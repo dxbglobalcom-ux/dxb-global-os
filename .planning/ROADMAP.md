@@ -40,7 +40,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. No plaintext secret exists anywhere in the repo, prompts, or agent-visible config — all secrets load through the `.env` vault pattern
   4. Automated secret scan (pre-commit + CI) runs on every commit and passes clean
   5. The source .odt's credentials section is stripped; a sanitized copy lives in project docs and the original stays out of git and cloud sync
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Secret scanning foundation: gitleaks + fail-closed pre-commit hook (canary-proven) + full-history scan + CI wiring (SEC-03)
+- [ ] 01-02-PLAN.md — Vault scaffold: .gitignore rules, .env.example name registry, agent deny rules (SEC-02)
+- [ ] 01-03-PLAN.md — CEO deliverables: bilingual rotation checklist, 21-row evidence template, ODT sanitization procedure (SEC-01/SEC-04 prep)
+- [ ] 01-04-PLAN.md — CEO performs all rotations + 2FA + probes; evidence machine-verified and committed (SEC-01, checkpoint)
+- [ ] 01-05-PLAN.md — CEO sanitizes ODT; sanitized markdown verified at two levels and committed; original swept (SEC-04, checkpoint)
+- [ ] 01-06-PLAN.md — Hard-gate closure: trufflehog verified sweep + live gate report + CEO sign-off (SEC-01..04, checkpoint)
 
 ### Phase 2: Foundation & Integration Program
 **Goal**: The company has a build-ready home — a monorepo skeleton reflecting the full approved architecture, and a tracking program that guarantees no doc-mandated tool is skipped or installed blind
@@ -167,7 +175,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Security Baseline & Credential Remediation | 0/TBD | Not started | - |
+| 1. Security Baseline & Credential Remediation | 0/6 | Planned | - |
 | 2. Foundation & Integration Program | 0/TBD | Not started | - |
 | 3. State Layer & dxb-mcp Core | 0/TBD | Not started | - |
 | 4. Safety Rails — Gates, Cost, Audit | 0/TBD | Not started | - |
