@@ -11,3 +11,6 @@ secrets/
 .DS_Store
 *.swp
 node_modules/
+
+# External clone — read-only persona source, not part of OS repo
+agency-agents/
