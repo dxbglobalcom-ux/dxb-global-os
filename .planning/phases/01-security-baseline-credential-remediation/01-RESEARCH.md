@@ -635,7 +635,7 @@ git ls-files | grep -x '.env' && echo "FAIL: .env tracked" || echo "OK: .env unt
 | A11 | Namecheap account-password change submenu location | Recipe 13 | Trivial dashboard navigation |
 | A12 | Gmail/Google "sign out all devices" menu wording | Recipe 9 | Menu labels drift; capability itself is stable |
 
-## Open Questions
+## Open Questions (RESOLVED — each answered by a plan task: Q1→01-01 T3 full-history scan; Q2→01-03/01-04 hostloom discovery step + risk-acceptance path; Q3→01-04/01-05 synced-copy sweep rows; Q4→01-03 key-shape prefix greps)
 
 1. **Does the git history already contain secrets?**
    - What we know: `.odt` was gitignored from the start; repo contains only planning docs; git status clean.
