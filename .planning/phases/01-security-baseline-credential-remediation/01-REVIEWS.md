@@ -3,8 +3,8 @@ phase: 1
 reviewers: [codex]
 reviewed_at: 2026-07-05T16:34:51Z
 plans_reviewed: [01-01-PLAN.md, 01-02-PLAN.md, 01-03-PLAN.md, 01-04-PLAN.md, 01-05-PLAN.md, 01-06-PLAN.md]
-review_cycles: 2
-last_reviewed_at: 2026-07-05T17:26:30Z
+review_cycles: 3
+last_reviewed_at: 2026-07-05T21:45:09Z
 ---
 
 # Cross-AI Plan Review — Phase 1: Security Baseline & Credential Remediation
@@ -375,3 +375,65 @@ No MISSING verdicts this cycle. Two AMBIGUOUS (one resolved in-file, one = MED-2
 ### Cycle-2 verdict
 
 **CYCLE 2 RESULT: current_high=2, current_actionable=5 — convergence not yet reached.** Recommended next step: `/gsd-plan-phase 1 --reviews` to fold HIGH-1 (A8 machine-readable outcome), HIGH-6 (ODT scratch path split), MED-1, MED-2, MED-4, MED-5, LOW-1 into the plans, then cycle 3.
+
+---
+
+## Codex Review (cycle 3)
+
+> Reviewer: codex-cli 0.142.5 (`codex exec --ephemeral`), run inside the project working tree with repo file access. Prompt: convergence cycle 3 — audit all 7 cycle-2 findings (HIGH-1, HIGH-6, MED-1, MED-2, MED-4, MED-5, LOW-1) against the plans as revised in commit `c7efcfa`, plus adversarial examination of the NEW mechanisms those fixes introduced (A8-RESULT grep semantics, Action-column `$5` awk parse, MED-4 Observed-cell regex, two-path ODT flow, MED-1 fenced-block verbatim loop), with mechanical parser execution against simulated table rows and file:line evidence. Required final line: `UNRESOLVED_HIGH=<n> NEW_HIGH=<n> ACTIONABLE_NONHIGH=<n>`.
+
+Summary: Cycle-2 fixes are materially converged. I found no unresolved HIGH findings and no new HIGH concerns. The remaining issues are hardening gaps in newly added parser/verification mechanics, mainly duplicate-row masking in the Apify grace awk and over-broad fenced-block scanning.
+
+| ID | Verdict | Evidence | Rationale |
+|---|---|---|---|
+| HIGH-1 | FULLY RESOLVED | `01-02-PLAN.md:103`, `01-02-PLAN.md:112`, `01-04-PLAN.md:44`, `01-06-PLAN.md:95`, `01-06-PLAN.md:102`, `01-06-PLAN.md:114` | A8 now has a committed parseable artifact, 01-06 reads it, malformed/missing/bare FAILED blocks, and FAILED+COMPENSATED requires the compensating-control block. |
+| HIGH-6 | FULLY RESOLVED | `01-03-PLAN.md:138`, `01-03-PLAN.md:147`, `01-05-PLAN.md:69`, `01-05-PLAN.md:94`, `01-05-PLAN.md:123`, `01-05-PLAN.md:132` | Original/sanitized ODT paths are split, `/tmp/sanitize-work.odt` is retired from the produced procedure, guard uses path identity + `cmp -s`, and scratch deletion is required. |
+| MED-1 | FULLY RESOLVED | `01-03-PLAN.md:107`, `01-03-PLAN.md:122`, `01-03-PLAN.md:123` | Endpoint loop remains and full fenced probe/EXPECT/header/body lines are checked against `01-RESEARCH.md`. |
+| MED-2 | FULLY RESOLVED | `01-03-PLAN.md:73`, `01-03-PLAN.md:85`, `01-04-PLAN.md:114`, `01-04-PLAN.md:125`, `01-06-PLAN.md:102` | Grace literal is now in Action column `$5`, placeholder is prefilled, and whole-row prose can no longer satisfy the gate. |
+| MED-4 | FULLY RESOLVED | `01-04-PLAN.md:114`, `01-04-PLAN.md:119`, `01-04-PLAN.md:123`, `01-06-PLAN.md:102` | ✅ rows now require both Probe UTC `$9` and non-empty Observed `$10`. |
+| MED-5 | FULLY RESOLVED | `01-02-PLAN.md:101`, `01-02-PLAN.md:134`, `01-06-PLAN.md:102` | The compensating-control boundary now states it is not shell-proof until Phase 2 least-privilege profiles. |
+| LOW-1 | FULLY RESOLVED | `01-06-PLAN.md:75`, `01-06-PLAN.md:84`, `01-05-PLAN.md:105`, `01-05-PLAN.md:123`, `01-05-PLAN.md:132` | `th-sweep.log`, `/tmp/odt-check`, both ODT scratch files, and wordmatch scratch deletion are covered by acceptance checks. |
+
+**New Concerns**
+- **MEDIUM** — Duplicate CRED rows can mask a pending Apify grace row. `01-03-PLAN.md:78` and `01-04-PLAN.md:114` count 21 rows but do not prove the exact unique ID set; `01-04-PLAN.md:114`, `01-04-PLAN.md:119`, `01-04-PLAN.md:125`, and `01-06-PLAN.md:102` use `awk ... { g=$5 } END ...`, so the last `CRED-17` wins. Simulated 21 rows with two `CRED-17`, one pending and one OK, produced `21-rows 0-unresolved`, MED4 `0`, `GRACE-OK`, but only 20 unique IDs.
+- **MEDIUM** — The MED-1 fenced-block loop can false-block legitimate non-probe fenced commands. `01-03-PLAN.md:111` asks for runtime sweep commands, while `01-03-PLAN.md:123` scans every fenced block line matching `curl|EXPECT|-H |-d |sudo|...`. A fenced `sudo find ...` example produced `NOT-VERBATIM`, even though it was not a probe recipe line.
+- **LOW** — A8 automated verification is weaker than the acceptance prose. `01-02-PLAN.md:106` checks only valid-line count; `01-02-PLAN.md:112` adds the needed `^A8-RESULT:` count. Simulated `PASSED` plus bare `FAILED` gives valid-count `1`, starts-count `2`; copying only the automated command would false-pass.
+- **LOW** — ODT Task 2 automated verification does not itself assert the path guard/container check or `/tmp/odt-check` cleanup. `01-05-PLAN.md:94`, `01-05-PLAN.md:104`, and `01-05-PLAN.md:105` require them in prose/acceptance, but `01-05-PLAN.md:99` omits those checks.
+
+Parser simulations run: A8 grep counts for OK/two-valid/valid-plus-invalid files; MED-4 awk against blank Observed and blank Probe rows; grace `$5` parser against prose-only, placeholder-plus-literal, declined, and accepted rows; duplicate-21-row CRED set; fenced loop over a non-probe `sudo` block.
+
+**Suggestions**
+- Add a unique ID-set gate for `CRED-01..CRED-21`, then make the grace parser fail on `n != 1`.
+- Scope the verbatim loop to fenced blocks explicitly marked as probe blocks, or add recipe IDs and diff only those.
+- Promote the A8 `^A8-RESULT:` count into the automated command.
+- Add explicit automated checks/evidence fields for ODT reported path, `cmp -s` result, container scan, and `/tmp/odt-check` removal.
+
+**Risk Assessment**
+Convergence is acceptable for HIGH-risk findings. The remaining issues are actionable non-HIGH hardening items; fixing them before execution would reduce false-pass and false-block risk without changing the plan architecture.
+
+`UNRESOLVED_HIGH=0 NEW_HIGH=0 ACTIONABLE_NONHIGH=4`
+
+---
+
+## Consensus Summary — Cycle 3
+
+Single reviewer (codex); Claude CLI skipped for independence (orchestrator runs inside Claude Code); no other CLIs configured for this cycle.
+
+### Resolution audit
+
+All 7 cycle-2 findings verdicted **FULLY RESOLVED** with file:line evidence and mechanical parser execution (not inspection-only). No partials carried. HIGH trajectory across cycles: 5 (cycle 1) → 2 (cycle 2) → **0 (cycle 3)**.
+
+### New findings (continuing the canonical ID sequence)
+
+- **MED-6** — duplicate CRED-row masking: row-count gate (`21-rows`) does not prove ID uniqueness; grace awk `{g=$5} END` takes the last CRED-17 match, so a duplicate row can mask a pending one. False-pass vector in the SEC-01 proof.
+- **MED-7** — MED-1 verbatim loop over-broad: scans all fenced lines matching the probe pattern (incl. `sudo` sweep commands the same plan asks to include), producing NOT-VERBATIM false-blocks on legitimate non-probe lines. False-block vector (safe direction, but blocks the gate).
+- **LOW-2** — A8 automated verify line checks only the valid-line count; the `^A8-RESULT:` prefix count that catches a stray bare-FAILED line lives only in acceptance prose. Copying the automated command alone can false-pass.
+- **LOW-3** — 01-05 Task 2 automated verify omits the path-guard/`cmp -s`/container-scan/`/tmp/odt-check` cleanup checks that its prose and acceptance criteria require.
+
+### Cycle-3 verdict
+
+**CYCLE 3 RESULT: current_high=0, current_actionable=4 (MED-6, MED-7, LOW-2, LOW-3) — HIGH convergence reached.** Reviewer's own risk assessment: remaining items are non-HIGH hardening that "would reduce false-pass and false-block risk without changing the plan architecture."
+
+Termination rule applied by orchestrator: the convergence loop exits when a cycle reports 0 unresolved and 0 new HIGHs; residual non-HIGH findings are folded as a bounded pre-execution hardening pass with mechanical self-verification of each fold (parser re-execution), not a further full external cycle. Rationale: three of the four residuals (MED-6, LOW-2, LOW-3) are false-pass vectors in the gates this phase's exit proof depends on — cheap plan-text fixes, disproportionate risk reduction; MED-7 is a false-block that would stall execution mid-phase.
+
+Next step: fold MED-6, MED-7, LOW-2, LOW-3 into plans 01-02/01-03/01-04/01-05/01-06, then begin execution.
