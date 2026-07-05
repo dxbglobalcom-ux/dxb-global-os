@@ -1,0 +1,13 @@
+# Secrets — never commit
+.env
+.env.*
+*.key
+secrets/
+
+# Source doc contains plaintext credentials — stays out of git until sanitized
+*.odt
+
+# OS/editor noise
+.DS_Store
+*.swp
+node_modules/
