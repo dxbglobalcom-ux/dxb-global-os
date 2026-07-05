@@ -3,6 +3,8 @@ phase: 1
 reviewers: [codex]
 reviewed_at: 2026-07-05T16:34:51Z
 plans_reviewed: [01-01-PLAN.md, 01-02-PLAN.md, 01-03-PLAN.md, 01-04-PLAN.md, 01-05-PLAN.md, 01-06-PLAN.md]
+review_cycles: 2
+last_reviewed_at: 2026-07-05T17:26:30Z
 ---
 
 # Cross-AI Plan Review — Phase 1: Security Baseline & Credential Remediation
@@ -239,3 +241,137 @@ No MISSING or AMBIGUOUS verdicts this cycle.
 | trufflehog exit-code semantics (183 = verified finding) | 01-06 | External tool behavior; cited from 01-RESEARCH.md:431 but not greppable beyond the citation. |
 
 Skipped (out of scope for this pass): symbols cited only by 01-CONTEXT.md or PROJECT.md rather than by the plans themselves (`.planning/research/PITFALLS.md`, `.planning/research/SUMMARY.md`, `/home/ghost/.claude/plans/bubbly-dazzling-goblet.md`); all items under each plan's "Artifacts this phase produces" (new by declaration).
+
+---
+---
+
+# Cross-AI Plan Review — Phase 1 — Convergence Cycle 2
+
+- reviewers: [codex]
+- reviewed_at: 2026-07-05T17:26:30Z
+- plans_reviewed: [01-01-PLAN.md, 01-02-PLAN.md, 01-03-PLAN.md, 01-04-PLAN.md, 01-05-PLAN.md, 01-06-PLAN.md] — as revised per cycle 1 in commit `8ccc529`
+- cycle_focus: (a) resolution audit of the 8 cycle-1 findings (5 HIGH, 3 MEDIUM); (b) new concerns introduced by the revisions themselves (awk column parsers, out-of-workspace vault compensating control, /tmp review flow)
+
+## Finding-ID mapping (canonical)
+
+Cycle-1 review text did not use literal IDs; the revised plans cite them as `cross-AI review HIGH-n / MED-n`. Canonical mapping, fixed here for traceability: **HIGH-1** = A8 deny-failure non-blocking (01-02/01-06) · **HIGH-2** = whole-row unresolved-grep false-pass (01-04) · **HIGH-3** = ungated runtime-sweep attestations (01-04) · **HIGH-4** = word-match content committed before CEO review (01-05) · **HIGH-5** = gate report inheriting the loose filter (01-06) · **MED-1** = probe commands not machine-checked verbatim (01-03) · **MED-2** = Apify grace not parseable (01-03/01-04) · **MED-3** = trufflehog scope overclaim (01-06). New cycle-2 findings continue the sequence (HIGH-6, MED-4…).
+
+## Codex Review (cycle 2)
+
+> Reviewer: codex-cli 0.142.5 (`codex exec --ephemeral`), run inside the project working tree with repo file access. Prompt included PROJECT.md context, Phase 1 roadmap section, SEC-01..04 requirements, 01-CONTEXT.md, all six revised plans, the canonical 8-finding retrospective table, and instructions to verify resolutions and new mechanisms against the repo (01-RESEARCH.md, 01-REVIEWS.md cycle-1 text, .gitignore, .claude/settings.local.json) with file:line evidence.
+
+**Summary** — Convergence is mostly achieved, but not clean enough to call Phase 1 low-risk yet. The major cycle-1 structural fixes are present: DEAD?-column parsing, ATT rows, deferred ODT commits, scoped trufflehog language. Two cycle-1 items remain only partially resolved because the new mechanisms are not mechanically tight: A8 depends on an unparseable summary outcome and a weak compensating control, and Apify's structured grace literal can be satisfied by row prose rather than a dedicated evidence field. I found one new HIGH around `/tmp/sanitize-work.odt` ambiguity: the plan may leave and/or verify the wrong ODT copy.
+
+**Cycle-1 Finding Resolution Table**
+
+| ID | Verdict | Evidence | Rationale |
+|---|---|---|---|
+| HIGH-1 | PARTIALLY RESOLVED | `01-02-PLAN.md:98`, `01-02-PLAN.md:107-110`, `01-06-PLAN.md:101`, `01-06-PLAN.md:113` | FAILED now triggers an out-of-workspace block and 01-06 says bare FAILED blocks, but the A8 outcome is only "recorded in the task summary" and 01-06 gives no machine-readable source/command for PASSED vs FAILED. |
+| HIGH-2 | FULLY RESOLVED | `01-03-PLAN.md:71`, `01-04-PLAN.md:114`, `01-04-PLAN.md:122-123` | The CRED table has 10 columns per research (`01-RESEARCH.md:521`), so with leading pipes `$11` is DEAD? and `$9` is Probe UTC. Exact row count `21-rows 0-unresolved` catches 20/22 rows. |
+| HIGH-3 | FULLY RESOLVED | `01-03-PLAN.md:75`, `01-04-PLAN.md:114`, `01-04-PLAN.md:124` | ATT table is machine-parseable; with leading pipes `$4` is Status. Gate requires 5 rows, all YES/DONE, and ATT-01 specifically YES. |
+| HIGH-4 | FULLY RESOLVED | `01-05-PLAN.md:93`, `01-05-PLAN.md:95`, `01-05-PLAN.md:119-121`, `01-05-PLAN.md:127-130` | Full matched lines go to `/tmp/odt-wordmatch-review.md`; committed evidence stores only line/category; commit is deferred until CEO approval. |
+| HIGH-5 | FULLY RESOLVED | `01-06-PLAN.md:101`, `01-06-PLAN.md:112` | Final gate report re-runs the column-aware DEAD? parser, ATT gate, and CRED-17 literal check live. |
+| MED-1 | PARTIALLY RESOLVED | `01-03-PLAN.md:106`, `01-03-PLAN.md:121`, `01-RESEARCH.md:169-172`, `01-RESEARCH.md:201-204` | Endpoint presence is now gated, but the loop checks literal endpoint fragments, not full verbatim probe commands, headers, bodies, or EXPECT lines. |
+| MED-2 | PARTIALLY RESOLVED | `01-03-PLAN.md:73`, `01-03-PLAN.md:108`, `01-04-PLAN.md:114`, `01-04-PLAN.md:125`, `01-06-PLAN.md:101` | Literal grep exists, but no dedicated Grace column/field exists. If CRED-17 row prose contains both literals, `grep -cE` still returns `1` because it counts matching lines. |
+| MED-3 | FULLY RESOLVED | `01-06-PLAN.md:14`, `01-06-PLAN.md:73-75`, `01-06-PLAN.md:83` | The overclaim is removed: trufflehog is scoped to supported detectors; plain-password proof is explicitly assigned to per-item probes. |
+
+Secondary items: CI SHA pin deferral still stands with rationale (`01-01-PLAN.md:134`, `01-01-PLAN.md:166`, `01-06-PLAN.md:103`). The ODT key-shape concern is sufficiently mitigated by `gitleaks dir`, container scan, and CEO word-review (`01-05-PLAN.md:93`, `01-05-PLAN.md:119`). The "CI every commit" wording is fixed in execution plans via "wired, arms on first push" (`01-06-PLAN.md:103`), though ROADMAP still says CI runs "on every commit" (`.planning/ROADMAP.md:41`).
+
+**New Concerns**
+
+- **HIGH** — Ambiguous sanitized ODT path can leave/verify the wrong credential-bearing copy. `01-03-PLAN.md:136` says copy the original to `/tmp/sanitize-work.odt`, then "Save As to a NEW file"; `01-05-PLAN.md:68` later says the sanitized working copy default is `/tmp/sanitize-work.odt`; `01-05-PLAN.md:93` unzips the reported/default path. If LibreOffice Save-As creates a different new file, `/tmp/sanitize-work.odt` may remain the unsanitized original copy. Mechanism: wrong-file verification or persistent leaked `/tmp` artifact.
+
+- **MEDIUM** — DEAD rows do not gate the Observed/status cell despite claiming status-code proof. `01-03-PLAN.md:71` says complete requires Probe timestamp and Observed; `01-04-PLAN.md:114` and `01-04-PLAN.md:123` only gate the Probe UTC field for ✅ rows. Mechanism: a row with `✅` and timestamp but blank Observed passes.
+
+- **MEDIUM** — A8 compensating control overclaims "unreachable" if executor agents can use shell reads outside the workspace. `01-02-PLAN.md:98` claims `~/.dxb-vault/.env` is unreachable by workspace-scoped tooling, but current security intent is "agent-visible config" (`.planning/REQUIREMENTS.md:10`) and the plan only denies Claude `Read(...)`, not shell commands. Mechanism: a Bash-capable agent may still read `~/.dxb-vault/.env` unless shell permissions/sandboxing also forbid it.
+
+- **MEDIUM** — A8 final gate is fragile/gameable. `01-06-PLAN.md:101` says pass if "plan 01-02 recorded A8 PASSED" or FAILED plus grep block, but `01-06` read_first omits `01-02-SUMMARY.md` (`01-06-PLAN.md:92-95`) and the compensating gate is only `grep -c 'OUT-OF-WORKSPACE VAULT' .env.example`. Mechanism: report author cannot reliably distinguish PASSED from unrecorded, and a comment string alone can satisfy FAILED compensation.
+
+- **LOW** — `/tmp` scratch cleanup is incomplete in acceptance. `01-06-PLAN.md:75` says delete `/tmp/th-sweep.json` and `/tmp/th-sweep.log`, but acceptance only checks JSON deletion (`01-06-PLAN.md:84`). `01-05` deletes wordmatch scratch post-review (`01-05-PLAN.md:121`, `01-05-PLAN.md:130`) but does not explicitly delete the sanitized/unsanitized ODT scratch after container verification. Mechanism: sensitive or value-adjacent scratch files can persist after interruption.
+
+**Suggestions**
+
+1. Add a dedicated `Grace` column or fixed `Action` token for CRED-17, then gate that exact field by column index. Do not grep the whole CRED-17 row.
+2. Add an Observed-cell gate for every ✅ row: `if (v == "✅" && ($9 !~ timestamp_re || $10 !~ /[^ \t]/)) bad++`.
+3. Make A8 outcome machine-readable in a committed artifact, preferably `evidence/A8-DENY-CHECK.md` with `A8_OUTCOME=PASSED|FAILED`, then have 01-06 parse that exact line.
+4. If A8 FAILED, either explicitly ban shell reads of the out-of-workspace vault or downgrade the claim to "outside repo/gitignored; not protected from shell-capable agents." Better: place real secrets under OS permissions unavailable to executor agents.
+5. Rename ODT scratch paths: `/tmp/source-original-copy.odt` for the copied original, `/tmp/source-sanitized-check.odt` for the Save-As result. Require Task 2 to verify the sanitized path is not the original-copy path unless LibreOffice overwrote it after sanitization, and delete both scratch ODTs after approval.
+
+**Risk Assessment**
+
+Overall phase risk: **MEDIUM**. The plan set is much stronger than cycle 1, but the remaining risks are in security-critical gate mechanics, not style. The biggest blocker is the ODT scratch ambiguity; the A8 and Apify gates need tightening before execution can be trusted as a hard security baseline.
+
+`UNRESOLVED_HIGH=0 NEW_HIGH=1 ACTIONABLE_NONHIGH=5`
+
+---
+
+## Consensus Summary — Cycle 2
+
+Single external reviewer again this cycle (Codex; `--codex` requested, other CLIs not installed). The orchestrator independently cross-checked every cycle-2 citation and mechanically executed the new parsers against a simulated evidence file before accepting verdicts.
+
+### Resolution scoreboard (orchestrator-confirmed)
+
+| Cycle-1 finding | Cycle-2 verdict | Orchestrator cross-check |
+|---|---|---|
+| HIGH-1 A8 non-blocking | **PARTIALLY RESOLVED** | Confirmed: blocking rule + compensating control now in plan text (01-02:98, 01-06:101), but the A8 outcome lives only in a task summary — 01-02:107 says "recorded in the task summary"; 01-06 Task 2 read_first (01-06-PLAN.md:92-95) lists no 01-02 artifact, and the FAILED-branch check is a comment-string grep. Not yet mechanically verifiable end-to-end. |
+| HIGH-2 whole-row grep | **FULLY RESOLVED** | Confirmed by execution: the awk DEAD?-column parser rejects the cycle-1 false-pass case (N/A in 2FA column → counted unresolved), blank DEAD? cells, and bare `N/A` without reason; header/separator rows don't pollute counts; row-count check catches 20/22 rows. |
+| HIGH-3 ungated attestations | **FULLY RESOLVED** | Confirmed by execution: ATT gate blocks on any blank Status; ATT-01=DONE slips the combined gate but the separate ATT-01=YES check in 01-04/01-06 acceptance criteria catches it (INFO: that specific check is in acceptance_criteria, not in 01-04's automated verify line). |
+| HIGH-4 evidence-before-review | **FULLY RESOLVED** | Confirmed: all commits deferred to 01-05 Task 3 post-approval; committed evidence format-gated to `- line N — category` lines only; full text confined to /tmp scratch. |
+| HIGH-5 gate-report inheritance | **FULLY RESOLVED** | Confirmed: 01-06 Task 2 re-runs the column-aware parsers live; verify block requires `21-rows 0-unresolved` in the report. |
+| MED-1 verbatim probes | **PARTIALLY RESOLVED** | Confirmed: 16-literal `grep -qF` endpoint loop exists (01-03:121) but covers endpoint fragments, not full command/EXPECT verbatim. |
+| MED-2 Apify grace | **PARTIALLY RESOLVED** | Confirmed mechanically: a CRED-17 row whose prose merely mentions the literals (e.g. instructional text in the template row) satisfies `grep -cE` → gate can false-pass on an untouched or contradictory row; no dedicated field parse. |
+| MED-3 trufflehog overclaim | **FULLY RESOLVED** | Confirmed: scope statement present in must_haves, action, and grep-gated acceptance (01-06:14,73-75,83). |
+
+**Score: 5 of 8 fully resolved; 3 partially resolved; 0 unresolved-untouched.** Secondary cycle-1 items: CI SHA-pin deferral stands (accepted/deferred in-plan, T-01-SC); 01-05 narrow-grep MEDIUM adequately compensated (gitleaks dir + container scan + CEO word review); "CI every commit" wording fixed in plans — residual imprecision only in ROADMAP.md:41 (INFO, outside plan scope).
+
+### Current concerns after cycle 2
+
+**HIGH (2):**
+1. **HIGH-1 (carried, partial)** — A8 outcome not machine-readable end-to-end: 01-06's blocking SEC-02 gate row has no committed, parseable artifact to distinguish PASSED / FAILED / unrecorded (Codex's "A8 gate fragile" MEDIUM is folded here as the same root cause). Fix direction: committed `evidence/A8-DENY-CHECK.md` with an exact `A8_OUTCOME=PASSED|FAILED` line written by 01-02 Task 2; 01-06 read_first + gate row parse that line.
+2. **HIGH-6 (new)** — `/tmp/sanitize-work.odt` doubles as the copy-of-original (01-03:136) and the default "sanitized working copy" (01-05:68,93): container verification can run against, and leave behind, the credential-bearing copy. Fix direction: two distinct named paths + a Task 2 guard + explicit post-approval deletion of both scratch ODTs.
+
+**Actionable MEDIUM/LOW (5):**
+1. **MED-1 (carried, partial)** — extend the verbatim gate beyond endpoint fragments (full probe command + EXPECT line checks, or a recipe-ID diff step).
+2. **MED-2 (carried, partial)** — parse the grace literal from a dedicated field/column of CRED-17 (column-aware, like the DEAD? gate), not a whole-row grep; ensure the template row's instructional prose cannot satisfy it.
+3. **MED-4 (new)** — ✅ rows must also require a non-empty Observed cell (`$10`), matching the completeness definition the template itself states (01-03:71); currently only `$9` (Probe UTC) is gated (01-04:114,123).
+4. **MED-5 (new)** — scope the compensating-control claim: `~/.dxb-vault/.env` is outside the workspace but not "unreachable" for Bash-capable agents; either add an explicit shell-read guard or restate the control's boundary honestly in 01-02's action text and threat register (T-01-06).
+5. **LOW-1 (new)** — /tmp hygiene: acceptance checks `test ! -f /tmp/th-sweep.json` but not the `.log` (01-06:84); 01-05 never deletes the ODT scratch copies. Add deletion + acceptance checks.
+
+### Agreed Strengths (cycle 2)
+
+- The three parser-based fixes (HIGH-2/3/5) are real, mechanically sound, and were verified by execution, not inspection — the central SEC-01 proof no longer false-passes on the cycle-1 case.
+- The HIGH-4 fix inverts the risky ordering completely: nothing reaches git before CEO approval, and the committed evidence format is itself grep-gated against content leakage.
+- Severity trajectory is converging: cycle 1 ended MEDIUM-HIGH with 5 open HIGHs; cycle 2 ends MEDIUM with 2 (one carried-partial, one new in a narrower blast radius).
+
+### Divergent Views
+
+None recordable — single reviewer. Orchestrator adjustments to the reviewer's own tally: Codex reported `UNRESOLVED_HIGH=0 NEW_HIGH=1 ACTIONABLE_NONHIGH=5`; under the convergence contract, a PARTIALLY RESOLVED HIGH counts as a current HIGH, so the orchestrator's canonical count is **2 current HIGHs** and **5 actionable non-HIGHs** (Codex's "A8 gate fragile" MEDIUM folded into HIGH-1; both carried partial MEDs counted; MED-4, MED-5, LOW-1 counted).
+
+### False-positive check
+
+`__SET_ME__` placeholders, the `.env.example` name registry, and `~/.dxb-vault/.env` path references were correctly treated as non-leaks by the reviewer. No false positives to discount this cycle.
+
+---
+
+## Verification coverage (source-grounding pass) — Cycle 2 additions
+
+Authority: `grep` (unchanged). Scope: symbols/paths NEWLY cited by the revised plans (commit `8ccc529`), excluding "Artifacts this phase produces" declarations. All cycle-1 verdicts re-spot-checked and unchanged (.gitignore rules, settings.local.json allow-list, .odt filename-level history checks all still hold).
+
+| New symbol / mechanism | Cited by | Verdict | Severity |
+|---|---|---|---|
+| awk DEAD?-column parser (`-F'|'`, `$2~/CRED-/`, `$11` = DEAD?, `$9` = Probe UTC) | 01-04, 01-06 | VERIFIED — mechanically executed against a simulated 10-column table: correct field mapping, rejects the cycle-1 false-pass case, blank cells, bare N/A; exact row count enforced | none |
+| awk ATT Status parser (`$2~/ATT-/`, `$4` = Status) | 01-04, 01-06 | VERIFIED — mechanically executed: blocks blank Status; ATT-01=DONE caught only by the separate ATT-01=YES acceptance check (present in both plans' acceptance_criteria; absent from 01-04's automated verify line — INFO) | none |
+| CRED-17 grace-literal grep gate | 01-03, 01-04, 01-06 | AMBIGUOUS — mechanically shown that instructional prose containing the literals inside the row satisfies the gate (whole-row grep, line-count semantics) | MEDIUM (= MED-2 carried) |
+| `cross-AI review HIGH-n / MED-n` labels cited by plans | all plans | AMBIGUOUS→RESOLVED — cycle-1 review text contains no literal IDs; substance mapping is unambiguous and is now canonically fixed in this file's "Finding-ID mapping" section | none (resolved in-file) |
+| `~/.dxb-vault/.env` out-of-workspace vault path | 01-02, 01-04, 01-06 | UNCHECKABLE — new artifact by declaration, outside repo; the "unreachable by workspace-scoped tooling" claim is behavioral, not greppable, and is flagged as MED-5 | INFO |
+| `OUT-OF-WORKSPACE VAULT (A8 compensating control)` literal in .env.example | 01-02, 01-06 | UNCHECKABLE — artifact content created at execution time; gate is a comment-string grep (weakness folded into HIGH-1) | INFO |
+| `/tmp/sanitize-work.odt`, `/tmp/odt-check`, `/tmp/odt-wordmatch-review.md`, `/tmp/th-sweep.json`, `/tmp/th-sweep.log` | 01-03, 01-05, 01-06 | VERIFIED as consistently named across plans EXCEPT `/tmp/sanitize-work.odt`, which is cited with two contradictory roles (original-copy vs sanitized working copy) — that contradiction is HIGH-6 | HIGH (= HIGH-6) |
+| `gitleaks dir` subcommand | 01-04, 01-05 | UNCHECKABLE — external tool behavior (v8.19+ directory scan form); consistent with the pinned 8.24.x install in 01-01 | INFO |
+| U+2705 / U+274C status-symbol contract in gate report | 01-06 | VERIFIED — symbols used consistently between action text, verify block (`grep -c '❌'` = 0), and the evidence-table parse (`✅` literal) | none |
+| Commit `8ccc529` (revision provenance) | this review | VERIFIED — `git log`: "docs(01): revise plans per cross-AI review cycle 1" | none |
+
+No MISSING verdicts this cycle. Two AMBIGUOUS (one resolved in-file, one = MED-2); one contradiction elevated to HIGH-6.
+
+### Cycle-2 verdict
+
+**CYCLE 2 RESULT: current_high=2, current_actionable=5 — convergence not yet reached.** Recommended next step: `/gsd-plan-phase 1 --reviews` to fold HIGH-1 (A8 machine-readable outcome), HIGH-6 (ODT scratch path split), MED-1, MED-2, MED-4, MED-5, LOW-1 into the plans, then cycle 3.
