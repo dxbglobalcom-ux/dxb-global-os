@@ -14,3 +14,8 @@ node_modules/
 
 # External clone — read-only persona source, not part of OS repo
 agency-agents/
+
+# vault (SEC-02) — real values live only in gitignored .env; .env.example is the committed name registry
+.env
+.env.*
+!.env.example
