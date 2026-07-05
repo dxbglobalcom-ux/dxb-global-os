@@ -1,0 +1,9 @@
+# DXB Global OS — secret scanning policy (SEC-03)
+#
+# Policy: default gitleaks rulepack, no baseline, no allowlist.
+# Any finding means STOP AND FIX (rotate/remove the secret), never ignore.
+# This repo is young and must be clean, not baselined
+# (RESEARCH decision: "clean, not baselined").
+
+[extend]
+useDefault = true
