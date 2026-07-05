@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+# DXB Global OS — fail-closed secret-scanning pre-commit hook (SEC-03)
+#
+# Blocks any commit containing a detectable secret in staged changes.
+#
+# CLONE BOOTSTRAP (required once per fresh clone):
+#   git config core.hooksPath scripts/hooks
+# Without this the hook file exists but never fires (RESEARCH Pitfall 7).
+#
+# Policy:
+#   - Fail closed: if gitleaks is missing, the commit is BLOCKED (exit 1).
+#     A missing scanner must never let a commit pass unscanned.
+#   - --redact is mandatory: hook output never prints a matched secret value
+#     (CEO no-values rule).
+
+# (1) Ensure gitleaks resolves for every git client (GUI, agents, cron),
+#     regardless of the login-shell PATH.
+PATH="$HOME/.local/bin:$PATH"
+export PATH
+
+# (2) Fail closed if the scanner is absent.
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "ERROR: gitleaks not installed — commit blocked (fail closed)." >&2
+  echo "Install: download release from github.com/gitleaks/gitleaks/releases into ~/.local/bin" >&2
+  exit 1
+fi
+
+# (3) Scan staged changes only; redact matched values in all output.
+exec gitleaks git --pre-commit --staged --redact --verbose
