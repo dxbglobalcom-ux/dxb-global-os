@@ -6,14 +6,14 @@ current_phase: 01
 current_phase_name: security-baseline-credential-remediation
 status: executing
 stopped_at: ROADMAP.md + STATE.md created; REQUIREMENTS.md traceability filled
-last_updated: "2026-07-05T22:52:09.587Z"
+last_updated: "2026-07-05T23:01:38.355Z"
 last_activity: 2026-07-05
 last_activity_desc: Phase 01 execution started
 progress:
   total_phases: 11
   completed_phases: 0
   total_plans: 6
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 01 (security-baseline-credential-remediation) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-07-05 — Phase 01 execution started
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01 P01 | 9min | 3 tasks | 5 files |
+| Phase 01 P02 | 6min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,7 @@ Recent decisions affecting current work:
 - [Roadmap]: COST-04 (cost dashboard view) mapped to Phase 8 — cost *enforcement* is Phase 4; the CEO-visible per-dept/model/mode view needs the cockpit
 - [Roadmap]: Phase 1 is a hard exit gate — old keys verifiably dead (401 evidence), 2FA, sanitized .odt, clean secret scan; nothing else starts before it passes
 - [Phase 01]: 01-01: gitleaks v8.24.3 sha256-verified install; canary matched generic-api-key rule; gitleaks-action @v2 tag with SHA-pin TODO at remote go-live
+- [Phase 01-02]: A8 deny spot-check PASSED - agent file-read of .env refused at tool layer; real .env goes to repo root in Wave 2, no out-of-workspace relocation needed
 
 ### Pending Todos
 
@@ -92,6 +94,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-05T22:50:26.214Z
+Last session: 2026-07-05T23:00:32.768Z
 Stopped at: ROADMAP.md + STATE.md created; REQUIREMENTS.md traceability filled
 Resume file: None
