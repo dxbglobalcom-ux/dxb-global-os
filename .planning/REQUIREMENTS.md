@@ -134,4 +134,63 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 
 ## Traceability
 
-(Filled by roadmap creation — every v1 REQ-ID maps to exactly one phase.)
+Every v1 requirement maps to exactly one phase (56/56 mapped, no orphans, no duplicates). Phases in ROADMAP.md.
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| SEC-01 | Phase 1 | Pending |
+| SEC-02 | Phase 1 | Pending |
+| SEC-03 | Phase 1 | Pending |
+| SEC-04 | Phase 1 | Pending |
+| INTEG-01 | Phase 2 | Pending |
+| INTEG-02 | Phase 2 | Pending |
+| QUEUE-01 | Phase 3 | Pending |
+| QUEUE-02 | Phase 3 | Pending |
+| QUEUE-03 | Phase 3 | Pending |
+| REG-01 | Phase 3 | Pending |
+| REG-02 | Phase 3 | Pending |
+| REG-03 | Phase 3 | Pending |
+| MCP-01 | Phase 3 | Pending |
+| GATE-01 | Phase 4 | Pending |
+| GATE-02 | Phase 4 | Pending |
+| GATE-04 | Phase 4 | Pending |
+| COST-01 | Phase 4 | Pending |
+| COST-02 | Phase 4 | Pending |
+| COST-03 | Phase 4 | Pending |
+| KERN-03 | Phase 4 | Pending |
+| KERN-01 | Phase 5 | Pending |
+| KERN-02 | Phase 5 | Pending |
+| ORCH-01 | Phase 5 | Pending |
+| ORCH-02 | Phase 5 | Pending |
+| ORCH-03 | Phase 5 | Pending |
+| ORCH-04 | Phase 5 | Pending |
+| CNCL-01 | Phase 5 | Pending |
+| MEM-01 | Phase 6 | Pending |
+| MEM-02 | Phase 6 | Pending |
+| MEM-03 | Phase 6 | Pending |
+| MEM-04 | Phase 6 | Pending |
+| MCP-02 | Phase 7 | Pending |
+| MCP-03 | Phase 7 | Pending |
+| VPS-01 | Phase 7 | Pending |
+| VPS-02 | Phase 7 | Pending |
+| VID-01 | Phase 7 | Pending |
+| DASH-01 | Phase 8 | Pending |
+| DASH-02 | Phase 8 | Pending |
+| DASH-03 | Phase 8 | Pending |
+| DASH-04 | Phase 8 | Pending |
+| DASH-05 | Phase 8 | Pending |
+| DASH-06 | Phase 8 | Pending |
+| DASH-07 | Phase 8 | Pending |
+| GATE-03 | Phase 8 | Pending |
+| COST-04 | Phase 8 | Pending |
+| VOICE-01 | Phase 9 | Pending |
+| VOICE-02 | Phase 9 | Pending |
+| DEPT-01 | Phase 10 | Pending |
+| DEPT-02 | Phase 10 | Pending |
+| DEPT-03 | Phase 10 | Pending |
+| DEPT-04 | Phase 10 | Pending |
+| DEPT-05 | Phase 10 | Pending |
+| PILOT-01 | Phase 11 | Pending |
+| PILOT-02 | Phase 11 | Pending |
+| PILOT-03 | Phase 11 | Pending |
+| PILOT-04 | Phase 11 | Pending |
