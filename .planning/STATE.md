@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-current_phase: 1
-current_phase_name: Security Baseline & Credential Remediation
+current_phase: 01
+current_phase_name: security-baseline-credential-remediation
 status: executing
 stopped_at: ROADMAP.md + STATE.md created; REQUIREMENTS.md traceability filled
-last_updated: "2026-07-05T22:28:19.402Z"
+last_updated: "2026-07-05T22:52:09.587Z"
 last_activity: 2026-07-05
-last_activity_desc: Roadmap created (11 phases, 56/56 requirements mapped)
+last_activity_desc: Phase 01 execution started
 progress:
   total_phases: 11
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 6
+  completed_plans: 1
   percent: 0
 ---
 
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-05)
 
 **Core value:** Anti-baby-sitting — the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward.
-**Current focus:** Phase 1 — Security Baseline & Credential Remediation
+**Current focus:** Phase 01 — security-baseline-credential-remediation
 
 ## Current Position
 
-Phase: 1 of 11 (Security Baseline & Credential Remediation)
-Plan: 0 of TBD in current phase
+Phase: 01 (security-baseline-credential-remediation) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-07-05 — Roadmap created (11 phases, 56/56 requirements mapped)
+Last activity: 2026-07-05 — Phase 01 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01 P01 | 9min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,7 @@ Recent decisions affecting current work:
 - [Roadmap]: Full schema (incl. memory_index + CRM tables) lands in Phase 3 — schema-first, "full architecture first" directive; UIs arrive later as pure projections
 - [Roadmap]: COST-04 (cost dashboard view) mapped to Phase 8 — cost *enforcement* is Phase 4; the CEO-visible per-dept/model/mode view needs the cockpit
 - [Roadmap]: Phase 1 is a hard exit gate — old keys verifiably dead (401 evidence), 2FA, sanitized .odt, clean secret scan; nothing else starts before it passes
+- [Phase 01]: 01-01: gitleaks v8.24.3 sha256-verified install; canary matched generic-api-key rule; gitleaks-action @v2 tag with SHA-pin TODO at remote go-live
 
 ### Pending Todos
 
@@ -90,6 +92,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-05 16:41
+Last session: 2026-07-05T22:50:26.214Z
 Stopped at: ROADMAP.md + STATE.md created; REQUIREMENTS.md traceability filled
 Resume file: None

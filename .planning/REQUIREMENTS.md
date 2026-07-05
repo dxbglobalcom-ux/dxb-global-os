@@ -8,7 +8,7 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 
 - [ ] **SEC-01**: CEO receives a credential-rotation checklist covering every secret in the source doc; completion is verified (old keys return 401/access-denied), not just ticked
 - [ ] **SEC-02**: Secrets vault pattern (`.env` + loader + `.gitignore`) — no plaintext secret ever appears in repo, prompts, or agent-visible config
-- [ ] **SEC-03**: Automated secret scan runs on the repo (pre-commit + CI) and passes clean
+- [x] **SEC-03**: Automated secret scan runs on the repo (pre-commit + CI) and passes clean
 - [ ] **SEC-04**: Source .odt credentials section stripped; sanitized copy stored in project docs
 
 ### OS Kernel (KERN)
@@ -140,7 +140,7 @@ Every v1 requirement maps to exactly one phase (56/56 mapped, no orphans, no dup
 |-------------|-------|--------|
 | SEC-01 | Phase 1 | Pending |
 | SEC-02 | Phase 1 | Pending |
-| SEC-03 | Phase 1 | Pending |
+| SEC-03 | Phase 1 | Complete |
 | SEC-04 | Phase 1 | Pending |
 | INTEG-01 | Phase 2 | Pending |
 | INTEG-02 | Phase 2 | Pending |

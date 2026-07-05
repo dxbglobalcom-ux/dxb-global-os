@@ -44,12 +44,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Automated secret scan (pre-commit + CI) runs on every commit and passes clean
   5. The source .odt's credentials section is stripped; a sanitized copy lives in project docs and the original stays out of git and cloud sync
 
-**Plans**: 6 plans
+**Plans**: 1/6 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 01-01-PLAN.md — Secret scanning foundation: gitleaks + fail-closed pre-commit hook (canary-proven) + full-history scan + CI wiring (SEC-03)
+- [x] 01-01-PLAN.md — Secret scanning foundation: gitleaks + fail-closed pre-commit hook (canary-proven) + full-history scan + CI wiring (SEC-03)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -223,7 +223,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Security Baseline & Credential Remediation | 0/6 | Planned | - |
+| 1. Security Baseline & Credential Remediation | 1/6 | In Progress|  |
 | 2. Foundation & Integration Program | 0/TBD | Not started | - |
 | 3. State Layer & dxb-mcp Core | 0/TBD | Not started | - |
 | 4. Safety Rails — Gates, Cost, Audit | 0/TBD | Not started | - |
