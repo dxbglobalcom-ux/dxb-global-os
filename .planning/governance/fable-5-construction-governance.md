@@ -30,6 +30,8 @@ Bu proje Fable 5 kalitesinde inşa edilmelidir. **Fable 5 yalnızca final review
 
 **Model yetki matrisi (v3, CEO onaylı 2026-07-06):** ayrıntı [[model-routing-hierarchy]] — özet: **plan yazımı VE repo'ya giren her satır (kod, config, tracker, doküman — boilerplate dahil) Fable'da, bizzat; yazarlık devri yok** (review yazarlık değildir); Opus/Sonnet SADECE yazarlık-dışı destek — keşif hammaddesi, checker/verifier, doğrulama koşuları (Sonnet high effort; final onay yok); Haiku SADECE mekanik getir-götür (verdict/onay/PASS/mimari yargı/milestone/commit kararı YASAK). **Gereksiz-subagent yasağı:** varsayılan inline Fable; subagent yalnız hacimli ham-veri toplama veya izole uzun koşu gerekçesiyle. Bütçe-fallback: maddi kısıtta Fable'ın MASTER-PLAN'ını Opus 4.8 adım adım uygular, verdict kapıları en yüksek modelde kalır.
 
+**Config backstop (2026-07-07):** `.planning/config.json` artık otomatik agent fan-out üretmeyecek şekilde sertleştirilmiştir: `parallelization=false`; `workflow.research/plan_check/verifier/nyquist_validation/pattern_mapper/ui_phase/ai_integration_phase/code_review/plan_review_convergence/node_repair=false`; `workflow.use_worktrees=false`; `hooks.workflow_guard=true`. Bu kalite kapılarını kapatmak değildir: Fable planlama, yazım, review ve verification işlerini inline yürütür; Sonnet high-effort sadece açık Fable gerekçesiyle, yazarlık dışı destek olarak çağrılabilir.
+
 # REPO AYNASI (senkron görevi)
 
 Bu dosyanın ve [[model-routing-hierarchy]] + MEMORY.md'nin commit'li kopyaları repo'da yaşar: `.planning/governance/`. **Bu runtime kaynaklardan herhangi biri değiştiğinde, ayna AYNI çalışma oturumunda güncellenip commit edilir** — Codex, gelecek ajanlar, git clone ve Claude-dışı araçlar kuralları oradan doğrular.

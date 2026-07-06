@@ -1,12 +1,12 @@
 ---
 name: model-routing-hierarchy
-description: "CEO-approved Fable-authorship matrix (2026-07-06 v3) — Fable writes plans AND ALL code/artifacts personally (no boilerplate exception); Sonnet support-only at high effort (research/checks/runs); no-unnecessary-subagent hard rule; Haiku fetch-and-carry only; budget-fallback mode documented"
+description: "CEO-approved Fable-authorship matrix (2026-07-07 v4) — Fable writes plans AND ALL code/artifacts personally; automatic subagent fan-out disabled by config; Sonnet support-only at high effort; Haiku fetch-and-carry only; budget-fallback mode documented"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
 ---
 
-CEO-approved runtime build-workflow authority matrix (v3, 2026-07-06 — v2'deki "boilerplate'i Sonnet daktilo eder" istisnası CEO tarafından kaldırıldı: "plan ve kodlama sende olmalı; bunun haricindeki her şeyde Sonnet'i kullanabilirsin, high seviyesinde". Tarihçe: v1 "Opus taslak yazar" → v2 "Fable plan+kritik kod" → v3 "Fable TÜM yazarlık"). Scope: Claude Code/GSD session'larının DXB Global OS'u nasıl inşa ettiği. Şirket/ürün yönetişimi DEĞİL — proje dosyalarına (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, faz planları, proje CLAUDE.md) asla yazılmaz. Üst çerçeve: [[fable-5-construction-governance]] (THE GOAL + bootstrap kuralı — her session ilk okuma).
+CEO-approved runtime build-workflow authority matrix (v4, 2026-07-07 — v3'teki Fable-authorship kuralı korunur; v4 ek kuralı: otomatik subagent fan-out config seviyesinde kapalıdır. Tarihçe: v1 "Opus taslak yazar" → v2 "Fable plan+kritik kod" → v2'deki "boilerplate'i Sonnet daktilo eder" istisnası CEO tarafından kaldırıldı → v3 "Fable TÜM yazarlık"). Scope: Claude Code/GSD session'larının DXB Global OS'u nasıl inşa ettiği. Şirket/ürün yönetişimi DEĞİL — proje dosyalarına (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, faz planları, proje CLAUDE.md) asla yazılmaz. Üst çerçeve: [[fable-5-construction-governance]] (THE GOAL + bootstrap kuralı — her session ilk okuma).
 
 **İlke: repo'ya giren HER satır Fable'dan çıkar — kod, config, migration, tracker, study card, doküman. İstisna yok (boilerplate dahil).**
 
@@ -39,7 +39,7 @@ CEO-approved runtime build-workflow authority matrix (v3, 2026-07-06 — v2'deki
 
 **How to apply:**
 - Subagent spawn'da `model=` HER ZAMAN açıkça geçilir. Tek istisna: gsd-planner/gsd-debugger'ın Fable session modelini miras alması ARTIK İSTENEN durumdur (plan yazarlığı Fable'da) — bu miras bilinçli ve kayıtlıdır, yangın değildir.
-- `.planning/config.json` backstop (v3): `model_profile: "adaptive"`, `resolve_model_ids: "resolve"`, `model_overrides`: **planner/debugger/executor → claude-fable-5** (yazan her subagent Fable modeli — ama varsayılan inline, subagent yasağına bak); phase-researcher/plan-checker/integration-checker/nyquist-auditor/verifier → sonnet. Haiku hiçbir kalite kapısında seçilemez.
+- `.planning/config.json` backstop (v4, 2026-07-07): `model_profile: "adaptive"`, `resolve_model_ids: "resolve"`, `model_overrides`: **planner/debugger/executor → claude-fable-5** (yazarlık yine Fable modeli; varsayılan yine inline); phase-researcher/plan-checker/integration-checker/nyquist-auditor/verifier → sonnet. **Otomatik fan-out kapalı:** `parallelization=false`, `workflow.research/plan_check/verifier/nyquist_validation/pattern_mapper/ui_phase/ai_integration_phase/code_review/plan_review_convergence/node_repair=false`, `workflow.use_worktrees=false`, `hooks.workflow_guard=true`. Sonnet desteği böylece workflow varsayılanından değil, Fable'ın açık gerekçesinden doğar. Haiku hiçbir kalite kapısında seçilemez.
 - Yürütme varsayılanı INLINE: onaylı plan varsa executor subagent'ı açılmaz, Fable doğrudan uygular; subagent yalnız yukarıdaki iki gerekçeyle.
 - Haiku'ya verilebilecek işler: gsd-codebase-mapper tarzı salt mekanik tarama/özet, dosya listeleme, sayım. Verdict cümlesi kurduracak hiçbir prompt Haiku'ya gitmez.
 - Usage hygiene: 4+ paralel session'dan kaçın; 150k+ bağlam maratonu yerine faz başına taze session; terminal session'ı için düz Fable 5 yeterli (`[1m]` değil).
