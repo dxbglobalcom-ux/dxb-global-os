@@ -11,7 +11,7 @@ Single source of truth for every master-plan §8B item's integration lifecycle. 
 | Item | Category | Status | Target Phase | Owner (dept/tier) | Trigger | Study Card | Notes |
 |------|----------|--------|--------------|-------------------|---------|------------|-------|
 | superpowers | Claude Code ecosystem | STUDY | 2 | All engineering-grade agents | skill | study-cards/superpowers.md | Already installed — retroactive study card owed (Pitfall 5); target: wiring |
-| GSD (gsd-core suite) | Claude Code ecosystem | STUDY | 2 | Orchestrator / project discipline | skill | study-cards/gsd-core.md | Already installed, driving this very build; retroactive card owed |
+| GSD (gsd-core suite) | Claude Code ecosystem | STUDY | 2 | Orchestrator / project discipline | skill | study-cards/gsd.md | Already installed, driving this very build; retroactive card owed |
 | gstack | Claude Code ecosystem | STUDY | 2 | QA gates (review/spec/ship/qa) | skill | study-cards/gstack.md | Already installed; retroactive card owed; used Phase 2 onward |
 | ruflo | Claude Code ecosystem | STUDY | 5 | Swarm/hooks/memory — evaluate overlap with kernel | mcp-profile | study-cards/ruflo.md | [ASSUMED — kernel-overlap eval fits orchestrator core loop]; already installed; explicit "study — evaluate overlap" per source; trigger also hook |
 | claude-mem | Claude Code ecosystem | STUDY | 6 | Cross-session memory, all agents | hook | study-cards/claude-mem.md | Already installed (auto hook); retroactive card owed |
