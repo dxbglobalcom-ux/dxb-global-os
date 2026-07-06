@@ -1,6 +1,6 @@
 # Phase 1 Gate Report — Security Baseline & Credential Remediation
 
-- **Status:** pending CEO approval
+- **Status:** APPROVED
 - **Generated (UTC):** 2026-07-06T16:16Z
 - **Method:** every row below re-run LIVE at report time (no copied results); commands and observed output verbatim.
 
@@ -37,3 +37,7 @@
 - SEC-02 deferral note for CEO sign-off: the runtime `.env` loader is deferred to Phase 2 by documented sequencing choice — no code exists in this phase to load it.
 - SEC-01 context: DEAD? proofs are ✅ login-rejected probes where old values were retained (CRED-01, 04, 21) and structured `N/A (old value not retained; server-side invalidation)` entries elsewhere — trufflehog's zero-verified-findings sweep complements these per-item proofs for detector-supported credential types.
 - ATT-01 exception on record (ROTATION-EVIDENCE.md CEO decisions): values unique per CEO attestation but hand-created before the vault existed, not generator-produced; accepted by CEO 2026-07-06, optional re-generation backlogged.
+
+## CEO approval (Task 3)
+
+- 2026-07-06T16:21Z — CEO confirmed: (1) 2FA enrolled and working on Google, Microsoft Hotmail x2, Namecheap, Private Email x2, Cloudflare, hostloom; (2) backup codes stored in password manager; (3) all new values unique per service (generator exception on record); (4) gate report read and accepted. **Phase 1 hard gate CLOSED — Phase 2 unblocked.**
