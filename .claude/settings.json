@@ -4,6 +4,13 @@
       "Read(./.env)",
       "Read(./.env.*)",
       "Read(**/.env)"
+    ],
+    "allow": [
+      "Bash(node /home/ghost/.claude/gsd-core/bin/gsd-tools.cjs *)",
+      "Bash(graphify *)",
+      "Bash(scrot *)",
+      "Bash(wmctrl -a *)",
+      "Bash(mkdir -p *)"
     ]
   }
 }
