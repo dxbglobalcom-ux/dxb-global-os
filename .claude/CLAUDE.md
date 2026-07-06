@@ -179,6 +179,15 @@ Architecture not yet mapped. Follow existing patterns found in the codebase.
 No project skills found. Add skills to any of: `.claude/skills/`, `.agents/skills/`, `.cursor/skills/`, `.github/skills/`, or `.codex/skills/` with a `SKILL.md` index file.
 <!-- GSD:skills-end -->
 
+## Knowledge Graph & Session Efficiency
+
+The repo root is a persistent knowledge substrate. All agents and subagents follow these rules to cut token waste and keep navigation grounded in current project state:
+
+1. **Graph-first reads.** Before any broad repo reading, query `.planning/graphs/` and the `.planning/` docs (STATE.md, phase SUMMARYs) first — only fall back to scanning source files when those don't answer the question.
+2. **Phase-completion refresh.** The graph is refreshed at phase completion by running `/gsd-graphify build` after each phase's verify step.
+3. **Obsidian wiki-links.** The repo root is an Obsidian vault, so human-facing docs may use `[[wiki-links]]` to cross-reference other notes.
+4. **Stale-graph rebuild.** If graph metadata is older than the current HEAD by more than one phase, rebuild before trusting it.
+
 <!-- GSD:workflow-start source:GSD defaults -->
 
 ## GSD Workflow Enforcement
