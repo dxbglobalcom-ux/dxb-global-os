@@ -17,24 +17,24 @@ Status codes, error phrases, and UTC timestamps ONLY. **No secret values, old or
 | ID | Category | Service / account | Action | Rotated (UTC) | 2FA | Dead-value probe | Probe (UTC) | Observed | DEAD? |
 |----|----------|--------------------|--------|----------------|-----|-------------------|--------------|----------|-------|
 | CRED-01 | Email | Google account + app password | password rotated, 2FA enrolled, old app password deleted | 2026-07-06T14:11Z | ✅ | SMTP AUTH smtps://smtp.gmail.com:465 + incognito login | 2026-07-06T15:00Z | login rejected | ✅ |
-| CRED-02 | Email | Hotmail account 1 | | | | login.live.com incognito login | | | |
-| CRED-03 | Email | Hotmail account 2 | | | | login.live.com incognito login | | | |
+| CRED-02 | Email | Hotmail account 1 | password rotated, 2FA enrolled | 2026-07-06T14:15Z | ✅ | login.live.com incognito login | | | N/A (old value not retained; server-side change invalidates) |
+| CRED-03 | Email | Hotmail account 2 | password rotated, 2FA enrolled | 2026-07-06T14:15Z | ✅ | login.live.com incognito login | | | N/A (old value not retained; server-side change invalidates) |
 | CRED-04 | Registrar | Namecheap dashboard | password rotated, 2FA enrolled | 2026-07-06T14:29Z | ✅ | login probe (namecheap.com sign-in, old password) | 2026-07-06T15:00Z | login rejected | ✅ |
-| CRED-05 | Email | Private Email support@ mailbox | | | | IMAP mail.privateemail.com:993 or webmail login | | | |
-| CRED-06 | Email | Private Email sales@ mailbox | | | | IMAP mail.privateemail.com:993 or webmail login | | | |
+| CRED-05 | Email | Private Email support@ mailbox | password rotated, 2FA enrolled | 2026-07-06T14:15Z | ✅ | IMAP mail.privateemail.com:993 or webmail login | | | N/A (old value not retained; server-side change invalidates) |
+| CRED-06 | Email | Private Email sales@ mailbox | password rotated, 2FA enrolled | 2026-07-06T14:15Z | ✅ | IMAP mail.privateemail.com:993 or webmail login | | | N/A (old value not retained; server-side change invalidates) |
 | CRED-07 | API token | Cloudflare account/agent token | token rolled, account 2FA enrolled | 2026-07-06T14:31Z | ✅ | accounts/{account_id}/tokens/verify | | | N/A (old value not retained; roll invalidates server-side) |
 | CRED-08 | API token | Cloudflare legacy user token | token rolled | 2026-07-06T14:31Z | ✅ | user/tokens/verify | | | N/A (old value not retained; roll invalidates server-side) |
 | CRED-09 | API token | Cloudflare Global API Key (probe only if it appeared in the leaked doc; otherwise write N/A in DEAD? column) | key changed (precautionary) | 2026-07-06T14:31Z | ✅ | user (X-Auth-Key) | | | N/A (old value not retained; change invalidates server-side) |
-| CRED-10 | Hosting | hostloom client-area password | | | | login probe (client area, old password) | | | |
-| CRED-11 | Hosting | hostloom cPanel password | | | | :2083 login probe | | | |
-| CRED-12 | CMS | WordPress admin password (outleteuro) | | | | wp-login.php probe | | | |
-| CRED-13 | CMS | WordPress application passwords (probe only if old value still available) | | | | wp-json/wp/v2/users/me probe | | | |
+| CRED-10 | Hosting | hostloom client-area password | password rotated, 2FA enrolled | 2026-07-06 11:00-13:00Z | ✅ | login probe (client area, old password) | | | N/A (old value not retained; server-side change invalidates) |
+| CRED-11 | Hosting | hostloom cPanel password | password rotated | 2026-07-06 11:00-13:00Z | ✅ | :2083 login probe | | | N/A (old value not retained; server-side change invalidates) |
+| CRED-12 | CMS | WordPress admin password (outleteuro) | password rotated, 2FA enrolled | 2026-07-06 11:00-13:00Z | ✅ | wp-login.php probe | | | N/A (old value not retained; server-side change invalidates) |
+| CRED-13 | CMS | WordPress application passwords (probe only if old value still available) | old app password revoked, new one created and login-verified by CEO | 2026-07-06T12:35Z | N/A (API credential row) | wp-json/wp/v2/users/me probe | | | N/A (old value not retained; revoke invalidates server-side) |
 | CRED-14 | API key | OpenAI API key | old key revoked in dashboard, new key created | 2026-07-06T14:00Z | N/A (API key row) | GET /v1/models | | | N/A (old value not retained; revoke invalidates server-side) |
 | CRED-15 | API key | OpenRouter API key | old key deleted in dashboard, new key created | 2026-07-06T14:00Z | N/A (API key row) | GET /api/v1/key | | | N/A (old value not retained; delete invalidates server-side) |
-| CRED-16 | API key | NVIDIA Build API key | | | | chat/completions probe | | | |
-| CRED-17 | API key | Apify token | grace=__PENDING__ | | | GET /v2/users/me | | | |
-| CRED-18 | API key | Ollama cloud key | | | | api/generate probe | | | |
-| CRED-19 | API key | OpenCode Zen key | | | | zen chat/completions probe | | | |
+| CRED-16 | API key | NVIDIA Build API key | old key deleted, new key created | 2026-07-06T12:10Z | N/A (API key row) | chat/completions probe | | | N/A (old value not retained; delete invalidates server-side) |
+| CRED-17 | API key | Apify token | grace=declined | 2026-07-06T12:10Z | N/A (API key row) | GET /v2/users/me | | | N/A (old value not retained; rotation was immediate, no grace offered) |
+| CRED-18 | API key | Ollama cloud key | old key deleted, new key created | 2026-07-06T12:10Z | N/A (API key row) | api/generate probe | | | N/A (old value not retained; delete invalidates server-side) |
+| CRED-19 | API key | OpenCode Zen key | old key deleted, new key created | 2026-07-06 11:00-13:00Z | N/A (API key row) | zen chat/completions probe | | | N/A (old value not retained; delete invalidates server-side) |
 | CRED-20 | Local software | 9Router local config sweep | | | | local config sweep + providers re-authed | | | N/A (local software) |
 | CRED-21 | System | Linux sudo password (laptop) | password rotated via passwd on 2nd attempt (1st attempt falsified by probe 15:16Z; exposed value forced rotation) | 2026-07-06T15:23Z | N/A (local account) | sudo -K old-password rejection | 2026-07-06T15:24Z | login rejected | ✅ |
 
