@@ -1,6 +1,8 @@
 packages:
   - "packages/*"
   - "apps/*"
+allowBuilds:
+  esbuild: false
 catalog:
   typescript: 6.0.3
   "@types/node": ^22.0.0
