@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "timestamp": "2026-07-06T10:38:16.405Z",
+  "timestamp": "2026-07-06T16:23:35.884Z",
   "nodes": [
     {
       "label": "app.json",
@@ -81,6 +81,134 @@
       "id": "obsidian_themes_minimal_manifest_fundingurl",
       "community": 23,
       "norm_label": "fundingurl"
+    },
+    {
+      "label": "odt-sanitize.py",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/odt-sanitize.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize",
+      "community": 52,
+      "norm_label": "odt-sanitize.py"
+    },
+    {
+      "label": "plain()",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/odt-sanitize.py",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize_plain",
+      "community": 52,
+      "norm_label": "plain()"
+    },
+    {
+      "label": "block_to_md()",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/odt-sanitize.py",
+      "source_location": "L98",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize_block_to_md",
+      "community": 52,
+      "norm_label": "block_to_md()"
+    },
+    {
+      "label": "probe-critical.sh",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/probe-critical.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical",
+      "community": 51,
+      "norm_label": "probe-critical.sh"
+    },
+    {
+      "label": "probe-critical.sh script",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/probe-critical.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical_sh__entry",
+      "community": 51,
+      "norm_label": "probe-critical.sh script"
+    },
+    {
+      "label": "ts()",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/probe-critical.sh",
+      "source_location": "L9",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical_ts",
+      "community": 51,
+      "norm_label": "ts()"
+    },
+    {
+      "label": "say()",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/probe-critical.sh",
+      "source_location": "L10",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical_say",
+      "community": 51,
+      "norm_label": "say()"
+    },
+    {
+      "label": "vault-import.sh",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/vault-import.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_vault_import",
+      "community": 53,
+      "norm_label": "vault-import.sh"
+    },
+    {
+      "label": "vault-import.sh script",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/vault-import.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_vault_import_sh__entry",
+      "community": 53,
+      "norm_label": "vault-import.sh script"
+    },
+    {
+      "label": "PATH",
+      "file_type": "code",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/vault-import.sh",
+      "source_location": "L6",
+      "metadata": {
+        "language": "bash",
+        "kind": "code"
+      },
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_vault_import_path",
+      "community": 53,
+      "norm_label": "path"
     },
     {
       "label": "CLAUDE.md",
@@ -363,10 +491,20 @@
       "norm_label": "project skills"
     },
     {
-      "label": "Knowledge Graph & Session Efficiency",
+      "label": "Evidence-Before-Done (binding — orchestrator and ALL subagents)",
       "file_type": "document",
       "source_file": ".claude/CLAUDE.md",
       "source_location": "L182",
+      "_origin": "ast",
+      "id": "claude_claude_evidence_before_done_binding_orchestrator_and_all_subagents",
+      "community": 1,
+      "norm_label": "evidence-before-done (binding — orchestrator and all subagents)"
+    },
+    {
+      "label": "Knowledge Graph & Session Efficiency",
+      "file_type": "document",
+      "source_file": ".claude/CLAUDE.md",
+      "source_location": "L192",
       "_origin": "ast",
       "id": "claude_claude_knowledge_graph_session_efficiency",
       "community": 1,
@@ -376,7 +514,7 @@
       "label": "GSD Workflow Enforcement",
       "file_type": "document",
       "source_file": ".claude/CLAUDE.md",
-      "source_location": "L193",
+      "source_location": "L203",
       "_origin": "ast",
       "id": "claude_claude_gsd_workflow_enforcement",
       "community": 1,
@@ -386,7 +524,7 @@
       "label": "Developer Profile",
       "file_type": "document",
       "source_file": ".claude/CLAUDE.md",
-      "source_location": "L208",
+      "source_location": "L218",
       "_origin": "ast",
       "id": "claude_claude_developer_profile",
       "community": 1,
@@ -1023,10 +1161,20 @@
       "norm_label": "blockers/concerns"
     },
     {
-      "label": "Deferred Items",
+      "label": "Quick Tasks Completed",
       "file_type": "document",
       "source_file": ".planning/STATE.md",
       "source_location": "L91",
+      "_origin": "ast",
+      "id": "planning_state_quick_tasks_completed",
+      "community": 17,
+      "norm_label": "quick tasks completed"
+    },
+    {
+      "label": "Deferred Items",
+      "file_type": "document",
+      "source_file": ".planning/STATE.md",
+      "source_location": "L97",
       "_origin": "ast",
       "id": "planning_state_deferred_items",
       "community": 17,
@@ -1036,11 +1184,551 @@
       "label": "Session Continuity",
       "file_type": "document",
       "source_file": ".planning/STATE.md",
-      "source_location": "L99",
+      "source_location": "L105",
       "_origin": "ast",
       "id": "planning_state_session_continuity",
       "community": 17,
       "norm_label": "session continuity"
+    },
+    {
+      "label": "GRAPH_REPORT.md",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report",
+      "community": 45,
+      "norm_label": "graph_report.md"
+    },
+    {
+      "label": "Graph Report - DxB Global OS  (2026-07-06)",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "community": 45,
+      "norm_label": "graph report - dxb global os  (2026-07-06)"
+    },
+    {
+      "label": "Corpus Check",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_corpus_check",
+      "community": 45,
+      "norm_label": "corpus check"
+    },
+    {
+      "label": "Summary",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_summary",
+      "community": 45,
+      "norm_label": "summary"
+    },
+    {
+      "label": "Graph Freshness",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_graph_freshness",
+      "community": 45,
+      "norm_label": "graph freshness"
+    },
+    {
+      "label": "Community Hubs (Navigation)",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_hubs_navigation",
+      "community": 45,
+      "norm_label": "community hubs (navigation)"
+    },
+    {
+      "label": "God Nodes (most connected - your core abstractions)",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_god_nodes_most_connected_your_core_abstractions",
+      "community": 45,
+      "norm_label": "god nodes (most connected - your core abstractions)"
+    },
+    {
+      "label": "Surprising Connections (you probably didn't know these)",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_surprising_connections_you_probably_didn_t_know_these",
+      "community": 45,
+      "norm_label": "surprising connections (you probably didn't know these)"
+    },
+    {
+      "label": "Import Cycles",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_import_cycles",
+      "community": 45,
+      "norm_label": "import cycles"
+    },
+    {
+      "label": "Communities (43 total, 0 thin omitted)",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "community": 43,
+      "norm_label": "communities (43 total, 0 thin omitted)"
+    },
+    {
+      "label": "Community 0 - \"Architecture Research\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L81",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_0_architecture_research",
+      "community": 43,
+      "norm_label": "community 0 - \"architecture research\""
+    },
+    {
+      "label": "Community 1 - \"CLAUDE.md\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L85",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_1_claude_md",
+      "community": 43,
+      "norm_label": "community 1 - \"claude.md\""
+    },
+    {
+      "label": "Community 2 - \"Implications for Roadmap\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_2_implications_for_roadmap",
+      "community": 43,
+      "norm_label": "community 2 - \"implications for roadmap\""
+    },
+    {
+      "label": "Community 3 - \"v1 Requirements\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L93",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_3_v1_requirements",
+      "community": 43,
+      "norm_label": "community 3 - \"v1 requirements\""
+    },
+    {
+      "label": "Community 4 - \"Critical Pitfalls\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_4_critical_pitfalls",
+      "community": 43,
+      "norm_label": "community 4 - \"critical pitfalls\""
+    },
+    {
+      "label": "Community 5 - \"Credential Rotation Checklist (CEO-executed)\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_5_credential_rotation_checklist_ceo_executed",
+      "community": 43,
+      "norm_label": "community 5 - \"credential rotation checklist (ceo-executed)\""
+    },
+    {
+      "label": "Community 6 - \"Cross-AI Plan Review — Phase 1: Security Baseline & Credential Remediation\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L105",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_6_cross_ai_plan_review_phase_1_security_baseline_credential_remediation",
+      "community": 43,
+      "norm_label": "community 6 - \"cross-ai plan review — phase 1: security baseline & credential remediation\""
+    },
+    {
+      "label": "Community 7 - \"Phase Details\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L109",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_7_phase_details",
+      "community": 43,
+      "norm_label": "community 7 - \"phase details\""
+    },
+    {
+      "label": "Community 8 - \"Phase 1: Security Baseline & Credential Remediation - Research\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L113",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_8_phase_1_security_baseline_credential_remediation_research",
+      "community": 43,
+      "norm_label": "community 8 - \"phase 1: security baseline & credential remediation - research\""
+    },
+    {
+      "label": "Community 9 - \"Cross-AI Plan Review — Phase 1 — Convergence Cycle 2\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L117",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_9_cross_ai_plan_review_phase_1_convergence_cycle_2",
+      "community": 43,
+      "norm_label": "community 9 - \"cross-ai plan review — phase 1 — convergence cycle 2\""
+    },
+    {
+      "label": "Community 10 - \"Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L121",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_10_quick_task_260706_h26_second_brain_infrastructure_obsidian_knowledge_graph_summary",
+      "community": 43,
+      "norm_label": "community 10 - \"quick task 260706-h26: second-brain infrastructure (obsidian + knowledge graph) summary\""
+    },
+    {
+      "label": "Community 11 - \"Feature Research\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L125",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_11_feature_research",
+      "community": 43,
+      "norm_label": "community 11 - \"feature research\""
+    },
+    {
+      "label": "Community 12 - \"Per-Service Recipes (rotate → prove dead → record)\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L129",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_12_per_service_recipes_rotate_prove_dead_record",
+      "community": 43,
+      "norm_label": "community 12 - \"per-service recipes (rotate → prove dead → record)\""
+    },
+    {
+      "label": "Community 13 - \"Stack Research\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L133",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_13_stack_research",
+      "community": 43,
+      "norm_label": "community 13 - \"stack research\""
+    },
+    {
+      "label": "Community 14 - \"Phase 1 Plan 3: CEO Rotation Deliverables Summary\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L137",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_14_phase_1_plan_3_ceo_rotation_deliverables_summary",
+      "community": 43,
+      "norm_label": "community 14 - \"phase 1 plan 3: ceo rotation deliverables summary\""
+    },
+    {
+      "label": "Community 15 - \"Implementation Decisions\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L141",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_15_implementation_decisions",
+      "community": 43,
+      "norm_label": "community 15 - \"implementation decisions\""
+    },
+    {
+      "label": "Community 16 - \"DXB Global OS\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L145",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_16_dxb_global_os",
+      "community": 43,
+      "norm_label": "community 16 - \"dxb global os\""
+    },
+    {
+      "label": "Community 17 - \"Project State\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L149",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_17_project_state",
+      "community": 43,
+      "norm_label": "community 17 - \"project state\""
+    },
+    {
+      "label": "Community 18 - \"260706-h26-PLAN.md\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L153",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_18_260706_h26_plan_md",
+      "community": 43,
+      "norm_label": "community 18 - \"260706-h26-plan.md\""
+    },
+    {
+      "label": "Community 19 - \"Phase 01 Plan 01: Automated Secret Scan (SEC-03 build half) Summary\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L157",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_19_phase_01_plan_01_automated_secret_scan_sec_03_build_half_summary",
+      "community": 43,
+      "norm_label": "community 19 - \"phase 01 plan 01: automated secret scan (sec-03 build half) summary\""
+    },
+    {
+      "label": "Community 20 - \"Phase 01 Plan 02: Secrets Vault Pattern (SEC-02) Summary\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L161",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_20_phase_01_plan_02_secrets_vault_pattern_sec_02_summary",
+      "community": 43,
+      "norm_label": "community 20 - \"phase 01 plan 02: secrets vault pattern (sec-02) summary\""
+    },
+    {
+      "label": "Community 21 - \"Common Pitfalls\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L165",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_21_common_pitfalls",
+      "community": 43,
+      "norm_label": "community 21 - \"common pitfalls\""
+    },
+    {
+      "label": "Community 22 - \"ODT Sanitization Procedure (CEO-executed)\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L169",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_22_odt_sanitization_procedure_ceo_executed",
+      "community": 43,
+      "norm_label": "community 22 - \"odt sanitization procedure (ceo-executed)\""
+    },
+    {
+      "label": "Community 23 - \"manifest.json\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L173",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_23_manifest_json",
+      "community": 43,
+      "norm_label": "community 23 - \"manifest.json\""
+    },
+    {
+      "label": "Community 24 - \"Phase 1 — Validation Strategy\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L177",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_24_phase_1_validation_strategy",
+      "community": 43,
+      "norm_label": "community 24 - \"phase 1 — validation strategy\""
+    },
+    {
+      "label": "Community 25 - \"Secret Scanning: decision + wiring\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L181",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_25_secret_scanning_decision_wiring",
+      "community": 43,
+      "norm_label": "community 25 - \"secret scanning: decision + wiring\""
+    },
+    {
+      "label": "Community 26 - \"Hook Self-Test Evidence — SEC-03 (pre-commit secret scan fires and blocks)\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L185",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_26_hook_self_test_evidence_sec_03_pre_commit_secret_scan_fires_and_blocks",
+      "community": 43,
+      "norm_label": "community 26 - \"hook self-test evidence — sec-03 (pre-commit secret scan fires and blocks)\""
+    },
+    {
+      "label": "Community 27 - \"Validation Architecture\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L189",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_27_validation_architecture",
+      "community": 43,
+      "norm_label": "community 27 - \"validation architecture\""
+    },
+    {
+      "label": "Community 28 - \"Phase 1 Rotation Evidence\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L193",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_28_phase_1_rotation_evidence",
+      "community": 43,
+      "norm_label": "community 28 - \"phase 1 rotation evidence\""
+    },
+    {
+      "label": "Community 29 - \"01-01-PLAN.md\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L197",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_29_01_01_plan_md",
+      "community": 43,
+      "norm_label": "community 29 - \"01-01-plan.md\""
+    },
+    {
+      "label": "Community 30 - \"01-02-PLAN.md\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L201",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_30_01_02_plan_md",
+      "community": 43,
+      "norm_label": "community 30 - \"01-02-plan.md\""
+    },
+    {
+      "label": "Community 31 - \"01-03-PLAN.md\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L205",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_31_01_03_plan_md",
+      "community": 43,
+      "norm_label": "community 31 - \"01-03-plan.md\""
+    },
+    {
+      "label": "Community 32 - \"01-04-PLAN.md\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L209",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_32_01_04_plan_md",
+      "community": 43,
+      "norm_label": "community 32 - \"01-04-plan.md\""
+    },
+    {
+      "label": "Community 33 - \"01-05-PLAN.md\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L213",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_33_01_05_plan_md",
+      "community": 43,
+      "norm_label": "community 33 - \"01-05-plan.md\""
+    },
+    {
+      "label": "Community 34 - \"01-06-PLAN.md\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L217",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_34_01_06_plan_md",
+      "community": 43,
+      "norm_label": "community 34 - \"01-06-plan.md\""
+    },
+    {
+      "label": "Community 35 - \"Standard Stack\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L221",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_35_standard_stack",
+      "community": 43,
+      "norm_label": "community 35 - \"standard stack\""
+    },
+    {
+      "label": "Community 36 - \"User Constraints (from CONTEXT.md)\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L225",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_36_user_constraints_from_context_md",
+      "community": 43,
+      "norm_label": "community 36 - \"user constraints (from context.md)\""
+    },
+    {
+      "label": "Community 37 - \"Code Examples\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L229",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_37_code_examples",
+      "community": 43,
+      "norm_label": "community 37 - \"code examples\""
+    },
+    {
+      "label": "Community 38 - \"Vault Pattern (SEC-02)\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L233",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_38_vault_pattern_sec_02",
+      "community": 43,
+      "norm_label": "community 38 - \"vault pattern (sec-02)\""
+    },
+    {
+      "label": "Community 39 - \"Sources\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L237",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_39_sources",
+      "community": 43,
+      "norm_label": "community 39 - \"sources\""
+    },
+    {
+      "label": "Community 40 - \"A8 Deny-Rule Functional Spot-Check (SEC-02, plan 01-02 Task 2)\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L241",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_40_a8_deny_rule_functional_spot_check_sec_02_plan_01_02_task_2",
+      "community": 43,
+      "norm_label": "community 40 - \"a8 deny-rule functional spot-check (sec-02, plan 01-02 task 2)\""
+    },
+    {
+      "label": "Community 41 - \"Security Domain\"",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L245",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_community_41_security_domain",
+      "community": 43,
+      "norm_label": "community 41 - \"security domain\""
+    },
+    {
+      "label": "Knowledge Gaps",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L249",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_knowledge_gaps",
+      "community": 45,
+      "norm_label": "knowledge gaps"
+    },
+    {
+      "label": "Suggested Questions",
+      "file_type": "document",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L253",
+      "_origin": "ast",
+      "id": "planning_graphs_graph_report_suggested_questions",
+      "community": 45,
+      "norm_label": "suggested questions"
     },
     {
       "label": "01-01-PLAN.md",
@@ -1523,6 +2211,56 @@
       "norm_label": "stride threat register"
     },
     {
+      "label": "01-04-SUMMARY.md",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_04_summary",
+      "community": 48,
+      "norm_label": "01-04-summary.md"
+    },
+    {
+      "label": "Plan 01-04 Summary — Credential Rotation Evidence",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_plan_01_04_summary_credential_rotation_evidence",
+      "community": 48,
+      "norm_label": "plan 01-04 summary — credential rotation evidence"
+    },
+    {
+      "label": "What happened",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_what_happened",
+      "community": 48,
+      "norm_label": "what happened"
+    },
+    {
+      "label": "Highlights",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_highlights",
+      "community": 48,
+      "norm_label": "highlights"
+    },
+    {
+      "label": "Deviations",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_deviations",
+      "community": 48,
+      "norm_label": "deviations"
+    },
+    {
       "label": "01-05-PLAN.md",
       "file_type": "document",
       "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-PLAN.md",
@@ -1563,6 +2301,66 @@
       "norm_label": "stride threat register"
     },
     {
+      "label": "01-05-SUMMARY.md",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_05_summary",
+      "community": 46,
+      "norm_label": "01-05-summary.md"
+    },
+    {
+      "label": "Plan 01-05 Summary — Source Document Sanitization",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_plan_01_05_summary_source_document_sanitization",
+      "community": 46,
+      "norm_label": "plan 01-05 summary — source document sanitization"
+    },
+    {
+      "label": "What happened",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_what_happened",
+      "community": 46,
+      "norm_label": "what happened"
+    },
+    {
+      "label": "Recorded deviation",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_recorded_deviation",
+      "community": 46,
+      "norm_label": "recorded deviation"
+    },
+    {
+      "label": "Evidence",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_evidence",
+      "community": 46,
+      "norm_label": "evidence"
+    },
+    {
+      "label": "Follow-ups",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_follow_ups",
+      "community": 46,
+      "norm_label": "follow-ups"
+    },
+    {
       "label": "01-06-PLAN.md",
       "file_type": "document",
       "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-PLAN.md",
@@ -1601,6 +2399,46 @@
       "id": "planning_phases_01_security_baseline_credential_remediation_01_06_plan_stride_threat_register",
       "community": 34,
       "norm_label": "stride threat register"
+    },
+    {
+      "label": "01-06-SUMMARY.md",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-SUMMARY.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_06_summary",
+      "community": 50,
+      "norm_label": "01-06-summary.md"
+    },
+    {
+      "label": "Plan 01-06 Summary — Phase 1 Hard Gate",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-SUMMARY.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_06_summary_plan_01_06_summary_phase_1_hard_gate",
+      "community": 50,
+      "norm_label": "plan 01-06 summary — phase 1 hard gate"
+    },
+    {
+      "label": "What happened",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-SUMMARY.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_06_summary_what_happened",
+      "community": 50,
+      "norm_label": "what happened"
+    },
+    {
+      "label": "Phase 1 outcome",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-SUMMARY.md",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_01_06_summary_phase_1_outcome",
+      "community": 50,
+      "norm_label": "phase 1 outcome"
     },
     {
       "label": "01-CONTEXT.md",
@@ -3213,6 +4051,116 @@
       "norm_label": "handoff"
     },
     {
+      "label": "ODT-SANITIZATION-EVIDENCE.md",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence",
+      "community": 47,
+      "norm_label": "odt-sanitization-evidence.md"
+    },
+    {
+      "label": "ODT Sanitization Evidence (SEC-04, plan 01-05)",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_odt_sanitization_evidence_sec_04_plan_01_05",
+      "community": 47,
+      "norm_label": "odt sanitization evidence (sec-04, plan 01-05)"
+    },
+    {
+      "label": "Gate results (command → observed)",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_gate_results_command_observed",
+      "community": 47,
+      "norm_label": "gate results (command → observed)"
+    },
+    {
+      "label": "Sweep locations (Step 6)",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_sweep_locations_step_6",
+      "community": 47,
+      "norm_label": "sweep locations (step 6)"
+    },
+    {
+      "label": "Word-match summary (line numbers + categories only)",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_word_match_summary_line_numbers_categories_only",
+      "community": 47,
+      "norm_label": "word-match summary (line numbers + categories only)"
+    },
+    {
+      "label": "CEO approval (Task 3)",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_ceo_approval_task_3",
+      "community": 47,
+      "norm_label": "ceo approval (task 3)"
+    },
+    {
+      "label": "PHASE-1-GATE-REPORT.md",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report",
+      "community": 49,
+      "norm_label": "phase-1-gate-report.md"
+    },
+    {
+      "label": "Phase 1 Gate Report — Security Baseline & Credential Remediation",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_phase_1_gate_report_security_baseline_credential_remediation",
+      "community": 49,
+      "norm_label": "phase 1 gate report — security baseline & credential remediation"
+    },
+    {
+      "label": "Gate rows",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_gate_rows",
+      "community": 49,
+      "norm_label": "gate rows"
+    },
+    {
+      "label": "Operational notes",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_operational_notes",
+      "community": 49,
+      "norm_label": "operational notes"
+    },
+    {
+      "label": "CEO approval (Task 3)",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_ceo_approval_task_3",
+      "community": 49,
+      "norm_label": "ceo approval (task 3)"
+    },
+    {
       "label": "ROTATION-EVIDENCE.md",
       "file_type": "document",
       "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ROTATION-EVIDENCE.md",
@@ -3261,6 +4209,16 @@
       "id": "planning_phases_01_security_baseline_credential_remediation_evidence_rotation_evidence_attestation",
       "community": 28,
       "norm_label": "attestation"
+    },
+    {
+      "label": "CEO decisions recorded this rotation (2026-07-06)",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ROTATION-EVIDENCE.md",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_rotation_evidence_ceo_decisions_recorded_this_rotation_2026_07_06",
+      "community": 28,
+      "norm_label": "ceo decisions recorded this rotation (2026-07-06)"
     },
     {
       "label": "a8-deny-check.md",
@@ -3361,6 +4319,26 @@
       "id": "planning_phases_01_security_baseline_credential_remediation_evidence_hook_selftest_fail_closed_property",
       "community": 26,
       "norm_label": "fail-closed property"
+    },
+    {
+      "label": "trufflehog-verified-sweep.md",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/trufflehog-verified-sweep.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_trufflehog_verified_sweep",
+      "community": 54,
+      "norm_label": "trufflehog-verified-sweep.md"
+    },
+    {
+      "label": "Trufflehog Verified Sweep (plan 01-06, Task 1)",
+      "file_type": "document",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/trufflehog-verified-sweep.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "planning_phases_01_security_baseline_credential_remediation_evidence_trufflehog_verified_sweep_trufflehog_verified_sweep_plan_01_06_task_1",
+      "community": 54,
+      "norm_label": "trufflehog verified sweep (plan 01-06, task 1)"
     },
     {
       "label": "260706-h26-PLAN.md",
@@ -3621,6 +4599,16 @@
       "id": "planning_quick_260706_h26_set_up_second_brain_infrastructure_obsid_260706_h26_summary_self_check_passed",
       "community": 10,
       "norm_label": "self-check: passed"
+    },
+    {
+      "label": "Addendum (orchestrator, post-executor)",
+      "file_type": "document",
+      "source_file": ".planning/quick/260706-h26-set-up-second-brain-infrastructure-obsid/260706-h26-SUMMARY.md",
+      "source_location": "L161",
+      "_origin": "ast",
+      "id": "planning_quick_260706_h26_set_up_second_brain_infrastructure_obsid_260706_h26_summary_addendum_orchestrator_post_executor",
+      "community": 10,
+      "norm_label": "addendum (orchestrator, post-executor)"
     },
     {
       "label": "ARCHITECTURE.md",
@@ -4721,6 +5709,196 @@
       "id": "planning_research_summary_tertiary_low_confidence",
       "community": 2,
       "norm_label": "tertiary (low confidence)"
+    },
+    {
+      "label": "source-architecture-notes-sanitized.md",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized",
+      "community": 44,
+      "norm_label": "source-architecture-notes-sanitized.md"
+    },
+    {
+      "label": "DXB Global — Source Architecture Notes (sanitized)",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_dxb_global_source_architecture_notes_sanitized",
+      "community": 44,
+      "norm_label": "dxb global — source architecture notes (sanitized)"
+    },
+    {
+      "label": "Level 1 — Skill + Loop Engineering",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L125",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_level_1_skill_loop_engineering",
+      "community": 44,
+      "norm_label": "level 1 — skill + loop engineering"
+    },
+    {
+      "label": "Level 2 — Memory + State",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L134",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_level_2_memory_state",
+      "community": 44,
+      "norm_label": "level 2 — memory + state"
+    },
+    {
+      "label": "Level 3 — Interface / UI",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L142",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_level_3_interface_ui",
+      "community": 44,
+      "norm_label": "level 3 — interface / ui"
+    },
+    {
+      "label": "Level 4 — Distribution",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L150",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_level_4_distribution",
+      "community": 44,
+      "norm_label": "level 4 — distribution"
+    },
+    {
+      "label": "1. Kernel / Orchestrator MCP’leri",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L348",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_1_kernel_orchestrator_mcp_leri",
+      "community": 44,
+      "norm_label": "1. kernel / orchestrator mcp’leri"
+    },
+    {
+      "label": "İlk kurulum için minimum “çekirdek MCP paketi”",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L511",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_i̇lk_kurulum_için_minimum_çekirdek_mcp_paketi",
+      "community": 44,
+      "norm_label": "ilk kurulum icin minimum “cekirdek mcp paketi”"
+    },
+    {
+      "label": "1. Google Stitch Entegrasyonu (MCP & API)",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L659",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_1_google_stitch_entegrasyonu_mcp_api",
+      "community": 44,
+      "norm_label": "1. google stitch entegrasyonu (mcp & api)"
+    },
+    {
+      "label": "A) MCP (Model Context Protocol) ile Doğrudan Bağlantı",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L663",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_a_mcp_model_context_protocol_ile_doğrudan_bağlantı",
+      "community": 44,
+      "norm_label": "a) mcp (model context protocol) ile dogrudan baglantı"
+    },
+    {
+      "label": "B) API / Node.js SDK ile Ajan Fonksiyonu (Tool) Yazma",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L696",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_b_api_node_js_sdk_ile_ajan_fonksiyonu_tool_yazma",
+      "community": 44,
+      "norm_label": "b) api / node.js sdk ile ajan fonksiyonu (tool) yazma"
+    },
+    {
+      "label": "2. Gemini Omni Entegrasyonu (Video API)",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L730",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_2_gemini_omni_entegrasyonu_video_api",
+      "community": 44,
+      "norm_label": "2. gemini omni entegrasyonu (video api)"
+    },
+    {
+      "label": "Ajanınızın video üretmek veya düzenlemek için çağıracağı Tool",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L744",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_ajanınızın_video_üretmek_veya_düzenlemek_için_çağıracağı_tool",
+      "community": 44,
+      "norm_label": "ajanınızın video uretmek veya duzenlemek icin cagıracagı tool"
+    },
+    {
+      "label": "Google AI Studio API anahtarınızı kullanır",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L748",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_google_ai_studio_api_anahtarınızı_kullanır",
+      "community": 44,
+      "norm_label": "google ai studio api anahtarınızı kullanır"
+    },
+    {
+      "label": "Gemini Omni Flash modelini çağırır",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L752",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_gemini_omni_flash_modelini_çağırır",
+      "community": 44,
+      "norm_label": "gemini omni flash modelini cagırır"
+    },
+    {
+      "label": "Üretilen videonun binary datası base64 olarak döner",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L770",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_üretilen_videonun_binary_datası_base64_olarak_döner",
+      "community": 44,
+      "norm_label": "uretilen videonun binary datası base64 olarak doner"
+    },
+    {
+      "label": "OS sisteminizdeki dosya dizinine kaydeder",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L774",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_os_sisteminizdeki_dosya_dizinine_kaydeder",
+      "community": 44,
+      "norm_label": "os sisteminizdeki dosya dizinine kaydeder"
+    },
+    {
+      "label": "Omni'nin En Büyük Avantajı: \"Çok Turlu Düzenleme\" (Multi-turn Editing)",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L784",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_omni_nin_en_büyük_avantajı_çok_turlu_düzenleme_multi_turn_editing",
+      "community": 44,
+      "norm_label": "omni'nin en buyuk avantajı: \"cok turlu duzenleme\" (multi-turn editing)"
+    },
+    {
+      "label": "Ajanların Tarafında Tanımlama (System Prompt)",
+      "file_type": "document",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L788",
+      "_origin": "ast",
+      "id": "docs_source_architecture_notes_sanitized_ajanların_tarafında_tanımlama_system_prompt",
+      "community": 44,
+      "norm_label": "ajanların tarafında tanımlama (system prompt)"
     }
   ],
   "edges": [
@@ -4782,6 +5960,98 @@
       "weight": 1,
       "source": "obsidian_themes_minimal_manifest",
       "target": "obsidian_themes_minimal_manifest_version",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/odt-sanitize.py",
+      "source_location": "L98",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize_block_to_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/odt-sanitize.py",
+      "source_location": "L37",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize_plain",
+      "confidence_score": 1
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/odt-sanitize.py",
+      "source_location": "L101",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize_block_to_md",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitize_plain",
+      "confidence_score": 1
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/probe-critical.sh",
+      "source_location": "L10",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical_say",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/probe-critical.sh",
+      "source_location": "L1",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical_sh__entry",
+      "confidence_score": 1
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/probe-critical.sh",
+      "source_location": "L9",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical_ts",
+      "confidence_score": 1
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/probe-critical.sh",
+      "source_location": "L24",
+      "weight": 1,
+      "context": "call",
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical_sh__entry",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_probe_critical_say",
+      "confidence_score": 1
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/vault-import.sh",
+      "source_location": "L6",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_vault_import",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_vault_import_path",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/vault-import.sh",
+      "source_location": "L1",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_vault_import",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_vault_import_sh__entry",
       "confidence_score": 1
     },
     {
@@ -4998,7 +6268,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": ".claude/CLAUDE.md",
-      "source_location": "L208",
+      "source_location": "L218",
       "weight": 1,
       "source": "claude_claude_caddy_tls_reverse_proxy",
       "target": "claude_claude_developer_profile",
@@ -5008,7 +6278,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": ".claude/CLAUDE.md",
-      "source_location": "L193",
+      "source_location": "L182",
+      "weight": 1,
+      "source": "claude_claude_caddy_tls_reverse_proxy",
+      "target": "claude_claude_evidence_before_done_binding_orchestrator_and_all_subagents",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/CLAUDE.md",
+      "source_location": "L203",
       "weight": 1,
       "source": "claude_claude_caddy_tls_reverse_proxy",
       "target": "claude_claude_gsd_workflow_enforcement",
@@ -5028,7 +6308,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": ".claude/CLAUDE.md",
-      "source_location": "L182",
+      "source_location": "L192",
       "weight": 1,
       "source": "claude_claude_caddy_tls_reverse_proxy",
       "target": "claude_claude_knowledge_graph_session_efficiency",
@@ -5628,7 +6908,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": ".planning/STATE.md",
-      "source_location": "L91",
+      "source_location": "L97",
       "weight": 1,
       "source": "planning_state_project_state",
       "target": "planning_state_deferred_items",
@@ -5658,7 +6938,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": ".planning/STATE.md",
-      "source_location": "L99",
+      "source_location": "L105",
       "weight": 1,
       "source": "planning_state_project_state",
       "target": "planning_state_session_continuity",
@@ -5692,6 +6972,546 @@
       "weight": 1,
       "source": "planning_state_accumulated_context",
       "target": "planning_state_pending_todos",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/STATE.md",
+      "source_location": "L91",
+      "weight": 1,
+      "source": "planning_state_accumulated_context",
+      "target": "planning_state_quick_tasks_completed",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L1",
+      "weight": 1,
+      "source": "planning_graphs_graph_report",
+      "target": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L79",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L17",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_community_hubs_navigation",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L3",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_corpus_check",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L61",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_god_nodes_most_connected_your_core_abstractions",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L12",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_graph_freshness",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L76",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_import_cycles",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L249",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_knowledge_gaps",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L253",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_suggested_questions",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L7",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_summary",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L73",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_graph_report_dxb_global_os_2026_07_06",
+      "target": "planning_graphs_graph_report_surprising_connections_you_probably_didn_t_know_these",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L81",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_0_architecture_research",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L121",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_10_quick_task_260706_h26_second_brain_infrastructure_obsidian_knowledge_graph_summary",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L125",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_11_feature_research",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L129",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_12_per_service_recipes_rotate_prove_dead_record",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L133",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_13_stack_research",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L137",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_14_phase_1_plan_3_ceo_rotation_deliverables_summary",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L141",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_15_implementation_decisions",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L145",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_16_dxb_global_os",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L149",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_17_project_state",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L153",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_18_260706_h26_plan_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L157",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_19_phase_01_plan_01_automated_secret_scan_sec_03_build_half_summary",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L85",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_1_claude_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L161",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_20_phase_01_plan_02_secrets_vault_pattern_sec_02_summary",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L165",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_21_common_pitfalls",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L169",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_22_odt_sanitization_procedure_ceo_executed",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L173",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_23_manifest_json",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L177",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_24_phase_1_validation_strategy",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L181",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_25_secret_scanning_decision_wiring",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L185",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_26_hook_self_test_evidence_sec_03_pre_commit_secret_scan_fires_and_blocks",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L189",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_27_validation_architecture",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L193",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_28_phase_1_rotation_evidence",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L197",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_29_01_01_plan_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L89",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_2_implications_for_roadmap",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L201",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_30_01_02_plan_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L205",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_31_01_03_plan_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L209",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_32_01_04_plan_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L213",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_33_01_05_plan_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L217",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_34_01_06_plan_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L221",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_35_standard_stack",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L225",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_36_user_constraints_from_context_md",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L229",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_37_code_examples",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L233",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_38_vault_pattern_sec_02",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L237",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_39_sources",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L93",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_3_v1_requirements",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L241",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_40_a8_deny_rule_functional_spot_check_sec_02_plan_01_02_task_2",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L245",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_41_security_domain",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L97",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_4_critical_pitfalls",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L101",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_5_credential_rotation_checklist_ceo_executed",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L105",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_6_cross_ai_plan_review_phase_1_security_baseline_credential_remediation",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L109",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_7_phase_details",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L113",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_8_phase_1_security_baseline_credential_remediation_research",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/graphs/GRAPH_REPORT.md",
+      "source_location": "L117",
+      "weight": 1,
+      "source": "planning_graphs_graph_report_communities_43_total_0_thin_omitted",
+      "target": "planning_graphs_graph_report_community_9_cross_ai_plan_review_phase_1_convergence_cycle_2",
       "confidence_score": 1
     },
     {
@@ -6107,6 +7927,46 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L9",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_04_summary",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_plan_01_04_summary_credential_rotation_evidence",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L22",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_plan_01_04_summary_credential_rotation_evidence",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_deviations",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L15",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_plan_01_04_summary_credential_rotation_evidence",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_highlights",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-04-SUMMARY.md",
+      "source_location": "L11",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_plan_01_04_summary_credential_rotation_evidence",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_04_summary_what_happened",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-PLAN.md",
       "source_location": "L36",
       "weight": 1,
@@ -6137,6 +7997,56 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L9",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_05_summary",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_plan_01_05_summary_source_document_sanitization",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L23",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_plan_01_05_summary_source_document_sanitization",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_evidence",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L29",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_plan_01_05_summary_source_document_sanitization",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_follow_ups",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L15",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_plan_01_05_summary_source_document_sanitization",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_recorded_deviation",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-05-SUMMARY.md",
+      "source_location": "L11",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_plan_01_05_summary_source_document_sanitization",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_05_summary_what_happened",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-PLAN.md",
       "source_location": "L34",
       "weight": 1,
@@ -6162,6 +8072,36 @@
       "weight": 1,
       "source": "planning_phases_01_security_baseline_credential_remediation_01_06_plan",
       "target": "planning_phases_01_security_baseline_credential_remediation_01_06_plan_trust_boundaries",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-SUMMARY.md",
+      "source_location": "L9",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_06_summary",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_06_summary_plan_01_06_summary_phase_1_hard_gate",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-SUMMARY.md",
+      "source_location": "L19",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_06_summary_plan_01_06_summary_phase_1_hard_gate",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_06_summary_phase_1_outcome",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/01-06-SUMMARY.md",
+      "source_location": "L11",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_01_06_summary_plan_01_06_summary_phase_1_hard_gate",
+      "target": "planning_phases_01_security_baseline_credential_remediation_01_06_summary_what_happened",
       "confidence_score": 1
     },
     {
@@ -7717,6 +9657,96 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L1",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_odt_sanitization_evidence_sec_04_plan_01_05",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L56",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_odt_sanitization_evidence_sec_04_plan_01_05",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_ceo_approval_task_3",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L6",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_odt_sanitization_evidence_sec_04_plan_01_05",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_gate_results_command_observed",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L24",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_odt_sanitization_evidence_sec_04_plan_01_05",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_sweep_locations_step_6",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ODT-SANITIZATION-EVIDENCE.md",
+      "source_location": "L36",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_odt_sanitization_evidence_sec_04_plan_01_05",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_odt_sanitization_evidence_word_match_summary_line_numbers_categories_only",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L1",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_phase_1_gate_report_security_baseline_credential_remediation",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L41",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_phase_1_gate_report_security_baseline_credential_remediation",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_ceo_approval_task_3",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L7",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_phase_1_gate_report_security_baseline_credential_remediation",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_gate_rows",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/PHASE-1-GATE-REPORT.md",
+      "source_location": "L32",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_phase_1_gate_report_security_baseline_credential_remediation",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_phase_1_gate_report_operational_notes",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ROTATION-EVIDENCE.md",
       "source_location": "L1",
       "weight": 1,
@@ -7732,6 +9762,16 @@
       "weight": 1,
       "source": "planning_phases_01_security_baseline_credential_remediation_evidence_rotation_evidence_phase_1_rotation_evidence",
       "target": "planning_phases_01_security_baseline_credential_remediation_evidence_rotation_evidence_attestation",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/ROTATION-EVIDENCE.md",
+      "source_location": "L55",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_rotation_evidence_phase_1_rotation_evidence",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_rotation_evidence_ceo_decisions_recorded_this_rotation_2026_07_06",
       "confidence_score": 1
     },
     {
@@ -7832,6 +9872,16 @@
       "weight": 1,
       "source": "planning_phases_01_security_baseline_credential_remediation_evidence_hook_selftest_hook_self_test_evidence_sec_03_pre_commit_secret_scan_fires_and_blocks",
       "target": "planning_phases_01_security_baseline_credential_remediation_evidence_hook_selftest_self_test_protocol_and_results",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/phases/01-security-baseline-credential-remediation/evidence/trufflehog-verified-sweep.md",
+      "source_location": "L1",
+      "weight": 1,
+      "source": "planning_phases_01_security_baseline_credential_remediation_evidence_trufflehog_verified_sweep",
+      "target": "planning_phases_01_security_baseline_credential_remediation_evidence_trufflehog_verified_sweep_trufflehog_verified_sweep_plan_01_06_task_1",
       "confidence_score": 1
     },
     {
@@ -7962,6 +10012,16 @@
       "weight": 1,
       "source": "planning_quick_260706_h26_set_up_second_brain_infrastructure_obsid_260706_h26_summary_quick_task_260706_h26_second_brain_infrastructure_obsidian_knowledge_graph_summary",
       "target": "planning_quick_260706_h26_set_up_second_brain_infrastructure_obsid_260706_h26_summary_accomplishments",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".planning/quick/260706-h26-set-up-second-brain-infrastructure-obsid/260706-h26-SUMMARY.md",
+      "source_location": "L161",
+      "weight": 1,
+      "source": "planning_quick_260706_h26_set_up_second_brain_infrastructure_obsid_260706_h26_summary_quick_task_260706_h26_second_brain_infrastructure_obsidian_knowledge_graph_summary",
+      "target": "planning_quick_260706_h26_set_up_second_brain_infrastructure_obsid_260706_h26_summary_addendum_orchestrator_post_executor",
       "confidence_score": 1
     },
     {
@@ -9122,6 +11182,186 @@
       "weight": 1,
       "source": "planning_research_summary_sources",
       "target": "planning_research_summary_tertiary_low_confidence",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L744",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_ajanınızın_video_üretmek_veya_düzenlemek_için_çağıracağı_tool",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L1",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_dxb_global_source_architecture_notes_sanitized",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L752",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_gemini_omni_flash_modelini_çağırır",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L748",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_google_ai_studio_api_anahtarınızı_kullanır",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L511",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_i̇lk_kurulum_için_minimum_çekirdek_mcp_paketi",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L125",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_level_1_skill_loop_engineering",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L134",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_level_2_memory_state",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L142",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_level_3_interface_ui",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L150",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_level_4_distribution",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L774",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_os_sisteminizdeki_dosya_dizinine_kaydeder",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L770",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized",
+      "target": "docs_source_architecture_notes_sanitized_üretilen_videonun_binary_datası_base64_olarak_döner",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L348",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized_level_4_distribution",
+      "target": "docs_source_architecture_notes_sanitized_1_kernel_orchestrator_mcp_leri",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L659",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized_i̇lk_kurulum_için_minimum_çekirdek_mcp_paketi",
+      "target": "docs_source_architecture_notes_sanitized_1_google_stitch_entegrasyonu_mcp_api",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L730",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized_i̇lk_kurulum_için_minimum_çekirdek_mcp_paketi",
+      "target": "docs_source_architecture_notes_sanitized_2_gemini_omni_entegrasyonu_video_api",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L663",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized_1_google_stitch_entegrasyonu_mcp_api",
+      "target": "docs_source_architecture_notes_sanitized_a_mcp_model_context_protocol_ile_doğrudan_bağlantı",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L696",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized_1_google_stitch_entegrasyonu_mcp_api",
+      "target": "docs_source_architecture_notes_sanitized_b_api_node_js_sdk_ile_ajan_fonksiyonu_tool_yazma",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L788",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized_os_sisteminizdeki_dosya_dizinine_kaydeder",
+      "target": "docs_source_architecture_notes_sanitized_ajanların_tarafında_tanımlama_system_prompt",
+      "confidence_score": 1
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/source-architecture-notes-sanitized.md",
+      "source_location": "L784",
+      "weight": 1,
+      "source": "docs_source_architecture_notes_sanitized_os_sisteminizdeki_dosya_dizinine_kaydeder",
+      "target": "docs_source_architecture_notes_sanitized_omni_nin_en_büyük_avantajı_çok_turlu_düzenleme_multi_turn_editing",
       "confidence_score": 1
     }
   ]

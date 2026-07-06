@@ -1,16 +1,16 @@
 # Graph Report - DxB Global OS  (2026-07-06)
 
 ## Corpus Check
-- 41 files · ~72,932 words
+- 55 files · ~153,900 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 472 nodes · 440 edges · 43 communities
+- 587 nodes · 546 edges · 55 communities (51 shown, 4 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8d2b39a4`
+- Built from commit: `db6bb4b6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -57,18 +57,30 @@
 - [[_COMMUNITY_Sources|Sources]]
 - [[_COMMUNITY_A8 Deny-Rule Functional Spot-Check (SEC-02, plan 01-02 Task 2)|A8 Deny-Rule Functional Spot-Check (SEC-02, plan 01-02 Task 2)]]
 - [[_COMMUNITY_Security Domain|Security Domain]]
+- [[_COMMUNITY_Communities (43 total, 0 thin omitted)|Communities (43 total, 0 thin omitted)]]
+- [[_COMMUNITY_source-architecture-notes-sanitized|source-architecture-notes-sanitized.md]]
+- [[_COMMUNITY_Graph Report - DxB Global OS  (2026-07-06)|Graph Report - DxB Global OS  (2026-07-06)]]
+- [[_COMMUNITY_Plan 01-05 Summary — Source Document Sanitization|Plan 01-05 Summary — Source Document Sanitization]]
+- [[_COMMUNITY_ODT Sanitization Evidence (SEC-04, plan 01-05)|ODT Sanitization Evidence (SEC-04, plan 01-05)]]
+- [[_COMMUNITY_Plan 01-04 Summary — Credential Rotation Evidence|Plan 01-04 Summary — Credential Rotation Evidence]]
+- [[_COMMUNITY_Phase 1 Gate Report — Security Baseline & Credential Remediation|Phase 1 Gate Report — Security Baseline & Credential Remediation]]
+- [[_COMMUNITY_Plan 01-06 Summary — Phase 1 Hard Gate|Plan 01-06 Summary — Phase 1 Hard Gate]]
+- [[_COMMUNITY_probe-critical.sh|probe-critical.sh]]
+- [[_COMMUNITY_odt-sanitize.py|odt-sanitize.py]]
+- [[_COMMUNITY_vault-import.sh|vault-import.sh]]
+- [[_COMMUNITY_trufflehog-verified-sweep|trufflehog-verified-sweep.md]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Phase 1: Security Baseline & Credential Remediation - Research` - 26 edges
-2. `v1 Requirements` - 18 edges
-3. `Per-Service Recipes (rotate → prove dead → record)` - 15 edges
-4. `caddy             — TLS reverse proxy` - 13 edges
-5. `Credential Rotation Checklist (CEO-executed)` - 13 edges
-6. `Phase Details` - 12 edges
-7. `Cross-AI Plan Review — Phase 1: Security Baseline & Credential Remediation` - 12 edges
-8. `Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary` - 12 edges
-9. `Phase 1 Plan 3: CEO Rotation Deliverables Summary` - 11 edges
-10. `Architecture Research` - 11 edges
+1. `Communities (43 total, 0 thin omitted)` - 43 edges
+2. `Phase 1: Security Baseline & Credential Remediation - Research` - 26 edges
+3. `v1 Requirements` - 18 edges
+4. `Per-Service Recipes (rotate → prove dead → record)` - 15 edges
+5. `caddy             — TLS reverse proxy` - 14 edges
+6. `Credential Rotation Checklist (CEO-executed)` - 13 edges
+7. `Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary` - 13 edges
+8. `Phase Details` - 12 edges
+9. `Cross-AI Plan Review — Phase 1: Security Baseline & Credential Remediation` - 12 edges
+10. `Graph Report - DxB Global OS  (2026-07-06)` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - None detected - all connections are within the same source files.
@@ -76,7 +88,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (43 total, 0 thin omitted)
+## Communities (55 total, 4 thin omitted)
 
 ### Community 0 - "Architecture Research"
 Cohesion: 0.06
@@ -84,7 +96,7 @@ Nodes (31): Anti-Pattern 1: Peer-to-peer agent chatter, Anti-Pattern 2: Approval
 
 ### Community 1 - "CLAUDE.md"
 Cohesion: 0.06
-Nodes (30): Alternatives Considered, Architecture, Architecture Fit (how the pieces click), caddy             — TLS reverse proxy, Constraints, Conventions, Core Technologies, Developer Profile (+22 more)
+Nodes (31): Alternatives Considered, Architecture, Architecture Fit (how the pieces click), caddy             — TLS reverse proxy, Constraints, Conventions, Core Technologies, Developer Profile (+23 more)
 
 ### Community 2 - "Implications for Roadmap"
 Cohesion: 0.08
@@ -120,7 +132,7 @@ Nodes (16): Agreed Strengths (cycle 2), Codex Review (cycle 2), Codex Review (cy
 
 ### Community 10 - "Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary"
 Cohesion: 0.12
-Nodes (15): Accomplishments, Decisions Made, Dependency graph, Deviations from Plan, Documented Non-Blocking Failure (Task 2, per plan's own instructions), Files Created/Modified, Issues Encountered, Known Stubs (+7 more)
+Nodes (16): Accomplishments, Addendum (orchestrator, post-executor), Decisions Made, Dependency graph, Deviations from Plan, Documented Non-Blocking Failure (Task 2, per plan's own instructions), Files Created/Modified, Issues Encountered (+8 more)
 
 ### Community 11 - "Feature Research"
 Cohesion: 0.12
@@ -147,8 +159,8 @@ Cohesion: 0.15
 Nodes (12): Active, Business Context, Constraints, Context, Core Value, DXB Global OS, Evolution, Key Decisions (+4 more)
 
 ### Community 17 - "Project State"
-Cohesion: 0.18
-Nodes (10): Accumulated Context, Blockers/Concerns, Current Position, Decisions, Deferred Items, Pending Todos, Performance Metrics, Project Reference (+2 more)
+Cohesion: 0.17
+Nodes (11): Accumulated Context, Blockers/Concerns, Current Position, Decisions, Deferred Items, Pending Todos, Performance Metrics, Project Reference (+3 more)
 
 ### Community 18 - "260706-h26-PLAN.md"
 Cohesion: 0.20
@@ -191,8 +203,8 @@ Cohesion: 0.40
 Nodes (5): Phase Requirements → Test Map, Sampling Rate, Test Framework, Validation Architecture, Wave 0 Gaps
 
 ### Community 28 - "Phase 1 Rotation Evidence"
-Cohesion: 0.40
-Nodes (4): Attestation, Header rules — read before filling any row, Phase 1 Rotation Evidence, Rotation Evidence
+Cohesion: 0.33
+Nodes (5): Attestation, CEO decisions recorded this rotation (2026-07-06), Header rules — read before filling any row, Phase 1 Rotation Evidence, Rotation Evidence
 
 ### Community 29 - "01-01-PLAN.md"
 Cohesion: 0.50
@@ -246,24 +258,57 @@ Nodes (3): A8 Deny-Rule Functional Spot-Check (SEC-02, plan 01-02 Task 2), Outco
 Cohesion: 0.67
 Nodes (3): Applicable ASVS Categories, Known Threat Patterns for this phase, Security Domain
 
+### Community 43 - "Communities (43 total, 0 thin omitted)"
+Cohesion: 0.05
+Nodes (43): Communities (43 total, 0 thin omitted), Community 0 - "Architecture Research", Community 10 - "Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary", Community 11 - "Feature Research", Community 12 - "Per-Service Recipes (rotate → prove dead → record)", Community 13 - "Stack Research", Community 14 - "Phase 1 Plan 3: CEO Rotation Deliverables Summary", Community 15 - "Implementation Decisions" (+35 more)
+
+### Community 44 - "source-architecture-notes-sanitized.md"
+Cohesion: 0.11
+Nodes (18): 1. Google Stitch Entegrasyonu (MCP & API), 1. Kernel / Orchestrator MCP’leri, 2. Gemini Omni Entegrasyonu (Video API), A) MCP (Model Context Protocol) ile Doğrudan Bağlantı, Ajanların Tarafında Tanımlama (System Prompt), Ajanınızın video üretmek veya düzenlemek için çağıracağı Tool, B) API / Node.js SDK ile Ajan Fonksiyonu (Tool) Yazma, DXB Global — Source Architecture Notes (sanitized) (+10 more)
+
+### Community 45 - "Graph Report - DxB Global OS  (2026-07-06)"
+Cohesion: 0.18
+Nodes (10): Community Hubs (Navigation), Corpus Check, God Nodes (most connected - your core abstractions), Graph Freshness, Graph Report - DxB Global OS  (2026-07-06), Import Cycles, Knowledge Gaps, Suggested Questions (+2 more)
+
+### Community 46 - "Plan 01-05 Summary — Source Document Sanitization"
+Cohesion: 0.33
+Nodes (5): Evidence, Follow-ups, Plan 01-05 Summary — Source Document Sanitization, Recorded deviation, What happened
+
+### Community 47 - "ODT Sanitization Evidence (SEC-04, plan 01-05)"
+Cohesion: 0.33
+Nodes (5): CEO approval (Task 3), Gate results (command → observed), ODT Sanitization Evidence (SEC-04, plan 01-05), Sweep locations (Step 6), Word-match summary (line numbers + categories only)
+
+### Community 48 - "Plan 01-04 Summary — Credential Rotation Evidence"
+Cohesion: 0.40
+Nodes (4): Deviations, Highlights, Plan 01-04 Summary — Credential Rotation Evidence, What happened
+
+### Community 49 - "Phase 1 Gate Report — Security Baseline & Credential Remediation"
+Cohesion: 0.40
+Nodes (4): CEO approval (Task 3), Gate rows, Operational notes, Phase 1 Gate Report — Security Baseline & Credential Remediation
+
+### Community 50 - "Plan 01-06 Summary — Phase 1 Hard Gate"
+Cohesion: 0.50
+Nodes (3): Phase 1 outcome, Plan 01-06 Summary — Phase 1 Hard Gate, What happened
+
 ## Knowledge Gaps
-- **374 isolated node(s):** `name`, `version`, `minAppVersion`, `author`, `authorUrl` (+369 more)
+- **462 isolated node(s):** `name`, `version`, `minAppVersion`, `author`, `authorUrl` (+457 more)
   These have ≤1 connection - possible missing edges or undocumented components.
+- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Phase 1: Security Baseline & Credential Remediation - Research` connect `Phase 1: Security Baseline & Credential Remediation - Research` to `Standard Stack`, `User Constraints (from CONTEXT.md)`, `Code Examples`, `Vault Pattern (SEC-02)`, `Sources`, `Security Domain`, `Per-Service Recipes (rotate → prove dead → record)`, `Common Pitfalls`, `Secret Scanning: decision + wiring`, `Validation Architecture`?**
-  _High betweenness centrality (0.023) - this node is a cross-community bridge._
-- **Why does `Per-Service Recipes (rotate → prove dead → record)` connect `Per-Service Recipes (rotate → prove dead → record)` to `Phase 1: Security Baseline & Credential Remediation - Research`?**
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Why does `Communities (43 total, 0 thin omitted)` connect `Communities (43 total, 0 thin omitted)` to `Graph Report - DxB Global OS  (2026-07-06)`?**
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
-- **Why does `Common Pitfalls` connect `Common Pitfalls` to `Phase 1: Security Baseline & Credential Remediation - Research`?**
+- **Why does `Per-Service Recipes (rotate → prove dead → record)` connect `Per-Service Recipes (rotate → prove dead → record)` to `Phase 1: Security Baseline & Credential Remediation - Research`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `minAppVersion` to the rest of the system?**
-  _374 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _462 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Architecture Research` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
 - **Should `CLAUDE.md` be split into smaller, more focused modules?**
-  _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
 - **Should `Implications for Roadmap` be split into smaller, more focused modules?**
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
