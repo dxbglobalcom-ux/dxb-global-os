@@ -4,8 +4,8 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 03
 current_phase_name: state-layer-dxb-mcp-core
-status: ready-to-plan
-stopped_at: "Phase 2 COMPLETE (Fable closure verdict in 02-FABLE-REVIEW.md, all 4 gate criteria machine-verified); NEXT ACTION: /gsd-plan-phase 3"
+status: planned
+stopped_at: "Phase 3 PLANNED — 5 Fable-authored plans in 4 waves (03-01..03-05); NEXT ACTION: /gsd-execute-phase 3 (starts with 03-01 incl. CEO supply-chain checkpoint)"
 last_updated: "2026-07-06T23:20:00.000Z"
 last_activity: 2026-07-07
 last_activity_desc: Phase 02 closed — closure verdict + docs committed
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 03 (state-layer-dxb-mcp-core) — READY TO PLAN
-Plan: —
-Status: Phase 2 COMPLETE (closure verdict: 02-FABLE-REVIEW.md); awaiting /gsd-plan-phase 3
-Last activity: 2026-07-07 — Phase 02 closed (all 5 plans complete, gate criteria machine-verified)
+Phase: 03 (state-layer-dxb-mcp-core) — PLANNED
+Plan: 0 of 5
+Status: 5 plans ready (4 waves); execution not started
+Last activity: 2026-07-07 — Phase 3 planned inline by Fable (governance v4)
 
 Progress: [█░░░░░░░░░] 9%
 

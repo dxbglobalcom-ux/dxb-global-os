@@ -80,7 +80,7 @@ Plans:
   3. Study cards exist for the Phase 3 toolset before anything is installed — the "tools installed at the START of the phase that uses them" rule is demonstrated, not just documented
   4. Excluded items (kickbacks.ai, automaton, llm-council dependency, ToS-gray systems) are recorded as excluded with reasons; re-admitting any requires an explicit CEO sign-off entry
 
-**Plans**: 1/5 plans executed
+**Plans**: 5/5 plans executed — phase complete (Fable closure verdict: 02-FABLE-REVIEW.md)
 
 Plans:
 **Wave 1**
@@ -110,7 +110,18 @@ Plans:
   4. All 367 personas exist in the registry as dormant v1.0 entries with per-agent metadata (brain, MCP profile, skills, autonomy level); a persona loads only when a task requires it; a new department can be created through registry tools
   5. dxb-mcp runs as a single server exposing the 8 tool groups over the shared schema — queue, registry, audit, and cost groups fully functional now; memory-router, dashboard, CRM, and approval-gate faces present and extended in their own phases
 
-**Plans**: TBD
+**Plans**: 0/5 executed — PLANNED (Fable-authored, governance v4)
+
+Plans:
+**Wave 1**
+- [ ] 03-01: Toolset study→approve→install gate (kysely+pg cards, CEO supply-chain checkpoint, pinned installs, tracker INSTALL)
+**Wave 2**
+- [ ] 03-02: Supabase local stack + migrations 0001-0006 (LOCKED SQL) + 367-persona seed
+- [ ] 03-03: @dxb/shared contract layer — TaskEnvelope (LOCKED) + single Kysely client
+**Wave 3**
+- [ ] 03-04: dxb-mcp server — queue/registry/audit/cost FULL + 4 stub faces + redaction
+**Wave 4**
+- [ ] 03-05: Crash test (kill -9) + 10/10 lifecycle battery + tracker EMBED + VERIFICATION evidence
 
 ### Phase 4: Safety Rails — Gates, Cost, Audit
 
