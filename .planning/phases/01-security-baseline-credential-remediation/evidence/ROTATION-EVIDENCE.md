@@ -16,15 +16,15 @@ Status codes, error phrases, and UTC timestamps ONLY. **No secret values, old or
 
 | ID | Category | Service / account | Action | Rotated (UTC) | 2FA | Dead-value probe | Probe (UTC) | Observed | DEAD? |
 |----|----------|--------------------|--------|----------------|-----|-------------------|--------------|----------|-------|
-| CRED-01 | Email | Google account + app password | | | | SMTP AUTH smtps://smtp.gmail.com:465 + incognito login | | | |
+| CRED-01 | Email | Google account + app password | password rotated, 2FA enrolled | 2026-07-06T14:11Z | ✅ | SMTP AUTH smtps://smtp.gmail.com:465 + incognito login | | | |
 | CRED-02 | Email | Hotmail account 1 | | | | login.live.com incognito login | | | |
 | CRED-03 | Email | Hotmail account 2 | | | | login.live.com incognito login | | | |
-| CRED-04 | Registrar | Namecheap dashboard | | | | login probe (namecheap.com sign-in, old password) | | | |
+| CRED-04 | Registrar | Namecheap dashboard | password rotated, 2FA enrolled | 2026-07-06T14:29Z | ✅ | login probe (namecheap.com sign-in, old password) | | | |
 | CRED-05 | Email | Private Email support@ mailbox | | | | IMAP mail.privateemail.com:993 or webmail login | | | |
 | CRED-06 | Email | Private Email sales@ mailbox | | | | IMAP mail.privateemail.com:993 or webmail login | | | |
-| CRED-07 | API token | Cloudflare account/agent token | | | | accounts/{account_id}/tokens/verify | | | |
-| CRED-08 | API token | Cloudflare legacy user token | | | | user/tokens/verify | | | |
-| CRED-09 | API token | Cloudflare Global API Key (probe only if it appeared in the leaked doc; otherwise write N/A in DEAD? column) | | | | user (X-Auth-Key) | | | |
+| CRED-07 | API token | Cloudflare account/agent token | token rolled, account 2FA enrolled | 2026-07-06T14:31Z | ✅ | accounts/{account_id}/tokens/verify | | | |
+| CRED-08 | API token | Cloudflare legacy user token | token rolled | 2026-07-06T14:31Z | ✅ | user/tokens/verify | | | |
+| CRED-09 | API token | Cloudflare Global API Key (probe only if it appeared in the leaked doc; otherwise write N/A in DEAD? column) | key changed (precautionary) | 2026-07-06T14:31Z | ✅ | user (X-Auth-Key) | | | |
 | CRED-10 | Hosting | hostloom client-area password | | | | login probe (client area, old password) | | | |
 | CRED-11 | Hosting | hostloom cPanel password | | | | :2083 login probe | | | |
 | CRED-12 | CMS | WordPress admin password (outleteuro) | | | | wp-login.php probe | | | |
