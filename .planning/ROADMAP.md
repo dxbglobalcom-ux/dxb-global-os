@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 **CEO decision (2026-07-05, locked) — Phase 1 hard gate:** Phase 2 (and any build/monorepo/code work) MUST NOT start until: old credential/key/password/token values verifiably return 401/access-denied, 2FA is confirmed, the source ODT is sanitized, the vault pattern is in place, and the secret scan passes clean.
 
-- [ ] **Phase 1: Security Baseline & Credential Remediation** - Rotate every leaked credential (verified dead), vault pattern, secret scanning, sanitized source doc — blocks everything else
+- [x] **Phase 1: Security Baseline & Credential Remediation** - Rotate every leaked credential (verified dead), vault pattern, secret scanning, sanitized source doc — blocks everything else — **COMPLETE 2026-07-06 (hard gate closed, CEO approved 16:21Z)**
 - [ ] **Phase 2: Foundation & Integration Program** - pnpm monorepo skeleton mirroring the full architecture + study→install→adopt→embed tracking for every §8B item
 - [ ] **Phase 3: State Layer & dxb-mcp Core** - Full Supabase schema (tasks, agents, approvals, outbox, cost, audit, memory index, CRM) + task queue + registry behind one dxb-mcp server
 - [ ] **Phase 4: Safety Rails — Gates, Cost, Audit** - Code-level approval gates, outbox executor, LiteLLM budget enforcement, velocity breakers, append-only audit — before anything runs unattended
@@ -44,7 +44,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Automated secret scan (pre-commit + CI) runs on every commit and passes clean
   5. The source .odt's credentials section is stripped; a sanitized copy lives in project docs and the original stays out of git and cloud sync
 
-**Plans**: 3/6 plans executed
+**Plans**: 6/6 plans executed — phase complete, hard gate closed with recorded CEO approval (evidence/PHASE-1-GATE-REPORT.md)
 
 Plans:
 **Wave 1**
@@ -58,15 +58,15 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 01-04-PLAN.md — CEO performs all rotations + 2FA + probes; evidence machine-verified and committed (SEC-01, checkpoint)
+- [x] 01-04-PLAN.md — CEO performs all rotations + 2FA + probes; evidence machine-verified and committed (SEC-01, checkpoint)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 01-05-PLAN.md — CEO sanitizes ODT; sanitized markdown verified at two levels and committed; original swept (SEC-04, checkpoint)
+- [x] 01-05-PLAN.md — CEO sanitizes ODT; sanitized markdown verified at two levels and committed; original swept (SEC-04, checkpoint)
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 01-06-PLAN.md — Hard-gate closure: trufflehog verified sweep + live gate report + CEO sign-off (SEC-01..04, checkpoint)
+- [x] 01-06-PLAN.md — Hard-gate closure: trufflehog verified sweep + live gate report + CEO sign-off (SEC-01..04, checkpoint)
 
 ### Phase 2: Foundation & Integration Program
 
@@ -238,8 +238,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Security Baseline & Credential Remediation | 3/6 | In Progress|  |
-| 2. Foundation & Integration Program | 0/5 | Not started | - |
+| 1. Security Baseline & Credential Remediation | 6/6 | Complete | 2026-07-06 |
+| 2. Foundation & Integration Program | 0/5 | Planned (Fable-approved, ready to execute) | - |
 | 3. State Layer & dxb-mcp Core | 0/TBD | Not started | - |
 | 4. Safety Rails — Gates, Cost, Audit | 0/TBD | Not started | - |
 | 5. Kernel & Orchestrator Core Loop | 0/TBD | Not started | - |
