@@ -29,3 +29,6 @@ agency-agents/
 
 # graphify working output — canonical copy lives in .planning/graphs/
 graphify-out/
+
+# Obsidian visibility bridge — symlink to .planning (dot-folders hidden in Obsidian)
+planning
