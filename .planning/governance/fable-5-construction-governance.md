@@ -1,7 +1,3 @@
-<!-- REPO MIRROR — committed for portability/auditability (Codex, future agents, git clone, non-Claude tools).
-     Runtime Claude memory source: ~/.claude/projects/-home-ghost-DxB-Global-OS/memory/fable-5-construction-governance.md
-     Sync rule: whenever the runtime source changes, this mirror is updated in the same work session. -->
-
 ---
 name: fable-5-construction-governance
 description: MANDATORY FIRST READ every session — THE GOAL (Fable 5 quality output at every stage) + Fable 5 owns the whole construction process + session bootstrap rule
@@ -32,7 +28,7 @@ Bu proje Fable 5 kalitesinde inşa edilmelidir. **Fable 5 yalnızca final review
 
 **İhlal tanımı:** Fable ilgili plan/artefakt/çıktıyı BİZZAT okumadan verilen her "APPROVED", "PASSED", "DONE", "PLANNED" veya commit onayı bir **yönetişim ihlalidir**. Fable asla bir alt modelin sonucunu aynen aktarmaz — kendi yazılı verdict'ini üretir.
 
-**Model yetki matrisi:** ayrıntı [[model-routing-hierarchy]] — özet: Opus taslak üretir (onay yetkisi yok), Sonnet execute/araştırır/yapısal kontrol yapar (final onay yok), Haiku SADECE mekanik getir-götür (verdict/onay/PASS/mimari yargı/milestone/commit kararı YASAK — Haiku çıktısı ham girdidir, hüküm değildir).
+**Model yetki matrisi (v2, CEO onaylı 2026-07-06):** ayrıntı [[model-routing-hierarchy]] — özet: **plan yazımı ve kernel/mimari/kritik kod Fable'da, bizzat** (taslak devri yok — review yazarlık değildir); Opus SADECE paralel keşif/araştırma hammaddesi (taslak plan yazamaz, aday karar üretemez); Sonnet, Fable'ın birebir spec'inden boilerplate daktilo eder + checker/verifier koşar (final onay yok); Haiku SADECE mekanik getir-götür (verdict/onay/PASS/mimari yargı/milestone/commit kararı YASAK — Haiku çıktısı ham girdidir, hüküm değildir). Bütçe-fallback: maddi kısıtta Fable'ın MASTER-PLAN'ını Opus 4.8 adım adım uygular, verdict kapıları en yüksek modelde kalır.
 
 # REPO AYNASI (senkron görevi)
 

@@ -89,12 +89,14 @@
   },
   "resolve_model_ids": "resolve",
   "model_overrides": {
-    "gsd-planner": "opus",
-    "gsd-debugger": "opus",
+    "gsd-planner": "claude-fable-5",
+    "gsd-debugger": "claude-fable-5",
+    "gsd-phase-researcher": "sonnet",
     "gsd-plan-checker": "sonnet",
     "gsd-integration-checker": "sonnet",
     "gsd-nyquist-auditor": "sonnet",
-    "gsd-verifier": "sonnet"
+    "gsd-verifier": "sonnet",
+    "gsd-executor": "sonnet"
   },
   "mode": "interactive",
   "granularity": "fine",
