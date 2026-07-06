@@ -90,7 +90,11 @@
   "resolve_model_ids": "resolve",
   "model_overrides": {
     "gsd-planner": "opus",
-    "gsd-debugger": "opus"
+    "gsd-debugger": "opus",
+    "gsd-plan-checker": "sonnet",
+    "gsd-integration-checker": "sonnet",
+    "gsd-nyquist-auditor": "sonnet",
+    "gsd-verifier": "sonnet"
   },
   "mode": "interactive",
   "granularity": "fine",
