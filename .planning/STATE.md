@@ -78,6 +78,8 @@ Recent decisions affecting current work:
 - [Quick-260706-h26]: Repo root repurposed as Obsidian vault; graphify build deferred (config.graphify.enabled not set in .planning/config.json)
 - [Phase 02-01]: tsconfig.base.json created in Task 1 (workspace root config) rather than Task 2, matching Task 1's own acceptance criteria; content follows Task 2's shared strict compiler options spec exactly
 - [Phase 02-01]: apps/dashboard and apps/jarvis declare @dxb/shared: workspace:* as a dependency (same pattern as packages/*), since their src/index.ts imports from @dxb/shared per the plan's key_links requirement
+- [Governance v2 2026-07-06]: Fable-authorship matrix (CEO directive) — plan authorship + kernel/critical code = Fable personally; Opus research-raw-material only; Sonnet types Fable specs + checkers; budget-fallback = Fable MASTER-PLAN + Opus 4.8 executor. Mirror + config committed (fa6250b)
+- [Master Plan 2026-07-06]: Fable-authored MASTER-PLAN deployed — .planning/MASTER-PLAN.md (spine) + master-plan/PHASE-01..11.md; all phases: goal+gate, LOCKED decisions, file-level specs w/ verbatim SQL/TS, step tables w/ verification commands, risks, ⛔ FABLE-ONLY markers. MASTER-PLAN wins on conflict; /gsd-plan-phase derives phase plans from it (planner=Fable)
 
 ### Pending Todos
 
@@ -107,6 +109,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-06T19:38:11.163Z
-Stopped at: Completed quick-260706-h26 (second-brain infrastructure)
+Last session: 2026-07-06T21:05:00Z
+Stopped at: Governance v2 (Fable-authorship) deployed + MASTER-PLAN (11 phases) written and committed; NEXT ACTION: /gsd-execute-phase 2 (plan 02-04/02-02 wave)
 Resume file: None
