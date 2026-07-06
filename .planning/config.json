@@ -96,7 +96,7 @@
     "gsd-integration-checker": "sonnet",
     "gsd-nyquist-auditor": "sonnet",
     "gsd-verifier": "sonnet",
-    "gsd-executor": "sonnet"
+    "gsd-executor": "claude-fable-5"
   },
   "mode": "interactive",
   "granularity": "fine",

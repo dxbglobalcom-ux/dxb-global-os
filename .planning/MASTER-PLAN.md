@@ -34,7 +34,7 @@ Supabase Postgres şirketin veri yolu ve tek gerçek kaynağıdır; Kernel, Orch
 
 ## Model Örgüsü (inşaat, governance v2)
 
-Plan yazımı + kernel/mimari/kritik kod: **Fable bizzat**. Keşif hammaddesi: Sonnet/Opus paralel (yargısız ham veri). Boilerplate: Sonnet, Fable'ın birebir spec'inden. Her commit öncesi diff + verdict: Fable. Bütçe-fallback: bu MASTER-PLAN + Opus 4.8 executor.
+Plan yazımı + repo'ya giren her satır (kod, config, doküman — boilerplate dahil): **Fable bizzat**. Normal modda kod yazarlığı istisnasız Fable'dadır; gereksiz subagent açılmaz (varsayılan inline). Keşif hammaddesi + doğrulama koşuları: Sonnet (high effort) / Opus — yazarlık-dışı destek-only. Her commit öncesi diff + verdict: Fable. Bütçe-fallback: bu MASTER-PLAN + Opus 4.8 executor (faz dosyalarındaki "Opus uygulayabilir" bölümleri YALNIZ bu fallback senaryosunu tarif eder).
 
 Runtime (işletim, §10 brain map — inşaat örgüsünden ayrı): L1 Fable/Opus kernel-orchestrator kritik kararlar; L2 Sonnet department heads; L3 Codex/Sonnet/GLM specialists; L4 ucuz worker havuzu (OpenRouter); L5 council sadece kritik kapılarda.
 

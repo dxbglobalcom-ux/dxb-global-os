@@ -1,30 +1,32 @@
 ---
 name: model-routing-hierarchy
-description: "CEO-approved Fable-authorship matrix (2026-07-06 v2) — Fable writes plans AND critical code personally; Opus is research-raw-material only; Sonnet types Fable's exact specs + runs checkers; Haiku fetch-and-carry only; budget-fallback mode documented"
+description: "CEO-approved Fable-authorship matrix (2026-07-06 v3) — Fable writes plans AND ALL code/artifacts personally (no boilerplate exception); Sonnet support-only at high effort (research/checks/runs); no-unnecessary-subagent hard rule; Haiku fetch-and-carry only; budget-fallback mode documented"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
 ---
 
-CEO-approved runtime build-workflow authority matrix (v2, 2026-07-06 — eski "Opus taslak yazar, Fable review eder" örgüsünün yerine geçti; CEO gerekçesi: Opus/Sonnet Fable kalitesinde çıktı veremez, review yazarlık değildir, taslak+rewrite çift harcamadır). Scope: Claude Code/GSD session'larının DXB Global OS'u nasıl inşa ettiği. Şirket/ürün yönetişimi DEĞİL — proje dosyalarına (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, faz planları, proje CLAUDE.md) asla yazılmaz. Üst çerçeve: [[fable-5-construction-governance]] (THE GOAL + bootstrap kuralı — her session ilk okuma).
+CEO-approved runtime build-workflow authority matrix (v3, 2026-07-06 — v2'deki "boilerplate'i Sonnet daktilo eder" istisnası CEO tarafından kaldırıldı: "plan ve kodlama sende olmalı; bunun haricindeki her şeyde Sonnet'i kullanabilirsin, high seviyesinde". Tarihçe: v1 "Opus taslak yazar" → v2 "Fable plan+kritik kod" → v3 "Fable TÜM yazarlık"). Scope: Claude Code/GSD session'larının DXB Global OS'u nasıl inşa ettiği. Şirket/ürün yönetişimi DEĞİL — proje dosyalarına (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, faz planları, proje CLAUDE.md) asla yazılmaz. Üst çerçeve: [[fable-5-construction-governance]] (THE GOAL + bootstrap kuralı — her session ilk okuma).
 
-**İlke: düşünen her satır Fable; daktilo edilen her satır Fable'ın birebir spec'inden.**
+**İlke: repo'ya giren HER satır Fable'dan çıkar — kod, config, migration, tracker, study card, doküman. İstisna yok (boilerplate dahil).**
 
-**Yetki matrisi (CEO onaylı tablo):**
+**Yetki matrisi (CEO onaylı tablo, v3):**
 
 | İş | Kim | Neden |
 |---|---|---|
 | Plan yazımı | **Fable, bizzat** | Tavan kalite, çift harcama yok |
-| Keşif/araştırma hammaddesi | Sonnet/Opus paralel | Ham veri, yargı yok |
-| Kernel, mimari, kritik kod | **Fable, bizzat yazar** | Kalite tavanı kodda da Fable'da |
-| Boilerplate (config, scaffold, tekrar kalıbı) | Sonnet, Fable'ın birebir spec'inden | Daktilo işi, fark yok |
+| Kod + her repo artefaktı (boilerplate dahil) | **Fable, bizzat yazar** | Kalite tavanı her satırda Fable'da |
+| Keşif/araştırma hammaddesi | Sonnet (high effort) / Opus paralel | Ham veri, yargı yok |
+| Doğrulama koşuları, kontrol taramaları | Sonnet (high effort) | Yazarlık-dışı destek |
 | Her commit öncesi diff okuma + verdict | **Fable** | Zaten kural |
+
+**GEREKSİZ-SUBAGENT YASAĞI (CEO, sert kural):** Varsayılan her iş inline Fable — token şişmesi yasak. Subagent yalnız iki gerekçeyle açılır: (1) ana bağlamı şişirecek hacimli ham-veri toplama (kompakt dönüşle), (2) izole edilmesi şart uzun doğrulama koşusu. Tek komutluk işe subagent açmak ihlaldir. GSD akışında da geçerli: onaylı plan varsa executor subagent'ı yerine inline yürütme tercih edilir.
 
 **Rol tanımları:**
 
-- **Fable 5:** Baş mimar + orkestratör + inşaat sahibi + **plan yazarı + kritik kod yazarı**. Planlar subagent'a devredilmez — gsd-planner çalışacaksa modeli Fable'dır ya da plan inline yazılır. Kernel, mimari ve kritik kod bizzat Fable'dan çıkar. Kritik artefaktları BİZZAT okur, final verdict verir, milestone statüsünü onaylar, commit'leri onaylar. **Fable incelemesi olmadan hiçbir final statü (PLANNED/DONE/PASSED/VERIFIED/APPROVED) ilan edilemez.**
-- **Opus:** Rol daraltıldı (v2). SADECE paralel keşif/araştırma hammaddesi. Taslak plan YAZAMAZ, mimari "aday karar" ÜRETEMEZ; bulguları ham veridir, sentez ve karar Fable'da. (Eski "Opus taslak üretir" yetkisi kaldırıldı — taslak+rewrite çift harcama, taslak+rötuş kalite tavanını Opus'ta bırakır.) İstisna: bütçe-fallback modu (aşağıda).
-- **Sonnet:** İki rol. (1) Boilerplate execution — yalnızca Fable'ın yazdığı, belirsizliği sıfırlanmış spec'lerden; yorum gerektiren HER execution kararı Fable'a escalate edilir. (2) Checker/verifier/araştırma (gsd-verifier, gsd-plan-checker, gsd-phase-researcher vb.) — bulgu raporlar ama final proje onayı VEREMEZ.
+- **Fable 5:** Baş mimar + orkestratör + inşaat sahibi + **plan yazarı + TÜM kod/artefakt yazarı**. Planlar subagent'a devredilmez; repo'ya giren her satır (boilerplate dahil) bizzat Fable'dan çıkar — normal modda yazarlık devri YOKTUR. Kritik artefaktları BİZZAT okur, final verdict verir, milestone statüsünü onaylar, commit'leri onaylar. **Fable incelemesi olmadan hiçbir final statü (PLANNED/DONE/PASSED/VERIFIED/APPROVED) ilan edilemez.**
+- **Opus:** SADECE paralel keşif/araştırma hammaddesi. Taslak plan YAZAMAZ, mimari "aday karar" ÜRETEMEZ, kod YAZAMAZ; bulguları ham veridir, sentez ve karar Fable'da. İstisna: bütçe-fallback modu (aşağıda).
+- **Sonnet:** Yazarlık-dışı destek, HIGH effort'ta: keşif/araştırma hammaddesi, checker/verifier koşuları (gsd-verifier, gsd-plan-checker, gsd-phase-researcher vb.), doğrulama komutları, kontrol taramaları. KOD/ARTEFAKT YAZAMAZ; bulgu raporlar ama final proje onayı VEREMEZ.
 - **Haiku:** SADECE mekanik getir-götür: dosya getir, dosya varlığı kontrolü, grep sayımı, dosya adı listeleme, mekanik özet, ham metin çıkarma. **Kalite yargısı YOK. Verdict YOK. Onay YOK. "Passed" YOK. Mimari yargı YOK. Risk yargısı YOK. Milestone kararı YOK. Commit onayı YOK.** Haiku çıktısı verdict değil, HAM GİRDİdir.
 
 **Checker PASS ≠ bitti (yönetişim maddesi):** Alt model (Sonnet dahil) "PASSED" dese bile iş bitmiş sayılmaz. Fable, "planned/done/approved" ilan etmeden önce üretilen artefaktları BİZZAT okur ve kendi yazılı verdict'ini üretir. Alt model çıktısını aynen aktarmak = yönetişim ihlali ([[fable-5-construction-governance]]).
@@ -37,7 +39,7 @@ CEO-approved runtime build-workflow authority matrix (v2, 2026-07-06 — eski "O
 
 **How to apply:**
 - Subagent spawn'da `model=` HER ZAMAN açıkça geçilir. Tek istisna: gsd-planner/gsd-debugger'ın Fable session modelini miras alması ARTIK İSTENEN durumdur (plan yazarlığı Fable'da) — bu miras bilinçli ve kayıtlıdır, yangın değildir.
-- `.planning/config.json` backstop (v2): `model_profile: "adaptive"`, `resolve_model_ids: "resolve"`, `model_overrides`: **planner/debugger → Fable (session modeli)**; phase-researcher → sonnet (keşif hammaddesi); plan-checker/integration-checker/nyquist-auditor/verifier → sonnet; **executor → sonnet** (spec-daktilo rolü, açıkça sabitlenir). Haiku hiçbir kalite kapısında seçilemez.
-- Kernel/mimari/kritik kod Fable inline yazar — executor subagent'a ancak Fable'ın birebir kod bloklarını içeren spec gider.
+- `.planning/config.json` backstop (v3): `model_profile: "adaptive"`, `resolve_model_ids: "resolve"`, `model_overrides`: **planner/debugger/executor → claude-fable-5** (yazan her subagent Fable modeli — ama varsayılan inline, subagent yasağına bak); phase-researcher/plan-checker/integration-checker/nyquist-auditor/verifier → sonnet. Haiku hiçbir kalite kapısında seçilemez.
+- Yürütme varsayılanı INLINE: onaylı plan varsa executor subagent'ı açılmaz, Fable doğrudan uygular; subagent yalnız yukarıdaki iki gerekçeyle.
 - Haiku'ya verilebilecek işler: gsd-codebase-mapper tarzı salt mekanik tarama/özet, dosya listeleme, sayım. Verdict cümlesi kurduracak hiçbir prompt Haiku'ya gitmez.
 - Usage hygiene: 4+ paralel session'dan kaçın; 150k+ bağlam maratonu yerine faz başına taze session; terminal session'ı için düz Fable 5 yeterli (`[1m]` değil).
