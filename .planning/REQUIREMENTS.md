@@ -101,7 +101,7 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 
 ### Integration Program (INTEG)
 
-- [ ] **INTEG-01**: Every master-plan §8B item tracked through study → install → adopt → embed with a study card in `.planning/research/`; tools installed at the START of the phase that uses them
+- [x] **INTEG-01**: Every master-plan §8B item tracked through study → install → adopt → embed with a study card in `.planning/research/`; tools installed at the START of the phase that uses them
 - [ ] **INTEG-02**: Excluded items (kickbacks.ai, automaton, llm-council dependency, ToS-gray systems) remain excluded; exceptions require CEO sign-off
 
 ### Outleteuro Pilot (PILOT)
@@ -142,7 +142,7 @@ Every v1 requirement maps to exactly one phase (56/56 mapped, no orphans, no dup
 | SEC-02 | Phase 1 | Complete |
 | SEC-03 | Phase 1 | Complete |
 | SEC-04 | Phase 1 | Complete |
-| INTEG-01 | Phase 2 | Pending |
+| INTEG-01 | Phase 2 | Complete |
 | INTEG-02 | Phase 2 | Pending |
 | QUEUE-01 | Phase 3 | Pending |
 | QUEUE-02 | Phase 3 | Pending |

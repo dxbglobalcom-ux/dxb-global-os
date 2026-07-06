@@ -80,12 +80,12 @@ Plans:
   3. Study cards exist for the Phase 3 toolset before anything is installed — the "tools installed at the START of the phase that uses them" rule is demonstrated, not just documented
   4. Excluded items (kickbacks.ai, automaton, llm-council dependency, ToS-gray systems) are recorded as excluded with reasons; re-admitting any requires an explicit CEO sign-off entry
 
-**Plans**: 5 plans
+**Plans**: 1/5 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 02-01-PLAN.md — Monorepo scaffold: pnpm workspace root (catalog) + 9 buildable TS projects mirroring the architecture, no Phase-3+ deps (INTEG-01)
+- [x] 02-01-PLAN.md — Monorepo scaffold: pnpm workspace root (catalog) + 9 buildable TS projects mirroring the architecture, no Phase-3+ deps (INTEG-01)
 - [ ] 02-04-PLAN.md — Integration tracker: INTEGRATION-TRACKER.md (all §8B rows + excluded + re-admission log) + 9 full Phase-3-toolset study cards (INTEG-01, INTEG-02)
 
 **Wave 2** *(blocked on Wave 1)*
@@ -239,7 +239,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Security Baseline & Credential Remediation | 6/6 | Complete | 2026-07-06 |
-| 2. Foundation & Integration Program | 0/5 | Planned (Fable-approved, ready to execute) | - |
+| 2. Foundation & Integration Program | 1/5 | In Progress|  |
 | 3. State Layer & dxb-mcp Core | 0/TBD | Not started | - |
 | 4. Safety Rails — Gates, Cost, Audit | 0/TBD | Not started | - |
 | 5. Kernel & Orchestrator Core Loop | 0/TBD | Not started | - |
