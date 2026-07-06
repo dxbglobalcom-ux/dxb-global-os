@@ -44,7 +44,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Automated secret scan (pre-commit + CI) runs on every commit and passes clean
   5. The source .odt's credentials section is stripped; a sanitized copy lives in project docs and the original stays out of git and cloud sync
 
-**Plans**: 2/6 plans executed
+**Plans**: 3/6 plans executed
 
 Plans:
 **Wave 1**
@@ -54,7 +54,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 01-02-PLAN.md — Vault scaffold: .gitignore rules, .env.example name registry, agent deny rules (SEC-02)
-- [ ] 01-03-PLAN.md — CEO deliverables: bilingual rotation checklist, 21-row evidence template, ODT sanitization procedure (SEC-01/SEC-04 prep)
+- [x] 01-03-PLAN.md — CEO deliverables: bilingual rotation checklist, 21-row evidence template, ODT sanitization procedure (SEC-01/SEC-04 prep)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -223,7 +223,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Security Baseline & Credential Remediation | 2/6 | In Progress|  |
+| 1. Security Baseline & Credential Remediation | 3/6 | In Progress|  |
 | 2. Foundation & Integration Program | 0/TBD | Not started | - |
 | 3. State Layer & dxb-mcp Core | 0/TBD | Not started | - |
 | 4. Safety Rails — Gates, Cost, Audit | 0/TBD | Not started | - |
