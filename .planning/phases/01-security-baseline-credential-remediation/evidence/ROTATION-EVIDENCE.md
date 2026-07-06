@@ -16,27 +16,27 @@ Status codes, error phrases, and UTC timestamps ONLY. **No secret values, old or
 
 | ID | Category | Service / account | Action | Rotated (UTC) | 2FA | Dead-value probe | Probe (UTC) | Observed | DEAD? |
 |----|----------|--------------------|--------|----------------|-----|-------------------|--------------|----------|-------|
-| CRED-01 | Email | Google account + app password | password rotated, 2FA enrolled | 2026-07-06T14:11Z | ✅ | SMTP AUTH smtps://smtp.gmail.com:465 + incognito login | | | |
+| CRED-01 | Email | Google account + app password | password rotated, 2FA enrolled, old app password deleted | 2026-07-06T14:11Z | ✅ | SMTP AUTH smtps://smtp.gmail.com:465 + incognito login | 2026-07-06T15:00Z | login rejected | ✅ |
 | CRED-02 | Email | Hotmail account 1 | | | | login.live.com incognito login | | | |
 | CRED-03 | Email | Hotmail account 2 | | | | login.live.com incognito login | | | |
-| CRED-04 | Registrar | Namecheap dashboard | password rotated, 2FA enrolled | 2026-07-06T14:29Z | ✅ | login probe (namecheap.com sign-in, old password) | | | |
+| CRED-04 | Registrar | Namecheap dashboard | password rotated, 2FA enrolled | 2026-07-06T14:29Z | ✅ | login probe (namecheap.com sign-in, old password) | 2026-07-06T15:00Z | login rejected | ✅ |
 | CRED-05 | Email | Private Email support@ mailbox | | | | IMAP mail.privateemail.com:993 or webmail login | | | |
 | CRED-06 | Email | Private Email sales@ mailbox | | | | IMAP mail.privateemail.com:993 or webmail login | | | |
-| CRED-07 | API token | Cloudflare account/agent token | token rolled, account 2FA enrolled | 2026-07-06T14:31Z | ✅ | accounts/{account_id}/tokens/verify | | | |
-| CRED-08 | API token | Cloudflare legacy user token | token rolled | 2026-07-06T14:31Z | ✅ | user/tokens/verify | | | |
-| CRED-09 | API token | Cloudflare Global API Key (probe only if it appeared in the leaked doc; otherwise write N/A in DEAD? column) | key changed (precautionary) | 2026-07-06T14:31Z | ✅ | user (X-Auth-Key) | | | |
+| CRED-07 | API token | Cloudflare account/agent token | token rolled, account 2FA enrolled | 2026-07-06T14:31Z | ✅ | accounts/{account_id}/tokens/verify | | | N/A (old value not retained; roll invalidates server-side) |
+| CRED-08 | API token | Cloudflare legacy user token | token rolled | 2026-07-06T14:31Z | ✅ | user/tokens/verify | | | N/A (old value not retained; roll invalidates server-side) |
+| CRED-09 | API token | Cloudflare Global API Key (probe only if it appeared in the leaked doc; otherwise write N/A in DEAD? column) | key changed (precautionary) | 2026-07-06T14:31Z | ✅ | user (X-Auth-Key) | | | N/A (old value not retained; change invalidates server-side) |
 | CRED-10 | Hosting | hostloom client-area password | | | | login probe (client area, old password) | | | |
 | CRED-11 | Hosting | hostloom cPanel password | | | | :2083 login probe | | | |
 | CRED-12 | CMS | WordPress admin password (outleteuro) | | | | wp-login.php probe | | | |
 | CRED-13 | CMS | WordPress application passwords (probe only if old value still available) | | | | wp-json/wp/v2/users/me probe | | | |
-| CRED-14 | API key | OpenAI API key | | | | GET /v1/models | | | |
-| CRED-15 | API key | OpenRouter API key | | | | GET /api/v1/key | | | |
+| CRED-14 | API key | OpenAI API key | old key revoked in dashboard, new key created | 2026-07-06T14:00Z | N/A (API key row) | GET /v1/models | | | N/A (old value not retained; revoke invalidates server-side) |
+| CRED-15 | API key | OpenRouter API key | old key deleted in dashboard, new key created | 2026-07-06T14:00Z | N/A (API key row) | GET /api/v1/key | | | N/A (old value not retained; delete invalidates server-side) |
 | CRED-16 | API key | NVIDIA Build API key | | | | chat/completions probe | | | |
 | CRED-17 | API key | Apify token | grace=__PENDING__ | | | GET /v2/users/me | | | |
 | CRED-18 | API key | Ollama cloud key | | | | api/generate probe | | | |
 | CRED-19 | API key | OpenCode Zen key | | | | zen chat/completions probe | | | |
 | CRED-20 | Local software | 9Router local config sweep | | | | local config sweep + providers re-authed | | | N/A (local software) |
-| CRED-21 | System | Linux sudo password (laptop) | | | | sudo -K old-password rejection | | | |
+| CRED-21 | System | Linux sudo password (laptop) | password rotated via passwd on 2nd attempt (1st attempt falsified by probe 15:16Z; exposed value forced rotation) | 2026-07-06T15:23Z | N/A (local account) | sudo -K old-password rejection | 2026-07-06T15:24Z | login rejected | ✅ |
 
 ## Attestation
 
@@ -51,3 +51,10 @@ Machine-parseable — 5 pre-filled rows, empty Status/Notes cells. Plan 01-04's 
 | ATT-05 | Stray .env files found and resolved | | |
 
 ATT-01 Status is filled with exactly `YES` once every new value is confirmed unique and password-manager-generated. ATT-02..ATT-05 Status cells are filled with exactly `DONE` once complete, with Notes holding a file-path list only — never a value.
+
+## CEO decisions recorded this rotation (2026-07-06)
+
+- **Critical-subset scope:** CEO directed rotation of the critical subset first (CRED-01, 04, 07, 08, 09, 14, 15, 21); remaining rows (CRED-02, 03, 05, 06, 10–13, 16–19) deferred by CEO decision — gate 01-06 will surface them as open items.
+- **Plaintext source file retained:** `passwords and API keys.odt` (Desktop) contains the new values; CEO declined deletion and will obfuscate/secure it personally ("gölgeleyeceğim"). Risk accepted by CEO. File is outside the git repo.
+- **ATT-01 caveat:** CEO attests all new values are unique per service (root-cause hazard addressed). Values were hand-created before the Bitwarden vault existed, then imported — NOT generator-produced. ATT-01 left unfilled pending CEO decision at gate: re-generate from vault or accept as-is.
+- **CRED-21 rotation failure caught by machine probe:** first "rotated" claim falsified by live sudo probe (exposed value still authenticated, 15:16Z); re-rotation executed same day — see row for final probe evidence.
