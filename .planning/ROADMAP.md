@@ -80,7 +80,22 @@ Plans:
   3. Study cards exist for the Phase 3 toolset before anything is installed — the "tools installed at the START of the phase that uses them" rule is demonstrated, not just documented
   4. Excluded items (kickbacks.ai, automaton, llm-council dependency, ToS-gray systems) are recorded as excluded with reasons; re-admitting any requires an explicit CEO sign-off entry
 
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 02-01-PLAN.md — Monorepo scaffold: pnpm workspace root (catalog) + 9 buildable TS projects mirroring the architecture, no Phase-3+ deps (INTEG-01)
+- [ ] 02-04-PLAN.md — Integration tracker: INTEGRATION-TRACKER.md (all §8B rows + excluded + re-admission log) + 9 full Phase-3-toolset study cards (INTEG-01, INTEG-02)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 02-02-PLAN.md — Package-legitimacy human-verify checkpoint for vitest + @types/node before install (INTEG-01, checkpoint)
+- [ ] 02-05-PLAN.md — Retroactive + stub study cards (full coverage) + machine-checkable tracker-integrity validator (INTEG-01, INTEG-02)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 02-03-PLAN.md — Corepack pnpm activation + install + `tsc --build` + vitest smoke: skeleton installs and builds clean (INTEG-01)
 
 ### Phase 3: State Layer & dxb-mcp Core
 
@@ -224,7 +239,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Security Baseline & Credential Remediation | 3/6 | In Progress|  |
-| 2. Foundation & Integration Program | 0/TBD | Not started | - |
+| 2. Foundation & Integration Program | 0/5 | Not started | - |
 | 3. State Layer & dxb-mcp Core | 0/TBD | Not started | - |
 | 4. Safety Rails — Gates, Cost, Audit | 0/TBD | Not started | - |
 | 5. Kernel & Orchestrator Core Loop | 0/TBD | Not started | - |
