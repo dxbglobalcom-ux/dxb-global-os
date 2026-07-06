@@ -19,3 +19,10 @@ agency-agents/
 .env
 .env.*
 !.env.example
+
+# Obsidian — personal/volatile UI state (shareable configs stay tracked)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# research fetch cache — transient, never enters history
+.planning/research/.cache/
