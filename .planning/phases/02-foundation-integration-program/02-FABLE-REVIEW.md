@@ -7,7 +7,7 @@
 ## Process record (governance-compliant chain)
 
 1. Opus (gsd-planner) produced 5 plans (`3f9ebc2`).
-2. Haiku checker verdict **INVALIDATED** by CEO governance correction — Haiku may never render quality verdicts (see memory: fable-5-construction-governance).
+2. Haiku checker verdict **INVALIDATED** by CEO governance correction — Haiku may never render quality verdicts. Governance source of record: `~/.claude/projects/-home-ghost-DxB-Global-OS/memory/fable-5-construction-governance.md` (Claude session memory, OUTSIDE this repo by design — its own scoping rule bars runtime build-strategy from project files; it is auto-loaded into every session via the memory index, which is what makes the bootstrap rule binding). Repo-side persistent counterpart: the `model_overrides` block in `.planning/config.json` (commit `f1572d2`).
 3. Sonnet (gsd-plan-checker) re-check from scratch: found 2 BLOCKERs + 1 WARNING that Haiku had passed —
    - excluded-item rows absent from the main tracker table → INTEG-02 re-admission validator vacuous, negative-control sed hit the Status legend instead of a row;
    - 02-VALIDATION.md left as unfilled template;
