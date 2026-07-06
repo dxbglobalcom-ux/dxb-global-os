@@ -1,0 +1,15 @@
+{
+  "name": "dxb-global-os",
+  "private": true,
+  "packageManager": "pnpm@11.10.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --build",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "@types/node": "catalog:",
+    "vitest": "catalog:"
+  }
+}
