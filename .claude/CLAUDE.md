@@ -179,6 +179,16 @@ Architecture not yet mapped. Follow existing patterns found in the codebase.
 No project skills found. Add skills to any of: `.claude/skills/`, `.agents/skills/`, `.cursor/skills/`, `.github/skills/`, or `.codex/skills/` with a `SKILL.md` index file.
 <!-- GSD:skills-end -->
 
+## Evidence-Before-Done (binding — orchestrator and ALL subagents)
+
+A task may be reported as complete ONLY with executed verification evidence. No exceptions.
+
+1. **Every "done" claim must cite the verification that was actually run** — the command and its decisive output line. No verification executed = the claim is forbidden.
+2. **Claims outside terminal observability** (GUI rendering, external dashboards, third-party service state) can NEVER be reported as "done". They MUST be labeled `⚠ UNVERIFIED — requires human-eye confirmation` and listed separately from verified results.
+3. **Two-tier reporting is mandatory:** `✓ VERIFIED (evidence: <command → output>)` vs `⚠ UNVERIFIED (reason it cannot be machine-checked)`. Mixing tiers in one claim is a violation.
+4. **Prediction ≠ result.** "This should work / will appear" is a hypothesis; state it as one. Only tested outcomes use past tense ("works", "appears").
+5. Subagents inherit this rule verbatim; orchestrator spot-checks subagent completion claims against disk/git state before relaying them.
+
 ## Knowledge Graph & Session Efficiency
 
 The repo root is a persistent knowledge substrate. All agents and subagents follow these rules to cut token waste and keep navigation grounded in current project state:
