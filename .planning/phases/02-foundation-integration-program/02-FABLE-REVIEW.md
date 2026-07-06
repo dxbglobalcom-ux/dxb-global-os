@@ -33,3 +33,29 @@
 ## Lesson recorded
 
 Haiku passed plans containing a defect that would have shipped INTEG-02's core safety control as decoration. The Sonnet re-check plus Fable personal read caught and fixed it before execution. This file is the standing precedent for the rule: **no final status without Fable's own reading.**
+
+---
+
+# Fable 5 Phase Closure Verdict — Phase 2 COMPLETE
+
+- **Reviewer:** Fable 5 (main loop — personal read of all five SUMMARYs: 02-01, 02-02, 02-03, 02-04, 02-05)
+- **Date (UTC):** 2026-07-06T23:10Z
+- **Verdict:** **PHASE 2 COMPLETE — APPROVED** (⛔ FABLE-ONLY gate, master-plan PHASE-02 §6)
+
+## Gate criteria (all machine-verified this session)
+
+1. **Installs and builds clean** — `pnpm install --frozen-lockfile && pnpm -r exec tsc --build && pnpm vitest run` → exit 0, `Test Files 1 passed (1)`. 9/9 projects emit `dist/index.js`; no Phase-3+ package in pnpm-lock.yaml (negative grep clean).
+2. **Tracker integrity** — `node scripts/check-integration-tracker.mjs` → exit 0: `tracker OK: 55 data rows (51 non-excluded, 4 excluded), 51 study cards`.
+3. **Study-before-install** — 9 Phase-3-toolset cards on disk before any Phase-3 install; 51 total cards cover every non-excluded row (11 retroactive FULL + stubs).
+4. **Exclusions gated** — 4 EXCLUDED rows with reasons + Re-admission Log rule machine-enforced (negative control proven in 02-05).
+
+## Execution record
+
+02-01 (Opus-planned pre-v3, Fable-approved), 02-02 (CEO human gate), 02-04/02-05/02-03 executed **inline by Fable personally under governance v3**. One session interruption (VS Code crash) recovered without loss: orphaned 02-05-SUMMARY committed (`e7ae684`), 02-03 executed to completion (`be87f3f`).
+
+## Deviations accepted at closure
+
+- Corepack EACCES → `--install-directory ~/.local/bin` (pin discipline intact).
+- pnpm 11 build-script gate (post-plan reality): esbuild postinstall **denied** via `allowBuilds: esbuild: false` in pnpm-workspace.yaml — conservative supply-chain posture; binary via optional dep, verified working through the green vitest run.
+
+**Phase 3 (State Layer & dxb-mcp Core) is unblocked.** Its toolset enters with study cards already on disk (criterion 3); installs remain gated by the legitimacy rule per card.

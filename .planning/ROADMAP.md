@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **CEO decision (2026-07-05, locked) — Phase 1 hard gate:** Phase 2 (and any build/monorepo/code work) MUST NOT start until: old credential/key/password/token values verifiably return 401/access-denied, 2FA is confirmed, the source ODT is sanitized, the vault pattern is in place, and the secret scan passes clean.
 
 - [x] **Phase 1: Security Baseline & Credential Remediation** - Rotate every leaked credential (verified dead), vault pattern, secret scanning, sanitized source doc — blocks everything else — **COMPLETE 2026-07-06 (hard gate closed, CEO approved 16:21Z)**
-- [ ] **Phase 2: Foundation & Integration Program** - pnpm monorepo skeleton mirroring the full architecture + study→install→adopt→embed tracking for every §8B item
+- [x] **Phase 2: Foundation & Integration Program** - pnpm monorepo skeleton mirroring the full architecture + study→install→adopt→embed tracking for every §8B item — **COMPLETE 2026-07-06 (Fable closure verdict, 02-FABLE-REVIEW.md)**
 - [ ] **Phase 3: State Layer & dxb-mcp Core** - Full Supabase schema (tasks, agents, approvals, outbox, cost, audit, memory index, CRM) + task queue + registry behind one dxb-mcp server
 - [ ] **Phase 4: Safety Rails — Gates, Cost, Audit** - Code-level approval gates, outbox executor, LiteLLM budget enforcement, velocity breakers, append-only audit — before anything runs unattended
 - [ ] **Phase 5: Kernel & Orchestrator Core Loop** - Intent → classification → decomposition → tiered dispatch → escalation → council; exit gate: 10/10 vertical slice runs
