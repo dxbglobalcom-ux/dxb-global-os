@@ -93,5 +93,8 @@
     "gsd-debugger": "opus"
   },
   "mode": "interactive",
-  "granularity": "fine"
+  "granularity": "fine",
+  "graphify": {
+    "enabled": true
+  }
 }

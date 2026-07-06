@@ -26,3 +26,6 @@ agency-agents/
 
 # research fetch cache — transient, never enters history
 .planning/research/.cache/
+
+# graphify working output — canonical copy lives in .planning/graphs/
+graphify-out/

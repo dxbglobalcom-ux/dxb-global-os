@@ -5,8 +5,8 @@ milestone_name: milestone
 current_phase: 01
 current_phase_name: security-baseline-credential-remediation
 status: executing
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-07-06T09:09:59.270Z"
+stopped_at: Completed quick-260706-h26 (second-brain infrastructure)
+last_updated: "2026-07-06T10:35:45.257Z"
 last_activity: 2026-07-06
 last_activity_desc: Phase 01 execution started
 progress:
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 Phase: 01 (security-baseline-credential-remediation) — EXECUTING
 Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-07-06 — Phase 01 execution started
+Last activity: 2026-07-06 — Completed quick task 260706-h26: second-brain infrastructure (Obsidian vault, knowledge graph, agent efficiency rules)
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -74,6 +74,7 @@ Recent decisions affecting current work:
 - [Phase 01-02]: A8 deny spot-check PASSED - agent file-read of .env refused at tool layer; real .env goes to repo root in Wave 2, no out-of-workspace relocation needed
 - [Phase 01-03]: probe commands copied byte-identically (original whitespace preserved) from RESEARCH recipes, guaranteeing exact-line matches for the reverse verbatim gate
 - [Phase 01-03]: CRED-20 (9Router) DEAD? pre-filled N/A (local software) unconditionally; CRED-09 (Cloudflare Global API Key) left blank since its applicability depends on a CEO-only fact
+- [Quick-260706-h26]: Repo root repurposed as Obsidian vault; graphify build deferred (config.graphify.enabled not set in .planning/config.json)
 
 ### Pending Todos
 
@@ -87,6 +88,12 @@ None yet.
 - [Phase 7]: 8GB VPS RAM budget is tight (Supabase + Speaches + Hermes + open-notebook) — fallback plan documented in research STACK.md
 - [Phase 11]: Stripe/DocuSign restricted-key scoping + WooCommerce staging patterns need verification at planning time (touches real money)
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260706-h26 | Second-brain infrastructure: Obsidian vault at repo root, knowledge graph (472 nodes), gitignore hygiene, agent efficiency rules | 2026-07-06 | 8d2b39a | [260706-h26-set-up-second-brain-infrastructure-obsid](./quick/260706-h26-set-up-second-brain-infrastructure-obsid/) |
+
 ## Deferred Items
 
 Items acknowledged and carried forward from previous milestone close:
@@ -97,6 +104,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-06T09:09:59.196Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-07-06T10:35:45.234Z
+Stopped at: Completed quick-260706-h26 (second-brain infrastructure)
 Resume file: None
