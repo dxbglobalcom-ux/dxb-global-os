@@ -34,6 +34,10 @@ Bu proje Fable 5 kalitesinde inşa edilmelidir. **Fable 5 yalnızca final review
 
 **Model yetki matrisi:** ayrıntı [[model-routing-hierarchy]] — özet: Opus taslak üretir (onay yetkisi yok), Sonnet execute/araştırır/yapısal kontrol yapar (final onay yok), Haiku SADECE mekanik getir-götür (verdict/onay/PASS/mimari yargı/milestone/commit kararı YASAK — Haiku çıktısı ham girdidir, hüküm değildir).
 
+# REPO AYNASI (senkron görevi)
+
+Bu dosyanın ve [[model-routing-hierarchy]] + MEMORY.md'nin commit'li kopyaları repo'da yaşar: `.planning/governance/`. **Bu runtime kaynaklardan herhangi biri değiştiğinde, ayna AYNI çalışma oturumunda güncellenip commit edilir** — Codex, gelecek ajanlar, git clone ve Claude-dışı araçlar kuralları oradan doğrular.
+
 # SESSION BOOTSTRAP KURALI
 
 Her yeni session'da, herhangi bir planlama veya execution ÖNCESİNDE Fable şunları okur:
