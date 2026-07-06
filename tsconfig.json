@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/shared" },
+    { "path": "packages/dxb-mcp" },
+    { "path": "packages/gateway" },
+    { "path": "packages/kernel" },
+    { "path": "packages/orchestrator" },
+    { "path": "packages/memory-router" },
+    { "path": "packages/outbox-executor" },
+    { "path": "apps/dashboard" },
+    { "path": "apps/jarvis" }
+  ]
+}
