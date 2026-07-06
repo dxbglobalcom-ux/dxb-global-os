@@ -46,7 +46,8 @@
     "security_enforcement": true,
     "security_asvs_level": 1,
     "security_block_on": "high",
-    "plan_review_convergence": true
+    "plan_review_convergence": true,
+    "_auto_chain_active": false
   },
   "ship": {
     "pr_body_sections": [
@@ -86,7 +87,11 @@
     "source_grounding": true,
     "source_grounding_authority": "grep"
   },
-  "resolve_model_ids": "omit",
+  "resolve_model_ids": "resolve",
+  "model_overrides": {
+    "gsd-planner": "opus",
+    "gsd-debugger": "opus"
+  },
   "mode": "interactive",
   "granularity": "fine"
 }
