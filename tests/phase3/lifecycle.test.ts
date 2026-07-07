@@ -1,0 +1,108 @@
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
+import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
+
+// Runs against the local Supabase stack (03-02). Real MCP protocol via linked
+// in-memory transports — no subprocess.
+process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+
+const ENVELOPE = {
+  department: "engineering",
+  objective: "lifecycle test: exercise the full LOCKED status chain end to end",
+  output_contract: "status transitions recorded",
+  model_tier: "L3",
+} as const;
+
+let client: Client;
+
+async function call(name: string, args: Record<string, unknown>): Promise<any> {
+  const res = await client.callTool({ name, arguments: args });
+  if (res.isError) throw new Error((res.content as Array<{ text: string }>)[0]?.text ?? "tool error");
+  return JSON.parse((res.content as Array<{ text: string }>)[0].text);
+}
+
+async function wipe(): Promise<void> {
+  const db = getDb();
+  // FK-safe order; tests own these tables on the local stack.
+  await db.deleteFrom("task_events").execute();
+  await db.deleteFrom("outbox").execute();
+  await db.deleteFrom("approvals").execute();
+  await db.deleteFrom("cost_ledger").execute();
+  await db.deleteFrom("audit_log").execute();
+  await db.updateTable("tasks").set({ parent_task_id: null }).execute();
+  await db.deleteFrom("tasks").execute();
+}
+
+beforeAll(async () => {
+  const server = createDxbMcpServer();
+  client = new Client({ name: "lifecycle-test", version: "0.0.0" });
+  const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+  await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
+  await wipe();
+});
+
+afterAll(async () => {
+  await client.close();
+  await closeDb();
+});
+
+describe("dxb-mcp queue lifecycle (gate criterion 2)", () => {
+  it("drives the happy chain create→claim→running→review→awaiting_approval→done with ≥4 events", async () => {
+    const task = await call("queue_create_task", ENVELOPE);
+    expect(task.status).toBe("queued");
+
+    const claimed = await call("queue_claim", { worker_id: "worker-1", departments: ["engineering"] });
+    expect(claimed.id).toBe(task.id);
+    expect(claimed.status).toBe("claimed");
+
+    for (const to of ["running", "review", "awaiting_approval", "done"]) {
+      const row = await call("queue_transition", { task_id: task.id, to_status: to, actor: "worker-1" });
+      expect(row.status).toBe(to);
+    }
+
+    const events = await getDb()
+      .selectFrom("task_events")
+      .select(["event", "from_status", "to_status"])
+      .where("task_id", "=", task.id)
+      .orderBy("id")
+      .execute();
+    expect(events.length).toBeGreaterThanOrEqual(4);
+    expect(events[0]).toMatchObject({ event: "created", from_status: "inbox", to_status: "queued" });
+    expect(events.at(-1)).toMatchObject({ to_status: "done" });
+  });
+
+  it("returned path: review→returned stores feedback, returned→queued is re-claimable", async () => {
+    const task = await call("queue_create_task", { ...ENVELOPE, objective: "returned path: exercise feedback loop end to end" });
+    await call("queue_claim", { worker_id: "worker-2", departments: ["engineering"] });
+    await call("queue_transition", { task_id: task.id, to_status: "running", actor: "worker-2" });
+    await call("queue_transition", { task_id: task.id, to_status: "review", actor: "worker-2" });
+
+    const returned = await call("queue_return", { task_id: task.id, feedback: "output contract unmet: missing section 3", actor: "qa-head" });
+    expect(returned.status).toBe("returned");
+    expect(returned.feedback).toContain("section 3");
+
+    await call("queue_transition", { task_id: task.id, to_status: "queued", actor: "qa-head" });
+    const reclaimed = await call("queue_claim", { worker_id: "worker-3", departments: ["engineering"] });
+    expect(reclaimed.id).toBe(task.id);
+    expect(reclaimed.claimed_by).toBe("worker-3");
+  });
+
+  it("rejects an illegal transition with the allowed-next list", async () => {
+    const task = await call("queue_create_task", { ...ENVELOPE, objective: "illegal transition attempt must fail loudly here" });
+    await expect(call("queue_transition", { task_id: task.id, to_status: "done", actor: "x" })).rejects.toThrow(
+      /illegal transition queued→done.*claim-only/,
+    );
+  });
+
+  it("rejects transition to returned without feedback (QUEUE-03)", async () => {
+    const task = await call("queue_create_task", { ...ENVELOPE, department: "qa-isolated", objective: "feedbackless return attempt must fail loudly" });
+    await call("queue_claim", { worker_id: "w", departments: ["qa-isolated"] });
+    await call("queue_transition", { task_id: task.id, to_status: "running", actor: "w" });
+    await call("queue_transition", { task_id: task.id, to_status: "review", actor: "w" });
+    await expect(call("queue_transition", { task_id: task.id, to_status: "returned", actor: "w" })).rejects.toThrow(
+      /requires feedback/,
+    );
+  });
+});

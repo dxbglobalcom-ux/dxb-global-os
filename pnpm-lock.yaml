@@ -41,6 +41,9 @@ importers:
 
   .:
     devDependencies:
+      '@modelcontextprotocol/sdk':
+        specifier: 'catalog:'
+        version: 1.29.0(zod@4.4.3)
       '@types/node':
         specifier: 'catalog:'
         version: 22.20.0
@@ -82,10 +85,16 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: 'catalog:'
         version: 1.29.0(zod@4.4.3)
+      kysely:
+        specifier: 'catalog:'
+        version: 0.29.3
       zod:
         specifier: 'catalog:'
         version: 4.4.3
     devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
       typescript:
         specifier: 'catalog:'
         version: 6.0.3

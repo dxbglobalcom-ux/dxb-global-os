@@ -8,9 +8,11 @@
   "dependencies": {
     "@dxb/shared": "workspace:*",
     "@modelcontextprotocol/sdk": "catalog:",
+    "kysely": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@types/node": "catalog:",
     "typescript": "catalog:"
   }
 }
