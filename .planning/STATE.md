@@ -112,6 +112,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260706-h26 | Second-brain infrastructure: Obsidian vault at repo root, knowledge graph (472 nodes), gitignore hygiene, agent efficiency rules | 2026-07-06 | 8d2b39a | [260706-h26-set-up-second-brain-infrastructure-obsid](./quick/260706-h26-set-up-second-brain-infrastructure-obsid/) |
+| 260708-t01 | Token-diet: CLAUDE.md 23.7k→~7.3k chars (stack tables → pointer to research/STACK.md), compact-cadence rule added, 13 plugins disabled in user settings (design/UI 6, helpers 5, codex+ruflo) — 5 kept (caveman, headroom, claude-mem, context7, superpowers) | 2026-07-08 | (this commit) | — |
 
 ## Deferred Items
 
