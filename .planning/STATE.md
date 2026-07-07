@@ -4,16 +4,16 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 04
 current_phase_name: safety-rails-gates-cost-audit
-status: ready-to-execute
-stopped_at: "Phase 4 PLANNED (04-01..04-05 on disk, Fable-authored under governance v4; ROADMAP Phase 4 section updated); NEXT ACTION: execute 04-01-PLAN.md (Wave 1 — toolset gate, autonomous:false, CEO supply-chain checkpoint)"
-last_updated: "2026-07-07T20:35:00.000Z"
+status: in-progress
+stopped_at: "04-01 COMPLETE (CEO checkpoint approved; pg-boss 12.25.1 in outbox-executor; LiteLLM healthy on shared Postgres schema litellm; SUMMARY on disk); NEXT ACTION: execute 04-02-PLAN.md (Wave 2 — 0007 budget_state + approval group FULL + dxb CLI)"
+last_updated: "2026-07-07T21:10:00.000Z"
 last_activity: 2026-07-07
-last_activity_desc: Phase 04 planned — 5 wave plans written; next is 04-01 execution
+last_activity_desc: 04-01 executed inline by Fable — toolset gate closed, LiteLLM container healthy
 progress:
   total_phases: 11
   completed_phases: 3
   total_plans: 22
-  completed_plans: 17
+  completed_plans: 18
   percent: 27
 ---
 
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 04 (safety-rails-gates-cost-audit) — PLANNED (0/5 executed)
-Plan: 04-01 (Wave 1 — toolset gate: litellm FULL card + CEO supply-chain checkpoint + pg-boss install + LiteLLM container)
-Status: Phase 3 COMPLETE (closure verdict: 03-FABLE-REVIEW.md); Phase 4 plans 04-01..04-05 on disk; NEXT ACTION: execute 04-01-PLAN.md
-Last activity: 2026-07-07 — Phase 04 planned (5 wave plans, governance v4, Fable-authored)
+Phase: 04 (safety-rails-gates-cost-audit) — IN PROGRESS (1/5 executed)
+Plan: 04-02 next (Wave 2 — 0007 budget_state migration + approval group FULL + tools/dxb-cli approve/reject)
+Status: 04-01 COMPLETE (summary: 04-01-SUMMARY.md; approval record: 04-01-legitimacy-approval.md); NEXT ACTION: execute 04-02-PLAN.md
+Last activity: 2026-07-07 — 04-01 executed (toolset gate: pg-boss install + LiteLLM container healthy)
 
 Progress: [███░░░░░░░] 27%
 
@@ -68,6 +68,7 @@ Progress: [███░░░░░░░] 27%
 | Phase 03 P03 | 8min | 2 tasks | 6 files |
 | Phase 03 P04 | 25min | 3 tasks | 15 files |
 | Phase 03 P05 | 15min | 3 tasks | 6 files |
+| Phase 04 P01 | 35min | 4 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -120,6 +121,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-07T20:35:00Z
-Stopped at: Phase 4 PLANNED — 04-01..04-05 written (Fable, governance v4); NEXT ACTION: execute 04-01-PLAN.md (CEO supply-chain checkpoint inside)
+Last session: 2026-07-07T21:10:00Z
+Stopped at: 04-01 COMPLETE — commits c38bada→9b63047; NEXT ACTION: execute 04-02-PLAN.md (autonomous, Wave 2)
 Resume file: None
