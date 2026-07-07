@@ -19,7 +19,7 @@
 | Next.js 16.2.x App Router + `@supabase/ssr` auth (deprecated auth-helpers YASAK) | CLAUDE.md uyum tablosu |
 | Realtime = `realtime.broadcast_changes` trigger'ları; `postgres_changes` YASAK (düşük hacimli tek istisna bile açılmaz) | Pattern 6 |
 | Kanal adlandırma: `dxb:{tablo}` — `dxb:task_events`, `dxb:approvals`, `dxb:cost_ledger` | tek konvansiyon |
-| Varsayılan görünüm exception-first: "beni bekleyen + değişen" — 367 ajan duvarı YASAK | UX pitfall |
+| Varsayılan görünüm exception-first: "beni bekleyen + değişen" — tüm-ajanlar duvarı YASAK | UX pitfall |
 | Her panelde tazelik damgası ("14:32 itibarıyla") | Pitfall 10 |
 | Onay inbox'ı risk_class gruplu (approvals.risk_class); high görsel-yüksek, low toplu-onaylanabilir; batch approve tek transaction | GATE-03 |
 | Auth: Supabase Auth, CEO tek kullanıcı; 2FA/passkey zorunlu; RLS: authenticated CEO rolü read, yazım YALNIZ intents+approval kararları | güvenlik tablosu |

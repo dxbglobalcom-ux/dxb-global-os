@@ -59,7 +59,7 @@ CREATE TABLE sampling_audits (
 |---|---|---|
 | 1 | 0013 + golden battery altyapısı (sınıf başına 5 görev, beklenen çıktılarla) | `golden.ts --class code.bulk` → passed/total kaydı |
 | 2 | Örnekleme denetim cron'u | sahte 20 ucuz çıktı → ≥1 audit satırı; disagreement>%15 senaryosunda routing_rules satırı otomatik güncellendi + audit |
-| 3 | Persona v2 şablonu + HR fabrika iş akışı | şablon lint'i (zorunlu alanlar); HR envelope'u bir persona'yı v2'ye çevirdi, PR + registry kanıtı |
+| 3 | Persona v2 şablonu + HR fabrika iş akışı (HR = hammadde/taslak; nihai metin ⛔ Fable) | şablon lint'i (zorunlu alanlar); bir persona v2'ye çevrildi (Fable-yazımı, `personas/<dept>/`), PR + registry `persona_version='v2.0-fable'` kanıtı |
 | 4 | W1: Engineering+Research aktivasyonu | dalga başı study→install kayıtları; golden gate geçti; gateway re-audit temiz (research profilde payment YOK); registry'de active |
 | 5 | Bir TAM departman v2.0 (Research önerilir — en küçük riskli) | departmanın tüm persona'ları v2 şablonunda; context_budget toplamı eski v1 ortalamasının altında |
 | 6 | Humanizer pipeline'a | content.outbound rotası testi: draft→humanizer→sonnet polish→draft(approval) zincirinde humanizer adımı event'te görünür |
@@ -72,9 +72,9 @@ CREATE TABLE sampling_audits (
 
 - **Golden task'lar oyunlaşırsa (memorization):** battery çeyrek başı %20 yenilenir; beklenen çıktılar repo'da hash'li.
 - **Örnekleme maliyeti:** %5–10 oran budget_state'e bağlı; breaker triplerse örnekleme kritik sınıflara daralır (denetim asla sıfırlanmaz).
-- **v2 rewrite hacmi (367):** dalga-gerektikçe: yalnız aktive edilen departman rewrite edilir; dormant v1 kalır (maliyet sıfır).
+- **v2 rewrite hacmi (159 — "367" düzeltilmiş efsane, ölçüm 2026-07-07):** dalga-gerektikçe: yalnız aktive edilen departman rewrite edilir; dormant v1.0-legacy kalır (maliyet sıfır). **Yazarlık Fable'da** (⛔): HR fabrikası hammadde/taslak hazırlar, nihai v2 metni Fable yazar — v2'siz departman aktive edilemez (PHASE-03 "Persona v2 Programı").
 
 ## 6. Bütçe-Fallback İşaretleri
 
-- ⛔ FABLE-ONLY: dalga açma verdict'i (her dalga!); autonomy politika değişikliği; golden battery içerik onayı; faz kapanışı.
+- ⛔ FABLE-ONLY: dalga açma verdict'i (her dalga!); **persona v2 nihai metni (her persona)**; autonomy politika değişikliği; golden battery içerik onayı; faz kapanışı.
 - Opus uygulayabilir: adım 1–3, 5–7 mekanik kısımları; dalga kapıları Fable'sız AÇILAMAZ — fallback modunda dalga aktivasyonu DURUR (birikir).

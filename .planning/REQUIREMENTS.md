@@ -27,7 +27,7 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 ### Agent Registry (REG)
 
 - [ ] **REG-01**: Registry stores department → head → specialist → worker hierarchy with per-agent metadata (brain, MCP profile, skills, autonomy level)
-- [ ] **REG-02**: 367 existing personas imported as dormant v1.0 entries; lazy activation — a persona loads only when a task requires it
+- [ ] **REG-02**: All classified legacy personas (measured 159 on 2026-07-07; "367" was a corrected myth) imported as dormant v1.0-legacy entries; every persona recreated by Fable at v2 quality before its department activates (staged by activation waves — see master-plan PHASE-03 "Persona v2 Programı"); lazy activation — a persona loads only when a task requires it
 - [ ] **REG-03**: New departments creatable via registry (Legal DE/TR, HR factory, Research at minimum)
 
 ### Task Queue (QUEUE)
@@ -127,7 +127,7 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 - Anthropic-limit bypass / free-tier stacking / multi-account rotation — ToS; modes stay tagged and honest
 - External CRM adoption — breaks single-cockpit requirement
 - Free-form agent-to-agent chat — cost/audit anti-feature (research-confirmed)
-- All-367-personas-live — token bloat; lazy activation instead (REG-02)
+- All-personas-live-at-once — token bloat; lazy activation instead (REG-02)
 - Real-time-everything dashboard — signal over firehose (DASH-03)
 - Per-action approval popups — batch inbox instead (GATE-03)
 - Autonomous outward actions without gates — Project Vend lesson; never

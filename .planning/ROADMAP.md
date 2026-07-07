@@ -107,7 +107,7 @@ Plans:
   1. The full operational schema exists as Supabase migrations — tasks, task_events, agents, approvals, outbox, cost_ledger, audit_log, memory_index, CRM tables — and applies cleanly to a fresh database
   2. A task moves through the complete lifecycle (inbox → assigned → in-progress → review → AWAITING_APPROVAL → done/failed) with `FOR UPDATE SKIP LOCKED` claims, and can be rejected/returned to sender with feedback — entirely through dxb-mcp queue tools
   3. Killing any client mid-task loses no state: the task remains visible and reclaimable after restart (durability demonstrated by a crash test)
-  4. All 367 personas exist in the registry as dormant v1.0 entries with per-agent metadata (brain, MCP profile, skills, autonomy level); a persona loads only when a task requires it; a new department can be created through registry tools
+  4. All classified legacy personas (measured 159, 2026-07-07) exist in the registry as dormant v1.0-legacy entries with per-agent metadata (brain, MCP profile, skills, autonomy level) — count is evidence-based from the seed classifier, mismatch halts for Fable; a persona loads only when a task requires it; a new department can be created through registry tools
   5. dxb-mcp runs as a single server exposing the 8 tool groups over the shared schema — queue, registry, audit, and cost groups fully functional now; memory-router, dashboard, CRM, and approval-gate faces present and extended in their own phases
 
 **Plans**: 0/5 executed — PLANNED (Fable-authored, governance v4)
@@ -116,7 +116,7 @@ Plans:
 **Wave 1**
 - [ ] 03-01: Toolset study→approve→install gate (kysely+pg cards, CEO supply-chain checkpoint, pinned installs, tracker INSTALL)
 **Wave 2**
-- [ ] 03-02: Supabase local stack + migrations 0001-0006 (LOCKED SQL) + 367-persona seed
+- [ ] 03-02: Supabase local stack + migrations 0001-0006 (LOCKED SQL) + 159-persona legacy seed (classifier-based)
 - [ ] 03-03: @dxb/shared contract layer — TaskEnvelope (LOCKED) + single Kysely client
 **Wave 3**
 - [ ] 03-04: dxb-mcp server — queue/registry/audit/cost FULL + 4 stub faces + redaction

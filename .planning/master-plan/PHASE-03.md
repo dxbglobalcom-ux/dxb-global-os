@@ -12,7 +12,7 @@ Kapı:
 1. Tam operasyonel şema migration olarak mevcut, taze DB'ye temiz uygulanır: `supabase db reset` exit 0
 2. Bir görev tam yaşam döngüsünü dxb-mcp queue araçlarıyla geçer (inbox→queued→claimed→running→review→awaiting_approval→done) + returned yolu çalışır
 3. Crash testi: claim'lenmiş görev sahibi öldürüldüğünde (kill -9) görev lease süresi sonunda yeniden claim'lenebilir — durum kaybı sıfır
-4. 367 persona registry'de dormant v1.0; yeni departman registry aracıyla yaratılabilir
+4. Sınıflandırıcının bulduğu TÜM legacy personalar (ölçüm 2026-07-07: **159**; "367" düzeltilmiş efsane) registry'de dormant `v1.0-legacy`; sayı kanıt-tabanlı, uyuşmazlık Fable'a döner; yeni departman registry aracıyla yaratılabilir
 5. dxb-mcp tek server, 8 tool grubu: queue/registry/audit/cost TAM; memory/dashboard/crm/approval yüzeyleri stub (kendi fazlarında genişler)
 
 ## 2. LOCKED Mimari Kararlar
@@ -170,7 +170,7 @@ ALTER TABLE departments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE agents ENABLE ROW LEVEL SECURITY;
 ```
 
-Seed: `db/seed/import-personas.ts` — `agency-agents/` altındaki 18 klasörü tarar; klasör adı = department slug (yoksa departments'a dormant ekler), dosya frontmatter'ından slug/role çıkarır (frontmatter yoksa: role='worker', slug=dosya adı kebab-case). Persona GÖVDESİ DB'ye girmez — dosyada kalır (lazy activation, REG-02).
+Seed: `db/seed/import-personas.ts` — **korpus gerçeği (ölçüm 2026-07-07):** `agency-agents/` altındaki `integrations/` (185 dosya = aynı ajanların diğer araçlara çevrimi), `examples/`, `scripts/` ve kök md'ler persona DEĞİL — hard-exclude. Persona sınıflandırma kuralı: dosya `---` frontmatter + `name:` alanı taşıyorsa persona, değilse SKIP + `seed-skipped.log` audit kaydı (strategy/ şu an 0 persona veriyor — doküman dizini). Kalan departman dizinleri taranır; klasör adı = department slug (lowercase, boşluk→`-`; yoksa departments'a dormant eklenir), frontmatter'dan slug/role çıkarılır (kısmî/bozuk frontmatter'da: role='worker', slug=dosya adı kebab-case, `persona_version='v1.0-unparsed'`). Tam personalar `persona_version='v1.0-legacy'`. Persona GÖVDESİ DB'ye girmez — dosyada kalır (lazy activation, REG-02). Ölçülen hedef: **159 persona, 13 persona-taşıyan dizin** — seed çıktısı bu sayıyla eşleşmezse Fable'a dur-raporu.
 
 ### 0003_approvals_outbox.sql (birebir — LOCKED)
 
@@ -349,6 +349,16 @@ export type TaskEnvelope = z.infer<typeof TaskEnvelope>;
 
 Stub gruplar (`memory.*`, `dashboard.*`, `crm.*`, `approval.*`): tool tanımı + "not yet active in this phase" hatası döner — yüzey MCP-01 gereği şimdiden mevcut, gövde kendi fazında.
 
+### Persona v2 Programı (CEO kararı 2026-07-07 — dalga-kademeli)
+
+Legacy personalar (159, `agency-agents/`) yetersiz kalitede; **her persona Fable tarafından v2 kalitesinde yeniden yazılır**. Zamanlama CEO-onaylı kademeli model:
+
+- Phase 3: 159 legacy dormant `v1.0-legacy` import (bu faz — yalnız kayıt, yeniden yazım YOK)
+- Phase 5: dikey dilimin kullandığı departman(lar)ın personaları ilk v2 batch'i olarak Fable'ca yazılır (10/10 gate ön-koşulu)
+- Phase 10: her aktivasyon dalgası = o departmanın personalarının Fable v2 yazımı + aktivasyon çifti; **v2'siz departman aktive edilemez**
+- v2 dosyaları `personas/<dept>/<slug>.md` (yeni, Fable-owned dizin); legacy `agency-agents/` READ-ONLY referans kalır; yeniden yazımda registry `persona_path` yeni dosyaya döner + `persona_version='v2.0-fable'`
+- ⛔ FABLE-ONLY: persona v2 nihai metni (HR fabrikası Phase 10'da hammadde/taslak desteği verir, yazarlık Fable'da)
+
 ## 4. Adım Listesi (adım = commit)
 
 | # | Adım | Doğrulama ("çalıştır → gör") |
@@ -356,7 +366,7 @@ Stub gruplar (`memory.*`, `dashboard.*`, `crm.*`, `approval.*`): tool tanımı +
 | 1 | Phase-3 toolset study→install (supabase CLI, supabase-js, pg-boss KURULMAZ-notu, @modelcontextprotocol/sdk, zod, drizzle-or-kysely seçimi) — study card'lar zaten Phase 2'de; install + tracker INSTALL kolonu | `pnpm ls @modelcontextprotocol/sdk zod @supabase/supabase-js` sürümleri CLAUDE.md pinleriyle eşleşir |
 | 2 | `supabase init` + local stack ayağa | `supabase start` → "API URL: http://127.0.0.1:54321" satırı |
 | 3 | Migration 0001 (tasks + events + claim + reaper) | `supabase db reset` exit 0; `psql -c "\df claim_next_task"` fonksiyonu listeler |
-| 4 | Migration 0002 + persona seed script | seed sonrası `psql -c "SELECT count(*) FROM agents"` → 367; `SELECT count(*) FROM departments` → 18 |
+| 4 | Migration 0002 + persona seed script | seed sonrası `psql -c "SELECT count(*) FROM agents"` → 159 (kanıt-tabanlı; sınıflandırıcı çıktısıyla eşleşmeli); `SELECT count(*) FROM departments` → 13 persona-taşıyan dizin |
 | 5 | Migration 0003 (approvals+outbox+trigger'lar) | `psql`: pending→draft UPDATE denemesi EXCEPTION fırlatır; pending→approved outbox satırı doğurur |
 | 6 | Migration 0004+0005+0006 | `supabase db reset` exit 0 (tümü sıfırdan); `\dt` 13+ tablo |
 | 7 | shared: envelope.ts + db.ts | `pnpm -r exec tsc --build` exit 0; envelope unit test 'objective<20 reddi' geçer |
@@ -371,7 +381,7 @@ Stub gruplar (`memory.*`, `dashboard.*`, `crm.*`, `approval.*`): tool tanımı +
 - **Supabase self-host yerine local CLI:** bu fazda her şey `supabase start` (Docker local). VPS taşıma Phase 7 — migration'lar aynı, risk düşük.
 - **drizzle vs kysely (CLAUDE.md P2'de seç dedi):** KARAR şimdi — **kysely**: SQL'e daha yakın, şema zaten SQL-first migration; drizzle'ın şema-TS-first modeli migration otoritemizle çakışır. (⛔ bu kararın revizyonu FABLE-ONLY.)
 - **pg-boss yanlış kullanım riski:** bu fazda pg-boss KURULMAZ — tracker'da "Phase 4 install" olarak işaretli kalır. Kör kurulum kuralı.
-- **367 persona frontmatter tutarsızlığı:** seed script frontmatter'sız dosyada varsayılanlara düşer ve `persona_version='v1.0-unparsed'` işaretler — HR fabrikası (Phase 10) düzeltir; import HİÇBİR dosyada patlamaz.
+- **Persona korpus tutarsızlığı:** sınıflandırıcı frontmatter'sız dosyayı persona SAYMAZ (skip + audit log); persona dizinindeki kısmî/bozuk frontmatter varsayılanlara düşer ve `persona_version='v1.0-unparsed'` işaretlenir — Persona v2 programı (Fable, dalga-kademeli, Phase 10) düzeltir; import HİÇBİR dosyada patlamaz.
 
 ## 6. Bütçe-Fallback İşaretleri
 

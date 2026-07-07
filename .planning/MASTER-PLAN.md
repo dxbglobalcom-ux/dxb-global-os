@@ -60,7 +60,7 @@ Runtime (işletim, §10 brain map — inşaat örgüsünden ayrı): L1 Fable/Opu
 | 7 | [PHASE-07](master-plan/PHASE-07.md) | Bekliyor | MCP gateway profilleri + hash-pin + EU VPS 24/7 + Hermes + video |
 | 8 | [PHASE-08](master-plan/PHASE-08.md) | Bekliyor | CEO cockpit + CRM (design bundle önce) |
 | 9 | [PHASE-09](master-plan/PHASE-09.md) | Bekliyor | JARVIS ses katmanı (ince ikinci istemci) |
-| 10 | [PHASE-10](master-plan/PHASE-10.md) | Bekliyor | Departman aktivasyon dalgaları + HR persona fabrikası |
+| 10 | [PHASE-10](master-plan/PHASE-10.md) | Bekliyor | Departman aktivasyon dalgaları + persona v2 (Fable-yazımı; HR fabrikası hammadde) — korpus düzeltmesi 2026-07-07: 159 gerçek persona ("367" efsaneydi), program PHASE-03 §"Persona v2 Programı" |
 | 11 | [PHASE-11](master-plan/PHASE-11.md) | Bekliyor | Outleteuro pilotu — Catalog Automation Rate |
 
 ## Bütçe-Fallback Protokolü (maddi kısıt senaryosu)

@@ -11,6 +11,7 @@
 3. Orchestrator intent'i bağımlı TaskEnvelope'lara böler, kuyruğa yazar, head'lere dispatch eder; sub-agent'lar izole (I3: kuyruk + typed artifact, serbest sohbet yok)
 4. Model tier'ı görev sınıfına brain map'ten seçilir; escalation ladder kodda çalışır (worker 2× fail veya düşük güven → specialist → head → Fable final); council yalnız kritik kapılarda, judge gücü golden set'le doğrulanmış
 5. Dikey dilim 10/10
+6. **Persona v2 ön-koşulu (CEO 2026-07-07):** dilimin kullandığı departman(lar)ın personaları Fable-yazımı v2 (`persona_version='v2.0-fable'`, `personas/<dept>/`) olmadan 10/10 gate KOŞULAMAZ — ilk v2 batch'i (~5-10 persona) bu fazda doğar; program tanımı PHASE-03 "Persona v2 Programı"
 
 ## 2. LOCKED Mimari Kararlar
 
