@@ -1,0 +1,24 @@
+services:
+  litellm:
+    # Pinned per 04-01-legitimacy-approval.md (amd64 digest sha256:671ec5317c75... recorded there)
+    image: ghcr.io/berriai/litellm:main-stable
+    container_name: dxb_litellm
+    # Linux Docker 28: host networking so the container reaches the Supabase
+    # Postgres published on 127.0.0.1:54322 and serves the proxy on host :4000.
+    # (Chosen over extra_hosts/host-gateway — recorded decision, 04-01 Task 4.)
+    network_mode: host
+    env_file:
+      - ./.env
+    environment:
+      # LiteLLM's Prisma layer reads DATABASE_URL; keep it aliased to the vault name.
+      DATABASE_URL: ${LITELLM_DATABASE_URL}
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:4000/health/readiness', timeout=5).status==200 else 1)"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    restart: unless-stopped

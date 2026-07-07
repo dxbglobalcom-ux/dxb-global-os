@@ -1,0 +1,22 @@
+# DXB LiteLLM proxy config — master-plan PHASE-04 §3 skeleton with slugs
+# live-verified 2026-07-07 (study-cards/litellm.md verified slug table;
+# CEO approval: 04-01-legitimacy-approval.md). Keys env-only (A8 vault).
+model_list:
+  - model_name: glm-5.2
+    litellm_params: { model: openrouter/z-ai/glm-5.2, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: kimi-2.7-code
+    # master-plan slug moonshotai/kimi-2.7 is not live on OpenRouter;
+    # CEO-selected replacement (04-01 checkpoint): kimi-k2.7-code
+    litellm_params: { model: openrouter/moonshotai/kimi-k2.7-code, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: deepseek-v4-flash
+    litellm_params: { model: openrouter/deepseek/deepseek-v4-flash, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: qwen3.6-flash
+    litellm_params: { model: openrouter/qwen/qwen3.6-flash, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: minimax-m3
+    litellm_params: { model: openrouter/minimax/minimax-m3, api_key: os.environ/OPENROUTER_API_KEY }
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/LITELLM_DATABASE_URL   # Supabase Postgres, schema litellm (LOCKED single-DB)
+litellm_settings:
+  max_budget: 100          # EUR/month equivalent — adjust to USD rate on VPS install day
+  budget_duration: 30d
