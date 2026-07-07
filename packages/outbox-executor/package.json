@@ -7,9 +7,12 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@dxb/shared": "workspace:*",
-    "pg-boss": "catalog:"
+    "kysely": "catalog:",
+    "pg-boss": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
+    "@types/node": "catalog:",
     "typescript": "catalog:"
   }
 }

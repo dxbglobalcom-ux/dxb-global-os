@@ -153,10 +153,19 @@ importers:
       '@dxb/shared':
         specifier: workspace:*
         version: link:../shared
+      kysely:
+        specifier: 'catalog:'
+        version: 0.29.3
       pg-boss:
         specifier: 'catalog:'
         version: 12.25.1
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
     devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
       typescript:
         specifier: 'catalog:'
         version: 6.0.3

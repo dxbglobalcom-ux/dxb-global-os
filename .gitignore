@@ -39,3 +39,6 @@ dist/
 
 # pnpm local store — not committed, restored via lockfile
 .pnpm-store/
+
+# outbox-executor harmless-proof artifacts (tests write here; never history)
+tmp/
