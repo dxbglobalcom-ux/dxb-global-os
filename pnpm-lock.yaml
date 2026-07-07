@@ -47,6 +47,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.20.0
+      kysely:
+        specifier: 'catalog:'
+        version: 0.29.3
       supabase:
         specifier: 'catalog:'
         version: 2.109.0

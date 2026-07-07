@@ -12,6 +12,7 @@
     "@types/node": "catalog:",
     "vitest": "catalog:",
     "supabase": "catalog:",
-    "@modelcontextprotocol/sdk": "catalog:"
+    "@modelcontextprotocol/sdk": "catalog:",
+    "kysely": "catalog:"
   }
 }
