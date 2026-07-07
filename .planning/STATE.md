@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 04
 current_phase_name: safety-rails-gates-cost-audit
 status: in-progress
-stopped_at: "04-02 COMPLETE (GATE-01 tool layer: budget_state live, approval group FULL, dxb CLI human-only decisions, suite 26/26); NEXT ACTION: execute 04-03-PLAN.md (Wave 3 — outbox executor LOCKED core + double-fire/TOCTOU + 0008 REVOKE TRUNCATE)"
-last_updated: "2026-07-07T21:40:00.000Z"
-last_activity: 2026-07-07
-last_activity_desc: 04-02 executed inline by Fable — draft-first enforced, decisions CLI-only, outbox birth trigger-proven
+stopped_at: "04-03 COMPLETE (GATE-02 proven: LOCKED tick(), double-fire single-claim, TOCTOU failed-no-effect, 0008 TRUNCATE revoked; suite 33/33); NEXT ACTION: execute 04-04-PLAN.md (Wave 4 — cost rails: CEO key checkpoint, virtual keys, hard-stop, velocity breaker, subscription hook; autonomous:false)"
+last_updated: "2026-07-07T22:05:00.000Z"
+last_activity: 2026-07-08
+last_activity_desc: 04-03 executed inline by Fable — single side-effect process machine-proven
 progress:
   total_phases: 11
   completed_phases: 3
   total_plans: 22
-  completed_plans: 19
+  completed_plans: 20
   percent: 27
 ---
 
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 04 (safety-rails-gates-cost-audit) — IN PROGRESS (2/5 executed)
-Plan: 04-03 next (Wave 3 — outbox executor LOCKED core + test.write_file + double-fire/TOCTOU tests + 0008 revoke TRUNCATE)
-Status: 04-02 COMPLETE (summary: 04-02-SUMMARY.md); NEXT ACTION: execute 04-03-PLAN.md
-Last activity: 2026-07-07 — 04-02 executed (GATE-01 tool layer: draft-first + CLI-only decisions + trigger-born outbox)
+Phase: 04 (safety-rails-gates-cost-audit) — IN PROGRESS (3/5 executed)
+Plan: 04-04 next (Wave 4 — cost rails: LiteLLM virtual keys + hard-stop + velocity breaker + subscription tagging; CEO credential checkpoint inside, autonomous:false)
+Status: 04-03 COMPLETE (summary: 04-03-SUMMARY.md); NEXT ACTION: execute 04-04-PLAN.md
+Last activity: 2026-07-08 — 04-03 executed (GATE-02: outbox executor exactly-once, evidence tables hardened)
 
 Progress: [███░░░░░░░] 27%
 
@@ -70,6 +70,7 @@ Progress: [███░░░░░░░] 27%
 | Phase 03 P05 | 15min | 3 tasks | 6 files |
 | Phase 04 P01 | 35min | 4 tasks | 12 files |
 | Phase 04 P02 | 30min | 3 tasks | 11 files |
+| Phase 04 P03 | 25min | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -122,6 +123,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-07T21:40:00Z
-Stopped at: 04-02 COMPLETE — commits 37e2110→01a3ada; NEXT ACTION: execute 04-03-PLAN.md (autonomous, Wave 3)
+Last session: 2026-07-07T22:05:00Z
+Stopped at: 04-03 COMPLETE — commits 58678b1→42d7bf5; NEXT ACTION: execute 04-04-PLAN.md (Wave 4, autonomous:false — CEO credential checkpoint Task 1)
 Resume file: None

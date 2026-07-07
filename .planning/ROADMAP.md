@@ -136,7 +136,7 @@ Plans:
   4. All API model calls flow through LiteLLM with per-department virtual keys: the 70% alert fires and the 100% hard-stop blocks non-critical calls in a forced test, and the velocity circuit breaker trips on a simulated retry storm before budget exhaustion — 24/7, including unattended hours
   5. Every prompt, tool call, and decision lands in the append-only audit log tagged with mode (`subscription`/`api`/`free-tier`), model, tokens, department, and task — a task's full causal chain is reconstructable, including subscription-mode calls tagged via Agent SDK hooks
 
-**Plans**: 2/5 executed — IN PROGRESS (Fable-authored, governance v4)
+**Plans**: 3/5 executed — IN PROGRESS (Fable-authored, governance v4)
 
 Plans:
 **Wave 1**
@@ -144,7 +144,7 @@ Plans:
 **Wave 2**
 - [x] 04-02: 0007 budget_state + approval grubu TAM (draft/finalize/list — karar YOK) + tools/dxb-cli approve/reject — **COMPLETE 2026-07-07**
 **Wave 3**
-- [ ] 04-03: Outbox executor (LOCKED çekirdek) + test.write_file + double-fire/TOCTOU testleri + 0008 REVOKE TRUNCATE
+- [x] 04-03: Outbox executor (LOCKED çekirdek) + test.write_file + double-fire/TOCTOU testleri + 0008 REVOKE TRUNCATE — **COMPLETE 2026-07-08**
 **Wave 4**
 - [ ] 04-04: Cost ailesi — CEO key checkpoint, virtual keys, hard-stop kanıtı, velocity breaker (pg-boss cron), subscription hook, dxb breaker reset
 **Wave 5**
@@ -264,7 +264,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 1. Security Baseline & Credential Remediation | 6/6 | Complete | 2026-07-06 |
 | 2. Foundation & Integration Program | 5/5 | Complete | 2026-07-06 |
 | 3. State Layer & dxb-mcp Core | 5/5 | Complete | 2026-07-07 |
-| 4. Safety Rails — Gates, Cost, Audit | 2/5 | In Progress | - |
+| 4. Safety Rails — Gates, Cost, Audit | 3/5 | In Progress | - |
 | 5. Kernel & Orchestrator Core Loop | 0/TBD | Not started | - |
 | 6. Memory Router & Knowledge Stores | 0/TBD | Not started | - |
 | 7. MCP Gateway & 24/7 VPS Runtime | 0/TBD | Not started | - |
