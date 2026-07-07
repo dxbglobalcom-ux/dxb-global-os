@@ -34,6 +34,6 @@ docker compose up -d
 
 ## Lifecycle Checklist
 - [x] STUDY
-- [ ] INSTALL
+- [x] INSTALL
 - [ ] ADOPT
 - [ ] EMBED

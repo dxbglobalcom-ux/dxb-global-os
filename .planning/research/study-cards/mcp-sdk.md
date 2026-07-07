@@ -31,5 +31,5 @@ pnpm add @modelcontextprotocol/sdk@1.29.0 --filter @dxb/dxb-mcp
 ## Lifecycle Checklist
 - [x] STUDY
 - [x] INSTALL
-- [ ] ADOPT
-- [ ] EMBED
+- [x] ADOPT
+- [x] EMBED

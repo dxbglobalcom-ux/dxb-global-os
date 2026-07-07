@@ -30,5 +30,5 @@ pnpm add -D -w supabase@2.109.0
 ## Lifecycle Checklist
 - [x] STUDY
 - [x] INSTALL
-- [ ] ADOPT
+- [x] ADOPT
 - [ ] EMBED

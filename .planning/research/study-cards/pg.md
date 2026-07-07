@@ -34,5 +34,5 @@ pnpm add -D @types/pg --filter @dxb/shared
 ## Lifecycle Checklist
 - [x] STUDY
 - [x] INSTALL
-- [ ] ADOPT
-- [ ] EMBED
+- [x] ADOPT
+- [x] EMBED

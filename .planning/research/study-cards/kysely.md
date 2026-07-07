@@ -33,5 +33,5 @@ pnpm add kysely@0.29.3 --filter @dxb/shared
 ## Lifecycle Checklist
 - [x] STUDY
 - [x] INSTALL
-- [ ] ADOPT
-- [ ] EMBED
+- [x] ADOPT
+- [x] EMBED
