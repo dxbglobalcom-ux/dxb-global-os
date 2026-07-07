@@ -12,7 +12,7 @@ Kapı:
 1. Tam operasyonel şema migration olarak mevcut, taze DB'ye temiz uygulanır: `supabase db reset` exit 0
 2. Bir görev tam yaşam döngüsünü dxb-mcp queue araçlarıyla geçer (inbox→queued→claimed→running→review→awaiting_approval→done) + returned yolu çalışır
 3. Crash testi: claim'lenmiş görev sahibi öldürüldüğünde (kill -9) görev lease süresi sonunda yeniden claim'lenebilir — durum kaybı sıfır
-4. Sınıflandırıcının bulduğu TÜM legacy personalar (ölçüm 2026-07-07: **159**; "367" düzeltilmiş efsane) registry'de dormant `v1.0-legacy`; sayı kanıt-tabanlı, uyuşmazlık Fable'a döner; yeni departman registry aracıyla yaratılabilir
+4. Sınıflandırıcının bulduğu TÜM legacy personalar (seed-anı ölçümü 2026-07-07: **153** (ilk ölçüm 159; spatial-computing 6 personası CEO korpus temizliğinde kaldırıldı); "367" düzeltilmiş efsane) registry'de dormant `v1.0-legacy`; sayı kanıt-tabanlı, uyuşmazlık Fable'a döner; yeni departman registry aracıyla yaratılabilir
 5. dxb-mcp tek server, 8 tool grubu: queue/registry/audit/cost TAM; memory/dashboard/crm/approval yüzeyleri stub (kendi fazlarında genişler)
 
 ## 2. LOCKED Mimari Kararlar
@@ -170,7 +170,7 @@ ALTER TABLE departments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE agents ENABLE ROW LEVEL SECURITY;
 ```
 
-Seed: `db/seed/import-personas.ts` — **korpus gerçeği (ölçüm 2026-07-07):** `agency-agents/` altındaki `integrations/` (185 dosya = aynı ajanların diğer araçlara çevrimi), `examples/`, `scripts/` ve kök md'ler persona DEĞİL — hard-exclude. Persona sınıflandırma kuralı: dosya `---` frontmatter + `name:` alanı taşıyorsa persona, değilse SKIP + `seed-skipped.log` audit kaydı (strategy/ şu an 0 persona veriyor — doküman dizini). Kalan departman dizinleri taranır; klasör adı = department slug (lowercase, boşluk→`-`; yoksa departments'a dormant eklenir), frontmatter'dan slug/role çıkarılır (kısmî/bozuk frontmatter'da: role='worker', slug=dosya adı kebab-case, `persona_version='v1.0-unparsed'`). Tam personalar `persona_version='v1.0-legacy'`. Persona GÖVDESİ DB'ye girmez — dosyada kalır (lazy activation, REG-02). Ölçülen hedef: **159 persona, 13 persona-taşıyan dizin** — seed çıktısı bu sayıyla eşleşmezse Fable'a dur-raporu.
+Seed: `db/seed/import-personas.ts` — **korpus gerçeği (ölçüm 2026-07-07):** `agency-agents/` altındaki `integrations/` (185 dosya = aynı ajanların diğer araçlara çevrimi), `examples/`, `scripts/` ve kök md'ler persona DEĞİL — hard-exclude. Persona sınıflandırma kuralı: dosya `---` frontmatter + `name:` alanı taşıyorsa persona, değilse SKIP + `seed-skipped.log` audit kaydı (strategy/ şu an 0 persona veriyor — doküman dizini). Kalan departman dizinleri taranır; klasör adı = department slug (lowercase, boşluk→`-`; yoksa departments'a dormant eklenir), frontmatter'dan slug/role çıkarılır (kısmî/bozuk frontmatter'da: role='worker', slug=dosya adı kebab-case, `persona_version='v1.0-unparsed'`). Tam personalar `persona_version='v1.0-legacy'`. Persona GÖVDESİ DB'ye girmez — dosyada kalır (lazy activation, REG-02). Ölçülen hedef: **153 persona, 11 persona-taşıyan dizin** (seed-anı, 2026-07-07) — seed çıktısı bu sayıyla eşleşmezse Fable'a dur-raporu.
 
 ### 0003_approvals_outbox.sql (birebir — LOCKED)
 
@@ -351,9 +351,9 @@ Stub gruplar (`memory.*`, `dashboard.*`, `crm.*`, `approval.*`): tool tanımı +
 
 ### Persona v2 Programı (CEO kararı 2026-07-07 — dalga-kademeli)
 
-Legacy personalar (159, `agency-agents/`) yetersiz kalitede; **her persona Fable tarafından v2 kalitesinde yeniden yazılır**. Zamanlama CEO-onaylı kademeli model:
+Legacy personalar (153 seed-anı; ilk ölçüm 159, spatial-computing sonradan kaldırıldı — `agency-agents/`) yetersiz kalitede; **her persona Fable tarafından v2 kalitesinde yeniden yazılır**. Zamanlama CEO-onaylı kademeli model:
 
-- Phase 3: 159 legacy dormant `v1.0-legacy` import (bu faz — yalnız kayıt, yeniden yazım YOK)
+- Phase 3: 153 legacy dormant `v1.0-legacy` import (bu faz — yalnız kayıt, yeniden yazım YOK)
 - Phase 5: dikey dilimin kullandığı departman(lar)ın personaları ilk v2 batch'i olarak Fable'ca yazılır (10/10 gate ön-koşulu)
 - Phase 10: her aktivasyon dalgası = o departmanın personalarının Fable v2 yazımı + aktivasyon çifti; **v2'siz departman aktive edilemez**
 - v2 dosyaları `personas/<dept>/<slug>.md` (yeni, Fable-owned dizin); legacy `agency-agents/` READ-ONLY referans kalır; yeniden yazımda registry `persona_path` yeni dosyaya döner + `persona_version='v2.0-fable'`
@@ -366,7 +366,7 @@ Legacy personalar (159, `agency-agents/`) yetersiz kalitede; **her persona Fable
 | 1 | Phase-3 toolset study→install (supabase CLI, supabase-js, pg-boss KURULMAZ-notu, @modelcontextprotocol/sdk, zod, drizzle-or-kysely seçimi) — study card'lar zaten Phase 2'de; install + tracker INSTALL kolonu | `pnpm ls @modelcontextprotocol/sdk zod @supabase/supabase-js` sürümleri CLAUDE.md pinleriyle eşleşir |
 | 2 | `supabase init` + local stack ayağa | `supabase start` → "API URL: http://127.0.0.1:54321" satırı |
 | 3 | Migration 0001 (tasks + events + claim + reaper) | `supabase db reset` exit 0; `psql -c "\df claim_next_task"` fonksiyonu listeler |
-| 4 | Migration 0002 + persona seed script | seed sonrası `psql -c "SELECT count(*) FROM agents"` → 159 (kanıt-tabanlı; sınıflandırıcı çıktısıyla eşleşmeli); `SELECT count(*) FROM departments` → 13 persona-taşıyan dizin |
+| 4 | Migration 0002 + persona seed script | seed sonrası `psql -c "SELECT count(*) FROM agents"` → 153 (kanıt-tabanlı; sınıflandırıcı çıktısıyla eşleşmeli); `SELECT count(*) FROM departments` → 11 |
 | 5 | Migration 0003 (approvals+outbox+trigger'lar) | `psql`: pending→draft UPDATE denemesi EXCEPTION fırlatır; pending→approved outbox satırı doğurur |
 | 6 | Migration 0004+0005+0006 | `supabase db reset` exit 0 (tümü sıfırdan); `\dt` 13+ tablo |
 | 7 | shared: envelope.ts + db.ts | `pnpm -r exec tsc --build` exit 0; envelope unit test 'objective<20 reddi' geçer |
