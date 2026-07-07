@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Security Baseline & Credential Remediation** - Rotate every leaked credential (verified dead), vault pattern, secret scanning, sanitized source doc — blocks everything else — **COMPLETE 2026-07-06 (hard gate closed, CEO approved 16:21Z)**
 - [x] **Phase 2: Foundation & Integration Program** - pnpm monorepo skeleton mirroring the full architecture + study→install→adopt→embed tracking for every §8B item — **COMPLETE 2026-07-06 (Fable closure verdict, 02-FABLE-REVIEW.md)**
-- [ ] **Phase 3: State Layer & dxb-mcp Core** - Full Supabase schema (tasks, agents, approvals, outbox, cost, audit, memory index, CRM) + task queue + registry behind one dxb-mcp server
+- [x] **Phase 3: State Layer & dxb-mcp Core** - Full Supabase schema (tasks, agents, approvals, outbox, cost, audit, memory index, CRM) + task queue + registry behind one dxb-mcp server — **COMPLETE 2026-07-07 (Fable closure verdict, 03-FABLE-REVIEW.md)**
 - [ ] **Phase 4: Safety Rails — Gates, Cost, Audit** - Code-level approval gates, outbox executor, LiteLLM budget enforcement, velocity breakers, append-only audit — before anything runs unattended
 - [ ] **Phase 5: Kernel & Orchestrator Core Loop** - Intent → classification → decomposition → tiered dispatch → escalation → council; exit gate: 10/10 vertical slice runs
 - [ ] **Phase 6: Memory Router & Knowledge Stores** - Single write path with provenance/quarantine/contradiction policy over Obsidian, claude-mem, Graphify, open-notebook, pgvector
@@ -110,18 +110,18 @@ Plans:
   4. All classified legacy personas (measured 153 at seed, 2026-07-07) exist in the registry as dormant v1.0-legacy entries with per-agent metadata (brain, MCP profile, skills, autonomy level) — count is evidence-based from the seed classifier, mismatch halts for Fable; a persona loads only when a task requires it; a new department can be created through registry tools
   5. dxb-mcp runs as a single server exposing the 8 tool groups over the shared schema — queue, registry, audit, and cost groups fully functional now; memory-router, dashboard, CRM, and approval-gate faces present and extended in their own phases
 
-**Plans**: 0/5 executed — PLANNED (Fable-authored, governance v4)
+**Plans**: 5/5 executed — phase complete (Fable closure verdict: 03-FABLE-REVIEW.md)
 
 Plans:
 **Wave 1**
-- [ ] 03-01: Toolset study→approve→install gate (kysely+pg cards, CEO supply-chain checkpoint, pinned installs, tracker INSTALL)
+- [x] 03-01: Toolset study→approve→install gate (kysely+pg cards, CEO supply-chain checkpoint, pinned installs, tracker INSTALL)
 **Wave 2**
-- [ ] 03-02: Supabase local stack + migrations 0001-0006 (LOCKED SQL) + 153-persona legacy seed (classifier-based)
-- [ ] 03-03: @dxb/shared contract layer — TaskEnvelope (LOCKED) + single Kysely client
+- [x] 03-02: Supabase local stack + migrations 0001-0006 (LOCKED SQL) + 153-persona legacy seed (classifier-based)
+- [x] 03-03: @dxb/shared contract layer — TaskEnvelope (LOCKED) + single Kysely client
 **Wave 3**
-- [ ] 03-04: dxb-mcp server — queue/registry/audit/cost FULL + 4 stub faces + redaction
+- [x] 03-04: dxb-mcp server — queue/registry/audit/cost FULL + 4 stub faces + redaction
 **Wave 4**
-- [ ] 03-05: Crash test (kill -9) + 10/10 lifecycle battery + tracker EMBED + VERIFICATION evidence
+- [x] 03-05: Crash test (kill -9) + 10/10 lifecycle battery + tracker EMBED + VERIFICATION evidence
 
 ### Phase 4: Safety Rails — Gates, Cost, Audit
 

@@ -2,19 +2,19 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-current_phase: 03
-current_phase_name: state-layer-dxb-mcp-core
-status: planned
-stopped_at: "Phase 3 PLANNED — 5 Fable-authored plans in 4 waves (03-01..03-05); NEXT ACTION: /gsd-execute-phase 3 (starts with 03-01 incl. CEO supply-chain checkpoint)"
-last_updated: "2026-07-06T23:20:00.000Z"
+current_phase: 04
+current_phase_name: safety-rails-gates-cost-audit
+status: ready-to-plan
+stopped_at: "Phase 3 COMPLETE (Fable closure verdict: 03-FABLE-REVIEW.md; 03-VERIFICATION status: passed, all 5 gate criteria fresh-verified); NEXT ACTION: /gsd-plan-phase 4"
+last_updated: "2026-07-07T01:10:00.000Z"
 last_activity: 2026-07-07
-last_activity_desc: Phase 02 closed — closure verdict + docs committed
+last_activity_desc: Phase 03 closed — schema live, dxb-mcp 8 groups, crash gate green
 progress:
   total_phases: 11
-  completed_phases: 2
-  total_plans: 12
-  completed_plans: 12
-  percent: 18
+  completed_phases: 3
+  total_plans: 17
+  completed_plans: 17
+  percent: 27
 ---
 
 # Project State
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-05)
 
 **Core value:** Anti-baby-sitting — the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward.
-**Current focus:** Phase 03 — state-layer-dxb-mcp-core (ready to plan)
+**Current focus:** Phase 04 — safety-rails-gates-cost-audit (ready to plan)
 
 ## Current Position
 
-Phase: 03 (state-layer-dxb-mcp-core) — PLANNED
-Plan: 0 of 5
-Status: 5 plans ready (4 waves); execution not started
-Last activity: 2026-07-07 — Phase 3 planned inline by Fable (governance v4)
+Phase: 04 (safety-rails-gates-cost-audit) — READY TO PLAN
+Plan: —
+Status: Phase 3 COMPLETE (closure verdict: 03-FABLE-REVIEW.md); awaiting /gsd-plan-phase 4
+Last activity: 2026-07-07 — Phase 03 closed (5/5 plans, 10/10 battery, crash gate green)
 
 Progress: [█░░░░░░░░░] 9%
 
@@ -63,6 +63,11 @@ Progress: [█░░░░░░░░░] 9%
 | Phase 02 P02 | 3min | 1 task | 2 files |
 | Phase 02 P05 | 7min | 3 tasks | 44 files |
 | Phase 02 P03 | 10min | 2 tasks | 3 files |
+| Phase 03 P01 | 12min | 3 tasks | 12 files |
+| Phase 03 P02 | 20min | 3 tasks | 10 files |
+| Phase 03 P03 | 8min | 2 tasks | 6 files |
+| Phase 03 P04 | 25min | 3 tasks | 15 files |
+| Phase 03 P05 | 15min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -116,5 +121,5 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-07-06T23:20:00Z
-Stopped at: Phase 2 COMPLETE — all 5 plans executed (02-03 finished after VS Code crash recovery), Fable closure verdict committed (67db503), governance v4 memory↔mirror synced; NEXT ACTION: /gsd-plan-phase 3
+Stopped at: Phase 3 COMPLETE — 5/5 plans executed inline by Fable (v4); crash gate caught+fixed a real LOCKED-SQL reaper bug; NEXT ACTION: /gsd-plan-phase 4
 Resume file: None
