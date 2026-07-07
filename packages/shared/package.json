@@ -5,7 +5,14 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "dependencies": {
+    "@supabase/supabase-js": "catalog:",
+    "kysely": "catalog:",
+    "pg": "catalog:",
+    "zod": "catalog:"
+  },
   "devDependencies": {
+    "@types/pg": "catalog:",
     "typescript": "catalog:"
   }
 }

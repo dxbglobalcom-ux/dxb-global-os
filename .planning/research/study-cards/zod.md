@@ -29,6 +29,6 @@ pnpm add zod@4.4.3 --filter @dxb/shared
 
 ## Lifecycle Checklist
 - [x] STUDY
-- [ ] INSTALL
+- [x] INSTALL
 - [ ] ADOPT
 - [ ] EMBED

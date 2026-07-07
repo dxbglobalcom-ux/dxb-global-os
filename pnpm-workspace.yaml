@@ -3,7 +3,15 @@ packages:
   - "apps/*"
 allowBuilds:
   esbuild: false
+  supabase: true
 catalog:
   typescript: 6.0.3
   "@types/node": ^22.0.0
   vitest: ^3.0.0
+  "@modelcontextprotocol/sdk": 1.29.0
+  zod: 4.4.3
+  "@supabase/supabase-js": 2.110.0
+  kysely: 0.29.3
+  pg: 8.22.0
+  "@types/pg": ^8.20.0
+  supabase: 2.109.0

@@ -56,13 +56,13 @@ Single source of truth for every master-plan §8B item's integration lifecycle. 
 | huggingface | Other | STUDY | as needed | Model/dataset source | ref | study-cards/huggingface.md | |
 | Notion/Granola/Composio AI-stack | Other | STUDY | 10+ | Ops — only if free tiers suffice | mcp-profile | study-cards/notion-granola-composio-stack.md | Evaluate |
 | claude-agent-sdk (@anthropic-ai/claude-agent-sdk) | Locked stack (runtime lib) | STUDY | 3 | Kernel/Orchestrator | lib | study-cards/claude-agent-sdk.md | PHASE-3-TOOLSET; pinned 0.3.201; foundational — card owed before Phase 3 per success criterion 3; primary use Phase 5 |
-| mcp-sdk (@modelcontextprotocol/sdk) | Locked stack (runtime lib) | STUDY | 3 | State Layer / dxb-mcp | lib | study-cards/mcp-sdk.md | PHASE-3-TOOLSET; pinned 1.29.0 |
+| mcp-sdk (@modelcontextprotocol/sdk) | Locked stack (runtime lib) | INSTALL | 3 | State Layer / dxb-mcp | lib | study-cards/mcp-sdk.md | PHASE-3-TOOLSET; pinned 1.29.0 |
 | pg-boss | Locked stack (runtime lib) | STUDY | 3 | State Layer / system-job queue | lib | study-cards/pg-boss.md | PHASE-3-TOOLSET; pinned 12.25.1; per MASTER-PLAN Phase 3 decision, install may defer to Phase 4 (system routines) — card owed now regardless |
-| supabase-js (@supabase/supabase-js) | Locked stack (runtime lib) | STUDY | 3 | State Layer / API-Backend | lib | study-cards/supabase-js.md | PHASE-3-TOOLSET; pinned 2.110.0 |
-| supabase-cli | Locked stack (dev tool) | STUDY | 3 | State Layer / migrations | lib | study-cards/supabase-cli.md | PHASE-3-TOOLSET; pinned 2.109.0; schema-only local workflow (Pitfall 1) |
-| zod | Locked stack (runtime lib) | STUDY | 3 | All boundary payloads | lib | study-cards/zod.md | PHASE-3-TOOLSET; pinned 4.4.3; MCP SDK 1.29 supports zod v4 as peer dep |
-| kysely | Locked stack (runtime lib) | STUDY | 3 | @dxb/shared db layer | lib | study-cards/kysely.md | PHASE-3-TOOLSET; pinned 0.29.3; chosen over drizzle (PHASE-03 §5 LOCKED, revision FABLE-ONLY) |
-| pg | Locked stack (runtime lib) | STUDY | 3 | @dxb/shared db layer (driver under kysely) | lib | study-cards/pg.md | PHASE-3-TOOLSET; pinned 8.22.0; session-mode direct connection only |
+| supabase-js (@supabase/supabase-js) | Locked stack (runtime lib) | INSTALL | 3 | State Layer / API-Backend | lib | study-cards/supabase-js.md | PHASE-3-TOOLSET; pinned 2.110.0 |
+| supabase-cli | Locked stack (dev tool) | INSTALL | 3 | State Layer / migrations | lib | study-cards/supabase-cli.md | PHASE-3-TOOLSET; pinned 2.109.0; schema-only local workflow (Pitfall 1) |
+| zod | Locked stack (runtime lib) | INSTALL | 3 | All boundary payloads | lib | study-cards/zod.md | PHASE-3-TOOLSET; pinned 4.4.3; MCP SDK 1.29 supports zod v4 as peer dep |
+| kysely | Locked stack (runtime lib) | INSTALL | 3 | @dxb/shared db layer | lib | study-cards/kysely.md | PHASE-3-TOOLSET; pinned 0.29.3; chosen over drizzle (PHASE-03 §5 LOCKED, revision FABLE-ONLY) |
+| pg | Locked stack (runtime lib) | INSTALL | 3 | @dxb/shared db layer (driver under kysely) | lib | study-cards/pg.md | PHASE-3-TOOLSET; pinned 8.22.0; session-mode direct connection only |
 | kickbacks.ai | Excluded | EXCLUDED | - | - | - | - | Adware: Marketplace removal + adverse audit; re-admission requires CEO sign-off entry below |
 | automaton | Excluded | EXCLUDED | - | - | - | - | Crypto-token project, safety criticism; re-admission requires CEO sign-off entry below |
 | llm-council (as dependency) | Excluded | EXCLUDED | - | - | - | - | Dead repo since Nov 2025; pattern reimplemented in-house (CNCL-01) |

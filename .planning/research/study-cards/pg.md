@@ -33,6 +33,6 @@ pnpm add -D @types/pg --filter @dxb/shared
 
 ## Lifecycle Checklist
 - [x] STUDY
-- [ ] INSTALL
+- [x] INSTALL
 - [ ] ADOPT
 - [ ] EMBED

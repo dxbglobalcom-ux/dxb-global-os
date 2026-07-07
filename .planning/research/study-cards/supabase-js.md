@@ -30,6 +30,6 @@ pnpm add @supabase/supabase-js@2.110.0 --filter @dxb/shared
 
 ## Lifecycle Checklist
 - [x] STUDY
-- [ ] INSTALL
+- [x] INSTALL
 - [ ] ADOPT
 - [ ] EMBED
