@@ -104,9 +104,11 @@ describe("dxb-mcp queue lifecycle (gate criterion 2)", () => {
     }
     expect(names.length).toBeGreaterThanOrEqual(17);
 
+    // approval went FULL in Phase 4 (04-02) — the stub-behavior probe moved to
+    // a group that is still a stub face (memory, FULL in Phase 6).
     const res = await client.callTool({
-      name: "approval_request",
-      arguments: { task_id: "8f14e45f-ceea-4e17-a123-3c59e0b0a111", action_type: "email.send", payload: {} },
+      name: "memory_route",
+      arguments: { kind: "fact", content: "stub probe", provenance: {} },
     });
     expect(res.isError).toBe(true);
     expect((res.content as Array<{ text: string }>)[0].text).toContain("not yet active in this phase");
