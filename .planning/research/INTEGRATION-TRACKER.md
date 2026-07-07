@@ -61,6 +61,8 @@ Single source of truth for every master-plan §8B item's integration lifecycle. 
 | supabase-js (@supabase/supabase-js) | Locked stack (runtime lib) | STUDY | 3 | State Layer / API-Backend | lib | study-cards/supabase-js.md | PHASE-3-TOOLSET; pinned 2.110.0 |
 | supabase-cli | Locked stack (dev tool) | STUDY | 3 | State Layer / migrations | lib | study-cards/supabase-cli.md | PHASE-3-TOOLSET; pinned 2.109.0; schema-only local workflow (Pitfall 1) |
 | zod | Locked stack (runtime lib) | STUDY | 3 | All boundary payloads | lib | study-cards/zod.md | PHASE-3-TOOLSET; pinned 4.4.3; MCP SDK 1.29 supports zod v4 as peer dep |
+| kysely | Locked stack (runtime lib) | STUDY | 3 | @dxb/shared db layer | lib | study-cards/kysely.md | PHASE-3-TOOLSET; pinned 0.29.3; chosen over drizzle (PHASE-03 §5 LOCKED, revision FABLE-ONLY) |
+| pg | Locked stack (runtime lib) | STUDY | 3 | @dxb/shared db layer (driver under kysely) | lib | study-cards/pg.md | PHASE-3-TOOLSET; pinned 8.22.0; session-mode direct connection only |
 | kickbacks.ai | Excluded | EXCLUDED | - | - | - | - | Adware: Marketplace removal + adverse audit; re-admission requires CEO sign-off entry below |
 | automaton | Excluded | EXCLUDED | - | - | - | - | Crypto-token project, safety criticism; re-admission requires CEO sign-off entry below |
 | llm-council (as dependency) | Excluded | EXCLUDED | - | - | - | - | Dead repo since Nov 2025; pattern reimplemented in-house (CNCL-01) |
