@@ -61,17 +61,24 @@ CREATE OR REPLACE FUNCTION claim_next_task(
 $$ LANGUAGE sql;
 
 -- reaper: süresi dolan lease'i kuyruğa iade (QUEUE-02)
+-- Fable fix (2026-07-07, ⛔ recorded): UPDATE..RETURNING yeni değerleri döndürür —
+-- orijinal LOCKED gövde was_claimed_by'ı her zaman NULL yazıyordu (kanıt kaybı).
+-- Eski claimed_by/status bir ön-CTE'de FOR UPDATE SKIP LOCKED ile yakalanır.
 CREATE OR REPLACE FUNCTION reap_expired_leases() RETURNS integer AS $$
 DECLARE n integer;
 BEGIN
-  WITH reaped AS (
-    UPDATE tasks SET status = 'queued', claimed_by = NULL, claimed_at = NULL,
-      lease_expires_at = NULL, updated_at = now()
+  WITH expired AS (
+    SELECT id, claimed_by, status FROM tasks
     WHERE status IN ('claimed','running') AND lease_expires_at < now()
-    RETURNING id, claimed_by
+    FOR UPDATE SKIP LOCKED
+  ), reaped AS (
+    UPDATE tasks t SET status = 'queued', claimed_by = NULL, claimed_at = NULL,
+      lease_expires_at = NULL, updated_at = now()
+    FROM expired e WHERE t.id = e.id
+    RETURNING e.id, e.claimed_by, e.status AS old_status
   )
   INSERT INTO task_events (task_id, event, from_status, to_status, actor, payload)
-    SELECT id, 'reaped', 'claimed', 'queued', 'system:reaper',
+    SELECT id, 'reaped', old_status, 'queued', 'system:reaper',
            jsonb_build_object('was_claimed_by', claimed_by) FROM reaped;
   GET DIAGNOSTICS n = ROW_COUNT;
   RETURN n;
