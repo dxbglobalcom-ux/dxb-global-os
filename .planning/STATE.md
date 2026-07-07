@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 04
 current_phase_name: safety-rails-gates-cost-audit
 status: in-progress
-stopped_at: "04-01 COMPLETE (CEO checkpoint approved; pg-boss 12.25.1 in outbox-executor; LiteLLM healthy on shared Postgres schema litellm; SUMMARY on disk); NEXT ACTION: execute 04-02-PLAN.md (Wave 2 — 0007 budget_state + approval group FULL + dxb CLI)"
-last_updated: "2026-07-07T21:10:00.000Z"
+stopped_at: "04-02 COMPLETE (GATE-01 tool layer: budget_state live, approval group FULL, dxb CLI human-only decisions, suite 26/26); NEXT ACTION: execute 04-03-PLAN.md (Wave 3 — outbox executor LOCKED core + double-fire/TOCTOU + 0008 REVOKE TRUNCATE)"
+last_updated: "2026-07-07T21:40:00.000Z"
 last_activity: 2026-07-07
-last_activity_desc: 04-01 executed inline by Fable — toolset gate closed, LiteLLM container healthy
+last_activity_desc: 04-02 executed inline by Fable — draft-first enforced, decisions CLI-only, outbox birth trigger-proven
 progress:
   total_phases: 11
   completed_phases: 3
   total_plans: 22
-  completed_plans: 18
+  completed_plans: 19
   percent: 27
 ---
 
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 04 (safety-rails-gates-cost-audit) — IN PROGRESS (1/5 executed)
-Plan: 04-02 next (Wave 2 — 0007 budget_state migration + approval group FULL + tools/dxb-cli approve/reject)
-Status: 04-01 COMPLETE (summary: 04-01-SUMMARY.md; approval record: 04-01-legitimacy-approval.md); NEXT ACTION: execute 04-02-PLAN.md
-Last activity: 2026-07-07 — 04-01 executed (toolset gate: pg-boss install + LiteLLM container healthy)
+Phase: 04 (safety-rails-gates-cost-audit) — IN PROGRESS (2/5 executed)
+Plan: 04-03 next (Wave 3 — outbox executor LOCKED core + test.write_file + double-fire/TOCTOU tests + 0008 revoke TRUNCATE)
+Status: 04-02 COMPLETE (summary: 04-02-SUMMARY.md); NEXT ACTION: execute 04-03-PLAN.md
+Last activity: 2026-07-07 — 04-02 executed (GATE-01 tool layer: draft-first + CLI-only decisions + trigger-born outbox)
 
 Progress: [███░░░░░░░] 27%
 
@@ -69,6 +69,7 @@ Progress: [███░░░░░░░] 27%
 | Phase 03 P04 | 25min | 3 tasks | 15 files |
 | Phase 03 P05 | 15min | 3 tasks | 6 files |
 | Phase 04 P01 | 35min | 4 tasks | 12 files |
+| Phase 04 P02 | 30min | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -121,6 +122,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-07T21:10:00Z
-Stopped at: 04-01 COMPLETE — commits c38bada→9b63047; NEXT ACTION: execute 04-02-PLAN.md (autonomous, Wave 2)
+Last session: 2026-07-07T21:40:00Z
+Stopped at: 04-02 COMPLETE — commits 37e2110→01a3ada; NEXT ACTION: execute 04-03-PLAN.md (autonomous, Wave 3)
 Resume file: None
