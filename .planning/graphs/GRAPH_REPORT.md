@@ -1,16 +1,16 @@
 # Graph Report - DxB Global OS  (2026-07-07)
 
 ## Corpus Check
-- 172 files · ~216,024 words
+- 219 files · ~469,847 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1262 nodes · 1120 edges · 176 communities (114 shown, 62 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 1512 nodes · 1435 edges · 189 communities (124 shown, 65 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2b5064e3`
+- Built from commit: `cf764c4d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -188,9 +188,22 @@
 - [[_COMMUNITY_index.ts|index.ts]]
 - [[_COMMUNITY_index.ts|index.ts]]
 - [[_COMMUNITY_index.ts|index.ts]]
+- [[_COMMUNITY_Plan 03-03 Summary|Plan 03-03 Summary]]
+- [[_COMMUNITY_Plan 03-04 Summary|Plan 03-04 Summary]]
+- [[_COMMUNITY_Plan 03-05 Summary|Plan 03-05 Summary]]
+- [[_COMMUNITY_Fable 5 Phase Closure Verdict — Phase 3 COMPLETE|Fable 5 Phase Closure Verdict — Phase 3 COMPLETE]]
+- [[_COMMUNITY_phase3-lifecycle-battery.mjs|phase3-lifecycle-battery.mjs]]
+- [[_COMMUNITY_Plan 03-01 — Package Legitimacy Approval Record (Phase-3 toolset)|Plan 03-01 — Package Legitimacy Approval Record (Phase-3 toolset)]]
+- [[_COMMUNITY_db — schema authority|db/ — schema authority]]
+- [[_COMMUNITY_crash-worker.mjs|crash-worker.mjs]]
+- [[_COMMUNITY_03-01-PLAN|03-01-PLAN.md]]
+- [[_COMMUNITY_03-02-PLAN|03-02-PLAN.md]]
+- [[_COMMUNITY_03-03-PLAN|03-03-PLAN.md]]
+- [[_COMMUNITY_03-04-PLAN|03-04-PLAN.md]]
+- [[_COMMUNITY_03-05-PLAN|03-05-PLAN.md]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Communities (55 total, 4 thin omitted)` - 51 edges
+1. `Communities (176 total, 62 thin omitted)` - 112 edges
 2. `Phase 1: Security Baseline & Credential Remediation - Research` - 26 edges
 3. `Phase 2: Foundation & Integration Program - Research` - 21 edges
 4. `v1 Requirements` - 18 edges
@@ -202,12 +215,21 @@
 10. `Cross-AI Plan Review — Phase 1: Security Baseline & Credential Remediation` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
-- None detected - all connections are within the same source files.
+- `wipe()` --calls--> `getDb()`  [EXTRACTED]
+  tests/phase3/lifecycle.test.ts → packages/shared/src/db.ts
+- `registerAudit()` --calls--> `getDb()`  [INFERRED]
+  packages/dxb-mcp/src/groups/audit.ts → packages/shared/src/db.ts
+- `registerCost()` --calls--> `getDb()`  [INFERRED]
+  packages/dxb-mcp/src/groups/cost.ts → packages/shared/src/db.ts
+- `registerQueue()` --calls--> `getDb()`  [INFERRED]
+  packages/dxb-mcp/src/groups/queue.ts → packages/shared/src/db.ts
+- `registerQueue()` --references--> `TaskEnvelope`  [EXTRACTED]
+  packages/dxb-mcp/src/groups/queue.ts → packages/shared/src/envelope.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (176 total, 62 thin omitted)
+## Communities (189 total, 65 thin omitted)
 
 ### Community 0 - "Architecture Research"
 Cohesion: 0.06
@@ -247,7 +269,7 @@ Nodes (16): 2FA Enrollment (TOTP-first) — summary table, Architectural Respons
 
 ### Community 9 - "Cross-AI Plan Review — Phase 1 — Convergence Cycle 2"
 Cohesion: 0.12
-Nodes (15): 0001_operational_core.sql (birebir — LOCKED), 0002_registry.sql (birebir — LOCKED), 0003_approvals_outbox.sql (birebir — LOCKED), 0004_cost_audit.sql (birebir — LOCKED), 0005_memory_index.sql (çekirdek — Phase 6 genişletir), 0006_crm.sql (ince — Phase 8 UI'da render edilir), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar (+7 more)
+Nodes (16): 0001_operational_core.sql (birebir — LOCKED), 0002_registry.sql (birebir — LOCKED), 0003_approvals_outbox.sql (birebir — LOCKED), 0004_cost_audit.sql (birebir — LOCKED), 0005_memory_index.sql (çekirdek — Phase 6 genişletir), 0006_crm.sql (ince — Phase 8 UI'da render edilir), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar (+8 more)
 
 ### Community 10 - "Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary"
 Cohesion: 0.12
@@ -378,8 +400,8 @@ Cohesion: 0.67
 Nodes (3): Applicable ASVS Categories, Known Threat Patterns for this phase, Security Domain
 
 ### Community 43 - "Communities (43 total, 0 thin omitted)"
-Cohesion: 0.04
-Nodes (51): Communities (55 total, 4 thin omitted), Community 0 - "Architecture Research", Community 10 - "Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary", Community 11 - "Feature Research", Community 12 - "Per-Service Recipes (rotate → prove dead → record)", Community 13 - "Stack Research", Community 14 - "Phase 1 Plan 3: CEO Rotation Deliverables Summary", Community 15 - "Implementation Decisions" (+43 more)
+Cohesion: 0.02
+Nodes (112): Communities (176 total, 62 thin omitted), Community 0 - "Architecture Research", Community 100 - "Study Card: Context7", Community 101 - "Study Card: @modelcontextprotocol/sdk", Community 102 - "Study Card: pg-boss", Community 103 - "Study Card: playwright-mcp", Community 104 - "Study Card: Supabase (self-hosted platform)", Community 105 - "Study Card: Supabase CLI" (+104 more)
 
 ### Community 44 - "source-architecture-notes-sanitized.md"
 Cohesion: 0.11
@@ -387,7 +409,7 @@ Nodes (18): 1. Google Stitch Entegrasyonu (MCP & API), 1. Kernel / Orchestrator 
 
 ### Community 45 - "Graph Report - DxB Global OS  (2026-07-06)"
 Cohesion: 0.18
-Nodes (10): Community Hubs (Navigation), Corpus Check, God Nodes (most connected - your core abstractions), Graph Freshness, Graph Report - DxB Global OS  (2026-07-06), Import Cycles, Knowledge Gaps, Suggested Questions (+2 more)
+Nodes (10): Community Hubs (Navigation), Corpus Check, God Nodes (most connected - your core abstractions), Graph Freshness, Graph Report - DxB Global OS  (2026-07-07), Import Cycles, Knowledge Gaps, Suggested Questions (+2 more)
 
 ### Community 46 - "Plan 01-05 Summary — Source Document Sanitization"
 Cohesion: 0.33
@@ -418,8 +440,8 @@ Cohesion: 0.14
 Nodes (13): Architectural Responsibility Map, Assumptions Log, Don't Hand-Roll, Environment Availability, Metadata, Open Questions, Package Legitimacy Audit, Phase 2: Foundation & Integration Program - Research (+5 more)
 
 ### Community 57 - "package.json"
-Cohesion: 0.17
-Nodes (11): devDependencies, @types/node, typescript, vitest, name, packageManager, private, scripts (+3 more)
+Cohesion: 0.10
+Nodes (18): devDependencies, @modelcontextprotocol/sdk, supabase, @types/node, typescript, vitest, name, packageManager (+10 more)
 
 ### Community 58 - "package.json"
 Cohesion: 0.18
@@ -430,8 +452,8 @@ Cohesion: 0.18
 Nodes (10): dependencies, @dxb/shared, devDependencies, typescript, main, name, private, type (+2 more)
 
 ### Community 60 - "package.json"
-Cohesion: 0.18
-Nodes (10): dependencies, @dxb/shared, devDependencies, typescript, main, name, private, type (+2 more)
+Cohesion: 0.04
+Nodes (44): kysely, dependencies, @dxb/shared, kysely, @modelcontextprotocol/sdk, zod, devDependencies, @types/node (+36 more)
 
 ### Community 61 - "package.json"
 Cohesion: 0.18
@@ -474,15 +496,15 @@ Cohesion: 0.20
 Nodes (9): compilerOptions, declaration, declarationMap, esModuleInterop, module, moduleResolution, skipLibCheck, strict (+1 more)
 
 ### Community 71 - "package.json"
-Cohesion: 0.22
-Nodes (8): devDependencies, typescript, main, name, private, type, types, version
+Cohesion: 0.18
+Nodes (9): Classified, CORPUS, deptDirs, EXCLUDED_DIRS, personas, { Pool }, require, ROOT (+1 more)
 
 ### Community 72 - "MASTER-PLAN.md"
-Cohesion: 0.22
+Cohesion: 0.25
 Nodes (4): 1. Hedef + Kabul Kapısı (karşılandı), 2. Kalıcı Miraslar (sonraki fazların üstüne bastığı zemin), 3–6. (uygulanmaz — faz kapalı), PHASE 01 — Security Baseline & Credential Remediation ✅ KAPALI
 
 ### Community 73 - "PHASE 08 — CEO Dashboard & CRM"
-Cohesion: 0.22
+Cohesion: 0.20
 Nodes (9): 0011_broadcast_triggers.sql (kalıp — 3 tabloya uygulanır), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi (adım = commit), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, Onay inbox davranışı (LOCKED) (+1 more)
 
 ### Community 74 - "PHASE 11 — Outleteuro Pilot"
@@ -502,8 +524,8 @@ Cohesion: 0.25
 Nodes (7): compilerOptions, composite, outDir, rootDir, extends, include, references
 
 ### Community 78 - "tsconfig.json"
-Cohesion: 0.25
-Nodes (7): compilerOptions, composite, outDir, rootDir, extends, include, references
+Cohesion: 0.22
+Nodes (8): compilerOptions, composite, outDir, rootDir, types, extends, include, references
 
 ### Community 79 - "tsconfig.json"
 Cohesion: 0.25
@@ -534,11 +556,11 @@ Cohesion: 0.25
 Nodes (8): Bütçe-Fallback Protokolü (maddi kısıt senaryosu), DXB Global OS — MASTER PLAN, Faz İndeksi ve Bağımlılık Grafiği, Faz-Üstü Değişmezler (her fazda geçerli, pazarlıksız), Kaynaklar, Model Örgüsü (inşaat, governance v2), Nasıl Okunur, Yönetici Özeti (tek cümle)
 
 ### Community 86 - "PHASE 02 — Foundation & Integration Program (✅ TAMAMLANDI, 5/5)"
-Cohesion: 0.25
+Cohesion: 0.29
 Nodes (7): 1. Hedef + Kabul Kapısı, 2. LOCKED Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi (kalan), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, PHASE 02 — Foundation & Integration Program (✅ TAMAMLANDI, 5/5)
 
 ### Community 87 - "PHASE 10 — Department Activation Waves & Persona Factory"
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (8): 0013_quality_metrics.sql (çekirdek), 1. Hedef + Kabul Kapısı, 2. LOCKED Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi, 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, PHASE 10 — Department Activation Waves & Persona Factory
 
 ### Community 88 - "Phase 2 — Validation Strategy"
@@ -550,8 +572,8 @@ Cohesion: 0.29
 Nodes (6): compilerOptions, composite, outDir, rootDir, extends, include
 
 ### Community 90 - "PHASE 04 — Safety Rails: Gates, Cost, Audit"
-Cohesion: 0.29
-Nodes (6): 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar, 4. Adım Listesi (adım = commit), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, PHASE 04 — Safety Rails: Gates, Cost, Audit
+Cohesion: 0.15
+Nodes (12): 0007_budget_state.sql (birebir), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi (adım = commit), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, CI gate canary (GATE-04) (+4 more)
 
 ### Community 91 - "PHASE 09 — JARVIS Voice Layer"
 Cohesion: 0.29
@@ -570,8 +592,8 @@ Cohesion: 0.29
 Nodes (6): Deviations from plan, Fable verdict, Next, Plan 02-05 Summary, Verification evidence (executed), What was built
 
 ### Community 95 - "3. Dosya-Seviyesi Spec"
-Cohesion: 0.33
-Nodes (6): 0007_budget_state.sql (birebir), 3. Dosya-Seviyesi Spec, CI gate canary (GATE-04), LiteLLM config iskeleti (birebir başlangıç — key'ler env'den), Outbox executor çekirdeği (birebir — LOCKED), Subscription tagging hook (Agent SDK)
+Cohesion: 0.22
+Nodes (8): Criterion 1 — Full schema applies clean to a fresh DB, Criterion 2 — Full lifecycle through dxb-mcp queue tools + returned path, Criterion 3 — Crash test: kill -9 the claim owner, zero state loss, Criterion 4 — Legacy personas dormant in registry; new department creatable, Criterion 5 — One dxb-mcp server, 8 tool groups (4 full + 4 stub faces), Fable closure input, Phase 3 Verification — Gate Evidence Table, Requirements → evidence map
 
 ### Community 96 - "Plan 02-02 Summary"
 Cohesion: 0.33
@@ -606,8 +628,8 @@ Cohesion: 0.33
 Nodes (5): Install Command (recorded — NOT run in Phase 2), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Study Card: playwright-mcp
 
 ### Community 104 - "Study Card: Supabase (self-hosted platform)"
-Cohesion: 0.33
-Nodes (5): Install Command (recorded — NOT run in Phase 2), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Study Card: Supabase (self-hosted platform)
+Cohesion: 0.25
+Nodes (7): Deviations from plan, Fable verdict, Next, Plan 03-02 Summary, Security note (for Phase 4 hardening backlog), Verification evidence (executed), What was built
 
 ### Community 105 - "Study Card: Supabase CLI"
 Cohesion: 0.33
@@ -618,8 +640,8 @@ Cohesion: 0.33
 Nodes (5): Install Command (recorded — NOT run in Phase 2), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Study Card: @supabase/supabase-js
 
 ### Community 107 - "Study Card: Zod"
-Cohesion: 0.33
-Nodes (5): Install Command (recorded — NOT run in Phase 2), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Study Card: Zod
+Cohesion: 0.29
+Nodes (6): Deviations from plan, Fable verdict, Next, Plan 03-01 Summary, Verification evidence (executed), What was built
 
 ### Community 108 - "Validation Architecture"
 Cohesion: 0.40
@@ -653,16 +675,60 @@ Nodes (4): Primary (HIGH confidence), Secondary (MEDIUM confidence — WebSearch
 Cohesion: 0.67
 Nodes (3): Applicable ASVS Categories, Known Threat Patterns for this phase's stack, Security Domain
 
+### Community 167 - "index.ts"
+Cohesion: 0.10
+Nodes (25): registerApproval(), ok(), registerAudit(), ok(), registerCost(), registerCrm(), registerDashboard(), registerMemory() (+17 more)
+
+### Community 173 - "index.ts"
+Cohesion: 0.13
+Nodes (22): AgentsTable, ApprovalsTable, AuditLogTable, CostLedgerTable, CrmClientsTable, CrmContactsTable, CrmDealsTable, CrmRequestsTable (+14 more)
+
+### Community 176 - "Plan 03-03 Summary"
+Cohesion: 0.29
+Nodes (6): Deviations from plan, Fable verdict, Next, Plan 03-03 Summary, Verification evidence (executed), What was built
+
+### Community 177 - "Plan 03-04 Summary"
+Cohesion: 0.29
+Nodes (6): Deviations from plan, Fable verdict, Next, Plan 03-04 Summary, Verification evidence (executed), What was built
+
+### Community 178 - "Plan 03-05 Summary"
+Cohesion: 0.29
+Nodes (6): Deviations from plan, Fable verdict, Next, Plan 03-05 Summary, Verification evidence (executed), What was built
+
+### Community 179 - "Fable 5 Phase Closure Verdict — Phase 3 COMPLETE"
+Cohesion: 0.33
+Nodes (5): Commit chain (this phase), Fable 5 Phase Closure Verdict — Phase 3 COMPLETE, Gate criteria (all freshly machine-verified at closure — 03-VERIFICATION.md, status: passed), Notable engineering outcomes, Standing consequences
+
+### Community 180 - "phase3-lifecycle-battery.mjs"
+Cohesion: 0.47
+Nodes (5): call(), client, [ct, st], runLifecycle(), server
+
+### Community 181 - "Plan 03-01 — Package Legitimacy Approval Record (Phase-3 toolset)"
+Cohesion: 0.40
+Nodes (4): Approved install list (live npm registry evidence, fetched 2026-07-07), Build-script decision (CEO-approved), Chain, Plan 03-01 — Package Legitimacy Approval Record (Phase-3 toolset)
+
+### Community 182 - "db/ — schema authority"
+Cohesion: 0.50
+Nodes (3): db/ — schema authority, Environment, Local stack (X230 RAM budget)
+
+### Community 183 - "crash-worker.mjs"
+Cohesion: 0.50
+Nodes (3): leaseSeconds, { Pool }, require
+
 ## Knowledge Gaps
-- **902 isolated node(s):** `name`, `version`, `minAppVersion`, `author`, `authorUrl` (+897 more)
+- **1053 isolated node(s):** `name`, `version`, `minAppVersion`, `author`, `authorUrl` (+1048 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **62 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **65 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `Communities (176 total, 62 thin omitted)` connect `Communities (43 total, 0 thin omitted)` to `Graph Report - DxB Global OS  (2026-07-06)`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `Graph Report - DxB Global OS  (2026-07-07)` connect `Graph Report - DxB Global OS  (2026-07-06)` to `Communities (43 total, 0 thin omitted)`?**
+  _High betweenness centrality (0.002) - this node is a cross-community bridge._
 - **What connects `name`, `version`, `minAppVersion` to the rest of the system?**
-  _902 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1053 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Architecture Research` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
 - **Should `CLAUDE.md` be split into smaller, more focused modules?**
@@ -671,7 +737,3 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
 - **Should `v1 Requirements` be split into smaller, more focused modules?**
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
-- **Should `Critical Pitfalls` be split into smaller, more focused modules?**
-  _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
-- **Should `Credential Rotation Checklist (CEO-executed)` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._

@@ -33,7 +33,7 @@ Plan: —
 Status: Phase 3 COMPLETE (closure verdict: 03-FABLE-REVIEW.md); awaiting /gsd-plan-phase 4
 Last activity: 2026-07-07 — Phase 03 closed (5/5 plans, 10/10 battery, crash gate green)
 
-Progress: [█░░░░░░░░░] 9%
+Progress: [███░░░░░░░] 27%
 
 ## Performance Metrics
 
