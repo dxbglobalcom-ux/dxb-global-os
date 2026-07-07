@@ -96,6 +96,22 @@ describe("dxb-mcp queue lifecycle (gate criterion 2)", () => {
     );
   });
 
+  it("exposes all 8 tool groups on ONE server; stubs error cleanly without touching the DB (MCP-01)", async () => {
+    const { tools } = await client.listTools();
+    const names = tools.map((t) => t.name);
+    for (const prefix of ["queue_", "registry_", "audit_", "cost_", "memory_", "dashboard_", "crm_", "approval_"]) {
+      expect(names.some((n) => n.startsWith(prefix)), `missing group ${prefix}`).toBe(true);
+    }
+    expect(names.length).toBeGreaterThanOrEqual(17);
+
+    const res = await client.callTool({
+      name: "approval_request",
+      arguments: { task_id: "8f14e45f-ceea-4e17-a123-3c59e0b0a111", action_type: "email.send", payload: {} },
+    });
+    expect(res.isError).toBe(true);
+    expect((res.content as Array<{ text: string }>)[0].text).toContain("not yet active in this phase");
+  });
+
   it("rejects transition to returned without feedback (QUEUE-03)", async () => {
     const task = await call("queue_create_task", { ...ENVELOPE, department: "qa-isolated", objective: "feedbackless return attempt must fail loudly" });
     await call("queue_claim", { worker_id: "w", departments: ["qa-isolated"] });
