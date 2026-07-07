@@ -8,6 +8,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
+    "@dxb/cli": "workspace:*",
     "typescript": "catalog:",
     "@types/node": "catalog:",
     "vitest": "catalog:",

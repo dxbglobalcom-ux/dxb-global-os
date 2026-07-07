@@ -1,0 +1,17 @@
+{
+  "name": "@dxb/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": { "dxb": "dist/index.js" },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@dxb/shared": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

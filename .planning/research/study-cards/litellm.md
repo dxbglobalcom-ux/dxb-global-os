@@ -28,6 +28,7 @@
 - **Prisma needs DDL rights on first boot** to create the `litellm` schema — local dev uses the postgres superuser; VPS hardening revisits this in Phase 7.
 - **Redis NOT needed** at single-instance scale (CLAUDE.md compat table) — do not add a second stateful service.
 - **Secrets:** `master_key` + provider keys env-only (`os.environ/...` references in config.yaml; A8 vault pattern). Nothing keylike in the repo. Local throwaway values until CEO places real keys (04-04 Task 1).
+- **`supabase db reset` wipes the `litellm` schema too** (single shared DB): after any reset, `docker restart dxb_litellm` so Prisma recreates its 66 tables — verified 2026-07-07 (04-02 Task 1: post-reset restart → `/health/readiness` healthy, table count 66 again). Local-dev-only concern; VPS never resets.
 - **Model slugs are guessed nowhere** (no-guessing rule): every configured slug must appear in the live OpenRouter list — see verified table below.
 
 ## Verified OpenRouter slug table (live fetch `https://openrouter.ai/api/v1/models`, 343 models, verified 2026-07-07)
