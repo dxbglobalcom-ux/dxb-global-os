@@ -4,15 +4,15 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 04
 current_phase_name: safety-rails-gates-cost-audit
-status: ready-to-plan
-stopped_at: "Phase 3 COMPLETE (Fable closure verdict: 03-FABLE-REVIEW.md; 03-VERIFICATION status: passed, all 5 gate criteria fresh-verified); NEXT ACTION: /gsd-plan-phase 4"
-last_updated: "2026-07-07T01:10:00.000Z"
+status: ready-to-execute
+stopped_at: "Phase 4 PLANNED (04-01..04-05 on disk, Fable-authored under governance v4; ROADMAP Phase 4 section updated); NEXT ACTION: execute 04-01-PLAN.md (Wave 1 — toolset gate, autonomous:false, CEO supply-chain checkpoint)"
+last_updated: "2026-07-07T20:35:00.000Z"
 last_activity: 2026-07-07
-last_activity_desc: Phase 03 closed — schema live, dxb-mcp 8 groups, crash gate green
+last_activity_desc: Phase 04 planned — 5 wave plans written; next is 04-01 execution
 progress:
   total_phases: 11
   completed_phases: 3
-  total_plans: 17
+  total_plans: 22
   completed_plans: 17
   percent: 27
 ---
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-05)
 
 **Core value:** Anti-baby-sitting — the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward.
-**Current focus:** Phase 04 — safety-rails-gates-cost-audit (ready to plan)
+**Current focus:** Phase 04 — safety-rails-gates-cost-audit (PLANNED — executing)
 
 ## Current Position
 
-Phase: 04 (safety-rails-gates-cost-audit) — READY TO PLAN
-Plan: —
-Status: Phase 3 COMPLETE (closure verdict: 03-FABLE-REVIEW.md); awaiting /gsd-plan-phase 4
-Last activity: 2026-07-07 — Phase 03 closed (5/5 plans, 10/10 battery, crash gate green)
+Phase: 04 (safety-rails-gates-cost-audit) — PLANNED (0/5 executed)
+Plan: 04-01 (Wave 1 — toolset gate: litellm FULL card + CEO supply-chain checkpoint + pg-boss install + LiteLLM container)
+Status: Phase 3 COMPLETE (closure verdict: 03-FABLE-REVIEW.md); Phase 4 plans 04-01..04-05 on disk; NEXT ACTION: execute 04-01-PLAN.md
+Last activity: 2026-07-07 — Phase 04 planned (5 wave plans, governance v4, Fable-authored)
 
 Progress: [███░░░░░░░] 27%
 
@@ -120,6 +120,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-06T23:20:00Z
-Stopped at: Phase 3 COMPLETE — 5/5 plans executed inline by Fable (v4); crash gate caught+fixed a real LOCKED-SQL reaper bug; NEXT ACTION: /gsd-plan-phase 4
+Last session: 2026-07-07T20:35:00Z
+Stopped at: Phase 4 PLANNED — 04-01..04-05 written (Fable, governance v4); NEXT ACTION: execute 04-01-PLAN.md (CEO supply-chain checkpoint inside)
 Resume file: None

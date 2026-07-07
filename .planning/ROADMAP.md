@@ -86,16 +86,16 @@ Plans:
 **Wave 1**
 
 - [x] 02-01-PLAN.md — Monorepo scaffold: pnpm workspace root (catalog) + 9 buildable TS projects mirroring the architecture, no Phase-3+ deps (INTEG-01)
-- [ ] 02-04-PLAN.md — Integration tracker: INTEGRATION-TRACKER.md (all §8B rows + excluded + re-admission log) + 9 full Phase-3-toolset study cards (INTEG-01, INTEG-02)
+- [x] 02-04-PLAN.md — Integration tracker: INTEGRATION-TRACKER.md (all §8B rows + excluded + re-admission log) + 9 full Phase-3-toolset study cards (INTEG-01, INTEG-02)
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 02-02-PLAN.md — Package-legitimacy human-verify checkpoint for vitest + @types/node before install (INTEG-01, checkpoint)
-- [ ] 02-05-PLAN.md — Retroactive + stub study cards (full coverage) + machine-checkable tracker-integrity validator (INTEG-01, INTEG-02)
+- [x] 02-02-PLAN.md — Package-legitimacy human-verify checkpoint for vitest + @types/node before install (INTEG-01, checkpoint)
+- [x] 02-05-PLAN.md — Retroactive + stub study cards (full coverage) + machine-checkable tracker-integrity validator (INTEG-01, INTEG-02)
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 02-03-PLAN.md — Corepack pnpm activation + install + `tsc --build` + vitest smoke: skeleton installs and builds clean (INTEG-01)
+- [x] 02-03-PLAN.md — Corepack pnpm activation + install + `tsc --build` + vitest smoke: skeleton installs and builds clean (INTEG-01)
 
 ### Phase 3: State Layer & dxb-mcp Core
 
@@ -136,7 +136,19 @@ Plans:
   4. All API model calls flow through LiteLLM with per-department virtual keys: the 70% alert fires and the 100% hard-stop blocks non-critical calls in a forced test, and the velocity circuit breaker trips on a simulated retry storm before budget exhaustion — 24/7, including unattended hours
   5. Every prompt, tool call, and decision lands in the append-only audit log tagged with mode (`subscription`/`api`/`free-tier`), model, tokens, department, and task — a task's full causal chain is reconstructable, including subscription-mode calls tagged via Agent SDK hooks
 
-**Plans**: TBD
+**Plans**: 0/5 executed — PLANNED (Fable-authored, governance v4)
+
+Plans:
+**Wave 1**
+- [ ] 04-01: Toolset kapısı — litellm FULL card + CEO checkpoint (pg-boss npm + imaj + doğrulanmış slug'lar) + pg-boss→outbox-executor + LiteLLM container healthy (shared Postgres, schema litellm)
+**Wave 2**
+- [ ] 04-02: 0007 budget_state + approval grubu TAM (draft/finalize/list — karar YOK) + tools/dxb-cli approve/reject
+**Wave 3**
+- [ ] 04-03: Outbox executor (LOCKED çekirdek) + test.write_file + double-fire/TOCTOU testleri + 0008 REVOKE TRUNCATE
+**Wave 4**
+- [ ] 04-04: Cost ailesi — CEO key checkpoint, virtual keys, hard-stop kanıtı, velocity breaker (pg-boss cron), subscription hook, dxb breaker reset
+**Wave 5**
+- [ ] 04-05: CI gate-canary (3 LOCKED senaryo + negatif kontrol) + causal-chain kanıtı + 04-VERIFICATION
 
 ### Phase 5: Kernel & Orchestrator Core Loop
 
@@ -250,9 +262,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Security Baseline & Credential Remediation | 6/6 | Complete | 2026-07-06 |
-| 2. Foundation & Integration Program | 1/5 | In Progress|  |
-| 3. State Layer & dxb-mcp Core | 0/TBD | Not started | - |
-| 4. Safety Rails — Gates, Cost, Audit | 0/TBD | Not started | - |
+| 2. Foundation & Integration Program | 5/5 | Complete | 2026-07-06 |
+| 3. State Layer & dxb-mcp Core | 5/5 | Complete | 2026-07-07 |
+| 4. Safety Rails — Gates, Cost, Audit | 0/5 | Planned | - |
 | 5. Kernel & Orchestrator Core Loop | 0/TBD | Not started | - |
 | 6. Memory Router & Knowledge Stores | 0/TBD | Not started | - |
 | 7. MCP Gateway & 24/7 VPS Runtime | 0/TBD | Not started | - |
