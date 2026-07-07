@@ -6,12 +6,18 @@ export { PACKAGE };
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerQueue } from "./groups/queue.js";
+import { registerRegistry } from "./groups/registry.js";
+import { registerAudit } from "./groups/audit.js";
+import { registerCost } from "./groups/cost.js";
 
 // One server, eight tool groups (MCP-01). Groups register incrementally
 // across plan 03-04's tasks; this factory is the single assembly point.
 export function createDxbMcpServer(): McpServer {
   const server = new McpServer({ name: "dxb-mcp", version: "0.1.0" });
   registerQueue(server);
+  registerRegistry(server);
+  registerAudit(server);
+  registerCost(server);
   return server;
 }
 
