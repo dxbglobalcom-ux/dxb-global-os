@@ -21,15 +21,17 @@
 - **02-RESEARCH Pitfall 2 (CRITICAL):** pg-boss relies on `SELECT ... FOR UPDATE SKIP LOCKED` + session-level behavior. It MUST use the **direct session-mode connection (port 5432)** — never PgBouncer/Supavisor transaction-mode pooling, which breaks session-scoped features. Self-hosted same-box makes the direct connection free. Warning signs: intermittent LISTEN/NOTIFY failures, advisory-lock errors under load.
 - LISTEN/NOTIFY is a latency optimization, not a delivery guarantee — workers must also poll (architecture research).
 
-## Install Command (recorded — NOT run in Phase 2)
+## Install Command (executed 2026-07-07, Phase 4 / 04-01 — CEO checkpoint first)
 ```bash
-pnpm add pg-boss@12.25.1 --filter @dxb/workers
+# catalog: pg-boss: 12.25.1 in pnpm-workspace.yaml; dependency ONLY in packages/outbox-executor
+# (earlier draft said @dxb/workers — superseded by 04-01 recorded decision: single scheduler process)
+pnpm install
 ```
 
 - **Legitimacy Verdict:** OK — established repo (timgit/pg-boss), locked stack
 
 ## Lifecycle Checklist
 - [x] STUDY
-- [ ] INSTALL
+- [x] INSTALL (2026-07-07, 04-01 — outbox-executor only)
 - [ ] ADOPT
 - [ ] EMBED
