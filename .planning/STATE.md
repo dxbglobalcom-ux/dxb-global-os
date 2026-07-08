@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 05
 current_phase_name: kernel-orchestrator-core-loop
 status: executing
-stopped_at: "05-04 COMPLETE (persona v2 first batch: 5 product personas Fable-authored inline at personas/product/, registry flipped v2.0-fable via apply-persona-v2.ts; reset round-trip PROVEN live — db reset → 3-seeder order → 5×v2 + 153 agents + 19 routing rules; suite 50 passed/8 skipped; commits 01870af+d488562; ADAPT-5 = role sync in flip script, product-manager worker→head). NEXT ACTION: /gsd-execute-phase 05 → plan 05-05"
-last_updated: "2026-07-08T14:00:00.000Z"
+stopped_at: "05-05 COMPLETE (orchestrator spine: decompose.ts LLM-boxed drafting + self-contained lint + hop<=3, dispatch.ts one-transaction queue writer with depends_on uuids, worker-shim.ts claim→work→review with confidence surfaced; live decompose 4 envelopes chain-depth 3; e2e 5-event chain done; dependency-order claim PROVEN live; suite 59 passed/9 skipped; commits 44e3870+315664f+9fb88e8; ADAPT-6 = SDK_MODEL_IDS export from kernel). NEXT ACTION: /gsd-execute-phase 05 → plan 05-06"
+last_updated: "2026-07-08T14:20:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 05-04 complete — persona v2 batch live (criterion 6 precondition met)
+last_activity_desc: 05-05 complete — orchestrator spine live (master-plan steps 4+5 closed)
 progress:
   total_phases: 11
   completed_phases: 4
   total_plans: 30
-  completed_plans: 25
-  percent: 40
+  completed_plans: 26
+  percent: 42
 ---
 
 # Project State
@@ -29,11 +29,11 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 05 (kernel-orchestrator-core-loop) — EXECUTING
-Plan: 4 of 9 complete (next: 05-05)
+Plan: 5 of 9 complete (next: 05-06)
 Status: Executing Phase 05
-Last activity: 2026-07-08 — 05-04 complete (persona v2 batch live)
+Last activity: 2026-07-08 — 05-05 complete (orchestrator spine live)
 
-Progress: [████░░░░░░] 40%
+Progress: [████░░░░░░] 42%
 
 ## Performance Metrics
 
