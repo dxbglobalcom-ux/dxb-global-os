@@ -200,7 +200,33 @@ Plans:
   3. Graphify knowledge graph and open-notebook research brain are integrated after their study passes, and a known-fact retrieval test validates routing quality across the store composition
   4. A long-running task stays inside a clean context via compression (headroom), summaries, and memory offloading — demonstrated against a context-rot scenario
 
-**Plans**: TBD
+**Plans**: 8 plans
+
+Plans:
+
+**Wave 1**
+- [ ] 06-01-PLAN.md — Toolset study→install: 5 cards filled, open-notebook local, embedding pin, dxb-os key, glm-5.2 proof (step 1)
+
+**Wave 2**
+- [ ] 06-02-PLAN.md — Routing-quality spike: 20 known facts, >=16/20 gate, ⛔ FABLE composition decision on FAIL (step 2)
+
+**Wave 3**
+- [ ] 06-03-PLAN.md — memory_embeddings migration [ADAPT 0009→0010] + llmEmbed + pgvector adapter round-trip (step 3)
+
+**Wave 4**
+- [ ] 06-04-PLAN.md — write-policy LOCKED rules 1-5 + memory_commit + contradiction flag + dxb promote CLI-only (steps 4+6)
+
+**Wave 5**
+- [ ] 06-05-PLAN.md — classify-read + memory_recall (trusted default, audited quarantine) + poisoning close (steps 5+7)
+
+**Wave 6**
+- [ ] 06-06-PLAN.md — graphify/notebook adapters + claude-mem pointer sync + per-store round-trips (step 8)
+
+**Wave 7**
+- [ ] 06-07-PLAN.md — Context-rot demo: 50-step band, summarize+offload through the door, measurement log (step 9)
+
+**Wave 8**
+- [ ] 06-08-PLAN.md — Compaction cron + known-fact battery >=18/20 + 06-VERIFICATION + FABLE verdict (step 10)
 
 ### Phase 7: MCP Gateway & 24/7 VPS Runtime
 

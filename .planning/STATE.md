@@ -2,19 +2,19 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-current_phase: 05
-current_phase_name: kernel-orchestrator-core-loop
-status: phase_complete
-stopped_at: "PHASE 5 COMPLETE — I9 exit gate PASSED 10/10 (slice-10of10.sh exit 0, 2026-07-08 20:47–20:55; per-run asserts: done + contiguous event chain + artifact + audit + council-silent; persona v2 gate proven blocking red→green; behavioral-determinism signature identical 10/10). Adaptations recorded in 05-09-SUMMARY: [ADAPT-4] routing seed +content.outbound L4 sonnet-5 subscription priority-20 row (worker tier-lookup off api/no-key path); [DEVIATION→05-05] decompose single-path output_contract bans invented facts / demands [placeholders] (honest-confidence root cause, events 25→6); signature refined to class|complexity|task_depts|tiers after first attempt FAILed run 3 on advisory ci.departments wander (re-ran from run 1). Verdict FABLE-ONLY in 05-VERIFICATION.md. Commits a6f7d69+3e0051c+ef9d58f+(closure). NEXT ACTION: /gsd-plan-phase 06 (Memory Router & Knowledge Stores; LOW-confidence memory-store composition spike in Blockers)"
-last_updated: "2026-07-08T19:00:00.000Z"
+current_phase: 06
+current_phase_name: memory-router-knowledge-stores
+status: phase_planned
+stopped_at: "PHASE 6 PLANNED — 8 plans (06-01..06-08), Fable-authored inline (v5 governance: no planner subagent), derived from master-plan/PHASE-06.md. Sequence: 01 study→install (5 cards + open-notebook local + embedding-model pin + dxb-os key + glm-5.2 reachability) → 02 ROUTING-QUALITY SPIKE (LOW-confidence composition gate: >=16/20 or ⛔ FABLE composition decision + MEM-03 ROADMAP flag; checkpoint) → 03 memory_embeddings migration [ADAPT: 0009→20260709000010; sync-embed LOCKED-interpretation recorded] + llmEmbed + pgvector adapter → 04 write-policy LOCKED rules 1-5 + memory_commit + contradiction + dxb promote (CLI-only) → 05 classify-read + memory_recall (trusted default, audited quarantine access) + poisoning close → 06 graphify/notebook/claude-mem-pointer adapters + round-trips → 07 context-rot demo (50-step band + offload; MEM-04) → 08 compaction cron + known-fact battery >=18/20 + 06-VERIFICATION (⛔ FABLE verdict; checkpoint). NEXT ACTION: /gsd-execute-phase 06 (start 06-01)"
+last_updated: "2026-07-08T21:40:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: Phase 5 CLOSED — 10/10 exit gate passed, FABLE verdict recorded (master-plan steps 9-10)
+last_activity_desc: Phase 6 planned — 8 PLAN.md files authored inline by Fable, spike gate first-class
 progress:
   total_phases: 11
   completed_phases: 5
-  total_plans: 30
+  total_plans: 38
   completed_plans: 30
-  percent: 51
+  percent: 53
 ---
 
 # Project State
@@ -24,16 +24,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-05)
 
 **Core value:** Anti-baby-sitting — the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward.
-**Current focus:** Phase 05 — kernel-orchestrator-core-loop
+**Current focus:** Phase 06 — memory-router-knowledge-stores
 
 ## Current Position
 
-Phase: 05 (kernel-orchestrator-core-loop) — COMPLETE (I9 exit gate 10/10 PASSED)
-Plan: 9 of 9 complete
-Status: Phase 05 closed on evidence (05-VERIFICATION.md, FABLE verdict); next: /gsd-plan-phase 06
-Last activity: 2026-07-08 — Phase 5 closed — 10/10 exit gate, FABLE verdict
+Phase: 06 (memory-router-knowledge-stores) — PLANNED (8 plans, Fable-authored inline)
+Plan: 0 of 8 executed
+Status: Plans committed; spike gate (06-02) is the phase's LOW-confidence checkpoint; next: /gsd-execute-phase 06
+Last activity: 2026-07-08 — Phase 6 planned: 8 PLAN.md derived from master-plan/PHASE-06.md
 
-Progress: [█████░░░░░] 51%
+Progress: [█████░░░░░] 53%
 
 ## Performance Metrics
 
