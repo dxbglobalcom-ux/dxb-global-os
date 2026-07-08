@@ -2,3 +2,6 @@ import { PACKAGE } from "@dxb/shared";
 
 export const OWNER = "orchestrator" as const;
 export { PACKAGE };
+
+export { decompose, lintBatch, chainDepth } from "./decompose.js";
+export type { DecomposedEnvelope } from "./decompose.js";

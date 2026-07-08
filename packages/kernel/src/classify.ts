@@ -22,7 +22,9 @@ export type ClassifiedIntent = z.infer<typeof ClassifiedIntent>;
 // Brain-map row values → CLI model ids. Mechanical translation ONLY — the
 // choice lives in routing_rules; unknown values pass through unchanged so a
 // full CLI id can ship as pure data with zero code change.
-const SDK_MODEL_IDS: Record<string, string> = {
+// Exported: orchestrator SDK calls (decompose/worker-shim) reuse this map so
+// no model-name literal ever appears outside the kernel translation layer.
+export const SDK_MODEL_IDS: Record<string, string> = {
   "fable-5": "claude-fable-5",
   "opus-4.8": "claude-opus-4-8",
   "sonnet-5": "claude-sonnet-5",
