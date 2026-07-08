@@ -47,7 +47,10 @@ async function runQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
       model: SDK_MODEL_IDS[own.model] ?? own.model,
       effort: own.effort as "low" | "medium" | "high" | "max",
       tools: [],
-      maxTurns: 1,
+      // NOT 1: structured output is delivered via an internal StructuredOutput
+      // tool call — with a single turn the SDK cannot retry when the model
+      // answers inline first (observed live on opus-4.8 effort=high).
+      maxTurns: 4,
       outputFormat: { type: "json_schema", schema: z.toJSONSchema(ClassifiedIntent) },
     },
   });
@@ -55,8 +58,12 @@ async function runQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
     if (msg.type === "result") {
       if (msg.subtype === "success") {
         if (msg.structured_output !== undefined) return msg.structured_output;
+        // Mechanical unwrap only (``` fences); ClassifiedIntent.parse stays the
+        // sole decision gate — this is not a free-text fallback.
+        const text = msg.result.trim();
+        const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/);
         try {
-          return JSON.parse(msg.result);
+          return JSON.parse((fenced ? fenced[1] : text).trim());
         } catch {
           return msg.result;
         }
