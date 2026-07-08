@@ -4,15 +4,15 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 05
 current_phase_name: kernel-orchestrator-core-loop
-status: phase-complete
-stopped_at: "PHASE 4 COMPLETE (04-FABLE-REVIEW.md APPROVED: canary 3 locked scenarios + flip control green 3x and required in pnpm test, gate-canary.yml self-arming [remote run ⚠ UNVERIFIED — no GitHub remote], audit_trace full causal chain proven, live hard-stop 400 ExceededBudget + velocity trip re-proven at closure, tracker pg-boss/litellm EMBED, 04-VERIFICATION passed); NEXT ACTION: /gsd-plan-phase 05 (Kernel & Orchestrator Core Loop — persona v2 precondition, PHASE-05 criterion 6)"
-last_updated: "2026-07-08T09:50:00.000Z"
+status: ready-to-execute
+stopped_at: "PHASE 5 PLANNED (9 plans / 6 waves / 23 tasks, commit 0eef3b9; Fable verdict PLANNED ✓ — all 10 master-plan steps + 8 LOCKED decisions mapped, 7/7 REQ covered, persona-v2 precondition = wave-2 plan 05-04 with gate enforcement in slice-10of10.sh, ADAPT-1/2/3 recorded, ADAPT-4 reserved); NEXT ACTION: /gsd-execute-phase 05 (wave 1: 05-01 SDK study→CEO checkpoint→install + 05-02 routing migration/seed/[BLOCKING] schema push)"
+last_updated: "2026-07-08T10:55:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 04-05 executed inline by Fable + Phase 4 closed (GATE-04 + COST-01 evidenced; all 5 gate criteria fresh)
+last_activity_desc: Phase 5 planned (gsd-planner on Fable model; Fable read all 9 plans personally, verdict PLANNED)
 progress:
   total_phases: 11
   completed_phases: 4
-  total_plans: 22
+  total_plans: 31
   completed_plans: 22
   percent: 36
 ---
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 04 (safety-rails-gates-cost-audit) — COMPLETE (5/5 executed; 04-FABLE-REVIEW.md APPROVED 2026-07-08)
-Plan: Phase 5 planning next (/gsd-plan-phase 05 — Kernel & Orchestrator Core Loop)
-Status: PHASE 4 CLOSED — canary armed (local-required; CI self-arms on first push), causal chain proven, cost rails live-re-proven at closure
-Last activity: 2026-07-08 — 04-05 executed + phase closure (gate-canary 5/5 ×3, audit_trace chain, tracker EMBED, 04-VERIFICATION passed)
+Phase: 05 (kernel-orchestrator-core-loop) — PLANNED (9 plans / 6 waves; Fable verdict PLANNED ✓ 2026-07-08, commit 0eef3b9)
+Plan: Execute next (/gsd-execute-phase 05) — wave 1: 05-01 (Agent SDK 0.3.201 study→CEO checkpoint→install), 05-02 (routing_and_deps migration + brain-map seed + [BLOCKING] schema push)
+Status: PHASE 5 READY TO EXECUTE — exit gate: intent→kernel→worker→QA→approval→recorded-result slice 10/10 (I9); persona-v2 precondition enforced in gate script; 1 blocking CEO checkpoint (05-01 npm supply chain)
+Last activity: 2026-07-08 — Phase 5 planned from MASTER-PLAN PHASE-05 (no CONTEXT/RESEARCH — canonical source, per 03/04 precedent); ADAPT-1 (migration filename 20260708000009), ADAPT-2 (LiteLLM model strings), ADAPT-3 (effort enum) recorded
 
 Progress: [████░░░░░░] 36%
 
