@@ -1,14 +1,17 @@
 #!/usr/bin/env node
-// dxb — human-only decision CLI (GATE-01). Two live commands + one placeholder:
+// dxb — human-only decision CLI (GATE-01 + COST-03). Three live commands:
 //   dxb approve <id>
 //   dxb reject <id> --note <text>
-//   dxb breaker reset          (arrives in 04-04 with the velocity breaker)
-// Hand-rolled arg parsing: two commands do not justify a dependency.
+//   dxb breaker reset --confirm
+// Hand-rolled arg parsing: three commands do not justify a dependency.
 import { closeDb } from "@dxb/shared";
 import { approve, reject, DecisionError } from "./approve.js";
+import { resetBreaker } from "./breaker.js";
 
 function usage(): never {
-  console.error("usage: dxb approve <id> | dxb reject <id> --note <text> | dxb breaker reset");
+  console.error(
+    "usage: dxb approve <id> | dxb reject <id> --note <text> | dxb breaker reset --confirm",
+  );
   process.exit(2);
 }
 
@@ -31,8 +34,13 @@ async function main(): Promise<number> {
     }
     case "breaker": {
       if (rest[0] !== "reset") usage();
-      console.error("dxb breaker reset arrives in 04-04 (velocity breaker)");
-      return 2;
+      const result = await resetBreaker({ confirm: rest.includes("--confirm") });
+      console.log(
+        `breaker reset (was_tripped=${result.was_tripped}); ` +
+          `unblocked: ${result.unblocked_aliases.join(", ") || "none"}` +
+          (result.unblock_errors.length ? `; errors: ${result.unblock_errors.join(" | ")}` : ""),
+      );
+      return result.unblock_errors.length ? 1 : 0;
     }
     default:
       usage();
