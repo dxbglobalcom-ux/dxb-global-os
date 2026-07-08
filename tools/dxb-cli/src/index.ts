@@ -4,15 +4,17 @@
 //   dxb approve <id>
 //   dxb reject <id> --note <text>
 //   dxb breaker reset --confirm
-// Hand-rolled arg parsing: four commands do not justify a dependency.
+//   dxb promote <index-id>
+// Hand-rolled arg parsing: five commands do not justify a dependency.
 import { closeDb } from "@dxb/shared";
 import { approve, reject, DecisionError } from "./approve.js";
 import { resetBreaker } from "./breaker.js";
 import { intent, IntentError } from "./intent.js";
+import { promote, PromoteError } from "./promote.js";
 
 function usage(): never {
   console.error(
-    'usage: dxb intent "<text>" | dxb approve <id> | dxb reject <id> --note <text> | dxb breaker reset --confirm',
+    'usage: dxb intent "<text>" | dxb approve <id> | dxb reject <id> --note <text> | dxb breaker reset --confirm | dxb promote <index-id>',
   );
   process.exit(2);
 }
@@ -52,6 +54,19 @@ async function main(): Promise<number> {
       console.log(`rejected ${row.id} (note recorded)`);
       return 0;
     }
+    case "promote": {
+      const [id, ...extra] = rest;
+      if (!id || extra.length > 0) usage();
+      const out = await promote(id);
+      console.log(
+        out.action === "promoted"
+          ? `promoted ${out.promoted} to trusted` +
+              (out.superseded ? ` (superseded ${out.superseded})` : "") +
+              ` — ${out.model}: ${out.reason}`
+          : `promotion declined for ${out.promoted} (stays quarantined) — ${out.model}: ${out.reason}`,
+      );
+      return 0;
+    }
     case "breaker": {
       if (rest[0] !== "reset") usage();
       const result = await resetBreaker({ confirm: rest.includes("--confirm") });
@@ -72,7 +87,11 @@ try {
   await closeDb();
   process.exit(code);
 } catch (e) {
-  console.error(e instanceof DecisionError || e instanceof IntentError ? `error: ${e.message}` : e);
+  console.error(
+    e instanceof DecisionError || e instanceof IntentError || e instanceof PromoteError
+      ? `error: ${e.message}`
+      : e,
+  );
   await closeDb().catch(() => {});
   process.exit(1);
 }

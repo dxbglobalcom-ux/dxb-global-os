@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 06
 current_phase_name: memory-router-knowledge-stores
 status: executing
-stopped_at: "PHASE 6 EXECUTING — 06-03 COMPLETE: memory_embeddings live (20260709000010, hnsw cosine, vector(1536)=card pin, reset-replayed), llmEmbed = ONE proxy surface (/embeddings only in litellm.ts, T-06-09 bounds), pgvector adapter writeEmbedding+cosineSearch with shared liveMemoryFilter (trusted default, T-06-07/08) — tests 5/5 green, full suite 76 pass/11 skip. Post-reset chain executed: seeds re-applied (memory.classify back count=1), litellm healthy, dxb-os RE-MINTED (.env refreshed, A8). LOCKED-interpretation recorded: sync embed inside commitMemory (06-04), not async trigger. NEXT: 06-04 write-policy.ts + memory.commit (quarantine rules, contradiction check on cosineSearch >=0.85)"
-last_updated: "2026-07-08T23:58:00.000Z"
-last_activity: 2026-07-08
-last_activity_desc: 06-03 pgvector store real — migration + llmEmbed + adapter, live round-trip green
+stopped_at: "PHASE 6 EXECUTING — 06-04 COMPLETE: single write door live (commitMemory, LOCKED rules 1→2→4+5data; KIND_STORE spike composition; StoreNotWired loud for graphify/notebook until 06-06), obsidian adapter (memory-store/ gitignored, frontmatter contract), memory_commit MCP real (memory_route retired, probe→dashboard_feed, NO memory_promote tool — CLI-only dxb promote via memory.promote row sonnet-5). Poisoning quarantine + contradiction→promote superseded_by chain proven deterministically + one LIVE run (real embed + glm-5.2 judge → quarantined+contradicts). Full suite 84 pass/12 skip. meta rides in provenance jsonb (no schema change, recorded). NEXT: 06-05 classify-read.ts (spike prompt VERBATIM, hash 2eeccfde…) + memory.recall (trusted default, include-quarantined + audit)"
+last_updated: "2026-07-09T00:20:00.000Z"
+last_activity: 2026-07-09
+last_activity_desc: 06-04 write door — quarantine/contradiction/promote proven, live judge run recorded
 progress:
   total_phases: 11
   completed_phases: 5
   total_plans: 38
-  completed_plans: 31
+  completed_plans: 32
   percent: 53
 ---
 
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 06 (memory-router-knowledge-stores) — EXECUTING
-Plan: 3 of 8 executed (06-01 study→install, 06-02 spike PASS 20/20, 06-03 pgvector store)
-Status: Semantic backbone live — memory_embeddings + llmEmbed + adapter (round-trip 5/5); next: 06-04 write-policy.ts + memory.commit
-Last activity: 2026-07-08 — 06-03 migration + llmEmbed + pgvector adapter green
+Plan: 4 of 8 executed (06-01 study→install, 06-02 spike 20/20, 06-03 pgvector, 06-04 write door)
+Status: Write path complete — quarantine/contradiction/promote proven (live judge run recorded); next: 06-05 classify-read + memory.recall
+Last activity: 2026-07-09 — 06-04 single write door + CLI-only promote green
 
 Progress: [█████░░░░░] 53%
 

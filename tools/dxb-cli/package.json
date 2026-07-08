@@ -7,9 +7,11 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "catalog:",
     "@dxb/kernel": "workspace:*",
     "@dxb/orchestrator": "workspace:*",
     "@dxb/shared": "workspace:*",
+    "kysely": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {

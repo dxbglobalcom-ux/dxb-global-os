@@ -45,3 +45,8 @@ tmp/
 
 # open-notebook local secret carrier (06-01; A8 — value never committed)
 vps/open-notebook/secrets.local
+
+# memory router runtime notes (06-04 DESIGN DECISION): router-written memories
+# are runtime data — vault-visible locally, never auto-committed (durability =
+# disk + memory_index + audit trail; VPS backup owns the rest at Phase 7)
+memory-store/

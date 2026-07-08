@@ -19,5 +19,6 @@
   { "task_class": "research.synthesis", "match": {}, "model_tier": "L2", "model": "sonnet-5", "mode": "subscription", "effort": "medium", "needs_council": false, "priority": 0 },
   { "task_class": "content.outbound", "match": {}, "model_tier": "L4", "model": "sonnet-5", "mode": "subscription", "effort": "medium", "needs_council": true, "priority": 0 },
   { "task_class": "content.outbound", "match": { "keyword": "listeleme" }, "model_tier": "L4", "model": "sonnet-5", "mode": "subscription", "effort": "medium", "needs_council": true, "priority": 20 },
-  { "task_class": "memory.classify", "match": {}, "model_tier": "L4", "model": "glm-5.2", "mode": "api", "effort": "low", "needs_council": false, "priority": 10 }
+  { "task_class": "memory.classify", "match": {}, "model_tier": "L4", "model": "glm-5.2", "mode": "api", "effort": "low", "needs_council": false, "priority": 10 },
+  { "task_class": "memory.promote", "match": {}, "model_tier": "L2", "model": "sonnet-5", "mode": "subscription", "effort": "high", "needs_council": false, "priority": 10 }
 ]
