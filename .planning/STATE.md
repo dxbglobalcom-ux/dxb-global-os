@@ -2,19 +2,19 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-current_phase: 04
-current_phase_name: safety-rails-gates-cost-audit
-status: in-progress
-stopped_at: "04-04 COMPLETE (cost rails live: dept virtual keys + real-call spend proof, hard-stop 400 ExceededBudget audited, velocity breaker trips <1 cycle + live key block + audited ceo:cli reset, ONE pg-boss scheduler tick15s/reaper60s/breaker5min, subscription hook row proven; suite 42/42; gitleaks clean); NEXT ACTION: execute 04-05-PLAN.md (Wave 5 — CI gate-canary + phase closure)"
-last_updated: "2026-07-08T00:55:00.000Z"
+current_phase: 05
+current_phase_name: kernel-orchestrator-core-loop
+status: phase-complete
+stopped_at: "PHASE 4 COMPLETE (04-FABLE-REVIEW.md APPROVED: canary 3 locked scenarios + flip control green 3x and required in pnpm test, gate-canary.yml self-arming [remote run ⚠ UNVERIFIED — no GitHub remote], audit_trace full causal chain proven, live hard-stop 400 ExceededBudget + velocity trip re-proven at closure, tracker pg-boss/litellm EMBED, 04-VERIFICATION passed); NEXT ACTION: /gsd-plan-phase 05 (Kernel & Orchestrator Core Loop — persona v2 precondition, PHASE-05 criterion 6)"
+last_updated: "2026-07-08T09:50:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 04-04 executed inline by Fable — COST-01/02/03 + KERN-03 enforced and machine-proven
+last_activity_desc: 04-05 executed inline by Fable + Phase 4 closed (GATE-04 + COST-01 evidenced; all 5 gate criteria fresh)
 progress:
   total_phases: 11
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 22
-  completed_plans: 21
-  percent: 27
+  completed_plans: 22
+  percent: 36
 ---
 
 # Project State
@@ -24,16 +24,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-05)
 
 **Core value:** Anti-baby-sitting — the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward.
-**Current focus:** Phase 04 — safety-rails-gates-cost-audit (PLANNED — executing)
+**Current focus:** Phase 05 — kernel-orchestrator-core-loop (next: plan)
 
 ## Current Position
 
-Phase: 04 (safety-rails-gates-cost-audit) — IN PROGRESS (4/5 executed)
-Plan: 04-05 next (Wave 5 — CI gate-canary workflow + phase closure VERIFICATION)
-Status: 04-04 COMPLETE (summary: 04-04-SUMMARY.md); NEXT ACTION: execute 04-05-PLAN.md
-Last activity: 2026-07-08 — 04-04 executed (cost rails: virtual keys, hard-stop, velocity breaker, scheduler, subscription tagging — all live-proven)
+Phase: 04 (safety-rails-gates-cost-audit) — COMPLETE (5/5 executed; 04-FABLE-REVIEW.md APPROVED 2026-07-08)
+Plan: Phase 5 planning next (/gsd-plan-phase 05 — Kernel & Orchestrator Core Loop)
+Status: PHASE 4 CLOSED — canary armed (local-required; CI self-arms on first push), causal chain proven, cost rails live-re-proven at closure
+Last activity: 2026-07-08 — 04-05 executed + phase closure (gate-canary 5/5 ×3, audit_trace chain, tracker EMBED, 04-VERIFICATION passed)
 
-Progress: [███░░░░░░░] 27%
+Progress: [████░░░░░░] 36%
 
 ## Performance Metrics
 
@@ -72,6 +72,7 @@ Progress: [███░░░░░░░] 27%
 | Phase 04 P02 | 30min | 3 tasks | 11 files |
 | Phase 04 P03 | 25min | 3 tasks | 9 files |
 | Phase 04 P04 | 57min | 4 tasks | 15 files |
+| Phase 04 P05 | 25min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -125,6 +126,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-07T22:05:00Z
-Stopped at: 04-03 COMPLETE — commits 58678b1→42d7bf5; NEXT ACTION: execute 04-04-PLAN.md (Wave 4, autonomous:false — CEO credential checkpoint Task 1)
+Last session: 2026-07-08T09:50:00Z
+Stopped at: PHASE 4 COMPLETE — commits 94e7b21→(closure); NEXT ACTION: /gsd-plan-phase 05 (Kernel & Orchestrator Core Loop; persona-v2 precondition on the vertical slice)
 Resume file: None

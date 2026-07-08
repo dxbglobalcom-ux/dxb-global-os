@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Security Baseline & Credential Remediation** - Rotate every leaked credential (verified dead), vault pattern, secret scanning, sanitized source doc — blocks everything else — **COMPLETE 2026-07-06 (hard gate closed, CEO approved 16:21Z)**
 - [x] **Phase 2: Foundation & Integration Program** - pnpm monorepo skeleton mirroring the full architecture + study→install→adopt→embed tracking for every §8B item — **COMPLETE 2026-07-06 (Fable closure verdict, 02-FABLE-REVIEW.md)**
 - [x] **Phase 3: State Layer & dxb-mcp Core** - Full Supabase schema (tasks, agents, approvals, outbox, cost, audit, memory index, CRM) + task queue + registry behind one dxb-mcp server — **COMPLETE 2026-07-07 (Fable closure verdict, 03-FABLE-REVIEW.md)**
-- [ ] **Phase 4: Safety Rails — Gates, Cost, Audit** - Code-level approval gates, outbox executor, LiteLLM budget enforcement, velocity breakers, append-only audit — before anything runs unattended
+- [x] **Phase 4: Safety Rails — Gates, Cost, Audit** - Code-level approval gates, outbox executor, LiteLLM budget enforcement, velocity breakers, append-only audit — before anything runs unattended — **COMPLETE 2026-07-08 (Fable closure verdict, 04-FABLE-REVIEW.md)**
 - [ ] **Phase 5: Kernel & Orchestrator Core Loop** - Intent → classification → decomposition → tiered dispatch → escalation → council; exit gate: 10/10 vertical slice runs
 - [ ] **Phase 6: Memory Router & Knowledge Stores** - Single write path with provenance/quarantine/contradiction policy over Obsidian, claude-mem, Graphify, open-notebook, pgvector
 - [ ] **Phase 7: MCP Gateway & 24/7 VPS Runtime** - Department-scoped tool visibility, hash pinning, EU VPS compose stack, Hermes resident agent, video-learning module
@@ -146,9 +146,9 @@ Plans:
 **Wave 3**
 - [x] 04-03: Outbox executor (LOCKED çekirdek) + test.write_file + double-fire/TOCTOU testleri + 0008 REVOKE TRUNCATE — **COMPLETE 2026-07-08**
 **Wave 4**
-- [ ] 04-04: Cost ailesi — CEO key checkpoint, virtual keys, hard-stop kanıtı, velocity breaker (pg-boss cron), subscription hook, dxb breaker reset
+- [x] 04-04: Cost ailesi — CEO key checkpoint, virtual keys, hard-stop kanıtı, velocity breaker (pg-boss cron), subscription hook, dxb breaker reset — **COMPLETE 2026-07-08**
 **Wave 5**
-- [ ] 04-05: CI gate-canary (3 LOCKED senaryo + negatif kontrol) + causal-chain kanıtı + 04-VERIFICATION
+- [x] 04-05: CI gate-canary (3 LOCKED senaryo + negatif kontrol) + causal-chain kanıtı + 04-VERIFICATION — **COMPLETE 2026-07-08**
 
 ### Phase 5: Kernel & Orchestrator Core Loop
 
