@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 05
 current_phase_name: kernel-orchestrator-core-loop
 status: executing
-stopped_at: "05-05 COMPLETE (orchestrator spine: decompose.ts LLM-boxed drafting + self-contained lint + hop<=3, dispatch.ts one-transaction queue writer with depends_on uuids, worker-shim.ts claim→work→review with confidence surfaced; live decompose 4 envelopes chain-depth 3; e2e 5-event chain done; dependency-order claim PROVEN live; suite 59 passed/9 skipped; commits 44e3870+315664f+9fb88e8; ADAPT-6 = SDK_MODEL_IDS export from kernel). NEXT ACTION: /gsd-execute-phase 05 → plan 05-06"
-last_updated: "2026-07-08T14:20:00.000Z"
+stopped_at: "05-06 COMPLETE (escalate.ts LOCKED ladder as pure code over task_events: fail_count event-derived + monotonic, low-confidence<0.6 → failed conversion, 2× fail → third claim at HIGHER tier PROVEN (L4→L3, 12-event chain exact-match), hard stop at 5 with blocked report in tasks.feedback + audit_log task.blocked + re-escalate no-op; ladder 6/6, full suite 65 passed/9 skipped; commits 4febf9e+test commit; migration count still 9 — no counter table). NEXT ACTION: /gsd-execute-phase 05 → plan 05-07 (qa.ts + council.ts + golden set)"
+last_updated: "2026-07-08T14:40:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 05-05 complete — orchestrator spine live (master-plan steps 4+5 closed)
+last_activity_desc: 05-06 complete — escalation ladder live (master-plan step 6 closed, ORCH-03)
 progress:
   total_phases: 11
   completed_phases: 4
   total_plans: 30
-  completed_plans: 26
-  percent: 42
+  completed_plans: 27
+  percent: 43
 ---
 
 # Project State
@@ -29,11 +29,11 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 05 (kernel-orchestrator-core-loop) — EXECUTING
-Plan: 5 of 9 complete (next: 05-06)
+Plan: 6 of 9 complete (next: 05-07)
 Status: Executing Phase 05
-Last activity: 2026-07-08 — 05-05 complete (orchestrator spine live)
+Last activity: 2026-07-08 — 05-06 complete (escalation ladder live, ORCH-03)
 
-Progress: [████░░░░░░] 42%
+Progress: [████░░░░░░] 43%
 
 ## Performance Metrics
 
