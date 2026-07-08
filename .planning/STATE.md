@@ -4,11 +4,11 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 06
 current_phase_name: memory-router-knowledge-stores
-status: phase_planned
-stopped_at: "PHASE 6 PLANNED — 8 plans (06-01..06-08), Fable-authored inline (v5 governance: no planner subagent), derived from master-plan/PHASE-06.md. Sequence: 01 study→install (5 cards + open-notebook local + embedding-model pin + dxb-os key + glm-5.2 reachability) → 02 ROUTING-QUALITY SPIKE (LOW-confidence composition gate: >=16/20 or ⛔ FABLE composition decision + MEM-03 ROADMAP flag; checkpoint) → 03 memory_embeddings migration [ADAPT: 0009→20260709000010; sync-embed LOCKED-interpretation recorded] + llmEmbed + pgvector adapter → 04 write-policy LOCKED rules 1-5 + memory_commit + contradiction + dxb promote (CLI-only) → 05 classify-read + memory_recall (trusted default, audited quarantine access) + poisoning close → 06 graphify/notebook/claude-mem-pointer adapters + round-trips → 07 context-rot demo (50-step band + offload; MEM-04) → 08 compaction cron + known-fact battery >=18/20 + 06-VERIFICATION (⛔ FABLE verdict; checkpoint). NEXT ACTION: /gsd-execute-phase 06 (start 06-01)"
-last_updated: "2026-07-08T21:40:00.000Z"
+status: executing
+stopped_at: "PHASE 6 EXECUTING — 06-02 SPIKE GATE PASSED 20/20 (gate >=16/20): composition CONFIRMED (pgvector+graphify+obsidian+open-notebook all stay; MEM-03 unchanged, no §5 fallback). Two identical runs (crash-recovery re-run live 23:14). Classifier = routing_rules memory.classify row (glm-5.2 api low, DB-verified count=1); prompt hash 2eeccfde… lifts verbatim into classify-read.ts at 06-05; known-facts.json reused by 06-08 battery. 06-01 COMPLETE (662ac19): 5 cards, open-notebook local healthy 620MiB, embed pin 1536, dxb-os key, glm-5.2 GLM_OK. DISCOVERIES: db reset wipes LiteLLM keys (06-03 re-mint dxb-os); glm-5.2 needs max_tokens>=200; .env lacks DXB_DATABASE_URL — pass explicitly on local runs. NEXT: 06-03 memory_embeddings migration + llmEmbed + pgvector adapter"
+last_updated: "2026-07-08T23:25:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: Phase 6 planned — 8 PLAN.md files authored inline by Fable, spike gate first-class
+last_activity_desc: 06-02 routing-quality spike PASS 20/20 — composition confirmed, crash-recovered closure
 progress:
   total_phases: 11
   completed_phases: 5
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 06 (memory-router-knowledge-stores) — PLANNED (8 plans, Fable-authored inline)
-Plan: 0 of 8 executed
-Status: Plans committed; spike gate (06-02) is the phase's LOW-confidence checkpoint; next: /gsd-execute-phase 06
-Last activity: 2026-07-08 — Phase 6 planned: 8 PLAN.md derived from master-plan/PHASE-06.md
+Phase: 06 (memory-router-knowledge-stores) — EXECUTING
+Plan: 2 of 8 executed (06-01 study→install, 06-02 spike gate PASS 20/20)
+Status: Spike gate passed — composition CONFIRMED, 06-03..06-08 unlocked as planned; next: 06-03 (memory_embeddings migration; re-mint dxb-os after any db reset)
+Last activity: 2026-07-08 — 06-02 routing-quality spike PASS (crash-recovered closure)
 
 Progress: [█████░░░░░] 53%
 
@@ -104,7 +104,7 @@ None yet.
 ### Blockers/Concerns
 
 - [Phase 1]: Credential rotation is CEO-owned manual work (checklist duty) — build work cannot start until old keys verifiably fail
-- [Phase 6]: Memory-store composition (Obsidian + Graphify + open-notebook + pgvector behind one router) rated LOW confidence — plan a routing-quality validation spike
+- [Phase 6]: ~~Memory-store composition rated LOW confidence~~ RESOLVED 2026-07-08: routing-quality spike (06-02) scored 20/20 — composition CONFIRMED, all four stores in scope (spikes/06-routing.md)
 - [Phase 7]: MCP gateway per-department scoping is the least-commoditized piece — study pass (docker/mcp-gateway, ContextForge, Lasso) required at phase planning
 - [Phase 7]: 8GB VPS RAM budget is tight (Supabase + Speaches + Hermes + open-notebook) — fallback plan documented in research STACK.md
 - [Phase 11]: Stripe/DocuSign restricted-key scoping + WooCommerce staging patterns need verification at planning time (touches real money)

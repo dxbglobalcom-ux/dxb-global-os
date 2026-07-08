@@ -1,0 +1,22 @@
+rule: task_class=memory.classify model=glm-5.2 mode=api effort=low tier=L4
+Q1 want=pgvector got=pgvector OK
+Q2 want=pgvector got=pgvector OK
+Q3 want=pgvector got=pgvector OK
+Q4 want=pgvector got=pgvector OK
+Q5 want=pgvector got=pgvector OK
+Q6 want=graphify got=graphify OK
+Q7 want=graphify got=graphify OK
+Q8 want=graphify got=graphify OK
+Q9 want=graphify got=graphify OK
+Q10 want=graphify got=graphify OK
+Q11 want=obsidian got=obsidian OK
+Q12 want=obsidian got=obsidian OK
+Q13 want=obsidian got=obsidian OK
+Q14 want=obsidian got=obsidian OK
+Q15 want=obsidian got=obsidian OK
+Q16 want=notebook got=notebook OK
+Q17 want=notebook got=notebook OK
+Q18 want=notebook got=notebook OK
+Q19 want=notebook got=notebook OK
+Q20 want=notebook got=notebook OK
+SCORE=20/20
