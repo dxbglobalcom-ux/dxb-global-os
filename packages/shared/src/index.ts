@@ -21,6 +21,7 @@ export type { LlmMessage, LlmCallArgs, LlmCallResult, KeyGenerateArgs } from "./
 export type { DB } from "./db-types.js";
 export type {
   TasksTable,
+  RoutingRulesTable,
   TaskEventsTable,
   DepartmentsTable,
   AgentsTable,

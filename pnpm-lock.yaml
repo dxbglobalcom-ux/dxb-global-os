@@ -129,6 +129,9 @@ importers:
       '@dxb/shared':
         specifier: workspace:*
         version: link:../shared
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
     devDependencies:
       typescript:
         specifier: 'catalog:'
