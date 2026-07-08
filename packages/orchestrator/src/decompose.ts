@@ -187,7 +187,10 @@ export async function decompose(ci: ClassifiedIntent): Promise<DecomposedEnvelop
     const envelope = TaskEnvelope.parse({
       department: ci.departments[0],
       objective: ci.intent_summary,
-      output_contract: `One self-contained deliverable that fully satisfies: ${ci.intent_summary}`,
+      output_contract:
+        `One self-contained deliverable that fully satisfies: ${ci.intent_summary}. ` +
+        "Where the intent leaves specifics (names, prices, categories, dates) undefined, " +
+        "mark them as explicit [placeholders] — inventing facts violates this contract.",
       model_tier: routed.model_tier,
       approval_class: ci.approval_class,
     });
