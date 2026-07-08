@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 05
 current_phase_name: kernel-orchestrator-core-loop
 status: executing
-stopped_at: "05-06 COMPLETE (escalate.ts LOCKED ladder as pure code over task_events: fail_count event-derived + monotonic, low-confidence<0.6 → failed conversion, 2× fail → third claim at HIGHER tier PROVEN (L4→L3, 12-event chain exact-match), hard stop at 5 with blocked report in tasks.feedback + audit_log task.blocked + re-escalate no-op; ladder 6/6, full suite 65 passed/9 skipped; commits 4febf9e+test commit; migration count still 9 — no counter table). NEXT ACTION: /gsd-execute-phase 05 → plan 05-07 (qa.ts + council.ts + golden set)"
-last_updated: "2026-07-08T14:40:00.000Z"
+stopped_at: "05-07 COMPLETE (dxb intent CLI — KERN-01 front door: one quoted sentence → classify → route fail-fast → decompose → dispatch, task ids printed; master-plan step 8 command run LIVE verbatim → 1 queued marketing L4 row + created event, SQL proof pasted + rows cleaned; guards executed: no-arg exit 2, 2001-char reject exit 1 nothing queued; NOTE for 05-09: listing-draft intent classified content.outbound/marketing NOT product — routing_rules keyword pin is the recorded data-side lever if dept determinism needed; suite 65 passed/9 skipped; commit 08b0873). NEXT ACTION: /gsd-execute-phase 05 → plan 05-08 (qa.ts + council.ts + golden set judge >=8/10)"
+last_updated: "2026-07-08T14:50:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 05-06 complete — escalation ladder live (master-plan step 6 closed, ORCH-03)
+last_activity_desc: 05-07 complete — dxb intent CLI live (master-plan step 8 closed, KERN-01 surface)
 progress:
   total_phases: 11
   completed_phases: 4
   total_plans: 30
-  completed_plans: 27
-  percent: 43
+  completed_plans: 28
+  percent: 45
 ---
 
 # Project State
@@ -29,11 +29,11 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 05 (kernel-orchestrator-core-loop) — EXECUTING
-Plan: 6 of 9 complete (next: 05-07)
+Plan: 7 of 9 complete (next: 05-08)
 Status: Executing Phase 05
-Last activity: 2026-07-08 — 05-06 complete (escalation ladder live, ORCH-03)
+Last activity: 2026-07-08 — 05-07 complete (dxb intent CLI live, KERN-01 surface)
 
-Progress: [████░░░░░░] 43%
+Progress: [████░░░░░░] 45%
 
 ## Performance Metrics
 
