@@ -28,7 +28,22 @@ export interface TasksTable {
   lease_expires_at: Date | null;
   result: Jsonb | null;
   feedback: string | null;
+  depends_on: Generated<string[]>;
   created_at: Timestamptz;
+  updated_at: Timestamptz;
+}
+
+export interface RoutingRulesTable {
+  id: Generated<string>;
+  task_class: string;
+  match: Jsonb;
+  model_tier: string;
+  model: string;
+  mode: string;
+  effort: Generated<string>;
+  needs_council: Generated<boolean>;
+  priority: Generated<number>;
+  enabled: Generated<boolean>;
   updated_at: Timestamptz;
 }
 
@@ -190,4 +205,5 @@ export interface DB {
   crm_contacts: CrmContactsTable;
   crm_requests: CrmRequestsTable;
   crm_deals: CrmDealsTable;
+  routing_rules: RoutingRulesTable;
 }
