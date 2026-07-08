@@ -4,16 +4,16 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 05
 current_phase_name: kernel-orchestrator-core-loop
-status: ready-to-execute
+status: executing
 stopped_at: "PHASE 5 PLANNED (9 plans / 6 waves / 23 tasks, commit 0eef3b9; Fable verdict PLANNED ✓ — all 10 master-plan steps + 8 LOCKED decisions mapped, 7/7 REQ covered, persona-v2 precondition = wave-2 plan 05-04 with gate enforcement in slice-10of10.sh, ADAPT-1/2/3 recorded, ADAPT-4 reserved); NEXT ACTION: /gsd-execute-phase 05 (wave 1: 05-01 SDK study→CEO checkpoint→install + 05-02 routing migration/seed/[BLOCKING] schema push)"
-last_updated: "2026-07-08T10:55:00.000Z"
+last_updated: "2026-07-08T11:09:21.062Z"
 last_activity: 2026-07-08
-last_activity_desc: Phase 5 planned (gsd-planner on Fable model; Fable read all 9 plans personally, verdict PLANNED)
+last_activity_desc: Phase 05 execution started
 progress:
   total_phases: 11
   completed_phases: 4
-  total_plans: 31
-  completed_plans: 22
+  total_plans: 30
+  completed_plans: 21
   percent: 36
 ---
 
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-05)
 
 **Core value:** Anti-baby-sitting — the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward.
-**Current focus:** Phase 05 — kernel-orchestrator-core-loop (next: plan)
+**Current focus:** Phase 05 — kernel-orchestrator-core-loop
 
 ## Current Position
 
-Phase: 05 (kernel-orchestrator-core-loop) — PLANNED (9 plans / 6 waves; Fable verdict PLANNED ✓ 2026-07-08, commit 0eef3b9)
-Plan: Execute next (/gsd-execute-phase 05) — wave 1: 05-01 (Agent SDK 0.3.201 study→CEO checkpoint→install), 05-02 (routing_and_deps migration + brain-map seed + [BLOCKING] schema push)
-Status: PHASE 5 READY TO EXECUTE — exit gate: intent→kernel→worker→QA→approval→recorded-result slice 10/10 (I9); persona-v2 precondition enforced in gate script; 1 blocking CEO checkpoint (05-01 npm supply chain)
-Last activity: 2026-07-08 — Phase 5 planned from MASTER-PLAN PHASE-05 (no CONTEXT/RESEARCH — canonical source, per 03/04 precedent); ADAPT-1 (migration filename 20260708000009), ADAPT-2 (LiteLLM model strings), ADAPT-3 (effort enum) recorded
+Phase: 05 (kernel-orchestrator-core-loop) — EXECUTING
+Plan: 1 of 9
+Status: Executing Phase 05
+Last activity: 2026-07-08 — Phase 05 execution started
 
 Progress: [████░░░░░░] 36%
 
