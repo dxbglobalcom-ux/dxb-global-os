@@ -1,0 +1,37 @@
+# open-notebook — LOCAL ONLY this phase; VPS placement decided by Phase 7 RAM budget test (master §5).
+# Pinned images (study-cards/open-notebook.md, verified 2026-07-08): upstream `v1-latest`/`v2` moving tags NOT used.
+# Ports bind 127.0.0.1 only (threat T-06-03); surrealdb has no host port at all.
+# Secret: OPEN_NOTEBOOK_ENCRYPTION_KEY lives in ./secrets.local (gitignored, A8) — never in this file.
+services:
+  surrealdb:
+    image: surrealdb/surrealdb:v2.6.5
+    user: root   # upstream docs: required so the container can create the RocksDB dir in the volume
+    command: start --log info --user root --pass root rocksdb:/mydata/mydatabase.db
+    volumes:
+      - on_surreal_data:/mydata
+    mem_limit: 512m
+    restart: unless-stopped
+
+  open_notebook:
+    image: lfnovo/open_notebook:1.10.0
+    ports:
+      - "127.0.0.1:5055:5055"   # FastAPI REST API (health: /health)
+      - "127.0.0.1:8502:8502"   # web UI
+    env_file:
+      - ./secrets.local          # OPEN_NOTEBOOK_ENCRYPTION_KEY=<random> (local, untracked)
+    environment:
+      SURREAL_URL: ws://surrealdb:8000/rpc
+      SURREAL_USER: root
+      SURREAL_PASSWORD: root     # local-only; surrealdb unreachable from host
+      SURREAL_NAMESPACE: open_notebook
+      SURREAL_DATABASE: open_notebook
+    volumes:
+      - on_notebook_data:/app/data
+    depends_on:
+      - surrealdb
+    mem_limit: 1g
+    restart: unless-stopped
+
+volumes:
+  on_surreal_data:
+  on_notebook_data:

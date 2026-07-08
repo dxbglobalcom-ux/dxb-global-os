@@ -42,3 +42,6 @@ dist/
 
 # outbox-executor harmless-proof artifacts (tests write here; never history)
 tmp/
+
+# open-notebook local secret carrier (06-01; A8 — value never committed)
+vps/open-notebook/secrets.local

@@ -4,6 +4,10 @@
 model_list:
   - model_name: glm-5.2
     litellm_params: { model: openrouter/z-ai/glm-5.2, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: embed-small
+    # Phase-6 embedding pin (06-01; study-cards/litellm.md Embeddings section): 1536-dim, $0.02/M
+    litellm_params: { model: openrouter/openai/text-embedding-3-small, api_key: os.environ/OPENROUTER_API_KEY }
+    model_info: { mode: embedding }
   - model_name: kimi-2.7-code
     # master-plan slug moonshotai/kimi-2.7 is not live on OpenRouter;
     # CEO-selected replacement (04-01 checkpoint): kimi-k2.7-code

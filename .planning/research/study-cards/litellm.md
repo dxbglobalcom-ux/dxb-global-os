@@ -63,6 +63,21 @@ curl -s http://127.0.0.1:4000/health/readiness      # must be 200/healthy
 
 - **Legitimacy Verdict:** OK — BerriAI official GHCR package, 30k+ star repo, image manifest verified without pull; keys env-only
 
+## Embeddings (Phase 6 — pinned 2026-07-08, 06-01 Task 3)
+
+- **Model:** `openrouter/openai/text-embedding-3-small` (OpenRouter embeddings endpoint — live-verified in OpenRouter embedding collection 2026-07-08; $0.02/M tokens)
+- **LiteLLM alias:** `embed-small` (config.yaml `model_list`, `model_info: { mode: embedding }`)
+- **VECTOR DIMENSION: 1536** — the number `db/migrations/20260709000010_memory_embeddings.sql` (06-03) writes as `vector(1536)`. One source, this line.
+- **Why not cheaper alternatives:** `qwen/qwen3-embedding-8b` ($0.01/M) outputs 4096 dims — exceeds pgvector hnsw 2000-dim index limit; `pplx-embed-v1-0.6b`/free-tier models fail the quality-never-drops rule without a benchmark pass. text-embedding-3-small = proven multilingual baseline, 1536 < 2000, budget-trivial at memory-note scale.
+- **Proof (live 2026-07-08, dxb-os key through proxy):** `POST /embeddings {model:"embed-small"}` → `EMBED_PROOF model=embed-small dimension=1536 usage_prompt_tokens=7`
+- **glm-5.2 reachability (06-02 spike + 06-05 classifier precondition):** `POST /chat/completions {model:"glm-5.2"}` → `HTTP 200 model=glm-5.2 content="GLM_OK" finish=stop`. Pitfall: glm-5.2 spends reasoning tokens before content — `max_tokens: 16` returned empty content (finish=length path); classifier/spike calls must set `max_tokens ≥ 200`.
+
+## Router identity (Phase 6 — dxb-os)
+
+- **Virtual key alias:** `dxb-os` (max_budget 25 EUR / 30d, `metadata.department: "os"`) — memory router + kernel OS-overhead spend attribution.
+- **Env carrier (name only):** `DXB_LITELLM_KEY_OS` — value appended to the gitignored repo-root `.env` at mint (A8 vault flow); NEVER in repo or prompts.
+- **Post-reset rule (extends the reset pitfall above):** `supabase db reset` wipes the `litellm` schema INCLUDING virtual keys — verified 2026-07-08: Phase-4 department keys (`dxb-engineering/-marketing/-research`) were gone; only freshly minted `dxb-os` listed. After any reset: `docker restart dxb_litellm` (Prisma recreates tables) then RE-MINT needed keys and refresh their `.env` values (06-03's reset must re-mint `dxb-os`).
+
 ## Lifecycle Checklist
 - [x] STUDY
 - [x] INSTALL (2026-07-07, 04-01 — container healthy on shared Postgres, host networking recorded)
