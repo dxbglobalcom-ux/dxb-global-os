@@ -1,0 +1,35 @@
+# DXB Global OS — CI gate canary (GATE-04)
+#
+# README (required check): mark the `canary` job as a REQUIRED status check in
+# branch protection the moment this repo gets a GitHub remote. Until then the
+# same test file is enforced locally — it lives under tests/** and therefore
+# runs inside `pnpm test` on every verification pass.
+#
+# The three scenarios in tests/phase4/gate-canary.test.ts are ⛔ FABLE-ONLY
+# locked (master-plan §3): weakening any scenario or this workflow's trigger
+# set is a governance violation, not a refactor.
+name: gate-canary
+
+on: [push, pull_request]
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Enable pnpm via Corepack (version pinned by packageManager)
+        run: corepack enable
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build workspace
+        run: pnpm build
+      - name: Start local Supabase (Postgres + triggers under test)
+        uses: supabase/setup-cli@v1
+        with:
+          version: 2.109.0
+      - run: supabase start
+      - name: Run gate canary (3 locked scenarios + negative control)
+        run: pnpm vitest run tests/phase4/gate-canary.test.ts
