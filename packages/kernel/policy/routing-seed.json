@@ -1,0 +1,21 @@
+[
+  { "task_class": "strategy", "match": {}, "model_tier": "L1", "model": "fable-5", "mode": "subscription", "effort": "max", "needs_council": true, "priority": 0 },
+  { "task_class": "architecture", "match": {}, "model_tier": "L1", "model": "fable-5", "mode": "subscription", "effort": "max", "needs_council": true, "priority": 0 },
+  { "task_class": "final-approval", "match": {}, "model_tier": "L1", "model": "fable-5", "mode": "subscription", "effort": "max", "needs_council": true, "priority": 0 },
+  { "task_class": "orchestration", "match": {}, "model_tier": "L1", "model": "opus-4.8", "mode": "subscription", "effort": "high", "needs_council": false, "priority": 0 },
+  { "task_class": "decompose", "match": {}, "model_tier": "L1", "model": "opus-4.8", "mode": "subscription", "effort": "high", "needs_council": false, "priority": 0 },
+  { "task_class": "code-review", "match": {}, "model_tier": "L1", "model": "opus-4.8", "mode": "subscription", "effort": "high", "needs_council": false, "priority": 0 },
+  { "task_class": "dept-head.planning", "match": {}, "model_tier": "L2", "model": "sonnet-5", "mode": "subscription", "effort": "medium", "needs_council": false, "priority": 0 },
+  { "task_class": "code.standard", "match": {}, "model_tier": "L3", "model": "codex-5.5", "mode": "subscription", "effort": "medium", "needs_council": false, "priority": 10 },
+  { "task_class": "code.standard", "match": {}, "model_tier": "L3", "model": "sonnet-5", "mode": "subscription", "effort": "medium", "needs_council": false, "priority": 5 },
+  { "task_class": "code.bulk", "match": {}, "model_tier": "L3", "model": "kimi-2.7-code", "mode": "api", "effort": "medium", "needs_council": false, "priority": 10 },
+  { "task_class": "code.bulk", "match": {}, "model_tier": "L3", "model": "glm-5.2", "mode": "api", "effort": "medium", "needs_council": false, "priority": 5 },
+  { "task_class": "summarize", "match": {}, "model_tier": "L4", "model": "deepseek-v4-flash", "mode": "api", "effort": "low", "needs_council": false, "priority": 10 },
+  { "task_class": "summarize", "match": {}, "model_tier": "L4", "model": "minimax-m3", "mode": "api", "effort": "low", "needs_council": false, "priority": 5 },
+  { "task_class": "ingest", "match": {}, "model_tier": "L4", "model": "deepseek-v4-flash", "mode": "api", "effort": "low", "needs_council": false, "priority": 10 },
+  { "task_class": "ingest", "match": {}, "model_tier": "L4", "model": "minimax-m3", "mode": "api", "effort": "low", "needs_council": false, "priority": 5 },
+  { "task_class": "research.fanout", "match": {}, "model_tier": "L4", "model": "qwen3.6-flash", "mode": "api", "effort": "medium", "needs_council": false, "priority": 10 },
+  { "task_class": "research.fanout", "match": {}, "model_tier": "L4", "model": "deepseek-v4-flash", "mode": "api", "effort": "medium", "needs_council": false, "priority": 5 },
+  { "task_class": "research.synthesis", "match": {}, "model_tier": "L2", "model": "sonnet-5", "mode": "subscription", "effort": "medium", "needs_council": false, "priority": 0 },
+  { "task_class": "content.outbound", "match": { "pipeline": "draft+humanizer+sonnet-5-polish" }, "model_tier": "L4", "model": "sonnet-5", "mode": "subscription", "effort": "medium", "needs_council": true, "priority": 0 }
+]
