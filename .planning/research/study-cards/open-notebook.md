@@ -39,5 +39,5 @@
 ## Lifecycle Checklist
 - [x] STUDY (2026-07-08, 06-01)
 - [x] INSTALL (2026-07-08 local — compose.local.yml, health OK)
-- [ ] ADOPT (06-06 notebook adapter)
-- [ ] EMBED (06-06 round-trip + 06-08 battery)
+- [x] ADOPT (2026-07-09, 06-06 — notebook adapter live: POST/GET /api/notes, server-assigned ref, NotebookDownError typed-loud)
+- [ ] EMBED (06-06 round-trip green ✓; 06-08 battery pending)

@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 06
 current_phase_name: memory-router-knowledge-stores
 status: executing
-stopped_at: "PHASE 6 EXECUTING — 06-05 COMPLETE: read door live (classifyQuery + recallMemory in classify-read.ts; spike prompt lifted VERBATIM, byte-diff proof hash 2eeccfde… both sides; fail-closed on missing memory.classify row; ClassifyParseError on non-strict output — no silent fallback store). Trust semantics LOCKED at SQL layer via liveMemoryFilter (trusted default; include-quarantined widens + audit 'quarantined_recall' same-call). memory_recall MCP registered — agent surface EXACTLY 2 tools (recall+commit, MEM-02 complete). Poisoning closed END-TO-END: default recall at poison's own vector → zero poisoned ids; worker-style context assembly string-proven free of sk-FAKE-POISON; include-quarantined reachable + audited (gate, not black hole). Recall behaviors (a)–(f) green incl. X=B-wins-after-promote retrieval. LIVE run recorded (real glm-5.2 classifier + embed → classifier_used:true, marker recalled). Full suite 93 pass/13 skip (20 files). NEXT: 06-06 graphify + open-notebook adapters (replace StoreNotWired seams in both registries)"
-last_updated: "2026-07-09T00:45:00.000Z"
+stopped_at: "PHASE 6 EXECUTING — 06-06 COMPLETE: all four spike-confirmed stores wired behind the door (StoreNotWired seams GONE — class deleted, no deferral). graphify adapter = corpus note memory-store/relation/<id>.md (card contract: no node-add API; ingest at build cycle; updateGraphIncremental = execFile('graphify',['update',path]) — CARD CORRECTED from stale '--update' flag vs live --help). notebook adapter = POST/GET /api/notes (live OpenAPI), SERVER-ASSIGNED ref updated in-tx, NotebookDownError typed-loud. claude-mem = pointer sync ONLY (LOCKED, node:sqlite read-only, idempotent by ref {scanned,inserted,skipped}); NO router→claude-mem write (grep-proven). Round-trips 7/7 green per store (index row + physical artifact + recall body); cross-adapter atomicity negative (dead notebook → typed error, zero orphans); full suite 99 pass/13 skip (21 files). ⚠ updateGraphIncremental runtime unexecuted (06-08 cron observes first run). NEXT: 06-07 (see plan) then 06-08 compaction cron + schedules (claude-mem hourly sync, graph ingest cadence)"
+last_updated: "2026-07-09T01:10:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: 06-05 read door — recall trust semantics + poisoning end-to-end proven, live recall recorded
+last_activity_desc: 06-06 store adapters — four-store composition fully wired, round-trips proven
 progress:
   total_phases: 11
   completed_phases: 5
   total_plans: 38
-  completed_plans: 33
-  percent: 55
+  completed_plans: 34
+  percent: 58
 ---
 
 # Project State
@@ -29,11 +29,11 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 06 (memory-router-knowledge-stores) — EXECUTING
-Plan: 5 of 8 executed (06-01 study→install, 06-02 spike 20/20, 06-03 pgvector, 06-04 write door, 06-05 read door)
-Status: Read+write paths complete — recall trust semantics LOCKED at SQL layer, poisoning closed end-to-end (live recall recorded); next: 06-06 graphify + notebook adapters
-Last activity: 2026-07-09 — 06-05 classify-read + memory_recall green
+Plan: 6 of 8 executed (06-01 study→install, 06-02 spike 20/20, 06-03 pgvector, 06-04 write door, 06-05 read door, 06-06 store adapters)
+Status: Four-store composition fully wired — per-store round-trips + claude-mem pointer sync proven; next: 06-07
+Last activity: 2026-07-09 — 06-06 graphify/notebook/claude-mem adapters green
 
-Progress: [██████░░░░] 55%
+Progress: [██████░░░░] 58%
 
 ## Performance Metrics
 

@@ -23,6 +23,8 @@ import { type Kysely, type Transaction } from "kysely";
 import { llmCall, llmEmbed, type DB } from "@dxb/shared";
 import { cosineSearch, writeEmbedding } from "./adapters/pgvector.js";
 import { writeNote } from "./adapters/obsidian.js";
+import { writeRelationNote } from "./adapters/graphify.js";
+import { writeDoc } from "./adapters/notebook.js";
 
 // -- memory.* tool interface (master §3, byte-faithful — LOCKED) ---------------
 
@@ -65,14 +67,8 @@ export const KIND_STORE = {
 export type MemoryKind = keyof typeof KIND_STORE;
 export type MemoryStore = (typeof KIND_STORE)[MemoryKind];
 
-/** Thrown BEFORE any row is written when a kind maps to a store whose physical
- *  adapter is not wired yet — no silent success (Evidence-Before-Done). */
-export class StoreNotWiredError extends Error {
-  constructor(readonly store: string) {
-    super(`memory store '${store}' is not wired yet (adapter lands in 06-06) — refusing to pretend`);
-    this.name = "StoreNotWiredError";
-  }
-}
+// (06-06) The not-wired guard/error is gone: the 06-02 spike CONFIRMED all
+// four stores, so every KIND_STORE target now has a live adapter — no deferral.
 
 // -- config + defaults ----------------------------------------------------------
 
@@ -169,15 +165,22 @@ const STORE_WRITERS: Record<MemoryStore, StoreWriter> = {
       createdAt: a.createdAt,
       body: a.body,
     }),
-  graphify: async () => {
-    throw new StoreNotWiredError("graphify");
-  },
-  notebook: async () => {
-    throw new StoreNotWiredError("notebook");
-  },
+  // graphify is corpus-driven (card): the relation note IS the physical write;
+  // graph ingest happens at the next build cycle (updateGraphIncremental, 06-08).
+  graphify: async (_trx, a) =>
+    writeRelationNote({
+      indexId: a.indexId,
+      trustTier: a.trustTier,
+      provenance: a.provenance,
+      createdAt: a.createdAt,
+      body: a.body,
+    }),
+  notebook: async (_trx, a) => writeDoc({ indexId: a.indexId, body: a.body }),
 };
 
-const WIRED_STORES: ReadonlySet<MemoryStore> = new Set(["pgvector", "obsidian"]);
+/** Stores whose physical id is assigned by the service at write time — the
+ *  memory_index ref is updated to the returned id inside the same transaction. */
+const SERVER_ASSIGNED_REF: ReadonlySet<MemoryStore> = new Set(["notebook"]);
 
 // -- the door -------------------------------------------------------------------
 
@@ -259,14 +262,6 @@ export async function commitMemory(
   ];
   if (items.length === 0) throw new Error("commitMemory: nothing to commit (no facts, no artifact)");
 
-  // StoreNotWired fails the WHOLE commit before any row is written — unless a
-  // test seam deliberately overrides that store's writer.
-  for (const item of items) {
-    if (!WIRED_STORES.has(item.store) && !deps.writers?.[item.store]) {
-      throw new StoreNotWiredError(item.store);
-    }
-  }
-
   // Rule 1: origin decides birth trust — without exception (even confidence 1.0).
   const originQuarantined = ["web", "email", "video"].includes(parsed.provenance.origin);
 
@@ -301,8 +296,10 @@ export async function commitMemory(
         ...(item.extraProvenance ?? {}),
         ...(item.contradicts ? { meta: { contradicts: item.contradicts } } : {}),
       };
+      // fs-note stores carry a path ref; pgvector's ref is the row id itself;
+      // notebook's ref is server-assigned (placeholder here, updated below).
       const ref =
-        item.store === "obsidian"
+        item.store === "obsidian" || item.store === "graphify"
           ? `memory-store/${item.kind}/${indexId}.md`
           : indexId;
       await trx
@@ -329,7 +326,19 @@ export async function commitMemory(
         body: item.body,
         vector: item.vector,
       });
-      if (writtenRef !== ref) throw new Error(`adapter ref mismatch: ${writtenRef} != ${ref}`);
+      let finalRef = ref;
+      if (SERVER_ASSIGNED_REF.has(item.store)) {
+        finalRef = writtenRef;
+        if (writtenRef !== ref) {
+          await trx
+            .updateTable("memory_index")
+            .set({ ref: writtenRef })
+            .where("id", "=", indexId)
+            .execute();
+        }
+      } else if (writtenRef !== ref) {
+        throw new Error(`adapter ref mismatch: ${writtenRef} != ${ref}`);
+      }
       if (item.contradicts) {
         await appendAudit(trx, parsed.provenance.agent, "contradiction_flagged", parsed.provenance.task_id, {
           index_id: indexId,
@@ -349,7 +358,7 @@ export async function commitMemory(
         kind: item.kind,
         store: item.store,
         trust_tier: item.trust,
-        ref,
+        ref: finalRef,
         contradicts: item.contradicts,
       });
     }

@@ -20,7 +20,7 @@
 - `graphify-out/graph.json` — canonical CLI default (SKILL.md fast path checks exactly this)
 - `.planning/graphs/` — gsd-graphify build output (graph.json + graph.html + GRAPH_REPORT.md), refreshed at phase completion (`/gsd-graphify build`)
 
-**Write (add node):** graphify has NO programmatic single-node-add API — build/update is corpus-driven (`/graphify <path>`, `/graphify add <url>` for URLs, `--update` incremental). Adapter design therefore: a `relation`-kind memory is written as a note under `memory-store/relation/` (same fs mechanics as the obsidian adapter) and the graph ingests it at the next build cycle; the adapter records the ref and, when the CLI is available, triggers an incremental update. Exact invocation recorded for 06-06: `execFile('graphify', [<corpus-path>, '--update'])` — no shell interpolation.
+**Write (add node):** graphify has NO programmatic single-node-add API — build/update is corpus-driven (`/graphify <path>`, `/graphify add <url>` for URLs, `--update` incremental). Adapter design therefore: a `relation`-kind memory is written as a note under `memory-store/relation/` (same fs mechanics as the obsidian adapter) and the graph ingests it at the next build cycle; the adapter records the ref and, when the CLI is available, triggers an incremental update. Exact invocation recorded for 06-06: `execFile('graphify', ['update', <corpus-path>])` — no shell interpolation. **(Corrected 2026-07-09 at 06-06 EMBED: live `graphify --help` shows the subcommand form `update <path>` ("re-extract code files and update the graph (no LLM needed)"); the earlier `[<corpus-path>, '--update']` note was stale.)**
 
 **Read (query):**
 - CLI direct (no LLM): `graphify path "A" "B" --graph graphify-out/graph.json`, `graphify explain "X" --graph graphify-out/graph.json`
@@ -41,4 +41,4 @@
 - [x] STUDY (backfilled 2026-07-06; adapter contract filled 2026-07-08)
 - [x] INSTALL (verified active — CLI at ~/.local/bin/graphify, graphs present in-repo)
 - [x] ADOPT (2026-07-08 — adapter contract above adopted; spike 06-02 may still defer)
-- [ ] EMBED (06-06 graphify adapter + round-trip test)
+- [x] EMBED (2026-07-09, 06-06 — adapter live behind the door; round-trip green in tests/phase6/adapters-roundtrip.test.ts; incremental ingest scheduled at 06-08)

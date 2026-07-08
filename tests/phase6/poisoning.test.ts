@@ -7,7 +7,6 @@ import {
   commitMemory,
   cosineSearch,
   recallMemory,
-  StoreNotWiredError,
 } from "../../packages/memory-router/src/index.js";
 
 // Master step 4/7 (06-04 write half + 06-05 recall half): a deliberate
@@ -133,31 +132,10 @@ describe("rule 1 — deliberate poisoning lands quarantined (gate criterion 1, w
 });
 
 describe("door hardening", () => {
-  it("kind='relation' commit throws StoreNotWiredError BEFORE any row is written", async () => {
-    const db = getDb();
-    const before = await db
-      .selectFrom("audit_log")
-      .select(({ fn }) => fn.countAll<string>().as("n"))
-      .where("actor", "=", AGENT)
-      .executeTakeFirstOrThrow();
-    await expect(
-      commitMemory(
-        db,
-        {
-          facts: [{ body: "outbox-executor depends on pg-boss for scheduling", kind: "relation", confidence: 0.8 }],
-          provenance: provenance("agent"),
-        },
-        { embed: async () => vec(12) },
-      ),
-    ).rejects.toThrow(StoreNotWiredError);
-    const after = await db
-      .selectFrom("audit_log")
-      .select(({ fn }) => fn.countAll<string>().as("n"))
-      .where("actor", "=", AGENT)
-      .executeTakeFirstOrThrow();
-    expect(after.n).toBe(before.n); // no audit → no write happened
-  });
-
+  // (06-06) the StoreNotWiredError pre-write guard test is gone with the guard
+  // itself: all four spike-confirmed stores are wired now — per-store round
+  // trips live in adapters-roundtrip.test.ts, and pre-write atomicity is
+  // covered by the failing-adapter negative below.
   it("atomicity: a failing store adapter leaves ZERO orphan memory_index rows", async () => {
     const db = getDb();
     const marker = `atomicity-probe-${AGENT}`;

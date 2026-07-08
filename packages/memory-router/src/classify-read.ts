@@ -20,10 +20,11 @@ import { z } from "zod";
 import type { Kysely, Selectable } from "kysely";
 import { llmCall, llmEmbed, type DB, type MemoryIndexTable } from "@dxb/shared";
 import { cosineSearch, liveMemoryFilter } from "./adapters/pgvector.js";
+import { readDoc } from "./adapters/notebook.js";
+import { readObservationByRef } from "./adapters/claude-mem.js";
 import {
   KIND_STORE,
   RecallInput,
-  StoreNotWiredError,
   type MemoryKind,
   type MemoryStore,
 } from "./write-policy.js";
@@ -204,50 +205,55 @@ async function readPgvector(a: StoreReadArgs): Promise<RecalledMemory[]> {
   });
 }
 
-async function readObsidian(a: StoreReadArgs): Promise<RecalledMemory[]> {
-  const rows = await a.db
-    .selectFrom("memory_index")
-    .select(["id", "kind", "ref", "trust_tier", "confidence", "created_at"])
-    .where("store", "=", "obsidian")
-    .where((eb) => liveMemoryFilter(eb, { trustTier: a.tierOpt, kind: a.kind }))
-    .orderBy("created_at", "desc")
-    .limit(a.limit)
-    .execute();
-  const out: RecalledMemory[] = [];
-  for (const row of rows) {
-    let body: string;
-    try {
-      body = await readFile(row.ref, "utf8"); // existence-checked: a broken ref is loud
-    } catch (e) {
-      await appendAudit(a.db, a.caller, "memory_ref_broken", { index_id: row.id, ref: row.ref });
-      throw new Error(
-        `recall: memory ref broken for index ${row.id} at '${row.ref}' — ${(e as Error).message}`,
-      );
+/** Metadata-ordered reader over a ref-resolving store: memory_index rows
+ *  (created_at desc) → resolve each body by ref. A broken ref is LOUD +
+ *  audited — recall must never read as silently empty. */
+function makeRefReader(
+  store: MemoryStore | "claude-mem",
+  resolve: (ref: string) => Promise<string> | string,
+): StoreReader {
+  return async (a) => {
+    const rows = await a.db
+      .selectFrom("memory_index")
+      .select(["id", "kind", "ref", "trust_tier", "confidence", "created_at"])
+      .where("store", "=", store)
+      .where((eb) => liveMemoryFilter(eb, { trustTier: a.tierOpt, kind: a.kind }))
+      .orderBy("created_at", "desc")
+      .limit(a.limit)
+      .execute();
+    const out: RecalledMemory[] = [];
+    for (const row of rows) {
+      let body: string;
+      try {
+        body = await resolve(row.ref);
+      } catch (e) {
+        await appendAudit(a.db, a.caller, "memory_ref_broken", { index_id: row.id, ref: row.ref });
+        throw new Error(
+          `recall: memory ref broken for index ${row.id} at '${row.ref}' — ${(e as Error).message}`,
+        );
+      }
+      out.push({
+        id: row.id,
+        kind: row.kind as MemoryKind,
+        store: store as MemoryStore,
+        body,
+        trust_tier: row.trust_tier,
+        confidence: row.confidence,
+        created_at: row.created_at,
+      });
     }
-    out.push({
-      id: row.id,
-      kind: row.kind as MemoryKind,
-      store: "obsidian" as const,
-      body,
-      trust_tier: row.trust_tier,
-      confidence: row.confidence,
-      created_at: row.created_at,
-    });
-  }
-  return out;
+    return out;
+  };
 }
 
-// graphify/notebook readByRef lands in 06-06 — until then recall over those
-// stores stays LOUD, never silently empty (Evidence-Before-Done).
-const STORE_READERS: Record<MemoryStore, StoreReader> = {
+// All four spike-confirmed stores are wired (06-06) — plus the claude-mem
+// pointer store (read-only; pointers land via syncClaudeMem, never the door).
+const STORE_READERS: Record<MemoryStore | "claude-mem", StoreReader> = {
   pgvector: readPgvector,
-  obsidian: readObsidian,
-  graphify: async () => {
-    throw new StoreNotWiredError("graphify");
-  },
-  notebook: async () => {
-    throw new StoreNotWiredError("notebook");
-  },
+  obsidian: makeRefReader("obsidian", (ref) => readFile(ref, "utf8")),
+  graphify: makeRefReader("graphify", (ref) => readFile(ref, "utf8")),
+  notebook: makeRefReader("notebook", (ref) => readDoc(ref)),
+  "claude-mem": makeRefReader("claude-mem", (ref) => readObservationByRef(ref)),
 };
 
 /** The ONE read door: metadata-routed, trust-filtered recall over the memory
