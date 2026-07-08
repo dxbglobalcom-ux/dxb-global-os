@@ -167,6 +167,9 @@ importers:
       '@dxb/kernel':
         specifier: workspace:*
         version: link:../kernel
+      '@dxb/memory-router':
+        specifier: workspace:*
+        version: link:../memory-router
       '@dxb/shared':
         specifier: workspace:*
         version: link:../shared

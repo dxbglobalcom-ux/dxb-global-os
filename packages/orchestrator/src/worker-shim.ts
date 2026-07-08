@@ -18,6 +18,14 @@ import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall } from "@dxb/shared";
 import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
+import {
+  checkContextBudget,
+  contextText,
+  estimateTokens,
+  type CompressionMeasurement,
+  type ContextBudgetDeps,
+  type WorkingContext,
+} from "./context-budget.js";
 
 export interface ClaimedTask {
   id: string;
@@ -109,6 +117,90 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
   }
   const parsed = WorkerJson.parse(raw);
   return { result: { text: parsed.result }, confidence: parsed.confidence };
+}
+
+// -- stepped execution + context budget (MEM-04, 06-07) ------------------------
+//
+// runWorkerOnce's single-shot Executor signature is UNTOUCHED (the certified
+// Phase-5 slice). Multi-step work opts in by building its executor with
+// makeSteppedExecutor: the loop runs the steps, and after each one the
+// context-budget hook measures the working context — past the soft limit it
+// compresses + offloads through the memory router's write door, and the
+// compression is appended to the task's event trail as 'context_compressed'
+// (from=to='running': an in-flight observation, not a status change — the
+// 10/10-gate transition chain stays contiguous).
+
+export interface StepOutcome {
+  output: string;
+  /** Optional running self-assessment; the LAST step's value is surfaced. */
+  confidence?: number;
+}
+
+export type TaskStep = (
+  task: ClaimedTask,
+  ctx: WorkingContext,
+  stepIndex: number,
+) => Promise<StepOutcome>;
+
+export interface SteppedExecutorArgs {
+  workerId: string;
+  steps: TaskStep[];
+  /** Default ON for multi-step tasks; single-step tasks never pay the check. */
+  contextBudget?: boolean;
+  budgetDeps?: ContextBudgetDeps;
+  /** Measurement tap (per step) — the 50-step demo builds its ölçüm logu here. */
+  onMeasurement?: (m: CompressionMeasurement, compressed: boolean) => void;
+}
+
+export function makeSteppedExecutor(args: SteppedExecutorArgs): Executor {
+  const { workerId, steps, budgetDeps, onMeasurement } = args;
+  if (steps.length === 0) throw new Error("worker-shim: makeSteppedExecutor needs >= 1 step");
+  const budgetEnabled = args.contextBudget ?? steps.length > 1;
+
+  return async (task) => {
+    const db = getDb();
+    let ctx: WorkingContext = {
+      taskId: task.id,
+      workerId,
+      department: task.department,
+      entries: [],
+    };
+    let confidence = 0.5;
+
+    for (let i = 0; i < steps.length; i++) {
+      const out = await steps[i](task, ctx, i);
+      ctx.entries.push({ step: i + 1, kind: "work", text: out.output });
+      if (out.confidence !== undefined) confidence = out.confidence;
+
+      if (!budgetEnabled) continue;
+      const check = await checkContextBudget(ctx, budgetDeps);
+      ctx = check.ctx;
+      onMeasurement?.(check.measurement, check.compressed);
+      if (check.compressed) {
+        await db
+          .insertInto("task_events")
+          .values({
+            task_id: task.id,
+            event: "context_compressed",
+            from_status: "running",
+            to_status: "running",
+            actor: workerId,
+            payload: JSON.stringify(check.measurement),
+          })
+          .execute();
+      }
+    }
+
+    return {
+      result: {
+        text: ctx.entries[ctx.entries.length - 1].text,
+        steps: steps.length,
+        context: contextText(ctx),
+        context_tokens: estimateTokens(contextText(ctx)),
+      },
+      confidence,
+    };
+  };
 }
 
 // Guarded transition: UPDATE succeeds only from the expected status (race-safe),

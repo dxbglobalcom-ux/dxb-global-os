@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 06
 current_phase_name: memory-router-knowledge-stores
 status: executing
-stopped_at: "PHASE 6 EXECUTING — 06-06 COMPLETE: all four spike-confirmed stores wired behind the door (StoreNotWired seams GONE — class deleted, no deferral). graphify adapter = corpus note memory-store/relation/<id>.md (card contract: no node-add API; ingest at build cycle; updateGraphIncremental = execFile('graphify',['update',path]) — CARD CORRECTED from stale '--update' flag vs live --help). notebook adapter = POST/GET /api/notes (live OpenAPI), SERVER-ASSIGNED ref updated in-tx, NotebookDownError typed-loud. claude-mem = pointer sync ONLY (LOCKED, node:sqlite read-only, idempotent by ref {scanned,inserted,skipped}); NO router→claude-mem write (grep-proven). Round-trips 7/7 green per store (index row + physical artifact + recall body); cross-adapter atomicity negative (dead notebook → typed error, zero orphans); full suite 99 pass/13 skip (21 files). ⚠ updateGraphIncremental runtime unexecuted (06-08 cron observes first run). NEXT: 06-07 (see plan) then 06-08 compaction cron + schedules (claude-mem hourly sync, graph ingest cadence)"
-last_updated: "2026-07-09T01:10:00.000Z"
+stopped_at: "PHASE 6 EXECUTING — 06-07 COMPLETE (MEM-04, master step 9): context-rot demonstrated AND defeated. context-budget.ts (estimateTokens chars/4, CONTEXT_BAND 12k/16k plan constant ⛔ Fable, checkContextBudget, summarizeAndOffload — oldest-60% slice → facts through commitMemory door provenance source:'context-offload' → compact summary block w/ recall handles; over-hard-after-compression THROWS). worker-shim makeSteppedExecutor: budget check per step (default ON multi-step), compression evented 'context_compressed' {step,before,after,offloaded_count} running→running; runWorkerOnce signature UNTOUCHED (phase-5 suite 26 pass). 50-step demo: CONTROL 37,018 tokens > 16k (rot real); MANAGED 4 compressions [17,28,38,48], band held 50/50 (awk BAND_HELD over committed tests/phase6/context-rot.log), 3/3 planted facts evicted+offloaded+recalled back. Live run green (real deepseek summarizer; live task under dept 'os' — synthetic dept has no LiteLLM key, fail-closed proven). Full suite 102 pass/14 skip (22 files). NEXT: 06-08 — compaction cron + schedules (claude-mem hourly sync, graph ingest cadence, updateGraphIncremental first runtime observation, 06-VERIFICATION cites context-rot.log)"
+last_updated: "2026-07-09T01:40:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: 06-06 store adapters — four-store composition fully wired, round-trips proven
+last_activity_desc: 06-07 context-budget — 50-step control-vs-managed demo, band held, offload recall-back proven
 progress:
   total_phases: 11
   completed_phases: 5
   total_plans: 38
-  completed_plans: 34
-  percent: 58
+  completed_plans: 35
+  percent: 61
 ---
 
 # Project State
@@ -29,11 +29,11 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 06 (memory-router-knowledge-stores) — EXECUTING
-Plan: 6 of 8 executed (06-01 study→install, 06-02 spike 20/20, 06-03 pgvector, 06-04 write door, 06-05 read door, 06-06 store adapters)
-Status: Four-store composition fully wired — per-store round-trips + claude-mem pointer sync proven; next: 06-07
-Last activity: 2026-07-09 — 06-06 graphify/notebook/claude-mem adapters green
+Plan: 7 of 8 executed (06-01 study→install, 06-02 spike 20/20, 06-03 pgvector, 06-04 write door, 06-05 read door, 06-06 store adapters, 06-07 context-budget)
+Status: Context-rot defeated — 50-step band-held demo w/ door-committed offload + recall-back; next: 06-08 (final plan: compaction cron + schedules)
+Last activity: 2026-07-09 — 06-07 context-budget green (control 37k vs managed ≤12k, live run pass)
 
-Progress: [██████░░░░] 58%
+Progress: [██████░░░░] 61%
 
 ## Performance Metrics
 
