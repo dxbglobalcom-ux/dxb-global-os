@@ -1,0 +1,11 @@
+{
+  "name": "summary-fidelity",
+  "objective": "Summarize in one sentence: 'Q2 revenue rose 12% to EUR 340k while costs fell 5%; headcount stayed unchanged at 14.'",
+  "output_contract": "One sentence containing only facts present in the source text, no invented numbers.",
+  "candidates": {
+    "A": "Q2 revenue fell 12% to EUR 340k while costs rose 5%, with headcount steady at 14.",
+    "B": "Q2 revenue rose 12% to EUR 340k, costs fell 5%, and the team grew to 16 people.",
+    "C": "Q2 revenue rose 12% to EUR 340k while costs fell 5%, with headcount unchanged at 14."
+  },
+  "correct": "C"
+}

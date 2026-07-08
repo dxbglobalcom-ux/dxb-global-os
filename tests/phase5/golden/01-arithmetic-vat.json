@@ -1,0 +1,11 @@
+{
+  "name": "arithmetic-vat",
+  "objective": "Compute the total price for 3 units at EUR 12.50 each, plus 19% VAT on the subtotal.",
+  "output_contract": "A single EUR amount rounded to 2 decimals, with a one-line calculation.",
+  "candidates": {
+    "A": "Subtotal 3 x 12.50 = 37.50 EUR; VAT 19% = 7.125 EUR; total = 44.63 EUR (rounded from 44.625).",
+    "B": "Subtotal 3 x 12.50 = 37.50 EUR; adding 19 EUR VAT gives a total of 56.50 EUR.",
+    "C": "Subtotal 3 x 12.50 = 37.50 EUR; VAT 19% = 6.55 EUR; total = 44.05 EUR."
+  },
+  "correct": "A"
+}

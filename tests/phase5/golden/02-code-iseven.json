@@ -1,0 +1,11 @@
+{
+  "name": "code-iseven",
+  "objective": "Write a JavaScript function isEven(n) that returns true when the integer n is even.",
+  "output_contract": "One correct JavaScript function; must return a boolean and handle any integer.",
+  "candidates": {
+    "A": "function isEven(n) { return n % 2 === 1; }",
+    "B": "function isEven(n) { return n % 2 === 0; }",
+    "C": "function isEven(n) { return n & 1 === 0; }"
+  },
+  "correct": "B"
+}

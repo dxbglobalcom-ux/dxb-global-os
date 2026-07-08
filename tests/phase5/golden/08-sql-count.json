@@ -1,0 +1,11 @@
+{
+  "name": "sql-count",
+  "objective": "Write a SQL query that counts queued tasks per department from a table tasks(id, department, status).",
+  "output_contract": "One valid PostgreSQL query returning department and its queued-task count.",
+  "candidates": {
+    "A": "SELECT department, count(*) FROM tasks WHERE status = 'queued';",
+    "B": "SELECT department, count(*) FROM tasks WHERE status = 'queued' GROUP BY department;",
+    "C": "SELECT department, count(*) FROM tasks WHERE status = 'done' GROUP BY department;"
+  },
+  "correct": "B"
+}

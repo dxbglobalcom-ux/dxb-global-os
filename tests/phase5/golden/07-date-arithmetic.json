@@ -1,0 +1,11 @@
+{
+  "name": "date-arithmetic",
+  "objective": "A project starts on 2026-03-15 and lasts exactly 45 days. On what date does it end (start day counts as day 1)?",
+  "output_contract": "A single ISO date with a one-line calculation.",
+  "candidates": {
+    "A": "Counting 45 days from 2026-03-15 gives 2026-04-29, since March has 31 days and we add the remainder into April.",
+    "B": "Day 1 is 2026-03-15; March contributes 17 days (15th-31st), leaving 28 days into April → 2026-04-28. Wait, 28 days into April is 2026-04-28, so the project ends 2026-05-01.",
+    "C": "Day 1 is 2026-03-15, so days 1-17 cover 2026-03-15 through 2026-03-31; the remaining 28 days run 2026-04-01 through 2026-04-28. End date: 2026-04-28."
+  },
+  "correct": "C"
+}

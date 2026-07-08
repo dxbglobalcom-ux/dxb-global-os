@@ -1,0 +1,11 @@
+{
+  "name": "listing-draft",
+  "objective": "Draft a product listing for a stainless steel water bottle (750ml, keeps drinks cold 24h).",
+  "output_contract": "Title of at most 60 characters plus exactly 5 bullet points; no medical or health-cure claims.",
+  "candidates": {
+    "A": "Steel Water Bottle 750ml — Cold for 24 Hours\n- 750ml capacity for all-day hydration\n- Double-wall insulation keeps drinks cold 24h\n- Food-grade stainless steel, BPA-free\n- Leak-proof screw cap\n- Fits standard car cup holders",
+    "B": "Steel Water Bottle 750ml — Cures Fatigue and Boosts Immunity\n- 750ml capacity\n- Keeps drinks cold 24h\n- Drinking from it strengthens your immune system\n- Relieves chronic headaches\n- Stainless steel body",
+    "C": "Premium Stainless Steel Vacuum-Insulated Water Bottle for Sports, Hiking, Office and Travel 750ml\n- 750ml capacity\n- Keeps drinks cold\n- Stainless steel"
+  },
+  "correct": "A"
+}

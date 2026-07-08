@@ -1,0 +1,11 @@
+{
+  "name": "translation-tr-en",
+  "objective": "Translate to English: 'Fatura odemesi 14 gun icinde yapilmalidir.'",
+  "output_contract": "A faithful English translation preserving the obligation and the 14-day deadline.",
+  "candidates": {
+    "A": "The invoice must be paid within 40 days.",
+    "B": "The invoice may be paid within 14 days if convenient.",
+    "C": "The invoice must be paid within 14 days."
+  },
+  "correct": "C"
+}

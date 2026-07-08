@@ -1,0 +1,11 @@
+{
+  "name": "unit-conversion",
+  "objective": "Convert 2.5 kilograms to grams.",
+  "output_contract": "A single number in grams with the unit stated.",
+  "candidates": {
+    "A": "2.5 kg equals 2500 grams.",
+    "B": "2.5 kg equals 25000 grams.",
+    "C": "2.5 kg equals 250 grams."
+  },
+  "correct": "A"
+}

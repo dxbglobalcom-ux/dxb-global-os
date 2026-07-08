@@ -1,0 +1,11 @@
+{
+  "name": "logic-syllogism",
+  "objective": "All department heads attend the Monday meeting. Ayse is a department head. Does Ayse attend the Monday meeting?",
+  "output_contract": "Yes/No answer with a one-line logical justification.",
+  "candidates": {
+    "A": "It cannot be determined from the given statements whether Ayse attends.",
+    "B": "No — being a department head does not imply attending the meeting.",
+    "C": "Yes — all department heads attend, Ayse is a department head, therefore Ayse attends."
+  },
+  "correct": "C"
+}
