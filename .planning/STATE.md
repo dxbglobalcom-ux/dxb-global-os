@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 05
 current_phase_name: kernel-orchestrator-core-loop
 status: executing
-stopped_at: "05-03 COMPLETE (kernel classify+policy; KERN-01 live 5-intent run 10/10 green, KERN-02 UPDATE proof codex-5.5→sonnet-5 zero code change; commits b6b7fff+dbfa469; ADAPT-4 = classify maxTurns 4 + fence unwrap, LOCKED schema untouched). 05-01/05-02 also complete. NEXT ACTION: /gsd-execute-phase 05 → plan 05-04 (persona v2 batch, wave 2)"
-last_updated: "2026-07-08T13:35:00.000Z"
+stopped_at: "05-04 COMPLETE (persona v2 first batch: 5 product personas Fable-authored inline at personas/product/, registry flipped v2.0-fable via apply-persona-v2.ts; reset round-trip PROVEN live — db reset → 3-seeder order → 5×v2 + 153 agents + 19 routing rules; suite 50 passed/8 skipped; commits 01870af+d488562; ADAPT-5 = role sync in flip script, product-manager worker→head). NEXT ACTION: /gsd-execute-phase 05 → plan 05-05"
+last_updated: "2026-07-08T14:00:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 05-03 complete — kernel verified live (KERN-01 + KERN-02)
+last_activity_desc: 05-04 complete — persona v2 batch live (criterion 6 precondition met)
 progress:
   total_phases: 11
   completed_phases: 4
   total_plans: 30
-  completed_plans: 24
-  percent: 36
+  completed_plans: 25
+  percent: 40
 ---
 
 # Project State
@@ -29,11 +29,11 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 05 (kernel-orchestrator-core-loop) — EXECUTING
-Plan: 3 of 9 complete (next: 05-04 persona v2 batch)
+Plan: 4 of 9 complete (next: 05-05)
 Status: Executing Phase 05
-Last activity: 2026-07-08 — 05-03 complete (kernel verified live)
+Last activity: 2026-07-08 — 05-04 complete (persona v2 batch live)
 
-Progress: [████░░░░░░] 36%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
