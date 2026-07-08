@@ -2,6 +2,17 @@
 
 - `migrations/` — the ONLY schema source of truth (Supabase CLI reads it via the `supabase/migrations` symlink). SQL here is LOCKED from master-plan PHASE-03; any divergence is ⛔ FABLE-ONLY.
 - `seed/import-personas.ts` — legacy persona import (classifier-based; see master-plan PHASE-03 "Persona v2 Programı").
+- `seed/apply-persona-v2.ts` — flips registry rows to Fable-authored v2 files under `personas/<dept>/`.
+
+## Seed order (after EVERY `supabase db reset`)
+
+1. `node --experimental-strip-types db/seed/import-personas.ts` — births all agent rows (v1.0-legacy)
+2. `node --experimental-strip-types db/seed/apply-persona-v2.ts` — flips v2-covered departments to `v2.0-fable`
+3. `node --experimental-strip-types db/seed/import-routing-rules.ts` — routing_rules rows
+
+Order 1→2 is mandatory: apply-persona-v2 only UPDATEs (never INSERTs); a v2 file without a
+registry row is reported as `missing-in-registry` and exits non-zero. The 05-09 slice gate
+(`slice-10of10.sh`) depends on this order.
 
 ## Environment
 
