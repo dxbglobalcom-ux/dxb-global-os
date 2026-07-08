@@ -116,6 +116,16 @@ export interface AuditLogTable {
   created_at: Timestamptz;
 }
 
+export interface BudgetStateTable {
+  id: Generated<boolean>;
+  monthly_cap_eur: Numeric;
+  hard_stopped: Generated<boolean>;
+  velocity_cap_eur_per_hour: Numeric;
+  breaker_tripped: Generated<boolean>;
+  breaker_tripped_at: Date | null;
+  updated_at: Timestamptz;
+}
+
 export interface MemoryIndexTable {
   id: Generated<string>;
   kind: string;
@@ -174,6 +184,7 @@ export interface DB {
   outbox: OutboxTable;
   cost_ledger: CostLedgerTable;
   audit_log: AuditLogTable;
+  budget_state: BudgetStateTable;
   memory_index: MemoryIndexTable;
   crm_clients: CrmClientsTable;
   crm_contacts: CrmContactsTable;
