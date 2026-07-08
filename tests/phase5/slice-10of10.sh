@@ -304,11 +304,17 @@ for i in $(seq 1 "$RUNS"); do
   CLASSIFIED="$(grep '^classified:' <<<"$OUT" || true)"
   IDS="$(grep '^queued ' <<<"$OUT" | awk '{print $2}' | paste -sd, || true)"
   DEPTS="$(grep '^queued ' <<<"$OUT" | sed 's/.*dept=\([^ ]*\).*/\1/' | sort -u | paste -sd, || true)"
+  TIERS="$(grep '^queued ' <<<"$OUT" | sed 's/.*tier=\([^ ]*\).*/\1/' | sort -u | paste -sd, || true)"
   if [ -z "$IDS" ]; then
     echo "FAIL: run $i: dxb intent queued no tasks" >&2
     exit 1
   fi
-  SIG="${CLASSIFIED}|depts=${DEPTS}"
+  # Behavioral determinism signature: what the chain DOES must not wander.
+  # ci.departments beyond index 0 is advisory (single-path decompose consumes
+  # only departments[0]) — the queued tasks' dept/tier/class are the invariant.
+  TASK_CLASS="$(sed 's/.*task_class=\([^ ]*\).*/\1/' <<<"$CLASSIFIED")"
+  COMPLEXITY="$(sed 's/.*complexity=\([^ ]*\).*/\1/' <<<"$CLASSIFIED")"
+  SIG="class=${TASK_CLASS}|complexity=${COMPLEXITY}|task_depts=${DEPTS}|tiers=${TIERS}"
   if [ "$i" -eq 1 ]; then
     SIGNATURE="$SIG"
   elif [ "$SIG" != "$SIGNATURE" ]; then
