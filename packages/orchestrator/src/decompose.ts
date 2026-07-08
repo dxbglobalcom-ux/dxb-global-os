@@ -47,8 +47,9 @@ const DraftBatch = z.object({ envelopes: z.array(EnvelopeDraft).min(2) });
 
 // Self-contained lint (master-plan §5 risk 1): an objective that points at
 // "the above/previous" output is not executable in isolation — reject.
+// Unicode lookarounds, not \b: ASCII \b never fires at the edge of 'önceki'.
 const BACK_REFERENCE =
-  /\b(yukarıda|yukarıya|önceki|above|previous step|as mentioned)\b/i;
+  /(?<![\p{L}\p{N}])(yukarıda|yukarıya|önceki|above|previous step|as mentioned)(?![\p{L}\p{N}])/iu;
 
 const APPROVAL_RANK = { none: 0, internal: 1, outward: 2 } as const;
 type ApprovalClass = keyof typeof APPROVAL_RANK;
