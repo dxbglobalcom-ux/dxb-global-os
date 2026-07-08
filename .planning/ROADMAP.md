@@ -163,7 +163,30 @@ Plans:
   4. Model tier per task class matches the brain map, the escalation ladder works (worker fails 2× or low confidence → specialist retry → head review → Fable final), and the in-house council (parallel cheap models + one strong judge) fires only at critical gates with judge strength validated against producers on a golden set
   5. Exit gate: one intent → kernel → worker → QA → approval → recorded-result vertical slice passes 10 out of 10 repeated runs
 
-**Plans**: TBD
+**Plans**: 9 plans
+
+Plans:
+
+**Wave 1**
+- [ ] 05-01-PLAN.md — Agent SDK 0.3.201 study→CEO gate→pinned install at kernel+orchestrator (step 1)
+- [ ] 05-02-PLAN.md — Migration routing_and_deps (LOCKED SQL) + brain-map seed + [BLOCKING] live schema push (step 2)
+
+**Wave 2**
+- [ ] 05-03-PLAN.md — Kernel: classify.ts (LOCKED ClassifiedIntent) + policy.ts + KERN-02 UPDATE proof (step 3)
+- [ ] 05-04-PLAN.md — Persona v2 first batch: 5 product personas, Fable-authored, registry flipped (criterion 6)
+
+**Wave 3**
+- [ ] 05-05-PLAN.md — Orchestrator spine: decompose + dispatch + worker shim, e2e event chain (steps 4-5)
+
+**Wave 4**
+- [ ] 05-06-PLAN.md — Escalation ladder from task_events, hard stop + blocked report (step 6)
+- [ ] 05-07-PLAN.md — `dxb intent` CLI + live queued-chain evidence (step 8)
+
+**Wave 5**
+- [ ] 05-08-PLAN.md — qa.ts + council.ts + golden set: judge >= 8/10 + council negative test (step 7)
+
+**Wave 6**
+- [ ] 05-09-PLAN.md — Vertical slice gate: slice-10of10.sh + 05-VERIFICATION.md + FABLE verdict (steps 9-10)
 
 ### Phase 6: Memory Router & Knowledge Stores
 
