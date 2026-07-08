@@ -6,7 +6,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@dxb/shared": "workspace:*"
+    "@dxb/shared": "workspace:*",
+    "kysely": "catalog:"
   },
   "devDependencies": {
     "typescript": "catalog:"

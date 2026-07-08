@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 06
 current_phase_name: memory-router-knowledge-stores
 status: executing
-stopped_at: "PHASE 6 EXECUTING — 06-02 SPIKE GATE PASSED 20/20 (gate >=16/20): composition CONFIRMED (pgvector+graphify+obsidian+open-notebook all stay; MEM-03 unchanged, no §5 fallback). Two identical runs (crash-recovery re-run live 23:14). Classifier = routing_rules memory.classify row (glm-5.2 api low, DB-verified count=1); prompt hash 2eeccfde… lifts verbatim into classify-read.ts at 06-05; known-facts.json reused by 06-08 battery. 06-01 COMPLETE (662ac19): 5 cards, open-notebook local healthy 620MiB, embed pin 1536, dxb-os key, glm-5.2 GLM_OK. DISCOVERIES: db reset wipes LiteLLM keys (06-03 re-mint dxb-os); glm-5.2 needs max_tokens>=200; .env lacks DXB_DATABASE_URL — pass explicitly on local runs. NEXT: 06-03 memory_embeddings migration + llmEmbed + pgvector adapter"
-last_updated: "2026-07-08T23:25:00.000Z"
+stopped_at: "PHASE 6 EXECUTING — 06-03 COMPLETE: memory_embeddings live (20260709000010, hnsw cosine, vector(1536)=card pin, reset-replayed), llmEmbed = ONE proxy surface (/embeddings only in litellm.ts, T-06-09 bounds), pgvector adapter writeEmbedding+cosineSearch with shared liveMemoryFilter (trusted default, T-06-07/08) — tests 5/5 green, full suite 76 pass/11 skip. Post-reset chain executed: seeds re-applied (memory.classify back count=1), litellm healthy, dxb-os RE-MINTED (.env refreshed, A8). LOCKED-interpretation recorded: sync embed inside commitMemory (06-04), not async trigger. NEXT: 06-04 write-policy.ts + memory.commit (quarantine rules, contradiction check on cosineSearch >=0.85)"
+last_updated: "2026-07-08T23:58:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 06-02 routing-quality spike PASS 20/20 — composition confirmed, crash-recovered closure
+last_activity_desc: 06-03 pgvector store real — migration + llmEmbed + adapter, live round-trip green
 progress:
   total_phases: 11
   completed_phases: 5
   total_plans: 38
-  completed_plans: 30
+  completed_plans: 31
   percent: 53
 ---
 
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 06 (memory-router-knowledge-stores) — EXECUTING
-Plan: 2 of 8 executed (06-01 study→install, 06-02 spike gate PASS 20/20)
-Status: Spike gate passed — composition CONFIRMED, 06-03..06-08 unlocked as planned; next: 06-03 (memory_embeddings migration; re-mint dxb-os after any db reset)
-Last activity: 2026-07-08 — 06-02 routing-quality spike PASS (crash-recovered closure)
+Plan: 3 of 8 executed (06-01 study→install, 06-02 spike PASS 20/20, 06-03 pgvector store)
+Status: Semantic backbone live — memory_embeddings + llmEmbed + adapter (round-trip 5/5); next: 06-04 write-policy.ts + memory.commit
+Last activity: 2026-07-08 — 06-03 migration + llmEmbed + pgvector adapter green
 
 Progress: [█████░░░░░] 53%
 

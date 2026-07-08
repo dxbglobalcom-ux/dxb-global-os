@@ -154,6 +154,13 @@ export interface MemoryIndexTable {
   expires_at: Date | null;
 }
 
+export interface MemoryEmbeddingsTable {
+  index_id: string;
+  body: string;
+  // pgvector transports as string through kysely/pg ('[v1,v2,...]'); adapters cast ::vector
+  embedding: string | null;
+}
+
 export interface CrmClientsTable {
   id: Generated<string>;
   name: string;
@@ -201,6 +208,7 @@ export interface DB {
   audit_log: AuditLogTable;
   budget_state: BudgetStateTable;
   memory_index: MemoryIndexTable;
+  memory_embeddings: MemoryEmbeddingsTable;
   crm_clients: CrmClientsTable;
   crm_contacts: CrmContactsTable;
   crm_requests: CrmRequestsTable;

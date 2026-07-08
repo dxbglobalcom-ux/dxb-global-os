@@ -11,13 +11,21 @@ export {
   litellmBaseUrl,
   departmentKeyEnvVar,
   llmCall,
+  llmEmbed,
   keyGenerate,
   keyUpdate,
   keyInfo,
   keyDelete,
   listDxbKeys,
 } from "./litellm.js";
-export type { LlmMessage, LlmCallArgs, LlmCallResult, KeyGenerateArgs } from "./litellm.js";
+export type {
+  LlmMessage,
+  LlmCallArgs,
+  LlmCallResult,
+  LlmEmbedArgs,
+  LlmEmbedResult,
+  KeyGenerateArgs,
+} from "./litellm.js";
 export type { DB } from "./db-types.js";
 export type {
   TasksTable,
@@ -31,6 +39,7 @@ export type {
   AuditLogTable,
   BudgetStateTable,
   MemoryIndexTable,
+  MemoryEmbeddingsTable,
   CrmClientsTable,
   CrmContactsTable,
   CrmRequestsTable,

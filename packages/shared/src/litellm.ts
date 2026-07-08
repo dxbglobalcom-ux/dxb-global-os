@@ -127,6 +127,71 @@ export async function llmCall(args: LlmCallArgs): Promise<LlmCallResult> {
   };
 }
 
+// -- embeddings (memory-router-facing) ----------------------------------------
+
+/** Batch bounds (T-06-09): memory notes embed one body per index row — anything
+ *  past these limits is a bug or an attack on the budget, so fail loud. */
+const EMBED_MAX_ITEMS = 64;
+const EMBED_MAX_CHARS = 8_000;
+
+export interface LlmEmbedArgs {
+  department: string;
+  /** LiteLLM alias (e.g. from a study card / config) — this surface stays model-agnostic. */
+  model: string;
+  input: string | string[];
+}
+
+export interface LlmEmbedResult {
+  /** One vector per input, in input order. */
+  vectors: number[][];
+  model: string;
+  usage: { prompt_tokens: number };
+}
+
+/** One embeddings call through the proxy with the department's virtual key. */
+export async function llmEmbed(args: LlmEmbedArgs): Promise<LlmEmbedResult> {
+  const inputs = Array.isArray(args.input) ? args.input : [args.input];
+  if (inputs.length === 0 || inputs.length > EMBED_MAX_ITEMS) {
+    throw new Error(`llmEmbed input must be 1..${EMBED_MAX_ITEMS} items, got ${inputs.length}`);
+  }
+  for (const item of inputs) {
+    if (typeof item !== "string" || item.length === 0 || item.length > EMBED_MAX_CHARS) {
+      throw new Error(`llmEmbed items must be non-empty strings of <= ${EMBED_MAX_CHARS} chars`);
+    }
+  }
+  const data = (await proxyFetch(
+    "/embeddings",
+    { method: "POST", body: JSON.stringify({ model: args.model, input: inputs }) },
+    departmentKey(args.department),
+  )) as {
+    model?: string;
+    data?: Array<{ index?: number; embedding?: number[] }>;
+    usage?: { prompt_tokens?: number };
+  };
+  const rows = data.data ?? [];
+  if (rows.length !== inputs.length) {
+    throw new LiteLLMError(
+      `LiteLLM /embeddings returned ${rows.length} vectors for ${inputs.length} inputs`,
+      200,
+      JSON.stringify(data).slice(0, 500),
+    );
+  }
+  const vectors = rows
+    .map((row, i) => ({ index: row.index ?? i, embedding: row.embedding }))
+    .sort((a, b) => a.index - b.index)
+    .map(({ embedding }) => {
+      if (!Array.isArray(embedding) || embedding.length === 0) {
+        throw new LiteLLMError("LiteLLM /embeddings row has no embedding array", 200, "");
+      }
+      return embedding;
+    });
+  return {
+    vectors,
+    model: data.model ?? args.model,
+    usage: { prompt_tokens: data.usage?.prompt_tokens ?? 0 },
+  };
+}
+
 // -- admin (master-key) operations -------------------------------------------
 
 export interface KeyGenerateArgs {

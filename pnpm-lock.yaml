@@ -142,6 +142,9 @@ importers:
       '@dxb/shared':
         specifier: workspace:*
         version: link:../shared
+      kysely:
+        specifier: 'catalog:'
+        version: 0.29.3
     devDependencies:
       typescript:
         specifier: 'catalog:'
