@@ -4,17 +4,17 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 05
 current_phase_name: kernel-orchestrator-core-loop
-status: executing
-stopped_at: "05-08 COMPLETE (qa.ts single-strong-model gate from final-approval routing row, fail→ladder wiring proven; council.ts LOCKED N+1: shouldCouncil outward/L1 only, 3 producers parallel via LiteLLM virtual key + comparative-only judge Zod-enum'd; golden set 10 fixtures → judge sonnet-5 10/10 LIVE no escalation needed; live council run → 4 cost_ledger meta.council=true rows; NEGATIVE proof deterministic: internal/L3 task zero council rows; suite 71 passed/11 skipped; commits 685e064+e7a6fb9; NOTE 05-09: listing intent → marketing not product, routing keyword pin = data lever). NEXT ACTION: /gsd-execute-phase 05 → plan 05-09 (slice-10of10 vertical slice gate — PHASE EXIT)"
-last_updated: "2026-07-08T15:10:00.000Z"
+status: phase_complete
+stopped_at: "PHASE 5 COMPLETE — I9 exit gate PASSED 10/10 (slice-10of10.sh exit 0, 2026-07-08 20:47–20:55; per-run asserts: done + contiguous event chain + artifact + audit + council-silent; persona v2 gate proven blocking red→green; behavioral-determinism signature identical 10/10). Adaptations recorded in 05-09-SUMMARY: [ADAPT-4] routing seed +content.outbound L4 sonnet-5 subscription priority-20 row (worker tier-lookup off api/no-key path); [DEVIATION→05-05] decompose single-path output_contract bans invented facts / demands [placeholders] (honest-confidence root cause, events 25→6); signature refined to class|complexity|task_depts|tiers after first attempt FAILed run 3 on advisory ci.departments wander (re-ran from run 1). Verdict FABLE-ONLY in 05-VERIFICATION.md. Commits a6f7d69+3e0051c+ef9d58f+(closure). NEXT ACTION: /gsd-plan-phase 06 (Memory Router & Knowledge Stores; LOW-confidence memory-store composition spike in Blockers)"
+last_updated: "2026-07-08T19:00:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 05-08 complete — QA gate + council live, judge 10/10 (master-plan step 7 closed, CNCL-01)
+last_activity_desc: Phase 5 CLOSED — 10/10 exit gate passed, FABLE verdict recorded (master-plan steps 9-10)
 progress:
   total_phases: 11
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 30
-  completed_plans: 29
-  percent: 47
+  completed_plans: 30
+  percent: 51
 ---
 
 # Project State
@@ -28,12 +28,12 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 05 (kernel-orchestrator-core-loop) — EXECUTING
-Plan: 8 of 9 complete (next: 05-09 — phase exit gate)
-Status: Executing Phase 05
-Last activity: 2026-07-08 — 05-08 complete (QA gate + council live, judge 10/10)
+Phase: 05 (kernel-orchestrator-core-loop) — COMPLETE (I9 exit gate 10/10 PASSED)
+Plan: 9 of 9 complete
+Status: Phase 05 closed on evidence (05-VERIFICATION.md, FABLE verdict); next: /gsd-plan-phase 06
+Last activity: 2026-07-08 — Phase 5 closed — 10/10 exit gate, FABLE verdict
 
-Progress: [████░░░░░░] 47%
+Progress: [█████░░░░░] 51%
 
 ## Performance Metrics
 

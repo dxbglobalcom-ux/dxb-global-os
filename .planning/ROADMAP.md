@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Foundation & Integration Program** - pnpm monorepo skeleton mirroring the full architecture + study→install→adopt→embed tracking for every §8B item — **COMPLETE 2026-07-06 (Fable closure verdict, 02-FABLE-REVIEW.md)**
 - [x] **Phase 3: State Layer & dxb-mcp Core** - Full Supabase schema (tasks, agents, approvals, outbox, cost, audit, memory index, CRM) + task queue + registry behind one dxb-mcp server — **COMPLETE 2026-07-07 (Fable closure verdict, 03-FABLE-REVIEW.md)**
 - [x] **Phase 4: Safety Rails — Gates, Cost, Audit** - Code-level approval gates, outbox executor, LiteLLM budget enforcement, velocity breakers, append-only audit — before anything runs unattended — **COMPLETE 2026-07-08 (Fable closure verdict, 04-FABLE-REVIEW.md)**
-- [ ] **Phase 5: Kernel & Orchestrator Core Loop** - Intent → classification → decomposition → tiered dispatch → escalation → council; exit gate: 10/10 vertical slice runs
+- [x] **Phase 5: Kernel & Orchestrator Core Loop** - Intent → classification → decomposition → tiered dispatch → escalation → council; exit gate: 10/10 vertical slice runs — PASSED 2026-07-08 (05-VERIFICATION.md, FABLE verdict)
 - [ ] **Phase 6: Memory Router & Knowledge Stores** - Single write path with provenance/quarantine/contradiction policy over Obsidian, claude-mem, Graphify, open-notebook, pgvector
 - [ ] **Phase 7: MCP Gateway & 24/7 VPS Runtime** - Department-scoped tool visibility, hash pinning, EU VPS compose stack, Hermes resident agent, video-learning module
 - [ ] **Phase 8: CEO Dashboard & CRM** - Design bundle first, then the cockpit: live task board, batch approval inbox, cost meter, command bar, drill-down audit, embedded CRM
