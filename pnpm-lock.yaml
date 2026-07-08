@@ -215,6 +215,12 @@ importers:
 
   tools/dxb-cli:
     dependencies:
+      '@dxb/kernel':
+        specifier: workspace:*
+        version: link:../../packages/kernel
+      '@dxb/orchestrator':
+        specifier: workspace:*
+        version: link:../../packages/orchestrator
       '@dxb/shared':
         specifier: workspace:*
         version: link:../../packages/shared

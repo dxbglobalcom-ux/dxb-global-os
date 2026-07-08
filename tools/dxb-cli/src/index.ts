@@ -1,16 +1,18 @@
 #!/usr/bin/env node
-// dxb — human-only decision CLI (GATE-01 + COST-03). Three live commands:
+// dxb — human-only decision CLI (GATE-01 + COST-03) + the KERN-01 front door:
+//   dxb intent "<text>"
 //   dxb approve <id>
 //   dxb reject <id> --note <text>
 //   dxb breaker reset --confirm
-// Hand-rolled arg parsing: three commands do not justify a dependency.
+// Hand-rolled arg parsing: four commands do not justify a dependency.
 import { closeDb } from "@dxb/shared";
 import { approve, reject, DecisionError } from "./approve.js";
 import { resetBreaker } from "./breaker.js";
+import { intent, IntentError } from "./intent.js";
 
 function usage(): never {
   console.error(
-    "usage: dxb approve <id> | dxb reject <id> --note <text> | dxb breaker reset --confirm",
+    'usage: dxb intent "<text>" | dxb approve <id> | dxb reject <id> --note <text> | dxb breaker reset --confirm',
   );
   process.exit(2);
 }
@@ -18,6 +20,24 @@ function usage(): never {
 async function main(): Promise<number> {
   const [cmd, ...rest] = process.argv.slice(2);
   switch (cmd) {
+    case "intent": {
+      // Exactly one non-flag argument — the intent text, quoted by the shell.
+      const [text, ...extra] = rest;
+      if (!text || text.startsWith("-") || extra.length > 0) {
+        console.error('intent text required: dxb intent "<one quoted sentence>"');
+        process.exit(2);
+      }
+      const out = await intent(text);
+      console.log(
+        `classified: task_class=${out.task_class} departments=${out.departments.join(",")} complexity=${out.complexity}`,
+      );
+      for (const t of out.tasks) {
+        console.log(
+          `queued ${t.id} dept=${t.department} tier=${t.model_tier} deps=[${t.depends_on.join(",")}]`,
+        );
+      }
+      return 0;
+    }
     case "approve": {
       const [id] = rest;
       if (!id) usage();
@@ -52,7 +72,7 @@ try {
   await closeDb();
   process.exit(code);
 } catch (e) {
-  console.error(e instanceof DecisionError ? `error: ${e.message}` : e);
+  console.error(e instanceof DecisionError || e instanceof IntentError ? `error: ${e.message}` : e);
   await closeDb().catch(() => {});
   process.exit(1);
 }

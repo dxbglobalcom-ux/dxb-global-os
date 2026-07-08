@@ -6,6 +6,10 @@
     "rootDir": "src",
     "types": ["node"]
   },
-  "references": [{ "path": "../../packages/shared" }],
+  "references": [
+    { "path": "../../packages/shared" },
+    { "path": "../../packages/kernel" },
+    { "path": "../../packages/orchestrator" }
+  ],
   "include": ["src"]
 }
