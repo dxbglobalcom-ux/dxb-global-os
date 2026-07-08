@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 04
 current_phase_name: safety-rails-gates-cost-audit
 status: in-progress
-stopped_at: "04-03 COMPLETE (GATE-02 proven: LOCKED tick(), double-fire single-claim, TOCTOU failed-no-effect, 0008 TRUNCATE revoked; suite 33/33); NEXT ACTION: execute 04-04-PLAN.md (Wave 4 — cost rails: CEO key checkpoint, virtual keys, hard-stop, velocity breaker, subscription hook; autonomous:false)"
-last_updated: "2026-07-07T22:05:00.000Z"
+stopped_at: "04-04 COMPLETE (cost rails live: dept virtual keys + real-call spend proof, hard-stop 400 ExceededBudget audited, velocity breaker trips <1 cycle + live key block + audited ceo:cli reset, ONE pg-boss scheduler tick15s/reaper60s/breaker5min, subscription hook row proven; suite 42/42; gitleaks clean); NEXT ACTION: execute 04-05-PLAN.md (Wave 5 — CI gate-canary + phase closure)"
+last_updated: "2026-07-08T00:55:00.000Z"
 last_activity: 2026-07-08
-last_activity_desc: 04-03 executed inline by Fable — single side-effect process machine-proven
+last_activity_desc: 04-04 executed inline by Fable — COST-01/02/03 + KERN-03 enforced and machine-proven
 progress:
   total_phases: 11
   completed_phases: 3
   total_plans: 22
-  completed_plans: 20
+  completed_plans: 21
   percent: 27
 ---
 
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 04 (safety-rails-gates-cost-audit) — IN PROGRESS (3/5 executed)
-Plan: 04-04 next (Wave 4 — cost rails: LiteLLM virtual keys + hard-stop + velocity breaker + subscription tagging; CEO credential checkpoint inside, autonomous:false)
-Status: 04-03 COMPLETE (summary: 04-03-SUMMARY.md); NEXT ACTION: execute 04-04-PLAN.md
-Last activity: 2026-07-08 — 04-03 executed (GATE-02: outbox executor exactly-once, evidence tables hardened)
+Phase: 04 (safety-rails-gates-cost-audit) — IN PROGRESS (4/5 executed)
+Plan: 04-05 next (Wave 5 — CI gate-canary workflow + phase closure VERIFICATION)
+Status: 04-04 COMPLETE (summary: 04-04-SUMMARY.md); NEXT ACTION: execute 04-05-PLAN.md
+Last activity: 2026-07-08 — 04-04 executed (cost rails: virtual keys, hard-stop, velocity breaker, scheduler, subscription tagging — all live-proven)
 
 Progress: [███░░░░░░░] 27%
 
@@ -71,6 +71,7 @@ Progress: [███░░░░░░░] 27%
 | Phase 04 P01 | 35min | 4 tasks | 12 files |
 | Phase 04 P02 | 30min | 3 tasks | 11 files |
 | Phase 04 P03 | 25min | 3 tasks | 9 files |
+| Phase 04 P04 | 57min | 4 tasks | 15 files |
 
 ## Accumulated Context
 
