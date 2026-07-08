@@ -18,3 +18,8 @@ export type { CommitDeps, CommittedMemory, MemoryKind, MemoryStore } from "./wri
 
 export { cosineSearch, liveMemoryFilter } from "./adapters/pgvector.js";
 export type { CosineSearchArgs, CosineSearchHit, MemoryFilterOpts } from "./adapters/pgvector.js";
+
+// The read door (06-05): metadata-routed, trust-filtered recall + the
+// spike-validated classifier. Trust semantics are LOCKED (⛔ FABLE-ONLY).
+export { classifyQuery, recallMemory, ClassifyParseError } from "./classify-read.js";
+export type { ClassifiedQuery, RecallDeps, RecallResult, RecalledMemory } from "./classify-read.js";

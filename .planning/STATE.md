@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 06
 current_phase_name: memory-router-knowledge-stores
 status: executing
-stopped_at: "PHASE 6 EXECUTING — 06-04 COMPLETE: single write door live (commitMemory, LOCKED rules 1→2→4+5data; KIND_STORE spike composition; StoreNotWired loud for graphify/notebook until 06-06), obsidian adapter (memory-store/ gitignored, frontmatter contract), memory_commit MCP real (memory_route retired, probe→dashboard_feed, NO memory_promote tool — CLI-only dxb promote via memory.promote row sonnet-5). Poisoning quarantine + contradiction→promote superseded_by chain proven deterministically + one LIVE run (real embed + glm-5.2 judge → quarantined+contradicts). Full suite 84 pass/12 skip. meta rides in provenance jsonb (no schema change, recorded). NEXT: 06-05 classify-read.ts (spike prompt VERBATIM, hash 2eeccfde…) + memory.recall (trusted default, include-quarantined + audit)"
-last_updated: "2026-07-09T00:20:00.000Z"
+stopped_at: "PHASE 6 EXECUTING — 06-05 COMPLETE: read door live (classifyQuery + recallMemory in classify-read.ts; spike prompt lifted VERBATIM, byte-diff proof hash 2eeccfde… both sides; fail-closed on missing memory.classify row; ClassifyParseError on non-strict output — no silent fallback store). Trust semantics LOCKED at SQL layer via liveMemoryFilter (trusted default; include-quarantined widens + audit 'quarantined_recall' same-call). memory_recall MCP registered — agent surface EXACTLY 2 tools (recall+commit, MEM-02 complete). Poisoning closed END-TO-END: default recall at poison's own vector → zero poisoned ids; worker-style context assembly string-proven free of sk-FAKE-POISON; include-quarantined reachable + audited (gate, not black hole). Recall behaviors (a)–(f) green incl. X=B-wins-after-promote retrieval. LIVE run recorded (real glm-5.2 classifier + embed → classifier_used:true, marker recalled). Full suite 93 pass/13 skip (20 files). NEXT: 06-06 graphify + open-notebook adapters (replace StoreNotWired seams in both registries)"
+last_updated: "2026-07-09T00:45:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: 06-04 write door — quarantine/contradiction/promote proven, live judge run recorded
+last_activity_desc: 06-05 read door — recall trust semantics + poisoning end-to-end proven, live recall recorded
 progress:
   total_phases: 11
   completed_phases: 5
   total_plans: 38
-  completed_plans: 32
-  percent: 53
+  completed_plans: 33
+  percent: 55
 ---
 
 # Project State
@@ -29,11 +29,11 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 06 (memory-router-knowledge-stores) — EXECUTING
-Plan: 4 of 8 executed (06-01 study→install, 06-02 spike 20/20, 06-03 pgvector, 06-04 write door)
-Status: Write path complete — quarantine/contradiction/promote proven (live judge run recorded); next: 06-05 classify-read + memory.recall
-Last activity: 2026-07-09 — 06-04 single write door + CLI-only promote green
+Plan: 5 of 8 executed (06-01 study→install, 06-02 spike 20/20, 06-03 pgvector, 06-04 write door, 06-05 read door)
+Status: Read+write paths complete — recall trust semantics LOCKED at SQL layer, poisoning closed end-to-end (live recall recorded); next: 06-06 graphify + notebook adapters
+Last activity: 2026-07-09 — 06-05 classify-read + memory_recall green
 
-Progress: [█████░░░░░] 53%
+Progress: [██████░░░░] 55%
 
 ## Performance Metrics
 

@@ -6,14 +6,16 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import {
   commitMemory,
   cosineSearch,
+  recallMemory,
   StoreNotWiredError,
 } from "../../packages/memory-router/src/index.js";
 
-// Master step 4/7 write-half (06-04): a deliberate poisoning commit LANDS
-// QUARANTINED (gate criterion 1) — rule 1 by origin, no exception, even at
-// confidence 1.0. The recall half (quarantined content absent from gated task
-// context) extends these fixtures in 06-05. Deterministic: injected embedder,
-// no LLM. Cleanup: tracked ids + this file's audit rows by unique actor.
+// Master step 4/7 (06-04 write half + 06-05 recall half): a deliberate
+// poisoning commit LANDS QUARANTINED (gate criterion 1) — rule 1 by origin, no
+// exception, even at confidence 1.0 — and the poisoned row provably cannot
+// reach a gated task's context through default recall (string-level assembly
+// proof below). Deterministic: injected embedder + classifier, no LLM.
+// Cleanup: tracked ids + this file's audit rows by unique actor.
 process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const DIM = 1536;
@@ -27,6 +29,8 @@ function vec(axis: number): number[] {
 
 const createdIndexIds: string[] = [];
 const createdFiles: string[] = [];
+/** Set by the first write-half test; the recall half asserts against it. */
+let poisonedId: string;
 
 function provenance(origin: "agent" | "ceo" | "web" | "email" | "video") {
   return { agent: AGENT, task_id: null, origin, source: "https://evil.example/blog-post" };
@@ -61,6 +65,7 @@ describe("rule 1 — deliberate poisoning lands quarantined (gate criterion 1, w
       { embed: async () => vec(10) },
     );
     createdIndexIds.push(...created.map((c) => c.index_id));
+    poisonedId = created[0].index_id;
 
     expect(created).toHaveLength(1);
     expect(created[0].trust_tier).toBe("quarantined");
@@ -186,5 +191,61 @@ describe("door hardening", () => {
       .where("body", "like", `%${marker}%`)
       .execute();
     expect(bodies).toHaveLength(0);
+  });
+});
+
+describe("recall half — poison provably outside gated context (master step 7)", () => {
+  const deps = {
+    embed: async () => vec(10), // the poisoned row's own axis: nearest possible match
+    classify: async () => ({ store: "pgvector", kind: "fact" }) as const,
+    caller: AGENT,
+  };
+
+  it("default recall returns zero poisoned ids for a query aimed straight at the poison", async () => {
+    const db = getDb();
+    const res = await recallMemory(db, { query: "which key should pay the incoming invoices" }, deps);
+    expect(res.rows.map((r) => r.id)).not.toContain(poisonedId);
+    expect(res.rows.every((r) => r.trust_tier === "trusted")).toBe(true);
+    expect(res.rows.some((r) => r.body.includes("sk-FAKE-POISON"))).toBe(false);
+  });
+
+  it("a worker-style context assembly built on default recall contains no poison marker", async () => {
+    const db = getDb();
+    const res = await recallMemory(db, { query: "which key should pay the incoming invoices" }, deps);
+    // mirror runWorkerOnce's defaultExecutor prompt-build (worker-shim.ts) with
+    // recalled trusted memory concatenated — the exact surface a gated task sees
+    const prompt = [
+      "You are a DXB Global OS worker agent. Complete the task below and answer",
+      'as strict JSON only: {"result": "<deliverable text>", "confidence": <0..1>}.',
+      "confidence is your honest self-assessment that the deliverable meets the contract.",
+      "",
+      "Objective: pay the incoming invoices that arrived this week",
+      "Output contract: strict JSON payment plan",
+      "",
+      "Trusted memory:",
+      ...res.rows.map((r) => `- ${r.body}`),
+    ].join("\n");
+    expect(prompt).not.toContain("sk-FAKE-POISON");
+  });
+
+  it("include-quarantined reaches the row explicitly AND leaves the audit trail (gate, not black hole)", async () => {
+    const db = getDb();
+    const res = await recallMemory(
+      db,
+      { query: "which key should pay the incoming invoices", trust: "include-quarantined" },
+      deps,
+    );
+    expect(res.rows.map((r) => r.id)).toContain(poisonedId);
+
+    const audit = await db
+      .selectFrom("audit_log")
+      .select("payload")
+      .where("actor", "=", AGENT)
+      .where("action", "=", "quarantined_recall")
+      .orderBy("created_at", "desc")
+      .executeTakeFirstOrThrow();
+    const payload = audit.payload as { query: string; returned_ids: string[]; caller: string };
+    expect(payload.returned_ids).toContain(poisonedId);
+    expect(payload.caller).toBe(AGENT);
   });
 });
