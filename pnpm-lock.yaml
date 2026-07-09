@@ -186,6 +186,9 @@ importers:
 
   packages/outbox-executor:
     dependencies:
+      '@dxb/memory-router':
+        specifier: workspace:*
+        version: link:../memory-router
       '@dxb/shared':
         specifier: workspace:*
         version: link:../shared

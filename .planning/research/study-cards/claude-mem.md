@@ -38,4 +38,4 @@
 - [x] STUDY (backfilled 2026-07-06; read-surface study completed 2026-07-08)
 - [x] INSTALL (plugin active — hooks firing this very session)
 - [x] ADOPT (2026-07-08 — pointer-sync-only contract adopted; code lands 06-06)
-- [ ] EMBED (06-06 syncClaudeMem live + idempotency proven ✓; 06-08 hourly schedule pending)
+- [x] EMBED (2026-07-09, 06-08 — hourly `claude-mem-sync` pg-boss schedule registered in outbox-executor scheduler.ts; sync idempotency proven 06-06)

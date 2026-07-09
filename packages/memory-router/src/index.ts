@@ -26,6 +26,8 @@ export type { ClassifiedQuery, RecallDeps, RecallResult, RecalledMemory } from "
 // 06-06 store surfaces: claude-mem pointer sync (LOCKED: sync only, the router
 // never writes INTO claude-mem), graphify incremental ingest (06-08 schedules
 // it), notebook read/typed-down error. All read-only or out-of-door ops.
+export { compactExpired } from "./compaction.js";
+export type { CompactExpiredResult } from "./compaction.js";
 export { syncClaudeMem, readObservationByRef } from "./adapters/claude-mem.js";
 export type { SyncClaudeMemOpts, SyncClaudeMemResult } from "./adapters/claude-mem.js";
 export { updateGraphIncremental, readRelationByRef } from "./adapters/graphify.js";

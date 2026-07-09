@@ -8,6 +8,7 @@
 import { PgBoss } from "pg-boss";
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
+import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
 import { tick } from "./index.js";
 import { checkVelocity } from "./breaker.js";
 
@@ -15,15 +16,26 @@ export const QUEUES = {
   tick: "outbox-tick",
   reaper: "lease-reaper",
   breaker: "velocity-breaker",
+  compaction: "memory-compaction",
+  memSync: "claude-mem-sync",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
 // self-perpetuating singleton job chain (send startAfter=15 from its own
 // worker) instead of a cron entry; reaper and breaker are plain crons.
+// Memory lifecycle (06-08): compaction daily 03:00 (rule 5 cron half),
+// claude-mem pointer sync hourly (T-06-18 residual: synced pointers meet the
+// contradiction sweep only when promoted content collides — documented).
+// NO graph-ingest cron: observed live 2026-07-09, the bare CLI's `update`
+// subcommand re-extracts CODE files only ("No code files found - nothing to
+// rebuild" on a markdown corpus) — relation notes ingest at the
+// phase-completion /gsd-graphify build cycle (repo rule), not from here.
 export const CADENCES = {
   outboxTickSeconds: 15,
   reaperCron: "* * * * *", // every 60s
   breakerCron: "*/5 * * * *", // every 5min
+  compactionCron: "0 3 * * *", // daily 03:00
+  memSyncCron: "0 * * * *", // hourly
 } as const;
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -60,8 +72,21 @@ export async function startScheduler(): Promise<PgBoss> {
     await checkVelocity();
   });
 
+  // Memory lifecycle handlers — error isolation is pg-boss's per-job
+  // containment (a throwing handler fails THAT job; the scheduler and the
+  // other queues keep running), same guarantee the reaper/breaker rely on.
+  await boss.work(QUEUES.compaction, async () => {
+    await compactExpired(getDb());
+  });
+
+  await boss.work(QUEUES.memSync, async () => {
+    await syncClaudeMem(getDb());
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
+  await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
+  await boss.schedule(QUEUES.memSync, CADENCES.memSyncCron);
   await enqueueTick(boss, 0); // bootstrap the 15s chain
 
   return boss;

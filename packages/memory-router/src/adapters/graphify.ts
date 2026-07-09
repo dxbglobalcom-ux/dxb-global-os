@@ -40,9 +40,15 @@ export async function readRelationByRef(ref: string): Promise<string> {
   return readFile(ref, "utf8");
 }
 
-/** Incremental ingest via the live CLI surface (`graphify update <path>`,
- *  no-LLM re-extract — see card correction above). Loud on nonzero exit.
- *  NOT called on the write path — 06-08 schedules it. */
+/** Incremental re-extract via the live CLI surface (`graphify update <path>`,
+ *  no-LLM — see card correction above). Loud on nonzero exit.
+ *  RUNTIME OBSERVED (06-08, first execution 2026-07-09): the subcommand
+ *  re-extracts CODE files only — on a markdown-only corpus it exits nonzero
+ *  with "No code files found - nothing to rebuild". Relation NOTES therefore
+ *  ingest at the phase-completion /gsd-graphify build cycle (skill-level,
+ *  repo rule), NOT via this function and NOT via any cron: a scheduled call
+ *  against memory-store/relation would fail on every tick. Kept exported for
+ *  code-corpus refresh use; never called on the write path. */
 export async function updateGraphIncremental(
   corpusPath = "memory-store/relation",
 ): Promise<{ stdout: string; stderr: string }> {

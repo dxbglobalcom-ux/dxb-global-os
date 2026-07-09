@@ -40,4 +40,4 @@
 - [x] STUDY (2026-07-08, 06-01)
 - [x] INSTALL (2026-07-08 local — compose.local.yml, health OK)
 - [x] ADOPT (2026-07-09, 06-06 — notebook adapter live: POST/GET /api/notes, server-assigned ref, NotebookDownError typed-loud)
-- [ ] EMBED (06-06 round-trip green ✓; 06-08 battery pending)
+- [x] EMBED (2026-07-09, 06-08 — battery procedure axis 5/5 both runs; round-trip + dead-container atomicity negative green)

@@ -22,7 +22,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: State Layer & dxb-mcp Core** - Full Supabase schema (tasks, agents, approvals, outbox, cost, audit, memory index, CRM) + task queue + registry behind one dxb-mcp server — **COMPLETE 2026-07-07 (Fable closure verdict, 03-FABLE-REVIEW.md)**
 - [x] **Phase 4: Safety Rails — Gates, Cost, Audit** - Code-level approval gates, outbox executor, LiteLLM budget enforcement, velocity breakers, append-only audit — before anything runs unattended — **COMPLETE 2026-07-08 (Fable closure verdict, 04-FABLE-REVIEW.md)**
 - [x] **Phase 5: Kernel & Orchestrator Core Loop** - Intent → classification → decomposition → tiered dispatch → escalation → council; exit gate: 10/10 vertical slice runs — PASSED 2026-07-08 (05-VERIFICATION.md, FABLE verdict)
-- [ ] **Phase 6: Memory Router & Knowledge Stores** - Single write path with provenance/quarantine/contradiction policy over Obsidian, claude-mem, Graphify, open-notebook, pgvector
+- [x] **Phase 6: Memory Router & Knowledge Stores** - Single write path with provenance/quarantine/contradiction policy over Obsidian, claude-mem, Graphify, open-notebook, pgvector — PASSED 2026-07-09 (06-VERIFICATION.md, FABLE verdict; battery 19/20 live)
 - [ ] **Phase 7: MCP Gateway & 24/7 VPS Runtime** - Department-scoped tool visibility, hash pinning, EU VPS compose stack, Hermes resident agent, video-learning module
 - [ ] **Phase 8: CEO Dashboard & CRM** - Design bundle first, then the cockpit: live task board, batch approval inbox, cost meter, command bar, drill-down audit, embedded CRM
 - [ ] **Phase 9: JARVIS Voice Layer** - Morning voice briefings and spoken commands as a thin second client of the same kernel
@@ -205,28 +205,28 @@ Plans:
 Plans:
 
 **Wave 1**
-- [ ] 06-01-PLAN.md — Toolset study→install: 5 cards filled, open-notebook local, embedding pin, dxb-os key, glm-5.2 proof (step 1)
+- [x] 06-01-PLAN.md — Toolset study→install: 5 cards filled, open-notebook local, embedding pin, dxb-os key, glm-5.2 proof (step 1)
 
 **Wave 2**
-- [ ] 06-02-PLAN.md — Routing-quality spike: 20 known facts, >=16/20 gate, ⛔ FABLE composition decision on FAIL (step 2)
+- [x] 06-02-PLAN.md — Routing-quality spike: 20 known facts, >=16/20 gate, ⛔ FABLE composition decision on FAIL (step 2)
 
 **Wave 3**
-- [ ] 06-03-PLAN.md — memory_embeddings migration [ADAPT 0009→0010] + llmEmbed + pgvector adapter round-trip (step 3)
+- [x] 06-03-PLAN.md — memory_embeddings migration [ADAPT 0009→0010] + llmEmbed + pgvector adapter round-trip (step 3)
 
 **Wave 4**
-- [ ] 06-04-PLAN.md — write-policy LOCKED rules 1-5 + memory_commit + contradiction flag + dxb promote CLI-only (steps 4+6)
+- [x] 06-04-PLAN.md — write-policy LOCKED rules 1-5 + memory_commit + contradiction flag + dxb promote CLI-only (steps 4+6)
 
 **Wave 5**
-- [ ] 06-05-PLAN.md — classify-read + memory_recall (trusted default, audited quarantine) + poisoning close (steps 5+7)
+- [x] 06-05-PLAN.md — classify-read + memory_recall (trusted default, audited quarantine) + poisoning close (steps 5+7)
 
 **Wave 6**
-- [ ] 06-06-PLAN.md — graphify/notebook adapters + claude-mem pointer sync + per-store round-trips (step 8)
+- [x] 06-06-PLAN.md — graphify/notebook adapters + claude-mem pointer sync + per-store round-trips (step 8)
 
 **Wave 7**
-- [ ] 06-07-PLAN.md — Context-rot demo: 50-step band, summarize+offload through the door, measurement log (step 9)
+- [x] 06-07-PLAN.md — Context-rot demo: 50-step band, summarize+offload through the door, measurement log (step 9)
 
 **Wave 8**
-- [ ] 06-08-PLAN.md — Compaction cron + known-fact battery >=18/20 + 06-VERIFICATION + FABLE verdict (step 10)
+- [x] 06-08-PLAN.md — Compaction cron + known-fact battery >=18/20 + 06-VERIFICATION + FABLE verdict (step 10)
 
 ### Phase 7: MCP Gateway & 24/7 VPS Runtime
 

@@ -4,17 +4,17 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 06
 current_phase_name: memory-router-knowledge-stores
-status: executing
-stopped_at: "PHASE 6 EXECUTING — 06-07 COMPLETE (MEM-04, master step 9): context-rot demonstrated AND defeated. context-budget.ts (estimateTokens chars/4, CONTEXT_BAND 12k/16k plan constant ⛔ Fable, checkContextBudget, summarizeAndOffload — oldest-60% slice → facts through commitMemory door provenance source:'context-offload' → compact summary block w/ recall handles; over-hard-after-compression THROWS). worker-shim makeSteppedExecutor: budget check per step (default ON multi-step), compression evented 'context_compressed' {step,before,after,offloaded_count} running→running; runWorkerOnce signature UNTOUCHED (phase-5 suite 26 pass). 50-step demo: CONTROL 37,018 tokens > 16k (rot real); MANAGED 4 compressions [17,28,38,48], band held 50/50 (awk BAND_HELD over committed tests/phase6/context-rot.log), 3/3 planted facts evicted+offloaded+recalled back. Live run green (real deepseek summarizer; live task under dept 'os' — synthetic dept has no LiteLLM key, fail-closed proven). Full suite 102 pass/14 skip (22 files). NEXT: 06-08 — compaction cron + schedules (claude-mem hourly sync, graph ingest cadence, updateGraphIncremental first runtime observation, 06-VERIFICATION cites context-rot.log)"
-last_updated: "2026-07-09T01:40:00.000Z"
+status: phase_complete
+stopped_at: "PHASE 6 COMPLETE — PASSED (06-VERIFICATION.md, FABLE verdict, 2026-07-09). 06-08 closed master step 10: compactExpired (rule 5 cron half — self-tombstone superseded_by=id, delete-free, batch audit 'memory_expired', idempotent) + two pg-boss schedules in outbox-executor scheduler (memory-compaction daily 03:00, claude-mem-sync hourly; ⚠ unattended firing needs Phase-7 VPS). Known-fact battery (same 20 facts as spike, sha256 pinned ec5547ca… vs spike commit): LIVE 19/20 (gate >=18; Q09 relation misroute) / deterministic 20/20. Graph-ingest cron WITHDRAWN on first runtime observation: CLI 'update <path>' = code-only re-extract ('No code files found' on md corpus) — relation notes ingest at phase-completion /gsd-graphify build (card+adapter corrected, 06-06's ⚠ closed). Tracker exits: claude-mem/obsidian-stack/graphify/open-notebook → EMBED. Full suite 23 files, 106 pass/14 skip. ROADMAP Phase 6 [x]. NEXT ACTION: /gsd-plan-phase 07 (MCP Gateway & 24/7 VPS Runtime — gateway study pass FIRST: docker/mcp-gateway, ContextForge, Lasso per standing blocker); knowledge graph >1 phase stale, /gsd-graphify build due at CEO's go"
+last_updated: "2026-07-09T02:35:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: 06-07 context-budget — 50-step control-vs-managed demo, band held, offload recall-back proven
+last_activity_desc: 06-08 phase closure — compaction cron, battery 19/20 live, FABLE verdict PASSED
 progress:
   total_phases: 11
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 38
-  completed_plans: 35
-  percent: 61
+  completed_plans: 36
+  percent: 64
 ---
 
 # Project State
@@ -28,12 +28,12 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 06 (memory-router-knowledge-stores) — EXECUTING
-Plan: 7 of 8 executed (06-01 study→install, 06-02 spike 20/20, 06-03 pgvector, 06-04 write door, 06-05 read door, 06-06 store adapters, 06-07 context-budget)
-Status: Context-rot defeated — 50-step band-held demo w/ door-committed offload + recall-back; next: 06-08 (final plan: compaction cron + schedules)
-Last activity: 2026-07-09 — 06-07 context-budget green (control 37k vs managed ≤12k, live run pass)
+Phase: 06 (memory-router-knowledge-stores) — COMPLETE, PASSED (FABLE verdict, 06-VERIFICATION.md)
+Plan: 8 of 8 executed (study→install, spike 20/20, pgvector, write door, read door, store adapters, context-budget, closure)
+Status: Phase 6 closed — battery 19/20 live across the full composition; lifecycle crons registered; next: /gsd-plan-phase 07
+Last activity: 2026-07-09 — 06-08 closure (compaction + battery + verification)
 
-Progress: [██████░░░░] 61%
+Progress: [██████░░░░] 64%
 
 ## Performance Metrics
 
