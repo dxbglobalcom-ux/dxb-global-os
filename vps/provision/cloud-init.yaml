@@ -1,0 +1,50 @@
+#cloud-config
+# DXB VPS first boot (07-04, master PHASE-07 step 5). Hardened from birth
+# (T-07-12): key-only SSH, non-root sudo user, firewall + fail2ban before any
+# service exists. @@VPS_SSH_PUBKEY@@ is substituted at `hcloud server create`
+# time from the VPS-ONLY public key (never the laptop's pair — T-07-13);
+# no secret value lives in this file.
+users:
+  - name: dxb
+    groups: [sudo]
+    shell: /bin/bash
+    sudo: ["ALL=(ALL) NOPASSWD:ALL"]
+    ssh_authorized_keys:
+      - "@@VPS_SSH_PUBKEY@@"
+
+package_update: true
+package_upgrade: true
+packages:
+  - ufw
+  - fail2ban
+  - unattended-upgrades
+  - curl
+  - ca-certificates
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/99-dxb-harden.conf
+    permissions: "0644"
+    content: |
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PermitRootLogin no
+      X11Forwarding no
+      MaxAuthTries 3
+  - path: /etc/fail2ban/jail.d/dxb-sshd.local
+    permissions: "0644"
+    content: |
+      [sshd]
+      enabled = true
+      maxretry = 4
+      bantime = 1h
+      findtime = 10m
+
+runcmd:
+  - systemctl reload ssh || systemctl reload sshd
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw allow 22/tcp
+  - ufw allow 80/tcp
+  - ufw allow 443/tcp
+  - ufw --force enable
+  - systemctl enable --now fail2ban

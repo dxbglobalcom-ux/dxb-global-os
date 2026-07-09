@@ -1,0 +1,18 @@
+# DXB VPS reverse proxy (07-04 Task 3). Caddy auto-HTTPS terminates TLS for
+# the CEO's domain (STACK.md: simpler than Traefik/nginx for one box). The
+# domain comes from the environment — no identity values hardcoded. 07-04
+# gate: GET /health → 200 over valid TLS. Service routes land in 07-05 with
+# the compose stack; until then this box serves /health and nothing else.
+{$DXB_DOMAIN} {
+	handle /health {
+		respond "ok" 200
+	}
+
+	# 07-05 compose stack routes (kept default-deny until services exist):
+	# handle_path /litellm/* { reverse_proxy 127.0.0.1:4000 }
+	# handle_path /dashboard/* { reverse_proxy 127.0.0.1:3000 }
+
+	handle {
+		respond "not found" 404
+	}
+}

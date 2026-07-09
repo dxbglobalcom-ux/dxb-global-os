@@ -50,3 +50,6 @@ vps/open-notebook/secrets.local
 # are runtime data — vault-visible locally, never auto-committed (durability =
 # disk + memory_index + audit trail; VPS backup owns the rest at Phase 7)
 memory-store/
+
+# Hetzner API token carrier (07-04; CEO-minted, project-scoped — value never committed)
+vps/provision/.hetzner.local
