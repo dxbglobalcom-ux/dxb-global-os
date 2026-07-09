@@ -40,6 +40,10 @@ dist/
 # pnpm local store — not committed, restored via lockfile
 .pnpm-store/
 
+# Next.js build output + generated env types (apps/dashboard)
+.next/
+next-env.d.ts
+
 # outbox-executor harmless-proof artifacts (tests write here; never history)
 tmp/
 

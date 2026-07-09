@@ -4,11 +4,12 @@ packages:
   - "tools/*"
 allowBuilds:
   esbuild: false
+  sharp: false
   supabase: true
 catalog:
   "@anthropic-ai/claude-agent-sdk": 0.3.201
   typescript: 6.0.3
-  "@types/node": ^22.0.0
+  "@types/node": ^22.20.0
   vitest: ^3.0.0
   "@modelcontextprotocol/sdk": 1.29.0
   zod: 4.4.3
