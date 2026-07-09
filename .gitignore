@@ -53,3 +53,6 @@ memory-store/
 
 # Hetzner API token carrier (07-04; CEO-minted, project-scoped — value never committed)
 vps/provision/.hetzner.local
+
+# LibreOffice lock files
+.~lock.*#

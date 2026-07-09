@@ -1,0 +1,22 @@
+# hermes resident agent (07-06; study-card daemon shape). Caged by design:
+# jobs come ONLY from jobs.enabled/ (loader validates budgets/artifacts at
+# every start — ExecStartPre), brain calls go through LiteLLM on the hermes
+# virtual key (EnvironmentFile), watchdog.timer polices runtime, and
+# `dxb kill-switch on` stops this unit (T-07-19/20/21).
+[Unit]
+Description=DXB hermes resident agent (v0.18.2, bounded jobs only)
+After=dxb-stack.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dxb
+WorkingDirectory=/opt/dxb/vps/hermes
+EnvironmentFile=/opt/dxb/vps/hermes/.env
+ExecStartPre=/opt/dxb/vps/hermes/load-jobs.sh
+ExecStart=/home/dxb/.local/bin/hermes gateway
+Restart=on-failure
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

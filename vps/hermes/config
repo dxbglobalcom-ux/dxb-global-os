@@ -1,0 +1,17 @@
+# hermes ~/.hermes/config.yaml — deploy copy (07-06 Task 1; study-card contract).
+# LiteLLM wiring (T-07-21): hermes NEVER sees a raw provider key — its brain
+# calls go to the local LiteLLM proxy on the hermes department VIRTUAL key.
+# key_env names the env var; the value lives ONLY in /opt/dxb/vps/hermes/.env
+# on the box (0600, never committed). Version pin: hermes v0.18.2 (card).
+providers:
+  litellm:
+    type: openai
+    base_url: http://127.0.0.1:4000/v1
+    key_env: DXB_LITELLM_KEY_HERMES
+
+model:
+  provider: custom
+  default_model: glm-5.2   # LiteLLM alias (vps/litellm/config.yaml model_list)
+
+# v1: NO messaging bridges (WhatsApp/Telegram/Discord stay off — card pitfall);
+# API server feature OFF; output path = artifact files + morning review queue.
