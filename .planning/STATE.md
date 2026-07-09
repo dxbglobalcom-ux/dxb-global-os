@@ -4,16 +4,16 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 07
 current_phase_name: mcp-gateway-24-7-vps-runtime
-status: phase_planned
-stopped_at: "PHASE 7 PLANNED — 8 Fable-authored plans in 6 waves (2026-07-09). Gateway study pass EXECUTED AT PLANNING (master step 1, CEO directive): docker/mcp-gateway, ContextForge, Lasso surveyed live — v1 registry-generated per-dept .mcp.json profiles CONFIRMED (⛔ Fable verdict, study-cards/mcp-gateway-patterns.md, commit b7dc785); standing Phase-7 blocker RESOLVED. Plan chain: 07-01 toolset cards+local CLIs → 07-02 tool_pins+pin-check (MCP-03) → 07-03 denials+generate-profiles (MCP-02) → 07-04 runtime not-found + Hetzner provision (CEO checkpoint: token+DNS; autonomous:false) → 07-05 compose core deploy + RAM ≤7GB + reboot self-heal (checkpoint) → 07-06 hermes+watchdog+kill-switch (VPS-02, checkpoint) ∥ 07-07 video-learn (VID-01) → 07-08 gitleaks SHA-pin + 07-VERIFICATION + ⛔ FABLE verdict. Governance incident recorded in 916a8a7: mid-planning safety-classifier false-flag auto-switched to Opus 4.8; 07-04/05 re-authored on Fable 5; prevention config set. NEXT ACTION: /gsd-execute-phase 07 (wave 1: 07-01+07-02); knowledge graph >1 phase stale, /gsd-graphify build due at CEO's go"
-last_updated: "2026-07-09T03:50:00.000Z"
+status: phase_executing
+stopped_at: "PHASE 7 EXECUTING — 07-01 COMPLETE (2026-07-09, inline Fable): 3 toolset cards pinned (hermes v0.18.2 LOCKED; speaches 0.8.3-cpu @ digest; yt-dlp 2026.07.04), hcloud 1.66.0 + yt-dlp sha256-verified local installs, tracker advanced evidence-only (hermes stays STUDY until VPS 07-06). Wave 1 remainder: 07-02 tool_pins+pin-check (MCP-03). Then 07-03 denials+profiles → 07-04 Hetzner provision (CEO checkpoint: token+DNS) → 07-05 compose deploy → 07-06 hermes+watchdog ∥ 07-07 video-learn → 07-08 closure ⛔ FABLE verdict. Knowledge graph >1 phase stale, /gsd-graphify build due at CEO's go"
+last_updated: "2026-07-09T10:10:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: Phase 7 planned — gateway study pass (v1 confirmed) + 8 plans, Fable-authored inline
+last_activity_desc: 07-01 complete — toolset cards pinned + hcloud/yt-dlp verified installs (inline Fable)
 progress:
   total_phases: 11
   completed_phases: 6
   total_plans: 44
-  completed_plans: 36
+  completed_plans: 37
   percent: 64
 ---
 
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 07 (mcp-gateway-24-7-vps-runtime) — PLANNED, ready to execute
-Plan: 0 of 8 executed (8 Fable-authored plans, 6 waves; gateway study pass done at planning — v1 profiles confirmed)
-Status: Phase 7 planned — least-privilege gateway (pins+profiles) then VPS runtime (provision→deploy→hermes/video); CEO checkpoints at 07-04/05/06/08
-Last activity: 2026-07-09 — Phase 7 planning (study pass b7dc785, plans 916a8a7 + closing commit)
+Phase: 07 (mcp-gateway-24-7-vps-runtime) — EXECUTING (wave 1)
+Plan: 1 of 8 executed (07-01 complete — toolset cards + local CLIs; 07-02 next)
+Status: Phase 7 executing — least-privilege gateway (pins+profiles) then VPS runtime (provision→deploy→hermes/video); CEO checkpoints at 07-04/05/06/08
+Last activity: 2026-07-09 — 07-01 toolset study→install closed (inline Fable)
 
 Progress: [██████░░░░] 64%
 
