@@ -82,6 +82,7 @@ services:
       DB_AFTER_CONNECT_QUERY: "SET search_path TO _realtime"
       DB_ENC_KEY: ${REALTIME_DB_ENC_KEY}   # exactly 16 chars
       API_JWT_SECRET: ${JWT_SECRET}
+      METRICS_JWT_SECRET: ${JWT_SECRET}   # required since realtime v2.1xx
       SECRET_KEY_BASE: ${SECRET_KEY_BASE}
       ERL_AFLAGS: "-proto_dist inet_tcp"
       RUN_JANITOR: "true"
@@ -121,6 +122,7 @@ services:
       AUTH_JWT_SECRET: ${JWT_SECRET}
       DEFAULT_ORGANIZATION_NAME: DXB Global
       DEFAULT_PROJECT_NAME: dxb-global-os
+      HOSTNAME: 0.0.0.0   # Next.js binds the container hostname otherwise; embedded healthcheck fetches localhost
     mem_limit: 512m
     restart: unless-stopped
 
@@ -134,8 +136,9 @@ services:
       KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
       KONG_DNS_ORDER: LAST,A,CNAME
       KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth
-      KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
-      KONG_NGINX_PROXY_PROXY_BUFFERS: 64 160k
+      # 4 vCPU box would spawn 4 nginx workers; with big proxy buffers that
+      # OOM-killed workers (signal 9) under the mem_limit — 2 workers, default buffers
+      KONG_NGINX_WORKER_PROCESSES: "2"
       SUPABASE_ANON_KEY: ${ANON_KEY}
       SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
       DASHBOARD_USERNAME: ${DASHBOARD_USERNAME}
@@ -144,7 +147,7 @@ services:
       - ./kong/kong.yml:/home/kong/temp.yml:ro
     # upstream self-host pattern: env-substitute the template, then start
     entrypoint: bash -c 'eval "echo \"$$(cat /home/kong/temp.yml)\"" > /home/kong/kong.yml && /docker-entrypoint.sh kong docker-start'
-    mem_limit: 256m
+    mem_limit: 384m
     restart: unless-stopped
 
   litellm:
@@ -164,7 +167,9 @@ services:
     volumes:
       - ./litellm/config.yaml:/app/config.yaml:ro
     command: ["--config", "/app/config.yaml", "--port", "4000"]
-    mem_limit: 512m
+    mem_limit: 1536m  # measured 2026-07-09: v1.91 python import alone gets Killed under 768m
+                      # (master's ~300-500MB line was optimistic for this major; steady RSS
+                      # recorded in 07-05-SUMMARY RAM table — budget still fits ≤7GB peak)
     restart: unless-stopped
 
   outbox:

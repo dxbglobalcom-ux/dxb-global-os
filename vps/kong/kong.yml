@@ -1,4 +1,6 @@
-_format_version: "2.1"
+# single quotes: they survive the entrypoint's eval-echo env substitution
+# (double quotes get consumed and 2.1 would parse as a YAML float)
+_format_version: '2.1'
 _transform: true
 
 ###
@@ -86,8 +88,8 @@ services:
           allow: [admin, anon]
 
   - name: realtime-v1-ws
+    # kong 2.8: websocket rides plain http upgrade (protocol:ws is Kong 3+)
     url: http://realtime:4000/socket
-    protocol: ws
     routes:
       - name: realtime-v1-ws
         strip_path: true

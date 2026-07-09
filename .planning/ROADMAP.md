@@ -256,7 +256,7 @@ Plans:
 - [ ] 07-04-PLAN.md — Runtime "tool not found" proof + Hetzner provision/hardening/Caddy (CEO checkpoint: token+DNS) (steps 4–5)
 
 **Wave 4**
-- [ ] 07-05-PLAN.md — compose core deploy + migrations + RAM ≤7GB measured + reboot self-heal + backup/restore drill (steps 6–7)
+- [x] 07-05-PLAN.md — compose core deploy + migrations + RAM ≤7GB measured + reboot self-heal + backup/restore drill (steps 6–7)
 
 **Wave 5** *(blocked on Wave 4 completion)*
 - [ ] 07-06-PLAN.md — hermes bounded jobs + watchdog + `dxb kill-switch` + night job → morning queue (steps 8–9)
