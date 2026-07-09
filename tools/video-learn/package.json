@@ -1,0 +1,19 @@
+{
+  "name": "@dxb/video-learn",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": { "video-learn": "dist/cli.js" },
+  "main": "dist/ingest.js",
+  "types": "dist/ingest.d.ts",
+  "dependencies": {
+    "@dxb/memory-router": "workspace:*",
+    "@dxb/shared": "workspace:*",
+    "kysely": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

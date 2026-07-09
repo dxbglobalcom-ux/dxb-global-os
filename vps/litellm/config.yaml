@@ -18,6 +18,16 @@ model_list:
     litellm_params: { model: openrouter/qwen/qwen3.6-flash, api_key: os.environ/OPENROUTER_API_KEY }
   - model_name: minimax-m3
     litellm_params: { model: openrouter/minimax/minimax-m3, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: sonnet-5
+    # 07-07 video.summarize (master "özet (sonnet)"); slug live-verified 2026-07-09
+    litellm_params: { model: openrouter/anthropic/claude-sonnet-5, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: opus-4.8
+    # 07-07 video.explain fallback row (L1 policy)
+    litellm_params: { model: openrouter/anthropic/claude-opus-4.8, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: fable-5
+    # 07-07 video.explain primary (CEO req: highest tier for CEO-facing output;
+    # anthropic/claude-fable-5 IS live on OpenRouter — verified 2026-07-09)
+    litellm_params: { model: openrouter/anthropic/claude-fable-5, api_key: os.environ/OPENROUTER_API_KEY }
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
   salt_key: os.environ/LITELLM_SALT_KEY           # 07-05: stable salt so virtual keys survive restarts

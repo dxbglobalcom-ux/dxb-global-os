@@ -9,6 +9,7 @@
     { "path": "packages/memory-router" },
     { "path": "packages/outbox-executor" },
     { "path": "tools/dxb-cli" },
+    { "path": "tools/video-learn" },
     { "path": "tools/hooks" },
     { "path": "apps/dashboard" },
     { "path": "apps/jarvis" }

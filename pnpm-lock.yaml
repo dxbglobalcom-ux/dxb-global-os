@@ -50,6 +50,9 @@ importers:
       '@dxb/cli':
         specifier: workspace:*
         version: link:tools/dxb-cli
+      '@dxb/video-learn':
+        specifier: workspace:*
+        version: link:tools/video-learn
       '@modelcontextprotocol/sdk':
         specifier: 'catalog:'
         version: 1.29.0(zod@4.4.3)
@@ -279,6 +282,28 @@ importers:
       '@dxb/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  tools/video-learn:
+    dependencies:
+      '@dxb/memory-router':
+        specifier: workspace:*
+        version: link:../../packages/memory-router
+      '@dxb/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+      kysely:
+        specifier: 'catalog:'
+        version: 0.29.3
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: 'catalog:'

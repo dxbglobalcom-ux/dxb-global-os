@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "build": "tsc --build",
-    "test": "vitest run"
+    "test": "vitest run",
+    "video-learn": "node tools/video-learn/dist/cli.js"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",
+    "@dxb/video-learn": "workspace:*",
     "typescript": "catalog:",
     "@types/node": "catalog:",
     "vitest": "catalog:",
