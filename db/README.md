@@ -28,4 +28,4 @@ DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres
 
 ## Local stack (X230 RAM budget)
 
-`supabase/config.toml` disables realtime, studio, storage, local_smtp, analytics, edge_runtime — the stack runs 4 containers (db, kong, rest, auth), measured ~1.9GB RAM still available after start. Re-enable services only in their owning phase.
+`supabase/config.toml` disables studio, storage, local_smtp, analytics, edge_runtime — the stack runs 5 containers (db, kong, rest, auth, realtime). Realtime was re-enabled in its owning phase (Phase 8, 08-01: Broadcast-from-DB needs `realtime.broadcast_changes` + the realtime service, which installs the `realtime` schema on first start). Re-enable further services only in their owning phase.
