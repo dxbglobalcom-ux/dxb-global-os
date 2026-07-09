@@ -10,6 +10,7 @@ import { closeDb } from "@dxb/shared";
 import { approve, reject, DecisionError } from "./approve.js";
 import { resetBreaker } from "./breaker.js";
 import { intent, IntentError } from "./intent.js";
+import { killSwitch, realDeps } from "./kill-switch.js";
 import { promote, PromoteError } from "./promote.js";
 
 function usage(): never {
@@ -66,6 +67,17 @@ async function main(): Promise<number> {
           : `promotion declined for ${out.promoted} (stays quarantined) — ${out.model}: ${out.reason}`,
       );
       return 0;
+    }
+    case "kill-switch": {
+      const [sub] = rest;
+      if (sub !== "on" && sub !== "off" && sub !== "status") usage();
+      const r = await killSwitch(sub, realDeps());
+      console.log(
+        `kill-switch ${r.action}: hard_stopped=${r.hard_stopped} hermes=${r.hermes}; ` +
+          `keys ${r.action === "status" ? "blocked" : "changed"}: ${r.keys_changed.join(", ") || "none"}` +
+          (r.key_errors.length ? `; errors: ${r.key_errors.join(" | ")}` : ""),
+      );
+      return r.key_errors.length ? 1 : 0;
     }
     case "breaker": {
       if (rest[0] !== "reset") usage();

@@ -1,0 +1,10 @@
+# hermes watchdog run (07-06 Task 2) — oneshot fired by watchdog.timer every
+# 5 minutes. Kills over-budget or artifactless>2h hermes jobs with audit trail.
+[Unit]
+Description=DXB hermes watchdog (budget/artifact enforcement tick)
+After=dxb-stack.service
+
+[Service]
+Type=oneshot
+User=dxb
+ExecStart=/opt/dxb/vps/watchdog/watchdog.sh

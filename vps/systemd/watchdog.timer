@@ -1,0 +1,11 @@
+# 5-minute watchdog cadence (master PHASE-07 spec, LOCKED).
+[Unit]
+Description=DXB hermes watchdog timer (5min)
+
+[Timer]
+OnCalendar=*:0/5
+Persistent=true
+Unit=watchdog.service
+
+[Install]
+WantedBy=timers.target
