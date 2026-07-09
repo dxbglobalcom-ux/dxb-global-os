@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-current_phase: 07
-current_phase_name: mcp-gateway-24-7-vps-runtime
-status: phase_complete
-stopped_at: "PHASE 7 CLOSED 2026-07-09 23:20 — ⛔ FABLE VERDICT PASS (07-VERIFICATION.md; CEO-emirli ön-koşul değişikliği kayıtlı: 06:00 ateşlemesi closure'ı bloklamaz, 08:23 addendum kontrolü zamanlı). CEO 3 maddesi ✓✓✓ (DNS, OpenRouter+€6, BACKUP_DEST off-site drill OFFSITE_OK — Storage Box subaccount SSH-key-only); TLS CANLI (dxbglobal.online+www, LE). CEO FULL AUTHORITY 23:15 kayıtlı (memory: ceo-delegation-rule) — izin sorulmaz, erteleme yasak, deadline 2026-07-12. ŞİMDİ: CEO Direktifi B1-B8 'hemen' kalemleri (B1/B2/B3/B5/B7/B8 doc + B4 rapor + B6 Dalga 1 LITERATURE+REVENUE) → sonra Phase 8 start prep (design bundle + playwright reaktivasyon) → /gsd-plan-phase 08"
-last_updated: "2026-07-09T21:10:00.000Z"
-last_activity: 2026-07-09
-last_activity_desc: 07-08 night ops — CEO 3 items ALL closed (BACKUP_DEST offsite drill OFFSITE_OK; TLS live dxbglobal.online+www); verdict residue = 06:00 firing check 2026-07-10 08:23
+current_phase: 08
+current_phase_name: ceo-dashboard-crm
+status: planned
+stopped_at: "PHASE 8 PLANNED 2026-07-10 00:35 (inline Fable, v5 governance) — 7 plan, 4 wave, 9/9 req kapsandı. B3 GİRİŞ ŞARTI TAM KAPANDI: design-bundle STUDY ⛔ FABLE PASS (study-cards/design-bundle.md; 6 SKILL.md bizzat okundu, ui-ux-pro-max CLI canlı test) + stitch grant design dept'e (pending_install) + 14 profil yenilendi. UI-SPEC ⛔ onaylı (Gece Lobisi: dual-mode OKLCH, Geist, şampanya altın ≤%8, Double-Bezel, Horizon Line; CEO brief = Burj Al Arab 7-yıldız lüks/3D — phase8-design-brief memory). CEO FULL AUTHORITY re-teyit 00:01 (bash dahil, izin sorulmaz). SIRADAKİ: /gsd-execute-phase 08 (08-01'den; deadline 2026-07-12). Doğal-zaman residue: hermes 06:00 ateşleme kontrolü 08:23 cron (e4dbe372)."
+last_updated: "2026-07-09T22:35:00.000Z"
+last_activity: 2026-07-10
+last_activity_desc: Phase 8 planning night — B3 study closed (Fable verdict PASS), CONTEXT+UI-SPEC+7 PLANs authored inline, ROADMAP/STATE synced
 progress:
   total_phases: 11
   completed_phases: 7
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 07 (mcp-gateway-24-7-vps-runtime) — **CLOSED 2026-07-09, ⛔ FABLE VERDICT PASS** (8/8 plans)
-Plan: — (next: /gsd-plan-phase 08 after B-directive immediates + Phase-8 skill reactivation)
-Status: Phase 7 complete — TLS live (dxbglobal.online+www), off-site backup live (OFFSITE_OK), hermes cage proven, video-learn live; B1-B8 directive immediates executing tonight (CEO full authority, deadline 2026-07-12)
-Last activity: 2026-07-09 — Phase 7 closure + CEO 3 items + night ops (inline Fable)
+Phase: 08 (ceo-dashboard-crm) — **PLANNED 2026-07-10** (7 plans, 4 waves; B3 entry gate fully closed: study ⛔ PASS + UI-SPEC ⛔ approved)
+Plan: 08-01 next (Broadcast triggers + Next.js auth + tema token'ları + AppShell)
+Status: Phase 8 planning complete — CONTEXT/UI-SPEC/PLANs inline Fable; execute starts with /gsd-execute-phase 08 (deadline 2026-07-12)
+Last activity: 2026-07-10 — Phase 8 planning + B3 study closure + FULL AUTHORITY re-teyit kaydı
 
 Progress: [████████░░] 75%
 
@@ -103,7 +103,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- **[Phase 8 GİRİŞ ŞARTI — CEO B3, 2026-07-09]: design bundle (impeccable + taste + open-design + Google Stitch) re-enable + study — dashboard tasarımından ÖNCE.** RE-ENABLE ✓ YAPILDI 2026-07-09 23:36 (settings.json: frontend-design, taste-skill, impeccable, ui-ux-pro-max, open-design, playwright → true; yeni session'da yüklenir). STUDY kısmı AÇIK — Phase 8 planlamasında Fable bizzat study-cards/design-bundle.md üzerinden çalışır + Stitch MCP profili eklenir; study kanıtı olmadan design task başlamaz. Kalıcı memory: design-bundle-phase8-bridge.md
+- ~~[Phase 8 GİRİŞ ŞARTI — CEO B3, 2026-07-09]: design bundle re-enable + study~~ **KAPANDI 2026-07-10 00:25**: RE-ENABLE ✓ (2026-07-09 23:36, 6 plugin) + STUDY ✓ ⛔ FABLE PASS (study-cards/design-bundle.md — 6 SKILL.md bizzat okundu, CLI canlı test, rol matrisi + 10 pitfall + çelişki kararları) + Stitch MCP profili ✓ (grants.json design→stitch, pending_install; 14 profil yenilendi, commit 2f19966). `od` daemon + Stitch server kurulumu = 08-01 execute kapsamı (INSTALL aşaması).
 - [Phase 1]: Credential rotation is CEO-owned manual work (checklist duty) — build work cannot start until old keys verifiably fail
 - [Phase 6]: ~~Memory-store composition rated LOW confidence~~ RESOLVED 2026-07-08: routing-quality spike (06-02) scored 20/20 — composition CONFIRMED, all four stores in scope (spikes/06-routing.md)
 - [Phase 7]: ~~MCP gateway per-department scoping is the least-commoditized piece — study pass required at phase planning~~ RESOLVED 2026-07-09: study pass executed at planning (docker/mcp-gateway, ContextForge, Lasso surveyed live) — v1 registry-generated per-dept profiles CONFIRMED, ⛔ Fable verdict in study-cards/mcp-gateway-patterns.md (b7dc785)

@@ -278,7 +278,25 @@ Plans:
   4. Any task drills down to its full audit trace on demand (no firehose streaming); the dashboard is a pure projection of operational tables — no agent ever "updates the dashboard"
   5. The thin CRM (clients, requests, contacts, deals) lives inside the cockpit with agents reading/writing via CRM MCP tools, and the whole cockpit is usable by a non-technical CEO from a phone anywhere (responsive, remote-accessible, Turkish-friendly labels)
 
-**Plans**: TBD
+**Plans**: 7 plans (planned 2026-07-10, inline Fable; B3 study closed at planning — study-cards/design-bundle.md ⛔ PASS; UI-SPEC ⛔ approved)
+
+Plans:
+
+**Wave 1**
+- [ ] 08-01-PLAN.md — Broadcast triggers 0013 + kanal RLS + Next.js 16/@supabase/ssr auth + tema token'ları + AppShell/Horizon Line/login (steps 2-3 + design foundation)
+
+**Wave 2**
+- [ ] 08-02-PLAN.md — Canlı cockpit kalbi: Panel/FreshnessStamp + görev panosu + ajan rosteri, exception-first + purity gate (step 4)
+- [ ] 08-03-PLAN.md — Risk-gruplu onay inbox'ı + tek-transaction batch + B7b money-OUT/IN asimetrisi (step 5, GATE-03)
+
+**Wave 3**
+- [ ] 08-04-PLAN.md — COST-04 maliyet kırılımı (SQL-eşitlik testli) + task drill-down audit zaman hattı (steps 6+8)
+- [ ] 08-05-PLAN.md — Command bar → kernel seam, TR intent E2E, ilk kernel istemcisi (step 7, DASH-02)
+- [ ] 08-06-PLAN.md — İnce CRM: 4 entity görünümü + alan-kısıtlı CEO yazımı + RLS parite testi (step 9, DASH-04)
+
+**Wave 4**
+- [ ] 08-07-PLAN.md — i18n tamamlama + telefon-grade responsive/a11y + Lighthouse ≥90 + UI-SPEC §9 bataryası + 08-VERIFICATION + ⛔ Fable verdict (steps 10-11)
+
 **UI hint**: yes
 
 ### Phase 9: JARVIS Voice Layer
