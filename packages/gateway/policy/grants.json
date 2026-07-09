@@ -1,0 +1,34 @@
+{
+  "_schema": [
+    "MCP-02 per-department ALLOW map + server catalog. [ADAPT 07-03] The Phase-3 registry carries",
+    "departments/agents only — no tool-grant table — so the default-deny allowlist lives here as policy",
+    "data, keyed by registry department slugs (generator rejects grants for slugs absent from the registry).",
+    "Default-deny: a department absent from 'grants', or a server absent from its entry, is DENIED.",
+    "Grant value: '*' = every non-quarantined tool of that server; or an explicit tool-name array.",
+    "'servers' is the launch catalog: only servers with a catalog entry can be emitted into a profile;",
+    "granted-but-uncatalogued servers are reported as pending_install, never emitted (profile stays loadable).",
+    "v1 grants are the MINIMAL set: house bus (dxb-mcp) for all departments; Stripe→finance only,",
+    "DocuSign→legal-de only (doc line 39); code MCPs→engineering only. The doc's full ~10 per-department",
+    "tables land wave-by-wave at Phase 10 department activation. ⛔ FABLE-ONLY: ADDING any grant here",
+    "(= privilege widening) requires a Fable-authored change with CEO-visible rationale."
+  ],
+  "servers": {
+    "dxb-mcp": { "command": "node", "args": ["packages/dxb-mcp/dist/index.js"] }
+  },
+  "grants": {
+    "ceo": { "dxb-mcp": "*" },
+    "research": { "dxb-mcp": "*" },
+    "design": { "dxb-mcp": "*" },
+    "engineering": { "dxb-mcp": "*", "github": "*", "git": "*", "context7": "*" },
+    "finance": { "dxb-mcp": "*", "stripe": "*" },
+    "legal-de": { "dxb-mcp": "*", "docusign": "*" },
+    "marketing": { "dxb-mcp": "*" },
+    "paid-media": { "dxb-mcp": "*" },
+    "product": { "dxb-mcp": "*" },
+    "project-management": { "dxb-mcp": "*" },
+    "sales": { "dxb-mcp": "*" },
+    "specialized": { "dxb-mcp": "*" },
+    "support": { "dxb-mcp": "*" },
+    "testing": { "dxb-mcp": "*" }
+  }
+}

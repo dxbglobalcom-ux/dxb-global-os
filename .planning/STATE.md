@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 07
 current_phase_name: mcp-gateway-24-7-vps-runtime
 status: phase_executing
-stopped_at: "PHASE 7 EXECUTING — WAVE 1 COMPLETE (2026-07-09, inline Fable). 07-01: 3 toolset cards pinned (hermes v0.18.2 LOCKED; speaches 0.8.3-cpu @ digest; yt-dlp 2026.07.04), hcloud 1.66.0 + yt-dlp sha256-verified local. 07-02 (MCP-03): tool_pins migration 20260709000011 applied (UNIQUE server,tool + RLS), pin-check.ts hash/pin/quarantine/audit same-trx + sticky quarantine, inventory via InMemoryTransport tools/list, 21 dxb-mcp tools pinned in production run, cron tool-pin-check 04:00, tests 5/5 + full suite 24 files green. NEXT: wave 2 = 07-03 denials.json + generate-profiles (MCP-02, quarantine-exclusion assert). Then 07-04 Hetzner provision (CEO checkpoint: token+DNS) → 07-05 compose deploy → 07-06 hermes+watchdog ∥ 07-07 video-learn → 07-08 closure ⛔ FABLE verdict. Knowledge graph >1 phase stale, /gsd-graphify build due at CEO's go"
-last_updated: "2026-07-09T10:20:00.000Z"
+stopped_at: "PHASE 7 EXECUTING — WAVES 1+2 COMPLETE (2026-07-09, inline Fable). 07-01 cards + installs; 07-02 (MCP-03) tool_pins/pin-check live, 21 tools pinned, cron 04:00; 07-03 (MCP-02): denials.json (14 dept red map, doc-transcribed) + grants.json ([ADAPT] registry has no grant table) + generate-profiles.ts (default-deny, denials override grants, quarantine excluded at generation, deterministic + source_hash), migration 20260709000012 seeds ceo+research depts, 14 production profiles emitted — grep proof research=no stripe / ceo=no github, tests 4/4, suite 25 files 115 pass. CEO CONFIRM pending: finance↔docusign / legal-de↔stripe denial split (SUMMARY deviation 3). NEXT: 07-04 Hetzner provision — CEO CHECKPOINT (real money ~€20/mo, Hetzner token + DNS = CEO identity steps) → 07-05 compose deploy → 07-06 hermes+watchdog ∥ 07-07 video-learn → 07-08 closure ⛔ FABLE verdict + /gsd-graphify build (CEO approved: at phase closure)"
+last_updated: "2026-07-09T10:45:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: Wave 1 complete — 07-01 toolset cards + 07-02 anti rug-pull layer (21 tools pinned, inline Fable)
+last_activity_desc: Wave 2 complete — 07-03 least-privilege profiles generated (14 depts, doc reds grep-proven, inline Fable)
 progress:
   total_phases: 11
   completed_phases: 6
   total_plans: 44
-  completed_plans: 38
-  percent: 64
+  completed_plans: 39
+  percent: 66
 ---
 
 # Project State
@@ -28,12 +28,12 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 07 (mcp-gateway-24-7-vps-runtime) — EXECUTING (wave 1 complete)
-Plan: 2 of 8 executed (07-01 toolset cards + 07-02 tool_pins/pin-check; 07-03 next, wave 2)
-Status: Phase 7 executing — anti rug-pull layer LIVE (21 tools pinned, 04:00 cron); next least-privilege profiles (07-03), then VPS runtime; CEO checkpoints at 07-04/05/06/08
-Last activity: 2026-07-09 — wave 1 closed: 07-01 + 07-02 (inline Fable)
+Phase: 07 (mcp-gateway-24-7-vps-runtime) — EXECUTING (waves 1+2 complete)
+Plan: 3 of 8 executed (07-01 cards, 07-02 tool_pins, 07-03 profiles; 07-04 next — CEO checkpoint)
+Status: Phase 7 executing — anti rug-pull + least-privilege profiles LIVE (14 dept profiles generated); next VPS runtime; CEO checkpoints at 07-04/05/06/08
+Last activity: 2026-07-09 — wave 2 closed: 07-03 (inline Fable)
 
-Progress: [██████░░░░] 64%
+Progress: [██████▌░░░] 66%
 
 ## Performance Metrics
 

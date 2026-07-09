@@ -1,0 +1,39 @@
+{
+  "_department": "design",
+  "_generated_at": "2026-07-09T10:37:26.520Z",
+  "_generator": "packages/gateway/src/generate-profiles.ts",
+  "_source_hash": "df8ea178af2ec6879902f430e417af258b0e16d1fb605642bc15a8d93129f752",
+  "_tools": {
+    "dxb-mcp": [
+      "approval_finalize_draft",
+      "approval_list_pending",
+      "approval_submit_draft",
+      "audit_append",
+      "audit_trace",
+      "cost_record",
+      "cost_summary",
+      "crm_get",
+      "dashboard_feed",
+      "memory_commit",
+      "memory_recall",
+      "queue_claim",
+      "queue_create_task",
+      "queue_get",
+      "queue_list",
+      "queue_return",
+      "queue_transition",
+      "registry_activate",
+      "registry_create_department",
+      "registry_get_agent",
+      "registry_list"
+    ]
+  },
+  "mcpServers": {
+    "dxb-mcp": {
+      "args": [
+        "packages/dxb-mcp/dist/index.js"
+      ],
+      "command": "node"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "_schema": [
+    "MCP-02 per-department DENY map (master PHASE-07 §3: 'doc'un departman red tabloları').",
+    "Transcribed from the architecture doc (bubbly-dazzling-goblet.md lines 39/76): CEO no code MCPs;",
+    "Research no payment / no prod-DB write; Sales no prod code; Marketing no GitHub write;",
+    "Stripe/DocuSign visible ONLY to finance/legal specialists — every other department denies both.",
+    "Entry format: '<server>' denies the whole server, '<server>.<tool>' denies one tool (study-card dot-notation).",
+    "Denials are hard overrides ON TOP of default-deny grants (policy/grants.json): a grant mistake cannot",
+    "resurface a denied server. ⛔ FABLE-ONLY: REMOVING or NARROWING any entry here (= privilege widening)",
+    "requires a Fable-authored change with CEO-visible rationale. Additions (tightening) are allowed."
+  ],
+  "ceo": ["github", "git"],
+  "research": ["stripe", "docusign", "postgres"],
+  "design": ["stripe", "docusign"],
+  "engineering": ["stripe", "docusign"],
+  "finance": ["docusign"],
+  "legal-de": ["stripe"],
+  "marketing": ["stripe", "docusign", "github"],
+  "paid-media": ["stripe", "docusign"],
+  "product": ["stripe", "docusign"],
+  "project-management": ["stripe", "docusign"],
+  "sales": ["stripe", "docusign", "github"],
+  "specialized": ["stripe", "docusign"],
+  "support": ["stripe", "docusign"],
+  "testing": ["stripe", "docusign"]
+}

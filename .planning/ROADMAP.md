@@ -250,7 +250,7 @@ Plans:
 - [x] 07-02-PLAN.md — 0010_tool_pins + pin-check.ts: hash pin, sticky quarantine, audit, daily cron (step 2)
 
 **Wave 2**
-- [ ] 07-03-PLAN.md — denials.json + generate-profiles.ts: registry-derived per-dept .mcp.json, quarantine excluded, red-grep tests (step 3)
+- [x] 07-03-PLAN.md — denials.json + generate-profiles.ts: registry-derived per-dept .mcp.json, quarantine excluded, red-grep tests (step 3)
 
 **Wave 3**
 - [ ] 07-04-PLAN.md — Runtime "tool not found" proof + Hetzner provision/hardening/Caddy (CEO checkpoint: token+DNS) (steps 4–5)
