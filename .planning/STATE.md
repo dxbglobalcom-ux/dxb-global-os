@@ -4,17 +4,17 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 07
 current_phase_name: mcp-gateway-24-7-vps-runtime
-status: phase_executing
-stopped_at: "PHASE 7 EXECUTING — 07-01..07 COMPLETE; 07-08 kanıt tarafı TAM, verdict TEK kalana indi (2026-07-09 gece, inline Fable). CEO 3 MADDESİ ✓✓✓ KAPANDI: (1) DNS ✓ dig-doğrulandı; (2) OpenRouter ✓ +€6 gerçek digest; (3) BACKUP_DEST ✓ KAPANDI 22:57 — Storage Box dxb-backup-1 + least-privilege subaccount u629578-sub1 (SSH-key-only, RFC4716 gotcha vps/README'de), drill OFFSITE_OK, dump box'ta 1564584 byte. TLS ✓ CANLI 23:00 (CEO in-session adlandırdı): https://dxbglobal.online/health + www → 'ok', LE cert (notAfter Oct 7 2026), http→308; DXB_DOMAIN caddy.env + systemd drop-in. fail2ban olayı: root@ denemeleri laptop IP'yi banladı 21:30, 22:31 otomatik düştü, sıfır hasar. pg_dump.sh exec-bit repo'da düzeltildi (100755). Hetzner not: port 25/465 kapalı → Phase 10/11 mail relay şart. VERDICT KALAN TEK ÖN-KOŞUL: ilk gözetimsiz 06:00 hermes ateşlemesi — kontrol 2026-07-10 08:23; artifact + review-queue satırı varsa ⛔ FABLE verdict + closure commit + graphify + STATE phase_complete. Sonra: CEO Direktifi B1-B7 doküman işleri (baseline audit: çoğu 0-iz, LITERATURE.md yok)"
+status: phase_complete
+stopped_at: "PHASE 7 CLOSED 2026-07-09 23:20 — ⛔ FABLE VERDICT PASS (07-VERIFICATION.md; CEO-emirli ön-koşul değişikliği kayıtlı: 06:00 ateşlemesi closure'ı bloklamaz, 08:23 addendum kontrolü zamanlı). CEO 3 maddesi ✓✓✓ (DNS, OpenRouter+€6, BACKUP_DEST off-site drill OFFSITE_OK — Storage Box subaccount SSH-key-only); TLS CANLI (dxbglobal.online+www, LE). CEO FULL AUTHORITY 23:15 kayıtlı (memory: ceo-delegation-rule) — izin sorulmaz, erteleme yasak, deadline 2026-07-12. ŞİMDİ: CEO Direktifi B1-B8 'hemen' kalemleri (B1/B2/B3/B5/B7/B8 doc + B4 rapor + B6 Dalga 1 LITERATURE+REVENUE) → sonra Phase 8 start prep (design bundle + playwright reaktivasyon) → /gsd-plan-phase 08"
 last_updated: "2026-07-09T21:10:00.000Z"
 last_activity: 2026-07-09
 last_activity_desc: 07-08 night ops — CEO 3 items ALL closed (BACKUP_DEST offsite drill OFFSITE_OK; TLS live dxbglobal.online+www); verdict residue = 06:00 firing check 2026-07-10 08:23
 progress:
   total_phases: 11
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 44
-  completed_plans: 41
-  percent: 70
+  completed_plans: 42
+  percent: 75
 ---
 
 # Project State
@@ -28,12 +28,12 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 07 (mcp-gateway-24-7-vps-runtime) — EXECUTING (7 of 8 plans done)
-Plan: 7 of 8 (07-07 complete; 07-04 yalnız DNS-TLS kapısı açık)
-Status: Phase 7 executing — video-learn VID-01 PROVEN LIVE (fable-5 explain, quarantined multi-artifact, CLI ingest+ask); next 07-08 closure (CEO 3 maddesi + ⛔ FABLE verdict + graphify)
-Last activity: 2026-07-09 — 07-07: canlı e2e + CLI, Speaches RAM ölçüldü, ilk gerçek video hafızada (inline Fable)
+Phase: 07 (mcp-gateway-24-7-vps-runtime) — **CLOSED 2026-07-09, ⛔ FABLE VERDICT PASS** (8/8 plans)
+Plan: — (next: /gsd-plan-phase 08 after B-directive immediates + Phase-8 skill reactivation)
+Status: Phase 7 complete — TLS live (dxbglobal.online+www), off-site backup live (OFFSITE_OK), hermes cage proven, video-learn live; B1-B8 directive immediates executing tonight (CEO full authority, deadline 2026-07-12)
+Last activity: 2026-07-09 — Phase 7 closure + CEO 3 items + night ops (inline Fable)
 
-Progress: [███████░░░] 70%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 

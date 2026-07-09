@@ -1,6 +1,6 @@
 ---
 phase: 07-mcp-gateway-24-7-vps-runtime
-status: evidence-complete — VERDICT PENDING (single residue: first unattended 06:00 firing, check 2026-07-10 08:23)
+status: CLOSED — FABLE VERDICT PASS (2026-07-09 23:20; CEO-ordered precondition change recorded in verdict block)
 verified: 2026-07-09
 verifier: "Claude Fable 5 — inline, personally (governance v5); evidence lines quote commands executed in the 07-02..07-08 recorded runs of 2026-07-09"
 ---
@@ -86,4 +86,19 @@ All five ROADMAP Phase-7 success criteria mapped to executed evidence (command �
 
 ## ⛔ FABLE VERDICT
 
-**PENDING — deliberately withheld, residue narrowed to ONE item.** The three CEO items are CLOSED with executed evidence (2026-07-09: DNS dig-verified; OpenRouter +€6 with real digest; BACKUP_DEST off-site drill `OFFSITE_OK`) and TLS is live (`https://dxbglobal.online/health` → `ok`, Let's Encrypt). Remaining precondition per the recorded standing order: the **first unattended 06:00 hermes firing** (a real morning cannot be simulated — Evidence-Before-Done). Check runs 2026-07-10 08:23; if the artifact + review-queue row exist, Fable writes the verdict block here in-session and the closure commit lands. Checker PASS ≠ done; this document is not a closure claim.
+**PASS — Phase 7 CLOSED.** Written in-session by Fable 5 personally, 2026-07-09 23:20, after reading the phase diff, the five criterion evidence blocks above, the ⚠ table, and the deviations roll-up.
+
+**Precondition change (recorded, NOT silent — [[master-plan-fidelity]]):** the earlier standing order required the first unattended 06:00 hermes firing before this verdict. CEO order 2026-07-09 ~23:10 (verbatim: "vaktimiz yok herşeyi bitieceğiz… sakın bir daha yarın sabah falan deme") overrides that: natural-clock evidence may not block closure. What replaces it, machine-verified tonight: `hermes cron list` on the box → job `social-morning-scan [active]`, `Next run: 2026-07-10T06:00:00+00:00`, `Last run: 2026-07-09T19:22:09 ok` (a REAL full run of the same job produced the real 20-item digest + review-queue row), `systemctl is-active hermes` → `active`. The only untested aspect is "nobody watching at 06:00" — scheduling infra is armed and the identical job has succeeded end-to-end today. Post-closure confirmation stays scheduled (2026-07-10 08:23) and its result will be appended below as an addendum; if the firing fails, that is a **runtime incident to fix**, not a phase-gate regression.
+
+**Verdict reasoning (5/5):**
+1. **Profiles/denials** — emitted-JSON + runtime "tool not found" both proven with executed tests; denial split CEO-confirmed. Nothing predicted, everything run.
+2. **Hash-pin quarantine** — live mutation drill, sticky quarantine, audit rows, 21/21 production pins, VPS parity. The supply-chain mechanism the phase exists for is demonstrably real.
+3. **8GB stack** — 9/9 healthy, RAM 2579/7751 with headroom, 100s reboot-to-green, backup now **including the off-site leg** (`OFFSITE_OK`, byte-identical on the storage box) and TLS live on the real domain.
+4. **Hermes cage** — runaway kill on REAL spend figures, kill switch both directions with key-probe evidence, morning review queue idempotent, zero outward rows. Bounded-autonomy promise holds.
+5. **Video-learn** — full REAL chain live (yt-dlp→STT→classify→generate→fable-5 explain→quarantined rows) + CLI + deterministic battery.
+
+Residue is honest and small (⚠ table): CI-run-green needs a GitHub remote (CEO outward decision); 06:00 unattended confirmation lands 08:23 as addendum; 15 dept keys deferred to Phase 8 by design. None of these is a mechanism gap.
+
+**Phase 7 gate: PASSED. Phase 8 may start.** Checker PASS ≠ done — this verdict is grounded in the executed evidence quoted above, read personally, none relayed.
+
+— Fable 5, inline, 2026-07-09 23:20 CET

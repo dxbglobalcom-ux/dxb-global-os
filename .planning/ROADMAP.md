@@ -23,7 +23,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Safety Rails — Gates, Cost, Audit** - Code-level approval gates, outbox executor, LiteLLM budget enforcement, velocity breakers, append-only audit — before anything runs unattended — **COMPLETE 2026-07-08 (Fable closure verdict, 04-FABLE-REVIEW.md)**
 - [x] **Phase 5: Kernel & Orchestrator Core Loop** - Intent → classification → decomposition → tiered dispatch → escalation → council; exit gate: 10/10 vertical slice runs — PASSED 2026-07-08 (05-VERIFICATION.md, FABLE verdict)
 - [x] **Phase 6: Memory Router & Knowledge Stores** - Single write path with provenance/quarantine/contradiction policy over Obsidian, claude-mem, Graphify, open-notebook, pgvector — PASSED 2026-07-09 (06-VERIFICATION.md, FABLE verdict; battery 19/20 live)
-- [ ] **Phase 7: MCP Gateway & 24/7 VPS Runtime** - Department-scoped tool visibility, hash pinning, EU VPS compose stack, Hermes resident agent, video-learning module
+- [x] **Phase 7: MCP Gateway & 24/7 VPS Runtime** - Department-scoped tool visibility, hash pinning, EU VPS compose stack, Hermes resident agent, video-learning module
 - [ ] **Phase 8: CEO Dashboard & CRM** - Design bundle first, then the cockpit: live task board, batch approval inbox, cost meter, command bar, drill-down audit, embedded CRM
 - [ ] **Phase 9: JARVIS Voice Layer** - Morning voice briefings and spoken commands as a thin second client of the same kernel
 - [ ] **Phase 10: Department Activation Waves & Persona Factory** - Golden-task battery + sampling audit live first, then wave-by-wave activation, HR persona v2.0 factory, progressive autonomy dial
@@ -253,7 +253,7 @@ Plans:
 - [x] 07-03-PLAN.md — denials.json + generate-profiles.ts: registry-derived per-dept .mcp.json, quarantine excluded, red-grep tests (step 3)
 
 **Wave 3**
-- [ ] 07-04-PLAN.md — Runtime "tool not found" proof + Hetzner provision/hardening/Caddy (CEO checkpoint: token+DNS) (steps 4–5)
+- [x] 07-04-PLAN.md — Runtime "tool not found" proof + Hetzner provision/hardening/Caddy (CEO checkpoint: token+DNS) (steps 4–5; TLS live 2026-07-09: https://dxbglobal.online/health + www → ok, LE cert)
 
 **Wave 4**
 - [x] 07-05-PLAN.md — compose core deploy + migrations + RAM ≤7GB measured + reboot self-heal + backup/restore drill (steps 6–7)
@@ -263,7 +263,7 @@ Plans:
 - [x] 07-07-PLAN.md — video-learn ingest: yt-dlp → Speaches STT → routed summary → quarantined memory (step 10)
 
 **Wave 6**
-- [ ] 07-08-PLAN.md — gitleaks-action SHA-pin + 07-VERIFICATION 5/5 + ⛔ FABLE closure verdict (steps 11–12)
+- [x] 07-08-PLAN.md — gitleaks-action SHA-pin + 07-VERIFICATION 5/5 + ⛔ FABLE closure verdict (steps 11–12; verdict 2026-07-09 23:20, CEO-ordered precondition change recorded)
 
 ### Phase 8: CEO Dashboard & CRM
 
@@ -339,7 +339,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 4. Safety Rails — Gates, Cost, Audit | 5/5 | Complete | 2026-07-08 |
 | 5. Kernel & Orchestrator Core Loop | 9/9 | Complete | 2026-07-08 |
 | 6. Memory Router & Knowledge Stores | 8/8 | Complete | 2026-07-09 |
-| 7. MCP Gateway & 24/7 VPS Runtime | 7/8 | In Progress | - |
+| 7. MCP Gateway & 24/7 VPS Runtime | 8/8 | Complete | 2026-07-09 |
 | 8. CEO Dashboard & CRM | 0/TBD | Not started | - |
 | 9. JARVIS Voice Layer | 0/TBD | Not started | - |
 | 10. Department Activation Waves & Persona Factory | 0/TBD | Not started | - |
