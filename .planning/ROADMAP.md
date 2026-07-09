@@ -259,8 +259,8 @@ Plans:
 - [x] 07-05-PLAN.md — compose core deploy + migrations + RAM ≤7GB measured + reboot self-heal + backup/restore drill (steps 6–7)
 
 **Wave 5** *(blocked on Wave 4 completion)*
-- [ ] 07-06-PLAN.md — hermes bounded jobs + watchdog + `dxb kill-switch` + night job → morning queue (steps 8–9)
-- [ ] 07-07-PLAN.md — video-learn ingest: yt-dlp → Speaches STT → routed summary → quarantined memory (step 10)
+- [x] 07-06-PLAN.md — hermes bounded jobs + watchdog + `dxb kill-switch` + night job → morning queue (steps 8–9)
+- [x] 07-07-PLAN.md — video-learn ingest: yt-dlp → Speaches STT → routed summary → quarantined memory (step 10)
 
 **Wave 6**
 - [ ] 07-08-PLAN.md — gitleaks-action SHA-pin + 07-VERIFICATION 5/5 + ⛔ FABLE closure verdict (steps 11–12)
@@ -336,10 +336,10 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 1. Security Baseline & Credential Remediation | 6/6 | Complete | 2026-07-06 |
 | 2. Foundation & Integration Program | 5/5 | Complete | 2026-07-06 |
 | 3. State Layer & dxb-mcp Core | 5/5 | Complete | 2026-07-07 |
-| 4. Safety Rails — Gates, Cost, Audit | 3/5 | In Progress | - |
-| 5. Kernel & Orchestrator Core Loop | 0/TBD | Not started | - |
-| 6. Memory Router & Knowledge Stores | 0/TBD | Not started | - |
-| 7. MCP Gateway & 24/7 VPS Runtime | 0/TBD | Not started | - |
+| 4. Safety Rails — Gates, Cost, Audit | 5/5 | Complete | 2026-07-08 |
+| 5. Kernel & Orchestrator Core Loop | 9/9 | Complete | 2026-07-08 |
+| 6. Memory Router & Knowledge Stores | 8/8 | Complete | 2026-07-09 |
+| 7. MCP Gateway & 24/7 VPS Runtime | 7/8 | In Progress | - |
 | 8. CEO Dashboard & CRM | 0/TBD | Not started | - |
 | 9. JARVIS Voice Layer | 0/TBD | Not started | - |
 | 10. Department Activation Waves & Persona Factory | 0/TBD | Not started | - |
