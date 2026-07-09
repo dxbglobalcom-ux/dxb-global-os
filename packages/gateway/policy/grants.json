@@ -18,7 +18,7 @@
   "grants": {
     "ceo": { "dxb-mcp": "*" },
     "research": { "dxb-mcp": "*" },
-    "design": { "dxb-mcp": "*" },
+    "design": { "dxb-mcp": "*", "stitch": "*" },
     "engineering": { "dxb-mcp": "*", "github": "*", "git": "*", "context7": "*" },
     "finance": { "dxb-mcp": "*", "stripe": "*", "revolut": "*", "wise": "*" },
     "legal-de": { "dxb-mcp": "*", "docusign": "*" },

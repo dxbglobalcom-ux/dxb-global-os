@@ -1,8 +1,8 @@
 {
   "_department": "research",
-  "_generated_at": "2026-07-09T12:25:51.853Z",
+  "_generated_at": "2026-07-09T22:16:44.640Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
-  "_source_hash": "fa8859c184f5149afa75c408d77cef0aa11e41192be92dca0bc45060882dbf62",
+  "_source_hash": "c35c0814e10aac413eff12a37fe3aa0768aef63cf2449abf98dd9ea3cfa29f07",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",
