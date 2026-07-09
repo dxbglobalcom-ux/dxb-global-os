@@ -4,17 +4,17 @@ milestone: v2.0
 milestone_name: milestone
 current_phase: 08
 current_phase_name: ceo-dashboard-crm
-status: planned
+status: executing
 stopped_at: "PHASE 8 PLANNED 2026-07-10 00:35 (inline Fable, v5 governance) — 7 plan, 4 wave, 9/9 req kapsandı. B3 GİRİŞ ŞARTI TAM KAPANDI: design-bundle STUDY ⛔ FABLE PASS (study-cards/design-bundle.md; 6 SKILL.md bizzat okundu, ui-ux-pro-max CLI canlı test) + stitch grant design dept'e (pending_install) + 14 profil yenilendi. UI-SPEC ⛔ onaylı (Gece Lobisi: dual-mode OKLCH, Geist, şampanya altın ≤%8, Double-Bezel, Horizon Line; CEO brief = Burj Al Arab 7-yıldız lüks/3D — phase8-design-brief memory). CEO FULL AUTHORITY re-teyit 00:01 (bash dahil, izin sorulmaz). SIRADAKİ: /gsd-execute-phase 08 (08-01'den; deadline 2026-07-12). Doğal-zaman residue: hermes 06:00 ateşleme kontrolü 08:23 cron (e4dbe372)."
-last_updated: "2026-07-09T22:35:00.000Z"
-last_activity: 2026-07-10
-last_activity_desc: Phase 8 planning night — B3 study closed (Fable verdict PASS), CONTEXT+UI-SPEC+7 PLANs authored inline, ROADMAP/STATE synced
+last_updated: "2026-07-09T22:49:22.411Z"
+last_activity: 2026-07-09
+last_activity_desc: Phase 08 execution started
 progress:
   total_phases: 11
   completed_phases: 7
-  total_plans: 44
-  completed_plans: 42
-  percent: 75
+  total_plans: 53
+  completed_plans: 46
+  percent: 64
 ---
 
 # Project State
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-05)
 
 **Core value:** Anti-baby-sitting — the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward.
-**Current focus:** Phase 06 — memory-router-knowledge-stores
+**Current focus:** Phase 08 — ceo-dashboard-crm
 
 ## Current Position
 
-Phase: 08 (ceo-dashboard-crm) — **PLANNED 2026-07-10** (7 plans, 4 waves; B3 entry gate fully closed: study ⛔ PASS + UI-SPEC ⛔ approved)
-Plan: 08-01 next (Broadcast triggers + Next.js auth + tema token'ları + AppShell)
-Status: Phase 8 planning complete — CONTEXT/UI-SPEC/PLANs inline Fable; execute starts with /gsd-execute-phase 08 (deadline 2026-07-12)
-Last activity: 2026-07-10 — Phase 8 planning + B3 study closure + FULL AUTHORITY re-teyit kaydı
+Phase: 08 (ceo-dashboard-crm) — EXECUTING
+Plan: 1 of 7
+Status: Executing Phase 08
+Last activity: 2026-07-09 — Phase 08 execution started
 
 Progress: [████████░░] 75%
 
