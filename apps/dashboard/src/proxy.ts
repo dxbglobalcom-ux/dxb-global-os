@@ -33,16 +33,22 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // 2FA is mandatory (master-plan LOCKED): a session below aal2 is treated as
+  // unauthenticated, so a password-only or magic-link session cannot reach the
+  // cockpit — the login flow forces TOTP enroll/verify to raise it.
+  const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+  const cockpitReady = Boolean(user) && aal?.currentLevel === "aal2";
+
   const path = request.nextUrl.pathname;
   const isPublic = path.startsWith("/login") || path.startsWith("/auth");
 
-  if (!user && !isPublic) {
+  if (!cockpitReady && !isPublic) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
-  if (user && path.startsWith("/login")) {
+  if (cockpitReady && path.startsWith("/login")) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);

@@ -1,0 +1,45 @@
+{
+  "brand": {
+    "name": "DXB Global",
+    "product": "Cockpit"
+  },
+  "nav": {
+    "cockpit": "Cockpit",
+    "approvals": "Approvals",
+    "costs": "Costs",
+    "tasks": "Tasks",
+    "crm": "CRM"
+  },
+  "horizon": {
+    "activeTasks": "active tasks",
+    "pendingApprovals": "pending approvals",
+    "todayCost": "cost today",
+    "live": "live",
+    "notLive": "not live"
+  },
+  "login": {
+    "title": "Enter the cockpit",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in",
+    "totpTitle": "Verification code",
+    "totpHint": "Enter the 6-digit code from your authenticator app.",
+    "totpCode": "6-digit code",
+    "verify": "Verify",
+    "verifying": "Verifying",
+    "enrollTitle": "Set up two-step verification",
+    "enrollHint": "Scan the QR code with an authenticator app, then enter the first code to finish setup.",
+    "enrollManual": "Manual entry code",
+    "errorCredentials": "Could not verify your credentials.",
+    "errorTotp": "Code could not be verified. Try again.",
+    "errorGeneric": "Something went wrong. Try again."
+  },
+  "cockpit": {
+    "title": "Cockpit",
+    "emptyTitle": "All clear",
+    "emptyBody": "Nothing is waiting on you. The company is running.",
+    "emptyAction": "Check the approval inbox",
+    "asOf": "as of"
+  }
+}

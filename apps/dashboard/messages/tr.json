@@ -1,0 +1,45 @@
+{
+  "brand": {
+    "name": "DXB Global",
+    "product": "Kokpit"
+  },
+  "nav": {
+    "cockpit": "Kokpit",
+    "approvals": "Onaylar",
+    "costs": "Maliyet",
+    "tasks": "Görevler",
+    "crm": "CRM"
+  },
+  "horizon": {
+    "activeTasks": "aktif görev",
+    "pendingApprovals": "bekleyen onay",
+    "todayCost": "bugünkü maliyet",
+    "live": "canlı",
+    "notLive": "canlı değil"
+  },
+  "login": {
+    "title": "Kokpite giriş",
+    "email": "E-posta",
+    "password": "Şifre",
+    "signIn": "Giriş yap",
+    "signingIn": "Giriş yapılıyor",
+    "totpTitle": "Doğrulama kodu",
+    "totpHint": "Authenticator uygulamandaki 6 haneli kodu gir.",
+    "totpCode": "6 haneli kod",
+    "verify": "Doğrula",
+    "verifying": "Doğrulanıyor",
+    "enrollTitle": "İki adımlı doğrulamayı kur",
+    "enrollHint": "QR kodu authenticator uygulamasıyla tara, ardından ilk kodu girerek kurulumu tamamla.",
+    "enrollManual": "Elle giriş için kod",
+    "errorCredentials": "Giriş bilgileri doğrulanamadı.",
+    "errorTotp": "Kod doğrulanamadı. Yeniden dene.",
+    "errorGeneric": "Bir sorun oluştu. Yeniden dene."
+  },
+  "cockpit": {
+    "title": "Kokpit",
+    "emptyTitle": "Kapı temiz",
+    "emptyBody": "Seni bekleyen bir şey yok. Şirket çalışıyor.",
+    "emptyAction": "Onay kutusuna bak",
+    "asOf": "itibarıyla"
+  }
+}
