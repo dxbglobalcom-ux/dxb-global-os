@@ -1,0 +1,230 @@
+# DXB VPS stack (07-05, master PHASE-07 §3). Profiles: core (Supabase trimmed
+# + LiteLLM + outbox) / voice (Speaches, on-demand — declared, NOT started
+# here) / brain (open-notebook; hermes is a native systemd service in 07-06,
+# not a container). Every image pinned exact (moving tags banned; Supabase
+# tags = LOCAL PARITY with the laptop's running stack, studio/litellm/speaches
+# pins verified live 2026-07-09). Storage/Imgproxy DISABLED per the master RAM
+# table. All host ports bind 127.0.0.1 — Caddy (native, 07-04) is the only
+# public face. mem_limit per the master budget (≤7GB peak / 1GB headroom,
+# T-07-16). No secret literal in this file: everything comes from ./.env on
+# the box (0600, never committed — T-07-15).
+name: dxb
+
+services:
+  db:
+    image: public.ecr.aws/supabase/postgres:17.6.1.140
+    profiles: [core]
+    ports:
+      - "127.0.0.1:5432:5432"   # session-mode DIRECT for pg-boss/admin (STACK rule: no transaction pooling)
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: postgres
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXP: 3600
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    mem_limit: 1792m
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-h", "127.0.0.1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  auth:
+    image: public.ecr.aws/supabase/gotrue:v2.192.0
+    profiles: [core]
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      GOTRUE_API_HOST: 0.0.0.0
+      GOTRUE_API_PORT: 9999
+      API_EXTERNAL_URL: https://${DXB_DOMAIN}/auth/v1
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@db:5432/postgres
+      GOTRUE_SITE_URL: https://${DXB_DOMAIN}
+      GOTRUE_DISABLE_SIGNUP: "true"     # CEO-only cockpit; users created by admin API
+      GOTRUE_JWT_SECRET: ${JWT_SECRET}
+      GOTRUE_JWT_EXP: 3600
+      GOTRUE_JWT_DEFAULT_GROUP_NAME: authenticated
+      GOTRUE_JWT_ADMIN_ROLES: service_role
+      GOTRUE_JWT_AUD: authenticated
+      GOTRUE_MAILER_AUTOCONFIRM: "true" # no SMTP on the box yet (Phase 8 revisits)
+    mem_limit: 192m
+    restart: unless-stopped
+
+  rest:
+    image: public.ecr.aws/supabase/postgrest:v14.14
+    profiles: [core]
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${POSTGRES_PASSWORD}@db:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      PGRST_DB_USE_LEGACY_GUCS: "false"
+    mem_limit: 192m
+    restart: unless-stopped
+
+  realtime:
+    image: public.ecr.aws/supabase/realtime:v2.112.1
+    profiles: [core]
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      PORT: 4000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: supabase_admin
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: postgres
+      DB_AFTER_CONNECT_QUERY: "SET search_path TO _realtime"
+      DB_ENC_KEY: ${REALTIME_DB_ENC_KEY}   # exactly 16 chars
+      API_JWT_SECRET: ${JWT_SECRET}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      ERL_AFLAGS: "-proto_dist inet_tcp"
+      RUN_JANITOR: "true"
+      APP_NAME: realtime
+      SEED_SELF_HOST: "true"
+    mem_limit: 512m
+    restart: unless-stopped
+
+  meta:
+    image: public.ecr.aws/supabase/postgres-meta:v0.96.6
+    profiles: [core]
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      PG_META_PORT: 8080
+      PG_META_DB_HOST: db
+      PG_META_DB_PORT: 5432
+      PG_META_DB_NAME: postgres
+      PG_META_DB_USER: supabase_admin
+      PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
+    mem_limit: 192m
+    restart: unless-stopped
+
+  studio:
+    image: supabase/studio:2026.07.07-sha-a6a04f2
+    profiles: [core]
+    depends_on:
+      - meta
+      - kong
+    environment:
+      STUDIO_PG_META_URL: http://meta:8080
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      SUPABASE_URL: http://kong:8000
+      SUPABASE_PUBLIC_URL: https://${DXB_DOMAIN}
+      SUPABASE_ANON_KEY: ${ANON_KEY}
+      SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      AUTH_JWT_SECRET: ${JWT_SECRET}
+      DEFAULT_ORGANIZATION_NAME: DXB Global
+      DEFAULT_PROJECT_NAME: dxb-global-os
+    mem_limit: 512m
+    restart: unless-stopped
+
+  kong:
+    image: public.ecr.aws/supabase/kong:2.8.1
+    profiles: [core]
+    ports:
+      - "127.0.0.1:8000:8000"   # Caddy → kong; never public directly
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /home/kong/kong.yml
+      KONG_DNS_ORDER: LAST,A,CNAME
+      KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth
+      KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
+      KONG_NGINX_PROXY_PROXY_BUFFERS: 64 160k
+      SUPABASE_ANON_KEY: ${ANON_KEY}
+      SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      DASHBOARD_USERNAME: ${DASHBOARD_USERNAME}
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD}
+    volumes:
+      - ./kong/kong.yml:/home/kong/temp.yml:ro
+    # upstream self-host pattern: env-substitute the template, then start
+    entrypoint: bash -c 'eval "echo \"$$(cat /home/kong/temp.yml)\"" > /home/kong/kong.yml && /docker-entrypoint.sh kong docker-start'
+    mem_limit: 256m
+    restart: unless-stopped
+
+  litellm:
+    image: ghcr.io/berriai/litellm:v1.91.0
+    profiles: [core]
+    depends_on:
+      db: { condition: service_healthy }
+    ports:
+      - "127.0.0.1:4000:4000"
+    environment:
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY}
+      LITELLM_SALT_KEY: ${LITELLM_SALT_KEY}
+      LITELLM_DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/postgres?schema=litellm
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/postgres?schema=litellm
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}   # real provider key lives ONLY here (COST-02)
+      STORE_MODEL_IN_DB: "false"
+    volumes:
+      - ./litellm/config.yaml:/app/config.yaml:ro
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    mem_limit: 512m
+    restart: unless-stopped
+
+  outbox:
+    build:
+      context: ..
+      dockerfile: vps/Dockerfile.node
+    image: dxb/monorepo:07-05
+    profiles: [core]
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DXB_DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/postgres
+      LITELLM_BASE_URL: http://litellm:4000/v1
+    mem_limit: 384m
+    restart: unless-stopped
+
+  # ---- voice profile (declared; started on demand: --profile voice) ----
+  speaches:
+    image: ghcr.io/speaches-ai/speaches:0.8.3-cpu@sha256:21e3df06d842fb7802ab470dd77c25f0e8c0d22950e8d8c6ae886e851af53ef8
+    profiles: [voice]
+    ports:
+      - "127.0.0.1:8001:8000"
+    volumes:
+      - hf_hub_cache:/home/ubuntu/.cache/huggingface/hub
+    mem_limit: 1536m
+    restart: unless-stopped
+
+  # ---- brain profile (declared; started in 07-06/07 wave) ----
+  surrealdb:
+    image: surrealdb/surrealdb:v2.6.5
+    profiles: [brain]
+    user: root
+    command: start --log info --user root --pass root rocksdb:/mydata/mydatabase.db
+    volumes:
+      - on_surreal_data:/mydata
+    mem_limit: 512m
+    restart: unless-stopped
+
+  open_notebook:
+    image: lfnovo/open_notebook:1.10.0
+    profiles: [brain]
+    depends_on:
+      - surrealdb
+    ports:
+      - "127.0.0.1:5055:5055"
+      - "127.0.0.1:8502:8502"
+    environment:
+      OPEN_NOTEBOOK_ENCRYPTION_KEY: ${OPEN_NOTEBOOK_ENCRYPTION_KEY}
+      SURREAL_URL: ws://surrealdb:8000/rpc
+      SURREAL_USER: root
+      SURREAL_PASSWORD: root       # unreachable from host (no public port)
+      SURREAL_NAMESPACE: open_notebook
+      SURREAL_DATABASE: open_notebook
+    volumes:
+      - on_notebook_data:/app/data
+    mem_limit: 1g
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  hf_hub_cache:
+  on_surreal_data:
+  on_notebook_data:

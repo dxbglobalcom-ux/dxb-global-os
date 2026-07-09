@@ -20,6 +20,7 @@ model_list:
     litellm_params: { model: openrouter/minimax/minimax-m3, api_key: os.environ/OPENROUTER_API_KEY }
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
+  salt_key: os.environ/LITELLM_SALT_KEY           # 07-05: stable salt so virtual keys survive restarts
   database_url: os.environ/LITELLM_DATABASE_URL   # Supabase Postgres, schema litellm (LOCKED single-DB)
 litellm_settings:
   max_budget: 100          # EUR/month equivalent — adjust to USD rate on VPS install day

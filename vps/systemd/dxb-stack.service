@@ -1,0 +1,20 @@
+# DXB core stack boot unit (07-05, T-07-17). `systemctl enable` makes the
+# reboot self-heal gate pass with ZERO manual steps (anti-baby-sitting at the
+# infra layer). Foreground `up` (no -d) so systemd owns the lifecycle and
+# Restart=always actually supervises.
+[Unit]
+Description=DXB Global OS core stack (docker compose)
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/dxb/vps
+ExecStart=/usr/bin/docker compose -f compose.yaml --profile core up
+ExecStop=/usr/bin/docker compose -f compose.yaml --profile core down
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
