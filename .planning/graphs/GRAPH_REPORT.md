@@ -1,16 +1,16 @@
-# Graph Report - DxB Global OS  (2026-07-08)
+# Graph Report - DxB Global OS  (2026-07-09)
 
 ## Corpus Check
-- 258 files · ~527,857 words
+- 420 files · ~692,049 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1713 nodes · 1765 edges · 221 communities (157 shown, 64 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 16 edges (avg confidence: 0.8)
+- 2670 nodes · 3207 edges · 311 communities (253 shown, 58 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 81 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7c5d8b37`
+- Built from commit: `d7531b2e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -228,35 +228,125 @@
 - [[_COMMUNITY_04-03 Summary — Outbox executor LOCKED core + double-fireTOCTOU proofs + 0008 hardening|04-03 Summary — Outbox executor LOCKED core + double-fire/TOCTOU proofs + 0008 hardening]]
 - [[_COMMUNITY_dependencies|dependencies]]
 - [[_COMMUNITY_LiteLLM proxy (Phase 4 — cost rails)|LiteLLM proxy (Phase 4 — cost rails)]]
+- [[_COMMUNITY_classify-read.ts|classify-read.ts]]
+- [[_COMMUNITY_adapters-roundtrip.test.ts|adapters-roundtrip.test.ts]]
+- [[_COMMUNITY_watchdog.test.ts|watchdog.test.ts]]
+- [[_COMMUNITY_Phase 5 Verification — Exit Gate (I9) Evidence|Phase 5 Verification — Exit Gate (I9) Evidence]]
+- [[_COMMUNITY_Bölüm B — Direktifler (8 madde; her biri kabul kriteriyle kapanır)|Bölüm B — Direktifler (8 madde; her biri kabul kriteriyle kapanır)]]
+- [[_COMMUNITY_recall.test.ts|recall.test.ts]]
+- [[_COMMUNITY_council.ts|council.ts]]
+- [[_COMMUNITY_promote.ts|promote.ts]]
+- [[_COMMUNITY_pgvector.ts|pgvector.ts]]
+- [[_COMMUNITY_context-rot.test.ts|context-rot.test.ts]]
+- [[_COMMUNITY_ladder.test.ts|ladder.test.ts]]
+- [[_COMMUNITY_known-facts.test.ts|known-facts.test.ts]]
+- [[_COMMUNITY_Phase 7 Verification — Exit Gate Evidence|Phase 7 Verification — Exit Gate Evidence]]
+- [[_COMMUNITY_package.json|package.json]]
+- [[_COMMUNITY_apply-persona-v2.ts|apply-persona-v2.ts]]
+- [[_COMMUNITY_Phase 6 Verification — Exit Gate Evidence|Phase 6 Verification — Exit Gate Evidence]]
+- [[_COMMUNITY_qa.ts|qa.ts]]
+- [[_COMMUNITY_06-02 SUMMARY — Routing-quality spike (LOW-confidence composition gate)|06-02 SUMMARY — Routing-quality spike (LOW-confidence composition gate)]]
+- [[_COMMUNITY_Study Card MCP Gateway Patterns (dockermcp-gateway · IBM ContextForge · Lasso mcp-gateway)|Study Card: MCP Gateway Patterns (docker/mcp-gateway · IBM ContextForge · Lasso mcp-gateway)]]
+- [[_COMMUNITY_Study Card Revolut Business API (payments inout — Finance dept)|Study Card: Revolut Business API (payments in/out — Finance dept)]]
+- [[_COMMUNITY_Study Card Wise API (payments inout — Finance dept)|Study Card: Wise API (payments in/out — Finance dept)]]
+- [[_COMMUNITY_compilerOptions|compilerOptions]]
+- [[_COMMUNITY_05-04 SUMMARY — Persona v2 first batch (product) + registry flip|05-04 SUMMARY — Persona v2 first batch (product) + registry flip]]
+- [[_COMMUNITY_06-04 SUMMARY — write-policy + memory.commit + CLI-only promote|06-04 SUMMARY — write-policy + memory.commit + CLI-only promote]]
+- [[_COMMUNITY_06-05 SUMMARY — classify-read + memory.recall + poisoning end-to-end close|06-05 SUMMARY — classify-read + memory.recall + poisoning end-to-end close]]
+- [[_COMMUNITY_07-01 SUMMARY — Phase toolset study cards + local CLI installs|07-01 SUMMARY — Phase toolset study cards + local CLI installs]]
+- [[_COMMUNITY_07-02 SUMMARY — tool_pins + pin-check (MCP-03 anti rug-pull)|07-02 SUMMARY — tool_pins + pin-check (MCP-03 anti rug-pull)]]
+- [[_COMMUNITY_07-03 SUMMARY — denials.json + generate-profiles (MCP-02 least-privilege)|07-03 SUMMARY — denials.json + generate-profiles (MCP-02 least-privilege)]]
+- [[_COMMUNITY_07-06 SUMMARY — hermes caged bounded jobs, watchdog, kill switch (VPS-02)|07-06 SUMMARY — hermes caged: bounded jobs, watchdog, kill switch (VPS-02)]]
+- [[_COMMUNITY_07-07 SUMMARY — video-learn ingest (VID-01, master step 10)|07-07 SUMMARY — video-learn ingest (VID-01, master step 10)]]
+- [[_COMMUNITY_VPS Provisioning (07-04 — master PHASE-07 step 5)|VPS Provisioning (07-04 — master PHASE-07 step 5)]]
+- [[_COMMUNITY_Behavioral Nudge Engine|Behavioral Nudge Engine]]
+- [[_COMMUNITY_Product Feedback Synthesizer|Product Feedback Synthesizer]]
+- [[_COMMUNITY_Product Manager — Department Head|Product Manager — Department Head]]
+- [[_COMMUNITY_Product Sprint Prioritizer|Product Sprint Prioritizer]]
+- [[_COMMUNITY_Product Trend Researcher|Product Trend Researcher]]
+- [[_COMMUNITY_PHASE 03 — State Layer & dxb-mcp Core (KÖK BAĞIMLILIK)|PHASE 03 — State Layer & dxb-mcp Core (KÖK BAĞIMLILIK)]]
+- [[_COMMUNITY_Spike Report — 06-02 Routing-Quality Gate (master PHASE-06 step 2)|Spike Report — 06-02 Routing-Quality Gate (master PHASE-06 step 2)]]
+- [[_COMMUNITY_05-05 SUMMARY — orchestrator spine decompose + dispatch + worker shim|05-05 SUMMARY — orchestrator spine: decompose + dispatch + worker shim]]
+- [[_COMMUNITY_05-06 SUMMARY — escalate.ts the LOCKED ladder over the event log|05-06 SUMMARY — escalate.ts: the LOCKED ladder over the event log]]
+- [[_COMMUNITY_05-07 SUMMARY — `dxb intent` the KERN-01 front door|05-07 SUMMARY — `dxb intent`: the KERN-01 front door]]
+- [[_COMMUNITY_05-08 SUMMARY — qa.ts + council.ts + golden set (master-plan step 7)|05-08 SUMMARY — qa.ts + council.ts + golden set (master-plan step 7)]]
+- [[_COMMUNITY_06-01 SUMMARY — Phase toolset study→install|06-01 SUMMARY — Phase toolset study→install]]
+- [[_COMMUNITY_06-03 SUMMARY — memory_embeddings migration + llmEmbed + pgvector adapter|06-03 SUMMARY — memory_embeddings migration + llmEmbed + pgvector adapter]]
+- [[_COMMUNITY_06-06 SUMMARY — graphify + notebook adapters, claude-mem pointer sync, round-trips|06-06 SUMMARY — graphify + notebook adapters, claude-mem pointer sync, round-trips]]
+- [[_COMMUNITY_06-08 SUMMARY — compaction cron, known-fact battery, phase closure (master step 10)|06-08 SUMMARY — compaction cron, known-fact battery, phase closure (master step 10)]]
+- [[_COMMUNITY_07-08 Summary — Phase Closure|07-08 Summary — Phase Closure]]
+- [[_COMMUNITY_import-routing-rules.ts|import-routing-rules.ts]]
+- [[_COMMUNITY_05-02 SUMMARY — routing_and_deps migration + brain-map seed + BLOCKING schema push|05-02 SUMMARY — routing_and_deps migration + brain-map seed + BLOCKING schema push]]
+- [[_COMMUNITY_05-03 SUMMARY — kernel classify.ts + policy.ts + executed routing-data verification|05-03 SUMMARY — kernel classify.ts + policy.ts + executed routing-data verification]]
+- [[_COMMUNITY_06-07 SUMMARY — context-budget compression + summaries + memory offload (MEM-04)|06-07 SUMMARY — context-budget: compression + summaries + memory offload (MEM-04)]]
+- [[_COMMUNITY_07-04 SUMMARY — runtime denial + Hetzner VPS provision (MCP-02 runtime half, VPS-01)|07-04 SUMMARY — runtime denial + Hetzner VPS provision (MCP-02 runtime half, VPS-01)]]
+- [[_COMMUNITY_07-05 SUMMARY — compose deploy + self-heal + backups (master steps 6–7)|07-05 SUMMARY — compose deploy + self-heal + backups (master steps 6–7)]]
+- [[_COMMUNITY_Study Card speaches|Study Card: speaches]]
+- [[_COMMUNITY_routing-spike.mjs|routing-spike.mjs]]
+- [[_COMMUNITY_DXB VPS Runtime (07-05)|DXB VPS Runtime (07-05)]]
+- [[_COMMUNITY_05-01 SUMMARY — Agent SDK study→approval→install gate|05-01 SUMMARY — Agent SDK study→approval→install gate]]
+- [[_COMMUNITY_poisoning.test.ts|poisoning.test.ts]]
+- [[_COMMUNITY_Plan 05-01 — Supply-Chain Approval Record (Phase-5 toolset)|Plan 05-01 — Supply-Chain Approval Record (Phase-5 toolset)]]
+- [[_COMMUNITY_05-01-PLAN|05-01-PLAN.md]]
+- [[_COMMUNITY_05-02-PLAN|05-02-PLAN.md]]
+- [[_COMMUNITY_05-03-PLAN|05-03-PLAN.md]]
+- [[_COMMUNITY_05-04-PLAN|05-04-PLAN.md]]
+- [[_COMMUNITY_05-05-PLAN|05-05-PLAN.md]]
+- [[_COMMUNITY_05-06-PLAN|05-06-PLAN.md]]
+- [[_COMMUNITY_05-07-PLAN|05-07-PLAN.md]]
+- [[_COMMUNITY_05-08-PLAN|05-08-PLAN.md]]
+- [[_COMMUNITY_05-09-PLAN|05-09-PLAN.md]]
+- [[_COMMUNITY_06-01-PLAN|06-01-PLAN.md]]
+- [[_COMMUNITY_06-02-PLAN|06-02-PLAN.md]]
+- [[_COMMUNITY_06-03-PLAN|06-03-PLAN.md]]
+- [[_COMMUNITY_06-04-PLAN|06-04-PLAN.md]]
+- [[_COMMUNITY_06-05-PLAN|06-05-PLAN.md]]
+- [[_COMMUNITY_06-06-PLAN|06-06-PLAN.md]]
+- [[_COMMUNITY_06-07-PLAN|06-07-PLAN.md]]
+- [[_COMMUNITY_06-08-PLAN|06-08-PLAN.md]]
+- [[_COMMUNITY_07-01-PLAN|07-01-PLAN.md]]
+- [[_COMMUNITY_07-02-PLAN|07-02-PLAN.md]]
+- [[_COMMUNITY_07-03-PLAN|07-03-PLAN.md]]
+- [[_COMMUNITY_07-04-PLAN|07-04-PLAN.md]]
+- [[_COMMUNITY_07-05-PLAN|07-05-PLAN.md]]
+- [[_COMMUNITY_07-06-PLAN|07-06-PLAN.md]]
+- [[_COMMUNITY_07-07-PLAN|07-07-PLAN.md]]
+- [[_COMMUNITY_07-08-PLAN|07-08-PLAN.md]]
+- [[_COMMUNITY_slice-10of10.sh|slice-10of10.sh]]
+- [[_COMMUNITY_watchdog.sh|watchdog.sh]]
+- [[_COMMUNITY_load-jobs.sh|load-jobs.sh]]
+- [[_COMMUNITY_pg_dump.sh|pg_dump.sh]]
+- [[_COMMUNITY_social-morning-scan|social-morning-scan.md]]
+- [[_COMMUNITY_harden.sh|harden.sh]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Communities (189 total, 65 thin omitted)` - 122 edges
-2. `getDb()` - 35 edges
-3. `Phase 1: Security Baseline & Credential Remediation - Research` - 26 edges
-4. `Phase 2: Foundation & Integration Program - Research` - 21 edges
-5. `v1 Requirements` - 18 edges
-6. `createDxbMcpServer()` - 15 edges
-7. `Per-Service Recipes (rotate → prove dead → record)` - 15 edges
-8. `Credential Rotation Checklist (CEO-executed)` - 13 edges
-9. `Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary` - 13 edges
-10. `closeDb()` - 12 edges
+1. `Communities (221 total, 64 thin omitted)` - 150 edges
+2. `getDb()` - 72 edges
+3. `closeDb()` - 28 edges
+4. `Phase 1: Security Baseline & Credential Remediation - Research` - 26 edges
+5. `Phase 2: Foundation & Integration Program - Research` - 21 edges
+6. `v1 Requirements` - 18 edges
+7. `createDxbMcpServer()` - 17 edges
+8. `commitMemory()` - 16 edges
+9. `TaskEnvelope` - 15 edges
+10. `Per-Service Recipes (rotate → prove dead → record)` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `classifyRow()` --calls--> `getDb()`  [INFERRED]
+  tests/phase6/routing-spike.mjs → packages/shared/src/db.ts
+- `ingestVideo()` --calls--> `classify()`  [INFERRED]
+  tools/video-learn/src/ingest.ts → packages/kernel/src/classify.ts
+- `intent()` --calls--> `decompose()`  [INFERRED]
+  tools/dxb-cli/src/intent.ts → packages/orchestrator/src/decompose.ts
+- `intent()` --calls--> `dispatch()`  [INFERRED]
+  tools/dxb-cli/src/intent.ts → packages/orchestrator/src/dispatch.ts
 - `wipe()` --calls--> `getDb()`  [EXTRACTED]
-  tests/phase4/gate-canary.test.ts → packages/shared/src/db.ts
-- `wipe()` --calls--> `getDb()`  [EXTRACTED]
-  tests/phase4/toctou.test.ts → packages/shared/src/db.ts
-- `clearBreakerState()` --calls--> `getDb()`  [EXTRACTED]
-  tests/phase4/velocity.test.ts → packages/shared/src/db.ts
-- `injectStorm()` --calls--> `getDb()`  [EXTRACTED]
-  tests/phase4/velocity.test.ts → packages/shared/src/db.ts
-- `wipeCostAndAudit()` --calls--> `getDb()`  [EXTRACTED]
-  tests/phase4/velocity.test.ts → packages/shared/src/db.ts
+  tests/phase4/approval-flow.test.ts → packages/shared/src/db.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (221 total, 64 thin omitted)
+## Communities (311 total, 58 thin omitted)
 
 ### Community 0 - "Architecture Research"
 Cohesion: 0.06
@@ -295,8 +385,8 @@ Cohesion: 0.12
 Nodes (16): 2FA Enrollment (TOTP-first) — summary table, Architectural Responsibility Map, Assumptions Log, Document Sanitization (SEC-04), Don't Hand-Roll, Environment Availability, Evidence-Record Schema (proposal), Metadata (+8 more)
 
 ### Community 9 - "Cross-AI Plan Review — Phase 1 — Convergence Cycle 2"
-Cohesion: 0.12
-Nodes (16): 0001_operational_core.sql (birebir — LOCKED), 0002_registry.sql (birebir — LOCKED), 0003_approvals_outbox.sql (birebir — LOCKED), 0004_cost_audit.sql (birebir — LOCKED), 0005_memory_index.sql (çekirdek — Phase 6 genişletir), 0006_crm.sql (ince — Phase 8 UI'da render edilir), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar (+8 more)
+Cohesion: 0.20
+Nodes (10): 0001_operational_core.sql (birebir — LOCKED), 0002_registry.sql (birebir — LOCKED), 0003_approvals_outbox.sql (birebir — LOCKED), 0004_cost_audit.sql (birebir — LOCKED), 0005_memory_index.sql (çekirdek — Phase 6 genişletir), 0006_crm.sql (ince — Phase 8 UI'da render edilir), 3. Dosya-Seviyesi Spec, dxb-mcp tool yüzeyi (Phase 3'te TAM olan gruplar) (+2 more)
 
 ### Community 10 - "Quick Task 260706-h26: Second-Brain Infrastructure (Obsidian + Knowledge Graph) Summary"
 Cohesion: 0.12
@@ -427,8 +517,8 @@ Cohesion: 0.67
 Nodes (3): Applicable ASVS Categories, Known Threat Patterns for this phase, Security Domain
 
 ### Community 43 - "Communities (43 total, 0 thin omitted)"
-Cohesion: 0.02
-Nodes (122): Communities (189 total, 65 thin omitted), Community 0 - "Architecture Research", Community 100 - "Study Card: Context7", Community 101 - "Study Card: @modelcontextprotocol/sdk", Community 102 - "Study Card: pg-boss", Community 103 - "Study Card: playwright-mcp", Community 104 - "Study Card: Supabase (self-hosted platform)", Community 105 - "Study Card: Supabase CLI" (+114 more)
+Cohesion: 0.01
+Nodes (150): Communities (221 total, 64 thin omitted), Community 0 - "Architecture Research", Community 100 - "Study Card: Context7", Community 101 - "Study Card: @modelcontextprotocol/sdk", Community 102 - "Study Card: pg-boss", Community 103 - "Study Card: playwright-mcp", Community 104 - "Study Card: Supabase (self-hosted platform)", Community 105 - "Study Card: Supabase CLI" (+142 more)
 
 ### Community 44 - "source-architecture-notes-sanitized.md"
 Cohesion: 0.11
@@ -436,7 +526,7 @@ Nodes (18): 1. Google Stitch Entegrasyonu (MCP & API), 1. Kernel / Orchestrator 
 
 ### Community 45 - "Graph Report - DxB Global OS  (2026-07-06)"
 Cohesion: 0.18
-Nodes (10): Community Hubs (Navigation), Corpus Check, God Nodes (most connected - your core abstractions), Graph Freshness, Graph Report - DxB Global OS  (2026-07-07), Import Cycles, Knowledge Gaps, Suggested Questions (+2 more)
+Nodes (10): Community Hubs (Navigation), Corpus Check, God Nodes (most connected - your core abstractions), Graph Freshness, Graph Report - DxB Global OS  (2026-07-08), Import Cycles, Knowledge Gaps, Suggested Questions (+2 more)
 
 ### Community 46 - "Plan 01-05 Summary — Source Document Sanitization"
 Cohesion: 0.33
@@ -467,8 +557,8 @@ Cohesion: 0.14
 Nodes (13): Architectural Responsibility Map, Assumptions Log, Don't Hand-Roll, Environment Availability, Metadata, Open Questions, Package Legitimacy Audit, Phase 2: Foundation & Integration Program - Research (+5 more)
 
 ### Community 57 - "package.json"
-Cohesion: 0.10
-Nodes (19): devDependencies, @dxb/cli, @modelcontextprotocol/sdk, supabase, @types/node, typescript, vitest, name (+11 more)
+Cohesion: 0.09
+Nodes (21): devDependencies, @dxb/cli, @dxb/video-learn, @modelcontextprotocol/sdk, supabase, @types/node, typescript, vitest (+13 more)
 
 ### Community 58 - "package.json"
 Cohesion: 0.18
@@ -479,31 +569,31 @@ Cohesion: 0.18
 Nodes (10): dependencies, @dxb/shared, devDependencies, typescript, main, name, private, type (+2 more)
 
 ### Community 60 - "package.json"
-Cohesion: 0.20
-Nodes (9): devDependencies, @types/node, typescript, main, name, private, type, types (+1 more)
+Cohesion: 0.12
+Nodes (15): dependencies, @dxb/memory-router, @dxb/shared, kysely, @modelcontextprotocol/sdk, zod, devDependencies, @types/node (+7 more)
 
 ### Community 61 - "package.json"
-Cohesion: 0.18
-Nodes (10): dependencies, @dxb/shared, devDependencies, typescript, main, name, private, type (+2 more)
+Cohesion: 0.13
+Nodes (14): dependencies, @dxb/dxb-mcp, @dxb/shared, kysely, @modelcontextprotocol/sdk, devDependencies, @types/node, typescript (+6 more)
 
 ### Community 62 - "package.json"
-Cohesion: 0.18
-Nodes (10): dependencies, @dxb/shared, devDependencies, typescript, main, name, private, type (+2 more)
+Cohesion: 0.15
+Nodes (12): dependencies, @anthropic-ai/claude-agent-sdk, @dxb/shared, zod, devDependencies, typescript, main, name (+4 more)
 
 ### Community 63 - "package.json"
-Cohesion: 0.18
-Nodes (10): dependencies, @dxb/shared, devDependencies, typescript, main, name, private, type (+2 more)
+Cohesion: 0.14
+Nodes (13): dependencies, @dxb/shared, kysely, zod, devDependencies, @types/node, typescript, main (+5 more)
 
 ### Community 64 - "package.json"
-Cohesion: 0.18
-Nodes (10): dependencies, @dxb/shared, devDependencies, typescript, main, name, private, type (+2 more)
+Cohesion: 0.13
+Nodes (14): dependencies, @anthropic-ai/claude-agent-sdk, @dxb/kernel, @dxb/memory-router, @dxb/shared, kysely, devDependencies, typescript (+6 more)
 
 ### Community 65 - "package.json"
-Cohesion: 0.20
-Nodes (9): devDependencies, @types/node, typescript, main, name, private, type, types (+1 more)
+Cohesion: 0.12
+Nodes (15): dependencies, @dxb/gateway, @dxb/memory-router, @dxb/shared, kysely, zod, devDependencies, @types/node (+7 more)
 
 ### Community 66 - "PHASE 05 — Kernel & Orchestrator Core Loop"
-Cohesion: 0.20
+Cohesion: 0.18
 Nodes (10): 0008_routing_and_deps.sql (birebir — LOCKED), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi (adım = commit), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, ClassifiedIntent + escalation (arayüz — LOCKED) (+2 more)
 
 ### Community 67 - "PHASE 06 — Memory Router & Knowledge Stores"
@@ -511,7 +601,7 @@ Cohesion: 0.18
 Nodes (10): 0009_memory_embeddings.sql (çekirdek), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi (adım = commit), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, memory.* tool arayüzü (birebir — LOCKED) (+2 more)
 
 ### Community 68 - "PHASE 07 — MCP Gateway & 24/7 VPS Runtime"
-Cohesion: 0.20
+Cohesion: 0.18
 Nodes (10): 0010_tool_pins.sql (birebir), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi (adım = commit), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, Hermes sınırlı iş şablonu (her iş dosyası zorunlu alanlar) (+2 more)
 
 ### Community 69 - "check-integration-tracker.mjs"
@@ -527,7 +617,7 @@ Cohesion: 0.18
 Nodes (9): Classified, CORPUS, deptDirs, EXCLUDED_DIRS, personas, { Pool }, require, ROOT (+1 more)
 
 ### Community 72 - "MASTER-PLAN.md"
-Cohesion: 0.25
+Cohesion: 0.29
 Nodes (4): 1. Hedef + Kabul Kapısı (karşılandı), 2. Kalıcı Miraslar (sonraki fazların üstüne bastığı zemin), 3–6. (uygulanmaz — faz kapalı), PHASE 01 — Security Baseline & Credential Remediation ✅ KAPALI
 
 ### Community 73 - "PHASE 08 — CEO Dashboard & CRM"
@@ -555,16 +645,16 @@ Cohesion: 0.22
 Nodes (8): compilerOptions, composite, outDir, rootDir, types, extends, include, references
 
 ### Community 79 - "tsconfig.json"
-Cohesion: 0.25
-Nodes (7): compilerOptions, composite, outDir, rootDir, extends, include, references
+Cohesion: 0.22
+Nodes (8): compilerOptions, composite, outDir, rootDir, types, extends, include, references
 
 ### Community 80 - "tsconfig.json"
 Cohesion: 0.25
 Nodes (7): compilerOptions, composite, outDir, rootDir, extends, include, references
 
 ### Community 81 - "tsconfig.json"
-Cohesion: 0.25
-Nodes (7): compilerOptions, composite, outDir, rootDir, extends, include, references
+Cohesion: 0.22
+Nodes (8): compilerOptions, composite, outDir, rootDir, types, extends, include, references
 
 ### Community 82 - "tsconfig.json"
 Cohesion: 0.25
@@ -575,7 +665,7 @@ Cohesion: 0.22
 Nodes (8): compilerOptions, composite, outDir, rootDir, types, extends, include, references
 
 ### Community 84 - "fable-5-construction-governance.md"
-Cohesion: 0.31
+Cohesion: 0.23
 Nodes (5): Fable 5 Construction Governance (CEO emri, 2026-07-06 — pazarlıksız), REPO AYNASI (senkron görevi), SESSION BOOTSTRAP KURALI, THE GOAL, Memory Index
 
 ### Community 85 - "DXB Global OS — MASTER PLAN"
@@ -603,7 +693,7 @@ Cohesion: 0.15
 Nodes (12): 0007_budget_state.sql (birebir), 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi (adım = commit), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, CI gate canary (GATE-04) (+4 more)
 
 ### Community 91 - "PHASE 09 — JARVIS Voice Layer"
-Cohesion: 0.25
+Cohesion: 0.29
 Nodes (7): 1. Hedef + Kabul Kapısı, 2. LOCKED Kararlar, 3. Dosya-Seviyesi Spec, 4. Adım Listesi, 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, PHASE 09 — JARVIS Voice Layer
 
 ### Community 92 - "Plan 02-03 Summary"
@@ -635,8 +725,8 @@ Cohesion: 0.33
 Nodes (6): Common Pitfalls, Pitfall 1: Running the full local Supabase stack on this laptop, Pitfall 2: pg-boss behind a transaction-mode pooled connection, Pitfall 3: Native module builds on a low-RAM machine, Pitfall 4: Agent SDK API drift breaking assumptions baked into later phases, Pitfall 5: Study cards skipped for tools installed before the tracking program existed
 
 ### Community 99 - "Study Card: @anthropic-ai/claude-agent-sdk"
-Cohesion: 0.33
-Nodes (5): Install Command (recorded — NOT run in Phase 2), Key API / Usage Notes (current API — 02-RESEARCH "State of the Art"), Known Pitfalls, Lifecycle Checklist, Study Card: @anthropic-ai/claude-agent-sdk
+Cohesion: 0.29
+Nodes (6): Install Command (Phase 5, plan 05-01 Task 3 — after CEO checkpoint), Install-Day Live Verification (2026-07-08), Key API / Usage Notes (current API — 02-RESEARCH "State of the Art"), Known Pitfalls, Lifecycle Checklist, Study Card: @anthropic-ai/claude-agent-sdk
 
 ### Community 100 - "Study Card: Context7"
 Cohesion: 0.33
@@ -702,17 +792,61 @@ Nodes (4): Primary (HIGH confidence), Secondary (MEDIUM confidence — WebSearch
 Cohesion: 0.67
 Nodes (3): Applicable ASVS Categories, Known Threat Patterns for this phase's stack, Security Domain
 
+### Community 128 - "Study Card: claude-mem (RETROACTIVE)"
+Cohesion: 0.33
+Nodes (5): Known Pitfalls, Lifecycle Checklist, Pointer-sync read surface (adapter contract for 06-06), Storage layout (verified 2026-07-08 on this machine), Study Card: claude-mem
+
+### Community 138 - "Study Card: Graphify (RETROACTIVE)"
+Cohesion: 0.40
+Nodes (4): Key API / Usage Notes (adapter contract for 06-06), Known Pitfalls, Lifecycle Checklist, Study Card: Graphify
+
+### Community 141 - "Study Card: headroom (RETROACTIVE)"
+Cohesion: 0.33
+Nodes (5): Activation state (verified 2026-07-08), Known Pitfalls, Lifecycle Checklist, MEM-04 scope boundary (explicit, per plan), Study Card: headroom
+
+### Community 142 - "Study Card: hermes-agent (STUB)"
+Cohesion: 0.33
+Nodes (5): Key API / Usage Notes (deploy contract for 07-06), Known Pitfalls, Lifecycle Checklist, RAM note (Phase 7 budget input), Study Card: hermes-agent
+
+### Community 152 - "Study Card: Obsidian stack (obsidian-mind, kepano/obsidian-skills, second-brain, claude-obsidian) (STUB)"
+Cohesion: 0.33
+Nodes (5): Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Study Card: Obsidian stack (obsidian-mind, kepano/obsidian-skills, second-brain, claude-obsidian), THE PICKED COMBINATION (final, consumed verbatim by 06-04)
+
+### Community 153 - "Study Card: open-notebook (STUB)"
+Cohesion: 0.33
+Nodes (5): Key API / Usage Notes (adapter contract for 06-06), Known Pitfalls, Lifecycle Checklist, RAM note (Phase 7 budget input — measured 2026-07-08 local), Study Card: open-notebook
+
+### Community 163 - "Study Card: yt-dlp + video-use (STUB)"
+Cohesion: 0.33
+Nodes (5): Install evidence (07-01 Task 2), Key API / Usage Notes (ingest contract for 07-07), Known Pitfalls, Lifecycle Checklist, Study Card: yt-dlp + video-use
+
 ### Community 167 - "index.ts"
-Cohesion: 0.22
-Nodes (12): ok(), registerApproval(), ok(), registerCost(), registerCrm(), registerDashboard(), registerMemory(), ok() (+4 more)
+Cohesion: 0.09
+Nodes (24): ok(), registerApproval(), ok(), registerAudit(), ok(), registerCost(), registerCrm(), registerDashboard() (+16 more)
+
+### Community 168 - "index.ts"
+Cohesion: 0.10
+Nodes (28): byName(), DenialsMap, DeptManifest, generateProfiles(), generateProfilesFromPolicy(), GenerateProfilesOptions, GenerateProfilesResult, GrantValue (+20 more)
+
+### Community 169 - "index.ts"
+Cohesion: 0.26
+Nodes (15): clampOutward(), ClassifiedIntent, classify(), runQuery(), SDK_MODEL_IDS, OWNER, loadPolicy(), NoRouteError (+7 more)
+
+### Community 170 - "index.ts"
+Cohesion: 0.25
+Nodes (12): defaultDbPath(), defaultProject(), observationBody(), ObservationRow, openReadOnly(), readObservationByRef(), syncClaudeMem(), SyncClaudeMemOpts (+4 more)
+
+### Community 171 - "index.ts"
+Cohesion: 0.18
+Nodes (25): BudgetCheckResult, checkContextBudget(), CompressionMeasurement, ContextBudgetDeps, ContextEntry, contextText(), defaultExtractFacts(), estimateTokens() (+17 more)
 
 ### Community 172 - "index.ts"
-Cohesion: 0.31
-Nodes (6): appendAudit(), OWNER, runOnce(), tick(), PROOF_ROOT, wipe()
+Cohesion: 0.17
+Nodes (12): appendAudit(), OWNER, runOnce(), tick(), PROOF_ROOT, wipe(), call(), draftAndFinalize() (+4 more)
 
 ### Community 173 - "index.ts"
-Cohesion: 0.07
-Nodes (45): AgentsTable, ApprovalsTable, AuditLogTable, BudgetStateTable, CostLedgerTable, CrmClientsTable, CrmContactsTable, CrmDealsTable (+37 more)
+Cohesion: 0.12
+Nodes (24): departmentKey(), departmentKeyEnvVar(), DXB_KEY_ALIAS_PREFIX, keyDelete(), keyGenerate(), KeyGenerateArgs, keyInfo(), LITELLM_KEYS_TABLE (+16 more)
 
 ### Community 176 - "Plan 03-03 Summary"
 Cohesion: 0.29
@@ -731,44 +865,44 @@ Cohesion: 0.33
 Nodes (5): Commit chain (this phase), Fable 5 Phase Closure Verdict — Phase 3 COMPLETE, Gate criteria (all freshly machine-verified at closure — 03-VERIFICATION.md, status: passed), Notable engineering outcomes, Standing consequences
 
 ### Community 180 - "phase3-lifecycle-battery.mjs"
-Cohesion: 0.47
-Nodes (5): call(), client, [ct, st], runLifecycle(), server
+Cohesion: 0.08
+Nodes (46): call(), client, [ct, st], runLifecycle(), server, baseDeps, cleanupSources, db (+38 more)
 
 ### Community 181 - "Plan 03-01 — Package Legitimacy Approval Record (Phase-3 toolset)"
 Cohesion: 0.40
 Nodes (4): Approved install list (live npm registry evidence, fetched 2026-07-07), Build-script decision (CEO-approved), Chain, Plan 03-01 — Package Legitimacy Approval Record (Phase-3 toolset)
 
 ### Community 182 - "db/ — schema authority"
-Cohesion: 0.50
-Nodes (3): db/ — schema authority, Environment, Local stack (X230 RAM budget)
+Cohesion: 0.40
+Nodes (4): db/ — schema authority, Environment, Local stack (X230 RAM budget), Seed order (after EVERY `supabase db reset`)
 
 ### Community 183 - "crash-worker.mjs"
 Cohesion: 0.50
 Nodes (3): leaseSeconds, { Pool }, require
 
 ### Community 189 - "velocity.test.ts"
-Cohesion: 0.20
-Nodes (15): pg-boss, checkVelocity(), CRITICAL_DEPARTMENTS, isCritical(), VelocityCheckResult, CADENCES, enqueueTick(), QUEUES (+7 more)
+Cohesion: 0.16
+Nodes (20): pg-boss, checkVelocity(), CRITICAL_DEPARTMENTS, isCritical(), VelocityCheckResult, CADENCES, enqueueTick(), QUEUES (+12 more)
 
 ### Community 190 - "getDb"
-Cohesion: 0.20
-Nodes (10): closeDb(), getDb(), WORKER, ENVELOPE, wipe(), wipe(), call(), makeReadyRow() (+2 more)
+Cohesion: 0.22
+Nodes (8): closeDb(), WORKER, createdTaskIds, envelope(), GoldenFixture, LIVE_LITELLM, taskInReview(), trackDispatch()
 
 ### Community 191 - "approval-flow.test.ts"
-Cohesion: 0.27
-Nodes (12): call(), ENVELOPE, makeTask(), approve(), DecisionError, readable(), reject(), Uuid (+4 more)
+Cohesion: 0.14
+Nodes (19): call(), ENVELOPE, makeTask(), wipe(), call(), makeReadyRow(), PROOF_ROOT, wipe() (+11 more)
 
 ### Community 192 - "package.json"
 Cohesion: 0.17
 Nodes (11): bin, dxb, devDependencies, @types/node, typescript, main, name, private (+3 more)
 
 ### Community 193 - "dependencies"
-Cohesion: 0.18
-Nodes (10): kysely, dependencies, @dxb/shared, kysely, zod, Install Command (recorded at card time), Key API / Usage Notes, Known Pitfalls (+2 more)
+Cohesion: 0.15
+Nodes (12): kysely, Install Command (recorded at card time), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Study Card: Kysely, kysely, dependencies (+4 more)
 
 ### Community 194 - "zod.md"
-Cohesion: 0.18
-Nodes (10): zod, zod, Install Command (recorded — NOT run in Phase 2), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Study Card: Zod, dependencies (+2 more)
+Cohesion: 0.15
+Nodes (12): zod, Install Command (recorded — NOT run in Phase 2), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Study Card: Zod, dependencies, @anthropic-ai/claude-agent-sdk (+4 more)
 
 ### Community 195 - "package.json"
 Cohesion: 0.18
@@ -779,8 +913,8 @@ Cohesion: 0.20
 Nodes (9): devDependencies, @types/pg, typescript, main, name, private, type, types (+1 more)
 
 ### Community 197 - "dependencies"
-Cohesion: 0.20
-Nodes (9): dependencies, kysely, pg, @supabase/supabase-js, Install Command (recorded at card time), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist (+1 more)
+Cohesion: 0.18
+Nodes (10): dependencies, kysely, pg, @supabase/supabase-js, zod, Install Command (recorded at card time), Key API / Usage Notes, Known Pitfalls (+2 more)
 
 ### Community 198 - "Phase 4 Verification — Gate Evidence Table"
 Cohesion: 0.22
@@ -795,20 +929,20 @@ Cohesion: 0.22
 Nodes (8): compilerOptions, composite, outDir, rootDir, types, extends, include, references
 
 ### Community 201 - "registerQueue"
-Cohesion: 0.43
-Nodes (6): appendAudit(), ok(), registerQueue(), allowedTargets(), assertTransition(), TRANSITIONS
+Cohesion: 0.07
+Nodes (28): 1. Külliyat Envanteri, 1a. Repolar — Claude Code ekosistemi / süreç disiplinleri, 1b. Repolar — veri/araştırma/medya/otomasyon, 1c. Servisler + resmi harita, 1d. DIŞLANDI (bilinçli — B4/B6 teyitli), 2. İlk Sentez (W1), 3. Derin-Etüt Dalga Planı (fazlara hizalı, dual-role korunur), LITERATURE — Master-Notlar Külliyatının Literatür Etüdü (+20 more)
 
 ### Community 202 - "Study Card: LiteLLM (proxy)"
-Cohesion: 0.25
-Nodes (7): Install Command (recorded — runs ONLY after CEO checkpoint 04-01 Task 2), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Spend table names (recorded at INSTALL 2026-07-07 — live `pg_tables` query, 66 tables in schema `litellm`), Study Card: LiteLLM (proxy), Verified OpenRouter slug table (live fetch `https://openrouter.ai/api/v1/models`, 343 models, verified 2026-07-07)
+Cohesion: 0.20
+Nodes (9): Embeddings (Phase 6 — pinned 2026-07-08, 06-01 Task 3), Install Command (recorded — runs ONLY after CEO checkpoint 04-01 Task 2), Key API / Usage Notes, Known Pitfalls, Lifecycle Checklist, Router identity (Phase 6 — dxb-os), Spend table names (recorded at INSTALL 2026-07-07 — live `pg_tables` query, 66 tables in schema `litellm`), Study Card: LiteLLM (proxy) (+1 more)
 
 ### Community 203 - "index.ts"
 Cohesion: 0.38
 Nodes (5): ActionHandler, handlers, CONFINE_ROOT, Payload, testWriteFile()
 
 ### Community 204 - "toctou.test.ts"
-Cohesion: 0.38
-Nodes (6): call(), draftAndFinalize(), ENVELOPE, makeTask(), PROOF_ROOT, wipe()
+Cohesion: 0.13
+Nodes (24): AgentsTable, ApprovalsTable, AuditLogTable, BudgetStateTable, CostLedgerTable, CrmClientsTable, CrmContactsTable, CrmDealsTable (+16 more)
 
 ### Community 205 - "Plan 04-01 — Supply-Chain Approval Record (Phase-4 toolset)"
 Cohesion: 0.33
@@ -835,8 +969,8 @@ Cohesion: 0.47
 Nodes (5): HookInput, main(), readStdin(), sumTranscript(), UsageTotals
 
 ### Community 211 - "registerAudit"
-Cohesion: 0.70
-Nodes (3): ok(), registerAudit(), redact()
+Cohesion: 0.14
+Nodes (20): APPROVAL_RANK, ApprovalClass, chainDepth(), decompose(), DecomposedEnvelope, DraftBatch, draftPrompt(), EnvelopeDraft (+12 more)
 
 ### Community 212 - "04-02 Summary — GATE-01 tool layer: budget_state + approval group FULL + dxb CLI"
 Cohesion: 0.40
@@ -847,31 +981,371 @@ Cohesion: 0.40
 Nodes (4): 04-03 Summary — Outbox executor LOCKED core + double-fire/TOCTOU proofs + 0008 hardening, Deviations (recorded, no scope change), Key outcomes for the rest of Phase 4, What happened
 
 ### Community 214 - "dependencies"
-Cohesion: 0.50
-Nodes (4): dependencies, @dxb/shared, kysely, @modelcontextprotocol/sdk
+Cohesion: 0.16
+Nodes (17): execFileAsync, readRelationByRef(), updateGraphIncremental(), writeRelationNote(), frontmatter(), ObsidianNoteArgs, writeNote(), appendAudit() (+9 more)
 
 ### Community 215 - "LiteLLM proxy (Phase 4 — cost rails)"
 Cohesion: 0.50
 Nodes (3): LiteLLM proxy (Phase 4 — cost rails), Required env (`./.env`, gitignored — A8 vault), Run
 
+### Community 221 - "classify-read.ts"
+Cohesion: 0.15
+Nodes (17): appendAudit(), ClassifiedQuery, ClassifyParseError, defaultQueryEmbed(), IndexMeta, makeRefReader(), readPgvector(), RecallDeps (+9 more)
+
+### Community 222 - "adapters-roundtrip.test.ts"
+Cohesion: 0.18
+Nodes (11): deleteDoc(), nbFetch(), notebookBaseUrl(), NotebookDocArgs, NotebookDownError, readDoc(), writeDoc(), createdFiles (+3 more)
+
+### Community 223 - "watchdog.test.ts"
+Cohesion: 0.16
+Nodes (11): BUDGET, NOW, execFileP, killSwitch(), KillSwitchDeps, KillSwitchResult, decideKill(), JobBudget (+3 more)
+
+### Community 224 - "Phase 5 Verification — Exit Gate (I9) Evidence"
+Cohesion: 0.12
+Nodes (14): 05-09 SUMMARY — slice-10of10: the Phase 5 exit gate (I9), Adaptations & deviations (recorded, CEO-visible — no silent deviation), Closure handoff, Evidence, What closed, Criterion 1 — CEO states intent (CLI); kernel classifies and routes; CEO never names a tool (KERN-01), Criterion 2 — Routing policy is DATA: rule change re-routes with zero code change (KERN-02), Criterion 3 — Orchestrator splits intent into dependent TaskEnvelopes, queues, dispatches to heads; sub-agents isolated (ORCH-01, ORCH-04/I3) (+6 more)
+
+### Community 225 - "Bölüm B — Direktifler (8 madde; her biri kabul kriteriyle kapanır)"
+Cohesion: 0.14
+Nodes (13): B1. Loop engineering: genel OS modülü + Outleteuro pilotu, B2. JARVIS: wake word + tam komut kanalı şartı, B3. Design-bundle re-enable köprüsü, B4. ODT kalem denetimi raporu, B5. Email / self-marketing outbound pipeline kriteri, B6. Literatür programı: 50+ kaynağın profesör-derinliğinde etüdü + gelir fırsatları sentezi, B7. CEO yük sıfırlama: onay/red makamı, iş gönderilmez + onay kapsamı daraltma, B8. Support ekibi + şirket-politikası yazarı güvencesi (+5 more)
+
+### Community 226 - "recall.test.ts"
+Cohesion: 0.18
+Nodes (8): ok(), registerMemory(), classifyQuery(), KINDS, recallMemory(), CommitInput, RecallInput, createdIndexIds
+
+### Community 227 - "council.ts"
+Cohesion: 0.19
+Nodes (13): ACTOR_META, CandidateLabel, council(), COUNCIL_CONFIG, CouncilResult, CouncilTask, judgeCandidates(), judgePrompt() (+5 more)
+
+### Community 228 - "promote.ts"
+Cohesion: 0.20
+Nodes (10): createdIndexIds, bodyOf(), IndexRow, promote(), PromoteDeps, PromoteError, PromoteResult, sdkJudge() (+2 more)
+
+### Community 229 - "pgvector.ts"
+Cohesion: 0.24
+Nodes (10): cosineSearch(), CosineSearchArgs, CosineSearchHit, liveMemoryFilter(), MemoryFilterOpts, vectorLiteral(), writeEmbedding(), WriteEmbeddingArgs (+2 more)
+
+### Community 230 - "context-rot.test.ts"
+Cohesion: 0.22
+Nodes (11): CONTEXT_BAND, createdTaskIds, dispatchOne(), envelope(), filler(), fixtureEmbed(), makeSteps(), PLANTED (+3 more)
+
+### Community 231 - "ladder.test.ts"
+Cohesion: 0.31
+Nodes (10): appendEvent(), blockTask(), bumpTier(), convertLowConfidence(), escalate(), EscalateResult, failCount(), ladderAction (+2 more)
+
+### Community 232 - "known-facts.test.ts"
+Cohesion: 0.18
+Nodes (10): KIND_STORE, axisEmbed(), createdFiles, createdIndexIds, createdNotebookRefs, FIXTURE, fixtureRaw, provenance (+2 more)
+
+### Community 233 - "Phase 7 Verification — Exit Gate Evidence"
+Cohesion: 0.17
+Nodes (11): Criterion 1 — Department MCP profiles filter `tools/list`: a worker cannot even SEE Stripe/DocuSign, the CEO agent sees no code MCPs; explicit denials verified per department, Criterion 2 — A changed upstream tool description quarantines that tool until re-approved (hash pinning on a live change), Criterion 3 — Compose stack (Postgres/Supabase, LiteLLM, dxb-mcp, Speaches, open-notebook) on the EU VPS within 8GB; healthy after reboot, Criterion 4 — Hermes (GLM 5.2 brain) runs bounded scheduled jobs with watchdog and kill switch; overnight output lands in a morning review queue behind the Phase-4 rails, Criterion 5 — CEO drops a video link → downloaded, transcribed, summarized, filed through the memory router asynchronously with a quarantine tier, Deviations / adaptations (CEO-visible, phase-wide roll-up), ⛔ FABLE VERDICT, Full-suite regression (+3 more)
+
+### Community 234 - "package.json"
+Cohesion: 0.17
+Nodes (11): bin, video-learn, devDependencies, @types/node, typescript, main, name, private (+3 more)
+
+### Community 235 - "apply-persona-v2.ts"
+Cohesion: 0.20
+Nodes (8): files, malformed, missingInRegistry, { Pool }, require, ROOT, V2_ROOT, V2Persona
+
+### Community 236 - "Phase 6 Verification — Exit Gate Evidence"
+Cohesion: 0.20
+Nodes (9): Criterion 1 — Every memory write goes through the router's single write path; provenance recorded, untrusted-origin content quarantined, contradictions flagged before promotion; a deliberate poisoning attempt stays in quarantine, Criterion 2 — Agents read and write memory only via memory-router MCP tools (memory.recall / memory.commit), with the Obsidian vault + claude-mem wired behind them, Criterion 3 — Graphify knowledge graph and open-notebook research brain integrated after their study passes, and a known-fact retrieval test validates routing quality across the store composition, Criterion 4 — A long-running task stays inside a clean context via compression (headroom), summaries, and memory offloading — demonstrated against a context-rot scenario, Deviations / adaptations (CEO-visible, phase-wide), FABLE VERDICT — Phase 6 PASSED, Full-suite regression (all criteria ride on it), Phase 6 Verification — Exit Gate Evidence (+1 more)
+
+### Community 237 - "qa.ts"
+Cohesion: 0.33
+Nodes (8): defaultEvaluator(), qa(), QaEvaluator, QaOutcome, QaTask, QaVerdict, transition(), unwrap()
+
+### Community 238 - "06-02 SUMMARY — Routing-quality spike (LOW-confidence composition gate)"
+Cohesion: 0.22
+Nodes (8): 06-02 SUMMARY — Routing-quality spike (LOW-confidence composition gate), Decisive evidence (executed), Deviations, Downstream contracts armed, Misroute table, SCORE, VERDICT, What closed
+
+### Community 239 - "Study Card: MCP Gateway Patterns (docker/mcp-gateway · IBM ContextForge · Lasso mcp-gateway)"
+Cohesion: 0.22
+Nodes (8): 1. docker/mcp-gateway — Go, MIT, 1.5k★, 70 releases, active, 2. IBM ContextForge (mcp-context-forge) — Python 3.11+, Apache-2.0, 4.1k★, v1.0.5 (2026-07-07), 3. Lasso mcp-gateway — Python, MIT, 377★, v1.2.0 (2026-01-21), Candidate findings (verified 2026-07-09), Known Pitfalls, Lifecycle Checklist, Study Card: MCP Gateway Patterns (docker/mcp-gateway · IBM ContextForge · Lasso mcp-gateway), VERDICT — v1 approach (⛔ FABLE decision zone, decided by Fable 5 inline 2026-07-09)
+
+### Community 240 - "Study Card: Revolut Business API (payments in/out — Finance dept)"
+Cohesion: 0.22
+Nodes (8): Candidate findings (verified 2026-07-09), Community MCP: jeff-nasseri/revolut-mcp, DXB adoption shape (Phase 11), Known Pitfalls, Lifecycle Checklist, Official API facts (payment in + out coverage), Study Card: Revolut Business API (payments in/out — Finance dept), VERDICT (⛔ FABLE, aligned with the LOCKED Stripe pattern)
+
+### Community 241 - "Study Card: Wise API (payments in/out — Finance dept)"
+Cohesion: 0.22
+Nodes (8): Candidate findings (verified 2026-07-09), Community MCPs, DXB adoption shape (Phase 11), Known Pitfalls, Lifecycle Checklist, Official API facts (payment in + out coverage), Study Card: Wise API (payments in/out — Finance dept), VERDICT (⛔ FABLE, aligned with the LOCKED Stripe pattern)
+
+### Community 242 - "compilerOptions"
+Cohesion: 0.22
+Nodes (8): compilerOptions, composite, outDir, rootDir, types, extends, include, references
+
+### Community 243 - "05-04 SUMMARY — Persona v2 first batch (product) + registry flip"
+Cohesion: 0.25
+Nodes (7): 05-04 SUMMARY — Persona v2 first batch (product) + registry flip, Deviations (recorded, CEO-visible), Evidence (✓ VERIFIED — executed), Fable authorship note, Key links honored, Test suite (post-reset), What shipped
+
+### Community 244 - "06-04 SUMMARY — write-policy + memory.commit + CLI-only promote"
+Cohesion: 0.25
+Nodes (7): 06-04 SUMMARY — write-policy + memory.commit + CLI-only promote, Decisive evidence (executed), Design decisions recorded (Fable, CEO-visible), Downstream contracts armed, MCP surface before/after, Schema diff (CommitInput/RecallInput vs master §3), What closed
+
+### Community 245 - "06-05 SUMMARY — classify-read + memory.recall + poisoning end-to-end close"
+Cohesion: 0.25
+Nodes (7): 06-05 SUMMARY — classify-read + memory.recall + poisoning end-to-end close, Decisive evidence (executed), Design decisions recorded (Fable, CEO-visible), Downstream contracts armed, Live recall sample (recorded), Prompt byte-diff proof (verbatim-lift contract), What closed
+
+### Community 246 - "07-01 SUMMARY — Phase toolset study cards + local CLI installs"
+Cohesion: 0.25
+Nodes (7): 07-01 SUMMARY — Phase toolset study cards + local CLI installs, Card-by-card verdict table (Task 1), Deviations, For downstream plans, Local installs (Task 2), Tracker (Task 3), What closed
+
+### Community 247 - "07-02 SUMMARY — tool_pins + pin-check (MCP-03 anti rug-pull)"
+Cohesion: 0.25
+Nodes (7): 07-02 SUMMARY — tool_pins + pin-check (MCP-03 anti rug-pull), Design decisions (in-code, commented), Deviations ([ADAPT]), Evidence (✓ VERIFIED), For downstream plans, Key links honored, What closed
+
+### Community 248 - "07-03 SUMMARY — denials.json + generate-profiles (MCP-02 least-privilege)"
+Cohesion: 0.25
+Nodes (7): 07-03 SUMMARY — denials.json + generate-profiles (MCP-02 least-privilege), Design decisions (in-code, commented), Deviations ([ADAPT] — CEO confirmation items marked), Evidence (✓ VERIFIED), For downstream plans, Key links honored, What closed
+
+### Community 249 - "07-06 SUMMARY — hermes caged: bounded jobs, watchdog, kill switch (VPS-02)"
+Cohesion: 0.25
+Nodes (7): 07-06 SUMMARY — hermes caged: bounded jobs, watchdog, kill switch (VPS-02), Deviations / findings (recorded, visible), Requirement, Task 1 — bounded job template + loader ✓ VERIFIED, Task 2 — watchdog + kill-switch code ✓ VERIFIED, Task 3 — live deploy (checkpoint) ✓ VERIFIED on box, ⚠ UNVERIFIED — CEO/pending
+
+### Community 250 - "07-07 SUMMARY — video-learn ingest (VID-01, master step 10)"
+Cohesion: 0.25
+Nodes (7): 07-07 SUMMARY — video-learn ingest (VID-01, master step 10), CEO requirements (approval round) — all ✓, Deviations / findings (recorded, visible), Evidence (executed), Requirement, ⚠ UNVERIFIED / carried, What shipped
+
+### Community 251 - "VPS Provisioning (07-04 — master PHASE-07 step 5)"
+Cohesion: 0.25
+Nodes (7): CEO step 1 — Hetzner API token, CEO step 2 — DNS A record, Claude step — VPS-only SSH keypair (LOCKED: separate credential set), Server spec (CEO approves at checkpoint), Split of duties (CEO delegation rule), Verification gates (07-04 acceptance), VPS Provisioning (07-04 — master PHASE-07 step 5)
+
+### Community 252 - "Behavioral Nudge Engine"
+Cohesion: 0.29
+Nodes (6): Behavioral Nudge Engine, Craft: behavioral design standards, Escalation posture, Mission, Nudge spec skeleton (default output_contract shape), Operating Rules (envelope contract — binding)
+
+### Community 253 - "Product Feedback Synthesizer"
+Cohesion: 0.29
+Nodes (6): Craft: synthesis standards, Escalation posture, Mission, Operating Rules (envelope contract — binding), Product Feedback Synthesizer, Report skeleton (default output_contract shape)
+
+### Community 254 - "Product Manager — Department Head"
+Cohesion: 0.29
+Nodes (6): Craft: how product decisions are made here, Escalation posture, Head duties: reviewing worker output, Mission, Operating Rules (envelope contract — binding), Product Manager — Department Head
+
+### Community 255 - "Product Sprint Prioritizer"
+Cohesion: 0.29
+Nodes (6): Craft: prioritization standards, Escalation posture, Mission, Operating Rules (envelope contract — binding), Product Sprint Prioritizer, Ranking skeleton (default output_contract shape)
+
+### Community 256 - "Product Trend Researcher"
+Cohesion: 0.29
+Nodes (6): Brief skeleton (default output_contract shape), Craft: evidence standards, Escalation posture, Mission, Operating Rules (envelope contract — binding), Product Trend Researcher
+
+### Community 257 - "PHASE 03 — State Layer & dxb-mcp Core (KÖK BAĞIMLILIK)"
+Cohesion: 0.29
+Nodes (6): 1. Hedef + Kabul Kapısı, 2. LOCKED Mimari Kararlar, 4. Adım Listesi (adım = commit), 5. Risk + Fallback, 6. Bütçe-Fallback İşaretleri, PHASE 03 — State Layer & dxb-mcp Core (KÖK BAĞIMLILIK)
+
+### Community 258 - "Spike Report — 06-02 Routing-Quality Gate (master PHASE-06 step 2)"
+Cohesion: 0.29
+Nodes (6): Misroute analysis, Per-question results, Runs (Evidence-Before-Done, T-06-05), Setup (production design, exactly), Spike Report — 06-02 Routing-Quality Gate (master PHASE-06 step 2), VERDICT — PASS, composition CONFIRMED
+
+### Community 259 - "05-05 SUMMARY — orchestrator spine: decompose + dispatch + worker shim"
+Cohesion: 0.29
+Nodes (6): 05-05 SUMMARY — orchestrator spine: decompose + dispatch + worker shim, Deviations (recorded, CEO-visible), Evidence (✓ VERIFIED — executed), Key links honored, Modules, What closed
+
+### Community 260 - "05-06 SUMMARY — escalate.ts: the LOCKED ladder over the event log"
+Cohesion: 0.29
+Nodes (6): 05-06 SUMMARY — escalate.ts: the LOCKED ladder over the event log, Deviations, Evidence — all executed, deterministic (never skipped), Module, Threats closed, What closed
+
+### Community 261 - "05-07 SUMMARY — `dxb intent`: the KERN-01 front door"
+Cohesion: 0.29
+Nodes (6): 05-07 SUMMARY — `dxb intent`: the KERN-01 front door, Deviations, Evidence, Module, Observed classification — 05-09 determinism note, What closed
+
+### Community 262 - "05-08 SUMMARY — qa.ts + council.ts + golden set (master-plan step 7)"
+Cohesion: 0.29
+Nodes (6): 05-08 SUMMARY — qa.ts + council.ts + golden set (master-plan step 7), Deviations (kayıtlı, CEO-görünür), Evidence, Modules, Threats closed, What closed
+
+### Community 263 - "06-01 SUMMARY — Phase toolset study→install"
+Cohesion: 0.29
+Nodes (6): 06-01 SUMMARY — Phase toolset study→install, Card-by-card verdict table (Task 1), Decisive evidence (executed), Deviations, For Phase 7 (RAM budget), What closed
+
+### Community 264 - "06-03 SUMMARY — memory_embeddings migration + llmEmbed + pgvector adapter"
+Cohesion: 0.29
+Nodes (6): 06-03 SUMMARY — memory_embeddings migration + llmEmbed + pgvector adapter, Decisive evidence (executed), Deviations, Downstream contracts armed, Post-reset chain (litellm.md card duty — executed), What closed
+
+### Community 265 - "06-06 SUMMARY — graphify + notebook adapters, claude-mem pointer sync, round-trips"
+Cohesion: 0.29
+Nodes (6): 06-06 SUMMARY — graphify + notebook adapters, claude-mem pointer sync, round-trips, Decisive evidence (executed), Deviations recorded (Fable, CEO-visible), Downstream contracts armed, ⚠ UNVERIFIED (honest tier), What closed
+
+### Community 266 - "06-08 SUMMARY — compaction cron, known-fact battery, phase closure (master step 10)"
+Cohesion: 0.29
+Nodes (6): 06-08 SUMMARY — compaction cron, known-fact battery, phase closure (master step 10), Battery — per-question table (LIVE gate run, DXB_LIVE_SDK=1, real glm-5.2 classifier + real embeddings), Decisive evidence (executed), Deviations recorded (Fable, CEO-visible), Phase 6 — CLOSED, What closed
+
+### Community 267 - "07-08 Summary — Phase Closure"
+Cohesion: 0.29
+Nodes (6): 07-08 Summary — Phase Closure, Commits, Night-ops deviations (detail in 07-VERIFICATION deviations #8), ⚠ residue (carried, none a mechanism gap), Task 1 — gitleaks-action SHA-pin (Phase-1 handover T-01-SC), Task 2 — 07-VERIFICATION 5/5 + FABLE verdict (⛔ checkpoint)
+
+### Community 268 - "import-routing-rules.ts"
+Cohesion: 0.33
+Nodes (5): { Pool }, require, ROOT, rows, SeedRow
+
+### Community 269 - "05-02 SUMMARY — routing_and_deps migration + brain-map seed + BLOCKING schema push"
+Cohesion: 0.33
+Nodes (5): 05-02 SUMMARY — routing_and_deps migration + brain-map seed + BLOCKING schema push, Decisive evidence (executed), Deviations (recorded), Discovery (operational), What closed
+
+### Community 270 - "05-03 SUMMARY — kernel classify.ts + policy.ts + executed routing-data verification"
+Cohesion: 0.33
+Nodes (5): 05-03 SUMMARY — kernel classify.ts + policy.ts + executed routing-data verification, Decisive evidence (executed), Deviations (recorded), Discovery (operational), What closed
+
+### Community 271 - "06-07 SUMMARY — context-budget: compression + summaries + memory offload (MEM-04)"
+Cohesion: 0.33
+Nodes (5): 06-07 SUMMARY — context-budget: compression + summaries + memory offload (MEM-04), Decisive evidence (executed), Deviations recorded (Fable, CEO-visible), Downstream contracts armed, What closed
+
+### Community 272 - "07-04 SUMMARY — runtime denial + Hetzner VPS provision (MCP-02 runtime half, VPS-01)"
+Cohesion: 0.33
+Nodes (5): 07-04 SUMMARY — runtime denial + Hetzner VPS provision (MCP-02 runtime half, VPS-01), Deviations ([ADAPT]), Evidence (✓ VERIFIED), For downstream plans, ⚠ UNVERIFIED / PENDING
+
+### Community 273 - "07-05 SUMMARY — compose deploy + self-heal + backups (master steps 6–7)"
+Cohesion: 0.33
+Nodes (5): 07-05 SUMMARY — compose deploy + self-heal + backups (master steps 6–7), Deviations ([ADAPT] — all fixed live, in-file comments), Evidence (✓ VERIFIED — all VPS rows are live-box terminal evidence), For downstream plans, ⚠ OPEN (CEO inputs)
+
+### Community 274 - "Study Card: speaches"
+Cohesion: 0.33
+Nodes (5): Key API / Usage Notes (compose contract for 07-05 / STT call for 07-07), Known Pitfalls, Lifecycle Checklist, RAM note (Phase 7 budget input), Study Card: speaches
+
+### Community 275 - "routing-spike.mjs"
+Cohesion: 0.33
+Nodes (4): classifyRow(), fixture, results, STORES
+
+### Community 276 - "DXB VPS Runtime (07-05)"
+Cohesion: 0.33
+Nodes (5): Backups (T-07-18), DXB VPS Runtime (07-05), Hermes resident + cage (07-06), Known deviations from upstream Supabase self-host, Layout / operate
+
+### Community 277 - "05-01 SUMMARY — Agent SDK study→approval→install gate"
+Cohesion: 0.40
+Nodes (4): 05-01 SUMMARY — Agent SDK study→approval→install gate, Decisive evidence (executed), Deviations, What closed
+
+### Community 279 - "Plan 05-01 — Supply-Chain Approval Record (Phase-5 toolset)"
+Cohesion: 0.50
+Nodes (3): Chain, Live npm registry evidence (fetched 2026-07-08, presented inline at checkpoint), Plan 05-01 — Supply-Chain Approval Record (Phase-5 toolset)
+
+### Community 280 - "05-01-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 281 - "05-02-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 282 - "05-03-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 283 - "05-04-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 284 - "05-05-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 285 - "05-06-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 286 - "05-07-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 287 - "05-08-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 288 - "05-09-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 289 - "06-01-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 290 - "06-02-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 291 - "06-03-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 292 - "06-04-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 293 - "06-05-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 294 - "06-06-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 295 - "06-07-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 296 - "06-08-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 297 - "07-01-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 298 - "07-02-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 299 - "07-03-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this phase produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 300 - "07-04-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this plan produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 301 - "07-05-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this plan produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 302 - "07-06-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this plan produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 303 - "07-07-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this plan produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 304 - "07-08-PLAN.md"
+Cohesion: 0.50
+Nodes (3): Artifacts this plan produces, STRIDE Threat Register, Trust Boundaries
+
+### Community 305 - "slice-10of10.sh"
+Cohesion: 0.67
+Nodes (3): DXB_DATABASE_URL, run_driver(), slice-10of10.sh script
+
+### Community 306 - "watchdog.sh"
+Cohesion: 0.83
+Nodes (3): hermes_active(), psql_q(), watchdog.sh script
+
 ## Knowledge Gaps
-- **1133 isolated node(s):** `name`, `version`, `minAppVersion`, `author`, `authorUrl` (+1128 more)
+- **1638 isolated node(s):** `name`, `version`, `minAppVersion`, `author`, `authorUrl` (+1633 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **64 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **58 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `dependencies` to `package.json`, `velocity.test.ts`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
-- **Why does `pg-boss` connect `velocity.test.ts` to `dependencies`, `Study Card: pg-boss`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
-- **Why does `getDb()` connect `getDb` to `index.ts`, `registerQueue`, `index.ts`, `index.ts`, `toctou.test.ts`, `tag-subscription-call.ts`, `registerAudit`, `velocity.test.ts`, `approval-flow.test.ts`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Are the 12 inferred relationships involving `getDb()` (e.g. with `registerApproval()` and `registerAudit()`) actually correct?**
-  _`getDb()` has 12 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `getDb()` connect `velocity.test.ts` to `routing-spike.mjs`, `poisoning.test.ts`, `index.ts`, `index.ts`, `index.ts`, `index.ts`, `index.ts`, `index.ts`, `phase3-lifecycle-battery.mjs`, `getDb`, `approval-flow.test.ts`, `toctou.test.ts`, `tag-subscription-call.ts`, `registerAudit`, `adapters-roundtrip.test.ts`, `watchdog.test.ts`, `recall.test.ts`, `council.ts`, `promote.ts`, `pgvector.ts`, `context-rot.test.ts`, `ladder.test.ts`, `known-facts.test.ts`, `qa.ts`?**
+  _High betweenness centrality (0.052) - this node is a cross-community bridge._
+- **Why does `pg-boss` connect `velocity.test.ts` to `package.json`, `Study Card: pg-boss`?**
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
+- **Why does `startScheduler()` connect `velocity.test.ts` to `index.ts`, `index.ts`, `index.ts`?**
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
+- **Are the 31 inferred relationships involving `getDb()` (e.g. with `registerApproval()` and `registerAudit()`) actually correct?**
+  _`getDb()` has 31 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `name`, `version`, `minAppVersion` to the rest of the system?**
-  _1133 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1638 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Architecture Research` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._
 - **Should `Implications for Roadmap` be split into smaller, more focused modules?**
