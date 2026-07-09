@@ -241,7 +241,29 @@ Plans:
   4. Hermes (GLM 5.2 brain) runs bounded scheduled jobs with watchdog and kill switch, and overnight output lands in a morning review queue — nothing runs unattended without the Phase 4 rails live
   5. The CEO drops a video link → the system downloads, transcribes, summarizes, and files it through the memory router asynchronously with a quarantine tier
 
-**Plans**: TBD
+**Plans**: 8 plans
+
+Plans:
+
+**Wave 1**
+- [ ] 07-01-PLAN.md — Toolset study→install: hermes/speaches/yt-dlp cards + hcloud/yt-dlp local (step-1 residue; gateway study pass landed at planning, b7dc785)
+- [ ] 07-02-PLAN.md — 0010_tool_pins + pin-check.ts: hash pin, sticky quarantine, audit, daily cron (step 2)
+
+**Wave 2**
+- [ ] 07-03-PLAN.md — denials.json + generate-profiles.ts: registry-derived per-dept .mcp.json, quarantine excluded, red-grep tests (step 3)
+
+**Wave 3**
+- [ ] 07-04-PLAN.md — Runtime "tool not found" proof + Hetzner provision/hardening/Caddy (CEO checkpoint: token+DNS) (steps 4–5)
+
+**Wave 4**
+- [ ] 07-05-PLAN.md — compose core deploy + migrations + RAM ≤7GB measured + reboot self-heal + backup/restore drill (steps 6–7)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+- [ ] 07-06-PLAN.md — hermes bounded jobs + watchdog + `dxb kill-switch` + night job → morning queue (steps 8–9)
+- [ ] 07-07-PLAN.md — video-learn ingest: yt-dlp → Speaches STT → routed summary → quarantined memory (step 10)
+
+**Wave 6**
+- [ ] 07-08-PLAN.md — gitleaks-action SHA-pin + 07-VERIFICATION 5/5 + ⛔ FABLE closure verdict (steps 11–12)
 
 ### Phase 8: CEO Dashboard & CRM
 

@@ -2,17 +2,17 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-current_phase: 06
-current_phase_name: memory-router-knowledge-stores
-status: phase_complete
-stopped_at: "PHASE 6 COMPLETE — PASSED (06-VERIFICATION.md, FABLE verdict, 2026-07-09). 06-08 closed master step 10: compactExpired (rule 5 cron half — self-tombstone superseded_by=id, delete-free, batch audit 'memory_expired', idempotent) + two pg-boss schedules in outbox-executor scheduler (memory-compaction daily 03:00, claude-mem-sync hourly; ⚠ unattended firing needs Phase-7 VPS). Known-fact battery (same 20 facts as spike, sha256 pinned ec5547ca… vs spike commit): LIVE 19/20 (gate >=18; Q09 relation misroute) / deterministic 20/20. Graph-ingest cron WITHDRAWN on first runtime observation: CLI 'update <path>' = code-only re-extract ('No code files found' on md corpus) — relation notes ingest at phase-completion /gsd-graphify build (card+adapter corrected, 06-06's ⚠ closed). Tracker exits: claude-mem/obsidian-stack/graphify/open-notebook → EMBED. Full suite 23 files, 106 pass/14 skip. ROADMAP Phase 6 [x]. NEXT ACTION: /gsd-plan-phase 07 (MCP Gateway & 24/7 VPS Runtime — gateway study pass FIRST: docker/mcp-gateway, ContextForge, Lasso per standing blocker); knowledge graph >1 phase stale, /gsd-graphify build due at CEO's go"
-last_updated: "2026-07-09T02:35:00.000Z"
+current_phase: 07
+current_phase_name: mcp-gateway-24-7-vps-runtime
+status: phase_planned
+stopped_at: "PHASE 7 PLANNED — 8 Fable-authored plans in 6 waves (2026-07-09). Gateway study pass EXECUTED AT PLANNING (master step 1, CEO directive): docker/mcp-gateway, ContextForge, Lasso surveyed live — v1 registry-generated per-dept .mcp.json profiles CONFIRMED (⛔ Fable verdict, study-cards/mcp-gateway-patterns.md, commit b7dc785); standing Phase-7 blocker RESOLVED. Plan chain: 07-01 toolset cards+local CLIs → 07-02 tool_pins+pin-check (MCP-03) → 07-03 denials+generate-profiles (MCP-02) → 07-04 runtime not-found + Hetzner provision (CEO checkpoint: token+DNS; autonomous:false) → 07-05 compose core deploy + RAM ≤7GB + reboot self-heal (checkpoint) → 07-06 hermes+watchdog+kill-switch (VPS-02, checkpoint) ∥ 07-07 video-learn (VID-01) → 07-08 gitleaks SHA-pin + 07-VERIFICATION + ⛔ FABLE verdict. Governance incident recorded in 916a8a7: mid-planning safety-classifier false-flag auto-switched to Opus 4.8; 07-04/05 re-authored on Fable 5; prevention config set. NEXT ACTION: /gsd-execute-phase 07 (wave 1: 07-01+07-02); knowledge graph >1 phase stale, /gsd-graphify build due at CEO's go"
+last_updated: "2026-07-09T03:50:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: 06-08 phase closure — compaction cron, battery 19/20 live, FABLE verdict PASSED
+last_activity_desc: Phase 7 planned — gateway study pass (v1 confirmed) + 8 plans, Fable-authored inline
 progress:
   total_phases: 11
   completed_phases: 6
-  total_plans: 38
+  total_plans: 44
   completed_plans: 36
   percent: 64
 ---
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 06 (memory-router-knowledge-stores) — COMPLETE, PASSED (FABLE verdict, 06-VERIFICATION.md)
-Plan: 8 of 8 executed (study→install, spike 20/20, pgvector, write door, read door, store adapters, context-budget, closure)
-Status: Phase 6 closed — battery 19/20 live across the full composition; lifecycle crons registered; next: /gsd-plan-phase 07
-Last activity: 2026-07-09 — 06-08 closure (compaction + battery + verification)
+Phase: 07 (mcp-gateway-24-7-vps-runtime) — PLANNED, ready to execute
+Plan: 0 of 8 executed (8 Fable-authored plans, 6 waves; gateway study pass done at planning — v1 profiles confirmed)
+Status: Phase 7 planned — least-privilege gateway (pins+profiles) then VPS runtime (provision→deploy→hermes/video); CEO checkpoints at 07-04/05/06/08
+Last activity: 2026-07-09 — Phase 7 planning (study pass b7dc785, plans 916a8a7 + closing commit)
 
 Progress: [██████░░░░] 64%
 
@@ -105,7 +105,7 @@ None yet.
 
 - [Phase 1]: Credential rotation is CEO-owned manual work (checklist duty) — build work cannot start until old keys verifiably fail
 - [Phase 6]: ~~Memory-store composition rated LOW confidence~~ RESOLVED 2026-07-08: routing-quality spike (06-02) scored 20/20 — composition CONFIRMED, all four stores in scope (spikes/06-routing.md)
-- [Phase 7]: MCP gateway per-department scoping is the least-commoditized piece — study pass (docker/mcp-gateway, ContextForge, Lasso) required at phase planning
+- [Phase 7]: ~~MCP gateway per-department scoping is the least-commoditized piece — study pass required at phase planning~~ RESOLVED 2026-07-09: study pass executed at planning (docker/mcp-gateway, ContextForge, Lasso surveyed live) — v1 registry-generated per-dept profiles CONFIRMED, ⛔ Fable verdict in study-cards/mcp-gateway-patterns.md (b7dc785)
 - [Phase 7]: 8GB VPS RAM budget is tight (Supabase + Speaches + Hermes + open-notebook) — fallback plan documented in research STACK.md
 - [Phase 11]: Stripe/DocuSign restricted-key scoping + WooCommerce staging patterns need verification at planning time (touches real money)
 
