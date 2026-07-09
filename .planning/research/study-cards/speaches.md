@@ -31,13 +31,13 @@
 - RAM is the scarce resource: **1–1.5GB under load** (master table) — this is WHY the voice profile is on-demand; keep it out of the `core` profile.
 
 ## RAM note (Phase 7 budget input)
-- Master table expectation: **1–1.5GB under load** — ⚠ UNMEASURED until 07-05 deploy; `docker stats --no-stream` measurement recorded at 07-05/07-07 evidence.
+- Master table expectation: **1–1.5GB under load** — **MEASURED 2026-07-09 (07-07 live STT):** peak **1.373GiB / 1.5GiB limit** during faster-whisper-small transcription on the VPS (`docker stats --no-stream` sampled every 2s); idle-loaded ~740MiB. Within expectation; mem_limit 1536m holds.
 
 - **Install Command:** (07-05, VPS) service block in `vps/compose.yaml` pinned to the digest above + `docker compose --profile voice up -d` → readiness curl — exact lines land in 07-05-SUMMARY
 - **Legitimacy Verdict:** OK — active OSS org (speaches-ai), stable release line, images under the project's own ghcr namespace with verifiable digests, no install-time code execution outside the container, no secrets required; local-only binding mandated
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-07-09, 07-01 — this fill)
-- [ ] INSTALL (07-05, VPS compose `--profile voice`)
-- [ ] ADOPT
+- [x] INSTALL (2026-07-09, 07-05 — VPS compose `profiles: [voice]`, digest-pinned 0.8.3-cpu)
+- [x] ADOPT (2026-07-09, 07-07 — video-learn STT live: `Systran/faster-whisper-small` verified in /v1/registry, real transcription 15s for 19s video, profile started on-demand and STOPPED after)
 - [ ] EMBED

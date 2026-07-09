@@ -44,5 +44,5 @@
 ## Lifecycle Checklist
 - [x] STUDY (2026-07-09, 07-01 — this fill)
 - [x] INSTALL (2026-07-09, 07-01 Task 2 — local `~/.local/bin/yt-dlp`, sha256-verified)
-- [ ] ADOPT (07-07 ingest pipeline)
+- [x] ADOPT (2026-07-09, 07-07 — tools/video-learn ingest live: real download + STT + quarantined filing, card invocation verbatim in `ytDlpArgs()`)
 - [ ] EMBED
