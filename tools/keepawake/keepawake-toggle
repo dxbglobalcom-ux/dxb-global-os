@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -u
+
+UNIT_NAME="codex-keepawake"
+UNIT="${UNIT_NAME}.service"
+TITLE="Keep Awake"
+WHY="Keep VS Code agent running while away"
+
+notify_info() {
+  if command -v notify-send >/dev/null 2>&1; then
+    notify-send "$TITLE" "$1"
+  elif command -v zenity >/dev/null 2>&1; then
+    zenity --info --title="$TITLE" --text="$1" >/dev/null 2>&1 &
+  fi
+}
+
+notify_error() {
+  if command -v notify-send >/dev/null 2>&1; then
+    notify-send --urgency=critical "$TITLE" "$1"
+  elif command -v zenity >/dev/null 2>&1; then
+    zenity --error --title="$TITLE" --text="$1" >/dev/null 2>&1 &
+  fi
+}
+
+if systemctl --user is-active --quiet "$UNIT"; then
+  if systemctl --user stop "$UNIT"; then
+    notify_info "OFF: Laptop can sleep normally again."
+    exit 0
+  fi
+
+  notify_error "Could not stop keep-awake service."
+  exit 1
+fi
+
+if systemd-run \
+  --user \
+  --unit="$UNIT_NAME" \
+  --description="$TITLE for VS Code agent" \
+  systemd-inhibit \
+    --what=sleep:idle:handle-lid-switch \
+    --mode=block \
+    --who="$TITLE" \
+    --why="$WHY" \
+    sleep infinity >/dev/null; then
+  notify_info "ON: Sleep, idle sleep, and lid sleep are blocked."
+  exit 0
+fi
+
+notify_error "Could not start keep-awake service."
+exit 1

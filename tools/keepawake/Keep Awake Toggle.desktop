@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Keep Awake Toggle
+Comment=Toggle sleep and lid-close blocking for VS Code agent work
+Exec=/home/ghost/.local/bin/keepawake-toggle
+Icon=preferences-system-power
+Terminal=false
+Categories=Utility;
+StartupNotify=false
