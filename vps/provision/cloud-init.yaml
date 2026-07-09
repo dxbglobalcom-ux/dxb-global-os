@@ -1,9 +1,9 @@
 #cloud-config
 # DXB VPS first boot (07-04, master PHASE-07 step 5). Hardened from birth
 # (T-07-12): key-only SSH, non-root sudo user, firewall + fail2ban before any
-# service exists. @@VPS_SSH_PUBKEY@@ is substituted at `hcloud server create`
-# time from the VPS-ONLY public key (never the laptop's pair — T-07-13);
-# no secret value lives in this file.
+# service exists. The pubkey placeholder below is substituted at `hcloud server
+# create` time from the VPS-ONLY public key (never the laptop's pair —
+# T-07-13); no secret value lives in this file.
 users:
   - name: dxb
     groups: [sudo]

@@ -5,10 +5,10 @@ milestone_name: milestone
 current_phase: 07
 current_phase_name: mcp-gateway-24-7-vps-runtime
 status: phase_executing
-stopped_at: "PHASE 7 EXECUTING — WAVES 1+2 COMPLETE (2026-07-09, inline Fable). 07-01 cards + installs; 07-02 (MCP-03) tool_pins/pin-check live, 21 tools pinned, cron 04:00; 07-03 (MCP-02): denials.json (14 dept red map, doc-transcribed) + grants.json ([ADAPT] registry has no grant table) + generate-profiles.ts (default-deny, denials override grants, quarantine excluded at generation, deterministic + source_hash), migration 20260709000012 seeds ceo+research depts, 14 production profiles emitted — grep proof research=no stripe / ceo=no github, tests 4/4, suite 25 files 115 pass. CEO CONFIRM pending: finance↔docusign / legal-de↔stripe denial split (SUMMARY deviation 3). NEXT: 07-04 Hetzner provision — CEO CHECKPOINT (real money ~€20/mo, Hetzner token + DNS = CEO identity steps) → 07-05 compose deploy → 07-06 hermes+watchdog ∥ 07-07 video-learn → 07-08 closure ⛔ FABLE verdict + /gsd-graphify build (CEO approved: at phase closure)"
+stopped_at: "PHASE 7 EXECUTING — 07-01..03 COMPLETE, 07-04 PARTIAL (2026-07-09, inline Fable). VPS LIVE: dxb-vps-1 (Hetzner 149310629, cx33 8GB nbg1, 46.225.89.249, ~€10.10/mo) — key-only ssh (password refused), ufw default-deny 22/80/443, fail2ban sshd, Caddy v2.11.4 interim :80 /health=200 from internet. Runtime denial proven: production research profile resolves stripe.create_charge to tool-not-found (test 2/2). REMAINING 07-04 GATE: CEO DNS A record → set DXB_DOMAIN, swap /etc/caddy/Caddyfile.domain, curl https 200, then tick ROADMAP 07-04. CEO CONFIRM pending: finance↔docusign/legal-de↔stripe denial split (07-03 dev.3). NEXT: 07-05 compose deploy (box ready) → 07-06 ∥ 07-07 → 07-08 closure ⛔ FABLE + graphify build (CEO: at phase closure)"
 last_updated: "2026-07-09T10:45:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: Wave 2 complete — 07-03 least-privilege profiles generated (14 depts, doc reds grep-proven, inline Fable)
+last_activity_desc: 07-04 partial — VPS dxb-vps-1 live hardened, runtime denial proven; TLS gate pending CEO DNS
 progress:
   total_phases: 11
   completed_phases: 6
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 07 (mcp-gateway-24-7-vps-runtime) — EXECUTING (waves 1+2 complete)
-Plan: 3 of 8 executed (07-01 cards, 07-02 tool_pins, 07-03 profiles; 07-04 next — CEO checkpoint)
-Status: Phase 7 executing — anti rug-pull + least-privilege profiles LIVE (14 dept profiles generated); next VPS runtime; CEO checkpoints at 07-04/05/06/08
-Last activity: 2026-07-09 — wave 2 closed: 07-03 (inline Fable)
+Plan: 4 of 8 in motion (07-04 partial: TLS gate awaits CEO DNS; 07-05 unblocked)
+Status: Phase 7 executing — profiles LIVE + EU VPS LIVE (hardened, health 200); TLS gate on CEO DNS; next compose deploy
+Last activity: 2026-07-09 — 07-04: dxb-vps-1 provisioned + hardened (inline Fable)
 
 Progress: [██████▌░░░] 66%
 

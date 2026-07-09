@@ -47,13 +47,15 @@ ssh-keygen -t ed25519 -f ~/.ssh/dxb_vps_ed25519 -N "" -C "dxb-vps-hetzner-2026-0
 
 - Public half → Hetzner (`hcloud ssh-key create`) + cloud-init `@@VPS_SSH_PUBKEY@@`.
 - Private half → `~/.ssh/` only (0600), never committed, never uploaded anywhere else.
-- Fingerprint recorded here after generation: `SHA256:<pending — filled at keygen>`
+- Fingerprint (generated 2026-07-09, uploaded to Hetzner as `dxb-vps`, ID 114883845):
+  `SHA256:y3ca+dBe+6A6LWrdulInoq26Gv2ComFSiPQ+nsuldGI` — no laptop default key exists,
+  so the credential sets are disjoint by construction (T-07-13).
 
 ## Server spec (CEO approves at checkpoint)
 
 | Choice | Value | Why |
 |---|---|---|
-| Type | **CX42** (4 vCPU / 8GB / 80GB, ~€16.4/mo) — alternative CPX31 (AMD, ~€15.6/mo) | STACK.md 8GB RAM budget table |
+| Type | **cx33** (4 vCPU / 8GB / 80GB, ~€10.10/mo — CEO-verified live from API 2026-07-09; Hetzner renamed the CX42-class line) | STACK.md 8GB RAM budget table |
 | Location | **Nuremberg (nbg1)** — alternative Helsinki (hel1) | EU requirement |
 | Image | ubuntu-24.04 | LTS, cloud-init native |
 | First boot | `cloud-init.yaml` (this dir) | hardened from birth: key-only SSH, ufw, fail2ban |
@@ -64,7 +66,7 @@ Create command (Claude runs; token sourced silently):
 set -a && . vps/provision/.hetzner.local && set +a
 hcloud ssh-key create --name dxb-vps --public-key-from-file ~/.ssh/dxb_vps_ed25519.pub
 sed "s|@@VPS_SSH_PUBKEY@@|$(cat ~/.ssh/dxb_vps_ed25519.pub)|" vps/provision/cloud-init.yaml > /tmp/dxb-cloud-init.yaml
-hcloud server create --name dxb-vps-1 --type cx42 --location nbg1 \
+hcloud server create --name dxb-vps-1 --type cx33 --location nbg1 \
   --image ubuntu-24.04 --ssh-key dxb-vps --user-data-from-file /tmp/dxb-cloud-init.yaml
 ```
 
