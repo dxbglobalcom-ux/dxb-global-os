@@ -197,8 +197,19 @@ export interface CrmDealsTable {
   created_at: Timestamptz;
 }
 
+export interface ToolPinsTable {
+  id: Generated<string>;
+  server: string;
+  tool: string;
+  schema_hash: string;
+  quarantined: Generated<boolean>;
+  pinned_at: Timestamptz;
+  last_checked: Date | null;
+}
+
 export interface DB {
   tasks: TasksTable;
+  tool_pins: ToolPinsTable;
   task_events: TaskEventsTable;
   departments: DepartmentsTable;
   agents: AgentsTable;

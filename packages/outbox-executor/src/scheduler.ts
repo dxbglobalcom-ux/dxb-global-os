@@ -8,6 +8,7 @@
 import { PgBoss } from "pg-boss";
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
+import { checkPins, readDxbMcpInventory } from "@dxb/gateway";
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
 import { tick } from "./index.js";
 import { checkVelocity } from "./breaker.js";
@@ -18,6 +19,7 @@ export const QUEUES = {
   breaker: "velocity-breaker",
   compaction: "memory-compaction",
   memSync: "claude-mem-sync",
+  pinCheck: "tool-pin-check",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -36,6 +38,9 @@ export const CADENCES = {
   breakerCron: "*/5 * * * *", // every 5min
   compactionCron: "0 3 * * *", // daily 03:00
   memSyncCron: "0 * * * *", // hourly
+  // Anti rug-pull drift check (07-02, MCP-03): daily 04:00 — after the 03:00
+  // compaction so the two daily jobs never contend for the session-mode pool.
+  pinCheckCron: "0 4 * * *", // daily 04:00
 } as const;
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -83,10 +88,15 @@ export async function startScheduler(): Promise<PgBoss> {
     await syncClaudeMem(getDb());
   });
 
+  await boss.work(QUEUES.pinCheck, async () => {
+    await checkPins(getDb(), await readDxbMcpInventory());
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
   await boss.schedule(QUEUES.memSync, CADENCES.memSyncCron);
+  await boss.schedule(QUEUES.pinCheck, CADENCES.pinCheckCron);
   await enqueueTick(boss, 0); // bootstrap the 15s chain
 
   return boss;

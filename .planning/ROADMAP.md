@@ -246,8 +246,8 @@ Plans:
 Plans:
 
 **Wave 1**
-- [ ] 07-01-PLAN.md — Toolset study→install: hermes/speaches/yt-dlp cards + hcloud/yt-dlp local (step-1 residue; gateway study pass landed at planning, b7dc785)
-- [ ] 07-02-PLAN.md — 0010_tool_pins + pin-check.ts: hash pin, sticky quarantine, audit, daily cron (step 2)
+- [x] 07-01-PLAN.md — Toolset study→install: hermes/speaches/yt-dlp cards + hcloud/yt-dlp local (step-1 residue; gateway study pass landed at planning, b7dc785)
+- [x] 07-02-PLAN.md — 0010_tool_pins + pin-check.ts: hash pin, sticky quarantine, audit, daily cron (step 2)
 
 **Wave 2**
 - [ ] 07-03-PLAN.md — denials.json + generate-profiles.ts: registry-derived per-dept .mcp.json, quarantine excluded, red-grep tests (step 3)

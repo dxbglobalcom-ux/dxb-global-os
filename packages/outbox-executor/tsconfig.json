@@ -6,6 +6,6 @@
     "rootDir": "src",
     "types": ["node"]
   },
-  "references": [{ "path": "../shared" }, { "path": "../memory-router" }],
+  "references": [{ "path": "../shared" }, { "path": "../memory-router" }, { "path": "../gateway" }],
   "include": ["src"]
 }

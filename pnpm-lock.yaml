@@ -116,10 +116,22 @@ importers:
 
   packages/gateway:
     dependencies:
+      '@dxb/dxb-mcp':
+        specifier: workspace:*
+        version: link:../dxb-mcp
       '@dxb/shared':
         specifier: workspace:*
         version: link:../shared
+      '@modelcontextprotocol/sdk':
+        specifier: 'catalog:'
+        version: 1.29.0(zod@4.4.3)
+      kysely:
+        specifier: 'catalog:'
+        version: 0.29.3
     devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -186,6 +198,9 @@ importers:
 
   packages/outbox-executor:
     dependencies:
+      '@dxb/gateway':
+        specifier: workspace:*
+        version: link:../gateway
       '@dxb/memory-router':
         specifier: workspace:*
         version: link:../memory-router

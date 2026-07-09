@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
+    "@dxb/gateway": "workspace:*",
     "@dxb/memory-router": "workspace:*",
     "@dxb/shared": "workspace:*",
     "kysely": "catalog:",

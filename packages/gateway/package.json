@@ -6,9 +6,13 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "@dxb/shared": "workspace:*"
+    "@dxb/dxb-mcp": "workspace:*",
+    "@dxb/shared": "workspace:*",
+    "@modelcontextprotocol/sdk": "catalog:",
+    "kysely": "catalog:"
   },
   "devDependencies": {
+    "@types/node": "catalog:",
     "typescript": "catalog:"
   }
 }
