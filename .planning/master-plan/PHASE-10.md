@@ -24,6 +24,8 @@
 | Persona v2.0 şablonu: role/objective/output_contract/termination/skills/mcp_profile/context_budget alanları ZORUNLU — serbest düzyazı yasak | MAST kategori-1 önleme |
 | Humanizer: outbound content pipeline'ında zorunlu adım (orchestrator content.outbound rotasında kodlu) — atlanamaz | DEPT-04 |
 | HR fabrikası kendisi bir departman: rewrite işleri normal TaskEnvelope; çıktı persona PR'ı (git) + registry update | süreç kendi OS'ini kullanır |
+| [CEO B8 2026-07-09] Support departmanı W2-W3 arasında TAM aktive edilir (mevcut 6 persona v2'ye); support-responder v2 müşteri şikayet/talep akışına bağlanır: dashboard/CRM inbox → cevap draft → **politika-İÇİ ise otonom gönderim** (B7b kuralı), politika-dışı → onay inbox | müşteri tarafı sahipsiz kalamaz |
+| [CEO B8 2026-07-09] Legal departmanına (DE+TR uzman yanına) dedike **policy-writer uzmanı** eklenir: şirket politikalarını (iade, SLA, gizlilik, iletişim tonu, departman SOP'ları) yazar + günceller; politikalar `docs/policies/` altında VERSİYONLU (git) tutulur; support-responder'ın otonom cevap SINIRINI bu politikalar çizer | otonom desteğin güvencesi yazılı politika |
 
 ## 3. Dosya-Seviyesi Spec
 
@@ -66,6 +68,8 @@ CREATE TABLE sampling_audits (
 | 7 | Autonomy dial | `dxb autonomy set <agent> 1` yalnız sicil şartı sağlanınca çalışır; dashboard'dan aynı işlem; audit |
 | 8 | W2 aktivasyonu (Marketing+Sales+Social) | W1 kapı prosedürünün aynısı; sabah kuyruğu sosyal işleri gösteriyor |
 | 9 | W3 (Finance+Legal DE/TR + HR resmî) | Legal DE/TR personaları v2 kadrolu; finance profili draft-only kanıtı |
+| 9a | [B8] policy-writer persona (Legal'e) + ilk politika seti | `docs/policies/` altında ≥3 versiyonlu politika (iade, SLA, iletişim tonu); persona v2 şablonunda, registry'de |
+| 9b | [B8] Support TAM aktivasyonu | 6 support personası v2; support-responder CRM inbox akışına bağlı; politika-içi otonom cevap testi + politika-dışı → onay inbox negatif testi |
 | 10 | Faz kapanışı | 5 kriter + dalga başına kapı kanıtları |
 
 ## 5. Risk + Fallback

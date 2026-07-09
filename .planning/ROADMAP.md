@@ -306,6 +306,7 @@ Plans:
   3. Legal (DE/TR), HR factory, and Research departments exist in the registry and are staffed with working agents (research-department writes gated through memory quarantine)
   4. The HR digital-worker factory rewrites personas to v2.0 (globalized, per-agent skills) systematically — demonstrated on at least one full department — and the humanizer skill runs in every outbound content pipeline before the approval gate
   5. Approval strictness relaxes per department/action class based on audited track record, adjustable by the CEO from the dashboard
+  6. [CEO B5, 2026-07-09] DXB kendi hizmetlerini pazarlayan **outbound pipeline** çalışır: humanizer skill zorunlu, tüm gönderimler draft → CEO onay → outbox; ölçülebilir çıktı (gönderilen kampanya sayısı / cevap oranı) dashboard'da görünür. (Loop-engine bağlantısı — B1: mail şablonu ilk loop asset adaylarından; Hetzner port 25/465 kapalı → harici SMTP relay üzerinden çıkar)
 
 **Plans**: TBD
 **UI hint**: yes
@@ -319,9 +320,9 @@ Plans:
 
   1. Catalog work on outleteuro.com is dispatched by the orchestrator to the holding's departments — neither the builder nor the CEO operates the store directly
   2. Catalog Automation Rate (% of 73 brands with live, complete, correct listings maintained autonomously) is measured continuously and visible in the cockpit
-  3. An autoresearch loop runs on at least one Outleteuro asset with a locked scorer and git commit/revert discipline
+  3. [CEO B1, 2026-07-09] A **generic loop-engine module** exists as its own task BEFORE any asset work: a program.md + asset + **locked-scorer** template every department can instantiate (change → measure → commit if better, revert if worse; scorer locked — agents can NEVER edit it; real mail draft-only; no unapproved spend). The Outleteuro asset loop is its FIRST instance, running with git commit/revert discipline. Example instantiations recorded: sales-mail template → reply rate; ad copy → CTR; product listing → conversion; agent prompt → test pass rate
   4. Stripe, DocuSign, and Cloudflare actions exist only as drafts behind the outbox executor with restricted keys — staging-first for WooCommerce writes
-  5. [CEO 2026-07-09] Revolut Business + Wise payment integrations (in + out) live BESIDE Stripe, finance-only, same draft-only/approval-gated class — in-house dxb-mcp payments tools (community MCPs rejected: approval-gate bypass; see study-cards/revolut-business-api.md + wise-api.md). Estimate: +2 plans (~5–6 tools each; auth = Revolut cert-OAuth, Wise token+SCA key; CEO checkpoint mints sandbox→prod creds)
+  5. [CEO 2026-07-09] Revolut Business + Wise payment integrations (in + out) live BESIDE Stripe, finance-only. [B7b revision 2026-07-09]: money-OUT legs (transfers, payments) = draft-only/approval-gated class; money-IN legs (collection, payment links, invoice settlement) = NO approval — autonomous, dashboard-visible, post-hoc audited — in-house dxb-mcp payments tools (community MCPs rejected: approval-gate bypass; see study-cards/revolut-business-api.md + wise-api.md). Estimate: +2 plans (~5–6 tools each; auth = Revolut cert-OAuth, Wise token+SCA key; CEO checkpoint mints sandbox→prod creds)
 
 **Plans**: TBD (+2 for Revolut/Wise payment tools per criterion 5)
 

@@ -1,10 +1,13 @@
 # Memory Index
 
+- [Deadline & Faz-8 reopen](deadline-and-phase8-reopen.md) — SERT DEADLINE 2026-07-12 (Fable kalkıyor, 'ölüm kalım'); Faz 8 başında design plugin'leri + playwright yeniden açılır, STACK.md Broadcast notları okunur
+- [Design-bundle Phase-8 köprüsü](design-bundle-phase8-bridge.md) — CEO B3: Phase 8 GİRİŞ ŞARTI — impeccable+taste+open-design+Stitch re-enable + study, dashboard tasarımından ÖNCE; kapanmadan design işi başlamaz
 - [Master plan fidelity](master-plan-fidelity.md) — CEO emri: master plandan ASLA sapma (ölüm-kalım); zorunlu uyarlama = kayıtlı + CEO'ya görünür, sessiz sapma yasak
 
 - [Fable 5 construction governance](fable-5-construction-governance.md) — **ZORUNLU İLK OKUMA her session** — THE GOAL: Fable 5 kalitesinde output her aşamada; Fable inşaatın TAMAMINA sahip (baş mimar + milestone kapıları + commit onayı); session bootstrap kuralı (BOOTSTRAP READ onayı olmadan proje işi yapılamaz)
 - [Model routing hierarchy](model-routing-hierarchy.md) — v5 yetki matrisi + config backstop: Fable plan + repo'ya giren HER satırı (boilerplate dahil) BİZZAT ve INLINE yazar — **planner/debugger subagent istisnası İPTAL (CEO 2026-07-08): claude-fable-5 modelli subagent yazarlığı bile ihlal**; tüm final verdict'ler Fable'da; otomatik subagent fan-out kapalı (`parallelization=false`, toggles off, `hooks.workflow_guard=true`); Sonnet sadece açık Fable gerekçesiyle yazarlık-dışı high-effort destek; Haiku SADECE getir-götür; Checker PASS ≠ bitti; bütçe-fallback: Fable MASTER-PLAN + Opus 4.8 executor
 - [Evidence before done](evidence-before-done.md) — never claim "done" without executed verification; GUI/external outcomes labeled ⚠ UNVERIFIED; CEO's hardest rule
 - [CEO report format](ceo-report-format.md) — tüm raporlar TABLO: ✓ VERIFIED / ⚠ UNVERIFIED / ❌ BİTMEDİ + kanıt kolonu; "tamam" kapsamı (plan/faz) her raporda açık; sapmalar ayrı tablo
-- [CEO delegation rule](ceo-delegation-rule.md) — CEO does ONLY credential/identity steps; Claude installs/configures everything else itself, never sends setup work back to CEO; onay kapsamı (2026-07-09): para ÇIKIŞI onaylı, para GİRİŞİ onaysız, rutin dış iletişim otonom
+- [CEO delegation rule](ceo-delegation-rule.md) — **FULL AUTHORITY (2026-07-09 23:15): her şeyde izin verildi, izin/onay SORULMAZ; laptop projeye tahsisli; erteleme ("yarın sabah") yasak**; CEO'ya sadece para-ÇIKIŞI + sözleşme + kimlik adımları gider; para GİRİŞİ onaysız, rutin dış iletişim otonom
 - [Skill diet](skill-diet.md) — gstack tamamen + 48 gsd skili arşivde (~/.claude/skills-disabled/); geri alma mv; gsd-update sonrası yeniden uygula
+- [Hetzner access & vault drop](hetzner-access-and-vault-drop.md) — Hetzner Cloud bağlı (hcloud context dxb); Storage Box dxb-backup-1 + subaccount u629578-sub1 CANLI (SSH-key-only; RFC4716 gotcha); kasa OKUMA'sı + credential ROTASYONU classifier bloklar (yeni credential YARATMA geçer); token bir kez sızdı, yenilenmeli

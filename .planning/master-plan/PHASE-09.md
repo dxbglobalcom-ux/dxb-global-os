@@ -4,6 +4,8 @@
 **Bağımlılık:** Phase 8 (briefing cockpit verisini okur; sesli teyitler onay inbox'ına düşer)
 **İlke:** Ses = aynı kernel'in İNCE ikinci istemcisi. Sıfır ekstra yetki, sıfır bağımsız state (mimari boundary kuralı).
 
+**[CEO DİREKTİFİ B2, 2026-07-09 — birebir şart]:** *"JARVIS, dashboard'a EŞİT tam komut kanalıdır — CEO'nun her sesli direktifi kernel intent yoluna iner ve ilgili departmana dağıtılır; asistan istenen işe itiraz etmez, risk ve faydayı bildirir, son karar CEO'nundur; outward aksiyonlar mevcut GATE-01 draft+onay akışından geçer."*
+
 ## 1. Hedef + Kabul Kapısı
 
 1. Sabah brifingi: gece işleri + onay kuyruğu + maliyet sözlü özeti (Speaches TTS, Türkçe)
@@ -17,6 +19,7 @@
 | Speaches VPS'te tek container: `/v1/audio/transcriptions` (faster-whisper small int8) + `/v1/audio/speech` (Kokoro-82M; Piper fallback) | STACK kilidi; CPU-only |
 | jarvis app'i kernel'e dashboard'un kullandığı AYNI seam'den bağlanır; kendi DB erişimi YOK | ince istemci |
 | Laptop istemcisi: voicebox push-to-talk / openWakeWord — yalnız yakalama+çalma; karar VPS/kernel'de | JARVIS input capture local |
+| **Wake word = runtime-configurable config değeri** (openWakeWord; hard-code YASAK); varsayılan: **"Selamünaleyküm ya Hamza"**; CEO istediği an config'ten değiştirir, restart yeter | CEO direktifi B2 (2026-07-09); kişiselleştirme + esneklik |
 | Onay kelimeleri ("onayla", "approve") STT'den gelirse SADECE inbox item referansı üretir; karar yine dashboard çift-teyit | UX pitfall: yanlış duyma |
 | Brifing içeriği tek SQL görünümden (`v_morning_briefing`): gece task_events özeti + pending approvals + 24h maliyet | tek kaynak; ajan "brifing yazmaz" |
 
@@ -39,6 +42,7 @@ tests/phase9/{parity,gate-negative}.test.ts
 | 2 | 0012 view | `SELECT * FROM v_morning_briefing` 3 blok döner |
 | 3 | briefing.ts + cron | 07:00 cron ses dosyası üretti; içerik view'le eşleşir (⚠ ses kalitesi CEO kulağı) |
 | 4 | listen.ts STT→kernel parite | aynı intent yazılı vs sesli → task_events zincirleri eşdeğer (parity test) |
+| 4b | Wake word config testi | config değeri değiştir → yeni wake word aktif, eskisi tetiklemiyor; varsayılan "Selamünaleyküm ya Hamza" doğrulanır |
 | 5 | Gated negatif test | sesli "ödemeyi onayla" → approvals hâlâ pending; yalnız inbox highlight |
 | 6 | Faz kapanışı | 3 kriter kanıtlı |
 

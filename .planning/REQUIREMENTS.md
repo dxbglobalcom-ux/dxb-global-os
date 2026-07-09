@@ -38,7 +38,7 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 
 ### Approval Gates (GATE)
 
-- [ ] **GATE-01**: All outward actions (money, contracts, real emails, ad spend) are DRAFT-first; execution requires recorded CEO approval — enforced in code, not prompts
+- [ ] **GATE-01** *(revised per CEO directive B7b, 2026-07-09 — recorded master-plan change, not a silent deviation)*: **Money-OUT** actions (transfers, payments, spending, ad budgets), **contract commitments**, and CEO-flagged topics are DRAFT-first; execution requires recorded CEO approval — enforced in code, not prompts. **Money-IN needs NO approval**: collections, incoming payments, sales revenue run autonomously by departments, dashboard-visible, post-hoc auditable. **Routine outward comms** (emails, social posts) run autonomously within versioned department policy (policy ownership: B8 policy-writer). The approval inbox carries ONLY money-out + contracts + CEO-flagged items (single channel from Phase 8: dashboard approval inbox + JARVIS voice confirm). CEO is an approve/reject authority — the company never sends the CEO tasks (permitted request classes: money-out approval, critical legal commitments, human-identity steps — always batched, copy-paste-ready, minute-estimated; automation alternative must be proven impossible first)
 - [ ] **GATE-02**: Single outbox-executor process holds the only outward credentials and executes only `approved` rows, exactly once (idempotency keys)
 - [ ] **GATE-03**: Batch approval inbox with risk grouping — never per-action popups
 - [ ] **GATE-04**: Gate-bypass canary tests run in CI (attempt outward action without approval → must fail)
@@ -76,7 +76,7 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 ### JARVIS Voice (VOICE)
 
 - [ ] **VOICE-01**: Morning voice briefing: spoken summary of overnight work, approval queue, costs (Speaches TTS)
-- [ ] **VOICE-02**: Spoken commands: STT → kernel intent path (voice = second kernel client)
+- [ ] **VOICE-02**: Spoken commands: STT → kernel intent path (voice = second kernel client). [CEO B2, 2026-07-09] Wake word is a runtime-configurable config value (openWakeWord; never hard-coded), default **"Selamünaleyküm ya Hamza"**. Verbatim clause binding on the Phase 9 spec: *"JARVIS, dashboard'a EŞİT tam komut kanalıdır — CEO'nun her sesli direktifi kernel intent yoluna iner ve ilgili departmana dağıtılır; asistan istenen işe itiraz etmez, risk ve faydayı bildirir, son karar CEO'nundur; outward aksiyonlar mevcut GATE-01 draft+onay akışından geçer."*
 
 ### Video Learning (VID)
 

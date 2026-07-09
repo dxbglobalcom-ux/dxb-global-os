@@ -103,6 +103,7 @@ None yet.
 
 ### Blockers/Concerns
 
+- **[Phase 8 GİRİŞ ŞARTI — CEO B3, 2026-07-09]: design bundle (impeccable + taste + open-design + Google Stitch) re-enable + study — dashboard tasarımından ÖNCE.** Token-diet'te kapatılan design/UI skilleri (bkz. Quick Tasks 260708-t01) Phase 8 başlamadan geri açılır ve çalışılır; bu şart kapanmadan design işine başlanamaz. Kalıcı memory: design-bundle-phase8-bridge.md
 - [Phase 1]: Credential rotation is CEO-owned manual work (checklist duty) — build work cannot start until old keys verifiably fail
 - [Phase 6]: ~~Memory-store composition rated LOW confidence~~ RESOLVED 2026-07-08: routing-quality spike (06-02) scored 20/20 — composition CONFIRMED, all four stores in scope (spikes/06-routing.md)
 - [Phase 7]: ~~MCP gateway per-department scoping is the least-commoditized piece — study pass required at phase planning~~ RESOLVED 2026-07-09: study pass executed at planning (docker/mcp-gateway, ContextForge, Lasso surveyed live) — v1 registry-generated per-dept profiles CONFIRMED, ⛔ Fable verdict in study-cards/mcp-gateway-patterns.md (b7dc785)

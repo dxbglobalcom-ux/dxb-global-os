@@ -83,6 +83,9 @@ DXB Global OS is an AI-native company operating system for **DXB Global Technolo
 | Personas v2.0 after skeleton, by HR factory | Factory rewrites 367 personas systematically instead of months of manual pre-work | — Pending |
 | Pilot KPI: Catalog Automation Rate | Measurable day one, traffic-independent, proves autonomous ops; KPI tree comes later | — Pending |
 | Credential rotation + vault before any build | Source doc leaked plaintext secrets; likely pasted into third-party AI chats | — Pending |
+| [CEO 2026-07-09, B7b] GATE-01 approval scope revision: money-IN = NO approval (autonomous, dashboard-visible, post-hoc audit); money-OUT = CEO approval always; routine outward comms autonomous within versioned dept policy; approval inbox = money-out + contracts + CEO-flagged only; single channel from Phase 8 (dashboard inbox + JARVIS confirm) | CEO is approve/reject authority, not task executor — anti-babysitting core value; recorded master-plan change (external audit directive), not silent deviation | REQUIREMENTS.md GATE-01 revised 2026-07-09 |
+| [CEO 2026-07-09, B1] Generic loop-engine module precedes Outleteuro asset (locked-scorer template, dept-instantiable) | One reusable optimization engine instead of one-off pilot hack; scorer agent-immutable | ROADMAP Phase-11 criterion 3 revised |
+| [CEO 2026-07-09, B8] Support dept full activation + dedicated policy-writer expert in Legal (versioned policies in docs/policies/ bound support-responder autonomy) | Autonomous support needs written policy boundary; customer side cannot stay unowned | PHASE-10 master plan updated |
 
 ## Evolution
 
