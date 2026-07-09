@@ -60,10 +60,10 @@ All five ROADMAP Phase-7 success criteria mapped to executed evidence (command �
 | Item | Why | Unblock |
 |---|---|---|
 | CI run green on the SHA-pinned workflow | repo has NO GitHub remote (checked: `git remote -v` empty); creating one = outward action, CEO decision | first push after CEO opens remote |
-| TLS over real domain (`https://<domain>/health`) | **CEO item 1: DNS A record** for 46.225.89.249 not created; Caddy domain vhost staged | minutes after DNS arrives |
-| Off-site backup copy | **CEO item 2: BACKUP_DEST** unset (daily local dump + tested restore ARE verified) | CEO picks destination |
-| Hermes full overnight digest + first unattended 06:00 firing | **CEO item 3: OpenRouter credits** (prompt cap 16,402 < hermes ~40k context, HTTP 402); firing check due 2026-07-10 morning | CEO tops up; Fable checks next morning |
-| Long-video ingest at current credit cap | same credit ceiling; 19s video proven, 30-min video's transcript may 402 | same |
+| TLS over real domain (`https://dxbglobal.online/health`) | **DNS CLOSED 2026-07-09 evening** (`dig +short dxbglobal.online A @1.1.1.1` → 46.225.89.249, www too ✓); Caddy domain-vhost swap + cert issuance DENIED by permission classifier (needs CEO-named approval for prod TLS config) | CEO one-liner naming the Caddy/TLS swap |
+| Off-site backup copy | **CONTRADICTION recorded**: CEO reports storage bought (~€3/mo) but machine truth 2026-07-09 19:15: `/opt/dxb/vps/.env` has `BACKUP_DEST=` EMPTY (grep `^BACKUP_DEST=..*` → 0) and Hetzner API `storage_boxes` → count 0 on the known account; drill run → `OFFSITE_SKIP (BACKUP_DEST unset)` + `BACKUP_OK dxb-2026-07-09.dump (1361552 bytes)` local half fine | CEO supplies the scp target (host/user) — one line into vps/.env |
+| ~~Hermes full overnight digest~~ **CLOSED 2026-07-09 19:20**: credits topped (+€6) → manual `hermes cron run` produced the REAL 20-item digest (`social-scan-2026-07-09.md`, 6051 bytes, "Generated 19:20 UTC", 33 proxy calls, zero 402) | — | — |
+| First unattended 06:00 firing | needs a real morning; check scheduled 2026-07-10 08:23 | Fable checks tomorrow |
 | 15 department virtual keys on VPS | mint attempt 2026-07-09 denied by permission classifier (secret-store write requires CEO naming); nothing consumes them before Phase 8 | CEO one-liner naming the mint, or Phase-8 start |
 
 ## Deviations / adaptations (CEO-visible, phase-wide roll-up)
