@@ -52,6 +52,8 @@ Single source of truth for every master-plan §8B item's integration lifecycle. 
 | Sentry MCP | Ops MCPs | STUDY | 10 | Eng error tracking | mcp-profile | study-cards/sentry-mcp.md | |
 | Stripe MCP | Ops MCPs | STUDY | 11 | Finance — draft-only, approval-gated | mcp-profile | study-cards/stripe-mcp.md | Gated (PILOT-04); credentials only in outbox executor |
 | DocuSign MCP | Ops MCPs | STUDY | 11 | Legal — draft-only, approval-gated | mcp-profile | study-cards/docusign-mcp.md | Gated (PILOT-04); credentials only in outbox executor |
+| Revolut Business API | Ops MCPs (CEO add 2026-07-09) | STUDY | 11 | Finance — pay in/out, draft-only, approval-gated | mcp-profile | study-cards/revolut-business-api.md | In-house dxb tools (community MCP rejected: gate bypass); denials/grants already applied 07-03 policy |
+| Wise API | Ops MCPs (CEO add 2026-07-09) | STUDY | 11 | Finance — pay in/out, draft-only, approval-gated | mcp-profile | study-cards/wise-api.md | In-house dxb tools (1★ community candidate rejected); SCA key = 2nd credential; denials/grants applied |
 | Composio | Ops MCPs | STUDY | 10+ | Orchestrator scale-out connector | mcp-profile | study-cards/composio.md | |
 | Cloudflare MCP | Ops MCPs | STUDY | 10 | Eng/Security — outleteuro zone | mcp-profile | study-cards/cloudflare-mcp.md | Tokens exist — rotate first |
 | autoresearch (karpathy) | Other | STUDY | 11 | Loop-engineering module | skill | study-cards/autoresearch.md | 89.8k stars; Outleteuro assets, locked scorer |

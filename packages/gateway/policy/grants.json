@@ -20,7 +20,7 @@
     "research": { "dxb-mcp": "*" },
     "design": { "dxb-mcp": "*" },
     "engineering": { "dxb-mcp": "*", "github": "*", "git": "*", "context7": "*" },
-    "finance": { "dxb-mcp": "*", "stripe": "*" },
+    "finance": { "dxb-mcp": "*", "stripe": "*", "revolut": "*", "wise": "*" },
     "legal-de": { "dxb-mcp": "*", "docusign": "*" },
     "marketing": { "dxb-mcp": "*" },
     "paid-media": { "dxb-mcp": "*" },

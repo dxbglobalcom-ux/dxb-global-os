@@ -1,8 +1,8 @@
 {
   "_department": "engineering",
-  "_generated_at": "2026-07-09T10:37:26.520Z",
+  "_generated_at": "2026-07-09T12:25:51.853Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
-  "_source_hash": "df8ea178af2ec6879902f430e417af258b0e16d1fb605642bc15a8d93129f752",
+  "_source_hash": "fa8859c184f5149afa75c408d77cef0aa11e41192be92dca0bc45060882dbf62",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",

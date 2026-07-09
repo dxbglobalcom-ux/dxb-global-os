@@ -321,8 +321,9 @@ Plans:
   2. Catalog Automation Rate (% of 73 brands with live, complete, correct listings maintained autonomously) is measured continuously and visible in the cockpit
   3. An autoresearch loop runs on at least one Outleteuro asset with a locked scorer and git commit/revert discipline
   4. Stripe, DocuSign, and Cloudflare actions exist only as drafts behind the outbox executor with restricted keys — staging-first for WooCommerce writes
+  5. [CEO 2026-07-09] Revolut Business + Wise payment integrations (in + out) live BESIDE Stripe, finance-only, same draft-only/approval-gated class — in-house dxb-mcp payments tools (community MCPs rejected: approval-gate bypass; see study-cards/revolut-business-api.md + wise-api.md). Estimate: +2 plans (~5–6 tools each; auth = Revolut cert-OAuth, Wise token+SCA key; CEO checkpoint mints sandbox→prod creds)
 
-**Plans**: TBD
+**Plans**: TBD (+2 for Revolut/Wise payment tools per criterion 5)
 
 ## Progress
 
