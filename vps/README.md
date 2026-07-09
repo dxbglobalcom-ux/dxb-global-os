@@ -11,7 +11,8 @@ via `git archive`); secrets ONLY in `/opt/dxb/vps/.env` (0600, generated on the 
 | Stack lifecycle | `systemctl {start,stop,status} dxb-stack` (enabled — survives reboot, proven 100s to green) |
 | Services (core) | db, auth, rest, realtime, meta, studio, kong, litellm, outbox — all ports bind 127.0.0.1; Caddy is the only public face |
 | Profiles | `core` (running) · `voice` (Speaches, on-demand: `docker compose --profile voice up -d`) · `brain` (open-notebook — 07-06/07 wave) |
-| Studio | `https://<domain>/` behind kong basic-auth (`DASHBOARD_USERNAME`/`PASSWORD` in .env) — until DNS: `http://127.0.0.1:8000/` via ssh tunnel |
+| Studio | NOT exposed via domain (Caddy default-deny; service routes land with the dashboard phase) — `http://127.0.0.1:8000/` via ssh tunnel, kong basic-auth (`DASHBOARD_USERNAME`/`PASSWORD` in .env) |
+| TLS / domain | `https://dxbglobal.online` + `www` LIVE (2026-07-09, Let's Encrypt via Caddy auto-HTTPS). `/etc/caddy/Caddyfile` = domain vhost (`Caddyfile.domain` promoted; interim kept as `Caddyfile.interim.bak`); `DXB_DOMAIN` fed from `/etc/caddy/caddy.env` via systemd drop-in `caddy.service.d/dxb-env.conf`. Only `/health` exposed, everything else 404 |
 | LiteLLM | `127.0.0.1:4000` — real provider keys ONLY in its container env (`OPENROUTER_API_KEY` in .env; ⚠ CEO must paste value, empty at deploy) |
 | Update deploy | from laptop: `git archive HEAD \| ssh dxb@<ip> 'tar -x -C /opt/dxb'` → `sudo systemctl restart dxb-stack` |
 | Migrations | `sudo docker compose --profile core exec -T db psql -U postgres -d postgres < db/migrations/<file>.sql` (0001..0012 applied 2026-07-09) |
@@ -25,13 +26,17 @@ via `git archive`); secrets ONLY in `/opt/dxb/vps/.env` (0600, generated on the 
 | Brain | glm-5.2 via local LiteLLM on the `dxb-hermes` VIRTUAL key (max_budget 10) — key in `~/.hermes/config.yaml` + `/opt/dxb/vps/hermes/.env` (both 0600) |
 | Watchdog | `watchdog.timer` every 5 min — kills over-budget / artifactless>2h jobs (facts from LiteLLM SpendLogs), audits, appends anomaly line to the morning artifact; completed artifacts enqueued as `tasks status='review'` |
 | Kill switch | `node tools/dxb-cli/dist/index.js kill-switch on|off|status` (on box, needs `DXB_DATABASE_URL` + `LITELLM_MASTER_KEY` env) — hard-stop flag + block ALL `dxb-*` keys + stop hermes; audited both directions |
-| ⚠ Pending | OpenRouter credits too low for full job runs (prompt cap 16k < hermes ~40k context) — CEO tops up; first unattended 06:00 firing unverified until credits + one real morning |
+| ⚠ Pending | ~~OpenRouter credits~~ topped up 2026-07-09 (+€6; real 20-item digest produced same evening). Residue: first unattended 06:00 firing — check scheduled 2026-07-10 08:23 |
 
 ## Backups (T-07-18)
 
 - Daily cron (installed): `30 2 * * * /opt/dxb/vps/backup/pg_dump.sh >> /opt/dxb/backups/backup.log 2>&1`
 - Custom-format dump → `/opt/dxb/backups/dxb-<date>.dump` (0600), retention 14d.
-- Off-site: set `BACKUP_DEST` (scp target) in `.env` — ⚠ unset until CEO picks a destination.
+- Off-site (LIVE 2026-07-09): `BACKUP_DEST` in `.env` → Hetzner Storage Box `dxb-backup-1` (bx11, fsn1), least-privilege subaccount `u629578-sub1` (home `backups/pg`, SSH only, no samba/webdav).
+  - Auth: key-only — `~dxb/.ssh/storagebox_ed25519` + `~/.ssh/config` Host block (`BatchMode yes`, works from cron). No password persisted anywhere (recovery = recreate subaccount via `hcloud storage-box subaccount`).
+  - Gotcha: Storage Box port-22 SFTP (ProFTPD) only accepts keys in **RFC4716** format inside `.ssh/authorized_keys`; OpenSSH one-liner format alone is silently rejected. Both formats installed.
+  - Offsite drill (2026-07-09): `bash pg_dump.sh` → `OFFSITE_OK 2026-07-09` + dump on box byte-identical (1,564,584 bytes).
+  - Gotcha: script needs exec bit for cron (`git update-index --chmod=+x` fixed in repo 2026-07-09; was 100644 → nightly cron would have failed silently until then).
 - **Restore drill (tested 2026-07-09):**
   ```
   psql -U supabase_admin -c "CREATE DATABASE restore_drill;"

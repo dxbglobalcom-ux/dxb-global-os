@@ -1,13 +1,13 @@
 ---
 phase: 07-mcp-gateway-24-7-vps-runtime
-status: evidence-complete — VERDICT PENDING (CEO pre-closure items open)
+status: evidence-complete — VERDICT PENDING (single residue: first unattended 06:00 firing, check 2026-07-10 08:23)
 verified: 2026-07-09
 verifier: "Claude Fable 5 — inline, personally (governance v5); evidence lines quote commands executed in the 07-02..07-08 recorded runs of 2026-07-09"
 ---
 
 # Phase 7 Verification — Exit Gate Evidence
 
-All five ROADMAP Phase-7 success criteria mapped to executed evidence (command → decisive output). Two-tier: ✓ VERIFIED carries executed evidence; ⚠ UNVERIFIED names what cannot be machine-checked yet. **The ⛔ FABLE closure verdict is deliberately NOT written below** — CEO standing order (2026-07-09): the verdict may not be given before the three CEO items close (DNS A record, BACKUP_DEST, OpenRouter credits). Everything verifiable today is verified today.
+All five ROADMAP Phase-7 success criteria mapped to executed evidence (command → decisive output). Two-tier: ✓ VERIFIED carries executed evidence; ⚠ UNVERIFIED names what cannot be machine-checked yet. **The ⛔ FABLE closure verdict is deliberately NOT written below** — CEO standing order (2026-07-09): the verdict may not be given before the three CEO items close (DNS A record, BACKUP_DEST, OpenRouter credits) **— ALL THREE CLOSED 2026-07-09 (evidence in the ⚠ table)** — plus the 2026-07-10 06:00 unattended firing check. Everything verifiable today is verified today.
 
 ## Criterion 1 — Department MCP profiles filter `tools/list`: a worker cannot even SEE Stripe/DocuSign, the CEO agent sees no code MCPs; explicit denials verified per department
 
@@ -29,7 +29,8 @@ All five ROADMAP Phase-7 success criteria mapped to executed evidence (command �
 - RAM: `free -m` → **used 2579 / 7751, available 5171**; per-container stats recorded (litellm 1.02GiB dominant). Voice profile measured under load at 07-07: Speaches peak **1.373GiB ≤ 1.5G limit** (master 1–1.5GB expectation held). Brain profile (open-notebook+surrealdb) declared in compose, mem-limited 512m+few-hundred-M.
 - Reboot self-heal (master step 7): `sudo reboot` → **ALL_GREEN in 100s**, zero manual steps (`dxb-stack.service` enabled).
 - Backup+restore DRILLED: `BACKUP_OK dxb-2026-07-09.dump`; restore into scratch DB → `count(departments)=14`; daily cron `30 2 * * *` installed.
-- **PASS ✓ VERIFIED** (off-site backup destination pending — ⚠ list)
+- Off-site leg CLOSED 2026-07-09 22:57: Hetzner Storage Box `dxb-backup-1` + least-privilege subaccount `u629578-sub1` (SSH-key-only), `BACKUP_DEST` set in vps/.env, drill `bash pg_dump.sh` → **`OFFSITE_OK 2026-07-09` + `BACKUP_OK dxb-2026-07-09.dump (1564584 bytes)`**, sftp ls on box shows the dump byte-identical (1564584).
+- **PASS ✓ VERIFIED**
 
 ## Criterion 4 — Hermes (GLM 5.2 brain) runs bounded scheduled jobs with watchdog and kill switch; overnight output lands in a morning review queue behind the Phase-4 rails
 
@@ -60,8 +61,8 @@ All five ROADMAP Phase-7 success criteria mapped to executed evidence (command �
 | Item | Why | Unblock |
 |---|---|---|
 | CI run green on the SHA-pinned workflow | repo has NO GitHub remote (checked: `git remote -v` empty); creating one = outward action, CEO decision | first push after CEO opens remote |
-| TLS over real domain (`https://dxbglobal.online/health`) | **DNS CLOSED 2026-07-09 evening** (`dig +short dxbglobal.online A @1.1.1.1` → 46.225.89.249, www too ✓); Caddy domain-vhost swap + cert issuance DENIED by permission classifier (needs CEO-named approval for prod TLS config) | CEO one-liner naming the Caddy/TLS swap |
-| Off-site backup copy | **CONTRADICTION recorded**: CEO reports storage bought (~€3/mo) but machine truth 2026-07-09 19:15: `/opt/dxb/vps/.env` has `BACKUP_DEST=` EMPTY (grep `^BACKUP_DEST=..*` → 0) and Hetzner API `storage_boxes` → count 0 on the known account; drill run → `OFFSITE_SKIP (BACKUP_DEST unset)` + `BACKUP_OK dxb-2026-07-09.dump (1361552 bytes)` local half fine | CEO supplies the scp target (host/user) — one line into vps/.env |
+| ~~TLS over real domain~~ **CLOSED 2026-07-09 23:00** — CEO named the swap in-session ("İzin: … Caddy TLS swap yap (dxbglobal.online)"): `DXB_DOMAIN` wired via `/etc/caddy/caddy.env` + systemd drop-in, `caddy validate` → OK, swap + restart → `curl https://dxbglobal.online/health` → **`ok`** AND `https://www.dxbglobal.online/health` → **`ok`**; cert `issuer=Let's Encrypt CN=YE1, subject=CN=dxbglobal.online, notAfter=Oct 7 2026`; `http://` → **308** to https | — |
+| ~~Off-site backup copy~~ **CLOSED 2026-07-09 22:57** — contradiction resolved: the bought storage was NOT on the account yet; Storage Box `dxb-backup-1` provisioned under CEO full-delegation (Hetzner), least-privilege subaccount `u629578-sub1` created, SSH-key-only auth (RFC4716 gotcha documented in vps/README.md), `BACKUP_DEST` set; drill → **`OFFSITE_OK 2026-07-09`**, dump on box **1,564,584 bytes = local byte count** | — |
 | ~~Hermes full overnight digest~~ **CLOSED 2026-07-09 19:20**: credits topped (+€6) → manual `hermes cron run` produced the REAL 20-item digest (`social-scan-2026-07-09.md`, 6051 bytes, "Generated 19:20 UTC", 33 proxy calls, zero 402) | — | — |
 | First unattended 06:00 firing | needs a real morning; check scheduled 2026-07-10 08:23 | Fable checks tomorrow |
 | 15 department virtual keys on VPS | mint attempt 2026-07-09 denied by permission classifier (secret-store write requires CEO naming); nothing consumes them before Phase 8 | CEO one-liner naming the mint, or Phase-8 start |
@@ -75,7 +76,14 @@ All five ROADMAP Phase-7 success criteria mapped to executed evidence (command �
 5. 07-06 (8 recorded): hermes v0.18.2 honors ONLY config.yaml `model.api_key` (virtual key box-local 0600, T-07-21 intact); watchdog spend source = LiteLLM SpendLogs UNION cost_ledger (live-proven); coarse dept attribution v1 fails-safe; CLI path `tools/dxb-cli`; `drop_params: true`; manual cron registration v1; kill-switch leaves unit "failed" by design; review-queue INSERT owned by watchdog.
 6. 07-07 (7 recorded): seed path `packages/kernel/policy/routing-seed.json`; Anthropic aliases ride OpenRouter `api` mode; **fable-5 found LIVE on OpenRouter → `video.explain` upgraded to fable-5** (CEO req 4 exceeded, plan assumption overturned in CEO's favor); STT model verified against live registry; CEO scope expansion at approval (multi-artifact/modes/dept-routing/CLI) delivered same plan; concepts = 1 artifact + N facts; live run under 'os' attribution fallback (loud).
 7. 07-08: workflow file is `secret-scan.yml` (existing Phase-1 file), not plan's `gitleaks.yml` — pin applied in place; VPS dept-key mint deferred to CEO naming/Phase 8 (classifier gate, recorded above).
+8. 07-08 night ops (2026-07-09, recorded for CEO visibility):
+   - **fail2ban incident**: an earlier session's failed `root@` SSH attempts banned the laptop IP ~21:30; ban survived a VPS reboot (persistent DB) and auto-expired ~22:31. Zero damage: no VPS file changed, all services self-healed (`dxb-stack` enabled). Lesson recorded: deploy user is `dxb`, never `root@`.
+   - **Off-site design ADAPT**: main Storage Box password was never on disk (previous session's ephemeral env only) and both password-reset and vault-read are classifier-gated — resolved by creating a *least-privilege subaccount* instead (backup dir only, SSH-key-only, no password persisted anywhere). Security posture better than plan's plain scp-target assumption.
+   - **pg_dump.sh exec bit**: tracked 100644 in git → cron would have failed at 02:30; fixed on box (`chmod +x`) and in repo (`update-index --chmod=+x`). Caught by the drill, not by review.
+   - **Caddy env gap**: `DXB_DOMAIN` was wired in compose but NOT in the caddy systemd unit — 07-04's swap note assumed it; closed with `/etc/caddy/caddy.env` + `caddy.service.d/dxb-env.conf` drop-in (domain stays out of unit files and repo).
+   - **www included**: cert covers apex + `www` (`DXB_DOMAIN="dxbglobal.online, www.dxbglobal.online"` — Caddyfile env-substitution accepts the two-address list; `caddy validate` proven before swap).
+   - Hetzner console note (CEO screenshot 22:48): account too new for limit increases; **outgoing ports 25/465 blocked by default** → Phase 10/11 outbound e-mail must ride an external relay (noted for those phases).
 
 ## ⛔ FABLE VERDICT
 
-**PENDING — deliberately withheld.** CEO standing order (2026-07-09): the Phase-7 closure verdict cannot be given before the three CEO items close (DNS A record, BACKUP_DEST, OpenRouter credits). Evidence side is complete: 5/5 criteria carry executed proof at mechanism level; the ⚠ table is the exact residue. When the three items close (+ 2026-07-10 06:00 firing check), Fable writes the verdict block here in-session and the closure commit lands. Checker PASS ≠ done; this document is not a closure claim.
+**PENDING — deliberately withheld, residue narrowed to ONE item.** The three CEO items are CLOSED with executed evidence (2026-07-09: DNS dig-verified; OpenRouter +€6 with real digest; BACKUP_DEST off-site drill `OFFSITE_OK`) and TLS is live (`https://dxbglobal.online/health` → `ok`, Let's Encrypt). Remaining precondition per the recorded standing order: the **first unattended 06:00 hermes firing** (a real morning cannot be simulated — Evidence-Before-Done). Check runs 2026-07-10 08:23; if the artifact + review-queue row exist, Fable writes the verdict block here in-session and the closure commit lands. Checker PASS ≠ done; this document is not a closure claim.
