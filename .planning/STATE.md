@@ -5,10 +5,10 @@ milestone_name: milestone
 current_phase: 07
 current_phase_name: mcp-gateway-24-7-vps-runtime
 status: phase_executing
-stopped_at: "PHASE 7 EXECUTING — 07-01..03+05 COMPLETE, 07-04 partial-DNS (2026-07-09, inline Fable). CORE STACK LIVE ON VPS: 9 services healthy (db/auth/rest/realtime/meta/studio/kong/litellm/outbox), 12 migrations, registry 14 dept/153 agents, 21 tool pins + 04:00 cron on box, RAM 2.6/7.75GB, reboot self-heal ALL_GREEN 100s, backup+restore DRILLED (14 depts recovered), cron 02:30. CEO OPEN (CEO taahhüdü: faz-7 kapanışından ÖNCE yapılacak; 07-08 verdict bunlar kapanmadan VERİLEMEZ): (1) DNS A kaydı 46.225.89.249 → domain; (2) OPENROUTER_API_KEY paste /opt/dxb/vps/.env + restart; (3) BACKUP_DEST off-site hedefi. NEXT: 07-06 hermes+watchdog+kill-switch ∥ 07-07 video-learn → 07-08 closure ⛔ FABLE + graphify build. Revolut+Wise: Phase-11 +2 plan (CEO 2026-07-09, kartlar+policy hazır)"
-last_updated: "2026-07-09T10:45:00.000Z"
+stopped_at: "PHASE 7 EXECUTING — 07-01..03+05+06 COMPLETE, 07-04 partial-DNS (2026-07-09, inline Fable). 07-06 LIVE: hermes v0.18.2 commit-pinned caged on VPS (84.8M RSS), watchdog.timer 5min (runaway kill DRILLED ×2, real SpendLogs source), dxb kill-switch e2e both directions (key blocked 401 + hermes stopped + flag, audited), morning review-queue enqueue working, dxb-hermes virtual key minted (VPS'te diğer 13 dept key YOK — 07-08/P8'de mint). OPENROUTER_API_KEY CEO tarafından yerleştirildi ✓ (DXB-OK round-trip). CEO OPEN (07-08 verdict bunlar kapanmadan VERİLEMEZ): (1) DNS A kaydı 46.225.89.249 → domain; (2) BACKUP_DEST off-site hedefi; (3) YENİ: OpenRouter kredi yükle (prompt cap 16k < hermes 40k — gece job'ı 402'de bloke; ilk 06:00 ateşlemesi ⚠ UNVERIFIED). NEXT: 07-07 video-learn → 07-08 closure ⛔ FABLE + graphify build. Revolut+Wise: Phase-11 +2 plan"
+last_updated: "2026-07-09T15:20:00.000Z"
 last_activity: 2026-07-09
-last_activity_desc: 07-05 complete — VPS core stack live, self-heal 100s, backup drilled; CEO open items DNS+OPENROUTER_API_KEY+BACKUP_DEST
+last_activity_desc: 07-06 complete — hermes caged live (watchdog kill drilled, kill-switch e2e); CEO open items DNS+BACKUP_DEST+OpenRouter-kredi
 progress:
   total_phases: 11
   completed_phases: 6
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 07 (mcp-gateway-24-7-vps-runtime) — EXECUTING (waves 1+2 complete)
-Plan: 5 of 8 done or in motion (07-05 complete; 07-04 yalnız DNS-TLS kapısı açık)
-Status: Phase 7 executing — CORE STACK LIVE on VPS (self-healing, backed up); next hermes+watchdog (07-06) ∥ video-learn (07-07)
-Last activity: 2026-07-09 — 07-05: core stack deployed, reboot 100s, restore drilled (inline Fable)
+Plan: 6 of 8 done or in motion (07-06 complete; 07-04 yalnız DNS-TLS kapısı açık)
+Status: Phase 7 executing — hermes CAGED live (watchdog+kill-switch drilled); next video-learn (07-07) → 07-08 closure
+Last activity: 2026-07-09 — 07-06: hermes v0.18.2 live, runaway kill drilled ×2, kill-switch e2e (inline Fable)
 
 Progress: [██████▌░░░] 66%
 

@@ -1,17 +1,27 @@
-# hermes ~/.hermes/config.yaml — deploy copy (07-06 Task 1; study-card contract).
-# LiteLLM wiring (T-07-21): hermes NEVER sees a raw provider key — its brain
-# calls go to the local LiteLLM proxy on the hermes department VIRTUAL key.
-# key_env names the env var; the value lives ONLY in /opt/dxb/vps/hermes/.env
-# on the box (0600, never committed). Version pin: hermes v0.18.2 (card).
-providers:
-  litellm:
-    type: openai
-    base_url: http://127.0.0.1:4000/v1
-    key_env: DXB_LITELLM_KEY_HERMES
-
-model:
-  provider: custom
-  default_model: glm-5.2   # LiteLLM alias (vps/litellm/config.yaml model_list)
-
+# hermes ~/.hermes/config.yaml — deploy contract (07-06 Task 3, live-verified).
+# The box config is the installer-generated template with EXACTLY these edits
+# (deployed 2026-07-09, hermes v0.18.2 commit 9de9c25f):
+#
+#   model:
+#     default: "glm-5.2"            # LiteLLM alias (vps/litellm/config.yaml)
+#     provider: "custom"
+#     base_url: "http://127.0.0.1:4000/v1"   # local LiteLLM proxy ONLY
+#     api_key: "<dxb-hermes virtual key>"    # box-local file 0600 — see note
+#     max_tokens: 4096              # fit OpenRouter credit ceiling; artifact
+#                                   # jobs finalize early by contract anyway
+#
+# T-07-21: hermes NEVER sees a raw provider key — api_key above is the
+# dxb-hermes LiteLLM VIRTUAL key (max_budget 10, blockable, dept-tagged).
+# DEPLOY FINDING (v0.18.2): the gateway cron runner reads ONLY config.yaml
+# model.api_key for provider=custom — key_env/CUSTOM_API_KEY/OPENROUTER_API_KEY
+# env fallbacks are NOT honored on that path (verified live: 401
+# "no-key-required" until api_key was set in the file). The key value
+# therefore lives in ~/.hermes/config.yaml (0600, dxb-owned, never in repo);
+# /opt/dxb/vps/hermes/.env (0600) keeps DXB_LITELLM_KEY_HERMES as the
+# canonical copy for tooling (kill-switch probes, redeploys).
+#
 # v1: NO messaging bridges (WhatsApp/Telegram/Discord stay off — card pitfall);
 # API server feature OFF; output path = artifact files + morning review queue.
+# Jobs: registered in hermes cron (hermes cron list) from the validated
+# vps/hermes/jobs/*.md contracts — load-jobs.sh (ExecStartPre) is the
+# mandatory-field gate; the watchdog polices the running window.

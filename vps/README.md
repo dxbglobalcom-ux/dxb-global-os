@@ -16,6 +16,17 @@ via `git archive`); secrets ONLY in `/opt/dxb/vps/.env` (0600, generated on the 
 | Update deploy | from laptop: `git archive HEAD \| ssh dxb@<ip> 'tar -x -C /opt/dxb'` → `sudo systemctl restart dxb-stack` |
 | Migrations | `sudo docker compose --profile core exec -T db psql -U postgres -d postgres < db/migrations/<file>.sql` (0001..0012 applied 2026-07-09) |
 
+## Hermes resident + cage (07-06)
+
+| What | How |
+|---|---|
+| Resident agent | `systemctl {start,stop,status} hermes` — `hermes gateway` (v0.18.2, commit-pinned 9de9c25f, user dxb, `~/.hermes/`) |
+| Jobs | contracts in `/opt/dxb/vps/hermes/jobs/*.md` (mandatory budget/artifact/on_output fields); `load-jobs.sh` validates at every service start; registered in `hermes cron list` |
+| Brain | glm-5.2 via local LiteLLM on the `dxb-hermes` VIRTUAL key (max_budget 10) — key in `~/.hermes/config.yaml` + `/opt/dxb/vps/hermes/.env` (both 0600) |
+| Watchdog | `watchdog.timer` every 5 min — kills over-budget / artifactless>2h jobs (facts from LiteLLM SpendLogs), audits, appends anomaly line to the morning artifact; completed artifacts enqueued as `tasks status='review'` |
+| Kill switch | `node tools/dxb-cli/dist/index.js kill-switch on|off|status` (on box, needs `DXB_DATABASE_URL` + `LITELLM_MASTER_KEY` env) — hard-stop flag + block ALL `dxb-*` keys + stop hermes; audited both directions |
+| ⚠ Pending | OpenRouter credits too low for full job runs (prompt cap 16k < hermes ~40k context) — CEO tops up; first unattended 06:00 firing unverified until credits + one real morning |
+
 ## Backups (T-07-18)
 
 - Daily cron (installed): `30 2 * * * /opt/dxb/vps/backup/pg_dump.sh >> /opt/dxb/backups/backup.log 2>&1`

@@ -25,3 +25,6 @@ general_settings:
 litellm_settings:
   max_budget: 100          # EUR/month equivalent — adjust to USD rate on VPS install day
   budget_duration: 30d
+  drop_params: true        # 07-06: hermes sends `reasoning`; OpenRouter chat route rejects
+                           # unknown params — drop instead of 400 (quality unaffected:
+                           # params silently unsupported upstream anyway)

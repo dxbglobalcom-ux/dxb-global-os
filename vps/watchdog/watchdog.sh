@@ -54,12 +54,39 @@ for f in "$ENABLED"/*.md; do
   artifact="$HERMES_DIR/${artifact_tpl//\{date\}/$window_date}"
   checked=$((checked+1))
 
-  # artifact on disk = job completed → healthy, untouched
-  [ -s "$artifact" ] && continue
+  # artifact on disk = job completed → enqueue morning review (once per
+  # window: on_output queue_review, master step 9 — NOTHING flows outward,
+  # the row lands in status 'review' behind the Phase-4 rails), then done.
+  if [ -s "$artifact" ]; then
+    psql_q "INSERT INTO tasks (department, objective, output_contract, model_tier, approval_class, status, result)
+            SELECT 'hermes',
+                   'CEO morning review: $job digest $window_date',
+                   'Review the artifact; approve, annotate, or discard. No outward action without Phase-4 approval.',
+                   'L2', 'none', 'review',
+                   jsonb_build_object('job','$job','artifact','$artifact','window_start','$window_iso')
+            WHERE NOT EXISTS (
+              SELECT 1 FROM tasks WHERE department='hermes' AND status IN ('review','done')
+              AND result->>'job'='$job' AND result->>'window_start'='$window_iso');" \
+      >/dev/null || echo "watchdog: review enqueue failed (db down?)" >&2
+    continue
+  fi
 
-  # --- observed consumption this window (cost_ledger, dept hermes) ---
-  row=$(psql_q "SELECT COALESCE(SUM(cost_eur),0), COALESCE(SUM(prompt_tokens+completion_tokens),0), COUNT(*)
-                FROM cost_ledger WHERE department='hermes' AND created_at >= '$window_iso';") || {
+  # --- observed consumption this window ---
+  # Source: LiteLLM spend tables via the dxb-hermes virtual key (proven live:
+  # SpendLogs rows land per call; cost_ledger stays empty for hermes because
+  # the Phase-4 ledger hook belongs to DXB-orchestrated agents, and hermes is
+  # an external resident — 07-06 deploy finding). UNION keeps any future
+  # cost_ledger hermes rows counted too. spend is proxy-currency (≈EUR, v1
+  # approximation recorded in SUMMARY).
+  row=$(psql_q "SELECT COALESCE(SUM(spent),0), COALESCE(SUM(tokens),0), COALESCE(SUM(calls),0) FROM (
+                  SELECT s.spend AS spent, s.total_tokens AS tokens, 1 AS calls
+                  FROM litellm.\"LiteLLM_SpendLogs\" s
+                  JOIN litellm.\"LiteLLM_VerificationToken\" k ON s.api_key = k.token
+                  WHERE k.key_alias='dxb-hermes' AND s.\"startTime\" >= '$window_iso'
+                  UNION ALL
+                  SELECT cost_eur, prompt_tokens+completion_tokens, 1
+                  FROM cost_ledger WHERE department='hermes' AND created_at >= '$window_iso'
+                ) u;") || {
     echo "watchdog: ledger query failed (db down?) — no decision this tick" >&2
     continue
   }
