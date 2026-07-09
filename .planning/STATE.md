@@ -5,7 +5,7 @@ milestone_name: milestone
 current_phase: 07
 current_phase_name: mcp-gateway-24-7-vps-runtime
 status: phase_executing
-stopped_at: "PHASE 7 EXECUTING — 07-01..03 COMPLETE, 07-04 PARTIAL (2026-07-09, inline Fable). VPS LIVE: dxb-vps-1 (Hetzner 149310629, cx33 8GB nbg1, 46.225.89.249, ~€10.10/mo) — key-only ssh (password refused), ufw default-deny 22/80/443, fail2ban sshd, Caddy v2.11.4 interim :80 /health=200 from internet. Runtime denial proven: production research profile resolves stripe.create_charge to tool-not-found (test 2/2). REMAINING 07-04 GATE: CEO DNS A record → set DXB_DOMAIN, swap /etc/caddy/Caddyfile.domain, curl https 200, then tick ROADMAP 07-04. CEO CONFIRM pending: finance↔docusign/legal-de↔stripe denial split (07-03 dev.3). NEXT: 07-05 compose deploy (box ready) → 07-06 ∥ 07-07 → 07-08 closure ⛔ FABLE + graphify build (CEO: at phase closure)"
+stopped_at: "PHASE 7 EXECUTING — 07-01..03 COMPLETE, 07-04 PARTIAL (2026-07-09, inline Fable). VPS LIVE: dxb-vps-1 (Hetzner 149310629, cx33 8GB nbg1, 46.225.89.249, ~€10.10/mo) — key-only ssh (password refused), ufw default-deny 22/80/443, fail2ban sshd, Caddy v2.11.4 interim :80 /health=200 from internet. Runtime denial proven: production research profile resolves stripe.create_charge to tool-not-found (test 2/2). REMAINING 07-04 GATE: CEO DNS A record → set DXB_DOMAIN, swap /etc/caddy/Caddyfile.domain, curl https 200, then tick ROADMAP 07-04. NEXT: 07-05 compose deploy (box ready) → 07-06 ∥ 07-07 → 07-08 closure ⛔ FABLE + graphify build (CEO: at phase closure)"
 last_updated: "2026-07-09T10:45:00.000Z"
 last_activity: 2026-07-09
 last_activity_desc: 07-04 partial — VPS dxb-vps-1 live hardened, runtime denial proven; TLS gate pending CEO DNS
