@@ -105,5 +105,27 @@
     "timelineTitle": "Audit timeline",
     "timelineEmpty": "No audit entries yet.",
     "payload": "Payload"
+  },
+  "commandBar": {
+    "trigger": "Command",
+    "shortcutHint": "⌘K",
+    "inputLabel": "State your intent",
+    "submit": "Send",
+    "recentTitle": "Recent intents",
+    "errorTitle": "Could not submit — nothing was queued",
+    "placeholders": [
+      "Draft a weekend campaign plan for Outleteuro…",
+      "Summarize this week's costs by department…",
+      "Prepare a client onboarding checklist…"
+    ]
+  },
+  "intent": {
+    "received": "received",
+    "classifying": "classifying",
+    "queued": "queued",
+    "running": "running",
+    "done": "done",
+    "failed": "failed",
+    "failed_dispatch": "dispatch failed"
   }
 }

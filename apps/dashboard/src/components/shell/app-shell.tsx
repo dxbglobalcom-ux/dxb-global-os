@@ -43,11 +43,13 @@ export function AppShell({
   labels,
   brand,
   horizon,
+  command,
   children,
 }: {
   labels: NavLabels;
   brand: string;
   horizon: ReactNode;
+  command?: ReactNode;
   children: ReactNode;
 }) {
   const pathname = usePathname();
@@ -94,8 +96,9 @@ export function AppShell({
         className="sticky top-0 border-b border-line bg-bg/85 backdrop-blur-md md:pl-16"
         style={{ zIndex: "var(--z-sticky)" }}
       >
-        <div className="flex h-14 items-center px-4 sm:px-6">
+        <div className="flex h-14 items-center justify-between gap-3 px-4 sm:px-6">
           <span className="text-panel-title text-ink md:hidden">{brand}</span>
+          {command}
         </div>
         {horizon}
       </div>

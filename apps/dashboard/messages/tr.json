@@ -105,5 +105,27 @@
     "timelineTitle": "Denetim zaman hattı",
     "timelineEmpty": "Henüz denetim kaydı yok.",
     "payload": "İçerik"
+  },
+  "commandBar": {
+    "trigger": "Komut",
+    "shortcutHint": "⌘K",
+    "inputLabel": "Niyetini yaz",
+    "submit": "Gönder",
+    "recentTitle": "Son niyetler",
+    "errorTitle": "Gönderilemedi — kuyruğa hiçbir şey girmedi",
+    "placeholders": [
+      "Outleteuro için hafta sonu kampanya taslağı hazırla…",
+      "Bu haftanın maliyetlerini departmana göre özetle…",
+      "Yeni müşteri karşılama listesi hazırla…"
+    ]
+  },
+  "intent": {
+    "received": "alındı",
+    "classifying": "sınıflanıyor",
+    "queued": "kuyrukta",
+    "running": "çalışıyor",
+    "done": "bitti",
+    "failed": "başarısız",
+    "failed_dispatch": "iletilemedi"
   }
 }
