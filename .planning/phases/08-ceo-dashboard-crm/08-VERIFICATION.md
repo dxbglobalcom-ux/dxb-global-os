@@ -15,7 +15,7 @@ Kapsam: 7 planın 7'si execute edildi (08-01 önceki session; 08-02..07 bu sessi
 |---|---|---|---|
 | 1 | Design bundle faz BAŞINDA study edilip disiplin altında inşa | ✓ VERIFIED | study-cards/design-bundle.md ⛔ PASS (2f19966, faz öncesi); UI-SPEC sözleşmesi altında üretim; anti-pattern battery 0 hit (aşağıda) |
 | 2 | Canlı cockpit: board + roster + risk-gruplu inbox + maliyet kırılımı, Broadcast'le gerçek zamanlı | ✓ VERIFIED | 39/39 test — broadcast payload kontratı gerçek DB INSERT'le pinli (live-projection); inbox atomicity 10 test; COST-04 SQL-eşitlik 5 test; canlı update <2s: evidence/live-before.png + live-after-2s.png (00:11 Playwright koşusu) |
-| 3 | TR/EN intent → kernel uçtan uca (dashboard ilk kernel istemcisi) | ✓ VERIFIED (DB düzeyi) | command-bar-intent.test: TR fixture → intents → intake → GERÇEK dispatch → tasks queued + broadcast 'created'. Canlı LLM classify/decompose enjekteydi (Phase-5'te 10/10 canlı kanıtlı, DXB_LIVE_SDK) — ilk gerçek intent ⚠ satırı aşağıda |
+| 3 | TR/EN intent → kernel uçtan uca (dashboard ilk kernel istemcisi) | ✓ VERIFIED (CANLI) | **İlk gerçek intent koştu (03:49):** TR metin (intent daa77572) → resident scheduler intentIntake tick → CANLI LLM classify → routing_rules → dispatch → task queued (dept=project-management, L4) + dxb:task_events broadcast=1. psql zincir sorgusu çıktısı SUMMARY'de (04:10'da DB'den yeniden doğrulandı). Ek: DB-düzeyi E2E testi (command-bar-intent, 4 test) |
 | 4 | Drill-down audit trace + saf projeksiyon (ajan dashboard'u güncellemez) | ✓ VERIFIED | tasks/[id] tek-task sorguları (kod düzeyi firehose yok); DASH-05 purity gate makine-kapısı: 3 dosyalık enumerated yazım yüzeyi dışında yazım = suite FAIL |
 | 5 | İnce CRM cockpit içinde + telefon-kullanılabilir + TR-dostu | ✓ VERIFIED (makine kısmı) | 4 entity route build'de; alan-whitelist iki katmanda testli; katalog 147/147 parite, hard-coded string 0; responsive kod kuralları (stacked cards, ≥44px, safe-area) uygulandı — telefon-elde akıcılık ⚠ CEO göz |
 
@@ -47,9 +47,9 @@ Kapsam: 7 planın 7'si execute edildi (08-01 önceki session; 08-02..07 bu sessi
 
 1. **Göz testi (A1.4):** cockpit, referans mockup'tan ("Gece Lobisi" artifact) güzel mi? Eşitlik yetmez.
 2. **Telefon-elde akıcılık:** 375px kod kuralları tam; gerçek cihaz hissi.
-3. **Authed sayfa Lighthouse + görsel matris:** classifier session-mint'i engelledi (doğru karar — credential materyali transcript'e girmemeli). CEO uyanınca 2 dk'lık yol aşağıda.
-4. **İlk gerçek LLM intent koşusu:** intake worker canlı; scheduler restart + ⌘K'dan gerçek intent → zincir izlenir.
-5. **VPS resident restart:** yeni intentIntake tick'inin VPS'te alınması (docker compose restart scheduler).
+3. **Authed sayfa Lighthouse + görsel matris:** classifier session-mint'i engelledi (doğru karar — credential materyali transcript'e girmemeli). Koşu scripti artık kalıcı: `scripts/lh-auth.mjs` (ilk kopya scratchpad'deydi, 04:00 reboot'unda silindi — repo'ya taşındı). CEO 2 dk'lık yol §5.7.
+4. ~~İlk gerçek LLM intent koşusu~~ → **✓ VERIFIED 03:49** (yuk. kriter 3). Not: ~04:00'te makine yeniden başladı; resident scheduler + :3100 prod server 04:12'de yeniden ayağa kaldırıldı (pg-boss intent-intake 5s zinciri yeniden kurulu, login HTTP 200 — loglar /var/tmp/dxb/). Sabah ⌘K demosu gerçek zincir üretir.
+5. **VPS resident restart:** yeni intentIntake tick'inin VPS'te alınması — compose servisi `outbox`; kod değiştiği için restart yetmez, `docker compose build outbox && docker compose up -d outbox` gerekir. Lokal koşu kanıtlandı, VPS residue.
 6. **Demo seed:** lokal DB'de 6 pending onay + 3 görev + 3 maliyet satırı CEO incelemesi için duruyor (gerçekçi TR verisi; temizleme: `delete from approvals where status='pending'` sonrası ilgili tasks/cost satırları).
 
 ## 5. CEO sabah checklist'i (5 dakika, sıralı)
@@ -60,7 +60,7 @@ Kapsam: 7 planın 7'si execute edildi (08-01 önceki session; 08-02..07 bu sessi
 4. ⌘K → Türkçe bir niyet yaz (örn. "Outleteuro ana sayfa başlıklarını yenile") → IntentStrip'te chip'in ilerlemesini izle.
 5. Telefondan aç (aynı ağda `http://<laptop-ip>:3100`) — alt tab bar + stacked tablolar.
 6. TV modu: cockpit'te sağ üst "TV modu" → duvar ekranı görünümü; çıkış sağ üstte.
-7. İstersen authed Lighthouse: `node <scratchpad>/lh-auth.mjs` koşusuna izin ver (script hazır, sır basmaz).
+7. İstersen authed Lighthouse: repo kökünden `node scripts/lh-auth.mjs` — açılan pencerede giriş+TOTP'yi sen yaparsın, script skorları basar (sır basmaz, cookie dosyası kendini siler).
 
 ## 6. Sapma özeti (faz geneli — plan SUMMARYlerinde ayrıntılı)
 
