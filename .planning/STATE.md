@@ -5,8 +5,8 @@ milestone_name: milestone
 current_phase: 08
 current_phase_name: ceo-dashboard-crm
 status: executing
-stopped_at: "PHASE 8 MACHINE-COMPLETE 2026-07-10 03:52 — 7/7 plan (08-02..07 bu session, tek gecede). 08-07: contrast 14/14 (A3 kalibrasyonu), i18n 147/147 + 0 hard-coded, anti-pattern 0, Lighthouse login a11y=100/perf=95/LCP=2.3s, A1.2 ultrawide+TV modu gemide, 08-VERIFICATION.md + ⛔ Fable ön-verdict yazıldı. CLOSED için bekleyen: CEO göz testi (A1.4 referans karşılaştırma) + telefon-elde + authed Lighthouse (classifier session-mint engeli — lh-auth.mjs hazır) + ilk canlı intent + VPS resident restart. Prod server :3100 AYAKTA, demo seed DB'de (6 onay). CEO checklist: 08-VERIFICATION.md §5. Faz kapanışında /gsd-graphify build + /compact önerisi."
-last_updated: "2026-07-09T22:49:22.411Z"
+stopped_at: "PHASE 8 MACHINE-COMPLETE 2026-07-10 04:20 — 7/7 plan. İLK CANLI INTENT ✓ VERIFIED 03:49 (intent daa77572 → task b70e6d4d project-management/L4 + broadcast=1; psql kanıtı 08-07-SUMMARY'de, commit 8c82581). ~04:00 reboot sonrası runtime RESTORE edildi: :3100 prod (curl 200) + resident scheduler (pg-boss intent-intake 5s zinciri) yeniden ayakta, demo seed sağlam (6 pending onay). lh-auth.mjs artık kalıcı: scripts/lh-auth.mjs. CLOSED için bekleyen (CEO): göz testi A1.4 + telefon-elde + istenirse authed Lighthouse (node scripts/lh-auth.mjs) + VPS outbox rebuild (classifier prod-SSH blokladı; CEO tek komut: ssh root@dxb-vps-1 'cd /opt/dxb && docker compose build outbox && docker compose up -d outbox'). CEO checklist: 08-VERIFICATION.md §5. Faz kapanışında /gsd-graphify build + /compact."
+last_updated: "2026-07-10T02:20:00.000Z"
 last_activity: 2026-07-09
 last_activity_desc: Phase 08 execution started
 progress:
@@ -129,6 +129,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-08T09:50:00Z
-Stopped at: PHASE 4 COMPLETE — commits 94e7b21→(closure); NEXT ACTION: /gsd-plan-phase 05 (Kernel & Orchestrator Core Loop; persona-v2 precondition on the vertical slice)
+Last session: 2026-07-10T02:20:00Z
+Stopped at: PHASE 8 MACHINE-COMPLETE + ilk canlı intent VERIFIED + reboot-restore (8c82581); NEXT ACTION: CEO sabah checklist'i (08-VERIFICATION §5) → faz CLOSED → /gsd-graphify build → Phase 09 planlama
 Resume file: None
