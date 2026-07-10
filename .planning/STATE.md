@@ -5,7 +5,7 @@ milestone_name: milestone
 current_phase: 08
 current_phase_name: ceo-dashboard-crm
 status: executing
-stopped_at: "08-02 COMPLETE 2026-07-10 02:52 (devralma: önceki session verify ortasında düştü; 12/12 test, build yeşil, purity gate aktif, 0014 policies=12 doğrulandı; commits 3bc1510/9b05296/29496e4). UI-SPEC AMENDMENTS: A1 (66bc0f7 — WebGL izni, 34\" ultrawide+çoklu ekran+TV modu, RTX 4090 hedef donanım, göz testi 'referanstan güzel') + A2 (a8ac6fc — UI iki dilli, EN birincil; DEFAULT_LOCALE=en). CEO uykuda (~04:40'a dek), 4. FULL AUTHORITY teyidi kayıtlı. SIRADAKİ: 08-03 (approval inbox, wave 2). Doğal-zaman residue: hermes 06:00 ateşleme kontrolü 08:23 cron (e4dbe372)."
+stopped_at: "08-03 COMPLETE 2026-07-10 03:01 (wave 2 bitti; 22/22 test — inbox atomicity/rollback/audit/privilege wall; migration 0015 decide_approvals SECURITY DEFINER tek yazım kapısı; commits 179a208/e89167b). Önceki bu session: 08-02 devralma-tamamlama (3bc1510/9b05296/29496e4) + UI-SPEC A1 (66bc0f7: WebGL izni, ultrawide+TV modu, 4090 profili, göz testi) + A2 (a8ac6fc: UI iki dilli EN birincil). CEO uykuda (~04:40'a dek), 4. FULL AUTHORITY teyidi kayıtlı. SIRADAKİ: 08-04 (wave 3). Wave-3 sonunda toplu Playwright görsel turu (08-03 ⚠ GUI kalemleri dahil). Doğal-zaman residue: hermes 06:00 cron (e4dbe372)."
 last_updated: "2026-07-09T22:49:22.411Z"
 last_activity: 2026-07-09
 last_activity_desc: Phase 08 execution started
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 08 (ceo-dashboard-crm) — EXECUTING
-Plan: 2 of 7 complete (next: 08-03, wave 2)
+Plan: 3 of 7 complete (next: 08-04, wave 3)
 Status: Executing Phase 08
-Last activity: 2026-07-10 — 08-02 complete + UI-SPEC amendments A1/A2
+Last activity: 2026-07-10 — 08-03 complete (approval inbox + decision seam)
 
 Progress: [████████░░] 75%
 
