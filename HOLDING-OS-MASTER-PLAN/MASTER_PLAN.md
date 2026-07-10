@@ -23,7 +23,7 @@ Bu proje **DXB GLOBAL AI-NATIVE HOLDING OPERATING SYSTEM**'dir: bütün holdingi
 - **Plan-first:** Bu korpus (31 spec) %100 bitmeden execution başlamaz. Korpus, executor-bağımsız detayda yazılır: her adımda dosya yolu, içerik kontratı, "çalıştır → şu çıktıyı gör" doğrulaması — Opus 4.8 duraksamadan devralabilir; ama korpus bitince birincil uygulayıcı YİNE FABLE'dır (12 Temmuz son geceye kadar).
 - **Deadline:** 12 Temmuz 2026 = Fable erişiminin son günü. Erken bitirme hedefi; uyku/erteleme yasak. 12'sine yetişmeyen kapsam BACKUP_PLAN protokolüne düşer.
 - **Model zinciri (v6, CEO kesin):** Fable bizzat → en kötü ihtimal Opus 4.8. **Sonnet DEFEDİLDİ** (hiçbir rol). Haiku yasak. Direktif madde 18'deki "Opus ve Sonnet" ifadesi CEO tarafından daraltıldı: sadece Opus.
-- **Öncelik:** Outleteuro DEĞİL. Outleteuro, tamamlanmış holding OS'un yöneteceği ilk şirket projesidir (CEO Faz 11).
+- **Öncelik:** Outleteuro DEĞİL — her şey bitince İLK PİLOT çalışma (CEO Faz 11). **Tanım (CEO sözlü düzeltmesi, 2026-07-10 ~20:45):** Outleteuro, şirketin MEVCUT e-ticaret sitesidir (WooCommerce/WordPress üzerinde yapılmış; kalitesi düşük). Holding OS tamamlanınca holdingin uzmanları önce bu siteyi MÜKEMMELLEŞTİRİR, sonra tam otonom işletmeye alır: alışlar + satışlar dahil tam otonom mağaza. Bu aşamada Outleteuro, holdingden doğan AYRI bir alt-OS (spawn) şirket olur. Önceki "holdingin yöneteceği ilk şirket projesi" ifadesi bu tanımla düzeltilmiştir.
 
 ## 3. KANITLI VARLIK ENVANTERİ (ne var — mevcut-durum eşlemesi)
 
@@ -111,7 +111,7 @@ Her workstream = spec seti + execution paketi. Bağımlılık oku: üsttekiler a
 | 8 | Workflow + approval + cost + audit | Kısmi: approvals/outbox/cost_ledger/audit_log | GENİŞLER (WS-E/F) |
 | 9 | Library + skills + plugins + memory | Kısmi: memory-router; library YOK | YENİ+GENİŞLER (WS-G) |
 | 10 | Test + kalite + güvenlik + production readiness | Kısmi: faz-başı verification vardı | GENİŞLER (WS-H); güvenlik SERTLEŞTİRME ertelenmiş sicilde |
-| 11 | Outleteuro'nun sisteme alınması | Roadmap Faz 11 (satış motoru) ile örtüşür | SONRA — holding bitmeden başlamaz |
+| 11 | Outleteuro pilotu: mevcut WooCommerce/WordPress e-ticaret sitesi holding uzmanlarınca mükemmelleştirilir, tam otonom mağazaya (alış+satış) dönüştürülür, AYRI bir alt-OS spawn şirket olarak doğar (CEO sözlü düzeltmesi 2026-07-10) | Roadmap Faz 11 (satış motoru) ile örtüşür | SONRA — holding bitmeden başlamaz; her şey bitince İLK PİLOT |
 | — | JARVIS voice (mevcut Faz 9) | CEO fazlarında görünmüyor | Ertelendi (09-03..05); korpus sonrası re-baseline'da yeri CEO'ya sorulmaz, IMPLEMENTATION_ROADMAP'te "sistem sonrası" dilimine yazılır — kayıtlı uyarlama U3 |
 
 ## 7. DEADLINE STRATEJİSİ (12 Temmuz)
