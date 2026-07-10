@@ -13,7 +13,7 @@
 - Register: **product** (design SERVES the product — impeccable product register)
 - Dials: VARIANCE 6 · MOTION 5 · DENSITY 7 (ana cockpit) / 5 (CRM+ayarlar) / 3 (login)
 - Duygu hedefi: giriş anında awe; kullanım boyunca sükûnet + tam kontrol; asla "jenerik admin template"
-- **"3 boyutlu" tanımı:** CSS derinlik dili — katman hiyerarşisi (bg → panel shell → panel core → floating chrome), hue-tinted çift gölge, iç ışık kenarı, sabit-chrome cam yüzeyler, spring micro-motion. **Three.js/WebGL YASAK.**
+- **"3 boyutlu" tanımı:** CSS derinlik dili — katman hiyerarşisi (bg → panel shell → panel core → floating chrome), hue-tinted çift gölge, iç ışık kenarı, sabit-chrome cam yüzeyler, spring micro-motion. **Three.js/WebGL İZİNLİ (Amendment A1.1, 2026-07-10):** yalnız imza anlarında — login sahnesi, cockpit ambient derinlik katmanı, Horizon Line derinliği; veri-UI (tablo/panel/form) DOM+CSS kalır. Feature-detect + `prefers-reduced-motion`'da CSS derinlik diline sessiz düşüş zorunlu; three.js chunk lazy-load, LCP <2.5s hedefini bloklayamaz.
 
 ## 2. Color Palette & Roles (OKLCH; Tailwind v4 `@theme` token'ları)
 
@@ -91,6 +91,8 @@ i18n: `tr` birincil — TR diakritikleri (ş, ğ, İ) Geist'te tam; başlıklard
 - Z-scale semantik: `base(0) < sticky(10) < dropdown(20) < backdrop(30) < modal(40) < toast(50) < tooltip(60)` — arbitrary z yasak.
 - Spacing ritmi 4/8: panel iç 16/20, panel arası 20/24, bölüm 32/40. `h-screen` yasak → `min-h-[100dvh]`.
 - Responsive: <768px tek kolon; rail → alt-tab; tablolar → kart-satır dönüşümü (yatay scroll yalnız kendi konteynerinde); touch hedefi ≥44px; safe-area insets (telefon).
+- **Ultrawide + çoklu ekran (A1.2):** birincil CEO donanımı 34" ultrawide (3440×1440) + çoklu ekran. ≥1920px'te içerik letterbox'ta ölmez: `max-w-[1600px]` kalkar, grid genişler (orta akış alanı büyür, sağ rail sabit genişlikte kalır, panel iç yoğunluğu artmaz — boşluk ritmi ölçeklenir). Dev boş margin = fail.
+- **Toplantı/TV modu (A1.2):** salt-okunur sunum görünümü (mod toggle / `?mode=tv`): tip skalası ~1.4×, DENSITY 5, interaktif chrome gizli, canlı paneller + Horizon Line + FreshnessStamp kalır. Faz 8 kapsamı: mod altyapısı + cockpit ana görünümü.
 - Drill-down (DASH-03): görev sayfası = tek görevin audit.trace kronolojisi, dikey zaman hattı, mono damgalar; firehose görünümü yok.
 
 ## 6. Motion & Interaction
@@ -122,7 +124,22 @@ Inter/serif-cockpit · saf #000/#fff · AI-purple/neon glow/gradient-text · sid
 2. **Pre-Flight mekanik tarama:** yasak desen grep seti (`#000000`, `h-screen`, `addEventListener('scroll'`, `z-[9`, `border-l-4`, `Inter`, emoji-in-JSX…) → 0 eşleşme.
 3. **Playwright:** 375px/768px/1440px screenshot seti + reduced-motion modu + her iki tema; yatay taşma kontrolü.
 4. **Lighthouse mobile a11y ≥ 90** (DASH kabulü) + LCP <2.5s cockpit.
-5. **Görsel nitelik** ("Burj hissi") → ⚠ UNVERIFIED, CEO göz testi (faz kapanış adımı).
+5. **Görsel nitelik göz testi (A1.4):** cockpit, referans mockup'tan (2026-07-10 "Gece Lobisi" görsel referans artifact'i, obs S481) **daha güzel** görünmek zorunda — eşitlik yetmez, geçmek gerekir. → ⚠ UNVERIFIED sınıfı, CEO göz testi (faz kapanış adımı).
 
 ---
 **⛔ FABLE VERDICT (UI-SPEC onayı):** Bu sözleşme CEO brief'ini (lüks/3D/holding ciddiyeti) ölçülebilir token+kural setine çevirir; study-card bulgularıyla (sans-only, CSS-derinlik, anti-slop yasakları) ve MASTER-PLAN LOCKED kararlarıyla çelişkisiz; Broadcast/i18n/RLS mimarisine dokunmaz. ONAYLANDI — cockpit üretimi bu sözleşme altında başlayabilir. — Fable 5, 2026-07-10
+
+---
+
+## 10. Amendment Log
+
+### A1 — 2026-07-10 02:35 (CEO kararları; session-kaybı kurtarması, kaynak: CEO handoff notu + obs #2833)
+
+| # | CEO kararı | Spec etkisi |
+|---|---|---|
+| A1.1 | WebGL/Three.js yasağı KALKTI | §1 güncellendi. Gerekçe revizyonu: render istemci GPU'sunda çalışır; "8GB VPS" kısıtı sunucu süreçlerine aittir, client render'ı bağlamaz. Disiplin korunur: imza anlarıyla sınırlı, graceful CSS fallback, lazy chunk, LCP hedefi dokunulmaz |
+| A1.2 | 34" ultrawide + çoklu ekran + toplantı/TV modu | §5'e iki madde eklendi (ultrawide grid genişlemesi; salt-okunur TV modu — Faz 8'de altyapı + ana cockpit) |
+| A1.3 | Hedef donanım profili: RTX 4090 Linux laptop (CEO kontrol terminali) | Performans bütçesi üst-uç istemciye kalibre edilebilir; mobil/düşük-uç destek ve §9 Lighthouse hedefleri AYNEN sürer (4090 tavanı belirler, tabanı değil) |
+| A1.4 | Göz testi: "referans görselden güzel olmalı" | §9.5 güncellendi — faz kapanış kabulü referans mockup'ı GEÇMEK zorunda, eşitlik yetmez |
+
+**⛔ FABLE VERDICT (A1):** Dört CEO kararı spec'e çelişkisiz işlendi. Anti-slop yasakları (§7), altın disiplini (≤%8), token sistemi, LOCKED mimari ve motion disiplini aynen yürürlükte; WebGL izni bu yasakları esnetmez (neon/glow/AI-purple WebGL'de de yasak). ONAYLANDI. — Fable 5, 2026-07-10
