@@ -2350,7 +2350,7 @@ Fable 5 planlamayı başka modele devredemez.
 
 Fable 5’in hazırladığı planın en kritik bölümleri yine Fable 5 tarafından uygulanmalıdır.
 
-Opus ve Sonnet
+Opus
 Fable 5 tarafından açıkça tanımlanmış execution görevleri
 Orta ve yüksek karmaşıklıktaki implementasyon
 Kodlama

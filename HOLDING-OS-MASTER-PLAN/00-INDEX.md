@@ -40,13 +40,13 @@ Durum değerleri: `—` başlanmadı · `YAZILIYOR` · `✓` tamam (derinlik şa
 
 | # | Dosya | Direktif kaynağı | Durum |
 |---|-------|------------------|-------|
-| 5 | CEO_COMMAND_CENTER_SPEC.md | §§1-39 + madde 1-5 | — |
-| 6 | DESIGN_SYSTEM.md | §32 | — |
-| 7 | SETTINGS_AND_CONTROL_SPEC.md | §18 + madde 6.1-6.4 | — |
-| 8 | MODEL_ROUTING_SPEC.md | §19 + madde 6.1 | — |
-| 9 | OBSERVABILITY_SPEC.md | madde 10.1-10.6 | — |
-| 10 | APPROVAL_ENGINE_SPEC.md | §21 + madde 11 + B7b (para-çıkışı kapısı KALIR) | — |
-| 11 | COST_CONTROL_SPEC.md | §20 + madde 10.5 | — |
+| 5 | CEO_COMMAND_CENTER_SPEC.md | §§1-39 + madde 1-5 | ✓ |
+| 6 | DESIGN_SYSTEM.md | §32 | ✓ |
+| 7 | SETTINGS_AND_CONTROL_SPEC.md | §18 + madde 6.1-6.4 | ✓ |
+| 8 | MODEL_ROUTING_SPEC.md | §19 + madde 6.1 | ✓ |
+| 9 | OBSERVABILITY_SPEC.md | madde 10.1-10.6 | ✓ |
+| 10 | APPROVAL_ENGINE_SPEC.md | §21 + madde 11 + B7b (para-çıkışı kapısı KALIR) | ✓ |
+| 11 | COST_CONTROL_SPEC.md | §20 + madde 10.5 | ✓ |
 
 ### Dalga 3 — Organizasyon + ajanlar
 

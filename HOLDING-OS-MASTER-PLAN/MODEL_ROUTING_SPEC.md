@@ -1,0 +1,166 @@
+# MODEL_ROUTING_SPEC — MODEL ORKESTRASYONU VE ROTALAMA
+
+> Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[SETTINGS_AND_CONTROL_SPEC]] (6.1 anahtarları), [[COST_CONTROL_SPEC]] (bütçe kesişimi), [[AGENT_ORCHESTRATION_SPEC]] (D3, tüketici)
+> Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı, CEO daraltması: Sonnet YOK).
+> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy v6; korpus/execution Fable bizzat → 12 Temmuz sonrası Opus).
+
+## 1. Amaç
+
+Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-değiştirilebilir, fallback'li ve tamamen loglanan seçimi. Hardcode model adı hiçbir ajan config'inde bulunamaz; seçim runtime'da `model_routing_rules`dan çözülür, her karar `decision_log`a düşer.
+
+## 2. Gereksinimler
+
+- R1. Madde 6.1'in 13 rol slotu birinci sınıf: ana orkestratör · yedek orkestratör · planlama · execution · review · kritik karar · hızlı görev · düşük maliyet · araştırma · kodlama · tasarım · QA · HR.
+- R2. CEO daraltması (madde 18 + hizalama m.5): **Sonnet hiçbir rol slotuna atanamaz** (katalogda `banned=true`); Haiku yalnız mekanik getir-götür sınıfı görevlerde (verdict/onay üretemez — rol kısıtı `mechanical_only`).
+- R3. Her model için §19 meta seti: provider, context window, cost, speed, quality score, reliability, current usage, assigned employees, active tasks, failure rate, fallback ilişkisi.
+- R4. Fallback zinciri deterministik: `model_catalog.fallback_of` + rol-başı sıra; her düşüş decision_log'a `routing_fallback` olayı.
+- R5. Raw provider key YASAK: tüm çağrılar LiteLLM proxy virtual key'leriyle (departman-başı; STACK sert kuralı).
+- R6. Model Orchestration Panel (§19): görsel flow, node sürükle → rol ataması değişir (control seam üzerinden); settings 6.1 anahtarlarıyla AYNI kaynağa yazar.
+- R7. Rotalama parametreleri ayarlanabilir (6.1): timeout, max token, max maliyet, context limiti, retry, confidence threshold, escalation, human-approval eşiği, Fable-review zorunluluğu — hepsi settings_registry'de, resolve zinciriyle scope'lu.
+
+## 3. Mimari
+
+```
+task (kernel) ─→ orchestrator.select_model(task)
+                   1. rol tespiti: task.type + persona.role_hint → rol slotu
+                   2. kural taraması: model_routing_rules (rol, departman,
+                      risk, maliyet tavanı, context ihtiyacı) öncelik sırasıyla
+                   3. sağlık kontrolü: model_catalog.status + provider health
+                   4. bütçe kontrolü: COST_CONTROL hard-stop bayrağı
+                   5. seçim → decision_log('routing_decision') → LiteLLM
+                      virtual key (departman) + model id ile çağrı
+                 fallback: hata/timeout/rate-limit → zincirde sıradaki →
+                      decision_log('routing_fallback') → 2 düşüşte alert
+```
+
+⛔ mimari-kritik: seçim mantığı `packages/orchestrator` İÇİNDE kalır (ayrı servis değil — SYSTEM_ARCHITECTURE §3 kararı); kurallar DB'de, kod yalnız yorumlayıcı.
+
+## 4. Veri modeli
+
+[[DATA_MODEL]] kontrol ailesine (0021x) normatif tanım:
+
+```sql
+model_catalog (
+  id text PK,                  -- 'claude-opus-4-8'
+  provider text,               -- 'anthropic' (LiteLLM üzerinden)
+  display_name text, context_window int,
+  cost_in_per_1m numeric, cost_out_per_1m numeric,
+  speed_tier text,             -- fast|standard|deep
+  quality_score int,           -- 0-100, CEO/QA günceller
+  reliability numeric,         -- son 30g başarı oranı (hesaplanır, view)
+  status text,                 -- active|degraded|disabled
+  banned boolean default false,        -- R2: sonnet ailesi true
+  mechanical_only boolean default false, -- R2: haiku ailesi true
+  fallback_of text null REFERENCES model_catalog(id)
+)
+model_routing_rules (
+  id uuid PK, role_slot text,  -- R1'deki 13 slot
+  priority int,                -- küçük önce
+  department_id uuid null,     -- null=tüm departmanlar
+  risk_max text null,          -- bu kuralın kabul ettiği en yüksek risk
+  min_context int null, cost_cap_per_task numeric null,
+  model_id FK→model_catalog, enabled boolean,
+  UNIQUE(role_slot, priority, department_id)
+)
+```
+
+Varsayılan atamalar (seed — CEO settings'ten değiştirir; ⛔ değişiklik CEO-görünür):
+
+| Rol slotu | Varsayılan | Not |
+|-----------|-----------|-----|
+| Ana orkestratör · kritik karar · review · planlama · kodlama · tasarım · araştırma · QA · HR · execution | `claude-opus-4-8` | Fable erişimi varken kritik-karar/review fiilen Fable'dadır (12 Temmuz'a kadar); katalogda Fable satırı `status=active`, sonrası `disabled` — BACKUP_PLAN devir protokolü |
+| Yedek orkestratör · emergency fallback | `claude-opus-4-8` → zincir: opus→(gelecek onaylı model) | tek-provider riski §26'da |
+| Hızlı görev · düşük maliyet | `claude-haiku-4-5` (`mechanical_only`) | verdict üretemez; çıktısı ham girdi sayılır |
+| (yasak) | `claude-sonnet-*` `banned=true` | R2 — atama denemesi policy hatası |
+
+## 5. Component yapısı
+
+| Bileşen | İçerik |
+|---------|--------|
+| `ModelOrchestrationPanel` (`/ai/orchestration`) | §19 görsel flow: rol slotları → model node'ları → fallback okları; DESIGN_SYSTEM Model Routing Node + routing graph chart |
+| `ModelNode` | model badge + §19 meta rozetleri (usage, failure rate, cost) + sağlık halkası |
+| `ModelDetailDrawer` | R3 meta tam seti + assigned employees listesi + aktif task'ler + son routing kararları |
+| `RoleSlotColumn` | 13 slot; Control Mode'da drop hedefi (drag = atama değişikliği onay dialog'u ile) |
+| `RoutingSimulator` | "bu görev hangi modele gider?" — task tipi+departman+risk gir → seçim zincirini adım adım göster (kural şeffaflığı) |
+
+## 6. Backend yapısı
+
+- Seçim fn: `fn_select_model(role_slot, department_id, risk, min_context, est_cost)` — SQL (kural taraması) + orchestrator TS sarmalayıcı (sağlık+bütçe). Karar yazımı: `decision_log` insert (aktör='orchestrator', gerekçe=eşleşen kural id + elenen adaylar).
+- Mutasyonlar: `POST /api/control/models` `{op:'assign_role'|'set_status'|'update_rule', ...}` → `fn_update_routing(...)` → audit + `settings` Broadcast (routing değişimi ayar değişimidir).
+- Reliability/failure hesap: `v_model_stats` view — agent_runs'tan son 30g başarı, ortalama süre, maliyet; panel bu view'dan beslenir (sahte skor yasak).
+
+## 7. Frontend yapısı
+
+`/ai/models` (katalog: tablo görünümü, R3 meta kolonları) + `/ai/orchestration` (flow paneli). RSC yükler (`v_model_stats` + catalog + rules tek geçiş); client adası: flow graph (drag yalnız Control Mode). Settings 6.1 bölümü aynı mutasyon endpoint'ine delege (çift kaynak yok — SETTINGS §8 delegate deseni).
+
+## 8. API'ler
+
+Reads: `v_model_stats`, `v_routing_rules_resolved` (rol→etkin kural zinciri). Mutations: `/api/control/models` (idempotency + `{ok, change_id, affected[]}`). Ajan içi: orchestrator → LiteLLM `POST /chat/completions` (virtual key `Authorization`; model id seçimden). LiteLLM config: provider key'ler yalnız proxy env'inde — repo/agent config'te 0 satır (doğrulama komutu §24).
+
+## 9. Event yapısı
+
+- `routing_decision` / `routing_fallback` / `routing_change` decision_log olayları; `ops:live` kanalına ajan satırında "model" alanı olarak yansır.
+- 2 ardışık fallback VEYA provider degraded → `alerts` (High); emergency fallback'e düşüş → Critical.
+- Routing değişikliği → `settings` Broadcast (kernel cache invalidate — SETTINGS §9 ile aynı yol).
+
+## 10. State yönetimi
+
+Panel client state'i yalnız görsel (seçili node, simulator girdileri). Atama gerçeği DB'de; drag bırakıldığında onay dialog'u → mutasyon → Broadcast dönüşü node'u boyar (optimistic update YOK — yanlış atama görsel yalanı olmasın).
+
+## 11. Database tabloları / 12. İlişkiler
+
+§4 normatif; [[DATA_MODEL]] 0021x ailesine girer. İlişkiler: catalog 1—N rules; catalog self-FK fallback zinciri (döngü CHECK ile yasak: `fallback_of != id` + fn içi derinlik≤4 kontrolü); rules.department_id → org_units. Mevcut `routing_rules` tablosu varsa (Phase 6 emsali): `model_routing_rules`a view-alias köprüsüyle evrilir (breaking change yasak — SYSTEM_ARCHITECTURE §11).
+
+## 13. Yetkilendirme
+
+Atama/kural değişikliği yalnız `ceo` (Control Mode → seam). `system` yalnız `status` alanını değiştirebilir (health degradation otomatiği); banned/mechanical_only bayraklarını KİMSE runtime'da değiştiremez (migration-only — CEO kararıyla kod değişikliği gerektirir, sessiz Sonnet dönüşü imkânsız).
+
+## 14. Logging / 15. Audit
+
+Her seçim decision_log (gerekçeli); her atama değişikliği audit_log + settings_change_log (undo). Panel "son 50 routing kararı" akışı decision_log'dan — CEO "neden bu model?" sorusunun cevabını HER ZAMAN görür (madde 2: her kararın gerekçesi).
+
+## 16. Security
+
+Virtual key'ler departman-başı (mevcut LiteLLM kurulumu KALIR); key rotasyonu SECURITY_MODEL sicil konusu. Model çağrı içerikleri loglanmaz (token maliyeti + gizlilik) — yalnız meta (model, token sayıları, süre, sonuç durumu).
+
+## 17. Error handling / 18. Retry / 19. Fallback
+
+- Model hatası sınıflaması: rate-limit/timeout → transient (zincirde kal, retry 6.1 politikası); auth/4xx → policy (zincirde sıradaki + alert); içerik reddi → task'e döner (model değişimi çözmez).
+- Zincir tükenirse: task `blocked_no_model` state + Critical alert + CEO aksiyonu (Approval Center'a düşmez — approval değil operasyon arızası).
+- LiteLLM proxy çökmesi: orchestrator circuit-breaker (30sn) + kuyruk park; VPS içi restart `unless-stopped`.
+
+## 20. Test planı / 21. Acceptance criteria
+
+- Birim: kural önceliği, departman override'ı, banned reddi, mechanical_only kısıtı, fallback derinlik sınırı, bütçe-stop kesişimi.
+- Entegrasyon: sahte provider hatası → zincir yürür → decision_log 2 satır → alert.
+- Kabul: 13 slot panel'de görünür ve atanabilir · her koşuda decision_log kaydı var (örneklem denetimi) · Sonnet atama denemesi reddedilir (kanıt) · simulator zinciri doğru gösterir · settings 6.1 ↔ panel aynı kaynağı değiştirir.
+
+## 22. Migration planı / 23. Rollback planı
+
+0021x içinde: `0021d_model_catalog.sql` (+seed katalog) · `0021e_routing_rules.sql` (+seed varsayılan atamalar) · mevcut routing_rules köprüsü `0021f`. ROLLBACK blokları: rules→catalog sırasıyla DROP; köprü view geri alınınca eski tablo aynen çalışır (orchestrator eski yolu feature-flag'le okuyabilir — iki sürüm birlikte yaşar).
+
+## 24. Uygulama sırası
+
+1. 0021d-f → `psql -c "SELECT count(*) FROM model_catalog WHERE banned"` → ≥1 (Sonnet satırı)
+2. `fn_select_model` + orchestrator entegrasyonu → smoke: `psql -c "SELECT fn_select_model('execution', NULL, 'low', 8000, 0.5)"` → opus id döner
+3. decision_log yazımı → bir test task koş → `psql -c "SELECT count(*) FROM decision_log WHERE kind='routing_decision'"` → ≥1
+4. Panel + drawer + simulator → Playwright: atama değiştir → onay → audit satırı
+5. Raw-key taraması: `grep -rn "sk-ant\|sk-or" packages/ apps/ --include="*.ts" | wc -l` → 0
+
+Opus-devralma: kural yorumlayıcı + panel bağımsız teslim birimleri; seed atamaları tablo halinde (yukarıda) — Opus değiştirmez, uygular. ⛔ kritik: varsayılan atama tablosu, banned/mechanical_only kümeleri, fallback derinliği — en güçlü model + CEO onayı.
+
+## 25. Bağımlılıklar
+
+LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry · [[COST_CONTROL_SPEC]] hard-stop bayrağı · [[OBSERVABILITY_SPEC]] decision_log/alerts · [[DATA_MODEL]] 0021x.
+
+## 26. Riskler / 27. Edge case'ler
+
+- **Tek-provider yoğunluğu** (bugün fiilen Anthropic): katalog provider-çoklu tasarlandı; yeni provider eklemek = katalog satırı + LiteLLM config, kod değişikliği yok. Provider-çapı kararı CEO'da.
+- **Quality score öznelliği**: skor CEO/QA girdisi + v_model_stats gerçek verisi yan yana gösterilir — tek sayıya indirgenmez.
+- **Fallback fırtınası** (rate-limit dalgası): zincir başına dakikada ≤3 düşüş, sonrası circuit-breaker + kuyruk park (maliyet patlaması önlenir).
+- **Fable→Opus devri günü**: katalogda Fable satırı disabled'a çekilir → tüm kritik-karar slotu otomatik Opus'a düşer → decision_log 'routing_change' + CEO'ya bilgi alert'i (BACKUP_PLAN protokolüyle senkron).
+- **mechanical_only ihlal denemesi** (Haiku'ya review görevi): fn reddeder + policy hatası + decision_log; görev bir üst slota escalate.
+
+## Done definition (bu spec)
+
+27 başlık ✓ · şema+seed+fn sözleşmesi kod seviyesinde ✓ · 13 rol slotu + varsayılan tablosu ✓ · Sonnet yasağı mekanizmalı (banned, migration-only) ✓ · §19 meta seti eksiksiz ✓ · doğrulama komutları adım-başı ✓ · Opus-devralma + ⛔ kararlar ✓

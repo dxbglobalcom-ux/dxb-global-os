@@ -32,8 +32,8 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 Phase: KORPUS (BEKLENTİLER plan-first fazı; roadmap re-baseline korpus sonrası)
 Plan: quick/20260710-beklentiler-master-plan-v2 + HOLDING-OS-MASTER-PLAN/00-INDEX.md durum tablosu
-Status: Adım 0 ✓ — **Dalga 1 ✓ (5/5: INDEX, MASTER_PLAN, SYSTEM_ARCHITECTURE, DATA_MODEL, BACKUP_PLAN)** — sırada Dalga 2 (kontrol düzlemi: CEO_COMMAND_CENTER_SPEC, DESIGN_SYSTEM, SETTINGS, MODEL_ROUTING, OBSERVABILITY, APPROVAL_ENGINE, COST_CONTROL)
-Last activity: 2026-07-10 ~19:15 — Dalga 1 yazıldı (Fable bizzat, inline); şifre taraması temiz; dalga commit'i atıldı
+Status: Adım 0 ✓ — Dalga 1 ✓ (5/5) — **Dalga 2 ✓ (7/7: CEO_COMMAND_CENTER_SPEC, DESIGN_SYSTEM, SETTINGS_AND_CONTROL, MODEL_ROUTING, OBSERVABILITY, APPROVAL_ENGINE, COST_CONTROL)** — sırada Dalga 3 (organizasyon+ajanlar: ORGANIZATION_ENGINE, AGENT_ORCHESTRATION, FABLE_5_HOOK, EMPLOYEE_PERSONA_STANDARD, HR_OPERATING_SYSTEM, PERMISSION_MODEL, HOLDING_OS_PRODUCT)
+Last activity: 2026-07-10 ~20:40 — Dalga 2 yazıldı (Fable bizzat, inline; 7 spec, 27-başlık şablon tam); gitleaks 0 leak (204KB); dalga commit'i atıldı — korpus 11/31
 
 Progress: [███████░░░] 66%
 Phase progress: 8.4/11 ≈ %76 (plan-bazlı %66; Faz 10-11 planları kayda girince plan-bazlı yüzde aşağı oynayabilir, normaldir)
