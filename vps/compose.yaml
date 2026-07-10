@@ -188,14 +188,25 @@ services:
 
   # ---- voice profile (declared; started on demand: --profile voice) ----
   speaches:
+    # digest verified 2026-07-10: identical to the digest the laptop's dxb_speaches_local
+    # pulled and passed the TR round-trip smoke on (09-01 Task 2) — local/VPS parity holds
     image: ghcr.io/speaches-ai/speaches:0.8.3-cpu@sha256:21e3df06d842fb7802ab470dd77c25f0e8c0d22950e8d8c6ae886e851af53ef8
     profiles: [voice]
     ports:
       - "127.0.0.1:8001:8000"
     volumes:
       - hf_hub_cache:/home/ubuntu/.cache/huggingface/hub
-    mem_limit: 1536m
+    # measured 2026-07-10: RSS 1.529GiB with whisper-small int8 + piper-tr both warm
+    # (study-cards/speaches.md) — 1536m would OOM; 1792m = measured + margin.
+    # whisper-medium does NOT fit this limit: no medium upgrade on VPS (recorded fallback).
+    mem_limit: 1792m
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
   # ---- brain profile (declared; started in 07-06/07 wave) ----
   surrealdb:
