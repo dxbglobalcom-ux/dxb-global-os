@@ -64,5 +64,23 @@
     "done": "Bitti",
     "failed": "Hata",
     "returned": "İade"
+  },
+  "approvals": {
+    "title": "Onaylar",
+    "groupHigh": "Yüksek risk — tek tek karar verin",
+    "groupMedium": "Orta risk",
+    "groupLow": "Düşük risk",
+    "approve": "Onayla",
+    "confirmApprove": "Onayı teyit et",
+    "reject": "Reddet",
+    "rejectNotePlaceholder": "Gerekçe (opsiyonel)",
+    "approveAll": "Tümünü onayla ({n})",
+    "moneyOut": "para çıkışı",
+    "highBadge": "yüksek risk",
+    "payload": "İçerik",
+    "empty": "Kapı temiz — kararınızı bekleyen bir şey yok.",
+    "emptyAction": "Kokpite dön",
+    "fatigue": "{n} onay birikti — kaşe-basma riski. Yavaşlayın, dikkatle inceleyin.",
+    "errorPanelTitle": "Karar uygulanamadı — hiçbir değişiklik yapılmadı"
   }
 }

@@ -64,5 +64,23 @@
     "done": "Done",
     "failed": "Failed",
     "returned": "Returned"
+  },
+  "approvals": {
+    "title": "Approvals",
+    "groupHigh": "High risk — decide one by one",
+    "groupMedium": "Medium risk",
+    "groupLow": "Low risk",
+    "approve": "Approve",
+    "confirmApprove": "Confirm approval",
+    "reject": "Reject",
+    "rejectNotePlaceholder": "Reason (optional)",
+    "approveAll": "Approve all ({n})",
+    "moneyOut": "money out",
+    "highBadge": "high risk",
+    "payload": "Payload",
+    "empty": "All clear — nothing awaits your decision.",
+    "emptyAction": "Back to cockpit",
+    "fatigue": "{n} approvals are pending — rubber-stamp risk. Slow down and review with care.",
+    "errorPanelTitle": "Decision failed — nothing was applied"
   }
 }
