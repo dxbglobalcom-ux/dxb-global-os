@@ -106,6 +106,11 @@
     "timelineEmpty": "Henüz denetim kaydı yok.",
     "payload": "İçerik"
   },
+  "tasksList": {
+    "title": "Tüm görevler",
+    "empty": "Henüz görev yok.",
+    "showingRecent": "en yeni"
+  },
   "commandBar": {
     "trigger": "Komut",
     "shortcutHint": "⌘K",
