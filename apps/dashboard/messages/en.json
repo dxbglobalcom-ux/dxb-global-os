@@ -127,5 +127,53 @@
     "done": "done",
     "failed": "failed",
     "failed_dispatch": "dispatch failed"
+  },
+  "crm": {
+    "title": "CRM",
+    "entities": {
+      "clients": "Clients",
+      "requests": "Requests",
+      "contacts": "Contacts",
+      "deals": "Deals"
+    },
+    "columns": {
+      "name": "Name",
+      "status": "Status",
+      "created_at": "Created",
+      "summary": "Summary",
+      "client_name": "Client",
+      "email": "Email",
+      "phone": "Phone",
+      "role": "Role",
+      "title": "Title",
+      "value_eur": "Value",
+      "stage": "Stage"
+    },
+    "filterAll": "All",
+    "byCeo": "CEO",
+    "byAgent": "agent",
+    "empty": "No records yet.",
+    "nextPage": "Next page",
+    "detailTitle": "Detail",
+    "close": "Close",
+    "save": "Save",
+    "saved": "Saved",
+    "lockedHint": "Not CEO-editable — owned by agents/system",
+    "errorTitle": "Save failed — nothing was changed"
+  },
+  "crmStatus": {
+    "lead": "Lead",
+    "active": "Active",
+    "paused": "Paused",
+    "closed": "Closed",
+    "new": "New",
+    "triaged": "Triaged",
+    "in_progress": "In progress",
+    "delivered": "Delivered",
+    "rejected": "Rejected",
+    "open": "Open",
+    "proposal": "Proposal",
+    "won": "Won",
+    "lost": "Lost"
   }
 }

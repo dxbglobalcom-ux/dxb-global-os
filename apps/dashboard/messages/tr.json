@@ -127,5 +127,53 @@
     "done": "bitti",
     "failed": "başarısız",
     "failed_dispatch": "iletilemedi"
+  },
+  "crm": {
+    "title": "CRM",
+    "entities": {
+      "clients": "Müşteriler",
+      "requests": "Talepler",
+      "contacts": "Kişiler",
+      "deals": "Fırsatlar"
+    },
+    "columns": {
+      "name": "Ad",
+      "status": "Durum",
+      "created_at": "Oluşturma",
+      "summary": "Özet",
+      "client_name": "Müşteri",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "role": "Rol",
+      "title": "Başlık",
+      "value_eur": "Değer",
+      "stage": "Aşama"
+    },
+    "filterAll": "Tümü",
+    "byCeo": "CEO",
+    "byAgent": "ajan",
+    "empty": "Henüz kayıt yok.",
+    "nextPage": "Sonraki sayfa",
+    "detailTitle": "Detay",
+    "close": "Kapat",
+    "save": "Kaydet",
+    "saved": "Kaydedildi",
+    "lockedHint": "CEO düzenleyemez — ajan/sistem alanı",
+    "errorTitle": "Kaydedilemedi — hiçbir değişiklik yapılmadı"
+  },
+  "crmStatus": {
+    "lead": "Aday",
+    "active": "Aktif",
+    "paused": "Duraklatıldı",
+    "closed": "Kapandı",
+    "new": "Yeni",
+    "triaged": "Önceliklendi",
+    "in_progress": "Devam ediyor",
+    "delivered": "Teslim edildi",
+    "rejected": "Reddedildi",
+    "open": "Açık",
+    "proposal": "Teklif",
+    "won": "Kazanıldı",
+    "lost": "Kaybedildi"
   }
 }
