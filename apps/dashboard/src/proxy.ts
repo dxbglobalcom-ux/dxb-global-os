@@ -53,9 +53,12 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // E2.3 switch: authenticated entry lands on the Command Center shell.
+  // Legacy cockpit routes stay reachable and redirect one by one as
+  // modules reach parity (CC-SPEC §22) — rollback is this one line.
   if (cockpitReady && path.startsWith("/login")) {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    url.pathname = "/overview";
     return NextResponse.redirect(url);
   }
 
