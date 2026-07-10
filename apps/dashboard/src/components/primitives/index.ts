@@ -1,0 +1,8 @@
+// Command Center primitive library core (DESIGN_SYSTEM §33, E1.2).
+// Everything here consumes semantic tokens only — see styles/tokens.css.
+export { Surface, type SurfaceLevel, type Elevation } from "./surface";
+export { Panel, type PanelState } from "./panel";
+export { StatusBadge, type StatusLevel } from "./badge";
+export { Stat } from "./stat";
+export { DataGrid, type Column } from "./data-grid";
+export { CommandItem } from "./command-item";

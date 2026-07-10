@@ -33,7 +33,7 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 | # | İş | Dosyalar | Kanıt | Model | Durum |
 |---|----|----------|-------|-------|-------|
 | E1.1 | Tailwind v4 token seti (obsidian/graphite yüzeyler, champagne gold, 8-durum matrisi, motion) | `apps/dashboard/src/styles/tokens.css` + `tailwind` config | `pnpm --filter dashboard build` → yeşil; token sınıfları derlendi | F/O | ✓ 2026-07-10 (build yeşil 14/14; derlenmiş CSS'te `--accent-champagne:#d8b98c` + `--t-fast:.12s` + `ease-refined` doğrulandı; utility ad uyarlaması U5) |
-| E1.2 | Primitive komponentler (Surface, Panel, Stat, DataGrid, Badge, CommandItem — §33 zorunlu library çekirdeği) | `apps/dashboard/src/components/primitives/` | Storybook YOK (bilinçli); `/design-preview` rotası primitives'i gerçek tokenlarla listeler | F/O | — |
+| E1.2 | Primitive komponentler (Surface, Panel, Stat, DataGrid, Badge, CommandItem — §33 zorunlu library çekirdeği) | `apps/dashboard/src/components/primitives/` | Storybook YOK (bilinçli); `/design-preview` rotası primitives'i gerçek tokenlarla listeler | F/O | ✓ 2026-07-10 (build yeşil, rota `○ /design-preview` çıktıda; hex-kaçağı 0; görsel kalite ⚠ CEO göz testi) |
 
 ### E2 — Command Center shell (CEO Faz 6) — [[CEO_COMMAND_CENTER_SPEC]] §9-11
 
