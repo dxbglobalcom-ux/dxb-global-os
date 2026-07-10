@@ -1,0 +1,16 @@
+# vps/Dockerfile.node build context = repo root (COPY . .) — keep it lean and
+# deterministic: dependencies come from pnpm install --frozen-lockfile inside
+# the image, never from a host node_modules (a copied-in tree aborts pnpm's
+# modules purge under no-TTY docker builds).
+node_modules
+**/node_modules
+.git
+.planning/graphs
+graphify-out
+memory-store
+tmp
+evidence
+**/dist
+.env
+.env.*
+!.env.example
