@@ -104,7 +104,10 @@ export default async function OverviewPage() {
         />
         <Stat
           label={t.tokens7d}
-          value={Number(data.tokens_7d).toLocaleString("en")}
+          value={new Intl.NumberFormat("en", {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(Number(data.tokens_7d))}
           drillHref="/fin/tokens?range=week"
         />
       </div>

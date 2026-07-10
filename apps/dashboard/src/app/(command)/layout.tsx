@@ -27,15 +27,14 @@ export default async function CommandLayout({
   const t = dict.command;
   const supabase = await createClient();
 
-  const [activeRes, pendingRes, railRes, dockRes] = await Promise.all([
+  // Counters come from the same single-round-trip view as the Overview
+  // page (SYS_ARCH §8) — head-count queries returned bogus zeros in the
+  // RSC layout (2026-07-11 fix; page and bar can never disagree again).
+  const [summaryRes, railRes, dockRes] = await Promise.all([
     supabase
-      .from("tasks")
-      .select("id", { count: "exact", head: true })
-      .in("status", ["queued", "claimed", "running"]),
-    supabase
-      .from("approvals")
-      .select("id", { count: "exact", head: true })
-      .eq("status", "pending"),
+      .from("v_exec_overview_v1")
+      .select("active_tasks,pending_approvals")
+      .single<{ active_tasks: number; pending_approvals: number }>(),
     supabase
       .from("approvals")
       .select("id,action_type,risk_class,created_at")
@@ -50,7 +49,7 @@ export default async function CommandLayout({
       .limit(8),
   ]);
 
-  const systemOk = !activeRes.error && !pendingRes.error;
+  const systemOk = !summaryRes.error;
   const approvals: RailApproval[] = (railRes.data ?? []).map((a) => ({
     id: a.id,
     title: a.action_type,
@@ -68,8 +67,8 @@ export default async function CommandLayout({
       <CommandBar
         labels={t.bar}
         systemOk={systemOk}
-        activeTasks={activeRes.count ?? 0}
-        pendingApprovals={pendingRes.count ?? 0}
+        activeTasks={summaryRes.data?.active_tasks ?? 0}
+        pendingApprovals={summaryRes.data?.pending_approvals ?? 0}
       />
       <div className="relative flex min-h-0 flex-1">
         <SideNav labels={t.nav} />
@@ -77,7 +76,7 @@ export default async function CommandLayout({
         <IntelligenceRail
           labels={t.rail}
           approvals={approvals}
-          pendingCount={pendingRes.count ?? 0}
+          pendingCount={summaryRes.data?.pending_approvals ?? 0}
         />
         <AgentDock label={t.dock.running} tasks={dockTasks} />
       </div>

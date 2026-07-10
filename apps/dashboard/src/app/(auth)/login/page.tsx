@@ -158,10 +158,10 @@ function BrandAtrium({ tagline, taglineSub, holding }: Record<string, string>) {
       onPointerLeave={handleLeave}
       className="relative hidden flex-1 overflow-hidden lg:block"
       style={{
-        /* Scene ground: deeper than --bg on purpose (stage, not panel);
-           champagne key light is high-L / low-alpha so it never muddies. */
+        /* Scene ground: obsidian depth stack (stage, not panel);
+           champagne key light is low-alpha so it never muddies. */
         background:
-          "linear-gradient(180deg, oklch(0.13 0.007 78), oklch(0.1 0.008 72)), oklch(0.1 0.008 72)",
+          "linear-gradient(180deg, var(--surface-obsidian), var(--surface-void))",
       }}
     >
       <div
@@ -177,7 +177,7 @@ function BrandAtrium({ tagline, taglineSub, holding }: Record<string, string>) {
           className="pointer-events-none absolute inset-0 transition-transform duration-[var(--t-slow)] ease-refined"
           style={{
             background:
-              "radial-gradient(42rem 24rem at 28% -4%, oklch(0.92 0.05 95 / 0.08), transparent 68%)",
+              "radial-gradient(42rem 24rem at 28% -4%, color-mix(in srgb, var(--accent-ivory) 8%, transparent), transparent 68%)",
             transform:
               "translate3d(calc(var(--plx-x, 0) * 24px), calc(var(--plx-y, 0) * 12px), 0)",
           }}
@@ -191,7 +191,7 @@ function BrandAtrium({ tagline, taglineSub, holding }: Record<string, string>) {
             className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%]"
             style={{
               background:
-                "radial-gradient(16rem 42rem at 50% 100%, oklch(0.88 0.08 95 / 0.07), transparent 72%)",
+                "radial-gradient(16rem 42rem at 50% 100%, color-mix(in srgb, var(--accent-champagne) 7%, transparent), transparent 72%)",
             }}
           />
           <div
@@ -380,7 +380,28 @@ export default function LoginPage() {
   const buttonSheen = { boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.25)" };
 
   return (
-    <main className="relative flex min-h-[100dvh] overflow-hidden bg-bg">
+    <main
+      className="relative flex min-h-[100dvh] overflow-hidden bg-bg"
+      style={
+        {
+          /* E2.4-b theme unification (CEO RET 2026-07-11: login and shell
+             must be ONE family). The whole scene consumes the Command
+             Center token set by remapping the legacy variable names it
+             was built on — composition and behavior unchanged. */
+          "--bg": "var(--surface-void)",
+          "--surface": "var(--surface-carbon)",
+          "--surface-2": "var(--surface-graphite)",
+          "--surface-3": "var(--surface-anthracite)",
+          "--ink": "var(--text-primary)",
+          "--ink-2": "var(--text-secondary)",
+          "--line": "var(--edge-neutral)",
+          "--accent": "var(--accent-champagne)",
+          "--accent-press": "var(--accent-brushed)",
+          "--on-accent": "var(--text-inverse)",
+          "--edge-light": "rgba(255, 255, 255, 0.04)",
+        } as React.CSSProperties
+      }
+    >
       <BrandAtrium
         tagline={dict.login.tagline}
         taglineSub={dict.login.taglineSub}
