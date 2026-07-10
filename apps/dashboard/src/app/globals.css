@@ -1,4 +1,7 @@
 @import "tailwindcss";
+/* Executive Command Center tokens (E1.1) — additive: new namespaces only,
+   legacy keys below are untouched (DESIGN_SYSTEM §22 isolation). */
+@import "../styles/tokens.css";
 
 /* ============================================================
    Gece Lobisi — DXB Cockpit token system

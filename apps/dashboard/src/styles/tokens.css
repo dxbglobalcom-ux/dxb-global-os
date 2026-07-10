@@ -1,0 +1,208 @@
+/* ============================================================
+   DXB Executive Command Center — token system (E1.1)
+   NORMATIVE SOURCE: HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md.
+   The contract wins on conflict: change the spec first, then this file.
+
+   Layer model (spec §3): the :root block below is the SEMANTIC layer
+   (contract-verbatim names; primitive raw values are folded in because
+   the contract defines roles directly). The @theme block is utility
+   exposure only. Components consume semantic tokens / utilities —
+   direct hex anywhere else in src/ fails the hex-leak gate (spec §6).
+
+   Scope (spec §22): built for the (command) shell. Legacy cockpit
+   keys are untouched; two legacy @theme keys forced utility renames:
+     text-body   → text-body-md    (14.5px, contract "body")
+     text-display→ text-display-lg (32px,  contract "display")
+   Values are contract-verbatim — recorded adaptation U5 (00-INDEX).
+
+   Single dark theme (B5): no light mode, no theme toggle.
+   ============================================================ */
+
+:root {
+  /* --- Surfaces (§4) — obsidian depth stack, bottom to top --- */
+  --surface-void: #060709;
+  --surface-obsidian: #0b0d11;
+  --surface-carbon: #10131a;
+  --surface-graphite: #161a22;
+  --surface-anthracite: #1d222d;
+  --surface-titanium: #272e3b;
+  /* Smoked glass: blur is FIXED at 14px, opacity never below .6 (§4) */
+  --surface-glass: rgba(16, 19, 26, 0.72);
+  --glass-blur: 14px;
+
+  /* --- Accents (§4) — gold discipline B4: champagne only for
+     active/selected/CTA/CEO authority/key metrics. No bright yellow,
+     no orange gold, no brown (eye-test RET lesson). --- */
+  --accent-champagne: #d8b98c;
+  --accent-brushed: #b99c6b;
+  --accent-amber: #dca55c;
+  --accent-copper: #be8663;
+  --accent-platinum: #c9cfd9;
+  --accent-ivory: #f0ebdf;
+
+  /* --- Status (§4) — color-independent display required (§30):
+     always paired with shape (ok=circle, warn=triangle, danger=square,
+     critical=double edge) --- */
+  --status-ok: #63b389;
+  --status-warn: #d9a441;
+  --status-danger: #c4605c;
+  --status-info: #7fa7c9;
+  --status-critical: #e0655f;
+
+  /* --- Text (§4) --- */
+  --text-primary: #e9e7e2;
+  --text-secondary: #a8abb4;
+  --text-muted: #6e7380; /* captions only — data values never muted (§27) */
+  --text-inverse: #0b0d11; /* on gold CTA */
+
+  /* --- Borders (§5) --- */
+  --edge-neutral: rgba(255, 255, 255, 0.06);
+  --edge-champagne: rgba(216, 185, 140, 0.35); /* active/selected edge light */
+  --edge-champagne-strong: rgba(216, 185, 140, 0.6); /* pressed */
+
+  /* --- Radius (§5) — pill/circle cards forbidden; full circle only
+     avatar + status dot --- */
+  --r-s: 6px; /* input, badge */
+  --r-m: 10px; /* card, panel */
+  --r-l: 14px; /* modal, drawer */
+
+  /* --- Elevation (§5) — every panel carries surface + edge light +
+     shadow + reflection (B2: no flat surfaces) --- */
+  --e1: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --e2: 0 12px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --e3: 0 24px 64px rgba(0, 0, 0, 0.55);
+  --reflection: linear-gradient(rgba(255, 255, 255, 0.03), transparent 40%);
+
+  /* --- Motion (§9) — single easing; bounce/elastic/cartoon forbidden --- */
+  --t-fast: 120ms; /* hover, focus, press */
+  --t-base: 200ms; /* panel expansion, fade */
+  --t-slow: 320ms; /* drawer/modal entry */
+  --t-ambient: 480ms; /* background light layers (and slower) */
+  --ease-refined: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  /* Colors — semantic utility names (bg-surface-carbon, text-ink-primary,
+     border-edge-champagne, text-status-danger, bg-accent-champagne) */
+  --color-surface-void: var(--surface-void);
+  --color-surface-obsidian: var(--surface-obsidian);
+  --color-surface-carbon: var(--surface-carbon);
+  --color-surface-graphite: var(--surface-graphite);
+  --color-surface-anthracite: var(--surface-anthracite);
+  --color-surface-titanium: var(--surface-titanium);
+
+  --color-accent-champagne: var(--accent-champagne);
+  --color-accent-brushed: var(--accent-brushed);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-copper: var(--accent-copper);
+  --color-accent-platinum: var(--accent-platinum);
+  --color-accent-ivory: var(--accent-ivory);
+
+  --color-status-ok: var(--status-ok);
+  --color-status-warn: var(--status-warn);
+  --color-status-danger: var(--status-danger);
+  --color-status-info: var(--status-info);
+  --color-status-critical: var(--status-critical);
+
+  --color-ink-primary: var(--text-primary);
+  --color-ink-secondary: var(--text-secondary);
+  --color-ink-muted: var(--text-muted);
+  --color-ink-inverse: var(--text-inverse);
+
+  --color-edge-neutral: var(--edge-neutral);
+  --color-edge-champagne: var(--edge-champagne);
+  --color-edge-champagne-strong: var(--edge-champagne-strong);
+
+  /* Radius — semantic names (rounded-input / rounded-panel / rounded-modal);
+     Tailwind default --radius-sm/md/lg keys deliberately NOT overridden
+     (legacy isolation §22) */
+  --radius-input: var(--r-s);
+  --radius-panel: var(--r-m);
+  --radius-modal: var(--r-l);
+
+  /* Elevation (shadow-e1 / shadow-e2 / shadow-e3) */
+  --shadow-e1: var(--e1);
+  --shadow-e2: var(--e2);
+  --shadow-e3: var(--e3);
+
+  /* Motion (ease-refined) */
+  --ease-refined: var(--ease-refined);
+
+  /* Typography families (§7) — Display final family is a ⛔ decision
+     (CEO eye test); until then the display slot falls back through the
+     loaded stack. Inter (body) and the display candidate are wired via
+     next/font in the (command) layout at E2.1. */
+  --font-display: var(--font-display-face, var(--font-geist-sans)),
+    ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-inter, var(--font-geist-sans)), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-data: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Type scale (§7) — px values are contract-verbatim.
+     Nothing below 11.5px may enter a PR (§35). */
+  --text-display-xl: 2.75rem; /* 44px — Overview hero metric */
+  --text-display-xl--line-height: 1.1;
+  --text-display-xl--font-weight: 600;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display-lg: 2rem; /* 32px — contract "display" (renamed: U5) */
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--font-weight: 600;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-h1: 1.5rem; /* 24px */
+  --text-h1--line-height: 1.25;
+  --text-h1--font-weight: 600;
+  --text-h1--letter-spacing: -0.01em;
+  --text-h2: 1.1875rem; /* 19px */
+  --text-h2--line-height: 1.35;
+  --text-h2--font-weight: 600;
+  --text-h3: 1rem; /* 16px */
+  --text-h3--line-height: 1.4;
+  --text-h3--font-weight: 600;
+  --text-body-md: 0.90625rem; /* 14.5px — contract "body" (renamed: U5) */
+  --text-body-md--line-height: 1.6;
+  --text-body-md--font-weight: 450;
+  --text-body-s: 0.8125rem; /* 13px — dense-table floor */
+  --text-body-s--line-height: 1.5;
+  --text-body-s--font-weight: 450;
+  --text-caption: 0.75rem; /* 12px */
+  --text-caption--line-height: 1.35;
+  --text-caption--font-weight: 500;
+  --text-caption--letter-spacing: 0.02em;
+  --text-label-caps: 0.71875rem; /* 11.5px — absolute floor (§35) */
+  --text-label-caps--line-height: 1.2;
+  --text-label-caps--font-weight: 600;
+  --text-label-caps--letter-spacing: 0.08em;
+}
+
+/* Panel section titles — authoritative caps label (§7).
+   One class carries the full treatment; text-label-caps alone
+   does not uppercase. */
+@utility label-caps {
+  font-size: var(--text-label-caps);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Smoked glass (§4) — e3 surfaces only (drawer, modal, palette);
+   blur on cards is forbidden (§26 cheap-glassmorphism guard). */
+@utility glass {
+  background-color: var(--surface-glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* Panel reflection overlay (B2) — apply to a relatively-positioned
+   panel; paints the faint top light every surface must carry. */
+@utility reflection {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--reflection);
+    pointer-events: none;
+  }
+}

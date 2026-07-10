@@ -95,6 +95,7 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 | U2 | Dalga sırası: 31 dosya 5 dalgada, dalga=atomik commit | 12 Temmuz kesinti riski — kesinti kayıpsız devam için | Sözleşme Adım 1 (CEO onaylı plan) |
 | U3 | Kadro kapsamı G7: `agency-agents/` legacy 153 + Fable'ın olmazsa-olmaz ekleri; persona = canlı çalışan | CEO sözlü ek hükmü 2026-07-10 ~21:35 (spec'lere dışarıdan işlendi, Fable devraldı) | EMPLOYEE_PERSONA_STANDARD G7 + HR §27 + bu tablo |
 | U4 | JARVIS voice (eski Faz 9, 09-03..05) "sistem sonrası" dilimine ertelendi — CEO Faz 1-11 listesinde yer almıyor | BEKLENTİLER pivotu; roadmap re-baseline korpus sonrası (MASTER_PLAN §6 son satır) | MASTER_PLAN §6 + STATE.md + bu tablo |
+| U5 | Tip ölçeği utility ADLARI: kontrat "display"→`text-display-lg`, "body"→`text-body-md`; radius utility'leri semantik (`rounded-input/panel/modal`) | Legacy cockpit `@theme` anahtarlarıyla (--text-display, --text-body, --radius-sm/md/lg) çakışma — legacy izolasyonu (DESIGN_SYSTEM §22); px DEĞERLERİ kontrat birebir | tokens.css başlık yorumu + bu tablo |
 
 ## Doğrulama komutları (dalga kapanışında koşulur)
 
