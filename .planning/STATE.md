@@ -5,7 +5,7 @@ milestone_name: milestone
 current_phase: 08
 current_phase_name: ceo-dashboard-crm
 status: executing
-stopped_at: "08-06 COMPLETE 2026-07-10 03:33 (39/39 test; CRM 4 entity + crm_update DEFINER kapısı 0017 + yapısal UI/RLS paritesi + provenance audit-türetimi; commits f11fdcf/35167aa). WAVE 3 BİTTİ — tüm route'lar var, konsol RSC 404'leri kapandı. Session toplamı: A1+A2, 08-02/03/04/05/06 (5 plan + 2 amendment). CEO uykuda (~04:40). SIRADAKİ: wave-3 toplu Playwright görsel turu, sonra 08-07 (wave 4 kapanış). ⚠ residue: VPS resident restart (intentIntake tick) + ilk gerçek LLM intent → 08-07; hermes 06:00 cron (e4dbe372)."
+stopped_at: "PHASE 8 MACHINE-COMPLETE 2026-07-10 03:52 — 7/7 plan (08-02..07 bu session, tek gecede). 08-07: contrast 14/14 (A3 kalibrasyonu), i18n 147/147 + 0 hard-coded, anti-pattern 0, Lighthouse login a11y=100/perf=95/LCP=2.3s, A1.2 ultrawide+TV modu gemide, 08-VERIFICATION.md + ⛔ Fable ön-verdict yazıldı. CLOSED için bekleyen: CEO göz testi (A1.4 referans karşılaştırma) + telefon-elde + authed Lighthouse (classifier session-mint engeli — lh-auth.mjs hazır) + ilk canlı intent + VPS resident restart. Prod server :3100 AYAKTA, demo seed DB'de (6 onay). CEO checklist: 08-VERIFICATION.md §5. Faz kapanışında /gsd-graphify build + /compact önerisi."
 last_updated: "2026-07-09T22:49:22.411Z"
 last_activity: 2026-07-09
 last_activity_desc: Phase 08 execution started
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 08 (ceo-dashboard-crm) — EXECUTING
-Plan: 6 of 7 complete (next: 08-07, wave 4)
-Status: Executing Phase 08
-Last activity: 2026-07-10 — 08-06 complete (CRM views + field-scoped CEO editing)
+Plan: 7 of 7 complete (machine); CEO checkpoint pending
+Status: Phase 08 MACHINE-COMPLETE — awaiting CEO eye test
+Last activity: 2026-07-10 — 08-07 closure pass + 08-VERIFICATION.md
 
 Progress: [████████░░] 75%
 
