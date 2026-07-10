@@ -310,7 +310,7 @@ Plans:
   2. A spoken command travels STT → kernel intent path and produces the same result as typing it in the command bar (voice = second kernel client)
   3. Voice-initiated gated actions still require explicit confirmation through the approval inbox — voice alone can never execute an outward action
 
-**Plans**: TBD
+**Plans**: 5 plans (09-01..09-05, planned 2026-07-10)
 
 ### Phase 10: Department Activation Waves & Persona Factory
 

@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
-current_phase: 08
-current_phase_name: ceo-dashboard-crm
+current_phase: 09
+current_phase_name: jarvis-voice-layer
 status: executing
 stopped_at: "PHASE 8 MACHINE-COMPLETE 2026-07-10 04:20 — 7/7 plan. İLK CANLI INTENT ✓ VERIFIED 03:49 (intent daa77572 → task b70e6d4d project-management/L4 + broadcast=1; psql kanıtı 08-07-SUMMARY'de, commit 8c82581). ~04:00 reboot sonrası runtime RESTORE edildi: :3100 prod (curl 200) + resident scheduler (pg-boss intent-intake 5s zinciri) yeniden ayakta, demo seed sağlam (6 pending onay). lh-auth.mjs artık kalıcı: scripts/lh-auth.mjs. CLOSED için bekleyen (CEO): göz testi A1.4 + telefon-elde + istenirse authed Lighthouse (node scripts/lh-auth.mjs) + VPS outbox rebuild (classifier prod-SSH blokladı; CEO tek komut: ssh root@dxb-vps-1 'cd /opt/dxb && docker compose build outbox && docker compose up -d outbox'). CEO checklist: 08-VERIFICATION.md §5. Faz kapanışında /gsd-graphify build + /compact."
 last_updated: "2026-07-10T02:20:00.000Z"
@@ -28,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 08 (ceo-dashboard-crm) — EXECUTING
-Plan: 7 of 7 complete (machine); CEO checkpoint pending
-Status: Phase 08 MACHINE-COMPLETE — awaiting CEO eye test
-Last activity: 2026-07-10 — 08-07 closure pass + 08-VERIFICATION.md
+Phase: 09 (jarvis-voice-layer) — EXECUTING (planned 8f4cb3b, 5 plans; CEO pre-approved plan + execution 07:22)
+Plan: 0 of 5
+Status: Phase 08 MACHINE-COMPLETE (CEO göz/telefon/VPS kalemleri bekliyor — §5 checklist); Phase 09 execution started per CEO order
+Last activity: 2026-07-10 — Phase 9 planned (CONTEXT + 5 plans, Fable inline)
 
 Progress: [████████░░] 75%
 
