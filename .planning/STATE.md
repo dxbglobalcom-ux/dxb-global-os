@@ -5,7 +5,7 @@ milestone_name: milestone
 current_phase: 09
 current_phase_name: jarvis-voice-layer
 status: executing
-stopped_at: "PHASE 9 WAVE 1 COMPLETE 2026-07-10 12:25 — 09-01 ✓ (Speaches: TR TTS→STT tam döngü kanıtı, Piper fahrettin + whisper-small, RSS 1.529GiB → compose 1792m+healthcheck, commit 51f0629) + 09-02 ✓ (v_morning_briefing 3 blok + 5/5 test + corrupt→FAIL→revert sensitivity, commit 9845168). Session ~11:55 çöktü, 12:13 resume, kanıtlar yeniden koşuldu. SIRADA: 09-03 briefing pipeline + 07:00 cron. Phase 8 CEO kalemleri hâlâ açık: göz testi A1.4 + telefon + VPS outbox rebuild (classifier blokladı; CEO tek komut: ssh root@dxb-vps-1 'cd /opt/dxb && docker compose build outbox && docker compose up -d outbox'). CEO checklist: 08-VERIFICATION.md §5."
+stopped_at: "LOGIN REDESIGN SHIPPED 2026-07-10 ~16:00 — CEO göz-testi RET'i (13:30) kapatıldı: 'Golden Threshold' split-scene login + yeni DxbMark (dikey bar skyline), makine kanıtları tam (build ✓, contrast 14/14, i18n 151/151, Playwright şifre→cockpit akışı ✓), CEO GÖZ TESTİ BEKLİYOR (localhost:3000, §5 handover; flag hem build hem start'ta şart). Öncesi: Phase 9 wave 1 ✓ (09-01 51f0629, 09-02 9845168). SIRADA: CEO göz testi → sonra 09-03 briefing pipeline + 07:00 cron. Phase 8 diğer CEO kalemleri açık: telefon testi + VPS outbox rebuild (CEO tek komut: ssh root@dxb-vps-1 'cd /opt/dxb && docker compose build outbox && docker compose up -d outbox')."
 last_updated: "2026-07-10T10:25:00.000Z"
 last_activity: 2026-07-10
 last_activity_desc: Phase 09 wave 1 (09-01, 09-02) complete
@@ -119,6 +119,7 @@ None yet.
 | 260708-t01 | Token-diet: CLAUDE.md 23.7k→~7.3k chars (stack tables → pointer to research/STACK.md), compact-cadence rule added, 13 plugins disabled in user settings (design/UI 6, helpers 5, codex+ruflo) — 5 kept (caveman, headroom, claude-mem, context7, superpowers) | 2026-07-08 | (this commit) | — |
 | 260709-p01 | CEO add: Revolut+Wise payment integrations (in/out, finance-only, Stripe class) — study cards, policy denials/grants, 14 profiles regenerated, Phase-11 +2 plan estimate | 2026-07-09 | (this commit) | — |
 | 260710-a1 | UI-SPEC Amendment A1 — kayıp session'ın 4 CEO kararı kurtarıldı: WebGL yasağı kalktı, 34" ultrawide+çoklu ekran+TV modu, RTX 4090 hedef donanım, göz testi "referanstan güzel"; memory+ayna senkron | 2026-07-10 | (this commit) | [20260710-ui-spec-amendment-a1](./quick/20260710-ui-spec-amendment-a1/) |
+| 260710-lr | Login redesign "Golden Threshold" — CEO göz-testi RET'ine karşılık: split-scene atriyum (özgün çift-katman skyline, ufuk süpürmesi, spire beacon), DxbMark dikey-bar skyline mark, autofill fix, mobil siluet bandı; build+contrast 14/14+i18n 151/151+Playwright akış kanıtlı; CEO göz testi BEKLİYOR | 2026-07-10 | (this commit) | [20260710-login-redesign](./quick/20260710-login-redesign/) |
 
 ## Deferred Items
 

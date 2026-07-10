@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "DXB Global",
-    "product": "Kokpit"
+    "product": "Kokpit",
+    "holding": "DXB Global Holding"
   },
   "nav": {
     "cockpit": "Kokpit",
@@ -33,7 +34,9 @@
     "enrollManual": "Elle giriş için kod",
     "errorCredentials": "Giriş bilgileri doğrulanamadı.",
     "errorTotp": "Kod doğrulanamadı. Yeniden dene.",
-    "errorGeneric": "Bir sorun oluştu. Yeniden dene."
+    "errorGeneric": "Bir sorun oluştu. Yeniden dene.",
+    "tagline": "Niyetin icraata dönüştüğü yer.",
+    "taglineSub": "DXB Global holdinginin yapay zekâ yerlisi işletim sistemi."
   },
   "cockpit": {
     "title": "Kokpit",

@@ -54,8 +54,9 @@ Kapsam: 7 planın 7'si execute edildi (08-01 önceki session; 08-02..07 bu sessi
 
 ## 5. CEO sabah checklist'i (5 dakika, sıralı)
 
-> **HANDOVER (2026-07-10, AM-08-AUTH-1 sonrası):**
-> - Adres: **`http://localhost:3000`** (prod build; `NEXT_PUBLIC_DXB_MFA_ENFORCED=false pnpm --filter @dxb/dashboard start` ile ayakta)
+> **HANDOVER (2026-07-10, AM-08-AUTH-1 sonrası; login redesign "Golden Threshold" dahil):**
+> - Adres: **`http://localhost:3000`** (prod build). Ayağa kaldırma — flag HEM build HEM start'ta şart (`NEXT_PUBLIC_*` build-time inline'dır; flag'siz build MFA branch'ine düşer ve login "Something went wrong" verir):
+>   `NEXT_PUBLIC_DXB_MFA_ENFORCED=false pnpm --filter @dxb/dashboard build && NEXT_PUBLIC_DXB_MFA_ENFORCED=false pnpm --filter @dxb/dashboard start`
 > - Kullanıcı: **dxbglobalcom@gmail.com** — şifre: CEO'ya chat handover'ında iletildi (repo'ya yazılmaz, "no plaintext credentials in repo" kuralı; pw kasasında da mevcut)
 > - Akış: **login → şifre → direkt cockpit.** QR/TOTP/6 haneli kod YOK (lokal amendment AM-08-AUTH-1); oturum 1 hafta canlı kalır, login nadir görünür. VPS/prod'da 2FA aynen zorunlu.
 

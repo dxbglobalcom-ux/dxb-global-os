@@ -1,7 +1,8 @@
 {
   "brand": {
     "name": "DXB Global",
-    "product": "Cockpit"
+    "product": "Cockpit",
+    "holding": "DXB Global Holding"
   },
   "nav": {
     "cockpit": "Cockpit",
@@ -33,7 +34,9 @@
     "enrollManual": "Manual entry code",
     "errorCredentials": "Could not verify your credentials.",
     "errorTotp": "Code could not be verified. Try again.",
-    "errorGeneric": "Something went wrong. Try again."
+    "errorGeneric": "Something went wrong. Try again.",
+    "tagline": "Where intent becomes execution.",
+    "taglineSub": "AI-native operating system of the DXB Global holding."
   },
   "cockpit": {
     "title": "Cockpit",

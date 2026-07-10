@@ -136,16 +136,18 @@ export function AppShell({
 
 // Simple geometric DXB mark (UI-SPEC §8): a sail-like monogram, inline SVG,
 // no external asset, currentColor so it lives on tokens.
+/* Brand mark — gold vertical skyline bars (CEO direction 2026-07-10: no
+   invented symbols; vertical bar/skyline mark + wordmark). Five bars rise
+   to a spire; the tallest carries a beacon tip. */
 export function DxbMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" fill="none" aria-hidden className={className}>
-      <path
-        d="M8 27V5c9.5 1.5 16 8.5 16 17v5H8Z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path d="M8 27c0-9 4.5-15.5 16-18" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+      <rect x="4" y="19" width="3" height="9" fill="currentColor" opacity="0.55" />
+      <rect x="9.5" y="13" width="3" height="15" fill="currentColor" opacity="0.75" />
+      <rect x="15" y="5" width="3" height="23" fill="currentColor" />
+      <path d="M16.5 1.5v3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="20.5" y="10" width="3" height="18" fill="currentColor" opacity="0.85" />
+      <rect x="26" y="16" width="3" height="12" fill="currentColor" opacity="0.65" />
     </svg>
   );
 }

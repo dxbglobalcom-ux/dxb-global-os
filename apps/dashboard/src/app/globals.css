@@ -186,6 +186,83 @@ body {
   animation: door-line-fade 700ms ease-out forwards;
 }
 
+/* ============================================================
+   Login scene — "Golden Threshold" (quick/20260710-login-redesign)
+   Signature-moment motion allowed by UI-SPEC §10 A1 (login is a listed
+   signature surface). Calibration rule from the CEO eye test: no broad
+   low-alpha gold washes over black (they read as mud-brown) — depth
+   comes from thin bright lines and tight highlights instead.
+   ============================================================ */
+
+/* Skyline draws itself once on arrival (stroke-dashoffset). */
+@keyframes skyline-draw {
+  from {
+    stroke-dashoffset: var(--skyline-dash, 600);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.login-skyline path,
+.login-skyline line {
+  stroke-dasharray: var(--skyline-dash, 600);
+  animation: skyline-draw 1600ms var(--ease-out-quint) forwards;
+}
+
+/* Horizon shimmer: a narrow light band travels the gold horizon line. */
+@keyframes horizon-sweep {
+  0% {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(130%);
+    opacity: 0;
+  }
+}
+.login-horizon-sweep {
+  animation: horizon-sweep 7s linear infinite;
+}
+
+/* Beacon at the spire tip breathes with the Horizon Line cadence. */
+.login-beacon {
+  animation: hl-pulse 2.4s ease-in-out infinite;
+}
+
+/* Chrome autofill paints its own blue-white field; force it back onto the
+   token surface so saved credentials don't break the dark scene. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset;
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+}
+
+/* Form column rises 12px and fades in after the scene lands. */
+@keyframes login-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.login-rise {
+  animation: login-rise 600ms var(--ease-out-quint) both;
+}
+.login-rise-late {
+  animation: login-rise 600ms var(--ease-out-quint) 150ms both;
+}
+
 /* §6 prefers-reduced-motion: everything instant, loops stop */
 @media (prefers-reduced-motion: reduce) {
   *,
