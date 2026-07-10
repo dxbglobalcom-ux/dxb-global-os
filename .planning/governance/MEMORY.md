@@ -2,7 +2,7 @@
 
 - [Deadline & Faz-8 reopen](deadline-and-phase8-reopen.md) — SERT DEADLINE 2026-07-12 (Fable kalkıyor, 'ölüm kalım'); Faz 8 başında design plugin'leri + playwright yeniden açılır, STACK.md Broadcast notları okunur
 - [Design-bundle Phase-8 köprüsü](design-bundle-phase8-bridge.md) — CEO B3: Phase 8 GİRİŞ ŞARTI — impeccable+taste+open-design+Stitch re-enable + study, dashboard tasarımından ÖNCE; kapanmadan design işi başlamaz
-- [Faz 8 design brief](phase8-design-brief.md) — CEO vizyonu (2026-07-10): Burj Al Arab 7-yıldız lüks/elegans, 3 boyutlu, efsane modern; jenerik admin-panel = ihlal; **+ A1 (02:35): WebGL yasağı KALKTI, 34" ultrawide+çoklu ekran+TV modu, hedef donanım RTX 4090 Linux laptop, göz testi "referans görselden güzel"**
+- [Faz 8 design brief](phase8-design-brief.md) — CEO vizyonu (2026-07-10): Burj Al Arab 7-yıldız lüks/elegans, 3 boyutlu, efsane modern; jenerik admin-panel = ihlal; **+ A1 (02:35): WebGL yasağı KALKTI, 34" ultrawide+çoklu ekran+TV modu, hedef donanım RTX 4090 Linux laptop, göz testi "referans görselden güzel"; + A2 (02:40): UI iki dilli — EN birincil, TR tam ikincil**
 - [Master plan fidelity](master-plan-fidelity.md) — CEO emri: master plandan ASLA sapma (ölüm-kalım); zorunlu uyarlama = kayıtlı + CEO'ya görünür, sessiz sapma yasak
 
 - [Fable 5 construction governance](fable-5-construction-governance.md) — **ZORUNLU İLK OKUMA her session** — THE GOAL: Fable 5 kalitesinde output her aşamada; Fable inşaatın TAMAMINA sahip (baş mimar + milestone kapıları + commit onayı); session bootstrap kuralı (BOOTSTRAP READ onayı olmadan proje işi yapılamaz)

@@ -32,3 +32,7 @@ metadata:
 
 **Why:** Sessiz kayıp = master-plan-fidelity ihlali olurdu ([[master-plan-fidelity]]); CEO "hash yoksa kayıt yok say" dedi.
 **How to apply:** Faz 8 görsel işlerinde UI-SPEC §10 A1 bağlayıcı; WebGL kullanan her iş fallback + LCP kanıtı üretir; faz kapanışında göz testi referans karşılaştırması CEO'ya sunulur.
+
+# Amendment A2 — UI dili (CEO canlı emri, 2026-07-10 02:40)
+
+**UI içerik dili iki dilli: İngilizce BİRİNCİL, Türkçe tam eş kapsamlı ikincil.** `DEFAULT_LOCALE = "en"`, root `lang="en"`; tek dilde eksik anahtar = fail; hard-coded string yasağı sürer; locale switch UI 08-07'de. Master-plan "i18n tr/en" LOCKED kararıyla çelişmez (iki dilli desteği şart koşar, birincil dili değil).

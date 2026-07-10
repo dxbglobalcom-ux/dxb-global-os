@@ -37,7 +37,7 @@ CEO'nun tüm şirketi tek cockpit'ten yönettiği canlı dashboard + ince CRM: g
 - **B7b asimetrisi (CEO direktifi):** money-OUT draft'ları onay kuyruğunda; money-IN onaysız akar, cockpit'te SADECE görünürlük (feed + audit). Inbox groupları bunu yansıtır.
 - Auth: Supabase Auth, CEO tek kullanıcı, 2FA/passkey zorunlu; RLS: CEO read; yazım YALNIZ intents + approval kararları
 - Command bar → kernel dxb-mcp/HTTP seam; dashboard'da LLM çağrısı YOK (`ai` SDK yalnız render/stream; provider SDK import'u lint'le yasak)
-- i18n: `messages/tr.json` birincil + `en.json`; hard-coded string YASAK
+- i18n: iki dilli — `messages/en.json` **birincil** + `tr.json` tam eş kapsamlı (A2, CEO 2026-07-10 02:40); hard-coded string YASAK
 - Dashboard saf projeksiyon (I8); drill-down audit.trace, firehose YOK
 
 ### Süreç

@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "DXB Cockpit",
-  description: "DXB Global — CEO operasyon kokpiti",
+  description: "DXB Global — CEO operations cockpit",
 };
 
 export const viewport: Viewport = {
@@ -17,7 +17,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="tr"
+      lang="en"
       data-theme="dark"
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning

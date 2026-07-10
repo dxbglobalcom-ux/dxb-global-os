@@ -63,7 +63,7 @@ Dual-mode; **dark birincil ve marka-taşıyıcı**. Sayfa içi tema karışımı
 | Micro | Geist Sans | 11.5px/500 etiketler; UPPERCASE+tracking eyebrow deseni YASAK (bölüm başına eyebrow kuralı: cockpit'te hiç) |
 
 Yasak: Inter/Roboto/Arial; cockpit chrome'da HER TÜRLÜ serif; `clamp()` display >2.5rem cockpit içinde; italik descender kırpması (`leading-[1.1]` min).
-i18n: `tr` birincil — TR diakritikleri (ş, ğ, İ) Geist'te tam; başlıklarda `text-wrap: balance`.
+i18n (**A2**): **iki dilli — `en` birincil, `tr` tam eş kapsamlı ikincil.** Her UI metni iki katalogda da yaşar (`messages/en.json` + `tr.json`); tek dilde eksik anahtar = fail; hard-coded string yasağı sürer. TR diakritikleri (ş, ğ, İ) Geist'te tam; her iki dilde başlıklarda `text-wrap: balance`.
 
 ## 4. Component Stylings
 
@@ -143,3 +143,11 @@ Inter/serif-cockpit · saf #000/#fff · AI-purple/neon glow/gradient-text · sid
 | A1.4 | Göz testi: "referans görselden güzel olmalı" | §9.5 güncellendi — faz kapanış kabulü referans mockup'ı GEÇMEK zorunda, eşitlik yetmez |
 
 **⛔ FABLE VERDICT (A1):** Dört CEO kararı spec'e çelişkisiz işlendi. Anti-slop yasakları (§7), altın disiplini (≤%8), token sistemi, LOCKED mimari ve motion disiplini aynen yürürlükte; WebGL izni bu yasakları esnetmez (neon/glow/AI-purple WebGL'de de yasak). ONAYLANDI. — Fable 5, 2026-07-10
+
+### A2 — 2026-07-10 02:40 (CEO emri, canlı)
+
+| # | CEO kararı | Spec etkisi |
+|---|---|---|
+| A2.1 | UI içerik dili **iki dilli: İngilizce BİRİNCİL, Türkçe tam ikincil** | §3 i18n satırı güncellendi; `DEFAULT_LOCALE` en'e döner (`lib/i18n.ts` + root `lang`); tr kataloğu eş kapsamlı kalır, locale switch 08-07'de |
+
+**⛔ FABLE VERDICT (A2):** Master-plan "i18n tr/en" LOCKED kararı iki dilli desteği şart koşar, birincil dili değil — çelişki yok. Katalog altyapısı (08-01) zaten simetrik; değişiklik varsayılan dil + `lang` attribute. ONAYLANDI. — Fable 5, 2026-07-10
