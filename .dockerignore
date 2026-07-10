@@ -10,7 +10,6 @@ graphify-out
 memory-store
 tmp
 evidence
-**/dist
 .env
 .env.*
 !.env.example
