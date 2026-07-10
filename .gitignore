@@ -60,3 +60,7 @@ vps/provision/.hetzner.local
 
 # LibreOffice lock files
 .~lock.*#
+
+# Playwright MCP session artifacts (console logs, page snapshots) — transient;
+# durable evidence is copied into .planning/phases/*/evidence/
+.playwright-mcp/
