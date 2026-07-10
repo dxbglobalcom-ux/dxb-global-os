@@ -70,7 +70,9 @@ describe("broadcast payload contract (lib/realtime.ts DxbBroadcastPayload)", () 
 // write chain (.from(...)....insert/update/upsert/delete) or .rpc( call in
 // apps/dashboard/src must appear in this allowlist or the suite fails.
 const PURITY_ALLOWLIST: string[] = [
-  // 08-03 will add: approval decision path file(s)
+  // 08-03: CEO approval decisions — single .rpc('decide_approvals') seam
+  // (migration 0015; single-tx, audit 1:1, EXECUTE only for authenticated)
+  "app/(cockpit)/approvals/actions.ts",
   // 08-05 will add: intent submission path file(s)
 ];
 
