@@ -50,6 +50,8 @@ export default async function ApprovalsPage() {
           moneyOut: a.moneyOut,
           highBadge: a.highBadge,
           payload: a.payload,
+          details: a.details,
+          fields: a.fields,
           empty: a.empty,
           emptyAction: a.emptyAction,
           fatigue: a.fatigue,

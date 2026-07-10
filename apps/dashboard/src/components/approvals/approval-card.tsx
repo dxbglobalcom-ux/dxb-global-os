@@ -20,6 +20,8 @@ export type ApprovalText = {
   moneyOut: string;
   highBadge: string;
   payload: string;
+  details: string;
+  fields: Record<string, string>;
 };
 
 function payloadAmount(payload: Record<string, unknown>): number | null {
@@ -136,16 +138,68 @@ function RejectControl({
   );
 }
 
-function PayloadView({ payload, open, label }: { payload: Record<string, unknown>; open: boolean; label: string }) {
+// The CEO reads sentences, not JSON (eye-test 2026-07-10): every payload
+// field renders as a labeled row; the raw JSON survives only behind a
+// disclosure for audit. Unknown keys prettify (snake_case → words) so new
+// action types degrade readably instead of technically.
+function prettifyKey(key: string): string {
+  const words = key.replace(/[_-]+/g, " ").trim();
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+function formatValue(key: string, value: unknown): string {
+  if (value === null || value === undefined || value === "") return "—";
+  if (/_eur$/.test(key)) {
+    const n = typeof value === "string" ? Number(value) : value;
+    if (typeof n === "number" && Number.isFinite(n)) return formatEur(n);
+  }
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  return JSON.stringify(value);
+}
+
+function PayloadView({
+  payload,
+  open,
+  text,
+}: {
+  payload: Record<string, unknown>;
+  open: boolean;
+  text: ApprovalText;
+}) {
+  const entries = Object.entries(payload);
+  if (entries.length === 0) return null;
   const body = (
-    <pre className="max-h-64 overflow-auto rounded-[0.625rem] bg-bg p-3 font-mono text-micro leading-relaxed text-ink-2">
-      {JSON.stringify(payload, null, 2)}
-    </pre>
+    <>
+      <dl className="divide-y divide-line rounded-[0.625rem] border border-line bg-surface">
+        {entries.map(([key, value]) => (
+          <div key={key} className="flex items-baseline gap-4 px-4 py-2.5">
+            <dt className="w-28 shrink-0 text-micro uppercase tracking-[0.06em] text-ink-2">
+              {text.fields[key] ?? prettifyKey(key)}
+            </dt>
+            <dd className="min-w-0 flex-1 break-words text-body text-ink">
+              {formatValue(key, value)}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <details className="pt-2">
+        <summary className="cursor-pointer text-micro text-ink-2 hover:text-ink">
+          {text.payload}
+        </summary>
+        <pre className="mt-2 max-h-64 overflow-auto rounded-[0.625rem] bg-bg p-3 font-mono text-micro leading-relaxed text-ink-2">
+          {JSON.stringify(payload, null, 2)}
+        </pre>
+      </details>
+    </>
   );
   if (open) return <div className="pt-2">{body}</div>;
   return (
     <details className="pt-1">
-      <summary className="cursor-pointer text-micro text-ink-2 hover:text-ink">{label}</summary>
+      <summary className="cursor-pointer text-micro text-ink-2 hover:text-ink">
+        {text.details}
+      </summary>
       <div className="pt-2">{body}</div>
     </details>
   );
@@ -186,7 +240,7 @@ export function HighApprovalCard({
         <p className="pt-0.5 text-micro text-ink-2">
           {approval.department ?? ""} · <span className="font-mono">{approval.action_type}</span>
         </p>
-        <PayloadView payload={approval.payload} open label={text.payload} />
+        <PayloadView payload={approval.payload} open text={text} />
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
         <RejectControl
@@ -248,7 +302,7 @@ export function MediumApprovalRow({
           {text.approve}
         </button>
       </div>
-      <PayloadView payload={approval.payload} open={false} label={text.payload} />
+      <PayloadView payload={approval.payload} open={false} text={text} />
     </li>
   );
 }
