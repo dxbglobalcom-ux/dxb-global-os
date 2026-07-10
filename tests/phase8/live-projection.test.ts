@@ -76,6 +76,9 @@ const PURITY_ALLOWLIST: string[] = [
   // 08-05: CEO intent submission — single intents INSERT (migration 0016
   // column grants pin text/lang/source/actor; kernel worker owns the rest)
   "app/api/intent/route.ts",
+  // 08-06: CEO CRM edits — single .rpc('crm_update') seam (migration 0017
+  // DEFINER door: field whitelist in-database, audit row per edit)
+  "app/(cockpit)/crm/actions.ts",
 ];
 
 const DASHBOARD_SRC = join(__dirname, "../../apps/dashboard/src");
