@@ -32,8 +32,8 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 Phase: KORPUS (BEKLENTİLER plan-first fazı; roadmap re-baseline korpus sonrası)
 Plan: quick/20260710-beklentiler-master-plan-v2 + HOLDING-OS-MASTER-PLAN/00-INDEX.md durum tablosu
-Status: Adım 0 ✓ — Dalga 1 ✓ (5/5) — Dalga 2 ✓ (7/7) — Dalga 3 ✓ (7/7) — **Dalga 4 ✓ (8/8: API_CONTRACTS, EVENT_MODEL, WORKFLOW_ENGINE, MEMORY_ARCHITECTURE, HOLDING_LIBRARY, PROJECT_OPERATING_SYSTEM, SECURITY_MODEL, AUDIT_AND_LOGGING)** — sırada Dalga 5 (teslimat: IMPLEMENTATION_ROADMAP, TEST_STRATEGY, ACCEPTANCE_CRITERIA, RISK_REGISTER, RECOVERY_AND_ROLLBACK_PLAN)
-Last activity: 2026-07-10 ~22:35 — Dalga 4 yazıldı (Fable bizzat, inline; 8 spec, 27-başlık şablon tam); kayıtlı ekler çapraz işlendi (DATA_MODEL §20 D4 migration satırları + API_CONTRACTS 8b memory/audit alanları + EVENT_MODEL settings kanalı library type'ları); korpus 26/31
+Status: **KORPUS 31/31 ✓ TAMAM** — Adım 0 ✓ · D1 ✓ (5) · D2 ✓ (7) · D3 ✓ (7) · D4 ✓ (8) · D5 ✓ (5: IMPLEMENTATION_ROADMAP, TEST_STRATEGY, ACCEPTANCE_CRITERIA, RISK_REGISTER, RECOVERY_AND_ROLLBACK_PLAN). Sözleşme Adım 2: **EXECUTION BAŞLAR** — IMPLEMENTATION_ROADMAP E1.1'den (Fable bizzat; 12 Temmuz gece → Opus ilk ✓'siz adımdan). Canlı ilerleme: roadmap adım tablosu.
+Last activity: 2026-07-10 ~23:00 — Dalga 5 yazıldı (Fable bizzat, inline); U4 kaydı (JARVIS "sistem sonrası" dilimi; MASTER_PLAN referans düzeltmesi U3→U4); korpus kapanış commit'i
 
 Progress: [███████░░░] 66%
 Phase progress: 8.4/11 ≈ %76 (plan-bazlı %66; Faz 10-11 planları kayda girince plan-bazlı yüzde aşağı oynayabilir, normaldir)

@@ -112,7 +112,7 @@ Her workstream = spec seti + execution paketi. Bağımlılık oku: üsttekiler a
 | 9 | Library + skills + plugins + memory | Kısmi: memory-router; library YOK | YENİ+GENİŞLER (WS-G) |
 | 10 | Test + kalite + güvenlik + production readiness | Kısmi: faz-başı verification vardı | GENİŞLER (WS-H); güvenlik SERTLEŞTİRME ertelenmiş sicilde |
 | 11 | Outleteuro pilotu: mevcut WooCommerce/WordPress e-ticaret sitesi holding uzmanlarınca mükemmelleştirilir, tam otonom mağazaya (alış+satış) dönüştürülür, AYRI bir alt-OS spawn şirket olarak doğar (CEO sözlü düzeltmesi 2026-07-10) | Roadmap Faz 11 (satış motoru) ile örtüşür | SONRA — holding bitmeden başlamaz; her şey bitince İLK PİLOT |
-| — | JARVIS voice (mevcut Faz 9) | CEO fazlarında görünmüyor | Ertelendi (09-03..05); korpus sonrası re-baseline'da yeri CEO'ya sorulmaz, IMPLEMENTATION_ROADMAP'te "sistem sonrası" dilimine yazılır — kayıtlı uyarlama U3 |
+| — | JARVIS voice (mevcut Faz 9) | CEO fazlarında görünmüyor | Ertelendi (09-03..05); korpus sonrası re-baseline'da yeri CEO'ya sorulmaz, IMPLEMENTATION_ROADMAP'te "sistem sonrası" dilimine yazılır — kayıtlı uyarlama U4 |
 
 ## 7. DEADLINE STRATEJİSİ (12 Temmuz)
 

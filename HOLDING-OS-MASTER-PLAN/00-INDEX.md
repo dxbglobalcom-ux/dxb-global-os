@@ -79,11 +79,13 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 
 | # | Dosya | Direktif kaynağı | Durum |
 |---|-------|------------------|-------|
-| 27 | IMPLEMENTATION_ROADMAP.md | madde 14 (uygulama sırası + Opus devralma noktaları) | — |
-| 28 | TEST_STRATEGY.md | §15 | — |
-| 29 | ACCEPTANCE_CRITERIA.md | §38 + modül-başı | — |
-| 30 | RISK_REGISTER.md | §15 | — |
-| 31 | RECOVERY_AND_ROLLBACK_PLAN.md | §15 + §16 | — |
+| 27 | IMPLEMENTATION_ROADMAP.md | madde 14 (uygulama sırası + Opus devralma noktaları) | ✓ |
+| 28 | TEST_STRATEGY.md | §15 | ✓ |
+| 29 | ACCEPTANCE_CRITERIA.md | §38 + modül-başı | ✓ |
+| 30 | RISK_REGISTER.md | §15 | ✓ |
+| 31 | RECOVERY_AND_ROLLBACK_PLAN.md | §15 + §16 | ✓ |
+
+**KORPUS 31/31 ✓ (2026-07-10 ~23:00).** Sözleşme Adım 2 yürürlükte: execution ayrı onay İSTEMEZ — sıradaki iş IMPLEMENTATION_ROADMAP E1.1'den başlar (Fable bizzat, 12 Temmuz son geceye kadar; sonra Opus ilk ✓'siz adımdan). Canlı ilerleme işareti artık IMPLEMENTATION_ROADMAP adım tablosundadır.
 
 ## Kayıtlı uyarlamalar (sessiz sapma yasak — master-plan-fidelity)
 
@@ -92,6 +94,7 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 | U1 | Port 3100 → 3000 | Sistem 3000'de canlı; direktifteki 3100 yazım kaynaklı | Bu tablo + sözleşme Adım 0 |
 | U2 | Dalga sırası: 31 dosya 5 dalgada, dalga=atomik commit | 12 Temmuz kesinti riski — kesinti kayıpsız devam için | Sözleşme Adım 1 (CEO onaylı plan) |
 | U3 | Kadro kapsamı G7: `agency-agents/` legacy 153 + Fable'ın olmazsa-olmaz ekleri; persona = canlı çalışan | CEO sözlü ek hükmü 2026-07-10 ~21:35 (spec'lere dışarıdan işlendi, Fable devraldı) | EMPLOYEE_PERSONA_STANDARD G7 + HR §27 + bu tablo |
+| U4 | JARVIS voice (eski Faz 9, 09-03..05) "sistem sonrası" dilimine ertelendi — CEO Faz 1-11 listesinde yer almıyor | BEKLENTİLER pivotu; roadmap re-baseline korpus sonrası (MASTER_PLAN §6 son satır) | MASTER_PLAN §6 + STATE.md + bu tablo |
 
 ## Doğrulama komutları (dalga kapanışında koşulur)
 
