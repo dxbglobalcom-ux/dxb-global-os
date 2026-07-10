@@ -33,7 +33,8 @@ Plan: 2 of 5 (wave 1 complete: 09-01 + 09-02)
 Status: Phase 08 MACHINE-COMPLETE (CEO göz/telefon/VPS kalemleri bekliyor — §5 checklist); Phase 09 wave 1 ✓ — next 09-03 (briefing pipeline + cron)
 Last activity: 2026-07-10 — 09-01 (Speaches TR round trip + VPS spec) ve 09-02 (v_morning_briefing + tests) tamamlandı, session-crash sonrası kanıtlar yeniden koşuldu
 
-Progress: [████████░░] 75%
+Progress: [███████░░░] 66%
+Phase progress: 8.4/11 ≈ %76 (plan-bazlı %66; Faz 10-11 planları kayda girince plan-bazlı yüzde aşağı oynayabilir, normaldir)
 
 ## Performance Metrics
 

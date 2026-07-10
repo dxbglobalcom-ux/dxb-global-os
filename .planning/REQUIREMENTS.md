@@ -76,7 +76,8 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 ### JARVIS Voice (VOICE)
 
 - [ ] **VOICE-01**: Morning voice briefing: spoken summary of overnight work, approval queue, costs (Speaches TTS)
-- [ ] **VOICE-02**: Spoken commands: STT → kernel intent path (voice = second kernel client). [CEO B2, 2026-07-09] Wake word is a runtime-configurable config value (openWakeWord; never hard-coded), default **"Selamünaleyküm ya Hamza"**. Verbatim clause binding on the Phase 9 spec: *"JARVIS, dashboard'a EŞİT tam komut kanalıdır — CEO'nun her sesli direktifi kernel intent yoluna iner ve ilgili departmana dağıtılır; asistan istenen işe itiraz etmez, risk ve faydayı bildirir, son karar CEO'nundur; outward aksiyonlar mevcut GATE-01 draft+onay akışından geçer."*
+- [ ] **VOICE-02**: Spoken commands: STT → kernel intent path (voice = second kernel client). [CEO B2, 2026-07-09] Wake word is a runtime-configurable config value (openWakeWord; never hard-coded), default **"Selamünaleyküm ya Hamza"**. [CEO C1, 2026-07-10] Wake word is the **PRIMARY activation path** (not an optional layer): on the CEO laptop `wakeword.enabled=true` is the default, push-to-talk is the fallback. Microphone + wake listener run ONLY on the CEO laptop; the VPS never listens (LOCKED, reconfirmed). Verbatim clause binding on the Phase 9 spec: *"JARVIS, dashboard'a EŞİT tam komut kanalıdır — CEO'nun her sesli direktifi kernel intent yoluna iner ve ilgili departmana dağıtılır; asistan istenen işe itiraz etmez, risk ve faydayı bildirir, son karar CEO'nundur; outward aksiyonlar mevcut GATE-01 draft+onay akışından geçer."*
+- [ ] **VOICE-03**: [CEO C2, 2026-07-10] Conversational voice dialogue: after the briefing (and at any time), the CEO can hold a **multi-turn spoken dialogue** with the kernel — follow-up questions, drill-down, and chained commands (e.g. "onaylar neymiş?" → JARVIS lists them → "ikincisini onayla" → kernel executes). One-shot intents do NOT satisfy this. The dialogue brain is the kernel/orchestrator (session context, referent resolution across turns); JARVIS remains a pure STT/TTS channel (VOICE-02 principle). Outward actions still pass GATE-01.
 
 ### Video Learning (VID)
 
@@ -185,6 +186,7 @@ Every v1 requirement maps to exactly one phase (56/56 mapped, no orphans, no dup
 | COST-04 | Phase 8 | Pending |
 | VOICE-01 | Phase 9 | Pending |
 | VOICE-02 | Phase 9 | Pending |
+| VOICE-03 | Phase 9 (09-06, CEO onayı bekliyor) | Pending |
 | DEPT-01 | Phase 10 | Pending |
 | DEPT-02 | Phase 10 | Pending |
 | DEPT-03 | Phase 10 | Pending |
