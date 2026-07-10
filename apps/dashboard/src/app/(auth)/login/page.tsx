@@ -8,7 +8,7 @@
 // stays behind NEXT_PUBLIC_DXB_MFA_ENFORCED (AM-08-AUTH-1 keeps local dev
 // password-only; outward deploys never set the flag).
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { DxbMark } from "@/components/shell/app-shell";
 import { getDict } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
@@ -122,9 +122,40 @@ function SkylineArt() {
 }
 
 function BrandAtrium({ tagline, taglineSub, holding }: Record<string, string>) {
+  // E2.4 3D hover: pointer-driven parallax — the stage tilts ≤1.6°, the
+  // near skyline drifts more than the far haze, the key light trails the
+  // pointer. Pure CSS transforms (no WebGL dependency yet; the token-set
+  // easing drives it so no second theme leaks in — DESIGN_SYSTEM §23).
+  // prefers-reduced-motion: listeners bail, scene stays still.
+  const stageRef = useRef<HTMLDivElement>(null);
+  const raf = useRef(0);
+  useEffect(() => () => cancelAnimationFrame(raf.current), []);
+
+  function handleMove(e: React.PointerEvent<HTMLElement>) {
+    const el = stageRef.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+    const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+    cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
+      el.style.setProperty("--plx-x", nx.toFixed(3));
+      el.style.setProperty("--plx-y", ny.toFixed(3));
+    });
+  }
+  function handleLeave() {
+    const el = stageRef.current;
+    if (!el) return;
+    el.style.setProperty("--plx-x", "0");
+    el.style.setProperty("--plx-y", "0");
+  }
+
   return (
     <section
       aria-hidden
+      onPointerMove={handleMove}
+      onPointerLeave={handleLeave}
       className="relative hidden flex-1 overflow-hidden lg:block"
       style={{
         /* Scene ground: deeper than --bg on purpose (stage, not panel);
@@ -134,68 +165,108 @@ function BrandAtrium({ tagline, taglineSub, holding }: Record<string, string>) {
       }}
     >
       <div
-        className="pointer-events-none absolute inset-0"
+        ref={stageRef}
+        className="absolute inset-0 transition-transform duration-[var(--t-slow)] ease-refined"
         style={{
-          background:
-            "radial-gradient(42rem 24rem at 28% -4%, oklch(0.92 0.05 95 / 0.08), transparent 68%)",
+          transform:
+            "perspective(1400px) rotateY(calc(var(--plx-x, 0) * 1.6deg)) rotateX(calc(var(--plx-y, 0) * -1.2deg))",
+          transformStyle: "preserve-3d",
         }}
-      />
-      {/* Skyline stands on a raised horizon; a faint glow reflects below it.
-          A narrow champagne aura rises behind the spire (tight + bright —
-          never a broad wash). */}
-      <div className="absolute inset-x-0 bottom-[7%] top-0">
+      >
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%]"
+          className="pointer-events-none absolute inset-0 transition-transform duration-[var(--t-slow)] ease-refined"
           style={{
             background:
-              "radial-gradient(16rem 42rem at 50% 100%, oklch(0.88 0.08 95 / 0.07), transparent 72%)",
+              "radial-gradient(42rem 24rem at 28% -4%, oklch(0.92 0.05 95 / 0.08), transparent 68%)",
+            transform:
+              "translate3d(calc(var(--plx-x, 0) * 24px), calc(var(--plx-y, 0) * 12px), 0)",
           }}
         />
-        <SkylineFar />
-        <SkylineArt />
-      </div>
-      <div className="absolute inset-x-0 bottom-[7%] h-px overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent) 60%, transparent) 50%, transparent)",
-          }}
-        />
-        <div
-          className="login-horizon-sweep absolute inset-y-0 w-1/3"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent) 90%, white 10%), transparent)",
-          }}
-        />
-      </div>
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 h-[7%]"
-        style={{
-          background:
-            "linear-gradient(180deg, color-mix(in oklab, var(--accent) 10%, transparent), transparent 75%)",
-        }}
-      />
-
-      <div className="login-rise absolute left-[9%] top-[18%] max-w-md">
-        <div className="flex items-center gap-4">
-          <DxbMark className="size-12 text-accent" />
-          {/* Hero wordmark: display type scaled up for the signature surface */}
-          <p className="text-[2.6rem] font-semibold leading-none tracking-[0.01em] text-ink">
-            DXB <span className="text-accent">Global</span>
-          </p>
+        {/* Skyline stands on a raised horizon; a faint glow reflects below it.
+            A narrow champagne aura rises behind the spire (tight + bright —
+            never a broad wash). Depth split: far haze drifts 6px, near
+            composition 14px on a raised Z plane. */}
+        <div className="absolute inset-x-0 bottom-[7%] top-0">
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%]"
+            style={{
+              background:
+                "radial-gradient(16rem 42rem at 50% 100%, oklch(0.88 0.08 95 / 0.07), transparent 72%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 transition-transform duration-[var(--t-slow)] ease-refined"
+            style={{
+              transform:
+                "translate3d(calc(var(--plx-x, 0) * 6px), calc(var(--plx-y, 0) * 3px), 0)",
+            }}
+          >
+            <SkylineFar />
+          </div>
+          <div
+            className="absolute inset-0 transition-transform duration-[var(--t-slow)] ease-refined"
+            style={{
+              transform:
+                "translate3d(calc(var(--plx-x, 0) * 14px), calc(var(--plx-y, 0) * 7px), 32px)",
+            }}
+          >
+            <SkylineArt />
+          </div>
         </div>
         <div
-          className="mb-5 mt-7 h-px w-24"
+          className="absolute inset-x-0 bottom-[7%] h-px overflow-hidden transition-transform duration-[var(--t-slow)] ease-refined"
+          style={{
+            transform: "translate3d(calc(var(--plx-x, 0) * 10px), 0, 0)",
+          }}
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent) 60%, transparent) 50%, transparent)",
+            }}
+          />
+          <div
+            className="login-horizon-sweep absolute inset-y-0 w-1/3"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, color-mix(in oklab, var(--accent) 90%, white 10%), transparent)",
+            }}
+          />
+        </div>
+        <div
+          aria-hidden
+          className="absolute inset-x-0 bottom-0 h-[7%]"
           style={{
             background:
-              "linear-gradient(90deg, var(--accent), transparent)",
+              "linear-gradient(180deg, color-mix(in oklab, var(--accent) 10%, transparent), transparent 75%)",
           }}
         />
-        <p className="text-page-title text-ink">{tagline}</p>
-        <p className="mt-2 text-body text-ink-2">{taglineSub}</p>
+
+        <div
+          className="login-rise absolute left-[9%] top-[18%] max-w-md transition-transform duration-[var(--t-slow)] ease-refined"
+          style={{
+            transform:
+              "translate3d(calc(var(--plx-x, 0) * -4px), calc(var(--plx-y, 0) * -2px), 20px)",
+          }}
+        >
+          <div className="flex items-center gap-4">
+            <DxbMark className="size-12 text-accent" />
+            {/* Hero wordmark: display type scaled up for the signature surface */}
+            <p className="text-[2.6rem] font-semibold leading-none tracking-[0.01em] text-ink">
+              DXB <span className="text-accent">Global</span>
+            </p>
+          </div>
+          <div
+            className="mb-5 mt-7 h-px w-24"
+            style={{
+              background:
+                "linear-gradient(90deg, var(--accent), transparent)",
+            }}
+          />
+          <p className="text-page-title text-ink">{tagline}</p>
+          <p className="mt-2 text-body text-ink-2">{taglineSub}</p>
+        </div>
       </div>
 
       <p className="absolute bottom-6 left-[9%] text-micro text-ink-2 opacity-70">
@@ -225,13 +296,13 @@ export default function LoginPage() {
     const alreadyOpened = sessionStorage.getItem("dxb-door") === "open";
     sessionStorage.setItem("dxb-door", "open");
     if (reduced || alreadyOpened) {
-      router.push("/");
+      router.push("/overview");
       router.refresh();
       return;
     }
     setStep("opening");
     window.setTimeout(() => {
-      router.push("/");
+      router.push("/overview");
       router.refresh();
     }, 700);
   }
