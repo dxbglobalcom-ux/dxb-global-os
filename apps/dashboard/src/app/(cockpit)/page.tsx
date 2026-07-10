@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { getDict } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/server";
 import { TaskBoard, type FeedEvent, type WaitingTask } from "@/components/task-board";
 import { AgentRoster, type RosterAgent } from "@/components/agent-roster";
+import { TvModeToggle } from "@/components/tv-mode";
 
 // Cockpit home (UI-SPEC §5, exception-first LOCKED): asymmetric 12-col —
 // left 8 "Beni bekleyenler" + "Az önce değişti", right 4 agent roster.
@@ -61,7 +63,13 @@ export default async function CockpitPage() {
   }));
 
   return (
-    <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+    <div className="flex flex-col gap-3">
+      <div className="flex justify-end">
+        <Suspense fallback={null}>
+          <TvModeToggle enterLabel={dict.tv.enter} exitLabel={dict.tv.exit} />
+        </Suspense>
+      </div>
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
       <div className="lg:col-span-8">
         <TaskBoard
           waiting={waiting}
@@ -91,6 +99,7 @@ export default async function CockpitPage() {
             rosterTasksShort: dict.cockpit.rosterTasksShort,
           }}
         />
+      </div>
       </div>
     </div>
   );

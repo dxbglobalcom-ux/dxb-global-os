@@ -89,6 +89,7 @@ export function CommandBar({
       {/* Desktop topbar affordance */}
       <button
         type="button"
+        data-chrome="command"
         onClick={() => setOpen(true)}
         className="hidden h-9 items-center gap-2 rounded-full border border-line px-4 text-micro text-ink-2 transition-colors duration-[var(--dur-fast)] hover:text-ink md:inline-flex"
       >
@@ -102,6 +103,7 @@ export function CommandBar({
       {/* Mobile fixed strip (above the bottom tab bar) */}
       <button
         type="button"
+        data-chrome="command-mobile"
         onClick={() => setOpen(true)}
         className="fixed inset-x-4 bottom-[calc(env(safe-area-inset-bottom)+4.25rem)] flex h-11 items-center gap-2 rounded-full border border-line bg-surface/90 px-4 text-body text-ink-2 backdrop-blur-md md:hidden"
         style={{ zIndex: "var(--z-sticky)" }}

@@ -151,3 +151,11 @@ Inter/serif-cockpit · saf #000/#fff · AI-purple/neon glow/gradient-text · sid
 | A2.1 | UI içerik dili **iki dilli: İngilizce BİRİNCİL, Türkçe tam ikincil** | §3 i18n satırı güncellendi; `DEFAULT_LOCALE` en'e döner (`lib/i18n.ts` + root `lang`); tr kataloğu eş kapsamlı kalır, locale switch 08-07'de |
 
 **⛔ FABLE VERDICT (A2):** Master-plan "i18n tr/en" LOCKED kararı iki dilli desteği şart koşar, birincil dili değil — çelişki yok. Katalog altyapısı (08-01) zaten simetrik; değişiklik varsayılan dil + `lang` attribute. ONAYLANDI. — Fable 5, 2026-07-10
+
+### A3 — 2026-07-10 03:35 (makine-kaynaklı token kalibrasyonu; §9.1 audit)
+
+| # | Değişiklik | Gerekçe |
+|---|---|---|
+| A3.1 | Light tema: `--accent` 0.60→0.55, `--accent-press` 0.54→0.49, `--ok` 0.66→0.60, `--warn` 0.68→0.63 (OKLCH L) | `scripts/contrast-audit.mjs` ilk koşusu 3 FAIL verdi (on-accent/accent 3.81<4.5; ok/surface 2.83<3; warn/surface 2.95<3). Kalibrasyon sonrası 14/14 PASS iki temada. §2 "status = dark seti L−0.06" kuralı bu tablolarla güncellenmiş sayılır — ölçüm kuralı ezer |
+
+**⛔ FABLE VERDICT (A3):** Göz kararı değil ölçüm; dark tema dokunulmadı, marka-taşıyıcı yüzey aynen. ONAYLANDI. — Fable 5, 2026-07-10

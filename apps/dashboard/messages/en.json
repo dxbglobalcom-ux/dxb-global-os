@@ -175,5 +175,9 @@
     "proposal": "Proposal",
     "won": "Won",
     "lost": "Lost"
+  },
+  "tv": {
+    "enter": "TV mode",
+    "exit": "Exit TV mode"
   }
 }

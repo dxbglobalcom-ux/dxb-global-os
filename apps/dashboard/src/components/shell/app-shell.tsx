@@ -63,6 +63,7 @@ export function AppShell({
     <div className="min-h-[100dvh]">
       {/* Rail — desktop */}
       <aside
+        data-chrome="rail"
         className="group fixed inset-y-0 left-0 hidden w-16 flex-col border-r border-line bg-surface/80 backdrop-blur-md transition-[width] duration-[var(--dur)] ease-out-quint hover:w-[220px] md:flex"
         style={{ zIndex: "var(--z-sticky)" }}
       >
@@ -103,13 +104,15 @@ export function AppShell({
         {horizon}
       </div>
 
-      {/* Content */}
-      <main className="mx-auto max-w-[1600px] px-4 pb-24 pt-6 sm:px-6 md:pl-[calc(4rem+1.5rem)] md:pb-10">
+      {/* Content — A1.2: ≥1920px the cap lifts so a 34" ultrawide is filled
+          (grid widens; no dead letterbox margins) */}
+      <main className="mx-auto max-w-[1600px] px-4 pb-24 pt-6 sm:px-6 md:pl-[calc(4rem+1.5rem)] md:pb-10 min-[1920px]:max-w-[3200px] min-[1920px]:px-12">
         {children}
       </main>
 
       {/* Bottom tab bar — phone */}
       <nav
+        data-chrome="tabbar"
         className="fixed inset-x-0 bottom-0 flex border-t border-line bg-surface/85 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
         style={{ zIndex: "var(--z-sticky)" }}
       >

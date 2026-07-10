@@ -168,7 +168,8 @@ export function TaskBoard({
       </Panel>
 
       <Panel title={text.changedTitle}>
-        <ul className="divide-y divide-line">
+        {/* Live region: arriving transitions are announced politely (a11y) */}
+        <ul className="divide-y divide-line" aria-live="polite" aria-relevant="additions">
           {feed.map((event) => (
             <li
               key={event.id}

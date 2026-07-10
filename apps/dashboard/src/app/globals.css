@@ -51,12 +51,14 @@
   --ink-2: oklch(0.45 0.01 80);
   --line: oklch(0.87 0.006 85);
   --edge-light: oklch(1 0 0 / 0.6); /* derived: inset highlight stays subtle on white */
-  --accent: oklch(0.6 0.115 85);
-  --accent-press: oklch(0.54 0.105 85); /* derived: accent L−0.06 */
+  /* A3 calibration (contrast-audit 2026-07-10): accent/ok/warn darkened
+     until every §9.1 pair PASSes on white — measured, not eyeballed */
+  --accent: oklch(0.55 0.115 85);
+  --accent-press: oklch(0.49 0.105 85); /* derived: accent L−0.06 */
   --on-accent: oklch(0.985 0.005 90);
-  /* status = dark set at L−0.06 / C+0.01 (spec rule) */
-  --ok: oklch(0.66 0.15 155);
-  --warn: oklch(0.68 0.17 55);
+  /* status = dark set lowered to clear 3:1 on --surface (audit-driven) */
+  --ok: oklch(0.60 0.15 155);
+  --warn: oklch(0.63 0.17 55);
   --danger: oklch(0.57 0.21 25);
   --info: oklch(0.64 0.11 240);
 }
@@ -194,4 +196,19 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* A1.2 toplantı/TV modu: salt-okunur sunum görünümü. rem tabanlı tip
+   skalası kökten ~1.4× ölçeklenir; interaktif chrome (rail, tab bar,
+   command bar) gizlenir; canlı paneller + Horizon Line + FreshnessStamp
+   kalır. Faz 8 kapsamı: altyapı + cockpit ana görünümü. */
+:root[data-mode="tv"] {
+  font-size: 140%;
+}
+:root[data-mode="tv"] [data-chrome] {
+  display: none !important;
+}
+:root[data-mode="tv"] main {
+  padding-left: 3rem !important;
+  padding-right: 3rem !important;
 }

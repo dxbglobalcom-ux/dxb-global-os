@@ -175,5 +175,9 @@
     "proposal": "Teklif",
     "won": "Kazanıldı",
     "lost": "Kaybedildi"
+  },
+  "tv": {
+    "enter": "TV modu",
+    "exit": "TV modundan çık"
   }
 }
