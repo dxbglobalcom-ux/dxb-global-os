@@ -5,16 +5,16 @@ milestone_name: milestone
 current_phase: 09
 current_phase_name: jarvis-voice-layer
 status: executing
-stopped_at: "PHASE 8 MACHINE-COMPLETE 2026-07-10 04:20 — 7/7 plan. İLK CANLI INTENT ✓ VERIFIED 03:49 (intent daa77572 → task b70e6d4d project-management/L4 + broadcast=1; psql kanıtı 08-07-SUMMARY'de, commit 8c82581). ~04:00 reboot sonrası runtime RESTORE edildi: :3100 prod (curl 200) + resident scheduler (pg-boss intent-intake 5s zinciri) yeniden ayakta, demo seed sağlam (6 pending onay). lh-auth.mjs artık kalıcı: scripts/lh-auth.mjs. CLOSED için bekleyen (CEO): göz testi A1.4 + telefon-elde + istenirse authed Lighthouse (node scripts/lh-auth.mjs) + VPS outbox rebuild (classifier prod-SSH blokladı; CEO tek komut: ssh root@dxb-vps-1 'cd /opt/dxb && docker compose build outbox && docker compose up -d outbox'). CEO checklist: 08-VERIFICATION.md §5. Faz kapanışında /gsd-graphify build + /compact."
-last_updated: "2026-07-10T02:20:00.000Z"
-last_activity: 2026-07-09
-last_activity_desc: Phase 08 execution started
+stopped_at: "PHASE 9 WAVE 1 COMPLETE 2026-07-10 12:25 — 09-01 ✓ (Speaches: TR TTS→STT tam döngü kanıtı, Piper fahrettin + whisper-small, RSS 1.529GiB → compose 1792m+healthcheck, commit 51f0629) + 09-02 ✓ (v_morning_briefing 3 blok + 5/5 test + corrupt→FAIL→revert sensitivity, commit 9845168). Session ~11:55 çöktü, 12:13 resume, kanıtlar yeniden koşuldu. SIRADA: 09-03 briefing pipeline + 07:00 cron. Phase 8 CEO kalemleri hâlâ açık: göz testi A1.4 + telefon + VPS outbox rebuild (classifier blokladı; CEO tek komut: ssh root@dxb-vps-1 'cd /opt/dxb && docker compose build outbox && docker compose up -d outbox'). CEO checklist: 08-VERIFICATION.md §5."
+last_updated: "2026-07-10T10:25:00.000Z"
+last_activity: 2026-07-10
+last_activity_desc: Phase 09 wave 1 (09-01, 09-02) complete
 progress:
   total_phases: 11
   completed_phases: 7
   total_plans: 53
-  completed_plans: 46
-  percent: 64
+  completed_plans: 48
+  percent: 66
 ---
 
 # Project State
@@ -24,14 +24,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-05)
 
 **Core value:** Anti-baby-sitting — the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward.
-**Current focus:** Phase 08 — ceo-dashboard-crm
+**Current focus:** Phase 09 — jarvis-voice-layer
 
 ## Current Position
 
 Phase: 09 (jarvis-voice-layer) — EXECUTING (planned 8f4cb3b, 5 plans; CEO pre-approved plan + execution 07:22)
-Plan: 0 of 5
-Status: Phase 08 MACHINE-COMPLETE (CEO göz/telefon/VPS kalemleri bekliyor — §5 checklist); Phase 09 execution started per CEO order
-Last activity: 2026-07-10 — Phase 9 planned (CONTEXT + 5 plans, Fable inline)
+Plan: 2 of 5 (wave 1 complete: 09-01 + 09-02)
+Status: Phase 08 MACHINE-COMPLETE (CEO göz/telefon/VPS kalemleri bekliyor — §5 checklist); Phase 09 wave 1 ✓ — next 09-03 (briefing pipeline + cron)
+Last activity: 2026-07-10 — 09-01 (Speaches TR round trip + VPS spec) ve 09-02 (v_morning_briefing + tests) tamamlandı, session-crash sonrası kanıtlar yeniden koşuldu
 
 Progress: [████████░░] 75%
 
@@ -39,7 +39,7 @@ Progress: [████████░░] 75%
 
 **Velocity:**
 
-- Total plans completed: 0
+- Total plans completed: 48
 - Average duration: -
 - Total execution time: 0 hours
 
@@ -129,6 +129,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T02:20:00Z
-Stopped at: PHASE 8 MACHINE-COMPLETE + ilk canlı intent VERIFIED + reboot-restore (8c82581); NEXT ACTION: CEO sabah checklist'i (08-VERIFICATION §5) → faz CLOSED → /gsd-graphify build → Phase 09 planlama
+Last session: 2026-07-10T10:25:00Z
+Stopped at: Phase 09 wave 1 complete — 09-01 (51f0629) + 09-02 (9845168), session-crash sonrası tüm kanıtlar yeniden koşuldu; NEXT ACTION: 09-03 briefing pipeline + 07:00 cron → 09-04 voice command path → 09-05 gated VPS deploy. Phase 8 CEO kalemleri paralel açık (08-VERIFICATION §5)
 Resume file: None
