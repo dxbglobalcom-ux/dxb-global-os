@@ -146,7 +146,7 @@ Bu dosya sıralama katmanıdır; teknik normlar ilgili spec'lerde (her adımda r
 
 ## 12-19. İlişkiler / Yetki / Logging / Audit / Security / Error / Retry / Fallback
 
-Yürütme sırasında geçerli çapraz kurallar: evidence-before-done (her adım) · gitleaks her commit · dalga/blok = atomik commit · Broadcast yasağı yok ama postgres_changes yasak · hata durumunda adım kapatılmaz, kanıt komutu geçene kadar açık kalır · Fable penceresinde subagent yasağı sürer.
+Yürütme sırasında geçerli çapraz kurallar: evidence-before-done (her adım) · gitleaks her commit · dalga/blok = atomik commit · Broadcast yasağı yok ama postgres_changes yasak · hata durumunda adım kapatılmaz, kanıt komutu geçene kadar açık kalır · Fable penceresinde subagent yasağı sürer · **canlı `next start` altında `.next` yeniden build edilirse sunucu MUTLAKA yeniden başlatılır** (2026-07-10 dersi: eski süreç yeni asset'leri bulamaz → çıplak HTML; kanıt zinciri: build → restart → `curl <css-chunk>` 200).
 
 ## 20. Test planı / 21. Acceptance criteria
 
