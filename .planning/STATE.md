@@ -5,7 +5,7 @@ milestone_name: milestone
 current_phase: 08
 current_phase_name: ceo-dashboard-crm
 status: executing
-stopped_at: "08-05 COMPLETE 2026-07-10 03:24 (31/31 test; intent seam = intents kuyruğu + 0016 column-grant duvarı + orchestrator intake worker 5s tick + /api/intent + CommandBar/IntentStrip; commits 4f13dc9/d82cc77/70b73ee). Session toplamı: A1+A2 (66bc0f7/a8ac6fc), 08-02 (3bc1510/9b05296/29496e4), 08-03 (179a208/e89167b), 08-04 (0bd606b/cfb5956/64c3d3f). CEO uykuda (~04:40). SIRADAKİ: 08-06 (CRM, wave 3 son). Wave-3 sonunda toplu Playwright görsel turu. ⚠ residue: VPS resident restart (yeni intentIntake tick) + ilk gerçek LLM intent koşusu → 08-07; hermes 06:00 cron (e4dbe372)."
+stopped_at: "08-06 COMPLETE 2026-07-10 03:33 (39/39 test; CRM 4 entity + crm_update DEFINER kapısı 0017 + yapısal UI/RLS paritesi + provenance audit-türetimi; commits f11fdcf/35167aa). WAVE 3 BİTTİ — tüm route'lar var, konsol RSC 404'leri kapandı. Session toplamı: A1+A2, 08-02/03/04/05/06 (5 plan + 2 amendment). CEO uykuda (~04:40). SIRADAKİ: wave-3 toplu Playwright görsel turu, sonra 08-07 (wave 4 kapanış). ⚠ residue: VPS resident restart (intentIntake tick) + ilk gerçek LLM intent → 08-07; hermes 06:00 cron (e4dbe372)."
 last_updated: "2026-07-09T22:49:22.411Z"
 last_activity: 2026-07-09
 last_activity_desc: Phase 08 execution started
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 08 (ceo-dashboard-crm) — EXECUTING
-Plan: 5 of 7 complete (next: 08-06, wave 3)
+Plan: 6 of 7 complete (next: 08-07, wave 4)
 Status: Executing Phase 08
-Last activity: 2026-07-10 — 08-05 complete (command bar → kernel intent seam)
+Last activity: 2026-07-10 — 08-06 complete (CRM views + field-scoped CEO editing)
 
 Progress: [████████░░] 75%
 
