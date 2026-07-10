@@ -8,6 +8,7 @@
   "dependencies": {
     "@dxb/gateway": "workspace:*",
     "@dxb/memory-router": "workspace:*",
+    "@dxb/orchestrator": "workspace:*",
     "@dxb/shared": "workspace:*",
     "kysely": "catalog:",
     "pg-boss": "catalog:",

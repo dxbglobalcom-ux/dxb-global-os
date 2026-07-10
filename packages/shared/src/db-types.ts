@@ -207,12 +207,26 @@ export interface ToolPinsTable {
   last_checked: Date | null;
 }
 
+export interface IntentsTable {
+  id: Generated<string>;
+  text: string;
+  lang: Generated<string>;
+  source: Generated<string>;
+  actor: Generated<string>;
+  status: Generated<string>;
+  error: string | null;
+  task_ids: Generated<string[]>;
+  created_at: Timestamptz;
+  updated_at: Timestamptz;
+}
+
 export interface DB {
   tasks: TasksTable;
   tool_pins: ToolPinsTable;
   task_events: TaskEventsTable;
   departments: DepartmentsTable;
   agents: AgentsTable;
+  intents: IntentsTable;
   approvals: ApprovalsTable;
   outbox: OutboxTable;
   cost_ledger: CostLedgerTable;

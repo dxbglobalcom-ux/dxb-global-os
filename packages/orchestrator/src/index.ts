@@ -6,6 +6,8 @@ export { PACKAGE };
 export { decompose, lintBatch, chainDepth } from "./decompose.js";
 export type { DecomposedEnvelope } from "./decompose.js";
 export { dispatch } from "./dispatch.js";
+export { intakeIntentOnce, drainIntents } from "./intent-intake.js";
+export type { IntentIntakeDeps, IntakeResult } from "./intent-intake.js";
 export { runWorkerOnce, makeSteppedExecutor } from "./worker-shim.js";
 export type { StepOutcome, TaskStep, SteppedExecutorArgs } from "./worker-shim.js";
 export {

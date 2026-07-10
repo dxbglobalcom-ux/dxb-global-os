@@ -10,6 +10,7 @@ import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
 import { checkPins, readDxbMcpInventory } from "@dxb/gateway";
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
+import { drainIntents } from "@dxb/orchestrator";
 import { tick } from "./index.js";
 import { checkVelocity } from "./breaker.js";
 
@@ -20,6 +21,7 @@ export const QUEUES = {
   compaction: "memory-compaction",
   memSync: "claude-mem-sync",
   pinCheck: "tool-pin-check",
+  intentIntake: "intent-intake",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -34,6 +36,9 @@ export const QUEUES = {
 // phase-completion /gsd-graphify build cycle (repo rule), not from here.
 export const CADENCES = {
   outboxTickSeconds: 15,
+  // Command-bar seam (08-05): received intents drain on a 5s self-chain —
+  // the CEO is watching the IntentStrip, minute-grained cron is too slow.
+  intentIntakeSeconds: 5,
   reaperCron: "* * * * *", // every 60s
   breakerCron: "*/5 * * * *", // every 5min
   compactionCron: "0 3 * * *", // daily 03:00
@@ -45,6 +50,14 @@ export const CADENCES = {
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
   await boss.send(QUEUES.tick, {}, { startAfter: delaySeconds, singletonKey: QUEUES.tick });
+}
+
+async function enqueueIntentIntake(boss: PgBoss, delaySeconds: number): Promise<void> {
+  await boss.send(
+    QUEUES.intentIntake,
+    {},
+    { startAfter: delaySeconds, singletonKey: QUEUES.intentIntake },
+  );
 }
 
 export async function startScheduler(): Promise<PgBoss> {
@@ -92,12 +105,23 @@ export async function startScheduler(): Promise<PgBoss> {
     await checkPins(getDb(), await readDxbMcpInventory());
   });
 
+  // Command-bar intent intake (08-05): same re-arm-even-on-throw discipline
+  // as the outbox tick — a dead chain would silently orphan CEO intents.
+  await boss.work(QUEUES.intentIntake, async () => {
+    try {
+      await drainIntents();
+    } finally {
+      await enqueueIntentIntake(boss, CADENCES.intentIntakeSeconds);
+    }
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
   await boss.schedule(QUEUES.memSync, CADENCES.memSyncCron);
   await boss.schedule(QUEUES.pinCheck, CADENCES.pinCheckCron);
   await enqueueTick(boss, 0); // bootstrap the 15s chain
+  await enqueueIntentIntake(boss, 0); // bootstrap the 5s intent chain
 
   return boss;
 }
