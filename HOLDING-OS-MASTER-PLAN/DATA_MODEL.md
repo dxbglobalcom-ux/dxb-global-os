@@ -320,8 +320,14 @@ Madde 4 sınırı: bu şema yeni kimlik/erişim bürokrasisi EKLEMEZ; RLS mevcut
 | Görünürlük | `0022x_observability_family` | DROP aile (append-only, dış FK yok) |
 | İş | `0023x_workflow_project_family` | DROP aile + tasks.project_id DROP |
 | Bilgi | `0024x_library_family` | DROP aile |
+| Audit ekleri (D4) | `0022x-b_audit_ext` — `file_changes.review_status + reverted_by`, `audit_log.detail_ref` | Kolonlar DROP (AUDIT_AND_LOGGING §4) |
+| Project OS (D4) | `0023x-b_project_os` — `project_members, project_milestones, task_dependencies, project_risks` + `projects.links`, `workflows.project_id` | Ekler DROP; projects çekirdeği yaşar (PROJECT_OS §4) |
+| Workflow snapshot (D4) | `0023x` içine ek kolon: `workflow_runs.steps_snapshot jsonb NOT NULL DEFAULT '[]'` | Kolon DROP (WORKFLOW_ENGINE §10) |
+| Library ekleri (D4) | `0024x-b_library_ext` — `library_items.owner_employee_id`, `library_usage_log`, `library_change_log` | Ekler DROP (HOLDING_LIBRARY §4) |
+| API destek (D4) | `0025x_api_support` — `control_idempotency` + `v_*` view kataloğu + `notify_broadcast` fn | View'lar + tablo DROP (API_CONTRACTS §4, EVENT_MODEL §5) |
+| Memory köprüleri (D4) | `0026x_memory_holding` — `memory_index.run_id`, `memory_index.scope` | Kolonlar DROP (MEMORY_ARCHITECTURE §22) |
 
-Her migration dosyası sonunda `-- ROLLBACK:` bloğu (komutlar hazır, elle koşulur). Sıra bağımlılığı: 0020x → 0021x → 0022x → 0023x → 0024x (FK yönleri).
+Her migration dosyası sonunda `-- ROLLBACK:` bloğu (komutlar hazır, elle koşulur). Sıra bağımlılığı: 0020x → 0021x → 0022x → 0023x → 0024x (FK yönleri); D4 ekleri kendi ailesinden sonra herhangi bir noktada, 0025x tüm ailelerden SONRA (view bağımlılığı).
 
 ## 22. Uygulama sırası (doğrulamalı)
 

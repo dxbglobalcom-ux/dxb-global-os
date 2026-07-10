@@ -1,0 +1,126 @@
+# WORKFLOW_ENGINE_SPEC — DXB GLOBAL AI-NATIVE HOLDING OS
+
+> Dalga 4 · Yazar: Fable 5 bizzat · Kaynak hüküm: direktif madde 6.4 (Workflow Settings, 17 kalem birebir) · Üst: [[SYSTEM_ARCHITECTURE]] §6 · Kardeşler: [[AGENT_ORCHESTRATION_SPEC]] (ajan adımı yürütücüsü), [[APPROVAL_ENGINE_SPEC]] (approval adımı), [[MODEL_ROUTING_SPEC]] (model atama), [[EVENT_MODEL]] (trigger + yayın)
+
+## 1. Amaç
+
+pg-boss üstünde CEO-görünür ve CEO-düzenlenebilir **deklaratif workflow varlığı**: bugün kod-tanımlı job zincirleri, DB'de yaşayan `workflows/workflow_steps` kayıtlarına taşınır; CEO dashboard'dan oluşturur, düzenler, kopyalar, durdurur, yeniden başlatır — kod dokunuşu olmadan (madde 2 "Bir workflow'u durdurabilmeli/yeniden başlatabilmeli" hükmünün motoru).
+
+## 2. Gereksinimler (madde 6.4 → karşılık)
+
+| Direktif kalemi | Karşılık |
+|-----------------|----------|
+| Oluşturma / düzenleme / kopyalama / devre dışı | `control_workflow_{create,update,copy,disable}` fn'leri ([[API_CONTRACTS]] 8b) |
+| Trigger ayarlama | `workflows.trigger` jsonb: `{kind:'cron'|'event'|'manual', ...}` |
+| Model atama | adım config `model_role_slot` → [[MODEL_ROUTING_SPEC]] slot çözümü (doğrudan model ID sabitlemek istisna, slot varsayılan) |
+| Çalışan atama | adım config `employee_id` (aktif + persona v2 kapısı fn'de denetlenir) |
+| Approval / review / retry / fallback adımı | `workflow_steps.kind` enum'u birebir (DATA_MODEL 4.4) |
+| Bütçe sınırı / token sınırı / zaman aşımı | `workflows.budget_eur, token_limit, timeout_s` — koşu-düzeyi enforcement §17 |
+| Risk seviyesi | `workflows.risk` → approval zorunluluğu eşiği ([[APPROVAL_ENGINE_SPEC]] risk matrisi) |
+| Logging seviyesi | `workflows.logging_level: minimal|normal|verbose` — [[AUDIT_AND_LOGGING_SPEC]] §14 semantiği |
+| Output standardı | `workflows.output_standard` → Fable Hook post-gate denetim girdisi ([[FABLE_5_HOOK_SPEC]]) |
+
+## 3. Mimari
+
+```
+trigger (cron | event | manual)
+  → pg-boss job 'workflow.run' {workflow_id}
+    → runner (packages/kernel içinde workflow modülü — YENİ; resident servis DEĞİL)
+      adım döngüsü: workflow_steps sırayla (seq)
+        agent    → orchestrator spawn (hook pre/post kapıları dahil)
+        approval → approvals satırı aç → run status='waiting_approval' (PARK, retry değil)
+        review   → reviewer çalışan koşusu; verdict fail → yapılandırılmış aksiyon (§17)
+        retry    → önceki adım için policy uygula (max_attempts, backoff)
+        fallback → alternatif adım/slot zincirine geç
+      her geçiş: workflow_runs.status + task_events/agent_runs satırları + Broadcast (ops:live)
+```
+
+Karar (⛔ mimari-kritik): motor **kernel worker içinde kütüphane**dir, ayrı servis değildir (R5 RAM bütçesi + Opus işletim yükü). Ayrı servisleştirme ancak ölçüm + CEO onayıyla.
+
+## 4. Veri modeli
+
+`workflows, workflow_steps, workflow_runs` — [[DATA_MODEL]] 4.4 normatif ve yeterli; bu spec ek tablo AÇMAZ. Adım `config` jsonb şemaları `packages/shared/src/contracts/workflow-steps.ts` Zod'unda (kind-başı ayrı şema; fn yazımda doğrular).
+
+## 5. Component yapısı / 6. Backend yapısı
+
+- `packages/kernel/src/workflow/` — runner, step handlers (kind-başı bir dosya), trigger kaydedici.
+- pg-boss job tipleri: `workflow.run` (koşu başlat/devam ettir) · `workflow.step` (tek adım — uzun adımlar için ayrı job, timeout izolasyonu) · cron trigger'lar pg-boss schedule API'siyle (`schedule('wf:<slug>', cron)`).
+- Event trigger: EVENT_MODEL kanal olayı → kernel'deki eşleyici (`trigger.kind='event'` kayıtlarına abone tek dinleyici) → `workflow.run` job.
+- Devam ettirme: approval kararı ([[APPROVAL_ENGINE_SPEC]] karar fn'i) `workflow.run` job'ını `{resume_from: step}` ile yeniden kuyruğa atar.
+
+## 7. Frontend yapısı
+
+Workflow Settings sayfası ([[SETTINGS_AND_CONTROL_SPEC]] §6.4 yüzeyi): adım listesi dikey kompozisyon (sürükle-sıra), adım-başı config formu (Zod şemasından türetilmiş), koşu geçmişi paneli (workflow_runs → drill-down agent_runs). Canlı koşu görünümü Live Operations'a gömülü (`corr.workflow_run_id` ile filtre).
+
+## 8. API'ler
+
+[[API_CONTRACTS]] 8b `workflows` alanı: create, update, copy, enable, disable, run_now, cancel_run, resume_run. Ek kontrat detayı: `update` yeni `version` üretir (aşağıda §10); `copy` slug'a `-copy-n` ekler, `enabled=false` başlar (yanlışlıkla çift cron yok).
+
+## 9. Event yapısı
+
+Yayınlar: `ops:live` üzerinden `run.*` type'ları (workflow_run corr'lu); `projects` kanalına `dependency.blocked` (proje-bağlı workflow'larda). Trigger tarafı: `trigger.kind='event'` eşleşmesi type + entity.kind filtresiyle (`{"kind":"event","match":{"type":"approval.decided","entity_kind":"approval"}}`).
+
+## 10. State yönetimi (koşu durum makinesi + sürümleme)
+
+- `workflow_runs.status`: `running → waiting_approval → running → succeeded|failed|cancelled`. `waiting_approval` PARK'tır — retry sayacı işlemez, timeout işlemez (insan kapısı sınırsız bekler; hatırlatma APPROVAL_ENGINE'de).
+- Sürümleme (bağlayıcı): koşu, başladığı andaki `workflows.version` + adım seti **snapshot**'ıyla yürür (`workflow_runs` başlangıçta adım listesini config'iyle donduran `steps_snapshot` — runner belleğinde değil, run kaydının jsonb'sinde; DATA_MODEL 4.4'e kayıtlı ek: `workflow_runs.steps_snapshot jsonb`). Düzenleme koşan run'ı DEĞİŞTİRMEZ; yeni koşu yeni sürümle başlar.
+- `current_step` her adım kapanışında güncellenir — kesinti sonrası kaldığı adımdan devam (pg-boss retry job'u aynı run'ı `resume_from` ile alır).
+
+## 11. Database tabloları / 12. İlişkiler
+
+DATA_MODEL 4.4 + kayıtlı ek: `workflow_runs.steps_snapshot jsonb NOT NULL DEFAULT '[]'` (Dalga 4 kapanışında DATA_MODEL'e işlenir). İlişki: `agent_runs.workflow_run_id` zinciri drill-down omurgası.
+
+## 13. Yetkilendirme
+
+Workflow CRUD yalnız CEO (control seam); `run_now` CEO veya sistem (cron/event); ajanlar workflow tanımını DEĞİŞTİREMEZ (gateway profillerinde workflow yazım fn'i yok). Çalışan ataması v2-persona-aktif kontrolünden geçer (HR kuralı fn içinde).
+
+## 14. Logging / 15. Audit
+
+`logging_level` semantiği: `minimal` = yalnız koşu başlangıç/bitiş + hata; `normal` = + adım geçişleri + karar özetleri; `verbose` = + tool_calls tam kaydı + adım config dump (özet+hash kuralı yine geçerli). Tanım değişiklikleri audit_log'a (`detail_ref` → settings_change_log değil, kendi fn audit satırı); koşu detayı observability ailesinde.
+
+## 16. Security
+
+Adım config'inde secret taşınamaz (Zod şemaları credential alanı içermez; vault referansı adı geçebilir, değeri asla). `risk='high'|'critical'` workflow'un para-çıkışı adımı üretmesi durumunda approval adımı OTOMATİK eklenir (fn, `outbox`a giden aksiyon tespit ederse approval'sız kaydı REDDEDER — B7b kapısının workflow karşılığı). Madde 4: yeni güvenlik bürokrasisi yok.
+
+## 17. Error handling / 18. Retry / 19. Fallback
+
+- Adım hatası sınıflaması SYSTEM_ARCHITECTURE §17 üçlüsü: transient → retry adımı/policy; policy (hook reddi) → escalation (FABLE_5_HOOK zinciri); fatal → run failed + `alerts` kanalına `alert.raised`.
+- Retry adımı: `{max_attempts, backoff_s, on_exhaust: 'fail'|'fallback'|'escalate'}`.
+- Fallback adımı: `{alternate_steps:[...]}` — ana adım tükenince alternatif zincir; model fallback'i AYRI mekanizmadır (model_catalog zinciri, orchestrator içinde).
+- Bütçe/token/timeout enforcement: adım başlamadan `cost_ledger` koşu toplamı kontrol (aşımda run `failed`, sebep `BUDGET_EXCEEDED`); token_limit LiteLLM virtual key üstünden koşu-etiketli sayaç; timeout_s pg-boss job `expireInSeconds` karşılığı (approval parkı hariç).
+- Review adımı fail: `{on_fail:'retry_prev'|'fallback'|'escalate'|'fail'}` — varsayılan `escalate`.
+
+## 20. Test planı / 21. Acceptance criteria
+
+- Birim: kind-başı step handler (mock orchestrator); durum makinesi geçiş tablosu testi.
+- Entegrasyon: 5-adımlı örnek workflow (agent→review→approval→agent→bitiş) test DB'de uçtan uca; approval parkında retry/timeout işlemediği kanıtı.
+- Kabul: madde 6.4'ün 17 kaleminin HER biri UI'dan ayarlanabilir ve koşuda etkisi gözlenebilir; koşan run düzenleme yapılınca etkilenmez (snapshot kanıtı); kesinti sonrası `resume_from` devam kanıtı.
+
+## 22. Migration planı / 23. Rollback planı
+
+0023x ailesi + `steps_snapshot` ek kolonu. Rollback: workflow tabloları DROP — mevcut kod-tanımlı pg-boss job'ları bağımsız yaşamaya devam eder (motor katmanı çıkarılabilir, çekirdek bozulmaz — bilinçli izolasyon).
+
+## 24. Uygulama sırası (doğrulamalı)
+
+```bash
+supabase db push && psql "$DB" -c "\d workflow_runs" | grep steps_snapshot        # → kolon var
+curl -s -X POST localhost:3000/api/control/workflows -H "Idempotency-Key: $(uuidgen)" -H "Cookie: $CEO_SESSION" \
+  -d '{"action":"create","payload":{"slug":"smoke-wf","name":"Smoke","trigger":{"kind":"manual"},"steps":[{"kind":"agent","config":{"employee_id":"...","model_role_slot":"execution"}}]}}'
+# → {"ok":true, ...}
+curl -s -X POST ... -d '{"action":"run_now","payload":{"slug":"smoke-wf"}}'        # → run_id
+psql "$DB" -c "SELECT status FROM workflow_runs ORDER BY started_at DESC LIMIT 1;" # → running|succeeded
+```
+
+## 25. Bağımlılıklar / 26. Riskler / 27. Edge case'ler
+
+- Bağımlılık: pg-boss 12 (session-mode 5432 — transaction pooling YASAK), 0023x, orchestrator + hook entegrasyonu, APPROVAL karar yolu.
+- Risk: event-trigger fırtınası (olay başına workflow) → eşleyicide workflow-başı eşzamanlılık kuralı: **singleton varsayılan** (`concurrency:'singleton'` — koşarken gelen tetik kuyruklanmaz, loglanır+atlanır; `'queue'` opt-in).
+- Edge: devre dışı workflow'a tetik → skip + `task_events` notu; atanan çalışan arşivlenmiş → adım başlangıcında fn reddi → run failed sebepli; adım silinmiş sürümde resume → snapshot sayesinde eski adımla biter; cron + manual çakışması → singleton kuralı çözer; timeout approval parkında → işlemez (bilinçli), hatırlatma eskalasyonu APPROVAL_ENGINE'de.
+
+## Opus-devralma notu
+
+Adım kind semantiği + durum makinesi + snapshot kuralı kapalıdır; Opus yeni adım kind'ı eklemez (⛔ — en güçlü model + CEO onayı), yeni workflow TANIMLARI eklemek serbesttir (veri işi, kod işi değil). Runner iskeleti kind-başı handler dosyalarıyla mekanik genişler.
+
+## Done definition (bu spec)
+
+27 başlık ✓ · madde 6.4'ün 17 kalemi birebir eşlendi ✓ · durum makinesi + snapshot sürümleme ✓ · park≠retry ayrımı ✓ · B7b workflow karşılığı (approval'sız para-çıkışı reddi) ✓ · doğrulama komutları ✓ · KALIR/YENİ (motor=kütüphane kararı ⛔) ✓ · Opus-devralma ✓

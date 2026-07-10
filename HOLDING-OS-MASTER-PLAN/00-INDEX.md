@@ -64,14 +64,16 @@ Durum değerleri: `—` başlanmadı · `YAZILIYOR` · `✓` tamam (derinlik şa
 
 | # | Dosya | Direktif kaynağı | Durum |
 |---|-------|------------------|-------|
-| 19 | API_CONTRACTS.md | §15 | — |
-| 20 | EVENT_MODEL.md | §15 | — |
-| 21 | WORKFLOW_ENGINE_SPEC.md | madde 6.4 | — |
-| 22 | MEMORY_ARCHITECTURE.md | §15 | — |
-| 23 | HOLDING_LIBRARY_SPEC.md | madde 13 | — |
-| 24 | PROJECT_OPERATING_SYSTEM_SPEC.md | madde 12 + §23 | — |
-| 25 | SECURITY_MODEL.md | madde 4 (ertelenmiş-sertleştirme sicili; yeni bürokrasi YOK) | — |
-| 26 | AUDIT_AND_LOGGING_SPEC.md | madde 10.2-10.4 | — |
+| 19 | API_CONTRACTS.md | §15 | ✓ |
+| 20 | EVENT_MODEL.md | §15 | ✓ |
+| 21 | WORKFLOW_ENGINE_SPEC.md | madde 6.4 | ✓ |
+| 22 | MEMORY_ARCHITECTURE.md | §15 | ✓ |
+| 23 | HOLDING_LIBRARY_SPEC.md | madde 13 | ✓ |
+| 24 | PROJECT_OPERATING_SYSTEM_SPEC.md | madde 12 + §23 | ✓ |
+| 25 | SECURITY_MODEL.md | madde 4 (ertelenmiş-sertleştirme sicili; yeni bürokrasi YOK) | ✓ |
+| 26 | AUDIT_AND_LOGGING_SPEC.md | madde 10.2-10.4 | ✓ |
+
+Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envanterleri) DATA_MODEL §20 tablosuna, API_CONTRACTS 8b envanterine ve EVENT_MODEL §9b kataloğuna aynı dalga içinde işlendi — devirli satır açık kalmadı.
 
 ### Dalga 5 — Teslimat
 
