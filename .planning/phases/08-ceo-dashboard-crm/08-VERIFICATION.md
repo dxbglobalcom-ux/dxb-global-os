@@ -58,7 +58,7 @@ Kapsam: 7 planın 7'si execute edildi (08-01 önceki session; 08-02..07 bu sessi
 2. **Göz testi:** Cockpit'i referans görselle yan yana koy — daha mı güzel? (A1.4 kabul ölçütü)
 3. Onaylar sayfasında 6 demo kaydı gör: yüksek riskli ödeme kartında çift-teyit davranışını dene (ilk tık → 600ms → teyit); düşük riskte "Tümünü onayla (2)".
 4. ⌘K → Türkçe bir niyet yaz (örn. "Outleteuro ana sayfa başlıklarını yenile") → IntentStrip'te chip'in ilerlemesini izle.
-5. Telefondan aç (aynı ağda `http://<laptop-ip>:3100`) — alt tab bar + stacked tablolar.
+5. Telefondan aç (aynı ağda `http://<laptop-ip>:3100`; şu an `http://192.168.178.30:3100`) — alt tab bar + stacked tablolar.
 6. TV modu: cockpit'te sağ üst "TV modu" → duvar ekranı görünümü; çıkış sağ üstte.
 7. İstersen authed Lighthouse: repo kökünden `node scripts/lh-auth.mjs` — açılan pencerede giriş+TOTP'yi sen yaparsın, script skorları basar (sır basmaz, cookie dosyası kendini siler).
 
