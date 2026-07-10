@@ -82,5 +82,28 @@
     "emptyAction": "Kokpite dön",
     "fatigue": "{n} onay birikti — kaşe-basma riski. Yavaşlayın, dikkatle inceleyin.",
     "errorPanelTitle": "Karar uygulanamadı — hiçbir değişiklik yapılmadı"
+  },
+  "costs": {
+    "title": "Maliyetler",
+    "tilesTitle": "Toplamlar",
+    "today": "Bugün",
+    "week": "Son 7 gün",
+    "monthToDate": "Bu ay",
+    "budget": "Bütçe kullanımı",
+    "breakdownTitle": "Kırılım",
+    "dimDepartment": "Departman",
+    "dimModel": "Model",
+    "dimMode": "Mod",
+    "periodToday": "Bugün",
+    "period7d": "7g",
+    "period30d": "30g",
+    "empty": "Bu dönemde kayıtlı harcama yok."
+  },
+  "task": {
+    "costSoFar": "bugüne dek harcama",
+    "back": "Kokpite dön",
+    "timelineTitle": "Denetim zaman hattı",
+    "timelineEmpty": "Henüz denetim kaydı yok.",
+    "payload": "İçerik"
   }
 }

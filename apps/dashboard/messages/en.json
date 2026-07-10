@@ -82,5 +82,28 @@
     "emptyAction": "Back to cockpit",
     "fatigue": "{n} approvals are pending — rubber-stamp risk. Slow down and review with care.",
     "errorPanelTitle": "Decision failed — nothing was applied"
+  },
+  "costs": {
+    "title": "Costs",
+    "tilesTitle": "Totals",
+    "today": "Today",
+    "week": "Last 7 days",
+    "monthToDate": "This month",
+    "budget": "Budget used",
+    "breakdownTitle": "Breakdown",
+    "dimDepartment": "Department",
+    "dimModel": "Model",
+    "dimMode": "Mode",
+    "periodToday": "Today",
+    "period7d": "7d",
+    "period30d": "30d",
+    "empty": "No spend recorded in this period."
+  },
+  "task": {
+    "costSoFar": "spent so far",
+    "back": "Back to cockpit",
+    "timelineTitle": "Audit timeline",
+    "timelineEmpty": "No audit entries yet.",
+    "payload": "Payload"
   }
 }
