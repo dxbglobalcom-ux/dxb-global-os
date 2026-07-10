@@ -32,8 +32,8 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 Phase: KORPUS (BEKLENTİLER plan-first fazı; roadmap re-baseline korpus sonrası)
 Plan: quick/20260710-beklentiler-master-plan-v2 + HOLDING-OS-MASTER-PLAN/00-INDEX.md durum tablosu
-Status: Adım 0 ✓ — Dalga 1 ✓ (5/5) — **Dalga 2 ✓ (7/7: CEO_COMMAND_CENTER_SPEC, DESIGN_SYSTEM, SETTINGS_AND_CONTROL, MODEL_ROUTING, OBSERVABILITY, APPROVAL_ENGINE, COST_CONTROL)** — sırada Dalga 3 (organizasyon+ajanlar: ORGANIZATION_ENGINE, AGENT_ORCHESTRATION, FABLE_5_HOOK, EMPLOYEE_PERSONA_STANDARD, HR_OPERATING_SYSTEM, PERMISSION_MODEL, HOLDING_OS_PRODUCT)
-Last activity: 2026-07-10 ~20:40 — Dalga 2 yazıldı (Fable bizzat, inline; 7 spec, 27-başlık şablon tam); gitleaks 0 leak (204KB); dalga commit'i atıldı — korpus 11/31
+Status: Adım 0 ✓ — Dalga 1 ✓ (5/5) — Dalga 2 ✓ (7/7) — **Dalga 3 ✓ (7/7: ORGANIZATION_ENGINE, AGENT_ORCHESTRATION, FABLE_5_HOOK, EMPLOYEE_PERSONA_STANDARD, HR_OPERATING_SYSTEM, PERMISSION_MODEL, HOLDING_OS_PRODUCT)** — sırada Dalga 4 (platform kontratları: API_CONTRACTS, EVENT_MODEL, WORKFLOW_ENGINE, MEMORY_ARCHITECTURE, HOLDING_LIBRARY, PROJECT_OPERATING_SYSTEM, SECURITY_MODEL, AUDIT_AND_LOGGING)
+Last activity: 2026-07-10 ~21:40 — Dalga 3 yazıldı (Fable bizzat, inline; 7 spec, 27-başlık şablon tam); U3 kaydı: kadro G7 = agency-agents 153 legacy + Fable olmazsa-olmaz ekleri (CEO sözlü hükmü ~21:35); gitleaks 0 leak (287KB); dalga commit'i — korpus 18/31
 
 Progress: [███████░░░] 66%
 Phase progress: 8.4/11 ≈ %76 (plan-bazlı %66; Faz 10-11 planları kayda girince plan-bazlı yüzde aşağı oynayabilir, normaldir)

@@ -52,13 +52,13 @@ Durum değerleri: `—` başlanmadı · `YAZILIYOR` · `✓` tamam (derinlik şa
 
 | # | Dosya | Direktif kaynağı | Durum |
 |---|-------|------------------|-------|
-| 12 | ORGANIZATION_ENGINE_SPEC.md | §15(org) + madde 5.3 | — |
-| 13 | AGENT_ORCHESTRATION_SPEC.md | madde 5.2 + 18 | — |
-| 14 | FABLE_5_HOOK_SPEC.md | madde 7 (Intelligence & Discipline Hook) | — |
-| 15 | EMPLOYEE_PERSONA_STANDARD.md | madde 8 (persona + sicil; CEO emri: tümü Fable yazar) | — |
-| 16 | HR_OPERATING_SYSTEM_SPEC.md | madde 9 | — |
-| 17 | PERMISSION_MODEL.md | §15 listesi | — |
-| 18 | HOLDING_OS_PRODUCT_SPEC.md | madde 1 (doğru tanım) | — |
+| 12 | ORGANIZATION_ENGINE_SPEC.md | §15(org) + madde 5.3 | ✓ |
+| 13 | AGENT_ORCHESTRATION_SPEC.md | madde 5.2 + 18 | ✓ |
+| 14 | FABLE_5_HOOK_SPEC.md | madde 7 (Intelligence & Discipline Hook) | ✓ |
+| 15 | EMPLOYEE_PERSONA_STANDARD.md | madde 8 (persona + sicil; CEO emri: tümü Fable yazar) | ✓ |
+| 16 | HR_OPERATING_SYSTEM_SPEC.md | madde 9 | ✓ |
+| 17 | PERMISSION_MODEL.md | §15 listesi | ✓ |
+| 18 | HOLDING_OS_PRODUCT_SPEC.md | madde 1 (doğru tanım) | ✓ |
 
 ### Dalga 4 — Platform kontratları
 
@@ -89,6 +89,7 @@ Durum değerleri: `—` başlanmadı · `YAZILIYOR` · `✓` tamam (derinlik şa
 |---|----------|---------|-----------------|
 | U1 | Port 3100 → 3000 | Sistem 3000'de canlı; direktifteki 3100 yazım kaynaklı | Bu tablo + sözleşme Adım 0 |
 | U2 | Dalga sırası: 31 dosya 5 dalgada, dalga=atomik commit | 12 Temmuz kesinti riski — kesinti kayıpsız devam için | Sözleşme Adım 1 (CEO onaylı plan) |
+| U3 | Kadro kapsamı G7: `agency-agents/` legacy 153 + Fable'ın olmazsa-olmaz ekleri; persona = canlı çalışan | CEO sözlü ek hükmü 2026-07-10 ~21:35 (spec'lere dışarıdan işlendi, Fable devraldı) | EMPLOYEE_PERSONA_STANDARD G7 + HR §27 + bu tablo |
 
 ## Doğrulama komutları (dalga kapanışında koşulur)
 

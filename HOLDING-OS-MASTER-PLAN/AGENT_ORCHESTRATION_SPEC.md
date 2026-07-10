@@ -1,0 +1,143 @@
+# AGENT_ORCHESTRATION_SPEC — AJAN ORKESTRASYONU
+
+> Dalga 3 · Yazar: Fable 5 bizzat · Kaynak hüküm: madde 5.2 (Live Operations — 20 soru) + madde 18 (model-görev dağılımı) + madde 2 (CEO müdahale yetkileri)
+> Üst: [[SYSTEM_ARCHITECTURE]] · Şema: [[DATA_MODEL]] §4.3 · Kardeşler: [[MODEL_ROUTING_SPEC]] (model seçimi), [[FABLE_5_HOOK_SPEC]] (kalite kapıları), [[OBSERVABILITY_SPEC]] (kayıt), [[WORKFLOW_ENGINE_SPEC]] (D4)
+
+## 1. Amaç
+
+Bir görevin ajana dönüşmesinden çıktının kabulüne kadar tüm yaşam döngüsünün tek standardı: spawn → hook pre-gate → model seçimi → yürütme (tool/file/decision kaydıyla) → hook post-gate → kapanış. CEO'nun madde 5.2'deki 20 sorusunun her anı cevaplanabilir; madde 2 müdahaleleri (duraklat, iptal, öncelik değiştir, override) her koşuda işler.
+
+## 2. Gereksinimler
+
+- G1. Her ajan koşusu `agent_runs` satırıyla doğar ve kapanır; satırsız koşu YOK (kayıt-dışı yürütme ihlaldir).
+- G2. Spawn zinciri sınırsız derinlikte izlenir (`parent_run_id`); sebepsiz devir hook'un "kendi işini başka ajana sebepsiz devretmeme" standardına çarpar — sub-agent spawn'ı gerekçe zorunlu (decision_log).
+- G3. Model seçimi ASLA ajan içinde hard-code değil: `fn_select_model(role_slot, dept, ...)` (MODEL_ROUTING) tek kapı; madde 18 dağılımı bu tablolarda yaşar.
+- G4. CEO müdahaleleri: pause / resume / cancel / priority / model-override / decision-override — hepsi control-plane fn'i, hepsi audit'li, hepsi koşan işe saniyeler içinde ulaşır.
+- G5. Onay bekleyen koşu (`waiting_approval`) kaynak TÜKETMEZ: park edilir (pg-boss job biter), approval kararı yeni job doğurur.
+- G6. Build-workflow ile karışmaz: bu spec ÜRÜN runtime'ıdır. İnşaat-dönemi yazarlık kuralları (model routing v6: Fable bizzat, Sonnet yasak) korpus/repo yazımına aittir; runtime dağılımı madde 18 + MODEL_ROUTING tablolarındadır. İkisinin karıştırılması ihlaldir (MODEL_ROUTING §1 ayrımı burada da bağlayıcı).
+
+## 3. Mimari — koşu yaşam döngüsü
+
+```
+task (pg-boss job)                                [KALIR — mevcut kuyruk]
+  └─ orchestrator.dispatch                        [GENİŞLER]
+       1. employee seç (org + workload)            → decision_log
+       2. hook.preTask(run_ctx)                    → RED ise: run 'failed', policy hatası
+       3. fn_select_model(role_slot,...)           → model_id + decision_log
+       4. agent_runs INSERT (status='running')     → Broadcast ops:live
+       5. Claude Agent SDK session (LiteLLM virtual key ile)
+            tool çağrıları → tool_calls · dosya → file_changes · karar → decision_log
+            kontrol sinyali her araç-turu başında okunur (pause/cancel)
+       6. hook.postTask(output)                    → kalite kapısı; RED ise revizyon turu
+       7. agent_runs kapat (succeeded/failed) + maliyet cost_ledger → Broadcast ops:live
+```
+
+Mevcut-varlık eşlemesi: `packages/orchestrator` KALIR+GENİŞLER (dispatch'e hook + model-fn + run kaydı eklenir); `packages/kernel` KALIR (intent→task üretimi değişmez); Claude Agent SDK oturum sarmalayıcısı `packages/orchestrator/runner` YENİ; kuyruk pg-boss KALIR (yeni job tipi yok, mevcut `task` ailesi genişler).
+
+## 4. Veri modeli
+
+DATA_MODEL §4.3 normatif. Ek hükümler:
+
+- `agent_runs.control_signal` kolonu (0022x'e eklenir): `NULL|pause|cancel` — CEO müdahalesinin taşıyıcısı; runner her araç-turu başında okur (poll DB'den, ekstra servis yok — R5).
+- Öncelik: `tasks.priority` (mevcut) pg-boss job priority'ye eşlenir; CEO değişikliği kuyruğa `pg-boss` API'siyle yansır (bekleyen job'da), koşan işi kesmez.
+- Madde 5.2'nin 20 sorusu → kolon eşlemesi OBSERVABILITY_SPEC §3 tablosunda birebir; bu spec veri ÜRETİM noktalarını sabitler (yukarıdaki akış adımları).
+
+## 5. Component yapısı
+
+| Component | Konum | Etiket |
+|-----------|-------|--------|
+| `orchestrator.dispatch` genişlemesi | `packages/orchestrator` | GENİŞLER |
+| SDK runner (oturum + sinyal + kayıt) | `packages/orchestrator/runner` | YENİ |
+| Kontrol fn'leri `fn_run_pause/resume/cancel`, `fn_run_override_model`, `fn_task_set_priority` | migration 0022x | YENİ |
+| Live Operations UI | `(command)/live` | SIFIRDAN — CEO_COMMAND_CENTER §5.2 rotası |
+| Run detail sayfası (drill-down hedefi) | `(command)/live/runs/[id]` | SIFIRDAN |
+
+## 6. Backend yapısı
+
+- Employee seçimi: departman + role_level uygunluğu + `employment_status='active'` + workload (açık run sayısı < çalışan limiti, `settings 'employee.max_concurrent_runs'`) → en düşük yüklü uygun çalışan; seçim gerekçesi decision_log'a.
+- Sub-agent spawn: runner içinden `dispatch(parent_run_id=...)` — aynı yoldan geçer (hook + model fn + kayıt); derinlik limiti `settings 'orchestration.max_spawn_depth'` (varsayılan 3), aşımı policy reddi.
+- Retry: `transient` hata → pg-boss retry (job config); `policy` reddi → retry YOK, escalation (hook kuralı); `fatal` → run failed + alert. Aynı sınıflandırma SYSTEM_ARCHITECTURE §17 ile birebir.
+- Timeout: run başına `settings 'orchestration.run_timeout_s'` (rol-slot bazında override); aşımda runner işi keser, run `failed(timeout)`, alert `medium`.
+
+## 7. Frontend yapısı — Live Operations (madde 5.2)
+
+- Liste: aktif koşular gerçek zamanlı (`ops:live` Broadcast + `v_live_operations`); satırda: çalışan, görev, veren (intent/workflow/CEO), workflow bağı, model, token, maliyet, süre, durum — 20 sorunun özet alt kümesi.
+- Satır tıklama → run detail: tool_calls akışı, file_changes listesi (diff özeti + rollback ref), decision_log kayıtları, sub-agent ağacı (parent zinciri), retry geçmişi, approval bağı — 20 sorunun TAMAMI bu sayfada (kabul: eksik soru = red).
+- Müdahale düğmeleri satırda ve detayda: Pause / Cancel / Priority / Model override — her biri onay diyaloğu + gerekçe alanı (gerekçe audit'e yazılır).
+
+## 8. API'ler
+
+- `POST /api/control/runs/{id}/pause|resume|cancel` · `POST /api/control/runs/{id}/model` (override) · `POST /api/control/tasks/{id}/priority` — hepsi `{ok, change_id}` kontratı, idempotent.
+- Read: `v_live_operations` (RSC ilk yük) + Broadcast delta.
+
+## 9. Event yapısı
+
+`ops:live` kanalı olay tipleri: `run.started`, `run.progress` (1sn toplu — fırtına koruması SYSTEM_ARCHITECTURE §26), `run.waiting_approval`, `run.paused`, `run.resumed`, `run.cancelled`, `run.finished`, `run.spawned` (sub-agent). Payload'da her zaman `run_id, employee_id, task_id` — drill-down bağlantısı UI'da bu üçlüden kurulur.
+
+## 10. State yönetimi
+
+Runner belleğinde yalnız oturum bağlamı; kalıcı gerçek DB'de. Crash kurtarma: VPS restart'ında `running` görünen ama pg-boss job'ı olmayan run'lar açılışta `failed(orphaned)` işaretlenir + alert (janitor sorgusu, health job'ının parçası — yeni servis değil).
+
+## 11. Database tabloları / 12. İlişkiler
+
+Yeni tablo yok; 0022x'e `agent_runs.control_signal` + kontrol fn'leri eklenir. İlişkiler DATA_MODEL §5: `workflow_runs 1─n agent_runs 1─n {decision_log, tool_calls, file_changes}`; `agent_runs n─1 agents`.
+
+## 13. Yetkilendirme
+
+Müdahale fn'leri: yalnız `ceo`. Dispatch/runner: `system`. Ajanın kendisi kendi run satırını KAPATAMAZ — kapanışı runner yazar (ajan çıktısı ile DB durumu ayrık; "işi bitti sayma" kararı hook post-gate'ten geçer). Model override'da `banned=true` model seçilemez (fn reddi — Sonnet yasağının runtime kilidi).
+
+## 14. Logging / 15. Audit
+
+Koşu içi her şey OBSERVABILITY tablolarına (buffer + 2sn flush deseni orada). CEO müdahaleleri ayrıca `audit_log`a (`action='run.pause'` vb. + gerekçe). Dispatch kararları (çalışan seçimi, model seçimi, spawn onayı) decision_log'da `rationale NOT NULL`.
+
+## 16. Security
+
+Ajan API erişimi yalnız LiteLLM virtual key (raw provider key hiçbir configde — sert kural, grep hedefi 0). MCP erişimi profil-başı (gateway, mevcut 14 profil KALIR); yeni çalışan profili HR akışında tanımlanır (madde 9), orchestrator profil ATAMAZ. Para-çıkışı: ajan outbox'a yazamaz — tek yol approval kararı (APPROVAL_ENGINE, DOKUNULMAZ).
+
+## 17. Error handling / 18. Retry / 19. Fallback
+
+§6'daki üç sınıf + model fallback: seçili model `degraded/kesinti` ise `fn_select_model` fallback zincirini döner (MODEL_ROUTING); runner model değişimini `run.progress` olayı + decision_log ile görünür kılar. Hook post-gate reddi: en fazla `settings 'orchestration.max_revision_rounds'` (varsayılan 2) revizyon turu, sonra escalation (müdüre/CEO'ya — hook spec §7).
+
+## 20. Test planı
+
+- Birim: dispatch çalışan seçimi (yük dengesi), spawn derinlik reddi, banned model reddi, orphan janitor.
+- Entegrasyon: sahte SDK oturumu ile tam yaşam döngüsü → 7 adımın her birinin DB izi assert edilir (satır sayıları).
+- Müdahale: koşan sahte-run'a pause → ≤ araç-turu süresi içinde `paused`; cancel → SDK oturumu kapanır, maliyet defteri kapanışı yazılmış.
+
+## 21. Acceptance criteria
+
+- Live Operations'ta koşan bir işin satırından run detail'e inilir ve madde 5.2'nin 20 sorusunun HER BİRİ ekranda cevaplıdır (denetim listesi: 20/20 — eksik varsa kabul reddi).
+- CEO pause'a basar → koşu bir sonraki araç-turunda durur, `run.paused` yayını gelir, audit satırı vardır.
+- Kayıt-dışı koşu kanıtı sıfır: `SELECT count(*) FROM tool_calls WHERE run_id IS NULL` → 0.
+
+## 22. Migration planı / 23. Rollback planı
+
+0022x içinde: `ALTER TABLE agent_runs ADD COLUMN control_signal text CHECK (control_signal IN ('pause','cancel'))` + 5 kontrol fn'i. Rollback: fn DROP + kolon DROP (nullable, veri kaybı yalnız aktif sinyallerde). Runner paketi geri alınırsa orchestrator eski dispatch'le çalışmaya devam eder (hook/kayıt katmanı feature-flag `settings 'orchestration.v2_enabled'` arkasında açılır — kademeli geçiş).
+
+## 24. Uygulama sırası (adım-başı doğrulama)
+
+```bash
+# 1. 0022x push (observability ailesiyle birlikte)
+psql "$DB" -c "\df fn_run_*" | grep -c fn_run                    # → 4 (+ fn_task_set_priority ayrı)
+# 2. runner feature-flag kapalı smoke (eski yol bozulmadı)
+pnpm --filter orchestrator test                                   # → yeşil
+# 3. flag aç, tek görev uçtan uca
+psql "$DB" -c "SELECT status FROM agent_runs ORDER BY started_at DESC LIMIT 1;"  # → succeeded
+# 4. pause kanıtı
+psql "$DB" -c "SELECT fn_run_pause('<id>','test');" && sleep 5 && \
+psql "$DB" -c "SELECT status FROM agent_runs WHERE id='<id>';"    # → paused
+```
+
+## 25. Bağımlılıklar
+
+0020x (org: çalışan seçimi) → 0021x (settings/model_catalog: fn_select_model) → 0022x (bu spec). Claude Agent SDK 0.3.x oturum API'si; LiteLLM virtual keys; pg-boss job priority API. STACK.md versiyon tablosu değişiklik öncesi okunur.
+
+## 26. Riskler / 27. Edge case'ler
+
+- Risk: kontrol sinyali poll'ü uzun araç-turlarında geç işler (LLM yanıtı dakikalar sürebilir) — kabul edilen sınır: sinyal ≤ 1 araç-turu gecikmeli; daha serti (stream kesme) ⛔ karar: SDK yeteneğine bağlı, uygulamada en güçlü model + CEO onayıyla değerlendirilir.
+- Risk: decision_log gerekçe kalitesi düşer (boilerplate rationale) — hook post-gate örneklem denetimi (HR performans girdisi).
+- Edge: çalışan suspend edilirken koşusu sürüyor (G6 — koşu biter, yeni spawn yok); approval reddedilen park işi (run `cancelled(approval_denied)` kapanır, task fail); aynı run'a çift cancel (idempotent — ikincisi no-op); LiteLLM tüm zincir down (run `failed(no_model)` + alert `critical`; kuyruk birikir, budget guard değil sağlık alarmı).
+
+## Done definition (bu spec)
+
+27 başlık ✓ · yaşam döngüsü 7 adım tek diyagram ✓ · KALIR/GENİŞLER/YENİ eşleme ✓ · madde 5.2 20-soru kabul bağı (§21) ✓ · madde 18 runtime/build ayrımı (G6) ✓ · müdahale seti fn+UI+audit üçlüsüyle ✓ · adım-başı doğrulama ✓ · ⛔ tek açık karar: stream-kesme (§26) ✓
