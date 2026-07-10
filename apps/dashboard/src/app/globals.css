@@ -144,6 +144,16 @@ body {
   }
 }
 
+/* §6 live value change: 600ms accent-fade pulse on arriving rows */
+@keyframes value-pulse {
+  0% {
+    background-color: color-mix(in oklab, var(--accent) 14%, transparent);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
 /* §6 login→cockpit door-opening (once per session; reduced-motion skips it):
    two scene halves part along the horizontal light line, 700ms out-quint */
 @keyframes door-open-up {

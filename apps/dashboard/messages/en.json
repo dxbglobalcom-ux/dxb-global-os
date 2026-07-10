@@ -40,6 +40,29 @@
     "emptyTitle": "All clear",
     "emptyBody": "Nothing is waiting on you. The company is running.",
     "emptyAction": "Check the approval inbox",
-    "asOf": "as of"
+    "asOf": "as of {time}",
+    "notLiveSince": "not live · last {time}",
+    "waitingTitle": "Waiting on me",
+    "waitingEmpty": "All clear. No task is waiting on you.",
+    "pendingApprovalsRow": "waiting in your approval inbox",
+    "goToApprovals": "Go to approvals",
+    "changedTitle": "Just changed",
+    "changedEmpty": "No activity yet.",
+    "rosterTitle": "Agent roster",
+    "rosterActive": "active",
+    "rosterDormant": "dormant",
+    "rosterShowAll": "Show all",
+    "rosterTasksShort": "tasks"
+  },
+  "status": {
+    "inbox": "Inbox",
+    "queued": "Queued",
+    "claimed": "Claimed",
+    "running": "Running",
+    "review": "In review",
+    "awaiting_approval": "Awaiting approval",
+    "done": "Done",
+    "failed": "Failed",
+    "returned": "Returned"
   }
 }

@@ -40,6 +40,29 @@
     "emptyTitle": "Kapı temiz",
     "emptyBody": "Seni bekleyen bir şey yok. Şirket çalışıyor.",
     "emptyAction": "Onay kutusuna bak",
-    "asOf": "itibarıyla"
+    "asOf": "{time} itibarıyla",
+    "notLiveSince": "canlı değil · son {time}",
+    "waitingTitle": "Beni bekleyenler",
+    "waitingEmpty": "Kapı temiz. Seni bekleyen görev yok.",
+    "pendingApprovalsRow": "onay kutunda bekliyor",
+    "goToApprovals": "Onaylara git",
+    "changedTitle": "Az önce değişti",
+    "changedEmpty": "Henüz hareket yok.",
+    "rosterTitle": "Ajan rosteri",
+    "rosterActive": "aktif",
+    "rosterDormant": "uykuda",
+    "rosterShowAll": "Tümünü göster",
+    "rosterTasksShort": "görev"
+  },
+  "status": {
+    "inbox": "Gelen",
+    "queued": "Sırada",
+    "claimed": "Üstlenildi",
+    "running": "Çalışıyor",
+    "review": "İncelemede",
+    "awaiting_approval": "Onay bekliyor",
+    "done": "Bitti",
+    "failed": "Hata",
+    "returned": "İade"
   }
 }

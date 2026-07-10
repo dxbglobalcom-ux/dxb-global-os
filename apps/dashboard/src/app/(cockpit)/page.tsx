@@ -1,31 +1,97 @@
-import { CheckCircleIcon } from "@phosphor-icons/react/dist/ssr";
-import Link from "next/link";
 import { getDict } from "@/lib/i18n";
+import { createClient } from "@/lib/supabase/server";
+import { TaskBoard, type FeedEvent, type WaitingTask } from "@/components/task-board";
+import { AgentRoster, type RosterAgent } from "@/components/agent-roster";
 
-// Cockpit empty-state shell (08-01): real exception-first panels arrive in
-// 08-02. Until live data is wired there is exactly one honest thing to say —
-// the "Kapı temiz" scene (UI-SPEC §4 EmptyState).
-export default function CockpitPage() {
+// Cockpit home (UI-SPEC §5, exception-first LOCKED): asymmetric 12-col —
+// left 8 "Beni bekleyenler" + "Az önce değişti", right 4 agent roster.
+// Pure projection: RSC fetches initial state, the client layer only listens
+// to dxb:* Broadcast. No equal-card grid, no firehose.
+const WAITING_STATES = ["awaiting_approval", "failed", "review"];
+
+export default async function CockpitPage() {
   const dict = getDict();
+  const supabase = await createClient();
+
+  const [waitingRes, eventsRes, pendingRes, agentsRes, agentLoadRes] = await Promise.all([
+    supabase
+      .from("tasks")
+      .select("id,objective,department,status,updated_at")
+      .in("status", WAITING_STATES)
+      .order("updated_at", { ascending: false })
+      .limit(8),
+    supabase
+      .from("task_events")
+      .select("id,task_id,event,from_status,to_status,actor,created_at,tasks(objective)")
+      .order("id", { ascending: false })
+      .limit(12),
+    supabase.from("approvals").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("agents").select("id,slug,department,role,status").order("department"),
+    supabase
+      .from("tasks")
+      .select("agent_id,id.count()")
+      .in("status", ["claimed", "running"])
+      .not("agent_id", "is", null),
+  ]);
+
+  const waiting: WaitingTask[] = waitingRes.data ?? [];
+  const events: FeedEvent[] = (eventsRes.data ?? []).map((row) => ({
+    id: String(row.id),
+    task_id: row.task_id,
+    event: row.event,
+    from_status: row.from_status,
+    to_status: row.to_status,
+    actor: row.actor,
+    created_at: row.created_at,
+    objective: (row.tasks as { objective?: string } | null)?.objective ?? null,
+  }));
+
+  const loadByAgent = new Map(
+    ((agentLoadRes.data ?? []) as Array<{ agent_id: string; count: number }>).map((r) => [
+      r.agent_id,
+      r.count,
+    ]),
+  );
+  const agents: RosterAgent[] = (agentsRes.data ?? []).map((agent) => ({
+    slug: agent.slug,
+    department: agent.department,
+    role: agent.role,
+    status: agent.status,
+    activeTasks: loadByAgent.get(agent.id) ?? 0,
+  }));
+
   return (
-    <section
-      className="rounded-[1.25rem] border border-line bg-surface p-1.5"
-      style={{ boxShadow: "0 24px 48px -24px oklch(0.1 0.02 80 / 0.55)" }}
-    >
-      <div
-        className="flex min-h-[50dvh] flex-col items-center justify-center gap-3 rounded-[calc(1.25rem-0.375rem)] bg-surface-2 px-6 py-16 text-center"
-        style={{ boxShadow: "inset 0 1px 0 var(--edge-light)" }}
-      >
-        <CheckCircleIcon size={24} className="text-ok" aria-hidden />
-        <h1 className="text-page-title text-ink">{dict.cockpit.emptyTitle}</h1>
-        <p className="max-w-[42ch] text-body text-ink-2">{dict.cockpit.emptyBody}</p>
-        <Link
-          href="/approvals"
-          className="mt-3 inline-flex h-10 items-center rounded-full border border-line px-5 text-body text-ink transition-colors duration-[var(--dur-fast)] hover:bg-surface-3"
-        >
-          {dict.cockpit.emptyAction}
-        </Link>
+    <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+      <div className="lg:col-span-8">
+        <TaskBoard
+          waiting={waiting}
+          events={events}
+          pendingApprovals={pendingRes.count ?? 0}
+          statusLabels={dict.status}
+          text={{
+            waitingTitle: dict.cockpit.waitingTitle,
+            waitingEmpty: dict.cockpit.waitingEmpty,
+            pendingApprovalsRow: dict.cockpit.pendingApprovalsRow,
+            goToApprovals: dict.cockpit.goToApprovals,
+            changedTitle: dict.cockpit.changedTitle,
+            changedEmpty: dict.cockpit.changedEmpty,
+            asOf: dict.cockpit.asOf,
+            notLiveSince: dict.cockpit.notLiveSince,
+          }}
+        />
       </div>
-    </section>
+      <div className="lg:col-span-4">
+        <AgentRoster
+          agents={agents}
+          text={{
+            rosterTitle: dict.cockpit.rosterTitle,
+            rosterActive: dict.cockpit.rosterActive,
+            rosterDormant: dict.cockpit.rosterDormant,
+            rosterShowAll: dict.cockpit.rosterShowAll,
+            rosterTasksShort: dict.cockpit.rosterTasksShort,
+          }}
+        />
+      </div>
+    </div>
   );
 }
