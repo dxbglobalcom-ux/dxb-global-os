@@ -11,11 +11,15 @@
   "devDependencies": {
     "@dxb/cli": "workspace:*",
     "@dxb/video-learn": "workspace:*",
-    "typescript": "catalog:",
-    "@types/node": "catalog:",
-    "vitest": "catalog:",
-    "supabase": "catalog:",
     "@modelcontextprotocol/sdk": "catalog:",
-    "kysely": "catalog:"
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "catalog:",
+    "jsdom": "^29.1.1",
+    "kysely": "catalog:",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "supabase": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
