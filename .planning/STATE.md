@@ -33,6 +33,7 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 Phase: KORPUS (BEKLENTİLER plan-first fazı; roadmap re-baseline korpus sonrası)
 Plan: quick/20260710-beklentiler-master-plan-v2 + HOLDING-OS-MASTER-PLAN/00-INDEX.md durum tablosu
 Status: **KORPUS 31/31 ✓ TAMAM** — Adım 0 ✓ · D1 ✓ (5) · D2 ✓ (7) · D3 ✓ (7) · D4 ✓ (8) · D5 ✓ (5: IMPLEMENTATION_ROADMAP, TEST_STRATEGY, ACCEPTANCE_CRITERIA, RISK_REGISTER, RECOVERY_AND_ROLLBACK_PLAN). Sözleşme Adım 2: **EXECUTION BAŞLAR** — IMPLEMENTATION_ROADMAP E1.1'den (Fable bizzat; 12 Temmuz gece → Opus ilk ✓'siz adımdan). Canlı ilerleme: roadmap adım tablosu.
+Execution ilerleme (2026-07-10 gece, Fable bizzat): **E1 ✓ (tokens+primitives+/design-preview) · E2 ✓ (CommandShell 5 katman + 38 rota + giriş anahtarı /overview + login 3D parallax) · E3 ✓ (v_exec_overview_v1 + Overview v1 drill-down + /live Broadcast feed)** — commit'ler dbd5033..119bcd4, her adım kanıtlı (roadmap tablosu). Sıradaki: E4 WS-A migrations → E5 persona ailesi (FABLE-ONLY).
 Last activity: 2026-07-10 ~23:00 — Dalga 5 yazıldı (Fable bizzat, inline); U4 kaydı (JARVIS "sistem sonrası" dilimi; MASTER_PLAN referans düzeltmesi U3→U4); korpus kapanış commit'i
 
 Progress: [███████░░░] 66%
