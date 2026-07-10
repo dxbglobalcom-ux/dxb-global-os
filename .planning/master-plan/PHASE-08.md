@@ -22,7 +22,7 @@
 | Varsayılan görünüm exception-first: "beni bekleyen + değişen" — tüm-ajanlar duvarı YASAK | UX pitfall |
 | Her panelde tazelik damgası ("14:32 itibarıyla") | Pitfall 10 |
 | Onay inbox'ı risk_class gruplu (approvals.risk_class); high görsel-yüksek, low toplu-onaylanabilir; batch approve tek transaction | GATE-03 |
-| Auth: Supabase Auth, CEO tek kullanıcı; 2FA/passkey zorunlu; RLS: authenticated CEO rolü read, yazım YALNIZ intents+approval kararları | güvenlik tablosu |
+| Auth: Supabase Auth, CEO tek kullanıcı; 2FA/passkey zorunlu **[Amendment AM-08-AUTH-1, 2026-07-10 — LOKAL DEV İSTİSNASI, aşağıda]**; RLS: authenticated CEO rolü read, yazım YALNIZ intents+approval kararları | güvenlik tablosu |
 | Command bar kernel'e dxb-mcp/HTTP seam'inden gider — dashboard'da LLM çağrısı YOK (`ai` SDK yalnız render/stream) | dashboard saf istemci |
 | UI metin katmanı i18n dosyasında (`tr` birincil, `en` ikincil) — hard-coded string YASAK | DASH-06 |
 
@@ -83,6 +83,19 @@ CREATE TRIGGER trg_broadcast_task_events AFTER INSERT ON task_events
 - **Broadcast helper self-hosted imaj sürümü:** kurulumda `realtime.broadcast_changes` varlığı doğrulanır (`\df`); yoksa imaj güncellenir — polling fallback YAZILMAZ.
 - **Non-teknik kullanılabilirlik:** ölçülemez kısım ⚠ UNVERIFIED etiketiyle CEO göz testine; hiçbir adım "görünüyor" diye VERIFIED yazılmaz.
 - **`ai` SDK sızması:** dashboard'da model çağrısı lint kuralıyla yasak (`no-restricted-imports`: provider SDK'ları).
+
+## Amendment Log
+
+### AM-08-AUTH-1 — 2026-07-10 (CEO kararı; kayıtlı amendment, sessiz sapma DEĞİL)
+
+| # | CEO kararı | Uygulama |
+|---|---|---|
+| 1 | LOKAL DEV'de zorunlu TOTP kaldırıldı — password-only login | `NEXT_PUBLIC_DXB_MFA_ENFORCED=false` (build+runtime, yalnız lokal): `proxy.ts` aal2 duvarı flag ile şartlı; login sayfası enroll akışına hiç girmez (`afterPasswordAccepted` erken `openDoor()`) |
+| 2 | GoTrue enroll akışı kapalı (lokal) | `supabase/config.toml`: `[auth.mfa.totp] enroll_enabled=false` (verify_enabled=true kalır — mevcut factor'lı hesaplar kilitlenmez) |
+| 3 | Oturum uzun — CEO login'i nadir görsün | `supabase/config.toml`: `jwt_expiry=604800` (GoTrue max, 1 hafta) + refresh-token rotation oturumu süresiz taşır |
+| 4 | KAPSAM: yalnız lokal dev | VPS/prod rollout'ta 2FA şartı AYNEN yürürlükte (dışa açık yüzey + para onayları). VPS compose/GoTrue bu dosyadan etkilenmez; `NEXT_PUBLIC_DXB_MFA_ENFORCED` VPS'te asla set edilmez — default (unset) = ENFORCED |
+
+**⛔ FABLE VERDICT (AM-08-AUTH-1):** LOCKED "2FA/passkey zorunlu" kararının kapsamı dışa-açık deploy'lardır; lokal laptop CEO'nun kendi kontrol terminalidir ve tehdit modeli farklıdır. Fail-safe yön korunur: flag'in yokluğu ENFORCED demektir, VPS hiçbir zaman set etmez. Çelişki yok, kayıtlı CEO amendment'ı olarak işlendi. — Fable 5, 2026-07-10
 
 ## 6. Bütçe-Fallback İşaretleri
 

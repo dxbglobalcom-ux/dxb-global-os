@@ -45,6 +45,13 @@ export default function LoginPage() {
   }
 
   async function afterPasswordAccepted() {
+    // CEO order 2026-07-10: on the local laptop the door opens on password
+    // alone — TOTP friction rejected. Outward deploys never set this flag,
+    // so the aal2 wall in proxy.ts stays live there.
+    if (process.env.NEXT_PUBLIC_DXB_MFA_ENFORCED === "false") {
+      openDoor();
+      return;
+    }
     const { data: factorData, error: factorsError } = await supabase.auth.mfa.listFactors();
     if (factorsError) {
       setError(dict.login.errorGeneric);

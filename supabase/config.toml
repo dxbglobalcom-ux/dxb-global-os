@@ -162,7 +162,10 @@ site_url = "http://127.0.0.1:3000"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
 additional_redirect_urls = ["https://127.0.0.1:3000"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
-jwt_expiry = 3600
+# CEO amendment 2026-07-10 (local dev only): max out so the CEO rarely sees the
+# login screen; refresh-token rotation keeps the session alive past this too.
+# VPS/prod GoTrue env is configured separately and keeps its own expiry.
+jwt_expiry = 604800
 # JWT issuer URL. If not set, defaults to auth.external_url.
 # jwt_issuer = ""
 # Path to JWT signing key. DO NOT commit your signing keys file to git.
@@ -299,11 +302,12 @@ auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
 max_enrolled_factors = 10
 
 # Control MFA via App Authenticator (TOTP)
-# TOTP is MANDATORY for the CEO account (master-plan PHASE-08 LOCKED:
-# "2FA/passkey zorunlu"); login enforces enroll on first sign-in and the
-# proxy treats sub-aal2 sessions as unauthenticated.
+# CEO amendment 2026-07-10 (recorded, not a silent deviation): on LOCAL DEV the
+# mandatory-TOTP rule is lifted — password-only login, no enroll flow. This file
+# only drives the local CLI stack; VPS/prod GoTrue keeps TOTP mandatory
+# (master-plan PHASE-08 LOCKED "2FA/passkey zorunlu" stays in force there).
 [auth.mfa.totp]
-enroll_enabled = true
+enroll_enabled = false
 verify_enabled = true
 
 # Configure MFA via Phone Messaging

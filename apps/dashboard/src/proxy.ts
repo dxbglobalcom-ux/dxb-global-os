@@ -33,11 +33,16 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // 2FA is mandatory (master-plan LOCKED): a session below aal2 is treated as
-  // unauthenticated, so a password-only or magic-link session cannot reach the
-  // cockpit — the login flow forces TOTP enroll/verify to raise it.
-  const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-  const cockpitReady = Boolean(user) && aal?.currentLevel === "aal2";
+  // 2FA is mandatory on outward-facing deploys (master-plan LOCKED). On the
+  // CEO's own laptop it is friction he explicitly rejected (CEO order
+  // 2026-07-10): NEXT_PUBLIC_DXB_MFA_ENFORCED=false relaxes the gate to
+  // password-only. Default (unset) stays ENFORCED — the VPS never sets it.
+  const mfaEnforced = process.env.NEXT_PUBLIC_DXB_MFA_ENFORCED !== "false";
+  let cockpitReady = Boolean(user);
+  if (mfaEnforced) {
+    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    cockpitReady = Boolean(user) && aal?.currentLevel === "aal2";
+  }
 
   const path = request.nextUrl.pathname;
   const isPublic = path.startsWith("/login") || path.startsWith("/auth");
