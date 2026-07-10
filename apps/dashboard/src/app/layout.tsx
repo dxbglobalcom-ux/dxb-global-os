@@ -4,8 +4,8 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DXB Cockpit",
-  description: "DXB Global — CEO operations cockpit",
+  title: "DXB Global — Command Center",
+  description: "AI-native operating system of the DXB Global holding",
 };
 
 export const viewport: Viewport = {

@@ -24,7 +24,7 @@ export function AgentDock({
           {tasks.map((t) => (
             <Link
               key={t.id}
-              href={`/ops/tasks/${t.id}`}
+              href={`/ops/tasks?focus=${t.id}`}
               className="flex shrink-0 items-center gap-1.5 rounded-input border border-edge-neutral bg-surface-graphite px-2 py-1 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
             >
               <StatusBadge level={t.status === "running" ? "ok" : "info"}>

@@ -62,6 +62,14 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Kök "/" eski cockpit ana sayfasıdır; Command Center dünyasında ilk
+  // ekran daima /overview (CEO RET 2026-07-11: eski tasarım görünmeyecek).
+  if (cockpitReady && path === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/overview";
+    return NextResponse.redirect(url);
+  }
+
   return supabaseResponse;
 }
 

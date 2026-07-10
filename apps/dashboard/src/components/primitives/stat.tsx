@@ -28,8 +28,14 @@ export function Stat({
       className={`group block rounded-panel border border-edge-neutral bg-surface-carbon p-5 shadow-e1 reflection transition duration-[var(--t-fast)] ease-refined hover:-translate-y-px hover:border-edge-champagne hover:bg-surface-graphite hover:shadow-e2 ${className}`}
     >
       <div className="label-caps text-ink-secondary">{label}</div>
-      <div className="mt-2 flex items-baseline gap-2">
-        <span className="font-display text-display-xl text-accent-ivory tabular-nums">
+      <div className="mt-2 flex min-w-0 items-baseline gap-2">
+        {/* Uzun değer bir alt ölçeğe düşer (display-xl→display, DESIGN_SYSTEM §7)
+            — kutudan taşan metrik göz-testi ihlalidir. */}
+        <span
+          className={`font-display text-accent-ivory tabular-nums ${
+            value.length > 5 ? "text-display" : "text-display-xl"
+          }`}
+        >
           {value}
         </span>
         {unit && <span className="text-h3 text-ink-secondary">{unit}</span>}
