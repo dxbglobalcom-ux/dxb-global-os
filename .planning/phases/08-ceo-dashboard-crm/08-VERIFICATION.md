@@ -54,11 +54,16 @@ Kapsam: 7 planın 7'si execute edildi (08-01 önceki session; 08-02..07 bu sessi
 
 ## 5. CEO sabah checklist'i (5 dakika, sıralı)
 
-1. Chrome'u aç → `http://localhost:3100` (prod build çalışıyor; login → TOTP).
+> **HANDOVER (2026-07-10, AM-08-AUTH-1 sonrası):**
+> - Adres: **`http://localhost:3000`** (prod build; `NEXT_PUBLIC_DXB_MFA_ENFORCED=false pnpm --filter @dxb/dashboard start` ile ayakta)
+> - Kullanıcı: **dxbglobalcom@gmail.com** — şifre: CEO'ya chat handover'ında iletildi (repo'ya yazılmaz, "no plaintext credentials in repo" kuralı; pw kasasında da mevcut)
+> - Akış: **login → şifre → direkt cockpit.** QR/TOTP/6 haneli kod YOK (lokal amendment AM-08-AUTH-1); oturum 1 hafta canlı kalır, login nadir görünür. VPS/prod'da 2FA aynen zorunlu.
+
+1. Chrome'u aç → `http://localhost:3000` (login → şifre → cockpit).
 2. **Göz testi:** Cockpit'i referans görselle yan yana koy — daha mı güzel? (A1.4 kabul ölçütü)
 3. Onaylar sayfasında 6 demo kaydı gör: yüksek riskli ödeme kartında çift-teyit davranışını dene (ilk tık → 600ms → teyit); düşük riskte "Tümünü onayla (2)".
 4. ⌘K → Türkçe bir niyet yaz (örn. "Outleteuro ana sayfa başlıklarını yenile") → IntentStrip'te chip'in ilerlemesini izle.
-5. Telefondan aç (aynı ağda `http://<laptop-ip>:3100`; şu an `http://192.168.178.30:3100`) — alt tab bar + stacked tablolar.
+5. Telefondan aç (aynı ağda `http://<laptop-ip>:3000`; şu an `http://192.168.178.30:3000`) — alt tab bar + stacked tablolar. Telefonda da QR yok: aynı e-posta+şifre.
 6. TV modu: cockpit'te sağ üst "TV modu" → duvar ekranı görünümü; çıkış sağ üstte.
 7. İstersen authed Lighthouse: repo kökünden `node scripts/lh-auth.mjs` — açılan pencerede giriş+TOTP'yi sen yaparsın, script skorları basar (sır basmaz, cookie dosyası kendini siler).
 
