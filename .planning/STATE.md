@@ -5,8 +5,8 @@ milestone_name: milestone
 current_phase: 09
 current_phase_name: jarvis-voice-layer
 status: executing
-stopped_at: "LOGIN REDESIGN SHIPPED 2026-07-10 ~16:00 — CEO göz-testi RET'i (13:30) kapatıldı: 'Golden Threshold' split-scene login + yeni DxbMark (dikey bar skyline), makine kanıtları tam (build ✓, contrast 14/14, i18n 151/151, Playwright şifre→cockpit akışı ✓), CEO GÖZ TESTİ BEKLİYOR (localhost:3000, §5 handover; flag hem build hem start'ta şart). Öncesi: Phase 9 wave 1 ✓ (09-01 51f0629, 09-02 9845168). SIRADA: CEO göz testi → sonra 09-03 briefing pipeline + 07:00 cron. Phase 8 diğer CEO kalemleri açık: telefon testi + VPS outbox rebuild (CEO tek komut: ssh root@dxb-vps-1 'cd /opt/dxb && docker compose build outbox && docker compose up -d outbox')."
-last_updated: "2026-07-10T10:25:00.000Z"
+stopped_at: "BEKLENTİLER PİVOTU 2026-07-10 ~18:45 — CEO ana direktifi işlendi (repo kökü BEKLENTİLER, sanitized: HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md). Proje = HOLDING OS; plan-first: 31 spec dosyalık korpus HOLDING-OS-MASTER-PLAN/ altında Fable bizzat yazıyor → korpus bitince Fable execution (12 Temmuz son geceye kadar) → Opus devralır. SONNET DEFEDİLDİ (v6). Phase 09 execution DURDU (09-03..05 ertelendi — kayıtlı sapma, CEO emri). Bağlayıcı sözleşme+yasaklar+açılış notu: ~/.claude/plans/sana-s-yl-orm-konu-al-m-nce-agile-pebble.md. Korpus ilerleme: 00-INDEX.md durum tablosu."
+last_updated: "2026-07-10T16:45:00.000Z"
 last_activity: 2026-07-10
 last_activity_desc: Phase 09 wave 1 (09-01, 09-02) complete
 progress:
@@ -28,10 +28,12 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 
 ## Current Position
 
-Phase: 09 (jarvis-voice-layer) — EXECUTING (planned 8f4cb3b, 5 plans; CEO pre-approved plan + execution 07:22)
-Plan: 2 of 5 (wave 1 complete: 09-01 + 09-02)
-Status: Phase 08 MACHINE-COMPLETE (CEO göz/telefon/VPS kalemleri bekliyor — §5 checklist); Phase 09 wave 1 ✓ — next 09-03 (briefing pipeline + cron)
-Last activity: 2026-07-10 — 09-01 (Speaches TR round trip + VPS spec) ve 09-02 (v_morning_briefing + tests) tamamlandı, session-crash sonrası kanıtlar yeniden koşuldu
+**PİVOT (CEO BEKLENTİLER direktifi, 2026-07-10):** Phase 09 execution DURDU (wave 1 ✓ kaldı; 09-03..05 ertelendi — kayıtlı sapma, sessiz değil). Yeni odak: **HOLDING-OS-MASTER-PLAN korpusu** (31 spec, Fable bizzat, plan-first) → sonra Fable execution → 12'sinden sonra Opus devralır. Model zinciri v6: Fable → Opus (Sonnet defedildi, Haiku yasak).
+
+Phase: KORPUS (BEKLENTİLER plan-first fazı; roadmap re-baseline korpus sonrası)
+Plan: quick/20260710-beklentiler-master-plan-v2 + HOLDING-OS-MASTER-PLAN/00-INDEX.md durum tablosu
+Status: Adım 0 ✓ — **Dalga 1 ✓ (5/5: INDEX, MASTER_PLAN, SYSTEM_ARCHITECTURE, DATA_MODEL, BACKUP_PLAN)** — sırada Dalga 2 (kontrol düzlemi: CEO_COMMAND_CENTER_SPEC, DESIGN_SYSTEM, SETTINGS, MODEL_ROUTING, OBSERVABILITY, APPROVAL_ENGINE, COST_CONTROL)
+Last activity: 2026-07-10 ~19:15 — Dalga 1 yazıldı (Fable bizzat, inline); şifre taraması temiz; dalga commit'i atıldı
 
 Progress: [███████░░░] 66%
 Phase progress: 8.4/11 ≈ %76 (plan-bazlı %66; Faz 10-11 planları kayda girince plan-bazlı yüzde aşağı oynayabilir, normaldir)
