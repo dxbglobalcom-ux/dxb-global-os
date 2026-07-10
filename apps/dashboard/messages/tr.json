@@ -294,7 +294,37 @@
       "statActiveTasks": "Aktif görevler",
       "statPendingApprovals": "Bekleyen onaylar",
       "statTodayCost": "Bugünkü maliyet",
-      "waitingBody": "Tam özet ızgarası (holding sağlığı, canlı operasyonlar, maliyet zekâsı) E3.2 adımında gerçek view'larla gelir."
+      "waitingBody": "Tam özet ızgarası (holding sağlığı, canlı operasyonlar, maliyet zekâsı) E3.2 adımında gerçek view'larla gelir.",
+      "runningNow": "Şu an koşan",
+      "queued": "Kuyrukta",
+      "awaitingApproval": "Onay bekleyen",
+      "failed24h": "Başarısız (24s)",
+      "highRisk": "Yüksek risk",
+      "oldestPending": "En eski bekleyen",
+      "agents": "AI iş gücü",
+      "agentsActive": "Aktif",
+      "agentsDormant": "Uykuda",
+      "tokens7d": "Token (7g)",
+      "cost7d": "Maliyet (7g)",
+      "budgetMonth": "Ay / tavan",
+      "hardStopped": "SERT-DURDURULDU",
+      "breakerTripped": "Hız kesici attı",
+      "lastActivity": "Son etkinlik",
+      "pulseTitle": "Holding nabzı"
+    },
+    "live": {
+      "title": "Canlı Operasyonlar",
+      "status": {
+        "connecting": "Bağlanıyor",
+        "live": "Canlı",
+        "stale": "Bayat — yeniden bağlanıyor"
+      },
+      "empty": "Henüz operasyon olayı yok. İş hareket ettiği an ajan etkinliği buraya akar.",
+      "event": "Olay",
+      "actor": "Aktör",
+      "task": "Görev",
+      "time": "Zaman",
+      "note": "Tam ajan-koşu akışı (ops:live) E8.3'te gelir; bu akış gerçek task_events + approvals Broadcast'idir."
     }
   }
 }

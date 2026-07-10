@@ -48,9 +48,9 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 
 | # | İş | Dosyalar | Kanıt | Model | Durum |
 |---|----|----------|-------|-------|-------|
-| E3.1 | `v_exec_overview_v1` view (mevcut 18 tablodan: tasks, approvals, cost_ledger, agents, budget_state) — migration `0019x-b` | `db/migrations/` | `psql -c "SELECT * FROM v_exec_overview_v1;"` → 1 satır özet | F/O | — |
-| E3.2 | Overview sayfası (§12): özet sayılar + HER sayı tıklanır → kaynak listesine iner (drill-down v1) | `(command)/overview/` | Playwright: sayıya tıkla → detay rotası açılır | F/O | — |
-| E3.3 | Live Operations v1 (§14): task_events akışı + Broadcast `approvals` mevcut kanalı; `ops:live` E8'de gelir | `(command)/operations/` | UI'da canlı task olayı ≤5 sn | F/O | — |
+| E3.1 | `v_exec_overview_v1` view (mevcut 18 tablodan: tasks, approvals, cost_ledger, agents, budget_state) — migration `0019x-b` | `db/migrations/` | `psql -c "SELECT * FROM v_exec_overview_v1;"` → 1 satır özet | F/O | ✓ 2026-07-10 (`20260710235000_exec_overview_v1.sql` uygulandı+idempotent; SELECT → 1 satır: 6 aktif görev, 6 onay, 153 ajan, €0.46 bugün; security_invoker + grant idiomu 0018 birebir) |
+| E3.2 | Overview sayfası (§12): özet sayılar + HER sayı tıklanır → kaynak listesine iner (drill-down v1) | `(command)/overview/` | Playwright: sayıya tıkla → detay rotası açılır | F/O | ✓ 2026-07-10 (view'dan tek round-trip; 4 Stat + nabız/işgücü/bütçe panelleri, HER değer drillHref'li — hedefsiz özet render edilemez (prop zorunlu); hard-stop kritik bandı; build yeşil; tık-testi ⚠ oturum ister — E13.1 L5'te) |
+| E3.3 | Live Operations v1 (§14): task_events akışı + Broadcast `approvals` mevcut kanalı; `ops:live` E8'de gelir | `(command)/operations/` | UI'da canlı task olayı ≤5 sn | F/O | ✓ 2026-07-10 (`/live`: 40 olay snapshot + dxb:task_events+approvals aboneliği, dürüst stale göstergesi; kanıt: probe INSERT → realtime.messages `dxb:task_events` 1 satır ≤30sn; UI ≤5sn görsel ⚠ CEO) |
 
 ### E4 — WS-A veri omurgası (CEO Faz 2 zemini) — [[DATA_MODEL]] §20 sırası
 

@@ -294,7 +294,37 @@
       "statActiveTasks": "Active tasks",
       "statPendingApprovals": "Pending approvals",
       "statTodayCost": "Today's cost",
-      "waitingBody": "Full overview grid (holding health, live operations, cost intelligence) lands at roadmap step E3.2 on real views."
+      "waitingBody": "Full overview grid (holding health, live operations, cost intelligence) lands at roadmap step E3.2 on real views.",
+      "runningNow": "Running now",
+      "queued": "Queued",
+      "awaitingApproval": "Awaiting approval",
+      "failed24h": "Failed (24h)",
+      "highRisk": "High risk",
+      "oldestPending": "Oldest pending",
+      "agents": "AI workforce",
+      "agentsActive": "Active",
+      "agentsDormant": "Dormant",
+      "tokens7d": "Tokens (7d)",
+      "cost7d": "Cost (7d)",
+      "budgetMonth": "Month vs cap",
+      "hardStopped": "HARD-STOPPED",
+      "breakerTripped": "Velocity breaker tripped",
+      "lastActivity": "Last activity",
+      "pulseTitle": "Holding pulse"
+    },
+    "live": {
+      "title": "Live Operations",
+      "status": {
+        "connecting": "Connecting",
+        "live": "Live",
+        "stale": "Stale — reconnecting"
+      },
+      "empty": "No operations events yet. Agent activity streams here the moment work moves.",
+      "event": "Event",
+      "actor": "Actor",
+      "task": "Task",
+      "time": "Time",
+      "note": "Full agent-run stream (ops:live) lands at E8.3; this feed is the real task_events + approvals Broadcast."
     }
   }
 }
