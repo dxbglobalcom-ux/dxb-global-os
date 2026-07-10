@@ -210,5 +210,91 @@
   "tv": {
     "enter": "TV modu",
     "exit": "TV modundan çık"
+  },
+  "command": {
+    "nav": {
+      "collapse": "Menüyü daralt",
+      "expand": "Menüyü genişlet",
+      "groups": {
+        "command": "Komuta",
+        "organization": "Organizasyon",
+        "operations": "Operasyon",
+        "intelligence": "Zekâ",
+        "governance": "Yönetişim",
+        "finance": "Finans & Kaynaklar",
+        "system": "Sistem"
+      },
+      "pages": {
+        "overview": "Yönetici Özeti",
+        "live": "Canlı Operasyonlar",
+        "intel": "Zekâ Akışı",
+        "approvals": "Onaylar",
+        "alerts": "Uyarılar",
+        "org": "Holding Yapısı",
+        "companies": "Şirketler",
+        "departments": "Departmanlar",
+        "directors": "Direktörler",
+        "employees": "Çalışanlar",
+        "hr": "İK",
+        "projects": "Projeler",
+        "workflows": "İş Akışları",
+        "tasks": "Görevler",
+        "automations": "Otomasyonlar",
+        "runtime": "Çalışma Zamanı",
+        "models": "Modeller",
+        "orchestration": "Orkestrasyon",
+        "memory": "Bellek",
+        "knowledge": "Bilgi",
+        "library": "Kütüphane",
+        "skills": "Yetenekler",
+        "plugins": "Eklentiler",
+        "audit": "Denetim",
+        "decisions": "Kararlar",
+        "risks": "Riskler",
+        "policies": "Politikalar",
+        "permissions": "Yetkiler",
+        "security": "Güvenlik",
+        "costs": "Maliyetler",
+        "tokens": "Tokenlar",
+        "budgets": "Bütçeler",
+        "providers": "Sağlayıcılar",
+        "capacity": "Kapasite",
+        "settings": "Ayarlar",
+        "integrations": "Entegrasyonlar",
+        "health": "Sistem Sağlığı",
+        "logs": "Kayıtlar",
+        "backups": "Yedekler"
+      }
+    },
+    "bar": {
+      "systemOk": "Tüm sistemler canlı",
+      "systemDegraded": "Bozulma var — sağlığı kontrol et",
+      "activeTasks": "aktif görev",
+      "pendingApprovals": "bekleyen onay",
+      "readOnly": "Salt okunur"
+    },
+    "rail": {
+      "title": "Zekâ",
+      "approvalsTitle": "Bekleyen onaylar",
+      "approvalsEmpty": "Bekleyen onay yok. Bir ajan onay istediği an burada belirir.",
+      "alertsTitle": "Kritik uyarılar",
+      "alertsWaiting": "Uyarı akışı gözlemlenebilirlik katmanıyla gelir (E8).",
+      "viewAll": "Tümünü gör"
+    },
+    "dock": {
+      "running": "Şu an çalışıyor"
+    },
+    "moduleWaiting": {
+      "title": "Modül inşada",
+      "body": "Bu yüzey uygulama yol haritasında planlı; omurgası geldiğinde gerçek veriyle render edilir.",
+      "step": "Yol haritası adımı"
+    },
+    "overview": {
+      "title": "Yönetici Özeti",
+      "statActiveTasks": "Aktif görevler",
+      "statPendingApprovals": "Bekleyen onaylar",
+      "statTodayCost": "Bugünkü maliyet",
+      "waitingBody": "Tam özet ızgarası (holding sağlığı, canlı operasyonlar, maliyet zekâsı) E3.2 adımında gerçek view'larla gelir."
+    }
   }
 }

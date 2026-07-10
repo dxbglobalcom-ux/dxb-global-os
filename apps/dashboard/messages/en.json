@@ -210,5 +210,91 @@
   "tv": {
     "enter": "TV mode",
     "exit": "Exit TV mode"
+  },
+  "command": {
+    "nav": {
+      "collapse": "Collapse navigation",
+      "expand": "Expand navigation",
+      "groups": {
+        "command": "Command",
+        "organization": "Organization",
+        "operations": "Operations",
+        "intelligence": "Intelligence",
+        "governance": "Governance",
+        "finance": "Finance & Resources",
+        "system": "System"
+      },
+      "pages": {
+        "overview": "Executive Overview",
+        "live": "Live Operations",
+        "intel": "Intelligence Feed",
+        "approvals": "Approvals",
+        "alerts": "Alerts",
+        "org": "Holding Structure",
+        "companies": "Companies",
+        "departments": "Departments",
+        "directors": "Directors",
+        "employees": "Employees",
+        "hr": "HR",
+        "projects": "Projects",
+        "workflows": "Workflows",
+        "tasks": "Tasks",
+        "automations": "Automations",
+        "runtime": "Runtime",
+        "models": "Models",
+        "orchestration": "Orchestration",
+        "memory": "Memory",
+        "knowledge": "Knowledge",
+        "library": "Library",
+        "skills": "Skills",
+        "plugins": "Plugins",
+        "audit": "Audit",
+        "decisions": "Decisions",
+        "risks": "Risks",
+        "policies": "Policies",
+        "permissions": "Permissions",
+        "security": "Security",
+        "costs": "Costs",
+        "tokens": "Tokens",
+        "budgets": "Budgets",
+        "providers": "Providers",
+        "capacity": "Capacity",
+        "settings": "Settings",
+        "integrations": "Integrations",
+        "health": "System Health",
+        "logs": "Logs",
+        "backups": "Backups"
+      }
+    },
+    "bar": {
+      "systemOk": "All systems live",
+      "systemDegraded": "Degraded — check health",
+      "activeTasks": "active tasks",
+      "pendingApprovals": "pending approvals",
+      "readOnly": "Read-only"
+    },
+    "rail": {
+      "title": "Intelligence",
+      "approvalsTitle": "Pending approvals",
+      "approvalsEmpty": "No approvals waiting. New requests appear here the moment an agent asks.",
+      "alertsTitle": "Critical alerts",
+      "alertsWaiting": "Alert stream lands with the observability layer (E8).",
+      "viewAll": "View all"
+    },
+    "dock": {
+      "running": "Running now"
+    },
+    "moduleWaiting": {
+      "title": "Module in build",
+      "body": "This surface is scheduled in the implementation roadmap and will render real data when its backbone lands.",
+      "step": "Roadmap step"
+    },
+    "overview": {
+      "title": "Executive Overview",
+      "statActiveTasks": "Active tasks",
+      "statPendingApprovals": "Pending approvals",
+      "statTodayCost": "Today's cost",
+      "waitingBody": "Full overview grid (holding health, live operations, cost intelligence) lands at roadmap step E3.2 on real views."
+    }
   }
 }

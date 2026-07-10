@@ -39,7 +39,7 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 
 | # | İş | Dosyalar | Kanıt | Model | Durum |
 |---|----|----------|-------|-------|-------|
-| E2.1 | Shell layout: sol nav (7 grup, §10 birebir), üst command bar (§11), canvas, sağ intelligence rayı, floating dock | `apps/dashboard/src/app/(command)/layout.tsx` + nav config | `curl -s localhost:3000/overview` → 200; ekranda 5 katman | F/O | — |
+| E2.1 | Shell layout: sol nav (7 grup, §10 birebir), üst command bar (§11), canvas, sağ intelligence rayı, floating dock | `apps/dashboard/src/app/(command)/layout.tsx` + nav config | `curl -s localhost:3000/overview` → 200; ekranda 5 katman | F/O | ✓ 2026-07-10 (build'de `ƒ /overview`; curl 307→login→200 auth duvarı doğru; 5 katman gerçek DB sayılarıyla — görsel ⚠ CEO göz testi; search/⌘K→E4, emergency/Control→E6, TV→E12 notlu) |
 | E2.2 | Rota iskeleti: §31 sayfa listesi route-bazlı (boş sayfa YOK — her rota gerçek veri veya "modül bekliyor" durum kartı + hedef tarihi) | `(command)/*/page.tsx` | rota sayısı ≥ 26: `find apps/dashboard/src/app/\(command\) -name page.tsx \| wc -l` | F/O | — |
 | E2.3 | Eski kokpit rotalarından geçiş (tek commit'te anahtar; rollback tek revert) | rota değişim commit'i | eski rotalar 308 → yeni shell | F/O | — |
 | E2.4 | Login 3D hover upgrade (davranış aynı, görsel katman) | login komponenti | build yeşil + ⚠ CEO göz testi | F/O | — |
