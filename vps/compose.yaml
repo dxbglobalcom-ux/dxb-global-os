@@ -183,6 +183,11 @@ services:
     environment:
       DXB_DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/postgres
       LITELLM_BASE_URL: http://litellm:4000/v1
+      # breaker lever (COST-02 keyUpdate blocked:true) needs admin key at runtime
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY}
+      # intent-intake classify/decompose run on the Agent SDK subscription path
+      # (kernel legality: no raw provider keys) — token injected via vps/.env
+      CLAUDE_CODE_OAUTH_TOKEN: ${CLAUDE_CODE_OAUTH_TOKEN:-}
     mem_limit: 384m
     restart: unless-stopped
 
