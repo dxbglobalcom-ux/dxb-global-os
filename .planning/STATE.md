@@ -5,7 +5,7 @@ milestone_name: milestone
 current_phase: 08
 current_phase_name: ceo-dashboard-crm
 status: executing
-stopped_at: "PHASE 8 PLANNED 2026-07-10 00:35 (inline Fable, v5 governance) — 7 plan, 4 wave, 9/9 req kapsandı. B3 GİRİŞ ŞARTI TAM KAPANDI: design-bundle STUDY ⛔ FABLE PASS (study-cards/design-bundle.md; 6 SKILL.md bizzat okundu, ui-ux-pro-max CLI canlı test) + stitch grant design dept'e (pending_install) + 14 profil yenilendi. UI-SPEC ⛔ onaylı (Gece Lobisi: dual-mode OKLCH, Geist, şampanya altın ≤%8, Double-Bezel, Horizon Line; CEO brief = Burj Al Arab 7-yıldız lüks/3D — phase8-design-brief memory). CEO FULL AUTHORITY re-teyit 00:01 (bash dahil, izin sorulmaz). SIRADAKİ: /gsd-execute-phase 08 (08-01'den; deadline 2026-07-12). Doğal-zaman residue: hermes 06:00 ateşleme kontrolü 08:23 cron (e4dbe372)."
+stopped_at: "08-02 COMPLETE 2026-07-10 02:52 (devralma: önceki session verify ortasında düştü; 12/12 test, build yeşil, purity gate aktif, 0014 policies=12 doğrulandı; commits 3bc1510/9b05296/29496e4). UI-SPEC AMENDMENTS: A1 (66bc0f7 — WebGL izni, 34\" ultrawide+çoklu ekran+TV modu, RTX 4090 hedef donanım, göz testi 'referanstan güzel') + A2 (a8ac6fc — UI iki dilli, EN birincil; DEFAULT_LOCALE=en). CEO uykuda (~04:40'a dek), 4. FULL AUTHORITY teyidi kayıtlı. SIRADAKİ: 08-03 (approval inbox, wave 2). Doğal-zaman residue: hermes 06:00 ateşleme kontrolü 08:23 cron (e4dbe372)."
 last_updated: "2026-07-09T22:49:22.411Z"
 last_activity: 2026-07-09
 last_activity_desc: Phase 08 execution started
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-07-05)
 ## Current Position
 
 Phase: 08 (ceo-dashboard-crm) — EXECUTING
-Plan: 1 of 7
+Plan: 2 of 7 complete (next: 08-03, wave 2)
 Status: Executing Phase 08
-Last activity: 2026-07-09 — Phase 08 execution started
+Last activity: 2026-07-10 — 08-02 complete + UI-SPEC amendments A1/A2
 
 Progress: [████████░░] 75%
 
