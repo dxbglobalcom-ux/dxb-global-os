@@ -42,7 +42,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2) |
 | 33 | Son güncelleme | 2026-07-11 |
 
-Ham madde referansı: `agency-agents/specialized/agents-orchestrator.md` (SALT REFERANS — kişilik DEĞİLDİR; bu personada metni kullanılmamıştır).
+Ham madde referansı (arşivde: ~/dxb-archive/agency-agents-20260711.tar.gz): `agency-agents/specialized/agents-orchestrator.md` (SALT REFERANS — kişilik DEĞİLDİR; bu personada metni kullanılmamıştır).
 
 ---
 

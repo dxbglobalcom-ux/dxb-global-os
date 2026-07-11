@@ -15,7 +15,7 @@
 | 5 | Departman | marketing |
 | 6 | Yönetici | ⏳ E5.3'te müdür ataması (`manager_id` backfill — matris §5.2) |
 | 7 | Alt çalışanlar | — |
-| 8 | Kullanılan model | agency-agents/marketing/marketing-bilibili-content-strategist.md (`agents.brain`; MODEL_ROUTING_SPEC'e tabi) |
+| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC'e tabi) |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | ⏳ v2 yazımında dolar (persona §1, §3) |
 | 11 | Yetki sınırları | ⏳ v2 yazımında dolar (persona §4) |
@@ -38,12 +38,12 @@
 | 28 | Hata geçmişi | kaynak: canlı DB (`employee_records.error_history`) |
 | 29 | Review sonuçları | — (v2 gate bekliyor; legacy stok gate'e giremez — spec G6) |
 | 30 | Eğitim ihtiyaçları | kaynak: canlı DB (`employee_records.training_needs`) |
-| 31 | Versiyon geçmişi |  (legacy, aktivasyon dışı); v2 Fable-yazımı BEKLİYOR |
+| 31 | Versiyon geçmişi | v1.0-legacy (legacy stok, aktivasyon dışı); v2 Fable-yazımı BEKLİYOR |
 | 32 | Oluşturan sistem | iskelet: gen-workforce-dossiers.sh (mekanik); kişilik yazarı: fable-5 (bekliyor) |
 | 33 | Son güncelleme | 2026-07-11 |
 
-Durum: `glm-5.2` · role: `worker` · role_level: `dormant` · hook: `v1.0-legacy`
-Ham madde referansı: `` (SALT REFERANS — kişilik DEĞİLDİR; bu dosyaya metni gömülmez).
+Durum: `dormant` · role: `worker` · role_level: `⏳ E5.3 backfill` · hook: `-`
+Ham madde referansı (arşivde: ~/dxb-archive/agency-agents-20260711.tar.gz): `agency-agents/marketing/marketing-bilibili-content-strategist.md` (SALT REFERANS — kişilik DEĞİLDİR; bu dosyaya metni gömülmez).
 
 ---
 

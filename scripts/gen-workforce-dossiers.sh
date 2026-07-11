@@ -55,12 +55,14 @@ wave_of() { # mevcut departman → yazım dalgası (matris §5.5)
     engineering|testing) echo "D4" ;;
     marketing|paid-media) echo "D5" ;;
     sales|support|project-management|design|product) echo "D6" ;;
+    social-media) echo "E5.6 (CEO direktifi 2026-07-11 — müdür dalgası sonrası)" ;;
     *) echo "matris §5.5" ;;
   esac
 }
 
 decision_of() { # slug → matris kararı satırı
-  local s="$1"
+  local s="$1" d="${2:-}"
+  [ "$d" = "social-media" ] && { echo "ADD (CEO direktifi 2026-07-11 — 00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT; legacy karşılığı yok, sıfırdan Fable yazımı)"; return; }
   for r in $RETIRE; do [ "$r" = "$s" ] && { echo "retire→library ÖNERİSİ (CEO onayı bekler — silme değil arşiv; onaya kadar kadroda pasif)"; return; }; done
   for p in $PROMOTE; do [ "$p" = "$s" ] && { echo "promote+rewrite → departman müdürü (E5.3 müdür dalgası)"; return; }; done
   [ -n "${MERGE[$s]:-}" ] && { echo "merge→${MERGE[$s]} (dosya ölür, rol yaşar — v2 hedef rolde yazılır)"; return; }
@@ -73,8 +75,15 @@ while IFS=$'\t' read -r id slug dept role rlevel estatus brain hookv ppath pver;
   dir="$PERSONAS_DIR/$dept"; file="$dir/$slug.md"
   if [ -e "$file" ]; then skipped=$((skipped+1)); continue; fi
   mkdir -p "$dir"
-  wave="$(wave_of "$dept")"; decision="$(decision_of "$slug")"
-  hookv="${hookv:-—}"; rlevel="${rlevel:-⏳ E5.3 backfill}"
+  wave="$(wave_of "$dept")"; decision="$(decision_of "$slug" "$dept")"
+  [ "$rlevel" = "-" ] && rlevel="⏳ E5.3 backfill"
+  if [[ "$ppath" == agency-agents/* ]]; then
+    hamline="Ham madde referansı (arşivde: ~/dxb-archive/agency-agents-20260711.tar.gz): \`$ppath\` (SALT REFERANS — kişilik DEĞİLDİR; bu dosyaya metni gömülmez)."
+    vline="${pver} (legacy stok, aktivasyon dışı); v2 Fable-yazımı BEKLİYOR"
+  else
+    hamline="Kaynak direktif: \`$ppath\` (rol sözleşmesinin kaynağı; kişilik metni değildir)."
+    vline="${pver} (ADD — legacy karşılığı yok); v2 Fable-yazımı BEKLİYOR"
+  fi
   cat > "$file" <<EOF
 <!-- KADRO DOSYASI — yazım kaynağı BU DOSYADIR; DB = runtime + kalite kapısı kopyası (tek yön: dosya→DB, scripts/sync-personas-to-db.sh).
      Kayıtlı uyarlama: EMPLOYEE_PERSONA_STANDARD §22 tersine çevrildi — CEO emri 2026-07-11.
@@ -116,12 +125,12 @@ while IFS=$'\t' read -r id slug dept role rlevel estatus brain hookv ppath pver;
 | 28 | Hata geçmişi | kaynak: canlı DB (\`employee_records.error_history\`) |
 | 29 | Review sonuçları | — (v2 gate bekliyor; legacy stok gate'e giremez — spec G6) |
 | 30 | Eğitim ihtiyaçları | kaynak: canlı DB (\`employee_records.training_needs\`) |
-| 31 | Versiyon geçmişi | ${pver} (legacy, aktivasyon dışı); v2 Fable-yazımı BEKLİYOR |
+| 31 | Versiyon geçmişi | ${vline} |
 | 32 | Oluşturan sistem | iskelet: gen-workforce-dossiers.sh (mekanik); kişilik yazarı: fable-5 (bekliyor) |
 | 33 | Son güncelleme | ${TODAY} |
 
 Durum: \`${estatus}\` · role: \`${role}\` · role_level: \`${rlevel}\` · hook: \`${hookv}\`
-Ham madde referansı: \`${ppath}\` (SALT REFERANS — kişilik DEĞİLDİR; bu dosyaya metni gömülmez).
+${hamline}
 
 ---
 
@@ -134,7 +143,8 @@ Ham madde referansı: \`${ppath}\` (SALT REFERANS — kişilik DEĞİLDİR; bu d
 - Yazıldığında bu bölümün yerini \`# PERSONA — <Unvan>\` başlıklı 11-bölümlük TAM persona alır; \`scripts/sync-personas-to-db.sh\` DB'ye taşır, kalite kapısı verdikti sonrası aktive edilebilir.
 EOF
   created=$((created+1))
-done < <("${PSQL[@]}" -c "SELECT a.id, a.slug, a.department, a.role, COALESCE(a.role_level,''), a.employment_status, a.brain, COALESCE(a.hook_version,''), a.persona_path, a.persona_version FROM agents a ORDER BY a.department, a.slug;")
+done < <("${PSQL[@]}" -c "SELECT a.id, a.slug, a.department, a.role, COALESCE(NULLIF(a.role_level,''),'-'), COALESCE(NULLIF(a.employment_status,''),'-'), COALESCE(NULLIF(a.brain,''),'-'), COALESCE(NULLIF(a.hook_version,''),'-'), COALESCE(NULLIF(a.persona_path,''),'-'), COALESCE(NULLIF(a.persona_version,''),'-') FROM agents a ORDER BY a.department, a.slug;")
+# NOT: boş alanlar '-' doldurulur — IFS=$'\t' read ardışık boş tab alanlarını ÇÖKERTIR (alan kayması bug'ı, 2026-07-11 düzeltildi)
 
 echo "---"
 echo "yeni iskelet : $created"

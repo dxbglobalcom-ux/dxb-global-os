@@ -19,8 +19,9 @@ Her çalışan dosyası iki bölümdür:
 
 - **Yazarlık:** TÜM personalar Fable 5 bizzat yazar (CEO K2). İskelet siciller mekaniktir
   (`scripts/gen-workforce-dossiers.sh`), kişilik yazmaz.
-- **agency-agents/ SALT REFERANSTIR.** Metni hiçbir kadro dosyasına gömülemez, "kişilik"
-  diye gösterilemez. Sicilde yalnız "ham madde referansı" satırı bulunur.
+- **Eski ajans ham maddesi SALT REFERANSTIR** (CEO emriyle repo dışına arşivlendi:
+  `~/dxb-archive/agency-agents-20260711.tar.gz`). Metni hiçbir kadro dosyasına gömülemez,
+  "kişilik" diye gösterilemez. Sicilde yalnız "ham madde referansı (arşivde)" satırı bulunur.
 - **İsim politikası:** çalışanlara uydurma insan adı verilmez; rol adı/unvan kullanılır (CEO emri 2026-07-11).
 - **Senkron:** `scripts/sync-personas-to-db.sh [dosya]` → `fn_persona_submit` (secret+injection
   taraması içeride); `--verify` DB↔dosya eşitliğini hash'le kanıtlar. ⏳ dosyalar atlanır.
