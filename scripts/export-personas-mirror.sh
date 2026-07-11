@@ -25,24 +25,37 @@ mkdir -p "$MIRROR_DIR"
   dir="$MIRROR_DIR/$dept"
   mkdir -p "$dir"
   file="$dir/${slug}.card.md"
+
+  # şahsiyet: legacy dosyanın frontmatter'ından (name/description/vibe/emoji)
+  legacy="$REPO_DIR/$ppath"
+  lname=""; ldesc=""; lvibe=""; lemoji=""
+  if [ -f "$legacy" ]; then
+    lname=$(awk '/^---$/{c++; next} c==1 && /^name:/{sub(/^name:[ ]*/,""); print; exit}' "$legacy")
+    ldesc=$(awk '/^---$/{c++; next} c==1 && /^description:/{sub(/^description:[ ]*/,""); gsub(/^"|"$/,""); print; exit}' "$legacy")
+    lvibe=$(awk '/^---$/{c++; next} c==1 && /^vibe:/{sub(/^vibe:[ ]*/,""); print; exit}' "$legacy")
+    lemoji=$(awk '/^---$/{c++; next} c==1 && /^emoji:/{sub(/^emoji:[ ]*/,""); gsub(/"/,""); print; exit}' "$legacy")
+  fi
+  [ -n "$lname" ] || lname="$slug"
+
   {
-    printf '<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->\n'
-    printf '# ÇALIŞAN — %s\n\n' "$slug"
-    printf '| Alan | Değer |\n|---|---|\n'
+    printf '<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->\n'
+    printf '# %s %s\n\n' "${lemoji:-👤}" "$lname"
+    if [ -n "$ldesc" ]; then printf '> %s\n\n' "$ldesc"; fi
+    if [ -n "$lvibe" ]; then printf '**Karakter:** %s\n\n' "$lvibe"; fi
+    printf '| Sicil | Değer |\n|---|---|\n'
+    printf '| Kod adı (slug) | `%s` |\n' "$slug"
     printf '| Departman | %s |\n' "$dept"
-    printf '| Rol | %s |\n' "$role"
-    printf '| Seviye (role_level) | %s |\n' "$rlevel"
+    printf '| Seviye | %s |\n' "$rlevel"
     printf '| Durum | %s |\n' "$estatus"
-    printf '| Model (brain) | %s |\n' "$brain"
-    printf '| Persona sürümü | %s |\n' "$pver"
+    printf '| Model | %s |\n' "$brain"
     printf '| Hook | %s |\n' "$hookv"
     if [ -n "$v2ver" ]; then
-      printf '| **v2 persona** | ✓ v%s · %s · %s → [`%s.v%s.%s.md`](./%s.v%s.%s.md) |\n' \
+      printf '| **v2 kişilik dosyası** | ✓ v%s · %s · %s → [`%s.v%s.%s.md`](./%s.v%s.%s.md) |\n' \
         "$v2ver" "$v2gate" "$v2author" "$slug" "$v2ver" "$v2gate" "$slug" "$v2ver" "$v2gate"
     else
-      printf '| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |\n'
+      printf '| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |\n'
     fi
-    printf '| Legacy kaynak | `%s` |\n' "$ppath"
+    printf '| Tam legacy kişilik | [`%s`](../../../%s) |\n' "$ppath" "$ppath"
   } > "$file"
 done
 

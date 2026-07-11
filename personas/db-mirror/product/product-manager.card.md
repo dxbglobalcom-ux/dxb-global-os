@@ -1,14 +1,13 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — product-manager
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# 👤 product-manager
 
-| Alan | Değer |
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `product-manager` |
 | Departman | product |
-| Rol | head |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v2.0-fable |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `personas/product/product-manager.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`personas/product/product-manager.md`](../../../personas/product/product-manager.md) |

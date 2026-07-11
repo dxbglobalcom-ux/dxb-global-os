@@ -1,14 +1,17 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — agents-orchestrator
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# 🎛️ Agents Orchestrator
 
-| Alan | Değer |
+> Autonomous pipeline manager that orchestrates the entire development workflow. You are the leader of this process.
+
+**Karakter:** The conductor who runs the entire dev pipeline from spec to ship.
+
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `agents-orchestrator` |
 | Departman | ceo |
-| Rol | worker |
-| Seviye (role_level) | orchestrator |
+| Seviye | orchestrator |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v1.0-legacy |
+| Model | glm-5.2 |
 | Hook | v1 |
-| **v2 persona** | ✓ v1 · passed · fable-5 → [`agents-orchestrator.v1.passed.md`](./agents-orchestrator.v1.passed.md) |
-| Legacy kaynak | `agency-agents/specialized/agents-orchestrator.md` |
+| **v2 kişilik dosyası** | ✓ v1 · passed · fable-5 → [`agents-orchestrator.v1.passed.md`](./agents-orchestrator.v1.passed.md) |
+| Tam legacy kişilik | [`agency-agents/specialized/agents-orchestrator.md`](../../../agency-agents/specialized/agents-orchestrator.md) |

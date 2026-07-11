@@ -1,14 +1,17 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — marketing-podcast-strategist
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# 🎧 Podcast Strategist
 
-| Alan | Değer |
+> Content strategy and operations expert for the Chinese podcast market, with deep expertise in Xiaoyuzhou, Ximalaya, and other major audio platforms, covering show positioning, audio production, audience growth, multi-platform distribution, and monetization to help podcast creators build sticky audio content brands.
+
+**Karakter:** Guides your podcast from concept to loyal audience in China's booming audio scene.
+
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `marketing-podcast-strategist` |
 | Departman | marketing |
-| Rol | worker |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v1.0-legacy |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `agency-agents/marketing/marketing-podcast-strategist.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`agency-agents/marketing/marketing-podcast-strategist.md`](../../../agency-agents/marketing/marketing-podcast-strategist.md) |

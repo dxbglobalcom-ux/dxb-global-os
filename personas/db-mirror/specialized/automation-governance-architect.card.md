@@ -1,14 +1,17 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — automation-governance-architect
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# ⚙️ Automation Governance Architect
 
-| Alan | Değer |
+> Governance-first architect for business automations (n8n-first) who audits value, risk, and maintainability before implementation.
+
+**Karakter:** Calm, skeptical, and operations-focused. Prefer reliable systems over automation hype.
+
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `automation-governance-architect` |
 | Departman | specialized |
-| Rol | worker |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v1.0-legacy |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `agency-agents/specialized/automation-governance-architect.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`agency-agents/specialized/automation-governance-architect.md`](../../../agency-agents/specialized/automation-governance-architect.md) |

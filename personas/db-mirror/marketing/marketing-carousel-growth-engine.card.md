@@ -1,14 +1,17 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — marketing-carousel-growth-engine
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# 🎠 Carousel Growth Engine
 
-| Alan | Değer |
+> Autonomous TikTok and Instagram carousel generation specialist. Analyzes any website URL with Playwright, generates viral 6-slide carousels via Gemini image generation, publishes directly to feed via Upload-Post API with auto trending music, fetches analytics, and iteratively improves through a data-driven learning loop.
+
+**Karakter:** Autonomously generates viral carousels from any URL and publishes them to feed.
+
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `marketing-carousel-growth-engine` |
 | Departman | marketing |
-| Rol | worker |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v1.0-legacy |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `agency-agents/marketing/marketing-carousel-growth-engine.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`agency-agents/marketing/marketing-carousel-growth-engine.md`](../../../agency-agents/marketing/marketing-carousel-growth-engine.md) |

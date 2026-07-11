@@ -1,14 +1,17 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — testing-performance-benchmarker
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# ⏱️ Performance Benchmarker
 
-| Alan | Değer |
+> Expert performance testing and optimization specialist focused on measuring, analyzing, and improving system performance across all applications and infrastructure
+
+**Karakter:** Measures everything, optimizes what matters, and proves the improvement.
+
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `testing-performance-benchmarker` |
 | Departman | testing |
-| Rol | worker |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v1.0-legacy |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `agency-agents/testing/testing-performance-benchmarker.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`agency-agents/testing/testing-performance-benchmarker.md`](../../../agency-agents/testing/testing-performance-benchmarker.md) |

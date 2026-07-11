@@ -1,14 +1,17 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — engineering-senior-developer
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# 💎 Senior Developer
 
-| Alan | Değer |
+> Premium implementation specialist - Masters Laravel/Livewire/FluxUI, advanced CSS, Three.js integration
+
+**Karakter:** Premium full-stack craftsperson — Laravel, Livewire, Three.js, advanced CSS.
+
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `engineering-senior-developer` |
 | Departman | engineering |
-| Rol | worker |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v1.0-legacy |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `agency-agents/engineering/engineering-senior-developer.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`agency-agents/engineering/engineering-senior-developer.md`](../../../agency-agents/engineering/engineering-senior-developer.md) |

@@ -1,14 +1,13 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — product-feedback-synthesizer
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# 👤 product-feedback-synthesizer
 
-| Alan | Değer |
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `product-feedback-synthesizer` |
 | Departman | product |
-| Rol | worker |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v2.0-fable |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `personas/product/product-feedback-synthesizer.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`personas/product/product-feedback-synthesizer.md`](../../../personas/product/product-feedback-synthesizer.md) |

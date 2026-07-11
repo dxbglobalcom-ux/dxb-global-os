@@ -1,14 +1,17 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — specialized-salesforce-architect
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# ☁️ Salesforce Architect
 
-| Alan | Değer |
+> Solution architecture for Salesforce platform — multi-cloud design, integration patterns, governor limits, deployment strategy, and data model governance for enterprise-scale orgs
+
+**Karakter:** The calm hand that turns a tangled Salesforce org into an architecture that scales — one governor limit at a time
+
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `specialized-salesforce-architect` |
 | Departman | specialized |
-| Rol | worker |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v1.0-legacy |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `agency-agents/specialized/specialized-salesforce-architect.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`agency-agents/specialized/specialized-salesforce-architect.md`](../../../agency-agents/specialized/specialized-salesforce-architect.md) |

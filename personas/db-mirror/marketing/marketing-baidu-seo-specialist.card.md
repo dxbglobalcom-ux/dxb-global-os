@@ -1,14 +1,17 @@
-<!-- AUTO-GENERATED — kaynak: DB agents tablosu; scripts/export-personas-mirror.sh ezer -->
-# ÇALIŞAN — marketing-baidu-seo-specialist
+<!-- AUTO-GENERATED — kaynak: DB agents + legacy frontmatter; scripts/export-personas-mirror.sh ezer -->
+# 🇨🇳 Baidu SEO Specialist
 
-| Alan | Değer |
+> Expert Baidu search optimization specialist focused on Chinese search engine ranking, Baidu ecosystem integration, ICP compliance, Chinese keyword research, and mobile-first indexing for the China market.
+
+**Karakter:** Masters Baidu's algorithm so your brand ranks in China's search ecosystem.
+
+| Sicil | Değer |
 |---|---|
+| Kod adı (slug) | `marketing-baidu-seo-specialist` |
 | Departman | marketing |
-| Rol | worker |
-| Seviye (role_level) | — |
+| Seviye | — |
 | Durum | dormant |
-| Model (brain) | glm-5.2 |
-| Persona sürümü | v1.0-legacy |
+| Model | glm-5.2 |
 | Hook | — |
-| **v2 persona** | ⏳ Fable v2 yazımı bekliyor (E5 dalga planı: WORKFORCE-GAP-MATRIX §5) |
-| Legacy kaynak | `agency-agents/marketing/marketing-baidu-seo-specialist.md` |
+| **v2 kişilik dosyası** | ⏳ Fable yazım sırasında (dalga planı: WORKFORCE-GAP-MATRIX §5) |
+| Tam legacy kişilik | [`agency-agents/marketing/marketing-baidu-seo-specialist.md`](../../../agency-agents/marketing/marketing-baidu-seo-specialist.md) |
