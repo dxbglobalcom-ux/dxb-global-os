@@ -11,10 +11,26 @@ Tek soruya tek cevap: **"proje nerede, neyi okuyacağım?"**
 | `scripts/` | İşletim scriptleri (`sync-personas-to-db.sh`, `gen-workforce-dossiers.sh`, denetimler) | Ajanlar |
 | `docs/` · `references/` · `graphify-out/` · `memory-store/` | Yardımcı: dokümantasyon, tasarım referansları, bilgi grafı, bellek | İhtiyaç halinde |
 
-Repo DIŞI arşiv: `~/dxb-archive/agency-agents-20260711.tar.gz` — eski ajans ham maddesi (535 dosya).
-CEO emriyle (2026-07-11) repo'dan kaldırıldı; persona yazımında SALT REFERANS olarak açılır, kadro
-dosyalarına metni GÖMÜLEMEZ. Persona dalgaları bitince CEO kararıyla tamamen silinebilir.
-(`planning` bind-mount aynası da aynı emirle söküldü — tek kaynak `.planning/`.)
+## Görünüm katmanları (kokpit / makine dairesi / arşiv)
+
+**1. KOKPİT (VS Code'da gördüğün):** `HOLDING-OS-MASTER-PLAN/` · `personas/` · kod (`apps` `packages`
+`supabase` `db` `scripts`) · `docs` `references` `tests` · bu README. Başka hiçbir şey göz kirletmez.
+
+**2. MAKİNE DAİRESİ (var ama Explorer'da gizli — `.vscode/settings.json` files.exclude):**
+`.planning/` (ajanların süreç defteri: STATE, roadmap, faz planları) · `memory-store/` (şirket kalıcı
+hafızası — artifact/relation; insan okumaz, ajanlar kullanır) · `graphify-out/` + `tmp/` (araç önbellekleri) ·
+`node_modules/` + config dosyaları (package.json, tsconfig…) · `.claude/ .github/ .obsidian/` (araç ayarları) ·
+`tools/ vps/` (altyapı scriptleri). **Hiçbiri silinmedi** — geri görmek: `.vscode/settings.json` içinde
+ilgili satırı sil/false yap.
+
+**3. ARŞİV (repo DIŞI — `~/dxb-archive/`):**
+- `agency-agents-20260711.tar.gz` (535 dosya) — eski ajans ham maddesi. Persona yazımında SALT REFERANS;
+  kadro dosyalarına metni GÖMÜLEMEZ. Tek dosya okumak:
+  `tar -xOzf ~/dxb-archive/agency-agents-20260711.tar.gz "agency-agents/<yol>"`. Dalgalar bitince CEO kararıyla silinir.
+- `ceo-sources/` — CEO'nun ham kaynak dosyaları (BEKLENTİLER metni + ODT mimari notları).
+  Sanitize edilmiş kanonik kopyaları korpusta: `00-CEO-DIRECTIVE-BEKLENTILER.md` (+ 00-INDEX).
+
+(`planning` bind-mount aynası da CEO emriyle söküldü — tek kaynak `.planning/`.)
 
 ## Karar hiyerarşisi (çelişkide)
 

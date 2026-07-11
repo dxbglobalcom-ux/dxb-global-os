@@ -22,6 +22,10 @@ Her çalışan dosyası iki bölümdür:
 - **Eski ajans ham maddesi SALT REFERANSTIR** (CEO emriyle repo dışına arşivlendi:
   `~/dxb-archive/agency-agents-20260711.tar.gz`). Metni hiçbir kadro dosyasına gömülemez,
   "kişilik" diye gösterilemez. Sicilde yalnız "ham madde referansı (arşivde)" satırı bulunur.
+  Persona yazarken tek dosya okumak (arşivi açmadan):
+  `tar -xOzf ~/dxb-archive/agency-agents-20260711.tar.gz "agency-agents/<sicildeki yol>"`
+  Arşiv yoksa (başka makine): persona yine yazılır — ham madde ZORUNLU DEĞİL, esin kaynağıdır;
+  rol sözleşmesinin kaynağı WORKFORCE-GAP-MATRIX + spec'lerdir.
 - **İsim politikası:** çalışanlara uydurma insan adı verilmez; rol adı/unvan kullanılır (CEO emri 2026-07-11).
 - **Senkron:** `scripts/sync-personas-to-db.sh [dosya]` → `fn_persona_submit` (secret+injection
   taraması içeride); `--verify` DB↔dosya eşitliğini hash'le kanıtlar. ⏳ dosyalar atlanır.

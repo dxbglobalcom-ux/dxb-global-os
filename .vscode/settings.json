@@ -1,0 +1,39 @@
+{
+  // KOKPİT GÖRÜNÜMÜ (CEO emri 2026-07-11): makine dairesi Explorer'dan gizli.
+  // Geri açmak: bu dosyada ilgili satırı false yap (veya sil) — hiçbir şey silinmiş DEĞİLDİR.
+  // Tam harita: README.md "Görünüm katmanları" bölümü.
+  "files.exclude": {
+    ".planning": true,
+    ".claude": true,
+    ".codex": true,
+    ".github": true,
+    ".impeccable": true,
+    ".obsidian": true,
+    ".vscode": true,
+    "playwright-mcp": true,
+    "graphify-out": true,
+    "memory-store": true,
+    "node_modules": true,
+    "tmp": true,
+    "tools": true,
+    "vps": true,
+    "package.json": true,
+    "pnpm-lock.yaml": true,
+    "pnpm-workspace.yaml": true,
+    "tsconfig.json": true,
+    "tsconfig.base.json": true,
+    "vitest.config.ts": true,
+    ".gitignore": true,
+    ".gitattributes": true,
+    ".dockerignore": true,
+    ".env": true,
+    ".env.*": true
+  },
+  "search.exclude": {
+    "node_modules": true,
+    "graphify-out": true,
+    "memory-store": true,
+    "tmp": true,
+    "pnpm-lock.yaml": true
+  }
+}
