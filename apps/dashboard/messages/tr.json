@@ -287,7 +287,9 @@
     "moduleWaiting": {
       "title": "Modül inşada",
       "body": "Bu yüzey uygulama yol haritasında planlı; omurgası geldiğinde gerçek veriyle render edilir.",
-      "step": "Yol haritası adımı"
+      "step": "Yol haritası adımı",
+      "liveNow": "Şu an canlı",
+      "related": "İlgili canlı yüzey"
     },
     "overview": {
       "title": "Yönetici Özeti",
@@ -310,7 +312,19 @@
       "hardStopped": "SERT-DURDURULDU",
       "breakerTripped": "Hız kesici attı",
       "lastActivity": "Son etkinlik",
-      "pulseTitle": "Holding nabzı"
+      "pulseTitle": "Holding nabzı",
+      "healthTitle": "Holding Sağlığı",
+      "healthExplain": "Canlı türetim: devre kesici, hard-stop, başarısızlıklar (24s), yüksek riskli onaylar, bütçe baskısı.",
+      "healthFactors": "Etkenler",
+      "factorBreaker": "Devre kesici atmış",
+      "factorHardStop": "Bütçe hard-stop",
+      "factorFailed": "Başarısız görevler (24s)",
+      "factorHighRisk": "Yüksek riskli onaylar",
+      "factorBudget": "Bütçe baskısı",
+      "factorClear": "Temiz — aktif ceza yok",
+      "attentionTitle": "Dikkat bekleyenler",
+      "attentionNone": "Şu an dikkatini bekleyen bir şey yok.",
+      "attentionOldest": "En eski bekleyen onay"
     },
     "live": {
       "title": "Canlı Operasyonlar",

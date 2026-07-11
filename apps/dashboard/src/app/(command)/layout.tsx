@@ -33,8 +33,12 @@ export default async function CommandLayout({
   const [summaryRes, railRes, dockRes] = await Promise.all([
     supabase
       .from("v_exec_overview_v1")
-      .select("active_tasks,pending_approvals")
-      .single<{ active_tasks: number; pending_approvals: number }>(),
+      .select("active_tasks,pending_approvals,pending_high_risk")
+      .single<{
+        active_tasks: number;
+        pending_approvals: number;
+        pending_high_risk: number;
+      }>(),
     supabase
       .from("approvals")
       .select("id,action_type,risk_class,created_at")
@@ -63,7 +67,7 @@ export default async function CommandLayout({
   }));
 
   return (
-    <div className="flex h-dvh flex-col bg-surface-void font-body text-body-md text-ink-primary">
+    <div className="ambient-depth relative flex h-dvh flex-col bg-surface-void font-body text-body-md text-ink-primary">
       <CommandBar
         labels={t.bar}
         systemOk={systemOk}
@@ -71,7 +75,14 @@ export default async function CommandLayout({
         pendingApprovals={summaryRes.data?.pending_approvals ?? 0}
       />
       <div className="relative flex min-h-0 flex-1">
-        <SideNav labels={t.nav} />
+        <SideNav
+          labels={t.nav}
+          counters={{
+            active_tasks: summaryRes.data?.active_tasks ?? 0,
+            pending_approvals: summaryRes.data?.pending_approvals ?? 0,
+            pending_high_risk: summaryRes.data?.pending_high_risk ?? 0,
+          }}
+        />
         <main className="min-w-0 flex-1 overflow-y-auto p-6">{children}</main>
         <IntelligenceRail
           labels={t.rail}

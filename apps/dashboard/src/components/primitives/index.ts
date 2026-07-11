@@ -4,5 +4,6 @@ export { Surface, type SurfaceLevel, type Elevation } from "./surface";
 export { Panel, type PanelState } from "./panel";
 export { StatusBadge, type StatusLevel } from "./badge";
 export { Stat } from "./stat";
+export { HealthRing } from "./health-ring";
 export { DataGrid, type Column } from "./data-grid";
 export { CommandItem } from "./command-item";

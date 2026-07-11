@@ -62,11 +62,18 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Kök "/" eski cockpit ana sayfasıdır; Command Center dünyasında ilk
-  // ekran daima /overview (CEO RET 2026-07-11: eski tasarım görünmeyecek).
-  if (cockpitReady && path === "/") {
+  // Eski cockpit rotaları Command Center karşılıklarına yönlenir (D2 —
+  // CEO RET 2026-07-11: eski tasarım görünmeyecek). /approvals fiziken
+  // taşındı; /crm bilinçli istisna (nav'dan linklenmez, modülü ayrı blok).
+  const LEGACY_REDIRECTS: Record<string, string> = {
+    "/": "/overview",
+    "/tasks": "/ops/tasks",
+    "/costs": "/fin/costs",
+  };
+  const legacyTarget = LEGACY_REDIRECTS[path];
+  if (cockpitReady && legacyTarget) {
     const url = request.nextUrl.clone();
-    url.pathname = "/overview";
+    url.pathname = legacyTarget;
     return NextResponse.redirect(url);
   }
 

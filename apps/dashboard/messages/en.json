@@ -287,7 +287,9 @@
     "moduleWaiting": {
       "title": "Module in build",
       "body": "This surface is scheduled in the implementation roadmap and will render real data when its backbone lands.",
-      "step": "Roadmap step"
+      "step": "Roadmap step",
+      "liveNow": "Live right now",
+      "related": "Related live surface"
     },
     "overview": {
       "title": "Executive Overview",
@@ -310,7 +312,19 @@
       "hardStopped": "HARD-STOPPED",
       "breakerTripped": "Velocity breaker tripped",
       "lastActivity": "Last activity",
-      "pulseTitle": "Holding pulse"
+      "pulseTitle": "Holding pulse",
+      "healthTitle": "Holding Health",
+      "healthExplain": "Live derivation: breaker, hard-stop, failures (24h), high-risk approvals, budget pressure.",
+      "healthFactors": "Contributing factors",
+      "factorBreaker": "Circuit breaker tripped",
+      "factorHardStop": "Budget hard-stop",
+      "factorFailed": "Failed tasks (24h)",
+      "factorHighRisk": "High-risk approvals",
+      "factorBudget": "Budget pressure",
+      "factorClear": "All clear — no active penalties",
+      "attentionTitle": "Needs attention",
+      "attentionNone": "Nothing needs your attention right now.",
+      "attentionOldest": "Oldest pending approval"
     },
     "live": {
       "title": "Live Operations",

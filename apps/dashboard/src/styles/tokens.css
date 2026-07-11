@@ -235,3 +235,62 @@
     animation: cc-shimmer 1.6s var(--ease-refined) infinite;
   }
 }
+
+/* ============================================================
+   C-Hibrit katmanı (R-kapısı 2026-07-11, reçete C onaylı):
+   B-malzemesi (obsidyen+şampanya) üstüne A-derinliği — ambient
+   ışık yalnız zeminde, glow yalnız canlı veri ve seçimde (B3).
+   ============================================================ */
+
+/* Zemin ambient derinliği — iki radyal ışık + mikro-grid dokusu (R8).
+   Opaklıklar bilinçli olarak eşik altı: doku hissedilir, okunmaz. */
+@utility ambient-depth {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        1100px 520px at 78% -8%,
+        rgba(216, 185, 140, 0.055),
+        transparent 62%
+      ),
+      radial-gradient(
+        900px 480px at 8% 112%,
+        rgba(127, 167, 201, 0.04),
+        transparent 60%
+      );
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.014) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.014) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(
+      1200px 800px at 60% 0%,
+      rgba(0, 0, 0, 0.9),
+      transparent 75%
+    );
+  }
+}
+
+/* Canlı değer vurgusu — holo-glow SADECE gerçek zamanlı/kritik metrikte
+   (gold enflasyonu lint'i §26 buna da bakar). */
+@utility live-glow {
+  text-shadow: 0 0 14px rgba(216, 185, 140, 0.32);
+}
+
+/* Nav kaydırma çubuğu — ince, sessiz. */
+@utility nav-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-titanium) transparent;
+}

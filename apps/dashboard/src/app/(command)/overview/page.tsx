@@ -1,12 +1,15 @@
 import Link from "next/link";
-import { Panel, Stat, StatusBadge } from "@/components/primitives";
+import { HealthRing, Panel, Stat, StatusBadge } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/server";
 
-// Executive Overview v1 (E3.2) — single round-trip on v_exec_overview_v1
-// (E3.1 view, existing schema; v2 swaps to the 0025x catalog at E4.5).
-// EVERY figure is a drill door (CC-SPEC madde 2B normative map) — a
-// summary without a target may not render. No fake metrics (§35).
+// Executive Overview v2 (E3.2 + C-Hibrit R-kapısı 2026-07-11) — single
+// round-trip on v_exec_overview_v1 (v2 swaps to the 0025x catalog at
+// E4.5). Kompozisyon R13+R3: Holding Health radial (§13) + KPI şeridi
+// ilk viewport'ta; ölü boşluk §35 ihlalidir. EVERY figure is a drill
+// door (CC-SPEC madde 2B) — a summary without a target may not render.
+// No fake metrics (§35): health skoru aşağıda görünür formülle GERÇEK
+// alanlardan türetilir, her etken kendi kanıt satırını gösterir.
 
 export const metadata = { title: "Executive Overview — DXB" };
 
@@ -59,8 +62,46 @@ export default async function OverviewPage() {
       ? Math.min(100, (data.cost_month_eur / data.monthly_cap_eur) * 100)
       : 0;
 
+  // Holding Health (§13) — şeffaf ceza formülü, tamamı gerçek alanlardan.
+  // Etkenler panelde kanıt satırı olarak listelenir; uydurma skor yok.
+  const factors: { label: string; penalty: number; href: string }[] = [];
+  if (data.breaker_tripped)
+    factors.push({ label: t.factorBreaker, penalty: 40, href: "/fin/budgets" });
+  if (data.hard_stopped)
+    factors.push({ label: t.factorHardStop, penalty: 40, href: "/fin/budgets" });
+  if (data.failed_tasks_24h > 0)
+    factors.push({
+      label: `${t.factorFailed}: ${data.failed_tasks_24h}`,
+      penalty: Math.min(24, data.failed_tasks_24h * 8),
+      href: "/ops/tasks?state=failed&range=24h",
+    });
+  if (data.pending_high_risk > 0)
+    factors.push({
+      label: `${t.factorHighRisk}: ${data.pending_high_risk}`,
+      penalty: Math.min(15, data.pending_high_risk * 5),
+      href: "/approvals?state=pending&risk=high",
+    });
+  if (capPct >= 70)
+    factors.push({
+      label: `${t.factorBudget}: ${capPct.toFixed(0)}%`,
+      penalty: capPct >= 100 ? 20 : 10,
+      href: "/fin/budgets",
+    });
+  const healthScore = Math.max(
+    5,
+    100 - factors.reduce((sum, f) => sum + f.penalty, 0),
+  );
+  const healthBand =
+    healthScore >= 85 ? "ok" : healthScore >= 60 ? "warn" : "danger";
+
+  const oldestPendingHours = data.oldest_pending_at
+    ? Math.floor(
+        (Date.now() - new Date(data.oldest_pending_at).getTime()) / 3_600_000,
+      )
+    : null;
+
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
+    <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex items-baseline justify-between">
         <h1 className="font-display text-h1 text-ink-primary">{t.title}</h1>
         {data.last_activity_at && (
@@ -84,35 +125,70 @@ export default async function OverviewPage() {
         </Panel>
       )}
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <Stat
-          label={t.statActiveTasks}
-          value={String(data.active_tasks)}
-          delta={undefined}
-          drillHref="/ops/tasks?state=active"
-        />
-        <Stat
-          label={t.statPendingApprovals}
-          value={String(data.pending_approvals)}
-          drillHref="/approvals?state=pending"
-        />
-        <Stat
-          label={t.statTodayCost}
-          value={Number(data.cost_today_eur).toFixed(2)}
-          unit="EUR"
-          drillHref="/fin/costs?range=today"
-        />
-        <Stat
-          label={t.tokens7d}
-          value={new Intl.NumberFormat("en", {
-            notation: "compact",
-            maximumFractionDigits: 1,
-          }).format(Number(data.tokens_7d))}
-          drillHref="/fin/tokens?range=week"
-        />
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[360px_1fr]">
+        <Panel title={t.healthTitle}>
+          <div className="flex items-center gap-5">
+            <HealthRing score={healthScore} band={healthBand} size={150} />
+            <div className="min-w-0 flex-1">
+              <div className="label-caps text-ink-muted">{t.healthFactors}</div>
+              <ul className="mt-2 space-y-1.5 text-body-s">
+                {factors.length === 0 && (
+                  <li className="text-status-ok">{t.factorClear}</li>
+                )}
+                {factors.map((f) => (
+                  <li key={f.label}>
+                    <Link
+                      href={f.href}
+                      className="flex justify-between gap-2 rounded-input px-1 py-0.5 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+                    >
+                      <span className="min-w-0 truncate text-ink-secondary">
+                        {f.label}
+                      </span>
+                      <span className="font-data text-status-danger tabular-nums">
+                        −{f.penalty}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <p className="mt-3 border-t border-edge-neutral pt-3 text-caption text-ink-muted">
+            {t.healthExplain}
+          </p>
+        </Panel>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4">
+          <Stat
+            label={t.statActiveTasks}
+            value={String(data.active_tasks)}
+            glow
+            drillHref="/ops/tasks?state=active"
+          />
+          <Stat
+            label={t.statPendingApprovals}
+            value={String(data.pending_approvals)}
+            glow
+            drillHref="/approvals?state=pending"
+          />
+          <Stat
+            label={t.statTodayCost}
+            value={Number(data.cost_today_eur).toFixed(2)}
+            unit="EUR"
+            drillHref="/fin/costs?range=today"
+          />
+          <Stat
+            label={t.tokens7d}
+            value={new Intl.NumberFormat("en", {
+              notation: "compact",
+              maximumFractionDigits: 1,
+            }).format(Number(data.tokens_7d))}
+            drillHref="/fin/tokens?range=week"
+          />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-4">
         <Panel title={t.pulseTitle}>
           <ul className="space-y-2 text-body-s">
             <li>
@@ -236,6 +312,56 @@ export default async function OverviewPage() {
               <span className="font-data tabular-nums">{capPct.toFixed(0)}%</span>
             </div>
           </Link>
+        </Panel>
+
+        <Panel title={t.attentionTitle}>
+          {factors.length === 0 && oldestPendingHours === null ? (
+            <p className="text-body-s text-status-ok">{t.attentionNone}</p>
+          ) : (
+            <ul className="space-y-2 text-body-s">
+              {data.pending_high_risk > 0 && (
+                <li>
+                  <Link
+                    href="/approvals?state=pending&risk=high"
+                    className="flex items-center justify-between rounded-input px-2 py-1 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+                  >
+                    <span className="text-ink-secondary">{t.highRisk}</span>
+                    <StatusBadge level="warn">
+                      {data.pending_high_risk}
+                    </StatusBadge>
+                  </Link>
+                </li>
+              )}
+              {data.failed_tasks_24h > 0 && (
+                <li>
+                  <Link
+                    href="/ops/tasks?state=failed&range=24h"
+                    className="flex items-center justify-between rounded-input px-2 py-1 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+                  >
+                    <span className="text-ink-secondary">{t.failed24h}</span>
+                    <StatusBadge level="danger">
+                      {data.failed_tasks_24h}
+                    </StatusBadge>
+                  </Link>
+                </li>
+              )}
+              {oldestPendingHours !== null && (
+                <li>
+                  <Link
+                    href="/approvals?state=pending"
+                    className="flex items-center justify-between rounded-input px-2 py-1 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+                  >
+                    <span className="text-ink-secondary">
+                      {t.attentionOldest}
+                    </span>
+                    <span className="font-data text-ink-primary tabular-nums">
+                      {oldestPendingHours}h
+                    </span>
+                  </Link>
+                </li>
+              )}
+            </ul>
+          )}
         </Panel>
       </div>
     </div>

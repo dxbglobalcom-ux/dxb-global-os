@@ -12,6 +12,7 @@ export function Stat({
   unit,
   delta,
   drillHref,
+  glow = false,
   className = "",
 }: {
   label: string;
@@ -19,6 +20,8 @@ export function Stat({
   unit?: string;
   delta?: { pct: number; label?: string };
   drillHref: string;
+  /** Canlı/kritik metrik vurgusu — holo-glow SADECE gerçek zamanlı değerde (B3). */
+  glow?: boolean;
   className?: string;
 }) {
   const dir = delta ? Math.sign(delta.pct) : 0;
@@ -33,8 +36,8 @@ export function Stat({
             — kutudan taşan metrik göz-testi ihlalidir. */}
         <span
           className={`font-display text-accent-ivory tabular-nums ${
-            value.length > 5 ? "text-display" : "text-display-xl"
-          }`}
+            value.length > 5 ? "text-display-lg" : "text-display-xl"
+          } ${glow ? "live-glow" : ""}`}
         >
           {value}
         </span>

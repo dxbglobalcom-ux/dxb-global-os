@@ -34,8 +34,8 @@ export default async function ApprovalsPage() {
 
   const a = dict.approvals;
   return (
-    <div className="flex flex-col gap-5">
-      <h1 className="text-page-title text-ink">{a.title}</h1>
+    <div className="mx-auto flex max-w-[1400px] flex-col gap-5">
+      <h1 className="font-display text-h1 text-ink-primary">{a.title}</h1>
       <ApprovalsInbox
         rows={rows}
         text={{

@@ -24,7 +24,7 @@ import {
   type ApprovalText,
 } from "@/components/approvals/approval-card";
 import { BatchBar } from "@/components/approvals/batch-bar";
-import { decideApprovals } from "@/app/(cockpit)/approvals/actions";
+import { decideApprovals } from "@/app/(command)/approvals/actions";
 
 export type InboxText = ApprovalText & {
   groupHigh: string;
