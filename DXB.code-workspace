@@ -14,7 +14,10 @@
     // (aşağıdaki MAKİNE bölümlerinde tam içerikleriyle açıktır).
     "files.exclude": {
       ".planning": true,
+      ".agents": true,
       ".claude": true,
+      ".playwright-mcp": true,
+      ".gitleaks.toml": true,
       ".codex": true,
       ".github": true,
       ".impeccable": true,
