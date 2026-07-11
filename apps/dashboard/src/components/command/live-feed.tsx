@@ -17,7 +17,7 @@ import {
 
 export type LiveEvent = {
   id: string;
-  kind: "task" | "approval";
+  kind: "task" | "approval" | "run";
   task_id: string | null;
   event: string;
   to_status: string | null;
@@ -124,7 +124,13 @@ export function LiveFeed({
           {events.map((e) => (
             <li key={e.id}>
               <Link
-                href={e.task_id ? `/tasks/${e.task_id}` : "/approvals"}
+                href={
+                  e.task_id
+                    ? `/tasks/${e.task_id}`
+                    : e.kind === "run"
+                      ? "/ops/runtime"
+                      : "/approvals"
+                }
                 className="flex h-10 items-center gap-3 px-2 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
               >
                 <span className="font-data text-caption text-ink-muted tabular-nums">

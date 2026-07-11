@@ -32,9 +32,10 @@ export default async function CommandLayout({
   // Counters come from the same single-round-trip view as the Overview
   // page (SYS_ARCH §8) — head-count queries returned bogus zeros in the
   // RSC layout (2026-07-11 fix; page and bar can never disagree again).
+  // E4.5: source is the 0025x catalog view (v1 stays as compat alias).
   const [summaryRes, railRes, dockRes] = await Promise.all([
     supabase
-      .from("v_exec_overview_v1")
+      .from("v_exec_overview")
       .select("active_tasks,pending_approvals,pending_high_risk")
       .single<{
         active_tasks: number;

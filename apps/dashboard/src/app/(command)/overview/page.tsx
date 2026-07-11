@@ -5,8 +5,10 @@ import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
 
 // Executive Overview v2 (E3.2 + C-Hibrit R-kapısı 2026-07-11) — single
-// round-trip on v_exec_overview_v1 (v2 swaps to the 0025x catalog at
-// E4.5). Kompozisyon R13+R3: Holding Health radial (§13) + KPI şeridi
+// round-trip on v_exec_overview (0025x catalog, E4.5; v_exec_overview_v1
+// stays as compat alias). New-family figures (agent runs, workflow runs,
+// projects) drill into their WS-A pages — drill-down descends into the
+// new families. Kompozisyon R13+R3: Holding Health radial (§13) + KPI şeridi
 // ilk viewport'ta; ölü boşluk §35 ihlalidir. EVERY figure is a drill
 // door (CC-SPEC madde 2B) — a summary without a target may not render.
 // No fake metrics (§35): health skoru aşağıda görünür formülle GERÇEK
@@ -26,6 +28,11 @@ type ExecOverview = {
   agents_total: number;
   agents_active: number;
   agents_dormant: number;
+  runs_active: number;
+  runs_waiting_approval: number;
+  projects_active: number;
+  projects_total: number;
+  workflow_runs_active: number;
   cost_today_eur: number;
   cost_7d_eur: number;
   cost_month_eur: number;
@@ -42,7 +49,7 @@ export default async function OverviewPage() {
   const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from("v_exec_overview_v1")
+    .from("v_exec_overview")
     .select("*")
     .single<ExecOverview>();
 
@@ -51,7 +58,7 @@ export default async function OverviewPage() {
       <div className="mx-auto max-w-6xl">
         <Panel title={t.title} state="error">
           <p className="text-body-s text-status-danger">
-            v_exec_overview_v1: {error?.message ?? "no row"}
+            v_exec_overview: {error?.message ?? "no row"}
           </p>
         </Panel>
       </div>
@@ -239,6 +246,40 @@ export default async function OverviewPage() {
                   }`}
                 >
                   {data.failed_tasks_24h}
+                </span>
+              </Link>
+            </li>
+            {/* E4.5: WS-A family figures — every drill lands in its new-family page */}
+            <li>
+              <Link
+                href="/ops/runtime"
+                className="flex justify-between rounded-input px-2 py-1 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+              >
+                <span className="text-ink-secondary">{t.runsActive}</span>
+                <span className="font-data text-ink-primary tabular-nums">
+                  {data.runs_active}
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/ops/workflows"
+                className="flex justify-between rounded-input px-2 py-1 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+              >
+                <span className="text-ink-secondary">{t.workflowRuns}</span>
+                <span className="font-data text-ink-primary tabular-nums">
+                  {data.workflow_runs_active}
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/ops/projects"
+                className="flex justify-between rounded-input px-2 py-1 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+              >
+                <span className="text-ink-secondary">{t.projectsActive}</span>
+                <span className="font-data text-ink-primary tabular-nums">
+                  {data.projects_active}
                 </span>
               </Link>
             </li>
