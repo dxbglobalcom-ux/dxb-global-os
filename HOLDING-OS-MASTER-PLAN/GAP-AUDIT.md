@@ -81,13 +81,13 @@ Tam persona-gövdesi okuma matrisi E5.0'ın çıktısıdır (aşağıda); bu tab
 | GAP-09 | MAJOR | ceo/research/legal-de dept 0 agent; §3.2'nin 6 ailesi TAM BOŞ | holding yönetim kabiliyeti yok | E5.0 matris → E5.5 dalgaları | **F** | gap matrisi kararları + yeni persona sözleşmeleri (§3.3) |
 | GAP-10 | MAJOR | alert/notification center yok (alerts=ModuleWaiting) | alarm sahipliği/acknowledge/escalation tanımsız | E8.4b→E12 | F/O | gerçek alarm kaynağı + severity + ack akışı |
 
-## 5. Karar gerektiren konular (§5-D — yalnız gerçek CEO kararları)
+## 5. Kararlar — CEO hükmü (2026-07-11 ~12:45, BAĞLAYICI)
 
-| # | Konu | Seçenekler | Öneri |
-|---|---|---|---|
-| K1 | 34 placeholder'ın kapanma sırası deadline'a sığmaz (12 Temmuz). | (a) E5 persona çekirdeği önce, moduller Opus devrinde direktif DoD'siyle kapanır; (b) E5 daraltılır, modüllere şimdi girilir | **(a)** — E5 FABLE-ONLY/devredilemez, modüller F/O devredilebilir. Direktif kapıları roadmape işlendi; Opus protokolü kapıları biliyor |
-| K2 | §3.2'nin 15 ailesi ≈ 40-60 yeni persona demek; hepsi Fable yazımı deadline'a sığmaz. | (a) Fable: orkestratör+müdürler+HR+kritik head'ler; kalan uzmanlar HR-fabrikası (E5.4 sonrası) quality_gate'ten geçerek; (b) hepsi Fable, yetişmeyen "Fable-yazımı bekliyor" | **(a)** — EMPLOYEE_PERSONA_STANDARD zaten hr-factory author'ına izin veriyor (DB CHECK: 'fable-5','hr-factory'); kapı quality_gate. Yetişmeyen head'ler yine (b) listesine düşer |
-| K3 | Eski cockpit rotaları (tasks/costs/crm) parite anında kapanacaktı; direktif CRM'i shell'e istiyor. | (a) CRM shell'e E12.4'te taşınır, cockpit o commit'te ölür; (b) cockpit şimdi öldürülür, CRM karanlığa düşer | **(a)** — veri kaybı yok, tek-anahtar geçiş idiomu korunur |
+| # | Konu | CEO KARARI |
+|---|---|---|
+| K1 | Modül/placeholder kapanışlarının yürütücüsü | **Yalnız Fable ve GPT 5.6 solo.** Başka model modül kapatamaz. Devralma protokolü bu karara göre güncellendi (roadmap §4 kural 4) |
+| K2 | Yeni + legacy persona yazarlığı | **TÜMÜ Fable bizzat, en mükemmel kalitede.** Personalar + skiller + MCP profilleri + HR müdürü ve uzman yapısı HAYATİ — mükemmel holding ancak mükemmel çalışanlarla yürür. HR-fabrikası altyapı olarak kurulur (E5.4) ama İLK oluşum yazarlığı devredilemez; yetişmeyen "Fable-yazımı bekliyor" listesine düşer, asla düşük kaliteyle kapatılmaz |
+| K3 | CRM'in shell'e taşınması | **Projeye göre** — master plan idiomu geçerli: E12.4'te tek-anahtar geçiş, eski cockpit aynı commit'te ölür, veri kaybı yok |
 
 ## 6. Roadmap entegrasyon kaydı (§4 gereği — yalnız burada bırakmak yasak)
 
