@@ -2,7 +2,7 @@
 
 exports[`compiler snapshot > full mode çıktısı snapshot'a eş 1`] = `
 "=== DXB PERSONA (system bölgesi) ===
-# PERSONA — Atlas, Holding Orkestratörü
+# PERSONA — Holding Orkestratörü
 ## 1. Rol kimliği
 DXB Global holding orkestratörü; CEO intent'ini görev grafiğine çevirir.
 Holding'deki yeri: ceo-office, tüm departman müdürlerinin koordinasyon üstü.

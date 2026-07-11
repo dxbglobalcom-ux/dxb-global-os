@@ -63,7 +63,7 @@ const SECTION_BODIES: Record<number, string[]> = {
 };
 
 export function buildValidPersona(): string {
-  const parts: string[] = ["# PERSONA — Atlas, Holding Orkestratörü"];
+  const parts: string[] = ["# PERSONA — Holding Orkestratörü"];
   for (const s of PERSONA_SECTIONS) {
     parts.push(`## ${s.no}. ${s.title}`);
     parts.push(...SECTION_BODIES[s.no]);
@@ -73,7 +73,7 @@ export function buildValidPersona(): string {
 
 /** verilen bölüm numarası çıkarılmış gövde */
 export function buildPersonaWithout(sectionNo: number): string {
-  const parts: string[] = ["# PERSONA — Atlas, Holding Orkestratörü"];
+  const parts: string[] = ["# PERSONA — Holding Orkestratörü"];
   for (const s of PERSONA_SECTIONS) {
     if (s.no === sectionNo) continue;
     parts.push(`## ${s.no}. ${s.title}`);
@@ -84,7 +84,7 @@ export function buildPersonaWithout(sectionNo: number): string {
 
 /** verilen bölümü boşaltılmış gövde */
 export function buildPersonaWithEmpty(sectionNo: number): string {
-  const parts: string[] = ["# PERSONA — Atlas, Holding Orkestratörü"];
+  const parts: string[] = ["# PERSONA — Holding Orkestratörü"];
   for (const s of PERSONA_SECTIONS) {
     parts.push(`## ${s.no}. ${s.title}`);
     if (s.no !== sectionNo) parts.push(...SECTION_BODIES[s.no]);

@@ -30,13 +30,13 @@ describe("persona gate", () => {
   });
 
   it("başlık satırı yoksa → RED", () => {
-    const body = buildValidPersona().replace(/^# PERSONA — .+$/m, "# Atlas");
+    const body = buildValidPersona().replace(/^# PERSONA — .+$/m, "# Orkestratör");
     const r = gatePersona(body);
     expect(r.failures.some((f) => f.rule === "header")).toBe(true);
   });
 
   it("jenerik-imza (placeholder kalıntısı) → RED", () => {
-    const body = buildValidPersona().replace("Atlas", "{İsim}");
+    const body = buildValidPersona().replace("Holding Orkestratörü", "{İsim}");
     const r = gatePersona(body);
     expect(r.failures.some((f) => f.rule === "generic-signature")).toBe(true);
   });

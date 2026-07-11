@@ -25,8 +25,9 @@ export const PERSONA_SECTIONS: readonly SectionSpec[] = [
   { no: 11, key: "hook bağlantısı", title: "Fable 5 hook bağlantısı", compactable: false },
 ] as const;
 
-/** `# PERSONA — {İsim}, {Unvan}` başlık satırı deseni */
-export const HEADER_RE = /^# PERSONA — .+,.+$/m;
+/** `# PERSONA — {Unvan}` başlık satırı deseni — isim politikası (E5.2b, CEO 2026-07-11):
+ *  uydurma insan adı YASAK, rol adıyla anılır; tarihsel `{İsim}, {Unvan}` formu da geçer. */
+export const HEADER_RE = /^# PERSONA — .+$/m;
 
 /** §11 içinde geçerli hook sürümü: `hook_version: v3` / `hook sürümü v3` vb. */
 export const HOOK_VERSION_RE = /hook[\s_-]?(?:version|sürümü?)\s*[:=]?\s*v?(\d+)/i;
