@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Panel } from "@/components/primitives";
 import { MODULE_LIVE, type LiveFamily } from "@/config/module-live";
 import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
 
 // Honest module state v2 (E2.2 kuralı + D4 bağlantı kontratı): rota ya
@@ -49,7 +50,7 @@ export async function ModuleWaiting({
   pageKey: string;
   step: string;
 }) {
-  const dict = getDict();
+  const dict = getDict(await getLocale());
   const t = dict.command;
   const pages = t.nav.pages as Record<string, string>;
   const title = pages[pageKey] ?? pageKey;

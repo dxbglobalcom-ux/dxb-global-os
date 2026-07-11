@@ -1,6 +1,7 @@
 import { LiveFeed, type LiveEvent } from "@/components/command/live-feed";
 import { Panel } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
 
 // Live Operations v1 (E3.3) — server snapshot of the last 40 task_events
@@ -21,7 +22,7 @@ type EventRow = {
 };
 
 export default async function LivePage() {
-  const dict = getDict();
+  const dict = getDict(await getLocale());
   const t = dict.command.live;
   const supabase = await createClient();
 

@@ -6,6 +6,7 @@ import {
 } from "@/components/command/intelligence-rail";
 import { SideNav } from "@/components/command/side-nav";
 import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
 
 // CommandShell — the single shell of the Executive Command Center
@@ -23,7 +24,8 @@ export default async function CommandLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const dict = getDict();
+  const locale = await getLocale();
+  const dict = getDict(locale);
   const t = dict.command;
   const supabase = await createClient();
 
@@ -73,6 +75,7 @@ export default async function CommandLayout({
         systemOk={systemOk}
         activeTasks={summaryRes.data?.active_tasks ?? 0}
         pendingApprovals={summaryRes.data?.pending_approvals ?? 0}
+        locale={locale}
       />
       <div className="relative flex min-h-0 flex-1">
         <SideNav

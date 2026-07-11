@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CheckCircleIcon, WarningIcon } from "@phosphor-icons/react";
 import { Panel } from "@/components/panel";
+import { Panel as CommandPanel } from "@/components/primitives";
 import { FreshnessStamp } from "@/components/freshness-stamp";
 import { useDxbChannel } from "@/lib/realtime";
 import {
@@ -69,17 +70,26 @@ export function ApprovalsInbox({ rows, text }: { rows: InboxApproval[]; text: In
   const total = rows.length;
   const stamp = <FreshnessStamp state={channel} asOfLabel={text.asOf} notLiveLabel={text.notLiveSince} />;
 
+  // Boş durum Command dilinde (CEO göz-testi 2026-07-11: eski kokpit
+  // paneli + "Back to cockpit" kalıntısı RET — kahverengi ton yasak B4).
   if (total === 0) {
     return (
-      <Panel stamp={stamp}>
+      <CommandPanel action={stamp}>
         <div className="flex flex-col items-center gap-3 py-12 text-center">
-          <CheckCircleIcon size={28} aria-hidden className="text-ok" />
-          <p className="text-body text-ink">{text.empty}</p>
-          <Link href="/" className="text-micro text-accent hover:text-accent-press">
+          <CheckCircleIcon
+            size={28}
+            aria-hidden
+            className="text-status-ok"
+          />
+          <p className="text-body-md text-ink-primary">{text.empty}</p>
+          <Link
+            href="/overview"
+            className="rounded-input px-2 py-1 text-body-s text-accent-champagne transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+          >
             {text.emptyAction}
           </Link>
         </div>
-      </Panel>
+      </CommandPanel>
     );
   }
 

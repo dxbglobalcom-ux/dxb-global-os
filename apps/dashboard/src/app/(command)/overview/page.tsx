@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { HealthRing, Panel, Stat, StatusBadge } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
 
 // Executive Overview v2 (E3.2 + C-Hibrit R-kapısı 2026-07-11) — single
@@ -36,7 +37,7 @@ type ExecOverview = {
 };
 
 export default async function OverviewPage() {
-  const dict = getDict();
+  const dict = getDict(await getLocale());
   const t = dict.command.overview;
   const supabase = await createClient();
 

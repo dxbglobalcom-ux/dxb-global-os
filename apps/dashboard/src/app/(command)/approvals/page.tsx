@@ -1,4 +1,5 @@
 import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
 import { ApprovalsInbox } from "@/components/approvals/inbox";
 import type { InboxApproval } from "@/lib/approvals";
@@ -9,7 +10,7 @@ import type { InboxApproval } from "@/lib/approvals";
 // approvals row upstream, so this surface only ever shows gated OUTWARD
 // actions — the money-OUT badge is derived per row.
 export default async function ApprovalsPage() {
-  const dict = getDict();
+  const dict = getDict(await getLocale());
   const supabase = await createClient();
 
   const { data } = await supabase

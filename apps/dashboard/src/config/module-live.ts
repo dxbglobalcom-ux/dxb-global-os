@@ -75,6 +75,7 @@ export const MODULE_LIVE: Record<string, ModuleLive> = {
   library: AI,
   skills: AI,
   plugins: AI,
+  mcp: AI,
   // governance
   audit: GOV,
   decisions: GOV,

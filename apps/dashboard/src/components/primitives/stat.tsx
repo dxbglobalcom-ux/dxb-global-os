@@ -28,15 +28,19 @@ export function Stat({
   return (
     <Link
       href={drillHref}
-      className={`group block rounded-panel border border-edge-neutral bg-surface-carbon p-5 shadow-e1 reflection transition duration-[var(--t-fast)] ease-refined hover:-translate-y-px hover:border-edge-champagne hover:bg-surface-graphite hover:shadow-e2 ${className}`}
+      className={`group flex min-h-32 flex-col rounded-panel border border-edge-neutral bg-surface-carbon p-5 shadow-e1 reflection transition duration-[var(--t-fast)] ease-refined hover:-translate-y-px hover:border-edge-champagne hover:bg-surface-graphite hover:shadow-e2 ${className}`}
     >
       <div className="label-caps text-ink-secondary">{label}</div>
-      <div className="mt-2 flex min-w-0 items-baseline gap-2">
-        {/* Uzun değer bir alt ölçeğe düşer (display-xl→display, DESIGN_SYSTEM §7)
-            — kutudan taşan metrik göz-testi ihlalidir. */}
+      {/* Değer bloğu kutu tabanına sabit (mt-auto): her genişlik/zoom'da
+          aynı dikey ritim. Ölçek akışkan clamp — uzun değer alt banda
+          düşer (display-xl→display sınırları, DESIGN_SYSTEM §7);
+          kutudan taşan ya da yüzen metrik göz-testi ihlalidir. */}
+      <div className="mt-auto flex min-w-0 items-baseline gap-2 pt-2">
         <span
-          className={`font-display text-accent-ivory tabular-nums ${
-            value.length > 5 ? "text-display-lg" : "text-display-xl"
+          className={`font-display font-semibold tracking-[-0.02em] text-accent-ivory tabular-nums leading-[1.1] ${
+            value.length > 5
+              ? "text-[length:clamp(1.5rem,0.9vw+1rem,2rem)]"
+              : "text-[length:clamp(2rem,1.2vw+1.25rem,2.75rem)]"
           } ${glow ? "live-glow" : ""}`}
         >
           {value}

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { StatusBadge } from "@/components/primitives";
 import { LiveClock } from "./live-clock";
+import { LocaleSwitch } from "./locale-switch";
+import type { Locale } from "@/lib/i18n";
 
 // Global Command Bar — top layer (CC-SPEC §3, §11). E2.1 renders the
 // REAL slice: brand, live system status (DB reachability from the
@@ -16,6 +18,7 @@ export function CommandBar({
   systemOk,
   activeTasks,
   pendingApprovals,
+  locale,
 }: {
   labels: {
     systemOk: string;
@@ -23,10 +26,12 @@ export function CommandBar({
     activeTasks: string;
     pendingApprovals: string;
     readOnly: string;
+    language: string;
   };
   systemOk: boolean;
   activeTasks: number;
   pendingApprovals: number;
+  locale: Locale;
 }) {
   return (
     <header className="flex h-12 items-center gap-4 border-b border-edge-neutral bg-surface-obsidian px-4">
@@ -58,6 +63,7 @@ export function CommandBar({
         <span className="label-caps rounded-input border border-edge-neutral px-2 py-1 text-ink-muted">
           {labels.readOnly}
         </span>
+        <LocaleSwitch locale={locale} ariaLabel={labels.language} />
         <LiveClock />
       </div>
     </header>

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
+import { getLocale } from "@/lib/locale";
 
 export const metadata: Metadata = {
   title: "DXB Global — Command Center",
@@ -14,10 +15,15 @@ export const viewport: Viewport = {
   viewportFit: "cover", // safe-area insets on phones (§5)
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const locale = await getLocale();
   return (
     <html
-      lang="en"
+      lang={locale}
       data-theme="dark"
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning

@@ -82,7 +82,7 @@
     "highBadge": "yüksek risk",
     "payload": "Teknik ayrıntı (JSON)",
     "empty": "Kapı temiz — kararınızı bekleyen bir şey yok.",
-    "emptyAction": "Kokpite dön",
+    "emptyAction": "Genel Bakışı aç",
     "fatigue": "{n} onay birikti — kaşe-basma riski. Yavaşlayın, dikkatle inceleyin.",
     "errorPanelTitle": "Karar uygulanamadı — hiçbir değişiklik yapılmadı",
     "fields": {
@@ -263,7 +263,8 @@
         "integrations": "Entegrasyonlar",
         "health": "Sistem Sağlığı",
         "logs": "Kayıtlar",
-        "backups": "Yedekler"
+        "backups": "Yedekler",
+        "mcp": "MCP Sunucuları"
       }
     },
     "bar": {
@@ -271,7 +272,8 @@
       "systemDegraded": "Bozulma var — sağlığı kontrol et",
       "activeTasks": "aktif görev",
       "pendingApprovals": "bekleyen onay",
-      "readOnly": "Salt okunur"
+      "readOnly": "Salt okunur",
+      "language": "Dil"
     },
     "rail": {
       "title": "Zekâ",

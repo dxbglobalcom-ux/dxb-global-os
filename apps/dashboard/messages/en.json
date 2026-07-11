@@ -82,7 +82,7 @@
     "highBadge": "high risk",
     "payload": "Technical detail (JSON)",
     "empty": "All clear — nothing awaits your decision.",
-    "emptyAction": "Back to cockpit",
+    "emptyAction": "Open Executive Overview",
     "fatigue": "{n} approvals are pending — rubber-stamp risk. Slow down and review with care.",
     "errorPanelTitle": "Decision failed — nothing was applied",
     "fields": {
@@ -263,7 +263,8 @@
         "integrations": "Integrations",
         "health": "System Health",
         "logs": "Logs",
-        "backups": "Backups"
+        "backups": "Backups",
+        "mcp": "MCP Servers"
       }
     },
     "bar": {
@@ -271,7 +272,8 @@
       "systemDegraded": "Degraded — check health",
       "activeTasks": "active tasks",
       "pendingApprovals": "pending approvals",
-      "readOnly": "Read-only"
+      "readOnly": "Read-only",
+      "language": "Language"
     },
     "rail": {
       "title": "Intelligence",

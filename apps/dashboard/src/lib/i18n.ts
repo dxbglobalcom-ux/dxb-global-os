@@ -8,6 +8,9 @@ import en from "../../messages/en.json";
 
 export type Locale = "tr" | "en";
 export const DEFAULT_LOCALE: Locale = "en";
+// Cookie adı client tarafında da lazım (LocaleSwitch); server çözümü
+// lib/locale.ts'te (next/headers oradan izole).
+export const LOCALE_COOKIE_CLIENT = "dxb-locale";
 
 export type Dictionary = typeof en;
 

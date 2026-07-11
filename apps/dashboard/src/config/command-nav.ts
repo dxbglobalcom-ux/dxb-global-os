@@ -15,6 +15,7 @@ import {
   BookOpen,
   BrainCircuit,
   Briefcase,
+  Cable,
   Building2,
   CircleDollarSign,
   ClipboardCheck,
@@ -119,6 +120,9 @@ export const COMMAND_NAV: NavGroup[] = [
       { key: "library", href: "/ai/library", icon: Library },
       { key: "skills", href: "/ai/skills", icon: Wrench },
       { key: "plugins", href: "/ai/plugins", icon: Puzzle },
+      // U8 (CEO emri 2026-07-11 ~02:55): MCP sunucuları Intelligence
+      // grubuna eklendi — §7 tablosuna +1 sayfa, kayıtlı uyarlama.
+      { key: "mcp", href: "/ai/mcp", icon: Cable },
     ],
   },
   {
