@@ -1,7 +1,7 @@
 # CEO_COMMAND_CENTER_SPEC — DXB GLOBAL EXECUTIVE COMMAND CENTER
 
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[DESIGN_SYSTEM]] (görsel kontrat), [[SETTINGS_AND_CONTROL_SPEC]], [[OBSERVABILITY_SPEC]], [[APPROVAL_ENGINE_SPEC]], [[COST_CONTROL_SPEC]], [[MODEL_ROUTING_SPEC]]
-> Direktif kaynağı: §§1-39 (tamamı) + madde 1-5. §14 şablonu: 27 başlık tam.
+> Direktif kaynağı: §§1-39 (tamamı) + madde 1-5. §14 şablonu: 27 başlık tam. + **CEO direktifi 2026-07-12** (ajan beyni dashboard'dan değiştirilebilir — bu spec'te §5/§6/§7 yüzeyleri, normatif kurallar [[MODEL_ROUTING_SPEC]] §4b).
 > Hüküm cümlesi (§39): "Bu bir dashboard değil. Bu, küresel bir AI holdinginin işletim sistemidir."
 
 ## 1. Amaç
@@ -75,7 +75,7 @@ Kural: view'lar sadece OKUMA; hiçbir dashboard bileşeni tabloya doğrudan yazm
 | `HoldingHealthPanel` (skor + explain drawer) | SIFIRDAN | Overview ana panel |
 | `LiveOpsPanel` (stream/grid/timeline/process-graph görünümleri) | SIFIRDAN | Overview + Live Operations sayfası |
 | `OrgGraph` (7 lens, drag-drop) | SIFIRDAN | Holding Structure |
-| `EmployeeCard` + `EmployeeCommandPage` | SIFIRDAN | Employees + org node tıklaması |
+| `EmployeeCard` + `EmployeeCommandPage` | SIFIRDAN | Employees + org node tıklaması; **beyin (model) rozeti zorunlu** — Control Mode'da rozet tıklaması model picker MutationDrawer açar (banned modeller listede YOK, mechanical_only etiketli; kurallar [[MODEL_ROUTING_SPEC]] §4b) |
 | `ProjectCommandView` | SIFIRDAN | Projects detayı (§23) |
 | `ControlModeSwitch` + `MutationDrawer` | SIFIRDAN | Control Mode her mutasyon yüzeyi |
 | Login sahnesi "Golden Threshold" | KALIR+DEĞİŞİR | 3D hover parallax upgrade (§39 notu) |
@@ -84,7 +84,7 @@ Kural: view'lar sadece OKUMA; hiçbir dashboard bileşeni tabloya doğrudan yazm
 ## 6. Backend yapısı
 
 - Okuma: RSC'de `@supabase/ssr` ile `v_*` view'ları; client bileşenlere props. Ağır sayfalarda `Promise.all` ile view + Broadcast snapshot tek geçiş.
-- Yazma (Control Mode mutasyonları): `/api/control/{alan}` route handler → Zod validate → `SECURITY DEFINER` fn → audit + Broadcast (SYSTEM_ARCHITECTURE §6 tek desen). Dashboard'a özel handler alanları: `org` (taşı/bağla/askıya al), `employees` (oluştur/deaktive/model değiştir), `workflows` (durdur/başlat/yeniden dene), `settings` (SETTINGS_AND_CONTROL_SPEC'e devir), `layout` (widget layout kaydet).
+- Yazma (Control Mode mutasyonları): `/api/control/{alan}` route handler → Zod validate → `SECURITY DEFINER` fn → audit + Broadcast (SYSTEM_ARCHITECTURE §6 tek desen). Dashboard'a özel handler alanları: `org` (taşı/bağla/askıya al), `employees` (oluştur/deaktive/model değiştir — `set_model` → `fn_update_agent_brain`: katalog+banned+mechanical_only doğrulaması, audit + decision_log `routing_change` + `settings` Broadcast + undo `change_id`; CEO direktifi 2026-07-12, normatif [[MODEL_ROUTING_SPEC]] §4b), `workflows` (durdur/başlat/yeniden dene), `settings` (SETTINGS_AND_CONTROL_SPEC'e devir), `layout` (widget layout kaydet).
 - Command palette aksiyonları ayrı endpoint AÇMAZ — mevcut control handler'larına komut eşler (aksiyon kataloğu §8'de).
 
 ## 7. Frontend yapısı (route ağacı = bilgi mimarisi)
@@ -123,6 +123,7 @@ Kural: view'lar sadece OKUMA; hiçbir dashboard bileşeni tabloya doğrudan yazm
 | Cost chart segmenti | `/fin/costs?dim={department\|model\|proje}&id=…` | segment |
 | Alert kartı | kaynak modül sayfası (etkilenen alan) | alert id |
 | Audit satırı | `/gov/audit/[id]` tam kayıt + ilgili değişiklik diff'i | — |
+| Beyin (model) rozeti (EmployeeCard/EmployeeCommandPage) | read-only: `/ai/models?highlight={model}` · Control Mode: model picker MutationDrawer ([[MODEL_ROUTING_SPEC]] §4b) | employee id + model id |
 
 Kural: bu tabloya yeni özet eklenirse hedefi de eklenir; hedefsiz özet render EDİLMEZ (lint-level kural: `WidgetFrame` `drillHref` prop'u zorunlu).
 
@@ -177,7 +178,7 @@ Madde 4 hükmü: yeni sertleştirme YOK — MFA kapalı, local açık. Mevcut Au
 
 ## 20. Test planı / 21. Acceptance criteria
 
-- Playwright akışları (mevcut altyapı KALIR): (a) login→overview<3sn, (b) overview'daki HER özet değerin tıklanıp doğru filtreli sayfaya inmesi (drill-down haritası üstünden data-driven test), (c) Control Mode toggle→mutasyon→audit satırı+Broadcast yayını, (d) widget ekle/taşı/kaydet→reload→layout korunur, (e) TV modu döngüsü.
+- Playwright akışları (mevcut altyapı KALIR): (a) login→overview<3sn, (b) overview'daki HER özet değerin tıklanıp doğru filtreli sayfaya inmesi (drill-down haritası üstünden data-driven test), (c) Control Mode toggle→mutasyon→audit satırı+Broadcast yayını, (d) widget ekle/taşı/kaydet→reload→layout korunur, (e) TV modu döngüsü, (f) EmployeeCommandPage beyin değişimi: rozet→picker→onay→audit satırı + `settings` Broadcast + rozet yeni modeli gösterir; negatif kanıt: banned model picker'da görünmez.
 - Veri gerçekliği testi: her widget'ın render değeri, kaynağı olan view'a SQL ile sorulup karşılaştırılır (sahte metrik regresyonu).
 - §38'in 27 maddesi ACCEPTANCE_CRITERIA'ya (D5) modül-başı kabul olarak taşınır; görsel maddeler CEO göz testine ⚠ UNVERIFIED etiketiyle sunulur (evidence-before-done).
 

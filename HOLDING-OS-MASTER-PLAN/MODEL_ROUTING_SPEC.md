@@ -1,7 +1,7 @@
 # MODEL_ROUTING_SPEC — MODEL ORKESTRASYONU VE ROTALAMA
 
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[SETTINGS_AND_CONTROL_SPEC]] (6.1 anahtarları), [[COST_CONTROL_SPEC]] (bütçe kesişimi), [[AGENT_ORCHESTRATION_SPEC]] (D3, tüketici)
-> Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı, CEO daraltması: Sonnet YOK).
+> Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı, CEO daraltması: Sonnet YOK) + **CEO direktifi 2026-07-12** (ajan beyinleri dashboard'dan değiştirilebilir — §4b).
 > Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy v6; korpus/execution Fable bizzat → 12 Temmuz sonrası Opus).
 
 ## 1. Amaç
@@ -17,6 +17,7 @@ Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-de�
 - R5. Raw provider key YASAK: tüm çağrılar LiteLLM proxy virtual key'leriyle (departman-başı; STACK sert kuralı).
 - R6. Model Orchestration Panel (§19): görsel flow, node sürükle → rol ataması değişir (control seam üzerinden); settings 6.1 anahtarlarıyla AYNI kaynağa yazar.
 - R7. Rotalama parametreleri ayarlanabilir (6.1): timeout, max token, max maliyet, context limiti, retry, confidence threshold, escalation, human-approval eşiği, Fable-review zorunluluğu — hepsi settings_registry'de, resolve zinciriyle scope'lu.
+- R8. (CEO direktifi 2026-07-12) `agents.brain` ajan-seviyesi beyin birinci sınıf rotalama girdisidir ve **dashboard'dan CEO-değiştirilebilir**: değişim = tek UPDATE + audit_log + decision_log + Broadcast; banned/mechanical_only korkulukları ajan seviyesinde de MUTLAK (bypass yolu yok). Normatif ayrıntı §4b.
 
 ## 3. Mimari
 
@@ -73,6 +74,21 @@ Varsayılan atamalar (seed — CEO settings'ten değiştirir; ⛔ değişiklik C
 | Hızlı görev · düşük maliyet | `claude-haiku-4-5` (`mechanical_only`) | verdict üretemez; çıktısı ham girdi sayılır |
 | (yasak) | `claude-sonnet-*` `banned=true` | R2 — atama denemesi policy hatası |
 
+### 4b. Ajan-seviyesi beyin: `agents.brain` — dashboard'dan değişim (CEO direktifi 2026-07-12, normatif)
+
+Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_registry.sql:14`). Bugünkü kadro-genelindeki tekdüzelik kolon DEFAULT'unun görüntüsüdür — iskelet üreticisi (`gen-workforce-dossiers.sh`) model ataması YAPMAZ; bu bir tasarım kararı değil, henüz koşulmamış rotalama atamasıdır (sicil alan 8 notu: "MODEL_ROUTING_SPEC slot kuralına tabi"). Persona dosyası model kopyası TUTMAZ (alan 9: "kaynak: canlı DB — kopya tutulmaz"); beyin gerçeği yalnız DB'dedir, dosyaya model adı yazmak ihlal.
+
+**Katman ilişkisi (çözüm önceliği):**
+- Yeni kolon: `agents.brain_source text NOT NULL DEFAULT 'default'` — `default` (doldurulmamış placeholder) | `slot` (rotalama-atama geçişiyle §4 varsayılan tablosundan türetilmiş) | `ceo_override` (dashboard'dan CEO ataması). Migration: `0021g_agent_brain_source.sql` (0021x ailesi, §22'ye ek).
+- `fn_select_model` genişler: adım 0 — ajanın `brain_source='ceo_override'` ise model = `agents.brain`, kural taraması atlanır; aksi halde §3 zinciri aynen. Korkuluklar HER iki yolda istisnasız: `banned=true` model hiçbir ajana atanamaz/seçilemez (Sonnet), `mechanical_only` model yalnız mekanik görev-sınıfı role atanabilir (`role_level='ops_agent'`; verdict/onay üretemez), COST_CONTROL hard-stop her seçimi keser.
+- **Rotalama-atama geçişi** (tekdüzeliği gideren adım): E5.5 persona dalgaları bitince tek migration — her ajanın rol sınıfı → 13 slot eşlemesi → §4 varsayılanından `brain` yazılır, `brain_source='slot'`, decision_log'a toplu `routing_change`. Geçişe kadar glm-5.2 görünümü bilinen-placeholder'dır; slot kuralı değişince `brain_source='slot'` ajanlar yeniden çözülür, `ceo_override` ajanlar CEO temizleyene kadar sabit kalır.
+
+**Dashboard değişim kanalı (TEK yol):**
+- Yüzey: `EmployeeCommandPage`/`EmployeeCard` Control Mode rozeti + palette "X'in modelini değiştir" ([[CEO_COMMAND_CENTER_SPEC]] §8) → `POST /api/control/employees {op:'set_model', employee_id, model_id, rationale}`.
+- fn: `fn_update_agent_brain(employee_id, model_id, rationale)` — doğrulama: katalogda var + `status='active'` + `banned=false` + `mechanical_only` rol-sınıf kontrolü; yazım: `agents.brain` UPDATE + `brain_source='ceo_override'` + audit_log + decision_log(`routing_change`, aktör=`ceo`, gerekçe) + `settings` Broadcast (kernel cache invalidate — §9 yolu). Yanıt `{ok, change_id}`; undo settings_change_log/audit üzerinden. Doğrudan tablo UPDATE'i (psql/PostgREST) control seam dışıdır — audit'siz yazım ihlal.
+- **Eval-önce doktrini (CAIO):** ajan/CAIO-kaynaklı beyin-değişim önerisi eval-önce + kayıtlı yürür (CAIO persona hükmü). CEO dashboard değişimi hook'un ÜSTÜNDEDİR ([[FABLE_5_HOOK_SPEC]] CEO istisnası): engellenmez, anında uygulanır; sistem warn + audit düşer ve CAIO'ya değişim-sonrası eval görevi otomatik kuyruklanır (`v_model_stats` 7 gün izleme; gerileme → bilgi-alert'i + geri-alma önerisi — approval DEĞİL, operasyon bilgisi).
+- Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy: Fable→Opus, Sonnet defedildi, Haiku getir-götür) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
+
 ## 5. Component yapısı
 
 | Bileşen | İçerik |
@@ -102,6 +118,7 @@ Reads: `v_model_stats`, `v_routing_rules_resolved` (rol→etkin kural zinciri). 
 - `routing_decision` / `routing_fallback` / `routing_change` decision_log olayları; `ops:live` kanalına ajan satırında "model" alanı olarak yansır.
 - 2 ardışık fallback VEYA provider degraded → `alerts` (High); emergency fallback'e düşüş → Critical.
 - Routing değişikliği → `settings` Broadcast (kernel cache invalidate — SETTINGS §9 ile aynı yol).
+- `agents.brain` değişimi (§4b) → decision_log `routing_change` + `settings` Broadcast; EmployeeCard/AgentDock model rozeti canlı boyanır (optimistic update yok — §10 ilkesi).
 
 ## 10. State yönetimi
 
@@ -113,7 +130,7 @@ Panel client state'i yalnız görsel (seçili node, simulator girdileri). Atama 
 
 ## 13. Yetkilendirme
 
-Atama/kural değişikliği yalnız `ceo` (Control Mode → seam). `system` yalnız `status` alanını değiştirebilir (health degradation otomatiği); banned/mechanical_only bayraklarını KİMSE runtime'da değiştiremez (migration-only — CEO kararıyla kod değişikliği gerektirir, sessiz Sonnet dönüşü imkânsız).
+Atama/kural değişikliği yalnız `ceo` (Control Mode → seam). `system` yalnız `status` alanını değiştirebilir (health degradation otomatiği); banned/mechanical_only bayraklarını KİMSE runtime'da değiştiremez (migration-only — CEO kararıyla kod değişikliği gerektirir, sessiz Sonnet dönüşü imkânsız). `agents.brain` aynı rejimde: runtime yazımı yalnız `ceo` (§4b tek yol, `fn_update_agent_brain`); `system` yalnız rotalama-atama geçişi migration'ıyla yazar.
 
 ## 14. Logging / 15. Audit
 
@@ -133,7 +150,7 @@ Virtual key'ler departman-başı (mevcut LiteLLM kurulumu KALIR); key rotasyonu 
 
 - Birim: kural önceliği, departman override'ı, banned reddi, mechanical_only kısıtı, fallback derinlik sınırı, bütçe-stop kesişimi.
 - Entegrasyon: sahte provider hatası → zincir yürür → decision_log 2 satır → alert.
-- Kabul: 13 slot panel'de görünür ve atanabilir · her koşuda decision_log kaydı var (örneklem denetimi) · Sonnet atama denemesi reddedilir (kanıt) · simulator zinciri doğru gösterir · settings 6.1 ↔ panel aynı kaynağı değiştirir.
+- Kabul: 13 slot panel'de görünür ve atanabilir · her koşuda decision_log kaydı var (örneklem denetimi) · Sonnet atama denemesi reddedilir (kanıt) · simulator zinciri doğru gösterir · settings 6.1 ↔ panel aynı kaynağı değiştirir · §4b: dashboard'dan beyin değişimi → audit_log + decision_log + Broadcast üçlüsü kanıtlı; banned model ajan-seviyesinde de reddedilir; `ceo_override` ajan slot-kural değişiminden etkilenmez (kanıt sorgusu).
 
 ## 22. Migration planı / 23. Rollback planı
 
@@ -163,4 +180,4 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
 
 ## Done definition (bu spec)
 
-27 başlık ✓ · şema+seed+fn sözleşmesi kod seviyesinde ✓ · 13 rol slotu + varsayılan tablosu ✓ · Sonnet yasağı mekanizmalı (banned, migration-only) ✓ · §19 meta seti eksiksiz ✓ · doğrulama komutları adım-başı ✓ · Opus-devralma + ⛔ kararlar ✓
+27 başlık ✓ · şema+seed+fn sözleşmesi kod seviyesinde ✓ · 13 rol slotu + varsayılan tablosu ✓ · Sonnet yasağı mekanizmalı (banned, migration-only) ✓ · §19 meta seti eksiksiz ✓ · doğrulama komutları adım-başı ✓ · Opus-devralma + ⛔ kararlar ✓ · ajan-beyni katmanı §4b (dashboard değişimi + öncelik çözümü + rotalama-atama geçişi — CEO direktifi 2026-07-12) ✓
