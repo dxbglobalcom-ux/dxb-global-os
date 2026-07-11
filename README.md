@@ -11,17 +11,32 @@ Tek soruya tek cevap: **"proje nerede, neyi okuyacağım?"**
 | `scripts/` | İşletim scriptleri (`sync-personas-to-db.sh`, `gen-workforce-dossiers.sh`, denetimler) | Ajanlar |
 | `docs/` · `references/` · `graphify-out/` · `memory-store/` | Yardımcı: dokümantasyon, tasarım referansları, bilgi grafı, bellek | İhtiyaç halinde |
 
-## Görünüm katmanları (kokpit / makine dairesi / arşiv)
+## Görünüm: iki bölümlü ağaç (KOKPİT + MAKİNE) — `DXB.code-workspace`
 
-**1. KOKPİT (VS Code'da gördüğün):** `HOLDING-OS-MASTER-PLAN/` · `personas/` · kod (`apps` `packages`
-`supabase` `db` `scripts`) · `docs` `references` `tests` · bu README. Başka hiçbir şey göz kirletmez.
+**Açılış: kökteki `DXB.code-workspace` dosyasına çift tık → "Open Workspace".** Ağaçta iki bölüm görürsün:
 
-**2. MAKİNE DAİRESİ (var ama Explorer'da gizli — `.vscode/settings.json` files.exclude):**
-`.planning/` (ajanların süreç defteri: STATE, roadmap, faz planları) · `memory-store/` (şirket kalıcı
-hafızası — artifact/relation; insan okumaz, ajanlar kullanır) · `graphify-out/` + `tmp/` (araç önbellekleri) ·
-`node_modules/` + config dosyaları (package.json, tsconfig…) · `.claude/ .github/ .obsidian/` (araç ayarları) ·
-`tools/ vps/` (altyapı scriptleri). **Hiçbiri silinmedi** — geri görmek: `.vscode/settings.json` içinde
-ilgili satırı sil/false yap.
+**1. 🏢 KOKPİT (üstte):** `HOLDING-OS-MASTER-PLAN/` · `personas/` · kod (`apps` `packages` `supabase`
+`db` `scripts`) · `docs` `references` `tests` · bu README.
+
+**2. ⚙ MAKİNE bölümleri (altında, AÇIK — istediğinde bakarsın):**
+`.planning` (ajanların süreç defteri: STATE, roadmap, faz planları) · `memory-store` (şirket kalıcı
+hafızası) · `tools` · `vps` (altyapı). Kokpit ağacında tekrarlanmazlar; kendi bölümlerinde tam içerikle dururlar.
+Görünmeyen tek şey değersiz önbellekler (`node_modules`, `tmp`, `graphify-out`) + config dosyaları —
+onlar da silinmedi, `DXB.code-workspace` içindeki listeden çıkarılarak anında görünür yapılır.
+
+## Session açılış protokolü — ajanların ZORUNLU okuma sırası
+
+Her yeni session, herhangi bir işten ÖNCE şunları okur (BOOTSTRAP READ onayı vermeden proje işi yapamaz):
+
+1. **Kalıcı hafıza:** `fable-5-construction-governance.md` + `model-routing-hierarchy.md` + `MEMORY.md`
+   endeksi (kim ne yazabilir, kalite kuralları, CEO hükümleri) — repo aynası: `.planning/governance/`
+2. **`.planning/STATE.md`** — neredeyiz, son durum, kayıtlı uyarlamalar (İLK bakılan dosya)
+3. **`HOLDING-OS-MASTER-PLAN/IMPLEMENTATION_ROADMAP.md`** — sıradaki adım + kabul kanıtları
+4. **İlgili CEO direktifleri** — `00-INDEX.md` üzerinden; aktif emirler her işin üstündedir
+5. **Yalnız işin dokunduğu spec'ler** — 31 spec'in TAMAMI okunmaz (token disiplini);
+   hangi spec'in ne olduğu `00-INDEX.md`'de
+
+CLAUDE.md otomatik yüklenir. Bu protokol governance'ın bağlayıcı bootstrap kuralıdır.
 
 **3. ARŞİV (repo DIŞI — `~/dxb-archive/`):**
 - `agency-agents-20260711.tar.gz` (535 dosya) — eski ajans ham maddesi. Persona yazımında SALT REFERANS;

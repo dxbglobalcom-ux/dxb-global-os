@@ -1,0 +1,49 @@
+{
+  // DXB GLOBAL OS — iki bölümlü ağaç (CEO emri 2026-07-11):
+  // üstte KOKPİT (iş gördüğün her şey), altında MAKİNE bölümleri (istediğinde açarsın).
+  // Açılış: bu dosyaya çift tık → "Open Workspace". Hiçbir şey gizli-silinmiş değildir.
+  "folders": [
+    { "name": "🏢 KOKPİT — DXB GLOBAL OS", "path": "." },
+    { "name": "⚙ MAKİNE — süreç defteri (.planning)", "path": ".planning" },
+    { "name": "⚙ MAKİNE — hafıza deposu (memory-store)", "path": "memory-store" },
+    { "name": "⚙ MAKİNE — araçlar (tools)", "path": "tools" },
+    { "name": "⚙ MAKİNE — sunucu scriptleri (vps)", "path": "vps" }
+  ],
+  "settings": {
+    // KOKPİT temizliği: makine klasörleri kokpit ağacında tekrarlanmaz
+    // (aşağıdaki MAKİNE bölümlerinde tam içerikleriyle açıktır).
+    "files.exclude": {
+      ".planning": true,
+      ".claude": true,
+      ".codex": true,
+      ".github": true,
+      ".impeccable": true,
+      ".obsidian": true,
+      ".vscode": true,
+      "playwright-mcp": true,
+      "graphify-out": true,
+      "memory-store": true,
+      "node_modules": true,
+      "tmp": true,
+      "tools": true,
+      "vps": true,
+      "package.json": true,
+      "pnpm-lock.yaml": true,
+      "pnpm-workspace.yaml": true,
+      "tsconfig.json": true,
+      "tsconfig.base.json": true,
+      "vitest.config.ts": true,
+      ".gitignore": true,
+      ".gitattributes": true,
+      ".dockerignore": true,
+      ".env": true,
+      ".env.*": true
+    },
+    "search.exclude": {
+      "node_modules": true,
+      "graphify-out": true,
+      "tmp": true,
+      "pnpm-lock.yaml": true
+    }
+  }
+}
