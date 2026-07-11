@@ -160,7 +160,7 @@ accessibility-auditor, api-tester, evidence-collector, performance-benchmarker, 
 | 7 | Data/AI | **ADD: Chief AI Officer, Prompt/Context Engineer, AI Observability & FinOps Analyst**; ML/data/BI/eval/knowledge/MCP/workflow/identity-graph move |
 | 8 | Platform | **ADD: Platform Head, Backup & DR Officer** (restore drill sahibi — E13.0); SRE/DBRE/incident/infra move; release+capacity ilk turda Platform Head'de |
 | 9 | Customer Success | **ADD: Head of CS, Onboarding & Implementation Lead**; account-strategist+support move; TAM/escalation ilk turda Head'de |
-| 10 | RevOps | **ADD: RevOps Head, CRM & Data Steward, Pricing & Deal Desk Manager**; pipeline-analyst + Revenue Reporting Agent move |
+| 10 | RevOps | **ADD: RevOps Head, CRM & Data Steward, Pricing & Deal Desk Manager**; pipeline-analyst + Revenue Reporting Agent move; **+ ADD: Revenue Growth Specialist (CEO direktifi 2026-07-11 E5.2 bloğu: rapor değil GERÇEK satış sonucu — pipeline/conversion/revenue KPI'ları; tüm Marketing+Sales personalarına satış-DNA'sı derin işlenir: fırsat bulma, itiraz karşılama, takip, kapama)** |
 | 11 | Partnerships | **ADD: Partnerships & Ecosystem Lead** (pod, strategy) — tek rol, genişleme kanıtla |
 | 12 | Corporate Comms | **ADD: Corporate Communications Lead** (PR+exec+kriz tek rolde başlar; pod, marketing) |
 | 13 | Finance tamamlayıcı | **ADD: CFO, Treasury & AR Manager, Payroll Manager (DE/TR)**; AP+procurement move; insurance ilk turda CFO'da |
@@ -180,14 +180,14 @@ accessibility-auditor, api-tester, evidence-collector, performance-benchmarker, 
 | merge (dosya ölür, rol yaşar) | 6 (proje-mgr-senior, finance-tracker, customer-service, sales-outreach, data-consolidation, report-distribution) |
 | retire→library (CEO onayı bekler) | 15 |
 | promote+rewrite (head olur) | 4 |
-| ADD (yeni, Fable §3.3) | 34 |
-| **Hedef aktif kadro** | **153 − 15 − 6 + 34 = 166** (v2 yazımı: 132 rewrite + 34 ADD) |
+| ADD (yeni, Fable §3.3) | 35 (Revenue Growth Specialist dahil — CEO 2026-07-11) |
+| **Hedef aktif kadro** | **153 − 15 − 6 + 35 = 167** (v2 yazımı: 132 rewrite + 35 ADD) |
 | Doğrulama | 92+36+6+15+4 = 153 ✓ · dept-içi: design 8 + eng 21 + fin 5 + mkt 30 + paid 6 + prod 4 + pm 4 + sales 6 + testing 8 = 92 keep ✓ |
 
 ## 5. Backfill + aktivasyon planı (E5.3 kapanış şartı)
 
 1. E5.2: agents-orchestrator v2 → personas satırı + quality_gate=passed.
-2. E5.3: 19 head personası (15 ADD + 4 promote) → her head yazıldıkça: `agents.role_level='head'`, `departments.director_id=head.id`; dept çalışanlarına `manager_id=head.id`, `role_level='worker'` (uzmanlar sonra 'specialist'e yükselir).
+2. E5.3: 19 head personası (15 ADD + 4 promote) → her head yazıldıkça: `agents.role_level='director'` (DATA_MODEL değer kümesi: orchestrator/director/senior_specialist/specialist/ops_agent/sub_agent — "head" bu şemada director'dır), `departments.director_id=head.id`; dept çalışanlarına `manager_id=head.id`, `role_level='specialist'` (rutin görev ajanları 'ops_agent', kıdemliler 'senior_specialist' — dalga yazımında persona-başı belirlenir). Orkestratör 'orchestrator' (E5.2'de işlendi).
 3. Yeni departman satırları (people-hr, strategy, legal, risk-audit, security, data-ai, platform, revops, customer-success, quality) migration ile eklenir; specialized/testing/support/research kapanışı **CEO onaylı** tek migration.
 4. E5.4: HR ailesi v2 + HR-fabrika altyapısı (yazarlık Fable'da kalır — K2).
 5. E5.5 dalgaları: D1 ceo-office+strategy+finance → D2 legal+risk+security → D3 data-ai+platform → D4 engineering+quality → D5 marketing(+pods)+paid-media → D6 sales+revops+CS+PMO+design+product. Her dalga: persona v2 + employee_record + persona_id bağı + dalga raporu.
