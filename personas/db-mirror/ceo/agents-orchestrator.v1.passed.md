@@ -1,6 +1,5 @@
 <!-- AUTO-GENERATED MIRROR — kaynak gerçek: DB personas tablosu (id: f902629c-3361-4a56-a4eb-ae26a14d8acc).
-     ELLE DÜZENLEME YASAK: değişiklik fn_persona_submit ile yeni sürüm olarak yapılır;
-     bu dosya scripts/export-personas-mirror.sh her koşuşunda ezilir.
+     ELLE DÜZENLEME YASAK: değişiklik fn_persona_submit ile yeni sürüm olarak yapılır.
      author: fable-5 · quality_gate: passed · version: 1 -->
 
 

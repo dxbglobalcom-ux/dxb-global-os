@@ -5,12 +5,18 @@ Bu dizin iki şey içerir:
 
 ```
 personas/
-├── db-mirror/           ← CANLI KADRO (salt-okunur DB aynası)
-│   └── <departman>/<slug>.v<sürüm>.<gate>.md
-│       örn. ceo/agents-orchestrator.v1.passed.md  (Atlas — ilk v2 persona)
+├── db-mirror/           ← CANLI KADRO (salt-okunur DB aynası — TÜM çalışanlar)
+│   └── <departman>/
+│       ├── <slug>.card.md              ← sicil kartı (her çalışanda VAR — 153/153)
+│       └── <slug>.v<sürüm>.<gate>.md   ← v2 persona tam metni (yazıldıkça belirir)
+│           örn. ceo/agents-orchestrator.v1.passed.md  (Atlas — ilk v2)
 └── legacy/              ← eski dönem dosyaları (yeniden-yazım bekliyor)
     └── product/         (5 adet v2.0-fable, Faz 5 dönemi — E5.5 product dalgasında DB'ye taşınır)
 ```
+
+Sicil kartı çalışanın anlık DB durumunu gösterir: departman, rol, seviye, durum,
+model, hook, v2 persona durumu (✓ dosya linki / ⏳ Fable yazımı bekliyor) ve
+legacy kaynak yolu. Kadro sayımı = `find personas/db-mirror -name '*.card.md' | wc -l`.
 
 **Kurallar**
 - `db-mirror/` ELLE DÜZENLENMEZ — `scripts/export-personas-mirror.sh` her persona
