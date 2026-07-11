@@ -28,6 +28,8 @@ E11 cost intelligence ──► E12 kalan modül sayfaları + widget ──► E
 
 Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir. Durum: `—` bekliyor · `✓` kanıtla kapandı.
 
+**Gap-audit bağlayıcı kuralları ([[00-CEO-DIRECTIVE-GAP-AUDIT]] + [[GAP-AUDIT]], 2026-07-11):** (1) Her E bloğu kendi domain'inin ModuleWaiting placeholder'ını KENDİ adımında kapatır; kabul ölçüsü direktif §2.1'in 8-şartlı DoD matrisidir (gerçek domain sorgusu, drill-down, gerektiğinde control fn + audit + Broadcast zinciri, loading/empty/error/stale/permission-denied durumları, EN/TR, rota-başı test, ölü buton 0). (2) "Menü var / route açılıyor / DB'de satır var / persona dosyası var" ≠ tamam; kanıtsız done = otomatik RET. (3) Final kabulde ModuleWaiting = **0** (E12.3 kapısı).
+
 ### E1 — Design tokens + primitives (CEO Faz 6 zemini) — [[DESIGN_SYSTEM]] normatif
 
 | # | İş | Dosyalar | Kanıt | Model | Durum |
@@ -66,19 +68,22 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 
 | # | İş | Kanıt | Model | Durum |
 |---|----|-------|-------|-------|
+| E5.0 | Kadro gap matrisi (direktif §3.1-3.2): 153 legacy + 5 v2 + registry tek envanter; persona GÖVDELERİ okunarak `capability \| dept \| required role \| existing \| gerçek kapsam \| duplicate \| missing authority/workflow/skill \| risk \| decision \| target phase` matrisi; §3.2 15-aile karşılaştırması; keep/merge/rewrite/add kararları; role_level + manager_id backfill planı | `HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX.md` | matris satırı = envanter toplamı; her satırda decision; 15 aile kapsanmış; CEO karar özeti | **F — persona yazım dalgaları bu matris olmadan başlayamaz** | — |
 | E5.1 | Persona derleyici: standard şablon → system-prompt compile fn (`packages/hr`) + personas tablo yazımı | derleme testi: örnek persona → geçerli system prompt | **F** (derleyici kodu F/O; şablon+kalite kapısı F) | — |
 | E5.2 | Orkestratör personası v2 (Fable yazımı, quality_gate=passed) | `SELECT quality_gate FROM personas WHERE ...` → passed | **F — DEVREDİLEMEZ** | — |
-| E5.3 | Departman müdürü personaları v2 (mevcut departman seti) | müdür-başı personas satırı + employee_records | **F — DEVREDİLEMEZ** | — |
+| E5.3 | Departman müdürü personaları v2 (mevcut 11 dolu departman + E5.0 gap-matrisi zorunlu yeni head'ler; müdür role_level='head' + departments.director_id + worker'lara manager_id zinciri) | müdür-başı personas satırı + employee_records; director_id dolu; orphan worker 0 | **F — DEVREDİLEMEZ** | — |
 | E5.4 | HR ilk oluşumu: HR personaları + persona-yazım standardı + kalite kapıları (Fable-sonrası fabrika) | HR dept aktif; hr fn'leri testli | **F — DEVREDİLEMEZ** | — |
-| E5.5 | Uzman personaları (153 legacy → v2 dalgaları + Fable olmazsa-olmaz ekleri — G7) | dalga-başı sayım raporu | **F**; yetişmeyen → "Fable-yazımı bekliyor" listesi CEO'ya (BACKUP_PLAN §1.6) | — |
+| E5.5 | Uzman personaları (153 legacy → v2 dalgaları + E5.0 gap-onaylı yeni personalar — G7); her persona direktif §3.3 sözleşme alanlarıyla (gerekçe, hiyerarşi, KPI, authority limits, model+budget, skill/MCP grants, autonomy, memory policy, quality rubric, dashboard bağı, activation proof) | dalga-başı sayım raporu + §3.3 alan denetimi | **F**; yetişmeyen → "Fable-yazımı bekliyor" listesi CEO'ya (BACKUP_PLAN §1.6) | — |
 
 ### E6 — Control seam + Settings (CEO Faz 7) — [[SETTINGS_AND_CONTROL_SPEC]], [[API_CONTRACTS]]
 
 | # | İş | Kanıt | Model | Durum |
 |---|----|-------|-------|-------|
+| E6.0 | Auth Closure (direktif §2.2 — GAP-01 BLOCKER): görünür Logout, `supabase.auth.signOut()` → `/login` replace+refresh, geri-tuşu auth duvarı, session-expiry uyarısı + güvenli yeniden giriş, çoklu-sekme logout senkronu, cookie bozulması kurtarma; yerel password-only davranışına regresyon testi | `(command)/layout.tsx` + auth helper + route handler | Playwright: logout → /login; geri tuşu korumalı sayfayı AÇMAZ; ikinci sekme oturumu düşürür | F/O | — |
 | E6.1 | settings_registry seed (§18 alan kataloğu) + `control_settings_*` fn'leri + route handler + client helper | API_CONTRACTS §24 komutu birebir (set → change_log 1 satır; idempotent tekrar) | F/O | — |
 | E6.2 | Settings UI (§18 bölümleri) + Live Impact Preview + tek-tık undo | Playwright: değiştir → preview → kaydet → undo → eski değer | F/O | — |
 | E6.3 | Org mutasyonları (`control_org_*`) + Organization sayfası v1 (read-only graph → sonra drag-drop) | org fn testi + `org` kanalında olay | F/O | — |
+| E6.4 | Global Search + ⌘K Command Palette + CEO intent surface (TR/EN doğal dil → kernel; intent → classification → task/workflow → approval/outbox → audit zinciri ekrandan izlenir; READ-ONLY ↔ CONTROL MODE ayrımı + kill-switch görünürlüğü) — E2.1 notundan sahiplenildi, GAP-07 | command bar + palette + intent route handler | Playwright: ⌘K açılır, gerçek sonuç döner; intent gönder → task satırı + audit kaydı ekranda | F/O | — |
 
 ### E7 — Model routing tablo-güdümlü (CEO Faz 7) — [[MODEL_ROUTING_SPEC]]
 
@@ -95,6 +100,7 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 | E8.2 | `logDecision` yardımcısı + §10 "önemli karar" noktalarına yerleştirme | decision_log 8 alan dolu satır | F/O | — |
 | E8.3 | `ops:live` Broadcast trigger'ları + Live Ops v2 canlı ajan akışı | EVENT_MODEL §24 probe komutu | F/O | — |
 | E8.4 | Audit sayfası (Governance grubu): birleşik akış + detail_ref drill-down + Decision Logs sekmesi | UI'da audit satırı → aile kaydına iniş | F/O | — |
+| E8.4b | Notification/Alert center (GAP-10): gerçek alarm kaynağı (cost eşik, run failure, queue age, heartbeat kaybı), severity, owner, acknowledge, escalation, resolved; `/alerts` ModuleWaiting kapanır; Intelligence Rail gerçek öncelik sırasına bağlanır | `(command)/alerts/` + alert kaynağı | alerts sayfası gerçek kayıt listeler; ack → audit satırı | F/O | — |
 
 ### E9 — İş akışı katmanı (CEO Faz 8) — [[WORKFLOW_ENGINE_SPEC]], [[PROJECT_OPERATING_SYSTEM_SPEC]], [[APPROVAL_ENGINE_SPEC]], [[HOLDING_LIBRARY_SPEC]]
 
@@ -125,11 +131,15 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 |---|----|-------|-------|-------|
 | E12.1 | Kalan §31 sayfaları gerçek veriye bağlanır (Memory, Library detay, Intelligence rayı içerikleri) | rota-başı gerçek sorgu kanıtı; dummy widget 0 | F/O | — |
 | E12.2 | Widget sistemi: layout persist `settings_values(scope='ceo_dashboard')` + ekle/kaldır/taşı | layout kaydet → yeni oturum aynı layout | F/O | — |
+| E12.3 | **Route Completeness Gate** (direktif §2.1/§6): ModuleWaiting = 0; rota-başı DoD matrisi raporu (`route \| owner \| source \| sorgu \| drill \| mutation \| loading \| empty \| error \| stale \| permission \| audit \| EN/TR \| test \| status`) | rota matris raporu | `grep -rl ModuleWaiting src/app \| wc -l` → **0**; matris her nav rotasında tam | F/O | — |
+| E12.4 | **Holding/CRM Integration Gate** (GAP-05): CRM yeni shell bilgi mimarisinde + company switch/context + şirket→departman→çalışan→proje drill-down + şirketler-arası veri izolasyon testi; eski cockpit rotaları AYNI commit'te ölür (tek-anahtar idiomu) | `(command)/` CRM rotaları + company context | Playwright: company değişir → veri izole; eski /crm 308 | F/O | — |
+| E12.5 | **Workforce Completeness Gate** (GAP-02/03/09): her aktif departmanda head; orphan/escalation'sız worker 0; gap-onaylı personalar canlı employee (registry+model+skill+MCP+permission+budget+dashboard+audit zinciri); 153 legacy'nin her biri keep/merge/rewrite/retire kararlı (CEO onayı olmadan rol silinmez); rapor = capability coverage, persona sayısı değil | DB + `/org/*` sayfaları | SQL: head'siz aktif dept 0, orphan 0; coverage raporu | F/O (persona içerikleri **F**/hr-factory) | — |
 
 ### E13 — Kabul turu (CEO Faz 10) — [[TEST_STRATEGY]], [[ACCEPTANCE_CRITERIA]]
 
 | # | İş | Kanıt | Model | Durum |
 |---|----|-------|-------|-------|
+| E13.0 | Operational Readiness (direktif §2.6 — GAP-08): backup **restore drill** (RPO/RTO kanıtı, yalnız dosya varlığı kabul değil), migration rollback tatbikatı, session E2E, accessibility (klavye/focus/contrast/reduced-motion), failure-path testleri (timeout/duplicate/retry/partial failure/idempotency), 100+/10k kayıt pagination/performans | tatbikat raporları | restore drill raporu + rollback kanıtı + a11y/failure test çıktıları | F/O | — |
 | E13.1 | Tam test koşusu (L1-L6) + §38 makine-denetlenebilir maddeler | TEST_STRATEGY §24 komut seti yeşil | F/O | — |
 | E13.2 | CEO göz testi oturumu (§37 10 ekran + §38 görsel maddeler) — giriş bilgileri ÖNCEDEN verilir | ⚠ CEO onayı (hiçbir modele devredilemez) | İNSAN | — |
 
