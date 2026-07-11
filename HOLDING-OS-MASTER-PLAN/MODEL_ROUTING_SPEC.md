@@ -89,6 +89,17 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_re
 - **Eval-önce doktrini (CAIO):** ajan/CAIO-kaynaklı beyin-değişim önerisi eval-önce + kayıtlı yürür (CAIO persona hükmü). CEO dashboard değişimi hook'un ÜSTÜNDEDİR ([[FABLE_5_HOOK_SPEC]] CEO istisnası): engellenmez, anında uygulanır; sistem warn + audit düşer ve CAIO'ya değişim-sonrası eval görevi otomatik kuyruklanır (`v_model_stats` 7 gün izleme; gerileme → bilgi-alert'i + geri-alma önerisi — approval DEĞİL, operasyon bilgisi).
 - Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy: Fable→Opus, Sonnet defedildi, Haiku getir-götür) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
 
+### 4c. Yeni model ekleme + bağlama — dashboard'dan (CEO direktifi 2026-07-12 ~01:30, normatif)
+
+Yeni bir model çıktığında CEO onu dashboard'dan kataloğa ekler ve bağlar; VPS'e SSH / config dosyası elle düzenleme GEREKMEZ. Giriş yüzeyi: `/ai/models` "Model Ekle" (yalnız Control Mode) → `ModelOnboardDrawer`. Dört adımlı akış, tamamı control seam üzerinden:
+
+1. **Kayıt:** form (id, provider, display_name, context_window, cost in/out, speed_tier) → `POST /api/control/models {op:'add_model'}` → katalog satırı **`status='testing'`** doğar (atanabilir havuzda DEĞİL). LiteLLM'e kayıt proxy admin API'siyle runtime yapılır (config dosyasına dokunmadan); admin API erişilemezse satır "LiteLLM kaydı bekliyor" durumunda görünür kalır — sahte-hazır yasak (§35 ruhu). ⛔ Raw provider key ASLA dashboard'dan girilmez/gösterilmez (R5): key işi vault + LiteLLM env; dashboard yalnız alias tanır.
+2. **Duman testi (zorunlu):** `{op:'test_model'}` → LiteLLM üzerinden 1 ucuz çağrı; latency/token/hata drawer'da gösterilir; başarısız model `testing`te kalır.
+3. **Eval-önce:** aktivasyon öncesi mini eval bataryası görevi otomatik açılır (sahip: Model Evaluation Lead, CAIO doktrini); sonuç `quality_score` ilk değerini verir. CEO atlayabilir — §4b ile aynı hook-üstü rejim (warn + audit + 7 gün izleme).
+4. **Aktivasyon + bağlama:** `{op:'set_catalog_status', 'active'}` → model atanabilir havuza girer; aynı drawer'dan bağlama kısayolları: rol slotuna ata (`assign_role`) · tek ajana beyin yap (§4b `set_model`) · fallback zincirine ekle (`set_fallback`, döngü-CHECK).
+
+Her adım audit_log + decision_log. Katalog satırı SİLİNMEZ — emekli model `status='retired'` (geçmiş decision_log referansları kırılmaz).
+
 ## 5. Component yapısı
 
 | Bileşen | İçerik |
@@ -98,6 +109,7 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_re
 | `ModelDetailDrawer` | R3 meta tam seti + assigned employees listesi + aktif task'ler + son routing kararları |
 | `RoleSlotColumn` | 13 slot; Control Mode'da drop hedefi (drag = atama değişikliği onay dialog'u ile) |
 | `RoutingSimulator` | "bu görev hangi modele gider?" — task tipi+departman+risk gir → seçim zincirini adım adım göster (kural şeffaflığı) |
+| `ModelOnboardDrawer` | §4c dört-adım akışı: kayıt → duman testi → eval-önce → aktivasyon+bağlama; `testing` durumu görsel olarak ayrık |
 
 ## 6. Backend yapısı
 
@@ -150,7 +162,7 @@ Virtual key'ler departman-başı (mevcut LiteLLM kurulumu KALIR); key rotasyonu 
 
 - Birim: kural önceliği, departman override'ı, banned reddi, mechanical_only kısıtı, fallback derinlik sınırı, bütçe-stop kesişimi.
 - Entegrasyon: sahte provider hatası → zincir yürür → decision_log 2 satır → alert.
-- Kabul: 13 slot panel'de görünür ve atanabilir · her koşuda decision_log kaydı var (örneklem denetimi) · `banned=true` test-satırı atama denemesi reddedilir (mekanizma kanıtı; Sonnet serbest — CEO 2026-07-12) · simulator zinciri doğru gösterir · settings 6.1 ↔ panel aynı kaynağı değiştirir · §4b: dashboard'dan beyin değişimi → audit_log + decision_log + Broadcast üçlüsü kanıtlı; banned model ajan-seviyesinde de reddedilir; `ceo_override` ajan slot-kural değişiminden etkilenmez (kanıt sorgusu).
+- Kabul: 13 slot panel'de görünür ve atanabilir · her koşuda decision_log kaydı var (örneklem denetimi) · `banned=true` test-satırı atama denemesi reddedilir (mekanizma kanıtı; Sonnet serbest — CEO 2026-07-12) · simulator zinciri doğru gösterir · settings 6.1 ↔ panel aynı kaynağı değiştirir · §4b: dashboard'dan beyin değişimi → audit_log + decision_log + Broadcast üçlüsü kanıtlı; banned model ajan-seviyesinde de reddedilir; `ceo_override` ajan slot-kural değişiminden etkilenmez (kanıt sorgusu) · §4c: add_model→testing→duman→active zinciri audit'li; `testing` model hiçbir slota/ajana atanamaz (fn reddi, kanıt).
 
 ## 22. Migration planı / 23. Rollback planı
 
