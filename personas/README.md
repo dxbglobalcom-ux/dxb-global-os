@@ -4,6 +4,18 @@
 Yazım kaynağı BU DOSYALARDIR; DB = runtime + kalite kapısı kopyasıdır (tek yön senkron: dosya→DB).
 (Kayıtlı uyarlama: EMPLOYEE_PERSONA_STANDARD §22 hükmü CEO emriyle tersine çevrildi, 2026-07-11.)
 
+**Hedef org CANLI (E5.3b, CEO onayı 2026-07-11):** 19 departman + ceo (CEO Office) + legal-de
+(legal pod'u) = 21 DB satırı; aktif kadro dosyası 158, hedef 179 (kalan 21 ADD uzman dalgalarında
+açılır). `specialized`, `testing`, `support`, `research` departmanları KAPANDI
+(migration `20260711005000_org_closure_e53b.sql`): move 42 uygulandı, merge 6 arşivlendi
+(rol emici dosyada yaşar), retire 15 aşağıdaki `_library/`de.
+
+## `_library/` — client-vertical şablon havuzu (aktif kadro DEĞİL)
+
+CEO onaylı retire→library 15 dosya (silme değil arşiv; DB karşılığı: `agents.employment_status='archived'`
++ `library_items` kind='persona', sahip people-hr). Müşteri projesi gelince HR + ilgili head
+v2'ye çevirip aktive eder — geri çağırma CEO kararıyla.
+
 ## Dosya yapısı
 
 Her çalışan dosyası iki bölümdür:

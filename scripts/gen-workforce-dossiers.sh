@@ -24,9 +24,9 @@ declare -A MOVE=(
   [accounts-payable-agent]="finance" [supply-chain-strategist]="finance"
   [sales-account-strategist]="customer-success" [sales-pipeline-analyst]="revops"
   [support-analytics-reporter]="data-ai" [support-infrastructure-maintainer]="platform"
-  [support-legal-compliance-checker]="legal" [support-executive-summary-generator]="ceo-office"
+  [support-legal-compliance-checker]="legal" [support-executive-summary-generator]="ceo"
   [support-support-responder]="customer-success"
-  [specialized-chief-of-staff]="ceo-office" [specialized-mcp-builder]="data-ai"
+  [specialized-chief-of-staff]="ceo" [specialized-mcp-builder]="data-ai"
   [specialized-workflow-architect]="data-ai" [specialized-document-generator]="ceo-office"
   [specialized-model-qa]="data-ai" [zk-steward]="data-ai"
   [specialized-developer-advocate]="marketing" [identity-graph-operator]="data-ai"
@@ -47,14 +47,17 @@ declare -A MERGE=(
 )
 RETIRE="specialized-civil-engineer government-digital-presales-consultant healthcare-customer-service healthcare-marketing-compliance hospitality-guest-services retail-customer-returns real-estate-buyer-seller loan-officer-assistant study-abroad-advisor legal-billing-time-tracking legal-client-intake language-translator specialized-french-consulting-market specialized-korean-business-navigator specialized-salesforce-architect"
 PROMOTE="engineering-software-architect product-manager paid-media-ppc-strategist project-management-studio-producer"
+HEADS_ADD="head-of-strategy chro general-counsel enterprise-risk-manager ciso chief-ai-officer platform-head head-of-design cmo head-of-sales revops-head head-of-customer-success cfo quality-head social-media-orchestrator"
 
-wave_of() { # mevcut departman → yazım dalgası (matris §5.5)
+wave_of() { # departman → yazım dalgası (matris §5.5 — E5.3b sonrası hedef org slug'ları)
   case "$1" in
-    ceo|finance) echo "D1" ;;
-    specialized) echo "D1-D3 (move hedefine göre — matris §2)" ;;
-    engineering|testing) echo "D4" ;;
+    ceo|strategy|finance) echo "D1" ;;
+    legal|risk-audit|security) echo "D2" ;;
+    data-ai|platform) echo "D3" ;;
+    engineering|quality) echo "D4" ;;
     marketing|paid-media) echo "D5" ;;
-    sales|support|project-management|design|product) echo "D6" ;;
+    sales|revops|customer-success|project-management|design|product) echo "D6" ;;
+    people-hr) echo "E5.4 (HR ailesi — müdür dalgasından hemen sonra)" ;;
     social-media) echo "E5.6 (CEO direktifi 2026-07-11 — müdür dalgası sonrası)" ;;
     *) echo "matris §5.5" ;;
   esac
@@ -62,11 +65,13 @@ wave_of() { # mevcut departman → yazım dalgası (matris §5.5)
 
 decision_of() { # slug → matris kararı satırı
   local s="$1" d="${2:-}"
+  [ "$s" = "revenue-reporting-agent" ] && { echo "merge-birleşimi 3→1 (sales-data-extraction + data-consolidation + report-distribution — E5.3b migration UYGULANDI); v2 Fable yazımı D6"; return; }
+  for h in $HEADS_ADD; do [ "$h" = "$s" ] && { echo "ADD head (matris §1 — E5.3 müdür dalgası, Fable bizzat DEVREDİLEMEZ)"; return; }; done
   [ "$d" = "social-media" ] && { echo "ADD (CEO direktifi 2026-07-11 — 00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT; legacy karşılığı yok, sıfırdan Fable yazımı)"; return; }
-  for r in $RETIRE; do [ "$r" = "$s" ] && { echo "retire→library ÖNERİSİ (CEO onayı bekler — silme değil arşiv; onaya kadar kadroda pasif)"; return; }; done
-  for p in $PROMOTE; do [ "$p" = "$s" ] && { echo "promote+rewrite → departman müdürü (E5.3 müdür dalgası)"; return; }; done
+  for r in $RETIRE; do [ "$r" = "$s" ] && { echo "retire→library (CEO ONAYLI 2026-07-11 — arşiv personas/_library/ + library_items; silme değil)"; return; }; done
+  for p in $PROMOTE; do [ "$p" = "$s" ] && { echo "promote+rewrite → departman müdürü (E5.3 müdür dalgası; role='head' E5.3b migration'la işlendi)"; return; }; done
   [ -n "${MERGE[$s]:-}" ] && { echo "merge→${MERGE[$s]} (dosya ölür, rol yaşar — v2 hedef rolde yazılır)"; return; }
-  [ -n "${MOVE[$s]:-}" ] && { echo "move→${MOVE[$s]} (+v2 rewrite; taşıma E5.3+ migration'la)"; return; }
+  [ -n "${MOVE[$s]:-}" ] && { echo "move→${MOVE[$s]} UYGULANDI (E5.3b migration 20260711005000; v2 rewrite kendi dalgasında)"; return; }
   echo "keep (yerinde v2 rewrite)"
 }
 
@@ -143,7 +148,8 @@ ${hamline}
 - Yazıldığında bu bölümün yerini \`# PERSONA — <Unvan>\` başlıklı 11-bölümlük TAM persona alır; \`scripts/sync-personas-to-db.sh\` DB'ye taşır, kalite kapısı verdikti sonrası aktive edilebilir.
 EOF
   created=$((created+1))
-done < <("${PSQL[@]}" -c "SELECT a.id, a.slug, a.department, a.role, COALESCE(NULLIF(a.role_level,''),'-'), COALESCE(NULLIF(a.employment_status,''),'-'), COALESCE(NULLIF(a.brain,''),'-'), COALESCE(NULLIF(a.hook_version,''),'-'), COALESCE(NULLIF(a.persona_path,''),'-'), COALESCE(NULLIF(a.persona_version,''),'-') FROM agents a ORDER BY a.department, a.slug;")
+done < <("${PSQL[@]}" -c "SELECT a.id, a.slug, a.department, a.role, COALESCE(NULLIF(a.role_level,''),'-'), COALESCE(NULLIF(a.employment_status,''),'-'), COALESCE(NULLIF(a.brain,''),'-'), COALESCE(NULLIF(a.hook_version,''),'-'), COALESCE(NULLIF(a.persona_path,''),'-'), COALESCE(NULLIF(a.persona_version,''),'-') FROM agents a WHERE a.employment_status <> 'archived' ORDER BY a.department, a.slug;")
+# NOT: archived (merge 6 + retire 15) kadro dosyası ALMAZ — retire dosyaları personas/_library/'de yaşar (E5.3b)
 # NOT: boş alanlar '-' doldurulur — IFS=$'\t' read ardışık boş tab alanlarını ÇÖKERTIR (alan kayması bug'ı, 2026-07-11 düzeltildi)
 
 echo "---"
