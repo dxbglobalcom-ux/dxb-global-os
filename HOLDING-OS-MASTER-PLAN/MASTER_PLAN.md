@@ -124,6 +124,8 @@ Her workstream = spec seti + execution paketi. Bağımlılık oku: üsttekiler a
 
 ## 8. MODEL MATRİSİ (v6 — bu korpusta bağlayıcı)
 
+> **Kapsam (CEO netleştirmesi 2026-07-12):** bu matris İNŞAAT YAZARLIĞIDIR (kim spec/persona/kod yazar). Şirket RUNTIME ajan beyinleri AYRI ağaçtır — [[MODEL_ROUTING_SPEC]] yönetir; orada Sonnet **serbesttir** (CEO kararı 2026-07-12, runtime beyin havuzunda). Aşağıdaki Sonnet yasağı yalnız inşaat yazarlığında sürer.
+
 | İş | Model | Not |
 |----|-------|-----|
 | Korpus yazımı (31 spec, her satır) | **Fable, bizzat, inline** | Devir yok; subagent yok |

@@ -92,7 +92,7 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 | # | İş | Kanıt | Model | Durum |
 |---|----|-------|-------|-------|
 | E7.1 | model_catalog seed + routing_rules genişleme + orchestrator tablo-okur seçim | routing testi: slot → beklenen model; fallback zinciri decision_log'a | F/O | — |
-| E7.2 | Model Orchestration Panel (§19) + Sonnet-ban denetimi görünür | panelde 13 rol slotu; Sonnet hiçbir slota atanamaz (fn reddi) | F/O | — |
+| E7.2 | Model Orchestration Panel (§19) + banned-mekanizması denetimi görünür | panelde 13 rol slotu; `banned=true` test-satırı hiçbir slota atanamaz (fn reddi — mekanizma kanıtı); Sonnet atanabilir havuzda (CEO kararı 2026-07-12, MODEL_ROUTING_SPEC R2/§4) | F/O | — |
 
 ### E8 — Observability yazıcıları (CEO Faz 6/8) — [[OBSERVABILITY_SPEC]], [[AUDIT_AND_LOGGING_SPEC]]
 

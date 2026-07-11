@@ -69,7 +69,7 @@ Hata:   { "ok": false, "code": "<KOD>", "message_en": "...", "message_tr": "..."
 | `settings` | set, undo | `control_settings_*` | undo = change_log satırından ters yazım ([[SETTINGS_AND_CONTROL_SPEC]]) |
 | `org` | create_company, create_department, assign_director, move_employee, suspend, reactivate, archive | `control_org_*` | org Broadcast olayları ([[ORGANIZATION_ENGINE_SPEC]] §9) |
 | `hr` | create_employee, update_persona, promote_version, set_status | `control_hr_*` | v2 kalite kapısı fn içinde ([[HR_OPERATING_SYSTEM_SPEC]]) |
-| `models` | set_role_slot, set_fallback, set_catalog_status | `control_models_*` | Sonnet-ban denetimi fn içinde ([[MODEL_ROUTING_SPEC]]) |
+| `models` | set_role_slot, set_fallback, set_catalog_status | `control_models_*` | banned/mechanical_only denetimi fn içinde ([[MODEL_ROUTING_SPEC]]; Sonnet runtime SERBEST — CEO kararı 2026-07-12) |
 | `workflows` | create, update, copy, enable, disable, run_now, cancel_run, resume_run | `control_workflow_*` | [[WORKFLOW_ENGINE_SPEC]] |
 | `projects` | create, update, set_status, add_milestone, set_dependency, add_member, log_risk | `control_project_*` | [[PROJECT_OPERATING_SYSTEM_SPEC]] |
 | `library` | register_item, update_item, grant, revoke_grant | `control_library_*` | [[HOLDING_LIBRARY_SPEC]] |

@@ -1,7 +1,7 @@
 # MODEL_ROUTING_SPEC — MODEL ORKESTRASYONU VE ROTALAMA
 
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[SETTINGS_AND_CONTROL_SPEC]] (6.1 anahtarları), [[COST_CONTROL_SPEC]] (bütçe kesişimi), [[AGENT_ORCHESTRATION_SPEC]] (D3, tüketici)
-> Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı, CEO daraltması: Sonnet YOK) + **CEO direktifi 2026-07-12** (ajan beyinleri dashboard'dan değiştirilebilir — §4b).
+> Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı) + **CEO direktifi 2026-07-12** (ajan beyinleri dashboard'dan değiştirilebilir — §4b). **KAYITLI KARAR DEĞİŞİMİ (CEO 2026-07-12 ~01:00):** madde-18 "Sonnet YOK" daraltması RUNTIME için KALDIRILDI — Sonnet şirket içinde beyin olarak serbest; inşaat-dönemi yazarlık yasağı (model-routing-hierarchy) AYNEN sürer.
 > Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy v6; korpus/execution Fable bizzat → 12 Temmuz sonrası Opus).
 
 ## 1. Amaç
@@ -11,7 +11,7 @@ Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-de�
 ## 2. Gereksinimler
 
 - R1. Madde 6.1'in 13 rol slotu birinci sınıf: ana orkestratör · yedek orkestratör · planlama · execution · review · kritik karar · hızlı görev · düşük maliyet · araştırma · kodlama · tasarım · QA · HR.
-- R2. CEO daraltması (madde 18 + hizalama m.5): **Sonnet hiçbir rol slotuna atanamaz** (katalogda `banned=true`); Haiku yalnız mekanik getir-götür sınıfı görevlerde (verdict/onay üretemez — rol kısıtı `mechanical_only`).
+- R2. Haiku yalnız mekanik getir-götür sınıfı görevlerde (verdict/onay üretemez — rol kısıtı `mechanical_only`). `banned` bayrağı MEKANİZMA olarak kalır (gelecek yasaklar için, migration-only). ~~Sonnet hiçbir rol slotuna atanamaz~~ **KALDIRILDI (CEO kararı 2026-07-12):** Sonnet katalogda `banned=false` — rol slotlarına ve `agents.brain`e atanabilir; eski madde-18 daraltması yalnız İNŞAAT yazarlığında yaşar (üstbilgi kapsam ayrımı).
 - R3. Her model için §19 meta seti: provider, context window, cost, speed, quality score, reliability, current usage, assigned employees, active tasks, failure rate, fallback ilişkisi.
 - R4. Fallback zinciri deterministik: `model_catalog.fallback_of` + rol-başı sıra; her düşüş decision_log'a `routing_fallback` olayı.
 - R5. Raw provider key YASAK: tüm çağrılar LiteLLM proxy virtual key'leriyle (departman-başı; STACK sert kuralı).
@@ -50,7 +50,7 @@ model_catalog (
   quality_score int,           -- 0-100, CEO/QA günceller
   reliability numeric,         -- son 30g başarı oranı (hesaplanır, view)
   status text,                 -- active|degraded|disabled
-  banned boolean default false,        -- R2: sonnet ailesi true
+  banned boolean default false,        -- R2: migration-only yasak bayrağı (bugün true satır YOK — Sonnet serbest, CEO 2026-07-12)
   mechanical_only boolean default false, -- R2: haiku ailesi true
   fallback_of text null REFERENCES model_catalog(id)
 )
@@ -72,7 +72,7 @@ Varsayılan atamalar (seed — CEO settings'ten değiştirir; ⛔ değişiklik C
 | Ana orkestratör · kritik karar · review · planlama · kodlama · tasarım · araştırma · QA · HR · execution | `claude-opus-4-8` | Fable erişimi varken kritik-karar/review fiilen Fable'dadır (12 Temmuz'a kadar); katalogda Fable satırı `status=active`, sonrası `disabled` — BACKUP_PLAN devir protokolü |
 | Yedek orkestratör · emergency fallback | `claude-opus-4-8` → zincir: opus→(gelecek onaylı model) | tek-provider riski §26'da |
 | Hızlı görev · düşük maliyet | `claude-haiku-4-5` (`mechanical_only`) | verdict üretemez; çıktısı ham girdi sayılır |
-| (yasak) | `claude-sonnet-*` `banned=true` | R2 — atama denemesi policy hatası |
+| (atanabilir havuz — varsayılan slotu yok) | `claude-sonnet-5` (`banned=false`) | CEO kararı 2026-07-12: runtime beyin olarak SERBEST; CEO settings/panel'den slot veya ajan-beyni atar — hızlı görev/düşük maliyet slotlarına doğal aday |
 
 ### 4b. Ajan-seviyesi beyin: `agents.brain` — dashboard'dan değişim (CEO direktifi 2026-07-12, normatif)
 
@@ -80,7 +80,7 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_re
 
 **Katman ilişkisi (çözüm önceliği):**
 - Yeni kolon: `agents.brain_source text NOT NULL DEFAULT 'default'` — `default` (doldurulmamış placeholder) | `slot` (rotalama-atama geçişiyle §4 varsayılan tablosundan türetilmiş) | `ceo_override` (dashboard'dan CEO ataması). Migration: `0021g_agent_brain_source.sql` (0021x ailesi, §22'ye ek).
-- `fn_select_model` genişler: adım 0 — ajanın `brain_source='ceo_override'` ise model = `agents.brain`, kural taraması atlanır; aksi halde §3 zinciri aynen. Korkuluklar HER iki yolda istisnasız: `banned=true` model hiçbir ajana atanamaz/seçilemez (Sonnet), `mechanical_only` model yalnız mekanik görev-sınıfı role atanabilir (`role_level='ops_agent'`; verdict/onay üretemez), COST_CONTROL hard-stop her seçimi keser.
+- `fn_select_model` genişler: adım 0 — ajanın `brain_source='ceo_override'` ise model = `agents.brain`, kural taraması atlanır; aksi halde §3 zinciri aynen. Korkuluklar HER iki yolda istisnasız: `banned=true` model hiçbir ajana atanamaz/seçilemez (bugün boş küme — mekanizma migration-only korunur), `mechanical_only` model yalnız mekanik görev-sınıfı role atanabilir (`role_level='ops_agent'`; verdict/onay üretemez), COST_CONTROL hard-stop her seçimi keser.
 - **Rotalama-atama geçişi** (tekdüzeliği gideren adım): E5.5 persona dalgaları bitince tek migration — her ajanın rol sınıfı → 13 slot eşlemesi → §4 varsayılanından `brain` yazılır, `brain_source='slot'`, decision_log'a toplu `routing_change`. Geçişe kadar glm-5.2 görünümü bilinen-placeholder'dır; slot kuralı değişince `brain_source='slot'` ajanlar yeniden çözülür, `ceo_override` ajanlar CEO temizleyene kadar sabit kalır.
 
 **Dashboard değişim kanalı (TEK yol):**
@@ -130,7 +130,7 @@ Panel client state'i yalnız görsel (seçili node, simulator girdileri). Atama 
 
 ## 13. Yetkilendirme
 
-Atama/kural değişikliği yalnız `ceo` (Control Mode → seam). `system` yalnız `status` alanını değiştirebilir (health degradation otomatiği); banned/mechanical_only bayraklarını KİMSE runtime'da değiştiremez (migration-only — CEO kararıyla kod değişikliği gerektirir, sessiz Sonnet dönüşü imkânsız). `agents.brain` aynı rejimde: runtime yazımı yalnız `ceo` (§4b tek yol, `fn_update_agent_brain`); `system` yalnız rotalama-atama geçişi migration'ıyla yazar.
+Atama/kural değişikliği yalnız `ceo` (Control Mode → seam). `system` yalnız `status` alanını değiştirebilir (health degradation otomatiği); banned/mechanical_only bayraklarını KİMSE runtime'da değiştiremez (migration-only — CEO kararıyla değişir; emsal: Sonnet yasağı tam bu yolla, kayıtlı CEO kararıyla kaldırıldı 2026-07-12 — sessiz değişim imkânsız kalır). `agents.brain` aynı rejimde: runtime yazımı yalnız `ceo` (§4b tek yol, `fn_update_agent_brain`); `system` yalnız rotalama-atama geçişi migration'ıyla yazar.
 
 ## 14. Logging / 15. Audit
 
@@ -150,7 +150,7 @@ Virtual key'ler departman-başı (mevcut LiteLLM kurulumu KALIR); key rotasyonu 
 
 - Birim: kural önceliği, departman override'ı, banned reddi, mechanical_only kısıtı, fallback derinlik sınırı, bütçe-stop kesişimi.
 - Entegrasyon: sahte provider hatası → zincir yürür → decision_log 2 satır → alert.
-- Kabul: 13 slot panel'de görünür ve atanabilir · her koşuda decision_log kaydı var (örneklem denetimi) · Sonnet atama denemesi reddedilir (kanıt) · simulator zinciri doğru gösterir · settings 6.1 ↔ panel aynı kaynağı değiştirir · §4b: dashboard'dan beyin değişimi → audit_log + decision_log + Broadcast üçlüsü kanıtlı; banned model ajan-seviyesinde de reddedilir; `ceo_override` ajan slot-kural değişiminden etkilenmez (kanıt sorgusu).
+- Kabul: 13 slot panel'de görünür ve atanabilir · her koşuda decision_log kaydı var (örneklem denetimi) · `banned=true` test-satırı atama denemesi reddedilir (mekanizma kanıtı; Sonnet serbest — CEO 2026-07-12) · simulator zinciri doğru gösterir · settings 6.1 ↔ panel aynı kaynağı değiştirir · §4b: dashboard'dan beyin değişimi → audit_log + decision_log + Broadcast üçlüsü kanıtlı; banned model ajan-seviyesinde de reddedilir; `ceo_override` ajan slot-kural değişiminden etkilenmez (kanıt sorgusu).
 
 ## 22. Migration planı / 23. Rollback planı
 
@@ -158,7 +158,7 @@ Virtual key'ler departman-başı (mevcut LiteLLM kurulumu KALIR); key rotasyonu 
 
 ## 24. Uygulama sırası
 
-1. 0021d-f → `psql -c "SELECT count(*) FROM model_catalog WHERE banned"` → ≥1 (Sonnet satırı)
+1. 0021d-f → `psql -c "SELECT id, banned FROM model_catalog WHERE id LIKE 'claude-sonnet%'"` → satır var, `banned=false` (CEO 2026-07-12); banned-mekanizması testi ayrı test-satırıyla
 2. `fn_select_model` + orchestrator entegrasyonu → smoke: `psql -c "SELECT fn_select_model('execution', NULL, 'low', 8000, 0.5)"` → opus id döner
 3. decision_log yazımı → bir test task koş → `psql -c "SELECT count(*) FROM decision_log WHERE kind='routing_decision'"` → ≥1
 4. Panel + drawer + simulator → Playwright: atama değiştir → onay → audit satırı
@@ -180,4 +180,4 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
 
 ## Done definition (bu spec)
 
-27 başlık ✓ · şema+seed+fn sözleşmesi kod seviyesinde ✓ · 13 rol slotu + varsayılan tablosu ✓ · Sonnet yasağı mekanizmalı (banned, migration-only) ✓ · §19 meta seti eksiksiz ✓ · doğrulama komutları adım-başı ✓ · Opus-devralma + ⛔ kararlar ✓ · ajan-beyni katmanı §4b (dashboard değişimi + öncelik çözümü + rotalama-atama geçişi — CEO direktifi 2026-07-12) ✓
+27 başlık ✓ · şema+seed+fn sözleşmesi kod seviyesinde ✓ · 13 rol slotu + varsayılan tablosu ✓ · banned mekanizması (migration-only) ✓ — Sonnet runtime yasağı CEO kararıyla kaldırıldı 2026-07-12, kayıtlı · §19 meta seti eksiksiz ✓ · doğrulama komutları adım-başı ✓ · Opus-devralma + ⛔ kararlar ✓ · ajan-beyni katmanı §4b (dashboard değişimi + öncelik çözümü + rotalama-atama geçişi — CEO direktifi 2026-07-12) ✓
