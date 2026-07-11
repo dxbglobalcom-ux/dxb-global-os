@@ -40,8 +40,13 @@ disiplini). Hem holding ciddiyeti hem "demir adam" anı.
 
 - Dalga 1 (commit 3ac7444): SideNav ikon+sayaç, Holding Health radial, ambient-depth,
   live-glow, ModuleWaiting v2, approvals göçü, legacy köprüler.
-- Sıradaki: gerçek modül sayfaları (ops/tasks, org/employees, fin/costs),
-  chart sistemi, mobil kokpit pası, /design-audit route, TV modu.
+- Dalga 2 (2026-07-11): gerçek modül sayfaları CANLI — /ops/tasks (durum
+  çipleri + KPI + gerçek kuyruk), /org/employees (153 kadro, departman
+  çipleri, persona v1→v2 görünürlüğü), /fin/costs (COST-04 tek-kaynak
+  kırılımlar + defter) + /design-audit (çalıştırılmış kontrat kontrolleri:
+  hex-leak, sözlük paritesi, bağlantı kontratı). "Aktif" tek tanıma indi
+  (queued+claimed+running — view/bar/nav/modül aynı sayı).
+- Sıradaki: chart sistemi, mobil kokpit pası, TV modu.
 
 ## Yasaklar (değişmedi)
 

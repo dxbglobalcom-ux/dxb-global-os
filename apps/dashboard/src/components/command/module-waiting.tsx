@@ -18,10 +18,12 @@ async function familyCount(family: LiveFamily): Promise<number | null> {
   let q;
   switch (family) {
     case "tasks":
+      // Single "active" definition — mirrors v_exec_overview_v1.active_tasks
+      // and /ops/tasks (awaiting_approval is the CEO's queue, not machine work).
       q = supabase
         .from("tasks")
         .select("id", head)
-        .in("status", ["claimed", "running", "queued", "awaiting_approval"]);
+        .in("status", ["queued", "claimed", "running"]);
       break;
     case "approvals":
       q = supabase.from("approvals").select("id", head).eq("status", "pending");

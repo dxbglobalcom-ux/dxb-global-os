@@ -1,4 +1,20 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(node /home/ghost/.claude/gsd-core/bin/gsd-tools.cjs *)",
+      "Bash(graphify *)",
+      "Bash(scrot *)",
+      "Bash(wmctrl -a *)",
+      "Bash(mkdir -p *)",
+      "Bash(awk '/^#/{h=$0; getline; if\\($0==\"\" \\) {getline; if\\($0==\"\" || $0 ~ /^#/\\) print NR\": \"h\" [BOŞ]\"}}' \"/home/ghost/DxB Global OS/HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md\")",
+      "Bash(awk '{print $6, $7}')"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/.env)"
+    ]
+  },
   "hooks": {
     "SessionEnd": [
       {
@@ -9,20 +25,6 @@
           }
         ]
       }
-    ]
-  },
-  "permissions": {
-    "deny": [
-      "Read(./.env)",
-      "Read(./.env.*)",
-      "Read(**/.env)"
-    ],
-    "allow": [
-      "Bash(node /home/ghost/.claude/gsd-core/bin/gsd-tools.cjs *)",
-      "Bash(graphify *)",
-      "Bash(scrot *)",
-      "Bash(wmctrl -a *)",
-      "Bash(mkdir -p *)"
     ]
   }
 }
