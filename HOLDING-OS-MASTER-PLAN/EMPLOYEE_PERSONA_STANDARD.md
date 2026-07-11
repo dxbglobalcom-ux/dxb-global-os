@@ -114,7 +114,9 @@ Derleyici hatası (persona yüklenemedi/parse edilemedi): spawn fail-closed (hoo
 
 ## 22. Migration planı / 23. Rollback planı
 
-0020x içinde tablolar + 2 fn + trigger'lar. Rollback: DATA_MODEL org ailesi bloğuyla birlikte; personalar git'te AYRICA yaşamaz (DB tek kaynak) — bu yüzden BACKUP_PLAN pg_dump kapsamında kritik tablo listesindedir (kayıp kabul edilemez).
+0020x içinde tablolar + 2 fn + trigger'lar. Rollback: DATA_MODEL org ailesi bloğuyla birlikte; ~~personalar git'te AYRICA yaşamaz (DB tek kaynak)~~ — bu yüzden BACKUP_PLAN pg_dump kapsamında kritik tablo listesindedir (kayıp kabul edilemez).
+
+> **KAYITLI UYARLAMA (CEO emri, 2026-07-11 — sessiz sapma değil):** "personalar git'te yaşamaz" hükmü TERSİNE çevrildi. **Yazım kaynağı = `personas/<dept>/<slug>.md` dosyaları** (CEO görünürlüğü + Fable-yazım akışı); **DB = runtime + kalite kapısı kopyası.** Senkron TEK YÖN dosya→DB: `scripts/sync-personas-to-db.sh` → `fn_persona_submit` (secret+injection taraması aynen); gate, derleyici ve aktivasyon trigger'ı DEĞİŞMEDİ (derleyici DB'den okumaya devam eder). BACKUP_PLAN hükmü geçerli kalır. Ek CEO hükümleri (aynı emir): çalışanlara uydurma insan adı verilmez — şablonun {İsim} alanı rol adı/unvandır; `agency-agents/` metni hiçbir kadro dosyasına gömülemez (SALT REFERANS). Gerekçe kaydı: önceki oturumun kart/ayna sunumu (153 kısa kart + legacy metin gömme) madde 8 ihlaliydi; kadro görünürlüğü artık dosya-öncelikli mimariyle sağlanır.
 
 ## 24. Uygulama sırası (adım-başı doğrulama)
 

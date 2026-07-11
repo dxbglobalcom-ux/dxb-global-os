@@ -10,7 +10,7 @@
 
 ## 1. Hedef organizasyon (Fable kararı)
 
-Mevcut 14 departman → hedef **18 departman + 5 pod**. "specialized" DAĞITILIR (direktif: kalıcı çöp çekmecesi yasak). "testing" → "quality" olarak genişler. "support" → "customer-success" olarak genişler. Yeni departmanlar: **people-hr, strategy, legal (legal-de'yi pod olarak yutar), risk-audit, security, data-ai, platform**. Pod'lar (departman içinde açık sahipli): china-growth (marketing), corporate-comms (marketing), partnerships (strategy), global-expansion (strategy), docs (engineering).
+Mevcut 14 departman → hedef **19 departman + 5 pod**. "specialized" DAĞITILIR (direktif: kalıcı çöp çekmecesi yasak). "testing" → "quality" olarak genişler. "support" → "customer-success" olarak genişler. Yeni departmanlar: **people-hr, strategy, legal (legal-de'yi pod olarak yutar), risk-audit, security, data-ai, platform, social-media (CEO direktifi 2026-07-11 — [[00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT]])**. Pod'lar (departman içinde açık sahipli): china-growth (marketing), corporate-comms (marketing), partnerships (strategy), global-expansion (strategy), docs (engineering).
 
 | Hedef dept | Head (kaynak) | Çekirdek |
 |---|---|---|
@@ -33,6 +33,7 @@ Mevcut 14 departman → hedef **18 departman + 5 pod**. "specialized" DAĞITILIR
 | project-management | PMO Head (**promote+rewrite**: studio-producer) | delivery, experiment, jira steward |
 | finance | CFO (**ADD**) | mevcut 5 + treasury/payroll/procurement/AP |
 | quality (eski testing) | Quality Head (**ADD**) | mevcut 8 + process excellence + CAPA |
+| social-media | Social Media Orchestrator (**ADD**, head) | 12 rol — omnisocials işlev seti: hesap bağlama, içerik stratejisi, copywriting, kreatif, takvim/yayın, inbox, analitik, rapor, onay akışı, müşteri workspace, MCP/API (sınır: marketing=strateji, social-media=operasyon) |
 
 research departmanı (boş) → **kapatılır**: market research = strategy/market-intel; teknik research = data-ai. (CEO onayına tabi — rol silinmiyor, boş departman birleşiyor.)
 
@@ -166,9 +167,10 @@ accessibility-auditor, api-tester, evidence-collector, performance-benchmarker, 
 | 13 | Finance tamamlayıcı | **ADD: CFO, Treasury & AR Manager, Payroll Manager (DE/TR)**; AP+procurement move; insurance ilk turda CFO'da |
 | 14 | Global Expansion | **ADD: Global Expansion Lead (DE/TR/EU regülasyon koordinasyonu)** (pod, strategy) |
 | 15 | Quality/OpEx | **ADD: Quality Head**; process-excellence+release-readiness+CAPA mevcut quality rollerine gömülür |
+| 16 | Social Media (CEO direktifi 2026-07-11) | **ADD ×12: Social Media Orchestrator (head), Social Account Connector, Content Strategy Agent, Copywriting Agent, Creative Asset Agent, Scheduler & Publisher, Social Inbox Agent, Social Analytics Agent, Social Reporting Agent, Approval Workflow Agent, Client Workspace Agent, Social MCP/API Agent** — [[00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT]] §3 kararları (publish=dışa dönük, approval zinciri; paid-media/para-çıkışı bu departmanda YOK) |
 | — | Dept head eksikleri | **ADD: CMO, Head of Sales, Head of Design** + promote×4 (yukarıda) |
 
-**ADD toplamı: 34 yeni persona** (3'ü pod-lead). Vanity yok: her biri direktifte adı geçen, sahipsiz kabiliyet.
+**ADD toplamı: 47 yeni persona** (34 taban + Revenue Growth Specialist + 12 social-media — CEO direktifleri 2026-07-11; 3'ü pod-lead). Vanity yok: her biri direktifte adı geçen, sahipsiz kabiliyet.
 
 ## 4. Sayım özeti
 
@@ -180,15 +182,15 @@ accessibility-auditor, api-tester, evidence-collector, performance-benchmarker, 
 | merge (dosya ölür, rol yaşar) | 6 (proje-mgr-senior, finance-tracker, customer-service, sales-outreach, data-consolidation, report-distribution) |
 | retire→library (CEO onayı bekler) | 15 |
 | promote+rewrite (head olur) | 4 |
-| ADD (yeni, Fable §3.3) | 35 (Revenue Growth Specialist dahil — CEO 2026-07-11) |
-| **Hedef aktif kadro** | **153 − 15 − 6 + 35 = 167** (v2 yazımı: 132 rewrite + 35 ADD) |
+| ADD (yeni, Fable §3.3) | 47 (Revenue Growth Specialist + 12 social-media dahil — CEO direktifleri 2026-07-11) |
+| **Hedef aktif kadro** | **153 − 15 − 6 + 47 = 179** (v2 yazımı: 132 rewrite + 47 ADD) |
 | Doğrulama | 92+36+6+15+4 = 153 ✓ · dept-içi: design 8 + eng 21 + fin 5 + mkt 30 + paid 6 + prod 4 + pm 4 + sales 6 + testing 8 = 92 keep ✓ |
 
 ## 5. Backfill + aktivasyon planı (E5.3 kapanış şartı)
 
 1. E5.2: agents-orchestrator v2 → personas satırı + quality_gate=passed.
 2. E5.3: 19 head personası (15 ADD + 4 promote) → her head yazıldıkça: `agents.role_level='director'` (DATA_MODEL değer kümesi: orchestrator/director/senior_specialist/specialist/ops_agent/sub_agent — "head" bu şemada director'dır), `departments.director_id=head.id`; dept çalışanlarına `manager_id=head.id`, `role_level='specialist'` (rutin görev ajanları 'ops_agent', kıdemliler 'senior_specialist' — dalga yazımında persona-başı belirlenir). Orkestratör 'orchestrator' (E5.2'de işlendi).
-3. Yeni departman satırları (people-hr, strategy, legal, risk-audit, security, data-ai, platform, revops, customer-success, quality) migration ile eklenir; specialized/testing/support/research kapanışı **CEO onaylı** tek migration.
+3. Yeni departman satırları (people-hr, strategy, legal, risk-audit, security, data-ai, platform, revops, customer-success, quality, **social-media** — CEO direktifi 2026-07-11) migration ile eklenir; specialized/testing/support/research kapanışı **CEO onaylı** tek migration.
 4. E5.4: HR ailesi v2 + HR-fabrika altyapısı (yazarlık Fable'da kalır — K2).
 5. E5.5 dalgaları: D1 ceo-office+strategy+finance → D2 legal+risk+security → D3 data-ai+platform → D4 engineering+quality → D5 marketing(+pods)+paid-media → D6 sales+revops+CS+PMO+design+product. Her dalga: persona v2 + employee_record + persona_id bağı + dalga raporu.
 6. Aktivasyon (employment_status='active') SADECE: persona_id dolu + quality_gate=passed (DB trigger E4.1 zorlar) + skill/MCP profili tanımlı.
@@ -197,5 +199,5 @@ accessibility-auditor, api-tester, evidence-collector, performance-benchmarker, 
 
 1. **retire→library 15 persona** (§2 specialized tablosu) — silme değil arşiv; onay?
 2. **research departmanının strategy/data-ai'ye katılması** — boş departman, rol kaybı yok; onay?
-3. **Hedef org: 18 dept + 5 pod, 166 aktif persona** (34 ADD dahil) — onay?
+3. **Hedef org: 19 dept + 5 pod, 179 aktif persona** (47 ADD dahil; social-media CEO direktifiyle zaten emredildi) — onay?
 4. K2 gereği 166 v2 yazımı (132 rewrite + 34 ADD) Fable'dan çıkar; 12 Temmuz'a sığmayanlar "Fable-yazımı bekliyor" listesinde sıralanır (öncelik: orchestrator → head'ler → HR → governance → uzman dalgaları).

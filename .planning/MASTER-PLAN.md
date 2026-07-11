@@ -1,5 +1,9 @@
 # DXB Global OS — MASTER PLAN
 
+> ⚠️ **SÜPERSEDE BANDI (2026-07-11):** Bu dosya BEKLENTİLER pivotu ÖNCESİNİN detay katmanıdır (Faz 1-11 mekaniği).
+> **HOLDING OS dönemi için geçerli kaynak: `HOLDING-OS-MASTER-PLAN/`** (31 spec + CEO direktifleri + IMPLEMENTATION_ROADMAP).
+> Çelişkide korpus kazanır. Bu dosya tarihî/mekanik referans olarak kalır — yeni iş buradan planlanmaz.
+
 **Yazar:** Claude Fable 5, bizzat (Fable-authorship governance v2, 2026-07-06)
 **Statü:** Fable-detay katmanı — ROADMAP.md'nin üzerine, onu değiştirmeden
 **Amaç:** 11 fazın tamamı, executor-bağımsız detayda. Bu plan o kadar belirsizliksiz ki bütçe-fallback modunda Opus 4.8 adım adım uygulayabilir; tasarım kalitesi plana gömülü olduğu için korunur.

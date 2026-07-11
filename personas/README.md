@@ -1,29 +1,36 @@
-# personas/ — kadro ağacı
+# personas/ — kadro dosyaları (holding'in çalışan dosyaları)
 
-Kaynak gerçek **DB'dir** (`personas` tablosu — EMPLOYEE_PERSONA_STANDARD §22).
-Bu dizin iki şey içerir:
+**Çalışan başına TEK dosya:** `personas/<departman>/<slug>.md` — TÜM kadro bu ağaçta görünür.
+Yazım kaynağı BU DOSYALARDIR; DB = runtime + kalite kapısı kopyasıdır (tek yön senkron: dosya→DB).
+(Kayıtlı uyarlama: EMPLOYEE_PERSONA_STANDARD §22 hükmü CEO emriyle tersine çevrildi, 2026-07-11.)
 
-```
-personas/
-├── db-mirror/           ← CANLI KADRO (salt-okunur DB aynası — TÜM çalışanlar)
-│   └── <departman>/
-│       ├── <slug>.card.md              ← sicil kartı (her çalışanda VAR — 153/153)
-│       └── <slug>.v<sürüm>.<gate>.md   ← v2 persona tam metni (yazıldıkça belirir)
-│           örn. ceo/agents-orchestrator.v1.passed.md  (Atlas — ilk v2)
-└── legacy/              ← eski dönem dosyaları (yeniden-yazım bekliyor)
-    └── product/         (5 adet v2.0-fable, Faz 5 dönemi — E5.5 product dalgasında DB'ye taşınır)
-```
+## Dosya yapısı
 
-Sicil kartı çalışanın anlık DB durumunu gösterir: departman, rol, seviye, durum,
-model, hook, v2 persona durumu (✓ dosya linki / ⏳ Fable yazımı bekliyor) ve
-legacy kaynak yolu. Kadro sayımı = `find personas/db-mirror -name '*.card.md' | wc -l`.
+Her çalışan dosyası iki bölümdür:
 
-**Kurallar**
-- `db-mirror/` ELLE DÜZENLENMEZ — `scripts/export-personas-mirror.sh` her persona
-  commit'inde yeniden üretir; değişiklik `fn_persona_submit` ile YENİ SÜRÜM olarak yapılır.
-- Dosya adındaki `<gate>` = kalite kapısı durumu (`passed/pending/failed/superseded`);
-  yalnız `passed` persona bir çalışanı aktive edebilir (DB trigger zorlar).
-- Hedef organizasyon (18 departman + 5 pod, 167 aktif persona):
-  [[../HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX]] §1.
-- 153 legacy ham maddesi `agency-agents/` dizinindedir (read-only); her biri kendi
-  E5.5 dalgasında Fable v2 olarak DB'ye yazılır ve burada `db-mirror/` altında belirir.
+1. **SİCİL** — 33 alan (EMPLOYEE_PERSONA_STANDARD §5). DB'den bilinenler dolu;
+   persona yazımında dolacaklar `⏳ v2 yazımında dolar` işaretli; grant/model gibi
+   canlı alanlar "kaynak: canlı DB" notlu (bayat kopya yasak).
+2. **KİŞİLİK** — iki dürüst durumdan biri:
+   - `# PERSONA — <Unvan>` başlıklı TAM v2 persona (11 bölüm, 150-300 satır, Fable yazımı), YA DA
+   - `## KİŞİLİK — ⏳ FABLE-YAZIMI BEKLİYOR` + dalga/sıra bilgisi.
+
+## Kurallar
+
+- **Yazarlık:** TÜM personalar Fable 5 bizzat yazar (CEO K2). İskelet siciller mekaniktir
+  (`scripts/gen-workforce-dossiers.sh`), kişilik yazmaz.
+- **agency-agents/ SALT REFERANSTIR.** Metni hiçbir kadro dosyasına gömülemez, "kişilik"
+  diye gösterilemez. Sicilde yalnız "ham madde referansı" satırı bulunur.
+- **İsim politikası:** çalışanlara uydurma insan adı verilmez; rol adı/unvan kullanılır (CEO emri 2026-07-11).
+- **Senkron:** `scripts/sync-personas-to-db.sh [dosya]` → `fn_persona_submit` (secret+injection
+  taraması içeride); `--verify` DB↔dosya eşitliğini hash'le kanıtlar. ⏳ dosyalar atlanır.
+- **Kalite kapısı:** submit sonrası `fn_persona_gate` verdikti (Fable 5-soru kontrolü);
+  `quality_gate='passed'` olmadan çalışan AKTİVE EDİLEMEZ (DB trigger — spec G3).
+- **Taşıma/birleşme:** matris kararı (move/merge) uygulanınca dosya `git mv` ile taşınır,
+  DB migration aynı commit'te gider — dosya ağacı her an DB gerçeğini yansıtır.
+
+## Sıra (E5.3 → E5.5)
+
+Müdürler (19 head) → HR ailesi → uzman dalgaları D1-D6 (WORKFORCE-GAP-MATRIX §5.5).
+Hedef kadro ve karar matrisi: [[../HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX]].
+Yetişmeyenler "Fable-yazımı bekliyor" listesinde sıralanır; kalite düşürülerek kapatılamaz (K2).
