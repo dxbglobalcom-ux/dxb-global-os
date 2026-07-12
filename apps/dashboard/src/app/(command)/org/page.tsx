@@ -22,6 +22,7 @@ type GraphRow = {
   model: string | null;
   director_slug: string | null;
   slug: string | null;
+  title_tr: string | null;
 };
 
 export default async function Page() {
@@ -32,15 +33,17 @@ export default async function Page() {
   const { data } = await supabase
     .from("v_org_graph")
     .select(
-      "node_id, kind, label, role_level, parent_node_id, status, department, model, director_slug, slug",
+      "node_id, kind, label, role_level, parent_node_id, status, department, model, director_slug, slug, title_tr",
     )
     .limit(1000)
     .returns<GraphRow[]>();
 
+  // Label follows the UI locale (design brief A2: EN primary, TR full
+  // secondary): label = EN canonical title; title_tr overrides on TR locale.
   const nodes: OrgNode[] = (data ?? []).map((r) => ({
     nodeId: r.node_id,
     kind: r.kind,
-    label: r.label,
+    label: locale === "tr" && r.title_tr ? r.title_tr : r.label,
     roleLevel: r.role_level,
     parentNodeId: r.parent_node_id,
     status: r.status,

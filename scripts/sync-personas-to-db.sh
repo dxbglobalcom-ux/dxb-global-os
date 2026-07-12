@@ -25,8 +25,10 @@ extract_body() { # dosyadan persona gövdesi: ilk '# PERSONA — ' satırından 
   awk '/^# PERSONA — /{f=1} f{print}' "$1"
 }
 
-extract_title() { # dosya H1'inden insan-okur unvan: '# <Title> — `slug` (dept)' → <Title>
-  grep -m1 '^# ' "$1" | sed 's/^# //; s/ — `.*//'
+extract_title() { # SİCİL alan 3 (EN, post-directive): '| 3 | Title | X |' → X
+  # TR-dönemi dosyalarda (alan adı "Unvan", H1 karışık dilli) BOŞ döner —
+  # DB'deki dil-ayrıştırılmış backfill (migration 20260713010000) ezilmez.
+  grep -m1 -oP '^\| 3 \| Title \| \K[^|]+' "$1" | sed 's/ *$//'
 }
 
 submitted=0; verified=0; mismatched=0; skipped=0; failed=0
@@ -59,7 +61,7 @@ SELECT public.fn_persona_submit('$emp_id'::uuid, \$dxb_body\$$body
 SQL
 )"
     echo "SUBMIT $slug — persona id: $pid (pending; gate verdikti ayrı adım)"
-    # Unvan da dosyadan akar (tek yön, E6.3 fix wave 3): H1 → agents.title
+    # Unvan da dosyadan akar (tek yön, E6.3 fix wave 3): dossier Title → agents.title (EN kanonik)
     title="$(extract_title "$f")"
     if [ -n "$title" ]; then
       "${PSQL[@]}" -c "UPDATE agents SET title='${title//\'/\'\'}' WHERE id='$emp_id';" >/dev/null

@@ -302,14 +302,23 @@ export function OrgTree({
     <div className="@container">
       <div className="flex flex-col gap-4 @3xl:flex-row">
         <Panel className="min-w-0 flex-1 !p-3" title={labels.title}>
-          <div data-testid="org-tree">
+          {/* The tree scrolls inside its own box (~220 rows fully expanded) —
+              the page keeps viewport height and the detail panel never drifts
+              a full workforce away (CEO eye-test wave 3b). */}
+          <div data-testid="org-tree" className="max-h-[70vh] overflow-y-auto pr-1">
             {roots.map((root) => (
               <NodeRow key={root.nodeId} node={root} depth={0} />
             ))}
           </div>
         </Panel>
 
-        <aside className="w-full @3xl:w-80 @3xl:shrink-0" data-testid="org-detail">
+        {/* Sticky detail (CEO eye-test wave 3b): the fully-expanded tree is
+            ~220 rows tall — the panel follows the scroll so a node click is
+            readable without traveling back up. */}
+        <aside
+          className="order-first w-full @3xl:sticky @3xl:top-4 @3xl:order-none @3xl:w-80 @3xl:shrink-0 @3xl:self-start"
+          data-testid="org-detail"
+        >
           <Panel title={labels.detailTitle}>
             {!selected ? (
               <p className="text-body-s text-ink-muted">{labels.detailSelect}</p>

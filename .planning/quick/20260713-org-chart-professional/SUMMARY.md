@@ -28,6 +28,11 @@ commit: pending (this wave's single atomic commit)
 - `tsc --noEmit` → 0; `eslint` org files → 0; i18n parity en **599** = tr **599**, diff none.
 - Playwright authed render of `/org`: human titles, holding order (CEO Office → Strategy → Finance → Legal …), no dormant badge wall; node click → detail panel shows "Platform, Infrastructure & Reliability", Agent ID `platform-head`, Draft badge.
 
+## Wave 3b (same night, two further CEO RETs)
+
+- **TR titles on the EN locale** (A2 violation) → `agents.title_tr` + `v_org_graph` v1.4; backfill language-split from persona H1s (TR-char/word detection, six TR-only titles given mechanical English equivalents, full 199-row list reviewed by Fable personally); RSC picks label by locale. Evidence: EN render 0 Turkish-title tokens (`grep -c` on page snapshot), TR render shows "Finans Direktörü" etc.; DB check `title ~ TR chars` → 0; `with_tr=67`. Sync script now flows title only from the dossier EN `Title` field so a resync cannot re-pollute the EN column.
+- **Detail panel a full workforce away** (fully-expanded tree ≈220 rows pushed the panel off-screen; below @3xl container width it even stacked UNDER the tree) → tree scrolls inside its own `max-h-[70vh]` box, detail panel `order-first` on narrow layouts and sticky at @3xl. Evidence: Playwright — deep node click (Social Media director), screenshot shows detail panel fully visible at top of viewport with the clicked row still in view.
+
 ## Explicitly out of scope (CEO-visible notes)
 
 - **Reporting lines untouched** — persona canon (dossier field 6) puts every specialist directly under the department director; senior specialists are senior ICs, not team leads. Inventing a team-lead layer would contradict the persona files. If the CEO wants mid-management clusters (e.g. the China cluster in marketing), that is an org-design decision → persona edits first, then DB.
