@@ -34,6 +34,7 @@ export type OrgNode = {
   department: string | null;
   model: string | null;
   directorSlug: string | null;
+  slug: string | null;
 };
 
 export type OrgLabels = {
@@ -56,7 +57,39 @@ export type OrgLabels = {
   headcountLabel: string;
   activeShort: string;
   deptDormantHint: string;
+  idLabel: string;
 };
+
+// Holding chart order (professional grouping, CEO eye-test wave 3):
+// Leadership → Corporate functions → Revenue side → Product & Technology.
+// Presentation-only — reporting lines and department rows stay canonical.
+const DEPT_ORDER: Record<string, number> = {
+  ceo: 0,
+  strategy: 10,
+  finance: 11,
+  legal: 12,
+  "risk-audit": 13,
+  "people-hr": 14,
+  sales: 20,
+  revops: 21,
+  marketing: 22,
+  "paid-media": 23,
+  "social-media": 24,
+  commerce: 25,
+  "customer-success": 26,
+  product: 30,
+  design: 31,
+  engineering: 32,
+  "data-ai": 33,
+  platform: 34,
+  security: 35,
+  quality: 36,
+  "project-management": 37,
+};
+
+function deptRank(n: OrgNode): number {
+  return DEPT_ORDER[n.slug ?? ""] ?? 99;
+}
 
 const STATUS_LEVEL: Record<string, StatusLevel> = {
   active: "ok",
@@ -96,11 +129,18 @@ export function OrgTree({
       ops_agent: 4,
     };
     for (const list of map.values()) {
-      list.sort(
-        (a, b) =>
+      list.sort((a, b) => {
+        // Departments follow the holding chart order; employees come before
+        // sub-departments and rank director → senior → specialist inside.
+        if (a.kind === "department" && b.kind === "department")
+          return deptRank(a) - deptRank(b) || a.label.localeCompare(b.label);
+        if (a.kind !== b.kind && (a.kind === "department" || b.kind === "department"))
+          return a.kind === "department" ? 1 : -1;
+        return (
           (rank[a.roleLevel ?? ""] ?? 9) - (rank[b.roleLevel ?? ""] ?? 9) ||
-          a.label.localeCompare(b.label),
-      );
+          a.label.localeCompare(b.label)
+        );
+      });
     }
     return map;
   }, [nodes]);
@@ -198,7 +238,11 @@ export function OrgTree({
             />
             <span
               className={`min-w-0 truncate text-body-s ${
-                node.kind === "employee" ? "text-ink-secondary" : "text-ink-primary"
+                node.kind !== "employee"
+                  ? "text-ink-primary"
+                  : node.status === "dormant"
+                    ? "text-ink-muted"
+                    : "text-ink-secondary"
               }`}
             >
               {node.label}
@@ -214,13 +258,19 @@ export function OrgTree({
                 {count}
               </span>
             )}
-            {node.kind === "employee" && node.status !== "active" && (
-              <span className="ml-auto">
-                <StatusBadge level={statusLevel(node.status)}>
-                  {labels.status[node.status] ?? node.status}
-                </StatusBadge>
-              </span>
-            )}
+            {/* Badge diet (eye-test wave 3): dormant is the pre-launch default
+                for the whole workforce — a badge on every row reads as a fault
+                wall. Dormant shows as muted text only; the badge is reserved
+                for exceptional states (draft, probation, suspended). */}
+            {node.kind === "employee" &&
+              node.status !== "active" &&
+              node.status !== "dormant" && (
+                <span className="ml-auto">
+                  <StatusBadge level={statusLevel(node.status)}>
+                    {labels.status[node.status] ?? node.status}
+                  </StatusBadge>
+                </span>
+              )}
           </button>
         </div>
         {expanded &&
@@ -234,6 +284,19 @@ export function OrgTree({
   const roots = byParent.get(null) ?? [];
   const manager = selected?.parentNodeId ? byId.get(selected.parentNodeId) : null;
   const directReports = selected ? (byParent.get(selected.nodeId) ?? []) : [];
+  // Slug → node lookups so the detail panel can show human names
+  // (department display name, director title) instead of raw slugs.
+  const deptBySlug = useMemo(
+    () => new Map(nodes.filter((n) => n.kind === "department").map((n) => [n.slug, n])),
+    [nodes],
+  );
+  const employeeBySlug = useMemo(
+    () => new Map(nodes.filter((n) => n.kind === "employee").map((n) => [n.slug, n])),
+    [nodes],
+  );
+  const selectedDirector = selected?.directorSlug
+    ? employeeBySlug.get(selected.directorSlug)
+    : null;
 
   return (
     <div className="@container">
@@ -272,8 +335,8 @@ export function OrgTree({
                   {selected.kind === "department" && (
                     <div className="flex gap-2">
                       <dt className="text-ink-muted">{labels.directorLabel}:</dt>
-                      <dd className="font-data text-ink-primary">
-                        {selected.directorSlug ?? "—"}
+                      <dd className="text-ink-primary">
+                        {selectedDirector?.label ?? selected.directorSlug ?? "—"}
                       </dd>
                     </div>
                   )}
@@ -291,7 +354,15 @@ export function OrgTree({
                   {selected.kind === "employee" && selected.department && (
                     <div className="flex gap-2">
                       <dt className="text-ink-muted">{labels.departmentLabel}:</dt>
-                      <dd className="font-data text-ink-primary">{selected.department}</dd>
+                      <dd className="text-ink-primary">
+                        {deptBySlug.get(selected.department)?.label ?? selected.department}
+                      </dd>
+                    </div>
+                  )}
+                  {selected.kind === "employee" && selected.slug && (
+                    <div className="flex gap-2">
+                      <dt className="text-ink-muted">{labels.idLabel}:</dt>
+                      <dd className="font-data text-ink-secondary">{selected.slug}</dd>
                     </div>
                   )}
                   {selected.kind === "employee" && (
@@ -329,7 +400,7 @@ export function OrgTree({
                 )}
                 {selected.kind === "employee" && (
                   <a
-                    href={`/org/employees?q=${encodeURIComponent(selected.label)}`}
+                    href={`/org/employees?q=${encodeURIComponent(selected.slug ?? selected.label)}`}
                     className="inline-block text-body-s text-accent-champagne hover:text-accent-ivory"
                   >
                     {labels.openEmployees} →

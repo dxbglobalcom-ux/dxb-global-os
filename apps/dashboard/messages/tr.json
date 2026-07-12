@@ -602,7 +602,8 @@
       "directorLabel": "Direktör",
       "headcountLabel": "Kadro",
       "activeShort": "aktif",
-      "deptDormantHint": "Uykuda: kadro işe alınmış ve kayıtlı, 7/24 çalışma zamanı aktivasyonunu bekliyor (Faz 7). Ajanları iş aldığı an departman uyanır."
+      "deptDormantHint": "Uykuda: kadro işe alınmış ve kayıtlı, 7/24 çalışma zamanı aktivasyonunu bekliyor (Faz 7). Ajanları iş aldığı an departman uyanır.",
+      "idLabel": "Ajan Kimliği"
     },
     "pnl": {
       "kpiTodayRevenue": "Bugünkü gelir",

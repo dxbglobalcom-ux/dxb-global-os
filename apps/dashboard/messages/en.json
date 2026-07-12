@@ -602,7 +602,8 @@
       "directorLabel": "Director",
       "headcountLabel": "Headcount",
       "activeShort": "active",
-      "deptDormantHint": "Dormant: staff are hired and on record, awaiting 24/7 runtime activation (Phase 7). The department wakes the moment its agents take work."
+      "deptDormantHint": "Dormant: staff are hired and on record, awaiting 24/7 runtime activation (Phase 7). The department wakes the moment its agents take work.",
+      "idLabel": "Agent ID"
     },
     "pnl": {
       "kpiTodayRevenue": "Revenue today",
