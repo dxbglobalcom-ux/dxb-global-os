@@ -1,6 +1,8 @@
-import { ModuleWaiting } from "@/components/command/module-waiting";
+import { redirect } from "next/navigation";
 
-// /sys/settings — real module lands at roadmap step E6.2 (E2.2 skeleton rule).
+// /sys/settings — the module lives at /sys/settings/[section] (E6.2,
+// SETTINGS_AND_CONTROL_SPEC §3). The bare path lands on the first real
+// registry category.
 export default function Page() {
-  return <ModuleWaiting pageKey="settings" step="E6.2" />;
+  redirect("/sys/settings/global_os");
 }
