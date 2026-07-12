@@ -6,16 +6,16 @@ current_phase: 09
 current_phase_name: jarvis-voice-layer
 status: executing
 stopped_at: "BEKLENTİLER PİVOTU 2026-07-10 ~18:45 — CEO ana direktifi işlendi (repo kökü BEKLENTİLER, sanitized: HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md). Proje = HOLDING OS; plan-first: 31 spec dosyalık korpus HOLDING-OS-MASTER-PLAN/ altında Fable bizzat yazıyor → korpus bitince Fable execution (12 Temmuz son geceye kadar) → Opus devralır. SONNET DEFEDİLDİ (v6). Phase 09 execution DURDU (09-03..05 ertelendi — kayıtlı sapma, CEO emri). Bağlayıcı sözleşme+yasaklar+açılış notu: ~/.claude/plans/sana-s-yl-orm-konu-al-m-nce-agile-pebble.md. Korpus ilerleme: 00-INDEX.md durum tablosu."
-last_updated: "2026-07-12T21:10:00.000Z"
+last_updated: "2026-07-12T21:45:00.000Z"
 last_activity: 2026-07-12
-last_activity_desc: "E6.2 ✓ SETTINGS UI + LIVE IMPACT PREVIEW + ONE-CLICK UNDO (K1 Fable in person, same session as E6.4 3e6bfae): /sys/settings/[section] SettingsShell 3 panels, ALL 89 registry keys / 7 real categories (registered adaptation of §18's 22 — empty sections = §35), type-appropriate editors incl. model_ref from catalog (banned excluded, mechanical-only per-slot), ScopeSwitcher global/department/employee + resolution origin, B7b LockedSettingRow, writes only via E6.1 seam; UI E2E real CEO session: timezone save → change_log #11 → toast Undo → row removed + #12 undo_of=11 → default on screen; TR verified; design-audit 3/3 (hex 119/0, en 562=tr 562, contract 37→41); container-query layout fix (mid-canvas overlap probe-caught) → next per roadmap: E6.3 org mutations or E7 block (K1)"
+last_activity_desc: "E6.3 ✓ ORG MUTATIONS + ORGANIZATION PAGE v1 (K1 Fable in person; session crashed mid-milestone — swap exhaustion — zero loss, 3 artifacts recovered from disk and completed): migration 20260712014000 — 8 control_org_* SECURITY DEFINER fns + fn_org_actor wall + manager-cycle trigger + v_org_graph (243 nodes / 220 employees, sub_agents = graph v2 per A3); each mutation = row lock + idempotency + audit_log + dxb:org Broadcast in one tx, undo = inverse op (A2); POST /api/control/org zod op-union seam; /org ModuleWaiting → real RSC + OrgTree collapse tree + detail panel, i18n orgTree 26 keys EN+TR. Evidence: suspend→replay(idempotent, single audit row)→reactivate roundtrip live DB; dxb:org employee.suspended/reactivated rows; ORG_MANAGER_CYCLE raised on self + 2-node loop; pre-crash probe residue verified clean; tsc 0 · eslint 0 · en 588 = tr 588 · contrast PASS; ⚠ browser render of tree UNVERIFIED (Chrome extension down post-freeze) — CEO eye test pending. Swap: /swapfile2 4G prepared but needs sudo to activate (command given to CEO) → next per roadmap: E7 block or graph v2 (K1)"
 progress:
   # re-base 2026-07-12 (CEO emri): plans = roadmap E-adımları (| E… satırları), ✓ = tamam
   total_phases: 11
   completed_phases: 7
   total_plans: 52
-  completed_plans: 26
-  percent: 50
+  completed_plans: 27
+  percent: 52
 ---
 
 # Project State

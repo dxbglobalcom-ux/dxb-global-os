@@ -566,6 +566,40 @@
         "worker": "Worker"
       }
     },
+    "orgTree": {
+      "title": "Organization Graph",
+      "subtitle": "Live hierarchy from the org database — company, departments, reporting lines.",
+      "employees": "employees",
+      "detailTitle": "Node Detail",
+      "detailSelect": "Select a node to inspect its live record.",
+      "kind": {
+        "company": "Company",
+        "department": "Department",
+        "employee": "Employee"
+      },
+      "roleLevel": {
+        "orchestrator": "Orchestrator",
+        "director": "Director",
+        "senior_specialist": "Senior Specialist",
+        "specialist": "Specialist",
+        "ops_agent": "Ops Agent"
+      },
+      "statusLabel": "Status",
+      "status": {
+        "active": "Active",
+        "probation": "Probation",
+        "dormant": "Dormant",
+        "draft": "Draft",
+        "suspended": "Suspended",
+        "archived": "Archived"
+      },
+      "departmentLabel": "Department",
+      "managerLabel": "Manager",
+      "modelLabel": "Brain",
+      "reportsLabel": "Direct reports",
+      "noManager": "No manager (root)",
+      "openEmployees": "Open in Employees"
+    },
     "pnl": {
       "kpiTodayRevenue": "Revenue today",
       "kpiTodayCost": "Cost today",

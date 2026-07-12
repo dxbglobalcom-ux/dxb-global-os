@@ -566,6 +566,40 @@
         "worker": "Çalışan"
       }
     },
+    "orgTree": {
+      "title": "Organizasyon Grafiği",
+      "subtitle": "Org veritabanından canlı hiyerarşi — şirket, departmanlar, raporlama zinciri.",
+      "employees": "çalışan",
+      "detailTitle": "Düğüm Detayı",
+      "detailSelect": "Canlı kaydını incelemek için bir düğüm seç.",
+      "kind": {
+        "company": "Şirket",
+        "department": "Departman",
+        "employee": "Çalışan"
+      },
+      "roleLevel": {
+        "orchestrator": "Orkestratör",
+        "director": "Direktör",
+        "senior_specialist": "Kıdemli Uzman",
+        "specialist": "Uzman",
+        "ops_agent": "Operasyon Ajanı"
+      },
+      "statusLabel": "Durum",
+      "status": {
+        "active": "Aktif",
+        "probation": "Deneme",
+        "dormant": "Uykuda",
+        "draft": "Taslak",
+        "suspended": "Askıda",
+        "archived": "Arşivlendi"
+      },
+      "departmentLabel": "Departman",
+      "managerLabel": "Yönetici",
+      "modelLabel": "Beyin",
+      "reportsLabel": "Doğrudan bağlı",
+      "noManager": "Yönetici yok (kök)",
+      "openEmployees": "Çalışanlar sayfasında aç"
+    },
     "pnl": {
       "kpiTodayRevenue": "Bugünkü gelir",
       "kpiTodayCost": "Bugünkü maliyet",
