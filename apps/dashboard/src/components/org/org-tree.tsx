@@ -408,7 +408,10 @@ export function OrgTree({
           {/* The tree scrolls inside its own box (~220 rows fully expanded) —
               the page keeps viewport height and the detail panel never drifts
               a full workforce away (CEO eye-test wave 3b). */}
-          <div data-testid="org-tree" className="max-h-[70vh] overflow-y-auto pr-1">
+          <div
+            data-testid="org-tree"
+            className="nav-scroll max-h-[calc(100dvh-16rem)] overflow-y-auto overscroll-contain pr-1"
+          >
             {roots.map((root) => (
               <NodeRow key={root.nodeId} node={root} depth={0} />
             ))}

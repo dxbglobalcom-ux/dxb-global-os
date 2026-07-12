@@ -65,6 +65,12 @@ Root causes: departments had NO Turkish name anywhere in the schema; title_tr co
 
 Evidence: agents title_tr NULL = 0; departments display_name_tr NULL = 0; Playwright TR page → 0 English remnants (Finance/Treasury/Payroll/etc. all absent, "Finans", "Vergi Stratejisti", "TikTok Stratejisti" render); EN page intact (6 EN markers, 0 TR leak); purity gate PASS (en 623 = tr 623).
 
+## Wave 3e (CEO RET: double scrollbar + Agent Dock crushing content)
+
+- Raw OS scrollbars app-wide (the `nav-scroll` thin utility existed but only the nav used it) → global thin scrollbar rule in `tokens.css` (titanium thumb, champagne hover, 8px, transparent track) — the two fat adjacent bars become quiet chrome.
+- Agent Dock (CC-SPEC §3 floating bottom layer) had zero content clearance — last tree rows ended hidden under it → `main` gets `pb-24`; org tree box `max-h-[calc(100dvh-16rem)]` + `nav-scroll` + `overscroll-contain`.
+- Evidence: Playwright full-scroll measurement — content bottom 1161px < dock top 1191px (nothing unreachable); screenshot shows thin bars; tsc 0, eslint 0.
+
 ## Explicitly out of scope (CEO-visible notes)
 
 - **Reporting lines untouched** — persona canon (dossier field 6) puts every specialist directly under the department director; senior specialists are senior ICs, not team leads. Inventing a team-lead layer would contradict the persona files. If the CEO wants mid-management clusters (e.g. the China cluster in marketing), that is an org-design decision → persona edits first, then DB.

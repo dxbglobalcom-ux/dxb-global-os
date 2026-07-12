@@ -294,3 +294,25 @@
   scrollbar-width: thin;
   scrollbar-color: var(--surface-titanium) transparent;
 }
+
+/* Kaydırma çubukları uygulama genelinde ince ve sessizdir (E6.3 wave 3e —
+   CEO göz testi: ham OS scrollbar'ı + iç içe iki kalın çubuk lüks brief'i
+   bozar). Chrome sakin, içerik önde. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-titanium) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--surface-titanium);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-brushed);
+}

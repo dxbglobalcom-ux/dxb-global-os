@@ -101,7 +101,9 @@ export default async function CommandLayout({
             pending_high_risk: summaryRes.data?.pending_high_risk ?? 0,
           }}
         />
-        <main className="min-w-0 flex-1 overflow-y-auto p-6">{children}</main>
+        {/* pb-24 clears the floating Agent Dock (CC-SPEC §3) — content must
+            scroll fully out from under it, never end hidden behind it. */}
+        <main className="min-w-0 flex-1 overflow-y-auto p-6 pb-24">{children}</main>
         <IntelligenceRail
           labels={t.rail}
           approvals={approvals}
