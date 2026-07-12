@@ -43,6 +43,7 @@ import {
   Shield,
   ShieldAlert,
   Sparkles,
+  TrendingUp,
   UserRound,
   Users,
   Workflow,
@@ -139,6 +140,9 @@ export const COMMAND_NAV: NavGroup[] = [
   {
     key: "finance",
     items: [
+      // P&L leads the group (CEO directive 2026-07-12): the holding exists
+      // to produce income — earnings stand next to costs, never behind them.
+      { key: "pnl", href: "/fin/pnl", icon: TrendingUp },
       { key: "costs", href: "/fin/costs", icon: CircleDollarSign },
       { key: "tokens", href: "/fin/tokens", icon: Coins },
       { key: "budgets", href: "/fin/budgets", icon: Banknote },
