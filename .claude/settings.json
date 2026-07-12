@@ -7,7 +7,15 @@
       "Bash(wmctrl -a *)",
       "Bash(mkdir -p *)",
       "Bash(awk '/^#/{h=$0; getline; if\\($0==\"\" \\) {getline; if\\($0==\"\" || $0 ~ /^#/\\) print NR\": \"h\" [BOŞ]\"}}' \"/home/ghost/DxB Global OS/HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md\")",
-      "Bash(awk '{print $6, $7}')"
+      "Bash(awk '{print $6, $7}')",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(python3 -c \"import json,sys; print\\(json.load\\(sys.stdin\\).get\\('scripts'\\)\\)\")",
+      "Bash(bash scripts/sync-personas-to-db.sh --verify)",
+      "Bash(pnpm --filter @dxb/hr test)",
+      "Bash(grep -n \"ON CONFLICT\\\\|DO \\\\$\\\\|IF NOT EXISTS\\\\|WHERE NOT EXISTS\" db/migrations/20260711006000_hr_family_e54.sql)",
+      "Bash(cd \"/home/ghost/DxB Global OS\" && git log --all --oneline --name-only | grep -i \"gate-run\" | head -5; echo \"---\"; ls packages/hr/ packages/hr/src/ 2>/dev/null; echo \"---\"; ls /tmp/claude-1000/-home-ghost-DxB-Global-OS/*/scratchpad/ 2>/dev/null | head -20)",
+      "Read(//tmp/claude-1000/-home-ghost-DxB-Global-OS/**)",
+      "Bash(rm /home/ghost/.claude/projects/-home-ghost-DxB-Global-OS/memory/side-channel-no-commit.md)"
     ],
     "deny": [
       "Read(./.env)",

@@ -8,6 +8,10 @@ DXB Global OS is an AI-native company operating system for **DXB Global Technolo
 
 **Core Value:** **Anti-baby-sitting**: the CEO states intent once; the company executes end-to-end autonomously, with hard approval gates only where actions face outward (money, contracts, emails, ad spend). If everything else fails, intent → autonomous, quality-gated execution must work.
 
+### Language rule (BINDING — CEO directive 2026-07-12)
+
+**Every project artifact is written in ENGLISH** — personas, specs, migrations, code comments, commit messages, planning docs, reports, evidence records. **Single exception: conversational chat replies to the CEO stay Turkish.** Applies to all authors (Fable, Opus, GPT 5.6, runtime agents) until the project ends. Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-LANGUAGE.md`. Pre-directive Turkish content stays; translation pass = optional CEO-scheduled follow-up.
+
 ### Constraints
 
 - **Budget**: €50–150/month OS operating cost (VPS + API tokens); Claude/Codex subscriptions separate — Cost Monitor enforces (alert 70%, hard-stop non-critical at 100%)
