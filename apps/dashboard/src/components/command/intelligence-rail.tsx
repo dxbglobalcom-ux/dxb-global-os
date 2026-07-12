@@ -52,9 +52,12 @@ export function IntelligenceRail({
                       </StatusBadge>
                     )}
                     <span className="font-data text-caption text-ink-muted tabular-nums">
+                      {/* 24h — language-neutral (no AM/PM leaking English
+                          onto the TR screen; RULE #0 purity) */}
                       {new Date(a.created_at).toLocaleTimeString(undefined, {
                         hour: "2-digit",
                         minute: "2-digit",
+                        hourCycle: "h23",
                       })}
                     </span>
                   </div>

@@ -49,10 +49,15 @@ export default async function CommandLayout({
       .eq("status", "pending")
       .order("created_at", { ascending: false })
       .limit(5),
+    // Only genuinely in-flight work reaches the dock: a claimed/running task
+    // without a live lease is a zombie (wave 3f — a 3-day-old unclaimed seed
+    // sat on every screen as green "running").
     supabase
       .from("tasks")
       .select("id,objective,status")
       .in("status", ["claimed", "running"])
+      .not("claimed_by", "is", null)
+      .gt("lease_expires_at", new Date().toISOString())
       .order("updated_at", { ascending: false })
       .limit(8),
     // Kill-switch visibility (E6.4 / GAP-07): os.global_pause has no
@@ -109,7 +114,7 @@ export default async function CommandLayout({
           approvals={approvals}
           pendingCount={summaryRes.data?.pending_approvals ?? 0}
         />
-        <AgentDock label={t.dock.running} tasks={dockTasks} />
+        <AgentDock label={t.dock.running} tasks={dockTasks} statusLabels={dict.status} />
       </div>
     </div>
   );

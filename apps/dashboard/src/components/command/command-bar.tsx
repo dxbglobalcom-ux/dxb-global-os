@@ -77,7 +77,7 @@ export function CommandBar({
           {labels.readOnly}
         </span>
         <LocaleSwitch locale={locale} ariaLabel={labels.language} />
-        <LiveClock />
+        <LiveClock locale={locale} />
         <LogoutButton label={labels.logout} />
       </div>
     </header>

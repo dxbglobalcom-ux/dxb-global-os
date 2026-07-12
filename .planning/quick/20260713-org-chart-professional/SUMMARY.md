@@ -71,6 +71,16 @@ Evidence: agents title_tr NULL = 0; departments display_name_tr NULL = 0; Playwr
 - Agent Dock (CC-SPEC §3 floating bottom layer) had zero content clearance — last tree rows ended hidden under it → `main` gets `pb-24`; org tree box `max-h-[calc(100dvh-16rem)]` + `nav-scroll` + `overscroll-contain`.
 - Evidence: Playwright full-scroll measurement — content bottom 1161px < dock top 1191px (nothing unreachable); screenshot shows thin bars; tsc 0, eslint 0.
 
+## Wave 3f (CEO RET: Agent Dock — "is that thing even real?") + first full RULE-0 sweep
+
+- **Zombie task exposed:** the dock's green "running" chip was a 3-day-old Phase-4 probe (`Ürün feed doğrulayıcısının haftalık bakım koşusu`) stuck in `running` with NO claim, NO agent, NO lease — never executed. Returned to honest state (`status='returned'`, feedback documents the cleanup).
+- **Dock query honesty:** layout now requires `claimed_by NOT NULL` + live `lease_expires_at` — no future zombie can wear the green badge.
+- **Dock design:** "RUNNING NOW … running" double-print removed (running chips carry no redundant badge; non-default states keep colored badges via `dict.status` localization: claimed=info, review=info, awaiting_approval=warn); chip text widened `max-w-40→96` + full-title tooltip. Dock hides entirely when nothing truly runs (current state).
+- **Full RULE-0 sweep findings (fixed same wave):** LiveClock printed English ("Jul 13 01:54 AM") on the TR screen → locale-tagged formatting (`13 Tem 01:56` / `Jul 13 01:56 AM`); rail/feed timestamps switched to 24h `hourCycle:'h23'` (no AM/PM language leak). Bottom-left "N" circle investigated: NOT in the app DOM — a browser-extension overlay, not ours.
+- Baselines recaptured post-fix (still PENDING CEO acceptance).
+
+Evidence: tasks table `running=0` after cleanup, header counter self-updated 6→5; dock element count 0 on live page; TR clock "13 Tem 01:56" / EN "Jul 13 01:56 AM" measured in-browser; sweep screenshots 1920+1280 EN / 1280 TR walked against CHECKLIST; tsc 0; eslint 0; i18n purity PASS.
+
 ## Explicitly out of scope (CEO-visible notes)
 
 - **Reporting lines untouched** — persona canon (dossier field 6) puts every specialist directly under the department director; senior specialists are senior ICs, not team leads. Inventing a team-lead layer would contradict the persona files. If the CEO wants mid-management clusters (e.g. the China cluster in marketing), that is an org-design decision → persona edits first, then DB.

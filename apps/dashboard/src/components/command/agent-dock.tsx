@@ -8,12 +8,23 @@ import { StatusBadge } from "@/components/primitives";
 
 export type DockTask = { id: string; title: string; status: string };
 
+// Status → badge level; the dock label already says "running now", so a
+// running chip carries no redundant badge (wave 3f: "RUNNING NOW … running"
+// double-print was noise). Non-default states keep their colored badge.
+const DOCK_LEVEL: Record<string, "ok" | "info" | "warn"> = {
+  claimed: "info",
+  review: "info",
+  awaiting_approval: "warn",
+};
+
 export function AgentDock({
   label,
   tasks,
+  statusLabels,
 }: {
   label: string;
   tasks: DockTask[];
+  statusLabels: Record<string, string>;
 }) {
   if (tasks.length === 0) return null;
   return (
@@ -25,12 +36,15 @@ export function AgentDock({
             <Link
               key={t.id}
               href={`/ops/tasks?focus=${t.id}`}
+              title={t.title}
               className="flex shrink-0 items-center gap-1.5 rounded-input border border-edge-neutral bg-surface-graphite px-2 py-1 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
             >
-              <StatusBadge level={t.status === "running" ? "ok" : "info"}>
-                {t.status}
-              </StatusBadge>
-              <span className="max-w-40 truncate text-body-s text-ink-primary">
+              {t.status !== "running" && (
+                <StatusBadge level={DOCK_LEVEL[t.status] ?? "info"}>
+                  {statusLabels[t.status] ?? t.status}
+                </StatusBadge>
+              )}
+              <span className="max-w-96 truncate text-body-s text-ink-primary">
                 {t.title}
               </span>
             </Link>

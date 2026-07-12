@@ -134,10 +134,12 @@ export function LiveFeed({
                 className="flex h-10 items-center gap-3 px-2 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
               >
                 <span className="font-data text-caption text-ink-muted tabular-nums">
+                  {/* 24h — language-neutral (RULE #0 purity) */}
                   {new Date(e.created_at).toLocaleTimeString(undefined, {
                     hour: "2-digit",
                     minute: "2-digit",
                     second: "2-digit",
+                    hourCycle: "h23",
                   })}
                 </span>
                 <StatusBadge level={levelFor(e)}>
