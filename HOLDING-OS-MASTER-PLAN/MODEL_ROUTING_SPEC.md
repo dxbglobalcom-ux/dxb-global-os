@@ -6,7 +6,7 @@
 
 ## 1. Amaç
 
-Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-değiştirilebilir, fallback'li ve tamamen loglanan seçimi. Hardcode model adı hiçbir ajan config'inde bulunamaz; seçim runtime'da `model_routing_rules`dan çözülür, her karar `decision_log`a düşer.
+Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-değiştirilebilir, fallback'li ve tamamen loglanan seçimi. Hardcode model adı hiçbir ajan config'inde bulunamaz; seçim runtime'da `routing_rules`dan çözülür (live table name — see §4 alignment note), her karar `decision_log`a düşer.
 
 ## 2. Gereksinimler
 
@@ -24,7 +24,7 @@ Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-de�
 ```
 task (kernel) ─→ orchestrator.select_model(task)
                    1. rol tespiti: task.type + persona.role_hint → rol slotu
-                   2. kural taraması: model_routing_rules (rol, departman,
+                   2. kural taraması: routing_rules (rol, departman,
                       risk, maliyet tavanı, context ihtiyacı) öncelik sırasıyla
                    3. sağlık kontrolü: model_catalog.status + provider health
                    4. bütçe kontrolü: COST_CONTROL hard-stop bayrağı
@@ -38,31 +38,49 @@ task (kernel) ─→ orchestrator.select_model(task)
 
 ## 4. Veri modeli
 
-[[DATA_MODEL]] kontrol ailesine (0021x) normatif tanım:
+[[DATA_MODEL]] kontrol ailesine (0021x) normatif tanım.
+
+**Live-schema alignment (2026-07-12, recorded — not silent):** the deployed schema (migration family 0021x, authority [[DATA_MODEL]] §4.2) is the single source of truth for column names. An earlier draft of this section used `cost_in_per_1m/cost_out_per_1m`, `speed_tier text`, status `disabled`-only, a `display_name` column, and the table name `model_routing_rules` — none of these exist live. This section now shows the LIVE schema; every column this spec additionally requires (for §4b `fn_update_agent_brain` and the §4c onboarding flow) is listed as an explicit **E6.1 ALTER delta** below. §4b/§4c functions CANNOT be written before that delta ships.
 
 ```sql
+-- LIVE (deployed, authority: DATA_MODEL §4.2)
 model_catalog (
-  id text PK,                  -- 'claude-opus-4-8'
-  provider text,               -- 'anthropic' (LiteLLM üzerinden)
-  display_name text, context_window int,
-  cost_in_per_1m numeric, cost_out_per_1m numeric,
-  speed_tier text,             -- fast|standard|deep
-  quality_score int,           -- 0-100, CEO/QA günceller
-  reliability numeric,         -- son 30g başarı oranı (hesaplanır, view)
-  status text,                 -- active|degraded|disabled
-  banned boolean default false,        -- R2: migration-only yasak bayrağı (bugün true satır YOK — Sonnet serbest, CEO 2026-07-12)
-  mechanical_only boolean default false, -- R2: haiku ailesi true
-  fallback_of text null REFERENCES model_catalog(id)
+  id text PK,                  -- LiteLLM alias, e.g. 'claude-opus-4-8'
+  provider text NOT NULL,      -- 'anthropic' (via LiteLLM)
+  context_window int,
+  cost_in_per_mtok numeric, cost_out_per_mtok numeric,
+  speed_score int,             -- higher = faster
+  quality_score int,           -- 0-100, CEO/QA updates
+  reliability numeric,         -- 30-day success rate (computed, view)
+  fallback_of text NULL REFERENCES model_catalog(id),  -- cycle-guarded (trigger, E4 evidence)
+  status text NOT NULL DEFAULT 'active'
+    CHECK (status IN ('active','degraded','retired'))
 )
-model_routing_rules (
-  id uuid PK, role_slot text,  -- R1'deki 13 slot
-  priority int,                -- küçük önce
-  department_id uuid null,     -- null=tüm departmanlar
-  risk_max text null,          -- bu kuralın kabul ettiği en yüksek risk
-  min_context int null, cost_cap_per_task numeric null,
-  model_id FK→model_catalog, enabled boolean,
-  UNIQUE(role_slot, priority, department_id)
+
+-- E6.1 ALTER delta — migration 0021h_model_catalog_governance.sql (0021x family, NOT YET LIVE):
+--   ALTER TABLE model_catalog
+--     ADD COLUMN display_name text,
+--     ADD COLUMN banned boolean NOT NULL DEFAULT false,          -- R2: migration-only ban flag (no true row today — Sonnet free, CEO 2026-07-12)
+--     ADD COLUMN mechanical_only boolean NOT NULL DEFAULT false; -- R2: haiku family true
+--   status CHECK extended to ('active','testing','degraded','disabled','retired')
+--     -- 'testing' = §4c onboarding mandatory step · 'disabled' = CEO temporary off · 'retired' = decommissioned, never deleted (§4c)
+
+-- LIVE routing table is `routing_rules` (extended in 0021x with model_id + role_slot);
+-- the earlier draft name `model_routing_rules` does not exist and must not be used.
+routing_rules (
+  id uuid PK,
+  -- legacy columns (pre-0021x): task_class, match jsonb, model_tier, model, mode, effort, needs_council
+  priority int, enabled boolean, updated_at timestamptz,
+  model_id text FK→model_catalog,  -- live (0021x)
+  role_slot text                   -- live (0021x); R1'deki 13 slot
 )
+-- E6.1 ALTER delta (same 0021h migration):
+--   ALTER TABLE routing_rules
+--     ADD COLUMN department_id uuid NULL,          -- null = all departments
+--     ADD COLUMN risk_max text NULL,               -- highest risk this rule accepts
+--     ADD COLUMN min_context int NULL,
+--     ADD COLUMN cost_cap_per_task numeric NULL;
+--   + UNIQUE(role_slot, priority, department_id) for slot-resolution determinism
 ```
 
 Varsayılan atamalar (seed — CEO settings'ten değiştirir; ⛔ değişiklik CEO-görünür):
@@ -93,7 +111,7 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_re
 
 Yeni bir model çıktığında CEO onu dashboard'dan kataloğa ekler ve bağlar; VPS'e SSH / config dosyası elle düzenleme GEREKMEZ. Giriş yüzeyi: `/ai/models` "Model Ekle" (yalnız Control Mode) → `ModelOnboardDrawer`. Dört adımlı akış, tamamı control seam üzerinden:
 
-1. **Kayıt:** form (id, provider, display_name, context_window, cost in/out, speed_tier) → `POST /api/control/models {op:'add_model'}` → katalog satırı **`status='testing'`** doğar (atanabilir havuzda DEĞİL). LiteLLM'e kayıt proxy admin API'siyle runtime yapılır (config dosyasına dokunmadan); admin API erişilemezse satır "LiteLLM kaydı bekliyor" durumunda görünür kalır — sahte-hazır yasak (§35 ruhu). ⛔ Raw provider key ASLA dashboard'dan girilmez/gösterilmez (R5): key işi vault + LiteLLM env; dashboard yalnız alias tanır.
+1. **Kayıt:** form (id, provider, display_name, context_window, cost_in_per_mtok/cost_out_per_mtok, speed_score) → `POST /api/control/models {op:'add_model'}` → katalog satırı **`status='testing'`** doğar (atanabilir havuzda DEĞİL). LiteLLM'e kayıt proxy admin API'siyle runtime yapılır (config dosyasına dokunmadan); admin API erişilemezse satır "LiteLLM kaydı bekliyor" durumunda görünür kalır — sahte-hazır yasak (§35 ruhu). ⛔ Raw provider key ASLA dashboard'dan girilmez/gösterilmez (R5): key işi vault + LiteLLM env; dashboard yalnız alias tanır.
 2. **Duman testi (zorunlu):** `{op:'test_model'}` → LiteLLM üzerinden 1 ucuz çağrı; latency/token/hata drawer'da gösterilir; başarısız model `testing`te kalır.
 3. **Eval-önce:** aktivasyon öncesi mini eval bataryası görevi otomatik açılır (sahip: Model Evaluation Lead, CAIO doktrini); sonuç `quality_score` ilk değerini verir. CEO atlayabilir — §4b ile aynı hook-üstü rejim (warn + audit + 7 gün izleme).
 4. **Aktivasyon + bağlama:** `{op:'set_catalog_status', 'active'}` → model atanabilir havuza girer; aynı drawer'dan bağlama kısayolları: rol slotuna ata (`assign_role`) · tek ajana beyin yap (§4b `set_model`) · fallback zincirine ekle (`set_fallback`, döngü-CHECK).
@@ -138,7 +156,7 @@ Panel client state'i yalnız görsel (seçili node, simulator girdileri). Atama 
 
 ## 11. Database tabloları / 12. İlişkiler
 
-§4 normatif; [[DATA_MODEL]] 0021x ailesine girer. İlişkiler: catalog 1—N rules; catalog self-FK fallback zinciri (döngü CHECK ile yasak: `fallback_of != id` + fn içi derinlik≤4 kontrolü); rules.department_id → org_units. Mevcut `routing_rules` tablosu varsa (Phase 6 emsali): `model_routing_rules`a view-alias köprüsüyle evrilir (breaking change yasak — SYSTEM_ARCHITECTURE §11).
+§4 normatif; [[DATA_MODEL]] 0021x ailesine girer. İlişkiler: catalog 1—N rules; catalog self-FK fallback zinciri (döngü CHECK ile yasak: `fallback_of != id` + fn içi derinlik≤4 kontrolü); rules.department_id → org_units (E6.1 delta). RESOLVED 2026-07-12: the existing `routing_rules` table was extended IN PLACE by the 0021x family (model_id + role_slot live); no view-alias bridge and no `model_routing_rules` table exist or will be created — the name `routing_rules` is final (breaking change yasak — SYSTEM_ARCHITECTURE §11).
 
 ## 13. Yetkilendirme
 

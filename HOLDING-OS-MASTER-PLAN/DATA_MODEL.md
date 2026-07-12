@@ -146,6 +146,8 @@ ALTER TABLE routing_rules
   ADD COLUMN role_slot text;                 -- §19: planning|execution|review|coding|research|design|low_cost|emergency
 ```
 
+> **Planned E6.1 delta (`0021h_model_catalog_governance.sql`, roadmap E6.1 — not yet live):** model_catalog gains `display_name`, `banned`, `mechanical_only` + status CHECK extended with `'testing'`/`'disabled'`; routing_rules gains `department_id`, `risk_max`, `min_context`, `cost_cap_per_task` + `UNIQUE(role_slot, priority, department_id)`. Normative definition: [[MODEL_ROUTING_SPEC]] §4 (alignment note 2026-07-12). This block stays deployed-truth until 0021h ships, then folds the delta in.
+
 ### 4.3 Görünürlük ailesi — `0022x_observability_family`
 
 ```sql

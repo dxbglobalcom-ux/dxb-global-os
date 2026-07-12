@@ -52,7 +52,7 @@ Karar ilkesi (⛔ mimari-kritik): **kontrol düzlemi ayrı mikroservis DEĞİLD�
 Birinci-sınıf varlıklar ve sahipleri — tam şema [[DATA_MODEL]]:
 
 - **Org ailesi:** `companies, org_units(departments genişler), employees(agents genişler), employee_records, personas` — hiyerarşi: holding→company→department→director→senior→specialist→ops_agent→sub_agent (`employees.parent_id` + `role_level` enum).
-- **Kontrol ailesi:** `settings_registry, settings_values, settings_change_log, model_catalog, model_routing_rules(routing_rules genişler)`.
+- **Kontrol ailesi:** `settings_registry, settings_values, settings_change_log, model_catalog, routing_rules` (extended in place by 0021x — model_id + role_slot; the draft name `model_routing_rules` was never created).
 - **Görünürlük ailesi:** `agent_runs, decision_log, tool_calls, file_changes` (+ mevcut `task_events, audit_log, cost_ledger`).
 - **İş ailesi:** `projects, workflows, workflow_steps, workflow_runs` (+ mevcut `tasks, intents, approvals, outbox`).
 - **Bilgi ailesi:** `library_items, library_grants` (+ mevcut `memory_index, memory_embeddings, tool_pins`).
@@ -66,7 +66,7 @@ Birinci-sınıf varlıklar ve sahipleri — tam şema [[DATA_MODEL]]:
 | Control-plane route handlers | `apps/dashboard/src/app/api/control/*` | YENİ | Mutasyon isteği → DB fn çağrısı → sonuç |
 | `packages/hook` | yeni paket | YENİ | Fable Hook: policy yükle, pre/post gate, ihlal kaydı |
 | `packages/kernel` | mevcut | KALIR+GENİŞLER | Workflow/project varlıklarını tanır; hook entegrasyonu |
-| `packages/orchestrator` | mevcut | KALIR+GENİŞLER | `model_routing_rules` tablo-güdümlü seçim |
+| `packages/orchestrator` | mevcut | KALIR+GENİŞLER | `routing_rules` tablo-güdümlü seçim |
 | `packages/hr` | yeni paket | YENİ | Çalışan yaşam döngüsü servis fonksiyonları (kernel worker içinde koşar) |
 | Diğer mevcut paketler | packages/* | KALIR | outbox-executor, gateway, dxb-mcp, memory-router, shared |
 
