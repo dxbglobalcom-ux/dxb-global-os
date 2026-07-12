@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Building2,
   ChevronDown,
@@ -58,6 +58,62 @@ export type OrgLabels = {
   activeShort: string;
   deptDormantHint: string;
   idLabel: string;
+  detailLoading: string;
+  detailError: string;
+  governanceTitle: string;
+  personaLabel: string;
+  personaGate: Record<string, string>;
+  personaBy: string;
+  personaRead: string;
+  personaHide: string;
+  recordLabel: string;
+  recordNone: string;
+  kpisLabel: string;
+  runtimeTitle: string;
+  autonomyLabel: string;
+  mcpLabel: string;
+  tasksLabel: string;
+  runsLabel: string;
+  costLabel: string;
+  memoryLabel: string;
+  skillsLabel: string;
+  grantsLabel: string;
+  phase7Hint: string;
+};
+
+// madde 5.3 field set served by v_org_node_detail (spec §12) — fetched per
+// selected employee; the persona body stays lazy behind ?include=persona.
+type NodeDetail = {
+  employee_id: string;
+  slug: string;
+  title: string;
+  title_tr: string | null;
+  role_level: string | null;
+  employment_status: string;
+  department_slug: string;
+  department_name: string;
+  manager_id: string | null;
+  manager_slug: string | null;
+  manager_title: string | null;
+  manager_title_tr: string | null;
+  direct_reports: number;
+  brain: string;
+  model_status: string | null;
+  autonomy_level: number;
+  mcp_profile: string;
+  persona_id: string | null;
+  persona_version: number | null;
+  persona_gate: string | null;
+  persona_author: string | null;
+  persona_updated_at: string | null;
+  has_employee_record: boolean;
+  kpi_count: number;
+  cost_30d_eur: number;
+  active_tasks: number;
+  active_runs: number;
+  skills: unknown[];
+  grants_count: number;
+  memory_count: number;
 };
 
 // Holding chart order (professional grouping, CEO eye-test wave 3):
@@ -107,7 +163,7 @@ function statusLevel(status: string): StatusLevel {
 export function OrgTree({
   nodes,
   labels,
-  locale: _locale,
+  locale,
 }: {
   nodes: OrgNode[];
   labels: OrgLabels;
@@ -177,6 +233,53 @@ export function OrgTree({
     () => new Set(nodes.map((n) => n.nodeId)),
   );
   const [selected, setSelected] = useState<OrgNode | null>(null);
+  const [detail, setDetail] = useState<NodeDetail | null>(null);
+  const [detailState, setDetailState] = useState<"idle" | "loading" | "error">("idle");
+  const [personaBody, setPersonaBody] = useState<string | null>(null);
+  const [personaOpen, setPersonaOpen] = useState(false);
+
+  // madde 5.3 set arrives per selection from /api/org/node (spec §12 view);
+  // stale responses are dropped when the selection has already moved on.
+  useEffect(() => {
+    setDetail(null);
+    setPersonaBody(null);
+    setPersonaOpen(false);
+    if (selected?.kind !== "employee") {
+      setDetailState("idle");
+      return;
+    }
+    let stale = false;
+    setDetailState("loading");
+    fetch(`/api/org/node?id=${selected.nodeId}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((json) => {
+        if (stale) return;
+        setDetail(json.detail as NodeDetail);
+        setDetailState("idle");
+      })
+      .catch(() => {
+        if (!stale) setDetailState("error");
+      });
+    return () => {
+      stale = true;
+    };
+  }, [selected]);
+
+  async function togglePersona() {
+    if (personaOpen) {
+      setPersonaOpen(false);
+      return;
+    }
+    setPersonaOpen(true);
+    if (personaBody || selected?.kind !== "employee") return;
+    try {
+      const r = await fetch(`/api/org/node?id=${selected.nodeId}&include=persona`);
+      const json = await r.json();
+      setPersonaBody(json.personaBody ?? "");
+    } catch {
+      setPersonaBody("");
+    }
+  }
 
   function toggle(id: string) {
     setOpen((prev) => {
@@ -378,19 +481,25 @@ export function OrgTree({
                     <div className="flex gap-2">
                       <dt className="text-ink-muted">{labels.managerLabel}:</dt>
                       <dd className="text-ink-primary">
-                        {manager && manager.kind === "employee"
-                          ? manager.label
-                          : labels.noManager}
+                        {detail?.manager_slug ? (
+                          <button
+                            type="button"
+                            className="text-left text-accent-champagne hover:text-accent-ivory"
+                            onClick={() => {
+                              const node = employeeBySlug.get(detail.manager_slug);
+                              if (node) setSelected(node);
+                            }}
+                          >
+                            {locale === "tr" && detail.manager_title_tr
+                              ? detail.manager_title_tr
+                              : detail.manager_title}
+                          </button>
+                        ) : manager && manager.kind === "employee" ? (
+                          manager.label
+                        ) : (
+                          labels.noManager
+                        )}
                       </dd>
-                    </div>
-                  )}
-                  {selected.model && (
-                    <div className="flex items-center gap-2">
-                      <dt className="flex items-center gap-1 text-ink-muted">
-                        <Cpu size={11} strokeWidth={1.5} aria-hidden />
-                        {labels.modelLabel}:
-                      </dt>
-                      <dd className="font-data text-ink-primary">{selected.model}</dd>
                     </div>
                   )}
                   {directReports.length > 0 && (
@@ -402,6 +511,138 @@ export function OrgTree({
                     </div>
                   )}
                 </dl>
+
+                {selected.kind === "employee" && detailState === "loading" && (
+                  <p className="text-caption text-ink-muted">{labels.detailLoading}</p>
+                )}
+                {selected.kind === "employee" && detailState === "error" && (
+                  <p className="text-caption text-status-danger">{labels.detailError}</p>
+                )}
+
+                {selected.kind === "employee" && detail && (
+                  <>
+                    {/* Governance — persona + sicil (madde 5.3: persona, sicil) */}
+                    <div className="space-y-1.5 border-t border-edge-neutral pt-3">
+                      <p className="label-caps text-caption text-ink-muted">
+                        {labels.governanceTitle}
+                      </p>
+                      <dl className="space-y-1.5 text-body-s">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <dt className="text-ink-muted">{labels.personaLabel}:</dt>
+                          <dd className="flex flex-wrap items-center gap-2 text-ink-primary">
+                            v{detail.persona_version ?? "—"}
+                            {detail.persona_gate && (
+                              <StatusBadge
+                                level={
+                                  detail.persona_gate === "passed"
+                                    ? "ok"
+                                    : detail.persona_gate === "failed"
+                                      ? "danger"
+                                      : "info"
+                                }
+                              >
+                                {labels.personaGate[detail.persona_gate] ??
+                                  detail.persona_gate}
+                              </StatusBadge>
+                            )}
+                            {detail.persona_author && (
+                              <span className="text-caption text-ink-muted">
+                                {labels.personaBy} {detail.persona_author}
+                              </span>
+                            )}
+                          </dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="text-ink-muted">{labels.recordLabel}:</dt>
+                          <dd className="text-ink-primary">
+                            {detail.has_employee_record
+                              ? `${labels.kpisLabel}: ${detail.kpi_count}`
+                              : labels.recordNone}
+                          </dd>
+                        </div>
+                      </dl>
+                      {detail.persona_id && (
+                        <button
+                          type="button"
+                          onClick={togglePersona}
+                          className="text-body-s text-accent-champagne hover:text-accent-ivory"
+                        >
+                          {personaOpen ? labels.personaHide : labels.personaRead}
+                        </button>
+                      )}
+                      {personaOpen && (
+                        <pre className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-input border border-edge-neutral bg-surface-graphite p-2 font-data text-caption text-ink-secondary">
+                          {personaBody ?? labels.detailLoading}
+                        </pre>
+                      )}
+                    </div>
+
+                    {/* Runtime — model, yetki, tool access, görev/koşu/maliyet/memory */}
+                    <div className="space-y-1.5 border-t border-edge-neutral pt-3">
+                      <p className="label-caps text-caption text-ink-muted">
+                        {labels.runtimeTitle}
+                      </p>
+                      <dl className="space-y-1.5 text-body-s">
+                        <div className="flex items-center gap-2">
+                          <dt className="flex items-center gap-1 text-ink-muted">
+                            <Cpu size={11} strokeWidth={1.5} aria-hidden />
+                            {labels.modelLabel}:
+                          </dt>
+                          <dd className="font-data text-ink-primary">{detail.brain}</dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="text-ink-muted">{labels.autonomyLabel}:</dt>
+                          <dd className="font-data text-ink-primary tabular-nums">
+                            {detail.autonomy_level}
+                          </dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="text-ink-muted">{labels.mcpLabel}:</dt>
+                          <dd className="font-data text-ink-primary">{detail.mcp_profile}</dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="text-ink-muted">{labels.tasksLabel}:</dt>
+                          <dd className="font-data text-ink-primary tabular-nums">
+                            {detail.active_tasks}
+                          </dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="text-ink-muted">{labels.runsLabel}:</dt>
+                          <dd className="font-data text-ink-primary tabular-nums">
+                            {detail.active_runs}
+                          </dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="text-ink-muted">{labels.costLabel}:</dt>
+                          <dd className="font-data text-ink-primary tabular-nums">
+                            €{detail.cost_30d_eur}
+                          </dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="text-ink-muted">{labels.memoryLabel}:</dt>
+                          <dd className="font-data text-ink-primary tabular-nums">
+                            {detail.memory_count}
+                          </dd>
+                        </div>
+                        <div className="flex gap-2">
+                          <dt className="text-ink-muted">{labels.skillsLabel}:</dt>
+                          <dd className="font-data text-ink-primary tabular-nums">
+                            {Array.isArray(detail.skills) ? detail.skills.length : 0}
+                            {" · "}
+                            {labels.grantsLabel}: {detail.grants_count}
+                          </dd>
+                        </div>
+                      </dl>
+                      {detail.active_tasks === 0 &&
+                        detail.active_runs === 0 &&
+                        detail.employment_status !== "active" && (
+                          <p className="text-caption text-ink-muted">
+                            {labels.phase7Hint}
+                          </p>
+                        )}
+                    </div>
+                  </>
+                )}
                 {selected.kind === "department" && selected.status === "dormant" && (
                   <p className="text-caption text-ink-muted">
                     {labels.deptDormantHint}

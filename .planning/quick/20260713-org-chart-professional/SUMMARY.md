@@ -33,6 +33,19 @@ commit: pending (this wave's single atomic commit)
 - **TR titles on the EN locale** (A2 violation) → `agents.title_tr` + `v_org_graph` v1.4; backfill language-split from persona H1s (TR-char/word detection, six TR-only titles given mechanical English equivalents, full 199-row list reviewed by Fable personally); RSC picks label by locale. Evidence: EN render 0 Turkish-title tokens (`grep -c` on page snapshot), TR render shows "Finans Direktörü" etc.; DB check `title ~ TR chars` → 0; `with_tr=67`. Sync script now flows title only from the dossier EN `Title` field so a resync cannot re-pollute the EN column.
 - **Detail panel a full workforce away** (fully-expanded tree ≈220 rows pushed the panel off-screen; below @3xl container width it even stacked UNDER the tree) → tree scrolls inside its own `max-h-[70vh]` box, detail panel `order-first` on narrow layouts and sticky at @3xl. Evidence: Playwright — deep node click (Social Media director), screenshot shows detail panel fully visible at top of viewport with the clicked row still in view.
 
+## Wave 3c (CEO order: "do what the spec says — madde 5.3, now")
+
+The spec's `v_org_node_detail` contract (ORGANIZATION_ENGINE_SPEC §12) had never been implemented — the v1 panel echoed the tree. Closed tonight:
+
+- **Migration `20260713013000`** — `v_org_node_detail`: full madde 5.3 field set per live employee (identity EN/TR, assignment incl. TRUE manager resolved cross-department, runtime counters: brain/model status/autonomy/MCP profile/active tasks/active runs/30d cost/memory count, governance: persona FK + version + quality gate + author, sicil flag + KPI count, capability: skills + grants). Persona content stays LAZY per spec.
+- **Route `GET /api/org/node?id=`** — session-guarded read seam; `?include=persona` returns latest `body_md`.
+- **Panel v2** — Governance section (persona version + gate badge + author, sicil state), Runtime section (all counters, honest zeros + Phase-7 hint), clickable manager (jumps selection — fixes the "No manager (root)" lie for directors), **in-panel persona reader** (first place in the whole UI where the CEO can read a persona).
+- i18n +24 keys EN+TR (623 = 623).
+
+Evidence: view 199 rows / 0 without persona; CMO row shows manager "Holding Orchestrator", persona v1 gate passed, 32 reports; Playwright: CMO click → all sections filled, "Personayı oku" loads the full dossier text in-panel; tsc 0, eslint 0.
+
+**Found gap (recorded, not silently fixed):** `employee_records` (sicil) has ZERO rows — the HR wave never populated the record layer (spec HR_OPERATING_SYSTEM). Panel shows "No employment record yet" honestly. Separate data task; belongs to the HR/E-step owner.
+
 ## Explicitly out of scope (CEO-visible notes)
 
 - **Reporting lines untouched** — persona canon (dossier field 6) puts every specialist directly under the department director; senior specialists are senior ICs, not team leads. Inventing a team-lead layer would contradict the persona files. If the CEO wants mid-management clusters (e.g. the China cluster in marketing), that is an org-design decision → persona edits first, then DB.
