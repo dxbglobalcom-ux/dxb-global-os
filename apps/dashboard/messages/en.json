@@ -424,12 +424,28 @@
       "engineEmpty": "No revenue recorded yet — the engines' output lands here the moment money comes in.",
       "engines": {
         "social_selling": "Social selling",
+        "content_monetization": "Content monetization",
         "ecommerce": "E-commerce",
         "consultancy": "Consultancy",
         "venture": "Venture factory",
         "physical": "Physical company",
         "other": "Other"
       },
+      "platformTitle": "Content earnings by platform · 30d",
+      "platformEmpty": "No platform payouts yet — YouTube, Instagram, TikTok and the rest land here the moment they pay.",
+      "platforms": {
+        "youtube": "YouTube",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "x": "X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "twitch": "Twitch",
+        "pinterest": "Pinterest",
+        "other": "Other platform"
+      },
+      "formPlatform": "Platform",
+      "formPlatformNone": "— none —",
       "ledgerTitle": "Latest revenue entries",
       "ledgerEmpty": "The revenue ledger is empty. Record the physical company's income below — integrations (WooCommerce, bank) write here automatically once they land.",
       "colEngine": "Engine",

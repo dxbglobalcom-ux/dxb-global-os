@@ -24,10 +24,13 @@ type PnlDay = {
 
 type EngineRow = { engine: string; day: string; revenue_eur: number };
 
+type PlatformRow = { platform: string; day: string; revenue_eur: number };
+
 type RevenueRow = {
   id: number;
   occurred_on: string;
   engine: string;
+  platform: string | null;
   client: string | null;
   description: string;
   amount_eur: number;
@@ -46,7 +49,7 @@ export default async function PnlPage() {
   const today = berlinToday();
   const since = new Date(Date.now() - 30 * 86400_000).toISOString().slice(0, 10);
 
-  const [dailyRes, engineRes, ledgerRes] = await Promise.all([
+  const [dailyRes, engineRes, platformRes, ledgerRes] = await Promise.all([
     supabase
       .from("v_pnl_daily")
       .select("day, revenue_eur, cost_eur, net_eur")
@@ -57,13 +60,18 @@ export default async function PnlPage() {
       .select("engine, day, revenue_eur")
       .gte("day", since),
     supabase
+      .from("v_pnl_platform")
+      .select("platform, day, revenue_eur")
+      .gte("day", since),
+    supabase
       .from("revenue_ledger")
-      .select("id, occurred_on, engine, client, description, amount_eur")
+      .select("id, occurred_on, engine, platform, client, description, amount_eur")
       .order("id", { ascending: false })
       .limit(15),
   ]);
 
-  const firstError = dailyRes.error ?? engineRes.error ?? ledgerRes.error;
+  const firstError =
+    dailyRes.error ?? engineRes.error ?? platformRes.error ?? ledgerRes.error;
   if (firstError) {
     return (
       <div className="mx-auto max-w-6xl">
@@ -89,6 +97,19 @@ export default async function PnlPage() {
   const engineEntries = [...engineTotals.entries()].sort((a, b) => b[1] - a[1]);
   const engineMax = engineEntries[0]?.[1] ?? 0;
   const engineLabels = t.engines as Record<string, string>;
+
+  const platformTotals = new Map<string, number>();
+  for (const row of (platformRes.data ?? []) as PlatformRow[]) {
+    platformTotals.set(
+      row.platform,
+      (platformTotals.get(row.platform) ?? 0) + Number(row.revenue_eur),
+    );
+  }
+  const platformEntries = [...platformTotals.entries()].sort(
+    (a, b) => b[1] - a[1],
+  );
+  const platformMax = platformEntries[0]?.[1] ?? 0;
+  const platformLabels = t.platforms as Record<string, string>;
 
   const ledger = (ledgerRes.data ?? []) as RevenueRow[];
 
@@ -133,7 +154,17 @@ export default async function PnlPage() {
     {
       key: "engine",
       label: t.colEngine,
-      render: (r) => engineLabels[r.engine] ?? r.engine,
+      render: (r) => (
+        <span>
+          {engineLabels[r.engine] ?? r.engine}
+          {r.platform ? (
+            <span className="text-ink-muted">
+              {" · "}
+              {platformLabels[r.platform] ?? r.platform}
+            </span>
+          ) : null}
+        </span>
+      ),
     },
     { key: "client", label: t.colClient, render: (r) => r.client ?? "—" },
     {
@@ -229,34 +260,64 @@ export default async function PnlPage() {
             )}
           </Panel>
         </div>
-        <Panel title={t.engineTitle}>
-          {engineEntries.length === 0 ? (
-            <p className="py-2 text-body-s text-ink-muted">{t.engineEmpty}</p>
-          ) : (
-            <ul className="space-y-2">
-              {engineEntries.map(([engine, total]) => (
-                <li key={engine}>
-                  <div className="flex items-baseline justify-between gap-3 text-body-s">
-                    <span className="min-w-0 truncate text-ink-secondary">
-                      {engineLabels[engine] ?? engine}
-                    </span>
-                    <span className="font-data text-ink-primary tabular-nums">
-                      {formatEur(total)}
-                    </span>
-                  </div>
-                  <div className="mt-1 h-1 overflow-hidden rounded-input bg-surface-anthracite">
-                    <div
-                      className="h-full rounded-input bg-accent-champagne"
-                      style={{
-                        width: `${Math.max(2, engineMax ? (total / engineMax) * 100 : 0).toFixed(1)}%`,
-                      }}
-                    />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Panel>
+        <div className="space-y-4">
+          <Panel title={t.engineTitle}>
+            {engineEntries.length === 0 ? (
+              <p className="py-2 text-body-s text-ink-muted">{t.engineEmpty}</p>
+            ) : (
+              <ul className="space-y-2">
+                {engineEntries.map(([engine, total]) => (
+                  <li key={engine}>
+                    <div className="flex items-baseline justify-between gap-3 text-body-s">
+                      <span className="min-w-0 truncate text-ink-secondary">
+                        {engineLabels[engine] ?? engine}
+                      </span>
+                      <span className="font-data text-ink-primary tabular-nums">
+                        {formatEur(total)}
+                      </span>
+                    </div>
+                    <div className="mt-1 h-1 overflow-hidden rounded-input bg-surface-anthracite">
+                      <div
+                        className="h-full rounded-input bg-accent-champagne"
+                        style={{
+                          width: `${Math.max(2, engineMax ? (total / engineMax) * 100 : 0).toFixed(1)}%`,
+                        }}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Panel>
+          <Panel title={t.platformTitle}>
+            {platformEntries.length === 0 ? (
+              <p className="py-2 text-body-s text-ink-muted">{t.platformEmpty}</p>
+            ) : (
+              <ul className="space-y-2">
+                {platformEntries.map(([platform, total]) => (
+                  <li key={platform}>
+                    <div className="flex items-baseline justify-between gap-3 text-body-s">
+                      <span className="min-w-0 truncate text-ink-secondary">
+                        {platformLabels[platform] ?? platform}
+                      </span>
+                      <span className="font-data text-ink-primary tabular-nums">
+                        {formatEur(total)}
+                      </span>
+                    </div>
+                    <div className="mt-1 h-1 overflow-hidden rounded-input bg-surface-anthracite">
+                      <div
+                        className="h-full rounded-input bg-accent-champagne"
+                        style={{
+                          width: `${Math.max(2, platformMax ? (total / platformMax) * 100 : 0).toFixed(1)}%`,
+                        }}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Panel>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3" id="revenue-ledger">

@@ -9,10 +9,23 @@ import { createClient } from "@/lib/supabase/server";
 
 const ENGINES = [
   "social_selling",
+  "content_monetization",
   "ecommerce",
   "consultancy",
   "venture",
   "physical",
+  "other",
+] as const;
+
+const PLATFORMS = [
+  "youtube",
+  "instagram",
+  "tiktok",
+  "x",
+  "facebook",
+  "linkedin",
+  "twitch",
+  "pinterest",
   "other",
 ] as const;
 
@@ -24,6 +37,7 @@ const Body = z.object({
   client: z.string().trim().max(200).optional(),
   department: z.string().trim().max(100).optional(),
   evidenceRef: z.string().trim().max(500).optional(),
+  platform: z.enum(PLATFORMS).optional(),
 });
 
 const ERROR_STATUS: Record<string, number> = {
@@ -70,6 +84,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     p_department: body.department ?? null,
     p_source: "manual",
     p_evidence_ref: body.evidenceRef ?? null,
+    p_platform: body.platform ?? null,
     p_meta: null,
   });
 

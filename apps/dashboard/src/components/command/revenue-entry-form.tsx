@@ -10,10 +10,23 @@ import { useState } from "react";
 
 const ENGINES = [
   "physical",
+  "content_monetization",
   "social_selling",
   "ecommerce",
   "consultancy",
   "venture",
+  "other",
+] as const;
+
+const PLATFORMS = [
+  "youtube",
+  "instagram",
+  "tiktok",
+  "x",
+  "facebook",
+  "linkedin",
+  "twitch",
+  "pinterest",
   "other",
 ] as const;
 
@@ -30,12 +43,16 @@ export function RevenueEntryForm({
     formSubmit: string;
     formSaved: string;
     formError: string;
+    formPlatform: string;
+    formPlatformNone: string;
     engines: Record<(typeof ENGINES)[number], string>;
+    platforms: Record<(typeof PLATFORMS)[number], string>;
   };
 }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [state, setState] = useState<"idle" | "saved" | "error">("idle");
+  const [engine, setEngine] = useState<string>("physical");
   const today = new Date().toISOString().slice(0, 10);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -57,6 +74,7 @@ export function RevenueEntryForm({
           amountEur: Number(form.get("amountEur")),
           description: String(form.get("description")),
           client: String(form.get("client") || "") || undefined,
+          platform: String(form.get("platform") || "") || undefined,
         }),
       });
       const result = (await response.json()) as { ok: boolean };
@@ -93,10 +111,34 @@ export function RevenueEntryForm({
           <span className="mb-1 block text-body-s text-ink-secondary">
             {labels.formEngine}
           </span>
-          <select name="engine" required defaultValue="physical" className={inputClass}>
-            {ENGINES.map((engine) => (
-              <option key={engine} value={engine}>
-                {labels.engines[engine]}
+          <select
+            name="engine"
+            required
+            value={engine}
+            onChange={(event) => setEngine(event.target.value)}
+            className={inputClass}
+          >
+            {ENGINES.map((option) => (
+              <option key={option} value={option}>
+                {labels.engines[option]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="block">
+          <span className="mb-1 block text-body-s text-ink-secondary">
+            {labels.formPlatform}
+          </span>
+          <select
+            name="platform"
+            required={engine === "content_monetization"}
+            defaultValue=""
+            className={inputClass}
+          >
+            <option value="">{labels.formPlatformNone}</option>
+            {PLATFORMS.map((platform) => (
+              <option key={platform} value={platform}>
+                {labels.platforms[platform]}
               </option>
             ))}
           </select>

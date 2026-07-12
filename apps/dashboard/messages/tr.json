@@ -424,12 +424,28 @@
       "engineEmpty": "Henüz gelir kaydı yok — para girdiği an motorların çıktısı buraya düşer.",
       "engines": {
         "social_selling": "Sosyal satış",
+        "content_monetization": "İçerik para kazanma",
         "ecommerce": "E-ticaret",
         "consultancy": "Danışmanlık",
         "venture": "Girişim fabrikası",
         "physical": "Fiziki şirket",
         "other": "Diğer"
       },
+      "platformTitle": "Platforma göre içerik kazancı · 30g",
+      "platformEmpty": "Henüz platform ödemesi yok — YouTube, Instagram, TikTok ve diğerleri ödeme yaptığı an buraya düşer.",
+      "platforms": {
+        "youtube": "YouTube",
+        "instagram": "Instagram",
+        "tiktok": "TikTok",
+        "x": "X",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "twitch": "Twitch",
+        "pinterest": "Pinterest",
+        "other": "Diğer platform"
+      },
+      "formPlatform": "Platform",
+      "formPlatformNone": "— yok —",
       "ledgerTitle": "Son gelir kayıtları",
       "ledgerEmpty": "Gelir defteri boş. Fiziki şirketin gelirini aşağıdan kaydet — entegrasyonlar (WooCommerce, banka) geldiğinde buraya otomatik yazar.",
       "colEngine": "Motor",
