@@ -598,7 +598,11 @@
       "modelLabel": "Brain",
       "reportsLabel": "Direct reports",
       "noManager": "No manager (root)",
-      "openEmployees": "Open in Employees"
+      "openEmployees": "Open in Employees",
+      "directorLabel": "Director",
+      "headcountLabel": "Headcount",
+      "activeShort": "active",
+      "deptDormantHint": "Dormant: staff are hired and on record, awaiting 24/7 runtime activation (Phase 7). The department wakes the moment its agents take work."
     },
     "pnl": {
       "kpiTodayRevenue": "Revenue today",

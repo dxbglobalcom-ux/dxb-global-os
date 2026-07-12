@@ -20,6 +20,7 @@ type GraphRow = {
   status: string;
   department: string | null;
   model: string | null;
+  director_slug: string | null;
 };
 
 export default async function Page() {
@@ -29,7 +30,9 @@ export default async function Page() {
 
   const { data } = await supabase
     .from("v_org_graph")
-    .select("node_id, kind, label, role_level, parent_node_id, status, department, model")
+    .select(
+      "node_id, kind, label, role_level, parent_node_id, status, department, model, director_slug",
+    )
     .limit(1000)
     .returns<GraphRow[]>();
 
@@ -42,6 +45,7 @@ export default async function Page() {
     status: r.status,
     department: r.department,
     model: r.model,
+    directorSlug: r.director_slug,
   }));
   const employeeCount = nodes.filter((n) => n.kind === "employee").length;
 

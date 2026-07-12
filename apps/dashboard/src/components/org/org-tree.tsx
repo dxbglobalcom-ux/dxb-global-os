@@ -33,6 +33,7 @@ export type OrgNode = {
   status: string;
   department: string | null;
   model: string | null;
+  directorSlug: string | null;
 };
 
 export type OrgLabels = {
@@ -51,6 +52,10 @@ export type OrgLabels = {
   reportsLabel: string;
   noManager: string;
   openEmployees: string;
+  directorLabel: string;
+  headcountLabel: string;
+  activeShort: string;
+  deptDormantHint: string;
 };
 
 const STATUS_LEVEL: Record<string, StatusLevel> = {
@@ -102,11 +107,23 @@ export function OrgTree({
 
   const byId = useMemo(() => new Map(nodes.map((n) => [n.nodeId, n])), [nodes]);
 
-  // Live employee headcount per department subtree (honest counts, §35).
+  // Live employee headcounts per department (honest counts, §35) —
+  // total and active tracked separately so the detail panel can explain
+  // a dormant department instead of leaving the badge unexplained.
   const deptCounts = useMemo(() => {
     const counts = new Map<string, number>();
     for (const n of nodes) {
       if (n.kind === "employee" && n.department) {
+        counts.set(n.department, (counts.get(n.department) ?? 0) + 1);
+      }
+    }
+    return counts;
+  }, [nodes]);
+
+  const deptActiveCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const n of nodes) {
+      if (n.kind === "employee" && n.department && n.status === "active") {
         counts.set(n.department, (counts.get(n.department) ?? 0) + 1);
       }
     }
@@ -250,7 +267,26 @@ export function OrgTree({
                       </dd>
                     )}
                   </div>
-                  {selected.department && (
+                  {selected.kind === "department" && (
+                    <div className="flex gap-2">
+                      <dt className="text-ink-muted">{labels.directorLabel}:</dt>
+                      <dd className="font-data text-ink-primary">
+                        {selected.directorSlug ?? "—"}
+                      </dd>
+                    </div>
+                  )}
+                  {selected.kind === "department" && selected.department && (
+                    <div className="flex gap-2">
+                      <dt className="text-ink-muted">{labels.headcountLabel}:</dt>
+                      <dd className="font-data text-ink-primary tabular-nums">
+                        {deptCounts.get(selected.department) ?? 0}
+                        {" · "}
+                        {deptActiveCounts.get(selected.department) ?? 0}{" "}
+                        {labels.activeShort}
+                      </dd>
+                    </div>
+                  )}
+                  {selected.kind === "employee" && selected.department && (
                     <div className="flex gap-2">
                       <dt className="text-ink-muted">{labels.departmentLabel}:</dt>
                       <dd className="font-data text-ink-primary">{selected.department}</dd>
@@ -284,6 +320,11 @@ export function OrgTree({
                     </div>
                   )}
                 </dl>
+                {selected.kind === "department" && selected.status === "dormant" && (
+                  <p className="text-caption text-ink-muted">
+                    {labels.deptDormantHint}
+                  </p>
+                )}
                 {selected.kind === "employee" && (
                   <a
                     href={`/org/employees?q=${encodeURIComponent(selected.label)}`}
