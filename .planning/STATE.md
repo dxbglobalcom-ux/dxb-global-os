@@ -8,7 +8,7 @@ status: executing
 stopped_at: "BEKLENTİLER PİVOTU 2026-07-10 ~18:45 — CEO ana direktifi işlendi (repo kökü BEKLENTİLER, sanitized: HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md). Proje = HOLDING OS; plan-first: 31 spec dosyalık korpus HOLDING-OS-MASTER-PLAN/ altında Fable bizzat yazıyor → korpus bitince Fable execution (12 Temmuz son geceye kadar) → Opus devralır. SONNET DEFEDİLDİ (v6). Phase 09 execution DURDU (09-03..05 ertelendi — kayıtlı sapma, CEO emri). Bağlayıcı sözleşme+yasaklar+açılış notu: ~/.claude/plans/sana-s-yl-orm-konu-al-m-nce-agile-pebble.md. Korpus ilerleme: 00-INDEX.md durum tablosu."
 last_updated: "2026-07-12T13:30:00.000Z"
 last_activity: 2026-07-12
-last_activity_desc: "E5.7a ✓ + CEO APPROVED (~15:55): MUST roster expansion v2 — +19 roles (17 audit + 2 Fable discoveries: Stock-Lot Sourcing, Managed Automation Services), target 198, new commerce dept → executing D7-A promise-debt 5 (Fable in person)"
+last_activity_desc: "E5.7b ✓ D7-A CLOSED: promise-debt 5 authored+gated+bound (F4 remediated — RGS/CRM-steward/Deal-Desk/Onboarding-Lead/CorpComms live; sync match 185 PASS) → next D7-B commerce dept 10 (Fable in person)"
 progress:
   # re-base 2026-07-12 (CEO emri): plans = roadmap E-adımları (| E… satırları), ✓ = tamam
   total_phases: 11
