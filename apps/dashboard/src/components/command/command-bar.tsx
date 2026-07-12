@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { StatusBadge } from "@/components/primitives";
+import { CommandPalette, type PaletteLabels } from "./command-palette";
 import { LiveClock } from "./live-clock";
 import { LocaleSwitch } from "./locale-switch";
 import { LogoutButton } from "./logout-button";
@@ -8,17 +9,18 @@ import type { Locale } from "@/lib/i18n";
 // Global Command Bar — top layer (CC-SPEC §3, §11). E2.1 renders the
 // REAL slice: brand, live system status (DB reachability from the
 // server fetch), active-task and pending-approval counters (drillable —
-// every number is a door), clock, read-only mode chip. Global search +
-// ⌘K palette wire up when v_global_search lands (E4); emergency
-// controls and the CONTROL badge arrive with Control Mode (E6) — in
-// read-only mode mutation affordances are not rendered at all
-// (DESIGN_SYSTEM §13), so nothing here is a dead button.
+// every number is a door), clock, read-only mode chip. E6.4 adds the
+// ⌘K palette (global search + action catalog + CEO intent seam) and
+// kill-switch visibility: when os.global_pause is on, a danger chip
+// stands here — the OS being stopped is never invisible (GAP-07).
 
 export function CommandBar({
   labels,
+  palette,
   systemOk,
   activeTasks,
   pendingApprovals,
+  paused,
   locale,
 }: {
   labels: {
@@ -27,12 +29,15 @@ export function CommandBar({
     activeTasks: string;
     pendingApprovals: string;
     readOnly: string;
+    osPaused: string;
     language: string;
     logout: string;
   };
+  palette: PaletteLabels;
   systemOk: boolean;
   activeTasks: number;
   pendingApprovals: number;
+  paused: boolean;
   locale: Locale;
 }) {
   return (
@@ -43,6 +48,12 @@ export function CommandBar({
       </Link>
 
       <div className="ml-auto flex items-center gap-3">
+        <CommandPalette labels={palette} locale={locale} paused={paused} />
+        {paused && (
+          <span data-testid="os-paused-chip">
+            <StatusBadge level="danger">{labels.osPaused}</StatusBadge>
+          </span>
+        )}
         <StatusBadge level={systemOk ? "ok" : "danger"}>
           {systemOk ? labels.systemOk : labels.systemDegraded}
         </StatusBadge>

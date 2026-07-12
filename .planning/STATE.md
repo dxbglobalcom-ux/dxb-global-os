@@ -6,9 +6,9 @@ current_phase: 09
 current_phase_name: jarvis-voice-layer
 status: executing
 stopped_at: "BEKLENTİLER PİVOTU 2026-07-10 ~18:45 — CEO ana direktifi işlendi (repo kökü BEKLENTİLER, sanitized: HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md). Proje = HOLDING OS; plan-first: 31 spec dosyalık korpus HOLDING-OS-MASTER-PLAN/ altında Fable bizzat yazıyor → korpus bitince Fable execution (12 Temmuz son geceye kadar) → Opus devralır. SONNET DEFEDİLDİ (v6). Phase 09 execution DURDU (09-03..05 ertelendi — kayıtlı sapma, CEO emri). Bağlayıcı sözleşme+yasaklar+açılış notu: ~/.claude/plans/sana-s-yl-orm-konu-al-m-nce-agile-pebble.md. Korpus ilerleme: 00-INDEX.md durum tablosu."
-last_updated: "2026-07-12T19:20:00.000Z"
+last_updated: "2026-07-12T20:45:00.000Z"
 last_activity: 2026-07-12
-last_activity_desc: "E6.5b ✓ CONTENT MONETIZATION + PLATFORM BREAKDOWN (CEO directive #2, K1 Fable in person): engine content_monetization + platform column (9 surfaces) + platform-required rule + v_pnl_platform + /fin/pnl platform panel + form selects EN/TR; migration 0027b idempotent 2×, E2E YouTube 87.40 + TikTok 23.10 probes → bars+ledger join via real CEO session, design-audit 3/3 (421=421), probe cleaned ledger 0 → next E6.4 Global Search ⌘K (K1)"
+last_activity_desc: "E6.4 ✓ GLOBAL SEARCH + ⌘K PALETTE + CEO INTENT SEAM (GAP-07 closed, K1 Fable in person; session crashed mid-milestone from laptop swap exhaustion — zero loss, recovered from disk, 4 orphan kilo-serve processes killed ~700MB freed): v_global_search (10 families, 871 rows) + intent audit triggers + GET /api/search (type-weight ranking) + CommandPalette 3 lanes (search / 7 actions + kill-switch CONTROL badge / intent with live 2s chain watcher) + paused chip in bar; DB seam vitest 4/4, UI E2E real CEO session (search ranked rows + intent → dispatched → task row + audit links ON SCREEN), TR locale verified, design-audit 3/3 (hex 117/0, en 464=tr 464, contract 37→41), console 0/0, probe cleaned → next per roadmap E6 block (K1)"
 progress:
   # re-base 2026-07-12 (CEO emri): plans = roadmap E-adımları (| E… satırları), ✓ = tamam
   total_phases: 11

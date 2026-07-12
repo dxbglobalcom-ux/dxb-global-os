@@ -34,7 +34,7 @@ export default async function CommandLayout({
   // page (SYS_ARCH §8) — head-count queries returned bogus zeros in the
   // RSC layout (2026-07-11 fix; page and bar can never disagree again).
   // E4.5: source is the 0025x catalog view (v1 stays as compat alias).
-  const [summaryRes, railRes, dockRes] = await Promise.all([
+  const [summaryRes, railRes, dockRes, pauseRes] = await Promise.all([
     supabase
       .from("v_exec_overview")
       .select("active_tasks,pending_approvals,pending_high_risk")
@@ -55,7 +55,17 @@ export default async function CommandLayout({
       .in("status", ["claimed", "running"])
       .order("updated_at", { ascending: false })
       .limit(8),
+    // Kill-switch visibility (E6.4 / GAP-07): os.global_pause has no
+    // settings_values row until first toggled — absent = registry default
+    // (false). The paused state must be visible on every page, always.
+    supabase
+      .from("settings_values")
+      .select("value")
+      .eq("key", "os.global_pause")
+      .eq("scope", "global")
+      .maybeSingle<{ value: boolean }>(),
   ]);
+  const paused = pauseRes.data?.value === true;
 
   const systemOk = !summaryRes.error;
   const approvals: RailApproval[] = (railRes.data ?? []).map((a) => ({
@@ -75,9 +85,11 @@ export default async function CommandLayout({
       <SessionGuard labels={t.session} />
       <CommandBar
         labels={t.bar}
+        palette={t.palette}
         systemOk={systemOk}
         activeTasks={summaryRes.data?.active_tasks ?? 0}
         pendingApprovals={summaryRes.data?.pending_approvals ?? 0}
+        paused={paused}
         locale={locale}
       />
       <div className="relative flex min-h-0 flex-1">
