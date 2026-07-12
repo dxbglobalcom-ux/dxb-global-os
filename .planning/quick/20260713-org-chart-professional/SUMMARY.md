@@ -46,6 +46,16 @@ Evidence: view 199 rows / 0 without persona; CMO row shows manager "Holding Orch
 
 **Found gap (recorded, not silently fixed):** `employee_records` (sicil) has ZERO rows — the HR wave never populated the record layer (spec HR_OPERATING_SYSTEM). Panel shows "No employment record yet" honestly. Separate data task; belongs to the HR/E-step owner.
 
+## Post-ship trust audit (CEO challenge: "is any of this actually wired?")
+
+Executed 2026-07-13 ~01:20, all on the live stack:
+
+1. **Live-wiring probe (transactional, zero residue):** inside one transaction injected a €1.23 `cost_ledger` row + 1 `running` task + 1 `memory_index` row for `cmo`, read `v_org_node_detail` → `cost_30d_eur=1.23, active_tasks=1, memory_count=1`; ROLLBACK → all three back to 0. Counters are live SQL against real tables, not decoration. (The three failed first attempts also prove schema CHECK constraints enforce enum discipline.)
+2. **Route guard:** unauthenticated `GET /api/org/node?id=…` → 307 to /login (middleware wall in front of the route's own 401).
+3. **Header counter:** "6 active tasks" = tasks table `queued 5 + running 1` — real DB, not hard-coded.
+4. **Manager click-through:** Playwright — CMO panel → click "Holding Orkestratörü" → panel re-fetches and shows the orchestrator (employees link flips to `q=agents-orchestrator`).
+5. **Mutation seam history:** `audit_log` holds `org.employee.suspended/reactivated/moved` ×2 each from the E6.3 fn-layer battery.
+
 ## Explicitly out of scope (CEO-visible notes)
 
 - **Reporting lines untouched** — persona canon (dossier field 6) puts every specialist directly under the department director; senior specialists are senior ICs, not team leads. Inventing a team-lead layer would contradict the persona files. If the CEO wants mid-management clusters (e.g. the China cluster in marketing), that is an org-design decision → persona edits first, then DB.
