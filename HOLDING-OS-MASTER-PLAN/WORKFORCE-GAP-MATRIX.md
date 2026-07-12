@@ -203,3 +203,9 @@ accessibility-auditor, api-tester, evidence-collector, performance-benchmarker, 
 4. K2 gereği 166 v2 yazımı (132 rewrite + 34 ADD) Fable'dan çıkar; 12 Temmuz'a sığmayanlar "Fable-yazımı bekliyor" listesinde sıralanır (öncelik: orchestrator → head'ler → HR → governance → uzman dalgaları).
 
 > **✅ CEO ONAYI VERİLDİ — 2026-07-11 ~17:35 (sözlü, oturum kaydı):** §6'nın üç kalemi birden onaylandı (retire→library 15 · research/specialized/testing/support kapanışı · hedef org 19 dept + 5 pod / 179 kadro). Uygulama: migration `20260711005000_org_closure_e53b.sql` (E5.3b, commit e4295f3). **E5.3 head dalgası TAMAM — 2026-07-11 akşamı:** 19/19 müdür personası Fable bizzat yazıldı, fn_persona_gate **passed**, `departments.director_id` 19 dept dolu, manager zinciri kuruldu (orphan 0). ceo-office müdürü (Chief of Staff — move+rewrite) D1 dalgasında; legal-de pod lead'i ADD dalgasında.
+
+## 7. Addendum — 2026-07-12 external audit correction ([[00-CEO-DIRECTIVE-MUST-ROSTER]])
+
+**Recorded arithmetic correction:** §4's `153 − 15 − 6 + 47 = 179` no longer describes the live roster. Verified 2026-07-12: the DB reached 179 roster personas (180 non-archived rows incl. orchestrator) **without** 5 ADDs promised in §3: Onboarding & Implementation Lead (§3-9), CRM & Data Steward + Pricing & Deal Desk Manager + Revenue Growth Specialist (§3-10, RGS = direct CEO E5.2 order), Corporate Communications Lead (§3-12). Net +5 substitution drift entered through wave migrations; exact set-diff = E5.7e verification deliverable.
+
+**This matrix is superseded for discovery purposes** by [[WORKFORCE-MUST-EXPANSION-PLAN]] (12-column revenue-engine capability matrix, +17 MUST roster → target **196** personas / 20 operating depts + 7 pods incl. new `commerce` dept). The audit's F2 finding stands: this file classified the given inventory but performed no independent MUST discovery — that layer now lives in the expansion plan. §5-6 disposition decisions remain valid and CEO-approved.
