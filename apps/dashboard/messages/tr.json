@@ -273,7 +273,12 @@
       "activeTasks": "aktif görev",
       "pendingApprovals": "bekleyen onay",
       "readOnly": "Salt okunur",
-      "language": "Dil"
+      "language": "Dil",
+      "logout": "Oturumu kapat"
+    },
+    "session": {
+      "ended": "Oturum sona erdi",
+      "redirect": "Giriş ekranına yönlendiriliyorsunuz…"
     },
     "rail": {
       "title": "Zekâ",

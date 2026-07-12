@@ -273,7 +273,12 @@
       "activeTasks": "active tasks",
       "pendingApprovals": "pending approvals",
       "readOnly": "Read-only",
-      "language": "Language"
+      "language": "Language",
+      "logout": "Sign out"
+    },
+    "session": {
+      "ended": "Session ended",
+      "redirect": "Taking you to sign-in…"
     },
     "rail": {
       "title": "Intelligence",

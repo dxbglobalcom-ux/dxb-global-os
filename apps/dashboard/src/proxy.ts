@@ -29,19 +29,38 @@ export async function proxy(request: NextRequest) {
 
   // Do not run code between createServerClient and auth.getUser() —
   // and never remove getUser(): it revalidates the session server-side.
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // The try/catch is the cookie-corruption recovery (E6.0): a truncated or
+  // stale-format sb-* cookie throws at parse time and would otherwise brick
+  // the door — sweep the auth cookies and land on a clean /login instead.
+  let cockpitReady = false;
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  // 2FA is mandatory on outward-facing deploys (master-plan LOCKED). On the
-  // CEO's own laptop it is friction he explicitly rejected (CEO order
-  // 2026-07-10): NEXT_PUBLIC_DXB_MFA_ENFORCED=false relaxes the gate to
-  // password-only. Default (unset) stays ENFORCED — the VPS never sets it.
-  const mfaEnforced = process.env.NEXT_PUBLIC_DXB_MFA_ENFORCED !== "false";
-  let cockpitReady = Boolean(user);
-  if (mfaEnforced) {
-    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-    cockpitReady = Boolean(user) && aal?.currentLevel === "aal2";
+    // 2FA is mandatory on outward-facing deploys (master-plan LOCKED). On the
+    // CEO's own laptop it is friction he explicitly rejected (CEO order
+    // 2026-07-10): NEXT_PUBLIC_DXB_MFA_ENFORCED=false relaxes the gate to
+    // password-only. Default (unset) stays ENFORCED — the VPS never sets it.
+    const mfaEnforced = process.env.NEXT_PUBLIC_DXB_MFA_ENFORCED !== "false";
+    cockpitReady = Boolean(user);
+    if (mfaEnforced) {
+      const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+      cockpitReady = Boolean(user) && aal?.currentLevel === "aal2";
+    }
+  } catch {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.search = "";
+    const recovery = NextResponse.redirect(url);
+    for (const { name } of request.cookies.getAll()) {
+      if (name.startsWith("sb-")) {
+        recovery.cookies.set(name, "", { path: "/", maxAge: 0 });
+      }
+    }
+    // No loop: the swept cookies mean the next /login request has no sb-*
+    // left to parse, getUser() resolves to "no user", and /login is public.
+    return recovery;
   }
 
   const path = request.nextUrl.pathname;

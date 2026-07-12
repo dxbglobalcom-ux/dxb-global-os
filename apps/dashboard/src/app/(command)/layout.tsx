@@ -4,6 +4,7 @@ import {
   IntelligenceRail,
   type RailApproval,
 } from "@/components/command/intelligence-rail";
+import { SessionGuard } from "@/components/command/session-guard";
 import { SideNav } from "@/components/command/side-nav";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
@@ -71,6 +72,7 @@ export default async function CommandLayout({
 
   return (
     <div className="ambient-depth relative flex h-dvh flex-col bg-surface-void font-body text-body-md text-ink-primary">
+      <SessionGuard labels={t.session} />
       <CommandBar
         labels={t.bar}
         systemOk={systemOk}

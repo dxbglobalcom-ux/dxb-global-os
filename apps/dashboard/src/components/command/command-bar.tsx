@@ -2,6 +2,7 @@ import Link from "next/link";
 import { StatusBadge } from "@/components/primitives";
 import { LiveClock } from "./live-clock";
 import { LocaleSwitch } from "./locale-switch";
+import { LogoutButton } from "./logout-button";
 import type { Locale } from "@/lib/i18n";
 
 // Global Command Bar — top layer (CC-SPEC §3, §11). E2.1 renders the
@@ -27,6 +28,7 @@ export function CommandBar({
     pendingApprovals: string;
     readOnly: string;
     language: string;
+    logout: string;
   };
   systemOk: boolean;
   activeTasks: number;
@@ -65,6 +67,7 @@ export function CommandBar({
         </span>
         <LocaleSwitch locale={locale} ariaLabel={labels.language} />
         <LiveClock />
+        <LogoutButton label={labels.logout} />
       </div>
     </header>
   );
