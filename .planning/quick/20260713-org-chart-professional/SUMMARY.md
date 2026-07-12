@@ -56,6 +56,15 @@ Executed 2026-07-13 ~01:20, all on the live stack:
 4. **Manager click-through:** Playwright — CMO panel → click "Holding Orkestratörü" → panel re-fetches and shows the orchestrator (employees link flips to `q=agents-orchestrator`).
 5. **Mutation seam history:** `audit_log` holds `org.employee.suspended/reactivated/moved` ×2 each from the E6.3 fn-layer battery.
 
+## Wave 3d (CEO RET: mixed-language screen on TR locale)
+
+Root causes: departments had NO Turkish name anywhere in the schema; title_tr covered only 67/199 (wave-3b parser skipped the dossier "Unvan" field — 18 rows; 114 post-directive EN personas never had a TR title).
+
+- Migration `20260713023000`: `departments.display_name_tr` + 22-row TR backfill; `v_org_graph` v1.5 (department rows carry display_name_tr in title_tr — RSC locale pick needs no UI change); agents title_tr completed to **199/199** (18 recovered from dossier Unvan, **114 Turkish titles authored by Fable personally**, proper nouns kept).
+- New standing gate: `scripts/i18n-purity-check.sh` — agents EN+TR coverage, departments EN+TR coverage, dictionary parity; runs before any org-UI "done" claim.
+
+Evidence: agents title_tr NULL = 0; departments display_name_tr NULL = 0; Playwright TR page → 0 English remnants (Finance/Treasury/Payroll/etc. all absent, "Finans", "Vergi Stratejisti", "TikTok Stratejisti" render); EN page intact (6 EN markers, 0 TR leak); purity gate PASS (en 623 = tr 623).
+
 ## Explicitly out of scope (CEO-visible notes)
 
 - **Reporting lines untouched** — persona canon (dossier field 6) puts every specialist directly under the department director; senior specialists are senior ICs, not team leads. Inventing a team-lead layer would contradict the persona files. If the CEO wants mid-management clusters (e.g. the China cluster in marketing), that is an org-design decision → persona edits first, then DB.
