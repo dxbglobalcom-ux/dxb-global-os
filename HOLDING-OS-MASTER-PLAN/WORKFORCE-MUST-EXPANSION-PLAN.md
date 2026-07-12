@@ -164,6 +164,32 @@ Matrix §4 formula `153 − 15 − 6 + 47 = 179` vs live: 180 non-archived rows 
 
 Post-expansion targets: roster **198** (+19) · sync match **199** · departments table **22 rows** (20 operating + ceo + legal-de pod) · pods **7** (china-growth, corporate-comms, partnerships, global-expansion, docs, venture-studio, consultancy-delivery).
 
+### §9.1 D7-D RECONCILIATION RESULT (2026-07-12, Fable in person — closed to the row)
+
+**Root cause found — the "+5 substitution drift" hypothesis was WRONG; the truth is two arithmetic defects inside the matrix itself:**
+
+| # | Defect | Evidence |
+|---|---|---|
+| 1 | **Matrix §4 base "153" included `agents-orchestrator`** — not a roster persona (its body lives in DB per E5.2; the file is a mirror). True legacy roster base = **152**. | `SELECT count(*) FROM agents WHERE created_at < '2026-07-09'` → **153**, and `agents-orchestrator` created_at = 2026-07-08 21:46 (same import batch); matrix §2 lists `agents-orchestrator` as an inventory row |
+| 2 | **Matrix §4 wrote "ADD 47" while §3's own named list enumerates 53 ADD roles** (14 heads + 27 workers + 12 social-media). The §4 undercount (−6) produced the false target 179 and let the "179/179" closure declaration mask 5 missing personas (audit finding F4). | §3 family-by-family name count = 53; wave migrations delivered 48 (E5.3b 14 heads + social 12 + D1 9 + D2 8 + D3 3 + HR 2 — INSERT slugs enumerated from migration files); 53 − 48 = **5 = exactly the promise-debt set** |
+
+**Corrected ledger (every number verified against live DB 2026-07-12):**
+
+| Item | Count | Verification |
+|---|---|---|
+| 2026-07-08 import batch | 153 rows (152 legacy roster + orchestrator) | `created_at < '2026-07-09'` → 153 |
+| Dispositions: retire 15 + merge 6 | 21 archived | `employment_status='archived'` → 21 ✓ exact slug match to matrix §2 decisions |
+| Live legacy roster | 152 − 21 = **131** | arithmetic |
+| ADD delivered pre-D7 | **48** of 53 promised | migration INSERT slugs; all 48 ∈ §3 named list |
+| Pre-D7 roster | 131 + 48 = **179** (+ orchestrator = 180 non-archived) | matches measured 180 exactly — no substitution, no mystery rows |
+| Promise debt (missing 5 of 53) | RGS · CRM Steward · Deal Desk · Onboarding Lead · CorpComms | = F4, remediated D7-A |
+| D7 expansion | +19 (5 promise-debt + 14 new MUST) | migrations 20260712005000/6000/7000 |
+| **Post-D7 roster** | 179 + 19 = **198** (+ orchestrator = 199 non-archived) | `agents` non-archived → **199** ✓ · sync --verify match **199** ✓ |
+| Full-promise cross-check | 131 legacy + 53 matrix ADDs + 14 new MUST = **198** | closes both directions ✓ |
+| Departments table | **22 rows** (20 operating incl commerce + ceo + legal-de pod) | `departments` → 22 ✓ |
+
+**Promised-ADD-absent sweep (E12.5 gate clause, executed):** 67-slug promise set (53 matrix §3 + 14 expansion-plan §4 new) vs live non-archived rows with bound persona → **ABSENT: 0**. No promised role is missing; no unpromised role exists (199 = 131 + 67 + orchestrator ✓).
+
 ## 10. CEO decision block (approval required before D7-A — E5.0/E5.3b precedent: org changes are CEO-gated)
 
 1. **+19 MUST roster (§4 — incl. 2 Fable-discovery seats), target org 198 personas / 20 departments + 7 pods, new `commerce` department** — approve?

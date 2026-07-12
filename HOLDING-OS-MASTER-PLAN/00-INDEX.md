@@ -27,7 +27,8 @@ Durum değerleri: `—` başlanmadı · `YAZILIYOR` · `✓` tamam (derinlik şa
 | i1 | 00-CEO-DIRECTIVE-BEKLENTILER.md | ✓ | Sanitized (şifre 0 eşleşme); orijinal gitignore'da |
 | i2 | 00-INDEX.md | ✓ | Bu dosya — dalga başı/sonu güncellenir |
 | i3 | 00-CEO-DIRECTIVE-MUST-ROSTER.md | ✓ | 2026-07-12: external solo audit + CEO order — MUST discovery binding |
-| i4 | WORKFORCE-MUST-EXPANSION-PLAN.md | ✓ | E5.7: 12-col revenue-engine matrix, +17 MUST roster → 196, commerce dept |
+| i4 | WORKFORCE-MUST-EXPANSION-PLAN.md | ✓ | E5.7: 12-col revenue-engine matrix, +19 MUST roster → 198, commerce dept — **EXECUTED 2026-07-12, sync 199, engines 4/4 owned** |
+| i5 | DEPUTY-FAILOVER-MAP.md | ✓ | E5.7e (audit F3): SPOF set + dept heads + D7-wave deputies; takeover protocol; E12.5 gate artifact |
 
 ### Dalga 1 — Temel
 
