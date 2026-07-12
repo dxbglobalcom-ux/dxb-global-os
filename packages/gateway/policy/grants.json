@@ -10,13 +10,16 @@
     "v1 grants are the MINIMAL set: house bus (dxb-mcp) for all departments; Stripe→finance only,",
     "DocuSign→legal-de only (doc line 39); code MCPs→engineering only. The doc's full ~10 per-department",
     "tables land wave-by-wave at Phase 10 department activation. ⛔ FABLE-ONLY: ADDING any grant here",
-    "(= privilege widening) requires a Fable-authored change with CEO-visible rationale."
+    "(= privilege widening) requires a Fable-authored change with CEO-visible rationale.",
+    "[FABLE 2026-07-12, E5.4b] people-hr added: HR spec DoD 'people-hr MCP profile' — house bus only",
+    "(dxb-mcp, minimal set), enabling the HR factory's activation chain; no external servers granted."
   ],
   "servers": {
     "dxb-mcp": { "command": "node", "args": ["packages/dxb-mcp/dist/index.js"] }
   },
   "grants": {
     "ceo": { "dxb-mcp": "*" },
+    "people-hr": { "dxb-mcp": "*" },
     "research": { "dxb-mcp": "*" },
     "design": { "dxb-mcp": "*", "stitch": "*" },
     "engineering": { "dxb-mcp": "*", "github": "*", "git": "*", "context7": "*" },

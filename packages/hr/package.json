@@ -7,7 +7,11 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b",
-    "test": "vitest run"
+    "test": "vitest run",
+    "demo:hire": "bash ../../scripts/hr-demo-hire.sh"
+  },
+  "dependencies": {
+    "kysely": "catalog:"
   },
   "devDependencies": {
     "@types/node": "catalog:",

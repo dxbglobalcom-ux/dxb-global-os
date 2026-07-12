@@ -9,6 +9,12 @@ import { PgBoss } from "pg-boss";
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
 import { checkPins, readDxbMcpInventory } from "@dxb/gateway";
+import {
+  hrPerformanceDaily,
+  hrProbationCheck,
+  hrStalePersonaScan,
+  hrTrainingQueue,
+} from "@dxb/hr";
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
 import { drainIntents } from "@dxb/orchestrator";
 import { tick } from "./index.js";
@@ -22,6 +28,14 @@ export const QUEUES = {
   memSync: "claude-mem-sync",
   pinCheck: "tool-pin-check",
   intentIntake: "intent-intake",
+  // HR lifecycle jobs (E5.4b, HR spec §3): run inside this scheduler worker — R5,
+  // no new resident service. Queue/schedule rows also seeded by migration
+  // 20260712008000 (recorded adaptation A4) so the spec §24 query answers pre-boot;
+  // boss.schedule() below upserts the same names.
+  hrPerformance: "hr.performance_daily",
+  hrProbation: "hr.probation_check",
+  hrStalePersona: "hr.stale_persona_scan",
+  hrTraining: "hr.training_queue",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -46,6 +60,12 @@ export const CADENCES = {
   // Anti rug-pull drift check (07-02, MCP-03): daily 04:00 — after the 03:00
   // compaction so the two daily jobs never contend for the session-mode pool.
   pinCheckCron: "0 4 * * *", // daily 04:00
+  // HR crons spread across the quiet window, after compaction, one per hour slot
+  // (same session-mode pool contention rule as pinCheck).
+  hrPerformanceCron: "30 2 * * *", // daily 02:30
+  hrStalePersonaCron: "0 5 * * *", // daily 05:00
+  hrProbationCron: "0 6 * * *", // daily 06:00
+  hrTrainingCron: "0 7 * * *", // daily 07:00
 } as const;
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -115,11 +135,28 @@ export async function startScheduler(): Promise<PgBoss> {
     }
   });
 
+  await boss.work(QUEUES.hrPerformance, async () => {
+    await hrPerformanceDaily(getDb());
+  });
+  await boss.work(QUEUES.hrProbation, async () => {
+    await hrProbationCheck(getDb());
+  });
+  await boss.work(QUEUES.hrStalePersona, async () => {
+    await hrStalePersonaScan(getDb());
+  });
+  await boss.work(QUEUES.hrTraining, async () => {
+    await hrTrainingQueue(getDb());
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
   await boss.schedule(QUEUES.memSync, CADENCES.memSyncCron);
   await boss.schedule(QUEUES.pinCheck, CADENCES.pinCheckCron);
+  await boss.schedule(QUEUES.hrPerformance, CADENCES.hrPerformanceCron);
+  await boss.schedule(QUEUES.hrStalePersona, CADENCES.hrStalePersonaCron);
+  await boss.schedule(QUEUES.hrProbation, CADENCES.hrProbationCron);
+  await boss.schedule(QUEUES.hrTraining, CADENCES.hrTrainingCron);
   await enqueueTick(boss, 0); // bootstrap the 15s chain
   await enqueueIntentIntake(boss, 0); // bootstrap the 5s intent chain
 

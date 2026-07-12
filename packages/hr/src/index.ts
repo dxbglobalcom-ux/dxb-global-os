@@ -5,3 +5,9 @@ export {
   type CompileMode,
 } from "./compiler.js";
 export { PERSONA_SECTIONS, parsePersona, HOOK_VERSION_RE } from "./template.js";
+export {
+  hrPerformanceDaily,
+  hrProbationCheck,
+  hrStalePersonaScan,
+  hrTrainingQueue,
+} from "./jobs.js";
