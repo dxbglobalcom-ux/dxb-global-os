@@ -1,5 +1,9 @@
 <!-- GSD:project-start source:PROJECT.md -->
 
+## ⛔ RULE #0 — MANDATORY DESIGN VERIFICATION (CEO directive 2026-07-13, SEVEREST TIER)
+
+**No visual work is "done" until a Design Verification Pass runs and is evidenced.** Render every touched route in the real browser, BOTH locales (EN+TR), ≥2 widths; walk `references/design-bank/CHECKLIST.md` (overlap, alignment, cut-off, scroll sanity, language purity, honest zero-states, token discipline); compare against the baselines in `references/design-bank/`; run `scripts/i18n-purity-check.sh`. The CEO is NOT the QA layer — catchable visual defects reaching the CEO's eye = governance violation (RET + recorded). Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-DESIGN-VERIFICATION.md`. Applies to every author and every session until project end.
+
 ## Project
 
 **DXB Global OS**
