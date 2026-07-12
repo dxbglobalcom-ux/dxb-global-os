@@ -131,8 +131,10 @@ export function OrgTree({
   }, [nodes]);
 
   const [open, setOpen] = useState<Set<string>>(
-    // Company + root departments visible; departments start collapsed.
-    () => new Set(nodes.filter((n) => n.kind === "company").map((n) => n.nodeId)),
+    // Fully expanded by default (CEO eye-test verdict 2026-07-13: the whole
+    // workforce must be visible by scrolling, no click-hunting). Chevrons
+    // still collapse any branch.
+    () => new Set(nodes.map((n) => n.nodeId)),
   );
   const [selected, setSelected] = useState<OrgNode | null>(null);
 
