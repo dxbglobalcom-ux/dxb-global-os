@@ -11,7 +11,12 @@ import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export type DxbChannelName = "task_events" | "approvals" | "cost_ledger" | "ops:live";
+export type DxbChannelName =
+  | "task_events"
+  | "approvals"
+  | "cost_ledger"
+  | "ops:live"
+  | "alerts";
 
 // Shape written by realtime.broadcast_changes (migration 0013): the UI reads
 // exactly these fields — live-projection.test.ts pins this contract.

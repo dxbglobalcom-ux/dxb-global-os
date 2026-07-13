@@ -29,6 +29,8 @@ afterAll(async () => {
   if (probeRunIds.length > 0) {
     await sql`DELETE FROM tool_calls WHERE run_id = ANY(${probeRunIds}::uuid[])`.execute(db());
     await sql`DELETE FROM file_changes WHERE run_id = ANY(${probeRunIds}::uuid[])`.execute(db());
+    // E8.4b: failed probe runs raise alerts rows (FK) — sweep before the runs.
+    await sql`DELETE FROM alerts WHERE run_id = ANY(${probeRunIds}::uuid[])`.execute(db());
     await sql`DELETE FROM agent_runs WHERE id = ANY(${probeRunIds}::uuid[])`.execute(db());
   }
   if (probeTaskIds.length > 0) {

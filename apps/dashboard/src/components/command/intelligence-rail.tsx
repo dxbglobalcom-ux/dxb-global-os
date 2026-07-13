@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Panel, StatusBadge } from "@/components/primitives";
+import { AlertsRail, type RailAlert } from "./alerts-rail";
 
 // Intelligence Rail — right layer (CC-SPEC §3). E2.1 slice: real
-// pending-approval feed from the approvals table. The critical-alert
-// stream and live ticker land with the observability layer (E8) and
-// are shown as an honest in-build card, never as fake liveliness (§35).
+// pending-approval feed from the approvals table. E8.4b: the alerts panel
+// binds to the real priority head of v_alerts_active (severity → unacked →
+// age) and repaints from the `alerts` Broadcast. Live ticker lands with its
+// own row.
 
 export type RailApproval = {
   id: string;
@@ -13,21 +15,29 @@ export type RailApproval = {
   created_at: string;
 };
 
+export type { RailAlert };
+
 export function IntelligenceRail({
   labels,
   approvals,
   pendingCount,
+  alerts,
+  alertCount,
+  alertLevels,
 }: {
   labels: {
     title: string;
     approvalsTitle: string;
     approvalsEmpty: string;
     alertsTitle: string;
-    alertsWaiting: string;
+    alertsEmpty: string;
     viewAll: string;
   };
   approvals: RailApproval[];
   pendingCount: number;
+  alerts: RailAlert[];
+  alertCount: number;
+  alertLevels: Record<string, string>;
 }) {
   return (
     <aside className="hidden w-72 shrink-0 flex-col gap-4 overflow-y-auto border-l border-edge-neutral bg-surface-obsidian p-4 xl:flex">
@@ -77,7 +87,11 @@ export function IntelligenceRail({
       </Panel>
 
       <Panel title={labels.alertsTitle}>
-        <p className="text-body-s text-ink-muted">{labels.alertsWaiting}</p>
+        <AlertsRail
+          alerts={alerts}
+          activeCount={alertCount}
+          labels={{ empty: labels.alertsEmpty, viewAll: labels.viewAll, levels: alertLevels }}
+        />
       </Panel>
     </aside>
   );

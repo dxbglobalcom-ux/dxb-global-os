@@ -150,11 +150,42 @@ export class RunScope {
               err,
             );
             spill(batch);
+            await this.raiseSpillAlert(batch.length, err);
           }
         }
       }
     });
     return this.flushing;
+  }
+
+  // §17: the spill itself raises a High alert (E8.4b alerts table) —
+  // best-effort: the flush just failed, so this insert may fail too; it
+  // logs and moves on (observation never blocks). dedup_key keeps one
+  // active alert per spill condition.
+  private async raiseSpillAlert(rowCount: number, cause: unknown): Promise<void> {
+    try {
+      const db = getDb();
+      await db
+        .insertInto("alerts")
+        .values({
+          level: "high",
+          source: "observability",
+          title: `Observation flush failed — ${rowCount} rows spilled to disk`,
+          affected_area: "observability buffer",
+          probable_cause: String(cause).slice(0, 300),
+          suggested_action:
+            "Check DB connectivity; spilled rows replay at next run scope open",
+          run_id: this.runId,
+          dedup_key: "obs-spill",
+          source_ref: JSON.stringify({ table: "agent_runs", id: this.runId }),
+        })
+        .execute();
+    } catch (err: unknown) {
+      // unique violation = an active spill alert already exists — fine.
+      if ((err as { code?: string })?.code !== "23505") {
+        console.error("[obs] spill alert insert failed (spill file kept):", err);
+      }
+    }
   }
 
   /** Final drain — awaited by runScope closure only, never by the agent path. */

@@ -38,6 +38,11 @@ afterAll(async () => {
   await sql`DELETE FROM routing_rules WHERE model_id LIKE 'test-e7-%' OR (role_slot IS NOT NULL AND priority = 9900)`.execute(db());
   await sql`DELETE FROM model_catalog WHERE id LIKE 'test-e7-%'`.execute(db());
   await sql`UPDATE budget_state SET hard_stopped = false`.execute(db());
+  // E8.4b: the hard-stop toggle + fallback probes raise real alerts rows —
+  // sweep the suite-induced ones so regression runs never pollute /alerts.
+  await sql`DELETE FROM alerts WHERE resolved_at IS NULL AND (
+      dedup_key IN ('budget-hard-stop', 'budget-breaker')
+      OR dedup_key LIKE 'fallback-%' OR dedup_key LIKE 'chain-exhausted-%')`.execute(db());
   await closeDb();
 });
 

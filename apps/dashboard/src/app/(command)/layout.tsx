@@ -2,6 +2,7 @@ import { AgentDock, type DockTask } from "@/components/command/agent-dock";
 import { CommandBar } from "@/components/command/command-bar";
 import {
   IntelligenceRail,
+  type RailAlert,
   type RailApproval,
 } from "@/components/command/intelligence-rail";
 import { SessionGuard } from "@/components/command/session-guard";
@@ -34,7 +35,7 @@ export default async function CommandLayout({
   // page (SYS_ARCH §8) — head-count queries returned bogus zeros in the
   // RSC layout (2026-07-11 fix; page and bar can never disagree again).
   // E4.5: source is the 0025x catalog view (v1 stays as compat alias).
-  const [summaryRes, railRes, dockRes, pauseRes] = await Promise.all([
+  const [summaryRes, railRes, dockRes, pauseRes, alertsRes] = await Promise.all([
     supabase
       .from("v_exec_overview")
       .select("active_tasks,pending_approvals,pending_high_risk")
@@ -69,6 +70,14 @@ export default async function CommandLayout({
       .eq("key", "os.global_pause")
       .eq("scope", "global")
       .maybeSingle<{ value: boolean }>(),
+    // E8.4b: rail alerts panel = the real priority head of v_alerts_active
+    // (view carries severity → unacked → age order; kind='alert' only here,
+    // approvals already own their rail panel).
+    supabase
+      .from("v_alerts_active")
+      .select("kind,id,level,title,at")
+      .eq("kind", "alert")
+      .limit(25),
   ]);
   const paused = pauseRes.data?.value === true;
 
@@ -84,6 +93,8 @@ export default async function CommandLayout({
     title: task.objective ?? task.id,
     status: task.status,
   }));
+  const railAlerts: RailAlert[] = ((alertsRes.data ?? []) as RailAlert[]).slice(0, 5);
+  const alertCount = alertsRes.data?.length ?? 0;
 
   return (
     <div className="ambient-depth relative flex h-dvh flex-col bg-surface-void font-body text-body-md text-ink-primary">
@@ -113,6 +124,9 @@ export default async function CommandLayout({
           labels={t.rail}
           approvals={approvals}
           pendingCount={summaryRes.data?.pending_approvals ?? 0}
+          alerts={railAlerts}
+          alertCount={alertCount}
+          alertLevels={t.alerts.ui.levels}
         />
         <AgentDock label={t.dock.running} tasks={dockTasks} statusLabels={dict.status} />
       </div>

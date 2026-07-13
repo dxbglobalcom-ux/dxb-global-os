@@ -21,6 +21,8 @@ afterAll(async () => {
   if (probeTaskIds.length > 0) {
     await sql`DELETE FROM decision_log WHERE rationale LIKE '%e8.2 probe%' OR rationale LIKE '%E8.2 probe%'`.execute(db());
     await sql`DELETE FROM tool_calls WHERE run_id IN (SELECT id FROM agent_runs WHERE task_id = ANY(${probeTaskIds}::uuid[]))`.execute(db());
+    // E8.4b: failed probe runs raise alerts rows (FK) — sweep before the runs.
+    await sql`DELETE FROM alerts WHERE task_id = ANY(${probeTaskIds}::uuid[]) OR run_id IN (SELECT id FROM agent_runs WHERE task_id = ANY(${probeTaskIds}::uuid[]))`.execute(db());
     await sql`DELETE FROM agent_runs WHERE task_id = ANY(${probeTaskIds}::uuid[])`.execute(db());
     await sql`DELETE FROM task_events WHERE task_id = ANY(${probeTaskIds}::uuid[])`.execute(db());
     await sql`DELETE FROM tasks WHERE id = ANY(${probeTaskIds}::uuid[])`.execute(db());

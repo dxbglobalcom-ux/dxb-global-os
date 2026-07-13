@@ -88,6 +88,13 @@ system_health_snapshots (
 
 Madde 5.2 eşleme kontrolü: 20 sorunun kaynağı — kim/görev/veren/workflow/model/token/maliyet/süre/araçlar/okunan-değişen dosyalar/kararlar/alt ajanlar/çıktılar/hata/retry/approval/paused/cancelled/completed → yukarıdaki kolonlar + tasks.created_by join'i. Eşlenmemiş soru YOK.
 
+> **Registered adaptations — E8.4b (2026-07-13, ticket `.planning/quick/20260713-e84b-alert-center/`):**
+> A1. `alerts` additive columns: `dedup_key` (unique WHERE resolved_at IS NULL — storm dedup, §26), `run_id`/`task_id`/`source_ref jsonb` (§12 "gevşek bağ" made concrete: envelope corr + drill target), `escalated_at`/`escalated_from` (GAP-10 escalation), `muted_until` (API_CONTRACTS `mute` op = per-alert snooze).
+> A2. Escalation defined (GAP-10): unacknowledged past per-level deadline (settings `alerts.escalate_after_minutes`, default attention 240m / high 60m / critical 15m) → ONE level bump (…→emergency), swept by `fn_alerts_evaluate()`; time-based checks (queue age, heartbeat, escalation) live in that fn — Phase-7 pg-boss 'alert-evaluate' job adopts it (R3 held).
+> A3. Single broadcast producer: alerts-table trigger emits alert.raised/acknowledged/resolved/escalated; every source (run failure, cost 70/90/100, budget stop, fallback ≥2/exhausted, flagged review, obs spill, evaluate fn) INSERTs a row instead of broadcasting directly.
+> A4. Heartbeat source = `system_health_snapshots` freshness (table created in E8.4b; probe job Phase 7); empty table → no alert (honest pre-Phase-7 state).
+> A5. Alert title/cause/action strings are system artifacts in ENGLISH (language directive); UI chrome fully bilingual — same data-vs-chrome rule as audit payloads and task objectives.
+
 ## 5. Component yapısı
 
 | Bileşen | Sayfa | İçerik |

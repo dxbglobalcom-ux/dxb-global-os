@@ -277,12 +277,39 @@ export interface DecisionLogTable {
   created_at: Timestamptz;
 }
 
+// alerts (E8.4b — OBSERVABILITY §4 + registered adaptations: dedup_key,
+// run_id/task_id/source_ref, escalation, mute). Lifecycle writes go through
+// control_alerts_action; code INSERTs only (obs spill alert, Phase-7 jobs).
+export interface AlertsTable {
+  id: Generated<string>;
+  at: Timestamptz;
+  level: string;
+  source: string;
+  title: string;
+  affected_area: string | null;
+  probable_cause: string | null;
+  suggested_action: string | null;
+  responsible_employee: string | null;
+  mitigation: string | null;
+  acknowledged_at: Date | null;
+  resolved_at: Date | null;
+  ceo_action: string | null;
+  dedup_key: string | null;
+  run_id: string | null;
+  task_id: string | null;
+  source_ref: Jsonb | null;
+  escalated_at: Date | null;
+  escalated_from: string | null;
+  muted_until: Date | null;
+}
+
 export interface DB {
   tasks: TasksTable;
   agent_runs: AgentRunsTable;
   tool_calls: ToolCallsTable;
   file_changes: FileChangesTable;
   decision_log: DecisionLogTable;
+  alerts: AlertsTable;
   tool_pins: ToolPinsTable;
   task_events: TaskEventsTable;
   departments: DepartmentsTable;

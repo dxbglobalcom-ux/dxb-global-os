@@ -72,6 +72,9 @@ afterAll(async () => {
     await sql`DELETE FROM file_changes WHERE id = ANY(${probeFileChangeIds}::bigint[])`.execute(db());
   }
   if (probeRunIds.length > 0) {
+    // E8.4b: flagged-review probes raise alerts rows (FK → agent_runs);
+    // probe hygiene as postgres — real alerts are otherwise kept (§22).
+    await sql`DELETE FROM alerts WHERE run_id = ANY(${probeRunIds}::uuid[])`.execute(db());
     await sql`DELETE FROM decision_log WHERE run_id = ANY(${probeRunIds}::uuid[])`.execute(db());
     await sql`DELETE FROM agent_runs WHERE id = ANY(${probeRunIds}::uuid[])`.execute(db());
   }
@@ -199,7 +202,9 @@ describe("E8.4 control_audit_mark_reviewed — the single audit-family mutation 
     expect(count.rows[0].n).toBe(1);
   });
 
-  it("reviewed_flagged → alert.raised on dxb:alerts (§9 — the ONLY broadcasting log write)", async () => {
+  it("reviewed_flagged → alerts ROW + alert.raised on dxb:alerts (§9; E8.4b single producer)", async () => {
+    // E8.4b refit: the fn INSERTs an alerts row and trg_alerts_broadcast is
+    // the ONE alerts-channel producer — envelope entity is the alert itself.
     const { taskId, runId } = await makeRun("E8.4 probe: flagged alert");
     const fcId = await makeFileChange(runId, "probe/e84/flagged.ts");
     const since = new Date(Date.now() - 1000);
@@ -210,6 +215,20 @@ describe("E8.4 control_audit_mark_reviewed — the single audit-family mutation 
     );
     expect(res.rows[0].resp).toMatchObject({ ok: true, review_status: "reviewed_flagged" });
     probeAuditIds.push(Number(res.rows[0].resp.audit_id!));
+    const alertId = (res.rows[0].resp as { alert_id?: string }).alert_id;
+    expect(alertId).toBeTruthy();
+
+    const alert = await sql<Record<string, unknown>>`
+      SELECT level, source, title, run_id, task_id, source_ref
+      FROM alerts WHERE id = ${alertId}::uuid
+    `.execute(db());
+    expect(alert.rows[0]).toMatchObject({
+      level: "attention",
+      source: "file_review",
+      run_id: runId,
+      task_id: taskId,
+      source_ref: { table: "file_changes", id: fcId },
+    });
 
     const msgs = await sql<{ payload: Record<string, any> }>`
       SELECT payload FROM realtime.messages
@@ -217,15 +236,14 @@ describe("E8.4 control_audit_mark_reviewed — the single audit-family mutation 
         AND inserted_at >= ${since.toISOString()}::timestamp
     `.execute(db());
     const mine = msgs.rows.filter(
-      (r) => r.payload.type === "alert.raised" && r.payload.payload?.audit_id === res.rows[0].resp.audit_id,
+      (r) => r.payload.type === "alert.raised" && r.payload.payload?.alert_id === alertId,
     );
     expect(mine).toHaveLength(1);
-    expect(mine[0].payload.entity).toMatchObject({ kind: "alert", id: String(fcId) });
+    expect(mine[0].payload.entity).toMatchObject({ kind: "alert", id: alertId });
     expect(mine[0].payload.corr).toMatchObject({ task_id: taskId, run_id: runId });
     expect(mine[0].payload.payload).toMatchObject({
       source: "file_review",
-      path: "probe/e84/flagged.ts",
-      note: "suspicious diff",
+      level: "attention",
     });
   });
 

@@ -444,8 +444,8 @@
       "approvalsTitle": "Bekleyen onaylar",
       "approvalsEmpty": "Bekleyen onay yok. Bir ajan onay istediği an burada belirir.",
       "alertsTitle": "Kritik uyarılar",
-      "alertsWaiting": "Uyarı akışı gözlemlenebilirlik katmanıyla gelir (E8).",
-      "viewAll": "Tümünü gör"
+      "viewAll": "Tümünü gör",
+      "alertsEmpty": "Her şey yolunda — aktif uyarı yok."
     },
     "dock": {
       "running": "Şu an çalışıyor"
@@ -888,7 +888,8 @@
           "routing_rules": "Yönlendirme kuralı",
           "revenue_ledger": "Gelir kaydı",
           "library_change_log": "Kütüphane değişikliği",
-          "file_changes": "Dosya değişikliği"
+          "file_changes": "Dosya değişikliği",
+          "alerts": "Uyarı"
         },
         "risks": {
           "low": "Düşük",
@@ -924,6 +925,57 @@
           "medium": "Orta",
           "high": "Yüksek"
         }
+      }
+    },
+    "alerts": {
+      "title": "Uyarılar",
+      "subtitle": "Gerçek alarm kuyruğu — önem, sahiplik, onaylama, eskalasyon, çözüm. Her yaşam döngüsü aksiyonu denetim izine düşer.",
+      "ui": {
+        "filterLevel": "Seviye",
+        "filterSource": "Kaynak",
+        "all": "Tümü",
+        "viewActive": "Aktif",
+        "viewResolved": "Çözüldü",
+        "colWhen": "Zaman",
+        "ack": "Onayla",
+        "resolve": "Çöz",
+        "mute": "1s sustur",
+        "assign": "Sahip ata…",
+        "owner": "Sahip",
+        "unassigned": "Atanmadı",
+        "acked": "Onaylandı",
+        "resolved": "Çözüldü",
+        "escalatedFrom": "Yükseltildi:",
+        "probableCause": "Olası neden",
+        "suggestedAction": "Önerilen aksiyon",
+        "mitigationTaken": "Alınan önlem",
+        "ceoAction": "CEO aksiyonu",
+        "notePlaceholder": "Not / önlem (isteğe bağlı)",
+        "mitigationPlaceholder": "Ne yapıldı",
+        "viewSource": "Kaynak modülü aç",
+        "taskLink": "Görevi aç",
+        "approvalRow": "Kritik onay — kararı Onay Merkezi'nde ver.",
+        "empty": "Her şey yolunda — aktif uyarı yok.",
+        "emptyResolved": "Henüz çözülmüş uyarı yok.",
+        "shown": "kayıt",
+        "levels": {
+          "informational": "Bilgi",
+          "attention": "Dikkat",
+          "high": "Yüksek",
+          "critical": "Kritik",
+          "emergency": "Acil"
+        },
+        "sources": {
+          "cost": "Maliyet",
+          "routing": "Yönlendirme",
+          "agent_run": "Ajan koşusu",
+          "queue": "Kuyruk",
+          "heartbeat": "Kalp atışı",
+          "observability": "Gözlemlenebilirlik",
+          "file_review": "Dosya incelemesi",
+          "approval": "Onay"
+        },
+        "affectedArea": "Etkilenen alan"
       }
     }
   }

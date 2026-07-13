@@ -104,6 +104,12 @@ afterAll(async () => {
       .deleteFrom("file_changes")
       .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", createdTaskIds))
       .execute();
+    // E8.4b: failed probe runs raise alerts rows (FK) — sweep before the runs.
+    await db
+      .deleteFrom("alerts")
+      .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", createdTaskIds))
+      .execute();
+    await db.deleteFrom("alerts").where("task_id", "in", createdTaskIds).execute();
     await db.deleteFrom("agent_runs").where("task_id", "in", createdTaskIds).execute();
     await db.deleteFrom("task_events").where("task_id", "in", createdTaskIds).execute();
     await db.deleteFrom("tasks").where("id", "in", createdTaskIds).execute();

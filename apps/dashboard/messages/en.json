@@ -444,8 +444,8 @@
       "approvalsTitle": "Pending approvals",
       "approvalsEmpty": "No approvals waiting. New requests appear here the moment an agent asks.",
       "alertsTitle": "Critical alerts",
-      "alertsWaiting": "Alert stream lands with the observability layer (E8).",
-      "viewAll": "View all"
+      "viewAll": "View all",
+      "alertsEmpty": "All clear — no active alerts."
     },
     "dock": {
       "running": "Running now"
@@ -888,7 +888,8 @@
           "routing_rules": "Routing rule",
           "revenue_ledger": "Revenue entry",
           "library_change_log": "Library change",
-          "file_changes": "File change"
+          "file_changes": "File change",
+          "alerts": "Alert"
         },
         "risks": {
           "low": "Low",
@@ -924,6 +925,57 @@
           "medium": "Medium",
           "high": "High"
         }
+      }
+    },
+    "alerts": {
+      "title": "Alerts",
+      "subtitle": "Real alarm queue — severity, ownership, acknowledge, escalation, resolution. Every lifecycle action lands in the audit trail.",
+      "ui": {
+        "filterLevel": "Level",
+        "filterSource": "Source",
+        "all": "All",
+        "viewActive": "Active",
+        "viewResolved": "Resolved",
+        "colWhen": "When",
+        "ack": "Acknowledge",
+        "resolve": "Resolve",
+        "mute": "Mute 1h",
+        "assign": "Assign owner…",
+        "owner": "Owner",
+        "unassigned": "Unassigned",
+        "acked": "Acknowledged",
+        "resolved": "Resolved",
+        "escalatedFrom": "Escalated from",
+        "probableCause": "Probable cause",
+        "suggestedAction": "Suggested action",
+        "mitigationTaken": "Mitigation",
+        "ceoAction": "CEO action",
+        "notePlaceholder": "Note / mitigation (optional)",
+        "mitigationPlaceholder": "What was done",
+        "viewSource": "Open source module",
+        "taskLink": "Open task",
+        "approvalRow": "Critical approval — decide in the Approval Center.",
+        "empty": "All clear — no active alerts.",
+        "emptyResolved": "No resolved alerts yet.",
+        "shown": "shown",
+        "levels": {
+          "informational": "Informational",
+          "attention": "Attention",
+          "high": "High",
+          "critical": "Critical",
+          "emergency": "Emergency"
+        },
+        "sources": {
+          "cost": "Cost",
+          "routing": "Routing",
+          "agent_run": "Agent run",
+          "queue": "Queue",
+          "heartbeat": "Heartbeat",
+          "observability": "Observability",
+          "file_review": "File review",
+          "approval": "Approval"
+        },
+        "affectedArea": "Affected area"
       }
     }
   }

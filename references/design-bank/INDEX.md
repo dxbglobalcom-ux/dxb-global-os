@@ -26,5 +26,9 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | gov-decisions-en-1920.png | /gov/decisions | EN | 1920 | PENDING | same |
 | gov-decisions-tr-1280.png | /gov/decisions | TR | 1280 | PENDING | same |
 | gov-decisions-tr-1920.png | /gov/decisions | TR | 1920 | PENDING | same |
+| alerts-en-1280.png | /alerts | EN | 1280 | PENDING | E8.4b Alert Center — real queue-age alert + rail panel live (2026-07-13); alert titles are DB data (English per language directive), chrome fully bilingual |
+| alerts-en-1920.png | /alerts | EN | 1920 | PENDING | same |
+| alerts-tr-1280.png | /alerts | TR | 1280 | PENDING | same |
+| alerts-tr-1920.png | /alerts | TR | 1920 | PENDING | same |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
