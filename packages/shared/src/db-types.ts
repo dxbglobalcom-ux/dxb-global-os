@@ -262,11 +262,27 @@ export interface FileChangesTable {
   reverted_by: string | null;
 }
 
+export interface DecisionLogTable {
+  id: Generated<string>;
+  run_id: string | null;
+  decided_by: string;
+  decision: string;
+  rationale: string;
+  data_used: string[] | null;
+  alternatives: Jsonb | null;
+  confidence: NumericNullable;
+  risk: string | null;
+  approval_id: string | null;
+  outcome: string | null;
+  created_at: Timestamptz;
+}
+
 export interface DB {
   tasks: TasksTable;
   agent_runs: AgentRunsTable;
   tool_calls: ToolCallsTable;
   file_changes: FileChangesTable;
+  decision_log: DecisionLogTable;
   tool_pins: ToolPinsTable;
   task_events: TaskEventsTable;
   departments: DepartmentsTable;

@@ -13,6 +13,7 @@
 // audit_log row — never a silent drop (T-05-15). Rule changes are FABLE-ONLY.
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
+import { logDecision } from "@dxb/observability";
 
 const ACTOR = "orchestrator:escalate";
 const LOW_CONFIDENCE = 0.6; // LOCKED threshold
@@ -169,6 +170,21 @@ async function blockTask(
     ladder: "blocked",
     fail_count: n,
   });
+  // §10 "workflow adım dallanması / escalation": the terminal rung is a CEO
+  // escalation — the loudest decision the ladder can take.
+  await logDecision(
+    {
+      runId: null,
+      decidedBy: ACTOR,
+      decision: "escalation",
+      rationale: `hard stop after ${n} failures — ladder exhausted, blocked report written for the CEO`,
+      dataUsed: ["task_events", "tasks"],
+      alternatives: { rejected: "another requeue", reason: "fail_count past the LOCKED ladder (T-05-13)" },
+      confidence: null,
+      risk: "high",
+    },
+    { outcome: "blocked", taskId: task.id },
+  );
   return { action: "blocked", failCount: n, alreadyBlocked: false };
 }
 
@@ -215,5 +231,23 @@ export async function escalate(db: Kysely<DB>, taskId: string): Promise<Escalate
     fail_count: n,
     model_tier: nextTier,
   });
+  // §10 "workflow adım dallanması (retry/fallback/escalate tercihi)": which
+  // rung fired and why — deterministic LOCKED code, so confidence is null and
+  // the alternatives are the other rungs the fail count ruled out.
+  await logDecision(
+    {
+      runId: null,
+      decidedBy: ACTOR,
+      decision: "escalation",
+      rationale: `fail_count=${n} → ladder '${step.ladder}': requeued at tier ${nextTier} (was ${task.model_tier})`,
+      dataUsed: ["task_events", "tasks"],
+      alternatives: {
+        ladder_map: "0 none · 1 retry-same-tier · 2 specialist · 3 head-review · 4 fable-final · 5+ blocked",
+      },
+      confidence: null,
+      risk: n >= 3 ? "medium" : "low",
+    },
+    { taskId },
+  );
   return { action: "requeued", ladder: step.ladder, failCount: n, modelTier: nextTier };
 }

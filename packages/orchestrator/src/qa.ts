@@ -12,6 +12,7 @@ import { sql } from "kysely";
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall } from "@dxb/shared";
+import { logDecision } from "@dxb/observability";
 import { loadPolicy, route, SDK_MODEL_IDS, type ClassifiedIntent } from "@dxb/kernel";
 
 const ACTOR = "orchestrator:qa";
@@ -162,6 +163,21 @@ export async function qa(taskId: string, evaluate: QaEvaluator = defaultEvaluato
       notes: verdict.notes,
       confidence: verdict.confidence,
     });
+    // §10 "workflow adım dallanması": the QA verdict routed this task onto the
+    // retry ladder instead of forward — a branch, not a micro choice.
+    await logDecision(
+      {
+        runId: null,
+        decidedBy: ACTOR,
+        decision: "workflow_branch",
+        rationale: `qa fail → escalation ladder: ${verdict.notes}`,
+        dataUsed: ["tasks.result", "tasks.output_contract"],
+        alternatives: { rejected: "pass → done/awaiting_approval" },
+        confidence: verdict.confidence,
+        risk: null,
+      },
+      { outcome: "qa-fail", taskId },
+    );
     return { verdict, toStatus: "failed" };
   }
   const toStatus = task.approval_class === "none" ? "done" : "awaiting_approval";
@@ -170,5 +186,22 @@ export async function qa(taskId: string, evaluate: QaEvaluator = defaultEvaluato
     confidence: verdict.confidence,
     notes: verdict.notes,
   });
+  if (toStatus === "awaiting_approval") {
+    // §10 "approval'a dönüştürme": the pass verdict became a human gate.
+    // (pass→done stays at task_events level — deliberate log-inflation limit.)
+    await logDecision(
+      {
+        runId: null,
+        decidedBy: ACTOR,
+        decision: "approval_conversion",
+        rationale: `qa pass on approval_class '${task.approval_class}' → awaiting_approval: ${verdict.notes}`,
+        dataUsed: ["tasks.result", "tasks.approval_class"],
+        alternatives: { rejected: "direct done", reason: "approval_class demands a human gate" },
+        confidence: verdict.confidence,
+        risk: null,
+      },
+      { taskId },
+    );
+  }
   return { verdict, toStatus };
 }

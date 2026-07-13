@@ -7,6 +7,7 @@
 // transaction — cycles impossible by construction.
 import { sql } from "kysely";
 import { getDb, TaskEnvelope } from "@dxb/shared";
+import { logDecision } from "@dxb/observability";
 import type { DecomposedEnvelope } from "./decompose.js";
 
 export async function dispatch(
@@ -29,7 +30,7 @@ export async function dispatch(
   });
 
   const db = getDb();
-  return db.transaction().execute(async (trx) => {
+  const result = await db.transaction().execute(async (trx) => {
     // First pass: insert every row 'queued', collecting uuids in input order.
     const taskIds: string[] = [];
     for (const env of valid) {
@@ -82,4 +83,26 @@ export async function dispatch(
 
     return { taskIds };
   });
+
+  // §10 "görev atama": the task-plan decision record — one row per committed
+  // batch, AFTER the transaction (a rolled-back batch must leave no decision).
+  // Deterministic planning code → confidence null; write failure never
+  // un-dispatches (logDecision is fail-visible, not fail-stop).
+  await logDecision({
+    runId: null,
+    decidedBy: "orchestrator:dispatch",
+    decision: "task_plan",
+    rationale:
+      `dispatched ${valid.length} task(s): ` +
+      valid.map((e, i) => `[${i}] ${e.department}: ${e.objective.slice(0, 80)}`).join(" · "),
+    dataUsed: ["task_envelopes", "tasks", "task_events"],
+    alternatives:
+      valid.some((e) => e.deps.length > 0)
+        ? { dependency_graph: valid.map((e, i) => ({ index: i, deps: e.deps })) }
+        : null,
+    confidence: null,
+    risk: null,
+  });
+
+  return result;
 }
