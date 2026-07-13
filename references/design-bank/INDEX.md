@@ -42,6 +42,14 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | approval-detail-en-1920.png | /approvals/[id] | EN | 1920 | PENDING | same |
 | approval-detail-tr-1280.png | /approvals/[id] | TR | 1280 | PENDING | same |
 | approval-detail-tr-1920.png | /approvals/[id] | TR | 1920 | PENDING | same |
+| e94-projects-en-1280.png | /ops/projects | EN | 1280 | PENDING | E9.4 Project OS index — health score per card, live §10 formula, dogfood DXB Global OS at 85 (2026-07-14) |
+| e94-projects-en-1920.png | /ops/projects | EN | 1920 | PENDING | same |
+| e94-projects-tr-1280.png | /ops/projects | TR | 1280 | PENDING | same |
+| e94-projects-tr-1920.png | /ops/projects | TR | 1920 | PENDING | same |
+| e94-command-en-1280.png | /ops/projects/[slug] | EN | 1280 | PENDING | E9.4 Project Command View — §23 19 fields: top strip + health breakdown, phase timeline with today line, staff/departments, risks/decisions/approvals/blockers rail, cost+token band, links (2026-07-14); dogfood rows are REAL project data and stay |
+| e94-command-en-1920.png | /ops/projects/[slug] | EN | 1920 | PENDING | same |
+| e94-command-tr-1280.png | /ops/projects/[slug] | TR | 1280 | PENDING | same |
+| e94-command-tr-1920.png | /ops/projects/[slug] | TR | 1920 | PENDING | same |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 

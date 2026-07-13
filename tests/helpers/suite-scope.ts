@@ -23,6 +23,9 @@ export async function sweepByDepartment(db: Kysely<DB>, marker: string): Promise
       )
       .execute();
     await db.deleteFrom("approvals").where("task_id", "in", ids).execute();
+    await sql`DELETE FROM task_dependencies
+      WHERE task_id = ANY(${ids}::uuid[]) OR depends_on = ANY(${ids}::uuid[])`.execute(db);
+    await sql`DELETE FROM agent_runs WHERE task_id = ANY(${ids}::uuid[])`.execute(db);
     await db.deleteFrom("audit_log").where("task_id", "in", ids).execute();
     await db.deleteFrom("cost_ledger").where("task_id", "in", ids).execute();
     await db.deleteFrom("task_events").where("task_id", "in", ids).execute();

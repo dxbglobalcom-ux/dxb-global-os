@@ -99,6 +99,8 @@ const PURITY_ALLOWLIST: string[] = [
   "app/(command)/ops/workflows/page.tsx",
   // E9.3: approval center control seam (.rpc control_approvals_action)
   "app/api/control/approvals/route.ts",
+  // E9.4: project OS control seam (.rpc control_project_action)
+  "app/api/control/projects/route.ts",
 ];
 
 const DASHBOARD_SRC = join(__dirname, "../../apps/dashboard/src");

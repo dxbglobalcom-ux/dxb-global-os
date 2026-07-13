@@ -1,6 +1,130 @@
-import { ModuleWaiting } from "@/components/command/module-waiting";
+import Link from "next/link";
+import { Panel, StatusBadge, type StatusLevel } from "@/components/primitives";
+import {
+  healthBand,
+  fmtDate,
+  fmtTokens,
+  mapProjectRow,
+  type ProjectCommandViewRow,
+} from "@/lib/projects-command";
+import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
+import { createClient } from "@/lib/supabase/server";
 
-// /ops/projects — real module lands at roadmap step E9.4 (E2.2 skeleton rule).
-export default function Page() {
-  return <ModuleWaiting pageKey="projects" step="E9.4" />;
+// /ops/projects — Project OS index (E9.4, PROJECT_OS §7/§8). One round-trip
+// per project from v_project_command (live §10 health + counters); every
+// card opens the Command View. Premium operations surface — NOT a classic
+// PM tool (§23 acceptance rule).
+
+export const metadata = { title: "Projects — DXB" };
+
+const STATUS_LEVEL: Record<string, StatusLevel> = {
+  draft: "info",
+  active: "ok",
+  paused: "warn",
+  done: "info",
+  archived: "info",
+};
+
+const BAND_TEXT: Record<"ok" | "warn" | "danger", string> = {
+  ok: "text-status-ok",
+  warn: "text-status-warn",
+  danger: "text-status-danger",
+};
+
+export default async function ProjectsPage() {
+  const locale = await getLocale();
+  const t = getDict(locale).command.projects;
+  const supabase = await createClient();
+
+  const { data } = await supabase
+    .from("v_project_command")
+    .select("*")
+    .order("status", { ascending: true })
+    .order("created_at", { ascending: true });
+
+  const projects = ((data ?? []) as unknown as ProjectCommandViewRow[]).map(mapProjectRow);
+
+  return (
+    <div className="mx-auto max-w-[1400px] space-y-4">
+      <header>
+        <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+        <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
+      </header>
+
+      {projects.length === 0 ? (
+        <Panel>
+          <p className="py-10 text-center text-body-s text-ink-muted">{t.ui.empty}</p>
+        </Panel>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {projects.map((p) => {
+            const band = healthBand(p.health);
+            const statuses = t.ui.statuses as Record<string, string>;
+            return (
+              <Link
+                key={p.id}
+                href={`/ops/projects/${p.slug}`}
+                className="group rounded-panel border border-edge-neutral bg-surface-graphite p-5 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <h2 className="truncate font-display text-h4 text-ink-primary group-hover:text-accent-champagne">
+                      {p.name}
+                    </h2>
+                    <p className="mt-1 line-clamp-2 text-body-s text-ink-secondary">{p.purpose}</p>
+                  </div>
+                  <div className="flex shrink-0 flex-col items-end gap-2">
+                    <span className={`font-display text-display-l tabular-nums ${BAND_TEXT[band]}`}>
+                      {p.health}
+                    </span>
+                    <StatusBadge level={STATUS_LEVEL[p.status] ?? "info"}>
+                      {statuses[p.status] ?? p.status}
+                    </StatusBadge>
+                  </div>
+                </div>
+
+                {p.currentPhase ? (
+                  <p className="mt-3 text-caption text-ink-muted">
+                    <span className="label-caps">{t.ui.currentPhase}</span>{" "}
+                    <span className="text-ink-secondary">{p.currentPhase}</span>
+                  </p>
+                ) : null}
+
+                <dl className="mt-4 grid grid-cols-4 gap-2 border-t border-edge-neutral pt-3">
+                  {(
+                    [
+                      [t.ui.milestones, `${p.milestonesReached}/${p.milestonesTotal}`],
+                      [t.ui.tasks, String(p.tasksTotal)],
+                      [t.ui.risks, String(p.risksOpen)],
+                      [t.ui.blockers, String(p.blockersCount)],
+                    ] as const
+                  ).map(([label, value]) => (
+                    <div key={label} className="min-w-0">
+                      <dt className="label-caps truncate text-ink-muted" title={label}>
+                        {label}
+                      </dt>
+                      <dd className="font-data text-body-s tabular-nums text-ink-primary">
+                        {value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <div className="mt-3 flex items-center justify-between text-caption text-ink-muted">
+                  <span className="font-data tabular-nums">
+                    €{p.costTotalEur.toFixed(2)} · {fmtTokens(p.tokensIn + p.tokensOut)}{" "}
+                    {t.ui.tokensShort}
+                  </span>
+                  <span>
+                    {t.ui.lastActivity}: {fmtDate(p.lastActivityAt, locale)}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
 }

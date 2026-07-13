@@ -144,6 +144,19 @@ curl -s "localhost:3000/api/... v_project_command?slug=eq.dxb-global-os" | jq '.
 - Risk: üyelik türetimi (koşulardan) ile sabit kadro (project_members) çelişirse → görünüm ikisini ayrı etiketler ("kadro" / "fiilen çalıştı") — çelişki bilgidir, gizlenmez.
 - Edge: projesiz görevler → "Unassigned" sanal grubu (Command View dışında, Operations'ta); proje arşivi → koşan workflow varsa fn reddi (önce durdur); tarihsiz milestone → zaman ekseninde "planlanmamış" rayında; Outleteuro (Faz 11) → AYRI alt-OS spawn'ı bu tablodan BAĞIMSIZ (kendi OS'unda kendi projeleri — buradaki kayıt yalnız holding-görünür üst özet).
 
+## Registered adaptations — E9.4 execution (2026-07-14, Fable K1; CEO-visible)
+
+Execution of §5-§10 against the live repo surfaced six binding-neutral interpretations; recorded here per the master-plan-fidelity rule (no silent deviation). Migration: `20260714010000_e94_project_command.sql`.
+
+- **A1 — control seam shape.** §5's `control_project_{create,...}` fn family ships as ONE fn `control_project_action(p_payload, p_idempotency_key)` with `action ∈ {create, update, set_status, add_milestone, set_dependency, add_member, log_risk}` — the established E6/E9.1/E9.3 single-door idiom (idempotency twin, audit row, CEO wall in one place). API_CONTRACTS 8b op list satisfied verbatim.
+- **A2 — route mount.** §7's `/projects/[slug]` lives at `/ops/projects` (index) + `/ops/projects/[slug]` (Command View) inside the command shell's Operations group — nav has pointed there since E2; no second mount.
+- **A3 — milestone link.** §9's milestone.reached automation needs a task↔milestone edge the §4 model lacked → `tasks.milestone_id uuid NULL REFERENCES project_milestones(id)` (registered addition). A DB trigger on task status→done stamps `reached_at` when the last open task of the milestone closes and broadcasts on `projects`.
+- **A4 — health exposure.** `project_health(project_id)` returns the §10 score; `project_health_breakdown(...)` exposes each penalty as a column and `v_project_command` LATERAL-joins it (`health_live` + `pen_*` + computed `blockers_count`). `projects.health_score` stays as the last-known cache for the §17 stale fallback.
+- **A5 — token correlation.** Token usage sums `agent_runs.tokens_in/out` through `tasks.project_id` (§11 single-source corr chain; no column duplication).
+- **A6 — risk row updates.** §14's "risk rows update in place" rides the same seam: `log_risk` with `{risk_id, status, note?}` updates instead of inserting (API route surfaces it as op `update_risk`).
+
+Dogfood acceptance (§21): `dxb-global-os` carries 13 phase milestones (the roadmap E-blocks; reached dates = each block's last ✓) + 3 REAL recorded risks (workforce activation gap, E11 pending, deferred brown-token audit) — written through the control fn under the CEO session (audit ids 5786-5801). These rows are project data, not demo residue: they persist.
+
 ## Opus-devralma notu
 
 Şema + formül + görünüm sözleşmesi kapalı; Opus Command View'ı `v_project_command` kolonlarından mekanik kurar. ⛔ kritik karar: health formül ağırlıkları + üyelik modelinin değişimi — en güçlü model + CEO onayı.
