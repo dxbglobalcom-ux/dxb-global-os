@@ -28,7 +28,6 @@ export function CommandBar({
     systemDegraded: string;
     activeTasks: string;
     pendingApprovals: string;
-    readOnly: string;
     osPaused: string;
     language: string;
     logout: string;
@@ -73,9 +72,6 @@ export function CommandBar({
           <span className="font-data tabular-nums">{pendingApprovals}</span>{" "}
           {labels.pendingApprovals}
         </Link>
-        <span className="label-caps rounded-input border border-edge-neutral px-2 py-1 text-ink-muted">
-          {labels.readOnly}
-        </span>
         <LocaleSwitch locale={locale} ariaLabel={labels.language} />
         <LiveClock locale={locale} />
         <LogoutButton label={labels.logout} />

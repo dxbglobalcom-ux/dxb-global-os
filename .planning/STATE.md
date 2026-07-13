@@ -6,16 +6,16 @@ current_phase: 09
 current_phase_name: jarvis-voice-layer
 status: executing
 stopped_at: "BEKLENTİLER PİVOTU 2026-07-10 ~18:45 — CEO ana direktifi işlendi (repo kökü BEKLENTİLER, sanitized: HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md). Proje = HOLDING OS; plan-first: 31 spec dosyalık korpus HOLDING-OS-MASTER-PLAN/ altında Fable bizzat yazıyor → korpus bitince Fable execution (12 Temmuz son geceye kadar) → Opus devralır. SONNET DEFEDİLDİ (v6). Phase 09 execution DURDU (09-03..05 ertelendi — kayıtlı sapma, CEO emri). Bağlayıcı sözleşme+yasaklar+açılış notu: ~/.claude/plans/sana-s-yl-orm-konu-al-m-nce-agile-pebble.md. Korpus ilerleme: 00-INDEX.md durum tablosu."
-last_updated: "2026-07-12T21:45:00.000Z"
+last_updated: "2026-07-13T13:30:00.000Z"
 last_activity: 2026-07-13
-last_activity_desc: "E7.1 ✓ TABLE-DRIVEN MODEL ROUTING (K1 Fable in person): migration 20260713040000 — 13 role-slot rows in routing_rules (defaults = live E6.1 registry: primary=fable-5, fast/low-cost=haiku, rest=opus), model_catalog fallback chain (fable→opus→sonnet, haiku→sonnet), fn_select_model (guardrails + hard-stop gate + decision_log routing_decision), fn_model_fallback (chain ≤4, routing_fallback, loud CHAIN_EXHAUSTED), fn_update_routing (assign_role ceo-only / set_catalog_status, audit+decision+Broadcast), settings delegate flip (13 orchestrator.*_model keys → routing, single source §7); packages/orchestrator/src/select-model.ts typed wrappers (no model name in code). Evidence: migration idempotent 2×; DB battery 13 blocks PASS; CEO-actor jwt-sim battery (ROLLBACK, zero residue) — MODEL_BANNED/MODEL_NOT_ACTIVE/MODEL_MECHANICAL_ONLY refusals + live reassignment proof; vitest tests/e7 8/8; phase5 legacy routing regression 5/5; tsc 0; raw-key scan 0. Next: E7.2 Model Orchestration Panel (§19) + §4c onboard flow"
+last_activity_desc: "E7.2 ✓ MODEL ORCHESTRATION PANEL + §4c ONBOARD (K1 Fable in person; resumed the 04:00 interrupted session, verified its uncommitted work end-to-end, closed the row): migration 20260713050000 idempotent 2× — v_model_stats (§19 R3 meta from REAL agent_runs, zero fabrication) + v_role_slots + fn_update_routing v2 (§4c add_model born testing ceo-only, set_fallback acyclic). Routes: api/control/models (5 ops, test_model honest LITELLM_UNREACHABLE until Phase-7 proxy, adaptation A1), api/ai/simulate (p_log=false — simulations never poison decision_log), api/ai/model-detail. UI: /ai/models catalog + detail drawer + 4-step §4c onboard drawer; /ai/orchestration 13-slot board (select+confirm, adaptation A2) + live guardrails + RoutingSimulator. Evidence: DB battery 13 blocks PASS (ROLLBACK zero-residue; full §4c chain add→testing-refused→activate→assignable; MODEL_BANNED/FALLBACK_CYCLE/mechanical/idempotency); UI E2E real CEO session assign→audit#2441→revert; vitest 8/8; tsc 0; eslint 0; purity PASS 726=726. Design pass RULE #0: 2 routes × EN+TR × 1280+1920, 8 baselines refreshed (PENDING CEO eye); 4 defects found+fixed in-pass: tr-TR number grouping, TR risk enum localization, smoke detail localization, stale READ-ONLY badge removed (§35). Next: next open E7/roadmap row (§4b agent-brain seam boundary recorded)"
 progress:
   # re-base 2026-07-12 (CEO emri): plans = roadmap E-adımları (| E… satırları), ✓ = tamam
   total_phases: 11
   completed_phases: 7
   total_plans: 52
-  completed_plans: 27
-  percent: 52
+  completed_plans: 28
+  percent: 54
 ---
 
 # Project State
