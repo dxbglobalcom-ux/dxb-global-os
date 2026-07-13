@@ -1,5 +1,10 @@
 # Roadmap: DXB Global OS
 
+> ⚠️ **SUPERSEDED FOR EXECUTION (BEKLENTİLER pivot, 2026-07-10):** new work is
+> planned and tracked ONLY in `HOLDING-OS-MASTER-PLAN/IMPLEMENTATION_ROADMAP.md`.
+> This file stays as the original phase-shape reference (GSD scaffold + phases/
+> history). On contradiction the corpus wins. Map: `.planning/README.md`.
+
 ## Overview
 
 The holding is built completely first, then its own employees run the pilot. The journey starts from a verified-clean security posture (rotated credentials, vault, clean repo scans), scaffolds the monorepo and the study→install→adopt→embed integration program, then lays the root dependency: the Supabase schema with dxb-mcp as the only door to state. Safety rails (approval gates, outbox executor, cost hard-stops, circuit breakers, append-only audit) land before any loop runs, then the kernel + orchestrator prove one repeatable intent→result vertical slice. From that proven core the OS widens: memory router with quarantine discipline, least-privilege MCP gateway plus 24/7 VPS runtime, the CEO cockpit with embedded CRM, the JARVIS voice layer, and gated department activation waves with the HR persona factory. Finally the holding's own departments execute the Outleteuro pilot, optimizing Catalog Automation Rate across 73 brands.
