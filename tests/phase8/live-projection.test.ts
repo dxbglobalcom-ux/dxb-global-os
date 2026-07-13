@@ -70,15 +70,35 @@ describe("broadcast payload contract (lib/realtime.ts DxbBroadcastPayload)", () 
 // write chain (.from(...)....insert/update/upsert/delete) or .rpc( call in
 // apps/dashboard/src must appear in this allowlist or the suite fails.
 const PURITY_ALLOWLIST: string[] = [
-  // 08-03: CEO approval decisions — single .rpc('decide_approvals') seam
-  // (migration 0015; single-tx, audit 1:1, EXECUTE only for authenticated)
-  "app/(cockpit)/approvals/actions.ts",
+  // 08-03 → E9.3: CEO approval decisions — .rpc('decide_approvals') seam
+  // (migration 0015 UNTOUCHED) now lives on the (command) route.
+  "app/(command)/approvals/actions.ts",
   // 08-05: CEO intent submission — single intents INSERT (migration 0016
   // column grants pin text/lang/source/actor; kernel worker owns the rest)
   "app/api/intent/route.ts",
   // 08-06: CEO CRM edits — single .rpc('crm_update') seam (migration 0017
   // DEFINER door: field whitelist in-database, audit row per edit)
   "app/(cockpit)/crm/actions.ts",
+  // E7.1: routing sandbox — READ-ONLY .rpc('fn_select_model') simulation
+  "app/api/ai/simulate/route.ts",
+  // E7.2: model routing control seam (.rpc('fn_update_routing') DEFINER door)
+  "app/api/control/models/route.ts",
+  // E6.x: settings control seam (.rpc control_settings_set / _undo)
+  "app/api/control/settings/route.ts",
+  // E6.x: org control seam (.rpc control_org_create_company / _department)
+  "app/api/control/org/route.ts",
+  // E6.x: revenue control seam (.rpc fn_revenue_record)
+  "app/api/control/revenue/route.ts",
+  // E8.4: audit mark_reviewed control seam (.rpc control_audit_mark_reviewed)
+  "app/api/control/audit/route.ts",
+  // E8.4b: alert lifecycle control seam (.rpc control_alerts_action)
+  "app/api/control/alerts/route.ts",
+  // E9.1: workflow control seam (.rpc control_workflow_action)
+  "app/api/control/workflows/route.ts",
+  // E9.2: run-history slot labels — READ-ONLY .rpc('fn_routing_slots')
+  "app/(command)/ops/workflows/page.tsx",
+  // E9.3: approval center control seam (.rpc control_approvals_action)
+  "app/api/control/approvals/route.ts",
 ];
 
 const DASHBOARD_SRC = join(__dirname, "../../apps/dashboard/src");

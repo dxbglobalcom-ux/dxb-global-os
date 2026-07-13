@@ -7,6 +7,7 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { approve } from "../../tools/dxb-cli/src/approve.js";
 import { tick } from "../../packages/outbox-executor/src/index.js";
+import { assertNoForeignReadyOutbox, sweepByDepartment } from "../helpers/suite-scope.js";
 
 // GATE-02 "one row, one effect, once": two parallel ticks race on ONE ready
 // outbox row — FOR UPDATE SKIP LOCKED must give exactly one execution.
@@ -23,21 +24,13 @@ async function call(name: string, args: Record<string, unknown>): Promise<any> {
   return JSON.parse((res.content as Array<{ text: string }>)[0].text);
 }
 
-async function wipe(): Promise<void> {
-  const db = getDb();
-  await db.deleteFrom("task_events").execute();
-  await db.deleteFrom("outbox").execute();
-  await db.deleteFrom("approvals").execute();
-  await db.deleteFrom("cost_ledger").execute();
-  await db.deleteFrom("audit_log").execute();
-  await db.updateTable("tasks").set({ parent_task_id: null }).execute();
-  await db.deleteFrom("tasks").execute();
-}
+// Suite-unique department = isolation marker (E9.3 incident fix).
+const DEPT = "p4df-gate";
 
 /** Full chain up to ONE ready outbox row; returns {approvalId, file}. */
 async function makeReadyRow(run: number): Promise<{ approvalId: string; file: string }> {
   const task = await call("queue_create_task", {
-    department: "engineering",
+    department: DEPT,
     objective: `double-fire run ${run}: parallel ticks must execute exactly once`,
     output_contract: "single execution",
     model_tier: "L3",
@@ -58,11 +51,14 @@ beforeAll(async () => {
   client = new Client({ name: "double-fire-test", version: "0.0.0" });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
-  await wipe();
+  await sweepByDepartment(getDb(), DEPT); // self-heal a killed previous run
+  // tick() fires EVERY ready row — refuse to run over live gated actions.
+  await assertNoForeignReadyOutbox(getDb());
   await rm(PROOF_ROOT, { recursive: true, force: true });
 });
 
 afterAll(async () => {
+  await sweepByDepartment(getDb(), DEPT);
   await client.close();
   await closeDb();
 });

@@ -30,7 +30,10 @@ function payloadAmount(payload: Record<string, unknown>): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-function MoneyOutBadge({ label }: { label: string }) {
+// Exported since E9.3: the Approval Center (command shell) reuses the badge,
+// the double-confirm control and the readable PayloadView — the GATE-03
+// payload work STAYS and generalizes (APPROVAL_ENGINE R5 / CC-SPEC §5).
+export function MoneyOutBadge({ label }: { label: string }) {
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-danger/10 px-2.5 py-0.5 text-micro font-medium text-danger">
       <CurrencyEurIcon size={12} aria-hidden />
@@ -41,7 +44,7 @@ function MoneyOutBadge({ label }: { label: string }) {
 
 // Double-confirm approve: click 1 arms; the confirm state becomes actionable
 // 600ms later; blur or 5s idle disarms. Second actionable click decides.
-function DoubleConfirmApprove({
+export function DoubleConfirmApprove({
   onConfirm,
   disabled,
   approveLabel,
@@ -159,7 +162,7 @@ function formatValue(key: string, value: unknown): string {
   return JSON.stringify(value);
 }
 
-function PayloadView({
+export function PayloadView({
   payload,
   open,
   text,

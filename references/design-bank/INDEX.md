@@ -34,6 +34,14 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | workflows-en-1920.png | /ops/workflows | EN | 1920 | PENDING | same |
 | workflows-tr-1280.png | /ops/workflows | TR | 1280 | PENDING | same |
 | workflows-tr-1920.png | /ops/workflows | TR | 1920 | PENDING | same |
+| approvals-en-1280.png | /approvals | EN | 1280 | PENDING | E9.3 Approval Center — fatigue banner, class/dept/age filters, bulk bar (money_out excluded, lock cue), decided tab (2026-07-14); [EYE-TEST] rows are demo data swept after the pass |
+| approvals-en-1920.png | /approvals | EN | 1920 | PENDING | same |
+| approvals-tr-1280.png | /approvals | TR | 1280 | PENDING | same |
+| approvals-tr-1920.png | /approvals | TR | 1920 | PENDING | same |
+| approval-detail-en-1280.png | /approvals/[id] | EN | 1280 | PENDING | E9.3 ApprovalDetail — §21 R3 field set, readable payload (R5, raw JSON behind audit fold), gold double frame on money_out, decision history, 7-action island (2026-07-14) |
+| approval-detail-en-1920.png | /approvals/[id] | EN | 1920 | PENDING | same |
+| approval-detail-tr-1280.png | /approvals/[id] | TR | 1280 | PENDING | same |
+| approval-detail-tr-1920.png | /approvals/[id] | TR | 1920 | PENDING | same |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 

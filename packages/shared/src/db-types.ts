@@ -101,6 +101,39 @@ export interface ApprovalsTable {
   decided_at: Date | null;
   decision_note: string | null;
   created_at: Timestamptz;
+  // E9.3 §21 extension (20260713110000) — all nullable
+  requester_employee_id: string | null;
+  department_id: string | null;
+  project_id: string | null;
+  operation: string | null;
+  purpose: string | null;
+  operation_class: string | null; // money_out|contract|identity|high_cost|other (A1: risk_class stays severity)
+  cost_estimate: number | null;
+  deadline: Date | null;
+  model_to_use: string | null;
+  affected_systems: string[] | null;
+  affected_files: string[] | null;
+  recommended_action: string | null;
+  reasoning_summary: string | null;
+  alternatives: Jsonb | null;
+  previous_reviews: Jsonb | null;
+  decided_action: string | null;
+  modifications: Jsonb | null;
+  delegated_to: string | null;
+  reanalysis_run_id: string | null;
+  policy_change_id: number | null;
+}
+
+export interface ApprovalRulesTable {
+  id: Generated<string>;
+  operation_pattern: string;
+  risk_class: string;
+  gate: string;
+  locked: Generated<boolean>;
+  enabled: Generated<boolean>;
+  priority: Generated<number>;
+  updated_by: string | null;
+  updated_at: Timestamptz;
 }
 
 export interface OutboxTable {
@@ -364,6 +397,7 @@ export interface DB {
   agents: AgentsTable;
   intents: IntentsTable;
   approvals: ApprovalsTable;
+  approval_rules: ApprovalRulesTable;
   outbox: OutboxTable;
   cost_ledger: CostLedgerTable;
   audit_log: AuditLogTable;

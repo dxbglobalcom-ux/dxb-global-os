@@ -44,12 +44,14 @@ export default async function CommandLayout({
         pending_approvals: number;
         pending_high_risk: number;
       }>(),
+    // E9.3 §5 rail summary: the center view carries the money_out flag and
+    // purpose; oldest-first so the rail surfaces what has waited longest.
     supabase
-      .from("approvals")
-      .select("id,action_type,risk_class,created_at")
+      .from("v_approvals_center")
+      .select("id,action_type,operation,purpose,risk_class,created_at,money_out")
       .eq("status", "pending")
-      .order("created_at", { ascending: false })
-      .limit(5),
+      .order("created_at", { ascending: true })
+      .limit(200),
     // Only genuinely in-flight work reaches the dock: a claimed/running task
     // without a live lease is a zombie (wave 3f — a 3-day-old unclaimed seed
     // sat on every screen as green "running").
@@ -82,12 +84,25 @@ export default async function CommandLayout({
   const paused = pauseRes.data?.value === true;
 
   const systemOk = !summaryRes.error;
-  const approvals: RailApproval[] = (railRes.data ?? []).map((a) => ({
+  type RailViewRow = {
+    id: string;
+    action_type: string;
+    operation: string | null;
+    purpose: string | null;
+    risk_class: string;
+    created_at: string;
+    money_out: boolean;
+  };
+  const railRows = (railRes.data ?? []) as unknown as RailViewRow[];
+  const approvals: RailApproval[] = railRows.slice(0, 5).map((a) => ({
     id: a.id,
-    title: a.action_type,
+    title: a.purpose ?? a.operation ?? a.action_type,
     risk: a.risk_class,
     created_at: a.created_at,
+    moneyOut: a.money_out,
   }));
+  const oldestPendingAt = railRows[0]?.created_at ?? null;
+  const moneyOutCount = railRows.filter((a) => a.money_out).length;
   const dockTasks: DockTask[] = (dockRes.data ?? []).map((task) => ({
     id: task.id,
     title: task.objective ?? task.id,
@@ -122,11 +137,15 @@ export default async function CommandLayout({
         <main className="min-w-0 flex-1 overflow-y-auto p-6 pb-24">{children}</main>
         <IntelligenceRail
           labels={t.rail}
+          locale={locale}
           approvals={approvals}
           pendingCount={summaryRes.data?.pending_approvals ?? 0}
+          oldestPendingAt={oldestPendingAt}
+          moneyOutCount={moneyOutCount}
           alerts={railAlerts}
           alertCount={alertCount}
           alertLevels={t.alerts.ui.levels}
+          riskLevels={t.approvals.ui.riskLevels}
         />
         <AgentDock label={t.dock.running} tasks={dockTasks} statusLabels={dict.status} />
       </div>

@@ -13,17 +13,22 @@ export type RailApproval = {
   title: string;
   risk: string | null;
   created_at: string;
+  moneyOut: boolean;
 };
 
 export type { RailAlert };
 
 export function IntelligenceRail({
   labels,
+  locale,
   approvals,
   pendingCount,
+  oldestPendingAt,
+  moneyOutCount,
   alerts,
   alertCount,
   alertLevels,
+  riskLevels,
 }: {
   labels: {
     title: string;
@@ -32,18 +37,51 @@ export function IntelligenceRail({
     alertsTitle: string;
     alertsEmpty: string;
     viewAll: string;
+    moneyOut: string;
+    oldest: string;
   };
+  locale: string;
   approvals: RailApproval[];
   pendingCount: number;
+  oldestPendingAt: string | null;
+  moneyOutCount: number;
   alerts: RailAlert[];
   alertCount: number;
   alertLevels: Record<string, string>;
+  riskLevels: Record<string, string>;
 }) {
   return (
     <aside className="hidden w-72 shrink-0 flex-col gap-4 overflow-y-auto border-l border-edge-neutral bg-surface-obsidian p-4 xl:flex">
       <div className="label-caps text-ink-muted">{labels.title}</div>
 
       <Panel title={labels.approvalsTitle}>
+        {/* E9.3 §5 rail summary: pending count + oldest + money_out badge */}
+        {pendingCount > 0 && (
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <span className="font-data text-body-s tabular-nums text-ink-primary">
+              {pendingCount}
+            </span>
+            {moneyOutCount > 0 && (
+              <StatusBadge level="warn">
+                {labels.moneyOut} {moneyOutCount}
+              </StatusBadge>
+            )}
+            {oldestPendingAt && (
+              <span className="font-data text-caption tabular-nums text-ink-muted">
+                {labels.oldest}{" "}
+                {/* locale-pinned: a short month name from the browser default
+                    would leak an EN month onto the TR screen (RULE #0) */}
+                {new Date(oldestPendingAt).toLocaleString(locale === "tr" ? "tr-TR" : "en-GB", {
+                  month: "short",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hourCycle: "h23",
+                })}
+              </span>
+            )}
+          </div>
+        )}
         {approvals.length === 0 ? (
           <p className="text-body-s text-ink-secondary">{labels.approvalsEmpty}</p>
         ) : (
@@ -51,14 +89,19 @@ export function IntelligenceRail({
             {approvals.map((a) => (
               <li key={a.id}>
                 <Link
-                  href={`/approvals?state=pending`}
-                  className="block rounded-input border border-edge-neutral bg-surface-graphite p-2 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
+                  href={`/approvals/${a.id}`}
+                  className={`block rounded-input border bg-surface-graphite p-2 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne ${
+                    a.moneyOut ? "border-edge-champagne" : "border-edge-neutral"
+                  }`}
                 >
                   <div className="truncate text-body-s text-ink-primary">{a.title}</div>
                   <div className="mt-1 flex items-center gap-2">
+                    {a.moneyOut && (
+                      <span className="label-caps text-accent-champagne">{labels.moneyOut}</span>
+                    )}
                     {a.risk && (
                       <StatusBadge level={a.risk === "critical" ? "critical" : "warn"}>
-                        {a.risk}
+                        {riskLevels[a.risk] ?? a.risk}
                       </StatusBadge>
                     )}
                     <span className="font-data text-caption text-ink-muted tabular-nums">

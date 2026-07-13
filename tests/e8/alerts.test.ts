@@ -206,6 +206,15 @@ describe("E8.4b alarm sources (OBSERVABILITY §3)", () => {
 describe("E8.4b fn_alerts_evaluate — time-based checks (queue age, heartbeat, escalation)", () => {
   it("stale queued task → queue-age alert; stale snapshot → heartbeat alert — rolled back", async () => {
     await db().transaction().execute(async (trx) => {
+      // A genuine long-lived alert may hold these dedup keys (and the
+      // escalation sweep may have bumped it past 'attention'); ON CONFLICT
+      // would then make the probe read THAT row's level. Resolve them inside
+      // the rolled-back trx so the probe sees its own fresh rows — live rows
+      // untouched after rollback.
+      await sql`
+        UPDATE alerts SET resolved_at = now()
+        WHERE dedup_key IN ('queue-age', 'heartbeat-loss') AND resolved_at IS NULL
+      `.execute(trx);
       await sql`
         INSERT INTO tasks (department, objective, output_contract, model_tier, status, created_at)
         VALUES ('engineering', 'E8.4b probe: ancient queued task', 'probe', 'L4', 'queued',

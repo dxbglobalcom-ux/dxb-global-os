@@ -22,10 +22,35 @@ process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322
 // DB-state assertions still run and the key checks are skipped (⚠ UNVERIFIED)
 const LIVE = Boolean(process.env.LITELLM_MASTER_KEY);
 
+// Scoped sweep (E9.3 incident fix: table-wide deletes destroyed live
+// history): only the rows this suite injects (meta marker) and the breaker
+// audit rows its trips produce.
 async function wipeCostAndAudit(): Promise<void> {
   const db = getDb();
-  await db.deleteFrom("cost_ledger").execute();
-  await db.deleteFrom("audit_log").where("actor", "in", ["system:breaker", "ceo:cli"]).execute();
+  await db
+    .deleteFrom("cost_ledger")
+    .where(sql<boolean>`meta->>'injected' = 'velocity-test'`)
+    .execute();
+  await db
+    .deleteFrom("audit_log")
+    .where("actor", "in", ["system:breaker", "ceo:cli"])
+    .where("action", "in", ["breaker.tripped", "breaker.reset"])
+    .execute();
+  // The intentional trip raises a REAL E8.4b alert row; once the suite has
+  // reset the breaker state, an unresolved budget-breaker alert is this
+  // suite's artifact — remove it so /alerts stays clean (E8.4b lesson).
+  await sql`DELETE FROM alerts WHERE dedup_key = 'budget-breaker' AND resolved_at IS NULL
+            AND NOT EXISTS (SELECT 1 FROM budget_state WHERE breaker_tripped)`.execute(db);
+}
+
+/** Real last-hour spend outside our injected rows (live dev usage). */
+async function foreignWindowEur(): Promise<number> {
+  const res = await sql<{ total: number }>`
+    SELECT coalesce(sum(cost_eur), 0)::float AS total FROM cost_ledger
+     WHERE created_at > now() - interval '60 minutes'
+       AND (meta->>'injected' IS DISTINCT FROM 'velocity-test')
+  `.execute(getDb());
+  return Number(res.rows[0].total);
 }
 
 async function clearBreakerState(): Promise<void> {
@@ -66,8 +91,16 @@ afterAll(async () => {
 });
 
 describe("velocity breaker (COST-03)", () => {
-  it("under-cap hour does NOT trip the breaker", async () => {
-    await injectStorm(2, 0.01); // 0.02 EUR << 2.00 cap
+  it("under-cap hour does NOT trip the breaker", async (ctx) => {
+    // The breaker reads GLOBAL last-hour spend. If real dev usage already
+    // sits near the cap, the under-cap premise is void this hour — skip
+    // honestly instead of tripping the live breaker on purpose.
+    const baseline = await foreignWindowEur();
+    if (baseline >= 1.0) {
+      ctx.skip(); // ⚠ premise void: real window spend ≥ 1.00 EUR (cap 2.00)
+      return;
+    }
+    await injectStorm(2, 0.01); // baseline < 1.00 + 0.02 EUR << 2.00 cap
     const result = await checkVelocity();
     expect(result.newly_tripped).toBe(false);
     const state = await getDb().selectFrom("budget_state").selectAll().executeTakeFirstOrThrow();

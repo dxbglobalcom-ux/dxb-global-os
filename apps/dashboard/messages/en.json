@@ -445,7 +445,9 @@
       "approvalsEmpty": "No approvals waiting. New requests appear here the moment an agent asks.",
       "alertsTitle": "Critical alerts",
       "viewAll": "View all",
-      "alertsEmpty": "All clear — no active alerts."
+      "alertsEmpty": "All clear — no active alerts.",
+      "moneyOut": "Money out",
+      "oldest": "Oldest:"
     },
     "dock": {
       "running": "Running now"
@@ -1086,6 +1088,172 @@
           "fail": "Fail run",
           "fallback": "Fallback",
           "escalate": "Escalate"
+        }
+      }
+    },
+    "approvals": {
+      "title": "Approval Center",
+      "subtitle": "Outward-facing actions wait here for your decision — everything else runs autonomously.",
+      "statuses": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "draft": "Draft"
+      },
+      "ui": {
+        "viewPending": "Pending",
+        "viewDecided": "Decided",
+        "filterClass": "Class",
+        "filterDepartment": "Department",
+        "filterAge": "Age",
+        "all": "All",
+        "ageOver24h": "Waiting > 24h",
+        "ageStale": "Stale (7d+)",
+        "shown": "shown",
+        "empty": "No approvals waiting. New requests appear here the moment an agent asks.",
+        "emptyDecided": "No decisions yet.",
+        "moneyOut": "Money out",
+        "stale": "Stale",
+        "expired": "Deadline passed",
+        "delegated": "Delegated to",
+        "deadline": "Deadline",
+        "requester": "Requested by",
+        "department": "Department",
+        "operation": "Operation",
+        "costEstimate": "Cost estimate",
+        "recommended": "Recommended action",
+        "reasoning": "Reasoning",
+        "approve": "Approve",
+        "reject": "Reject",
+        "rejectNotePlaceholder": "Note (optional)",
+        "decideInDetail": "Money-out decisions are made on the detail page with full context.",
+        "openDetail": "Full record",
+        "selectedCount": "selected",
+        "approveSelected": "Approve selected",
+        "rejectSelected": "Reject selected",
+        "bulkMoneyOutNote": "Money-out approvals are never part of a batch.",
+        "fatigueTitle": "Gate load",
+        "fatiguePending": "Pending",
+        "fatigueOldest": "Oldest",
+        "fatigueRate7d": "7-day approval rate",
+        "fatigueAvgDecision": "Avg decision",
+        "fatigueSuggestion": "Every {class} request was approved in the last 7 days — consider making this class autonomous (policy action on the detail page).",
+        "decidedAs": "Decision",
+        "hours": "h",
+        "minutes": "m",
+        "classes": {
+          "money_out": "Money out",
+          "contract": "Contract",
+          "identity": "Identity",
+          "high_cost": "High cost",
+          "other": "Other"
+        },
+        "riskLevels": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High",
+          "critical": "Critical"
+        },
+        "actions": {
+          "approve": "Approved",
+          "reject": "Rejected",
+          "approve_with_modifications": "Approved with changes",
+          "delegate": "Delegated",
+          "request_info": "Info requested",
+          "reanalyze": "Re-analysis requested",
+          "change_policy": "Policy changed"
+        },
+        "payloadText": {
+          "approve": "Approve",
+          "confirmApprove": "Confirm",
+          "reject": "Reject",
+          "rejectNotePlaceholder": "Note (optional)",
+          "moneyOut": "Money out",
+          "highBadge": "High risk",
+          "payload": "Raw payload (audit)",
+          "details": "Details",
+          "fields": {
+            "memo": "Note",
+            "recipient": "Recipient",
+            "to": "To",
+            "subject": "Subject",
+            "preview": "Preview",
+            "amount_eur": "Amount",
+            "cost_eur": "Cost",
+            "budget_eur": "Budget",
+            "iban_last4": "IBAN ending",
+            "liste": "List",
+            "description": "Description",
+            "reason": "Reason",
+            "url": "Link",
+            "campaign": "Campaign",
+            "body": "Message",
+            "attachment": "Attachment",
+            "vendor": "Vendor",
+            "invoice": "Invoice",
+            "due_date": "Due date",
+            "currency": "Currency"
+          }
+        }
+      },
+      "detail": {
+        "status": "Status",
+        "contextTitle": "Full context",
+        "classLabel": "Operation class",
+        "project": "Project",
+        "modelToUse": "Model to use",
+        "affectedSystems": "Affected systems",
+        "contextAge": "Context age",
+        "alternativesTitle": "Alternatives",
+        "relatedTitle": "Related files & tasks",
+        "taskLink": "Task",
+        "historyTitle": "Decision history",
+        "historyEmpty": "No decisions or reviews yet.",
+        "modificationsTitle": "Applied modifications",
+        "reviewTypes": {
+          "delegation": "Delegation",
+          "info_request": "Info request",
+          "reanalysis_requested": "Re-analysis requested",
+          "reanalysis_result": "Re-analysis result"
+        }
+      },
+      "actionsUi": {
+        "actionsTitle": "Decide",
+        "approve": "Approve",
+        "confirmApprove": "Confirm",
+        "reject": "Reject",
+        "modify": "Approve with changes",
+        "cancelModify": "Cancel",
+        "diffTitle": "Change summary",
+        "noChanges": "No fields changed yet.",
+        "approveWithChanges": "Approve with these changes",
+        "delegate": "Delegate",
+        "delegateTo": "Analyst",
+        "alreadyDelegated": "Already delegated to",
+        "requestInfo": "Request info",
+        "reanalyze": "Re-analyze",
+        "reanalyzeModel": "Model",
+        "modelAuto": "Automatic",
+        "changePolicy": "Change policy",
+        "policyRule": "Rule",
+        "policyGate": "Gate",
+        "lockedRule": "locked (B7b)",
+        "gates": {
+          "autonomous": "Autonomous",
+          "notify": "Notify",
+          "gated": "Gated"
+        },
+        "notePlaceholder": "Note for this action (optional — required for info requests)",
+        "send": "Send",
+        "moneyOutNotice": "Money-out release happens only through this decision — there is no other path to the outbox (B7b).",
+        "done": {
+          "approve": "Approved — the action is released to the outbox.",
+          "reject": "Rejected.",
+          "approve_with_modifications": "Approved with your changes — released to the outbox.",
+          "delegate": "Delegated — an analysis task was queued. The final decision stays with you.",
+          "request_info": "Info requested from the requester.",
+          "reanalyze": "Re-analysis queued — the result will appear under decision history.",
+          "change_policy": "Policy updated — recorded in the settings change log (undoable)."
         }
       }
     }

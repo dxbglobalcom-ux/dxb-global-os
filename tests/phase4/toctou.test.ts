@@ -8,6 +8,7 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { approve } from "../../tools/dxb-cli/src/approve.js";
 import { tick } from "../../packages/outbox-executor/src/index.js";
+import { assertNoForeignReadyOutbox, sweepByDepartment } from "../helpers/suite-scope.js";
 
 // GATE-02 proofs (04-03): the executor's same-transaction re-check (TOCTOU),
 // loud refusal of unknown action types, path-traversal confinement, and the
@@ -16,8 +17,11 @@ process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322
 
 const PROOF_ROOT = resolve(process.cwd(), "tmp", "outbox-proof");
 
+// Suite-unique department = isolation marker (E9.3 incident fix).
+const DEPT = "p4tc-gate";
+
 const ENVELOPE = {
-  department: "engineering",
+  department: DEPT,
   objective: "outbox executor test: GATE-02 exactly-once side effects",
   output_contract: "outbox chain recorded",
   model_tier: "L3",
@@ -29,17 +33,6 @@ async function call(name: string, args: Record<string, unknown>): Promise<any> {
   const res = await client.callTool({ name, arguments: args });
   if (res.isError) throw new Error((res.content as Array<{ text: string }>)[0]?.text ?? "tool error");
   return JSON.parse((res.content as Array<{ text: string }>)[0].text);
-}
-
-async function wipe(): Promise<void> {
-  const db = getDb();
-  await db.deleteFrom("task_events").execute();
-  await db.deleteFrom("outbox").execute();
-  await db.deleteFrom("approvals").execute();
-  await db.deleteFrom("cost_ledger").execute();
-  await db.deleteFrom("audit_log").execute();
-  await db.updateTable("tasks").set({ parent_task_id: null }).execute();
-  await db.deleteFrom("tasks").execute();
 }
 
 async function makeTask(): Promise<string> {
@@ -64,11 +57,14 @@ beforeAll(async () => {
   client = new Client({ name: "toctou-test", version: "0.0.0" });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
-  await wipe();
+  await sweepByDepartment(getDb(), DEPT); // self-heal a killed previous run
+  // tick() fires EVERY ready row — refuse to run over live gated actions.
+  await assertNoForeignReadyOutbox(getDb());
   await rm(PROOF_ROOT, { recursive: true, force: true });
 });
 
 afterAll(async () => {
+  await sweepByDepartment(getDb(), DEPT);
   await client.close();
   await closeDb();
 });

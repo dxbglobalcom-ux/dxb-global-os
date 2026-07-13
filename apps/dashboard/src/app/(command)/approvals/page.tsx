@@ -1,66 +1,63 @@
+import { ApprovalCenter } from "@/components/command/approval-center";
+import { Panel } from "@/components/primitives";
+import {
+  mapCenterRow,
+  mapFatigueRow,
+  type CenterViewRow,
+  type FatigueViewRow,
+} from "@/lib/approvals-center";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
-import { ApprovalsInbox } from "@/components/approvals/inbox";
-import type { InboxApproval } from "@/lib/approvals";
 
-// Approvals inbox (GATE-03, master plan step 5): server-fetches pending
-// drafts with their task context; the client island groups by risk_class
-// and stays live over dxb:approvals. B7b: money-IN never creates an
-// approvals row upstream, so this surface only ever shows gated OUTWARD
-// actions — the money-OUT badge is derived per row.
+// /approvals — Approval Center (E9.3, APPROVAL_ENGINE §5/§7). Pending +
+// recent decisions in ONE query (v_approvals_center); fatigue metrics from
+// v_approval_fatigue (R6 — a view, never a table). Quick decisions ride the
+// LOCKED 0015 path (actions.ts, KALIR); the 7-action surface is the detail
+// page. GATE-03 inbox grew into this center — the readable-payload work
+// carried over (R5).
+
+export const metadata = { title: "Approvals — DXB" };
+
 export default async function ApprovalsPage() {
-  const dict = getDict(await getLocale());
+  const locale = await getLocale();
+  const t = getDict(locale).command.approvals;
   const supabase = await createClient();
 
-  const { data } = await supabase
-    .from("approvals")
-    .select("id,task_id,action_type,payload,risk_class,created_at,tasks(department,objective)")
-    .eq("status", "pending")
-    .order("created_at", { ascending: true });
+  const [pendingRes, decidedRes, fatigueRes] = await Promise.all([
+    supabase
+      .from("v_approvals_center")
+      .select("*")
+      .eq("status", "pending")
+      .limit(200),
+    supabase
+      .from("v_approvals_center")
+      .select("*")
+      .neq("status", "pending")
+      .order("decided_at", { ascending: false })
+      .limit(50),
+    supabase.from("v_approval_fatigue").select("*"),
+  ]);
 
-  const rows: InboxApproval[] = (data ?? []).map((row) => {
-    const task = row.tasks as { department?: string; objective?: string } | null;
-    return {
-      id: row.id,
-      task_id: row.task_id,
-      action_type: row.action_type,
-      payload: (row.payload ?? {}) as Record<string, unknown>,
-      risk_class: row.risk_class,
-      created_at: row.created_at,
-      department: task?.department ?? null,
-      objective: task?.objective ?? null,
-    };
-  });
+  const pending = ((pendingRes.data ?? []) as unknown as CenterViewRow[]).map(mapCenterRow);
+  const decided = ((decidedRes.data ?? []) as unknown as CenterViewRow[]).map(mapCenterRow);
+  const fatigue = ((fatigueRes.data ?? []) as unknown as FatigueViewRow[]).map(mapFatigueRow);
 
-  const a = dict.approvals;
   return (
-    <div className="mx-auto flex max-w-[1400px] flex-col gap-5">
-      <h1 className="font-display text-h1 text-ink-primary">{a.title}</h1>
-      <ApprovalsInbox
-        rows={rows}
-        text={{
-          groupHigh: a.groupHigh,
-          groupMedium: a.groupMedium,
-          groupLow: a.groupLow,
-          approve: a.approve,
-          confirmApprove: a.confirmApprove,
-          reject: a.reject,
-          rejectNotePlaceholder: a.rejectNotePlaceholder,
-          approveAll: a.approveAll,
-          moneyOut: a.moneyOut,
-          highBadge: a.highBadge,
-          payload: a.payload,
-          details: a.details,
-          fields: a.fields,
-          empty: a.empty,
-          emptyAction: a.emptyAction,
-          fatigue: a.fatigue,
-          errorPanelTitle: a.errorPanelTitle,
-          asOf: dict.cockpit.asOf,
-          notLiveSince: dict.cockpit.notLiveSince,
-        }}
-      />
+    <div className="mx-auto max-w-[1400px] space-y-4">
+      <header>
+        <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+        <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
+      </header>
+      <Panel>
+        <ApprovalCenter
+          pending={pending}
+          decided={decided}
+          fatigue={fatigue}
+          labels={t.ui}
+          locale={locale}
+        />
+      </Panel>
     </div>
   );
 }

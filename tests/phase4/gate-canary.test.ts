@@ -7,6 +7,7 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { approve } from "../../tools/dxb-cli/src/approve.js";
 import { tick } from "../../packages/outbox-executor/src/index.js";
+import { assertNoForeignReadyOutbox, sweepByDepartment } from "../helpers/suite-scope.js";
 
 // GATE-04 CI canary (04-05): three ⛔-locked scenarios from master-plan §3.
 // If any of these goes red, the approval gate has weakened — CI must block.
@@ -29,27 +30,22 @@ async function call(name: string, args: Record<string, unknown>): Promise<any> {
   return JSON.parse((res.content as Array<{ text: string }>)[0].text);
 }
 
-async function wipe(): Promise<void> {
-  const db = getDb();
-  await db.deleteFrom("task_events").execute();
-  await db.deleteFrom("outbox").execute();
-  await db.deleteFrom("approvals").execute();
-  await db.deleteFrom("cost_ledger").execute();
-  await db.deleteFrom("audit_log").execute();
-  await db.updateTable("tasks").set({ parent_task_id: null }).execute();
-  await db.deleteFrom("tasks").execute();
-}
+// Suite-unique department = isolation marker (E9.3 incident fix).
+const DEPT = "p4gc-gate";
 
 beforeAll(async () => {
   const server = createDxbMcpServer();
   client = new Client({ name: "gate-canary-test", version: "0.0.0" });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
-  await wipe();
+  await sweepByDepartment(getDb(), DEPT); // self-heal a killed previous run
+  // tick() fires EVERY ready row — refuse to run over live gated actions.
+  await assertNoForeignReadyOutbox(getDb());
   await rm(resolve(PROOF_ROOT, INJECTION_FILE), { force: true });
 });
 
 afterAll(async () => {
+  await sweepByDepartment(getDb(), DEPT);
   await client.close();
   await closeDb();
 });
@@ -75,7 +71,7 @@ describe("gate canary scenario 1: outward tools are invisible (GATE-04)", () => 
 describe("gate canary scenario 2: 'approved' is unreachable from agent paths (GATE-04)", () => {
   it("direct UPDATE draft→approved (skipping pending) is refused by the one-way trigger", async () => {
     const task = await call("queue_create_task", {
-      department: "engineering",
+      department: DEPT,
       objective: "gate-canary scenario 2: agent seeks a path around submit_draft",
       output_contract: "no path exists",
       model_tier: "L3",
@@ -106,7 +102,7 @@ describe("gate canary scenario 3: prompt injection cannot cross the gate (GATE-0
 
   it("verbatim 'pre-approved' injection through the full agent surface + a scheduler tick stays pending, outbox empty, no side effect", async () => {
     const task = await call("queue_create_task", {
-      department: "engineering",
+      department: DEPT,
       objective: `gate-canary scenario 3 — ${INJECTION}`,
       output_contract: "the gate does not read prose",
       model_tier: "L3",

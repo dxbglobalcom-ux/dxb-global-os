@@ -3,13 +3,19 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
+import { sweepByDepartment } from "../helpers/suite-scope.js";
 
 // Runs against the local Supabase stack (03-02). Real MCP protocol via linked
 // in-memory transports — no subprocess.
 process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
+// Suite-unique departments: queue_claim(departments) pulls the OLDEST queued
+// task in a department, so sharing 'engineering' with live rows would claim
+// (mutate!) real work. Isolation marker doubles as the sweep key (E9.3
+// incident fix).
+const DEPT = "p3lc-gate";
 const ENVELOPE = {
-  department: "engineering",
+  department: DEPT,
   objective: "lifecycle test: exercise the full LOCKED status chain end to end",
   output_contract: "status transitions recorded",
   model_tier: "L3",
@@ -23,27 +29,16 @@ async function call(name: string, args: Record<string, unknown>): Promise<any> {
   return JSON.parse((res.content as Array<{ text: string }>)[0].text);
 }
 
-async function wipe(): Promise<void> {
-  const db = getDb();
-  // FK-safe order; tests own these tables on the local stack.
-  await db.deleteFrom("task_events").execute();
-  await db.deleteFrom("outbox").execute();
-  await db.deleteFrom("approvals").execute();
-  await db.deleteFrom("cost_ledger").execute();
-  await db.deleteFrom("audit_log").execute();
-  await db.updateTable("tasks").set({ parent_task_id: null }).execute();
-  await db.deleteFrom("tasks").execute();
-}
-
 beforeAll(async () => {
   const server = createDxbMcpServer();
   client = new Client({ name: "lifecycle-test", version: "0.0.0" });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
-  await wipe();
+  await sweepByDepartment(getDb(), "p3lc-"); // self-heal a killed previous run
 });
 
 afterAll(async () => {
+  await sweepByDepartment(getDb(), "p3lc-");
   await client.close();
   await closeDb();
 });
@@ -53,7 +48,7 @@ describe("dxb-mcp queue lifecycle (gate criterion 2)", () => {
     const task = await call("queue_create_task", ENVELOPE);
     expect(task.status).toBe("queued");
 
-    const claimed = await call("queue_claim", { worker_id: "worker-1", departments: ["engineering"] });
+    const claimed = await call("queue_claim", { worker_id: "worker-1", departments: [DEPT] });
     expect(claimed.id).toBe(task.id);
     expect(claimed.status).toBe("claimed");
 
@@ -75,7 +70,7 @@ describe("dxb-mcp queue lifecycle (gate criterion 2)", () => {
 
   it("returned path: review→returned stores feedback, returned→queued is re-claimable", async () => {
     const task = await call("queue_create_task", { ...ENVELOPE, objective: "returned path: exercise feedback loop end to end" });
-    await call("queue_claim", { worker_id: "worker-2", departments: ["engineering"] });
+    await call("queue_claim", { worker_id: "worker-2", departments: [DEPT] });
     await call("queue_transition", { task_id: task.id, to_status: "running", actor: "worker-2" });
     await call("queue_transition", { task_id: task.id, to_status: "review", actor: "worker-2" });
 
@@ -84,7 +79,7 @@ describe("dxb-mcp queue lifecycle (gate criterion 2)", () => {
     expect(returned.feedback).toContain("section 3");
 
     await call("queue_transition", { task_id: task.id, to_status: "queued", actor: "qa-head" });
-    const reclaimed = await call("queue_claim", { worker_id: "worker-3", departments: ["engineering"] });
+    const reclaimed = await call("queue_claim", { worker_id: "worker-3", departments: [DEPT] });
     expect(reclaimed.id).toBe(task.id);
     expect(reclaimed.claimed_by).toBe("worker-3");
   });
@@ -115,8 +110,8 @@ describe("dxb-mcp queue lifecycle (gate criterion 2)", () => {
   });
 
   it("rejects transition to returned without feedback (QUEUE-03)", async () => {
-    const task = await call("queue_create_task", { ...ENVELOPE, department: "qa-isolated", objective: "feedbackless return attempt must fail loudly" });
-    await call("queue_claim", { worker_id: "w", departments: ["qa-isolated"] });
+    const task = await call("queue_create_task", { ...ENVELOPE, department: "p3lc-isolated", objective: "feedbackless return attempt must fail loudly" });
+    await call("queue_claim", { worker_id: "w", departments: ["p3lc-isolated"] });
     await call("queue_transition", { task_id: task.id, to_status: "running", actor: "w" });
     await call("queue_transition", { task_id: task.id, to_status: "review", actor: "w" });
     await expect(call("queue_transition", { task_id: task.id, to_status: "returned", actor: "w" })).rejects.toThrow(

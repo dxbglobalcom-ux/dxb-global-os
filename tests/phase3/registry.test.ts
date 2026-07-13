@@ -15,15 +15,32 @@ async function call(name: string, args: Record<string, unknown>): Promise<any> {
   return JSON.parse((res.content as Array<{ text: string }>)[0].text);
 }
 
+// The cost probe writes real cost_ledger rows; interrupted runs skip afterAll
+// (E9.1 lesson), so the sweep runs on BOTH sides to stay self-healing.
+async function sweepCostProbes() {
+  await getDb()
+    .deleteFrom("cost_ledger")
+    .where("department", "=", "finance")
+    .where("model", "=", "glm-5.2")
+    .where("mode", "=", "api")
+    .where("cost_eur", "in", [0.01, 0.03])
+    .execute();
+}
+
 beforeAll(async () => {
   const server = createDxbMcpServer();
   client = new Client({ name: "registry-test", version: "0.0.0" });
   const [ct, st] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(st), client.connect(ct)]);
   await getDb().deleteFrom("departments").where("slug", "=", "legal-de").execute();
+  await sweepCostProbes();
 });
 
 afterAll(async () => {
+  await sweepCostProbes();
+  // legal-de is a probe department with no display_name_tr — leaving it live
+  // fails the i18n purity gate between runs.
+  await getDb().deleteFrom("departments").where("slug", "=", "legal-de").execute();
   await client.close();
   await closeDb();
 });
@@ -49,7 +66,9 @@ describe("dxb-mcp registry/audit/cost groups (gate criteria 4-5)", () => {
     const agents = await call("registry_list", { role: "worker" });
     expect(agents.length).toBeGreaterThan(0);
     const agent = await call("registry_get_agent", { slug: agents[0].slug });
-    expect(agent.persona_path).toMatch(/agency-agents\//);
+    // E5.2b file-first architecture: personas/<dept>/<slug>.md is canonical
+    // (the agency-agents/ mirror was retired).
+    expect(agent.persona_path).toMatch(/personas\//);
     const body = readFileSync(agent.persona_path, "utf8");
     // a distinctive line from the persona body must NOT appear in the tool response
     const marker = body.split("\n").find((l) => l.length > 40) ?? body.slice(0, 80);

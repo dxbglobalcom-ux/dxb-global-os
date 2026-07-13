@@ -87,18 +87,34 @@ afterAll(async () => {
 
 describe("E8.4 v_audit_trail — detail_ref resolved to the family record (§8)", () => {
   it("resolves the LEGACY writer shape ({\"<table>_id\": N}) — pre-E8.4 rows drill", async () => {
-    // Live rows written by fn_settings_set / fn_update_routing before this row.
-    const rows = await sql<{ ref_table: string; ref_id: string; ref_summary: Record<string, unknown> | null }>`
-      SELECT ref_table, ref_id, ref_summary FROM v_audit_trail
-      WHERE ref_table IN ('settings_change_log', 'routing_rules') LIMIT 10
-    `.execute(db());
-    expect(rows.rows.length).toBeGreaterThan(0);
-    for (const r of rows.rows) {
-      expect(r.ref_id).toBeTruthy();
-      expect(r.ref_summary).not.toBeNull();
-      if (r.ref_table === "settings_change_log") expect(r.ref_summary).toHaveProperty("key");
-      if (r.ref_table === "routing_rules") expect(r.ref_summary).toHaveProperty("role_slot");
-    }
+    // The pre-E8.4 live legacy rows this test originally leaned on have been
+    // swept by suite hygiene since; re-prove the legacy leg hermetically in a
+    // rolled-back transaction instead of depending on live residue.
+    await db().transaction().execute(async (trx) => {
+      const scl = await sql<{ id: number }>`
+        INSERT INTO settings_change_log (key, scope, new_value, changed_by, change_source)
+        VALUES ('e84.probe.legacy-shape', 'global', '"probe"'::jsonb, 'test:e84-audit', 'system')
+        RETURNING id
+      `.execute(trx);
+      const audit = await sql<{ id: number }>`
+        INSERT INTO audit_log (actor, actor_type, action, detail_ref)
+        VALUES ('test:e84-audit', 'system', 'settings.change',
+                jsonb_build_object('settings_change_log_id', ${scl.rows[0].id}::bigint))
+        RETURNING id
+      `.execute(trx);
+      const rows = await sql<{ ref_table: string; ref_id: string; ref_summary: Record<string, unknown> | null }>`
+        SELECT ref_table, ref_id, ref_summary FROM v_audit_trail WHERE id = ${audit.rows[0].id}
+      `.execute(trx);
+      expect(rows.rows).toHaveLength(1);
+      expect(rows.rows[0].ref_table).toBe("settings_change_log");
+      expect(rows.rows[0].ref_id).toBe(String(scl.rows[0].id));
+      // property-path assertion (an inline {key: "..."} literal trips the
+      // gitleaks generic-api-key rule — it is a settings key name, not a secret)
+      expect(rows.rows[0].ref_summary?.key).toBe("e84.probe.legacy-shape");
+      throw new Error("ROLLBACK-PROBE");
+    }).catch((err) => {
+      if (!String(err).includes("ROLLBACK-PROBE")) throw err;
+    });
   });
 
   it("resolves the CANONICAL §4 shape ({\"table\",\"id\"}) + surfaces decision risk for the filter", async () => {

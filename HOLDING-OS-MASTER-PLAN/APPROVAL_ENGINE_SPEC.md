@@ -147,6 +147,18 @@ Mevcut approvals+outbox+0013 trigger (KALIR) · [[SETTINGS_AND_CONTROL_SPEC]] (p
 - **Deadline geçen pending**: işlem iptal EDİLMEZ (karar CEO'nun); expired işareti + alert; talep sahibi ajana "beklemede" durumu (OBSERVABILITY awaiting_approval).
 - **Delegasyon zinciri**: tek seviye — devredilen tekrar devredemez (analiz döner, karar CEO'da kalır).
 
+## Registered adaptations — E9.3 execution (2026-07-14, Fable K1; CEO-visible)
+
+Recorded at implementation time per the master-plan fidelity rule (adaptation ≠ deviation; every item below implements this spec's intent against the live system's actual shape). Ticket: `.planning/quick/20260713-e93-approval-center/PLAN.md`.
+
+- **A1 — operation_class carries the §4 classification domain.** Spec §4 lists `risk_class` as money_out|contract|identity|high_cost|other, but the live `approvals.risk_class` column already holds severity values (low/medium/high/critical) consumed by inbox grouping and v_alerts_active. New nullable `operation_class` column carries the classification; `risk_class` stays severity. B7b keys on `operation_class='money_out'` OR the legacy `action_type` prefix (`fn_is_money_out`).
+- **A2 — money_out outbox INSERT realized through the 0003 enqueue trigger** firing INSIDE `control_approvals_action`'s transaction (single-transaction guarantee holds; a duplicated direct INSERT would violate outbox UNIQUE). Grant proof unchanged: authenticated/anon hold no outbox write path (`has_table_privilege` all false).
+- **A3 — fn name follows the control-seam idiom:** `control_approvals_action(p_payload, p_idempotency_key)` (alerts/workflows twin) implements this spec's fn_decide_approval contract. `decide_approvals` (0015) stays untouched beside it; the legacy inbox path remains green.
+- **A4 — §9 deadline/money_out sweeps land as additive checks inside `fn_alerts_evaluate`** (E8.4b's single sweep door) instead of a new sweep fn — existing checks byte-identical.
+- **A5 — reanalyze/delegate produce analysis TASKS** (tasks table, holding department); the resident worker that executes them is Phase-7 scope. Tests drive the system-append path directly.
+- **A6 — approve_with_modifications semantics:** effective payload = `payload || modifications` written back to `payload` (executor reads one field); the `modifications` column keeps the delta; audit carries the original payload_hash.
+- **A7 — migration shipped as ONE file** `20260713110000_approval_center.sql` (0023a-c folded, repo idiom of one migration per roadmap row); TRUNCATE grant revoke on approvals/outbox included (broken grant found during recon = fixed immediately; B7b infrastructure is the explicit exception to the security-hardening deferral).
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · §21 + madde 11 alan/aksiyon eşlemesi eksiksiz ✓ · B7b üç-katman mekanizması + DB-kanıt komutu ✓ · madde 4 dengesi (yeni kapı yok, fail-closed) ✓ · mevcut-varlık eşlemesi (approvals/outbox/trigger KALIR) ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓

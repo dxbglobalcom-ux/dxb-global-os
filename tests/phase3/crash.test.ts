@@ -14,12 +14,27 @@ const WORKER = fileURLToPath(new URL("./crash-worker.mjs", import.meta.url));
 const DEPT = "crash-test";
 
 beforeAll(async () => {
+  // Scoped to this suite's department only (E9.3 incident fix: table-wide
+  // deletes destroyed live history).
   const db = getDb();
-  await db.deleteFrom("task_events").execute();
+  await db
+    .deleteFrom("task_events")
+    .where("task_id", "in", (qb) =>
+      qb.selectFrom("tasks").select("id").where("department", "=", DEPT),
+    )
+    .execute();
   await db.deleteFrom("tasks").where("department", "=", DEPT).execute();
 });
 
 afterAll(async () => {
+  const db = getDb();
+  await db
+    .deleteFrom("task_events")
+    .where("task_id", "in", (qb) =>
+      qb.selectFrom("tasks").select("id").where("department", "=", DEPT),
+    )
+    .execute();
+  await db.deleteFrom("tasks").where("department", "=", DEPT).execute();
   await closeDb();
 });
 

@@ -445,7 +445,9 @@
       "approvalsEmpty": "Bekleyen onay yok. Bir ajan onay istediği an burada belirir.",
       "alertsTitle": "Kritik uyarılar",
       "viewAll": "Tümünü gör",
-      "alertsEmpty": "Her şey yolunda — aktif uyarı yok."
+      "alertsEmpty": "Her şey yolunda — aktif uyarı yok.",
+      "moneyOut": "Para çıkışı",
+      "oldest": "En eski:"
     },
     "dock": {
       "running": "Şu an çalışıyor"
@@ -1086,6 +1088,172 @@
           "fail": "Koşuyu düşür",
           "fallback": "Yedeğe geç",
           "escalate": "Yükselt"
+        }
+      }
+    },
+    "approvals": {
+      "title": "Onay Merkezi",
+      "subtitle": "Dışa dönük işlemler kararınızı burada bekler — geri kalan her şey otonom akar.",
+      "statuses": {
+        "pending": "Bekliyor",
+        "approved": "Onaylandı",
+        "rejected": "Reddedildi",
+        "draft": "Taslak"
+      },
+      "ui": {
+        "viewPending": "Bekleyen",
+        "viewDecided": "Karara bağlanan",
+        "filterClass": "Sınıf",
+        "filterDepartment": "Departman",
+        "filterAge": "Yaş",
+        "all": "Tümü",
+        "ageOver24h": "24 saatten eski",
+        "ageStale": "Bayat (7g+)",
+        "shown": "gösteriliyor",
+        "empty": "Bekleyen onay yok. Bir ajan onay istediği an burada belirir.",
+        "emptyDecided": "Henüz karar yok.",
+        "moneyOut": "Para çıkışı",
+        "stale": "Bayat",
+        "expired": "Süresi geçti",
+        "delegated": "Devredildi:",
+        "deadline": "Son tarih",
+        "requester": "Talep sahibi",
+        "department": "Departman",
+        "operation": "İşlem",
+        "costEstimate": "Maliyet tahmini",
+        "recommended": "Önerilen aksiyon",
+        "reasoning": "Gerekçe",
+        "approve": "Onayla",
+        "reject": "Reddet",
+        "rejectNotePlaceholder": "Not (isteğe bağlı)",
+        "decideInDetail": "Para-çıkışı kararları tam bağlamla detay sayfasında verilir.",
+        "openDetail": "Tam kayıt",
+        "selectedCount": "seçili",
+        "approveSelected": "Seçilenleri onayla",
+        "rejectSelected": "Seçilenleri reddet",
+        "bulkMoneyOutNote": "Para-çıkışı onayları asla toplu işleme girmez.",
+        "fatigueTitle": "Kapı yükü",
+        "fatiguePending": "Bekleyen",
+        "fatigueOldest": "En eski",
+        "fatigueRate7d": "7 günlük onay oranı",
+        "fatigueAvgDecision": "Ortalama karar",
+        "fatigueSuggestion": "Son 7 günde her {class} talebi onaylandı — bu sınıfı otonom yapmayı değerlendirin (politika aksiyonu detay sayfasında).",
+        "decidedAs": "Karar",
+        "hours": "s",
+        "minutes": "dk",
+        "classes": {
+          "money_out": "Para çıkışı",
+          "contract": "Sözleşme",
+          "identity": "Kimlik",
+          "high_cost": "Yüksek maliyet",
+          "other": "Diğer"
+        },
+        "riskLevels": {
+          "low": "Düşük",
+          "medium": "Orta",
+          "high": "Yüksek",
+          "critical": "Kritik"
+        },
+        "actions": {
+          "approve": "Onaylandı",
+          "reject": "Reddedildi",
+          "approve_with_modifications": "Değişiklikle onaylandı",
+          "delegate": "Devredildi",
+          "request_info": "Bilgi istendi",
+          "reanalyze": "Yeniden analiz istendi",
+          "change_policy": "Politika değişti"
+        },
+        "payloadText": {
+          "approve": "Onayla",
+          "confirmApprove": "Onayı doğrula",
+          "reject": "Reddet",
+          "rejectNotePlaceholder": "Not (isteğe bağlı)",
+          "moneyOut": "Para çıkışı",
+          "highBadge": "Yüksek risk",
+          "payload": "Ham veri (denetim)",
+          "details": "Ayrıntılar",
+          "fields": {
+            "memo": "Not",
+            "recipient": "Alıcı",
+            "to": "Kime",
+            "subject": "Konu",
+            "preview": "Önizleme",
+            "amount_eur": "Tutar",
+            "cost_eur": "Maliyet",
+            "budget_eur": "Bütçe",
+            "iban_last4": "IBAN sonu",
+            "liste": "Liste",
+            "description": "Açıklama",
+            "reason": "Gerekçe",
+            "url": "Bağlantı",
+            "campaign": "Kampanya",
+            "body": "Mesaj",
+            "attachment": "Ek",
+            "vendor": "Tedarikçi",
+            "invoice": "Fatura",
+            "due_date": "Vade",
+            "currency": "Para birimi"
+          }
+        }
+      },
+      "detail": {
+        "status": "Durum",
+        "contextTitle": "Tam bağlam",
+        "classLabel": "İşlem sınıfı",
+        "project": "Proje",
+        "modelToUse": "Kullanılacak model",
+        "affectedSystems": "Etkilenen sistemler",
+        "contextAge": "Bağlam yaşı",
+        "alternativesTitle": "Alternatifler",
+        "relatedTitle": "İlgili dosya ve görevler",
+        "taskLink": "Görev",
+        "historyTitle": "Karar geçmişi",
+        "historyEmpty": "Henüz karar veya inceleme yok.",
+        "modificationsTitle": "Uygulanan değişiklikler",
+        "reviewTypes": {
+          "delegation": "Devir",
+          "info_request": "Bilgi talebi",
+          "reanalysis_requested": "Yeniden analiz istendi",
+          "reanalysis_result": "Yeniden analiz sonucu"
+        }
+      },
+      "actionsUi": {
+        "actionsTitle": "Karar ver",
+        "approve": "Onayla",
+        "confirmApprove": "Onayı doğrula",
+        "reject": "Reddet",
+        "modify": "Değişiklikle onayla",
+        "cancelModify": "Vazgeç",
+        "diffTitle": "Değişiklik özeti",
+        "noChanges": "Henüz alan değişmedi.",
+        "approveWithChanges": "Bu değişikliklerle onayla",
+        "delegate": "Devret",
+        "delegateTo": "Analist",
+        "alreadyDelegated": "Zaten devredildi:",
+        "requestInfo": "Bilgi iste",
+        "reanalyze": "Yeniden analiz",
+        "reanalyzeModel": "Model",
+        "modelAuto": "Otomatik",
+        "changePolicy": "Politika değiştir",
+        "policyRule": "Kural",
+        "policyGate": "Kapı",
+        "lockedRule": "kilitli (B7b)",
+        "gates": {
+          "autonomous": "Otonom",
+          "notify": "Bildir",
+          "gated": "Kapılı"
+        },
+        "notePlaceholder": "Bu aksiyon için not (isteğe bağlı — bilgi talebinde zorunlu)",
+        "send": "Gönder",
+        "moneyOutNotice": "Para çıkışı yalnız bu karar yoluyla serbest kalır — outbox'a başka yol yoktur (B7b).",
+        "done": {
+          "approve": "Onaylandı — işlem outbox'a salındı.",
+          "reject": "Reddedildi.",
+          "approve_with_modifications": "Değişikliklerinizle onaylandı — outbox'a salındı.",
+          "delegate": "Devredildi — analiz görevi kuyruğa alındı. Nihai karar sizde kalır.",
+          "request_info": "Talep sahibinden bilgi istendi.",
+          "reanalyze": "Yeniden analiz kuyruğa alındı — sonuç karar geçmişinde belirecek.",
+          "change_policy": "Politika güncellendi — ayar değişiklik kaydına işlendi (geri alınabilir)."
         }
       }
     }

@@ -15,7 +15,9 @@
       "Bash(grep -n \"ON CONFLICT\\\\|DO \\\\$\\\\|IF NOT EXISTS\\\\|WHERE NOT EXISTS\" db/migrations/20260711006000_hr_family_e54.sql)",
       "Bash(cd \"/home/ghost/DxB Global OS\" && git log --all --oneline --name-only | grep -i \"gate-run\" | head -5; echo \"---\"; ls packages/hr/ packages/hr/src/ 2>/dev/null; echo \"---\"; ls /tmp/claude-1000/-home-ghost-DxB-Global-OS/*/scratchpad/ 2>/dev/null | head -20)",
       "Read(//tmp/claude-1000/-home-ghost-DxB-Global-OS/**)",
-      "Bash(rm /home/ghost/.claude/projects/-home-ghost-DxB-Global-OS/memory/side-channel-no-commit.md)"
+      "Bash(rm /home/ghost/.claude/projects/-home-ghost-DxB-Global-OS/memory/side-channel-no-commit.md)",
+      "Bash(grep -rniA30 \"INTO model_catalog\" db/migrations/)",
+      "Bash(grep -nE \"^#{1,3} \" HOLDING-OS-MASTER-PLAN/HR_OPERATING_SYSTEM_SPEC.md)"
     ],
     "deny": [
       "Read(./.env)",

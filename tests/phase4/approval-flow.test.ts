@@ -4,13 +4,17 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { approve, reject } from "../../tools/dxb-cli/src/approve.js";
+import { sweepByDepartment } from "../helpers/suite-scope.js";
 
 // GATE-01 tool-layer proof (04-02): agents can only draft and hand over;
 // decisions exist solely in the human CLI; the outbox row is trigger-born.
 process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
+// Suite-unique department = isolation marker: fixtures and the scoped sweep
+// both key on it (E9.3 incident fix — table-wide wipes are forbidden).
+const DEPT = "p4af-gate";
 const ENVELOPE = {
-  department: "engineering",
+  department: DEPT,
   objective: "approval-flow test: draft-first outward action under GATE-01",
   output_contract: "approval chain recorded",
   model_tier: "L3",
@@ -24,17 +28,6 @@ async function call(name: string, args: Record<string, unknown>): Promise<any> {
   return JSON.parse((res.content as Array<{ text: string }>)[0].text);
 }
 
-async function wipe(): Promise<void> {
-  const db = getDb();
-  await db.deleteFrom("task_events").execute();
-  await db.deleteFrom("outbox").execute();
-  await db.deleteFrom("approvals").execute();
-  await db.deleteFrom("cost_ledger").execute();
-  await db.deleteFrom("audit_log").execute();
-  await db.updateTable("tasks").set({ parent_task_id: null }).execute();
-  await db.deleteFrom("tasks").execute();
-}
-
 async function makeTask(): Promise<string> {
   const task = await call("queue_create_task", ENVELOPE);
   return task.id as string;
@@ -45,10 +38,11 @@ beforeAll(async () => {
   client = new Client({ name: "approval-flow-test", version: "0.0.0" });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(serverTransport), client.connect(clientTransport)]);
-  await wipe();
+  await sweepByDepartment(getDb(), DEPT); // self-heal a killed previous run
 });
 
 afterAll(async () => {
+  await sweepByDepartment(getDb(), DEPT);
   await client.close();
   await closeDb();
 });
