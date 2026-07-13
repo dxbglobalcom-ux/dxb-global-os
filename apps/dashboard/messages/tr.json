@@ -977,6 +977,117 @@
         },
         "affectedArea": "Etkilenen alan"
       }
+    },
+    "workflows": {
+      "title": "Workflow'lar",
+      "subtitle": "Deklaratif workflow'lar — her direktif kalemi düzenlenebilir, her koşu hesap verir.",
+      "ui": {
+        "newWorkflow": "Yeni workflow",
+        "name": "Ad",
+        "slug": "Slug",
+        "enabled": "Etkin",
+        "disabled": "Devre dışı",
+        "version": "Sürüm",
+        "risk": "Risk seviyesi",
+        "trigger": "Tetikleyici",
+        "triggerCron": "Cron ifadesi",
+        "triggerEventType": "Olay türü",
+        "triggerEventEntity": "Olay varlığı",
+        "budget": "Bütçe sınırı (EUR)",
+        "tokenLimit": "Token sınırı",
+        "timeout": "Zaman aşımı (sn)",
+        "logging": "Loglama seviyesi",
+        "outputStandard": "Çıktı standardı",
+        "outputStandardPh": "örn. rapor-v1",
+        "steps": "Adımlar",
+        "addStep": "Adım ekle",
+        "stepUp": "Adımı yukarı taşı",
+        "stepDown": "Adımı aşağı taşı",
+        "removeStep": "Kaldır",
+        "employee": "Çalışan",
+        "modelSlot": "Model rol slotu",
+        "modelPin": "Model sabitleme (istisna)",
+        "modelPinNone": "Slot belirler",
+        "objective": "Hedef",
+        "outputContract": "Çıktı sözleşmesi",
+        "outboxAction": "Dışa dönük aksiyon (B7b)",
+        "outboxActionPh": "örn. email.send — yoksa boş bırakın",
+        "actionType": "Aksiyon türü",
+        "summary": "Özet",
+        "criteria": "İnceleme kriterleri",
+        "minConfidence": "Asgari güven",
+        "onFail": "Başarısızlıkta",
+        "maxAttempts": "Azami deneme",
+        "backoff": "Bekleme (sn)",
+        "onExhaust": "Tükenince",
+        "fallbackInfo": "Alternatif adımlar (JSON)",
+        "save": "Değişiklikleri kaydet",
+        "create": "Workflow oluştur",
+        "copy": "Kopyala",
+        "enable": "Etkinleştir",
+        "disable": "Devre dışı bırak",
+        "runNow": "Şimdi çalıştır",
+        "cancelRun": "Koşuyu iptal et",
+        "resumeRun": "Koşuyu sürdür",
+        "saved": "Kaydedildi.",
+        "runQueued": "Koşu kuyruğa alındı.",
+        "runSkipped": "Koşu atlandı",
+        "drainHint": "koşular ~10 sn içinde işçi tarafından alınır",
+        "runHistory": "Koşu geçmişi",
+        "runsEmpty": "Henüz koşu yok",
+        "colStatus": "Durum",
+        "colTrigger": "Tetikleyen",
+        "colStarted": "Başladı",
+        "colEnded": "Bitti",
+        "colStep": "adım",
+        "agentRuns": "Ajan koşuları",
+        "agentRunsEmpty": "Bu koşu için kayıtlı ajan koşusu yok.",
+        "liveLink": "Canlı Operasyonları aç",
+        "selectEmpty": "Bir workflow seçin veya oluşturun.",
+        "listEmpty": "Henüz tanımlı workflow yok.",
+        "unsaved": "Kaydedilmemiş değişiklikler",
+        "kinds": {
+          "agent": "Ajan",
+          "approval": "Onay",
+          "review": "İnceleme",
+          "retry": "Yeniden deneme",
+          "fallback": "Yedek"
+        },
+        "risks": {
+          "low": "Düşük",
+          "medium": "Orta",
+          "high": "Yüksek",
+          "critical": "Kritik"
+        },
+        "loggingLevels": {
+          "minimal": "Asgari",
+          "normal": "Normal",
+          "verbose": "Ayrıntılı"
+        },
+        "triggerKinds": {
+          "manual": "Manuel",
+          "cron": "Cron",
+          "event": "Olay"
+        },
+        "statuses": {
+          "running": "Çalışıyor",
+          "waiting_approval": "Onay bekliyor",
+          "succeeded": "Başarılı",
+          "failed": "Başarısız",
+          "cancelled": "İptal edildi"
+        },
+        "onFailOptions": {
+          "retry_prev": "Öncekini yeniden dene",
+          "fallback": "Yedeğe geç",
+          "escalate": "Yükselt",
+          "fail": "Koşuyu düşür"
+        },
+        "onExhaustOptions": {
+          "fail": "Koşuyu düşür",
+          "fallback": "Yedeğe geç",
+          "escalate": "Yükselt"
+        }
+      }
     }
   }
 }

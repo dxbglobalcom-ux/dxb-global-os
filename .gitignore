@@ -59,4 +59,4 @@ vps/provision/.hetzner.local
 # durable evidence is copied into .planning/phases/*/evidence/
 .playwright-mcp/
 BEKLENTİLER
-.impeccable/hook.cache.json
+**/.impeccable/

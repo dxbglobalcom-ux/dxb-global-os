@@ -977,6 +977,117 @@
         },
         "affectedArea": "Affected area"
       }
+    },
+    "workflows": {
+      "title": "Workflows",
+      "subtitle": "Declarative workflows — every directive item editable, every run accountable.",
+      "ui": {
+        "newWorkflow": "New workflow",
+        "name": "Name",
+        "slug": "Slug",
+        "enabled": "Enabled",
+        "disabled": "Disabled",
+        "version": "Version",
+        "risk": "Risk level",
+        "trigger": "Trigger",
+        "triggerCron": "Cron expression",
+        "triggerEventType": "Event type",
+        "triggerEventEntity": "Event entity",
+        "budget": "Budget limit (EUR)",
+        "tokenLimit": "Token limit",
+        "timeout": "Timeout (s)",
+        "logging": "Logging level",
+        "outputStandard": "Output standard",
+        "outputStandardPh": "e.g. report-v1",
+        "steps": "Steps",
+        "addStep": "Add step",
+        "stepUp": "Move step up",
+        "stepDown": "Move step down",
+        "removeStep": "Remove",
+        "employee": "Employee",
+        "modelSlot": "Model role slot",
+        "modelPin": "Model pin (exception)",
+        "modelPinNone": "Slot decides",
+        "objective": "Objective",
+        "outputContract": "Output contract",
+        "outboxAction": "Outward action (B7b)",
+        "outboxActionPh": "e.g. email.send — leave empty if none",
+        "actionType": "Action type",
+        "summary": "Summary",
+        "criteria": "Review criteria",
+        "minConfidence": "Min confidence",
+        "onFail": "On fail",
+        "maxAttempts": "Max attempts",
+        "backoff": "Backoff (s)",
+        "onExhaust": "On exhaust",
+        "fallbackInfo": "Alternate steps (JSON)",
+        "save": "Save changes",
+        "create": "Create workflow",
+        "copy": "Copy",
+        "enable": "Enable",
+        "disable": "Disable",
+        "runNow": "Run now",
+        "cancelRun": "Cancel run",
+        "resumeRun": "Resume run",
+        "saved": "Saved.",
+        "runQueued": "Run queued.",
+        "runSkipped": "Run skipped",
+        "drainHint": "runs are picked up by the worker within ~10 s",
+        "runHistory": "Run history",
+        "runsEmpty": "No runs yet",
+        "colStatus": "Status",
+        "colTrigger": "Triggered by",
+        "colStarted": "Started",
+        "colEnded": "Ended",
+        "colStep": "step",
+        "agentRuns": "Agent runs",
+        "agentRunsEmpty": "No agent runs recorded for this run.",
+        "liveLink": "Open Live Ops",
+        "selectEmpty": "Select a workflow or create one.",
+        "listEmpty": "No workflows defined yet.",
+        "unsaved": "Unsaved changes",
+        "kinds": {
+          "agent": "Agent",
+          "approval": "Approval",
+          "review": "Review",
+          "retry": "Retry",
+          "fallback": "Fallback"
+        },
+        "risks": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High",
+          "critical": "Critical"
+        },
+        "loggingLevels": {
+          "minimal": "Minimal",
+          "normal": "Normal",
+          "verbose": "Verbose"
+        },
+        "triggerKinds": {
+          "manual": "Manual",
+          "cron": "Cron",
+          "event": "Event"
+        },
+        "statuses": {
+          "running": "Running",
+          "waiting_approval": "Waiting approval",
+          "succeeded": "Succeeded",
+          "failed": "Failed",
+          "cancelled": "Cancelled"
+        },
+        "onFailOptions": {
+          "retry_prev": "Retry previous",
+          "fallback": "Fallback",
+          "escalate": "Escalate",
+          "fail": "Fail run"
+        },
+        "onExhaustOptions": {
+          "fail": "Fail run",
+          "fallback": "Fallback",
+          "escalate": "Escalate"
+        }
+      }
     }
   }
 }

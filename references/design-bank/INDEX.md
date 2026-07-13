@@ -30,5 +30,10 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | alerts-en-1920.png | /alerts | EN | 1920 | PENDING | same |
 | alerts-tr-1280.png | /alerts | TR | 1280 | PENDING | same |
 | alerts-tr-1920.png | /alerts | TR | 1920 | PENDING | same |
+| workflows-en-1280.png | /ops/workflows | EN | 1280 | PENDING | E9.2 Workflow Center — 17-item editor + run history (2026-07-13) |
+| workflows-en-1920.png | /ops/workflows | EN | 1920 | PENDING | same |
+| workflows-tr-1280.png | /ops/workflows | TR | 1280 | PENDING | same |
+| workflows-tr-1920.png | /ops/workflows | TR | 1920 | PENDING | same |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
+
