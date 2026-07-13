@@ -220,8 +220,53 @@ export interface IntentsTable {
   updated_at: Timestamptz;
 }
 
+// Observability family (0022x — OBSERVABILITY_SPEC §4). Append-only evidence
+// tables; the ONLY sanctioned UPDATE is the agent_runs closure (R2 exception).
+export interface AgentRunsTable {
+  id: Generated<string>;
+  employee_id: string | null;
+  task_id: string | null;
+  workflow_run_id: string | null;
+  parent_run_id: string | null;
+  model_id: string | null;
+  status: Generated<string>;
+  started_at: Timestamptz;
+  ended_at: Date | null;
+  tokens_in: Generated<string>;
+  tokens_out: Generated<string>;
+  cost_eur: Numeric;
+  progress_pct: number | null;
+  error: string | null;
+}
+
+export interface ToolCallsTable {
+  id: Generated<string>;
+  run_id: string | null;
+  tool: string;
+  params_digest: Jsonb | null;
+  duration_ms: number | null;
+  ok: boolean | null;
+  error: string | null;
+  created_at: Timestamptz;
+}
+
+export interface FileChangesTable {
+  id: Generated<string>;
+  run_id: string | null;
+  path: string;
+  op: string;
+  diff_summary: string | null;
+  commit_sha: string | null;
+  created_at: Timestamptz;
+  review_status: Generated<string>;
+  reverted_by: string | null;
+}
+
 export interface DB {
   tasks: TasksTable;
+  agent_runs: AgentRunsTable;
+  tool_calls: ToolCallsTable;
+  file_changes: FileChangesTable;
   tool_pins: ToolPinsTable;
   task_events: TaskEventsTable;
   departments: DepartmentsTable;

@@ -8,6 +8,13 @@ export default defineConfig({
     // modules with value imports (type-only imports never hit the resolver).
     alias: {
       "@": fileURLToPath(new URL("./apps/dashboard/src", import.meta.url)),
+      // Tests import package internals as src paths; workspace deps between
+      // packages resolve to dist. @dxb/observability must be ONE module
+      // instance in both graphs — its AsyncLocalStorage carries the run scope
+      // (two copies = two stores = a silently lost scope).
+      "@dxb/observability": fileURLToPath(
+        new URL("./packages/observability/src/index.ts", import.meta.url),
+      ),
     },
   },
   test: {

@@ -5,6 +5,21 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "references": [{ "path": "../shared" }, { "path": "../kernel" }, { "path": "../memory-router" }],
-  "include": ["src"]
+  "references": [
+    {
+      "path": "../shared"
+    },
+    {
+      "path": "../kernel"
+    },
+    {
+      "path": "../memory-router"
+    },
+    {
+      "path": "../observability"
+    }
+  ],
+  "include": [
+    "src"
+  ]
 }

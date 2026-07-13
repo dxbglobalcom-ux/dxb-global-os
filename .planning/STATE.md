@@ -6,16 +6,16 @@ current_phase: 09
 current_phase_name: jarvis-voice-layer
 status: executing
 stopped_at: "BEKLENTİLER PİVOTU 2026-07-10 ~18:45 — CEO ana direktifi işlendi (repo kökü BEKLENTİLER, sanitized: HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md). Proje = HOLDING OS; plan-first: 31 spec dosyalık korpus HOLDING-OS-MASTER-PLAN/ altında Fable bizzat yazıyor → korpus bitince Fable execution (12 Temmuz son geceye kadar) → Opus devralır. SONNET DEFEDİLDİ (v6). Phase 09 execution DURDU (09-03..05 ertelendi — kayıtlı sapma, CEO emri). Bağlayıcı sözleşme+yasaklar+açılış notu: ~/.claude/plans/sana-s-yl-orm-konu-al-m-nce-agile-pebble.md. Korpus ilerleme: 00-INDEX.md durum tablosu."
-last_updated: "2026-07-13T13:30:00.000Z"
+last_updated: "2026-07-13T14:00:00.000Z"
 last_activity: 2026-07-13
-last_activity_desc: "E7.2 ✓ MODEL ORCHESTRATION PANEL + §4c ONBOARD (K1 Fable in person; resumed the 04:00 interrupted session, verified its uncommitted work end-to-end, closed the row): migration 20260713050000 idempotent 2× — v_model_stats (§19 R3 meta from REAL agent_runs, zero fabrication) + v_role_slots + fn_update_routing v2 (§4c add_model born testing ceo-only, set_fallback acyclic). Routes: api/control/models (5 ops, test_model honest LITELLM_UNREACHABLE until Phase-7 proxy, adaptation A1), api/ai/simulate (p_log=false — simulations never poison decision_log), api/ai/model-detail. UI: /ai/models catalog + detail drawer + 4-step §4c onboard drawer; /ai/orchestration 13-slot board (select+confirm, adaptation A2) + live guardrails + RoutingSimulator. Evidence: DB battery 13 blocks PASS (ROLLBACK zero-residue; full §4c chain add→testing-refused→activate→assignable; MODEL_BANNED/FALLBACK_CYCLE/mechanical/idempotency); UI E2E real CEO session assign→audit#2441→revert; vitest 8/8; tsc 0; eslint 0; purity PASS 726=726. Design pass RULE #0: 2 routes × EN+TR × 1280+1920, 8 baselines refreshed (PENDING CEO eye); 4 defects found+fixed in-pass: tr-TR number grouping, TR risk enum localization, smoke detail localization, stale READ-ONLY badge removed (§35). Next: next open E7/roadmap row (§4b agent-brain seam boundary recorded)"
+last_activity_desc: "E8.1 ✓ OBSERVABILITY SDK WRAPPER (K1 Fable in person, same session as E7.2 close): new packages/observability — runScope(ctx,fn) opens agent_runs 'running' / closes with R2-exception UPDATE (status/tokens/cost/model/progress/error); tool_calls+file_changes through one batch buffer (spec §3: 20 rows/2s — adaptation A1, roadmap '1 sn' yields to spec); scope on AsyncLocalStorage so certified Phase-5 Executor signature untouched; ⛔ observation-never-blocks at every layer (sync queue push; async flush; 3 fails → JSONL spill + restoreSpill replay, corrupt kept; failed opening insert degrades to unrecorded run). runWorkerOnce wrapped; defaultExecutor taps SDK tool_use blocks (key-digest only, §16) + usage both paths (costEur 0 pre-Phase-7, single-source cost rule). Evidence: tests/e8 9/9 incl. N=7 calls → 7 rows (AUDIT §24) + spill round-trip + real claim path; full regression e7+e8+phase5+phase6 78/0 (legacy cleanups extended for new FK chain); tsc -b 0; append-only 4× permission denied as authenticated; raw-key 0. Fixed in-pass: vitest @dxb/observability alias (src/dist double instance silently loses ALS scope). Boundaries: flush-failure alert row → E8.4b; logDecision → E8.2; ops:live triggers → E8.3. Next: E8.2 logDecision + §10 decision points"
 progress:
   # re-base 2026-07-12 (CEO emri): plans = roadmap E-adımları (| E… satırları), ✓ = tamam
   total_phases: 11
   completed_phases: 7
   total_plans: 52
-  completed_plans: 28
-  percent: 54
+  completed_plans: 29
+  percent: 56
 ---
 
 # Project State

@@ -48,6 +48,15 @@ async function trackDispatch(envelopes: DecomposedEnvelope[]): Promise<string[]>
 afterAll(async () => {
   const db = getDb();
   if (createdTaskIds.length > 0) {
+    await db
+      .deleteFrom("tool_calls")
+      .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", createdTaskIds))
+      .execute();
+    await db
+      .deleteFrom("file_changes")
+      .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", createdTaskIds))
+      .execute();
+    await db.deleteFrom("agent_runs").where("task_id", "in", createdTaskIds).execute();
     await db.deleteFrom("task_events").where("task_id", "in", createdTaskIds).execute();
     await db.deleteFrom("tasks").where("id", "in", createdTaskIds).execute();
   }

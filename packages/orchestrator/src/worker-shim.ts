@@ -17,6 +17,7 @@ import { sql } from "kysely";
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall } from "@dxb/shared";
+import { currentRunScope, runScope } from "@dxb/observability";
 import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
 import {
   checkContextBudget,
@@ -79,6 +80,11 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
     `Output contract: ${task.output_contract}`,
   ].join("\n");
 
+  // Observability tap (E8.1): the run scope travels on AsyncLocalStorage so
+  // this certified Executor signature stays untouched.
+  const obs = currentRunScope();
+  obs?.setModel(rule.model);
+
   let raw: unknown;
   if (rule.mode === "subscription") {
     const q = query({
@@ -92,10 +98,35 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
       },
     });
     for await (const msg of q) {
+      // SDK tool traffic → tool_calls (params digest only, §16: no raw content).
+      if (msg.type === "assistant") {
+        const blocks = (msg as { message?: { content?: unknown } }).message?.content;
+        if (Array.isArray(blocks)) {
+          for (const b of blocks) {
+            if (b && typeof b === "object" && (b as { type?: string }).type === "tool_use") {
+              const tu = b as { name?: string; input?: unknown };
+              obs?.recordToolCall({
+                tool: tu.name ?? "unknown",
+                paramsDigest: tu.input && typeof tu.input === "object"
+                  ? { keys: Object.keys(tu.input as object) }
+                  : null,
+              });
+            }
+          }
+        }
+      }
       if (msg.type === "result") {
         if (msg.subtype !== "success") {
           throw new Error(`worker-shim: agent-sdk result error (${msg.subtype})`);
         }
+        const usage = (msg as { usage?: { input_tokens?: number; output_tokens?: number } }).usage;
+        obs?.addUsage({
+          tokensIn: usage?.input_tokens ?? 0,
+          tokensOut: usage?.output_tokens ?? 0,
+          // costEur stays 0 on the subscription path: no marginal cost, and the
+          // single-source cost rule (litellm.ts LOCKED header) forbids a second
+          // cost writer. API-mode cost lands with the Phase-7 LiteLLM wiring.
+        });
         raw = msg.structured_output ?? msg.result;
         break;
       }
@@ -107,6 +138,10 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
       model: rule.model,
       messages: [{ role: "user", content: prompt }],
       maxTokens: Math.min(task.budget_max_tokens, 8192),
+    });
+    obs?.addUsage({
+      tokensIn: res.usage.prompt_tokens,
+      tokensOut: res.usage.completion_tokens,
     });
     raw = res.content;
   }
@@ -268,7 +303,11 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
   await transition(task.id, "claimed", "running", workerId);
 
   try {
-    const out = await execute(task);
+    // E8.1: every execution runs inside an observability scope — agent_runs
+    // open/close + buffered tool_calls/file_changes ride AsyncLocalStorage.
+    // Observation never blocks this path (spec §3 ⛔): a dead observability
+    // write spills to disk and the task outcome is decided by execute() alone.
+    const { value: out } = await runScope({ taskId: task.id }, () => execute(task));
     await transition(
       task.id,
       "running",

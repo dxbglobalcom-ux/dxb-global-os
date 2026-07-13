@@ -9,6 +9,7 @@
     "@anthropic-ai/claude-agent-sdk": "catalog:",
     "@dxb/kernel": "workspace:*",
     "@dxb/memory-router": "workspace:*",
+    "@dxb/observability": "workspace:*",
     "@dxb/shared": "workspace:*",
     "kysely": "catalog:",
     "zod": "catalog:"
