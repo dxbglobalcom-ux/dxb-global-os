@@ -117,6 +117,35 @@ psql "$DB" -c "SELECT status FROM workflow_runs ORDER BY started_at DESC LIMIT 1
 - Risk: event-trigger fırtınası (olay başına workflow) → eşleyicide workflow-başı eşzamanlılık kuralı: **singleton varsayılan** (`concurrency:'singleton'` — koşarken gelen tetik kuyruklanmaz, loglanır+atlanır; `'queue'` opt-in).
 - Edge: devre dışı workflow'a tetik → skip + `task_events` notu; atanan çalışan arşivlenmiş → adım başlangıcında fn reddi → run failed sebepli; adım silinmiş sürümde resume → snapshot sayesinde eski adımla biter; cron + manual çakışması → singleton kuralı çözer; timeout approval parkında → işlemez (bilinçli), hatırlatma eskalasyonu APPROVAL_ENGINE'de.
 
+> **E9.1 registered adaptations (2026-07-13, Fable in person — ticket
+> `.planning/quick/20260713-e91-workflow-runner/PLAN.md`):**
+> **A1 — run_now/resume enqueue path:** a Postgres control fn cannot call
+> pg-boss `send()`; the fn writes the run row state and the kernel drain
+> (`drainWorkflowRuns`, chained off the scheduler's pg-boss `workflow.run`
+> queue, 10 s self-chain — intent-intake precedent) picks up actionable runs.
+> §3 trigger→job semantics preserved; pg-boss stays the vehicle.
+> **A2 — approval resume without touching 0015:** `decide_approvals` is
+> LOCKED; the drain scans `waiting_approval` runs whose approvals row is
+> decided — approved → resume (parked step + 1), rejected → run `failed`
+> (`APPROVAL_REJECTED`, no alert: a human decision is not an alarm). E9.3 may
+> move this to an explicit hook.
+> **A3 — B7b detection key:** "outbox'a giden aksiyon" = agent step config
+> carrying `outbox_action`; high/critical workflow with such a step and no
+> EARLIER approval step is rejected at create/update (update re-scans existing
+> steps when risk rises without a steps payload).
+> **A4 — token_limit source until Phase 7:** LiteLLM run-tagged counters land
+> with P7; until then `SUM(tokens_in+tokens_out)` / `SUM(cost_eur)` over the
+> run's `agent_runs` rows is the enforcement source (single-source cost rule
+> intact). Timeout excludes approval-park time by subtracting decided
+> approvals' open intervals.
+> **A5 — snapshot result bookkeeping:** the runner appends a `result`
+> object into the run's own `steps_snapshot` entry as each step closes —
+> run-record bookkeeping (what resume/review read), not definition drift;
+> the workflow's step tables are never touched by the runner.
+> **A6 — `workflow.step` job split** (long-step timeout isolation) is a P7
+> runtime concern; the library exposes per-step execution so the split needs
+> no API change. E9.1 runs steps in-process.
+
 ## Opus-devralma notu
 
 Adım kind semantiği + durum makinesi + snapshot kuralı kapalıdır; Opus yeni adım kind'ı eklemez (⛔ — en güçlü model + CEO onayı), yeni workflow TANIMLARI eklemek serbesttir (veri işi, kod işi değil). Runner iskeleti kind-başı handler dosyalarıyla mekanik genişler.

@@ -15,6 +15,7 @@ import {
   hrStalePersonaScan,
   hrTrainingQueue,
 } from "@dxb/hr";
+import { drainWorkflowRuns, registerCronTriggers, triggerRunNow } from "@dxb/kernel";
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
 import { drainIntents } from "@dxb/orchestrator";
 import { tick } from "./index.js";
@@ -36,6 +37,12 @@ export const QUEUES = {
   hrProbation: "hr.probation_check",
   hrStalePersona: "hr.stale_persona_scan",
   hrTraining: "hr.training_queue",
+  // E9.1 workflow engine (WORKFLOW §3/§6): the runner stays a LIBRARY in the
+  // kernel — this scheduler is its pg-boss vehicle. workflow.run drains
+  // actionable runs on a self-chain (running runs advance; parked runs whose
+  // approvals row got decided resume or fail); cron triggers register as
+  // 'wf:<slug>' schedules whose jobs also land here.
+  workflowRun: "workflow.run",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -66,6 +73,10 @@ export const CADENCES = {
   hrStalePersonaCron: "0 5 * * *", // daily 05:00
   hrProbationCron: "0 6 * * *", // daily 06:00
   hrTrainingCron: "0 7 * * *", // daily 07:00
+  // Workflow drain: run_now/resume write only DB rows (a Postgres fn cannot
+  // reach pg-boss), so the drain self-chains like intent-intake — 10s keeps
+  // manual runs snappy without contending for the session-mode pool.
+  workflowDrainSeconds: 10,
 } as const;
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -77,6 +88,14 @@ async function enqueueIntentIntake(boss: PgBoss, delaySeconds: number): Promise<
     QUEUES.intentIntake,
     {},
     { startAfter: delaySeconds, singletonKey: QUEUES.intentIntake },
+  );
+}
+
+async function enqueueWorkflowDrain(boss: PgBoss, delaySeconds: number): Promise<void> {
+  await boss.send(
+    QUEUES.workflowRun,
+    {},
+    { startAfter: delaySeconds, singletonKey: QUEUES.workflowRun },
   );
 }
 
@@ -148,6 +167,22 @@ export async function startScheduler(): Promise<PgBoss> {
     await hrTrainingQueue(getDb());
   });
 
+  // E9.1 workflow drain — same re-arm-even-on-throw discipline as the outbox
+  // tick (a dead chain would strand every waiting run). Cron-triggered jobs
+  // ('wf:<slug>' schedules) also land on this queue: their payload names the
+  // slug, run_now fires through the control fn (singleton/disabled skip +
+  // audit inside), then the same drain advances whatever became runnable.
+  await boss.work(QUEUES.workflowRun, async (jobs: { data?: { slug?: string } }[]) => {
+    try {
+      for (const job of jobs) {
+        if (job.data?.slug) await triggerRunNow(job.data.slug, "cron");
+      }
+      await drainWorkflowRuns();
+    } finally {
+      await enqueueWorkflowDrain(boss, CADENCES.workflowDrainSeconds);
+    }
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
@@ -157,8 +192,22 @@ export async function startScheduler(): Promise<PgBoss> {
   await boss.schedule(QUEUES.hrStalePersona, CADENCES.hrStalePersonaCron);
   await boss.schedule(QUEUES.hrProbation, CADENCES.hrProbationCron);
   await boss.schedule(QUEUES.hrTraining, CADENCES.hrTrainingCron);
+  // Workflow cron triggers: enabled trigger.kind='cron' workflows register as
+  // 'wf:<slug>' schedules; those jobs need their queue + worker too.
+  const cronWfs = await registerCronTriggers({
+    schedule: (name, cron, data) => boss.schedule(name, cron, data as object),
+    unschedule: (name) => boss.unschedule(name),
+  });
+  for (const wf of cronWfs) {
+    await boss.createQueue(`wf:${wf.slug}`);
+    await boss.work(`wf:${wf.slug}`, async () => {
+      await triggerRunNow(wf.slug, "cron");
+    });
+  }
+
   await enqueueTick(boss, 0); // bootstrap the 15s chain
   await enqueueIntentIntake(boss, 0); // bootstrap the 5s intent chain
+  await enqueueWorkflowDrain(boss, 0); // bootstrap the 10s workflow drain
 
   return boss;
 }

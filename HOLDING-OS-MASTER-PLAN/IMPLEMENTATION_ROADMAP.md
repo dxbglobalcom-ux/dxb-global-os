@@ -122,7 +122,7 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 
 | # | İş | Kanıt | Model | Durum |
 |---|----|-------|-------|-------|
-| E9.1 | Workflow runner (`packages/kernel/src/workflow/`) + step handlers + control fn'ler | WORKFLOW §24 smoke-wf uçtan uca | F/O | — |
+| E9.1 | Workflow runner (`packages/kernel/src/workflow/`) + step handlers + control fn'ler | WORKFLOW §24 smoke-wf uçtan uca | F/O | ✓ 2026-07-13 (K1 Fable in person; migration 20260713090000 control_workflow_action + run.* Broadcast; kernel runner/steps/triggers library (§3 ⛔); scheduler workflow.run 10s drain; /api/control/workflows; §24 live: create ok → run_now run_id → succeeded; tests/e9 24/24; regression 18 files 134/0; adaptations A1-A6 in spec) |
 | E9.2 | Workflow Settings UI (§6.4'ün 17 kalemi) + koşu geçmişi | 17 kalem denetim listesi UI'da işaretlenir | F/O | — |
 | E9.3 | Approval Center genişleme (§21: tam sayfa, karar geçmişi, politika bağı) — mevcut karar yolu KALIR | mevcut approval testleri yeşil + yeni center rotası | F/O | — |
 | E9.4 | Project OS: 0023x-b üstüne Command View (§23 19 alan) + health fn | PROJECT_OS §24 komutları | F/O | — |

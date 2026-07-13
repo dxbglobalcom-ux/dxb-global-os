@@ -8,6 +8,7 @@
   "dependencies": {
     "@dxb/gateway": "workspace:*",
     "@dxb/hr": "workspace:*",
+    "@dxb/kernel": "workspace:*",
     "@dxb/memory-router": "workspace:*",
     "@dxb/orchestrator": "workspace:*",
     "@dxb/shared": "workspace:*",

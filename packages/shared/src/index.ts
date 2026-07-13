@@ -14,6 +14,20 @@ export {
 } from "./contracts/events.js";
 export type { DxbChannel, OpsLiveType } from "./contracts/events.js";
 export {
+  STEP_KINDS,
+  STEP_CONFIG_SCHEMAS,
+  AgentStepConfig,
+  ApprovalStepConfig,
+  ReviewStepConfig,
+  RetryStepConfig,
+  FallbackStepConfig,
+  WorkflowStep,
+  StepsSnapshot,
+  WORKFLOW_RUN_STATUSES,
+  parseStepConfig,
+} from "./contracts/workflow-steps.js";
+export type { StepKind, WorkflowRunStatus } from "./contracts/workflow-steps.js";
+export {
   LITELLM_SCHEMA,
   LITELLM_SPEND_TABLE,
   LITELLM_KEYS_TABLE,

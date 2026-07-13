@@ -78,13 +78,21 @@ export interface AgentsTable {
   persona_path: string;
   persona_version: Generated<string>;
   status: Generated<string>;
+  // HR family (E5.4/E6.3 — live since 20260711006000; mirror was stale)
+  role_level: string | null;
+  manager_id: string | null;
+  employment_status: Generated<string>;
+  persona_id: string | null;
+  hook_version: string | null;
+  title: string | null;
+  title_tr: string | null;
   created_at: Timestamptz;
   updated_at: Timestamptz;
 }
 
 export interface ApprovalsTable {
   id: Generated<string>;
-  task_id: string;
+  task_id: string | null; // nullable in live schema — workflow approval steps carry no task
   action_type: string;
   payload: JsonbRequired;
   risk_class: Generated<string>;
@@ -303,7 +311,47 @@ export interface AlertsTable {
   muted_until: Date | null;
 }
 
+// 0023x work family (E9.1 — DATA_MODEL 4.4; steps_snapshot = WORKFLOW §10
+// versioning: a run executes its frozen step set, never the live tables).
+export interface WorkflowsTable {
+  id: Generated<string>;
+  slug: string;
+  name: string;
+  owner_employee_id: string | null;
+  trigger: Jsonb;
+  enabled: Generated<boolean>;
+  budget_eur: NumericNullable;
+  token_limit: number | null;
+  timeout_s: number | null;
+  risk: Generated<string>;
+  logging_level: Generated<string>;
+  output_standard: string | null;
+  version: Generated<number>;
+}
+
+export interface WorkflowStepsTable {
+  id: Generated<string>;
+  workflow_id: string;
+  seq: number;
+  kind: string;
+  config: Jsonb;
+}
+
+export interface WorkflowRunsTable {
+  id: Generated<string>;
+  workflow_id: string;
+  status: Generated<string>;
+  triggered_by: string;
+  current_step: number | null;
+  steps_snapshot: Jsonb;
+  started_at: Timestamptz;
+  ended_at: Date | null;
+}
+
 export interface DB {
+  workflows: WorkflowsTable;
+  workflow_steps: WorkflowStepsTable;
+  workflow_runs: WorkflowRunsTable;
   tasks: TasksTable;
   agent_runs: AgentRunsTable;
   tool_calls: ToolCallsTable;
