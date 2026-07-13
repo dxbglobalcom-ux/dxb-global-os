@@ -18,5 +18,13 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | live-en-1920.png | /live | EN | 1920 | PENDING | same |
 | live-tr-1280.png | /live | TR | 1280 | PENDING | same (note string localized this pass) |
 | live-tr-1920.png | /live | TR | 1920 | PENDING | same |
+| gov-audit-en-1280.png | /gov/audit | EN | 1280 | PENDING | E8.4 audit trail — unified stream + filters + drill (2026-07-13) |
+| gov-audit-en-1920.png | /gov/audit | EN | 1920 | PENDING | same |
+| gov-audit-tr-1280.png | /gov/audit | TR | 1280 | PENDING | same |
+| gov-audit-tr-1920.png | /gov/audit | TR | 1920 | PENDING | same |
+| gov-decisions-en-1280.png | /gov/decisions | EN | 1280 | PENDING | E8.4 Decision Logs — 8 directive questions as headers (2026-07-13); wide table scrolls in own container at 1280 |
+| gov-decisions-en-1920.png | /gov/decisions | EN | 1920 | PENDING | same |
+| gov-decisions-tr-1280.png | /gov/decisions | TR | 1280 | PENDING | same |
+| gov-decisions-tr-1920.png | /gov/decisions | TR | 1920 | PENDING | same |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).

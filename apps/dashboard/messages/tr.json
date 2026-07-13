@@ -847,6 +847,84 @@
         "disabled": "Kapalı",
         "retired": "Emekli"
       }
+    },
+    "audit": {
+      "title": "Denetim Kaydı",
+      "subtitle": "Her kontrol düzlemi eyleminin kalıcı kaydı — kim, ne, neden; kanıt bir tık derinde.",
+      "recordTitle": "Denetim Kaydı",
+      "backToTrail": "Denetim Kaydına dön",
+      "tabs": {
+        "trail": "Denetim Kaydı",
+        "decisions": "Karar Kayıtları"
+      },
+      "ui": {
+        "filterActor": "Aktör",
+        "filterEntity": "Varlık",
+        "filterRisk": "Risk",
+        "filterFrom": "Başlangıç",
+        "filterTo": "Bitiş",
+        "all": "Tümü",
+        "noRef": "Bağlı kayıt yok",
+        "colTime": "Zaman",
+        "colActor": "Aktör",
+        "colAction": "Eylem",
+        "colEntity": "Bağlı kayıt",
+        "colRisk": "Risk",
+        "drillPayload": "Eylem içeriği",
+        "drillRefRecord": "Bağlı aile kaydı",
+        "drillNoRef": "Bu eylemin detay referansı yok.",
+        "fullRecord": "Tam kayıt",
+        "taskLink": "Görev",
+        "empty": "Geçerli filtrelerle eşleşen denetim satırı yok.",
+        "shown": "satır",
+        "actorTypes": {
+          "ceo": "CEO",
+          "agent": "Ajan",
+          "system": "Sistem"
+        },
+        "entities": {
+          "decision_log": "Karar",
+          "settings_change_log": "Ayar değişikliği",
+          "routing_rules": "Yönlendirme kuralı",
+          "revenue_ledger": "Gelir kaydı",
+          "library_change_log": "Kütüphane değişikliği",
+          "file_changes": "Dosya değişikliği"
+        },
+        "risks": {
+          "low": "Düşük",
+          "medium": "Orta",
+          "high": "Yüksek"
+        }
+      }
+    },
+    "decisions": {
+      "title": "Karar Kayıtları",
+      "subtitle": "Her önemli karar, direktifin kendi sekiz sorusuyla yanıtlanır.",
+      "ui": {
+        "colTime": "Ne zaman",
+        "colWho": "Kim karar verdi",
+        "colDecision": "Ne kararlaştırıldı",
+        "colRationale": "Neden (gerekçe)",
+        "colData": "Hangi veriler kullanıldı",
+        "colAlternatives": "Hangi alternatifler değerlendirildi",
+        "colConfidence": "Güven",
+        "colRisk": "Risk",
+        "colApproval": "Onay",
+        "colOutcome": "Sonuç",
+        "filterWho": "Karar veren",
+        "filterRisk": "Risk",
+        "all": "Tümü",
+        "empty": "Geçerli filtrelerle eşleşen karar yok.",
+        "shown": "satır",
+        "taskLink": "Görev",
+        "drillContext": "Görev bağlamı",
+        "none": "—",
+        "risks": {
+          "low": "Düşük",
+          "medium": "Orta",
+          "high": "Yüksek"
+        }
+      }
     }
   }
 }

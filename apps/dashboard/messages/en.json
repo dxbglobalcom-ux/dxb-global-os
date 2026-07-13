@@ -847,6 +847,84 @@
         "disabled": "Disabled",
         "retired": "Retired"
       }
+    },
+    "audit": {
+      "title": "Audit Trail",
+      "subtitle": "Permanent record of every control-plane action — who, what, why, with the evidence one click deeper.",
+      "recordTitle": "Audit Record",
+      "backToTrail": "Back to Audit Trail",
+      "tabs": {
+        "trail": "Audit Trail",
+        "decisions": "Decision Logs"
+      },
+      "ui": {
+        "filterActor": "Actor",
+        "filterEntity": "Entity",
+        "filterRisk": "Risk",
+        "filterFrom": "From",
+        "filterTo": "To",
+        "all": "All",
+        "noRef": "No linked record",
+        "colTime": "Time",
+        "colActor": "Actor",
+        "colAction": "Action",
+        "colEntity": "Linked record",
+        "colRisk": "Risk",
+        "drillPayload": "Action payload",
+        "drillRefRecord": "Linked family record",
+        "drillNoRef": "This action carries no detail reference.",
+        "fullRecord": "Full record",
+        "taskLink": "Task",
+        "empty": "No audit rows match the current filters.",
+        "shown": "rows",
+        "actorTypes": {
+          "ceo": "CEO",
+          "agent": "Agent",
+          "system": "System"
+        },
+        "entities": {
+          "decision_log": "Decision",
+          "settings_change_log": "Settings change",
+          "routing_rules": "Routing rule",
+          "revenue_ledger": "Revenue entry",
+          "library_change_log": "Library change",
+          "file_changes": "File change"
+        },
+        "risks": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High"
+        }
+      }
+    },
+    "decisions": {
+      "title": "Decision Logs",
+      "subtitle": "Every significant decision answered in the directive's own eight questions.",
+      "ui": {
+        "colTime": "When",
+        "colWho": "Who decided",
+        "colDecision": "What was decided",
+        "colRationale": "Why (rationale)",
+        "colData": "What data was used",
+        "colAlternatives": "What alternatives were considered",
+        "colConfidence": "Confidence",
+        "colRisk": "Risk",
+        "colApproval": "Approval",
+        "colOutcome": "Outcome",
+        "filterWho": "Decided by",
+        "filterRisk": "Risk",
+        "all": "All",
+        "empty": "No decisions match the current filters.",
+        "shown": "rows",
+        "taskLink": "Task",
+        "drillContext": "Task context",
+        "none": "—",
+        "risks": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High"
+        }
+      }
     }
   }
 }
