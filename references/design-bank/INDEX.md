@@ -14,5 +14,9 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | orchestration-en-1920.png | /ai/orchestration | EN | 1920 | PENDING | same |
 | orchestration-tr-1280.png | /ai/orchestration | TR | 1280 | PENDING | same (risk options localized this pass) |
 | orchestration-tr-1920.png | /ai/orchestration | TR | 1920 | PENDING | same (stale READ-ONLY header badge removed this pass) |
+| live-en-1280.png | /live | EN | 1280 | PENDING | E8.3 Live Ops v2 — ops:live stream live (2026-07-13); top row = live-delivered agent run |
+| live-en-1920.png | /live | EN | 1920 | PENDING | same |
+| live-tr-1280.png | /live | TR | 1280 | PENDING | same (note string localized this pass) |
+| live-tr-1920.png | /live | TR | 1920 | PENDING | same |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).

@@ -1,7 +1,18 @@
 export const PACKAGE = "@dxb/shared" as const;
 
 export { TaskEnvelope } from "./envelope.js";
-export { getDb, closeDb } from "./db.js";
+export { getDb, closeDb, createListenClient } from "./db.js";
+export type { ListenClient } from "./db.js";
+export {
+  DXB_CHANNELS,
+  EntityKind,
+  EventType,
+  EventEnvelope,
+  OpsLiveBatchPayload,
+  OpsLiveMessage,
+  OPS_LIVE_TYPES,
+} from "./contracts/events.js";
+export type { DxbChannel, OpsLiveType } from "./contracts/events.js";
 export {
   LITELLM_SCHEMA,
   LITELLM_SPEND_TABLE,

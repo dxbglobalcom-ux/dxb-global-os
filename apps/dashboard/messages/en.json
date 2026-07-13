@@ -507,7 +507,7 @@
       "actor": "Actor",
       "task": "Task",
       "time": "Time",
-      "note": "Full agent-run stream (ops:live) lands at E8.3; this feed is the real task_events + approvals Broadcast."
+      "note": "Agent runs, task events and decisions stream over ops:live (1 s batched Broadcast); approvals ride their own channel."
     },
     "tasks": {
       "kpiActive": "Active",

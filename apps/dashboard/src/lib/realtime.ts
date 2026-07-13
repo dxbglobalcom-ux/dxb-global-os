@@ -1,15 +1,17 @@
 "use client";
 
-// Single Broadcast subscription helper for the three cockpit channels
-// (dxb:task_events / dxb:approvals / dxb:cost_ledger — LOCKED naming, 0013
-// triggers). Private channels: joining is a SELECT on realtime.messages under
-// the dxb_ceo_broadcast_read policy, so realtime.setAuth() must run before
-// subscribe. postgres_changes is forbidden project-wide.
+// Single Broadcast subscription helper for the cockpit channels: the three
+// 0013 legacy channels (dxb:task_events / dxb:approvals / dxb:cost_ledger —
+// LOCKED naming, broadcast_changes shape) plus the EVENT_MODEL §9b catalog
+// channels (dxb:ops:live — §9a envelope shape, 1 s batched by the e83
+// collector). Private channels: joining is a SELECT on realtime.messages
+// under the dxb_ceo_broadcast_read policy, so realtime.setAuth() must run
+// before subscribe. postgres_changes is forbidden project-wide.
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export type DxbChannelName = "task_events" | "approvals" | "cost_ledger";
+export type DxbChannelName = "task_events" | "approvals" | "cost_ledger" | "ops:live";
 
 // Shape written by realtime.broadcast_changes (migration 0013): the UI reads
 // exactly these fields — live-projection.test.ts pins this contract.
@@ -34,9 +36,11 @@ function getClient(): SupabaseClient {
   return shared;
 }
 
-export function subscribeDxb(
+// Message shape is per-channel: 0013 channels deliver DxbBroadcastPayload,
+// ops:live delivers the §9a envelope — callers pick T accordingly.
+export function subscribeDxb<T = DxbBroadcastPayload>(
   name: DxbChannelName,
-  onMessage: (payload: DxbBroadcastPayload) => void,
+  onMessage: (payload: T) => void,
   onStatus?: (state: DxbChannelState) => void,
 ): () => void {
   const supabase = getClient();
@@ -49,7 +53,7 @@ export function subscribeDxb(
     if (disposed) return;
     lastAt = new Date();
     onStatus?.({ status: "live", lastAt });
-    onMessage(message.payload as DxbBroadcastPayload);
+    onMessage(message.payload as T);
   });
 
   onStatus?.({ status: "connecting", lastAt });
@@ -74,16 +78,16 @@ export function subscribeDxb(
 }
 
 // React binding: channel state + message fan-in for live panels.
-export function useDxbChannel(
+export function useDxbChannel<T = DxbBroadcastPayload>(
   name: DxbChannelName,
-  onMessage: (payload: DxbBroadcastPayload) => void,
+  onMessage: (payload: T) => void,
 ): DxbChannelState {
   const [state, setState] = useState<DxbChannelState>({ status: "connecting", lastAt: null });
   const handler = useRef(onMessage);
   handler.current = onMessage;
 
   useEffect(() => {
-    const unsubscribe = subscribeDxb(name, (payload) => handler.current(payload), setState);
+    const unsubscribe = subscribeDxb<T>(name, (payload) => handler.current(payload), setState);
     return unsubscribe;
   }, [name]);
 
