@@ -14,6 +14,14 @@
 | `../HOLDING-OS-MASTER-PLAN/*_SPEC.md` (31 files) | Module contracts (org, routing, settings, HR, CRM…) |
 | `STATE.md` | Live position: last activity, current step, quick-task ledger |
 | `quick/` | GSD bookkeeping: one dir per work unit (PLAN.md = intent, SUMMARY.md = evidence). "Quick" = the tracking lane's NAME, not the quality level — E-step work recorded here follows the corpus specs in full |
+
+> ⛔ **PLAN.md ≠ a plan (CEO ruling 2026-07-13).** The plan was written ONCE —
+> the corpus. A quick `PLAN.md` is an **execution ticket only**: which spec
+> section, which roadmap row, what evidence will prove it. It may contain
+> ZERO new design decisions. If reality forces a deviation, it is written into
+> the SPEC as a registered adaptation (CEO-visible) — never invented inside a
+> PLAN.md. Successor authors (Opus after Fable) EXECUTE the corpus; they do
+> not re-plan it. A PLAN.md that redesigns anything is a governance violation.
 | `governance/`, `research/`, `study-cards/`, `graphs/` | Standing references (directive mirrors, stack research, tool cards, knowledge graph) |
 
 ## HISTORY (execution records — not plans; do not delete)

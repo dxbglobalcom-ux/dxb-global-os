@@ -97,6 +97,8 @@ Use these entry points:
 - `/gsd-execute-phase` for planned phase work
 
 Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
+
+⛔ **PLAN.md ≠ a plan (CEO ruling 2026-07-13).** The project plan exists ONCE: `HOLDING-OS-MASTER-PLAN/` (31-spec corpus + IMPLEMENTATION_ROADMAP). Quick/phase `PLAN.md` files are execution tickets only — spec pointer + roadmap row + evidence contract, ZERO new design decisions. Deviations go into the SPEC as registered adaptations (CEO-visible), never invented inside a PLAN.md. Successor authors (Opus after Fable) execute the corpus; they do not re-plan it.
 <!-- GSD:workflow-end -->
 
 <!-- GSD:profile-start -->
