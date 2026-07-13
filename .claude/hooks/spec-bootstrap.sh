@@ -25,6 +25,11 @@ RULES (binding on every author):
    decisions. Deviations = registered adaptations written into the SPEC.
 3. On contradiction: CEO directive > MASTER_PLAN.md > module spec. Corpus wins.
 4. Evidence-Before-Done: no "done" without executed verification.
+5. SPEC-GAP = YOUR DEFECT (CEO ruling 2026-07-13): if you discover a spec
+   contract that a ✓-closed roadmap row skipped, FIX IT IMMEDIATELY in that
+   same session — the CEO is never the one who orders the fix. Only if the
+   item belongs to a FUTURE roadmap row do you record it as a boundary
+   instead of jumping ahead.
 
 LIVE POSITION (from STATE.md):
 ${last_activity:-"(STATE.md unreadable — read it manually before any work)"}
