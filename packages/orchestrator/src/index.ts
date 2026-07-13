@@ -25,6 +25,8 @@ export type {
   BudgetCheckResult,
   ContextBudgetDeps,
 } from "./context-budget.js";
+export { ROLE_SLOTS, selectModel, fallbackModel, RoutingRefusedError } from "./select-model.js";
+export type { RoleSlot, SelectModelArgs, FallbackArgs, RoutingSelection } from "./select-model.js";
 export { escalate, failCount, ladderAction, bumpTier } from "./escalate.js";
 export type { LadderAction, EscalateResult } from "./escalate.js";
 export { qa, QaVerdict } from "./qa.js";
