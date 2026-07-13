@@ -3,6 +3,7 @@
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[CEO_COMMAND_CENTER_SPEC]] · Direktif kaynağı: §32 (içerik listesi birebir) + §§3-8, 24, 26-28, 30, 33-35 + A1 (WebGL serbest, 34" ultrawide, TV modu, RTX 4090 hedef) + A2 (EN birincil, TR tam ikincil).
 > Hüküm: "yalnızca görsel açıklama değil, uygulanabilir tasarım standardı" — her token kod değeriyle yazılmıştır.
 > Faz-8 design brief bağı: Burj Al Arab 7-yıldız lüks/elegans; jenerik admin panel = ihlal; göz testi çıtası "referans görselden güzel".
+> ⚠ SOURCE HIERARCHY AMENDED — CEO directive 2026-07-11 (codified 2026-07-14): PRIMARY design universe = **Iron Man / JARVIS**; Burj Al Arab = quality bar only. Binding text: "Registered directive — design source hierarchy" section below. Every design pass reads that section together with this header.
 
 ## 1. Amaç
 
@@ -195,6 +196,17 @@ Tailwind v4 `@theme` · shadcn/ui taban (token'larla override) + Aceternity (yal
 - **Table:** §10 Advanced Data Table kuralları + sticky başlık + kolon yönetimi + satır tık = drawer.
 - **Form:** label-caps üstte, input 40px graphite inset, focus champagne kenar; inline doğrulama (submit'te toplu değil); tehlikeli aksiyonlarda yazarak-onay ("PAUSE" yaz).
 - **Chart:** §24 direktifi — ince çizgi 1.5px, kontrollü glow (yalnız aktif seri, 4px blur), premium tooltip, drill-down tık, karşılaştırma modu (dönem overlay), zaman aralığı seçici; izinli tipler: line/area/radial health/heatmap/sankey/network/timeline/cost waterfall/dependency map/routing graph/org graph; pie minimum.
+
+## Registered directive — design source hierarchy (CEO 2026-07-11, codified 2026-07-14; BINDING)
+
+CEO ruling (recorded from the 2026-07-11 exchange; codification ordered 2026-07-14): the design is not "Burj Al Arab only" — the design lives INSIDE the Iron Man universe.
+
+1. **PRIMARY design source: Iron Man / JARVIS.** The dashboard is an Iron Man cockpit/HUD, and JARVIS is already architecture, not metaphor (Phase 09 = jarvis-voice-layer; "Command Center" naming, Intelligence Rail, live agent stream are extensions of that cockpit concept). HUD language — depth, glass panels, thin-line glow, live-telemetry feel — must read as an Iron Man cockpit, NEVER as generic luxury admin.
+2. **Burj Al Arab 7-star = QUALITY BAR only.** It sets the craftsmanship/elegance/finish standard ("referans görselden güzel" eye-test bar). It is NOT the concept spine; where the two pull apart, Iron Man cockpit identity wins and Burj-level finish is applied to it.
+3. **C-Hybrit palette stays and already fits.** Champagne/gold accent = Mark armor gold-titanium warm metal tone (no shift toward red). The gold double edge + lock on the money-out gate reads as armor plating — that reading is canon.
+4. **Existing token discipline unchanged.** B3 (light is hierarchy, not decoration; no neon/cyberpunk lines) and B4 (gold discipline; bright yellow / orange gold / BROWN banned — brown glow = recorded RET lesson) continue to bound the HUD language. This directive changes the CONCEPT SOURCE, not the token rules.
+5. **Scope: every future design pass until project end** — JARVIS/voice screens included — and every author (Fable, Opus, GPT 5.6, runtime agents). RULE #0 comparisons read the design-bank baselines through this hierarchy.
+6. **Quality bar restated:** THE GOAL applies — Fable 5 quality at every stage; this directive raises identity clarity, never lowers finish.
 
 ## Done definition (bu spec)
 
