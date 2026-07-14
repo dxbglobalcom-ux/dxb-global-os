@@ -209,7 +209,10 @@ export default async function PermissionsPage() {
               >
                 {locale === "tr" ? (d.display_name_tr ?? d.display_name) : d.display_name}
               </Link>
-              <StatusBadge level={d.mcp_profile === "default-deny" ? "ok" : "warn"}>
+              <StatusBadge
+                level={d.mcp_profile === "default-deny" ? "ok" : "warn"}
+                className="shrink-0"
+              >
                 <span className="font-data">{d.mcp_profile}</span>
               </StatusBadge>
             </li>

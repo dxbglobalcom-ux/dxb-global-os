@@ -8,6 +8,7 @@ import {
 } from "@/components/command/intelligence-rail";
 import { SessionGuard } from "@/components/command/session-guard";
 import { SideNav } from "@/components/command/side-nav";
+import { localizeAlertTitle } from "@/lib/alert-title";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -116,7 +117,11 @@ export default async function CommandLayout({
     title: task.objective ?? task.id,
     status: task.status,
   }));
-  const railAlerts: RailAlert[] = ((alertsRes.data ?? []) as RailAlert[]).slice(0, 5);
+  // Alert titles are English machine records; the TR surface localizes the
+  // finite generator vocabulary at the server boundary (RULE #0 purity).
+  const railAlerts: RailAlert[] = ((alertsRes.data ?? []) as RailAlert[])
+    .slice(0, 5)
+    .map((a) => ({ ...a, title: localizeAlertTitle(a.title, locale) }));
   const alertCount = alertsRes.data?.length ?? 0;
   const ticker = (tickerRes.data ?? []) as TickerRow[];
 

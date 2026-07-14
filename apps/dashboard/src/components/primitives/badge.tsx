@@ -54,7 +54,7 @@ export function StatusBadge({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-input border border-edge-neutral bg-surface-graphite px-2 py-0.5 text-caption ${TEXT_CLASS[level]} ${className}`}
+      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-input border border-edge-neutral bg-surface-graphite px-2 py-0.5 text-caption ${TEXT_CLASS[level]} ${className}`}
     >
       <Shape level={level} />
       {children}

@@ -4,6 +4,7 @@ import {
   type AlertRow,
 } from "@/components/command/alert-center";
 import { Panel } from "@/components/primitives";
+import { localizeAlertTitle } from "@/lib/alert-title";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -83,7 +84,9 @@ export default async function Page() {
       kind: r.kind,
       id: r.id,
       level: r.level,
-      title: r.title,
+      // Machine-written English record; TR surface localizes known
+      // generator patterns (approval purposes fall through untouched).
+      title: localizeAlertTitle(r.title, locale),
       source: r.source,
       at: r.at,
       acknowledgedAt: r.acknowledged_at,
@@ -104,7 +107,7 @@ export default async function Page() {
       kind: "alert",
       id: r.id,
       level: r.level,
-      title: r.title,
+      title: localizeAlertTitle(r.title, locale),
       source: r.source,
       at: r.at,
       acknowledgedAt: r.acknowledged_at,

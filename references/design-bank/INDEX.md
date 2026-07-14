@@ -129,9 +129,9 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e121e-policies-en-1280.png | /gov/policies | EN | 1280 | PENDING | E12.1-E policy constitution — 8 approval gates (7 LOCKED), 19 hook standards (17 blocking), governance_rule shelf; risk-class labels localized |
 | e121e-policies-en-1920.png | /gov/policies | EN | 1920 | PENDING | same, wide |
 | e121e-policies-tr-1280.png | /gov/policies | TR | 1280 | PENDING | same, TR |
-| e121e-permissions-en-1280.png | /gov/permissions | EN | 1280 | PENDING | E12.1-E permissions — honest zero grants (pre-activation), 21/21 default-deny posture |
-| e121e-permissions-en-1920.png | /gov/permissions | EN | 1920 | PENDING | same, wide |
-| e121e-permissions-tr-1280.png | /gov/permissions | TR | 1280 | PENDING | same, TR |
+| e121e-permissions-en-1280.png | /gov/permissions | EN | 1280 | PENDING | E12.1-E permissions — honest zero grants (pre-activation), 21/21 default-deny posture (retaken 2026-07-15: badge-wrap fix — StatusBadge nowrap+shrink-0, CEO-spotted jagged rows) |
+| e121e-permissions-en-1920.png | /gov/permissions | EN | 1920 | PENDING | same, wide (retaken post badge-wrap fix) |
+| e121e-permissions-tr-1280.png | /gov/permissions | TR | 1280 | PENDING | same, TR (retaken post badge-wrap fix; rail alert title now localized via lib/alert-title) |
 | e121e-security-en-1280.png | /gov/security | EN | 1280 | PENDING | E12.1-E security posture — violations 0 honest, 10 real high-risk audit rows (battery fn calls, append-only), LIVE/DEFERRED posture list incl. registered hardening deferral |
 | e121e-security-en-1920.png | /gov/security | EN | 1920 | PENDING | same, wide |
 | e121e-security-tr-1280.png | /gov/security | TR | 1280 | PENDING | same, TR |
