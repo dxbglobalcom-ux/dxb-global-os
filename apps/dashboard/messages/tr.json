@@ -556,6 +556,7 @@
       "colBrain": "Beyin",
       "colAutonomy": "Otonomi",
       "colPersona": "Persona",
+      "colHook": "Fable 5 Hook",
       "colStatus": "Durum",
       "showing": "Gösterilen",
       "of": "/",
@@ -565,7 +566,8 @@
         "head": "Müdür",
         "specialist": "Uzman",
         "worker": "Çalışan"
-      }
+      },
+      "hookUnbound": "Bağsız"
     },
     "orgTree": {
       "title": "Organizasyon Grafiği",
@@ -1489,7 +1491,7 @@
         "enable": "Aç",
         "highRiskNote": "Block bir policy'yi zayıflatmak (uyarıya düşürmek ya da kapatmak) yüksek riskli bir yönetişim değişikliğidir — audit'e öyle işlenir. Çalışan bazında muafiyet yoktur.",
         "emptyStream": "Kayıtlı ihlal yok.",
-        "emptyStreamHint": "Kapılar E10.2 adımında spawn yoluna bağlanır; her red, revizyon ve escalation buraya düşecek.",
+        "emptyStreamHint": "Kapılar spawn yoluna bağlı (E10.2); her red, revizyon ve escalation olduğu an buraya düşer.",
         "shown": "satır",
         "errorPrefix": "Hata"
       }

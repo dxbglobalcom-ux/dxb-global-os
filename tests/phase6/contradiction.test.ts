@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { afterAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
 import { commitMemory } from "../../packages/memory-router/src/index.js";
 import { promote } from "../../tools/dxb-cli/src/promote.js";
 
@@ -45,6 +46,10 @@ afterAll(async () => {
   await db.deleteFrom("audit_log").where("actor", "in", [AGENT, "ceo:cli"]).where("created_at", ">", new Date(Date.now() - 3_600_000)).execute();
   await closeDb();
 });
+
+// E10.2: this suite predates the hook — pin the §22 flag off for its
+// lifetime (restored + alert swept in the helper afterAll).
+pinHookOff(() => getDb());
 
 describe("rule 2 + rule 3 — contradiction flag → CLI promote → superseded_by chain", () => {
   it("flags 'X=B' against trusted 'X=A', then promote flips trust and chains supersession", async () => {

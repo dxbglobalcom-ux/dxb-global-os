@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import {
   departmentKeyEnvVar,
@@ -123,6 +124,10 @@ afterAll(async () => {
   }
   await closeDb();
 });
+
+// E10.2: this suite predates the hook — pin the §22 flag off for its
+// lifetime (restored + alert swept in the helper afterAll).
+pinHookOff(() => getDb());
 
 describe("shouldCouncil — LOCKED trigger truth table (deterministic)", () => {
   it("outward OR L1 fires; everything else is silent", () => {

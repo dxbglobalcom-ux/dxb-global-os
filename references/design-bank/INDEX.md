@@ -62,6 +62,15 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e101-violations-tr-1920.png | /gov/violations | TR | 1920 | PENDING | same |
 | e101-violations-en-1280.png | /gov/violations | EN | 1280 | PENDING | narrow composition — action buttons stack vertically, policy slug on its own line, table fits without hidden columns (652=652 probe) |
 | e101-violations-tr-1280.png | /gov/violations | TR | 1280 | PENDING | same |
+| e102-employees-en-1920.png | /org/employees | EN | 1920 | PENDING | E10.2 employee card hook status — 'Fable 5 Hook' column (§5 row 3): green v1 badge per bound employee, archived rows neutral 'Unbound' (2026-07-14) |
+| e102-employees-tr-1920.png | /org/employees | TR | 1920 | PENDING | same |
+| e102-employees-en-1280.png | /org/employees | EN | 1280 | PENDING | narrow composition — 9-column table on min-w-960 real scroll (RULE #0 catch fixed: column crush hid the new hook column) |
+| e102-employees-en-1280-scrolled.png | /org/employees | EN | 1280 | PENDING | proof frame: table scrolled right — hook + status columns fully visible |
+| e102-employees-tr-1280.png | /org/employees | TR | 1280 | PENDING | same narrow composition, TR |
+| e102-violations-en-1920.png | /gov/violations | EN | 1920 | PENDING | E10.2 zero-state copy updated — gates now BOUND to the spawn path (E10.1's 'binds at E10.2' promise closed) |
+| e102-violations-tr-1920.png | /gov/violations | TR | 1920 | PENDING | same |
+| e102-violations-en-1280.png | /gov/violations | EN | 1280 | PENDING | same, narrow |
+| e102-violations-tr-1280.png | /gov/violations | TR | 1280 | PENDING | same, narrow |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 

@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
 import {
   currentRunScope,
   restoreSpill,
@@ -39,6 +40,10 @@ afterAll(async () => {
   }
   await closeDb();
 });
+
+// E10.2: this suite predates the hook — pin the §22 flag off for its
+// lifetime (restored + alert swept in the helper afterAll).
+pinHookOff(() => getDb());
 
 describe("E8.1 runScope — agent_runs open/close", () => {
   it("opens running, closes succeeded with usage", async () => {

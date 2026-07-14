@@ -3,6 +3,7 @@ import { readFile, rm } from "node:fs/promises";
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
 import {
   commitMemory,
   cosineSearch,
@@ -45,6 +46,10 @@ afterAll(async () => {
   for (const f of createdFiles) await rm(f, { force: true });
   await closeDb();
 });
+
+// E10.2: this suite predates the hook — pin the §22 flag off for its
+// lifetime (restored + alert swept in the helper afterAll).
+pinHookOff(() => getDb());
 
 describe("rule 1 — deliberate poisoning lands quarantined (gate criterion 1, write half)", () => {
   it("web-origin 'CEO approved' fact is born quarantined even at confidence 1.0", async () => {

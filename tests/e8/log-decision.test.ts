@@ -1,6 +1,7 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
 import { logDecision } from "@dxb/observability";
 import { dispatch } from "../../packages/orchestrator/src/dispatch.js";
 import { escalate } from "../../packages/orchestrator/src/escalate.js";
@@ -72,6 +73,10 @@ async function dispatchProbe(objective: string, department = "engineering"): Pro
   probeTaskIds.push(...taskIds);
   return taskIds[0];
 }
+
+// E10.2: this suite predates the hook — pin the §22 flag off for its
+// lifetime (restored + alert swept in the helper afterAll).
+pinHookOff(() => getDb());
 
 describe("E8.2 logDecision — the 8-field row", () => {
   it("writes a row with every field filled (AUDIT acceptance)", async () => {

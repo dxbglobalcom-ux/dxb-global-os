@@ -26,6 +26,8 @@ type AgentRow = {
   brain: string;
   autonomy_level: number;
   persona_version: string;
+  hook_version: string | null;
+  employment_status: string;
   status: "dormant" | "active";
 };
 
@@ -44,7 +46,7 @@ export default async function EmployeesPage({
   let rowsQuery = supabase
     .from("agents")
     .select(
-      "id, slug, department, role, brain, autonomy_level, persona_version, status",
+      "id, slug, department, role, brain, autonomy_level, persona_version, hook_version, employment_status, status",
       { count: "exact" },
     )
     .order("department", { ascending: true })
@@ -142,6 +144,24 @@ export default async function EmployeesPage({
       ),
     },
     {
+      // FABLE_5_HOOK §5 row 3 / §21: the employee card carries the hook
+      // status — an unbound live employee is a visible defect, never hidden.
+      key: "hook_version",
+      label: t.colHook,
+      render: (r) =>
+        r.hook_version ? (
+          <StatusBadge level="ok">
+            <span className="font-data">{r.hook_version}</span>
+          </StatusBadge>
+        ) : (
+          // §21 wall is about LIVE employees — an archived row's NULL is
+          // honest history, not an alarm.
+          <StatusBadge level={r.employment_status === "archived" ? "info" : "danger"}>
+            {t.hookUnbound}
+          </StatusBadge>
+        ),
+    },
+    {
       key: "status",
       label: t.colStatus,
       render: (r) => (
@@ -232,7 +252,14 @@ export default async function EmployeesPage({
           ) : (
             <>
               <div className="overflow-x-auto">
-                <DataGrid columns={columns} rows={rows} rowKey={(r) => r.id} />
+                {/* 9 columns crush at 1280 (RULE #0 catch) — real scroll
+                    beats hidden columns, same idiom as /ai/library. */}
+                <DataGrid
+                  className="min-w-[960px]"
+                  columns={columns}
+                  rows={rows}
+                  rowKey={(r) => r.id}
+                />
               </div>
               <p className="mt-2 text-right font-data text-caption text-ink-muted tabular-nums">
                 {t.showing} {rows.length} {t.of} {matched}

@@ -3,6 +3,7 @@ import { writeFileSync } from "node:fs";
 import { sql } from "kysely";
 import { afterAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import {
   CONTEXT_BAND,
@@ -134,6 +135,10 @@ afterAll(async () => {
   }
   await closeDb();
 });
+
+// E10.2: this suite predates the hook — pin the §22 flag off for its
+// lifetime (restored + alert swept in the helper afterAll).
+pinHookOff(() => getDb());
 
 describe("context-rot — 50-step control vs managed (master step 9)", () => {
   it("CONTROL: budget disabled → the same 50 steps provably exceed the hard band", async () => {

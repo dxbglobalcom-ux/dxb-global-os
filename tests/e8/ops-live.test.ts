@@ -1,6 +1,7 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb, createListenClient, EventEnvelope } from "../../packages/shared/src/index.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
 import { startOpsLiveCollector } from "../../packages/orchestrator/src/ops-live-collector.js";
 import { runWorkerOnce } from "../../packages/orchestrator/src/worker-shim.js";
 import { dispatch } from "../../packages/orchestrator/src/dispatch.js";
@@ -81,6 +82,10 @@ afterAll(async () => {
   }
   await closeDb();
 });
+
+// E10.2: this suite predates the hook — pin the §22 flag off for its
+// lifetime (restored + alert swept in the helper afterAll).
+pinHookOff(() => getDb());
 
 describe("E8.3 source triggers → §9a envelopes on the NOTIFY firehose", () => {
   it("task_events INSERT → task.event_appended with corr from row FKs", async () => {

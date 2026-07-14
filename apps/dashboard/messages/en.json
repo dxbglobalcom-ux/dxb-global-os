@@ -556,6 +556,7 @@
       "colBrain": "Brain",
       "colAutonomy": "Autonomy",
       "colPersona": "Persona",
+      "colHook": "Fable 5 Hook",
       "colStatus": "Status",
       "showing": "Showing",
       "of": "of",
@@ -565,7 +566,8 @@
         "head": "Head",
         "specialist": "Specialist",
         "worker": "Worker"
-      }
+      },
+      "hookUnbound": "Unbound"
     },
     "orgTree": {
       "title": "Organization Graph",
@@ -1489,7 +1491,7 @@
         "enable": "Enable",
         "highRiskNote": "Weakening a block policy (to warn, or disabling it) is a high-risk governance change — it is audited as such. Per-employee opt-out does not exist.",
         "emptyStream": "No violations recorded.",
-        "emptyStreamHint": "The gates bind to the spawn path at step E10.2; every rejection, revision and escalation will land here.",
+        "emptyStreamHint": "The gates are bound to the spawn path (E10.2); every rejection, revision and escalation lands here the moment it happens.",
         "shown": "rows",
         "errorPrefix": "Error"
       }

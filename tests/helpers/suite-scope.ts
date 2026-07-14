@@ -1,3 +1,4 @@
+import { afterAll, beforeAll } from "vitest";
 import { sql, type Kysely } from "kysely";
 import type { DB } from "../../packages/shared/src/db-types.js";
 
@@ -8,6 +9,30 @@ import type { DB } from "../../packages/shared/src/db-types.js";
 // a suite may only delete rows it can prove it created. Fixtures carry a
 // suite-unique department marker; this sweep follows the FK chain for
 // exactly those tasks and nothing else.
+
+/**
+ * E10.2: pin the Fable hook OFF for a pre-hook suite's lifetime. The certified
+ * Phase-5/6 (and E8) slices predate the hook — their fixtures carry no
+ * employee/persona/project surface, so the (production-on) gates would reject
+ * every claim. `hook.enabled` is exactly the §22 gradual-transition flag for
+ * that old path; production stays ON (the E10.2 migration flip), and any
+ * flag-off spawn raises the 'hook:disabled' attention alert, so this pin is
+ * loud in the DB, never silent. Restored to true in afterAll (files run
+ * sequentially — vitest fileParallelism=false). The helper also sweeps the
+ * pin-period 'hook:disabled' alert so the suite leaves no residue.
+ */
+export function pinHookOff(db: () => Kysely<DB>): void {
+  beforeAll(async () => {
+    await sql`UPDATE settings_values SET value = 'false'::jsonb
+       WHERE key = 'hook.enabled' AND scope = 'global'`.execute(db());
+  });
+  afterAll(async () => {
+    await sql`UPDATE settings_values SET value = 'true'::jsonb
+       WHERE key = 'hook.enabled' AND scope = 'global'`.execute(db());
+    await sql`DELETE FROM alerts
+       WHERE dedup_key = 'hook:disabled' AND resolved_at IS NULL`.execute(db());
+  });
+}
 
 /** Delete every row chained to tasks whose department starts with `marker`. */
 export async function sweepByDepartment(db: Kysely<DB>, marker: string): Promise<void> {

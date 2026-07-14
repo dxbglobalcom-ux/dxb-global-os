@@ -283,8 +283,26 @@ async function drive() {
   await closeDb();
 }
 
+// E10.2: the LOCKED slice predates the Fable hook — its fixtures carry no
+// employee/persona/project surface, so the production-on gates would reject
+// the worker claim. Pin the §22 flag off for the gate's duration (restored
+// by the caller's trap; the flag-off period is alerted by design, and the
+// hook-on restore sweeps the pin-period alert).
+async function hookFlag() {
+  const db = getDb();
+  const on = process.env.SLICE_HOOK === "on";
+  await sql`UPDATE settings_values SET value = ${on ? "true" : "false"}::jsonb
+     WHERE key = 'hook.enabled' AND scope = 'global'`.execute(db);
+  if (on) {
+    await sql`DELETE FROM alerts
+       WHERE dedup_key = 'hook:disabled' AND resolved_at IS NULL`.execute(db);
+  }
+  await closeDb();
+}
+
 if (MODE === "pre") await preconditions();
 else if (MODE === "drive") await drive();
+else if (MODE === "hook-flag") await hookFlag();
 else { console.error(`unknown SLICE_MODE '${MODE}'`); process.exit(2); }
 NODE_DRIVER
 )"
@@ -295,6 +313,10 @@ run_driver() { # $1=mode  (drive args ride env: SLICE_RUN/SLICE_TASK_IDS/SLICE_D
 
 echo "== slice-10of10: preconditions =="
 run_driver pre
+
+# E10.2 hook pin (see hookFlag in the driver) — restore even on failure.
+SLICE_HOOK=off run_driver hook-flag
+trap 'SLICE_HOOK=on run_driver hook-flag' EXIT
 
 SIGNATURE="" # run-1 classification signature — later runs must match (determinism)
 for i in $(seq 1 "$RUNS"); do

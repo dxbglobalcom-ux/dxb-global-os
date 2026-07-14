@@ -1,5 +1,6 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import {
   bumpTier,
@@ -71,6 +72,10 @@ afterAll(async () => {
   }
   await closeDb();
 });
+
+// E10.2: this suite predates the hook — pin the §22 flag off for its
+// lifetime (restored + alert swept in the helper afterAll).
+pinHookOff(() => getDb());
 
 describe("ladder map — LOCKED, pure, no DB (PHASE-05 §3 line-for-line)", () => {
   it("0/1/2/3/4/beyond map exactly to the §3 comment", () => {
