@@ -135,6 +135,29 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e121e-security-en-1280.png | /gov/security | EN | 1280 | PENDING | E12.1-E security posture — violations 0 honest, 10 real high-risk audit rows (battery fn calls, append-only), LIVE/DEFERRED posture list incl. registered hardening deferral |
 | e121e-security-en-1920.png | /gov/security | EN | 1920 | PENDING | same, wide |
 | e121e-security-tr-1280.png | /gov/security | TR | 1280 | PENDING | same, TR |
+| e121f-automations-en-1280.png | /ops/automations | EN | 1280 | PENDING | E12.1-F automations — 9 real pg-boss schedules (v_automation_schedules), 4 KPI stats, honest zero cron/event workflows; jsonb trigger filter fixed in-pass |
+| e121f-automations-en-1920.png | /ops/automations | EN | 1920 | PENDING | same, wide (UPDATED column fully visible) |
+| e121f-automations-tr-1280.png | /ops/automations | TR | 1280 | PENDING | same, TR |
+| e121f-automations-tr-1920.png | /ops/automations | TR | 1920 | PENDING | same, TR wide |
+| e121f-runtime-en-1280.png | /ops/runtime | EN | 1280 | PENDING | E12.1-F runtime — honest zeros after probe-residue purge (37 ghost agent_runs removed), 24h KPIs + status mix + latest runs |
+| e121f-runtime-en-1920.png | /ops/runtime | EN | 1920 | PENDING | same, wide |
+| e121f-runtime-tr-1280.png | /ops/runtime | TR | 1280 | PENDING | same, TR |
+| e121f-runtime-tr-1920.png | /ops/runtime | TR | 1920 | PENDING | same, TR wide |
+| e121f-health-en-1280.png | /sys/health | EN | 1280 | PENDING | E12.1-F health — settings-driven thresholds (per-level escalate map rendered per level; [object Object] fixed in-pass), honest liveliness dashes |
+| e121f-health-en-1920.png | /sys/health | EN | 1920 | PENDING | same, wide |
+| e121f-health-tr-1280.png | /sys/health | TR | 1280 | PENDING | same, TR ("Ayarlar güdümlü" purity fix in-pass) |
+| e121f-health-tr-1920.png | /sys/health | TR | 1920 | PENDING | same, TR wide (post-fix retake: "Ayarlar güdümlü") |
+| e121f-integrations-en-1280.png | /sys/integrations | EN | 1280 | PENDING | E12.1-F integrations — outbox posture via v_outbox_status (least-privilege view added in-pass), CRM lineage counts, 4 planned boundaries |
+| e121f-integrations-en-1920.png | /sys/integrations | EN | 1920 | PENDING | same, wide |
+| e121f-integrations-tr-1280.png | /sys/integrations | TR | 1280 | PENDING | same, TR |
+| e121f-integrations-tr-1920.png | /sys/integrations | TR | 1920 | PENDING | same, TR wide |
+| e121f-logs-en-1280.png | /sys/logs | EN | 1280 | PENDING | E12.1-F logs — 2015 audit / 0 task-event / 2414 decision tails, tabbed append-only walls |
+| e121f-logs-en-1920.png | /sys/logs | EN | 1920 | PENDING | same, wide |
+| e121f-logs-tr-1280.png | /sys/logs | TR | 1280 | PENDING | same, TR |
+| e121f-logs-tr-1920.png | /sys/logs | TR | 1920 | PENDING | same, TR |
+| e121f-backups-en-1280.png | /sys/backups | EN | 1280 | PENDING | E12.1-F backups — 6/6 append-only streams live with row counts, BACKUP_PLAN §5 posture (IN REPO / OPERATOR-VERIFIED / E13.0 gate) |
+| e121f-backups-en-1920.png | /sys/backups | EN | 1920 | PENDING | same, wide |
+| e121f-backups-tr-1280.png | /sys/backups | TR | 1280 | PENDING | same, TR |
+| e121f-backups-tr-1920.png | /sys/backups | TR | 1920 | PENDING | same, TR wide |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
-

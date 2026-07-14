@@ -27,6 +27,24 @@ async function sweepCostProbes() {
     .execute();
 }
 
+// The audit_trace probe creates a real queued task; left alive it stacks up
+// one CEO-visible ticker row per run (22 found on 2026-07-14). Same
+// both-sides self-healing sweep as the cost probe. audit_log rows stay —
+// that wall is append-only by design.
+const TRACE_PROBE_OBJECTIVE = "trace test: create one evented task for the merged trace";
+async function sweepTraceTasks() {
+  const db = getDb();
+  const stale = await db
+    .selectFrom("tasks")
+    .select("id")
+    .where("objective", "=", TRACE_PROBE_OBJECTIVE)
+    .execute();
+  if (stale.length === 0) return;
+  const ids = stale.map((r) => r.id);
+  await db.deleteFrom("task_events").where("task_id", "in", ids).execute();
+  await db.deleteFrom("tasks").where("id", "in", ids).execute();
+}
+
 beforeAll(async () => {
   const server = createDxbMcpServer();
   client = new Client({ name: "registry-test", version: "0.0.0" });
@@ -34,10 +52,12 @@ beforeAll(async () => {
   await Promise.all([server.connect(st), client.connect(ct)]);
   await getDb().deleteFrom("departments").where("slug", "=", "legal-de").execute();
   await sweepCostProbes();
+  await sweepTraceTasks();
 });
 
 afterAll(async () => {
   await sweepCostProbes();
+  await sweepTraceTasks();
   // legal-de is a probe department with no display_name_tr — leaving it live
   // fails the i18n purity gate between runs.
   await getDb().deleteFrom("departments").where("slug", "=", "legal-de").execute();

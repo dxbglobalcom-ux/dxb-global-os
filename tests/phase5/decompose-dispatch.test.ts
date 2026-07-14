@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { pinHookOff } from "../helpers/suite-scope.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
@@ -46,27 +46,54 @@ async function trackDispatch(envelopes: DecomposedEnvelope[]): Promise<string[]>
   return taskIds;
 }
 
-afterAll(async () => {
+async function sweepTaskIds(taskIds: string[]) {
+  if (taskIds.length === 0) return;
   const db = getDb();
-  if (createdTaskIds.length > 0) {
-    await db
-      .deleteFrom("tool_calls")
-      .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", createdTaskIds))
-      .execute();
-    await db
-      .deleteFrom("file_changes")
-      .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", createdTaskIds))
-      .execute();
-    // E8.4b: failed probe runs raise alerts rows (FK) — sweep before the runs.
-    await db
-      .deleteFrom("alerts")
-      .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", createdTaskIds))
-      .execute();
-    await db.deleteFrom("alerts").where("task_id", "in", createdTaskIds).execute();
-    await db.deleteFrom("agent_runs").where("task_id", "in", createdTaskIds).execute();
-    await db.deleteFrom("task_events").where("task_id", "in", createdTaskIds).execute();
-    await db.deleteFrom("tasks").where("id", "in", createdTaskIds).execute();
-  }
+  await db
+    .deleteFrom("tool_calls")
+    .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", taskIds))
+    .execute();
+  await db
+    .deleteFrom("file_changes")
+    .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", taskIds))
+    .execute();
+  // E8.4b: failed probe runs raise alerts rows (FK) — sweep before the runs.
+  await db
+    .deleteFrom("alerts")
+    .where("run_id", "in", db.selectFrom("agent_runs").select("id").where("task_id", "in", taskIds))
+    .execute();
+  await db.deleteFrom("alerts").where("task_id", "in", taskIds).execute();
+  await db.deleteFrom("agent_runs").where("task_id", "in", taskIds).execute();
+  await db.deleteFrom("task_events").where("task_id", "in", taskIds).execute();
+  await db.deleteFrom("tasks").where("id", "in", taskIds).execute();
+}
+
+// Interrupted runs skip afterAll (E9.1 lesson; 6 stale probe tasks found
+// 2026-07-14), so the stale-probe sweep also runs up front: every task this
+// file can create lives in the probe department or carries a probe objective.
+async function sweepStaleProbes() {
+  const stale = await getDb()
+    .selectFrom("tasks")
+    .select("id")
+    .where((eb) =>
+      eb.or([
+        eb("department", "=", "orch-test-dispatch"),
+        eb("objective", "like", "%haiku%DXB task queue%"),
+        eb("objective", "like", "translate the stored haiku%"),
+        eb("objective", "like", "compile the two stored haikus%"),
+      ]),
+    )
+    .execute();
+  await sweepTaskIds(stale.map((r) => r.id));
+}
+
+beforeAll(async () => {
+  await sweepStaleProbes();
+});
+
+afterAll(async () => {
+  await sweepTaskIds(createdTaskIds);
+  await sweepStaleProbes();
   await closeDb();
 });
 
