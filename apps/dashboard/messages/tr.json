@@ -933,6 +933,32 @@
       "viewHealth": "Sistem sağlığı",
       "boundaryNote": "Kapasite = para + donanım birlikte (COST spec §5). Para tarafı Bütçeler'de; bu pano şimdiki iş basıncını, probe yazınca VPS göstergelerini taşır."
     },
+    "libraryBoard": {
+      "kpiItems": "Varlık",
+      "kpiGranted": "Yetkili",
+      "kpiUsed": "Kullanılan",
+      "kpiReviewed": "Onaylı",
+      "colName": "Varlık",
+      "colKind": "Tür",
+      "colVersion": "Sürüm",
+      "colOwner": "Sahip",
+      "colReview": "İnceleme",
+      "colGrants": "Yetki",
+      "colUsage": "Kullanım",
+      "colUpdated": "Güncellendi",
+      "reviewStatuses": {
+        "approved": "Onaylı",
+        "pending": "Beklemede",
+        "rejected": "Reddedildi"
+      },
+      "reviewNone": "İncelenmemiş",
+      "viewLibrary": "Kütüphanede aç",
+      "empty": "Holding Kütüphanesi'nde bu türden varlık henüz yok — envanter yalnız gerçekten var olanı gösterir."
+    },
+    "mcp": {
+      "postureTitle": "Departman geçit duruşu",
+      "profileNote": "Derlenmiş departman profil dosyaları (yetki → profil zinciri, E9.5) gateway ağacında yaşar; bir varlığın kesin araç izin listesi Kütüphane kaydının Erişim sekmesindedir. default-deny = en-az-yetki tabanı."
+    },
     "designAudit": {
       "title": "Tasarım Denetimi",
       "subtitle": "Çalıştırılmış uygunluk kontrolleri — istek anında hesaplanır, elle beyan edilmez.",

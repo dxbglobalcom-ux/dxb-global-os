@@ -111,6 +111,18 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e121c-capacity-en-1280.png | /fin/capacity | EN | 1280 | PENDING | E12.1-C capacity board — live work pressure (queued/running/wf/queue alerts), honest empty VPS gauges (health-probe = P7) |
 | e121c-capacity-en-1920.png | /fin/capacity | EN | 1920 | PENDING | same, wide |
 | e121c-capacity-tr-1280.png | /fin/capacity | TR | 1280 | PENDING | same, TR |
+| e121d-skills-en-1280.png | /ai/skills | EN | 1280 | PENDING | E12.1-D kind-scoped library board — 23 real skill assets, drill to Library item record |
+| e121d-skills-en-1920.png | /ai/skills | EN | 1920 | PENDING | same, wide |
+| e121d-skills-tr-1280.png | /ai/skills | TR | 1280 | PENDING | same, TR |
+| e121d-plugins-en-1280.png | /ai/plugins | EN | 1280 | PENDING | 18 real plugin assets |
+| e121d-plugins-en-1920.png | /ai/plugins | EN | 1920 | PENDING | same, wide |
+| e121d-plugins-tr-1280.png | /ai/plugins | TR | 1280 | PENDING | same, TR |
+| e121d-knowledge-en-1280.png | /ai/knowledge | EN | 1280 | PENDING | knowledge shelf (research/report/sop/policy/project_doc/training, kind column on) |
+| e121d-knowledge-en-1920.png | /ai/knowledge | EN | 1920 | PENDING | same, wide |
+| e121d-knowledge-tr-1280.png | /ai/knowledge | TR | 1280 | PENDING | same, TR |
+| e121d-mcp-en-1280.png | /ai/mcp | EN | 1280 | PENDING | 8 dxb-mcp groups + department gateway posture (default-deny baseline) |
+| e121d-mcp-en-1920.png | /ai/mcp | EN | 1920 | PENDING | same, wide |
+| e121d-mcp-tr-1280.png | /ai/mcp | TR | 1280 | PENDING | same, TR |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 

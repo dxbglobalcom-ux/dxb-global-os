@@ -1,6 +1,20 @@
-import { ModuleWaiting } from "@/components/command/module-waiting";
+import { LibraryKindBoard } from "@/components/ai/library-kind-board";
+import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
 
-// /ai/knowledge — real module lands at roadmap step E12.1 (E2.2 skeleton rule).
-export default function Page() {
-  return <ModuleWaiting pageKey="knowledge" step="E12.1" />;
+// /ai/knowledge v1 (E12.1-D) — the knowledge shelf of the Holding Library:
+// research, reports, SOPs, policies, project docs and training material
+// (real E9.5 intake rows). Memory stores have their own page (/ai/memory).
+
+export const metadata = { title: "Knowledge — DXB" };
+
+export default async function KnowledgePage() {
+  const dict = getDict(await getLocale());
+  return (
+    <LibraryKindBoard
+      kinds={["research", "report", "sop", "policy", "project_doc", "training"]}
+      pageTitle={dict.command.nav.pages.knowledge}
+      showKindColumn
+    />
+  );
 }

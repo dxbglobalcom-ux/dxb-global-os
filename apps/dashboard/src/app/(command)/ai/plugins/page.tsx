@@ -1,6 +1,18 @@
-import { ModuleWaiting } from "@/components/command/module-waiting";
+import { LibraryKindBoard } from "@/components/ai/library-kind-board";
+import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
 
-// /ai/plugins — real module lands at roadmap step E12.1 (E2.2 skeleton rule).
-export default function Page() {
-  return <ModuleWaiting pageKey="plugins" step="E12.1" />;
+// /ai/plugins v1 (E12.1-D) — kind-scoped view over the Holding Library
+// inventory (18 real plugin assets from the E9.5 intake).
+
+export const metadata = { title: "Plugins — DXB" };
+
+export default async function PluginsPage() {
+  const dict = getDict(await getLocale());
+  return (
+    <LibraryKindBoard
+      kinds={["plugin"]}
+      pageTitle={dict.command.nav.pages.plugins}
+    />
+  );
 }

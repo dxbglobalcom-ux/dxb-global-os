@@ -933,6 +933,32 @@
       "viewHealth": "System health",
       "boundaryNote": "Capacity = money + hardware together (COST spec §5). Money side lives on Budgets; this board carries work pressure now and VPS gauges when the probe writes."
     },
+    "libraryBoard": {
+      "kpiItems": "Assets",
+      "kpiGranted": "Granted",
+      "kpiUsed": "Used",
+      "kpiReviewed": "Approved",
+      "colName": "Asset",
+      "colKind": "Kind",
+      "colVersion": "Version",
+      "colOwner": "Owner",
+      "colReview": "Review",
+      "colGrants": "Grants",
+      "colUsage": "Usage",
+      "colUpdated": "Updated",
+      "reviewStatuses": {
+        "approved": "Approved",
+        "pending": "Pending",
+        "rejected": "Rejected"
+      },
+      "reviewNone": "Unreviewed",
+      "viewLibrary": "Open in Library",
+      "empty": "No assets of this kind in the Holding Library yet — the inventory shows only what really exists."
+    },
+    "mcp": {
+      "postureTitle": "Department gateway posture",
+      "profileNote": "Compiled per-department profile files (grant → profile chain, E9.5) live in the gateway tree; an asset's exact tool allowlist is on its Library record's Access tab. default-deny = the least-privilege baseline."
+    },
     "designAudit": {
       "title": "Design Audit",
       "subtitle": "Executed conformance checks — computed on request, never hand-declared.",
