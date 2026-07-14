@@ -147,6 +147,15 @@ describe("kill-switch state transitions (deps seam; live halves in Task 3)", () 
     if (initialHardStop !== null) {
       await db.updateTable("budget_state").set({ hard_stopped: initialHardStop }).execute();
     }
+    // E8.4b arrived AFTER this suite: flipping hard_stopped now fires the
+    // budget alert trigger — sweep the alerts this suite manufactured, or
+    // every full regression leaves a fake CRITICAL on the CEO rail
+    // (suite-induced alert pollution, E8.4b lesson; found live 2026-07-14).
+    await db
+      .deleteFrom("alerts")
+      .where("dedup_key", "in", ["budget-hard-stop", "budget-breaker"])
+      .where("resolved_at", "is", null)
+      .execute();
     await closeDb();
   });
 

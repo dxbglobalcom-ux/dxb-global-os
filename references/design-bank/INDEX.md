@@ -58,6 +58,10 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e95-library-record-en-1280.png | /ai/library?item | EN | 1280 | PENDING | record card scrolled into view — honest no-grants warning + gateway note |
 | e95-library-grant-tr-1920.png | /ai/library?item&tab=access | TR | 1920 | PENDING | live grant added through the seam (revoked after probe — mutation hygiene) |
 | e95-library-history-en-1920.png | /ai/library?item&tab=history | EN | 1920 | PENDING | change_log tab — field-level diff records from the control fn |
+| e101-violations-en-1920.png | /gov/violations | EN | 1920 | PENDING | E10.1 Hook Violations — honest zero-state stream (gates bind at E10.2) + 17-standard policy board, live UI severity toggle proven through the seam and reverted (2026-07-14) |
+| e101-violations-tr-1920.png | /gov/violations | TR | 1920 | PENDING | same |
+| e101-violations-en-1280.png | /gov/violations | EN | 1280 | PENDING | narrow composition — action buttons stack vertically, policy slug on its own line, table fits without hidden columns (652=652 probe) |
+| e101-violations-tr-1280.png | /gov/violations | TR | 1280 | PENDING | same |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 

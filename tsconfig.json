@@ -23,6 +23,9 @@
       "path": "packages/observability"
     },
     {
+      "path": "packages/hook"
+    },
+    {
       "path": "packages/outbox-executor"
     },
     {

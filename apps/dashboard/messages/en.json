@@ -857,7 +857,8 @@
       "backToTrail": "Back to Audit Trail",
       "tabs": {
         "trail": "Audit Trail",
-        "decisions": "Decision Logs"
+        "decisions": "Decision Logs",
+        "violations": "Hook Violations"
       },
       "ui": {
         "filterActor": "Actor",
@@ -1444,6 +1445,53 @@
         "backToList": "All categories",
         "gatewayNote": "Grants compile into MCP gateway profiles within ~30 s — capability outside the record is unusable.",
         "errorPrefix": "Action failed"
+      }
+    },
+    "violations": {
+      "title": "Hook Violations",
+      "subtitle": "The Fable 5 discipline hook — every gate rejection, revision and escalation on the record, plus the 17-standard policy board.",
+      "ui": {
+        "streamTitle": "Violation stream",
+        "policiesTitle": "Policy board — the 17 standards",
+        "colTime": "Time",
+        "colPolicy": "Policy",
+        "colGate": "Gate",
+        "colAction": "Action",
+        "colDetail": "Detail",
+        "colRun": "Run",
+        "colStandard": "Std",
+        "colSeverity": "Severity",
+        "colEnabled": "State",
+        "colVersion": "Version",
+        "filterGate": "Gate",
+        "filterAction": "Action",
+        "all": "All",
+        "gates": {
+          "pre": "Pre-task",
+          "runtime": "Runtime",
+          "post": "Post-task"
+        },
+        "actions": {
+          "rejected": "Rejected",
+          "revised": "Revision",
+          "escalated": "Escalated",
+          "warned": "Warned"
+        },
+        "severities": {
+          "block": "Block",
+          "warn": "Warn"
+        },
+        "enabledOn": "Enabled",
+        "enabledOff": "Disabled",
+        "toWarn": "Severity → warn",
+        "toBlock": "Severity → block",
+        "disable": "Disable",
+        "enable": "Enable",
+        "highRiskNote": "Weakening a block policy (to warn, or disabling it) is a high-risk governance change — it is audited as such. Per-employee opt-out does not exist.",
+        "emptyStream": "No violations recorded.",
+        "emptyStreamHint": "The gates bind to the spawn path at step E10.2; every rejection, revision and escalation will land here.",
+        "shown": "rows",
+        "errorPrefix": "Error"
       }
     }
   }

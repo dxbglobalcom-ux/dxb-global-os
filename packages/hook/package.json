@@ -1,0 +1,20 @@
+{
+  "name": "@dxb/hook",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "pnpm --dir ../.. exec vitest run tests/e10"
+  },
+  "dependencies": {
+    "@dxb/observability": "workspace:*",
+    "@dxb/shared": "workspace:*",
+    "kysely": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

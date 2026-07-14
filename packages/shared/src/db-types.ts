@@ -344,6 +344,30 @@ export interface AlertsTable {
   muted_until: Date | null;
 }
 
+// hook family (E10.1 — FABLE_5_HOOK_SPEC §4; policies edited ONLY through
+// fn_hook_set_policy, violations append-only).
+export interface HookPoliciesTable {
+  id: string;
+  standard_no: number;
+  gate: string;
+  rule: JsonbRequired;
+  severity: Generated<string>;
+  enabled: Generated<boolean>;
+  version: Generated<number>;
+  title_en: string;
+  title_tr: string;
+}
+
+export interface HookViolationsTable {
+  id: Generated<string>;
+  run_id: string | null;
+  policy_id: string;
+  gate: string;
+  detail: string;
+  action_taken: string;
+  created_at: Timestamptz;
+}
+
 // 0023x work family (E9.1 — DATA_MODEL 4.4; steps_snapshot = WORKFLOW §10
 // versioning: a run executes its frozen step set, never the live tables).
 export interface WorkflowsTable {
@@ -409,4 +433,6 @@ export interface DB {
   crm_requests: CrmRequestsTable;
   crm_deals: CrmDealsTable;
   routing_rules: RoutingRulesTable;
+  hook_policies: HookPoliciesTable;
+  hook_violations: HookViolationsTable;
 }

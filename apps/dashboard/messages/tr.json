@@ -857,7 +857,8 @@
       "backToTrail": "Denetim Kaydına dön",
       "tabs": {
         "trail": "Denetim Kaydı",
-        "decisions": "Karar Kayıtları"
+        "decisions": "Karar Kayıtları",
+        "violations": "Hook İhlalleri"
       },
       "ui": {
         "filterActor": "Aktör",
@@ -1444,6 +1445,53 @@
         "backToList": "Tüm kategoriler",
         "gatewayNote": "Grant'ler ~30 sn içinde MCP gateway profillerine derlenir — kayıt dışı yetenek kullanılamaz.",
         "errorPrefix": "İşlem başarısız"
+      }
+    },
+    "violations": {
+      "title": "Hook İhlalleri",
+      "subtitle": "Fable 5 disiplin hook'u — her kapı reddi, revizyon ve escalation kayıtta; 17 standartlık policy panosu.",
+      "ui": {
+        "streamTitle": "İhlal akışı",
+        "policiesTitle": "Policy panosu — 17 standart",
+        "colTime": "Zaman",
+        "colPolicy": "Policy",
+        "colGate": "Kapı",
+        "colAction": "Aksiyon",
+        "colDetail": "Detay",
+        "colRun": "Koşu",
+        "colStandard": "Std",
+        "colSeverity": "Şiddet",
+        "colEnabled": "Durum",
+        "colVersion": "Sürüm",
+        "filterGate": "Kapı",
+        "filterAction": "Aksiyon",
+        "all": "Tümü",
+        "gates": {
+          "pre": "Görev öncesi",
+          "runtime": "Koşu içi",
+          "post": "Görev sonrası"
+        },
+        "actions": {
+          "rejected": "Reddedildi",
+          "revised": "Revizyon",
+          "escalated": "Escalate edildi",
+          "warned": "Uyarıldı"
+        },
+        "severities": {
+          "block": "Engelle",
+          "warn": "Uyar"
+        },
+        "enabledOn": "Açık",
+        "enabledOff": "Kapalı",
+        "toWarn": "Şiddet → uyar",
+        "toBlock": "Şiddet → engelle",
+        "disable": "Kapat",
+        "enable": "Aç",
+        "highRiskNote": "Block bir policy'yi zayıflatmak (uyarıya düşürmek ya da kapatmak) yüksek riskli bir yönetişim değişikliğidir — audit'e öyle işlenir. Çalışan bazında muafiyet yoktur.",
+        "emptyStream": "Kayıtlı ihlal yok.",
+        "emptyStreamHint": "Kapılar E10.2 adımında spawn yoluna bağlanır; her red, revizyon ve escalation buraya düşecek.",
+        "shown": "satır",
+        "errorPrefix": "Hata"
       }
     }
   }

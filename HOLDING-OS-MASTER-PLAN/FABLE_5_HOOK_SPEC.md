@@ -156,6 +156,21 @@ pnpm --filter hook test -- --grep "fail-closed"                         # → sp
 - Risk: policy seti şişer, spawn gecikir — bütçe: pre-gate < 100ms (DB tek sorgu + cache); ölçüm health snapshot'ta.
 - Edge: hook sürümü yükselirken koşan run'lar (eski sürümle biter — `agent_runs` başlangıç sürümünü taşır); CEO'nun kendisi standart-dışı iş isterse (hook CEO emrini engellemez, `warn` + audit ile kayıt altına alır — tek insan otoritesi ilkesi); iki policy çelişirse (en kısıtlayıcı kazanır + alert `medium` çelişki kaydı).
 
+## Registered adaptations — E10.1 (2026-07-14, Fable K1; ticket .planning/quick/20260714-e101-hook-engine)
+
+| # | Adaptation | Why |
+|---|-----------|-----|
+| A1 | `fn_hook_set_policy(p_payload, p_idempotency_key)` — spec §13 name kept, sibling control-seam payload idiom adopted (action `set_policy`; CEO wall — system actor rejected; idempotency twin; audit row; `hook_policy.changed` settings-channel broadcast = §10 cache drop). Weakening a block policy (severity→warn OR enabled→false) stamps `risk='high'` in the audit payload. | One door per family (E9.1-E9.5 precedent); §13's high-risk clause made machine-visible. |
+| A2 | `hook_policies.title_en/title_tr` columns added to the §4 DDL. | §14 "insan-okur TR/EN" + bilingual purity directive (DB text = i18n surface); §4 had no human-readable field. |
+| A3 | Seed severities: `block` everywhere except std 5 token budget (`warn` — hard-stop authority stays COST_CONTROL, §2 row 5) and std 10 context integrity (`warn` — monitor-and-reload semantic). 19 seed rows / 17 distinct standards: std 5 has a pre `budget_fit` row (§6 gate order) AND a runtime `token_budget` row; std 12 carries a second row `std.persona_gate` (§6 "persona kalite kapısı" — EMPLOYEE_PERSONA rule filed under spawn eligibility). | §2/§6 both demand these mechanisms; severity defaults were unspecified per-standard. |
+| A4 | Violations→alerts mapping (§9 left it open): AFTER INSERT trigger — escalated→`high` (§7), rejected→`attention`, revised/warned→`informational`; dedup key `hook:<policy>:<action>:<run|no-run>` (action included so an early 'revised' informational never masks a later 'escalated' high); alert write swallowed on failure (projection, never blocks the record). | E8.4b single-producer + storm-guard idiom. |
+| A5 | Package depends on `@dxb/observability` in addition to `@dxb/shared`: every violation writes decision_log through `logDecision` (`hook_reject` / `hook_escalation` — the two points E8.2 recorded as boundaries to E10.1). | AUDIT R6 single-mechanism rule outranks §25's "yalnız packages/shared"; workspace-internal, zero new external deps — §25's intent preserved. |
+| A6 | Fail-closed surface (§17): policy load failure → `preTask` returns `REJECT('hook_unavailable')` + best-effort critical alert (dedup `hook:unavailable`); post-gate degrades to REVISE('hook_unavailable') — the run cannot close until the hook recovers. Spawn stop is the caller's contract (queue holds the work). | §17 verbatim, expressed as library return values (the hook is a library, not a service — R5). |
+| A7 | std 11 project link source: live schema has no `tasks.project_id` — the mechanical check reads `ctx.project` or `tasks.milestone_id → project_milestones.project_id` (E9.4 adaptation chain); PASS injects the project purpose from `projects.purpose`. | §2 row 11 wording predates the E9.4 milestone link. |
+| A8 | §24 command `pnpm --filter hook test` delegates to root vitest `tests/e10/` (repo test-layout rule: all suites under tests/). §7's 24 h-unanswered sweep lives as an additive block in `fn_alerts_evaluate` (`hook-escalation-stale-*` → critical), adopted by the existing scheduler — no new job. | Test layout + R3 no-new-resident-service. |
+
+E10.2 boundary: spawn-path binding, `agents.hook_version` stamping, employee-card hook status field (§5 row 3), `run.finished.hook_result` payload (§9). Pre-gate <100 ms health-snapshot metric (§26) → P7 health row.
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · 17 standart → mekanizma eşleme tablosu (normatif) ✓ · 12 uygulama katmanı dağılımı ✓ · fail-closed ilkesi ✓ · token-disiplinli denetim ilkesi (mekanik post-gate + örneklem HR) ✓ · KALIR/YENİ eşleme ✓ · doğrulama komutları ✓ · Opus-devralma: DDL + seed listesi + gate sırası kopyala-uygula düzeyinde ✓

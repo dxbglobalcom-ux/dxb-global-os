@@ -15,6 +15,13 @@ export default defineConfig({
       "@dxb/observability": fileURLToPath(
         new URL("./packages/observability/src/index.ts", import.meta.url),
       ),
+      // E10.1: suites and packages must share ONE @dxb/shared instance (one
+      // getDb pool singleton) — the hook fail-closed test closes/reopens that
+      // pool; two instances would silently test the wrong one. dist (not src):
+      // this matches what every package itself resolves.
+      "@dxb/shared": fileURLToPath(
+        new URL("./packages/shared/dist/index.js", import.meta.url),
+      ),
     },
   },
   test: {

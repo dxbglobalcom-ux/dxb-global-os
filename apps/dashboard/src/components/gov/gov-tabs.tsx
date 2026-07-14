@@ -1,16 +1,17 @@
 import Link from "next/link";
 
 // Governance audit surface tab header (AUDIT_AND_LOGGING_SPEC §7: unified
-// stream + "Decision Logs ayrı sekme"). Tabs are links — /gov/audit and
-// /gov/decisions stay real routes (CEO_COMMAND_CENTER IA) while reading as
-// one surface. Registered interpretation 2, ticket 20260713-e84-audit-surface.
+// stream + "Decision Logs ayrı sekme"; E10.1 adds the hook violation feed —
+// FABLE_5_HOOK_SPEC §5 "İhlal akışı UI (command)/gov/violations"). Tabs are
+// links — every tab stays a real route (CEO_COMMAND_CENTER IA) while reading
+// as one surface. Registered interpretation 2, ticket 20260713-e84-audit-surface.
 
 export function GovTabs({
   active,
   labels,
 }: {
-  active: "trail" | "decisions";
-  labels: { trail: string; decisions: string };
+  active: "trail" | "decisions" | "violations";
+  labels: { trail: string; decisions: string; violations?: string };
 }) {
   const base = "rounded-input px-4 py-1.5 text-body-s transition duration-[var(--t-fast)] ease-refined";
   const on = "bg-surface-graphite text-ink-primary border border-edge-neutral";
@@ -23,6 +24,11 @@ export function GovTabs({
       <Link href="/gov/decisions" className={`${base} ${active === "decisions" ? on : off}`}>
         {labels.decisions}
       </Link>
+      {labels.violations && (
+        <Link href="/gov/violations" className={`${base} ${active === "violations" ? on : off}`}>
+          {labels.violations}
+        </Link>
+      )}
     </nav>
   );
 }
