@@ -98,6 +98,19 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e121b-hr-en-1280.png | /org/hr | EN | 1280 | PENDING | E12.1-B HR board — roster 199, probation honest 0, 199/199 unequipped = registered activation-gap risk, 7-point equipment grid |
 | e121b-hr-en-1920.png | /org/hr | EN | 1920 | PENDING | same, wide |
 | e121b-hr-tr-1280.png | /org/hr | TR | 1280 | PENDING | same, TR |
+| e121c-tokens-en-1280.png | /fin/tokens | EN | 1280 | PENDING | E12.1-C token intelligence — 198.3M real tokens, model/dept bars, Berlin-day trend, honest 10.5-columns P7 note |
+| e121c-tokens-en-1920.png | /fin/tokens | EN | 1920 | PENDING | same, wide |
+| e121c-tokens-tr-1280.png | /fin/tokens | TR | 1280 | PENDING | same, TR |
+| e121c-budgets-en-1280.png | /fin/budgets | EN | 1280 | PENDING | E12.1-C budget board — live budget_state (cap €100, velocity €2/h), 70/90/100 tick bar, cost-alert history, hard-stop/breaker badges |
+| e121c-budgets-en-1920.png | /fin/budgets | EN | 1920 | PENDING | same, wide |
+| e121c-budgets-tr-1920.png | /fin/budgets | TR | 1920 | PENDING | same, TR |
+| e121c-budgets-tr-1280.png | /fin/budgets | TR | 1280 | PENDING | same, TR narrow |
+| e121c-providers-en-1280.png | /fin/providers | EN | 1280 | PENDING | E12.1-C provider board — v_model_stats (anthropic, 4 models, slots/fallback/success), §16 manual-reconcile note |
+| e121c-providers-en-1920.png | /fin/providers | EN | 1920 | PENDING | same, wide |
+| e121c-providers-tr-1280.png | /fin/providers | TR | 1280 | PENDING | same, TR |
+| e121c-capacity-en-1280.png | /fin/capacity | EN | 1280 | PENDING | E12.1-C capacity board — live work pressure (queued/running/wf/queue alerts), honest empty VPS gauges (health-probe = P7) |
+| e121c-capacity-en-1920.png | /fin/capacity | EN | 1920 | PENDING | same, wide |
+| e121c-capacity-tr-1280.png | /fin/capacity | TR | 1280 | PENDING | same, TR |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 
