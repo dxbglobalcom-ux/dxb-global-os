@@ -85,6 +85,19 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e121a-intelligence-tr-1280.png | /intelligence | TR | 1280 | PENDING | same |
 | e121a-intelligence-en-1920.png | /intelligence | EN | 1920 | PENDING | wide composition; rail shows new Live ticker panel (v_live_ops head, ops:live repaint) |
 | e121a-intelligence-tr-1920.png | /intelligence | TR | 1920 | PENDING | same |
+| e121b-departments-en-1280.png | /org/departments | EN | 1280 | PENDING | E12.1-B departments — v_org_tree rollups (21 depts, 220 employees, honest dormant status), rows drill to roster |
+| e121b-departments-en-1920.png | /org/departments | EN | 1920 | PENDING | same, wide |
+| e121b-departments-tr-1920.png | /org/departments | TR | 1920 | PENDING | display_name_tr from DB (bilingual gate) |
+| e121b-departments-tr-1280.png | /org/departments | TR | 1280 | PENDING | same, narrow |
+| e121b-directors-en-1280.png | /org/directors | EN | 1280 | PENDING | E12.1-B director bench (21 heads) — persona/hook binding badges, dept drill |
+| e121b-directors-en-1920.png | /org/directors | EN | 1920 | PENDING | same, wide |
+| e121b-directors-tr-1280.png | /org/directors | TR | 1280 | PENDING | same, TR |
+| e121b-companies-en-1280.png | /org/companies | EN | 1280 | PENDING | E12.1-B company register (1 real company + honest Phase-11 spawn note; mission text = EN artifact, alert-title boundary family) |
+| e121b-companies-en-1920.png | /org/companies | EN | 1920 | PENDING | same, wide |
+| e121b-companies-tr-1920.png | /org/companies | TR | 1920 | PENDING | same, TR |
+| e121b-hr-en-1280.png | /org/hr | EN | 1280 | PENDING | E12.1-B HR board — roster 199, probation honest 0, 199/199 unequipped = registered activation-gap risk, 7-point equipment grid |
+| e121b-hr-en-1920.png | /org/hr | EN | 1920 | PENDING | same, wide |
+| e121b-hr-tr-1280.png | /org/hr | TR | 1280 | PENDING | same, TR |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 
