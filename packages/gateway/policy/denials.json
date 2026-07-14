@@ -9,20 +9,132 @@
     "Entry format: '<server>' denies the whole server, '<server>.<tool>' denies one tool (study-card dot-notation).",
     "Denials are hard overrides ON TOP of default-deny grants (policy/grants.json): a grant mistake cannot",
     "resurface a denied server. ⛔ FABLE-ONLY: REMOVING or NARROWING any entry here (= privilege widening)",
-    "requires a Fable-authored change with CEO-visible rationale. Additions (tightening) are allowed."
+    "requires a Fable-authored change with CEO-visible rationale. Additions (tightening) are allowed.",
+    "[FABLE 2026-07-14, E9.5] Re-keyed to the live registry (same event as grants.json). Only slug re-keys and TIGHTENING: social-media joins the marketing/sales no-GitHub class; every new department gets the payment/contract denial set."
   ],
-  "ceo": ["github", "git", "revolut", "wise"],
-  "research": ["stripe", "docusign", "postgres", "revolut", "wise"],
-  "design": ["stripe", "docusign", "revolut", "wise"],
-  "engineering": ["stripe", "docusign", "revolut", "wise"],
-  "finance": ["docusign"],
-  "legal-de": ["stripe", "revolut", "wise"],
-  "marketing": ["stripe", "docusign", "github", "revolut", "wise"],
-  "paid-media": ["stripe", "docusign", "revolut", "wise"],
-  "product": ["stripe", "docusign", "revolut", "wise"],
-  "project-management": ["stripe", "docusign", "revolut", "wise"],
-  "sales": ["stripe", "docusign", "github", "revolut", "wise"],
-  "specialized": ["stripe", "docusign", "revolut", "wise"],
-  "support": ["stripe", "docusign", "revolut", "wise"],
-  "testing": ["stripe", "docusign", "revolut", "wise"]
+  "ceo": [
+    "github",
+    "git",
+    "revolut",
+    "wise"
+  ],
+  "commerce": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "customer-success": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "data-ai": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "design": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "engineering": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "finance": [
+    "docusign"
+  ],
+  "legal": [
+    "stripe",
+    "revolut",
+    "wise"
+  ],
+  "marketing": [
+    "stripe",
+    "docusign",
+    "github",
+    "revolut",
+    "wise"
+  ],
+  "paid-media": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "people-hr": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "platform": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "product": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "project-management": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "quality": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "revops": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "risk-audit": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "sales": [
+    "stripe",
+    "docusign",
+    "github",
+    "revolut",
+    "wise"
+  ],
+  "security": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ],
+  "social-media": [
+    "stripe",
+    "docusign",
+    "github",
+    "revolut",
+    "wise"
+  ],
+  "strategy": [
+    "stripe",
+    "docusign",
+    "revolut",
+    "wise"
+  ]
 }

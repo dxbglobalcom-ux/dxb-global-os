@@ -1,0 +1,28 @@
+{
+  "source_hash": "06867575fe2717981e54c1c6eb39d618c222e9d1d189be8218d2073162f1ba5e",
+  "generated_at": "2026-07-14T09:32:32.504Z",
+  "profiles": [
+    "ceo",
+    "commerce",
+    "customer-success",
+    "data-ai",
+    "design",
+    "engineering",
+    "finance",
+    "legal",
+    "marketing",
+    "paid-media",
+    "people-hr",
+    "platform",
+    "product",
+    "project-management",
+    "quality",
+    "revops",
+    "risk-audit",
+    "sales",
+    "security",
+    "social-media",
+    "strategy"
+  ],
+  "employee_profiles": []
+}

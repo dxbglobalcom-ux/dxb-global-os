@@ -1359,6 +1359,92 @@
           "change_policy": "Policy updated — recorded in the settings change log (undoable)."
         }
       }
+    },
+    "library": {
+      "title": "Holding Library",
+      "subtitle": "Capability and knowledge inventory — owner, version, access, quality for every asset (directive item 13).",
+      "kinds": {
+        "skill": "Skills",
+        "plugin": "Plugins",
+        "tool": "Tools",
+        "mcp": "MCP groups",
+        "prompt_template": "Prompt templates",
+        "persona": "Personas",
+        "policy": "Policies",
+        "governance_rule": "Governance rules",
+        "workflow": "Workflows",
+        "sop": "SOPs",
+        "framework": "Frameworks",
+        "code_component": "Code components",
+        "design_system": "Design systems",
+        "research": "Research",
+        "report": "Reports",
+        "project_doc": "Project docs",
+        "training": "Training",
+        "memory_source": "Memory sources",
+        "best_practice": "Best practices",
+        "lesson_learned": "Lessons learned"
+      },
+      "ui": {
+        "totalItems": "items in record",
+        "zeroRecords": "0 records",
+        "records": "records",
+        "pickKind": "Select a category to browse its records.",
+        "colName": "Name",
+        "colVersion": "Version",
+        "colOwner": "Owner department",
+        "colReview": "Review",
+        "colQuality": "Quality",
+        "colGrants": "Access",
+        "colUsage": "Usage",
+        "colUpdated": "Updated",
+        "detailTitle": "Item record",
+        "fields": {
+          "owner": "Owner",
+          "department": "Department",
+          "version": "Version",
+          "usageArea": "Usage area",
+          "dependencies": "Dependencies",
+          "access": "Access grants",
+          "lastUpdate": "Last update",
+          "usageHistory": "Usage history",
+          "quality": "Quality score",
+          "review": "Review status",
+          "changeHistory": "Change history",
+          "source": "Source location"
+        },
+        "tabs": {
+          "usage": "Usage",
+          "access": "Access",
+          "history": "History",
+          "deps": "Dependencies"
+        },
+        "grantAdd": "Grant access",
+        "grantRevoke": "Revoke",
+        "granteeKind": "Grantee type",
+        "granteeId": "Grantee",
+        "expiresAt": "Expires (optional)",
+        "granteeKinds": {
+          "department": "Department",
+          "employee": "Employee",
+          "role_level": "Role level"
+        },
+        "grantedBy": "by",
+        "expires": "expires",
+        "permanent": "permanent",
+        "expired": "expired",
+        "noGrants": "No grants — nobody can use this item (the record is the enforcement source).",
+        "noUsage": "No recorded usage yet.",
+        "noChanges": "No change history.",
+        "noDeps": "No dependencies recorded.",
+        "noItems": "No records of this kind yet — honest zero, nothing hidden.",
+        "usageTotal": "total uses",
+        "last14d": "last 14 days",
+        "unowned": "—",
+        "backToList": "All categories",
+        "gatewayNote": "Grants compile into MCP gateway profiles within ~30 s — capability outside the record is unusable.",
+        "errorPrefix": "Action failed"
+      }
     }
   }
 }

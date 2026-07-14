@@ -9,7 +9,7 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { generateProfilesFromPolicy } from "../../packages/gateway/src/index.js";
 
 // Master PHASE-07 step 4 (07-04 Task 1, runtime half of MCP-02): a session
-// loaded with the PRODUCTION research profile cannot even SELECT Stripe — the
+// loaded with the PRODUCTION strategy profile cannot even SELECT Stripe — the
 // tool fails at resolution ("tool not found"), before any call could exist
 // (filter-before-discovery, study-pass v1 model). This uses the real policy
 // files + real registry + real pins, not fixtures. The fuller proof (spawning
@@ -45,21 +45,21 @@ afterAll(async () => {
 });
 
 describe("profile-denial-runtime (MCP-02 runtime half)", () => {
-  it("research session cannot resolve stripe.create_charge; a pinned dxb tool resolves AND is live", async () => {
+  it("strategy session cannot resolve stripe.create_charge; a pinned dxb tool resolves AND is live", async () => {
     await generateProfilesFromPolicy(db, { outDir, generatedAt: "2026-07-09T00:00:00.000Z" });
-    const research = JSON.parse(readFileSync(join(outDir, "research.mcp.json"), "utf8")) as Profile;
+    const strategy = JSON.parse(readFileSync(join(outDir, "strategy.mcp.json"), "utf8")) as Profile;
 
     // Runtime denial: fails at SELECTION, not called-then-rejected.
-    expect(() => resolveTool(research, "stripe", "create_charge")).toThrow(/tool not found/);
-    expect(() => resolveTool(research, "docusign", "send_envelope")).toThrow(/tool not found/);
-    expect(() => resolveTool(research, "postgres", "query")).toThrow(/tool not found/);
+    expect(() => resolveTool(strategy, "stripe", "create_charge")).toThrow(/tool not found/);
+    expect(() => resolveTool(strategy, "docusign", "send_envelope")).toThrow(/tool not found/);
+    expect(() => resolveTool(strategy, "postgres", "query")).toThrow(/tool not found/);
 
     // Positive control (profile not empty by accident): the allowlist is the
     // explicit pinned dxb-mcp tool list; every entry must resolve...
-    const allowed = research._tools["dxb-mcp"];
+    const allowed = strategy._tools["dxb-mcp"];
     expect(Array.isArray(allowed) && allowed.length >= 21).toBe(true);
     const sample = (allowed as string[])[0]!;
-    const resolved = resolveTool(research, "dxb-mcp", sample);
+    const resolved = resolveTool(strategy, "dxb-mcp", sample);
     expect(resolved.tool).toBe(sample);
 
     // ...and the resolved tool is actually served by the LIVE server (the
@@ -80,9 +80,9 @@ describe("profile-denial-runtime (MCP-02 runtime half)", () => {
   });
 
   it("an allowlisted-but-quarantine-dropped tool would fail resolution too (same path)", async () => {
-    const research = JSON.parse(readFileSync(join(outDir, "research.mcp.json"), "utf8")) as Profile;
+    const strategy = JSON.parse(readFileSync(join(outDir, "strategy.mcp.json"), "utf8")) as Profile;
     // Any name absent from the explicit list — the exact path a quarantined
     // tool takes after 07-03 generation drops it from _tools.
-    expect(() => resolveTool(research, "dxb-mcp", "no_such_tool")).toThrow(/not in allowlist/);
+    expect(() => resolveTool(strategy, "dxb-mcp", "no_such_tool")).toThrow(/not in allowlist/);
   });
 });

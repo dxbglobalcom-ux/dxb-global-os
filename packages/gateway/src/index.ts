@@ -22,4 +22,12 @@ export {
   type GenerateProfilesOptions,
   type GenerateProfilesResult,
   type DeptManifest,
+  type EmployeeManifest,
+  type LibraryLayer,
+  type LibrarySubjectCaps,
 } from "./generate-profiles.js";
+export {
+  readLibraryLayer,
+  compileLibraryProfiles,
+  type CompileLibraryProfilesResult,
+} from "./library-profiles.js";

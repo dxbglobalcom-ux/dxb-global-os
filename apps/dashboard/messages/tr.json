@@ -1359,6 +1359,92 @@
           "change_policy": "Politika güncellendi — ayar değişiklik kaydına işlendi (geri alınabilir)."
         }
       }
+    },
+    "library": {
+      "title": "Holding Kütüphanesi",
+      "subtitle": "Yetenek ve bilgi envanteri — her varlığın sahibi, sürümü, erişimi, kalitesi (direktif madde 13).",
+      "kinds": {
+        "skill": "Skill'ler",
+        "plugin": "Plugin'ler",
+        "tool": "Araçlar",
+        "mcp": "MCP grupları",
+        "prompt_template": "Prompt şablonları",
+        "persona": "Personalar",
+        "policy": "Politikalar",
+        "governance_rule": "Yönetişim kuralları",
+        "workflow": "İş akışları",
+        "sop": "SOP'lar",
+        "framework": "Framework'ler",
+        "code_component": "Kod bileşenleri",
+        "design_system": "Tasarım sistemleri",
+        "research": "Araştırmalar",
+        "report": "Raporlar",
+        "project_doc": "Proje dokümanları",
+        "training": "Eğitim",
+        "memory_source": "Hafıza kaynakları",
+        "best_practice": "En iyi uygulamalar",
+        "lesson_learned": "Çıkarılan dersler"
+      },
+      "ui": {
+        "totalItems": "kayıtlı öğe",
+        "zeroRecords": "0 kayıt",
+        "records": "kayıt",
+        "pickKind": "Kayıtlarına göz atmak için bir kategori seçin.",
+        "colName": "Ad",
+        "colVersion": "Sürüm",
+        "colOwner": "Sahip departman",
+        "colReview": "İnceleme",
+        "colQuality": "Kalite",
+        "colGrants": "Erişim",
+        "colUsage": "Kullanım",
+        "colUpdated": "Güncelleme",
+        "detailTitle": "Öğe kaydı",
+        "fields": {
+          "owner": "Sahibi",
+          "department": "Departman",
+          "version": "Sürüm",
+          "usageArea": "Kullanım alanı",
+          "dependencies": "Bağımlılıklar",
+          "access": "Erişim yetkileri",
+          "lastUpdate": "Son güncelleme",
+          "usageHistory": "Kullanım geçmişi",
+          "quality": "Kalite puanı",
+          "review": "İnceleme durumu",
+          "changeHistory": "Değişiklik geçmişi",
+          "source": "Kaynak konumu"
+        },
+        "tabs": {
+          "usage": "Kullanım",
+          "access": "Erişim",
+          "history": "Geçmiş",
+          "deps": "Bağımlılıklar"
+        },
+        "grantAdd": "Erişim ver",
+        "grantRevoke": "Kaldır",
+        "granteeKind": "Yetkilendirilen türü",
+        "granteeId": "Yetkilendirilen",
+        "expiresAt": "Süre sonu (opsiyonel)",
+        "granteeKinds": {
+          "department": "Departman",
+          "employee": "Çalışan",
+          "role_level": "Rol seviyesi"
+        },
+        "grantedBy": "veren",
+        "expires": "süre sonu",
+        "permanent": "kalıcı",
+        "expired": "süresi doldu",
+        "noGrants": "Grant yok — bu öğeyi kimse kullanamaz (yaptırım kaynağı kayıttır).",
+        "noUsage": "Henüz kayıtlı kullanım yok.",
+        "noChanges": "Değişiklik geçmişi yok.",
+        "noDeps": "Kayıtlı bağımlılık yok.",
+        "noItems": "Bu türde henüz kayıt yok — dürüst sıfır, gizlenen yok.",
+        "usageTotal": "toplam kullanım",
+        "last14d": "son 14 gün",
+        "unowned": "—",
+        "backToList": "Tüm kategoriler",
+        "gatewayNote": "Grant'ler ~30 sn içinde MCP gateway profillerine derlenir — kayıt dışı yetenek kullanılamaz.",
+        "errorPrefix": "İşlem başarısız"
+      }
     }
   }
 }

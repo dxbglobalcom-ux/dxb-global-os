@@ -1,8 +1,8 @@
 {
-  "_department": "support",
-  "_generated_at": "2026-07-09T22:16:44.640Z",
+  "_department": "commerce",
+  "_generated_at": "2026-07-14T09:32:32.471Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
-  "_source_hash": "c35c0814e10aac413eff12a37fe3aa0768aef63cf2449abf98dd9ea3cfa29f07",
+  "_source_hash": "06867575fe2717981e54c1c6eb39d618c222e9d1d189be8218d2073162f1ba5e",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",

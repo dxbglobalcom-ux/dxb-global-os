@@ -16,7 +16,9 @@ export type DxbChannelName =
   | "approvals"
   | "cost_ledger"
   | "ops:live"
-  | "alerts";
+  | "alerts"
+  // E9.5: setting/library events (EVENT_MODEL §9b settings channel).
+  | "settings";
 
 // Shape written by realtime.broadcast_changes (migration 0013): the UI reads
 // exactly these fields — live-projection.test.ts pins this contract.

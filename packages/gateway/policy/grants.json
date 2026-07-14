@@ -12,26 +12,88 @@
     "tables land wave-by-wave at Phase 10 department activation. ⛔ FABLE-ONLY: ADDING any grant here",
     "(= privilege widening) requires a Fable-authored change with CEO-visible rationale.",
     "[FABLE 2026-07-12, E5.4b] people-hr added: HR spec DoD 'people-hr MCP profile' — house bus only",
-    "(dxb-mcp, minimal set), enabling the HR factory's activation chain; no external servers granted."
+    "(dxb-mcp, minimal set), enabling the HR factory's activation chain; no external servers granted.",
+    "[FABLE 2026-07-14, E9.5] Re-keyed to the LIVE registry (E5.x org rebuild replaced the department set; old slugs research/legal-de/specialized/support/testing no longer exist — the generator was failing against the live table). NO privilege widening: every live department gets the same minimal house-bus grant; the special classes moved with their function (finance: stripe/revolut/wise; legal (ex legal-de): docusign; engineering: github/git/context7; design: stitch)."
   ],
   "servers": {
-    "dxb-mcp": { "command": "node", "args": ["packages/dxb-mcp/dist/index.js"] }
+    "dxb-mcp": {
+      "command": "node",
+      "args": [
+        "packages/dxb-mcp/dist/index.js"
+      ]
+    }
   },
   "grants": {
-    "ceo": { "dxb-mcp": "*" },
-    "people-hr": { "dxb-mcp": "*" },
-    "research": { "dxb-mcp": "*" },
-    "design": { "dxb-mcp": "*", "stitch": "*" },
-    "engineering": { "dxb-mcp": "*", "github": "*", "git": "*", "context7": "*" },
-    "finance": { "dxb-mcp": "*", "stripe": "*", "revolut": "*", "wise": "*" },
-    "legal-de": { "dxb-mcp": "*", "docusign": "*" },
-    "marketing": { "dxb-mcp": "*" },
-    "paid-media": { "dxb-mcp": "*" },
-    "product": { "dxb-mcp": "*" },
-    "project-management": { "dxb-mcp": "*" },
-    "sales": { "dxb-mcp": "*" },
-    "specialized": { "dxb-mcp": "*" },
-    "support": { "dxb-mcp": "*" },
-    "testing": { "dxb-mcp": "*" }
+    "ceo": {
+      "dxb-mcp": "*"
+    },
+    "commerce": {
+      "dxb-mcp": "*"
+    },
+    "customer-success": {
+      "dxb-mcp": "*"
+    },
+    "data-ai": {
+      "dxb-mcp": "*"
+    },
+    "design": {
+      "dxb-mcp": "*",
+      "stitch": "*"
+    },
+    "engineering": {
+      "dxb-mcp": "*",
+      "github": "*",
+      "git": "*",
+      "context7": "*"
+    },
+    "finance": {
+      "dxb-mcp": "*",
+      "stripe": "*",
+      "revolut": "*",
+      "wise": "*"
+    },
+    "legal": {
+      "dxb-mcp": "*",
+      "docusign": "*"
+    },
+    "marketing": {
+      "dxb-mcp": "*"
+    },
+    "paid-media": {
+      "dxb-mcp": "*"
+    },
+    "people-hr": {
+      "dxb-mcp": "*"
+    },
+    "platform": {
+      "dxb-mcp": "*"
+    },
+    "product": {
+      "dxb-mcp": "*"
+    },
+    "project-management": {
+      "dxb-mcp": "*"
+    },
+    "quality": {
+      "dxb-mcp": "*"
+    },
+    "revops": {
+      "dxb-mcp": "*"
+    },
+    "risk-audit": {
+      "dxb-mcp": "*"
+    },
+    "sales": {
+      "dxb-mcp": "*"
+    },
+    "security": {
+      "dxb-mcp": "*"
+    },
+    "social-media": {
+      "dxb-mcp": "*"
+    },
+    "strategy": {
+      "dxb-mcp": "*"
+    }
   }
 }

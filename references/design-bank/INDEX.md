@@ -50,6 +50,14 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e94-command-en-1920.png | /ops/projects/[slug] | EN | 1920 | PENDING | same |
 | e94-command-tr-1280.png | /ops/projects/[slug] | TR | 1280 | PENDING | same |
 | e94-command-tr-1920.png | /ops/projects/[slug] | TR | 1920 | PENDING | same |
+| e95-library-en-1920.png | /ai/library | EN | 1920 | PENDING | E9.5 Holding Library — 20-kind rail with honest zero-states, 356 real intake records (2026-07-14) |
+| e95-library-tr-1920.png | /ai/library | TR | 1920 | PENDING | same |
+| e95-library-detail-tr-1920.png | /ai/library?item | TR | 1920 | PENDING | E9.5 item record — 11 directive fields + Usage/Access/History/Dependencies tabs, grant editor (2026-07-14) |
+| e95-library-detail-tr-1280.png | /ai/library?item | TR | 1280 | PENDING | same (single-column stack) |
+| e95-library-detail-en-1280.png | /ai/library?item | EN | 1280 | PENDING | same |
+| e95-library-record-en-1280.png | /ai/library?item | EN | 1280 | PENDING | record card scrolled into view — honest no-grants warning + gateway note |
+| e95-library-grant-tr-1920.png | /ai/library?item&tab=access | TR | 1920 | PENDING | live grant added through the seam (revoked after probe — mutation hygiene) |
+| e95-library-history-en-1920.png | /ai/library?item&tab=history | EN | 1920 | PENDING | change_log tab — field-level diff records from the control fn |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 

@@ -34,12 +34,31 @@ export interface ProfilePolicy {
 /** dept slug → deny entries; "<server>" = whole server, "<server>.<tool>" = one tool. */
 export type DenialsMap = Record<string, string[]>;
 
+/** E9.5 library layer (HOLDING_LIBRARY §6, adaptation A4/A5): the union of a
+ *  subject's active library grants, expanded to concrete capability names.
+ *  tools use "<server>.<tool>"; skills carry skill/plugin item names. A subject
+ *  PRESENT here has its surface intersected with the granted set (an empty
+ *  list = deny-all: the record says nothing is granted); a subject ABSENT here
+ *  has zero library grants and keeps the registry behavior (spec §22). */
+export interface LibrarySubjectCaps {
+  tools: string[];
+  skills: string[];
+}
+
+export interface LibraryLayer {
+  departments: Record<string, LibrarySubjectCaps>;
+  /** agent slug → dept + union caps (employee ∪ department ∪ role_level). */
+  employees: Record<string, { department: string } & LibrarySubjectCaps>;
+}
+
 export interface GenerateProfilesOptions {
   denials: DenialsMap;
   policy: ProfilePolicy;
   outDir: string;
   /** Injected so identical inputs produce identical bytes (determinism gate). */
   generatedAt: string;
+  /** E9.5: library_grants compiled in (kayıt-yetki-uygulama chain, spec G3). */
+  library?: LibraryLayer;
 }
 
 export interface DeptManifest {
@@ -52,11 +71,24 @@ export interface DeptManifest {
   quarantinedExcluded: string[];
   /** Granted but absent from the server catalog — reported, never emitted. */
   pendingInstall: string[];
+  /** E9.5: policy-allowed tools removed because the library record grants
+   *  them to nobody in this department (kayıt dışı = fiilen kullanılamaz). */
+  libraryFiltered: string[];
+}
+
+export interface EmployeeManifest {
+  employee: string;
+  department: string;
+  file: string;
+  tools: Record<string, string[]>;
+  skills: string[];
 }
 
 export interface GenerateProfilesResult {
   sourceHash: string;
   profiles: DeptManifest[];
+  /** E9.5 employee overlays — only employees holding employee-kind grants. */
+  employeeProfiles: EmployeeManifest[];
 }
 
 /** Recursively sort object keys so JSON.stringify emits canonical byte order. */
@@ -102,7 +134,15 @@ export async function generateProfiles(
 
   const sourceHash = createHash("sha256")
     .update(
-      canonicalJson({ departments, pins, denials: opts.denials, policy: opts.policy }),
+      canonicalJson({
+        departments,
+        pins,
+        denials: opts.denials,
+        policy: opts.policy,
+        // E9.5: grant changes must change the hash — the recompile job keys
+        // its "anything to do?" decision off it.
+        library: opts.library ?? null,
+      }),
       "utf8",
     )
     .digest("hex");
@@ -135,7 +175,9 @@ export async function generateProfiles(
       deniedTools: [],
       quarantinedExcluded: [],
       pendingInstall: [],
+      libraryFiltered: [],
     };
+    const libCaps = opts.library?.departments[dept.slug];
     const mcpServers: Record<string, ServerCatalogEntry> = {};
     const deniedToolsOut: Record<string, string[]> = {};
 
@@ -178,6 +220,28 @@ export async function generateProfiles(
           manifest.deniedTools.push(...dots);
         }
       }
+      // E9.5 library intersection (adaptation A4): a department present in the
+      // library layer keeps only the tools its record grants — after the
+      // quarantine/denial subtraction, so the library can never re-open what
+      // policy closed (PERMISSION_MODEL G2: en dar kesişim).
+      if (libCaps) {
+        const granted = new Set(
+          libCaps.tools
+            .filter((t) => t.startsWith(`${server}.`))
+            .map((t) => t.slice(server.length + 1)),
+        );
+        if (Array.isArray(allowed)) {
+          const kept = allowed.filter((tool) => granted.has(tool));
+          manifest.libraryFiltered.push(
+            ...allowed.filter((tool) => !granted.has(tool)).map((tool) => `${server}.${tool}`),
+          );
+          allowed = kept;
+        } else {
+          // "*" on an unpinned server: the granted list IS the surface.
+          const dotDeniedHere = (tool: string) => deniedToolsSet.has(`${server}.${tool}`);
+          allowed = [...granted].filter((tool) => !dotDeniedHere(tool)).sort(byName);
+        }
+      }
       mcpServers[server] = catalog;
       manifest.tools[server] = allowed;
     }
@@ -188,6 +252,10 @@ export async function generateProfiles(
       _generator: "packages/gateway/src/generate-profiles.ts",
       _source_hash: sourceHash,
       _tools: manifest.tools,
+      // E9.5 adaptation A5: skills/plugins ride the same allowlist model —
+      // key present = the record governs (empty = deny-all), key absent =
+      // the department has no library grants at all (registry behavior).
+      ...(libCaps ? { _skills: [...libCaps.skills].sort(byName) } : {}),
       ...(Object.keys(deniedToolsOut).length > 0 ? { _denied_tools: deniedToolsOut } : {}),
       mcpServers,
     });
@@ -195,14 +263,58 @@ export async function generateProfiles(
     profiles.push(manifest);
   }
 
-  return { sourceHash, profiles };
+  // E9.5 employee overlays (adaptation A4): only employees holding
+  // employee-kind grants get a file; effective surface = the department
+  // profile's emitted tools ∩ the employee's union set — an overlay can
+  // never exceed the department surface (G2 intersection).
+  const employeeProfiles: EmployeeManifest[] = [];
+  for (const slug of Object.keys(opts.library?.employees ?? {}).sort(byName)) {
+    const emp = opts.library!.employees[slug]!;
+    const deptManifest = profiles.find((p) => p.department === emp.department);
+    const tools: Record<string, string[]> = {};
+    const mcpServers: Record<string, ServerCatalogEntry> = {};
+    for (const [server, allowed] of Object.entries(deptManifest?.tools ?? {})) {
+      const granted = new Set(
+        emp.tools.filter((t) => t.startsWith(`${server}.`)).map((t) => t.slice(server.length + 1)),
+      );
+      const kept = (Array.isArray(allowed) ? allowed : [...granted]).filter((tool) =>
+        granted.has(tool),
+      );
+      if (kept.length > 0) {
+        tools[server] = kept.sort(byName);
+        mcpServers[server] = opts.policy.servers[server]!;
+      }
+    }
+    const skills = [...emp.skills].sort(byName);
+    const manifest: EmployeeManifest = {
+      employee: slug,
+      department: emp.department,
+      file: join(opts.outDir, `${slug}.employee.mcp.json`),
+      tools,
+      skills,
+    };
+    const profile = sortKeysDeep({
+      _employee: slug,
+      _department: emp.department,
+      _generated_at: opts.generatedAt,
+      _generator: "packages/gateway/src/generate-profiles.ts",
+      _source_hash: sourceHash,
+      _tools: tools,
+      _skills: skills,
+      mcpServers,
+    });
+    writeFileSync(manifest.file, `${JSON.stringify(profile, null, 2)}\n`, "utf8");
+    employeeProfiles.push(manifest);
+  }
+
+  return { sourceHash, profiles, employeeProfiles };
 }
 
 /** Production entry (07-04 calls this): reads policy/{grants,denials}.json
  *  from this package and emits packages/gateway/profiles/<dept>.mcp.json. */
 export async function generateProfilesFromPolicy(
   db: Kysely<DB>,
-  overrides: Partial<Pick<GenerateProfilesOptions, "outDir" | "generatedAt">> = {},
+  overrides: Partial<Pick<GenerateProfilesOptions, "outDir" | "generatedAt" | "library">> = {},
 ): Promise<GenerateProfilesResult> {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
   const readJson = (rel: string) =>
@@ -214,5 +326,6 @@ export async function generateProfilesFromPolicy(
     policy: { servers, grants },
     outDir: overrides.outDir ?? join(packageRoot, "profiles"),
     generatedAt: overrides.generatedAt ?? new Date().toISOString(),
+    library: overrides.library,
   });
 }

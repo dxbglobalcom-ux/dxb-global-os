@@ -8,7 +8,7 @@
 import { PgBoss } from "pg-boss";
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
-import { checkPins, readDxbMcpInventory } from "@dxb/gateway";
+import { checkPins, compileLibraryProfiles, readDxbMcpInventory } from "@dxb/gateway";
 import {
   hrPerformanceDaily,
   hrProbationCheck,
@@ -43,6 +43,11 @@ export const QUEUES = {
   // approvals row got decided resume or fail); cron triggers register as
   // 'wf:<slug>' schedules whose jobs also land here.
   workflowRun: "workflow.run",
+  // E9.5 library engine (HOLDING_LIBRARY §6, adaptation A6): a Postgres fn
+  // cannot reach pg-boss (E9.1 A1 emsal), so grant changes are picked up by a
+  // self-chained recompile that regenerates against the live record and swaps
+  // profile files only when the source hash moved.
+  libraryRecompile: "library.profile_recompile",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -77,6 +82,10 @@ export const CADENCES = {
   // reach pg-boss), so the drain self-chains like intent-intake — 10s keeps
   // manual runs snappy without contending for the session-mode pool.
   workflowDrainSeconds: 10,
+  // Library recompile: unchanged-hash runs are two SELECTs + policy reads, so
+  // 30s keeps a CEO grant change effective inside half a minute without
+  // pressuring the session-mode pool.
+  libraryRecompileSeconds: 30,
 } as const;
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -96,6 +105,14 @@ async function enqueueWorkflowDrain(boss: PgBoss, delaySeconds: number): Promise
     QUEUES.workflowRun,
     {},
     { startAfter: delaySeconds, singletonKey: QUEUES.workflowRun },
+  );
+}
+
+async function enqueueLibraryRecompile(boss: PgBoss, delaySeconds: number): Promise<void> {
+  await boss.send(
+    QUEUES.libraryRecompile,
+    {},
+    { startAfter: delaySeconds, singletonKey: QUEUES.libraryRecompile },
   );
 }
 
@@ -183,6 +200,18 @@ export async function startScheduler(): Promise<PgBoss> {
     }
   });
 
+  // E9.5 library recompile — same re-arm-even-on-throw discipline (a dead
+  // chain would freeze grant changes out of the gateway forever). Unchanged
+  // hash = cheap no-op; a compile failure leaves the old set in force (§17)
+  // and surfaces through pg-boss job failure, not a broken profile dir.
+  await boss.work(QUEUES.libraryRecompile, async () => {
+    try {
+      await compileLibraryProfiles(getDb());
+    } finally {
+      await enqueueLibraryRecompile(boss, CADENCES.libraryRecompileSeconds);
+    }
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
@@ -208,6 +237,7 @@ export async function startScheduler(): Promise<PgBoss> {
   await enqueueTick(boss, 0); // bootstrap the 15s chain
   await enqueueIntentIntake(boss, 0); // bootstrap the 5s intent chain
   await enqueueWorkflowDrain(boss, 0); // bootstrap the 10s workflow drain
+  await enqueueLibraryRecompile(boss, 0); // bootstrap the 30s library recompile
 
   return boss;
 }
