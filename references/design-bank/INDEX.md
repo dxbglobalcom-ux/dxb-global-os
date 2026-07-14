@@ -123,6 +123,18 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e121d-mcp-en-1280.png | /ai/mcp | EN | 1280 | PENDING | 8 dxb-mcp groups + department gateway posture (default-deny baseline) |
 | e121d-mcp-en-1920.png | /ai/mcp | EN | 1920 | PENDING | same, wide |
 | e121d-mcp-tr-1280.png | /ai/mcp | TR | 1280 | PENDING | same, TR |
+| e121e-risks-en-1280.png | /gov/risks | EN | 1280 | PENDING | E12.1-E risk register — 3 real project_risks (E11 risk closed via control seam this session, closure note visible), severity/status filters per CC drill map |
+| e121e-risks-en-1920.png | /gov/risks | EN | 1920 | PENDING | same, wide |
+| e121e-risks-tr-1280.png | /gov/risks | TR | 1280 | PENDING | same, TR |
+| e121e-policies-en-1280.png | /gov/policies | EN | 1280 | PENDING | E12.1-E policy constitution — 8 approval gates (7 LOCKED), 19 hook standards (17 blocking), governance_rule shelf; risk-class labels localized |
+| e121e-policies-en-1920.png | /gov/policies | EN | 1920 | PENDING | same, wide |
+| e121e-policies-tr-1280.png | /gov/policies | TR | 1280 | PENDING | same, TR |
+| e121e-permissions-en-1280.png | /gov/permissions | EN | 1280 | PENDING | E12.1-E permissions — honest zero grants (pre-activation), 21/21 default-deny posture |
+| e121e-permissions-en-1920.png | /gov/permissions | EN | 1920 | PENDING | same, wide |
+| e121e-permissions-tr-1280.png | /gov/permissions | TR | 1280 | PENDING | same, TR |
+| e121e-security-en-1280.png | /gov/security | EN | 1280 | PENDING | E12.1-E security posture — violations 0 honest, 10 real high-risk audit rows (battery fn calls, append-only), LIVE/DEFERRED posture list incl. registered hardening deferral |
+| e121e-security-en-1920.png | /gov/security | EN | 1920 | PENDING | same, wide |
+| e121e-security-tr-1280.png | /gov/security | TR | 1280 | PENDING | same, TR |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 
