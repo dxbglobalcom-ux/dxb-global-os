@@ -296,6 +296,9 @@ importers:
       '@anthropic-ai/claude-agent-sdk':
         specifier: 'catalog:'
         version: 0.3.201(@anthropic-ai/sdk@0.110.0(zod@4.4.3))(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(zod@4.4.3)
+      '@dxb/hook':
+        specifier: workspace:*
+        version: link:../hook
       '@dxb/kernel':
         specifier: workspace:*
         version: link:../kernel

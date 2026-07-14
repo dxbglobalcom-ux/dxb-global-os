@@ -278,6 +278,9 @@ export interface AgentRunsTable {
   cost_eur: Numeric;
   progress_pct: number | null;
   error: string | null;
+  // E10.2 (FABLE_5_HOOK §27/§14): starting hook version + close-time gate summary.
+  hook_version: string | null;
+  hook_result: Jsonb | null;
 }
 
 export interface ToolCallsTable {

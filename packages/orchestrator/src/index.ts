@@ -35,4 +35,15 @@ export { qa, QaVerdict } from "./qa.js";
 export type { QaTask, QaEvaluator, QaOutcome } from "./qa.js";
 export { council, judgeCandidates, shouldCouncil, COUNCIL_CONFIG, JudgeVerdict } from "./council.js";
 export type { CouncilTask, CouncilResult, CandidateLabel } from "./council.js";
-export type { ClaimedTask, Executor, RunWorkerArgs, RunWorkerResult, WorkerOutput } from "./worker-shim.js";
+export type { ClaimedTask, Executor, HookedClaimedTask, RunWorkerArgs, RunWorkerResult, WorkerOutput } from "./worker-shim.js";
+// E10.2 — spawn-path hook binding (FABLE_5_HOOK §3): dispatch-side glue.
+export {
+  CURRENT_HOOK_VERSION,
+  alertHookDisabled,
+  assembleHookCtx,
+  buildHookResult,
+  extractEvidencePackage,
+  hookEnabled,
+  stampHookVersion,
+} from "./hook-binding.js";
+export type { HookMonitorFlags } from "./hook-binding.js";

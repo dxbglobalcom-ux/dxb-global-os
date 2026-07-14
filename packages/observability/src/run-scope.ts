@@ -22,6 +22,8 @@ export interface RunContext {
   workflowRunId?: string | null;
   parentRunId?: string | null;
   modelId?: string | null;
+  /** E10.2 (FABLE_5_HOOK §27): the hook version the run is born under. */
+  hookVersion?: string | null;
 }
 
 export interface ToolCallEvent {
@@ -69,6 +71,7 @@ export class RunScope {
   private usage = { tokensIn: 0, tokensOut: 0, costEur: 0 };
   private model: string | null;
   private progress: number | null = null;
+  private hookResult: unknown = null;
   private readonly insert: InsertFn;
 
   constructor(runId: string, modelId: string | null, insert: InsertFn = defaultInsert) {
@@ -116,6 +119,17 @@ export class RunScope {
 
   setProgress(pct: number): void {
     this.progress = Math.max(0, Math.min(100, Math.round(pct)));
+  }
+
+  /** E10.2 (FABLE_5_HOOK §14): the gate summary the closure UPDATE persists —
+   *  set by the hook binding before the run closes; ops:live terminal events
+   *  surface it as the run.finished hook_result payload field (§9). */
+  setHookResult(result: unknown): void {
+    this.hookResult = result;
+  }
+
+  currentHookResult(): unknown {
+    return this.hookResult;
   }
 
   private enqueue(row: SpillRow): void {
@@ -251,6 +265,7 @@ export async function runScope<T>(
         workflow_run_id: ctx.workflowRunId ?? null,
         parent_run_id: ctx.parentRunId ?? null,
         model_id: ctx.modelId ?? null,
+        hook_version: ctx.hookVersion ?? null,
         status: "running",
       })
       .returning("id")
@@ -280,6 +295,10 @@ export async function runScope<T>(
           model_id: scope.currentModel(),
           progress_pct: status === "succeeded" ? 100 : scope.currentProgress(),
           error: error ?? null,
+          hook_result:
+            scope.currentHookResult() == null
+              ? null
+              : JSON.stringify(scope.currentHookResult()),
         })
         .where("id", "=", scope.runId)
         .execute();

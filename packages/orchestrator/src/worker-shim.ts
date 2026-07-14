@@ -20,6 +20,23 @@ import { getDb, llmCall } from "@dxb/shared";
 import { currentRunScope, runScope } from "@dxb/observability";
 import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
 import {
+  checkConfidence,
+  monitorTokens,
+  postTask,
+  preTask,
+  type HookCtx,
+  type PreVerdict,
+} from "@dxb/hook";
+import {
+  alertHookDisabled,
+  assembleHookCtx,
+  buildHookResult,
+  CURRENT_HOOK_VERSION,
+  extractEvidencePackage,
+  hookEnabled,
+  stampHookVersion,
+} from "./hook-binding.js";
+import {
   checkContextBudget,
   contextText,
   estimateTokens,
@@ -38,6 +55,20 @@ export interface ClaimedTask {
   budget_max_tokens: number;
   priority: number;
   status: string;
+  // E10.2 — claim_next_task returns SETOF tasks; the hook binding reads the
+  // real columns (optional: pre-hook fixtures construct the narrow shape).
+  agent_id?: string | null;
+  project_id?: string | null;
+  milestone_id?: string | null;
+  budget_max_cost_eur?: number | string | null;
+  feedback?: string | null;
+}
+
+/** E10.2: what the binding hands the executor — the claimed row plus the
+ *  std 11 project-purpose injection (§6 "proje amacı enjekte edilir"). The
+ *  certified Executor signature is untouched; the extras flow structurally. */
+export interface HookedClaimedTask extends ClaimedTask {
+  hook_project_purpose?: string | null;
 }
 
 export interface WorkerOutput {
@@ -71,6 +102,7 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
     throw new Error(`worker-shim: no enabled routing_rules row for tier '${task.model_tier}'`);
   }
 
+  const hooked = task as HookedClaimedTask;
   const prompt = [
     "You are a DXB Global OS worker agent. Complete the task below and answer",
     'as strict JSON only: {"result": "<deliverable text>", "confidence": <0..1>}.',
@@ -78,6 +110,14 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
     "",
     `Objective: ${task.objective}`,
     `Output contract: ${task.output_contract}`,
+    // E10.2 std 11: the pre-gate injects the project purpose into the run.
+    ...(hooked.hook_project_purpose
+      ? ["", `Project purpose (holding alignment): ${hooked.hook_project_purpose}`]
+      : []),
+    // E10.2 §19: post-gate REVISE feedback rides the re-execution.
+    ...(hooked.feedback
+      ? ["", "Quality-gate revision feedback — address EVERY point:", hooked.feedback]
+      : []),
   ].join("\n");
 
   // Observability tap (E8.1): the run scope travels on AsyncLocalStorage so
@@ -302,12 +342,94 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
 
   await transition(task.id, "claimed", "running", workerId);
 
+  // ── E10.2 hook binding (FABLE_5_HOOK §3) ──────────────────────────────────
+  // Flag ON: preTask BEFORE the run is born (§6: a block rejection = the run
+  // never exists, the task fails as policy), hook_version stamped on the
+  // employee (roadmap acceptance), in-run monitors + post-gate inside the run
+  // scope. Flag OFF: the pre-E10 path, loudly (§22 'hook:disabled' alert).
+  const hookOn = await hookEnabled(task.agent_id ?? null);
+  if (!hookOn) await alertHookDisabled();
+
+  let hookCtx: HookCtx | null = null;
+  let preVerdict: Extract<PreVerdict, { verdict: "PASS" }> | null = null;
+  if (hookOn) {
+    hookCtx = await assembleHookCtx(task);
+    const pre = await preTask(hookCtx);
+    if (pre.verdict === "REJECT") {
+      const error = `policy: ${pre.reason}`;
+      await transition(task.id, "running", "failed", "hook", {
+        error,
+        hook_gate: "pre",
+        violations: pre.violations.map((v) => v.policyId),
+      });
+      return { claimed: true, taskId: task.id, status: "failed", error };
+    }
+    preVerdict = pre;
+    // ROADMAP E10.2 acceptance: spawn → agents.hook_version dolu.
+    if (task.agent_id) await stampHookVersion(task.agent_id);
+  }
+
   try {
     // E8.1: every execution runs inside an observability scope — agent_runs
     // open/close + buffered tool_calls/file_changes ride AsyncLocalStorage.
     // Observation never blocks this path (spec §3 ⛔): a dead observability
     // write spills to disk and the task outcome is decided by execute() alone.
-    const { value: out } = await runScope({ taskId: task.id }, () => execute(task));
+    const { value: out } = await runScope(
+      {
+        taskId: task.id,
+        employeeId: task.agent_id ?? null,
+        hookVersion: hookOn ? CURRENT_HOOK_VERSION : null,
+      },
+      async (scope) => {
+        if (!hookOn || !hookCtx || !preVerdict) return execute(task);
+
+        // In-run rules (§6 runtime: the hook MONITORS, the runner decides) +
+        // post-gate with the §19 revision loop. std 9: the run can only close
+        // 'succeeded' through a post-gate PASS — REVISE re-executes with the
+        // feedback, exhaustion ESCALATEs (§7 chain recorded by the gate) and
+        // the run fails.
+        const ctx: HookCtx = { ...hookCtx, runId: scope.runId };
+        const monitors = {
+          tokenBudgetExceeded: false,
+          confidenceEscalationRequired: false,
+        };
+        const execTask: HookedClaimedTask = {
+          ...task,
+          hook_project_purpose: preVerdict.inject.projectPurpose,
+        };
+        let rounds = 0;
+        for (;;) {
+          const attempt = await execute(execTask);
+
+          if (!monitors.tokenBudgetExceeded) {
+            const u = scope.snapshotUsage();
+            const tok = await monitorTokens(ctx, u.tokensIn + u.tokensOut);
+            monitors.tokenBudgetExceeded = tok.exceeded;
+          }
+          if (!monitors.confidenceEscalationRequired) {
+            const conf = await checkConfidence(ctx, attempt.confidence);
+            monitors.confidenceEscalationRequired = conf.escalationRequired;
+          }
+
+          const post = await postTask(
+            { ...ctx, revisionRound: rounds },
+            extractEvidencePackage(attempt.result),
+          );
+          scope.setHookResult(
+            buildHookResult({ pre: preVerdict, post, rounds, monitors }),
+          );
+          if (post.verdict === "PASS") return attempt;
+          if (post.verdict === "REVISE") {
+            rounds += 1;
+            execTask.feedback = post.feedback.join("\n");
+            continue;
+          }
+          throw new Error(
+            `hook post-gate ESCALATE after ${rounds} revision round(s): ${post.feedback.join("; ")}`,
+          );
+        }
+      },
+    );
     await transition(
       task.id,
       "running",

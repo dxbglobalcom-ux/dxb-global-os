@@ -10,6 +10,9 @@
       "path": "../shared"
     },
     {
+      "path": "../hook"
+    },
+    {
       "path": "../kernel"
     },
     {
