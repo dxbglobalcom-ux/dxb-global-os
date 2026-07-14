@@ -62,7 +62,10 @@ export function LiveTicker({
               href="/live"
               className="block rounded-input border border-edge-neutral bg-surface-graphite p-2 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
             >
-              <div className="truncate text-body-s text-ink-primary">
+              <div
+                className="line-clamp-2 text-body-s text-ink-primary"
+                title={r.label ?? r.event ?? r.source}
+              >
                 {r.label ?? r.event ?? r.source}
               </div>
               <div className="mt-1 flex items-center gap-2">

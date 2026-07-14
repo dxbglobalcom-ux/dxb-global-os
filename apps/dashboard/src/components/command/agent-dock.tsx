@@ -44,7 +44,7 @@ export function AgentDock({
                   {statusLabels[t.status] ?? t.status}
                 </StatusBadge>
               )}
-              <span className="max-w-96 truncate text-body-s text-ink-primary">
+              <span className="max-w-96 truncate text-body-s text-ink-primary" title={t.title}>
                 {t.title}
               </span>
             </Link>

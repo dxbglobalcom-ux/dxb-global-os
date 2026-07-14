@@ -103,7 +103,9 @@ export function IntelligenceRail({
                     a.moneyOut ? "border-edge-champagne" : "border-edge-neutral"
                   }`}
                 >
-                  <div className="truncate text-body-s text-ink-primary">{a.title}</div>
+                  <div className="line-clamp-2 text-body-s text-ink-primary" title={a.title}>
+                    {a.title}
+                  </div>
                   <div className="mt-1 flex items-center gap-2">
                     {a.moneyOut && (
                       <span className="label-caps text-accent-champagne">{labels.moneyOut}</span>

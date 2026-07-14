@@ -197,17 +197,23 @@ export default async function PermissionsPage() {
 
       <Panel title={t.postureTitle}>
         <p className="mb-3 text-caption text-ink-muted">{t.postureHint}</p>
-        <ul className="grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2 2xl:grid-cols-3">
-          {depts.map((d) => (
+        {/* auto-fit: a column appears only when a full department name fits
+            (~26rem incl. badge). Windowed → 1 column (name on one line),
+            2xl → 2, ultrawide → 3. No truncation, no second-line wrap. */}
+        <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,26rem),1fr))] gap-x-6 gap-y-2.5">
+          {depts.map((d) => {
+            const deptName =
+              locale === "tr" ? (d.display_name_tr ?? d.display_name) : d.display_name;
+            return (
             <li
               key={d.slug}
               className="flex items-baseline justify-between gap-3 text-body-s"
             >
               <Link
                 href={`/org/employees?dept=${encodeURIComponent(d.slug)}`}
-                className="min-w-0 truncate text-accent-champagne"
+                className="text-accent-champagne"
               >
-                {locale === "tr" ? (d.display_name_tr ?? d.display_name) : d.display_name}
+                {deptName}
               </Link>
               <StatusBadge
                 level={d.mcp_profile === "default-deny" ? "ok" : "warn"}
@@ -216,7 +222,8 @@ export default async function PermissionsPage() {
                 <span className="font-data">{d.mcp_profile}</span>
               </StatusBadge>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </Panel>
     </div>
