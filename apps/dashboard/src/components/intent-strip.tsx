@@ -36,7 +36,7 @@ export function IntentStrip({
       if (record?.task_id && watched.has(record.task_id)) router.refresh();
     },
     // watched derives from props each render; the set identity is irrelevant
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // (deps intentionally narrowed — exhaustive-deps not linted here)
     [router, intents],
   );
   useDxbChannel("task_events", onMessage);

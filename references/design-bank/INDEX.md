@@ -71,6 +71,11 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e102-violations-tr-1920.png | /gov/violations | TR | 1920 | PENDING | same |
 | e102-violations-en-1280.png | /gov/violations | EN | 1280 | PENDING | same, narrow |
 | e102-violations-tr-1280.png | /gov/violations | TR | 1280 | PENDING | same, narrow |
+| e111-costs-en-1920.png | /fin/costs | EN | 1920 | PENDING | E11.1 day breakdown — 'By day · 30 days' panel from v_cost_breakdown (Berlin days, tokens + EUR per day), real ledger data (2026-07-14) |
+| e111-costs-tr-1920.png | /fin/costs | TR | 1920 | PENDING | same |
+| e111-costs-en-1280.png | /fin/costs | EN | 1280 | PENDING | narrow composition — day cards 2-col at 1280 (RULE #0 catch fixed: 3-col wrapped the date), 3-col only at 2xl |
+| e111-costs-tr-1280.png | /fin/costs | TR | 1280 | PENDING | same, narrow |
+| e111-costs-en-1280-drill.png | /fin/costs?day=... | EN | 1280 | PENDING | drill state: selected day champagne border + ledger panel titled with the day + clear chip (spec §7 day → row-level ledger) |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 

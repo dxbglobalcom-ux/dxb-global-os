@@ -8,12 +8,16 @@ import {
 } from "@/components/primitives";
 import {
   COST_PERIODS,
+  berlinDayRangeISO,
   costBreakdown,
+  dailyBreakdown,
   monthStart,
   periodTotal,
   postgrestCostSource,
+  postgrestDailySource,
   type BreakdownEntry,
   type CostPeriod,
+  type DailyEntry,
 } from "@/lib/costs";
 import { formatEur } from "@/lib/format";
 import { getDict } from "@/lib/i18n";
@@ -25,6 +29,10 @@ import { createClient } from "@/lib/supabase/server";
 // Horizon counter and the SQL-equality test consume, so this page cannot
 // drift from the ledger. Bars carry magnitude by WIDTH (ratio), color
 // stays champagne — no rainbow finance (R17 typography discipline).
+//
+// E11.1 close: the day grain comes from v_cost_breakdown (Berlin day, the
+// view the roadmap row names); a day row drills into the ledger table on
+// the same page (COST spec §7: chart segment → row-level cost_ledger).
 
 export const metadata = { title: "Costs — DXB" };
 
@@ -59,12 +67,77 @@ function BreakdownList({
   );
 }
 
+function DailyList({
+  entries,
+  emptyText,
+  tokensLabel,
+  selectedDay,
+  hrefFor,
+}: {
+  entries: DailyEntry[];
+  emptyText: string;
+  tokensLabel: string;
+  selectedDay?: string;
+  hrefFor: (day: string) => string;
+}) {
+  if (entries.length === 0)
+    return <p className="py-2 text-body-s text-ink-muted">{emptyText}</p>;
+  const compact = new Intl.NumberFormat("en", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  });
+  return (
+    // 3 columns only at 2xl — at 1280 the content column leaves ~210px per
+    // card and the date wraps (RULE #0 catch).
+    <ul className="grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2 2xl:grid-cols-3">
+      {entries.map((e) => {
+        const selected = e.day === selectedDay;
+        return (
+          <li key={e.day}>
+            <Link
+              href={hrefFor(selected ? "" : e.day)}
+              aria-current={selected ? "true" : undefined}
+              className={`block rounded-input border px-2.5 py-1.5 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
+                selected ? "border-edge-champagne" : "border-transparent"
+              }`}
+            >
+              <div className="flex items-baseline justify-between gap-3 text-body-s">
+                <span
+                  className={`whitespace-nowrap font-data tabular-nums ${
+                    selected ? "text-accent-champagne" : "text-ink-secondary"
+                  }`}
+                >
+                  {e.day}
+                </span>
+                <span className="flex items-baseline gap-3">
+                  <span className="whitespace-nowrap font-data text-caption text-ink-muted tabular-nums">
+                    {compact.format(e.tokens)} {tokensLabel}
+                  </span>
+                  <span className="whitespace-nowrap font-data text-ink-primary tabular-nums">
+                    {e.formatted}
+                  </span>
+                </span>
+              </div>
+              <div className="mt-1 h-1 overflow-hidden rounded-input bg-surface-anthracite">
+                <div
+                  className="h-full rounded-input bg-accent-champagne"
+                  style={{ width: `${Math.max(2, e.ratio * 100).toFixed(1)}%` }}
+                />
+              </div>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export default async function CostsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ range?: string }>;
+  searchParams: Promise<{ range?: string; day?: string }>;
 }) {
-  const { range } = await searchParams;
+  const { range, day: rawDay } = await searchParams;
   const dict = getDict(await getLocale());
   const t = dict.command.costs;
   const supabase = await createClient();
@@ -76,24 +149,42 @@ export default async function CostsPage({
   )
     ? (range as CostPeriod)
     : "7d";
+  // Day drill (spec §7): a Berlin calendar day narrows the ledger table.
+  const day = /^\d{4}-\d{2}-\d{2}$/.test(rawDay ?? "") ? rawDay! : undefined;
 
-  const [today, week, month30, monthToDate, byDept, byModel, byMode, ledgerRes] =
-    await Promise.all([
-      periodTotal(source, "today", now),
-      periodTotal(source, "7d", now),
-      periodTotal(source, "30d", now),
-      source.totalSince(monthStart(now).toISOString()),
-      costBreakdown(source, "department", period, now),
-      costBreakdown(source, "model", period, now),
-      costBreakdown(source, "mode", period, now),
-      supabase
-        .from("cost_ledger")
-        .select(
-          "id, model, mode, department, prompt_tokens, completion_tokens, cost_eur, created_at",
-        )
-        .order("created_at", { ascending: false })
-        .limit(20),
-    ]);
+  let ledgerQuery = supabase
+    .from("cost_ledger")
+    .select(
+      "id, model, mode, department, prompt_tokens, completion_tokens, cost_eur, created_at",
+    )
+    .order("created_at", { ascending: false })
+    .limit(20);
+  if (day) {
+    const { startISO, endISO } = berlinDayRangeISO(day);
+    ledgerQuery = ledgerQuery.gte("created_at", startISO).lt("created_at", endISO);
+  }
+
+  const [
+    today,
+    week,
+    month30,
+    monthToDate,
+    byDay,
+    byDept,
+    byModel,
+    byMode,
+    ledgerRes,
+  ] = await Promise.all([
+    periodTotal(source, "today", now),
+    periodTotal(source, "7d", now),
+    periodTotal(source, "30d", now),
+    source.totalSince(monthStart(now).toISOString()),
+    dailyBreakdown(postgrestDailySource(supabase), now),
+    costBreakdown(source, "department", period, now),
+    costBreakdown(source, "model", period, now),
+    costBreakdown(source, "mode", period, now),
+    ledgerQuery,
+  ]);
 
   if (ledgerRes.error) {
     return (
@@ -129,6 +220,18 @@ export default async function CostsPage({
     notation: "compact",
     maximumFractionDigits: 1,
   });
+
+  // Drill state lives in the URL (spec §10) — range and day compose.
+  const rangeParam = (COST_PERIODS as readonly string[]).includes(range ?? "")
+    ? range
+    : undefined;
+  const costsHref = (params: { range?: string; day?: string }) => {
+    const q = new URLSearchParams();
+    if (params.range) q.set("range", params.range);
+    if (params.day) q.set("day", params.day);
+    const s = q.toString();
+    return `/fin/costs${s ? `?${s}` : ""}`;
+  };
 
   const columns: Column<LedgerRow>[] = [
     {
@@ -235,12 +338,23 @@ export default async function CostsPage({
         </Panel>
       </div>
 
-      <Panel title={t.ledgerTitle}>
+      <Panel title={`${t.byDay} · ${t.kpi30d}`}>
+        <p className="mb-3 text-caption text-ink-muted">{t.byDayHint}</p>
+        <DailyList
+          entries={byDay}
+          emptyText={t.breakdownEmpty}
+          tokensLabel={t.colTokens}
+          selectedDay={day}
+          hrefFor={(d) => costsHref({ range: rangeParam, day: d || undefined })}
+        />
+      </Panel>
+
+      <Panel title={day ? `${t.ledgerTitle} · ${day}` : t.ledgerTitle}>
         <div className="mb-3 flex flex-wrap gap-2">
           {COST_PERIODS.map((p) => (
             <Link
               key={p}
-              href={`/fin/costs?range=${p}`}
+              href={costsHref({ range: p, day })}
               className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
                 period === p
                   ? "border-edge-champagne text-accent-champagne"
@@ -250,6 +364,16 @@ export default async function CostsPage({
               {periodLabel[p]}
             </Link>
           ))}
+          {day && (
+            <Link
+              href={costsHref({ range: rangeParam })}
+              aria-label={t.clearDay}
+              title={t.clearDay}
+              className="rounded-input border border-edge-champagne px-2.5 py-1 font-data text-body-s text-accent-champagne transition duration-[var(--t-fast)] ease-refined tabular-nums hover:bg-surface-graphite"
+            >
+              {day} ✕
+            </Link>
+          )}
         </div>
         {ledger.length === 0 ? (
           <p className="py-4 text-body-s text-ink-secondary">{t.ledgerEmpty}</p>

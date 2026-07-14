@@ -10,7 +10,13 @@ export default [
     languageOptions: {
       parser: tseslint.parser,
     },
+    plugins: {
+      "@typescript-eslint": tseslint.plugin,
+    },
     rules: {
+      // Registered so the in-code disable comments reference a REAL rule —
+      // ESLint 9 hard-errors on directives naming unregistered rules.
+      "@typescript-eslint/no-explicit-any": "error",
       "no-restricted-imports": [
         "error",
         {

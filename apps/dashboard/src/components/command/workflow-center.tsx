@@ -298,7 +298,7 @@ export function WorkflowCenter({
     if (lastSync.current === syncKey) return;
     lastSync.current = syncKey;
     if (!dirty) setDraft(draftFrom(selected, steps));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // deps intentionally narrowed to syncKey (exhaustive-deps not linted here)
   }, [syncKey]);
 
   // ops:live run.* → debounced refetch (run history stays honest without a

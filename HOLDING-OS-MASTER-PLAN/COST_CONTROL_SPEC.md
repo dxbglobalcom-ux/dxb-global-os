@@ -155,6 +155,15 @@ Mevcut cost_ledger + Cost Monitor (KALIR) · [[OBSERVABILITY_SPEC]] trigger/snap
 - **€150 tavana yaklaşan ay sonu**: forecast budget risk chart'ı + %90 High alert CEO'ya erken görünür; hard-stop ayın son günü sürpriz olmaz.
 - **Bütçesiz scope** (yeni departman): holding bütçesi şemsiyedir — scope bütçesi yoksa üst scope sayacına akar (kaçak yok).
 
+## Registered adaptations — E11.1 (2026-07-14, Fable K1; CEO-visible)
+
+| # | Adaptation | Why |
+|---|------------|-----|
+| A1 | E11.1 delivers the roadmap row only: `v_cost_breakdown` (shipped 0025x, `20260711002500`) + `/fin/costs` day/dept/model breakdowns on real ledger data + `cost`-channel threshold alarms. §3 pg-boss jobs (rollup/guard/anomaly), `budgets`/`cost_rollups` tables, LiteLLM `/key/update` sync, the full R2 10-chart set and R6 forecast stay on the recorded P7 boundary (E8.4b boundary records stand). | Roadmap row scope; no silent scope inflation |
+| A2 | Threshold alarms run TRIGGER-based on `cost_ledger` insert (`fn_alert_on_cost_threshold`, 70/90/100, per-month dedup — shipped at E8.4b), not as the §3 5-min `cost-guard` job. The pg-boss guard adopts these constants at P7; behavior (levels/channel/dedup) already matches §3. | Existing Phase-4 Cost-Monitor lineage generalized early; zero alert latency |
+| A3 | The day grain reads `v_cost_breakdown` LIVE (no `cost_rollups` materialization yet). The §26 "rollup vs reality 5-min window" risk therefore does not exist in this stage. | Rollups are derived tables — premature before P7 job infra |
+| A4 | Daily panel window/rows = 30 days / 15 rows, mirroring the `/fin/pnl` daily precedent (E6.5); day boundary Europe/Berlin per the P&L D5 decision, identical to the view. | Established idiom, no new design decision |
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · §20 11 boyut + 10 görselleştirme eşlenmiş ✓ · madde 10.5 alanları şemada ✓ · %70/100 Cost-Monitor kuralı mekanizmalı + kritik muafiyet ✓ · LiteLLM çift-katman senkronu ✓ · mevcut-varlık (ledger/monitor KALIR) ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓

@@ -76,6 +76,94 @@ export function monthStart(now: Date): Date {
   return start;
 }
 
+// ── E11.1 daily grain ────────────────────────────────────────────────────────
+// Day boundary = Europe/Berlin, matching v_cost_breakdown and the P&L D5
+// decision — NOT the local-midnight 'today' KPI boundary above. The daily
+// panel reads the view; the KPIs keep the COST-04 module untouched.
+
+export const DAILY_WINDOW_DAYS = 30;
+export const DAILY_ROWS_SHOWN = 15;
+
+export type DailyRow = {
+  /** Berlin calendar day, YYYY-MM-DD */
+  day: string;
+  totalEur: number;
+  tokens: number;
+};
+
+export interface CostDailySource {
+  sumByDay(sinceDay: string): Promise<DailyRow[]>;
+}
+
+export type DailyEntry = DailyRow & {
+  formatted: string;
+  /** 0..1 of the largest bar — drives bar width, not color */
+  ratio: number;
+};
+
+/** Berlin calendar day of an instant, YYYY-MM-DD. */
+export function berlinDay(at: Date): string {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Berlin",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(at);
+}
+
+function berlinOffsetMinutes(utcMs: number): number {
+  const zone = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Europe/Berlin",
+    timeZoneName: "longOffset",
+  })
+    .formatToParts(new Date(utcMs))
+    .find((p) => p.type === "timeZoneName")?.value;
+  const m = /GMT([+-])(\d{2}):(\d{2})/.exec(zone ?? "");
+  if (!m) return 0;
+  return (m[1] === "-" ? -1 : 1) * (Number(m[2]) * 60 + Number(m[3]));
+}
+
+// Berlin midnight as a UTC instant. Sampling the offset at 00:00Z is exact
+// for Berlin: EU DST switches at 01:00Z, local midnight lies before it.
+function berlinMidnightUtcMs(day: string): number {
+  const guess = Date.parse(`${day}T00:00:00Z`);
+  return guess - berlinOffsetMinutes(guess) * 60_000;
+}
+
+/** [start, end) UTC instants of a Berlin calendar day (DST days = 23h/25h). */
+export function berlinDayRangeISO(day: string): {
+  startISO: string;
+  endISO: string;
+} {
+  const nextDay = new Date(Date.parse(`${day}T12:00:00Z`) + 24 * 3_600_000)
+    .toISOString()
+    .slice(0, 10);
+  return {
+    startISO: new Date(berlinMidnightUtcMs(day)).toISOString(),
+    endISO: new Date(berlinMidnightUtcMs(nextDay)).toISOString(),
+  };
+}
+
+export async function dailyBreakdown(
+  source: CostDailySource,
+  now: Date,
+): Promise<DailyEntry[]> {
+  const sinceDay = new Date(
+    Date.parse(`${berlinDay(now)}T12:00:00Z`) -
+      (DAILY_WINDOW_DAYS - 1) * 86_400_000,
+  )
+    .toISOString()
+    .slice(0, 10);
+  const rows = await source.sumByDay(sinceDay);
+  const sorted = [...rows].sort((a, b) => b.day.localeCompare(a.day));
+  const max = Math.max(0, ...sorted.map((r) => r.totalEur));
+  return sorted.slice(0, DAILY_ROWS_SHOWN).map((row) => ({
+    ...row,
+    formatted: formatEur(row.totalEur),
+    ratio: max > 0 ? row.totalEur / max : 0,
+  }));
+}
+
 // PostgREST-backed source (RSC usage). Kept here so the page and the Horizon
 // layout share one query shape; the supabase client type stays loose to
 // avoid coupling to generated DB types.
@@ -106,6 +194,34 @@ export function postgrestCostSource(supabase: PostgrestClient): CostRowsSource {
         .gte("created_at", sinceISO);
       if (error) throw new Error(error.message);
       return Number((data as Array<{ sum: number | string | null }> | null)?.[0]?.sum ?? 0) || 0;
+    },
+  };
+}
+
+// v_cost_breakdown-backed daily source (E11.1): the view owns the Berlin-day
+// grain; PostgREST aggregates it up to one row per day.
+export function postgrestDailySource(supabase: PostgrestClient): CostDailySource {
+  return {
+    async sumByDay(sinceDay) {
+      const { data, error } = await supabase
+        .from("v_cost_breakdown")
+        .select(
+          "day, cost:cost_eur.sum(), ptok:prompt_tokens.sum(), ctok:completion_tokens.sum()",
+        )
+        .gte("day", sinceDay);
+      if (error) throw new Error(error.message);
+      return (
+        (data ?? []) as Array<{
+          day: string;
+          cost: number | string | null;
+          ptok: number | string | null;
+          ctok: number | string | null;
+        }>
+      ).map((row) => ({
+        day: row.day,
+        totalEur: Number(row.cost ?? 0),
+        tokens: Number(row.ptok ?? 0) + Number(row.ctok ?? 0),
+      }));
     },
   };
 }
