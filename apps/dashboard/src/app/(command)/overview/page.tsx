@@ -44,7 +44,8 @@ type ExecOverview = {
 };
 
 export default async function OverviewPage() {
-  const dict = getDict(await getLocale());
+  const locale = await getLocale();
+  const dict = getDict(locale);
   const t = dict.command.overview;
   const supabase = await createClient();
 
@@ -115,7 +116,7 @@ export default async function OverviewPage() {
         {data.last_activity_at && (
           <span className="font-data text-caption text-ink-muted tabular-nums">
             {t.lastActivity}:{" "}
-            {new Date(data.last_activity_at).toLocaleString(undefined, {
+            {new Date(data.last_activity_at).toLocaleString(locale === "tr" ? "tr-TR" : "en-GB", {
               day: "2-digit",
               month: "short",
               hour: "2-digit",

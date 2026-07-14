@@ -66,7 +66,8 @@ export default async function TasksPage({
   searchParams: Promise<{ state?: string; range?: string }>;
 }) {
   const { state, range } = await searchParams;
-  const dict = getDict(await getLocale());
+  const locale = await getLocale();
+  const dict = getDict(locale);
   const t = dict.command.tasks;
   const supabase = await createClient();
 
@@ -169,7 +170,7 @@ export default async function TasksPage({
       align: "right",
       numeric: true,
       render: (r) =>
-        new Date(r.updated_at).toLocaleString(undefined, {
+        new Date(r.updated_at).toLocaleString(locale === "tr" ? "tr-TR" : "en-GB", {
           day: "2-digit",
           month: "short",
           hour: "2-digit",

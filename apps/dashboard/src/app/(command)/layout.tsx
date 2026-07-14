@@ -4,6 +4,7 @@ import {
   IntelligenceRail,
   type RailAlert,
   type RailApproval,
+  type TickerRow,
 } from "@/components/command/intelligence-rail";
 import { SessionGuard } from "@/components/command/session-guard";
 import { SideNav } from "@/components/command/side-nav";
@@ -35,7 +36,7 @@ export default async function CommandLayout({
   // page (SYS_ARCH §8) — head-count queries returned bogus zeros in the
   // RSC layout (2026-07-11 fix; page and bar can never disagree again).
   // E4.5: source is the 0025x catalog view (v1 stays as compat alias).
-  const [summaryRes, railRes, dockRes, pauseRes, alertsRes] = await Promise.all([
+  const [summaryRes, railRes, dockRes, pauseRes, alertsRes, tickerRes] = await Promise.all([
     supabase
       .from("v_exec_overview")
       .select("active_tasks,pending_approvals,pending_high_risk")
@@ -80,6 +81,13 @@ export default async function CommandLayout({
       .select("kind,id,level,title,at")
       .eq("kind", "alert")
       .limit(25),
+    // E12.1: rail live ticker = head of v_live_ops (24h union view, newest
+    // first) — the §3 "live ticker" slot; ops:live Broadcast repaints it.
+    supabase
+      .from("v_live_ops")
+      .select("source,source_id,ts,status,event,label")
+      .order("ts", { ascending: false })
+      .limit(5),
   ]);
   const paused = pauseRes.data?.value === true;
 
@@ -110,6 +118,7 @@ export default async function CommandLayout({
   }));
   const railAlerts: RailAlert[] = ((alertsRes.data ?? []) as RailAlert[]).slice(0, 5);
   const alertCount = alertsRes.data?.length ?? 0;
+  const ticker = (tickerRes.data ?? []) as TickerRow[];
 
   return (
     <div className="ambient-depth relative flex h-dvh flex-col bg-surface-void font-body text-body-md text-ink-primary">
@@ -146,6 +155,8 @@ export default async function CommandLayout({
           alertCount={alertCount}
           alertLevels={t.alerts.ui.levels}
           riskLevels={t.approvals.ui.riskLevels}
+          ticker={ticker}
+          statusLabels={dict.status}
         />
         <AgentDock label={t.dock.running} tasks={dockTasks} statusLabels={dict.status} />
       </div>

@@ -138,7 +138,8 @@ export default async function CostsPage({
   searchParams: Promise<{ range?: string; day?: string }>;
 }) {
   const { range, day: rawDay } = await searchParams;
-  const dict = getDict(await getLocale());
+  const locale = await getLocale();
+  const dict = getDict(locale);
   const t = dict.command.costs;
   const supabase = await createClient();
   const source = postgrestCostSource(supabase);
@@ -265,11 +266,14 @@ export default async function CostsPage({
       align: "right",
       numeric: true,
       render: (r) =>
-        new Date(r.created_at).toLocaleString(undefined, {
+        // locale-pinned: server-default short month leaks an EN month name
+        // onto the TR ledger (RULE #0 purity; rail precedent — E12.1 catch).
+        new Date(r.created_at).toLocaleString(locale === "tr" ? "tr-TR" : "en-GB", {
           day: "2-digit",
           month: "short",
           hour: "2-digit",
           minute: "2-digit",
+          hourCycle: "h23",
         }),
     },
   ];

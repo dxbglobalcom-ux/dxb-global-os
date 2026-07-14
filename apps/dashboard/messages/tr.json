@@ -66,7 +66,11 @@
     "awaiting_approval": "Onay bekliyor",
     "done": "Bitti",
     "failed": "Hata",
-    "returned": "İade"
+    "returned": "İade",
+    "succeeded": "Başarılı",
+    "waiting": "Bekliyor",
+    "cancelled": "İptal",
+    "pending": "Beklemede"
   },
   "approvals": {
     "title": "Onaylar",
@@ -447,7 +451,9 @@
       "viewAll": "Tümünü gör",
       "alertsEmpty": "Her şey yolunda — aktif uyarı yok.",
       "moneyOut": "Para çıkışı",
-      "oldest": "En eski:"
+      "oldest": "En eski:",
+      "tickerTitle": "Canlı akış",
+      "tickerEmpty": "Son 24 saatte operasyon yok."
     },
     "dock": {
       "running": "Şu an çalışıyor"
@@ -714,6 +720,62 @@
       "ledgerEmpty": "Bu pencerede maliyet defteri boş — her model çağrısı buraya satır yazar.",
       "viewBudgets": "Bütçeler ve tavanlar",
       "viewTokens": "Token analitiği"
+    },
+    "memory": {
+      "kpiRecords": "Hafıza kaydı",
+      "kpiTrusted": "Güvenilir payı",
+      "kpiStores": "Canlı depo",
+      "kpiLastWrite": "Son yazım",
+      "lastWrite": "Son yazım",
+      "tierTrusted": "Güvenilir",
+      "tierQuarantined": "Karantinada",
+      "tierTrustedShort": "güvenilir",
+      "kinds": {
+        "fact": "Olgu",
+        "relation": "İlişki",
+        "artifact": "Artefakt",
+        "procedure": "Prosedür"
+      },
+      "colRef": "Referans",
+      "colKind": "Tür",
+      "colStore": "Depo",
+      "colTier": "Güven",
+      "colConfidence": "Güven skoru",
+      "colScope": "Kapsam",
+      "colWhen": "Zaman",
+      "detailTitle": "Kayıt",
+      "detailClose": "Kapat",
+      "detailExpires": "Süre sonu",
+      "detailSuperseded": "Yerini alan",
+      "detailProvenance": "Köken",
+      "detailRun": "Kaynak koşu",
+      "detailNoRun": "Kaynak koşu kaydı yok — kayıt koşu köprüsünden eski ya da koşu dışında yazılmış.",
+      "mutationsBoundary": "Düzenle, arşivle ve yeniden sınıflandır aksiyonları control_memory_* kapısıyla gelecek (kayıtlı Dalga-4 eki) — bu yüzey tasarım gereği salt-okunur.",
+      "listTitle": "Dizin kayıtları",
+      "searchPlaceholder": "Referans ara…",
+      "searchAction": "Ara",
+      "empty": "Bu filtreye uyan hafıza kaydı yok.",
+      "showing": "Gösterilen",
+      "of": "/"
+    },
+    "intelligence": {
+      "kpiAlerts": "Aktif uyarı",
+      "kpiApprovals": "Bekleyen onay",
+      "kpiDecisions24h": "Karar · 24s",
+      "kpiOvernight": "Gece olayları",
+      "briefOvernight": "Gece çalışması",
+      "briefRecentDone": "Yeni tamamlanan",
+      "briefEmpty": "Gece etkinliği kaydedilmedi.",
+      "briefApprovals": "Onay yükü",
+      "briefNoApprovals": "Sizi bekleyen bir şey yok.",
+      "briefCost": "Maliyet · son 24s",
+      "briefCostTotal": "Toplam harcama",
+      "alertsTitle": "Öncelikli uyarılar",
+      "alertsEmpty": "Her şey yolunda — aktif uyarı yok.",
+      "decisionsTitle": "Son kararlar",
+      "decisionsEmpty": "Henüz karar kaydı yok — ajan koşuları gerekçelerini buraya yazar.",
+      "liveTitle": "Operasyon kuyruğu",
+      "liveEmpty": "Son 24 saatte operasyon yok."
     },
     "designAudit": {
       "title": "Tasarım Denetimi",

@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { Panel, StatusBadge } from "@/components/primitives";
 import { AlertsRail, type RailAlert } from "./alerts-rail";
+import { LiveTicker, type TickerRow } from "./live-ticker";
 
 // Intelligence Rail — right layer (CC-SPEC §3). E2.1 slice: real
 // pending-approval feed from the approvals table. E8.4b: the alerts panel
 // binds to the real priority head of v_alerts_active (severity → unacked →
-// age) and repaints from the `alerts` Broadcast. Live ticker lands with its
-// own row.
+// age) and repaints from the `alerts` Broadcast. E12.1: the live ticker
+// binds to the head of v_live_ops and repaints from ops:live — the §3 rail
+// content set (approval özeti · critical alerts · live ticker) is complete;
+// contextual controls ride the widget/control row (E12.2).
 
 export type RailApproval = {
   id: string;
@@ -16,7 +19,7 @@ export type RailApproval = {
   moneyOut: boolean;
 };
 
-export type { RailAlert };
+export type { RailAlert, TickerRow };
 
 export function IntelligenceRail({
   labels,
@@ -29,6 +32,8 @@ export function IntelligenceRail({
   alertCount,
   alertLevels,
   riskLevels,
+  ticker,
+  statusLabels,
 }: {
   labels: {
     title: string;
@@ -36,6 +41,8 @@ export function IntelligenceRail({
     approvalsEmpty: string;
     alertsTitle: string;
     alertsEmpty: string;
+    tickerTitle: string;
+    tickerEmpty: string;
     viewAll: string;
     moneyOut: string;
     oldest: string;
@@ -49,6 +56,8 @@ export function IntelligenceRail({
   alertCount: number;
   alertLevels: Record<string, string>;
   riskLevels: Record<string, string>;
+  ticker: TickerRow[];
+  statusLabels: Record<string, string>;
 }) {
   return (
     <aside className="hidden w-72 shrink-0 flex-col gap-4 overflow-y-auto border-l border-edge-neutral bg-surface-obsidian p-4 xl:flex">
@@ -134,6 +143,14 @@ export function IntelligenceRail({
           alerts={alerts}
           activeCount={alertCount}
           labels={{ empty: labels.alertsEmpty, viewAll: labels.viewAll, levels: alertLevels }}
+        />
+      </Panel>
+
+      <Panel title={labels.tickerTitle}>
+        <LiveTicker
+          rows={ticker}
+          labels={{ empty: labels.tickerEmpty, viewAll: labels.viewAll }}
+          statusLabels={statusLabels}
         />
       </Panel>
     </aside>

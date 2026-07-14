@@ -66,7 +66,11 @@
     "awaiting_approval": "Awaiting approval",
     "done": "Done",
     "failed": "Failed",
-    "returned": "Returned"
+    "returned": "Returned",
+    "succeeded": "Succeeded",
+    "waiting": "Waiting",
+    "cancelled": "Cancelled",
+    "pending": "Pending"
   },
   "approvals": {
     "title": "Approvals",
@@ -447,7 +451,9 @@
       "viewAll": "View all",
       "alertsEmpty": "All clear — no active alerts.",
       "moneyOut": "Money out",
-      "oldest": "Oldest:"
+      "oldest": "Oldest:",
+      "tickerTitle": "Live ticker",
+      "tickerEmpty": "No operations in the last 24 hours."
     },
     "dock": {
       "running": "Running now"
@@ -714,6 +720,62 @@
       "ledgerEmpty": "The cost ledger is empty for this window — every model call writes a row here.",
       "viewBudgets": "Budgets & caps",
       "viewTokens": "Token analytics"
+    },
+    "memory": {
+      "kpiRecords": "Memory records",
+      "kpiTrusted": "Trusted share",
+      "kpiStores": "Stores live",
+      "kpiLastWrite": "Last write",
+      "lastWrite": "Last write",
+      "tierTrusted": "Trusted",
+      "tierQuarantined": "Quarantined",
+      "tierTrustedShort": "trusted",
+      "kinds": {
+        "fact": "Fact",
+        "relation": "Relation",
+        "artifact": "Artifact",
+        "procedure": "Procedure"
+      },
+      "colRef": "Reference",
+      "colKind": "Kind",
+      "colStore": "Store",
+      "colTier": "Trust",
+      "colConfidence": "Confidence",
+      "colScope": "Scope",
+      "colWhen": "When",
+      "detailTitle": "Record",
+      "detailClose": "Close",
+      "detailExpires": "Expires",
+      "detailSuperseded": "Superseded by",
+      "detailProvenance": "Provenance",
+      "detailRun": "Source run",
+      "detailNoRun": "No source run recorded — this record predates the run bridge or was written outside a run.",
+      "mutationsBoundary": "Edit, archive and reclassify actions arrive with the control_memory_* seam (registered Wave-4 addition) — this surface is read-only by design.",
+      "listTitle": "Index records",
+      "searchPlaceholder": "Search reference…",
+      "searchAction": "Search",
+      "empty": "No memory records match this filter.",
+      "showing": "Showing",
+      "of": "of"
+    },
+    "intelligence": {
+      "kpiAlerts": "Active alerts",
+      "kpiApprovals": "Pending approvals",
+      "kpiDecisions24h": "Decisions · 24h",
+      "kpiOvernight": "Overnight events",
+      "briefOvernight": "Overnight work",
+      "briefRecentDone": "Recently completed",
+      "briefEmpty": "No overnight activity recorded.",
+      "briefApprovals": "Approval load",
+      "briefNoApprovals": "Nothing waits on you.",
+      "briefCost": "Cost · last 24h",
+      "briefCostTotal": "Total spend",
+      "alertsTitle": "Priority alerts",
+      "alertsEmpty": "All clear — no active alerts.",
+      "decisionsTitle": "Recent decisions",
+      "decisionsEmpty": "No decisions recorded yet — agent runs write their reasoning here.",
+      "liveTitle": "Operations tail",
+      "liveEmpty": "No operations in the last 24 hours."
     },
     "designAudit": {
       "title": "Design Audit",

@@ -76,6 +76,15 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e111-costs-en-1280.png | /fin/costs | EN | 1280 | PENDING | narrow composition — day cards 2-col at 1280 (RULE #0 catch fixed: 3-col wrapped the date), 3-col only at 2xl |
 | e111-costs-tr-1280.png | /fin/costs | TR | 1280 | PENDING | same, narrow |
 | e111-costs-en-1280-drill.png | /fin/costs?day=... | EN | 1280 | PENDING | drill state: selected day champagne border + ledger panel titled with the day + clear chip (spec §7 day → row-level ledger) |
+| e121a-memory-en-1920.png | /ai/memory | EN | 1920 | PENDING | E12.1-A Memory page — 5 store cards (count/last write/trusted %), 5931 real memory_index records, filterable list (2026-07-14) |
+| e121a-memory-tr-1920.png | /ai/memory | TR | 1920 | PENDING | same |
+| e121a-memory-en-1280.png | /ai/memory | EN | 1280 | PENDING | narrow composition — store cards 2/3-col, list min-w-880 real scroll |
+| e121a-memory-tr-1280.png | /ai/memory | TR | 1280 | PENDING | same, narrow; locale-pinned dates (Tem not Jul — RULE #0 catch fixed across 4 pages) |
+| e121a-memory-en-1280-detail.png | /ai/memory?id=... | EN | 1280 | PENDING | record detail: real provenance (video-learn agent + source URL), honest no-run message, read-only boundary note |
+| e121a-intelligence-en-1280.png | /intelligence | EN | 1280 | PENDING | E12.1-A Intelligence Feed — briefing blocks (v_morning_briefing) + priority alerts + recent decisions (837/24h real) + ops tail |
+| e121a-intelligence-tr-1280.png | /intelligence | TR | 1280 | PENDING | same |
+| e121a-intelligence-en-1920.png | /intelligence | EN | 1920 | PENDING | wide composition; rail shows new Live ticker panel (v_live_ops head, ops:live repaint) |
+| e121a-intelligence-tr-1920.png | /intelligence | TR | 1920 | PENDING | same |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
 
