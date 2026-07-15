@@ -4,6 +4,18 @@
 
 **No visual work is "done" until a Design Verification Pass runs and is evidenced.** Render every touched route in the real browser, BOTH locales (EN+TR), ≥2 widths; walk `references/design-bank/CHECKLIST.md` (overlap, alignment, cut-off, scroll sanity, language purity, honest zero-states, token discipline); compare against the baselines in `references/design-bank/`; run `scripts/i18n-purity-check.sh`. The CEO is NOT the QA layer — catchable visual defects reaching the CEO's eye = governance violation (RET + recorded). Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-DESIGN-VERIFICATION.md`. Applies to every author and every session until project end.
 
+## ⛔ RULE #0-A — MEASURE, NEVER GUESS (CEO directive 2026-07-15, SEVEREST TIER)
+
+**Guessing and hallucination are DEADLY dangerous to this project.** Before stating ANY fact, number, status, completion %, or "where is X" answer — to the CEO or in any artifact — the claim must rest on a measurement taken THIS session. This is not a style preference; a guessed answer that reaches the CEO is a governance violation of the same tier as RULE #0 (RET + recorded).
+
+1. **Measure it.** Read the authoritative file, run the command, count the rows — then cite the source (`file:line` or `command → output`). No claim without a measurement behind it.
+2. **Grep-summaries, memory, prior context, and inference are NOT sources** — they are leads to verify, never answers. A grep hit tells you *where to read*, not *what is true*. (This exact confusion produced the "project is 88% done — JARVIS may be forgotten" error on 2026-07-15; JARVIS was in fact a governed deferral recorded in the U-table. Root cause: answered a status question from grep instead of reading the ledger.)
+3. **For any project-status / completeness / "is X done" / "where is X" question:** read `HOLDING-OS-MASTER-PLAN/00-INDEX.md` (the Registered Adaptations "U-table" — the sole ledger of every deliberate deferral/deviation) AND the relevant `IMPLEMENTATION_ROADMAP.md` rows BEFORE answering. Deferred tracks (e.g. JARVIS = U4) live in the U-table, not in the numbered roadmap rows, so a roadmap-only reading undercounts and misleads.
+4. **If you cannot measure it, say exactly that:** `UNVERIFIED — could not measure because <reason>`. Never fill the gap with a plausible-sounding guess. "Should be / probably / I think" about a checkable fact = violation.
+5. **Prediction ≠ result** (Evidence-Before-Done). State hypotheses as hypotheses ("this should…"); only measured outcomes use past tense ("this does…").
+
+Binds every author (Opus and all successors) every session until project end. Same discipline Fable held: 100% accuracy, zero fabrication (§35 honesty).
+
 ## Project
 
 **DXB Global OS**

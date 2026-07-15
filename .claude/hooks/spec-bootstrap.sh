@@ -30,6 +30,11 @@ RULES (binding on every author):
    same session — the CEO is never the one who orders the fix. Only if the
    item belongs to a FUTURE roadmap row do you record it as a boundary
    instead of jumping ahead.
+6. MEASURE, NEVER GUESS (CEO directive 2026-07-15) — full text in CLAUDE.md
+   RULE #0-A. Pointer: before ANY project-status / completeness / "where is X"
+   answer, READ HOLDING-OS-MASTER-PLAN/00-INDEX.md (Registered Adaptations
+   U-table — deferrals like JARVIS=U4 live there, not in the roadmap rows).
+   Grep/memory are leads, never answers; cannot measure → say UNVERIFIED.
 
 LIVE POSITION (from STATE.md):
 ${last_activity:-"(STATE.md unreadable — read it manually before any work)"}
