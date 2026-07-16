@@ -32,6 +32,15 @@ async function criticalAlert(title: string, cause: string): Promise<void> {
 
 type CheckOutcome = { ok: true } | { ok: false; detail: string };
 
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** tr locale lowering on BOTH sides keeps İ/I matching consistent. */
+function trLower(s: string): string {
+  return s.toLocaleLowerCase("tr");
+}
+
 async function runCheck(policy: HookPolicyRow, ctx: HookCtx): Promise<CheckOutcome> {
   const check = String(policy.rule.check);
   switch (check) {
@@ -107,6 +116,38 @@ async function runCheck(policy: HookPolicyRow, ctx: HookCtx): Promise<CheckOutco
         return { ok: false, detail: `missing_project_link: milestone ${ctx.task.milestoneId} resolves to no project` };
       }
       return { ok: false, detail: "missing_project_link: task has neither project ctx nor milestone" };
+    }
+    case "halal_screen": {
+      // R1.5 (Revenue-First directive, MASTER_PLAN §11): immutable Islamic
+      // boundaries. The task text surface is screened against the flagged
+      // category terms (letter-boundary match, tr-locale lowering); a hit
+      // fail-closes the spawn. Policy edits stay CEO-only (§13 wall), so no
+      // agent can weaken this rule; §27 CEO degrade applies as everywhere.
+      const categories = (policy.rule.categories ?? {}) as Record<string, unknown>;
+      const surface = trLower(
+        [ctx.task.objective, ctx.task.outputContract].filter(Boolean).join("\n"),
+      );
+      if (!surface) return { ok: true };
+      for (const [category, terms] of Object.entries(categories)) {
+        if (!Array.isArray(terms)) continue;
+        for (const raw of terms) {
+          const term = trLower(String(raw)).trim();
+          if (!term) continue;
+          const re = new RegExp(
+            `(^|[^\\p{L}\\p{N}])${escapeRegExp(term)}([^\\p{L}\\p{N}]|$)`,
+            "u",
+          );
+          if (re.test(surface)) {
+            return {
+              ok: false,
+              detail:
+                `halal_screen: flagged category '${category}' (term '${term}') — ` +
+                `Islamic boundaries are immutable (MASTER_PLAN §11); task fail-closed`,
+            };
+          }
+        }
+      }
+      return { ok: true };
     }
     default:
       // Unknown check name in a syntactically valid rule = broken policy (§17).

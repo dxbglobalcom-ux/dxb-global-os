@@ -382,6 +382,65 @@ describe("pre-gate — 17-standard mechanisms (§2/§6)", () => {
   });
 });
 
+describe("R1.5 halal_screen — immutable Islamic boundaries (MASTER_PLAN §11)", () => {
+  it("RED: haram term in objective → REJECT + violation + decision_log (fail-closed)", async () => {
+    const before = await violationsSince(baseViolationId);
+    const verdict = await preTask(
+      goodCtx({ task: { ...goodCtx().task, objective: `${M}: launch an alcohol brand campaign` } }),
+    );
+    expect(verdict.verdict).toBe("REJECT");
+    if (verdict.verdict !== "REJECT") return;
+    expect(verdict.reason).toContain("halal_screen");
+    expect(verdict.reason).toContain("alcohol");
+    const after = await violationsSince(baseViolationId);
+    const mine = after.filter((v) => !before.some((b) => b.id === v.id));
+    expect(mine.some((v) => v.policy_id === "const.halal_screen" && v.action_taken === "rejected")).toBe(true);
+    const dl = await sql<{ n: number }>`
+      SELECT count(*)::int AS n FROM decision_log
+       WHERE id > ${baseDecisionId} AND decided_by = 'hook'
+         AND decision = 'hook_reject' AND rationale LIKE '%const.halal_screen%'
+    `.execute(db());
+    expect(dl.rows[0].n).toBeGreaterThanOrEqual(1);
+  });
+
+  it("RED (TR): Turkish haram term → REJECT (tr-locale lowering)", async () => {
+    const verdict = await preTask(
+      goodCtx({ task: { ...goodCtx().task, objective: `${M}: KUMAR sitesi için reklam metni yaz` } }),
+    );
+    expect(verdict.verdict).toBe("REJECT");
+    if (verdict.verdict !== "REJECT") return;
+    expect(verdict.reason).toContain("gambling");
+  });
+
+  it("PASS: letter-boundary — 'ham veri'/'stok raporu' class words do NOT false-positive", async () => {
+    const verdict = await preTask(
+      goodCtx({
+        task: {
+          ...goodCtx().task,
+          objective: `${M}: ham veri setinden stok raporu çıkar ve pipeline'ı doğrula`,
+        },
+      }),
+    );
+    expect(verdict.verdict).toBe("PASS");
+  });
+
+  it("§27: CEO is never blocked — degrade to warn, violation recorded 'warned'", async () => {
+    const before = await violationsSince(baseViolationId);
+    const verdict = await preTask(
+      goodCtx({
+        actor: "ceo",
+        task: { ...goodCtx().task, objective: `${M}: evaluate a casino sponsorship offer` },
+      }),
+    );
+    expect(verdict.verdict).toBe("PASS");
+    if (verdict.verdict !== "PASS") return;
+    expect(verdict.warnings.some((w) => w.policyId === "const.halal_screen")).toBe(true);
+    const after = await violationsSince(baseViolationId);
+    const mine = after.filter((v) => !before.some((b) => b.id === v.id));
+    expect(mine.some((v) => v.policy_id === "const.halal_screen" && v.action_taken === "warned")).toBe(true);
+  });
+});
+
 describe("runtime rules — monitor, single kill authority (§6)", () => {
   it("std 6 RED+PASS: spawn without rationale / over depth rejects; disciplined spawn passes", async () => {
     const noReason = await checkSpawn(goodCtx({ spawnDepth: 0, spawnRationale: null }));
