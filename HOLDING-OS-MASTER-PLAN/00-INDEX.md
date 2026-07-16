@@ -94,7 +94,7 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 | # | Dosya | Direktif kaynağı | Durum |
 |---|-------|------------------|-------|
 | 32 | REVENUE_ENGINE_SPEC.md | [[00-CEO-DIRECTIVE-REVENUE-FIRST]] (Talep §§2-4, 7; D1-D4) | ✓ 2026-07-17 |
-| 33 | VOICE_INTERACTION_SPEC.md | Talep §5 + D3 (v1 çağrı hattı; boardroom "add-later") | — |
+| 33 | VOICE_INTERACTION_SPEC.md | Talep §5 + D3 (v1 çağrı hattı; boardroom "add-later") | ✓ 2026-07-17 |
 
 **KORPUS 31/31 ✓ (2026-07-10 ~23:00).** Sözleşme Adım 2 yürürlükte: execution ayrı onay İSTEMEZ — sıradaki iş IMPLEMENTATION_ROADMAP E1.1'den başlar (Fable bizzat, 12 Temmuz son geceye kadar; sonra Opus ilk ✓'siz adımdan). Canlı ilerleme işareti artık IMPLEMENTATION_ROADMAP adım tablosundadır.
 
@@ -105,7 +105,7 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 | U1 | Port 3100 → 3000 | Sistem 3000'de canlı; direktifteki 3100 yazım kaynaklı | Bu tablo + sözleşme Adım 0 |
 | U2 | Dalga sırası: 31 dosya 5 dalgada, dalga=atomik commit | 12 Temmuz kesinti riski — kesinti kayıpsız devam için | Sözleşme Adım 1 (CEO onaylı plan) |
 | U3 | Kadro kapsamı G7: `agency-agents/` legacy 153 + Fable'ın olmazsa-olmaz ekleri; persona = canlı çalışan | CEO sözlü ek hükmü 2026-07-10 ~21:35 (spec'lere dışarıdan işlendi, Fable devraldı) | EMPLOYEE_PERSONA_STANDARD G7 + HR §27 + bu tablo |
-| U4 | JARVIS voice (eski Faz 9, 09-03..05) "sistem sonrası" dilimine ertelendi — CEO Faz 1-11 listesinde yer almıyor | BEKLENTİLER pivotu; roadmap re-baseline korpus sonrası (MASTER_PLAN §6 son satır) | MASTER_PLAN §6 + STATE.md + bu tablo |
+| U4 | JARVIS voice (eski Faz 9, 09-03..05) "sistem sonrası" dilimine ertelendi — CEO Faz 1-11 listesinde yer almıyor. **Refined 2026-07-17:** spec artık VAR ([[VOICE_INTERACTION_SPEC]] #33); v1 ücretsiz çağrı hattı = roadmap R3.1; Moderated boardroom D3 gereği "add-later" (spec §3.4, execution satırı YOK) | BEKLENTİLER pivotu; sonra CEO Talep §5 + D1/D3 kararları | MASTER_PLAN §6 + VOICE_INTERACTION_SPEC + bu tablo |
 | U5 | Tip ölçeği utility ADLARI: kontrat "display"→`text-display-lg`, "body"→`text-body-md`; radius utility'leri semantik (`rounded-input/panel/modal`) | Legacy cockpit `@theme` anahtarlarıyla (--text-display, --text-body, --radius-sm/md/lg) çakışma — legacy izolasyonu (DESIGN_SYSTEM §22); px DEĞERLERİ kontrat birebir | tokens.css başlık yorumu + bu tablo |
 | U6 | Görsel yön güncellemesi: IRON MAN / JARVIS HUD hissi (holo-glow serbest, champagne kimlik + obsidian zemin KALIR; §35 neon-çizgi yasağı gevşedi) + login↔shell tema birleşmesi (E2.4-b) | CEO sözlü RET + yeni referans 2026-07-11 ~00:40 ("Iron Man'deki gibi istiyorum, bunu beğenmedim") | phase8-design-brief memory A3 + bu tablo + DESIGN_SYSTEM uygulaması sıradaki design pası |
 | U8 | CC-SPEC §7 rota tablosuna +1 sayfa: Intelligence grubuna `/ai/mcp` (MCP Servers) eklendi; TR/EN dil anahtarı command bar'a kondu (A2 gereği); approvals boş-durumu Command diline geçti ("Back to cockpit" kalıntısı öldü) | CEO göz-testi emirleri 2026-07-11 ~02:55 ("MCP'ler nerede?", "TR/EN dil butonu nerede?", "rengi eskiden kalma") | Bu tablo + commit + canlı UI |

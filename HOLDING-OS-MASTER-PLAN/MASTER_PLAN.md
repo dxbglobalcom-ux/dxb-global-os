@@ -153,3 +153,18 @@ Her workstream = spec seti + execution paketi. Bağımlılık oku: üsttekiler a
 - Dalga-başı atomik commit'ler git log'da
 - STATE.md korpus kapanışı + CEO raporu (✓/⚠ tablo) verilmiş
 - Execution'a geçiş: ayrı onay İSTENMEZ — sözleşme Adım 2 bu onayı içerir
+
+## 11. REVENUE-FIRST FOUNDING PURPOSE (CEO directive 2026-07-16/17 — normative)
+
+Added 2026-07-17 per [[00-CEO-DIRECTIVE-REVENUE-FIRST]] (Talep `MUSTS from Fable 5 - English.md` + decision round D1–D9). Measured baseline before this section: `grep -c "net profit|net kâr"` on this file = 0 — the founding purpose was absent from the constitution; this section closes that gap (roadmap R1.7).
+
+**The Holding's reason to exist is to conduct real economic activity and generate sustainable, halal net profit** — continuously discover revenue opportunities, convert them into projects, operate them through digital employees, sell, measure, scale winners, stop losers, 24/7, with minimal human intervention. Everything in §1–§10 (the OS, the cockpit, the corpus) is the MEANS; net profit within Islamic boundaries is the END.
+
+Governing formula (Talep §2, verbatim ruling): **the objective is fixed, the Islamic boundaries are fixed, the solution/portfolio/execution are the Holding's responsibility.**
+
+Binding consequences:
+1. **Immutable Islamic boundaries:** no haram products/services (alcohol, tobacco, pork, incompatible finance, fraud, indecent content); crypto/stock-market trading excluded from opportunity scanning (CEO exclusion). Revenue targets can NEVER weaken these boundaries; no agent may debate, reinterpret, or optimize around them. Machine enforcement: [[REVENUE_ENGINE_SPEC]] `halal_verdict` gate + hook policy (roadmap R1.5).
+2. **Objective Contract:** economic targets are first-class records (`objectives`), realized net = `revenue_ledger − cost_ledger`, never projections. First binding objective: **€50 net profit** after full system test (CEO D2), scaling upward afterwards.
+3. **Free-first growth (D1):** capabilities are built with zero/minimal-cost means first; paid upgrades activate only from realized profit and pass the money-out approval gate.
+4. **Product-level check:** [[HOLDING_OS_PRODUCT_SPEC]] P0 carries this purpose into every feature audit; [[VOICE_INTERACTION_SPEC]] and all later specs inherit it.
+5. **Precedence:** this section ranks as CEO-directive content — above module specs; conflicts resolve per corpus rule (CEO directive > MASTER_PLAN > module spec).

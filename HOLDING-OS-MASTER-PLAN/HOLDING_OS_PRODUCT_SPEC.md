@@ -43,6 +43,7 @@ Kural: her alan için "gör + incele + DEĞİŞTİR + kontrol et" dört fiili sa
 
 ## 5. Ürün ilkeleri (bağlayıcı, tüm spec'lerin üstünde)
 
+- P0. **Revenue-First founding purpose (CEO directive 2026-07-16/17, [[00-CEO-DIRECTIVE-REVENUE-FIRST]]):** the Holding exists to conduct real economic activity and generate sustainable, **halal net profit** — discover opportunities, run them through digital employees, sell, measure, scale winners, stop losers, 24/7. The dashboard is the control surface, not the purpose. The objective is fixed; the Islamic boundaries are fixed and may never be debated, reinterpreted, or optimized around by any agent; the solution and portfolio are the Holding's responsibility. Normative machinery: [[REVENUE_ENGINE_SPEC]] (spec #32). P0 outranks P1–P7; every feature is additionally audited against "does this serve halal net profit generation?".
 - P1. **Anti-baby-sitting:** CEO niyeti bir kez söyler; sistem uçtan uca yürütür; onay yalnız dışa-dönük eşiklerde (para/sözleşme/kimlik).
 - P2. **Özet varsa detayı vardır:** hedefsiz özet render EDİLMEZ (Infinite Drill-Down — CEO_COMMAND_CENTER normatif haritası).
 - P3. **Şema-önce:** DB'de karşılığı olmayan hiçbir veri ekranda yoktur; sahte metrik/dummy widget yasak (§35).
