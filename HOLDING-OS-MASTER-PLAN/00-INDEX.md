@@ -29,6 +29,7 @@ Durum değerleri: `—` başlanmadı · `YAZILIYOR` · `✓` tamam (derinlik şa
 | i3 | 00-CEO-DIRECTIVE-MUST-ROSTER.md | ✓ | 2026-07-12: external solo audit + CEO order — MUST discovery binding |
 | i4 | WORKFORCE-MUST-EXPANSION-PLAN.md | ✓ | E5.7: 12-col revenue-engine matrix, +19 MUST roster → 198, commerce dept — **EXECUTED 2026-07-12, sync 199, engines 4/4 owned** |
 | i5 | DEPUTY-FAILOVER-MAP.md | ✓ | E5.7e (audit F3): SPOF set + dept heads + D7-wave deputies; takeover protocol; E12.5 gate artifact |
+| i6 | 00-CEO-DIRECTIVE-REVENUE-FIRST.md | ✓ | 2026-07-17: Talep (MUSTS) + CEO kararları D1-D9 + dış denetim (Codex F-01..15) adaptasyonu — Dalga 6 + R-serisi kaynağı |
 
 ### Dalga 1 — Temel
 
@@ -88,6 +89,13 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 | 30 | RISK_REGISTER.md | §15 | ✓ |
 | 31 | RECOVERY_AND_ROLLBACK_PLAN.md | §15 + §16 | ✓ |
 
+### Dalga 6 — Revenue-First genişlemesi (CEO Talep 2026-07-16/17)
+
+| # | Dosya | Direktif kaynağı | Durum |
+|---|-------|------------------|-------|
+| 32 | REVENUE_ENGINE_SPEC.md | [[00-CEO-DIRECTIVE-REVENUE-FIRST]] (Talep §§2-4, 7; D1-D4) | ✓ 2026-07-17 |
+| 33 | VOICE_INTERACTION_SPEC.md | Talep §5 + D3 (v1 çağrı hattı; boardroom "add-later") | — |
+
 **KORPUS 31/31 ✓ (2026-07-10 ~23:00).** Sözleşme Adım 2 yürürlükte: execution ayrı onay İSTEMEZ — sıradaki iş IMPLEMENTATION_ROADMAP E1.1'den başlar (Fable bizzat, 12 Temmuz son geceye kadar; sonra Opus ilk ✓'siz adımdan). Canlı ilerleme işareti artık IMPLEMENTATION_ROADMAP adım tablosundadır.
 
 ## Kayıtlı uyarlamalar (sessiz sapma yasak — master-plan-fidelity)
@@ -101,6 +109,8 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 | U5 | Tip ölçeği utility ADLARI: kontrat "display"→`text-display-lg`, "body"→`text-body-md`; radius utility'leri semantik (`rounded-input/panel/modal`) | Legacy cockpit `@theme` anahtarlarıyla (--text-display, --text-body, --radius-sm/md/lg) çakışma — legacy izolasyonu (DESIGN_SYSTEM §22); px DEĞERLERİ kontrat birebir | tokens.css başlık yorumu + bu tablo |
 | U6 | Görsel yön güncellemesi: IRON MAN / JARVIS HUD hissi (holo-glow serbest, champagne kimlik + obsidian zemin KALIR; §35 neon-çizgi yasağı gevşedi) + login↔shell tema birleşmesi (E2.4-b) | CEO sözlü RET + yeni referans 2026-07-11 ~00:40 ("Iron Man'deki gibi istiyorum, bunu beğenmedim") | phase8-design-brief memory A3 + bu tablo + DESIGN_SYSTEM uygulaması sıradaki design pası |
 | U8 | CC-SPEC §7 rota tablosuna +1 sayfa: Intelligence grubuna `/ai/mcp` (MCP Servers) eklendi; TR/EN dil anahtarı command bar'a kondu (A2 gereği); approvals boş-durumu Command diline geçti ("Back to cockpit" kalıntısı öldü) | CEO göz-testi emirleri 2026-07-11 ~02:55 ("MCP'ler nerede?", "TR/EN dil butonu nerede?", "rengi eskiden kalma") | Bu tablo + commit + canlı UI |
+| U9 | Revenue-First dalgası (D1-D9): free-first büyüme, ilk hedef €50, voice v1 = orkestratör çağrı hattı (boardroom ertelendi), İslami ton persona direktifi, fable-method DNA onayı, Claude ekosistem + masaüstü-25 library taraması | CEO Talep 2026-07-16 + karar turu 2026-07-17 | [[00-CEO-DIRECTIVE-REVENUE-FIRST]] + bu tablo + R-serisi roadmap |
+| U10 | `revenue_ledger.engine` donmuş CHECK enum → `revenue_engines` tablosuna FK (motor=veri; yeni motor migration istemez) | Talep §7.2 "engines are a floor, not a ceiling"; keşif mimarisi şartı | REVENUE_ENGINE_SPEC §0/§11 + migration 0028a |
 | U7 | Dashboard Kurtarma D-bloku E4'ün ÖNÜNE alındı; R-kapısı süreci eklendi (22 referanslık pano → CEO seçimi) ve CEO **reçete C — DXB Hibrit**'i seçti (B-malzemesi: şampanya+obsidyen lüks zemin; A-derinliği: JARVIS holo-glow yalnız canlı veri/seçimde; mobil R12/R14 + voice R21 hedef yüzeyler). Bağlantı kontratı: ikon/veri/drill eşlemesi `command-nav.ts`+`module-live.ts` tek kaynak | CEO canlı emri 2026-07-11 ~01:00 ("önce internetten örnek sunun" + "her şey bağlantılı olacak" + 01:56 "c-hibrit seçeneği aynen uygula") | `references/design-direction/` (pano + seçim) + bu tablo + STATE.md + commit'ler 25ae9f6, 3ac7444 |
 
 ## Doğrulama komutları (dalga kapanışında koşulur)

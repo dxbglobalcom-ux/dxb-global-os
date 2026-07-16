@@ -159,6 +159,29 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 | E13.1 | Tam test koşusu (L1-L6) + §38 makine-denetlenebilir maddeler | TEST_STRATEGY §24 komut seti yeşil | F/O | — |
 | E13.2 | CEO göz testi oturumu (§37 10 ekran + §38 görsel maddeler) — giriş bilgileri ÖNCEDEN verilir | ⚠ CEO onayı (hiçbir modele devredilemez) | İNSAN | — |
 
+### R — Revenue-First + Execution Activation (CEO Talep 2026-07-16/17 — [[00-CEO-DIRECTIVE-REVENUE-FIRST]], [[REVENUE_ENGINE_SPEC]], dış denetim F-01..15)
+
+> Sıra hükmü: açık E12.2–E13.2 satırları plandaki yerinde kalır. R1 spec/anayasa satırları paralel yürür (yazım işi, rails'e dokunmaz); R2 execution-activation bloku gerçek gelir operasyonunun ÖN ŞARTIDIR ve E13 kapanışından bağımsız başlayabilir. Kaynak kararlar: D1-D9 direktifte.
+
+| # | İş | Kanıt | Model | Durum |
+|---|----|-------|-------|-------|
+| R1.1 | REVENUE_ENGINE_SPEC yazımı (27-başlık + KALIR/YENİ/DEĞİŞİR + adım-başı verify) | spec dosyası INDEX Dalga 6'da ✓ | **F** | ✓ 2026-07-17 (Fable in person; kaynak: Talep + D1-D4 + ölçülmüş boşluklar) |
+| R1.2 | `revenue_core` migrations 0028a-c (engines-as-data FK swap dahil, U10) + `control_revenue_*` fn ailesi + testler | SPEC §24.1-2 komutları: `\dt` 4 tablo + FK kanıtı + illegal-transition red testi | F/O | — |
+| R1.3 | Günlük döngü job'ları (`revenue.scan/score/brief/rollup`) + 12-boyut skorlama + settings seed | `SELECT name FROM pgboss.schedule WHERE name LIKE 'revenue%'` → 4 | F/O | — |
+| R1.4 | Dashboard: `/revenue` hedef kartı + objectives/opportunities/portfolio rotaları | SPEC §21.1 + RULE #0 kanıt seti | F/O | — |
+| R1.5 | İslami sınır kodlaması: halal screen (SPEC §16) + [[FABLE_5_HOOK_SPEC]] pre-task policy ek + APPROVAL bağlantısı — ölçülen boşluk: korpus+kod grep = 0 hit (2026-07-16) | hook red testi: flagged task fail-closed + decision_log | F/O | — |
+| R1.6 | VOICE_INTERACTION_SPEC yazımı: v1 orkestratör çağrı hattı (D3, free-first D1: Speaches+voicebox) + boardroom mimarisi "add-later" bölümü + OpenAI **mini** gelecek yolu | spec dosyası + INDEX ✓ | **F** | — |
+| R1.7 | Anayasa değişiklikleri: [[HOLDING_OS_PRODUCT_SPEC]] P0 (helal net kâr amacı) + [[MASTER_PLAN]] Revenue-First bölümü | `grep -c "net profit\|net kâr" MASTER_PLAN.md HOLDING_OS_PRODUCT_SPEC.md` > 0 (taban: 0) | **F** | — |
+| R1.8 | Persona anayasası: [[EMPLOYEE_PERSONA_STANDARD]] Discipline DNA (fable-method uyarlaması, D6) + İslami ton bölümü (D5) + `fn_persona_gate` bölüm-yoksa-FAIL şartı + 199 dosyaya uygulama + sync | gate negatif testi + `sync --verify` PASS + örnek persona diff | **F (K2: tümü Fable)** | — |
+| R2.1 | **Resident worker loop (denetim F-01):** production topolojide `tasks` kuyruğunu sürekli tüketen süreç + restart sürekliliği | denetim §4/F-01 7-adım kanıt zinciri (manuel çağrısız intent→run→terminal) | F/O | — |
+| R2.2 | **Worker gerçek araç yüzeyi (F-02+F-04):** grant→gateway profil→SDK tools bağlanır; `tools: []` ölür | gerçek tool_calls satırı (default executor) + revoke→red kanıtı (denetim F-04 7-adım) | F/O | — |
+| R2.3 | **Workflow executor birleşmesi (F-03/F-05):** aynı hook/gateway/observability anayasası; spec'teki `orchestrator/runner` kararı netleşir (uygula VEYA kayıtlı iptal) | workflow gerçek tool step + tek anayasa testi; runner kararı U-tablosunda | F/O | — |
+| R2.4 | **İlk sandbox outbox handler (F-06):** bir staging provider uçtan uca (onay→tek koşum→idempotent tekrar→audit ref) — para/gerçek müşteri YOK | denetim F-06 7-adım staging kanıtı | F/O | — |
+| R2.5 | **Fresh-bootstrap parity (F-08; E13.0'a ek şart):** boş DB tek komut zinciriyle kurulur; repo 73 ↔ canlı ledger 14 uyumsuzluğu kapanır | boş DB kurulum raporu + şema/fn/RLS envanter diff = 0 | F/O | — |
+| R3.1 | **Voice v1 free hattı (D1+D3):** Speaches STT → kernel intent → orkestratör → voicebox klon TTS (Hamza sesi); müdüre soru = orkestratör aracılığıyla | uçtan uca sesli soru→sesli cevap kanıtı, maliyet €0 | F/O | — |
+| R4.1 | **Library araştırma pası (D7+D8):** masaüstü-25 listesi + Claude ekosistem taraması → study-card + STUDY→INSTALL yaşam döngüsü (Scrapling/Camoufox/deerflow öncelikli) | kart envanteri + intake raporu; kurulumsuz-blind = 0 | F/O | — |
+| R5.1 | **Kelam M0-M1 (D9, OD-1 slot):** repo bootstrap + headless çekirdek döngü (`docs/kelam/ARCHITECTURE.md` uygulanır) | kelam CI yeşil + CLI record→Speaches→cleanup→clipboard TR/EN/DE | F/O | — |
+
 ## 5. Devralma noktaları (Opus protokolü — [[BACKUP_PLAN]] §13 tamamlayıcısı)
 
 - **Kural:** Opus, tablodaki ilk `—` adımdan başlar; yarım adım varsa önce kanıt komutunu koşar — geçiyorsa ✓ işler, geçmiyorsa adımı baştan alır.
