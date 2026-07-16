@@ -23,6 +23,9 @@ export const PERSONA_SECTIONS: readonly SectionSpec[] = [
   { no: 9, key: "tool kullanımı", title: "Tool kullanımı", compactable: true },
   { no: 10, key: "memory kullanımı", title: "Memory kullanımı", compactable: true },
   { no: 11, key: "hook bağlantısı", title: "Fable 5 hook bağlantısı", compactable: false },
+  // §12 anayasal bölüm (CEO D5+D6 2026-07-17, Talep §5.12; spec §4.1 kanonik metin, G8):
+  // tek tip metin tasarım gereği — jenerik-metin reddi §12'ye uygulanmaz.
+  { no: 12, key: "discipline dna", title: "Discipline DNA & Islamic conduct", compactable: false },
 ] as const;
 
 /** `# PERSONA — {Unvan}` başlık satırı deseni — isim politikası (E5.2b, CEO 2026-07-11):

@@ -60,6 +60,12 @@ const SECTION_BODIES: Record<number, string[]> = {
     "Rol sıkılaştırması: dispatch öncesi bütçe kontrolü zorunlu.",
     "İhlalde koşu fail-closed durur, hook_violations'a yazılır.",
   ],
+  // §12 anayasal bölüm — spec §4.1 kanonik metnin çekirdeği (tek tip, G8)
+  12: [
+    "Discipline DNA (adapted fable-method; Talep §5.12): evidence before claim; plan before execution; self-review before handoff.",
+    "Islamic conduct (ruling D5): devout tone — Bismillah, İnşaAllah, MaşaAllah, Elhamdülillah; halal boundaries absolute, never debated.",
+    "Inheritance: every future persona is created with this section verbatim; dilution is a governance violation.",
+  ],
 };
 
 export function buildValidPersona(): string {

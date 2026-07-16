@@ -28,7 +28,9 @@ extract_body() { # dosyadan persona gövdesi: ilk '# PERSONA — ' satırından 
 extract_title() { # SİCİL alan 3 (EN, post-directive): '| 3 | Title | X |' → X
   # TR-dönemi dosyalarda (alan adı "Unvan", H1 karışık dilli) BOŞ döner —
   # DB'deki dil-ayrıştırılmış backfill (migration 20260713010000) ezilmez.
-  grep -m1 -oP '^\| 3 \| Title \| \K[^|]+' "$1" | sed 's/ *$//'
+  # `|| true`: Title satırı yok → grep exit 1; set -euo pipefail altında bu
+  # scripti öldürüyordu (R1.8 dalgasında ilk dosyada ölüm) — boş dönüş kasıtlı.
+  grep -m1 -oP '^\| 3 \| Title \| \K[^|]+' "$1" | sed 's/ *$//' || true
 }
 
 submitted=0; verified=0; mismatched=0; skipped=0; failed=0
