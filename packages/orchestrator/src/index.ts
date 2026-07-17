@@ -12,6 +12,9 @@ export { runWorkerOnce, makeSteppedExecutor } from "./worker-shim.js";
 // R2.1 — resident worker loop (audit F-01): the tasks-queue production consumer.
 export { drainTasks, RESIDENT_WORKER_ID } from "./worker-loop.js";
 export type { DrainTasksDeps, DrainTasksResult } from "./worker-loop.js";
+// R2.2 — worker real tool surface (audit F-02/F-04): profile → SDK bridge.
+export { buildSdkToolOptions, resolveEvidenceToolCalls } from "./worker-shim.js";
+export type { SdkToolOptions } from "./worker-shim.js";
 export { startOpsLiveCollector } from "./ops-live-collector.js";
 export type { OpsLiveCollector } from "./ops-live-collector.js";
 export type { StepOutcome, TaskStep, SteppedExecutorArgs } from "./worker-shim.js";

@@ -30,7 +30,13 @@ export function createDxbMcpServer(): McpServer {
 }
 
 // stdio entrypoint: `node packages/dxb-mcp/dist/index.js`
-if (import.meta.url === `file://${process.argv[1]}`) {
+// R2.2 measured fix: the naive `"file://" + argv[1]` comparison NEVER matches
+// when the repo path contains a space (import.meta.url is %20-encoded, the
+// concatenation is not) — the server process started but never connected, so
+// every SDK MCP handshake timed out (mcp_servers status 'failed', 0 tools).
+// pathToFileURL performs the same encoding import.meta.url uses.
+import { pathToFileURL } from "node:url";
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const server = createDxbMcpServer();
   await server.connect(new StdioServerTransport());
 }

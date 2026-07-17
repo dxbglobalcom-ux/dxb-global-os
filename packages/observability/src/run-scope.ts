@@ -132,6 +132,14 @@ export class RunScope {
     return this.hookResult;
   }
 
+  /** R2.2 — drain the pending buffer NOW and wait for it. The evidence
+   *  resolver (worker-shim) needs the run's tool_calls rows queryable before
+   *  the post-gate checks std 15 (tool_call_proof). Same never-throws
+   *  contract as flush(); a spill still resolves. */
+  settle(): Promise<void> {
+    return this.flush();
+  }
+
   private enqueue(row: SpillRow): void {
     this.queue.push(row);
     if (this.queue.length >= FLUSH_MAX_ROWS) {

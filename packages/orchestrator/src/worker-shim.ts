@@ -18,6 +18,12 @@ import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall } from "@dxb/shared";
 import { currentRunScope, logDecision, runScope } from "@dxb/observability";
+import {
+  mcpToolName,
+  readDxbMcpInventory,
+  resolveRuntimeProfile,
+  type RuntimeToolSurface,
+} from "@dxb/gateway";
 import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
 import {
   checkConfidence,
@@ -90,7 +96,60 @@ export type RunWorkerResult =
   | { claimed: true; taskId: string; status: "review"; confidence: number }
   | { claimed: true; taskId: string; status: "failed"; error: string };
 
-const WorkerJson = z.object({ result: z.string(), confidence: z.number().min(0).max(1) });
+// R2.2 — the worker self-declares its evidence package (FABLE_5_HOOK A10:
+// executor-declared keys, the binding never fabricates). `tool` names the MCP
+// tool whose REAL tool_calls row anchors a verification item; the binding
+// resolves it to a row id after the observability buffer settles (std 15
+// tool_call_proof). acceptance_map answers the output contract (std 4/2/16).
+const WorkerEvidence = z.object({
+  kind: z.string().min(1), // 'verification' | 'command' | 'file' | free-form
+  tool: z.string().min(1).optional(), // MCP tool name used (e.g. mcp__dxb-mcp__queue_get)
+  note: z.string().min(1),
+});
+const WorkerJson = z.object({
+  result: z.string(),
+  confidence: z.number().min(0).max(1),
+  evidence: z.array(WorkerEvidence).default([]),
+  acceptance_map: z.record(z.string(), z.string()).default({}),
+});
+
+// R2.2 — tool surface cache (audit F-02/F-04): the dxb-mcp inventory is one
+// in-memory server boot; cache it per process. Profile files are re-read per
+// run (the 30s library recompile chain may swap them between runs — F-04
+// step 7: a revoked grant must not survive in a stale cache).
+let inventoryToolNames: string[] | null = null;
+
+async function dxbInventoryNames(): Promise<string[]> {
+  if (!inventoryToolNames) {
+    const inv = await readDxbMcpInventory();
+    inventoryToolNames = inv.map((e) => mcpToolName(e.server, e.tool));
+  }
+  return inventoryToolNames;
+}
+
+export interface SdkToolOptions {
+  mcpServers: RuntimeToolSurface["mcpServers"];
+  allowedTools: string[];
+  disallowedTools: string[];
+  strictMcpConfig: true;
+}
+
+/** Pure assembly: compiled surface + full inventory → SDK session options.
+ *  Allowed = the profile's grant set; disallowed = every OTHER inventory tool
+ *  (stripped from context — F-04 'görünmez'); strictMcpConfig pins the session
+ *  to exactly the mounted servers (no repo .mcp.json bleed). */
+export function buildSdkToolOptions(
+  surface: RuntimeToolSurface,
+  inventory: string[],
+): SdkToolOptions {
+  const allowed = new Set(surface.allowedTools);
+  return {
+    mcpServers: surface.mcpServers,
+    allowedTools: [...allowed].sort(),
+    disallowedTools: inventory.filter((t) => !allowed.has(t)).sort(),
+    strictMcpConfig: true,
+  };
+}
 
 // Default executor: the model is a routing_rules lookup by the task's tier —
 // the highest-priority enabled row for that tier wins (ORCH-02 at execution
@@ -102,11 +161,42 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
     throw new Error(`worker-shim: no enabled routing_rules row for tier '${task.model_tier}'`);
   }
 
+  // R2.2 — tool surface (audit F-02/F-04): resolve the employee's compiled
+  // gateway profile and mount it on the SDK session. tools:[] is DEAD on the
+  // staffed path; an unstaffed task (no agent) or an empty profile runs
+  // tool-less by default-deny, never by silent design.
+  let toolOpts: SdkToolOptions | null = null;
+  if (task.agent_id) {
+    const emp = await sql<{ slug: string; department: string }>`
+      SELECT slug, department FROM agents WHERE id = ${task.agent_id}::uuid
+    `.execute(getDb());
+    if (emp.rows[0]) {
+      const surface = resolveRuntimeProfile(emp.rows[0]);
+      if (surface.allowedTools.length > 0) {
+        toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
+      }
+    }
+  }
+
   const hooked = task as HookedClaimedTask;
   const prompt = [
     "You are a DXB Global OS worker agent. Complete the task below and answer",
-    'as strict JSON only: {"result": "<deliverable text>", "confidence": <0..1>}.',
+    "as strict JSON only:",
+    '{"result": "<deliverable text>", "confidence": <0..1>,',
+    ' "evidence": [{"kind": "verification", "tool": "<mcp tool you called>", "note": "<what you checked>"}],',
+    ' "acceptance_map": {"<each requirement of the output contract>": "<how the deliverable meets it, specific>"}}',
     "confidence is your honest self-assessment that the deliverable meets the contract.",
+    ...(toolOpts
+      ? [
+          "",
+          "You have real MCP tools. VERIFY your work with at least one relevant tool",
+          "call before answering (e.g. read back the record you touched), and list",
+          "that call in evidence with kind 'verification' and the exact tool name.",
+          "Never claim evidence for a tool you did not call.",
+          `Your own task row id is ${task.id} (department ${task.department}) —`,
+          "reading it back (e.g. queue_get) is a valid minimal verification.",
+        ]
+      : []),
     "",
     `Objective: ${task.objective}`,
     `Output contract: ${task.output_contract}`,
@@ -132,8 +222,20 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
       options: {
         model: SDK_MODEL_IDS[rule.model] ?? rule.model,
         effort: rule.effort as "low" | "medium" | "high" | "max",
+        // R2.2: built-ins stay OFF (least privilege); the MCP surface is the
+        // compiled gateway profile — allowed set mounted, everything else in
+        // the inventory stripped from context, session pinned to these
+        // servers only. Tool-less tasks keep the old empty surface.
         tools: [],
-        maxTurns: 4,
+        ...(toolOpts
+          ? {
+              mcpServers: toolOpts.mcpServers,
+              allowedTools: toolOpts.allowedTools,
+              disallowedTools: toolOpts.disallowedTools,
+              strictMcpConfig: toolOpts.strictMcpConfig,
+              maxTurns: 12, // verification tool loops need turns
+            }
+          : { maxTurns: 4 }),
         outputFormat: { type: "json_schema", schema: z.toJSONSchema(WorkerJson) },
       },
     });
@@ -188,10 +290,53 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
 
   if (typeof raw === "string") {
     const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/);
-    raw = JSON.parse((fenced ? fenced[1] : raw).trim());
+    try {
+      raw = JSON.parse((fenced ? fenced[1] : raw).trim());
+    } catch {
+      // R2.2: a tool-using session may close with prose instead of the JSON
+      // envelope (structured_output absent). That is a QUALITY failure, not a
+      // fatal one — surface it as an evidence-less package so the post-gate
+      // REVISEs with feedback instead of the run dying before any gate.
+      raw = { result: String(raw), confidence: 0.3, evidence: [], acceptance_map: {} };
+    }
   }
   const parsed = WorkerJson.parse(raw);
-  return { result: { text: parsed.result }, confidence: parsed.confidence };
+  // Evidence keys ride result verbatim (A10 executor-declared carrier);
+  // resolveEvidenceToolCalls anchors verification items to real tool_calls
+  // rows after the observability buffer settles.
+  return {
+    result: {
+      text: parsed.result,
+      evidence: parsed.evidence,
+      acceptance_map: parsed.acceptance_map,
+    },
+    confidence: parsed.confidence,
+  };
+}
+
+/** R2.2 — anchor executor-declared verification evidence to the run's REAL
+ *  tool_calls rows (std 15 tool_call_proof). Resolution only: an item whose
+ *  named tool has no recorded call stays unanchored and the post-gate rejects
+ *  it — the binding never invents a reference (A10). */
+export async function resolveEvidenceToolCalls(
+  result: unknown,
+  runId: string,
+): Promise<void> {
+  if (!result || typeof result !== "object") return;
+  const evidence = (result as { evidence?: unknown }).evidence;
+  if (!Array.isArray(evidence) || evidence.length === 0) return;
+  const db = getDb();
+  for (const item of evidence) {
+    if (!item || typeof item !== "object") continue;
+    const e = item as { kind?: string; tool?: string; toolCallId?: string | null };
+    if (e.kind !== "verification" || e.toolCallId || !e.tool) continue;
+    const row = await sql<{ id: string }>`
+      SELECT id FROM tool_calls
+      WHERE run_id = ${runId}::uuid AND tool = ${e.tool}
+      ORDER BY id DESC LIMIT 1
+    `.execute(db);
+    if (row.rows[0]) e.toolCallId = row.rows[0].id;
+  }
 }
 
 // -- stepped execution + context budget (MEM-04, 06-07) ------------------------
@@ -455,6 +600,12 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
         let rounds = 0;
         for (;;) {
           const attempt = await execute(execTask);
+
+          // R2.2: settle the observability buffer, then anchor declared
+          // verification evidence to the run's real tool_calls rows BEFORE
+          // the post-gate reads the package (std 15 tool_call_proof).
+          await scope.settle();
+          await resolveEvidenceToolCalls(attempt.result, scope.runId);
 
           if (!monitors.tokenBudgetExceeded) {
             const u = scope.snapshotUsage();
