@@ -1,6 +1,6 @@
 ---
 name: phase8-design-brief
-description: "CEO Faz 8 design vizyonu (2026-07-10 00:01): Burj Al Arab 7-yıldız lüks/elegans, 3 boyutlu, efsane modern + A1 kararları (02:35): WebGL yasağı KALKTI, 34\" ultrawide+çoklu ekran+TV modu, hedef donanım RTX 4090 Linux laptop, göz testi 'referans görselden güzel'"
+description: "CEO Faz 8 design vizyonu + A4 KANUN (2026-07-11, kodifiye 2026-07-14): ANA tasarım kaynağı Iron Man/JARVIS evreni, Burj Al Arab YALNIZ kalite çıtası (DESIGN_SYSTEM'de kayıtlı direktif); A1: WebGL serbest, 34\" ultrawide+TV modu, RTX 4090 hedef, göz testi 'referans görselden güzel'"
 metadata: 
   node_type: memory
   type: project
@@ -36,3 +36,23 @@ metadata:
 # Amendment A2 — UI dili (CEO canlı emri, 2026-07-10 02:40)
 
 **UI içerik dili iki dilli: İngilizce BİRİNCİL, Türkçe tam eş kapsamlı ikincil.** `DEFAULT_LOCALE = "en"`, root `lang="en"`; tek dilde eksik anahtar = fail; hard-coded string yasağı sürer; locale switch UI 08-07'de. Master-plan "i18n tr/en" LOCKED kararıyla çelişmez (iki dilli desteği şart koşar, birincil dili değil).
+
+## A3 — IRON MAN / JARVIS HUD pivotu (CEO sözlü, 2026-07-11 ~00:40)
+
+CEO: "Iron Man'deki gibi dashboard istiyorum, bunu beğenmedim" — sakin-lüks yorum RET.
+**Yeni yön:** JARVIS-sınıfı holografik komuta HUD hissi — boyutlu/ışıklı paneller, ambient derinlik, canlı veri parıltısı; kimlik rengi champagne-gold KALIR (cyan holo değil), zemin obsidian. §35 "neon/cyberpunk çizgi yasağı" bu emirle GEVŞEDİ: kontrollü holo-glow serbest, çamur-kahve yasağı sürer.
+**Ayrıca:** login↔shell tema birleşmesi yapıldı (E2.4-b, legacy değişken remap); approvals köprü sayfası tema uyumsuzluğu E9.3'te kapandı (command-shell Approval Center, commit e4b496b).
+
+## A4 — Tasarım kaynağı hiyerarşisi KANUNU (CEO 2026-07-11; kodifiye 2026-07-14)
+
+CEO hükmü: "sadece burj arab değil! tasarım iron man..." — öncelik sıralaması netleşti ve DESIGN_SYSTEM.md'ye **Registered directive — design source hierarchy** bölümü olarak işlendi (bağlayıcı metin ORADA yaşar; bu memory işaretçidir).
+
+1. **ANA tasarım evreni: Iron Man / JARVIS.** Dashboard = Iron Man kokpiti/HUD; JARVIS metafor değil mimari (Phase 09 jarvis-voice-layer, Command Center, Intelligence Rail). HUD dili (derinlik, cam paneller, ince çizgi ışıması, canlı telemetri hissi) jenerik lüks admin DEĞİL Iron Man kokpiti okunur.
+2. **Burj Al Arab = YALNIZ kalite/işçilik çıtası** ("referans görselden güzel" göz testi barı) — konsept omurga değil; çelişkide Iron Man kimliği kazanır, Burj cilası onun üstüne gelir.
+3. **C-Hibrit palet kalır:** champagne/gold = Mark zırhı altın-titanyum sıcak metal (kırmızıya kaymaz); para-çıkışı altın çift kenar + kilit = zırh plakası okuması kanon.
+4. **B3/B4 token disiplinleri değişmez** (ışık=hiyerarşi; parlak sarı/turuncu/KAHVERENGİ yasak — kahve glow RET dersi). Direktif konsept kaynağını değiştirir, token kurallarını değil.
+
+**Why:** yazılmazsa her design pass "sakin lüks"e geri kayar (A3'te bir kez RET yendi); sessiz kayıp = [[master-plan-fidelity]] ihlali.
+**How to apply:** her görsel işte DESIGN_SYSTEM header + hierarchy bölümü birlikte okunur; RULE #0 baseline karşılaştırmaları bu hiyerarşiden yapılır. [[design-direction-c-hybrid]] [[design-verification-rule0]]
+
+**AÇIK KALEM (CEO 2026-07-14):** onay sayfasındaki "kahve rengi" görünen öğeler eski projeden kalma olabilir — token denetimi CEO emriyle ERTELENDİ ("designa şimdilik dokunma"); ilk design pass'te globals.css champagne değerleri + düşük-alfa gold-üstü-siyah (çamur-kahve tuzağı, globals.css:196 uyarısı) denetlenecek.

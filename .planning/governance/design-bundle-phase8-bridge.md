@@ -1,8 +1,10 @@
 ---
 name: design-bundle-phase8-bridge
 description: "Phase 8 GİRİŞ ŞARTI (CEO B3): design bundle (impeccable + taste + open-design + Google Stitch) + playwright re-enable + study — dashboard tasarımından ÖNCE; bu kapanmadan design işi başlayamaz"
-metadata:
+metadata: 
+  node_type: memory
   type: project
+  originSessionId: 4406d46b-36dc-4e1a-8c61-3552c0612f30
 ---
 
 **Phase 8 giriş şartı (CEO Direktifi B3, 2026-07-09, bağlayıcı):** Token-diet'te (2026-07-08) kapatılan design/UI skilleri ile Phase 8 "design bundle faz BAŞINDA kurulur+çalışılır" kriteri (ROADMAP Phase-8 criterion 1, DASH-07) arasındaki köprü BU dosya + STATE.md Blockers satırıdır.

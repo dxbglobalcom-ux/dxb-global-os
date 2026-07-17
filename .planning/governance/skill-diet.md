@@ -19,3 +19,4 @@ CEO emri (2026-07-08, token analizi sonrası): kullanılmayan skiller session a�
 - Faz 8 (dashboard) başlarken `gsd-ui-phase` + `gsd-ui-review` geri alınabilir; GitHub remote gelince `gsd-ship`/`gsd-pr-branch`.
 - `gsd-update` çalıştırınca arşivlenen gsd skilleri geri gelebilir — update sonrası bu listeyi yeniden uygula.
 - Yeni skill ihtiyacı çıkarsa önce arşivden geri yükle, yeniden kurma.
+- **DOĞRULANDI 2026-07-17 (R4.1):** regresyon gerçekleşti — 50 gsd skili sessizce geri gelmişti; library intake dry-run'ının "+50 yeni skill" anomalisi yakaladı. Tespit deseni: aktif set ≠ DB'deki E9.5 23-skill ledger seti → farkı arşive taşı (o gün `moved=50`, sonuç 23/23).

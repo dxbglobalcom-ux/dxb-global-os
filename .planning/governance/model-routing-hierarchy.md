@@ -1,9 +1,30 @@
 ---
 name: model-routing-hierarchy
-description: "CEO-approved Fable-authorship matrix (2026-07-08 v5) — Fable writes plans AND ALL code/artifacts personally AND INLINE (planner/debugger subagent exception CANCELLED — same-model subagent authorship is still a violation); automatic subagent fan-out disabled by config; Sonnet support-only at high effort; Haiku fetch-and-carry only; budget-fallback mode documented"
+description: "v8 (CEO 2026-07-12): Sonnet yasağı YALNIZ inşaat yazarlığı — şirket RUNTIME ajan beyni olarak Sonnet SERBEST (MODEL_ROUTING_SPEC). v7 (K1-K2): modül kapanışı YALNIZ Fable + GPT 5.6 solo; TÜM personalar Fable bizzat. v6 tabanı: Sonnet inşaatta defedildi, zincir Fable bizzat → Opus 4.8; Haiku yasak; inline yazarlık"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
+---
+
+# v8 — Runtime/inşaat ağaç ayrımı + Sonnet runtime serbest (CEO, 2026-07-12)
+
+1. **İki ayrı ağaç:** bu memory'deki TÜM kurallar İNŞAAT YAZARLIĞIDIR (kim spec/persona/kod yazar — Claude Code session'ları). Şirketin RUNTIME ajan beyinleri (`agents.brain` + rol slotları) AYRI yönetişimdir: MODEL_ROUTING_SPEC yönetir, dashboard'dan CEO değiştirir (spec §4b).
+2. **Sonnet runtime SERBEST (CEO kararı 2026-07-12 ~01:00):** v6'nın "Sonnet defedildi" hükmü yalnız inşaat yazarlığında yaşar. Şirket içinde ajan beyni olarak Sonnet atanabilir havuzda (`banned=false`; varsayılan slot ataması yok — CEO panel/settings'ten atar). İşlendiği yerler: MODEL_ROUTING_SPEC üstbilgi+R2+§4+§13+§21+§24 · API_CONTRACTS models · roadmap E7.2 · MASTER_PLAN §8 kapsam notu.
+3. İnşaat tarafında HİÇBİR ŞEY değişmedi: Sonnet spec/persona/kod yazamaz, verdict veremez; zincir Fable bizzat → Opus 4.8; Haiku getir-götür.
+
+# v7 — GAP-AUDIT K1-K2 hükmü (CEO, 2026-07-11, tartışmasız)
+
+1. **K1:** Dashboard modül/placeholder kapanışlarının (ModuleWaiting → gerçek sayfa; E6-E12 modül işleri) yürütücüsü **yalnız Fable ve GPT 5.6 solo**. Başka model (Opus dahil) modül KAPATAMAZ. Roadmap F/O kolonunun devralması bu kapsamda GPT 5.6 solo demektir. v6'nın "Opus devralır" zinciri modül-dışı işlerde (test koşuları, migration uygulaması vb. roadmap devir protokolü) geçerli kalır — çelişki durumunda K1 üstündür.
+2. **K2:** TÜM personalar (orkestratör, müdürler, HR, 153 legacy v2 dalgaları, gap-onaylı yeniler) **Fable bizzat, en mükemmel kalitede** yazar. hr-factory İLK oluşumda yazarlık yapmaz (altyapısı kurulur, Fable-sonrası dönem için). Yetişmeyen "Fable-yazımı bekliyor" listesine düşer; kalite düşürülerek kapatılamaz. CEO: personalar+skiller+MCP profilleri+HR yapısı HAYATİ. Kaynak: [[gap-audit-directive-2026-07-11]].
+
+# v6 — BEKLENTİLER dönemi (CEO, 2026-07-10, pazarlıksız)
+
+1. **SONNET DEFEDİLDİ.** Hiçbir rolde kullanılamaz — araştırma, checker, verifier, keşif dahil. v5'in "Sonnet high-effort destek" maddeleri İPTAL.
+2. Zincir: **Fable bizzat → en kötü ihtimal Opus 4.8.** Haiku yasağı sürer. Korpus (HOLDING-OS-MASTER-PLAN/) bitmeden Fable'dan başka el değmez.
+3. Sıra: korpus %100 → **Fable execution'a bizzat devam (12 Temmuz son geceye kadar)** → Fable erişimi bitince **Opus 4.8 kaldığı yerden devralır** (IMPLEMENTATION_ROADMAP'teki devralma noktaları + BACKUP_PLAN devir protokolü). Verdict kapıları eldeki en güçlü modelde.
+4. Persona yazarlığı: TÜM personalar + HR ilk oluşumu bizzat Fable ([[beklentiler-directive-2026-07-10]] madde 7).
+5. v5'in inline-yazarlık, subagent-yasağı, evidence-before-done kuralları aynen geçerli.
+
 ---
 
 CEO-approved runtime build-workflow authority matrix (v5, 2026-07-08 — v4 kuralları korunur; v5 ek kuralı: **plan/artefakt yazımı YALNIZ inline Fable — gsd-planner/gsd-debugger'ın "Fable modelini miras alır, sayılır" istisnası CEO tarafından İPTAL edildi; aynı model (claude-fable-5) bile olsa subagent yazarlığı ihlaldir; "bizzat" = aktif conversation'daki Fable**. Tarihçe: v1 "Opus taslak yazar" → v2 "Fable plan+kritik kod" → v2'deki "boilerplate'i Sonnet daktilo eder" istisnası CEO tarafından kaldırıldı → v3 "Fable TÜM yazarlık" → v4 otomatik fan-out config'de kapalı → v5 planner-subagent istisnası iptal). Scope: Claude Code/GSD session'larının DXB Global OS'u nasıl inşa ettiği. Şirket/ürün yönetişimi DEĞİL — proje dosyalarına (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, faz planları, proje CLAUDE.md) asla yazılmaz. Üst çerçeve: [[fable-5-construction-governance]] (THE GOAL + bootstrap kuralı — her session ilk okuma).
