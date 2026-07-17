@@ -117,6 +117,16 @@ async function sweep() {
 beforeAll(sweep);
 afterAll(async () => {
   await sweep();
+  // R4.2 backstop: whatever happened above, 'quality' leaves the suite with
+  // its full standing core grant package (8 dxb-mcp groups; grant = upsert).
+  const groups = await sql<{ id: string }>`
+    SELECT id FROM library_items WHERE kind = 'mcp' AND version IS NULL
+  `.execute(db());
+  for (const g of groups.rows) {
+    await ceoAction({
+      action: "grant", item_id: g.id, grantee_kind: "department", grantee_id: "quality",
+    });
+  }
   await closeDb();
 });
 
@@ -310,7 +320,12 @@ describe("grant / revoke_grant", () => {
     expect(again.error).toBe("VALIDATION_FAILED");
   });
 
-  it("expired grants are dead: view grant_count 0, layer omits the subject (A2)", async () => {
+  it("expired grants are dead: view grant_count 0, layer contribution zero (A2)", async () => {
+    // State-independent since R4.2: departments hold STANDING grants (core
+    // package v1), so the layer legitimately contains the subject. The A2
+    // property under test is that an EXPIRED grant contributes NOTHING —
+    // asserted as before/after layer equality, not subject absence.
+    const before = await readLibraryLayer(db());
     const { itemId } = await registerItem({
       kind: "tool",
       name: `dxb-mcp.${M}_expired_tool`,
@@ -327,8 +342,11 @@ describe("grant / revoke_grant", () => {
       SELECT grant_count FROM v_library_catalog WHERE id = ${itemId}::uuid
     `.execute(db());
     expect(view.rows[0].grant_count).toBe(0);
-    const layer = await readLibraryLayer(db());
-    expect(layer.departments.quality).toBeUndefined();
+    const after = await readLibraryLayer(db());
+    expect(after).toEqual(before);
+    expect(
+      (after.departments.quality?.tools ?? []).includes(`dxb-mcp.${M}_expired_tool`),
+    ).toBe(false);
     await ceoAction({ action: "revoke_grant", grant_id: g.grant_id });
   });
 });
@@ -350,7 +368,28 @@ describe("grant→profile chain (G3, §21 E2E)", () => {
     const skill = await registerItem({ kind: "skill", name: `${M}-skill-probe` });
     const group = await registerItem({ kind: "mcp", name: "dxb-mcp/queue", version: M });
 
-    // Department grant: 'testing' gets ONLY the queue group.
+    // R4.2: departments hold the STANDING core grant package (8 dxb-mcp
+    // groups). To prove A4 narrowing on 'quality' the non-queue standing
+    // grants are PARKED (revoked via control fn) for the duration of this
+    // test and re-granted in the finally block — same-door mutation hygiene.
+    const parked = (
+      await sql<{ item_id: string; name: string }>`
+        SELECT g.item_id, li.name FROM library_grants g
+          JOIN library_items li ON li.id = g.item_id
+         WHERE g.grantee_kind = 'department' AND g.grantee_id = 'quality'
+           AND li.kind = 'mcp' AND li.version IS NULL AND li.name <> 'dxb-mcp/queue'
+      `.execute(db())
+    ).rows;
+    for (const p of parked) {
+      const r = await ceoAction({
+        action: "revoke_grant", item_id: p.item_id,
+        grantee_kind: "department", grantee_id: "quality",
+      });
+      expect(r.ok).toBe(true);
+    }
+    try {
+
+    // Department grant: 'quality' now holds ONLY the queue group(s).
     const gGroup = await ceoAction({
       action: "grant",
       item_id: group.itemId,
@@ -391,7 +430,8 @@ describe("grant→profile chain (G3, §21 E2E)", () => {
       outDir: outB, generatedAt: "2026-07-14T00:00:00.000Z",
     });
 
-    // §22 backward compat: a dept with ZERO library grants is byte-identical.
+    // R4.2 identity property: a dept whose standing grants MIRROR the policy
+    // surface keeps a byte-identical _tools block (A4 intersection = identity).
     const readP = (dir: string, f: string) => JSON.parse(readFileSync(join(dir, f), "utf8")) as Profile;
     expect(readP(outA, "marketing.mcp.json")._tools).toEqual(readP(outB, "marketing.mcp.json")._tools);
 
@@ -432,6 +472,16 @@ describe("grant→profile chain (G3, §21 E2E)", () => {
     expect(after.employeeProfiles.map((p) => p.employee)).not.toContain(empSlug);
 
     await ceoAction({ action: "revoke_grant", grant_id: gGroup.grant_id });
+
+    } finally {
+      // Restore the parked standing grants (idempotent upsert in the fn).
+      for (const p of parked) {
+        await ceoAction({
+          action: "grant", item_id: p.item_id,
+          grantee_kind: "department", grantee_id: "quality",
+        });
+      }
+    }
   });
 
   it("compileLibraryProfiles: staging swap, hash-skip, stale overlay cleanup, system event", async () => {

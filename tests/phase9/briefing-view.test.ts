@@ -33,6 +33,7 @@ function block(rows: Block[], name: string): Record<string, unknown> {
 
 const ids = {
   taskInside: "", // task with a 'done' event inside the overnight window
+  taskFresh: "", // future-stamped done event — deterministic recent_done top
   taskEdge: "", // task with an event BEFORE the window (must not count)
   taskApproval: "",
   approvals: [] as string[],
@@ -66,15 +67,23 @@ beforeAll(async () => {
   const before = new Date(start.getTime() - 60_000); // 1 min before → excluded
 
   ids.taskInside = await insertTask(`${SEED} gece biten iş`);
+  ids.taskFresh = await insertTask(`${SEED} taze biten iş`);
   ids.taskEdge = await insertTask(`${SEED} pencere dışı iş`);
   ids.taskApproval = await insertTask(`${SEED} onay bekleyen iş`);
 
-  // Overnight block seeds: one done-event inside, one BEFORE the edge.
+  // Overnight block seeds: one done-event JUST inside the edge (window
+  // inclusion witness — counted, but on a busy live night it may fall off the
+  // LIMIT-5 recent_done list), one FRESH event stamped 2 s in the future
+  // (deterministic top of recent_done regardless of live traffic — R4.2
+  // live-data fix), one BEFORE the edge (exclusion witness).
+  const fresh = new Date(Date.now() + 2000);
   await sql`
     insert into task_events (task_id, event, from_status, to_status, actor, payload, created_at)
     values
       (${ids.taskInside}::uuid, 'status_change', 'running', 'done', 'test',
        ${JSON.stringify({ seed: SEED })}::jsonb, ${inside.toISOString()}::timestamptz),
+      (${ids.taskFresh}::uuid, 'status_change', 'running', 'done', 'test',
+       ${JSON.stringify({ seed: SEED })}::jsonb, ${fresh.toISOString()}::timestamptz),
       (${ids.taskEdge}::uuid, 'status_change', 'running', 'done', 'test',
        ${JSON.stringify({ seed: SEED })}::jsonb, ${before.toISOString()}::timestamptz)
   `.execute(getDb());
@@ -159,11 +168,17 @@ describe("v_morning_briefing (09-02)", () => {
     const rows = await readView();
     const before = Number(block(baseline, "overnight_work").total_events);
     const after = Number(block(rows, "overnight_work").total_events);
-    // Two events seeded, exactly ONE inside the window.
-    expect(after - before).toBe(1);
+    // Three events seeded, exactly TWO inside the window (edge witness +
+    // fresh witness); the before-edge one must not count.
+    expect(after - before).toBe(2);
     const done = block(rows, "overnight_work").recent_done as Array<{ objective: string }>;
+    // LIMIT-5 semantics on a live DB: the FUTURE-stamped seed is always the
+    // newest in-window event, so its membership is deterministic; the
+    // edge-stamped seed may be outranked by real overnight traffic.
+    expect(done.length).toBeLessThanOrEqual(5);
     const seeded = done.filter((d) => d.objective.startsWith(SEED));
-    expect(seeded.map((d) => d.objective)).toEqual([`${SEED} gece biten iş`]);
+    expect(seeded.map((d) => d.objective)).toContain(`${SEED} taze biten iş`);
+    expect(seeded.map((d) => d.objective)).not.toContain(`${SEED} pencere dışı iş`);
   });
 
   it("counts pending approvals only, grouped by risk", async () => {

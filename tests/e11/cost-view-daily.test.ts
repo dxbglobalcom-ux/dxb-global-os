@@ -98,14 +98,18 @@ describe("E11.1 — v_cost_breakdown day grain vs independent raw SQL", () => {
         and day >= ${D1}::date
     `.execute(db());
 
-    // Independent aggregate: no view, different SQL text.
+    // Independent aggregate: no view, different SQL text. Same universe as
+    // the view query (NOT seed-filtered): on a live ledger the seeded keys
+    // can collide with real rows (measured 2026-07-17: a live 0-cost
+    // engineering/fable row shared the seed's day|dept|model key), so both
+    // sides must aggregate the same row set to be comparable.
     const raw = await sql<{
       day: string; department: string | null; model: string; cost: string;
     }>`
       select (c.created_at at time zone 'Europe/Berlin')::date::text as day,
              c.department, c.model, sum(c.cost_eur)::numeric(10,4)::text as cost
       from cost_ledger c
-      where c.meta->>'seed' = ${SEED}
+      where c.department in ('engineering', 'finance', 'design', 'boundary')
         and (c.created_at at time zone 'Europe/Berlin')::date >= ${D1}::date
       group by 1, 2, 3
     `.execute(db());
@@ -113,9 +117,14 @@ describe("E11.1 — v_cost_breakdown day grain vs independent raw SQL", () => {
 
     const key = (r: { day: string; department: string | null; model: string }) =>
       `${r.day}|${r.department}|${r.model}`;
-    const viewByKey = new Map(view.rows.map((r) => [key(r), r.cost]));
+    // The view's grain is finer (× mode × agent_id) — ACCUMULATE per key; a
+    // plain Map(map) would silently keep only the last row of a key.
+    const viewByKey = new Map<string, number>();
+    for (const r of view.rows) {
+      viewByKey.set(key(r), (viewByKey.get(key(r)) ?? 0) + Number(r.cost));
+    }
     for (const r of raw.rows) {
-      expect(viewByKey.get(key(r)), key(r)).toBe(r.cost);
+      expect((viewByKey.get(key(r)) ?? 0).toFixed(4), key(r)).toBe(Number(r.cost).toFixed(4));
     }
   });
 
