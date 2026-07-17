@@ -125,4 +125,11 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 ls HOLDING-OS-MASTER-PLAN/ | wc -l          # hedef: 33 (31 spec + INDEX + direktif)
 grep -rn "DxB-Kokpit" HOLDING-OS-MASTER-PLAN/ .planning/ | wc -l   # hedef: 0
 git log --oneline -5                          # dalga-başı atomik commit görünür
+
+# AUDIT-LEDGER INVARIANT (registered 2026-07-17 ~22:40 — lesson: 8 findings lived only in
+# session memory for a day; memory is a lead, NEVER a ledger [RULE #0-A]. Every external-audit
+# finding ID must hit a GOVERNED anchor: roadmap row, U-row, or directive disposition table.)
+for f in F-01 F-02 F-03 F-04 F-05 F-06 F-07 F-08 F-09 F-10 F-11 F-12 F-13 F-14 F-15; do
+  grep -ql "$f" HOLDING-OS-MASTER-PLAN/IMPLEMENTATION_ROADMAP.md HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-REVENUE-FIRST.md \
+    || echo "ORPHANED AUDIT FINDING: $f"; done   # hedef: sıfır satır çıktı
 ```
