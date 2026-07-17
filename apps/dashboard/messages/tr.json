@@ -273,7 +273,8 @@
         "revenue": "Gelir İstihbaratı",
         "revenueObjectives": "Hedefler",
         "revenueOpportunities": "Fırsatlar",
-        "revenuePortfolio": "Portföy"
+        "revenuePortfolio": "Portföy",
+        "voice": "Ses Hattı"
       }
     },
     "bar": {
@@ -2065,6 +2066,56 @@
         "emptyStreamHint": "Kapılar spawn yoluna bağlı (E10.2); her red, revizyon ve escalation olduğu an buraya düşer.",
         "shown": "satır",
         "errorPrefix": "Hata"
+      }
+    },
+    "voice": {
+      "title": "Ses Hattı",
+      "subtitle": "Bir müdüre sesle sorun — Hamza yönlendirir, tek hat, €0.",
+      "idleHint": "Mikrofonu basılı tutup konuşun; bırakınca gönderilir.",
+      "holdToTalk": "Bas-konuş",
+      "recording": "Dinliyor… bırakınca gönderilir",
+      "uploading": "Yazıya dökülüyor…",
+      "waiting": "Düşünüyor…",
+      "speaking": "Konuşuyor",
+      "done": "Görüşme bitti",
+      "failedTitle": "Görüşme başarısız",
+      "busy": "Hat meşgul — aynı anda tek görüşme. Az sonra tekrar deneyin.",
+      "micDenied": "Mikrofon izni reddedildi — ses hattı için mikrofona izin verin.",
+      "micUnsupported": "Bu tarayıcı ses kaydedemiyor.",
+      "youLabel": "Siz (CEO)",
+      "askLabel": "Soru hedefi",
+      "hamzaOption": "Hamza — otomatik yönlendirir",
+      "stop": "Durdur",
+      "playAnswer": "Cevabı çal",
+      "newCall": "Yeni görüşme",
+      "degraded": "Yedek ses",
+      "freeLine": "€0 hat",
+      "emptyTranscript": "Henüz görüşme yok. Mikrofonu basılı tutup sorunuzu sorun.",
+      "recentTitle": "Son görüşmeler",
+      "recentEmpty": "Kayıtlı görüşme yok.",
+      "answerNotReady": "Cevap sesi henüz hazır değil.",
+      "sttMs": "Yazıya dökme",
+      "answerMs": "Cevap",
+      "ttsMs": "Ses",
+      "errors": {
+        "stt_error": "Net duyulamadı — tekrar deneyin.",
+        "empty_transcript": "Hiçbir şey duyulamadı — mikrofona daha yakın deneyin.",
+        "target_not_found": "Müdür bulunamadı.",
+        "answer_error": "Müdür bu sefer cevap veremedi.",
+        "tts_error": "Ses üretimi başarısız — yazılı cevap hazır.",
+        "stale_timeout": "Görüşme zaman aşımına uğradı.",
+        "line_busy": "Hat meşgul — aynı anda tek görüşme.",
+        "missing_transcript": "Görüşme metni kayboldu.",
+        "claim_lost": "Görüşme başka yerde devralındı."
+      },
+      "statuses": {
+        "listening": "Dinliyor",
+        "transcribing": "Yazıya dökülüyor",
+        "routing": "Yönlendiriliyor",
+        "answering": "Cevaplıyor",
+        "speaking": "Konuşuyor",
+        "ended": "Bitti",
+        "failed": "Başarısız"
       }
     }
   }

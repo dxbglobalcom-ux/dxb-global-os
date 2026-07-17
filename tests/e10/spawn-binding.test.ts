@@ -112,6 +112,26 @@ beforeAll(async () => {
   const m = await sql<{ project_id: string }>`SELECT project_id FROM project_milestones LIMIT 1`.execute(db());
   realProjectId = m.rows[0]?.project_id ?? null;
 
+  // Crash-residue sweep (2026-07-17 laptop-freeze lesson): a killed session
+  // skips afterAll, so a leftover fixture agent breaks the next run on
+  // agents_slug_key. Idempotent re-entry, FK-ordered — deletes ONLY this
+  // suite's fixture slug (same archive-first idiom as the R2.3 cleanup).
+  const stale = await sql<{ id: string; persona_id: string | null }>`
+    SELECT id, persona_id FROM agents WHERE slug = ${`${M}-worker-agent`}
+  `.execute(db());
+  for (const row of stale.rows) {
+    await sql`DELETE FROM task_events WHERE task_id IN (SELECT id FROM tasks WHERE agent_id = ${row.id}::uuid)`.execute(db());
+    await sql`DELETE FROM tool_calls WHERE run_id IN (SELECT id FROM agent_runs WHERE employee_id = ${row.id}::uuid)`.execute(db());
+    await sql`DELETE FROM alerts WHERE run_id IN (SELECT id FROM agent_runs WHERE employee_id = ${row.id}::uuid)`.execute(db());
+    await sql`DELETE FROM agent_runs WHERE employee_id = ${row.id}::uuid`.execute(db());
+    await sql`DELETE FROM tasks WHERE agent_id = ${row.id}::uuid`.execute(db());
+    await sql`UPDATE agents SET persona_id = NULL WHERE id = ${row.id}::uuid`.execute(db());
+    if (row.persona_id) {
+      await sql`DELETE FROM personas WHERE id = ${row.persona_id}::uuid`.execute(db());
+    }
+    await sql`DELETE FROM agents WHERE id = ${row.id}::uuid`.execute(db());
+  }
+
   // Fixture employee: real department (agents.department FK), MCP profile set,
   // persona quality-gated 'passed' — hook_version deliberately NULL so the
   // stamp is provable. employment_status 'active' also proves §21 end-state.

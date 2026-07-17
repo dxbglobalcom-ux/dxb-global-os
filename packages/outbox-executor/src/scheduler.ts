@@ -19,6 +19,7 @@ import { drainWorkflowRuns, registerCronTriggers, triggerRunNow } from "@dxb/ker
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
 import { drainIntents, drainTasks } from "@dxb/orchestrator";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
+import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
 import { tick } from "./index.js";
 import { checkVelocity } from "./breaker.js";
 
@@ -62,6 +63,11 @@ export const QUEUES = {
   // themselves STAY in the tasks table (Phase 3 LOCKED: two queues = two
   // sources of truth); this pg-boss job is only the drain vehicle.
   taskWorker: "task.worker",
+  // R3.1 voice call line (VOICE_INTERACTION_SPEC §6): the answer half of a
+  // call CANNOT run in the dashboard (PHASE-08 LOCKED — no LLM surface in the
+  // projection client) and a Postgres fn cannot reach pg-boss (E9.1 A1), so
+  // parked 'routing' voice_calls rows drain here on a self-chain.
+  voiceDrain: "voice.drain",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -104,6 +110,10 @@ export const CADENCES = {
   // pressure — an execution leg holds its job for the LLM's duration anyway,
   // and the chain re-arms only after the drain returns.
   taskWorkerSeconds: 10,
+  // Voice drain (R3.1): the CEO is on the line waiting — 5s matches the
+  // intent-intake cadence rationale; the answer leg holds its job for the
+  // LLM+TTS duration, the chain re-arms after the drain returns.
+  voiceDrainSeconds: 5,
   // Revenue cycle: spec §22 stagger inside the 05:00-06:00 UTC window, but
   // off the exact hours already owned by hrStalePersona (05:00) and
   // hrProbation (06:00) — session-mode pool contention rule.
@@ -149,6 +159,14 @@ async function enqueueTaskWorker(boss: PgBoss, delaySeconds: number): Promise<vo
   );
 }
 
+async function enqueueVoiceDrain(boss: PgBoss, delaySeconds: number): Promise<void> {
+  await boss.send(
+    QUEUES.voiceDrain,
+    {},
+    { startAfter: delaySeconds, singletonKey: QUEUES.voiceDrain },
+  );
+}
+
 export async function startScheduler(): Promise<PgBoss> {
   const url = process.env.DXB_DATABASE_URL;
   if (!url) throw new Error("DXB_DATABASE_URL is not set (session-mode direct URL required)");
@@ -170,6 +188,7 @@ export async function startScheduler(): Promise<PgBoss> {
     QUEUES.workflowRun,
     QUEUES.libraryRecompile,
     QUEUES.taskWorker,
+    QUEUES.voiceDrain,
   ];
   for (const queue of Object.values(QUEUES)) {
     await boss.createQueue(queue, chainQueues.includes(queue) ? { policy: "short" } : {});
@@ -284,6 +303,17 @@ export async function startScheduler(): Promise<PgBoss> {
     }
   });
 
+  // R3.1 voice drain — same re-arm-even-on-throw discipline (a dead chain =
+  // the CEO speaks into a line nobody answers). Per-call errors land in the
+  // call's own failed state inside drainVoiceCalls/answerVoiceCall.
+  await boss.work(QUEUES.voiceDrain, async () => {
+    try {
+      await drainVoiceCalls({ db: getDb(), audioDir: voiceAudioDir() });
+    } finally {
+      await enqueueVoiceDrain(boss, CADENCES.voiceDrainSeconds);
+    }
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
@@ -321,6 +351,9 @@ export async function startScheduler(): Promise<PgBoss> {
   // the orphan's eventual retry is harmless (every downstream mutation is
   // race-safe: SKIP LOCKED claim + guarded transitions + idempotent ladder).
   await enqueueTaskWorker(boss, 0);
+  // R3.1: bootstrap the voice drain chain (same continuity-by-construction
+  // guarantee as the task worker chain above).
+  await enqueueVoiceDrain(boss, 0);
 
   return boss;
 }

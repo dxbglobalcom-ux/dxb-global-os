@@ -64,6 +64,10 @@ export interface DepartmentsTable {
   mcp_profile: Generated<string>;
   status: Generated<string>;
   created_at: Timestamptz;
+  id: Generated<string>;
+  company_id: string | null;
+  parent_id: string | null;
+  director_id: string | null;
 }
 
 export interface AgentsTable {
@@ -408,6 +412,31 @@ export interface WorkflowRunsTable {
   ended_at: Date | null;
 }
 
+export interface VoiceIdentitiesTable {
+  id: Generated<string>;
+  agent_id: string;
+  engine: string;
+  profile_ref: string;
+  locale: Generated<string>;
+  status: Generated<string>;
+  created_at: Timestamptz;
+}
+
+export interface VoiceCallsTable {
+  id: Generated<string>;
+  started_at: Timestamptz;
+  ended_at: Date | null;
+  status: Generated<string>;
+  target_agent_id: string | null;
+  transcript: Jsonb;
+  timeline: Jsonb;
+  stt_ms: number | null;
+  answer_ms: number | null;
+  tts_ms: number | null;
+  degraded: Generated<boolean>;
+  cost_eur: Generated<string>;
+}
+
 export interface DB {
   workflows: WorkflowsTable;
   workflow_steps: WorkflowStepsTable;
@@ -438,4 +467,6 @@ export interface DB {
   routing_rules: RoutingRulesTable;
   hook_policies: HookPoliciesTable;
   hook_violations: HookViolationsTable;
+  voice_identities: VoiceIdentitiesTable;
+  voice_calls: VoiceCallsTable;
 }

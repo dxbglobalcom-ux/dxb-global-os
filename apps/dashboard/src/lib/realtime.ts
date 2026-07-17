@@ -18,7 +18,10 @@ export type DxbChannelName =
   | "ops:live"
   | "alerts"
   // E9.5: setting/library events (EVENT_MODEL §9b settings channel).
-  | "settings";
+  | "settings"
+  // R3.1: voice call lifecycle (VOICE_INTERACTION_SPEC §9 — call.started /
+  // call.answer_ready / call.ended / call.failed, fired by control_voice_call_log).
+  | "voice";
 
 // Shape written by realtime.broadcast_changes (migration 0013): the UI reads
 // exactly these fields — live-projection.test.ts pins this contract.

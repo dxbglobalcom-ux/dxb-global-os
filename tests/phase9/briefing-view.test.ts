@@ -114,6 +114,18 @@ afterAll(async () => {
       (select id from approvals where payload->>'seed' = ${SEED})
   `.execute(getDb());
   await sql`delete from task_events where payload->>'seed' = ${SEED}`.execute(getDb());
+  // R2.1 reality: the resident worker may claim seed tasks mid-suite and
+  // write its own task_events (no seed payload) — delete by task membership
+  // too, or the tasks delete below dies on task_events_task_id_fkey
+  // (measured 2026-07-17 full-regression with the live scheduler).
+  await sql`
+    delete from task_events where task_id in
+      (select id from tasks where objective like ${SEED + "%"})
+  `.execute(getDb());
+  await sql`
+    delete from agent_runs where task_id in
+      (select id from tasks where objective like ${SEED + "%"})
+  `.execute(getDb());
   await sql`delete from approvals where payload->>'seed' = ${SEED}`.execute(getDb());
   await sql`delete from cost_ledger where meta->>'seed' = ${SEED}`.execute(getDb());
   await sql`delete from tasks where objective like ${SEED + "%"}`.execute(getDb());

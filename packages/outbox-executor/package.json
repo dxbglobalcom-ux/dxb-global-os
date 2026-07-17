@@ -13,6 +13,7 @@
     "@dxb/orchestrator": "workspace:*",
     "@dxb/revenue": "workspace:*",
     "@dxb/shared": "workspace:*",
+    "@dxb/voice": "workspace:*",
     "kysely": "catalog:",
     "pg-boss": "catalog:",
     "zod": "catalog:"

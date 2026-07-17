@@ -1,0 +1,28 @@
+{
+  "name": "@dxb/voice",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./intake": { "types": "./dist/intake.d.ts", "default": "./dist/intake.js" },
+    "./paths": { "types": "./dist/paths.d.ts", "default": "./dist/paths.js" }
+  },
+  "scripts": {
+    "test": "pnpm --dir ../.. exec vitest run tests/r31"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "catalog:",
+    "@dxb/kernel": "workspace:*",
+    "@dxb/memory-router": "workspace:*",
+    "@dxb/shared": "workspace:*",
+    "kysely": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  }
+}

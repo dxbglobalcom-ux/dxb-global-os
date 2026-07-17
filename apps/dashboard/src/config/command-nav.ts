@@ -35,6 +35,7 @@ import {
   Layers,
   LayoutDashboard,
   Library,
+  Mic,
   Network,
   PieChart,
   Plug,
@@ -87,6 +88,11 @@ export const COMMAND_NAV: NavGroup[] = [
         icon: ShieldAlert,
         counter: "pending_high_risk",
       },
+      // R3.1 (VOICE_INTERACTION_SPEC §7, U4 refinement): the v1 Ask-a-Director
+      // voice line — spec-ordered §31 route addition to the Command group
+      // (U8 /ai/mcp + R1.4 revenue-route precedent; CC-SPEC §7 table updated
+      // in the same commit).
+      { key: "voice", href: "/voice", icon: Mic },
     ],
   },
   {

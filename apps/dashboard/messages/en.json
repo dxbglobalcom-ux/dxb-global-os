@@ -273,7 +273,8 @@
         "revenue": "Revenue Intelligence",
         "revenueObjectives": "Objectives",
         "revenueOpportunities": "Opportunities",
-        "revenuePortfolio": "Portfolio"
+        "revenuePortfolio": "Portfolio",
+        "voice": "Voice Line"
       }
     },
     "bar": {
@@ -2065,6 +2066,56 @@
         "emptyStreamHint": "The gates are bound to the spawn path (E10.2); every rejection, revision and escalation lands here the moment it happens.",
         "shown": "rows",
         "errorPrefix": "Error"
+      }
+    },
+    "voice": {
+      "title": "Voice Line",
+      "subtitle": "Ask a director by voice — Hamza routes, one line, €0.",
+      "idleHint": "Hold the mic and speak; release to send.",
+      "holdToTalk": "Hold to talk",
+      "recording": "Listening… release to send",
+      "uploading": "Transcribing…",
+      "waiting": "Thinking…",
+      "speaking": "Speaking",
+      "done": "Call ended",
+      "failedTitle": "Call failed",
+      "busy": "Line busy — one call at a time. Try again shortly.",
+      "micDenied": "Microphone access denied — allow the mic to use the voice line.",
+      "micUnsupported": "This browser cannot record audio.",
+      "youLabel": "You (CEO)",
+      "askLabel": "Ask",
+      "hamzaOption": "Hamza — routes automatically",
+      "stop": "Stop",
+      "playAnswer": "Play answer",
+      "newCall": "New call",
+      "degraded": "Fallback voice",
+      "freeLine": "€0 line",
+      "emptyTranscript": "No call yet. Hold the mic and ask your question.",
+      "recentTitle": "Recent calls",
+      "recentEmpty": "No calls recorded yet.",
+      "answerNotReady": "Answer audio not ready yet.",
+      "sttMs": "STT",
+      "answerMs": "Answer",
+      "ttsMs": "Voice",
+      "errors": {
+        "stt_error": "Could not hear clearly — try again.",
+        "empty_transcript": "Could not hear anything — try again closer to the mic.",
+        "target_not_found": "That director could not be found.",
+        "answer_error": "The director could not answer this time.",
+        "tts_error": "Voice synthesis failed — the written answer is available.",
+        "stale_timeout": "The call timed out.",
+        "line_busy": "Line busy — one call at a time.",
+        "missing_transcript": "The call lost its transcript.",
+        "claim_lost": "The call was picked up elsewhere."
+      },
+      "statuses": {
+        "listening": "Listening",
+        "transcribing": "Transcribing",
+        "routing": "Routing",
+        "answering": "Answering",
+        "speaking": "Speaking",
+        "ended": "Ended",
+        "failed": "Failed"
       }
     }
   }

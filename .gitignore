@@ -60,3 +60,6 @@ vps/provision/.hetzner.local
 .playwright-mcp/
 BEKLENTİLER
 **/.impeccable/
+
+# R3.1 voice: transient answer-WAV handoff + scheduler log — runtime artifacts, never committed
+/var/

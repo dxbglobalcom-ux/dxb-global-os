@@ -92,6 +92,8 @@ Two tables, additive only (no breaking change to the existing schema — DATA_MO
 - pg-boss job `voice.tts` (optional async for long answers); short answers render synchronously.
 - No resident daemon in v1 — the call is request-scoped; the resident worker question belongs to R2.1, not here.
 
+**Implementation note (R3.1, 2026-07-17 — recorded, not a deviation):** the answer leg (routing/persona/TTS) is an LLM surface and therefore CANNOT run inside the dashboard process — PHASE-08 LOCKED ("dashboard is a pure projection client, no LLM calls / provider SDKs", enforced by eslint) outranks this section's "render synchronously" sketch per the corpus hierarchy. Shipped shape: `@dxb/voice` splits into an SDK-free intake half (dashboard imports only the `./intake` subpath: auth → Speaches STT → intent → `voice_calls` parked at `status='routing'`) and an answer half hosted by the EXISTING resident scheduler on a 5s `voice.drain` self-chain (E9.1 A1 idiom — "a Postgres fn cannot reach pg-boss, so drains self-chain"; no new resident daemon, R5 intact). This is the §6 pg-boss job path made primary; the answer WAV hands off via `var/voice/<call_id>.wav` (synthetic audio only — question audio is never persisted, V9/§16) and the page follows `voice.*` Broadcast events with a 5s poll fallback.
+
 ## 7. Frontend structure (§31 route addition — Command group)
 
 `/voice` page: single-call surface. States: idle → recording → thinking → speaking → done/failed, each visibly distinct; transcript pane (CEO line + answer line, speaker-labeled with agent identity chip); director picker (default: Hamza routes). RULE #0 applies: EN+TR, ≥2 widths, design-bank baseline before done.

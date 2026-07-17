@@ -86,6 +86,12 @@ importers:
 
   apps/dashboard:
     dependencies:
+      '@dxb/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
+      '@dxb/voice':
+        specifier: workspace:*
+        version: link:../../packages/voice
       '@phosphor-icons/react':
         specifier: ^2.1.10
         version: 2.1.10(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -354,6 +360,9 @@ importers:
       '@dxb/shared':
         specifier: workspace:*
         version: link:../shared
+      '@dxb/voice':
+        specifier: workspace:*
+        version: link:../voice
       kysely:
         specifier: 'catalog:'
         version: 0.29.3
@@ -402,6 +411,34 @@ importers:
       '@types/pg':
         specifier: 'catalog:'
         version: 8.20.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  packages/voice:
+    dependencies:
+      '@anthropic-ai/claude-agent-sdk':
+        specifier: 'catalog:'
+        version: 0.3.201(@anthropic-ai/sdk@0.110.0(zod@4.4.3))(@modelcontextprotocol/sdk@1.29.0(zod@4.4.3))(zod@4.4.3)
+      '@dxb/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+      '@dxb/memory-router':
+        specifier: workspace:*
+        version: link:../memory-router
+      '@dxb/shared':
+        specifier: workspace:*
+        version: link:../shared
+      kysely:
+        specifier: 'catalog:'
+        version: 0.29.3
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
       typescript:
         specifier: 'catalog:'
         version: 6.0.3

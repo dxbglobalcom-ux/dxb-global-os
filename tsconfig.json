@@ -20,6 +20,9 @@
       "path": "packages/memory-router"
     },
     {
+      "path": "packages/voice"
+    },
+    {
       "path": "packages/observability"
     },
     {
