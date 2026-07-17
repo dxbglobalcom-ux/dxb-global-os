@@ -15,6 +15,13 @@
 # DXB_PSQL overrides the psql runner (e.g. a docker exec on the control
 # laptop, where no host psql exists): every invocation feeds SQL on stdin, so
 # file paths never need to exist inside a container.
+#
+# DXB_PSQL_ADMIN (optional) runs ONLY the preamble — platform-plane surface
+# (extensions, platform schemas, stubs) is an admin act on managed images
+# where the app role cannot write into e.g. the realtime schema. On bare PG
+# it defaults to DXB_PSQL (postgres owns everything, planes collapse) so the
+# one-command contract is unchanged. App-chain objects stay owned by the app
+# role either way — live parity (definer/RLS semantics follow ownership).
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -22,12 +29,13 @@ DB_URL="${DXB_DATABASE_URL:?DXB_DATABASE_URL required (session-mode port, never 
 # DXB_PSQL must be a COMPLETE connection command (its own -U/-d/host); the
 # default connects with the URL. Every call feeds SQL on stdin.
 PSQL="${DXB_PSQL:-psql $DB_URL}"
+PSQL_ADMIN="${DXB_PSQL_ADMIN:-$PSQL}"
 
 run_sql_file() { $PSQL -v ON_ERROR_STOP=1 -q < "$1"; }
 run_sql() { echo "$1" | $PSQL -v ON_ERROR_STOP=1 -qtA; }
 
-echo "[bootstrap] preamble (bare-PG compat surface)"
-run_sql_file "$REPO/scripts/bootstrap/preamble.sql"
+echo "[bootstrap] preamble (bare-PG compat surface; admin plane)"
+$PSQL_ADMIN -v ON_ERROR_STOP=1 -q < "$REPO/scripts/bootstrap/preamble.sql"
 
 echo "[bootstrap] pg-boss schema (library initializer)"
 (cd "$REPO/packages/outbox-executor" && node - <<'NODE'

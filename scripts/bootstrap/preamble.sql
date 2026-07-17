@@ -96,3 +96,13 @@ CREATE TABLE IF NOT EXISTS supabase_migrations.schema_migrations (
   statements text[],
   name       text
 );
+
+-- Ledger ownership parity: on live the ledger belongs to the app role
+-- (postgres); when the preamble runs on the admin plane (DXB_PSQL_ADMIN),
+-- hand it over so the app-chain surface stays app-owned on every env.
+DO $$ BEGIN
+  IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'postgres') THEN
+    ALTER SCHEMA supabase_migrations OWNER TO postgres;
+    ALTER TABLE supabase_migrations.schema_migrations OWNER TO postgres;
+  END IF;
+END $$;
