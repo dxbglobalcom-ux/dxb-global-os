@@ -18,6 +18,10 @@
 
 Binds every author (Opus and all successors) every session until project end. Same discipline Fable held: 100% accuracy, zero fabrication (§35 honesty).
 
+## ⛔ RULE #0-B — PERFECTION GATE (CEO directive 2026-07-17, SEVEREST TIER)
+
+**Before ANY deliverable ships, its author explicitly answers three questions and acts on the answers: (1) Is this PERFECT — would a world-class specialist sign it? (2) Is this LOGICAL — does the structure match the user's mental model, not the implementer's convenience? (3) Could it be BETTER — name the concrete better version; build it now if in scope, record it as a boundary if not.** "It satisfies the spec row" is not a defense — the spec is the floor, this gate is the ceiling-check. Sloppy-but-spec-compliant work reaching the CEO = governance violation (RET + recorded). Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-PERFECTION-GATE.md`. Applies to every author and every session until project end.
+
 ## Project
 
 **DXB Global OS**
