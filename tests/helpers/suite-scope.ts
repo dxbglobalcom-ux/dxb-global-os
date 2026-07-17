@@ -47,6 +47,14 @@ export async function sweepByDepartment(db: Kysely<DB>, marker: string): Promise
         qb.selectFrom("approvals").select("id").where("task_id", "in", ids),
       )
       .execute();
+    // R2.4: a control_approvals_action decision writes a decision_log row
+    // FK-ing the approval — unlink before the approvals go.
+    await db
+      .deleteFrom("decision_log")
+      .where("approval_id", "in", (qb) =>
+        qb.selectFrom("approvals").select("id").where("task_id", "in", ids),
+      )
+      .execute();
     await db.deleteFrom("approvals").where("task_id", "in", ids).execute();
     await sql`DELETE FROM task_dependencies
       WHERE task_id = ANY(${ids}::uuid[]) OR depends_on = ANY(${ids}::uuid[])`.execute(db);
