@@ -1982,6 +1982,14 @@
         "colOwner": "Sahip departman",
         "colReview": "İnceleme",
         "colQuality": "Kalite",
+        "reviewStatuses": {
+          "approved": "Onaylı",
+          "needs_review": "İnceleme bekliyor",
+          "archived": "Arşivlendi",
+          "pending": "Beklemede",
+          "draft": "Taslak",
+          "active": "Aktif"
+        },
         "colGrants": "Erişim",
         "colUsage": "Kullanım",
         "colUpdated": "Güncelleme",

@@ -1982,6 +1982,14 @@
         "colOwner": "Owner department",
         "colReview": "Review",
         "colQuality": "Quality",
+        "reviewStatuses": {
+          "approved": "Approved",
+          "needs_review": "Needs review",
+          "archived": "Archived",
+          "pending": "Pending",
+          "draft": "Draft",
+          "active": "Active"
+        },
         "colGrants": "Access",
         "colUsage": "Usage",
         "colUpdated": "Updated",

@@ -160,5 +160,8 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | e121f-backups-en-1920.png | /sys/backups | EN | 1920 | PENDING | same, wide |
 | e121f-backups-tr-1280.png | /sys/backups | TR | 1280 | PENDING | same, TR |
 | e121f-backups-tr-1920.png | /sys/backups | TR | 1920 | PENDING | same, TR wide |
+| library-r42-tr-1280.png | /ai/library?kind=persona | TR | 1280 | PENDING | R4.2 enrichment surface — localized review badges (Onaylı/İnceleme bekliyor), 4-column minimal list (Version/Access/Usage moved to detail — info-free ruling), wrapped names, zero "…" (A1 battery: clipped 0, inner FITS) |
+| library-r42-en-1280.png | /ai/library?kind=persona | EN | 1280 | PENDING | same, EN |
+| library-r42-tr-1920.png | /ai/library?kind=persona | TR | 1920 | PENDING | same, wide |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).

@@ -27,6 +27,7 @@ const REVIEW_LEVEL: Record<string, StatusLevel> = {
   active: "ok",
   draft: "info",
   pending: "warn",
+  needs_review: "warn",
   archived: "info",
 };
 
@@ -204,7 +205,9 @@ export default async function LibraryPage({
                   : "border-edge-neutral bg-surface-onyx hover:border-edge-bright"
               }`}
             >
-              <span className={`block truncate text-body-s ${n === 0 ? "text-ink-muted" : "text-ink-primary"}`}>
+              {/* No truncate: kind labels like "Yönetişim kuralları" were
+                  clipping to "…" at 1280 (RULE #0 A1) — labels wrap instead. */}
+              <span className={`block break-words text-body-s ${n === 0 ? "text-ink-muted" : "text-ink-primary"}`}>
                 {t.kinds[k]}
               </span>
               <span
@@ -234,17 +237,18 @@ export default async function LibraryPage({
               <p className="py-10 text-center text-body-s text-ink-muted">{t.ui.noItems}</p>
             ) : (
               <div className="overflow-x-auto">
-                {/* min-w keeps the columns readable in a narrow container —
-                    the wrapper then actually scrolls instead of clipping. */}
-                <table className="w-full min-w-[720px] text-left text-body-s">
+                {/* List = scan surface: name · owner · review · updated.
+                    Version (406/439 empty), access and usage counts are
+                    info-thin at row level (CEO minimalism ruling — zeros are
+                    noise); the detail panel's fields + Erişim/Kullanım tabs
+                    carry them. min-w keeps columns readable in a narrow
+                    container — the wrapper then scrolls instead of clipping. */}
+                <table className="w-full min-w-[520px] text-left text-body-s">
                   <thead>
                     <tr className="label-caps text-ink-muted">
                       <th className="px-2 py-2">{t.ui.colName}</th>
-                      <th className="px-2 py-2">{t.ui.colVersion}</th>
                       <th className="px-2 py-2">{t.ui.colOwner}</th>
                       <th className="px-2 py-2">{t.ui.colReview}</th>
-                      <th className="px-2 py-2 text-right">{t.ui.colGrants}</th>
-                      <th className="px-2 py-2 text-right">{t.ui.colUsage}</th>
                       <th className="px-2 py-2">{t.ui.colUpdated}</th>
                     </tr>
                   </thead>
@@ -256,29 +260,29 @@ export default async function LibraryPage({
                           selected?.id === r.id ? "bg-surface-graphite" : "hover:bg-surface-graphite/50"
                         }`}
                       >
-                        <td className="max-w-[280px] px-2 py-2">
-                          <Link href={itemHref(r)} className="block truncate text-ink-primary hover:text-accent-champagne">
+                        <td className="max-w-[360px] px-2 py-2">
+                          {/* No truncate: "…" on a CEO surface is an automatic
+                              FAIL (RULE #0 A1) — slugs wrap at their dashes. */}
+                          <Link href={itemHref(r)} className="block break-words text-ink-primary hover:text-accent-champagne">
                             {r.name}
                           </Link>
                         </td>
-                        <td className="px-2 py-2 font-data text-ink-secondary">{r.version ?? "—"}</td>
-                        <td className="max-w-[160px] truncate px-2 py-2 text-ink-secondary">
+                        {/* No width cap: the longest department display name
+                            measures 43 chars (~300px) — a cap hard-clips
+                            letters (RULE #0 A1). The name column wraps, so
+                            this column may take its natural width. */}
+                        <td className="whitespace-nowrap px-2 py-2 text-ink-secondary">
                           {deptName(r) ?? t.ui.unowned}
                         </td>
                         <td className="px-2 py-2">
                           {r.review_status ? (
                             <StatusBadge level={REVIEW_LEVEL[r.review_status] ?? "info"}>
-                              {r.review_status}
+                              {(t.ui.reviewStatuses as Record<string, string>)[r.review_status] ??
+                                r.review_status}
                             </StatusBadge>
                           ) : (
                             <span className="text-ink-muted">—</span>
                           )}
-                        </td>
-                        <td className="px-2 py-2 text-right font-data tabular-nums text-ink-secondary">
-                          {r.grant_count}
-                        </td>
-                        <td className="px-2 py-2 text-right font-data tabular-nums text-ink-secondary">
-                          {r.usage_count}
                         </td>
                         <td className="whitespace-nowrap px-2 py-2 font-data text-ink-muted">
                           {fmtDateShort(r.updated_at, locale)}
@@ -329,7 +333,13 @@ export default async function LibraryPage({
                   </div>
                   <div>
                     <dt className="label-caps text-ink-muted">{t.ui.fields.review}</dt>
-                    <dd className="text-ink-primary">{selected.review_status ?? "—"}</dd>
+                    <dd className="text-ink-primary">
+                      {selected.review_status
+                        ? ((t.ui.reviewStatuses as Record<string, string>)[
+                            selected.review_status
+                          ] ?? selected.review_status)
+                        : "—"}
+                    </dd>
                   </div>
                   <div>
                     <dt className="label-caps text-ink-muted">{t.ui.fields.lastUpdate}</dt>
