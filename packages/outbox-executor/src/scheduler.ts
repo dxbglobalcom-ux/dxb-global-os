@@ -18,6 +18,7 @@ import {
 import { drainWorkflowRuns, registerCronTriggers, triggerRunNow } from "@dxb/kernel";
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
 import { drainIntents } from "@dxb/orchestrator";
+import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
 import { tick } from "./index.js";
 import { checkVelocity } from "./breaker.js";
 
@@ -48,6 +49,14 @@ export const QUEUES = {
   // self-chained recompile that regenerates against the live record and swaps
   // profile files only when the source hash moved.
   libraryRecompile: "library.profile_recompile",
+  // R1.3 revenue cycle (REVENUE_ENGINE_SPEC §3): same in-scheduler idiom as
+  // the HR jobs — pre-R2 the handlers are mechanical digests + the intake
+  // halal screen. Queue/schedule rows also seeded by migration
+  // 20260717030100 (hr A4 precedent) so the spec §24.3 query answers pre-boot.
+  revenueScan: "revenue.scan",
+  revenueScore: "revenue.score",
+  revenueBrief: "revenue.brief",
+  revenueRollup: "revenue.rollup",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -86,6 +95,13 @@ export const CADENCES = {
   // 30s keeps a CEO grant change effective inside half a minute without
   // pressuring the session-mode pool.
   libraryRecompileSeconds: 30,
+  // Revenue cycle: spec §22 stagger inside the 05:00-06:00 UTC window, but
+  // off the exact hours already owned by hrStalePersona (05:00) and
+  // hrProbation (06:00) — session-mode pool contention rule.
+  revenueScanCron: "10 5 * * *", // daily 05:10
+  revenueScoreCron: "25 5 * * *", // daily 05:25
+  revenueBriefCron: "40 5 * * *", // daily 05:40
+  revenueRollupCron: "55 5 * * *", // daily 05:55
 } as const;
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -184,6 +200,20 @@ export async function startScheduler(): Promise<PgBoss> {
     await hrTrainingQueue(getDb());
   });
 
+  // R1.3 revenue cycle — same in-scheduler idiom as the HR jobs above.
+  await boss.work(QUEUES.revenueScan, async () => {
+    await revenueScan(getDb());
+  });
+  await boss.work(QUEUES.revenueScore, async () => {
+    await revenueScore(getDb());
+  });
+  await boss.work(QUEUES.revenueBrief, async () => {
+    await revenueBrief(getDb());
+  });
+  await boss.work(QUEUES.revenueRollup, async () => {
+    await revenueRollup(getDb());
+  });
+
   // E9.1 workflow drain — same re-arm-even-on-throw discipline as the outbox
   // tick (a dead chain would strand every waiting run). Cron-triggered jobs
   // ('wf:<slug>' schedules) also land on this queue: their payload names the
@@ -221,6 +251,10 @@ export async function startScheduler(): Promise<PgBoss> {
   await boss.schedule(QUEUES.hrStalePersona, CADENCES.hrStalePersonaCron);
   await boss.schedule(QUEUES.hrProbation, CADENCES.hrProbationCron);
   await boss.schedule(QUEUES.hrTraining, CADENCES.hrTrainingCron);
+  await boss.schedule(QUEUES.revenueScan, CADENCES.revenueScanCron);
+  await boss.schedule(QUEUES.revenueScore, CADENCES.revenueScoreCron);
+  await boss.schedule(QUEUES.revenueBrief, CADENCES.revenueBriefCron);
+  await boss.schedule(QUEUES.revenueRollup, CADENCES.revenueRollupCron);
   // Workflow cron triggers: enabled trigger.kind='cron' workflows register as
   // 'wf:<slug>' schedules; those jobs need their queue + worker too.
   const cronWfs = await registerCronTriggers({

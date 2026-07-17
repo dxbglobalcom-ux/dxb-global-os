@@ -22,6 +22,11 @@ export default defineConfig({
       "@dxb/shared": fileURLToPath(
         new URL("./packages/shared/dist/index.js", import.meta.url),
       ),
+      // R1.3: root suites import the revenue job handlers directly (tests/r13);
+      // dist for the same one-instance reason as @dxb/shared.
+      "@dxb/revenue": fileURLToPath(
+        new URL("./packages/revenue/dist/index.js", import.meta.url),
+      ),
     },
   },
   test: {

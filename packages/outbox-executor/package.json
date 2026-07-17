@@ -11,6 +11,7 @@
     "@dxb/kernel": "workspace:*",
     "@dxb/memory-router": "workspace:*",
     "@dxb/orchestrator": "workspace:*",
+    "@dxb/revenue": "workspace:*",
     "@dxb/shared": "workspace:*",
     "kysely": "catalog:",
     "pg-boss": "catalog:",
