@@ -95,6 +95,7 @@ Dalga 4 kapanış notu: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envan
 |---|-------|------------------|-------|
 | 32 | REVENUE_ENGINE_SPEC.md | [[00-CEO-DIRECTIVE-REVENUE-FIRST]] (Talep §§2-4, 7; D1-D4) | ✓ 2026-07-17 |
 | 33 | VOICE_INTERACTION_SPEC.md | Talep §5 + D3 (v1 çağrı hattı; boardroom "add-later") | ✓ 2026-07-17 |
+| 34 | CAPABILITY_ARSENAL_DOCTRINE.md | CEO emri 2026-07-18 00:20 ("alet edevatın HEPSİ nakşedilsin") + 00:30 paid-bench hükmü; denetim F-07 kapanışı — roadmap R4.3 | ✓ 2026-07-18 |
 
 **KORPUS 31/31 ✓ (2026-07-10 ~23:00).** Sözleşme Adım 2 yürürlükte: execution ayrı onay İSTEMEZ — sıradaki iş IMPLEMENTATION_ROADMAP E1.1'den başlar (Fable bizzat, 12 Temmuz son geceye kadar; sonra Opus ilk ✓'siz adımdan). Canlı ilerleme işareti artık IMPLEMENTATION_ROADMAP adım tablosundadır.
 

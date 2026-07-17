@@ -32,6 +32,6 @@
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-07-17 — R4.1 pass)
-- [ ] INSTALL
-- [ ] ADOPT
+- [x] INSTALL (2026-07-18 R4.3 — v152.0.4-beta.27 into ~/scrapling-env + browser build fetched)
+- [x] ADOPT (consumed via Scrapling StealthyFetcher — live fetch verified STATUS 200)
 - [ ] EMBED

@@ -30,6 +30,6 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp
 
 ## Lifecycle Checklist
 - [x] STUDY
-- [ ] INSTALL
-- [ ] ADOPT
+- [x] INSTALL (2026-07-18 R4.3 — @upstash/context7-mcp@3.2.4 workspace dep; catalog+pins 2 tools)
+- [x] ADOPT (granted engineering; live resolve-library-id proof → /reactjs/react.dev)
 - [ ] EMBED

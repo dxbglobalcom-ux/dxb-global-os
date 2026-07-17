@@ -31,6 +31,6 @@
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-07-17 — R4.1 pass)
-- [ ] INSTALL
-- [ ] ADOPT
+- [x] INSTALL (2026-07-18 R4.3 — runnable via `uvx --from git+https://github.com/nvidia/skillspector skillspector`; NOT on PyPI, GitHub-source only)
+- [x] ADOPT (gate exercised on the R4.3 free tranche; reports archived .planning/research/skillspector/. LIMIT measured: component discovery is SKILL-oriented — npm MCP packages parse as 0 components (verdict weak there); scrapling Python source scanned fully: 28 findings, all 3 decisive ones triaged FALSE POSITIVE at source. Gate = scan + provenance + version-pin + schema-hash pins together.)
 - [ ] EMBED

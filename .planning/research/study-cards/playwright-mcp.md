@@ -31,6 +31,6 @@ claude mcp add playwright -- npx @playwright/mcp@latest
 
 ## Lifecycle Checklist
 - [x] STUDY
-- [ ] INSTALL
-- [ ] ADOPT
+- [x] INSTALL (2026-07-18 R4.3 — @playwright/mcp@0.0.78 workspace dep; catalog+pins 24 tools; run_code_unsafe/file_upload policy-denied)
+- [x] ADOPT (granted engineering+quality; live browser_navigate proof example.com)
 - [ ] EMBED

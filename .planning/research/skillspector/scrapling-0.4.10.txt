@@ -1,0 +1,237 @@
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ SkillSpector Security Report                                                 │
+╰────────────────────────────────── v2.3.13 ───────────────────────────────────╯
+
+Skill: unknown
+Source: /home/ghost/scrapling-env/lib/python3.12/site-packages/scrapling
+Scanned: 2026-07-17 23:02:27 UTC
+
+
+        Risk Assessment         
+ Score           100/100        
+ Severity        CRITICAL       
+ Recommendation  DO NOT INSTALL 
+
+
+                      Components (54)                      
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━┓
+┃ File                      ┃ Type   ┃ Lines ┃ Executable ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━┩
+│ __init__.py               │ python │    38 │ Yes        │
+│ cli.py                    │ python │   669 │ Yes        │
+│ core/__init__.py          │ python │     0 │ Yes        │
+│ core/_shell_signatures.py │ python │   118 │ Yes        │
+│ core/_types.py            │ python │    57 │ Yes        │
+│ core/ai.py                │ python │   934 │ Yes        │
+│ core/custom_types.py      │ python │   345 │ Yes        │
+│ core/mixins.py            │ python │    90 │ Yes        │
+│ core/shell.py             │ python │   678 │ Yes        │
+│ core/storage.py           │ python │   156 │ Yes        │
+│ core/translator.py        │ python │   134 │ Yes        │
+│ core/utils/__init__.py    │ python │    11 │ Yes        │
+│ core/utils/_shell.py      │ python │    48 │ Yes        │
+│ core/utils/_utils.py      │ python │   120 │ Yes        │
+│ engines/__init__.py       │ python │     0 │ Yes        │
+│ ... and 39 more           │        │       │            │
+└───────────────────────────┴────────┴───────┴────────────┘
+
+
+Issues (28)
+
+  MEDIUM: AST3 - Dynamic import via __import__()...
+    Location: __init__.py:30
+    Confidence: 75%
+    Remediation: Use standard import statements instead of __import__(). If 
+dynamic loading is needed, use importlib with an allowlist of permitted 
+modules....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: __init__.py:31
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  MEDIUM: AST4 - subprocess module call...
+    Location: cli.py:26
+    Confidence: 70%
+    Remediation: Use subprocess.run() with shell=False and an explicit argument 
+list. Validate all inputs and avoid passing user-controlled data to commands....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: cli.py:358
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: core/shell.py:320
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: core/translator.py:97
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: core/translator.py:103
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: core/utils/_utils.py:45
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: engines/_browsers/_validators.py:201
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: engines/_browsers/_validators.py:194
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: engines/static.py:720
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: engines/static.py:746
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  MEDIUM: AST3 - Dynamic import via __import__()...
+    Location: fetchers/__init__.py:40
+    Confidence: 75%
+    Remediation: Use standard import statements instead of __import__(). If 
+dynamic loading is needed, use importlib with an allowlist of permitted 
+modules....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: fetchers/__init__.py:41
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  LOW: AST7 - Dynamic attribute access via getattr()...
+    Location: spiders/request.py:171
+    Confidence: 50%
+    Remediation: Replace dynamic getattr() with explicit attribute access or a 
+dictionary lookup with an allowlist of permitted attributes....
+
+  HIGH: PE3 - Credential Access...
+    Location: engines/constants.py:52
+    Confidence: 70%
+    Remediation: Remove references to credential paths. Use environment 
+variables or secrets managers. For docs, use placeholder paths (e.g., 
+/path/to/config). Never l...
+
+  MEDIUM: RA2 - Session Persistence...
+    Location: engines/toolbelt/ad_domains.py:1099
+    Confidence: 75%
+    Remediation: Remove any persistence mechanisms (cron jobs, startup scripts, 
+state files). Skills should not maintain state across sessions without explicit 
+user co...
+
+  MEDIUM: RA2 - Session Persistence...
+    Location: engines/toolbelt/ad_domains.py:2536
+    Confidence: 75%
+    Remediation: Remove any persistence mechanisms (cron jobs, startup scripts, 
+state files). Skills should not maintain state across sessions without explicit 
+user co...
+
+  MEDIUM: RA2 - Session Persistence...
+    Location: engines/toolbelt/ad_domains.py:3188
+    Confidence: 75%
+    Remediation: Remove any persistence mechanisms (cron jobs, startup scripts, 
+state files). Skills should not maintain state across sessions without explicit 
+user co...
+
+  MEDIUM: RA2 - Session Persistence...
+    Location: engines/toolbelt/ad_domains.py:3189
+    Confidence: 75%
+    Remediation: Remove any persistence mechanisms (cron jobs, startup scripts, 
+state files). Skills should not maintain state across sessions without explicit 
+user co...
+
+  MEDIUM: RA2 - Session Persistence...
+    Location: engines/toolbelt/ad_domains.py:3190
+    Confidence: 75%
+    Remediation: Remove any persistence mechanisms (cron jobs, startup scripts, 
+state files). Skills should not maintain state across sessions without explicit 
+user co...
+
+  MEDIUM: RA2 - Session Persistence...
+    Location: engines/toolbelt/ad_domains.py:3191
+    Confidence: 75%
+    Remediation: Remove any persistence mechanisms (cron jobs, startup scripts, 
+state files). Skills should not maintain state across sessions without explicit 
+user co...
+
+  HIGH: TM1 - Tool Parameter Abuse...
+    Location: cli.py:231
+    Confidence: 21%
+    Remediation: Validate all tool parameters against an allowlist. Reject 
+dangerous parameter values (shell=True, --force, -rf /) and use safe 
+defaults....
+
+  MEDIUM: TM3 - Unsafe Defaults...
+    Location: core/ai.py:475
+    Confidence: 75%
+    Remediation: Override unsafe defaults with secure settings (verify=True, 
+auth required, restrictive permissions). Review and harden all tool 
+configurations....
+
+  MEDIUM: TM3 - Unsafe Defaults...
+    Location: core/ai.py:484
+    Confidence: 75%
+    Remediation: Override unsafe defaults with secure settings (verify=True, 
+auth required, restrictive permissions). Review and harden all tool 
+configurations....
+
+  HIGH: TM1 - Tool Parameter Abuse...
+    Location: core/shell.py:88
+    Confidence: 70%
+    Remediation: Validate all tool parameters against an allowlist. Reject 
+dangerous parameter values (shell=True, --force, -rf /) and use safe 
+defaults....
+
+  HIGH: TM1 - Tool Parameter Abuse...
+    Location: core/shell.py:88
+    Confidence: 75%
+    Remediation: Validate all tool parameters against an allowlist. Reject 
+dangerous parameter values (shell=True, --force, -rf /) and use safe 
+defaults....
+
+  CRITICAL: YR3 - YARA rule 'crypto_coinjacking': Browser-based cryptojacking 
+...
+    Location: engines/toolbelt/ad_domains.py:1979
+    Confidence: 90%
+    Remediation: Remove all cryptocurrency mining code, pool references, and 
+miner binaries. Mining in agent skills is unauthorized resource abuse. Report 
+the skill as...
+
+Executable scripts: Yes
+
+
+=== FABLE TRIAGE 2026-07-18 (study-card pitfall 2: triage, don't auto-reject) ===
+All 3 decisive findings inspected at source — FALSE POSITIVES:
+1. PE3 constants.py:52 = "--use-mock-keychain" — Chromium flag that DISABLES real
+   keychain access (privacy-protective launch hardening, not credential theft).
+2. TM1 core/shell.py:88 = NoExitArgumentParser for curl-arg parsing — legit CLI code.
+3. YR3 ad_domains.py:1979 "cryptojacking" = jsecoin.com inside the library's own
+   AD-BLOCK DOMAIN BLOCKLIST — the rule matched the blocklist that BLOCKS the threat.
+VERDICT: install stands. Controls: MIT/official PyPI provenance, exact-version pin
+(0.4.10), schema-hash tool pins, strategy-only grant, untrusted-input discipline.

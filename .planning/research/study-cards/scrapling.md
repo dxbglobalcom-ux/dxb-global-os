@@ -34,5 +34,5 @@
 ## Lifecycle Checklist
 - [x] STUDY (2026-07-12 — this retroactive fill)
 - [x] INSTALL (2026-07-12 session — ~/scrapling-env venv + browser deps, live fetch verified)
-- [ ] ADOPT
+- [x] ADOPT (2026-07-18 R4.3 — MCP bridge catalogued (`scrapling mcp`, 10 tools pinned); camoufox gap FIXED: pip install camoufox + browser fetch; StealthyFetcher live-verified 200/Example Domain; granted strategy)
 - [ ] EMBED

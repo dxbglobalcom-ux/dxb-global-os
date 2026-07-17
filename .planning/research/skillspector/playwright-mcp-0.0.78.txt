@@ -1,0 +1,27 @@
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ SkillSpector Security Report                                                 │
+╰────────────────────────────────── v2.3.13 ───────────────────────────────────╯
+
+Skill: unknown
+Source: /home/ghost/DxB Global 
+OS/node_modules/.pnpm/@playwright+mcp@0.0.78/node_modules/@playwright/mcp
+Scanned: 2026-07-17 23:01:18 UTC
+
+
+    Risk Assessment    
+ Score           0/100 
+ Severity        LOW   
+ Recommendation  SAFE  
+
+
+           Components (0)           
+┏━━━━━━┳━━━━━━┳━━━━━━━┳━━━━━━━━━━━━┓
+┃ File ┃ Type ┃ Lines ┃ Executable ┃
+┡━━━━━━╇━━━━━━╇━━━━━━━╇━━━━━━━━━━━━┩
+└──────┴──────┴───────┴────────────┘
+
+No security issues detected.
+
+Executable scripts: No
+
