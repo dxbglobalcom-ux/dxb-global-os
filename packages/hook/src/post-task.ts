@@ -7,6 +7,7 @@
 // this gate decides.
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
+import { ensureResearchOnShelf } from "./knowledge-shelf.js";
 import { gatePolicies, loadPolicies } from "./policies.js";
 import { escalate, recordViolation } from "./violations.js";
 import { runtimeLimits } from "./runtime.js";
@@ -117,6 +118,30 @@ async function runCheck(
       // std 9 is THIS gate: the lock is enforced by the runner refusing
       // 'succeeded' without a PASS verdict — nothing to check inside.
       return { ok: true };
+    case "library_registration": {
+      // R4.2 knowledge-shelf (HOLDING_LIBRARY A9): research tasks must
+      // deliver a report artifact, and the report must land on the shelf.
+      let marker: RegExp;
+      try {
+        marker = new RegExp(String(policy.rule.pattern ?? "\\bresearch\\b"), "iu");
+      } catch {
+        return { ok: false, detail: `invalid_policy: bad pattern in ${policy.id}` };
+      }
+      const field = String(policy.rule.match_field ?? "output_contract");
+      const text =
+        field === "objective" ? (ctx.task.objective ?? "") : (ctx.task.outputContract ?? "");
+      if (!marker.test(text)) return { ok: true };
+      const report = (result.evidence ?? []).find((e) => e.kind === "file" && !!e.ref);
+      if (!report) {
+        return {
+          ok: false,
+          detail:
+            "research task closed without a report artifact (file-kind evidence with ref) — no research without report (knowledge-shelf)",
+        };
+      }
+      const failure = await ensureResearchOnShelf(ctx, String(report.ref));
+      return failure === null ? { ok: true } : { ok: false, detail: failure };
+    }
     default:
       return { ok: false, detail: `invalid_policy: unknown check '${check}'` };
   }

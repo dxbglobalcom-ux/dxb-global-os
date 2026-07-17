@@ -1,8 +1,9 @@
 {
   "_department": "ceo",
-  "_generated_at": "2026-07-14T09:32:32.471Z",
+  "_generated_at": "2026-07-17T20:52:38.282Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
-  "_source_hash": "06867575fe2717981e54c1c6eb39d618c222e9d1d189be8218d2073162f1ba5e",
+  "_skills": [],
+  "_source_hash": "c41eff302e9d803b7310dae2c668d7d9c3b9b9721e1431f20725ca2a873329ec",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",
