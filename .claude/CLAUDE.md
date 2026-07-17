@@ -4,6 +4,8 @@
 
 **No visual work is "done" until a Design Verification Pass runs and is evidenced.** Render every touched route in the real browser, BOTH locales (EN+TR), ≥2 widths; walk `references/design-bank/CHECKLIST.md` (overlap, alignment, cut-off, scroll sanity, language purity, honest zero-states, token discipline); compare against the baselines in `references/design-bank/`; run `scripts/i18n-purity-check.sh`. The CEO is NOT the QA layer — catchable visual defects reaching the CEO's eye = governance violation (RET + recorded). Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-DESIGN-VERIFICATION.md`. Applies to every author and every session until project end.
 
+**Amendment A1 (CEO 2026-07-17):** the pass runs PER SURFACE in the same turn the surface changes (never batched); defects — found by the pass or the CEO — are treated IMMEDIATELY in that turn; horizontal-overflow measurement (`scrollWidth === clientWidth`) is part of the battery; visible "…" truncation and info-free fields on CEO surfaces are automatic FAILs (kill overflow at the data source; render a field only when its value is informative).
+
 ## ⛔ RULE #0-A — MEASURE, NEVER GUESS (CEO directive 2026-07-15, SEVEREST TIER)
 
 **Guessing and hallucination are DEADLY dangerous to this project.** Before stating ANY fact, number, status, completion %, or "where is X" answer — to the CEO or in any artifact — the claim must rest on a measurement taken THIS session. This is not a style preference; a guessed answer that reaches the CEO is a governance violation of the same tier as RULE #0 (RET + recorded).

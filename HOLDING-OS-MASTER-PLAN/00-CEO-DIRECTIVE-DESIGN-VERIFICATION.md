@@ -26,3 +26,19 @@
 - This directive is quoted at the TOP of the project `CLAUDE.md` — first thing every session loads.
 - A "done" claim on visual work without the pass = same violation class as an unevidenced done (governance: RET + recorded violation).
 - Wasting CEO time on catchable visual defects is the exact anti-pattern this project exists to kill (anti-baby-sitting core value).
+
+## Amendment A1 — PER-SURFACE PASS + IMMEDIATE TREATMENT (CEO refinement, 2026-07-17 ~02:30)
+
+Trigger: during the R1.4 revenue-dashboard wave the CEO personally caught a horizontal-overflow defect on `/revenue/objectives` (long evidence token, missing `min-w-0`) while the author's own pass was still in progress. Defect reached the CEO's eye → **recorded violation (RET), 2026-07-17, R1.4 wave** — the pass existed but ran too late.
+
+Binding refinements (same tier as the base rule):
+
+1. **Per-surface, not per-wave:** the Design Verification Pass runs after EVERY operation that changes a CEO-visible surface — each page/component lands with its own pass in the SAME working turn, before the next surface is started. Batching N pages first and passing later is a violation even if the batch pass eventually runs.
+2. **Immediate treatment:** any defect found — by the pass or by the CEO — is treated IMMEDIATELY in the same turn ("bozukluklar tedavi anında"). No defect backlog, no "noted for later" on visual work.
+3. **Overflow measurement is part of the battery:** `document.documentElement.scrollWidth === clientWidth` measured per touched route per width; a horizontal scrollbar on a CEO surface is an automatic FAIL.
+4. **Minimalism gates the pass (CEO design ruling 2026-07-17):** visible "…" truncation on a CEO surface = FAIL (kill overflow at the SOURCE — shorten/structure the data, never clip); fields that carry no decision information (values that can only ever be one thing, e.g. "Proposed by: ceo" on a CEO-created objective) = FAIL — render conditionally only when the value is informative (e.g. a Hamza proposal); explanation notes are one short sentence, never repeated across pages.
+
+Recorded violations under this directive:
+| Date | Surface | Defect | Treatment |
+|---|---|---|---|
+| 2026-07-17 | /revenue/objectives (R1.4) | horizontal overflow + visible truncation + info-free fields, caught by CEO eye | same-turn: grid `min-w-0`, seed title → language-neutral "€50 net", info-free fields removed, notes shortened; commit 9d6cc51 |
