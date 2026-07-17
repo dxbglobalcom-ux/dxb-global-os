@@ -1,5 +1,6 @@
 # Memory Index
 
+- [R4.2 library enrichment ✓ + dersler](r42-library-enrichment-lessons.md) — **2026-07-18 gecesi**: library governed-data (grant 168 kimlik-aynası, review 423, quality 438, raf kancası std.knowledge_shelf CANLI); R-serisi kapandı → sıra E12.2; dersler: hayalet next-server pid ölç, canlı-DB testleri duruma-bağımsız, veri doldurmak = RULE #0 yüzey değişimi (dict veriyle iner)
 - [U15/U16: voice + design deferral](r32-voice-deferral-u15.md) — **2026-07-17 gecesi**: R3.2 = ◐, D1-D8 canlı kusur defteri AÇIK (selam cevapsız, Korece STT, 8/14 çağrı fail, ladder BLOCKED); çözüm bileti = korpus 00-NOTE-R32-VOICE-REMEDIATION-PLAN (E13.x'te ZORUNLU okuma); design simetri kusurları da ertelendi; ders: commit'siz + canlı-kanıtsız ✓ atmak YASAK
 - [RULE #0-B: Perfection gate](perfection-gate-rule0b.md) — **EN ŞİDDETLİ (CEO 2026-07-17)**: her teslimat öncesi 3 soru (mükemmel? mantıklı? daha iyisi?) cevaplanır + gereği yapılır; spec taban, kapı tavan; kanonik: 00-CEO-DIRECTIVE-PERFECTION-GATE.md
 - [CEO design minimalizm hükmü](ceo-design-minimalism-ruling.md) — "…" kesme YASAK (kaynağında kısalt), bilgi taşımayan alan gösterilmez ("Proposed by: ceo" RET; Hamza önerisi ise rozet), az yazı; grid'de min-w-0 + scrollWidth ölçümü zorunlu
