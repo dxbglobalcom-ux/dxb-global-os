@@ -1,6 +1,7 @@
 # Study Card: Scrapling
 
 > FILLED 2026-07-12 (quick task 260712-mno). RETROACTIVE — installed this session before the card existed; INTEG-01 study-before-install order was not followed (recorded deviation, not silent; same debt class as the superpowers/GSD/caveman rows).
+> REFRESHED 2026-07-17 (R4.1 Library research pass — D8 item 5, D4 priority trio): installed version measured 0.4.10 (`pip show`); upstream now ships a **built-in MCP server** for AI-assisted scraping — this dissolves Pitfall 3's "no TS/Node bridge" problem: the DXB bridge path is an MCP profile entry, no subprocess/HTTP wrapper needed. MEASURED gap: the venv lacks the `camoufox` package (browserforge+playwright only) → `StealthyFetcher` is not yet runnable; fix at ADOPT together with [[camoufox]] card step. ADOPT target: Revenue Engine research chain (REVENUE_ENGINE_SPEC G7).
 
 - **Tool:** Scrapling — Python web scraping library (stealthy fetchers, adaptive selectors)
 - **Slug:** scrapling

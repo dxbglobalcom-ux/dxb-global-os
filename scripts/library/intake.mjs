@@ -233,12 +233,30 @@ function discoverReports() {
 }
 
 function discoverTraining() {
-  return listFiles(join(ROOT, ".planning/study-cards"), ".md").map((f) =>
-    asset("training", basename(f, ".md"), {
-      source_ref: `.planning/study-cards/${f}`,
-      usage_notes: "Study card (tool onboarding material).",
-    }),
-  );
+  // Study cards live in TWO dirs: .planning/research/study-cards (the main
+  // deck — the tracker's Study Card column resolves here) and
+  // .planning/study-cards (1 legacy file). E9.5 scanned only the legacy dir,
+  // missing the main deck (G4 spec-gap, fixed R4.1 2026-07-17). Same basename
+  // in both dirs = ONE asset (tracker-canonical dir wins) — without the
+  // dedupe, two same-kind+name registers in one run would violate
+  // UNIQUE(kind,name,version).
+  const dirs = [".planning/research/study-cards", ".planning/study-cards"];
+  const seen = new Set();
+  const out = [];
+  for (const rel of dirs) {
+    for (const f of listFiles(join(ROOT, rel), ".md")) {
+      const name = basename(f, ".md");
+      if (seen.has(name)) continue;
+      seen.add(name);
+      out.push(
+        asset("training", name, {
+          source_ref: `${rel}/${f}`,
+          usage_notes: "Study card (tool onboarding material).",
+        }),
+      );
+    }
+  }
+  return out;
 }
 
 function discoverCodeComponents() {
