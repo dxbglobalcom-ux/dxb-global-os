@@ -12,12 +12,23 @@ export interface AgentWork {
   model: string;
   objective: string;
   outputContract: string;
+  /** R2.3 — hook post-gate REVISE feedback rides the re-execution (§19),
+   *  exactly the worker-shim idiom. */
+  feedback?: string;
+}
+
+/** R2.3 — the executor's result carries the A10 evidence package the hook
+ *  post-gate consumes (executor-declared; anchored to real tool_calls rows by
+ *  the shared resolver). Absent on injected test executors that predate it. */
+export interface AgentWorkResult {
+  output: string;
+  confidence: number;
+  /** Raw result object for extractEvidencePackage (evidence[], acceptance_map). */
+  resultPackage?: Record<string, unknown>;
 }
 
 /** Injectable LLM seam. Default: executor.ts dual path (SDK / LiteLLM). */
-export type WorkflowExecutor = (
-  work: AgentWork,
-) => Promise<{ output: string; confidence: number }>;
+export type WorkflowExecutor = (work: AgentWork) => Promise<AgentWorkResult>;
 
 export interface RunnerDeps {
   executor?: WorkflowExecutor;

@@ -12,6 +12,10 @@ export {
   checkConfidence,
 } from "./runtime.js";
 export { postTask } from "./post-task.js";
+// R2.3 — shared spawn-path pieces (one constitution for worker-shim AND the
+// workflow agent step): §22 flag + A10 evidence extraction live HERE.
+export { hookEnabled, alertHookDisabled } from "./flag.js";
+export { extractEvidencePackage } from "./evidence.js";
 export { recordViolation, escalate, resolveEscalationChain } from "./violations.js";
 export type {
   HookCtx,

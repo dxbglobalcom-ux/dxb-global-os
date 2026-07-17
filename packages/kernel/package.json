@@ -7,6 +7,8 @@
   "types": "dist/index.d.ts",
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "catalog:",
+    "@dxb/gateway": "workspace:*",
+    "@dxb/hook": "workspace:*",
     "@dxb/observability": "workspace:*",
     "@dxb/shared": "workspace:*",
     "kysely": "catalog:",

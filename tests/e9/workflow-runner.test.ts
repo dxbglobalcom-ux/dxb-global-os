@@ -10,6 +10,13 @@ import {
   StepError,
   type WorkflowExecutor,
 } from "../../packages/kernel/src/index.js";
+import { pinHookOff } from "../helpers/suite-scope.js";
+
+// R2.3: the workflow agent step now runs the SAME hook constitution as the
+// task path. This suite's fixtures predate the hook (no persona/project
+// surface) — pinned off per the registered A13 mechanism (loud in DB,
+// restored in afterAll); the hooked workflow path is proven in tests/r23.
+pinHookOff(() => getDb());
 
 // E9.1 verification — WORKFLOW_ENGINE_SPEC §20/§21/§24:
 //   control_workflow_action full surface (create/update/copy/enable/disable/

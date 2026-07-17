@@ -2,9 +2,24 @@
 // MODEL_ROUTING role slot (model_id pin = the registered exception), executed
 // inside an observability runScope so agent_runs.workflow_run_id carries the
 // drill-down chain (§11) and usage feeds §17 enforcement.
+//
+// R2.3 (audits F-03/F-05, FABLE_5_HOOK A9 unification): the step now runs the
+// SAME hook constitution as the task path — preTask BEFORE the run is born
+// (REJECT → StepError 'policy', run never exists, §6), post-gate + §19 REVISE
+// loop inside the scope, evidence anchored to real tool_calls rows through
+// the shared resolver. Flag OFF flows the old path loudly (hook:disabled
+// alert), exactly the worker-shim semantics.
 import { sql } from "kysely";
 import { getDb, AgentStepConfig } from "@dxb/shared";
-import { runScope } from "@dxb/observability";
+import { resolveEvidenceToolCalls, runScope } from "@dxb/observability";
+import {
+  alertHookDisabled,
+  extractEvidencePackage,
+  hookEnabled,
+  postTask,
+  preTask,
+  type HookCtx,
+} from "@dxb/hook";
 import { StepError, type AgentWork, type WorkflowExecutor, type WorkflowRow, type WorkflowRunRow } from "../types.js";
 
 export interface EligibleEmployee {
@@ -58,6 +73,50 @@ export async function resolveStepModel(
   return out.model_id;
 }
 
+/** R2.3 — workflow-side HookCtx assembly from REAL rows (the A9 mirror of the
+ *  orchestrator's assembleHookCtx; workflow steps are not tasks rows, so the
+ *  task ctx carries the step's own contract and the workflow's project). */
+async function assembleStepHookCtx(args: {
+  emp: EligibleEmployee & { mcpProfile?: string | null; managerId?: string | null };
+  wf: WorkflowRow;
+  cfg: { objective: string; output_contract: string };
+}): Promise<HookCtx> {
+  const db = getDb();
+  const empRow = await db
+    .selectFrom("agents")
+    .select(["mcp_profile", "manager_id"])
+    .where("id", "=", args.emp.id)
+    .executeTakeFirst();
+  const hardStop = await sql<{ on: boolean }>`
+    SELECT EXISTS (SELECT 1 FROM budget_state WHERE hard_stopped) AS on
+  `.execute(db);
+  const wfProject = (args.wf as { project_id?: string | null }).project_id ?? null;
+  let project: HookCtx["project"] = null;
+  if (wfProject) {
+    const p = await sql<{ id: string; purpose: string | null }>`
+      SELECT id, purpose FROM projects WHERE id = ${wfProject}::uuid
+    `.execute(db);
+    if (p.rows[0]) project = { id: p.rows[0].id, purpose: p.rows[0].purpose };
+  }
+  return {
+    employee: {
+      id: args.emp.id,
+      slug: args.emp.slug,
+      department: args.emp.department,
+      mcpProfile: empRow?.mcp_profile ?? null,
+      managerId: empRow?.manager_id ?? null,
+    },
+    task: {
+      id: null, // workflow step, not a tasks row — violations link via runId
+      objective: args.cfg.objective,
+      outputContract: args.cfg.output_contract,
+    },
+    project,
+    budget: { hardStop: hardStop.rows[0]?.on === true },
+    actor: "system",
+  };
+}
+
 export async function runAgentStep(args: {
   wf: WorkflowRow;
   run: WorkflowRunRow;
@@ -77,9 +136,61 @@ export async function runAgentStep(args: {
     outputContract: cfg.output_contract,
   };
 
+  // R2.3 hook binding (A9): same order as the task path — pre-gate BEFORE the
+  // run is born; flag OFF flows the old path loudly.
+  const hookOn = await hookEnabled(emp.id);
+  if (!hookOn) await alertHookDisabled();
+
+  let hookCtx: HookCtx | null = null;
+  if (hookOn) {
+    hookCtx = await assembleStepHookCtx({ emp, wf: args.wf, cfg });
+    const pre = await preTask(hookCtx);
+    if (pre.verdict === "REJECT") {
+      throw new StepError(
+        `hook pre-gate rejected step: ${pre.reason}`,
+        "policy",
+        "HOOK_REJECTED",
+      );
+    }
+    if (pre.inject.projectPurpose) {
+      work.objective = `${work.objective}\n\nProject purpose (holding alignment): ${pre.inject.projectPurpose}`;
+    }
+  }
+
   const { value } = await runScope(
     { employeeId: emp.id, workflowRunId: args.run.id, modelId: model },
-    () => args.executor(work),
+    async (scope) => {
+      if (!hookOn || !hookCtx) return args.executor(work);
+
+      // §19 REVISE loop — the worker-shim idiom verbatim: settle the
+      // observability buffer, anchor declared evidence to REAL tool_calls
+      // rows, then let the post-gate judge; REVISE re-executes with feedback,
+      // exhaustion escalates as a policy StepError (§17 triple).
+      const ctx: HookCtx = { ...hookCtx, runId: scope.runId };
+      let rounds = 0;
+      const attemptWork: AgentWork = { ...work };
+      for (;;) {
+        const attempt = await args.executor(attemptWork);
+        await scope.settle();
+        const pkg = attempt.resultPackage ?? { text: attempt.output };
+        await resolveEvidenceToolCalls(pkg, scope.runId);
+        const post = await postTask(
+          { ...ctx, revisionRound: rounds },
+          extractEvidencePackage(pkg),
+        );
+        if (post.verdict === "PASS") return attempt;
+        if (post.verdict === "REVISE") {
+          rounds += 1;
+          attemptWork.feedback = post.feedback.join("\n");
+          continue;
+        }
+        throw new StepError(
+          `hook post-gate ESCALATE after ${rounds} revision round(s): ${post.feedback.join("; ")}`,
+          "policy",
+          "HOOK_ESCALATED",
+        );
+      }
+    },
   );
-  return value;
+  return { output: value.output, confidence: value.confidence };
 }

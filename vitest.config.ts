@@ -27,6 +27,15 @@ export default defineConfig({
       "@dxb/revenue": fileURLToPath(
         new URL("./packages/revenue/dist/index.js", import.meta.url),
       ),
+      // R2.3: the unified constitution is shared through @dxb/gateway and
+      // @dxb/hook — root suites (r22/r23) and package-src graphs must load
+      // ONE instance of each (reference-equality is itself a test assertion).
+      "@dxb/gateway": fileURLToPath(
+        new URL("./packages/gateway/dist/index.js", import.meta.url),
+      ),
+      "@dxb/hook": fileURLToPath(
+        new URL("./packages/hook/dist/index.js", import.meta.url),
+      ),
     },
   },
   test: {

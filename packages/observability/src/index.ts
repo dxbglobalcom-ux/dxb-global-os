@@ -10,6 +10,8 @@ export {
   type ToolCallEvent,
 } from "./run-scope.js";
 export { restoreSpill, spill, spillDir, type SpillRow } from "./spill.js";
+// R2.3 — shared evidence anchoring (worker-shim AND workflow agent step).
+export { resolveEvidenceToolCalls } from "./evidence-anchor.js";
 export {
   logDecision,
   type DecisionExtras,

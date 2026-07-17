@@ -50,6 +50,31 @@ function readProfile(file: string): ProfileFile | null {
   }
 }
 
+export interface SdkToolOptions {
+  mcpServers: RuntimeToolSurface["mcpServers"];
+  allowedTools: string[];
+  disallowedTools: string[];
+  strictMcpConfig: true;
+}
+
+/** R2.3 (moved from the orchestrator worker-shim so BOTH spawn paths share
+ *  it): compiled surface + full inventory → SDK session options. Allowed =
+ *  the profile's grant set; disallowed = every OTHER inventory tool (stripped
+ *  from model context — F-04 'görünmez'); strictMcpConfig pins the session to
+ *  exactly the mounted servers. */
+export function buildSdkToolOptions(
+  surface: RuntimeToolSurface,
+  inventory: string[],
+): SdkToolOptions {
+  const allowed = new Set(surface.allowedTools);
+  return {
+    mcpServers: surface.mcpServers,
+    allowedTools: [...allowed].sort(),
+    disallowedTools: inventory.filter((t) => !allowed.has(t)).sort(),
+    strictMcpConfig: true,
+  };
+}
+
 /** Resolve the compiled tool surface for one employee. `profilesDir` is
  *  injectable for tests; production uses the compiler's output directory. */
 export function resolveRuntimeProfile(

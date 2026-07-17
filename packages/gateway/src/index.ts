@@ -13,8 +13,8 @@ export {
 } from "./pin-check.js";
 export { readDxbMcpInventory, DXB_MCP_SERVER_NAME } from "./inventory.js";
 // R2.2 — runtime consumption of the compiled profile layer (audit F-02/F-04).
-export { resolveRuntimeProfile, mcpToolName } from "./runtime-profile.js";
-export type { RuntimeToolSurface } from "./runtime-profile.js";
+export { resolveRuntimeProfile, mcpToolName, buildSdkToolOptions } from "./runtime-profile.js";
+export type { RuntimeToolSurface, SdkToolOptions } from "./runtime-profile.js";
 export {
   generateProfiles,
   generateProfilesFromPolicy,

@@ -17,14 +17,26 @@ import { sql } from "kysely";
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall } from "@dxb/shared";
-import { currentRunScope, logDecision, runScope } from "@dxb/observability";
 import {
+  currentRunScope,
+  logDecision,
+  resolveEvidenceToolCalls,
+  runScope,
+} from "@dxb/observability";
+import {
+  buildSdkToolOptions,
   mcpToolName,
   readDxbMcpInventory,
   resolveRuntimeProfile,
-  type RuntimeToolSurface,
+  type SdkToolOptions,
 } from "@dxb/gateway";
 import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
+
+// R2.3: the R2.2 pieces moved to their dependency-clean homes so the workflow
+// agent step (kernel) shares ONE implementation — re-exported here verbatim
+// for API stability (tests/r21-r22 and any caller keep importing from us).
+export { buildSdkToolOptions, resolveEvidenceToolCalls };
+export type { SdkToolOptions };
 import {
   checkConfidence,
   monitorTokens,
@@ -125,30 +137,6 @@ async function dxbInventoryNames(): Promise<string[]> {
     inventoryToolNames = inv.map((e) => mcpToolName(e.server, e.tool));
   }
   return inventoryToolNames;
-}
-
-export interface SdkToolOptions {
-  mcpServers: RuntimeToolSurface["mcpServers"];
-  allowedTools: string[];
-  disallowedTools: string[];
-  strictMcpConfig: true;
-}
-
-/** Pure assembly: compiled surface + full inventory → SDK session options.
- *  Allowed = the profile's grant set; disallowed = every OTHER inventory tool
- *  (stripped from context — F-04 'görünmez'); strictMcpConfig pins the session
- *  to exactly the mounted servers (no repo .mcp.json bleed). */
-export function buildSdkToolOptions(
-  surface: RuntimeToolSurface,
-  inventory: string[],
-): SdkToolOptions {
-  const allowed = new Set(surface.allowedTools);
-  return {
-    mcpServers: surface.mcpServers,
-    allowedTools: [...allowed].sort(),
-    disallowedTools: inventory.filter((t) => !allowed.has(t)).sort(),
-    strictMcpConfig: true,
-  };
 }
 
 // Default executor: the model is a routing_rules lookup by the task's tier —
@@ -312,31 +300,6 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
     },
     confidence: parsed.confidence,
   };
-}
-
-/** R2.2 — anchor executor-declared verification evidence to the run's REAL
- *  tool_calls rows (std 15 tool_call_proof). Resolution only: an item whose
- *  named tool has no recorded call stays unanchored and the post-gate rejects
- *  it — the binding never invents a reference (A10). */
-export async function resolveEvidenceToolCalls(
-  result: unknown,
-  runId: string,
-): Promise<void> {
-  if (!result || typeof result !== "object") return;
-  const evidence = (result as { evidence?: unknown }).evidence;
-  if (!Array.isArray(evidence) || evidence.length === 0) return;
-  const db = getDb();
-  for (const item of evidence) {
-    if (!item || typeof item !== "object") continue;
-    const e = item as { kind?: string; tool?: string; toolCallId?: string | null };
-    if (e.kind !== "verification" || e.toolCallId || !e.tool) continue;
-    const row = await sql<{ id: string }>`
-      SELECT id FROM tool_calls
-      WHERE run_id = ${runId}::uuid AND tool = ${e.tool}
-      ORDER BY id DESC LIMIT 1
-    `.execute(db);
-    if (row.rows[0]) e.toolCallId = row.rows[0].id;
-  }
 }
 
 // -- stepped execution + context budget (MEM-04, 06-07) ------------------------
