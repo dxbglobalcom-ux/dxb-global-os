@@ -13,10 +13,29 @@ import { classify, type ClassifiedIntent } from "@dxb/kernel";
 import { decompose, type DecomposedEnvelope } from "./decompose.js";
 import { dispatch } from "./dispatch.js";
 
+// R2.1 — std 11 project link for CEO intents (registered adaptation, roadmap
+// row R2.1): command-bar work is by definition holding-OS work, so intent-born
+// tasks ride the dogfood project row (slug 'dxb-global-os' — its purpose text
+// names itself the OS's own project record). Without this link every
+// intent-born task died at the std.project_alignment pre-gate (measured live
+// 2026-07-17: 5 ladder rounds → blocked). Missing row (fresh DB) → null →
+// the pre-gate rejects loudly, which is the honest signal.
+const HOLDING_PROJECT_SLUG = "dxb-global-os";
+
+async function holdingProjectId(): Promise<string | null> {
+  const res = await sql<{ id: string }>`
+    SELECT id FROM projects WHERE slug = ${HOLDING_PROJECT_SLUG} AND status = 'active'
+  `.execute(getDb());
+  return res.rows[0]?.id ?? null;
+}
+
 export type IntentIntakeDeps = {
   classifyFn?: (text: string) => Promise<ClassifiedIntent>;
   decomposeFn?: (ci: ClassifiedIntent) => Promise<DecomposedEnvelope[]>;
-  dispatchFn?: (envelopes: DecomposedEnvelope[]) => Promise<{ taskIds: string[] }>;
+  dispatchFn?: (
+    envelopes: DecomposedEnvelope[],
+    opts?: { projectId?: string | null },
+  ) => Promise<{ taskIds: string[] }>;
 };
 
 export type IntakeResult =
@@ -49,7 +68,7 @@ export async function intakeIntentOnce(deps: IntentIntakeDeps = {}): Promise<Int
   try {
     const ci = await classifyFn(intent.text);
     const envelopes = await decomposeFn(ci);
-    const { taskIds } = await dispatchFn(envelopes);
+    const { taskIds } = await dispatchFn(envelopes, { projectId: await holdingProjectId() });
 
     await sql`
       update intents

@@ -10,8 +10,16 @@ import { getDb, TaskEnvelope } from "@dxb/shared";
 import { logDecision } from "@dxb/observability";
 import type { DecomposedEnvelope } from "./decompose.js";
 
+export interface DispatchOpts {
+  /** R2.1 — std 11 project link (FABLE_5_HOOK §2 row 11): the caller that
+   *  KNOWS the work's project passes it here; every inserted task carries it.
+   *  The TaskEnvelope contract itself stays LOCKED (no project field). */
+  projectId?: string | null;
+}
+
 export async function dispatch(
   envelopes: DecomposedEnvelope[],
+  opts: DispatchOpts = {},
 ): Promise<{ taskIds: string[] }> {
   if (envelopes.length === 0) throw new Error("dispatch: empty envelope batch");
 
@@ -46,6 +54,7 @@ export async function dispatch(
           budget_max_cost_eur: env.budget.max_cost_eur,
           priority: env.priority,
           parent_task_id: env.parent_task_id,
+          ...(opts.projectId ? { project_id: opts.projectId } : {}),
           status: "queued",
         })
         .returning("id")

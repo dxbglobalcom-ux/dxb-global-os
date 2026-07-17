@@ -17,7 +17,7 @@ import { sql } from "kysely";
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall } from "@dxb/shared";
-import { currentRunScope, runScope } from "@dxb/observability";
+import { currentRunScope, logDecision, runScope } from "@dxb/observability";
 import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
 import {
   checkConfidence,
@@ -278,6 +278,58 @@ export function makeSteppedExecutor(args: SteppedExecutorArgs): Executor {
   };
 }
 
+// R2.1 — AGENT_ORCHESTRATION §3 step 1 / §6: intent-born tasks arrive
+// agent-less (the Phase-5 dispatch writes envelopes, not staffing). Before
+// the hook gates run, the claim assigns the least-loaded eligible employee:
+// task department + employment_status='active' + an MCP profile (the
+// std.permission_bounds pre-gate demands one), workload = open running runs.
+// The spec's `employee.max_concurrent_runs` cap is not seeded in settings —
+// least-loaded ordering carries the workload rule until HR seeds it
+// (registered adaptation on roadmap row R2.1). No eligible employee is NOT
+// an error here: the task proceeds agent-less and the pre-gate rejects it
+// loudly (violation + ladder + blocked report = the CEO-visible signal that
+// a department has no activated workforce).
+async function assignEmployee(task: ClaimedTask, workerId: string): Promise<void> {
+  if (task.agent_id) return; // dispatch or a prior round already staffed it
+  const db = getDb();
+  const pick = await sql<{ id: string; slug: string; open_runs: number }>`
+    SELECT a.id, a.slug,
+           (SELECT count(*)::int FROM agent_runs r
+             WHERE r.employee_id = a.id AND r.status = 'running') AS open_runs
+    FROM agents a
+    WHERE a.department = ${task.department}
+      AND a.employment_status = 'active'
+      AND a.mcp_profile IS NOT NULL
+    ORDER BY open_runs, a.slug
+    LIMIT 1
+  `.execute(db);
+  const chosen = pick.rows[0];
+
+  await logDecision(
+    {
+      runId: null,
+      decidedBy: workerId,
+      decision: "employee-selection",
+      rationale: chosen
+        ? `least-loaded active employee in '${task.department}': ${chosen.slug} (open runs ${chosen.open_runs})`
+        : `no active employee with an MCP profile in '${task.department}' — task proceeds agent-less, pre-gate will decide`,
+      dataUsed: ["agents", "agent_runs"],
+      alternatives: { rule: "AGENT_ORCHESTRATION §6 — department + active + least open runs" },
+      confidence: null,
+      risk: chosen ? "low" : "medium",
+    },
+    { taskId: task.id },
+  );
+  if (!chosen) return;
+
+  await db
+    .updateTable("tasks")
+    .set({ agent_id: chosen.id, updated_at: sql`now()` })
+    .where("id", "=", task.id)
+    .execute();
+  task.agent_id = chosen.id; // the hook ctx downstream reads the claimed row
+}
+
 // Guarded transition: UPDATE succeeds only from the expected status (race-safe),
 // and every transition appends its event — the chain in task_events is the
 // single source of truth escalation counts from.
@@ -341,6 +393,9 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
     .execute();
 
   await transition(task.id, "claimed", "running", workerId);
+
+  // R2.1 — staff the task BEFORE the gates (spec §3: employee seç → preTask).
+  await assignEmployee(task, workerId);
 
   // ── E10.2 hook binding (FABLE_5_HOOK §3) ──────────────────────────────────
   // Flag ON: preTask BEFORE the run is born (§6: a block rejection = the run

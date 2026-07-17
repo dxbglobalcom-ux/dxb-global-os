@@ -9,6 +9,9 @@ export { dispatch } from "./dispatch.js";
 export { intakeIntentOnce, drainIntents } from "./intent-intake.js";
 export type { IntentIntakeDeps, IntakeResult } from "./intent-intake.js";
 export { runWorkerOnce, makeSteppedExecutor } from "./worker-shim.js";
+// R2.1 — resident worker loop (audit F-01): the tasks-queue production consumer.
+export { drainTasks, RESIDENT_WORKER_ID } from "./worker-loop.js";
+export type { DrainTasksDeps, DrainTasksResult } from "./worker-loop.js";
 export { startOpsLiveCollector } from "./ops-live-collector.js";
 export type { OpsLiveCollector } from "./ops-live-collector.js";
 export type { StepOutcome, TaskStep, SteppedExecutorArgs } from "./worker-shim.js";

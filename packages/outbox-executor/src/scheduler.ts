@@ -17,7 +17,7 @@ import {
 } from "@dxb/hr";
 import { drainWorkflowRuns, registerCronTriggers, triggerRunNow } from "@dxb/kernel";
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
-import { drainIntents } from "@dxb/orchestrator";
+import { drainIntents, drainTasks } from "@dxb/orchestrator";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
 import { tick } from "./index.js";
 import { checkVelocity } from "./breaker.js";
@@ -57,6 +57,11 @@ export const QUEUES = {
   revenueScore: "revenue.score",
   revenueBrief: "revenue.brief",
   revenueRollup: "revenue.rollup",
+  // R2.1 resident worker (audit F-01): the business `tasks` queue finally has
+  // a production consumer. Same self-chain idiom as intent-intake — the tasks
+  // themselves STAY in the tasks table (Phase 3 LOCKED: two queues = two
+  // sources of truth); this pg-boss job is only the drain vehicle.
+  taskWorker: "task.worker",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -95,6 +100,10 @@ export const CADENCES = {
   // 30s keeps a CEO grant change effective inside half a minute without
   // pressuring the session-mode pool.
   libraryRecompileSeconds: 30,
+  // Resident worker drain (R2.1): 10s keeps the queue moving without pool
+  // pressure — an execution leg holds its job for the LLM's duration anyway,
+  // and the chain re-arms only after the drain returns.
+  taskWorkerSeconds: 10,
   // Revenue cycle: spec §22 stagger inside the 05:00-06:00 UTC window, but
   // off the exact hours already owned by hrStalePersona (05:00) and
   // hrProbation (06:00) — session-mode pool contention rule.
@@ -132,6 +141,14 @@ async function enqueueLibraryRecompile(boss: PgBoss, delaySeconds: number): Prom
   );
 }
 
+async function enqueueTaskWorker(boss: PgBoss, delaySeconds: number): Promise<void> {
+  await boss.send(
+    QUEUES.taskWorker,
+    {},
+    { startAfter: delaySeconds, singletonKey: QUEUES.taskWorker },
+  );
+}
+
 export async function startScheduler(): Promise<PgBoss> {
   const url = process.env.DXB_DATABASE_URL;
   if (!url) throw new Error("DXB_DATABASE_URL is not set (session-mode direct URL required)");
@@ -140,8 +157,22 @@ export async function startScheduler(): Promise<PgBoss> {
   boss.on("error", (err: Error) => console.error("[scheduler] pg-boss:", err));
   await boss.start();
 
+  // Self-chained queues need policy 'short' (R2.1 measured defect): pg-boss 12
+  // enforces singletonKey dedup ONLY under 'short' (unique index scoped to
+  // state='created' AND policy='short'). Under 'standard' every bootstrap
+  // send minted one more parallel chain. 'short' = one queued tick max,
+  // unlimited active — pending ticks dedupe, an orphaned active job never
+  // blocks the re-arm. Existing 'standard' rows are flipped by migration
+  // 20260717050000 (createQueue is ON CONFLICT DO NOTHING — it cannot).
+  const chainQueues: string[] = [
+    QUEUES.tick,
+    QUEUES.intentIntake,
+    QUEUES.workflowRun,
+    QUEUES.libraryRecompile,
+    QUEUES.taskWorker,
+  ];
   for (const queue of Object.values(QUEUES)) {
-    await boss.createQueue(queue);
+    await boss.createQueue(queue, chainQueues.includes(queue) ? { policy: "short" } : {});
   }
 
   await boss.work(QUEUES.tick, async () => {
@@ -242,6 +273,17 @@ export async function startScheduler(): Promise<PgBoss> {
     }
   });
 
+  // R2.1 resident worker drain — same re-arm-even-on-throw discipline (a dead
+  // chain = the anti-babysitting engine silently stops). Per-task errors are
+  // contained inside drainTasks; only infrastructure faults reach this catch.
+  await boss.work(QUEUES.taskWorker, async () => {
+    try {
+      await drainTasks();
+    } finally {
+      await enqueueTaskWorker(boss, CADENCES.taskWorkerSeconds);
+    }
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
@@ -272,6 +314,13 @@ export async function startScheduler(): Promise<PgBoss> {
   await enqueueIntentIntake(boss, 0); // bootstrap the 5s intent chain
   await enqueueWorkflowDrain(boss, 0); // bootstrap the 10s workflow drain
   await enqueueLibraryRecompile(boss, 0); // bootstrap the 30s library recompile
+  // R2.1: bootstrap the resident worker chain. Restart continuity by
+  // construction: a pending chain job (created state) dedupes on singletonKey
+  // so exactly one chain survives; an orphaned active job (process died
+  // mid-drain) does NOT block this send, so the chain resumes immediately and
+  // the orphan's eventual retry is harmless (every downstream mutation is
+  // race-safe: SKIP LOCKED claim + guarded transitions + idempotent ladder).
+  await enqueueTaskWorker(boss, 0);
 
   return boss;
 }

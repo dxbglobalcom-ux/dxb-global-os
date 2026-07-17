@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --build",
+    "scheduler": "node packages/outbox-executor/dist/main.js",
     "test": "vitest run",
     "video-learn": "node tools/video-learn/dist/cli.js"
   },
