@@ -76,7 +76,16 @@ async function runQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
   throw new Error("classify: agent-sdk stream ended without a result message");
 }
 
-export async function classify(text: string): Promise<ClassifiedIntent> {
+export async function classify(
+  text: string,
+  opts: {
+    /** routing_rules row that prices THIS classification call — latency-
+     *  critical callers (voice) point at a fast-tier row; default stays the
+     *  L1 'orchestration' row. Missing row → orchestration fallback, so a
+     *  pre-migration DB never breaks (routing stays data, KERN-02). */
+    taskClass?: string;
+  } = {},
+): Promise<ClassifiedIntent> {
   const db = getDb();
   const deptRows = await db.selectFrom("departments").select("slug").orderBy("slug").execute();
   const deptSlugs = deptRows.map((d) => d.slug);
@@ -84,16 +93,18 @@ export async function classify(text: string): Promise<ClassifiedIntent> {
   // Legal task classes are live data — whatever routing_rules can route.
   const taskClasses = [...new Set(rules.map((r) => r.task_class))].sort();
 
-  const own = route(
-    {
-      intent_summary: "kernel classification call",
-      task_class: "orchestration",
-      departments: deptSlugs.length > 0 ? [deptSlugs[0]] : ["engineering"],
-      approval_class: "none",
-      complexity: "single",
-    },
-    rules,
-  );
+  const ownCi = {
+    intent_summary: "kernel classification call",
+    departments: deptSlugs.length > 0 ? [deptSlugs[0]] : ["engineering"],
+    approval_class: "none" as const,
+    complexity: "single" as const,
+  };
+  let own: ResolvedRoute;
+  try {
+    own = route({ ...ownCi, task_class: opts.taskClass ?? "orchestration" }, rules);
+  } catch {
+    own = route({ ...ownCi, task_class: "orchestration" }, rules);
+  }
   if (own.mode !== "subscription") {
     throw new Error(
       `classify: 'orchestration' routing row resolved mode '${own.mode}' — ` +

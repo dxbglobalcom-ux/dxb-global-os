@@ -9,6 +9,7 @@ import { randomUUID } from "node:crypto";
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
+import { detectLang } from "./lang.js";
 import { logCall } from "./log.js";
 import { sttTranscribe, speachesConfig, type SpeachesConfig } from "./speaches.js";
 
@@ -25,6 +26,9 @@ export interface VoiceIntakeDeps {
 
 export interface VoiceIntakeInput {
   audio: Buffer;
+  /** caller's UI locale — a last-resort TIE-BREAK for language detection,
+   *  NEVER forced into STT (registered adaptation 2026-07-17: forcing the
+   *  dashboard locale made Whisper transcribe TR speech as fluent EN) */
   lang?: "tr" | "en";
   /** original upload name — Speaches sniffs the container format from it
    *  (browser MediaRecorder sends webm/opus, proofs send wav) */
@@ -54,7 +58,6 @@ export async function intakeVoiceCall(
   const db = deps.db;
   const stt = deps.stt ?? sttTranscribe;
   const cfg = deps.speaches ?? speachesConfig();
-  const lang = input.lang ?? "tr";
 
   const callId = randomUUID();
   const timeline: TimelineEntry[] = [];
@@ -100,12 +103,15 @@ export async function intakeVoiceCall(
   step("listening");
   await logCall(db, { id: callId, status: "listening", timeline });
 
-  // 1. STT (§17: empty transcript → one retry → honest failure, never a guess)
+  // 1. STT (§17: empty transcript → one retry → honest failure, never a guess).
+  //    Whisper runs in AUTO-DETECT — no language is ever forced (the CEO may
+  //    speak TR at an EN dashboard); the utterance language is read from the
+  //    transcript afterwards.
   step("transcribing");
   const sttStart = Date.now();
   let transcript = "";
   try {
-    const sttOpts = { lang, config: cfg, ...(input.filename ? { filename: input.filename } : {}) };
+    const sttOpts = { config: cfg, ...(input.filename ? { filename: input.filename } : {}) };
     transcript = await stt(input.audio, sttOpts);
     if (!transcript) transcript = await stt(input.audio, sttOpts);
   } catch (e) {
@@ -114,6 +120,7 @@ export async function intakeVoiceCall(
   result.sttMs = Date.now() - sttStart;
   if (!transcript) return fail("empty_transcript");
   result.transcript = transcript;
+  const lang = detectLang(transcript, input.lang);
 
   // 2. Intent lineage (V5): the SAME intake seam as the typed command bar.
   const intent = await db

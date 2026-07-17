@@ -1,0 +1,20 @@
+# DXB JARVIS wake daemon — systemd USER unit (install: scripts/systemd/install.sh)
+# Always-on microphone listener: "Selamaleykum ya Hamza" opens the voice line
+# with no password and no dashboard (VOICE_INTERACTION_SPEC §24bis).
+[Unit]
+Description=DXB JARVIS always-on wake daemon (Selamaleykum ya Hamza)
+After=network-online.target sound.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/DxB Global OS
+# .env may use `export KEY=…` lines — a login-shell source handles both
+# styles; systemd's EnvironmentFile does not.
+ExecStart=/bin/bash -lc 'set -a; for f in ./.env ./.env.local ./.env.daemon; do [ -f "$f" ] && source "$f"; done; exec pnpm jarvis'
+Restart=always
+RestartSec=5
+StandardOutput=append:%h/DxB Global OS/var/jarvis.log
+StandardError=append:%h/DxB Global OS/var/jarvis.log
+
+[Install]
+WantedBy=default.target

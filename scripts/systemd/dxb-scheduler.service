@@ -1,0 +1,21 @@
+# DXB resident scheduler — systemd USER unit (install: scripts/systemd/install.sh)
+# Born from the 2026-07-17 incident: the scheduler process silently died with
+# a laptop freeze and the voice line went unanswered until a human noticed.
+# One resident scheduler by law (04-01) — systemd is now its supervisor.
+[Unit]
+Description=DXB Global OS resident scheduler (pg-boss queues + voice drain)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/DxB Global OS
+# .env may use `export KEY=…` lines — a login-shell source handles both
+# styles; systemd's EnvironmentFile does not.
+ExecStart=/bin/bash -lc 'set -a; for f in ./.env ./.env.local ./.env.daemon; do [ -f "$f" ] && source "$f"; done; exec pnpm scheduler'
+Restart=always
+RestartSec=5
+StandardOutput=append:%h/DxB Global OS/var/scheduler.log
+StandardError=append:%h/DxB Global OS/var/scheduler.log
+
+[Install]
+WantedBy=default.target

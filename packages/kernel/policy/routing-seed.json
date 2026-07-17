@@ -24,5 +24,7 @@
   { "task_class": "video.classify", "match": {}, "model_tier": "L4", "model": "glm-5.2", "mode": "api", "effort": "low", "needs_council": false, "priority": 10 },
   { "task_class": "video.summarize", "match": {}, "model_tier": "L2", "model": "sonnet-5", "mode": "api", "effort": "medium", "needs_council": false, "priority": 10 },
   { "task_class": "video.explain", "match": {}, "model_tier": "L1", "model": "fable-5", "mode": "api", "effort": "high", "needs_council": false, "priority": 10 },
-  { "task_class": "video.explain", "match": {}, "model_tier": "L1", "model": "opus-4.8", "mode": "api", "effort": "high", "needs_council": false, "priority": 5 }
+  { "task_class": "video.explain", "match": {}, "model_tier": "L1", "model": "opus-4.8", "mode": "api", "effort": "high", "needs_council": false, "priority": 5 },
+  { "task_class": "voice.classify", "match": {}, "model_tier": "L4", "model": "claude-haiku-4-5", "mode": "subscription", "effort": "low", "needs_council": false, "priority": 0 },
+  { "task_class": "voice.answer", "match": {}, "model_tier": "L4", "model": "claude-haiku-4-5", "mode": "subscription", "effort": "low", "needs_council": false, "priority": 0 }
 ]

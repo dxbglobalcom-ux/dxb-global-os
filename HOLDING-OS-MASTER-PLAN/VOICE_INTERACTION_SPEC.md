@@ -19,7 +19,7 @@
 - Events `voice.*` on Broadcast.
 
 **DEĞİŞİR:**
-- U4 (JARVIS deferral) is REFINED, not repealed: spec now exists (this file); v1 call line executes as roadmap R3.1; Moderated-Mode boardroom stays deferred (D3) at the "add-later" architecture level in §3.4. INDEX U4 note updated accordingly.
+- U4 (JARVIS deferral) is REFINED, not repealed: spec now exists (this file); v1 call line executes as roadmap R3.1; Moderated-Mode boardroom stays deferred (D3) at the "add-later" architecture level in §3.4. INDEX U4 note updated accordingly. **R3.2 (2026-07-17):** the always-on wake layer itself SHIPPED (§24bis) — U4's deferred remainder is the Moderated Boardroom alone.
 
 ## 1. Purpose
 
@@ -83,6 +83,7 @@ Two tables, additive only (no breaking change to the existing schema — DATA_MO
 ## 5. Component structure
 
 - `packages/voice` (NEW, thin): call-session state machine, Speaches client, voicebox invoker, no business logic (business stays in orchestrator).
+- `packages/voice` R3.2 additions (§24bis): `jarvis-daemon.ts` (always-on wake daemon), `wake.ts` (fuzzy TR wake/dismiss matchers), `lang.ts` (utterance-language detection, §27 adaptation); supervised by `scripts/systemd/` user units + `install.sh`.
 - Dashboard `apps/dashboard` route `/voice`: push-to-talk, director picker, live transcript, playback (R3.1).
 - Speaches container (existing, unchanged). voicebox local install (existing; invoked via its MCP `voicebox.speak` or CLI).
 
@@ -210,6 +211,24 @@ Drop-family rollback: 0029x tables/fns are leaf objects (nothing else references
 5. `/voice` page → RULE #0 design pass (EN+TR, 2 widths, baselines).
 6. E2E spoken TR question → spoken answer; `voice_calls` row shows timings, `cost_eur=0` (D1 proof).
 
+## 24bis. JARVIS always-on wake layer (roadmap R3.2 — registered 2026-07-17)
+
+**CEO command (verbatim contract):** "Selamaleykum ya Hamza" spoken aloud → the line opens (no password, no dashboard, no line-picking); Hamza acknowledges by voice; every following utterance is a question on the SAME intake seam (V5 one-path, busy law §10 intact) answered aloud on the speakers; "kapanabilirsin / gidebilirsin (ya) Hamza …" closes the session.
+
+**Shipped shape (free-first D1, €0 marginal):**
+- `jarvis-daemon.ts` — resident wake daemon on the CEO terminal: `arecord` 16k mono capture (the proven Kelam M1 lane on this machine) → RMS voice-activity gate (silence costs nothing) → short-segment STT pass → fuzzy wake/dismiss match → active-session questions through `intakeVoiceCall` → answer WAV playback (`aplay`/`paplay` fallback) watched off `voice_calls`. Fixed spoken cues (ack/bye/busy/lost/err) pre-synthesized once per boot so the acknowledgement never waits on live TTS.
+- `wake.ts` — token-CLASS fuzzy matching, never exact strings (STT mangles greetings): wake = salam-class token ∧ hamza-class token in one utterance; hamza edit-distance bound ≤1 (at ≤2 the common word "hava" false-wakes — measured in the R3.2 unit battery). Dismiss = the CEO's listed verbs, stem-fuzzy.
+- Supervision: `scripts/systemd/dxb-jarvis.service` + `dxb-scheduler.service` user units + `install.sh`; ExecStart sources `.env`/`.env.local`/`.env.daemon` in-shell because systemd `EnvironmentFile` cannot read quoted dotenv syntax. `pnpm jarvis` repo entry.
+- Trust model: runs on the CEO's own terminal, reads the CEO's own microphone, talks to localhost services only — physical presence IS the authentication (same trust class as the laptop session itself). V6 unchanged: voice may still never approve.
+
+**R3.2 scope also closes two measured line defects:**
+1. **Voice fast lane (routing data):** spoken-call classify/answer rode the L1 `orchestration` row — measured 104s answer leg (live call f05cf286). New `routing_rules` rows `voice.classify` + `voice.answer` (L4, subscription mode) via migration `20260717090000` + `routing-seed.json` parity (KERN-02: routing stays pure data; both callers fall back to `orchestration` on a pre-migration DB). Answer leg re-measured 39.2s same-day on a thermally degraded X230 (honest floor below). SDK lesson NOT-1 applied to the answer query: `maxTurns: 4` — `maxTurns: 1` produced `error_max_turns` on the fast tier (probe call 30ddba44).
+2. **Utterance-language law:** §27 registered adaptation (UI locale never forced into STT; TTS voice follows the ANSWER language).
+
+**Honest hardware floor (measured X230, 2026-07-17):** wake reaction ≈ speech chunk + STT ≈ 3-6s; question→spoken-answer ≈ 30-60s nominal. Under the machine's measured thermal-critical state (cores 96-100°C against an 87°C threshold) raw small-model STT degraded 17.8s → 50-80s; a SECOND resident whisper model amplifies the thrash, so the wake pass defaults to the SAME model intake uses (one working set; a GPU/VPS host may point `DXB_WAKE_STT_MODEL` at a lighter model). The <1s wake upgrade lane remains openWakeWord custom-model training on the VPS/GPU path.
+
+**Verify:** `tests/r32` 36/36 (wake/dismiss/lang/WAV-header/ambient-gate contracts; count re-measured 2026-07-17 22:18 — the earlier "31" here and "35" in the roadmap row were stale mid-growth claims, recorded as a D8 lesson) · `systemctl --user is-active dxb-jarvis.service dxb-scheduler.service` → active · production probe `scripts/dev/voice-latency-probe.mjs` → `ended` row with per-leg timings · ⚠ spoken wake→answer at the CEO's ear = human gate (real mic + speakers), machine-unverifiable.
+
 ## 25. Dependencies
 
 Speaches container (measured Up) · voicebox install (measured present) · agents/directors live rows (220 agents in DB) · intents intake (exists) · NOT dependent on R1.2 revenue tables (parallel-safe) · R1.5 hook codification supplies the Islamic-boundary + decision-principles enforcement Hamza answers under.
@@ -226,6 +245,8 @@ Speaches container (measured Up) · voicebox install (measured present) · agent
 ## 27. Edge cases
 
 Mixed TR/EN utterance (whisper handles; answer language = utterance language) · silence/noise-only recording (empty-transcript path, no hallucinated text) · director with no voice identity yet (Kokoro fallback + auto-task to clone) · second concurrent call (rejected, line-busy) · very long dictation >2min (chunked STT; answer summarizes, full text in transcript) · CEO closes page mid-answer (call marked ended, transcript preserved).
+
+**Registered adaptation (2026-07-17) — utterance-language law implementation:** the UI locale is NOT a language source. Forcing the dashboard locale into STT made Whisper transcribe Turkish speech as fluent English (measured live, call f05cf286). Law as shipped: STT runs auto-detect; `lang.ts detectLang` decides from the transcript itself (TR chars → TR; else short-stopword vote; the caller's locale is a last-resort tie-break for signal-free one-word utterances only). The TTS voice must carry the ANSWER language: a registered voice identity speaks only when its `locale` matches the answer language (a TR clone reading EN text through TR phonemes was unintelligible on the CEO's live call), otherwise the language-default voice speaks and `degraded=true` stays honest; an EN default voice (`piper-en_US-lessac-medium`) joined the TR default in `speaches.ts`.
 
 ## 28. Done definition (this spec)
 

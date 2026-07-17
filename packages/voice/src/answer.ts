@@ -11,7 +11,7 @@ import { query } from "@anthropic-ai/claude-agent-sdk";
 import type { DB } from "@dxb/shared";
 import { classify, SDK_MODEL_IDS, loadPolicy, route } from "@dxb/kernel";
 import { recallMemory } from "@dxb/memory-router";
-import { ttsSpeak, speachesConfig, type SpeachesConfig } from "./speaches.js";
+import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./speaches.js";
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
 import { logCall } from "./log.js";
 
@@ -66,17 +66,24 @@ async function personaHead(repoRoot: string, personaPath: string | null): Promis
 
 async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string> {
   // One brain (V2): same subscription path and routing rows the kernel uses.
+  // Voice is a LATENCY-CRITICAL lane (registered adaptation 2026-07-17): a
+  // 2-4 sentence spoken answer routed through the L1 'orchestration' row cost
+  // a measured 104s wall on the CEO's live call — the dedicated 'voice.answer'
+  // row (fast tier, still subscription data in routing_rules) is the fix.
+  // Fallback to 'orchestration' keeps pre-migration DBs answering.
   const rules = await loadPolicy(db);
-  const r = route(
-    {
-      intent_summary: `voice call answer as ${q.agent.slug}`,
-      task_class: "orchestration",
-      departments: [q.agent.department],
-      approval_class: "none",
-      complexity: "single",
-    },
-    rules,
-  );
+  const ci = {
+    intent_summary: `voice call answer as ${q.agent.slug}`,
+    departments: [q.agent.department],
+    approval_class: "none" as const,
+    complexity: "single" as const,
+  };
+  let r;
+  try {
+    r = route({ ...ci, task_class: "voice.answer" }, rules);
+  } catch {
+    r = route({ ...ci, task_class: "orchestration" }, rules);
+  }
   const sys = [
     `You are ${q.agent.slug}, ${q.agent.role_level ?? "member"} of the ${q.agent.department} department at DXB Global.`,
     q.personaHead ? `Your persona (authoritative identity, follow it):\n${q.personaHead}` : "",
@@ -91,7 +98,10 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
       model: SDK_MODEL_IDS[r.model] ?? r.model,
       effort: "low",
       tools: [],
-      maxTurns: 1,
+      // Same lesson as classify NOT 1: with maxTurns 1 the SDK cannot recover
+      // when the model spends its only turn before the final text — measured
+      // error_max_turns on the fast-lane row (probe call 30ddba44, 2026-07-17).
+      maxTurns: 4,
     },
   });
   for await (const msg of stream) {
@@ -182,7 +192,7 @@ export async function answerVoiceCall(
   } else {
     let targetSlug = HAMZA_SLUG;
     try {
-      const classified = await classify(question);
+      const classified = await classify(question, { taskClass: "voice.classify" });
       const dept = classified.departments[0];
       if (dept) {
         const director = await db
@@ -238,11 +248,19 @@ export async function answerVoiceCall(
   step("speaking");
   const identity = await db
     .selectFrom("voice_identities")
-    .select(["engine", "profile_ref"])
+    .select(["engine", "profile_ref", "locale"])
     .where("agent_id", "=", agent.id)
     .where("status", "=", "active")
     .executeTakeFirst();
   result.degraded = !identity;
+  // The voice must carry the ANSWER language (§27) — a registered identity in
+  // another locale would read EN text through TR phonemes (unintelligible,
+  // measured on the CEO's live call 2026-07-17). Identity wins only when its
+  // locale matches; otherwise the language-default voice speaks.
+  const langVoice = ttsForLang(cfg, lang);
+  const spokenVoice = identity && identity.locale === lang
+    ? { model: undefined as string | undefined, voice: identity.profile_ref }
+    : { model: langVoice.model, voice: langVoice.voice };
   await logCall(db, {
     id: job.callId, status: "speaking", target_agent_slug: agent.slug,
     transcript: [...transcript, answerLine], timeline,
@@ -251,7 +269,8 @@ export async function answerVoiceCall(
   const ttsStart = Date.now();
   try {
     result.answerAudio = await tts(answerText, {
-      voice: identity?.profile_ref ?? cfg.ttsVoice,
+      voice: spokenVoice.voice,
+      ...(spokenVoice.model ? { model: spokenVoice.model } : {}),
       config: cfg,
     });
   } catch (e) {

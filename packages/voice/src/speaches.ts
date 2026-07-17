@@ -11,6 +11,12 @@ export interface SpeachesConfig {
   sttModel: string;
   ttsModel: string;
   ttsVoice: string;
+  /** language-default voices — the answer is spoken in the utterance language
+   *  (spec §27), so every supported language needs a phoneme-correct voice.
+   *  Measured defect 2026-07-17: EN answer through the TR piper voice was
+   *  unintelligible to the CEO's ear. */
+  ttsModelEn: string;
+  ttsVoiceEn: string;
 }
 
 export function speachesConfig(env: NodeJS.ProcessEnv = process.env): SpeachesConfig {
@@ -19,7 +25,16 @@ export function speachesConfig(env: NodeJS.ProcessEnv = process.env): SpeachesCo
     sttModel: env.DXB_STT_MODEL ?? "Systran/faster-whisper-small",
     ttsModel: env.DXB_TTS_MODEL ?? "speaches-ai/piper-tr_TR-fahrettin-medium",
     ttsVoice: env.DXB_TTS_VOICE ?? "tr_TR-fahrettin-medium",
+    ttsModelEn: env.DXB_TTS_MODEL_EN ?? "speaches-ai/piper-en_US-lessac-medium",
+    ttsVoiceEn: env.DXB_TTS_VOICE_EN ?? "en_US-lessac-medium",
   };
+}
+
+/** The (model, voice) pair whose phonemes match the answer language. */
+export function ttsForLang(cfg: SpeachesConfig, lang: "tr" | "en"): { model: string; voice: string } {
+  return lang === "en"
+    ? { model: cfg.ttsModelEn, voice: cfg.ttsVoiceEn }
+    : { model: cfg.ttsModel, voice: cfg.ttsVoice };
 }
 
 /** Audio → text. Returns the raw transcript ("" for silence — caller owns the
