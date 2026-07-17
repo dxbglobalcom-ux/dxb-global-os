@@ -13,13 +13,42 @@
     "(= privilege widening) requires a Fable-authored change with CEO-visible rationale.",
     "[FABLE 2026-07-12, E5.4b] people-hr added: HR spec DoD 'people-hr MCP profile' — house bus only",
     "(dxb-mcp, minimal set), enabling the HR factory's activation chain; no external servers granted.",
-    "[FABLE 2026-07-14, E9.5] Re-keyed to the LIVE registry (E5.x org rebuild replaced the department set; old slugs research/legal-de/specialized/support/testing no longer exist — the generator was failing against the live table). NO privilege widening: every live department gets the same minimal house-bus grant; the special classes moved with their function (finance: stripe/revolut/wise; legal (ex legal-de): docusign; engineering: github/git/context7; design: stitch)."
+    "[FABLE 2026-07-14, E9.5] Re-keyed to the LIVE registry (E5.x org rebuild replaced the department set; old slugs research/legal-de/specialized/support/testing no longer exist — the generator was failing against the live table). NO privilege widening: every live department gets the same minimal house-bus grant; the special classes moved with their function (finance: stripe/revolut/wise; legal (ex legal-de): docusign; engineering: github/git/context7; design: stitch).",
+    "[FABLE 2026-07-18, R4.3 — CEO order 2026-07-18 00:20 'Capability Arsenal Expansion'] FREE credential-less tranche catalogued: git (uvx mcp-server-git==2026.7.10, repo-pinned), context7 (@upstash/context7-mcp@3.2.4 workspace dep), playwright (@playwright/mcp@0.0.78 workspace dep, headless+isolated), scrapling (scrapling 0.4.10 venv MCP bridge, StealthyFetcher live-verified with camoufox v152.0.4-beta.27). Grant widening WITH rationale: playwright→engineering+quality (QA gates/browser testing, study card owner 'Eng/QA'); scrapling→strategy (research/opportunity-scan custody per R4.2 custody map). Browser/scrape output is UNTRUSTED input (study-card pitfall): it must never trigger gated actions or memory writes directly. github/stitch stay UNCATALOGUED by design = credential tranche (CEO hands secrets, vault-only); stripe/revolut/wise/docusign stay UNCATALOGUED = Phase-11 LOCKED (R6.1). Doctrine: HOLDING-OS-MASTER-PLAN/CAPABILITY_ARSENAL_DOCTRINE.md. Note: scrapling command path is host-absolute (~/scrapling-env); VPS placement re-provisions the venv and updates this entry (doctrine §placement)."
   ],
   "servers": {
     "dxb-mcp": {
       "command": "node",
       "args": [
         "packages/dxb-mcp/dist/index.js"
+      ]
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git==2026.7.10",
+        "--repository",
+        "./"
+      ]
+    },
+    "context7": {
+      "command": "node",
+      "args": [
+        "node_modules/@upstash/context7-mcp/dist/index.js"
+      ]
+    },
+    "playwright": {
+      "command": "node",
+      "args": [
+        "node_modules/@playwright/mcp/cli.js",
+        "--headless",
+        "--isolated"
+      ]
+    },
+    "scrapling": {
+      "command": "/home/ghost/scrapling-env/bin/scrapling",
+      "args": [
+        "mcp"
       ]
     }
   },
@@ -44,7 +73,8 @@
       "dxb-mcp": "*",
       "github": "*",
       "git": "*",
-      "context7": "*"
+      "context7": "*",
+      "playwright": "*"
     },
     "finance": {
       "dxb-mcp": "*",
@@ -75,7 +105,8 @@
       "dxb-mcp": "*"
     },
     "quality": {
-      "dxb-mcp": "*"
+      "dxb-mcp": "*",
+      "playwright": "*"
     },
     "revops": {
       "dxb-mcp": "*"
@@ -93,7 +124,8 @@
       "dxb-mcp": "*"
     },
     "strategy": {
-      "dxb-mcp": "*"
+      "dxb-mcp": "*",
+      "scrapling": "*"
     }
   }
 }

@@ -121,6 +121,23 @@ async function runRow(runId: string): Promise<{ status: string }> {
 }
 
 beforeAll(async () => {
+  // R4.3 orphan sweep: a crashed prior run (killed vitest, frozen laptop)
+  // leaves its random-slugged r23t-* fixture agent ACTIVE with a NULL
+  // hook_version — which then fails e10 spawn-binding's live acceptance
+  // proof (measured 2026-07-18: r23t-30019999-wf-agent). Slugs are random
+  // per run, so any pre-existing r23t-* agent is by construction an orphan.
+  const orphans = (
+    await sql<{ id: string }>`SELECT id FROM agents WHERE slug LIKE 'r23t-%'`.execute(db())
+  ).rows.map((r) => r.id);
+  if (orphans.length > 0) {
+    await sql`UPDATE agents SET employment_status = 'archived', persona_id = NULL
+      WHERE id = ANY(${orphans}::uuid[])`.execute(db());
+    await sql`DELETE FROM personas WHERE employee_id = ANY(${orphans}::uuid[])`.execute(db());
+    // Hard-delete only run-less orphans; one with agent_runs keeps its FK'd
+    // history and stays archived (archived never trips the e10 acceptance).
+    await sql`DELETE FROM agents WHERE id = ANY(${orphans}::uuid[])
+      AND NOT EXISTS (SELECT 1 FROM agent_runs r WHERE r.employee_id = agents.id)`.execute(db());
+  }
   await makeHookReadyEmployee();
 });
 

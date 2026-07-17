@@ -114,17 +114,29 @@ async function sweep() {
   await sql`DELETE FROM control_idempotency WHERE key LIKE ${`${M}-%`}`.execute(db());
 }
 
-beforeAll(sweep);
+// R4.3 backstop rework: snapshot quality's ACTUAL standing gateway grants at
+// suite start and restore exactly that set at the end — state-independent of
+// what the arsenal holds (8 dxb-mcp groups today + playwright@0.0.78 + any
+// future hand), and it can never over-grant a server quality never held.
+let qualityStanding: string[] = [];
+
+beforeAll(async () => {
+  await sweep();
+  qualityStanding = (
+    await sql<{ item_id: string }>`
+      SELECT g.item_id FROM library_grants g
+        JOIN library_items li ON li.id = g.item_id
+       WHERE g.grantee_kind = 'department' AND g.grantee_id = 'quality'
+         AND li.kind IN ('tool','mcp','skill','plugin')
+         AND (g.expires_at IS NULL OR g.expires_at > now())
+    `.execute(db())
+  ).rows.map((r) => r.item_id);
+});
 afterAll(async () => {
   await sweep();
-  // R4.2 backstop: whatever happened above, 'quality' leaves the suite with
-  // its full standing core grant package (8 dxb-mcp groups; grant = upsert).
-  const groups = await sql<{ id: string }>`
-    SELECT id FROM library_items WHERE kind = 'mcp' AND version IS NULL
-  `.execute(db());
-  for (const g of groups.rows) {
+  for (const itemId of qualityStanding) {
     await ceoAction({
-      action: "grant", item_id: g.id, grantee_kind: "department", grantee_id: "quality",
+      action: "grant", item_id: itemId, grantee_kind: "department", grantee_id: "quality",
     });
   }
   await closeDb();
@@ -368,16 +380,20 @@ describe("grant→profile chain (G3, §21 E2E)", () => {
     const skill = await registerItem({ kind: "skill", name: `${M}-skill-probe` });
     const group = await registerItem({ kind: "mcp", name: "dxb-mcp/queue", version: M });
 
-    // R4.2: departments hold the STANDING core grant package (8 dxb-mcp
-    // groups). To prove A4 narrowing on 'quality' the non-queue standing
-    // grants are PARKED (revoked via control fn) for the duration of this
-    // test and re-granted in the finally block — same-door mutation hygiene.
+    // R4.2/R4.3: departments hold STANDING grants (8 dxb-mcp groups + external
+    // arsenal servers, e.g. quality's playwright@0.0.78). To prove A4
+    // narrowing on 'quality' EVERY standing gateway-kind grant except the
+    // queue probe group is PARKED (revoked via control fn) for the duration
+    // of this test and re-granted in the finally block — same-door mutation
+    // hygiene, state-independent of whatever the arsenal holds by then.
     const parked = (
       await sql<{ item_id: string; name: string }>`
         SELECT g.item_id, li.name FROM library_grants g
           JOIN library_items li ON li.id = g.item_id
          WHERE g.grantee_kind = 'department' AND g.grantee_id = 'quality'
-           AND li.kind = 'mcp' AND li.version IS NULL AND li.name <> 'dxb-mcp/queue'
+           AND li.kind IN ('tool','mcp','skill','plugin')
+           AND li.name <> 'dxb-mcp/queue'
+           AND (g.expires_at IS NULL OR g.expires_at > now())
       `.execute(db())
     ).rows;
     for (const p of parked) {

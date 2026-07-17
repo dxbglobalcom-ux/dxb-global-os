@@ -10,7 +10,8 @@
     "Denials are hard overrides ON TOP of default-deny grants (policy/grants.json): a grant mistake cannot",
     "resurface a denied server. ⛔ FABLE-ONLY: REMOVING or NARROWING any entry here (= privilege widening)",
     "requires a Fable-authored change with CEO-visible rationale. Additions (tightening) are allowed.",
-    "[FABLE 2026-07-14, E9.5] Re-keyed to the live registry (same event as grants.json). Only slug re-keys and TIGHTENING: social-media joins the marketing/sales no-GitHub class; every new department gets the payment/contract denial set."
+    "[FABLE 2026-07-14, E9.5] Re-keyed to the live registry (same event as grants.json). Only slug re-keys and TIGHTENING: social-media joins the marketing/sales no-GitHub class; every new department gets the payment/contract denial set.",
+    "[FABLE 2026-07-18, R4.3] TIGHTENING with the free-tranche install: (1) playwright.browser_run_code_unsafe + playwright.browser_file_upload denied for every playwright-granted department — arbitrary in-page JS and local-file upload are exfiltration surfaces; the snapshot/act tool set covers all QA/testing needs. (2) git WRITE tools (git_commit/git_add/git_reset/git_checkout/git_create_branch) denied for engineering — construction-phase K1 rule: repo authorship is Fable-only; runtime agents get the READ set (status/diff/log/show/branch). Revisit when holding-owned product repos (Kelam etc.) get their own write policy."
   ],
   "ceo": [
     "github",
@@ -46,7 +47,14 @@
     "stripe",
     "docusign",
     "revolut",
-    "wise"
+    "wise",
+    "playwright.browser_run_code_unsafe",
+    "playwright.browser_file_upload",
+    "git.git_commit",
+    "git.git_add",
+    "git.git_reset",
+    "git.git_checkout",
+    "git.git_create_branch"
   ],
   "finance": [
     "docusign"
@@ -97,7 +105,9 @@
     "stripe",
     "docusign",
     "revolut",
-    "wise"
+    "wise",
+    "playwright.browser_run_code_unsafe",
+    "playwright.browser_file_upload"
   ],
   "revops": [
     "stripe",

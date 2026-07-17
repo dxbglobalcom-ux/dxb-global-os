@@ -8,7 +8,7 @@
 import { PgBoss } from "pg-boss";
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
-import { checkPins, compileLibraryProfiles, readDxbMcpInventory } from "@dxb/gateway";
+import { checkPins, compileLibraryProfiles, readFullInventory } from "@dxb/gateway";
 import {
   hrPerformanceDaily,
   hrProbationCheck,
@@ -224,7 +224,14 @@ export async function startScheduler(): Promise<PgBoss> {
   });
 
   await boss.work(QUEUES.pinCheck, async () => {
-    await checkPins(getDb(), await readDxbMcpInventory());
+    // R4.3: the corpus now spans dxb-mcp + every external catalogued server.
+    // Unreachable servers stay out of the missing-sweep scope (spawn hiccup ≠
+    // vanished tool) but are logged — silence would hide a dead hand.
+    const inv = await readFullInventory();
+    for (const [server, err] of Object.entries(inv.failures)) {
+      console.warn(`[pin-check] external server '${server}' unreachable: ${err}`);
+    }
+    await checkPins(getDb(), inv.entries, inv.reachable);
   });
 
   // Command-bar intent intake (08-05): same re-arm-even-on-throw discipline

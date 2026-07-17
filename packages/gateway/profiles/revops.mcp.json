@@ -1,9 +1,9 @@
 {
   "_department": "revops",
-  "_generated_at": "2026-07-17T20:52:38.282Z",
+  "_generated_at": "2026-07-17T23:01:35.744Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
   "_skills": [],
-  "_source_hash": "c41eff302e9d803b7310dae2c668d7d9c3b9b9721e1431f20725ca2a873329ec",
+  "_source_hash": "84106766a78c903e1dbefdce56b8abb55ba17eac72802e1472e11195b3bb9afa",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",

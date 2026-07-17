@@ -98,8 +98,11 @@ describe("pin-quarantine (MCP-03 anti rug-pull)", () => {
     expect(after[0]!.schema_hash).toBe(computeToolHash(toolA()));
   });
 
+  // R4.3: every checkPins call scopes the missing-sweep to the fixture server —
+  // without it, each run stamped ALL real dxb-mcp pins 'tool_missing' into the
+  // live audit ledger (measured 2026-07-18: 147 runs × 21 = 3087 rows).
   it("(2) a live description change quarantines WITH audit; the other tool is untouched", async () => {
-    const result = await checkPins(db, [toolAMutated(), toolB()]);
+    const result = await checkPins(db, [toolAMutated(), toolB()], new Set([SERVER]));
     expect(result.quarantined).toEqual([{ server: SERVER, tool: "alpha_lookup" }]);
     expect(result.matched).toBe(1);
 
@@ -119,14 +122,14 @@ describe("pin-quarantine (MCP-03 anti rug-pull)", () => {
   });
 
   it("(3) re-running against the same mutated inventory adds NO duplicate audit row", async () => {
-    const result = await checkPins(db, [toolAMutated(), toolB()]);
+    const result = await checkPins(db, [toolAMutated(), toolB()], new Set([SERVER]));
     expect(result.quarantined).toHaveLength(0);
     expect(result.alreadyQuarantined).toBe(1);
     expect(await quarantineAudits()).toHaveLength(1);
   });
 
   it("(4) restoring the original description does NOT un-quarantine (sticky quarantine)", async () => {
-    const result = await checkPins(db, [toolA(), toolB()]);
+    const result = await checkPins(db, [toolA(), toolB()], new Set([SERVER]));
     expect(result.quarantined).toHaveLength(0);
     expect(result.matched).toBe(2); // hash matches the pin again…
 

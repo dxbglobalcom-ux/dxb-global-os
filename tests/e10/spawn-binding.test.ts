@@ -231,9 +231,14 @@ describe("E10.2 spawn binding — ROADMAP acceptance", () => {
   });
 
   it("§21 SQL proof: zero active employees with a NULL hook_version", async () => {
+    // R4.3: parallel live-DB suites (r23/e10 own fixtures) hold an ACTIVE
+    // fixture agent for a moment before their run stamps it — exclude
+    // fixture-prefixed slugs so the proof measures the REAL workforce only
+    // (interleave race measured 2026-07-18: r23t fixture mid-window).
     const res = await sql<{ n: number }>`
       SELECT count(*)::int AS n FROM agents
-       WHERE employment_status = 'active' AND hook_version IS NULL`.execute(db());
+       WHERE employment_status = 'active' AND hook_version IS NULL
+         AND slug NOT LIKE 'r23t-%' AND slug NOT LIKE 'e102t%'`.execute(db());
     expect(res.rows[0].n).toBe(0);
   });
 });
