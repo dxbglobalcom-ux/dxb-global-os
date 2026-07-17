@@ -33,11 +33,14 @@ import type { Locale } from "@/lib/i18n";
 //     kill-switch pair (control lane). Control rows carry an explicit
 //     CONTROL badge — the READ-ONLY ↔ CONTROL distinction is visible per
 //     row, never implied (DESIGN_SYSTEM §13).
-//  3. CEO intent: free text that matches nothing is never a dead end — it
-//     submits to the kernel seam (POST /api/intent, raw text only; the
-//     classify→decompose→dispatch pipeline lives in the orchestrator).
-//     After submit the palette WATCHES the chain live: intent status →
-//     task rows → audit trail links (roadmap E6.4 DoD).
+//  3. CEO intent: the instruction lane is ALWAYS visible (RULE #0-B trigger
+//     case, 2026-07-17: "where does the CEO write a full intent?" needs a
+//     standing answer — the old 3-char reveal rule is dead). Activating the
+//     lane opens a MULTILINE composer (Enter sends, Shift+Enter breaks a
+//     line) seeded with whatever was typed; text submits to the kernel seam
+//     (POST /api/intent, raw text only; classify→decompose→dispatch lives in
+//     the orchestrator). After submit the palette WATCHES the chain live:
+//     intent status → task rows → audit trail links (roadmap E6.4 DoD).
 
 export type PaletteLabels = {
   placeholder: string;
@@ -49,6 +52,10 @@ export type PaletteLabels = {
   sectionIntent: string;
   intentSubmit: string;
   intentSubmitting: string;
+  intentCompose: string;
+  intentPlaceholder: string;
+  intentHint: string;
+  intentBack: string;
   controlBadge: string;
   chainTitle: string;
   chainStatus: Record<string, string>;
@@ -117,7 +124,11 @@ export function CommandPalette({
   const [selected, setSelected] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [chain, setChain] = useState<ChainState | null>(null);
+  const [mode, setMode] = useState<"list" | "compose">("list");
+  const [draft, setDraft] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const modeRef = useRef<"list" | "compose">("list");
   const listRef = useRef<HTMLDivElement>(null);
   const pollRef = useRef<number | null>(null);
 
@@ -127,6 +138,8 @@ export function CommandPalette({
     setResults([]);
     setSelected(0);
     setChain(null);
+    setMode("list");
+    setDraft("");
     if (pollRef.current) window.clearInterval(pollRef.current);
   }, []);
 
@@ -137,7 +150,10 @@ export function CommandPalette({
         event.preventDefault();
         setOpen((v) => !v);
       } else if (event.key === "Escape") {
-        close();
+        // In the composer, Escape steps back to the list — it must never
+        // throw a typed instruction away with the whole palette.
+        if (modeRef.current === "compose") setMode("list");
+        else close();
       }
     }
     window.addEventListener("keydown", onKey);
@@ -147,6 +163,11 @@ export function CommandPalette({
   useEffect(() => {
     if (open) inputRef.current?.focus();
   }, [open]);
+
+  useEffect(() => {
+    modeRef.current = mode;
+    if (mode === "compose") textareaRef.current?.focus();
+  }, [mode]);
 
   // Debounced global search.
   useEffect(() => {
@@ -185,9 +206,9 @@ export function CommandPalette({
     for (const a of actions) list.push({ kind: "action", ...a });
     if (showKill) list.push({ kind: "kill" });
     for (const r of results) list.push({ kind: "result", result: r });
-    if (q.length >= 3) list.push({ kind: "intent" });
+    list.push({ kind: "intent" });
     return list;
-  }, [actions, showKill, results, q]);
+  }, [actions, showKill, results]);
 
   // Watch the intent chain live after submit: intents row status plus the
   // task rows it dispatched. Poll stops at a terminal chain state.
@@ -227,19 +248,22 @@ export function CommandPalette({
     [],
   );
 
-  async function submitIntent() {
-    if (submitting || q.length < 3) return;
+  async function submitIntent(raw: string) {
+    const text = raw.trim();
+    if (submitting || text.length === 0) return;
     setSubmitting(true);
     try {
       const res = await fetch("/api/intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: query.trim(), lang: locale }),
+        body: JSON.stringify({ text, lang: locale }),
       });
       if (res.status === 201) {
         const body = (await res.json()) as { intentId: string };
-        watchChain(body.intentId, query.trim());
+        watchChain(body.intentId, text);
         setQuery("");
+        setDraft("");
+        setMode("list");
         setResults([]);
       }
     } finally {
@@ -278,7 +302,10 @@ export function CommandPalette({
     } else if (item.kind === "kill") {
       void toggleKillSwitch();
     } else {
-      void submitIntent();
+      // The lane opens the composer; sending is always the composer's own
+      // explicit act (deliberate CONTROL action, seeded with the query).
+      setDraft((prev) => (query.trim().length > 0 ? query.trim() : prev));
+      setMode("compose");
     }
   }
 
@@ -377,7 +404,7 @@ export function CommandPalette({
                           <span className="font-data text-caption text-ink-muted">
                             {task.status}
                           </span>
-                          <span className="min-w-0 truncate text-ink-primary">
+                          <span className="min-w-0 break-words text-ink-primary">
                             {task.objective}
                           </span>
                         </li>
@@ -412,6 +439,54 @@ export function CommandPalette({
                     onClick={close}
                   >
                     {labels.chainClose}
+                  </button>
+                </div>
+              </div>
+            ) : mode === "compose" ? (
+              <div className="space-y-3 p-4" data-testid="intent-composer">
+                <div className="flex items-center justify-between">
+                  <p className="label-caps text-accent-brushed">{labels.sectionIntent}</p>
+                  <span className="label-caps rounded-input border border-status-danger/60 px-1.5 py-0.5 text-caption text-status-danger">
+                    {labels.controlBadge}
+                  </span>
+                </div>
+                <textarea
+                  ref={textareaRef}
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && !event.shiftKey) {
+                      event.preventDefault();
+                      void submitIntent(draft);
+                    }
+                  }}
+                  placeholder={labels.intentPlaceholder}
+                  rows={4}
+                  data-testid="intent-composer-input"
+                  className="max-h-48 min-h-24 w-full resize-none rounded-input border border-edge-neutral bg-transparent p-3 text-body-md text-ink-primary outline-none placeholder:text-ink-muted focus:border-edge-champagne"
+                />
+                <div className="flex items-center gap-3">
+                  <p className="text-caption text-ink-muted">{labels.intentHint}</p>
+                  <button
+                    type="button"
+                    className="ml-auto text-body-s text-ink-muted hover:text-ink-primary"
+                    onClick={() => setMode("list")}
+                  >
+                    {labels.intentBack}
+                  </button>
+                  <button
+                    type="button"
+                    data-testid="intent-composer-send"
+                    disabled={submitting || draft.trim().length === 0}
+                    onClick={() => void submitIntent(draft)}
+                    className="flex items-center gap-2 rounded-input border border-status-danger/60 px-3 py-1.5 text-body-s text-status-danger transition duration-[var(--t-fast)] ease-refined enabled:hover:bg-status-danger/10 disabled:opacity-40"
+                  >
+                    {submitting ? (
+                      <Loader2 size={14} className="animate-spin" aria-hidden />
+                    ) : (
+                      <Send size={14} strokeWidth={1.5} aria-hidden />
+                    )}
+                    {submitting ? labels.intentSubmitting : labels.intentSubmit}
                   </button>
                 </div>
               </div>
@@ -501,41 +576,29 @@ export function CommandPalette({
                   <p className="px-3 py-2 text-body-s text-ink-muted">{labels.empty}</p>
                 )}
 
-                {q.length >= 3 && (
-                  <div>
-                    <p className="label-caps px-3 py-1 text-ink-muted">
-                      {labels.sectionIntent}
-                    </p>
-                    <button
-                      type="button"
-                      className="block w-full text-left"
-                      data-testid="palette-intent-submit"
-                      onClick={() => activate({ kind: "intent" })}
-                      onMouseEnter={() => setSelected(items.length - 1)}
-                    >
-                      <CommandItem
-                        icon={
-                          submitting ? (
-                            <Loader2 size={14} className="animate-spin" aria-hidden />
-                          ) : (
-                            <Send size={14} strokeWidth={1.5} aria-hidden />
-                          )
-                        }
-                        title={
-                          submitting
-                            ? labels.intentSubmitting
-                            : `${labels.intentSubmit}: “${query.trim()}”`
-                        }
-                        selected={selected === items.length - 1}
-                        trailing={
-                          <span className="label-caps rounded-input border border-status-danger/60 px-1.5 py-0.5 text-caption text-status-danger">
-                            {labels.controlBadge}
-                          </span>
-                        }
-                      />
-                    </button>
-                  </div>
-                )}
+                <div>
+                  <p className="label-caps px-3 py-1 text-ink-muted">
+                    {labels.sectionIntent}
+                  </p>
+                  <button
+                    type="button"
+                    className="block w-full text-left"
+                    data-testid="palette-intent-submit"
+                    onClick={() => activate({ kind: "intent" })}
+                    onMouseEnter={() => setSelected(items.length - 1)}
+                  >
+                    <CommandItem
+                      icon={<Send size={14} strokeWidth={1.5} aria-hidden />}
+                      title={labels.intentCompose}
+                      selected={selected === items.length - 1}
+                      trailing={
+                        <span className="label-caps rounded-input border border-status-danger/60 px-1.5 py-0.5 text-caption text-status-danger">
+                          {labels.controlBadge}
+                        </span>
+                      }
+                    />
+                  </button>
+                </div>
               </div>
             )}
           </div>

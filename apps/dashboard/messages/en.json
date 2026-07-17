@@ -289,13 +289,17 @@
     "palette": {
       "placeholder": "Search or command…",
       "hintOpen": "⌘K",
-      "empty": "No results — press Enter to send as an intent",
+      "empty": "No results — use the instruction lane below",
       "searching": "Searching…",
       "sectionActions": "Actions",
       "sectionResults": "Results",
       "sectionIntent": "Intent",
       "intentSubmit": "Send intent",
       "intentSubmitting": "Sending intent…",
+      "intentCompose": "Write an instruction to the company…",
+      "intentPlaceholder": "State your intent in full — the company executes it end-to-end.",
+      "intentHint": "Enter sends · Shift+Enter breaks a line",
+      "intentBack": "Back",
       "controlBadge": "CONTROL",
       "chainTitle": "Intent chain",
       "chainStatus": {
@@ -923,6 +927,14 @@
       "empty": "No directors registered."
     },
     "hr": {
+      "teamTitle": "HR Team — People & HR",
+      "deptTitle": "Departments",
+      "deptHead": "Director",
+      "deptNoHead": "No director bound",
+      "deptEmpty": "No staff yet",
+      "deptUnequipped": "unequipped",
+      "viewEquipment": "Equipment audit",
+      "viewOverview": "Overview",
       "kpiRoster": "Roster",
       "kpiProbation": "Probation queue",
       "kpiUnequipped": "Unequipped",

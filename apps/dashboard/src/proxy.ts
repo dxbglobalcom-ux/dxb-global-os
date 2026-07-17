@@ -100,5 +100,12 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
+  // _next/webpack-hmr MUST stay out of the auth wall: the dev HMR websocket
+  // handshake cannot follow a redirect, and a pre-login browser that can't
+  // open it enters Next's full-reload loop — hydration never completes and
+  // the login form submits natively (measured 2026-07-17: ERR_INVALID_HTTP_
+  // RESPONSE storm + /login? GET loop on a fresh unauthenticated browser).
+  matcher: [
+    "/((?!_next/static|_next/image|_next/webpack-hmr|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };

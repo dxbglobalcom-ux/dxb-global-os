@@ -62,10 +62,9 @@ export function LiveTicker({
               href="/live"
               className="block rounded-input border border-edge-neutral bg-surface-graphite p-2 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
             >
-              <div
-                className="line-clamp-2 text-body-s text-ink-primary"
-                title={r.label ?? r.event ?? r.source}
-              >
+              {/* Full wrap, never "…" — visible ellipsis on a CEO surface is
+                  an automatic FAIL (RULE #0 Amendment A1, 2026-07-17). */}
+              <div className="min-w-0 break-words text-body-s text-ink-primary">
                 {r.label ?? r.event ?? r.source}
               </div>
               <div className="mt-1 flex items-center gap-2">

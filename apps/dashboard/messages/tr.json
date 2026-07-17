@@ -289,13 +289,17 @@
     "palette": {
       "placeholder": "Ara veya komut ver…",
       "hintOpen": "⌘K",
-      "empty": "Sonuç yok — Enter ile niyet olarak gönder",
+      "empty": "Sonuç yok — aşağıdaki talimat şeridini kullan",
       "searching": "Aranıyor…",
       "sectionActions": "Eylemler",
       "sectionResults": "Sonuçlar",
       "sectionIntent": "Niyet",
       "intentSubmit": "Niyeti gönder",
       "intentSubmitting": "Niyet gönderiliyor…",
+      "intentCompose": "Şirkete talimat yaz…",
+      "intentPlaceholder": "Niyetini eksiksiz yaz — şirket uçtan uca yürütür.",
+      "intentHint": "Enter gönderir · Shift+Enter yeni satır",
+      "intentBack": "Geri",
       "controlBadge": "KONTROL",
       "chainTitle": "Niyet zinciri",
       "chainStatus": {
@@ -923,6 +927,14 @@
       "empty": "Kayıtlı direktör yok."
     },
     "hr": {
+      "teamTitle": "İK Kadrosu — People & HR",
+      "deptTitle": "Departmanlar",
+      "deptHead": "Direktör",
+      "deptNoHead": "Direktör atanmadı",
+      "deptEmpty": "Henüz kadro yok",
+      "deptUnequipped": "ekipman eksik",
+      "viewEquipment": "Ekipman denetimi",
+      "viewOverview": "Genel görünüm",
       "kpiRoster": "Kadro",
       "kpiProbation": "Deneme kuyruğu",
       "kpiUnequipped": "Donanımsız",
