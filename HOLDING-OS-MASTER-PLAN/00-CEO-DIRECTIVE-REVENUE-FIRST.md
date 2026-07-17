@@ -34,7 +34,27 @@ Governing formula (Talep §2, verbatim ruling):
 
 ## 4. External audit adoption
 
-Codex audit findings F-01..F-15: 14 CONFIRMED + 1 PARTIAL (Fable measurements 2026-07-17, recorded in session memory + roadmap R2 rows). Core adoption: **roadmap % ≠ product capability %**. The execution core (resident worker F-01, worker tool surface F-02/F-04, workflow executor tools F-03, real outbox handlers F-06, fresh-bootstrap migration parity F-08) becomes the R2 "Execution Activation" roadmap block — prerequisite for any real revenue operation.
+Codex audit findings F-01..F-15: 14 CONFIRMED + 1 PARTIAL (Fable measurements 2026-07-17). Core adoption: **roadmap % ≠ product capability %**. The execution core (resident worker F-01, worker tool surface F-02/F-04, workflow executor tools F-03, real outbox handlers F-06, fresh-bootstrap migration parity F-08) became the R2 "Execution Activation" roadmap block — prerequisite for any real revenue operation.
+
+**Per-finding disposition ledger (registered 2026-07-17 ~22:35 — CEO question exposed that the previous sentence claimed "recorded" while F-07/F-09..F-15 had NO disposition anywhere; SPEC-GAP rule 5 fix, measured `grep F-xx` across corpus+STATE):**
+
+| Finding | Disposition | Where |
+|---|---|---|
+| F-01 resident worker | ✓ executed | R2.1 |
+| F-02 worker real tool surface | ✓ executed | R2.2 |
+| F-03 workflow executor tools | ✓ executed | R2.3 |
+| F-04 grant→profile→runtime chain | ✓ executed | R2.2 (live F-02+F-04 chains) |
+| F-05 spec-vs-runner gap | ✓ ruled | R2.3 + U12 (runner cancelled, responsibilities re-homed) |
+| F-06 real outbox handlers | ✓ staged | R2.4 (staging; real providers = Phase-11 LOCKED) |
+| F-07 social/payment/commerce integrations deferred WITHOUT canonical open item | **REGISTERED now** | roadmap R6.1 (Phase-11-gated open item) |
+| F-08 migration ledger parity | ✓ executed | R2.5 (ledger=files deterministic) |
+| F-09 E13 acceptance could pass on mock/demo evidence | **REGISTERED now** | E13.1 gate hardened: production-capability proofs mandatory, mock/demo evidence CANNOT close the row |
+| F-10 empty live tables ≠ error, but production work unproven | ✓ discipline + evidence | Evidence-Before-Done + live production chains recorded in R2.2 (first autonomous delivery), R2.4 (real staging send), R3.1 (spoken Q→A) |
+| F-11 training/capability lifecycle unproven | ◐ partially executed | R4.1 ✓ (library knows tools, training 1→75) + R4.2 OPEN row = execution home (grants>0, review>0, need-matrix) |
+| F-12 University standalone product layer absent | **REGISTERED now** | roadmap R6.2 (OD-slot product row, Kelam pattern) |
+| F-13 JARVIS not bound to canonical closure | ✓ bound | R3.1 ✓ + R3.2 ◐ + U15 ("MUST be solved before project end", mandatory E13.x read) |
+| F-14 roadmap/STATE status drift | ✓ discipline | measured re-bases recorded in STATE (12:55 + 22:25); tonight's R3.2 ✓→◐ truth-restore is the enforcement example; drift check = each wave's STATE sync |
+| F-15 real business pilot not mandatory at closure | **REGISTERED now** | E13.1 gate addition: closure requires Outleteuro pilot readiness attested (MASTER_PLAN Phase-11 definition), simulation cannot substitute |
 
 ## 5. Precedence
 
