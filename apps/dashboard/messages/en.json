@@ -269,7 +269,11 @@
         "health": "System Health",
         "logs": "Logs",
         "backups": "Backups",
-        "mcp": "MCP Servers"
+        "mcp": "MCP Servers",
+        "revenue": "Revenue Intelligence",
+        "revenueObjectives": "Objectives",
+        "revenueOpportunities": "Opportunities",
+        "revenuePortfolio": "Portfolio"
       }
     },
     "bar": {
@@ -757,6 +761,100 @@
       "empty": "No memory records match this filter.",
       "showing": "Showing",
       "of": "of"
+    },
+    "revenue": {
+      "ui": {
+        "kpiTarget": "Target",
+        "kpiRealized": "Realized net",
+        "kpiGap": "Gap",
+        "kpiDaysLeft": "Days left",
+        "runRate": "Run rate / day",
+        "noPeriod": "No period — activates with one",
+        "netUnverified": "Cost rows missing for the period — net unverified",
+        "snevTitle": "SNEV — Sustainable Net Enterprise Value",
+        "snevNet90": "Trailing 90-day net",
+        "snevRecurring": "Recurring share",
+        "snevConcentration": "Top-client share",
+        "snevValue": "SNEV",
+        "snevNote": "90-day net × recurring share − concentration penalty.",
+        "pipelineTitle": "Opportunity pipeline",
+        "pipelineEmpty": "0 opportunities — first scan 05:10 UTC.",
+        "objectivesTitle": "Objective contracts",
+        "objectivesEmpty": "No objectives.",
+        "portfolioTitle": "Portfolio allocations",
+        "portfolioEmpty": "No allocations yet.",
+        "activeAllocations": "Active allocations",
+        "stoppedAllocations": "Stopped allocations",
+        "objectiveCard": "Objective",
+        "colTitle": "Title",
+        "colEngine": "Engine",
+        "colScore": "Score",
+        "colCapital": "Capital req.",
+        "colState": "State",
+        "colHalal": "Halal",
+        "colCreated": "Created",
+        "colStatus": "Status",
+        "colMetric": "Metric",
+        "colPeriod": "Period",
+        "colProposedBy": "Proposed by",
+        "colEvidence": "Evidence",
+        "colObjective": "Objective",
+        "colOpportunity": "Opportunity",
+        "colExpected": "Expected net",
+        "colCommitted": "Committed",
+        "colStopped": "Stopped",
+        "colReason": "Reason",
+        "scoreDims": "Score breakdown (12 dims)",
+        "unscored": "Not scored yet",
+        "metricLabels": {
+          "net_profit": "Net profit",
+          "revenue": "Revenue"
+        },
+        "statusLabels": {
+          "draft": "Draft",
+          "proposed": "Proposed",
+          "active": "Active",
+          "achieved": "Achieved",
+          "missed": "Missed",
+          "closed": "Closed"
+        },
+        "stateLabels": {
+          "discovered": "Discovered",
+          "scored": "Scored",
+          "shortlisted": "Shortlisted",
+          "piloting": "Piloting",
+          "scaling": "Scaling",
+          "retired": "Retired",
+          "rejected": "Rejected"
+        },
+        "halalLabels": {
+          "pending": "Pending",
+          "halal": "Halal",
+          "haram": "Haram",
+          "review": "In review"
+        },
+        "dimLabels": {
+          "market": "Market",
+          "trend": "Trend",
+          "demand": "Demand",
+          "competition": "Competition",
+          "price_gap": "Price gap",
+          "logistics": "Logistics",
+          "platform_fees": "Platform fees",
+          "tax_constraints": "Tax constraints",
+          "ad_cost": "Ad cost",
+          "est_margin": "Est. margin",
+          "time_to_revenue_days": "Time to revenue",
+          "scalability": "Scalability"
+        },
+        "viewLedger": "P&L ledger",
+        "viewObjectives": "Objectives",
+        "viewOpportunities": "Opportunities",
+        "viewPortfolio": "Portfolio",
+        "rejectedCause": "Cause",
+        "halalReason": "Halal note",
+        "boundariesNote": "Islamic boundaries are immutable — haram scope never advances."
+      }
     },
     "intelligence": {
       "kpiAlerts": "Active alerts",

@@ -20,10 +20,12 @@ import {
   CircleDollarSign,
   ClipboardCheck,
   Coins,
+  Compass,
   Cpu,
   Database,
   FileClock,
   Gauge,
+  Gem,
   GitBranch,
   Globe,
   HardDrive,
@@ -34,6 +36,7 @@ import {
   LayoutDashboard,
   Library,
   Network,
+  PieChart,
   Plug,
   Puzzle,
   Radio,
@@ -43,6 +46,7 @@ import {
   Shield,
   ShieldAlert,
   Sparkles,
+  Target,
   TrendingUp,
   UserRound,
   Users,
@@ -124,6 +128,13 @@ export const COMMAND_NAV: NavGroup[] = [
       // U8 (CEO emri 2026-07-11 ~02:55): MCP sunucuları Intelligence
       // grubuna eklendi — §7 tablosuna +1 sayfa, kayıtlı uyarlama.
       { key: "mcp", href: "/ai/mcp", icon: Cable },
+      // R1.4 (REVENUE_ENGINE_SPEC §7, Dalga 6): Revenue Intelligence rotaları
+      // Intelligence grubuna eklendi — spec-emirli kayıtlı ekleme (U9 dalgası),
+      // U8 emsali; Fable 5 yazımı + CEO "başlıyoruz" onayı (CC-SPEC §24 şartı).
+      { key: "revenue", href: "/revenue", icon: Gem },
+      { key: "revenueObjectives", href: "/revenue/objectives", icon: Target },
+      { key: "revenueOpportunities", href: "/revenue/opportunities", icon: Compass },
+      { key: "revenuePortfolio", href: "/revenue/portfolio", icon: PieChart },
     ],
   },
   {

@@ -890,7 +890,7 @@ REVOKE ALL ON FUNCTION
 
 -- ── 6. Objective seed (§24.6): the CEO's first binding target as DRAFT ──────
 INSERT INTO public.objectives (title, amount_eur, metric, status, proposed_by, evidence_refs)
-SELECT 'First net profit objective — €50 after full system test (CEO D2, 2026-07-17)',
+SELECT '€50 net',  -- short by CEO design ruling 2026-07-17 (no clutter, no truncation); context in evidence_refs
        50, 'net_profit', 'draft', 'ceo',
        '["00-CEO-DIRECTIVE-REVENUE-FIRST.md §3 D2"]'::jsonb
 WHERE NOT EXISTS (SELECT 1 FROM public.objectives WHERE amount_eur = 50 AND metric = 'net_profit');

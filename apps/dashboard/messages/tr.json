@@ -269,7 +269,11 @@
         "health": "Sistem Sağlığı",
         "logs": "Kayıtlar",
         "backups": "Yedekler",
-        "mcp": "MCP Sunucuları"
+        "mcp": "MCP Sunucuları",
+        "revenue": "Gelir İstihbaratı",
+        "revenueObjectives": "Hedefler",
+        "revenueOpportunities": "Fırsatlar",
+        "revenuePortfolio": "Portföy"
       }
     },
     "bar": {
@@ -757,6 +761,100 @@
       "empty": "Bu filtreye uyan hafıza kaydı yok.",
       "showing": "Gösterilen",
       "of": "/"
+    },
+    "revenue": {
+      "ui": {
+        "kpiTarget": "Hedef",
+        "kpiRealized": "Gerçekleşen net",
+        "kpiGap": "Açık",
+        "kpiDaysLeft": "Kalan gün",
+        "runRate": "Günlük tempo",
+        "noPeriod": "Dönem yok — aktivasyonla belirlenir",
+        "netUnverified": "Dönemde maliyet kaydı yok — net doğrulanmadı",
+        "snevTitle": "SNEV — Sürdürülebilir Net İşletme Değeri",
+        "snevNet90": "Son 90 gün net",
+        "snevRecurring": "Tekrarlayan pay",
+        "snevConcentration": "En büyük müşteri payı",
+        "snevValue": "SNEV",
+        "snevNote": "90 gün net × tekrarlayan pay − yoğunlaşma cezası.",
+        "pipelineTitle": "Fırsat hattı",
+        "pipelineEmpty": "0 fırsat — ilk tarama 05:10 UTC.",
+        "objectivesTitle": "Hedef sözleşmeleri",
+        "objectivesEmpty": "Hedef yok.",
+        "portfolioTitle": "Portföy tahsisleri",
+        "portfolioEmpty": "Henüz tahsis yok.",
+        "activeAllocations": "Aktif tahsisler",
+        "stoppedAllocations": "Durdurulan tahsisler",
+        "objectiveCard": "Hedef",
+        "colTitle": "Başlık",
+        "colEngine": "Motor",
+        "colScore": "Skor",
+        "colCapital": "Sermaye ihtiyacı",
+        "colState": "Durum",
+        "colHalal": "Helal",
+        "colCreated": "Oluşturulma",
+        "colStatus": "Durum",
+        "colMetric": "Metrik",
+        "colPeriod": "Dönem",
+        "colProposedBy": "Öneren",
+        "colEvidence": "Kanıt",
+        "colObjective": "Hedef",
+        "colOpportunity": "Fırsat",
+        "colExpected": "Beklenen net",
+        "colCommitted": "Bağlanma",
+        "colStopped": "Durdurma",
+        "colReason": "Gerekçe",
+        "scoreDims": "Skor dökümü (12 boyut)",
+        "unscored": "Henüz skorlanmadı",
+        "metricLabels": {
+          "net_profit": "Net kâr",
+          "revenue": "Gelir"
+        },
+        "statusLabels": {
+          "draft": "Taslak",
+          "proposed": "Önerildi",
+          "active": "Aktif",
+          "achieved": "Başarıldı",
+          "missed": "Kaçırıldı",
+          "closed": "Kapandı"
+        },
+        "stateLabels": {
+          "discovered": "Keşfedildi",
+          "scored": "Skorlandı",
+          "shortlisted": "Kısa liste",
+          "piloting": "Pilot",
+          "scaling": "Ölçekleniyor",
+          "retired": "Emekli",
+          "rejected": "Reddedildi"
+        },
+        "halalLabels": {
+          "pending": "Beklemede",
+          "halal": "Helal",
+          "haram": "Haram",
+          "review": "İncelemede"
+        },
+        "dimLabels": {
+          "market": "Pazar",
+          "trend": "Trend",
+          "demand": "Talep",
+          "competition": "Rekabet",
+          "price_gap": "Fiyat aralığı",
+          "logistics": "Lojistik",
+          "platform_fees": "Platform kesintileri",
+          "tax_constraints": "Vergi kısıtları",
+          "ad_cost": "Reklam maliyeti",
+          "est_margin": "Tahmini marj",
+          "time_to_revenue_days": "Gelire kalan süre",
+          "scalability": "Ölçeklenebilirlik"
+        },
+        "viewLedger": "Gelir-gider defteri",
+        "viewObjectives": "Hedefler",
+        "viewOpportunities": "Fırsatlar",
+        "viewPortfolio": "Portföy",
+        "rejectedCause": "Sebep",
+        "halalReason": "Helal notu",
+        "boundariesNote": "İslami sınırlar değişmez — haram kapsam asla ilerlemez."
+      }
     },
     "intelligence": {
       "kpiAlerts": "Aktif uyarı",
