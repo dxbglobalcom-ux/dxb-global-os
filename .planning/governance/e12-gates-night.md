@@ -43,8 +43,26 @@ E12.5 baseline measured (row OPEN). Progress 72/79 = 91%.
 - X230: `next dev` alongside prod server dropped free RAM to 185MB — kill dev,
   use a prod-build probe cycle for boundary render proofs (probe route in,
   build, screenshot, probe out, rebuild).
-- Ghost pid 3985 (portless next-server) resurfaced after R4.2's kill — check
-  `ps -eo pid,rss,cmd | grep next-server` at session start, not just :3000.
+- GHOST 3985 MYSTERY SOLVED (2026-07-18 ~05:50, measured): it is the
+  open-notebook CONTAINER's internal next-server (root, supervisord-managed,
+  docker scope 8a9071d4, 1MB RSS, never on :3000). Host-side kill can't touch
+  it and it always "resurfaces". STOP hunting it — it is not project debris.
+  The real check stays: verify the pid that OWNS :3000 via `ss -ltnp`.
+
+**E13 waves (same night, ~05:00-06:00):**
+- E13.3 ✓ CEO_OPERATING_MANUAL.md (00-INDEX row 35; TR+EN one file; every
+  fact measured; library sop item 0d530051; access proven /ai/library?kind=sop).
+- E13.1 ◐ machine tier: §24 command set 5/5 verbatim green; db-suite.sh BORN
+  (ephemeral container, ASSERTS 7/7, first live rollback execution — 0021x
+  block was STALE at head, CASCADE amendment); L5 playwright runner BORN
+  (public 5/5; authed 8 skip: mfa_factors EMPTY → automated login would
+  ENROLL TOTP on the CEO account = forbidden mutation; cookie extraction
+  classifier-blocked; CEO mints storageState via scripts/test/e2e-login.mjs).
+- db-suite gotchas: preamble needs supabase_admin plane on the supabase
+  image; image's auth.uid() may read the dotted GUC → set BOTH
+  request.jwt.claims AND request.jwt.claim.sub in fresh-chain asserts.
+- NIGHT END STATE: no executable row left without CEO input (E12.5
+  activation ← MUSTS decisions; E13.1 authed/production legs; E13.2 session).
 
 Related: [[r43-capability-arsenal]], [[r42-library-enrichment-lessons]],
 [[musts-talep-audit-2026-07-16]], [[design-verification-rule0]].
