@@ -420,7 +420,7 @@ function CenterCard({
               checked={selected}
               onChange={onSelect}
               aria-label={row.operation ?? row.actionType}
-              className="h-4 w-4 accent-[var(--accent-champagne,#c8a962)]"
+              className="h-4 w-4 accent-[var(--accent-champagne)]"
             />
           ))}
         <button

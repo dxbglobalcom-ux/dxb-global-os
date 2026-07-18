@@ -63,3 +63,4 @@ BEKLENTİLER
 
 # R3.1 voice: transient answer-WAV handoff + scheduler log — runtime artifacts, never committed
 /var/
+tests/e2e/evidence/

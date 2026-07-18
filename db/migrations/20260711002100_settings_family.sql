@@ -116,11 +116,16 @@ COMMENT ON TABLE public.settings_change_log is
 COMMENT ON TABLE public.model_catalog is
   '0021x control family: LiteLLM alias registry; fallback_of is trigger-protected against cycles.';
 
+-- CASCADE amendment 2026-07-18 (E13.1 L2 suite finding): later migrations
+-- built views on these columns/tables — v_model_stats, v_role_slots,
+-- v_audit_trail and kin. Rolling this family back at chain head therefore
+-- requires CASCADE; the original CASCADE-less block only worked at this
+-- file's own chain position. First live execution: scripts/test/db-suite.sh §4.
 -- ROLLBACK:
 --   DROP TRIGGER IF EXISTS trg_model_catalog_fallback_acyclic ON public.model_catalog;
 --   DROP FUNCTION IF EXISTS public.enforce_model_fallback_acyclic();
---   ALTER TABLE public.routing_rules DROP COLUMN IF EXISTS model_id, DROP COLUMN IF EXISTS role_slot;
---   DROP TABLE IF EXISTS public.model_catalog;
---   DROP TABLE IF EXISTS public.settings_change_log;
---   DROP TABLE IF EXISTS public.settings_values;
---   DROP TABLE IF EXISTS public.settings_registry;
+--   ALTER TABLE public.routing_rules DROP COLUMN IF EXISTS model_id CASCADE, DROP COLUMN IF EXISTS role_slot CASCADE;
+--   DROP TABLE IF EXISTS public.model_catalog CASCADE;
+--   DROP TABLE IF EXISTS public.settings_change_log CASCADE;
+--   DROP TABLE IF EXISTS public.settings_values CASCADE;
+--   DROP TABLE IF EXISTS public.settings_registry CASCADE;

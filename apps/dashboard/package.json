@@ -23,6 +23,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.3.2",
     "@types/node": "catalog:",
     "@types/react": "^19.2.17",
