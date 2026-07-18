@@ -23,10 +23,17 @@ E12.5 baseline measured (row OPEN). Progress 72/79 = 91%.
   (`fn_default_company_id()` STABLE default — never a uuid literal, companies
   rows are runtime-born); children isolate through client_id inner join.
   Company context = `dxb-company` cookie.
-- Workforce (E12.5 baseline): 221 agents = 1 active (finance) / 143 dormant
-  CHAIN-READY / 55 draft-ready / 22 archived; heads 21/21 all dormant.
-  Mass activation blocked on: Fable-personal ADD personas (K2) + CEO's OPEN
-  MUSTS-Talep decisions. R4.3's staffed-hands proof waits on this gate.
+- Workforce (E12.5 ◐ 2026-07-18 ~05:00, commit ce80018): MACHINE GATES ALL
+  CLOSED — sweep scripts/org/workforce-gate.mjs 9/9 PASS (promise ledger
+  67 slugs frozen in scripts/org/promise-ledger.json); hygiene migration
+  20260718030000 deleted r23t fixture chain, repointed 21 stale paths,
+  restored persona_version v2.0-fable on 175 rows; tests/e125 7/7; coverage
+  30/30 (shelf 1a56f36d). Set-diff came out 0 — NO missing ADD personas
+  (baseline hypothesis wrong). Remaining leg: HR machine draft→probation→
+  active (dormant=pre-machine stock, NO status shortcut) — blocked on CEO's
+  OPEN MUSTS-Talep decisions. R4.3's staffed-hands proof waits on this.
+  legal-de pod retirement was GOVERNED (migration 20260717060000) — 21 depts
+  is truth; all 21 depts status='dormant'.
 
 **Lessons:**
 - Locale-pinned `Intl.DateTimeFormat("en-GB")` in shared components leaks EN
