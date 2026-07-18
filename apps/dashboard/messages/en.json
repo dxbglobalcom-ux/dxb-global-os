@@ -510,7 +510,30 @@
       "factorClear": "All clear — no active penalties",
       "attentionTitle": "Needs attention",
       "attentionNone": "Nothing needs your attention right now.",
-      "attentionOldest": "Oldest pending approval"
+      "attentionOldest": "Oldest pending approval",
+      "widgets": {
+        "edit": "Edit layout",
+        "save": "Save layout",
+        "cancel": "Cancel",
+        "add": "Add widget",
+        "remove": "Remove",
+        "moveLeft": "Move earlier",
+        "moveRight": "Move later",
+        "width": "Width",
+        "saveFailed": "Layout could not be saved",
+        "empty": "No widgets on this dashboard — use Edit layout to add some.",
+        "labels": {
+          "health": "Holding Health",
+          "stat_active_tasks": "Active tasks",
+          "stat_pending_approvals": "Pending approvals",
+          "stat_cost_today": "Cost today",
+          "stat_tokens_7d": "Tokens (7d)",
+          "pulse": "Operations pulse",
+          "agents": "Workforce",
+          "budget": "Monthly budget",
+          "attention": "Needs attention"
+        }
+      }
     },
     "live": {
       "title": "Live Operations",

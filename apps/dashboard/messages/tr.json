@@ -510,7 +510,30 @@
       "factorClear": "Temiz — aktif ceza yok",
       "attentionTitle": "Dikkat bekleyenler",
       "attentionNone": "Şu an dikkatini bekleyen bir şey yok.",
-      "attentionOldest": "En eski bekleyen onay"
+      "attentionOldest": "En eski bekleyen onay",
+      "widgets": {
+        "edit": "Yerleşimi düzenle",
+        "save": "Yerleşimi kaydet",
+        "cancel": "Vazgeç",
+        "add": "Widget ekle",
+        "remove": "Kaldır",
+        "moveLeft": "Öne al",
+        "moveRight": "Sona al",
+        "width": "Genişlik",
+        "saveFailed": "Yerleşim kaydedilemedi",
+        "empty": "Bu panoda widget yok — eklemek için Yerleşimi düzenle'yi kullanın.",
+        "labels": {
+          "health": "Holding Sağlığı",
+          "stat_active_tasks": "Aktif görevler",
+          "stat_pending_approvals": "Bekleyen onaylar",
+          "stat_cost_today": "Bugünkü maliyet",
+          "stat_tokens_7d": "Token (7g)",
+          "pulse": "Operasyon nabzı",
+          "agents": "İş gücü",
+          "budget": "Aylık bütçe",
+          "attention": "Dikkat gerektirenler"
+        }
+      }
     },
     "live": {
       "title": "Canlı Operasyonlar",

@@ -85,6 +85,9 @@ const PURITY_ALLOWLIST: string[] = [
   "app/api/control/models/route.ts",
   // E6.x: settings control seam (.rpc control_settings_set / _undo)
   "app/api/control/settings/route.ts",
+  // E12.2: widget layout seam — same control_settings_set fn, layout-schema
+  // Zod wall in front (CC-SPEC §10; scope='ceo_dashboard', key='layout')
+  "app/api/control/layout/route.ts",
   // E6.x: org control seam (.rpc control_org_create_company / _department)
   "app/api/control/org/route.ts",
   // E6.x: revenue control seam (.rpc fn_revenue_record)
