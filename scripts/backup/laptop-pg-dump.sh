@@ -27,10 +27,15 @@ docker exec "$CONTAINER" pg_dump -U postgres -d postgres -Fc > "$OUT"
 test -s "$OUT" || { echo "BACKUP_FAIL empty dump"; exit 1; }
 echo "BACKUP_OK $STAMP $(stat -c%s "$OUT") bytes"
 
-if [ -n "${BACKUP_DEST:-}" ]; then
+# Off-site default LIVE 2026-07-18: laptop key installed on u629578-sub1
+# (CEO ran install-storagebox-laptop-key.sh); ~/.ssh/config Host block
+# `dxb-storagebox` carries user/port/key. Laptop dumps land beside the VPS
+# ones (distinct dxb-laptop-* prefix, no collision).
+BACKUP_DEST="${BACKUP_DEST:-dxb-storagebox:.}"
+if [ -n "$BACKUP_DEST" ]; then
   scp -q "$OUT" "$BACKUP_DEST/" && echo "OFFSITE_OK $STAMP"
 else
-  echo "OFFSITE_SKIP (BACKUP_DEST unset — laptop→StorageBox key is a CEO-owned credential step)"
+  echo "OFFSITE_SKIP (BACKUP_DEST explicitly emptied)"
 fi
 
 find "$BACKUP_DIR" -name "dxb-laptop-*.dump" -mtime "+$RETENTION" -delete
