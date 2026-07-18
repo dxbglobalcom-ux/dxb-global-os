@@ -295,9 +295,14 @@ export default async function LibraryPage({
             )}
           </Panel>
 
-          {/* ── item record: the 11 directive fields + tabs (§7) ─────────── */}
+          {/* ── item record: the 11 directive fields + tabs (§7) ───────────
+              order-first below 2xl: single-column mode stacks panels, and a
+              record hiding UNDER a 200+-row list is unreachable (CEO catch,
+              2026-07-18 eye session — "card renders way at the bottom").
+              At 2xl the grid goes 2-col and order-none restores it as the
+              right-hand column. */}
           {selected && (
-            <Panel className="min-w-0 self-start">
+            <Panel className="order-first min-w-0 self-start 2xl:order-none">
               <div className="space-y-4">
                 <div>
                   <p className="label-caps text-ink-muted">{t.ui.detailTitle}</p>
