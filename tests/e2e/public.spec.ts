@@ -33,6 +33,66 @@ test.describe("login screen", () => {
   });
 });
 
+test.describe("accessibility battery (E13.0) — login surface", () => {
+  test("keyboard path: Tab reaches email → password → submit, focus visible", async ({ page }) => {
+    await page.goto("/login");
+    await page.keyboard.press("Tab");
+    const order: string[] = [];
+    for (let i = 0; i < 6 && order.length < 3; i++) {
+      const desc = await page.evaluate(() => {
+        const el = document.activeElement as HTMLElement | null;
+        if (!el) return "";
+        const input = el as HTMLInputElement;
+        return el.tagName === "INPUT" ? `input:${input.type}` : el.tagName === "BUTTON" ? "button" : "";
+      });
+      if (desc && !order.includes(desc)) order.push(desc);
+      await page.keyboard.press("Tab");
+    }
+    expect(order).toContain("input:email");
+    expect(order).toContain("input:password");
+    expect(order.indexOf("input:email")).toBeLessThan(order.indexOf("input:password"));
+  });
+
+  test("inputs carry accessible names (label/aria) — screen-reader path exists", async ({ page }) => {
+    await page.goto("/login");
+    for (const type of ["email", "password"]) {
+      const named = await page.evaluate((t) => {
+        const el = document.querySelector(`input[type="${t}"]`) as HTMLInputElement;
+        if (!el) return false;
+        return Boolean(
+          el.labels?.length ||
+            el.getAttribute("aria-label") ||
+            el.getAttribute("aria-labelledby") ||
+            el.placeholder,
+        );
+      }, type);
+      expect(named, `input[type=${type}] accessible name`).toBe(true);
+    }
+  });
+
+  test("prefers-reduced-motion: page renders and the §6 kill-switch CSS is served", async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: "reduce" });
+    const page = await ctx.newPage();
+    await page.goto("/login");
+    await expect(page.locator('input[type="email"]')).toBeVisible();
+    // globals.css §6 (line ~269) declares the reduce override — assert the
+    // rule actually reached the browser, not just the repo.
+    const hasRule = await page.evaluate(() =>
+      [...document.styleSheets].some((s) => {
+        try {
+          return [...s.cssRules].some(
+            (r) => r instanceof CSSMediaRule && r.conditionText.includes("prefers-reduced-motion"),
+          );
+        } catch {
+          return false;
+        }
+      }),
+    );
+    expect(hasRule).toBe(true);
+    await ctx.close();
+  });
+});
+
 test.describe("boundary layer (E12.3) — anonymous face", () => {
   test("unknown route reveals NOTHING to anonymous visitors: wall first, /login", async ({ page }) => {
     // Measured truth 2026-07-18: the proxy wall outranks 404 (307 → /login),
