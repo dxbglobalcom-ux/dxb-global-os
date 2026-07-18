@@ -32,6 +32,26 @@ Governing formula (Talep §2, verbatim ruling):
 | D8 | Desktop research backlog (`repo vb şeyler.odt`, 25 items) enters the Library research pass |
 | D9 | Kelam (WisprFlow-clone) architecture prepared (`docs/kelam/ARCHITECTURE.md`); build slot after current wave (OD-1) |
 
+## 3-bis. CEO decisions of 2026-07-18 (workforce-activation rulings — the two OPEN MUSTS questions answered)
+
+Context: the MUSTS-Talep audit (2026-07-16) left two CEO questions open; E12.5 mass
+activation was blocked-class on them (E12.5-WORKFORCE-BASELINE §"BLOCKED-CLASS
+DEPENDENCY"). The CEO answered both in-session 2026-07-18 morning ("karar A (Evet).
+karar B (1.seçenek)").
+
+| # | Ruling |
+|---|--------|
+| D10 | **Worker objective contract is MANDATORY.** Every executable task carries the economic frame: expected output (`tasks.objective`), success metric (`tasks.output_contract`), budget ceilings (`tasks.budget_max_tokens`, `tasks.budget_max_cost_eur`), and deadline (`tasks.due_at`). Measured baseline at ruling time: the first three were already NOT NULL since birth (65/65 live rows, 0 nulls — the audit-era "intents are text-only" gap had been closed structurally by the task envelope); `due_at` was the one missing field and is added by migration `20260718090000` (7-day default SLA; probation tasks use the `hr.probation_max_days` window). Approval-facing surfaces must render the frame (a task asking for CEO eyes shows what it costs and when it is due) |
+| D11 | **Activation scope = TEXT-ONLY FIRST (option 1).** Workforce activation waves add ZERO new tool grants: runtime default-deny stands (no grant ⇒ no tools mounted on the SDK session, R2.2 law), so a newly-activated employee thinks and writes but touches nothing external. The existing measured grant surface stands AS-IS (R4.2 dept identity-mirror dxb-mcp grants + R4.3 three-dept external pins — both separately CEO-ordered installs); EXPANSION of external hands per department requires a separate CEO approval. `hr.grant_package` rows stay `pending_library` until a real kit is granted — the honest state, not a simulated one |
+
+Activation-integrity corollary (F-09 discipline applied to HR): mass activation may
+NOT ride simulated equipment or invented scores. Per-employee LiteLLM keys are REAL
+(alias-only stored in DB — no key material outside the proxy), the probation task
+actually RUNS through the production worker, and the evaluation score is DERIVED
+(`succeeded_runs / total_runs` of the probation task, threshold
+`hr.probation_pass_score`) — the E5.4b demo's labeled manual-score path remains legal
+only for its sandbox probe.
+
 ## 4. External audit adoption
 
 Codex audit findings F-01..F-15: 14 CONFIRMED + 1 PARTIAL (Fable measurements 2026-07-17). Core adoption: **roadmap % ≠ product capability %**. The execution core (resident worker F-01, worker tool surface F-02/F-04, workflow executor tools F-03, real outbox handlers F-06, fresh-bootstrap migration parity F-08) became the R2 "Execution Activation" roadmap block — prerequisite for any real revenue operation.
