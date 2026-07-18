@@ -37,6 +37,10 @@ export type CenterViewRow = {
   department: string | null;
   delegated_to_slug: string | null;
   task_objective: string | null;
+  task_budget_ceiling_eur: number | string | null;
+  task_due_at: string | null;
+  department_display: string | null;
+  department_display_tr: string | null;
   created_at: string;
   decided_by: string | null;
   decided_at: string | null;
@@ -64,6 +68,11 @@ export function mapCenterRow(r: CenterViewRow): CenterRow {
     department: r.department,
     delegatedToSlug: r.delegated_to_slug,
     taskObjective: r.task_objective,
+    taskBudgetCeilingEur:
+      r.task_budget_ceiling_eur === null ? null : Number(r.task_budget_ceiling_eur),
+    taskDueAt: r.task_due_at,
+    departmentDisplay: r.department_display,
+    departmentDisplayTr: r.department_display_tr,
     createdAt: r.created_at,
     decidedAt: r.decided_at,
     decidedAction: r.decided_action,

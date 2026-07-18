@@ -72,6 +72,25 @@ test("unknown top-level URL gets the styled root 404, not a raw crash (E12.3)", 
   await expect(page.locator('a[href="/overview"], a[href="/"]').first()).toBeVisible();
 });
 
+test("approvals economic frame (D10): decided drawer shows ceiling+deadline, no overflow at 1280/1920", async ({ page }) => {
+  // Width debt from the 2026-07-18 in-person pass: the X230 window manager
+  // pins the real browser at 1366, so 1280/1920 run here with viewport
+  // emulation. Frame fields ride the single real decided approval (R2.4).
+  for (const width of [1280, 1920]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/approvals");
+    await page.getByRole("button", { name: /Decided|Karara/ }).click();
+    const row = page.getByRole("button", { name: /R2\.4 live staging/ });
+    await row.click();
+    await expect(page.locator("dl")).toContainText(/Budget ceiling|Bütçe tavanı/i);
+    await expect(page.locator("dl")).toContainText("€");
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    );
+    expect(overflow, `horizontal overflow at ${width}`).toBe(false);
+  }
+});
+
 test("widget layout is server truth: fresh context sees the stored layout (§38/15)", async ({ page }) => {
   await page.goto("/overview");
   // Server-truth proof lives in E12.2's live evidence; the E2E leg pins the

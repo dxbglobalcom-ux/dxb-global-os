@@ -1837,6 +1837,8 @@
         "department": "Departman",
         "operation": "İşlem",
         "costEstimate": "Maliyet tahmini",
+        "taskBudgetCeiling": "Bütçe tavanı",
+        "taskDue": "Görev son tarihi",
         "recommended": "Önerilen aksiyon",
         "reasoning": "Gerekçe",
         "approve": "Onayla",

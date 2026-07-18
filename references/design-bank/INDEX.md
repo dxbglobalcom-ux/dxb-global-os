@@ -38,6 +38,8 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | approvals-en-1920.png | /approvals | EN | 1920 | PENDING | same |
 | approvals-tr-1280.png | /approvals | TR | 1280 | PENDING | same |
 | approvals-tr-1920.png | /approvals | TR | 1920 | PENDING | same |
+| approvals-e125-frame-en-1366.jpg | /approvals | EN | 1366 | PENDING | E12.5/D10 economic frame in decided drawer — BUDGET CEILING + TASK DEADLINE from tasks (view 093000), department display name (purity fix), info-free rows killed (requester/department conditional); real R2.4 approval row (2026-07-18) |
+| approvals-e125-frame-tr-1366.jpg | /approvals | TR | 1366 | PENDING | same — DEPARTMAN "Finans" via display_name_tr, dates tr-TR |
 | approval-detail-en-1280.png | /approvals/[id] | EN | 1280 | PENDING | E9.3 ApprovalDetail — §21 R3 field set, readable payload (R5, raw JSON behind audit fold), gold double frame on money_out, decision history, 7-action island (2026-07-14) |
 | approval-detail-en-1920.png | /approvals/[id] | EN | 1920 | PENDING | same |
 | approval-detail-tr-1280.png | /approvals/[id] | TR | 1280 | PENDING | same |

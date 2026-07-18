@@ -1837,6 +1837,8 @@
         "department": "Department",
         "operation": "Operation",
         "costEstimate": "Cost estimate",
+        "taskBudgetCeiling": "Budget ceiling",
+        "taskDue": "Task deadline",
         "recommended": "Recommended action",
         "reasoning": "Reasoning",
         "approve": "Approve",

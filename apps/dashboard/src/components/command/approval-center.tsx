@@ -38,6 +38,10 @@ export type CenterRow = {
   department: string | null;
   delegatedToSlug: string | null;
   taskObjective: string | null;
+  taskBudgetCeilingEur: number | null;
+  taskDueAt: string | null;
+  departmentDisplay: string | null;
+  departmentDisplayTr: string | null;
   createdAt: string;
   decidedAt: string | null;
   decidedAction: string | null;
@@ -75,6 +79,8 @@ export type CenterLabels = {
   department: string;
   operation: string;
   costEstimate: string;
+  taskBudgetCeiling: string;
+  taskDue: string;
   recommended: string;
   reasoning: string;
   approve: string;
@@ -160,10 +166,19 @@ export function ApprovalCenter({
   }, [router]);
 
   const rows = view === "pending" ? pending : decided;
-  const departmentOptions = useMemo(
-    () => Array.from(new Set(rows.map((r) => r.department).filter(Boolean))).sort() as string[],
-    [rows],
-  );
+  const departmentOptions = useMemo(() => {
+    const seen = new Map<string, string>();
+    for (const r of rows) {
+      if (!r.department || seen.has(r.department)) continue;
+      seen.set(
+        r.department,
+        (locale === "tr" ? r.departmentDisplayTr : r.departmentDisplay) ?? r.department,
+      );
+    }
+    return Array.from(seen, ([value, label]) => ({ value, label })).sort((a, b) =>
+      a.label.localeCompare(b.label),
+    );
+  }, [rows, locale]);
   const filtered = useMemo(
     () =>
       rows.filter((r) => {
@@ -256,8 +271,8 @@ export function ApprovalCenter({
           >
             <option value="all">{labels.all}</option>
             {departmentOptions.map((d) => (
-              <option key={d} value={d}>
-                {d}
+              <option key={d.value} value={d.value}>
+                {d.label}
               </option>
             ))}
           </select>
@@ -465,10 +480,21 @@ function CenterCard({
             <dd className="font-data text-body-s text-ink-secondary">
               {row.operation ?? row.actionType}
             </dd>
-            <dt className="label-caps text-ink-muted">{labels.requester}</dt>
-            <dd className="text-body-s text-ink-secondary">{row.requesterSlug ?? "—"}</dd>
-            <dt className="label-caps text-ink-muted">{labels.department}</dt>
-            <dd className="text-body-s text-ink-secondary">{row.department ?? "—"}</dd>
+            {row.requesterSlug && (
+              <>
+                <dt className="label-caps text-ink-muted">{labels.requester}</dt>
+                <dd className="text-body-s text-ink-secondary">{row.requesterSlug}</dd>
+              </>
+            )}
+            {row.department && (
+              <>
+                <dt className="label-caps text-ink-muted">{labels.department}</dt>
+                <dd className="text-body-s text-ink-secondary">
+                  {(locale === "tr" ? row.departmentDisplayTr : row.departmentDisplay) ??
+                    row.department}
+                </dd>
+              </>
+            )}
             {row.costEstimate !== null && (
               <>
                 <dt className="label-caps text-ink-muted">{labels.costEstimate}</dt>
@@ -482,6 +508,22 @@ function CenterCard({
                 <dt className="label-caps text-ink-muted">{labels.deadline}</dt>
                 <dd className="font-data text-body-s tabular-nums text-ink-secondary">
                   {fmtTime(row.deadline, locale)}
+                </dd>
+              </>
+            )}
+            {row.taskBudgetCeilingEur !== null && (
+              <>
+                <dt className="label-caps text-ink-muted">{labels.taskBudgetCeiling}</dt>
+                <dd className="font-data text-body-s tabular-nums text-ink-secondary">
+                  €{Number(row.taskBudgetCeilingEur).toFixed(2)}
+                </dd>
+              </>
+            )}
+            {!row.deadline && row.taskDueAt && (
+              <>
+                <dt className="label-caps text-ink-muted">{labels.taskDue}</dt>
+                <dd className="font-data text-body-s tabular-nums text-ink-secondary">
+                  {fmtTime(row.taskDueAt, locale)}
                 </dd>
               </>
             )}

@@ -156,13 +156,20 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             <Field label={t.ui.operation}>
               <span className="font-data">{row.operation ?? row.action_type}</span>
             </Field>
-            <Field label={t.ui.requester}>
-              {row.requester_slug ?? "—"}
-              {locale === "tr"
-                ? row.requester_title_tr && ` · ${row.requester_title_tr}`
-                : row.requester_title && ` · ${row.requester_title}`}
-            </Field>
-            <Field label={t.ui.department}>{row.department ?? "—"}</Field>
+            {row.requester_slug && (
+              <Field label={t.ui.requester}>
+                {row.requester_slug}
+                {locale === "tr"
+                  ? row.requester_title_tr && ` · ${row.requester_title_tr}`
+                  : row.requester_title && ` · ${row.requester_title}`}
+              </Field>
+            )}
+            {row.department && (
+              <Field label={t.ui.department}>
+                {(locale === "tr" ? row.department_display_tr : row.department_display) ??
+                  row.department}
+              </Field>
+            )}
             {row.project_name && <Field label={d.project}>{row.project_name}</Field>}
             <Field label={d.classLabel}>
               {classLabels[row.operation_class ?? "other"] ?? (row.operation_class ?? "—")}
@@ -177,6 +184,18 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             {row.deadline && (
               <Field label={t.ui.deadline}>
                 <span className="font-data tabular-nums">{fmt(row.deadline)}</span>
+              </Field>
+            )}
+            {row.task_budget_ceiling_eur !== null && (
+              <Field label={t.ui.taskBudgetCeiling}>
+                <span className="font-data tabular-nums">
+                  €{Number(row.task_budget_ceiling_eur).toFixed(2)}
+                </span>
+              </Field>
+            )}
+            {!row.deadline && row.task_due_at && (
+              <Field label={t.ui.taskDue}>
+                <span className="font-data tabular-nums">{fmt(row.task_due_at)}</span>
               </Field>
             )}
             {row.model_to_use && (
