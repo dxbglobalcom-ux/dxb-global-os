@@ -94,6 +94,7 @@ Madde 5.2 eşleme kontrolü: 20 sorunun kaynağı — kim/görev/veren/workflow/
 > A3. Single broadcast producer: alerts-table trigger emits alert.raised/acknowledged/resolved/escalated; every source (run failure, cost 70/90/100, budget stop, fallback ≥2/exhausted, flagged review, obs spill, evaluate fn) INSERTs a row instead of broadcasting directly.
 > A4. Heartbeat source = `system_health_snapshots` freshness (table created in E8.4b; probe job Phase 7); empty table → no alert (honest pre-Phase-7 state).
 > A5. Alert title/cause/action strings are system artifacts in ENGLISH (language directive); UI chrome fully bilingual — same data-vs-chrome rule as audit payloads and task objectives.
+> A6. Success supersedes the failure alarm (CEO order 2026-07-18 eye session, migration `20260718210000`): when a task transitions to `done`, its still-active `task_id`-bound alerts auto-resolve with an explicit mitigation note (`trg_alert_supersede_on_task_done`). Rides the A3 single-producer trigger for `alert.resolved` broadcasts. Scope: task-bound alerts only — cost/budget/hook/obs alerts keep their own lifecycles. Precedent: E12.5 wave left 123 success-superseded alarms burying 7 real criticals; manual governed sweep (control_alerts_action ×123, audit +123) preceded this permanent rule.
 
 ## 5. Component yapısı
 
