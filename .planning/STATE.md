@@ -23,9 +23,14 @@ progress:
   # 2026-07-18 02:40: E12.3 ✓ → 71
   # 2026-07-18 03:00: E12.4 ✓ → 72
   # 2026-07-18 05:15: E13.3 ✓ → 73 (E12.5 machine gates closed but row ◐ — not counted)
+  # 2026-07-18 ~08:10 bootstrap CENSUS (status-CELL measured with a pipe-in-backtick-safe
+  # parse): 72 ✓ / 4 ◐ (E12.5, E13.0, E13.1, R3.2) / 3 open (E13.2, R6.1, R6.2) = 79 total.
+  # Prior 73 carried a +1 drift inherited from the 07-17 12:55 baseline "67": at 12:55 the
+  # not-done set inside the then-75 row set was 9 (E12.2-5, E13.0-3 incl. E13.3, R4.2) →
+  # true 66; 66 + the same 6 later completions = 72. Census supersedes carried arithmetic.
   total_plans: 79
-  completed_plans: 73
-  percent: 92
+  completed_plans: 72
+  percent: 91
 ---
 
 # Project State
