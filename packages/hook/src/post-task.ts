@@ -73,7 +73,12 @@ async function runCheck(
       if (verifications.length === 0) {
         return { ok: false, detail: "no verification-kind evidence — was the work verified? (std 15)" };
       }
-      if (policy.rule.tool_call_proof && ctx.runId) {
+      // D11/U17 registered adaptation (2026-07-18): a toolless run (api path
+      // or empty compiled profile) cannot write tool_calls rows, so the
+      // anchor below is waived for it — verification-kind evidence itself
+      // stays mandatory (checked above). Only the executor's MEASURED flag
+      // waives; absence of the flag keeps std 15 fully strict.
+      if (policy.rule.tool_call_proof && ctx.runId && ctx.toollessRun !== true) {
         // The proof must exist in tool_calls (kanıt tool_calls'ta).
         const ids = verifications.map((e) => e.toolCallId).filter((id): id is string => !!id);
         if (ids.length === 0) {

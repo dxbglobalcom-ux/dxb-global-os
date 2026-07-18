@@ -82,8 +82,12 @@ test("approvals economic frame (D10): decided drawer shows ceiling+deadline, no 
     await page.getByRole("button", { name: /Decided|Karara/ }).click();
     const row = page.getByRole("button", { name: /R2\.4 live staging/ });
     await row.click();
-    await expect(page.locator("dl")).toContainText(/Budget ceiling|Bütçe tavanı/i);
-    await expect(page.locator("dl")).toContainText("€");
+    // the drawer holds two <dl>s (frame + email preview) — scope to the frame
+    const frame = page
+      .locator("dl")
+      .filter({ hasText: /Budget ceiling|Bütçe tavanı/i });
+    await expect(frame).toBeVisible();
+    await expect(frame).toContainText("€");
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
     );

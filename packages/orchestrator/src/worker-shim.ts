@@ -92,6 +92,12 @@ export interface HookedClaimedTask extends ClaimedTask {
 export interface WorkerOutput {
   result: unknown;
   confidence: number; // 0-1 self-report — escalation input, never dropped
+  /** Measured by the executor, never model-declared: true when the run had a
+   *  mounted tool surface (subscription path with a non-empty compiled
+   *  profile). Toolless runs (api path, or empty profile) cannot produce
+   *  tool_calls rows, so std 15's anchor is waived for them — the
+   *  verification-kind evidence requirement itself stays. */
+  toolSurfaceMounted?: boolean;
 }
 
 export type Executor = (task: ClaimedTask) => Promise<WorkerOutput>;
@@ -299,6 +305,7 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
       acceptance_map: parsed.acceptance_map,
     },
     confidence: parsed.confidence,
+    toolSurfaceMounted: rule.mode === "subscription" && toolOpts !== null,
   };
 }
 
@@ -581,7 +588,13 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
           }
 
           const post = await postTask(
-            { ...ctx, revisionRound: rounds },
+            // toollessRun only when the executor MEASURED the surface absent
+            // (undefined = executor didn't declare — std 15 stays strict).
+            {
+              ...ctx,
+              revisionRound: rounds,
+              toollessRun: attempt.toolSurfaceMounted === false,
+            },
             extractEvidencePackage(attempt.result),
           );
           scope.setHookResult(

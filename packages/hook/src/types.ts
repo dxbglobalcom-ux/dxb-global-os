@@ -65,6 +65,11 @@ export interface HookCtx {
   actor?: "system" | "ceo";
   /** Completed post-gate REVISE rounds so far (ORCHESTRATION §19). */
   revisionRound?: number;
+  /** True ONLY when the executor measured the run's tool surface as absent
+   *  (api path or empty compiled profile — D11 text-only). std 15 then keeps
+   *  its verification-evidence requirement but waives the tool_calls anchor,
+   *  which a toolless run structurally cannot produce. Undefined = strict. */
+  toollessRun?: boolean;
 }
 
 export interface EvidenceItem {

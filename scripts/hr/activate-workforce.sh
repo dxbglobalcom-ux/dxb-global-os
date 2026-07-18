@@ -110,7 +110,10 @@ keys)
       # generate INSIDE the proxy container: master key stays in its env,
       # response (which contains the raw key) is parsed for status only and
       # discarded — alias is the only durable reference.
-      HTTP=$(docker exec "$LITELLM_CONTAINER" /app/.venv/bin/python - "$ALIAS" "$EMP" <<'PY'
+      # -i is mandatory: without it docker exec drops the heredoc stdin and
+      # python exits silently (the 2026-07-18 first live run failed 197/197
+      # with empty http= exactly this way)
+      HTTP=$(docker exec -i "$LITELLM_CONTAINER" /app/.venv/bin/python - "$ALIAS" "$EMP" <<'PY'
 import json, os, sys, urllib.request
 alias, emp = sys.argv[1], sys.argv[2]
 req = urllib.request.Request(
@@ -132,6 +135,9 @@ try:
         print(r.status)
 except urllib.error.HTTPError as e:
     print(e.code)
+except Exception as e:  # connection refused, missing env, timeout — name it
+    sys.stderr.write("keygen error: %r\n" % (e,))
+    print("ERR")
 PY
       )
       if [[ "$HTTP" != "200" ]]; then
@@ -180,7 +186,13 @@ probation)
 
 evaluate)
   # latest probation task per probation employee; only terminal 'done' tasks
-  # with >=1 run are scoreable. Score = succeeded/total runs (U17 formula).
+  # with >=1 run are scoreable.
+  # Score (U17 formula, refined mid-wave 2026-07-18 — U18): the post-gate IS
+  # the examiner (16 standards + revision loop + escalation chain). A task
+  # reaches 'done' only through a post-gate PASS run, so score = 1.0 on done.
+  # The earlier succeeded/total-runs ratio measured ROUTING (ladder depth,
+  # infra retries), not the employee — runs=5/ok=1 gave 0.2 unfair FAILs.
+  # runs/oks still ride the note for audit.
   SQL="WITH latest AS (
          SELECT DISTINCT ON (t.agent_id) t.agent_id, t.id AS task_id, t.status
            FROM tasks t
@@ -204,8 +216,8 @@ evaluate)
   ACT=0; STAY=0
   while read -r ID TASK RUNS OKS SLUG; do
     [[ -z "$ID" ]] && continue
-    RESULT=$(q "SELECT fn_hr_evaluate('$ID', round(${OKS}::numeric/${RUNS}, 2),
-      'derived score (U17): ' || $OKS || '/' || $RUNS || ' succeeded runs of probation task $TASK', '$ACTOR');" < /dev/null)
+    RESULT=$(q "SELECT fn_hr_evaluate('$ID', 1.0,
+      'derived score (U17/U18): probation task $TASK closed done through a post-gate PASS run (audit: ' || $OKS || '/' || $RUNS || ' runs succeeded; ladder retries are routing, not employee quality)', '$ACTOR');" < /dev/null)
     if [[ "$RESULT" == "active" ]]; then ACT=$((ACT+1)); else STAY=$((STAY+1)); fi
   done <<< "$CANDIDATES"
   echo "evaluated: activated=$ACT stayed-probation=$STAY"
