@@ -173,5 +173,9 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | error-boundary-e123-tr-1280.png | /design-audit/crash (probe, deleted) | TR | 1280 | PENDING | E12.3 error boundary — crashing route, shell ALIVE + Yeniden dene (§17) |
 | crm-e124-tr-1280.png | /revenue/crm/clients | TR | 1280 | PENDING | E12.4 CRM in shell — company switch (E124T fixture ctx), localized chips/filters, isolation visible (single-company rows) |
 | crm-e124-outlet-en-1280.png | /revenue/crm/clients | EN | ~1280 | PENDING | switched-company universe (fixture; captured pre-resize at narrow width — content proof, not a layout baseline) |
+| library-e133-sop-en-1280.png | /ai/library?kind=sop | EN | 1280 | PENDING | E13.3 — ceo-operating-manual sop row live (SOPs 3 records, CEO Office owner); A1 battery: overflow 0, clipped 0 |
+| library-e133-sop-en-1920.png | /ai/library?kind=sop | EN | 1920 | PENDING | same, EN wide |
+| library-e133-sop-tr-1920.png | /ai/library?kind=sop | TR | 1920 | PENDING | same, TR — "SOP'lar" label, "18 Tem 2026" date, EN leak 0 |
+| library-e133-sop-tr-1280.png | /ai/library?kind=sop | TR | 1280 | PENDING | same, TR windowed width |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).
