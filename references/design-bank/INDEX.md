@@ -166,5 +166,8 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | library-r43-mcp-tr-1920.png | /ai/library?kind=mcp | TR | 1920 | PENDING | R4.3 arsenal surface — MCP kind board 12 kayıt (8 dxb groups + git/context7/playwright/scrapling), localized badges, A1 battery: page overflow 0, clipped 0 |
 | library-r43-mcp-en-1920.png | /ai/library?kind=mcp | EN | 1920 | PENDING | same, EN |
 | library-r43-mcp-en-1280.png | /ai/library?kind=mcp | EN | 1280 | PENDING | same, EN windowed width |
+| overview-e122-en-1280.png | /overview | EN | 1280 | PENDING | E12.2 widget system — view mode, 9-widget default layout, A1 battery clipped 0 |
+| overview-e122-tr-1920.png | /overview | TR | 1920 | PENDING | same, TR wide |
+| overview-e122-edit-tr-1280.png | /overview (edit mode) | TR | 1280 | PENDING | edit toolbar (Widget ekle/Kaydet/Vazgeç) + per-widget chips (◀ ▶ w× ✕), break-words factor labels |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).

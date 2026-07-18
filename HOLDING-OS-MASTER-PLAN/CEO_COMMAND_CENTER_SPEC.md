@@ -219,3 +219,10 @@ Opus-devralma netliği: her ekran bağımsız teslim birimi; IMPLEMENTATION_ROAD
 ## Done definition (bu spec)
 
 27 başlık ✓ · KALIR/DEĞİŞİR/SIFIRDAN eşlemesi (§5) ✓ · doğrulama komut deseni (§24) ✓ · Opus-devralma netliği (§24) ✓ · ⛔ kritik kararlar işaretli (§3 shell tekliği, §24 seam listesi) ✓ · drill-down haritası normatif tablo ✓ · §35/§38 bağlayıcılığı (R9, §21) ✓
+
+## Registered adaptations
+
+| # | Adaptation | Why (measured) | Where |
+|---|---|---|---|
+| A1 | **E12.2 (2026-07-18): layout scope string = `ceo_dashboard:default`** — §10 names the scope `ceo_dashboard`; the settings engine (E6.1, SETTINGS spec) enforces "scoped write needs an id: `<class>:<id>`" on every non-global scope. The spec name is the scope CLASS; the stored string carries the engine-mandated id segment (`default` = the CEO's dashboard set; multi-dashboard stays INSIDE the layout JSON per §10 schema). Key registered as `dashboard.layout` (migration 20260718010000, namespaced per registry precedent `alerts.*`/`department.*`). | `control_settings_set` scope law measured live: bare `ceo_dashboard` → `VALIDATION_FAILED 'scoped write needs an id'` (tests/e122 test 4 pins this permanently) | migration 20260718010000 · `widgets/types.ts` LAYOUT_SCOPE · tests/e122 |
+| A2 | **E12.2: v1 edit interactions = deterministic buttons** (add select / remove / order-swap arrows / width cycle), not pointer drag-drop — §5 WidgetGrid contract is met (ekle/kaldır/taşı/boyutlandır/kaydet all live); drag-drop is POLISH scheduled with the deferred design slot (U16 companion), recorded here so it cannot silently vanish. Resize is width-cycle (1/2/4 col) + fixed row heights v1; free h resizing joins the same polish slot. | One-night wave scope + Playwright-provable determinism (spec §24 acceptance (d) needs a machine-walkable flow) | `widgets/widget-grid.tsx` header note · U16 |
