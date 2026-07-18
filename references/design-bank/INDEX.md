@@ -169,5 +169,7 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | overview-e122-en-1280.png | /overview | EN | 1280 | PENDING | E12.2 widget system — view mode, 9-widget default layout, A1 battery clipped 0 |
 | overview-e122-tr-1920.png | /overview | TR | 1920 | PENDING | same, TR wide |
 | overview-e122-edit-tr-1280.png | /overview (edit mode) | TR | 1280 | PENDING | edit toolbar (Widget ekle/Kaydet/Vazgeç) + per-widget chips (◀ ▶ w× ✕), break-words factor labels |
+| notfound-e123-tr-1280.png | /yanlis-rota (404) | TR | 1280 | PENDING | E12.3 boundary layer — root 404 panel, shell-agnostic copy |
+| error-boundary-e123-tr-1280.png | /design-audit/crash (probe, deleted) | TR | 1280 | PENDING | E12.3 error boundary — crashing route, shell ALIVE + Yeniden dene (§17) |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).

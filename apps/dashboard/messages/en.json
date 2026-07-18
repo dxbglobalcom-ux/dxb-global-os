@@ -2160,6 +2160,14 @@
         "ended": "Ended",
         "failed": "Failed"
       }
+    },
+    "boundary": {
+      "errorTitle": "Something broke in this view",
+      "errorBody": "The rest of the command center is unaffected. The failure is contained to this route; retrying re-runs its queries.",
+      "retry": "Retry",
+      "backToOverview": "Back to Overview",
+      "notFoundTitle": "No such route",
+      "notFoundBody": "This address does not exist in the command center."
     }
   }
 }

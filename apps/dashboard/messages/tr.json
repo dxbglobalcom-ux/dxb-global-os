@@ -2160,6 +2160,14 @@
         "ended": "Bitti",
         "failed": "Başarısız"
       }
+    },
+    "boundary": {
+      "errorTitle": "Bu görünümde bir şey bozuldu",
+      "errorBody": "Komuta merkezinin geri kalanı etkilenmedi. Hata bu rotayla sınırlı; yeniden denemek sorgularını tekrar çalıştırır.",
+      "retry": "Yeniden dene",
+      "backToOverview": "Yönetici Özeti'ne dön",
+      "notFoundTitle": "Böyle bir rota yok",
+      "notFoundBody": "Bu adres komuta merkezinde yok."
     }
   }
 }
