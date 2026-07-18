@@ -49,7 +49,11 @@ while true; do
              WHERE objective LIKE 'HR probation:%'
                AND status IN ('queued','review','running');")
   if [[ "$OPEN" == "0" && "$CORR" == "0" && "$EVAL" == *"activated=0 stayed-probation=0"* ]]; then
-    echo "[$TS] WAVE MONITOR EXIT — no open probation tasks, nothing evaluable, no corrections owed" >> "$LOG"
+    # Wave close: sweep success-superseded hook-escalation approvals out of
+    # the CEO queue (orchestrator lane — CEO standing order 2026-07-18,
+    # migration 20260718214000; idempotent, touches ONLY the proven class).
+    SWEEP=$(q "SELECT fn_approvals_supersede_sweep();")
+    echo "[$TS] WAVE MONITOR EXIT — no open probation tasks, nothing evaluable, no corrections owed | approval-sweep: $SWEEP" >> "$LOG"
     break
   fi
 
