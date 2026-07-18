@@ -1,33 +1,41 @@
-// EntityTable (DASH-04, DENSITY 5): table-first on desktop, stacked
-// row-cards under 768px (UI-SPEC responsive rule). RSC — selection, sort
-// and filter travel as searchParams links. Identity never rides on color:
-// every status chip is dot + LABEL TEXT; ids/amounts/dates render mono.
+// EntityTable (E12.4 command-shell port of the DASH-04 original): table on
+// desktop, stacked row-cards under 768px. RSC — selection, sort and filter
+// travel as searchParams links. Identity never rides on color: every status
+// chip is dot + LABEL TEXT; ids/amounts/dates render in the data face.
+// Tokens = DESIGN_SYSTEM command set (the cockpit token family died with
+// the cockpit routes — single design system per surface).
 import Link from "next/link";
 import { formatEur, timeHM } from "@/lib/format";
 import type { CrmColumn, CrmEntity, CrmRow } from "@/lib/crm";
 
 const STATUS_TONE: Record<string, string> = {
-  lead: "bg-info",
-  active: "bg-ok",
-  paused: "bg-warn",
-  closed: "bg-line",
-  new: "bg-info",
-  triaged: "bg-info",
-  in_progress: "bg-info",
-  delivered: "bg-ok",
-  rejected: "bg-danger",
-  open: "bg-info",
-  proposal: "bg-warn",
-  won: "bg-ok",
-  lost: "bg-danger",
+  lead: "bg-status-info",
+  active: "bg-status-ok",
+  paused: "bg-status-warn",
+  closed: "bg-edge-neutral",
+  new: "bg-status-info",
+  triaged: "bg-status-info",
+  in_progress: "bg-status-info",
+  delivered: "bg-status-ok",
+  rejected: "bg-status-danger",
+  open: "bg-status-info",
+  proposal: "bg-status-warn",
+  won: "bg-status-ok",
+  lost: "bg-status-danger",
 };
 
-const dateStamp = new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short" });
+// Locale-pinned per render (TR UI must never show EN month names — the
+// R4.2 purity class); the formatter is built where the locale is known.
+const dateStamp = (locale: string) =>
+  new Intl.DateTimeFormat(locale === "tr" ? "tr-TR" : "en-GB", {
+    day: "2-digit",
+    month: "short",
+  });
 
 export function CrmStatusChip({ value, label }: { value: string; label: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-micro text-ink-2">
-      <span aria-hidden className={`size-1.5 rounded-full ${STATUS_TONE[value] ?? "bg-line"}`} />
+    <span className="inline-flex items-center gap-1.5 text-caption text-ink-secondary">
+      <span aria-hidden className={`size-1.5 rounded-full ${STATUS_TONE[value] ?? "bg-edge-neutral"}`} />
       {label}
     </span>
   );
@@ -37,14 +45,16 @@ function CellValue({
   column,
   row,
   statusLabels,
+  locale,
 }: {
   column: CrmColumn;
   row: CrmRow;
   statusLabels: Record<string, string>;
+  locale: string;
 }) {
   const raw = row[column.key];
   if (raw === null || raw === undefined || raw === "") {
-    return <span className="text-micro text-ink-2">—</span>;
+    return <span className="text-caption text-ink-muted">—</span>;
   }
   switch (column.kind) {
     case "status": {
@@ -53,22 +63,22 @@ function CellValue({
     }
     case "eur":
       return (
-        <span className="font-mono text-body text-ink" data-numeric>
+        <span className="font-data text-body-s text-ink-primary tabular-nums" data-numeric>
           {formatEur(Number(raw))}
         </span>
       );
     case "date": {
       const at = new Date(String(raw));
       return (
-        <span className="font-mono text-micro text-ink-2" data-numeric>
-          {dateStamp.format(at)} {timeHM(at)}
+        <span className="font-data text-caption text-ink-secondary tabular-nums" data-numeric>
+          {dateStamp(locale).format(at)} {timeHM(at)}
         </span>
       );
     }
     case "mono":
-      return <span className="font-mono text-micro text-ink-2">{String(raw)}</span>;
+      return <span className="font-data text-caption text-ink-secondary">{String(raw)}</span>;
     default:
-      return <span className="text-body text-ink">{String(raw)}</span>;
+      return <span className="text-body-s text-ink-primary">{String(raw)}</span>;
   }
 }
 
@@ -83,6 +93,7 @@ export function EntityTable({
   selectedId,
   makeHref,
   emptyLabel,
+  locale,
 }: {
   entity: CrmEntity;
   columns: CrmColumn[];
@@ -95,17 +106,18 @@ export function EntityTable({
   selectedId: string | null;
   makeHref: (rowId: string) => string;
   emptyLabel: string;
+  locale: string;
 }) {
   if (rows.length === 0) {
-    return <p className="py-6 text-body text-ink-2">{emptyLabel}</p>;
+    return <p className="py-6 text-body-s text-ink-muted">{emptyLabel}</p>;
   }
 
   const provenanceChip = (row: CrmRow) => {
     const writer = provenance[row.id] ?? "agent";
     return (
       <span
-        className={`inline-flex rounded-full border border-line px-2 py-0.5 text-micro ${
-          writer === "ceo" ? "text-accent" : "text-ink-2"
+        className={`inline-flex rounded-input border border-edge-neutral px-2 py-0.5 text-caption ${
+          writer === "ceo" ? "text-accent-champagne" : "text-ink-secondary"
         }`}
       >
         {provenanceLabels[writer]}
@@ -118,25 +130,29 @@ export function EntityTable({
       {/* Desktop table */}
       <table className="hidden w-full md:table">
         <thead>
-          <tr className="border-b border-line text-left">
+          <tr className="border-b border-edge-neutral text-left">
             {columns.map((column) => (
-              <th key={column.key} className="py-2 pr-4 text-micro font-medium text-ink-2">
+              <th key={column.key} className="label-caps py-2 pr-4 text-ink-muted">
                 {columnLabels[column.key] ?? column.key}
               </th>
             ))}
-            <th className="py-2 text-micro font-medium text-ink-2" />
+            <th className="py-2" />
           </tr>
         </thead>
-        <tbody className="divide-y divide-line">
+        <tbody className="divide-y divide-edge-neutral">
           {rows.map((row) => (
             <tr
               key={row.id}
-              className={row.id === selectedId ? "bg-surface-3/50" : "hover:bg-surface-2/60"}
+              className={
+                row.id === selectedId
+                  ? "bg-surface-anthracite/60"
+                  : "transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite/60"
+              }
             >
               {columns.map((column) => (
-                <td key={column.key} className="max-w-64 truncate py-2.5 pr-4">
-                  <Link href={makeHref(row.id)} className="block truncate">
-                    <CellValue column={column} row={row} statusLabels={statusLabels} />
+                <td key={column.key} className="min-w-0 max-w-64 py-2.5 pr-4">
+                  <Link href={makeHref(row.id)} className="block min-w-0 break-words">
+                    <CellValue column={column} row={row} statusLabels={statusLabels} locale={locale} />
                   </Link>
                 </td>
               ))}
@@ -146,18 +162,18 @@ export function EntityTable({
         </tbody>
       </table>
 
-      {/* Stacked row-cards — phone */}
-      <ul className="divide-y divide-line md:hidden">
+      {/* Stacked row-cards — narrow widths */}
+      <ul className="divide-y divide-edge-neutral md:hidden">
         {rows.map((row) => (
           <li key={row.id}>
             <Link href={makeHref(row.id)} className="flex flex-col gap-1 py-3">
               <div className="flex items-center justify-between gap-2">
-                <CellValue column={columns[0]} row={row} statusLabels={statusLabels} />
+                <CellValue column={columns[0]} row={row} statusLabels={statusLabels} locale={locale} />
                 {provenanceChip(row)}
               </div>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-0.5">
                 {columns.slice(1).map((column) => (
-                  <CellValue key={column.key} column={column} row={row} statusLabels={statusLabels} />
+                  <CellValue key={column.key} column={column} row={row} statusLabels={statusLabels} locale={locale} />
                 ))}
               </div>
             </Link>

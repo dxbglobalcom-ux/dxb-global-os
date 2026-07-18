@@ -8,6 +8,15 @@ const nextConfig: NextConfig = {
   // rendering activity during development; dev-only, absent from production).
   // Nudged to bottom-right so it never overlaps the nav rail.
   devIndicators: { position: "bottom-right" },
+  // E12.4 (GAP-05, tek-anahtar idiomu): the legacy cockpit CRM died in the
+  // SAME commit that bore /revenue/crm — permanent redirects keep every old
+  // bookmark alive. permanent:true = 308.
+  async redirects() {
+    return [
+      { source: "/crm", destination: "/revenue/crm/clients", permanent: true },
+      { source: "/crm/:entity", destination: "/revenue/crm/:entity", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

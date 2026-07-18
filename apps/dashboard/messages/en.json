@@ -194,7 +194,9 @@
     "save": "Save",
     "saved": "Saved",
     "lockedHint": "Not CEO-editable — owned by agents/system",
-    "errorTitle": "Save failed — nothing was changed"
+    "errorTitle": "Save failed — nothing was changed",
+    "noCompany": "No active company exists yet — the CRM needs at least one registered company.",
+    "companyLabel": "Company"
   },
   "crmStatus": {
     "lead": "Lead",
@@ -274,7 +276,8 @@
         "revenueObjectives": "Objectives",
         "revenueOpportunities": "Opportunities",
         "revenuePortfolio": "Portfolio",
-        "voice": "Voice Line"
+        "voice": "Voice Line",
+        "crm": "CRM"
       }
     },
     "bar": {

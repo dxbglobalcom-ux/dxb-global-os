@@ -78,7 +78,9 @@ const PURITY_ALLOWLIST: string[] = [
   "app/api/intent/route.ts",
   // 08-06: CEO CRM edits — single .rpc('crm_update') seam (migration 0017
   // DEFINER door: field whitelist in-database, audit row per edit)
-  "app/(cockpit)/crm/actions.ts",
+  // E12.4: the CRM edit seam moved home with the shell migration (old
+  // cockpit routes died the same commit — GAP-05 tek-anahtar idiomu).
+  "app/(command)/revenue/crm/actions.ts",
   // E7.1: routing sandbox — READ-ONLY .rpc('fn_select_model') simulation
   "app/api/ai/simulate/route.ts",
   // E7.2: model routing control seam (.rpc('fn_update_routing') DEFINER door)

@@ -1,13 +1,17 @@
-// EntityView (RSC): shared composition every CRM page is a thin config
-// over — fetch rows (+ client-name join), derive provenance from
-// audit_log's last crm.update writer, render table + side-panel form for
-// the ?sel= row. Filter chips and pagination travel as searchParams.
+// EntityView (E12.4 command-shell port, RSC): shared composition every CRM
+// page is a thin config over — fetch rows COMPANY-SCOPED (GAP-05 isolation:
+// clients filter on company_id; children scope through their client_id
+// inner join — the company column lives ONLY on crm_clients), derive
+// provenance from audit_log's last crm.update writer, render table +
+// side-panel form for the ?sel= row. Filter chips and pagination travel as
+// searchParams.
 import Link from "next/link";
-import { Panel } from "@/components/panel";
+import { Panel } from "@/components/primitives";
 import { EntityTable } from "@/components/crm/entity-table";
 import { EntityForm, type FormField } from "@/components/crm/entity-form";
 import { createClient } from "@/lib/supabase/server";
 import { getDict } from "@/lib/i18n";
+import { getLocale } from "@/lib/locale";
 import {
   CLIENT_STATUS,
   CRM_COLUMNS,
@@ -70,13 +74,17 @@ function formFields(entity: CrmEntity, row: CrmRow): FormField[] {
 
 export async function EntityView({
   entity,
+  companyId,
   searchParams,
 }: {
   entity: CrmEntity;
+  /** Active company (GAP-05): every query below is scoped to it. */
+  companyId: string;
   searchParams: Promise<{ sel?: string; filter?: string; page?: string }>;
 }) {
   const params = await searchParams;
-  const dict = getDict();
+  const locale = await getLocale();
+  const dict = getDict(locale);
   const supabase = await createClient();
 
   const filterValues = FILTER_VALUES[entity];
@@ -85,15 +93,29 @@ export async function EntityView({
     filterValues && params.filter && filterValues.includes(params.filter) ? params.filter : null;
   const page = Math.max(0, Number(params.page ?? 0) || 0);
 
+  // Company isolation: clients carry company_id; every child row scopes
+  // through its client (inner join — a child of another company's client
+  // can never leak into this view).
   const needsClient = entity !== "clients";
-  const columns = needsClient ? `*, crm_clients(name)` : "*";
+  const columns = needsClient ? `*, crm_clients!inner(name, company_id)` : "*";
   let query = supabase
     .from(CRM_TABLES[entity])
     .select(columns)
     .order("created_at", { ascending: false })
     .range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
+  query = needsClient
+    ? query.eq("crm_clients.company_id", companyId)
+    : query.eq("company_id", companyId);
   if (filter && filterColumn) query = query.eq(filterColumn, filter);
-  const { data } = await query;
+  const { data, error } = await query;
+
+  if (error) {
+    return (
+      <Panel title={dict.crm.entities[entity]} state="error">
+        <p className="text-body-s text-status-danger">{error.message}</p>
+      </Panel>
+    );
+  }
 
   const rows: CrmRow[] = ((data ?? []) as unknown as Array<Record<string, unknown>>).map((row) => ({
     ...row,
@@ -119,9 +141,9 @@ export async function EntityView({
     }
   }
 
-  const selected = params.sel ? rows.find((row) => row.id === params.sel) ?? null : null;
+  const selected = params.sel ? (rows.find((row) => row.id === params.sel) ?? null) : null;
   const crm = dict.crm;
-  const base = `/crm/${entity}`;
+  const base = `/revenue/crm/${entity}`;
   const keepFilter = filter ? `&filter=${filter}` : "";
 
   return (
@@ -132,8 +154,10 @@ export async function EntityView({
             <div className="flex flex-wrap items-center gap-1 pb-3">
               <Link
                 href={base}
-                className={`inline-flex h-8 items-center rounded-full px-3.5 text-micro font-medium ${
-                  !filter ? "bg-surface-3 text-ink" : "text-ink-2 hover:text-ink"
+                className={`inline-flex h-8 items-center rounded-input px-3.5 text-caption transition duration-[var(--t-fast)] ease-refined ${
+                  !filter
+                    ? "bg-surface-anthracite text-ink-primary"
+                    : "text-ink-secondary hover:bg-surface-graphite hover:text-ink-primary"
                 }`}
               >
                 {crm.filterAll}
@@ -142,8 +166,10 @@ export async function EntityView({
                 <Link
                   key={value}
                   href={`${base}?filter=${value}`}
-                  className={`inline-flex h-8 items-center rounded-full px-3.5 text-micro font-medium ${
-                    filter === value ? "bg-surface-3 text-ink" : "text-ink-2 hover:text-ink"
+                  className={`inline-flex h-8 items-center rounded-input px-3.5 text-caption transition duration-[var(--t-fast)] ease-refined ${
+                    filter === value
+                      ? "bg-surface-anthracite text-ink-primary"
+                      : "text-ink-secondary hover:bg-surface-graphite hover:text-ink-primary"
                   }`}
                 >
                   {dict.crmStatus[value as keyof typeof dict.crmStatus] ?? value}
@@ -159,6 +185,7 @@ export async function EntityView({
             statusLabels={dict.crmStatus}
             provenance={provenance}
             provenanceLabels={{ ceo: crm.byCeo, agent: crm.byAgent }}
+            locale={locale}
             selectedId={selected?.id ?? null}
             makeHref={(rowId) => `${base}?sel=${rowId}${keepFilter}`}
             emptyLabel={crm.empty}
@@ -167,7 +194,7 @@ export async function EntityView({
             <div className="flex justify-end pt-3">
               <Link
                 href={`${base}?page=${page + 1}${keepFilter}`}
-                className="text-micro text-accent hover:text-accent-press"
+                className="text-caption text-accent-champagne transition duration-[var(--t-fast)] ease-refined hover:text-accent-ivory"
               >
                 {crm.nextPage}
               </Link>
@@ -181,7 +208,10 @@ export async function EntityView({
           <Panel
             title={crm.detailTitle}
             action={
-              <Link href={`${base}${filter ? `?filter=${filter}` : ""}`} className="text-micro text-ink-2 hover:text-ink">
+              <Link
+                href={`${base}${filter ? `?filter=${filter}` : ""}`}
+                className="text-caption text-ink-secondary transition duration-[var(--t-fast)] ease-refined hover:text-ink-primary"
+              >
                 {crm.close}
               </Link>
             }

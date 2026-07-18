@@ -26,6 +26,7 @@ import {
   FileClock,
   Gauge,
   Gem,
+  Handshake,
   GitBranch,
   Globe,
   HardDrive,
@@ -141,6 +142,9 @@ export const COMMAND_NAV: NavGroup[] = [
       { key: "revenueObjectives", href: "/revenue/objectives", icon: Target },
       { key: "revenueOpportunities", href: "/revenue/opportunities", icon: Compass },
       { key: "revenuePortfolio", href: "/revenue/portfolio", icon: PieChart },
+      // E12.4 (GAP-05): CRM joins the shell under the revenue family —
+      // clients/deals ARE revenue objects; company switch lives in its chrome.
+      { key: "crm", href: "/revenue/crm", icon: Handshake },
     ],
   },
   {

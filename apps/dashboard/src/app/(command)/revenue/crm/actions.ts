@@ -1,9 +1,9 @@
 "use server";
 
-// CRM CEO-edit path (DASH-04): the dashboard's 3rd enumerated write file —
-// one .rpc('crm_update') per edit (migration 0017 DEFINER door: field
-// whitelist enforced IN the database, audit row appended in the same
-// transaction). Purity-allowlisted in tests/phase8/live-projection.test.ts.
+// CRM CEO-edit path (E12.4 command-shell home; DASH-04 heritage): one
+// .rpc('crm_update') per edit (migration 0017 DEFINER door: field whitelist
+// enforced IN the database, audit row appended in the same transaction).
+// Purity-allowlisted in tests/phase8/live-projection.test.ts.
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { CRM_EDIT_SCHEMAS, CRM_ENTITIES, type CrmEntity } from "@/lib/crm";
@@ -35,6 +35,6 @@ export async function updateCrmEntity(
   });
   if (error) return { ok: false, error: error.message };
 
-  revalidatePath(`/crm/${entity}`);
+  revalidatePath(`/revenue/crm/${entity}`);
   return { ok: true };
 }

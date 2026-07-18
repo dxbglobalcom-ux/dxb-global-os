@@ -171,5 +171,7 @@ Baselines are the visual CONTRACT. `APPROVED` = CEO accepted; `PENDING` = shippe
 | overview-e122-edit-tr-1280.png | /overview (edit mode) | TR | 1280 | PENDING | edit toolbar (Widget ekle/Kaydet/Vazgeç) + per-widget chips (◀ ▶ w× ✕), break-words factor labels |
 | notfound-e123-tr-1280.png | /yanlis-rota (404) | TR | 1280 | PENDING | E12.3 boundary layer — root 404 panel, shell-agnostic copy |
 | error-boundary-e123-tr-1280.png | /design-audit/crash (probe, deleted) | TR | 1280 | PENDING | E12.3 error boundary — crashing route, shell ALIVE + Yeniden dene (§17) |
+| crm-e124-tr-1280.png | /revenue/crm/clients | TR | 1280 | PENDING | E12.4 CRM in shell — company switch (E124T fixture ctx), localized chips/filters, isolation visible (single-company rows) |
+| crm-e124-outlet-en-1280.png | /revenue/crm/clients | EN | ~1280 | PENDING | switched-company universe (fixture; captured pre-resize at narrow width — content proof, not a layout baseline) |
 
 Written references (always part of comparison): `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` (tokens), Phase-8 design brief (Burj Al Arab 7-star, modern, non-generic; memory: phase8-design-brief), C-Hybrid direction (memory: design-direction-c-hybrid).

@@ -194,7 +194,9 @@
     "save": "Kaydet",
     "saved": "Kaydedildi",
     "lockedHint": "CEO düzenleyemez — ajan/sistem alanı",
-    "errorTitle": "Kaydedilemedi — hiçbir değişiklik yapılmadı"
+    "errorTitle": "Kaydedilemedi — hiçbir değişiklik yapılmadı",
+    "noCompany": "Henüz aktif şirket yok — CRM en az bir kayıtlı şirket ister.",
+    "companyLabel": "Şirket"
   },
   "crmStatus": {
     "lead": "Aday",
@@ -274,7 +276,8 @@
         "revenueObjectives": "Hedefler",
         "revenueOpportunities": "Fırsatlar",
         "revenuePortfolio": "Portföy",
-        "voice": "Ses Hattı"
+        "voice": "Ses Hattı",
+        "crm": "CRM"
       }
     },
     "bar": {
