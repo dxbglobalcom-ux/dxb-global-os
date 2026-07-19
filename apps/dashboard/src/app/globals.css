@@ -124,8 +124,11 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* §4 Focus: 2px accent ring + 2px offset, visible in both themes */
-:focus-visible {
+/* §4 Focus: 2px accent ring + 2px offset, visible in both themes.
+   data-no-ring opts out for surfaces that carry their OWN focus treatment
+   (palette input header underline — 7a: the offset ring read as a
+   misaligned gold box); the rule is unlayered so it beats utilities. */
+:focus-visible:not([data-no-ring]) {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }

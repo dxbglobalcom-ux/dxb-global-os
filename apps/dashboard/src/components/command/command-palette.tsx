@@ -242,7 +242,11 @@ export function CommandPalette({
             className="w-full max-w-2xl rounded-panel border border-edge-neutral bg-surface-obsidian shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex items-center gap-3 border-b border-edge-neutral px-4">
+            {/* 7a fix: the global :focus-visible ring drew an offset gold
+                rectangle around ONLY the input — the "misaligned yellow box"
+                the CEO flagged repeatedly. Focus is shown by the header row
+                itself (champagne underline), perfectly aligned to the panel. */}
+            <div className="flex items-center gap-3 border-b border-edge-neutral px-4 transition duration-[var(--t-fast)] ease-refined focus-within:border-edge-champagne">
               <Search size={16} strokeWidth={1.5} className="text-ink-muted" aria-hidden />
               <input
                 ref={inputRef}
@@ -251,6 +255,7 @@ export function CommandPalette({
                 onKeyDown={onInputKey}
                 placeholder={labels.placeholder}
                 data-testid="palette-input"
+                data-no-ring
                 className="h-12 w-full bg-transparent text-body-md text-ink-primary outline-none placeholder:text-ink-muted"
               />
               {searching && (
