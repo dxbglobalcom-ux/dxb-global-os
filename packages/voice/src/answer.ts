@@ -90,6 +90,7 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
     q.memoryLines.length ? `Relevant company memory:\n- ${q.memoryLines.join("\n- ")}` : "",
     `Answer the CEO's spoken question in ${q.lang === "tr" ? "Turkish" : "English"}.`,
     "This is a VOICE call: answer in 2-4 short spoken sentences, no markdown, no lists.",
+    `First line of your output MUST be exactly "TOPIC: <2-4 word topic of the question in ${q.lang === "tr" ? "Turkish" : "English"}>", then an empty line, then the spoken answer. The TOPIC line is never spoken.`,
     "If the question implies outward action (money, contracts, external messages), say it needs a dashboard approval — voice may request, never approve (V6).",
   ].filter(Boolean).join("\n\n");
   const stream = query({
@@ -239,6 +240,18 @@ export async function answerVoiceCall(
     return fail(`answer_error: ${(e as Error).message.slice(0, 200)}`);
   }
   result.timings.answer_ms = Date.now() - answerStart;
+  // Topic contract (CEO 2026-07-19): the model's first line is
+  // "TOPIC: <2-4 words>" — parsed off, NEVER spoken. Missing marker
+  // (injected test answers, non-compliant model) → fall back to the first
+  // words of the question so the history list always says what it was about.
+  let topic: string | null = null;
+  const topicMatch = /^TOPIC:\s*(.+)\s*\n+/.exec(answerText);
+  if (topicMatch) {
+    topic = topicMatch[1].trim().slice(0, 60);
+    answerText = answerText.slice(topicMatch[0].length).trim();
+  } else {
+    topic = question.split(/\s+/).slice(0, 4).join(" ").slice(0, 60) || null;
+  }
   result.answerText = answerText;
   const answerLine: TranscriptLine = { role: agent.slug, text: answerText, at: new Date().toISOString() };
 
@@ -262,7 +275,7 @@ export async function answerVoiceCall(
     ? { model: undefined as string | undefined, voice: identity.profile_ref }
     : { model: langVoice.model, voice: langVoice.voice };
   await logCall(db, {
-    id: job.callId, status: "speaking", target_agent_slug: agent.slug,
+    id: job.callId, status: "speaking", target_agent_slug: agent.slug, topic,
     transcript: [...transcript, answerLine], timeline,
     stt_ms: row.stt_ms, answer_ms: result.timings.answer_ms, degraded: result.degraded,
   });
@@ -295,7 +308,7 @@ export async function answerVoiceCall(
   step("ended");
   result.state = state;
   await logCall(db, {
-    id: job.callId, status: "ended", target_agent_slug: agent.slug,
+    id: job.callId, status: "ended", target_agent_slug: agent.slug, topic,
     transcript: [...transcript, answerLine], timeline,
     stt_ms: row.stt_ms, answer_ms: result.timings.answer_ms,
     tts_ms: result.timings.tts_ms, degraded: result.degraded, cost_eur: 0,

@@ -307,7 +307,9 @@ export function VoiceCall({
   const answering = phase === "recording" || phase === "uploading" || phase === "waiting" || phase === "speaking";
 
   return (
-    <div className="grid min-w-0 gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+    // Layout (CEO order 2026-07-19): call panel CENTERED, history UNDER it —
+    // never squeezed into a side column with dead space below.
+    <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-col gap-4">
       <Panel className="min-w-0">
         <div className="flex flex-col items-center gap-5 py-4">
           {/* live state line — role=status so screen readers follow the call */}
@@ -434,7 +436,7 @@ export function VoiceCall({
         <audio ref={audioRef} onEnded={() => setPhase("done")} className="hidden" />
       </Panel>
 
-      <Panel title={labels.recentTitle} className="min-w-0 self-start">
+      <Panel title={labels.recentTitle} className="min-w-0 w-full">
         {recent.length === 0 ? (
           <p className="text-body-s text-ink-muted">{labels.recentEmpty}</p>
         ) : (
