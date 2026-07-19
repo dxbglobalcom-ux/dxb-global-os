@@ -2177,7 +2177,13 @@
         "ended": "Bitti",
         "failed": "Başarısız"
       },
-      "failedCall": "Cevapsız görüşme"
+      "failedCall": "Cevapsız görüşme",
+      "topicLabel": "Konu",
+      "statusEnded": "Tamamlanan görüşme",
+      "removeSelected": "Seçilenleri kaldır",
+      "removing": "Kaldırılıyor",
+      "selectAll": "Tümünü seç",
+      "selectedCount": "seçili"
     },
     "boundary": {
       "errorTitle": "Bu görünümde bir şey bozuldu",

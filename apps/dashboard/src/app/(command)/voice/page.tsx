@@ -27,6 +27,7 @@ type CallRow = {
   started_at: string;
   ended_at: string | null;
   degraded: boolean;
+  transcript: Array<{ role?: string; text?: string }>;
   target: { slug: string; title: string | null; title_tr: string | null } | null;
 };
 
@@ -46,7 +47,7 @@ export default async function Page() {
     supabase.from("departments").select("slug,display_name,display_name_tr"),
     supabase
       .from("voice_calls")
-      .select("id,status,started_at,ended_at,degraded,target:agents(slug,title,title_tr)")
+      .select("id,status,started_at,ended_at,degraded,transcript,target:agents(slug,title,title_tr)")
       .order("started_at", { ascending: false })
       .limit(6),
   ]);
@@ -72,6 +73,12 @@ export default async function Page() {
     targetLabel: c.target
       ? ((locale === "tr" ? c.target.title_tr : c.target.title) ?? c.target.slug)
       : null,
+    // Call topic (CEO order 2026-07-19): the CEO's first sentence IS what
+    // the call was about. Shortened at the source — never truncated in CSS.
+    topic:
+      (Array.isArray(c.transcript)
+        ? c.transcript.find((turn) => turn.role === "ceo" && turn.text)?.text ?? null
+        : null)?.slice(0, 120) ?? null,
     degraded: c.degraded,
     totalMs:
       c.ended_at != null

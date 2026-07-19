@@ -7,6 +7,7 @@
 // the dict (i18n purity gate); states are visibly distinct and honest —
 // busy, failed and degraded are first-class, never masked (V10/§17).
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Mic, Square } from "lucide-react";
 import { Panel, StatusBadge, type StatusLevel } from "@/components/primitives";
 import { useDxbChannel } from "@/lib/realtime";
@@ -23,6 +24,8 @@ export type RecentCallRow = {
   status: string;
   startedAt: string;
   targetLabel: string | null;
+  /** the CEO's first sentence of the call — what it was about */
+  topic: string | null;
   degraded: boolean;
   totalMs: number | null;
 };
@@ -51,6 +54,12 @@ export type VoiceLabels = {
   recentTitle: string;
   recentEmpty: string;
   failedCall: string;
+  topicLabel: string;
+  statusEnded: string;
+  removeSelected: string;
+  removing: string;
+  selectAll: string;
+  selectedCount: string;
   answerNotReady: string;
   sttMs: string;
   answerMs: string;
@@ -429,42 +438,134 @@ export function VoiceCall({
         {recent.length === 0 ? (
           <p className="text-body-s text-ink-muted">{labels.recentEmpty}</p>
         ) : (
-          <ul className="divide-y divide-edge-neutral">
-            {/* Ledger-line design (CEO pick "A", 2026-07-19): no boxes, no
-                chips — hairline rows; status = shape-coded dot (§30: circle
-                ok / square danger), name center, time · duration right. */}
-            {recent.map((row) => {
-              const failed = row.status === "failed";
-              return (
-                <li key={row.id} className="flex min-w-0 items-center gap-2.5 py-2">
-                  <span
-                    aria-label={labels.statuses[row.status] ?? row.status}
-                    className={
-                      failed
-                        ? "size-[7px] shrink-0 border-[1.5px] border-status-danger"
-                        : "size-[7px] shrink-0 rounded-full bg-status-ok"
-                    }
-                  />
-                  <span
-                    className={`min-w-0 flex-1 break-words text-body-s ${
-                      failed ? "text-ink-secondary" : "text-ink-primary"
-                    }`}
-                  >
-                    {row.targetLabel ?? (failed ? labels.failedCall : labels.statuses[row.status] ?? row.status)}
-                  </span>
-                  <span className="shrink-0 font-data text-caption text-ink-muted tabular-nums">
-                    {new Date(row.startedAt).toLocaleTimeString(locale === "tr" ? "tr-TR" : "en-GB", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                    {row.totalMs != null && row.totalMs > 0 && ` · ${fmtDuration(row.totalMs)}`}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
+          <RecentCallsList recent={recent} labels={labels} locale={locale} />
         )}
       </Panel>
+    </div>
+  );
+}
+
+// Recent-calls ledger (CEO design pick "A" + list standard, 2026-07-19):
+// hairline rows — shape-coded status dot (§30), name + topic, time·duration
+// right; selection + audited bulk removal (control_records_purge entity
+// 'voice_call', terminal rows only) with the action bar UNDER the list.
+function RecentCallsList({
+  recent,
+  labels,
+  locale,
+}: {
+  recent: RecentCallRow[];
+  labels: VoiceLabels;
+  locale: Locale;
+}) {
+  const router = useRouter();
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [busy, setBusy] = useState(false);
+
+  const toggle = (id: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
+  const removeSelected = async () => {
+    if (selected.size === 0 || busy) return;
+    setBusy(true);
+    try {
+      const res = await fetch("/api/control/purge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entity: "voice_call", ids: [...selected] }),
+      });
+      if (res.ok) {
+        setSelected(new Set());
+        router.refresh();
+      }
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div>
+      <ul className="divide-y divide-edge-neutral">
+        {recent.map((row) => {
+          const failed = row.status === "failed";
+          return (
+            <li key={row.id} className="flex min-w-0 items-start gap-2.5 py-2">
+              <input
+                type="checkbox"
+                checked={selected.has(row.id)}
+                onChange={() => toggle(row.id)}
+                aria-label={row.topic ?? row.targetLabel ?? row.status}
+                className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-[var(--accent-champagne)]"
+              />
+              <span
+                aria-label={labels.statuses[row.status] ?? row.status}
+                className={
+                  failed
+                    ? "mt-1.5 size-[7px] shrink-0 border-[1.5px] border-status-danger"
+                    : "mt-1.5 size-[7px] shrink-0 rounded-full bg-status-ok"
+                }
+              />
+              <span className="min-w-0 flex-1">
+                <span
+                  className={`block break-words text-body-s ${
+                    failed ? "text-ink-secondary" : "text-ink-primary"
+                  }`}
+                >
+                  {row.targetLabel ??
+                    (failed ? labels.failedCall : labels.statusEnded)}
+                </span>
+                {row.topic && (
+                  <span className="block break-words text-caption text-ink-muted">
+                    {row.topic}
+                  </span>
+                )}
+              </span>
+              <span className="shrink-0 font-data text-caption text-ink-muted tabular-nums">
+                {new Date(row.startedAt).toLocaleTimeString(
+                  locale === "tr" ? "tr-TR" : "en-GB",
+                  { hour: "2-digit", minute: "2-digit" },
+                )}
+                {row.totalMs != null && row.totalMs > 0 && ` · ${fmtDuration(row.totalMs)}`}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+      <div className="mt-3 flex flex-wrap items-center gap-3 border-t border-edge-neutral pt-3">
+        <label className="flex items-center gap-2 text-body-s text-ink-secondary">
+          <input
+            type="checkbox"
+            checked={recent.length > 0 && selected.size === recent.length}
+            onChange={() =>
+              setSelected(
+                selected.size === recent.length
+                  ? new Set()
+                  : new Set(recent.map((r) => r.id)),
+              )
+            }
+            aria-label={labels.selectAll}
+            className="h-3.5 w-3.5 accent-[var(--accent-champagne)]"
+          />
+          {labels.selectAll}
+        </label>
+        <span className="font-data text-body-s tabular-nums text-ink-primary">
+          {selected.size} {labels.selectedCount}
+        </span>
+        <button
+          type="button"
+          data-testid="voice-remove-selected"
+          disabled={busy || selected.size === 0}
+          onClick={() => void removeSelected()}
+          className="ml-auto rounded-input border border-edge-neutral px-3 py-1 text-body-s text-ink-secondary transition duration-[var(--t-fast)] ease-refined hover:text-status-danger disabled:opacity-50"
+        >
+          {busy ? labels.removing : `${labels.removeSelected} (${selected.size})`}
+        </button>
+      </div>
     </div>
   );
 }

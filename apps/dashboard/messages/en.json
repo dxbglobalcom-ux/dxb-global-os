@@ -2177,7 +2177,13 @@
         "ended": "Ended",
         "failed": "Failed"
       },
-      "failedCall": "Unanswered call"
+      "failedCall": "Unanswered call",
+      "topicLabel": "Topic",
+      "statusEnded": "Completed call",
+      "removeSelected": "Remove selected",
+      "removing": "Removing",
+      "selectAll": "Select all",
+      "selectedCount": "selected"
     },
     "boundary": {
       "errorTitle": "Something broke in this view",
