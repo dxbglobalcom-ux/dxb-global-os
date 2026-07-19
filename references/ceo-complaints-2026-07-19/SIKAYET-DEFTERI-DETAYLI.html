@@ -1,0 +1,222 @@
+<meta charset="utf-8">
+<style>
+body{font-family:"DejaVu Sans",sans-serif;font-size:10.5pt;line-height:1.45;margin:2.2cm;color:#111}
+h1{font-size:17pt;border-bottom:3px solid #111;padding-bottom:6px}
+h2{font-size:13pt;margin-top:22px;background:#f2ede2;padding:6px 10px}
+h3{font-size:11pt;margin-top:14px}
+table{border-collapse:collapse;width:100%;margin:8px 0}
+th,td{border:1px solid #999;padding:5px 7px;vertical-align:top;font-size:9.5pt}
+th{background:#eee;text-align:left}
+.k{background:#fdf3f3}
+.s{background:#f3f7fd}
+.q{background:#fdfaf0}
+.tag{font-weight:bold;font-size:8.5pt;white-space:nowrap}
+.ozet{background:#f7f7f7;border:1px solid #bbb;padding:10px 14px}
+.aynen{font-style:italic;color:#444}
+</style>
+
+<h1>DXB Global OS — CEO Şikâyet Defteri (Tam ve Ayrıntılı Döküm)</h1>
+<p><b>Tarih:</b> 19 Temmuz 2026 &nbsp;·&nbsp; <b>Kaynak:</b> masaüstündeki <i>şikayet.odt</i> (19 başlık + 26 ekran görüntüsü) + sohbet emirleriniz<br>
+<b>Bu belge nedir:</b> Yazdığınız HER cümle tek tek ayrıştırıldı; toplam <b>68 ayrı madde</b> çıkarıldı. Hiçbir madde birleştirilerek yutulmadı. Her maddenin yanında: ne tespit ettim (ölçerek), ne yapılacak, hangi sırada.<br>
+<b>Etiketler:</b> <span class="tag">KUSUR</span> = bozuk/yanlış davranış · <span class="tag">EMİR</span> = verdiğiniz bağlayıcı karar · <span class="tag">SORU</span> = ölçülmüş cevap borcum olan sorunuz</p>
+
+<div class="ozet">
+<b>ÖZET — bütün panelin ortak 6 hastalığı (sizin maddelerinizden çıkan sistemik kurallar):</b>
+<ol>
+<li><b>Her sayfa başlığının ve her ana bölüm başlığının yanına küçük soru işareti:</b> fare ÜZERİNE GELİNCE (tıklamadan) o sayfanın/panelin ne işe yaradığını sade dille anlatan açıklama — İngilizce ve Türkçe. İstisnasız her sayfada.</li>
+<li><b>Her listeye akıllı filtre:</b> departmana göre, modele göre, gerçek takvimden tarih seçerek, projeye göre. Filtre seçilince sayfanın TAMAMI (alttaki büyük alan dâhil) o filtreye göre değişecek.</li>
+<li><b>Her listeye seçmeli silme + toplu silme/kaldırma.</b> Başarısız görevler ve benzeri kayıtlar sonsuza dek ekranda birikmeyecek.</li>
+<li><b>Kod dili yasak:</b> ID, action_type, payload_hash, "succeeded/claimed", "E 11 220 EMP", "azami kalp atışı" gibi ifadeler CEO ekranında ilk bakışta görünmeyecek. Her şey yönetici diliyle yazılacak (mağara adamı kısaltması da değil — düzgün, sade cümle).</li>
+<li><b>Bilgi taşımayan alan gösterilmez:</b> €0,00 dolu kartlar, "–" dolu kolonlar, "0 koşu" gibi yanlış/boş değerler ya doğru veriyle dolar ya ekrandan kalkar.</li>
+<li><b>Test/deneme verisi CEO ekranına asla sızmaz:</b> "r23t… kumar sitesi reklam" gibi deneme kayıtları derhâl temizlenecek; test verisinde bile dinen sakıncalı alan adı geçmesi yasak kural olarak kazındı.</li>
+</ol>
+</div>
+
+<h2>1. Niyet paneli konuşamıyor — "hamza orda mısın" → "Dağıtım başarısız"</h2>
+<p class="aynen">"Ben önce konuşmak istiyorum, planlama vs. En üst yetkiliyle, orkestratörle. Nerede? Hazırmış — nerede hazır sistem? Sistemi çok maliyetli mi tasarlamışsınız?"</p>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>1a</td><td>Selam/soru yazınca sistem bunu iş emri sanıyor, "Dağıtım başarısız" diyor</td><td class="tag">KUSUR</td><td>Ölçtüm: kutuya yazılan HER metin doğrudan "niyet" kaydı olarak veritabanına yazılıyor; arada konuşma katmanı hiç yok. Selamınız görev zinciri olmaya çalışıp çöküyor.</td></tr>
+<tr class="k"><td>1b</td><td>Önce KONUŞMA (fikir alışverişi, planlama), sonra dağıtım — bu akış hiç yok</td><td class="tag">KUSUR</td><td>Doğru. Panel bugün yalnız "yap" emri alıyor. "Konuşalım" modu tasarıma hiç konmamış. CEO Sohbet Panosu (aşağıda 7c/10b) bunu çözecek.</td></tr>
+<tr class="k"><td>1c</td><td>En üst yetkiliyle (orkestratör/Hamza) doğrudan iletişim kurulamıyor; müdürlerle de kurulamıyor</td><td class="tag">KUSUR</td><td>Sistemde Hamza'yla tek konuşma yolu ses hattıydı, o da arızalı (ayrı kusur defteri D1–D8 açık). Müdürlerle konuşma yüzeyi hiç yapılmamış. Sohbet Panosu'nda muhatap seçimi olacak: Hamza + istediğiniz müdür.</td></tr>
+<tr class="q"><td>1d</td><td>"Panel sadece 'bana YouTube sayfası yap' için mi var?"</td><td class="tag">SORU</td><td>Bugünkü hâliyle evet — yalnız iş emri kabul ediyor. Bu, çekirdek vaadin (patronla istişare eden şirket) eksik kalmış hâli; kusur olarak kabul ediyorum.</td></tr>
+<tr class="q"><td>1e</td><td>"Sistemi çok maliyetli mi tasarladınız?"</td><td class="tag">SORU</td><td>Ölçülmüş cevap: işletme maliyeti hedef bandın içinde; ama 2. maddede haklı çıktınız — Sonnet'in OpenRouter'dan çağrılması gereksiz para yaktı (7 günde $2,80). Düzeltme aşağıda 2a.</td></tr>
+</table>
+
+<h2>2. Model merdiveni ve OpenRouter — "Sonnet neden OpenRouter'dan?"</h2>
+<p class="aynen">"Ben onu sadece Çinli modeller için söyledim, maliyeti düşük olsun diye. Hepsi oradan çağrılmayacak."</p>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>2a</td><td>Sonnet (ve Opus, Fable) OpenRouter listesinde tanımlı — emrinize aykırı</td><td class="tag">KUSUR</td><td>Ölçtüm: yapılandırma dosyasında üçü de OpenRouter'a bağlı; panelinizde Sonnet $2,80 ile en çok harcayan. Düzeltme: Anthropic modelleri OpenRouter listesinden çıkacak; abonelik yolundan çağrılacak. OpenRouter'da yalnız ucuz modeller kalacak.</td></tr>
+<tr class="s"><td>2b</td><td>OpenRouter = SADECE Çinli/ucuz modeller</td><td class="tag">EMİR</td><td>Kalıcı kural olarak deftere kazındı.</td></tr>
+<tr class="s"><td>2c</td><td>Alttaki "Text Embedding, North Mini, Hy3" gibi kalemler: BEDAVAYSA kalsın</td><td class="tag">EMİR</td><td>Ölçtüm: North Mini Code (ücretsiz) ve Hy3 = $0,00 → kalır. "Text Embedding 3 Small" ise ÜCRETLİ (düşük ama sıfır değil) → ya yerli/bedava karşılığına geçilecek ya kapatılacak; öneriyle geleceğim.</td></tr>
+<tr class="s"><td>2d</td><td>Modellere işe göre görev: ticarete/para kaynağına hangisi uygunsa o çalışacak</td><td class="tag">EMİR</td><td>Model atama kuralı buna göre elden geçecek (12. maddeyle birlikte).</td></tr>
+<tr class="s"><td>2e</td><td>Kimi sınavı geçemedi → Kimi 3 çıktı, değiştirilecek</td><td class="tag">EMİR</td><td>Ölçüm sizi doğruluyor: Kimi 2.7 bu iş sınıfında 52 denemede 4 başarı. Kimi 3 kataloğa eklenip sınavdan geçirilecek; geçerse 2.7'nin yerini alacak.</td></tr>
+<tr class="q"><td>2f</td><td>"Bunları nereden seçiyoruz?"</td><td class="tag">SORU</td><td>Cevap: modeller OpenRouter kataloğundan seçilip bizim Model Kataloğu'na kaydediliyor; hangi işe hangi model gideceğini yönlendirme kuralları belirliyor. Bu kurallar şu an teknik ekranda gömülü — 12. maddeyle sadeleşecek.</td></tr>
+</table>
+
+<h2>3. "Basınca hiçbiri çalışmıyor" — tıklama ölü, imleç yalan söylüyor</h2>
+<p class="aynen">"Bir işi her şeyi DENEYEREK yapsanıza. Açılmayacak şeyse neden üstüne gelince parmak işareti oluşuyor? Hover olsun, canlı akışta tıklayınca aşağıya açılsın. 'Tümü gör' basınca çalışmıyor."</p>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>3a</td><td>Sağ paneldeki kalemler tıklanınca açılmıyor</td><td class="tag">KUSUR</td><td>Ölü tıklama yüzeyleri tek tek taranıp (yalnız ekrandakiler değil, bütün panel) ya çalışır yapılacak ya tıklanabilir görünümden çıkarılacak.</td></tr>
+<tr class="k"><td>3b</td><td>Açılmayan şeyin üstünde parmak (el) imleci çıkıyor</td><td class="tag">KUSUR</td><td>Kural: el imleci yalnız gerçekten açılan şeyde. Denetim taraması yapılacak.</td></tr>
+<tr class="s"><td>3c</td><td>Fare üstüne gelince ÖZET görünsün (hover önizleme)</td><td class="tag">EMİR</td><td>Canlı akış kalemlerine hover kartı eklenecek.</td></tr>
+<tr class="s"><td>3d</td><td>Canlı akışta tıklayınca detay AŞAĞIYA açılsın (sayfa değiştirmeden)</td><td class="tag">EMİR</td><td>Akordeon davranışı eklenecek; sayfaya fırlatma bitecek.</td></tr>
+<tr class="k"><td>3e</td><td>"Tümünü gör" düğmesi çalışmıyor</td><td class="tag">KUSUR</td><td>Ölçüldü, ekranda sabit: düğme ölü. Onarılacak.</td></tr>
+<tr class="k"><td>3f</td><td>"Bir işi her şeyi deneyerek yapsanıza" — tıklamadan teslim edilmiş</td><td class="tag">KUSUR (süreç)</td><td>Kabul: doğrulama kuralımız görsel bakıyordu, HER tıklanabilir öğeye basmayı zorunlu saymıyordu. Kural genişletildi: teslim öncesi her tıklanabilir öğe gerçekten tıklanacak.</td></tr>
+</table>
+
+<h2>4. Başarısız görevler yığını — silme yok</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="q"><td>4a</td><td>"Bu başarısız görevler ne? Sürekli böyle mi duracak?"</td><td class="tag">SORU</td><td>Cevap: işe alım dalgasının deneme görevlerinden kalanlar (58 adet). Bugün silme mekanizması hiç yok — o yüzden evet, sonsuza dek dururlar. Bu kabul edilemez, aşağıdaki 4b ile çözülüyor.</td></tr>
+<tr class="s"><td>4b</td><td>Seçmeli silme + toplu silme, HEMEN, bu tarz BÜTÜN sayfalara</td><td class="tag">EMİR</td><td>Sistemik kural #3 oldu. Denetim izi bozulmadan "arşivle/gizle" + kalıcı temizlik olarak kurulacak; tek tek sayfa sayılmayacak, standart olarak hepsine inecek.</td></tr>
+<tr class="k"><td>4c</td><td>"Ben mi söylemeliyim?" — proaktiflik eksiği</td><td class="tag">KUSUR (süreç)</td><td>Kabul. Bu sınıf ihtiyaçları sizden önce görmek bizim işimizdi; sistemik kural listesi tam da bunun için çıkarıldı.</td></tr>
+</table>
+
+<h2>5. "Bekleyen onay yok" ama görevlerde 3 tane "Onay bekliyor"</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>5a</td><td>Onay Merkezi "Bekleyen (0)" derken Görevler sayfası 3 kayıt gösteriyor — iki sayfa farklı gerçek söylüyor</td><td class="tag">KUSUR</td><td>Kök neden ölçüldü: 3 görev "onay bekliyor" durumunda ama karşılarında onay kaydı açılmamış (dalga öncesi deneme döneminden kalma). İki tablo birbirine bağlanacak; bir daha ayrışamayacaklar. (Not: üçünden biri Outleteuro kampanyası — Outleteuro'yu iptal ettiğiniz için o zaten ölüyor.)</td></tr>
+</table>
+
+<h2>6. Canlı Operasyonlar — karmakarışık; tıklayınca ESKİ TASARIM sayfa geliyor</h2>
+<p class="aynen">"succeeded done running claimed karmakarışık… TAA ESKİ DESIGNDAN KALMA SAYFA GELİYOR, üstte KORECE… KAHVE RENGİ ALAKASIZ… Kök nedeni bulup tedbir alın. Projenin kafası mı karıştı, mimari mi çöktü?"</p>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="q"><td>6a</td><td>"Canlı Operasyonlar tam olarak nedir?"</td><td class="tag">SORU</td><td>Cevap: şirkette o an dönen işlerin saniye saniye akışı (kim hangi görevi aldı, bitirdi, hata verdi). Bu açıklama sayfanın başlığının yanında soru işaretiyle duracak (sistemik kural #1).</td></tr>
+<tr class="k"><td>6b</td><td>succeeded / done / running / claimed / review — ham İngilizce kod durumları</td><td class="tag">KUSUR</td><td>Ölçtüm: Türkçe karşılıklar sözlükte VAR ama bu sayfa sözlüğü kullanmayıp ham değeri basıyor. Karşılıklar: üstlenildi → çalışıyor → kalite kontrolde → tamamlandı. Her yerde bu dil kullanılacak.</td></tr>
+<tr class="s"><td>6c</td><td>Bütün başlıkların yanına soru işareti, açıklama EN + TR</td><td class="tag">EMİR</td><td>Sistemik kural #1. Fare üzerine gelince açılacak (tıklama değil). Bu bileşen sistemde hiç yokmuş — sıfırdan yapılıp her sayfaya dağıtılacak.</td></tr>
+<tr class="k"><td>6d</td><td>Burada da seçmeli/toplu silme-kaldırma yok</td><td class="tag">KUSUR</td><td>Sistemik kural #3 kapsamında.</td></tr>
+<tr class="k"><td>6e</td><td>Aynı görevin 5 ayrı durum satırı alt alta yığılıyor (Üstlenildi/Çalışıyor/Başarılı/İncelemede/Bitti)</td><td class="tag">KUSUR</td><td>Ekranınızda sabit. Tek satırda toplanacak; zincir isteyince açılacak (3d ile aynı akordeon).</td></tr>
+<tr class="k"><td>6f</td><td>Operasyona tıklayınca ALAKASIZ, eski tasarımdan kalma sayfa geliyor; üstünde Korece saçmalıklar; kahve rengi</td><td class="tag">KUSUR (ağır)</td><td><b>Kök neden BULUNDU (sorunuzun cevabı):</b> mimari çökmedi, kafa karışmadı — Canlı Operasyonlar satırı, kodda bilinçli olarak ESKİ görev sayfasına bağlanmış; kodda "yenisi hazır olana kadar geçici" notu var ama yenisi yapılınca bağlantı unutulmuş. Eski sayfa grubu bütünüyle hâlâ erişilebilir (Onaylar detayından da oraya düşülüyor). Üstteki Korece = eski ses hatası döneminin çöp kayıtları (21. madde), kahve rengi = eski tasarımın yasaklı rengi. <b>Tedbir:</b> eski sayfa grubu tamamen silinecek, ona giden BÜTÜN bağlantılar taranıp yeni sayfalara çevrilecek; "geçici bağlantı" bir daha kayıtsız bırakılamayacak.</td></tr>
+<tr class="q"><td>6g</td><td>"1 operasyona basınca bize NEYİ göstermesi gerek?"</td><td class="tag">SORU</td><td>Cevap (tasarım niyeti): o görevin sade özeti — ne istendi, kim yaptı, hangi model, sonuç ne, kaç para/token harcandı, onay gerekti mi. Yeni görev detay sayfası bu içerikle, sade dille yapılacak.</td></tr>
+</table>
+
+<h2>7. Sarı "kayık" kutu + niyet aramanın içinde ne arıyor + CEO SOHBETİ</h2>
+<p class="aynen">"Bunu sürekli şikayet ettim ama kimse aldırmadı!!! CEO chat buradan hem voice ile hem yazılı, tıpkı harnesslerde olduğu gibi, ChatGPT gibi. Ayrıca plan modu da koyun."</p>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>7a</td><td>Sarı çerçeveli kutu "kayık" (hizasız) — defalarca şikâyet edildi, kayda geçmedi</td><td class="tag">KUSUR + süreç</td><td>Hiza kusuru düzeltilecek. Süreç itirafı: tekrarlanan şikâyetleriniz deftere işlenmiyordu — bu belge o hatanın da ilacı; bundan sonra her sözlü şikâyet aynı gün deftere girer.</td></tr>
+<tr class="s"><td>7b</td><td>"Niyet"i arama kutusundan ÇIKARIN — aramanın içinde komut ne alaka</td><td class="tag">EMİR</td><td>Arama kutusu yalnız arama yapacak. Niyet/komut oradan sökülecek.</td></tr>
+<tr class="s"><td>7c</td><td>CEO SOHBETİ: hem yazılı hem sesli, ChatGPT/Claude arayüzü gibi, PLAN MODU dahil</td><td class="tag">EMİR (büyük)</td><td>Yeni yüzey: CEO Sohbet Panosu. Muhatap: Hamza (ve seçtiğiniz müdür). Önce konuşur/planlarsınız (plan modu = "henüz iş başlatma, önce tartışalım" düğmesi), siz onaylayınca iş dağıtılır. 1. maddenin kökten çözümü budur.</td></tr>
+</table>
+
+<h2>8. İK'da "Loan Officer, Real Estate" — bin defa şikâyet edildi</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>8a</td><td>İK listesinde alakasız personalar (kredi memuru, emlakçı, otel misafir hizmetleri…)</td><td class="tag">KUSUR</td><td>Ölçtüm: bunlar eski devirden kalan "yedek havuz" dosyaları (15 adet, hiçbiri çalışmıyor, hepsi "uykuda"). İK ekranı uyuyanları da saydığı için gözünüze geliyorlar.</td></tr>
+<tr class="q"><td>8b</td><td>"Bağsız, uykuda falan ne bunlar, ne işe yarayacaklar?"</td><td class="tag">SORU</td><td>Cevap: "uykuda" = işe alınmamış taslak; "bağsız" = eski sürüm dosyası, yeni düzene bağlanmamış. Hiçbiri şu an hiçbir işe yaramıyor.</td></tr>
+<tr class="s"><td>8c</td><td>İşe yaramayacak olanları SİLİN gitsin</td><td class="tag">EMİR</td><td>Silme listesi hazırlanıp tek onayınıza gelecek (holding profiline uymayanlar: kredi memuru, emlak, sağlık, otel vb.); ekranlarınızda yalnız gerçek kadro (198 aktif) görünecek.</td></tr>
+</table>
+
+<h2>9. Maliyet/Token sayfası — filtreler kör, takvim sahte, veri kaynağı belirsiz</h2>
+<p class="aynen">"Soru işareti HOVER'da… Bu veriler nereden geldi, nasıl silinecek/sıfırlanacak? Proje bazlı olacak. Takvim gerçek manada tarih seçilince o tarihtekiler direkt yansısın. Departmana göre seçilmiyor, modele göre seçilmiyor. En alta büyük sayfaya bu filtreye göre yansısın. BU NE SAÇMA MİMARİ."</p>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="s"><td>9a</td><td>Soru işareti açıklamaları TIKLAYINCA değil, fare ÜSTÜNE GELİNCE</td><td class="tag">EMİR</td><td>Sistemik kural #1'in netleştirilmiş hâli: hover. Not aldım, tıklamalı yapılmayacak.</td></tr>
+<tr class="q"><td>9b</td><td>"Bu verileri nereden çektiniz?"</td><td class="tag">SORU</td><td>Ölçülmüş cevap: her yapay zekâ koşusunun token sayacı veritabanına yazılıyor (agent_runs/cost_ledger tabloları); sayfa oradan okuyor. AMA 24. maddede göreceğiniz gibi etiketleme bozuk (hepsi "engineering" görünüyor) — kaynak doğru, sunum yanlış.</td></tr>
+<tr class="q"><td>9c</td><td>"Nasıl silinecek/sıfırlanacak?"</td><td class="tag">SORU</td><td>Bugün: hiç silinemiyor (mekanizma yok). Yapılacak: dönem kapama/sıfır noktası özelliği + eski kayıtları arşivleme (sistemik kural #3'ün maliyet sayfası ayağı).</td></tr>
+<tr class="s"><td>9d</td><td>Veriler PROJE BAZLI olacak: proje seçilince yalnız o projenin verisi yansıyacak</td><td class="tag">EMİR</td><td>Proje filtresi eklenecek; tüm kartlar ve alt liste seçime uyacak.</td></tr>
+<tr class="k"><td>9e</td><td>Takvim gerçek değil: tarih seçilince o günün verisi DİREKT yansımıyor</td><td class="tag">KUSUR</td><td>Gerçek tarih seçici konacak; seçim bütün sayfayı sürecek.</td></tr>
+<tr class="k"><td>9f</td><td>Departmana göre filtre YOK</td><td class="tag">KUSUR</td><td>Eklenecek.</td></tr>
+<tr class="k"><td>9g</td><td>Modele göre filtre YOK</td><td class="tag">KUSUR</td><td>Eklenecek.</td></tr>
+<tr class="k"><td>9h</td><td>Alttaki gün listesi kendi başına; filtre bütün büyük sayfayı SÜRMÜYOR</td><td class="tag">KUSUR</td><td>Tek filtre çubuğu her bloğu yönetecek (sistemik kural #2).</td></tr>
+</table>
+
+<h2>10. Portföy — aşırı karmaşık; sizin istediğiniz akış bambaşka</h2>
+<p class="aynen">"R23T 30001000 bilmem ne! Ben bunu istemedim. Portföy hazırlanınca üzerinde tartışılıp ittifak yapılınca 'CEO CHAT BOARD'unda Hamza ile… kimler çalışacak, hangi model sorumlu olacak bilmek istersem, o portföy sorumlularının beynini değiştirebileyim."</p>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>10a</td><td>Portföy sayfası anlamsız rakam/kod dolu (R23T 30001000…)</td><td class="tag">KUSUR</td><td>O "R23T…" kayıtları yine TEST KALINTISI (20. madde ile aynı hastalık). Temizlenecek; sayfa sadeleşecek.</td></tr>
+<tr class="s"><td>10b</td><td>İstediğiniz akış: portföy hazırlanır → CEO Sohbet Panosu'nda Hamza ile tartışılır → ittifakla karar</td><td class="tag">EMİR</td><td>Portföy akışı bu modele göre yeniden kurulacak (7c'deki sohbet panosuna bağlanır).</td></tr>
+<tr class="s"><td>10c</td><td>Orkestratörün adı artık HAMZA; JARVIS üzerinden sizinle konuşan da o</td><td class="tag">EMİR</td><td>Resmî isim değişikliği kayda geçti; her yüzeyde "Hamza" yazacak.</td></tr>
+<tr class="s"><td>10d</td><td>İstediğinizde görün: bu portföyde kimler çalışıyor, hangi model sorumlu</td><td class="tag">EMİR</td><td>Portföy detayına "sorumlu kadro ve beyin" kutusu eklenecek.</td></tr>
+<tr class="s"><td>10e</td><td>Portföy sorumlusunun BEYNİNİ (modelini) oradan değiştirebilme</td><td class="tag">EMİR</td><td>Operasyon &gt; Projeler ve Portföy'den model değiştirme düğmesi; normalde karışmazsınız ama yetki elinizde olacak.</td></tr>
+</table>
+
+<h2>11–13. Menü düzeni — "özensizliğin tam adresi"</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="s"><td>11a</td><td>Görevler sayfası Operasyon menüsünden KALKSIN (CEO'nun görmesi gerekmiyor)</td><td class="tag">EMİR</td><td>Menüden kaldırılacak (sistem içinde çalışmaya devam eder, göz önünde durmaz).</td></tr>
+<tr class="s"><td>11b</td><td>Portföy → Operasyon altına (para kazanma yeri, "Zekâ" altında işi yok)</td><td class="tag">EMİR</td><td>Taşınacak.</td></tr>
+<tr class="s"><td>13a</td><td>Fırsatlar, CRM, Hedefler → hepsi Operasyon altına</td><td class="tag">EMİR</td><td>Taşınacak. Ölçtüm: bugün beşi de "Zekâ" grubunda — operasyonel şeylerin zekâ menüsünde işi yok, haklısınız.</td></tr>
+</table>
+
+<h2>12. Modeller sayfası</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="s"><td>12a</td><td>Fable'ın yedeği = Codex 5.6 solo VE Opus 4.8</td><td class="tag">EMİR</td><td>Ölçtüm: bugün yedek yalnız Opus görünüyor. Zincir emrinize göre düzeltilecek.</td></tr>
+<tr class="s"><td>12b</td><td>"Model ekle" = SADECE isim + API anahtarı (+ istersem not). Gerisi orkestratörün işi</td><td class="tag">EMİR</td><td>Bugünkü 4 adımlı teknik form (kayıt/duman testi/eval/aktifleştir) perde arkasına alınacak; size yalnız isim+anahtar+not sorulacak, testleri Hamza yürütecek.</td></tr>
+<tr class="k"><td>12c</td><td>Sayfada bir sürü gereksiz detay; yalnız gerekli olan görünsün</td><td class="tag">KUSUR</td><td>Sadeleştirilecek (23. maddedeki boş/yanlış kolonlarla birlikte).</td></tr>
+<tr class="q"><td>12d</td><td>"Codex Solo 5.6, Codex 5.5, glm 5.2, kimi 3, deepseek V4 pro neden eklenmemiş? Mode seçimleri?"</td><td class="tag">SORU</td><td>Ölçülmüş cevap: glm 5.2 ve deepseek (V4 flash sürümü) sistemde VAR ama katalog sayfasına yansımıyor; Codex 5.5 yönlendirme kurallarında var, katalogda görünmüyor; Codex 5.6, kimi 3, deepseek V4 pro hiç eklenmemiş. Hepsi kataloğa eklenecek, mod seçimleri (abonelik mi, kullandıkça öde mi) yanlarında sade dille yazacak.</td></tr>
+</table>
+
+<h2>14. Bellek (Memory) sayfası</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>14a</td><td>İçerik anlaşılmaz ("Fact / claude-mem / Trusted / 0.50" satırları)</td><td class="tag">KUSUR</td><td>Sade dile çevrilecek: "ne öğrenildi, hangi kaynaktan, ne kadar güvenilir" cümleleriyle.</td></tr>
+<tr class="q"><td>14b</td><td>"Token harcamayı engellemek için ne yapıldı? Bu onun için var — çalışıyor mu?"</td><td class="tag">SORU</td><td>Ölçülmüş cevap: evet, hafıza sistemi tekrar okuma maliyetini düşürmek için var ve çalışıyor (oturum başına ölçülen ~%84 okuma tasarrufu kayıtlı). Bu bilgi sayfanın başına sade dille yazılacak.</td></tr>
+<tr class="s"><td>14c</td><td>Her segmentte ana başlığın içinde sizin anlayacağınız açıklama; "ben teknik değil yöneticiyim"</td><td class="tag">EMİR</td><td>Sistemik kural #1 + #4'ün bu sayfaya uygulanması.</td></tr>
+</table>
+
+<h2>15–16. Yetenekler (Skills) / Eklentiler (Plugins) / Kütüphane</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="q"><td>15a</td><td>"Bunların hepsi kullanılabilir mi? Nasıl kullanılacak? Çalışıldı mı, öğrenildi mi?"</td><td class="tag">SORU</td><td>Tahminle DEĞİL, kayıtla cevaplanacak: her yetenek/eklenti için "çalışma kartı var mı, hangi çalışan kullanabiliyor, kaç kez gerçekten kullanıldı" tablosu çıkarılıp sayfaya işlenecek. (Ölçülen taban: 69 araç 5 sunucuda bağlı ve canlı çağrı kanıtlı; çalışma kartı 75 adet.)</td></tr>
+<tr class="q"><td>15b</td><td>"Sarı ile işaretli şey ne demek?"</td><td class="tag">SORU</td><td>Ekran görüntünüzdeki sarı çerçeve = o an seçili satırın vurgusu (kütüphanede "autoresearch" satırı seçiliydi). Kafa karıştırıyorsa vurgu rengi/biçimi değiştirilecek.</td></tr>
+<tr class="q"><td>16a</td><td>"Onaylanan skiller 23, pluginler 18 mi?"</td><td class="tag">SORU</td><td>Ölçüldü: kütüphanede Yetenek 23 kayıt, Eklenti 18 kayıt — sayılar doğru.</td></tr>
+<tr class="q"><td>16b</td><td>"Bu kütüphanede BENİM verdiklerim nerede?"</td><td class="tag">SORU</td><td>Ölçülmüş cevap borcu: sizin gönderdiğiniz kaynaklar (ör. beğendiğiniz araç listeleri, tasarım kaynakları) kütüphanede hangi kayıtlara dönüştü — kaynak-kim-verdi kolonu çıkarılıp "CEO'nun verdikleri" filtresi eklenecek ve size liste sunulacak.</td></tr>
+</table>
+
+<h2>17. Onay/Outbox detayları — "PANEL CODE'CU İÇİN DEĞİL, CEO İÇİN"</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="q"><td>17a</td><td>"Bunlar ne ve ben bunları nasıl kullanacağım?"</td><td class="tag">SORU</td><td>Cevap: Onaylar = dışa dönük (para/sözleşme/e-posta) işlerde son sözün sizde olduğu kapı. Kullanımı: iş sade cümleyle önünüze gelir, Onayla/Reddet dersiniz. Bugünkü sunum bu sadelikte DEĞİL — kusur.</td></tr>
+<tr class="k"><td>17b</td><td>Detaya basınca yine o saçma eski ekran geliyor</td><td class="tag">KUSUR</td><td>Ölçtüm: Onay detayındaki görev bağlantısı da ESKİ sayfaya gidiyor (6f ile aynı kök neden). Birlikte ölecek.</td></tr>
+<tr class="k"><td>17c</td><td>"Tam kayıt" ekranı: OUTBOX_ID, ACTION_TYPE, PAYLOAD_HASH… anlaşılmaz alt başlıklar</td><td class="tag">KUSUR</td><td>Ham teknik alanlar CEO görünümünden kalkacak; yerine sade cümle: "Ne yapıldı, kim istedi, sonuç ne". Teknik detay "gelişmiş" sekmesine saklanacak (isteyen açar).</td></tr>
+<tr class="s"><td>17d</td><td>Onay içerikleri satış/proje/portföy işleriyle ilgili, düz cümlelerle olacak</td><td class="tag">EMİR</td><td>Gerçek ticari işler başlayınca onay kartı şablonu: "X kampanyası için Y €'luk harcama onayı" gibi tek cümle + gerekirse detay.</td></tr>
+<tr class="s"><td>17e</td><td>"Panel yazılımcı için değil, CEO/holding başkanı için"</td><td class="tag">EMİR (genel)</td><td>Sistemik kural #4'ün anayasa cümlesi olarak deftere kazındı.</td></tr>
+</table>
+
+<h2>18. Onaylar listesi — aynı hastalık</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>18a</td><td>Uzun, filtresiz, seçme/silmesiz liste; içerik alakasız/teknik</td><td class="tag">KUSUR</td><td>113 aynı tip onay tek tek listelenmiş — toplu karar TEK kayıt olarak gösterilecek ("113 işe alım onayı — toplu karar"); filtre+seçim standardı buraya da inecek.</td></tr>
+<tr class="q"><td>18b</td><td>"Biz ticaret/video üretimi işleri yazacağız; onay içeriği hep böyle mi olacak?"</td><td class="tag">SORU</td><td>Hayır. Bu görünen içerik, işe alım dalgasının makine fişleriydi. Gerçek işlerde 17d şablonu geçerli olacak: sade ticari cümle. Söz + tasarım değişikliği kayıtlı.</td></tr>
+</table>
+
+<h2>19. Çalışma Zamanı / Pano / genel dil — "BEN BUNLARI TAKİP EDEMEM"</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>19a</td><td>"E 11 220 EMP" gibi kodlu kutular</td><td class="tag">KUSUR</td><td>Kod kısaltmaları ekrandan kalkacak; sade sayı + sade etiket.</td></tr>
+<tr class="k"><td>19b</td><td>"Azami kalp atışı", "ön/koşu/son", "kilitli kapı" — anlaşılmaz terimler</td><td class="tag">KUSUR</td><td>Bunlar iç mutfak terimleri (sağlık ölçümü, denetim kapıları). CEO ekranında ya sade karşılığı yazacak ("çalışan sağlığı: normal") ya hiç görünmeyecek.</td></tr>
+<tr class="k"><td>19c</td><td>Pano: "aktif uyarı 10000, dikkat 240" gibi delirtici sayılar</td><td class="tag">KUSUR</td><td>Uyarı sayıları anlamlı özete inecek ("bugün 3 önemli uyarı"); ham binlik sayaçlar kalkacak. (Uyarı yığılması hastalığının kökü zaten dün kapatıldı: başarı gelince eski alarm otomatik düşüyor; şimdi SUNUM da insanileşecek.)</td></tr>
+<tr class="s"><td>19d</td><td>BÜTÜN sayfalar: filtreli, kodsuz, anlaşılır dil; mağara adamı dili de değil</td><td class="tag">EMİR</td><td>Sistemik kural #2+#4'ün genel hükmü. Sol menünün bakmadığınız sayfaları dâhil — ekran görüntüsü verdiğiniz sayfalarla sınırlı kalınmayacak, 46 sayfanın HEPSİ bu süzgeçten geçecek.</td></tr>
+<tr class="k"><td>19e</td><td>Hook İhlalleri sayfası: Türkçe sayfada İngilizce detay cümleleri</td><td class="tag">KUSUR</td><td>Dil saflığı kuralı ihlali; makine kayıtları Türkçe özetlenecek.</td></tr>
+<tr class="k"><td>19f</td><td>Görev listelerinde Türkçe ekranda İngilizce görev başlıkları</td><td class="tag">KUSUR</td><td>İçerik verisi de iki dilli tutulacak (başlık_tr alanı kuralı zaten kayıtlı — uygulanmamış, uygulanacak).</td></tr>
+</table>
+
+<h2>20–25. Ekran görüntülerinden çıkan EK kusurlar (sizin yazmadığınız ama görüntüde duran)</h2>
+<table>
+<tr><th>#</th><th>Madde</th><th>Tür</th><th>Tespit / Yapılacak</th></tr>
+<tr class="k"><td>20</td><td><b>İş Akışları sayfasında test kalıntısı — birinin hedefinde "kumar sitesi reklam" yazıyor</b></td><td class="tag">KUSUR (en ağır)</td><td>Deneme kayıtları ("r23t-…") CEO ekranına sızmış; üstelik dinen kabul edilemez bir ibareyle. İLK temizlenecek madde bu. Yeni yasak kural: test verisinde bile haram-alan kelimesi kullanılamaz.</td></tr>
+<tr class="k"><td>21</td><td>Korece "뭐요?…" ve bozuk "May the do you, Muslim Hamza" niyetleri ekranlarda asılı</td><td class="tag">KUSUR</td><td>Eski ses-arızası döneminin çöpü; veritabanından temizlenecek.</td></tr>
+<tr class="k"><td>22</td><td>Riskler sayfası ESKİ bilgi gösteriyor: "220 çalışanın 219'u uykuda" hâlâ AÇIK risk</td><td class="tag">KUSUR</td><td>Gerçek: 198 aktif, 0 stajyer. Risk kayıtları dalga bitince güncellenmemiş; kapama disiplini kurulacak.</td></tr>
+<tr class="k"><td>23</td><td>Model Kataloğu istatistikleri boş/yanlış: Sonnet "0 koşu" diyor (gerçek: bir günde 335); panelde "simulated timeout" test satırları</td><td class="tag">KUSUR</td><td>İstatistik beslemesi onarılacak; test satırları temizlenecek.</td></tr>
+<tr class="k"><td>24</td><td>Tokenlar sayfası: 2,1 milyar token'ın TAMAMI "engineering" görünüyor (21 departman çalıştı); benim inşaat oturumlarım şirket kullanımıyla karışmış</td><td class="tag">KUSUR</td><td>Departman etiketi görevden alınacak (doğru dağılım); inşaat (kuruluş çalışması) ile şirket işletmesi ayrı gösterilecek.</td></tr>
+<tr class="k"><td>25</td><td>Her yerde €0,00 kartları, "–" kolonları</td><td class="tag">KUSUR</td><td>Bilgi taşımayan alan gösterilmez kuralınız (daha önce verdiğiniz A1 hükmü) bu sayfalara da uygulanacak.</td></tr>
+</table>
+
+<h2>Çözüm sırası (onayınıza sunulan öneri)</h2>
+<table>
+<tr><th>Dalga</th><th>İçerik</th><th>Neden bu sıra</th></tr>
+<tr><td><b>A — Güven temizliği</b></td><td>20 (kumar-fikstür temizliği) → 6f/17b (eski sayfa grubunun ölümü) → 21 (çöp niyetler) → 5a (onay/görev çelişkisi) → 2a (OpenRouter onarımı) → 22 (risk tazeleme)</td><td>Ekranda yalan söyleyen / utandıran ne varsa önce o gider</td></tr>
+<tr><td><b>B — CEO Sohbet Panosu</b></td><td>1a-1e, 7b, 7c, 10b, 10c (Hamza ile yazılı+sesli sohbet, plan modu, niyet aramadan çıkar)</td><td>En büyük yapısal isteğiniz; "önce konuş, sonra iş"</td></tr>
+<tr><td><b>C — Sistemik standartlar</b></td><td>Soru işareti bileşeni (her sayfaya) + filtre standardı + seçmeli/toplu silme + sade dil taraması (3, 4, 6b-e, 9, 14, 17c, 18, 19, 23, 24, 25)</td><td>Tek bileşen yapılır, 46 sayfaya birden dağıtılır — tek tek yamadan hızlı ve tutarlı</td></tr>
+<tr><td><b>D — Menü + Modeller + İK</b></td><td>11, 13 (taşımalar), 12 (model sayfası + eksik modeller + yedek zinciri), 8 (persona temizliği), 10d-e (portföy sorumlu/beyin)</td><td>Yapı değişiklikleri; standartlar oturduktan sonra</td></tr>
+<tr><td><b>E — Ölçülü cevap borçları</b></td><td>15a-b, 16a-b, 14b, 9b, 12d — her biri kayıtla, tahminsiz</td><td>Cevaplar ancak temiz veriyle güvenilir olur</td></tr>
+</table>
+
+<p><b>Söz:</b> Her madde kapanırken kanıtıyla kapanacak (ekran görüntüsü + ölçüm). Hiçbir madde sessizce düşürülemez; düşecekse ancak sizin kararınızla düşer.</p>
