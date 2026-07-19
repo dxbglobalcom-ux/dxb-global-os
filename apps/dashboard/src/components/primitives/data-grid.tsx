@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
 
 export type Column<T> = {
   key: string;
-  label: string;
+  label: React.ReactNode;
   align?: "left" | "right";
   numeric?: boolean;
   render: (row: T) => ReactNode;

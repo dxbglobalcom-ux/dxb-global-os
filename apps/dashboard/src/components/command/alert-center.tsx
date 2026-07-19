@@ -66,6 +66,9 @@ export type AlertLabels = {
   shown: string;
   levels: Record<string, string>;
   sources: Record<string, string>;
+  purgeSelected: string;
+  purging: string;
+  selectHint: string;
 };
 
 const LEVEL_BADGE: Record<string, StatusLevel> = {
@@ -115,6 +118,8 @@ export function AlertCenter({
   const [level, setLevel] = useState("all");
   const [source, setSource] = useState("all");
   const [open, setOpen] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [purging, setPurging] = useState(false);
 
   // Broadcast → server refetch, debounced: a raise/ack/resolve lands within
   // a second without any client-side alert cache.
@@ -144,6 +149,35 @@ export function AlertCenter({
       }),
     [rows, level, source],
   );
+
+  // C4/C18 list-page standard: alert rows (kind='alert') are selectable and
+  // bulk-removable through the audited purge door; approval rows are not.
+  const selectableIds = filtered.filter((r) => r.kind === "alert").map((r) => r.id);
+  const allSelected = selectableIds.length > 0 && selectableIds.every((id) => selected.has(id));
+  function toggleSelect(id: string) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }
+  async function purgeSelected() {
+    if (selected.size === 0 || purging) return;
+    setPurging(true);
+    try {
+      const res = await fetch("/api/control/purge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entity: "alert", ids: [...selected] }),
+      });
+      if (res.ok) {
+        setSelected(new Set());
+        router.refresh();
+      }
+    } finally {
+      setPurging(false);
+    }
+  }
 
   const selectCls =
     "rounded-input border border-edge-neutral bg-surface-graphite px-2 py-1 text-body-s text-ink-primary";
@@ -198,6 +232,31 @@ export function AlertCenter({
         </span>
       </div>
 
+      <div className="flex min-h-7 items-center gap-3">
+        {selectableIds.length > 0 && (
+          <label className="flex items-center gap-2 text-caption text-ink-muted">
+            <input
+              type="checkbox"
+              checked={allSelected}
+              onChange={() => setSelected(allSelected ? new Set() : new Set(selectableIds))}
+              className="size-3.5 accent-[#c8a96a]"
+            />
+            {labels.selectHint}
+          </label>
+        )}
+        {selected.size > 0 && (
+          <button
+            type="button"
+            onClick={() => void purgeSelected()}
+            disabled={purging}
+            data-testid="alert-purge-selected"
+            className="rounded-input border border-status-danger/60 px-3 py-1 text-body-s text-status-danger transition duration-[var(--t-fast)] ease-refined enabled:hover:bg-status-danger/10 disabled:opacity-40"
+          >
+            {purging ? labels.purging : `${labels.purgeSelected} (${selected.size})`}
+          </button>
+        )}
+      </div>
+
       {filtered.length === 0 ? (
         <p className="py-8 text-center text-body-s text-ink-muted">
           {view === "active" ? labels.empty : labels.emptyResolved}
@@ -205,8 +264,19 @@ export function AlertCenter({
       ) : (
         <ul className="space-y-2">
           {filtered.map((r) => (
+            <li key={`${r.kind}-${r.id}`} className="flex items-start gap-2">
+              {r.kind === "alert" ? (
+                <input
+                  type="checkbox"
+                  aria-label={`select ${r.id}`}
+                  checked={selected.has(r.id)}
+                  onChange={() => toggleSelect(r.id)}
+                  className="mt-4 size-3.5 shrink-0 accent-[#c8a96a]"
+                />
+              ) : (
+                <span aria-hidden className="mt-4 inline-block size-3.5 shrink-0" />
+              )}
             <AlertCard
-              key={`${r.kind}-${r.id}`}
               row={r}
               agents={agents}
               labels={labels}
@@ -215,6 +285,7 @@ export function AlertCenter({
               onToggle={() => setOpen(open === r.id ? null : r.id)}
               onDone={() => router.refresh()}
             />
+            </li>
           ))}
         </ul>
       )}
@@ -274,7 +345,7 @@ function AlertCard({
   };
 
   return (
-    <li className="rounded-panel border border-edge-neutral bg-surface-obsidian">
+    <div className="min-w-0 flex-1 rounded-panel border border-edge-neutral bg-surface-obsidian">
       <button
         type="button"
         onClick={onToggle}
@@ -401,7 +472,7 @@ function AlertCard({
           {error && <p className="text-body-s text-status-danger">{error}</p>}
         </div>
       )}
-    </li>
+    </div>
   );
 }
 

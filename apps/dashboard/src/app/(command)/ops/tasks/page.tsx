@@ -1,11 +1,6 @@
 import Link from "next/link";
-import {
-  DataGrid,
-  Panel,
-  Stat,
-  StatusBadge,
-  type Column,
-  type StatusLevel, HelpTip } from "@/components/primitives";
+import { TaskPurgeGrid } from "@/components/ops/task-purge-grid";
+import { HelpTip, Panel, Stat } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -35,18 +30,6 @@ type TaskStatus = (typeof STATUSES)[number];
 // with v_exec_overview_v1.active_tasks and the command-bar counter —
 // awaiting_approval is the CEO's queue, counted separately.
 const ACTIVE_SET: TaskStatus[] = ["queued", "claimed", "running"];
-
-const BADGE: Record<TaskStatus, StatusLevel> = {
-  inbox: "info",
-  queued: "info",
-  claimed: "info",
-  running: "ok",
-  review: "warn",
-  awaiting_approval: "warn",
-  done: "ok",
-  failed: "danger",
-  returned: "danger",
-};
 
 type TaskRow = {
   id: string;
@@ -125,58 +108,7 @@ export default async function TasksPage({
 
   const selfHref = (params: string) => `/ops/tasks${params ? `?${params}` : ""}`;
 
-  const columns: Column<TaskRow>[] = [
-    {
-      key: "objective",
-      label: t.colObjective,
-      render: (r) => (
-        <span className="block max-w-[40ch] truncate" title={r.objective}>
-          {r.objective}
-        </span>
-      ),
-    },
-    { key: "department", label: t.colDept, render: (r) => r.department },
-    {
-      key: "status",
-      label: t.colStatus,
-      render: (r) => (
-        <StatusBadge level={BADGE[r.status]}>
-          {stateLabels[r.status] ?? r.status}
-        </StatusBadge>
-      ),
-    },
-    {
-      key: "model_tier",
-      label: t.colTier,
-      numeric: true,
-      render: (r) => r.model_tier,
-    },
-    {
-      key: "priority",
-      label: t.colPriority,
-      align: "right",
-      numeric: true,
-      render: (r) => String(r.priority),
-    },
-    {
-      key: "claimed_by",
-      label: t.colClaimedBy,
-      render: (r) => r.claimed_by ?? "—",
-    },
-    {
-      key: "updated_at",
-      label: t.colUpdated,
-      align: "right",
-      numeric: true,
-      render: (r) =>
-        new Date(r.updated_at).toLocaleString(locale === "tr" ? "tr-TR" : "en-GB", {
-          day: "2-digit",
-          month: "short",
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-    },
-  ];
+
 
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
@@ -269,9 +201,23 @@ export default async function TasksPage({
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto">
-                <DataGrid columns={columns} rows={rows} rowKey={(r) => r.id} />
-              </div>
+              <TaskPurgeGrid
+                rows={rows}
+                locale={locale}
+                labels={{
+                  colObjective: t.colObjective,
+                  colDept: t.colDept,
+                  colStatus: t.colStatus,
+                  colTier: t.colTier,
+                  colPriority: t.colPriority,
+                  colClaimedBy: t.colClaimedBy,
+                  colUpdated: t.colUpdated,
+                  states: stateLabels,
+                  purgeSelected: t.purgeSelected,
+                  purging: t.purging,
+                  selectableHint: t.selectableHint,
+                }}
+              />
               <p className="mt-2 text-right font-data text-caption text-ink-muted tabular-nums">
                 {t.showing} {rows.length} {t.of} {matched}
               </p>

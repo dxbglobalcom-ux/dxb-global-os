@@ -570,7 +570,10 @@
         "done": "Bitti",
         "failed": "Başarısız",
         "returned": "İade edildi"
-      }
+      },
+      "purgeSelected": "Seçilenleri kaldır",
+      "purging": "Kaldırılıyor…",
+      "selectableHint": "Biten satırlar (bitti, hata, iade) işaretlenip kaldırılabilir — çalışan iş buradan silinemez. Kaldırma denetim izine kaydedilir."
     },
     "employees": {
       "kpiTotal": "Kadro",
@@ -1577,7 +1580,10 @@
           "file_review": "Dosya incelemesi",
           "approval": "Onay"
         },
-        "affectedArea": "Etkilenen alan"
+        "affectedArea": "Etkilenen alan",
+        "purgeSelected": "Seçilenleri kaldır",
+        "purging": "Kaldırılıyor…",
+        "selectHint": "Görünenlerin tümünü seç"
       }
     },
     "workflows": {

@@ -570,7 +570,10 @@
         "done": "Done",
         "failed": "Failed",
         "returned": "Returned"
-      }
+      },
+      "purgeSelected": "Remove selected",
+      "purging": "Removing…",
+      "selectableHint": "Finished rows (done, failed, returned) can be ticked and removed — running work cannot be deleted from here. Removal is recorded in the audit trail."
     },
     "employees": {
       "kpiTotal": "Workforce",
@@ -1577,7 +1580,10 @@
           "file_review": "File review",
           "approval": "Approval"
         },
-        "affectedArea": "Affected area"
+        "affectedArea": "Affected area",
+        "purgeSelected": "Remove selected",
+        "purging": "Removing…",
+        "selectHint": "Select all shown"
       }
     },
     "workflows": {
