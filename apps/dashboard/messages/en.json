@@ -450,7 +450,8 @@
       "moneyOut": "Money out",
       "oldest": "Oldest:",
       "tickerTitle": "Live ticker",
-      "tickerEmpty": "No operations in the last 24 hours."
+      "tickerEmpty": "No operations in the last 24 hours.",
+      "runNoLabel": "Background system work"
     },
     "dock": {
       "running": "Running now"

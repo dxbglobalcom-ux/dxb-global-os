@@ -34,7 +34,7 @@ export function LiveTicker({
   statusLabels,
 }: {
   rows: TickerRow[];
-  labels: { empty: string; viewAll: string };
+  labels: { empty: string; viewAll: string; runNoLabel: string };
   statusLabels: Record<string, string>;
 }) {
   const router = useRouter();
@@ -65,14 +65,14 @@ export function LiveTicker({
               {/* Full wrap, never "…" — visible ellipsis on a CEO surface is
                   an automatic FAIL (RULE #0 Amendment A1, 2026-07-17). */}
               <div className="min-w-0 break-words text-body-s text-ink-primary">
-                {r.label ?? r.event ?? r.source}
+                {r.label ?? labels.runNoLabel}
               </div>
-              <div className="mt-1 flex items-center gap-2">
-                {r.status && (
-                  <StatusBadge level={STATUS_BADGE[r.status] ?? "info"}>
-                    {statusLabels[r.status] ?? r.status}
-                  </StatusBadge>
-                )}
+              {/* Symmetry ruling: chip pinned left, time pinned right —
+                  identical geometry on every card. */}
+              <div className="mt-1 flex items-center justify-between gap-2">
+                <StatusBadge level={(r.status && STATUS_BADGE[r.status]) || "info"}>
+                  {(r.status && statusLabels[r.status]) ?? r.status ?? "—"}
+                </StatusBadge>
                 <span className="font-data text-caption text-ink-muted tabular-nums">
                   {new Date(r.ts).toLocaleTimeString(undefined, {
                     hour: "2-digit",

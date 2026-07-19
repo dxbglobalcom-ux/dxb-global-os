@@ -450,7 +450,8 @@
       "moneyOut": "Para çıkışı",
       "oldest": "En eski:",
       "tickerTitle": "Canlı akış",
-      "tickerEmpty": "Son 24 saatte operasyon yok."
+      "tickerEmpty": "Son 24 saatte operasyon yok.",
+      "runNoLabel": "Arka plan sistem işi"
     },
     "dock": {
       "running": "Şu an çalışıyor"

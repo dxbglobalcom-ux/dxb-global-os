@@ -86,9 +86,9 @@ export default async function CommandLayout({
     // first) — the §3 "live ticker" slot; ops:live Broadcast repaints it.
     supabase
       .from("v_live_ops")
-      .select("source,source_id,ts,status,event,label")
+      .select("source,source_id,ts,status,event,label,task_id")
       .order("ts", { ascending: false })
-      .limit(5),
+      .limit(25),
   ]);
   const paused = pauseRes.data?.value === true;
 
@@ -119,11 +119,28 @@ export default async function CommandLayout({
   }));
   // Alert titles are English machine records; the TR surface localizes the
   // finite generator vocabulary at the server boundary (RULE #0 purity).
-  const railAlerts: RailAlert[] = ((alertsRes.data ?? []) as RailAlert[])
-    .slice(0, 5)
-    .map((a) => ({ ...a, title: localizeAlertTitle(a.title, locale) }));
+  // C3+ rail leg (CEO 2026-07-19 morning): identical alert titles collapse
+  // to ONE card carrying ×N — five copies of the same failure are noise.
+  const alertGroups = new Map<string, RailAlert & { count: number }>();
+  for (const a of (alertsRes.data ?? []) as RailAlert[]) {
+    const title = localizeAlertTitle(a.title, locale);
+    const seen = alertGroups.get(title);
+    if (seen) seen.count += 1;
+    else alertGroups.set(title, { ...a, title, count: 1 });
+  }
+  const railAlerts = [...alertGroups.values()].slice(0, 5);
   const alertCount = alertsRes.data?.length ?? 0;
-  const ticker = (tickerRes.data ?? []) as TickerRow[];
+  // C3+ rail leg: one ticker card per task (or per run when task-less) —
+  // the newest event wins; lifecycle chains live on /live, not the rail.
+  const tickerGroups = new Map<string, TickerRow>();
+  for (const r of (tickerRes.data ?? []) as (TickerRow & { task_id: string | null })[]) {
+    // Collapse by what the CEO READS: identical labels (even across sibling
+    // tasks) and all label-less system runs each become ONE card — the rail
+    // is a headline strip, the full story lives on /live.
+    const key = r.label ?? "system-run";
+    if (!tickerGroups.has(key)) tickerGroups.set(key, r);
+  }
+  const ticker = [...tickerGroups.values()].slice(0, 5);
 
   return (
     <div className="ambient-depth relative flex h-dvh flex-col bg-surface-void font-body text-body-md text-ink-primary">

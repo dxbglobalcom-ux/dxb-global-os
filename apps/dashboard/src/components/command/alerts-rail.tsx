@@ -16,6 +16,8 @@ export type RailAlert = {
   level: string;
   title: string;
   at: string;
+  /** identical-title collapse count (C3+ rail leg) — 1 when unique */
+  count?: number;
 };
 
 const LEVEL_BADGE: Record<string, StatusLevel> = {
@@ -60,10 +62,17 @@ export function AlertsRail({
               href="/alerts"
               className="block rounded-input border border-edge-neutral bg-surface-graphite p-2 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
             >
-              <div className="line-clamp-2 text-body-s text-ink-primary" title={a.title}>
+              {/* Full wrap, never "…" (standing order 8). */}
+              <div className="min-w-0 break-words text-body-s text-ink-primary">
                 {a.title}
+                {(a.count ?? 1) > 1 && (
+                  <span className="ml-1.5 font-data text-caption text-ink-muted tabular-nums">
+                    ×{a.count}
+                  </span>
+                )}
               </div>
-              <div className="mt-1 flex items-center gap-2">
+              {/* Symmetry ruling: chip pinned left, time pinned right. */}
+              <div className="mt-1 flex items-center justify-between gap-2">
                 <StatusBadge level={LEVEL_BADGE[a.level] ?? "info"}>
                   {labels.levels[a.level] ?? a.level}
                 </StatusBadge>

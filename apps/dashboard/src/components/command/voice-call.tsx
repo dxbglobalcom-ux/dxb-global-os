@@ -428,31 +428,33 @@ export function VoiceCall({
           <p className="text-body-s text-ink-muted">{labels.recentEmpty}</p>
         ) : (
           <ul className="space-y-3">
+            {/* Symmetry ruling (CEO 2026-07-19): every row = identical
+                two-line geometry — chip pinned left, name after it; second
+                line time+duration left, degraded chip pinned right. */}
             {recent.map((row) => (
-              <li key={row.id} className="min-w-0 space-y-1">
+              <li
+                key={row.id}
+                className="min-w-0 space-y-1 rounded-input border border-edge-neutral bg-surface-graphite p-2"
+              >
                 <div className="flex min-w-0 items-center gap-2">
                   <StatusBadge level={row.status === "ended" ? "ok" : row.status === "failed" ? "danger" : "info"}>
                     {labels.statuses[row.status] ?? row.status}
                   </StatusBadge>
                   {/* target only when informative (A1: no info-free fields) */}
                   {row.targetLabel && (
-                    <span className="min-w-0 flex-1 truncate text-body-s text-ink-primary" title={row.targetLabel}>
+                    <span className="min-w-0 flex-1 break-words text-body-s text-ink-primary">
                       {row.targetLabel}
                     </span>
                   )}
                 </div>
-                <div className="flex flex-wrap items-center gap-2 pl-1">
+                <div className="flex items-center justify-between gap-2">
                   <span className="font-data text-caption text-ink-muted tabular-nums">
                     {new Date(row.startedAt).toLocaleTimeString(locale === "tr" ? "tr-TR" : "en-GB", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
+                    {row.totalMs != null && ` · ${fmtDuration(row.totalMs)}`}
                   </span>
-                  {row.totalMs != null && (
-                    <span className="font-data text-caption text-ink-muted tabular-nums">
-                      {fmtDuration(row.totalMs)}
-                    </span>
-                  )}
                   {row.degraded && <StatusBadge level="warn">{labels.degraded}</StatusBadge>}
                 </div>
               </li>

@@ -43,6 +43,7 @@ export function IntelligenceRail({
     alertsEmpty: string;
     tickerTitle: string;
     tickerEmpty: string;
+    runNoLabel: string;
     viewAll: string;
     moneyOut: string;
     oldest: string;
@@ -151,7 +152,11 @@ export function IntelligenceRail({
       <Panel title={labels.tickerTitle}>
         <LiveTicker
           rows={ticker}
-          labels={{ empty: labels.tickerEmpty, viewAll: labels.viewAll }}
+          labels={{
+            empty: labels.tickerEmpty,
+            viewAll: labels.viewAll,
+            runNoLabel: labels.runNoLabel,
+          }}
           statusLabels={statusLabels}
         />
       </Panel>
