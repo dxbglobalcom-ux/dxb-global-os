@@ -1001,7 +1001,8 @@
       "dailyTitle": "By day",
       "empty": "No token usage recorded in this window.",
       "viewCosts": "Cost breakdown",
-      "boundaryNote": "Cache ratio, context consumption and spawn-tree cost gauges arrive with the 10.5 ledger extension columns (P7) — nothing is simulated before the data exists."
+      "constructionTitle": "Build sessions (Fable)",
+      "constructionNote": "Tokens spent BUILDING the company (architect sessions on this laptop) — not the workforce doing business. Kept separate so company numbers stay honest."
     },
     "budgets": {
       "kpiCap": "Monthly cap",

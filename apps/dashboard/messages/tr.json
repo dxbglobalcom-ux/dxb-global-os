@@ -1001,7 +1001,8 @@
       "dailyTitle": "Güne göre",
       "empty": "Bu pencerede token kullanımı yok.",
       "viewCosts": "Maliyet kırılımı",
-      "boundaryNote": "Önbellek oranı, bağlam tüketimi ve spawn-ağacı maliyet göstergeleri 10.5 defter ek kolonlarıyla gelir (P7) — veri yokken hiçbir şey simüle edilmez."
+      "constructionTitle": "İnşaat oturumları (Fable)",
+      "constructionNote": "Şirketi İNŞA ederken harcanan tokenlar (bu dizüstündeki mimar oturumları) — çalışan kadronun iş yapması değil. Şirket sayıları dürüst kalsın diye ayrı gösterilir."
     },
     "budgets": {
       "kpiCap": "Aylık tavan",
