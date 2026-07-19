@@ -2176,7 +2176,8 @@
         "speaking": "Speaking",
         "ended": "Ended",
         "failed": "Failed"
-      }
+      },
+      "failedCall": "Unanswered call"
     },
     "boundary": {
       "errorTitle": "Something broke in this view",

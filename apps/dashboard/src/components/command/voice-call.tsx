@@ -50,6 +50,7 @@ export type VoiceLabels = {
   emptyTranscript: string;
   recentTitle: string;
   recentEmpty: string;
+  failedCall: string;
   answerNotReady: string;
   sttMs: string;
   answerMs: string;
@@ -428,37 +429,39 @@ export function VoiceCall({
         {recent.length === 0 ? (
           <p className="text-body-s text-ink-muted">{labels.recentEmpty}</p>
         ) : (
-          <ul className="space-y-3">
-            {/* Symmetry ruling (CEO 2026-07-19): every row = identical
-                two-line geometry — chip pinned left, name after it; second
-                line time+duration left, degraded chip pinned right. */}
-            {recent.map((row) => (
-              <li
-                key={row.id}
-                className="min-w-0 space-y-1 rounded-input border border-edge-neutral bg-surface-graphite p-2"
-              >
-                <div className="flex min-w-0 items-center gap-2">
-                  <StatusBadge level={row.status === "ended" ? "ok" : row.status === "failed" ? "danger" : "info"}>
-                    {labels.statuses[row.status] ?? row.status}
-                  </StatusBadge>
-                  {/* target only when informative (A1: no info-free fields) */}
-                  {row.targetLabel && (
-                    <span className="min-w-0 flex-1 break-words text-body-s text-ink-primary">
-                      {row.targetLabel}
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-data text-caption text-ink-muted tabular-nums">
+          <ul className="divide-y divide-edge-neutral">
+            {/* Ledger-line design (CEO pick "A", 2026-07-19): no boxes, no
+                chips — hairline rows; status = shape-coded dot (§30: circle
+                ok / square danger), name center, time · duration right. */}
+            {recent.map((row) => {
+              const failed = row.status === "failed";
+              return (
+                <li key={row.id} className="flex min-w-0 items-center gap-2.5 py-2">
+                  <span
+                    aria-label={labels.statuses[row.status] ?? row.status}
+                    className={
+                      failed
+                        ? "size-[7px] shrink-0 border-[1.5px] border-status-danger"
+                        : "size-[7px] shrink-0 rounded-full bg-status-ok"
+                    }
+                  />
+                  <span
+                    className={`min-w-0 flex-1 break-words text-body-s ${
+                      failed ? "text-ink-secondary" : "text-ink-primary"
+                    }`}
+                  >
+                    {row.targetLabel ?? (failed ? labels.failedCall : labels.statuses[row.status] ?? row.status)}
+                  </span>
+                  <span className="shrink-0 font-data text-caption text-ink-muted tabular-nums">
                     {new Date(row.startedAt).toLocaleTimeString(locale === "tr" ? "tr-TR" : "en-GB", {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
                     {row.totalMs != null && row.totalMs > 0 && ` · ${fmtDuration(row.totalMs)}`}
                   </span>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
         )}
       </Panel>

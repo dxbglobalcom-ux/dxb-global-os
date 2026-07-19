@@ -2176,7 +2176,8 @@
         "speaking": "Konuşuyor",
         "ended": "Bitti",
         "failed": "Başarısız"
-      }
+      },
+      "failedCall": "Cevapsız görüşme"
     },
     "boundary": {
       "errorTitle": "Bu görünümde bir şey bozuldu",
