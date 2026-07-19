@@ -107,3 +107,21 @@ Plan ticket: `.planning/quick/20260719-c-series-remediation/PLAN.md`. Commits: d
 | E8.2/R31 probe fixtures on CEO surfaces (Tokens model list `test-e8-model`, Live feed rows, fake pending approvals) | ✓ PURGED | 15 E8.2 + 47 R31 probe tasks purged via control fn (audited); 2 pending probe approvals + 2 `e10t-employee` orphan escalations rejected-then-purged; pending approvals now 4 = real work only |
 | Outleteuro wording in dashboard dicts (U19 cancellation) | ✓ PURGED | grep 0 in messages/*.json |
 | decide_approvals does NOT move the linked task out of `awaiting_approval` (C5 truth gap, approve/reject direction) | ◐ OPEN | Measured this session: approval decided, task stayed `awaiting_approval`; probes were force-failed before purge. Needs decision→task sync leg of the C5 trigger |
+| Rail C3+ leg finally executed (CEO: "sabahtan beri atıyorum, ignore ediyorsunuz") | ✓ FIXED | Honest finding: the overnight C3 closure fixed the /live PAGE but NOT the rail — the rail kept stacking per-event cards. Now: ticker collapses to one card per readable headline; alert cards collapse identical titles ×N; chip-left/time-right fixed geometry; raw `run` label dead (`runNoLabel` EN+TR). Commit c8581d9 |
+| 29 stale critical alerts (activation wave + e9t fixture) shown as live truth | ✓ RESOLVED | All resolved with wave-close-out note + audit row (C22 discipline); rail shows "all clear" honestly |
+| "Yedek ses" (degraded) chip + "0s" duration = decoration on CEO surface | ✓ REMOVED | Registered adaptation: degraded stays in voice_calls data + D-ledger, never on the CEO surface (A1); zero durations suppressed. **Standing order 9: decoration-only elements are banned from every page — a field renders only if it carries CEO decision info** |
+
+**Completeness audit vs the 68-item atomic document (CEO order 2026-07-19 ~12:30 — full re-read, gaps listed honestly):**
+
+| Atomic item | Status | Note |
+|---|---|---|
+| 9c — cost data delete/reset mechanism | ❌ OPEN | No period-close/reset mechanism exists yet |
+| 9d — PROJECT filter on data pages | ❌ OPEN | FilterBar has range/dept/model; project param not built |
+| 9e — real DATE PICKER driving the page | ❌ OPEN | Range chips + day drill exist; a real calendar input does not |
+| 10d — portfolio: who works on it, which model responsible | ❌ OPEN | Measured: portfolio page has zero model-responsibility view |
+| 10e — change the portfolio brain (model) from Operations | ❌ OPEN | Same measurement; control fn exists, surface does not |
+| 3a/3b — full dead-click + pointer-cursor sweep | ◐ PARTIAL | Legacy kill removed the worst; a route-by-route cursor sweep has no recorded evidence |
+| 14c/HelpTip depth — per-section plain explanations | ❌ OPEN | Queued next (CEO re-ordered today) |
+| 19e/19f — DB-content i18n (EN strings on TR surfaces) | ❌ OPEN | Registered leg; visible today in rail/task titles |
+| 1a-1e voice lane — WisprFlow dictation in chat + Voice Line merge | ❌ OPEN | CEO re-ordered today; U15 remediation plan is the ticket |
+| Everything else (C1-C25 closure table above) | ✓ | Closed with evidence or answered with measurement |

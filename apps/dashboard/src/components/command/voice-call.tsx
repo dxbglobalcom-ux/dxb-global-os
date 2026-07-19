@@ -388,10 +388,11 @@ export function VoiceCall({
             )}
           </div>
 
-          {/* honest supply + cost chips: degraded is shown, never masked */}
+          {/* Registered adaptation (CEO 2026-07-19): the degraded/"Yedek ses"
+              chip is engine-room detail, not CEO decision info — it stays in
+              voice_calls data and the D-ledger, never on this surface (A1). */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="label-caps text-accent-brushed">{labels.freeLine}</span>
-            {call?.degraded && <StatusBadge level="warn">{labels.degraded}</StatusBadge>}
             {timingChips.map(([label, value]) => (
               <span key={label} className="font-data text-caption text-ink-muted tabular-nums">
                 {label} {value}
@@ -453,9 +454,8 @@ export function VoiceCall({
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
-                    {row.totalMs != null && ` · ${fmtDuration(row.totalMs)}`}
+                    {row.totalMs != null && row.totalMs > 0 && ` · ${fmtDuration(row.totalMs)}`}
                   </span>
-                  {row.degraded && <StatusBadge level="warn">{labels.degraded}</StatusBadge>}
                 </div>
               </li>
             ))}
