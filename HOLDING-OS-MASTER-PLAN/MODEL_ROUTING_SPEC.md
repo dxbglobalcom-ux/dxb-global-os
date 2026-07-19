@@ -211,3 +211,27 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
 ## Done definition (bu spec)
 
 27 başlık ✓ · şema+seed+fn sözleşmesi kod seviyesinde ✓ · 13 rol slotu + varsayılan tablosu ✓ · banned mekanizması (migration-only) ✓ — Sonnet runtime yasağı CEO kararıyla kaldırıldı 2026-07-12, kayıtlı · §19 meta seti eksiksiz ✓ · doğrulama komutları adım-başı ✓ · Opus-devralma + ⛔ kararlar ✓ · ajan-beyni katmanı §4b (dashboard değişimi + öncelik çözümü + rotalama-atama geçişi — CEO direktifi 2026-07-12) ✓
+
+## Registered adaptation A-2026-07-19 (CEO complaint ledger C2 + C12 — BINDING)
+
+1. **OpenRouter carries ONLY low-cost/Chinese models.** Anthropic models never
+   ride OpenRouter: removed from `vps/litellm/config.yaml` (2026-07-19);
+   `routing_rules`/`routing-seed.json` api-mode rows with Anthropic models
+   flipped to `subscription`. Measured trigger: $2.80 real Sonnet spend on the
+   CEO's OpenRouter panel.
+2. **Fable fallback chain = Codex 5.6 Solo (first), Opus 4.8 (second).**
+   Catalog: `codex-5.6.fallback_of = fable-5` (status `testing` until its
+   exam); Opus 4.8 remains the construction-authorship fallback per v6 memory.
+3. **Catalog completed to the real roster** (kimi-2.7-code, glm-5.2,
+   deepseek-v4-flash, qwen3.6-flash, minimax-m3, codex-5.5 active; CEO-ordered
+   candidates codex-5.6, kimi-3, deepseek-v4-pro in `testing` — kimi-3
+   replaces kimi-2.7 only after passing its exam, C2 order). No guessed
+   numbers: unknown context/cost fields stay NULL and the UI renders only
+   informative values (A1).
+4. **Add-model = name + API key (+ optional note).** Key goes to the local
+   vault file `~/.dxb/model-keys.env` (chmod 600, outside repo) — never the
+   database; audit records the event, not the key. Provider/routing wiring is
+   the orchestrator's job (§4c gate chain unchanged: testing → smoke → eval →
+   activate).
+5. **chat.answer routing row** (sonnet-5, subscription, medium effort) added
+   for the CEO Chat Board fast lane (C1/C10) — §4b runtime-lane authority.

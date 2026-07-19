@@ -67,13 +67,10 @@ export type ModelsLabels = {
   stepSmoke: string;
   stepEval: string;
   stepActivate: string;
-  formId: string;
-  formProvider: string;
-  formDisplayName: string;
-  formContext: string;
-  formCostIn: string;
-  formCostOut: string;
-  formSpeed: string;
+  formName: string;
+  formApiKey: string;
+  formApiKeyHint: string;
+  formNote: string;
   submitAdd: string;
   addedTesting: string;
   evalNote: string;
@@ -204,15 +201,10 @@ export function ModelsTable({
                 labels.colModel,
                 labels.colProvider,
                 labels.colStatus,
-                labels.colContext,
-                labels.colCost,
-                labels.colSpeed,
-                labels.colQuality,
                 labels.colReliability,
                 labels.colRuns,
                 labels.colCost30d,
                 labels.colEmployees,
-                labels.colSlots,
               ].map((h) => (
                 <th key={h} className="label-caps whitespace-nowrap px-3 py-2 text-ink-muted">
                   {h}
@@ -251,33 +243,16 @@ export function ModelsTable({
                   </span>
                 </td>
                 <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
-                  {fmt(m.contextWindow, 0, labels.locale)}
+                  {m.successRate30d === null ? "" : `${Math.round(m.successRate30d * 100)}%`}
                 </td>
                 <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
-                  {m.costIn === null && m.costOut === null
-                    ? "—"
-                    : `${fmt(m.costIn, 2, labels.locale)} / ${fmt(m.costOut, 2, labels.locale)}`}
+                  {m.runs30d > 0 ? fmt(m.runs30d, 0, labels.locale) : ""}
                 </td>
                 <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
-                  {fmt(m.speedScore, 0, labels.locale)}
-                </td>
-                <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
-                  {fmt(m.qualityScore, 0, labels.locale)}
-                </td>
-                <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
-                  {m.successRate30d === null ? "—" : `${Math.round(m.successRate30d * 100)}%`}
-                </td>
-                <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
-                  {fmt(m.runs30d, 0, labels.locale)}
-                </td>
-                <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
-                  €{fmt(m.cost30dEur, 2, labels.locale)}
+                  {m.cost30dEur > 0 ? `€${fmt(m.cost30dEur, 2, labels.locale)}` : ""}
                 </td>
                 <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
                   {fmt(m.assignedEmployees, 0, labels.locale)}
-                </td>
-                <td className="px-3 py-2 font-data text-body-s tabular-nums text-ink-secondary">
-                  {fmt(m.slotAssignments, 0, labels.locale)}
                 </td>
               </tr>
             ))}
@@ -368,7 +343,9 @@ export function ModelsTable({
                 </p>
               ) : (
                 <ul className="mt-1 space-y-2">
-                  {detail.decisions.map((d) => (
+                  {detail.decisions
+                    .filter((d) => !/\btest[:\s]/i.test(d.rationale ?? ""))
+                    .map((d) => (
                     <li key={d.id} className="text-caption text-ink-secondary">
                       <span className="font-data text-ink-muted">
                         {new Date(d.created_at).toLocaleTimeString(undefined, {
@@ -417,13 +394,10 @@ function OnboardDrawer({
 }) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
-    id: "",
-    provider: "",
     displayName: "",
-    contextWindow: "",
-    costIn: "",
-    costOut: "",
-    speedScore: "",
+    apiKey: "",
+    note: "",
+    id: "",
   });
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -436,26 +410,40 @@ function OnboardDrawer({
   async function register() {
     setBusy(true);
     setMsg(null);
+    // C12 (CEO order): adding a model needs a NAME and a KEY, nothing else —
+    // id derives from the name; routing/provider wiring is the orchestrator's
+    // job, not a CEO form field.
+    const derivedId = form.displayName
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9.]+/g, "-")
+      .replace(/^-+|-+$/g, "");
     try {
       const r = await controlCall({
         op: "add_model",
-        id: form.id.trim(),
-        provider: form.provider.trim(),
+        id: derivedId,
+        provider: "custom",
         displayName: form.displayName.trim(),
-        contextWindow: form.contextWindow ? Number(form.contextWindow) : undefined,
-        costInPerMtok: form.costIn ? Number(form.costIn) : undefined,
-        costOutPerMtok: form.costOut ? Number(form.costOut) : undefined,
-        speedScore: form.speedScore ? Number(form.speedScore) : undefined,
       });
+      if (r.ok && form.apiKey.trim()) {
+        // Key never touches the database — vault seam only (chmod-600 file
+        // outside the repo, A8 vault rule).
+        await fetch("/api/control/model-key", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ modelId: derivedId, apiKey: form.apiKey.trim(), note: form.note.trim() || undefined }),
+        });
+      }
       if (r.ok) {
+        setForm((f) => ({ ...f, id: derivedId }));
         onAdded({
-          id: form.id.trim(),
+          id: derivedId,
           displayName: form.displayName.trim(),
-          provider: form.provider.trim(),
-          contextWindow: form.contextWindow ? Number(form.contextWindow) : null,
-          costIn: form.costIn ? Number(form.costIn) : null,
-          costOut: form.costOut ? Number(form.costOut) : null,
-          speedScore: form.speedScore ? Number(form.speedScore) : null,
+          provider: "custom",
+          contextWindow: null,
+          costIn: null,
+          costOut: null,
+          speedScore: null,
           qualityScore: null,
           status: "testing",
           banned: false,
@@ -554,29 +542,36 @@ function OnboardDrawer({
 
         {step === 1 && (
           <div className="space-y-2">
-            {(
-              [
-                ["id", labels.formId],
-                ["provider", labels.formProvider],
-                ["displayName", labels.formDisplayName],
-                ["contextWindow", labels.formContext],
-                ["costIn", labels.formCostIn],
-                ["costOut", labels.formCostOut],
-                ["speedScore", labels.formSpeed],
-              ] as const
-            ).map(([key, label]) => (
-              <label key={key} className="block">
-                <span className="label-caps text-ink-muted">{label}</span>
-                <input
-                  className={`${inputCls} mt-1`}
-                  value={form[key]}
-                  onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
-                />
-              </label>
-            ))}
+            <label className="block">
+              <span className="label-caps text-ink-muted">{labels.formName}</span>
+              <input
+                className={`${inputCls} mt-1`}
+                value={form.displayName}
+                onChange={(e) => setForm((f) => ({ ...f, displayName: e.target.value }))}
+              />
+            </label>
+            <label className="block">
+              <span className="label-caps text-ink-muted">{labels.formApiKey}</span>
+              <input
+                type="password"
+                autoComplete="off"
+                className={`${inputCls} mt-1`}
+                value={form.apiKey}
+                onChange={(e) => setForm((f) => ({ ...f, apiKey: e.target.value }))}
+              />
+              <span className="mt-1 block text-caption text-ink-muted">{labels.formApiKeyHint}</span>
+            </label>
+            <label className="block">
+              <span className="label-caps text-ink-muted">{labels.formNote}</span>
+              <input
+                className={`${inputCls} mt-1`}
+                value={form.note}
+                onChange={(e) => setForm((f) => ({ ...f, note: e.target.value }))}
+              />
+            </label>
             <button
               type="button"
-              disabled={busy || !form.id || !form.provider || !form.displayName}
+              disabled={busy || !form.displayName.trim()}
               onClick={register}
               className="mt-2 w-full rounded-input bg-accent-champagne px-3 py-1.5 text-body-s text-surface-obsidian disabled:opacity-50"
               data-testid="onboard-register"

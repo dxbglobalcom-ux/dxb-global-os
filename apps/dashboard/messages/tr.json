@@ -1374,17 +1374,14 @@
         "stepSmoke": "Duman testi",
         "stepEval": "Eval-önce",
         "stepActivate": "Aktifleştir",
-        "formId": "Model id (LiteLLM takma adı)",
-        "formProvider": "Sağlayıcı",
-        "formDisplayName": "Görünen ad",
-        "formContext": "Bağlam penceresi (token)",
-        "formCostIn": "Maliyet giriş (€/Mtok)",
-        "formCostOut": "Maliyet çıkış (€/Mtok)",
-        "formSpeed": "Hız puanı (1-100)",
         "submitAdd": "Testing olarak kaydet",
         "addedTesting": "Kaydedildi — durum testing, henüz atanamaz.",
         "evalNote": "Doktrin: aktivasyondan önce Model Evaluation Lead'e eval bataryası görevi kuyruklanır; sonucu kalite puanını tohumlar. CEO olarak şimdi aktifleştirebilirsin — atlama audit'e düşer ve 7 günlük izleme görevi kuyruklanır.",
-        "cancel": "Vazgeç"
+        "cancel": "Vazgeç",
+        "formName": "Model adı",
+        "formApiKey": "API anahtarı (şimdilik boş olabilir)",
+        "formApiKeyHint": "Yalnız yerel kasa dosyasına yazılır — asla veritabanına değil. Yönlendirmeyi orkestratör kurar.",
+        "formNote": "Not (isteğe bağlı)"
       },
       "statuses": {
         "active": "Aktif",

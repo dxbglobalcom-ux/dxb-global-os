@@ -1374,17 +1374,14 @@
         "stepSmoke": "Smoke test",
         "stepEval": "Eval-first",
         "stepActivate": "Activate",
-        "formId": "Model id (LiteLLM alias)",
-        "formProvider": "Provider",
-        "formDisplayName": "Display name",
-        "formContext": "Context window (tokens)",
-        "formCostIn": "Cost in (€/Mtok)",
-        "formCostOut": "Cost out (€/Mtok)",
-        "formSpeed": "Speed score (1-100)",
         "submitAdd": "Register in testing",
         "addedTesting": "Registered — status testing, not assignable yet.",
         "evalNote": "Doctrine: an eval battery task is queued to the Model Evaluation Lead before activation; its result seeds the quality score. As CEO you may activate now — the skip is audited and a 7-day watch task is queued.",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "formName": "Model name",
+        "formApiKey": "API key (optional now)",
+        "formApiKeyHint": "Stored in the local vault file only — never the database. Routing is wired by the orchestrator.",
+        "formNote": "Note (optional)"
       },
       "statuses": {
         "active": "Active",
