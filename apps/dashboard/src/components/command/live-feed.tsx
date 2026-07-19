@@ -221,7 +221,7 @@ export function LiveFeed({
                   type="button"
                   onClick={() => setOpenKey(open ? null : g.key)}
                   aria-expanded={open}
-                  className="flex h-10 w-full items-center gap-3 px-2 text-left transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+                  className="flex min-h-10 w-full items-center gap-3 px-2 py-1.5 text-left transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
                 >
                   {open ? (
                     <CaretDownIcon size={12} className="shrink-0 text-ink-muted" />

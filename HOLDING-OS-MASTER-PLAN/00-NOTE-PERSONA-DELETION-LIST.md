@@ -1,5 +1,12 @@
 # Persona Deletion List — CEO one-confirm (C8, 2026-07-19)
 
+> **EXECUTED 2026-07-19 ~12:05.** CEO confirmed in chat ("C8 sil.") — no
+> strikes. All 15 files deleted, 15 archived DB rows + 15 persona
+> library_items mirrors removed in one transaction, audit_log action
+> `persona.delete` written. Child-row scan before delete: 0 tasks, 0 runs,
+> 0 costs, 0 approvals. This note stays as the record of what was removed
+> and why.
+
 **Order:** CEO complaint C8 ("Loan Officer, Real Estate etc. — complained a
 thousand times; delete the useless ones"). Per governance no silent deletion:
 this list is the single confirmation surface. On the CEO's one "delete"
