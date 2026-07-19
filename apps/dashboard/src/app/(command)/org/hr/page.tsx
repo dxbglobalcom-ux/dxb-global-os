@@ -90,12 +90,13 @@ export default async function HrPage({
   if (statusFilter) equipQuery = equipQuery.eq("employment_status", statusFilter);
 
   const [rosterRes, deptRes, probationRes, equipRes] = await Promise.all([
+    // C8 (CEO order 2026-07-19): the CEO sees the WORKING organization —
+    // archived/dormant records are history, not headcount. They remain
+    // reachable through the explicit status filter, never in the default view.
     supabase
       .from("v_hr_roster")
-      .select("employee_id, slug, department, role, role_level, employment_status, equipment_ok"),
-    // No status filter: the whole org is dormant until the activation wave
-    // (measured 2026-07-17: 21/21 departments status='dormant') — the HR
-    // overview must show the real organization, not an empty page.
+      .select("employee_id, slug, department, role, role_level, employment_status, equipment_ok")
+      .not("employment_status", "in", "(archived,dormant)"),
     supabase
       .from("departments")
       .select("slug, display_name, display_name_tr, director_id")
