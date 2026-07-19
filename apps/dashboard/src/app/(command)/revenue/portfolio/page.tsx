@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, StatusBadge } from "@/components/primitives";
+import { Panel, StatusBadge, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -119,7 +119,8 @@ export default async function RevenuePortfolioPage() {
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">
-        {dict.command.nav.pages.revenuePortfolio}
+        {dict.command.nav.pages.revenuePortfolio}{" "}
+        <HelpTip text={dict.help.portfolio} />
       </h1>
 
       {allocations.length === 0 ? (

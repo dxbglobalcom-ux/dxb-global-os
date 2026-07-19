@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { DataGrid, Panel, Stat, type Column } from "@/components/primitives";
+import { DataGrid, Panel, Stat, type Column, HelpTip } from "@/components/primitives";
 import { RevenueEntryForm } from "@/components/command/revenue-entry-form";
 import { formatEur } from "@/lib/format";
 import { getDict } from "@/lib/i18n";
@@ -193,8 +193,9 @@ export default async function PnlPage() {
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">
-          {dict.command.nav.pages.pnl}
-        </h1>
+        {dict.command.nav.pages.pnl}{" "}
+        <HelpTip text={dict.help.pnl} />
+      </h1>
         <Link
           href="/fin/costs"
           className="flex items-center gap-1.5 text-body-s text-accent-champagne transition duration-[var(--t-fast)] ease-refined hover:text-accent-ivory"

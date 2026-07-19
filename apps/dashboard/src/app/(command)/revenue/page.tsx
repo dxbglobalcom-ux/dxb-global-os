@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, Stat, StatusBadge, type StatusLevel } from "@/components/primitives";
+import { Panel, Stat, StatusBadge, type StatusLevel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -96,8 +96,9 @@ export default async function RevenuePage() {
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">
-          {dict.command.nav.pages.revenue}
-        </h1>
+        {dict.command.nav.pages.revenue}{" "}
+        <HelpTip text={dict.help.revenue} />
+      </h1>
         {lead && (
           <span className="flex min-w-0 items-center gap-2">
             <StatusBadge level={OBJECTIVE_BADGE[lead.status] ?? "info"}>

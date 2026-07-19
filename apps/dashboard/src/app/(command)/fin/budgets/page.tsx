@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, Stat, StatusBadge } from "@/components/primitives";
+import { Panel, Stat, StatusBadge, HelpTip } from "@/components/primitives";
 import { monthStart, postgrestCostSource } from "@/lib/costs";
 import { formatEur } from "@/lib/format";
 import { getDict } from "@/lib/i18n";
@@ -99,8 +99,9 @@ export default async function BudgetsPage() {
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">
-          {dict.command.nav.pages.budgets}
-        </h1>
+        {dict.command.nav.pages.budgets}{" "}
+        <HelpTip text={dict.help.budgets} />
+      </h1>
         <Link href="/fin/costs" className="text-body-s text-accent-champagne">
           {t.viewCosts}
         </Link>

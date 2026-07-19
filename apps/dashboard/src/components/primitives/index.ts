@@ -7,3 +7,4 @@ export { Stat } from "./stat";
 export { HealthRing } from "./health-ring";
 export { DataGrid, type Column } from "./data-grid";
 export { CommandItem } from "./command-item";
+export { HelpTip } from "./help-tip";

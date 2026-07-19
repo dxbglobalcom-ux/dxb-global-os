@@ -4,7 +4,7 @@ import { getLocale } from "@/lib/locale";
 import { companyContext } from "@/lib/company";
 import { CompanySwitch } from "@/components/crm/company-switch";
 import { CRM_ENTITIES } from "@/lib/crm";
-import { Panel } from "@/components/primitives";
+import { Panel, HelpTip } from "@/components/primitives";
 
 // E12.4 — CRM chrome inside the command shell (GAP-05): title + entity
 // sub-nav + the COMPANY SWITCH. The active company is the isolation key:
@@ -27,7 +27,7 @@ export default async function CrmLayout({ children }: { children: React.ReactNod
   return (
     <div className="mx-auto flex max-w-[1720px] flex-col gap-5">
       <div className="flex flex-wrap items-center gap-4">
-        <h1 className="font-display text-h1 text-ink-primary">{dict.crm.title}</h1>
+        <h1 className="font-display text-h1 text-ink-primary">{dict.crm.title} <HelpTip text={dict.help.crm} /></h1>
         <nav className="flex items-center gap-1">
           {CRM_ENTITIES.map((entity) => (
             <Link

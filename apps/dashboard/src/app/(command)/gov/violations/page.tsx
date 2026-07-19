@@ -6,7 +6,7 @@ import {
   type PolicyRow,
   type ViolationRow,
 } from "@/components/gov/violations-board";
-import { Panel } from "@/components/primitives";
+import { Panel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -47,7 +47,8 @@ type DbPolicy = {
 
 export default async function Page() {
   const locale = await getLocale();
-  const dict = getDict(locale).command;
+  const fullDict = getDict(locale);
+  const dict = fullDict.command;
   const t = dict.violations;
   const supabase = await createClient();
 
@@ -98,7 +99,7 @@ export default async function Page() {
       <ViolationsLive />
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+          <h1 className="font-display text-h2 text-ink-primary">{t.title} <HelpTip text={fullDict.help.violations} /></h1>
           <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
         </div>
         <GovTabs active="violations" labels={dict.audit.tabs} />

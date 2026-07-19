@@ -1,5 +1,5 @@
 import { ChatBoard, type ChatMessage } from "@/components/chat/chat-board";
-import { Panel } from "@/components/primitives";
+import { HelpTip, Panel } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -26,7 +26,7 @@ export default async function ChatPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div>
-        <h1 className="font-display text-h1 text-ink-primary">{t.title}</h1>
+        <h1 className="font-display text-h1 text-ink-primary">{t.title} <HelpTip text={dict.help.chat} /></h1>
         <p className="text-body-s text-ink-secondary">{t.subtitle}</p>
       </div>
       <Panel>

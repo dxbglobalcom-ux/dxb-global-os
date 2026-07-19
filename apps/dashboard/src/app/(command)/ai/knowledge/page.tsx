@@ -14,6 +14,7 @@ export default async function KnowledgePage() {
     <LibraryKindBoard
       kinds={["research", "report", "sop", "policy", "project_doc", "training"]}
       pageTitle={dict.command.nav.pages.knowledge}
+      helpText={dict.help.knowledge}
       showKindColumn
     />
   );

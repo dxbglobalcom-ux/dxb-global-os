@@ -13,6 +13,7 @@ export default async function PluginsPage() {
     <LibraryKindBoard
       kinds={["plugin"]}
       pageTitle={dict.command.nav.pages.plugins}
+      helpText={dict.help.plugins}
     />
   );
 }

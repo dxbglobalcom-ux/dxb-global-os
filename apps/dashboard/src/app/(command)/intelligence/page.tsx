@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, Stat, StatusBadge, type StatusLevel } from "@/components/primitives";
+import { Panel, Stat, StatusBadge, type StatusLevel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -120,7 +120,8 @@ export default async function IntelligencePage() {
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">
-        {dict.command.nav.pages.intel}
+        {dict.command.nav.pages.intel}{" "}
+        <HelpTip text={dict.help.intelligence} />
       </h1>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-4">

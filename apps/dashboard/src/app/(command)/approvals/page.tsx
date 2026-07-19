@@ -1,5 +1,5 @@
 import { ApprovalCenter } from "@/components/command/approval-center";
-import { Panel } from "@/components/primitives";
+import { Panel, HelpTip } from "@/components/primitives";
 import {
   mapCenterRow,
   mapFatigueRow,
@@ -21,7 +21,8 @@ export const metadata = { title: "Approvals — DXB" };
 
 export default async function ApprovalsPage() {
   const locale = await getLocale();
-  const t = getDict(locale).command.approvals;
+  const dict = getDict(locale);
+  const t = dict.command.approvals;
   const supabase = await createClient();
 
   const [pendingRes, decidedRes, fatigueRes] = await Promise.all([
@@ -46,7 +47,10 @@ export default async function ApprovalsPage() {
   return (
     <div className="mx-auto max-w-[1400px] space-y-4">
       <header>
-        <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+        <h1 className="font-display text-h2 text-ink-primary">
+        {t.title}{" "}
+        <HelpTip text={dict.help.approvals} />
+      </h1>
         <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
       </header>
       <Panel>

@@ -4,8 +4,7 @@ import {
   Panel,
   Stat,
   StatusBadge,
-  type Column,
-} from "@/components/primitives";
+  type Column, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -108,8 +107,9 @@ export default async function AutomationsPage() {
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">
-          {dict.command.nav.pages.automations}
-        </h1>
+        {dict.command.nav.pages.automations}{" "}
+        <HelpTip text={dict.help.automations} />
+      </h1>
         <Link href="/ops/workflows" className="text-body-s text-accent-champagne">
           {t.viewWorkflows}
         </Link>

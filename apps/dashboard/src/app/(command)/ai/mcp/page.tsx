@@ -37,6 +37,7 @@ export default async function McpPage() {
     <LibraryKindBoard
       kinds={["mcp"]}
       pageTitle={dict.command.nav.pages.mcp}
+      helpText={dict.help.mcp}
       footnote={t.profileNote}
       extra={
         <Panel title={t.postureTitle}>

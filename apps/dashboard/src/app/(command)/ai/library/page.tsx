@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, StatusBadge, type StatusLevel } from "@/components/primitives";
+import { Panel, StatusBadge, type StatusLevel, HelpTip } from "@/components/primitives";
 import { LibraryDetailActions, LibraryLive } from "@/components/ai/library-actions";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
@@ -97,7 +97,8 @@ export default async function LibraryPage({
 }) {
   const params = await searchParams;
   const locale = await getLocale();
-  const t = getDict(locale).command.library;
+  const dict = getDict(locale);
+  const t = dict.command.library;
   const supabase = await createClient();
 
   const activeKind = KINDS.includes(params.kind as Kind) ? (params.kind as Kind) : null;
@@ -182,7 +183,10 @@ export default async function LibraryPage({
       <LibraryLive />
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+          <h1 className="font-display text-h2 text-ink-primary">
+        {t.title}{" "}
+        <HelpTip text={dict.help.library} />
+      </h1>
           <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
         </div>
         <span className="font-data text-body-s tabular-nums text-ink-muted">

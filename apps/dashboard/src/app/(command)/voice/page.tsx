@@ -1,3 +1,4 @@
+import { HelpTip } from "@/components/primitives";
 import { VoiceCall, type DirectorOption, type RecentCallRow } from "@/components/command/voice-call";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
@@ -31,7 +32,8 @@ type CallRow = {
 
 export default async function Page() {
   const locale = await getLocale();
-  const t = getDict(locale).command.voice;
+  const dict = getDict(locale);
+  const t = dict.command.voice;
   const supabase = await createClient();
 
   const [directorsRes, deptsRes, callsRes] = await Promise.all([
@@ -80,7 +82,10 @@ export default async function Page() {
   return (
     <div className="space-y-4">
       <header>
-        <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+        <h1 className="font-display text-h2 text-ink-primary">
+        {t.title}{" "}
+        <HelpTip text={dict.help.voice} />
+      </h1>
         <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
       </header>
       <VoiceCall directors={directors} recent={recent} labels={t} locale={locale} />

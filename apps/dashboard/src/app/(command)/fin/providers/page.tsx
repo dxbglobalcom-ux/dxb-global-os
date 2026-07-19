@@ -4,8 +4,7 @@ import {
   Panel,
   Stat,
   StatusBadge,
-  type Column,
-} from "@/components/primitives";
+  type Column, HelpTip } from "@/components/primitives";
 import { formatEur } from "@/lib/format";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
@@ -146,8 +145,9 @@ export default async function ProvidersPage() {
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">
-          {dict.command.nav.pages.providers}
-        </h1>
+        {dict.command.nav.pages.providers}{" "}
+        <HelpTip text={dict.help.providers} />
+      </h1>
         <Link href="/ai/models" className="text-body-s text-accent-champagne">
           {t.viewModels}
         </Link>

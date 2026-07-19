@@ -1,3 +1,4 @@
+import { HelpTip } from "@/components/primitives";
 import { notFound } from "next/navigation";
 import {
   SettingsShell,
@@ -198,7 +199,7 @@ export default async function SettingsSectionPage({
   return (
     <div className="space-y-4">
       <header>
-        <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+        <h1 className="font-display text-h2 text-ink-primary">{t.title} <HelpTip text={dict.help.settings} /></h1>
         <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
       </header>
       <SettingsShell

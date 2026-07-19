@@ -4,8 +4,7 @@ import {
   Panel,
   Stat,
   StatusBadge,
-  type Column,
-} from "@/components/primitives";
+  type Column, HelpTip } from "@/components/primitives";
 import { formatEur } from "@/lib/format";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
@@ -187,8 +186,9 @@ export default async function RuntimePage() {
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">
-          {dict.command.nav.pages.runtime}
-        </h1>
+        {dict.command.nav.pages.runtime}{" "}
+        <HelpTip text={dict.help.runtime} />
+      </h1>
         <Link href="/live" className="text-body-s text-accent-champagne">
           {t.viewLive}
         </Link>

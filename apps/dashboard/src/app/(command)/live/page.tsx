@@ -1,5 +1,5 @@
 import { LiveFeed } from "@/components/command/live-feed";
-import { Panel } from "@/components/primitives";
+import { Panel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { mapLiveOpsRow, type LiveEvent, type LiveOpsRow } from "@/lib/live-ops";
@@ -30,7 +30,7 @@ export default async function LivePage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <h1 className="font-display text-h1 text-ink-primary">{t.title}</h1>
+      <h1 className="font-display text-h1 text-ink-primary">{t.title} <HelpTip text={dict.help.live} /></h1>
       <Panel>
         <LiveFeed initial={initial} labels={t} statusLabels={dict.status} />
       </Panel>

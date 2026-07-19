@@ -5,8 +5,7 @@ import {
   Stat,
   StatusBadge,
   type Column,
-  type StatusLevel,
-} from "@/components/primitives";
+  type StatusLevel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -182,7 +181,8 @@ export default async function TasksPage({
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">
-        {dict.command.nav.pages.tasks}
+        {dict.command.nav.pages.tasks}{" "}
+        <HelpTip text={dict.help.tasks} />
       </h1>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-4">

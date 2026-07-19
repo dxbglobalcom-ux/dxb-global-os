@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, Stat } from "@/components/primitives";
+import { Panel, Stat, HelpTip } from "@/components/primitives";
 import {
   berlinDay,
   dailyBreakdown,
@@ -120,8 +120,9 @@ export default async function TokensPage() {
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">
-          {dict.command.nav.pages.tokens}
-        </h1>
+        {dict.command.nav.pages.tokens}{" "}
+        <HelpTip text={dict.help.tokens} />
+      </h1>
         <Link href="/fin/costs" className="text-body-s text-accent-champagne">
           {t.viewCosts}
         </Link>

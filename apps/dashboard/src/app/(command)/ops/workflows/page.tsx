@@ -6,7 +6,7 @@ import {
   type StepRowUi,
   type WorkflowRowUi,
 } from "@/components/command/workflow-center";
-import { Panel } from "@/components/primitives";
+import { Panel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -30,7 +30,8 @@ type AgentRunRaw = {
 
 export default async function Page() {
   const locale = await getLocale();
-  const t = getDict(locale).command.workflows;
+  const dict = getDict(locale);
+  const t = dict.command.workflows;
   const supabase = await createClient();
 
   const [wfRes, stepsRes, runsRes, agentRunsRes, employeesRes, slotsRes, modelsRes] =
@@ -78,7 +79,10 @@ export default async function Page() {
   return (
     <div className="space-y-4">
       <header>
-        <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+        <h1 className="font-display text-h2 text-ink-primary">
+        {t.title}{" "}
+        <HelpTip text={dict.help.workflows} />
+      </h1>
         <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
       </header>
       <Panel>

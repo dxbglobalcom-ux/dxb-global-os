@@ -14,6 +14,7 @@ export default async function SkillsPage() {
     <LibraryKindBoard
       kinds={["skill"]}
       pageTitle={dict.command.nav.pages.skills}
+      helpText={dict.help.skills}
     />
   );
 }

@@ -1,4 +1,4 @@
-import { Panel, StatusBadge, type StatusLevel } from "@/components/primitives";
+import { Panel, StatusBadge, type StatusLevel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -96,7 +96,8 @@ export default async function RevenueObjectivesPage() {
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">
-        {dict.command.nav.pages.revenueObjectives}
+        {dict.command.nav.pages.revenueObjectives}{" "}
+        <HelpTip text={dict.help.objectives} />
       </h1>
 
       <Panel title={t.objectivesTitle}>

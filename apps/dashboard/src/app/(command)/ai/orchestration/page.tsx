@@ -1,3 +1,4 @@
+import { HelpTip } from "@/components/primitives";
 import {
   OrchestrationBoard,
   type DeptOption,
@@ -33,7 +34,8 @@ type DeptDbRow = { id: string; display_name: string; display_name_tr: string | n
 
 export default async function Page() {
   const locale = await getLocale();
-  const t = getDict(locale).command.orchestration;
+  const dict = getDict(locale);
+  const t = dict.command.orchestration;
   const supabase = await createClient();
 
   const [slotsRes, modelsRes, deptsRes] = await Promise.all([
@@ -72,7 +74,10 @@ export default async function Page() {
   return (
     <div className="space-y-4">
       <header>
-        <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+        <h1 className="font-display text-h2 text-ink-primary">
+        {t.title}{" "}
+        <HelpTip text={dict.help.orchestration} />
+      </h1>
         <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
       </header>
       <OrchestrationBoard

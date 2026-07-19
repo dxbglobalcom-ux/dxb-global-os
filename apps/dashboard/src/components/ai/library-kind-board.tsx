@@ -4,8 +4,7 @@ import {
   Panel,
   Stat,
   StatusBadge,
-  type Column,
-} from "@/components/primitives";
+  type Column, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -36,12 +35,14 @@ export type CatalogRow = {
 export async function LibraryKindBoard({
   kinds,
   pageTitle,
+  helpText,
   showKindColumn = false,
   footnote,
   extra,
 }: {
   kinds: string[];
   pageTitle: string;
+  helpText?: string;
   showKindColumn?: boolean;
   footnote?: string;
   extra?: React.ReactNode;
@@ -174,7 +175,7 @@ export async function LibraryKindBoard({
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h1 className="font-display text-h1 text-ink-primary">{pageTitle}</h1>
+        <h1 className="font-display text-h1 text-ink-primary">{pageTitle}{helpText ? <> <HelpTip text={helpText} /></> : null}</h1>
         <Link
           href={`/ai/library?kind=${encodeURIComponent(kinds[0])}`}
           className="text-body-s text-accent-champagne"

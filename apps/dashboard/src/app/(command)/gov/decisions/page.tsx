@@ -1,6 +1,6 @@
 import { DecisionLogs, type DecisionRow } from "@/components/gov/decision-logs";
 import { GovTabs } from "@/components/gov/gov-tabs";
-import { Panel } from "@/components/primitives";
+import { Panel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -31,7 +31,8 @@ type ViewRow = {
 
 export default async function Page() {
   const locale = await getLocale();
-  const t = getDict(locale).command.decisions;
+  const dict = getDict(locale);
+  const t = dict.command.decisions;
   const audit = getDict(locale).command.audit;
   const supabase = await createClient();
 
@@ -63,7 +64,10 @@ export default async function Page() {
     <div className="space-y-4">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+          <h1 className="font-display text-h2 text-ink-primary">
+        {t.title}{" "}
+        <HelpTip text={dict.help.decisions} />
+      </h1>
           <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
         </div>
         <GovTabs active="decisions" labels={audit.tabs} />

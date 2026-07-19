@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, Stat, StatusBadge } from "@/components/primitives";
+import { Panel, Stat, StatusBadge, HelpTip } from "@/components/primitives";
 import { formatEur } from "@/lib/format";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
@@ -85,7 +85,8 @@ export default async function CompaniesPage() {
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">
-        {dict.command.nav.pages.companies}
+        {dict.command.nav.pages.companies}{" "}
+        <HelpTip text={dict.help.companies} />
       </h1>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-4">

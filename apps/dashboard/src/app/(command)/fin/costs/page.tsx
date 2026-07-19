@@ -4,8 +4,7 @@ import {
   DataGrid,
   Panel,
   Stat,
-  type Column,
-} from "@/components/primitives";
+  type Column, HelpTip } from "@/components/primitives";
 import {
   COST_PERIODS,
   berlinDayRangeISO,
@@ -282,8 +281,9 @@ export default async function CostsPage({
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">
-          {dict.command.nav.pages.costs}
-        </h1>
+        {dict.command.nav.pages.costs}{" "}
+        <HelpTip text={dict.help.costs} />
+      </h1>
         <div className="flex gap-4 text-body-s">
           <Link
             href="/fin/budgets"

@@ -1,3 +1,4 @@
+import { HelpTip } from "@/components/primitives";
 import { ModelsTable, type ModelStatsRow } from "@/components/ai/models-table";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
@@ -32,7 +33,8 @@ type StatsRow = {
 
 export default async function Page() {
   const locale = await getLocale();
-  const t = getDict(locale).command.aiModels;
+  const dict = getDict(locale);
+  const t = dict.command.aiModels;
   const supabase = await createClient();
 
   const { data } = await supabase
@@ -65,7 +67,10 @@ export default async function Page() {
   return (
     <div className="space-y-4">
       <header>
-        <h1 className="font-display text-h2 text-ink-primary">{t.title}</h1>
+        <h1 className="font-display text-h2 text-ink-primary">
+        {t.title}{" "}
+        <HelpTip text={dict.help.models} />
+      </h1>
         <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
       </header>
       <ModelsTable models={models} labels={{ ...t.ui, statuses: t.statuses, locale }} />

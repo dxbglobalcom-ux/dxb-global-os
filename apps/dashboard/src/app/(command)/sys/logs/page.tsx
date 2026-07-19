@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, Stat, StatusBadge } from "@/components/primitives";
+import { Panel, Stat, StatusBadge, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -137,7 +137,8 @@ export default async function LogsPage({
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">
-        {dict.command.nav.pages.logs}
+        {dict.command.nav.pages.logs}{" "}
+        <HelpTip text={dict.help.logs} />
       </h1>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">

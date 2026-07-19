@@ -4,8 +4,7 @@ import {
   Panel,
   Stat,
   StatusBadge,
-  type Column,
-} from "@/components/primitives";
+  type Column, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -236,7 +235,8 @@ export default async function HrPage({
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">
-        {dict.command.nav.pages.hr}
+        {dict.command.nav.pages.hr}{" "}
+        <HelpTip text={dict.help.hr} />
       </h1>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-4">

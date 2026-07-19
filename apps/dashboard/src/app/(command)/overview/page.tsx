@@ -1,4 +1,4 @@
-import { Panel } from "@/components/primitives";
+import { Panel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -79,7 +79,7 @@ export default async function OverviewPage() {
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <div className="flex items-baseline justify-between">
-        <h1 className="font-display text-h1 text-ink-primary">{t.title}</h1>
+        <h1 className="font-display text-h1 text-ink-primary">{t.title} <HelpTip text={dict.help.overview} /></h1>
         {data.last_activity_at && (
           <span className="font-data text-caption text-ink-muted tabular-nums">
             {t.lastActivity}:{" "}
