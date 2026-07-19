@@ -103,6 +103,28 @@ export function DecisionLogs({
     [rows, who, risk],
   );
 
+  // C17 (2026-07-19): a batch decision (e.g. 113 identical approvals in one
+  // CEO order) collapses to ONE row with a count — the CEO reads one
+  // decision, not a flood of copies. Consecutive identical records group.
+  const grouped = useMemo(() => {
+    const out: Array<{ row: DecisionRow; count: number }> = [];
+    for (const r of filtered) {
+      const last = out[out.length - 1];
+      if (
+        last &&
+        last.row.decidedBy === r.decidedBy &&
+        last.row.decision === r.decision &&
+        last.row.rationale === r.rationale &&
+        last.row.risk === r.risk
+      ) {
+        last.count += 1;
+      } else {
+        out.push({ row: r, count: 1 });
+      }
+    }
+    return out;
+  }, [filtered]);
+
   const selectCls =
     "rounded-input border border-edge-neutral bg-surface-graphite px-2 py-1 text-body-s text-ink-primary";
 
@@ -132,7 +154,7 @@ export function DecisionLogs({
           </select>
         </label>
         <span className="ml-auto pb-1 font-data text-body-s tabular-nums text-ink-muted">
-          {filtered.length} {labels.shown}
+          {grouped.length} {labels.shown}
         </span>
       </div>
 
@@ -159,10 +181,11 @@ export function DecisionLogs({
               </tr>
             </thead>
             <tbody>
-              {filtered.map((r) => (
+              {grouped.map(({ row: r, count }) => (
                 <Row
                   key={r.id}
                   row={r}
+                  count={count}
                   labels={labels}
                   locale={locale}
                   open={open === r.id}
@@ -179,12 +202,14 @@ export function DecisionLogs({
 
 function Row({
   row,
+  count,
   labels,
   locale,
   open,
   onToggle,
 }: {
   row: DecisionRow;
+  count: number;
   labels: DecisionLabels;
   locale: string;
   open: boolean;
@@ -201,7 +226,14 @@ function Row({
           {fmtTime(row.createdAt, locale)}
         </td>
         <td className="h-10 truncate px-2 text-ink-primary">{row.employee ?? row.decidedBy}</td>
-        <td className="h-10 truncate px-2 text-ink-primary">{row.decision}</td>
+        <td className="h-10 truncate px-2 text-ink-primary">
+          {row.decision}
+          {count > 1 && (
+            <span className="ml-1.5 rounded-input border border-edge-neutral px-1 font-data text-caption text-ink-muted">
+              ×{count}
+            </span>
+          )}
+        </td>
         <td className="h-10 truncate px-2 text-ink-secondary">{row.rationale}</td>
         <td className="h-10 truncate px-2 font-data text-ink-secondary">
           {row.dataUsed?.length ? row.dataUsed.join(" · ") : "—"}

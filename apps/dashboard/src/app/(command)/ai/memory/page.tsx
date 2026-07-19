@@ -423,7 +423,7 @@ export default async function MemoryPage({
                   {detailRun.model_id ?? "—"}
                 </span>
                 <StatusBadge level={detailRun.status === "succeeded" ? "ok" : "info"}>
-                  {detailRun.status}
+                  {(dict.status as Record<string, string>)[detailRun.status] ?? detailRun.status}
                 </StatusBadge>
                 <span className="font-data text-caption text-ink-muted tabular-nums">
                   {dateFmt(detailRun.started_at)}

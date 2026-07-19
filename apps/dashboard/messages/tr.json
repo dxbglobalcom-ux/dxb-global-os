@@ -1171,7 +1171,7 @@
     "security": {
       "kpiViolations": "Hook ihlali (son)",
       "kpiHighRisk7d": "Yüksek-risk eylem · 7g",
-      "kpiLockedGates": "Kilitli kapı",
+      "kpiLockedGates": "Onay zorunlu işlemler",
       "kpiKillSwitch": "Global durdurma",
       "pausedOn": "DURDURULDU",
       "pausedOff": "Kapalı",
@@ -1271,7 +1271,7 @@
       "thresholdsTitle": "Uyarı eşikleri (Ayarlar güdümlü)",
       "thresholdsHint": "fn_alerts_evaluate bunları canlı okur — Ayarlar'dan değiştirin, değerlendirici izler.",
       "thQueueAge": "Azami kuyruk yaşı",
-      "thHeartbeat": "Azami kalp atışı sessizliği",
+      "thHeartbeat": "Sessizlik alarm eşiği (işçi bundan uzun süre ses vermezse uyarı)",
       "thEscalate": "Şu süreden sonra tırmandır",
       "unitMinutes": "dk",
       "unitSeconds": "sn",
@@ -1575,7 +1575,7 @@
           "routing": "Yönlendirme",
           "agent_run": "Ajan koşusu",
           "queue": "Kuyruk",
-          "heartbeat": "Kalp atışı",
+          "heartbeat": "Sistem canlılığı",
           "observability": "Gözlemlenebilirlik",
           "file_review": "Dosya incelemesi",
           "approval": "Onay"
@@ -1905,6 +1905,11 @@
             "due_date": "Vade",
             "currency": "Para birimi"
           }
+        },
+        "actionTypes": {
+          "task_completion": "Onayınızı bekleyen bitmiş iş",
+          "hook_escalation": "Kalite kapısı insan kararı istedi",
+          "email.send.staging": "Giden e-posta (deneme ortamı)"
         }
       },
       "detail": {

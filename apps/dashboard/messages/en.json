@@ -1171,7 +1171,7 @@
     "security": {
       "kpiViolations": "Hook violations (recent)",
       "kpiHighRisk7d": "High-risk actions · 7d",
-      "kpiLockedGates": "Locked gates",
+      "kpiLockedGates": "Approval-required actions",
       "kpiKillSwitch": "Global pause",
       "pausedOn": "PAUSED",
       "pausedOff": "Off",
@@ -1271,7 +1271,7 @@
       "thresholdsTitle": "Alert thresholds (settings-driven)",
       "thresholdsHint": "fn_alerts_evaluate reads these live — change them in Settings, the evaluator follows.",
       "thQueueAge": "Max queue age",
-      "thHeartbeat": "Max heartbeat silence",
+      "thHeartbeat": "Silence alarm threshold (worker quiet longer than this → warning)",
       "thEscalate": "Escalate after",
       "unitMinutes": "min",
       "unitSeconds": "s",
@@ -1575,7 +1575,7 @@
           "routing": "Routing",
           "agent_run": "Agent run",
           "queue": "Queue",
-          "heartbeat": "Heartbeat",
+          "heartbeat": "System liveness",
           "observability": "Observability",
           "file_review": "File review",
           "approval": "Approval"
@@ -1905,6 +1905,11 @@
             "due_date": "Due date",
             "currency": "Currency"
           }
+        },
+        "actionTypes": {
+          "task_completion": "Finished work awaiting your go-ahead",
+          "hook_escalation": "Quality gate asked for a human decision",
+          "email.send.staging": "Outgoing e-mail (staging)"
         }
       },
       "detail": {

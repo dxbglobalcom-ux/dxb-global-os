@@ -135,7 +135,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           ← {t.title}
         </Link>
         <h1 className="font-display text-h2 text-ink-primary">
-          {row.purpose ?? row.operation ?? row.action_type}
+          {row.purpose ??
+            row.operation ??
+            (t.ui.actionTypes as Record<string, string>)[row.action_type] ??
+            row.action_type.replace(/[._]/g, " ")}
         </h1>
         <StatusBadge level={RISK_LEVEL[row.risk_class] ?? "warn"}>
           {riskLabels[row.risk_class] ?? row.risk_class}
@@ -154,7 +157,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <Panel title={d.contextTitle}>
           <dl className="grid gap-x-6 gap-y-1.5 md:grid-cols-[max-content_1fr]">
             <Field label={t.ui.operation}>
-              <span className="font-data">{row.operation ?? row.action_type}</span>
+              {row.operation ??
+                (t.ui.actionTypes as Record<string, string>)[row.action_type] ??
+                row.action_type.replace(/[._]/g, " ")}
             </Field>
             {row.requester_slug && (
               <Field label={t.ui.requester}>
