@@ -70,7 +70,11 @@
     "succeeded": "Succeeded",
     "waiting": "Waiting",
     "cancelled": "Cancelled",
-    "pending": "Pending"
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "paused": "Paused",
+    "dormant": "Dormant"
   },
   "approvals": {
     "title": "Approvals",
@@ -550,7 +554,9 @@
       "actor": "Actor",
       "task": "Task",
       "time": "Time",
-      "note": "Agent runs, task events and decisions stream over ops:live (1 s batched Broadcast); approvals ride their own channel."
+      "note": "Every movement of company work appears here the moment it happens. Click a row to see its full story.",
+      "steps": "steps",
+      "approvalsLink": "Open approvals"
     },
     "tasks": {
       "kpiActive": "Active",

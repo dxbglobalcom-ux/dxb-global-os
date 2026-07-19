@@ -278,7 +278,7 @@ function Row({
               </Link>
               {row.taskId && (
                 <Link
-                  href={`/tasks/${row.taskId}`}
+                  href="/ops/tasks"
                   className="text-body-s text-accent-champagne hover:underline"
                   onClick={(e) => e.stopPropagation()}
                 >

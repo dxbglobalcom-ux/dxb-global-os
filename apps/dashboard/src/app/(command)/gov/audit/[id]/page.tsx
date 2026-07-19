@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           )}
           {row.task_id && (
             <Field label={t.ui.taskLink}>
-              <Link href={`/tasks/${row.task_id}`} className="text-accent-champagne hover:underline">
+              <Link href="/ops/tasks" className="text-accent-champagne hover:underline">
                 {row.task_id}
               </Link>
             </Field>

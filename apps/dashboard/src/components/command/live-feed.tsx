@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { CaretDownIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { StatusBadge, type StatusLevel } from "@/components/primitives";
 import {
   useDxbChannel,
@@ -17,14 +18,12 @@ import {
 } from "@/lib/live-ops";
 import { createClient } from "@/lib/supabase/client";
 
-// Live Operations v2 (E8.3) — the agent-run stream rides the EVENT_MODEL §9b
-// ops:live channel (§9a envelopes, 1 s collector batches unwrapped here);
-// approvals stay on their 0013 channel. Reconnect contract §10/§21: when the
-// channel comes back from stale, the v_live_ops snapshot is re-fetched so the
-// feed is consistent within 10 s (missed Broadcasts already live in the
-// source tables). Connection state is shown honestly: a stale feed says
-// stale (§35 — fake liveliness is a violation). Row drill goes to the
-// legacy task detail until /ops/tasks reaches parity at E12.1.
+// Live Operations v3 (C3/C6/C19 remediation 2026-07-19) — one collapsed row
+// per task (the lifecycle chain folds into its latest state); clicking a row
+// expands the full chain INLINE below it. No drill into the retired legacy
+// task page. Statuses render through the i18n status dictionary — raw enums
+// never reach the CEO's eye. Stream contract unchanged: EVENT_MODEL §9b
+// ops:live channel + approvals channel, §10 stale→live snapshot re-fetch.
 
 export type { LiveEvent } from "@/lib/live-ops";
 
@@ -45,8 +44,14 @@ const STATUS_LEVEL: Record<string, StatusLevel> = {
   dormant: "info",
 };
 
+function statusKey(e: LiveEvent): string {
+  const raw = e.to_status ?? e.event;
+  // Event strings like "approval.approved" resolve on their last segment.
+  return raw.includes(".") ? (raw.split(".").pop() as string) : raw;
+}
+
 function levelFor(e: LiveEvent): StatusLevel {
-  return STATUS_LEVEL[e.to_status ?? e.event] ?? "info";
+  return STATUS_LEVEL[statusKey(e)] ?? "info";
 }
 
 function prepend(prev: LiveEvent[], next: LiveEvent[]): LiveEvent[] {
@@ -65,19 +70,65 @@ function prepend(prev: LiveEvent[], next: LiveEvent[]): LiveEvent[] {
   return [...fresh, ...prev].slice(0, 100);
 }
 
+type FeedGroup = { key: string; latest: LiveEvent; chain: LiveEvent[] };
+
+// Newest-first event list → one group per task (standalone events group alone).
+function groupEvents(events: LiveEvent[]): FeedGroup[] {
+  const byKey = new Map<string, FeedGroup>();
+  const groups: FeedGroup[] = [];
+  for (const e of events) {
+    const key = e.task_id ?? e.id;
+    const existing = byKey.get(key);
+    if (existing) {
+      existing.chain.push(e);
+      if (!existing.latest.objective && e.objective) {
+        existing.latest = { ...existing.latest, objective: e.objective };
+      }
+    } else {
+      const group: FeedGroup = { key, latest: e, chain: [e] };
+      byKey.set(key, group);
+      groups.push(group);
+    }
+  }
+  return groups;
+}
+
+function timeShort(iso: string): string {
+  // 24h — language-neutral (RULE #0 purity)
+  return new Date(iso).toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  });
+}
+
 export function LiveFeed({
   initial,
   labels,
+  statusLabels,
 }: {
   initial: LiveEvent[];
   labels: {
     status: { connecting: string; live: string; stale: string };
     empty: string;
     note: string;
+    steps: string;
+    approvalsLink: string;
   };
+  statusLabels: Record<string, string>;
 }) {
   const [events, setEvents] = useState<LiveEvent[]>(initial);
+  const [openKey, setOpenKey] = useState<string | null>(null);
   const wasStale = useRef(false);
+
+  const statusText = useCallback(
+    (e: LiveEvent) => {
+      const key = statusKey(e);
+      return statusLabels[key] ?? key.replace(/[._]/g, " ");
+    },
+    [statusLabels],
+  );
 
   const onOpsLive = useCallback((message: unknown) => {
     const mapped = unwrapOpsLive(message)
@@ -143,6 +194,8 @@ export function LiveFeed({
         ? "connecting"
         : "live";
 
+  const groups = groupEvents(events);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
@@ -154,45 +207,83 @@ export function LiveFeed({
         <span className="text-caption text-ink-muted">{labels.note}</span>
       </div>
 
-      {events.length === 0 ? (
+      {groups.length === 0 ? (
         <p className="text-body-s text-ink-secondary">{labels.empty}</p>
       ) : (
         <ul className="divide-y divide-edge-neutral">
-          {events.map((e) => (
-            <li key={e.id}>
-              <Link
-                href={
-                  e.task_id
-                    ? `/tasks/${e.task_id}`
-                    : e.kind === "run"
-                      ? "/ops/runtime"
-                      : e.kind === "approval"
-                        ? "/approvals"
-                        : "/ops/runtime"
-                }
-                className="flex h-10 items-center gap-3 px-2 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
-              >
-                <span className="font-data text-caption text-ink-muted tabular-nums">
-                  {/* 24h — language-neutral (RULE #0 purity) */}
-                  {new Date(e.created_at).toLocaleTimeString(undefined, {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                    hourCycle: "h23",
-                  })}
-                </span>
-                <StatusBadge level={levelFor(e)}>
-                  {e.to_status ?? e.event}
-                </StatusBadge>
-                <span className="truncate text-body-s text-ink-primary">
-                  {e.objective ?? e.event}
-                </span>
-                <span className="ml-auto shrink-0 text-caption text-ink-muted">
-                  {e.actor}
-                </span>
-              </Link>
-            </li>
-          ))}
+          {groups.map((g) => {
+            const open = openKey === g.key;
+            const hasChain = g.chain.length > 1;
+            return (
+              <li key={g.key}>
+                <button
+                  type="button"
+                  onClick={() => setOpenKey(open ? null : g.key)}
+                  aria-expanded={open}
+                  className="flex h-10 w-full items-center gap-3 px-2 text-left transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
+                >
+                  {open ? (
+                    <CaretDownIcon size={12} className="shrink-0 text-ink-muted" />
+                  ) : (
+                    <CaretRightIcon size={12} className="shrink-0 text-ink-muted" />
+                  )}
+                  <span className="font-data text-caption text-ink-muted tabular-nums">
+                    {timeShort(g.latest.created_at)}
+                  </span>
+                  <StatusBadge level={levelFor(g.latest)}>
+                    {statusText(g.latest)}
+                  </StatusBadge>
+                  <span
+                    className="min-w-0 truncate text-body-s text-ink-primary"
+                    title={g.latest.objective ?? undefined}
+                  >
+                    {g.latest.objective ?? statusText(g.latest)}
+                  </span>
+                  {hasChain ? (
+                    <span className="ml-auto shrink-0 text-caption text-ink-muted">
+                      {g.chain.length} {labels.steps}
+                    </span>
+                  ) : (
+                    <span className="ml-auto shrink-0 text-caption text-ink-muted">
+                      {g.latest.actor}
+                    </span>
+                  )}
+                </button>
+                {open && (
+                  <div className="space-y-1 border-l-2 border-edge-neutral pb-3 pl-8">
+                    {g.latest.objective && (
+                      <p className="pt-1 text-body-s text-ink-primary">
+                        {g.latest.objective}
+                      </p>
+                    )}
+                    <ul className="space-y-1 pt-1">
+                      {[...g.chain].reverse().map((e) => (
+                        <li key={e.id} className="flex items-center gap-3">
+                          <span className="font-data text-caption text-ink-muted tabular-nums">
+                            {timeShort(e.created_at)}
+                          </span>
+                          <StatusBadge level={levelFor(e)}>
+                            {statusText(e)}
+                          </StatusBadge>
+                          <span className="text-caption text-ink-muted">
+                            {e.actor}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    {g.latest.kind === "approval" && (
+                      <Link
+                        href="/approvals"
+                        className="inline-block pt-1 text-caption text-ink-secondary underline-offset-2 hover:underline"
+                      >
+                        {labels.approvalsLink}
+                      </Link>
+                    )}
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

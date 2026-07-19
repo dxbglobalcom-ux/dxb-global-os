@@ -342,7 +342,7 @@ function AlertCard({
             </Link>
             {row.taskId && (
               <Link
-                href={`/tasks/${row.taskId}`}
+                href="/ops/tasks"
                 className="text-body-s text-accent-champagne hover:underline"
               >
                 {labels.taskLink} →

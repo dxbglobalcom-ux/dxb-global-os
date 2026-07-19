@@ -249,7 +249,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           <div className="space-y-1">
             {row.task_id && (
               <Link
-                href={`/tasks/${row.task_id}`}
+                href="/ops/tasks"
                 className="block text-body-s text-accent-champagne hover:underline"
               >
                 {d.taskLink}: {row.task_objective ?? row.task_id} →

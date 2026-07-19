@@ -239,7 +239,7 @@ function Row({
                 {row.taskObjective ?? labels.none}
                 {row.taskId && (
                   <Link
-                    href={`/tasks/${row.taskId}`}
+                    href="/ops/tasks"
                     className="ml-3 text-accent-champagne hover:underline"
                     onClick={(e) => e.stopPropagation()}
                   >

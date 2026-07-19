@@ -32,7 +32,7 @@ export default async function LivePage() {
     <div className="mx-auto max-w-6xl space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">{t.title}</h1>
       <Panel>
-        <LiveFeed initial={initial} labels={t} />
+        <LiveFeed initial={initial} labels={t} statusLabels={dict.status} />
       </Panel>
     </div>
   );

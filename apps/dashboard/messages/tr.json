@@ -70,7 +70,11 @@
     "succeeded": "Başarılı",
     "waiting": "Bekliyor",
     "cancelled": "İptal",
-    "pending": "Beklemede"
+    "pending": "Beklemede",
+    "approved": "Onaylandı",
+    "rejected": "Reddedildi",
+    "paused": "Duraklatıldı",
+    "dormant": "Uykuda"
   },
   "approvals": {
     "title": "Onaylar",
@@ -550,7 +554,9 @@
       "actor": "Aktör",
       "task": "Görev",
       "time": "Zaman",
-      "note": "Ajan koşuları, görev olayları ve kararlar ops:live üzerinden akar (1 sn toplu Broadcast); onaylar kendi kanalında."
+      "note": "Şirket işlerindeki her hareket, olduğu anda burada görünür. Bir satıra tıklayınca tüm hikâyesi açılır.",
+      "steps": "adım",
+      "approvalsLink": "Onaylara git"
     },
     "tasks": {
       "kpiActive": "Aktif",

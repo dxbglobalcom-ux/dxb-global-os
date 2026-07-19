@@ -9,7 +9,7 @@
 // password-only; outward deploys never set the flag).
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { DxbMark } from "@/components/shell/app-shell";
+import { DxbMark } from "@/components/shell/dxb-mark";
 import { getDict } from "@/lib/i18n";
 import { createClient } from "@/lib/supabase/client";
 
