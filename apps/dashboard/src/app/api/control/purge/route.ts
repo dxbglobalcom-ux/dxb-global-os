@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/server";
 // per call); this handler only checks a session and validates shape.
 
 const Body = z.object({
-  entity: z.enum(["task", "alert", "intent"]),
+  entity: z.enum(["task", "alert", "intent", "approval"]),
   ids: z.array(z.string().uuid()).min(1).max(500),
   rationale: z.string().max(500).optional(),
 });

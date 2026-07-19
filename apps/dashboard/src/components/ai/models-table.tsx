@@ -314,7 +314,7 @@ export function ModelsTable({
               <div>
                 <p className="label-caps text-ink-muted">{labels.detailEmployees}</p>
                 {detail === null ? (
-                  <p className="mt-1 text-caption text-ink-muted">…</p>
+                  <p className="mt-1 text-caption text-ink-muted">—</p>
                 ) : detail.employees.length === 0 ? (
                   <p className="mt-1 text-body-s text-ink-secondary">
                     {labels.detailEmployeesEmpty}
@@ -336,7 +336,7 @@ export function ModelsTable({
             <div>
               <p className="label-caps text-ink-muted">{labels.detailDecisions}</p>
               {detail === null ? (
-                <p className="mt-1 text-caption text-ink-muted">…</p>
+                <p className="mt-1 text-caption text-ink-muted">—</p>
               ) : detail.decisions.length === 0 ? (
                 <p className="mt-1 text-body-s text-ink-secondary">
                   {labels.detailDecisionsEmpty}

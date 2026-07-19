@@ -174,13 +174,31 @@ type PostgrestClient = {
   };
 };
 
-export function postgrestCostSource(supabase: PostgrestClient): CostRowsSource {
+// Optional C9 filter narrowing: equality constraints applied to every query
+// the source issues, so KPIs, breakdowns and totals all obey the same URL
+// filter state. Omitted (the default) = pre-C9 behavior; the SQL-equality
+// gate runs unfiltered and is untouched.
+export type CostFilters = { department?: string; model?: string };
+
+export function postgrestCostSource(
+  supabase: PostgrestClient,
+  filters: CostFilters = {},
+): CostRowsSource {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const applyFilters = (query: any): any => {
+    let q = query;
+    if (filters.department) q = q.eq("department", filters.department);
+    if (filters.model) q = q.eq("model", filters.model);
+    return q;
+  };
   return {
     async sumBy(dimension, sinceISO) {
-      const { data, error } = await supabase
-        .from("cost_ledger")
-        .select(`${dimension},cost_eur.sum()`)
-        .gte("created_at", sinceISO);
+      const { data, error } = await applyFilters(
+        supabase
+          .from("cost_ledger")
+          .select(`${dimension},cost_eur.sum()`)
+          .gte("created_at", sinceISO),
+      );
       if (error) throw new Error(error.message);
       return ((data ?? []) as Array<Record<string, unknown>>).map((row) => ({
         key: String(row[dimension] ?? ""),
@@ -188,10 +206,12 @@ export function postgrestCostSource(supabase: PostgrestClient): CostRowsSource {
       }));
     },
     async totalSince(sinceISO) {
-      const { data, error } = await supabase
-        .from("cost_ledger")
-        .select("cost_eur.sum()")
-        .gte("created_at", sinceISO);
+      const { data, error } = await applyFilters(
+        supabase
+          .from("cost_ledger")
+          .select("cost_eur.sum()")
+          .gte("created_at", sinceISO),
+      );
       if (error) throw new Error(error.message);
       return Number((data as Array<{ sum: number | string | null }> | null)?.[0]?.sum ?? 0) || 0;
     },
@@ -200,15 +220,21 @@ export function postgrestCostSource(supabase: PostgrestClient): CostRowsSource {
 
 // v_cost_breakdown-backed daily source (E11.1): the view owns the Berlin-day
 // grain; PostgREST aggregates it up to one row per day.
-export function postgrestDailySource(supabase: PostgrestClient): CostDailySource {
+export function postgrestDailySource(
+  supabase: PostgrestClient,
+  filters: CostFilters = {},
+): CostDailySource {
   return {
     async sumByDay(sinceDay) {
-      const { data, error } = await supabase
+      let query = supabase
         .from("v_cost_breakdown")
         .select(
           "day, cost:cost_eur.sum(), ptok:prompt_tokens.sum(), ctok:completion_tokens.sum()",
         )
         .gte("day", sinceDay);
+      if (filters.department) query = query.eq("department", filters.department);
+      if (filters.model) query = query.eq("model", filters.model);
+      const { data, error } = await query;
       if (error) throw new Error(error.message);
       return (
         (data ?? []) as Array<{

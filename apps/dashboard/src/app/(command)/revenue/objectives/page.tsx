@@ -54,7 +54,7 @@ function formatPeriod(period: string | null, locale: string): string | null {
           month: "short",
           year: "numeric",
         })
-      : "…";
+      : "—";
   return `${fmt(m[1])} → ${fmt(m[2])}`;
 }
 

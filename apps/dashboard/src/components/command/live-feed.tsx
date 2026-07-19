@@ -115,6 +115,7 @@ export function LiveFeed({
     note: string;
     steps: string;
     approvalsLink: string;
+    runNoLabel: string;
   };
   statusLabels: Record<string, string>;
 }) {
@@ -233,11 +234,14 @@ export function LiveFeed({
                   <StatusBadge level={levelFor(g.latest)}>
                     {statusText(g.latest)}
                   </StatusBadge>
-                  <span
-                    className="min-w-0 truncate text-body-s text-ink-primary"
-                    title={g.latest.objective ?? undefined}
-                  >
-                    {g.latest.objective ?? statusText(g.latest)}
+                  {/* Full wrap, never "…"; a label-less run row says WHAT it
+                      is instead of echoing the status chip (CEO catch: the
+                      "Running Running" info-free line). */}
+                  <span className="min-w-0 break-words text-body-s text-ink-primary">
+                    {g.latest.objective ??
+                      (g.latest.kind === "run"
+                        ? labels.runNoLabel
+                        : statusText(g.latest))}
                   </span>
                   {hasChain ? (
                     <span className="ml-auto shrink-0 text-caption text-ink-muted">

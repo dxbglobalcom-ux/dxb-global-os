@@ -92,6 +92,10 @@ export type CenterLabels = {
   approveSelected: string;
   rejectSelected: string;
   bulkMoneyOutNote: string;
+  removeSelected: string;
+  removing: string;
+  selectAll: string;
+  removeNotePending: string;
   fatigueTitle: string;
   fatiguePending: string;
   fatigueOldest: string;
@@ -190,6 +194,15 @@ export function ApprovalCenter({
       }),
     [rows, klass, department, age],
   );
+  // Bulk-selectable rows: money_out stays lock-excluded while pending (§10);
+  // decided history is selectable in full.
+  const selectableIds = useMemo(
+    () =>
+      filtered
+        .filter((r) => view === "decided" || !r.moneyOut)
+        .map((r) => r.id),
+    [filtered, view],
+  );
 
   const toggleSelect = (id: string) => {
     setSelected((prev) => {
@@ -211,6 +224,38 @@ export function ApprovalCenter({
     else {
       setSelected(new Set());
       router.refresh();
+    }
+  };
+
+  // C4 bulk removal (audited purge door). A pending gate is rejected FIRST
+  // via the LOCKED batch fn, then the decided rows go through
+  // control_records_purge — nothing disappears without a decision on record.
+  const bulkRemove = async () => {
+    if (selected.size === 0 || busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const ids = Array.from(selected);
+      if (view === "pending") {
+        const dec = await decideApprovals(ids, "rejected");
+        if (!dec.ok) {
+          setError(dec.error);
+          return;
+        }
+      }
+      const res = await fetch("/api/control/purge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entity: "approval", ids }),
+      });
+      if (!res.ok) {
+        setError(`purge failed (${res.status})`);
+        return;
+      }
+      setSelected(new Set());
+      router.refresh();
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -290,28 +335,67 @@ export function ApprovalCenter({
         </span>
       </div>
 
-      {view === "pending" && selected.size > 0 && (
-        <div className="flex flex-wrap items-center gap-3 rounded-panel border border-edge-champagne bg-surface-graphite px-4 py-2">
-          <span className="text-body-s text-ink-primary">
+      {filtered.length > 0 && (
+        <div
+          className={`flex flex-wrap items-center gap-3 rounded-panel border px-4 py-2 ${
+            selected.size > 0
+              ? "border-edge-champagne bg-surface-graphite"
+              : "border-edge-neutral bg-surface-graphite"
+          }`}
+        >
+          <label className="flex items-center gap-2 text-body-s text-ink-secondary">
+            <input
+              type="checkbox"
+              checked={selectableIds.length > 0 && selected.size === selectableIds.length}
+              onChange={() =>
+                setSelected(
+                  selected.size === selectableIds.length
+                    ? new Set()
+                    : new Set(selectableIds),
+                )
+              }
+              aria-label={labels.selectAll}
+              className="h-4 w-4 accent-[var(--accent-champagne)]"
+            />
+            {labels.selectAll}
+          </label>
+          <span className="font-data text-body-s tabular-nums text-ink-primary">
             {selected.size} {labels.selectedCount}
           </span>
+          {view === "pending" && (
+            <>
+              <button
+                type="button"
+                disabled={busy || selected.size === 0}
+                onClick={() => void bulkDecide("approved")}
+                className="rounded-input border border-edge-champagne px-3 py-1 text-body-s text-accent-champagne transition duration-[var(--t-fast)] ease-refined hover:bg-surface-obsidian disabled:opacity-50"
+              >
+                {labels.approveSelected}
+              </button>
+              <button
+                type="button"
+                disabled={busy || selected.size === 0}
+                onClick={() => void bulkDecide("rejected")}
+                className="rounded-input border border-edge-neutral px-3 py-1 text-body-s text-ink-secondary transition duration-[var(--t-fast)] ease-refined hover:text-status-danger disabled:opacity-50"
+              >
+                {labels.rejectSelected}
+              </button>
+            </>
+          )}
           <button
             type="button"
-            disabled={busy}
-            onClick={() => void bulkDecide("approved")}
-            className="rounded-input border border-edge-champagne px-3 py-1 text-body-s text-accent-champagne transition duration-[var(--t-fast)] ease-refined hover:bg-surface-obsidian disabled:opacity-50"
-          >
-            {labels.approveSelected}
-          </button>
-          <button
-            type="button"
-            disabled={busy}
-            onClick={() => void bulkDecide("rejected")}
+            data-testid="approval-remove-selected"
+            disabled={busy || selected.size === 0}
+            onClick={() => void bulkRemove()}
             className="rounded-input border border-edge-neutral px-3 py-1 text-body-s text-ink-secondary transition duration-[var(--t-fast)] ease-refined hover:text-status-danger disabled:opacity-50"
           >
-            {labels.rejectSelected}
+            {busy ? labels.removing : `${labels.removeSelected} (${selected.size})`}
           </button>
-          <span className="text-caption text-ink-muted">{labels.bulkMoneyOutNote}</span>
+          <span className="text-caption text-ink-muted">
+            {view === "pending"
+              ? `${labels.bulkMoneyOutNote} ${labels.removeNotePending}`
+              : labels.removeNotePending}
+          </span>
         </div>
       )}
 
@@ -422,22 +506,22 @@ function CenterCard({
   return (
     <li className={frame}>
       <div className="flex w-full flex-wrap items-center gap-3 px-4 py-3">
-        {isPending &&
-          (row.moneyOut ? (
-            // money_out is NEVER bulk-selectable (§10) — the lock takes the
-            // checkbox slot so the exclusion is visible, not accidental.
-            <span aria-hidden className="flex w-4 justify-center text-accent-champagne">
-              <LockSimpleIcon size={14} weight="fill" />
-            </span>
-          ) : (
-            <input
-              type="checkbox"
-              checked={selected}
-              onChange={onSelect}
-              aria-label={row.operation ?? row.actionType}
-              className="h-4 w-4 accent-[var(--accent-champagne)]"
-            />
-          ))}
+        {isPending && row.moneyOut ? (
+          // money_out is NEVER bulk-selectable while pending (§10) — the lock
+          // takes the checkbox slot so the exclusion is visible, not
+          // accidental. Decided history is selectable for audited removal.
+          <span aria-hidden className="flex w-4 justify-center text-accent-champagne">
+            <LockSimpleIcon size={14} weight="fill" />
+          </span>
+        ) : (
+          <input
+            type="checkbox"
+            checked={selected}
+            onChange={onSelect}
+            aria-label={row.operation ?? row.actionType}
+            className="h-4 w-4 accent-[var(--accent-champagne)]"
+          />
+        )}
         <button
           type="button"
           onClick={() => setOpen(!open)}
@@ -450,7 +534,7 @@ function CenterCard({
           {row.moneyOut && (
             <span className="label-caps text-accent-champagne">{labels.moneyOut}</span>
           )}
-          <span className="min-w-0 flex-1 truncate text-body-s text-ink-primary">
+          <span className="min-w-0 flex-1 break-words text-body-s text-ink-primary">
             {row.purpose ?? row.taskObjective ?? row.operation ?? row.actionType}
           </span>
           <span className="label-caps text-ink-muted">

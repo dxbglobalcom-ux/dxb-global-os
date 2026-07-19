@@ -81,7 +81,7 @@ Plan ticket: `.planning/quick/20260719-c-series-remediation/PLAN.md`. Commits: d
 | C5 | ✓ CLOSED | Bridge trigger + 3 stale gates returned; awaiting=0 = pending=0 measured |
 | C6 | ✓ CLOSED | `(cockpit)` deleted; root → /overview; /tasks/* 404 measured; zero legacy links (grep 0) |
 | C8 | ✓ CLOSED (display) / ◐ deletion | HR default view = working org only; deletion list `00-NOTE-PERSONA-DELETION-LIST.md` awaits CEO one-confirm |
-| C9 | ✓ CLOSED (help+ambient) / ◐ filters | HelpTip on every page heading (92 route-locale checks green); full filter-bar standard (dept/model/date driving whole page) delivered on Tokens; remaining pages = open leg |
+| C9 | ✓ CLOSED (help+ambient) / ◐ filters | HelpTip on every page heading (92 route-locale checks green). **Correction (2026-07-19 11:05, RULE #0-A):** the earlier "filter-bar delivered on Tokens" claim overstated — measured: no filter existed on Tokens at close. Now actually built (commit this session): `FilterBar` primitive (URL-param groups: chips + selects, clear-all) LIVE on /fin/tokens (range/dept/model narrow every panel) and /fin/costs (KPIs, breakdowns, daily, ledger all narrowed; dept/model survive drills). Remaining list pages = open leg |
 | C11/C13 | ✓ CLOSED | Nav: tasks out; revenue/portfolio/CRM/opportunities/objectives → Operations |
 | C12 | ✓ CLOSED (catalog+form) | 13-model catalog (missing models added; kimi-3/codex-5.6/deepseek-v4-pro testing-until-exam); add-model = name+key+note (key → vault file); Fable chain registered in MODEL_ROUTING_SPEC |
 | C14/C15/C16 | ✓ ANSWERED | `00-NOTE-C-LEDGER-MEASURED-ANSWERS.md` — every claim cited |
@@ -93,4 +93,17 @@ Plan ticket: `.planning/quick/20260719-c-series-remediation/PLAN.md`. Commits: d
 | C23 | ✓ CLOSED | v_model_stats alias fix (sonnet 0→327 runs); test-noise filtered from decisions panel |
 | C24/C25 | ✓ CLOSED | Tokens v2: 21 departments from v_workforce_tokens; construction separated; zero/`—` noise suppressed |
 
-**Open legs (honest, not dropped):** voice lane of the chat board (U15 D-ledger); filter-bar rollout beyond Tokens; C8 deletion confirm; embed-small decision; hook-violation detail i18n; per-item skill exam records. All carried in this ledger — next session's queue.
+**Open legs (honest, not dropped):** voice lane of the chat board (U15 D-ledger) — CEO re-ordered 2026-07-19 morning: WisprFlow-style dictation INSIDE Chat with Hamza, Voice Line merges into the chat page, one-command activation; filter-bar rollout beyond Tokens+Costs; C8 deletion confirm; embed-small decision; hook-violation detail i18n; per-item skill exam records; HelpTip depth pass (CEO 2026-07-19: page help must explain the page's sections and what each is for, in plain non-programmer language, EN+TR — one-line generic texts are insufficient); approval purpose/DB strings render EN inside TR locale (same DB-content-i18n leg as C19). All carried in this ledger — the immediate queue.
+
+**Morning session additions (2026-07-19 ~11:00-11:45, CEO live review):**
+
+| Item | Status | Evidence |
+|---|---|---|
+| Stale server = "SOMETHING BROKE" on /live | ✓ FIXED | `next start` from 03:46 served pre-rebuild chunks (assets 500). Restarted on fresh build; /live renders, 0 console errors, screenshot on record |
+| Approvals bulk actions invisible + no bulk delete | ✓ FIXED | Bar now always visible (select-all + count + disabled-at-0 buttons); NEW audited delete: entity `approval` added to `control_records_purge` (terminal-only; pending = bulk-reject first, then purge — migration 20260719008000); decided view rows selectable |
+| **Standing order 7 — equal-width status chips** | ✓ REGISTERED+APPLIED | CEO design ruling: status badges in a list line up at equal width, never sized by their word. `StatusBadge` primitive now `min-w-[9ch] justify-center` |
+| **Standing order 8 — zero "…" anywhere** | ✓ APPLIED | All ellipsis stripped from both dictionaries (42 strings incl. search placeholder) and 5 rendered code sites; `truncate` replaced with wrap on live feed, approval titles, cost model column, bar lists. RULE #0 battery now counts …-nodes and clipped-truncate nodes — 16/16 route-locale-width checks = 0 |
+| Live feed "Running Running" info-free row | ✓ FIXED | Label-less run rows now say "Background system work" (EN+TR `runNoLabel`) instead of echoing the status chip |
+| E8.2/R31 probe fixtures on CEO surfaces (Tokens model list `test-e8-model`, Live feed rows, fake pending approvals) | ✓ PURGED | 15 E8.2 + 47 R31 probe tasks purged via control fn (audited); 2 pending probe approvals + 2 `e10t-employee` orphan escalations rejected-then-purged; pending approvals now 4 = real work only |
+| Outleteuro wording in dashboard dicts (U19 cancellation) | ✓ PURGED | grep 0 in messages/*.json |
+| decide_approvals does NOT move the linked task out of `awaiting_approval` (C5 truth gap, approve/reject direction) | ◐ OPEN | Measured this session: approval decided, task stayed `awaiting_approval`; probes were force-failed before purge. Needs decision→task sync leg of the C5 trigger |

@@ -8,3 +8,4 @@ export { HealthRing } from "./health-ring";
 export { DataGrid, type Column } from "./data-grid";
 export { CommandItem } from "./command-item";
 export { HelpTip } from "./help-tip";
+export { FilterBar, type FilterGroup, type FilterOption } from "./filter-bar";

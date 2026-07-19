@@ -153,9 +153,9 @@
     "recentTitle": "Recent intents",
     "errorTitle": "Could not submit — nothing was queued",
     "placeholders": [
-      "Draft a weekend campaign plan for Outleteuro…",
-      "Summarize this week's costs by department…",
-      "Prepare a client onboarding checklist…"
+      "Draft a weekend marketing campaign plan",
+      "Summarize this week's costs by department",
+      "Prepare a client onboarding checklist"
     ]
   },
   "intent": {
@@ -295,10 +295,10 @@
       "logout": "Sign out"
     },
     "palette": {
-      "placeholder": "Search the company…",
+      "placeholder": "Search the company",
       "hintOpen": "⌘K",
       "empty": "No results — use the instruction lane below",
-      "searching": "Searching…",
+      "searching": "Searching",
       "sectionActions": "Actions",
       "sectionResults": "Results",
       "controlBadge": "CONTROL",
@@ -340,11 +340,11 @@
         "workflows": "Workflows",
         "hr": "HR"
       },
-      "searchPlaceholder": "Filter settings…",
+      "searchPlaceholder": "Filter settings",
       "scopeGlobal": "Global",
       "scopeDepartment": "Department",
       "scopeEmployee": "Employee",
-      "scopePickEntity": "Pick…",
+      "scopePickEntity": "Pick",
       "scopeBanner": "Editing scope",
       "hiddenAtScope": "keys are global-only and hidden at this scope",
       "originScope": "set at this scope",
@@ -370,7 +370,7 @@
       "delegateBadge": "Managed by org seam",
       "delegateReason": "Source of truth is the organization table — edit it on the org pages (double source forbidden). Current value:",
       "save": "Save",
-      "saving": "Saving…",
+      "saving": "Saving",
       "saved": "Saved",
       "noop": "No change — value already set",
       "undo": "Undo",
@@ -438,7 +438,7 @@
     },
     "session": {
       "ended": "Session ended",
-      "redirect": "Taking you to sign-in…"
+      "redirect": "Taking you to sign-in"
     },
     "rail": {
       "title": "Intelligence",
@@ -537,7 +537,8 @@
       "time": "Time",
       "note": "Every movement of company work appears here the moment it happens. Click a row to see its full story.",
       "steps": "steps",
-      "approvalsLink": "Open approvals"
+      "approvalsLink": "Open approvals",
+      "runNoLabel": "Background system work"
     },
     "tasks": {
       "kpiActive": "Active",
@@ -572,7 +573,7 @@
         "returned": "Returned"
       },
       "purgeSelected": "Remove selected",
-      "purging": "Removing…",
+      "purging": "Removing",
       "selectableHint": "Finished rows (done, failed, returned) can be ticked and removed — running work cannot be deleted from here. Removal is recorded in the audit trail."
     },
     "employees": {
@@ -638,7 +639,7 @@
       "activeShort": "active",
       "deptDormantHint": "Dormant: staff are hired and on record, awaiting 24/7 runtime activation (Phase 7). The department wakes the moment its agents take work.",
       "idLabel": "Agent ID",
-      "detailLoading": "Loading detail…",
+      "detailLoading": "Loading detail",
       "detailError": "Detail could not be loaded.",
       "governanceTitle": "Governance",
       "personaLabel": "Persona",
@@ -777,7 +778,7 @@
       "detailNoRun": "No source run recorded — this record predates the run bridge or was written outside a run.",
       "mutationsBoundary": "Edit, archive and reclassify actions arrive with the control_memory_* seam (registered Wave-4 addition) — this surface is read-only by design.",
       "listTitle": "Index records",
-      "searchPlaceholder": "Search reference…",
+      "searchPlaceholder": "Search reference",
       "searchAction": "Search",
       "empty": "No memory records match this filter.",
       "showing": "Showing",
@@ -907,7 +908,7 @@
       "cardEmployees": "Employees",
       "cardCost7d": "Cost · 7 days",
       "cardSince": "Since",
-      "spawnNote": "Spawned sub-OS companies (the Outleteuro model, Phase 11) register here as real rows when they exist — nothing is invented before that."
+      "spawnNote": "Spawned sub-OS companies register here as real rows when they exist — nothing is invented before that."
     },
     "departments": {
       "kpiTotal": "Departments",
@@ -988,6 +989,16 @@
       "colAllOk": "Complete",
       "showing": "Showing",
       "of": "of"
+    },
+    "filters": {
+      "department": "Department",
+      "model": "Model",
+      "allDepartments": "All departments",
+      "allModels": "All models",
+      "clear": "Clear filters",
+      "rangeToday": "Today",
+      "range7d": "7 days",
+      "range30d": "30 days"
     },
     "tokens": {
       "kpiToday": "Tokens today",
@@ -1254,7 +1265,7 @@
       "revenueEmpty": "No revenue rows yet — external writers (WooCommerce, bank) dock into revenue_ledger.source when their integration steps land.",
       "plannedTitle": "Planned integrations (recorded boundaries)",
       "plannedBadge": "Planned",
-      "plannedWoo": "WooCommerce order/spend sync (Outleteuro pilot)",
+      "plannedWoo": "WooCommerce order/spend sync (future store pilots)",
       "plannedBank": "Bank feed → revenue reconciliation",
       "plannedEmail": "Outbound e-mail executor",
       "plannedLitellm": "LiteLLM virtual-key budget sync"
@@ -1362,7 +1373,7 @@
         "none": "none",
         "statusLabel": "Status",
         "smokeTest": "Smoke test",
-        "smokeRunning": "Testing…",
+        "smokeRunning": "Testing",
         "smokeUnreachable": "LiteLLM proxy unreachable — not configured on this host (Phase-7 VPS scope). Model stays in testing.",
         "smokeFailed": "Smoke test failed — model stays in testing.",
         "activate": "Activate — enter the assignable pool",
@@ -1543,7 +1554,7 @@
         "ack": "Acknowledge",
         "resolve": "Resolve",
         "mute": "Mute 1h",
-        "assign": "Assign owner…",
+        "assign": "Assign owner",
         "owner": "Owner",
         "unassigned": "Unassigned",
         "acked": "Acknowledged",
@@ -1580,7 +1591,7 @@
         },
         "affectedArea": "Affected area",
         "purgeSelected": "Remove selected",
-        "purging": "Removing…",
+        "purging": "Removing",
         "selectHint": "Select all shown"
       }
     },
@@ -1841,6 +1852,10 @@
         "approveSelected": "Approve selected",
         "rejectSelected": "Reject selected",
         "bulkMoneyOutNote": "Money-out approvals are never part of a batch.",
+        "removeSelected": "Remove selected",
+        "removing": "Removing",
+        "selectAll": "Select all",
+        "removeNotePending": "Removing a waiting request rejects it first — nothing disappears without a decision, and every removal lands in the audit trail.",
         "fatigueTitle": "Gate load",
         "fatiguePending": "Pending",
         "fatigueOldest": "Oldest",
@@ -2117,9 +2132,9 @@
       "subtitle": "Ask a director by voice — Hamza routes, one line, €0.",
       "idleHint": "Hold the mic and speak; release to send.",
       "holdToTalk": "Hold to talk",
-      "recording": "Listening… release to send",
-      "uploading": "Transcribing…",
-      "waiting": "Thinking…",
+      "recording": "Listening — release to send",
+      "uploading": "Transcribing",
+      "waiting": "Thinking",
       "speaking": "Speaking",
       "done": "Call ended",
       "failedTitle": "Call failed",
@@ -2174,13 +2189,13 @@
       "title": "Chat with Hamza",
       "subtitle": "Talk it through first — ideas, plans, questions. Work starts only when you say so.",
       "empty": "No messages yet. Say hello to Hamza — he runs the company for you.",
-      "placeholder": "Write to Hamza… (Enter sends, Shift+Enter = new line)",
+      "placeholder": "Write to Hamza — (Enter sends, Shift+Enter = new line)",
       "send": "Send",
       "planMode": "Plan mode",
       "planModeHint": "Hamza drafts a plan with you — nothing is executed.",
       "dispatch": "Send as a task",
       "dispatched": "Sent as a task",
-      "thinking": "Hamza is writing…",
+      "thinking": "Hamza is writing",
       "failed": "Could not be answered",
       "you": "You",
       "hamza": "Hamza"

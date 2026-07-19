@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
   DataGrid,
+  FilterBar,
   Panel,
   Stat,
   type Column, HelpTip } from "@/components/primitives";
@@ -11,6 +12,7 @@ import {
   costBreakdown,
   dailyBreakdown,
   monthStart,
+  periodStart,
   periodTotal,
   postgrestCostSource,
   postgrestDailySource,
@@ -49,7 +51,7 @@ function BreakdownList({
       {entries.map((e) => (
         <li key={e.key}>
           <div className="flex items-baseline justify-between gap-3 text-body-s">
-            <span className="min-w-0 truncate text-ink-secondary">{e.key}</span>
+            <span className="min-w-0 break-words text-ink-secondary">{e.key}</span>
             <span className="font-data text-ink-primary tabular-nums">
               {e.formatted}
             </span>
@@ -134,14 +136,20 @@ function DailyList({
 export default async function CostsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ range?: string; day?: string }>;
+  searchParams: Promise<{
+    range?: string;
+    day?: string;
+    dept?: string;
+    model?: string;
+  }>;
 }) {
-  const { range, day: rawDay } = await searchParams;
+  const { range, day: rawDay, dept: rawDept, model: rawModel } =
+    await searchParams;
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.costs;
+  const tf = dict.command.filters;
   const supabase = await createClient();
-  const source = postgrestCostSource(supabase);
   const now = new Date();
 
   const period: CostPeriod = (COST_PERIODS as readonly string[]).includes(
@@ -152,6 +160,19 @@ export default async function CostsPage({
   // Day drill (spec §7): a Berlin calendar day narrows the ledger table.
   const day = /^\d{4}-\d{2}-\d{2}$/.test(rawDay ?? "") ? rawDay! : undefined;
 
+  // C9 filter standard: dept/model validated against 30d distincts, then
+  // narrow every query the page issues (KPIs, breakdowns, daily, ledger).
+  const optionSource = postgrestCostSource(supabase);
+  const [deptRows, modelRows] = await Promise.all([
+    optionSource.sumBy("department", periodStart("30d", now).toISOString()),
+    optionSource.sumBy("model", periodStart("30d", now).toISOString()),
+  ]);
+  const deptOptions = deptRows.map((r) => r.key).filter((k) => k && k !== "—").sort();
+  const modelOptions = modelRows.map((r) => r.key).filter((k) => k && k !== "—").sort();
+  const dept = deptOptions.includes(rawDept ?? "") ? rawDept : undefined;
+  const model = modelOptions.includes(rawModel ?? "") ? rawModel : undefined;
+  const source = postgrestCostSource(supabase, { department: dept, model });
+
   let ledgerQuery = supabase
     .from("cost_ledger")
     .select(
@@ -159,6 +180,8 @@ export default async function CostsPage({
     )
     .order("created_at", { ascending: false })
     .limit(20);
+  if (dept) ledgerQuery = ledgerQuery.eq("department", dept);
+  if (model) ledgerQuery = ledgerQuery.eq("model", model);
   if (day) {
     const { startISO, endISO } = berlinDayRangeISO(day);
     ledgerQuery = ledgerQuery.gte("created_at", startISO).lt("created_at", endISO);
@@ -179,7 +202,7 @@ export default async function CostsPage({
     periodTotal(source, "7d", now),
     periodTotal(source, "30d", now),
     source.totalSince(monthStart(now).toISOString()),
-    dailyBreakdown(postgrestDailySource(supabase), now),
+    dailyBreakdown(postgrestDailySource(supabase, { department: dept, model }), now),
     costBreakdown(source, "department", period, now),
     costBreakdown(source, "model", period, now),
     costBreakdown(source, "mode", period, now),
@@ -215,6 +238,12 @@ export default async function CostsPage({
     "7d": t.kpi7d,
     "30d": t.kpi30d,
   };
+  // Short window words for the filter chips (the KPI labels say "Cost · 7d").
+  const rangeChipLabel: Record<CostPeriod, string> = {
+    today: tf.rangeToday,
+    "7d": tf.range7d,
+    "30d": tf.range30d,
+  };
 
   const compactTokens = new Intl.NumberFormat("en", {
     notation: "compact",
@@ -229,6 +258,9 @@ export default async function CostsPage({
     const q = new URLSearchParams();
     if (params.range) q.set("range", params.range);
     if (params.day) q.set("day", params.day);
+    // C9: dept/model filters survive the range/day drills.
+    if (dept) q.set("dept", dept);
+    if (model) q.set("model", model);
     const s = q.toString();
     return `/fin/costs${s ? `?${s}` : ""}`;
   };
@@ -238,7 +270,7 @@ export default async function CostsPage({
       key: "model",
       label: t.colModel,
       render: (r) => (
-        <span className="block max-w-[24ch] truncate font-data" title={r.model}>
+        <span className="block max-w-[24ch] break-words font-data">
           {r.model}
         </span>
       ),
@@ -302,6 +334,37 @@ export default async function CostsPage({
         </div>
       </div>
 
+      <FilterBar
+        clearLabel={tf.clear}
+        groups={[
+          {
+            param: "range",
+            label: periodLabel[period],
+            kind: "chips",
+            value: period,
+            defaultValue: "7d",
+            options: COST_PERIODS.map((p) => ({
+              value: p,
+              label: rangeChipLabel[p],
+            })),
+          },
+          {
+            param: "dept",
+            label: tf.department,
+            allLabel: tf.allDepartments,
+            value: dept,
+            options: deptOptions.map((d) => ({ value: d, label: d })),
+          },
+          {
+            param: "model",
+            label: tf.model,
+            allLabel: tf.allModels,
+            value: model,
+            options: modelOptions.map((m) => ({ value: m, label: m })),
+          },
+        ]}
+      />
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-4">
         <Stat
           label={t.kpiToday}
@@ -354,21 +417,8 @@ export default async function CostsPage({
       </Panel>
 
       <Panel title={day ? `${t.ledgerTitle} · ${day}` : t.ledgerTitle}>
-        <div className="mb-3 flex flex-wrap gap-2">
-          {COST_PERIODS.map((p) => (
-            <Link
-              key={p}
-              href={costsHref({ range: p, day })}
-              className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                period === p
-                  ? "border-edge-champagne text-accent-champagne"
-                  : "border-edge-neutral text-ink-secondary"
-              }`}
-            >
-              {periodLabel[p]}
-            </Link>
-          ))}
-          {day && (
+        {day && (
+          <div className="mb-3 flex flex-wrap gap-2">
             <Link
               href={costsHref({ range: rangeParam })}
               aria-label={t.clearDay}
@@ -377,8 +427,8 @@ export default async function CostsPage({
             >
               {day} ✕
             </Link>
-          )}
-        </div>
+          </div>
+        )}
         {ledger.length === 0 ? (
           <p className="py-4 text-body-s text-ink-secondary">{t.ledgerEmpty}</p>
         ) : (

@@ -241,8 +241,7 @@ export default async function RisksPage({
                 .map((r) => (
                   <li key={r.id} className="text-caption text-ink-muted">
                     <span className="font-data text-ink-secondary">
-                      {r.title.slice(0, 40)}
-                      {r.title.length > 40 ? "…" : ""}:
+                      {r.title}:
                     </span>{" "}
                     {r.note}
                   </li>

@@ -387,7 +387,7 @@ export default async function MemoryPage({
                   href={selfHref({ id: detail.superseded_by })}
                   className="font-data text-accent-champagne"
                 >
-                  {detail.superseded_by.slice(0, 8)}…
+                  {detail.superseded_by.slice(0, 8)}
                 </Link>
               </div>
             )}

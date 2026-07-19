@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Panel, Stat, HelpTip } from "@/components/primitives";
+import { FilterBar, Panel, Stat, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -34,7 +34,7 @@ function BarList({
       {entries.map((e) => (
         <li key={e.key}>
           <div className="flex items-baseline justify-between gap-3 text-body-s">
-            <span className="min-w-0 truncate text-ink-secondary">{e.key}</span>
+            <span className="min-w-0 break-words text-ink-secondary">{e.key}</span>
             <span className="font-data text-ink-primary tabular-nums">
               {e.formatted}
             </span>
@@ -51,10 +51,19 @@ function BarList({
   );
 }
 
-export default async function TokensPage() {
+const TOKEN_RANGES = ["today", "7d", "30d"] as const;
+type TokenRange = (typeof TOKEN_RANGES)[number];
+
+export default async function TokensPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string; dept?: string; model?: string }>;
+}) {
+  const params = await searchParams;
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.tokens;
+  const tf = dict.command.filters;
   const supabase = await createClient();
   const now = new Date();
   const compact = new Intl.NumberFormat("en", {
@@ -92,13 +101,39 @@ export default async function TokensPage() {
     );
   }
 
-  const rows = (wfRes.data ?? []) as unknown as WorkforceRow[];
+  const allRows = (wfRes.data ?? []) as unknown as WorkforceRow[];
   const buildRow = (buildRes.data?.[0] ?? {}) as Record<string, unknown>;
   const constructionTokens7d =
     Number(buildRow.ptok ?? 0) + Number(buildRow.ctok ?? 0);
 
+  // C9 filter standard: dept/model/range live in the URL and narrow EVERY
+  // panel below. Values are validated against the 30d data — junk params
+  // fall back to "all" / the 7d default silently.
+  const range: TokenRange = (TOKEN_RANGES as readonly string[]).includes(
+    params.range ?? "",
+  )
+    ? (params.range as TokenRange)
+    : "7d";
+  const deptOptions = [...new Set(allRows.map((r) => r.department))].sort();
+  const modelOptions = [...new Set(allRows.map((r) => r.model))].sort();
+  const dept = deptOptions.includes(params.dept ?? "") ? params.dept : undefined;
+  const model = modelOptions.includes(params.model ?? "")
+    ? params.model
+    : undefined;
+
+  const rows = allRows.filter(
+    (r) => (!dept || r.department === dept) && (!model || r.model === model),
+  );
+
   const within7d = rows.filter((r) => r.day >= since7d.slice(0, 10));
   const todayRows = rows.filter((r) => r.day === todayBerlin);
+  const inRange =
+    range === "today" ? todayRows : range === "7d" ? within7d : rows;
+  const rangeLabel: Record<TokenRange, string> = {
+    today: tf.rangeToday,
+    "7d": tf.range7d,
+    "30d": tf.range30d,
+  };
 
   const sumBy = (list: WorkforceRow[], key: "department" | "model") => {
     const acc = new Map<string, number>();
@@ -109,8 +144,8 @@ export default async function TokensPage() {
     return [...acc.entries()].map(([k, v]) => ({ key: k, value: v }));
   };
 
-  const byDept = sumBy(within7d, "department");
-  const byModel = sumBy(within7d, "model");
+  const byDept = sumBy(inRange, "department");
+  const byModel = sumBy(inRange, "model");
   const totalToday = todayRows.reduce((a, r) => a + r.tokens, 0);
   const total7d = within7d.reduce((a, r) => a + r.tokens, 0);
   const total30d = rows.reduce((a, r) => a + r.tokens, 0);
@@ -144,6 +179,37 @@ export default async function TokensPage() {
         </Link>
       </div>
 
+      <FilterBar
+        clearLabel={tf.clear}
+        groups={[
+          {
+            param: "range",
+            label: rangeLabel[range],
+            kind: "chips",
+            value: range,
+            defaultValue: "7d",
+            options: TOKEN_RANGES.map((r) => ({
+              value: r,
+              label: rangeLabel[r],
+            })),
+          },
+          {
+            param: "dept",
+            label: tf.department,
+            allLabel: tf.allDepartments,
+            value: dept,
+            options: deptOptions.map((d) => ({ value: d, label: d })),
+          },
+          {
+            param: "model",
+            label: tf.model,
+            allLabel: tf.allModels,
+            value: model,
+            options: modelOptions.map((m) => ({ value: m, label: m })),
+          },
+        ]}
+      />
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-4">
         <Stat
           label={t.kpiToday}
@@ -169,10 +235,10 @@ export default async function TokensPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <Panel title={`${t.byModel} · ${t.window7d}`}>
+        <Panel title={`${t.byModel} · ${rangeLabel[range]}`}>
           <BarList entries={shape(byModel)} emptyText={t.empty} />
         </Panel>
-        <Panel title={`${t.byDepartment} · ${t.window7d}`}>
+        <Panel title={`${t.byDepartment} · ${rangeLabel[range]}`}>
           <BarList entries={shape(byDept)} emptyText={t.empty} />
         </Panel>
       </div>

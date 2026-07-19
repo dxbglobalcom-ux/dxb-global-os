@@ -153,9 +153,9 @@
     "recentTitle": "Son niyetler",
     "errorTitle": "Gönderilemedi — kuyruğa hiçbir şey girmedi",
     "placeholders": [
-      "Outleteuro için hafta sonu kampanya taslağı hazırla…",
-      "Bu haftanın maliyetlerini departmana göre özetle…",
-      "Yeni müşteri karşılama listesi hazırla…"
+      "Hafta sonu için pazarlama kampanya planı hazırla",
+      "Bu haftanın maliyetlerini departmana göre özetle",
+      "Yeni müşteri karşılama listesi hazırla"
     ]
   },
   "intent": {
@@ -295,10 +295,10 @@
       "logout": "Oturumu kapat"
     },
     "palette": {
-      "placeholder": "Şirkette ara…",
+      "placeholder": "Şirkette ara",
       "hintOpen": "⌘K",
       "empty": "Sonuç yok — aşağıdaki talimat şeridini kullan",
-      "searching": "Aranıyor…",
+      "searching": "Aranıyor",
       "sectionActions": "Eylemler",
       "sectionResults": "Sonuçlar",
       "controlBadge": "KONTROL",
@@ -340,11 +340,11 @@
         "workflows": "İş Akışları",
         "hr": "İK"
       },
-      "searchPlaceholder": "Ayarları filtrele…",
+      "searchPlaceholder": "Ayarları filtrele",
       "scopeGlobal": "Global",
       "scopeDepartment": "Departman",
       "scopeEmployee": "Çalışan",
-      "scopePickEntity": "Seç…",
+      "scopePickEntity": "Seç",
       "scopeBanner": "Düzenlenen kapsam",
       "hiddenAtScope": "anahtar yalnız global — bu kapsamda gizli",
       "originScope": "bu kapsamda ayarlı",
@@ -370,7 +370,7 @@
       "delegateBadge": "Org seam'i yönetir",
       "delegateReason": "Kaynak-gerçek organizasyon tablosudur — org sayfalarından düzenlenir (çift kaynak yasak). Mevcut değer:",
       "save": "Kaydet",
-      "saving": "Kaydediliyor…",
+      "saving": "Kaydediliyor",
       "saved": "Kaydedildi",
       "noop": "Değişiklik yok — değer zaten aynı",
       "undo": "Geri al",
@@ -438,7 +438,7 @@
     },
     "session": {
       "ended": "Oturum sona erdi",
-      "redirect": "Giriş ekranına yönlendiriliyorsunuz…"
+      "redirect": "Giriş ekranına yönlendiriliyorsunuz"
     },
     "rail": {
       "title": "Zekâ",
@@ -537,7 +537,8 @@
       "time": "Zaman",
       "note": "Şirket işlerindeki her hareket, olduğu anda burada görünür. Bir satıra tıklayınca tüm hikâyesi açılır.",
       "steps": "adım",
-      "approvalsLink": "Onaylara git"
+      "approvalsLink": "Onaylara git",
+      "runNoLabel": "Arka plan sistem işi"
     },
     "tasks": {
       "kpiActive": "Aktif",
@@ -572,7 +573,7 @@
         "returned": "İade edildi"
       },
       "purgeSelected": "Seçilenleri kaldır",
-      "purging": "Kaldırılıyor…",
+      "purging": "Kaldırılıyor",
       "selectableHint": "Biten satırlar (bitti, hata, iade) işaretlenip kaldırılabilir — çalışan iş buradan silinemez. Kaldırma denetim izine kaydedilir."
     },
     "employees": {
@@ -638,7 +639,7 @@
       "activeShort": "aktif",
       "deptDormantHint": "Uykuda: kadro işe alınmış ve kayıtlı, 7/24 çalışma zamanı aktivasyonunu bekliyor (Faz 7). Ajanları iş aldığı an departman uyanır.",
       "idLabel": "Ajan Kimliği",
-      "detailLoading": "Detay yükleniyor…",
+      "detailLoading": "Detay yükleniyor",
       "detailError": "Detay yüklenemedi.",
       "governanceTitle": "Yönetişim",
       "personaLabel": "Persona",
@@ -777,7 +778,7 @@
       "detailNoRun": "Kaynak koşu kaydı yok — kayıt koşu köprüsünden eski ya da koşu dışında yazılmış.",
       "mutationsBoundary": "Düzenle, arşivle ve yeniden sınıflandır aksiyonları control_memory_* kapısıyla gelecek (kayıtlı Dalga-4 eki) — bu yüzey tasarım gereği salt-okunur.",
       "listTitle": "Dizin kayıtları",
-      "searchPlaceholder": "Referans ara…",
+      "searchPlaceholder": "Referans ara",
       "searchAction": "Ara",
       "empty": "Bu filtreye uyan hafıza kaydı yok.",
       "showing": "Gösterilen",
@@ -907,7 +908,7 @@
       "cardEmployees": "Çalışan",
       "cardCost7d": "Maliyet · 7 gün",
       "cardSince": "Kuruluş",
-      "spawnNote": "Spawn edilen alt-OS şirketleri (Outleteuro modeli, Faz 11) var oldukları anda gerçek satır olarak buraya düşer — öncesinde hiçbir şey uydurulmaz."
+      "spawnNote": "Spawn edilen alt-OS şirketleri var oldukları anda gerçek satır olarak buraya düşer — öncesinde hiçbir şey uydurulmaz."
     },
     "departments": {
       "kpiTotal": "Departman",
@@ -988,6 +989,16 @@
       "colAllOk": "Tamam",
       "showing": "Gösterilen",
       "of": "/"
+    },
+    "filters": {
+      "department": "Departman",
+      "model": "Model",
+      "allDepartments": "Tüm departmanlar",
+      "allModels": "Tüm modeller",
+      "clear": "Filtreleri temizle",
+      "rangeToday": "Bugün",
+      "range7d": "7 gün",
+      "range30d": "30 gün"
     },
     "tokens": {
       "kpiToday": "Bugünkü token",
@@ -1254,7 +1265,7 @@
       "revenueEmpty": "Henüz gelir satırı yok — dış yazıcılar (WooCommerce, banka) entegrasyon adımları geldiğinde revenue_ledger.source'a bağlanır.",
       "plannedTitle": "Planlı entegrasyonlar (kayıtlı sınırlar)",
       "plannedBadge": "Planlı",
-      "plannedWoo": "WooCommerce sipariş/harcama senkronu (Outleteuro pilotu)",
+      "plannedWoo": "WooCommerce sipariş/harcama senkronu (gelecek mağaza pilotları)",
       "plannedBank": "Banka akışı → gelir mutabakatı",
       "plannedEmail": "Giden e-posta yürütücüsü",
       "plannedLitellm": "LiteLLM sanal-anahtar bütçe senkronu"
@@ -1362,7 +1373,7 @@
         "none": "yok",
         "statusLabel": "Durum",
         "smokeTest": "Duman testi",
-        "smokeRunning": "Test ediliyor…",
+        "smokeRunning": "Test ediliyor",
         "smokeUnreachable": "LiteLLM proxy'sine ulaşılamadı — bu makinede yapılandırılmamış (Faz-7 VPS kapsamı). Model testing durumunda kalır.",
         "smokeFailed": "Duman testi başarısız — model testing durumunda kalır.",
         "activate": "Aktifleştir — atanabilir havuza girer",
@@ -1543,7 +1554,7 @@
         "ack": "Onayla",
         "resolve": "Çöz",
         "mute": "1s sustur",
-        "assign": "Sahip ata…",
+        "assign": "Sahip ata",
         "owner": "Sahip",
         "unassigned": "Atanmadı",
         "acked": "Onaylandı",
@@ -1580,7 +1591,7 @@
         },
         "affectedArea": "Etkilenen alan",
         "purgeSelected": "Seçilenleri kaldır",
-        "purging": "Kaldırılıyor…",
+        "purging": "Kaldırılıyor",
         "selectHint": "Görünenlerin tümünü seç"
       }
     },
@@ -1841,6 +1852,10 @@
         "approveSelected": "Seçilenleri onayla",
         "rejectSelected": "Seçilenleri reddet",
         "bulkMoneyOutNote": "Para-çıkışı onayları asla toplu işleme girmez.",
+        "removeSelected": "Seçilenleri kaldır",
+        "removing": "Kaldırılıyor",
+        "selectAll": "Tümünü seç",
+        "removeNotePending": "Bekleyen bir istek kaldırılırken önce reddedilir — hiçbir şey kararsız kaybolmaz, her kaldırma denetim kaydına işlenir.",
         "fatigueTitle": "Kapı yükü",
         "fatiguePending": "Bekleyen",
         "fatigueOldest": "En eski",
@@ -2117,9 +2132,9 @@
       "subtitle": "Bir müdüre sesle sorun — Hamza yönlendirir, tek hat, €0.",
       "idleHint": "Mikrofonu basılı tutup konuşun; bırakınca gönderilir.",
       "holdToTalk": "Bas-konuş",
-      "recording": "Dinliyor… bırakınca gönderilir",
-      "uploading": "Yazıya dökülüyor…",
-      "waiting": "Düşünüyor…",
+      "recording": "Dinliyor — bırakınca gönderilir",
+      "uploading": "Yazıya dökülüyor",
+      "waiting": "Düşünüyor",
       "speaking": "Konuşuyor",
       "done": "Görüşme bitti",
       "failedTitle": "Görüşme başarısız",
@@ -2174,13 +2189,13 @@
       "title": "Hamza ile Sohbet",
       "subtitle": "Önce konuşun — fikir, plan, soru. İş ancak siz isteyince başlar.",
       "empty": "Henüz mesaj yok. Hamza'ya bir merhaba deyin — şirketi sizin için o yönetiyor.",
-      "placeholder": "Hamza'ya yazın… (Enter gönderir, Shift+Enter = yeni satır)",
+      "placeholder": "Hamza'ya yazın — (Enter gönderir, Shift+Enter = yeni satır)",
       "send": "Gönder",
       "planMode": "Plan modu",
       "planModeHint": "Hamza sizinle plan taslağı çıkarır — hiçbir şey çalıştırılmaz.",
       "dispatch": "Görev olarak gönder",
       "dispatched": "Görev olarak gönderildi",
-      "thinking": "Hamza yazıyor…",
+      "thinking": "Hamza yazıyor",
       "failed": "Cevaplanamadı",
       "you": "Siz",
       "hamza": "Hamza"

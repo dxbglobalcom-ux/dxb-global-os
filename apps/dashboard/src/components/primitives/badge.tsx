@@ -53,8 +53,10 @@ export function StatusBadge({
   className?: string;
 }) {
   return (
+    // Equal-width chips (CEO design ruling 2026-07-19): status badges in a
+    // list column line up — the box is sized by the column, not the word.
     <span
-      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-input border border-edge-neutral bg-surface-graphite px-2 py-0.5 text-caption ${TEXT_CLASS[level]} ${className}`}
+      className={`inline-flex min-w-[9ch] items-center justify-center gap-1.5 whitespace-nowrap rounded-input border border-edge-neutral bg-surface-graphite px-2 py-0.5 text-caption ${TEXT_CLASS[level]} ${className}`}
     >
       <Shape level={level} />
       {children}
