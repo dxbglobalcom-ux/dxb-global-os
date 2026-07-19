@@ -21,7 +21,9 @@ export type DxbChannelName =
   | "settings"
   // R3.1: voice call lifecycle (VOICE_INTERACTION_SPEC §9 — call.started /
   // call.answer_ready / call.ended / call.failed, fired by control_voice_call_log).
-  | "voice";
+  | "voice"
+  // C1/C7/C10 CEO Chat Board: chat_messages broadcast_changes rows.
+  | "chat";
 
 // Shape written by realtime.broadcast_changes (migration 0013): the UI reads
 // exactly these fields — live-projection.test.ts pins this contract.

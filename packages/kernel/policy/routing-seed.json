@@ -280,5 +280,15 @@
   "effort": "low",
   "needs_council": false,
   "priority": 0
+ },
+ {
+  "task_class": "chat.answer",
+  "match": {},
+  "model_tier": "L2",
+  "model": "sonnet-5",
+  "mode": "subscription",
+  "effort": "medium",
+  "needs_council": false,
+  "priority": 0
  }
 ]

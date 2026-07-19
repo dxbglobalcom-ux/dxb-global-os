@@ -9,7 +9,6 @@
 // eşlemesi tek kaynaktır; sayfa içinde ad-hoc ikon seçimi yasaktır.
 import type { LucideIcon } from "lucide-react";
 import {
-  Activity,
   AlarmClock,
   Banknote,
   BookOpen,
@@ -36,6 +35,7 @@ import {
   Layers,
   LayoutDashboard,
   Library,
+  MessagesSquare,
   Mic,
   Network,
   PieChart,
@@ -75,6 +75,10 @@ export const COMMAND_NAV: NavGroup[] = [
     key: "command",
     items: [
       { key: "overview", href: "/overview", icon: LayoutDashboard },
+      // C1/C7/C10 (CEO orders 2026-07-19): the CEO talks to Hamza FIRST —
+      // conversation and planning before any dispatch. The board lives at
+      // the top of the command group, right under the overview.
+      { key: "chat", href: "/chat", icon: MessagesSquare },
       { key: "live", href: "/live", icon: Radio },
       { key: "intel", href: "/intelligence", icon: Sparkles },
       {
@@ -111,13 +115,16 @@ export const COMMAND_NAV: NavGroup[] = [
     key: "operations",
     items: [
       { key: "projects", href: "/ops/projects", icon: Briefcase },
+      // C11/C13 (CEO orders 2026-07-19): the revenue family are MONEY-MAKING
+      // operations, not "intelligence" — they live here now. Tasks left the
+      // nav entirely (the CEO doesn't drive by task list; the route stays
+      // reachable from drill links).
+      { key: "revenue", href: "/revenue", icon: Gem },
+      { key: "revenuePortfolio", href: "/revenue/portfolio", icon: PieChart },
+      { key: "crm", href: "/revenue/crm", icon: Handshake },
+      { key: "revenueOpportunities", href: "/revenue/opportunities", icon: Compass },
+      { key: "revenueObjectives", href: "/revenue/objectives", icon: Target },
       { key: "workflows", href: "/ops/workflows", icon: Workflow },
-      {
-        key: "tasks",
-        href: "/ops/tasks",
-        icon: Activity,
-        counter: "active_tasks",
-      },
       { key: "automations", href: "/ops/automations", icon: AlarmClock },
       { key: "runtime", href: "/ops/runtime", icon: Gauge },
     ],
@@ -135,16 +142,9 @@ export const COMMAND_NAV: NavGroup[] = [
       // U8 (CEO emri 2026-07-11 ~02:55): MCP sunucuları Intelligence
       // grubuna eklendi — §7 tablosuna +1 sayfa, kayıtlı uyarlama.
       { key: "mcp", href: "/ai/mcp", icon: Cable },
-      // R1.4 (REVENUE_ENGINE_SPEC §7, Dalga 6): Revenue Intelligence rotaları
-      // Intelligence grubuna eklendi — spec-emirli kayıtlı ekleme (U9 dalgası),
-      // U8 emsali; Fable 5 yazımı + CEO "başlıyoruz" onayı (CC-SPEC §24 şartı).
-      { key: "revenue", href: "/revenue", icon: Gem },
-      { key: "revenueObjectives", href: "/revenue/objectives", icon: Target },
-      { key: "revenueOpportunities", href: "/revenue/opportunities", icon: Compass },
-      { key: "revenuePortfolio", href: "/revenue/portfolio", icon: PieChart },
-      // E12.4 (GAP-05): CRM joins the shell under the revenue family —
-      // clients/deals ARE revenue objects; company switch lives in its chrome.
-      { key: "crm", href: "/revenue/crm", icon: Handshake },
+      // R1.4 revenue routes lived here until 2026-07-19 — moved to the
+      // Operations group by CEO order (C11/C13: money-making places belong
+      // under Operations, not Intelligence).
     ],
   },
   {

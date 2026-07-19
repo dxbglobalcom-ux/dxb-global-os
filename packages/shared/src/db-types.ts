@@ -437,6 +437,18 @@ export interface VoiceCallsTable {
   cost_eur: Generated<string>;
 }
 
+// CEO Chat Board with Hamza (C1/C7/C10, migration 20260719004000)
+export interface ChatMessagesTable {
+  id: Generated<string>;
+  role: "ceo" | "hamza";
+  content: string;
+  mode: Generated<"normal" | "plan">;
+  status: Generated<"pending" | "answered" | "failed">;
+  error: string | null;
+  intent_id: string | null;
+  created_at: Timestamptz;
+}
+
 export interface DB {
   workflows: WorkflowsTable;
   workflow_steps: WorkflowStepsTable;
@@ -469,4 +481,5 @@ export interface DB {
   hook_violations: HookViolationsTable;
   voice_identities: VoiceIdentitiesTable;
   voice_calls: VoiceCallsTable;
+  chat_messages: ChatMessagesTable;
 }

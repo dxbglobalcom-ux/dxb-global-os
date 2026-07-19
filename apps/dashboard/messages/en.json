@@ -281,7 +281,8 @@
         "revenueOpportunities": "Opportunities",
         "revenuePortfolio": "Portfolio",
         "voice": "Voice Line",
-        "crm": "CRM"
+        "crm": "CRM",
+        "chat": "Chat with Hamza"
       }
     },
     "bar": {
@@ -294,35 +295,13 @@
       "logout": "Sign out"
     },
     "palette": {
-      "placeholder": "Search or command…",
+      "placeholder": "Search the company…",
       "hintOpen": "⌘K",
       "empty": "No results — use the instruction lane below",
       "searching": "Searching…",
       "sectionActions": "Actions",
       "sectionResults": "Results",
-      "sectionIntent": "Intent",
-      "intentSubmit": "Send intent",
-      "intentSubmitting": "Sending intent…",
-      "intentCompose": "Write an instruction to the company…",
-      "intentPlaceholder": "State your intent in full — the company executes it end-to-end.",
-      "intentHint": "Enter sends · Shift+Enter breaks a line",
-      "intentBack": "Back",
       "controlBadge": "CONTROL",
-      "chainTitle": "Intent chain",
-      "chainStatus": {
-        "received": "Received",
-        "classifying": "Classifying",
-        "queued": "Queued",
-        "running": "Running",
-        "done": "Done",
-        "failed": "Failed",
-        "failed_dispatch": "Dispatch failed"
-      },
-      "chainTasks": "Dispatched tasks",
-      "chainNoTasks": "No tasks yet — the kernel is working",
-      "viewTasks": "View tasks",
-      "viewAudit": "View audit trail",
-      "chainClose": "Close",
       "actionLabels": {
         "pendingApprovals": "Pending approvals",
         "failedWorkflows": "Failed workflows (24h)",
@@ -345,7 +324,9 @@
         "audit": "Audit"
       },
       "killPause": "Pause the OS (kill-switch)",
-      "killResume": "Resume the OS"
+      "killResume": "Resume the OS",
+      "sectionChat": "Talk to Hamza",
+      "chatOpen": "Open the chat board — plan and decide together, then dispatch"
     },
     "settingsUi": {
       "title": "Full System Settings",
@@ -2179,6 +2160,21 @@
       "backToOverview": "Back to Overview",
       "notFoundTitle": "No such route",
       "notFoundBody": "This address does not exist in the command center."
+    },
+    "chat": {
+      "title": "Chat with Hamza",
+      "subtitle": "Talk it through first — ideas, plans, questions. Work starts only when you say so.",
+      "empty": "No messages yet. Say hello to Hamza — he runs the company for you.",
+      "placeholder": "Write to Hamza… (Enter sends, Shift+Enter = new line)",
+      "send": "Send",
+      "planMode": "Plan mode",
+      "planModeHint": "Hamza drafts a plan with you — nothing is executed.",
+      "dispatch": "Send as a task",
+      "dispatched": "Sent as a task",
+      "thinking": "Hamza is writing…",
+      "failed": "Could not be answered",
+      "you": "You",
+      "hamza": "Hamza"
     }
   }
 }

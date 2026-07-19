@@ -281,7 +281,8 @@
         "revenueOpportunities": "Fırsatlar",
         "revenuePortfolio": "Portföy",
         "voice": "Ses Hattı",
-        "crm": "CRM"
+        "crm": "CRM",
+        "chat": "Hamza ile Sohbet"
       }
     },
     "bar": {
@@ -294,35 +295,13 @@
       "logout": "Oturumu kapat"
     },
     "palette": {
-      "placeholder": "Ara veya komut ver…",
+      "placeholder": "Şirkette ara…",
       "hintOpen": "⌘K",
       "empty": "Sonuç yok — aşağıdaki talimat şeridini kullan",
       "searching": "Aranıyor…",
       "sectionActions": "Eylemler",
       "sectionResults": "Sonuçlar",
-      "sectionIntent": "Niyet",
-      "intentSubmit": "Niyeti gönder",
-      "intentSubmitting": "Niyet gönderiliyor…",
-      "intentCompose": "Şirkete talimat yaz…",
-      "intentPlaceholder": "Niyetini eksiksiz yaz — şirket uçtan uca yürütür.",
-      "intentHint": "Enter gönderir · Shift+Enter yeni satır",
-      "intentBack": "Geri",
       "controlBadge": "KONTROL",
-      "chainTitle": "Niyet zinciri",
-      "chainStatus": {
-        "received": "Alındı",
-        "classifying": "Sınıflandırılıyor",
-        "queued": "Kuyrukta",
-        "running": "Çalışıyor",
-        "done": "Tamamlandı",
-        "failed": "Başarısız",
-        "failed_dispatch": "Dağıtım başarısız"
-      },
-      "chainTasks": "Dağıtılan görevler",
-      "chainNoTasks": "Henüz görev yok — çekirdek çalışıyor",
-      "viewTasks": "Görevleri gör",
-      "viewAudit": "Denetim izini gör",
-      "chainClose": "Kapat",
       "actionLabels": {
         "pendingApprovals": "Bekleyen onaylar",
         "failedWorkflows": "Başarısız iş akışları (24s)",
@@ -345,7 +324,9 @@
         "audit": "Denetim"
       },
       "killPause": "OS'i duraklat (kill-switch)",
-      "killResume": "OS'i devam ettir"
+      "killResume": "OS'i devam ettir",
+      "sectionChat": "Hamza ile konuş",
+      "chatOpen": "Sohbet panosunu aç — birlikte planlayın, sonra göreve dönüştürün"
     },
     "settingsUi": {
       "title": "Tam Sistem Ayarları",
@@ -2179,6 +2160,21 @@
       "backToOverview": "Yönetici Özeti'ne dön",
       "notFoundTitle": "Böyle bir rota yok",
       "notFoundBody": "Bu adres komuta merkezinde yok."
+    },
+    "chat": {
+      "title": "Hamza ile Sohbet",
+      "subtitle": "Önce konuşun — fikir, plan, soru. İş ancak siz isteyince başlar.",
+      "empty": "Henüz mesaj yok. Hamza'ya bir merhaba deyin — şirketi sizin için o yönetiyor.",
+      "placeholder": "Hamza'ya yazın… (Enter gönderir, Shift+Enter = yeni satır)",
+      "send": "Gönder",
+      "planMode": "Plan modu",
+      "planModeHint": "Hamza sizinle plan taslağı çıkarır — hiçbir şey çalıştırılmaz.",
+      "dispatch": "Görev olarak gönder",
+      "dispatched": "Görev olarak gönderildi",
+      "thinking": "Hamza yazıyor…",
+      "failed": "Cevaplanamadı",
+      "you": "Siz",
+      "hamza": "Hamza"
     }
   }
 }

@@ -47,7 +47,7 @@ export function CommandBar({
       </Link>
 
       <div className="ml-auto flex items-center gap-3">
-        <CommandPalette labels={palette} locale={locale} paused={paused} />
+        <CommandPalette labels={palette} paused={paused} />
         {paused && (
           <span data-testid="os-paused-chip">
             <StatusBadge level="danger">{labels.osPaused}</StatusBadge>

@@ -1,0 +1,207 @@
+"use client";
+
+// CEO Chat Board (C1/C7/C10, 2026-07-19) — the CEO's conversation lane with
+// Hamza, the orchestrator. Conversation FIRST: greetings, questions, planning.
+// Dispatch is an explicit button on a Hamza reply, never implicit. The board
+// is a projection: writes go through /api/chat, answers arrive from the
+// resident chat.drain over the dxb:chat Broadcast channel.
+import { useCallback, useEffect, useRef, useState } from "react";
+import { StatusBadge } from "@/components/primitives";
+import { useDxbChannel, type DxbBroadcastPayload } from "@/lib/realtime";
+
+export type ChatMessage = {
+  id: string;
+  role: "ceo" | "hamza";
+  content: string;
+  mode: "normal" | "plan";
+  status: "pending" | "answered" | "failed";
+  error: string | null;
+  intent_id: string | null;
+  created_at: string;
+};
+
+export type ChatLabels = {
+  empty: string;
+  placeholder: string;
+  send: string;
+  planMode: string;
+  planModeHint: string;
+  dispatch: string;
+  dispatched: string;
+  thinking: string;
+  failed: string;
+  you: string;
+  hamza: string;
+};
+
+function mergeMessage(prev: ChatMessage[], next: ChatMessage): ChatMessage[] {
+  const idx = prev.findIndex((m) => m.id === next.id);
+  if (idx >= 0) {
+    const copy = [...prev];
+    copy[idx] = next;
+    return copy;
+  }
+  return [...prev, next].sort((a, b) => a.created_at.localeCompare(b.created_at));
+}
+
+export function ChatBoard({
+  initial,
+  labels,
+  lang,
+}: {
+  initial: ChatMessage[];
+  labels: ChatLabels;
+  lang: "tr" | "en";
+}) {
+  const [messages, setMessages] = useState<ChatMessage[]>(initial);
+  const [draft, setDraft] = useState("");
+  const [planMode, setPlanMode] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [dispatchedIds, setDispatchedIds] = useState<Set<string>>(new Set());
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const onBroadcast = useCallback((p: DxbBroadcastPayload) => {
+    if (!p.record) return;
+    const r = p.record as Record<string, unknown>;
+    setMessages((prev) =>
+      mergeMessage(prev, {
+        id: String(r.id),
+        role: r.role as "ceo" | "hamza",
+        content: String(r.content ?? ""),
+        mode: (r.mode as "normal" | "plan") ?? "normal",
+        status: (r.status as ChatMessage["status"]) ?? "pending",
+        error: (r.error as string) ?? null,
+        intent_id: (r.intent_id as string) ?? null,
+        created_at: String(r.created_at ?? new Date().toISOString()),
+      }),
+    );
+  }, []);
+  useDxbChannel("chat", onBroadcast);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages.length]);
+
+  const send = useCallback(async () => {
+    const text = draft.trim();
+    if (!text || sending) return;
+    setSending(true);
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, mode: planMode ? "plan" : "normal" }),
+      });
+      if (res.ok) setDraft("");
+    } finally {
+      setSending(false);
+    }
+  }, [draft, planMode, sending]);
+
+  const dispatchAsTask = useCallback(
+    async (m: ChatMessage) => {
+      const res = await fetch("/api/intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: m.content.slice(0, 500), lang }),
+      });
+      if (res.ok) {
+        setDispatchedIds((prev) => new Set(prev).add(m.id));
+      }
+    },
+    [lang],
+  );
+
+  const waiting = messages.some((m) => m.role === "ceo" && m.status === "pending");
+
+  return (
+    <div className="flex h-[calc(100vh-11rem)] min-h-[24rem] flex-col">
+      <div className="flex-1 space-y-4 overflow-y-auto pr-1">
+        {messages.length === 0 && (
+          <p className="pt-8 text-center text-body-s text-ink-secondary">{labels.empty}</p>
+        )}
+        {messages.map((m) => (
+          <div key={m.id} className={m.role === "ceo" ? "flex justify-end" : "flex justify-start"}>
+            <div
+              className={
+                m.role === "ceo"
+                  ? "max-w-[75%] rounded-lg bg-surface-graphite px-4 py-3"
+                  : "max-w-[75%] rounded-lg border border-edge-neutral px-4 py-3"
+              }
+            >
+              <div className="mb-1 flex items-center gap-2">
+                <span className="text-caption font-medium text-ink-muted">
+                  {m.role === "ceo" ? labels.you : labels.hamza}
+                </span>
+                {m.mode === "plan" && <StatusBadge level="info">{labels.planMode}</StatusBadge>}
+                {m.role === "ceo" && m.status === "failed" && (
+                  <StatusBadge level="danger">{labels.failed}</StatusBadge>
+                )}
+              </div>
+              <p className="whitespace-pre-wrap text-body-s text-ink-primary">{m.content}</p>
+              {m.role === "hamza" && (
+                <div className="mt-2">
+                  {dispatchedIds.has(m.id) || m.intent_id ? (
+                    <StatusBadge level="ok">{labels.dispatched}</StatusBadge>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => void dispatchAsTask(m)}
+                      className="text-caption text-accent-champagne underline-offset-2 hover:underline"
+                    >
+                      {labels.dispatch}
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+        {waiting && (
+          <div className="flex justify-start">
+            <div className="max-w-[75%] rounded-lg border border-edge-neutral px-4 py-3">
+              <p className="animate-pulse text-body-s text-ink-muted">{labels.thinking}</p>
+            </div>
+          </div>
+        )}
+        <div ref={bottomRef} />
+      </div>
+
+      <div className="mt-4 space-y-2 border-t border-edge-neutral pt-4">
+        <label className="flex w-fit cursor-pointer items-center gap-2">
+          <input
+            type="checkbox"
+            checked={planMode}
+            onChange={(e) => setPlanMode(e.target.checked)}
+            className="size-4 accent-[var(--accent-champagne,#c8a96a)]"
+          />
+          <span className="text-body-s text-ink-secondary">{labels.planMode}</span>
+          <span className="text-caption text-ink-muted">{labels.planModeHint}</span>
+        </label>
+        <div className="flex items-end gap-2">
+          <textarea
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                void send();
+              }
+            }}
+            rows={2}
+            placeholder={labels.placeholder}
+            className="min-h-[3rem] flex-1 resize-y rounded-md border border-edge-neutral bg-transparent px-3 py-2 text-body-s text-ink-primary outline-none focus:border-accent-champagne"
+          />
+          <button
+            type="button"
+            onClick={() => void send()}
+            disabled={sending || draft.trim().length === 0}
+            className="h-10 rounded-md bg-accent-champagne px-4 text-body-s font-medium text-surface-obsidian transition disabled:opacity-40"
+          >
+            {labels.send}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

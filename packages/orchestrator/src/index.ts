@@ -53,3 +53,5 @@ export {
   stampHookVersion,
 } from "./hook-binding.js";
 export type { HookMonitorFlags } from "./hook-binding.js";
+export { drainChatMessages, CHAT_HAMZA_SLUG } from "./chat-drain.js";
+export type { DrainChatDeps, DrainChatResult, ChatAnswerInput } from "./chat-drain.js";
