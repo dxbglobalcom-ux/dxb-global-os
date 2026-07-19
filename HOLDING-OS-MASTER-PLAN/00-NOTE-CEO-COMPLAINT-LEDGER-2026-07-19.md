@@ -67,3 +67,30 @@ E13.1 closes first (F-09 production proof; F-15 struck by U19). Then C-series wa
 - **Wave E — measured answers:** C14, C15, C16 (each answer cited, no guessing).
 
 Wave composition is a proposal — CEO may reorder; items may not be silently dropped.
+
+## Overnight remediation execution — 2026-07-19 02:30–03:50 (Fable in person, CEO order "hiç durmadan tamire başla")
+
+Plan ticket: `.planning/quick/20260719-c-series-remediation/PLAN.md`. Commits: df333f9, 6049e0d, 7b53813, c6e4aa1, 3cbe79d, 250dbe4, d5a7daa, d5f97d5, 502b0c4, f010403 (+ this closure commit). Every ✓ carries RULE #0 evidence in its commit.
+
+| ID | Status | Evidence anchor |
+|----|--------|-----------------|
+| C1/C7/C10 | ✓ CLOSED (text lane) | CEO Chat Board live: `/chat` + chat.drain resident chain; REAL E2E "selam hamza nasılsın" → conversational Hamza reply (DB rows, commit c6e4aa1); intent removed from palette; voice join = open leg (U15 remediation plan) |
+| C2 | ✓ CLOSED (config+ladder) | Anthropic models out of OpenRouter (proxy /v1/models measured: 6 low-cost only); api routing rows → subscription; embed-small = open CEO decision (measured answers note) |
+| C3 | ✓ CLOSED | Live feed v3: rows expand inline, chains collapse ("5 adım"); "Tümünü gör" measured as REAL links (/approvals, /alerts) — the dead one died with the legacy page |
+| C4/C18 | ✓ CLOSED | control_records_purge + selection UI on tasks & alerts; live UI purge evidence (purged:2, audit row) |
+| C5 | ✓ CLOSED | Bridge trigger + 3 stale gates returned; awaiting=0 = pending=0 measured |
+| C6 | ✓ CLOSED | `(cockpit)` deleted; root → /overview; /tasks/* 404 measured; zero legacy links (grep 0) |
+| C8 | ✓ CLOSED (display) / ◐ deletion | HR default view = working org only; deletion list `00-NOTE-PERSONA-DELETION-LIST.md` awaits CEO one-confirm |
+| C9 | ✓ CLOSED (help+ambient) / ◐ filters | HelpTip on every page heading (92 route-locale checks green); full filter-bar standard (dept/model/date driving whole page) delivered on Tokens; remaining pages = open leg |
+| C11/C13 | ✓ CLOSED | Nav: tasks out; revenue/portfolio/CRM/opportunities/objectives → Operations |
+| C12 | ✓ CLOSED (catalog+form) | 13-model catalog (missing models added; kimi-3/codex-5.6/deepseek-v4-pro testing-until-exam); add-model = name+key+note (key → vault file); Fable chain registered in MODEL_ROUTING_SPEC |
+| C14/C15/C16 | ✓ ANSWERED | `00-NOTE-C-LEDGER-MEASURED-ANSWERS.md` — every claim cited |
+| C17 | ✓ CLOSED | action_type humanized; batch decisions collapse ×N; payload behind progressive disclosure |
+| C19 | ✓ CLOSED (vocab) / ◐ sweep | Jargon labels reworded EN+TR; hook-violation EN-detail-in-TR = open leg (DB content i18n) |
+| C20 | ✓ CLOSED | r23t workflows(+steps/runs) and r23t alert purged, audited; 'kumar' absent from repo (grep 0) |
+| C21 | ✓ CLOSED | 7 garbled intents + 4 garble tasks purged, audited |
+| C22 | ✓ CLOSED | Stale workforce risk closed with measurement; wave-end refresh discipline noted |
+| C23 | ✓ CLOSED | v_model_stats alias fix (sonnet 0→327 runs); test-noise filtered from decisions panel |
+| C24/C25 | ✓ CLOSED | Tokens v2: 21 departments from v_workforce_tokens; construction separated; zero/`—` noise suppressed |
+
+**Open legs (honest, not dropped):** voice lane of the chat board (U15 D-ledger); filter-bar rollout beyond Tokens; C8 deletion confirm; embed-small decision; hook-violation detail i18n; per-item skill exam records. All carried in this ledger — next session's queue.
