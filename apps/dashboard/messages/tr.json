@@ -1542,7 +1542,10 @@
         },
         "selectAll": "Tümünü seç",
         "purgeSelected": "Seçilenleri kaldır",
-        "purging": "Kaldırılıyor"
+        "purging": "Kaldırılıyor",
+        "scopeLabel": "Görünüm",
+        "scopeImportant": "Önemli kararlar",
+        "scopeAll": "Tümü"
       }
     },
     "alerts": {
@@ -2786,7 +2789,7 @@
       "sections": [
         {
           "t": "Liste",
-          "b": "Her satır bir otomatik karar ve kayıtlı gerekçesi: sistem neyi neden seçti. Birbirinin aynı toplu kararlar sayıyla tek satırda toplanır."
+          "b": "Her satır bir otomatik karar ve kayıtlı gerekçesi: sistem neyi neden seçti. Birbirinin aynı toplu kararlar sayıyla tek satırda toplanır. Varsayılan görünüm yalnız sizi ilgilendiren kararları gösterir (sizin kararlarınız ve orta/yüksek riskliler); makinenin rutin kayıtlarını da görmek için görünümü Tümü yapın."
         },
         {
           "t": "Bu veri nereden geliyor",

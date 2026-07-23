@@ -1542,7 +1542,10 @@
         },
         "selectAll": "Select all",
         "purgeSelected": "Remove selected",
-        "purging": "Removing"
+        "purging": "Removing",
+        "scopeLabel": "View",
+        "scopeImportant": "Important decisions",
+        "scopeAll": "Everything"
       }
     },
     "alerts": {
@@ -2786,7 +2789,7 @@
       "sections": [
         {
           "t": "The list",
-          "b": "Each row is one automatic decision with its recorded reasoning: why the system chose what it chose. Identical batch decisions fold into one row with a count."
+          "b": "Each row is one automatic decision with its recorded reasoning: why the system chose what it chose. Identical batch decisions fold into one row with a count. The default view shows only decisions that matter to you (your own decisions and medium/high risk ones); switch the view to Everything to see the machine's routine records too."
         },
         {
           "t": "Where the data comes from",

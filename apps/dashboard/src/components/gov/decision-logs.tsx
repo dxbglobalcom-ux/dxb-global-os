@@ -51,6 +51,9 @@ export type DecisionLabels = {
   selectAll: string;
   purgeSelected: string;
   purging: string;
+  scopeLabel: string;
+  scopeImportant: string;
+  scopeAll: string;
 };
 
 const RISK_LEVEL: Record<string, StatusLevel> = {
@@ -92,6 +95,11 @@ export function DecisionLogs({
   locale: string;
 }) {
   const router = useRouter();
+  // CEO ruling 2026-07-24 ("her saniye buraya mı kaydolacak?"): the archive
+  // records everything, but the CEO's default view carries only decisions
+  // that need his eye — his own, and medium/high risk. Machine plumbing
+  // (routine dispatch/plan rows) stays behind the "Everything" switch.
+  const [scope, setScope] = useState<"important" | "all">("important");
   const [who, setWho] = useState("all");
   const [risk, setRisk] = useState("all");
   const [open, setOpen] = useState<number | null>(null);
@@ -103,11 +111,18 @@ export function DecisionLogs({
   const filtered = useMemo(
     () =>
       rows.filter((r) => {
+        if (
+          scope === "important" &&
+          r.decidedBy !== "ceo" &&
+          r.risk !== "medium" &&
+          r.risk !== "high"
+        )
+          return false;
         if (who !== "all" && r.decidedBy !== who) return false;
         if (risk !== "all" && r.risk !== risk) return false;
         return true;
       }),
-    [rows, who, risk],
+    [rows, scope, who, risk],
   );
 
   // C17 (2026-07-19): a batch decision (e.g. 113 identical approvals in one
@@ -168,6 +183,17 @@ export function DecisionLogs({
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-end gap-3">
+        <label className="flex flex-col gap-1">
+          <span className="label-caps text-ink-muted">{labels.scopeLabel}</span>
+          <select
+            className={selectCls}
+            value={scope}
+            onChange={(e) => setScope(e.target.value as "important" | "all")}
+          >
+            <option value="important">{labels.scopeImportant}</option>
+            <option value="all">{labels.scopeAll}</option>
+          </select>
+        </label>
         <label className="flex flex-col gap-1">
           <span className="label-caps text-ink-muted">{labels.filterWho}</span>
           <select className={selectCls} value={who} onChange={(e) => setWho(e.target.value)}>
