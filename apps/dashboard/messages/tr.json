@@ -1539,7 +1539,10 @@
           "low": "Düşük",
           "medium": "Orta",
           "high": "Yüksek"
-        }
+        },
+        "selectAll": "Tümünü seç",
+        "purgeSelected": "Seçilenleri kaldır",
+        "purging": "Kaldırılıyor"
       }
     },
     "alerts": {
@@ -2210,54 +2213,894 @@
     }
   },
   "help": {
-    "overview": "Yönetici özetiniz. Tek bakışta: şirket şu an ne yapıyor, sizi ne bekliyor, para nasıl hareket ediyor. Tüm sayılar canlı şirket veritabanından gelir.",
-    "chat": "Şirketi yöneten orkestratör Hamza ile doğrudan hattınız. Konuşun, planlayın, sorun — 'Görev olarak gönder' demeden hiçbir şey çalıştırılmaz.",
-    "live": "Şirket işlerindeki her hareket, olduğu anda. Her satır bir iş; tıklayınca tüm hikâyesi açılır. Veri canlı görev ve koşu kayıtlarından gelir.",
-    "intelligence": "Dikkatinize değer sinyaller — şirketin ürettiği her şeyin içinden seçilir. Kaynak: canlı koşular, uyarılar ve kararlar.",
-    "approvals": "Bitmiş ve dünyaya çıkmadan önce SİZİN onayınızı bekleyen işler. Yalnız dışa dönük şeyler (para, sözleşme, dış mesaj) burada durur.",
-    "alerts": "Şirketin kendi hakkında verdiği sorun ve uyarılar. Aynı iş sonradan başarılı olursa eskisi kendiliğinden kapanır.",
-    "voice": "Sesli hat: sesle sorun, ilgili direktör sesle cevaplasın. Kurallar sohbetle aynı — sormak serbest, dışa dönük iş yine onay ister.",
-    "org": "Holding tek bakışta: şirketler, departmanlar ve kimin neyi yönettiği.",
-    "companies": "Holding içindeki şirketler. Hepsi aynı işletim sistemi üzerinde çalışır.",
-    "departments": "Tüm departmanlar, direktörleri ve ekip büyüklükleri. Veri canlı istihdam kayıtlarının aynasıdır.",
-    "directors": "Departman başkanları — her biri ekibini özerk yönetir ve yukarıya raporlar.",
-    "employees": "Şirketteki her çalışan, rolü ve güncel durumu. Yalnız aktif kadro iş yapar; arşiv kayıtları tarihçedir.",
-    "hr": "Tüm kadronun işe alımı, deneme süresi ve performansı. İK kontrollerini her gece otomatik çalıştırır.",
-    "projects": "Şirket projeleri: hedefleri, riskleri ve ilerlemeleri.",
-    "revenue": "Para nereden geliyor: gelir akışları ve sağlıkları — yalnız gerçek gelir kayıtlarından, simülasyon yok.",
-    "portfolio": "Gelir portföyleri — para kazandıran bahisler. Her birinin sorumlu bir beyni var; inceleyebilir, değiştirebilirsiniz.",
-    "crm": "Müşteriler, kişiler, talepler ve anlaşmalar — şirketin ticari hafızası.",
-    "opportunities": "Şirketin fark ettiği, gelire dönüşebilecek fırsatlar. Otomatik incelenir ve puanlanır.",
-    "objectives": "Şirketin yöneldiği gelir hedefleri, ölçülmüş ilerlemeyle.",
-    "workflows": "Şirketin istediğinizde veya takvimle çalıştırabildiği çok adımlı süreçler.",
-    "tasks": "Her iş birimi: kim aldı, ne oldu, nasıl bitti. Daha sade sayfaların arkasındaki ham iş defteri budur.",
-    "automations": "Kendi kendine, takvimle çalışan işler — gece kontrolleri, temizlikler, raporlar.",
-    "runtime": "Makine dairesi: yerleşik işçi ayakta mı, kuyruklar akıyor mu? Bir şey tıkanırsa önce burada görünür.",
-    "models": "Şirketin kullanabildiği yapay zekâ beyinleri, görevleri ve maliyetleri. Model eklemek için sadece isim + anahtar yeter — yönlendirmeyi sistem yapar.",
-    "orchestration": "İş beyinlere nasıl dağılıyor: hangi tür iş hangi modele gider, hata olursa ne olur.",
-    "memory": "Şirketin uzun vadede ne hatırladığı ve neden. Yazma disiplinlidir — hafıza sessizce token yakmaz.",
-    "knowledge": "Şirketin çalışılmış bilgisi — gerçek çalışma oturumlarından üretilen notlar ve kartlar.",
-    "library": "Şirketin iş için topladığı her şey: belgeler, bağlantılar, medya. Her öğe nereden geldiğini gösterir.",
-    "skills": "Kadronun kullanabildiği, çalışılmış yetenekler. Her biri burada görünmeden önce öğrenildi ve doğrulandı.",
-    "plugins": "Kurulu yetenek paketleri. Her biri yalnız ihtiyacı olan departmanlara açıktır.",
-    "mcp": "Şirketin erişebildiği dış araç sunucuları — departman başına en az yetki ilkesiyle.",
-    "audit": "Olan her şeyin değiştirilemez günlüğü — her eylem, kim, ne zaman. Buradan asla kayıt silinmez.",
-    "decisions": "İşlerin NEDEN'i: her otomatik kararın kayıtlı gerekçesi.",
-    "risks": "Bilinen riskler ve güncel durumları. Her iş dalgasının sonunda yeniden ölçülür.",
-    "policies": "Şirketin kendine uyguladığı kurallar — kalite kapıları, harcama kontrolleri, güvenlik rayları.",
-    "permissions": "Kim neyi yapabilir: departman ve araç başına erişim sınırları.",
-    "security": "Güvenlik durumu: gizli bilgiler, erişim kuralları ve sertleştirme gerekenler.",
-    "violations": "Bir çalışanın işinin kalite kapısından döndüğü anlar ve nedenleri. Yüksek sayı = yeniden eğitim.",
-    "pnl": "Kâr-zarar: gerçek gelir eksi gerçek maliyet. Tahmin yok — yalnız ölçülmüş para.",
-    "costs": "Şirketi çalıştırmanın maliyeti, güne ve kaynağa göre. Canlı harcama defterinden beslenir.",
-    "tokens": "Yapay zekâ kullanımı: departmana, modele ve güne göre. Üstte filtreleyin; alttaki her şey filtreye uyar.",
-    "budgets": "Departman başına harcama limitleri ve her birinin tavana yakınlığı. Sert duruşlar aylık bütçeyi korur.",
-    "providers": "Modellerin arkasındaki dış yapay zekâ sağlayıcıları ve harcamanın dağılımı.",
-    "capacity": "Şirketin ne kadar çalışma kapasitesi var, ne kadarı kullanımda.",
-    "settings": "Şirket geneli anahtarlar — tüm işi durduran acil duraklatma dahil.",
-    "integrations": "Bağlı dış servisler ve sağlık durumları.",
-    "health": "Sistemin her parçası yaşıyor mu: veritabanı, kuyruklar, işçiler, ses.",
-    "logs": "Derin sorun çözümü için ham sistem günlükleri.",
-    "backups": "Önemli her şeyin kopyaları — takvimle, dizüstüne ve uzak depoya."
+    "overview": {
+      "what": "Yönetici özetiniz. Tek bakışta: şirket şu an ne yapıyor, sizi ne bekliyor, para nasıl hareket ediyor.",
+      "sections": [
+        {
+          "t": "Sayı kartları",
+          "b": "Canlı sayaçlar: çalışan ve sıradaki işler, onayınızı bekleyenler, bugünün maliyeti ve yapay zekâ kadrosunun büyüklüğü. Her kart, sayfa açıldığı anda gerçek kayıtları sayar."
+        },
+        {
+          "t": "Holding nabzı",
+          "b": "Şirketin kalp atışı: şu an hareket hâlindeki işler, en yeni faaliyet ve herhangi bir harcama freninin çekilip çekilmediği."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Her sayı, şirketin kendi iş ve harcama kayıtlarından canlı sayılır. Hiçbir şey elle yazılmaz; bu yüzden burada temizlenecek veya sıfırlanacak bir şey yoktur."
+        }
+      ]
+    },
+    "chat": {
+      "what": "Şirketi yöneten orkestratör Hamza ile doğrudan hattınız. Konuşun, planlayın, sorun — 'Görev olarak gönder' demeden hiçbir şey çalıştırılmaz.",
+      "sections": [
+        {
+          "t": "Sohbet",
+          "b": "Hamza'ya bir genel müdüre yazar gibi yazın: sorun, planlayın, sesli düşünün. Konuşmak kendi başına asla iş başlatmaz."
+        },
+        {
+          "t": "Görev olarak gönder",
+          "b": "Bir fikir olgunlaşınca tek dokunuş onu şirkete gerçek iş olarak teslim eder. Çalışanlar ancak o zaman başlar."
+        },
+        {
+          "t": "Plan modu",
+          "b": "Plan modu açıkken Hamza önce bir plan serer ve hiçbir şey kımıldamadan sizin onayınızı bekler."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Sohbet şirketin kendi kayıtlarında saklanır; Hamza böylece önceki bağlamı ziyaretler arasında hatırlar."
+        }
+      ]
+    },
+    "live": {
+      "what": "Şirket işlerindeki her hareket, olduğu anda. Her satır bir iş; tıklayınca tüm hikâyesi açılır.",
+      "sections": [
+        {
+          "t": "Akış",
+          "b": "Her satır bir hareket: iş alındı, çalışıyor, bitti. Aynı işin adımları tek satırda toplanır ki liste okunur kalsın."
+        },
+        {
+          "t": "Satırı açmak",
+          "b": "Bir satıra tıklayın; tüm hikâyesi hemen altında açılır: ne istendi, kim çalıştı, nasıl bitti."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Doğrudan canlı iş kayıtlarından; çalışanlar hareket ettikçe yazılır. Kayıtların kendisi Görevler sayfasında yönetilir — orada satırlar seçilip denetim notuyla kaldırılabilir."
+        }
+      ]
+    },
+    "intelligence": {
+      "what": "Dikkatinize değer sinyaller — şirketin ürettiği her şeyin içinden seçilir.",
+      "sections": [
+        {
+          "t": "Üç özet",
+          "b": "Gece işleri, onay yükü ve son 24 saatin maliyeti: siz yokken olanların özü."
+        },
+        {
+          "t": "Öncelikli uyarılar",
+          "b": "Şu an gözünüze en çok değecek uyarılar; tam liste Uyarılar sayfasındadır."
+        },
+        {
+          "t": "Son kararlar",
+          "b": "En yeni kayıtlı gerekçeler: sistem neyi neden seçti."
+        },
+        {
+          "t": "Operasyon kuyruğu",
+          "b": "Canlı işlerin son hareketleri — tempoyu bu sayfadan ayrılmadan tartabilirsiniz."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Buradaki her şey canlı koşu, uyarı ve karar kayıtlarından otomatik seçilir. Hiçbiri elle yazılmaz."
+        }
+      ]
+    },
+    "approvals": {
+      "what": "Bitmiş ve dünyaya çıkmadan önce SİZİN onayınızı bekleyen işler. Yalnız dışa dönük şeyler burada durur.",
+      "sections": [
+        {
+          "t": "Bekleyenler",
+          "b": "Yalnız dış dünyaya bakan işler burada durur: çıkan para, sözleşmeler, şirket dışına giden mesajlar. Onaylarsanız çıkar; reddederseniz durur."
+        },
+        {
+          "t": "Karar verilenler",
+          "b": "Geçmiş kararlarınız, tarihçe olarak saklanır. Karar verilmiş kalemler topluca seçilip kaldırılabilir; kaldırma işlemi de kayda geçer."
+        },
+        {
+          "t": "Toplu işlemler",
+          "b": "Listenin üstündeki şerit hep görünür: tümünü seçin, sonra çoğunu birden onaylayın, reddedin veya kaldırın."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Satırları, bir iş dışa açılan kapıya vardığı anda şirketin kendisi oluşturur. Bu listeye elle hiçbir şey girmez."
+        }
+      ]
+    },
+    "alerts": {
+      "what": "Şirketin kendi hakkında verdiği sorun ve uyarılar.",
+      "sections": [
+        {
+          "t": "Liste",
+          "b": "Her satır, şirketin kendi işi hakkında verdiği bir sorun veya uyarıdır; ciddiyet seviyesiyle birlikte."
+        },
+        {
+          "t": "Uyarılar nasıl kapanır",
+          "b": "Aynı iş sonradan başarılı olursa eski uyarı kendiliğinden kapanır. Satırları seçip kaldırabilirsiniz; kaldırmalar denetim defterine yazılır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Çalışan sistem tarafından otomatik üretilir; asla elle yazılmaz."
+        }
+      ]
+    },
+    "voice": {
+      "what": "Sesli hat: sesle sorun, şirket sesle cevaplasın. Kurallar sohbetle aynı — sormak serbest, dışa dönük iş yine onay ister.",
+      "sections": [
+        {
+          "t": "Arama paneli",
+          "b": "Düğmeyi basılı tutun, konuşun, bırakın: sözünüz Hamza'ya gider, cevap sesli döner. Sormak bedavadır ve hiçbir iş başlatmaz."
+        },
+        {
+          "t": "Son aramalar",
+          "b": "Biten her arama, birkaç kelimelik konusuyla. Eski aramaları seçip kaldırabilirsiniz; kaldırmalar kayda geçer."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Her arama, ne duyulduğu ve ne cevaplandığıyla birlikte şirket kayıtlarında saklanır."
+        }
+      ]
+    },
+    "org": {
+      "what": "Holding tek bakışta: şirketler, departmanlar ve kimin neyi yönettiği.",
+      "sections": [
+        {
+          "t": "Şema",
+          "b": "En üstte şirketler, altında departmanlar, onların altında insanlar. Herhangi bir kişiye tıklayın: rolü, yöneticisi ve hangi yapay zekâ beyniyle çalıştığı görünür."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı istihdam kayıtlarından çizilir; kadro değiştiği anda şema da değişir."
+        }
+      ]
+    },
+    "companies": {
+      "what": "Holding içindeki şirketler. Hepsi aynı işletim sistemi üzerinde çalışır.",
+      "sections": [
+        {
+          "t": "Sayaçlar",
+          "b": "Holdingde toplam kaç şirket, departman ve çalışan olduğu."
+        },
+        {
+          "t": "Şirket kartları",
+          "b": "Her kart bir şirket: departmanları, kadro sayısı ve son 7 günün maliyeti."
+        },
+        {
+          "t": "Yeni şirketler",
+          "b": "Holding bir alt şirket doğurduğunda burada gerçek bir satır olarak kaydolur ve aynı işletim sisteminde çalışır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı şirket ve istihdam kayıtları; maliyet rakamları harcama defterinden."
+        }
+      ]
+    },
+    "departments": {
+      "what": "Tüm departmanlar, direktörleri ve ekip büyüklükleri.",
+      "sections": [
+        {
+          "t": "Sayaçlar",
+          "b": "Departman sayısı, kaçının aktif olduğu, toplam kadro ve hepsinin 7 günlük maliyeti."
+        },
+        {
+          "t": "Tablo",
+          "b": "Her departman: ekip büyüklüğü, bugünkü ve son 7 günlük maliyeti."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı istihdam kayıtları ve harcama defteri; tablo her ziyarette onların aynasıdır."
+        }
+      ]
+    },
+    "directors": {
+      "what": "Departman başkanları — her biri ekibini özerk yönetir ve yukarıya raporlar.",
+      "sections": [
+        {
+          "t": "Sayaçlar",
+          "b": "Kaç direktör olduğu, kaçının karakter kartı ve disiplin kancası bağlı olduğu, kaç departmanın yönetildiği."
+        },
+        {
+          "t": "Tablo",
+          "b": "Her departman başkanı: yönettiği departman, çalıştığı yapay zekâ beyni ve ne kadar serbestlikle hareket ettiği. 'Persona' çalışanın yazılı karakteri ve görevleridir; 'bağlı' demek ekli ve yürürlükte demektir."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı istihdam kayıtları — Çalışanlar sayfasıyla aynı kaynak."
+        }
+      ]
+    },
+    "employees": {
+      "what": "Şirketteki her çalışan, rolü ve güncel durumu.",
+      "sections": [
+        {
+          "t": "Sayaçlar",
+          "b": "Tüm kadro, kaçının aktif, kaçının uykuda olduğu ve kaç departmanda aktif kadro bulunduğu."
+        },
+        {
+          "t": "Kadro tablosu",
+          "b": "İstihdam edilen herkes: rol, departman, yapay zekâ beyni ve durum. Üstten departmana göre süzün; yalnız aktif kadro iş yapar."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı istihdam kayıtları. Arşivlenenler tarihçe olarak kalır — asla çalışmaz, asla aktif görünmez."
+        }
+      ]
+    },
+    "hr": {
+      "what": "Tüm kadronun işe alımı, deneme süresi ve performansı.",
+      "sections": [
+        {
+          "t": "İK Ekibi",
+          "b": "İşe alımı ve performansı yürüten kişiler — kendileri de şirketin çalışanıdır."
+        },
+        {
+          "t": "Donanım kontrolü",
+          "b": "Her yeni işe alınanın başlamadan önce sahip olması gereken 7 şey (karakter kartı, görevler, erişim ve diğerleri) — otomatik denetlenir."
+        },
+        {
+          "t": "Departmanlar",
+          "b": "Departman başına kadro sayısı ve durum."
+        },
+        {
+          "t": "Deneme kuyruğu",
+          "b": "Tam statü kazanmadan önce izlenen yeni işe alınanlar."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "İK kontrollerini her gece otomatik çalıştırır ve sonuçları bu sayfanın okuduğu istihdam kayıtlarına yazar."
+        }
+      ]
+    },
+    "projects": {
+      "what": "Şirket projeleri: hedefleri, riskleri ve ilerlemeleri.",
+      "sections": [
+        {
+          "t": "Proje kartları",
+          "b": "Her kart bir proje: hedefi, ilerlemesi ve açık riskleri. Karta tıklayın; projenin tam sayfası açılır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Çalışan ekipler tarafından güncel tutulur; risk satırları şirket risk defterinden katılır."
+        }
+      ]
+    },
+    "revenue": {
+      "what": "Para nereden geliyor: gelir akışları ve sağlıkları — yalnız gerçek gelir kayıtlarından, simülasyon yok.",
+      "sections": [
+        {
+          "t": "Hedef sözleşmeleri",
+          "b": "Şirketin altına imza attığı ölçülebilir gelir hedefleri, canlı ilerlemeyle."
+        },
+        {
+          "t": "SNEV",
+          "b": "Şirketin inşa ettiği kalıcı değeri özetleyen tek sayı: gelir kalitesi, maliyet disiplini ve risk birlikte tartılır."
+        },
+        {
+          "t": "Fırsat hattı",
+          "b": "Gelire dönüşebilecek açıklıklar; ilk fark edilişten kazanılana kadar aşama aşama."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Yalnız gerçek gelir ve fırsat kayıtları. Burada hiçbir şey tahmin veya simülasyon değildir."
+        }
+      ]
+    },
+    "portfolio": {
+      "what": "Gelir portföyleri — şirketin yürüttüğü para kazanma girişimleri.",
+      "sections": [
+        {
+          "t": "Portföy tahsisleri",
+          "b": "Her satır bir para kazanma girişimi: ne olduğu, durumu ve gidişatı. Aktif ve durdurulmuş girişimler ayrı listelenir."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Gelir ekiplerinin tuttuğu canlı portföy kayıtları."
+        }
+      ]
+    },
+    "crm": {
+      "what": "Müşteriler, kişiler, talepler ve anlaşmalar — şirketin ticari hafızası.",
+      "sections": [
+        {
+          "t": "Dört sekme",
+          "b": "Müşteriler, talepler, kişiler ve anlaşmalar. Her sekme şirketin ticari dünyasının canlı bir tablosudur."
+        },
+        {
+          "t": "Düzenleme",
+          "b": "Bazı alanlar sizindir, düzenleyebilirsiniz; çalışan şirkete ait alanlar kilitlidir ve öyle işaretlenmiştir."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Ticari iş oldukça şirket tarafından, düzenlenebilir alanlarda ise sizin tarafınızdan yazılır."
+        }
+      ]
+    },
+    "opportunities": {
+      "what": "Şirketin fark ettiği, gelire dönüşebilecek fırsatlar.",
+      "sections": [
+        {
+          "t": "Fırsat hattı",
+          "b": "Sütunlar aşamalardır; bir açıklık gelire doğru olgunlaştıkça kart sağa ilerler. İnceleme ve puanlama otomatik yapılır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Gelir ekiplerinin yazdığı canlı fırsat kayıtları."
+        }
+      ]
+    },
+    "objectives": {
+      "what": "Şirketin yöneldiği gelir hedefleri, ölçülmüş ilerlemeyle.",
+      "sections": [
+        {
+          "t": "Hedef sözleşmeleri",
+          "b": "Her satır imzalanmış bir gelir hedefi: hedef, ölçüsü ve ona doğru canlı ilerleme."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "İlerleme gerçek gelir kayıtlarından ölçülür, asla tahmin edilmez."
+        }
+      ]
+    },
+    "workflows": {
+      "what": "Şirketin istediğinizde veya takvimle çalıştırabildiği çok adımlı süreçler.",
+      "sections": [
+        {
+          "t": "Liste",
+          "b": "Her satır tekrarlanabilir bir süreç: adımları ve son sonucu ile. Şirket bunları istek üzerine veya takvimle çalıştırır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı süreç kayıtları; her çalıştırmanın sonucu dahil."
+        }
+      ]
+    },
+    "tasks": {
+      "what": "Her iş birimi: kim aldı, ne oldu, nasıl bitti. Daha sade sayfaların arkasındaki ham iş defteri budur.",
+      "sections": [
+        {
+          "t": "Sayaçlar",
+          "b": "Şu an aktif, çalışan, sırada bekleyen ve son 24 saatte başarısız olan işler."
+        },
+        {
+          "t": "İş defteri",
+          "b": "Alınmış her iş birimi: kim üstlendi, durumu, önemi. Daha sade sayfaların hepsi bu defteri özetler."
+        },
+        {
+          "t": "Temizlik",
+          "b": "Satırları seçip kaldırın; kaldırma denetim defterine yazılır, hiçbir şey sessizce kaybolmaz."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Bu, ham kaydın kendisidir; çalışanlar çalıştıkça yazılır."
+        }
+      ]
+    },
+    "automations": {
+      "what": "Kendi kendine, takvimle çalışan işler — gece kontrolleri, temizlikler, raporlar.",
+      "sections": [
+        {
+          "t": "Zaman çizelgesi",
+          "b": "Kendi kendine çalışan işler: gece kontrolleri, temizlikler, raporlar. Her satır ritmini ve son çalışmasını gösterir."
+        },
+        {
+          "t": "Tetiklenen süreçler",
+          "b": "Saate bağlı veya şirkette belirli bir olay olunca başlayan süreçler."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Zamanlayıcının kendi kayıtları — işleri fiilen ateşleyen mekanizmanın ta kendisi."
+        }
+      ]
+    },
+    "runtime": {
+      "what": "Makine dairesi: yerleşik işçi ayakta mı, kuyruklar akıyor mu? Bir şey tıkanırsa önce burada görünür.",
+      "sections": [
+        {
+          "t": "Yerleşik işçi",
+          "b": "İşi gece gündüz taşıyan, hep açık motor. Tıkanırsa önce bu sayfa gösterir."
+        },
+        {
+          "t": "Durum dağılımı · 24s",
+          "b": "Son günün işleri nasıl bitti — her sonucun payı."
+        },
+        {
+          "t": "Son koşular",
+          "b": "Motorun en yeni işleri, en ham hâliyle."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Motorun kendi kalp atışı ve koşu kayıtları."
+        }
+      ]
+    },
+    "models": {
+      "what": "Şirketin kullanabildiği yapay zekâ beyinleri, görevleri ve maliyetleri. Model eklemek için sadece isim + anahtar yeter — yönlendirmeyi sistem yapar.",
+      "sections": [
+        {
+          "t": "Model Kataloğu",
+          "b": "Şirketin kullanabileceği her yapay zekâ beyni: ne için olduğu, durumu ve gerçek iş almadan önce sınavını geçip geçmediği."
+        },
+        {
+          "t": "Model eklemek",
+          "b": "İsim ve anahtar yeter — isterseniz bir not. Anahtar doğrudan kasaya gider; gerisini yönlendirme halleder."
+        },
+        {
+          "t": "Son yönlendirme kararları",
+          "b": "Hangi beynin hangi işi aldığına dair en son seçimler, gerekçesi sade dille."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Model kataloğu ve canlı koşu kayıtları."
+        }
+      ]
+    },
+    "orchestration": {
+      "what": "İş beyinlere nasıl dağılıyor: hangi tür iş hangi modele gider, hata olursa ne olur.",
+      "sections": [
+        {
+          "t": "Yönlendirme yuvaları",
+          "b": "Hangi tür işin hangi beyne gittiği, yuva yuva serilmiş hâlde."
+        },
+        {
+          "t": "Merdiven",
+          "b": "Kalite izin verdiği yerde önce ucuz beyinler denenir; biri başarısız olur veya erişilemezse iş kendiliğinden daha güçlü beyne tırmanır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Kayıtlı yönlendirme kuralları. Üzerlerindeki her değişiklik kayda geçer ve görünürdür."
+        }
+      ]
+    },
+    "memory": {
+      "what": "Şirketin uzun vadede ne hatırladığı ve neden. Yazma disiplinlidir — hafıza sessizce token yakmaz.",
+      "sections": [
+        {
+          "t": "Sayaçlar",
+          "b": "Kaç hafıza kaydı var, kaçı güvenilir, nerede saklanıyor, sonuncusu ne zaman yazıldı."
+        },
+        {
+          "t": "Dizin kayıtları",
+          "b": "Her satır bir hafıza: türü, güven kademesi ve kesinliğiyle. Karantinadaki hafızalar doğrulanana kadar kullanılmaz."
+        },
+        {
+          "t": "Kayıt detayı",
+          "b": "Bir satıra tıklayın: hafızanın nereden geldiği, ne zaman süresinin dolacağı, yerini neyin aldığı görünür."
+        },
+        {
+          "t": "Token koruması",
+          "b": "Hafızaya yazmak bilerek disiplinlidir: yalnız damıtılmış, doğrulanmış gerçekler saklanır. Böylece hafıza küçük kalır ve gürültüyü tekrar tekrar okuyarak sessizce para yakmaz."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Şirketin kendi hafıza depoları; her kaydın kökeni detayında gösterilir."
+        }
+      ]
+    },
+    "knowledge": {
+      "what": "Şirketin çalışılmış bilgisi — gerçek çalışma oturumlarından üretilen notlar ve kartlar.",
+      "sections": [
+        {
+          "t": "Raf",
+          "b": "Çalışılmış notlar ve kartlar: araştırma, rapor, prosedür, politika ve eğitim malzemesi. Her biri gerçek bir çalışma oturumunda üretildi, körlemesine kopyalanmadı."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Şirket kütüphanesi kayıtları; her öğe kökenini gösterir."
+        }
+      ]
+    },
+    "library": {
+      "what": "Şirketin iş için topladığı her şey: belgeler, bağlantılar, medya. Her öğe nereden geldiğini gösterir.",
+      "sections": [
+        {
+          "t": "Raf",
+          "b": "İş için toplanan her şey: belgeler, bağlantılar, medya, yetenekler ve eklentiler. Tür sütunu her öğenin ne olduğunu söyler."
+        },
+        {
+          "t": "Köken",
+          "b": "Her öğe nereden geldiğini gösterir — kimin, ne zaman eklediği; sizin verdiğiniz öğeler dahil."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı kütüphane kayıtları; kullanım ve erişim sayıları çalışan şirketten gelir."
+        }
+      ]
+    },
+    "skills": {
+      "what": "Kadronun kullanabildiği, çalışılmış yetenekler. Her biri burada görünmeden önce öğrenildi ve doğrulandı.",
+      "sections": [
+        {
+          "t": "Raf",
+          "b": "Kadronun çalışıp kullanabildiği yetenekler. Her biri burada görünmeden önce öğrenildi ve doğrulandı; çalışılmamış yetenek buraya giremez."
+        },
+        {
+          "t": "Kim neyi kullanabilir",
+          "b": "Bir yetenek yalnız ihtiyacı olan departmanlara açılır; asla varsayılan olarak herkese değil."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Kütüphane kayıtları; her yeteneğin çalışma ve doğrulama izi dahil."
+        }
+      ]
+    },
+    "plugins": {
+      "what": "Kurulu yetenek paketleri. Her biri yalnız ihtiyacı olan departmanlara açıktır.",
+      "sections": [
+        {
+          "t": "Raf",
+          "b": "Çalışanların yapabildiklerini genişleten kurulu yetenek paketleri."
+        },
+        {
+          "t": "Kim neyi kullanabilir",
+          "b": "Bir paket yalnız ihtiyacı olan departmanlara açılır; asla varsayılan olarak herkese değil."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Kütüphane kayıtları; her paketin izin listesi dahil."
+        }
+      ]
+    },
+    "mcp": {
+      "what": "Şirketin erişebildiği dış araç sunucuları — departman başına en az yetki ilkesiyle.",
+      "sections": [
+        {
+          "t": "Araç kapıları",
+          "b": "Her sunucu dış araçlara açılan bir kapıdır: tarama, dosyalar, servisler. Kapılar departman başına, yeten en az erişimle açılır."
+        },
+        {
+          "t": "Departman geçit duruşu",
+          "b": "Hangi departman hangi kapıdan geçebilir ve o kapı ne kadar açılır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Kayıtlı erişim profilleri; erişimdeki her genişleme kayda geçer."
+        }
+      ]
+    },
+    "audit": {
+      "what": "Olan her şeyin değiştirilemez günlüğü — her eylem, kim, ne zaman. Buradan asla kayıt silinmez.",
+      "sections": [
+        {
+          "t": "İz",
+          "b": "Yapılmış her eylem: kim, ne zaman. Bu günlüğü kimse düzenleyemez, kimse silemez — sistemin kendisi dahil."
+        },
+        {
+          "t": "Kayıt detayı",
+          "b": "Bir kaydı açın: önce sade dille hikâyesi gelir; teknik ham içerik uzmanlar için altta katlı durur."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Her eylem olduğu anda otomatik yazılır. Burada silme bilerek yoktur — güvenilirliği bundandır."
+        }
+      ]
+    },
+    "decisions": {
+      "what": "İşlerin NEDEN'i: her otomatik kararın kayıtlı gerekçesi.",
+      "sections": [
+        {
+          "t": "Liste",
+          "b": "Her satır bir otomatik karar ve kayıtlı gerekçesi: sistem neyi neden seçti. Birbirinin aynı toplu kararlar sayıyla tek satırda toplanır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Her karar anında sistem tarafından yazılır; kayıtlar sonradan düzenlenemez. Satırları seçip kaldırabilirsiniz; her kaldırma denetim defterine yazılır."
+        }
+      ]
+    },
+    "risks": {
+      "what": "Bilinen riskler ve güncel durumları. Her iş dalgasının sonunda yeniden ölçülür.",
+      "sections": [
+        {
+          "t": "Sayaçlar",
+          "b": "Açık riskler, kaçının ciddi olduğu, kaçının çözüldüğü ve şimdiye dek kaydedilen toplam."
+        },
+        {
+          "t": "Risk tablosu",
+          "b": "Bilinen her risk: ciddiyeti, durumu ve projesi. Riskler ölçülmüş bir notla kapanır, asla sessizce değil."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Proje ekiplerinin kendi risk defteri; her iş dalgasının sonunda yeniden ölçülür."
+        }
+      ]
+    },
+    "policies": {
+      "what": "Şirketin kendine uyguladığı kurallar — kalite kapıları, harcama kontrolleri, güvenlik rayları.",
+      "sections": [
+        {
+          "t": "Dışa dönük eylem kapıları",
+          "b": "Parayı, sözleşmeleri ve dış mesajları siz onaylayana kadar durduran kurallar."
+        },
+        {
+          "t": "Disiplin motoru",
+          "b": "Her çalışanın işinin geçtiği kalite kapısı; geri çevrilenler gerekçesiyle İhlaller sayfasına düşer."
+        },
+        {
+          "t": "Yönetişim kuralları",
+          "b": "Şirketin yazılı kuralları; kütüphanede durur, her çalışan okuyabilir."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Kayıtlı kural kayıtları; değişiklikler denetlenir."
+        }
+      ]
+    },
+    "permissions": {
+      "what": "Kim neyi yapabilir: departman ve araç başına erişim sınırları.",
+      "sections": [
+        {
+          "t": "Kütüphane izinleri",
+          "b": "Hangi departman hangi kütüphane öğesini kullanabilir: yetenek, eklenti veya belge."
+        },
+        {
+          "t": "Departman geçit duruşu",
+          "b": "Her departmanın dış araç kapılarına erişiminin genişliği."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı izin kayıtları; her değişiklik denetlenir."
+        }
+      ]
+    },
+    "security": {
+      "what": "Güvenlik durumu: gizli bilgiler, erişim kuralları ve sertleştirme gerekenler.",
+      "sections": [
+        {
+          "t": "Kural ihlalleri",
+          "b": "Yakın zamanda bir güvenlik veya kalite kuralına takılan işler."
+        },
+        {
+          "t": "Yüksek riskli eylemler · 7 gün",
+          "b": "Haftanın en hassas kayıtlı eylemleri, gözünüz için öne çıkarılmış."
+        },
+        {
+          "t": "Duruş",
+          "b": "Süregelen güvenlik resmi: kasada tutulan gizli bilgiler, en az erişim kuralları ve hâlâ sertleştirilmesi gerekenler."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Denetim günlüğü ve kayıtlı güvenlik kuralları."
+        }
+      ]
+    },
+    "violations": {
+      "what": "Bir çalışanın işinin kalite kapısından döndüğü anlar ve nedenleri. Yüksek sayı = yeniden eğitim.",
+      "sections": [
+        {
+          "t": "Liste",
+          "b": "Her satır, bir çalışanın işinin kalite kapısından döndüğü bir andır; gerekçesi sade dille yazılır. Tekrarlanan retler yeniden eğitim işaretidir."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Disiplin motorunun kendi kayıtları; ret anında yazılır."
+        }
+      ]
+    },
+    "pnl": {
+      "what": "Kâr-zarar: gerçek gelir eksi gerçek maliyet. Tahmin yok — yalnız ölçülmüş para.",
+      "sections": [
+        {
+          "t": "Günlük kâr-zarar",
+          "b": "Her günün gerçek geliri eksi gerçek maliyeti, yan yana."
+        },
+        {
+          "t": "Motora göre gelir · 30g",
+          "b": "Son ayda hangi gelir motoru ne kazandı."
+        },
+        {
+          "t": "Platforma göre içerik geliri · 30g",
+          "b": "Yayımlanan içerik hangi platformda ne kazandı."
+        },
+        {
+          "t": "Son gelir kayıtları",
+          "b": "En yeni gelir kayıtları, en yenisi başta."
+        },
+        {
+          "t": "Gelir kaydet",
+          "b": "Gelen parayı girin. Gelen para onay istemez — yalnız şirketten çıkan para ister."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı gelir ve harcama defterleri. Yalnız ölçülmüş para; tahmin yok."
+        }
+      ]
+    },
+    "costs": {
+      "what": "Şirketi çalıştırmanın maliyeti, güne ve kaynağa göre. Canlı harcama defterinden beslenir.",
+      "sections": [
+        {
+          "t": "Filtreler",
+          "b": "Üstten dönem, departman veya model seçin; alttaki her panel seçiminize uyar."
+        },
+        {
+          "t": "Kırılımlar",
+          "b": "Aynı harcama dört kesitte: departmana, modele, çalışma moduna ve güne göre. Bir güne tıklayın; o günün defteri açılır."
+        },
+        {
+          "t": "Son defter kayıtları",
+          "b": "En yeni harcama kayıtları; biten her iş için bir satır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı harcama defteri; her iş bittikçe yazılır. Bu kayıtlar şirketin kalıcı harcama tarihçesidir."
+        }
+      ]
+    },
+    "tokens": {
+      "what": "Yapay zekâ kullanımı: departmana, modele ve güne göre. Üstte filtreleyin; alttaki her şey filtreye uyar.",
+      "sections": [
+        {
+          "t": "Filtreler",
+          "b": "Üstten dönem, departman veya model seçin; alttaki her panel seçiminize uyar."
+        },
+        {
+          "t": "Kırılımlar",
+          "b": "Yapay zekâ kullanımı üç kesitte: modele, departmana ve güne göre — kim neyi ne zaman kullanıyor görürsünüz."
+        },
+        {
+          "t": "İnşaat oturumları (Fable)",
+          "b": "Şirketin kendisini inşa etmenin kullanımı; ayrı tutulur ki asla şirket operasyonu gibi görünmesin."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı kullanım defteri; her iş bittikçe yazılır."
+        }
+      ]
+    },
+    "budgets": {
+      "what": "Departman başına harcama limitleri ve her birinin tavana yakınlığı. Sert duruşlar aylık bütçeyi korur.",
+      "sections": [
+        {
+          "t": "Aylık bütçe",
+          "b": "Her departmanın harcama tavanı ve ne kadar yaklaştığı. %100'de kritik olmayan işler kendiliğinden durur."
+        },
+        {
+          "t": "Maliyet eşiği uyarıları",
+          "b": "Bir tavan yaklaşınca (%70'te) veya dolunca ateşlenen uyarılar."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı harcama defteri, kayıtlı tavanlarla karşılaştırılarak ölçülür."
+        }
+      ]
+    },
+    "providers": {
+      "what": "Modellerin arkasındaki dış yapay zekâ sağlayıcıları ve harcamanın dağılımı.",
+      "sections": [
+        {
+          "t": "Sağlayıcı kartları",
+          "b": "Her dış yapay zekâ sağlayıcısı, üzerinde koşan modeller ve harcamanın aralarında nasıl dağıldığı."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Model kataloğu ile canlı harcama defterinin birleşimi."
+        }
+      ]
+    },
+    "capacity": {
+      "what": "Şirketin ne kadar çalışma kapasitesi var, ne kadarı kullanımda.",
+      "sections": [
+        {
+          "t": "Sunucu kaynakları",
+          "b": "Kiralık sunucunun gücü — bellek ve işlem gücü — ve ne kadarının kullanımda olduğu. Şirket gece gündüz bu makinede çalışır."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Makinenin kendisinden alınan canlı ölçümler."
+        }
+      ]
+    },
+    "settings": {
+      "what": "Şirket geneli anahtarlar — tüm işi durduran acil duraklatma dahil.",
+      "sections": [
+        {
+          "t": "Bölümler",
+          "b": "Anahtarlar konuya göre gruplanmıştır; soldan bir bölüm seçin."
+        },
+        {
+          "t": "Kapsam",
+          "b": "Bir anahtar tüm şirkete, tek departmana veya tek çalışana uygulanabilir — dar olan kazanır."
+        },
+        {
+          "t": "Emniyet işaretleri",
+          "b": "Riskli anahtarlar işaretlidir. Bazı değişiklikler uygulanmadan önce onay için durur; kilitli olanlar nedenini söyler."
+        },
+        {
+          "t": "Acil duraklatma",
+          "b": "Tek anahtar tüm şirket işini bir anda durdurur; bırakınca iş kaldığı yerden devam eder."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Şirket ayar kayıtları; her değişiklik denetlenir."
+        }
+      ]
+    },
+    "integrations": {
+      "what": "Bağlı dış servisler ve sağlık durumları.",
+      "sections": [
+        {
+          "t": "Giden kutusu (dışa açılan kapı)",
+          "b": "Dış dünyaya gidecek her mesaj burada sıraya girer ve ancak onaydan sonra çıkar."
+        },
+        {
+          "t": "CRM",
+          "b": "Ticari kayıtların bağlantı durumu: müşterilere, taleplere, kişilere ve anlaşmalara ne yazıyor."
+        },
+        {
+          "t": "Gelir yazıcıları",
+          "b": "Gelir kaydetmeye izinli servisler; her biri defterin kaynak sütununda adıyla görünür."
+        },
+        {
+          "t": "Planlanan bağlantılar",
+          "b": "Kararlaştırılmış ama henüz kurulmamış bağlantılar — sessizce eksik kalmak yerine açıkça kayıtlı."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Canlı bağlantı kayıtları ve kendi sağlık kontrolleri."
+        }
+      ]
+    },
+    "health": {
+      "what": "Sistemin her parçası yaşıyor mu: veritabanı, kuyruklar, işçiler, ses.",
+      "sections": [
+        {
+          "t": "Canlılık",
+          "b": "Her hayati parça şu an ayakta mı: veritabanı, kuyruklar, işçiler, ses hattı."
+        },
+        {
+          "t": "Seviyeye göre uyarılar",
+          "b": "Açık uyarılar, ciddiyetine göre gruplu."
+        },
+        {
+          "t": "Uyarı eşikleri",
+          "b": "Bir uyarının ne zaman ateşleneceğini belirleyen sınırlar; şirket ayarlarını izler."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Sistem kendini sürekli yoklar ve bulduğunu yazar; bu sayfa o yoklamaları okur."
+        }
+      ]
+    },
+    "logs": {
+      "what": "Derin sorun çözümü için ham sistem günlükleri.",
+      "sections": [
+        {
+          "t": "Üç akış",
+          "b": "Denetim kayıtları, görev olayları ve kararlar: her sade sayfanın arkasındaki ham günlükler."
+        },
+        {
+          "t": "Neden düzenlenemezler",
+          "b": "Üç akış da yalnız büyür: yeni satır yazılabilir, eski satır asla değiştirilemez ve silinemez — kimse tarafından."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Doğrudan çalışan sistem tarafından yazılır. Bu sayfa derin sorun çözümü içindir."
+        }
+      ]
+    },
+    "backups": {
+      "what": "Önemli her şeyin kopyaları — takvimle, dizüstüne ve uzak depoya.",
+      "sections": [
+        {
+          "t": "Yalnız büyüyen akışlar",
+          "b": "Çekirdek kayıtlar, daha yedek alınmadan bile tarih kaybedemeyecek şekilde kuruludur — eski satırlar asla değiştirilemez."
+        },
+        {
+          "t": "Kopyalar",
+          "b": "Önemli her şey takvimle dizüstüne ve uzak depoya kopyalanır; tek bir makinenin kaybı şirkete zarar veremez."
+        },
+        {
+          "t": "Bu veri nereden geliyor",
+          "b": "Yedekleme işlerinin kendi çalışma kayıtları ve kayıtlı yedekleme planı."
+        }
+      ]
+    }
   }
 }

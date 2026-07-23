@@ -7,7 +7,15 @@
 // click / Escape / second click.
 import { useEffect, useId, useRef, useState } from "react";
 
-export function HelpTip({ text }: { text: string }) {
+// Depth pass (C-ledger open leg, CEO 2026-07-19): one sentence is not enough.
+// Structured form carries the page summary plus one plain-language entry per
+// on-screen section, ending with where the data comes from.
+export type HelpContent = {
+  what: string;
+  sections?: { t: string; b: string }[];
+};
+
+export function HelpTip({ text }: { text: string | HelpContent }) {
   const id = useId();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLSpanElement | null>(null);
@@ -52,13 +60,27 @@ export function HelpTip({ text }: { text: string }) {
       <span
         id={id}
         role="tooltip"
-        className={`absolute left-0 top-full z-50 mt-2 w-80 max-w-[80vw] rounded-panel border border-edge-neutral bg-surface-obsidian p-3 text-left text-body-s font-normal normal-case tracking-normal text-ink-secondary shadow-2xl transition duration-[var(--t-fast)] ease-refined ${
+        className={`absolute left-0 top-full z-50 mt-2 max-h-[70vh] w-96 max-w-[85vw] overflow-y-auto rounded-panel border border-edge-neutral bg-surface-obsidian p-3 text-left text-body-s font-normal normal-case tracking-normal text-ink-secondary shadow-2xl transition duration-[var(--t-fast)] ease-refined ${
           open
             ? "visible opacity-100"
             : "pointer-events-none invisible opacity-0 group-hover/help:pointer-events-auto group-hover/help:visible group-hover/help:opacity-100 group-focus-within/help:visible group-focus-within/help:opacity-100"
         }`}
       >
-        {text}
+        {typeof text === "string" ? (
+          text
+        ) : (
+          <>
+            <span className="block">{text.what}</span>
+            {text.sections?.map((s) => (
+              <span key={s.t} className="mt-2.5 block">
+                <span className="block font-medium text-ink-primary">
+                  {s.t}
+                </span>
+                <span className="block">{s.b}</span>
+              </span>
+            ))}
+          </>
+        )}
       </span>
     </span>
   );

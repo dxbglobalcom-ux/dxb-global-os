@@ -4,7 +4,7 @@ import {
   Panel,
   Stat,
   StatusBadge,
-  type Column, HelpTip } from "@/components/primitives";
+  type Column, HelpTip, type HelpContent } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -42,7 +42,7 @@ export async function LibraryKindBoard({
 }: {
   kinds: string[];
   pageTitle: string;
-  helpText?: string;
+  helpText?: string | HelpContent;
   showKindColumn?: boolean;
   footnote?: string;
   extra?: React.ReactNode;
@@ -94,7 +94,7 @@ export async function LibraryKindBoard({
       render: (r) => (
         <Link
           href={`/ai/library?kind=${encodeURIComponent(r.kind)}&item=${r.id}`}
-          className="block max-w-[32ch] truncate font-data text-accent-champagne"
+          className="block max-w-[32ch] break-all font-data text-accent-champagne"
           title={r.name}
         >
           {r.name}

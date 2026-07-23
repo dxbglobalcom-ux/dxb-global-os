@@ -1539,7 +1539,10 @@
           "low": "Low",
           "medium": "Medium",
           "high": "High"
-        }
+        },
+        "selectAll": "Select all",
+        "purgeSelected": "Remove selected",
+        "purging": "Removing"
       }
     },
     "alerts": {
@@ -2210,54 +2213,894 @@
     }
   },
   "help": {
-    "overview": "Your executive summary. One glance: what the company is doing right now, what waits for you, and how money moves. All numbers come live from the company database.",
-    "chat": "Your direct line to Hamza, the orchestrator who runs the company. Talk, plan, ask — nothing is executed until you press 'Send as a task'.",
-    "live": "Every movement of company work, the moment it happens. Each row is one piece of work; click it to see its full story. Data comes from the live task and run records.",
-    "intelligence": "Signals worth your attention, picked from everything the company produced. Sourced from live runs, alerts and decisions.",
-    "approvals": "Work that finished and waits for YOUR yes or no before it ships. Only outward-facing things (money, contracts, messages to the world) stop here.",
-    "alerts": "Problems and warnings the company raised about itself. Solved ones close automatically when the same work later succeeds.",
-    "voice": "The spoken line: ask a question by voice, a director answers by voice. Same rules as chat — asking is free, outward actions still need approval.",
-    "org": "The whole holding at a glance: companies, departments, and who leads what.",
-    "companies": "The companies inside the holding. Each one runs on the same operating system.",
-    "departments": "All departments with their directors and team sizes. Data mirrors the live employment records.",
-    "directors": "The department heads — each one manages their team autonomously and reports upward.",
-    "employees": "Every employee in the company, their role and current status. Only active staff do work; archived records are history.",
-    "hr": "Hiring, probation and performance for the whole workforce. HR runs its checks automatically every night.",
-    "projects": "The company's projects with their goals, risks and progress.",
-    "revenue": "Where money comes from: income streams and their health, from real revenue records only — nothing simulated.",
-    "portfolio": "Revenue portfolios — the money-making bets. Each has a responsible brain you can inspect and change.",
-    "crm": "Clients, contacts, requests and deals — the commercial memory of the company.",
-    "opportunities": "Openings the company spotted that could become revenue. Reviewed and scored automatically.",
-    "objectives": "The revenue goals the company is steering toward, with measured progress.",
-    "workflows": "Repeatable multi-step processes the company can run on demand or on schedule.",
-    "tasks": "Every unit of work: who took it, what happened, how it ended. This is the raw work ledger behind the friendlier pages.",
-    "automations": "Jobs that run by themselves on a schedule — nightly checks, cleanups, reports.",
-    "runtime": "The engine room: is the resident worker alive, are queues moving. If something stalls, it shows here first.",
-    "models": "The AI brains the company can use, their jobs and costs. Add a model with just a name and a key — routing does the rest.",
-    "orchestration": "How work is routed to brains: which kind of task goes to which model, and what happens on failure.",
-    "memory": "What the company remembers long-term and why. Writing is disciplined so memory never burns tokens silently.",
-    "knowledge": "The company's studied knowledge — notes and cards produced from real study sessions.",
-    "library": "Everything the company has collected to work with: documents, links, media. Each item shows where it came from.",
-    "skills": "Studied abilities the workforce can use. Each one was learned and verified before appearing here.",
-    "plugins": "Installed capability packs. Each is enabled only for the departments that need it.",
-    "mcp": "External tool servers the company can reach, with least-privilege access per department.",
-    "audit": "The unchangeable diary of everything that happened — every action, by whom, when. Nothing is ever deleted from here.",
-    "decisions": "Why things happened: the recorded reasoning behind every automatic decision.",
-    "risks": "Known risks and their current state. Re-measured at the end of every work wave.",
-    "policies": "The rules the company enforces on itself — quality gates, spending checks, safety rails.",
-    "permissions": "Who may do what: access boundaries per department and per tool.",
-    "security": "Security posture: secrets handling, access rules, and anything that needs hardening.",
-    "violations": "Times an employee's work was rejected by a quality gate, with the reason. High counts mean retraining.",
-    "pnl": "Profit and loss: real income minus real costs. No projections — measured money only.",
-    "costs": "What running the company costs, by day and by source. Fed from the live spend ledger.",
-    "tokens": "AI usage by department, model and day. Filter above; everything below follows the filter.",
-    "budgets": "Spending limits per department and how close each one is to its ceiling. Hard stops protect the monthly budget.",
-    "providers": "The external AI providers behind the models, and how spend spreads across them.",
-    "capacity": "How much working capacity the company has and how much is in use.",
-    "settings": "Company-wide switches, including the emergency pause that stops all work.",
-    "integrations": "Connected external services and their health.",
-    "health": "Is every part of the system alive: database, queues, workers, voice.",
-    "logs": "Raw system logs for deep troubleshooting.",
-    "backups": "Copies of everything important, taken on schedule to the laptop and offsite storage."
+    "overview": {
+      "what": "Your executive summary. One glance: what the company is doing right now, what waits for you, and how money moves.",
+      "sections": [
+        {
+          "t": "The number cards",
+          "b": "Live counters: work running or queued, items waiting for your approval, today's cost, and the size of the AI workforce. Each card counts real records at the moment the page opens."
+        },
+        {
+          "t": "Holding pulse",
+          "b": "The company's heartbeat: work in motion right now, the newest activity, and whether any spending brake has been pulled."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Every number is counted live from the company's own work and spending records. Nothing is typed in by hand, so there is nothing here to clean or reset."
+        }
+      ]
+    },
+    "chat": {
+      "what": "Your direct line to Hamza, the orchestrator who runs the company. Talk, plan, ask — nothing is executed until you press 'Send as a task'.",
+      "sections": [
+        {
+          "t": "The conversation",
+          "b": "Write to Hamza as you would to a general manager: ask, plan, think out loud. Talking never starts work by itself."
+        },
+        {
+          "t": "Send as a task",
+          "b": "When a thought is ripe, one press hands it to the company as real work. Only then do employees start."
+        },
+        {
+          "t": "Plan mode",
+          "b": "With plan mode on, Hamza first lays out a plan and waits for your yes before anything moves."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The conversation is stored in the company's own records, so Hamza remembers earlier context between visits."
+        }
+      ]
+    },
+    "live": {
+      "what": "Every movement of company work, the moment it happens. Each row is one piece of work; click it to see its full story.",
+      "sections": [
+        {
+          "t": "The stream",
+          "b": "Each row is one movement: work taken, running, finished. The steps of the same piece of work fold into a single line so the list stays readable."
+        },
+        {
+          "t": "Opening a row",
+          "b": "Click a row and its full story opens right below it: what was asked, who worked on it, how it ended."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Straight from the live work records, written by employees as they act. The records themselves are managed on the Tasks page, where rows can be selected and removed with an audit note."
+        }
+      ]
+    },
+    "intelligence": {
+      "what": "Signals worth your attention, picked from everything the company produced.",
+      "sections": [
+        {
+          "t": "The three briefs",
+          "b": "Overnight work, approval load and cost of the last 24 hours: what happened while you were away, condensed."
+        },
+        {
+          "t": "Priority alerts",
+          "b": "The warnings most worth your eye right now; the full list lives on the Alerts page."
+        },
+        {
+          "t": "Recent decisions",
+          "b": "The newest recorded reasoning: why the system chose what it chose."
+        },
+        {
+          "t": "Operations tail",
+          "b": "The last movements of live work, so you can judge the tempo without leaving this page."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Everything here is picked automatically from live runs, alerts and decision records. Nothing is written by hand."
+        }
+      ]
+    },
+    "approvals": {
+      "what": "Work that finished and waits for YOUR yes or no before it ships. Only outward-facing things stop here.",
+      "sections": [
+        {
+          "t": "Pending",
+          "b": "Only work that faces the outside world stops here: money leaving, contracts, messages to anyone outside the company. Approve and it ships; reject and it stops."
+        },
+        {
+          "t": "Decided",
+          "b": "Your past decisions, kept as history. Decided items can be selected and removed in bulk; the removal itself is recorded."
+        },
+        {
+          "t": "Bulk actions",
+          "b": "The bar above the list is always visible: select all, then approve, reject or remove many at once."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Rows are created by the company itself the moment a piece of work reaches the outward door. Nothing enters this list by hand."
+        }
+      ]
+    },
+    "alerts": {
+      "what": "Problems and warnings the company raised about itself.",
+      "sections": [
+        {
+          "t": "The list",
+          "b": "Each row is a problem or warning the company raised about its own work, with its seriousness level."
+        },
+        {
+          "t": "How alerts close",
+          "b": "When the same work later succeeds, the old warning closes by itself. You can also select rows and remove them; removals are written into the audit diary."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Raised automatically by the working system, never typed in."
+        }
+      ]
+    },
+    "voice": {
+      "what": "The spoken line: ask a question by voice, the company answers by voice. Same rules as chat — asking is free, outward actions still need approval.",
+      "sections": [
+        {
+          "t": "The call panel",
+          "b": "Hold the button, speak, release: your words go to Hamza and the answer comes back out loud. Asking costs nothing and starts no work."
+        },
+        {
+          "t": "Recent calls",
+          "b": "Every finished call with its topic in a few words. Select rows to remove old calls; removals are recorded."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Each call is stored in the company records with what was heard and what was answered."
+        }
+      ]
+    },
+    "org": {
+      "what": "The whole holding at a glance: companies, departments, and who leads what.",
+      "sections": [
+        {
+          "t": "The graph",
+          "b": "Companies at the top, departments under them, people under those. Click any person to see their role, manager and which AI brain they run on."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Drawn live from the employment records; it changes the moment the workforce changes."
+        }
+      ]
+    },
+    "companies": {
+      "what": "The companies inside the holding. Each one runs on the same operating system.",
+      "sections": [
+        {
+          "t": "The counters",
+          "b": "How many companies, departments and employees the holding has in total."
+        },
+        {
+          "t": "Company cards",
+          "b": "Each card is one company: its departments, headcount and cost over the last 7 days."
+        },
+        {
+          "t": "New companies",
+          "b": "When the holding spawns a sub-company, it registers here as a real row and runs on the same operating system."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live company and employment records, plus the spending ledger for the cost figures."
+        }
+      ]
+    },
+    "departments": {
+      "what": "All departments with their directors and team sizes.",
+      "sections": [
+        {
+          "t": "The counters",
+          "b": "Departments, how many are active, total staff, and 7-day cost across all of them."
+        },
+        {
+          "t": "The table",
+          "b": "Every department with its team size and what it cost today and over the last 7 days."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live employment records and the spending ledger; the table mirrors them at every visit."
+        }
+      ]
+    },
+    "directors": {
+      "what": "The department heads — each one manages their team autonomously and reports upward.",
+      "sections": [
+        {
+          "t": "The counters",
+          "b": "How many directors there are, how many have their character sheet and discipline hook attached, and how many departments are led."
+        },
+        {
+          "t": "The table",
+          "b": "Each department head, the department they lead, the AI brain they run on, and how much freedom they act with. 'Persona' is the written character and duties of the employee; 'bound' means it is attached and enforced."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live employment records, same source as the Employees page."
+        }
+      ]
+    },
+    "employees": {
+      "what": "Every employee in the company, their role and current status.",
+      "sections": [
+        {
+          "t": "The counters",
+          "b": "The whole workforce, how many are active, how many are dormant, and how many departments have active staff."
+        },
+        {
+          "t": "The staff table",
+          "b": "Everyone employed: role, department, AI brain and status. Filter by department above; only active staff do work."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live employment records. Archived people remain as history — they never work and never appear as active."
+        }
+      ]
+    },
+    "hr": {
+      "what": "Hiring, probation and performance for the whole workforce.",
+      "sections": [
+        {
+          "t": "HR Team",
+          "b": "The people who run hiring and performance — themselves employees of the company."
+        },
+        {
+          "t": "Equipment check",
+          "b": "The 7 things every new hire must have before starting (character sheet, duties, access and the rest), checked automatically."
+        },
+        {
+          "t": "Departments",
+          "b": "Headcount and status per department."
+        },
+        {
+          "t": "Probation queue",
+          "b": "New hires still being watched before they earn full status."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "HR runs its checks automatically every night and writes the results into the employment records this page reads."
+        }
+      ]
+    },
+    "projects": {
+      "what": "The company's projects with their goals, risks and progress.",
+      "sections": [
+        {
+          "t": "Project cards",
+          "b": "Each card is one project: its goal, progress and open risks. Click a card to open the project's full page."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Kept up to date by the working teams; risk rows join in from the company risk register."
+        }
+      ]
+    },
+    "revenue": {
+      "what": "Where money comes from: income streams and their health, from real revenue records only — nothing simulated.",
+      "sections": [
+        {
+          "t": "Objective contracts",
+          "b": "The measurable income goals the company signed up to, with live progress."
+        },
+        {
+          "t": "SNEV",
+          "b": "One number summarizing the lasting value the company is building: income quality, cost discipline and risk, weighed together."
+        },
+        {
+          "t": "Opportunity pipeline",
+          "b": "Openings that could become income, staged from first spotted to won."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Real income and pipeline records only. Nothing here is projected or simulated."
+        }
+      ]
+    },
+    "portfolio": {
+      "what": "Revenue portfolios — the money-making ventures the company is running.",
+      "sections": [
+        {
+          "t": "Portfolio allocations",
+          "b": "Each row is one money-making venture: what it is, its state, and how it is doing. Active and stopped ventures are listed separately."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live portfolio records kept by the revenue teams."
+        }
+      ]
+    },
+    "crm": {
+      "what": "Clients, contacts, requests and deals — the commercial memory of the company.",
+      "sections": [
+        {
+          "t": "The four tabs",
+          "b": "Clients, requests, contacts and deals. Each tab is a live table of the company's commercial world."
+        },
+        {
+          "t": "Editing",
+          "b": "Some fields are yours to edit; fields owned by the working company are locked and marked so."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Written by the company as commercial work happens, and by you where fields are editable."
+        }
+      ]
+    },
+    "opportunities": {
+      "what": "Openings the company spotted that could become revenue.",
+      "sections": [
+        {
+          "t": "Opportunity pipeline",
+          "b": "Columns are stages; cards move to the right as an opening ripens toward income. Review and scoring happen automatically."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live pipeline records written by the revenue teams."
+        }
+      ]
+    },
+    "objectives": {
+      "what": "The revenue goals the company is steering toward, with measured progress.",
+      "sections": [
+        {
+          "t": "Objective contracts",
+          "b": "Each row is one signed income goal: the target, the measure, and live progress toward it."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Progress is measured from real revenue records, never estimated."
+        }
+      ]
+    },
+    "workflows": {
+      "what": "Repeatable multi-step processes the company can run on demand or on schedule.",
+      "sections": [
+        {
+          "t": "The list",
+          "b": "Each row is one repeatable process with its steps and its latest outcome. The company runs them on demand or on a schedule."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live process records, including each run's result."
+        }
+      ]
+    },
+    "tasks": {
+      "what": "Every unit of work: who took it, what happened, how it ended. This is the raw work ledger behind the friendlier pages.",
+      "sections": [
+        {
+          "t": "The counters",
+          "b": "Work currently active, running, queued, and failed in the last 24 hours."
+        },
+        {
+          "t": "The work ledger",
+          "b": "Every unit of work ever taken: who claimed it, its state and its importance. The friendlier pages all summarize this ledger."
+        },
+        {
+          "t": "Cleaning up",
+          "b": "Select rows and remove them; the removal is written into the audit diary so nothing disappears silently."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "This is the raw record itself, written by employees as they work."
+        }
+      ]
+    },
+    "automations": {
+      "what": "Jobs that run by themselves on a schedule — nightly checks, cleanups, reports.",
+      "sections": [
+        {
+          "t": "The timetable",
+          "b": "Jobs that run by themselves: nightly checks, cleanups, reports. Each row shows its rhythm and its last run."
+        },
+        {
+          "t": "Triggered processes",
+          "b": "Processes that start on a clock or when a specific event happens in the company."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The scheduler's own records — the same machinery that actually fires the jobs."
+        }
+      ]
+    },
+    "runtime": {
+      "what": "The engine room: is the resident worker alive, are queues moving. If something stalls, it shows here first.",
+      "sections": [
+        {
+          "t": "The resident worker",
+          "b": "The always-on engine that carries work day and night. If it stalls, this page shows it first."
+        },
+        {
+          "t": "Status mix · 24h",
+          "b": "How the last day's work ended, as a share of each outcome."
+        },
+        {
+          "t": "Latest runs",
+          "b": "The engine's most recent pieces of work, in their rawest form."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The engine's own heartbeat and run records."
+        }
+      ]
+    },
+    "models": {
+      "what": "The AI brains the company can use, their jobs and costs. Add a model with just a name and a key — routing does the rest.",
+      "sections": [
+        {
+          "t": "Model Catalog",
+          "b": "Every AI brain the company may use: what it is for, its state, and whether it has passed its exam before getting real work."
+        },
+        {
+          "t": "Adding a model",
+          "b": "A name and a key are enough — plus a note if you wish. The key goes straight into the vault; routing decides the rest."
+        },
+        {
+          "t": "Recent routing decisions",
+          "b": "The latest picks of which brain got which work, with the reason in plain words."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The model catalog and the live run records."
+        }
+      ]
+    },
+    "orchestration": {
+      "what": "How work is routed to brains: which kind of task goes to which model, and what happens on failure.",
+      "sections": [
+        {
+          "t": "Routing slots",
+          "b": "Which kind of work goes to which brain, laid out slot by slot."
+        },
+        {
+          "t": "The ladder",
+          "b": "Cheaper brains are tried where quality allows; when one fails or is unavailable, the work climbs to a stronger brain automatically."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The registered routing rules. Every change to them is recorded and visible."
+        }
+      ]
+    },
+    "memory": {
+      "what": "What the company remembers long-term and why. Writing is disciplined so memory never burns tokens silently.",
+      "sections": [
+        {
+          "t": "The counters",
+          "b": "How many memories exist, how many are trusted, where they are stored, and when the last one was written."
+        },
+        {
+          "t": "Index records",
+          "b": "Each row is one memory with its kind, trust tier and confidence. Quarantined memories are not used until verified."
+        },
+        {
+          "t": "Record detail",
+          "b": "Click a row to see where the memory came from, when it expires, and what replaced it."
+        },
+        {
+          "t": "Token protection",
+          "b": "Writing into memory is deliberately disciplined: only distilled, verified facts are stored, so memory stays small and never silently burns money re-reading noise."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The company's own memory stores, with the origin of every record shown in its detail."
+        }
+      ]
+    },
+    "knowledge": {
+      "what": "The company's studied knowledge — notes and cards produced from real study sessions.",
+      "sections": [
+        {
+          "t": "The shelf",
+          "b": "Studied notes and cards: research, reports, procedures, policies and training material. Each was produced in a real study session, not copied in blindly."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The company library records; every item shows its origin."
+        }
+      ]
+    },
+    "library": {
+      "what": "Everything the company has collected to work with: documents, links, media. Each item shows where it came from.",
+      "sections": [
+        {
+          "t": "The shelf",
+          "b": "Everything collected to work with: documents, links, media, skills and plugins. The kind column says what each item is."
+        },
+        {
+          "t": "Provenance",
+          "b": "Every item shows where it came from — who added it and when, including the items you provided yourself."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live library records; usage and access counts come from the working company."
+        }
+      ]
+    },
+    "skills": {
+      "what": "Studied abilities the workforce can use. Each one was learned and verified before appearing here.",
+      "sections": [
+        {
+          "t": "The shelf",
+          "b": "Abilities the workforce has studied and can use. Each was learned and verified before appearing here; unstudied abilities do not enter."
+        },
+        {
+          "t": "Who may use what",
+          "b": "A skill is enabled only for the departments that need it, never for everyone by default."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The library records, including each skill's study and verification trail."
+        }
+      ]
+    },
+    "plugins": {
+      "what": "Installed capability packs. Each is enabled only for the departments that need it.",
+      "sections": [
+        {
+          "t": "The shelf",
+          "b": "Installed capability packs that extend what employees can do."
+        },
+        {
+          "t": "Who may use what",
+          "b": "A pack is enabled only for the departments that need it, never for everyone by default."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The library records, including each pack's grant list."
+        }
+      ]
+    },
+    "mcp": {
+      "what": "External tool servers the company can reach, with least-privilege access per department.",
+      "sections": [
+        {
+          "t": "The tool doors",
+          "b": "Each server is a door to outside tools: browsing, files, services. Doors open per department, with the least access that suffices."
+        },
+        {
+          "t": "Department gateway posture",
+          "b": "Which department may pass through which door, and how wide that door opens."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The registered access profiles; every widening of access is recorded."
+        }
+      ]
+    },
+    "audit": {
+      "what": "The unchangeable diary of everything that happened — every action, by whom, when. Nothing is ever deleted from here.",
+      "sections": [
+        {
+          "t": "The trail",
+          "b": "Every action ever taken, by whom and when. This diary cannot be edited or deleted by anyone — including the system itself."
+        },
+        {
+          "t": "Record detail",
+          "b": "Open a record for the plain-language story first; the technical raw content stays folded below for specialists."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Written automatically at the moment each action happens. By design there is no delete here — that is what makes it trustworthy."
+        }
+      ]
+    },
+    "decisions": {
+      "what": "Why things happened: the recorded reasoning behind every automatic decision.",
+      "sections": [
+        {
+          "t": "The list",
+          "b": "Each row is one automatic decision with its recorded reasoning: why the system chose what it chose. Identical batch decisions fold into one row with a count."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Written by the system at the moment of each decision; records cannot be edited afterwards. You can select rows and remove them; every removal is written into the audit diary."
+        }
+      ]
+    },
+    "risks": {
+      "what": "Known risks and their current state. Re-measured at the end of every work wave.",
+      "sections": [
+        {
+          "t": "The counters",
+          "b": "Open risks, how many of them are serious, how many were resolved, and the total ever registered."
+        },
+        {
+          "t": "The risk table",
+          "b": "Each known risk with its seriousness, state and project. Risks close with a measured note, never silently."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The project teams' own risk register, re-measured at the end of every work wave."
+        }
+      ]
+    },
+    "policies": {
+      "what": "The rules the company enforces on itself — quality gates, spending checks, safety rails.",
+      "sections": [
+        {
+          "t": "Outward-action gates",
+          "b": "The rules that stop money, contracts and outside messages until you approve them."
+        },
+        {
+          "t": "The discipline engine",
+          "b": "The quality gate every employee's work passes through; rejections land on the Violations page with their reason."
+        },
+        {
+          "t": "Governance rules",
+          "b": "The written rules of the company, kept in the library where every employee can read them."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The registered rule records; changes are audited."
+        }
+      ]
+    },
+    "permissions": {
+      "what": "Who may do what: access boundaries per department and per tool.",
+      "sections": [
+        {
+          "t": "Library grants",
+          "b": "Which department may use which library item: skill, plugin or document."
+        },
+        {
+          "t": "Department gateway posture",
+          "b": "The width of each department's access to outside tool doors."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live grant records; every change is audited."
+        }
+      ]
+    },
+    "security": {
+      "what": "Security posture: secrets handling, access rules, and anything that needs hardening.",
+      "sections": [
+        {
+          "t": "Policy violations",
+          "b": "Recent times work was rejected by a safety or quality rule."
+        },
+        {
+          "t": "High-risk audit actions · 7 days",
+          "b": "The most sensitive recorded actions of the week, surfaced for your eye."
+        },
+        {
+          "t": "Posture",
+          "b": "The standing security picture: secrets kept in the vault, least-access rules, and what still needs hardening."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The audit diary and the registered security rules."
+        }
+      ]
+    },
+    "violations": {
+      "what": "Times an employee's work was rejected by a quality gate, with the reason. High counts mean retraining.",
+      "sections": [
+        {
+          "t": "The list",
+          "b": "Each row is one time an employee's work was rejected by the quality gate, with the reason in plain words. Repeated rejections signal retraining."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The discipline engine's own records, written at the moment of rejection."
+        }
+      ]
+    },
+    "pnl": {
+      "what": "Profit and loss: real income minus real costs. No projections — measured money only.",
+      "sections": [
+        {
+          "t": "Daily P&L",
+          "b": "Each day's real income minus real cost, side by side."
+        },
+        {
+          "t": "Revenue by engine · 30d",
+          "b": "Which income engine earned what over the last month."
+        },
+        {
+          "t": "Content earnings by platform · 30d",
+          "b": "What published content earned, per platform."
+        },
+        {
+          "t": "Latest revenue entries",
+          "b": "The newest income records, most recent first."
+        },
+        {
+          "t": "Record income",
+          "b": "Enter money that arrived. Incoming money needs no approval — only money leaving the company does."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live income and spending ledgers. Measured money only; nothing projected."
+        }
+      ]
+    },
+    "costs": {
+      "what": "What running the company costs, by day and by source. Fed from the live spend ledger.",
+      "sections": [
+        {
+          "t": "The filters",
+          "b": "Pick a period, department or model at the top; every panel below follows your choice."
+        },
+        {
+          "t": "The breakdowns",
+          "b": "The same spending cut four ways: by department, by model, by mode of work, and by day. Click a day to see that day's ledger."
+        },
+        {
+          "t": "Latest ledger entries",
+          "b": "The newest spending records, one row per piece of finished work."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live spend ledger, written as each piece of work completes. These records are the company's permanent spending history."
+        }
+      ]
+    },
+    "tokens": {
+      "what": "AI usage by department, model and day. Filter above; everything below follows the filter.",
+      "sections": [
+        {
+          "t": "The filters",
+          "b": "Pick a period, department or model at the top; every panel below follows your choice."
+        },
+        {
+          "t": "The breakdowns",
+          "b": "AI usage cut three ways: by model, by department, and by day — so you can see who uses what, and when."
+        },
+        {
+          "t": "Build sessions (Fable)",
+          "b": "Usage from building the company itself, kept separate so it never masquerades as company operations."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live usage ledger, written as each piece of work completes."
+        }
+      ]
+    },
+    "budgets": {
+      "what": "Spending limits per department and how close each one is to its ceiling. Hard stops protect the monthly budget.",
+      "sections": [
+        {
+          "t": "Monthly budget",
+          "b": "Each department's spending ceiling and how close it stands. At 100%, non-critical work stops by itself."
+        },
+        {
+          "t": "Cost threshold alerts",
+          "b": "The warnings fired as a ceiling nears (at 70%) or is hit."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live spend ledger measured against the registered ceilings."
+        }
+      ]
+    },
+    "providers": {
+      "what": "The external AI providers behind the models, and how spend spreads across them.",
+      "sections": [
+        {
+          "t": "Provider cards",
+          "b": "Each outside AI provider, the models riding on it, and how spending spreads across them."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The model catalog joined with the live spend ledger."
+        }
+      ]
+    },
+    "capacity": {
+      "what": "How much working capacity the company has and how much is in use.",
+      "sections": [
+        {
+          "t": "VPS resources",
+          "b": "The rented server's muscle — memory and processing power — and how much of it is in use. The company runs on this machine day and night."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Live measurements taken from the machine itself."
+        }
+      ]
+    },
+    "settings": {
+      "what": "Company-wide switches, including the emergency pause that stops all work.",
+      "sections": [
+        {
+          "t": "The sections",
+          "b": "Switches grouped by subject; pick a section on the left."
+        },
+        {
+          "t": "Scope",
+          "b": "A switch can apply to the whole company, one department, or one employee — the narrower setting wins."
+        },
+        {
+          "t": "Safety marks",
+          "b": "Risky switches are marked. Some changes stop for approval before applying; locked ones state why they are locked."
+        },
+        {
+          "t": "The emergency pause",
+          "b": "One switch stops all company work at once; releasing it lets work resume."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The company settings records; every change is audited."
+        }
+      ]
+    },
+    "integrations": {
+      "what": "Connected external services and their health.",
+      "sections": [
+        {
+          "t": "Outbox (the outward door)",
+          "b": "Every message meant for the outside world queues here and leaves only after approval."
+        },
+        {
+          "t": "CRM",
+          "b": "The connection state of the commercial records: what writes into clients, requests, contacts and deals."
+        },
+        {
+          "t": "Revenue writers",
+          "b": "The services allowed to record income, each named in the ledger's source column."
+        },
+        {
+          "t": "Planned integrations",
+          "b": "Connections decided but not yet built, recorded openly instead of silently missing."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The live connection records and their own health checks."
+        }
+      ]
+    },
+    "health": {
+      "what": "Is every part of the system alive: database, queues, workers, voice.",
+      "sections": [
+        {
+          "t": "Liveliness",
+          "b": "Whether each vital part is alive right now: database, queues, workers, voice line."
+        },
+        {
+          "t": "Alerts by level",
+          "b": "Open warnings grouped by seriousness."
+        },
+        {
+          "t": "Alert thresholds",
+          "b": "The limits that decide when a warning fires; they follow the company settings."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The system checks itself continuously and writes what it finds; this page reads those checks."
+        }
+      ]
+    },
+    "logs": {
+      "what": "Raw system logs for deep troubleshooting.",
+      "sections": [
+        {
+          "t": "The three streams",
+          "b": "Audit entries, task events and decisions: the raw diaries behind every friendlier page."
+        },
+        {
+          "t": "Why they cannot be edited",
+          "b": "All three streams only ever grow: new lines can be written, old lines can never be changed or deleted, by anyone."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "Written directly by the working system. This page exists for deep troubleshooting."
+        }
+      ]
+    },
+    "backups": {
+      "what": "Copies of everything important, taken on schedule to the laptop and offsite storage.",
+      "sections": [
+        {
+          "t": "Append-only streams",
+          "b": "The core records are built so they cannot lose history even before any backup runs — old lines can never be changed."
+        },
+        {
+          "t": "The copies",
+          "b": "Everything important is copied on schedule to the laptop and to offsite storage, so losing any single machine cannot hurt the company."
+        },
+        {
+          "t": "Where the data comes from",
+          "b": "The backup jobs' own run records and the registered backup plan."
+        }
+      ]
+    }
   }
 }
