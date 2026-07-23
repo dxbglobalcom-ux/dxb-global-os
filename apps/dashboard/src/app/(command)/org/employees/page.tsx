@@ -109,7 +109,7 @@ export default async function EmployeesPage({
       key: "slug",
       label: t.colAgent,
       render: (r) => (
-        <span className="block max-w-[32ch] truncate font-data" title={r.slug}>
+        <span className="block max-w-[32ch] break-all font-data">
           {r.slug}
         </span>
       ),

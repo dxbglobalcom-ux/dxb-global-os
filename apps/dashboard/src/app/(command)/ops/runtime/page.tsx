@@ -122,7 +122,7 @@ export default async function RuntimePage() {
       key: "employee_id",
       label: t.colEmployee,
       render: (r) => (
-        <span className="block max-w-[26ch] truncate font-data">
+        <span className="block max-w-[26ch] break-all font-data">
           {r.employee_id ? (slugById.get(r.employee_id) ?? "—") : "—"}
         </span>
       ),

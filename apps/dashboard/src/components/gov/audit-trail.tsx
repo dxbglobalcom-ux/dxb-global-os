@@ -232,11 +232,11 @@ function Row({
           <span className="inline-flex items-center gap-2">
             <StatusBadge level={ACTOR_LEVEL[row.actorType] ?? "info"}>{labels.actorTypes[row.actorType] ?? row.actorType}</StatusBadge>
             {row.actor.toLowerCase() !== row.actorType && (
-              <span className="max-w-48 truncate text-ink-primary">{row.actor}</span>
+              <span className="max-w-48 break-words text-ink-primary">{row.actor}</span>
             )}
           </span>
         </td>
-        <td className="h-10 px-2 font-data text-ink-primary"><div className="max-w-44 truncate">{row.action}</div></td>
+        <td className="px-2 py-2 align-top font-data text-ink-primary"><div className="max-w-44 break-words">{row.action}</div></td>
         <td className="h-10 whitespace-nowrap px-2 text-ink-secondary">
           {row.refTable ? (labels.entities[row.refTable] ?? row.refTable) : "—"}
         </td>

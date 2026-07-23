@@ -111,7 +111,7 @@ export default async function RisksPage({
       key: "title",
       label: t.colRisk,
       render: (r) => (
-        <span className="block max-w-[52ch] truncate" title={r.title}>
+        <span className="block max-w-[52ch] break-words">
           {r.title}
         </span>
       ),

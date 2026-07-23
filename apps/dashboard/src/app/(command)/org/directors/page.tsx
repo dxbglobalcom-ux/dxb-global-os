@@ -80,7 +80,7 @@ export default async function DirectorsPage() {
       key: "slug",
       label: t.colDirector,
       render: (r) => (
-        <span className="block max-w-[32ch] truncate font-data" title={r.slug}>
+        <span className="block max-w-[32ch] break-all font-data">
           {r.slug}
         </span>
       ),

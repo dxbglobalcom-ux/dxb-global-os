@@ -73,7 +73,7 @@ export default async function ProjectsPage() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <h2 className="truncate font-display text-h4 text-ink-primary group-hover:text-accent-champagne">
+                    <h2 className="break-words font-display text-h4 text-ink-primary group-hover:text-accent-champagne">
                       {p.name}
                     </h2>
                     <p className="mt-1 line-clamp-2 text-body-s text-ink-secondary">{p.purpose}</p>
@@ -105,7 +105,7 @@ export default async function ProjectsPage() {
                     ] as const
                   ).map(([label, value]) => (
                     <div key={label} className="min-w-0">
-                      <dt className="label-caps truncate text-ink-muted" title={label}>
+                      <dt className="label-caps break-words text-ink-muted">
                         {label}
                       </dt>
                       <dd className="font-data text-body-s tabular-nums text-ink-primary">

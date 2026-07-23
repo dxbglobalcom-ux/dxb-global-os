@@ -54,7 +54,7 @@ export default async function McpPage() {
                 >
                   <Link
                     href={`/org/employees?dept=${encodeURIComponent(d.slug)}`}
-                    className="min-w-0 truncate text-accent-champagne"
+                    className="min-w-0 break-all text-accent-champagne"
                   >
                     {locale === "tr"
                       ? (d.display_name_tr ?? d.display_name)

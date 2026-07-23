@@ -340,7 +340,7 @@ export function OrgTree({
               aria-hidden
             />
             <span
-              className={`min-w-0 truncate text-body-s ${
+              className={`min-w-0 break-all text-body-s ${
                 node.kind !== "employee"
                   ? "text-ink-primary"
                   : node.status === "dormant"

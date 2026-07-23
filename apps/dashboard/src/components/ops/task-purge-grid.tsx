@@ -124,7 +124,7 @@ export function TaskPurgeGrid({
       key: "objective",
       label: labels.colObjective,
       render: (r) => (
-        <span className="block max-w-[40ch] truncate" title={r.objective}>
+        <span className="block max-w-[40ch] break-words">
           {r.objective}
         </span>
       ),
