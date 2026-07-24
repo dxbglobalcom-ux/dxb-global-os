@@ -452,7 +452,9 @@
       "oldest": "En eski:",
       "tickerTitle": "Canlı akış",
       "tickerEmpty": "Son 24 saatte operasyon yok.",
-      "runNoLabel": "Arka plan sistem işi"
+      "runNoLabel": "Arka plan sistem işi",
+      "collapse": "Paneli gizle »",
+      "expand": "«"
     },
     "dock": {
       "running": "Şu an çalışıyor"
@@ -767,6 +769,10 @@
     },
     "memory": {
       "kpiRecords": "Hafıza kaydı",
+      "constructionTitle": "İnşaat arşivi — Fable'ın yapım notları",
+      "constructionBody": "Bunlar Fable'ın bu şirketi İNŞA EDERKEN kendine yazdığı çalışma notlarının işaretçileri (10-24 Temmuz). Şirket bilgisi değildir ve hiçbir çalışan bunları kendiliğinden okumaz: hafıza yalnız bir ajan açıkça istediğinde çekilir, yani bu kayıtlar burada dururken sıfır token yakar. Yukarıdaki sayılar yalnız şirketin kendi hafızasını sayar.",
+      "constructionView": "İnşaat kayıtlarını aşağıdaki listede göster",
+      "constructionHide": "İnşaat kayıtlarını gizle",
       "kpiTrusted": "Güvenilir payı",
       "kpiStores": "Canlı depo",
       "kpiLastWrite": "Son yazım",
@@ -2757,6 +2763,10 @@
         {
           "t": "Sayaçlar",
           "b": "Kaç hafıza kaydı var, kaçı güvenilir, nerede saklanıyor, sonuncusu ne zaman yazıldı."
+        },
+        {
+          "t": "İnşaat arşivi",
+          "b": "Fable'ın kendi yapım-oturumu notları (10-24 Temmuz). Şirket bilgisi değildir; sayaçlara ve varsayılan listeye girmez; burada dururken token yakmaz. Yalnız yapım tarihini incelemek isterseniz açın."
         },
         {
           "t": "Dizin kayıtları",

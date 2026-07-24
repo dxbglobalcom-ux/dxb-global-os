@@ -452,7 +452,9 @@
       "oldest": "Oldest:",
       "tickerTitle": "Live ticker",
       "tickerEmpty": "No operations in the last 24 hours.",
-      "runNoLabel": "Background system work"
+      "runNoLabel": "Background system work",
+      "collapse": "Hide the panel »",
+      "expand": "«"
     },
     "dock": {
       "running": "Running now"
@@ -767,6 +769,10 @@
     },
     "memory": {
       "kpiRecords": "Memory records",
+      "constructionTitle": "Construction archive — Fable's build notes",
+      "constructionBody": "These are pointers to the work notes Fable wrote to itself while BUILDING this company (10-24 July). They are not company knowledge and no employee ever reads them on their own: memory is fetched only when an agent explicitly asks, so these records burn zero tokens while they sit here. The numbers above count only the company's own memory.",
+      "constructionView": "Show the construction records in the list below",
+      "constructionHide": "Hide the construction records",
       "kpiTrusted": "Trusted share",
       "kpiStores": "Stores live",
       "kpiLastWrite": "Last write",
@@ -2757,6 +2763,10 @@
         {
           "t": "The counters",
           "b": "How many memories exist, how many are trusted, where they are stored, and when the last one was written."
+        },
+        {
+          "t": "Construction archive",
+          "b": "Fable's own build-session notes (10-24 July). Not company knowledge; excluded from the counters and the default list; costs no tokens while stored. Open it only if you want to inspect the build history."
         },
         {
           "t": "Index records",

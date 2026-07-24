@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Panel, StatusBadge } from "@/components/primitives";
 import { AlertsRail, type RailAlert } from "./alerts-rail";
 import { LiveTicker, type TickerRow } from "./live-ticker";
+import { RailShell } from "./rail-shell";
 
 // Intelligence Rail — right layer (CC-SPEC §3). E2.1 slice: real
 // pending-approval feed from the approvals table. E8.4b: the alerts panel
@@ -47,6 +48,8 @@ export function IntelligenceRail({
     viewAll: string;
     moneyOut: string;
     oldest: string;
+    collapse: string;
+    expand: string;
   };
   locale: string;
   approvals: RailApproval[];
@@ -61,9 +64,11 @@ export function IntelligenceRail({
   statusLabels: Record<string, string>;
 }) {
   return (
-    <aside className="hidden w-72 shrink-0 flex-col gap-4 overflow-y-auto border-l border-edge-neutral bg-surface-obsidian p-4 xl:flex">
-      <div className="label-caps text-ink-muted">{labels.title}</div>
-
+    <RailShell
+      title={labels.title}
+      collapseLabel={labels.collapse}
+      expandLabel={labels.expand}
+    >
       <Panel title={labels.approvalsTitle}>
         {/* E9.3 §5 rail summary: pending count + oldest + money_out badge */}
         {pendingCount > 0 && (
@@ -160,6 +165,6 @@ export function IntelligenceRail({
           statusLabels={statusLabels}
         />
       </Panel>
-    </aside>
+    </RailShell>
   );
 }

@@ -19,6 +19,12 @@ import { createClient } from "@/lib/supabase/server";
 export const metadata = { title: "Memory — DXB" };
 
 const STORES = ["claude-mem", "obsidian", "graphify", "notebook", "pgvector"] as const;
+// CEO measurement 2026-07-25 (C24 precedent — construction vs company):
+// store 'claude-mem' = pointer archive of Fable's BUILD sessions (9.6k rows,
+// 2026-07-10..24), not company knowledge. It leaves the headline figures and
+// the default list; it stays reachable behind its own panel.
+const COMPANY_STORES = ["obsidian", "graphify", "notebook", "pgvector"] as const;
+const CONSTRUCTION_STORE = "claude-mem";
 const KINDS = ["fact", "relation", "artifact", "procedure"] as const;
 const TIERS = ["trusted", "quarantined"] as const;
 const ROW_LIMIT = 100;
@@ -79,6 +85,8 @@ export default async function MemoryPage({
     .order("created_at", { ascending: false })
     .limit(ROW_LIMIT);
   if (store) listQuery = listQuery.eq("store", store);
+  // default view = company memory; construction pointers only when asked for
+  else listQuery = listQuery.neq("store", CONSTRUCTION_STORE);
   if (kind) listQuery = listQuery.eq("kind", kind);
   if (tier) listQuery = listQuery.eq("trust_tier", tier);
   if (q) listQuery = listQuery.ilike("ref", `%${q}%`);
@@ -134,13 +142,21 @@ export default async function MemoryPage({
       }[]
     ).map((r) => [r.name, r]),
   );
-  const totalRecords = [...byStore.values()].reduce((a, s) => a + s.total, 0);
-  const trustedRecords = [...byStore.values()].reduce((a, s) => a + s.trusted, 0);
-  const liveStores = [...byStore.values()].filter((s) => s.total > 0).length;
-  const lastWrite = [...byStore.values()].reduce<string | null>(
+  const companyStats = COMPANY_STORES.map((s) => byStore.get(s)).filter(
+    (s): s is NonNullable<typeof s> => Boolean(s),
+  );
+  const totalRecords = companyStats.reduce((a, s) => a + s.total, 0);
+  const trustedRecords = companyStats.reduce((a, s) => a + s.trusted, 0);
+  const liveStores = companyStats.filter((s) => s.total > 0).length;
+  const lastWrite = companyStats.reduce<string | null>(
     (a, s) => (s.last && (!a || s.last > a) ? s.last : a),
     null,
   );
+  const construction = byStore.get(CONSTRUCTION_STORE) ?? {
+    total: 0,
+    trusted: 0,
+    last: null,
+  };
 
   const rows = (listRes.data ?? []) as IndexRow[];
   const matched = listRes.count ?? rows.length;
@@ -225,8 +241,7 @@ export default async function MemoryPage({
       render: (r) => (
         <Link
           href={selfHref({ id: r.id })}
-          className="block max-w-[38ch] truncate font-data text-accent-champagne"
-          title={r.ref}
+          className="block max-w-[38ch] break-all font-data text-accent-champagne"
         >
           {r.ref}
         </Link>
@@ -292,16 +307,18 @@ export default async function MemoryPage({
         />
         <Stat
           label={t.kpiStores}
-          value={`${liveStores}/${STORES.length}`}
+          value={`${liveStores}/${COMPANY_STORES.length}`}
           drillHref="/ai/library?kind=memory_source"
         />
         <Stat label={t.kpiLastWrite} value={dateFmt(lastWrite)} drillHref="/ai/memory" />
       </div>
 
       {/* §7 store cards: record count + last write + quality signal; the
-          library inventory row (§4 bridge 1) supplies the description. */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
-        {STORES.map((s) => {
+          library inventory row (§4 bridge 1) supplies the description.
+          Company stores only — the construction archive sits in its own
+          panel below (C24 separation, CEO ruling 2026-07-25). */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {COMPANY_STORES.map((s) => {
           const stat = byStore.get(s);
           const inv = inventory.get(s);
           const selected = store === s;
@@ -337,6 +354,37 @@ export default async function MemoryPage({
           );
         })}
       </div>
+
+      {/* Construction archive — Fable's build-session observation pointers.
+          Not company knowledge; never auto-read by employees (recall is
+          call-only). Kept out of the headline numbers and the default list. */}
+      <Panel
+        title={t.constructionTitle}
+        state={store === CONSTRUCTION_STORE ? "selected" : "default"}
+      >
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <span className="font-data text-h3 text-ink-primary tabular-nums">
+            {construction.total}
+          </span>
+          <span className="font-data text-caption text-ink-muted tabular-nums">
+            {t.lastWrite}: {dateFmt(construction.last)}
+          </span>
+        </div>
+        <p className="mt-2 max-w-[90ch] break-words text-body-s text-ink-secondary">
+          {t.constructionBody}
+        </p>
+        <div className="mt-3">
+          <Link
+            href={selfHref({
+              store: store === CONSTRUCTION_STORE ? undefined : CONSTRUCTION_STORE,
+              id: undefined,
+            })}
+            className="text-body-s text-accent-champagne"
+          >
+            {store === CONSTRUCTION_STORE ? t.constructionHide : t.constructionView}
+          </Link>
+        </div>
+      </Panel>
 
       {detail && (
         <Panel title={`${t.detailTitle} · ${detail.store}`}>
@@ -401,8 +449,7 @@ export default async function MemoryPage({
                   <div key={k} className="flex items-baseline justify-between gap-3">
                     <dt className="font-data text-ink-muted">{k}</dt>
                     <dd
-                      className="min-w-0 truncate font-data text-ink-secondary"
-                      title={String(v)}
+                      className="min-w-0 break-all font-data text-ink-secondary"
                     >
                       {typeof v === "string" ? v : JSON.stringify(v)}
                     </dd>
