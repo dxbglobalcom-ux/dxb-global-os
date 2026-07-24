@@ -890,6 +890,29 @@
         "viewObjectives": "Hedefler",
         "viewOpportunities": "Fırsatlar",
         "viewPortfolio": "Portföy",
+        "respTitle": "Sorumlu kim",
+        "respHint": "Her gelir motoru için bir satır: sahibi olan departman, üzerinde çalışan kişiler ve her birinin çalıştığı model. Sahip ve model değişiklikleri denetimli kontrol kapılarından geçer.",
+        "respOwner": "Sahip",
+        "respNoOwner": "Henüz sahibi yok",
+        "respSetOwner": "Ata",
+        "respPickDept": "Departman seçin",
+        "respEmployees": "kişi",
+        "respBrains": "Modeller",
+        "respShowPeople": "Kişileri göster",
+        "respHidePeople": "Kişileri gizle",
+        "respChangeModel": "Modeli değiştir",
+        "respPickModel": "Model seçin",
+        "respApply": "Ekibe uygula",
+        "respWorking": "Çalışıyor",
+        "respApplied": "Uygulandı",
+        "respFailed": "Değişiklik gerçekleşmedi, yeniden deneyin",
+        "respNoPeople": "Bu departmanda aktif çalışan yok",
+        "lifecycleLabels": {
+          "candidate": "Aday",
+          "pilot": "Pilot",
+          "scale": "Ölçekleniyor",
+          "sunset": "Kapanıyor"
+        },
         "rejectedCause": "Sebep",
         "halalReason": "Helal notu",
         "boundariesNote": "İslami sınırlar değişmez — haram kapsam asla ilerlemez."
@@ -2542,6 +2565,10 @@
         {
           "t": "Portföy tahsisleri",
           "b": "Her satır bir para kazanma girişimi: ne olduğu, durumu ve gidişatı. Aktif ve durdurulmuş girişimler ayrı listelenir."
+        },
+        {
+          "t": "Sorumlu kim",
+          "b": "Her gelir motoru için bir satır: sahibi olan departman, üzerinde çalışan kişiler ve her birinin çalıştığı model. Buradan sahip atayabilir ve tüm ekibin modelini değiştirebilirsiniz; her değişiklik denetimli kontrol kapılarından geçer ve kayda yazılır."
         },
         {
           "t": "Bu veri nereden geliyor",

@@ -89,6 +89,8 @@ Empty states honest ("0 opportunities — first scan scheduled …"), no dummy m
 
 `control_objective_create(p_actor, …fields, p_status draft|proposed)` · `control_objective_activate(id)` **CEO-only** · `control_objective_close(id, outcome)` · `control_engine_create/update_lifecycle` · `control_opportunity_register/score/set_halal_verdict/advance/reject` · `control_portfolio_allocate/rotate/stop`. Reads via views. Agents may READ pipeline; mutations CEO or named-owner fns per §13.
 
+**Registered adaptation (2026-07-24, ledger 10d/10e):** the engine seam gains `control_engine_set_owner(slug, department)` — **CEO-only** (fn_org_actor gate), validates engine + department, writes audit_log `engine.owner.assigned` + decision_log. Rationale: `owner_department` (§4) is the responsibility anchor of the portfolio view (C10: CEO inspects/replaces the responsible brain from Operations), but no door existed to set it — "who works on it" was unanswerable. Brain replacement itself rides the existing MODEL_ROUTING §4b-regime door `control_org_assign_model_group` (banned/testing models rejected at the catalog check). Migration `20260724004000_engine_owner_control.sql`.
+
 ## 9. Event structure (existing `revenue` Broadcast channel extends)
 
 `objective.created|activated|progress|gap_alert|closed` · `opportunity.registered|scored|halal_blocked|advanced` · `engine.lifecycle_changed` · `portfolio.rotated`. Envelope contract unchanged (packages/shared events). `gap_alert` also feeds alerts center (E8.4b) at thresholds `settings: revenue.gap_alert_pct`.

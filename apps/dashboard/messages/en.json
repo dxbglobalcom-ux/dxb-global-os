@@ -890,6 +890,29 @@
         "viewObjectives": "Objectives",
         "viewOpportunities": "Opportunities",
         "viewPortfolio": "Portfolio",
+        "respTitle": "Who is responsible",
+        "respHint": "One row per revenue engine: the owning department, the people working on it, and the model each of them runs. Owner and model changes go through the audited control doors.",
+        "respOwner": "Owner",
+        "respNoOwner": "No owner yet",
+        "respSetOwner": "Assign",
+        "respPickDept": "Pick a department",
+        "respEmployees": "people",
+        "respBrains": "Models",
+        "respShowPeople": "Show people",
+        "respHidePeople": "Hide people",
+        "respChangeModel": "Change the model",
+        "respPickModel": "Pick a model",
+        "respApply": "Apply to the team",
+        "respWorking": "Working",
+        "respApplied": "Applied",
+        "respFailed": "The change did not go through, try again",
+        "respNoPeople": "No active employees in this department",
+        "lifecycleLabels": {
+          "candidate": "Candidate",
+          "pilot": "Pilot",
+          "scale": "Scaling",
+          "sunset": "Winding down"
+        },
         "rejectedCause": "Cause",
         "halalReason": "Halal note",
         "boundariesNote": "Islamic boundaries are immutable — haram scope never advances."
@@ -2542,6 +2565,10 @@
         {
           "t": "Portfolio allocations",
           "b": "Each row is one money-making venture: what it is, its state, and how it is doing. Active and stopped ventures are listed separately."
+        },
+        {
+          "t": "Who is responsible",
+          "b": "One row per revenue engine: the owning department, the people working on it, and the model each runs. You can assign an owner and replace the whole team's model from here; every change asks the audited control doors and is recorded."
         },
         {
           "t": "Where the data comes from",

@@ -1,0 +1,15 @@
+# SUMMARY — ledger 10d/10e portfolio responsibility (2026-07-24 late evening)
+
+**Outcome:** both rows closed with evidence; one registered spec adaptation; one root-caused defect fixed mid-ticket.
+
+| Item | What shipped | Evidence |
+|---|---|---|
+| 10d view | "Who is responsible" panel on /revenue/portfolio: one card per revenue engine — locale-resolved title, lifecycle badge, owner department, active employee count, brain-distribution chips, expandable people list (title + brain each); allocation cards inherit the engine responsibility line via opportunity.engine_slug. | RULE #0 battery 4/4 (EN+TR × 1366/1920, scrollOK, 0 ellipsis, 0 clipped) + screenshots; TR shows Turkish engine titles (title_tr) |
+| Owner door | NEW `control_engine_set_owner(slug, department)` — CEO-only (fn_org_actor), validates engine+department, audit_log `engine.owner.assigned` + decision_log; exposed at `/api/control/engines`. Registered adaptation written into REVENUE_ENGINE_SPEC §5 (responsibility anchor `owner_department` had no setter — 10d unanswerable without it). | TDD red→green `tests/c9/engine-owner.test.ts` 3/3 (impersonated `request.jwt.claims` CEO in rolled-back transactions; PERMISSION_DENIED for system actor; VALIDATION_FAILED for unknown engine/dept). Live UI proof: social_selling→risk-audit assigned through the page, audit row present |
+| 10e control | "Change the model" per owned engine: select offers ACTIVE non-banned catalog models only (kimi-3/testing measured absent); applies to the owning department's active employees via EXISTING door `control_org_assign_model_group` (§4b regime — fn re-checks banned/status; decision_log + audit per call). | Live proof on the smallest department (risk-audit, 4 people) with their CURRENT model glm-5.2 — real door, value-identical: audit `org.model_group.assigned` updated=4, brains still glm-5.2 |
+| Defect found & fixed | First battery run: model door silently did nothing. Systematic-debugging measured: door never fired (0 audit rows) → org control seam REQUIRES `Idempotency-Key` header; component didn't send it → 400 swallowed. Fix: header sent (crypto.randomUUID) + failure now visible in UI (`respFailed` EN+TR). | Re-run battery 8/8 PASS |
+| Hygiene | Construction exercise traces cleaned THROUGH audited doors: 6 decision rows (2 owner + 4 model) purged via `control_decision_purge` with rationale; engine owner reverted to null (documented SQL — the door has no unset op; owner assignment is the CEO's business decision, not construction's). | decision_log count for those patterns = 0; `owner_department` null re-measured |
+
+**Verification (final build):** vitest 17/17 (c9 suites + COST-04 gate); i18n purity PASS (2313=2313); haram-vocab grep on touched files 0; battery 8/8.
+
+**Boundaries:** engine owner UNSET door does not exist (assign-only — unset had no ledger demand); TR header clock rendered `--:--` in one screenshot (global header hydration timing, pre-existing, not this ticket's surface); engines/opportunities/allocations still empty of business data — panel shows honest zero states until the CEO assigns owners.
