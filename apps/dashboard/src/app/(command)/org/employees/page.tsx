@@ -27,6 +27,7 @@ type AgentRow = {
   persona_version: string;
   hook_version: string | null;
   employment_status: "active" | "dormant" | "archived";
+  brain_source: "default" | "slot" | "ceo_override";
 };
 
 const ROW_LIMIT = 200;
@@ -48,7 +49,7 @@ export default async function EmployeesPage({
   let rowsQuery = supabase
     .from("agents")
     .select(
-      "id, slug, department, role, brain, autonomy_level, persona_version, hook_version, employment_status",
+      "id, slug, department, role, brain, brain_source, autonomy_level, persona_version, hook_version, employment_status",
       { count: "exact" },
     )
     .neq("employment_status", "archived")
@@ -141,10 +142,19 @@ export default async function EmployeesPage({
       render: (r) => roleLabels[r.role] ?? r.role,
     },
     {
+      // §4b truth: a 'default' brain is the never-assigned seed placeholder —
+      // echoing it as a chosen model misled the CEO (2026-07-25 catch).
       key: "brain",
       label: t.colBrain,
       numeric: true,
-      render: (r) => <span className="whitespace-nowrap">{r.brain}</span>,
+      render: (r) =>
+        r.brain_source === "default" ? (
+          <span className="whitespace-normal text-caption text-ink-muted">
+            {t.brainUnassigned}
+          </span>
+        ) : (
+          <span className="whitespace-nowrap">{r.brain}</span>
+        ),
     },
     {
       key: "autonomy_level",

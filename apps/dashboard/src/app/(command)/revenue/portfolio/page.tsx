@@ -40,6 +40,7 @@ type AgentRow = {
   title_tr: string | null;
   department: string;
   brain: string;
+  brain_source: "default" | "slot" | "ceo_override";
 };
 
 const eur = (n: number | null | undefined) =>
@@ -70,7 +71,7 @@ export default async function RevenuePortfolioPage() {
         .order("title"),
       supabase
         .from("agents")
-        .select("id, title, title_tr, department, brain")
+        .select("id, title, title_tr, department, brain, brain_source")
         .eq("employment_status", "active"),
       supabase.from("departments").select("slug").order("slug"),
       supabase
@@ -126,7 +127,8 @@ export default async function RevenuePortfolioPage() {
       .map((a) => ({
         id: a.id,
         title: ((locale === "tr" ? a.title_tr : null) ?? a.title) || a.id,
-        brain: a.brain,
+        // §4b truth: seed-default brain is "not assigned", never a chosen model
+        brain: a.brain_source === "default" ? t.brainUnassigned : a.brain,
       }))
       .sort((x, y) => x.title.localeCompare(y.title)),
   }));

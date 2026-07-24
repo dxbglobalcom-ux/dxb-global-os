@@ -21,6 +21,7 @@ type DirectorRow = {
   slug: string;
   department: string;
   brain: string;
+  brain_source: "default" | "slot" | "ceo_override";
   autonomy_level: number;
   persona_version: string;
   hook_version: string | null;
@@ -41,7 +42,7 @@ export default async function DirectorsPage() {
       // same 2026-07-24 catch as v_exec_overview); archived heads stay off
       // the CEO surface (C8 working-org rule).
       .select(
-        "id, slug, department, brain, autonomy_level, persona_version, hook_version, employment_status, persona_id",
+        "id, slug, department, brain, brain_source, autonomy_level, persona_version, hook_version, employment_status, persona_id",
       )
       .eq("role", "head")
       .neq("employment_status", "archived")
@@ -104,7 +105,14 @@ export default async function DirectorsPage() {
       key: "brain",
       label: t.colBrain,
       numeric: true,
-      render: (r) => <span className="whitespace-nowrap">{r.brain}</span>,
+      render: (r) =>
+        r.brain_source === "default" ? (
+          <span className="whitespace-normal text-caption text-ink-muted">
+            {t.brainUnassigned}
+          </span>
+        ) : (
+          <span className="whitespace-nowrap">{r.brain}</span>
+        ),
     },
     {
       key: "autonomy_level",

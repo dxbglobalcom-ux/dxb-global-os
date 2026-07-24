@@ -607,7 +607,8 @@
         "specialist": "Specialist",
         "worker": "Worker"
       },
-      "hookUnbound": "Unbound"
+      "hookUnbound": "Unbound",
+      "brainUnassigned": "Not assigned (task-based routing)"
     },
     "orgTree": {
       "title": "Organization Graph",
@@ -922,7 +923,8 @@
         },
         "rejectedCause": "Cause",
         "halalReason": "Halal note",
-        "boundariesNote": "Islamic boundaries are immutable — haram scope never advances."
+        "boundariesNote": "Islamic boundaries are immutable — haram scope never advances.",
+        "brainUnassigned": "Not assigned (task-based routing)"
       }
     },
     "intelligence": {
@@ -988,7 +990,8 @@
       "statusActive": "Active",
       "statusDormant": "Dormant",
       "unbound": "Unbound",
-      "empty": "No directors registered."
+      "empty": "No directors registered.",
+      "brainUnassigned": "Not assigned (task-based routing)"
     },
     "hr": {
       "teamTitle": "HR Team — People & HR",

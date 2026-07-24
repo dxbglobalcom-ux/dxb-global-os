@@ -607,7 +607,8 @@
         "specialist": "Uzman",
         "worker": "Çalışan"
       },
-      "hookUnbound": "Bağsız"
+      "hookUnbound": "Bağsız",
+      "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)"
     },
     "orgTree": {
       "title": "Organizasyon Grafiği",
@@ -922,7 +923,8 @@
         },
         "rejectedCause": "Sebep",
         "halalReason": "Helal notu",
-        "boundariesNote": "İslami sınırlar değişmez — haram kapsam asla ilerlemez."
+        "boundariesNote": "İslami sınırlar değişmez — haram kapsam asla ilerlemez.",
+        "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)"
       }
     },
     "intelligence": {
@@ -988,7 +990,8 @@
       "statusActive": "Aktif",
       "statusDormant": "Uykuda",
       "unbound": "Bağsız",
-      "empty": "Kayıtlı direktör yok."
+      "empty": "Kayıtlı direktör yok.",
+      "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)"
     },
     "hr": {
       "teamTitle": "İK Kadrosu — People & HR",
