@@ -750,7 +750,19 @@
       "colWhen": "Zaman",
       "ledgerEmpty": "Bu pencerede maliyet defteri boş — her model çağrısı buraya satır yazar.",
       "viewBudgets": "Bütçeler ve tavanlar",
-      "viewTokens": "Token analitiği"
+      "viewTokens": "Token analitiği",
+      "reset": {
+        "open": "Veri sıfırlama",
+        "intro": "Dönem kapatın: seçtiğiniz günden eski harcama kayıtlarını kaldırın. Her kaldırma denetim defterine yazılır.",
+        "dateLabel": "Şu günden öncesini kaldır",
+        "preview": "Önizle",
+        "previewCount": "kayıt kaldırılacak",
+        "previewZero": "Bu günden eski kayıt yok",
+        "confirm": "Kaldır",
+        "working": "Çalışıyor",
+        "done": "Kaldırıldı",
+        "cancel": "Kapat"
+      }
     },
     "memory": {
       "kpiRecords": "Hafıza kaydı",
@@ -1003,7 +1015,10 @@
       "clear": "Filtreleri temizle",
       "rangeToday": "Bugün",
       "range7d": "7 gün",
-      "range30d": "30 gün"
+      "range30d": "30 gün",
+      "project": "Proje",
+      "allProjects": "Tüm projeler",
+      "date": "Gün"
     },
     "tokens": {
       "kpiToday": "Bugünkü token",
@@ -2815,7 +2830,7 @@
       "sections": [
         {
           "t": "Liste",
-          "b": "Her satır bir otomatik karar ve kayıtlı gerekçesi: sistem neyi neden seçti. Birbirinin aynı toplu kararlar sayıyla tek satırda toplanır. Varsayılan görünüm yalnız sizi ilgilendiren kararları gösterir (sizin kararlarınız ve orta/yüksek riskliler); makinenin rutin kayıtlarını da görmek için görünümü Tümü yapın."
+          "b": "Her satır bir otomatik karar ve kayıtlı gerekçesi: sistem neyi neden seçti. Birbirinin aynı toplu kararlar sayıyla tek satırda toplanır. Varsayılan görünüm yalnız sizin kararlarınızı gösterir; makinenin kayıtlarını da görmek için görünümü Tümü yapın. Makine kayıtları 14 gün sonra bu ekrandan kendiliğinden çekilir — alttaki arşiv her şeyi saklar."
         },
         {
           "t": "Bu veri nereden geliyor",
@@ -2946,7 +2961,7 @@
       "sections": [
         {
           "t": "Filtreler",
-          "b": "Üstten dönem, departman veya model seçin; alttaki her panel seçiminize uyar."
+          "b": "Üstten dönem, takvim günü, proje, departman veya model seçin; alttaki her panel seçiminize uyar."
         },
         {
           "t": "Kırılımlar",
@@ -2957,8 +2972,12 @@
           "b": "En yeni harcama kayıtları; biten her iş için bir satır."
         },
         {
+          "t": "Veri sıfırlama",
+          "b": "Sayfanın altındaki düğme, seçtiğiniz günden eski harcama kayıtlarını kaldırır. Önce tam sayıyı gösterir ve onayınızı ister; her kaldırma denetim kaydı bırakır."
+        },
+        {
           "t": "Bu veri nereden geliyor",
-          "b": "Canlı harcama defteri; her iş bittikçe yazılır. Bu kayıtlar şirketin kalıcı harcama tarihçesidir."
+          "b": "Canlı harcama defteri; her iş bittikçe yazılır. Bu kayıtlar, alttaki veri sıfırlama kapısıyla siz kaldırana dek durur."
         }
       ]
     },
@@ -2967,7 +2986,7 @@
       "sections": [
         {
           "t": "Filtreler",
-          "b": "Üstten dönem, departman veya model seçin; alttaki her panel seçiminize uyar."
+          "b": "Üstten dönem, takvim günü, proje, departman veya model seçin; alttaki her panel seçiminize uyar."
         },
         {
           "t": "Kırılımlar",

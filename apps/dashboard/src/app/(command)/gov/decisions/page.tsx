@@ -1,6 +1,7 @@
 import { DecisionLogs, type DecisionRow } from "@/components/gov/decision-logs";
 import { GovTabs } from "@/components/gov/gov-tabs";
 import { Panel, HelpTip } from "@/components/primitives";
+import { decisionAgingOrFilter } from "@/lib/decisions";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -36,9 +37,13 @@ export default async function Page() {
   const audit = getDict(locale).command.audit;
   const supabase = await createClient();
 
+  // 9c decision aging (CEO order 2026-07-24): machine records auto-withdraw
+  // from the CEO's view after DECISION_MACHINE_AGING_DAYS; the CEO's own
+  // rows never age. The decision_log table keeps everything (archive).
   const { data } = await supabase
     .from("v_decision_log")
     .select("*")
+    .or(decisionAgingOrFilter(new Date()))
     .order("id", { ascending: false })
     .limit(300);
 

@@ -750,7 +750,19 @@
       "colWhen": "When",
       "ledgerEmpty": "The cost ledger is empty for this window — every model call writes a row here.",
       "viewBudgets": "Budgets & caps",
-      "viewTokens": "Token analytics"
+      "viewTokens": "Token analytics",
+      "reset": {
+        "open": "Data reset",
+        "intro": "Close a period: remove spending records older than a chosen day. Every removal is written to the audit ledger.",
+        "dateLabel": "Remove before",
+        "preview": "Preview",
+        "previewCount": "records would be removed",
+        "previewZero": "No records before this day",
+        "confirm": "Remove",
+        "working": "Working",
+        "done": "Removed",
+        "cancel": "Close"
+      }
     },
     "memory": {
       "kpiRecords": "Memory records",
@@ -1003,7 +1015,10 @@
       "clear": "Clear filters",
       "rangeToday": "Today",
       "range7d": "7 days",
-      "range30d": "30 days"
+      "range30d": "30 days",
+      "project": "Project",
+      "allProjects": "All projects",
+      "date": "Day"
     },
     "tokens": {
       "kpiToday": "Tokens today",
@@ -2815,7 +2830,7 @@
       "sections": [
         {
           "t": "The list",
-          "b": "Each row is one automatic decision with its recorded reasoning: why the system chose what it chose. Identical batch decisions fold into one row with a count. The default view shows only decisions that matter to you (your own decisions and medium/high risk ones); switch the view to Everything to see the machine's routine records too."
+          "b": "Each row is one automatic decision with its recorded reasoning: why the system chose what it chose. Identical batch decisions fold into one row with a count. The default view shows only your own decisions; switch the view to Everything to see the machine's records too. Machine records leave this screen by themselves after 14 days — the archive underneath keeps everything."
         },
         {
           "t": "Where the data comes from",
@@ -2946,7 +2961,7 @@
       "sections": [
         {
           "t": "The filters",
-          "b": "Pick a period, department or model at the top; every panel below follows your choice."
+          "b": "Pick a period, a calendar day, a project, a department or a model at the top; every panel below follows your choice."
         },
         {
           "t": "The breakdowns",
@@ -2957,8 +2972,12 @@
           "b": "The newest spending records, one row per piece of finished work."
         },
         {
+          "t": "Data reset",
+          "b": "The button at the bottom of the page removes spending records older than a day you choose. It shows the exact count first and asks you to confirm; every removal leaves an audit record."
+        },
+        {
           "t": "Where the data comes from",
-          "b": "The live spend ledger, written as each piece of work completes. These records are the company's permanent spending history."
+          "b": "The live spend ledger, written as each piece of work completes. These records stay until you remove them with the data reset door below."
         }
       ]
     },
@@ -2967,7 +2986,7 @@
       "sections": [
         {
           "t": "The filters",
-          "b": "Pick a period, department or model at the top; every panel below follows your choice."
+          "b": "Pick a period, a calendar day, a project, a department or a model at the top; every panel below follows your choice."
         },
         {
           "t": "The breakdowns",

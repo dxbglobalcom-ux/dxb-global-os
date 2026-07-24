@@ -42,13 +42,7 @@ export type BreakdownEntry = {
   ratio: number;
 };
 
-export async function costBreakdown(
-  source: CostRowsSource,
-  dimension: CostDimension,
-  period: CostPeriod,
-  now: Date,
-): Promise<BreakdownEntry[]> {
-  const rows = await source.sumBy(dimension, periodStart(period, now).toISOString());
+function shapeBreakdown(rows: BreakdownRow[]): BreakdownEntry[] {
   const sorted = [...rows]
     .map((row) => ({ key: row.key || "—", totalEur: row.totalEur }))
     .sort((a, b) => b.totalEur - a.totalEur);
@@ -58,6 +52,27 @@ export async function costBreakdown(
     formatted: formatEur(row.totalEur),
     ratio: max > 0 ? row.totalEur / max : 0,
   }));
+}
+
+export async function costBreakdown(
+  source: CostRowsSource,
+  dimension: CostDimension,
+  period: CostPeriod,
+  now: Date,
+): Promise<BreakdownEntry[]> {
+  return shapeBreakdown(
+    await source.sumBy(dimension, periodStart(period, now).toISOString()),
+  );
+}
+
+// 9e day drill: breakdown over an explicit [sinceISO, source.until) window —
+// the calendar day narrows the SAME panels the period chips drive.
+export async function costBreakdownSince(
+  source: CostRowsSource,
+  dimension: CostDimension,
+  sinceISO: string,
+): Promise<BreakdownEntry[]> {
+  return shapeBreakdown(await source.sumBy(dimension, sinceISO));
 }
 
 export async function periodTotal(
@@ -177,25 +192,38 @@ type PostgrestClient = {
 // Optional C9 filter narrowing: equality constraints applied to every query
 // the source issues, so KPIs, breakdowns and totals all obey the same URL
 // filter state. Omitted (the default) = pre-C9 behavior; the SQL-equality
-// gate runs unfiltered and is untouched.
-export type CostFilters = { department?: string; model?: string };
+// gate runs unfiltered and is untouched. 9d: a project filter reads the
+// project-aware v_cost_entries view (cost_ledger + tasks→projects); the bare
+// path keeps reading cost_ledger directly. 9e: `until` closes the window on
+// the right so a calendar day narrows every panel, not just the ledger.
+export type CostFilters = {
+  department?: string;
+  model?: string;
+  /** projects.slug — switches the read to v_cost_entries */
+  project?: string;
+  /** exclusive right window edge, ISO instant */
+  until?: string;
+};
 
 export function postgrestCostSource(
   supabase: PostgrestClient,
   filters: CostFilters = {},
 ): CostRowsSource {
+  const table = filters.project ? "v_cost_entries" : "cost_ledger";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const applyFilters = (query: any): any => {
     let q = query;
     if (filters.department) q = q.eq("department", filters.department);
     if (filters.model) q = q.eq("model", filters.model);
+    if (filters.project) q = q.eq("project_slug", filters.project);
+    if (filters.until) q = q.lt("created_at", filters.until);
     return q;
   };
   return {
     async sumBy(dimension, sinceISO) {
       const { data, error } = await applyFilters(
         supabase
-          .from("cost_ledger")
+          .from(table)
           .select(`${dimension},cost_eur.sum()`)
           .gte("created_at", sinceISO),
       );
@@ -208,7 +236,7 @@ export function postgrestCostSource(
     async totalSince(sinceISO) {
       const { data, error } = await applyFilters(
         supabase
-          .from("cost_ledger")
+          .from(table)
           .select("cost_eur.sum()")
           .gte("created_at", sinceISO),
       );
@@ -234,6 +262,7 @@ export function postgrestDailySource(
         .gte("day", sinceDay);
       if (filters.department) query = query.eq("department", filters.department);
       if (filters.model) query = query.eq("model", filters.model);
+      if (filters.project) query = query.eq("project_slug", filters.project);
       const { data, error } = await query;
       if (error) throw new Error(error.message);
       return (

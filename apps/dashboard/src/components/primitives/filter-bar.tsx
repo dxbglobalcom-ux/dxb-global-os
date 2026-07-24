@@ -21,7 +21,10 @@ export type FilterGroup = {
   defaultValue?: string;
   /** first <option> label for select groups ("All departments") */
   allLabel?: string;
-  kind?: "select" | "chips";
+  /** date kind (9e): YYYY-MM-DD bounds for the calendar input */
+  min?: string;
+  max?: string;
+  kind?: "select" | "chips" | "date";
 };
 
 export function FilterBar({
@@ -81,6 +84,26 @@ export function FilterBar({
               );
             })}
           </div>
+        ) : g.kind === "date" ? (
+          // 9e — a REAL calendar input (C9: "calendar must be a real date
+          // picker driving the page"). Owns one URL param like every group;
+          // clearing = empty value = param removed.
+          <label
+            key={g.param}
+            className="flex items-center gap-2 text-body-s text-ink-muted"
+          >
+            {g.label}
+            <input
+              type="date"
+              value={g.value ?? ""}
+              min={g.min}
+              max={g.max}
+              onChange={(e) => setParam(g, e.target.value)}
+              className={`rounded-input border bg-surface-graphite px-2.5 py-1 font-data text-body-s text-ink-primary outline-none transition duration-[var(--t-fast)] ease-refined [color-scheme:dark] focus:border-edge-champagne ${
+                isActive(g) ? "border-edge-champagne" : "border-edge-neutral"
+              }`}
+            />
+          </label>
         ) : (
           <label
             key={g.param}

@@ -6,10 +6,13 @@ import {
   Panel,
   Stat,
   type Column, HelpTip } from "@/components/primitives";
+import { CostResetControl } from "@/components/fin/cost-reset-control";
 import {
   COST_PERIODS,
+  berlinDay,
   berlinDayRangeISO,
   costBreakdown,
+  costBreakdownSince,
   dailyBreakdown,
   monthStart,
   periodStart,
@@ -141,9 +144,10 @@ export default async function CostsPage({
     day?: string;
     dept?: string;
     model?: string;
+    project?: string;
   }>;
 }) {
-  const { range, day: rawDay, dept: rawDept, model: rawModel } =
+  const { range, day: rawDay, dept: rawDept, model: rawModel, project: rawProject } =
     await searchParams;
   const locale = await getLocale();
   const dict = getDict(locale);
@@ -160,31 +164,67 @@ export default async function CostsPage({
   // Day drill (spec §7): a Berlin calendar day narrows the ledger table.
   const day = /^\d{4}-\d{2}-\d{2}$/.test(rawDay ?? "") ? rawDay! : undefined;
 
-  // C9 filter standard: dept/model validated against 30d distincts, then
-  // narrow every query the page issues (KPIs, breakdowns, daily, ledger).
+  // C9 filter standard: dept/model validated against 30d distincts, project
+  // against the registered projects — then every query the page issues
+  // narrows (KPIs, breakdowns, daily, ledger).
   const optionSource = postgrestCostSource(supabase);
-  const [deptRows, modelRows] = await Promise.all([
+  const [deptRows, modelRows, projectRes, firstDayRes] = await Promise.all([
     optionSource.sumBy("department", periodStart("30d", now).toISOString()),
     optionSource.sumBy("model", periodStart("30d", now).toISOString()),
+    supabase.from("projects").select("slug, name").order("name"),
+    supabase
+      .from("v_cost_breakdown")
+      .select("day")
+      .order("day", { ascending: true })
+      .limit(1),
   ]);
   const deptOptions = deptRows.map((r) => r.key).filter((k) => k && k !== "—").sort();
-  const modelOptions = modelRows.map((r) => r.key).filter((k) => k && k !== "—").sort();
+  const modelOptions = modelRows
+    .map((r) => r.key)
+    // C25: the construction placeholder model never reaches a CEO surface —
+    // not even as a filter option.
+    .filter((k) => k && k !== "—" && k !== "<synthetic>")
+    .sort();
+  const projectRows = (projectRes.data ?? []) as Array<{ slug: string; name: string }>;
   const dept = deptOptions.includes(rawDept ?? "") ? rawDept : undefined;
   const model = modelOptions.includes(rawModel ?? "") ? rawModel : undefined;
-  const source = postgrestCostSource(supabase, { department: dept, model });
+  const project = projectRows.some((p) => p.slug === rawProject)
+    ? rawProject
+    : undefined;
+  const source = postgrestCostSource(supabase, { department: dept, model, project });
+  // 9e — the calendar day drives EVERY breakdown panel, not just the ledger:
+  // a day-scoped source closes the window on the right, sumBy opens it on
+  // the left at Berlin midnight.
+  const dayRange = day ? berlinDayRangeISO(day) : undefined;
+  const daySource = dayRange
+    ? postgrestCostSource(supabase, {
+        department: dept,
+        model,
+        project,
+        until: dayRange.endISO,
+      })
+    : undefined;
+  const todayBerlin = berlinDay(now);
+  const firstDataDay =
+    (firstDayRes.data as Array<{ day: string }> | null)?.[0]?.day ?? todayBerlin;
 
   let ledgerQuery = supabase
-    .from("cost_ledger")
+    .from(project ? "v_cost_entries" : "cost_ledger")
     .select(
       "id, model, mode, department, prompt_tokens, completion_tokens, cost_eur, created_at",
     )
     .order("created_at", { ascending: false })
     .limit(20);
+  // C25: the construction placeholder model is a code-looking, info-free
+  // label — it never renders on the CEO ledger.
+  ledgerQuery = ledgerQuery.neq("model", "<synthetic>");
   if (dept) ledgerQuery = ledgerQuery.eq("department", dept);
   if (model) ledgerQuery = ledgerQuery.eq("model", model);
-  if (day) {
-    const { startISO, endISO } = berlinDayRangeISO(day);
-    ledgerQuery = ledgerQuery.gte("created_at", startISO).lt("created_at", endISO);
+  if (project) ledgerQuery = ledgerQuery.eq("project_slug", project);
+  if (dayRange) {
+    ledgerQuery = ledgerQuery
+      .gte("created_at", dayRange.startISO)
+      .lt("created_at", dayRange.endISO);
   }
 
   const [
@@ -202,12 +242,29 @@ export default async function CostsPage({
     periodTotal(source, "7d", now),
     periodTotal(source, "30d", now),
     source.totalSince(monthStart(now).toISOString()),
-    dailyBreakdown(postgrestDailySource(supabase, { department: dept, model }), now),
-    costBreakdown(source, "department", period, now),
-    costBreakdown(source, "model", period, now),
-    costBreakdown(source, "mode", period, now),
+    dailyBreakdown(
+      postgrestDailySource(supabase, { department: dept, model, project }),
+      now,
+    ),
+    // Day selected → the breakdown panels narrow to that Berlin day (9e);
+    // otherwise the period chips drive them, as before.
+    daySource && dayRange
+      ? costBreakdownSince(daySource, "department", dayRange.startISO)
+      : costBreakdown(source, "department", period, now),
+    daySource && dayRange
+      ? costBreakdownSince(daySource, "model", dayRange.startISO)
+      : costBreakdown(source, "model", period, now),
+    daySource && dayRange
+      ? costBreakdownSince(daySource, "mode", dayRange.startISO)
+      : costBreakdown(source, "mode", period, now),
     ledgerQuery,
   ]);
+
+  // C25 (A1): a zero-cost row informs nobody — this also keeps construction
+  // '<synthetic>' rows off the CEO surface (same rule the Tokens page applies;
+  // filtered at render, never inside the COST-04 aggregate module).
+  const informative = (entries: BreakdownEntry[]) =>
+    entries.filter((e) => e.totalEur > 0);
 
   if (ledgerRes.error) {
     return (
@@ -258,9 +315,10 @@ export default async function CostsPage({
     const q = new URLSearchParams();
     if (params.range) q.set("range", params.range);
     if (params.day) q.set("day", params.day);
-    // C9: dept/model filters survive the range/day drills.
+    // C9: dept/model/project filters survive the range/day drills.
     if (dept) q.set("dept", dept);
     if (model) q.set("model", model);
+    if (project) q.set("project", project);
     const s = q.toString();
     return `/fin/costs${s ? `?${s}` : ""}`;
   };
@@ -349,6 +407,24 @@ export default async function CostsPage({
             })),
           },
           {
+            // 9e — real calendar input; drives every panel below.
+            param: "day",
+            label: tf.date,
+            kind: "date",
+            value: day,
+            min: firstDataDay,
+            max: todayBerlin,
+            options: [],
+          },
+          {
+            // 9d — project filter (validated against registered projects).
+            param: "project",
+            label: tf.project,
+            allLabel: tf.allProjects,
+            value: project,
+            options: projectRows.map((p) => ({ value: p.slug, label: p.name })),
+          },
+          {
             param: "dept",
             label: tf.department,
             allLabel: tf.allDepartments,
@@ -393,15 +469,16 @@ export default async function CostsPage({
         />
       </div>
 
+      {/* 9e: a selected calendar day retitles the panels it now scopes. */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
-        <Panel title={`${t.byDepartment} · ${periodLabel[period]}`}>
-          <BreakdownList entries={byDept} emptyText={t.breakdownEmpty} />
+        <Panel title={`${t.byDepartment} · ${day ?? periodLabel[period]}`}>
+          <BreakdownList entries={informative(byDept)} emptyText={t.breakdownEmpty} />
         </Panel>
-        <Panel title={`${t.byModel} · ${periodLabel[period]}`}>
-          <BreakdownList entries={byModel} emptyText={t.breakdownEmpty} />
+        <Panel title={`${t.byModel} · ${day ?? periodLabel[period]}`}>
+          <BreakdownList entries={informative(byModel)} emptyText={t.breakdownEmpty} />
         </Panel>
-        <Panel title={`${t.byMode} · ${periodLabel[period]}`}>
-          <BreakdownList entries={byMode} emptyText={t.breakdownEmpty} />
+        <Panel title={`${t.byMode} · ${day ?? periodLabel[period]}`}>
+          <BreakdownList entries={informative(byMode)} emptyText={t.breakdownEmpty} />
         </Panel>
       </div>
 
@@ -441,6 +518,11 @@ export default async function CostsPage({
           </div>
         )}
       </Panel>
+
+      {/* 9c — the audited delete/reset door for this page's data. */}
+      <div className="flex justify-end">
+        <CostResetControl labels={t.reset} maxDay={todayBerlin} />
+      </div>
     </div>
   );
 }

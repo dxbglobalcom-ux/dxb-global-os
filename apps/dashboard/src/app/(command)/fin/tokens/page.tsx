@@ -18,6 +18,8 @@ type WorkforceRow = {
   model: string;
   day: string;
   tokens: number;
+  project_slug: string | null;
+  project: string | null;
 };
 
 function BarList({
@@ -57,7 +59,13 @@ type TokenRange = (typeof TOKEN_RANGES)[number];
 export default async function TokensPage({
   searchParams,
 }: {
-  searchParams: Promise<{ range?: string; dept?: string; model?: string }>;
+  searchParams: Promise<{
+    range?: string;
+    dept?: string;
+    model?: string;
+    project?: string;
+    day?: string;
+  }>;
 }) {
   const params = await searchParams;
   const locale = await getLocale();
@@ -80,7 +88,7 @@ export default async function TokensPage({
   const [wfRes, buildRes] = await Promise.all([
     supabase
       .from("v_workforce_tokens")
-      .select("department, model, day, tokens")
+      .select("department, model, day, tokens, project_slug, project")
       .gte("started_at", since30d),
     supabase
       .from("cost_ledger")
@@ -116,19 +124,40 @@ export default async function TokensPage({
     : "7d";
   const deptOptions = [...new Set(allRows.map((r) => r.department))].sort();
   const modelOptions = [...new Set(allRows.map((r) => r.model))].sort();
+  // 9d — project options come from the rows themselves (slug → name).
+  const projectMap = new Map<string, string>();
+  for (const r of allRows)
+    if (r.project_slug && r.project) projectMap.set(r.project_slug, r.project);
+  const projectOptions = [...projectMap.entries()]
+    .map(([slug, name]) => ({ value: slug, label: name }))
+    .sort((a, b) => a.label.localeCompare(b.label));
   const dept = deptOptions.includes(params.dept ?? "") ? params.dept : undefined;
   const model = modelOptions.includes(params.model ?? "")
     ? params.model
     : undefined;
+  const project = projectMap.has(params.project ?? "") ? params.project : undefined;
+  // 9e — calendar day, validated shape + inside the 30d data window.
+  const dayParam = /^\d{4}-\d{2}-\d{2}$/.test(params.day ?? "")
+    ? params.day
+    : undefined;
 
   const rows = allRows.filter(
-    (r) => (!dept || r.department === dept) && (!model || r.model === model),
+    (r) =>
+      (!dept || r.department === dept) &&
+      (!model || r.model === model) &&
+      (!project || r.project_slug === project),
   );
 
   const within7d = rows.filter((r) => r.day >= since7d.slice(0, 10));
   const todayRows = rows.filter((r) => r.day === todayBerlin);
-  const inRange =
-    range === "today" ? todayRows : range === "7d" ? within7d : rows;
+  // Day beats range for the panels (9e: the calendar drives the page).
+  const inRange = dayParam
+    ? rows.filter((r) => r.day === dayParam)
+    : range === "today"
+      ? todayRows
+      : range === "7d"
+        ? within7d
+        : rows;
   const rangeLabel: Record<TokenRange, string> = {
     today: tf.rangeToday,
     "7d": tf.range7d,
@@ -194,6 +223,24 @@ export default async function TokensPage({
             })),
           },
           {
+            // 9e — real calendar input; a chosen day drives the panels.
+            param: "day",
+            label: tf.date,
+            kind: "date",
+            value: dayParam,
+            min: [...allRows.map((r) => r.day)].sort()[0],
+            max: todayBerlin,
+            options: [],
+          },
+          {
+            // 9d — project filter from the rows' own project identity.
+            param: "project",
+            label: tf.project,
+            allLabel: tf.allProjects,
+            value: project,
+            options: projectOptions,
+          },
+          {
             param: "dept",
             label: tf.department,
             allLabel: tf.allDepartments,
@@ -234,11 +281,12 @@ export default async function TokensPage({
         />
       </div>
 
+      {/* 9e: a selected calendar day retitles the panels it now scopes. */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <Panel title={`${t.byModel} · ${rangeLabel[range]}`}>
+        <Panel title={`${t.byModel} · ${dayParam ?? rangeLabel[range]}`}>
           <BarList entries={shape(byModel)} emptyText={t.empty} />
         </Panel>
-        <Panel title={`${t.byDepartment} · ${rangeLabel[range]}`}>
+        <Panel title={`${t.byDepartment} · ${dayParam ?? rangeLabel[range]}`}>
           <BarList entries={shape(byDept)} emptyText={t.empty} />
         </Panel>
       </div>
@@ -262,9 +310,25 @@ export default async function TokensPage({
             {daily.map((d) => (
               <li key={d.day}>
                 <Link
-                  href={`/fin/costs?day=${d.day}`}
+                  // 9e: a day row drives THIS page (C9: the big page below
+                  // follows the filter); click again to clear.
+                  href={(() => {
+                    const q = new URLSearchParams();
+                    if (params.range) q.set("range", params.range);
+                    if (dept) q.set("dept", dept);
+                    if (model) q.set("model", model);
+                    if (project) q.set("project", project);
+                    if (d.day !== dayParam) q.set("day", d.day);
+                    const s = q.toString();
+                    return `/fin/tokens${s ? `?${s}` : ""}`;
+                  })()}
+                  aria-current={d.day === dayParam ? "true" : undefined}
                   className={`block rounded-input border px-2.5 py-1.5 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                    d.day === todayBerlin ? "border-edge-champagne" : "border-transparent"
+                    d.day === dayParam
+                      ? "border-edge-champagne"
+                      : d.day === todayBerlin
+                        ? "border-edge-neutral"
+                        : "border-transparent"
                   }`}
                 >
                   <div className="flex items-baseline justify-between gap-3 text-body-s">
