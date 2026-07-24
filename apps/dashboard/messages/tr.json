@@ -232,7 +232,8 @@
         "intelligence": "Zekâ",
         "governance": "Yönetişim",
         "finance": "Finans & Kaynaklar",
-        "system": "Sistem"
+        "system": "Sistem",
+        "machineRoom": "Makine Odası"
       },
       "pages": {
         "overview": "Yönetici Özeti",

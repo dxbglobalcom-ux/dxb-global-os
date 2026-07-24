@@ -232,7 +232,8 @@
         "intelligence": "Intelligence",
         "governance": "Governance",
         "finance": "Finance & Resources",
-        "system": "System"
+        "system": "System",
+        "machineRoom": "Machine Room"
       },
       "pages": {
         "overview": "Executive Overview",

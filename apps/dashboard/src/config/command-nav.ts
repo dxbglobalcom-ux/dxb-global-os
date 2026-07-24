@@ -122,7 +122,7 @@ export const COMMAND_NAV: NavGroup[] = [
       { key: "revenueObjectives", href: "/revenue/objectives", icon: Target },
       { key: "workflows", href: "/ops/workflows", icon: Workflow },
       { key: "automations", href: "/ops/automations", icon: AlarmClock },
-      { key: "runtime", href: "/ops/runtime", icon: Gauge },
+      // runtime → Machine Room (CEO order 2026-07-24).
     ],
   },
   {
@@ -146,7 +146,8 @@ export const COMMAND_NAV: NavGroup[] = [
   {
     key: "governance",
     items: [
-      { key: "audit", href: "/gov/audit", icon: FileClock },
+      // audit → Machine Room (CEO order 2026-07-24); Decisions stays here —
+      // it is the CEO's own record, not machine telemetry.
       { key: "decisions", href: "/gov/decisions", icon: Scale },
       { key: "risks", href: "/gov/risks", icon: ShieldAlert },
       { key: "policies", href: "/gov/policies", icon: ScrollText },
@@ -173,8 +174,20 @@ export const COMMAND_NAV: NavGroup[] = [
       { key: "settings", href: "/sys/settings", icon: Settings },
       { key: "integrations", href: "/sys/integrations", icon: Plug },
       { key: "health", href: "/sys/health", icon: HeartPulse },
-      { key: "logs", href: "/sys/logs", icon: BookOpen },
       { key: "backups", href: "/sys/backups", icon: HardDrive },
+    ],
+  },
+  {
+    // Machine Room (CEO order 2026-07-24, in-chat with screenshots):
+    // code-heavy compliance/telemetry surfaces are the ROBOTS' domain — the
+    // orchestrator, directors and audit processes read them; the CEO is not
+    // expected to. Grouped last so they stop mixing with his working
+    // surfaces. Hook Violations rides the audit page's tab bar.
+    key: "machineRoom",
+    items: [
+      { key: "audit", href: "/gov/audit", icon: FileClock },
+      { key: "runtime", href: "/ops/runtime", icon: Gauge },
+      { key: "logs", href: "/sys/logs", icon: BookOpen },
     ],
   },
 ];
