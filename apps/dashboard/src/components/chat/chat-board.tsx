@@ -6,6 +6,7 @@
 // is a projection: writes go through /api/chat, answers arrive from the
 // resident chat.drain over the dxb:chat Broadcast channel.
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Mic, Square } from "lucide-react";
 import { StatusBadge } from "@/components/primitives";
 import { useDxbChannel, type DxbBroadcastPayload } from "@/lib/realtime";
 
@@ -32,6 +33,13 @@ export type ChatLabels = {
   failed: string;
   you: string;
   hamza: string;
+  /** dictation lane (complaint ledger 1a-1e, U15): mic button + honest states */
+  dictate: string;
+  dictateStop: string;
+  dictateRecording: string;
+  dictateTranscribing: string;
+  dictateLang: string;
+  dictateErrors: Record<string, string>;
 };
 
 function mergeMessage(prev: ChatMessage[], next: ChatMessage): ChatMessage[] {
@@ -59,6 +67,101 @@ export function ChatBoard({
   const [sending, setSending] = useState(false);
   const [dispatchedIds, setDispatchedIds] = useState<Set<string>>(new Set());
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  // Dictation lane (WisprFlow idiom, ledger 1a-1e): click = record, click =
+  // stop → /api/chat/dictate (Speaches STT) → text APPENDS to the editable
+  // draft. Toggle, not hold — dictating a sentence while thinking is the
+  // point; the call line keeps hold-to-talk. Language is an explicit TR|EN
+  // picker defaulting to the UI locale, never a silent inherit (lang.ts
+  // registered adaptation; U15 block-2 whitelist {tr,en}).
+  const [dictPhase, setDictPhase] = useState<"idle" | "recording" | "transcribing">("idle");
+  const [dictLang, setDictLang] = useState<"tr" | "en">(lang);
+  const [dictError, setDictError] = useState<string | null>(null);
+  const [dictSeconds, setDictSeconds] = useState(0);
+  const dictRecorderRef = useRef<MediaRecorder | null>(null);
+  const dictChunksRef = useRef<Blob[]>([]);
+  const dictPhaseRef = useRef<typeof dictPhase>("idle");
+  dictPhaseRef.current = dictPhase;
+
+  // Honest elapsed-seconds counter while recording/transcribing (the U15 D4
+  // lesson: silent waiting reads as dead — always show time moving).
+  useEffect(() => {
+    if (dictPhase === "idle") {
+      setDictSeconds(0);
+      return;
+    }
+    const timer = setInterval(() => setDictSeconds((s) => s + 1), 1000);
+    return () => clearInterval(timer);
+  }, [dictPhase]);
+
+  const transcribe = useCallback(
+    async (blob: Blob, mime: string) => {
+      setDictPhase("transcribing");
+      setDictSeconds(0);
+      const form = new FormData();
+      const ext = mime.includes("webm") ? "webm" : mime.includes("ogg") ? "ogg" : "wav";
+      form.append("audio", new File([blob], `dictation.${ext}`, { type: mime }));
+      form.append("lang", dictLang);
+      try {
+        const res = await fetch("/api/chat/dictate", { method: "POST", body: form });
+        const body = (await res.json()) as { text?: string; error?: string };
+        const text = body.text;
+        if (!res.ok || !text) {
+          setDictError(body.error ?? "stt_unavailable");
+          return;
+        }
+        setDraft((prev) => (prev.trim().length > 0 ? `${prev.trimEnd()} ${text}` : text));
+      } catch {
+        setDictError("stt_unavailable");
+      } finally {
+        setDictPhase("idle");
+      }
+    },
+    [dictLang],
+  );
+
+  const startDictation = useCallback(async () => {
+    setDictError(null);
+    if (typeof MediaRecorder === "undefined" || !navigator.mediaDevices?.getUserMedia) {
+      setDictError("mic_unsupported");
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus")
+        ? "audio/webm;codecs=opus"
+        : "";
+      const recorder = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
+      dictChunksRef.current = [];
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) dictChunksRef.current.push(e.data);
+      };
+      recorder.onstop = () => {
+        stream.getTracks().forEach((t) => t.stop());
+        const type = recorder.mimeType || "audio/webm";
+        const blob = new Blob(dictChunksRef.current, { type });
+        if (blob.size > 0) void transcribe(blob, type);
+        else {
+          setDictError("empty_transcript");
+          setDictPhase("idle");
+        }
+      };
+      dictRecorderRef.current = recorder;
+      recorder.start();
+      setDictPhase("recording");
+    } catch {
+      setDictError("mic_denied");
+    }
+  }, [transcribe]);
+
+  const toggleDictation = useCallback(() => {
+    if (dictPhaseRef.current === "recording") {
+      const recorder = dictRecorderRef.current;
+      if (recorder && recorder.state === "recording") recorder.stop();
+      return;
+    }
+    if (dictPhaseRef.current === "idle") void startDictation();
+  }, [startDictation]);
 
   const onBroadcast = useCallback((p: DxbBroadcastPayload) => {
     if (!p.record) return;
@@ -194,12 +297,71 @@ export function ChatBoard({
           />
           <button
             type="button"
+            data-testid="chat-dictate"
+            aria-pressed={dictPhase === "recording"}
+            aria-label={dictPhase === "recording" ? labels.dictateStop : labels.dictate}
+            title={dictPhase === "recording" ? labels.dictateStop : labels.dictate}
+            disabled={dictPhase === "transcribing"}
+            onClick={toggleDictation}
+            className={`flex h-10 w-10 items-center justify-center rounded-md border transition duration-[var(--t-fast)] ease-refined disabled:opacity-40 ${
+              dictPhase === "recording"
+                ? "animate-pulse border-status-danger text-status-danger"
+                : "border-edge-champagne text-accent-champagne hover:bg-surface-carbon"
+            }`}
+          >
+            {dictPhase === "recording" ? (
+              <Square className="size-4" aria-hidden />
+            ) : (
+              <Mic className="size-4" aria-hidden />
+            )}
+          </button>
+          <button
+            type="button"
             onClick={() => void send()}
             disabled={sending || draft.trim().length === 0}
             className="h-10 rounded-md bg-accent-champagne px-4 text-body-s font-medium text-surface-obsidian transition disabled:opacity-40"
           >
             {labels.send}
           </button>
+        </div>
+        <div className="flex min-h-5 flex-wrap items-center gap-3">
+          <div
+            className="flex items-center gap-1"
+            role="radiogroup"
+            aria-label={labels.dictateLang}
+          >
+            {(["tr", "en"] as const).map((code) => (
+              <button
+                key={code}
+                type="button"
+                role="radio"
+                aria-checked={dictLang === code}
+                onClick={() => setDictLang(code)}
+                className={`rounded-input border px-2 py-0.5 text-caption uppercase transition duration-[var(--t-fast)] ease-refined ${
+                  dictLang === code
+                    ? "border-edge-champagne text-accent-champagne"
+                    : "border-edge-neutral text-ink-muted hover:text-ink-secondary"
+                }`}
+              >
+                {code}
+              </button>
+            ))}
+          </div>
+          {dictPhase === "recording" && (
+            <span className="text-caption text-status-danger" role="status">
+              {labels.dictateRecording} · {dictSeconds}s
+            </span>
+          )}
+          {dictPhase === "transcribing" && (
+            <span className="animate-pulse text-caption text-ink-muted" role="status">
+              {labels.dictateTranscribing} · {dictSeconds}s
+            </span>
+          )}
+          {dictError && dictPhase === "idle" && (
+            <span data-testid="chat-dictate-error" className="text-caption text-status-danger">
+              {labels.dictateErrors[dictError] ?? dictError}
+            </span>
+          )}
         </div>
       </div>
     </div>

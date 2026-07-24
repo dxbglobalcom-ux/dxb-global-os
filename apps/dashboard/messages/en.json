@@ -2212,7 +2212,20 @@
       "thinking": "Hamza is writing",
       "failed": "Could not be answered",
       "you": "You",
-      "hamza": "Hamza"
+      "hamza": "Hamza",
+      "dictate": "Dictate by voice",
+      "dictateStop": "Stop and convert to text",
+      "dictateRecording": "Listening",
+      "dictateTranscribing": "Converting speech to text",
+      "dictateLang": "Dictation language",
+      "voiceLineHint": "spoken question, spoken answer",
+      "dictateErrors": {
+        "mic_denied": "Microphone permission was refused — allow it in the browser and try again.",
+        "mic_unsupported": "This browser cannot record audio.",
+        "empty_transcript": "Nothing was heard — please speak again.",
+        "stt_unavailable": "The speech engine did not answer — turn it on with scripts/voice-on.sh and retry.",
+        "audio_too_large": "The recording is too long — dictate in shorter pieces."
+      }
     }
   },
   "help": {
@@ -2249,8 +2262,16 @@
           "b": "With plan mode on, Hamza first lays out a plan and waits for your yes before anything moves."
         },
         {
+          "t": "Dictation (microphone button)",
+          "b": "Press the microphone, speak, press again to stop. Your words appear as editable text in the writing box — nothing is sent by itself; you read, correct if needed, then press Send. The small TR|EN switch under the box tells the listener which language you are speaking."
+        },
+        {
+          "t": "Voice line (below the board)",
+          "b": "The spoken call line lives under the chat now: open it, hold the big button, ask a director or Hamza by voice and hear the answer spoken back. Dictation writes text for you; the voice line talks back."
+        },
+        {
           "t": "Where the data comes from",
-          "b": "The conversation is stored in the company's own records, so Hamza remembers earlier context between visits."
+          "b": "Messages live in the company database (chat_messages); voice calls in the call ledger (voice_calls). Dictation sound goes only to the speech engine running on this machine (Speaches) and is turned into text there — no audio ever leaves your own hardware."
         }
       ]
     },

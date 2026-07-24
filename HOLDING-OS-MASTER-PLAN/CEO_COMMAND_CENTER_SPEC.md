@@ -93,7 +93,7 @@ Kural: view'lar sadece OKUMA; hiçbir dashboard bileşeni tabloya doğrudan yazm
 
 | Grup | Sayfalar (route) |
 |------|------------------|
-| Command | `/overview` · `/live` · `/intelligence` · `/approvals` · `/alerts` · `/voice` (R3.1, VOICE_INTERACTION_SPEC §7 — U4 refinement) |
+| Command | `/overview` · `/chat` (C1/C7/C10, 2026-07-19) · `/live` · `/intelligence` · `/approvals` · `/alerts` |
 | Organization | `/org` (Holding Structure graph) · `/org/companies` · `/org/departments` · `/org/directors` · `/org/employees` · `/org/hr` |
 | Operations | `/ops/projects` · `/ops/workflows` · `/ops/tasks` · `/ops/automations` · `/ops/runtime` |
 | Intelligence | `/ai/models` · `/ai/orchestration` · `/ai/memory` · `/ai/knowledge` · `/ai/library` · `/ai/skills` · `/ai/plugins` · `/ai/mcp` (U8) · `/revenue` · `/revenue/objectives` · `/revenue/opportunities` · `/revenue/portfolio` (R1.4, REVENUE_ENGINE_SPEC §7) |
@@ -102,6 +102,7 @@ Kural: view'lar sadece OKUMA; hiçbir dashboard bileşeni tabloya doğrudan yazm
 | System | `/sys/settings` · `/sys/integrations` · `/sys/health` · `/sys/logs` · `/sys/backups` |
 
 > Tablo senkron kaydı 2026-07-17 (R3.1 oturumu): U8 `/ai/mcp`, R1.4 revenue rotaları ve `/fin/pnl` kayıtlı eklemeleri nav'da canlıydı ama bu tabloya işlenmemişti (ölçüldü: `command-nav.ts` ↔ §7 diff). Tek kaynak `src/config/command-nav.ts`; tablo aynı commit'te eşitlendi, `/voice` eklendi.
+> Table sync record 2026-07-24 (registered adaptation, complaint ledger 1a-1e): the voice line merged INTO the `/chat` page — `/voice` now redirects to `/chat` and its nav row is gone; `/chat` (born 2026-07-19, C1/C7/C10) entered the table. The WisprFlow dictation lane lives in the ChatBoard input row (`/api/chat/dictate`, language whitelist {tr,en} — U15 block 2). The VOICE_INTERACTION_SPEC §7 page-half now lives inside `/chat`; the §6 intake/answer architecture is unchanged.
 
 - RSC-first; client adaları: OrgGraph, WidgetGrid, CommandPalette, LiveOps stream, chart etkileşimleri.
 - Detay route deseni: `/org/employees/[id]`, `/ops/projects/[id]`, `/ops/tasks/[id]`, `/gov/decisions/[id]`, `/approvals/[id]` — drill-down hedefleri (§ aşağıda).

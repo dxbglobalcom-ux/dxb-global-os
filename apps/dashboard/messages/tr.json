@@ -2212,7 +2212,20 @@
       "thinking": "Hamza yazıyor",
       "failed": "Cevaplanamadı",
       "you": "Siz",
-      "hamza": "Hamza"
+      "hamza": "Hamza",
+      "dictate": "Sesle yazdır",
+      "dictateStop": "Durdur ve yazıya çevir",
+      "dictateRecording": "Dinliyor",
+      "dictateTranscribing": "Konuşma yazıya çevriliyor",
+      "dictateLang": "Dikte dili",
+      "voiceLineHint": "sesli soru, sesli cevap",
+      "dictateErrors": {
+        "mic_denied": "Mikrofon izni reddedildi — tarayıcıdan izin verip tekrar deneyin.",
+        "mic_unsupported": "Bu tarayıcı ses kaydedemiyor.",
+        "empty_transcript": "Hiçbir şey duyulmadı — lütfen tekrar konuşun.",
+        "stt_unavailable": "Ses motoru cevap vermedi — scripts/voice-on.sh ile açıp yeniden deneyin.",
+        "audio_too_large": "Kayıt çok uzun — daha kısa parçalar halinde yazdırın."
+      }
     }
   },
   "help": {
@@ -2249,8 +2262,16 @@
           "b": "Plan modu açıkken Hamza önce bir plan serer ve hiçbir şey kımıldamadan sizin onayınızı bekler."
         },
         {
+          "t": "Dikte (mikrofon düğmesi)",
+          "b": "Mikrofona basın, konuşun, tekrar basıp durdurun. Söyledikleriniz yazı kutusuna düzenlenebilir metin olarak düşer — hiçbir şey kendiliğinden gönderilmez; okur, gerekirse düzeltir, sonra Gönder'e basarsınız. Kutunun altındaki küçük TR|EN anahtarı dinleyiciye hangi dilde konuştuğunuzu söyler."
+        },
+        {
+          "t": "Sesli hat (panonun altında)",
+          "b": "Sesli arama hattı artık sohbetin altında: açın, büyük düğmeyi basılı tutun, bir direktöre veya Hamza'ya sesle sorun, cevabı sesli dinleyin. Dikte sizin yerinize yazı yazar; sesli hat ise sesle cevap verir."
+        },
+        {
           "t": "Bu veri nereden geliyor",
-          "b": "Sohbet şirketin kendi kayıtlarında saklanır; Hamza böylece önceki bağlamı ziyaretler arasında hatırlar."
+          "b": "Mesajlar şirket veritabanında (chat_messages), sesli aramalar arama defterinde (voice_calls) durur. Dikte sesi yalnızca bu makinede çalışan ses motoruna (Speaches) gider ve orada yazıya çevrilir — ses kaydı asla kendi donanımınızın dışına çıkmaz."
         }
       ]
     },

@@ -8,6 +8,7 @@
   "exports": {
     ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
     "./intake": { "types": "./dist/intake.d.ts", "default": "./dist/intake.js" },
+    "./speaches": { "types": "./dist/speaches.d.ts", "default": "./dist/speaches.js" },
     "./paths": { "types": "./dist/paths.d.ts", "default": "./dist/paths.js" }
   },
   "scripts": {
