@@ -26,8 +26,7 @@ type AgentRow = {
   autonomy_level: number;
   persona_version: string;
   hook_version: string | null;
-  employment_status: string;
-  status: "dormant" | "active";
+  employment_status: "active" | "dormant" | "archived";
 };
 
 const ROW_LIMIT = 200;
@@ -42,28 +41,41 @@ export default async function EmployeesPage({
   const t = dict.command.employees;
   const supabase = await createClient();
 
+  // Workforce truth = employment_status (the legacy agents.status column went
+  // stale after the activation waves — the 2026-07-24 eye-test catch, same
+  // fix as v_exec_overview migration 20260724005000). Archived rows leave
+  // every figure: CEO surfaces show the working org only (C8).
   let rowsQuery = supabase
     .from("agents")
     .select(
-      "id, slug, department, role, brain, autonomy_level, persona_version, hook_version, employment_status, status",
+      "id, slug, department, role, brain, autonomy_level, persona_version, hook_version, employment_status",
       { count: "exact" },
     )
+    .neq("employment_status", "archived")
     .order("department", { ascending: true })
     .order("role", { ascending: true })
     .order("slug", { ascending: true })
     .limit(ROW_LIMIT);
   if (status === "active" || status === "dormant")
-    rowsQuery = rowsQuery.eq("status", status);
+    rowsQuery = rowsQuery.eq("employment_status", status);
   if (dept) rowsQuery = rowsQuery.eq("department", dept);
 
   const [rowsRes, statusRes, deptRes, activeDeptRes] = await Promise.all([
     rowsQuery,
-    supabase.from("agents").select("status, id.count()"),
-    supabase.from("agents").select("department, id.count()"),
     supabase
-      .from("departments")
-      .select("slug", { count: "exact", head: true })
-      .eq("status", "active"),
+      .from("agents")
+      .select("employment_status, id.count()")
+      .neq("employment_status", "archived"),
+    supabase
+      .from("agents")
+      .select("department, id.count()")
+      .neq("employment_status", "archived"),
+    // active departments = departments with active employees (the
+    // departments.status column is legacy-stale the same way)
+    supabase
+      .from("agents")
+      .select("department")
+      .eq("employment_status", "active"),
   ]);
 
   if (rowsRes.error || statusRes.error || deptRes.error) {
@@ -81,13 +93,21 @@ export default async function EmployeesPage({
   }
 
   const byStatus = new Map<string, number>(
-    (statusRes.data as unknown as { status: string; count: number }[]).map(
-      (r) => [r.status, Number(r.count)],
-    ),
+    (
+      statusRes.data as unknown as {
+        employment_status: string;
+        count: number;
+      }[]
+    ).map((r) => [r.employment_status, Number(r.count)]),
   );
   const activeCount = byStatus.get("active") ?? 0;
   const dormantCount = byStatus.get("dormant") ?? 0;
   const totalCount = activeCount + dormantCount;
+  const activeDeptCount = new Set(
+    (
+      (activeDeptRes.data ?? []) as unknown as { department: string }[]
+    ).map((r) => r.department),
+  ).size;
   const deptCounts = (
     deptRes.data as unknown as { department: string; count: number }[]
   )
@@ -161,11 +181,11 @@ export default async function EmployeesPage({
         ),
     },
     {
-      key: "status",
+      key: "employment_status",
       label: t.colStatus,
       render: (r) => (
-        <StatusBadge level={r.status === "active" ? "ok" : "info"}>
-          {r.status === "active" ? t.kpiActive : t.kpiDormant}
+        <StatusBadge level={r.employment_status === "active" ? "ok" : "info"}>
+          {r.employment_status === "active" ? t.kpiActive : t.kpiDormant}
         </StatusBadge>
       ),
     },
@@ -198,7 +218,7 @@ export default async function EmployeesPage({
         />
         <Stat
           label={t.kpiDepartments}
-          value={String(activeDeptRes.count ?? 0)}
+          value={String(activeDeptCount)}
           drillHref="/org/departments"
         />
       </div>

@@ -76,7 +76,7 @@ export default async function ProjectsPage() {
                     <h2 className="break-words font-display text-h4 text-ink-primary group-hover:text-accent-champagne">
                       {p.name}
                     </h2>
-                    <p className="mt-1 line-clamp-2 text-body-s text-ink-secondary">{p.purpose}</p>
+                    <p className="mt-1 break-words text-body-s text-ink-secondary">{p.purpose}</p>
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-2">
                     <span className={`font-display text-display-l tabular-nums ${BAND_TEXT[band]}`}>

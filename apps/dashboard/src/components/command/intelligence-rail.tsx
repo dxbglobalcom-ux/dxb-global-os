@@ -104,7 +104,7 @@ export function IntelligenceRail({
                     a.moneyOut ? "border-edge-champagne" : "border-edge-neutral"
                   }`}
                 >
-                  <div className="line-clamp-2 text-body-s text-ink-primary" title={a.title}>
+                  <div className="break-words text-body-s text-ink-primary" title={a.title}>
                     {a.title}
                   </div>
                   <div className="mt-1 flex items-center gap-2">

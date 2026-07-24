@@ -24,8 +24,7 @@ type DirectorRow = {
   autonomy_level: number;
   persona_version: string;
   hook_version: string | null;
-  employment_status: string;
-  status: "dormant" | "active";
+  employment_status: "active" | "dormant" | "archived";
   persona_id: string | null;
 };
 
@@ -38,10 +37,14 @@ export default async function DirectorsPage() {
   const [rowsRes, deptRes] = await Promise.all([
     supabase
       .from("agents")
+      // Workforce truth = employment_status (legacy agents.status is stale —
+      // same 2026-07-24 catch as v_exec_overview); archived heads stay off
+      // the CEO surface (C8 working-org rule).
       .select(
-        "id, slug, department, brain, autonomy_level, persona_version, hook_version, employment_status, status, persona_id",
+        "id, slug, department, brain, autonomy_level, persona_version, hook_version, employment_status, persona_id",
       )
       .eq("role", "head")
+      .neq("employment_status", "archived")
       .order("department"),
     supabase.from("departments").select("slug, display_name, display_name_tr"),
   ]);
@@ -139,11 +142,11 @@ export default async function DirectorsPage() {
         ),
     },
     {
-      key: "status",
+      key: "employment_status",
       label: t.colStatus,
       render: (r) => (
-        <StatusBadge level={r.status === "active" ? "ok" : "info"}>
-          {r.status === "active" ? t.statusActive : t.statusDormant}
+        <StatusBadge level={r.employment_status === "active" ? "ok" : "info"}>
+          {r.employment_status === "active" ? t.statusActive : t.statusDormant}
         </StatusBadge>
       ),
     },

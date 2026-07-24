@@ -623,7 +623,7 @@ export default async function ProjectCommandPage({
                         href="/gov/decisions"
                         className="block text-body-s text-ink-secondary hover:text-accent-champagne"
                       >
-                        <span className="line-clamp-2">{d.decision}</span>
+                        <span className="break-words">{d.decision}</span>
                         <span className="font-data text-caption tabular-nums text-ink-muted">
                           {d.decided_by} · {fmtDate(d.created_at, locale)}
                         </span>

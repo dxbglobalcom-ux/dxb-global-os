@@ -487,7 +487,13 @@ async function sweepProbeRows(): Promise<void> {
     await sql`DELETE FROM approvals WHERE id = ANY(${ids}::uuid[])`.execute(db());
   }
   // task sweep by shape (covers delegate/request_info via probe agents and
-  // reanalyze via its fixed objective prefix — also heals aborted runs)
+  // reanalyze via its fixed objective prefix — also heals aborted runs).
+  // The live resident worker may have claimed probe tasks and written
+  // task_events — clear them first or the task delete hits the FK.
+  await sql`DELETE FROM task_events WHERE task_id IN (
+    SELECT id FROM tasks WHERE output_contract = 'analysis-report-v1'
+    AND (agent_id IN (SELECT id FROM agents WHERE slug LIKE 'e93t-%')
+         OR objective LIKE 'Re-analyze approval %'))`.execute(db());
   await sql`DELETE FROM tasks WHERE output_contract = 'analysis-report-v1'
     AND agent_id IN (SELECT id FROM agents WHERE slug LIKE 'e93t-%')`.execute(db());
   await sql`DELETE FROM tasks WHERE output_contract = 'analysis-report-v1'

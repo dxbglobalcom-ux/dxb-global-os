@@ -113,6 +113,19 @@ afterAll(async () => {
     await db.deleteFrom("alerts").where("task_id", "in", createdTaskIds).execute();
     await db.deleteFrom("agent_runs").where("task_id", "in", createdTaskIds).execute();
     await db.deleteFrom("task_events").where("task_id", "in", createdTaskIds).execute();
+    // The awaiting_approval bridge trigger opens gates for orch-qa-appr/noc
+    // probes — sweep the approval chain or the task delete dies on the FK
+    // (root cause of the 2026-07-19 + 2026-07-24 stuck-probe residue).
+    await db
+      .deleteFrom("outbox")
+      .where("approval_id", "in", db.selectFrom("approvals").select("id").where("task_id", "in", createdTaskIds))
+      .execute();
+    await db
+      .updateTable("decision_log")
+      .set({ approval_id: null })
+      .where("approval_id", "in", db.selectFrom("approvals").select("id").where("task_id", "in", createdTaskIds))
+      .execute();
+    await db.deleteFrom("approvals").where("task_id", "in", createdTaskIds).execute();
     await db.deleteFrom("tasks").where("id", "in", createdTaskIds).execute();
   }
   if (LIVE_LITELLM) {

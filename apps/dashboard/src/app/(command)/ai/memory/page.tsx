@@ -326,7 +326,7 @@ export default async function MemoryPage({
                 </p>
                 {inv?.usage_notes && (
                   <p
-                    className="mt-2 line-clamp-2 text-caption text-ink-secondary"
+                    className="mt-2 break-words text-caption text-ink-secondary"
                     title={inv.usage_notes}
                   >
                     {inv.usage_notes}
