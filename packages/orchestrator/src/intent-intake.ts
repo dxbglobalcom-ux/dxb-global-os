@@ -51,10 +51,18 @@ export async function intakeIntentOnce(deps: IntentIntakeDeps = {}): Promise<Int
   const dispatchFn = deps.dispatchFn ?? dispatch;
 
   // Claim: received → classifying, single row, race-safe.
+  // source <> 'voice' (registered adaptation 2026-07-24, CEO: "selam verdi,
+  // su içti gibi basit şeyler dahi buraya yansıyor"): voice-call intents are
+  // CONVERSATION LINEAGE (V5), not work orders — the voice lane answers them
+  // itself. Before this guard every spoken greeting rode intent→classify→
+  // decompose→dispatch and became a company task with worker-selection and
+  // escalation decisions trailing it. Spoken Q&A "asking is free and never
+  // starts work" (§7 help contract); voice-COMMANDED work is the deferred
+  // JARVIS lane (U15), which will dispatch explicitly, not by side effect.
   const claimed = await sql<{ id: string; text: string }>`
     update intents set status = 'classifying', updated_at = now()
     where id = (
-      select id from intents where status = 'received'
+      select id from intents where status = 'received' and source <> 'voice'
       order by created_at
       for update skip locked
       limit 1

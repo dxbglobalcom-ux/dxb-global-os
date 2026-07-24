@@ -539,7 +539,11 @@
       "note": "Every movement of company work appears here the moment it happens. Click a row to see its full story.",
       "steps": "steps",
       "approvalsLink": "Open approvals",
-      "runNoLabel": "Background system work"
+      "runNoLabel": "Background system work",
+      "selectAll": "Select all",
+      "selectedCount": "selected",
+      "removeSelected": "Remove selected",
+      "removing": "Removing"
     },
     "tasks": {
       "kpiActive": "Active",

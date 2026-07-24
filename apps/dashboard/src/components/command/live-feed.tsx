@@ -93,6 +93,13 @@ function groupEvents(events: LiveEvent[]): FeedGroup[] {
   return groups;
 }
 
+// C4 list-page standard (CEO 2026-07-24: "yine silinemeyen seçilemeyen
+// sayfa!!"): feed rows are TASK projections — removing one purges the task
+// through the audited control door, which cascades its whole event chain out
+// of this feed. Only settled work is removable (same PURGEABLE set as the
+// tasks grid: terminal + never-started); rows mid-flight carry no checkbox.
+const PURGEABLE = new Set(["done", "failed", "returned", "queued", "inbox", "succeeded"]);
+
 function timeShort(iso: string): string {
   // 24h — language-neutral (RULE #0 purity)
   return new Date(iso).toLocaleTimeString(undefined, {
@@ -116,11 +123,17 @@ export function LiveFeed({
     steps: string;
     approvalsLink: string;
     runNoLabel: string;
+    selectAll: string;
+    selectedCount: string;
+    removeSelected: string;
+    removing: string;
   };
   statusLabels: Record<string, string>;
 }) {
   const [events, setEvents] = useState<LiveEvent[]>(initial);
   const [openKey, setOpenKey] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [busy, setBusy] = useState(false);
   const wasStale = useRef(false);
 
   const statusText = useCallback(
@@ -196,6 +209,39 @@ export function LiveFeed({
         : "live";
 
   const groups = groupEvents(events);
+  const selectableIds = groups
+    .filter((g) => g.latest.task_id && PURGEABLE.has(statusKey(g.latest)))
+    .map((g) => g.latest.task_id as string);
+  const allSelected =
+    selectableIds.length > 0 && selectableIds.every((id) => selected.has(id));
+
+  const toggleSelect = (id: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
+  const removeSelected = async () => {
+    if (selected.size === 0 || busy) return;
+    setBusy(true);
+    try {
+      const ids = [...selected];
+      const res = await fetch("/api/control/purge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entity: "task", ids }),
+      });
+      if (res.ok) {
+        const gone = new Set(ids);
+        setEvents((prev) => prev.filter((e) => !e.task_id || !gone.has(e.task_id)));
+        setSelected(new Set());
+      }
+    } finally {
+      setBusy(false);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -215,8 +261,22 @@ export function LiveFeed({
           {groups.map((g) => {
             const open = openKey === g.key;
             const hasChain = g.chain.length > 1;
+            const selectable =
+              g.latest.task_id != null && PURGEABLE.has(statusKey(g.latest));
             return (
-              <li key={g.key}>
+              <li key={g.key} className="flex items-start gap-1">
+                {selectable ? (
+                  <input
+                    type="checkbox"
+                    checked={selected.has(g.latest.task_id as string)}
+                    onChange={() => toggleSelect(g.latest.task_id as string)}
+                    aria-label={g.latest.objective ?? g.key}
+                    className="mt-3 h-3.5 w-3.5 shrink-0 accent-[var(--accent-champagne)]"
+                  />
+                ) : (
+                  <span aria-hidden className="mt-3 inline-block h-3.5 w-3.5 shrink-0" />
+                )}
+                <div className="min-w-0 flex-1">
                 <button
                   type="button"
                   onClick={() => setOpenKey(open ? null : g.key)}
@@ -285,10 +345,41 @@ export function LiveFeed({
                     )}
                   </div>
                 )}
+                </div>
               </li>
             );
           })}
         </ul>
+      )}
+
+      {groups.length > 0 && (
+        <div className="flex flex-wrap items-center gap-3 border-t border-edge-neutral pt-3">
+          <label className="flex items-center gap-2 text-body-s text-ink-secondary">
+            <input
+              type="checkbox"
+              checked={allSelected}
+              disabled={selectableIds.length === 0}
+              onChange={() =>
+                setSelected(allSelected ? new Set() : new Set(selectableIds))
+              }
+              aria-label={labels.selectAll}
+              className="h-3.5 w-3.5 accent-[var(--accent-champagne)]"
+            />
+            {labels.selectAll}
+          </label>
+          <span className="font-data text-body-s tabular-nums text-ink-primary">
+            {selected.size} {labels.selectedCount}
+          </span>
+          <button
+            type="button"
+            data-testid="live-remove-selected"
+            disabled={busy || selected.size === 0}
+            onClick={() => void removeSelected()}
+            className="ml-auto rounded-input border border-edge-neutral px-3 py-1 text-body-s text-ink-secondary transition duration-[var(--t-fast)] ease-refined hover:text-status-danger disabled:opacity-50"
+          >
+            {busy ? labels.removing : `${labels.removeSelected} (${selected.size})`}
+          </button>
+        </div>
       )}
     </div>
   );

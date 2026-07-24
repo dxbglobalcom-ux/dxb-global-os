@@ -111,13 +111,11 @@ export function DecisionLogs({
   const filtered = useMemo(
     () =>
       rows.filter((r) => {
-        if (
-          scope === "important" &&
-          r.decidedBy !== "ceo" &&
-          r.risk !== "medium" &&
-          r.risk !== "high"
-        )
-          return false;
+        // Important = the CEO's OWN decisions, nothing else (CEO refinement
+        // 2026-07-24: the earlier risk-based criterion leaked machine plumbing
+        // — hook escalations write themselves high-risk. Machine records stay
+        // reachable behind the "Everything" scope; the archive keeps recording).
+        if (scope === "important" && r.decidedBy !== "ceo") return false;
         if (who !== "all" && r.decidedBy !== who) return false;
         if (risk !== "all" && r.risk !== risk) return false;
         return true;

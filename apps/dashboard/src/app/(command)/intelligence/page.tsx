@@ -55,14 +55,20 @@ export default async function IntelligencePage() {
         .select("kind, id, level, title, at, source")
         .eq("kind", "alert")
         .limit(8),
+      // CEO-only scope (ruling 2026-07-24, same as the decisions page default):
+      // machine plumbing (hook escalations, dispatch plans, worker selection)
+      // never reaches this briefing surface — full record stays behind the
+      // decisions page "Everything" view.
       supabase
         .from("v_decision_log")
         .select("id, decided_by, decision, confidence, risk, employee, created_at")
+        .eq("decided_by", "ceo")
         .order("created_at", { ascending: false })
         .limit(8),
       supabase
         .from("v_decision_log")
         .select("id", { count: "exact", head: true })
+        .eq("decided_by", "ceo")
         .gte("created_at", dayAgo),
       supabase
         .from("v_live_ops")

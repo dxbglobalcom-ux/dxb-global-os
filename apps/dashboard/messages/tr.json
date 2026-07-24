@@ -539,7 +539,11 @@
       "note": "Şirket işlerindeki her hareket, olduğu anda burada görünür. Bir satıra tıklayınca tüm hikâyesi açılır.",
       "steps": "adım",
       "approvalsLink": "Onaylara git",
-      "runNoLabel": "Arka plan sistem işi"
+      "runNoLabel": "Arka plan sistem işi",
+      "selectAll": "Tümünü seç",
+      "selectedCount": "seçili",
+      "removeSelected": "Seçilenleri kaldır",
+      "removing": "Kaldırılıyor"
     },
     "tasks": {
       "kpiActive": "Aktif",

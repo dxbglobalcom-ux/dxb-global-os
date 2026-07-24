@@ -33,3 +33,12 @@ Root causes measured, all fixed:
 3. **Hold-to-talk retired**: click-to-talk toggle (same idiom as dictation), Square icon while recording, <400ms short-press guard (measured: tiny presses shipped truncated webm → Speaches 500 "Failed to decode audio" → "Unanswered call" rows).
 4. Labels: hamzaOption "Hamza — size bizzat cevap verir", idleHint/help texts de-hold-ified; purity PASS.
 Live proof (E2E synth-mic call 2d98e045): answering role = agents-orchestrator, topic "Şirket durumu", fluent Turkish answer ("Evet, Muhittin Bey, benim, Hamza…"), timings stt 41.8s / answer 28.8s / tts 4.9s (X230; VPS lifts STT). tests/r31 10/10 pass. Final /chat battery 4/4.
+
+## Addendum — round 4 (CEO surface-cleanliness verdict 2026-07-24 evening 2: "selam verdi su içti bile yansıyor")
+
+Root: voice-call intents (V5 lineage) were being claimed by intent-intake and dispatched as COMPANY WORK — every greeting spawned task→worker-selection→escalation decisions; r31 live-DB tests added probe intents on top. Fixes:
+1. intent-intake claim query now excludes source='voice' (registered adaptation in the code comment; spoken Q&A "asking never starts work" per §7 help contract; voice-COMMANDED work = deferred JARVIS lane U15).
+2. Decisions "Important" scope = decided_by='ceo' ONLY (risk criterion removed — machine hooks write themselves high-risk and leaked through). Intelligence Feed recent-decisions panel + 24h counter now CEO-only too.
+3. Live Operations joined the C4 list standard: per-row checkbox on settled task rows → audited task purge (E2E: probe row selected, removed via UI, audit 37557); rows mid-flight not selectable.
+4. Residue: 13 voice intents + 12 conversation tasks purged via doors; 5 zombie agent_runs "running" since 2026-07-19 exam night closed as failed (audit runs.close_stale).
+Battery live/intelligence/decisions 6/6; decisions important view = 6/6 rows decided_by ceo; feed free of hook_reject/escalation. VS Code kill '61696' answered as X230 swap/OOM (known pattern, hardware boundary).
