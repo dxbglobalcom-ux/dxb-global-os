@@ -1587,7 +1587,28 @@
         "purging": "Kaldırılıyor",
         "scopeLabel": "Görünüm",
         "scopeImportant": "Önemli kararlar",
-        "scopeAll": "Tümü"
+        "scopeAll": "Tümü",
+        "decisionCodes": {
+          "routing_change": "Model yönlendirmesi değişti",
+          "hook_escalation": "Kural denetimi incelemeye yükseltildi",
+          "hook_reject": "İş, kural denetimince reddedildi",
+          "escalation": "Karar için yükseltildi",
+          "employee-selection": "Görev için çalışan seçildi",
+          "task_plan": "Görev planı hazırlandı",
+          "model.assigned": "Model atandı",
+          "engine.owner": "Motor sahibi atandı"
+        },
+        "outcomes": {
+          "applied": "Uygulandı",
+          "blocked": "Engellendi"
+        },
+        "actors": {
+          "ceo": "CEO",
+          "hook": "Kural kancası",
+          "resident-worker": "Yerleşik çalışan",
+          "orchestrator:escalate": "Hamza (yükseltme)",
+          "orchestrator:dispatch": "Hamza (dağıtım)"
+        }
       }
     },
     "alerts": {

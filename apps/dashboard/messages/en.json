@@ -1587,7 +1587,28 @@
         "purging": "Removing",
         "scopeLabel": "View",
         "scopeImportant": "Important decisions",
-        "scopeAll": "Everything"
+        "scopeAll": "Everything",
+        "decisionCodes": {
+          "routing_change": "Model routing changed",
+          "hook_escalation": "Rule check escalated to review",
+          "hook_reject": "Work rejected by a rule check",
+          "escalation": "Escalated for a decision",
+          "employee-selection": "Employee picked for a task",
+          "task_plan": "Task plan drawn up",
+          "model.assigned": "Model assigned",
+          "engine.owner": "Engine owner assigned"
+        },
+        "outcomes": {
+          "applied": "Applied",
+          "blocked": "Blocked"
+        },
+        "actors": {
+          "ceo": "CEO",
+          "hook": "Rule hook",
+          "resident-worker": "Resident worker",
+          "orchestrator:escalate": "Hamza (escalation)",
+          "orchestrator:dispatch": "Hamza (dispatch)"
+        }
       }
     },
     "alerts": {

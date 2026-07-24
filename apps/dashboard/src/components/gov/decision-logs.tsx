@@ -54,7 +54,21 @@ export type DecisionLabels = {
   scopeLabel: string;
   scopeImportant: string;
   scopeAll: string;
+  /** 19e: raw DB codes never reach the CEO's eye — finite vocabulary maps */
+  decisionCodes: Record<string, string>;
+  outcomes: Record<string, string>;
+  actors: Record<string, string>;
 };
+
+// 19e humanization (C17 precedent, rule 6: no code-language on first read).
+// Exact code → label; door-written rows ("model.assigned: x → y",
+// "engine.owner: a → b") match on prefix; anything else is already prose.
+function humanDecision(decision: string, codes: Record<string, string>): string {
+  if (codes[decision]) return codes[decision];
+  const prefix = decision.split(":")[0];
+  if (codes[prefix]) return `${codes[prefix]}${decision.slice(prefix.length)}`;
+  return decision;
+}
 
 const RISK_LEVEL: Record<string, StatusLevel> = {
   low: "ok",
@@ -198,7 +212,7 @@ export function DecisionLogs({
             <option value="all">{labels.all}</option>
             {whoOptions.map((w) => (
               <option key={w} value={w}>
-                {w}
+                {labels.actors[w] ?? w}
               </option>
             ))}
           </select>
@@ -319,9 +333,11 @@ function Row({
         <td className="whitespace-nowrap px-2 py-2 align-top font-data tabular-nums text-ink-secondary">
           {fmtTime(row.createdAt, locale)}
         </td>
-        <td className="break-words px-2 py-2 align-top text-ink-primary">{row.employee ?? row.decidedBy}</td>
         <td className="break-words px-2 py-2 align-top text-ink-primary">
-          {row.decision}
+          {row.employee ?? labels.actors[row.decidedBy] ?? row.decidedBy}
+        </td>
+        <td className="break-words px-2 py-2 align-top text-ink-primary">
+          {humanDecision(row.decision, labels.decisionCodes)}
           {count > 1 && (
             <span className="ml-1.5 rounded-input border border-edge-neutral px-1 font-data text-caption text-ink-muted">
               ×{count}
@@ -335,7 +351,9 @@ function Row({
             <span className="text-ink-muted">—</span>
           )}
         </td>
-        <td className="break-words px-2 py-2 align-top text-ink-secondary">{row.outcome ?? "—"}</td>
+        <td className="break-words px-2 py-2 align-top text-ink-secondary">
+          {row.outcome ? (labels.outcomes[row.outcome] ?? row.outcome) : "—"}
+        </td>
       </tr>
       {open && (
         <tr className="border-b border-edge-neutral bg-surface-graphite/50">
