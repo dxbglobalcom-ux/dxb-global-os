@@ -86,7 +86,7 @@ Plan ticket: `.planning/quick/20260719-c-series-remediation/PLAN.md`. Commits: d
 | C12 | ✓ CLOSED (catalog+form) | 13-model catalog (missing models added; kimi-3/codex-5.6/deepseek-v4-pro testing-until-exam); add-model = name+key+note (key → vault file); Fable chain registered in MODEL_ROUTING_SPEC |
 | C14/C15/C16 | ✓ ANSWERED | `00-NOTE-C-LEDGER-MEASURED-ANSWERS.md` — every claim cited |
 | C17 | ✓ CLOSED | action_type humanized; batch decisions collapse ×N; payload behind progressive disclosure |
-| C19 | ✓ CLOSED (vocab) / ◐ sweep | Jargon labels reworded EN+TR; hook-violation EN-detail-in-TR = open leg (DB content i18n) |
+| C19 | ✓ CLOSED | Jargon labels reworded EN+TR; hook-violation EN-detail leg CEO-WAIVED 2026-07-24 (see 19e/19f audit row + CC-SPEC A4 Machine Room doctrine) |
 | C20 | ✓ CLOSED | r23t workflows(+steps/runs) and r23t alert purged, audited; 'kumar' absent from repo (grep 0) |
 | C21 | ✓ CLOSED | 7 garbled intents + 4 garble tasks purged, audited |
 | C22 | ✓ CLOSED | Stale workforce risk closed with measurement; wave-end refresh discipline noted |
