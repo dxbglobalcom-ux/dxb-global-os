@@ -9,7 +9,7 @@ import { join } from "node:path";
 import { sql, type Kysely } from "kysely";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import type { DB } from "@dxb/shared";
-import { classify, SDK_MODEL_IDS, loadPolicy, route } from "@dxb/kernel";
+import { SDK_MODEL_IDS, loadPolicy, route } from "@dxb/kernel";
 import { recallMemory } from "@dxb/memory-router";
 import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./speaches.js";
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
@@ -85,11 +85,19 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
     r = route({ ...ci, task_class: "orchestration" }, rules);
   }
   const sys = [
-    `You are ${q.agent.slug}, ${q.agent.role_level ?? "member"} of the ${q.agent.department} department at DXB Global.`,
+    q.agent.slug === HAMZA_SLUG
+      ? "You are Hamza, the orchestrator of DXB Global — the CEO's direct counterpart for planning and running the whole company. When the CEO calls, HE IS TALKING TO YOU, Hamza — never claim to be someone else or say Hamza is unavailable."
+      : `You are ${q.agent.slug}, ${q.agent.role_level ?? "member"} of the ${q.agent.department} department at DXB Global.`,
     q.personaHead ? `Your persona (authoritative identity, follow it):\n${q.personaHead}` : "",
     q.memoryLines.length ? `Relevant company memory:\n- ${q.memoryLines.join("\n- ")}` : "",
     `Answer the CEO's spoken question in ${q.lang === "tr" ? "Turkish" : "English"}.`,
     "This is a VOICE call: answer in 2-4 short spoken sentences, no markdown, no lists.",
+    // Style ruling (CEO 2026-07-24, in-chat: "türkçesi çok kötü... tarzanca"):
+    // spoken answers must read like a fluent human speaking, never like
+    // compressed telegraph or translated jargon.
+    q.lang === "tr"
+      ? "Doğal, akıcı, sade konuşma Türkçesi kullan: tam cümleler kur, devrik/telegrafik kısaltma yapma, İngilizce iş jargonunu Türkçeye zorla çevirme (gerekiyorsa sade Türkçe karşılığını söyle). Bir insana sesli söylendiğinde kulağa doğal gelmeli."
+      : "Speak in natural, fluent conversational English: complete sentences, no telegraphic compression, no internal jargon. It must sound natural when read aloud to a person.",
     `First line of your output MUST be exactly "TOPIC: <2-4 word topic of the question in ${q.lang === "tr" ? "Turkish" : "English"}>", then an empty line, then the spoken answer. The TOPIC line is never spoken.`,
     "If the question implies outward action (money, contracts, external messages), say it needs a dashboard approval — voice may request, never approve (V6).",
   ].filter(Boolean).join("\n\n");
@@ -180,8 +188,14 @@ export async function answerVoiceCall(
     ? ceoLine.lang
     : /[çğıöşüÇĞİÖŞÜ]/.test(question) || !/^[\x00-\x7F]*$/.test(question) ? "tr" : "en";
 
-  // 3. Routing: explicit pick (id parked by intake), else classify →
-  //    department director, else Hamza (the orchestrator answers himself).
+  // 3. Routing — registered adaptation (CEO ruling 2026-07-24, in-chat:
+  //    "Hamza neden kendisi cevap vermiyor da CEO ofis müdürü araya giriyor?"):
+  //    the default line is HAMZA HIMSELF. The v1 "Ask-a-Director" classify hop
+  //    (question → department → director answers) put a Chief of Staff between
+  //    the CEO and his orchestrator — retired. A director answers ONLY when the
+  //    CEO explicitly picks one in the ASK dropdown (id parked by intake).
+  //    Bonus: dropping the classify call removes one LLM round from the
+  //    latency-critical lane.
   let agent: { id: string; slug: string; department: string; role_level: string | null; persona_path: string | null } | undefined;
   if (row.target_agent_id) {
     agent = await db
@@ -191,26 +205,10 @@ export async function answerVoiceCall(
       .where("employment_status", "<>", "archived")
       .executeTakeFirst();
   } else {
-    let targetSlug = HAMZA_SLUG;
-    try {
-      const classified = await classify(question, { taskClass: "voice.classify" });
-      const dept = classified.departments[0];
-      if (dept) {
-        const director = await db
-          .selectFrom("departments")
-          .innerJoin("agents", "agents.id", "departments.director_id")
-          .select("agents.slug")
-          .where("departments.slug", "=", dept)
-          .executeTakeFirst();
-        targetSlug = director?.slug ?? HAMZA_SLUG;
-      }
-    } catch {
-      targetSlug = HAMZA_SLUG; // routing failure → the orchestrator answers
-    }
     agent = await db
       .selectFrom("agents")
       .select(["id", "slug", "department", "role_level", "persona_path"])
-      .where("slug", "=", targetSlug)
+      .where("slug", "=", HAMZA_SLUG)
       .where("employment_status", "<>", "archived")
       .executeTakeFirst();
   }

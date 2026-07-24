@@ -274,10 +274,10 @@
  {
   "task_class": "voice.answer",
   "match": {},
-  "model_tier": "L4",
-  "model": "claude-haiku-4-5",
+  "model_tier": "L2",
+  "model": "sonnet-5",
   "mode": "subscription",
-  "effort": "low",
+  "effort": "medium",
   "needs_council": false,
   "priority": 0
  },

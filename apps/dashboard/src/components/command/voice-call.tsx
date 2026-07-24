@@ -135,6 +135,7 @@ export function VoiceCall({
   const chunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const callIdRef = useRef<string | null>(null);
+  const recordStartRef = useRef(0);
   const phaseRef = useRef<Phase>("idle");
   phaseRef.current = phase;
 
@@ -237,6 +238,14 @@ export function VoiceCall({
       };
       recorder.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
+        // Short-press guard (measured 2026-07-24: sub-instant presses shipped
+        // truncated webm → Speaches 500 "Failed to decode audio" → a dead
+        // "Unanswered call" row): under 400ms nothing intelligible was said —
+        // discard honestly instead of failing loudly.
+        if (Date.now() - recordStartRef.current < 400) {
+          if (phaseRef.current === "recording") setPhase("idle");
+          return;
+        }
         const type = recorder.mimeType || "audio/webm";
         const blob = new Blob(chunksRef.current, { type });
         if (blob.size > 0 && phaseRef.current === "recording") void send(blob, type);
@@ -244,6 +253,7 @@ export function VoiceCall({
       };
       recorderRef.current = recorder;
       recorder.start();
+      recordStartRef.current = Date.now();
       callIdRef.current = null;
       setCall(null);
       setLines([]);
@@ -317,25 +327,18 @@ export function VoiceCall({
             <StatusBadge level={PHASE_LEVEL[phase]}>{stateLabel[phase]}</StatusBadge>
           </div>
 
+          {/* Click-to-talk toggle (CEO ruling 2026-07-24: "basılıp tutup
+              konuşmak çok kötü") — first click starts, second click sends;
+              same idiom as the chat dictation mic. Keyboard works through the
+              native button click. */}
           <button
             type="button"
             aria-pressed={phase === "recording"}
             aria-label={labels.holdToTalk}
             disabled={phase === "uploading" || phase === "waiting"}
-            onPointerDown={(e) => {
-              e.preventDefault();
-              void startRecording();
-            }}
-            onPointerUp={stopRecording}
-            onPointerLeave={stopRecording}
-            onKeyDown={(e) => {
-              if ((e.key === " " || e.key === "Enter") && !e.repeat) {
-                e.preventDefault();
-                void startRecording();
-              }
-            }}
-            onKeyUp={(e) => {
-              if (e.key === " " || e.key === "Enter") stopRecording();
+            onClick={() => {
+              if (phaseRef.current === "recording") stopRecording();
+              else void startRecording();
             }}
             className={`flex size-24 items-center justify-center rounded-full border transition duration-[var(--t-fast)] ease-refined disabled:opacity-50 ${
               phase === "recording"
@@ -343,7 +346,11 @@ export function VoiceCall({
                 : "border-edge-champagne text-accent-champagne hover:bg-surface-carbon"
             }`}
           >
-            <Mic className="size-9" aria-hidden />
+            {phase === "recording" ? (
+              <Square className="size-8" aria-hidden />
+            ) : (
+              <Mic className="size-9" aria-hidden />
+            )}
           </button>
           <p className="text-caption text-ink-muted">{labels.holdToTalk}</p>
 

@@ -24,3 +24,12 @@ Boundary: U15 D1-D7 daemon defects stay OPEN (separate ticket); joint CEO mic te
 3. **Stuck worker wave cleared**: Hamza dispatched 3 construction-code tasks to runtime workers (K1 violation) + 1 research task in a deterministic std.knowledge_shelf loop (toolless worker vs file-artifact gate — 3 fails, ladder burning). All 4 failed with events + audit, then purged through the door (their objectives also carried "…" chars — standing order 8). Root causes recorded; the gate/capability mismatch is a known open item for the runtime lane.
 4. **Standing order 11** (superpowers always) registered in ledger + project CLAUDE.md.
 5. Battery: chat/tasks/alerts 6/6 scrollOK + zero ellipsis; purity PASS (2271=2271).
+
+## Addendum — round 3 (CEO voice-line verdict 2026-07-24 evening: "kalite çok kötü, tarzanca, Hamza neden cevap vermiyor")
+
+Root causes measured, all fixed:
+1. **Wrong answerer**: v1 Ask-a-Director law routed unpicked calls classify→department director (Chief of Staff answered "Hamza yok"). Registered adaptation (VOICE_INTERACTION_SPEC §3.1 note): default answerer = HAMZA HIMSELF (agents-orchestrator); director only on explicit dropdown pick; classify hop retired (one less LLM round).
+2. **Broken Turkish**: voice.answer routing row was L4 claude-haiku/low vs chat's L2 sonnet/medium — lifted to sonnet-5/medium (DB + routing-seed.json KERN-02 parity) + natural-speech style directive in the answer prompt (TR: tam cümle, telegrafik yasak).
+3. **Hold-to-talk retired**: click-to-talk toggle (same idiom as dictation), Square icon while recording, <400ms short-press guard (measured: tiny presses shipped truncated webm → Speaches 500 "Failed to decode audio" → "Unanswered call" rows).
+4. Labels: hamzaOption "Hamza — size bizzat cevap verir", idleHint/help texts de-hold-ified; purity PASS.
+Live proof (E2E synth-mic call 2d98e045): answering role = agents-orchestrator, topic "Şirket durumu", fluent Turkish answer ("Evet, Muhittin Bey, benim, Hamza…"), timings stt 41.8s / answer 28.8s / tts 4.9s (X230; VPS lifts STT). tests/r31 10/10 pass. Final /chat battery 4/4.

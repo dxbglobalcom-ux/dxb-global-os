@@ -2137,8 +2137,8 @@
     "voice": {
       "title": "Voice Line",
       "subtitle": "Ask a director by voice — Hamza routes, one line, €0.",
-      "idleHint": "Hold the mic and speak; release to send.",
-      "holdToTalk": "Hold to talk",
+      "idleHint": "Click the microphone and speak; click again to send.",
+      "holdToTalk": "Click, speak, click again to send",
       "recording": "Listening — release to send",
       "uploading": "Transcribing",
       "waiting": "Thinking",
@@ -2150,13 +2150,13 @@
       "micUnsupported": "This browser cannot record audio.",
       "youLabel": "You (CEO)",
       "askLabel": "Ask",
-      "hamzaOption": "Hamza — routes automatically",
+      "hamzaOption": "Hamza — answers you himself",
       "stop": "Stop",
       "playAnswer": "Play answer",
       "newCall": "New call",
       "degraded": "Fallback voice",
       "freeLine": "€0 line",
-      "emptyTranscript": "No call yet. Hold the mic and ask your question.",
+      "emptyTranscript": "No conversation yet. Click the microphone, ask your question, click again to send.",
       "recentTitle": "Recent calls",
       "recentEmpty": "No calls recorded yet.",
       "answerNotReady": "Answer audio not ready yet.",
@@ -2268,7 +2268,7 @@
         },
         {
           "t": "Voice line (below the board)",
-          "b": "The spoken call line lives under the chat now: open it, hold the big button, ask a director or Hamza by voice and hear the answer spoken back. Dictation writes text for you; the voice line talks back."
+          "b": "The spoken call line lives under the chat now: open it, click the microphone, ask a director or Hamza by voice; click again when done and hear the answer spoken back. Dictation writes text for you; the voice line talks back. With no target picked, Hamza himself answers you."
         },
         {
           "t": "Where the data comes from",
@@ -2361,7 +2361,7 @@
       "sections": [
         {
           "t": "The call panel",
-          "b": "Hold the button, speak, release: your words go to Hamza and the answer comes back out loud. Asking costs nothing and starts no work."
+          "b": "Click the microphone, speak, click again when done: your words go to Hamza and the answer comes back spoken. Asking is free and never starts work."
         },
         {
           "t": "Recent calls",

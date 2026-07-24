@@ -55,6 +55,16 @@ CEO push-to-talk (dashboard /voice or laptop client)
   → voice_calls row + decision_log entry                    [V10]
 ```
 
+> **Registered adaptation 2026-07-24 (CEO ruling, in-chat):** the default
+> answerer is **Hamza himself** — the classify→department-director hop is
+> retired for unpicked calls ("Hamza neden kendisi cevap vermiyor da CEO ofis
+> müdürü araya giriyor?"). A director answers only on an explicit ASK-dropdown
+> pick. Same ruling: push-to-talk became click-to-talk toggle; `voice.answer`
+> routing row lifted L4-haiku/low → L2-sonnet/medium (KERN-02 parity in
+> `routing-seed.json`) after measured broken-Turkish answers on the haiku row.
+> The call surface itself lives inside `/chat` since the same-day merge
+> (CC-SPEC §7 sync note).
+
 Two spoken shapes, one pipeline: (a) "Hamza, ask the HR Director: …" — Hamza routes and the director's voice answers; (b) "Hamza, …" — Hamza answers himself as orchestrator. Both are ONE call session with ONE active AI voice.
 
 ### 3.2 Voice supply

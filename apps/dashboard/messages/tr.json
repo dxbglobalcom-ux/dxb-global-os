@@ -2137,8 +2137,8 @@
     "voice": {
       "title": "Ses Hattı",
       "subtitle": "Bir müdüre sesle sorun — Hamza yönlendirir, tek hat, €0.",
-      "idleHint": "Mikrofonu basılı tutup konuşun; bırakınca gönderilir.",
-      "holdToTalk": "Bas-konuş",
+      "idleHint": "Mikrofona tıklayıp konuşun; bitirince tekrar tıklayın, gönderilir.",
+      "holdToTalk": "Tıklayın, konuşun, bitirince tekrar tıklayın",
       "recording": "Dinliyor — bırakınca gönderilir",
       "uploading": "Yazıya dökülüyor",
       "waiting": "Düşünüyor",
@@ -2150,13 +2150,13 @@
       "micUnsupported": "Bu tarayıcı ses kaydedemiyor.",
       "youLabel": "Siz (CEO)",
       "askLabel": "Soru hedefi",
-      "hamzaOption": "Hamza — otomatik yönlendirir",
+      "hamzaOption": "Hamza — size bizzat cevap verir",
       "stop": "Durdur",
       "playAnswer": "Cevabı çal",
       "newCall": "Yeni görüşme",
       "degraded": "Yedek ses",
       "freeLine": "€0 hat",
-      "emptyTranscript": "Henüz görüşme yok. Mikrofonu basılı tutup sorunuzu sorun.",
+      "emptyTranscript": "Henüz görüşme yok. Mikrofona tıklayın, sorunuzu sorun, bitirince tekrar tıklayın.",
       "recentTitle": "Son görüşmeler",
       "recentEmpty": "Kayıtlı görüşme yok.",
       "answerNotReady": "Cevap sesi henüz hazır değil.",
@@ -2268,7 +2268,7 @@
         },
         {
           "t": "Sesli hat (panonun altında)",
-          "b": "Sesli arama hattı artık sohbetin altında: açın, büyük düğmeyi basılı tutun, bir direktöre veya Hamza'ya sesle sorun, cevabı sesli dinleyin. Dikte sizin yerinize yazı yazar; sesli hat ise sesle cevap verir."
+          "b": "Sesli arama hattı artık sohbetin altında: açın, mikrofona tıklayın, bir direktöre veya Hamza'ya sesle sorun; bitirince tekrar tıklayın, cevabı sesli dinleyin. Dikte sizin yerinize yazı yazar; sesli hat ise sesle cevap verir. Hedef seçmezseniz size bizzat Hamza cevap verir."
         },
         {
           "t": "Bu veri nereden geliyor",
@@ -2361,7 +2361,7 @@
       "sections": [
         {
           "t": "Arama paneli",
-          "b": "Düğmeyi basılı tutun, konuşun, bırakın: sözünüz Hamza'ya gider, cevap sesli döner. Sormak bedavadır ve hiçbir iş başlatmaz."
+          "b": "Mikrofona tıklayın, konuşun, bitirince tekrar tıklayın: sözünüz Hamza'ya gider, cevap sesli döner. Sormak bedavadır ve hiçbir iş başlatmaz."
         },
         {
           "t": "Son aramalar",
