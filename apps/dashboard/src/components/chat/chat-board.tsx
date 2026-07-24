@@ -38,6 +38,7 @@ export type ChatLabels = {
   dictateStop: string;
   dictateRecording: string;
   dictateTranscribing: string;
+  dictateCancelHint: string;
   dictateLang: string;
   dictateErrors: Record<string, string>;
 };
@@ -80,8 +81,24 @@ export function ChatBoard({
   const [dictSeconds, setDictSeconds] = useState(0);
   const dictRecorderRef = useRef<MediaRecorder | null>(null);
   const dictChunksRef = useRef<Blob[]>([]);
+  const dictCancelledRef = useRef(false);
   const dictPhaseRef = useRef<typeof dictPhase>("idle");
   dictPhaseRef.current = dictPhase;
+
+  // WisprFlow cancel idiom: Escape while recording discards the take —
+  // nothing is uploaded, nothing lands in the draft.
+  useEffect(() => {
+    if (dictPhase !== "recording") return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      e.preventDefault();
+      dictCancelledRef.current = true;
+      const recorder = dictRecorderRef.current;
+      if (recorder && recorder.state === "recording") recorder.stop();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [dictPhase]);
 
   // Honest elapsed-seconds counter while recording/transcribing (the U15 D4
   // lesson: silent waiting reads as dead — always show time moving).
@@ -138,6 +155,10 @@ export function ChatBoard({
       };
       recorder.onstop = () => {
         stream.getTracks().forEach((t) => t.stop());
+        if (dictCancelledRef.current) {
+          setDictPhase("idle");
+          return;
+        }
         const type = recorder.mimeType || "audio/webm";
         const blob = new Blob(dictChunksRef.current, { type });
         if (blob.size > 0) void transcribe(blob, type);
@@ -147,6 +168,7 @@ export function ChatBoard({
         }
       };
       dictRecorderRef.current = recorder;
+      dictCancelledRef.current = false;
       recorder.start();
       setDictPhase("recording");
     } catch {
@@ -349,7 +371,7 @@ export function ChatBoard({
           </div>
           {dictPhase === "recording" && (
             <span className="text-caption text-status-danger" role="status">
-              {labels.dictateRecording} · {dictSeconds}s
+              {labels.dictateRecording} · {dictSeconds}s · {labels.dictateCancelHint}
             </span>
           )}
           {dictPhase === "transcribing" && (

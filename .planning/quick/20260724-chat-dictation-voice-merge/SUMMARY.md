@@ -16,3 +16,11 @@ Ledger 1a-1e CLOSED (row updated with full evidence). Delivered:
 Evidence: red→green E2E (scratchpad dictate-e2e.mjs; fake-file mic broken in this Chromium — measured headless AND headed — mic stream synthesized in-page from the real WAV; MediaRecorder→route→STT all real): dictated text landed = "Merhaba Hamza, yarın sabah pazarlaman raporunu hazırla." RULE #0 battery 4/4 on merged /chat. Speaches exit 137 root-caused = manual stop in 07-18 RAM crunch. Latency measured: small 17s / base 5s warm on X230 (dictation model knob `DXB_DICTATION_STT_MODEL`, default stays quality-first small).
 
 Boundary: U15 D1-D7 daemon defects stay OPEN (separate ticket); joint CEO mic test (U15 block 8) still the only closer for the human-ear legs.
+
+## Addendum — same-day round 2 (CEO feedback 2026-07-24 afternoon)
+
+1. **Accuracy levers (WisprFlow parity)**: sttTranscribe gained prompt/hotwords/vadFilter; dictate route passes vad_filter=true + per-lang domain prompt + hotwords "Hamza, DXB" (env knobs DXB_DICTATION_PROMPT_TR/EN, DXB_DICTATION_HOTWORDS). Measured: "rapuru→raporu" fixed by prompt, "Anza→Hamza" fixed by hotwords, 3s silence → "" (hallucination dead); full UI E2E now transcribes the proof sentence 100% exact. Escape cancels a recording without uploading (E2E: 0 requests, empty draft).
+2. **Queued rows removable**: migration 20260724001000_task_purge_queued.sql widens the task purge door to queued/inbox (live states still untouchable); grid PURGEABLE set + hint labels updated. E2E: dummy queued row ticked, purged via UI, audit row 37525.
+3. **Stuck worker wave cleared**: Hamza dispatched 3 construction-code tasks to runtime workers (K1 violation) + 1 research task in a deterministic std.knowledge_shelf loop (toolless worker vs file-artifact gate — 3 fails, ladder burning). All 4 failed with events + audit, then purged through the door (their objectives also carried "…" chars — standing order 8). Root causes recorded; the gate/capability mismatch is a known open item for the runtime lane.
+4. **Standing order 11** (superpowers always) registered in ledger + project CLAUDE.md.
+5. Battery: chat/tasks/alerts 6/6 scrollOK + zero ellipsis; purity PASS (2271=2271).

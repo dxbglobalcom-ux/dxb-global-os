@@ -575,7 +575,7 @@
       },
       "purgeSelected": "Remove selected",
       "purging": "Removing",
-      "selectableHint": "Finished rows (done, failed, returned) can be ticked and removed — running work cannot be deleted from here. Removal is recorded in the audit trail."
+      "selectableHint": "Finished rows (done, failed, returned) and not-yet-started rows (queued, inbox) can be ticked and removed — work in progress cannot be deleted from here. Removal is recorded in the audit trail."
     },
     "employees": {
       "kpiTotal": "Workforce",
@@ -2225,7 +2225,8 @@
         "empty_transcript": "Nothing was heard — please speak again.",
         "stt_unavailable": "The speech engine did not answer — turn it on with scripts/voice-on.sh and retry.",
         "audio_too_large": "The recording is too long — dictate in shorter pieces."
-      }
+      },
+      "dictateCancelHint": "Esc cancels"
     }
   },
   "help": {

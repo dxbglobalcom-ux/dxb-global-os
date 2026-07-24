@@ -575,7 +575,7 @@
       },
       "purgeSelected": "Seçilenleri kaldır",
       "purging": "Kaldırılıyor",
-      "selectableHint": "Biten satırlar (bitti, hata, iade) işaretlenip kaldırılabilir — çalışan iş buradan silinemez. Kaldırma denetim izine kaydedilir."
+      "selectableHint": "Bitmiş satırlar (tamamlandı, başarısız, iade) ve henüz başlamamış satırlar (kuyrukta, gelen kutusu) işaretlenip kaldırılabilir — devam eden iş buradan silinemez. Kaldırma işlemi denetim defterine kaydedilir."
     },
     "employees": {
       "kpiTotal": "Kadro",
@@ -2225,7 +2225,8 @@
         "empty_transcript": "Hiçbir şey duyulmadı — lütfen tekrar konuşun.",
         "stt_unavailable": "Ses motoru cevap vermedi — scripts/voice-on.sh ile açıp yeniden deneyin.",
         "audio_too_large": "Kayıt çok uzun — daha kısa parçalar halinde yazdırın."
-      }
+      },
+      "dictateCancelHint": "Esc iptal eder"
     }
   },
   "help": {

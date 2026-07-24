@@ -1,9 +1,11 @@
 "use client";
 
 // C4/C18 list-page standard (2026-07-19): the task grid with SELECTION and
-// bulk removal. Only terminal rows (failed/returned/done) are selectable —
-// live work cannot be deleted from a checkbox. The purge goes through the
-// audited control door (/api/control/purge → control_records_purge).
+// bulk removal. Terminal rows (failed/returned/done) AND never-started rows
+// (queued/inbox — CEO adaptation 2026-07-24: a queued mistake must be
+// removable) are selectable; work in flight (claimed/running/review/
+// awaiting_approval) cannot be deleted from a checkbox. The purge goes
+// through the audited control door (/api/control/purge → control_records_purge).
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { DataGrid, StatusBadge, type Column, type StatusLevel } from "@/components/primitives";
@@ -19,7 +21,7 @@ export type PurgeTaskRow = {
   updated_at: string;
 };
 
-const TERMINAL = new Set(["failed", "returned", "done"]);
+const PURGEABLE = new Set(["failed", "returned", "done", "queued", "inbox"]);
 
 const BADGE: Record<string, StatusLevel> = {
   queued: "info",
@@ -61,7 +63,7 @@ export function TaskPurgeGrid({
   const [busy, setBusy] = useState(false);
 
   const selectableIds = useMemo(
-    () => rows.filter((r) => TERMINAL.has(r.status)).map((r) => r.id),
+    () => rows.filter((r) => PURGEABLE.has(r.status)).map((r) => r.id),
     [rows],
   );
   const allSelected = selectableIds.length > 0 && selectableIds.every((id) => selected.has(id));
@@ -108,7 +110,7 @@ export function TaskPurgeGrid({
         />
       ),
       render: (r) =>
-        TERMINAL.has(r.status) ? (
+        PURGEABLE.has(r.status) ? (
           <input
             type="checkbox"
             aria-label={`select ${r.id}`}

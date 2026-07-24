@@ -1,5 +1,9 @@
 <!-- GSD:project-start source:PROJECT.md -->
 
+## ⛔ STANDING ORDER 11 — SUPERPOWERS DISCIPLINE, ALWAYS (CEO order 2026-07-24)
+
+**Every session on this project works through the superpowers skill set.** Invoke the matching process skill BEFORE the work: `systematic-debugging` for any defect (root cause before fix), `executing-plans` for ticket execution, `test-driven-development` for new code (red before green), `verification-before-completion` before any "done" claim. Excluded: `subagent-driven-development` and agent-dispatch for construction authorship (K1 — every repo line is Fable's, inline). Composes with, never overrides, RULE #0/#0-A/#0-B. Full text: complaint ledger `00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` standing order 11.
+
 ## ⛔ RULE #0 — MANDATORY DESIGN VERIFICATION (CEO directive 2026-07-13, SEVEREST TIER)
 
 **No visual work is "done" until a Design Verification Pass runs and is evidenced.** Render every touched route in the real browser, BOTH locales (EN+TR), ≥2 widths; walk `references/design-bank/CHECKLIST.md` (overlap, alignment, cut-off, scroll sanity, language purity, honest zero-states, token discipline); compare against the baselines in `references/design-bank/`; run `scripts/i18n-purity-check.sh`. The CEO is NOT the QA layer — catchable visual defects reaching the CEO's eye = governance violation (RET + recorded). Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-DESIGN-VERIFICATION.md`. Applies to every author and every session until project end.

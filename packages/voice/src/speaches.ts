@@ -38,16 +38,32 @@ export function ttsForLang(cfg: SpeachesConfig, lang: "tr" | "en"): { model: str
 }
 
 /** Audio → text. Returns the raw transcript ("" for silence — caller owns the
- *  empty-transcript retry/fail path, spec §17: never a guessed transcript). */
+ *  empty-transcript retry/fail path, spec §17: never a guessed transcript).
+ *  Accuracy levers (2026-07-24, WisprFlow parity work — all native Speaches/
+ *  faster-whisper params, measured against the openapi surface):
+ *  - vadFilter: trims non-speech before decoding — the antidote to Whisper's
+ *    silence hallucinations (measured: silent clips produced "Altyazı M.K.").
+ *  - prompt: initial-prompt domain biasing (business vocabulary, suffixes).
+ *  - hotwords: proper nouns the model keeps mangling ("Hamza" → "Anza"). */
 export async function sttTranscribe(
   audio: Buffer,
-  opts: { lang?: "tr" | "en"; filename?: string; config?: SpeachesConfig } = {},
+  opts: {
+    lang?: "tr" | "en";
+    filename?: string;
+    config?: SpeachesConfig;
+    prompt?: string;
+    hotwords?: string;
+    vadFilter?: boolean;
+  } = {},
 ): Promise<string> {
   const cfg = opts.config ?? speachesConfig();
   const form = new FormData();
   form.append("file", new Blob([new Uint8Array(audio)], { type: "audio/wav" }), opts.filename ?? "utterance.wav");
   form.append("model", cfg.sttModel);
   if (opts.lang) form.append("language", opts.lang);
+  if (opts.prompt) form.append("prompt", opts.prompt);
+  if (opts.hotwords) form.append("hotwords", opts.hotwords);
+  if (opts.vadFilter != null) form.append("vad_filter", String(opts.vadFilter));
   const res = await fetch(`${cfg.baseUrl}/v1/audio/transcriptions`, { method: "POST", body: form });
   if (!res.ok) throw new Error(`speaches stt ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const body = (await res.json()) as { text?: string };

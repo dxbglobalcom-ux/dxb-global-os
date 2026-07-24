@@ -54,12 +54,28 @@ export async function POST(request: Request): Promise<NextResponse> {
     sttModel: process.env.DXB_DICTATION_STT_MODEL ?? base.sttModel,
   };
 
+  // Accuracy levers (WisprFlow parity, CEO 2026-07-24 "yapacağım→yapacağın"):
+  // VAD trims silence (whisper hallucinates on it — measured "Altyazı M.K.");
+  // a short domain prompt biases toward business vocabulary and complete
+  // suffixes; hotwords pin the proper nouns whisper mangles ("Hamza"→"Anza").
+  const DICTATION_PROMPT: Record<"tr" | "en", string> = {
+    tr:
+      process.env.DXB_DICTATION_PROMPT_TR ??
+      "Şirket yönetimi diktesi. Görevler, raporlar, pazarlama, satış, finans, departmanlar. Tam ve doğru Türkçe cümleler: yapacağım, hazırlayacağım, göndereceğim.",
+    en:
+      process.env.DXB_DICTATION_PROMPT_EN ??
+      "Business dictation. Tasks, reports, marketing, sales, finance, departments. Complete natural English sentences.",
+  };
+
   const started = Date.now();
   try {
     const text = await sttTranscribe(Buffer.from(await audio.arrayBuffer()), {
       lang: parsed.data.lang,
       filename: audio.name || "dictation.webm",
       config,
+      vadFilter: true,
+      prompt: DICTATION_PROMPT[parsed.data.lang],
+      hotwords: process.env.DXB_DICTATION_HOTWORDS ?? "Hamza, DXB",
     });
     if (text.length === 0) {
       // Honest empty-capture signal (§17): the UI says "nothing heard",
