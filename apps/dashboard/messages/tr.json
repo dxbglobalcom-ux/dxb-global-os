@@ -1051,7 +1051,17 @@
       "range30d": "30 gün",
       "project": "Proje",
       "allProjects": "Tüm projeler",
-      "date": "Gün"
+      "date": "Gün",
+      "status": "Durum",
+      "all": "Tümü",
+      "role": "Rol",
+      "allRoles": "Tüm roller",
+      "kind": "Tür",
+      "allKinds": "Tüm türler",
+      "severity": "Önem",
+      "allSeverities": "Tüm önem düzeyleri",
+      "state": "Durum",
+      "allStates": "Tüm durumlar"
     },
     "tokens": {
       "kpiToday": "Bugünkü token",
@@ -1107,7 +1117,8 @@
       "banned": "Yasaklı",
       "viewModels": "Model kataloğu",
       "empty": "Kayıtlı sağlayıcı yok.",
-      "reconcileNote": "Beyan-edilen ile ölçülen fatura mutabakatı CEO'nun aylık manuel işidir (COST spec §16) — ölçülen harcama yukarıda, sağlayıcı faturası yanında."
+      "reconcileNote": "Beyan-edilen ile ölçülen fatura mutabakatı CEO'nun aylık manuel işidir (COST spec §16) — ölçülen harcama yukarıda, sağlayıcı faturası yanında.",
+      "statusTesting": "Sınavda"
     },
     "capacity": {
       "kpiQueued": "Kuyrukta görev",

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   DataGrid,
+  FilterBar,
   Panel,
   Stat,
   StatusBadge,
@@ -29,11 +30,24 @@ type DirectorRow = {
   persona_id: string | null;
 };
 
-export default async function DirectorsPage() {
+export default async function DirectorsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ dept?: string; bound?: string }>;
+}) {
+  const params = await searchParams;
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.directors;
+  const tf = dict.command.filters;
   const supabase = await createClient();
+
+  // C9 filter standard: validated URL params, junk falls back silently.
+  const dept = params.dept || undefined;
+  const bound =
+    params.bound === "bound" || params.bound === "unbound"
+      ? params.bound
+      : undefined;
 
   const [rowsRes, deptRes] = await Promise.all([
     supabase
@@ -74,10 +88,18 @@ export default async function DirectorsPage() {
       locale === "tr" ? (d.display_name_tr ?? d.display_name) : d.display_name,
     ]),
   );
-  const rows = (rowsRes.data ?? []) as DirectorRow[];
+  const allRows = (rowsRes.data ?? []) as DirectorRow[];
+  // C9: every figure below follows the filter (small bench — narrowed here,
+  // not in SQL).
+  const rows = allRows.filter(
+    (r) =>
+      (!dept || r.department === dept) &&
+      (!bound || (bound === "bound") === (r.hook_version != null)),
+  );
 
   const personaBound = rows.filter((r) => r.persona_id != null).length;
   const hookBound = rows.filter((r) => r.hook_version != null).length;
+  const anyUnbound = allRows.some((r) => r.hook_version == null);
 
   const columns: Column<DirectorRow>[] = [
     {
@@ -187,6 +209,42 @@ export default async function DirectorsPage() {
       </div>
 
       <Panel title={dict.command.nav.pages.directors}>
+        {/* C9 list-page standard. The hook-binding group only renders while
+            an unbound director actually exists — a filter with one real
+            value is noise (A1: informative fields only). */}
+        <div className="mb-4">
+          <FilterBar
+            clearLabel={tf.clear}
+            groups={[
+              {
+                param: "dept",
+                label: tf.department,
+                kind: "select",
+                value: dept ?? "",
+                allLabel: tf.allDepartments,
+                options: allRows
+                  .map((r) => r.department)
+                  .sort()
+                  .map((d) => ({ value: d, label: deptNames.get(d) ?? d })),
+              },
+              ...(anyUnbound
+                ? [
+                    {
+                      param: "bound",
+                      label: t.colHook,
+                      kind: "chips" as const,
+                      value: bound ?? "",
+                      defaultValue: "",
+                      options: [
+                        { value: "", label: tf.all },
+                        { value: "unbound", label: t.unbound },
+                      ],
+                    },
+                  ]
+                : []),
+            ]}
+          />
+        </div>
         {rows.length === 0 ? (
           <p className="py-4 text-body-s text-ink-secondary">{t.empty}</p>
         ) : (

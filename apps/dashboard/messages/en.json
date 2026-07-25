@@ -1051,7 +1051,17 @@
       "range30d": "30 days",
       "project": "Project",
       "allProjects": "All projects",
-      "date": "Day"
+      "date": "Day",
+      "status": "Status",
+      "all": "All",
+      "role": "Role",
+      "allRoles": "All roles",
+      "kind": "Type",
+      "allKinds": "All types",
+      "severity": "Severity",
+      "allSeverities": "All severities",
+      "state": "State",
+      "allStates": "All states"
     },
     "tokens": {
       "kpiToday": "Tokens today",
@@ -1107,7 +1117,8 @@
       "banned": "Banned",
       "viewModels": "Model catalog",
       "empty": "No providers registered.",
-      "reconcileNote": "Declared-vs-measured invoice reconciliation is the CEO's monthly manual task (COST spec §16) — measured spend above, provider invoice beside it."
+      "reconcileNote": "Declared-vs-measured invoice reconciliation is the CEO's monthly manual task (COST spec §16) — measured spend above, provider invoice beside it.",
+      "statusTesting": "In testing"
     },
     "capacity": {
       "kpiQueued": "Queued tasks",

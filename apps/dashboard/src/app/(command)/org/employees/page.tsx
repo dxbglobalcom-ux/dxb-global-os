@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   DataGrid,
+  FilterBar,
   Panel,
   Stat,
   StatusBadge,
@@ -35,12 +36,26 @@ const ROW_LIMIT = 200;
 export default async function EmployeesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; dept?: string }>;
+  searchParams: Promise<{ status?: string; dept?: string; role?: string }>;
 }) {
-  const { status, dept } = await searchParams;
-  const dict = getDict(await getLocale());
+  const params = await searchParams;
+  const locale = await getLocale();
+  const dict = getDict(locale);
   const t = dict.command.employees;
+  const tf = dict.command.filters;
   const supabase = await createClient();
+
+  // C9 filter standard: every value is validated server-side; junk params
+  // fall back to "all" silently (the costs/tokens idiom).
+  const status =
+    params.status === "active" || params.status === "dormant"
+      ? params.status
+      : undefined;
+  const role =
+    params.role === "head" || params.role === "specialist" || params.role === "worker"
+      ? params.role
+      : undefined;
+  const dept = params.dept || undefined;
 
   // Workforce truth = employment_status (the legacy agents.status column went
   // stale after the activation waves — the 2026-07-24 eye-test catch, same
@@ -57,27 +72,39 @@ export default async function EmployeesPage({
     .order("role", { ascending: true })
     .order("slug", { ascending: true })
     .limit(ROW_LIMIT);
-  if (status === "active" || status === "dormant")
-    rowsQuery = rowsQuery.eq("employment_status", status);
+  if (status) rowsQuery = rowsQuery.eq("employment_status", status);
   if (dept) rowsQuery = rowsQuery.eq("department", dept);
+  if (role) rowsQuery = rowsQuery.eq("role", role);
 
-  const [rowsRes, statusRes, deptRes, activeDeptRes] = await Promise.all([
-    rowsQuery,
-    supabase
-      .from("agents")
-      .select("employment_status, id.count()")
-      .neq("employment_status", "archived"),
-    supabase
-      .from("agents")
-      .select("department, id.count()")
-      .neq("employment_status", "archived"),
-    // active departments = departments with active employees (the
-    // departments.status column is legacy-stale the same way)
-    supabase
-      .from("agents")
-      .select("department")
-      .eq("employment_status", "active"),
-  ]);
+  // KPI queries narrow with dept/role too (C9: the whole page follows the
+  // filter); status stays out of the KPI scope because the KPI row IS the
+  // status breakdown of whatever slice is selected.
+  let statusQuery = supabase
+    .from("agents")
+    .select("employment_status, id.count()")
+    .neq("employment_status", "archived");
+  if (dept) statusQuery = statusQuery.eq("department", dept);
+  if (role) statusQuery = statusQuery.eq("role", role);
+  let activeDeptQuery = supabase
+    .from("agents")
+    .select("department")
+    .eq("employment_status", "active");
+  if (dept) activeDeptQuery = activeDeptQuery.eq("department", dept);
+  if (role) activeDeptQuery = activeDeptQuery.eq("role", role);
+
+  const [rowsRes, statusRes, deptRes, activeDeptRes, deptNamesRes] =
+    await Promise.all([
+      rowsQuery,
+      statusQuery,
+      supabase
+        .from("agents")
+        .select("department, id.count()")
+        .neq("employment_status", "archived"),
+      // active departments = departments with active employees (the
+      // departments.status column is legacy-stale the same way)
+      activeDeptQuery,
+      supabase.from("departments").select("slug, display_name, display_name_tr"),
+    ]);
 
   if (rowsRes.error || statusRes.error || deptRes.error) {
     const message =
@@ -109,6 +136,18 @@ export default async function EmployeesPage({
       (activeDeptRes.data ?? []) as unknown as { department: string }[]
     ).map((r) => r.department),
   ).size;
+  const deptNames = new Map(
+    (
+      (deptNamesRes.data ?? []) as {
+        slug: string;
+        display_name: string;
+        display_name_tr: string | null;
+      }[]
+    ).map((d) => [
+      d.slug,
+      locale === "tr" ? (d.display_name_tr ?? d.display_name) : d.display_name,
+    ]),
+  );
   const deptCounts = (
     deptRes.data as unknown as { department: string; count: number }[]
   )
@@ -135,7 +174,11 @@ export default async function EmployeesPage({
         </span>
       ),
     },
-    { key: "department", label: t.colDept, render: (r) => r.department },
+    {
+      key: "department",
+      label: t.colDept,
+      render: (r) => deptNames.get(r.department) ?? r.department,
+    },
     {
       key: "role",
       label: t.colRole,
@@ -213,18 +256,18 @@ export default async function EmployeesPage({
           label={t.kpiTotal}
           value={String(totalCount)}
           glow
-          drillHref={selfHref({})}
+          drillHref={selfHref({ dept, role })}
         />
         <Stat
           label={t.kpiActive}
           value={String(activeCount)}
           glow
-          drillHref={selfHref({ status: "active" })}
+          drillHref={selfHref({ status: "active", dept, role })}
         />
         <Stat
           label={t.kpiDormant}
           value={String(dormantCount)}
-          drillHref={selfHref({ status: "dormant" })}
+          drillHref={selfHref({ status: "dormant", dept, role })}
         />
         <Stat
           label={t.kpiDepartments}
@@ -234,39 +277,54 @@ export default async function EmployeesPage({
       </div>
 
       <Panel
-        title={`${dict.command.nav.pages.employees} · ${dept ?? t.filterAll}`}
+        title={`${dict.command.nav.pages.employees} · ${
+          dept ? (deptNames.get(dept) ?? dept) : t.filterAll
+        }`}
       >
-        <div className="flex flex-wrap gap-2">
-          <Link
-            href={selfHref({ status })}
-            className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-              !dept
-                ? "border-edge-champagne text-accent-champagne"
-                : "border-edge-neutral text-ink-secondary"
-            }`}
-          >
-            {t.filterAll}
-            <span className="ml-1.5 font-data text-ink-muted tabular-nums">
-              {totalCount}
-            </span>
-          </Link>
-          {deptCounts.map((d) => (
-            <Link
-              key={d.department}
-              href={selfHref({ status, dept: d.department })}
-              className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                dept === d.department
-                  ? "border-edge-champagne text-accent-champagne"
-                  : "border-edge-neutral text-ink-secondary"
-              }`}
-            >
-              {d.department}
-              <span className="ml-1.5 font-data text-ink-muted tabular-nums">
-                {d.count}
-              </span>
-            </Link>
-          ))}
-        </div>
+        {/* C9 list-page standard: the chip wall (21 departments) became a
+            FilterBar — progressive disclosure (registered CEO preference),
+            same URL params as before so KPI drills keep working. */}
+        <FilterBar
+          clearLabel={tf.clear}
+          groups={[
+            {
+              param: "status",
+              label: tf.status,
+              kind: "chips",
+              value: status ?? "",
+              defaultValue: "",
+              options: [
+                { value: "", label: tf.all },
+                { value: "active", label: t.kpiActive },
+                { value: "dormant", label: t.kpiDormant },
+              ],
+            },
+            {
+              param: "dept",
+              label: tf.department,
+              kind: "select",
+              value: dept ?? "",
+              allLabel: tf.allDepartments,
+              options: deptCounts.map((d) => ({
+                value: d.department,
+                label: `${deptNames.get(d.department) ?? d.department} (${d.count})`,
+              })),
+            },
+            {
+              param: "role",
+              label: tf.role,
+              kind: "chips",
+              value: role ?? "",
+              defaultValue: "",
+              options: [
+                { value: "", label: tf.all },
+                { value: "head", label: roleLabels.head },
+                { value: "specialist", label: roleLabels.specialist },
+                { value: "worker", label: roleLabels.worker },
+              ],
+            },
+          ]}
+        />
 
         <div className="mt-4 border-t border-edge-neutral pt-1">
           {rows.length === 0 ? (

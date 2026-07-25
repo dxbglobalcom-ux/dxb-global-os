@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   DataGrid,
+  FilterBar,
   Panel,
   Stat,
   StatusBadge,
@@ -36,9 +37,15 @@ type ModelStatRow = {
   slot_assignments: number;
 };
 
-export default async function ProvidersPage() {
+export default async function ProvidersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ provider?: string; status?: string }>;
+}) {
+  const params = await searchParams;
   const dict = getDict(await getLocale());
   const t = dict.command.providers;
+  const tf = dict.command.filters;
   const supabase = await createClient();
 
   const statsRes = await supabase
@@ -61,7 +68,23 @@ export default async function ProvidersPage() {
     );
   }
 
-  const rows = (statsRes.data ?? []) as ModelStatRow[];
+  const allRows = (statsRes.data ?? []) as ModelStatRow[];
+  const allProviders = [...new Set(allRows.map((r) => r.provider))].sort();
+
+  // C9 filter standard: validated URL params, junk falls back silently;
+  // KPIs and every provider panel below follow the filter.
+  const providerFilter = allProviders.includes(params.provider ?? "")
+    ? params.provider
+    : undefined;
+  const statusFilter =
+    params.status === "active" || params.status === "testing"
+      ? params.status
+      : undefined;
+  const rows = allRows.filter(
+    (r) =>
+      (!providerFilter || r.provider === providerFilter) &&
+      (!statusFilter || r.status === statusFilter),
+  );
   const providers = [...new Set(rows.map((r) => r.provider))];
   const runs30d = rows.reduce((a, r) => a + Number(r.runs_30d), 0);
   const cost30d = rows.reduce((a, r) => a + Number(r.cost_30d_eur ?? 0), 0);
@@ -87,7 +110,12 @@ export default async function ProvidersPage() {
           <StatusBadge level="danger">{t.banned}</StatusBadge>
         ) : (
           <StatusBadge level={r.status === "active" ? "ok" : "info"}>
-            {r.status === "active" ? t.statusActive : r.status}
+            {/* no raw enum on the CEO surface (C19): 'testing' gets its label */}
+            {r.status === "active"
+              ? t.statusActive
+              : r.status === "testing"
+                ? t.statusTesting
+                : r.status}
           </StatusBadge>
         ),
     },
@@ -104,8 +132,11 @@ export default async function ProvidersPage() {
       align: "right",
       numeric: true,
       render: (r) =>
+        // success_rate_30d is a 0..1 fraction (v_model_stats) — ×100 like
+        // /ai/models; rendering the raw fraction showed "1%" for 73%
+        // (caught by the 2026-07-25 battery eyeball pass).
         r.runs_30d > 0 && r.success_rate_30d != null
-          ? `${Number(r.success_rate_30d).toFixed(0)}%`
+          ? `${Math.round(Number(r.success_rate_30d) * 100)}%`
           : "—",
     },
     {
@@ -169,6 +200,34 @@ export default async function ProvidersPage() {
           drillHref="/fin/costs?range=30d"
         />
       </div>
+
+      {/* C9 list-page standard: provider + lifecycle status narrow the KPIs
+          and every provider panel below. */}
+      <FilterBar
+        clearLabel={tf.clear}
+        groups={[
+          {
+            param: "provider",
+            label: t.kpiProviders,
+            kind: "select",
+            value: providerFilter ?? "",
+            allLabel: tf.all,
+            options: allProviders.map((p) => ({ value: p, label: p })),
+          },
+          {
+            param: "status",
+            label: tf.status,
+            kind: "chips",
+            value: statusFilter ?? "",
+            defaultValue: "",
+            options: [
+              { value: "", label: tf.all },
+              { value: "active", label: t.statusActive },
+              { value: "testing", label: t.statusTesting },
+            ],
+          },
+        ]}
+      />
 
       {providers.map((p) => (
         <Panel key={p} title={`${t.providerTitle} · ${p}`}>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   DataGrid,
+  FilterBar,
   Panel,
   Stat,
   StatusBadge,
@@ -44,6 +45,7 @@ export default async function RisksPage({
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.risks;
+  const tf = dict.command.filters;
   const supabase = await createClient();
 
   const levelFilter = SEVERITIES.includes(level as (typeof SEVERITIES)[number])
@@ -191,34 +193,42 @@ export default async function RisksPage({
       </div>
 
       <Panel title={`${dict.command.nav.pages.risks} · ${riskRes.count ?? rows.length}`}>
-        <div className="mb-3 flex flex-wrap gap-2">
-          {SEVERITIES.map((s) => (
-            <Link
-              key={s}
-              href={selfHref({ level: levelFilter === s ? undefined : s })}
-              className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                levelFilter === s
-                  ? "border-edge-champagne text-accent-champagne"
-                  : "border-edge-neutral text-ink-secondary"
-              }`}
-            >
-              {sevLabels[s] ?? s}
-            </Link>
-          ))}
-          <span className="mx-1 border-l border-edge-neutral" aria-hidden />
-          {(["open", "mitigated", "accepted", "closed"] as const).map((s) => (
-            <Link
-              key={s}
-              href={selfHref({ status: statusFilter === s ? undefined : s })}
-              className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                statusFilter === s
-                  ? "border-edge-champagne text-accent-champagne"
-                  : "border-edge-neutral text-ink-secondary"
-              }`}
-            >
-              {statusLabels[s] ?? s}
-            </Link>
-          ))}
+        {/* C9 list-page standard: the two link-chip rows became one
+            FilterBar — same URL params (?level= stays the CC-SPEC drill
+            contract), plus the standard clear-all affordance. */}
+        <div className="mb-3">
+          <FilterBar
+            clearLabel={tf.clear}
+            groups={[
+              {
+                param: "level",
+                label: tf.severity,
+                kind: "chips",
+                value: levelFilter ?? "",
+                defaultValue: "",
+                options: [
+                  { value: "", label: tf.all },
+                  ...SEVERITIES.map((s) => ({
+                    value: s,
+                    label: sevLabels[s] ?? s,
+                  })),
+                ],
+              },
+              {
+                param: "status",
+                label: tf.status,
+                kind: "chips",
+                value: statusFilter ?? "",
+                defaultValue: "",
+                options: [
+                  { value: "", label: tf.all },
+                  ...(["open", "mitigated", "accepted", "closed"] as const).map(
+                    (s) => ({ value: s, label: statusLabels[s] ?? s }),
+                  ),
+                ],
+              },
+            ]}
+          />
         </div>
 
         {rows.length === 0 ? (

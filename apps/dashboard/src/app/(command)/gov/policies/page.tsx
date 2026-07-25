@@ -93,8 +93,9 @@ export default async function PoliciesPage() {
     {
       key: "operation_pattern",
       label: t.colPattern,
+      // rule 8: no "…" anywhere — patterns wrap instead of truncating
       render: (r) => (
-        <span className="block max-w-[36ch] truncate font-data" title={r.operation_pattern}>
+        <span className="block max-w-[36ch] break-all font-data">
           {r.operation_pattern}
         </span>
       ),
@@ -216,8 +217,7 @@ export default async function PoliciesPage() {
                 <li key={g.id} className="flex items-baseline justify-between gap-3">
                   <Link
                     href={`/ai/library?kind=governance_rule&item=${g.id}`}
-                    className="min-w-0 truncate font-data text-body-s text-accent-champagne"
-                    title={g.name}
+                    className="min-w-0 break-words font-data text-body-s text-accent-champagne"
                   >
                     {g.name}
                   </Link>

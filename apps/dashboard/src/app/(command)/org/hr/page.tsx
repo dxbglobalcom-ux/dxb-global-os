@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   DataGrid,
+  FilterBar,
   Panel,
   Stat,
   StatusBadge,
@@ -67,12 +68,13 @@ type DeptRow = {
 export default async function HrPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; view?: string }>;
+  searchParams: Promise<{ status?: string; view?: string; dept?: string }>;
 }) {
-  const { status, view } = await searchParams;
+  const { status, view, dept } = await searchParams;
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.hr;
+  const tf = dict.command.filters;
   const supabase = await createClient();
   const equipmentView = view === "equipment";
 
@@ -81,6 +83,7 @@ export default async function HrPage({
   )
     ? status
     : undefined;
+  const deptFilter = dept || undefined;
 
   let equipQuery = supabase
     .from("v_hr_equipment_check")
@@ -88,6 +91,7 @@ export default async function HrPage({
     .order("slug")
     .limit(50);
   if (statusFilter) equipQuery = equipQuery.eq("employment_status", statusFilter);
+  if (deptFilter) equipQuery = equipQuery.eq("department", deptFilter);
 
   const [rosterRes, deptRes, probationRes, equipRes] = await Promise.all([
     // C8 (CEO order 2026-07-19): the CEO sees the WORKING organization —
@@ -178,14 +182,6 @@ export default async function HrPage({
         b.rows.length - a.rows.length ||
         deptName(a.dept).localeCompare(deptName(b.dept), locale),
     );
-
-  const selfHref = (s?: string) => {
-    const p = new URLSearchParams();
-    if (equipmentView) p.set("view", "equipment");
-    if (s) p.set("status", s);
-    const qs = p.toString();
-    return qs ? `/org/hr?${qs}` : "/org/hr";
-  };
 
   const columns: Column<EquipRow>[] = [
     {
@@ -296,35 +292,39 @@ export default async function HrPage({
             >
               ← {t.viewOverview}
             </Link>
-            <div className="flex flex-wrap gap-2">
-              <Link
-                href={selfHref()}
-                className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                  !statusFilter
-                    ? "border-edge-champagne text-accent-champagne"
-                    : "border-edge-neutral text-ink-secondary"
-                }`}
-              >
-                {t.filterAll}
-                <span className="ml-1.5 font-data text-ink-muted tabular-nums">
-                  {roster.length}
-                </span>
-              </Link>
-              {[...byStatus.entries()].sort().map(([s, n]) => (
-                <Link
-                  key={s}
-                  href={selfHref(statusFilter === s ? undefined : s)}
-                  className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                    statusFilter === s
-                      ? "border-edge-champagne text-accent-champagne"
-                      : "border-edge-neutral text-ink-secondary"
-                  }`}
-                >
-                  {statusLabels[s] ?? s}
-                  <span className="ml-1.5 font-data text-ink-muted tabular-nums">{n}</span>
-                </Link>
-              ))}
-            </div>
+            {/* C9 list-page standard: the ad-hoc status chips became the
+                FilterBar (same URL params + a department group; ?view=
+                equipment is untouched — FilterBar only owns its params). */}
+            <FilterBar
+              clearLabel={tf.clear}
+              groups={[
+                {
+                  param: "status",
+                  label: tf.status,
+                  kind: "chips",
+                  value: statusFilter ?? "",
+                  defaultValue: "",
+                  options: [
+                    { value: "", label: t.filterAll },
+                    ...[...byStatus.entries()].sort().map(([s, n]) => ({
+                      value: s,
+                      label: `${statusLabels[s] ?? s} (${n})`,
+                    })),
+                  ],
+                },
+                {
+                  param: "dept",
+                  label: tf.department,
+                  kind: "select",
+                  value: deptFilter ?? "",
+                  allLabel: tf.allDepartments,
+                  options: departments.map((d) => ({
+                    value: d.slug,
+                    label: deptName(d),
+                  })),
+                },
+              ]}
+            />
           </div>
 
           <Panel title={`${t.equipmentTitle} · ${equipMatched}`}>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   DataGrid,
+  FilterBar,
   Panel,
   Stat,
   StatusBadge,
@@ -27,20 +28,39 @@ type GrantRow = {
   library_items: { name: string; kind: string } | null;
 };
 
-export default async function PermissionsPage() {
+export default async function PermissionsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ dept?: string }>;
+}) {
+  const params = await searchParams;
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.permissions;
+  const tf = dict.command.filters;
   const supabase = await createClient();
 
+  // C9 filter standard: the grant book is department-granted today (measured
+  // 173/173 grantee_kind='department'), so the informative group is the
+  // department. The slug from the URL resolves to the grantee id server-side.
+  const deptParam = params.dept || undefined;
+  const deptIdRes = deptParam
+    ? await supabase.from("departments").select("id").eq("slug", deptParam).maybeSingle()
+    : null;
+  const deptFilterId = deptIdRes?.data?.id as string | undefined;
+
+  let grantsQuery = supabase
+    .from("library_grants")
+    .select(
+      "id, grantee_kind, grantee_id, granted_by, created_at, expires_at, library_items(name, kind)",
+      { count: "exact" },
+    )
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (deptFilterId) grantsQuery = grantsQuery.eq("grantee_id", deptFilterId);
+
   const [grantsRes, deptRes, agentCountRes] = await Promise.all([
-    supabase
-      .from("library_grants")
-      .select(
-        "id, grantee_kind, grantee_id, granted_by, created_at, expires_at, library_items(name, kind)",
-      )
-      .order("created_at", { ascending: false })
-      .limit(100),
+    grantsQuery,
     supabase.from("departments").select("slug, display_name, display_name_tr, mcp_profile"),
     supabase.from("agents").select("id", { count: "exact", head: true }),
   ]);
@@ -109,8 +129,9 @@ export default async function PermissionsPage() {
     {
       key: "item",
       label: t.colAsset,
+      // rule 8: no "…" anywhere — asset names wrap instead of truncating
       render: (g) => (
-        <span className="block max-w-[28ch] truncate font-data" title={g.library_items?.name}>
+        <span className="block max-w-[28ch] break-all font-data">
           {g.library_items?.name ?? "—"}
         </span>
       ),
@@ -179,19 +200,49 @@ export default async function PermissionsPage() {
         />
       </div>
 
-      <Panel title={`${t.grantsTitle} · ${grants.length}`}>
+      <Panel title={`${t.grantsTitle} · ${grantsRes.count ?? grants.length}`}>
         <p className="mb-3 text-caption text-ink-muted">{t.grantsHint}</p>
+        {/* C9 list-page standard: the grant book narrows by grantee
+            department (the only multi-valued dimension measured today). */}
+        <div className="mb-3">
+          <FilterBar
+            clearLabel={tf.clear}
+            groups={[
+              {
+                param: "dept",
+                label: tf.department,
+                kind: "select",
+                value: deptParam ?? "",
+                allLabel: tf.allDepartments,
+                options: depts
+                  .map((d) => ({
+                    value: d.slug,
+                    label:
+                      locale === "tr"
+                        ? (d.display_name_tr ?? d.display_name)
+                        : d.display_name,
+                  }))
+                  .sort((a, b) => a.label.localeCompare(b.label, locale)),
+              },
+            ]}
+          />
+        </div>
         {grants.length === 0 ? (
           <p className="py-2 text-body-s text-ink-secondary">{t.grantsEmpty}</p>
         ) : (
-          <div className="overflow-x-auto">
-            <DataGrid
-              className="min-w-[880px]"
-              columns={columns}
-              rows={grants}
-              rowKey={(g) => String(g.id)}
-            />
-          </div>
+          <>
+            <div className="overflow-x-auto">
+              <DataGrid
+                className="min-w-[880px]"
+                columns={columns}
+                rows={grants}
+                rowKey={(g) => String(g.id)}
+              />
+            </div>
+            <p className="mt-2 text-right font-data text-caption text-ink-muted tabular-nums">
+              {grants.length} / {grantsRes.count ?? grants.length}
+            </p>
+          </>
         )}
       </Panel>
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   DataGrid,
+  FilterBar,
   Panel,
   Stat,
   StatusBadge,
@@ -62,6 +63,7 @@ export default async function MemoryPage({
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.memory;
+  const tf = dict.command.filters;
   const supabase = await createClient();
 
   const store = STORES.includes(params.store as (typeof STORES)[number])
@@ -507,34 +509,40 @@ export default async function MemoryPage({
           </button>
         </form>
 
-        <div className="mb-3 flex flex-wrap gap-2">
-          {KINDS.map((k) => (
-            <Link
-              key={k}
-              href={selfHref({ kind: kind === k ? undefined : k, id: undefined })}
-              className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                kind === k
-                  ? "border-edge-champagne text-accent-champagne"
-                  : "border-edge-neutral text-ink-secondary"
-              }`}
-            >
-              {kindLabels[k] ?? k}
-            </Link>
-          ))}
-          <span className="mx-1 border-l border-edge-neutral" aria-hidden />
-          {TIERS.map((tr) => (
-            <Link
-              key={tr}
-              href={selfHref({ tier: tier === tr ? undefined : tr, id: undefined })}
-              className={`rounded-input border px-2.5 py-1 text-body-s transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite ${
-                tier === tr
-                  ? "border-edge-champagne text-accent-champagne"
-                  : "border-edge-neutral text-ink-secondary"
-              }`}
-            >
-              {tr === "trusted" ? t.tierTrusted : t.tierQuarantined}
-            </Link>
-          ))}
+        {/* C9 list-page standard: kind + trust tier ride the FilterBar (store
+            selection stays on the §7 cards above — progressive disclosure). */}
+        <div className="mb-3">
+          <FilterBar
+            clearLabel={tf.clear}
+            groups={[
+              {
+                param: "kind",
+                label: tf.kind,
+                kind: "chips",
+                value: kind ?? "",
+                defaultValue: "",
+                options: [
+                  { value: "", label: tf.all },
+                  ...KINDS.map((k) => ({
+                    value: k,
+                    label: kindLabels[k] ?? k,
+                  })),
+                ],
+              },
+              {
+                param: "tier",
+                label: t.colTier,
+                kind: "chips",
+                value: tier ?? "",
+                defaultValue: "",
+                options: [
+                  { value: "", label: tf.all },
+                  { value: "trusted", label: t.tierTrusted },
+                  { value: "quarantined", label: t.tierQuarantined },
+                ],
+              },
+            ]}
+          />
         </div>
 
         {rows.length === 0 ? (
