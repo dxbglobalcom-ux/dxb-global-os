@@ -33,6 +33,8 @@
 - [Eye-test windowed-width gap](eye-test-windowed-width-gap.md) — full-screen 1280/1920 baseline'ları CEO'nun WINDOWED genişliğindeki "…" kesmesini gizler; windowed pass (~1280-1366 rail açık) zorunlu; truncate+tooltip yoksa kusur; auto-fit grid > sabit kolon; **2 saat CSS ping-pong = süreç dersi: kusuru direkt söyle, kararlı düzelt, doğru DOM'u ölç**
 - [UI bilingual purity gate](ui-bilingual-purity-gate.md) — CEO-görünür UI %100 tek dil/locale; DB metinleri de i18n yüzeyi (title_tr/display_name_tr); "done" öncesi scripts/i18n-purity-check.sh + iki locale Playwright grep zorunlu
 
+- [systemd kalıcı servisler](systemd-resident-services.md) — scheduler + JARVIS = `systemctl --user` unit'leri; çıplak `node main.js` env'siz ölür, pid kill = otomatik restart, `pgrep -fc` şişik sayar (cgroup ağacını oku)
+
 - [X230 freeze = swap + orphans](x230-freeze-swap-orphans.md) — freeze ≠ loss: swap doldu; hayalet kilo-serve process'leri öldür, TEK Playwright tarayıcı, MCP profili CEO oturumu taşıyor
 
 - [English directive 2026-07-12](english-directive-2026-07-12.md) — **BINDING mid-D4**: ALL project artifacts English until project end (personas/specs/commits/reports); **chat replies to CEO stay TURKISH** (CEO refinement ~02:10); gate is language-agnostic (section numbers); 86 TR personas stay, translation pass = optional follow-up; packages/hr canonical titles EN switch = listed follow-up
