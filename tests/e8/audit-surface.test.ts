@@ -24,7 +24,10 @@ const probeIdemKeys: string[] = [];
 async function makeRun(objective: string): Promise<{ taskId: string; runId: string }> {
   const task = await sql<{ id: string }>`
     INSERT INTO tasks (department, objective, output_contract, model_tier, status)
-    VALUES ('engineering', ${objective}, 'probe output', 'L4', 'queued')
+    -- 'inbox', not 'queued': these rows are FK anchors only. A 'queued' probe
+    -- races the RESIDENT daemon's drain tick, which claims it mid-suite and
+    -- writes real-actor decision rows onto the CEO ticker (2026-07-25 triage).
+    VALUES ('engineering', ${objective}, 'probe output', 'L4', 'inbox')
     RETURNING id
   `.execute(db());
   const taskId = task.rows[0].id;

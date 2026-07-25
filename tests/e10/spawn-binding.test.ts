@@ -183,6 +183,10 @@ afterAll(async () => {
   await sql`DELETE FROM hook_violations WHERE id > ${baseViolationId}`.execute(db());
   await sql`DELETE FROM decision_log WHERE id > ${baseDecisionId}
              AND decision IN ('hook_reject', 'hook_escalation')`.execute(db());
+  // The worker leg also writes run-less employee-selection rows under the
+  // fixture worker name — outside the decision-kind filter above (2026-07-25
+  // residue triage). decided_by is fixture-unique, so no watermark needed.
+  await sql`DELETE FROM decision_log WHERE decided_by = 'e102t-worker'`.execute(db());
   if (probeRunIds.length > 0) {
     await sql`DELETE FROM tool_calls WHERE run_id = ANY(${probeRunIds}::uuid[])`.execute(db());
     await sql`DELETE FROM alerts WHERE run_id = ANY(${probeRunIds}::uuid[])`.execute(db());

@@ -143,3 +143,30 @@ describe("normalize + distance primitives", () => {
     expect(editDistance("abc", "abc")).toBe(0);
   });
 });
+
+// U15 remediation (2026-07-25) — D1 wake TR-lock + D2 {tr,en} script gate.
+describe("U15 D1 — wake STT options TR-lock", () => {
+  it("wake pass is locked to Turkish with the accuracy levers on", async () => {
+    const { wakeSttOpts } = await import("../../packages/voice/src/jarvis-daemon.js");
+    const { speachesConfig } = await import("../../packages/voice/src/speaches.js");
+    const opts = wakeSttOpts(speachesConfig());
+    expect(opts.lang).toBe("tr");            // the wake phrase IS Turkish (§24bis adaptation)
+    expect(opts.vadFilter).toBe(true);       // silence-hallucination antidote
+    expect(String(opts.hotwords)).toContain("Hamza"); // measured mangling "Anza"
+    expect(opts.config.sttModel).toBeTruthy();
+  });
+});
+
+describe("U15 D2 — unsupported-script gate (measured Korean utterance)", () => {
+  it("flags the live Korean transcript from call b3858c42", async () => {
+    const { unsupportedScript } = await import("../../packages/voice/src/lang.js");
+    expect(unsupportedScript("뭐요? 무슨 말이야?")).toBe(true);
+  });
+  it("passes Turkish, English and mixed business speech", async () => {
+    const { unsupportedScript } = await import("../../packages/voice/src/lang.js");
+    expect(unsupportedScript("Hamza, pazarlama raporu ne durumda?")).toBe(false);
+    expect(unsupportedScript("what is the revenue status")).toBe(false);
+    expect(unsupportedScript("CRM raporu %20 arttı!")).toBe(false);
+    expect(unsupportedScript("")).toBe(false); // empty stays the empty_transcript path
+  });
+});

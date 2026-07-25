@@ -34,6 +34,10 @@ afterAll(async () => {
     await sql`DELETE FROM approvals WHERE task_id = ANY(${probeTaskIds}::uuid[])`.execute(db());
     await sql`DELETE FROM tasks WHERE id = ANY(${probeTaskIds}::uuid[])`.execute(db());
   }
+  // The worker leg writes run-less employee-selection decision rows whose
+  // rationale never matches the 'e8.2 probe' pattern above (2026-07-25
+  // residue triage). decided_by is fixture-unique.
+  await sql`DELETE FROM decision_log WHERE decided_by = 'e8-2-worker'`.execute(db());
   await closeDb();
 });
 

@@ -176,6 +176,37 @@ describe("R3.1 — service e2e (real DB + Speaches, deterministic answer)", () =
     await db().deleteFrom("voice_calls").where("id", "=", blocker).execute();
   });
 
+  it("U15 D3 — stale takeover: a crashed listening row must not reject the CEO's next press", async () => {
+    // A listening/transcribing row is a millisecond-scale state inside ONE
+    // intake process; one older than 60s is a corpse from a crashed intake.
+    // The measured 2026-07-17 defect: the CEO's FIRST press of the day was
+    // rejected line_busy by exactly such a corpse.
+    const corpse = crypto.randomUUID();
+    createdCallIds.push(corpse);
+    await sql`
+      SELECT control_voice_call_log(${JSON.stringify({ id: corpse, status: "listening" })}::jsonb)
+    `.execute(db());
+    await sql`
+      UPDATE voice_calls SET started_at = now() - interval '2 minutes' WHERE id = ${corpse}
+    `.execute(db());
+    createdIntentTexts.push("Hamza, gelir raporu ne durumda?");
+    const dial = await intakeVoiceCall(
+      { db: db(), stt: async () => "Hamza, gelir raporu ne durumda?" },
+      { audio: Buffer.from("x"), lang: "tr" },
+    );
+    createdCallIds.push(dial.callId);
+    expect(dial.busy).toBe(false); // the corpse never blocks the line
+    expect(dial.state).toBe("routing");
+    const swept = await db()
+      .selectFrom("voice_calls")
+      .select(["status", "timeline"])
+      .where("id", "=", corpse)
+      .executeTakeFirstOrThrow();
+    expect(swept.status).toBe("failed"); // corpse failed honestly, with a reason
+    expect(JSON.stringify(swept.timeline)).toContain("stale_takeover");
+    await db().deleteFrom("voice_calls").where("id", "=", dial.callId).execute();
+  });
+
   it("worker path: intake parks 'routing', drainVoiceCalls answers + writes the handoff WAV", async () => {
     const question = "R31 drain probe: haftalık öncelik nedir?";
     createdIntentTexts.push(question);

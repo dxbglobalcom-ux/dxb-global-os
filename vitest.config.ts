@@ -43,5 +43,10 @@ export default defineConfig({
     // Phase-3+ integration tests share one local Postgres — parallel files
     // interfere (cross-file claims/wipes). Sequential is correct at DXB scale.
     fileParallelism: false,
+    // Post-suite sweep: in the sequential run, files that execute AFTER the
+    // owning suite re-raise ':no-run' probe alerts with nobody left to sweep
+    // them (a halal-probe alert reached the CEO's Alerts page 2026-07-25).
+    // One global teardown owns that test-only class.
+    globalSetup: "./tests/global-teardown.ts",
   },
 });

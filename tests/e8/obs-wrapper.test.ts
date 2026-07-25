@@ -38,6 +38,12 @@ afterAll(async () => {
     await sql`DELETE FROM task_events WHERE task_id = ANY(${probeTaskIds}::uuid[])`.execute(db());
     await sql`DELETE FROM tasks WHERE id = ANY(${probeTaskIds}::uuid[])`.execute(db());
   }
+  // Worker/dispatch also write run-less decision_log rows (employee-selection
+  // + task_plan) that the id-scoped sweeps above never see — they land on the
+  // CEO ticker (2026-07-25 residue triage). Scope keys are fixture-unique.
+  await sql`DELETE FROM decision_log WHERE decided_by = 'e8-test-worker'
+             OR (decided_by = 'orchestrator:dispatch'
+                 AND rationale LIKE '%E8.1 observability%')`.execute(db());
   await closeDb();
 });
 

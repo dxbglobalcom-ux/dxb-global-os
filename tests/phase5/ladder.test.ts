@@ -182,8 +182,13 @@ describe("low-confidence rule — confidence < 0.6 counts as a fail (LOCKED)", (
     });
     expect(run).toMatchObject({ claimed: true, taskId, status: "review", confidence: 0.4 });
 
+    // U15 D5 registered adaptation (2026-07-25): a LOW-CONFIDENCE fail must
+    // never be retried on the same tier — the same worker at the same tier
+    // reproduces the same 0.4 (measured 2026-07-17: five identical rounds →
+    // blocked). Rung 1 escalates the tier for low-confidence fails; plain
+    // execution failures keep the LOCKED retry-same-tier rung.
     const esc = await escalate(db, taskId);
-    expect(esc).toEqual({ action: "requeued", ladder: "retry-same-tier", failCount: 1, modelTier: "L4" });
+    expect(esc).toEqual({ action: "requeued", ladder: "low-confidence-bump", failCount: 1, modelTier: "L3" });
 
     const failEvent = await db
       .selectFrom("task_events")
