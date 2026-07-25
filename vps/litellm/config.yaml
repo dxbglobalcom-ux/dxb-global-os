@@ -18,6 +18,17 @@ model_list:
     litellm_params: { model: openrouter/qwen/qwen3.6-flash, api_key: os.environ/OPENROUTER_API_KEY }
   - model_name: minimax-m3
     litellm_params: { model: openrouter/minimax/minimax-m3, api_key: os.environ/OPENROUTER_API_KEY }
+  # §4c exam wiring 2026-07-25 — CEO-ordered candidates (C12), catalog status
+  # 'testing' until their exams pass. OpenRouter ids MEASURED from the live
+  # /api/v1/models listing this session (no guessed slugs):
+  #   moonshotai/kimi-k3        ctx 1,048,576  $3.00/M in  $15.00/M out
+  #   deepseek/deepseek-v4-pro  ctx 1,048,576  $0.435/M in  $0.87/M out
+  # NOTE kimi-k3 pricing is PREMIUM-tier — activation is a CEO cost decision,
+  # not an automatic post-exam step (C2 order names the replacement chain).
+  - model_name: kimi-3
+    litellm_params: { model: openrouter/moonshotai/kimi-k3, api_key: os.environ/OPENROUTER_API_KEY }
+  - model_name: deepseek-v4-pro
+    litellm_params: { model: openrouter/deepseek/deepseek-v4-pro, api_key: os.environ/OPENROUTER_API_KEY }
   # ANTHROPIC MODELS REMOVED (CEO order 2026-07-19, complaint ledger C2):
   # OpenRouter carries ONLY low-cost/Chinese models. Anthropic models run
   # exclusively over the subscription path (worker-shim mode='subscription',
