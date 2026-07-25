@@ -435,6 +435,20 @@ export interface VoiceCallsTable {
   tts_ms: number | null;
   degraded: Generated<boolean>;
   cost_eur: Generated<string>;
+  topic: string | null;
+  // U15 D13 (migration 20260725005000): wake-session conversation thread id
+  session_id: string | null;
+}
+
+// U15 D12 (migration 20260725005000): the ONE persisted JARVIS mic switch —
+// the daemon polls it; chat commands / panel toggle / spoken hard-off write
+// it through control_voice_daemon_set_state.
+export interface VoiceDaemonStateTable {
+  id: Generated<number>;
+  state: Generated<"listening" | "muted">;
+  updated_by: Generated<string>;
+  updated_at: Timestamptz;
+  note: string | null;
 }
 
 // CEO Chat Board with Hamza (C1/C7/C10, migration 20260719004000)
@@ -446,6 +460,9 @@ export interface ChatMessagesTable {
   status: Generated<"pending" | "answered" | "failed">;
   error: string | null;
   intent_id: string | null;
+  // U15 D12 (migration 20260725005000): which lane produced the turn —
+  // voice turns mirror onto the board tagged 'voice' (one conversation law)
+  source: Generated<"chat" | "voice">;
   created_at: Timestamptz;
 }
 
@@ -482,4 +499,5 @@ export interface DB {
   voice_identities: VoiceIdentitiesTable;
   voice_calls: VoiceCallsTable;
   chat_messages: ChatMessagesTable;
+  voice_daemon_state: VoiceDaemonStateTable;
 }

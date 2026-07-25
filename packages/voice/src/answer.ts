@@ -23,6 +23,10 @@ export interface AnswerQuestion {
   agent: { slug: string; department: string; role_level: string | null; persona_path: string | null };
   personaHead: string;
   memoryLines: string[];
+  /** U15 D12 (one-conversation law): recent board turns (chat + mirrored
+   *  voice), oldest first — the CEO must be able to continue in voice what
+   *  he started in chat and vice versa. */
+  history?: Array<{ role: string; content: string }>;
 }
 
 export interface VoiceAnswerDeps {
@@ -101,8 +105,11 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
     `First line of your output MUST be exactly "TOPIC: <2-4 word topic of the question in ${q.lang === "tr" ? "Turkish" : "English"}>", then an empty line, then the spoken answer. The TOPIC line is never spoken.`,
     "If the question implies outward action (money, contracts, external messages), say it needs a dashboard approval — voice may request, never approve (V6).",
   ].filter(Boolean).join("\n\n");
+  const historyText = (q.history ?? [])
+    .map((m) => `${m.role === "ceo" ? "CEO" : "Hamza"}: ${m.content}`)
+    .join("\n");
   const stream = query({
-    prompt: `${sys}\n\nCEO asks: ${q.question}`,
+    prompt: `${sys}${historyText ? `\n\nConversation so far (chat and voice are ONE conversation):\n${historyText}` : ""}\n\nCEO asks: ${q.question}`,
     options: {
       model: SDK_MODEL_IDS[r.model] ?? r.model,
       effort: "low",
@@ -224,15 +231,24 @@ export async function answerVoiceCall(
   const answerStart = Date.now();
   let answerText: string;
   try {
-    const [head, recall] = await Promise.all([
+    const [head, recall, historyRows] = await Promise.all([
       personaHead(repoRoot, agent.persona_path),
       recallMemory(db, { query: question, limit: 5 }).catch(() => ({ rows: [], classifier_used: false })),
+      // U15 D12 (one-conversation law): the voice answer sees the same board
+      // history chat sees — a voice question continues the chat thread.
+      db.selectFrom("chat_messages")
+        .select(["role", "content"])
+        .orderBy("created_at", "desc")
+        .limit(12)
+        .execute()
+        .catch(() => []),
     ]);
     const memoryLines = recall.rows.map((r) => r.body.slice(0, 200)).filter(Boolean);
     answerText = await produceAnswer({
       question, lang,
       agent: { slug: agent.slug, department: agent.department, role_level: agent.role_level, persona_path: agent.persona_path },
       personaHead: head, memoryLines,
+      history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content.slice(0, 500) })),
     });
   } catch (e) {
     return fail(`answer_error: ${(e as Error).message.slice(0, 200)}`);
@@ -311,5 +327,23 @@ export async function answerVoiceCall(
     stt_ms: row.stt_ms, answer_ms: result.timings.answer_ms,
     tts_ms: result.timings.tts_ms, degraded: result.degraded, cost_eur: 0,
   });
+
+  // 7. U15 D12 (one-conversation law): mirror the exchange onto the CEO Chat
+  //    Board tagged source='voice' — chat, dictation and JARVIS are ONE
+  //    Hamza. Only Hamza-answered calls mirror (the board's role column knows
+  //    exactly 'ceo'|'hamza'); a director picked in the ASK dropdown stays on
+  //    the call history alone. Mirror rows are terminal ('answered') so
+  //    chat.drain never re-answers them. Best-effort: a mirror failure never
+  //    fails the call.
+  if (agent.slug === HAMZA_SLUG) {
+    try {
+      await db.insertInto("chat_messages").values([
+        { role: "ceo" as const, content: question, mode: "normal" as const, status: "answered" as const, source: "voice" as const },
+        { role: "hamza" as const, content: answerText, mode: "normal" as const, status: "answered" as const, source: "voice" as const },
+      ]).execute();
+    } catch (e) {
+      console.error(`[voice] chat mirror failed for ${job.callId}:`, (e as Error).message.slice(0, 160));
+    }
+  }
   return result;
 }

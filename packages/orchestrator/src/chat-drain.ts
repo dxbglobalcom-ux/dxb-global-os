@@ -12,10 +12,11 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import type { Kysely } from "kysely";
+import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 import { loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
 import { recallMemory } from "@dxb/memory-router";
+import { matchMute, matchUnmute } from "@dxb/voice";
 
 export const CHAT_HAMZA_SLUG = "agents-orchestrator";
 /** Conversation window Hamza sees per answer (newest last). */
@@ -140,6 +141,35 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
 
   const lang: "tr" | "en" =
     /[çğıöşüÇĞİÖŞÜ]/.test(row.content) || !/^[\x00-\x7F]*$/.test(row.content) ? "tr" : "en";
+
+  // U15 D12 (CEO live verdict 2026-07-25 "chatten kapan dedim, uymadı"):
+  // daemon control commands execute DETERMINISTICALLY — no LLM, no
+  // interpretation, immediate effect. "kapan" in chat MUTES the mic (the
+  // daemon polls voice_daemon_state within 5s); "aç / jarvis uyan" reopens.
+  const daemonCommand = matchMute(row.content) ? "muted" : matchUnmute(row.content) ? "listening" : null;
+  if (daemonCommand) {
+    try {
+      await sql`SELECT control_voice_daemon_set_state(${daemonCommand}, ${"ceo"}, ${`chat command: "${row.content.slice(0, 80)}"`})`.execute(db);
+      // The command stems are Turkish ("kapan", "sus", "mikrofonu aç") — the
+      // ASCII-only ones defeat the char-based lang heuristic, so the
+      // confirmation is always Turkish (the CEO's chat language).
+      const confirmation = daemonCommand === "muted"
+        ? "Anlaşıldı Muhittin Bey — mikrofonu kapattım. Siz sohbetten ya da panelden açana kadar sesli asistan tamamen sessiz kalacak."
+        : "Mikrofon açıldı Muhittin Bey — \"Selamaleykum ya Hamza\" dediğinizde buradayım.";
+      await db.insertInto("chat_messages")
+        .values({ role: "hamza", content: confirmation, mode: row.mode, status: "answered", error: null, intent_id: null })
+        .execute();
+      await db.updateTable("chat_messages").set({ status: "answered" }).where("id", "=", row.id).execute();
+      result.answered += 1;
+    } catch (e) {
+      await db.updateTable("chat_messages")
+        .set({ status: "failed", error: (e as Error).message.slice(0, 300) })
+        .where("id", "=", row.id)
+        .execute();
+      result.failed += 1;
+    }
+    return result;
+  }
 
   try {
     const hamza = await db

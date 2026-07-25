@@ -2273,7 +2273,14 @@
       "removeSelected": "Remove selected",
       "removing": "Removing",
       "selectAll": "Select all",
-      "selectedCount": "selected"
+      "selectedCount": "selected",
+      "micStateLabel": "JARVIS microphone",
+      "micOn": "Listening",
+      "micOff": "Muted",
+      "micTurnOn": "Open microphone",
+      "micTurnOff": "Mute microphone",
+      "micOffHint": "Stays silent until you reopen it here or by typing \"aç\" in chat.",
+      "turnsSuffix": "exchanges"
     },
     "boundary": {
       "errorTitle": "Something broke in this view",
@@ -2310,7 +2317,8 @@
         "stt_unavailable": "The speech engine did not answer — turn it on with scripts/voice-on.sh and retry.",
         "audio_too_large": "The recording is too long — dictate in shorter pieces."
       },
-      "dictateCancelHint": "Esc cancels"
+      "dictateCancelHint": "Esc cancels",
+      "voiceTag": "Voice"
     }
   },
   "help": {

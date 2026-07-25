@@ -35,6 +35,10 @@ export interface VoiceIntakeInput {
   filename?: string;
   /** explicit director pick; omitted → the answer half routes (Hamza law) */
   targetSlug?: string;
+  /** U15 D13: wake-session conversation thread — every call inside one
+   *  JARVIS session carries the same id (voice_calls.session_id); the
+   *  dashboard groups history by it. Push-to-talk calls omit it. */
+  sessionId?: string;
 }
 
 export interface VoiceIntakeResult {
@@ -172,6 +176,7 @@ export async function intakeVoiceCall(
   await logCall(db, {
     id: callId, status: "routing",
     ...(input.targetSlug ? { target_agent_slug: input.targetSlug } : {}),
+    ...(input.sessionId ? { session_id: input.sessionId } : {}),
     transcript: [{
       role: "ceo", text: transcript, at: new Date().toISOString(),
       intent_id: result.intentId, lang,

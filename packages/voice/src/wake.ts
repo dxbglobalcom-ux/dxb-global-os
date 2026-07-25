@@ -70,18 +70,107 @@ export function matchWake(text: string): boolean {
 // Dismiss verbs the CEO listed (plus close TR variants an STT plausibly
 // produces). Utterance-level: a dismiss verb ends the session; the "hamza"
 // vocative is optional in his sentences, so it is not required.
+// U15 D9 (2026-07-25, CEO live verdict "kapan dedim kapanmadı"): the CEO's
+// actual shutdown words joined the list. Short stems (≤4 chars) match EXACT
+// only — at fuzzy distance 1 "sus" would swallow "su" and "kes" would
+// swallow "ses", both common in ordinary speech.
 const DISMISS_STEMS = [
   "kapanabilirsin",
   "kapatabilirsin",
   "gidebilirsin",
   "kapan",
+  "kapat",
   "görüşürüz",
   "görüşmek",
   "hoşçakal",
   "hoşça",
+  "sus",
+  "yeter",
+  "kes",
 ];
+
+function matchesStem(token: string, stem: string): boolean {
+  if (stem.length <= 4) return token === stem;
+  return fuzzyEquals(token, stem, 0.25);
+}
 
 export function matchDismiss(text: string): boolean {
   const tokens = normalizeTr(text).split(" ").filter(Boolean);
-  return tokens.some((tok) => DISMISS_STEMS.some((stem) => fuzzyEquals(tok, stem, 0.25)));
+  return tokens.some((tok) => DISMISS_STEMS.some((stem) => matchesStem(tok, stem)));
+}
+
+// ── U15 round 2 (ticket 20260725-u15-voice-round2) — hard-off + chat-lane
+// mute/unmute matchers. Semantics contract (spec §24bis round-2 block):
+//   dismiss   → session closes, wake phrase re-opens (sleeping)
+//   hard-off  → microphone MUTES until the CEO re-opens it from chat/panel
+//   mute/unmute → the same commands arriving on the CHAT lane
+
+/** Off-verb class: kapan/kapat and one-char STT slips of them. */
+function isOffVerb(token: string): boolean {
+  return fuzzyEquals(token, "kapan", 0.2) || fuzzyEquals(token, "kapat", 0.2);
+}
+
+/** On-verb class for reopening. "aç" is exact-only (2 chars). */
+function isOnVerb(token: string): boolean {
+  return token === "aç" || fuzzyEquals(token, "uyan", 0.25)
+    || fuzzyEquals(token, "dinle", 0.25) || fuzzyEquals(token, "başlat", 0.25);
+}
+
+/** Address tokens that point a command at the voice layer itself. */
+function isVoiceAddress(token: string): boolean {
+  return token.startsWith("jarvis") || token.startsWith("hamza")
+    || token.startsWith("mikrofon") || token.startsWith("ses")
+    || token.startsWith("asistan");
+}
+
+/** Hard-off target: "kendini/tamamen/mikrofonu/sesi kapat" class. */
+function isHardOffTarget(token: string): boolean {
+  return token === "kendini" || token === "tamamen"
+    || token.startsWith("mikrofon") || token.startsWith("ses");
+}
+
+/** Hard-off = an off-verb aimed at the daemon itself ("kendini kapat",
+ *  "tamamen kapan", "mikrofonu kapat"). Plain dismissals are NOT hard-off. */
+export function matchHardOff(text: string): boolean {
+  const tokens = normalizeTr(text).split(" ").filter(Boolean);
+  return tokens.some(isHardOffTarget) && tokens.some(isOffVerb);
+}
+
+// Filler tokens allowed inside a standalone command ("kapan artık lütfen").
+const COMMAND_FILLER = new Set([
+  "artık", "lütfen", "hemen", "şimdi", "hadi", "tamam", "i", "ı", "u", "ü",
+]);
+
+function isMuteWord(token: string): boolean {
+  return isOffVerb(token) || token === "sus" || token === "kendini" || token === "yeter";
+}
+
+/** Chat-lane mute: a short standalone command whose EVERY token is
+ *  command-class ("kapan", "sus artık lütfen"), a targeted command
+ *  ("jarvis kapan", "sesli asistanı kapat"), or a hard-off sentence.
+ *  Long free-text sentences ("dosyayı kapat ve raporu gönder") never match:
+ *  without a voice-address token the standalone path requires ALL tokens to
+ *  be command-class. */
+export function matchMute(text: string): boolean {
+  if (matchHardOff(text)) return true;
+  const tokens = normalizeTr(text).split(" ").filter(Boolean);
+  if (tokens.length === 0) return false;
+  const standalone =
+    tokens.length <= 3 &&
+    tokens.every((t) => isMuteWord(t) || COMMAND_FILLER.has(t)) &&
+    tokens.some((t) => isOffVerb(t) || t === "sus");
+  if (standalone) return true;
+  return tokens.some(isVoiceAddress) && tokens.some(isOffVerb);
+}
+
+/** Chat-lane unmute: "mikrofonu aç", "jarvis uyan", standalone "aç". */
+export function matchUnmute(text: string): boolean {
+  const tokens = normalizeTr(text).split(" ").filter(Boolean);
+  if (tokens.length === 0) return false;
+  const standalone =
+    tokens.length <= 3 &&
+    tokens.every((t) => isOnVerb(t) || isVoiceAddress(t) || COMMAND_FILLER.has(t)) &&
+    tokens.some(isOnVerb);
+  if (standalone) return true;
+  return tokens.some(isVoiceAddress) && tokens.some(isOnVerb);
 }

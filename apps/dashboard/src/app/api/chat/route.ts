@@ -48,7 +48,7 @@ export async function GET(): Promise<NextResponse> {
   }
   const { data, error } = await supabase
     .from("chat_messages")
-    .select("id, role, content, mode, status, error, intent_id, created_at")
+    .select("id, role, content, mode, status, error, intent_id, source, created_at")
     .order("created_at", { ascending: true })
     .limit(200);
   if (error) {

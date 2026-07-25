@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { ChatBoard, type ChatMessage } from "@/components/chat/chat-board";
 import { HelpTip, Panel } from "@/components/primitives";
+import { DaemonToggle } from "@/components/command/daemon-toggle";
 import { VoiceCall, type DirectorOption, type RecentCallRow } from "@/components/command/voice-call";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
@@ -35,6 +36,7 @@ type CallRow = {
   ended_at: string | null;
   degraded: boolean;
   topic: string | null;
+  session_id: string | null;
   transcript: Array<{ role?: string; text?: string }>;
   target: { slug: string; title: string | null; title_tr: string | null } | null;
 };
@@ -46,10 +48,10 @@ export default async function ChatPage() {
   const tv = dict.command.voice;
   const supabase = await createClient();
 
-  const [messagesRes, directorsRes, deptsRes, callsRes] = await Promise.all([
+  const [messagesRes, directorsRes, deptsRes, callsRes, daemonRes] = await Promise.all([
     supabase
       .from("chat_messages")
-      .select("id, role, content, mode, status, error, intent_id, created_at")
+      .select("id, role, content, mode, status, error, intent_id, source, created_at")
       .order("created_at", { ascending: true })
       .limit(200),
     supabase
@@ -61,9 +63,10 @@ export default async function ChatPage() {
     supabase.from("departments").select("slug,display_name,display_name_tr"),
     supabase
       .from("voice_calls")
-      .select("id,status,started_at,ended_at,degraded,topic,transcript,target:agents(slug,title,title_tr)")
+      .select("id,status,started_at,ended_at,degraded,topic,session_id,transcript,target:agents(slug,title,title_tr)")
       .order("started_at", { ascending: false })
-      .limit(6),
+      .limit(18),
+    supabase.from("voice_daemon_state").select("state").limit(1).maybeSingle(),
   ]);
 
   // Bilingual purity: department shown by localized display name, never the
@@ -80,28 +83,60 @@ export default async function ChatPage() {
     department: deptName.get(a.department) ?? a.department,
   }));
 
-  const recent: RecentCallRow[] = ((callsRes.data ?? []) as unknown as CallRow[]).map((c) => ({
-    id: c.id,
-    status: c.status,
-    startedAt: c.started_at,
-    targetLabel: c.target
+  // Call topic (CEO order 2026-07-19): 2-4 words from the answering brain
+  // (voice_calls.topic); legacy rows fall back to the CEO's first sentence.
+  // Shortened at the source — never truncated in CSS.
+  const callTopic = (c: CallRow): string | null =>
+    c.topic ??
+    (Array.isArray(c.transcript)
+      ? c.transcript.find((turn) => turn.role === "ceo" && turn.text)?.text ?? null
+      : null)?.slice(0, 120) ??
+    null;
+  const callMs = (c: CallRow): number | null =>
+    c.ended_at != null
+      ? new Date(c.ended_at).getTime() - new Date(c.started_at).getTime()
+      : null;
+
+  // U15 D13 (CEO order "konu konu kaydolmalı"): calls sharing a session_id
+  // are ONE conversation thread — one list row, topic from its first answered
+  // call, duration summed. Sessionless calls (push-to-talk, legacy) stay
+  // single rows. Newest-first order is inherited from the query.
+  const recent: RecentCallRow[] = [];
+  const threadIndex = new Map<string, RecentCallRow>();
+  for (const c of (callsRes.data ?? []) as unknown as CallRow[]) {
+    if (recent.length >= 6 && !(c.session_id && threadIndex.has(c.session_id))) continue;
+    const targetLabel = c.target
       ? ((locale === "tr" ? c.target.title_tr : c.target.title) ?? c.target.slug)
-      : null,
-    // Call topic (CEO order 2026-07-19): 2-4 words from the answering brain
-    // (voice_calls.topic); legacy rows fall back to the CEO's first sentence.
-    // Shortened at the source — never truncated in CSS.
-    topic:
-      c.topic ??
-      (Array.isArray(c.transcript)
-        ? c.transcript.find((turn) => turn.role === "ceo" && turn.text)?.text ?? null
-        : null)?.slice(0, 120) ??
-      null,
-    degraded: c.degraded,
-    totalMs:
-      c.ended_at != null
-        ? new Date(c.ended_at).getTime() - new Date(c.started_at).getTime()
-        : null,
-  }));
+      : null;
+    const existing = c.session_id ? threadIndex.get(c.session_id) : undefined;
+    if (existing) {
+      existing.ids.push(c.id);
+      existing.turns += 1;
+      // the query walks newest→oldest: the OLDEST call opens the thread —
+      // its start time and topic win
+      existing.startedAt = c.started_at;
+      existing.topic = callTopic(c) ?? existing.topic;
+      existing.totalMs = (existing.totalMs ?? 0) + (callMs(c) ?? 0);
+      existing.degraded = existing.degraded || c.degraded;
+      continue;
+    }
+    const row: RecentCallRow = {
+      id: c.id,
+      ids: [c.id],
+      turns: 1,
+      status: c.status,
+      startedAt: c.started_at,
+      targetLabel,
+      topic: callTopic(c),
+      degraded: c.degraded,
+      totalMs: callMs(c),
+    };
+    recent.push(row);
+    if (c.session_id) threadIndex.set(c.session_id, row);
+  }
+
+  const daemonState: "listening" | "muted" =
+    (daemonRes.data as { state?: string } | null)?.state === "muted" ? "muted" : "listening";
 
   return (
     <div className="mx-auto max-w-4xl space-y-6">
@@ -123,6 +158,7 @@ export default async function ChatPage() {
           />
           <span className="font-medium text-ink-primary">{tv.title}</span>
           <span className="text-caption text-ink-muted">{t.voiceLineHint}</span>
+          <DaemonToggle state={daemonState} labels={tv} />
         </summary>
         <div className="mt-4">
           <VoiceCall directors={directors} recent={recent} labels={tv} locale={locale} />

@@ -21,10 +21,16 @@ export type DirectorOption = {
 
 export type RecentCallRow = {
   id: string;
+  /** U15 D13: every call id in this conversation thread (one JARVIS wake
+   *  session = one row; push-to-talk calls stay single). Purge removes the
+   *  whole thread. */
+  ids: string[];
+  /** exchanges inside the thread (1 = single call) */
+  turns: number;
   status: string;
   startedAt: string;
   targetLabel: string | null;
-  /** the CEO's first sentence of the call — what it was about */
+  /** thread topic — the first answered call's topic */
   topic: string | null;
   degraded: boolean;
   totalMs: number | null;
@@ -53,6 +59,7 @@ export type VoiceLabels = {
   emptyTranscript: string;
   recentTitle: string;
   recentEmpty: string;
+  turnsSuffix: string;
   failedCall: string;
   topicLabel: string;
   statusEnded: string;
@@ -483,10 +490,12 @@ function RecentCallsList({
     if (selected.size === 0 || busy) return;
     setBusy(true);
     try {
+      // A selected thread removes ALL its calls (U15 D13).
+      const ids = recent.filter((r) => selected.has(r.id)).flatMap((r) => r.ids);
       const res = await fetch("/api/control/purge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ entity: "voice_call", ids: [...selected] }),
+        body: JSON.stringify({ entity: "voice_call", ids }),
       });
       if (res.ok) {
         setSelected(new Set());
@@ -531,6 +540,7 @@ function RecentCallsList({
                 {row.topic && (
                   <span className="block break-words text-caption text-ink-muted">
                     {row.topic}
+                    {row.turns > 1 && ` · ${row.turns} ${labels.turnsSuffix}`}
                   </span>
                 )}
               </span>

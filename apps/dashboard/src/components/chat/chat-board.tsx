@@ -18,6 +18,9 @@ export type ChatMessage = {
   status: "pending" | "answered" | "failed";
   error: string | null;
   intent_id: string | null;
+  /** U15 round 2 (one-conversation law): voice turns mirror onto the board
+   *  tagged 'voice'; absent on legacy rows fetched before the migration */
+  source?: "chat" | "voice";
   created_at: string;
 };
 
@@ -41,6 +44,8 @@ export type ChatLabels = {
   dictateCancelHint: string;
   dictateLang: string;
   dictateErrors: Record<string, string>;
+  /** U15 round 2: marker on board turns that arrived through the mic */
+  voiceTag: string;
 };
 
 function mergeMessage(prev: ChatMessage[], next: ChatMessage): ChatMessage[] {
@@ -197,6 +202,7 @@ export function ChatBoard({
         status: (r.status as ChatMessage["status"]) ?? "pending",
         error: (r.error as string) ?? null,
         intent_id: (r.intent_id as string) ?? null,
+        source: (r.source as "chat" | "voice") ?? "chat",
         created_at: String(r.created_at ?? new Date().toISOString()),
       }),
     );
@@ -258,6 +264,12 @@ export function ChatBoard({
                 <span className="text-caption font-medium text-ink-muted">
                   {m.role === "ceo" ? labels.you : labels.hamza}
                 </span>
+                {m.source === "voice" && (
+                  <span className="flex items-center gap-1 text-caption text-ink-muted">
+                    <Mic className="size-3" aria-hidden />
+                    {labels.voiceTag}
+                  </span>
+                )}
                 {m.mode === "plan" && <StatusBadge level="info">{labels.planMode}</StatusBadge>}
                 {m.role === "ceo" && m.status === "failed" && (
                   <StatusBadge level="danger">{labels.failed}</StatusBadge>

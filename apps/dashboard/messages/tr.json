@@ -2273,7 +2273,14 @@
       "removeSelected": "Seçilenleri kaldır",
       "removing": "Kaldırılıyor",
       "selectAll": "Tümünü seç",
-      "selectedCount": "seçili"
+      "selectedCount": "seçili",
+      "micStateLabel": "JARVIS mikrofonu",
+      "micOn": "Dinlemede",
+      "micOff": "Kapalı",
+      "micTurnOn": "Mikrofonu aç",
+      "micTurnOff": "Mikrofonu kapat",
+      "micOffHint": "Siz burada ya da sohbete \"aç\" yazana kadar sessiz kalır.",
+      "turnsSuffix": "konuşma"
     },
     "boundary": {
       "errorTitle": "Bu görünümde bir şey bozuldu",
@@ -2310,7 +2317,8 @@
         "stt_unavailable": "Ses motoru cevap vermedi — scripts/voice-on.sh ile açıp yeniden deneyin.",
         "audio_too_large": "Kayıt çok uzun — daha kısa parçalar halinde yazdırın."
       },
-      "dictateCancelHint": "Esc iptal eder"
+      "dictateCancelHint": "Esc iptal eder",
+      "voiceTag": "Sesli"
     }
   },
   "help": {

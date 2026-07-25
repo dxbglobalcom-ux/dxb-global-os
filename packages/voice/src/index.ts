@@ -17,3 +17,6 @@ export type { DrainVoiceDeps, DrainVoiceResult } from "./drain.js";
 export { runVoiceCall } from "./call.js";
 export type { VoiceCallDeps, VoiceCallInput, VoiceCallResult } from "./call.js";
 export { voiceAudioDir, repoRootFromCwd } from "./paths.js";
+// U15 round 2: wake/dismiss + daemon-control matchers (chat lane imports
+// matchMute/matchUnmute — pure string fns, SDK-free).
+export { matchWake, matchDismiss, matchHardOff, matchMute, matchUnmute, normalizeTr } from "./wake.js";

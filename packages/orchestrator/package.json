@@ -13,6 +13,7 @@
     "@dxb/memory-router": "workspace:*",
     "@dxb/observability": "workspace:*",
     "@dxb/shared": "workspace:*",
+    "@dxb/voice": "workspace:*",
     "kysely": "catalog:",
     "zod": "catalog:"
   },

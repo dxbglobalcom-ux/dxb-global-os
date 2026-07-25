@@ -170,3 +170,100 @@ describe("U15 D2 — unsupported-script gate (measured Korean utterance)", () =>
     expect(unsupportedScript("")).toBe(false); // empty stays the empty_transcript path
   });
 });
+
+// ── U15 round 2 (ticket 20260725-u15-voice-round2, CEO live verdict) ──
+
+describe("U15 D9 — dismissal hardening (the CEO's actual shutdown words)", () => {
+  const dismissals = [
+    "kapan",
+    "kapat",
+    "kendini kapat",
+    "sus artık",
+    "sus",
+    "yeter kapan artık",
+    "kes sesini",
+  ];
+  for (const phrase of dismissals) {
+    it(`dismisses on "${phrase}"`, async () => {
+      const { matchDismiss } = await import("../../packages/voice/src/wake.js");
+      expect(matchDismiss(phrase)).toBe(true);
+    });
+  }
+  it("does not dismiss on ordinary business speech", async () => {
+    const { matchDismiss } = await import("../../packages/voice/src/wake.js");
+    expect(matchDismiss("pazarlama raporu ne durumda")).toBe(false);
+    expect(matchDismiss("bugün hava çok güzel")).toBe(false);
+  });
+});
+
+describe("U15 D9 — hard-off matcher (mute until reopened, never just sleep)", () => {
+  const hardOffs = [
+    "kendini kapat",
+    "tamamen kapan",
+    "mikrofonu kapat",
+    "sesi kapat artık",
+    "kendini kapat hamza",
+  ];
+  for (const phrase of hardOffs) {
+    it(`hard-off on "${phrase}"`, async () => {
+      const { matchHardOff } = await import("../../packages/voice/src/wake.js");
+      expect(matchHardOff(phrase)).toBe(true);
+    });
+  }
+  it("plain session dismissals are NOT hard-off", async () => {
+    const { matchHardOff } = await import("../../packages/voice/src/wake.js");
+    expect(matchHardOff("kapanabilirsin")).toBe(false);
+    expect(matchHardOff("görüşürüz hamza")).toBe(false);
+    expect(matchHardOff("sus")).toBe(false);
+  });
+});
+
+describe("U15 D12 — chat-lane mute/unmute commands (deterministic, no LLM)", () => {
+  it("mutes on the CEO's standalone commands", async () => {
+    const { matchMute } = await import("../../packages/voice/src/wake.js");
+    for (const t of ["kapan", "kapat", "sus", "kapan artık", "kendini kapat", "sus artık lütfen"]) {
+      expect(matchMute(t), t).toBe(true);
+    }
+  });
+  it("mutes on targeted commands inside longer sentences", async () => {
+    const { matchMute } = await import("../../packages/voice/src/wake.js");
+    for (const t of ["jarvis kapan", "hamza mikrofonu kapat", "jarvis'i kapat lütfen", "sesli asistanı kapat"]) {
+      expect(matchMute(t), t).toBe(true);
+    }
+  });
+  it("never mutes on ordinary chat", async () => {
+    const { matchMute } = await import("../../packages/voice/src/wake.js");
+    for (const t of [
+      "toplantıyı kapatalım mı ne dersin",
+      "bu ay maliyetler ne durumda",
+      "dosyayı kapat ve raporu gönder bana özetle",
+      "kapı açık kaldı sanırım",
+    ]) {
+      expect(matchMute(t), t).toBe(false);
+    }
+  });
+  it("unmutes on wake commands, never on ordinary speech", async () => {
+    const { matchUnmute } = await import("../../packages/voice/src/wake.js");
+    for (const t of ["mikrofonu aç", "jarvis uyan", "aç", "sesi aç", "jarvis'i aç"]) {
+      expect(matchUnmute(t), t).toBe(true);
+    }
+    for (const t of ["kapıyı aç lütfen", "yeni sekme aç ve bak", "raporu aç konuşalım"]) {
+      expect(matchUnmute(t), t).toBe(false);
+    }
+  });
+});
+
+describe("U15 D10 — half-duplex segment drop (own voice never re-enters)", () => {
+  it("drops segments that ended during playback or its tail", async () => {
+    const { shouldDropSegment } = await import("../../packages/voice/src/jarvis-daemon.js");
+    const playEnd = 100_000;
+    // ended while audio was still playing → drop
+    expect(shouldDropSegment(playEnd - 5_000, playEnd)).toBe(true);
+    // ended within the echo tail after playback → drop
+    expect(shouldDropSegment(playEnd + 500, playEnd)).toBe(true);
+    // well after the tail → keep
+    expect(shouldDropSegment(playEnd + 5_000, playEnd)).toBe(false);
+    // no playback yet → keep
+    expect(shouldDropSegment(50_000, 0)).toBe(false);
+  });
+});

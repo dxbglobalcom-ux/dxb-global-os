@@ -1,6 +1,20 @@
 # 00-NOTE — R3.2 Voice-Line Defect Ledger & Deferred Remediation Plan
 
-> **Status update 2026-07-25 (ticket 20260725-u15-voice-remediation): machine blocks 1-7 EXECUTED — D1 wake TR-lock+hotwords (`wakeSttOpts`, regression in tests/r32), D2 {tr,en} script gate (`unsupportedScript` → `language_unsupported` → spoken clarify), D3 crash root measured+fixed (708-restart loop = prepareCues dying on stopped Speaches; boot now fail-soft) + stale-line takeover (60s corpse sweep before the busy check, red→green tests/r31), D4 progress cues (STT >15s `wait` cue + answer `prep` cue; cue cache versioned, block-4 clarify text live), D5 ladder low-confidence-bump (registered adaptation, red→green tests/phase5), D6 clarify-not-task (script gate + round-4 voice-intent dispatch guard), D7 measured closed (no task-id lookup in packages/voice; emitter was the retired classify hop). Daemon ENABLED + boot-proven ("up — wake phrase armed", single process). Registered adaptations: VOICE_INTERACTION_SPEC §24bis "U15 remediation" block. ⚠ OPEN: block 8 joint CEO ear test (D1/D3 human gate) — the ONLY remaining leg.**
+> **Status update 2026-07-25 ROUND 2 (ticket 20260725-u15-voice-round2): the CEO ran block 8
+> live and returned a FAIL verdict with five NEW measured defect classes — D9 shutdown
+> disobedience ("kapan dedim kapanmadı"; dismissal missed by rough STT fell through to the LLM
+> which ANSWERED "kapanıyorum" while the session stayed open, plus systemd Restart=always
+> resurrecting the killed daemon), D10 self-talk feedback loop (own speaker output re-entered
+> the mic; the "çözümlüyorum" the CEO kept hearing was the D4 wait cue replaying through the
+> loop), D11 runaway active session (every segment reset the idle clock — a lived-in room never
+> slept), D12 chat↔voice disconnection, D13 per-utterance history rows. ALL FIVE REMEDIATED
+> same session — spec §24bis "U15 ROUND 2" block is the registered-adaptation record; evidence:
+> tests/r32 58/58 + tests/u15r2 5/5 + daemon boot "STATE: MUTED". Daemon now runs MUTED by
+> standing CEO order until the CEO reopens it (chat "aç" / panel toggle).
+> ⚠ OPEN: block 8bis = CEO ear+eye re-test (mic conversation + /chat surface), ideally on the
+> incoming 32GB machine where STT drops from tens of seconds to seconds.**
+>
+> Status update 2026-07-25 morning (ticket 20260725-u15-voice-remediation): machine blocks 1-7 EXECUTED — D1 wake TR-lock+hotwords (`wakeSttOpts`, regression in tests/r32), D2 {tr,en} script gate (`unsupportedScript` → `language_unsupported` → spoken clarify), D3 crash root measured+fixed (708-restart loop = prepareCues dying on stopped Speaches; boot now fail-soft) + stale-line takeover (60s corpse sweep before the busy check, red→green tests/r31), D4 progress cues (STT >15s `wait` cue + answer `prep` cue; cue cache versioned, block-4 clarify text live), D5 ladder low-confidence-bump (registered adaptation, red→green tests/phase5), D6 clarify-not-task (script gate + round-4 voice-intent dispatch guard), D7 measured closed (no task-id lookup in packages/voice; emitter was the retired classify hop). Daemon ENABLED + boot-proven ("up — wake phrase armed", single process). Registered adaptations: VOICE_INTERACTION_SPEC §24bis "U15 remediation" block. ⚠ OPEN: block 8 joint CEO ear test (D1/D3 human gate) — the ONLY remaining leg.**
 >
 > Original registration below, kept verbatim:
 >

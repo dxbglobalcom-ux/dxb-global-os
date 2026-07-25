@@ -29,11 +29,14 @@
 // Run: DXB_DATABASE_URL=postgres://… node packages/voice/dist/jarvis-daemon.js
 // (repo shortcut: pnpm jarvis; supervised: scripts/systemd/dxb-jarvis.service)
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { sql } from "kysely";
 import { getDb, closeDb } from "@dxb/shared";
 import { intakeVoiceCall } from "./intake.js";
-import { matchWake, matchDismiss } from "./wake.js";
+import { logCall } from "./log.js";
+import { matchWake, matchDismiss, matchHardOff } from "./wake.js";
 import { sttTranscribe, ttsSpeak, speachesConfig } from "./speaches.js";
 import { voiceAudioDir } from "./paths.js";
 
@@ -121,6 +124,23 @@ export function wakeSttOpts(cfg: ReturnType<typeof speachesConfig>): {
 const STT_PROGRESS_MS = Number(process.env.DXB_JARVIS_STT_CUE_MS ?? 15000);
 const ANSWER_PROGRESS_MS = Number(process.env.DXB_JARVIS_ANSWER_CUE_MS ?? 20000);
 
+// U15 D10 (2026-07-25, CEO live verdict "kendi kendine konuşuyor"): the
+// daemon's own speaker output re-entered the mic and became new question
+// segments — a closed feedback loop ("çözümlüyorum" cue → mic → intake →
+// cue …). Half-duplex law: any segment that ENDED during playback or within
+// the echo tail after it is discarded before it can cost STT.
+const ECHO_TAIL_MS = Number(process.env.DXB_JARVIS_ECHO_TAIL_MS ?? 1500);
+export function shouldDropSegment(segmentEndedAt: number, playbackEndedAt: number): boolean {
+  if (playbackEndedAt <= 0) return false;
+  return segmentEndedAt <= playbackEndedAt + ECHO_TAIL_MS;
+}
+
+// U15 D11: active mode also keeps a hard STT spacing — ambient chatter in a
+// lived-in room must never machine-gun the intake seam.
+const ACTIVE_STT_MIN_GAP_MS = Number(process.env.DXB_ACTIVE_STT_GAP_MS ?? 3000);
+// U15 D12: mute state poll cadence (voice_daemon_state, chat/panel door).
+const STATE_POLL_MS = 5000;
+
 type Mode = "sleeping" | "active";
 
 function rms(frame: Buffer): number {
@@ -187,6 +207,9 @@ async function prepareCues(dir: string): Promise<Record<string, string>> {
     // U15 D4 progress cues: long STT / answer preparation must never be silent.
     wait: { text: "Sizi duydum efendim, çözümlüyorum." },
     prep: { text: "Cevabınızı hazırlıyorum efendim, birazdan söylüyorum." },
+    // U15 D9 hard-off: mic mutes until reopened from chat or the panel —
+    // the cue must say HOW to reopen, because speech can no longer do it.
+    off: { text: "Kapandım efendim. Mikrofonum kapalı; sohbet ekranından ya da panelden açana kadar sessiz kalacağım." },
   };
   const out: Record<string, string> = {};
   for (const [key, cue] of Object.entries(cues)) {
@@ -218,7 +241,7 @@ async function prepareCuesWithRetry(dir: string): Promise<Record<string, string>
   }
 }
 
-interface Segment { pcm: Buffer; ms: number; peak: number; gate: number }
+interface Segment { pcm: Buffer; ms: number; peak: number; gate: number; at: number }
 
 /** Async iterator of speech segments cut from the arecord stream by the RMS
  *  gate. Never returns while the room is silent — silence costs nothing.
@@ -278,7 +301,7 @@ async function* speechSegments(
         if (silent >= SPEECH_END_FRAMES || ms >= maxMsFor()) {
           if (passesEnergy(segPeak, gate)) {
             if (coalesce()) queue.length = 0;
-            queue.push({ pcm: Buffer.concat(seg), ms, peak: Math.round(segPeak), gate: Math.round(gate) });
+            queue.push({ pcm: Buffer.concat(seg), ms, peak: Math.round(segPeak), gate: Math.round(gate), at: Date.now() });
             notify?.();
           } else {
             dropped += 1;
@@ -306,6 +329,47 @@ async function* speechSegments(
   }
 }
 
+/** U15 D12: read the shared daemon state (chat/panel door). Missing row or
+ *  a DB hiccup default to 'listening' — the mic never gets stuck muted by an
+ *  outage; the CEO's explicit mute is a persisted row, not a guess. */
+async function readDaemonState(db: ReturnType<typeof getDb>): Promise<"listening" | "muted"> {
+  try {
+    const res = await sql<{ state: string }>`SELECT state FROM voice_daemon_state LIMIT 1`.execute(db);
+    return res.rows[0]?.state === "muted" ? "muted" : "listening";
+  } catch {
+    return "listening";
+  }
+}
+
+async function writeDaemonState(
+  db: ReturnType<typeof getDb>,
+  state: "listening" | "muted",
+  note: string,
+): Promise<void> {
+  await sql`SELECT control_voice_daemon_set_state(${state}, ${"jarvis-daemon"}, ${note})`.execute(db);
+}
+
+/** U15 D9: end a parked call honestly when its transcript turned out to be a
+ *  dismissal — the row must never sit in 'routing' waiting for an LLM answer
+ *  to a goodbye. Best-effort: if the drain already claimed it, the upsert
+ *  still records the honest end state. */
+async function logCallEnd(db: ReturnType<typeof getDb>, callId: string, reason: string): Promise<void> {
+  try {
+    const res = await sql<{ timeline: unknown; transcript: unknown }>`
+      SELECT timeline, transcript FROM voice_calls WHERE id = ${callId}
+    `.execute(db);
+    const row = res.rows[0];
+    const timeline = (Array.isArray(row?.timeline) ? row.timeline : []) as Array<Record<string, unknown>>;
+    timeline.push({ state: "ended", at: new Date().toISOString(), reason });
+    await logCall(db, {
+      id: callId, status: "ended", timeline,
+      transcript: Array.isArray(row?.transcript) ? row.transcript : [],
+    });
+  } catch (e) {
+    log(`dismiss call-end write failed for ${callId}: ${(e as Error).message.slice(0, 120)}`);
+  }
+}
+
 async function main(): Promise<void> {
   const db = getDb();
   const audioDir = voiceAudioDir();
@@ -315,9 +379,49 @@ async function main(): Promise<void> {
   let mode: Mode = "sleeping";
   let lastActivity = Date.now();
   let lastWakeStt = 0;
+  let lastActiveStt = 0;
   let skippedByGap = 0;
+  // U15 D10 half-duplex: wall-clock end of the last playback; every play()
+  // goes through speak() so the window is always current.
+  let playbackEnd = 0;
+  let playing = false;
+  const speak = async (path: string): Promise<void> => {
+    playing = true;
+    try {
+      await play(path);
+    } finally {
+      playbackEnd = Date.now();
+      playing = false;
+    }
+  };
 
-  log(`up — wake phrase armed ("Selamaleykum ya Hamza"), vad rms ${SPEECH_RMS}, wake stt ${WAKE_STT_MODEL}`);
+  // U15 D12: mute is a persisted CEO order (chat "kapan", panel toggle, or
+  // spoken hard-off). Polled — the chat lane must be able to silence the mic
+  // within seconds.
+  let muted = (await readDaemonState(db)) === "muted";
+  setInterval(() => {
+    void readDaemonState(db).then((s) => {
+      const next = s === "muted";
+      if (next !== muted) {
+        muted = next;
+        if (muted) mode = "sleeping";
+        log(muted ? "MUTED by chat/panel order — mic ignored until reopened" : "UNMUTED — wake listening resumes");
+      }
+    });
+  }, STATE_POLL_MS).unref();
+
+  // U15 D11: idle runs on the WALL CLOCK, not on segment arrival — the old
+  // check only fired when new sound came in, and every segment reset the
+  // clock, so a lived-in room kept the session open forever (measured: the
+  // CEO's friend conversation kept being "çözümle"nmiş).
+  setInterval(() => {
+    if (mode === "active" && Date.now() - lastActivity > ACTIVE_IDLE_MS) {
+      mode = "sleeping";
+      log("idle timeout — back to wake listening");
+    }
+  }, 10_000).unref();
+
+  log(`up — wake phrase armed ("Selamaleykum ya Hamza"), vad rms ${SPEECH_RMS}, wake stt ${WAKE_STT_MODEL}${muted ? " — STATE: MUTED (chat/panel reopens)" : ""}`);
 
   const rec = spawn("arecord", [
     "-f", "S16_LE", "-r", String(SAMPLE_RATE), "-c", "1", "-t", "raw", "-q", "-",
@@ -335,14 +439,26 @@ async function main(): Promise<void> {
   process.on("SIGINT", () => shutdown("SIGINT"));
   process.on("SIGTERM", () => shutdown("SIGTERM"));
 
+  // U15 D13: one wake session = one conversation thread; every call inside
+  // it carries the same session id (voice_calls.session_id).
+  let sessionId: string | null = null;
+
   for await (const segment of speechSegments(
     rec,
     () => (mode === "sleeping" ? WAKE_SEGMENT_MAX_MS : QUESTION_SEGMENT_MAX_MS),
-    () => mode === "sleeping",
+    // U15 D10: ALWAYS coalesce — a backlog of room chatter captured while an
+    // answer played must never become an intake backlog (the old active-mode
+    // queue replayed it utterance by utterance).
+    () => true,
   )) {
-    if (mode === "active" && Date.now() - lastActivity > ACTIVE_IDLE_MS) {
-      mode = "sleeping";
-      log("idle timeout — back to wake listening");
+    // U15 D12: muted = the CEO closed the mic. Nothing is transcribed,
+    // nothing wakes; the segment dies here at zero cost.
+    if (muted) continue;
+
+    // U15 D10: drop own-voice echoes and anything captured while we spoke.
+    if (playing || shouldDropSegment(segment.at, playbackEnd)) {
+      log(`segment dropped (half-duplex: captured during/near playback)`);
+      continue;
     }
 
     const wav = pcmToWav(segment.pcm);
@@ -366,18 +482,36 @@ async function main(): Promise<void> {
       // in 5min, measured 2026-07-17) must never be invisible again.
       const passTag = `${(segment.ms / 1000).toFixed(1)}s peak ${segment.peak}/gate ${segment.gate}`;
       if (!rough) { log(`wake pass ${passTag} — empty`); continue; }
+      // U15 D9: a spoken hard-off works even while asleep ("kendini kapat").
+      if (matchHardOff(rough)) {
+        try {
+          await writeDaemonState(db, "muted", `spoken hard-off: "${rough.trim().slice(0, 60)}"`);
+          muted = true;
+          log(`HARD-OFF ("${rough.trim()}") — muted until chat/panel reopens`);
+          await speak(cues.off);
+        } catch (e) {
+          log(`hard-off state write failed: ${(e as Error).message.slice(0, 120)}`);
+        }
+        continue;
+      }
       if (matchWake(rough)) {
         mode = "active";
         lastActivity = Date.now();
-        log(`WAKE ("${rough.trim()}") — session open`);
-        await play(cues.ack);
+        sessionId = randomUUID();
+        log(`WAKE ("${rough.trim()}") — session ${sessionId} open`);
+        await speak(cues.ack);
       } else {
         log(`wake pass ${passTag} — no match ("${rough.trim().slice(0, 40)}")`);
       }
       continue;
     }
 
-    // ACTIVE: dismiss check rides the same rough pass BEFORE the full intake
+    // ACTIVE: U15 D11 — the same STT spacing law as wake mode; room chatter
+    // must not machine-gun the rough pass.
+    if (Date.now() - lastActiveStt < ACTIVE_STT_MIN_GAP_MS) continue;
+    lastActiveStt = Date.now();
+
+    // Dismiss check rides the same rough pass BEFORE the full intake
     // (a goodbye must not become a voice_calls row).
     let rough = "";
     try {
@@ -385,41 +519,80 @@ async function main(): Promise<void> {
     } catch {
       rough = "";
     }
+    // U15 D9: hard-off beats dismiss — "kendini kapat" mutes, not just sleeps.
+    if (rough && matchHardOff(rough)) {
+      try {
+        await writeDaemonState(db, "muted", `spoken hard-off: "${rough.trim().slice(0, 60)}"`);
+        muted = true;
+      } catch (e) {
+        log(`hard-off state write failed: ${(e as Error).message.slice(0, 120)}`);
+      }
+      mode = "sleeping";
+      sessionId = null;
+      log(`HARD-OFF ("${rough.trim()}") — muted until chat/panel reopens`);
+      await speak(cues.off);
+      continue;
+    }
     if (rough && matchDismiss(rough)) {
       mode = "sleeping";
+      sessionId = null;
       log(`DISMISS ("${rough.trim()}") — session closed`);
-      await play(cues.bye);
+      await speak(cues.bye);
       continue;
     }
     if (rough && matchWake(rough) && rough.length < 40) {
       // A re-greeting inside an open session is an ack, not a question.
       lastActivity = Date.now();
-      await play(cues.ack);
+      await speak(cues.ack);
       continue;
     }
 
-    lastActivity = Date.now();
     log(`question segment (${Math.round(segment.ms / 100) / 10}s) — intake`);
     let callId: string;
     // U15 D4: X230 STT measured up to 7.4 min — speak a progress cue instead
     // of silence once intake crosses the threshold.
-    const sttCue = setTimeout(() => { void play(cues.wait); }, STT_PROGRESS_MS);
+    const sttCue = setTimeout(() => { void speak(cues.wait); }, STT_PROGRESS_MS);
     try {
-      const res = await intakeVoiceCall({ db }, { audio: wav, filename: "utterance.wav" });
-      if (res.busy) { await play(cues.busy); continue; }
+      const res = await intakeVoiceCall({ db }, {
+        audio: wav, filename: "utterance.wav",
+        ...(sessionId ? { sessionId } : {}),
+      });
+      if (res.busy) { await speak(cues.busy); continue; }
       // U15 D6/D2: garble and non-{tr,en} speech get the clarify cue — never
       // a silent drop, never a guessed task.
       if (res.failure === "empty_transcript" || res.failure === "language_unsupported") {
         log(`intake clarify (${res.failure})`);
-        await play(cues.lost);
+        await speak(cues.lost);
         continue;
       }
-      if (res.failure) { log(`intake failure: ${res.failure}`); await play(cues.err); continue; }
+      if (res.failure) { log(`intake failure: ${res.failure}`); await speak(cues.err); continue; }
+      // U15 D9 second net: the rough pass missed the dismissal but intake's
+      // full-quality transcript caught it — obey it NOW instead of letting
+      // the LLM answer "kapanıyorum" while the session stays open (the
+      // measured 2026-07-25 defect). The parked row ends honestly.
+      if (matchHardOff(res.transcript) || matchDismiss(res.transcript)) {
+        const hardOff = matchHardOff(res.transcript);
+        await logCallEnd(db, res.callId, hardOff ? "hard_off_via_intake" : "dismiss_via_intake");
+        mode = "sleeping";
+        sessionId = null;
+        if (hardOff) {
+          try {
+            await writeDaemonState(db, "muted", `spoken hard-off (intake): "${res.transcript.slice(0, 60)}"`);
+            muted = true;
+          } catch (e) {
+            log(`hard-off state write failed: ${(e as Error).message.slice(0, 120)}`);
+          }
+        }
+        log(`${hardOff ? "HARD-OFF" : "DISMISS"} via intake transcript ("${res.transcript.slice(0, 60)}")`);
+        await speak(hardOff ? cues.off : cues.bye);
+        continue;
+      }
       callId = res.callId;
+      lastActivity = Date.now();
       log(`call ${callId} parked ("${res.transcript.slice(0, 80)}") — waiting for the answer`);
     } catch (e) {
       log(`intake error: ${(e as Error).message.slice(0, 160)}`);
-      await play(cues.err);
+      await speak(cues.err);
       continue;
     } finally {
       clearTimeout(sttCue);
@@ -433,7 +606,7 @@ async function main(): Promise<void> {
     while (Date.now() < deadline) {
       if (prepCueAt !== null && Date.now() >= prepCueAt) {
         prepCueAt = null;
-        await play(cues.prep);
+        await speak(cues.prep);
       }
       await new Promise((r) => setTimeout(r, 2000));
       const row = await db
@@ -447,7 +620,7 @@ async function main(): Promise<void> {
         try {
           await readFile(wavPath);
           log(`answer ready — playing ${wavPath}`);
-          await play(wavPath);
+          await speak(wavPath);
           played = true;
         } catch {
           log("answer row ended but WAV missing — degraded silent end");
