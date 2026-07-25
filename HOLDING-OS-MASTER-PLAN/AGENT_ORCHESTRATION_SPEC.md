@@ -14,7 +14,7 @@ Bir görevin ajana dönüşmesinden çıktının kabulüne kadar tüm yaşam dö
 - G3. Model seçimi ASLA ajan içinde hard-code değil: `fn_select_model(role_slot, dept, ...)` (MODEL_ROUTING) tek kapı; madde 18 dağılımı bu tablolarda yaşar.
 - G4. CEO müdahaleleri: pause / resume / cancel / priority / model-override / decision-override — hepsi control-plane fn'i, hepsi audit'li, hepsi koşan işe saniyeler içinde ulaşır.
 - G5. Onay bekleyen koşu (`waiting_approval`) kaynak TÜKETMEZ: park edilir (pg-boss job biter), approval kararı yeni job doğurur.
-- G6. Build-workflow ile karışmaz: bu spec ÜRÜN runtime'ıdır. İnşaat-dönemi yazarlık kuralları (model routing v6: Fable bizzat, Sonnet yasak) korpus/repo yazımına aittir; runtime dağılımı madde 18 + MODEL_ROUTING tablolarındadır. İkisinin karıştırılması ihlaldir (MODEL_ROUTING §1 ayrımı burada da bağlayıcı).
+- G6. Build-workflow ile karışmaz: bu spec ÜRÜN runtime'ıdır. İnşaat-dönemi yazarlık kuralları (model routing **v9**: Opus 5 bizzat, yedek katman yok, Sonnet yazarlıkta yasak) korpus/repo yazımına aittir; runtime dağılımı madde 18 + MODEL_ROUTING tablolarındadır. İkisinin karıştırılması ihlaldir (MODEL_ROUTING §1 ayrımı burada da bağlayıcı).
 
 ## 3. Mimari — koşu yaşam döngüsü
 

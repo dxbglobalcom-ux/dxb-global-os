@@ -1,6 +1,6 @@
 // Mekanik kalite kapısı — EMPLOYEE_PERSONA_STANDARD §7 katman 1.
 // Derin kalite (içerik gerçekten rol-özgü ve akıllı mı) burada DEĞİL:
-// kuruluş döneminde CEO/Fable gözü, işletimde HR review (fn_persona_gate
+// kuruluş döneminde CEO + inşaat yazarı gözü, işletimde HR review (fn_persona_gate
 // verdict'i). Bu katman yalnız makine-denetlenebilir redleri verir.
 
 import {

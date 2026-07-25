@@ -7,7 +7,7 @@
 
 1. **Every project artifact is written in ENGLISH** from 2026-07-12 onward: personas, dossiers, specs, migrations, seeds, code comments, commit messages, planning docs, CEO reports, runbooks, evidence records — everything that lands in the repo or the DB.
 2. **The single exception is the CEO chat channel:** conversational replies to the CEO in working sessions stay **Turkish** ("benimle yazışmanın dışında her şey İngilizce"). This exception covers the conversation only — any artifact produced during that conversation is still English.
-3. The rule binds ALL authors: Fable sessions, Opus takeover sessions, GPT 5.6 solo module work (K1), future hr-factory output, and every runtime agent producing repo/DB artifacts.
+3. The rule binds ALL authors: Opus 5 sessions (the construction author since 2026-07-25), GPT 5.6 solo module work (K1), future hr-factory output, and every runtime agent producing repo/DB artifacts. *(Historical: written while Fable 5 held authorship.)*
 
 ## 2. Scope clarifications
 

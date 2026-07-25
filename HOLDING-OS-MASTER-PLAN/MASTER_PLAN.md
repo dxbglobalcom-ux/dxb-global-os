@@ -20,9 +20,9 @@ Bu proje **DXB GLOBAL AI-NATIVE HOLDING OPERATING SYSTEM**'dir: bütün holdingi
 
 ## 2. HÜKÜM VE STRATEJİ
 
-- **Plan-first:** Bu korpus (31 spec) %100 bitmeden execution başlamaz. Korpus, executor-bağımsız detayda yazılır: her adımda dosya yolu, içerik kontratı, "çalıştır → şu çıktıyı gör" doğrulaması — Opus 4.8 duraksamadan devralabilir; ama korpus bitince birincil uygulayıcı YİNE FABLE'dır (12 Temmuz son geceye kadar).
+- **Plan-first:** Bu korpus (31 spec) %100 bitmeden execution başlamaz. Korpus, executor-bağımsız detayda yazılır: her adımda dosya yolu, içerik kontratı, "çalıştır → şu çıktıyı gör" doğrulaması — devralan yazar duraksamadan sürdürebilir; ama korpus bitince birincil uygulayıcı YİNE FABLE'dır (12 Temmuz son geceye kadar). *(Devir gerçekleşti: 2026-07-25 itibarıyla yazar Opus 5 — bkz. aşağıdaki model zinciri.)*
 - **Deadline:** 12 Temmuz 2026 = Fable erişiminin son günü. Erken bitirme hedefi; uyku/erteleme yasak. 12'sine yetişmeyen kapsam BACKUP_PLAN protokolüne düşer.
-- **Model zinciri (v6, CEO kesin):** Fable bizzat → en kötü ihtimal Opus 4.8. **Sonnet DEFEDİLDİ** (hiçbir rol). Haiku yasak. Direktif madde 18'deki "Opus ve Sonnet" ifadesi CEO tarafından daraltıldı: sadece Opus.
+- **Model zinciri (v9, CEO 2026-07-25 — geçerli hüküm):** **Opus 5 bizzat. Yedek model katmanı YOKTUR** — hata/timeout durumunda sessizce alt modele düşülmez, iş `blocked` raporuyla CEO'ya çıkar. **Sonnet DEFEDİLDİ** inşaat yazarlığında (hiçbir rol; ürün runtime'ında serbest — MODEL_ROUTING_SPEC §4b). Haiku yalnız mekanik getir-götür. *(Tarihsel: v6 zinciri "Fable bizzat → en kötü ihtimal Opus 4.8" idi; 2026-07-25'te yazarlık Opus 5'e devredildi ve yedek katman kaldırıldı — U20.)*
 - **Öncelik:** Outleteuro DEĞİL — her şey bitince İLK PİLOT çalışma (CEO Faz 11). **Tanım (CEO sözlü düzeltmesi, 2026-07-10 ~20:45):** Outleteuro, şirketin MEVCUT e-ticaret sitesidir (WooCommerce/WordPress üzerinde yapılmış; kalitesi düşük). Holding OS tamamlanınca holdingin uzmanları önce bu siteyi MÜKEMMELLEŞTİRİR, sonra tam otonom işletmeye alır: alışlar + satışlar dahil tam otonom mağaza. Bu aşamada Outleteuro, holdingden doğan AYRI bir alt-OS (spawn) şirket olur. Önceki "holdingin yöneteceği ilk şirket projesi" ifadesi bu tanımla düzeltilmiştir.
 
 ## 3. KANITLI VARLIK ENVANTERİ (ne var — mevcut-durum eşlemesi)
@@ -68,7 +68,7 @@ Kanıt tabanı: repo durumu 2026-07-10, commit `3744db8` sonrası. Doğrulama ko
 | G1 | Executive Command Center (§§1-39: katmanlı kompozisyon, 26+ sayfa, widget sistemi) | 5-6 sayfalık kokpit; RET | **SIFIRDAN** | CEO_COMMAND_CENTER_SPEC, DESIGN_SYSTEM |
 | G2 | Holding→Company→Dept→Director→Specialist→Agent→Sub-agent hiyerarşisi + interaktif org graph + drag-drop | `departments` + `agents` (2 seviye); companies/directors/hiyerarşi YOK | **YENİ şema + motor** | ORGANIZATION_ENGINE_SPEC, DATA_MODEL |
 | G3 | HR Operating System (yaşam döngüsü: oluştur→eğit→değerlendir→terfi→arşivle) | YOK (personas dizini statik dosya) | **YENİ** | HR_OPERATING_SYSTEM_SPEC, EMPLOYEE_PERSONA_STANDARD |
-| G4 | Fable 5 Intelligence & Discipline Hook (runtime policy + pre/post-task validation + quality gates) | Governance kuralları memory/doc'ta; runtime enforcement kısmi (hooks.workflow_guard) | **YENİ runtime katmanı** | FABLE_5_HOOK_SPEC |
+| G4 | Opus 5 Intelligence & Discipline Hook (runtime policy + pre/post-task validation + quality gates) | Governance kuralları memory/doc'ta; runtime enforcement kısmi (hooks.workflow_guard) | **YENİ runtime katmanı** | FABLE_5_HOOK_SPEC |
 | G5 | Settings = tam kontrol merkezi (orkestratör/model/çalışan/bütçe/approval politikaları CEO-değiştirilebilir) | YOK (config dosyaları + memory; UI'dan değişmez) | **YENİ** | SETTINGS_AND_CONTROL_SPEC, MODEL_ROUTING_SPEC |
 | G6 | Full observability (agent/decision/tool/file/cost/system-health logları drill-down'lu) | Kısmi: `task_events`, `audit_log`, `cost_ledger` var; decision/tool/file katmanları ve UI YOK | **GENİŞLER** | OBSERVABILITY_SPEC, AUDIT_AND_LOGGING_SPEC |
 | G7 | Approval Center (tam sayfa, alternatifler, karar geçmişi, politika değişimi) | Approval listesi + okunur payload var; center YOK | **GENİŞLER** | APPROVAL_ENGINE_SPEC |
@@ -89,7 +89,7 @@ Her workstream = spec seti + execution paketi. Bağımlılık oku: üsttekiler a
 | WS-A | Veri omurgası | DATA_MODEL, EVENT_MODEL, API_CONTRACTS | Org/HR/settings/project/library tabloları + RLS + Broadcast; migration 0020+ |
 | WS-B | Kontrol düzlemi UI | CEO_COMMAND_CENTER_SPEC, DESIGN_SYSTEM | Design tokens → shell → Executive Overview → modül sayfaları (26+) |
 | WS-C | Org + HR motoru | ORGANIZATION_ENGINE, HR_OS, EMPLOYEE_PERSONA_STANDARD, PERMISSION_MODEL | Org graph API + HR yaşam döngüsü + persona v2 fabrikası |
-| WS-D | Fable Hook + orkestrasyon | FABLE_5_HOOK_SPEC, AGENT_ORCHESTRATION, MODEL_ROUTING | Policy engine + pre/post-task gates + model routing tablo-güdümlü |
+| WS-D | Opus 5 Hook + orkestrasyon | FABLE_5_HOOK_SPEC, AGENT_ORCHESTRATION, MODEL_ROUTING | Policy engine + pre/post-task gates + model routing tablo-güdümlü |
 | WS-E | Görünürlük | OBSERVABILITY, AUDIT_AND_LOGGING, COST_CONTROL | Log katmanları + Live Operations + Cost Intelligence |
 | WS-F | Karar/iş akışı | APPROVAL_ENGINE, WORKFLOW_ENGINE, PROJECT_OS, SETTINGS_AND_CONTROL | Approval center + workflow varlığı + settings mutasyon API'si |
 | WS-G | Bilgi | MEMORY_ARCHITECTURE, HOLDING_LIBRARY | Library kayıt sistemi + memory erişim haritası |
@@ -104,7 +104,7 @@ Her workstream = spec seti + execution paketi. Bağımlılık oku: üsttekiler a
 | 1 | Mimari + plan + çekirdek | Fazlar 1-7 (secrets→monorepo→şema→rails→kernel→memory→VPS/MCP) | BÜYÜK ORANDA TAMAM — bu korpus "plan" bacağını kapatır |
 | 2 | Holding org yapısı | Karşılık YOK | YENİ (WS-C) |
 | 3 | Orkestratör + müdürler + çalışan sistemi | Kısmi: orchestrator paketi + agents tablosu | GENİŞLER (WS-C/D) |
-| 4 | Fable 5 Hook | Karşılık YOK (governance doc'ta) | YENİ (WS-D) |
+| 4 | Opus 5 Hook | Karşılık YOK (governance doc'ta) | YENİ (WS-D) |
 | 5 | HR OS | Karşılık YOK | YENİ (WS-C) |
 | 6 | CEO Command Center + full observability | Faz 8 (RET edilen kokpit) | SIFIRDAN (WS-B/E) |
 | 7 | Settings + model routing + manuel kontrol | Karşılık YOK | YENİ (WS-D/F) |
@@ -130,7 +130,7 @@ Her workstream = spec seti + execution paketi. Bağımlılık oku: üsttekiler a
 |----|-------|-----|
 | Korpus yazımı (31 spec, her satır) | **Fable, bizzat, inline** | Devir yok; subagent yok |
 | Execution P2 penceresi | **Fable, bizzat** | Kritik bölümler zaten Fable'da |
-| Execution P3 penceresi (12'den sonra) | **Opus 4.8** | Roadmap adım adım; mimariyi DEĞİŞTİREMEZ |
+| Execution P3 penceresi (12'den sonra) | **Opus 5** | Roadmap adım adım; mimariyi DEĞİŞTİREMEZ |
 | Sonnet | **YASAK — defedildi** | Hiçbir rol (araştırma/checker dahil) |
 | Haiku | **YASAK** | — |
 | Kritik karar (⛔ işaretli adımlar) | Eldeki en güçlü model + CEO onayı | BACKUP_PLAN protokolü |

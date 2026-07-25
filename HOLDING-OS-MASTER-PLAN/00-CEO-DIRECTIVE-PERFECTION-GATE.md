@@ -1,7 +1,7 @@
 # CEO DIRECTIVE — PERFECTION GATE (2026-07-17)
 
 > **Tier: SEVEREST** — same enforcement class as RULE #0 (Design Verification)
-> and RULE #0-A (Measure, Never Guess). Binds every author (Fable, Opus,
+> and RULE #0-A (Measure, Never Guess). Binds every author (Opus 5,
 > GPT 5.6, runtime agents) on every deliverable until project end.
 > Source: CEO complaint document (Desktop `şikayet.odt`, 2026-07-17) —
 > "HER YAPTIĞINIZ İŞE BAKIP BU MÜKEMMEL Mİ MANTIKLI MI DAHA İYİSİ OLUR MU

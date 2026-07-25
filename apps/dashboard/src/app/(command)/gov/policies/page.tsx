@@ -11,7 +11,7 @@ import { createClient } from "@/lib/supabase/server";
 
 // /gov/policies v1 (E12.1-E) — the policy constitution in one view, three
 // REAL families: approval_rules (the LOCKED money-out/contract/identity
-// gates, E9.3), hook_policies (the 17-standard Fable 5 engine, E10.1 —
+// gates, E9.3), hook_policies (the 17-standard Opus 5 Hook engine, E10.1 —
 // its full board lives on /gov/violations), and governance_rule library
 // assets. Approval rules mutate only through control_approvals_action
 // change_policy (locked rows reject) — read-only here by design.

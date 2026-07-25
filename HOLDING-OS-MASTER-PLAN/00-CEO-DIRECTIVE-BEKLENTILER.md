@@ -1,3 +1,10 @@
+> ⚠ **OKUMA NOTU (U20, CEO emri 2026-07-25):** bu dosya CEO'nun 2026-07-10 tarihli BEKLENTİLER
+> metninin **birebir sanitize kopyasıdır** — CEO'nun kendi cümleleri değiştirilmez (§35 sıfır-uydurma).
+> Metin içinde geçen **"Fable 5"** ifadelerinin tamamı, 2026-07-25'ten itibaren **"Opus 5"** olarak
+> okunur: inşaat yazarlığı, plan sahipliği, persona yazımı, hook standardı ve kalite tavanı artık
+> Opus 5'e aittir. "Opus 4.8" geçen yerler **"Opus 5"** okunur; yedek model katmanı kaldırılmıştır.
+> Yöneten kayıt: [[00-INDEX]] U20 + [[MODEL_ROUTING_SPEC]] A-2026-07-25.
+
 
 
 

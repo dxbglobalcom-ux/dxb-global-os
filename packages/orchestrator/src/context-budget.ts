@@ -20,7 +20,7 @@ import { z } from "zod";
 import { getDb, llmCall, type DB } from "@dxb/shared";
 import { commitMemory, type CommitDeps } from "@dxb/memory-router";
 
-/** Per-task working-context band, in estimated tokens (plan constant — ⛔ Fable). */
+/** Per-task working-context band, in estimated tokens (plan constant — ⛔ construction author). */
 export const CONTEXT_BAND = { softLimit: 12_000, hardLimit: 16_000 } as const;
 
 /** Offload provenance source — the audit trail's marker for door-committed

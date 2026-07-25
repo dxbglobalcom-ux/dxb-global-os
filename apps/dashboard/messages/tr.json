@@ -596,7 +596,7 @@
       "colBrain": "Beyin",
       "colAutonomy": "Otonomi",
       "colPersona": "Persona",
-      "colHook": "Fable 5 Hook",
+      "colHook": "Opus 5 Hook",
       "colStatus": "Durum",
       "showing": "Gösterilen",
       "of": "/",
@@ -985,7 +985,7 @@
       "colBrain": "Beyin",
       "colAutonomy": "Otonomi",
       "colPersona": "Persona",
-      "colHook": "Fable 5 Hook",
+      "colHook": "Opus 5 Hook",
       "colStatus": "Durum",
       "statusActive": "Aktif",
       "statusDormant": "Uykuda",
@@ -1204,7 +1204,7 @@
       "unlocked": "Düzenlenebilir",
       "enabled": "Etkin",
       "disabled": "Devre dışı",
-      "hookTitle": "Fable 5 Hook motoru",
+      "hookTitle": "Opus 5 Hook motoru",
       "hookSummary": "17 standartlık politika motoru her spawn'ı kapılar (ön/koşu/son). Şiddet dağılımı aşağıda; standart-başına anahtarlı tam politika panosu ihlaller sayfasındadır.",
       "hookSeverities": {
         "block": "Engelle",
@@ -1456,7 +1456,9 @@
         "formName": "Model adı",
         "formApiKey": "API anahtarı (şimdilik boş olabilir)",
         "formApiKeyHint": "Yalnız yerel kasa dosyasına yazılır — asla veritabanına değil. Yönlendirmeyi orkestratör kurar.",
-        "formNote": "Not (isteğe bağlı)"
+        "formNote": "Not (isteğe bağlı)",
+        "retiredShow": "Emekli modelleri göster ({n})",
+        "retiredHide": "Emekli modelleri gizle"
       },
       "statuses": {
         "active": "Aktif",
@@ -2173,7 +2175,7 @@
     },
     "violations": {
       "title": "Hook İhlalleri",
-      "subtitle": "Fable 5 disiplin hook'u — her kapı reddi, revizyon ve escalation kayıtta; 17 standartlık policy panosu.",
+      "subtitle": "Opus 5 disiplin hook'u — her kapı reddi, revizyon ve escalation kayıtta; 17 standartlık policy panosu.",
       "ui": {
         "streamTitle": "İhlal akışı",
         "policiesTitle": "Policy panosu — 17 standart",

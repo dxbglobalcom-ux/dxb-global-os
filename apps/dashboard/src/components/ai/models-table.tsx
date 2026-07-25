@@ -75,6 +75,8 @@ export type ModelsLabels = {
   addedTesting: string;
   evalNote: string;
   cancel: string;
+  retiredShow: string;
+  retiredHide: string;
   statuses: Record<string, string>;
   locale: string;
 };
@@ -140,7 +142,14 @@ export function ModelsTable({
   const [busy, setBusy] = useState(false);
   const [smoke, setSmoke] = useState<string | null>(null);
   const [onboardOpen, setOnboardOpen] = useState(false);
+  // U20 (2026-07-25): retired rows stay in the catalog (cost/run history joins
+  // on their id) but leave the default view — a retired generation is history,
+  // not a choice the CEO is being offered. Progressive disclosure, not deletion.
+  const [showRetired, setShowRetired] = useState(false);
   const detailReq = useRef(0);
+
+  const retiredCount = models.filter((m) => m.status === "retired").length;
+  const visibleModels = showRetired ? models : models.filter((m) => m.status !== "retired");
 
   useEffect(() => {
     if (!selected) {
@@ -213,7 +222,7 @@ export function ModelsTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-edge-neutral">
-            {models.map((m) => (
+            {visibleModels.map((m) => (
               <tr
                 key={m.id}
                 onClick={() => {
@@ -259,6 +268,19 @@ export function ModelsTable({
           </tbody>
         </table>
       </div>
+
+      {retiredCount > 0 && (
+        <button
+          type="button"
+          onClick={() => setShowRetired((v) => !v)}
+          className="text-caption text-ink-muted underline-offset-2 transition duration-[var(--t-fast)] ease-refined hover:text-ink-secondary hover:underline"
+          data-testid="toggle-retired"
+        >
+          {showRetired
+            ? labels.retiredHide
+            : labels.retiredShow.replace("{n}", String(retiredCount))}
+        </button>
+      )}
 
       {selected && (
         <Panel title={selected.displayName ?? selected.id}>

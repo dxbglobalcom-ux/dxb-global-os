@@ -81,7 +81,7 @@ Kabul katmanının kendi teknik varlığı yok; kayıt düzeni: sonuçlar bu dos
 
 ## 13. Yetkilendirme
 
-Kabul verme yetkisi: makine-tier = kanıt komutları (kimse "geçti" diyemez, komut der); ürün kabulü = YALNIZ CEO. Fable/Opus hiçbir final kabulü CEO adına veremez (governance kuralı).
+Kabul verme yetkisi: makine-tier = kanıt komutları (kimse "geçti" diyemez, komut der); ürün kabulü = YALNIZ CEO. Hiçbir yazar (Opus 5 dahil) final kabulü CEO adına veremez (governance kuralı).
 
 ## 14. Logging / 15. Audit
 

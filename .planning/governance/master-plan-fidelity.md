@@ -15,4 +15,4 @@ CEO emri (2026-07-08, 04-04 kapanışında): "master plan'dan asla ama asla sapm
 - ⛔ LOCKED kararlar ve birebir-verilen kod çekirdekleri değiştirilemez; zorunlu uyarlamalar `[ADAPT-x]` etiketiyle kodda + SUMMARY'de kayıtlı olur.
 - Gerçeklik planla çelişirse (API davranışı, versiyon kısıtı): no-guessing ile çözüm bul, "Deviations (recorded)" bölümüne yaz, CEO'ya raporda göster. Sessiz sapma = yönetişim ihlali.
 - Gate/kabul kriterleri zayıflatılamaz; kanıtsız DONE yok ([[evidence-before-done]]).
-- Şüphede: dur, CEO'ya sor. Üst çerçeve: [[fable-5-construction-governance]], [[model-routing-hierarchy]].
+- Şüphede: dur, CEO'ya sor. Üst çerçeve: [[opus-5-construction-governance]], [[model-routing-hierarchy]].

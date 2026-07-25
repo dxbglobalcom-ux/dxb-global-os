@@ -2,6 +2,8 @@
 
 > Dalga 1 · Yazar: Fable 5 bizzat · Kaynak: direktif madde 16 (birebir) + CEO hizalaması m.1 (12 Temmuz = Fable son günü)
 > Bu plan "kalitesiz MVP planı" DEĞİLDİR — ana hedefi koruyan kontrollü execution planıdır (madde 16 hükmü).
+>
+> **⚠ DURUM 2026-07-25 — DEVİR YÜRÜRLÜKTE (U20):** bu planın öngördüğü devir gerçekleşti. Yürütücü artık **Opus 5**'tir; **yedek model katmanı KALDIRILDI** (tek beyin; hata = `blocked` raporu, sessiz alt-model düşüşü yok). Aşağıdaki S0/S1/S2 senaryo metni ve tarihli pencereler **tarihsel kayıttır** — güncel model hükmü MASTER_PLAN §2 "Model zinciri (v9)" + MODEL_ROUTING_SPEC A-2026-07-25'tir.
 
 ## 0. Senaryo tanımı
 
@@ -52,7 +54,7 @@
 | Health score = eşik-bazlı basit formül | Ağırlıklı çok-katmanlı skor | RISK_REGISTER |
 | Forecast = son-7-gün lineer uzatma | Gerçek tahmin modeli | COST_CONTROL_SPEC |
 | Org graph read-only | Drag-drop mutasyonlu | ORGANIZATION_ENGINE_SPEC |
-| Fable Hook = spawn-sarmalayıcı + policy tablosu | Tam pre/post validation + quality gates | FABLE_5_HOOK_SPEC |
+| Opus 5 Hook = spawn-sarmalayıcı + policy tablosu | Tam pre/post validation + quality gates | FABLE_5_HOOK_SPEC |
 
 ## 7. Sonra genişletilebilir mimari kararlar
 
@@ -66,8 +68,8 @@ Fable penceresinde paralellik YOK (inline tek akış — subagent yasağı). Opu
 
 | Görev sınıfı | Model | Not |
 |--------------|-------|-----|
-| Korpus, mimari kararlar, persona yazımı, verdict/kabul | **Yalnız Fable** | Devredilemez; yetişmeyen persona bekler (bkz. §1.6) |
-| Roadmap adımlarının uygulanması (kod/migration/UI) | **Opus 4.8** | Spec'ten sapamaz; mimariyi değiştiremez |
+| Korpus, mimari kararlar, persona yazımı, verdict/kabul | **Yalnız Opus 5** | Devredilemez; yetişmeyen persona bekler (bkz. §1.6) |
+| Roadmap adımlarının uygulanması (kod/migration/UI) | **Opus 5** | Spec'ten sapamaz; mimariyi CEO onayı olmadan değiştiremez |
 | ~~Sonnet görevleri~~ | **YOK — Sonnet defedildi** | Direktifteki "Opus veya Sonnet" CEO tarafından daraltıldı (hizalama m.5) |
 | ~~Haiku düşük-risk görevleri~~ | **YOK — Haiku yasak** | v5/v6 kuralı sürer |
 

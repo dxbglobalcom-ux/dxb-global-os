@@ -176,8 +176,20 @@ describe("E8.4b alarm sources (OBSERVABILITY §3)", () => {
 
   it("fallback depth ≥2 → High; exhausted chain → Critical (ROUTING §9/§17) — rolled back", async () => {
     await db().transaction().execute(async (trx) => {
-      // Make the first hop ineligible so fable-5 → opus(banned) → sonnet = depth 2.
-      await sql`UPDATE model_catalog SET banned = true WHERE id = 'claude-opus-4-8'`.execute(trx);
+      // U20 (2026-07-25): this probe used to lean on the LIVE catalog having a
+      // three-rung chain (fable-5 → claude-opus-4-8 → claude-sonnet-5). The 4.8
+      // rung was retired that day, so banning it stopped producing depth ≥2 and
+      // the assertion silently measured nothing. The depth rule is what this
+      // test owns, not the roster — so build the rungs the probe needs INSIDE
+      // the rolled-back transaction and stop depending on catalog shape.
+      await sql`
+        INSERT INTO model_catalog (id, provider, status, display_name, mechanical_only, fallback_of)
+        VALUES ('test-e8-rung-b', 'test', 'active', 'Probe rung B', false, 'claude-sonnet-5'),
+               ('test-e8-rung-a', 'test', 'active', 'Probe rung A', false, 'test-e8-rung-b')
+      `.execute(trx);
+      await sql`UPDATE model_catalog SET fallback_of = 'test-e8-rung-a' WHERE id = 'fable-5'`.execute(trx);
+      // First hop ineligible → fable-5 → A(banned) → B = depth 2.
+      await sql`UPDATE model_catalog SET banned = true WHERE id = 'test-e8-rung-a'`.execute(trx);
       const fb = await sql<{ resp: { ok: boolean; model_id?: string } }>`
         SELECT fn_model_fallback('fable-5', 'execution', 'probe outage') AS resp
       `.execute(trx);
@@ -189,7 +201,7 @@ describe("E8.4b alarm sources (OBSERVABILITY §3)", () => {
       expect(high.rows[0].level).toBe("high");
 
       // Kill the whole chain below fable-5 → CHAIN_EXHAUSTED → Critical.
-      await sql`UPDATE model_catalog SET banned = true WHERE id = 'claude-sonnet-5'`.execute(trx);
+      await sql`UPDATE model_catalog SET banned = true WHERE id IN ('test-e8-rung-b', 'claude-sonnet-5')`.execute(trx);
       const dead = await sql<{ resp: { ok: boolean; error?: string } }>`
         SELECT fn_model_fallback('fable-5', 'execution', 'probe outage') AS resp
       `.execute(trx);

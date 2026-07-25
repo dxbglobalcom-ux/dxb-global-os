@@ -2,7 +2,7 @@
 
 ## ⛔ STANDING ORDER 11 — SUPERPOWERS DISCIPLINE, ALWAYS (CEO order 2026-07-24)
 
-**Every session on this project works through the superpowers skill set.** Invoke the matching process skill BEFORE the work: `systematic-debugging` for any defect (root cause before fix), `executing-plans` for ticket execution, `test-driven-development` for new code (red before green), `verification-before-completion` before any "done" claim. Excluded: `subagent-driven-development` and agent-dispatch for construction authorship (K1 — every repo line is Fable's, inline). Composes with, never overrides, RULE #0/#0-A/#0-B. Full text: complaint ledger `00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` standing order 11.
+**Every session on this project works through the superpowers skill set.** Invoke the matching process skill BEFORE the work: `systematic-debugging` for any defect (root cause before fix), `executing-plans` for ticket execution, `test-driven-development` for new code (red before green), `verification-before-completion` before any "done" claim. Excluded: `subagent-driven-development` and agent-dispatch for construction authorship (K1 — every repo line is Opus 5's, inline). Composes with, never overrides, RULE #0/#0-A/#0-B. Full text: complaint ledger `00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` standing order 11.
 
 ## ⛔ RULE #0 — MANDATORY DESIGN VERIFICATION (CEO directive 2026-07-13, SEVEREST TIER)
 
@@ -36,7 +36,7 @@ DXB Global OS is an AI-native company operating system for **DXB Global Technolo
 
 ### Language rule (BINDING — CEO directive 2026-07-12)
 
-**Every project artifact is written in ENGLISH** — personas, specs, migrations, code comments, commit messages, planning docs, reports, evidence records. **Single exception: conversational chat replies to the CEO stay Turkish.** Applies to all authors (Fable, Opus, GPT 5.6, runtime agents) until the project ends. Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-LANGUAGE.md`. Pre-directive Turkish content stays; translation pass = optional CEO-scheduled follow-up.
+**Every project artifact is written in ENGLISH** — personas, specs, migrations, code comments, commit messages, planning docs, reports, evidence records. **Single exception: conversational chat replies to the CEO stay Turkish.** Applies to all authors (Opus 5, GPT 5.6, runtime agents) until the project ends. Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-LANGUAGE.md`. Pre-directive Turkish content stays; translation pass = optional CEO-scheduled follow-up.
 
 ### Constraints
 
@@ -120,7 +120,7 @@ Use these entry points:
 
 Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
 
-⛔ **PLAN.md ≠ a plan (CEO ruling 2026-07-13).** The project plan exists ONCE: `HOLDING-OS-MASTER-PLAN/` (31-spec corpus + IMPLEMENTATION_ROADMAP). Quick/phase `PLAN.md` files are execution tickets only — spec pointer + roadmap row + evidence contract, ZERO new design decisions. Deviations go into the SPEC as registered adaptations (CEO-visible), never invented inside a PLAN.md. Successor authors (Opus after Fable) execute the corpus; they do not re-plan it.
+⛔ **PLAN.md ≠ a plan (CEO ruling 2026-07-13).** The project plan exists ONCE: `HOLDING-OS-MASTER-PLAN/` (31-spec corpus + IMPLEMENTATION_ROADMAP). Quick/phase `PLAN.md` files are execution tickets only — spec pointer + roadmap row + evidence contract, ZERO new design decisions. Deviations go into the SPEC as registered adaptations (CEO-visible), never invented inside a PLAN.md. Successor authors (Opus 5, who took over from Fable) execute the corpus; they do not re-plan it.
 <!-- GSD:workflow-end -->
 
 <!-- GSD:profile-start -->

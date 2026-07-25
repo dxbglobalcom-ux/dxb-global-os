@@ -596,7 +596,7 @@
       "colBrain": "Brain",
       "colAutonomy": "Autonomy",
       "colPersona": "Persona",
-      "colHook": "Fable 5 Hook",
+      "colHook": "Opus 5 Hook",
       "colStatus": "Status",
       "showing": "Showing",
       "of": "of",
@@ -985,7 +985,7 @@
       "colBrain": "Brain",
       "colAutonomy": "Autonomy",
       "colPersona": "Persona",
-      "colHook": "Fable 5 Hook",
+      "colHook": "Opus 5 Hook",
       "colStatus": "Status",
       "statusActive": "Active",
       "statusDormant": "Dormant",
@@ -1204,7 +1204,7 @@
       "unlocked": "Editable",
       "enabled": "Enabled",
       "disabled": "Disabled",
-      "hookTitle": "Fable 5 Hook engine",
+      "hookTitle": "Opus 5 Hook engine",
       "hookSummary": "The 17-standard policy engine gates every spawn (pre/runtime/post). Severity mix below; the full policy board with per-standard toggles lives on the violations page.",
       "hookSeverities": {
         "block": "Block",
@@ -1456,7 +1456,9 @@
         "formName": "Model name",
         "formApiKey": "API key (optional now)",
         "formApiKeyHint": "Stored in the local vault file only — never the database. Routing is wired by the orchestrator.",
-        "formNote": "Note (optional)"
+        "formNote": "Note (optional)",
+        "retiredShow": "Show retired models ({n})",
+        "retiredHide": "Hide retired models"
       },
       "statuses": {
         "active": "Active",
@@ -2173,7 +2175,7 @@
     },
     "violations": {
       "title": "Hook Violations",
-      "subtitle": "The Fable 5 discipline hook — every gate rejection, revision and escalation on the record, plus the 17-standard policy board.",
+      "subtitle": "The Opus 5 discipline hook — every gate rejection, revision and escalation on the record, plus the 17-standard policy board.",
       "ui": {
         "streamTitle": "Violation stream",
         "policiesTitle": "Policy board — the 17 standards",

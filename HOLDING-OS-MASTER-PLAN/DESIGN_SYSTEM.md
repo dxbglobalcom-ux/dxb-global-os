@@ -205,8 +205,8 @@ CEO ruling (recorded from the 2026-07-11 exchange; codification ordered 2026-07-
 2. **Burj Al Arab 7-star = QUALITY BAR only.** It sets the craftsmanship/elegance/finish standard ("referans görselden güzel" eye-test bar). It is NOT the concept spine; where the two pull apart, Iron Man cockpit identity wins and Burj-level finish is applied to it.
 3. **C-Hybrit palette stays and already fits.** Champagne/gold accent = Mark armor gold-titanium warm metal tone (no shift toward red). The gold double edge + lock on the money-out gate reads as armor plating — that reading is canon.
 4. **Existing token discipline unchanged.** B3 (light is hierarchy, not decoration; no neon/cyberpunk lines) and B4 (gold discipline; bright yellow / orange gold / BROWN banned — brown glow = recorded RET lesson) continue to bound the HUD language. This directive changes the CONCEPT SOURCE, not the token rules.
-5. **Scope: every future design pass until project end** — JARVIS/voice screens included — and every author (Fable, Opus, GPT 5.6, runtime agents). RULE #0 comparisons read the design-bank baselines through this hierarchy.
-6. **Quality bar restated:** THE GOAL applies — Fable 5 quality at every stage; this directive raises identity clarity, never lowers finish.
+5. **Scope: every future design pass until project end** — JARVIS/voice screens included — and every author (Opus 5, GPT 5.6, runtime agents). RULE #0 comparisons read the design-bank baselines through this hierarchy.
+6. **Quality bar restated:** THE GOAL applies — Opus 5 quality at every stage; this directive raises identity clarity, never lowers finish.
 
 ## Done definition (bu spec)
 

@@ -56,9 +56,19 @@ describe("E7.1 — slot resolution (table-driven, no model name in code)", () =>
     }
   });
 
-  it("spec §24 smoke: execution slot resolves to opus", async () => {
+  // U20 (2026-07-25): the execution slot's registry default moved off the
+  // retired 'claude-opus-4-8' row onto 'fable-5' (display name "Claude Opus 5"
+  // — the id is a frozen technical key, CEO decision). Asserting the LIVE
+  // catalog row instead of a literal keeps this smoke honest across future
+  // CEO reassignments: it proves the slot resolves to an ACTIVE, verdict-capable
+  // Anthropic model, not that one particular string survived.
+  it("spec §24 smoke: execution slot resolves to the active default model", async () => {
     const sel = await selectModel(db(), { roleSlot: "execution" });
-    expect(sel.modelId).toBe("claude-opus-4-8");
+    expect(sel.modelId).toBe(registryDefaults.execution);
+    const row = await sql<{ status: string; banned: boolean; mechanical_only: boolean }>`
+      SELECT status, banned, mechanical_only FROM model_catalog WHERE id = ${sel.modelId}
+    `.execute(db());
+    expect(row.rows[0]).toMatchObject({ status: "active", banned: false, mechanical_only: false });
   });
 
   it("writes a routing_decision row per selection (decision_log)", async () => {
@@ -122,18 +132,28 @@ describe("E7.1 — slot resolution (table-driven, no model name in code)", () =>
 });
 
 describe("E7.1 — fallback chain (R4: deterministic, logged)", () => {
-  it("fable-5 failure on critical_decision falls back to opus, logs routing_fallback", async () => {
+  // U20 (2026-07-25): the 'claude-opus-4-8' rung was retired, so fable-5's
+  // next hop is now whatever model_catalog.fallback_of actually points at. The
+  // assertion reads that pointer instead of a literal — the mechanism (walk one
+  // rung, log routing_fallback, name both ends in the rationale) is what this
+  // test owns; WHICH model is next is a CEO/catalog decision, not test truth.
+  it("fable-5 failure on critical_decision walks one catalog rung, logs routing_fallback", async () => {
+    const next = await sql<{ fallback_of: string }>`
+      SELECT fallback_of FROM model_catalog WHERE id = 'fable-5'
+    `.execute(db());
+    const expected = next.rows[0].fallback_of;
+    expect(expected, "fable-5 must still declare a next rung").toBeTruthy();
     const fb = await fallbackModel(db(), {
       failedModelId: "fable-5",
       roleSlot: "critical_decision",
       reason: "test: simulated timeout",
     });
-    expect(fb.modelId).toBe("claude-opus-4-8");
+    expect(fb.modelId).toBe(expected);
     const row = await sql<{ decision: string; outcome: string; rationale: string }>`
       SELECT decision, outcome, rationale FROM decision_log WHERE id = ${fb.decisionId}
     `.execute(db());
     expect(row.rows[0]).toMatchObject({ decision: "routing_fallback", outcome: "selected" });
-    expect(row.rows[0].rationale).toContain("fable-5 → claude-opus-4-8");
+    expect(row.rows[0].rationale).toContain(`fable-5 → ${expected}`);
   });
 
   it("chain exhaustion is a loud CHAIN_EXHAUSTED, logged blocked_no_model", async () => {

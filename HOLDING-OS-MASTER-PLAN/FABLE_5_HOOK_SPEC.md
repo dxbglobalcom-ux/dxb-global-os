@@ -1,11 +1,17 @@
-# FABLE_5_HOOK_SPEC — FABLE 5 INTELLIGENCE & DISCIPLINE HOOK
+# FABLE_5_HOOK_SPEC — OPUS 5 INTELLIGENCE & DISCIPLINE HOOK
+
+> **⚠ İSİM/ID AYRIMI (U20, CEO kararı 2026-07-25):** motorun CEO'ya görünen adı **Opus 5 Hook**'tur.
+> Teknik kimlikler DEĞİŞMEZ: bu dosyanın adı `FABLE_5_HOOK_SPEC.md`, ayar anahtarı
+> `orchestrator.fable_review_required`, escalation basamağı `fable-final` ve persona §11 başlığı
+> (`## 11. Fable 5 hook bağlantısı` — kapı bu başlıkla eşleşir, `packages/hr/src/template.ts:25`)
+> yerinde kalır; yeniden adlandırma 196 personanın kapısını ve canlı ayar undo zincirini kırardı.
 
 > Dalga 3 · Yazar: Fable 5 bizzat · Kaynak hüküm: madde 7 birebir ("bu hook yalnızca bir prompt olmamalıdır")
 > Üst: [[SYSTEM_ARCHITECTURE]] (R6) · Kardeşler: [[AGENT_ORCHESTRATION_SPEC]] (çağrı noktaları), [[EMPLOYEE_PERSONA_STANDARD]] (hook bağlantısı), [[HR_OPERATING_SYSTEM_SPEC]] (otomatik donanım)
 
 ## 1. Amaç
 
-Holding'deki HER ajan — hangi temel modeli kullanırsa kullansın — Fable 5'in tanımladığı merkezi çalışma standardına bağlanır. Hook = `packages/hook` kütüphanesi: ajan spawn yolunu saran policy motoru. Prompt değil, YÜRÜTME KATMANI: pre-task gate, post-task gate, koşu-içi kurallar, ihlal kaydı, escalation.
+Holding'deki HER ajan — hangi temel modeli kullanırsa kullansın — inşaat yazarının (2026-07-25'ten itibaren Opus 5) tanımladığı merkezi çalışma standardına bağlanır. Hook = `packages/hook` kütüphanesi: ajan spawn yolunu saran policy motoru. Prompt değil, YÜRÜTME KATMANI: pre-task gate, post-task gate, koşu-içi kurallar, ihlal kaydı, escalation.
 
 ## 2. Gereksinimler — madde 7'nin 17 standardı (normatif eşleme)
 
@@ -76,7 +82,7 @@ CREATE TABLE hook_violations (
 |-----------|-------|--------|
 | `packages/hook` (policy yükleyici + gate motoru + prompt derleyici katkısı) | yeni paket | YENİ |
 | `hook_policies` seed (17 standart × varsayılan kurallar) | migration 0022x seed | YENİ |
-| Hook status UI (çalışan kartındaki "Fable 5 Hook status" alanı — §16) | employee command page içinde | SIFIRDAN |
+| Hook status UI (çalışan kartındaki "Opus 5 Hook status" alanı — §16) | employee command page içinde | SIFIRDAN |
 | İhlal akışı UI | `(command)/gov/violations` | SIFIRDAN |
 
 ## 6. Backend yapısı — gate'ler

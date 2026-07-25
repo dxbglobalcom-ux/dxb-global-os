@@ -62,7 +62,7 @@ ALTER TABLE agents
     CHECK (employment_status IN ('draft','probation','active',
                                  'suspended','archived','dormant')),
   ADD COLUMN persona_id uuid,               -- FK personas(id), aşağıda
-  ADD COLUMN hook_version text;             -- Fable Hook bağlanma damgası
+  ADD COLUMN hook_version text;             -- Opus 5 Hook bağlanma damgası
 
 CREATE TABLE personas (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

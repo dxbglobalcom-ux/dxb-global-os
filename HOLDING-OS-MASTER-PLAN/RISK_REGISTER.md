@@ -42,7 +42,7 @@ T = teslimat/takvim · K = kalite/model · Ş = şema/veri · A = altyapı/kayna
 | R19 | A | memory-store/ repo şişmesi | D | D | 500MB eşik uyarısı → eski artifact'ler Storage Box arşivine | System Health + du | MEMORY §26 |
 | R20 | O | Kabul edilen ekranlarda sonradan regresyon | O | O | Kabul dondurmaz — L5 senaryoları kabul edilen ekranları da korur → RET döngüsü yeniden | L5 koşuları | ACCEPTANCE §27 |
 | R21 | K | Opus test assert'lerini gevşetir (sessiz kalite erozyonu) | D | Y | Assert-sayısı-düşemez kapısı + test diff'i evidence kapsamında → diff revert + yeniden yazım | sayaç denetimi | TEST §27 |
-| R22 | T | Fable Hook policy içeriği yetişmez (E10, persona ailesine bağlı) | O | O | Geçici çözüm kayıtlı: spawn-sarmalayıcı + policy tablosu v1 (BACKUP §6) → tam gates sonra | E10 durum | FABLE_5_HOOK |
+| R22 | T | Opus 5 Hook policy içeriği yetişmez (E10, persona ailesine bağlı) | O | O | Geçici çözüm kayıtlı: spawn-sarmalayıcı + policy tablosu v1 (BACKUP §6) → tam gates sonra | E10 durum | FABLE_5_HOOK |
 
 ## 5-12. Component/Backend/Frontend/API/Event/State/Tablolar/İlişkiler
 

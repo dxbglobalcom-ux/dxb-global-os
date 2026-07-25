@@ -2,7 +2,7 @@
 
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[SETTINGS_AND_CONTROL_SPEC]] (6.1 anahtarları), [[COST_CONTROL_SPEC]] (bütçe kesişimi), [[AGENT_ORCHESTRATION_SPEC]] (D3, tüketici)
 > Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı) + **CEO direktifi 2026-07-12** (ajan beyinleri dashboard'dan değiştirilebilir — §4b). **KAYITLI KARAR DEĞİŞİMİ (CEO 2026-07-12 ~01:00):** madde-18 "Sonnet YOK" daraltması RUNTIME için KALDIRILDI — Sonnet şirket içinde beyin olarak serbest; inşaat-dönemi yazarlık yasağı (model-routing-hierarchy) AYNEN sürer.
-> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy v6; korpus/execution Fable bizzat → 12 Temmuz sonrası Opus).
+> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy **v9**; korpus/execution yazarı **Opus 5 bizzat** — yedek katman yok, CEO 2026-07-25).
 
 ## 1. Amaç
 
@@ -16,7 +16,7 @@ Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-de�
 - R4. Fallback zinciri deterministik: `model_catalog.fallback_of` + rol-başı sıra; her düşüş decision_log'a `routing_fallback` olayı.
 - R5. Raw provider key YASAK: tüm çağrılar LiteLLM proxy virtual key'leriyle (departman-başı; STACK sert kuralı).
 - R6. Model Orchestration Panel (§19): görsel flow, node sürükle → rol ataması değişir (control seam üzerinden); settings 6.1 anahtarlarıyla AYNI kaynağa yazar.
-- R7. Rotalama parametreleri ayarlanabilir (6.1): timeout, max token, max maliyet, context limiti, retry, confidence threshold, escalation, human-approval eşiği, Fable-review zorunluluğu — hepsi settings_registry'de, resolve zinciriyle scope'lu.
+- R7. Rotalama parametreleri ayarlanabilir (6.1): timeout, max token, max maliyet, context limiti, retry, confidence threshold, escalation, human-approval eşiği, Opus 5-review zorunluluğu (teknik anahtar sabit: `orchestrator.fable_review_required`) — hepsi settings_registry'de, resolve zinciriyle scope'lu.
 - R8. (CEO direktifi 2026-07-12) `agents.brain` ajan-seviyesi beyin birinci sınıf rotalama girdisidir ve **dashboard'dan CEO-değiştirilebilir**: değişim = tek UPDATE + audit_log + decision_log + Broadcast; banned/mechanical_only korkulukları ajan seviyesinde de MUTLAK (bypass yolu yok). Normatif ayrıntı §4b.
 
 ## 3. Mimari
@@ -87,8 +87,8 @@ Varsayılan atamalar (seed — CEO settings'ten değiştirir; ⛔ değişiklik C
 
 | Rol slotu | Varsayılan | Not |
 |-----------|-----------|-----|
-| Ana orkestratör · kritik karar · review · planlama · kodlama · tasarım · araştırma · QA · HR · execution | `claude-opus-4-8` | Fable erişimi varken kritik-karar/review fiilen Fable'dadır (12 Temmuz'a kadar); katalogda Fable satırı `status=active`, sonrası `disabled` — BACKUP_PLAN devir protokolü |
-| Yedek orkestratör · emergency fallback | `claude-opus-4-8` → zincir: opus→(gelecek onaylı model) | tek-provider riski §26'da |
+| Ana orkestratör · kritik karar · review · planlama · kodlama · tasarım · araştırma · QA · HR · execution | `fable-5` (görünen ad: **Claude Opus 5**) | Devir tamamlandı 2026-07-25: kritik-karar/review Opus 5'tedir. Katalog satırının teknik `id`'si tarihsel nedenle `fable-5` kalır (yeniden adlandırma canlı FK zincirini kırardı — CEO kararı 2026-07-25); CEO'ya görünen ad `display_name` üzerinden Opus 5'tir. |
+| Yedek orkestratör · emergency fallback | **YOK** (katman kaldırıldı, CEO 2026-07-25) | Tek beyin Opus 5. Hata/timeout/rate-limit'te sessiz alt-model düşüşü yasak — iş `blocked` raporuyla CEO'ya çıkar (§"never a silent drop"). `claude-opus-4-8` satırı `status='retired'`. Tek-provider riski §26'da |
 | Hızlı görev · düşük maliyet | `claude-haiku-4-5` (`mechanical_only`) | verdict üretemez; çıktısı ham girdi sayılır |
 | (atanabilir havuz — varsayılan slotu yok) | `claude-sonnet-5` (`banned=false`) | CEO kararı 2026-07-12: runtime beyin olarak SERBEST; CEO settings/panel'den slot veya ajan-beyni atar — hızlı görev/düşük maliyet slotlarına doğal aday |
 
@@ -105,7 +105,7 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_re
 - Yüzey: `EmployeeCommandPage`/`EmployeeCard` Control Mode rozeti + palette "X'in modelini değiştir" ([[CEO_COMMAND_CENTER_SPEC]] §8) → `POST /api/control/employees {op:'set_model', employee_id, model_id, rationale}`.
 - fn: `fn_update_agent_brain(employee_id, model_id, rationale)` — doğrulama: katalogda var + `status='active'` + `banned=false` + `mechanical_only` rol-sınıf kontrolü; yazım: `agents.brain` UPDATE + `brain_source='ceo_override'` + audit_log + decision_log(`routing_change`, aktör=`ceo`, gerekçe) + `settings` Broadcast (kernel cache invalidate — §9 yolu). Yanıt `{ok, change_id}`; undo settings_change_log/audit üzerinden. Doğrudan tablo UPDATE'i (psql/PostgREST) control seam dışıdır — audit'siz yazım ihlal.
 - **Eval-önce doktrini (CAIO):** ajan/CAIO-kaynaklı beyin-değişim önerisi eval-önce + kayıtlı yürür (CAIO persona hükmü). CEO dashboard değişimi hook'un ÜSTÜNDEDİR ([[FABLE_5_HOOK_SPEC]] CEO istisnası): engellenmez, anında uygulanır; sistem warn + audit düşer ve CAIO'ya değişim-sonrası eval görevi otomatik kuyruklanır (`v_model_stats` 7 gün izleme; gerileme → bilgi-alert'i + geri-alma önerisi — approval DEĞİL, operasyon bilgisi).
-- Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy: Fable→Opus, Sonnet defedildi, Haiku getir-götür) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
+- Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy v9: tek yazar Opus 5, yedek yok, Sonnet defedildi, Haiku getir-götür) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
 
 ### 4c. Yeni model ekleme + bağlama — dashboard'dan (CEO direktifi 2026-07-12 ~01:30, normatif)
 
@@ -205,7 +205,7 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
 - **Tek-provider yoğunluğu** (bugün fiilen Anthropic): katalog provider-çoklu tasarlandı; yeni provider eklemek = katalog satırı + LiteLLM config, kod değişikliği yok. Provider-çapı kararı CEO'da.
 - **Quality score öznelliği**: skor CEO/QA girdisi + v_model_stats gerçek verisi yan yana gösterilir — tek sayıya indirgenmez.
 - **Fallback fırtınası** (rate-limit dalgası): zincir başına dakikada ≤3 düşüş, sonrası circuit-breaker + kuyruk park (maliyet patlaması önlenir).
-- **Fable→Opus devri günü**: katalogda Fable satırı disabled'a çekilir → tüm kritik-karar slotu otomatik Opus'a düşer → decision_log 'routing_change' + CEO'ya bilgi alert'i (BACKUP_PLAN protokolüyle senkron).
+- **Yazar devri (GERÇEKLEŞTİ 2026-07-25)**: kritik-karar slotu Opus 5'tedir; `claude-opus-4-8` satırı `retired`, yedek zincir kaldırıldı. Gelecekte bir katalog satırı `disabled`/`retired` edilirse aynı yol işler: slot yeniden çözülür → decision_log 'routing_change' + CEO'ya bilgi alert'i.
 - **mechanical_only ihlal denemesi** (Haiku'ya review görevi): fn reddeder + policy hatası + decision_log; görev bir üst slota escalate.
 
 ## Done definition (bu spec)
@@ -235,3 +235,36 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
    activate).
 5. **chat.answer routing row** (sonnet-5, subscription, medium effort) added
    for the CEO Chat Board fast lane (C1/C10) — §4b runtime-lane authority.
+
+## Registered adaptation A-2026-07-25 (CEO order — construction authorship handover, U20, BINDING)
+
+1. **Construction authorship moved Fable 5 → Opus 5.** Every forward-looking
+   authority sentence in the corpus, the governance memory and the planning
+   docs now names **Opus 5**. `model-routing-hierarchy` is at **v9**.
+2. **The backup-model layer is REMOVED.** The v6 chain "Fable in person → at
+   worst Opus 4.8" and the v5 budget-fallback mode are cancelled. One brain:
+   Opus 5. On error/timeout/rate-limit there is no silent downgrade — the work
+   surfaces to the CEO as a `blocked` report. Consequence in the catalog:
+   `claude-opus-4-8` moves to `status='retired'`; item 2 of adaptation
+   A-2026-07-19 (Opus 4.8 as the construction-authorship fallback) is
+   **superseded** by this row. The Codex 5.6 fallback row from that same
+   adaptation is untouched (separate CEO order, standing order 3).
+3. **History is not rewritten** (CEO decision 2026-07-25). Records of who
+   authored what — persona `Created by: fable-5`, the live
+   `persona_version='v2.0-fable'` rows, applied migration files, evidence
+   notes — stay exactly as they are: Fable 5 really did build 2026-07-06 →
+   2026-07-25, and editing those records would violate the §35 zero-fabrication
+   rule.
+4. **Internal technical identifiers are not renamed** (CEO decision
+   2026-07-25). `model_catalog.id='fable-5'`, the settings key
+   `orchestrator.fable_review_required`, the escalation rung `fable-final`,
+   the file name `FABLE_5_HOOK_SPEC.md` and the persona §11 heading (gate
+   matches on that title — `packages/hr/src/template.ts:25`) keep their keys;
+   renaming them would break live FK chains, the settings undo chain and the
+   196-persona gate for zero CEO-visible benefit. **Every CEO-visible label is
+   Opus 5** — carried by `model_catalog.display_name` and the i18n message
+   values, not by the keys.
+5. **Known cosmetic boundary:** persona files still carry the section heading
+   `## 11. Fable 5 hook binding` and the historical `Created by: fable-5`
+   line. This is deliberate (rows 3 + 4) and CEO-approved; the dashboard never
+   renders that heading verbatim.

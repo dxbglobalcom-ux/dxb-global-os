@@ -28,7 +28,7 @@ onlar da silinmedi, `DXB.code-workspace` içindeki listeden çıkarılarak anın
 
 Her yeni session, herhangi bir işten ÖNCE şunları okur (BOOTSTRAP READ onayı vermeden proje işi yapamaz):
 
-1. **Kalıcı hafıza:** `fable-5-construction-governance.md` + `model-routing-hierarchy.md` + `MEMORY.md`
+1. **Kalıcı hafıza:** `opus-5-construction-governance.md` + `model-routing-hierarchy.md` + `MEMORY.md`
    endeksi (kim ne yazabilir, kalite kuralları, CEO hükümleri) — repo aynası: `.planning/governance/`
 2. **`.planning/STATE.md`** — neredeyiz, son durum, kayıtlı uyarlamalar (İLK bakılan dosya)
 3. **`HOLDING-OS-MASTER-PLAN/IMPLEMENTATION_ROADMAP.md`** — sıradaki adım + kabul kanıtları
@@ -55,4 +55,4 @@ CLAUDE.md otomatik yüklenir. Bu protokol governance'ın bağlayıcı bootstrap 
 4. Kod içi yorum/README'ler
 
 Sapma kuralı: master plandan sapma ancak KAYITLI + CEO'ya görünür olur; sessiz sapma yasak.
-Kadro kuralları: TÜM personalar Fable 5 bizzat (K2) · uydurma insan adı yok · `agency-agents` salt referans.
+Kadro kuralları: TÜM personalar Opus 5 bizzat (K2) · uydurma insan adı yok · `agency-agents` salt referans.

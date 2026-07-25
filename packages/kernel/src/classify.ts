@@ -24,9 +24,15 @@ export type ClassifiedIntent = z.infer<typeof ClassifiedIntent>;
 // full CLI id can ship as pure data with zero code change.
 // Exported: orchestrator SDK calls (decompose/worker-shim) reuse this map so
 // no model-name literal ever appears outside the kernel translation layer.
+// U20 (CEO order 2026-07-25): construction/critical authorship moved to Opus 5
+// and the 4.8 generation retired. The routing SLUGS are technical keys and stay
+// put (renaming them would break the live model_catalog FK chain, the settings
+// undo chain and every historical routing_rules row) — only the CLI model they
+// resolve to moves. Both legacy slugs therefore land on the same real model.
 export const SDK_MODEL_IDS: Record<string, string> = {
-  "fable-5": "claude-fable-5",
-  "opus-4.8": "claude-opus-4-8",
+  "fable-5": "claude-opus-5",
+  "opus-5": "claude-opus-5",
+  "opus-4.8": "claude-opus-5",
   "sonnet-5": "claude-sonnet-5",
 };
 

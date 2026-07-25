@@ -20,7 +20,7 @@
 > section, which roadmap row, what evidence will prove it. It may contain
 > ZERO new design decisions. If reality forces a deviation, it is written into
 > the SPEC as a registered adaptation (CEO-visible) — never invented inside a
-> PLAN.md. Successor authors (Opus after Fable) EXECUTE the corpus; they do
+> PLAN.md. Successor authors (Opus 5, who took over from Fable) EXECUTE the corpus; they do
 > not re-plan it. A PLAN.md that redesigns anything is a governance violation.
 | `governance/`, `research/`, `study-cards/`, `graphs/` | Standing references (directive mirrors, stack research, tool cards, knowledge graph) |
 

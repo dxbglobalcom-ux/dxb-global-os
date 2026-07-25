@@ -14,7 +14,7 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 - R3. CEO'nun her ayar değişikliği tek yazım seamı üzerinden geçer (SECURITY DEFINER fonksiyon deseni — migration 0015 emsali) ve audit'e düşer.
 - R4. Canlılık: UI güncellemeleri Supabase Realtime **Broadcast** ile (postgres_changes YASAK — STACK.md sert kuralı).
 - R5. 8GB VPS RAM bütçesi aşılmaz: yeni yetenekler öncelikle **kütüphane + tablo + view** olarak eklenir, yeni resident servis olarak DEĞİL.
-- R6. Her ajan spawn'ı Fable Hook policy katmanından geçer (pre/post-task validation) — madde 7.
+- R6. Her ajan spawn'ı Opus 5 Hook policy katmanından geçer (pre/post-task validation) — madde 7.
 - R7. Güvenlik sertleştirme ertelenmiş sicilde; para-ÇIKIŞI onay kapısı + outbox tek-çıkış deseni DOKUNULMAZ.
 
 ## 3. Mimari (katman görünümü)
@@ -28,7 +28,7 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 ├─ KONTROL DÜZLEMİ ────────────────────────────────── [YENİ] ──────────┤
 │ Settings/Org/HR mutasyonları: Next.js route handler →               │
 │  SECURITY DEFINER fn → settings/org tabloları → audit_log + Broadcast│
-│ Fable Hook Policy Engine: packages/hook (kütüphane; ajan spawn      │
+│ Opus 5 Hook Policy Engine: packages/hook (kütüphane; ajan spawn     │
 │  yolunu sarar — pre-task gate, post-task gate, quality gate)         │
 ├─ ÇEKİRDEK YÜRÜTME ────────────────────────────────── [KALIR] ────────┤
 │ packages/kernel (intent→plan→task) · packages/orchestrator (routing) │
@@ -64,7 +64,7 @@ Birinci-sınıf varlıklar ve sahipleri — tam şema [[DATA_MODEL]]:
 | Command Center shell | `apps/dashboard/src/app/(command)` | SIFIRDAN | Katmanlı kompozisyon (§9): nav, command bar, canvas, sağ ray, dock |
 | Modül sayfaları (26+) | aynı shell altında | SIFIRDAN | §31 listesi; tek design system |
 | Control-plane route handlers | `apps/dashboard/src/app/api/control/*` | YENİ | Mutasyon isteği → DB fn çağrısı → sonuç |
-| `packages/hook` | yeni paket | YENİ | Fable Hook: policy yükle, pre/post gate, ihlal kaydı |
+| `packages/hook` | yeni paket | YENİ | Opus 5 Hook: policy yükle, pre/post gate, ihlal kaydı |
 | `packages/kernel` | mevcut | KALIR+GENİŞLER | Workflow/project varlıklarını tanır; hook entegrasyonu |
 | `packages/orchestrator` | mevcut | KALIR+GENİŞLER | `routing_rules` tablo-güdümlü seçim |
 | `packages/hr` | yeni paket | YENİ | Çalışan yaşam döngüsü servis fonksiyonları (kernel worker içinde koşar) |

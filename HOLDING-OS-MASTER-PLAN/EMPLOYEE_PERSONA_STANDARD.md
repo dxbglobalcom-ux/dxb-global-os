@@ -92,7 +92,7 @@ Kural: sicil ekranı (employee command page) bu 33 alanın TAMAMINI gösterir; k
 | `fn_persona_gate(persona_id, verdict, notes)` → `passed/failed` + audit | 0020x | YENİ |
 | Persona editör/görüntüleyici UI | `(command)/org/employees/[id]/persona` | SIFIRDAN |
 
-Mekanik kapı denetimleri: 11 başlık tam · boş bölüm yok · jenerik-imza taraması (şablon placeholder kalıntısı, departman-değişmez metin benzerliği) · hook bölümünde geçerli hook sürümü. Derin kalite (içerik gerçekten rol-özgü ve akıllı mı): ilk kuruluşta CEO/Fable gözü; işletimde HR review görevi (madde 9) — verdict `fn_persona_gate` ile yazılır, decision_log'lu.
+Mekanik kapı denetimleri: 11 başlık tam · boş bölüm yok · jenerik-imza taraması (şablon placeholder kalıntısı, departman-değişmez metin benzerliği) · hook bölümünde geçerli hook sürümü. Derin kalite (içerik gerçekten rol-özgü ve akıllı mı): kuruluş döneminde CEO + inşaat yazarı (2026-07-25'ten itibaren Opus 5) gözü; işletimde HR review görevi (madde 9) — verdict `fn_persona_gate` ile yazılır, decision_log'lu.
 
 ## 8. API'ler / 9. Event yapısı / 10. State yönetimi
 
@@ -106,7 +106,7 @@ DATA_MODEL 4.1 normatif (`personas` UNIQUE(employee_id, version); `agents.person
 
 ## 13. Yetkilendirme
 
-Persona submit: `ceo` veya `system`(HR). Gate verdict: kuruluş döneminde yalnız `ceo` (Fable önerir, CEO onaylar — inşaat governance'ı); işletimde HR review + `risk='high'` çalışanlarda (director+) CEO onayı zorunlu. Persona OKUMA: CEO tümü; müdür kendi ekibini; çalışan kendi personasını (self-awareness — derleyici zaten enjekte eder).
+Persona submit: `ceo` veya `system`(HR). Gate verdict: kuruluş döneminde yalnız `ceo` (inşaat yazarı önerir — 2026-07-25'ten itibaren Opus 5 —, CEO onaylar; inşaat governance'ı); işletimde HR review + `risk='high'` çalışanlarda (director+) CEO onayı zorunlu. Persona OKUMA: CEO tümü; müdür kendi ekibini; çalışan kendi personasını (self-awareness — derleyici zaten enjekte eder).
 
 ## 14. Logging / 15. Audit
 

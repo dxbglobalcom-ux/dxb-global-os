@@ -1,6 +1,6 @@
 # CEO DIRECTIVE — MANDATORY DESIGN VERIFICATION (SEVEREST TIER)
 
-> Issued: 2026-07-13 ~01:40 · Authority: CEO, verbatim order · Scope: every CEO-visible surface (dashboard, login, JARVIS UI, future sub-OS UIs) · Binding on: Fable, Opus, GPT 5.6, every runtime agent, every future session — until project end.
+> Issued: 2026-07-13 ~01:40 · Authority: CEO, verbatim order · Scope: every CEO-visible surface (dashboard, login, JARVIS UI, future sub-OS UIs) · Binding on: Opus 5, GPT 5.6, every runtime agent, every future session — until project end.
 > Trigger: the CEO had to personally catch, in one night, seven visual defects (raw slugs, badge walls, mixed languages, buried detail panel, double scrollbars, dock crushing content, stale renders). **The CEO is not the QA layer.**
 
 ## The rule (write-once, obey-always)

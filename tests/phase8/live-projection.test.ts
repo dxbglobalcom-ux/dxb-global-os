@@ -125,6 +125,11 @@ const PURITY_ALLOWLIST: string[] = [
   // C4/C18 (2026-07-19): list purge door (.rpc control_records_purge —
   // status-guarded, audited)
   "app/api/control/purge/route.ts",
+  // U15 D9/D12 (2026-07-25): JARVIS mute/hard-off door
+  // (.rpc control_voice_daemon_set_state — SECURITY DEFINER single-row door,
+  // migration 20260725005000). The route landed with commit 514f119 but its
+  // allowlist row did not — caught by this gate on the next full run.
+  "app/api/voice/daemon/route.ts",
 ];
 
 const DASHBOARD_SRC = join(__dirname, "../../apps/dashboard/src");

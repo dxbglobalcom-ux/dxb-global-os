@@ -18,7 +18,7 @@ pg-boss üstünde CEO-görünür ve CEO-düzenlenebilir **deklaratif workflow va
 | Bütçe sınırı / token sınırı / zaman aşımı | `workflows.budget_eur, token_limit, timeout_s` — koşu-düzeyi enforcement §17 |
 | Risk seviyesi | `workflows.risk` → approval zorunluluğu eşiği ([[APPROVAL_ENGINE_SPEC]] risk matrisi) |
 | Logging seviyesi | `workflows.logging_level: minimal|normal|verbose` — [[AUDIT_AND_LOGGING_SPEC]] §14 semantiği |
-| Output standardı | `workflows.output_standard` → Fable Hook post-gate denetim girdisi ([[FABLE_5_HOOK_SPEC]]) |
+| Output standardı | `workflows.output_standard` → Opus 5 Hook post-gate denetim girdisi ([[FABLE_5_HOOK_SPEC]]) |
 
 ## 3. Mimari
 

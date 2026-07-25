@@ -1,18 +1,18 @@
 # IMPLEMENTATION_ROADMAP — DXB GLOBAL AI-NATIVE HOLDING OS
 
 > Dalga 5 · Yazar: Fable 5 bizzat · Kaynak hüküm: direktif madde 14 (uygulama sırası teknik detayla) + madde 17 (Faz 1-11) + madde 18/v6 (model dağılımı) · Üst: [[MASTER_PLAN]] §7 (pencere stratejisi — bu dosya P2/P3'ün adım tablosudur) · Kardeşler: [[BACKUP_PLAN]] (S1/S2 senaryoları), [[TEST_STRATEGY]], [[ACCEPTANCE_CRITERIA]]
-> Yürütme sözleşmesi: adımlar SIRAYLA; her adım kanıt komutuyla kapanır (evidence-before-done); ✓ işareti BU DOSYAYA işlenir (canlı ilerleme kaydı). Opus herhangi bir ✓-sınırından devralabilir — istisnalar §5.
+> Yürütme sözleşmesi: adımlar SIRAYLA; her adım kanıt komutuyla kapanır (evidence-before-done); ✓ işareti BU DOSYAYA işlenir (canlı ilerleme kaydı). Devralan yazar (2026-07-25'ten itibaren **Opus 5**, U20) herhangi bir ✓-sınırından sürdürebilir — istisnalar §5.
 
 ## 1. Amaç
 
-Korpus (31 spec) → çalışan Holding OS dönüşümünün adım-adım, kanıt-komutlu, devralma-işaretli yürütme planı. Pencere 2'de Fable bizzat koşar; Pencere 3'te Opus 4.8 ilk ✓'siz adımdan sürer.
+Korpus (31 spec) → çalışan Holding OS dönüşümünün adım-adım, kanıt-komutlu, devralma-işaretli yürütme planı. Pencere 2'de Fable bizzat koştu (12 Temmuz'a kadar); Pencere 3'te **Opus 5** ilk ✓'siz adımdan sürer (U20 — yedek model katmanı yok).
 
 ## 2. Gereksinimler
 
 - G1. Her adım: dosya yolları + normatif spec referansı + "çalıştır → şu çıktıyı gör" kanıtı.
 - G2. Sıra MASTER_PLAN §7 P2 sırasına sadıktır (değer-öncelikli: görünür kokpit erken); CEO Faz eşlemesi her blokta.
-- G3. Fable-only işler işaretli (persona ailesi); ⛔ kritik kararlar işaretli.
-- G4. Paralellik yalnız Opus penceresinde ve yalnız işaretli bloklar arasında (aynı dosyaya iki el yasak — BACKUP_PLAN §8).
+- G3. Yazar-only işler işaretli (persona ailesi — K2: inşaat yazarı bizzat, 2026-07-25'ten itibaren Opus 5); ⛔ kritik kararlar işaretli.
+- G4. Paralellik yalnız devralma penceresinde ve yalnız işaretli bloklar arasında (aynı dosyaya iki el yasak — BACKUP_PLAN §8).
 
 ## 3. Mimari (yürütme blokları ve bağımlılık)
 
@@ -28,7 +28,7 @@ E11 cost intelligence ──► E12 kalan modül sayfaları + widget ──► E
 
 Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir. Durum: `—` bekliyor · `✓` kanıtla kapandı.
 
-**Gap-audit bağlayıcı kuralları ([[00-CEO-DIRECTIVE-GAP-AUDIT]] + [[GAP-AUDIT]], 2026-07-11):** (1) Her E bloğu kendi domain'inin ModuleWaiting placeholder'ını KENDİ adımında kapatır; kabul ölçüsü direktif §2.1'in 8-şartlı DoD matrisidir (gerçek domain sorgusu, drill-down, gerektiğinde control fn + audit + Broadcast zinciri, loading/empty/error/stale/permission-denied durumları, EN/TR, rota-başı test, ölü buton 0). (2) "Menü var / route açılıyor / DB'de satır var / persona dosyası var" ≠ tamam; kanıtsız done = otomatik RET. (3) Final kabulde ModuleWaiting = **0** (E12.3 kapısı). (4) **CEO K1 kararı (2026-07-11):** modül/placeholder kapanış yürütücüsü yalnız **Fable ve GPT 5.6 solo** — başka model modül kapatamaz; F/O kolonundaki devralma bu kapsamda GPT 5.6 solo demektir. (5) **CEO K2 kararı (2026-07-11):** TÜM personalar (yeni + legacy v2 dalgaları) **Fable bizzat** yazar; hr-factory ilk oluşumda yazarlık yapmaz; yetişmeyen "Fable-yazımı bekliyor" listesine düşer, kalite asla düşürülmez.
+**Gap-audit bağlayıcı kuralları ([[00-CEO-DIRECTIVE-GAP-AUDIT]] + [[GAP-AUDIT]], 2026-07-11):** (1) Her E bloğu kendi domain'inin ModuleWaiting placeholder'ını KENDİ adımında kapatır; kabul ölçüsü direktif §2.1'in 8-şartlı DoD matrisidir (gerçek domain sorgusu, drill-down, gerektiğinde control fn + audit + Broadcast zinciri, loading/empty/error/stale/permission-denied durumları, EN/TR, rota-başı test, ölü buton 0). (2) "Menü var / route açılıyor / DB'de satır var / persona dosyası var" ≠ tamam; kanıtsız done = otomatik RET. (3) Final kabulde ModuleWaiting = **0** (E12.3 kapısı). (4) **CEO K1 kararı (2026-07-11; yazar 2026-07-25'te devredildi — U20):** modül/placeholder kapanış yürütücüsü yalnız **inşaat yazarı (Opus 5) ve GPT 5.6 solo** — başka model modül kapatamaz; F/O kolonundaki devralma bu kapsamda GPT 5.6 solo demektir. (5) **CEO K2 kararı (2026-07-11; aynı devir):** TÜM personalar (yeni + legacy v2 dalgaları) **inşaat yazarı bizzat** yazar; hr-factory ilk oluşumda yazarlık yapmaz; yetişmeyen "yazım bekliyor" listesine düşer, kalite asla düşürülmez. *(Tarihsel: 196 personanın tamamını Fable 5 bizzat yazdı, 2026-07-11/12 dalgaları.)*
 
 ### E1 — Design tokens + primitives (CEO Faz 6 zemini) — [[DESIGN_SYSTEM]] normatif
 
@@ -128,7 +128,7 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 | E9.4 | Project OS: 0023x-b üstüne Command View (§23 19 alan) + health fn | PROJECT_OS §24 komutları | F/O | ✓ 2026-07-14 (K1 Fable in person; migration 20260714010000 idempotent 2× — project_health + project_health_breakdown (§10 formula verbatim, per-component columns), v_project_command v2 (19-field single round-trip + health_live/pen_*/blockers/tokens/current_phase), control_project_action 7 ops (§13 CEO wall, idempotency twin, §16 links credential regex reject, §27 archive-guard, §17 cycle path + CONFLICT_STALE), tasks.milestone_id + milestone.reached trigger + projects channel broadcasts; /api/control/projects Zod seam; /ops/projects + /ops/projects/[slug] Command View — ModuleWaiting projects DEAD; dogfood: dxb-global-os 13 phase milestones (roadmap E-blocks, real ✓ dates) + 3 real recorded risks via control fn, health 85 live (−15 high risks); §24 probes: \dt project_* 4 tables · project_health→0-100 · view breakdown non-null; tests/e9/project-command 17/17 + full regression 27 files 195/0; adaptations A1-A6 in spec; RULE #0 EN+TR × 1280+1920 (3 catches fixed in-pass: card label overlap, timeline label collision + TZ drift, 3-lane grid overflow), i18n purity PASS 1152=1152, 8 baselines e94-*.png PENDING CEO eye) |
 | E9.5 | Library intake script + katalog UI + grant→profil derleme entegrasyonu | LIBRARY §24: intake raporu + grant→gateway reddi kanıtı | F/O | ✓ 2026-07-14 (K1 Fable in person; migration 20260714020000 idempotent 2× — expires_at (A2) + source_ref (A3), v_library_catalog v2, control_library_action 4 ops (A1 single door; §13 CEO wall; idempotency twin; §5 change_log INSIDE fn — creation entry + field diff; settings-channel broadcasts), fn_library_usage trigger on tool_calls (A7); scripts/library/intake.mjs — 352 REAL assets registered through the control fn in CEO context (A8): 10 acceptance kinds all ≥1 (skill 23 · plugin 18 · tool 21 · mcp 8 · persona 214 · policy 2 · sop 2 · research 8 · report 2 · memory_source 4), zero-discovery kinds explicitly listed (§26), re-run = 0 writes; gateway: generate-profiles library layer (A4 union→intersection, §22 backward compat) + `_skills` key (A5) + employee overlay profiles + compileLibraryProfiles (staged atomic swap §17, hash-skip, system channel event) + scheduler library.profile_recompile 30 s self-chain (A6); §21 E2E in tests: grant→profile→resolveTool/resolveSkill, revoke→refusal both legs; FOUND+FIXED: Phase-7 policy files still keyed to pre-E5.x registry (generator failing live) — re-keyed to 21 live departments, NO widening, stale dept profiles cleaned, live recompile → 21 profiles + profile.recompiled event; /ai/library ModuleWaiting DEAD (20-kind rail honest zeros, 11-field record, 4 tabs, grant editor through seam — live UI grant+revoke proven, audit actor=ceo); tests/e9/library 13/13 + full regression 46 files 305/0; tsc 0 root+dashboard; i18n purity PASS 1226=1226; RULE #0 EN+TR × 1280+1920 — CEO mid-pass catch: 1400-1500 band 2-column crush + unscrollable clipping → 2xl breakpoint + table min-w fix, 1400 probe docW=innerW + in-container table scroll proven; 8 baselines e95-*.png design-bank INDEX PENDING CEO eye) |
 
-### E10 — Fable Hook engine (CEO Faz 4) — [[FABLE_5_HOOK_SPEC]]
+### E10 — Opus 5 Hook engine (CEO Faz 4) — [[FABLE_5_HOOK_SPEC]]
 
 | # | İş | Kanıt | Model | Durum |
 |---|----|-------|-------|-------|
@@ -188,11 +188,13 @@ Model kolonu: **F** = yalnız Fable · F/O = Fable öncelikli, Opus devralabilir
 | R6.1 | **Integrations canonical open item (audit F-07, registered 2026-07-17):** social/payment/commerce REAL provider integrations — Phase-11-gated (LOCKED real-provider rule stands, R2.4 staging pattern is the template); at Phase 11 kickoff EACH provider enters as its own execution row. **RE-GATED 2026-07-19 by U19: Phase 11 (Outleteuro) cancelled entirely by CEO order — this row now opens only on a future explicit CEO order; it stays visible as debt, no per-provider rows are born** | per-provider execution rows exist when the CEO reopens real-business operation; until then this row = the visible debt (audit demanded it never be an undocumented "later") | F/O | — |
 | R6.2 | **University standalone product layer (audit F-12, registered 2026-07-17; OD-1 slot, Kelam pattern):** independent product repo — architecture doc FIRST (docs/kelam precedent), build slot queues after Kelam M2+; NOT the internal training shelf (that is Library R4.1 ✓ / R4.2 + U14 ruling) | architecture doc exists before any build row opens | F/O | — |
 
-## 5. Devralma noktaları (Opus protokolü — [[BACKUP_PLAN]] §13 tamamlayıcısı)
+## 5. Devralma noktaları (devralan-yazar protokolü — [[BACKUP_PLAN]] §13 tamamlayıcısı)
 
-- **Kural:** Opus, tablodaki ilk `—` adımdan başlar; yarım adım varsa önce kanıt komutunu koşar — geçiyorsa ✓ işler, geçmiyorsa adımı baştan alır.
-- **Devredilemez:** E5.2-E5.5 persona yazımı (yetişmeyen "Fable-yazımı bekliyor" listesine), tüm ⛔ kararlar, CEO göz testi.
-- **Paralellik (yalnız Opus):** E8 ↔ E9 ↔ E11 blokları bağımsız; E12 hepsinden sonra. Aynı dosyaya iki koldan dokunma yasak.
+> **U20 (CEO 2026-07-25):** devir gerçekleşti — devralan yazar **Opus 5**'tir; yedek model katmanı YOKTUR.
+
+- **Kural:** devralan yazar, tablodaki ilk `—` adımdan başlar; yarım adım varsa önce kanıt komutunu koşar — geçiyorsa ✓ işler, geçmiyorsa adımı baştan alır.
+- **Devredilemez:** E5.2-E5.5 persona yazımı (yetişmeyen "yazım bekliyor" listesine), tüm ⛔ kararlar, CEO göz testi.
+- **Paralellik (yalnız devralma penceresinde):** E8 ↔ E9 ↔ E11 blokları bağımsız; E12 hepsinden sonra. Aynı dosyaya iki koldan dokunma yasak.
 - **⛔ envanteri (spec'lerden):** agents rename (DATA_MODEL) · kontrol düzlemi servisleştirme (SYS_ARCH §3) · API zarf değişimi (API_CONTRACTS) · EVENT zarf/kanal sınıfı (EVENT_MODEL) · workflow step kind ekleme (WORKFLOW) · KIND_STORE değişimi (MEMORY) · grant yaptırım noktası (LIBRARY) · health formül ağırlıkları (PROJECT_OS) · omurga gevşetme/saklama kısaltma (SECURITY, AUDIT) → hepsi: eldeki en güçlü model + CEO onayı.
 
 ## 6-11. Veri modeli / Component / Backend / Frontend / API / Event
@@ -201,7 +203,7 @@ Bu dosya sıralama katmanıdır; teknik normlar ilgili spec'lerde (her adımda r
 
 ## 12-19. İlişkiler / Yetki / Logging / Audit / Security / Error / Retry / Fallback
 
-Yürütme sırasında geçerli çapraz kurallar: evidence-before-done (her adım) · gitleaks her commit · dalga/blok = atomik commit · Broadcast yasağı yok ama postgres_changes yasak · hata durumunda adım kapatılmaz, kanıt komutu geçene kadar açık kalır · Fable penceresinde subagent yasağı sürer · **canlı `next start` altında `.next` yeniden build edilirse sunucu MUTLAKA yeniden başlatılır** (2026-07-10 dersi: eski süreç yeni asset'leri bulamaz → çıplak HTML; kanıt zinciri: build → restart → `curl <css-chunk>` 200).
+Yürütme sırasında geçerli çapraz kurallar: evidence-before-done (her adım) · gitleaks her commit · dalga/blok = atomik commit · Broadcast yasağı yok ama postgres_changes yasak · hata durumunda adım kapatılmaz, kanıt komutu geçene kadar açık kalır · inşaat yazarlığında subagent yasağı sürer (K1) · **canlı `next start` altında `.next` yeniden build edilirse sunucu MUTLAKA yeniden başlatılır** (2026-07-10 dersi: eski süreç yeni asset'leri bulamaz → çıplak HTML; kanıt zinciri: build → restart → `curl <css-chunk>` 200).
 
 ## 20. Test planı / 21. Acceptance criteria
 

@@ -1,10 +1,20 @@
 ---
 name: model-routing-hierarchy
-description: "v8 (CEO 2026-07-12): Sonnet yasağı YALNIZ inşaat yazarlığı — şirket RUNTIME ajan beyni olarak Sonnet SERBEST (MODEL_ROUTING_SPEC). v7 (K1-K2): modül kapanışı YALNIZ Fable + GPT 5.6 solo; TÜM personalar Fable bizzat. v6 tabanı: Sonnet inşaatta defedildi, zincir Fable bizzat → Opus 4.8; Haiku yasak; inline yazarlık"
+description: "v9 (CEO 2026-07-25): inşaat yazarlığı Fable 5'ten OPUS 5'e devredildi; yedek model katmanı KALDIRILDI (tek beyin Opus 5, hata = blocked raporu); v8-v5 blokları tarihsel kayıt olarak korunur"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
+  modified: 2026-07-25T14:19:07.584Z
 ---
+
+# v9 — YAZARLIK DEVRİ: Fable 5 → OPUS 5 + yedek katman kaldırıldı (CEO, 2026-07-25)
+
+1. **İnşaat yazarı artık OPUS 5.** v5-v8'de "Fable bizzat" diyen HER kural cümlesi bundan böyle **Opus 5 bizzat** okunur: plan yazımı, repo'ya giren her satır (boilerplate dahil), tüm personalar (K2), modül kapanışları (K1), her commit öncesi diff okuma + final verdict. Yazarlık devri yoktur; subagent yazarlığı — Opus 5 modelli subagent dahil — ihlaldir.
+2. **Yedek model katmanı KALDIRILDI.** v6'nın "Fable bizzat → en kötü ihtimal Opus 4.8" zinciri ve v5'in "bütçe-fallback: Opus 4.8 adım adım uygular" modu İPTAL. Zincir tek elemanlıdır: **Opus 5**. Hata/timeout/rate-limit durumunda sessizce alt modele düşülmez — iş `blocked` raporuyla CEO'ya çıkar (§"never a silent drop"). Gerekçe: birincil ve yedek aynı model olsaydı katman anlamsız; sessiz kalite düşüşü CEO'nun kalite tavanı hükmüne aykırı.
+3. **"4.8" ifadeleri.** Projede model sürümü olarak geçen `Opus 4.8` / `claude-opus-4-8` ileriye dönük kural metinlerinde **Opus 5**'e çevrildi; tek istisna, tarihsel kayıtlarda (kim ne zaman ne yazdı) olduğu gibi bırakılmasıdır.
+4. **Tarihsel kayıt dokunulmazdır (CEO kararı 2026-07-25).** Persona `Created by: fable-5`, canlı DB'deki `persona_version='v2.0-fable'`, uygulanmış migration dosyaları ve kanıt notları DEĞİŞTİRİLMEZ — inşaatı 2026-07-06 → 2026-07-25 arası gerçekten Fable 5 yaptı; bunu değiştirmek §35 sıfır-uydurma kuralının ihlali olurdu.
+5. **İç teknik kimlikler korunur (CEO kararı 2026-07-25).** Çalışma-zamanı ID'leri — `model_catalog.id='fable-5'`, ayar anahtarı `orchestrator.fable_review_required`, escalation basamağı `fable-final`, `FABLE_5_HOOK_SPEC.md` dosya adı, persona §11 başlığı (`packages/hr/src/template.ts:25`, kapı bu başlıkla eşleşir) — teknik anahtar olarak yerinde kalır. CEO'ya GÖRÜNEN her etiket Opus 5'tir.
+6. Aşağıdaki v8-v5 blokları **tarihsel kayıttır** (o tarihlerde verilmiş CEO emirleri); çelişkide v9 üsttedir.
 
 # v8 — Runtime/inşaat ağaç ayrımı + Sonnet runtime serbest (CEO, 2026-07-12)
 
@@ -27,7 +37,7 @@ metadata:
 
 ---
 
-CEO-approved runtime build-workflow authority matrix (v5, 2026-07-08 — v4 kuralları korunur; v5 ek kuralı: **plan/artefakt yazımı YALNIZ inline Fable — gsd-planner/gsd-debugger'ın "Fable modelini miras alır, sayılır" istisnası CEO tarafından İPTAL edildi; aynı model (claude-fable-5) bile olsa subagent yazarlığı ihlaldir; "bizzat" = aktif conversation'daki Fable**. Tarihçe: v1 "Opus taslak yazar" → v2 "Fable plan+kritik kod" → v2'deki "boilerplate'i Sonnet daktilo eder" istisnası CEO tarafından kaldırıldı → v3 "Fable TÜM yazarlık" → v4 otomatik fan-out config'de kapalı → v5 planner-subagent istisnası iptal). Scope: Claude Code/GSD session'larının DXB Global OS'u nasıl inşa ettiği. Şirket/ürün yönetişimi DEĞİL — proje dosyalarına (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, faz planları, proje CLAUDE.md) asla yazılmaz. Üst çerçeve: [[fable-5-construction-governance]] (THE GOAL + bootstrap kuralı — her session ilk okuma).
+CEO-approved runtime build-workflow authority matrix (v5, 2026-07-08 — v4 kuralları korunur; v5 ek kuralı: **plan/artefakt yazımı YALNIZ inline Fable — gsd-planner/gsd-debugger'ın "Fable modelini miras alır, sayılır" istisnası CEO tarafından İPTAL edildi; aynı model (claude-fable-5) bile olsa subagent yazarlığı ihlaldir; "bizzat" = aktif conversation'daki Fable**. Tarihçe: v1 "Opus taslak yazar" → v2 "Fable plan+kritik kod" → v2'deki "boilerplate'i Sonnet daktilo eder" istisnası CEO tarafından kaldırıldı → v3 "Fable TÜM yazarlık" → v4 otomatik fan-out config'de kapalı → v5 planner-subagent istisnası iptal). Scope: Claude Code/GSD session'larının DXB Global OS'u nasıl inşa ettiği. Şirket/ürün yönetişimi DEĞİL — proje dosyalarına (ROADMAP.md, PROJECT.md, REQUIREMENTS.md, faz planları, proje CLAUDE.md) asla yazılmaz. Üst çerçeve: [[opus-5-construction-governance]] (THE GOAL + bootstrap kuralı — her session ilk okuma).
 
 **İlke: repo'ya giren HER satır Fable'dan çıkar — kod, config, migration, tracker, study card, doküman. İstisna yok (boilerplate dahil).**
 
@@ -50,7 +60,7 @@ CEO-approved runtime build-workflow authority matrix (v5, 2026-07-08 — v4 kura
 - **Sonnet:** Yazarlık-dışı destek, HIGH effort'ta: keşif/araştırma hammaddesi, checker/verifier koşuları (gsd-verifier, gsd-plan-checker, gsd-phase-researcher vb.), doğrulama komutları, kontrol taramaları. KOD/ARTEFAKT YAZAMAZ; bulgu raporlar ama final proje onayı VEREMEZ.
 - **Haiku:** SADECE mekanik getir-götür: dosya getir, dosya varlığı kontrolü, grep sayımı, dosya adı listeleme, mekanik özet, ham metin çıkarma. **Kalite yargısı YOK. Verdict YOK. Onay YOK. "Passed" YOK. Mimari yargı YOK. Risk yargısı YOK. Milestone kararı YOK. Commit onayı YOK.** Haiku çıktısı verdict değil, HAM GİRDİdir.
 
-**Checker PASS ≠ bitti (yönetişim maddesi):** Alt model (Sonnet dahil) "PASSED" dese bile iş bitmiş sayılmaz. Fable, "planned/done/approved" ilan etmeden önce üretilen artefaktları BİZZAT okur ve kendi yazılı verdict'ini üretir. Alt model çıktısını aynen aktarmak = yönetişim ihlali ([[fable-5-construction-governance]]).
+**Checker PASS ≠ bitti (yönetişim maddesi):** Alt model (Sonnet dahil) "PASSED" dese bile iş bitmiş sayılmaz. Fable, "planned/done/approved" ilan etmeden önce üretilen artefaktları BİZZAT okur ve kendi yazılı verdict'ini üretir. Alt model çıktısını aynen aktarmak = yönetişim ihlali ([[opus-5-construction-governance]]).
 
 **Bütçe-fallback modu (CEO onaylı, 2026-07-06):** Maddi kısıt durumunda onaylı fallback: Fable'ın yazdığı detaylı planı (MASTER-PLAN) **Opus 4.8 adım adım uygular**; verdict/diff-okuma kapıları mümkün olan en yüksek modelde kalır. Dürüst kalite beklentisi: tasarım kalitesi %100 korunur (plana gömülü), mikro-implementasyon (isimlendirme, hata mesajı, spec'in sustuğu edge-case refleksi) Opus seviyesinde kalır — "Fable tasarımı + Opus işçiliği". Verdict kapısı da düşerse güvence, plandaki yazılı adım-başı doğrulama komutlarına iner; MASTER-PLAN bu yüzden her adıma "çalıştır → şu çıktıyı gör" kontrolü gömer.
 
