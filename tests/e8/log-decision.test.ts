@@ -26,6 +26,12 @@ afterAll(async () => {
     await sql`DELETE FROM alerts WHERE task_id = ANY(${probeTaskIds}::uuid[]) OR run_id IN (SELECT id FROM agent_runs WHERE task_id = ANY(${probeTaskIds}::uuid[]))`.execute(db());
     await sql`DELETE FROM agent_runs WHERE task_id = ANY(${probeTaskIds}::uuid[])`.execute(db());
     await sql`DELETE FROM task_events WHERE task_id = ANY(${probeTaskIds}::uuid[])`.execute(db());
+    // approvals (and their outbox rows) referencing probe tasks must go
+    // before the tasks (FK chain outbox→approvals→tasks) — the missing legs
+    // that aborted this sweep silently (2026-07-25 triage).
+    await sql`DELETE FROM outbox WHERE approval_id IN
+                (SELECT id FROM approvals WHERE task_id = ANY(${probeTaskIds}::uuid[]))`.execute(db());
+    await sql`DELETE FROM approvals WHERE task_id = ANY(${probeTaskIds}::uuid[])`.execute(db());
     await sql`DELETE FROM tasks WHERE id = ANY(${probeTaskIds}::uuid[])`.execute(db());
   }
   await closeDb();

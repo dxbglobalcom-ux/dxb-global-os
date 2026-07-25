@@ -106,9 +106,24 @@ describe("E12.5 activation contract — machine intake (U17)", () => {
   });
 
   it("(8) named exclusion: agents-orchestrator stays outside the machine", async () => {
-    const orch = await sql<{ employment_status: string }>`
-      SELECT employment_status FROM agents WHERE slug = 'agents-orchestrator'
+    // The U17(5) contract is about the ACTIVATION PIPELINE, not the status
+    // column: the orchestrator never rides the HR machine (no LiteLLM key /
+    // grant package / budget rows are minted for him). His employment_status
+    // was corrected dormant→active on 2026-07-25 (audit org.status.corrected)
+    // because 'dormant' was the pipeline exclusion leaking onto the CEO
+    // surface as a false "inactive" — he works daily. Asserting 'dormant'
+    // here would re-freeze that lie; assert the real exclusion instead.
+    const script = await import("node:fs/promises").then((fs) =>
+      fs.readFile("scripts/hr/activate-workforce.sh", "utf8"),
+    );
+    expect(script).toMatch(/EXCLUDED_SLUGS[^\n]*agents-orchestrator/);
+
+    const equipped = await sql<{ n: number }>`
+      SELECT count(*)::int AS n FROM settings_values sv
+       WHERE sv.scope = 'employee:' ||
+             (SELECT id::text FROM agents WHERE slug = 'agents-orchestrator')
+         AND sv.key IN ('hr.grant_package','hr.litellm_key_alias','hr.employee_budget')
     `.execute(db());
-    expect(orch.rows[0].employment_status).toBe("dormant");
+    expect(equipped.rows[0].n).toBe(0);
   });
 });

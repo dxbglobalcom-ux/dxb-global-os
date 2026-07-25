@@ -110,6 +110,21 @@ const PURITY_ALLOWLIST: string[] = [
   "app/api/control/library/route.ts",
   // E10.1: hook policy control seam (.rpc fn_hook_set_policy)
   "app/api/control/hook/route.ts",
+  // C1/C7/C10 (2026-07-19): CEO Chat Board — pending-message INSERT into
+  // chat_messages only; Hamza's answer half drains in the resident scheduler
+  // (PHASE-08 LOCKED: no LLM in the projection), dispatch rides /api/intent.
+  "app/api/chat/route.ts",
+  // 9c (2026-07-24): cost reset door (.rpc control_cost_reset — SECURITY
+  // DEFINER, one audit_log costs.reset row per call)
+  "app/api/control/cost-reset/route.ts",
+  // 10d (2026-07-24): engine ownership door (.rpc control_engine_set_owner)
+  "app/api/control/engines/route.ts",
+  // C12 (2026-07-19): add-model seam — catalog INSERT + key handoff to the
+  // vault file (name+key+note only; §4c chain)
+  "app/api/control/model-key/route.ts",
+  // C4/C18 (2026-07-19): list purge door (.rpc control_records_purge —
+  // status-guarded, audited)
+  "app/api/control/purge/route.ts",
 ];
 
 const DASHBOARD_SRC = join(__dirname, "../../apps/dashboard/src");

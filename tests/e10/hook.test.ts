@@ -156,8 +156,26 @@ afterAll(async () => {
                        ELSE rule END
                WHERE id = ${id}`.execute(db());
   }
-  await sql`DELETE FROM alerts WHERE source = 'hook'`.execute(db());
-  await sql`DELETE FROM approvals WHERE action_type = 'hook_escalation'`.execute(db());
+  // Sweep only THIS suite's alerts: engine calls without a run (':no-run')
+  // happen only from tests; run-scoped rows use the fixture run. The old
+  // unscoped delete wiped REAL wave alerts on every run (hygiene defect).
+  await sql`DELETE FROM alerts WHERE source = 'hook'
+              AND (dedup_key LIKE '%:no-run'
+                   OR run_id = ${fxRunId}
+                   OR dedup_key LIKE ${"%" + fxRunId})`.execute(db());
+  // Sweep ONLY this suite's escalations (fixture run id) — the old unscoped
+  // delete would have wiped the REAL 2026-07-18 wave escalation history; it
+  // only survived because the missing outbox leg aborted the sweep (FK).
+  // Order matters: outbox rows go before their approvals (FK).
+  // Two probe shapes: run-scoped (fixture run) AND run-less (goodCtx has no
+  // run — payload employee carries the e10t marker instead).
+  await sql`DELETE FROM outbox WHERE approval_id IN
+              (SELECT id FROM approvals WHERE action_type = 'hook_escalation'
+                  AND (payload->>'run_id' = ${fxRunId}
+                       OR payload->>'employee' LIKE ${M + "%"}))`.execute(db());
+  await sql`DELETE FROM approvals WHERE action_type = 'hook_escalation'
+              AND (payload->>'run_id' = ${fxRunId}
+                   OR payload->>'employee' LIKE ${M + "%"})`.execute(db());
   await sql`DELETE FROM hook_violations WHERE id > ${baseViolationId}`.execute(db());
   await sql`DELETE FROM decision_log
              WHERE id > ${baseDecisionId}
@@ -473,10 +491,13 @@ describe("runtime rules — monitor, single kill authority (§6)", () => {
   it("std 13 RED+PASS: confidence under threshold escalates; violations→alerts trigger fires (A4)", async () => {
     const low = await checkConfidence(goodCtx(), 0.1);
     expect(low.escalationRequired).toBe(true);
+    // Scope to THIS suite's alert (goodCtx has no run → ':no-run' suffix) —
+    // the unscoped LIKE also counted the real 2026-07-18 wave escalations
+    // still unresolved on the live DB (measured 4, made this 5≠1).
     const alert = await sql<{ n: number }>`
       SELECT count(*)::int AS n FROM alerts
        WHERE source = 'hook' AND level = 'high' AND resolved_at IS NULL
-         AND dedup_key LIKE 'hook:std.escalation_required:%'`.execute(db());
+         AND dedup_key = 'hook:std.escalation_required:escalated:no-run'`.execute(db());
     expect(alert.rows[0].n).toBe(1);
     const high = await checkConfidence(goodCtx(), 0.9);
     expect(high.escalationRequired).toBe(false);

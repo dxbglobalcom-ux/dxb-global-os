@@ -38,7 +38,10 @@ DELETE FROM tasks WHERE id IN (SELECT id FROM _pt);
 -- 3) run-less hook violations from the window (hook tests write without runs)
 CREATE TEMP TABLE _hv ON COMMIT DROP AS
   SELECT id FROM hook_violations WHERE created_at >= :win::timestamptz AND run_id IS NULL;
+-- source_ref->>'id' is NOT always numeric (policy-id strings occur) — guard
+-- the cast or the whole sweep transaction aborts (caught 2026-07-25).
 DELETE FROM alerts WHERE source='hook' AND resolved_at IS NULL
+  AND source_ref->>'id' ~ '^[0-9]+$'
   AND (source_ref->>'id')::bigint IN (SELECT id FROM _hv);
 DELETE FROM hook_violations WHERE id IN (SELECT id FROM _hv);
 
