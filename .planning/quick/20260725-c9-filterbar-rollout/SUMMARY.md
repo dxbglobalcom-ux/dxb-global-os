@@ -36,7 +36,24 @@ commits: [94a6c8a, 05a99ae]
   inventory on the TR locale (DB content; pre-existing). Candidate for the
   DB-content i18n family — needs a CEO call (translate vs waive like 19e/19f).
 
-## Open (tracked in ledger)
+## Second leg — suite triage + stale-daemon kill (same night, commit c34609a)
 
-- Full-vitest triage + post-suite residue sweep — running in this same night
-  session, reported separately.
+| Leg | Evidence |
+|---|---|
+| Full suite 9 failing files → **70/70 files, 486 passed, 0 failed** | fresh detached run, `vitest-full2.log` SUITE-DONE exit=0 |
+| Outbox internal-signal exclusion (51 eternal 'ready' hook_escalation rows) | migration 20260725004000; TDD tests/c9/outbox-internal-signal 2/2 red→green; close-out audited |
+| e10/e8 sweep hygiene (FK order + fixture scoping — unscoped e10 would have wiped real wave history) | e10 alone 35/35; sweeps verified by the clean full-suite run |
+| e125 (8) re-anchored to U17(5) pipeline-exclusion contract | EXCLUDED_SLUGS + zero equipment rows asserted; green |
+| phase8 DASH-05 allowlist +5 governed doors (each verified a control seam) | green |
+| Mailpit sandbox restarted (stopped since 07-18) | r24 7-step walk green |
+| **Stale-daemon governance catch**: 2 Jul-19 scheduler processes with pre-guard code dispatched voice/question intents into tasks all week (Korean silence-hallucination chain, the 2 'CEO greets Hamza' rail cards, 4 r31/f31 probes) | both killed; artifact chains purged via audited transactions; CEO voice utterances kept as conversation lineage; end state awaiting=0 pending=0 running=0 alerts=0; /overview eyeballed |
+| Post-suite residue sweep executed (script numeric-guard fixed) | sweep COMMIT + audit row |
+
+Note: suite regenerated `packages/gateway/profiles/*` `_generated_at` stamps
+(content identical) — rode into c34609a as harmless churn.
+
+## Operational rule recorded (ledger)
+
+After every scheduler restart, exactly ONE `outbox-executor/dist/main.js`
+process may exist — stale daemons keep dead code in memory and bypass every
+later guard.
