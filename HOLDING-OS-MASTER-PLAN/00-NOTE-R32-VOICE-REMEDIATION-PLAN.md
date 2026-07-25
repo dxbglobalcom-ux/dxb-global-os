@@ -1,5 +1,9 @@
 # 00-NOTE — R3.2 Voice-Line Defect Ledger & Deferred Remediation Plan
 
+> **Status update 2026-07-25 (ticket 20260725-u15-voice-remediation): machine blocks 1-7 EXECUTED — D1 wake TR-lock+hotwords (`wakeSttOpts`, regression in tests/r32), D2 {tr,en} script gate (`unsupportedScript` → `language_unsupported` → spoken clarify), D3 crash root measured+fixed (708-restart loop = prepareCues dying on stopped Speaches; boot now fail-soft) + stale-line takeover (60s corpse sweep before the busy check, red→green tests/r31), D4 progress cues (STT >15s `wait` cue + answer `prep` cue; cue cache versioned, block-4 clarify text live), D5 ladder low-confidence-bump (registered adaptation, red→green tests/phase5), D6 clarify-not-task (script gate + round-4 voice-intent dispatch guard), D7 measured closed (no task-id lookup in packages/voice; emitter was the retired classify hop). Daemon ENABLED + boot-proven ("up — wake phrase armed", single process). Registered adaptations: VOICE_INTERACTION_SPEC §24bis "U15 remediation" block. ⚠ OPEN: block 8 joint CEO ear test (D1/D3 human gate) — the ONLY remaining leg.**
+>
+> Original registration below, kept verbatim:
+>
 > **Status: OPEN DEBT — CEO-deferred, MUST be solved before project end.**
 > Registered: 2026-07-17 ~22:10, in-session CEO ruling (verbatim intent): *"the voice matter and
 > the small design work can wait now — but write this problem somewhere visible; at the end we

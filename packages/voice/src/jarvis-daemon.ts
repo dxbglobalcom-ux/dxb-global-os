@@ -94,6 +94,33 @@ const WAKE_STT_MIN_GAP_MS = Number(process.env.DXB_WAKE_STT_GAP_MS ?? 5000);
 // DXB_WAKE_STT_MODEL back at a lighter model safely.
 const WAKE_STT_MODEL = process.env.DXB_WAKE_STT_MODEL ?? "Systran/faster-whisper-small";
 
+// U15 D1 (2026-07-25): the wake contract phrase IS Turkish — the wake/rough
+// pass is locked to `language=tr` (§24bis registered adaptation; §27 governs
+// question language and is untouched: intake still auto-detects). The same
+// accuracy levers the dictation lane proved ride along: vad_filter kills the
+// silence-hallucination class, hotwords pin the names STT keeps mangling
+// (measured live: "Hamza"→"Anza", "Selamaleykum"→"May the do you, Muslim").
+export const WAKE_HOTWORDS = "Hamza Selamaleykum";
+export function wakeSttOpts(cfg: ReturnType<typeof speachesConfig>): {
+  config: ReturnType<typeof speachesConfig>;
+  lang: "tr";
+  vadFilter: boolean;
+  hotwords: string;
+} {
+  return {
+    config: { ...cfg, sttModel: WAKE_STT_MODEL },
+    lang: "tr",
+    vadFilter: true,
+    hotwords: WAKE_HOTWORDS,
+  };
+}
+
+// U15 D4: spoken progress thresholds — the CEO must never wait in silence.
+// STT on the X230 measured up to 7.4 minutes (defect D4); a cue speaks when
+// intake exceeds the threshold, and once more while the answer is prepared.
+const STT_PROGRESS_MS = Number(process.env.DXB_JARVIS_STT_CUE_MS ?? 15000);
+const ANSWER_PROGRESS_MS = Number(process.env.DXB_JARVIS_ANSWER_CUE_MS ?? 20000);
+
 type Mode = "sleeping" | "active";
 
 function rms(frame: Buffer): number {
@@ -143,20 +170,27 @@ async function play(path: string): Promise<void> {
 }
 
 /** Pre-synthesize the fixed spoken cues once per boot — the ack must feel
- *  instant, so it can never wait for a live TTS round-trip. */
+ *  instant, so it can never wait for a live TTS round-trip. Filenames carry
+ *  CUE_VERSION: changing a cue TEXT bumps the version so the stale cached WAV
+ *  can never speak the old sentence (U15 block-4 text upgrade, 2026-07-25). */
+const CUE_VERSION = "v2";
 async function prepareCues(dir: string): Promise<Record<string, string>> {
   await mkdir(dir, { recursive: true });
   const cfg = speachesConfig();
-  const cues: Record<string, { text: string; file: string }> = {
-    ack: { text: "Buyrun efendim?", file: "jarvis-ack.wav" },
-    bye: { text: "Görüşmek üzere efendim.", file: "jarvis-bye.wav" },
-    busy: { text: "Hat şu an meşgul, bir saniye.", file: "jarvis-busy.wav" },
-    lost: { text: "Anlayamadım, tekrar eder misiniz?", file: "jarvis-lost.wav" },
-    err: { text: "Bir sorun oldu, tekrar deneyin.", file: "jarvis-err.wav" },
+  const cues: Record<string, { text: string }> = {
+    ack: { text: "Buyrun efendim?" },
+    bye: { text: "Görüşmek üzere efendim." },
+    busy: { text: "Hat şu an meşgul, bir saniye lütfen." },
+    // U15 block 4 verbatim clarify text — garble/unsupported-language answer.
+    lost: { text: "Anlayamadım Muhittin Bey, tekrar buyurur musunuz?" },
+    err: { text: "Bir sorun oldu efendim, tekrar dener misiniz?" },
+    // U15 D4 progress cues: long STT / answer preparation must never be silent.
+    wait: { text: "Sizi duydum efendim, çözümlüyorum." },
+    prep: { text: "Cevabınızı hazırlıyorum efendim, birazdan söylüyorum." },
   };
   const out: Record<string, string> = {};
   for (const [key, cue] of Object.entries(cues)) {
-    const path = join(dir, cue.file);
+    const path = join(dir, `jarvis-${key}-${CUE_VERSION}.wav`);
     try {
       await readFile(path);
     } catch {
@@ -166,6 +200,22 @@ async function prepareCues(dir: string): Promise<Record<string, string>> {
     out[key] = path;
   }
   return out;
+}
+
+/** U15 D3 boot fail-soft: 708 crash-loop restarts on 2026-07-18 were ONE root
+ *  cause — prepareCues died on a stopped Speaches container and the daemon
+ *  exited 1 forever. Speaches being down is a WAIT state, not a crash: the
+ *  daemon retries and reports, so the mic lane self-heals when the container
+ *  returns. */
+async function prepareCuesWithRetry(dir: string): Promise<Record<string, string>> {
+  for (;;) {
+    try {
+      return await prepareCues(dir);
+    } catch (e) {
+      log(`speaches unreachable for cue synthesis (${(e as Error).message.slice(0, 80)}) — retrying in 30s`);
+      await new Promise((r) => setTimeout(r, 30_000));
+    }
+  }
 }
 
 interface Segment { pcm: Buffer; ms: number; peak: number; gate: number }
@@ -259,7 +309,7 @@ async function* speechSegments(
 async function main(): Promise<void> {
   const db = getDb();
   const audioDir = voiceAudioDir();
-  const cues = await prepareCues(audioDir);
+  const cues = await prepareCuesWithRetry(audioDir);
   const cfg = speachesConfig();
 
   let mode: Mode = "sleeping";
@@ -307,10 +357,7 @@ async function main(): Promise<void> {
       // Cheap fast pass: rough transcript only feeds the fuzzy matcher.
       let rough = "";
       try {
-        rough = await sttTranscribe(wav, {
-          filename: "wake.wav",
-          config: { ...cfg, sttModel: WAKE_STT_MODEL },
-        });
+        rough = await sttTranscribe(wav, { filename: "wake.wav", ...wakeSttOpts(cfg) });
       } catch (e) {
         log(`wake stt error: ${(e as Error).message.slice(0, 120)}`);
         continue;
@@ -334,10 +381,7 @@ async function main(): Promise<void> {
     // (a goodbye must not become a voice_calls row).
     let rough = "";
     try {
-      rough = await sttTranscribe(wav, {
-        filename: "utterance.wav",
-        config: { ...cfg, sttModel: WAKE_STT_MODEL },
-      });
+      rough = await sttTranscribe(wav, { filename: "utterance.wav", ...wakeSttOpts(cfg) });
     } catch {
       rough = "";
     }
@@ -357,10 +401,19 @@ async function main(): Promise<void> {
     lastActivity = Date.now();
     log(`question segment (${Math.round(segment.ms / 100) / 10}s) — intake`);
     let callId: string;
+    // U15 D4: X230 STT measured up to 7.4 min — speak a progress cue instead
+    // of silence once intake crosses the threshold.
+    const sttCue = setTimeout(() => { void play(cues.wait); }, STT_PROGRESS_MS);
     try {
       const res = await intakeVoiceCall({ db }, { audio: wav, filename: "utterance.wav" });
       if (res.busy) { await play(cues.busy); continue; }
-      if (res.failure === "empty_transcript") { await play(cues.lost); continue; }
+      // U15 D6/D2: garble and non-{tr,en} speech get the clarify cue — never
+      // a silent drop, never a guessed task.
+      if (res.failure === "empty_transcript" || res.failure === "language_unsupported") {
+        log(`intake clarify (${res.failure})`);
+        await play(cues.lost);
+        continue;
+      }
       if (res.failure) { log(`intake failure: ${res.failure}`); await play(cues.err); continue; }
       callId = res.callId;
       log(`call ${callId} parked ("${res.transcript.slice(0, 80)}") — waiting for the answer`);
@@ -368,12 +421,20 @@ async function main(): Promise<void> {
       log(`intake error: ${(e as Error).message.slice(0, 160)}`);
       await play(cues.err);
       continue;
+    } finally {
+      clearTimeout(sttCue);
     }
 
     // The resident scheduler answers (voice.drain); we watch the row.
     const deadline = Date.now() + ANSWER_TIMEOUT_MS;
     let played = false;
+    // U15 D4: one spoken "preparing your answer" cue if the drain takes long.
+    let prepCueAt: number | null = Date.now() + ANSWER_PROGRESS_MS;
     while (Date.now() < deadline) {
+      if (prepCueAt !== null && Date.now() >= prepCueAt) {
+        prepCueAt = null;
+        await play(cues.prep);
+      }
       await new Promise((r) => setTimeout(r, 2000));
       const row = await db
         .selectFrom("voice_calls")

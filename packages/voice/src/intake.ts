@@ -9,7 +9,7 @@ import { randomUUID } from "node:crypto";
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
-import { detectLang } from "./lang.js";
+import { detectLang, unsupportedScript } from "./lang.js";
 import { logCall } from "./log.js";
 import { sttTranscribe, speachesConfig, type SpeachesConfig } from "./speaches.js";
 
@@ -88,6 +88,25 @@ export async function intakeVoiceCall(
     return result;
   };
 
+  // 0a. U15 D3 stale takeover (2026-07-25): listening/transcribing are
+  //     millisecond-scale states inside ONE intake process — a row still
+  //     sitting there after 60s is a corpse from a crashed intake. The
+  //     measured 2026-07-17 defect: the CEO's FIRST press of the day was
+  //     rejected line_busy by exactly such a corpse. Corpses fail honestly
+  //     (reasoned timeline entry through the one write seam) BEFORE the busy
+  //     check, so the line is never blocked by a dead process. Live calls
+  //     (routing/answering, or younger than 60s) are untouched — §10 intact.
+  const corpses = await sql<{ id: string; timeline: unknown }>`
+    SELECT id, timeline FROM voice_calls
+    WHERE status IN ('listening','transcribing')
+      AND started_at < now() - interval '60 seconds'
+  `.execute(db);
+  for (const corpse of corpses.rows) {
+    const corpseTimeline = (Array.isArray(corpse.timeline) ? corpse.timeline : []) as TimelineEntry[];
+    corpseTimeline.push({ state: "failed", at: new Date().toISOString(), reason: "stale_takeover" });
+    await logCall(db, { id: corpse.id, status: "failed", timeline: corpseTimeline });
+  }
+
   // 0. Line-busy law (§10): one active call, window-bounded. Single-CEO v1 —
   //    the check-then-insert race needs no lock (one human, one line).
   const busyRes = await sql<{ n: number }>`
@@ -120,6 +139,10 @@ export async function intakeVoiceCall(
   result.sttMs = Date.now() - sttStart;
   if (!transcript) return fail("empty_transcript");
   result.transcript = transcript;
+  // U15 D2: {tr,en} whitelist at the script level — a transcript dominated by
+  // non-Latin letters (measured live: Korean, call b3858c42) is rejected for
+  // a spoken re-ask; it must never become an intent or a task.
+  if (unsupportedScript(transcript)) return fail("language_unsupported");
   const lang = detectLang(transcript, input.lang);
 
   // 2. Intent lineage (V5): the SAME intake seam as the typed command bar.

@@ -24,6 +24,22 @@ const EN_WORDS = new Set([
   "or", "of", "to", "in", "on", "for", "with", "have", "has",
 ]);
 
+/** U15 D2 (2026-07-25): the {tr,en} whitelist at the SCRIPT level. Whisper
+ *  auto-detect occasionally lands in a wholly different language (measured
+ *  live 2026-07-17: a TR utterance transcribed as Korean, call b3858c42).
+ *  Both supported languages are Latin-script; a transcript dominated by
+ *  letters outside Latin script cannot be an intelligible {tr,en} intent —
+ *  the caller rejects it and asks the CEO to repeat (never a guessed task). */
+export function unsupportedScript(text: string): boolean {
+  let latin = 0;
+  let other = 0;
+  for (const ch of text) {
+    if (/[a-zA-ZçğıöşüÇĞİÖŞÜ]/.test(ch)) latin += 1;
+    else if (/\p{L}/u.test(ch)) other += 1;
+  }
+  return other >= 3 && other > latin;
+}
+
 /** Decide the utterance language from transcript text. `hint` (the caller's
  *  UI locale) is used ONLY when the text carries no signal at all. */
 export function detectLang(text: string, hint?: "tr" | "en"): "tr" | "en" {

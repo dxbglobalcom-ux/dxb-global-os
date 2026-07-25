@@ -5,6 +5,9 @@
 //   0→first-assignment tier | 1→same-tier retry | 2→specialist (one tier up)
 //   3→head review (L2) | 4→Fable final (L1) | beyond→'blocked' report to the CEO
 //   low-confidence: a worker result with confidence < 0.6 counts as a fail
+//   U15 D5 adaptation (2026-07-25): rung 1 for a LOW-CONFIDENCE fail bumps
+//   the tier ('low-confidence-bump') instead of retrying the same tier —
+//   remediation-note block 6; plain failures keep the LOCKED map.
 //
 // fail_count derives ONLY from task_events (UPDATE/DELETE revoked — the count
 // can rise, never fall: T-05-14). No counter table exists and none may be
@@ -23,6 +26,8 @@ export type LadderAction =
   | { kind: "none" } // 0 fails — task is on its first-assignment tier
   | { kind: "requeue"; ladder: "retry-same-tier"; tier: "same" }
   | { kind: "requeue"; ladder: "specialist"; tier: "bump" }
+  // U15 D5 adaptation: rung-1 substitute when the last fail was low-confidence
+  | { kind: "requeue"; ladder: "low-confidence-bump"; tier: "bump" }
   | { kind: "requeue"; ladder: "head-review"; tier: "L2" }
   | { kind: "requeue"; ladder: "fable-final"; tier: "L1" }
   | { kind: "blocked" };
@@ -203,9 +208,31 @@ export async function escalate(db: Kysely<DB>, taskId: string): Promise<Escalate
   await convertLowConfidence(db, taskId, task.status);
 
   const n = await failCount(db, taskId);
-  const step = ladderAction(n);
+  let step = ladderAction(n);
   if (step.kind === "none") return { action: "none", failCount: n };
   if (step.kind === "blocked") return blockTask(db, task, n);
+
+  // U15 D5 registered adaptation (2026-07-25, remediation-note block 6
+  // authority): a LOW-CONFIDENCE fail is never retried on the same tier —
+  // the same worker at the same tier reproduces the same confidence
+  // (measured 2026-07-17: 0.42 → retry-same-tier ×5 → blocked, 10 tasks in
+  // one day). Rung 1 escalates the tier for low-confidence fails only;
+  // plain execution failures keep the LOCKED retry-same-tier rung, and the
+  // fail-count arithmetic (T-05-13/14) is untouched.
+  if (step.kind === "requeue" && step.tier === "same") {
+    const lastFail = await db
+      .selectFrom("task_events")
+      .select("payload")
+      .where("task_id", "=", taskId)
+      .where("event", "=", "transition")
+      .where("to_status", "=", "failed")
+      .orderBy("id", "desc")
+      .executeTakeFirst();
+    const reason = (lastFail?.payload as { reason?: string } | null)?.reason;
+    if (reason === "low-confidence") {
+      step = { kind: "requeue", ladder: "low-confidence-bump", tier: "bump" };
+    }
+  }
 
   const nextTier =
     step.tier === "same" ? task.model_tier : step.tier === "bump" ? bumpTier(task.model_tier) : step.tier;
