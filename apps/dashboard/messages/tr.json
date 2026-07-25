@@ -1460,7 +1460,7 @@
       },
       "statuses": {
         "active": "Aktif",
-        "testing": "Testte",
+        "testing": "Sınavda",
         "degraded": "Düşük performans",
         "disabled": "Kapalı",
         "retired": "Emekli"
@@ -1519,7 +1519,7 @@
       },
       "statuses": {
         "active": "Aktif",
-        "testing": "Testte",
+        "testing": "Sınavda",
         "degraded": "Düşük performans",
         "disabled": "Kapalı",
         "retired": "Emekli"

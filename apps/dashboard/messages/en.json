@@ -1460,7 +1460,7 @@
       },
       "statuses": {
         "active": "Active",
-        "testing": "Testing",
+        "testing": "In testing",
         "degraded": "Degraded",
         "disabled": "Disabled",
         "retired": "Retired"
@@ -1519,7 +1519,7 @@
       },
       "statuses": {
         "active": "Active",
-        "testing": "Testing",
+        "testing": "In testing",
         "degraded": "Degraded",
         "disabled": "Disabled",
         "retired": "Retired"
