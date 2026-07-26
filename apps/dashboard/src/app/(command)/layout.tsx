@@ -59,7 +59,7 @@ export default async function CommandLayout({
     // sat on every screen as green "running").
     supabase
       .from("tasks")
-      .select("id,objective,status")
+      .select("id,objective,label,label_tr,status")
       .in("status", ["claimed", "running"])
       .not("claimed_by", "is", null)
       .gt("lease_expires_at", new Date().toISOString())
@@ -112,9 +112,15 @@ export default async function CommandLayout({
   }));
   const oldestPendingAt = railRows[0]?.created_at ?? null;
   const moneyOutCount = railRows.filter((a) => a.money_out).length;
+  // The dock shows a task in ONE line: its headline, in the page's language.
+  // The objective is the worker's instruction (a scout brief runs to 1700
+  // characters) and belongs on the task's own page, never on a dock chip.
   const dockTasks: DockTask[] = (dockRes.data ?? []).map((task) => ({
     id: task.id,
-    title: task.objective ?? task.id,
+    title:
+      (locale === "tr" ? (task.label_tr ?? task.label) : task.label) ??
+      task.objective ??
+      task.id,
     status: task.status,
   }));
   // Alert titles are English machine records; the TR surface localizes the

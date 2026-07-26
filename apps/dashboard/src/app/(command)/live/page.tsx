@@ -15,7 +15,8 @@ import { createClient } from "@/lib/supabase/server";
 export const metadata = { title: "Live Operations — DXB" };
 
 export default async function LivePage() {
-  const dict = getDict(await getLocale());
+  const locale = await getLocale();
+  const dict = getDict(locale);
   const t = dict.command.live;
   const supabase = await createClient();
 
@@ -32,7 +33,7 @@ export default async function LivePage() {
     <div className="mx-auto max-w-6xl space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">{t.title} <HelpTip text={dict.help.live} /></h1>
       <Panel>
-        <LiveFeed initial={initial} labels={t} statusLabels={dict.status} />
+        <LiveFeed initial={initial} labels={t} statusLabels={dict.status} locale={locale} />
       </Panel>
     </div>
   );

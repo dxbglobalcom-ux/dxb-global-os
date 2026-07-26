@@ -63,7 +63,17 @@ type TaskRow = {
   department: string;
   status: string;
   objective: string;
+  label: string | null;
+  label_tr: string | null;
 };
+// What a task shows on a LIST: its headline, in the page's language. The
+// objective is the worker's instruction (scout briefs run past 1700 characters)
+// and belongs on the task's own page — CEO catch 2026-07-26.
+function taskLine(t: TaskRow | undefined, locale: string): string | null {
+  if (!t) return null;
+  return (locale === "tr" ? (t.label_tr ?? t.label) : t.label) ?? t.objective;
+}
+
 type RiskRow = {
   id: string;
   title: string;
@@ -153,7 +163,7 @@ export default async function ProjectCommandPage({
     supabase.from("project_members").select("employee_id, role").eq("project_id", p.id),
     supabase
       .from("tasks")
-      .select("id, agent_id, department, status, objective")
+      .select("id, agent_id, department, status, objective, label, label_tr")
       .eq("project_id", p.id)
       .limit(500),
     supabase
@@ -531,8 +541,8 @@ export default async function ProjectCommandPage({
               <ul className="mt-3 divide-y divide-edge-neutral">
                 {tasks.slice(0, 12).map((x) => (
                   <li key={x.id} className="flex items-center justify-between gap-3 py-2">
-                    <span className="min-w-0 truncate text-body-s text-ink-secondary">
-                      {x.objective}
+                    <span className="min-w-0 break-words text-body-s text-ink-secondary">
+                      {taskLine(x, locale)}
                     </span>
                     <span className="flex shrink-0 items-center gap-2">
                       <span className="label-caps text-ink-muted">{x.department}</span>
@@ -595,8 +605,10 @@ export default async function ProjectCommandPage({
                 <ul className="space-y-1.5">
                   {blockerRows.slice(0, 5).map((d) => (
                     <li key={`${d.task_id}-${d.depends_on}`} className="text-caption text-ink-secondary">
-                      <span className="truncate">{taskById.get(d.task_id)?.objective}</span>{" "}
-                      <span className="text-ink-muted">← {taskById.get(d.depends_on)?.objective}</span>
+                      <span>{taskLine(taskById.get(d.task_id), locale)}</span>{" "}
+                      <span className="text-ink-muted">
+                        ← {taskLine(taskById.get(d.depends_on), locale)}
+                      </span>
                     </li>
                   ))}
                   {p.blockerApprovals > 0 ? (

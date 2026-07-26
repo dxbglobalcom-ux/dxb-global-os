@@ -257,7 +257,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                 href="/ops/tasks"
                 className="block text-body-s text-accent-champagne hover:underline"
               >
-                {d.taskLink}: {row.task_objective ?? row.task_id} →
+                {d.taskLink}:{" "}
+                {(locale === "tr" ? (row.task_label_tr ?? row.task_objective) : row.task_objective) ??
+                  row.task_id}{" "}
+                →
               </Link>
             )}
             {(row.affected_files ?? []).map((f) => (

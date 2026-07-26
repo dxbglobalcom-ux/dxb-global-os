@@ -221,6 +221,34 @@ Opus-devralma netliği: her ekran bağımsız teslim birimi; IMPLEMENTATION_ROAD
 
 27 başlık ✓ · KALIR/DEĞİŞİR/SIFIRDAN eşlemesi (§5) ✓ · doğrulama komut deseni (§24) ✓ · Opus-devralma netliği (§24) ✓ · ⛔ kritik kararlar işaretli (§3 shell tekliği, §24 seam listesi) ✓ · drill-down haritası normatif tablo ✓ · §35/§38 bağlayıcılığı (R9, §21) ✓
 
+### §9ter — What a CEO-facing row is allowed to say (CEO order 2026-07-26, U29)
+
+**A task carries a headline; it does not wear its instruction.** `tasks.objective` is
+what a worker executes — a research brief runs past 1700 characters — and it may never
+be what a feed row, dock chip, grid cell or briefing line says. Every task therefore
+carries a SHORT HEADLINE in both languages:
+
+| Column | Meaning |
+|--------|---------|
+| `tasks.label` | short headline, artifact language (the binding language directive) |
+| `tasks.label_tr` | the same headline on the CEO's Turkish page |
+| `tasks.objective` | unchanged — the worker's instruction, shown on the task's own page |
+
+**Whoever creates the task writes both legs**, at creation, where the meaning is known:
+the scout because it knows what it was sent to do, the intent intake because the CEO's
+own sentence needs no translation (both legs carry it verbatim, first line, cut at a
+word boundary — `headline()` in `@dxb/orchestrator`).
+
+**The fallback chain lives in the views, once:** `label` → first LINE of the objective →
+(for runs) the model id. Never a mid-word cut, never a visible "…" (CEO ruling
+2026-07-18: shorten at the source). Views carrying it: `v_live_ops`,
+`v_morning_briefing`, `v_approvals_center`, `v_decision_log`. A surface that reads
+`tasks.objective` directly and renders it as a line is a defect, not a shortcut.
+
+**Locale rule on every one of these surfaces:** the Turkish page prefers `label_tr` and
+falls back to `label`; the English page NEVER borrows the Turkish leg — purity runs both
+ways. Gate: `tests/c9/feed-headlines.test.ts`.
+
 ## Registered adaptations
 
 | # | Adaptation | Why (measured) | Where |
@@ -229,3 +257,4 @@ Opus-devralma netliği: her ekran bağımsız teslim birimi; IMPLEMENTATION_ROAD
 | A2 | **E12.2: v1 edit interactions = deterministic buttons** (add select / remove / order-swap arrows / width cycle), not pointer drag-drop — §5 WidgetGrid contract is met (ekle/kaldır/taşı/boyutlandır/kaydet all live); drag-drop is POLISH scheduled with the deferred design slot (U16 companion), recorded here so it cannot silently vanish. Resize is width-cycle (1/2/4 col) + fixed row heights v1; free h resizing joins the same polish slot. | One-night wave scope + Playwright-provable determinism (spec §24 acceptance (d) needs a machine-walkable flow) | `widgets/widget-grid.tsx` header note · U16 |
 | A3 | **E12.4 (GAP-05): CRM home = `/revenue/crm/*` under the Intelligence group's revenue family** (clients/deals ARE revenue objects — CEO mental model: müşteri=gelir; U9 precedent for revenue-family nav additions). Company context = `dxb-company` cookie (locale-switch idiom), isolation enforced in SERVER queries: `company_id` on crm_clients only (migration 20260718020000, `fn_default_company_id()` STABLE default — no uuid literal, R2.5 bootstrap-parity), children scope through `client_id` inner join. Old cockpit CRM died the SAME COMMIT (tek-anahtar): `/crm/*` → 308 `/revenue/crm/*` (next.config redirects). Single-company state renders the honest company name, never an info-free selector (CEO minimalism ruling). | GAP-05 gate row; measured: crm tables had NO company scoping; companies row is runtime-born (uuid varies per env) | migration 20260718020000 · `lib/company.ts` · tests/e124 · next.config.ts |
 | A4 | **2026-07-24 (CEO order, in-chat with screenshots): nav gains a LAST group "Machine Room" (`machineRoom` — EN "Machine Room" / TR "Makine Odası") holding the code-heavy compliance/telemetry surfaces: Audit Trail `/gov/audit` (Hook Violations `/gov/violations` rides its tab bar), Runtime `/ops/runtime`, System Logs `/sys/logs`. Doctrine registered with the move: these surfaces are the ROBOTS' domain (orchestrator, directors, audit processes) — the CEO is not expected to read them; they serve as evidence when a dispute or doubt arises. Consequently their DETAIL panes are exempt from the plain-language humanization standard (rule 6 keeps applying to every CEO working surface): hook-violation detail strings stay English by explicit CEO waiver ("büyük iş büyük token"), audit expanded-record raw fields likewise. Decisions stays in Governance — it is the CEO's own record. §7 route table composition unchanged (routes move groups, none die). | CEO complaint 2026-07-24 night: audit flood "hiçbirinin detayı bana anlamlı gelmiyor... robotların alanı, benim değil"; builder verdict concurred (C19 runtime jargon complaint same class) | `config/command-nav.ts` machineRoom group · dicts `command.nav.groups.machineRoom` · complaint ledger 19e/19f + C19 rows |
+| A5 | **2026-07-26 (CEO screenshot: "canlı türkçe değil hala ingilizce"): task rows across the cockpit render `tasks.label`/`label_tr`, never `objective`** — the objective is an instruction and the live feed was reciting a 1700-character scout brief as one row's label. Contract in §9ter; registered as U29. Surfaces changed together so they cannot disagree: `/live`, `/intelligence` (tail + overnight list), the approvals dock in `(command)/layout.tsx`, `/ops/tasks` grid, `/ops/projects/[slug]`, `/approvals/[id]`, `/gov/decisions` | CEO live report | migrations `20260726010000/010100/010200` |

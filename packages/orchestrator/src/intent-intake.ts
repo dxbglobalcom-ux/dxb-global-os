@@ -22,6 +22,19 @@ import { dispatch } from "./dispatch.js";
 // the pre-gate rejects loudly, which is the honest signal.
 const HOLDING_PROJECT_SLUG = "dxb-global-os";
 
+/** One feed-readable line out of a free-text intent. First line, and if that
+ *  line is long, cut at the last word boundary before the limit — never
+ *  mid-word, never an ellipsis (CEO ruling: shorten at the source). */
+const HEADLINE_MAX = 120;
+export function headline(text: string): string | null {
+  const first = text.split("\n")[0]!.trim();
+  if (first === "") return null;
+  if (first.length <= HEADLINE_MAX) return first;
+  const cut = first.slice(0, HEADLINE_MAX);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > 40 ? cut.slice(0, lastSpace) : cut).trim();
+}
+
 async function holdingProjectId(): Promise<string | null> {
   const res = await sql<{ id: string }>`
     SELECT id FROM projects WHERE slug = ${HOLDING_PROJECT_SLUG} AND status = 'active'
@@ -34,7 +47,7 @@ export type IntentIntakeDeps = {
   decomposeFn?: (ci: ClassifiedIntent) => Promise<DecomposedEnvelope[]>;
   dispatchFn?: (
     envelopes: DecomposedEnvelope[],
-    opts?: { projectId?: string | null; labelTr?: string | null },
+    opts?: { projectId?: string | null; label?: string | null; labelTr?: string | null },
   ) => Promise<{ taskIds: string[] }>;
 };
 
@@ -76,13 +89,16 @@ export async function intakeIntentOnce(deps: IntentIntakeDeps = {}): Promise<Int
   try {
     const ci = await classifyFn(intent.text);
     const envelopes = await decomposeFn(ci);
-    // The CEO's own sentence is the Turkish label of the work it becomes: the
-    // rail shows him what he asked for, in the words he asked it in. Trimmed to
-    // one readable line — the full text stays on the intent row.
-    const labelTr = intent.text.split("\n")[0].trim().slice(0, 160) || null;
+    // The CEO's own sentence is the label of the work it becomes: the feed shows
+    // him what he asked for, in the words he asked it in — so both legs carry it
+    // (his sentence is not an artifact to translate). One readable line, cut at
+    // a word boundary, never mid-word and never with an ellipsis; the full text
+    // stays on the intent row.
+    const label = headline(intent.text);
     const { taskIds } = await dispatchFn(envelopes, {
       projectId: await holdingProjectId(),
-      labelTr,
+      label,
+      labelTr: label,
     });
 
     await sql`

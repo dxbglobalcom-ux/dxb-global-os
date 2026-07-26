@@ -27,7 +27,9 @@ type ViewRow = {
   run_id: string | null;
   task_id: string | null;
   employee: string | null;
+  /** Task HEADLINE, artifact language (the view resolves label → first line). */
   task_objective: string | null;
+  task_label_tr: string | null;
 };
 
 export default async function Page() {
@@ -62,7 +64,8 @@ export default async function Page() {
     runId: r.run_id,
     taskId: r.task_id,
     employee: r.employee,
-    taskObjective: r.task_objective,
+    taskObjective:
+      (locale === "tr" ? (r.task_label_tr ?? r.task_objective) : r.task_objective),
   }));
 
   return (

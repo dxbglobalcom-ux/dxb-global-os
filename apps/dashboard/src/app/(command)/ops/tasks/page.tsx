@@ -34,6 +34,8 @@ const ACTIVE_SET: TaskStatus[] = ["queued", "claimed", "running"];
 type TaskRow = {
   id: string;
   objective: string;
+  label: string | null;
+  label_tr: string | null;
   department: string;
   status: TaskStatus;
   model_tier: string;
@@ -58,7 +60,7 @@ export default async function TasksPage({
   let rowsQuery = supabase
     .from("tasks")
     .select(
-      "id, objective, department, status, model_tier, priority, claimed_by, updated_at",
+      "id, objective, label, label_tr, department, status, model_tier, priority, claimed_by, updated_at",
       { count: "exact" },
     )
     .order("updated_at", { ascending: false })

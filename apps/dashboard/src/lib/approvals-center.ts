@@ -36,7 +36,9 @@ export type CenterViewRow = {
   requester_title_tr: string | null;
   department: string | null;
   delegated_to_slug: string | null;
+  /** Task HEADLINE, artifact language (view resolves label → first line). */
   task_objective: string | null;
+  task_label_tr: string | null;
   task_budget_ceiling_eur: number | string | null;
   task_due_at: string | null;
   department_display: string | null;

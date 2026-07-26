@@ -12,10 +12,12 @@ import type { DecomposedEnvelope } from "./decompose.js";
 
 export interface DispatchOpts {
   /** CEO order 2026-07-26 ("canlı akış … türkçe sayfadayken türkçe olsun"): the
-   *  live rail must read Turkish on his page. Task objectives stay English (the
-   *  binding language directive covers every artifact), so the caller that KNOWS
-   *  the human sentence behind the work passes it here — for a CEO intent that
-   *  is his own words, which need no translation and cannot be mistranslated. */
+   *  live feed must read Turkish on his page, and a feed row is ONE LINE — the
+   *  objective is the worker's instruction, not a headline. The caller that
+   *  KNOWS the human sentence behind the work passes it here; for a CEO intent
+   *  that is his own words, which need no translation and cannot be
+   *  mistranslated (so both legs carry the same sentence). */
+  label?: string | null;
   labelTr?: string | null;
   /** R2.1 — std 11 project link (FABLE_5_HOOK §2 row 11): the caller that
    *  KNOWS the work's project passes it here; every inserted task carries it.
@@ -53,7 +55,8 @@ export async function dispatch(
         .values({
           department: env.department,
           objective: env.objective,
-          ...(opts.labelTr ? { objective_tr: opts.labelTr } : {}),
+          ...(opts.label ? { label: opts.label } : {}),
+          ...(opts.labelTr ? { label_tr: opts.labelTr } : {}),
           output_contract: env.output_contract,
           model_tier: env.model_tier,
           approval_class: env.approval_class,

@@ -32,11 +32,13 @@ import { sql } from "kysely";
 export const SCOUT_DEPARTMENT = "strategy";
 const SCOUT_PREFERRED_SLUGS = ["market-intelligence-lead", "global-expansion-lead"];
 
-/** The CEO reads the live rail all day. The task objective stays English (the
- *  binding language directive covers every artifact); this is its Turkish face,
- *  written at creation rather than translated later (CEO order 2026-07-26). */
-const SCOUT_LABEL_TR =
-  "Pazar taraması: holdingin hemen başlayabileceği gerçek gelir fırsatlarını bul";
+/** The CEO reads the live feed all day, and a feed row is one line. The brief
+ *  below is an instruction of ~1700 characters — it is what the worker executes,
+ *  never what the row says. So the task carries a short headline in both
+ *  languages, written at creation rather than derived later (CEO catch
+ *  2026-07-26: a full brief was rendering as the row's label). */
+const SCOUT_LABEL_EN = "Market scan for live revenue opportunities";
+const SCOUT_LABEL_TR = "Piyasa taraması: canlı gelir fırsatları";
 
 /** Statuses that mean "this run has not finished yet". */
 const OPEN_TASK_STATES = ["inbox", "queued", "claimed", "running", "review", "awaiting_approval"];
@@ -271,11 +273,12 @@ export async function commissionScoutingRun(
   if (!project.rows[0]) return { commissioned: false, reason: "no_project" };
 
   const task = await sql<{ id: string }>`
-    INSERT INTO tasks (department, agent_id, project_id, objective, objective_tr,
+    INSERT INTO tasks (department, agent_id, project_id, objective, label, label_tr,
                        output_contract, model_tier,
                        approval_class, status, priority, budget_max_tokens)
     VALUES (${SCOUT_DEPARTMENT}, ${scout.rows[0].id}::uuid, ${project.rows[0].id}::uuid,
-            ${brief.objective}::text, ${SCOUT_LABEL_TR}::text, ${brief.contract}::text,
+            ${brief.objective}::text, ${SCOUT_LABEL_EN}::text, ${SCOUT_LABEL_TR}::text,
+            ${brief.contract}::text,
             'L3', 'none', 'queued', 5, 120000)
     RETURNING id
   `.execute(db);

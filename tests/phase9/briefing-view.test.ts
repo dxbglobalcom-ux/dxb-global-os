@@ -171,14 +171,22 @@ describe("v_morning_briefing (09-02)", () => {
     // Three events seeded, exactly TWO inside the window (edge witness +
     // fresh witness); the before-edge one must not count.
     expect(after - before).toBe(2);
-    const done = block(rows, "overnight_work").recent_done as Array<{ objective: string }>;
+    const done = block(rows, "overnight_work").recent_done as Array<{
+      label: string;
+      label_tr: string;
+    }>;
     // LIMIT-5 semantics on a live DB: the FUTURE-stamped seed is always the
     // newest in-window event, so its membership is deterministic; the
     // edge-stamped seed may be outranked by real overnight traffic.
     expect(done.length).toBeLessThanOrEqual(5);
-    const seeded = done.filter((d) => d.objective.startsWith(SEED));
-    expect(seeded.map((d) => d.objective)).toContain(`${SEED} taze biten iş`);
-    expect(seeded.map((d) => d.objective)).not.toContain(`${SEED} pencere dışı iş`);
+    // 010100 contract: the list carries task HEADLINES (label/label_tr), never
+    // a `left(objective, 80)` cut. These seeds have no explicit label, so the
+    // view falls back to the objective's first line — whole, not truncated.
+    const seeded = done.filter((d) => d.label.startsWith(SEED));
+    expect(seeded.map((d) => d.label)).toContain(`${SEED} taze biten iş`);
+    expect(seeded.map((d) => d.label)).not.toContain(`${SEED} pencere dışı iş`);
+    // Both language legs are present on every row (TR falls back to label).
+    for (const d of done) expect(d.label_tr).toBeTruthy();
   });
 
   it("counts pending approvals only, grouped by risk", async () => {
@@ -191,8 +199,8 @@ describe("v_morning_briefing (09-02)", () => {
     expect((afterRisk.high ?? 0) - (beforeRisk.high ?? 0)).toBe(1);
     expect((afterRisk.low ?? 0) - (beforeRisk.low ?? 0)).toBe(1);
     // The approved seed row must be invisible.
-    const oldest = after.oldest as Array<{ objective: string }>;
-    const seededOldest = oldest.filter((o) => o.objective.startsWith(SEED));
+    const oldest = after.oldest as Array<{ label: string }>;
+    const seededOldest = oldest.filter((o) => o.label.startsWith(SEED));
     expect(seededOldest.length).toBeLessThanOrEqual(2);
   });
 

@@ -12,7 +12,11 @@ import { DataGrid, StatusBadge, type Column, type StatusLevel } from "@/componen
 
 export type PurgeTaskRow = {
   id: string;
+  /** The worker's instruction — kept for the drill, never rendered as a cell. */
   objective: string;
+  /** Short headline pair (tasks.label / label_tr) — what a grid row shows. */
+  label: string | null;
+  label_tr: string | null;
   department: string;
   status: string;
   model_tier: string;
@@ -125,9 +129,12 @@ export function TaskPurgeGrid({
     {
       key: "objective",
       label: labels.colObjective,
+      // A grid cell is a line. Rendering the raw objective put a 1700-character
+      // scout brief in one row (CEO catch 2026-07-26); the headline is what the
+      // row is for, and the objective lives on the task's own page.
       render: (r) => (
         <span className="block max-w-[40ch] break-words">
-          {r.objective}
+          {(locale === "tr" ? (r.label_tr ?? r.label) : r.label) ?? r.objective}
         </span>
       ),
     },

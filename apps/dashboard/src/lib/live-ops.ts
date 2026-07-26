@@ -13,6 +13,7 @@ export type LiveOpsRow = {
   actor: string;
   event: string;
   label: string | null;
+  label_tr: string | null;
 };
 
 export type LiveEvent = {
@@ -22,9 +23,20 @@ export type LiveEvent = {
   event: string;
   to_status: string | null;
   actor: string;
-  objective: string | null;
+  /** Short headline, artifact language (tasks.label). NOT the objective: a
+   *  task objective is the worker's instruction and can run to a page. */
+  label: string | null;
+  /** Same headline on the CEO's Turkish page (tasks.label_tr). */
+  label_tr: string | null;
   created_at: string;
 };
+
+/** The one line a feed row shows, per locale. Turkish page prefers the Turkish
+ *  headline and falls back to the artifact one — a fallback the CEO can read is
+ *  better than a blank row, and the view already resolves most of them. */
+export function lineFor(e: LiveEvent, locale: string): string | null {
+  return (locale === "tr" ? (e.label_tr ?? e.label) : e.label) ?? null;
+}
 
 export function mapLiveOpsRow(r: LiveOpsRow): LiveEvent {
   return {
@@ -34,7 +46,8 @@ export function mapLiveOpsRow(r: LiveOpsRow): LiveEvent {
     event: r.event,
     to_status: r.status,
     actor: r.actor,
-    objective: r.label,
+    label: r.label,
+    label_tr: r.label_tr,
     created_at: r.ts,
   };
 }
@@ -75,7 +88,10 @@ export function mapOpsLiveEnvelope(env: OpsLiveEnvelope): LiveEvent | null {
       event: env.type,
       to_status: (env.payload.status as string) ?? null,
       actor: (env.payload.employee as string) ?? env.actor,
-      objective: (env.payload.model as string) ?? null,
+      // A run envelope carries the model, not the work's headline; the feed
+      // borrows the headline from an already-rendered event of the same task.
+      label: (env.payload.model as string) ?? null,
+      label_tr: null,
       created_at: env.ts,
     };
   }
@@ -87,7 +103,8 @@ export function mapOpsLiveEnvelope(env: OpsLiveEnvelope): LiveEvent | null {
       event: (env.payload.event as string) ?? env.type,
       to_status: (env.payload.to_status as string) ?? null,
       actor: env.actor,
-      objective: null,
+      label: null,
+      label_tr: null,
       created_at: env.ts,
     };
   }
@@ -99,7 +116,8 @@ export function mapOpsLiveEnvelope(env: OpsLiveEnvelope): LiveEvent | null {
       event: env.type,
       to_status: null,
       actor: env.actor,
-      objective: (env.payload.kind as string) ?? null,
+      label: (env.payload.kind as string) ?? null,
+      label_tr: null,
       created_at: env.ts,
     };
   }

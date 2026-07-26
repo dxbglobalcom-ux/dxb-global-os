@@ -10,6 +10,7 @@ import {
   type DxbStatus,
 } from "@/lib/realtime";
 import {
+  lineFor,
   mapLiveOpsRow,
   mapOpsLiveEnvelope,
   unwrapOpsLive,
@@ -59,12 +60,17 @@ function prepend(prev: LiveEvent[], next: LiveEvent[]): LiveEvent[] {
   const fresh = next.filter((e) => !seen.has(e.id));
   if (fresh.length === 0) return prev;
   // Run envelopes carry model/status only (OBSERVABILITY §9 payload contract);
-  // borrow the task objective from an already-rendered event of the same task
-  // so the human line stays readable without an extra query.
+  // borrow the task headline — BOTH language legs — from an already-rendered
+  // event of the same task so the human line stays readable without an extra
+  // query. Borrowing only the English leg was how a Turkish page fell back to
+  // English mid-stream (CEO catch 2026-07-26).
   for (const e of fresh) {
-    if (e.objective === null && e.task_id) {
-      const known = prev.find((p) => p.task_id === e.task_id && p.objective);
-      if (known?.objective) e.objective = known.objective;
+    if (e.label === null && e.task_id) {
+      const known = prev.find((p) => p.task_id === e.task_id && p.label);
+      if (known?.label) {
+        e.label = known.label;
+        e.label_tr = known.label_tr;
+      }
     }
   }
   return [...fresh, ...prev].slice(0, 100);
@@ -81,8 +87,8 @@ function groupEvents(events: LiveEvent[]): FeedGroup[] {
     const existing = byKey.get(key);
     if (existing) {
       existing.chain.push(e);
-      if (!existing.latest.objective && e.objective) {
-        existing.latest = { ...existing.latest, objective: e.objective };
+      if (!existing.latest.label && e.label) {
+        existing.latest = { ...existing.latest, label: e.label, label_tr: e.label_tr };
       }
     } else {
       const group: FeedGroup = { key, latest: e, chain: [e] };
@@ -114,8 +120,10 @@ export function LiveFeed({
   initial,
   labels,
   statusLabels,
+  locale,
 }: {
   initial: LiveEvent[];
+  locale: string;
   labels: {
     status: { connecting: string; live: string; stale: string };
     empty: string;
@@ -166,7 +174,8 @@ export function LiveFeed({
           event: `approval.${String(r.status ?? p.operation.toLowerCase())}`,
           to_status: (r.status as string) ?? null,
           actor: String(r.action_type ?? "approval"),
-          objective: null,
+          label: null,
+          label_tr: null,
           created_at: String(r.created_at ?? new Date().toISOString()),
         },
       ]),
@@ -270,7 +279,7 @@ export function LiveFeed({
                     type="checkbox"
                     checked={selected.has(g.latest.task_id as string)}
                     onChange={() => toggleSelect(g.latest.task_id as string)}
-                    aria-label={g.latest.objective ?? g.key}
+                    aria-label={lineFor(g.latest, locale) ?? g.key}
                     className="mt-3 h-3.5 w-3.5 shrink-0 accent-[var(--accent-champagne)]"
                   />
                 ) : (
@@ -296,9 +305,10 @@ export function LiveFeed({
                   </StatusBadge>
                   {/* Full wrap, never "…"; a label-less run row says WHAT it
                       is instead of echoing the status chip (CEO catch: the
-                      "Running Running" info-free line). */}
+                      "Running Running" info-free line). The line is a HEADLINE
+                      now — the task's instruction never renders here. */}
                   <span className="min-w-0 break-words text-body-s text-ink-primary">
-                    {g.latest.objective ??
+                    {lineFor(g.latest, locale) ??
                       (g.latest.kind === "run"
                         ? labels.runNoLabel
                         : statusText(g.latest))}
@@ -315,11 +325,9 @@ export function LiveFeed({
                 </button>
                 {open && (
                   <div className="space-y-1 border-l-2 border-edge-neutral pb-3 pl-8">
-                    {g.latest.objective && (
-                      <p className="pt-1 text-body-s text-ink-primary">
-                        {g.latest.objective}
-                      </p>
-                    )}
+                    {/* The headline already sits on the row above; repeating it
+                        here was an info-free field once labels became short.
+                        The story of a row IS its chain of steps. */}
                     <ul className="space-y-1 pt-1">
                       {[...g.chain].reverse().map((e) => (
                         <li key={e.id} className="flex items-center gap-3">

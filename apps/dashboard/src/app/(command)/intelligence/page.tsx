@@ -38,6 +38,7 @@ type LiveRow = {
   status: string | null;
   event: string | null;
   label: string | null;
+  label_tr: string | null;
 };
 
 export default async function IntelligencePage() {
@@ -72,7 +73,7 @@ export default async function IntelligencePage() {
         .gte("created_at", dayAgo),
       supabase
         .from("v_live_ops")
-        .select("source, source_id, ts, status, event, label")
+        .select("source, source_id, ts, status, event, label, label_tr")
         .order("ts", { ascending: false })
         .limit(10),
     ]);
@@ -98,7 +99,7 @@ export default async function IntelligencePage() {
     briefing.find((b) => b.block === name)?.payload ?? {};
   const overnight = block("overnight_work") as {
     by_status?: Record<string, number>;
-    recent_done?: { objective?: string }[];
+    recent_done?: { label?: string; label_tr?: string }[];
     total_events?: number;
   };
   const briefApprovals = block("approvals") as {
@@ -184,8 +185,8 @@ export default async function IntelligencePage() {
               <div className="label-caps text-ink-muted">{t.briefRecentDone}</div>
               <ul className="mt-1 space-y-1">
                 {(overnight.recent_done ?? []).slice(0, 5).map((d, i) => (
-                  <li key={i} className="truncate text-body-s text-ink-secondary">
-                    {d.objective ?? "—"}
+                  <li key={i} className="text-body-s text-ink-secondary">
+                    {(locale === "tr" ? (d.label_tr ?? d.label) : d.label) ?? "—"}
                   </li>
                 ))}
               </ul>
@@ -329,7 +330,9 @@ export default async function IntelligencePage() {
                   className="flex items-center justify-between gap-3 py-2 transition duration-[var(--t-fast)] ease-refined hover:bg-surface-graphite"
                 >
                   <span className="min-w-0 truncate text-body-s text-ink-primary">
-                    {r.label ?? r.event ?? r.source}
+                    {(locale === "tr" ? (r.label_tr ?? r.label) : r.label) ??
+                      r.event ??
+                      r.source}
                   </span>
                   <span className="flex shrink-0 items-center gap-2">
                     {r.status && (
