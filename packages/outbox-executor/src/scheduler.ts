@@ -22,6 +22,7 @@ import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/rev
 import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
 import { tick } from "./index.js";
 import { checkVelocity } from "./breaker.js";
+import { checkMonthlyCap } from "./monthly-cap.js";
 
 export const QUEUES = {
   tick: "outbox-tick",
@@ -227,7 +228,14 @@ export async function startScheduler(): Promise<PgBoss> {
   });
 
   await boss.work(QUEUES.breaker, async () => {
-    await checkVelocity();
+    // Two windows, one tick: the 60-minute runaway breaker (COST-03) and the
+    // month-shaped cap (W1.6). They are independent — a retry storm dies in
+    // minutes, a slow overspend dies at the cap — and neither may mask the
+    // other, so a failure in one must not skip the other.
+    const results = await Promise.allSettled([checkVelocity(), checkMonthlyCap()]);
+    for (const r of results) {
+      if (r.status === "rejected") console.error("[scheduler] budget check:", r.reason);
+    }
   });
 
   // Memory lifecycle handlers — error isolation is pg-boss's per-job

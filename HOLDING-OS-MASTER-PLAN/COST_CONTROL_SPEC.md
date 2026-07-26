@@ -65,6 +65,30 @@ cost_rollups (
 )
 ```
 
+## 4bis. THE MONTHLY BRAKE IS REAL (built 2026-07-26, W1.6)
+
+**Measured defect, after two corrections to my own first reading:**
+
+- **Alerting was already COMPLETE.** `20260713080000_e84b_alerts.sql` ships two triggers — one on `cost_ledger` raising the 70% / 90% / 100% rows (its 100% text tells the CEO *"Non-critical work hard-stops"*), and `trg_alert_budget_stop` on `budget_state` raising `budget-hard-stop` the moment the flag flips.
+- **Enforcement was MISSING.** `budget_state.hard_stopped` had exactly ONE writer in the entire system: `tools/dxb-cli/src/kill-switch.ts`, run by hand. Nothing ever flipped it from spend.
+
+So the system told the CEO that work stops and then did not stop it. That is the same class of defect as an invented number: it changes what he believes about his own company.
+
+`packages/outbox-executor/src/monthly-cap.ts` is therefore **only the missing writer** — it raises no alert of its own, because flipping the flag makes the existing trigger speak and a second voice for one fact is noise. On the existing 5-minute breaker tick:
+
+| Line | What happens | Who keeps running |
+|---|---|---|
+| **70%** | nothing here — the `cost_ledger` trigger already warned | everything |
+| **100%** | `hard_stopped = true` written FIRST (the hard signal must survive a proxy outage), then best-effort blocking of every non-critical LiteLLM key, then one `audit_log` row. `trg_alert_budget_stop` raises the alert. | the critical class only — approvals, outbox, health, backup (`CRITICAL_DEPARTMENTS`) |
+
+Spend is the unified figure the velocity breaker already uses: `cost_ledger` + LiteLLM spend logs, month-to-date. If the proxy's spend table is unreachable the ledger figure alone still governs — **a monitoring outage may not silently disable the brake.** (This also matters because the `cost_ledger` trigger only fires on an INSERT: spend that lands purely in the proxy would never have alerted, and now at least it still stops.)
+
+Two windows, one tick, independent: the 60-minute runaway breaker (COST-03) kills a retry storm in minutes; this one kills a slow overspend at the cap. They run under `Promise.allSettled` so a failure in one can never skip the other.
+
+**Release is deliberately NOT automatic.** A month rolling over does not undo a stop the company earned: the CEO releases it (`dxb kill-switch --release`, or by raising the cap), and that stays a human decision.
+
+**Recorded incident, 2026-07-26 — read this before writing any probe against `budget_state`:** the first version of `tests/c9/monthly-cap.test.ts` wrapped its cases in a rolled-back transaction but called `getDb()` inside its helpers, so every write went to the LIVE database on a different connection. It tripped the real brake, left €105 of fake spend, and the `cost_ledger` trigger raised three real alerts off it. Cleaned within the minute (probe rows purged, flag reset, all four alerts resolved with an explaining note) and recorded honestly in `audit_log` as `budget.hard_stop.reverted` — the trip itself stays in the log, because history is not rewritten. `checkMonthlyCap(db)` takes an injectable handle **because of this**, not for convenience.
+
 ## 5. Component yapısı
 
 | Bileşen | Sayfa | İçerik |
