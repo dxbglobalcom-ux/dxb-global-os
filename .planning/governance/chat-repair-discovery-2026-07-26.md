@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: f4d4d08f-07f8-4496-b60a-f8bda0013418
-  modified: 2026-07-26T08:57:07.742Z
+  modified: 2026-07-26T09:37:41.536Z
 ---
 
 **2026-07-26 05:45-11:00, 4 commit (adb206c, fc825ba, 6132ccc, 02f9d9a).** CEO gece
@@ -59,5 +59,22 @@ Canlı kanıt: 5 fırsat, her biri 3 ayrı çekilmiş URL, €0 sermaye, halal `
   etiketi **onun kendi cümlesidir**. Fırsat başlıkları da `title_tr` (scout kaynakta
   iki dili birden yazar).
 
+## U29 — talimat etiket değildir (11:10, CEO ekran görüntüsü)
+
+CEO: *"canlı türkçe değil hala ingilizce."* İki kusur, tek belirti. (a) 009300'de
+Türkçe bacağı ekledim ama YALNIZ rayı öğrettim — sayfa/kuyruk/dock/görev
+ızgarası/proje/onay/karar defteri hepsi hâlâ eser dilini basıyordu. **Ders: bir
+i18n bacağı eklerken o alanı okuyan TÜM yüzeyler aynı turda değişir**, yoksa
+CEO'nun işaret ettiği yer düzelir, gerisi yalan söyler. (b) Asıl kusur: akış
+satırının kendisi `tasks.objective` idi ve scout brifingi ~1700 karakter — yani
+satır bir sayfa İngilizce metin basıyordu. Çeviri yanlış çözüm olurdu: **brifing
+etiket değildir**, eser dili kuralı da haklı. Şekil değişti: görev artık iki dilde
+KISA BAŞLIK taşır (`label`/`label_tr`), uzun talimat ayrı; geri-düşme zinciri
+(başlık → objective'in İLK SATIRI, asla kelime ortası kesme, asla "…") görünümde
+TEK yerde. Aynı taramada iki kesme daha öldü: `v_morning_briefing`'in
+`left(objective,80)`'i (sayfa `truncate` ile sarınca = yasaklı "…") ve proje
+sayfası. Kapı: `tests/c9/feed-headlines.test.ts`.
+
 İlgili: [[night-shift-w1-closed-2026-07-26]] · [[evidence-before-done]] ·
+[[ceo-design-minimalism-ruling]] ·
 [[ui-bilingual-purity-gate]] · [[systemd-resident-services]]
