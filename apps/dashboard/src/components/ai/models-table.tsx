@@ -237,7 +237,16 @@ export function ModelsTable({
               >
                 <td className="px-3 py-2">
                   <div className="text-body-s text-ink-primary">{m.displayName ?? m.id}</div>
-                  <div className="font-data text-caption text-ink-muted">{m.id}</div>
+                  {/* The catalog id is an INTERNAL registry key frozen by U20
+                      (renaming it would break the live FK chain, the settings
+                      undo chain and the persona gate). Printing it under the
+                      name meant the CEO read "fable-5" as the identity of his
+                      own top model, months after the authorship handover — the
+                      exact thing U20 decision 4 forbids on a CEO surface. It is
+                      shown only where it is the ONLY name a row has. */}
+                  {m.displayName == null && (
+                    <div className="font-data text-caption text-ink-muted">{m.id}</div>
+                  )}
                 </td>
                 <td className="px-3 py-2 text-body-s text-ink-secondary">{m.provider}</td>
                 <td className="px-3 py-2">

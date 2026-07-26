@@ -25,6 +25,19 @@ export default function globalSetup(): () => Promise<void> {
       if (n > 0) {
         console.log(`[global-teardown] swept ${n} test-probe hook alert(s) (:no-run class)`);
       }
+      // Second test-only class, measured on the CEO's Alerts page 2026-07-26
+      // 04:23 ("Workflow 'e9t-retry' run failed"): e9 sweeps its own alerts,
+      // but the RESIDENT scheduler can pick up a leftover queued run AFTER
+      // that sweep and raise a fresh one — nobody is left to clean it. The
+      // e9t- prefix is test-owned by construction (no production workflow
+      // carries it), so this is safe and belongs at the very end of the run.
+      const wf = await sql`
+        DELETE FROM alerts WHERE source = 'workflow' AND affected_area LIKE 'workflow:e9t-%'
+      `.execute(getDb());
+      const m = Number(wf.numAffectedRows ?? 0);
+      if (m > 0) {
+        console.log(`[global-teardown] swept ${m} test-probe workflow alert(s) (e9t- class)`);
+      }
     } finally {
       await closeDb().catch(() => {});
     }
