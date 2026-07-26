@@ -1,5 +1,6 @@
 # Memory Index
 
+- [U21 kalite kademe kanunu + konsey](u21-quality-tier-law-2026-07-26.md) — **2026-07-26 gecesi, commit 649cb20+a7ddc65**: Sonnet kritik işlerden çıktı (L1=Opus 5 kalıcı: tasarım/site/mağaza), 8 model kovuldu, 205 beyin atandı; OpenAI anahtarı kotasız — abonelik hattı Codex CLI; konsey = Opus 5 yazar + Solo 5.6/GPT 5.5 çürütür (adaptör borç)
 - [U15 round 2: JARVIS kontrol + tek-konuşma](u15-round2-jarvis-control-2026-07-25.md) — **2026-07-25 öğleden sonra, commit 514f119**: CEO blok-8 FAIL; D9-D13 kapandı (mute state+audited kapı, half-duplex, chat↔voice ayna, session thread); daemon MUTED bekliyor ("aç" ile açılır); görsel batarya = CEO e2e-login re-mint borcu; rollback-trx test idiomu
 
 - [Sabah kararları + U15 ses + probe-uyarı olayı](morning-decisions-u15-2026-07-25.md) — **2026-07-25 sabah-öğle, 3 commit**: deepseek-v4-pro aktif (§4c kapısı), kimi ertelendi, suite-hijyen 3 kalıntı sınıfı + global teardown, U15 blok 1-7 bitti (daemon CANLI, blok 8 = CEO kulak testi), halal "kumar" uyarısı = firewall'un kendi test probe'u (ihlal yok)
