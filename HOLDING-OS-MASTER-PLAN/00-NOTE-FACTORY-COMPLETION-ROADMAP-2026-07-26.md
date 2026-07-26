@@ -87,7 +87,7 @@ Hardware confirmed by the CEO: Ryzen 9 7900X · **RTX 5060 Ti 16 GB** · 32 GB D
 
 | # | Work | Closing evidence |
 |---|---|---|
-| 5.1 | **The CEO acceptance session was never held**, which is why 11 of 27 acceptance criteria are permanently UNVERIFIED. | `ACCEPTANCE_CRITERIA.md:134` filled with real results |
+| 5.1 | **The CEO acceptance session was never held**, which is why 11 of 27 acceptance criteria are permanently UNVERIFIED. **Gate added 2026-07-26 (U36):** the machine-checkable legs face the AUDIT TWIN before the session — cross-model (Codex `-s read-only`), told to refute, one row per claim with the command it ran; tier-C rows are the CEO's eye and the auditor may only confirm that nobody claimed them verified. | `ACCEPTANCE_CRITERIA.md:134` filled with real results + the audit's refutation table, and every claim neither side can prove recorded as ⚠ UNVERIFIED |
 
 ---
 
