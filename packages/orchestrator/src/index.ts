@@ -15,6 +15,8 @@ export type { DrainTasksDeps, DrainTasksResult } from "./worker-loop.js";
 // R2.2 — worker real tool surface (audit F-02/F-04): profile → SDK bridge.
 export { buildSdkToolOptions, resolveEvidenceToolCalls, resolveExecutionRoute } from "./worker-shim.js";
 export { runCriticalGate, codexRunner, CRITICAL_GATE_CONFIG } from "./critical-gate.js";
+export { classifyLeg, buildBriefSnapshot, legInstruction, LEG_TASK_CLASS } from "./chat-legs.js";
+export type { ChatLeg, BriefSnapshot } from "./chat-legs.js";
 export type { CriticalGateInput, CriticalGateResult, ChallengerRun, ChallengerRunner, Objection } from "./critical-gate.js";
 export type { ExecutionRoute } from "./worker-shim.js";
 export type { SdkToolOptions } from "./worker-shim.js";

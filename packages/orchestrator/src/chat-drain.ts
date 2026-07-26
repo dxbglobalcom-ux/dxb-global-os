@@ -17,6 +17,14 @@ import type { DB } from "@dxb/shared";
 import { loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
 import { recallMemory } from "@dxb/memory-router";
 import { matchMute, matchUnmute } from "@dxb/voice";
+import {
+  buildBriefSnapshot,
+  classifyLeg,
+  legInstruction,
+  LEG_TASK_CLASS,
+  type BriefSnapshot,
+  type ChatLeg,
+} from "./chat-legs.js";
 
 export const CHAT_HAMZA_SLUG = "agents-orchestrator";
 /** Conversation window Hamza sees per answer (newest last). */
@@ -29,13 +37,17 @@ export interface ChatAnswerInput {
   history: Array<{ role: "ceo" | "hamza"; content: string }>;
   personaHead: string;
   memoryLines: string[];
+  /** Which of Hamza's two legs answers this (CEO directive 2026-07-25). */
+  leg: ChatLeg;
+  /** Live company figures — present on the brief leg, null on strategy. */
+  snapshot: BriefSnapshot | null;
 }
 
 export interface DrainChatDeps {
   db: Kysely<DB>;
   repoRoot?: string;
-  /** answer producer — overridable in tests; default = SDK on the
-   *  voice.answer fast route (same one-brain law as the voice line, V2). */
+  /** answer producer — overridable in tests; default = SDK on this message's
+   *  leg row (same one-brain law as the voice line, V2). */
   answer?: (q: ChatAnswerInput) => Promise<string>;
 }
 
@@ -56,8 +68,6 @@ async function personaHead(repoRoot: string, personaPath: string | null): Promis
 
 async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string> {
   // One brain (V2): the same subscription routing rows the kernel uses.
-  // Chat rides the voice.answer fast-tier row (latency lane precedent,
-  // registered adaptation 2026-07-17); orchestration row is the fallback.
   const rules = await loadPolicy(db);
   const ci = {
     intent_summary: "CEO chat board answer as Hamza",
@@ -65,20 +75,23 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
     approval_class: "none" as const,
     complexity: "single" as const,
   };
-  // Dedicated chat row. U21 (CEO order 2026-07-26): the CEO conversation is
-  // critical work, so the row is Opus 5 at high effort — Sonnet may not sit on
-  // anything the CEO reads. Voice's fast row and the orchestration row are the
-  // fallbacks; all three are L1 now, so a fallback cannot downgrade quality.
+  // Two legs (CEO directive 2026-07-25), both L1 — U21 §4d puts anything the
+  // CEO reads on Opus 5, so the legs differ in effort and context, never in
+  // quality. Fallback chain keeps a pre-migration deployment answering: leg row
+  // -> chat.answer -> voice.answer -> orchestration, every rung L1.
   let r;
-  try {
-    r = route({ ...ci, task_class: "chat.answer" }, rules);
-  } catch {
+  const chain = [LEG_TASK_CLASS[q.leg], "chat.answer", "voice.answer", "orchestration"];
+  let routed: ReturnType<typeof route> | null = null;
+  for (const task_class of chain) {
     try {
-      r = route({ ...ci, task_class: "voice.answer" }, rules);
+      routed = route({ ...ci, task_class }, rules);
+      break;
     } catch {
-      r = route({ ...ci, task_class: "orchestration" }, rules);
+      /* next rung */
     }
   }
+  if (!routed) throw new Error("chat answer: no routing row for any chat class");
+  r = routed;
   const planMode = q.mode === "plan";
   const sys = [
     `You are Hamza, the orchestrator of DXB Global — the CEO's direct counterpart for planning and running the whole company.`,
@@ -90,6 +103,7 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
       ? "PLAN MODE is ON: think through the CEO's topic WITH him — propose a concrete plan (goal, steps, who does what, rough cost), ask what to adjust. DO NOT start any work; the CEO dispatches explicitly when he is satisfied."
       : "If the CEO clearly wants work executed, summarize what you would dispatch in one sentence and remind him of the 'Görev olarak gönder' button — never dispatch from chat yourself.",
     "If the topic implies outward action (money, contracts, external messages), say it will pass through a dashboard approval gate.",
+    legInstruction(q.leg, q.snapshot, q.lang),
     "Plain language, no markdown headers, no code jargon. Keep it under 8 sentences unless the CEO asked for depth.",
   ].filter(Boolean).join("\n\n");
 
@@ -192,6 +206,11 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
         classifier_used: false,
       })),
     ]);
+    // Which leg — and, on the report leg, the live figures it is allowed to
+    // quote. The snapshot is read AFTER the persona/memory fetch so it is as
+    // fresh as possible when the model sees it.
+    const leg = classifyLeg(row.content);
+    const snapshot = leg === "brief" ? await buildBriefSnapshot(db, lang) : null;
     const answerText = await produce({
       message: row.content,
       mode: row.mode,
@@ -199,6 +218,8 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content })),
       personaHead: head,
       memoryLines: recall.rows.map((r) => r.body.slice(0, 200)).filter(Boolean),
+      leg,
+      snapshot,
     });
     await db
       .insertInto("chat_messages")

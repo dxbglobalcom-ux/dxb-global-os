@@ -259,6 +259,27 @@ Drop-family rollback: 0029x tables/fns are leaf objects (nothing else references
 7. **Panel surface:** /chat voice section summary row shows the live mic state pill + toggle (`/api/voice/daemon` → the audited door); board turns that arrived by voice carry a mic marker.
 **Verify:** tests/r32 58/58 (matchers incl. D9/D10 cases) · tests/u15r2 5/5 (door audit, deterministic chat mute/unmute, mirror+session on a live-DB rolled-back transaction) · daemon boot log "STATE: MUTED (chat/panel reopens)" · ⚠ CEO ear/eye re-test remains the human gate (block 8bis).
 
+## 24ter. HAMZA'S TWO LEGS — one conversation, two behaviours (CEO directive 2026-07-25, built 2026-07-26)
+
+CEO, verbatim: *"2 ayak var: 1- para kazanma planları projeleri konusu konuşulması 2- gündelik rapor özetler şirket nasıl ilerliyor sohbeti. ikisi de Hamza jarvis ama farklı beyinler olmalı sanırım."*
+
+**Both legs are L1.** §4d (MODEL_ROUTING_SPEC) is explicit — anything the CEO reads is produced by Opus 5 — so the CEO's instinct that they need "different brains" resolves as different BEHAVIOUR on the same brain, not a quality split. Splitting them onto different models would have put the daily report, which the CEO reads every morning, below the ceiling.
+
+| Leg | Class | Effort | What it is handed | What it does |
+|---|---|---|---|---|
+| **Strategy** — money, plans, projects, decisions | `chat.strategy` | `max` | persona + memory + conversation | Thinks WITH the CEO. Takes a position, names the trade-off, says what it would do and why. A decision he can act on beats a balanced survey he cannot. |
+| **Brief** — how is the company doing | `chat.brief` | `medium` | the above **plus a live snapshot** | Reports MEASURED numbers only. |
+
+**Routing is one-directional (CEO safety rule):** anything smelling of money or planning goes UP, never down. `classifyLeg()` therefore defaults to **strategy** and routes to brief only on an explicit report/status marker, in both languages, because the CEO switches mid-sentence. Misrouting a status question to strategy costs tokens; misrouting a money decision to the report leg costs a decision.
+
+**The brief leg may not remember figures — it must be given them.** `buildBriefSnapshot()` reads `v_exec_overview`, the revenue ledger, the opportunity count and open alerts live, renders them in the CEO's language, and the prompt states that these are the only numbers permitted. A query that fails drops its line rather than inviting an estimate: a brief with one missing figure is honest, a brief with an invented one is a RULE #0-A violation by Hamza himself.
+
+**Standing framing rule, carried in the prompt:** empty tables are NOT a defect. The CEO deliberately has not started the money leg — the factory is being built first — and he has corrected this framing twice in chat. Presenting zero revenue or zero running work as a failure is the error; the emptiness is not.
+
+**Fallback chain** (a deployment that has not shipped the new rows must keep answering): leg row → `chat.answer` → `voice.answer` → `orchestration`. Every rung is L1 after U21, so a fallback can never quietly downgrade the CEO's conversation.
+
+**Live enforcement:** `packages/orchestrator/src/chat-legs.ts` + `chat-drain.ts`; rows from `db/migrations/20260726003000_chat_legs.sql`; proof `tests/c9/chat-legs.test.ts` (13 cases).
+
 ## 25. Dependencies
 
 Speaches container (measured Up) · voicebox install (measured present) · agents/directors live rows (220 agents in DB) · intents intake (exists) · NOT dependent on R1.2 revenue tables (parallel-safe) · R1.5 hook codification supplies the Islamic-boundary + decision-principles enforcement Hamza answers under.
