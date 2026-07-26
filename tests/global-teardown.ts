@@ -38,6 +38,33 @@ export default function globalSetup(): () => Promise<void> {
       if (m > 0) {
         console.log(`[global-teardown] swept ${m} test-probe workflow alert(s) (e9t- class)`);
       }
+      // Third class, measured 2026-07-26 13:53: a policy-mutation case
+      // mid-flight raises 'hook:conflict:*' while its temporary severities
+      // disagree; the policies roll back, the alert stays. Unlike the classes
+      // above this one CAN occur in production, so the sweep is
+      // SELF-VERIFYING: an unresolved conflict alert is removed only when the
+      // live hook_policies table shows NO actual severity disagreement on any
+      // gate/check pair — a real conflict survives the sweep untouched.
+      const hc = await sql`
+        DELETE FROM alerts a
+         WHERE a.source = 'hook'
+           AND a.dedup_key LIKE 'hook:conflict:%'
+           AND a.resolved_at IS NULL
+           AND NOT EXISTS (
+             -- same grouping the engine uses (policies.ts resolveConflicts):
+             -- a "check" is gate + rule->>'check', never the whole rule body
+             SELECT 1 FROM hook_policies p
+              WHERE p.enabled
+              GROUP BY p.gate, p.rule->>'check'
+             HAVING count(DISTINCT p.severity) > 1
+           )
+      `.execute(getDb());
+      const k = Number(hc.numAffectedRows ?? 0);
+      if (k > 0) {
+        console.log(
+          `[global-teardown] swept ${k} stale hook-conflict alert(s) (no live policy disagreement)`,
+        );
+      }
     } finally {
       await closeDb().catch(() => {});
     }
