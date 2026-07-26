@@ -139,10 +139,29 @@ describe("outbox executor (GATE-02)", () => {
     expect(audit.length).toBe(1);
   });
 
-  it("unknown action_type: tick throws loudly and the transaction rolls back (row stays ready)", async () => {
+  it("unknown action_type: refused at birth (20260726011000), loud throw stays as depth", async () => {
     const taskId = await makeTask();
     const draft = await draftAndFinalize(taskId, "nope.unknown", { anything: true });
     await approve(draft.id);
+
+    // Since the enqueue allowlist, an approval the executor cannot carry never
+    // becomes a row — it leaves an audit trace instead of a poison entry.
+    const born = await getDb()
+      .selectFrom("outbox")
+      .selectAll()
+      .where("approval_id", "=", draft.id)
+      .execute();
+    expect(born.length).toBe(0);
+
+    // Defense in depth: a row that PREDATES the allowlist (inserted directly)
+    // still hits the executor's loud refusal — throw, rollback, row visible.
+    await getDb()
+      .insertInto("outbox")
+      .values({
+        approval_id: draft.id,
+        idempotency_key: `nope.unknown:${draft.id}`,
+      })
+      .execute();
 
     await expect(tick()).rejects.toThrow(/no handler for nope\.unknown/);
 

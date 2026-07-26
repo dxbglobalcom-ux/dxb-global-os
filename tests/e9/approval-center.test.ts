@@ -202,7 +202,10 @@ describe("grant walls", () => {
 
 describe("control_approvals_action — 7 actions", () => {
   it("approve: approved + outbox born in the SAME fn transaction + decision_log + audit", async () => {
-    const apprId = await makeApproval({});
+    // Outbox birth needs an EXECUTABLE action type since the 20260726011000
+    // enqueue allowlist — the payment probe type has no handler yet
+    // (Phase-11 LOCKED) and would leave an audit trace instead of a row.
+    const apprId = await makeApproval({ action_type: "email.send.staging" });
     const res = await ceoAction({ op: "decide", approval_id: apprId, action: "approve", note: "e93 yes" });
     expect(res.ok).toBe(true);
     expect(res.outbox_id).toBeTruthy();
@@ -381,7 +384,9 @@ describe("decision walls", () => {
   });
 
   it("idempotency: replay returns the SAME response (no double release), body drift → MISMATCH", async () => {
-    const apprId = await makeApproval({});
+    // Executable type for the same reason as the approve case above: the
+    // double-release wall is proven on a row the allowlist actually births.
+    const apprId = await makeApproval({ action_type: "email.send.staging" });
     const key = `e93t-idem-${randomUUID()}`;
     const payload = { op: "decide", approval_id: apprId, action: "approve", note: "once" };
 
