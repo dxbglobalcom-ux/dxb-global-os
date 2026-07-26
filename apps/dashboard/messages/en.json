@@ -935,7 +935,14 @@
         "doorSubmitting": "Setting...",
         "doorCreated": "Target set.",
         "doorFailed": "Could not set the target.",
-        "doorCapitalNote": "Capital limit starts at 0 - nothing may be spent on it until you raise it."
+        "doorCapitalNote": "Capital limit starts at 0 - nothing may be spent on it until you raise it.",
+        "capitalLimitLine": "Active capital ceiling: {limit}",
+        "capitalLimitFrom": "from the active objective “{title}”",
+        "capitalLimitNoObjective": "no active objective, so only zero-capital work can advance",
+        "capitalBlocked": "Capital-blocked",
+        "capitalBlockedDetail": "Needs {needed}, ceiling is {limit} — stopped by money, not by merit. Raising the ceiling is your call.",
+        "capitalBlockedCount": "{n} candidates waiting on the ceiling",
+        "capitalBlockedCountOne": "1 candidate waiting on the ceiling"
       }
     },
     "intelligence": {

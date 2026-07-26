@@ -126,6 +126,12 @@ Empty states honest ("0 opportunities — first scan scheduled …"), no dummy m
 
 **Proof (red-first):** `tests/c9/revenue-gates.test.ts` — 9 cases, all failing against the pre-W2.3 functions, all green after migration `20260726012000_w23_revenue_gates.sql`; each runs inside a rolled-back transaction, so an `active` objective (a CEO-only act) can be staged honestly without touching the live pipeline. Live door proof on the real database, also rolled back: *"needs €900 capital; the active limit is €0 — raising it is the CEO's call (G4)"*, *"evidence cites an opportunity that does not exist: 1111…"*, *"a proposed objective must cite the opportunities behind it (G3)"*, and a proposal citing a live opportunity accepted.
 
+### 7quater-b. The refusal is visible where the CEO looks (W2.3b, built 2026-07-26)
+
+G4 without a surface is a rule only the audit log knows. `/revenue/opportunities` now states the ACTIVE CEILING as a first-line fact — the number, the objective it comes from, and how many candidates wait on it — and marks every blocked candidate on its own card (warn border, `Capital-blocked` / `Sermaye kilidi`, and one plain line naming what it needs against what the ceiling allows, ending in "raising the ceiling is your call"). When no objective is active the line says so instead of showing a bare €0.00: an unexplained zero is a number the CEO cannot act on.
+
+Two rules carry it. The ceiling and its objective arrive in ONE row (`v_revenue_capital_ceiling`, migration 20260726016000), so the board can never attribute a limit to the wrong objective. The comparison is one pure function (`isCapitalBlocked` — `>` not `>=`, live states only) shared by the board and its tests, so the surface can never accuse the gate of a refusal it did not make. The first implementation read the limit through `supabase.rpc()`; the DASH-05 purity gate caught it and the view is the answer — the dashboard stays a projection, and no gate was weakened to make a screen work.
+
 ## 7quinquies. AN APPROVED ALLOCATION PRODUCES REAL WORK (W2.4, built 2026-07-26)
 
 **Measured defect:** all six engines carried `owner_department = NULL` — "who works on this?" had no answer anywhere in the company — and `control_portfolio_allocate` wrote its row and stopped. The CEO's approval produced a ledger entry and silence. That is the line between a 24/7 OS and a very well audited idle system.

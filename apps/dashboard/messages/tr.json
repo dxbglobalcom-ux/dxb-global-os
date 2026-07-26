@@ -935,7 +935,14 @@
         "doorSubmitting": "Konuluyor...",
         "doorCreated": "Hedef kondu.",
         "doorFailed": "Hedef konulamadı.",
-        "doorCapitalNote": "Sermaye limiti 0 başlar — siz yükseltene kadar bu hedef için hiçbir harcama yapılamaz."
+        "doorCapitalNote": "Sermaye limiti 0 başlar — siz yükseltene kadar bu hedef için hiçbir harcama yapılamaz.",
+        "capitalLimitLine": "Aktif sermaye tavanı: {limit}",
+        "capitalLimitFrom": "aktif hedeften: “{title}”",
+        "capitalLimitNoObjective": "aktif hedef yok, yalnız sıfır-sermaye iş ilerleyebilir",
+        "capitalBlocked": "Sermaye kilidi",
+        "capitalBlockedDetail": "{needed} gerekiyor, tavan {limit} — değerinden değil, paradan durdu. Tavanı yükseltmek sizin kararınız.",
+        "capitalBlockedCount": "{n} aday tavanı bekliyor",
+        "capitalBlockedCountOne": "1 aday tavanı bekliyor"
       }
     },
     "intelligence": {

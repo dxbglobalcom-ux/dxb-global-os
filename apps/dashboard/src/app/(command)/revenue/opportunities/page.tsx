@@ -1,6 +1,7 @@
 import { Panel, StatusBadge, type StatusLevel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { fill, fmtEur, isCapitalBlocked } from "@/lib/revenue-capital";
 import { createClient } from "@/lib/supabase/server";
 
 // /revenue/opportunities v1 (R1.4, REVENUE_ENGINE_SPEC §7) — the pipeline
@@ -46,19 +47,32 @@ const HALAL_BADGE: Record<string, StatusLevel> = {
   review: "warn",
 };
 
-const eur = (n: number | null | undefined) => `€${Number(n ?? 0).toFixed(2)}`;
-
 export default async function RevenueOpportunitiesPage() {
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.revenue.ui;
   const supabase = await createClient();
 
-  const pipelineRes = await supabase
-    .from("v_opportunity_pipeline")
-    .select(
-      "id, title, title_tr, state, halal_verdict, score, score_dims, capital_required_eur, region, channel, engine_slug, engine_title, engine_title_tr, created_by, created_at",
-    );
+  // The ceiling and the objective it comes from arrive as ONE row
+  // (v_revenue_capital_ceiling, migration 20260726016000): the number is
+  // fn_revenue_capital_limit()'s — U32 keeps it the single source — and the
+  // name sits beside it, so the board can never attribute a ceiling to the
+  // wrong objective. A limit with no visible origin is a number the CEO
+  // cannot act on.
+  const [pipelineRes, ceilingRes] = await Promise.all([
+    supabase
+      .from("v_opportunity_pipeline")
+      .select(
+        "id, title, title_tr, state, halal_verdict, score, score_dims, capital_required_eur, region, channel, engine_slug, engine_title, engine_title_tr, created_by, created_at",
+      ),
+    supabase.from("v_revenue_capital_ceiling").select("limit_eur, objective_title").limit(1),
+  ]);
+
+  const ceiling = ceilingRes.data?.[0] as
+    | { limit_eur: number | null; objective_title: string | null }
+    | undefined;
+  const capitalLimit = Number(ceiling?.limit_eur ?? 0);
+  const activeObjective = ceiling?.objective_title ?? null;
 
   if (pipelineRes.error) {
     return (
@@ -82,6 +96,10 @@ export default async function RevenueOpportunitiesPage() {
     items: rows.filter((r) => r.state === state),
   })).filter((col) => col.items.length > 0);
 
+  const blockedCount = rows.filter((r) =>
+    isCapitalBlocked(r.capital_required_eur, capitalLimit, r.state),
+  ).length;
+
   return (
     <div className="mx-auto max-w-[1720px] space-y-6">
       <h1 className="font-display text-h1 text-ink-primary">
@@ -98,6 +116,37 @@ export default async function RevenueOpportunitiesPage() {
         </Panel>
       ) : (
         <>
+          {/* The ceiling line, W2.3b. The G4 refusal used to live only in
+              audit_log, so a candidate stopped by MONEY looked exactly like one
+              stopped by merit — and the CEO is the only person who can raise the
+              ceiling. The line states the number, where it came from, and how
+              many candidates are waiting on it. */}
+          <p
+            data-testid="capital-ceiling"
+            className="text-caption text-ink-secondary"
+          >
+            <span className="font-data tabular-nums">
+              {fill(t.capitalLimitLine, { limit: fmtEur(capitalLimit) })}
+            </span>
+            {" — "}
+            <span className="text-ink-muted">
+              {activeObjective
+                ? fill(t.capitalLimitFrom, { title: activeObjective })
+                : t.capitalLimitNoObjective}
+            </span>
+            {blockedCount > 0 ? (
+              <>
+                {" · "}
+                <span className="text-status-warn">
+                  {/* one form per count: "1 candidate(s)" is the kind of
+                      machine-shaped text the CEO reads as sloppiness */}
+                  {blockedCount === 1
+                    ? t.capitalBlockedCountOne
+                    : fill(t.capitalBlockedCount, { n: blockedCount })}
+                </span>
+              </>
+            ) : null}
+          </p>
           <p className="text-caption text-ink-muted">{t.boundariesNote}</p>
           <div className="space-y-4">
             {byState.map((col) => (
@@ -106,10 +155,18 @@ export default async function RevenueOpportunitiesPage() {
                 title={`${stateLabels[col.state] ?? col.state} (${col.items.length})`}
               >
                 <ul className="grid grid-cols-1 gap-3 xl:grid-cols-2 2xl:grid-cols-3">
-                  {col.items.map((r) => (
+                  {col.items.map((r) => {
+                    const blocked = isCapitalBlocked(
+                      r.capital_required_eur,
+                      capitalLimit,
+                      r.state,
+                    );
+                    return (
                     <li
                       key={r.id}
-                      className="rounded-input border border-edge-neutral bg-surface-graphite p-3"
+                      className={`rounded-input border bg-surface-graphite p-3 ${
+                        blocked ? "border-status-warn/50" : "border-edge-neutral"
+                      }`}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <span className="min-w-0 flex-1 text-body-s text-ink-primary">
@@ -119,17 +176,38 @@ export default async function RevenueOpportunitiesPage() {
                               rendering blank (honest over pretty). */}
                           {(locale === "tr" ? r.title_tr : r.title) || r.title}
                         </span>
-                        <StatusBadge level={HALAL_BADGE[r.halal_verdict] ?? "info"}>
-                          {halalLabels[r.halal_verdict] ?? r.halal_verdict}
-                        </StatusBadge>
+                        <div className="flex shrink-0 flex-wrap items-center justify-end gap-1.5">
+                          {blocked ? (
+                            <StatusBadge level="warn">{t.capitalBlocked}</StatusBadge>
+                          ) : null}
+                          <StatusBadge level={HALAL_BADGE[r.halal_verdict] ?? "info"}>
+                            {halalLabels[r.halal_verdict] ?? r.halal_verdict}
+                          </StatusBadge>
+                        </div>
                       </div>
+
+                      {blocked ? (
+                        <p
+                          data-testid="capital-blocked-detail"
+                          className="mt-1.5 text-caption text-status-warn"
+                        >
+                          {fill(t.capitalBlockedDetail, {
+                            needed: fmtEur(r.capital_required_eur),
+                            limit: fmtEur(capitalLimit),
+                          })}
+                        </p>
+                      ) : null}
 
                       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
                         <span className="text-caption text-ink-secondary">
                           {locale === "tr" ? r.engine_title_tr : r.engine_title}
                         </span>
-                        <span className="font-data text-caption text-ink-muted tabular-nums">
-                          {t.colCapital}: {eur(r.capital_required_eur)}
+                        <span
+                          className={`font-data text-caption tabular-nums ${
+                            blocked ? "text-status-warn" : "text-ink-muted"
+                          }`}
+                        >
+                          {t.colCapital}: {fmtEur(r.capital_required_eur)}
                         </span>
                         {r.region && (
                           <span className="text-caption text-ink-muted">{r.region}</span>
@@ -163,7 +241,8 @@ export default async function RevenueOpportunitiesPage() {
                         </dl>
                       )}
                     </li>
-                  ))}
+                    );
+                  })}
                 </ul>
               </Panel>
             ))}

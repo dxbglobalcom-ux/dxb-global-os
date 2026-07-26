@@ -217,6 +217,27 @@ test("project cards speak the CEO's language and keep a readable column at 1366 
   expect(narrowest, "a project card's text column collapsed at 1366").toBeGreaterThan(200);
 });
 
+test("the capital ceiling is stated on the pipeline board, both locales (W2.3b)", async ({ page, context }) => {
+  // The G4 refusal used to exist only in audit_log: a candidate stopped by
+  // MONEY looked exactly like one stopped by merit, and the CEO is the only
+  // person who can raise the ceiling. The line must name the number and where
+  // it came from — in the language he is reading.
+  await page.setViewportSize({ width: 1366, height: 900 });
+  for (const locale of ["en", "tr"] as const) {
+    await context.clearCookies({ name: "dxb-locale" });
+    await context.addCookies([{ name: "dxb-locale", value: locale, url: "http://localhost:3000" }]);
+    await page.goto("/revenue/opportunities");
+    const line = page.getByTestId("capital-ceiling");
+    await expect(line).toBeVisible();
+    await expect(line).toContainText("€");
+    await expect(line).toContainText(locale === "tr" ? /Aktif sermaye tavanı/ : /Active capital ceiling/);
+    // no cross-locale leakage on the line the CEO reads first
+    await expect(line).not.toContainText(
+      locale === "tr" ? /Active capital ceiling/ : /Aktif sermaye tavanı/,
+    );
+  }
+});
+
 test("no data grid is clipped inside its own scroller at 1366 (W2.5 eye pass)", async ({ page, context }) => {
   // The A1 ellipsis test cannot see this class: a table inside `overflow-x-auto`
   // has no text-overflow, so a cut column reads as clean while the CEO sees
