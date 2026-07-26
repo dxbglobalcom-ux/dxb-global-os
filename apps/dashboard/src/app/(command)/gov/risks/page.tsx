@@ -23,9 +23,12 @@ type RiskRow = {
   id: string;
   project_id: string;
   title: string;
+  /** the CEO reads the register in Turkish (migration 20260726017000) */
+  title_tr: string | null;
   severity: string;
   status: string;
   note: string | null;
+  note_tr: string | null;
   updated_at: string;
 };
 
@@ -114,7 +117,7 @@ export default async function RisksPage({
       label: t.colRisk,
       render: (r) => (
         <span className="block max-w-[52ch] break-words">
-          {r.title}
+          {(locale === "tr" ? (r.title_tr ?? r.title) : r.title)}
         </span>
       ),
     },
@@ -251,9 +254,9 @@ export default async function RisksPage({
                 .map((r) => (
                   <li key={r.id} className="text-caption text-ink-muted">
                     <span className="font-data text-ink-secondary">
-                      {r.title}:
+                      {(locale === "tr" ? (r.title_tr ?? r.title) : r.title)}:
                     </span>{" "}
-                    {r.note}
+                    {(locale === "tr" ? (r.note_tr ?? r.note) : r.note)}
                   </li>
                 ))}
             </ul>

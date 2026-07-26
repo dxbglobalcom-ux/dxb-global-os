@@ -217,6 +217,19 @@ test("project cards speak the CEO's language and keep a readable column at 1366 
   expect(narrowest, "a project card's text column collapsed at 1366").toBeGreaterThan(200);
 });
 
+test("the design specimen is not part of the product (§35 negative acceptance)", async ({ page }) => {
+  // W5.1 audit finding, 2026-07-26: /design-preview shipped in the production
+  // build and rendered invented metrics — "Active agents 24", "Daily cost 6.80
+  // EUR", an agent table with 128 runs at €4.12 — while §35 makes fake metric
+  // data an automatic RET. Worse, /design-audit linked to it from the command
+  // side. The specimen stays for local design work; the product does not have it.
+  const res = await page.goto("/design-preview");
+  expect(res?.status()).toBe(404);
+  await page.goto("/design-audit");
+  await expect(page.locator("main")).toBeVisible();
+  await expect(page.locator('a[href="/design-preview"]')).toHaveCount(0);
+});
+
 test("the capital ceiling is stated on the pipeline board, both locales (W2.3b)", async ({ page, context }) => {
   // The G4 refusal used to exist only in audit_log: a candidate stopped by
   // MONEY looked exactly like one stopped by merit, and the CEO is the only

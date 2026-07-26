@@ -77,6 +77,8 @@ function taskLine(t: TaskRow | undefined, locale: string): string | null {
 type RiskRow = {
   id: string;
   title: string;
+  /** the CEO reads the register in Turkish (migration 20260726017000) */
+  title_tr: string | null;
   severity: string;
   status: string;
   note: string | null;
@@ -168,7 +170,7 @@ export default async function ProjectCommandPage({
       .limit(500),
     supabase
       .from("project_risks")
-      .select("id, title, severity, status, note, updated_at")
+      .select("id, title, title_tr, severity, status, note, updated_at")
       .eq("project_id", p.id)
       .order("updated_at", { ascending: false })
       .limit(20),
@@ -590,7 +592,7 @@ export default async function ProjectCommandPage({
                     <li key={r.id} className="rounded-input border border-edge-neutral p-2">
                       <div className="flex items-center justify-between gap-2">
                         <span className="min-w-0 truncate text-body-s text-ink-secondary">
-                          {r.title}
+                          {(locale === "tr" ? (r.title_tr ?? r.title) : r.title)}
                         </span>
                         <StatusBadge level={RISK_LEVEL[r.severity] ?? "info"}>
                           {severities[r.severity] ?? r.severity}

@@ -255,7 +255,7 @@ export function renderWidget(type: WidgetType, ctx: WidgetRenderCtx): React.Reac
               <span className="font-display text-display-lg text-accent-ivory tabular-nums">
                 {data.agents_total}
               </span>
-              <span className="text-body-s text-ink-secondary">total</span>
+              <span className="text-body-s text-ink-secondary">{t.agentsTotal}</span>
             </div>
             <div className="mt-2 flex gap-3 text-body-s">
               <span className="text-status-ok">

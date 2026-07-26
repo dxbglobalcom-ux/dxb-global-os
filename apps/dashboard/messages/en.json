@@ -525,7 +525,8 @@
           "budget": "Monthly budget",
           "attention": "Needs attention"
         }
-      }
+      },
+      "agentsTotal": "total"
     },
     "live": {
       "title": "Live Operations",

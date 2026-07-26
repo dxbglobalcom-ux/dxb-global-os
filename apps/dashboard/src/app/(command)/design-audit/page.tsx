@@ -130,13 +130,19 @@ export default async function DesignAuditPage() {
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-display text-h1 text-ink-primary">{t.title}</h1>
-        <Link
-          href="/design-preview"
-          className="flex items-center gap-1.5 text-body-s text-accent-champagne transition duration-[var(--t-fast)] ease-refined hover:text-accent-ivory"
-        >
-          {t.previewLink}
-          <ArrowRight size={14} strokeWidth={1.5} aria-hidden />
-        </Link>
+        {/* The specimen is a builder's tool and 404s in production (§35: its
+            numbers are invented). Linking to a dead route from a CEO surface
+            would be the same defect wearing a different hat, so the link
+            exists exactly where the page does. */}
+        {process.env.NODE_ENV === "production" ? null : (
+          <Link
+            href="/design-preview"
+            className="flex items-center gap-1.5 text-body-s text-accent-champagne transition duration-[var(--t-fast)] ease-refined hover:text-accent-ivory"
+          >
+            {t.previewLink}
+            <ArrowRight size={14} strokeWidth={1.5} aria-hidden />
+          </Link>
+        )}
       </div>
       <p className="text-body-s text-ink-secondary">{t.subtitle}</p>
 

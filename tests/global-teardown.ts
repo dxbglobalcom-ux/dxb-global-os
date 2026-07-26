@@ -65,6 +65,45 @@ export default function globalSetup(): () => Promise<void> {
           `[global-teardown] swept ${k} stale hook-conflict alert(s) (no live policy disagreement)`,
         );
       }
+      // Fourth class, caught by the CEO himself on the Görevler board
+      // 2026-07-27 00:05: "Başarısız 9" — seven of those nine rows were MINE.
+      // The e8 observability suites open real `tasks` rows and fail them on
+      // purpose (that IS the thing under test), and nothing swept the rows
+      // afterwards, so a full-suite run posted seven fresh failures onto the
+      // CEO's board. Alerts were already swept above; tasks were not.
+      //
+      // Test-owned by construction: production never writes an objective or
+      // label starting with "E8.1 observability" or "E8.3 probe". Children are
+      // removed first (no ON DELETE CASCADE on these FKs) in the same order the
+      // purge door uses.
+      const probeWhere = sql`
+        SELECT id FROM tasks
+         WHERE objective LIKE 'E8.1 observability%' OR objective LIKE 'E8.3 probe%'
+            OR label LIKE 'E8.1 observability%' OR label LIKE 'E8.3 probe%'
+      `;
+      await sql`UPDATE tasks SET parent_task_id = NULL WHERE parent_task_id IN (${probeWhere})`.execute(getDb());
+      // The run's own children first — measured 2026-07-27: deleting agent_runs
+      // straight away trips tool_calls_run_id_fkey. Depth before breadth.
+      const probeRuns = sql`SELECT id FROM agent_runs WHERE task_id IN (${probeWhere})`;
+      // column names measured, not assumed (pg_constraint → conkey → attname):
+      // approvals points at a run through `reanalysis_run_id`, everyone else
+      // through `run_id`.
+      for (const gchild of [
+        "tool_calls", "file_changes", "decision_log", "hook_violations",
+        "library_usage_log", "memory_index", "alerts",
+      ]) {
+        await sql`DELETE FROM ${sql.raw(gchild)} WHERE run_id IN (${probeRuns})`.execute(getDb());
+      }
+      await sql`UPDATE approvals SET reanalysis_run_id = NULL WHERE reanalysis_run_id IN (${probeRuns})`.execute(getDb());
+      await sql`UPDATE agent_runs SET parent_run_id = NULL WHERE parent_run_id IN (${probeRuns})`.execute(getDb());
+      for (const child of ["task_events", "agent_runs", "cost_ledger", "alerts", "approvals"]) {
+        await sql`DELETE FROM ${sql.raw(child)} WHERE task_id IN (${probeWhere})`.execute(getDb());
+      }
+      const probes = await sql`DELETE FROM tasks WHERE id IN (${probeWhere})`.execute(getDb());
+      const p = Number(probes.numAffectedRows ?? 0);
+      if (p > 0) {
+        console.log(`[global-teardown] swept ${p} test-probe task row(s) (e8 observability class)`);
+      }
     } finally {
       await closeDb().catch(() => {});
     }

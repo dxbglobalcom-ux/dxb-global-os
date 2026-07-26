@@ -156,3 +156,27 @@ an ESTIMATE and is labelled as one until the pilot measures it.
 - It does not create authority. A subagent cannot close a row, cannot approve, and
   cannot sign. The author signs; the record shows what was attacked and what
   survived.
+
+---
+
+## 8. Pilot result — run 1 (2026-07-26 23:00-23:50, W5.1 pre-acceptance)
+
+| Metric | Threshold | Measured | Verdict |
+|---|---|---|---|
+| Criteria given a command-backed refutation attempt | ≥ 24 / 27 | **19 / 27** (8 UNMEASURABLE: 6 tier-C rows correctly refused as never-delegable, 2 blocked because the sandbox cannot reach the database container) | **MISSED** — and the reason is the author's prompt, not the auditor: the Codex sandbox has no database, which was foreseeable and unaddressed |
+| Findings backed by a command | ≥ 80% | **14 / 14 = 100%** (every block carried the command it ran) | MET |
+| False alarms | ≤ 25% | **3 / 14 = 21%** (RLS "gap" was fail-closed by design — zero grants; "Command Center" is the wordmark, not untranslated copy; the org-graph row named the wrong view in the DOC, the product reads the right one) | MET |
+| Write-check (`audit_log`/`tasks`/`agent_runs`/`opportunities`) | identical | **26753/216/377/5 → 26753/216/377/5** | MET |
+| Cost | record it | 4 agents, ~250k tokens, ~50 min wall-clock, €0 metered (subscription lanes) | recorded |
+
+**What it caught that the batteries did not** — three confirmed defects, all fixed in the same turn:
+
+1. **§35 violation live in the product.** `/design-preview` shipped in the production build and rendered invented metrics ("Active agents 24", "Daily cost 6.80 EUR", an agent table with 128 runs at €4.12), and `/design-audit` linked to it from the command side. §35 makes fake metric data an automatic RET. Now dev-only (404 in production) with an E2E gate.
+2. **The risk register was half-translated.** `project_risks` had no `title_tr`/`note_tr`, so /gov/risks and every project's Command View showed English sentences on the Turkish board. Migrations 20260726017000 + 017500, both consumers localised, purity gate extended.
+3. **The acceptance record contradicted the roadmap.** This file said "no session yet" while `IMPLEMENTATION_ROADMAP.md:160` carried a verbatim CEO approval from 2026-07-18. U28 class. Reconciled above.
+
+**And one the CEO caught while the audit ran** — seven "Başarısız" rows on his Görevler board were test probes from the e8 observability suites, left behind when a suite failed mid-run. The global teardown now sweeps that class (fourth one it owns). That is a defect of the author, not of the audit — the pilot's own rule.
+
+**Author-side lessons recorded:** the Codex lane needs the prompt on **stdin** (a positional argument makes `codex exec` wait for stdin and burn the whole timeout); the breadth sweep found no dummy data because the author scoped it to `(command)` pages while the fake-metric route lived outside that group — a narrow scope produces a clean answer that means nothing.
+
+**Verdict on the twin itself: it earns its place.** It found a §35 automatic-RET defect on a shipped surface that six months of machine gates never flagged, at a false-alarm rate inside the threshold and with a clean write-check. The missed coverage metric is fixable (give the auditor database reach, or split the DB-dependent rows to a lane that has it) and is scheduled for run 2, before the CEO's acceptance session.

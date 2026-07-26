@@ -36,6 +36,16 @@ else
   echo "PASS projects: every live project named + explained EN+TR"
 fi
 
+# The risk register is CEO-visible too — /gov/risks and every project's Command
+# View render the title. Found by the W5.1 audit twin 2026-07-26: three English
+# sentences on the Turkish board because `project_risks` had no `title_tr`.
+risks_missing="$("${PSQL[@]}" -c "SELECT left(title, 40) FROM project_risks WHERE title_tr IS NULL OR (note IS NOT NULL AND note_tr IS NULL);")"
+if [ -n "$risks_missing" ]; then
+  echo "FAIL risks missing title_tr:"; echo "$risks_missing"; fail=1
+else
+  echo "PASS risks: every risk titled + noted EN+TR"
+fi
+
 node - <<EOF || fail=1
 const en = require("$REPO_DIR/apps/dashboard/messages/en.json");
 const tr = require("$REPO_DIR/apps/dashboard/messages/tr.json");

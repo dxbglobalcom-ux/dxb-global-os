@@ -525,7 +525,8 @@
           "budget": "Aylık bütçe",
           "attention": "Dikkat gerektirenler"
         }
-      }
+      },
+      "agentsTotal": "toplam"
     },
     "live": {
       "title": "Canlı Operasyonlar",

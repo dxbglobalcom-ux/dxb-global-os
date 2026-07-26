@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import {
   CommandItem,
   DataGrid,
@@ -10,9 +11,19 @@ import {
   type SurfaceLevel,
 } from "@/components/primitives";
 
-// /design-preview — hidden audit route (DESIGN_SYSTEM §24: Storybook is
-// deliberately skipped; this page renders the component×state matrix on
-// real tokens as the eye-test input). Not linked from any nav.
+// /design-preview — the design specimen (DESIGN_SYSTEM §24: Storybook is
+// deliberately skipped; this page renders the component×state matrix on real
+// tokens as the eye-test input).
+//
+// DEV-ONLY SINCE 2026-07-26 (W5.1 audit finding, §35 negative acceptance). The
+// specimen feeds components with INVENTED numbers — "Active agents 24",
+// "Daily cost 6.80 EUR", an agent table with 128 runs at €4.12 — which is
+// exactly what §35 bans from the product ("sahte metrik / süs data / dummy
+// widget" = automatic RET). The header comment claimed it was "not linked from
+// any nav", but /design-audit linked straight to it and the route shipped in
+// the production build. A specimen is a builder's tool; it may not be reachable
+// in the CEO's product. It stays for local design work and 404s in production.
+export const dynamic = "force-dynamic";
 
 export const metadata = { title: "Design preview — DXB Command Center" };
 
@@ -66,6 +77,10 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 export default function DesignPreviewPage() {
+  // The specimen's numbers are invented on purpose; §35 bans invented
+  // numbers from the product. So the product does not have this page.
+  if (process.env.NODE_ENV === "production") notFound();
+
   return (
     <div className="min-h-screen bg-surface-void px-10 py-12 font-body text-body-md text-ink-primary">
       <div className="mx-auto max-w-6xl space-y-12">
