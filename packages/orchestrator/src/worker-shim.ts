@@ -62,6 +62,7 @@ import {
   type ContextBudgetDeps,
   type WorkingContext,
 } from "./context-budget.js";
+import { runCriticalGate } from "./critical-gate.js";
 
 export interface ClaimedTask {
   id: string;
@@ -562,6 +563,17 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
   const hookOn = await hookEnabled(task.agent_id ?? null);
   if (!hookOn) await alertHookDisabled();
 
+  // §4e: does this task's class bind money, reputation or the company's
+  // direction? The switch is the routing row's needs_council flag — the same
+  // one CNCL-01 used, kept so the gate is CEO-configurable as data. A routing
+  // failure here must not fail the task: no route resolved simply means no gate.
+  let needsGate = false;
+  try {
+    needsGate = (await resolveExecutionRoute(task)).rule.needs_council === true;
+  } catch {
+    needsGate = false;
+  }
+
   let hookCtx: HookCtx | null = null;
   let preVerdict: Extract<PreVerdict, { verdict: "PASS" }> | null = null;
   if (hookOn) {
@@ -610,6 +622,7 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
           hook_project_purpose: preVerdict.inject.projectPurpose,
         };
         let rounds = 0;
+        let gateRounds = 0;
         for (;;) {
           const attempt = await execute(execTask);
 
@@ -642,7 +655,35 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
           scope.setHookResult(
             buildHookResult({ pre: preVerdict, post, rounds, monitors }),
           );
-          if (post.verdict === "PASS") return attempt;
+          if (post.verdict === "PASS") {
+            // §4e critical gate. The QA hook says the deliverable meets its
+            // contract; the gate asks a different question — is it WRONG?
+            // Independent challengers try to refute it, and their objections
+            // come back as one revision round, so the author (the L1 model)
+            // revises and signs. Exactly one gate round: a second would let two
+            // reviewers argue forever over one task.
+            if (needsGate && gateRounds === 0) {
+              const gate = await runCriticalGate({
+                subject: task.objective,
+                answer:
+                  typeof attempt.result === "string"
+                    ? attempt.result
+                    : JSON.stringify(attempt.result),
+                context: task.output_contract,
+                taskId: task.id,
+                runId: scope.runId,
+              });
+              if (gate.status === "objections") {
+                gateRounds += 1;
+                execTask.feedback = gate.feedback;
+                continue;
+              }
+              // `clean` and `unavailable` both proceed. An unreachable panel is
+              // recorded in decision_log as `unavailable` and stays visible —
+              // it must never be able to halt the company on its own.
+            }
+            return attempt;
+          }
           if (post.verdict === "REVISE") {
             rounds += 1;
             execTask.feedback = post.feedback.join("\n");
