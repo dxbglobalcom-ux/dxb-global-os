@@ -2,6 +2,7 @@ import { Panel, StatusBadge, type StatusLevel, HelpTip } from "@/components/prim
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
+import { ObjectiveDoor } from "@/components/revenue/objective-door";
 
 // /revenue/objectives v1 (R1.4, REVENUE_ENGINE_SPEC §7) — the Objective
 // Contract register: every economic target with status machine, metric,
@@ -81,6 +82,7 @@ export default async function RevenueObjectivesPage() {
     return (
       <div className="mx-auto max-w-6xl">
         <Panel title={dict.command.nav.pages.revenueObjectives} state="error">
+
           <p className="text-body-s text-status-danger">{firstError.message}</p>
         </Panel>
       </div>
@@ -101,6 +103,22 @@ export default async function RevenueObjectivesPage() {
       </h1>
 
       <Panel title={t.objectivesTitle}>
+        <ObjectiveDoor
+          labels={{
+            title: t.doorTitle,
+            hint: t.doorHint,
+            amountLabel: t.doorAmount,
+            nameLabel: t.doorName,
+            namePlaceholder: t.doorNamePlaceholder,
+            activateLabel: t.doorActivate,
+            submit: t.doorSubmit,
+            submitting: t.doorSubmitting,
+            created: t.doorCreated,
+            failed: t.doorFailed,
+            capitalNote: t.doorCapitalNote,
+          }}
+        />
+
         {objectives.length === 0 ? (
           <p className="text-body-s text-ink-secondary">{t.objectivesEmpty}</p>
         ) : (

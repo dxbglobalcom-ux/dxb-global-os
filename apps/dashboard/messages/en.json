@@ -925,7 +925,18 @@
         "rejectedCause": "Cause",
         "halalReason": "Halal note",
         "boundariesNote": "Islamic boundaries are immutable — haram scope never advances.",
-        "brainUnassigned": "Not assigned (task-based routing)"
+        "brainUnassigned": "Not assigned (task-based routing)",
+        "doorTitle": "Set a target",
+        "doorHint": "State the number. The OS works out how — you approve only what leaves the company.",
+        "doorAmount": "Amount (EUR)",
+        "doorName": "Name",
+        "doorNamePlaceholder": "e.g. first revenue test",
+        "doorActivate": "Start now",
+        "doorSubmit": "Set target",
+        "doorSubmitting": "Setting...",
+        "doorCreated": "Target set.",
+        "doorFailed": "Could not set the target.",
+        "doorCapitalNote": "Capital limit starts at 0 - nothing may be spent on it until you raise it."
       }
     },
     "intelligence": {

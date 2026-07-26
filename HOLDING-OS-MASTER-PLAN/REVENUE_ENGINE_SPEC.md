@@ -85,6 +85,18 @@ Parts measured pre-existing: projects/tasks/approval/outbox/ledger. Parts NEW: o
 
 Empty states honest ("0 opportunities — first scan scheduled …"), no dummy metrics (§35).
 
+## 7bis. THE OBJECTIVE DOOR — how a target enters the company (W2.1, built 2026-07-26)
+
+**Measured defect:** `control_objective_create`, `_activate` and `_close` had existed since the revenue wave with **no caller anywhere in the product** — no screen, no API, and no `EXECUTE` grant to `authenticated`. Setting a target meant opening psql. The CEO's framing of the entire system is *"I state the number, the OS works out how"*, and the number had no way in.
+
+- **Surface:** `/revenue/objectives` → `ObjectiveDoor`. Amount, name, "start now". Nothing else: metric, period and capital limit all have working defaults, and a default the CEO never has to think about is worth more than a field he has to fill.
+- **Seam:** `POST /api/control/objectives` with `Idempotency-Key` **required** — a target is exactly the thing a double-submit must not create twice (org-seam lesson, 2026-07-24). The gate, audit row and decision row stay inside the SECURITY DEFINER functions; the handler checks session and shape only.
+- **Two measured rules the door respects rather than fights:** `create` refuses `active` ("create accepts only draft|proposed") because activation is its own audited act, and `activate` refuses an objective with no period because a target with no deadline cannot be measured. The door performs both steps for the CEO and **defaults the period to the current calendar month**.
+- **Capital limit defaults to 0** — the safe end of the G4 zero-capital filter. A new target arrives unable to spend anything until the CEO raises it, and the form says so in both languages.
+- **`close` accepts `achieved|missed|closed`** (measured against the function, not assumed).
+
+**Proven end to end, through the real UI:** the form submitted, the page honestly displayed `permission denied for function control_objective_create` (the missing grant — same class as `chat_sessions` shipping without RLS an hour earlier), the grant shipped as `20260726005000`, and the next run created objective *"e2e door proof"* = €75, `status=active`, `period=[2026-07-01,2026-08-01)`. The probe was then closed through the audited `close` door rather than deleted, because a real audited row is not test litter to be erased.
+
 ## 8. APIs (control seam — all SECURITY DEFINER, audit-writing)
 
 `control_objective_create(p_actor, …fields, p_status draft|proposed)` · `control_objective_activate(id)` **CEO-only** · `control_objective_close(id, outcome)` · `control_engine_create/update_lifecycle` · `control_opportunity_register/score/set_halal_verdict/advance/reject` · `control_portfolio_allocate/rotate/stop`. Reads via views. Agents may READ pipeline; mutations CEO or named-owner fns per §13.

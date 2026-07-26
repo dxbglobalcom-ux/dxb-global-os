@@ -925,7 +925,18 @@
         "rejectedCause": "Sebep",
         "halalReason": "Helal notu",
         "boundariesNote": "İslami sınırlar değişmez — haram kapsam asla ilerlemez.",
-        "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)"
+        "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)",
+        "doorTitle": "Hedef koy",
+        "doorHint": "Rakamı siz söyleyin. Nasıl yapılacağını OS çözer — siz yalnız şirketten çıkanı onaylarsınız.",
+        "doorAmount": "Tutar (EUR)",
+        "doorName": "Ad",
+        "doorNamePlaceholder": "örn. ilk gelir testi",
+        "doorActivate": "Hemen başlat",
+        "doorSubmit": "Hedefi koy",
+        "doorSubmitting": "Konuluyor...",
+        "doorCreated": "Hedef kondu.",
+        "doorFailed": "Hedef konulamadı.",
+        "doorCapitalNote": "Sermaye limiti 0 başlar — siz yükseltene kadar bu hedef için hiçbir harcama yapılamaz."
       }
     },
     "intelligence": {
