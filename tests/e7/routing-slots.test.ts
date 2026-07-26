@@ -88,19 +88,30 @@ describe("E7.1 — slot resolution (table-driven, no model name in code)", () =>
     expect(row.rows[0].rationale).toContain("slot=qa");
   });
 
+  // U21 (2026-07-26): this probe used to borrow the live 'claude-haiku-4-5' row.
+  // That model is now retired AND banned, so it would be eliminated for the
+  // WRONG reason and this test would prove nothing about mechanical_only. The
+  // probe now brings its own catalog row — mechanical_only=true, banned=false —
+  // the same self-fixturing idiom the banned-flag proof below already uses, so
+  // the mechanism stays provable no matter which models the CEO hires or fires.
   it("eliminates a mechanical_only model on a verdict-capable slot (R2)", async () => {
+    await sql`
+      INSERT INTO model_catalog (id, provider, status, display_name, banned, mechanical_only)
+      VALUES ('test-e7-mech', 'anthropic', 'active', 'Mechanical Probe', false, true)
+    `.execute(db());
     await sql`
       INSERT INTO routing_rules (task_class, match, model_tier, model, mode, effort,
         needs_council, priority, enabled, model_id, role_slot)
-      VALUES ('slot.review', '{}'::jsonb, 'L4', 'claude-haiku-4-5', 'subscription',
-              'medium', false, 9900, true, 'claude-haiku-4-5', 'review')
+      VALUES ('slot.review', '{}'::jsonb, 'L4', 'test-e7-mech', 'subscription',
+              'medium', false, 9900, true, 'test-e7-mech', 'review')
     `.execute(db());
     try {
       const sel = await selectModel(db(), { roleSlot: "review" });
-      expect(sel.modelId).toBe(registryDefaults.review); // haiku skipped
+      expect(sel.modelId).toBe(registryDefaults.review); // probe skipped
       expect(JSON.stringify(sel.considered)).toContain("mechanical_only");
     } finally {
       await sql`DELETE FROM routing_rules WHERE role_slot = 'review' AND priority = 9900`.execute(db());
+      await sql`DELETE FROM model_catalog WHERE id = 'test-e7-mech'`.execute(db());
     }
   });
 

@@ -65,9 +65,10 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
     approval_class: "none" as const,
     complexity: "single" as const,
   };
-  // Dedicated chat row (sonnet subscription, medium effort — conversation
-  // quality over raw latency; runtime Sonnet is free under §4b). Voice's
-  // fast row and the orchestration row are the fallbacks.
+  // Dedicated chat row. U21 (CEO order 2026-07-26): the CEO conversation is
+  // critical work, so the row is Opus 5 at high effort — Sonnet may not sit on
+  // anything the CEO reads. Voice's fast row and the orchestration row are the
+  // fallbacks; all three are L1 now, so a fallback cannot downgrade quality.
   let r;
   try {
     r = route({ ...ci, task_class: "chat.answer" }, rules);

@@ -1,11 +1,23 @@
 ---
 name: model-routing-hierarchy
-description: "v9 (CEO 2026-07-25): inşaat yazarlığı Fable 5'ten OPUS 5'e devredildi; yedek model katmanı KALDIRILDI (tek beyin Opus 5, hata = blocked raporu); v8-v5 blokları tarihsel kayıt olarak korunur"
+description: "v10 (CEO 2026-07-26): RUNTIME kalite kademe kanunu — Sonnet kritik işlerden çıktı, angarya-only; v9 inşaat yazarlığı Opus 5 + yedek katman yok; v8-v5 tarihsel kayıt"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
-  modified: 2026-07-25T14:19:07.584Z
+  modified: 2026-07-26T00:12:59.019Z
 ---
+
+# v10 — RUNTIME KALİTE KADEME KANUNU (CEO, 2026-07-26) — U21
+
+Bu blok **RUNTIME ağacıdır** (şirketin ajanları hangi modelle koşar), inşaat yazarlığı değil. v8 madde 2'nin "Sonnet runtime tamamen serbest" hükmünü DARALTIR.
+
+1. **Kanun:** hüküm, zevk, yapı ve bir insanın (CEO veya müşteri) gördüğü her çıktı **Opus 5**'ten çıkar. Alt kademenin çıktısı asla bitmiş ürün değildir — üst kademenin girdisidir.
+2. **Ayrım çizgisi maliyet DEĞİL, kod-vs-metin DEĞİL:** "bu işte zevk, yapı veya insanın göreceği bir sonuç var mı?" Varsa L1, ve **kalıcı olarak** L1 — sonradan ucuz bir kodlayıcı model gelmesi bunu geri almaz (CEO: "site mağaza kurulumunu sen yapacaksın tasarım vs … videolarda alt yazı başka model ama videoların tasarımı vs sen").
+3. **Kademeler:** L1 Opus 5 (strateji, karar, para, QA/helal hükmü, araştırma SENTEZİ, site/mağaza kurulumu, tasarım + video yönetimi, ürün kodu, departman planlaması, dışa giden içerik, CEO sohbeti yazılı+sesli, hafıza terfisi) · L2 Sonnet (görsel/yapısal yargı içermeyen mekanik backend kodu) · L3 Sonnet (toplama, taslak, özet — sadece ham malzeme) · L4 Sonnet `effort=low`, yerel modelin ayrılmış koltuğu (sınıflandır, ayıkla, deşifre, alt yazı).
+4. **Kovulanlar** (`retired` + `banned`, silinmez): haiku 4.5 · DeepSeek V4 Flash · Kimi 2.7 Code · Kimi 3 · GLM 5.2 · Qwen 3.6 Flash · MiniMax M3 · Codex 5.5. DeepSeek V4 Pro `mechanical_only` olarak kalır — hüküm üretemez.
+5. **Kademe tekliği (yeni değişmez):** `worker-shim` modeli YALNIZ `model_tier`'dan çözer; bir kademede iki farklı model artık kusurdur, tercih değil.
+6. **GPT/Codex hattı API anahtarıyla açılmaz** (ölçüldü 2026-07-26): anahtar doğrulanıyor ama her tamamlama `429 insufficient_quota` — OpenAI API faturası ChatGPT aboneliğinden ayrıdır. Çalışan yol: **Codex CLI abonelik oturumu** (canlı `gpt-5.6-sol` cevabı alındı). CEO emri: Solo 5.6 + GPT 5.5 holdingde kullanılacak, **özellikle konseyde Opus 5'in işini denetleyen çürütücüler olarak**.
+7. Normatif metin: `MODEL_ROUTING_SPEC` §4d · kayıt: `00-INDEX` U21 · migration `20260726001000_u21_quality_tier_law.sql`.
 
 # v9 — YAZARLIK DEVRİ: Fable 5 → OPUS 5 + yedek katman kaldırıldı (CEO, 2026-07-25)
 

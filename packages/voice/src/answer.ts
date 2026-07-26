@@ -112,7 +112,16 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
     prompt: `${sys}${historyText ? `\n\nConversation so far (chat and voice are ONE conversation):\n${historyText}` : ""}\n\nCEO asks: ${q.question}`,
     options: {
       model: SDK_MODEL_IDS[r.model] ?? r.model,
-      effort: "low",
+      // U21: effort comes from the routing row, never from a constant here.
+      // The hardcoded "low" silently overrode the row and made the voice lane
+      // the one place a CEO dashboard change could not reach. Same guard idiom
+      // as chat-drain: an unknown row value falls back to "low" rather than
+      // handing the SDK a value it cannot parse.
+      effort: (["low", "medium", "high", "max"].includes(r.effort ?? "") ? r.effort : "low") as
+        | "low"
+        | "medium"
+        | "high"
+        | "max",
       tools: [],
       // Same lesson as classify NOT 1: with maxTurns 1 the SDK cannot recover
       // when the model spends its only turn before the final text — measured

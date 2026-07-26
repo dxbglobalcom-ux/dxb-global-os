@@ -147,7 +147,18 @@ describe("decompose — guards (no LLM)", () => {
     expect(out).toHaveLength(1);
     expect(() => TaskEnvelope.parse(out[0])).not.toThrow();
     expect(out[0].deps).toEqual([]);
-    expect(out[0].model_tier).toBe("L3"); // code.standard seed row — route() decided
+    // U21 (2026-07-26): code.standard moved from L3 to L1 — building a site or a
+    // store is design work, so it never leaves Opus 5. The literal is gone; the
+    // assertion now reads the live row, because what this test owns is "route()
+    // decided the tier, not the LLM", not which tier the CEO currently wants.
+    const expectedTier = await getDb()
+      .selectFrom("routing_rules")
+      .select("model_tier")
+      .where("task_class", "=", "code.standard")
+      .where("enabled", "=", true)
+      .orderBy("priority", "desc")
+      .executeTakeFirstOrThrow();
+    expect(out[0].model_tier).toBe(expectedTier.model_tier);
     expect(out[0].approval_class).toBe("internal"); // propagated, not lowered
   });
 });

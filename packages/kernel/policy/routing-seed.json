@@ -1,294 +1,224 @@
 [
  {
-  "task_class": "strategy",
-  "match": {},
-  "model_tier": "L1",
-  "model": "fable-5",
   "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
   "effort": "max",
-  "needs_council": true,
-  "priority": 0
- },
- {
+  "priority": 0,
+  "model_tier": "L1",
   "task_class": "architecture",
+  "needs_council": true
+ },
+ {
+  "mode": "subscription",
   "match": {},
-  "model_tier": "L1",
   "model": "fable-5",
-  "mode": "subscription",
-  "effort": "max",
-  "needs_council": true,
-  "priority": 0
+  "effort": "high",
+  "priority": 0,
+  "model_tier": "L1",
+  "task_class": "chat.answer",
+  "needs_council": false
  },
  {
-  "task_class": "final-approval",
+  "mode": "subscription",
   "match": {},
-  "model_tier": "L1",
   "model": "fable-5",
-  "mode": "subscription",
-  "effort": "max",
-  "needs_council": true,
-  "priority": 0
- },
- {
-  "task_class": "orchestration",
-  "match": {},
-  "model_tier": "L1",
-  "model": "opus-4.8",
-  "mode": "subscription",
   "effort": "high",
-  "needs_council": false,
-  "priority": 0
- },
- {
-  "task_class": "decompose",
-  "match": {},
+  "priority": 0,
   "model_tier": "L1",
-  "model": "opus-4.8",
-  "mode": "subscription",
-  "effort": "high",
-  "needs_council": false,
-  "priority": 0
- },
- {
   "task_class": "code-review",
-  "match": {},
-  "model_tier": "L1",
-  "model": "opus-4.8",
+  "needs_council": false
+ },
+ {
   "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
   "effort": "high",
-  "needs_council": false,
-  "priority": 0
- },
- {
-  "task_class": "dept-head.planning",
-  "match": {},
-  "model_tier": "L2",
-  "model": "sonnet-5",
-  "mode": "subscription",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 0
- },
- {
+  "priority": 10,
+  "model_tier": "L1",
   "task_class": "code.standard",
-  "match": {},
-  "model_tier": "L3",
-  "model": "codex-5.5",
+  "needs_council": false
+ },
+ {
   "mode": "subscription",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "code.standard",
-  "match": {},
-  "model_tier": "L3",
-  "model": "sonnet-5",
-  "mode": "subscription",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 5
- },
- {
-  "task_class": "code.bulk",
-  "match": {},
-  "model_tier": "L3",
-  "model": "kimi-2.7-code",
-  "mode": "api",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "code.bulk",
-  "match": {},
-  "model_tier": "L3",
-  "model": "glm-5.2",
-  "mode": "api",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 5
- },
- {
-  "task_class": "summarize",
-  "match": {},
-  "model_tier": "L4",
-  "model": "deepseek-v4-flash",
-  "mode": "api",
-  "effort": "low",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "summarize",
-  "match": {},
-  "model_tier": "L4",
-  "model": "minimax-m3",
-  "mode": "api",
-  "effort": "low",
-  "needs_council": false,
-  "priority": 5
- },
- {
-  "task_class": "ingest",
-  "match": {},
-  "model_tier": "L4",
-  "model": "deepseek-v4-flash",
-  "mode": "api",
-  "effort": "low",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "ingest",
-  "match": {},
-  "model_tier": "L4",
-  "model": "minimax-m3",
-  "mode": "api",
-  "effort": "low",
-  "needs_council": false,
-  "priority": 5
- },
- {
-  "task_class": "research.fanout",
-  "match": {},
-  "model_tier": "L4",
-  "model": "qwen3.6-flash",
-  "mode": "api",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "research.fanout",
-  "match": {},
-  "model_tier": "L4",
-  "model": "deepseek-v4-flash",
-  "mode": "api",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 5
- },
- {
-  "task_class": "research.synthesis",
-  "match": {},
-  "model_tier": "L2",
-  "model": "sonnet-5",
-  "mode": "subscription",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 0
- },
- {
-  "task_class": "content.outbound",
-  "match": {},
-  "model_tier": "L4",
-  "model": "sonnet-5",
-  "mode": "subscription",
-  "effort": "medium",
-  "needs_council": true,
-  "priority": 0
- },
- {
-  "task_class": "content.outbound",
   "match": {
    "keyword": "listeleme"
   },
-  "model_tier": "L4",
-  "model": "sonnet-5",
-  "mode": "subscription",
-  "effort": "medium",
-  "needs_council": true,
-  "priority": 20
- },
- {
-  "task_class": "memory.classify",
-  "match": {},
-  "model_tier": "L4",
-  "model": "glm-5.2",
-  "mode": "api",
-  "effort": "low",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "memory.promote",
-  "match": {},
-  "model_tier": "L2",
-  "model": "sonnet-5",
-  "mode": "subscription",
-  "effort": "high",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "video.classify",
-  "match": {},
-  "model_tier": "L4",
-  "model": "glm-5.2",
-  "mode": "api",
-  "effort": "low",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "video.summarize",
-  "match": {},
-  "model_tier": "L2",
-  "model": "sonnet-5",
-  "mode": "subscription",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "video.explain",
-  "match": {},
-  "model_tier": "L1",
   "model": "fable-5",
-  "mode": "subscription",
   "effort": "high",
-  "needs_council": false,
-  "priority": 10
- },
- {
-  "task_class": "video.explain",
-  "match": {},
+  "priority": 20,
   "model_tier": "L1",
-  "model": "opus-4.8",
+  "task_class": "content.outbound",
+  "needs_council": true
+ },
+ {
   "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
   "effort": "high",
-  "needs_council": false,
-  "priority": 5
+  "priority": 0,
+  "model_tier": "L1",
+  "task_class": "decompose",
+  "needs_council": false
  },
  {
-  "task_class": "voice.classify",
-  "match": {},
-  "model_tier": "L4",
-  "model": "claude-haiku-4-5",
   "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
+  "effort": "high",
+  "priority": 0,
+  "model_tier": "L1",
+  "task_class": "dept-head.planning",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
+  "effort": "max",
+  "priority": 0,
+  "model_tier": "L1",
+  "task_class": "final-approval",
+  "needs_council": true
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
+  "effort": "medium",
+  "priority": 10,
+  "model_tier": "L1",
+  "task_class": "memory.promote",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
+  "effort": "high",
+  "priority": 0,
+  "model_tier": "L1",
+  "task_class": "orchestration",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
+  "effort": "high",
+  "priority": 0,
+  "model_tier": "L1",
+  "task_class": "research.synthesis",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
+  "effort": "max",
+  "priority": 0,
+  "model_tier": "L1",
+  "task_class": "strategy",
+  "needs_council": true
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
+  "effort": "high",
+  "priority": 10,
+  "model_tier": "L1",
+  "task_class": "video.explain",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "fable-5",
   "effort": "low",
-  "needs_council": false,
-  "priority": 0
- },
- {
+  "priority": 0,
+  "model_tier": "L1",
   "task_class": "voice.answer",
-  "match": {},
-  "model_tier": "L2",
-  "model": "sonnet-5",
-  "mode": "subscription",
-  "effort": "medium",
-  "needs_council": false,
-  "priority": 0
+  "needs_council": false
  },
  {
-  "task_class": "chat.answer",
-  "match": {},
-  "model_tier": "L2",
-  "model": "sonnet-5",
   "mode": "subscription",
+  "match": {},
+  "model": "sonnet-5",
   "effort": "medium",
-  "needs_council": false,
-  "priority": 0
+  "priority": 10,
+  "model_tier": "L2",
+  "task_class": "code.bulk",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "sonnet-5",
+  "effort": "medium",
+  "priority": 10,
+  "model_tier": "L3",
+  "task_class": "research.fanout",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "sonnet-5",
+  "effort": "medium",
+  "priority": 10,
+  "model_tier": "L3",
+  "task_class": "video.summarize",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "sonnet-5",
+  "effort": "low",
+  "priority": 10,
+  "model_tier": "L4",
+  "task_class": "ingest",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "sonnet-5",
+  "effort": "low",
+  "priority": 10,
+  "model_tier": "L4",
+  "task_class": "memory.classify",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "sonnet-5",
+  "effort": "low",
+  "priority": 10,
+  "model_tier": "L4",
+  "task_class": "summarize",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "sonnet-5",
+  "effort": "low",
+  "priority": 10,
+  "model_tier": "L4",
+  "task_class": "video.classify",
+  "needs_council": false
+ },
+ {
+  "mode": "subscription",
+  "match": {},
+  "model": "sonnet-5",
+  "effort": "low",
+  "priority": 0,
+  "model_tier": "L4",
+  "task_class": "voice.classify",
+  "needs_council": false
  }
 ]

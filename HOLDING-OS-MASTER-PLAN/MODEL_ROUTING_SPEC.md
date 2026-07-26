@@ -118,6 +118,31 @@ Yeni bir model çıktığında CEO onu dashboard'dan kataloğa ekler ve bağlar;
 
 Her adım audit_log + decision_log. Katalog satırı SİLİNMEZ — emekli model `status='retired'` (geçmiş decision_log referansları kırılmaz).
 
+### 4d. THE QUALITY TIER LAW (CEO order 2026-07-26, normative, supersedes the §4 default table where they disagree)
+
+**The law, one sentence: judgment, taste, structure and every output a human — the CEO or a customer — actually sees is produced by Opus 5. A lower tier's output is never a finished product; it is the higher tier's input.**
+
+CEO in chat, verbatim: *"ana hedef KALİTE!!! her işte!!! zeka!!!"* · *"sonnet şuanlık kritik işlerde asla olmamalı … sadece angarya işlerinde"* · *"site mağaza kurulumunu sen yapacaksın tasarım vs … basit ve göze hitap etmeyen backend işleri vs bunlar diğer modeller … videolarda alt yazı başka model ama videoların tasarımı vs sen"*.
+
+The dividing line is **not** cost and **not** code-versus-text. It is a single question: *does this work carry taste, structure, or a result a human will see?* If yes, it is L1 and stays L1 permanently — a cheaper coder model arriving later does not change it.
+
+| Tier | What belongs here | Model today |
+|------|-------------------|-------------|
+| **L1** | strategy · decisions · money · QA and halal verdicts · research **synthesis** · site and store build · design and video direction · feature code · department planning · outbound content · the CEO conversation (chat and voice) · memory promotion | `fable-5` (display **Claude Opus 5**) |
+| **L2** | mechanical backend code with no visual or structural judgment in it (bulk plumbing) | `sonnet-5` |
+| **L3** | grunt text work: gathering, drafting, summarising — raw material only | `sonnet-5` |
+| **L4** | mechanical/clerical: classify, extract, transcribe, subtitle | `sonnet-5` at `effort='low'`, the local model's reserved seat until the exam runs on the new workstation |
+
+**Research, worked example (the CEO's own case — "which local video tools for the new PC"):** L3 opens the fan (many sources, parallel, cheap) → real tools verify what was gathered (scrapling/playwright, never model memory) → **L1 decides**: what fits 16 GB of VRAM, what the licence permits, what actually runs on Linux, what we install and what we discard. Gathering may be cheap. Concluding may not.
+
+**Roster.** In: Opus 5 (L1), Sonnet (L2-L4 grunt), a local model (L4, after the exam), plus DeepSeek V4 Pro held `mechanical_only` for bulk reads too large for the local tier — it may never produce a verdict. Out, `status='retired'` + `banned=true`: haiku 4.5 · DeepSeek V4 Flash · Kimi 2.7 Code · Kimi 3 · GLM 5.2 · Qwen 3.6 Flash · MiniMax M3 · Codex 5.5. Rows are retired, never deleted (U20 precedent — `agent_runs`/`cost_ledger` history references them), and `banned=true` makes `fn_update_agent_brain` and the §4c onboarding flow refuse to re-hire one from the dashboard.
+
+**Tier homogeneity (new invariant).** `packages/orchestrator/src/worker-shim.ts` resolves a task's model by `model_tier` alone. Before this law, one tier could resolve to four different models depending on row ordering. Every tier is now single-model, so *tier match == model match*. **A routing change that puts two different models on one tier reintroduces nondeterminism and is a defect**, not a preference.
+
+**The GPT/Codex lane is NOT open** (measured 2026-07-26): the CEO's OpenAI key authenticates (HTTP 200, 117 models, up to `gpt-5.6-sol/terra/luna`) but every completion returns `429 insufficient_quota` — the ChatGPT subscription does not fund the API. Opening the lane additionally requires `SDK_MODEL_IDS` to learn a non-Anthropic id or the call to go through LiteLLM. Until both are true, no rule may name a GPT/Codex model; when it opens, that lane competes for **L2 mechanical work only — never for the design lane**.
+
+**Live enforcement:** migration `20260726001000_u21_quality_tier_law.sql` (U21). Seed mirror: `packages/kernel/policy/routing-seed.json` — regenerated from the live table, so a fresh bootstrap reproduces the law instead of resurrecting a fired model.
+
 ## 5. Component yapısı
 
 | Bileşen | İçerik |
