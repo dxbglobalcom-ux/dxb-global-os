@@ -310,6 +310,12 @@ W1.5 shipped with the board unable to accept a single message. The CEO found it,
 
 **The list became a list** (same CEO turn: *"eski konuşmalar nerede... design'ı da düzeltin"*). The chip wall above the board is gone; conversations have their own column with their own scroll, each row carrying the thread's name, its size and when it last moved, and the board keeps the remaining height so the composer is on screen instead of below the fold. An untitled thread now borrows the CEO's own opening line through `v_chat_threads` (migration `20260726007000`) rather than reading "Untitled" — his hundred-message history is named *"selam hamza nasılsın"*, which is what it actually was.
 
+### 24quater-ter. The call line SHARES the column, never seizes it (CEO-reported, 2026-07-26 ~12:00 — U31)
+
+The CEO opened the Ses Hattı section and voice and chat interleaved: the conversation grid was crushed to 42px, the thread list disappeared under the voice bar, and the board's composer spilled across the panel. Root cause, measured in the DOM: the chat page owns exactly the shell height (§24quater-bis), and the open call line inserted ~900px of `shrink-0` content into that fixed column — the only flexible row (the conversation grid) absorbed all the negative space. The 45vh first fix looked green at 1366/1920 and was refuted by the 1280×800 windowed leg (the CEO's real window class).
+
+**The law:** on a fixed-height page, a disclosure section may only open as a BOUNDED region that scrolls inside itself. The bound is the REMAINDER of the viewport after the fixed parts (`clamp(12rem, 100vh − 38rem, 34rem)` on the content, never a bare viewport fraction), and the conversation grid carries a min-height floor so any future sibling growth pushes the page tall instead of crushing the grid. Mechanical gate: `tests/e2e/authed.spec.ts` "chat voice line opens as its own region" — three viewports including 1280×800, asserting the thread column's height, zero rect overlap between the voice bar/panel and the thread list/composer, and zero horizontal or vertical spill. A design battery for a fixed-height surface MUST include the open state of every disclosure on it — the closed state proves nothing about the open one.
+
 ## 25. Dependencies
 
 Speaches container (measured Up) · voicebox install (measured present) · agents/directors live rows (220 agents in DB) · intents intake (exists) · NOT dependent on R1.2 revenue tables (parallel-safe) · R1.5 hook codification supplies the Islamic-boundary + decision-principles enforcement Hamza answers under.

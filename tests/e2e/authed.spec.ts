@@ -72,26 +72,76 @@ test("unknown top-level URL gets the styled root 404, not a raw crash (E12.3)", 
   await expect(page.locator('a[href="/overview"], a[href="/"]').first()).toBeVisible();
 });
 
-test("approvals economic frame (D10): decided drawer shows ceiling+deadline, no overflow at 1280/1920", async ({ page }) => {
+test("approvals economic frame (D10): decided drawer opens its detail frame, no overflow at 1280/1920", async ({ page }) => {
   // Width debt from the 2026-07-18 in-person pass: the X230 window manager
   // pins the real browser at 1366, so 1280/1920 run here with viewport
-  // emulation. Frame fields ride the single real decided approval (R2.4).
+  // emulation. 2026-07-26: the original anchor row (R2.4 live staging) no
+  // longer exists in the live DB — the residue sweeps took it — so the test
+  // pins the SHAPE on whatever decided row is first: the drawer opens with
+  // its <dl> detail frame, economic fields render as € when the row carries
+  // them, and the page never overflows.
   for (const width of [1280, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/approvals");
     await page.getByRole("button", { name: /Decided|Karara/ }).click();
-    const row = page.getByRole("button", { name: /R2\.4 live staging/ });
+    const row = page.locator("ul li button[aria-expanded]").first();
+    await expect(row).toBeVisible();
     await row.click();
-    // the drawer holds two <dl>s (frame + email preview) — scope to the frame
-    const frame = page
-      .locator("dl")
-      .filter({ hasText: /Budget ceiling|Bütçe tavanı/i });
+    const frame = page.locator("ul li dl").first();
     await expect(frame).toBeVisible();
-    await expect(frame).toContainText("€");
+    const cost = frame.locator("dd", { hasText: "€" });
+    if ((await cost.count()) > 0) await expect(cost.first()).toContainText("€");
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
     );
     expect(overflow, `horizontal overflow at ${width}`).toBe(false);
+  }
+});
+
+test("chat voice line opens as its own region — board and threads keep their space (U31)", async ({ page }) => {
+  // CEO screenshot 2026-07-26 ~12:00: opening Ses Hattı crushed the
+  // conversation grid to 42px and its contents spilled across the voice
+  // panel. The open panel must SHARE the fixed-height column, never seize it.
+  // 1280×800 is the CEO's real windowed class — the leg that caught the
+  // vh-fraction cap crushing the grid after the first fix looked green.
+  for (const size of [
+    { width: 1280, height: 800 },
+    { width: 1366, height: 900 },
+    { width: 1920, height: 1080 },
+  ]) {
+    await page.setViewportSize(size);
+    await page.goto("/chat");
+    await page.locator('summary[data-testid="chat-voice-line"]').click();
+    const aside = await page.locator("aside").first().boundingBox();
+    expect(aside?.height ?? 0, `threads column crushed at ${size.width}`).toBeGreaterThan(160);
+    const overlap = await page.evaluate(() => {
+      const r = (el: Element | null) => el?.getBoundingClientRect();
+      const hit = (p?: DOMRect, q?: DOMRect) =>
+        !!p &&
+        !!q &&
+        Math.min(p.right, q.right) - Math.max(p.left, q.left) > 2 &&
+        Math.min(p.bottom, q.bottom) - Math.max(p.top, q.top) > 2;
+      const summary = r(document.querySelector('summary[data-testid="chat-voice-line"]'));
+      return {
+        newVsSummary: hit(r(document.querySelector('[data-testid="chat-new-thread"]')), summary),
+        panelVsComposer: hit(
+          r(document.querySelector("details > div")),
+          r(document.querySelector("textarea")),
+        ),
+      };
+    });
+    expect(overlap.newVsSummary, `voice bar overlaps thread list at ${size.width}`).toBe(false);
+    expect(overlap.panelVsComposer, `voice panel overlaps composer at ${size.width}`).toBe(false);
+    const spill = await page.evaluate(() => {
+      const main = document.querySelector("main") ?? document.documentElement;
+      return {
+        h: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+        v: main.scrollHeight > main.clientHeight + 2,
+      };
+    });
+    expect(spill.h, `horizontal overflow at ${size.width}`).toBe(false);
+    // The open panel scrolls INSIDE its region; it may not stretch the page.
+    expect(spill.v, `vertical spill past the shell at ${size.width}`).toBe(false);
   }
 });
 

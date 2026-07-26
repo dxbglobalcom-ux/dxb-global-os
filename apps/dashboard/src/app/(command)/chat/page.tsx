@@ -180,7 +180,9 @@ export default async function ChatPage({
         <h1 className="font-display text-h1 text-ink-primary">{t.title} <HelpTip text={dict.help.chat} /></h1>
         <p className="text-body-s text-ink-secondary">{t.subtitle}</p>
       </div>
-      <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[17rem_minmax(0,1fr)]">
+      {/* min-h floor: if a future sibling grows, the grid pushes the page tall
+          (main scrolls) instead of being crushed under its own content. */}
+      <div className="grid min-h-[12rem] flex-1 gap-4 lg:grid-cols-[17rem_minmax(0,1fr)]">
         <ChatThreads
           sessions={sessions}
           activeId={activeSessionId}
@@ -205,6 +207,13 @@ export default async function ChatPage({
           />
         </Panel>
       </div>
+      {/* U31: the call line is ~900px tall when open, and this column's height
+          is fixed — so the open panel must SHARE the column as its own
+          scrollable region. As a plain shrink-0 block it seized the height and
+          crushed the conversation grid to 42px, spilling board and thread list
+          across itself (CEO screenshot 2026-07-26). The bound sits on the
+          content div, not on <details> flex — Chromium slots the content, so a
+          flex chain through <details> does not reach it. */}
       <details className="group shrink-0">
         <summary
           data-testid="chat-voice-line"
@@ -218,7 +227,10 @@ export default async function ChatPage({
           <span className="text-caption text-ink-muted">{t.voiceLineHint}</span>
           <DaemonToggle state={daemonState} labels={tv} />
         </summary>
-        <div className="mt-4">
+        {/* The cap is the REMAINDER of the viewport after the shell bar, page
+            header, grid minimum and this bar (~38rem together) — a plain vh
+            fraction crushed the grid at windowed heights (1280×800 probe). */}
+        <div className="mt-4 max-h-[clamp(12rem,100vh_-_38rem,34rem)] overflow-y-auto pr-1">
           <VoiceCall directors={directors} recent={recent} labels={tv} locale={locale} />
         </div>
       </details>
