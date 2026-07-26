@@ -3,6 +3,7 @@ import { ChatBoard, type ChatMessage } from "@/components/chat/chat-board";
 import { HelpTip, Panel } from "@/components/primitives";
 import { DaemonToggle } from "@/components/command/daemon-toggle";
 import { VoiceCall, type DirectorOption, type RecentCallRow } from "@/components/command/voice-call";
+import { ChatThreads } from "@/components/chat/chat-threads";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -41,19 +42,43 @@ type CallRow = {
   target: { slug: string; title: string | null; title_tr: string | null } | null;
 };
 
-export default async function ChatPage() {
+export default async function ChatPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ s?: string; new?: string }>;
+}) {
+  const params = await searchParams;
   const locale = await getLocale();
   const dict = getDict(locale);
   const t = dict.command.chat;
   const tv = dict.command.voice;
   const supabase = await createClient();
 
+  // W1.5 — one conversation at a time. ?new=1 opens an empty board whose first
+  // message will mint a fresh thread; ?s=<id> opens a chosen one; neither means
+  // "the current conversation", which is what walking up to the board means.
+  const startingNew = params.new === "1";
+  const sessionsRes = await supabase
+    .from("chat_sessions")
+    .select("id, title, last_message_at")
+    .order("last_message_at", { ascending: false })
+    .limit(12);
+  const sessions = (sessionsRes.data ?? []) as Array<{
+    id: string;
+    title: string | null;
+    last_message_at: string;
+  }>;
+  const activeSessionId = startingNew ? null : (params.s ?? sessions[0]?.id ?? null);
+
   const [messagesRes, directorsRes, deptsRes, callsRes, daemonRes] = await Promise.all([
-    supabase
-      .from("chat_messages")
-      .select("id, role, content, mode, status, error, intent_id, source, created_at")
-      .order("created_at", { ascending: true })
-      .limit(200),
+    activeSessionId
+      ? supabase
+          .from("chat_messages")
+          .select("id, role, content, mode, status, error, intent_id, source, created_at")
+          .eq("session_id", activeSessionId)
+          .order("created_at", { ascending: true })
+          .limit(200)
+      : Promise.resolve({ data: [], error: null }),
     supabase
       .from("agents")
       .select("slug,title,title_tr,department")
@@ -145,7 +170,20 @@ export default async function ChatPage() {
         <p className="text-body-s text-ink-secondary">{t.subtitle}</p>
       </div>
       <Panel>
-        <ChatBoard initial={(messagesRes.data ?? []) as ChatMessage[]} labels={t} lang={locale} />
+        <ChatThreads
+          sessions={sessions}
+          activeId={activeSessionId}
+          startingNew={startingNew}
+          labels={t}
+          locale={locale}
+        />
+        <ChatBoard
+          initial={(messagesRes.data ?? []) as ChatMessage[]}
+          labels={t}
+          lang={locale}
+          sessionId={activeSessionId}
+          startingNew={startingNew}
+        />
       </Panel>
       <details className="group">
         <summary

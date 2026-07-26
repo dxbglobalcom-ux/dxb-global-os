@@ -463,7 +463,18 @@ export interface ChatMessagesTable {
   // U15 D12 (migration 20260725005000): which lane produced the turn —
   // voice turns mirror onto the board tagged 'voice' (one conversation law)
   source: Generated<"chat" | "voice">;
+  // W1.5 (migration 20260726004000): which conversation this turn belongs to.
+  // Scopes both the board thread and Hamza's context window.
+  session_id: string | null;
   created_at: Timestamptz;
+}
+
+/** One CEO chat conversation (W1.5). */
+export interface ChatSessionsTable {
+  id: Generated<string>;
+  title: string | null;
+  created_at: Generated<Timestamptz>;
+  last_message_at: Generated<Timestamptz>;
 }
 
 export interface DB {
@@ -499,5 +510,6 @@ export interface DB {
   voice_identities: VoiceIdentitiesTable;
   voice_calls: VoiceCallsTable;
   chat_messages: ChatMessagesTable;
+  chat_sessions: ChatSessionsTable;
   voice_daemon_state: VoiceDaemonStateTable;
 }

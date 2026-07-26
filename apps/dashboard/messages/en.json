@@ -2322,7 +2322,11 @@
         "audio_too_large": "The recording is too long — dictate in shorter pieces."
       },
       "dictateCancelHint": "Esc cancels",
-      "voiceTag": "Voice"
+      "voiceTag": "Voice",
+      "threadsTitle": "Conversations",
+      "newThread": "New conversation",
+      "untitledThread": "Untitled conversation",
+      "threadsHint": "Each conversation keeps its own context"
     }
   },
   "help": {

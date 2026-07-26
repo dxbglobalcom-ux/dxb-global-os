@@ -62,10 +62,16 @@ export function ChatBoard({
   initial,
   labels,
   lang,
+  sessionId,
+  startingNew,
 }: {
   initial: ChatMessage[];
   labels: ChatLabels;
   lang: "tr" | "en";
+  /** W1.5: the conversation this board is showing (null while starting a new one). */
+  sessionId?: string | null;
+  /** True on /chat?new=1 — the first message mints a fresh thread. */
+  startingNew?: boolean;
 }) {
   const [messages, setMessages] = useState<ChatMessage[]>(initial);
   const [draft, setDraft] = useState("");
@@ -221,13 +227,28 @@ export function ChatBoard({
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, mode: planMode ? "plan" : "normal" }),
+        body: JSON.stringify({
+          text,
+          mode: planMode ? "plan" : "normal",
+          // W1.5: keep the CEO in the thread he is looking at. A new board
+          // sends newSession so the server mints one from this first message —
+          // the client never invents an id.
+          ...(startingNew ? { newSession: true } : sessionId ? { sessionId } : {}),
+        }),
       });
-      if (res.ok) setDraft("");
+      if (res.ok) {
+        setDraft("");
+        // The new thread exists only after this message, so the empty board has
+        // to become the real one; a full navigation also picks up its title.
+        if (startingNew) {
+          const body = (await res.json().catch(() => null)) as { sessionId?: string } | null;
+          if (body?.sessionId) window.location.assign(`/chat?s=${body.sessionId}`);
+        }
+      }
     } finally {
       setSending(false);
     }
-  }, [draft, planMode, sending]);
+  }, [draft, planMode, sending, sessionId, startingNew]);
 
   const dispatchAsTask = useCallback(
     async (m: ChatMessage) => {

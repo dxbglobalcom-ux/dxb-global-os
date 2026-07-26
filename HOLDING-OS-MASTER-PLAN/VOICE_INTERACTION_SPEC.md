@@ -280,6 +280,23 @@ CEO, verbatim: *"2 ayak var: 1- para kazanma planları projeleri konusu konuşul
 
 **Live enforcement:** `packages/orchestrator/src/chat-legs.ts` + `chat-drain.ts`; rows from `db/migrations/20260726003000_chat_legs.sql`; proof `tests/c9/chat-legs.test.ts` (13 cases).
 
+## 24quater. CONVERSATIONS ON THE BOARD (W1.5, built 2026-07-26)
+
+The CEO named this himself: chat had **no "new chat" concept**. Measured: `chat_messages` had no session column, the board was one flat 200-row list, and Hamza's context window was the newest 20 messages *whatever they were about* — so a question about video production carried the tail of a conversation about the budget.
+
+The voice lane had already solved it (U15 D13, `voice_calls.session_id`). This gives the written lane the same shape, deliberately, because chat and voice are ONE conversation (U15 D12).
+
+- **`chat_sessions`** — id, title, created_at, last_message_at. `chat_messages.session_id` joins it, indexed on `(session_id, created_at)`.
+- **Titles are the CEO's own opening line**, first line, trimmed to 60 characters. Not model-generated: a title is navigation, and paying for a model call to name a thread he is about to read anyway is spend with no decision behind it. The system authors **no** title at all — an untitled thread falls back to a localised label, because DB text is an i18n surface and an English literal would render on the Turkish board.
+- **`fn_chat_session_for_new_message(message, new, idle_hours)`** decides the thread server-side: `new=true` always opens one; otherwise the most recent thread continues **unless it has been quiet for more than 12 hours**, because a message the next morning is a new conversation in every sense that matters to the person having it. A client that forgets to send a session can never orphan a message.
+- **The context window is scoped to the thread** — in chat AND in voice. This is the half that actually protects answer quality; the navigation strip is only how the CEO steers it.
+- **The voice mirror joins a real conversation.** Before this, every mirrored spoken turn landed on the board with no thread: visible in no conversation, scoped to nothing, a permanent orphan. It now resolves through the same function the written lane uses, so speaking and typing genuinely continue each other.
+- **History is not discarded:** the existing board was adopted into one legacy thread, timestamped from the rows themselves so it sorts where the conversation actually happened.
+
+**Two defects the RULE #0 pass caught in the same turn, both fixed before commit:** `chat_sessions` shipped without RLS or grants, so the dashboard could not see a single row and the board rendered empty (a new table is invisible by default here — it must be given the seat `chat_messages` already has); and the adopted legacy thread carried the literal English title "Earlier conversation", which rendered on the Turkish board.
+
+**Live enforcement:** migrations `20260726004000` / `004100` / `004200`; `packages/orchestrator/src/chat-drain.ts`, `packages/voice/src/answer.ts`, `apps/dashboard/src/components/chat/chat-threads.tsx`; proof `tests/c9/chat-sessions.test.ts` (6 cases, including the cross-thread leak test).
+
 ## 25. Dependencies
 
 Speaches container (measured Up) · voicebox install (measured present) · agents/directors live rows (220 agents in DB) · intents intake (exists) · NOT dependent on R1.2 revenue tables (parallel-safe) · R1.5 hook codification supplies the Islamic-boundary + decision-principles enforcement Hamza answers under.

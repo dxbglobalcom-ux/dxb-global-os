@@ -244,9 +244,16 @@ export async function answerVoiceCall(
       personaHead(repoRoot, agent.persona_path),
       recallMemory(db, { query: question, limit: 5 }).catch(() => ({ rows: [], classifier_used: false })),
       // U15 D12 (one-conversation law): the voice answer sees the same board
-      // history chat sees — a voice question continues the chat thread.
+      // history chat sees — a voice question continues the chat thread. W1.5
+      // scopes that to the CURRENT thread, so a spoken question no longer
+      // inherits the tail of whatever was discussed last week.
       db.selectFrom("chat_messages")
         .select(["role", "content"])
+        .where(
+          "session_id",
+          "in",
+          db.selectFrom("chat_sessions").select("id").orderBy("last_message_at", "desc").limit(1),
+        )
         .orderBy("created_at", "desc")
         .limit(12)
         .execute()
@@ -346,9 +353,18 @@ export async function answerVoiceCall(
   //    fails the call.
   if (agent.slug === HAMZA_SLUG) {
     try {
+      // W1.5: the mirror joins a real conversation. Without this a spoken turn
+      // landed on the board with no thread — visible to nobody, scoped to
+      // nothing, and a permanent orphan in the messages table. The same
+      // resolver the written lane uses decides which thread it belongs to, so
+      // speaking and typing genuinely continue each other.
+      const sess = await sql<{ id: string }>`
+        SELECT fn_chat_session_for_new_message(${question}, false) AS id
+      `.execute(db);
+      const sessionId = sess.rows[0]?.id ?? null;
       await db.insertInto("chat_messages").values([
-        { role: "ceo" as const, content: question, mode: "normal" as const, status: "answered" as const, source: "voice" as const },
-        { role: "hamza" as const, content: answerText, mode: "normal" as const, status: "answered" as const, source: "voice" as const },
+        { role: "ceo" as const, content: question, mode: "normal" as const, status: "answered" as const, source: "voice" as const, session_id: sessionId },
+        { role: "hamza" as const, content: answerText, mode: "normal" as const, status: "answered" as const, source: "voice" as const, session_id: sessionId },
       ]).execute();
     } catch (e) {
       console.error(`[voice] chat mirror failed for ${job.callId}:`, (e as Error).message.slice(0, 160));

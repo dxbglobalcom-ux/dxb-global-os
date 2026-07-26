@@ -2322,7 +2322,11 @@
         "audio_too_large": "Kayıt çok uzun — daha kısa parçalar halinde yazdırın."
       },
       "dictateCancelHint": "Esc iptal eder",
-      "voiceTag": "Sesli"
+      "voiceTag": "Sesli",
+      "threadsTitle": "Konuşmalar",
+      "newThread": "Yeni konuşma",
+      "untitledThread": "Başlıksız konuşma",
+      "threadsHint": "Her konuşma kendi bağlamını taşır"
     }
   },
   "help": {

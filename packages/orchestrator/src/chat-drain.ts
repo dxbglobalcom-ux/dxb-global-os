@@ -146,7 +146,7 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
 
   const row = await db
     .selectFrom("chat_messages")
-    .select(["id", "content", "mode"])
+    .select(["id", "content", "mode", "session_id"])
     .where("role", "=", "ceo")
     .where("status", "=", "pending")
     .orderBy("created_at", "asc")
@@ -172,7 +172,7 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
         ? "Anlaşıldı Muhittin Bey — mikrofonu kapattım. Siz sohbetten ya da panelden açana kadar sesli asistan tamamen sessiz kalacak."
         : "Mikrofon açıldı Muhittin Bey — \"Selamaleykum ya Hamza\" dediğinizde buradayım.";
       await db.insertInto("chat_messages")
-        .values({ role: "hamza", content: confirmation, mode: row.mode, status: "answered", error: null, intent_id: null })
+        .values({ role: "hamza", content: confirmation, mode: row.mode, status: "answered", error: null, intent_id: null, session_id: row.session_id })
         .execute();
       await db.updateTable("chat_messages").set({ status: "answered" }).where("id", "=", row.id).execute();
       result.answered += 1;
@@ -192,13 +192,19 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       .select(["persona_path"])
       .where("slug", "=", CHAT_HAMZA_SLUG)
       .executeTakeFirst();
-    const historyRows = await db
+    // W1.5: the window is scoped to THIS conversation. Before sessions existed
+    // it was the newest 20 rows on a single flat board, so a question about
+    // video production carried the tail of a conversation about the budget.
+    let historyQuery = db
       .selectFrom("chat_messages")
       .select(["role", "content"])
       .where("id", "<>", row.id)
       .orderBy("created_at", "desc")
-      .limit(HISTORY_LIMIT)
-      .execute();
+      .limit(HISTORY_LIMIT);
+    historyQuery = row.session_id
+      ? historyQuery.where("session_id", "=", row.session_id)
+      : historyQuery.where("session_id", "is", null);
+    const historyRows = await historyQuery.execute();
     const [head, recall] = await Promise.all([
       personaHead(repoRoot, hamza?.persona_path ?? null),
       recallMemory(db, { query: row.content, limit: 5 }).catch(() => ({
@@ -223,7 +229,7 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
     });
     await db
       .insertInto("chat_messages")
-      .values({ role: "hamza", content: answerText, mode: row.mode, status: "answered", error: null, intent_id: null })
+      .values({ role: "hamza", content: answerText, mode: row.mode, status: "answered", error: null, intent_id: null, session_id: row.session_id })
       .execute();
     await db
       .updateTable("chat_messages")
