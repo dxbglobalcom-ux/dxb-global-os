@@ -195,8 +195,17 @@ export default async function EmployeesPage({
     {
       // §4b truth: a 'default' brain is the never-assigned seed placeholder —
       // echoing it as a chosen model misled the CEO (2026-07-25 catch).
+      // §4f: the column is no longer decoration — it is the FLOOR this employee's
+      // own work runs at. The CEO asked what "183 Sonnet" meant; the header now
+      // answers that where he reads it, instead of in a spec he would have to
+      // go looking for.
       key: "brain",
-      label: t.colBrain,
+      label: (
+        <span className="inline-flex items-center gap-1">
+          {t.colBrain}
+          <HelpTip text={t.brainFloorHelp} />
+        </span>
+      ),
       numeric: true,
       render: (r) =>
         r.brain_source === "default" ? (

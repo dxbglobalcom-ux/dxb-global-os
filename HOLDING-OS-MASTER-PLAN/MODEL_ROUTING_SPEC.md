@@ -141,6 +141,25 @@ The dividing line is **not** cost and **not** code-versus-text. It is a single q
 
 **The GPT/Codex lane is NOT open** (measured 2026-07-26): the CEO's OpenAI key authenticates (HTTP 200, 117 models, up to `gpt-5.6-sol/terra/luna`) but every completion returns `429 insufficient_quota` — the ChatGPT subscription does not fund the API. Opening the lane additionally requires `SDK_MODEL_IDS` to learn a non-Anthropic id or the call to go through LiteLLM. Until both are true, no rule may name a GPT/Codex model; when it opens, that lane competes for **L2 mechanical work only — never for the design lane**.
 
+### 4f. THE BRAIN IS A FLOOR — `agents.brain` becomes load-bearing (CEO decision 2026-07-26, normative)
+
+The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest answer was that the column decided nothing: `fn_select_model` never read `agents.brain` (measured: `prosrc` contains no `brain`), no TypeScript router read it, and `worker-shim` resolved the model from `model_tier` alone. §4b had specified an agent-level brain on 2026-07-12; it was never built. Offered the choice between making the column honest ("task-based") and making it real, the CEO chose **real**.
+
+**The rule: the brain is a FLOOR, never a ceiling.**
+
+- It may **raise** a task's tier — a director whose brain is Opus 5 runs even routine gathering on Opus 5.
+- It may **never lower** one — a Sonnet-brained specialist writing outbound content still runs on Opus 5, because §4d puts that class at L1 and the class always wins.
+
+**Where the ordering lives:** `model_catalog.tier_floor` (`L1` best … `L4`), the best tier a model is allowed to serve. `fn_tier_rank(text)` turns it into a number (unknown → 99, so a typo can never win a comparison) and `fn_effective_tier(task_tier, agent_id)` performs the single comparison. No other place may re-derive quality order. `quality_score` is NOT that source — it is NULL on both Opus 5 and Sonnet and reflects eval history, not seat.
+
+**Deliberately fail-open toward the task's own tier.** An unassigned task, a `brain_source='default'` placeholder, an unrated model, a retired or banned one — all leave the task exactly where the routing table put it. A raised tier with no enabled routing row falls back to the task's tier in `resolveExecutionRoute`. **A floor is an upgrade path, never a new failure mode.**
+
+**Guardrails are absolute and unbypassable by a floor:** `banned` models are never selected; `mechanical_only` models never serve a verdict-capable slot; the budget hard-stop still cuts every non-critical selection. A `ceo_override` brain that fails any of these falls through to the normal rule scan and the refusal is written into the decision's `considered` list — it never silently succeeds and never strands the task.
+
+**§4b step 0, finally built:** the slot lane has no tiers, so the brain enters it the way §4b always said — an employee carrying `brain_source='ceo_override'` wins the selection outright, after the same guardrails, and `decision_log` records `selected_ceo_override` with the agent id. `brain_source='slot'` does NOT hijack the slot lane: a derived assignment is a floor, not an override.
+
+**Live enforcement:** migration `20260726002000_brain_floor.sql`; executor seam `packages/orchestrator/src/worker-shim.ts` → `resolveExecutionRoute()`; proof `tests/c9/brain-floor.test.ts` (14 cases, every probe inside a rolled-back transaction because the resident scheduler shares this database). The employees page header now carries the meaning in both locales instead of leaving the CEO to infer it.
+
 ### 4e. THE CRITICAL GATE — challengers, not co-authors (CEO order 2026-07-26, normative)
 
 CEO, said twice in the same session and closed with *"bunu unutma sakın"*: **Solo 5.6 and GPT 5.5 are used inside the holding, and above all in the council — as the models that check Opus 5's work.**

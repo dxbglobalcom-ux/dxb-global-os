@@ -608,7 +608,8 @@
         "worker": "Worker"
       },
       "hookUnbound": "Unbound",
-      "brainUnassigned": "Not assigned (task-based routing)"
+      "brainUnassigned": "Not assigned (task-based routing)",
+      "brainFloorHelp": "Minimum quality for this employee's own work. A task that needs a higher tier — a decision, a design, anything the CEO or a customer reads — always runs on the top model regardless. The floor can raise, never lower."
     },
     "orgTree": {
       "title": "Organization Graph",
@@ -991,7 +992,8 @@
       "statusDormant": "Dormant",
       "unbound": "Unbound",
       "empty": "No directors registered.",
-      "brainUnassigned": "Not assigned (task-based routing)"
+      "brainUnassigned": "Not assigned (task-based routing)",
+      "brainFloorHelp": "Minimum quality for this employee's own work. A task that needs a higher tier — a decision, a design, anything the CEO or a customer reads — always runs on the top model regardless. The floor can raise, never lower."
     },
     "hr": {
       "teamTitle": "HR Team — People & HR",

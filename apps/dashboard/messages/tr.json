@@ -608,7 +608,8 @@
         "worker": "Çalışan"
       },
       "hookUnbound": "Bağsız",
-      "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)"
+      "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)",
+      "brainFloorHelp": "Bu çalışanın kendi işleri için taban kalite. Daha üst kademe isteyen bir iş — karar, tasarım, CEO'nun veya müşterinin okuduğu her şey — her hâlükârda en üst modelle koşar. Taban yükseltir, asla düşürmez."
     },
     "orgTree": {
       "title": "Organizasyon Grafiği",
@@ -991,7 +992,8 @@
       "statusDormant": "Uykuda",
       "unbound": "Bağsız",
       "empty": "Kayıtlı direktör yok.",
-      "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)"
+      "brainUnassigned": "Atanmamış (görev bazlı yönlendirme)",
+      "brainFloorHelp": "Bu çalışanın kendi işleri için taban kalite. Daha üst kademe isteyen bir iş — karar, tasarım, CEO'nun veya müşterinin okuduğu her şey — her hâlükârda en üst modelle koşar. Taban yükseltir, asla düşürmez."
     },
     "hr": {
       "teamTitle": "İK Kadrosu — People & HR",

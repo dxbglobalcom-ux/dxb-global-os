@@ -145,30 +145,72 @@ async function dxbInventoryNames(): Promise<string[]> {
   return inventoryToolNames;
 }
 
-// Default executor: the model is a routing_rules lookup by the task's tier —
-// the highest-priority enabled row for that tier wins (ORCH-02 at execution
-// time; no model name lives in this file).
-async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
+/**
+ * What this task will actually execute with. Exported so the routing decision
+ * can be proven in a test WITHOUT paying for a live model call — the wiring is
+ * exactly where a silent mistake would hide.
+ */
+export interface ExecutionRoute {
+  /** The tier the routing table asked for, straight off the task envelope. */
+  taskTier: string;
+  /** The tier after the employee's brain floor was applied (§4f). */
+  effectiveTier: string;
+  /** The routing row that won, and therefore the model. */
+  rule: RoutingRule;
+  /** The employee, when the task is staffed — the tool surface rides on this. */
+  employee: { slug: string; department: string } | null;
+}
+
+/**
+ * Resolves tier -> model for one task. The model is a routing_rules lookup (no
+ * model name lives in this file, ORCH-02), and §4f lets the assigned employee's
+ * brain RAISE that tier — never lower it.
+ */
+export async function resolveExecutionRoute(task: ClaimedTask): Promise<ExecutionRoute> {
   const rules = await loadPolicy(getDb()); // already priority-ordered
-  const rule: RoutingRule | undefined = rules.find((r) => r.model_tier === task.model_tier);
+
+  // One read serves both jobs: the employee's compiled tool surface (R2.2,
+  // audit F-02/F-04) and the brain floor. fn_effective_tier owns the comparison
+  // so the quality ordering lives in one place (model_catalog.tier_floor)
+  // instead of being re-derived here.
+  let effectiveTier = task.model_tier;
+  let employee: { slug: string; department: string } | null = null;
+  if (task.agent_id) {
+    const emp = await sql<{ slug: string; department: string; effective_tier: string }>`
+      SELECT a.slug, a.department,
+             fn_effective_tier(${task.model_tier}, a.id) AS effective_tier
+        FROM agents a
+       WHERE a.id = ${task.agent_id}::uuid
+    `.execute(getDb());
+    if (emp.rows[0]) {
+      effectiveTier = emp.rows[0].effective_tier ?? effectiveTier;
+      employee = { slug: emp.rows[0].slug, department: emp.rows[0].department };
+    }
+  }
+
+  // A raised tier with no enabled row would silently strand the task, so the
+  // task's own tier stays the fallback: the floor is an upgrade path, never a
+  // new failure mode.
+  const rule: RoutingRule | undefined =
+    rules.find((r) => r.model_tier === effectiveTier) ??
+    rules.find((r) => r.model_tier === task.model_tier);
   if (!rule) {
     throw new Error(`worker-shim: no enabled routing_rules row for tier '${task.model_tier}'`);
   }
+  return { taskTier: task.model_tier, effectiveTier, rule, employee };
+}
 
-  // R2.2 — tool surface (audit F-02/F-04): resolve the employee's compiled
-  // gateway profile and mount it on the SDK session. tools:[] is DEAD on the
-  // staffed path; an unstaffed task (no agent) or an empty profile runs
-  // tool-less by default-deny, never by silent design.
+// Default executor: routing decided above; this function owns the SDK call.
+async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
+  const { rule, employee } = await resolveExecutionRoute(task);
+
+  // tools:[] is DEAD on the staffed path; an unstaffed task (no agent) or an
+  // empty profile runs tool-less by default-deny, never by silent design.
   let toolOpts: SdkToolOptions | null = null;
-  if (task.agent_id) {
-    const emp = await sql<{ slug: string; department: string }>`
-      SELECT slug, department FROM agents WHERE id = ${task.agent_id}::uuid
-    `.execute(getDb());
-    if (emp.rows[0]) {
-      const surface = resolveRuntimeProfile(emp.rows[0]);
-      if (surface.allowedTools.length > 0) {
-        toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
-      }
+  if (employee) {
+    const surface = resolveRuntimeProfile(employee);
+    if (surface.allowedTools.length > 0) {
+      toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
     }
   }
 
