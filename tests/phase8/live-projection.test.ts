@@ -119,6 +119,11 @@ const PURITY_ALLOWLIST: string[] = [
   "app/api/control/cost-reset/route.ts",
   // 10d (2026-07-24): engine ownership door (.rpc control_engine_set_owner)
   "app/api/control/engines/route.ts",
+  // W2.1 (2026-07-26): the objective door — the CEO states the number from the
+  // dashboard instead of psql (.rpc control_objective_create/_activate/_close,
+  // all SECURITY DEFINER with their own CEO gate + audit + decision rows;
+  // Idempotency-Key required by the handler)
+  "app/api/control/objectives/route.ts",
   // C12 (2026-07-19): add-model seam — catalog INSERT + key handoff to the
   // vault file (name+key+note only; §4c chain)
   "app/api/control/model-key/route.ts",
