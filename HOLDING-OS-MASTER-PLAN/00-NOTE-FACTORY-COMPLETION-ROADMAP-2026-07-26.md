@@ -51,7 +51,7 @@ Nothing here starts revenue; it builds the machine that could. The CEO opens it 
 
 | # | Work | Owner spec | Closing evidence |
 |---|---|---|---|
-| 2.1 | **Objective gate in the product** — `control_objective_create/_activate` exist but have no screen and no API caller; setting a target today needs psql. | REVENUE_ENGINE_SPEC §7 | CEO sets a target from the dashboard; audit row + decision row exist |
+| 2.1 | ✓ **DONE 2026-07-26 (REVENUE_ENGINE_SPEC §7bis).** **Objective gate in the product** — `control_objective_create/_activate` exist but have no screen and no API caller; setting a target today needs psql. | REVENUE_ENGINE_SPEC §7 | CEO sets a target from the dashboard; audit row + decision row exist |
 | 2.2 | **Discovery engine** — `revenue.scan` re-reads existing rows with SQL; `opportunities` is empty; the spec's `revenue/propose.ts` was never written. The tools it needs are installed and have **never been called** (scrapling 10 tools / playwright 24 tools → 0 calls). | REVENUE_ENGINE_SPEC | an `opportunities` row is born from a real tool run, with `tool_calls` rows proving the fetch |
 | 2.3 | **The two written gates actually fire** — zero-capital filter (G4) and evidence gate (G3): `capital_required_eur` is compared nowhere, `evidence_refs` is validated nowhere. | REVENUE_ENGINE_SPEC G3/G4 | a proposal above the capital limit is refused; a proposal with unbacked evidence is refused |
 | 2.4 | **Allocation → project → task seam** — all six engines have `owner_department = NULL`; an approved allocation produces no work. | REVENUE_ENGINE_SPEC §5 | an approved allocation creates real tasks in the owning department |
