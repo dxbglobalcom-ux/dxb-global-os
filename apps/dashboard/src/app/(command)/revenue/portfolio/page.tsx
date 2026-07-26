@@ -76,7 +76,7 @@ export default async function RevenuePortfolioPage() {
       supabase.from("departments").select("slug").order("slug"),
       supabase
         .from("model_catalog")
-        .select("id")
+        .select("id, display_name")
         .eq("status", "active")
         .eq("banned", false)
         .order("id"),
@@ -108,6 +108,13 @@ export default async function RevenuePortfolioPage() {
   const oppById = new Map(opps.map((o) => [o.id, o.title]));
   const oppEngineById = new Map(opps.map((o) => [o.id, o.engine_slug]));
 
+  // U21: value stays the frozen id (the control door keys on it), label is the
+  // CEO-visible catalog name — no dashboard surface prints a raw model id.
+  const models = (
+    (modelsRes.data ?? []) as Array<{ id: string; display_name: string | null }>
+  ).map((m) => ({ id: m.id, label: m.display_name ?? m.id }));
+  const modelNameById = new Map(models.map((m) => [m.id, m.label]));
+
   // 10d responsibility chain: engine → owner department → active employees
   // (locale-resolved titles, current brain each).
   const engines = (enginesRes.data ?? []) as unknown as EngineRow[];
@@ -128,14 +135,16 @@ export default async function RevenuePortfolioPage() {
         id: a.id,
         title: ((locale === "tr" ? a.title_tr : null) ?? a.title) || a.id,
         // §4b truth: seed-default brain is "not assigned", never a chosen model
-        brain: a.brain_source === "default" ? t.brainUnassigned : a.brain,
+        brain:
+          a.brain_source === "default"
+            ? t.brainUnassigned
+            : (modelNameById.get(a.brain) ?? a.brain),
       }))
       .sort((x, y) => x.title.localeCompare(y.title)),
   }));
   const engineTitleBySlug = new Map(engineCards.map((e) => [e.slug, e.title]));
   const engineOwnerBySlug = new Map(engines.map((e) => [e.slug, e.owner_department]));
   const departments = ((deptRes.data ?? []) as Array<{ slug: string }>).map((d) => d.slug);
-  const models = ((modelsRes.data ?? []) as Array<{ id: string }>).map((m) => m.id);
 
   const active = allocations.filter((a) => a.stopped_at == null);
   const stopped = allocations.filter((a) => a.stopped_at != null);

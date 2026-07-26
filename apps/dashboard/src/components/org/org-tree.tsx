@@ -98,6 +98,8 @@ type NodeDetail = {
   manager_title_tr: string | null;
   direct_reports: number;
   brain: string;
+  /** CEO-visible catalog name; the id above stays internal (U20/U21). */
+  brain_label?: string;
   model_status: string | null;
   autonomy_level: number;
   mcp_profile: string;
@@ -591,7 +593,9 @@ export function OrgTree({
                             <Cpu size={11} strokeWidth={1.5} aria-hidden />
                             {labels.modelLabel}:
                           </dt>
-                          <dd className="font-data text-ink-primary">{detail.brain}</dd>
+                          <dd className="font-data text-ink-primary">
+                            {detail.brain_label ?? detail.brain}
+                          </dd>
                         </div>
                         <div className="flex gap-2">
                           <dt className="text-ink-muted">{labels.autonomyLabel}:</dt>

@@ -9,6 +9,7 @@ import {
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
+import { fetchModelNames, modelLabel } from "@/lib/model-names";
 
 // /org/employees v1 (D-bloku dalga-2, C-Hibrit) — the agents registry is
 // seeded (153 legacy personas), so the roster renders REAL rows now.
@@ -92,7 +93,7 @@ export default async function EmployeesPage({
   if (dept) activeDeptQuery = activeDeptQuery.eq("department", dept);
   if (role) activeDeptQuery = activeDeptQuery.eq("role", role);
 
-  const [rowsRes, statusRes, deptRes, activeDeptRes, deptNamesRes] =
+  const [rowsRes, statusRes, deptRes, activeDeptRes, deptNamesRes, modelNamesRes] =
     await Promise.all([
       rowsQuery,
       statusQuery,
@@ -104,6 +105,11 @@ export default async function EmployeesPage({
       // departments.status column is legacy-stale the same way)
       activeDeptQuery,
       supabase.from("departments").select("slug, display_name, display_name_tr"),
+      // U21 eye-test catch: this column rendered the raw catalog id, so the CEO
+      // read "fable-5" on his own workforce page. U20 decision 4 froze the id as
+      // an internal technical key and put every CEO-VISIBLE label on
+      // display_name — the brain cell has to resolve through the catalog.
+      fetchModelNames(supabase),
     ]);
 
   if (rowsRes.error || statusRes.error || deptRes.error) {
@@ -148,6 +154,7 @@ export default async function EmployeesPage({
       locale === "tr" ? (d.display_name_tr ?? d.display_name) : d.display_name,
     ]),
   );
+  const modelNames = modelNamesRes;
   const deptCounts = (
     deptRes.data as unknown as { department: string; count: number }[]
   )
@@ -168,10 +175,11 @@ export default async function EmployeesPage({
     {
       key: "slug",
       label: t.colAgent,
+      // U21 eye-test: break-all split slugs mid-word ("chief-of-sta ff") at the
+      // CEO's windowed width. The table already scrolls inside its own
+      // overflow-x container, so the slug stays on one line instead.
       render: (r) => (
-        <span className="block max-w-[32ch] break-all font-data">
-          {r.slug}
-        </span>
+        <span className="block whitespace-nowrap font-data">{r.slug}</span>
       ),
     },
     {
@@ -196,7 +204,9 @@ export default async function EmployeesPage({
             {t.brainUnassigned}
           </span>
         ) : (
-          <span className="whitespace-nowrap">{r.brain}</span>
+          <span className="whitespace-nowrap">
+            {modelLabel(modelNames, r.brain)}
+          </span>
         ),
     },
     {

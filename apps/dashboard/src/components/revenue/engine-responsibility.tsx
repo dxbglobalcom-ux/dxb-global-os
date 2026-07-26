@@ -12,6 +12,9 @@ import { StatusBadge, type StatusLevel } from "@/components/primitives";
 // testing models never reach the select — active catalog only).
 
 export type EngineEmployee = { id: string; title: string; brain: string };
+// U21: the picker shows the CEO-visible catalog name; `id` is the frozen
+// technical key the control door actually receives.
+export type ModelOption = { id: string; label: string };
 
 export type EngineCard = {
   slug: string;
@@ -74,7 +77,7 @@ function Card({
 }: {
   engine: EngineCard;
   departments: string[];
-  models: string[];
+  models: ModelOption[];
   labels: ResponsibilityLabels;
 }) {
   const router = useRouter();
@@ -206,8 +209,8 @@ function Card({
               >
                 <option value="">{labels.pickModel}</option>
                 {models.map((m) => (
-                  <option key={m} value={m}>
-                    {m}
+                  <option key={m.id} value={m.id}>
+                    {m.label}
                   </option>
                 ))}
               </select>
@@ -252,7 +255,7 @@ export function EngineResponsibility({
 }: {
   engines: EngineCard[];
   departments: string[];
-  models: string[];
+  models: ModelOption[];
   labels: ResponsibilityLabels;
 }) {
   return (

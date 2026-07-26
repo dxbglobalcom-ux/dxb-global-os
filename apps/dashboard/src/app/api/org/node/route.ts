@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { fetchModelNames, modelLabel } from "@/lib/model-names";
 
 // Node detail read seam (E6.3 wave 3c — ORGANIZATION_ENGINE_SPEC §12).
 // One row from v_org_node_detail (madde 5.3 field set); the persona BODY is
@@ -50,5 +51,15 @@ export async function GET(request: Request) {
     personaBody = persona?.body_md ?? null;
   }
 
-  return NextResponse.json({ ok: true, detail, personaBody });
+  // U21 eye-test: the node drawer rendered `brain` raw, so the CEO read the
+  // frozen technical id ("fable-5") instead of "Claude Opus 5". The id is kept
+  // in the payload — internal consumers still key on it — and the CEO-visible
+  // label rides alongside it.
+  const modelNames = await fetchModelNames(supabase);
+  const withLabel =
+    detail && typeof detail.brain === "string"
+      ? { ...detail, brain_label: modelLabel(modelNames, detail.brain) }
+      : detail;
+
+  return NextResponse.json({ ok: true, detail: withLabel, personaBody });
 }

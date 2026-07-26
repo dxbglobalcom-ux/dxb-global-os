@@ -9,6 +9,7 @@ import {
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
+import { fetchModelNames, modelLabel } from "@/lib/model-names";
 
 // /org/directors v1 (E12.1-B) — the department-head bench: every agents row
 // with role='head', each carrying its persona/hook binding state (the same
@@ -49,7 +50,7 @@ export default async function DirectorsPage({
       ? params.bound
       : undefined;
 
-  const [rowsRes, deptRes] = await Promise.all([
+  const [rowsRes, deptRes, modelNames] = await Promise.all([
     supabase
       .from("agents")
       // Workforce truth = employment_status (legacy agents.status is stale —
@@ -62,6 +63,8 @@ export default async function DirectorsPage({
       .neq("employment_status", "archived")
       .order("department"),
     supabase.from("departments").select("slug, display_name, display_name_tr"),
+    // U21: CEO-visible label comes from the catalog, never the frozen id.
+    fetchModelNames(supabase),
   ]);
 
   if (rowsRes.error || deptRes.error) {
@@ -133,7 +136,7 @@ export default async function DirectorsPage({
             {t.brainUnassigned}
           </span>
         ) : (
-          <span className="whitespace-nowrap">{r.brain}</span>
+          <span className="whitespace-nowrap">{modelLabel(modelNames, r.brain)}</span>
         ),
     },
     {
