@@ -263,7 +263,9 @@ export default async function IntelligencePage() {
                     href="/alerts"
                     className="flex items-center justify-between gap-3 rounded-input border border-edge-neutral bg-surface-graphite p-2 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
                   >
-                    <span className="min-w-0 truncate text-body-s text-ink-primary">
+                    {/* free text wraps — a visible "…" on a CEO surface is a
+                        banned cut (A1); same class as the decision line below */}
+                    <span className="min-w-0 break-words text-body-s text-ink-primary">
                       {a.title}
                     </span>
                     <span className="flex shrink-0 items-center gap-2">
@@ -294,7 +296,11 @@ export default async function IntelligencePage() {
                     href="/gov/decisions"
                     className="block rounded-input border border-edge-neutral bg-surface-graphite p-2 transition duration-[var(--t-fast)] ease-refined hover:border-edge-champagne"
                   >
-                    <div className="truncate text-body-s text-ink-primary">
+                    {/* the decision statement is historical free text — it
+                        cannot be shortened at the source, so it wraps; the
+                        stabilization battery caught the U21 entry rendering
+                        as a visible "…" here (banned, A1) */}
+                    <div className="break-words text-body-s text-ink-primary">
                       {d.decision}
                     </div>
                     <div className="mt-1 flex flex-wrap items-center gap-2">

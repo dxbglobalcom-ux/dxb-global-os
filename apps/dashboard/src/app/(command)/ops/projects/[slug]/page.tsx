@@ -305,7 +305,11 @@ export default async function ProjectCommandPage({
                 {statuses[p.status] ?? p.status}
               </StatusBadge>
             </div>
-            <p className="mt-2 max-w-[70ch] text-body-s text-ink-secondary">{p.purpose}</p>
+            {/* purpose is bilingual DB text (20260726011100) — read the leg
+                the CEO's locale asks for, everywhere the field renders */}
+            <p className="mt-2 max-w-[70ch] text-body-s text-ink-secondary">
+              {locale === "tr" ? (p.purposeTr ?? p.purpose) : p.purpose}
+            </p>
             <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
               <dt className="label-caps text-ink-muted">{ui.strategyLink}</dt>
               <dd className="text-body-s text-ink-secondary">{p.strategyLink ?? "—"}</dd>

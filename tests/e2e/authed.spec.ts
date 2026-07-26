@@ -145,6 +145,50 @@ test("chat voice line opens as its own region — board and threads keep their s
   }
 });
 
+test("no visible ellipsis cut on any core CEO surface (A1 ban, stabilization battery)", async ({ page }) => {
+  // The 2026-07-26 battery caught the U21 decision statement rendering as a
+  // visible "…" on /intelligence. The A1 rule is mechanical: an ellipsis
+  // element that is ACTUALLY cut (scrollWidth > clientWidth) on a CEO surface
+  // is a defect — kill the overflow at the source or let the text wrap.
+  await page.setViewportSize({ width: 1366, height: 900 });
+  for (const route of [
+    "/overview",
+    "/live",
+    "/intelligence",
+    "/tasks",
+    "/ops/projects",
+    "/approvals",
+    "/gov/decisions",
+    "/chat",
+  ]) {
+    await page.goto(route);
+    await expect(page.locator("main")).toBeVisible();
+    const cut = await page.evaluate(() => {
+      const out: string[] = [];
+      for (const el of document.querySelectorAll("main *")) {
+        if (!(el instanceof HTMLElement) || el.offsetParent === null) continue;
+        const cs = getComputedStyle(el);
+        if (
+          cs.textOverflow === "ellipsis" &&
+          cs.overflow.includes("hidden") &&
+          el.scrollWidth > el.clientWidth + 1
+        ) {
+          let n: HTMLElement | null = el;
+          let hidden = false;
+          while (n && n !== document.body) {
+            const pcs = getComputedStyle(n);
+            if (Number(pcs.opacity) < 0.1 || pcs.visibility === "hidden") hidden = true;
+            n = n.parentElement;
+          }
+          if (!hidden) out.push((el.textContent ?? "").trim().slice(0, 60));
+        }
+      }
+      return out;
+    });
+    expect(cut, `visible "…" on ${route}: ${cut.join(" | ")}`).toEqual([]);
+  }
+});
+
 test("widget layout is server truth: fresh context sees the stored layout (§38/15)", async ({ page }) => {
   await page.goto("/overview");
   // Server-truth proof lives in E12.2's live evidence; the E2E leg pins the

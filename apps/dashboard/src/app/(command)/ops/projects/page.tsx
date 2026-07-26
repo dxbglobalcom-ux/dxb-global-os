@@ -76,7 +76,11 @@ export default async function ProjectsPage() {
                     <h2 className="break-words font-display text-h4 text-ink-primary group-hover:text-accent-champagne">
                       {p.name}
                     </h2>
-                    <p className="mt-1 break-words text-body-s text-ink-secondary">{p.purpose}</p>
+                    {/* DB text is an i18n surface — the TR card reads the
+                        purpose's Turkish leg (migration 20260726011100) */}
+                    <p className="mt-1 break-words text-body-s text-ink-secondary">
+                      {(locale === "tr" ? (p.purposeTr ?? p.purpose) : p.purpose)}
+                    </p>
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-2">
                     <span className={`font-display text-display-l tabular-nums ${BAND_TEXT[band]}`}>
@@ -95,7 +99,10 @@ export default async function ProjectsPage() {
                   </p>
                 ) : null}
 
-                <dl className="mt-4 grid grid-cols-4 gap-2 border-t border-edge-neutral pt-3">
+                {/* 2×2, not 4-in-a-row: a quarter of a card cannot hold
+                    "KİLOMETRE TAŞLARI" without breaking mid-word (eye pass
+                    2026-07-26 — the "KİLOM ETRE" class) */}
+                <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-edge-neutral pt-3">
                   {(
                     [
                       [t.ui.milestones, `${p.milestonesReached}/${p.milestonesTotal}`],
@@ -105,7 +112,7 @@ export default async function ProjectsPage() {
                     ] as const
                   ).map(([label, value]) => (
                     <div key={label} className="min-w-0">
-                      <dt className="label-caps break-words text-ink-muted">
+                      <dt className="label-caps text-ink-muted">
                         {label}
                       </dt>
                       <dd className="font-data text-body-s tabular-nums text-ink-primary">

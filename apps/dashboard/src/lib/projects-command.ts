@@ -6,6 +6,7 @@ export type ProjectCommandViewRow = {
   slug: string;
   name: string;
   purpose: string;
+  purpose_tr: string | null;
   strategy_link: string | null;
   status: string;
   health_score: number | string | null;
@@ -79,6 +80,7 @@ export type ProjectCommandRow = {
   slug: string;
   name: string;
   purpose: string;
+  purposeTr: string | null;
   strategyLink: string | null;
   status: string;
   createdAt: string;
@@ -125,6 +127,7 @@ export function mapProjectRow(r: ProjectCommandViewRow): ProjectCommandRow {
     slug: r.slug,
     name: r.name,
     purpose: r.purpose,
+    purposeTr: r.purpose_tr,
     strategyLink: r.strategy_link,
     status: r.status,
     createdAt: r.created_at,
