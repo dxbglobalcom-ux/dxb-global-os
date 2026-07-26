@@ -21,7 +21,6 @@ export type PurgeTaskRow = {
   status: string;
   model_tier: string;
   priority: number;
-  claimed_by: string | null;
   updated_at: string;
 };
 
@@ -45,7 +44,6 @@ export type TaskPurgeLabels = {
   colStatus: string;
   colTier: string;
   colPriority: string;
-  colClaimedBy: string;
   colUpdated: string;
   states: Record<string, string>;
   purgeSelected: string; // "Remove selected"
@@ -156,7 +154,14 @@ export function TaskPurgeGrid({
       numeric: true,
       render: (r) => String(r.priority),
     },
-    { key: "claimed_by", label: labels.colClaimedBy, render: (r) => r.claimed_by ?? "—" },
+    // "Üstlenen" is gone on purpose (eye pass 2026-07-26, 1366 TR): the table
+    // measured 770px inside a 748px container, so the last column's header and
+    // its timestamps were cut mid-word — and the column that paid for it was
+    // information-free. 213 of 216 live rows read "resident-worker" and the
+    // other 3 are null; the holding has ONE resident worker. Dropping it frees
+    // 93px against a 22px overflow, which kills the cut at the source instead
+    // of hiding it behind a scrollbar the CEO has to discover. Who claimed a
+    // row still lives on the task's own page and in Live Operations.
     {
       key: "updated_at",
       label: labels.colUpdated,

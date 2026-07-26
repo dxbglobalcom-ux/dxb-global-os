@@ -17,7 +17,12 @@ import {
 } from "@dxb/hr";
 import { drainWorkflowRuns, registerCronTriggers, triggerRunNow } from "@dxb/kernel";
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
-import { drainChatMessages, drainIntents, drainTasks } from "@dxb/orchestrator";
+import {
+  drainChatMessages,
+  drainIntents,
+  drainTasks,
+  generateWorkFromPlans,
+} from "@dxb/orchestrator";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
 import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
 import { tick } from "./index.js";
@@ -64,6 +69,13 @@ export const QUEUES = {
   // themselves STAY in the tasks table (Phase 3 LOCKED: two queues = two
   // sources of truth); this pg-boss job is only the drain vehicle.
   taskWorker: "task.worker",
+  // W2.5 autonomous work generation (AGENT_ORCHESTRATION_SPEC §3, roadmap row
+  // 2.5): the only task-creating path that does not start at a human. It reads
+  // FINISHED plans inside already-approved projects and opens the steps those
+  // plans named — execution, never a new decision. Guarding lives in the
+  // control door (switch, cap, exactly-once, staffing); this queue is the
+  // vehicle that makes it happen with nobody watching.
+  workGenerate: "orchestration.work_generate",
   // R3.1 voice call line (VOICE_INTERACTION_SPEC §6): the answer half of a
   // call CANNOT run in the dashboard (PHASE-08 LOCKED — no LLM surface in the
   // projection client) and a Postgres fn cannot reach pg-boss (E9.1 A1), so
@@ -131,6 +143,10 @@ export const CADENCES = {
   revenueScoreCron: "25 5 * * *", // daily 05:25
   revenueBriefCron: "40 5 * * *", // daily 05:40
   revenueRollupCron: "55 5 * * *", // daily 05:55
+  // W2.5: a plan that finished at 09:03 must not wait for tomorrow's 05:00
+  // window — the point of the row is that work appears while nobody watches.
+  // Every 15 minutes; a pass with nothing to harvest is one indexed query.
+  workGenerateCron: "*/15 * * * *",
 } as const;
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -297,6 +313,18 @@ export async function startScheduler(): Promise<PgBoss> {
     await revenueRollup(getDb());
   });
 
+  // W2.5 — the self-opening work pass. Its outcome is logged even when it is
+  // empty: "nothing to harvest" and "the pass never ran" must never look the
+  // same afterwards (the audit row itself is written by the control door).
+  await boss.work(QUEUES.workGenerate, async () => {
+    const out = await generateWorkFromPlans(getDb());
+    if (out.plansRead > 0) {
+      console.log(
+        `[work-generate] plans=${out.plansRead} opened=${out.tasksOpened} skipped=${out.stepsSkipped}`,
+      );
+    }
+  });
+
   // E9.1 workflow drain — same re-arm-even-on-throw discipline as the outbox
   // tick (a dead chain would strand every waiting run). Cron-triggered jobs
   // ('wf:<slug>' schedules) also land on this queue: their payload names the
@@ -371,6 +399,7 @@ export async function startScheduler(): Promise<PgBoss> {
   await boss.schedule(QUEUES.revenueScore, CADENCES.revenueScoreCron);
   await boss.schedule(QUEUES.revenueBrief, CADENCES.revenueBriefCron);
   await boss.schedule(QUEUES.revenueRollup, CADENCES.revenueRollupCron);
+  await boss.schedule(QUEUES.workGenerate, CADENCES.workGenerateCron);
   // Workflow cron triggers: enabled trigger.kind='cron' workflows register as
   // 'wf:<slug>' schedules; those jobs need their queue + worker too.
   const cronWfs = await registerCronTriggers({

@@ -12,6 +12,9 @@ export { runWorkerOnce, makeSteppedExecutor } from "./worker-shim.js";
 // R2.1 — resident worker loop (audit F-01): the tasks-queue production consumer.
 export { drainTasks, RESIDENT_WORKER_ID } from "./worker-loop.js";
 export type { DrainTasksDeps, DrainTasksResult } from "./worker-loop.js";
+// W2.5 — autonomous work generation: a finished plan opens its own next tasks.
+export { generateWorkFromPlans, parsePlanSteps, openGeneratedWork } from "./work-generation.js";
+export type { PlanStep, PlanHarvest, GenerateWorkResult, GeneratedTask } from "./work-generation.js";
 // R2.2 — worker real tool surface (audit F-02/F-04): profile → SDK bridge.
 export { buildSdkToolOptions, resolveEvidenceToolCalls, resolveExecutionRoute } from "./worker-shim.js";
 export { runCriticalGate, codexRunner, CRITICAL_GATE_CONFIG } from "./critical-gate.js";

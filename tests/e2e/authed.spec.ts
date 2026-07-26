@@ -217,6 +217,31 @@ test("project cards speak the CEO's language and keep a readable column at 1366 
   expect(narrowest, "a project card's text column collapsed at 1366").toBeGreaterThan(200);
 });
 
+test("no data grid is clipped inside its own scroller at 1366 (W2.5 eye pass)", async ({ page, context }) => {
+  // The A1 ellipsis test cannot see this class: a table inside `overflow-x-auto`
+  // has no text-overflow, so a cut column reads as clean while the CEO sees
+  // "GÜNCELLENİ" and a date ending "18:5". Measured 2026-07-26 on /ops/tasks at
+  // 1366 TR: table 770px inside a 748px container. The fix is at the source
+  // (an information-free column removed), and this pins it: a grid may scroll
+  // only when the CEO chose a width where it genuinely cannot fit.
+  await page.setViewportSize({ width: 1366, height: 900 });
+  await context.addCookies([{ name: "dxb-locale", value: "tr", url: "http://localhost:3000" }]);
+  for (const route of ["/ops/tasks", "/ops/projects", "/gov/decisions"]) {
+    await page.goto(route);
+    await expect(page.locator("main")).toBeVisible();
+    const clipped = await page.evaluate(() => {
+      const out: string[] = [];
+      for (const el of document.querySelectorAll("main div.overflow-x-auto")) {
+        if (el.scrollWidth > el.clientWidth + 1) {
+          out.push(`${el.scrollWidth}>${el.clientWidth}`);
+        }
+      }
+      return out;
+    });
+    expect(clipped, `clipped grid on ${route}: ${clipped.join(", ")}`).toEqual([]);
+  }
+});
+
 test("widget layout is server truth: fresh context sees the stored layout (§38/15)", async ({ page }) => {
   await page.goto("/overview");
   // Server-truth proof lives in E12.2's live evidence; the E2E leg pins the

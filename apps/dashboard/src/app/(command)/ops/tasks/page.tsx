@@ -40,7 +40,6 @@ type TaskRow = {
   status: TaskStatus;
   model_tier: string;
   priority: number;
-  claimed_by: string | null;
   updated_at: string;
 };
 
@@ -60,7 +59,7 @@ export default async function TasksPage({
   let rowsQuery = supabase
     .from("tasks")
     .select(
-      "id, objective, label, label_tr, department, status, model_tier, priority, claimed_by, updated_at",
+      "id, objective, label, label_tr, department, status, model_tier, priority, updated_at",
       { count: "exact" },
     )
     .order("updated_at", { ascending: false })
@@ -212,7 +211,6 @@ export default async function TasksPage({
                   colStatus: t.colStatus,
                   colTier: t.colTier,
                   colPriority: t.colPriority,
-                  colClaimedBy: t.colClaimedBy,
                   colUpdated: t.colUpdated,
                   states: stateLabels,
                   purgeSelected: t.purgeSelected,
