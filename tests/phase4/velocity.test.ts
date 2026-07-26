@@ -201,5 +201,10 @@ describe("scheduler (KERN: one process owns all system routines)", () => {
     } finally {
       await stopScheduler(boss);
     }
-  });
+    // Measured 2026-07-26: alone this case takes ~2.0s, but at the end of the
+    // full sequential run a real pg-boss start crossed vitest's 5s DEFAULT and
+    // failed the suite — a stopwatch verdict, not a behaviour verdict. The one
+    // case here that boots a whole scheduler process gets a timeout sized for
+    // what it actually does; every assertion above is unchanged.
+  }, 30_000);
 });
