@@ -34,7 +34,7 @@ export type IntentIntakeDeps = {
   decomposeFn?: (ci: ClassifiedIntent) => Promise<DecomposedEnvelope[]>;
   dispatchFn?: (
     envelopes: DecomposedEnvelope[],
-    opts?: { projectId?: string | null },
+    opts?: { projectId?: string | null; labelTr?: string | null },
   ) => Promise<{ taskIds: string[] }>;
 };
 
@@ -76,7 +76,14 @@ export async function intakeIntentOnce(deps: IntentIntakeDeps = {}): Promise<Int
   try {
     const ci = await classifyFn(intent.text);
     const envelopes = await decomposeFn(ci);
-    const { taskIds } = await dispatchFn(envelopes, { projectId: await holdingProjectId() });
+    // The CEO's own sentence is the Turkish label of the work it becomes: the
+    // rail shows him what he asked for, in the words he asked it in. Trimmed to
+    // one readable line — the full text stays on the intent row.
+    const labelTr = intent.text.split("\n")[0].trim().slice(0, 160) || null;
+    const { taskIds } = await dispatchFn(envelopes, {
+      projectId: await holdingProjectId(),
+      labelTr,
+    });
 
     await sql`
       update intents

@@ -156,6 +156,7 @@ export function IntelligenceRail({
 
       <Panel title={labels.tickerTitle}>
         <LiveTicker
+          locale={locale === "tr" ? "tr" : "en"}
           rows={ticker}
           labels={{
             empty: labels.tickerEmpty,

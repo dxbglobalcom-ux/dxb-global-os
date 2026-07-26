@@ -170,6 +170,7 @@ describe("reading what the scout brought back", () => {
         "",
         "CANDIDATE",
         "title: Turkish-language onboarding docs for EU SaaS vendors",
+        "title_tr: AB'li SaaS satıcıları için Türkçe kullanıma alma dokümanları",
         "engine: consultancy",
         "region: EU",
         "channel: direct outreach",
@@ -188,6 +189,8 @@ describe("reading what the scout brought back", () => {
     );
     expect(out).toHaveLength(2);
     expect(out[0].engine_slug).toBe("consultancy");
+    // The CEO's screen is Turkish; the scout writes both legs at the source.
+    expect(out[0].title_tr).toBe("AB'li SaaS satıcıları için Türkçe kullanıma alma dokümanları");
     expect(out[0].evidence_urls).toEqual(["https://example.org/a", "https://example.org/b"]);
     expect(out[0].capital_required_eur).toBe(0);
     expect(out[1].capital_required_eur).toBe(25);
@@ -240,6 +243,7 @@ describe("harvest — findings become opportunities, or say why not", () => {
               capital_required_eur: 0,
               evidence_urls: ["https://example.org/market-report"],
               rationale: "measured demand signal",
+              title_tr: "AB merkezli Türkçe SaaS kullanıma alma danışmanlığı",
             },
           ],
         }),
@@ -253,8 +257,9 @@ describe("harvest — findings become opportunities, or say why not", () => {
         title: string;
         state: string;
         capital_required_eur: string;
+        title_tr: string | null;
         research_refs: { task_id?: string; evidence_urls?: string[] };
-      }>`SELECT title, state, capital_required_eur, research_refs FROM opportunities
+      }>`SELECT title, title_tr, state, capital_required_eur, research_refs FROM opportunities
           WHERE research_refs->>'task_id' = ${taskId}`.execute(trx as never);
       expect(opp.rows).toHaveLength(1);
       expect(opp.rows[0].state).toBe("discovered");
@@ -262,6 +267,7 @@ describe("harvest — findings become opportunities, or say why not", () => {
       expect(opp.rows[0].research_refs.evidence_urls).toEqual([
         "https://example.org/market-report",
       ]);
+      expect(opp.rows[0].title_tr).toBe("AB merkezli Türkçe SaaS kullanıma alma danışmanlığı");
 
       // The audited door wrote the trail, not the job.
       const audit = await sql<{ n: string }>`

@@ -32,6 +32,12 @@ import { sql } from "kysely";
 export const SCOUT_DEPARTMENT = "strategy";
 const SCOUT_PREFERRED_SLUGS = ["market-intelligence-lead", "global-expansion-lead"];
 
+/** The CEO reads the live rail all day. The task objective stays English (the
+ *  binding language directive covers every artifact); this is its Turkish face,
+ *  written at creation rather than translated later (CEO order 2026-07-26). */
+const SCOUT_LABEL_TR =
+  "Pazar taraması: holdingin hemen başlayabileceği gerçek gelir fırsatlarını bul";
+
 /** Statuses that mean "this run has not finished yet". */
 const OPEN_TASK_STATES = ["inbox", "queued", "claimed", "running", "review", "awaiting_approval"];
 
@@ -42,11 +48,21 @@ export interface CommissionResult {
   commissioned: boolean;
   taskId?: string;
   /** why not, when not — never a silent no-op */
-  reason?: "disabled" | "run_open" | "pipeline_full" | "no_scout" | "no_project";
+  reason?: "disabled" | "not_autonomous" | "run_open" | "pipeline_full" | "no_scout" | "no_project";
 }
+
+/** WHO asked for this run. CEO order 2026-07-26: the factory is being BUILT, not
+ *  operated — "sadece ben görev vermedikçe çalışmasın, ben görev verince
+ *  çalışsın". So the daily job may not open a research run on its own; only an
+ *  explicit CEO instruction does, and it still obeys every other bound. */
+export type CommissionTrigger = "ceo" | "schedule";
 
 export interface Candidate {
   title: string;
+  /** The CEO's language. His revenue screen is Turkish; DB text is an i18n
+   *  surface here exactly like agents.title_tr (measured on the first real
+   *  data: five English titles on the Turkish Fırsatlar page). */
+  title_tr?: string | null;
   engine_slug: string;
   region?: string | null;
   channel?: string | null;
@@ -137,7 +153,8 @@ function scoutBrief(opts: {
     "candidate, in exactly this shape, and nothing else between blocks:",
     "",
     "CANDIDATE",
-    "title: <what it is, one line a busy reader understands>",
+    "title: <what it is, one line a busy reader understands — English>",
+    "title_tr: <the same line in Turkish; the CEO reads this one>",
     "engine: <one of the valid engine slugs>",
     "region: <where>",
     "channel: <how it reaches a buyer>",
@@ -175,9 +192,19 @@ function scoutBrief(opts: {
  * a time and a pipeline floor, so a daily job can never turn into a queue of
  * scouts talking to the same internet.
  */
-export async function commissionScoutingRun(db: Kysely<any>): Promise<CommissionResult> {
+export async function commissionScoutingRun(
+  db: Kysely<any>,
+  opts: { trigger?: CommissionTrigger } = {},
+): Promise<CommissionResult> {
+  const trigger: CommissionTrigger = opts.trigger ?? "ceo";
   if (!(await settingBool(db, "revenue.discovery.enabled", true))) {
     return { commissioned: false, reason: "disabled" };
+  }
+  // The scheduled lane is OFF by default and stays off until the CEO turns it
+  // on. He is building the factory; a machine that scans the market nightly
+  // while nobody asked is spending his tokens on work he did not order.
+  if (trigger === "schedule" && !(await settingBool(db, "revenue.discovery.auto", false))) {
+    return { commissioned: false, reason: "not_autonomous" };
   }
 
   const open = await sql<{ n: string }>`
@@ -244,10 +271,11 @@ export async function commissionScoutingRun(db: Kysely<any>): Promise<Commission
   if (!project.rows[0]) return { commissioned: false, reason: "no_project" };
 
   const task = await sql<{ id: string }>`
-    INSERT INTO tasks (department, agent_id, project_id, objective, output_contract, model_tier,
+    INSERT INTO tasks (department, agent_id, project_id, objective, objective_tr,
+                       output_contract, model_tier,
                        approval_class, status, priority, budget_max_tokens)
     VALUES (${SCOUT_DEPARTMENT}, ${scout.rows[0].id}::uuid, ${project.rows[0].id}::uuid,
-            ${brief.objective}, ${brief.contract},
+            ${brief.objective}::text, ${SCOUT_LABEL_TR}::text, ${brief.contract}::text,
             'L3', 'none', 'queued', 5, 120000)
     RETURNING id
   `.execute(db);
@@ -272,7 +300,8 @@ export async function commissionScoutingRun(db: Kysely<any>): Promise<Commission
     VALUES ('revenue.scan', 'system', 'revenue.discovery.commissioned',
             jsonb_build_object('task_id', ${task.rows[0].id}::uuid,
                                'objective_id', ${obj?.id ?? null}::uuid,
-                               'pipeline_floor', ${floor}::numeric))
+                               'pipeline_floor', ${floor}::numeric,
+                               'trigger', ${trigger}::text))
   `.execute(db);
 
   return { commissioned: true, taskId: task.rows[0].id };
@@ -297,11 +326,13 @@ export function parseCandidates(text: string | null | undefined): Candidate[] {
         return m ? m[1].trim() : null;
       };
       const title = field("title");
+      const titleTr = field("title_tr");
       const engine = field("engine") ?? field("engine_slug");
       if (!title || !engine) continue;
       const capital = Number((field("capital_eur") ?? "0").replace(/[^\d.-]/g, ""));
       out.push({
         title,
+        title_tr: titleTr,
         engine_slug: engine.split(/\s/)[0].replace(/[^\w-]/g, ""),
         region: field("region"),
         channel: field("channel"),
@@ -421,7 +452,8 @@ export async function harvestScoutingRuns(db: Kysely<any>): Promise<HarvestResul
                  ${Number(c.capital_required_eur ?? 0)}::numeric,
                  ${JSON.stringify(refs)}::jsonb,
                  'revenue.discovery',
-                 ${`discovery-${run.run_id}-${registered.length + refusals.length}`}
+                 ${`discovery-${run.run_id}-${registered.length + refusals.length}`},
+                 ${c.title_tr ?? null}
                ) AS out
       `.execute(db);
       if (res.rows[0]?.out?.ok) {

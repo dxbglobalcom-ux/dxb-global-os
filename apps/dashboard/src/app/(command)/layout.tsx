@@ -86,7 +86,7 @@ export default async function CommandLayout({
     // first) — the §3 "live ticker" slot; ops:live Broadcast repaints it.
     supabase
       .from("v_live_ops")
-      .select("source,source_id,ts,status,event,label,task_id")
+      .select("source,source_id,ts,status,event,label,label_tr,task_id")
       .order("ts", { ascending: false })
       .limit(25),
   ]);

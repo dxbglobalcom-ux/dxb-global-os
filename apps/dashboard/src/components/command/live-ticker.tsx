@@ -18,6 +18,10 @@ export type TickerRow = {
   status: string | null;
   event: string | null;
   label: string | null;
+  /** CEO order 2026-07-26: the live flow reads Turkish on the Turkish page.
+   *  Task objectives stay English (language directive) — this is their i18n
+   *  surface, filled by whoever creates the task; null falls back honestly. */
+  label_tr: string | null;
 };
 
 const STATUS_BADGE: Record<string, StatusLevel> = {
@@ -32,10 +36,12 @@ export function LiveTicker({
   rows,
   labels,
   statusLabels,
+  locale,
 }: {
   rows: TickerRow[];
   labels: { empty: string; viewAll: string; runNoLabel: string };
   statusLabels: Record<string, string>;
+  locale: "tr" | "en";
 }) {
   const router = useRouter();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -65,7 +71,7 @@ export function LiveTicker({
               {/* Full wrap, never "…" — visible ellipsis on a CEO surface is
                   an automatic FAIL (RULE #0 Amendment A1, 2026-07-17). */}
               <div className="min-w-0 break-words text-body-s text-ink-primary">
-                {r.label ?? labels.runNoLabel}
+                {(locale === "tr" ? r.label_tr : null) ?? r.label ?? labels.runNoLabel}
               </div>
               {/* Symmetry ruling: chip pinned left, time pinned right —
                   identical geometry on every card. */}

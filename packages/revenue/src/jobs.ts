@@ -59,7 +59,7 @@ export async function revenueScan(db: Kysely<any>): Promise<void> {
   };
   try {
     const harvested = await harvestScoutingRuns(db);
-    const commissioned = await commissionScoutingRun(db);
+    const commissioned = await commissionScoutingRun(db, { trigger: "schedule" });
     discovery = {
       registered: harvested.registered,
       refused: harvested.refused,

@@ -14,6 +14,7 @@ export const metadata = { title: "Opportunities — DXB" };
 type PipelineRow = {
   id: string;
   title: string;
+  title_tr: string | null;
   state: string;
   halal_verdict: string;
   score: number | null;
@@ -56,7 +57,7 @@ export default async function RevenueOpportunitiesPage() {
   const pipelineRes = await supabase
     .from("v_opportunity_pipeline")
     .select(
-      "id, title, state, halal_verdict, score, score_dims, capital_required_eur, region, channel, engine_slug, engine_title, engine_title_tr, created_by, created_at",
+      "id, title, title_tr, state, halal_verdict, score, score_dims, capital_required_eur, region, channel, engine_slug, engine_title, engine_title_tr, created_by, created_at",
     );
 
   if (pipelineRes.error) {
@@ -112,7 +113,11 @@ export default async function RevenueOpportunitiesPage() {
                     >
                       <div className="flex items-start justify-between gap-2">
                         <span className="min-w-0 flex-1 text-body-s text-ink-primary">
-                          {r.title}
+                          {/* The scout writes both legs while it still has the
+                              source page in front of it; the CEO's screen shows
+                              his. An untranslated row falls back rather than
+                              rendering blank (honest over pretty). */}
+                          {(locale === "tr" ? r.title_tr : r.title) || r.title}
                         </span>
                         <StatusBadge level={HALAL_BADGE[r.halal_verdict] ?? "info"}>
                           {halalLabels[r.halal_verdict] ?? r.halal_verdict}
