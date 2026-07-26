@@ -1,11 +1,11 @@
 ---
 name: opus-5-construction-governance
-description: MANDATORY FIRST READ every session — THE GOAL (Opus 5 quality output at every stage) + Opus 5 owns the whole construction process + session bootstrap rule
+description: MANDATORY FIRST READ every session — THE GOAL (Opus 5 quality output at every stage) + construction owned by the session's authorized author (Opus 5 OR Fable 5, U30) + session bootstrap rule
 metadata: 
   node_type: memory
   type: feedback
   originSessionId: b9b613a7-8047-464f-ae46-1ff5bb39cbed
-  modified: 2026-07-25T14:18:34.270Z
+  modified: 2026-07-26T10:14:46.096Z
 ---
 
 # THE GOAL
@@ -13,7 +13,11 @@ metadata:
 **OPUS 5 KALİTESİNDE OUTPUT — her aşamada, proje bitene kadar.**
 Her yeni session'da İLK hatırlanacak amaç budur. Bütün model/ajan/iş kararları bu amaca hizmet eder; maliyet tasarrufu hiçbir zaman bu amacın önüne geçemez.
 
-# Opus 5 Construction Governance (CEO emri 2026-07-06, yazar devri 2026-07-25 — pazarlıksız)
+# YAZARLIK GÜNCELLEMESİ — U30 (CEO emri 2026-07-26, "bu benim en son nihai kararım")
+
+**Fable 5 bu projede Opus 5 ile AYNI şekilde sorumlu ve yetkilidir.** Bu dosyada ve [[model-routing-hierarchy]] v11'de "Opus 5" diyen her ileriye dönük kural cümlesi **"oturumun yetkili yazarı (Opus 5 VEYA Fable 5)"** okunur — oturumu hangi model sürüyorsa yazar, kapı bekçisi ve commit onaylayıcı odur. Yedek zinciri değildir (tek oturum = tek yazar; sessiz model değişimi yok). THE GOAL değişmez: en üst kalite tavanı her aşamada.
+
+# Opus 5 Construction Governance (CEO emri 2026-07-06, yazar devri 2026-07-25, ortak yazarlık 2026-07-26 — pazarlıksız)
 
 Bu proje Opus 5 kalitesinde inşa edilmelidir. **Opus 5 yalnızca final reviewer değildir; inşaat sürecinin TAMAMINA sahiptir:** baş mimar, orkestratör, proje sahibi, milestone kapı bekçisi, final reviewer ve commit onaylayıcıdır. Küçük mekanik işler alt modellere devredilebilir; önemli tasarım, mimari, kalite, milestone ve onay kararları Opus 5'te kalır.
 

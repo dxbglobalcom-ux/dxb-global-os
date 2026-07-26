@@ -1,11 +1,19 @@
 ---
 name: model-routing-hierarchy
-description: "v10 (CEO 2026-07-26): RUNTIME kalite kademe kanunu — Sonnet kritik işlerden çıktı, angarya-only; v9 inşaat yazarlığı Opus 5 + yedek katman yok; v8-v5 tarihsel kayıt"
+description: "v11 (CEO 2026-07-26): İNŞAAT yazarlığı ORTAK — Opus 5 + Fable 5, oturumun yetkili yazarı; v10 runtime kalite kademe kanunu; v9 yedek katman yok; v8-v5 tarihsel kayıt"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
-  modified: 2026-07-26T00:12:59.019Z
+  modified: 2026-07-26T10:14:16.637Z
 ---
+
+# v11 — FABLE 5 YENİDEN YETKİLİ: ortak inşaat yazarlığı (CEO, 2026-07-26) — U30
+
+1. **CEO emri (2026-07-26, "bu benim en son nihai kararım"): Fable 5 bu projede Opus 5 ile AYNI şekilde sorumlu ve YETKİLİDİR.** v9 madde 1'in "inşaat yazarı yalnız Opus 5" hükmü genişler: inşaat yazarı = **oturumun yetkili yazarı (Opus 5 VEYA Fable 5)** — oturumu hangi model sürüyorsa yazar odur.
+2. **Bu bir yedek zinciri DEĞİLDİR:** v9 madde 2 aynen yaşar — hata/timeout durumunda sessiz model değişimi yok, iş `blocked` raporuyla CEO'ya çıkar. Tek oturum = tek yazar.
+3. **K1 değişmez:** repo'ya giren her satır o oturumun yazarının, bizzat ve inline; subagent yazarlığı (Opus 5/Fable 5 modelli dahil) ihlaldir.
+4. **Tarihsel kayıt + iç teknik ID hükümleri** (v9 madde 4-5) aynen geçerli; U20'nin "CEO'ya görünen etiket" hükmü katalog satırlarını yönetmeye devam eder.
+5. Kayıt: `00-INDEX` U30 · ayna: `.planning/governance/model-routing-hierarchy.md`.
 
 # v10 — RUNTIME KALİTE KADEME KANUNU (CEO, 2026-07-26) — U21
 
