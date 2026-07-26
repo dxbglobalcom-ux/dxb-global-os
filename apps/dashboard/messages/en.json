@@ -2311,6 +2311,8 @@
       "empty": "No messages yet. Say hello to Hamza — he runs the company for you.",
       "placeholder": "Write to Hamza — (Enter sends, Shift+Enter = new line)",
       "send": "Send",
+      "sendFailed": "The message could not be sent — your text is still here, try again.",
+      "sendFailedDetail": "Reason",
       "planMode": "Plan mode",
       "planModeHint": "Hamza drafts a plan with you — nothing is executed.",
       "dispatch": "Send as a task",
@@ -2337,6 +2339,8 @@
       "threadsTitle": "Conversations",
       "newThread": "New conversation",
       "untitledThread": "Untitled conversation",
+      "threadMessages": "messages",
+      "threadMessageOne": "message",
       "threadsHint": "Each conversation keeps its own context"
     }
   },

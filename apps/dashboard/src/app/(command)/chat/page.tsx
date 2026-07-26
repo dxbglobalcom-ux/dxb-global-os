@@ -58,15 +58,21 @@ export default async function ChatPage({
   // message will mint a fresh thread; ?s=<id> opens a chosen one; neither means
   // "the current conversation", which is what walking up to the board means.
   const startingNew = params.new === "1";
+  // v_chat_threads (migration 20260726007000) carries what a list of
+  // conversations has to answer: what it was called, how big it was, when it
+  // last moved. An untitled thread borrows the CEO's own opening line rather
+  // than wearing a generic label.
   const sessionsRes = await supabase
-    .from("chat_sessions")
-    .select("id, title, last_message_at")
+    .from("v_chat_threads")
+    .select("id, title, last_message_at, messages, has_voice")
     .order("last_message_at", { ascending: false })
-    .limit(12);
+    .limit(30);
   const sessions = (sessionsRes.data ?? []) as Array<{
     id: string;
     title: string | null;
     last_message_at: string;
+    messages: number;
+    has_voice: boolean;
   }>;
   const activeSessionId = startingNew ? null : (params.s ?? sessions[0]?.id ?? null);
 
@@ -164,12 +170,17 @@ export default async function ChatPage({
     (daemonRes.data as { state?: string } | null)?.state === "muted" ? "muted" : "listening";
 
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    // The page owns exactly the height the shell gives it, and nothing more:
+    // the conversation list and the board each scroll inside themselves, so the
+    // one thing the CEO always needs — the box he types in — is on screen
+    // without scrolling for it. Before this, the composer sat below the fold at
+    // 1366×900 and the middle of the page was 600px of nothing.
+    <div className="mx-auto flex h-full min-h-[38rem] max-w-[110rem] flex-col gap-5">
       <div>
         <h1 className="font-display text-h1 text-ink-primary">{t.title} <HelpTip text={dict.help.chat} /></h1>
         <p className="text-body-s text-ink-secondary">{t.subtitle}</p>
       </div>
-      <Panel>
+      <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[17rem_minmax(0,1fr)]">
         <ChatThreads
           sessions={sessions}
           activeId={activeSessionId}
@@ -177,15 +188,24 @@ export default async function ChatPage({
           labels={t}
           locale={locale}
         />
-        <ChatBoard
-          initial={(messagesRes.data ?? []) as ChatMessage[]}
-          labels={t}
-          lang={locale}
-          sessionId={activeSessionId}
-          startingNew={startingNew}
-        />
-      </Panel>
-      <details className="group">
+        <Panel className="flex min-h-0 flex-col">
+          {/* The board keeps its messages in client state, and switching
+              conversation is a soft navigation — React would keep the SAME
+              instance alive and, with it, the previous thread's messages. That
+              is what the CEO saw on 2026-07-26: "yeni konuşma" opened with the
+              old conversation still on screen. Keying by conversation makes
+              each thread its own board. */}
+          <ChatBoard
+            key={startingNew ? "new" : (activeSessionId ?? "empty")}
+            initial={(messagesRes.data ?? []) as ChatMessage[]}
+            labels={t}
+            lang={locale}
+            sessionId={activeSessionId}
+            startingNew={startingNew}
+          />
+        </Panel>
+      </div>
+      <details className="group shrink-0">
         <summary
           data-testid="chat-voice-line"
           className="flex cursor-pointer list-none items-center gap-2 rounded-md border border-edge-neutral px-4 py-3 text-body-s text-ink-secondary transition duration-[var(--t-fast)] ease-refined hover:text-ink-primary [&::-webkit-details-marker]:hidden"

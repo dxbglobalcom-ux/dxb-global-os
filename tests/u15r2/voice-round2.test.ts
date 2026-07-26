@@ -78,9 +78,14 @@ describe("U15 D12 — chat-lane mute command (deterministic, no LLM)", () => {
         SELECT count(*)::int AS n FROM chat_messages WHERE role = 'ceo' AND status = 'pending'
       `.execute(trx);
       expect(pending.rows[0].n).toBe(0);
+      // U27: a message belongs to a conversation — the column is NOT NULL now,
+      // and production mints the thread through the same resolver.
+      const thread = await sql<{ id: string }>`
+        SELECT fn_chat_session_for_new_message('kapan', true) AS id
+      `.execute(trx);
       await trx
         .insertInto("chat_messages")
-        .values({ role: "ceo", content: "kapan", mode: "normal", status: "pending", error: null, intent_id: null })
+        .values({ role: "ceo", content: "kapan", mode: "normal", status: "pending", error: null, intent_id: null, session_id: thread.rows[0].id })
         .execute();
       const res = await drainChatMessages({
         db: trx as unknown as Kysely<DB>,
@@ -109,9 +114,12 @@ describe("U15 D12 — chat-lane mute command (deterministic, no LLM)", () => {
         SELECT count(*)::int AS n FROM chat_messages WHERE role = 'ceo' AND status = 'pending'
       `.execute(trx);
       expect(pending.rows[0].n).toBe(0);
+      const thread = await sql<{ id: string }>`
+        SELECT fn_chat_session_for_new_message('mikrofonu aç', true) AS id
+      `.execute(trx);
       await trx
         .insertInto("chat_messages")
-        .values({ role: "ceo", content: "mikrofonu aç", mode: "normal", status: "pending", error: null, intent_id: null })
+        .values({ role: "ceo", content: "mikrofonu aç", mode: "normal", status: "pending", error: null, intent_id: null, session_id: thread.rows[0].id })
         .execute();
       const res = await drainChatMessages({
         db: trx as unknown as Kysely<DB>,

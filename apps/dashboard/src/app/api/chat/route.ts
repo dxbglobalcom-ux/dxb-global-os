@@ -32,33 +32,29 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: "invalid_body" }, { status: 400 });
   }
 
-  // The session is resolved server-side (fn_chat_session_for_new_message): a
-  // client that forgets to send one must never be able to orphan a message, and
-  // the idle-gap rule that starts a new thread the next morning belongs next to
-  // the data, not in a browser.
-  let sessionId = body.sessionId ?? null;
-  if (!sessionId) {
-    const { data: sess, error: sessErr } = await supabase.rpc(
-      "fn_chat_session_for_new_message",
-      { p_first_message: body.text, p_new: body.newSession },
-    );
-    if (sessErr) {
-      return NextResponse.json({ error: sessErr.message }, { status: 500 });
-    }
-    sessionId = sess as unknown as string;
-  }
-
-  const { data, error } = await supabase
-    .from("chat_messages")
-    .insert({ role: "ceo", content: body.text, mode: body.mode, session_id: sessionId })
-    .select("id")
-    .single();
+  // ONE door (`fn_chat_post_message`, migration 20260726006000): the thread and
+  // the message are written by a single statement, so a message can never be
+  // lost while its conversation survives — which is exactly what the CEO hit on
+  // 2026-07-26 (three empty threads titled "selam", not one message). The
+  // session rule itself stays next to the data: an explicit id continues that
+  // thread, `newSession` opens a fresh one, and a long silence starts one by
+  // itself. A browser cannot orphan a message here.
+  const { data, error } = await supabase.rpc("fn_chat_post_message", {
+    p_text: body.text,
+    p_mode: body.mode,
+    p_session_id: body.sessionId ?? null,
+    p_new: body.newSession,
+  });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ messageId: data.id, sessionId }, { status: 201 });
+  const posted = data as unknown as { message_id: string; session_id: string };
+  return NextResponse.json(
+    { messageId: posted.message_id, sessionId: posted.session_id },
+    { status: 201 },
+  );
 }
 
 export async function GET(request: Request): Promise<NextResponse> {

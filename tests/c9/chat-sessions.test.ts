@@ -15,6 +15,12 @@ import { drainChatMessages, type ChatAnswerInput } from "../../packages/orchestr
 process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
+// The dashboard reaches Postgres as `authenticated` carrying the CEO's jwt —
+// the only role whose grants and policies are worth asserting here.
+const CEO_JWT = JSON.stringify({
+  sub: "00000000-0000-0000-0000-000000000001",
+  email: "ceo-test",
+});
 const inTrx = async (fn: (trx: never) => Promise<void>) =>
   getDb()
     .transaction()
@@ -101,6 +107,103 @@ describe("sessions — the data model", () => {
           FROM chat_sessions WHERE id = ${s.rows[0].id}
       `.execute(trx);
       expect(t.rows[0].fresh).toBe(true);
+    });
+  });
+});
+
+// 2026-07-26, CEO-reported live defect: "yeni konuşma" produced three empty
+// threads and not one message. Measured cause: the browser writes as the
+// `authenticated` role, and the 2026-07-19 board migration had granted INSERT
+// per COLUMN (`role, content, mode`) — W1.5 then added `session_id` to the
+// insert without widening that grant, so every send died on "permission denied
+// for table chat_messages" while the API had already minted the thread.
+//
+// Every case below runs as the role the browser actually uses. A test that
+// writes as `postgres` cannot see a grant defect at all — which is exactly why
+// the suite was green while the CEO's chat was dead.
+describe("sessions — the CEO's own send path, as the role the browser uses", () => {
+  const asCeo = async (trx: unknown) => {
+    await sql`select set_config('request.jwt.claims', ${CEO_JWT}, true)`.execute(trx as never);
+    await sql`set local role authenticated`.execute(trx as never);
+  };
+
+  it("a message sent from the board lands in the database", async () => {
+    await inTrx(async (trx) => {
+      await asCeo(trx);
+      const r = await sql<{ out: { message_id: string; session_id: string } }>`
+        SELECT fn_chat_post_message('grant probe — the CEO says hello', 'normal', NULL, true) AS out
+      `.execute(trx as never);
+      const { message_id, session_id } = r.rows[0].out;
+      expect(message_id).toBeTruthy();
+
+      const m = await sql<{ content: string; session_id: string; role: string }>`
+        SELECT content, session_id, role FROM chat_messages WHERE id = ${message_id}
+      `.execute(trx as never);
+      expect(m.rows).toHaveLength(1);
+      expect(m.rows[0].role).toBe("ceo");
+      expect(m.rows[0].session_id).toBe(session_id);
+    });
+  });
+
+  it("continuing an open thread keeps the message in it", async () => {
+    await inTrx(async (trx) => {
+      await asCeo(trx);
+      const first = await sql<{ out: { session_id: string } }>`
+        SELECT fn_chat_post_message('opening line', 'normal', NULL, true) AS out
+      `.execute(trx as never);
+      const sid = first.rows[0].out.session_id;
+      const second = await sql<{ out: { session_id: string } }>`
+        SELECT fn_chat_post_message('second line', 'plan', ${sid}::uuid, false) AS out
+      `.execute(trx as never);
+      expect(second.rows[0].out.session_id).toBe(sid);
+    });
+  });
+
+  it("a refused message leaves no empty conversation behind", async () => {
+    // The CEO's three "selam" threads with zero messages in them were the old
+    // two-statement shape: mint the thread, then write the message, and keep the
+    // thread when the write died. The DO block below is exactly what a caller
+    // that catches the error and carries on looks like to the database.
+    await inTrx(async (trx) => {
+      await asCeo(trx);
+      const count = async () =>
+        Number(
+          (
+            await sql<{ n: string }>`SELECT count(*)::text AS n FROM chat_sessions`.execute(
+              trx as never,
+            )
+          ).rows[0].n,
+        );
+
+      const before = await count();
+      await sql`
+        DO $$ BEGIN
+          PERFORM fn_chat_post_message('   ', 'normal', NULL, true);
+        EXCEPTION WHEN OTHERS THEN NULL; END $$
+      `.execute(trx as never);
+      expect(await count()).toBe(before);
+
+      // The contrast that makes the assertion mean something: minting the thread
+      // on its own — the first half of the old shape — does leave one behind.
+      await sql`SELECT fn_chat_session_for_new_message('orphan by construction', true)`.execute(
+        trx as never,
+      );
+      expect(await count()).toBe(before + 1);
+    });
+  });
+
+  it("the board has exactly one write door — the table itself is closed", async () => {
+    await inTrx(async (trx) => {
+      await asCeo(trx);
+      const s = await sql<{ out: { session_id: string } }>`
+        SELECT fn_chat_post_message('door probe', 'normal', NULL, true) AS out
+      `.execute(trx as never);
+      await expect(
+        sql`
+          INSERT INTO chat_messages (role, content, mode, session_id)
+          VALUES ('ceo', 'straight through the table', 'normal', ${s.rows[0].out.session_id}::uuid)
+        `.execute(trx as never),
+      ).rejects.toThrow(/permission denied/i);
     });
   });
 });

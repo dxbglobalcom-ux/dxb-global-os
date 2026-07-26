@@ -28,6 +28,9 @@ export type ChatLabels = {
   empty: string;
   placeholder: string;
   send: string;
+  /** shown when a send fails — the CEO must never face a silent button */
+  sendFailed: string;
+  sendFailedDetail: string;
   planMode: string;
   planModeHint: string;
   dispatch: string;
@@ -77,6 +80,7 @@ export function ChatBoard({
   const [draft, setDraft] = useState("");
   const [planMode, setPlanMode] = useState(false);
   const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
   const [dispatchedIds, setDispatchedIds] = useState<Set<string>>(new Set());
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -196,9 +200,15 @@ export function ChatBoard({
     if (dictPhaseRef.current === "idle") void startDictation();
   }, [startDictation]);
 
-  const onBroadcast = useCallback((p: DxbBroadcastPayload) => {
+  const onBroadcast = useCallback(
+    (p: DxbBroadcastPayload) => {
     if (!p.record) return;
     const r = p.record as Record<string, unknown>;
+    // The channel carries every conversation, including spoken turns mirrored
+    // from the voice line. A board shows ONE conversation, so a turn from
+    // another thread is not ours to display.
+    const belongs = r.session_id == null || sessionId == null || r.session_id === sessionId;
+    if (!belongs) return;
     setMessages((prev) =>
       mergeMessage(prev, {
         id: String(r.id),
@@ -212,7 +222,9 @@ export function ChatBoard({
         created_at: String(r.created_at ?? new Date().toISOString()),
       }),
     );
-  }, []);
+    },
+    [sessionId],
+  );
   useDxbChannel("chat", onBroadcast);
 
   useEffect(() => {
@@ -223,6 +235,7 @@ export function ChatBoard({
     const text = draft.trim();
     if (!text || sending) return;
     setSending(true);
+    setSendError(null);
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -236,15 +249,26 @@ export function ChatBoard({
           ...(startingNew ? { newSession: true } : sessionId ? { sessionId } : {}),
         }),
       });
-      if (res.ok) {
-        setDraft("");
-        // The new thread exists only after this message, so the empty board has
-        // to become the real one; a full navigation also picks up its title.
-        if (startingNew) {
-          const body = (await res.json().catch(() => null)) as { sessionId?: string } | null;
-          if (body?.sessionId) window.location.assign(`/chat?s=${body.sessionId}`);
-        }
+      const body = (await res.json().catch(() => null)) as
+        | { sessionId?: string; error?: string }
+        | null;
+      if (!res.ok) {
+        // 2026-07-26: this branch did not exist. The send failed with a 500 on
+        // every attempt and the board said nothing at all, so the CEO saw a
+        // button that "does not work" with no reason on screen. A failure the
+        // user cannot see is worse than the failure itself — his words stay in
+        // the box and the cause is printed.
+        setSendError(body?.error ?? `HTTP ${res.status}`);
+        return;
       }
+      setDraft("");
+      // The new thread exists only after this message, so the empty board has
+      // to become the real one; a full navigation also picks up its title.
+      if (startingNew && body?.sessionId) {
+        window.location.assign(`/chat?s=${body.sessionId}`);
+      }
+    } catch {
+      setSendError("network");
     } finally {
       setSending(false);
     }
@@ -267,18 +291,26 @@ export function ChatBoard({
   const waiting = messages.some((m) => m.role === "ceo" && m.status === "pending");
 
   return (
-    <div className="flex h-[calc(100vh-11rem)] min-h-[24rem] flex-col">
-      <div className="flex-1 space-y-4 overflow-y-auto pr-1">
-        {messages.length === 0 && (
-          <p className="pt-8 text-center text-body-s text-ink-secondary">{labels.empty}</p>
-        )}
+    // The board fills the height its column was given and scrolls inside
+    // itself; the composer is pinned to the bottom of that column, never to the
+    // bottom of a page that runs past the screen.
+    <div className="flex h-full min-h-0 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
+        {messages.length === 0 ? (
+          // An empty conversation is a room, not a list with nothing in it —
+          // the invitation belongs in the middle of the room.
+          <p className="m-auto max-w-[38ch] text-center text-body-s text-ink-secondary">
+            {labels.empty}
+          </p>
+        ) : (
+          <div className="mt-auto space-y-4">
         {messages.map((m) => (
           <div key={m.id} className={m.role === "ceo" ? "flex justify-end" : "flex justify-start"}>
             <div
               className={
                 m.role === "ceo"
-                  ? "max-w-[75%] rounded-lg bg-surface-graphite px-4 py-3"
-                  : "max-w-[75%] rounded-lg border border-edge-neutral px-4 py-3"
+                  ? "max-w-[min(75%,68ch)] rounded-lg bg-surface-graphite px-4 py-3"
+                  : "max-w-[min(75%,68ch)] rounded-lg border border-edge-neutral px-4 py-3"
               }
             >
               <div className="mb-1 flex items-center gap-2">
@@ -315,14 +347,16 @@ export function ChatBoard({
             </div>
           </div>
         ))}
-        {waiting && (
-          <div className="flex justify-start">
-            <div className="max-w-[75%] rounded-lg border border-edge-neutral px-4 py-3">
-              <p className="animate-pulse text-body-s text-ink-muted">{labels.thinking}</p>
-            </div>
+            {waiting && (
+              <div className="flex justify-start">
+                <div className="max-w-[min(75%,68ch)] rounded-lg border border-edge-neutral px-4 py-3">
+                  <p className="animate-pulse text-body-s text-ink-muted">{labels.thinking}</p>
+                </div>
+              </div>
+            )}
+            <div ref={bottomRef} />
           </div>
         )}
-        <div ref={bottomRef} />
       </div>
 
       <div className="mt-4 space-y-2 border-t border-edge-neutral pt-4">
@@ -379,6 +413,15 @@ export function ChatBoard({
             {labels.send}
           </button>
         </div>
+        {sendError && (
+          <p
+            data-testid="chat-send-error"
+            role="alert"
+            className="text-caption text-status-danger"
+          >
+            {labels.sendFailed} <span className="text-ink-muted">({labels.sendFailedDetail}: {sendError})</span>
+          </p>
+        )}
         <div className="flex min-h-5 flex-wrap items-center gap-3">
           <div
             className="flex items-center gap-1"

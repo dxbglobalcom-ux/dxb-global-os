@@ -2311,6 +2311,8 @@
       "empty": "Henüz mesaj yok. Hamza'ya bir merhaba deyin — şirketi sizin için o yönetiyor.",
       "placeholder": "Hamza'ya yazın — (Enter gönderir, Shift+Enter = yeni satır)",
       "send": "Gönder",
+      "sendFailed": "Mesaj gönderilemedi — yazdığınız duruyor, tekrar deneyin.",
+      "sendFailedDetail": "Sebep",
       "planMode": "Plan modu",
       "planModeHint": "Hamza sizinle plan taslağı çıkarır — hiçbir şey çalıştırılmaz.",
       "dispatch": "Görev olarak gönder",
@@ -2337,6 +2339,8 @@
       "threadsTitle": "Konuşmalar",
       "newThread": "Yeni konuşma",
       "untitledThread": "Başlıksız konuşma",
+      "threadMessages": "mesaj",
+      "threadMessageOne": "mesaj",
       "threadsHint": "Her konuşma kendi bağlamını taşır"
     }
   },

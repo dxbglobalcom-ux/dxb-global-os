@@ -138,10 +138,13 @@ describe("the brief leg answers from measurements", () => {
 });
 
 describe("the drain routes a real message to the right leg", () => {
+  // U27: every message belongs to a conversation (session_id NOT NULL), and the
+  // thread is minted by the same resolver production uses.
   const seed = async (trx: never, content: string) => {
     await sql`
-      INSERT INTO chat_messages (role, content, mode, status)
-      VALUES ('ceo', ${content}, 'normal', 'pending')
+      INSERT INTO chat_messages (role, content, mode, status, session_id)
+      VALUES ('ceo', ${content}, 'normal', 'pending',
+              fn_chat_session_for_new_message(${content}, true))
     `.execute(trx);
   };
 
