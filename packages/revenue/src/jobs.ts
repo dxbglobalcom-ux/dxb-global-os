@@ -6,6 +6,7 @@
 // scan/score enrichment arrives with the resident worker (R2), not here.
 import type { Kysely } from "kysely";
 import { sql } from "kysely";
+import { commissionScoutingRun, harvestScoutingRuns } from "./discovery.js";
 
 // revenue.scan — intake pass (spec §16 leg b): opportunities still 'pending'
 // on halal_verdict are screened against settings 'revenue.halal_screen';
@@ -45,9 +46,39 @@ export async function revenueScan(db: Kysely<any>): Promise<void> {
                               'still_pending', (SELECT n FROM pending))
   `.execute(db);
 
+  // W2.2 — the scan stopped being a pass over rows that already existed.
+  // Harvest FIRST (a finished run frees the single open-run slot), then
+  // commission the next one if the pipeline needs it. Both halves are bounded
+  // and both explain themselves in audit_log; neither throws into the job
+  // runner, because a failed scan must not stop the measurement half of the
+  // daily cycle (spec §17-19: independent jobs).
+  let discovery: { registered: number; refused: number; commissioned: boolean; reason?: string } = {
+    registered: 0,
+    refused: 0,
+    commissioned: false,
+  };
+  try {
+    const harvested = await harvestScoutingRuns(db);
+    const commissioned = await commissionScoutingRun(db);
+    discovery = {
+      registered: harvested.registered,
+      refused: harvested.refused,
+      commissioned: commissioned.commissioned,
+      reason: commissioned.reason,
+    };
+  } catch (e) {
+    await sql`
+      INSERT INTO audit_log (actor, actor_type, action, payload)
+      VALUES ('revenue.scan', 'system', 'revenue.discovery.failed',
+              jsonb_build_object('error', ${(e as Error).message.slice(0, 300)}))
+    `.execute(db);
+  }
+
   await sql`
     SELECT notify_broadcast('revenue', 'scan.completed',
       jsonb_build_object(
+        'registered', ${discovery.registered}::int,
+        'commissioned', ${discovery.commissioned}::boolean,
         'summary_en', 'Daily intake scan completed',
         'summary_tr', 'Günlük fırsat taraması tamamlandı'))
   `.execute(db);

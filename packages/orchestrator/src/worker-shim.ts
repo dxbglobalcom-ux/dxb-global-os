@@ -123,6 +123,14 @@ export type RunWorkerResult =
 const WorkerEvidence = z.object({
   kind: z.string().min(1), // 'verification' | 'command' | 'file' | free-form
   tool: z.string().min(1).optional(), // MCP tool name used (e.g. mcp__dxb-mcp__queue_get)
+  // ROOT CAUSE of the "knowledge-shelf loop" recorded as an open runtime item on
+  // 2026-07-24 and re-measured live on 2026-07-26: the post-gate accepts a
+  // file-kind evidence entry ONLY with a `ref` (post-task library_registration),
+  // and this schema did not carry the field — so Zod stripped it silently and
+  // NO worker in this company could ever satisfy the rule. Six live runs
+  // produced a contract-perfect research deliverable and were failed on a field
+  // that was being deleted before the gate could see it.
+  ref: z.string().min(1).optional(),
   note: z.string().min(1),
 });
 const WorkerJson = z.object({
@@ -223,6 +231,16 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
     ' "evidence": [{"kind": "verification", "tool": "<mcp tool you called>", "note": "<what you checked>"}],',
     ' "acceptance_map": {"<each requirement of the output contract>": "<how the deliverable meets it, specific>"}}',
     "confidence is your honest self-assessment that the deliverable meets the contract.",
+    // 2026-07-26: the gate has always required `ref` on a file-kind evidence
+    // entry (post-task library_registration), but this prompt never showed the
+    // shape — so a research task could satisfy every word of its contract and
+    // still fail five times running on a field nobody had told the worker about.
+    // That is the deterministic loop recorded as an open runtime item on
+    // 2026-07-24. An evidence entry may carry `ref`, and when the contract asks
+    // for a file entry it MUST.
+    'An evidence entry may also be {"kind": "file", "ref": "<the exact ref your output',
+    'contract names>", "note": "<what this artifact is>"} — when the contract asks for a',
+    "file entry, copy its ref EXACTLY. A file entry without ref is rejected by the gate.",
     ...(toolOpts
       ? [
           "",
