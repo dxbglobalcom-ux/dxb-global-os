@@ -26,6 +26,16 @@ else
   echo "PASS departments: every department named EN+TR"
 fi
 
+# Projects are CEO-visible cards; heading AND purpose both render (found
+# 2026-07-26: purpose had its Turkish leg, the heading did not, so the TR board
+# read "HR Sandbox"). Archived projects are out of the CEO's live view.
+projects_missing="$("${PSQL[@]}" -c "SELECT slug FROM projects WHERE status <> 'archived' AND (name_tr IS NULL OR purpose_tr IS NULL);")"
+if [ -n "$projects_missing" ]; then
+  echo "FAIL projects missing name_tr/purpose_tr:"; echo "$projects_missing"; fail=1
+else
+  echo "PASS projects: every live project named + explained EN+TR"
+fi
+
 node - <<EOF || fail=1
 const en = require("$REPO_DIR/apps/dashboard/messages/en.json");
 const tr = require("$REPO_DIR/apps/dashboard/messages/tr.json");

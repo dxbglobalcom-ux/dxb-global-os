@@ -56,12 +56,17 @@ export default async function ProjectsPage() {
         <p className="mt-1 text-body-s text-ink-secondary">{t.subtitle}</p>
       </header>
 
+      {/* Column count follows the CONTAINER, never the viewport. Measured
+          2026-07-26 at 1366 with both rails open: `xl:grid-cols-3` fires on
+          viewport width while the content area is ~790px, so each card fell to
+          ~250px and its text column collapsed to one word per line. A 22rem
+          floor gives 2 columns there and 3 on the wide screen. */}
       {projects.length === 0 ? (
         <Panel>
           <p className="py-10 text-center text-body-s text-ink-muted">{t.ui.empty}</p>
         </Panel>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(22rem,1fr))]">
           {projects.map((p) => {
             const band = healthBand(p.health);
             const statuses = t.ui.statuses as Record<string, string>;
@@ -73,8 +78,10 @@ export default async function ProjectsPage() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
+                    {/* the HEADING is i18n text too (migration 20260726012500)
+                        — the purpose leg alone left "HR Sandbox" on the TR board */}
                     <h2 className="break-words font-display text-h4 text-ink-primary group-hover:text-accent-champagne">
-                      {p.name}
+                      {locale === "tr" ? (p.nameTr ?? p.name) : p.name}
                     </h2>
                     {/* DB text is an i18n surface — the TR card reads the
                         purpose's Turkish leg (migration 20260726011100) */}

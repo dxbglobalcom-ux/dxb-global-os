@@ -300,7 +300,9 @@ export default async function ProjectCommandPage({
         <div className="flex flex-wrap items-start gap-6 p-5">
           <div className="min-w-[280px] flex-1">
             <div className="flex items-center gap-3">
-              <h1 className="font-display text-h2 text-ink-primary">{p.name}</h1>
+              <h1 className="font-display text-h2 text-ink-primary">
+                {locale === "tr" ? (p.nameTr ?? p.name) : p.name}
+              </h1>
               <StatusBadge level={STATUS_LEVEL[p.status] ?? "info"}>
                 {statuses[p.status] ?? p.status}
               </StatusBadge>

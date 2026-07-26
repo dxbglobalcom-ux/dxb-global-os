@@ -5,6 +5,7 @@ export type ProjectCommandViewRow = {
   id: string;
   slug: string;
   name: string;
+  name_tr: string | null;
   purpose: string;
   purpose_tr: string | null;
   strategy_link: string | null;
@@ -79,6 +80,7 @@ export type ProjectCommandRow = {
   id: string;
   slug: string;
   name: string;
+  nameTr: string | null;
   purpose: string;
   purposeTr: string | null;
   strategyLink: string | null;
@@ -126,6 +128,7 @@ export function mapProjectRow(r: ProjectCommandViewRow): ProjectCommandRow {
     id: r.id,
     slug: r.slug,
     name: r.name,
+    nameTr: r.name_tr,
     purpose: r.purpose,
     purposeTr: r.purpose_tr,
     strategyLink: r.strategy_link,

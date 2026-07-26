@@ -189,6 +189,34 @@ test("no visible ellipsis cut on any core CEO surface (A1 ban, stabilization bat
   }
 });
 
+test("project cards speak the CEO's language and keep a readable column at 1366 (W2.4)", async ({ page, context }) => {
+  // Two defects measured on this surface 2026-07-26, both fixed, both pinned
+  // here: (1) the card HEADING had no Turkish leg, so the TR board read
+  // "HR Sandbox" while the purpose below it was Turkish; (2) `xl:grid-cols-3`
+  // fires on VIEWPORT width — at 1366 with both rails open the content area is
+  // ~790px, so three cards squeezed each text column to one word per line.
+  await page.setViewportSize({ width: 1366, height: 900 });
+  await context.addCookies([
+    { name: "dxb-locale", value: "tr", url: "http://localhost:3000" },
+  ]);
+  await page.goto("/ops/projects");
+  await expect(page.locator("main")).toBeVisible();
+
+  const headings = await page.locator("main h2").allInnerTexts();
+  expect(headings.length).toBeGreaterThan(0);
+  // The English originals are never rewritten in the DB — they must simply not
+  // be what the Turkish board shows.
+  expect(headings.some((h) => /HR Sandbox|Revenue Discovery/.test(h))).toBe(false);
+
+  const narrowest = await page.evaluate(() => {
+    const cards = [...document.querySelectorAll("main h2")].map(
+      (h) => (h.parentElement as HTMLElement).getBoundingClientRect().width,
+    );
+    return cards.length ? Math.min(...cards) : 0;
+  });
+  expect(narrowest, "a project card's text column collapsed at 1366").toBeGreaterThan(200);
+});
+
 test("widget layout is server truth: fresh context sees the stored layout (§38/15)", async ({ page }) => {
   await page.goto("/overview");
   // Server-truth proof lives in E12.2's live evidence; the E2E leg pins the
