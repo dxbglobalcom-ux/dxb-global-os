@@ -26,7 +26,7 @@ export function compilePersonaPrompt(input: CompileInput): string {
   const mode: CompileMode = input.mode ?? "full";
   const parsed = parsePersona(input.personaBody);
 
-  const missing = PERSONA_SECTIONS.filter((s) => !parsed.sections.has(s.no));
+  const missing = PERSONA_SECTIONS.filter((s) => !s.optional && !parsed.sections.has(s.no));
   if (!parsed.header || missing.length > 0) {
     // kimliksiz koşu yok — hook zinciriyle aynı fail-closed ilkesi (spec §17)
     throw new Error(
@@ -39,7 +39,8 @@ export function compilePersonaPrompt(input: CompileInput): string {
   out.push("=== DXB PERSONA (system bölgesi) ===");
   out.push(parsed.header);
   for (const s of PERSONA_SECTIONS) {
-    const lines = parsed.sections.get(s.no)!;
+    const lines = parsed.sections.get(s.no);
+    if (!lines) continue; // yalnız optional bölüm buraya düşer (zorunlu eksikler yukarıda fırlattı)
     out.push(`## ${s.no}. ${s.title}`);
     if (mode === "compact" && s.compactable && s.no >= 9) {
       const content = contentLines(lines);

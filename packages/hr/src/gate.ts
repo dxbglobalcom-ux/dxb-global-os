@@ -69,6 +69,8 @@ export function gatePersona(
   for (const s of PERSONA_SECTIONS) {
     const lines = parsed.sections.get(s.no);
     if (!lines) {
+      // rol-özgü bölüm yoksa red yok; varsa aşağıdaki incelik kontrolüne girer
+      if (s.optional) continue;
       failures.push({ rule: `section-${s.no}-missing`, detail: `§${s.no} ${s.title} yok` });
       continue;
     }

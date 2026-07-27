@@ -11,6 +11,7 @@ export type { CallState, TimelineEntry } from "./machine.js";
 export { intakeVoiceCall, LINE_BUSY_WINDOW_MINUTES } from "./intake.js";
 export type { VoiceIntakeDeps, VoiceIntakeInput, VoiceIntakeResult } from "./intake.js";
 export { answerVoiceCall, HAMZA_SLUG } from "./answer.js";
+export { loadPersonaBody } from "./persona.js";
 export type { AnswerQuestion, VoiceAnswerDeps, VoiceAnswerResult } from "./answer.js";
 export { drainVoiceCalls, STALE_CALL_MINUTES, AUDIO_RETENTION_HOURS } from "./drain.js";
 export type { DrainVoiceDeps, DrainVoiceResult } from "./drain.js";

@@ -36,6 +36,12 @@ export default defineConfig({
       "@dxb/hook": fileURLToPath(
         new URL("./packages/hook/dist/index.js", import.meta.url),
       ),
+      // 2026-07-27: tests/r31 asserts what the live answer lanes actually
+      // deliver as an employee's identity, so it must load the SAME module the
+      // scheduler loads — dist, for the one-instance reason above.
+      "@dxb/voice": fileURLToPath(
+        new URL("./packages/voice/dist/index.js", import.meta.url),
+      ),
     },
   },
   test: {

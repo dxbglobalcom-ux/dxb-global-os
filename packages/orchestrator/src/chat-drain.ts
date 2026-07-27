@@ -16,7 +16,7 @@ import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 import { loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
 import { recallMemory } from "@dxb/memory-router";
-import { matchMute, matchUnmute } from "@dxb/voice";
+import { matchMute, matchUnmute, loadPersonaBody } from "@dxb/voice";
 import {
   buildBriefSnapshot,
   classifyLeg,
@@ -35,7 +35,7 @@ export interface ChatAnswerInput {
   mode: "normal" | "plan";
   lang: "tr" | "en";
   history: Array<{ role: "ceo" | "hamza"; content: string }>;
-  personaHead: string;
+  personaBody: string;
   memoryLines: string[];
   /** Which of Hamza's two legs answers this (CEO directive 2026-07-25). */
   leg: ChatLeg;
@@ -54,16 +54,6 @@ export interface DrainChatDeps {
 export interface DrainChatResult {
   answered: number;
   failed: number;
-}
-
-async function personaHead(repoRoot: string, personaPath: string | null): Promise<string> {
-  if (!personaPath) return "";
-  try {
-    const text = await readFile(join(repoRoot, personaPath), "utf8");
-    return text.split("\n").slice(0, 60).join("\n");
-  } catch {
-    return ""; // persona file missing = degraded context, never a crash
-  }
 }
 
 async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string> {
@@ -95,7 +85,7 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
   const planMode = q.mode === "plan";
   const sys = [
     `You are Hamza, the orchestrator of DXB Global — the CEO's direct counterpart for planning and running the whole company.`,
-    q.personaHead ? `Your persona (authoritative identity, follow it):\n${q.personaHead}` : "",
+    q.personaBody ? `Your persona (authoritative identity, follow it):\n${q.personaBody}` : "",
     q.memoryLines.length ? `Relevant company memory:\n- ${q.memoryLines.join("\n- ")}` : "",
     `Answer the CEO in ${q.lang === "tr" ? "Turkish" : "English"}.`,
     "This is a CONVERSATION, not a task intake. A greeting gets a warm greeting back. A question gets a direct answer. An idea gets genuine engagement — agree, push back, refine.",
@@ -206,7 +196,7 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       : historyQuery.where("session_id", "is", null);
     const historyRows = await historyQuery.execute();
     const [head, recall] = await Promise.all([
-      personaHead(repoRoot, hamza?.persona_path ?? null),
+      loadPersonaBody(repoRoot, hamza?.persona_path ?? null),
       recallMemory(db, { query: row.content, limit: 5 }).catch(() => ({
         rows: [] as Array<{ body: string }>,
         classifier_used: false,
@@ -222,7 +212,7 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       mode: row.mode,
       lang,
       history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content })),
-      personaHead: head,
+      personaBody: head,
       memoryLines: recall.rows.map((r) => r.body.slice(0, 200)).filter(Boolean),
       leg,
       snapshot,

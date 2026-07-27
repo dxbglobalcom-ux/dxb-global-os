@@ -14,6 +14,7 @@ import { recallMemory } from "@dxb/memory-router";
 import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./speaches.js";
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
 import { logCall } from "./log.js";
+import { loadPersonaBody } from "./persona.js";
 
 export const HAMZA_SLUG = "agents-orchestrator";
 
@@ -21,7 +22,7 @@ export interface AnswerQuestion {
   question: string;
   lang: "tr" | "en";
   agent: { slug: string; department: string; role_level: string | null; persona_path: string | null };
-  personaHead: string;
+  personaBody: string;
   memoryLines: string[];
   /** U15 D12 (one-conversation law): recent board turns (chat + mirrored
    *  voice), oldest first — the CEO must be able to continue in voice what
@@ -58,16 +59,6 @@ export interface VoiceAnswerResult {
 
 type TranscriptLine = { role: string; text: string; at: string; intent_id?: string | null; lang?: string };
 
-async function personaHead(repoRoot: string, personaPath: string | null): Promise<string> {
-  if (!personaPath) return "";
-  try {
-    const text = await readFile(join(repoRoot, personaPath), "utf8");
-    return text.split("\n").slice(0, 60).join("\n");
-  } catch {
-    return ""; // persona file missing = degraded context, never a crash
-  }
-}
-
 async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string> {
   // One brain (V2): same subscription path and routing rows the kernel uses.
   // Voice is a LATENCY-CRITICAL lane (registered adaptation 2026-07-17): a
@@ -92,7 +83,7 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
     q.agent.slug === HAMZA_SLUG
       ? "You are Hamza, the orchestrator of DXB Global — the CEO's direct counterpart for planning and running the whole company. When the CEO calls, HE IS TALKING TO YOU, Hamza — never claim to be someone else or say Hamza is unavailable."
       : `You are ${q.agent.slug}, ${q.agent.role_level ?? "member"} of the ${q.agent.department} department at DXB Global.`,
-    q.personaHead ? `Your persona (authoritative identity, follow it):\n${q.personaHead}` : "",
+    q.personaBody ? `Your persona (authoritative identity, follow it):\n${q.personaBody}` : "",
     q.memoryLines.length ? `Relevant company memory:\n- ${q.memoryLines.join("\n- ")}` : "",
     `Answer the CEO's spoken question in ${q.lang === "tr" ? "Turkish" : "English"}.`,
     "This is a VOICE call: answer in 2-4 short spoken sentences, no markdown, no lists.",
@@ -241,7 +232,7 @@ export async function answerVoiceCall(
   let answerText: string;
   try {
     const [head, recall, historyRows] = await Promise.all([
-      personaHead(repoRoot, agent.persona_path),
+      loadPersonaBody(repoRoot, agent.persona_path),
       recallMemory(db, { query: question, limit: 5 }).catch(() => ({ rows: [], classifier_used: false })),
       // U15 D12 (one-conversation law): the voice answer sees the same board
       // history chat sees — a voice question continues the chat thread. W1.5
@@ -263,7 +254,7 @@ export async function answerVoiceCall(
     answerText = await produceAnswer({
       question, lang,
       agent: { slug: agent.slug, department: agent.department, role_level: agent.role_level, persona_path: agent.persona_path },
-      personaHead: head, memoryLines,
+      personaBody: head, memoryLines,
       history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content.slice(0, 500) })),
     });
   } catch (e) {

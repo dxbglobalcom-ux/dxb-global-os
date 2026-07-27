@@ -9,6 +9,14 @@ export type SectionSpec = {
   title: string;
   /** compact derlemede kısaltılabilir mi (§1-6 + §11 HER ZAMAN tam — spec §26) */
   compactable: boolean;
+  /**
+   * Rol-özgü bölüm: YOKSA kapı reddetmez, VARSA derlenir.
+   * Bu bayrak olmadan role-specific bir bölüm eklemek iki yoldan da yanlıştı:
+   * listeye eklenmezse derleyici onu SESSİZCE düşürür (yazılmış ama teslim
+   * edilmemiş bir CEO emri), listeye zorunlu olarak eklenirse bölümü olmayan
+   * 198 persona kapıdan düşer. Ölçüldü 2026-07-27, §13 eklenirken.
+   */
+  optional?: boolean;
 };
 
 export const PERSONA_SECTIONS: readonly SectionSpec[] = [
@@ -26,6 +34,17 @@ export const PERSONA_SECTIONS: readonly SectionSpec[] = [
   // §12 anayasal bölüm (CEO D5+D6 2026-07-17, Talep §5.12; spec §4.1 kanonik metin, G8):
   // tek tip metin tasarım gereği — jenerik-metin reddi §12'ye uygulanmaz.
   { no: 12, key: "discipline dna", title: "Discipline DNA & Islamic conduct", compactable: false },
+  // §13 — rol-özgü karakter bölümü (CEO ruling 2026-07-27). Şu an YALNIZ orkestratörde
+  // (`agents-orchestrator` = Hamza): CEO şirketini emanet edeceği orkestratörün, adını taşıdığı
+  // Hamza ibn Abdülmuttalib (r.a.) karakterinde olmasını emretti. §12'nin aksine bu bölüm
+  // MİRAS ALINMAZ — ada ve arkasındaki emanete özgüdür. optional: yoksa kapı reddetmez.
+  {
+    no: 13,
+    key: "name and the character",
+    title: "The name and the character",
+    compactable: false,
+    optional: true,
+  },
 ] as const;
 
 /** `# PERSONA — {Unvan}` başlık satırı deseni — isim politikası (E5.2b, CEO 2026-07-11):

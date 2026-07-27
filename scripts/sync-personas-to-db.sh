@@ -16,6 +16,22 @@ PSQL=(docker exec -i supabase_db_DxB_Global_OS psql -U postgres -d postgres -At)
 MODE="submit"
 [ "${1:-}" = "--verify" ] && { MODE="verify"; shift; }
 
+# AUTHOR — U30 (CEO ruling 2026-07-26): construction authorship is shared between Opus 5 and
+# Fable 5, and the model running THIS session is the author. This was hardcoded to 'fable-5'
+# until 2026-07-27, so every persona an Opus 5 session synced was filed under the wrong author —
+# the ledger-behind-reality class. There is no default on purpose: a silent wrong author is worse
+# than a stopped script.
+AUTHOR="${DXB_PERSONA_AUTHOR:-}"
+if [ "$MODE" = "submit" ] && [ -z "$AUTHOR" ]; then
+  echo "HATA: DXB_PERSONA_AUTHOR boş. Bu oturumun yazarını yaz — persona kaydı yazarsız/yanlış yazarla açılmaz." >&2
+  echo "  ör: DXB_PERSONA_AUTHOR=opus-5 $0 personas/ceo/agents-orchestrator.md" >&2
+  exit 2
+fi
+case "${AUTHOR:-x}" in
+  opus-5|fable-5|x) ;;
+  *) echo "HATA: DXB_PERSONA_AUTHOR='$AUTHOR' — U30 yalnız 'opus-5' veya 'fable-5' tanır." >&2; exit 2 ;;
+esac
+
 files=("$@")
 if [ ${#files[@]} -eq 0 ]; then
   mapfile -t files < <(find "$REPO_DIR/personas" -mindepth 2 -name '*.md' | sort)
@@ -57,12 +73,19 @@ for f in "${files[@]}"; do
       echo "DIFF  $slug — DB($db_hash) ≠ dosya($file_hash) — sync gerekli"; mismatched=$((mismatched+1))
     fi
   else
-    pid="$("${PSQL[@]}" <<SQL
+    # The psql exit code is NOT trusted alone here: with a heredoc the client can still return 0
+    # while the server refused the INSERT. The returned persona id IS the proof of a write, so an
+    # empty id is treated as a failure. Measured 2026-07-27: a CHECK-constraint refusal
+    # (personas_author_check) printed its error and the run still reported "submit: 1 · fail: 0" —
+    # a script that reports success for work the database refused is worse than no script.
+    if ! pid="$("${PSQL[@]}" <<SQL
 SELECT public.fn_persona_submit('$emp_id'::uuid, \$dxb_body\$$body
-\$dxb_body\$, 'fable-5');
+\$dxb_body\$, '$AUTHOR');
 SQL
-)"
-    echo "SUBMIT $slug — persona id: $pid (pending; gate verdikti ayrı adım)"
+)" || [ -z "${pid//[[:space:]]/}" ]; then
+      echo "FAIL  $slug — submit reddedildi (DB yazmadı; yukarıdaki hataya bak)"; failed=$((failed+1)); continue
+    fi
+    echo "SUBMIT $slug — persona id: $pid · author: $AUTHOR (pending; gate verdikti ayrı adım)"
     # Unvan da dosyadan akar (tek yön, E6.3 fix wave 3): dossier Title → agents.title (EN kanonik)
     title="$(extract_title "$f")"
     if [ -n "$title" ]; then
