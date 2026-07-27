@@ -104,6 +104,43 @@ export default function globalSetup(): () => Promise<void> {
       if (p > 0) {
         console.log(`[global-teardown] swept ${p} test-probe task row(s) (e8 observability class)`);
       }
+      // Fifth class, measured 2026-07-27 right after W2.6 shipped: the r31
+      // voice suite drives a real call, and answering a call MIRRORS both turns
+      // onto the CEO's chat board (U15 D13 one-conversation law). The suite
+      // deleted its `voice_calls` and `intents` rows and never knew about the
+      // mirror, so four probe turns landed inside the morning briefing's own
+      // conversation — the 12-hour idle rule attaches new turns to the newest
+      // thread, which is now Hamza's briefing.
+      //
+      // This class is the worst of the five: it is not an alert the CEO can
+      // dismiss, it is text inside a conversation he is meant to read.
+      // Test-owned by construction — production voice turns are the CEO's own
+      // speech, and these strings come from `tests/r31/voice-line.test.ts`
+      // (the second pattern is the TTS-normalised form of "R31 probe:", which
+      // the intake rewrites before the mirror sees it).
+      const chatProbes = await sql`
+        DELETE FROM chat_messages
+         WHERE source = 'voice'
+           -- ILIKE and the STEM, not the sentence: the intake normalises the
+           -- probe text before the mirror sees it, so the same case reaches the
+           -- board as "R31 probe:", "F31 Probe", "Pre-31 Probe" and "ve otuz bir
+           -- probe … görevin nedir". Measured 2026-07-27: a case-sensitive
+           -- pattern swept 178 rows and left 15 behind.
+           AND (content ILIKE '%probe%şirketin görev%' OR content LIKE 'R31 %')
+      `.execute(getDb());
+      const c = Number(chatProbes.numAffectedRows ?? 0);
+      if (c > 0) {
+        console.log(`[global-teardown] swept ${c} voice-probe chat message(s) off the CEO board (r31 class)`);
+        // A thread the sweep emptied was never a conversation — the same rule
+        // migration 20260726006000 applied to the CEO's three lost "selam"
+        // attempts. A thread that still holds a message is history: untouched.
+        const ghosts = await sql`
+          DELETE FROM chat_sessions s
+           WHERE NOT EXISTS (SELECT 1 FROM chat_messages m WHERE m.session_id = s.id)
+        `.execute(getDb());
+        const g = Number(ghosts.numAffectedRows ?? 0);
+        if (g > 0) console.log(`[global-teardown] swept ${g} emptied chat thread(s)`);
+      }
     } finally {
       await closeDb().catch(() => {});
     }

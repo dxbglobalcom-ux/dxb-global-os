@@ -41,6 +41,20 @@ afterAll(async () => {
   for (const text of createdIntentTexts) {
     await db().deleteFrom("intents").where("text", "=", text).where("source", "=", "voice").execute();
   }
+  // Answering a call MIRRORS both turns onto the CEO's chat board (U15 D13 —
+  // chat and voice are one conversation). This suite cleaned its calls and its
+  // intents and left the mirror behind: measured 2026-07-27, four probe turns
+  // sat inside Hamza's morning briefing thread, because the 12-hour idle rule
+  // attaches new turns to the newest conversation. A probe may not leave text
+  // in a conversation the CEO is meant to read.
+  await sql`
+    DELETE FROM chat_messages
+     WHERE source = 'voice'
+       -- ILIKE and the STEM: the intake normalises the probe text before the
+       -- mirror sees it ("F31 Probe", "Pre-31 Probe", "ve otuz bir probe …
+       -- görevin nedir" all came from this one question).
+       AND (content ILIKE '%probe%şirketin görev%' OR content LIKE 'R31 %')
+  `.execute(db());
   await db()
     .deleteFrom("voice_identities")
     .where("agent_id", "in", db().selectFrom("agents").select("id").where("slug", "=", "cfo"))
