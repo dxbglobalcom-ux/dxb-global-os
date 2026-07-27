@@ -2348,7 +2348,8 @@
       "untitledThread": "Untitled conversation",
       "threadMessages": "messages",
       "threadMessageOne": "message",
-      "threadsHint": "Each conversation keeps its own context"
+      "threadsHint": "Each conversation keeps its own context",
+      "briefingTag": "Morning briefing"
     }
   },
   "help": {

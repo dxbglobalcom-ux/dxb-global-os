@@ -6,7 +6,7 @@
 // is a projection: writes go through /api/chat, answers arrive from the
 // resident chat.drain over the dxb:chat Broadcast channel.
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Mic, Square } from "lucide-react";
+import { Mic, Square, Sunrise } from "lucide-react";
 import { StatusBadge } from "@/components/primitives";
 import { useDxbChannel, type DxbBroadcastPayload } from "@/lib/realtime";
 
@@ -14,13 +14,18 @@ export type ChatMessage = {
   id: string;
   role: "ceo" | "hamza";
   content: string;
+  /** W2.6: Turkish leg of a SYSTEM-authored message (the morning briefing).
+   *  Null on conversation turns — the CEO's words and Hamza's replies are the
+   *  language they were written in, not translations of each other. */
+  content_tr?: string | null;
   mode: "normal" | "plan";
   status: "pending" | "answered" | "failed";
   error: string | null;
   intent_id: string | null;
   /** U15 round 2 (one-conversation law): voice turns mirror onto the board
-   *  tagged 'voice'; absent on legacy rows fetched before the migration */
-  source?: "chat" | "voice";
+   *  tagged 'voice'; 'briefing' = the holding opened this one itself (W2.6);
+   *  absent on legacy rows fetched before the migration */
+  source?: "chat" | "voice" | "briefing";
   created_at: string;
 };
 
@@ -49,6 +54,8 @@ export type ChatLabels = {
   dictateErrors: Record<string, string>;
   /** U15 round 2: marker on board turns that arrived through the mic */
   voiceTag: string;
+  /** W2.6: marker on the conversation the holding opened by itself */
+  briefingTag: string;
 };
 
 function mergeMessage(prev: ChatMessage[], next: ChatMessage): ChatMessage[] {
@@ -214,11 +221,12 @@ export function ChatBoard({
         id: String(r.id),
         role: r.role as "ceo" | "hamza",
         content: String(r.content ?? ""),
+        content_tr: (r.content_tr as string) ?? null,
         mode: (r.mode as "normal" | "plan") ?? "normal",
         status: (r.status as ChatMessage["status"]) ?? "pending",
         error: (r.error as string) ?? null,
         intent_id: (r.intent_id as string) ?? null,
-        source: (r.source as "chat" | "voice") ?? "chat",
+        source: (r.source as ChatMessage["source"]) ?? "chat",
         created_at: String(r.created_at ?? new Date().toISOString()),
       }),
     );
@@ -323,13 +331,30 @@ export function ChatBoard({
                     {labels.voiceTag}
                   </span>
                 )}
+                {m.source === "briefing" && (
+                  <span
+                    data-testid="chat-briefing-tag"
+                    className="flex items-center gap-1 text-caption text-accent-champagne"
+                  >
+                    <Sunrise className="size-3" aria-hidden />
+                    {labels.briefingTag}
+                  </span>
+                )}
                 {m.mode === "plan" && <StatusBadge level="info">{labels.planMode}</StatusBadge>}
                 {m.role === "ceo" && m.status === "failed" && (
                   <StatusBadge level="danger">{labels.failed}</StatusBadge>
                 )}
               </div>
-              <p className="whitespace-pre-wrap text-body-s text-ink-primary">{m.content}</p>
-              {m.role === "hamza" && (
+              {/* W2.6: a system-authored message carries both legs and the board
+                  shows the one this locale asked for — the English board never
+                  borrows the Turkish text. A conversation turn has one leg and
+                  falls through unchanged. */}
+              <p className="whitespace-pre-wrap text-body-s text-ink-primary">
+                {(lang === "tr" ? m.content_tr : null) ?? m.content}
+              </p>
+              {/* A briefing is a report, not a proposal: there is nothing to
+                  dispatch, so the button that would offer it is not drawn. */}
+              {m.role === "hamza" && m.source !== "briefing" && (
                 <div className="mt-2">
                   {dispatchedIds.has(m.id) || m.intent_id ? (
                     <StatusBadge level="ok">{labels.dispatched}</StatusBadge>

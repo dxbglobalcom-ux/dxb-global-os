@@ -2348,7 +2348,8 @@
       "untitledThread": "Başlıksız konuşma",
       "threadMessages": "mesaj",
       "threadMessageOne": "mesaj",
-      "threadsHint": "Her konuşma kendi bağlamını taşır"
+      "threadsHint": "Her konuşma kendi bağlamını taşır",
+      "briefingTag": "Sabah brifingi"
     }
   },
   "help": {

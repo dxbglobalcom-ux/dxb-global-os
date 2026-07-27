@@ -18,6 +18,7 @@ import {
 import { drainWorkflowRuns, registerCronTriggers, triggerRunNow } from "@dxb/kernel";
 import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
 import {
+  deliverMorningBriefing,
   drainChatMessages,
   drainIntents,
   drainTasks,
@@ -86,6 +87,13 @@ export const QUEUES = {
   // there). Same self-chain idiom as voice.drain; the CEO is watching the
   // board, so the cadence matches the voice lane.
   chatDrain: "chat.drain",
+  // W2.6 proactive morning briefing (VOICE_INTERACTION_SPEC §24quinquies): the
+  // FIRST scheduled job in this company that writes to the CEO's board instead
+  // of answering it. Measured before it existed: 14 jobs, none touching
+  // chat_messages — Hamza had never opened a conversation. Content comes from
+  // one SQL view and no model call, so the briefing cannot hallucinate and a
+  // dead subscription lane cannot silence the CEO's morning.
+  briefingMorning: "ceo.briefing.morning",
 } as const;
 
 // pg-boss cron is minute-grained, so the 15s outbox tick runs as a
@@ -147,6 +155,12 @@ export const CADENCES = {
   // window — the point of the row is that work appears while nobody watches.
   // Every 15 minutes; a pass with nothing to harvest is one indexed query.
   workGenerateCron: "*/15 * * * *",
+  // W2.6: 07:00 in the operating manual means 07:00 where the CEO is standing.
+  // Every other schedule in this file is UTC (measured: 14/14 rows), which is
+  // harmless for a digest job and wrong for the one message he reads with his
+  // first coffee — so this row carries its timezone explicitly.
+  briefingMorningCron: "0 7 * * *",
+  briefingMorningTz: "Europe/Berlin",
 } as const;
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -386,6 +400,18 @@ export async function startScheduler(): Promise<PgBoss> {
     }
   });
 
+  // W2.6 — the holding opens the conversation. Outcome is logged either way:
+  // "delivered", "already delivered" and "the CEO switched it off" are three
+  // different mornings and must never look the same in the journal.
+  await boss.work(QUEUES.briefingMorning, async () => {
+    const out = await deliverMorningBriefing(getDb());
+    console.log(
+      out.delivered
+        ? `[briefing] delivered session=${out.sessionId}`
+        : `[briefing] not delivered: ${out.reason}`,
+    );
+  });
+
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
@@ -400,6 +426,9 @@ export async function startScheduler(): Promise<PgBoss> {
   await boss.schedule(QUEUES.revenueBrief, CADENCES.revenueBriefCron);
   await boss.schedule(QUEUES.revenueRollup, CADENCES.revenueRollupCron);
   await boss.schedule(QUEUES.workGenerate, CADENCES.workGenerateCron);
+  await boss.schedule(QUEUES.briefingMorning, CADENCES.briefingMorningCron, {}, {
+    tz: CADENCES.briefingMorningTz,
+  });
   // Workflow cron triggers: enabled trigger.kind='cron' workflows register as
   // 'wf:<slug>' schedules; those jobs need their queue + worker too.
   const cronWfs = await registerCronTriggers({

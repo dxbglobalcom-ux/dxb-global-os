@@ -18,8 +18,15 @@ Günde ~15 dakikalık bir rutinle tüm holdingi yönetebilirsiniz.
 
 ## 2. Günlük rutin (sabah, ~15 dk)
 
-1. **Sabah brifingi** — `Intelligence → /intelligence` sayfası sabah brifingini gösterir
-   (07:00 itibarıyla hazır; kaynak: `v_morning_briefing`). Gece ne oldu, ne bitti, ne bekliyor.
+1. **Sabah brifingi — Hamza size yazar (W2.6, 2026-07-27'den beri).** Her sabah **07:00'de
+   (sizin saatinizle)** Hamza sohbet panosunda YENİ BİR KONUŞMA AÇAR: gece ne bitti, holdingin
+   kendi kendine ne başlattığı, sizi bekleyen onay/uyarı, 24 saatlik ve aylık para, gelir hattı.
+   `Command → Hamza ile Sohbet (/chat)` — konuşmalar sütununda en üsttedir, "Sabah brifingi"
+   rozetiyle. Cevap yazarsanız aynı konuşmada devam eder. Sayılar tek bir SQL görünümünden gelir
+   (`v_ceo_briefing`) — hiçbir model yazmaz, dolayısıyla uydurma sayı imkânsızdır.
+   **Kapatma anahtarı sizde:** `briefing.proactive.enabled` (ayarlar) ve günlük tavan
+   `briefing.proactive.max_per_day`. Aynı brifingi `Intelligence → /intelligence` sayfasında
+   sayfa hâlinde de görürsünüz (kaynak: `v_morning_briefing`).
 2. **Onay kutusu** — `Command → Approvals (/approvals)`. Sol menüdeki rozet bekleyen onay
    sayısını canlı gösterir. Kurallar §5'te.
 3. **Alarmlar** — `Command → Alerts (/alerts)`. Rozet yüksek-riskli bekleyenleri sayar.
@@ -143,8 +150,15 @@ the whole holding.
 
 ## 2. Daily routine (morning, ~15 min)
 
-1. **Morning briefing** — `Intelligence → /intelligence` shows the morning briefing (ready by
-   07:00; source: `v_morning_briefing`): what happened overnight, what finished, what waits.
+1. **Morning briefing — Hamza writes to you (W2.6, since 2026-07-27).** Every morning at
+   **07:00 your time**, Hamza OPENS A NEW CONVERSATION on the chat board: what finished
+   overnight, what the holding started by itself, what waits on you, 24-hour and month-to-date
+   money, the revenue line. `Command → Chat with Hamza (/chat)` — top of the conversation
+   column, badged "Morning briefing". Reply and the thread continues. The figures come from one
+   SQL view (`v_ceo_briefing`) and no model writes them, so an invented number is impossible.
+   **You hold the switch:** `briefing.proactive.enabled` plus the daily ceiling
+   `briefing.proactive.max_per_day`. The same briefing is also a page:
+   `Intelligence → /intelligence` (source: `v_morning_briefing`).
 2. **Approval inbox** — `Command → Approvals (/approvals)`. The sidebar badge counts pending
    approvals live. Rules in §5.
 3. **Alerts** — `Command → Alerts (/alerts)`. The badge counts high-risk pending items.

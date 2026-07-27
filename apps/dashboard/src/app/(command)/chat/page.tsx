@@ -62,14 +62,21 @@ export default async function ChatPage({
   // conversations has to answer: what it was called, how big it was, when it
   // last moved. An untitled thread borrows the CEO's own opening line rather
   // than wearing a generic label.
+  // W2.6: a thread Hamza opened carries a name the SYSTEM wrote, so it has both
+  // language legs (`title_tr`); a thread named by the CEO's own opening line
+  // carries his words in both, because they are not a translation of anything.
   const sessionsRes = await supabase
     .from("v_chat_threads")
-    .select("id, title, last_message_at, messages, has_voice")
+    // `has_briefing` exists on the view and is deliberately NOT read here: the
+    // thread's own name says "sabah brifingi", so a second marker beside it
+    // would be an information-free field (CEO minimalism ruling 2026-07-18).
+    .select("id, title, title_tr, last_message_at, messages, has_voice")
     .order("last_message_at", { ascending: false })
     .limit(30);
   const sessions = (sessionsRes.data ?? []) as Array<{
     id: string;
     title: string | null;
+    title_tr: string | null;
     last_message_at: string;
     messages: number;
     has_voice: boolean;
@@ -80,7 +87,7 @@ export default async function ChatPage({
     activeSessionId
       ? supabase
           .from("chat_messages")
-          .select("id, role, content, mode, status, error, intent_id, source, created_at")
+          .select("id, role, content, content_tr, mode, status, error, intent_id, source, created_at")
           .eq("session_id", activeSessionId)
           .order("created_at", { ascending: true })
           .limit(200)

@@ -290,3 +290,39 @@ test("widget layout is server truth: fresh context sees the stored layout (§38/
   const after = await page.locator("main section, main [data-widget]").count();
   expect(after).toBe(before);
 });
+
+test("a briefing Hamza opened reads in the board's own language (W2.6)", async ({ page, context }) => {
+  // W2.6 puts SYSTEM-authored text on the CEO's board for the first time, which
+  // is the exact class that produced the U26 and U33 defects (an English literal
+  // rendering on the Turkish board). Both legs are stored; this gate holds the
+  // rendering side. It is vacuous on a database that has never delivered a
+  // briefing and non-vacuous every day after 07:00 — a class gate, not a row
+  // anchor, so it cannot rot the way the dead D10 approval anchor did.
+  await page.setViewportSize({ width: 1366, height: 900 });
+  for (const locale of ["tr", "en"] as const) {
+    await context.clearCookies({ name: "dxb-locale" });
+    await context.addCookies([{ name: "dxb-locale", value: locale, url: "http://localhost:3000" }]);
+    await page.goto("/chat");
+    await expect(page.locator("main")).toBeVisible();
+
+    const tag = page.getByTestId("chat-briefing-tag").first();
+    if ((await page.getByTestId("chat-briefing-tag").count()) === 0) continue;
+
+    await expect(tag).toHaveText(locale === "tr" ? "Sabah brifingi" : "Morning briefing");
+    const body = await page.locator("main p.whitespace-pre-wrap").first().innerText();
+    if (locale === "tr") {
+      expect(body).toContain("Günaydın");
+      expect(body).not.toContain("Good morning");
+    } else {
+      expect(body).toContain("Good morning");
+      expect(body).not.toContain("Günaydın");
+    }
+    // A report is not a proposal: the dispatch button has nothing to send.
+    const dispatchInBriefing = await page.evaluate(() => {
+      const tagEl = document.querySelector('[data-testid="chat-briefing-tag"]');
+      const bubble = tagEl?.closest("div")?.parentElement;
+      return bubble ? bubble.querySelectorAll("button").length : -1;
+    });
+    expect(dispatchInBriefing).toBe(0);
+  }
+});

@@ -24,6 +24,9 @@ import { Mic, Plus } from "lucide-react";
 export interface ChatSessionRow {
   id: string;
   title: string | null;
+  /** W2.6: a thread the SYSTEM named carries both legs; a thread named by the
+   *  CEO's own opening line carries his words in both. */
+  title_tr: string | null;
   last_message_at: string;
   messages: number;
   has_voice: boolean;
@@ -103,7 +106,9 @@ export function ChatThreads({
                         active ? "text-accent-champagne" : "text-ink-primary"
                       }`}
                     >
-                      {s.title?.trim() || labels.untitledThread}
+                      {(locale === "tr" ? s.title_tr : s.title)?.trim() ||
+                        s.title?.trim() ||
+                        labels.untitledThread}
                     </span>
                     <span className="mt-0.5 flex items-center gap-1.5 text-caption text-ink-muted">
                       <span className="tabular-nums">

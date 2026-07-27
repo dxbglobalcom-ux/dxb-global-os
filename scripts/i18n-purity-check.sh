@@ -46,6 +46,24 @@ else
   echo "PASS risks: every risk titled + noted EN+TR"
 fi
 
+# W2.6: the holding now writes on the CEO's board itself. A SYSTEM-authored
+# message is an i18n surface — a briefing missing its Turkish leg would print an
+# English paragraph straight onto the Turkish board, and its thread name would
+# sit in the conversation list in the wrong language. Conversation turns (the
+# CEO's own words, Hamza's replies) are deliberately single-leg and out of scope.
+briefings_missing="$("${PSQL[@]}" -c "
+  SELECT 'message ' || m.id FROM chat_messages m
+   WHERE m.source = 'briefing' AND (m.content_tr IS NULL OR btrim(m.content_tr) = '')
+  UNION ALL
+  SELECT 'thread ' || s.id FROM chat_sessions s
+   WHERE EXISTS (SELECT 1 FROM chat_messages m WHERE m.session_id = s.id AND m.source = 'briefing')
+     AND (s.title IS NULL OR s.title_tr IS NULL);")"
+if [ -n "$briefings_missing" ]; then
+  echo "FAIL system-authored chat rows missing a language leg:"; echo "$briefings_missing"; fail=1
+else
+  echo "PASS briefings: every system-authored chat row carries EN+TR"
+fi
+
 node - <<EOF || fail=1
 const en = require("$REPO_DIR/apps/dashboard/messages/en.json");
 const tr = require("$REPO_DIR/apps/dashboard/messages/tr.json");

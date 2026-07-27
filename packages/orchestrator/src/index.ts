@@ -19,6 +19,9 @@ export type { PlanStep, PlanHarvest, GenerateWorkResult, GeneratedTask } from ".
 export { buildSdkToolOptions, resolveEvidenceToolCalls, resolveExecutionRoute } from "./worker-shim.js";
 export { runCriticalGate, codexRunner, CRITICAL_GATE_CONFIG } from "./critical-gate.js";
 export { classifyLeg, buildBriefSnapshot, legInstruction, LEG_TASK_CLASS } from "./chat-legs.js";
+// W2.6 — the proactive morning briefing: the holding opens the conversation.
+export { renderBriefing, readBriefingFacts, deliverMorningBriefing } from "./morning-briefing.js";
+export type { BriefingFacts, BriefingHeadline, RenderedBriefing, BriefingDelivery } from "./morning-briefing.js";
 export type { ChatLeg, BriefSnapshot } from "./chat-legs.js";
 export type { CriticalGateInput, CriticalGateResult, ChallengerRun, ChallengerRunner, Objection } from "./critical-gate.js";
 export type { ExecutionRoute } from "./worker-shim.js";
