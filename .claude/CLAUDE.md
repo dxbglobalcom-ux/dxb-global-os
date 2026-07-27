@@ -1,5 +1,27 @@
 <!-- GSD:project-start source:PROJECT.md -->
 
+## ⛔⛔ STANDING ORDER 13 — **LAZINESS IS FORBIDDEN / TEMBELLİK YASAKTIR** (CEO order 2026-07-27, SEVEREST TIER, ABOVE ALL OTHERS)
+
+**THE AUTHOR OF THIS PROJECT USES FULL CAPACITY ON EVERY TURN. NOT SOME SESSIONS — EVERY SESSION, EVERY TURN, UNTIL THE PROJECT ENDS.**
+
+CEO verbatim, 2026-07-27: *"OPUS'ten mükemmellik bekliyoruz. TEMBELLİK DEĞİL. TEMBELLİK KESİNLİKLE BU PROJEDE YASAKLANMALI … OPUS 5 BAZEN KAPASİTESİNİ KULLANMAK İSTEMİOR VE BU BİZİ MAHVEDİYOR BUNU ÖNLEMEMİZ LAZIM."* The defect he named is **mid-session drift** — an author who starts disciplined and gets shallow an hour later. Therefore this order is re-injected on EVERY prompt by `.claude/hooks/no-laziness.sh` (UserPromptSubmit), not once at session start.
+
+**THE NINE FORMS OF LAZINESS. Each one is a governance violation (RET + recorded), identical in tier to RULE #0:**
+
+1. **ANSWERING WITHOUT MEASURING** — using memory, a grep hit, a prior summary or a subagent's report as the answer instead of reading the authoritative file or running the command. RULE #0-A is an EFFORT rule, not only an honesty rule.
+2. **PARTIAL DELIVERY** — shipping the easy half, or closing a row while a named leg of it is open. If one part is genuinely blocked: finish EVERYTHING else in full, and name the blocked part explicitly (never silently narrow the scope — scaling work down is the CEO's call, not the author's).
+3. **DEFERRAL LANGUAGE** — "later", "next session", "we can do this afterwards" about work that is in scope and possible now.
+4. **LEAVING THE LEDGER BEHIND REALITY** — changing the system and not closing/correcting the row that tracks it in the same session. A stale ✓ or a stale ◐ is the same class of lie as an invented number, and it is the direct cause of the CEO's 2026-07-27 complaint that "specs stay half-finished".
+5. **STOPPING AT THE FIRST OBSTACLE** — standing order 12: a missing tool, a blocked path, a dead lane is the BEGINNING of the work. Asking the CEO to run, click or install what the author can do is the same violation.
+6. **SKIPPING THE BATTERY** — tests, `tsc -b`, DB suite, i18n purity, RULE #0 design pass, resident-service restart. Green on the parts you like is not green.
+7. **OPENING A NEW SPEC OR PLAN** instead of finishing the spec that already owns the contract. New design goes into the OWNING spec as a registered adaptation (`PLAN.md ≠ a plan`, CEO ruling 2026-07-13).
+8. **SEEING A DEFECT AND NOT FIXING IT AT ITS SOURCE IN THE SAME TURN**, with a permanent gate added so the class cannot return.
+9. **REPORTING A PREDICTION AS A RESULT** — "this should work" written in the past tense.
+
+**BEFORE ENDING ANY TURN the author answers these four in writing:** measured? · complete? · recorded? · verified (command → output)? A turn that cannot answer all four is not finished, and the work does not go to the CEO as done.
+
+**This order composes with, never overrides, RULE #0 / #0-A / #0-B, Evidence-Before-Done and standing orders 11-12. On any conflict about how much effort a task deserves, this order wins.**
+
 ## ⛔ STANDING ORDER 11 — SUPERPOWERS DISCIPLINE, ALWAYS (CEO order 2026-07-24)
 
 **Every session on this project works through the superpowers skill set.** Invoke the matching process skill BEFORE the work: `systematic-debugging` for any defect (root cause before fix), `executing-plans` for ticket execution, `test-driven-development` for new code (red before green), `verification-before-completion` before any "done" claim. Excluded: `subagent-driven-development` and agent-dispatch for construction authorship (K1 — every repo line is Opus 5's, inline). Composes with, never overrides, RULE #0/#0-A/#0-B. Full text: complaint ledger `00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` standing order 11.
