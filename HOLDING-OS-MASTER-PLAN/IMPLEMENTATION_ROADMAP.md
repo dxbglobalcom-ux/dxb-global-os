@@ -1,5 +1,10 @@
 # IMPLEMENTATION_ROADMAP — DXB GLOBAL AI-NATIVE HOLDING OS
 
+> **OPEN ROWS HERE ALSO LIVE ON THE BOARD (2026-07-27, U38).** [[00-BOARD-OPEN-WORK]] is the
+> one page that answers "what is left" across all six ledgers. Close a row here and correct the
+> board in the SAME session; a stale row on either side is the same class of lie as an invented
+> number.
+
 > Dalga 5 · Yazar: Fable 5 bizzat · Kaynak hüküm: direktif madde 14 (uygulama sırası teknik detayla) + madde 17 (Faz 1-11) + madde 18/v6 (model dağılımı) · Üst: [[MASTER_PLAN]] §7 (pencere stratejisi — bu dosya P2/P3'ün adım tablosudur) · Kardeşler: [[BACKUP_PLAN]] (S1/S2 senaryoları), [[TEST_STRATEGY]], [[ACCEPTANCE_CRITERIA]]
 > Yürütme sözleşmesi: adımlar SIRAYLA; her adım kanıt komutuyla kapanır (evidence-before-done); ✓ işareti BU DOSYAYA işlenir (canlı ilerleme kaydı). Devralan yazar (2026-07-25'ten itibaren **Opus 5**, U20) herhangi bir ✓-sınırından sürdürebilir — istisnalar §5.
 

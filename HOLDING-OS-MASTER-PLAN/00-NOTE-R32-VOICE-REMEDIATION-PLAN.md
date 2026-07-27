@@ -1,5 +1,10 @@
 # 00-NOTE — R3.2 Voice-Line Defect Ledger & Deferred Remediation Plan
 
+> **OPEN ROWS HERE ALSO LIVE ON THE BOARD (2026-07-27, U38).** [[00-BOARD-OPEN-WORK]] is the
+> one page that answers "what is left" across all six ledgers. Close a row here and correct the
+> board in the SAME session; a stale row on either side is the same class of lie as an invented
+> number.
+
 > **Status update 2026-07-25 ROUND 2 (ticket 20260725-u15-voice-round2): the CEO ran block 8
 > live and returned a FAIL verdict with five NEW measured defect classes — D9 shutdown
 > disobedience ("kapan dedim kapanmadı"; dismissal missed by rough STT fell through to the LLM

@@ -1,5 +1,11 @@
 # CEO Complaint Ledger — 2026-07-19 (C-series)
 
+> **THE SEQUENCE CONTINUES ON THE BOARD (2026-07-27, U38).** C1-C25 closed here. The CEO's next
+> complaints — spoken on the night of 2026-07-27 while looking at the live dashboard — are
+> **C26-C42 on [[00-BOARD-OPEN-WORK]]**, section 2, each with the measurement taken that night.
+> They were numbered forward on purpose: the complaint history is ONE sequence, never a new
+> ledger per outburst.
+
 **Source:** `~/Desktop/şikayet.odt` (CEO, delivered 2026-07-19 ~00:45) — 19 numbered complaints with 26 screenshots.
 **Screenshots preserved:** `references/ceo-complaints-2026-07-19/` (26 PNGs extracted from the .odt).
 **Status:** OPEN — remediation queued after E13.1 closure (CEO ruling in-chat 2026-07-19: "önce bir projeyi bitirelim").

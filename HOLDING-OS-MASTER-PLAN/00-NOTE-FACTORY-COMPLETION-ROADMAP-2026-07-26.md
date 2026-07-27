@@ -1,5 +1,10 @@
 # NOTE — FACTORY COMPLETION ROADMAP (ordered work queue, 2026-07-26)
 
+> **↑ THIS NOTE IS NO LONGER THE ONLY PLACE OPEN WORK LIVES (2026-07-27, U38).** Whatever is
+> still open here also has a row on **[[00-BOARD-OPEN-WORK]]**, the one page that answers "what
+> is left" across all six ledgers. Close a row here and the board is corrected in the SAME
+> session — that parity IS the rule, not a courtesy.
+
 > **Status:** binding work order. Written by Opus 5 on the CEO's instruction *"herşey karıştı sen düzene sok lütfen"* and *"senden sonra gelen opus 5 kaldığın yerden devam etsin veya planı bilsin"*.
 > **This note does not design anything.** Every row points at a spec that already owns the contract, or at a measured defect. New design decisions go into the SPEC as registered adaptations, never here (CEO ruling 2026-07-13, "PLAN.md ≠ a plan").
 > **Read order for a fresh session:** `memory/opus-5-construction-governance.md` → `memory/model-routing-hierarchy.md` → `.planning/STATE.md` → `00-INDEX.md` (U-table) → this note.

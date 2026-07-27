@@ -1,5 +1,10 @@
 # ACCEPTANCE_CRITERIA — DXB GLOBAL AI-NATIVE HOLDING OS
 
+> **OPEN ROWS HERE ALSO LIVE ON THE BOARD (2026-07-27, U38).** [[00-BOARD-OPEN-WORK]] is the
+> one page that answers "what is left" across all six ledgers. Close a row here and correct the
+> board in the SAME session; a stale row on either side is the same class of lie as an invented
+> number.
+
 > Dalga 5 · Yazar: Fable 5 bizzat · Kaynak hüküm: direktif §38 (27 kabul şartı birebir) + §37 (10 ilk-teslim ekranı) + §35 (yasaklar — negatif kabul) + her spec'in done-definition'ı · Üst: [[MASTER_PLAN]] §10 · Kardeşler: [[TEST_STRATEGY]] (L7 protokolü), [[IMPLEMENTATION_ROADMAP]] E13
 > İki tier bağlayıcı: **M** = makine-denetlenebilir (komut/test kanıtı) · **C** = CEO göz testi (⚠ hiçbir modele devredilemez) · **M+C** = ikisi birden.
 

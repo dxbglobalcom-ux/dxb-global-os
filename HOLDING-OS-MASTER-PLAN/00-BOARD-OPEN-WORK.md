@@ -1,0 +1,105 @@
+# 00-BOARD — THE OPEN WORK BOARD
+
+**Accepted by the CEO, 2026-07-27 22:0x ("açık işler tahtası teklifini kabul ettim").**
+**This board is the single answer to "what is left".** Until tonight that answer lived in six
+separate ledgers — the roadmap, the U-table, the factory queue, the complaint ledger, the
+acceptance criteria and the voice remediation note — and no one, CEO or a fresh session, could
+see it in one look. That scatter is the measured root cause of the CEO's 2026-07-27 complaint
+that the project "advances in a mess and specs stay half-finished".
+
+## The law of this board
+
+1. **One row per open thing.** If work is open anywhere in the corpus, it has a row here. The
+   six ledgers keep their detail; this board keeps the truth about what is still open.
+2. **No row closes without evidence.** A row closes with a command and its decisive output, or
+   with the CEO's own eye/ear where the machine cannot check it. A closed row keeps its evidence.
+3. **No work starts outside this board.** New work gets a row first. New design goes into the
+   spec that already owns the contract as a registered adaptation — never into a new spec.
+4. **Historical order.** Rows are ordered by the date the item was opened, oldest first, because
+   the CEO's ruling of 2026-07-27 is that half-finished older work outranks new work.
+5. **Ledger parity.** When a row closes here, the ledger that owns it is corrected in the SAME
+   session. A stale ✓ or a stale ◐ is a governance violation of the same tier as an invented number.
+
+## How to read the "Waits on" column
+
+| Value | Meaning |
+|---|---|
+| **CEO** | Needs the CEO's decision, money, eye, ear or identity. The author cannot close it. |
+| **AUTHOR** | The session author's work. No excuse, no deferral — a missing tool or a blocked path is the beginning of the work. |
+| **HARDWARE** | Physically blocked until the workstation arrives (CEO confirmed: **Friday**). |
+
+---
+
+## Section 1 — Open work, historical order
+
+Every row measured on 2026-07-27 unless its evidence column says otherwise.
+
+| # | Opened | What is open (plain language) | Owning spec / ledger | Why it is still open | Waits on | What closes it |
+|---|---|---|---|---|---|---|
+| B01 | 2026-07-10 | **Boardroom** — several directors discussing a question out loud, with the CEO listening | [[VOICE_INTERACTION_SPEC]] §3.4 (add-later section), U4 | The CEO deferred it at the time | CEO | A CEO order to build it |
+| B02 | 2026-07-17 | **Small design symmetry defects the CEO disliked** — the list was never captured | U16, [[DESIGN_SYSTEM]] | Deferred by CEO ruling; nobody ever wrote down which surfaces | AUTHOR | A written surface-by-surface defect list, then RULE #0 pass per surface |
+| B03 | 2026-07-17 | **Voice line — the CEO's ear test** (block 8): selam → spoken ack · question → spoken answer · "kapanabilirsin" → spoken bye | [[00-NOTE-R32-VOICE-REMEDIATION-PLAN]] block 8, roadmap R3.2 ◐, U15 | Machine blocks 1-7 executed 2026-07-25; only the CEO's ear can close D1/D3 | CEO + HARDWARE | The 5-minute spoken protocol at the real mic, legs timed |
+| B04 | 2026-07-17 | **University product layer** — a separate product | Roadmap R6.2 | Never started; no architecture written | CEO | A CEO order to start |
+| B05 | 2026-07-19 | **Real payment / storefront integrations** (Stripe, DocuSign, Gmail send) | Roadmap R6.1 | Frozen when the CEO cancelled Outleteuro (U19); still shows as a debt | CEO | A future CEO order |
+| B06 | 2026-07-25 | **kimi-3 model exam** | [[MODEL_ROUTING_SPEC]] §4c | OpenRouter balance exhausted; the exam costs money | CEO (money) | Balance, then the §4c onboarding chain |
+| B07 | 2026-07-25 | **Codex 5.6 exam** | [[MODEL_ROUTING_SPEC]] §4c | Needed a subscription session; the path is open now | AUTHOR | §4c chain run to `active` with the scores recorded |
+| B08 | 2026-07-25 | **Per-employee brain switch** — the CEO changing ONE employee's model from the dashboard | [[MODEL_ROUTING_SPEC]] §4b | Half shipped: 205/205 agents carry `brain_source='slot'`; `fn_update_agent_brain` was never written | AUTHOR | The function + the dashboard control + an audited change |
+| B09 | 2026-07-26 | **Hermes has no brain** — the 24/7 server runs but cannot think (credit exhausted + a retired model) | Factory queue W3 | Needs money or a subscription lane | CEO (money) | A live server-side agent run that succeeds |
+| B10 | 2026-07-26 | **Hermes is invisible on the CEO's board** — the server and the laptop are two separate databases | Factory queue W3, [[OBSERVABILITY_SPEC]] | No bridge between the two databases | AUTHOR | The server's work appearing on the CEO's live board |
+| B11 | 2026-07-26 | **13 department keys on the server + the first 06:00 run** | Factory queue W3 | Setup debt, never closed | AUTHOR | Keys present + one proven overnight run |
+| B12 | 2026-07-26 | **Local model layer + full voice repair** (5 rows: local model exam, `whisper large-v3-turbo`, mixed language, pronunciation layer, local embeddings) | Factory queue W4.1-4.5 | Physically blocked on the workstation | HARDWARE (Friday) | Each row's own evidence; models chosen by measurement, never reputation |
+| B13 | 2026-07-26 | **The CEO acceptance session was never held** — 11 of 27 acceptance criteria are permanently UNVERIFIED | [[ACCEPTANCE_CRITERIA]] §38, factory queue W5.1 | The session has not happened | CEO | The session, after the audit twin has faced the machine-checkable legs |
+
+---
+
+## Section 2 — The CEO's complaints of 2026-07-27 (C26-C42)
+
+The complaint ledger C1-C25 (`00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md`) closed 25/25. These
+are NEW, spoken by the CEO on the night of 2026-07-27 while looking at the live dashboard. They
+continue the same numbering so the complaint history stays one sequence.
+
+Every "Measured" cell below was taken this session. A row with no measurement says so.
+
+| # | The complaint, in the CEO's terms | Measured tonight | Owning spec | Waits on | What closes it |
+|---|---|---|---|---|---|
+| C26 | **"I say 'Hamza, tell me what is going on on this page' and he must know which page I am on and explain it."** Hamza has no idea where the CEO is standing | `apps/dashboard/src/app/api/chat/route.ts` — **zero** references to pathname / page / route context. The chat receives the message and nothing else | [[CEO_COMMAND_CENTER_SPEC]] + [[VOICE_INTERACTION_SPEC]] | AUTHOR | The CEO asks the question on three different pages and gets three page-correct answers |
+| C27 | **Links between pages are weak** — the surfaces do not lead into each other | Not yet measured surface-by-surface | [[CEO_COMMAND_CENTER_SPEC]] §7 | AUTHOR | A navigation audit table: every entity on every page reaches its own detail |
+| C28 | **"Opportunities were found but you cannot open one. Where are the details? THERE ARE NONE."** | `revenue/opportunities/` holds `page.tsx` only — **no `[id]` detail route exists** | [[REVENUE_ENGINE_SPEC]] | AUTHOR | Clicking a discovered opportunity opens its full record |
+| C29 | **The Skills page is rubbish** — 23 skills, all from one source, one flat list. A plugin or skill that contains other skills must collapse into a dropdown group | `library_items` kind=`skill` = **23**; kind=`plugin` = **18**; the page renders a flat table | [[HOLDING_LIBRARY_SPEC]] | AUTHOR | Parent/child grouping with the CEO's preferred progressive disclosure |
+| C30 | **"I gave nearly 100 repos. NOT ONE was properly studied, installed and integrated into the system."** Plugins and MCPs are weak | `INTEGRATION-TRACKER.md` — 80 tracked items: **51 STUDY · 4 INSTALL** · the rest other. Most study cards are stubs | [[CAPABILITY_ARSENAL_DOCTRINE]] | AUTHOR | Per source: a real study card, an install decision with a reason, and a code path that consumes it — or an explicit written refusal |
+| C31 | **"What are these tools? Skinny. Everything about the holding looks skinny."** | `library_items` = 434 rows across 15 kinds, but `library_usage_log` = **0 rows** and only **12 distinct items** were ever granted to anyone (173 grant rows). The catalogue is real; the *use* is empty | [[HOLDING_LIBRARY_SPEC]] | AUTHOR | Usage recorded per item, and the catalogue reflecting what the workforce actually reaches for |
+| C32 | **"Something was built, but it is WEAK. Every page must be re-upgraded until it is excellent."** | Systemic — no single measurement | [[DESIGN_SYSTEM]] + RULE #0-B | AUTHOR | A per-page upgrade pass with a RULE #0 verification per surface, one surface per turn, never batched |
+| C33 | **"There is no DATE — only a time. When did this work start?"** (Live Operations and the timelines) | **7** dashboard components render `toLocaleTimeString` with no date: `live-feed`, `live-ticker`, `alerts-rail`, `intelligence-rail`, `models-table`, `voice-call`, `live-clock` | [[CEO_COMMAND_CENTER_SPEC]] | AUTHOR | Every time stamp on a CEO surface carries the date it belongs to |
+| C34 | **The date is placed stupidly** — bad position, no aesthetic judgement | Same components as C33 | [[DESIGN_SYSTEM]] + RULE #0 | AUTHOR | Date/time treatment designed once as a token, applied everywhere |
+| C35 | **Long descriptions must be dropdowns** — click to open, excellent design, not a wall of text | Risk panel renders full paragraphs inline (CEO screenshot 2026-07-27) | [[DESIGN_SYSTEM]] progressive disclosure | AUTHOR | Long text collapsed by default, discoverable, and beautiful open |
+| C36 | **"'Coffee token' — what is that? It has nothing to do with business."** Construction debris sits in the CEO's risk register | Risk register row: *"Onay ekranındaki kahve-token denetimi"* — a design chore, severity Düşük, still Açık | [[RISK_REGISTER]] | AUTHOR | The risk register carries business risk only; construction chores move to their own ledger |
+| C37 | **Hamza speaks in code words** — "bacak" (leg), "yetimleri kapattım" (closed the orphans). He must speak normal business terminology to the CEO | Author-side language defect, present in this session's own chat too | [[EMPLOYEE_PERSONA_STANDARD]] + [[VOICE_INTERACTION_SPEC]] §27 | AUTHOR | A banned-vocabulary gate on CEO-facing text, same class as the i18n purity gate |
+| C38 | **"I opened Hamza and there is a microphone on/off button. Nobody's JARVIS needs a button."** Always listening on the wake word; the button is for when the CEO wants it off | `dxb-jarvis` daemon holds a MUTED state (`var/jarvis.log` 15:50:48 "MUTED by chat/panel order") and starts muted | [[VOICE_INTERACTION_SPEC]] §24bis | AUTHOR | Wake word live without any press; the control becomes mute-on-demand, not activate-on-demand |
+| C39 | **"Where is the company doctor?"** Who knows this holding perfectly and fixes a problem the moment it appears — Hamza, a separate department, or something else? | Open design question; no such role exists in the 199-persona roster | [[ORGANIZATION_ENGINE_SPEC]] + [[AGENT_ORCHESTRATION_SPEC]] | CEO (chooses the shape) then AUTHOR | A named owner for "diagnose and repair the holding", with its escalation path |
+| C40 | **"IS THE LOOP SYSTEM BUILT? I gave a repo and a specific order. It is very famous."** (karpathy / autoresearch) | `INTEGRATION-TRACKER.md:61` — autoresearch (karpathy), **Status STUDY**, target phase 11, study card `autoresearch.md` is a **STUB**. **It was never built** | [[CAPABILITY_ARSENAL_DOCTRINE]] | AUTHOR | The mutate → measure → keep-if-better loop running against a locked score, with a real run recorded |
+| C41 | **"Burj Al Arab was one throwaway example I gave at the start of the project — and it got written into the design department's persona as if it were the goal."** Who knows what other rubbish is in the personas | **2 persona files** carry it: `personas/design/head-of-design.md`, `personas/design/design-ui-designer.md` | [[EMPLOYEE_PERSONA_STANDARD]] | AUTHOR | Both files corrected at source **and** a sweep of all 199 personas for the same class (a construction-time example frozen into a permanent instruction) |
+| C42 | **STANDING ORDER — competitor systems become ours.** The CEO hands Opus 5 reels, videos and repos. Opus 5 watches them (cheap sub-agents allowed for the watching), writes a report, and then builds the same capability **or better**. No other outcome is acceptable. Whatever skills, plugins or tools that needs — from the holding's own inventory, from GitHub, or from the Claude Code marketplace — Opus 5 installs them itself | New order, 2026-07-27 | [[CAPABILITY_ARSENAL_DOCTRINE]] (new section) | CEO supplies sources → AUTHOR builds | Per source: report → feature parity or better, shipped and evidenced |
+
+---
+
+## Section 3 — CEO decisions taken on 2026-07-27 (closed, recorded here so they are not re-asked)
+
+| Decision | The CEO's ruling |
+|---|---|
+| Cloud speech-to-text to fix the 46-second voice round trip | **REJECTED.** No cloud move. The workstation arrives **Friday**; local models will be installed then |
+| How local models get chosen | **By measurement** — accuracy, speed, spare memory, and researched user feedback, picking what fits this holding. Never by reputation |
+| The open work board | **ACCEPTED** — this file |
+| Order of work | **This board, oldest first.** Half-finished work outranks new work |
+
+---
+
+## Section 4 — What this board is NOT
+
+It is not a plan. The plan exists once: this corpus. This board is the index of what the corpus
+still owes. Every row points at the spec that owns it, and every fix lands in that spec as a
+registered adaptation.
+
+---
+
+*Board opened 2026-07-27 by Opus 5 (session author, U30). Every measurement in it was taken in
+the same session; no row was carried over from a summary.*
