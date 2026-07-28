@@ -64,3 +64,9 @@ BEKLENTİLER
 # R3.1 voice: transient answer-WAV handoff + scheduler log — runtime artifacts, never committed
 /var/
 tests/e2e/evidence/
+
+# rival intel (C42) raw material — evidence lives as sha256 + transcript + report,
+# never as committed media. Repos are shallow clones of public upstreams.
+.planning/research/rival-intel/media/
+.planning/research/rival-intel/repos/
+.planning/research/rival-intel/frames/
