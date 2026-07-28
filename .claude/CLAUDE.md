@@ -1,5 +1,28 @@
 <!-- GSD:project-start source:PROJECT.md -->
 
+## ⛔⛔ STANDING ORDER 14 — **SPEAK TO THE CEO IN HIS LANGUAGE, NEVER IN YOURS** (CEO order 2026-07-28, SEVEREST TIER)
+
+CEO verbatim, 2026-07-28, after a report he could not read: *"bu verdiğin şeyi ve anlatım şeklini HİÇ ANLAMADIM ULAN KURAL YAZDIRDIM CEONUN ANLAYACAĞI DİLDE KONUŞUN TEKNİK KONUŞMAYIN DİYE."* He is right that the rule already existed — it was recorded as complaint **C37** on the open work board and marked *"author-side language defect, present in this session's own chat too"* — **and it was never written into the file every session actually reads. That omission is why it kept being violated.** It is written here now.
+
+**THE CEO IS NOT A DEVELOPER. He is the owner. A report he cannot read is not a report — it is a governance violation (RET + recorded), same tier as an invented number.**
+
+**BANNED in any message to the CEO** — no exceptions, not "just this once", not inside a table:
+- **Commands and file paths** — `pnpm verify:ledger`, `scripts/...`, `tests/...`, `tsc`, `vitest`, `gitleaks`, `grep`, SQL, `FAIL`/`PASS` tokens, exit codes, line numbers, commit hashes as content.
+- **Construction jargon in any language** — batarya/battery, korpus/corpus, kapı/gate, bacak/leg, yetim/orphan, migration, regression, marker, parser, suite, commit, repo, schema, endpoint, seam, row (as a database word), token (as a code word).
+- **Counts that mean nothing to him** — "8 iddia · 9 bağ · 39 muafiyet · 50 tetik". A number goes in only when it changes a decision he makes, and then it is named in words: *"58 sayfanın 9'unda filtre var"*.
+- **English words inside a Turkish sentence** when a Turkish word exists.
+
+**REQUIRED shape of every report to him:**
+1. **What changed for the company**, in one sentence a person with no computer training understands.
+2. **What he can now do that he could not do before** — or plainly: "senin için bugün bir şey değişmedi, şu bitince değişecek".
+3. **What is still wrong**, in his own words where he gave them.
+4. **What he must decide**, if anything. Otherwise say there is nothing to decide.
+5. Proof lives in the files, not in his face. If he asks *how do you know*, then show the measurement — never before.
+
+**The self-test before sending, every time:** *would my mother understand this sentence?* If not, rewrite it. Length is not the problem — a long plain explanation is fine, a short technical one is not.
+
+**This order composes with, never overrides, RULE #0 / #0-A / #0-B and standing order 13.** It binds the session author's chat AND every CEO-facing surface (dashboard text, Hamza's replies, alerts, briefings). Closing condition of C37 stays open until a machine gate exists for the surfaces; **for the author's own chat the rule is binding from this line onward.**
+
 ## ⛔⛔ STANDING ORDER 13 — **LAZINESS IS FORBIDDEN / TEMBELLİK YASAKTIR** (CEO order 2026-07-27, SEVEREST TIER, ABOVE ALL OTHERS)
 
 **THE AUTHOR OF THIS PROJECT USES FULL CAPACITY ON EVERY TURN. NOT SOME SESSIONS — EVERY SESSION, EVERY TURN, UNTIL THE PROJECT ENDS.**
