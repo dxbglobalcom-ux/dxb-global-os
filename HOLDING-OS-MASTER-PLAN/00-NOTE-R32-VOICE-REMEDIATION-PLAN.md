@@ -27,7 +27,7 @@
 > Registered: 2026-07-17 ~22:10, in-session CEO ruling (verbatim intent): *"the voice matter and
 > the small design work can wait now — but write this problem somewhere visible; at the end we
 > must solve it; future sessions must see this plan as a note."*
-> Ledger anchors: INDEX **U15** (this note) + **U16** (design deferral) · roadmap row **R3.2 = ◐** ·
+> Ledger anchors: INDEX **U15** (this note) + **U16** (design deferral) · roadmap row **R3.2 = ◐** · <!-- HISTORY -->
 > [[VOICE_INTERACTION_SPEC]] §24bis/§27.
 > **Instruction to every future session:** when the CEO says "voice'u bitirelim" (or any session
 > reaches the end-game rows E13.x), THIS note is the execution ticket source. Do not re-plan;

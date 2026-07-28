@@ -19,7 +19,7 @@
 3. Korpus 31/31 diskte + commit'li (bu, Fable'ın devredilemez mirasıdır).
 4. WS-A migration'ları (veri omurgası) — kontrol düzleminin temeli.
 5. DESIGN_SYSTEM tokens + Command Center shell + Executive Overview (gerçek veriyle).
-6. EMPLOYEE_PERSONA_STANDARD + orkestratör personası + departman müdürü personaları + HR ilk oluşumu — **yalnız Fable yazabilir (CEO emri); yetişmezse eksik kalan personalar Opus'a DEVREDİLMEZ, CEO'ya "Fable-yazımı bekliyor" listesi bırakılır.**
+6. EMPLOYEE_PERSONA_STANDARD + orkestratör personası + departman müdürü personaları + HR ilk oluşumu — **yalnız Fable yazabilir (CEO emri); yetişmezse eksik kalan personalar Opus'a DEVREDİLMEZ, CEO'ya "Fable-yazımı bekliyor" listesi bırakılır.** <!-- HISTORY -->
 
 ## 2. Tamamlanması zorunlu modüller / 3. Ertelenebilecek modüller
 

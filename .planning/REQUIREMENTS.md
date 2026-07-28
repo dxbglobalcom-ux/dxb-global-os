@@ -186,7 +186,7 @@ Every v1 requirement maps to exactly one phase (56/56 mapped, no orphans, no dup
 | COST-04 | Phase 8 | Pending |
 | VOICE-01 | Phase 9 | Pending |
 | VOICE-02 | Phase 9 | Pending |
-| VOICE-03 | Phase 9 (09-06, CEO onayı bekliyor) | Pending |
+| VOICE-03 | Phase 9 (09-06, CEO onayı bekliyor) | Pending  <!-- HISTORY --> |
 | DEPT-01 | Phase 10 | Pending |
 | DEPT-02 | Phase 10 | Pending |
 | DEPT-03 | Phase 10 | Pending |

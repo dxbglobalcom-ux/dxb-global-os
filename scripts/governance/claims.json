@@ -1,0 +1,57 @@
+{
+  "_doc": "Claim registry for scripts/governance/ledger-truth.mjs. Each id maps a STATE claim written in the corpus to the read-only query that re-measures it. Queries are SELECT-only by construction — the gate refuses to run anything else. Keeping the SQL here and not in the markdown means a column rename breaks ONE file instead of thirty, and the CEO's documents never carry SQL.",
+  "_kind": "Every entry answers: what does this number mean to a reader who acts on it?",
+
+  "agents_total": {
+    "sql": "SELECT count(*) FROM agents",
+    "what": "rows in the agent registry, every employment status included"
+  },
+  "agents_active": {
+    "sql": "SELECT count(*) FROM agents WHERE employment_status = 'active'",
+    "what": "employees the holding can actually put to work today"
+  },
+  "agents_archived": {
+    "sql": "SELECT count(*) FROM agents WHERE employment_status = 'archived'",
+    "what": "retired registry rows, kept for history"
+  },
+  "agents_stale_persona_path": {
+    "sql": "SELECT count(*) FROM agents WHERE persona_path LIKE 'agency-agents/%'",
+    "what": "registry rows still pointing at the pre-v2 persona tree — the E12.5 gate demands 0"
+  },
+  "agents_legacy_version_live": {
+    "sql": "SELECT count(*) FROM agents WHERE persona_version = 'v1.0-legacy' AND employment_status <> 'archived'",
+    "what": "LIVE rows whose persona_version tag still says legacy; archived rows are deliberately left alone, so this counts only rows that can still feed a running agent"
+  },
+  "hr_employees_evaluated": {
+    "sql": "SELECT count(*) FROM audit_log WHERE action = 'employee.evaluated'",
+    "what": "employees that passed through the HR machine's evaluation step — the evidence that the draft to probation to active chain actually ran"
+  },
+  "library_items_total": {
+    "sql": "SELECT count(*) FROM library_items",
+    "what": "records in the holding library catalogue"
+  },
+  "library_grants_live": {
+    "sql": "SELECT count(*) FROM library_grants WHERE expires_at IS NULL OR expires_at > now()",
+    "what": "capability grants in force — the record layer that governs what a department may reach for"
+  },
+  "library_usage_log_rows": {
+    "sql": "SELECT count(*) FROM library_usage_log",
+    "what": "times the workforce actually reached for a catalogued item; a full catalogue with zero usage is a shelf, not a toolkit (board row C31)"
+  },
+  "library_empty_kinds": {
+    "sql": "SELECT count(*) FROM (VALUES ('prompt_template'),('workflow'),('framework'),('best_practice'),('lesson_learned')) AS k(name) WHERE NOT EXISTS (SELECT 1 FROM library_items li WHERE li.kind = k.name)",
+    "what": "how many of the five operational-knowledge kinds hold zero rows — R4.2 left these to fill through real work, so this number is the measure of whether that happened"
+  },
+  "objectives_total": {
+    "sql": "SELECT count(*) FROM objectives",
+    "what": "economic objectives the CEO has set"
+  },
+  "agent_runs_total": {
+    "sql": "SELECT count(*) FROM agent_runs",
+    "what": "agent runs ever recorded — the difference between a company that exists and a company that works"
+  },
+  "voice_calls_total": {
+    "sql": "SELECT count(*) FROM voice_calls",
+    "what": "voice calls recorded on the CEO's line"
+  }
+}

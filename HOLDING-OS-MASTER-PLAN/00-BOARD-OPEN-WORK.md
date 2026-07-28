@@ -20,6 +20,27 @@ that the project "advances in a mess and specs stay half-finished".
 5. **Ledger parity.** When a row closes here, the ledger that owns it is corrected in the SAME
    session. A stale ✓ or a stale ◐ is a governance violation of the same tier as an invented number.
 
+### Laws 1 and 5 are enforced by machine (U41, 2026-07-28)
+
+Until tonight these two laws were honour rules, and the honour failed in three measurable ways on
+one evening: two commitments written in a document were built nowhere and tracked on no ledger;
+five records asserted a state the database contradicted (one said the holding had ONE employee
+while it had 199); and a roadmap row sat ◐ for ten days after its own audit trail proved the work
+done. The CEO named the pattern himself — *"her gelen model bir şeyleri atlıyor mutlaka"*.
+
+`scripts/governance/ledger-truth.mjs` runs in the battery and enforces both laws over the whole
+corpus. Every durable statement is now one of two kinds, and the distinction is the fix:
+
+| Kind | Example | Rule |
+|---|---|---|
+| **STATE** — what is true NOW | "199 active employees" | carries `<!-- STATE: id = value @ date -->`, **re-measured against the live company database on every run** |
+| **EVENT** — what happened ONCE | "restore drill 2026-07-17, RTO 5s" | frozen forever, and **must carry its date** |
+
+Any line declaring open work must carry `<!-- OPEN: <row> -->` naming a row on this board, or
+`<!-- HISTORY -->` if it merely describes the past. An unmarked declaration fails the battery.
+This board is exempt from that check — it IS the register; its rows are the declarations.
+Each section below declares `open` or `closed` for the machine, so the gate never guesses.
+
 ## How to read the "Waits on" column
 
 | Value | Meaning |
@@ -31,6 +52,8 @@ that the project "advances in a mess and specs stay half-finished".
 ---
 
 ## Section 1 — Open work, historical order
+
+<!-- BOARD-SECTION: open -->
 
 Every row measured on 2026-07-27 unless its evidence column says otherwise.
 
@@ -51,9 +74,27 @@ Every row measured on 2026-07-27 unless its evidence column says otherwise.
 | B12 | 2026-07-26 | **Local model layer + full voice repair** (5 rows: local model exam, `whisper large-v3-turbo`, mixed language, pronunciation layer, local embeddings) | Factory queue W4.1-4.5 | Physically blocked on the workstation | HARDWARE (Friday) | Each row's own evidence; models chosen by measurement, never reputation |
 | B13 | 2026-07-26 | **The CEO acceptance session was never held** — 11 of 27 acceptance criteria are permanently UNVERIFIED | [[ACCEPTANCE_CRITERIA]] §38, factory queue W5.1 | The session has not happened | CEO | The session, after the audit twin has faced the machine-checkable legs |
 
+**Rows B14-B19 were found on 2026-07-28** by the sweep the CEO ordered — *"buradaki şeyler bizim
+sistemimizde yapılmış mı? eğer yapılmadıysa bizim eksikler tahtasında mevcut mu?"*. Each had been
+promised in a document and tracked on **no ledger at all**: board 0 hits, roadmap 0 hits, U-table
+0 hits. They are the reason U41 exists. They keep the historical ordering by the date each promise
+was made, not the date it was found.
+
+| # | Opened | What is open (plain language) | Owning spec / ledger | Why it is still open | Waits on | What closes it |
+|---|---|---|---|---|---|---|
+| B15 | 2026-07-05 | **The autonomy dial was never built.** `FEATURES.md:54` promised the CEO could raise or lower ONE employee's autonomy from the dashboard as it earns trust — its stated trigger was "enough audit history", and `audit_log` now holds 29,518 rows. Measured 2026-07-28: the column `agents.autonomy_level` exists and `/org/directors` only PRINTS it as `L0`; **all 205 agents sit at 0** and no function or control can change it | [[MODEL_ROUTING_SPEC]] §4b (the same seam as the per-employee brain switch, B08) + [[CEO_COMMAND_CENTER_SPEC]] | Half-shipped as a column and a label; the dial itself was never designed or built, and no ledger recorded that | AUTHOR | The CEO raises one employee's autonomy from the dashboard, the change is audited, and the level actually changes what that employee may do without asking |
+| B19 | 2026-07-06 | **A security TODO with a trigger nobody watches.** `.planning/STATE.md:113` (Phase 01) records: *"gitleaks-action @v2 tag with SHA-pin TODO at remote go-live"* — the CI action is pinned to a moving tag instead of a commit SHA, which is the supply-chain hole the pinning discipline exists to close. Its trigger is "remote go-live", an event with no owner and no watcher | [[SECURITY_MODEL]] · Phase-01 secret-scanning discipline | Written as a note inside a phase record; no ledger ever picked it up | AUTHOR (at the trigger) | Either the action is SHA-pinned now, or the trigger is made real: a named check that runs when the repository first gets a remote |
+| B14 | 2026-07-09 | **Video-learn never reached the CEO's screen.** The holding can already watch a video and file what it learned — `tools/video-learn` was proven live on 2026-07-09 (`LIVE_INGEST_OK`). Its own tracker row says it is finished only "when the Phase-8 dashboard entry point lands". The dashboard landed with 46 routes; the entry point never did, so the capability exists and the CEO cannot reach it | `INTEGRATION-TRACKER.md:39` (ADOPT row, EMBED condition) | Nobody was tracking the condition: the row states it, and no ledger carries it. Measured 2026-07-28: `apps/dashboard/src/app` holds **not one file** that mentions video | AUTHOR | The CEO gives a video link on a DXB surface and the holding files what it learned — with the run visible and the artefact reachable |
+| B16 | 2026-07-09 | **A hard gate we set for ourselves and then walked past.** `LITERATURE.md:98` states: *"Phase-10 planlaması bu belgenin FINAL hali olmadan açılamaz (B6 sert kapı)"* — the deep-study waves W2-W5 must finish before department activation planning opens. W2-W5 **never ran**; the document still says W1; activation happened anyway (197 employees evaluated 2026-07-18) | `.planning/research/LITERATURE.md` (B6 directive) | Never tracked anywhere, so nothing objected when the gate was passed | **CEO** | His ruling: either the W2-W5 study waves run and the document is finalised, or the B6 gate is explicitly retired with a reason. A gate that is silently ignored is worse than no gate |
+| B17 | 2026-07-09 | **A standing report to the CEO that was never delivered.** `REVENUE-OPPORTUNITIES.md:117` binds itself: *"Bu belge her dalga sonunda güncellenir ve CEO'ya tabloyla sunulur"* — sixteen revenue structures, refreshed and presented each wave. Last updated **2026-07-09**; never presented | `.planning/research/REVENUE-OPPORTUNITIES.md` (B6 directive) | Nobody carried the duty; no ledger held it | AUTHOR | The sixteen opportunities re-measured against today's system (what is now possible, what the CEO cancelled, what earns nothing) and put in front of him as one table |
+| B20 | 2026-07-17 | **Nobody can count this project the same way twice.** The roadmap's status token sits in no fixed cell and description cells carry pipes inside backticks, so the completion figure is re-derived by hand every session — and drifts. The evidence is in `.planning/STATE.md`'s own comment history: 67 → re-base → 73 → a census that "supersedes carried arithmetic" → 74, including one openly recorded "+1 drift". This is the mechanical half of the CEO's complaint *"KALİTE Mİ DÜŞÜYOR UYGULARKEN ANLAMIYORUM"* — he cannot see progress because progress is not measurable | [[IMPLEMENTATION_ROADMAP]] · `.planning/STATE.md` | The table was written for human eyes and never given a machine-readable status field | AUTHOR | One command prints the tally from the roadmap, the same number every time, and `ledger-truth.mjs` re-measures it as a STATE claim so it can never silently drift again |
+| B18 | 2026-07-19 | **Filters stop at nine pages.** Complaint C9 was closed as *"✓ CLOSED (help+ambient) / ◐ filters"* with its own last words reading *"Remaining list pages = open leg"* — and that leg was carried on no ledger. Measured 2026-07-28: `FilterBar` is used by **9 of 58 command routes** (`/fin/costs`, `/fin/tokens`, `/fin/providers`, `/org/employees`, `/org/directors`, `/org/hr`, `/gov/risks`, `/gov/permissions`, `/ai/memory`). On the other 49 the CEO reads whatever the page decided to show him | `00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` C9 · [[CEO_COMMAND_CENTER_SPEC]] | The ◐ half of a row whose ✓ half got all the attention | AUTHOR | Every list surface the CEO reads can be narrowed the way `/fin/costs` can — or the pages that genuinely need no filter are named, with the reason |
+
 ---
 
 ## Section 2 — The CEO's complaints of 2026-07-27 (C26-C42)
+
+<!-- BOARD-SECTION: open -->
 
 The complaint ledger C1-C25 (`00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md`) closed 25/25. These
 are NEW, spoken by the CEO on the night of 2026-07-27 while looking at the live dashboard. They
@@ -85,6 +126,8 @@ Every "Measured" cell below was taken this session. A row with no measurement sa
 
 ## Section 2b — Closed on the board the night it opened (2026-07-27/28)
 
+<!-- BOARD-SECTION: closed -->
+
 Rows are kept, never deleted, with the evidence that closed them.
 
 | # | What | Closed by | Evidence |
@@ -103,6 +146,8 @@ Rows are kept, never deleted, with the evidence that closed them.
 
 ## Section 2c — The CEO's complaints of 2026-07-28 (C52-C56)
 
+<!-- BOARD-SECTION: open -->
+
 From `HAMZA VE KOMPLE SISTEM SIKAYETİ.odt` (224 lines + 6 screenshots, read in full 2026-07-28)
 and from the measurements taken while reading it. Every "Measured" cell was taken this session.
 
@@ -115,6 +160,8 @@ and from the measurements taken while reading it. Every "Measured" cell was take
 | C56 | **A button that fails without saying so** | `apps/dashboard/src/components/chat/chat-board.tsx:285-297` — the "send as task" dispatch has **no `else` branch**; a failed `/api/intent` call tells the CEO nothing. Same class as the fault that killed his chat on 2026-07-26 (U27 fault 4) | [[CEO_COMMAND_CENTER_SPEC]] | AUTHOR | A forced-failure test asserts a visible message; the button can never fail silently again |
 
 ### Section 2c continued — C57-C64, found on a SECOND reading of the same document
+
+<!-- BOARD-SECTION: open -->
 
 **Author's defect, recorded:** the first pass through `HAMZA VE KOMPLE SISTEM SIKAYETİ.odt`
 produced only C52-C56. The document contains more, and the file was **edited again at 19:52**

@@ -44,7 +44,7 @@ Yok (yukarıda). İlişki: diğer spec'lerin "SECURITY_MODEL siciline" referansl
 | # | Kalem | Neden ertelendi | Açılma tetiği | Sahip spec |
 |---|-------|-----------------|---------------|------------|
 | S1 | MFA / 2FA zorunluluğu | CEO kararı: tek kullanıcı, hız önce; kapatıldı | CEO kararı VEYA sistemin internete CEO-dışı kullanıcıya açılması | (bu dosya) |
-| S2 | Local erişim kısıtlama | geliştirme hızı; local açık kalır | VPS'in üretim-tek-kaynak olması + CEO kararı | BACKUP_PLAN ortamı |
+| S2 | Local erişim kısıtlama | geliştirme hızı; local açık kalır | VPS'in üretim-tek-kaynak olması + CEO kararı | BACKUP_PLAN ortamı  <!-- HISTORY --> |
 | S3 | API rate-limit + IP allowlist | dış-açık API yok (Caddy yalnız dashboard) | API'nin dışa açılması | API_CONTRACTS §16 |
 | S4 | Kolon-düzeyi şifreleme (at-rest) | tek-tenant VPS, disk şifreleme yeterli sayıldı | müşteri verisi (Outleteuro PII) tabloya girdiğinde | DATA_MODEL §14 |
 | S5 | Audit satır imzalama (tamper-evidence) | append-only grant modeli yeterli sayıldı | dış denetim/uyum ihtiyacı | AUDIT_AND_LOGGING §16 |

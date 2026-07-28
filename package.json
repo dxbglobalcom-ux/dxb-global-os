@@ -9,6 +9,8 @@
     "scheduler": "node packages/outbox-executor/dist/main.js",
     "jarvis": "node packages/voice/dist/jarvis-daemon.js",
     "test": "vitest run",
+    "verify:ledger": "node scripts/governance/ledger-truth.mjs",
+    "verify:ledger:update": "node scripts/governance/ledger-truth.mjs --update",
     "video-learn": "node tools/video-learn/dist/cli.js"
   },
   "devDependencies": {

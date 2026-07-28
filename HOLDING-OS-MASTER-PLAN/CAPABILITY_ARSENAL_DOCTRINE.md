@@ -6,7 +6,7 @@
 - 2026-07-18 00:30 — *"ücretliler de olabilir ama yedekte dursunlar önerilmek için. fakat en iyi ücretsiz aletlerin en mükemmel şekilde kurulmasını istiyorum"* — paid tools = **proposal bench only**; free tools installed **to perfection**.
 
 This doctrine is the single map of the holding's tool hands: what is installed, what each
-department is targeted to hold, what waits on a credential, what is money-locked, and what
+department is targeted to hold, what waits on a credential, what is money-locked, and what <!-- HISTORY -->
 sits on the paid bench. Its standing invariant: **kurulumsuz-blind = 0** — no server may be
 declared (in `packages/gateway/policy/grants.json` grants) without a *named disposition* in §6.
 A granted-but-uncatalogued server with no disposition row here is a governance defect.

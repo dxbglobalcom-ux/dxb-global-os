@@ -115,7 +115,7 @@ Sunucu gerçeği tek kaynak; client state yalnız görünüm tercihi (widget lay
 
 ## 16. Security
 
-Madde 4 hükmü: sertleştirme DURUR — MFA kapalı kalır, local açık kalır, yeni kimlik bürokrasisi eklenmez. Mimarinin güvenlik omurgası şu üçlüde sabittir: (1) para-çıkışı onay kapısı, (2) outbox tek-çıkış, (3) MCP least-privilege profiller + LiteLLM virtual keys. Ertelenen her sertleştirme kalemi SECURITY_MODEL (D4) sicil tablosuna yazılır ("ne, neden ertelendi, ne zaman açılır").
+Madde 4 hükmü: sertleştirme DURUR — MFA kapalı kalır, local açık kalır, yeni kimlik bürokrasisi eklenmez. Mimarinin güvenlik omurgası şu üçlüde sabittir: (1) para-çıkışı onay kapısı, (2) outbox tek-çıkış, (3) MCP least-privilege profiller + LiteLLM virtual keys. Ertelenen her sertleştirme kalemi SECURITY_MODEL (D4) sicil tablosuna yazılır ("ne, neden ertelendi, ne zaman açılır"). <!-- HISTORY -->
 
 ## 17. Error handling / 18. Retry / 19. Fallback
 

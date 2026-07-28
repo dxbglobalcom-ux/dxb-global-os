@@ -103,7 +103,7 @@ Two windows, one tick, independent: the 60-minute runaway breaker (COST-03) kill
 ## 6. Backend yapısı
 
 - Rollup/guard/anomaly pg-boss job'ları `packages/kernel` worker'ında (yeni servis yok).
-- `fn_set_budget` (control seam): budgets upsert + LiteLLM proxy API'sine key bütçe senkronu (`/key/update`) — tek transaction değil (dış sistem): önce DB, sonra proxy; proxy hatası alert + retry job (eventual consistency, fark BudgetBoard'da "senkron bekliyor" rozeti).
+- `fn_set_budget` (control seam): budgets upsert + LiteLLM proxy API'sine key bütçe senkronu (`/key/update`) — tek transaction değil (dış sistem): önce DB, sonra proxy; proxy hatası alert + retry job (eventual consistency, fark BudgetBoard'da "senkron bekliyor" rozeti). <!-- HISTORY -->
 - Hard-stop bayrağı: `settings_values('cost.stop_noncritical', scope)` — kernel task kabulünde resolve eder (SETTINGS cache 30sn).
 
 ## 7. Frontend yapısı

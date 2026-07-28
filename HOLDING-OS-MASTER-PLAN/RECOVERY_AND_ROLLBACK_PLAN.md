@@ -92,7 +92,7 @@ psql "$DB" -c "SELECT id, employee_id, started_at FROM agent_runs WHERE status='
 # yetimler: status='failed', error='orphaned: session interrupted' — SİLME yok, işaretleme var
 psql "$DB" -c "UPDATE ... "   # ilgili fn: control-plane yetim-işaretleme fn'i (E8'de gelir); o güne dek elle UPDATE service_role ile
 ```
-workflow_runs aynı desen; `waiting_approval` PARK'takiler yetim DEĞİLDİR — dokunulmaz (insan kapısı bekliyor).
+workflow_runs aynı desen; `waiting_approval` PARK'takiler yetim DEĞİLDİR — dokunulmaz (insan kapısı bekliyor). <!-- HISTORY -->
 
 ### P8 — Devir/session kazası
 

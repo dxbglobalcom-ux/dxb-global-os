@@ -81,7 +81,7 @@ Canlı seviye kümesi (ölçülü): **informational · attention · high · crit
 |---|---|---|
 | informational | Bilgi; işlem istemez | Okuyun, geçin |
 | attention | Bir şey sapmaya başladı | Gün içinde göz atın; mitigasyon önerisini okuyun |
-| high | Müdahale bekliyor (ör. bekleyen para-çıkışı, kuyruk yaşlanması) | Aynı gün karar: onayla/reddet/delege et |
+| high | Müdahale bekliyor (ör. bekleyen para-çıkışı, kuyruk yaşlanması) | Aynı gün karar: onayla/reddet/delege et  <!-- HISTORY --> |
 | critical | Sistem veya bütçe tehdidi | Hemen bakın; gerekirse §8 Global Pause |
 
 Her alarm satırı olası neden + önerilen aksiyon + sorumlu çalışan taşır. Alarmı susturmak
@@ -152,7 +152,7 @@ the whole holding.
 
 1. **Morning briefing — Hamza writes to you (W2.6, since 2026-07-27).** Every morning at
    **07:00 your time**, Hamza OPENS A NEW CONVERSATION on the chat board: what finished
-   overnight, what the holding started by itself, what waits on you, 24-hour and month-to-date
+   overnight, what the holding started by itself, what waits on you, 24-hour and month-to-date <!-- HISTORY -->
    money, the revenue line. `Command → Chat with Hamza (/chat)` — top of the conversation
    column, badged "Morning briefing". Reply and the thread continues. The figures come from one
    SQL view (`v_ceo_briefing`) and no model writes them, so an invented number is impossible.

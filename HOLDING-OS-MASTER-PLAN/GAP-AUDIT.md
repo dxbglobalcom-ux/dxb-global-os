@@ -34,7 +34,7 @@ Kanıt: `docker exec supabase_db psql` sorguları + `find personas -name "*.md"`
 | agents toplam | 153 | `SELECT count(*) FROM agents` → 153 |
 | role_level | **153'ü NULL** | direktifteki "tamamı worker" varsayımından da geride — hiyerarşi alanı hiç doldurulmamış |
 | employment_status | 153'ü dormant | aktivasyon 0 |
-| personas tablosu | **0 satır** | derleyici yok (E5.1 bekliyor) |
+| personas tablosu | **0 satır** | derleyici yok (E5.1 bekliyor)  <!-- HISTORY --> |
 | persona bağlı agent | 0 | `WHERE persona_id IS NOT NULL` → 0 |
 | v2.0-fable persona dosyası | **5** (hepsi Product) | `grep -rl v2.0-fable personas/` → 5 |
 | legacy persona dosyası | 148 | agency-agents kökenli |
@@ -86,7 +86,7 @@ Tam persona-gövdesi okuma matrisi E5.0'ın çıktısıdır (aşağıda); bu tab
 | # | Konu | CEO KARARI |
 |---|---|---|
 | K1 | Modül/placeholder kapanışlarının yürütücüsü | **Yalnız Fable ve GPT 5.6 solo.** Başka model modül kapatamaz. Devralma protokolü bu karara göre güncellendi (roadmap §4 kural 4) |
-| K2 | Yeni + legacy persona yazarlığı | **TÜMÜ Fable bizzat, en mükemmel kalitede.** Personalar + skiller + MCP profilleri + HR müdürü ve uzman yapısı HAYATİ — mükemmel holding ancak mükemmel çalışanlarla yürür. HR-fabrikası altyapı olarak kurulur (E5.4) ama İLK oluşum yazarlığı devredilemez; yetişmeyen "Fable-yazımı bekliyor" listesine düşer, asla düşük kaliteyle kapatılmaz |
+| K2 | Yeni + legacy persona yazarlığı | **TÜMÜ Fable bizzat, en mükemmel kalitede.** Personalar + skiller + MCP profilleri + HR müdürü ve uzman yapısı HAYATİ — mükemmel holding ancak mükemmel çalışanlarla yürür. HR-fabrikası altyapı olarak kurulur (E5.4) ama İLK oluşum yazarlığı devredilemez; yetişmeyen "Fable-yazımı bekliyor" listesine düşer, asla düşük kaliteyle kapatılmaz  <!-- HISTORY --> |
 | K3 | CRM'in shell'e taşınması | **Projeye göre** — master plan idiomu geçerli: E12.4'te tek-anahtar geçiş, eski cockpit aynı commit'te ölür, veri kaybı yok |
 
 ## 6. Roadmap entegrasyon kaydı (§4 gereği — yalnız burada bırakmak yasak)

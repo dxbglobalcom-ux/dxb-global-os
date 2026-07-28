@@ -560,7 +560,7 @@ Canlı olarak:
 * Hangi tool’ları kullanıyor?
 * Alt ajan spawn etti mi?
 * Hata oluştu mu?
-* Approval bekliyor mu?
+* Approval bekliyor mu? <!-- HISTORY -->
 * İş yüzde kaç tamamlandı?
 
 görülmelidir.
@@ -1627,7 +1627,7 @@ Hangi alt ajanları oluşturdu?
 Hangi çıktıları üretti?
 Hangi hata oluştu?
 Yeniden deneme yapıldı mı?
-Human approval bekliyor mu?
+Human approval bekliyor mu? <!-- HISTORY -->
 Duraklatıldı mı?
 İptal edildi mi?
 Başarıyla tamamlandı mı?

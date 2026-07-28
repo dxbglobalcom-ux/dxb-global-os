@@ -111,7 +111,7 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_re
 
 Yeni bir model çıktığında CEO onu dashboard'dan kataloğa ekler ve bağlar; VPS'e SSH / config dosyası elle düzenleme GEREKMEZ. Giriş yüzeyi: `/ai/models` "Model Ekle" (yalnız Control Mode) → `ModelOnboardDrawer`. Dört adımlı akış, tamamı control seam üzerinden:
 
-1. **Kayıt:** form (id, provider, display_name, context_window, cost_in_per_mtok/cost_out_per_mtok, speed_score) → `POST /api/control/models {op:'add_model'}` → katalog satırı **`status='testing'`** doğar (atanabilir havuzda DEĞİL). LiteLLM'e kayıt proxy admin API'siyle runtime yapılır (config dosyasına dokunmadan); admin API erişilemezse satır "LiteLLM kaydı bekliyor" durumunda görünür kalır — sahte-hazır yasak (§35 ruhu). ⛔ Raw provider key ASLA dashboard'dan girilmez/gösterilmez (R5): key işi vault + LiteLLM env; dashboard yalnız alias tanır.
+1. **Kayıt:** form (id, provider, display_name, context_window, cost_in_per_mtok/cost_out_per_mtok, speed_score) → `POST /api/control/models {op:'add_model'}` → katalog satırı **`status='testing'`** doğar (atanabilir havuzda DEĞİL). LiteLLM'e kayıt proxy admin API'siyle runtime yapılır (config dosyasına dokunmadan); admin API erişilemezse satır "LiteLLM kaydı bekliyor" durumunda görünür kalır — sahte-hazır yasak (§35 ruhu). ⛔ Raw provider key ASLA dashboard'dan girilmez/gösterilmez (R5): key işi vault + LiteLLM env; dashboard yalnız alias tanır. <!-- HISTORY -->
 2. **Duman testi (zorunlu):** `{op:'test_model'}` → LiteLLM üzerinden 1 ucuz çağrı; latency/token/hata drawer'da gösterilir; başarısız model `testing`te kalır.
 3. **Eval-önce:** aktivasyon öncesi mini eval bataryası görevi otomatik açılır (sahip: Model Evaluation Lead, CAIO doktrini); sonuç `quality_score` ilk değerini verir. CEO atlayabilir — §4b ile aynı hook-üstü rejim (warn + audit + 7 gün izleme).
 4. **Aktivasyon + bağlama:** `{op:'set_catalog_status', 'active'}` → model atanabilir havuza girer; aynı drawer'dan bağlama kısayolları: rol slotuna ata (`assign_role`) · tek ajana beyin yap (§4b `set_model`) · fallback zincirine ekle (`set_fallback`, döngü-CHECK).
@@ -143,7 +143,7 @@ The dividing line is **not** cost and **not** code-versus-text. It is a single q
 
 ### 4f. THE BRAIN IS A FLOOR — `agents.brain` becomes load-bearing (CEO decision 2026-07-26, normative)
 
-The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest answer was that the column decided nothing: `fn_select_model` never read `agents.brain` (measured: `prosrc` contains no `brain`), no TypeScript router read it, and `worker-shim` resolved the model from `model_tier` alone. §4b had specified an agent-level brain on 2026-07-12; it was never built. Offered the choice between making the column honest ("task-based") and making it real, the CEO chose **real**.
+The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest answer was that the column decided nothing: `fn_select_model` never read `agents.brain` (measured: `prosrc` contains no `brain`), no TypeScript router read it, and `worker-shim` resolved the model from `model_tier` alone. §4b had specified an agent-level brain on 2026-07-12; it was never built. Offered the choice between making the column honest ("task-based") and making it real, the CEO chose **real**. <!-- HISTORY -->
 
 **The rule: the brain is a FLOOR, never a ceiling.**
 

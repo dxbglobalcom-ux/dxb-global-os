@@ -12,7 +12,7 @@
 1. **Render every touched route in the real browser** (Playwright), BOTH locales (EN + TR), at ≥2 widths (narrow ~1280 and wide ≥1900).
 2. **Walk the checklist** — `references/design-bank/CHECKLIST.md`: overlap, alignment, cut-off content, scroll sanity (no double bars, no unreachable rows), language purity, empty/zero states honest, status noise, spacing rhythm, token discipline (no invented colors/fonts).
 3. **Compare against the reference bank** — `references/design-bank/`: baseline screenshots of CEO-accepted states + the written design brief (Burj Al Arab 7-star, modern, non-generic). Deviation from an approved baseline without a recorded reason = violation.
-4. **Machine gates**: `scripts/i18n-purity-check.sh` PASS + tsc 0 + eslint 0 + contrast audit where applicable.
+4. **Machine gates**: `scripts/i18n-purity-check.sh` PASS + tsc 0 + eslint 0 + contrast audit where applicable + **`pnpm verify:ledger` PASS** (U41 — the corpus may not disagree with the system: every `STATE` number re-measured against the live company database, every declaration of open work bound to a board row).
 5. **Evidence in the report**: screenshots + decisive check outputs. Anything not machine-checkable stays `⚠ UNVERIFIED — CEO eye test`, but the eye test must be the FINAL polish, never the first QA.
 
 ## Reference bank protocol

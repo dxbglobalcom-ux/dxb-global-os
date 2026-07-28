@@ -21,8 +21,21 @@ const ENUM = new Set(["STUDY", "INSTALL", "ADOPT", "EMBED", "EXCLUDED"]);
 const text = readFileSync(TRACKER, "utf8");
 const failures = [];
 
-// ---- main table (everything above "## Excluded Items") ----
-const main = text.split("## Excluded Items")[0];
+// ---- main table ----
+// Bounded by its OWN heading, not by "everything above the exclusions". The
+// file gained a second table on 2026-07-28 (the C42 rival-intelligence rows,
+// whose Status column is a source kind: reel/repo/pdf) and the old bound
+// swallowed it, failing Rule 2 on rows it was never meant to judge. A section
+// parser that assumes it owns everything before some later marker breaks the
+// moment the document grows — so it is bounded on both sides now.
+const mainStart = text.indexOf("## Main Tracking Table");
+if (mainStart === -1) {
+  console.error("FAIL — the '## Main Tracking Table' heading is missing; the tracker's shape changed");
+  process.exit(1);
+}
+const afterStart = text.slice(mainStart + "## Main Tracking Table".length);
+const nextHeading = afterStart.search(/\n## /);
+const main = nextHeading === -1 ? afterStart : afterStart.slice(0, nextHeading);
 const rows = main
   .split("\n")
   .filter((l) => /^\|/.test(l) && !/^\|\s*-+/.test(l))

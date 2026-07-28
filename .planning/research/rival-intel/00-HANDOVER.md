@@ -36,7 +36,7 @@ YENİDEN PLAN YAZMA. Kaldığın yerden DEVAM ET.
 SONRA BANA ŞUNU SÖYLE (tablo halinde, teknik olmayan dilde, kısa):
 - Aşama 1'de ne bulundu (tek paragraf)
 - Altı dalga ve her birinin ne getirdiği
-- Hangi dalga BENİM kararımı bekliyor, hangisi beklemiyor
+- Hangi dalga BENİM kararımı bekliyor, hangisi beklemiyor <!-- HISTORY -->
 - Senin tavsiye ettiğin sıra ve NEDEN
 
 BEN "başla" DEMEDEN İNŞAATA BAŞLAMA.

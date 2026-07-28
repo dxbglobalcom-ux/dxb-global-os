@@ -200,7 +200,7 @@ accessibility-auditor, api-tester, evidence-collector, performance-benchmarker, 
 1. **retire→library 15 persona** (§2 specialized tablosu) — silme değil arşiv; onay?
 2. **research departmanının strategy/data-ai'ye katılması** — boş departman, rol kaybı yok; onay?
 3. **Hedef org: 19 dept + 5 pod, 179 aktif persona** (47 ADD dahil; social-media CEO direktifiyle zaten emredildi) — onay?
-4. K2 gereği 166 v2 yazımı (132 rewrite + 34 ADD) Fable'dan çıkar; 12 Temmuz'a sığmayanlar "Fable-yazımı bekliyor" listesinde sıralanır (öncelik: orchestrator → head'ler → HR → governance → uzman dalgaları).
+4. K2 gereği 166 v2 yazımı (132 rewrite + 34 ADD) Fable'dan çıkar; 12 Temmuz'a sığmayanlar "Fable-yazımı bekliyor" listesinde sıralanır (öncelik: orchestrator → head'ler → HR → governance → uzman dalgaları). <!-- HISTORY -->
 
 > **✅ CEO ONAYI VERİLDİ — 2026-07-11 ~17:35 (sözlü, oturum kaydı):** §6'nın üç kalemi birden onaylandı (retire→library 15 · research/specialized/testing/support kapanışı · hedef org 19 dept + 5 pod / 179 kadro). Uygulama: migration `20260711005000_org_closure_e53b.sql` (E5.3b, commit e4295f3). **E5.3 head dalgası TAMAM — 2026-07-11 akşamı:** 19/19 müdür personası Fable bizzat yazıldı, fn_persona_gate **passed**, `departments.director_id` 19 dept dolu, manager zinciri kuruldu (orphan 0). ceo-office müdürü (Chief of Staff — move+rewrite) D1 dalgasında; legal-de pod lead'i ADD dalgasında.
 

@@ -70,10 +70,10 @@ Codex audit findings F-01..F-15: 14 CONFIRMED + 1 PARTIAL (Fable measurements 20
 | F-08 migration ledger parity | ✓ executed | R2.5 (ledger=files deterministic) |
 | F-09 E13 acceptance could pass on mock/demo evidence | **REGISTERED now** | E13.1 gate hardened: production-capability proofs mandatory, mock/demo evidence CANNOT close the row |
 | F-10 empty live tables ≠ error, but production work unproven | ✓ discipline + evidence | Evidence-Before-Done + live production chains recorded in R2.2 (first autonomous delivery), R2.4 (real staging send), R3.1 (spoken Q→A) |
-| F-11 training/capability lifecycle unproven | ◐ partially executed | R4.1 ✓ (library knows tools, training 1→75) + R4.2 OPEN row = execution home (grants>0, review>0, need-matrix) |
+| F-11 training/capability lifecycle unproven | ◐ partially executed | R4.1 ✓ (library knows tools, training 1→75) + R4.2 OPEN row = execution home (grants>0, review>0, need-matrix)  <!-- HISTORY --> |
 | F-12 University standalone product layer absent | **REGISTERED now** | roadmap R6.2 (OD-slot product row, Kelam pattern) |
-| F-13 JARVIS not bound to canonical closure | ✓ bound | R3.1 ✓ + R3.2 ◐ + U15 ("MUST be solved before project end", mandatory E13.x read) |
-| F-14 roadmap/STATE status drift | ✓ discipline | measured re-bases recorded in STATE (12:55 + 22:25); tonight's R3.2 ✓→◐ truth-restore is the enforcement example; drift check = each wave's STATE sync |
+| F-13 JARVIS not bound to canonical closure | ✓ bound | R3.1 ✓ + R3.2 ◐ + U15 ("MUST be solved before project end", mandatory E13.x read)  <!-- HISTORY --> |
+| F-14 roadmap/STATE status drift | ✓ discipline | measured re-bases recorded in STATE (12:55 + 22:25); tonight's R3.2 ✓→◐ truth-restore is the enforcement example; drift check = each wave's STATE sync  <!-- HISTORY --> |
 | F-15 real business pilot not mandatory at closure | **REGISTERED now** | E13.1 gate addition: closure requires Outleteuro pilot readiness attested (MASTER_PLAN Phase-11 definition), simulation cannot substitute |
 
 ## 5. Precedence

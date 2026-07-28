@@ -353,7 +353,7 @@ Made operational, and binding on every surface in Waves 2 and 3:
 - **The RULE #0 browser leg still needs one thing from him** (B03-bis): automated login is
   forbidden because it would enrol TOTP on his account, so the visual battery for Waves 2–3 needs
   a session file minted by his own hand. **One login, once.**
-- **Turkish speech quality** waits on the workstation for the larger STT model. **The 44 %
+- **Turkish speech quality** waits on the workstation for the larger STT model. **The 44 % <!-- OPEN: B12 -->
   `empty_transcript` defect and the 30-second latency do not wait** — they are software faults in
   our own daemon.
 - **Nothing here is built yet.** Every row above is a *project*, not a result. The only things
