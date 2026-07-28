@@ -57,16 +57,16 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | # | Source | Kind | Status | Claimed at | Report | The CEO's own words about this source |
 |---|---|---|---|---|---|---|
 | 01 | https://www.instagram.com/reel/DY4o8dluXdK/ — Luke Cutting (`lukebuildsai`) | reel | reported | 2026-07-28T10:46:20Z | `01-lukebuildsai-jarvis.md` | *"Bizim DxB Global Holdigimiz için tam da istediğimiz Jarvis sistemi bu short videoda mevcut"* — he gave this link three times (items 1, 15, 16 of his list) |
-| 02 | https://www.instagram.com/reel/DbTuJhOo69k/ — Okyanusi · Akın Yılmaz (`akinyilmaz.ai`) | reel | pending | — | `02-akinyilmaz-skills-system.md` | *"(BURADAKI SKILLERI VS TUM SISTEMI ISTIORZ)"* |
-| 03 | https://www.instagram.com/reel/DbBPiy4vcz4/ — Chloe Shy (`chloeshy.ai`) | reel | pending | — | `03-chloeshy.md` | listed without a note |
-| 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | pending | — | `04-thealinalab.md` | listed without a note |
-| 05 | https://www.instagram.com/reel/DadfHYrkmr7/ — CNN (`cnn`) | reel | pending | — | `05-cnn-clipping-business.md` | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* |
-| 06 | https://www.instagram.com/reel/DZkevADMVPK/ — Alp Ünlü (`alppunlu`) | reel | pending | — | `06-alppunlu.md` | listed without a note |
-| 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | pending | — | `07-misael-founder-systems.md` | listed without a note |
-| 08 | https://github.com/paperclipai/paperclip | repo | pending | — | `08-paperclip-repo.md` | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
-| 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | pending | — | `09-huwprosser.md` | listed without a note |
-| 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | pending | — | `10-cloud9-markets.md` | listed without a note |
-| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | pending | — | `11-rinaldojanjua-a.md` | listed without a note |
+| 02 | https://www.instagram.com/reel/DbTuJhOo69k/ — Okyanusi · Akın Yılmaz (`akinyilmaz.ai`) | reel | fetched | 2026-07-28T11:12:31Z | `02-akinyilmaz-skills-system.md` | *"(BURADAKI SKILLERI VS TUM SISTEMI ISTIORZ)"* |
+| 03 | https://www.instagram.com/reel/DbBPiy4vcz4/ — Chloe Shy (`chloeshy.ai`) | reel | fetched | 2026-07-28T11:21:15Z | `03-chloeshy.md` | listed without a note |
+| 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | fetched | 2026-07-28T11:24:47Z | `04-thealinalab.md` | listed without a note |
+| 05 | https://www.instagram.com/reel/DadfHYrkmr7/ — CNN (`cnn`) | reel | fetched | 2026-07-28T11:26:33Z | `05-cnn-clipping-business.md` | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* |
+| 06 | https://www.instagram.com/reel/DZkevADMVPK/ — Alp Ünlü (`alppunlu`) | reel | fetched | 2026-07-28T11:31:01Z | `06-alppunlu.md` | listed without a note |
+| 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | fetched | 2026-07-28T11:33:23Z | `07-misael-founder-systems.md` | listed without a note |
+| 08 | https://github.com/paperclipai/paperclip | repo | fetched | 2026-07-28T11:37:36Z | `08-paperclip-repo.md` | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
+| 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | fetched | 2026-07-28T11:37:37Z | `09-huwprosser.md` | listed without a note |
+| 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | fetched | 2026-07-28T11:38:17Z | `10-cloud9-markets.md` | listed without a note |
+| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | claimed | 2026-07-28T11:40:50Z | `11-rinaldojanjua-a.md` | listed without a note |
 | 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | pending | — | `12-rinaldojanjua-b.md` | listed without a note |
 | 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | pending | — | `13-rinaldojanjua-c.md` | listed without a note |
 | 14 | https://www.instagram.com/reel/DbKe90ETKfB/ — Rinaldo Janjua | reel | pending | — | `14-rinaldojanjua-d.md` | listed without a note |
