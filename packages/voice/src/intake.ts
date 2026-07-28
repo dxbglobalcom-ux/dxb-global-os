@@ -140,12 +140,41 @@ export async function intakeVoiceCall(
   } catch (e) {
     return fail(`stt_error: ${(e as Error).message.slice(0, 200)}`);
   }
+  // U15 D2 + 2026-07-28 repair: a transcript dominated by non-Latin letters is
+  // NOT evidence that the CEO spoke an unsupported language — it is usually
+  // Whisper's auto-detect landing in the wrong alphabet on a short clip.
+  // MEASURED LIVE, call 8788dc75 (2026-07-28 01:31): the CEO said
+  // "Selamün aleyküm" — a 1.3s segment — and auto-detect wrote it in ARABIC
+  // script ("السلام علي…"), so this holding's own greeting was thrown out by
+  // this holding's own gate and Hamza answered "Anlayamadım". The greeting is
+  // Arabic BY ORIGIN; hearing it is not an error, and rejecting it is.
+  // So: before refusing, spend one more STT pass with the language pinned to
+  // Turkish. A wrong-alphabet transcript is a machine problem and the machine
+  // retries it — asking the CEO to repeat himself is the LAST resort, never
+  // the first. If the pinned pass still comes back non-Latin, the original
+  // refusal stands (U15 D2 intact: never a guessed intent, never a task).
+  if (transcript && unsupportedScript(transcript)) {
+    try {
+      const pinned = await stt(input.audio, {
+        config: cfg,
+        ...(input.filename ? { filename: input.filename } : {}),
+        lang: "tr",
+      });
+      if (pinned && !unsupportedScript(pinned)) {
+        transcript = pinned;
+        timeline.push({
+          state: "transcribing",
+          at: new Date().toISOString(),
+          reason: "stt_rescued_tr: auto-detect returned a non-Latin script; pinned tr pass used",
+        });
+      }
+    } catch {
+      /* the pinned retry is a rescue attempt, never a new failure mode */
+    }
+  }
   result.sttMs = Date.now() - sttStart;
   if (!transcript) return fail("empty_transcript");
   result.transcript = transcript;
-  // U15 D2: {tr,en} whitelist at the script level — a transcript dominated by
-  // non-Latin letters (measured live: Korean, call b3858c42) is rejected for
-  // a spoken re-ask; it must never become an intent or a task.
   if (unsupportedScript(transcript)) return fail("language_unsupported");
   const lang = detectLang(transcript, input.lang);
 

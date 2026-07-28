@@ -193,12 +193,19 @@ async function play(path: string): Promise<void> {
  *  instant, so it can never wait for a live TTS round-trip. Filenames carry
  *  CUE_VERSION: changing a cue TEXT bumps the version so the stale cached WAV
  *  can never speak the old sentence (U15 block-4 text upgrade, 2026-07-25). */
-const CUE_VERSION = "v2";
+const CUE_VERSION = "v3";
 async function prepareCues(dir: string): Promise<Record<string, string>> {
   await mkdir(dir, { recursive: true });
   const cfg = speachesConfig();
   const cues: Record<string, { text: string }> = {
-    ack: { text: "Buyrun efendim?" },
+    // The CEO opens with "Selamün aleyküm" — the wake phrase IS the greeting.
+    // Until 2026-07-28 the ack answered it with "Buyrun efendim?", which takes
+    // the salam and does not return it; in a devout holding that is a defect,
+    // not a style choice, and the CEO heard it as the machine ignoring him.
+    // The reply now RETURNS the greeting first and offers the line second.
+    // It stays pre-synthesized: an ack that waits for a live TTS round-trip
+    // stops feeling like an answer (§24bis instant-ack law).
+    ack: { text: "Aleykümselam efendim, buyrun." },
     bye: { text: "Görüşmek üzere efendim." },
     busy: { text: "Hat şu an meşgul, bir saniye lütfen." },
     // U15 block 4 verbatim clarify text — garble/unsupported-language answer.
