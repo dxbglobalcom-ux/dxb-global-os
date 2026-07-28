@@ -79,7 +79,7 @@ Every "Measured" cell below was taken this session. A row with no measurement sa
 | C39 | **"Where is the company doctor?"** Who knows this holding perfectly and fixes a problem the moment it appears? | No such role existed in the 199-persona roster. **SHAPE DECIDED — CEO approved 2026-07-27: ONE DOOR, A TEAM BEHIND IT.** Hamza is the doctor the CEO speaks to — he diagnoses, names the owner and carries the repair to a closed, evidenced end; behind him stands a permanent **system-health team** that watches continuously and repairs without being asked. NOT a second department the CEO has to address: splitting diagnosis away from Hamza would give the CEO two doors to knock on, which is the very scatter he complained about | [[ORGANIZATION_ENGINE_SPEC]] + [[AGENT_ORCHESTRATION_SPEC]] | AUTHOR (shape approved) | The team exists and is staffed; a defect injected on purpose is detected, owned and repaired without the CEO reporting it, with the audit trail to prove it |
 | C40 | **"IS THE LOOP SYSTEM BUILT? I gave a repo and a specific order. It is very famous."** (karpathy / autoresearch) | `INTEGRATION-TRACKER.md:61` — autoresearch (karpathy), **Status STUDY**, target phase 11, study card `autoresearch.md` is a **STUB**. **It was never built** | [[CAPABILITY_ARSENAL_DOCTRINE]] | AUTHOR | The mutate → measure → keep-if-better loop running against a locked score, with a real run recorded |
 | C41 | **"Burj Al Arab was one throwaway example I gave at the start of the project — and it got written into the design department's persona as if it were the goal."** Who knows what other rubbish is in the personas | **2 persona files** carry it: `personas/design/head-of-design.md`, `personas/design/design-ui-designer.md` | [[EMPLOYEE_PERSONA_STANDARD]] | AUTHOR | Both files corrected at source **and** a sweep of all 199 personas for the same class (a construction-time example frozen into a permanent instruction) |
-| C42 | **STANDING ORDER — competitor systems become ours.** The CEO hands Opus 5 reels, videos and repos. Opus 5 watches them (cheap sub-agents allowed for the watching), writes a report, and then builds the same capability **or better**. No other outcome is acceptable. Whatever skills, plugins or tools that needs — from the holding's own inventory, from GitHub, or from the Claude Code marketplace — Opus 5 installs them itself | New order, 2026-07-27 | [[CAPABILITY_ARSENAL_DOCTRINE]] (new section) | CEO supplies sources → AUTHOR builds | Per source: report → feature parity or better, shipped and evidenced |
+| C42 | **STANDING ORDER — competitor systems become ours.** The CEO hands Opus 5 reels, videos and repos. Opus 5 watches them (cheap sub-agents allowed for the watching), writes a report, and then builds the same capability **or better**. No other outcome is acceptable. Whatever skills, plugins or tools that needs — from the holding's own inventory, from GitHub, or from the Claude Code marketplace — Opus 5 installs them itself | New order, 2026-07-27 | [[CAPABILITY_ARSENAL_DOCTRINE]] (new section) | CEO supplies sources → AUTHOR builds | Per source: report → feature parity or better, shipped and evidenced. **STAGE 1 CLOSED 2026-07-28: 16/16 sources read frame by frame, reported and merged — see Section 3.** The row stays open because the building has not started |
 
 ---
 
@@ -101,12 +101,96 @@ Rows are kept, never deleted, with the evidence that closed them.
 | C50 | **The Bellek page described itself in engineering language.** CEO, 2026-07-28 02:33: *"şu mallığa bak ya saçma sapan küçük yazılar ör: notebook altında bu ne yaaa ben CEO yum bunlar ne yaaa."* Each store card printed `library_items.usage_notes` — a note written for the library catalogue — so his NOTEBOOK card read *"procedure store — memory-store/procedure/\*.md (open-notebook line); kind=procedure, LOCKED composition"*. A file path, a `kind=` pair and a composition rule, on a command surface | The inventory join is **removed**, not reworded: a store card now says what the store HOLDS in one word from the page dictionary — Belgeler · Bağlantılar · Prosedürler · Olgular (EN: Documents · Connections · Procedures · Facts). The words are **measured**, not chosen: each company store holds exactly one kind (`memory_index`: obsidian=artifact 32, notebook=procedure 5, pgvector=fact 37) | `tests/phase8/memory-store-labels.test.ts` (5 cases): both locales carry a label for every store, no label may contain a path / `kind=` / `LOCKED` / more than two words, and the page may no longer read `usage_notes`. i18n purity PASS (en 2395 = tr 2395), tsc clean, phase8 44/44. **Browser leg ⚠ UNVERIFIED — see B03-bis** |
 | C51 | **A false statement stood on a CEO surface.** The same page titled its archive *"Fable'ın yapım notları (10-24 Temmuz)"*. Measured: `memory_index` store `claude-mem` runs **2026-07-10 → 2026-07-28**, with **2,135 rows written after Fable's last day** (07-24: 520 · 07-25: 481 · 07-26: 1370 · 07-27: 172 · 07-28: 92). The archive holds Opus 5's build notes too, and the CEO was being told otherwise | Renamed for what it is in both locales — *"İnşaat arşivi — yapım oturumlarının notları"* / *"Construction archive — the build sessions' own notes"*, dated "10 Temmuz'dan bugüne". The four-line explanation that stood open permanently now sits behind a native `<details>` (C35 — long text discoverable, never a wall); the count and last write stay visible | Date range measured in-session; both locale strings updated together; i18n purity PASS |
 
+## Section 2c — The CEO's complaints of 2026-07-28 (C52-C56)
+
+From `HAMZA VE KOMPLE SISTEM SIKAYETİ.odt` (224 lines + 6 screenshots, read in full 2026-07-28)
+and from the measurements taken while reading it. Every "Measured" cell was taken this session.
+
+| # | The complaint, in the CEO's terms | Measured 2026-07-28 | Owning spec | Waits on | What closes it |
+|---|---|---|---|---|---|
+| C52 | **"TAMAMEN DATA BASETEN SİLİNSİN ÇOK YER KAPLAMASIN."** He calls this his *"TEK istek ve tek görev"* for the chat panel: a conversation must be deletable **completely from the database**, not hidden | **No delete door exists at all.** The chat write path has exactly three functions — `fn_chat_post_message`, `fn_chat_session_for_new_message`, `fn_chat_touch_session`. Nothing deletes | [[CEO_COMMAND_CENTER_SPEC]] | AUTHOR | A CEO-triggered delete that removes the session and its messages from the database, audited, with the row count measured before and after |
+| C53 | **Images must be sendable to the chat** | No image upload on the chat surface. Note the irony measured the same day: **his own complaint arrived as six screenshots** he had to describe in words | [[CEO_COMMAND_CENTER_SPEC]] | AUTHOR | He drops a screenshot into chat and gets an answer that refers to what is in it |
+| C54 | **"bir kısmı gidiyor bir kısmı gitmiyor"** — half of what he says never arrives | **44 % of today's calls lost his speech.** `select status,count(*) from voice_calls where started_at::date=current_date` → `ended 5 · failed 4`; every failure `empty_transcript`. This is a software defect in our own daemon, **not** the hardware question that waits on Friday | [[VOICE_INTERACTION_SPEC]] · [[00-NOTE-R32-VOICE-REMEDIATION-PLAN]] | AUTHOR | 20 consecutive calls with 0 `empty_transcript`, and a spoken "sizi duyamadım" when capture is empty |
+| C55 | **He waits and nothing tells him anything** | Measured per call: **stt 12.9–17.7 s (one 67.3 s) + answer 12.5–22.2 s + tts 1.7–3.6 s ≈ 29–35 s**, with no state shown at any point. Two independent rivals (sources 02, 06) show `Düşünüyor` / `Listening` / `Speaking` throughout | [[VOICE_INTERACTION_SPEC]] · [[CEO_COMMAND_CENTER_SPEC]] | AUTHOR | Acknowledgement within ~1 s, visible state throughout, median round trip ≤ 10 s |
+| C56 | **A button that fails without saying so** | `apps/dashboard/src/components/chat/chat-board.tsx:285-297` — the "send as task" dispatch has **no `else` branch**; a failed `/api/intent` call tells the CEO nothing. Same class as the fault that killed his chat on 2026-07-26 (U27 fault 4) | [[CEO_COMMAND_CENTER_SPEC]] | AUTHOR | A forced-failure test asserts a visible message; the button can never fail silently again |
+
+---
+
 | Decision | The CEO's ruling |
 |---|---|
 | Cloud speech-to-text to fix the 46-second voice round trip | **REJECTED.** No cloud move. The workstation arrives **Friday**; local models will be installed then |
 | How local models get chosen | **By measurement** — accuracy, speed, spare memory, and researched user feedback, picking what fits this holding. Never by reputation |
 | The open work board | **ACCEPTED** — this file |
 | Order of work | **This board, oldest first.** Half-finished work outranks new work |
+| Order of work, amended 2026-07-28 | **Rival analysis first, then build.** The CEO chose it himself: *"Rakip analizi önce"* — because the report defines the target, and building before the target is known means demolishing afterwards. **Stage 1 is now closed (Section 3).** |
+| How the sixteen sources get read | **"HEPSİNİ İZLE TEKTEK EN İNCE EN KUCUK DETAYLARI YAZ. HEPİSININ SONRA DA BİRLEŞTİRİCİ BİR PLAN ÇIKAR!"** (CEO, 2026-07-28). Not one report then a pause — all sixteen, then one unifying plan |
+
+---
+
+## Section 3 — The C42 programme (opened 2026-07-28)
+
+**Stage 1 — rival intelligence — is CLOSED.** Sixteen sources supplied by the CEO were read
+frame by frame, reported, and merged into one plan. The reading lives at
+`.planning/research/rival-intel/` (16 reports + `00-LEDGER.md` + `00-SYNTHESIS.md`), it is
+machine-gated (`tests/c42/rival-intel-ledger.test.ts`, 7 cases — a `reported` row with no report,
+or a report missing its six sections, or a reel report whose section 2 is a summary rather than
+a timestamped record, all fail the suite), and it is crash-resumable
+(`scripts/rival-intel/next.sh`).
+
+### 3.1 What stage 1 measured
+
+| Fact | Measurement |
+|---|---|
+| Sources read | **16/16 reported** — 13 reels, 1 PDF, 2 repositories; `00-LEDGER.md` `NEXT: done` |
+| Distinct systems behind them | **6–7.** Sources 01/03/16 are one story (demo → teardown → the open-source stack); rows 11–14 are one account; rows 05 and 11–14 are the same clipping operation from opposite ends |
+| The diagnosis | **DXB is bigger, safer and better governed than every one of them — and is the only one whose owner cannot see it working.** The gap is visibility, feedback, connectors and speed. Not intelligence, not architecture |
+| Highest-value single screen found | Source 08's **Conference Room** — the CEO's chat and a live agent feed side by side in one view |
+| Highest-value single idea found | Source 10's **constellation** — the org chart IS the live activity display; the speaking agent's node lights up |
+| What the admired "judgement" actually is | Source 03 names it: **a connected data source with the right breakdown** (Meta Ads MCP returning ROAS *per creative*). Not reasoning |
+| Where DXB is unambiguously ahead | The objectives ledger (`capital_limit_eur`, `risk_limit_eur`, `max_loss_eur`, `net_unverified` — nobody else has anything like it) · the enforced approvals gate · 199 personas against their 5 · Islamic boundaries · two languages held pure |
+
+### 3.2 The six waves — every project already has an owning spec
+
+Full text, per-project evidence contracts and the per-source derivation:
+`.planning/research/rival-intel/00-SYNTHESIS.md`.
+
+| # | Wave | What it delivers | Waits on | Owning specs |
+|---|---|---|---|---|
+| **W-C42-1** | **"Hamza nefes alsın"** — feedback and speed | Acknowledge in ~1 s before transcription · state always visible (`dinliyor · düşünüyorum · konuşuyorum · sessize alındı`) · name the tool while using it · **kill the 44 % `empty_transcript` and the 29–35 s round trip** · mute stops being a trap · the silent dispatch button dies | AUTHOR | [[VOICE_INTERACTION_SPEC]] · [[CEO_COMMAND_CENTER_SPEC]] · [[00-NOTE-R32-VOICE-REMEDIATION-PLAN]] |
+| **W-C42-2** | **"Şirket görünsün"** — the living command centre | The Conference Room (chat + live feed in one view) · the living org constellation · the speaker always named · a page per agent · run cards with outcomes in words · the Knowledge Vault made visible · pipelines drawn with their invariants and their owner · a health line · a resting state that is alive · the book of bad calls | AUTHOR (+ CEO for the RULE #0 browser leg, B03-bis) | [[CEO_COMMAND_CENTER_SPEC]] · [[DESIGN_SYSTEM]] |
+| **W-C42-3** | **"Brifing karar versin"** | The briefing gains a voice and a spine · a **stated, CEO-owned ranking function** · it grades itself and regenerates when weak · it ends in the decision awaiting him · a world block that omits itself when empty · honorific as configuration · one gesture that teaches · every run writes back to memory | AUTHOR | [[VOICE_INTERACTION_SPEC]] §24quinquies · [[CEO_COMMAND_CENTER_SPEC]] |
+| **W-C42-4** | **"Dış dünya gelsin"** — connectors | Mailbox · unsubscribe inside our gate · revenue aggregator · ads with ROAS per creative · calendar. **Read-only first; every outward action keeps the approvals gate; each connector must produce one briefing sentence quoting a number that came from it** | **CEO** (which accounts exist and may be connected) | [[CAPABILITY_ARSENAL_DOCTRINE]] · [[REVENUE_ENGINE_SPEC]] · `INTEGRATION-TRACKER.md` |
+| **W-C42-5** | **"İş dayanıklı olsun"** — durability | Run liveness + resume-from-step + retry lineage with a stated reason · stop/interrupt a live run from the thread · task as a document (blockers, sub-tasks, reviewers, artefact) · the goal tree (`parent_id`, `owner_agent_id` on `objectives`) · the worker named out loud | AUTHOR | [[AGENT_ORCHESTRATION_SPEC]] · [[REVENUE_ENGINE_SPEC]] |
+| **W-C42-6** | **"Para"** — revenue | Decide on the clipping engine **on evidence** · a CEO-owned **halal allowlist** (the live campaign grid in source 05 contains a betting brand) · objective → production line → reconciliation against measured views · **Merchant of Record answered before the first sale** | **CEO** | [[REVENUE_ENGINE_SPEC]] · governance / boundaries |
+
+### 3.3 The design law the waves are built on
+
+The CEO's own sentence — *"HER PANELIN CANLI OLDUĞU YAŞAYAN BİR HOLDİNG"* — made operational and
+binding on every surface in W-C42-2 and W-C42-3:
+
+1. **Every panel reads from a query or shows an honest empty state.** No panel may display a
+   number it cannot prove. Source 01's goal panel sat frozen at `$16,678` for its whole video
+   while its owner spoke nine different figures; that is the failure mode we refuse. RULE #0-A,
+   expressed as design.
+2. **Zero is a real answer** — a quiet board says "nothing is running" and never animates to look
+   busy.
+3. **The refusals are visible** — every pipeline card names the rule it will not break.
+4. **Outward actions look different from reads** — the distinction the whole governance rests on
+   must be visible in one glance.
+5. **No "…" truncation** (CEO ruling 2026-07-18) — shorten at the source.
+6. **Both locales, ≥2 widths, `scrollWidth === clientWidth`** — RULE #0, per surface, same turn.
+
+### 3.4 What stage 1 explicitly refused, with reasons
+
+Coolify (already banned by our stack rules; its one-click Redis reintroduces a removed
+dependency) · Trigger.dev (a second job runtime; **its idea, resume-from-step, is adopted — its
+infrastructure is not**) · adopting Paperclip or OpenJarvis wholesale (would replace DXB with
+someone else's control plane, or add a second language and scheduler) · the trading desk of
+source 10 (market speculation touches constitutional Islamic boundaries — **we take the
+constellation, not the desk**) · Kokoro TTS (Speaches already gives us self-hosted €0 speech;
+recorded as the first fallback to measure) · the $97 six-agent kit · "duplicate a repo and let
+Claude Code edit it" (K1) · every comment-for-DM funnel (in two of them the withheld link is
+`open-jarvis/OpenJarvis`, **already cloned on this machine**).
 
 ---
 
