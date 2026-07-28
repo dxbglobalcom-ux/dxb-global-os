@@ -66,9 +66,9 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 08 | https://github.com/paperclipai/paperclip | repo | fetched | 2026-07-28T11:37:36Z | `08-paperclip-repo.md` | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
 | 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | fetched | 2026-07-28T11:37:37Z | `09-huwprosser.md` | listed without a note |
 | 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | fetched | 2026-07-28T11:38:17Z | `10-cloud9-markets.md` | listed without a note |
-| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | claimed | 2026-07-28T11:40:50Z | `11-rinaldojanjua-a.md` | listed without a note |
-| 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | pending | — | `12-rinaldojanjua-b.md` | listed without a note |
-| 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | pending | — | `13-rinaldojanjua-c.md` | listed without a note |
+| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | fetched | 2026-07-28T11:40:50Z | `11-rinaldojanjua-a.md` | listed without a note |
+| 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | fetched | 2026-07-28T11:47:15Z | `12-rinaldojanjua-b.md` | listed without a note |
+| 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | claimed | 2026-07-28T11:51:40Z | `13-rinaldojanjua-c.md` | listed without a note |
 | 14 | https://www.instagram.com/reel/DbKe90ETKfB/ — Rinaldo Janjua | reel | pending | — | `14-rinaldojanjua-d.md` | listed without a note |
 | 15 | https://drive.google.com/file/d/105ejHFZg-07mYEJwT4vZ5rxFClS-h9G4/view | pdf | pending | — | `15-vibecoder-4-sites-pdf.md` | measured 2026-07-28: not a video — the PDF *"Her Vibe Coder'ın Bilmesi Gereken 4 Site - Part 5"* |
 | 16 | https://github.com/open-jarvis/OpenJarvis | repo | pending | — | `16-openjarvis-repo.md` | *"JARVIS REPOSU"* — 8,065 stars, "Personal AI, On Personal Devices". Studied once on 2026-07-27 in a session that died; that study is NOT on disk, so it is redone here |
