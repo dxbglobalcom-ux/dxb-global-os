@@ -10,21 +10,32 @@
 // run happen nowhere in production — e10 suite comment).
 export default function globalSetup(): () => Promise<void> {
   return async function teardown(): Promise<void> {
+    // Same target the suites use (vitest.config.ts `test.env`): the isolated
+    // clone, never the company database. globalSetup runs in the main process
+    // where `test.env` does not apply, so it is named here explicitly.
     process.env.DXB_DATABASE_URL ??=
-      "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+      "postgresql://postgres:postgres@127.0.0.1:54322/dxb_test";
     // Root has no direct 'pg' dependency — ride the shared package's own
     // pool exactly like the suites do (dist path: resolvable from vite-node
     // without the test-runner alias map).
     const { getDb, closeDb } = await import("../packages/shared/dist/index.js");
     const { sql } = await import("kysely");
     try {
-      const res = await sql`
-        DELETE FROM alerts WHERE source = 'hook' AND dedup_key LIKE '%:no-run'
-      `.execute(getDb());
-      const n = Number(res.numAffectedRows ?? 0);
-      if (n > 0) {
-        console.log(`[global-teardown] swept ${n} test-probe hook alert(s) (:no-run class)`);
-      }
+      // 2026-07-28: this sweep is GONE, and its removal is the fix — not an
+      // omission. It deleted every hook alert whose dedup_key ends in ':no-run',
+      // and the pre-gate ALWAYS has a null run in production too (measured over
+      // 1963 live rows: pre = 516 null-run / 0 with-run; both callers gate
+      // "BEFORE the run is born"). So every suite run was quietly deleting REAL
+      // pre-gate rejections — halal and permission blocks among them — off the
+      // CEO's panel. Migration 20260728002000 replaces it with two intrinsic
+      // rules that need no sweep at all and survive a killed run:
+      //   · post/runtime violation with no run raises no alert (impossible in
+      //     production; the audit row is still written)
+      //   · deleting a violation row deletes its projection, so a suite that
+      //     cleans up after itself (id watermark, E9.3) cleans the alert too
+      // The pre-gate class stays visible on purpose: a probe there is
+      // indistinguishable from a genuine constitutional rejection, and showing
+      // the CEO one extra alert beats silently dropping a real halal block.
       // Second test-only class, measured on the CEO's Alerts page 2026-07-26
       // 04:23 ("Workflow 'e9t-retry' run failed"): e9 sweeps its own alerts,
       // but the RESIDENT scheduler can pick up a leftover queued run AFTER

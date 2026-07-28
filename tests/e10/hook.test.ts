@@ -489,17 +489,23 @@ describe("runtime rules — monitor, single kill authority (§6)", () => {
   });
 
   it("std 13 RED+PASS: confidence under threshold escalates; violations→alerts trigger fires (A4)", async () => {
-    const low = await checkConfidence(goodCtx(), 0.1);
+    // Drives the suite's REAL run fixture, which is also the production shape:
+    // the runtime monitors fire inside the run scope (worker-shim.ts:576 — the
+    // pre-gate is the only one that precedes the run). Migration
+    // 20260728002000 suppresses the CEO projection of a runtime/post violation
+    // that carries no run at all, so a null-run ctx here would have asserted a
+    // shape production can never produce.
+    const low = await checkConfidence(goodCtx({ runId: fxRunId }), 0.1);
     expect(low.escalationRequired).toBe(true);
-    // Scope to THIS suite's alert (goodCtx has no run → ':no-run' suffix) —
-    // the unscoped LIKE also counted the real 2026-07-18 wave escalations
-    // still unresolved on the live DB (measured 4, made this 5≠1).
+    // Scope to THIS suite's alert — the unscoped LIKE also counted the real
+    // 2026-07-18 wave escalations still unresolved on the live DB (measured 4,
+    // made this 5≠1).
     const alert = await sql<{ n: number }>`
       SELECT count(*)::int AS n FROM alerts
        WHERE source = 'hook' AND level = 'high' AND resolved_at IS NULL
-         AND dedup_key = 'hook:std.escalation_required:escalated:no-run'`.execute(db());
+         AND dedup_key = ${`hook:std.escalation_required:escalated:${fxRunId}`}`.execute(db());
     expect(alert.rows[0].n).toBe(1);
-    const high = await checkConfidence(goodCtx(), 0.9);
+    const high = await checkConfidence(goodCtx({ runId: fxRunId }), 0.9);
     expect(high.escalationRequired).toBe(false);
   });
 });
@@ -610,8 +616,11 @@ describe("post-gate — evidence package (§6/§20)", () => {
 
   it("§19/§7 integration: revision limit exhausted → ESCALATE with chain decision rows (manager hop) + approval item + high alert", async () => {
     const before = await violationsSince(baseViolationId);
+    // Real run fixture — the post-gate runs INSIDE the run scope in both
+    // production callers, and 20260728002000 no longer projects a runless
+    // post-gate violation onto the CEO's panel (that shape is an engine probe).
     const verdict = await postTask(
-      goodCtx({ revisionRound: 2 }),
+      goodCtx({ revisionRound: 2, runId: fxRunId }),
       goodResult({ evidence: [] }),
     );
     expect(verdict.verdict).toBe("ESCALATE");

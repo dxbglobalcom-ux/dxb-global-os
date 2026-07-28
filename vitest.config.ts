@@ -46,6 +46,27 @@ export default defineConfig({
   },
   test: {
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+    // ── The company database is not a test fixture (CEO, 2026-07-28: "bu bok
+    // inşaa sürecinin her boku neden bu şirkete yansıyor — burası ayrı bir
+    // platform"). Until tonight every suite wrote into the SAME Postgres
+    // database the CEO's dashboard reads, and six separate residue classes had
+    // to be swept back out again by hand (global-teardown.ts). A sweep only
+    // works if the run survives to reach it; on 2026-07-28 01:49 earlyoom
+    // killed the editor mid-run and construction artifacts stood on his KRİTİK
+    // UYARILAR panel.
+    //
+    // `dxb_test` is a full clone of the company database in the same Postgres
+    // instance — same schema, same seeds, same roles and RLS — so the live-data
+    // acceptance proofs this corpus relies on still measure real rows, while
+    // every write the suite makes lands somewhere the CEO never sees. Refresh
+    // it with scripts/test/refresh-test-db.sh (after migrations, or before an
+    // acceptance run that must measure current reality).
+    //
+    // Every test file uses `process.env.DXB_DATABASE_URL ??= <live url>`, so
+    // setting it here wins for all of them without touching a single suite.
+    env: {
+      DXB_DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:54322/dxb_test",
+    },
     // Phase-3+ integration tests share one local Postgres — parallel files
     // interfere (cross-file claims/wipes). Sequential is correct at DXB scale.
     fileParallelism: false,

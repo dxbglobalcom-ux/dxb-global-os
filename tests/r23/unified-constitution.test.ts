@@ -34,6 +34,7 @@ const SLUG = (s: string) => `${M}-${s}`;
 const PROJECT = "68ce909a-6d93-4e12-82cc-afa9cee57a9f"; // dxb-global-os
 let EMPLOYEE = "";
 let personaId = "";
+let baseViolationId = 0;
 
 async function makeHookReadyEmployee(): Promise<void> {
   const emp = await db()
@@ -121,6 +122,18 @@ async function runRow(runId: string): Promise<{ status: string }> {
 }
 
 beforeAll(async () => {
+  // CEO-caught 2026-07-28 01:50: this suite's halal REJECT stood on his KRİTİK
+  // UYARILAR panel. The afterAll below sweeps violations two ways — by run and
+  // by the M marker in `detail` — and the pre-gate rejection matches NEITHER:
+  // the pre-gate fires before the run exists (worker-shim.ts:576), and the
+  // halal detail is written by the policy engine, so it carries no marker.
+  // An id watermark catches every row the suite writes regardless of shape;
+  // the file suite is sequential (fileParallelism false), the same reason the
+  // e10 suite may use this idiom. Migration 20260728002000 then removes the
+  // CEO projection along with the row.
+  const bv = await sql<{ mx: number | null }>`
+    SELECT max(id)::int AS mx FROM hook_violations`.execute(db());
+  baseViolationId = bv.rows[0]?.mx ?? 0;
   // R4.3 orphan sweep: a crashed prior run (killed vitest, frozen laptop)
   // leaves its random-slugged r23t-* fixture agent ACTIVE with a NULL
   // hook_version — which then fails e10 spawn-binding's live acceptance
@@ -163,6 +176,10 @@ afterAll(async () => {
   }
   await sql`DELETE FROM audit_log WHERE action LIKE 'workflow.%' AND payload->>'slug' LIKE ${M + "%"}`.execute(db());
   await sql`DELETE FROM hook_violations WHERE detail LIKE ${"%" + M + "%"}`.execute(db());
+  // Everything this run wrote, whatever its shape — including the pre-gate
+  // halal REJECT that carries neither a run nor the M marker. The DELETE
+  // trigger added in 20260728002000 takes each row's CEO alert with it.
+  await sql`DELETE FROM hook_violations WHERE id > ${baseViolationId}`.execute(db());
   if (EMPLOYEE) {
     // archive FIRST: enforce_persona_gate_on_activation refuses persona_id =
     // NULL on an active agent (measured — the leak that stranded 7 fixture
