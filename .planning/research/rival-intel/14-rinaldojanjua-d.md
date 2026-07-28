@@ -1,5 +1,23 @@
 # SOURCE 14 — Rinaldo Janjua (`rinaldojanjua.ai`) D: `attu.ai` — the whole company, shipped as a product
 
+> ## ⛔ SCOPE CORRECTION — CEO ruling 2026-07-28, binding on this report
+>
+> **What was measured here is the RECORDING. What was NOT measured is the SYSTEM.**
+> A frame-by-frame reading proves what a 15–100 second video showed. It proves nothing about what
+> that system does when the camera is off, what it earns, how long it has run, or whether its
+> owner is satisfied with it. **I have never used any of these systems.**
+>
+> The CEO knows several of these systems and their owners personally. His words, 2026-07-28:
+> *"BEN O SİSTEMLERİ VİDEODAN DEĞİL, HEPSİNİ TANIYORUM — ARKADAŞLARIM — VE MİLYONLARCA DOLAR
+> KAZANIYOR VE HEPSİ GERÇEK, HEPSİ CANLI."*
+>
+> **His testimony outranks this reading.** Every verdict below is therefore scoped to the
+> recording, never to the company behind it, and where his account and this reading disagree,
+> **his is the evidence and this is the guess.** Sentences that judged a system rather than a
+> video were a RULE #0-A violation by the session author and have been corrected in place, with
+> the correction recorded rather than quietly overwritten.
+
+
 > The last of the CEO's four videos from this account, and **the most important of the four by
 > a wide margin**. Rows 11–13 showed individual pipelines drawn on a whiteboard. This one shows
 > the *product they live inside*: a shipped web application called **attu.ai** with a

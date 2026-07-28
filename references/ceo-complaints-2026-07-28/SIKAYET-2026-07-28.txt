@@ -1,0 +1,134 @@
+
+BOOTSTRAP OKU VE ONAYLA, SONRA DEVAM ET.
+Sen bu projenin oturum yazarısın (Opus 5, U30). Önceki oturum C42 Aşama 1&apos;i BİTİRDİ:
+16 rakip kaynağı kare kare okundu, raporlandı ve tek bir birleştirici plana çevrildi.
+YENİDEN PLAN YAZMA. Kaldığın yerden DEVAM ET.
+ÖNCE ŞUNLARI OKU (bu sırayla, tamamını):
+1. .planning/STATE.md
+2. HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md — Bölüm 3 (altı dalga) ve Bölüm 2c (C52-C56)
+3. HOLDING-OS-MASTER-PLAN/00-INDEX.md — U40 satırı
+4. .planning/research/rival-intel/00-SYNTHESIS.md — birleştirici plan
+5. Çalışacağın dalganın sahibi olan spec
+SONRA BANA TABLO HALİNDE, TEKNİK OLMAYAN DİLDE SÖYLE:
+- Aşama 1&apos;de ne bulundu (tek paragraf)
+- Altı dalga ve her birinin ne getirdiği
+- Hangisi BENİM kararımı bekliyor, hangisi beklemiyor
+- Tavsiye ettiğin sıra ve NEDEN
+BEN &quot;başla&quot; DEMEDEN İNŞAATA BAŞLAMA.
+KURALLAR: Yeni spec AÇMA (PLAN.md ≠ plan). Ölç, tahmin etme (RULE #0-A) — her sayı
+komut→çıktı. Kanıtsız &quot;bitti&quot; YASAK. Görsel iş RULE #0&apos;sız bitmez (iki dil, ≥2 genişlik,
+&quot;…&quot; kesme yasak); tarayıcı bacağı için benden BİR KEZ giriş iste. Tembellik dokuz biçimiyle
+yasak — turu bitirmeden yaz: ölçtüm mü · tam mı · kaydettim mi · doğruladım mı.
+Bana &quot;CEO Bey&quot; de. Sohbet Türkçe, repo İngilizce. Her satırı sen yaz (K1).
+Satır kapanınca defteri AYNI oturumda düzelt.
+TASARIM KANUNU (benim cümlem, artık kural):
+&quot;HER PANELIN CANLI OLDUĞU YAŞAYAN BİR HOLDİNG.&quot;
+Her panel ya bir sorgudan okur ya da dürüst boş durum gösterir. Kanıtlayamadığı sayıyı
+hiçbir panel gösteremez.
+BU AŞAĞIDAKİ YAZDIKLARIM 27.07.2026 YANI DUNE AIT TAKİ SAYFANIN AŞAĞISINDA BUGUNUN 28.07.2027 YE KADAR. ORADA DA BUGÜNÜN ÇILDIRTMA NOTLARI VAR ÇÜNKÜ BIKTIM BIKTIM!!!!!!! YOK MU BU PROEMİ MÜKEMMEL YAPACAK BİR EKİP CİDDEN AĞLAYACAĞIM YA EKİP OLARAK ÇOK ÜZGÜNÜZ!!!! BİŞEYLER OLDU DENİNİOR BİTTİ DENİNİOR AMA OLMAMIŞ İŞTE ÇALIŞMIORRR ALLAHIN BELALARI!!!! NİYE YALAN SÖYLÜORSUNUZ PİSLİK ALÇAKLAR!!!! AYIP GÜNAH DEĞİL Mİ YALAN SÖYLEMEK!!!!!
+Selamaleykum Ben DxB Global Technology AI Native Consultancy Holding OS sahibi Muhittin Bey. Bu oturumun yetkili yazarı sensin (Opus 5, U30). 
+AŞIRI ÜZGÜN VE SİNİRLİYİM YANİ VAKİT KAYBEDİORM TOKEN KAYBEDİORM ŞU JARVIS HAMZA TARAFI HALA ADAM GIBI ÇALIŞMIOR HEP SORUNLAR VAR. EN UFAK OZELLIĞINDE BILE TEST EDILMESI BERABER TEST ETMEMIZ LAZIM HEM BACKEND REVIREW VE TESTLER HEM DE BENDE TEST ETMEM LAZIM— Önce mevcut en iyi REVIEW skill&apos;ini çalıştır. çünkü çok önemli bir konuyu review etmemiz lazım hala HAMZA JARVIS SISTEMI ISTEDIGIM GIBI OLMAMIS. TEMBELLIK YOK BURDA KESIN TALEBIMIZ! KÜÇÜK ADIMLARLA DENEYEREK İLERLEYELİM, HEM SEN HEM BEN OK DEDİKÇE İLERLEYELİM.
+ÖNCE ŞUNLARI OKU (bu sırayla, hiçbir işe başlamadan):
+1. memory/opus-5-construction-governance.md ve memory/model-routing-hierarchy.md ve memory/audit-twin-rule.md
+2. .claude/CLAUDE.md — Standing Order 11 + Amendment A1, RULE #0, RULE #0-A, RULE #0-B
+3. .planning/STATE.md — canlı pozisyon, devir teslim burada
+4. HOLDING-OS-MASTER-PLAN/00-INDEX.md — U-tablosu (U1…U36)
+5. HOLDING-OS-MASTER-PLAN/00-NOTE-FACTORY-COMPLETION-ROADMAP-2026-07-26.md — iş kuyruğu; senin satırın W2.6
+6. Satırın sahibi spec: VOICE_INTERACTION_SPEC + CEO_COMMAND_CENTER_SPEC
+7-BOARD OPEN WORK MD.
+BAĞLAYICI KURALLAR (kısa hâli; tam metin yukarıdaki dosyalarda):
+- K1: repoya giren her satırı SEN inline yazarsın. Subagent asla yazmaz.
+- U36 denetim ikizi: subagent DENETLER. İddia + nerede ölçüleceği verilir, görevi çürütmektir, salt-okur mekanik olur, denetim öncesi/sonrası audit_log·tasks·agent_runs satır sayısı ölçülür. Bulgusu kanıttır, hükmü sen imzalarsın. W2.6 makine kanıtıyla kapanır — denetçi gerekmez; W5.1 gerektirir.
+- RULE #0-A: ölç, asla tahmin etme. &quot;UNVERIFIED — şu sebeple ölçemedim&quot; meşru cevaptır; makul görünen tahmin ihlaldir.
+- RULE #0-B: teslimden önce üç soru — mükemmel mi, mantıklı mı, daha iyisi olabilir mi — ve gereğini yap.
+- Evidence-Before-Done: ✓ VERIFIED (komut→çıktı) ile ⚠ UNVERIFIED ayrı satırlarda; karıştırma.
+- Gördüğün kusuru O AN, kaynağında düzelt ve kalıcı kapı koy (CEO emri). Sonraya bırakma.
+- Dil: tüm artefaktlar İngilizce; CEO&apos;ya sohbet cevapları Türkçe.
+- Hitap: her cevapta &quot;CEO Bey&quot; veya &quot;Muhittin Bey&quot;. Yalın isim yok, hitapsız cevap da yok.
+- Raporlar tablo + kanıt kolonu.BENİM ANLAYACAĞIM DİLDE OLSUN KISALTMA FALAN FILAN DEĞİL BEN TEKNİK DEĞİLİM CEOYUM.
+JARVIS REPOSU: 1-https://github.com/open-jarvis/OpenJarvis 
+Bizim DxB Global Holdigimiz için tam da istediğimiz
+Jarvis sistemi bu short videoda mevcut: https://www.instagram.com/reel/DY4o8dluXdK/?igsh=ams3MmI2dHJzNGQ4 bişey yazma 
+Video izlemek için hangi tool skill ve pluging gerekiyorsa hem locale kur hem globale hem de Holding’in içine yükle ki çalışanlar hemen kullanabilsin.
+Videodaki ve repodaki Jarvis sistemi aynı sanırım ve bizim tam da istediğimiz sistem bu. 
+ÇOK ÖNELİ NOT: Öncelikle Hamza ile sohbet. Aşağıdaki pano ile hiç bir sorunumuz yok. Mic ile sesli transcription. Yazı cvp görev olarak gönder. Alttaki ingilizce türkçe. Türkçe seçince türkçe yazı aktarıor. Ingizce seçince ingilizce. Buraya dokunma SADECE tek istek ve tek görev: Konuşmalar kısmı yeni konuşma açma var ama kaydolan konuşmaları silme yok bu çok önemli bunu da ekleyelim istediğim konversation TAMAMEN DATA BASETEN SİLİNSİN ÇOK YER KAPLAMASIN.
+
+BEKLENTİMİZ NEYDİ NE OLDU: ŞİKAYETLER: 
+1-ŞİMDİ HAMZA PANELİNİ AÇTIM MİKROFON AÇ/KAPAT BUTONU VAR. AÇTIM. SELAMALEYKUM DEDİM. BUYRUN EFENDİM DİOR!!! ALEYKUMSELAM DEMELİ (HAMZA PERSONASI DİNDAR HEM HOLDINGIN ORKESTRATORU HEM DE ASSISTANIM. İNANÇLI MÜSLÜMAN BUNA GÖRE DAVRANMALI). 30 SN SNRA CVP VERDİ. BAKIORM EFENDİM. CVP VERİCEM EFENDİM. SONRA 15 SN FALAN SANIRIM SONRA BİŞEYLER SÖYLÜOR. ORTALAMA 45-1 DK BEKLEME SÜRESİ SORUNU.
+2-KONUŞMA ŞEKLİ TAMAMEN YAPAY ZEKA KOKUYOR ÇOK KÖTÜ. TELAFFUZ VS BAZEN KÖTÜ. HIZLI INTERACTION YOK. 
+3- BU BENİM SORUM: HAMZA JARVİS’İMİZ HER ZAMAN AYNI BEYİNLE(MODEL) CVP VERMİYOR DEĞİL Mİ? NE ZAMAN OPUS 5 NE ZAMAN FABLE 5 NE ZAMAN SONNET NE ZAMAN GPT 5.5 VS OLUYOR? SONUÇTA BU HAMZA ŞİRKETİN EN TEPESİNDEKİ YÖNETİCİ ORKESTRATÖR DĞEİL Mİ? YA OPUS 5 YA FABLE 5 OLMALI DEĞİL Mİ? AMA TERCİH OPUS 5. ! SÖYLE BİR SÖZLÜ SWİTCH SİSTEMİ OLMALI “
+2-SOHBETIMIZIN BIR KISMI 
+BUNU FABLE 5 HEMEN HEMEN DÜZGÜN YAPMIŞTI SONRAKİ AHMAK OPUS 5 BOZDU AMA SEN DEĞİL. ANA NEDEN NEDİR? NEDEN HIZLI INTERACTION YOK SEBEP ŞUANKI LAPTOP VE BULUTTA ÇALIŞMAMASIMI. GEÇ ALGILIYOR GEÇ CEVAP VERIYOR. ÖNCE SORUNU TEŞHİS ET
+NOT: BENİM AÇIK KARARLARIM (senin değil, onun):
+1. Hermes beyin hattı finansmanı (W3.1c) — para kararı.
+2. W5.1 öncesi denetim run 2: denetçiye DB erişimi verilecek (run 1&apos;de kapsam 19/27 ile eşiği kaçırdı).
+neden konuştuklarım bir kısmı gidior bir kısmı gitmior bir kısmı okunuyor anlaşılıyor diğer kısmı anlaşılmıyor. 10 dk konuştum sadece 2 dksı yansıdı bu mal gerizekalı voicebox kullandığınız için oranın özellikleri veya bok gibi olmuş yaaaa. Şimdi cvp bile vermior sustu kendiliğinden bok gibi bir sistem kurulmuş çıldıracağım yaaaaa. Bir sürü şey konuştum bir yerde de takılmışşş bok gibi konuştuklarımı algılamamış. BOK GİBİ BİR KODLAMA VE TEMEL ÜZERİNE KURULMUŞŞŞŞ ALLAH BELASINI VERSİN TEMBELLİĞE KAÇILMIŞ İNCE İNC İŞLENMEMİŞ SİSTEM YAAAA!!!. MİLLET MÜKEMMEL ŞEKİLDE KURMUŞ SİSTEMİ ÇALIŞTIRIYOR BEN HALA HAMZA JARVİS SİSTEMİNİ KURAMADIM ÜZÜNTÜDEN ÖLÜCEZ EKİP OLARAK ŞİRKET MAHVOLACAK. Şimdi bir saattir ben konuşuyorum, tamam mı? Konuştuklarım, bir kısmı geliyor, bir kısmı gitmiyor sana. Ya böyle bir şey olamaz ya, seninle on dakikada konuşursam, yüzyüz dakikada konuşurum, hepsi sana gitmeli, hepsi sen bunu anlamalısın. Bir kısmını sana naklediyor, tamam mı? Bu sistem bir kısmını nakletmiyor. Sen kendi kendine mi çözebilen, kendi kendine tamir edebilen, kendi ekibin var mı böyle? Yani bu nedir ya? Acayip sinirliyim ya. Ben ne bekliyordum? Nasıl bir sistem oldu ya? Ya videoları atacağım, millet almış başına gitmiş bir sürü sistem ya. Gerçekten neler neler yapmışlar? Bizimki şu işe bak ya. Ya biz güvenlik sana fable 5 dedik, opuz 5 dedik. Yani ne bu ya? Çıldıracağım ya, ekip olarak şirket olarak batacağız ya.
+AL OKU HAMZA NEDEMİŞ!!!!!
+3- AYRICA CHATE RESIM ATABİLMEM LAZIM. ATAMIYORUM. 
+❯ gördüm banka hesaplarını kendim gördüm bir kaçını ziyaret ettik. yardımcı olmak isrtediler istemedik OPUS 5 ve Fable 5 yapar dedik. Ör: [Image #6] bu nedir arkadaş ben buna CEO
+olarak bakınca hiç bir halt anlamıorm. resident worker ne, üstlendi çalışıor saatler ne oldu. ondan sonra tarih yok sadece saat var bu iş en başta hangi tarihte başladı tarih nerede
+[Image #7] bu resimde mesela canlı operasyon altında işler oluor ama tarih yok. ayrıca beni mahveden şey yine saçma sapan design ile bazı şeylerin konulması akıllıca estetikçe değil
+tarihi bok gibi yere koymayın. örneğin bu sayfayı mesela hamza mükemmel çalışsaydı bana şirketle iligli sayfayla ilgili ne sorarsam sorayım hemen hallederdi anlatır. ayrıca şirket
+doktoru nerede. yani bu holdingi mükemmel şekilde bilen bir sorun çıktığında hemen mükemmel şekilde çözecek olan da aslında hamza olmalı mı yoksa ayrıca bir departman mı yoksa nasıl
+olmalı? Diğer soru LOOP SİSTEMİ KURULDU MU BUNUNLA İLİGLİ REPO VE ÖZEL GÖREV VERMİŞTİM KHARPHATYNİN!!! ÇOK MEŞHUR... Diğer konu: [Image #8] resimde açıklamalar var yani panledeki
+açıklamalar yazı şekli zar diye değil bütün uzun açıklamalar drop down şeklinde olamalı ama bilinmeli oraya basınca açılacak ve mükemmel design olmalı. içeriğe bak: &quot;kahve token&quot;
+bilemmene bu ne ya? kahve token ne arkdaşım :@! işle ilgili değil ki bu ne işi var ticaret mi, kanal gleirleri mi para getirecek işlerle igilimi projelerle ilgili mi? yok benim
+beğenmediğim designla iligli. İLK DESING FABLE 5 YAPMIŞTI OKADAR KOTUYDU Kİ AĞLAYACAKTIM KONUŞ KONUŞ BİR TON TOKEN İLE ANCA BU ŞEKİLDE. VE CİDDEN COK YORDU ESKİLER! bunu yazmışlar
+bir halt anlamıyorum bak: &quot;Kapandı 2026-07-14: E11.1 /fin/costs üzerinde v_cost_breakdown gün kırılımını yayına aldı (commit f3f0bfc); E12.1-C /fin/tokens + /fin/budgets +
+/fin/providers + /fin/capacity ekranlarını gerçek defter/bütçe verisine bağladı (commit ff4c924). Dashboard tarafında harcama görünürlüğü artık 50-150 EUR bandını kapsıyor; P7
+kalemleri (toplamalar, koruma işleri, LiteLLM anahtar senkronu) bu riskin değil, kayıtlı sınırların parçası.&quot; bu ne?nESE BOŞVER! şimdi hamzayı açtım jarvis mic mikrofon aç kapa
+konmuş onu ben ihtiyaç duyduğumda sadece kullanırım. onu açınca aktif olmalı değil. al repo ve reels deki rakiplerime bak. kimse düğmeye basıp aktif etmior jarvisini yani
+orkestraötoröünü. AYRICA MESELA &quot;BACAK&quot; MACAK falan kullanıyor. kullandığı dil kodlama dilindeki bazı keliemelr ör: şu bacak takıldı olmalı. sonra yetimleri kapattım falan bunlar ne
+abi!!!? bu konuşma tarzını değil CEO&apos;ya açıklayı normal terminoloji ile herşey konuşulmalı anlatılmalı. Ben buraya hem derdimi şikayaetlerimi anlattım hem de yapılması gerekenleri.
+ama şimdi önce şu eksik tabloyu tamamlayalım. ve GÖREV BUNU DA EKSİK TABLOYA EKLE: RAKİPLERİN Videoları reelsleri vb kaynakları CEO tarafından OPUS 5 verilecek opus 5 isterse alt
+ajanları çalıştırarak ucuza videoları izlettirecek rapor çıkaracak ve o rapora göre videodaki özelliklerin birebir aynısını veya daha iyisini YAPACAK! başka seçenek yok. Bunun için
+hangi skiller hangi pluginler hangi toollar gerekiryorsa en iyisini kuracak kendisi için. ister holdingin içinde bulunan özelliklerden kursun ister githubtan ister claude code&apos;un
+marketplacingden. ayrıca mesela design müdürünü çağırdım baktım bana diorki bizim designımız genelde burj arab kullanıorz işleri yaparken falan. gerizekalı önceki fable 5 kalkmış
+design departmanındaki personanın içine aptal gibi sanki biz sadece burj arab içerikli design yapacakmışız sadece sanki buymuş hedef gibi bişey yapmış. burj arabı bok yedim de
+söyledim öylesine bir örnek vermiştim proje başında bunu kalktı ahmak herif heryere yazdı ulan ben milyonlarca design içinden öylesine bi örnek verdim bu inşaa sürecinde olan şeyi
+ana holding design departmanına sokmuş ulan kim bilir ne bok personalar var. AH AH ÖYLE DERTLİYİM Kİ.. NOT: BUNLARLA İLGİLİ OPUS 5 BİR BOARD HAZIRLADI SANIRIM ZATEN.
+BU SABAH Kİ SORUN: 28.07.2026
+
+❯ şuan seste yine sorun var &quot;anlayamadım muhittin bey&quot; dedi aynı anda ses üstüne ses bindi &quot;çözümlüyorum yorum&quot; &quot;başka bir ses daha bindi üstüne daha sonra Allahım ya
+çıldıracağım. her söylediğimde aynayamadım muhittin bey sizi duydum çözümlüyorum bilmem ne! ayrıca ÇOK BÜYÜK HALİSÜNASYON GÖÜOR BEN ONA NE KADAR ÇOK TOKEN YAKTIN
+BENLE KONUŞURKEN SORDUM O BANA EET EFNDİM PARDON EFENDİM YANLIŞ ANLADIM SİZ BANA BENİM SEVİYEMİ SORDUNUZ BENİM SEVİYEM DİYE BAŞLAYIP ALAKASIZ ŞEVLER SÖYLEME
+BAŞLIORRR BU NE BİÇİM NE BONTAN BİR JARVİS SİSTEMİ ALLAHIM DELİ OLACAĞIM YAAAA. AYRICA BASİT ŞİRKET SORULARINDA SONNET AMA İŞ STRATEJİ PLANLAMA BUNUN GİBİ ÖENMLİ
+KONULARDA OPUS... YA KONUŞTUĞUMU ANLAMIYOR YA. SİSTEMDEN HABERİ YOK SİSTEME ULAŞAMIOR SİSTEMİ KULLANAMIOR. HER BOKTA GÖREV GÖNDER BUTONU VAR ONU İSTİOR AMA O DA ÇALIŞMIOR BEN ONE GÖREV OLARAK VERSEMDE BOK O ŞEY ÇALIŞMIYOR O. ZATEN DESIGN OLARAK HER ŞEY ÇOK BOKTAN SISTEM ÇOK BOKTAN KÖTÜ. HER SAYFA ANLAŞILMAZ ŞEYLER VAR BİR CEONUN ANLAYAMAYACAĞI ŞEYLER
+ALLAHIN BELASI SİSTEM DAHA KENDİ İÇİNDE NE BOK YAPILDI NASIL YAPILDI NE OLUOR DAHA KENDİSİ BİLMİYOR LANET MAL YA CHATE SORSAMDA YOK. BİR GÖREV VERDİĞİMDE GÖREVİ TAKİP EDECEĞİM ALAN YOK SADECE CANLI OPERASYONLAR VAR ORADA DA MUĞLAK HERŞEY. BİTTİ PEKİ SONUCU NEDİR İŞİN??? YOK!!!!! BÖYLE DESIGN İSTEMİORM ZATEN.
+
+SORUN: NEREDEN İÇİNE GİRİLİOR KARTLARA TIKLAYINCA HİÇ Bİ BOK YOK
+
+ÖZELLİKLE SİSTEMİN KENDİ ORKESTRATÖRÜ SİSTEMİ DÜNYADAKİ HERKESTEN DAHA İİ BİLMELİ HEMEN ANINDA CVP VEREBİLMELİ. 
+EN BÜYÜK SORUNLARDAN: SOĞUK SAÇMA KARTLAR SAYFALAR PANELLER. DASHBOARD SAYFALARININ DESIGN ICI BERBAT BERBAT BERBAT YANI RAKIPLERIME BAKIORM SINIR KIRIZI GEÇIRICEM VE BUNU UCUZ AHMAK CINLI MODELLERLE VE DUSUK ZEKALI OPUSLARLA YAPTILAR NE FABLE 5 NE OPUS 5 BUMU BANA VERDIĞINIZ HEM DESIGN KOTU HEM SISTEM BOZUK!!!! AŞIRI SINIRLYIM AŞIRI UZGUN!!!!!! AŞAĞIDAKİ RESME BAK 34 INC EKRAN KOCA BOŞ SAYFA!!! SAYFAYI KUCULTUNCE SAĞA SOLA KAYDIRMA NEREDEYSE HIC BIR PANEL SAY DESIGNINDA YOK BELKİ BİRAZINDA!!!!! 
+
+AŞAĞIDA KENDİLERİNİ ZİYARET ETTİĞİMİZ TANIDIĞIM VE CİDDEN MÜKEMMEL DESIGN VE SISTEMLE ÇALIŞAN RAKİPLERİMİZİN REELSLERİ VİDEOLAR İLE 2 REPODA VERECEĞİM. BUNLARLA İLGİLİ YASAK: KESİNLİKLE TEMBELLİK YOK. VE VİDEODAKİNDEN DAHA MÜKEMMELİNİ İSTİYORUZ. BAŞKA KABULU YOK.
+ÖR: BİZİM EKRANDA NEREDE CANLI HAREKET EDEN HAMZA. BAK: NİMBUS VEYA JARVİS KONUŞURKEN RESMEN CANLI BİR İLETİŞİM VAR. ANA EKRANLAR VS VS.
+
+Şimdi şöyle bir şey yapacağız. Bu benim bütün şikayetlerim ve şirket ekibimizin şikayetleri. Girdik baktık, bok gibi yani. Tamam mı? Adam gibi çalışmıyor. Anlatabildim mi? Sistem orkestratörünün daha kendi şirketinden haberi yok. Yapamıyor, ulaşamıyor, edemiyor. Tamam mı? Hızlı değil, hız sorunu var. Bu tamam belki sistemle, laptopla ilgili sistem gelecek, makine gelecek. O ayrı. Yani çıldıracağım ya. Yani rakiplerimize bakıyoruz, on tane video atacağım size. On tane rakipleri, yani küçük çocuklar bile o kadar mükemmel sistemi oluşturabilmişler ki. Dizayn böyle her şey hareket ediyor, ne bileyim konuşurken Nimbus veya Jarvis böyle hareket ediyor. Ondan sonra canlı bir insan varmış gibi karşında genel ana panel, ekran güzel böyle tamam mı? Dizayn edilmiş, her şey böyle. Ondan sonra chartlar, analiz chartları birbiriyle bağlantılı, her şey güzel birbiriyle sistematik, dizayn edilmiş, bağlantılı. Bizimki yüzeysel böyle saçma sapan tamam mı? İlkokul çocuğu şeyi seviyesinde. Bizden profesör seviyesinde istiyoruz. İlkokul sev... Bu benim gördüğüm, çok net söylüyorum. İlkokul seviyesinde bu. Bağırarak söylüyoruz bunu. Arkamda on kişi şu an bakıyor size. Tamam mı? Senden öncekiler, sana demiyorum, senden öncekiler mahvettiler ya. Böyle boktan bir şey yapılabilir mi ya? Ya en mükemmel şekilde yapılması lazım bunun. Şimdi, önce bu sistem bakılacak dosyasına neler yapılmış falan. Tamam mı? Önce bir sistemi öğren. Çalış, bak ne ne değil. Ondan sonra benim problemlerimi öğren ne ne değil tamamıyla. Ondan sonra rakiplerin bütün videolarını indir, izle, çalış. Kelime kelime çalış, ekran ekran çalış. Not çıkar, tamam mı? Daha mükemmeli ve daha güzelini yapmak için uğraş. Uğraşma, yap. Anladın mı? Yap. Bitti. Yasak yap, karşı gelmek yasak. Yasak olan şey bizim beklentimizi karşılamamak.
+❯ [Image #19] şimdi önemli bir sıkıntımız daha var. örnek bu resim. burada &quot;kaliteyi burj
+arab standardında tuutoruz&quot; dior. ii de bu sadece.... İyi de bu sadece şeye özel bir şey. Yani bizim bu projeye özel, proje inşaatına özel bir şey. Yani şirketin sanki sürekli bütün design şeyleriyle ilgili yapılacak, gelecekte yapılacak bütün işleri, yirmi tane web sitesi geldi mesela. Ne alakası var Burj Al Arab&apos;la ya, standart? Ya bu anlatamıyorum ya. Ya bu bir şirket, bir holding. Dışarıda gittin, dışarı çıktın, bir tane dünyanın en büyük, tamam mı, holdingi içerisinde farklı şirketler var. Tamam mı? Design departmanı var, satış departmanı var, o departmanı var, şu departmanı var, bu departmanı var. Bir sürü farklı departmanlar var. Hepsi kendine özel, kendine has çalışacak. Biz bu şirketi inşa ederken kullandığımız şeyler, tamam mı, şirket için geçerli değil. Mesela Burj Al Arab standardında yapıyoruz design. Ya ne Burj Al Arab? Burj Al Arab design&apos;ında sadece ben bir küçücük bir şey söyledim yani dedim hani biraz lüks örnek verdim sadece, anlatabiliyor muyum? Faybulbeş. Yani sadece bir örnek verdim. Dedim ki yani bu hani bir lüks havası olsun, tamam mı? Oradan ağzından çıktı. Yapıştırdınız ona her yere onu sokuşturmuşsunuz ya. Burj Al Arab design standardı. Hayır abi. O sadece bu şeyin inşasıyla ilgiliydi. Onun dışında yapılacak bütün her şeyde farklı designler. O yüzden bunu da soruyorum sana. Yani bizim kütüphanemiz, üniversitemiz, knowledge şeyimiz, ben bir sürü şey yüklettirdim yani. Bir sürü design&apos;la ilgili bir sürü şey yüklettirdim. Ayrıca dizaynı mükemmelleştir, şeyi şeye de bağlanması lazım yani. Başka MCP&apos;lere, dış dünyaya vesaire bağlanması lazım. Yani. Demem o ki, burada şöyle bir şey var. Yani bu şirketi inşa ederken kullandığımız şeyler, bu gibi şeyler şirket için genel bir kural değil ya. Zaten bu şirketi inşa ederken kullandığımız şeyleri hep kullanmışsınız. Hep oraya yansımış şirketin içerisine. Ayrıca yine burada mesela design departmanındaki adamı çağırdım, seçtim. Ya mesela UI/UX dashboard diyecek, dashboard. Türkçe okuyor. Tamam mı? Böyle yabancı kelimeleri şey okuması lazım. Anlatabiliyor muyum? Yani yabancı kelimeleri yabancı okuması lazım. U eks diyor. UX den, UX&apos;ten Yu-eks ama yazımı doğruydu UX olarak almış güzel ama okurken sıkıntı. Bunları tanımlayacak, anlayacak bunları ya.
+İNŞAAT SÜRECİ İNŞAAT DOSYALARI KESİNLİKLE AMA KESİNLİKLE HOLDİNGİN İÇİNE YANSIMASIN GÖRMEELİM REZALET DÜN ÖRNEK VERDİM VE BUNU SPECLERDE BULMALISIN NE REZALETİ OLDUĞU: 
+1- BURJ ARAB ÖYLESİNE SAÇMA VERDİĞM KÜÇÜK BİR DESGN ÖRNEĞİNİ GİTMİŞ FABLE 5 MALI DESIGN DEPARTMANININ ANA POLITIKASI YAPMIŞ ULAN BU İNŞAAT SÜRECİNİN BİR SAÇMA KÜÇÜK PARÇASIYDI.
+2-APTAL SAÇMA KODÇULARIN TEKNİK KİŞİLERİN ANLAYACAĞI UZUN UZUN KODLAR FALAN EKRANDA HOLDING PANELLERINDE ULAN BU HOLDING PROJE PARA VS İŞİ OLAN BİR YER. ALLAHIM KONUŞMAYACAĞIM GEREKİRSE HER KELİMESİNİ OKU YAPILANLARIN ELEŞTİRİLERİN HATALARIN CİDDEN ÇILDIRACAĞIM ONA GÖRE SEN VE SENDEN SONRAKİ OPUS 5 LER MÜKEMMEL İLERLESİNLER…
+YAHU NE GRAFIK ANALİZLERİ NE CHARLAR. BELEK OBSİDİAN HAFIZA YERİ SAÇMA KUTUCUKLARDAN İBARET HERŞEY KUTU KUTU KUTU KART KART FALAN AÇ BAK VİDEOLARI OKU ÇALIŞ NASIL MÜKEMMEL CANLI CANLI HER PANEL KENDİNE ÖZGÜ BİR YAŞAM BELİRTİSİ OLAN. BİR SİSTEM!!!!
+PROJENİN MİMARİSİ TAMAMI VS ADIM ADIM KALİTE NASIL ARTACAKSA O ŞEKİLDE İLERLESİN. KOMPLE PROJE BAŞTAN SONA YAZILIOR KALİTE Mİ DÜŞÜOR UYGULARKEN ANLAMIORM BUNUN ÇÖZÜMÜ OLMALI.
+ÇOOOOOOOOOOK ÖNEMMMMLİ!!!!!!!!!!!!!!!!!!!!!! BÖLÜM:
+RAKİPLERİN LİNKLERİ: ÖLÜMCÜL UYARI EN BÜYÜK HATA: ÖZET İNCELEME YAPILMAYACAK MİLİMETRİK DEĞERLENDİRME HER KAREDEKİ OLGU DXB GLOBAL HOLDINGE NASIL UYARLAYABİLİRİZ DEĞİL ŞU SKİLLERİ ŞU PLUGİNLERİ ŞU TOOLLARI İNDİRİP KURUP YAPARIM YAPILIR PROJESİ OLMALI. SİSTEMİN NEREDEYSE GEREKİRSE SİSTEMİ KOMPLE YENİDEN İNŞAAA EDERİZ YETERKİ MÜKEMMEL RAKİPLERİMİZDEN ÇOK İİ OLSUN. 
+1- https://www.instagram.com/reel/DY4o8dluXdK/?igsh=ams3MmI2dHJzNGQ4 
+
+2- https://www.instagram.com/reel/DbTuJhOo69k/?igsh=MXU5YTl1eW4xbmNtZA== (BURADAKI SKILLERI VS TUM SISTEMI ISTIORZ)
+3- https://www.instagram.com/reel/DbBPiy4vcz4/?igsh=anVvb2g5bnMxYTR3 
+4- https://www.instagram.com/reel/DYG-_i9PPCM/?igsh=MXJhaHI0czRzY284aA==
+5- https://www.instagram.com/reel/DadfHYrkmr7/?igsh=YmlpZzhxNGlmenh1 BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)
+6- https://www.instagram.com/reel/DZkevADMVPK/?igsh=MXAyenRuN3lmOHFpcA== 
+7-https://www.instagram.com/reel/DbSGx3CCRQS/?igsh=cGl5MnZ4Y3M4ZXox
+8-paperclipai/paperclip BAK BAK İNCELE DE GÖR!!!!! 
+9-https://www.instagram.com/reel/DYK2IWyoEWh/?igsh=ZnMwOW9hcTQyaXVx 
+10-https://www.instagram.com/reel/DbBAOdVBjka/?igsh=MWhyOWExZWFjOWhkMQ== 
+11-https://www.instagram.com/reel/DbA3JgbphEs/?igsh=ZjQyZHo5c2JiaHNm
+12-https://www.instagram.com/reel/DbF2AUQh0MQ/?igsh=Zm91ZDN3MHFzODU= 
+13-https://www.instagram.com/reel/DbHOTOqhBXE/?igsh=ODFkYnlrdGdtOHFs
+14-https://www.instagram.com/reel/DbKe90ETKfB/?igsh=Y2JmMHBrbmE0cHls 
+15- https://www.instagram.com/reel/DY4o8dluXdK/?igsh=ams3MmI2dHJzNGQ4 
+15- https://drive.google.com/file/d/105ejHFZg-07mYEJwT4vZ5rxFClS-h9G4/view?fbclid=PAT01DUATUWs1leHRuA2FlbQIxMABzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAads-_Pps7B1HwH4Gu6-k-qTrJ-fX-trBe4Jm8DdWVSkXjO27scHjQvbTqiMJg_aem_0Qf-IVjIoU39qb8La4npnA 
+16-REPO: https://github.com/open-jarvis/OpenJarvis 

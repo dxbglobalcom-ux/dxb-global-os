@@ -1,5 +1,6 @@
 # 00-ARCHIVE — where every frame, subtitle and byte of the sixteen sources lives
 
+
 **Written 2026-07-28 in answer to the CEO's question:** *"bunların sen resimlerini indirdiğin her
 videonun deposu nerede? resimleri, altyazıları veya içerik yazıları nerede, hangi dosyada
 tutuyorsun hepsini? Opus 5 geldiğinde tekrar bu videoları indirmek, resimleri kırpmak yerine

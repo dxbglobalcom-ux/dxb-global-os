@@ -1,5 +1,23 @@
 # C42 STAGE 1 — SYNTHESIS: what sixteen rivals prove, and the one programme that answers them
 
+> ## ⛔ SCOPE CORRECTION — CEO ruling 2026-07-28, binding on this report
+>
+> **What was measured here is the RECORDING. What was NOT measured is the SYSTEM.**
+> A frame-by-frame reading proves what a 15–100 second video showed. It proves nothing about what
+> that system does when the camera is off, what it earns, how long it has run, or whether its
+> owner is satisfied with it. **I have never used any of these systems.**
+>
+> The CEO knows several of these systems and their owners personally. His words, 2026-07-28:
+> *"BEN O SİSTEMLERİ VİDEODAN DEĞİL, HEPSİNİ TANIYORUM — ARKADAŞLARIM — VE MİLYONLARCA DOLAR
+> KAZANIYOR VE HEPSİ GERÇEK, HEPSİ CANLI."*
+>
+> **His testimony outranks this reading.** Every verdict below is therefore scoped to the
+> recording, never to the company behind it, and where his account and this reading disagree,
+> **his is the evidence and this is the guess.** Sentences that judged a system rather than a
+> video were a RULE #0-A violation by the session author and have been corrected in place, with
+> the correction recorded rather than quietly overwritten.
+
+
 **Written 2026-07-28. Session author: Opus 5 (U30). All 16 sources read frame by frame; every
 DXB fact below measured this session, none recalled.**
 

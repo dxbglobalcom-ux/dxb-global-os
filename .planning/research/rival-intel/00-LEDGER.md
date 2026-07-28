@@ -1,5 +1,6 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
+
 **NEXT: done**
 
 > This file is the work queue, not the report. One row per source. A fresh session runs

@@ -1,5 +1,23 @@
 # SOURCE 04 — The Alina Lab (`thealinalab`): "HOW TO BUILD UR OWN JARVIS AI ASSISTANT"
 
+> ## ⛔ SCOPE CORRECTION — CEO ruling 2026-07-28, binding on this report
+>
+> **What was measured here is the RECORDING. What was NOT measured is the SYSTEM.**
+> A frame-by-frame reading proves what a 15–100 second video showed. It proves nothing about what
+> that system does when the camera is off, what it earns, how long it has run, or whether its
+> owner is satisfied with it. **I have never used any of these systems.**
+>
+> The CEO knows several of these systems and their owners personally. His words, 2026-07-28:
+> *"BEN O SİSTEMLERİ VİDEODAN DEĞİL, HEPSİNİ TANIYORUM — ARKADAŞLARIM — VE MİLYONLARCA DOLAR
+> KAZANIYOR VE HEPSİ GERÇEK, HEPSİ CANLI."*
+>
+> **His testimony outranks this reading.** Every verdict below is therefore scoped to the
+> recording, never to the company behind it, and where his account and this reading disagree,
+> **his is the evidence and this is the guess.** Sentences that judged a system rather than a
+> video were a RULE #0-A violation by the session author and have been corrected in place, with
+> the correction recorded rather than quietly overwritten.
+
+
 > Listed by the CEO without a note. Read in full anyway, because the order was to read
 > everything and because a source that turns out to be empty is itself a finding — it tells
 > us what the market noise looks like, and it lets the CEO stop spending attention on this
@@ -70,13 +88,16 @@ One project, and it is small. Recording it rather than inflating the source.
 |---|---|---|---|---|
 | **P04-1** | **A world block in the briefing** (CAP-04-A) | An optional final block in `v_ceo_briefing` — currency/market moves that touch the holding, and anything in the news that touches a live objective or a named market. **Rules it must obey:** skipped entirely when there is no data (never an empty heading), every item traceable to its source, and no commentary the data does not support. Cost stays near zero: a read of an existing feed, not a research run. | `CEO_COMMAND_CENTER_SPEC` + the U37 briefing adaptation | The briefing carries a world line when there is one and **omits the block silently** when there is not, in both locales. |
 
-**Not built:** everything else in this video, because there is nothing else in it.
+**Not built:** anything else, because **this 32-second clip does not show anything else**. That is a
+statement about the clip, not about its author or whatever they may have built.
 
 ---
 
 ## 6. Verdict
 
-**`reddedildi` — no capability to copy, one small idea worth keeping.**
+**`reddedildi` — this RECORDING carries no capability to copy, and one small idea worth keeping.**
+Nothing here is a judgement of the person or of any system they may run; 32 seconds of Iron Man
+footage is simply not evidence either way.
 
 - **Rejected.** Thirty-two seconds of Iron Man footage and a promise. The repository is never
   named. The instruction "duplicate it and tell Claude Code to edit it" is not a method.

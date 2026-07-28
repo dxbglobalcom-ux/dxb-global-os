@@ -1,5 +1,23 @@
 # SOURCE 01 — Luke Cutting (`lukebuildsai`): "POV: Jarvis is building you a $30k MRR app"
 
+> ## ⛔ SCOPE CORRECTION — CEO ruling 2026-07-28, binding on this report
+>
+> **What was measured here is the RECORDING. What was NOT measured is the SYSTEM.**
+> A frame-by-frame reading proves what a 15–100 second video showed. It proves nothing about what
+> that system does when the camera is off, what it earns, how long it has run, or whether its
+> owner is satisfied with it. **I have never used any of these systems.**
+>
+> The CEO knows several of these systems and their owners personally. His words, 2026-07-28:
+> *"BEN O SİSTEMLERİ VİDEODAN DEĞİL, HEPSİNİ TANIYORUM — ARKADAŞLARIM — VE MİLYONLARCA DOLAR
+> KAZANIYOR VE HEPSİ GERÇEK, HEPSİ CANLI."*
+>
+> **His testimony outranks this reading.** Every verdict below is therefore scoped to the
+> recording, never to the company behind it, and where his account and this reading disagree,
+> **his is the evidence and this is the guess.** Sentences that judged a system rather than a
+> video were a RULE #0-A violation by the session author and have been corrected in place, with
+> the correction recorded rather than quietly overwritten.
+
+
 > The CEO handed this link three times (items 1, 15 and 16 of his list) and wrote:
 > *"Bizim DxB Global Holdigimiz için tam da istediğimiz Jarvis sistemi bu short videoda mevcut."*
 > It is therefore the reference source of the whole C42 programme, and the one every
@@ -172,9 +190,11 @@ machine. The first three projects below are **wiring, not procurement**.
 | **P01-6** | **Judgement, not a number dump** (CAP-01-D) | Where two comparable things exist (two campaigns, two engines, two content angles), the briefing states which is winning and which is worst — with the measurement behind it. | Hamza persona §13 | A briefing sentence that ranks two real records and cites the query behind the ranking. |
 
 **Deliberately NOT copied.** The rival's HUD reports `LAT 34.0194"N · LON 118.4912"W`, `ALT 312FT`,
-`PACKET LOSS 0.00 %`, `BIOMETRIC LOCK — STABLE` and a frozen `$16,678`. Those are set dressing. Under
+`PACKET LOSS 0.00 %`, `BIOMETRIC LOCK — STABLE` and a `$16,678` that did not move in 72 seconds of
+recording. **What that proves is that those numbers were not live IN THIS CLIP — not that his system
+is fake.** Under
 RULE #0-A a panel that displays an unmeasured number is a governance violation here, not a feature.
-**DXB takes the grammar of that HUD and refuses its fiction:** every panel we ship reads from a query
+**DXB takes the grammar of that HUD and holds itself to a stricter rule than the clip can show:** every panel we ship reads from a query
 or shows an honest empty state. That is the concrete meaning of the CEO's
 *"her panelin canlı olduğu yaşayan bir holding"* — and it is the one axis on which we can be
 unambiguously better than this source rather than merely equal.
@@ -189,9 +209,11 @@ unambiguously better than this source rather than merely equal.
   speech lost today), and any connection to the outside world (analytics, ads, mailbox: none).
 - **Equal:** hands-free wake with a spoken phrase — ours needs no button and no password either, and
   its phrase is the salam.
-- **Better, already:** the goal panel. Theirs is frozen decoration; ours is computed from a ledger and
-  carries an "unverified" flag. And the *shape* of the win: their intelligence is trapped in the voice
-  because their screen has nothing on it. Ours can say it **and** show it, live, on every panel.
+- **Where we could be different:** the goal panel. In this recording theirs does not move; ours is
+  computed from a ledger and carries an `net_unverified` flag. **That is a difference in what the
+  clip shows, not a proven difference in the two systems** — his may well update outside these 72
+  seconds, and its owner is earning while ours is not. The usable lesson stands on its own: in DXB,
+  a panel that cannot prove its number may not display it.
 
 The right target is therefore not "build their Jarvis". It is: **their voice quality, our evidence** —
 an assistant that greets, aggregates, judges, delegates by name, recommends in order and hands the

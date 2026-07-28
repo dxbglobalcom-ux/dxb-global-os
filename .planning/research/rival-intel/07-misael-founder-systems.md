@@ -1,5 +1,23 @@
 # SOURCE 07 — Misael · Founder Systems (`misael.systems`): a six-agent company, sold as a kit
 
+> ## ⛔ SCOPE CORRECTION — CEO ruling 2026-07-28, binding on this report
+>
+> **What was measured here is the RECORDING. What was NOT measured is the SYSTEM.**
+> A frame-by-frame reading proves what a 15–100 second video showed. It proves nothing about what
+> that system does when the camera is off, what it earns, how long it has run, or whether its
+> owner is satisfied with it. **I have never used any of these systems.**
+>
+> The CEO knows several of these systems and their owners personally. His words, 2026-07-28:
+> *"BEN O SİSTEMLERİ VİDEODAN DEĞİL, HEPSİNİ TANIYORUM — ARKADAŞLARIM — VE MİLYONLARCA DOLAR
+> KAZANIYOR VE HEPSİ GERÇEK, HEPSİ CANLI."*
+>
+> **His testimony outranks this reading.** Every verdict below is therefore scoped to the
+> recording, never to the company behind it, and where his account and this reading disagree,
+> **his is the evidence and this is the guess.** Sentences that judged a system rather than a
+> video were a RULE #0-A violation by the session author and have been corrected in place, with
+> the correction recorded rather than quietly overwritten.
+
+
 > Listed by the CEO without a note. It is a sales page filmed off a screen — but the page
 > itself is worth reading, because someone is **charging money for a smaller version of DXB
 > Global OS**, and the way they package it says something useful about what a buyer thinks the
@@ -95,7 +113,7 @@ above it, not outside it. That placement is the whole product argument.
 
 | ID | DXB status | Evidence taken today |
 |---|---|---|
-| **CAP-07-A** minimum company | **HAVE — 30× over** | 22 departments, 199 personas, a named orchestrator. Their entire product is 1/33rd of our roster. |
+| **CAP-07-A** minimum company | **Larger on paper, unproven in practice** | 22 departments and 199 personas exist here against their 6 agents. **Roster size is not capability**: theirs is shipped and sold, ours has never run for a customer. Counting personas against a working product is the comparison error the CEO rejected on 2026-07-28. |
 | **CAP-07-B** human as final authority | **HAVE — and enforced** | The approvals gate stops every outward action at the CEO; `packages/outbox-executor` runs an allowlist; voice may request, never approve. Theirs is a box on a diagram. |
 | **CAP-07-C** daily brief as proof of life | **PARTIAL** | `v_morning_briefing` and `v_ceo_briefing` are live (U37). What they have and we do not is the **shape**: the brief ends in something the human reviews, approves and sends. Ours reports; theirs hands over work. |
 | **CAP-07-D** fifteen-minute rhythm | **NO** | Nothing measured defines what the CEO's day with the OS is supposed to look like. He currently discovers the system by complaining at it. |
@@ -126,8 +144,10 @@ database. Buying it would be paying for a smaller copy of what already exists he
 **`daha iyisi` on substance — `geride` on one thing we keep rediscovering: the CEO's day is
 undefined.**
 
-- **We are far past their product.** Six agents against 199; a diagram of authority against an
-  enforced approvals gate; a prompt library against a persona corpus.
+- **We have more written down; they have something that runs.** Six agents against 199 personas, a
+  diagram of authority against an enforced approvals gate, a prompt library against a persona
+  corpus — **all of it ours unproven, all of it theirs shipped and sold.** More inventory is not a
+  better company.
 - **But they answer a question we have not.** *"What does running this thing look like on a
   Tuesday morning?"* They answer in one line — fifteen minutes, four levers, one brief that
   ends in review-approve-send. DXB has no such answer, and that is precisely the hole the CEO

@@ -1,5 +1,6 @@
 # HANDOVER — how the next Opus 5 picks this up without losing anything
 
+
 **Written 2026-07-28 by the session author (Opus 5, U30) at the CEO's order:**
 *"bir sonraki opus 5'i de aynı şekilde devam etmesi için hazırla (bana ona vereceğim promptla lütfen)"*.
 
