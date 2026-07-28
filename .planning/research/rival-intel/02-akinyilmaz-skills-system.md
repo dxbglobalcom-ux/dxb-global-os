@@ -19,7 +19,7 @@
 | Uploader | `akinyilmaz.ai` — "Okyanusi · Akın Yılmaz" (14,623 posts · 85.5k followers · 202 following, read off the profile in-frame) |
 | Kind | Instagram reel, vertical, Turkish |
 | File | `media/02-DbTuJhOo69k.mp4` (34,517,899 bytes) |
-| **sha256** | `827f3babd92e389b8139c7252f1e807b1241cb1679f3021222e72c967ebf1fc2` |
+| **sha256** | `55b778b16a879059e36fe80b3e6f61910f5102fb4da87de67e3f593be940d37e` |
 | Duration | 143.15 s — the longest reel in the set |
 | Native resolution | 1080 × 1920 |
 | Material studied | **148 frames** — 143 at 1 fps + 5 scene cuts — swept as 13 contact sheets, plus targeted reads of the spreadsheet screens |

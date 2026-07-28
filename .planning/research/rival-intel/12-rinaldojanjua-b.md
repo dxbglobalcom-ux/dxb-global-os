@@ -18,7 +18,7 @@
 | Uploader | `rinaldojanjua.ai` |
 | Kind | Instagram reel, vertical, spoken English, split-screen (board on top, presenter below), one-word burned-in captions |
 | File | `media/12-DbF2AUQh0MQ.mp4` (4,571,825 bytes) |
-| **sha256** | `56c13033556bec93ea2064e9e250f54af1ad1fdf0d17a5c1469b1be292f2b4be` |
+| **sha256** | `5fde87b11bc847cf87467edfe1279fb37743e385135213ac0bea736e9a4cb352` |
 | Duration | 52.1 s |
 | Material studied | **52 frames** at 1 fps — swept as 5 contact sheets |
 | Transcript | `transcripts/12.json`, language `en` |

@@ -17,18 +17,55 @@ operation seen from opposite ends (row 05's clipping industry, rows 11–14's mu
 account). What survives the deduplication is **six or seven distinct systems** — and against
 every one of them, the pattern is the same:
 
-> **DXB Global OS is bigger, safer and better governed than every system in these sixteen
-> sources. It is also the only one whose owner cannot see it working.**
+> **Every one of these systems RUNS and EARNS. DXB does neither. On the only measure that
+> decides — does it work, and does it make money — DXB loses to all sixteen.**
 
-That is not a compliment wrapped around a defect. It is the diagnosis. The gap the CEO feels is
-**not intelligence and not architecture**. Measured, it is four things: **visibility**,
-**feedback**, **connectors**, and **speed**.
+### The correction that produced that sentence
+
+An earlier version of this file said DXB was *"bigger, safer and better governed than every
+system in these sixteen sources"*. **The CEO rejected it, and he was right.** The error was
+mine and it is recorded here rather than quietly overwritten, because it is the exact error
+RULE #0-A exists to prevent:
+
+- **I counted what was countable and called it a verdict.** 199 personas, 60 tables, 34 views,
+  a rich objectives schema — all measured, all real, and **none of them evidence of quality**.
+  A system is judged by what it produces. Ours produces nothing yet: `realized_revenue_eur = 0`
+  since the project began.
+- **I graded rivals from 60-second marketing reels; the CEO knows these systems personally.**
+  His words: *"BEN O SİSTEMLERİ VİDEODAN DEĞİL HEPSİNİ TANIYORUM, ARKADAŞLARIM, VE MİLYONLARCA
+  DOLAR KAZANIYOR VE HEPSİ GERÇEK, HEPSİ CANLI."* Direct knowledge of a running system outranks
+  a frame-by-frame reading of an advertisement for it. **Where his account and my reading
+  disagree, his is the stronger evidence** — and it means every "we are ahead" cell in §1 must
+  be read as *"ahead on this one countable dimension"*, never as *"ahead as a system"*.
+- **An unused table is not an asset.** `library_items` holds 434 rows and `library_usage_log`
+  holds **0**. 199 personas exist and the CEO has never heard one speak. Capability that has
+  never run is inventory, not capability.
+
+### The diagnosis, restated honestly
+
+DXB has **more unfinished structure and stricter rules** than any of them. Rules are not
+results. What the sixteen have that DXB does not is not intelligence and not architecture — it
+is that **theirs are switched on and connected to the world, and ours is not**. Measured, that
+resolves into four things, in this order of consequence:
+
+1. **It does not earn.** No connector, no revenue engine running, `objectives` realising €0.
+2. **It does not reliably hear him.** 44 % of today's calls lost his speech entirely.
+3. **It does not show him anything.** The company runs behind a blank screen.
+4. **It is slow.** 29–35 s per answer against roughly 1.5 s.
 
 ---
 
 ## 1. The scoreboard, measured
 
 Every DXB cell was measured on 2026-07-28 by command or query, not from memory.
+
+**How to read the "Ahead" cells — this caveat is binding.** *Ahead* here means **ahead on that
+one countable dimension**, and nothing more. It does not mean the system is better, because a
+capability that has never run is inventory, not capability: `library_items` holds 434 rows while
+`library_usage_log` holds **0**, and the CEO has never heard one of the 199 personas speak. The
+rival cells are read from 15–100 second promotional reels; the CEO knows several of these systems
+directly and reports that they are live and earning. **Where his account and this reading
+disagree, his is the stronger evidence.**
 
 | Dimension | Best rival, and what it does | DXB, measured today | Verdict |
 |---|---|---|---|
@@ -311,21 +348,38 @@ Made operational, and binding on every surface in Waves 2 and 3:
 
 He wrote: *"bizimki bok gibi, alakası yok."*
 
-**About what he can see, he is right.** Sixteen rivals show their company working and DXB shows
-him a blank page. Source 14 in particular runs, today, in someone else's browser: a live org
-tree, an agent log, a searchable knowledge vault with 954 entries, and a "speak to the CEO" orb
-on the main screen.
+**He is right, and the first draft of this file argued with him. That was the defect.**
 
-**About what exists, he is not right, and he deserves the measurement rather than reassurance.**
-199 personas against their 5. A goal ledger with capital limits, loss limits and an
-`net_unverified` flag that no rival has anything like. An approvals gate enforced by an allowlist
-in code where theirs is a line of dialogue. Islamic boundaries as constitutional limits. Two
-languages held pure by a gate. A wake daemon that has been listening for a spoken salam since
-01:44 this morning.
+The rivals are **live and earning**. He knows them personally — they are his friends' systems,
+not screenshots. DXB is **not live in any sense that matters to him**: it does not earn, it loses
+44 % of his speech, it shows him a blank screen and it answers in half a minute. Every one of
+those is measured, not felt.
 
-**The distance between those two facts is this programme.** Wave 1 makes Hamza answer like
-something alive. Wave 2 makes the company visible on the screen he already paid for. Wave 3 makes
-the morning briefing decide instead of report. Wave 4 brings the outside world in so the numbers
-are real. And none of it requires inventing anything that the sixteen sources proved is possible
-— because after reading all of them, **the only thing they have that we do not is the part that
-shows.**
+What DXB has that they do not is **structure and rules**: 199 written personas against their 5, a
+goal ledger with capital, loss and cash limits and an `net_unverified` flag, an approvals gate
+enforced by an allowlist in code, Islamic boundaries as constitutional limits, two languages held
+pure by a gate. **All of it is unproven, because none of it has produced anything.** Structure is
+an asset only after it runs. Until then it is a cost, and he has been paying it.
+
+So the honest ranking is:
+
+| | Them | Us |
+|---|---|---|
+| Runs | **yes** | no |
+| Earns | **yes** | **no — `realized_revenue_eur = 0`** |
+| Hears its owner | **yes** | 56 % of the time |
+| Shows its owner what it is doing | **yes** | no |
+| Answers fast | **~1.5 s** | 29–35 s |
+| Has rules that hold money and boundaries | no | yes |
+| Has a written workforce | 5 named roles | 199 personas |
+
+**Six rows to four, and the four we win are the ones that only pay off later.** That is the
+whole truth of the comparison, and it is why the order of the waves matters more than their
+content.
+
+**What this programme is for, then:** not to prove DXB is good, but to **switch it on**. Wave 1
+makes it hear him and answer. Wave 2 makes it visible. Wave 3 makes the briefing decide. Wave 4
+connects it to the world so its numbers are real. Wave 6 makes it earn. Nothing here needs
+inventing — all sixteen sources prove every piece is possible, and several of them prove it is
+possible cheaply. **The only thing that has never been true here is that it works.** That is the
+target.

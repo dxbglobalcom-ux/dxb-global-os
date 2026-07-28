@@ -15,7 +15,7 @@
 | Uploader | `misael.systems` — "Founder Systems" |
 | Kind | Instagram reel, vertical, spoken English over a screen recording |
 | File | `media/07-DbSGx3CCRQS.mp4` (25,171,122 bytes) |
-| **sha256** | `6e09c27d6dcd99cdd5cb9424a03f1c125a07067714ba5fad7a48f6c51c4aa460` |
+| **sha256** | `56d2203b3333185e1f7c432904071bcc73daabcbe0271292bb1ef01a655964e6` |
 | Duration | 82.2 s |
 | Material studied | **82 frames** at 1 fps — swept as 7 contact sheets |
 | Transcript | `transcripts/07.json`, language `en` |

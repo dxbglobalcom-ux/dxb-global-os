@@ -127,7 +127,9 @@ twice by two independent sources.**
   contracts, e-mail and ad spend at a human by law, enforced by an allowlist in code.
 - **The conclusion this row forces, stated plainly for the CEO.** His complaint — *"bizimki bok
   gibi"* — is **not wrong about what he can see**, and is **not right about what exists**. The
-  holding is bigger, safer and better governed than every system in these sixteen sources. It is
-  also the only one of them that its owner cannot see working. Sources 10 and 14 independently
+  rival in these sixteen sources RUNS and EARNS while this one does not — the CEO knows several
+  of them personally and reports exactly that. What the holding has instead is more unfinished
+  structure and stricter rules, and rules are not results (`library_items` 434 rows against
+  `library_usage_log` 0; `realized_revenue_eur` 0). Sources 10 and 14 independently
   show the same cure: **draw the company, name the speaker, log what was asked and answered, and
   put the shelf on screen** — all from rows we already have, with no new intelligence required.

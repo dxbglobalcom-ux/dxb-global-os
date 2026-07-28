@@ -77,6 +77,10 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 `yt-dlp --simulate`, the Drive link resolved to a PDF over `drive.usercontent.google.com` (HTTP
 200), both repos answered the GitHub API. **Zero blocked sources.**
 
+## Where the material lives
+
+`00-ARCHIVE.md` maps every source to its media file, its sha256, its frames, its contact sheets, its transcript and its report — measured, not described. **The next session does not re-download or re-crop anything: the reading is written as text inside the reports, and those are committed.**
+
 ## Closing stage 1
 
 When every row reads `reported`, one synthesis lands at `00-SYNTHESIS.md`: repeated capabilities

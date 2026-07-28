@@ -11,6 +11,7 @@
 //   - section 2 is a real frame-by-frame record, not a summary.
 //
 // Read-only: this suite touches no database and no network.
+import { createHash } from "node:crypto";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -124,6 +125,31 @@ describe("C42 rival-intel ledger", () => {
       expect(body, `row ${r.n} report names no sha256 and no commit`).toMatch(
         /\b(?:[a-f0-9]{64}|[a-f0-9]{7,40})\b/i,
       );
+    }
+  });
+
+  // "A hash is present" was not enough. Measured 2026-07-28: a bulk-insert script
+  // matched media files by a two-character prefix and hashed the extracted .wav
+  // instead of the .mp4, so SIX reports carried a syntactically perfect sha256 of
+  // the wrong file — and the test above passed all six. A fingerprint that is not
+  // checked against the artefact is decoration. When the media is on disk, the
+  // number in the report must BE its hash.
+  it("a recorded sha256 is the hash of the file it claims to describe", () => {
+    const mediaDir = join(DIR, "media");
+    if (!existsSync(mediaDir)) return; // media is gitignored; skip on a fresh clone
+    const media = readdirSync(mediaDir).filter((f) => /^\d{2}-.*\.(mp4|pdf)$/.test(f));
+    for (const file of media) {
+      const n = file.slice(0, 2);
+      const row = ledgerRows().find((r) => r.n === n && r.status === "reported");
+      if (!row) continue;
+      const body = readFileSync(join(DIR, row.report), "utf8");
+      const claimed = body.match(/\*\*sha256\*\*\s*\|\s*`([a-f0-9]{64})`/i)?.[1];
+      if (!claimed) continue; // repo rows name a commit instead; covered above
+      const actual = createHash("sha256").update(readFileSync(join(mediaDir, file))).digest("hex");
+      expect(
+        claimed,
+        `row ${n}: the report's sha256 is not the hash of ${file} — it describes some other bytes`,
+      ).toBe(actual);
     }
   });
 

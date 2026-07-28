@@ -87,7 +87,8 @@ hiçbir panel gösteremez.
 | The board (waves, complaints, open work) | `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md` §2c, §3 |
 | The governed adaptation record | `HOLDING-OS-MASTER-PLAN/00-INDEX.md` → **U40** |
 | The 16 sources as tracker rows | `.planning/research/INTEGRATION-TRACKER.md` → "Rival Intelligence (C42, stage 1)" |
-| Evidence not committed (gitignored) | `media/` `frames/` `repos/` — reproducible from the sha256 in each report |
+| **Where every frame, subtitle and byte lives** | **`.planning/research/rival-intel/00-ARCHIVE.md`** — the map. Read it before re-downloading or re-cropping anything: **nothing needs to be** |
+| Evidence not committed (gitignored) | `media/` (182 MB) `frames/` (656 MB) `repos/` (257 MB) — reproducible byte-for-byte from the sha256 in each report; the gate now verifies that hash against the file on disk |
 
 ---
 
