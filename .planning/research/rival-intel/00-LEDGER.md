@@ -1,6 +1,6 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
-**NEXT: 01**
+**NEXT: 02**
 
 > This file is the work queue, not the report. One row per source. A fresh session runs
 > `scripts/rival-intel/next.sh`, reads the row this file points at, and continues there.
@@ -56,7 +56,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 
 | # | Source | Kind | Status | Claimed at | Report | The CEO's own words about this source |
 |---|---|---|---|---|---|---|
-| 01 | https://www.instagram.com/reel/DY4o8dluXdK/ — Luke Cutting (`lukebuildsai`) | reel | fetched | 2026-07-28T10:46:20Z | `01-lukebuildsai-jarvis.md` | *"Bizim DxB Global Holdigimiz için tam da istediğimiz Jarvis sistemi bu short videoda mevcut"* — he gave this link three times (items 1, 15, 16 of his list) |
+| 01 | https://www.instagram.com/reel/DY4o8dluXdK/ — Luke Cutting (`lukebuildsai`) | reel | reported | 2026-07-28T10:46:20Z | `01-lukebuildsai-jarvis.md` | *"Bizim DxB Global Holdigimiz için tam da istediğimiz Jarvis sistemi bu short videoda mevcut"* — he gave this link three times (items 1, 15, 16 of his list) |
 | 02 | https://www.instagram.com/reel/DbTuJhOo69k/ — Okyanusi · Akın Yılmaz (`akinyilmaz.ai`) | reel | pending | — | `02-akinyilmaz-skills-system.md` | *"(BURADAKI SKILLERI VS TUM SISTEMI ISTIORZ)"* |
 | 03 | https://www.instagram.com/reel/DbBPiy4vcz4/ — Chloe Shy (`chloeshy.ai`) | reel | pending | — | `03-chloeshy.md` | listed without a note |
 | 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | pending | — | `04-thealinalab.md` | listed without a note |
