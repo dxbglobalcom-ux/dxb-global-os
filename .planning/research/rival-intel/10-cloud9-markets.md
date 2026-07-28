@@ -17,6 +17,7 @@
 | Uploader | `cloud9.markets` |
 | Kind | Instagram reel, vertical, spoken English, multiple voices |
 | File | `media/10-DbBAOdVBjka.mp4` (8,224,439 bytes) |
+| **sha256** | `36bf05ac45b79902e4ca10b462e7f7f9554dad15be12936f3a9c46f0bcb4083d` |
 | Duration | 75.4 s |
 | Material studied | **75 frames** at 1 fps — swept as 7 contact sheets |
 | Transcript | `transcripts/10.json`, language `en` |

@@ -19,6 +19,7 @@
 | Uploader | `chloeshy.ai` — Chloe Shy |
 | Kind | Instagram reel, vertical. Spoken English, **burned-in bilingual subtitles (English + Traditional Chinese)** |
 | File | `media/03-DbBPiy4vcz4.mp4` (6,580,139 bytes) |
+| **sha256** | `b3d743f7b7a15d1ceb13cb32b5a8677ed3248978c1d5cf1305f5d001d085a007` |
 | Duration | 74.0 s |
 | Material studied | **84 frames** — 74 at 1 fps + 10 scene cuts — swept as 7 contact sheets (`scripts/rival-intel/sheets.sh 03`) |
 | Transcript | `transcripts/03.json`, language `en` |

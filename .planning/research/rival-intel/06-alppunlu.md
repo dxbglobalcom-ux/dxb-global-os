@@ -14,6 +14,7 @@
 | Uploader | `alppunlu` — Alp Ünlü. YouTube profile shown in-frame: **@alppunlu, 67.3k abone, 59 video** |
 | Kind | Instagram reel, vertical, Turkish |
 | File | `media/06-DZkevADMVPK.mp4` (9,417,556 bytes) |
+| **sha256** | `28e78fce39bd61baa4a8ea321fbf0bfba452cd137e5c15c4796284fa52c2af49` |
 | Duration | 42.8 s |
 | Material studied | **66 frames** — 43 at 1 fps + 23 scene cuts — swept as 6 contact sheets |
 | Transcript | `transcripts/06.json`, language detected `tr` |

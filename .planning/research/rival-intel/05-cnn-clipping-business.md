@@ -18,6 +18,7 @@
 | Uploader | `cnn` — a CNN report, re-cut vertically |
 | Kind | Instagram reel, vertical, spoken English, burned-in captions |
 | File | `media/05-DadfHYrkmr7.mp4` (22,333,759 bytes) |
+| **sha256** | `952104e0fdf8e1c97f44cd9ea83385adb9a9906435fd4717c0988bb9ba7168c1` |
 | Duration | 102.4 s |
 | Material studied | **129 frames** — 102 at 1 fps + 27 scene cuts — swept as 11 contact sheets, plus native-resolution extraction of the platform screens (video frames 810–960) |
 | Transcript | `transcripts/05.json`, language `en` |

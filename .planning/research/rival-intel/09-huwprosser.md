@@ -14,6 +14,7 @@
 | Uploader | `huwprosser` — Huw Prosser |
 | Kind | Instagram reel, vertical, spoken English |
 | File | `media/09-DYK2IWyoEWh.mp4` (2,804,997 bytes) — the smallest file in the set |
+| **sha256** | `26a91b04f9e9e4ea5292fd9f03000c24ba60741afce8786ca1bbdc2e31115979` |
 | Duration | **15.1 s** |
 | Material studied | **21 frames** — 15 at 1 fps + 6 scene cuts — swept as 2 contact sheets |
 | Transcript | `transcripts/09.json`, language `en` |

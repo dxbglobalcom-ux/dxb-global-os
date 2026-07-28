@@ -18,6 +18,7 @@
 | Uploader | `rinaldojanjua.ai` — Rinaldo Janjua |
 | Kind | Instagram reel, vertical, spoken English over a screen recording |
 | File | `media/11-DbA3JgbphEs.mp4` (17,829,131 bytes) |
+| **sha256** | `1970ec4540e1671737328f0cd467248f227b28f9de253b2a65e3b34697b34462` |
 | Duration | 97.0 s |
 | Material studied | **98 frames** — 97 at 1 fps + 1 scene cut — swept as 9 contact sheets |
 | Transcript | `transcripts/11.json`, language `en` |

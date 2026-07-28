@@ -23,12 +23,21 @@ const LEDGER = join(DIR, "00-LEDGER.md");
 // TOOLLARI İNDİRİP KURUP YAPARIM YAPILIR PROJESİ OLMALI."
 const REQUIRED_SECTIONS = [
   "## 1. Source identity",
-  "## 2. Frame-by-frame record",
   "## 3. Capabilities",
   "## 4. What DXB has today",
   "## 5. The build project",
   "## 6. Verdict",
 ] as const;
+
+// Section 2 is the anti-summary section, and its NAME depends on what the source
+// is: a reel has frames, a repository has files, a PDF has pages. Requiring the
+// literal words "frame-by-frame" would have forced a repo report to lie about
+// what it read — measured on the first full run, where sources 08 and 16 failed
+// the gate for honestly calling their section "file-by-file record". The rule
+// that actually matters is unchanged and is enforced twice: section 2 must exist
+// and must be a RECORD, and for a reel or a video it must additionally carry a
+// real count of timestamped rows (see MIN_FRAME_ROWS below).
+const SECTION_2 = /^## 2\. .*\brecord\b/im;
 
 // A frame row is a table line opening with a timestamp: | 00:04 | ...
 const FRAME_ROW = /^\|\s*\d{1,2}:\d{2}(?:[.:]\d{1,3})?\s*\|/gm;
@@ -86,6 +95,10 @@ describe("C42 rival-intel ledger", () => {
       for (const section of REQUIRED_SECTIONS) {
         expect(body, `row ${r.n} report is missing "${section}"`).toContain(section);
       }
+      expect(
+        SECTION_2.test(body),
+        `row ${r.n} report has no "## 2. …record" section — the anti-summary section is missing`,
+      ).toBe(true);
     }
   });
 

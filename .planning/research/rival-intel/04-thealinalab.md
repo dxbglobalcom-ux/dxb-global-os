@@ -15,6 +15,7 @@
 | Uploader | `thealinalab` |
 | Kind | Instagram reel, vertical, spoken English |
 | File | `media/04-DYG-_i9PPCM.mp4` (5,718,320 bytes) |
+| **sha256** | `91f19ae9e1a1042a3206a14f8898332227d257bfee00f58a841a55afc0fa7419` |
 | Duration | **32.1 s** — the shortest source in the set |
 | Material studied | **35 frames** — 32 at 1 fps + 3 scene cuts — swept as 3 contact sheets |
 | Transcript | `transcripts/04.json`, language `en` |
