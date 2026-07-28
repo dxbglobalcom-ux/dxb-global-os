@@ -771,8 +771,9 @@
     },
     "memory": {
       "kpiRecords": "Hafıza kaydı",
-      "constructionTitle": "İnşaat arşivi — Fable'ın yapım notları",
-      "constructionBody": "Bunlar Fable'ın bu şirketi İNŞA EDERKEN kendine yazdığı çalışma notlarının işaretçileri (10-24 Temmuz). Şirket bilgisi değildir ve hiçbir çalışan bunları kendiliğinden okumaz: hafıza yalnız bir ajan açıkça istediğinde çekilir, yani bu kayıtlar burada dururken sıfır token yakar. Yukarıdaki sayılar yalnız şirketin kendi hafızasını sayar.",
+      "constructionTitle": "İnşaat arşivi — yapım oturumlarının notları",
+      "constructionBody": "Bu şirketi İNŞA EDEN oturumların kendilerine yazdığı çalışma notlarının işaretçileri (10 Temmuz'dan bugüne). Şirket bilgisi değildir ve hiçbir çalışan bunları kendiliğinden okumaz: hafıza yalnız bir ajan açıkça istediğinde çekilir, yani bu kayıtlar burada dururken sıfır token yakar. Yukarıdaki sayılar yalnız şirketin kendi hafızasını sayar.",
+      "constructionWhat": "Bu nedir?",
       "constructionView": "İnşaat kayıtlarını aşağıdaki listede göster",
       "constructionHide": "İnşaat kayıtlarını gizle",
       "kpiTrusted": "Güvenilir payı",
@@ -787,6 +788,12 @@
         "relation": "İlişki",
         "artifact": "Artefakt",
         "procedure": "Prosedür"
+      },
+      "storeHolds": {
+        "obsidian": "Belgeler",
+        "graphify": "Bağlantılar",
+        "notebook": "Prosedürler",
+        "pgvector": "Olgular"
       },
       "colRef": "Referans",
       "colKind": "Tür",

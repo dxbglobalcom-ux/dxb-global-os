@@ -93,26 +93,27 @@ export default async function MemoryPage({
   if (tier) listQuery = listQuery.eq("trust_tier", tier);
   if (q) listQuery = listQuery.ilike("ref", `%${q}%`);
 
-  const [aggRes, invRes, listRes, detailRes] = await Promise.all([
+  // The library inventory join is GONE (2026-07-28). It supplied each store
+  // card's description straight from `library_items.usage_notes` — a catalogue
+  // note written for the library, in engineering language: the CEO's card for
+  // NOTEBOOK read "procedure store — memory-store/procedure/*.md
+  // (open-notebook line); kind=procedure, LOCKED composition". He named it the
+  // night he saw it. A store card says what the store HOLDS, in one word, from
+  // the page dictionary; file paths and composition rules belong in the
+  // library, not on a command surface.
+  const [aggRes, listRes, detailRes] = await Promise.all([
     supabase
       .from("memory_index")
       .select("store, trust_tier, cnt:id.count(), last:created_at.max()"),
-    supabase
-      .from("library_items")
-      .select("name, usage_notes, updated_at")
-      .eq("kind", "memory_source"),
     listQuery,
     detailId
       ? supabase.from("memory_index").select("*").eq("id", detailId).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
   ]);
 
-  if (aggRes.error || invRes.error || listRes.error || detailRes.error) {
+  if (aggRes.error || listRes.error || detailRes.error) {
     const message =
-      aggRes.error?.message ??
-      invRes.error?.message ??
-      listRes.error?.message ??
-      detailRes.error?.message;
+      aggRes.error?.message ?? listRes.error?.message ?? detailRes.error?.message;
     return (
       <div className="mx-auto max-w-6xl">
         <Panel title={dict.command.nav.pages.memory} state="error">
@@ -135,15 +136,6 @@ export default async function MemoryPage({
     if (!s.last || (row.last && row.last > s.last)) s.last = row.last;
     byStore.set(row.store, s);
   }
-  const inventory = new Map(
-    (
-      (invRes.data ?? []) as {
-        name: string;
-        usage_notes: string | null;
-        updated_at: string;
-      }[]
-    ).map((r) => [r.name, r]),
-  );
   const companyStats = COMPANY_STORES.map((s) => byStore.get(s)).filter(
     (s): s is NonNullable<typeof s> => Boolean(s),
   );
@@ -322,7 +314,6 @@ export default async function MemoryPage({
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {COMPANY_STORES.map((s) => {
           const stat = byStore.get(s);
-          const inv = inventory.get(s);
           const selected = store === s;
           return (
             <Link
@@ -343,23 +334,30 @@ export default async function MemoryPage({
                 <p className="mt-1 text-caption text-ink-muted">
                   {t.lastWrite}: {dateFmt(stat?.last ?? null)}
                 </p>
-                {inv?.usage_notes && (
-                  <p
-                    className="mt-2 break-words text-caption text-ink-secondary"
-                    title={inv.usage_notes}
-                  >
-                    {inv.usage_notes}
-                  </p>
-                )}
+                <p className="mt-2 text-caption text-ink-secondary">
+                  {t.storeHolds[s]}
+                </p>
               </Panel>
             </Link>
           );
         })}
       </div>
 
-      {/* Construction archive — Fable's build-session observation pointers.
-          Not company knowledge; never auto-read by employees (recall is
-          call-only). Kept out of the headline numbers and the default list. */}
+      {/* Construction archive — the build sessions' observation pointers. Not
+          company knowledge; never auto-read by employees (recall is call-only).
+          Kept out of the headline numbers and the default list.
+
+          2026-07-28, two corrections after the CEO's "iğrenç saçmalıklar" on
+          this very screen:
+          · The copy claimed the notes were "Fable's (10-24 July)". Measured:
+            the store runs 2026-07-10 → 2026-07-28 with 2,135 rows written
+            AFTER Fable's last day. A false claim on a CEO surface is a RULE
+            #0-A defect, so the archive is now named for what it is — the build
+            sessions' notes, whoever ran them.
+          · The four-line explanation stood open permanently. It is background,
+            not a figure, so it now sits behind a native <details> (C35 —
+            long text is discoverable, never a wall). The count and the last
+            write stay visible: those are the only numbers here. */}
       <Panel
         title={t.constructionTitle}
         state={store === CONSTRUCTION_STORE ? "selected" : "default"}
@@ -372,9 +370,14 @@ export default async function MemoryPage({
             {t.lastWrite}: {dateFmt(construction.last)}
           </span>
         </div>
-        <p className="mt-2 max-w-[90ch] break-words text-body-s text-ink-secondary">
-          {t.constructionBody}
-        </p>
+        <details className="mt-2">
+          <summary className="cursor-pointer text-caption text-ink-muted hover:text-ink-secondary">
+            {t.constructionWhat}
+          </summary>
+          <p className="mt-2 max-w-[90ch] break-words text-body-s text-ink-secondary">
+            {t.constructionBody}
+          </p>
+        </details>
         <div className="mt-3">
           <Link
             href={selfHref({

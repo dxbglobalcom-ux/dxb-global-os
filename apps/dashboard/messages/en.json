@@ -771,8 +771,9 @@
     },
     "memory": {
       "kpiRecords": "Memory records",
-      "constructionTitle": "Construction archive — Fable's build notes",
-      "constructionBody": "These are pointers to the work notes Fable wrote to itself while BUILDING this company (10-24 July). They are not company knowledge and no employee ever reads them on their own: memory is fetched only when an agent explicitly asks, so these records burn zero tokens while they sit here. The numbers above count only the company's own memory.",
+      "constructionTitle": "Construction archive — the build sessions' own notes",
+      "constructionBody": "Pointers to the working notes written by the sessions that BUILT this company (10 July to today). This is not company knowledge and no employee reads it on their own: memory is fetched only when an agent explicitly asks, so these records burn zero tokens while they sit here. The numbers above count only the company's own memory.",
+      "constructionWhat": "What is this?",
       "constructionView": "Show the construction records in the list below",
       "constructionHide": "Hide the construction records",
       "kpiTrusted": "Trusted share",
@@ -787,6 +788,12 @@
         "relation": "Relation",
         "artifact": "Artifact",
         "procedure": "Procedure"
+      },
+      "storeHolds": {
+        "obsidian": "Documents",
+        "graphify": "Connections",
+        "notebook": "Procedures",
+        "pgvector": "Facts"
       },
       "colRef": "Reference",
       "colKind": "Kind",
