@@ -28,8 +28,9 @@ laws now written into `.claude/CLAUDE.md`:
 - **LAW B** — finished ≠ approved. *"iş tamamlanınca bitti anlamına gelmez, ben bakmam lazım."*
   Only his own eye accepts. No record may claim his approval without a registered entry.
 
-Board row **B21** carries this work. **Built and committed 2026-07-31 (four commits, oldest work
-first).** Under LAW B it is NOT approved: the author's work is done, the CEO's eye has not seen it.
+Board row **B21** carried this work and is **CLOSED — he tested it himself and accepted it**:
+*"kabul ediyorum"* (2026-07-31). His first test failed and is recorded on the board with its two
+causes; his second passed. Nothing else on the board is accepted by that word.
 
 ## The newest written directive
 
@@ -63,14 +64,17 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 
 ## Next — read this before doing anything
 
-1. **B21 waits on the CEO's eye, not on work.** <!-- OPEN: B21 --> Do not re-open it, do not
-   "improve" it. If he says the sessions now start clean, close it with his words; if he names a
-   defect, fix that.
-2. **Then B22 — the rival re-analysis**, under `docs/ceo-directives/2026-07-reanalysis/` and door
-   `dxb-rival-intel`: proper source quality, full temporal reading, evidence labels, selective
-   rewrite. **This is what he said comes next**, in his own words: *"rakip analizi vs bunlar hepsi
-   sonra."* Do not start it before he says the word — the same sentence that ordered it also
-   ordered the context work first, and that ordering was his, not the author's.
+1. **B22 — the rival re-analysis is the next work**, under
+   `docs/ceo-directives/2026-07-reanalysis/` and door `dxb-rival-intel`: proper source quality,
+   full temporal reading, evidence labels on every statement, selective rewrite with a change log.
+   <!-- OPEN: B22 --> **This is what he said comes next**, in his own words: *"rakip analizi vs
+   bunlar hepsi sonra."* **It waits on his word**, because the same sentence that ordered it also
+   ordered the context work first, and that ordering was his.
+2. **What is blocked on him, and cannot move without him:** his approval of a visual design package
+   before any redesign is built · one hand-minted browser session so authenticated surfaces can be
+   checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two
+   paid model exams (B06, B09) · the machine's administrator password for the two root-level fixes
+   behind the editor crashes (C65) · the acceptance session itself (B13).
 3. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
    this (authority order, `.claude/CLAUDE.md` §1) — and it DELETES whatever contradicts it (LAW A).
 

@@ -356,16 +356,23 @@ for (const rel of corpusFiles()) {
     // --- check 5: an unregistered claim of the CEO's approval ---------------
     // LAW B. The board is NOT exempt here: its own rows are exactly where a
     // "he approved it" can hide, and his example of the defect was on it.
+    // A CEO-OK marker is validated wherever it appears, not only on a line the
+    // claim vocabulary happened to match. Found 2026-07-31 while closing B21:
+    // the row was marked correctly and the gate never looked, because its
+    // sentence was phrased as a quotation of the CEO rather than as an
+    // assertion about him. A mistyped or stale approval id would have passed.
+    const ok = line.match(MARK_CEO_OK);
+    if (ok) {
+      found.ceoOk++;
+      if (!approvals[ok[1]]) {
+        failures.push(
+          `${rel}:${i + 1} — CEO-OK marker names approval "${ok[1]}", which is not registered in ${APPROVALS}`,
+        );
+      }
+    }
+
     if (APPROVAL_CLAIM.test(line) && !APPROVAL_NOT_A_CLAIM.test(line)) {
-      const ok = line.match(MARK_CEO_OK);
-      if (ok) {
-        found.ceoOk++;
-        if (!approvals[ok[1]]) {
-          failures.push(
-            `${rel}:${i + 1} — CEO-OK marker names approval "${ok[1]}", which is not registered in ${APPROVALS}`,
-          );
-        }
-      } else if (!MARK_HISTORY.test(line) && !cover[i]) {
+      if (!ok && !MARK_HISTORY.test(line) && !cover[i]) {
         failures.push(
           `${rel}:${i + 1} — claims the CEO approved something with no registered approval behind it. LAW B: only his own eye accepts. Register it in ${APPROVALS} with his words and mark the line, or stop claiming it — ${line.trim().slice(0, 100)}`,
         );
