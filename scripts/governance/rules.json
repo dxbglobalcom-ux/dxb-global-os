@@ -1,0 +1,75 @@
+{
+  "_doc": "One rule, one owner. Registered by the CEO's context-architecture order of 2026-07-30, after the measured finding that the same rule lived in dozens of files and the copies had drifted — which is how a rule he had given ('speak to me in my language') sat in a complaint ledger for nine days while binding nobody. Each entry names a sentence that belongs to exactly ONE file. ledger-truth.mjs fails the battery when a registered fingerprint appears anywhere else in the ACTIVE instruction surfaces.",
+
+  "_scope": "Active instruction only: .claude/CLAUDE.md, .claude/skills/**/SKILL.md, .claude/hooks/*.sh, and the corpus's law and spec files. Deliberately EXCLUDED, each for a stated reason: 00-INDEX.md (the registered-adaptation table is a DATED RECORD of what was decided on a day, not active instruction — rewriting it would be rewriting history), 00-NOTE-* (dated session notes, same reason), .planning/STATE-ARCHIVE.md (frozen), docs/ceo-directives/** (the CEO's own documents — we never annotate or edit what he wrote), references/** (his evidence).",
+
+  "_how_to_use": "Naming a rule is always allowed — 'see RULE #0-A' is a pointer. What is forbidden is restating its TEXT in a second file. A fingerprint must therefore be a phrase from the rule's body, and it must fit on ONE line: these files are hard-wrapped, so a phrase that spans a line break silently matches nothing (measured while building this, 2026-07-30).",
+
+  "_growing": "This registry does not claim to cover every rule in the corpus. It covers the rules that were relocated on 2026-07-30 plus the laws most likely to be re-copied. Entries are added as rules are consolidated; an unregistered rule is simply unguarded, never blessed.",
+
+  "so13_full_capacity": {
+    "owner": ".claude/hooks/no-laziness.sh",
+    "fingerprint": "USE FULL CAPACITY ON EVERY TURN",
+    "what": "Standing order 13 — the nine forms of laziness. Re-injected on every prompt, which is why the hook owns it: a second copy in the always-on file paid for the same text twice."
+  },
+  "so14_self_test": {
+    "owner": ".claude/skills/dxb-ceo-report/SKILL.md",
+    "fingerprint": "Would my mother understand",
+    "what": "Standing order 14 — the self-test before any message reaches the CEO."
+  },
+  "evidence_unverified_label": {
+    "owner": ".claude/skills/dxb-verify/SKILL.md",
+    "fingerprint": "requires human-eye confirmation",
+    "what": "Evidence-before-done — the label that separates what a terminal proved from what it cannot."
+  },
+  "rule0a_sources": {
+    "owner": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md",
+    "fingerprint": "are NOT sources",
+    "what": "RULE #0-A clause 2 — a grep hit tells you where to read, not what is true."
+  },
+  "rule0a_danger": {
+    "owner": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md",
+    "fingerprint": "DEADLY dangerous",
+    "what": "RULE #0-A opening — the CEO's own framing of what guessing costs this project."
+  },
+  "rule0b_ceiling": {
+    "owner": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-PERFECTION-GATE.md",
+    "fingerprint": "the ceiling-check",
+    "what": "RULE #0-B — the spec is the floor, the perfection gate is the ceiling."
+  },
+  "rule0_design_pass": {
+    "owner": ".claude/skills/dxb-surface/SKILL.md",
+    "fingerprint": "Render the touched route",
+    "what": "RULE #0 — the operational design-verification pass. The CEO's directive owns the LAW; this door owns the PROCEDURE."
+  },
+  "board_law_one_row": {
+    "owner": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md",
+    "fingerprint": "One row per open thing",
+    "what": "The board's first law. The board owns its own laws; the closing door points at them."
+  },
+  "so11_process_skill_first": {
+    "owner": ".claude/skills/dxb-start/SKILL.md",
+    "fingerprint": "The process skill comes before the work",
+    "what": "Standing order 11 — the matching process skill is invoked before the work, and subagents never author. Registered after this rule was found to have lost its home during the 2026-07-30 consolidation: it existed in a complaint ledger and in nothing a session reads."
+  },
+  "onboarding_read_order": {
+    "owner": ".claude/skills/dxb-start/SKILL.md",
+    "fingerprint": "the smallest set",
+    "what": "The onboarding principle — read the smallest set that lets you act correctly."
+  },
+  "authority_order": {
+    "owner": ".claude/CLAUDE.md",
+    "fingerprint": "when two sources disagree",
+    "what": "The authority order. Its absence was the measured cause of two documents contradicting each other with nothing to settle it."
+  },
+  "law_a_delete": {
+    "owner": ".claude/CLAUDE.md",
+    "fingerprint": "DELETES what contradicts it",
+    "what": "LAW A (CEO, 2026-07-30) — a live order deletes the record it overturns."
+  },
+  "law_b_accepted": {
+    "owner": ".claude/CLAUDE.md",
+    "fingerprint": "finished ≠ approved",
+    "what": "LAW B (CEO, 2026-07-30) — only his own eye accepts."
+  }
+}

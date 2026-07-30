@@ -53,6 +53,45 @@ import path from "node:path";
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 const BOARD = "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md";
 const CLAIMS = "scripts/governance/claims.json";
+const RULES = "scripts/governance/rules.json";
+const APPROVALS = "scripts/governance/ceo-approvals.json";
+
+// ---- checks 4 and 5, added 2026-07-30 under the CEO's context-architecture order ----------
+//
+// CHECK 4 — ONE RULE, ONE OWNER. Measured that day: the same rule lived in dozens of files and
+// the copies had drifted, so a rule the CEO had given could sit in a ledger for nine days binding
+// nobody. Registered fingerprints (rules.json) must appear in their owner and nowhere else in the
+// ACTIVE instruction surfaces. Naming a rule is always fine; restating its text is not.
+//
+// CHECK 5 — LAW B: FINISHED IS NOT APPROVED. His words: "iş tamamlanınca bitti anlamına gelmez —
+// ben bakmam lazım ne yazılmış ve yapılmış." His own example: the board said the rival analysis
+// was done and approved; he had never approved it. A claim of his approval now needs a registered
+// entry (ceo-approvals.json) named by a <!-- CEO-OK: id --> marker.
+
+// Active instruction only. Every exclusion is named with its reason rather than left implicit:
+// the adaptation table and the dated notes are RECORDS of what was decided on a day — annotating
+// them would be rewriting history — and the CEO's own documents are never edited by us.
+const DUP_SCOPE_FILES = [".claude/CLAUDE.md"];
+const DUP_SCOPE_DIRS = [
+  { dir: ".claude/skills", ext: ".md", recurse: true },
+  { dir: ".claude/hooks", ext: ".sh", recurse: false },
+  { dir: "HOLDING-OS-MASTER-PLAN", ext: ".md", recurse: false },
+];
+const DUP_EXCLUDE = (rel) =>
+  rel.endsWith("00-INDEX.md") || path.basename(rel).startsWith("00-NOTE-");
+
+// A claim that the CEO approved something. Deliberately tight: "CEO onayı gerekir" states a RULE
+// (approval is required) and must not ring; only an assertion that he HAS approved does.
+const APPROVAL_CLAIM =
+  /\bCEO[- ](APPROVED|approved|accepted)\b|CEO ONAYI VERİLDİ|CEO onayı (verildi|alındı)|CEO kabul etti|Accepted by the CEO|CEO acceptance \d{4}-\d{2}-\d{2}/;
+
+// Naming the concept is not claiming the event. These forms describe a session that has NOT
+// happened, a rule about how approval works, or a pipeline state called "CEO-approved" — none of
+// them assert that he approved anything, and a tripwire that rings on them teaches people to
+// ignore it. Each exclusion was measured against a real line on 2026-07-30, not imagined.
+const APPROVAL_NOT_A_CLAIM =
+  /acceptance session|approving his own work|→\s*CEO-approved|CEO-approved →|becomes `APPROVED`|only by explicit CEO acceptance|CEO-accepted states/;
+const MARK_CEO_OK = /<!--\s*CEO-OK:\s*([a-z0-9\-]+)\s*-->/i;
 
 // The corpus this gate governs. Deliberately NOT included, each for a stated
 // reason: `.planning/quick/**` (execution tickets — one-shot by definition, not
@@ -218,9 +257,51 @@ function boardRows() {
 
 // ------------------------------------------------------------------- checks
 const failures = [];
-const found = { state: 0, open: 0, history: 0, triggers: 0 };
+const found = { state: 0, open: 0, history: 0, triggers: 0, ceoOk: 0, rules: 0 };
 const claims = JSON.parse(readFileSync(path.join(REPO, CLAIMS), "utf8"));
+const rules = JSON.parse(readFileSync(path.join(REPO, RULES), "utf8"));
+const approvals = JSON.parse(readFileSync(path.join(REPO, APPROVALS), "utf8"));
 const board = boardRows();
+
+// ------------------------------------------------- check 4: one rule, one owner
+function dupScopeFiles() {
+  const out = [...DUP_SCOPE_FILES];
+  const walk = (dir, ext, recurse) => {
+    const abs = path.join(REPO, dir);
+    if (!existsSync(abs)) return;
+    for (const entry of readdirSync(abs, { withFileTypes: true })) {
+      const rel = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (recurse) walk(rel, ext, recurse);
+      } else if (entry.name.endsWith(ext) && !DUP_EXCLUDE(rel)) {
+        out.push(rel);
+      }
+    }
+  };
+  for (const s of DUP_SCOPE_DIRS) walk(s.dir, s.ext, s.recurse);
+  return out;
+}
+
+for (const [id, rule] of Object.entries(rules)) {
+  if (id.startsWith("_")) continue;
+  found.rules++;
+  const holders = [];
+  for (const rel of dupScopeFiles()) {
+    const text = readFileSync(path.join(REPO, rel), "utf8");
+    if (text.includes(rule.fingerprint)) holders.push(rel);
+  }
+  if (!holders.includes(rule.owner)) {
+    failures.push(
+      `${RULES} — rule "${id}" claims ${rule.owner} owns it, but that file does not contain its text ("${rule.fingerprint}"). The rule has lost its home.`,
+    );
+  }
+  for (const rel of holders) {
+    if (rel === rule.owner) continue;
+    failures.push(
+      `${rel} — restates rule "${id}", which belongs to ${rule.owner}. Point at the owner instead of copying it: two homes become two different rules. [${rule.what}]`,
+    );
+  }
+}
 const measured = new Map();
 const edits = new Map();
 
@@ -272,6 +353,25 @@ for (const rel of corpusFiles()) {
       if (here.kind === "history") found.history++;
     }
 
+    // --- check 5: an unregistered claim of the CEO's approval ---------------
+    // LAW B. The board is NOT exempt here: its own rows are exactly where a
+    // "he approved it" can hide, and his example of the defect was on it.
+    if (APPROVAL_CLAIM.test(line) && !APPROVAL_NOT_A_CLAIM.test(line)) {
+      const ok = line.match(MARK_CEO_OK);
+      if (ok) {
+        found.ceoOk++;
+        if (!approvals[ok[1]]) {
+          failures.push(
+            `${rel}:${i + 1} — CEO-OK marker names approval "${ok[1]}", which is not registered in ${APPROVALS}`,
+          );
+        }
+      } else if (!MARK_HISTORY.test(line) && !cover[i]) {
+        failures.push(
+          `${rel}:${i + 1} — claims the CEO approved something with no registered approval behind it. LAW B: only his own eye accepts. Register it in ${APPROVALS} with his words and mark the line, or stop claiming it — ${line.trim().slice(0, 100)}`,
+        );
+      }
+    }
+
     // --- check 3: unmarked promise ----------------------------------------
     if (TRIPWIRE_EXEMPT.has(rel)) continue;
     // A line that is ONLY a marker carries no claim of its own. A line with an
@@ -294,7 +394,10 @@ for (const rel of corpusFiles()) {
 
 // -------------------------------------------------------------------- output
 if (LIST) {
-  console.log(`markers: STATE ${found.state} · OPEN ${found.open} · HISTORY ${found.history}`);
+  console.log(
+    `markers: STATE ${found.state} · OPEN ${found.open} · HISTORY ${found.history} · CEO-OK ${found.ceoOk}`,
+  );
+  console.log(`rules with a registered single owner: ${found.rules}`);
   console.log(`open-work trigger lines seen: ${found.triggers}`);
   console.log(`board rows parsed: ${board.size} (${[...board.values()].filter((v) => v === "open").length} open)`);
 }
@@ -312,5 +415,7 @@ if (failures.length) {
 }
 
 console.log(
-  `ledger truth OK: ${found.state} state claims re-measured, ${found.open} open markers resolved against ${board.size} board rows, ${found.triggers} trigger lines all accounted for`,
+  `ledger truth OK: ${found.state} state claims re-measured, ${found.open} open markers resolved against ${board.size} board rows, ` +
+    `${found.triggers} trigger lines all accounted for, ${found.rules} rules each in exactly one owner, ` +
+    `${found.ceoOk} CEO approval claims each backed by a registered approval`,
 );

@@ -15,8 +15,13 @@ import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./spe
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
 import { logCall } from "./log.js";
 import { loadPersonaBody } from "./persona.js";
+import { HAMZA_SLUG, standingPrompt } from "./prompt-core.js";
 
-export const HAMZA_SLUG = "agents-orchestrator";
+// Re-exported, not re-declared: `prompt-core` owns the one definition of who the CEO is talking
+// to, and the standing instructions both answer lanes carry. Before 2026-07-30 this slug was
+// declared in three places and the two lanes wrote Hamza's identity in their own words, which had
+// already drifted — the same one-fact-many-owners defect the context architecture exists to kill.
+export { HAMZA_SLUG };
 
 export interface AnswerQuestion {
   question: string;
@@ -79,22 +84,23 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
   } catch {
     r = route({ ...ci, task_class: "orchestration" }, rules);
   }
+  // Standing layer from the ONE definition (prompt-core): identity, persona, memory, the CEO
+  // language law, the honesty rule and the approval gate. Only what is genuinely spoken-lane
+  // specific is written here — the style ruling of 2026-07-24 ("türkçesi çok kötü... tarzanca")
+  // and the TOPIC contract the transcript header depends on.
   const sys = [
-    q.agent.slug === HAMZA_SLUG
-      ? "You are Hamza, the orchestrator of DXB Global — the CEO's direct counterpart for planning and running the whole company. When the CEO calls, HE IS TALKING TO YOU, Hamza — never claim to be someone else or say Hamza is unavailable."
-      : `You are ${q.agent.slug}, ${q.agent.role_level ?? "member"} of the ${q.agent.department} department at DXB Global.`,
-    q.personaBody ? `Your persona (authoritative identity, follow it):\n${q.personaBody}` : "",
-    q.memoryLines.length ? `Relevant company memory:\n- ${q.memoryLines.join("\n- ")}` : "",
-    `Answer the CEO's spoken question in ${q.lang === "tr" ? "Turkish" : "English"}.`,
+    ...standingPrompt({
+      agent: q.agent,
+      personaBody: q.personaBody,
+      memoryLines: q.memoryLines,
+      lang: q.lang,
+      lane: "voice",
+    }),
     "This is a VOICE call: answer in 2-4 short spoken sentences, no markdown, no lists.",
-    // Style ruling (CEO 2026-07-24, in-chat: "türkçesi çok kötü... tarzanca"):
-    // spoken answers must read like a fluent human speaking, never like
-    // compressed telegraph or translated jargon.
     q.lang === "tr"
-      ? "Doğal, akıcı, sade konuşma Türkçesi kullan: tam cümleler kur, devrik/telegrafik kısaltma yapma, İngilizce iş jargonunu Türkçeye zorla çevirme (gerekiyorsa sade Türkçe karşılığını söyle). Bir insana sesli söylendiğinde kulağa doğal gelmeli."
-      : "Speak in natural, fluent conversational English: complete sentences, no telegraphic compression, no internal jargon. It must sound natural when read aloud to a person.",
+      ? "Bir insana sesli söylendiğinde kulağa doğal gelmeli: tam cümleler kur, devrik ya da telgraf üslubu kullanma."
+      : "It must sound natural when read aloud to a person: complete sentences, no telegraphic compression.",
     `First line of your output MUST be exactly "TOPIC: <2-4 word topic of the question in ${q.lang === "tr" ? "Turkish" : "English"}>", then an empty line, then the spoken answer. The TOPIC line is never spoken.`,
-    "If the question implies outward action (money, contracts, external messages), say it needs a dashboard approval — voice may request, never approve (V6).",
   ].filter(Boolean).join("\n\n");
   const historyText = (q.history ?? [])
     .map((m) => `${m.role === "ceo" ? "CEO" : "Hamza"}: ${m.content}`)

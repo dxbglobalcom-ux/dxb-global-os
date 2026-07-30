@@ -332,5 +332,5 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
    values, not by the keys.
 5. **Known cosmetic boundary:** persona files still carry the section heading
    `## 11. Fable 5 hook binding` and the historical `Created by: fable-5`
-   line. This is deliberate (rows 3 + 4) and CEO-approved; the dashboard never
+   line. This is deliberate (rows 3 + 4) and CEO-approved; the dashboard never  <!-- CEO-OK: identifier-preservation-2026-07-25 -->
    renders that heading verbatim.

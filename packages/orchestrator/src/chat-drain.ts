@@ -16,7 +16,7 @@ import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 import { loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
 import { recallMemory } from "@dxb/memory-router";
-import { matchMute, matchUnmute, loadPersonaBody } from "@dxb/voice";
+import { matchMute, matchUnmute, loadPersonaBody, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
 import {
   buildBriefSnapshot,
   classifyLeg,
@@ -26,7 +26,9 @@ import {
   type ChatLeg,
 } from "./chat-legs.js";
 
-export const CHAT_HAMZA_SLUG = "agents-orchestrator";
+// Not re-declared: the orchestrator's slug has exactly one definition, in `@dxb/voice`
+// prompt-core. The exported name is kept so existing importers are unaffected.
+export const CHAT_HAMZA_SLUG = HAMZA_SLUG;
 /** Conversation window Hamza sees per answer (newest last). */
 const HISTORY_LIMIT = 20;
 
@@ -83,18 +85,24 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
   if (!routed) throw new Error("chat answer: no routing row for any chat class");
   r = routed;
   const planMode = q.mode === "plan";
+  // Standing layer from the ONE definition (`@dxb/voice` prompt-core): identity, persona, memory,
+  // the CEO language law, the honesty rule and the approval gate. This lane used to write its own
+  // versions of all six, and the identity line had already drifted from the voice lane's — the
+  // same person answering with a different self-understanding depending on which door was used.
   const sys = [
-    `You are Hamza, the orchestrator of DXB Global — the CEO's direct counterpart for planning and running the whole company.`,
-    q.personaBody ? `Your persona (authoritative identity, follow it):\n${q.personaBody}` : "",
-    q.memoryLines.length ? `Relevant company memory:\n- ${q.memoryLines.join("\n- ")}` : "",
-    `Answer the CEO in ${q.lang === "tr" ? "Turkish" : "English"}.`,
+    ...standingPrompt({
+      agent: { slug: CHAT_HAMZA_SLUG },
+      personaBody: q.personaBody,
+      memoryLines: q.memoryLines,
+      lang: q.lang,
+      lane: "chat",
+    }),
     "This is a CONVERSATION, not a task intake. A greeting gets a warm greeting back. A question gets a direct answer. An idea gets genuine engagement — agree, push back, refine.",
     planMode
       ? "PLAN MODE is ON: think through the CEO's topic WITH him — propose a concrete plan (goal, steps, who does what, rough cost), ask what to adjust. DO NOT start any work; the CEO dispatches explicitly when he is satisfied."
       : "If the CEO clearly wants work executed, summarize what you would dispatch in one sentence and remind him of the 'Görev olarak gönder' button — never dispatch from chat yourself.",
-    "If the topic implies outward action (money, contracts, external messages), say it will pass through a dashboard approval gate.",
     legInstruction(q.leg, q.snapshot, q.lang),
-    "Plain language, no markdown headers, no code jargon. Keep it under 8 sentences unless the CEO asked for depth.",
+    "No markdown headers. Keep it under 8 sentences unless the CEO asked for depth.",
   ].filter(Boolean).join("\n\n");
 
   const historyText = q.history

@@ -10,8 +10,21 @@ export { assertTransition } from "./machine.js";
 export type { CallState, TimelineEntry } from "./machine.js";
 export { intakeVoiceCall, LINE_BUSY_WINDOW_MINUTES } from "./intake.js";
 export type { VoiceIntakeDeps, VoiceIntakeInput, VoiceIntakeResult } from "./intake.js";
-export { answerVoiceCall, HAMZA_SLUG } from "./answer.js";
+export { answerVoiceCall } from "./answer.js";
 export { loadPersonaBody } from "./persona.js";
+// prompt-core owns the standing instruction layer both answer lanes carry, and the one
+// definition of the orchestrator's slug (context architecture, 2026-07-30).
+export {
+  HAMZA_SLUG,
+  standingPrompt,
+  identityLine,
+  personaBlock,
+  memoryBlock,
+  ceoLanguageLaw,
+  honestyLine,
+  approvalGateLine,
+} from "./prompt-core.js";
+export type { AnswerLane } from "./prompt-core.js";
 export type { AnswerQuestion, VoiceAnswerDeps, VoiceAnswerResult } from "./answer.js";
 export { drainVoiceCalls, STALE_CALL_MINUTES, AUDIO_RETENTION_HOURS } from "./drain.js";
 export type { DrainVoiceDeps, DrainVoiceResult } from "./drain.js";
