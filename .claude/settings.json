@@ -19,7 +19,9 @@
       "Bash(grep -rniA30 \"INTO model_catalog\" db/migrations/)",
       "Bash(grep -nE \"^#{1,3} \" HOLDING-OS-MASTER-PLAN/HR_OPERATING_SYSTEM_SPEC.md)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('mcpServers',{}\\),indent=2\\)\\)\")",
-      "Bash(code --list-extensions --show-versions)"
+      "Bash(code --list-extensions --show-versions)",
+      "Bash(python3 -c ' *)",
+      "Bash(grep -oE 'getLanguageSetting\\\\\\(\\\\\\)\\\\{.{0,500}' /home/ghost/.vscode/extensions/anthropic.claude-code-2.1.220-linux-x64/extension.js)"
     ],
     "deny": [
       "Read(./.env)",
