@@ -12,65 +12,206 @@
 #   3. kilo-serve / codex app-server whose parent died (ppid=1): ghost
 #      extension hosts (recorded freeze factor, memory note 2026-07-15).
 #
-#   4. OOM shield + pressure-adaptive threshold (added 2026-07-28 — see below).
+#   4. OOM shield — see below. Rewritten 2026-07-29 (C49 reopened).
 #
 # Never touches: scheduler, next-server, docker containers, claude CLI,
-# real Chrome, VS Code. Runs from cron every minute; silent unless it acts.
+# real Chrome's browser process, VS Code, Postgres, LibreOffice.
+#
+# ── Why this script exists in the shape it does ─────────────────────────────
+# The machine runs ~6.4 GB of live processes on 7.4 GB of RAM, so its 6 GB of
+# disk swap sits permanently full (measured 2026-07-29 16:30: swap free 0 of
+# 6143 MiB). earlyoom's two conditions are "available memory below 10%" AND
+# "free swap below 10%"; the second is therefore always true, and every dip in
+# memory becomes a kill. earlyoom then picks the highest oom_score on the
+# machine — and Electron raises its own window renderers to oom_score_adj=300,
+# which measured 872-894 against 666-700 for everything unshielded. The CEO's
+# editor was not unlucky; it was structurally the designated victim, 38 times
+# in three days.
+#
+# An unprivileged process may only RAISE oom_score_adj, never lower it, so the
+# editor cannot be protected directly. It is protected indirectly: everything
+# whose loss is cheap is pushed above it, in two tiers, so the kernel's own
+# victim choice always lands somewhere that costs the CEO nothing or costs him
+# one click on Reload.
+#
+# The 2026-07-28 version of this shield covered only chroma-mcp,
+# headless_shell and kilo-serve — small processes that are usually ABSENT at
+# the moment of pressure — and it ran from cron once a minute, while earlyoom
+# acts within a second of crossing its threshold. Measured result: at 16:30:01
+# the guard logged "raised 1 expendable(s)" and at 16:30:54 earlyoom killed a
+# VS Code window anyway. Hence the two changes here: a wider shield that always
+# has a candidate (the browser's tab renderers), and residency (systemd --user,
+# a few seconds) instead of a cron slot it cannot win from.
+#
+# Root-level relief — earlyoom's own --avoid/--prefer flags, and compressed
+# swap (zram) to end the permanent swap saturation — needs a root password this
+# process does not have. Recorded on the board as C49's remaining leg.
+#
+# Environment:
+#   FREEZE_GUARD_LOG        log file (default: var/freeze-guard.log)
+#   FREEZE_GUARD_STATE      how long each suspended process has stood still
+#   FREEZE_GUARD_INTERVAL   seconds between passes; 0/unset = single pass
+#   FREEZE_GUARD_DRY_KILL   1 = shield only, never kill (used by the suite)
 set -uo pipefail
 LOG="${FREEZE_GUARD_LOG:-/home/ghost/DxB Global OS/var/freeze-guard.log}"
+DRY_KILL="${FREEZE_GUARD_DRY_KILL:-0}"
 
-# ── memory pressure, measured once per run ──────────────────────────────────
-mem_avail_pct=$(awk '/^MemTotal:/{t=$2} /^MemAvailable:/{a=$2} END{if(t>0) printf "%d", a*100/t; else print 100}' /proc/meminfo)
-swap_free_pct=$(awk '/^SwapTotal:/{t=$2} /^SwapFree:/{f=$2} END{if(t>0) printf "%d", f*100/t; else print 100}' /proc/meminfo)
-# earlyoom's own SIGTERM limits are 10%/10% (measured in /etc/default/earlyoom:
-# EARLYOOM_ARGS="-r 3600" — no --avoid, no tuned limits). Acting at 20% gives
-# this guard a full minute of headroom before earlyoom starts choosing victims.
-under_pressure=0
-if [[ "$mem_avail_pct" -lt 20 || "$swap_free_pct" -lt 20 ]]; then under_pressure=1; fi
+# ── A SESSION IS NEVER JUNK, HOWEVER LONG IT STANDS STILL ───────────────────
+# CEO ruling 2026-07-29. A draft of this guard proposed closing agent sessions
+# that had been suspended for over half an hour, on the evidence of one that
+# had stood still for forty-four hours with eight helpers attached. The CEO
+# stopped it: *"BU DÜNDEN BERİ AÇIK ... DÜN AKŞAMDAN BERİ KENDİSİNE GÖREV
+# VERMEDİM DEVAM EDECEĞİZ."* He leaves sessions standing for days on purpose
+# and returns to them. Idle time is therefore NOT evidence of abandonment, and
+# no rule in this file may ever infer it from age, from being suspended, or
+# from silence. The only thing this guard treats as finished is a helper whose
+# session is provably GONE from the process table.
 
-kill_pids() { # $1 = reason, stdin = pids
-  local pids
+# Kill-list tiers. A shielded process scores its own base (lowest measured on
+# this machine: 666) plus the tier, so even the smallest shielded process at
+# the lower tier reaches 1366 — comfortably above the editor's measured 894.
+SHIELD_SCAFFOLDING=1000 # agent scaffolding: nothing of the CEO's is lost
+SHIELD_BROWSER_TAB=700  # one browser tab: costs a click on Reload
+
+last_shield_log=0
+
+kill_pids() { # $1 = reason, $2 = signal (default TERM), stdin = pids
+  local pids signal="${2:-TERM}"
   pids=$(tr '\n' ' ' | sed 's/ $//')
   [[ -z "$pids" ]] && return 0
+  if [[ "$DRY_KILL" == "1" ]]; then
+    echo "[$(date '+%F %T')] $1: DRY RUN, would kill $pids" >> "$LOG"
+    return 0
+  fi
   echo "[$(date '+%F %T')] $1: killing $pids" >> "$LOG"
   # shellcheck disable=SC2086
-  kill $pids 2>/dev/null || true
+  kill "-$signal" $pids 2>/dev/null || true
 }
 
-# 1. stuck chroma-mcp (child + uv wrapper both match the pattern). Under
-#    pressure the threshold drops to 60s: measured 2026-07-28, this guard killed
-#    chroma-mcp at 01:49:02 — ONE SECOND after earlyoom had already SIGTERMed
-#    the CEO's VS Code window at 01:49:01. A fixed 6-minute grace loses that
-#    race every time.
-CHROMA_MAX=360
-[[ "$under_pressure" -eq 1 ]] && CHROMA_MAX=60
-ps -eo pid,etimes,args | awk -v m="$CHROMA_MAX" '$3 != "awk" && /chroma-mcp/ && $2 > m {print $1}' \
-  | kill_pids "chroma-mcp stuck >${CHROMA_MAX}s"
+run_once() {
+  # ── memory pressure, measured once per pass ───────────────────────────────
+  local mem_total=0 mem_avail=0 swap_total=0 swap_free=0 key val
+  while read -r key val _; do
+    case "$key" in
+      MemTotal:) mem_total=$val ;;
+      MemAvailable:) mem_avail=$val ;;
+      SwapTotal:) swap_total=$val ;;
+      SwapFree:) swap_free=$val; break ;;
+    esac
+  done < /proc/meminfo
+  local mem_avail_pct=100 swap_free_pct=100
+  [[ "$mem_total" -gt 0 ]] && mem_avail_pct=$((mem_avail * 100 / mem_total))
+  [[ "$swap_total" -gt 0 ]] && swap_free_pct=$((swap_free * 100 / swap_total))
+  # earlyoom's own SIGTERM limits are 10%/10% (measured in /etc/default/earlyoom:
+  # EARLYOOM_ARGS="-r 3600" — no --avoid, no tuned limits). Acting at 20% gives
+  # this guard headroom before earlyoom starts choosing victims.
+  local under_pressure=0
+  if [[ "$mem_avail_pct" -lt 20 || "$swap_free_pct" -lt 20 ]]; then under_pressure=1; fi
 
-# 2. orphaned Playwright headless browsers
-ps -eo pid,etimes,comm | awk '$3 == "headless_shell" && $2 > 1800 {print $1}' \
-  | kill_pids "headless_shell orphan >30min"
+  # Under pressure the chroma-mcp grace drops to 60s: measured 2026-07-28, this
+  # guard killed chroma-mcp at 01:49:02 — ONE SECOND after earlyoom had already
+  # SIGTERMed the CEO's VS Code window at 01:49:01. A fixed 6-minute grace loses
+  # that race every time.
+  local chroma_max=360
+  [[ "$under_pressure" -eq 1 ]] && chroma_max=60
 
-# 3. ghost extension hosts (parent gone)
-ps -eo pid,ppid,args | awk '$2 == 1 && (/kilo serve/ || /app-server/) && !/awk/ {print $1}' \
-  | kill_pids "ghost extension host (ppid=1)"
+  # ── ONE process table read per pass ───────────────────────────────────────
+  # Four `ps` calls plus a subshell per candidate cost 4% of a core at a 3s
+  # cadence (measured 2026-07-29). A guard against resource exhaustion may not
+  # itself be a resource problem: one read, no forks inside the loop.
+  local pid ppid etimes state args tier cur now
+  local stuck_chroma="" old_headless="" ghost_hosts=""
+  local raised_scaffolding=0 raised_tab=0
+  while read -r pid ppid etimes state args; do
+    [[ -z "${args:-}" ]] && continue
+    # The editor is never a candidate for anything this script does.
+    case "$args" in *"/usr/share/code/code"*) continue ;; esac
+    case "$args" in *"freeze-guard.sh"*) continue ;; esac
 
-# 4. OOM shield — earlyoom kills whichever process scores highest, and Electron
-#    raises its own windows to oom_score_adj=300, which makes the CEO's editor
-#    the permanent first victim (measured 2026-07-28: score 894 for a VS Code
-#    window vs 666-686 for everything else; three windows SIGTERMed between
-#    01:49 and 01:53, one working session lost). An unprivileged process may
-#    only RAISE oom_score_adj, never lower it, so the editor cannot be shielded
-#    directly. Instead the processes this script ALREADY treats as expendable
-#    are pushed above it, so the kernel's own victim choice lands on something
-#    whose loss costs nothing. Idempotent; runs every minute.
-shield=0
-while read -r p; do
-  [[ -w "/proc/$p/oom_score_adj" ]] || continue
-  cur=$(cat "/proc/$p/oom_score_adj" 2>/dev/null || echo 1000)
-  [[ "$cur" -ge 1000 ]] && continue
-  echo 1000 > "/proc/$p/oom_score_adj" 2>/dev/null && shield=$((shield + 1))
-done < <(ps -eo pid,comm,args | awk '!/awk/ && (/chroma-mcp/ || $2 == "headless_shell" || /kilo serve/) {print $1}')
-if [[ "$shield" -gt 0 && "$under_pressure" -eq 1 ]]; then
-  echo "[$(date '+%F %T')] oom shield: raised $shield expendable(s) above the editor (mem ${mem_avail_pct}%, swap free ${swap_free_pct}%)" >> "$LOG"
+    tier=0
+    case "$args" in
+      *chroma-mcp*)
+        [[ "$etimes" -gt "$chroma_max" ]] && stuck_chroma+="$pid"$'\n'
+        tier=$SHIELD_SCAFFOLDING ;;
+      *headless_shell*)
+        [[ "$etimes" -gt 1800 ]] && old_headless+="$pid"$'\n'
+        tier=$SHIELD_SCAFFOLDING ;;
+      *"kilo serve"* | *"@playwright/mcp"* | *playwright-mcp* | *context7-mcp* | *memory-mcp*)
+        tier=$SHIELD_SCAFFOLDING ;;
+      # Chrome: renderers only. The browser process, the GPU process and the
+      # network service are shared — killing one kills every tab at once.
+      *"/opt/google/chrome/chrome"*)
+        case "$args" in *--type=renderer*) tier=$SHIELD_BROWSER_TAB ;; esac ;;
+    esac
+    # Ghost extension hosts and widowed tool servers: the session that started
+    # them is GONE from the process table, so the kernel re-parented them to
+    # init. This is the ONLY evidence of abandonment this guard accepts — never
+    # idleness, never age, never being suspended (CEO ruling, top of file). By
+    # 2026-07-29 four full tool stacks had piled up because nothing swept the
+    # ones whose session had ended.
+    if [[ "$ppid" -eq 1 ]]; then
+      case "$args" in
+        # The claude-mem worker is a resident daemon and is SUPPOSED to have no
+        # parent; it hosts live sessions. It is never a widow.
+        *"/.bun/bin/bun"*) : ;;
+        *"kilo serve"* | *app-server* | *mcp*)
+          ghost_hosts+="$pid"$'\n' ;;
+      esac
+    fi
+
+    # ── OOM shield. Idempotent: a score is only ever raised, never lowered.
+    [[ "$tier" -eq 0 ]] && continue
+    # A SUSPENDED process is never offered as a victim. Measured 2026-07-29
+    # 17:15: the killer fired SIX times in ninety seconds, and three of its
+    # choices were suspended helpers of the CEO's standing sessions. A stopped
+    # process cannot act on the polite signal it is sent, so nothing is freed
+    # and the killer immediately fires again — the shield had turned them into
+    # a wall in front of the live processes that CAN yield memory. Left
+    # unshielded they score around 666 against the editor's 880, so they stay
+    # safe without ever blocking the queue.
+    [[ "$state" == T* ]] && continue
+    [[ -w "/proc/$pid/oom_score_adj" ]] || continue
+    read -r cur < "/proc/$pid/oom_score_adj" 2>/dev/null || continue
+    [[ "$cur" -ge "$tier" ]] && continue
+    if echo "$tier" > "/proc/$pid/oom_score_adj" 2>/dev/null; then
+      if [[ "$tier" -eq "$SHIELD_SCAFFOLDING" ]]; then
+        raised_scaffolding=$((raised_scaffolding + 1))
+      else
+        raised_tab=$((raised_tab + 1))
+      fi
+    fi
+    # Only candidate lines reach this loop — the pre-filter below is what keeps
+    # the guard cheap. Measured 2026-07-29 at a 3s cadence: 6.2% of a core when
+    # the shell examined all ~250 processes itself, against 0.x% when awk hands
+    # it only the two dozen lines that can possibly match.
+  done < <(ps -weo pid=,ppid=,etimes=,stat=,args= \
+    | awk '!/\/usr\/share\/code\/code/ && !/freeze-guard/ && (/mcp/ || /headless_shell/ || /kilo serve/ || /app-server/ || /\/opt\/google\/chrome\/chrome/)')
+
+  # 1. stuck chroma-mcp (child + uv wrapper both match the pattern)
+  printf '%s' "$stuck_chroma" | kill_pids "chroma-mcp stuck >${chroma_max}s"
+  # 2. orphaned Playwright headless browsers
+  printf '%s' "$old_headless" | kill_pids "headless_shell orphan >30min"
+  # 3. helper with no session left to serve (parent gone)
+  printf '%s' "$ghost_hosts" | kill_pids "helper with no session (parent gone)"
+
+  # Log only what a human would want to read: a change, under pressure, at most
+  # once a minute — a three-second loop would otherwise write 20 lines a minute.
+  now=$(date +%s)
+  if [[ "$under_pressure" -eq 1 ]] \
+    && [[ $((raised_scaffolding + raised_tab)) -gt 0 ]] \
+    && [[ $((now - last_shield_log)) -ge 60 ]]; then
+    echo "[$(date '+%F %T')] oom shield: $raised_scaffolding scaffolding + $raised_tab browser tab(s) raised above the editor (mem ${mem_avail_pct}%, swap free ${swap_free_pct}%)" >> "$LOG"
+    last_shield_log=$now
+  fi
+}
+
+interval="${FREEZE_GUARD_INTERVAL:-0}"
+if [[ "$interval" -gt 0 ]]; then
+  echo "[$(date '+%F %T')] freeze-guard resident: pass every ${interval}s" >> "$LOG"
+  while :; do
+    run_once
+    sleep "$interval"
+  done
+else
+  run_once
 fi
