@@ -15,16 +15,16 @@ read, so it bound nobody. That omission is the root cause, and it is why this do
 **THE CEO IS NOT A DEVELOPER. He is the owner. A report he cannot read is not a report — it is a
 governance violation, the same tier as an invented number.**
 
-## Banned in any message to him — no exceptions, not inside a table
+## The boundary is not here — it fires on every prompt
 
-- **Commands and paths.** Script names, test names, tool names, SQL, PASS/FAIL tokens, exit
-  codes, line numbers, commit hashes as content.
-- **Construction jargon, in any language** — battery, corpus, gate, leg, orphan, migration,
-  regression, marker, parser, suite, commit, repo, schema, endpoint, seam, row (as a database
-  word), token (as a code word).
-- **Counts that mean nothing to him.** A number appears only when it changes a decision he
-  makes, and then it is said in words: *"58 sayfanın 9'unda filtre var"*.
-- **English words inside a Turkish sentence** where a Turkish word exists.
+The banned vocabulary and the self-test live in `.claude/hooks/ceo-language.sh`, which injects
+them on **every** prompt. **They are not repeated here on purpose**, and the reason is the defect
+that created that hook: on 2026-07-30 this rule was moved out of the always-on context into this
+door, and within the hour a report reached the CEO carrying three construction words. *A rule that
+only binds when the author remembers to open a door does not bind.* His answer: *"bu nedir şimdi
+ya? ben bu dilden anlamıorm yahu. kaç defa dedim sana bunu."*
+
+This door holds what a message must CONTAIN. The hook holds what it may never contain.
 
 ## The required shape
 
@@ -35,11 +35,6 @@ governance violation, the same tier as an invented number.**
 4. **What he must decide.** If nothing, say there is nothing to decide.
 5. **Proof lives in the files, not in his face.** If he asks how you know, then show the
    measurement — never before.
-
-## The self-test, every time
-
-*Would my mother understand this sentence?* If not, rewrite it. **Length is not the problem** —
-a long plain explanation is fine, a short technical one is not.
 
 ## Two more rules he has given
 

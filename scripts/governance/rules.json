@@ -12,10 +12,15 @@
     "fingerprint": "USE FULL CAPACITY ON EVERY TURN",
     "what": "Standing order 13 — the nine forms of laziness. Re-injected on every prompt, which is why the hook owns it: a second copy in the always-on file paid for the same text twice."
   },
-  "so14_self_test": {
+  "so14_boundary": {
+    "owner": ".claude/hooks/ceo-language.sh",
+    "fingerprint": "THE CEO IS THE OWNER, NOT A DEVELOPER",
+    "what": "Standing order 14, the BOUNDARY — the banned vocabulary and the self-test. A hook and not a skill because it governs every sentence he reads, not a particular job: on 2026-07-30 it was placed in a skill and was violated within the hour, because a rule that binds only when the author opens a door does not bind."
+  },
+  "so14_report_shape": {
     "owner": ".claude/skills/dxb-ceo-report/SKILL.md",
-    "fingerprint": "Would my mother understand",
-    "what": "Standing order 14 — the self-test before any message reaches the CEO."
+    "fingerprint": "The required shape",
+    "what": "Standing order 14, the PROCEDURE — what a message to the CEO must contain, and how far the rule reaches across the system's own surfaces."
   },
   "evidence_unverified_label": {
     "owner": ".claude/skills/dxb-verify/SKILL.md",
