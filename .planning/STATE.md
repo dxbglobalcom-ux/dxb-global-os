@@ -28,7 +28,8 @@ laws now written into `.claude/CLAUDE.md`:
 - **LAW B** — finished ≠ approved. *"iş tamamlanınca bitti anlamına gelmez, ben bakmam lazım."*
   Only his own eye accepts. No record may claim his approval without a registered entry.
 
-Board row **B21** carries this work.
+Board row **B21** carries this work. **Built and committed 2026-07-31 (four commits, oldest work
+first).** Under LAW B it is NOT approved: the author's work is done, the CEO's eye has not seen it.
 
 ## The newest written directive
 
@@ -60,11 +61,17 @@ verdict and it stands until a measurement replaces it.
 machine-readable, so every session re-derives a different figure — the drift is recorded in the
 archive and owned by board row **B20**. A number nobody can reproduce is worse than no number.
 
-## Next
+## Next — read this before doing anything
 
-1. Finish and verify the context architecture (B21), then put it in front of the CEO.
-2. His decision on what follows — his stated intention is the 2026-07-29 directive: rival
-   re-analysis at proper source quality, then the visual design package, then implementation.
+1. **B21 waits on the CEO's eye, not on work.** Do not re-open it, do not "improve" it. If he says
+   the sessions now start clean, close it with his words; if he names a defect, fix that.
+2. **Then B22 — the rival re-analysis**, under `docs/ceo-directives/2026-07-reanalysis/` and door
+   `dxb-rival-intel`: proper source quality, full temporal reading, evidence labels, selective
+   rewrite. **This is what he said comes next**, in his own words: *"rakip analizi vs bunlar hepsi
+   sonra."* Do not start it before he says the word — the same sentence that ordered it also
+   ordered the context work first, and that ordering was his, not the author's.
+3. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
+   this (authority order, `.claude/CLAUDE.md` §1) — and it DELETES whatever contradicts it (LAW A).
 
 ## Where things live
 
