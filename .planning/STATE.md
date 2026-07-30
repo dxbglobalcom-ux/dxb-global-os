@@ -63,8 +63,9 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 
 ## Next — read this before doing anything
 
-1. **B21 waits on the CEO's eye, not on work.** Do not re-open it, do not "improve" it. If he says
-   the sessions now start clean, close it with his words; if he names a defect, fix that.
+1. **B21 waits on the CEO's eye, not on work.** <!-- OPEN: B21 --> Do not re-open it, do not
+   "improve" it. If he says the sessions now start clean, close it with his words; if he names a
+   defect, fix that.
 2. **Then B22 — the rival re-analysis**, under `docs/ceo-directives/2026-07-reanalysis/` and door
    `dxb-rival-intel`: proper source quality, full temporal reading, evidence labels, selective
    rewrite. **This is what he said comes next**, in his own words: *"rakip analizi vs bunlar hepsi

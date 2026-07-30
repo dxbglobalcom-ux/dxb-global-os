@@ -47,6 +47,10 @@ violation of the same tier as an invented number.
   once tripped the real budget brake and left €105 of fake spend on the CEO's board.
 - **Piping a build into `head` kills it with SIGPIPE** and leaves a half-written build that a
   design pass will happily photograph.
+- **A pipe swallows the verdict.** `check | tail -3 && commit` commits even when the check failed —
+  a pipeline's exit status is the LAST command's, and `tail` always succeeds. Measured on
+  2026-07-31: a record went in while its own gate was red. Run the check on its own line, read the
+  output, and only then act on it.
 - **A design pass that measured the login page reported PASS.** Assert the landed address and a
   non-empty heading before you believe a screenshot.
 
