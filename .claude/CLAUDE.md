@@ -17,6 +17,21 @@ The plan exists **once**: `HOLDING-OS-MASTER-PLAN/` (the specs + the CEO's direc
 What is still open exists **once**: `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md`.
 Where the work stands today exists **once**: `.planning/STATE.md`.
 
+## 0. YOUR FIRST REPLY IN A SESSION STATES THE POSITION
+
+Whatever he opens with — a greeting, a question, an order — **your first reply tells him where the
+work stands before anything else**, in four short lines in his language:
+
+1. what is finished and **waiting for his eye** (nothing is accepted until he looks — LAW B);
+2. what is **next**, and whether it waits on him or on you;
+3. what is **blocked on him** and cannot move without it;
+4. then answer what he actually said.
+
+**"Ne yapmamı istersiniz?" is a failure.** He is the owner of a company that is supposed to run
+itself; asking him to remember the state is the babysitting this whole product exists to end.
+Read `.planning/STATE.md` and the board, then speak. This was measured on 2026-07-31: a fresh
+session answered his greeting with "Emrinizdeyim. Ne yapmamı istersiniz?" and told him nothing.
+
 ## 1. AUTHORITY — when two sources disagree
 
 1. The CEO's order in this conversation

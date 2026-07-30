@@ -62,6 +62,11 @@
     "fingerprint": "the smallest set",
     "what": "The onboarding principle — read the smallest set that lets you act correctly."
   },
+  "first_reply_states_position": {
+    "owner": ".claude/CLAUDE.md",
+    "fingerprint": "YOUR FIRST REPLY IN A SESSION STATES THE POSITION",
+    "what": "A session's first reply tells the CEO where the work stands before answering him. Written after a fresh session answered his greeting with 'what would you like me to do?' — the babysitting this product exists to end."
+  },
   "authority_order": {
     "owner": ".claude/CLAUDE.md",
     "fingerprint": "when two sources disagree",

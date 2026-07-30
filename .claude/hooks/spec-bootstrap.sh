@@ -20,12 +20,28 @@ position=$(awk '
   grab {print}
 ' "$STATE" 2>/dev/null | sed '/^$/d' | head -c 1200 | iconv -f UTF-8 -t UTF-8 -c 2>/dev/null || true)
 
+# What happens next, straight from the state photograph. Added 2026-07-31 after a fresh session
+# answered the CEO's greeting with "what would you like me to do?" — it had been handed his last
+# ORDER but not the current POSITION, so it had nothing to tell him.
+next=$(awk '
+  /^## Next/ {grab=1; next}
+  grab && /^## / {exit}
+  grab {print}
+' "$STATE" 2>/dev/null | sed '/^$/d' | head -c 1200 | iconv -f UTF-8 -t UTF-8 -c 2>/dev/null || true)
+
 cat <<EOF
 === DXB — WHERE THE WORK STANDS ===
 Always-on core: .claude/CLAUDE.md (authority order, the boundaries, the doors).
 Open work: HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md — the single register.
 Starting, or picking up work? Open the door: dxb-start.
 
+YOUR FIRST REPLY TELLS HIM WHERE THE WORK STANDS, THEN ANSWERS HIM (core §0).
+Never ask him what to do — the position is below and in .planning/STATE.md.
+
+--- HIS LAST ORDER ---
 ${position:-"(.planning/STATE.md could not be read — read it yourself before any work)"}
+
+--- WHAT HAPPENS NEXT ---
+${next:-"(no Next block found — read .planning/STATE.md before answering him)"}
 === END ===
 EOF
