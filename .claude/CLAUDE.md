@@ -74,6 +74,10 @@ the date. The battery fails on an unregistered approval claim.
   written by that author inline. Subagents audit, refute and sweep; they never write.
 - **The plan exists once.** No new spec, no new plan file. A deviation is a registered
   adaptation inside the spec that already owns the contract.
+- **What the CEO drops is not written down.** A discussion that ends in *"forget it"* leaves no
+  file, no row, no note — **silence is the record.** Only real, ordered, unfinished work is written
+  anywhere. The reflex to keep a dropped idea "just in case" is what grew the always-on layer to 27
+  pages, and he should never have to be the one who catches it.
 - **Secrets** never enter the repo, a prompt, or any printed output.
 - **Full capacity, every turn.** The nine forms of laziness are re-injected on every prompt
   by `.claude/hooks/no-laziness.sh`, which owns that text.

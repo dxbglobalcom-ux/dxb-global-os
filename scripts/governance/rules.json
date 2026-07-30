@@ -47,6 +47,16 @@
     "fingerprint": "Render the touched route",
     "what": "RULE #0 — the operational design-verification pass. The CEO's directive owns the LAW; this door owns the PROCEDURE."
   },
+  "dropped_ideas_leave_no_trace": {
+    "owner": ".claude/CLAUDE.md",
+    "fingerprint": "What the CEO drops is not written down",
+    "what": "The general habit: a discussion that ends in 'forget it' produces no file, no row, no note. Written after a cancelled conversation was filed onto the open work board and the CEO had to catch it himself. The board's own admission rule is its law 6 — a different scope, deliberately not the same sentence."
+  },
+  "board_admission": {
+    "owner": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md",
+    "fingerprint": "ONLY REAL WORK ENTERS",
+    "what": "The board's law 6 — what may be written on the board at all: real, ordered or approved, and unfinished. Nothing else."
+  },
   "board_law_one_row": {
     "owner": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md",
     "fingerprint": "One row per open thing",

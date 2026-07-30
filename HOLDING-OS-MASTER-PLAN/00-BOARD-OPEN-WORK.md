@@ -19,6 +19,16 @@ that the project "advances in a mess and specs stay half-finished".
    the CEO's ruling of 2026-07-27 is that half-finished older work outranks new work.
 5. **Ledger parity.** When a row closes here, the ledger that owns it is corrected in the SAME
    session. A stale ✓ or a stale ◐ is a governance violation of the same tier as an invented number.
+6. **ONLY REAL WORK ENTERS. A DROPPED IDEA LEAVES NO TRACE — HERE OR ANYWHERE.**
+   A row belongs here when the work is **real, ordered or approved, and unfinished**. An idea that
+   was discussed and dropped, a plan the CEO waved away, a possibility nobody committed to — none
+   of it is written here, and none of it is written anywhere else either. **Silence is the record.**
+   CEO, 2026-07-31, after finding a cancelled conversation written onto this board: *"orası sadece
+   gerçek onaylanmış ama yarıda kalmış tamamlanmamış işler için… ben uyarmasam yine bir yığın boş
+   yazı olacaktı, ben habire boş sohbetler için uyarmak zorunda mıyım?"* **He is not the filter.**
+   The reflex being banned is "write it down just in case" — the same reflex that grew the
+   always-on layer to 27 pages. When in doubt, write nothing: a dropped idea costs one sentence to
+   raise again, and costs the register its meaning to keep.
 
 ### Laws 1 and 5 are enforced by machine (U41, 2026-07-28)
 
@@ -250,7 +260,6 @@ CEO — not the machine — is the one who caught that the editor kept dying. Sa
 | Order of work, amended 2026-07-28 | **Rival analysis first, then build.** The CEO chose it himself: *"Rakip analizi önce"* — because the report defines the target, and building before the target is known means demolishing afterwards. **Stage 1 was reported by its author and REJECTED by the CEO on inspection — see the correction at the head of Section 3 and his directive of 2026-07-29.** |
 | Order of work, amended 2026-07-30 | **The context architecture first, and nothing else beside it.** His words: *"şuan sadece odak noktamız bu directive paketi o kadar ve bu context engineering işi… rakip analizi vs bunlar hepsi sonra."* |
 | A finished job is not an approved job (2026-07-30) | **LAW B.** *"iş tamamlanınca bitti anlamına gelmez — ben bakmam lazım ne yazılmış ve yapılmış."* Only his own eye accepts. Every claim of his approval now needs a registered entry carrying his words |
-| Extending the context architecture beyond this project (2026-07-31) | **NO, and do not re-propose it.** *"Gerek yok, bu kadarı yeter — yeni projeye daha çok var."* |
 | A live order deletes what contradicts it (2026-07-30) | **LAW A.** *"şuanki emrimle eski bulunan şeyler çelişiyorsa hepsini sil."* Not a footnote beside the old text — the old text goes, and the report says what went |
 | How the sixteen sources get read | **"HEPSİNİ İZLE TEKTEK EN İNCE EN KUCUK DETAYLARI YAZ. HEPİSININ SONRA DA BİRLEŞTİRİCİ BİR PLAN ÇIKAR!"** (CEO, 2026-07-28). Not one report then a pause — all sixteen, then one unifying plan |
 | A suspended session is never junk (2026-07-29) | **RULED.** *"BU DÜNDEN BERİ AÇIK … DEVAM EDECEĞİZ."* No rule anywhere may infer abandonment from idle time, age or suspension. Only a helper whose session has left the process table may be closed |
