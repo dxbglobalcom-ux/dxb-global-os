@@ -7,7 +7,7 @@
 - **Tool:** Kelam — native Linux hold-to-talk dictation (our own product, not an install of someone else's; revenue op #12 SME packaged install)
 - **Slug:** whisperflow-clone
 - **Category:** Media/content (product)
-- **Status:** INSTALL (M0 repo + M1 headless core BUILT and proven; ADOPT = M2 desktop integration wave)
+- **Status:** INSTALL (M0 repo + M1 headless core BUILT and proven; ADOPT = board row B25) <!-- OPEN: B25 -->
 - **Target Phase:** 9+ (JARVIS input lane) / R5.x build slots
 - **Owner (dept/tier):** JARVIS input / Engineering (product)
 - **Trigger Type:** service (own repo, own CI — NOT a DxB monorepo module)

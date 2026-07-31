@@ -21,17 +21,14 @@
 set -euo pipefail
 
 cat <<'EOF'
-=== ⛔ STANDING ORDER 14 — THE CEO IS THE OWNER, NOT A DEVELOPER ===
-Every sentence he reads is plain business language, or it is a violation.
-BANNED, including inside tables and "just this once":
- · file names, command names, test names, status codes, identifiers
- · construction words in ANY language — gate/kapı, pipe/boru, row/satır,
-   leg/bacak, battery/batarya, corpus/korpus, migration, schema, endpoint,
-   commit, suite, marker, parser, seam, token-as-a-code-word
- · counts that change no decision he makes
- · an English word inside a Turkish sentence where a Turkish word exists
-SELF-TEST BEFORE SENDING: would my mother understand this sentence?
-A long plain explanation is fine. A short technical one is not.
-Full procedure + report shape: open the `dxb-ceo-report` door.
+=== STANDING ORDER 14 — THE CEO IS THE OWNER, NOT A DEVELOPER ===
+His complaint, his words: "ben bu dilden anlamıorm yahu."
+NO BANNED WORDS. He struck the ban list out himself, 2026-08-01:
+"kelimeler kullanılsın ama parantez içinde açıklansın basitçe o kadar."
+THE RULE: use the real word — the file's name, the tool's name, the technical
+term — and put a short plain explanation in brackets right after it, once.
+  Kelam'ın kayıtları 00-INDEX.md dosyasında (alınmış kararların listesi).
+Never leave him to guess what a word means, and never hide the word from him.
+SELF-TEST: would my mother understand what this work IS?
 === END STANDING ORDER 14 ===
 EOF

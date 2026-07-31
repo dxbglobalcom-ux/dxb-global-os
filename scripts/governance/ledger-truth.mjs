@@ -126,6 +126,38 @@ const TRIGGERS = [
   /◐/,
 ];
 
+// Tried and rejected 2026-07-31: an unticked checkbox as a tripwire. It rang
+// 317 times — in this corpus a box shows state (requirement catalogues, the
+// study-card lifecycle line), it does not promise work. A bell that rings 317
+// times is a bell nobody hears.
+
+// A FINISHED row may not smuggle unfinished work inside its own closing
+// evidence. In a ledger the status token is the declaration, so a ✓ row is
+// never examined by LEDGER_TRIGGER — which is how "NEXT Kelam milestones M2-M6
+// = future roadmap rows" sat inside a ✓ COMPLETE row and rang nothing. A closed
+// row that announces future work names the board row that carries it, or the
+// sentence is not written. A phrase list, not an oracle — same stated limit as
+// TRIGGERS.
+const FUTURE_WORK = [
+  /\bNEXT\b[^|]{0,60}\b(milestones?|waves?|slots?|rows?|phases?)\b/i,
+  /\bfuture (roadmap )?(rows?|waves?|slots?|milestones?)\b/i,
+  /\b(ADOPT|EMBED)\s*=\s*\S/,
+  /\bileride\b/i,
+  /\bgelecek (dalga|faz|aşama)/i,
+];
+
+// Naming the future is not promising it: a rule about later work, a tool's
+// printed output, or the phrase quoted in order to forbid it. Each exclusion
+// measured against a real line on 2026-07-31.
+const FUTURE_NOT_A_PROMISE = [
+  /ileride bakarız/i, // the gap-audit directive quotes it to forbid it
+  /record it as a boundary/i, // the perfection gate: a rule for later slots
+  /this manual is updated/i, // the operating manual's own single-source rule
+  /the next row, and the exact command/i, // describes what the resume tool prints
+  /next\.sh/, // ditto — a script named "next"
+  /as the next rung/i, // a model-ladder position, not a task
+];
+
 // The board is exempt from the tripwire — it IS the register of open work.
 // Demanding that its own rows carry markers pointing at themselves would be
 // tautological noise. The tripwire's job is to find open-work declared
@@ -386,15 +418,17 @@ for (const rel of corpusFiles()) {
     // quietly shrink as the sweep progressed and look like the work vanished.
     if (/^\s*<!--[^>]*-->\s*$/.test(line)) continue;
     const isLedger = LEDGERS.has(rel);
-    const hit = isLedger ? LEDGER_TRIGGER.test(line) : TRIGGERS.some((t) => t.test(line));
-    if (!hit) continue;
+    const future = FUTURE_WORK.some((t) => t.test(line)) && !FUTURE_NOT_A_PROMISE.some((t) => t.test(line));
+    const worded = isLedger ? LEDGER_TRIGGER.test(line) : TRIGGERS.some((t) => t.test(line));
+    if (!worded && !future) continue;
     found.triggers++;
     if (!cover[i]) {
-      failures.push(
-        isLedger
-          ? `${rel}:${i + 1} — a ◐ row with no OPEN marker: work is unfinished here and no board row carries it — ${line.trim().slice(0, 90)}`
-          : `${rel}:${i + 1} — declares open work with no OPEN/HISTORY marker: ${line.trim().slice(0, 110)}`,
-      );
+      const why = future
+        ? "announces work still to come — a ✓ stamp cannot hold unfinished work inside it; name the board row that carries it, or do not write the sentence"
+        : isLedger
+          ? "a ◐ row with no OPEN marker: work is unfinished here and no board row carries it"
+          : "declares open work with no OPEN/HISTORY marker";
+      failures.push(`${rel}:${i + 1} — ${why} — ${line.trim().slice(0, 110)}`);
     }
   }
 }

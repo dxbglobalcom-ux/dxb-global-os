@@ -21,7 +21,9 @@
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('mcpServers',{}\\),indent=2\\)\\)\")",
       "Bash(code --list-extensions --show-versions)",
       "Bash(python3 -c ' *)",
-      "Bash(grep -oE 'getLanguageSetting\\\\\\(\\\\\\)\\\\{.{0,500}' /home/ghost/.vscode/extensions/anthropic.claude-code-2.1.220-linux-x64/extension.js)"
+      "Bash(grep -oE 'getLanguageSetting\\\\\\(\\\\\\)\\\\{.{0,500}' /home/ghost/.vscode/extensions/anthropic.claude-code-2.1.220-linux-x64/extension.js)",
+      "Bash(sort -k3 -n)",
+      "Bash(npx vitest *)"
     ],
     "deny": [
       "Read(./.env)",

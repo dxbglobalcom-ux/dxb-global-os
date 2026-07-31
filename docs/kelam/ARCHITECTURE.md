@@ -2,9 +2,10 @@
 ## Full Architecture Specification (v1.0 — architecture only, no implementation yet)
 
 > **Origin:** CEO order 2026-07-17 ("prepare the architecture in finest detail, only the architecture").
-> Fills the recorded stub `.planning/research/study-cards/whisperflow-clone.md` (INTEGRATION-TRACKER row 45: "Build clone: voicebox + whisper, NOT the paid product" — locked decision) and REVENUE-OPPORTUNITIES #12 (SME packaged install).
+> Fills the recorded stub `.planning/research/study-cards/whisperflow-clone.md` (INTEGRATION-TRACKER row 45: "Build clone: voicebox + whisper, NOT the paid product" — locked decision).
 > **Source contract:** CEO's full WisprFlow-clone prompt (22 sections), delivered in chat 2026-07-17 — every numbered requirement below cites it as `P§n`.
-> **Status:** DESIGN. No code, no repo, no packages exist yet. Every "will/should" here is a hypothesis until built (Evidence-Before-Done).
+> **Status (2026-07-31):** M0+M1 built (R5.1). M2-M6 = board row B25. <!-- OPEN: B25 -->
+> **Selling it is an OPEN possibility, not a decision** (CEO, 2026-08-01: *"geri koy belki satarız gerçekten"*). It had been written here as settled when it came from the author's revenue list of 2026-07-09, never from him; he struck that out, then restored it as what it truly is — something he may take up.
 
 ---
 
@@ -16,8 +17,8 @@
 | Alternates | Beyan, Sada, Lisan, VoiceQuill |
 | One-liner | System-wide hold-to-talk dictation for Linux: speak anywhere, clean text lands in the active app |
 | What it is NOT | Not a WisprFlow rebrand, no proprietary assets copied; original name/icon/UI. Not a TTS studio (that is voicebox's job). Not an Electron web-wrap (P§4 ban) |
-| License | MIT or Apache-2.0 (final = CEO; MIT recommended for SME distribution — revenue op #12) |
-| Repo | New standalone repo `kelam/` (own lifecycle, own CI). NOT inside DxB Global OS monorepo — the holding *uses and sells* it; it is a product, not an OS module |
+| License | MIT or Apache-2.0 — CEO decision, not taken |
+| Repo | Standalone repo `kelam/` (own lifecycle, own CI), not inside the DxB Global OS repository |
 
 **Relation to existing holding assets (measured 2026-07-17):**
 - **Speaches** (`ghcr.io/speaches-ai/speaches:0.8.3-cpu`, container `dxb_speaches_local` running on laptop; declared in `vps/compose.yaml:195`) exposes OpenAI-compatible `/v1/audio/transcriptions` (faster-whisper) → **Kelam's default STT backend. Zero cost, already deployed.**
@@ -363,7 +364,7 @@ Estimated effort: M1-M2 are the risk mass (Wayland). No calendar promise here �
 |---|---|---|
 | OD-1 | Build slot: now vs after open E12/E13 rows + Revenue spec wave | After current wave; M0-M1 can ride the new PC's arrival |
 | OD-2 | Final product name | **Kelam** |
-| OD-3 | License for SME distribution (revenue op #12) | MIT |
+| OD-3 | Which licence, if it is ever distributed at all | MIT |
 | OD-4 | AT-SPI insertion research in v1? | No — v1 ships the §10 ladder |
 | OD-5 | GNOME Shell extension for true overlay on GNOME Wayland | Later add-on if GNOME UX proves annoying |
 | OD-6 | Contribute Linux fixes upstream to voicebox instead of/alongside Kelam dictation? | Revisit after M2 — measure voicebox's Linux dictation maturity then |

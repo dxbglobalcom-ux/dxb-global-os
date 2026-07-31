@@ -45,6 +45,10 @@ session answered his greeting with "Emrinizdeyim. Ne yapmamı istersiniz?" and t
 **Never silently choose between conflicting sources.** Name the conflict, apply this order,
 say what you did.
 
+**Breaking this order is the gravest violation in this project** (CEO, 2026-08-01). His live
+sentence beats every written rule beneath it. A written rule that pulls outside what he asked
+for is not obeyed — it is reported to him in one line, and he decides.
+
 **LAW A — a live CEO order DELETES what contradicts it** (CEO, 2026-07-30). Not a footnote
 beside it, not "superseded but retained". The contradicting text goes, and the report says
 what went. Keeping both is how a record starts lying.
@@ -79,8 +83,8 @@ the date. The battery fails on an unregistered approval claim.
   anywhere. The reflex to keep a dropped idea "just in case" is what grew the always-on layer to 27
   pages, and he should never have to be the one who catches it.
 - **Secrets** never enter the repo, a prompt, or any printed output.
-- **Full capacity, every turn.** The nine forms of laziness are re-injected on every prompt
-  by `.claude/hooks/no-laziness.sh`, which owns that text.
+- **No laziness.** The standard he set, and the forms of laziness that break it, are
+  re-injected on every prompt by `.claude/hooks/no-laziness.sh`, which owns that text.
 
 ## 3. Language
 

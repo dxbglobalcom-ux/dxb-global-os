@@ -9,8 +9,8 @@
 
   "so13_full_capacity": {
     "owner": ".claude/hooks/no-laziness.sh",
-    "fingerprint": "USE FULL CAPACITY ON EVERY TURN",
-    "what": "Standing order 13 — the nine forms of laziness. Re-injected on every prompt, which is why the hook owns it: a second copy in the always-on file paid for the same text twice."
+    "fingerprint": "Full capacity, every turn.",
+    "what": "Standing order 13 — work worthy of an award, and the forms of laziness. Re-injected on every prompt, which is why the hook owns it: a second copy in the always-on file paid for the same text twice."
   },
   "so14_boundary": {
     "owner": ".claude/hooks/ceo-language.sh",

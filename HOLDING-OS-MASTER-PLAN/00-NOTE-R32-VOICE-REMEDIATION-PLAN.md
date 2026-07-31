@@ -85,5 +85,5 @@ D3, D5, D6, D7 are software defects that no hardware fixes. Answer brain is clou
 ## Companion deferral — U16 (design)
 
 Small design work postponed by the same ruling: the CEO observed symmetry defects he disliked
-(surface list to be captured at the joint walkthrough). Open item for the next design slot;
+(surface list to be captured at the joint walkthrough). Open item for the next design slot, board row B02; <!-- OPEN: B02 -->
 RULE #0 discipline unchanged for any surface that changes meanwhile.

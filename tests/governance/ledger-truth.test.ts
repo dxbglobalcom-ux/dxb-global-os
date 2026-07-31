@@ -90,6 +90,35 @@ describe("U41 ledger-truth gate", () => {
     expect(ids).toEqual(["agents_total", "agents_active", "agents_archived"]);
   });
 
+  // 2026-07-31 — a ✓ row hid Kelam's four unbuilt stages for fourteen days.
+  // These read the script's OWN phrase lists, not a copy.
+  const listFromScript = (name: string): RegExp[] => {
+    const src = readFileSync(SCRIPT, "utf8");
+    const body = src.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\n\\];`))?.[1] ?? "";
+    return [...body.matchAll(/^\s*(\/(?:[^/\\\n]|\\.)+\/[gimsuy]*)\s*,/gm)].map((m) =>
+      eval(m[1]),
+    ) as RegExp[];
+  };
+  const announcesFutureWork = (line: string): boolean =>
+    listFromScript("FUTURE_WORK").some((r) => r.test(line)) &&
+    !listFromScript("FUTURE_NOT_A_PROMISE").some((r) => r.test(line));
+
+  it("a ✓ row that announces work still to come is caught", () => {
+    expect(
+      announcesFutureWork(
+        "**✓ COMPLETE 2026-07-17** … NEXT Kelam milestones M2-M6 = future roadmap rows (OD-1).",
+      ),
+    ).toBe(true);
+    expect(announcesFutureWork("acoustic mic roundtrip; ADOPT = M2 desktop wave |")).toBe(true);
+    expect(announcesFutureWork("- **Status:** INSTALL (… ADOPT = M2 desktop integration wave)")).toBe(true);
+  });
+
+  it("naming the future is not promising it — the measured exclusions stay silent", () => {
+    expect(announcesFutureWork("belongs to a future roadmap row, record it as a boundary")).toBe(false);
+    expect(announcesFutureWork("If a future wave changes a surface, this manual is updated in the SAME commit")).toBe(false);
+    expect(announcesFutureWork("Bu metni bir fikir listesi veya “ileride bakarız” notu olarak değil")).toBe(false);
+  });
+
   it("every board row sits inside a declared open/closed section", () => {
     const text = readFileSync(BOARD, "utf8");
     const declared = boardSections();

@@ -11,24 +11,27 @@
 set -euo pipefail
 
 cat <<'EOF'
-=== ⛔ STANDING ORDER 13 — LAZINESS IS FORBIDDEN (CEO 2026-07-27, SEVEREST) ===
-USE FULL CAPACITY ON EVERY TURN. These nine ARE laziness = governance violation:
- 1. Answering from memory/grep/a summary instead of reading the file or running
-    the command (RULE #0-A is an EFFORT rule, not only an honesty rule).
+=== STANDING ORDER 13 — LAZINESS IS FORBIDDEN (CEO 2026-07-27, SEVEREST) ===
+THE ORDER, in his own words (2026-08-01): every piece of work is done to a
+standard worthy of an award — the fine details thought through, and then
+actually done. Full capacity, every turn.
+These are laziness = governance violation:
+ 1. Stating as fact what you did not measure THIS session. Memory and a search
+    hit tell you WHERE to look; the answer comes from the file or the command.
+    Never answer out of a summary.
  2. Partial delivery — shipping the easy half, or closing a row with a named leg
     still open. Blocked part: name it, finish EVERYTHING else in full.
- 3. Deferral language ("later", "next session", "we can do this afterwards") for
-    work that is in scope and possible NOW.
- 4. Leaving the ledger behind reality — you changed the system and did not close
+ 3. Leaving the ledger behind reality — you changed the system and did not close
     or correct the row that tracks it. Then you have not finished.
- 5. Stopping at the first obstacle (standing order 12: an obstacle is the START
+ 4. Stopping at the first obstacle (standing order 12: an obstacle is the START
     of the work), or asking the CEO to run/click/install what you can do.
- 6. Skipping the battery: tests, tsc, DB suite, i18n purity, RULE #0 pass,
+ 5. Skipping the battery: tests, tsc, DB suite, i18n purity, RULE #0 pass,
     resident-service restart.
- 7. Opening a NEW spec/plan instead of finishing the spec that already owns the
+ 6. Opening a NEW spec/plan instead of finishing the spec that already owns the
     contract (PLAN.md ≠ a plan).
- 8. Seeing a defect and not fixing it AT ITS SOURCE in the same turn.
- 9. Reporting a prediction as a result.
+ 7. Seeing a defect and not fixing it AT ITS SOURCE in the same turn — but the
+    fix stays INSIDE what he asked for. Outside it: tell him in one line and ask.
+ 8. Reporting a prediction as a result.
 BEFORE ENDING ANY TURN answer in writing: measured? · complete? · recorded? ·
 verified (command → output)?
 === END STANDING ORDER 13 ===
