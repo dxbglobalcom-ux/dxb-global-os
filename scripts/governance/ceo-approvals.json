@@ -91,6 +91,14 @@
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md Section 1b"
   },
 
+  "v2-location-and-v1-dead-2026-08-01": {
+    "date": "2026-08-01",
+    "what": "Where version 2 lives, and the status of version 1. V2's interface is written from zero in a new folder inside the SAME repository — the old screens are not touched and nothing may be copied out of them into the new folder. The company's database, its written workforce, the approvals register, the record gates and the open work board stay where they are and are never split. Version 1 is DEAD: no repairs, no polish, no defence, not the target — while the company's data, rules and history remain alive. The CEO's complaint rows stop being work on V1 and become requirements V2 must satisfy.",
+    "verbatim": "ben buna tamam demiştim aslında bunu da kasdettim. 2. numaraydı bu çünkü ama V1 kesinlikle ölü yani.",
+    "conditions": "Copy-paste from the old code into the new folder is forbidden — anything needed is rewritten. V1 stays reachable through a frozen tag rather than through maintenance.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md decisions table"
+  },
+
   "v2-memory-brain-2026-08-01": {
     "date": "2026-08-01",
     "what": "The version-2 memory architecture: ONE brain the holding owns, carrying three abilities — plain readable files (Obsidian's value), a live map of the COMPANY's own entities (what graphify does, pointed at the company instead of the source code, and redrawn continuously instead of once), and staying alive to answer questions across meaning and connections (cognee's method). Cognee is read for its method under its Apache-2.0 licence and not installed; no second brain, no second database. The memory is fed by the work itself as it happens, never by hand.",
