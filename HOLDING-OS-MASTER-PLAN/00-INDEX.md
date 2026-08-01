@@ -149,7 +149,7 @@ Wave 4 closing note: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envanter
 | U40 | Sixteen rival sources read frame by frame. **Corrected verdict: all sixteen run and earn, DXB does neither — the programme's purpose is to switch it on.** Six waves, no new spec | CEO order C42 | [[00-BOARD-OPEN-WORK]] Section 3 |
 | U41 | **The record may no longer disagree with the system** — every durable statement is either current state, re-measured, or a dated event; open work names its board row | CEO 2026-07-28 | [[00-BOARD-OPEN-WORK]] laws |
 | U42 | **The context architecture:** one page of always-on text instead of 27, eight doors opened on demand, the state file cut to a photograph. **LAW A** — a live order deletes what contradicts it. **LAW B** — finished is not approved | CEO 2026-07-30 | `.claude/CLAUDE.md` + `.claude/skills/dxb-*` |
-| U43 | Alarm opened: a ✓ record that announces work still to come must name its board row. The ban list in the CEO-language text struck out — real words are used and explained in brackets | CEO 2026-07-31 / 08-01 | `scripts/governance/ledger-truth.mjs` + `.claude/hooks/ceo-language.sh` |
+| U43 | Alarm opened: a ✓ record that announces work still to come must name its board row. The ban list in the CEO-language text struck out — real words are used and explained in brackets. **Accepted by the CEO 2026-08-01 ("1. yi onaylıyorum. dünde onaylamıştım. kaydedilsin demiştim")** | CEO 2026-07-31 / 08-01 | `scripts/governance/ledger-truth.mjs` + `.claude/hooks/ceo-language.sh` <!-- CEO-OK: governance-repairs-accepted-2026-08-01 --> |
 
 ## Verification commands (run at wave close)
 

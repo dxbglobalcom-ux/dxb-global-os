@@ -29,6 +29,7 @@ that the project "advances in a mess and specs stay half-finished".
    The reflex being banned is "write it down just in case" — the same reflex that grew the
    always-on layer to 27 pages. When in doubt, write nothing: a dropped idea costs one sentence to
    raise again, and costs the register its meaning to keep.
+   **Accepted by the CEO, 2026-08-01** — *"1. yi onaylıyorum. dünde onaylamıştım. kaydedilsin demiştim"*.  <!-- CEO-OK: governance-repairs-accepted-2026-08-01 -->
 
 ### Laws 1 and 5 are enforced by machine (U41, 2026-07-28)
 
