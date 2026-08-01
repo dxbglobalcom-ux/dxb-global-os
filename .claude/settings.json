@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node /home/ghost/.claude/gsd-core/bin/gsd-tools.cjs *)",
       "Bash(graphify *)",
       "Bash(scrot *)",
       "Bash(wmctrl -a *)",
