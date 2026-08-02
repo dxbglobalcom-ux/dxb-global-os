@@ -63,19 +63,14 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
    for the watching. Section 2 of every report is still a timestamped record with no
    summarising; it is now the record of what was WATCHED.
 5. **A FRAME IS NEVER DOWNSCALED, AND A ZOOM IS CUT FROM THE VIDEO.** Added 2026-08-02 on his
-   order *"625 okunamazlar silinsin"*, after the measurement that explains his verdict on the
-   sixteen reports. `fetch.sh` used to carry `scale=720:-1` and `sheets.sh` then tiled twelve of
-   those at `-geometry 300x533`; these sources are SCREEN RECORDINGS, and at that size a terminal
-   line or a tool name is not legible at all. **625 MB of such images existed and the binned
-   reports were written off them** — an eye that cannot read the screen guesses, and the guess
-   reads as contempt. Both are gone: the scaling, the tiler script, and the images. Frames are now
-   native (`-q:v 2`, 1080×1920), and a detail is enlarged by cutting it out of the VIDEO —
-   `ffmpeg -ss <t> -i <video> -vframes 1 -vf "crop=W:H:X:Y" -q:v 1` — never by cropping a frame,
-   which throws the pixels away twice. Proven the same hour on source 01 at 00:20: the rival's
-   objective panel, an unreadable blue smear under the old method, reads **`PRIMARY OBJECTIVE ·
-   $30,000 · $16,678 · $13,338`** under the new one. Where the pixels genuinely run out — a phone
-   camera pointed at a television has a hard limit — the report writes **UNREADABLE**, never a
-   guess.
+   order *"625 okunamazlar silinsin"*. `fetch.sh` used to carry `scale=720:-1` and `sheets.sh`
+   then tiled twelve of those at 300px; on a SCREEN RECORDING nothing is legible at that size, and
+   **625 MB of such images is what the sixteen binned reports were written from** — an eye that
+   cannot read the screen guesses, and the guess reads as contempt. Frames are now native
+   (`-q:v 2`); a detail is enlarged with
+   `ffmpeg -ss <t> -i <video> -vframes 1 -vf "crop=W:H:X:Y" -q:v 1`, never by cropping a frame,
+   which throws the pixels away twice. Where the pixels genuinely run out, the report writes
+   **UNREADABLE**, never a guess.
 6. **Ledger parity (U38).** When a row closes here, its row on `00-BOARD-OPEN-WORK.md` and in
    `INTEGRATION-TRACKER.md` is corrected in the SAME session.
 
