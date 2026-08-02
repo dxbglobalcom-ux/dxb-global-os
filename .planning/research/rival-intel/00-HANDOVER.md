@@ -35,7 +35,7 @@ değil. Sonra hükmü sıfırdan yaz. Satır 01'den başla.
    (Ferrari · V1 ölü · V2'nin birinci kanunu: CANLI OLACAK)
 3. .planning/research/rival-intel/00-LEDGER.md    — kuyruk ve 5 kanunu (özellikle 4)
 4. `scripts/rival-intel/next.sh` çıktısı          — sıradaki satır ve komutu
-5. 00-SYNTHESIS.md GEÇERSİZDİR — sadece neyin reddedildiğinin kaydı; ondan alıntı yapma
+5. 00-SYNTHESIS.md ve reddedilen 16 rapor SİLİNDİ (CEO, 2026-08-02: "reddettiğim metni tamamen sil") — arayıp bulma, alıntılama, geri getirme
 
 SONRA BANA ŞUNU SÖYLE (tablo halinde, teknik olmayan dilde, kısa):
 - Kaç kaynak izlendi, kaçı kaldı
@@ -81,8 +81,8 @@ hiçbir panel gösteremez.
 
 | What | Path |
 |---|---|
-| The plan (six waves, per-project evidence contracts) | `.planning/research/rival-intel/00-SYNTHESIS.md` |
-| The 16 reports | `.planning/research/rival-intel/{01..16}-*.md` |
+| The plan (six waves) | **Does not exist yet.** The old `00-SYNTHESIS.md` was built on the binned verdicts and was deleted with them on 2026-08-02. A new one is written only when every row reads `reported` |
+| The reports written under his method | `.planning/research/rival-intel/<nn>-*.md` — one appears as each row is finished. The sixteen rejected ones are gone |
 | The queue and its five laws | `.planning/research/rival-intel/00-LEDGER.md` |
 | The resume command | `scripts/rival-intel/next.sh` |
 | Fetch a source (claim → download → sha256 → transcribe → frames) | `scripts/rival-intel/fetch.sh <nn>` |
@@ -112,7 +112,7 @@ The programme is built to absorb one more source without a redesign:
 5. Write the six-section report. **Section 2 must be a record, never a summary** — the gate
    enforces ≥ 8 timestamped rows for a reel or video.
 6. Mark the row `reported`, run `npx vitest run tests/c42/rival-intel-ledger.test.ts`, commit.
-7. Fold the new capabilities into `00-SYNTHESIS.md` and correct the board in the same session.
+7. Correct the board and the tracker in the same session. The synthesis is written once, at the end.
 
 ---
 

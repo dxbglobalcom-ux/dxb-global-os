@@ -8,8 +8,11 @@
 > TOOOOOOO MUCH"*, while **every one of those systems is real and live — he confirmed it himself**.
 > His order: *"hükümler çöpe, ham malzeme kalsın."* So the sixteen rows were reset from `reported`
 > to `fetched` on 2026-08-02: the media, the sha256 fingerprints and the transcripts stay and are
-> re-used, and **not one sentence of the old reports may be carried into a new one.** The report
-> files remain on disk only as the record of what was rejected. **Eighteen further sources he
+> re-used, and **not one sentence of the old reports may be carried into a new one.** They were
+> first left on disk as the record of what was rejected; **on his further order of 2026-08-02 —
+> *"reddettiğim metni tamamen sil"* — all sixteen and the synthesis built on them are DELETED.**
+> A rewrite opens the source's own file from nothing, and the rejected text is never re-opened to
+> write it. **Eighteen further sources he
 > supplied join the same queue** — twelve read out of the Markdown (rows 17-28), and six more that
 > existed only in the DOCX he edited on 2026-08-01 and that no session had ever seen (rows 29-34,
 > opened 2026-08-02 when he asked whether that file had been read; it had not). Nothing here is

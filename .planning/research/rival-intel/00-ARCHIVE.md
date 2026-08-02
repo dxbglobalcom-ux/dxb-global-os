@@ -1,4 +1,4 @@
-# 00-ARCHIVE — where every frame, subtitle and byte of the twenty-eight sources lives
+# 00-ARCHIVE — where every frame, subtitle and byte of the thirty-four sources lives
 
 
 **Written 2026-07-28 in answer to the CEO's question:** *"bunların sen resimlerini indirdiğin her
@@ -17,14 +17,14 @@ Everything below was measured on 2026-07-28 by command, not recalled.
 ```
 .planning/research/rival-intel/
 ├── 00-LEDGER.md        the queue and its five laws            (git: TRACKED)
-├── 00-SYNTHESIS.md     the unifying plan, six waves           (git: TRACKED)
+│   (00-SYNTHESIS.md deleted 2026-08-02 with the verdicts it was built on)
 ├── 00-HANDOVER.md      the prompt for the next session        (git: TRACKED)
 ├── 00-ARCHIVE.md       this file — the map                    (git: TRACKED)
-├── 01..28-*.md         the reports — 01-16 binned, 17-28 unwritten (git: TRACKED)
+├── <nn>-*.md           one report per finished row (git: TRACKED)
 ├── transcripts/*.json  spoken word, timestamped, per source   (git: TRACKED)
-├── media/              25 videos + the PDF, all ≥720p, audio kept (git: IGNORED — 332 MB)
-├── frames/             zoom aid only, never the reading itself (git: IGNORED — 682 MB)
-└── repos/              the two cloned repositories            (git: IGNORED — 257 MB)
+├── media/              30 videos + the PDF, all ≥720p, audio kept (git: IGNORED)
+├── frames/             native-resolution zoom aid, never the reading (git: IGNORED)
+└── repos/              the three cloned repositories          (git: IGNORED)
 ```
 
 **Why media/frames/repos are gitignored and that is correct:** 1.1 GB of binaries would bloat the
@@ -39,22 +39,22 @@ found, fixed, and the gate strengthened in the same turn).
 
 | # | Source | Media on disk | sha256 | Frames | Spoken word | The reading |
 |---|---|---|---|---|---|---|
-| **01** | Luke Cutting (`lukebuildsai`) | `media/01-DY4o8dluXdK.mp4` | `8edba9f274fb7c9b…` | `frames/01/` — **72 frames** + 1 scene cuts · 6 contact sheets · 86 zoom crops | `transcripts/01.json` — en, 13 segments | **`01-lukebuildsai-jarvis.md`** |
-| **02** | Okyanusi · Akın Yılmaz (`akinyilmaz.ai`) | `media/02-DbTuJhOo69k.mp4` | `55b778b16a879059…` | `frames/02/` — **143 frames** + 5 scene cuts · 13 contact sheets | `transcripts/02.json` — tr, 40 segments | **`02-akinyilmaz-skills-system.md`** |
-| **03** | Chloe Shy (`chloeshy.ai`) | `media/03-DbBPiy4vcz4.mp4` | `e5a1d0d66c218e14…` | `frames/03/` — **74 frames** + 10 scene cuts · 7 contact sheets | `transcripts/03.json` — en, 17 segments | **`03-chloeshy.md`** |
-| **04** | The Alina Lab (`thealinalab`) | `media/04-DYG-_i9PPCM.mp4` | `91f19ae9e1a1042a…` | `frames/04/` — **32 frames** + 3 scene cuts · 3 contact sheets | `transcripts/04.json` — en, 8 segments | **`04-thealinalab.md`** |
-| **05** | CNN (`cnn`) | `media/05-DadfHYrkmr7.mp4` | `952104e0fdf8e1c9…` | `frames/05/` — **102 frames** + 27 scene cuts · 11 contact sheets · 5 zoom crops | `transcripts/05.json` — en, 22 segments | **`05-cnn-clipping-business.md`** |
-| **06** | Alp Ünlü (`alppunlu`) | `media/06-DZkevADMVPK.mp4` | `d5a91a7ec046aa60…` | `frames/06/` — **43 frames** + 23 scene cuts · 6 contact sheets | `transcripts/06.json` — tr, 15 segments | **`06-alppunlu.md`** |
-| **07** | Misael · Founder Systems (`misael.systems`) | `media/07-DbSGx3CCRQS.mp4` | `56d2203b3333185e…` | `frames/07/` — **82 frames** + 0 scene cuts · 7 contact sheets | `transcripts/07.json` — en, 18 segments | **`07-misael-founder-systems.md`** |
-| **08** |  | `repos/paperclip` — 112M, HEAD `7797995` | — | — | — | **`08-paperclip-repo.md`** |
-| **09** | Huw Prosser (`huwprosser`) | `media/09-DYK2IWyoEWh.mp4` | `26a91b04f9e9e4ea…` | `frames/09/` — **15 frames** + 6 scene cuts · 2 contact sheets | `transcripts/09.json` — en, 3 segments | **`09-huwprosser.md`** |
-| **10** | `cloud9.markets` | `media/10-DbBAOdVBjka.mp4` | `36bf05ac45b79902…` | `frames/10/` — **75 frames** + 0 scene cuts · 7 contact sheets | `transcripts/10.json` — en, 15 segments | **`10-cloud9-markets.md`** |
-| **11** | Rinaldo Janjua (`rinaldojanjua.ai`) | `media/11-DbA3JgbphEs.mp4` | `c76361d6bee7dad5…` | `frames/11/` — **97 frames** + 1 scene cuts · 9 contact sheets | `transcripts/11.json` — en, 25 segments | **`11-rinaldojanjua-a.md`** |
-| **12** | Rinaldo Janjua | `media/12-DbF2AUQh0MQ.mp4` | `5fde87b11bc847cf…` | `frames/12/` — **52 frames** + 0 scene cuts · 5 contact sheets | `transcripts/12.json` — en, 21 segments | **`12-rinaldojanjua-b.md`** |
-| **13** | Rinaldo Janjua | `media/13-DbHOTOqhBXE.mp4` | `6b1fac4a2e9203dc…` | `frames/13/` — **52 frames** + 0 scene cuts · 5 contact sheets | `transcripts/13.json` — en, 12 segments | **`13-rinaldojanjua-c.md`** |
-| **14** | Rinaldo Janjua | `media/14-DbKe90ETKfB.mp4` | `7e8ceb034a5ed3e1…` | `frames/14/` — **61 frames** + 0 scene cuts · 6 contact sheets | `transcripts/14.json` — en, 16 segments | **`14-rinaldojanjua-d.md`** |
-| **15** |  | `media/15-vibecoder-4-sites.pdf` | `fd2ffd0d1523b6ec…` | `frames/15/` — **0 frames** + 0 scene cuts · 0 contact sheets | — | **`15-vibecoder-4-sites-pdf.md`** |
-| **16** |  | `repos/openjarvis` — 146M, HEAD `93fc7b9` | — | — | — | **`16-openjarvis-repo.md`** |
+| **01** | Luke Cutting (`lukebuildsai`) | `media/01-DY4o8dluXdK.mp4` | `8edba9f274fb7c9b…` | `frames/01/` — **72 frames** + 1 scene cuts | `transcripts/01.json` — en, 13 segments | **`01-lukebuildsai-jarvis.md`** |
+| **02** | Okyanusi · Akın Yılmaz (`akinyilmaz.ai`) | `media/02-DbTuJhOo69k.mp4` | `55b778b16a879059…` | `frames/02/` — **143 frames** + 5 scene cuts | `transcripts/02.json` — tr, 40 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **03** | Chloe Shy (`chloeshy.ai`) | `media/03-DbBPiy4vcz4.mp4` | `e5a1d0d66c218e14…` | `frames/03/` — **74 frames** + 10 scene cuts | `transcripts/03.json` — en, 17 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **04** | The Alina Lab (`thealinalab`) | `media/04-DYG-_i9PPCM.mp4` | `91f19ae9e1a1042a…` | `frames/04/` — **32 frames** + 3 scene cuts | `transcripts/04.json` — en, 8 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **05** | CNN (`cnn`) | `media/05-DadfHYrkmr7.mp4` | `952104e0fdf8e1c9…` | `frames/05/` — **102 frames** + 27 scene cuts | `transcripts/05.json` — en, 22 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **06** | Alp Ünlü (`alppunlu`) | `media/06-DZkevADMVPK.mp4` | `d5a91a7ec046aa60…` | `frames/06/` — **43 frames** + 23 scene cuts | `transcripts/06.json` — tr, 15 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **07** | Misael · Founder Systems (`misael.systems`) | `media/07-DbSGx3CCRQS.mp4` | `56d2203b3333185e…` | `frames/07/` — **82 frames** + 0 scene cuts | `transcripts/07.json` — en, 18 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **08** |  | `repos/paperclip` — 112M, HEAD `7797995` | — | — | — | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **09** | Huw Prosser (`huwprosser`) | `media/09-DYK2IWyoEWh.mp4` | `26a91b04f9e9e4ea…` | `frames/09/` — **15 frames** + 6 scene cuts | `transcripts/09.json` — en, 3 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **10** | `cloud9.markets` | `media/10-DbBAOdVBjka.mp4` | `36bf05ac45b79902…` | `frames/10/` — **75 frames** + 0 scene cuts | `transcripts/10.json` — en, 15 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **11** | Rinaldo Janjua (`rinaldojanjua.ai`) | `media/11-DbA3JgbphEs.mp4` | `c76361d6bee7dad5…` | `frames/11/` — **97 frames** + 1 scene cuts | `transcripts/11.json` — en, 25 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **12** | Rinaldo Janjua | `media/12-DbF2AUQh0MQ.mp4` | `5fde87b11bc847cf…` | `frames/12/` — **52 frames** + 0 scene cuts | `transcripts/12.json` — en, 21 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **13** | Rinaldo Janjua | `media/13-DbHOTOqhBXE.mp4` | `6b1fac4a2e9203dc…` | `frames/13/` — **52 frames** + 0 scene cuts | `transcripts/13.json` — en, 12 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **14** | Rinaldo Janjua | `media/14-DbKe90ETKfB.mp4` | `7e8ceb034a5ed3e1…` | `frames/14/` — **61 frames** + 0 scene cuts | `transcripts/14.json` — en, 16 segments | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **15** |  | `media/15-vibecoder-4-sites.pdf` | `fd2ffd0d1523b6ec…` | `frames/15/` — **0 frames** + 0 scene cuts | — | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
+| **16** |  | `repos/openjarvis` — 146M, HEAD `93fc7b9` | — | — | — | *deleted 2026-08-02 with the binned verdicts — row is `fetched`, awaiting a fresh watch* |
 | **17** | *not yet identified — named after watching* | `media/17-DZoJOLQoQY2.mp4` · **1080×1920**, audio kept | `a5ccfacac3b09c49…` | `frames/17/` — **87 frames** | `transcripts/17.json` — en, 11 segments | *not yet written — row is `fetched`* |
 | **18** | *not yet identified — named after watching* | `media/18-DZC-H3tRH7C.mp4` · **1080×1920**, audio kept | `9f59f661ae674c4c…` | `frames/18/` — **67 frames** | `transcripts/18.json` — en, 25 segments | *not yet written — row is `fetched`* |
 | **19** | *not yet identified — named after watching* | `media/19-DZc0F3Nx2rb.mp4` · **1080×1920**, audio kept | `2c340df407753e7c…` | `frames/19/` — **41 frames** | `transcripts/19.json` — en, 9 segments | *not yet written — row is `fetched`* |
@@ -67,6 +67,12 @@ found, fixed, and the gate strengthened in the same turn).
 | **26** | *not yet identified — named after watching* | `media/26-Day97uOu0SA.mp4` · **1080×1920**, audio kept | `c3147592dfac2232…` | `frames/26/` — **60 frames** | `transcripts/26.json` — en, 18 segments | *not yet written — row is `fetched`* |
 | **27** | *not yet identified — named after watching* | `media/27-Dajd_9PuW1r.mp4` · **1080×1920**, audio kept | `1c1c7370ce9d71e5…` | `frames/27/` — **63 frames** | `transcripts/27.json` — en, 25 segments | *not yet written — row is `fetched`* |
 | **28** | *not yet identified — named after watching* | `media/28-DaWrNiQO7QH.mp4` · **1080×1920**, audio kept | `f65c57b268f31bcd…` | `frames/28/` — **72 frames** | `transcripts/28.json` — en, 36 segments | *not yet written — row is `fetched`* |
+| **29** | *not yet identified — named after watching* | `media/29-DZ1BSCyRtD0.mp4` · **1080×1920**, audio kept | `eba4b7b3830fbec7…` | `frames/29/` — **80 frames** | `transcripts/29.json` — en, 16 segments | *not yet written — row is `fetched`* |
+| **30** | *not yet identified — named after watching* | `media/30-DbcPo0dMQ3d.mp4` · **1080×1920**, audio kept | `66e2d485799ce39e…` | `frames/30/` — **90 frames** | `transcripts/30.json` — en, 23 segments | *not yet written — row is `fetched`* |
+| **31** | *not yet identified — named after watching* | `media/31-DaYUSD_ALo0.mp4` · **1080×1920**, audio kept | `2860f877684cf05f…` | `frames/31/` — **45 frames** | `transcripts/31.json` — en, 7 segments | *not yet written — row is `fetched`* |
+| **32** | *not yet identified — named after watching* | `media/32-DYw6w3RxYJ0.mp4` · **1080×1920**, audio kept | `be59df51038b04fe…` | `frames/32/` — **66 frames** | `transcripts/32.json` — en, 27 segments | *not yet written — row is `fetched`* |
+| **33** | *not yet identified — named after watching* | `media/33-DbeNY9aRtri.mp4` · **1080×1920**, audio kept | `4f1e44120b50ab00…` | `frames/33/` — **92 frames** | `transcripts/33.json` — en, 26 segments | *not yet written — row is `fetched`* |
+| **34** | `topoteretes/cognee` — the memory repository he added to the DOCX | `repos/cognee` — 159M, HEAD `38eece5` | — | — | — | *not yet written — row is `fetched`* |
 **Totals measured 2026-08-02:** media **332 MB** · frames **682 MB** · repos **257 MB** · transcripts 220 KB ·
 **1,003 frames extracted across 13 videos** (14 with source 08/16 excluded — they are repositories,
 not video).
@@ -125,4 +131,4 @@ Markdown and the DOCX. He edits the DOCX; sessions read only the Markdown; six s
 unseen for eight hours with nothing on disk saying so.
 
 **It should not need any of them.** The reading is in the reports; the plan is in
-`00-SYNTHESIS.md`; the prompt to start from is in `00-HANDOVER.md`.
+each source's own report as it is finished; the prompt to start from is in `00-HANDOVER.md`.
