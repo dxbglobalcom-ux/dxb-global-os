@@ -64,12 +64,17 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 
 ## Next — read this before doing anything
 
-1. **B22 — the rival re-analysis is the next work**, under
-   `docs/ceo-directives/2026-07-reanalysis/` and door `dxb-rival-intel`: proper source quality,
-   full temporal reading, evidence labels on every statement, selective rewrite with a change log.
-   <!-- OPEN: B22 --> **This is what he said comes next**, in his own words: *"rakip analizi vs
-   bunlar hepsi sonra."* **It waits on his word**, because the same sentence that ordered it also
-   ordered the context work first, and that ordering was his.
+1. **B22 — the rival re-analysis IS the work in hand, and it starts at row 01.**
+   <!-- OPEN: B22 --> His word was given on 2026-08-02 at 01:30: *"yarın ilk iş videolara başlamak
+   olacak"*. It no longer waits on him. **The night before it, the material was prepared and
+   measured** — all 28 sources are on disk, every video at 720p or better with its audio kept
+   (23 of 25 at 1080×1920), each with a timestamped transcript; the twelve supplementary sources
+   he had listed in section 11 of his directive had never been fetched at all and now are. **The
+   sixteen old verdicts are binned on his order** (*"hükümler çöpe, ham malzeme kalsın"*): those
+   rows went back from `reported` to `fetched`, `00-SYNTHESIS.md` is marked VOID, and not one of
+   its sentences may be re-used. **The method is his and it is now enforced in the tools**: each
+   source is WATCHED start to end with sound, in order, and frames exist only to zoom into a
+   detail already seen. Run `scripts/rival-intel/next.sh` — it prints the row and the command.
 2. **What is blocked on him, and cannot move without him:** his approval of a visual design package
    before any redesign is built · one hand-minted browser session so authenticated surfaces can be
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two

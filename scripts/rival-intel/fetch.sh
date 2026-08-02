@@ -49,11 +49,19 @@ echo "row $NN claimed at $stamp ($kind)"
 
 case "$kind" in
   reel|video)
-    base="$MEDIA/$NN-$(printf '%s' "$url" | grep -oE '[A-Za-z0-9_-]+/?$' | tr -d '/')"
+    # The slug is the last path segment, taken BEFORE any '?tracking=…' tail —
+    # the CEO's supplementary links carry share parameters ending in '=', which
+    # the old end-of-string match could not read at all (measured 2026-08-02).
+    slug="$(printf '%s' "$url" | sed -E 's#\?.*$##; s#/+$##; s#.*/##')"
+    [ -n "$slug" ] || { echo "FAIL row $NN: cannot read a slug out of $url" >&2; exit 1; }
+    base="$MEDIA/$NN-$slug"
     vid="$(ls "$MEDIA/$NN-"*.mp4 2>/dev/null | head -1 || true)"
     if [ -z "$vid" ]; then
       echo "downloading $url"
-      yt-dlp --no-warnings -q -o "$base.%(ext)s" "$url"
+      # Highest resolution the source offers, audio ALWAYS kept and merged.
+      # The CEO's condition of 2026-08-01: "720 HD KALİTESİ İLE İNDİRİLİP İZLENSİN".
+      yt-dlp --no-warnings -q -S "res,vcodec:h264,acodec" \
+        -f "bv*+ba/b" --merge-output-format mp4 -o "$base.%(ext)s" "$url"
       vid="$(ls "$MEDIA/$NN-"*.mp4 2>/dev/null | head -1)"
     else
       echo "already downloaded: $(basename "$vid")"
@@ -63,6 +71,16 @@ case "$kind" in
     dur="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$vid")"
     echo "sha256 $sha"
     echo "duration ${dur}s"
+
+    # ---- the quality floor is a GATE, not a hope --------------------------
+    # A vertical reel is 1080x1920: the short side is what "720p" means here.
+    w="$(ffprobe -v error -select_streams v:0 -show_entries stream=width  -of csv=p=0 "$vid")"
+    h="$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$vid")"
+    short=$(( w < h ? w : h ))
+    acodec="$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of csv=p=0 "$vid")"
+    echo "resolution ${w}x${h} (short side $short) · audio ${acodec:-NONE}"
+    [ "$short" -ge 720 ] || { echo "FAIL row $NN short side ${short}px < 720 — his quality floor" >&2; exit 1; }
+    [ -n "$acodec" ] || { echo "FAIL row $NN has no audio track — it must be watched WITH sound" >&2; exit 1; }
 
     # ---- transcript (the holding's own STT, €0, nothing leaves the box) -----
     tx="$TRANSCRIPTS/$NN.json"
@@ -78,10 +96,11 @@ case "$kind" in
       echo "transcript already on disk"
     fi
 
-    # ---- frames: one per second PLUS every scene cut ------------------------
-    # A reel changes screen faster than 1fps; the scene pass catches what the
-    # clock misses. Summarising is forbidden (C42) — every screen state must be
-    # available to the eye that reads it.
+    # ---- frames: an aid to the watching, never a substitute for it ---------
+    # AMENDED 2026-08-01 by the CEO's live order (LAW A): the reading is the
+    # VIDEO, watched start to end with its sound, "İNSAN GÖZÜYLE İZLENİR GİBİ
+    # … kötü karelere bakıp değil". Frames stay only so a detail already seen
+    # while watching can be zoomed into and quoted exactly.
     fdir="$FRAMES/$NN"
     if [ ! -d "$fdir" ] || [ -z "$(ls -A "$fdir" 2>/dev/null)" ]; then
       mkdir -p "$fdir"
@@ -114,5 +133,5 @@ esac
 
 scripts_claim "fetched"
 echo
-echo "row $NN is now 'fetched'. Next: read every frame by eye, then write"
+echo "row $NN is now 'fetched'. Next: WATCH it start to end with its sound, then write"
 echo "$DIR/$(grep -E "^\| $NN \|" "$LEDGER" | awk -F'|' '{print $7}' | tr -d ' `')"

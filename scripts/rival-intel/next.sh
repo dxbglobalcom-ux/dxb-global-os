@@ -67,10 +67,13 @@ echo "report:   $DIR/$rep"
 echo
 case "$st" in
   pending|claimed) echo "continue with:  scripts/rival-intel/fetch.sh $target" ;;
-  fetched)         echo "material is on disk. Read EVERY frame in $DIR/frames/$target by eye," ;&
-  watched)         echo "then write the six-section report at $DIR/$rep, set the row to"
-                   echo "'reported', and commit. Section 2 must be a timestamped frame-by-frame"
-                   echo "record — summarising is forbidden (CEO order C42)." ;;
+  fetched)         echo "material is on disk. WATCH $DIR/media/$target-*.mp4 start to end WITH ITS"
+                   echo "SOUND — every second in order, the transcript beside it — the way a person"
+                   echo "watches (CEO, 2026-08-01: \"İNSAN GÖZÜYLE İZLENİR GİBİ İZLENSİN kötü karelere"
+                   echo "bakıp değil\"). $DIR/frames/$target is a zoom aid for a detail already seen," ;&
+  watched)         echo "never the reading itself. Then write the six-section report at $DIR/$rep, set"
+                   echo "the row to 'reported', and commit. Section 2 must be a timestamped record of"
+                   echo "what was watched — summarising is forbidden (CEO order C42)." ;;
 esac
 echo
 echo "Read first, before anything: $LEDGER (its law section)."

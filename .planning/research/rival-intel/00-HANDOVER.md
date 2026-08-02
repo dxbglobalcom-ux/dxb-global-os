@@ -21,23 +21,26 @@ the prompt.
 ```
 BOOTSTRAP OKU VE ONAYLA, SONRA DEVAM ET.
 
-Sen bu projenin oturum yazarısın (Opus 5, U30). Önceki oturum C42 Aşama 1'i BİTİRDİ:
-16 rakip kaynağı kare kare okundu, raporlandı ve tek bir birleştirici plana çevrildi.
-YENİDEN PLAN YAZMA. Kaldığın yerden DEVAM ET.
+Sen bu projenin oturum yazarısın (Opus 5). C42 Aşama 1 BİTMEDİ — 2026-08-01'de
+16 raporun HÜKÜMLERİNİ ÇÖPE ATTIM ("hükümler çöpe, ham malzeme kalsın"), çünkü
+o sistemlerin hepsi gerçek ve canlı, ben kendim teyit ettim. Ham malzeme duruyor:
+28 kaynağın tamamı diskte, 720p ve üstü, sesiyle birlikte.
+
+İŞ ŞU: her kaynağı BAŞTAN SONA, SESİYLE, insan gibi izle — kötü karelere bakarak
+değil. Sonra hükmü sıfırdan yaz. Satır 01'den başla.
 
 ÖNCE ŞUNLARI OKU (bu sırayla, tamamını):
 1. .planning/STATE.md
-2. HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md   — özellikle Bölüm 3 (C42 programı,
-   altı dalga) ve Bölüm 2c (28 Temmuz'un yeni şikayetleri C52-C56)
-3. HOLDING-OS-MASTER-PLAN/00-INDEX.md             — U40 satırı
-4. .planning/research/rival-intel/00-SYNTHESIS.md — birleştirici plan, altı dalga
-5. Hangi dalgayı çalışacaksan, o dalganın sahibi olan spec
+2. HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md   — B22 satırı ve karar tablosu
+   (Ferrari · V1 ölü · V2'nin birinci kanunu: CANLI OLACAK)
+3. .planning/research/rival-intel/00-LEDGER.md    — kuyruk ve 5 kanunu (özellikle 4)
+4. `scripts/rival-intel/next.sh` çıktısı          — sıradaki satır ve komutu
+5. 00-SYNTHESIS.md GEÇERSİZDİR — sadece neyin reddedildiğinin kaydı; ondan alıntı yapma
 
 SONRA BANA ŞUNU SÖYLE (tablo halinde, teknik olmayan dilde, kısa):
-- Aşama 1'de ne bulundu (tek paragraf)
-- Altı dalga ve her birinin ne getirdiği
-- Hangi dalga BENİM kararımı bekliyor, hangisi beklemiyor <!-- HISTORY -->
-- Senin tavsiye ettiğin sıra ve NEDEN
+- Kaç kaynak izlendi, kaçı kaldı
+- İzlenenlerden ne çıktı (tek paragraf, süs yok)
+- Neyin benim kararımı beklediği <!-- HISTORY -->
 
 BEN "başla" DEMEDEN İNŞAATA BAŞLAMA.
 

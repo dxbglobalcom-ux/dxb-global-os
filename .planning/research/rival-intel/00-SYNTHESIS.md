@@ -1,5 +1,16 @@
 # C42 STAGE 1 — SYNTHESIS: what sixteen rivals prove, and the one programme that answers them
 
+> ## ⛔ VOID — the CEO binned every verdict beneath this line, 2026-08-01 (LAW A)
+>
+> This synthesis was derived from the sixteen reports, and he rejected them on inspection: the
+> author *"UNDERESTIMATED MY OPPONENTS TOOOOOOO MUCH"*, while **every one of those systems is real
+> and live — he confirmed it himself.** His order: *"hükümler çöpe, ham malzeme kalsın."*
+>
+> **Nothing below may be cited, built on, or carried into a new report.** It stays on disk only as
+> the record of what was rejected. The synthesis is written again from zero after all 28 sources
+> have been WATCHED under law 4 of `00-LEDGER.md` — start to end, with sound, at 720p or better.
+> The six-wave programme that came out of it is suspended with it.
+
 > ## ⛔ SCOPE CORRECTION — CEO ruling 2026-07-28, binding on this report
 >
 > **What was measured here is the RECORDING. What was NOT measured is the SYSTEM.**
