@@ -94,7 +94,19 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    with sound, in order; a frame is never downscaled; a zoom is cut from the VIDEO, never from a
    frame; where the pixels genuinely run out the report writes `UNREADABLE`, never a guess. A
    Gemini key is live and proven as a second pair of eyes that can ingest video with its sound —
-   and it must be rotated, which is board row **B26**. Run `scripts/rival-intel/next.sh`.
+   and it must be replaced after the work, which is board row **B26**.
+
+   **Where the watching stands, 2026-08-02 end of session: 1 of 34 reported.**
+   **Row 01 — Luke Cutting, the source he gave three times — is DONE** and its report is written
+   under his method. What it established: the rival's "JARVIS" is an ordinary web page on
+   `localhost:3000` on a television; it carries `TARGET $30,000 MRR · REVENUE $16,678 · GAP
+   $13,338 · PROGRESS 55.6%`; and at five separate seconds **it opens the operator's own monitors
+   by itself** — metrics, a posting calendar, a Gmail inbox, and a GitHub pull request titled
+   `backend #2` with its merge button live, loaded in the same second the voice said *"ready for
+   your review"*. Two named agents, `Tom` (developer) and `Scout` (research), do the work.
+   **Row 02 is half watched and its notes are filed** at `00-NOTE-02-PARTIAL-WATCH.md` — do not
+   repeat that work, and do not write the report from those notes. Run
+   `scripts/rival-intel/next.sh`.
 2. **What is blocked on him, and cannot move without him:** his approval of a visual design package
    before any redesign is built · one hand-minted browser session so authenticated surfaces can be
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two
