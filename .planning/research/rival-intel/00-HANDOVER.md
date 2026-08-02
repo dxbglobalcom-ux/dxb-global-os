@@ -86,7 +86,7 @@ hiçbir panel gösteremez.
 | The queue and its five laws | `.planning/research/rival-intel/00-LEDGER.md` |
 | The resume command | `scripts/rival-intel/next.sh` |
 | Fetch a source (claim → download → sha256 → transcribe → frames) | `scripts/rival-intel/fetch.sh <nn>` |
-| Sweep every frame into contact sheets | `scripts/rival-intel/sheets.sh <nn>` |
+| ~~Sweep every frame into contact sheets~~ | **DELETED 2026-08-02 under LAW A.** `sheets.sh` glued frames into a grid at `-geometry 300x533`, i.e. a 1080-wide screen recording shrunk to 300px before anyone looked at it. Terminal text, tool names and menu labels are unreadable at that size, and the sixteen reports the CEO binned were written off exactly those sheets. His live order of 2026-08-01 deletes the method, so the script goes with it — not a footnote beside it |
 | The gate that makes a stale ✓ impossible | `tests/c42/rival-intel-ledger.test.ts` |
 | The board (waves, complaints, open work) | `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md` §2c, §3 |
 | The governed adaptation record | `HOLDING-OS-MASTER-PLAN/00-INDEX.md` → **U40** |
@@ -105,9 +105,10 @@ The programme is built to absorb one more source without a redesign:
 2. Set `**NEXT: <nn>**`.
 3. `scripts/rival-intel/fetch.sh <nn>` — it claims the row *before* doing any work, so a crash
    costs one source and never the finished ones.
-4. `scripts/rival-intel/sheets.sh <nn>` — read **every** frame by eye. The sheet script prints the
-   count it swept; compare it against the frame count, because a silent omission already happened
-   once here (source 02 lost 44 frames to a prefix bug).
+4. **WATCH the video start to end with its sound**, in order, the transcript beside it — the CEO's
+   order of 2026-08-01. Frames are opened ONE AT A TIME, at native resolution, only to zoom into a
+   detail already seen while watching. Never a grid, never a downscaled copy, never a substitute
+   for the watching.
 5. Write the six-section report. **Section 2 must be a record, never a summary** — the gate
    enforces ≥ 8 timestamped rows for a reel or video.
 6. Mark the row `reported`, run `npx vitest run tests/c42/rival-intel-ledger.test.ts`, commit.
@@ -119,11 +120,14 @@ The programme is built to absorb one more source without a redesign:
 
 1. **Claim the row before you work on it.** A crash then costs one source, not fifteen. This is why
    `fetch.sh` writes `claimed` before it downloads anything.
-2. **Count what you swept.** The contact-sheet bug that lost 44 frames of source 02 was invisible
-   until a sheet came out three-quarters black. `sheets.sh` now prints its count — read it.
-3. **A camera pointed at a screen has a resolution limit.** Re-extract the region of interest from
-   the source file at native resolution rather than reading the downscaled working frames, and
-   write **UNREADABLE** where the pixels run out. Never guess a number off a blurred panel.
+2. **An unreadable frame is worse than no frame — it produces a confident wrong sentence.** The
+   sixteen binned reports were written off frames downscaled to 720px and then tiled at 300px.
+   Nobody could read a tool name off that, so the reading became a guess, and the guess read as
+   contempt: *"UNDERESTIMATED MY OPPONENTS TOOOOOOO MUCH"*. Measured and fixed at source on
+   2026-08-02 — `fetch.sh` no longer scales frames at all (`-q:v 2`, native 1080×1920) and
+   `sheets.sh` is deleted.
+3. **A camera pointed at a screen has a resolution limit.** Read the frame at native resolution,
+   and write **UNREADABLE** where the pixels run out. Never guess a number off a blurred panel.
 4. **The local Turkish STT is unreliable.** `Systran/faster-whisper-small` produced "Moriafa",
    "SunTrench" and "akın Yemez" on source 02. Where a video carries burned-in subtitles, **the
    frames are authoritative and the transcript is a lead.**

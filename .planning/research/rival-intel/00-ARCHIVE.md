@@ -91,10 +91,20 @@ against the recorded sha256.
 
 Two kinds of derived image exist beyond the plain 1-fps frames, and both are inside `frames/<nn>/`:
 
-- **`frames/<nn>/sheets/`** — contact sheets, 12 frames per sheet, built by
-  `scripts/rival-intel/sheets.sh <nn>`. This is how every frame is swept by eye without opening
-  150 files. The script prints the count it swept; compare it against the frame count, because a
-  silent omission already happened once here (source 02 lost 44 frames to a prefix bug).
+- **`frames/<nn>/sheets/`, `zoom/`, `tvhi/` — DELETED ON HIS ORDER, 2026-08-02: *"625 okunamazlar
+  silinsin"*.** They were contact sheets tiled at `-geometry 300x533` plus crops taken from the
+  already-downscaled working frames — **625 MB across 16 folders, and not one tool name legible in
+  any of them**: a 1080-wide screen recording reduced first to 720px by the extractor and then to
+  300px by the tiler, or cropped after that first loss so the pixels were gone twice over. These
+  are the images off which the sixteen binned reports were written, which is the mechanical cause
+  of his verdict that they *"UNDERESTIMATED MY OPPONENTS TOOOOOOO MUCH"*: an eye that cannot read
+  the screen guesses. The builder `scripts/rival-intel/sheets.sh` is deleted with them under LAW A.
+  The downscaled working frames went in the same pass and were re-extracted from the video at
+  native resolution — **721 MB → 48 MB before regeneration**. Nothing was lost that the video
+  cannot reproduce; the videos themselves were measured first and all pass his floor.
+- **How a detail is zoomed now.** From the VIDEO, never from a working frame:
+  `ffmpeg -ss <t> -i media/<nn>-*.mp4 -vframes 1 -vf "crop=W:H:X:Y" -q:v 2 out.png`. Cropping a
+  working frame repeats the old mistake — the pixels have already been thrown away once.
 - **`frames/01/tvhi/` and `frames/<nn>/zoom/`** — native-resolution crops of a region of interest,
   re-extracted from the source file rather than from the downscaled working frames. Source 01 has
   72 of these (the wall screen, second by second) plus panel and monitor zooms; source 05 has the
@@ -104,11 +114,15 @@ Two kinds of derived image exist beyond the plain 1-fps frames, and both are ins
 ## 5. What the next Opus 5 runs
 
 ```bash
-scripts/rival-intel/next.sh            # where am I? (now prints: NEXT: 17 — 28 rows fetched, 0 reported)
-scripts/rival-intel/sheets.sh 05       # re-sweep any source's frames by eye
-scripts/rival-intel/fetch.sh 05        # ONLY if the media is missing — idempotent, skips what exists
-npx vitest run tests/c42/rival-intel-ledger.test.ts   # 8 cases: the reading cannot rot
+scripts/rival-intel/next.sh            # where am I? (prints the row and the command)
+scripts/rival-intel/fetch.sh 29        # ONLY if the media is missing — idempotent, skips what exists
+npx vitest run tests/c42/rival-intel-ledger.test.ts   # 9 cases: the reading cannot rot
 ```
+
+The ninth case was added 2026-08-02 and it guards a different failure from the others: **every
+source URL in the CEO's directive must own a ledger row, read out of BOTH carriers** — the
+Markdown and the DOCX. He edits the DOCX; sessions read only the Markdown; six sources went
+unseen for eight hours with nothing on disk saying so.
 
 **It should not need any of them.** The reading is in the reports; the plan is in
 `00-SYNTHESIS.md`; the prompt to start from is in `00-HANDOVER.md`.

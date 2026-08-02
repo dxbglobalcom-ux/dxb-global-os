@@ -9,9 +9,11 @@
 > His order: *"hükümler çöpe, ham malzeme kalsın."* So the sixteen rows were reset from `reported`
 > to `fetched` on 2026-08-02: the media, the sha256 fingerprints and the transcripts stay and are
 > re-used, and **not one sentence of the old reports may be carried into a new one.** The report
-> files remain on disk only as the record of what was rejected. Twelve further sources he supplied
-> (rows 17-28) join the same queue. Nothing here is `reported` again until it has been watched
-> under law 4 below.
+> files remain on disk only as the record of what was rejected. **Eighteen further sources he
+> supplied join the same queue** — twelve read out of the Markdown (rows 17-28), and six more that
+> existed only in the DOCX he edited on 2026-08-01 and that no session had ever seen (rows 29-34,
+> opened 2026-08-02 when he asked whether that file had been read; it had not). Nothing here is
+> `reported` again until it has been watched under law 4 below.
 
 > This file is the work queue, not the report. One row per source. A fresh session runs
 > `scripts/rival-intel/next.sh`, reads the row this file points at, and continues there.
@@ -57,7 +59,21 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
    purpose only — zooming into a detail already seen while watching — and may never stand in
    for the watching. Section 2 of every report is still a timestamped record with no
    summarising; it is now the record of what was WATCHED.
-5. **Ledger parity (U38).** When a row closes here, its row on `00-BOARD-OPEN-WORK.md` and in
+5. **A FRAME IS NEVER DOWNSCALED, AND A ZOOM IS CUT FROM THE VIDEO.** Added 2026-08-02 on his
+   order *"625 okunamazlar silinsin"*, after the measurement that explains his verdict on the
+   sixteen reports. `fetch.sh` used to carry `scale=720:-1` and `sheets.sh` then tiled twelve of
+   those at `-geometry 300x533`; these sources are SCREEN RECORDINGS, and at that size a terminal
+   line or a tool name is not legible at all. **625 MB of such images existed and the binned
+   reports were written off them** — an eye that cannot read the screen guesses, and the guess
+   reads as contempt. Both are gone: the scaling, the tiler script, and the images. Frames are now
+   native (`-q:v 2`, 1080×1920), and a detail is enlarged by cutting it out of the VIDEO —
+   `ffmpeg -ss <t> -i <video> -vframes 1 -vf "crop=W:H:X:Y" -q:v 1` — never by cropping a frame,
+   which throws the pixels away twice. Proven the same hour on source 01 at 00:20: the rival's
+   objective panel, an unreadable blue smear under the old method, reads **`PRIMARY OBJECTIVE ·
+   $30,000 · $16,678 · $13,338`** under the new one. Where the pixels genuinely run out — a phone
+   camera pointed at a television has a hard limit — the report writes **UNREADABLE**, never a
+   guess.
+6. **Ledger parity (U38).** When a row closes here, its row on `00-BOARD-OPEN-WORK.md` and in
    `INTEGRATION-TRACKER.md` is corrected in the SAME session.
 
 ## Status vocabulary
@@ -102,6 +118,20 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 26 | https://www.instagram.com/reel/Day97uOu0SA/?igsh=MTNoMHZjZ2RvazR5cA== | reel | fetched | 2026-08-01T23:50:50Z | `26-day97uou0sa.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
 | 27 | https://www.instagram.com/reel/Dajd_9PuW1r/?igsh=NGFpejduNGNjdWhq | reel | fetched | 2026-08-01T23:52:27Z | `27-dajd-9puw1r.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
 | 28 | https://www.instagram.com/reel/DaWrNiQO7QH/?igsh=YzRkazFkZWExbGkx | reel | fetched | 2026-08-01T23:54:13Z | `28-dawrniqo7qh.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
+| 29 | https://www.instagram.com/reel/DZ1BSCyRtD0/?igsh=NG1oaGN5MmIyYmdx | reel | fetched | 2026-08-02T18:53:34Z | `29-dz1bscyrtd0.md` | Added by the CEO to the DOCX on 2026-08-01 17:45, under the same supplementary-list instruction |
+| 30 | https://www.instagram.com/reel/DbcPo0dMQ3d/?igsh=MWIwOXZkYzg4Ymt5Yg== | reel | fetched | 2026-08-02T18:56:57Z | `30-dbcpo0dmq3d.md` | Added by the CEO to the DOCX on 2026-08-01 17:45, under the same supplementary-list instruction |
+| 31 | https://www.instagram.com/reel/DaYUSD_ALo0/?igsh=MXcyZ2hpaTBjeTQ4Ng== | reel | fetched | 2026-08-02T19:02:05Z | `31-dayusd-alo0.md` | Added by the CEO to the DOCX on 2026-08-01 17:45, under the same supplementary-list instruction |
+| 32 | https://www.instagram.com/reel/DYw6w3RxYJ0/?igsh=eXloNGx0c2lnMjR2 | reel | fetched | 2026-08-02T19:04:38Z | `32-dyw6w3rxyj0.md` | Added by the CEO to the DOCX on 2026-08-01 17:45, under the same supplementary-list instruction |
+| 33 | https://www.instagram.com/reel/DbeNY9aRtri/?igsh=MTBiaHZyOXNuc2VlZQ== | reel | fetched | 2026-08-02T19:08:58Z | `33-dbeny9artri.md` | Added by the CEO to the DOCX on 2026-08-01 17:45, under the same supplementary-list instruction |
+| 34 | https://github.com/topoteretes/cognee | repo | fetched | 2026-08-02T19:28:47Z | `34-cognee-repo.md` | Added by the CEO to the DOCX on 2026-08-01 17:45: *"Önemli Memory Repo: … study it carefully and craft it if you find it correctly for real usefull."* Bounded by his own approval of the same day (`v2-memory-brain-2026-08-01`): read for its METHOD under Apache-2.0, **not installed** — no second brain, no second database |
+
+**Rows 29-34 exist because the DOCX was never read.** Measured 2026-08-02 20:4x: the CEO edited
+`DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.docx` at 2026-08-01 17:45 and the repository's copy was still
+the one of 2026-07-29 — different sha256, while the two `.md` copies were byte-identical. The
+fetch run of 2026-08-02 01:33-01:54 therefore took twelve supplementary links from the `.md` when
+his own list already held seventeen, and it never saw the cognee line at all. The package's
+`README.txt` is the root cause and it is now wrong: it calls the DOCX *"the formatted human-review
+copy"*, so every session treats it as decoration — **but the CEO writes his amendments INTO it.**
 
 **Accessibility measured 2026-07-28 12:2x:** all 16 reachable — 13 reels probed one by one with
 `yt-dlp --simulate`, the Drive link resolved to a PDF over `drive.usercontent.google.com` (HTTP

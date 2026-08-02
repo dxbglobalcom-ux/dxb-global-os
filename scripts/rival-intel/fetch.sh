@@ -101,11 +101,20 @@ case "$kind" in
     # VIDEO, watched start to end with its sound, "İNSAN GÖZÜYLE İZLENİR GİBİ
     # … kötü karelere bakıp değil". Frames stay only so a detail already seen
     # while watching can be zoomed into and quoted exactly.
+    #
+    # NEVER DOWNSCALE. Measured 2026-08-02: this line used to carry
+    # `scale=720:-1`, which halved a 1080x1920 reel before anyone looked at it.
+    # These sources are SCREEN RECORDINGS — terminal output, tool names, menu
+    # labels — and at 720px wide that text is unreadable. The sixteen reports the
+    # CEO binned were written off exactly such frames, which is the mechanical
+    # cause of his verdict that they "UNDERESTIMATED MY OPPONENTS TOOOOOOO MUCH":
+    # an eye that cannot read the screen guesses, and guessing reads as contempt.
+    # -q:v 2 keeps the JPEG near-lossless so small type survives compression.
     fdir="$FRAMES/$NN"
     if [ ! -d "$fdir" ] || [ -z "$(ls -A "$fdir" 2>/dev/null)" ]; then
       mkdir -p "$fdir"
-      ffmpeg -v error -y -i "$vid" -vf "fps=$FPS,scale=720:-1" "$fdir/t%03d.jpg"
-      ffmpeg -v error -y -i "$vid" -vf "select='gt(scene,0.25)',scale=720:-1" \
+      ffmpeg -v error -y -i "$vid" -vf "fps=$FPS" -q:v 2 "$fdir/t%03d.jpg"
+      ffmpeg -v error -y -i "$vid" -vf "select='gt(scene,0.25)'" -q:v 2 \
         -vsync vfr "$fdir/cut%03d.jpg" 2>/dev/null || true
     fi
     echo "frames: $(ls "$fdir" | wc -l) in $fdir"

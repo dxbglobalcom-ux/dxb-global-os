@@ -11,6 +11,7 @@
 //   - section 2 is a real frame-by-frame record, not a summary.
 //
 // Read-only: this suite touches no database and no network.
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
@@ -166,6 +167,58 @@ describe("C42 rival-intel ledger", () => {
       expect(row, `NEXT points at row ${next}, which does not exist`).toBeDefined();
       expect(row!.status, `NEXT points at row ${next}, already reported`).not.toBe("reported");
     }
+  });
+
+  // THE SECOND GATE, and it exists because of a measured miss, not a worry.
+  //
+  // The CEO's directive package ships two carriers of the same text: a Markdown
+  // file and a DOCX. Its own README calls the DOCX "the formatted human-review
+  // copy", so every session read the Markdown and skipped it — but the CEO
+  // WRITES HIS AMENDMENTS INTO THE DOCX. Measured 2026-08-02: he edited it at
+  // 2026-08-01 17:45, adding five reels and the cognee repository; the copy in
+  // the repository was still the one of 2026-07-29, and the fetch run of
+  // 2026-08-02 01:33-01:54 — eight hours after his edit — took twelve
+  // supplementary links when his list already held seventeen. Six sources were
+  // invisible, and nothing on disk said so.
+  //
+  // A rule in a document could not have caught that. This can: every source URL
+  // written in EITHER carrier must own a ledger row, or the suite fails.
+  it("every source URL in the CEO's directive owns a ledger row — both carriers", () => {
+    const pkg = join(process.cwd(), "docs/ceo-directives/2026-07-reanalysis");
+    const md = join(pkg, "00_READ_FIRST_MASTER_DIRECTIVE.md");
+    const docx = join(pkg, "DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.docx");
+    if (!existsSync(md) && !existsSync(docx)) return; // package absent — nothing to check
+
+    // A source is a reel/post slug or a repository path. The trailing share
+    // parameters he pastes ("?igsh=…") are NOT part of the identity: the same
+    // reel arrives with a different tail every time he copies it, so matching on
+    // the whole URL would report phantom misses forever.
+    const SOURCE = /(?:instagram\.com\/(?:reel|p)\/([A-Za-z0-9_-]+))|(?:github\.com\/([A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+))/g;
+    const identities = (text: string) => {
+      const out = new Set<string>();
+      for (const m of text.matchAll(SOURCE)) out.add((m[1] ?? m[2]).replace(/\.git$/, "").toLowerCase());
+      return out;
+    };
+
+    const wanted = new Set<string>();
+    if (existsSync(md)) for (const id of identities(readFileSync(md, "utf8"))) wanted.add(id);
+    if (existsSync(docx)) {
+      // A .docx is a zip; the body text lives in word/document.xml. Reading it
+      // needs no dependency and no network — `unzip -p` writes it to stdout.
+      const xml = execFileSync("unzip", ["-p", docx, "word/document.xml"], {
+        encoding: "utf8",
+        maxBuffer: 64 * 1024 * 1024,
+      });
+      for (const id of identities(xml)) wanted.add(id);
+    }
+    expect(wanted.size, "no source URL was readable out of the directive package").toBeGreaterThan(0);
+
+    const ledger = readFileSync(LEDGER, "utf8").toLowerCase();
+    const missing = [...wanted].filter((id) => !ledger.includes(id));
+    expect(
+      missing,
+      `the CEO's directive names ${missing.length} source(s) with no ledger row: ${missing.join(", ")}`,
+    ).toEqual([]);
   });
 
   it("no orphan reports — a report on disk belongs to a ledger row", () => {

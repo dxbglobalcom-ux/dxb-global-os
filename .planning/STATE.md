@@ -66,20 +66,41 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 
 1. **B22 — the rival re-analysis IS the work in hand, and it starts at row 01.**
    <!-- OPEN: B22 --> His word was given on 2026-08-02 at 01:30: *"yarın ilk iş videolara başlamak
-   olacak"*. It no longer waits on him. **The night before it, the material was prepared and
-   measured** — all 28 sources are on disk, every video at 720p or better with its audio kept
-   (23 of 25 at 1080×1920), each with a timestamped transcript; the twelve supplementary sources
-   he had listed in section 11 of his directive had never been fetched at all and now are. **The
-   sixteen old verdicts are binned on his order** (*"hükümler çöpe, ham malzeme kalsın"*): those
-   rows went back from `reported` to `fetched`, `00-SYNTHESIS.md` is marked VOID, and not one of
-   its sentences may be re-used. **The method is his and it is now enforced in the tools**: each
-   source is WATCHED start to end with sound, in order, and frames exist only to zoom into a
-   detail already seen. Run `scripts/rival-intel/next.sh` — it prints the row and the command.
+   olacak"*. It no longer waits on him. **The material is prepared and measured: 34 sources, all
+   `fetched`** — 30 videos every one at 1080×1920 with its audio kept and a timestamped transcript,
+   one PDF, three repositories. **The sixteen old verdicts are binned on his order**
+   (*"hükümler çöpe, ham malzeme kalsın"*): those rows went back from `reported` to `fetched`,
+   `00-SYNTHESIS.md` is marked VOID, and not one of its sentences may be re-used.
+
+   **Six of those 34 existed only in a file nobody read, and HE found it, not the machine
+   (2026-08-02).** He asked whether the DOCX had been read. It had not: the directive package
+   carries the same text twice and its own `README.txt` called the DOCX *"the formatted
+   human-review copy"* — while he writes his amendments into it, because that is the file he
+   opens. He edited it 2026-08-01 at 17:45; the repository's copy was still 2026-07-29; the fetch
+   run eight hours later took twelve supplementary links when his list already held seventeen.
+   Five reels and the `cognee` repository were invisible. All six are now on disk (rows 29-34),
+   the README says the opposite, and **a ninth machine gate makes the miss impossible to repeat**:
+   every source URL in EITHER carrier must own a ledger row.
+
+   **And the frames were why the binned verdicts read as contempt.** `fetch.sh` carried
+   `scale=720:-1` and `sheets.sh` then tiled twelve of those at 300px — on SCREEN RECORDINGS,
+   where a tool name at that size is simply not legible. **625 MB of such images existed and the
+   sixteen reports were written off them.** Deleted on his order (*"625 okunamazlar silinsin"*),
+   together with the tiler script and the downscaling; the frames folder went **721 MB → 48 MB**
+   and was re-extracted from the video at native resolution. Proven on source 01 at 00:20: an
+   unreadable blue smear now reads `PRIMARY OBJECTIVE · $30,000 · $16,678 · $13,338`.
+
+   **The method is his and it is now enforced in the tools**: each source is WATCHED start to end
+   with sound, in order; a frame is never downscaled; a zoom is cut from the VIDEO, never from a
+   frame; where the pixels genuinely run out the report writes `UNREADABLE`, never a guess. A
+   Gemini key is live and proven as a second pair of eyes that can ingest video with its sound —
+   and it must be rotated, which is board row **B26**. Run `scripts/rival-intel/next.sh`.
 2. **What is blocked on him, and cannot move without him:** his approval of a visual design package
    before any redesign is built · one hand-minted browser session so authenticated surfaces can be
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two
    paid model exams (B06, B09) · the machine's administrator password for the two root-level fixes
-   behind the editor crashes (C65) · the acceptance session itself (B13).
+   behind the editor crashes (C65) · the acceptance session itself (B13) · replacing the Gemini key
+   after the work, his own ruling *"ben iş bitince değersiz kılıcam"* (B26).
 3. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
    this (authority order, `.claude/CLAUDE.md` §1) — and it DELETES whatever contradicts it (LAW A).
 
