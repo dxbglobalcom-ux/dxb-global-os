@@ -305,29 +305,38 @@ CEO — not the machine — is the one who caught that the editor kept dying. Sa
 > Nothing is deleted from `.planning/research/rival-intel/`: his directive orders a *selective
 > rewrite*, not a bonfire.
 
-The stage-1 reading lives at
-`.planning/research/rival-intel/` (16 reports + `00-LEDGER.md` + `00-SYNTHESIS.md`), it is
-machine-gated (`tests/c42/rival-intel-ledger.test.ts`, 7 cases — a `reported` row with no report,
-or a report missing its six sections, or a reel report whose section 2 is a summary rather than
-a timestamped record, all fail the suite), and it is crash-resumable
-(`scripts/rival-intel/next.sh`).
+The stage-1 reading lives at `.planning/research/rival-intel/`. **Measured 2026-08-04: two reports
+on disk (01, 02) out of 34 sources, and no `00-SYNTHESIS.md` — it was built on the binned verdicts
+and was deleted with them.** The machinery is sound and is what makes the count trustworthy: the
+ledger `00-LEDGER.md`, the resume script `scripts/rival-intel/next.sh`, and the gate
+`tests/c42/rival-intel-ledger.test.ts` (**9 cases**, run 2026-08-04 → 9 passed — a `reported` row
+with no report, a report missing one of its six sections, a reel report whose section 2 is a summary
+instead of a timestamped record, a sha256 that is not the hash of the file it names, and a source
+URL in either carrier of the CEO's directive with no ledger row, all fail the suite).
 
 ### 3.1 What stage 1 measured
 
 | Fact | Measurement |
 |---|---|
-| Sources read | **16/16 reported** — 13 reels, 1 PDF, 2 repositories; `00-LEDGER.md` `NEXT: done` |
-| Distinct systems behind them | **6–7.** Sources 01/03/16 are one story (demo → teardown → the open-source stack); rows 11–14 are one account; rows 05 and 11–14 are the same clipping operation from opposite ends |
+| Sources read | **2 of 34 reported** — measured 2026-08-04, `scripts/rival-intel/next.sh` → `progress: 2 / 34`, `NEXT: 03`. The figure "16/16, `NEXT: done`" that stood here was true of a reading he rejected and is deleted under LAW A |
+| Distinct systems behind them | **Withdrawn.** The grouping (01/03/16 one story, 11–14 one account) was drawn from the deleted reports. It may be true; nothing measured survives to support it, so it is not stated |
 | The diagnosis | **CORRECTED 2026-07-28 by the CEO, and the correction is the finding.** The first draft read "DXB is bigger, safer and better governed than every one of them" — counting personas and tables and calling it a verdict. He rejected it: *"BEN O SİSTEMLERİ VİDEODAN DEĞİL HEPSİNİ TANIYORUM, ARKADAŞLARIM, VE MİLYONLARCA DOLAR KAZANIYOR VE HEPSİ GERÇEK, HEPSİ CANLI."* **Every one of the sixteen RUNS and EARNS; DXB does neither.** On the only measure that decides — does it work and does it make money — DXB loses to all sixteen. What DXB holds is more unfinished structure and stricter rules, and **rules are not results**: `library_items` 434 rows against `library_usage_log` **0**, `realized_revenue_eur` **0**. Consequences in order: it does not earn · it loses 44% of his speech · it shows him nothing · it is 20× slow |
-| Highest-value single screen found | Source 08's **Conference Room** — the CEO's chat and a live agent feed side by side in one view |
-| Highest-value single idea found | Source 10's **constellation** — the org chart IS the live activity display; the speaking agent's node lights up |
-| What the admired "judgement" actually is | Source 03 names it: **a connected data source with the right breakdown** (Meta Ads MCP returning ROAS *per creative*). Not reasoning |
-| Where DXB is unambiguously ahead | The objectives ledger (`capital_limit_eur`, `risk_limit_eur`, `max_loss_eur`, `net_unverified` — nobody else has anything like it) · the enforced approvals gate · 199 personas against their 5 · Islamic boundaries · two languages held pure |
+| Highest-value screen · highest-value idea · what the admired "judgement" is | **All three rows deleted 2026-08-04 under LAW A.** Each named a source (08, 10, 03) and quoted a finding from a report the CEO rejected and then ordered deleted. Sources 03, 08 and 10 have not been re-watched, so **there is no surviving reading of them and none may be reconstructed from memory or from git history.** They return, or do not, when their rows are watched |
+| What the two re-watched sources gave | **01 (2026-08-02):** the wall is an ordinary web page on `localhost:3000` carrying a real business objective — the distance to ours is work, not magic; **the gap is that theirs moves and ours does not.** **02 (2026-08-04):** the agent **names the skill it loads, to the user, in his own language** (`Control In App Browser becerisi okunuyor`), and the public pool it draws on is **1000+ official and community Claude skills** — the ecosystem we already stand in and install nothing from (we run 8 doors of our own, measured) |
+| Where DXB is ahead on its own measurement | The objectives ledger (`capital_limit_eur`, `risk_limit_eur`, `max_loss_eur`, `net_unverified`) · the enforced approvals gate · 199 written personas · Islamic boundaries · two languages held pure. **The comparative half of this row — "against their 5" — is deleted: it counted a rival's staff out of the rejected reading** |
 
 ### 3.2 The six waves — every project already has an owning spec
 
-Full text, per-project evidence contracts and the per-source derivation:
-`.planning/research/rival-intel/00-SYNTHESIS.md`.
+**The document this line used to point at does not exist.** `00-SYNTHESIS.md` held the per-source
+derivation of these six waves and was deleted on 2026-08-02 with the reports it was built from.
+
+**So read the table below for what it is: a wave list whose evidence has been withdrawn.** The
+waves are neither cancelled nor confirmed (banner above). Several cells still name a rival's screen
+or number — *the Conference Room, the constellation, ROAS per creative, the betting brand in a
+campaign grid* — and **every one of those came from the rejected reading.** They are left standing
+only as a record of what was once proposed; **not one of them may be built, quoted to the CEO, or
+treated as a finding until its source has been watched whole and reported.** When B22 finishes, this
+table is re-derived from what survives and this warning goes with it.
 
 | # | Wave | What it delivers | Waits on | Owning specs |
 |---|---|---|---|---|
@@ -344,9 +353,12 @@ The CEO's own sentence — *"HER PANELIN CANLI OLDUĞU YAŞAYAN BİR HOLDİNG"* 
 binding on every surface in W-C42-2 and W-C42-3:
 
 1. **Every panel reads from a query or shows an honest empty state.** No panel may display a
-   number it cannot prove. Source 01's goal panel sat frozen at `$16,678` for its whole video
-   while its owner spoke nine different figures; that is the failure mode we refuse. RULE #0-A,
-   expressed as design.
+   number it cannot prove. RULE #0-A, expressed as design. **The example that stood here — "source
+   01's goal panel sat frozen while its owner spoke nine different figures" — is deleted 2026-08-04
+   under LAW A.** It came from the rejected reading, and the re-watch of 2026-08-02 reads the same
+   panel the opposite way: a stated target, a real progress figure, subscriptions and trials —
+   *"the number on the wall is the business"*. **The failure mode we refuse is our own and needs no
+   rival to illustrate it:** 61 pages, 0 live.
 2. **Zero is a real answer** — a quiet board says "nothing is running" and never animates to look
    busy.
 3. **The refusals are visible** — every pipeline card names the rule it will not break.
@@ -357,15 +369,23 @@ binding on every surface in W-C42-2 and W-C42-3:
 
 ### 3.4 What stage 1 explicitly refused, with reasons
 
-Coolify (already banned by our stack rules; its one-click Redis reintroduces a removed
-dependency) · Trigger.dev (a second job runtime; **its idea, resume-from-step, is adopted — its
-infrastructure is not**) · adopting Paperclip or OpenJarvis wholesale (would replace DXB with
-someone else's control plane, or add a second language and scheduler) · the trading desk of
-source 10 (market speculation touches constitutional Islamic boundaries — **we take the
-constellation, not the desk**) · Kokoro TTS (Speaches already gives us self-hosted €0 speech;
-recorded as the first fallback to measure) · the $97 six-agent kit · "duplicate a repo and let
-Claude Code edit it" (K1) · every comment-for-DM funnel (in two of them the withheld link is
-`open-jarvis/OpenJarvis`, **already cloned on this machine**).
+**Split 2026-08-04, because these two kinds of refusal do not have the same standing.**
+
+**A — refusals that rest on OUR OWN rules. These stand, whatever the re-watch finds.** Coolify
+(already banned by our stack rules; its one-click Redis reintroduces a removed dependency) ·
+Trigger.dev (a second job runtime; **its idea, resume-from-step, is adopted — its infrastructure is
+not**) · adopting anyone's control plane wholesale (it would replace DXB, or add a second language
+and scheduler) · Kokoro TTS as the Turkish voice (Speaches already gives us self-hosted €0 speech;
+recorded as the first fallback to measure) · "duplicate a repo and let Claude Code edit it" (K1) ·
+**anything touching market speculation, which is a constitutional Islamic boundary and needs no
+rival to justify it.**
+
+**B — refusals that quoted a rival's content, and therefore rest on the rejected reading.** The
+$97 six-agent kit · the comment-for-DM funnels · the characterisation of any specific source as a
+trading desk or as a low-value product. **These are suspended, not upheld and not overturned.** The
+sources they concern have not been re-watched; a refusal written from a reading the CEO threw out
+carries no more weight than the praise he threw out with it. Each is decided again, in writing, when
+its source is watched whole — and a rejection with its reason is a deliverable exactly as before.
 
 ---
 

@@ -93,36 +93,51 @@ Single source of truth for every master-plan §8B item's integration lifecycle. 
 
 ## Rival Intelligence (C42, stage 1 — 2026-07-28)
 
-Sixteen sources supplied by the CEO under standing order **C42**, read frame by frame and
-reported at `.planning/research/rival-intel/`. These rows are **sources studied**, not tools
-installed — a tool named inside a source gets its own row in the main table when it is chosen.
-The synthesis and the six build waves live at `.planning/research/rival-intel/00-SYNTHESIS.md`
-and [[00-BOARD-OPEN-WORK]] Section 3.
+**CORRECTED 2026-08-04, and the correction is the point.** This section used to carry a verdict for
+all sixteen sources, written from the frame-photography the CEO binned on 2026-08-01 and ordered
+deleted on 2026-08-02 (*"reddettiğim metni tamamen sil"*). The reports went; **these cells did not,
+and they went on stating conclusions out of deleted text while pointing at files that no longer
+exist** — measured 2026-08-04: of sixteen study cards named here, **fourteen were missing from
+disk.** Under LAW A a live order deletes what contradicts it, so the fourteen verdicts are gone
+from here too. Nothing replaced them but the truth: not yet re-watched.
+
+**The queue is not here.** The CEO's list now holds **34 sources**, and it lives in exactly one
+place — `.planning/research/rival-intel/00-LEDGER.md`, with each source's address, status and his
+own words about it. This table carries **only sources that have been watched whole, with their
+sound, and reported**: **2 of 34** today. A source earns its row here when its report exists.
+
+These rows are **sources studied**, not tools installed — a tool named inside a source gets its own
+row in the main table when it is chosen. **There is no synthesis yet**: the old
+`00-SYNTHESIS.md` was built on the binned verdicts and was deleted with them. A new one is written
+only when every ledger row reads `reported`. The build programme itself is [[00-BOARD-OPEN-WORK]]
+Section 3, row **B22**.
 
 | # | Source | Kind | Status | Study card | Verdict, and what it gave us |
 |---|--------|------|--------|------------|------------------------------|
-| 01 | Luke Cutting (`lukebuildsai`) — "POV: Jarvis is building you a $30k MRR app" | reel | STUDY | rival-intel/01-lukebuildsai-jarvis.md | **daha iyisi.** The CEO's reference reel. Its HUD is decoration — the nine business figures it speaks appear NOWHERE on its screen; the goal panel sits frozen for the whole video. Gave: the target shape of a spoken briefing, and the proof that their panels are not alive |
+| 01 | Luke Cutting (`lukebuildsai`) — the JARVIS wall | reel | STUDY | rival-intel/01-lukebuildsai-jarvis.md | **Re-watched with sound 2026-08-02; this cell replaces the binned one, which called the wall decoration.** **daha iyisi.** The CEO's reference reel, sent three times. Read at native resolution the screen carries a session identifier, a running diagnostics log, **55.6 %** against a stated target, **1,428** subscriptions, **86** trials and pull request `#2` with its merge button live. Mechanically it is an ordinary web page on `localhost:3000` — so the distance to ours is work, not magic. **The gap is not features: theirs moves and ours does not** |
 | 02 | Akın Yılmaz (`akinyilmaz.ai`) | reel | STUDY | rival-intel/02-akinyilmaz-skills-system.md | **Re-watched end to end with sound 2026-08-04; this cell replaces the binned one.** **geride.** At 00:46 his agent prints `Control In App Browser becerisi okunuyor` — it names the skill it loads, to the user, in his language. His atlas (`claude_skills_rehberi`, 7 worksheets, scored /10 with Kritik/Yüksek/Orta priority) points at **1000+ official + community Claude skills**; we run **8** doors of our own and install none of that pool (measured 2026-08-04). Level on one line only: his self-announcing `GOD MODE Akşam Review · Ready` is our 07:00 briefing |
-| 03 | Chloe Shy (`chloeshy.ai`) | reel | STUDY | rival-intel/03-chloeshy.md | **daha iyisi.** The teardown of source 01, naming every tool with a logo card: Claude for the HUD, **Kokoro TTS**, **Claude-for-Chrome / Playwright MCP**, **RevenueCat MCP**, **Meta Ads MCP**, ending at OpenJarvis. Dissolves the mystery: the "judgement" is a connector with the right breakdown |
-| 04 | The Alina Lab (`thealinalab`) | reel | EXCLUDED | rival-intel/04-thealinalab.md | **reddedildi.** 32 seconds, Iron Man footage, no repo named, comment-for-DM. Kept one small idea: a world block in the briefing that omits itself when empty |
-| 05 | CNN — the clipping industry | reel | STUDY | rival-intel/05-cnn-clipping-business.md | **daha iyisi, on the CEO's word.** Marketplace **Whop "Discover Content Rewards"**, rate card **$1–1.50 / 1,000 views**, one operator claiming >$30M. **Precondition: a CEO-owned halal allowlist — the live grid contains a betting brand** |
-| 06 | Alp Ünlü (`alppunlu`) | reel | STUDY | rival-intel/06-alppunlu.md | **geride / daha iyisi.** Turkish Jarvis that SEES ("what is in my left hand?" → "a black smartphone"), shows LIVE/PAUSE/CAM ON/Listening/Speaking at all times, autostarts, runs on his phone. Our voice line is behind it on state, vision and speed |
-| 07 | Misael · Founder Systems (`misael.systems`) | reel | EXCLUDED | rival-intel/07-misael-founder-systems.md | **daha iyisi.** A six-agent company sold for $97→$497; we are 30× past the product. Kept: their answer to "what does running this look like on a Tuesday" — fifteen minutes, four levers, a brief that ends in review-approve-send |
-| 08 | `paperclipai/paperclip` | repo | STUDY | rival-intel/08-paperclip-repo.md | **daha iyisi, after admitting the gap.** DXB Global OS built by someone else, MIT, 74,953 stars, 109 tables, 1,579 files, PR #10352. **Adopting it wholesale is EXCLUDED** (it would replace our control plane). Gave: the **Conference Room**, run liveness (`heartbeat_runs`), the goal tree, controllable live runs |
-| 09 | Huw Prosser (`huwprosser`) | reel | STUDY | rival-intel/09-huwprosser.md | **geride on one idea.** 15 seconds. "Are you there?" / "At your service." — the cheapest fix in the programme, and a resting state that is quiet yet obviously alive |
-| 10 | `cloud9.markets` — "Nimbus" | reel | STUDY | rival-intel/10-cloud9-markets.md | **daha iyisi.** Nine named agents drawn as a constellation; **the speaking agent's node lights up** — the org chart IS the live activity display. **The trading desk itself is EXCLUDED** (Islamic boundaries). We take the constellation, not the desk |
-| 11 | Rinaldo Janjua A — the inbox agent | reel | STUDY | rival-intel/11-rinaldojanjua-a.md | **daha iyisi / geride.** Five-stage mailbox pipeline with the script, artefact and **constraint written on each card** ("mailto List-Unsubscribe only — never clicks a web link", "never deletes, only moves"). This is what source 01's "I resolved 13 of 16 emails" actually takes |
-| 12 | Rinaldo Janjua B — the same system | reel | STUDY | rival-intel/12-rinaldojanjua-b.md | **eşit on capability.** Adds the presentation grammar: a named board per pipeline, colour by class of action, the shared brain drawn once, the invariant in the footer, the owner badged |
-| 13 | Rinaldo Janjua C — "Top 5 Priorities" | reel | STUDY | rival-intel/13-rinaldojanjua-c.md | **geride.** A STATED ranking function (revenue impact → urgency → unblocking), top five **with the reason**, and the run's last stage is **writing back to memory**. Our briefing reports and stops |
-| 14 | Rinaldo Janjua D — `attu.ai` | reel | STUDY | rival-intel/14-rinaldojanjua-d.md | **geride on the surface, ahead underneath.** A shipped product with a live org tree, an agent log, per-agent skill pages, a searchable Knowledge Vault (954 entries) and a "Speak with the CEO" orb. We hold more of every one of those in the database and render none |
-| 15 | `ozgurmode` — "4 Temel SaaS Altyapı Aracı" | pdf | STUDY | rival-intel/15-vibecoder-4-sites-pdf.md | **half reddedildi.** **Coolify EXCLUDED** (already banned by our stack rules; its one-click Redis reintroduces a removed dependency). **Trigger.dev EXCLUDED** (a second job runtime — its *idea*, resume-from-step, is adopted). `Resend` STUDY (transport behind the existing outbox gate). `Lemon Squeezy` STUDY — **Merchant of Record is the one gap nothing else in the sixteen surfaced** |
-| 16 | `open-jarvis/OpenJarvis` (Stanford) | repo | STUDY | rival-intel/16-openjarvis-repo.md | **daha iyisi on doctrine, geride on the briefing pipeline. Adopting the code is EXCLUDED** (Python, a second scheduler and agent registry). Gave: collect-deterministically → narrate once → **self-grade and regenerate below 7/10** → speak → file the artifact; `honorific` as config; and the confirmation that local-first was the right call |
 
-**Tools named inside these sources, awaiting their own main-table rows when chosen:** Kokoro TTS
-(fallback only — Speaches already gives us self-hosted €0 speech) · RevenueCat MCP · Meta Ads MCP ·
-Claude-for-Chrome · Resend · Lemon Squeezy · agentskills.io / ClawHub / Hermes Skills Hub as a
-skill-import path. **Two of the CEO's own sources disagree on the size of the public skill supply
-(5,400+ vs ~13,700 OpenClaw skills); both are recorded and neither is believed until measured.**
+**Sources 03 to 34 have no row here yet, and that is deliberate.** Their material is on disk —
+video at 720p or better with its audio, sha256 recorded, transcripts extracted — but **none of them
+has been re-watched under the CEO's method, so none of them has a verdict.** Fourteen verdicts that
+used to sit here were written from the frame-photography he rejected; they were deleted with the
+reports they came from and **may not be quoted, restored from git history, or paraphrased from
+memory.** The next author reads `00-LEDGER.md`, takes the row it points at, <!-- OPEN: B22 -->
+watches that source whole, and adds its line here.
+
+**Tools named inside the two sources that have been read properly, awaiting their own main-table
+rows when chosen** (from source 02, 2026-08-04): the **official Anthropic skills** — `docx`, `xlsx`,
+`pdf`, `skill-creator`, `mcp-builder`, `webapp-testing`, `artifacts-builder`, `canvas-design`,
+`algorithmic-art`, `internal-comms` · community sets **`obra/superpowers`** and a 17-skill developer
+workflow set · skill indexes **ClawHub** (`github.com/openclaw/clawhub`), **Hermes Skills Hub**
+(662 skills, 16 categories, 4 registries), `VoltAgent/awesome-*`, `sundial-org/awesome-*`,
+`mergisi/awesome-openclaw-agents` (162 agent templates, `SOUL.md`), `0xNyk/awesome-hermes-agent`
+(persona packages: `SOUL.md`, `AGENTS.md`, `SKILL.md`).
+
+**One public figure, measured, not inherited:** source 02's own comparison sheet puts OpenClaw at
+**5,400+ (ClawHub)** and Claude Skills at **1000+ (official + community)**. A second, larger figure
+for the same supply circulated in the deleted reports; **it is not carried forward, because no
+measurement of it survives.** Nothing here is believed as a count until we count it ourselves.
 
 
 ## Excluded Items (INTEG-02)
