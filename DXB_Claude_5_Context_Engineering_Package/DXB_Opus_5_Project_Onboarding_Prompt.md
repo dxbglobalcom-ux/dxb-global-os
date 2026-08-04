@@ -15,7 +15,7 @@ Read the following in this exact order:
 3. `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md`
 4. `DXB Global Operating System Directive Package`
 5. `HOLDING-OS-MASTER-PLAN/00-INDEX.md`
-6. `.planning/research/rival-intel/00-SYNTHESIS.md`
+6. `.planning/research/rival-intel/00-LEDGER.md` — the rival-source queue and the reports written so far. **Corrected 2026-08-04:** this line used to name `00-SYNTHESIS.md`, which was built on the verdicts the CEO rejected and was deleted on his order of 2026-08-02. A new synthesis is written only when the whole queue is reported.
 7. The specification for the wave you will own
 8. Only the relevant code, tests, ADRs, schemas, and references needed to understand that wave
 

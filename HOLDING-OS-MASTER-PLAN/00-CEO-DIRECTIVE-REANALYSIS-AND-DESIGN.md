@@ -23,11 +23,19 @@ every spec, the board, the state file and every earlier analysis in this corpus.
 ## What it overrules, stated plainly
 
 **It supersedes the previous competitor-analysis conclusions and any plan built on them.** The
-sixteen rival reports, `00-LEDGER.md` and `00-SYNTHESIS.md` under `.planning/research/rival-intel/`
-were produced from low-quality downloads and sparse frames, and the CEO does not accept them as a
-reliable basis for product decisions. They are not deleted — the directive itself orders a
-**selective rewrite**, keeping what is correct and correcting what is not, with a change log per
-file.
+sixteen rival reports and `00-SYNTHESIS.md` under `.planning/research/rival-intel/` were produced
+from low-quality downloads and sparse frames, and the CEO does not accept them as a reliable basis
+for product decisions. `00-LEDGER.md` is untouched by that judgement: it is the queue and the
+machinery, not a verdict, and it is the file the work resumes from.
+
+> **CORRECTED 2026-08-04 — LAW A.** This paragraph used to end *"They are not deleted — the
+> directive itself orders a selective rewrite."* **They are deleted.** His live order of 2026-08-02,
+> *"reddettiğim metni tamamen sil"*, outranks the written directive beneath it, and all sixteen
+> reports and the synthesis went with it. The selective rewrite survives in the only form still
+> possible: **the raw material is preserved and re-used** — video, audio, transcripts, timestamps,
+> sha256 fingerprints, his source list — while **each verdict is written from nothing**, with the
+> rejected text never re-opened. The directive package itself was brought into line with this on the
+> same day, in both of its carriers, on his one-session authorisation.
 
 **Consequence recorded, not hidden:** the six-wave programme derived from that synthesis rests on
 a foundation he has rejected. It is not cancelled and it is not confirmed; it waits for the
@@ -45,7 +53,7 @@ DESIGN OLARAK BANA SUNULACAK GERÇEĞE GEÇMEDEN ÖNCE… BEĞENMEDİĞİMİ ASL
 | Part | What it is |
 |---|---|
 | `00_READ_FIRST_MASTER_DIRECTIVE.md` | the controlling text — the only authority |
-| `DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.docx` | the same text, formatted for human review |
+| `DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.docx` | **NOT decoration — the carrier he edits.** This row used to read *"the same text, formatted for human review"*, and that sentence cost the project six sources: he amended the DOCX on 2026-08-01 at 17:45 and the Markdown was not touched, so five reels and the cognee repository were invisible for eight hours. **Both carriers are read; where they disagree the newer wins.** The gate is `tests/c42/rival-intel-ledger.test.ts` — every source URL in either carrier must own a ledger row. Corrected 2026-08-04, and the two carriers were made identical the same day |
 | `source/CEO_RAW_NOTES_AND_VISUAL_EVIDENCE_ORIGINAL.odt` | **the CEO's own words, unedited** — read this, not only the tidy version |
 | `evidence/` | 12 images: 5 of our current surfaces, 5 rival references, 2 of his target Hamza |
 | `README.txt` | his filing instruction, which this move followed |

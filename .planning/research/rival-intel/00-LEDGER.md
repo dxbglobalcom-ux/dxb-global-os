@@ -128,8 +128,16 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 the one of 2026-07-29 — different sha256, while the two `.md` copies were byte-identical. The
 fetch run of 2026-08-02 01:33-01:54 therefore took twelve supplementary links from the `.md` when
 his own list already held seventeen, and it never saw the cognee line at all. The package's
-`README.txt` is the root cause and it is now wrong: it calls the DOCX *"the formatted human-review
-copy"*, so every session treats it as decoration — **but the CEO writes his amendments INTO it.**
+`README.txt` was the root cause: it called the DOCX *"the formatted human-review copy"*, so every
+session treated it as decoration — **while the CEO writes his amendments INTO it.**
+
+**CLOSED 2026-08-04, on his one-session authorisation to edit his own package.** Both carriers now
+say the same thing and were verified identical by sha256: the Markdown gained the five reels and the
+cognee line that had existed only in the DOCX (rows 29-34), the DOCX and both `README.txt` copies —
+repository and `~/Downloads`, where he actually works — were corrected, and the file as he last
+edited it is preserved as `DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.BACKUP-2026-08-04.docx`. The gate that
+makes this unrepeatable was already in place and still passes: every source URL in **either** carrier
+must own a row in this table.
 
 **Accessibility measured 2026-07-28 12:2x:** all 16 reachable — 13 reels probed one by one with
 `yt-dlp --simulate`, the Drive link resolved to a PDF over `drive.usercontent.google.com` (HTTP

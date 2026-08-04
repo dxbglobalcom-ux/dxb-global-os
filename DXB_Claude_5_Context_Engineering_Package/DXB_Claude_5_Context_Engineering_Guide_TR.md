@@ -527,7 +527,7 @@ En doğru model:
 3. `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md`
 4. `DXB Global Operating System Directive Package`
 5. `HOLDING-OS-MASTER-PLAN/00-INDEX.md`
-6. `.planning/research/rival-intel/00-SYNTHESIS.md`
+6. `.planning/research/rival-intel/00-LEDGER.md` — rakip kaynak kuyruğu ve o ana kadar yazılmış raporlar. **Düzeltildi 2026-08-04:** burada eskiden `00-SYNTHESIS.md` yazıyordu; o dosya, CEO'nun reddettiği hükümler üzerine kurulmuştu ve 2026-08-02'de onun emriyle silindi. Yeni bir sentez ancak kuyruğun tamamı raporlandığında yazılır.
 7. Sorumlu olunan wave spec
 8. Yalnızca gerekli ilgili kod, ADR, test ve referanslar
 
