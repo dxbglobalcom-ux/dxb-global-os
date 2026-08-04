@@ -1,0 +1,120 @@
+STATIC SCAN REPORT — third-party skill install gate (INTEG-01 / R4.1 §5)
+========================================================================
+
+Skill:      skill-creator
+Source:     github.com/anthropics/skills  ->  skills/skill-creator
+Commit:     b29e7cf65e5cb78a5ac33d582270551bc74a14eb  (2026-07-24T20:12:34Z)
+Licence:    Apache License 2.0 (LICENSE.txt read, not inferred from file presence)
+Installed:  .claude/skills/skill-creator  (18 files, 272 KB, 10 python files)
+Tree hash:  9e87f8fb7824940731d3c259b9698738e77cfc15f1eac9823b75b77706d76c4a
+Scanned:    2026-08-04, by the session author (Opus 5)
+Authorised: CEO, 2026-08-04 — "1 ve 2'yi onayliyorum"
+
+VERDICT: SAFE TO USE, with two recorded notes. No blocking issue.
+
+
+WHY THIS IS NOT A SkillSpector REPORT — recorded, not hidden
+------------------------------------------------------------
+The registered gate names SkillSpector (NVIDIA/SkillSpector, Apache-2.0). It is
+NOT on npm or PyPI under any of `skillspector` / `skill-spector` (both probed
+2026-08-04 -> HTTP 404); the repository's only supported install path is
+`uv tool install git+https://github.com/NVIDIA/skillspector.git`, and that
+command was BLOCKED by this environment's safety classifier — installing an
+executable from an arbitrary git URL. The block was not worked around.
+
+A manual static review was performed instead and its method is stated in full
+below so the reader can judge its depth rather than trust its verdict. The three
+earlier reports in this directory (context7, playwright-mcp, scrapling) were
+produced by the tool itself at v2.3.13 and are not comparable in form.
+
+
+METHOD — exactly what was checked
+----------------------------------
+1. Licence: LICENSE.txt read in full, and the SKILL.md front matter checked for
+   a `license:` field. NOT judged by whether a LICENSE.txt file exists — that
+   heuristic was tried first and was WRONG: every skill in the repository ships
+   one, and their contents differ.
+2. Every import in every .py file enumerated (30 distinct).
+3. Grep for: outbound HTTP clients (requests / httpx / aiohttp / urlopen),
+   raw sockets, subprocess, os.system, eval, exec, base64 decode,
+   credential names (API_KEY / SECRET / TOKEN), .env and .ssh paths.
+4. Every hit above read in its surrounding code, not counted from the grep line.
+
+
+FINDINGS — every flagged construct, explained
+----------------------------------------------
+subprocess          eval-viewer/generate_review.py:291, scripts/run_eval.py:85,
+                    scripts/improve_description.py:35
+                    -> invokes the local `claude` CLI to run skill evaluations.
+                       Expected for a skill whose purpose is testing skills.
+
+HTTPServer          eval-viewer/generate_review.py:443,446
+                    -> BOUND TO 127.0.0.1 ONLY, for viewing a local evaluation
+                       report. No external interface. Confirmed by reading the
+                       bind address, not by assumption.
+
+base64              eval-viewer/generate_review.py:167,179,190,202
+                    -> encodes local files INTO the generated HTML report as
+                       data: URIs. Encoding, not decoding; nothing is executed.
+
+webbrowser.open     generate_review.py:461, scripts/run_loop.py:279
+                    -> opens the locally generated report file.
+
+os.environ          scripts/run_eval.py:83, scripts/improve_description.py:33
+                    -> the parent environment is COPIED and one key removed
+                       (CLAUDECODE) before being handed to the child process.
+                       No variable is read for its value, and none is
+                       transmitted anywhere. See NOTE 1.
+
+No outbound HTTP client, no raw INET socket, no eval/exec, no os.system, no
+credential read, no write outside the working tree.
+
+
+NOTE 1 — the child process inherits this shell's environment
+-------------------------------------------------------------
+run_eval.py and improve_description.py pass a copy of the whole environment to
+the `claude` subprocess. That is ordinary, and it is how the tool avoids asking
+for a separate ANTHROPIC_API_KEY. The consequence to record for THIS project:
+anything exported into the shell — including values sourced from .env.daemon —
+would be visible to that child. Our own rule already covers it (secrets never
+enter a prompt or printed output), and the eval runner is not used in the
+outward-facing path. Recorded so it is a known property, not a discovery.
+
+NOTE 2 — a generated report calls out to Google Fonts
+------------------------------------------------------
+scripts/generate_report.py:39-41 embeds
+  https://fonts.googleapis.com  and  https://fonts.gstatic.com
+into the HTML it produces. Opening such a report in a browser therefore makes a
+request to Google. No project data is sent in that request beyond the ordinary
+fingerprint of any font fetch, but it is an outbound call from a file we
+generate, and this project does not make outbound calls by accident.
+TRIAGE: acceptable as installed, because the report is a developer artefact and
+is not a CEO-visible surface. IF a generated report ever reaches a CEO surface,
+the font links are stripped first — a CEO-visible page that phones out would
+break the surface rules.
+
+
+WHAT WAS NOT INSTALLED, AND WHY — the licence boundary
+-------------------------------------------------------
+The CEO approved four skills. Three of them CANNOT be installed, and the reason
+is legal, not technical. `docx`, `xlsx`, `pdf` (and `pptx`) in the same
+repository each carry LICENSE.txt with these words:
+
+  "users may not: Extract these materials from the Services or retain copies of
+   these materials outside the Services · Reproduce or copy these materials,
+   except for temporary copies created automatically during authorized use ·
+   Create derivative works based on these materials · Distribute, sublicense,
+   or transfer these materials to any third party"
+
+Copying them into this repository would be retaining a copy outside the
+Services, which the licence forbids in terms. They were downloaded to a
+scratch directory during this scan and DELETED from it as soon as the licence
+was read. Nothing proprietary is on disk in this project.
+
+The measured licence split across all 17 published official skills:
+  Apache-2.0   algorithmic-art, brand-guidelines, canvas-design, claude-api,
+               frontend-design, internal-comms, mcp-builder, skill-creator,
+               slack-gif-creator, theme-factory, webapp-testing,
+               web-artifacts-builder
+  Proprietary  docx, pdf, pptx, xlsx        (the four document skills)
+  No licence   doc-coauthoring              (no LICENSE.txt shipped)
