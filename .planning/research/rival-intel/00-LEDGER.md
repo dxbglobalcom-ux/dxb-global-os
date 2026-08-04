@@ -1,7 +1,7 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 03**
+**NEXT: 04**
 
 > ### ⛔ EVERY VERDICT ON THIS QUEUE WAS BINNED BY THE CEO — 2026-08-01 (LAW A)
 > He inspected the sixteen reports and rejected them: the author *"UNDERESTIMATED MY OPPONENTS
@@ -62,6 +62,11 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
    purpose only — zooming into a detail already seen while watching — and may never stand in
    for the watching. Section 2 of every report is still a timestamped record with no
    summarising; it is now the record of what was WATCHED.
+   **The CEO may narrow a single source, and his live word outranks this law** (`.claude/CLAUDE.md`
+   §1). Measured case: on 2026-08-04 he watched source 03 himself and ordered *"12. saniyeden
+   itibaren raporla izledim ben. öncesi gereksiz."* The report begins at 00:12 and **states in its
+   own text what was excluded and why**, so a later reader can never mistake a narrowing for a
+   shortcut. A narrowing is valid only where his own words are on the row.
 5. **A FRAME IS NEVER DOWNSCALED, AND A ZOOM IS CUT FROM THE VIDEO.** Added 2026-08-02 on his
    order *"625 okunamazlar silinsin"*. `fetch.sh` used to carry `scale=720:-1` and `sheets.sh`
    then tiled twelve of those at 300px; on a SCREEN RECORDING nothing is legible at that size, and
@@ -90,7 +95,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 |---|---|---|---|---|---|---|
 | 01 | https://www.instagram.com/reel/DY4o8dluXdK/ — Luke Cutting (`lukebuildsai`) | reel | reported | 2026-07-28T10:46:20Z | `01-lukebuildsai-jarvis.md` | *"Bizim DxB Global Holdigimiz için tam da istediğimiz Jarvis sistemi bu short videoda mevcut"* — he gave this link three times (items 1, 15, 16 of his list) |
 | 02 | https://www.instagram.com/reel/DbTuJhOo69k/ — Okyanusi · Akın Yılmaz (`akinyilmaz.ai`) | reel | reported | 2026-07-28T11:12:31Z | `02-akinyilmaz-skills-system.md` | *"(BURADAKI SKILLERI VS TUM SISTEMI ISTIORZ)"* |
-| 03 | https://www.instagram.com/reel/DbBPiy4vcz4/ — Chloe Shy (`chloeshy.ai`) | reel | fetched  | 2026-07-28T11:21:15Z | `03-chloeshy.md` | listed without a note |
+| 03 | https://www.instagram.com/reel/DbBPiy4vcz4/ — Chloe Shy (`chloeshy.ai`) | reel | reported | 2026-08-04T21:06:35Z | `03-chloeshy.md` | listed without a note; **watched it himself 2026-08-04 and narrowed the reading: *"12. saniyeden itibaren raporla izledim ben. öncesi gereksiz."*** |
 | 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | fetched  | 2026-07-28T11:24:47Z | `04-thealinalab.md` | listed without a note |
 | 05 | https://www.instagram.com/reel/DadfHYrkmr7/ — CNN (`cnn`) | reel | fetched  | 2026-07-28T11:26:33Z | `05-cnn-clipping-business.md` | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* |
 | 06 | https://www.instagram.com/reel/DZkevADMVPK/ — Alp Ünlü (`alppunlu`) | reel | fetched  | 2026-07-28T11:31:01Z | `06-alppunlu.md` | listed without a note |
