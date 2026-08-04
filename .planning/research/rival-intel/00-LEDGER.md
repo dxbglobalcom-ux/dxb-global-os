@@ -1,7 +1,7 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 04**
+**NEXT: 05**
 
 > ### ⛔ EVERY VERDICT ON THIS QUEUE WAS BINNED BY THE CEO — 2026-08-01 (LAW A)
 > He inspected the sixteen reports and rejected them: the author *"UNDERESTIMATED MY OPPONENTS
@@ -91,7 +91,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 01 | https://www.instagram.com/reel/DY4o8dluXdK/ — Luke Cutting (`lukebuildsai`) | reel | reported | 2026-07-28T10:46:20Z | `01-lukebuildsai-jarvis.md` | *"Bizim DxB Global Holdigimiz için tam da istediğimiz Jarvis sistemi bu short videoda mevcut"* — he gave this link three times (items 1, 15, 16 of his list) |
 | 02 | https://www.instagram.com/reel/DbTuJhOo69k/ — Okyanusi · Akın Yılmaz (`akinyilmaz.ai`) | reel | reported | 2026-07-28T11:12:31Z | `02-akinyilmaz-skills-system.md` | *"(BURADAKI SKILLERI VS TUM SISTEMI ISTIORZ)"* |
 | 03 | https://www.instagram.com/reel/DbBPiy4vcz4/ — Chloe Shy (`chloeshy.ai`) | reel | reported | 2026-08-04T21:06:35Z | `03-chloeshy.md` | listed without a note; **watched it himself 2026-08-04 and narrowed the reading: *"12. saniyeden itibaren raporla izledim ben. öncesi gereksiz."*** |
-| 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | fetched  | 2026-07-28T11:24:47Z | `04-thealinalab.md` | listed without a note |
+| 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | reported | 2026-08-04T21:34:57Z | `04-thealinalab.md` | listed without a note; **narrowed by his live order 2026-08-04: *"aynı repoyu söylüor… o repoyu biliyoruz zaten… ekranda sistemin işleyişi ile ilgili not et… kapat ve diğerine geç"*** |
 | 05 | https://www.instagram.com/reel/DadfHYrkmr7/ — CNN (`cnn`) | reel | fetched  | 2026-07-28T11:26:33Z | `05-cnn-clipping-business.md` | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* |
 | 06 | https://www.instagram.com/reel/DZkevADMVPK/ — Alp Ünlü (`alppunlu`) | reel | fetched  | 2026-07-28T11:31:01Z | `06-alppunlu.md` | listed without a note |
 | 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | fetched  | 2026-07-28T11:33:23Z | `07-misael-founder-systems.md` | listed without a note |

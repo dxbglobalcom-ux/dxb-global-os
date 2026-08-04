@@ -65,7 +65,7 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 ## Next — read this before doing anything
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
-   **3 of 34 sources reported.** Run `scripts/rival-intel/next.sh` — it prints the row and the
+   **4 of 34 sources reported.** Run `scripts/rival-intel/next.sh` — it prints the row and the
    command. Everything about this work lives in `.planning/research/rival-intel/00-LEDGER.md`:
    the queue, its six laws, and what each source cost to learn. Do not repeat it here.
 
