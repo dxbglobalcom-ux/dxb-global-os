@@ -62,11 +62,6 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
    purpose only — zooming into a detail already seen while watching — and may never stand in
    for the watching. Section 2 of every report is still a timestamped record with no
    summarising; it is now the record of what was WATCHED.
-   **The CEO may narrow a single source, and his live word outranks this law** (`.claude/CLAUDE.md`
-   §1). Measured case: on 2026-08-04 he watched source 03 himself and ordered *"12. saniyeden
-   itibaren raporla izledim ben. öncesi gereksiz."* The report begins at 00:12 and **states in its
-   own text what was excluded and why**, so a later reader can never mistake a narrowing for a
-   shortcut. A narrowing is valid only where his own words are on the row.
 5. **A FRAME IS NEVER DOWNSCALED, AND A ZOOM IS CUT FROM THE VIDEO.** Added 2026-08-02 on his
    order *"625 okunamazlar silinsin"*. `fetch.sh` used to carry `scale=720:-1` and `sheets.sh`
    then tiled twelve of those at 300px; on a SCREEN RECORDING nothing is legible at that size, and
