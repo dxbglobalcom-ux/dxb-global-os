@@ -74,7 +74,9 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two
    paid model exams (B06, B09) · the machine's administrator password for the two root-level fixes
    behind the editor crashes (C65) · the acceptance session itself (B13) · replacing the Gemini key
-   after the work, his own ruling *"ben iş bitince değersiz kılıcam"* (B26).
+   after the work, his own ruling *"ben iş bitince değersiz kılıcam"* (B26) · **whether to pursue the
+   three document skills he approved but whose licence forbids copying them here (B27) — the
+   capability he wanted already works without them, so this is a choice, not a blocker.**
 3. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
    this (authority order, `.claude/CLAUDE.md` §1) — and it DELETES whatever contradicts it (LAW A).
 
