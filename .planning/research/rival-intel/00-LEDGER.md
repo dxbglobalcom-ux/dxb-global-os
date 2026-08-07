@@ -1,7 +1,25 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 06**
+**NEXT: 08**
+
+> ### ROW 06 IS DELETED — the CEO's live order, 2026-08-08 (LAW A)
+> His words: *"6 videoyu izleme onu sil."* Row 06 — `instagram.com/reel/DZkevADMVPK/`, Alp Ünlü
+> (`alppunlu`), item 6 of his list in `SIKAYET-2026-07-28.txt` — is **struck from this queue and
+> will never be watched or reported.** Its material was deleted with it: the video, the extracted
+> audio, the 43 frames and the transcript. That URL lives on in the July complaint file, which is a
+> historical record and is not edited; **this line is what stops a future session re-opening the row
+> from it.** The two carriers of his master directive never named this source, so no gate moves.
+> The number 06 is not re-used: every other row keeps the number he refers to it by (*"şimdi 7 den
+> devam"* — his 7 is this table's 07, and it stays 07).
+>
+> ### ROW 35 IS HIS, ADDED THE SAME MINUTE
+> *"34. video olarak bunu koy … bunu listeye ekleyip izle ve raporla sonra. şimdi 7 den devam."*
+> With 06 gone this reel is **the 34th source in the queue** — his count is exact. It carries the
+> row number **35** because 34 belongs to the cognee repository and row numbers are welded to file
+> names, frame folders and every report already written; renumbering to close the 06 hole would have
+> moved his 7 as well, which his own sentence forbids. It sits last in the queue on his order to
+> watch it **later** — source 07 is the work now.
 
 > ### ⛔ EVERY VERDICT ON THIS QUEUE WAS BINNED BY THE CEO — 2026-08-01 (LAW A)
 > He inspected the sixteen reports and rejected them: the author *"UNDERESTIMATED MY OPPONENTS
@@ -93,8 +111,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 03 | https://www.instagram.com/reel/DbBPiy4vcz4/ — Chloe Shy (`chloeshy.ai`) | reel | reported | 2026-08-04T21:06:35Z | `03-chloeshy.md` | listed without a note; **watched it himself 2026-08-04 and narrowed the reading: *"12. saniyeden itibaren raporla izledim ben. öncesi gereksiz."*** |
 | 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | reported | 2026-08-04T21:34:57Z | `04-thealinalab.md` | listed without a note; **narrowed by his live order 2026-08-04: *"aynı repoyu söylüor… o repoyu biliyoruz zaten… ekranda sistemin işleyişi ile ilgili not et… kapat ve diğerine geç"*** |
 | 05 | https://www.instagram.com/reel/DadfHYrkmr7/ — CNN (`cnn`) | reel | reported | 2026-08-07T20:35:56Z | `05-cnn-clipping-business.md` | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* — **and on reading the report, 2026-08-07: *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"*** (total exclusion, every seat, any size — report §5.3) |
-| 06 | https://www.instagram.com/reel/DZkevADMVPK/ — Alp Ünlü (`alppunlu`) | reel | fetched  | 2026-07-28T11:31:01Z | `06-alppunlu.md` | listed without a note |
-| 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | fetched  | 2026-07-28T11:33:23Z | `07-misael-founder-systems.md` | listed without a note |
+| 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | reported | 2026-08-08T00:35:00Z | `07-misael-founder-systems.md` | listed without a note |
 | 08 | https://github.com/paperclipai/paperclip | repo | fetched  | 2026-07-28T11:37:36Z | `08-paperclip-repo.md` | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
 | 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | fetched  | 2026-07-28T11:37:37Z | `09-huwprosser.md` | listed without a note |
 | 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | fetched  | 2026-07-28T11:38:17Z | `10-cloud9-markets.md` | listed without a note |
@@ -122,6 +139,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 32 | https://www.instagram.com/reel/DYw6w3RxYJ0/?igsh=eXloNGx0c2lnMjR2 | reel | fetched | 2026-08-02T19:04:38Z | `32-dyw6w3rxyj0.md` | Added by the CEO to the DOCX on 2026-08-01 17:45, under the same supplementary-list instruction |
 | 33 | https://www.instagram.com/reel/DbeNY9aRtri/?igsh=MTBiaHZyOXNuc2VlZQ== | reel | fetched | 2026-08-02T19:08:58Z | `33-dbeny9artri.md` | Added by the CEO to the DOCX on 2026-08-01 17:45, under the same supplementary-list instruction |
 | 34 | https://github.com/topoteretes/cognee | repo | fetched | 2026-08-02T19:28:47Z | `34-cognee-repo.md` | Added by the CEO to the DOCX on 2026-08-01 17:45: *"Önemli Memory Repo: … study it carefully and craft it if you find it correctly for real usefull."* Bounded by his own approval of the same day (`v2-memory-brain-2026-08-01`): read for its METHOD under Apache-2.0, **not installed** — no second brain, no second database |
+| 35 | https://www.instagram.com/reels/DbsM7RMBSzo/ | reel | fetched | 2026-08-07T22:24:38Z | `35-dbsm7rmbszo.md` | Handed over live on 2026-08-08: *"34. video olarak bunu koy … bunu listeye ekleyip izle ve raporla sonra. şimdi 7 den devam."* The 34th source in the queue after he struck 06; watched **after** the rows before it |
 
 **Rows 29-34 exist because the DOCX was never read.** Measured 2026-08-02 20:4x: the CEO edited
 `DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.docx` at 2026-08-01 17:45 and the repository's copy was still
