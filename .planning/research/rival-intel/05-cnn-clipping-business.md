@@ -10,6 +10,14 @@ Every substantive statement carries an evidence label: **V** visible · **T** tr
 caption with a timestamp · **C** CEO-confirmed · **R** repository/backend verified this session ·
 **U** unverified.
 
+> ### ⛔ THE ABSOLUTE LINE — THE CEO, 2026-08-07, ON READING THIS REPORT
+> **"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"**
+>
+> This marketplace openly carries such campaigns (measured, §3.8). **Total exclusion — every seat,
+> every campaign, every client, every clip, at any size whatsoever.** Not a filter, not a threshold.
+> Recorded in full at **§5.3** with the measurement that provoked it and the live machine gate that
+> already enforces it. Nothing in this report proposes otherwise, and nothing built from it may.
+
 **The finding that matters before anything else: this is not a JARVIS reel and it is not a design
 reference. It is a working two-sided marketplace filmed on screen, with real money on it.** The
 platform is named on the page — **Whop**, section *Discover Content Rewards* (V, 00:26–00:31) — and
@@ -57,6 +65,8 @@ law 5). Two cuts were made for this report and are on disk:
 
 - `frames/05/cut-propaganda-backoffice-66.4.jpg` — Propaganda Media's own internal roster screen
 - `frames/05/cut-topearners-52.3.jpg` — the campaign's top-earner leaderboard
+- `frames/05/cut-donbet-29.5.jpg` — the `DONBET` and `Jack Sports` cards, publisher and figures
+- `frames/05/cut-bizbet-42.2.jpg` — the `BizBet` card and the description text on it
 
 **Where the pixels ran out, this report writes UNREADABLE.** The Whop grid at 00:26–00:31 is filmed
 from the side at an angle: the campaign artwork and the platform name are legible, most card titles
@@ -85,14 +95,14 @@ No summarising. Caption text is quoted as burned into the picture.
 | 00:26 | Presenter to camera, moving, room swinging behind him | **"Well,"** | V·T |
 | 00:28 | **The screen recording begins.** A MacBook on a wooden table, a second monitor behind it marked `TWISTED MINDS`. The laptop shows a browser page: top-left the **Whop** wordmark, under it **`Discover Content Rewards`**, and a grid of campaign cards with artwork, small platform icons and blue price chips | **"rewards platform."** | V |
 | 00:30 | Same page, camera closer. Card artwork legible: `MOORHOUSE CLIPPER NETWORK $1.50 CPM`, `SAFETY`, `NEW YORK UGC`, `BACKYARD BREAKS`, `WEAPONIZED INCOMPETENCE`, `FACELESS UGC`, `LULL`. **Card titles and prices are UNREADABLE at this angle** | **"all of the live campaigns"** | V |
-| 00:31 | The grid scrolled; new cards visible — `ENIGMA QUEST`, `CANDY AI`, `GET PAID CLIPPING`, `ADAPTIVE AI`, `JACK`, `DONBET`, `Billy Brown Clipping`, `JAMES TONIC`, `GRIZ` | **"that are being run"** | V |
+| 00:31 | The grid scrolled; new cards visible — `ENIGMA QUEST`, `CANDY AI`, `GET PAID CLIPPING`, `ADAPTIVE AI`, `JACK`, `DONBET`, `Billy Brown Clipping`, `JAMES TONIC`, `GRIZ`. **Enlarged from the video (`cut-donbet-29.5.jpg`): the `DONBET` card reads `Donbet FIFA World Cup Logo`, publisher `billbord`, `$1,877/$4,000`, `246` participants; beside it `Jack Sports`, same publisher `billbord`, `$4,063/$6,250`, `225` participants** | **"that are being run"** | V |
 | 00:33 | Presenter to camera | **"These are from influencers,"** | V·T |
 | 00:35 | Same | **"creators, brands,"** | V·T |
 | 00:37 | Same | **"artists, musicians,"** | V·T |
 | 00:38 | Same | **"even tourism boards."** | V·T |
 | 00:40 | **A campaign detail page fills the screen.** Header art: *Launched by ◆Propaganda* / **"Get Paid Clipping For Earn Your Leisure"**, a phone mock-up showing two men, a chip reading *Pays out $1.5 per 1000 Views*. Below, the campaign card: **`Earn Your Leisure Clipping \| $10k Budget \| $1.5 CPM`**, progress **`$0/$10,000`**, badges **`4` participants**, **`Personal brand`**, **`$1.50/1K`**; description naming EYL's founders and instructing the clipper to clip and post to TikTok, Instagram and YouTube Shorts; a black **`Join Campaign`** button and a share icon; a **`Requirements`** heading below | **"So a clipper can come"** | V |
 | 00:41 | Same page held; the cursor moves onto the `Propaganda` publisher name | **"to this website, click"** | V·T |
-| 00:42 | **Back on the grid, closer.** Now readable: `BizBet Logo Clipping \| $1.2K Budget` — `$0/$1,195` — `7` — `$0.20/1K` · **`David Heacock Clipping \| $20K Budget`** — `$4,733/$20,000` — `1K` — `$1.50/1K` — publisher `Clipix`, `6d`, with a `Join Campaign` button · `Talking-Head UGC [Non-English]` — publisher `Content Rewards` · `ENIGMA QUEST` — publisher `ClipHaus`, `19d`. A row of platform filter icons runs across the top: **YouTube · TikTok · Instagram · X · Facebook** | **"the campaign"** | V |
+| 00:42 | **Back on the grid, closer.** Now readable: `BizBet Logo Clipping \| $1.2K Budget` — `$0/$1,195` — `7` — `$0.20/1K`. **Enlarged from the video (`cut-bizbet-42.2.jpg`): its own description on the card reads *"…an Australian online casino focused on … market and growing its…"*** · **`David Heacock Clipping \| $20K Budget`** — `$4,733/$20,000` — `1K` — `$1.50/1K` — publisher `Clipix`, `6d`, with a `Join Campaign` button · `Talking-Head UGC [Non-English]` — publisher `Content Rewards` · `ENIGMA QUEST` — publisher `ClipHaus`, `19d`. A row of platform filter icons runs across the top: **YouTube · TikTok · Instagram · X · Facebook** | **"the campaign"** | V |
 | 00:43 | Same grid | **"they want to participate"** | V·T |
 | 00:44 | Grid scrolled one card: **`Post Bebe Rexha Love Island UK 2026…`** — publisher `Sound Network`, `19h` — **`$583/$2,417`** — `237` — **`$2/1K`** | **"in, download"** | V |
 | 00:45 | Grid held; the Bebe Rexha card now shows its own `Join Campaign` button and a `Music` category chip; the `Earn Your Leisure` card sits beside it at `$0/$10,000`, publisher `Propaganda`, `2h` | **"the source content."** | V |
@@ -186,11 +196,41 @@ chyroned CO-FOUNDER of Propaganda Media: traditional marketing firms are being k
 (V, 01:10) — the reel's *"a third of that will shift to clipping over the next decade"* is
 **Eddie's forecast, not PwC's** (T, 01:15–01:17).
 
+**3.8 The marketplace openly carries online-casino and betting campaigns, and this is decisive for
+DXB.** Read off the screen, not inferred: **`BizBet Logo Clipping | $1.2K Budget`, whose own card
+description reads *"…an Australian online casino focused on … market and growing its…"***
+(V, 00:42, `cut-bizbet-42.2.jpg`), and **`Donbet FIFA World Cup Logo`, publisher `billbord`,
+`$1,877/$4,000`, `246` participants**, alongside `Jack Sports` from the same publisher
+(V, 00:31, `cut-donbet-29.5.jpg`). **No filter, screen or category wall of any kind is visible
+anywhere on this platform** — these campaigns sit in the same open grid as a game trailer and a
+personal brand. Under `MASTER_PLAN §11` the Islamic boundaries are immutable and CEO-only, and this
+repository already enforces them by machine: `packages/hook/src/pre-task.ts` carries a
+`halal_screen` check that matches flagged category terms against a task's own text with a
+letter-boundary regex and **fail-closes the spawn**, with policy edits walled to the CEO (R, read
+this session). **So the platform's open door and our closed door are both facts, and they collide on
+this exact business.**
+
+### The economics of one campaign, computed from the numbers on screen
+
+Not a forecast — arithmetic on figures visible at 00:52, computed this session:
+
+| Measure | Working | Result |
+|---|---|---|
+| What the brand actually paid per thousand views | `$120,000 ÷ 114,200,000 × 1000` | **$1.05 per 1,000 views**, blended across the three platforms |
+| What the posted rate would have bought | `$120,000 ÷ $1.50 × 1000` | 80.0M views — **the campaign delivered 114.2M, i.e. 43 % more views than the top rate pays for**, because Instagram is priced at `$1/1K` and because unpaid overspill exists |
+| Average earning per participant | `$120,000 ÷ 12,000` | **$10.00 per participant** |
+| Concentration at the top | `(8,483,132 + 4,720,759 + 4,539,970) ÷ 114,200,000` | **the top three clippers took 15.5 % of all views** |
+
+**What those four lines mean, in one sentence:** for the brand this is cheap, verifiable
+distribution; for the clipper it is **a lottery — the average ticket pays ten dollars and three
+people out of twelve thousand take a sixth of everything.**
+
 **What is NOT claimed.** How Whop verifies that a view is real, how payouts are settled, what the
 `82%` measures, what the three tiles on Propaganda's back office count, what `Trust Score` is
 computed from, and whether any figure on any screen is live rather than seeded — all **UNREADABLE or
 unobservable in this source** (U). Nothing about either company's backend is inferred from these
-screenshots.
+screenshots. The `$1500` ceiling is read as a per-submission cap because it sits inside a
+per-platform rate card; **whether it caps the clip or the clipper is not legible** (U).
 
 ---
 
@@ -210,33 +250,107 @@ marketing and social employees, thirteen of them purpose-built for exactly this 
 
 ---
 
-## 5. The build project — what to install and do
+## 5. The build project — the recommendation, and what it rests on
 
-The CEO asked for this **as a project**. What the reel establishes is that there are **three
-distinct businesses on this screen, and they are not the same size, the same risk, or the same
-distance from us**:
+The CEO asked for this **as a project**, so this section does not hand him a menu. It names the
+seat DXB should take, says why, says what would prove it wrong, and marks the one line that is
+genuinely his.
 
-| Position | What it is | What it needs | Where DXB stands |
-|---|---|---|---|
-| **The clipper** | Joins campaigns, clips source footage, posts, gets paid per 1,000 views | Accounts on TikTok/Instagram/YouTube, editing capacity, volume | **Closest.** We have `marketing-tiktok-strategist`, `social-creative-asset`, `social-scheduler-publisher` written; we lack the accounts (**his decision, W-C42-4**) |
-| **The agency (Propaganda's position)** | Sits between brands and clippers, runs campaigns for clients, keeps a scored roster | Brand clients, a clipper roster, a back office with a trust score, money to front campaigns | **Middle.** The roster idea maps onto what we already do with employees; the brand clients do not exist |
-| **The marketplace (Whop's position)** | Owns the two-sided platform, takes a cut of every campaign | Both sides at once, view verification, payout settlement, fraud control | **Furthest.** Nothing here is measured and nothing about how Whop verifies a view is visible in this source |
+### 5.1 What these people actually do, described as an operating loop
 
-**Nothing is installed and no row is opened by this report.** Two reasons, both binding and both
-already on the record: **implementation is prohibited until the CEO approves the visual design
-package** (`docs/ceo-directives/2026-07-reanalysis/` §8), and **which outside accounts may be
-connected is his decision, not the author's** (W-C42-4). What this report puts in front of him is
-the choice above — **which of the three positions he wants**, because they are three different
-companies and only he picks.
+Four distinct jobs are visible on this screen, and they are four different companies:
 
-Two things can be said without waiting for that, because they are measurements rather than plans:
+| Seat | The daily loop it actually runs | What it owns at the end of a year |
+|---|---|---|
+| **The brand** | Writes a brief, funds a budget, uploads source footage, waits, pays per verified thousand views | Reach it bought at **$1.05 per 1,000 views** (measured, §3) |
+| **The clipper** (Musa's seat) | Browses the grid, joins a campaign, downloads the source footage, cuts it, adds captions, posts to TikTok/Instagram/YouTube, gets paid per thousand views | **Nothing that compounds.** Piecework. Average $10; three of twelve thousand take a sixth of everything |
+| **The agency** (Propaganda's seat) | Wins a brand client, launches the campaign under its own name (`Launched by ◆Propaganda`), recruits and **scores** clippers in its own back office (`Trust Score 80%`), guarantees delivery to the brand, keeps the spread | **A scored roster and a client list** — both compound. This is the only seat with an asset |
+| **The marketplace** (Whop's seat) | Runs the two-sided platform, verifies views, settles payouts, polices fraud, takes a cut of every campaign | The network itself — **and it already exists, with 12K participants on a single campaign** |
 
-1. **The unit is a thousand views, and the price band on screen is $0.20 to $2.00 per thousand**
-   (V, 00:42–00:52). Any version of this business we run is priced inside that band, by someone
-   else's market, not by us.
-2. **The middleman's durable asset is the scored roster** (V, 01:08), not the campaigns — campaigns
-   end, the roster compounds. That is the part of this machine that most resembles what DXB already
-   is: a company whose asset is its people.
+### 5.2 The recommendation
+
+**Take the agency seat. Enter through the clipper seat. Do not attempt the marketplace.**
+
+**Why the agency seat and not the others — each reason is a measurement, not a preference:**
+
+1. **The clipper seat is a lottery and DXB is not built to play lotteries.** $10 average across
+   12,000 people, 15.5 % of all views to three of them (computed, §3). A holding whose stated
+   objective is revenue and profit does not become participant number 12,001.
+2. **The marketplace seat is a fight against an existing network from zero.** Whop already has both
+   sides. Nothing in this source shows how it verifies a view, settles a payout or polices fraud
+   (U) — meaning we would be building the hardest part of the machine blind.
+3. **The agency seat is the only one whose asset is a scored roster of people** (V, 01:08) — and
+   **that is precisely what DXB already is.** 199 written employees, a governance ledger, an
+   approval gate, a scoring culture. Propaganda's differentiator is a spreadsheet of humans with a
+   trust percentage. Ours would be **49 written marketing and social employees who are themselves
+   the production capacity** (R, measured §4) with a human roster layered on top. That is the
+   Ferrari version of this business: *an agency whose creative capacity is its own workforce.*
+4. **The money direction fits the standing rule.** In the agency seat the brand pays us — **money
+   IN, which needs no approval** — and we pay clippers, **money OUT, which stops at the CEO**. The
+   boundary already written into `.claude/CLAUDE.md` maps onto this business without amendment.
+
+**Why entry is through the clipper seat, not directly into the agency seat.** The agency seat needs
+a first brand client, and we cannot credibly sell delivery we have never performed. The clipper seat
+costs **nothing**: no money out, no contract, no identity step. Running a handful of campaigns
+ourselves produces the three things the agency seat is sold on — proof we can deliver views, a
+measured cost per thousand, and the operational know-how to score somebody else's clippers. **It is
+a training ground and a reference, not the business.**
+
+### 5.3 THE ABSOLUTE LINE — the CEO's live order of 2026-08-07
+
+> **"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"**
+> — the CEO, 2026-08-07, on reading that this marketplace carries such campaigns.
+
+**This is not a filter, a threshold, or a percentage. It is a total exclusion, and it binds every
+seat, every campaign, every client and every clip, at any size whatsoever.** His words are explicit
+that not even the smallest version of it is permitted. No campaign from such a brand is joined, no
+such brand is represented, no such logo appears in anything DXB produces, and no revenue from that
+source enters this holding — not as a test, not as a one-off, not as a favour to a client who also
+has clean work.
+
+**What was measured that made him say it:** this marketplace openly carries those campaigns — read
+off the cards themselves (§3.8, `cut-bizbet-42.2.jpg` whose own description names an online casino,
+`cut-donbet-29.5.jpg` with its publisher and figures), sitting in the same open grid as a game
+trailer and a personal brand, with **no filter, screen or category wall visible anywhere on the
+platform**.
+
+**What the repository already does about it, measured this session (R):** `MASTER_PLAN §11` makes
+the Islamic boundaries immutable and CEO-only, and `packages/hook/src/pre-task.ts` carries a
+`halal_screen` check that matches flagged category terms against a task's own text with a
+letter-boundary regex and **fail-closes the spawn**, with policy edits walled to the CEO. The
+machine that enforces his order exists and is live. **Its term list is CEO-only by construction and
+was not touched by this report** — if he wants his sentence hardened into that list, that is his
+edit to make or to order, and it is named here so it is not forgotten.
+
+**Consequence for the project, stated now rather than discovered later:** in every seat in 5.1, the
+exclusion is **part of the build, not a policy note bolted on afterwards.** In the clipper seat it
+decides which campaigns may be joined at all. In the agency seat it decides which brands may be
+represented at all. It is also, incidentally, a position in the market — a clean-roster agency is a
+real thing to sell in a grid that mixes such brands with everything else — **but that is a side
+effect, not the reason. The reason is that he has forbidden it outright.**
+
+### 5.4 The one thing that could overturn this recommendation, and how to settle it
+
+**The decisive unknown is whether our own workforce can actually produce a finished, postable clip
+end to end.** The personas exist (`social-creative-asset`, `social-scheduler-publisher`,
+`marketing-short-video-editing-coach`, `marketing-video-optimization-specialist` — R, §4); **whether
+they have real video-editing hands has not been measured** (⚠ UNVERIFIED). If they cannot, the
+agency seat still stands but its production capacity is bought rather than owned, and the Ferrari
+argument in 5.2 (3) weakens to an ordinary agency.
+
+**This is testable without spending money, signing anything, or connecting a single account:** take
+one piece of freely usable source footage, and have the workforce cut, caption and render a
+short-form clip to file — **produced locally, not posted anywhere.** That measurement settles the
+question and crosses none of his gates. It is not started here, because §5.5.
+
+### 5.5 What is NOT done here, and why
+
+**No row is opened, nothing is installed, no account is touched.** Two binding reasons, both already
+on the record: **implementation is prohibited until the CEO approves the visual design package**
+(`docs/ceo-directives/2026-07-reanalysis/` §8), and **which outside accounts may be connected is his
+decision** (W-C42-4). The recommendation above is the author's judgement, offered so he decides on a
+position rather than on a menu — **and the only line that is genuinely his is whether to take the
+agency seat at all, and which accounts it may use.**
 
 ---
 
@@ -259,8 +373,28 @@ caption converts into *"spent on advertising"*. Recorded as it is, not smoothed.
 **What DXB has:** the staff and none of the connections. Forty-nine written marketing and social
 employees, thirteen purpose-built for this work, **zero routes and zero outside accounts.**
 
-**What is blocked on him, in one line:** which of the three positions — clipper, agency, or
-marketplace — this project is, and which outside accounts may be connected to run it.
+**THE ABSOLUTE LINE, above every other line in this report — the CEO, 2026-08-07:**
+> **"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"**
+
+Total exclusion, every seat, every campaign, every client, every clip, at any size. Recorded in
+full at §5.3 with the measurement that provoked it and the live machine gate that enforces it.
+
+**THE RECOMMENDATION, made rather than deferred: take the agency seat, enter through the clipper
+seat, do not attempt the marketplace.** The clipper seat is a lottery — **$10 average across 12,000
+participants, 15.5 % of all views to three of them** (computed §3). The marketplace seat is a fight
+against an existing network from zero, whose hardest parts — view verification, payout settlement,
+fraud control — are not even visible in this source. **The agency seat is the only one whose asset
+is a scored roster of people, and that is what DXB already is**; entering as a clipper first costs
+nothing and buys the delivery proof an agency is sold on. Full reasoning at §5.2, the constraint at
+§5.3, the test that could overturn it at §5.4.
+
+**The decisive unknown, named honestly:** whether our own workforce can cut, caption and render a
+finished clip end to end is **⚠ UNVERIFIED**. It is settleable locally, with no money, no contract
+and no account — §5.4 says exactly how.
+
+**What is genuinely his, and only this:** whether to take the agency seat at all, and which outside
+accounts it may use (W-C42-4). Everything else in this report is the author's judgement, offered so
+he decides on a position rather than on a menu.
 
 **Not approved.** This report is the author's work, not an accepted finding — LAW B: only the CEO's
 own eye accepts it.
