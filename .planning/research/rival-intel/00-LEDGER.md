@@ -1,7 +1,7 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 08**
+**NEXT: 09**
 
 > ### ROW 06 IS DELETED — the CEO's live order, 2026-08-08 (LAW A)
 > His words: *"6 videoyu izleme onu sil."* Row 06 — `instagram.com/reel/DZkevADMVPK/`, Alp Ünlü
@@ -112,7 +112,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | reported | 2026-08-04T21:34:57Z | `04-thealinalab.md` | listed without a note; **narrowed by his live order 2026-08-04: *"aynı repoyu söylüor… o repoyu biliyoruz zaten… ekranda sistemin işleyişi ile ilgili not et… kapat ve diğerine geç"*** |
 | 05 | https://www.instagram.com/reel/DadfHYrkmr7/ — CNN (`cnn`) | reel | reported | 2026-08-07T20:35:56Z | `05-cnn-clipping-business.md` | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* — **and on reading the report, 2026-08-07: *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"*** (total exclusion, every seat, any size — report §5.3) |
 | 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | reported | 2026-08-08T00:35:00Z | `07-misael-founder-systems.md` | listed without a note |
-| 08 | https://github.com/paperclipai/paperclip | repo | fetched  | 2026-07-28T11:37:36Z | `08-paperclip-repo.md` | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
+| 08 | https://github.com/paperclipai/paperclip | repo | reported | 2026-08-08T00:50:00Z | `08-paperclip-repo.md` | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
 | 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | fetched  | 2026-07-28T11:37:37Z | `09-huwprosser.md` | listed without a note |
 | 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | fetched  | 2026-07-28T11:38:17Z | `10-cloud9-markets.md` | listed without a note |
 | 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | fetched  | 2026-07-28T11:40:50Z | `11-rinaldojanjua-a.md` | listed without a note |
