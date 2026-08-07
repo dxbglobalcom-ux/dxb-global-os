@@ -1,7 +1,7 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 10**
+**NEXT: 11**
 
 > ### ROW 06 IS DELETED — the CEO's live order, 2026-08-08 (LAW A)
 > His words: *"6 videoyu izleme onu sil."* Row 06 — `instagram.com/reel/DZkevADMVPK/`, Alp Ünlü
@@ -114,7 +114,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | reported | 2026-08-08T00:35:00Z | `07-misael-founder-systems.md` | listed without a note |
 | 08 | https://github.com/paperclipai/paperclip | repo | reported | 2026-08-08T00:50:00Z | `08-paperclip-repo.md` | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
 | 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | reported | 2026-08-08T00:58:00Z | `09-huwprosser.md` | listed without a note |
-| 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | fetched  | 2026-07-28T11:38:17Z | `10-cloud9-markets.md` | listed without a note |
+| 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | reported | 2026-08-08T01:05:00Z | `10-cloud9-markets.md` | listed without a note |
 | 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | fetched  | 2026-07-28T11:40:50Z | `11-rinaldojanjua-a.md` | listed without a note |
 | 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:47:15Z | `12-rinaldojanjua-b.md` | listed without a note |
 | 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:51:40Z | `13-rinaldojanjua-c.md` | listed without a note |
