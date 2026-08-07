@@ -329,28 +329,39 @@ represented at all. It is also, incidentally, a position in the market — a cle
 real thing to sell in a grid that mixes such brands with everything else — **but that is a side
 effect, not the reason. The reason is that he has forbidden it outright.**
 
-### 5.4 The one thing that could overturn this recommendation, and how to settle it
+### 5.4 HIS DECISION — the agency seat is approved, 2026-08-07
 
-**The decisive unknown is whether our own workforce can actually produce a finished, postable clip
-end to end.** The personas exist (`social-creative-asset`, `social-scheduler-publisher`,
-`marketing-short-video-editing-coach`, `marketing-video-optimization-specialist` — R, §4); **whether
-they have real video-editing hands has not been measured** (⚠ UNVERIFIED). If they cannot, the
-agency seat still stands but its production capacity is bought rather than owned, and the Ferrari
-argument in 5.2 (3) weakens to an ordinary agency.
+> **"ajans koltuğunu onaylıyorum, klip testine gerek yok el kol bağlanınca zaten Holdingimiz yani
+> ferrarimiz zaten yapar"** — the CEO, 2026-08-07.
+> Registered: `scripts/governance/ceo-approvals.json` → `c42-agency-seat-2026-08-07`.
+<!-- CEO-OK: c42-agency-seat-2026-08-07 -->
 
-**This is testable without spending money, signing anything, or connecting a single account:** take
-one piece of freely usable source footage, and have the workforce cut, caption and render a
-short-form clip to file — **produced locally, not posted anywhere.** That measurement settles the
-question and crosses none of his gates. It is not started here, because §5.5.
+**The seat is settled.** DXB takes the agency position, entering through the clipper position, and
+does not attempt the marketplace. This is no longer the author's recommendation — it is his
+decision, and the reasoning in §5.2 now records why the seat is the right one rather than why it
+should be chosen.
+
+**The clip-production test proposed here is cancelled on his ruling and is not carried as a
+footnote** (LAW A). It asked whether our own workforce can cut, caption and render a clip end to
+end. **His answer: the question is about hands, not ability — once the workforce is given tools,
+the holding does this by itself.** So the open item is not "can they?" but "what are they holding?",
+and that belongs to the build, not to a test.
 
 ### 5.5 What is NOT done here, and why
 
-**No row is opened, nothing is installed, no account is touched.** Two binding reasons, both already
-on the record: **implementation is prohibited until the CEO approves the visual design package**
-(`docs/ceo-directives/2026-07-reanalysis/` §8), and **which outside accounts may be connected is his
-decision** (W-C42-4). The recommendation above is the author's judgement, offered so he decides on a
-position rather than on a menu — **and the only line that is genuinely his is whether to take the
-agency seat at all, and which accounts it may use.**
+**Nothing is installed and no account is touched.** Two things are unmoved by his approval and he
+said so himself in the same breath — his approval is **of the seat, not of a start**:
+
+- **Implementation is still prohibited until he approves the visual design package**
+  (`docs/ceo-directives/2026-07-reanalysis/` §8). He approved a direction, not a build order.
+- **Which outside accounts may be connected is still his** (W-C42-4), and **money out to clippers
+  stops at him** by the standing boundary.
+- **His absolute line of the same day binds the whole seat** (§5.3): nothing to do with betting,
+  every seat, every campaign, every client, every clip, at any size.
+
+**The work this creates is real, approved and unfinished, so it owns a board row — `B28`** — and
+that row is where the agency build lives from here. No new spec was opened: the C42 programme
+(`B22`) still owns the reading, and the build lands in the spec that owns its contract.
 
 ---
 
@@ -379,8 +390,9 @@ employees, thirteen purpose-built for this work, **zero routes and zero outside 
 Total exclusion, every seat, every campaign, every client, every clip, at any size. Recorded in
 full at §5.3 with the measurement that provoked it and the live machine gate that enforces it.
 
-**THE RECOMMENDATION, made rather than deferred: take the agency seat, enter through the clipper
-seat, do not attempt the marketplace.** The clipper seat is a lottery — **$10 average across 12,000
+**THE SEAT IS DECIDED — and it is his decision, not a recommendation any more.** He approved it the
+same day: *"ajans koltuğunu onaylıyorum"* (registered, §5.4). <!-- CEO-OK: c42-agency-seat-2026-08-07 -->
+**DXB takes the agency seat, enters through the clipper seat, and does not attempt the marketplace.** The clipper seat is a lottery — **$10 average across 12,000
 participants, 15.5 % of all views to three of them** (computed §3). The marketplace seat is a fight
 against an existing network from zero, whose hardest parts — view verification, payout settlement,
 fraud control — are not even visible in this source. **The agency seat is the only one whose asset
@@ -388,13 +400,16 @@ is a scored roster of people, and that is what DXB already is**; entering as a c
 nothing and buys the delivery proof an agency is sold on. Full reasoning at §5.2, the constraint at
 §5.3, the test that could overturn it at §5.4.
 
-**The decisive unknown, named honestly:** whether our own workforce can cut, caption and render a
-finished clip end to end is **⚠ UNVERIFIED**. It is settleable locally, with no money, no contract
-and no account — §5.4 says exactly how.
+**What he ruled about the workforce, replacing the test this report proposed:** *"klip testine gerek
+yok el kol bağlanınca zaten Holdingimiz yani ferrarimiz zaten yapar"* — the question was never
+whether the holding can do the work, only what tools its hands are holding. The test is cancelled,
+not footnoted (LAW A), and the tooling belongs to the build.
 
-**What is genuinely his, and only this:** whether to take the agency seat at all, and which outside
-accounts it may use (W-C42-4). Everything else in this report is the author's judgement, offered so
-he decides on a position rather than on a menu.
+**What remains his, unmoved by this approval:** the visual design package before any implementation,
+which outside accounts may be connected (W-C42-4), and money out to clippers. **He approved the
+seat, not a start**, and he said so in the same sentence.
 
-**Not approved.** This report is the author's work, not an accepted finding — LAW B: only the CEO's
-own eye accepts it.
+**Status of this report under LAW B.** The **seat** is accepted by his own words and registered
+(`c42-agency-seat-2026-08-07`). **The rest of this report — the reading, the figures, the four
+operating loops — is still the author's work and is NOT approved.** A registered approval covers
+what he actually said and nothing beside it.

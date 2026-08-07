@@ -69,15 +69,24 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    command. Everything about this work lives in `.planning/research/rival-intel/00-LEDGER.md`:
    the queue, its six laws, and what each source cost to learn. Do not repeat it here.
 
-2. **What is blocked on him, and cannot move without him:** his approval of a visual design package
+2. **B28 — the clipping business, and he has decided its shape.** <!-- OPEN: B28 -->
+   **The AGENCY seat is approved in his own words** (2026-08-07): *"ajans koltuğunu onaylıyorum…"*
+   <!-- CEO-OK: c42-agency-seat-2026-08-07 --> DXB wins brand clients, launches campaigns under its
+   own name, keeps and scores a roster, guarantees delivery, keeps the spread — entering through the
+   clipper seat, never attempting the marketplace. **His absolute line binds all of it:**
+   *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"* — every
+   campaign, every client, every clip, at any size. **Nothing is built: he approved the seat, not a
+   start.** Everything about it is in `.planning/research/rival-intel/05-cnn-clipping-business.md` §5.
+3. **What is blocked on him, and cannot move without him:** his approval of a visual design package
    before any redesign is built · one hand-minted browser session so authenticated surfaces can be
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two
    paid model exams (B06, B09) · the machine's administrator password for the two root-level fixes
    behind the editor crashes (C65) · the acceptance session itself (B13) · replacing the Gemini key
    after the work, his own ruling *"ben iş bitince değersiz kılıcam"* (B26) · **whether to pursue the
    three document skills he approved but whose licence forbids copying them here (B27) — the
-   capability he wanted already works without them, so this is a choice, not a blocker.**
-3. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
+   capability he wanted already works without them, so this is a choice, not a blocker** · **money
+   out to clippers once the agency seat starts operating (B28).**
+4. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
    this (authority order, `.claude/CLAUDE.md` §1) — and it DELETES whatever contradicts it (LAW A).
 
 ## Where things live

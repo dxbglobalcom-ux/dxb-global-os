@@ -1,124 +1,131 @@
 {
-  "_doc": "The register of things the CEO has actually approved. LAW B (CEO, 2026-07-30): 'iş tamamlanınca bitti anlamına gelmez — ben bakmam lazım ne yazılmış ve yapılmış.' A green battery means the AUTHOR's work is done; only his own eye makes something ACCEPTED. No document in this corpus may claim his approval unless it carries a <!-- CEO-OK: <id> --> marker naming an entry here. ledger-truth.mjs fails the battery on an unregistered claim. The trigger for this register was his own example: the board said the rival analysis was done and approved, and he had never approved it — he inspected it himself and rejected it.",
-  "_fields": "date = when he said it. what = what he approved, in plain words. verbatim = HIS OWN WORDS, or null when nobody wrote them down. conditions = what he attached to it. where = the record that carries the approval.",
-  "_null_verbatim": "A null verbatim is not a defect to hide — it is an entry the CEO may legitimately dispute, because no one captured his sentence. It stays registered so the claim is visible and challengeable, never deleted quietly.",
-  "board-2026-07-27": {
-    "date": "2026-07-27",
-    "what": "The open work board as the single register of what is left",
-    "verbatim": "açık işler tahtası teklifini kabul ettim",
-    "conditions": null,
-    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md header"
-  },
-  "eye-test-2026-07-18": {
-    "date": "2026-07-18",
-    "what": "The visual state of the ten screens at that moment (roadmap row E13.2)",
-    "verbatim": "ok I just check some pcitures etc they seem fine ama sonradan değişiklik isteyeceğim. şimdilik ok verelim",
-    "conditions": "CONDITIONAL and explicitly temporary — he said he would ask for changes later, and on 2026-07-27/28 he did, at length. This approval covers 2026-07-18 only and may not be cited as acceptance of any surface today.",
-    "where": "HOLDING-OS-MASTER-PLAN/ACCEPTANCE_CRITERIA.md acceptance table"
-  },
-  "audit-twin-2026-07-26": {
-    "date": "2026-07-26",
-    "what": "Option B for the audit twin — an independent, read-only, adversarial auditor on three named triggers",
-    "verbatim": "B onayla, W5.1 denetimini bu kurallarla koş… nakşet en mükemmel şekilde",
-    "conditions": null,
-    "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md"
-  },
-  "joint-authorship-2026-07-26": {
-    "date": "2026-07-26",
-    "what": "Fable 5 re-authorized alongside Opus 5 as a session's authorized author",
-    "verbatim": "şuan emrimdir. Fable 5 te aynı şekilde bu projeden sorumlu ve yetkilidir",
-    "conditions": "One session, one author. Not a fallback chain.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-INDEX.md registered adaptation U30"
-  },
-  "identifier-preservation-2026-07-25": {
-    "date": "2026-07-25",
-    "what": "When authorship moved to Opus 5: historical records stay untouched, internal technical identifiers stay as they are, and only CEO-visible labels change",
-    "verbatim": "projenin heryerinde Fable 5 geçen yerler Opus 5, 4.8 geçen yerler 5 olsun",
-    "conditions": "The three scope decisions were taken in the same exchange; the quoted sentence is the order, and the scope answers were spoken replies that were not captured word for word.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-INDEX.md registered adaptation U20"
-  },
-  "workforce-gap-2026-07-11": {
-    "date": "2026-07-11",
-    "what": "The three decisions in the workforce gap matrix §6 — 15 roles retired to the library, the research department closed, the new department rows",
-    "verbatim": null,
-    "conditions": "Given verbally in session; nobody recorded his sentence. Registered so the claim is visible and he can dispute it.",
-    "where": "HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX.md §6"
-  },
-  "company-doctor-2026-07-27": {
-    "date": "2026-07-27",
-    "what": "The SHAPE of the company doctor — one door (Hamza) with a permanent system-health team behind him, not a second department to address",
-    "verbatim": null,
-    "conditions": "Shape only. Nothing has been built, and the approval does not extend to any implementation.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row C39"
-  },
-  "phase1-security-2026-07-06": {
-    "date": "2026-07-06",
-    "what": "The security baseline gate — every leaked credential rotated and verified dead, secret scanning in place, the source document sanitised",
-    "verbatim": null,
-    "conditions": "The rotation itself was his own manual work, so his approval was of a gate he had personally executed. Words not captured; the record carries only the time (16:21Z).",
-    "where": ".planning/ROADMAP.md phase 1"
-  },
-  "sdk-legitimacy-2026-07-08": {
-    "date": "2026-07-08",
-    "what": "The agent SDK as a locked runtime library, confined to the kernel and orchestrator",
-    "verbatim": null,
-    "conditions": "Recorded in the phase-5 legitimacy note of the day; his sentence was not captured.",
-    "where": ".planning/research/INTEGRATION-TRACKER.md"
-  },
-  "must-roster-v2-2026-07-12": {
-    "date": "2026-07-12",
-    "what": "The v2 workforce decision block — the roster raised to 198 with the commerce department added",
-    "verbatim": null,
-    "conditions": "He challenged the first print and the numbers were corrected before he agreed; the corrected block is what he approved. His words were not captured.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-MUST-ROSTER.md §3 and WORKFORCE-GAP-MATRIX.md"
-  },
-  "context-architecture-accepted-2026-07-31": {
-    "date": "2026-07-31",
-    "what": "ACCEPTANCE of the delivered context architecture — distinct from his approval of the plan the night before. Board row B21 closed on this.",
-    "verbatim": "kabul ediyorum",
-    "conditions": "Given after he tested it himself, twice, by opening a fresh session and greeting it. The first attempt failed and is recorded on the board with the two causes; the second told him the position unprompted. This accepts the architecture as delivered — it accepts nothing else on the board.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md Section 1b"
-  },
-  "v2-location-and-v1-dead-2026-08-01": {
-    "date": "2026-08-01",
-    "what": "Where version 2 lives, and the status of version 1. V2's interface is written from zero in a new folder inside the SAME repository — the old screens are not touched and nothing may be copied out of them into the new folder. The company's database, its written workforce, the approvals register, the record gates and the open work board stay where they are and are never split. Version 1 is DEAD: no repairs, no polish, no defence, not the target — while the company's data, rules and history remain alive. The CEO's complaint rows stop being work on V1 and become requirements V2 must satisfy.",
-    "verbatim": "ben buna tamam demiştim aslında bunu da kasdettim. 2. numaraydı bu çünkü ama V1 kesinlikle ölü yani.",
-    "conditions": "Copy-paste from the old code into the new folder is forbidden — anything needed is rewritten. V1 stays reachable through a frozen tag rather than through maintenance.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md decisions table"
-  },
-  "v2-memory-brain-2026-08-01": {
-    "date": "2026-08-01",
-    "what": "The version-2 memory architecture: ONE brain the holding owns, carrying three abilities — plain readable files (Obsidian's value), a live map of the COMPANY's own entities (what graphify does, pointed at the company instead of the source code, and redrawn continuously instead of once), and staying alive to answer questions across meaning and connections (cognee's method). Cognee is read for its method under its Apache-2.0 licence and not installed; no second brain, no second database. The memory is fed by the work itself as it happens, never by hand.",
-    "verbatim": "tamam onaylıyorum, bunu da not al v2 için",
-    "conditions": "DESIGN approved, nothing built — his standing order of the same day forbids implementation before he has seen each screen drawn and approved it. Scope is capped by a test he owns: it is finished when ~20 real business questions are all answered — the author drafts that list, he edits and approves it. Corrected the same day, on his objection that the first wording made him produce a list he has no way to produce.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md decisions table"
-  },
-  "governance-repairs-accepted-2026-08-01": {
-    "date": "2026-08-01",
-    "what": "ACCEPTANCE of the governance repairs delivered on the nights of 2026-07-31 and 2026-08-01: the cancelled conversation deleted from the board and LAW 6 written so no session can file a dropped idea again; the alarm that now hears a finished record announcing work still to come (U43); his own corrections to the always-on text — breaking the authority order made the gravest violation in the project, the language rule lost its ban list in favour of real words explained in brackets, and standing order 13 became his own sentence about work worthy of an award; the decisions book cut from 28 pages to 5; Kelam restored to the register as B25.",
-    "verbatim": "1. yi onaylıyorum. dünde onaylamıştım. kaydedilsin demiştim",
-    "conditions": "He gave this approval twice. The first time was 2026-08-01 01:11 — 'geri koy belki satarız gerçekten. yapılanları kaydedebilirsin' — and the session carried it into the commit message and never entered it here, so his approval stood unregistered until he asked for it again the next morning. Author's defect, recorded rather than hidden: LAW B says only his eye accepts, and an acceptance nobody registers is the same failure seen from the other side.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-INDEX.md row U43 and 00-BOARD-OPEN-WORK.md law 6"
-  },
-  "context-architecture-2026-07-30": {
-    "date": "2026-07-30",
-    "what": "The eight-step context architecture — one always-on core, eight doors, the state file as a photograph, the duplication and approval gates, dead rules deleted, and Hamza's information package put through the same discipline",
-    "verbatim": "onaylıyorum, hamza da dahil",
-    "conditions": "Scope narrowed by him in the same exchange: 'şuan sadece odak noktamız bu directive paketi o kadar ve bu context engineering işi. rakip analizi vs bunlar hepsi sonra.' He also issued LAW A and LAW B in this exchange.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B21"
-  },
-  "official-skills-install-2026-08-04": {
-    "date": "2026-08-04",
-    "what": "Installing official Anthropic skills into the holding — his approval of the two items put to him: (1) the skills themselves, after the alet listesi is read, (2) signing up to the rival's free package to verify its contents, using the address he supplied",
-    "verbatim": "1 ve 2'yi onaylıyorum yukarıda açıklama yaptığın konu hakkında. alternatif işler için şu emaili kullanırım: oktaydubai@hotmail.com",
-    "conditions": "Approval covers installing; it does NOT waive licence terms. Measured the same day: docx, xlsx, pdf and pptx are proprietary and their licence forbids retaining copies outside the Services, so THREE OF THE FOUR HE APPROVED WERE NOT INSTALLED and the reason was put back to him. Only skill-creator (Apache-2.0) was installed. Whether to seek those document skills by another route is his decision and is carried by board row B27.",
-    "where": ".planning/research/INTEGRATION-TRACKER.md main table (skill-creator row, docx/xlsx/pdf/pptx row) + .planning/research/skillspector/skill-creator-anthropics-b29e7cf.txt"
-  },
-  "docx-package-edit-2026-08-04": {
-    "date": "2026-08-04",
-    "what": "One-session authorisation to edit the CEO's own directive package — including the DOCX he edits himself — so that no contradiction remains between its two carriers or with his later live orders",
-    "verbatim": "sana sadece bu sessionda yetki veriorum word'de sen kalıcı yapabilirsin. hiç bir çelişki kalmayacak şekilde hepsini düzenle. Yani önerini kabul ediyorum.",
-    "conditions": "EXPLICITLY LIMITED TO THAT SESSION. It does not create a standing right to edit docs/ceo-directives/**, and rules.json still forbids it by default. The file as he last edited it is preserved as DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.BACKUP-2026-08-04.docx in both locations.",
-    "where": "docs/ceo-directives/2026-07-reanalysis/ (both carriers) + ~/Downloads/DXB_Global_OS_Directive_Package/ + HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-REANALYSIS-AND-DESIGN.md"
-  }
+ "_doc": "The register of things the CEO has actually approved. LAW B (CEO, 2026-07-30): 'iş tamamlanınca bitti anlamına gelmez — ben bakmam lazım ne yazılmış ve yapılmış.' A green battery means the AUTHOR's work is done; only his own eye makes something ACCEPTED. No document in this corpus may claim his approval unless it carries a <!-- CEO-OK: <id> --> marker naming an entry here. ledger-truth.mjs fails the battery on an unregistered claim. The trigger for this register was his own example: the board said the rival analysis was done and approved, and he had never approved it — he inspected it himself and rejected it.",
+ "_fields": "date = when he said it. what = what he approved, in plain words. verbatim = HIS OWN WORDS, or null when nobody wrote them down. conditions = what he attached to it. where = the record that carries the approval.",
+ "_null_verbatim": "A null verbatim is not a defect to hide — it is an entry the CEO may legitimately dispute, because no one captured his sentence. It stays registered so the claim is visible and challengeable, never deleted quietly.",
+ "board-2026-07-27": {
+  "date": "2026-07-27",
+  "what": "The open work board as the single register of what is left",
+  "verbatim": "açık işler tahtası teklifini kabul ettim",
+  "conditions": null,
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md header"
+ },
+ "eye-test-2026-07-18": {
+  "date": "2026-07-18",
+  "what": "The visual state of the ten screens at that moment (roadmap row E13.2)",
+  "verbatim": "ok I just check some pcitures etc they seem fine ama sonradan değişiklik isteyeceğim. şimdilik ok verelim",
+  "conditions": "CONDITIONAL and explicitly temporary — he said he would ask for changes later, and on 2026-07-27/28 he did, at length. This approval covers 2026-07-18 only and may not be cited as acceptance of any surface today.",
+  "where": "HOLDING-OS-MASTER-PLAN/ACCEPTANCE_CRITERIA.md acceptance table"
+ },
+ "audit-twin-2026-07-26": {
+  "date": "2026-07-26",
+  "what": "Option B for the audit twin — an independent, read-only, adversarial auditor on three named triggers",
+  "verbatim": "B onayla, W5.1 denetimini bu kurallarla koş… nakşet en mükemmel şekilde",
+  "conditions": null,
+  "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md"
+ },
+ "joint-authorship-2026-07-26": {
+  "date": "2026-07-26",
+  "what": "Fable 5 re-authorized alongside Opus 5 as a session's authorized author",
+  "verbatim": "şuan emrimdir. Fable 5 te aynı şekilde bu projeden sorumlu ve yetkilidir",
+  "conditions": "One session, one author. Not a fallback chain.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-INDEX.md registered adaptation U30"
+ },
+ "identifier-preservation-2026-07-25": {
+  "date": "2026-07-25",
+  "what": "When authorship moved to Opus 5: historical records stay untouched, internal technical identifiers stay as they are, and only CEO-visible labels change",
+  "verbatim": "projenin heryerinde Fable 5 geçen yerler Opus 5, 4.8 geçen yerler 5 olsun",
+  "conditions": "The three scope decisions were taken in the same exchange; the quoted sentence is the order, and the scope answers were spoken replies that were not captured word for word.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-INDEX.md registered adaptation U20"
+ },
+ "workforce-gap-2026-07-11": {
+  "date": "2026-07-11",
+  "what": "The three decisions in the workforce gap matrix §6 — 15 roles retired to the library, the research department closed, the new department rows",
+  "verbatim": null,
+  "conditions": "Given verbally in session; nobody recorded his sentence. Registered so the claim is visible and he can dispute it.",
+  "where": "HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX.md §6"
+ },
+ "company-doctor-2026-07-27": {
+  "date": "2026-07-27",
+  "what": "The SHAPE of the company doctor — one door (Hamza) with a permanent system-health team behind him, not a second department to address",
+  "verbatim": null,
+  "conditions": "Shape only. Nothing has been built, and the approval does not extend to any implementation.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row C39"
+ },
+ "phase1-security-2026-07-06": {
+  "date": "2026-07-06",
+  "what": "The security baseline gate — every leaked credential rotated and verified dead, secret scanning in place, the source document sanitised",
+  "verbatim": null,
+  "conditions": "The rotation itself was his own manual work, so his approval was of a gate he had personally executed. Words not captured; the record carries only the time (16:21Z).",
+  "where": ".planning/ROADMAP.md phase 1"
+ },
+ "sdk-legitimacy-2026-07-08": {
+  "date": "2026-07-08",
+  "what": "The agent SDK as a locked runtime library, confined to the kernel and orchestrator",
+  "verbatim": null,
+  "conditions": "Recorded in the phase-5 legitimacy note of the day; his sentence was not captured.",
+  "where": ".planning/research/INTEGRATION-TRACKER.md"
+ },
+ "must-roster-v2-2026-07-12": {
+  "date": "2026-07-12",
+  "what": "The v2 workforce decision block — the roster raised to 198 with the commerce department added",
+  "verbatim": null,
+  "conditions": "He challenged the first print and the numbers were corrected before he agreed; the corrected block is what he approved. His words were not captured.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-MUST-ROSTER.md §3 and WORKFORCE-GAP-MATRIX.md"
+ },
+ "context-architecture-accepted-2026-07-31": {
+  "date": "2026-07-31",
+  "what": "ACCEPTANCE of the delivered context architecture — distinct from his approval of the plan the night before. Board row B21 closed on this.",
+  "verbatim": "kabul ediyorum",
+  "conditions": "Given after he tested it himself, twice, by opening a fresh session and greeting it. The first attempt failed and is recorded on the board with the two causes; the second told him the position unprompted. This accepts the architecture as delivered — it accepts nothing else on the board.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md Section 1b"
+ },
+ "v2-location-and-v1-dead-2026-08-01": {
+  "date": "2026-08-01",
+  "what": "Where version 2 lives, and the status of version 1. V2's interface is written from zero in a new folder inside the SAME repository — the old screens are not touched and nothing may be copied out of them into the new folder. The company's database, its written workforce, the approvals register, the record gates and the open work board stay where they are and are never split. Version 1 is DEAD: no repairs, no polish, no defence, not the target — while the company's data, rules and history remain alive. The CEO's complaint rows stop being work on V1 and become requirements V2 must satisfy.",
+  "verbatim": "ben buna tamam demiştim aslında bunu da kasdettim. 2. numaraydı bu çünkü ama V1 kesinlikle ölü yani.",
+  "conditions": "Copy-paste from the old code into the new folder is forbidden — anything needed is rewritten. V1 stays reachable through a frozen tag rather than through maintenance.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md decisions table"
+ },
+ "v2-memory-brain-2026-08-01": {
+  "date": "2026-08-01",
+  "what": "The version-2 memory architecture: ONE brain the holding owns, carrying three abilities — plain readable files (Obsidian's value), a live map of the COMPANY's own entities (what graphify does, pointed at the company instead of the source code, and redrawn continuously instead of once), and staying alive to answer questions across meaning and connections (cognee's method). Cognee is read for its method under its Apache-2.0 licence and not installed; no second brain, no second database. The memory is fed by the work itself as it happens, never by hand.",
+  "verbatim": "tamam onaylıyorum, bunu da not al v2 için",
+  "conditions": "DESIGN approved, nothing built — his standing order of the same day forbids implementation before he has seen each screen drawn and approved it. Scope is capped by a test he owns: it is finished when ~20 real business questions are all answered — the author drafts that list, he edits and approves it. Corrected the same day, on his objection that the first wording made him produce a list he has no way to produce.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md decisions table"
+ },
+ "governance-repairs-accepted-2026-08-01": {
+  "date": "2026-08-01",
+  "what": "ACCEPTANCE of the governance repairs delivered on the nights of 2026-07-31 and 2026-08-01: the cancelled conversation deleted from the board and LAW 6 written so no session can file a dropped idea again; the alarm that now hears a finished record announcing work still to come (U43); his own corrections to the always-on text — breaking the authority order made the gravest violation in the project, the language rule lost its ban list in favour of real words explained in brackets, and standing order 13 became his own sentence about work worthy of an award; the decisions book cut from 28 pages to 5; Kelam restored to the register as B25.",
+  "verbatim": "1. yi onaylıyorum. dünde onaylamıştım. kaydedilsin demiştim",
+  "conditions": "He gave this approval twice. The first time was 2026-08-01 01:11 — 'geri koy belki satarız gerçekten. yapılanları kaydedebilirsin' — and the session carried it into the commit message and never entered it here, so his approval stood unregistered until he asked for it again the next morning. Author's defect, recorded rather than hidden: LAW B says only his eye accepts, and an acceptance nobody registers is the same failure seen from the other side.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-INDEX.md row U43 and 00-BOARD-OPEN-WORK.md law 6"
+ },
+ "context-architecture-2026-07-30": {
+  "date": "2026-07-30",
+  "what": "The eight-step context architecture — one always-on core, eight doors, the state file as a photograph, the duplication and approval gates, dead rules deleted, and Hamza's information package put through the same discipline",
+  "verbatim": "onaylıyorum, hamza da dahil",
+  "conditions": "Scope narrowed by him in the same exchange: 'şuan sadece odak noktamız bu directive paketi o kadar ve bu context engineering işi. rakip analizi vs bunlar hepsi sonra.' He also issued LAW A and LAW B in this exchange.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B21"
+ },
+ "official-skills-install-2026-08-04": {
+  "date": "2026-08-04",
+  "what": "Installing official Anthropic skills into the holding — his approval of the two items put to him: (1) the skills themselves, after the alet listesi is read, (2) signing up to the rival's free package to verify its contents, using the address he supplied",
+  "verbatim": "1 ve 2'yi onaylıyorum yukarıda açıklama yaptığın konu hakkında. alternatif işler için şu emaili kullanırım: oktaydubai@hotmail.com",
+  "conditions": "Approval covers installing; it does NOT waive licence terms. Measured the same day: docx, xlsx, pdf and pptx are proprietary and their licence forbids retaining copies outside the Services, so THREE OF THE FOUR HE APPROVED WERE NOT INSTALLED and the reason was put back to him. Only skill-creator (Apache-2.0) was installed. Whether to seek those document skills by another route is his decision and is carried by board row B27.",
+  "where": ".planning/research/INTEGRATION-TRACKER.md main table (skill-creator row, docx/xlsx/pdf/pptx row) + .planning/research/skillspector/skill-creator-anthropics-b29e7cf.txt"
+ },
+ "docx-package-edit-2026-08-04": {
+  "date": "2026-08-04",
+  "what": "One-session authorisation to edit the CEO's own directive package — including the DOCX he edits himself — so that no contradiction remains between its two carriers or with his later live orders",
+  "verbatim": "sana sadece bu sessionda yetki veriorum word'de sen kalıcı yapabilirsin. hiç bir çelişki kalmayacak şekilde hepsini düzenle. Yani önerini kabul ediyorum.",
+  "conditions": "EXPLICITLY LIMITED TO THAT SESSION. It does not create a standing right to edit docs/ceo-directives/**, and rules.json still forbids it by default. The file as he last edited it is preserved as DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.BACKUP-2026-08-04.docx in both locations.",
+  "where": "docs/ceo-directives/2026-07-reanalysis/ (both carriers) + ~/Downloads/DXB_Global_OS_Directive_Package/ + HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-REANALYSIS-AND-DESIGN.md"
+ },
+ "c42-agency-seat-2026-08-07": {
+  "date": "2026-08-07",
+  "what": "The agency seat as DXB's position in the clipping business (source 05). He approved the recommended seat and cancelled the proposed local clip-production test as unnecessary. Direction only — it does not lift the design-package gate, name any outside account, or authorise money out.",
+  "verbatim": "ajans koltuğunu onaylıyorum, klip testine gerek yok el kol bağlanınca zaten Holdingimiz yani ferrarimiz zaten yapar",
+  "conditions": "His absolute line of the same day binds it totally: 'bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!' — every seat, every campaign, every client, every clip, at any size. Still his and unmoved: which outside accounts may be connected (W-C42-4), money out to clippers, and approval of the visual design package before any implementation.",
+  "where": ".planning/research/rival-intel/05-cnn-clipping-business.md §5.2 and §5.4 · board row B28"
+ }
 }
