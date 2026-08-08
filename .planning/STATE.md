@@ -65,8 +65,16 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 ## Next — read this before doing anything
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
-   **5 of 34 sources reported**, `NEXT: 07`. Sources 07-11 were reported in the night session of
-   2026-08-08 and **the CEO deleted all five reports the same morning** — his words:
+   **6 of 34 sources reported**, `NEXT: 08`. **Source 07 was re-watched and rewritten from nothing on
+   2026-08-08 on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — and it is the first report
+   written under law 7: it measures what the rival PRODUCES (a priced product, `$97` against a struck
+   `$197`, a live countdown, eight deliverables summing to $1,926), says plainly that the buyer count
+   is **Unverified**, and lands a build project that needs no download — **P07-1, every agent run ends
+   in one measured sentence**, because 1,543 of our task events carry **zero** statements of what an
+   agent found. Rows 08-11 stand at `fetched` with their raw material intact.
+
+   Sources 07-11 had been reported in the night session of 2026-08-08 and
+   **the CEO deleted all five reports the same morning** — his words:
    *"BOZUK OLAN BOKTAN RAPORLAR HEPSİNİ sil. 7 8 9 10 11."* The five rows are back to `fetched` and
    the raw material (videos, audio, frames, zooms, transcripts) is untouched, per his standing ruling
    *"hükümler çöpe, ham malzeme kalsın."* The queue also changed that night on his live order: **row
