@@ -65,13 +65,20 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 ## Next — read this before doing anything
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
-   **6 of 34 sources reported**, `NEXT: 08`. **Source 07 was re-watched and rewritten from nothing on
-   2026-08-08 on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — and it is the first report
-   written under law 7: it measures what the rival PRODUCES (a priced product, `$97` against a struck
-   `$197`, a live countdown, eight deliverables summing to $1,926), says plainly that the buyer count
-   is **Unverified**, and lands a build project that needs no download — **P07-1, every agent run ends
-   in one measured sentence**, because 1,543 of our task events carry **zero** statements of what an
-   agent found. Rows 08-11 stand at `fetched` with their raw material intact.
+   **7 of 34 sources reported**, `NEXT: 09`. **Sources 07 and 08 were rewritten from nothing on
+   2026-08-08 on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — the first two reports
+   written under law 7, which judges a rival by what it PRODUCES. Rows 09-11 stand at `fetched` with
+   their raw material intact.
+
+   **The one thing on this page he should read first — from source 08 (`paperclip`, read at live HEAD
+   on 2026-08-08, 75,865 stars, pushed two hours before the reading).** Measured: **nothing in this
+   holding binds the act that executes to the text the CEO signed.** A search of every column in the
+   database for `signed`, `signature` or `snapshot` returns `workflow_runs.steps_snapshot` and nothing
+   else; the approval is one row, the execution is another, and only a foreign key joins them. The
+   whole product is *he approves the acts that face outward* — **project P08-1** closes it with a
+   signed spec and a target snapshot, needs no download, costs nothing, and waits on his word.
+   Source 07 lands **P07-1** beside it: every agent run must end in one measured sentence, because
+   1,543 of our task events carry **zero** statements of what an agent found.
 
    Sources 07-11 had been reported in the night session of 2026-08-08 and
    **the CEO deleted all five reports the same morning** — his words:
