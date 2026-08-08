@@ -65,26 +65,26 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 ## Next — read this before doing anything
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
-   **10 of 34 sources reported**, `NEXT: 12` — sources **07, 08, 09, 10 and 11 all closed in the
-   night session of 2026-08-08**, on his order *"11. video'ya kadar raporu hazırla. yarın üzerinden
-   geçerim sabah."* **All five reports are finished and waiting for his eye** (LAW B — nothing is
-   accepted until he looks). The queue itself changed that night, twice, on his live order: **row 06
-   was struck and its material deleted** (*"6 videoyu izleme onu sil"*), and **row 35 was added and
-   fetched** (*"34. video olarak bunu koy … izle ve raporla sonra"*) — so the total is still 34, and
-   row 35 waits at the end of the queue as he instructed. Run `scripts/rival-intel/next.sh` — it
-   prints the row and the command. Everything about this work lives in
-   `.planning/research/rival-intel/00-LEDGER.md`: the queue, its six laws, and what each source cost
-   to learn. Do not repeat it here.
+   **5 of 34 sources reported**, `NEXT: 07`. Sources 07-11 were reported in the night session of
+   2026-08-08 and **the CEO deleted all five reports the same morning** — his words:
+   *"BOZUK OLAN BOKTAN RAPORLAR HEPSİNİ sil. 7 8 9 10 11."* The five rows are back to `fetched` and
+   the raw material (videos, audio, frames, zooms, transcripts) is untouched, per his standing ruling
+   *"hükümler çöpe, ham malzeme kalsın."* The queue also changed that night on his live order: **row
+   06 struck** (*"6 videoyu izleme onu sil"*) and **row 35 added and fetched** (*"34. video olarak
+   bunu koy … izle ve raporla sonra"*) — total still 34, row 35 last. Run
+   `scripts/rival-intel/next.sh`. Everything else lives in
+   `.planning/research/rival-intel/00-LEDGER.md`: the queue, its **seven** laws, and what each source
+   cost to learn. Do not repeat it here.
 
-   **The one sentence he should hear first when he wakes:** three of the five sources say the same
-   thing from three different angles — **the gap is not engineering, it is legibility.** Source 07
-   shows the traffic between its agents, source 10 lets its nine employees introduce themselves in
-   one sentence each, source 11 draws its safety constraint next to the step it binds. We are larger
-   than all three combined (`agents`=205, `employee_records`=199, 200 persona files, 378 `agent_runs`,
-   measured 2026-08-08) and he can see none of it. Source 08 (`paperclip`, 75,835 stars, pushed three
-   hours before the reading) is the exception and the serious one: **the only rival building what we
-   are building**, ahead of us on run machinery, behind us on memory, on organisational learning and
-   on a CEO you can talk to — and with **no revenue tables and no boundary anywhere in its 109.**
+   **Why he burned them, and the rule that replaces it — read this before writing a single word about
+   a rival.** The five reports called the distance between DXB and these systems **"legibility"** —
+   *they are not really ahead of us, they are only easier to read.* That is the verdict he had already
+   burned on 2026-08-01 (*"UNDERESTIMATED MY OPPONENTS TOOOOOOO MUCH"*) wearing a politer word, and it
+   was reached by counting our agents, tables and persona files and calling the count a judgement.
+   **Ledger law 7, added 2026-08-08, with the tenth test case behind it: a rival is judged by what it
+   PRODUCES, never by what it owns.** Every source on this queue runs and earns; DXB has never run end
+   to end and `realized_revenue_eur` is 0. On the measure that decides we are behind all of them, and
+   any sentence that softens that is deleted on sight.
 
 2. **B28 — the clipping business, and he has decided its shape.** <!-- OPEN: B28 -->
    **The AGENCY seat is approved in his own words** (2026-08-07): *"ajans koltuğunu onaylıyorum…"*

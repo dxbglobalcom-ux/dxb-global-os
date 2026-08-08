@@ -117,6 +117,62 @@ describe("C42 rival-intel ledger", () => {
     }
   });
 
+  // LAW 7 — added 2026-08-08, the SECOND time the CEO burned a whole batch of
+  // verdicts for one error. Sixteen reports on 2026-08-01: "UNDERESTIMATED MY
+  // OPPONENTS TOOOOOOO MUCH". Five reports on 2026-08-08, for the same thing in a
+  // politer word — they called the rivals' lead "legibility", wrote "nothing in it
+  // is technically ahead of us", and counted 205 agents and 199 personas as if a
+  // count were a judgement. Capability that has never run is stock on a shelf.
+  //
+  // Every one of the earlier cases asks HOW MUCH WAS WATCHED. None of them ever
+  // asked HOW IT WAS JUDGED — which is why 9/9 went green over a sentence he had
+  // already burned. This case asks the second question, so the machine fails the
+  // commit instead of the CEO finding it three days later.
+  it("a report never calls a rival's lead cosmetic, and never counts our inventory as a verdict", () => {
+    const FORBIDDEN: Array<[RegExp, string]> = [
+      [
+        /\b(?:gap|lead|difference)\b[^.\n]{0,60}\bis\b[^.\n]{0,30}\b(?:legibilit|presentation|display|drawing|cosmetic)/i,
+        'calls the rivals\' lead a matter of legibility/presentation — the exact verdict burned on 2026-08-08',
+      ],
+      [
+        /\bnot(?:hing)?\b[^.\n]{0,40}\btechnically ahead of us\b/i,
+        '"nothing in it is technically ahead of us" — burned verbatim on 2026-08-08',
+      ],
+      [
+        /\bahead of us\b[^.\n]{0,30}\b(?:on the surface|only on the surface|superficially)\b/i,
+        'narrows a rival\'s lead to "the surface"',
+      ],
+      [
+        /\b(?:we|dxb|ours?|the ceo)\b[^.\n]{0,40}\b(?:\d+\s*(?:x|times)|thirty times|larger than|bigger than)\b[^.\n]{0,40}\b(?:them|their|all three|combined|rival)/i,
+        'compares size instead of output — counting inventory and calling it a judgement',
+      ],
+      [
+        /\bnot (?:an? )?engineering (?:gap|problem)\b/i,
+        'declares the gap non-engineering — the softening sentence he deleted',
+      ],
+    ];
+    for (const r of ledgerRows().filter((x) => x.status === "reported")) {
+      const body = readFileSync(join(DIR, r.report), "utf8");
+      // The banner that RECORDS the rejection is allowed to quote the burned text;
+      // the ledger is the record of the defect, never the defect. Reports are not.
+      for (const [re, why] of FORBIDDEN) {
+        const hit = body.match(re);
+        expect(
+          hit,
+          `row ${r.n} (${r.report}) breaks ledger law 7 — ${why}. Found: "${hit?.[0] ?? ""}"`,
+        ).toBeNull();
+      }
+      // The required half: a verdict must state what the source PRODUCES, measured,
+      // or say plainly that it does not show it.
+      expect(
+        /\b(?:earns?|earning|revenue|customers?|paying|users?|stars|subscribers|sold|sells|priced at|\$[\d,]|does not (?:show|prove) what it produces)\b/i.test(
+          body,
+        ),
+        `row ${r.n} (${r.report}) records nothing about what this rival PRODUCES — law 7 requires the measured output, or the honest line that the source does not show it`,
+      ).toBe(true);
+    }
+  });
+
   it("a reported row records the fingerprint of what was actually studied", () => {
     for (const r of ledgerRows().filter((x) => x.status === "reported")) {
       const body = readFileSync(join(DIR, r.report), "utf8");

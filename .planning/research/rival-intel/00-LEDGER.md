@@ -1,7 +1,30 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 12**
+**NEXT: 07**
+
+> ### ⛔ REPORTS 07, 08, 09, 10 AND 11 ARE DELETED — the CEO's live order, 2026-08-08 (LAW A)
+> His words: *"yaptığın son raporlar hangileri BOZUK OLAN BOKTAN RAPORLAR HEPSİNİ sil. 7 8 9 10 11."*
+> The five report files are **removed from disk.** Not archived, not marked void — deleted, exactly as
+> he ordered the sixteen July reports deleted on 2026-08-02.
+>
+> **Why he rejected them, in his own words, so no future session repeats it:** the reports called the
+> gap between DXB and these rivals **"legibility"** — *they are not ahead of us, they are only easier
+> to read.* That is the same verdict he binned on 2026-08-01 (*"UNDERESTIMATED MY OPPONENTS
+> TOOOOOOO MUCH"*) wearing a politer word. Report 11 wrote *"nothing in it is technically ahead of
+> us"* and *"the CEO owns a system thirty times larger"*; report 07 wrote *"ahead of us on the
+> surface"*. Counting our agents, tables and persona files and calling that size is **counting
+> inventory and calling it a judgement.**
+>
+> **THE RULE THAT REPLACES IT — LAW 7 BELOW.** A rival is judged by what it PRODUCES, never by what
+> it owns. Every one of these systems runs and earns; DXB does neither yet. On the measure that
+> decides, we are behind all of them, and any sentence that softens that is deleted on sight.
+>
+> **The raw material stays** — his standing ruling of 2026-08-01, *"hükümler çöpe, ham malzeme
+> kalsın"*: the videos, the audio, the frames, the native zooms and the transcripts of rows 07-11 are
+> untouched on disk (see `00-ARCHIVE.md`). The five rows are back to `fetched` and **NEXT is 07**.
+> Not one sentence of the deleted reports may be carried into a rewrite; a rewrite opens the file
+> from nothing.
 
 > ### ROW 06 IS DELETED — the CEO's live order, 2026-08-08 (LAW A)
 > His words: *"6 videoyu izleme onu sil."* Row 06 — `instagram.com/reel/DZkevADMVPK/`, Alp Ünlü
@@ -91,6 +114,24 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
    **UNREADABLE**, never a guess.
 6. **Ledger parity (U38).** When a row closes here, its row on `00-BOARD-OPEN-WORK.md` and in
    `INTEGRATION-TRACKER.md` is corrected in the SAME session.
+7. **A RIVAL IS JUDGED BY WHAT IT PRODUCES, NEVER BY WHAT IT OWNS.** Added 2026-08-08, the second
+   time the CEO had to burn a whole batch of verdicts for the same error — sixteen on 2026-08-01,
+   five on 2026-08-08. **Counting our agents, tables, persona files or lines of code and calling
+   that a comparison is counting inventory and calling it a judgement.** Capability that has never
+   run is not capability; it is stock on a shelf. The standing measurement, until a measurement
+   replaces it: **every source on this queue runs and earns; DXB has never run end to end and
+   `realized_revenue_eur` is 0.** On the only measure that decides — does it work, does it make
+   money — we are behind all of them.
+   - **FORBIDDEN in any report**, in any language, however dressed: *"we are larger / bigger / X
+     times their size"* · *"nothing in it is technically ahead of us"* · *"ahead of us only on the
+     surface"* · *"the gap is not engineering, it is legibility / presentation / display"* · any
+     sentence whose effect is that the rival's lead is cosmetic.
+   - **REQUIRED instead**: what this source PRODUCES, measured — money, customers, users, stars,
+     live runs, a shipping date — or the honest line *"this source does not show what it produces;
+     the CEO knows these systems personally and his knowledge outranks a reading of an
+     advertisement"* (his own correction, 2026-08-01).
+   - The tenth case of `tests/c42/rival-intel-ledger.test.ts` enforces this. A report that breaks it
+     cannot be `reported` — the machine fails the commit, not the CEO's eye three days later.
 
 ## Status vocabulary
 
@@ -111,11 +152,11 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 03 | https://www.instagram.com/reel/DbBPiy4vcz4/ — Chloe Shy (`chloeshy.ai`) | reel | reported | 2026-08-04T21:06:35Z | `03-chloeshy.md` | listed without a note; **watched it himself 2026-08-04 and narrowed the reading: *"12. saniyeden itibaren raporla izledim ben. öncesi gereksiz."*** |
 | 04 | https://www.instagram.com/reel/DYG-_i9PPCM/ — The Alina Lab (`thealinalab`) | reel | reported | 2026-08-04T21:34:57Z | `04-thealinalab.md` | listed without a note; **narrowed by his live order 2026-08-04: *"aynı repoyu söylüor… o repoyu biliyoruz zaten… ekranda sistemin işleyişi ile ilgili not et… kapat ve diğerine geç"*** |
 | 05 | https://www.instagram.com/reel/DadfHYrkmr7/ — CNN (`cnn`) | reel | reported | 2026-08-07T20:35:56Z | `05-cnn-clipping-business.md` | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* — **and on reading the report, 2026-08-07: *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"*** (total exclusion, every seat, any size — report §5.3) |
-| 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | reported | 2026-08-08T00:35:00Z | `07-misael-founder-systems.md` | listed without a note |
-| 08 | https://github.com/paperclipai/paperclip | repo | reported | 2026-08-08T00:50:00Z | `08-paperclip-repo.md` | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
-| 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | reported | 2026-08-08T00:58:00Z | `09-huwprosser.md` | listed without a note |
-| 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | reported | 2026-08-08T01:05:00Z | `10-cloud9-markets.md` | listed without a note |
-| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | reported | 2026-08-08T01:12:00Z | `11-rinaldojanjua-a.md` | listed without a note |
+| 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | fetched  | 2026-07-28T11:47:15Z | `07-misael-founder-systems.md`  | listed without a note |
+| 08 | https://github.com/paperclipai/paperclip | repo | fetched  | 2026-07-28T11:47:15Z | `08-paperclip-repo.md`  | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
+| 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | fetched  | 2026-07-28T11:47:15Z | `09-huwprosser.md`  | listed without a note |
+| 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | fetched  | 2026-07-28T11:47:15Z | `10-cloud9-markets.md`  | listed without a note |
+| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | fetched  | 2026-07-28T11:47:15Z | `11-rinaldojanjua-a.md`  | listed without a note |
 | 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:47:15Z | `12-rinaldojanjua-b.md` | listed without a note |
 | 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:51:40Z | `13-rinaldojanjua-c.md` | listed without a note |
 | 14 | https://www.instagram.com/reel/DbKe90ETKfB/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:55:20Z | `14-rinaldojanjua-d.md` | listed without a note |
