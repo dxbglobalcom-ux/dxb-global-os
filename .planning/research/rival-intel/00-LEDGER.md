@@ -188,7 +188,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 08 | https://github.com/paperclipai/paperclip | repo | reported   | 2026-08-08T10:38:00Z | `08-paperclip-repo.md`  | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
 | 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | reported | 2026-08-09T14:21:34Z | `09-huwprosser.md`  | listed without a note |
 | 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | reported | 2026-08-09T16:29:05Z | `10-cloud9-markets.md`  | listed without a note |
-| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | fetched  | 2026-07-28T11:47:15Z | `11-rinaldojanjua-a.md`  | listed without a note |
+| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | claimed  | 2026-08-09T19:04:02Z | `11-rinaldojanjua-a.md`  | listed without a note |
 | 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:47:15Z | `12-rinaldojanjua-b.md` | listed without a note |
 | 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:51:40Z | `13-rinaldojanjua-c.md` | listed without a note |
 | 14 | https://www.instagram.com/reel/DbKe90ETKfB/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:55:20Z | `14-rinaldojanjua-d.md` | listed without a note |
