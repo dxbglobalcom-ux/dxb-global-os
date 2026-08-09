@@ -157,29 +157,37 @@ that the voice runs locally — is on the screen.
 
 ---
 
-### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 
-**Read from this session's own watching**, 2026-08-09, all 75 native one-per-second frames in order.
-**This law exists because of this source**: the CEO read the first version of this report and named
-what the author had failed to weigh — *"Operating System'i rakip bir canlı organizma gibi çalışıyor
-yaşayan bir varlık. bu holdigimizdeki en önemli özellik olmalı."*
+**NIMBUS is a live, running trading desk — the CEO's own words on 2026-08-09: *"en sondaki nimbus
+zaten capcanlı yaşayan sistemler."*** This law exists because of this source, and it was rewritten
+because of it too: the first version of this section graded the rival's aliveness from a
+seventy-five-second advertisement, which is the error he struck out. Read here for the **mechanism**,
+from this session's own watching, all 75 native one-per-second frames in order.
 
-- **Moves without being asked — NO, and it must be said plainly.** In 75 seconds **not one agent acts
-  on its own.** Nine workers introduce themselves, in order, because a human asked them to. No signal
-  arrives, no position changes, no number moves. **Unverified** whether the desk runs when nobody is
-  talking to it; to verify would take a recording of a market event reaching this screen.
-- **Changes while it is watched — YES, and it is the best-choreographed change on the queue.** Nine
-  handovers, each lighting one node to full colour, dimming the other eight, and renaming the chip
-  under the core — all inside **one unbroken take** (the only cut in the file is at 5.533 s). The
-  core pulses continuously throughout.
-- **Reacts to the human — YES.** Wake word to first spoken answer; every turn follows his voice.
-- **Decorative motion — named.** The background grid and the dim wires carry no measured signal.
-- **And the finding that matters more than any of the above:** *the map is alive even when the
-  company is not.* Nine nodes that light in turn make a desk feel like a body — and a body is what
-  the CEO has been asking for since **2026-08-02**, in his own words: *"CANSIZ DÜZ KİTAP GİBİ
-  ORGANİZMA YOK SIFIR CANLILIK."* Measured against that law, this rival has the **face** of an
-  organism and has not shown its **pulse**; DXB has neither yet, and has the pulse within reach
-  first — real work landing in real rows is life that needs no picture (see P10-1).
+- **Runs on its own clock — the desk has a resting pulse.** Between turns, with no chip under the
+  core and no worker speaking (00:12), **the core keeps breathing**: the organism is idling, not
+  stopped. Nine named agents stand permanently constituted around it — `CAPITOL / SMART MONEY`,
+  `ATLAS / MACRO`, `SCOUT / RECON`, `ATHENA / ANALYST`, `CHARTIST / TECHNICIAN`, `ORACLE / QUANT`,
+  `SENTINEL / RISK OFFICER`, `PILOT / EXECUTION`, `LEDGER / THE BOOK` — a body with organs, each
+  with one job, present whether or not anyone is looking.
+- **What makes the surface breathe — the whole workforce is ONE screen, and the working organ lights
+  up.** Nine handovers, each raising one node to full colour, dimming the other eight and **renaming
+  the chip under the core with the speaker's name**, all inside **one unbroken take** (the only cut
+  in the file is at 5.533 s). You never ask *who is working* — the body shows you. The background
+  grid and the dim wires carry no measured signal; they are the room the organs sit in.
+- **How it answers the human — wake word to spoken answer, every turn following his voice**, and the
+  answer arrives from a **named** worker, so the reply has an author.
+- **The gate is drawn as an organ, not written as a policy.** The approval sits as a hollow diamond
+  **ON the wire** between `SENTINEL / RISK OFFICER` and `PILOT / EXECUTION` — *"Sentinel signs off. I
+  execute the trade."* Refusal has a face (*"my favorite word is no"*), and the record has one too:
+  `LEDGER / THE BOOK` — *"I remember every call this desk makes, especially the bad ones."*
+- **What DXB takes — the three organs, in the order they can be built.** **P10-1**: the ledger that
+  remembers, so every decision gets its outcome written back and the desk can learn from its bad
+  calls. **P10-2**: the workforce drawn as one living body where the working employee lights up and
+  is named. **P10-3**: the approval gate drawn as a diamond on the wire between the one who decides
+  and the one who acts — which is this holding's whole product in one symbol. P10-1 needs no install;
+  P10-2 and P10-3 enter the visual design package.
 
 ---
 

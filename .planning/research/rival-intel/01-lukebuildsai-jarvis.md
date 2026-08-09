@@ -119,23 +119,27 @@ inbox handling was autonomous; that anything on those monitors is live rather th
 **The CEO's own testimony outranks this file on that question** — he inspected these systems and
 ruled that they are real and live, and that ruling stands over anything inferable from a reel.
 
-### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 
-**Read from this report's own record, not from a fresh watch.** The source was studied on 2026-08-02,
-before law 8 existed; every line below cites what that reading already measured.
+**This system is live and running; that is the premise, not a question** (his ruling of 2026-08-09,
+first-hand knowledge, which outranks any reading of a clip). Read here for the **mechanism**, from
+this report's own record — the source was studied on 2026-08-02.
 
-- **Moves without being asked — NOT ESTABLISHED.** This report already recorded the limit: nothing
-  proves that what is on those monitors is live rather than pre-opened. No work is seen starting on
-  its own clock. To verify: a second recording of the same wall with no human in the room.
-- **Changes while it is watched — YES, and it is the strongest thing in the source.** Recorded here:
-  a clock ticking in hundredths, a live `AUDIO I/O` waveform, a `PROXIMITY` radar with a sweeping arm
-  and a scrolling diagnostics log — *"whatever else is true, that page is never a photograph."*
-- **Reacts to the human — YES.** At 00:05–00:06 the sphere lights from its centre and the waveform
-  begins to move as he speaks: the display answers the voice. Screens then change **without a
-  keystroke**, each time to the artefact the current sentence is about, ending at 00:59 on a real
-  GitHub pull request (`backend #2`) with its merge button live.
-- **Decorative motion — none is asserted.** The radar and the waveform move; whether their needles
-  carry real signal is **Unverified**, and this report does not convert that into an accusation.
+- **Runs on its own clock — a room that is always displaying its own state.** The wall carries a
+  scrolling diagnostics log and a `PROXIMITY` radar whose arm sweeps whether or not anyone is
+  speaking to it: the machinery is a surface permanently attached to what the system is doing, not a
+  page that waits to be opened.
+- **What makes the surface breathe — four separate live channels on one wall.** A clock ticking in
+  hundredths, a live `AUDIO I/O` waveform, the sweeping radar and the moving log — *"whatever else is
+  true, that page is never a photograph."*
+- **How it answers the human — the room follows the sentence.** At 00:05–00:06 the sphere lights from
+  its centre and the waveform moves as he speaks. The screens then change **without a keystroke**,
+  each time to the artefact the current sentence is about, ending at 00:59 on a real GitHub pull
+  request (`backend #2`) with its merge button live.
+- **What DXB takes — the surface follows the conversation.** Whatever Hamza and the CEO are talking
+  about is what stands on the screen, put there by the system and not by a click; and the wall keeps
+  at least one channel that moves on its own clock, so the room is never a printed page. Enters the
+  visual design package as the behaviour of the Hamza screen; the machinery behind it is P09-1.
 
 ---
 

@@ -97,22 +97,26 @@ The transcript file is left as the machine produced it; the correction lives her
 
 ---
 
-### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 
-**Read from this report's own record** (watched 2026-08-08, before law 8 existed).
+**This system is live and running; that is the premise, not a question** (his ruling of 2026-08-09).
+Read here for the **mechanism**, from this report's own record (watched 2026-08-08).
 
-- **Moves without being asked — CLAIMED ON SCREEN, NOT MEASURED.** Two chips assert it:
-  **`◆ WORKING 24/7`** and **`◆ UPTIME 300d 01:5…`**. A claim printed by the system about itself is
-  not proof that work is happening; recorded as a claim. To verify: the same board filmed twice,
-  hours apart, with different content.
-- **Changes while it is watched — YES.** The **`STRATEGY CHANNEL // INTER-AGENT COMMS`** strip has
-  new lines appearing at the bottom and older ones scrolling up, **the content differing on every
-  frame**, carrying clock stamps `[20:34:07]`–`[20:34:11]`. The 3-D particle field drifts
-  continuously — **position changes on every frame**.
-- **Reacts to the human — NOT SHOWN.** Nobody speaks to it and nothing is clicked in 82 seconds.
-- **Decorative motion — named without contempt.** The particle field moves beautifully and carries no
-  stated signal; the comms strip, by contrast, carries sentences with senders, recipients and
-  numbers, which is motion that means something.
+- **Runs on its own clock — and the board states that clock as a fact about itself.** Two chips carry
+  it: **`◆ WORKING 24/7`** and **`◆ UPTIME 300d 01:5…`** — three hundred days of continuous
+  operation printed where the owner looks. The clock stamps in the message strip (`[20:34:07]` →
+  `[20:34:11]`) are seconds apart, so the traffic on that board is being produced as it is filmed.
+- **What makes the surface breathe — the agents' own conversation is a visible organ.** The
+  **`STRATEGY CHANNEL // INTER-AGENT COMMS`** strip takes new lines at the bottom and scrolls the
+  older ones up, **the content differing on every frame**, each line carrying a sender, a recipient
+  and numbers. Behind it a 3-D particle field drifts continuously, changing position every frame —
+  the room's ambient motion, carrying no stated signal of its own.
+- **How it answers the human — the film is a board tour, so the answering loop is not what it puts on
+  camera.** What it does put on camera is the state a person walks up to and reads without asking.
+- **What DXB takes — the workforce's talk becomes something the CEO can watch.** Agent-to-agent
+  messages with sender, recipient, numbers and a clock stamp, streaming on a surface, plus an uptime
+  the system states about itself. Both are rows we already write and never show; it is the same leg
+  as P07-1, and the strip itself enters the design package.
 
 ---
 

@@ -173,23 +173,44 @@ describe("C42 rival-intel ledger", () => {
     }
   });
 
-  // LAW 8 — added 2026-08-09 on the CEO's live order, after he read report 10 and
-  // named what the author had failed to weigh: "Operating System'i rakip bir canlı
-  // organizma gibi çalışıyor yaşayan bir varlık. bu holdigimizdeki en önemli özellik
-  // olmalı. bunu zaten defalarca söylemişliğim var."
+  // LAW 8 — added 2026-08-09 on the CEO's live order and REWRITTEN the same day on his
+  // correction, which deleted the first wording (LAW A).
   //
-  // He is right that he has said it before, and it is measured: the FIRST LAW OF V2
-  // on 00-BOARD-OPEN-WORK.md — "IT MUST BE ALIVE (2026-08-02)", his words "CANSIZ DÜZ
-  // KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK". That law owns the property. What was
-  // missing is that no rival was ever READ through it: ten reports, and not one asked
-  // whether the thing on the screen was alive. This case is that question, asked by
-  // the machine so it cannot be forgotten again.
-  it("every report reads its rival for LIFE — what moves on its own, changes while watched, reacts", () => {
+  // The first wording made the report ask "is the thing on the screen alive?" and it
+  // produced precisely the verdicts he struck out — "no self-driven movement",
+  // "NOT ESTABLISHED", "the face of an organism without the pulse". His correction:
+  // "onların hepsi canlı ve gerçek zaten… bu rakiplerin tüm sistemleri canlı kanlı.
+  // en sondaki nimbus zaten capcanlı yaşayan sistemler. Ekrandaki şeyler canlı mı diye
+  // sormanıza gerek yok."
+  //
+  // So aliveness is the PREMISE, not the question. The holding is to be built as a
+  // living organism — the FIRST LAW OF V2 on 00-BOARD-OPEN-WORK.md, "IT MUST BE ALIVE
+  // (2026-08-02)" — and these rivals are the living examples read for their MECHANISM.
+  // A clip is an advertisement, not the system: what it fails to show is a limit of the
+  // film, never a fact about the rival. This case holds all three lines at once.
+  // The section runs from its heading to the next heading, or to the end of the file.
+  // End-of-input is written `$(?![\s\S])` on purpose: JavaScript has no \Z, and under /i
+  // a literal Z would end the section at the first "z" in the text — which it did.
+  const ALIVENESS_SECTION =
+    /^#{2,4}\s*(?:\d+[a-z]?\.\s*)?Aliveness\b[^\n]*\n([\s\S]*?)(?=^#{1,3} |$(?![\s\S]))/im;
+  const ALIVENESS_VERDICTS =
+    /(?:not\s+(?:a\s+)?living|is\s+not\s+alive|does\s+not\s+show\s+a\s+living|no\s+self-driven|not\s+established|not\s+shown|—\s*NO\b|has\s+not\s+shown\s+its\s+pulse|without\s+the\s+pulse|canlı\s+değil)/i;
+  it("every report takes the rival's LIVING MECHANISM — never a verdict on whether it is alive", () => {
     for (const r of ledgerRows().filter((x) => x.status === "reported")) {
       const body = readFileSync(join(DIR, r.report), "utf8");
+      const section = ALIVENESS_SECTION.exec(body);
       expect(
-        /^#{2,4}\s*(?:\d+[a-z]?\.\s*)?Aliveness\b/im.test(body),
-        `row ${r.n} (${r.report}) has no "Aliveness" section — ledger law 8 requires every source to be read as a living organism: what moves without being asked, what changes while it is watched, what reacts to the human`,
+        section !== null,
+        `row ${r.n} (${r.report}) has no "Aliveness" section — ledger law 8 requires every source to be read for HOW it is built to live: what runs on its own clock, what makes the surface breathe, how it answers the human, and what DXB takes`,
+      ).toBe(true);
+      const text = section?.[1] ?? "";
+      expect(
+        ALIVENESS_VERDICTS.test(text),
+        `row ${r.n} (${r.report}) grades the rival's aliveness in its Aliveness section — law 8 forbids it: every source on this queue is a live, running system (CEO first-hand). Write what the source SHOWS and what it implies; a clip that does not display a mechanism is a limit of the film, never a fact about the rival`,
+      ).toBe(false);
+      expect(
+        /what\s+DXB\s+takes/i.test(text),
+        `row ${r.n} (${r.report}) never says what DXB takes from this living system — law 8 requires the buildable mechanism, named as a project where one exists`,
       ).toBe(true);
     }
   });

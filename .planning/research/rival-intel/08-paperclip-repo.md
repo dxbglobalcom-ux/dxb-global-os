@@ -138,25 +138,28 @@ guess which.
 
 ---
 
-### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 
-**A repository is read for the life its code can produce, not for what a screen does** — this source
-was never installed or run, by decision (`STACK.md` and the standing boundary), so every line below
-is **R** (code read at live HEAD) and none of it is **V**.
+**This system is live and running; that is the premise, not a question** (his ruling of 2026-08-09) —
+and here the life is in the code itself, which is the only source on the queue that can be read
+directly rather than filmed. Never installed or run, by decision (`STACK.md` and the standing
+boundary), so every line below is **R** (code read at live HEAD).
 
-- **Moves without being asked — YES, and this is the mechanism worth taking.** `issue_watchdogs`
-  carries `last_observed_fingerprint` / `last_reviewed_fingerprint`: a watchdog that fires **when
-  something changed**, not when a timer expired. Recovery actions and a continuation policy sit on
-  the decision object, so a run can resume itself rather than wait for a human.
-- **Changes while it is watched — UNVERIFIED, and deliberately so.** No interface of theirs was run
-  here. To verify would mean installing a second agent framework, which the boundary forbids.
-- **Reacts to the human — YES, in the shape that matters to this holding:** a decision is an object
-  with a signature, a snapshot and a **deadline**, and approved effects execute exactly once.
-- **The project itself is alive, measured:** ~**529 commits in thirty days**, three releases in three
-  weeks, ~166 contributors, and a push roughly **two hours before the reading**.
-- **What this teaches the holding:** the first kind of life to build is not animation on a screen —
-  it is **a machine that notices a change and acts on it without being asked.** That is project
-  P08-2, and it costs nothing to install.
+- **Runs on its own clock — and the clock is a CHANGE, not a timer.** `issue_watchdogs` carries
+  `last_observed_fingerprint` / `last_reviewed_fingerprint`: the watchdog wakes because something
+  became different, not because a schedule expired. Recovery actions and a continuation policy sit on
+  the decision object, so a run **resumes itself** instead of waiting for a human to notice it died.
+- **What makes the surface breathe — the state lives on the objects, so any surface can read it.**
+  A decision is an object carrying a signature, a snapshot and a **deadline**; a run carries its own
+  continuation. A screen over that schema shows the present without being told to refresh.
+- **How it answers the human — approval is an object with a deadline, and approved effects execute
+  exactly once.** The human's answer is a durable thing the machine holds, not a moment that passes.
+- **The organism around the code, measured:** ~**529 commits in thirty days**, three releases in
+  three weeks, ~166 contributors, and a push roughly **two hours before this reading**.
+- **What DXB takes — the first life to build is not animation.** It is **a machine that notices a
+  change and acts on it without being asked** (**P08-2**), standing on an approval that is an object
+  with a signature, a snapshot and a deadline (**P08-1**). Neither needs a download and neither costs
+  anything.
 
 ---
 

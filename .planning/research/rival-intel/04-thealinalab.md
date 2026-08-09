@@ -148,22 +148,29 @@ page is **not** established, and the address bar is UNREADABLE.
 
 ---
 
-### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 
-**Read from this report's own record** (watched 2026-08-04/05, before law 8 existed). **Of every
-source read so far this is the most alive picture on the queue, and it lasts eight seconds.**
+**This system is live and running; that is the premise, not a question** (his ruling of 2026-08-09).
+Read here for the **mechanism**, from this report's own record (watched 2026-08-04/05). **Eight
+seconds of this source carry more visible machinery than any other film on the queue.**
 
-- **Moves without being asked — YES, on the strongest evidence in the queue.** A ring gauge reads
-  **green `11`** and then **amber `59`** — value and colour changing **inside five seconds of one
-  unbroken take**, with no input shown. Something behind that screen was working while the camera
-  ran.
-- **Changes while it is watched — YES, continuously.** Between 00:02 and 00:04 the board **fills
-  progressively**: the frame draws first, then each panel loads its own data (blank grey map → drawn
-  map; *loading…* widgets → content). Live broadcast video plays **inside** the panels.
-- **Reacts to the human — YES, in one sentence.** A voice speaks an owner-addressed line built out of
-  what is on the screen: *"tensions are high with Iran, **boss**…"*.
-- **Decorative motion — not asserted.** Panel headings and the address bar are **UNREADABLE** (a phone
-  filming a monitor), so what the numbers count is **Unverified** — recorded as a limit, not a charge.
+- **Runs on its own clock — a number recomputing itself on camera.** A ring gauge reads **green `11`**
+  and then **amber `59`** — value *and* colour changing **inside five seconds of one unbroken take**,
+  with no input shown: something behind the screen was working while the camera ran, and the surface
+  was wired to it.
+- **What makes the surface breathe — each panel loads its own data, independently.** Between 00:02
+  and 00:04 the board **fills progressively**: the frame draws first, then every panel fetches for
+  itself (blank grey map → drawn map; *loading…* widgets → content), and live broadcast video plays
+  **inside** the panels. The screen is a set of separate live organs, not one page printed at once.
+- **How it answers the human — it speaks a sentence assembled from what is on the screen.** A voice
+  says an owner-addressed line built out of the board's own content: *"tensions are high with Iran,
+  **boss**…"*.
+- **What DXB takes — panels that live independently, and a spoken line built from the live board.**
+  Each panel owns its own refresh so one slow source cannot freeze the room, and the briefing Hamza
+  speaks is assembled from what is actually on the screen at that moment. Machinery: P09-1; the
+  drawing enters the design package.
+  *(Limit of the film, not of the system: panel headings and the address bar are **UNREADABLE** — a
+  phone filming a monitor — so what the numbers count is Unverified.)*
 
 ---
 

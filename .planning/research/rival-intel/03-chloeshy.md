@@ -262,22 +262,26 @@ Two observations that belong together, neither of them a criticism of the system
 
 ---
 
-### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 
-**Read from this report's own record** (watched 2026-08-04, before law 8 existed).
+**These systems are live and running; that is the premise, not a question** (his ruling of
+2026-08-09). This source is the one on the queue that **draws the mechanism instead of filming it** —
+a teardown to camera — so it is read for the anatomy it puts on the board. From this report's own
+record (watched 2026-08-04).
 
-- **Moves without being asked — NOT SHOWN.** Nothing in this source runs on its own clock. It is a
-  teardown, filmed to camera.
-- **Changes while it is watched — barely, and only inside the clip it quotes.** The one recorded
-  change is at 00:29, where the inset of source 01 returns and **the monitors have changed** —
-  wallpapers gone, a line chart on the left, a text panel on the right. Everything else on screen is
-  a diagram or a web page held still.
-- **Reacts to the human — NOT SHOWN.** No interaction with any system is filmed.
-- **What it does contribute to the question:** the loop is *drawn* even though it is not *run* — the
-  architecture card wires **`SUPERVISOR FEEDBACK & ESCALATION`** back into the Actions layer. That is
-  the shape of a living system on paper.
-- **Honest line:** **this source does not show a living system; it shows the anatomy of one.** Its
-  value is the parts list, and this report already treats it that way.
+- **Runs on its own clock — the loop is drawn as a wire that re-enters itself.** The architecture
+  card carries **`SUPERVISOR FEEDBACK & ESCALATION`** wired **back into the Actions layer**: work is
+  checked and, where it fails, raised again — the machinery by which a system keeps going without a
+  human standing over it, and the reason the escalation path has a named owner.
+- **What makes the surface breathe — the one live window she opens.** At 00:29 the inset of source 01
+  returns and **the monitors have changed**: wallpapers gone, a line chart on the left, a text panel
+  on the right — the same wall in a different state, minutes apart.
+- **How it answers the human — the escalation edge is where the person sits.** In the anatomy she
+  draws, the human is not the operator of every step; the human is the destination of the escalation.
+- **What DXB takes — the supervisor loop as a wire, not as a policy sentence.** Every act that can
+  fail has a check behind it and an edge that carries the failure to a named owner, drawn on the
+  surface where it lives. It joins the design package alongside P10-3 (the gate drawn where it
+  stands).
 
 ---
 

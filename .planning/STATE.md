@@ -91,8 +91,9 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    **Source 09 (`huwprosser`, watched whole with sound on 2026-08-09) is the second thing he should
    read.** A man says one sentence out loud and **2.8–3.2 seconds later** the machine has drawn a
    live map across his whole screen — measured inside a single unbroken take — and the assistant's
-   own mark steps out of the way first. Measured against us the same session: our voice loop's
-   **median is 32.7 seconds** (hearing 20.1 / thinking 14.8 / speaking 2.6) across 102 calls, the
+   own mark steps out of the way first. The size of the work that follows from it, measured the same
+   session: our voice loop's **median is 32.7 seconds** (hearing 20.1 / thinking 14.8 / speaking 2.6)
+   across 102 calls, the
    last of them on 2026-07-28, and the voice surface can render **only text** — a spoken request
    cannot draw anything at all. Projects **P09-1** (the answer lands on the screen) and **P09-2**
    (the 32-second answer) need no install and no money; the design half waits for his design package.
@@ -101,21 +102,27 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    A rival draws his nine workers as one living screen where the one that is working lights up and
    the centre says its name — and he draws **the permission to act as a diamond sitting on the wire
    between the one who decides and the one who acts.** That is this whole product in one symbol.
-   Measured against us: we have 205 written employees and **not one picture of any of them** — three
-   files in the entire dashboard draw a shape, two are a logo and a ring. And our decision record
-   cannot learn: **`decision_log` holds 4,730 rows and 3,248 of them (68.7 %) never say what
-   happened.** Project **P10-1** closes that and needs no install; **P10-2** (the desk map) and
+   What that makes buildable here, measured to size the work and not to grade the holding: we have 205
+   written employees and **not one picture of any of them** — three files in the entire dashboard draw
+   a shape, two are a logo and a ring — and our decision record cannot yet learn, because
+   **`decision_log` holds 4,730 rows and 3,248 of them (68.7 %) never say what happened.** Project **P10-1** closes that and needs no install; **P10-2** (the desk map) and
    **P10-3** (the gate drawn where it stands) enter the design package and are not built.
 
-   **His live order of 2026-08-09 changed how the whole queue is read.** After that report he named
-   the property the author had failed to weigh: *"Operating System'i rakip bir canlı organizma gibi
-   çalışıyor yaşayan bir varlık. bu holdigimizdeki en önemli özellik olmalı. bunu zaten defalarca
-   söylemişliğim var."* **He had said it before and the record proves it** — the board's
-   **FIRST LAW OF V2, "IT MUST BE ALIVE" (2026-08-02)**, in his words *"CANSIZ DÜZ KİTAP GİBİ
-   ORGANİZMA YOK SIFIR CANLILIK."* The failure was the reading, not the record: ten sources studied
-   and none ever asked whether the thing on the screen was alive. Repaired the same hour —
-   **ledger law 8** makes the aliveness reading compulsory, a machine check enforces it (proven to
-   bite), and **all nine finished reports were given that reading** from their own measured records.
+   **His live order of 2026-08-09 changed how the whole queue is read, and his correction the same
+   evening decided what the reading IS.** He first named the property the author had failed to weigh:
+   *"Operating System'i rakip bir canlı organizma gibi çalışıyor yaşayan bir varlık. bu holdigimizdeki
+   en önemli özellik olmalı."* — the board's **FIRST LAW OF V2, "IT MUST BE ALIVE" (2026-08-02)**.
+   The first repair asked the wrong question, and he struck it out: *"onların hepsi canlı ve gerçek
+   zaten… en sondaki nimbus zaten capcanlı yaşayan sistemler. Ekrandaki şeyler canlı mı diye sormanıza
+   gerek yok."* **Aliveness is the PREMISE, never the question.** Every source here is a live, running
+   system — he knows them first-hand — and a clip is an advertisement, so what a film does not show is
+   a limit of the film, never a fact about the rival. **Ledger law 8, rewritten:** read each rival for
+   **HOW it is built to live** — what runs on its own clock, what makes the surface breathe, how it
+   answers the human and how fast, and **what DXB takes** — because the holding itself is to be built
+   as a living organism. A machine check enforces it, proven to bite, and **all nine finished reports
+   were rewritten to that reading.** **The order of the work is his too:** *"bizim durumumuz zaten
+   daha ferrari kalitesinde bir holding OS sistemi henüz kurulmadı. önce rakipleri inceliyoruz."* —
+   our own zero readings are not news and never a grade against a rival; the machine is not built yet.
    The synthesis at the end of this queue is built on that lens. <!-- OPEN: B22 -->
 
    Sources 07-11 had been reported in the night session of 2026-08-08 and

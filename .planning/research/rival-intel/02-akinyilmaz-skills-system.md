@@ -289,20 +289,27 @@ means he also warns about some of them.
 
 ---
 
-### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 
-**Read from this report's own record** (watched 2026-08-04, before law 8 existed).
+**This system is live and running; that is the premise, not a question** (his ruling of 2026-08-09).
+Read here for the **mechanism**, from this report's own record (watched 2026-08-04).
 
-- **Moves without being asked — YES, once and clearly.** At 00:16 a notification card announces
-  **`…ODE Akşam Review` / `Ready`** with a green tick: a scheduled routine finished **on its own
-  clock** and told him so. That is work happening while the human was doing something else.
-- **Changes while it is watched — YES.** His speech is transcribed into the chat **live, growing word
-  by word** (00:27–00:31); the conversation scrolls as it runs; each unit of work stamps itself
-  (`Worked for 1m 3s`, `Worked for 37s`, `Worked for 9s`, `Worked for 10s`).
-- **Reacts to the human — YES, in a full loop.** He reported a bug by voice, the agent fixed it and
-  reported back, **twice**; later the page **scrolls itself on voice command**.
-- **Decorative motion — one item, named.** The robotic arm moving chess pieces at 00:59–01:03 is
-  **stock footage, not his system**, and was recorded as illustration when it was first read.
+- **Runs on its own clock — and it announces itself when it is done.** At 00:16 a notification card
+  reads **`…ODE Akşam Review` / `Ready`** with a green tick: a scheduled routine finished on its own
+  clock while the human was doing something else, and the finished work came to him rather than
+  waiting to be discovered.
+- **What makes the surface breathe — the work narrates itself as it runs.** His speech is transcribed
+  into the chat **live, growing word by word** (00:27–00:31); the conversation scrolls while it runs;
+  and every unit of work stamps its own cost in time (`Worked for 1m 3s`, `Worked for 37s`,
+  `Worked for 9s`, `Worked for 10s`).
+- **How it answers the human — a closed loop, twice over.** He reported a fault by voice, the agent
+  repaired it and reported back, **twice in the same session**; later the page **scrolls itself on a
+  spoken command**, so the voice drives the surface and not only the work.
+  (The chess-arm shot at 00:59–01:03 is stock footage used as illustration — film, not his system.)
+- **What DXB takes — finished work reports itself, and every unit of work carries its own duration.**
+  A routine that ends puts its result in front of the CEO with a state word he can read at a glance;
+  each agent run stamps how long it took. Both are rows we already have and do not yet surface — the
+  same leg as P07-1 (every run ends in one measured sentence).
 
 ---
 

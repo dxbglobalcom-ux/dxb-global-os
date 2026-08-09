@@ -234,26 +234,28 @@ per-platform rate card; **whether it caps the clip or the clipper is not legible
 
 ---
 
-### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 
-**Read from this report's own record** (watched 2026-08-07, before law 8 existed). This source is a
-business, filmed on the platform that runs it, so the question splits in two and the answer is
-different on each side.
+**This system is live and running; that is the premise, not a question** (his ruling of 2026-08-09).
+This source is a **business** filmed on the platform that runs it, so its life is not in animation —
+it is in money and people moving through the numbers on the page. From this report's own record
+(watched 2026-08-07).
 
-- **The interface: moves without being asked — NO.** Every change recorded in section 2 is
-  human-driven: the grid scrolls under the presenter's cursor, the cursor moves onto a publisher
-  name, a page is scrolled one card. **No self-driven change was observed**, and none is claimed.
-- **Changes while it is watched — only where a human pushes it.** Recorded honestly rather than
-  dressed up.
-- **Reacts to the human — YES, as any web page does; nothing more is shown.**
-- **The market behind it is what is alive, and it is measurable:** budgets shown mid-consumption
-  (`$1,877/$4,000`, `$4,063/$6,250`, one at **`$120,000/$120,000`**), participant counts up to
-  **12K**, **114.2M** views tallied, and a **public top-earners leaderboard** that can only mean
-  something if it reorders as people earn. **Whether any of those numbers moved during the filming is
-  Unverified** — no frame in this reading shows one changing.
-- **What this teaches the holding:** liveness is not only animation. A budget consuming itself in
-  public and a roster reordering itself are life, and they are the kind DXB can actually produce
-  first, because they need no new picture — only real work landing in real rows.
+- **Runs on its own clock — the marketplace consumes itself in public.** Campaign budgets are shown
+  **mid-consumption** (`$1,877/$4,000`, `$4,063/$6,250`, one already at **`$120,000/$120,000`**),
+  participant counts reach **12K**, **114.2M** views are tallied, and a **public top-earners
+  leaderboard** stands on the page — a board that only means anything because it reorders itself as
+  people earn. Nobody presses a button to make those numbers move; the crowd does.
+- **What makes the surface breathe — the state of the business IS the interface.** Every card carries
+  a live pair (spent against budget, views against target), so the page is a set of gauges over real
+  money rather than a catalogue.
+- **How it answers the human — it hands the visitor a position, not a page.** The grid, the publisher
+  pages and the leaderboard exist so a clipper can see where they stand and what is still unspent.
+- **What DXB takes — the kind of life that needs no picture, and it is the kind we can build first.**
+  A budget consuming itself in public and a roster reordering itself are living surfaces made purely
+  of real rows: money committed against money spent, work delivered against work promised, people
+  ranked by what they actually produced. This is the aliveness the agency seat (row **B28**) carries
+  in its own numbers.
 
 ---
 

@@ -136,26 +136,34 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
      advertisement"* (his own correction, 2026-08-01).
    - The tenth case of `tests/c42/rival-intel-ledger.test.ts` enforces this. A report that breaks it
      cannot be `reported` — the machine fails the commit, not the CEO's eye three days later.
-8. **A RIVAL IS READ FOR ITS LIFE — IS IT A LIVING ORGANISM, OR A PRINTED PAGE?** Added 2026-08-09 on
-   his live order, given after he read report 10: *"Operating System'i rakip bir canlı organizma gibi
-   çalışıyor yaşayan bir varlık. bu holdigimizdeki en önemli özellik olmalı. bunu zaten defalarca
-   söylemişliğim var."* **He has said it before and the record proves it** — the property is owned by
-   **the FIRST LAW OF V2 on `00-BOARD-OPEN-WORK.md`, "IT MUST BE ALIVE (2026-08-02)"**, in his words
-   *"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK."* That law is not repeated here; this law is
-   the **reading rule** it was missing. The defect it repairs is the author's: ten sources studied and
-   **not one of them was ever asked whether the thing on the screen was alive.**
-   - **Every report carries an `Aliveness` section**, and it answers the four questions the first law
-     of V2 is written in: (1) what **moves without being asked** — does work happen on its own clock?
-     (2) what **changes while it is watched** — is any number, line or shape different from one second
-     to the next, and how was that measured? (3) what **reacts to the human** — does the thing respond
-     to the person in front of it, and how fast? (4) what is **decorative** — motion that is not real
-     work, named as such without contempt.
-   - **Measured, never impressionistic.** "It feels alive" is not a reading. Frame-to-frame difference,
-     a scrolling log whose lines differ, a gauge that changes value inside one unbroken take, a
-     watchdog that fires on change in the code — those are readings. Where a source shows no life,
-     the report says so plainly, and that is a finding too.
-   - **The eleventh case of `tests/c42/rival-intel-ledger.test.ts` enforces the section's existence.**
-     The machine can only check that the question was asked; the CEO's eye checks the answer.
+8. **EVERY RIVAL ON THIS QUEUE IS ALIVE. READ IT FOR *HOW* IT LIVES — NEVER FOR *WHETHER* IT LIVES.**
+   Added 2026-08-09 and **rewritten the same day on his correction** (LAW A — the first wording is
+   deleted, not footnoted beside it). The first wording told the author to ask *"is the thing on the
+   screen alive?"*, and it produced exactly the verdicts he struck out: *"no self-driven movement"*,
+   *"NOT ESTABLISHED"*, *"it has the face of an organism and has not shown its pulse"*. His words:
+   *"onların hepsi canlı ve gerçek zaten… bu rakiplerin tüm sistemleri canlı kanlı. en sondaki nimbus
+   zaten capcanlı yaşayan sistemler. Ekrandaki şeyler canlı mı diye sormanıza gerek yok."*
+   - **THE PREMISE, NOT THE QUESTION.** Every source on this queue is a live, running system. The CEO
+     knows these systems first-hand, which is the highest evidence label his directive defines, and it
+     outranks any reading of a fifteen-second clip. **A clip is an advertisement, not the system:**
+     what the film does not happen to show is a limit of the FILM and never a fact about the rival.
+   - **WHY THE SECTION EXISTS AT ALL:** the holding itself is to be built as a **living organism** —
+     his oldest and most repeated requirement, owned by **the FIRST LAW OF V2 on
+     `00-BOARD-OPEN-WORK.md`, "IT MUST BE ALIVE (2026-08-02)"**, *"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK
+     SIFIR CANLILIK."* These rivals are the living examples. The section reads them to learn **how a
+     living system is built**, and hands the holding the mechanism.
+   - **REQUIRED — four readings, all of them mechanism:** (1) **what runs on its own clock**, and by
+     what machinery; (2) **what makes the surface breathe** — how a change inside the system reaches
+     the screen; (3) **how it answers the human**, and how fast, measured where the source allows it;
+     (4) **what DXB takes** — the buildable mechanism, named as a project where one exists. Every
+     report carries this section under a heading beginning `Aliveness`.
+   - **FORBIDDEN**, in any language, however dressed: *"not alive"* · *"does not show a living
+     system"* · *"no self-driven movement"* · *"NOT ESTABLISHED / NOT SHOWN"* used as a verdict on
+     life · *"the face of an organism without the pulse"* · any sentence that grades how alive a rival
+     is. Where the source does not display a mechanism, the report writes what it DOES show and what
+     that implies — and says the clip did not display it, never that the rival lacks it.
+   - **The eleventh case of `tests/c42/rival-intel-ledger.test.ts`** requires the section, fails the
+     forbidden verdicts inside it, and fails a section that never says what DXB takes.
 
 ## Status vocabulary
 
