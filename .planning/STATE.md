@@ -65,6 +65,14 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 ## Next — read this before doing anything
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
+
+   **WHY IT EXISTS — order C42, sharpened 2026-08-09:** *"bu rakip video raporlarını niye
+   hazırlıyoruz adam gibi hatırlamanız lazım."* He hands over a rival; the author watches it whole,
+   reports what that rival **PRODUCES**, then builds the same **or better** — *"RAKİPLERİMİZDEN ÇOK
+   İİ OLSUN."* It is the parts list for **the Ferrari**, not research, and **no design work starts
+   until every source is watched.** A sentence not traceable to the source is `UNVERIFIED`, or it
+   is not written. Full reason: `.claude/skills/dxb-rival-intel` + ledger §Why this exists.
+
    **9 of 34 sources reported**, `NEXT: 11`. **Sources 07, 08, 09 and 10 were rewritten from nothing on
    his order — *"7'den tekrar başla, bu sefer doğru yap"*** — the first four reports
    written under law 7, which judges a rival by what it PRODUCES. Row 11 stands at `fetched` with
