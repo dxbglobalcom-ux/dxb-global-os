@@ -73,9 +73,9 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    until every source is watched.** A sentence not traceable to the source is `UNVERIFIED`, or it
    is not written. Full reason: `.claude/skills/dxb-rival-intel` + ledger §Why this exists.
 
-   **10 of 34 sources reported**, `NEXT: 12`. **Sources 07, 08, 09, 10 and 11 were rewritten from
+   **11 of 34 sources reported**, `NEXT: 13`. **Sources 07, 08, 09, 10 and 11 were rewritten from
    nothing on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — under law 7, which judges a
-   rival by what it PRODUCES. Row 12 stands at `fetched` with its raw material intact.
+   rival by what it PRODUCES. Row 13 stands at `fetched` with its raw material intact.
 
    **His live order of 2026-08-09 gave the queue its second reading law, and it is now machine-held.**
    His words, handing over source 11: *"zaten 11 de göreceksiniz bağlantı dallarından böyle bir nokta
@@ -100,7 +100,23 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    draw a shape** — so there is no wire for anything to travel along. We do have the clock (15 scheduled
    jobs) and live data on the screen (15 realtime subscriptions). Projects **P11-2** (a step declares its
    constraint) and **P11-3** (a run accounts for every item; memory names its run) need no install and no
-   money; **P11-1** (the wire that carries the work) enters the design package and waits on his approval.
+   money; **P11-1** (the wire that carries the work) enters the design package and waits on his approval. <!-- OPEN: B22 -->
+
+   **Source 12 (the same board, filmed as a clean screen recording, watched whole on 2026-08-09) turned
+   that pulse into a specification.** Because the canvas is pixel-stable, the animation could be measured
+   exactly: **one duration per edge — 1.8 s whether the edge is 44 px or 340 px long** — constant speed
+   inside it with no easing, **one 2.4 s period for the whole board** with neighbouring wires ≈ 1.2 s out
+   of phase, and **≈ 0.5 s of every cycle with the wire empty**, so rest is part of the design. The brain's
+   sphere lives by brightness, not motion: **(0, 0) px of displacement over 2.0 s** while 1–2 of its 13–20
+   lit vertices change every 0.1 s. Its second mechanism is the **viewport as an actor** — four camera moves
+   in 52 s, each landing the stage being spoken about within **0.02–0.44 s** of the sentence naming it.
+   **P12-1** is those numbers, filed into P11-1 rather than beside it. **P12-2** — an answer names where it
+   lives and the surface travels to it — needs no install and no money for its data half, and it is the
+   missing half of complaint **C26**: `api/chat/route.ts` holds **0** references to a page or a route.
+   **Measured the same session:** the holding's only 2.4-second heartbeat is `hl-pulse … infinite` on the
+   **login page's beacon**; inside the cockpit every perpetual motion is a loading placeholder. Two errors
+   in report 11 were corrected at source (the sphere flickers in place rather than turning; one cited
+   command was wrong while its number was right).
 
    **The one thing on this page he should read first — from source 08 (`paperclip`, read at live HEAD
    on 2026-08-08, 75,865 stars, pushed two hours before the reading).** Measured: **nothing in this

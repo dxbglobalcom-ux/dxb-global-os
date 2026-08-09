@@ -1,7 +1,7 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 12**
+**NEXT: 13**
 
 > ### ⛔ REPORTS 07, 08, 09, 10 AND 11 WERE DELETED ON 2026-08-08 — the CEO's live order (LAW A)
 > *(Status today: 07, 08, 09, 10 and 11 have all been rewritten from nothing under law 7 — row 11 on
@@ -206,7 +206,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | reported | 2026-08-09T14:21:34Z | `09-huwprosser.md`  | listed without a note |
 | 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | reported | 2026-08-09T16:29:05Z | `10-cloud9-markets.md`  | listed without a note |
 | 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | reported | 2026-08-09T19:04:02Z | `11-rinaldojanjua-a.md`  | listed without a note |
-| 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | claimed  | 2026-08-09T19:52:52Z | `12-rinaldojanjua-b.md` | listed without a note |
+| 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | reported | 2026-08-09T20:12:00Z | `12-rinaldojanjua-b.md` | listed without a note |
 | 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:51:40Z | `13-rinaldojanjua-c.md` | listed without a note |
 | 14 | https://www.instagram.com/reel/DbKe90ETKfB/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:55:20Z | `14-rinaldojanjua-d.md` | listed without a note |
 | 15 | https://drive.google.com/file/d/105ejHFZg-07mYEJwT4vZ5rxFClS-h9G4/view | pdf | fetched  | 2026-07-28T11:59:59Z | `15-vibecoder-4-sites-pdf.md` | measured 2026-07-28: not a video — the PDF *"Her Vibe Coder'ın Bilmesi Gereken 4 Site - Part 5"* |

@@ -69,8 +69,8 @@ ffmpeg -ss 69.0 -i media/11-DbA3JgbphEs.mp4 -vframes 1 -vf "crop=420:130:400:150
 ## 2. What was on the screen — the record, second by second
 
 One canvas throughout: a **dotted graph paper field** carrying five rounded **stage cards** wired
-left to right by curved lines, with a rotating **wireframe sphere** sitting between stage 03 and
-stage 04. The camera pans along the wiring for 97 seconds the way a finger traces a circuit. The
+left to right by curved lines, with a **wireframe sphere** whose vertices flicker sitting between
+stage 03 and stage 04. The camera pans along the wiring for 97 seconds the way a finger traces a circuit. The
 overlay caption **`Inbox Cleaner agent saves me 15hrs/wk`** / **`It Unsubscribes for me`** sits on
 the first 8 seconds only.
 
@@ -100,7 +100,7 @@ the first 8 seconds only.
 | 00:27 | `STAGE 03` rule chips: **`Read new newsletters`** · **`Move the real-insight ones`** | *"Then all the inbound email leads are automatically added to my click-up and enriched by another agent."* (28.37–33.37) |
 | 00:29 | The dotted line to the right is labelled in small blue type: **`READS + WRITES BRAIN`** | — |
 | 00:32 | Behind `STAGE 03`, at the right, a **large wireframe sphere** comes into frame — dozens of vertices wired to each other, lit cyan, violet and white | *"So right now it's running the COO, I have other agents to enrich my leads."* (33.37–37.37) |
-| 00:36 | The sphere fills the right half; **its vertices sit in different places each second — the body turns on its own** | *"Then it identifies if the contents of the business newsletter are relevant to me,"* (37.37–42.37) |
+| 00:36 | The sphere fills the right half; **its lit vertices sit in different places in each of these one-second frames** (what that means was decided by a 10-fps measurement on source 12 — see the change log at the foot of this file) | *"Then it identifies if the contents of the business newsletter are relevant to me,"* (37.37–42.37) |
 | 00:39 | A long white/violet wire leaves `STAGE 03`, curves down under the sphere and away to the right; a bead rides it | — |
 | 00:41 | Top-right of the screen: a pill badge — the mark, then **`RUN BY COO`**, with a **`✕`** beside it (`zoom/11/run-by-coo-69.0.jpg`) | *"and if they are, it adds the important information to my agent network brain right here."* (42.37–47.37) |
 | 00:46 | Under the sphere, its label is legible: **`AGENT BRAIN`** over **`AI Brain · shared memory`** (`zoom/11/agent-brain-89.5.jpg`) | *"And this is what all the agents use to see what others have done"* (47.37–50.37) |
@@ -114,7 +114,7 @@ the first 8 seconds only.
 | 01:02–01:06 | Five consecutive seconds: the 04→05 wire carries a green bead at five different heights | *"And then lastly, it sends a message to my phone with any important business"* (65.37–70.37) |
 | 01:08 | The whole right half in frame: `STAGE 04` violet, `STAGE 05` green, the `CONSTRAINT` object above, the `RUN BY COO` badge at top right | *"or personal emails that I actually need to review personally."* (70.37–74.37) |
 | 01:13 | Camera swings left, back past the sphere; the violet wire from the sphere to `STAGE 04` is long and clear, beaded | *"And honestly, this saves me like 15 hours per week,"* (74.37–77.37) |
-| 01:18 | The pen crosses the frame; the sphere still turning behind it | *"and every single day this whole system just runs completely on autopilot."* (77.37–82.37) |
+| 01:18 | The pen crosses the frame; the sphere's vertices still flickering behind it | *"and every single day this whole system just runs completely on autopilot."* (77.37–82.37) |
 | 01:22 | Steady wide shot of sphere + `STAGE 04`; the laptop's own function-key row enters the bottom of the frame | *"And if you want to set this up for yourself, just comment system"* (82.37–85.37) |
 | 01:27 | **The dense measurement window.** Bead climbs the sphere→`STAGE 04` wire and lands on the arrowhead | *"and I can send you the file and the scripts that I use."* (85.37–88.37) |
 | 01:30 | Wire empty — no bead anywhere on it for roughly a second and a half | *"Again, it's completely free and it works with any AI you prefer to use."* (88.37–91.37) |
@@ -235,8 +235,12 @@ clip never names — the UNVERIFIED line above says what would settle it.
 bead travelling along it** is a circuit with something moving in it — which is exactly the CEO's
 reading: blood in a vein. Measured in 11-C2: direction = the direction of work, crossing ≈ 1.0–1.2 s,
 one pulse every ≈ 2.3 s, wires out of step with each other so the board never pulses as one block.
-Second breathing element: the `AGENT BRAIN` sphere **turns continuously** — its vertices sit in
-different places in every one of the ~50 seconds it is on screen. Third: **the stage colours are the
+Second breathing element: the `AGENT BRAIN` sphere's **lit vertices change constantly** — a different
+set of them is lit in every one of the ~50 seconds it is on screen. **Corrected 2026-08-09 from source
+12:** this was first written as *"the body turns on its own"*, and a 10-fps measurement of the same
+object on a clean screen recording shows the body is displaced **(0, 0) px over 2.0 s** while **50 % of
+its lit pixels are still lit at the identical pixel one second later** — the vertices switch on and off
+in place, 1–2 of them every 0.1 s. At one frame per second the two are indistinguishable. Third: **the stage colours are the
 circuit's own** — blue for sorting, cyan for routing, violet for the stage that acts outward, green
 for the stage that speaks to the human — so the eye reads *what kind of thing is happening* before it
 reads a word.
@@ -267,7 +271,7 @@ Measured to size the work, never as a grade against this rival — the Ferrari i
 | A workflow that wakes on its own clock | **We have the clock: 15 scheduled jobs** with cron and timezone — `ceo.briefing.morning 0 7 * * *`, `orchestration.work_generate */15 * * * *`, `velocity-breaker */5 * * * *`, `revenue.scan/score/rollup/brief`, four `hr.*` jobs, `memory-compaction`, `lease-reaper`, `tool-pin-check`, `claude-mem-sync` | `psql -At -c "select name,cron,timezone from pgboss.schedule"` |
 | That clock written on the surface the owner reads | **3 of 61 dashboard pages/components mention a schedule at all** (`ops/projects/[slug]`, `ops/automations`, `workflow-center`) | `grep -rlniE "cron\|schedule\|every day" --include=*.tsx apps/dashboard/src` · `find … -name page.tsx \| wc -l` |
 | Stage cards wired with travelling pulses | **Exactly 3 files in the whole dashboard draw an SVG shape** — the login page, `health-ring.tsx`, `dxb-mark.tsx`. Two of them are a logo and a ring. **No wire is drawn anywhere, so nothing can travel along one.** `stroke-dasharray` appears once in `globals.css`, for the skyline that draws itself on arrival | `grep -rl "<svg" --include=*.tsx apps/dashboard/src` |
-| A change inside reaching the screen | **15 files subscribe to live database changes**; 0 use server-sent events; 4 use `setInterval` (session heartbeat, a clock, the voice timer, the dictation timer). **Data does reach the screen live — it just arrives as text in a list** | `grep -rln "\.channel(\|postgres_changes" --include=*.ts* apps/dashboard/src \| wc -l` |
+| A change inside reaching the screen | **15 files carry the live-change subscription**: one helper owns it (`src/lib/realtime.ts`, exporting `subscribeDxb` / `useDxbChannel`) and **14 components consume it**. 0 use server-sent events; 4 use `setInterval` (session heartbeat, a clock, the voice timer, the dictation timer). **Data does reach the screen live — it just arrives as text in a list** | `grep -rln "lib/realtime\|useDxbChannel" --include=*.ts* apps/dashboard/src \| wc -l` → 15. **Corrected 2026-08-09:** the command first cited here (`grep -rln "\.channel(\|postgres_changes" …`) returns **1**, the helper alone — the count was right, the citation was not |
 | Five stages with declared rules | **`workflows` = 0 rows · `workflow_steps` = 0 rows · `workflow_runs` = 0 rows.** The tables exist and `workflow_steps.kind` even allows an `approval` step; **not one workflow has ever been defined in them.** `agent_runs` = 378 | `psql -At -c "select count(*) from workflows"` … |
 | A `CONSTRAINT` object bound to the acting step | `workflow_steps` has `kind` and a free-form `config jsonb` — **no constraint column, nothing declared, nothing enforced**, because there are no rows. The boundary lives elsewhere: `approval_rules`, `approvals`, `hook_policies` | `psql -c "\d workflow_steps"` |
 | `AGENT BRAIN · shared memory`, with the write drawn as an edge | **`memory_index` = 13,194 rows, and `run_id` is NULL on every single one of them (0 rows carry it).** The column exists and points at `agent_runs`; nothing fills it. `memory_embeddings` = 37. **Our brain cannot say which run wrote into it** | `psql -At -c "select count(*) from memory_index"` · `… where run_id is not null` |
@@ -361,3 +365,11 @@ along. That is the size of the work, and it starts with his design package.
 **Two things behind it need no approval and no money: P11-2** (a step declares its constraint before
 the first step is ever written) **and P11-3** (a run accounts for every item, and the 13,194 rows of
 our shared memory learn to say who wrote them).
+
+---
+
+## Change log
+
+| Date | What changed, and why |
+|---|---|
+| 2026-08-09 | **Two corrections, both forced by measurements taken while reading source 12** (`12-rinaldojanjua-b.md`), which films the same board as a clean screen recording instead of a phone pointed at a laptop. **(1) The sphere.** This file read the `AGENT BRAIN` sphere as *"the body turns on its own"*, from 1-fps frames. Measured on source 12 at 10 fps: the body's best rigid displacement over 2.0 s is **(0, 0) px**, **64 %** of its lit pixels are still lit at the identical pixel 0.1 s later and **50 %** a full second later — the vertices switch on and off in place, 1–2 of them every 0.1 s. At one frame per second a flicker field and a rotation cannot be told apart. Corrected in §2 (00:36, 01:18), §Aliveness (2) and the opening paragraph of §2; the observation is kept, the inference is replaced. **(2) The realtime citation** in §4: the count of 15 is right — one helper plus 14 consumers — but the command printed beside it returns 1. The correct command is now in the cell. Nothing else in this file was touched, and **P11-2 and P11-3 are unaffected** |
