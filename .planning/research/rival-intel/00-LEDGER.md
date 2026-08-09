@@ -1,7 +1,7 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 09**
+**NEXT: 10**
 
 > ### ⛔ REPORTS 07, 08, 09, 10 AND 11 ARE DELETED — the CEO's live order, 2026-08-08 (LAW A)
 > His words: *"yaptığın son raporlar hangileri BOZUK OLAN BOKTAN RAPORLAR HEPSİNİ sil. 7 8 9 10 11."*
@@ -22,7 +22,9 @@
 >
 > **The raw material stays** — his standing ruling of 2026-08-01, *"hükümler çöpe, ham malzeme
 > kalsın"*: the videos, the audio, the frames, the native zooms and the transcripts of rows 07-11 are
-> untouched on disk (see `00-ARCHIVE.md`). The five rows are back to `fetched` and **NEXT is 07**.
+> untouched on disk (see `00-ARCHIVE.md`). The five rows went back to `fetched` and NEXT went to 07
+> **on that day** — 07, 08 and 09 have since been rewritten from nothing; the live marker is at the
+> top of this file and nowhere else.
 > Not one sentence of the deleted reports may be carried into a rewrite; a rewrite opens the file
 > from nothing.
 
@@ -42,7 +44,7 @@
 > row number **35** because 34 belongs to the cognee repository and row numbers are welded to file
 > names, frame folders and every report already written; renumbering to close the 06 hole would have
 > moved his 7 as well, which his own sentence forbids. It sits last in the queue on his order to
-> watch it **later** — source 07 is the work now.
+> watch it **later** — source 07 was the work when he said it, on 2026-08-08.
 
 > ### ⛔ EVERY VERDICT ON THIS QUEUE WAS BINNED BY THE CEO — 2026-08-01 (LAW A)
 > He inspected the sixteen reports and rejected them: the author *"UNDERESTIMATED MY OPPONENTS
@@ -154,7 +156,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 05 | https://www.instagram.com/reel/DadfHYrkmr7/ — CNN (`cnn`) | reel | reported | 2026-08-07T20:35:56Z | `05-cnn-clipping-business.md` | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* — **and on reading the report, 2026-08-07: *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"*** (total exclusion, every seat, any size — report §5.3) |
 | 07 | https://www.instagram.com/reel/DbSGx3CCRQS/ — Misael · Founder Systems (`misael.systems`) | reel | reported   | 2026-08-08T10:22:00Z | `07-misael-founder-systems.md`  | listed without a note |
 | 08 | https://github.com/paperclipai/paperclip | repo | reported   | 2026-08-08T10:38:00Z | `08-paperclip-repo.md`  | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
-| 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | fetched  | 2026-07-28T11:47:15Z | `09-huwprosser.md`  | listed without a note |
+| 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | reported | 2026-08-09T14:21:34Z | `09-huwprosser.md`  | listed without a note |
 | 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | fetched  | 2026-07-28T11:47:15Z | `10-cloud9-markets.md`  | listed without a note |
 | 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | fetched  | 2026-07-28T11:47:15Z | `11-rinaldojanjua-a.md`  | listed without a note |
 | 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:47:15Z | `12-rinaldojanjua-b.md` | listed without a note |

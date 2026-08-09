@@ -65,9 +65,9 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 ## Next — read this before doing anything
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
-   **7 of 34 sources reported**, `NEXT: 09`. **Sources 07 and 08 were rewritten from nothing on
-   2026-08-08 on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — the first two reports
-   written under law 7, which judges a rival by what it PRODUCES. Rows 09-11 stand at `fetched` with
+   **8 of 34 sources reported**, `NEXT: 10`. **Sources 07, 08 and 09 were rewritten from nothing on
+   his order — *"7'den tekrar başla, bu sefer doğru yap"*** — the first three reports
+   written under law 7, which judges a rival by what it PRODUCES. Rows 10-11 stand at `fetched` with
    their raw material intact.
 
    **The one thing on this page he should read first — from source 08 (`paperclip`, read at live HEAD
@@ -76,9 +76,18 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    database for `signed`, `signature` or `snapshot` returns `workflow_runs.steps_snapshot` and nothing
    else; the approval is one row, the execution is another, and only a foreign key joins them. The
    whole product is *he approves the acts that face outward* — **project P08-1** closes it with a
-   signed spec and a target snapshot, needs no download, costs nothing, and waits on his word.
+   signed spec and a target snapshot, needs no download, costs nothing, and waits on his word. <!-- OPEN: B22 -->
    Source 07 lands **P07-1** beside it: every agent run must end in one measured sentence, because
    1,543 of our task events carry **zero** statements of what an agent found.
+
+   **Source 09 (`huwprosser`, watched whole with sound on 2026-08-09) is the second thing he should
+   read.** A man says one sentence out loud and **2.8–3.2 seconds later** the machine has drawn a
+   live map across his whole screen — measured inside a single unbroken take — and the assistant's
+   own mark steps out of the way first. Measured against us the same session: our voice loop's
+   **median is 32.7 seconds** (hearing 20.1 / thinking 14.8 / speaking 2.6) across 102 calls, the
+   last of them on 2026-07-28, and the voice surface can render **only text** — a spoken request
+   cannot draw anything at all. Projects **P09-1** (the answer lands on the screen) and **P09-2**
+   (the 32-second answer) need no install and no money; the design half waits for his design package.
 
    Sources 07-11 had been reported in the night session of 2026-08-08 and
    **the CEO deleted all five reports the same morning** — his words:

@@ -247,5 +247,5 @@ refusing work with a stated reason, written into `task_events`, observed today. 
 as much as the business it will one day protect — which is not yet any, and that is our problem, not
 theirs.
 
-**Row 08 is `reported`. Nothing is built, nothing is installed. P08-1, P08-2 and P08-3 wait on his
+**Row 08 is `reported`. Nothing is built, nothing is installed. <!-- OPEN: B22 --> P08-1, P08-2 and P08-3 wait on his
 word.**

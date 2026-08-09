@@ -197,5 +197,5 @@ that requirement, it costs nothing, it needs no download, and it is his to appro
 stopping real work with a real reason, in `task_events`, measured today. It is worth exactly as much
 as the work it will one day protect, which is not yet any.
 
-**Row 07 is `reported`. Nothing is built. P07-1 and P07-3 wait on his word; P07-2 waits behind his
+**Row 07 is `reported`. Nothing is built. <!-- OPEN: B22 --> P07-1 and P07-3 wait on his word; P07-2 waits behind his
 design gate.**
