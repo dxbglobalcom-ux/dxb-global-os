@@ -157,6 +157,32 @@ that the voice runs locally — is on the screen.
 
 ---
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**Read from this session's own watching**, 2026-08-09, all 75 native one-per-second frames in order.
+**This law exists because of this source**: the CEO read the first version of this report and named
+what the author had failed to weigh — *"Operating System'i rakip bir canlı organizma gibi çalışıyor
+yaşayan bir varlık. bu holdigimizdeki en önemli özellik olmalı."*
+
+- **Moves without being asked — NO, and it must be said plainly.** In 75 seconds **not one agent acts
+  on its own.** Nine workers introduce themselves, in order, because a human asked them to. No signal
+  arrives, no position changes, no number moves. **Unverified** whether the desk runs when nobody is
+  talking to it; to verify would take a recording of a market event reaching this screen.
+- **Changes while it is watched — YES, and it is the best-choreographed change on the queue.** Nine
+  handovers, each lighting one node to full colour, dimming the other eight, and renaming the chip
+  under the core — all inside **one unbroken take** (the only cut in the file is at 5.533 s). The
+  core pulses continuously throughout.
+- **Reacts to the human — YES.** Wake word to first spoken answer; every turn follows his voice.
+- **Decorative motion — named.** The background grid and the dim wires carry no measured signal.
+- **And the finding that matters more than any of the above:** *the map is alive even when the
+  company is not.* Nine nodes that light in turn make a desk feel like a body — and a body is what
+  the CEO has been asking for since **2026-08-02**, in his own words: *"CANSIZ DÜZ KİTAP GİBİ
+  ORGANİZMA YOK SIFIR CANLILIK."* Measured against that law, this rival has the **face** of an
+  organism and has not shown its **pulse**; DXB has neither yet, and has the pulse within reach
+  first — real work landing in real rows is life that needs no picture (see P10-1).
+
+---
+
 ## 4. What DXB has today — measured by command, this session
 
 | # | Measured | Command |

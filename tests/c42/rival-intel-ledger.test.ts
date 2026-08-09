@@ -173,6 +173,27 @@ describe("C42 rival-intel ledger", () => {
     }
   });
 
+  // LAW 8 — added 2026-08-09 on the CEO's live order, after he read report 10 and
+  // named what the author had failed to weigh: "Operating System'i rakip bir canlı
+  // organizma gibi çalışıyor yaşayan bir varlık. bu holdigimizdeki en önemli özellik
+  // olmalı. bunu zaten defalarca söylemişliğim var."
+  //
+  // He is right that he has said it before, and it is measured: the FIRST LAW OF V2
+  // on 00-BOARD-OPEN-WORK.md — "IT MUST BE ALIVE (2026-08-02)", his words "CANSIZ DÜZ
+  // KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK". That law owns the property. What was
+  // missing is that no rival was ever READ through it: ten reports, and not one asked
+  // whether the thing on the screen was alive. This case is that question, asked by
+  // the machine so it cannot be forgotten again.
+  it("every report reads its rival for LIFE — what moves on its own, changes while watched, reacts", () => {
+    for (const r of ledgerRows().filter((x) => x.status === "reported")) {
+      const body = readFileSync(join(DIR, r.report), "utf8");
+      expect(
+        /^#{2,4}\s*(?:\d+[a-z]?\.\s*)?Aliveness\b/im.test(body),
+        `row ${r.n} (${r.report}) has no "Aliveness" section — ledger law 8 requires every source to be read as a living organism: what moves without being asked, what changes while it is watched, what reacts to the human`,
+      ).toBe(true);
+    }
+  });
+
   it("a reported row records the fingerprint of what was actually studied", () => {
     for (const r of ledgerRows().filter((x) => x.status === "reported")) {
       const body = readFileSync(join(DIR, r.report), "utf8");

@@ -234,6 +234,29 @@ per-platform rate card; **whether it caps the clip or the clipper is not legible
 
 ---
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**Read from this report's own record** (watched 2026-08-07, before law 8 existed). This source is a
+business, filmed on the platform that runs it, so the question splits in two and the answer is
+different on each side.
+
+- **The interface: moves without being asked — NO.** Every change recorded in section 2 is
+  human-driven: the grid scrolls under the presenter's cursor, the cursor moves onto a publisher
+  name, a page is scrolled one card. **No self-driven change was observed**, and none is claimed.
+- **Changes while it is watched — only where a human pushes it.** Recorded honestly rather than
+  dressed up.
+- **Reacts to the human — YES, as any web page does; nothing more is shown.**
+- **The market behind it is what is alive, and it is measurable:** budgets shown mid-consumption
+  (`$1,877/$4,000`, `$4,063/$6,250`, one at **`$120,000/$120,000`**), participant counts up to
+  **12K**, **114.2M** views tallied, and a **public top-earners leaderboard** that can only mean
+  something if it reorders as people earn. **Whether any of those numbers moved during the filming is
+  Unverified** — no frame in this reading shows one changing.
+- **What this teaches the holding:** liveness is not only animation. A budget consuming itself in
+  public and a roster reordering itself are life, and they are the kind DXB can actually produce
+  first, because they need no new picture — only real work landing in real rows.
+
+---
+
 ## 4. What DXB has today — measured 2026-08-07, this session
 
 | Question | Measurement (command → output) | Result |

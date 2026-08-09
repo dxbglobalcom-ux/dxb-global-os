@@ -148,6 +148,25 @@ page is **not** established, and the address bar is UNREADABLE.
 
 ---
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**Read from this report's own record** (watched 2026-08-04/05, before law 8 existed). **Of every
+source read so far this is the most alive picture on the queue, and it lasts eight seconds.**
+
+- **Moves without being asked — YES, on the strongest evidence in the queue.** A ring gauge reads
+  **green `11`** and then **amber `59`** — value and colour changing **inside five seconds of one
+  unbroken take**, with no input shown. Something behind that screen was working while the camera
+  ran.
+- **Changes while it is watched — YES, continuously.** Between 00:02 and 00:04 the board **fills
+  progressively**: the frame draws first, then each panel loads its own data (blank grey map → drawn
+  map; *loading…* widgets → content). Live broadcast video plays **inside** the panels.
+- **Reacts to the human — YES, in one sentence.** A voice speaks an owner-addressed line built out of
+  what is on the screen: *"tensions are high with Iran, **boss**…"*.
+- **Decorative motion — not asserted.** Panel headings and the address bar are **UNREADABLE** (a phone
+  filming a monitor), so what the numbers count is **Unverified** — recorded as a limit, not a charge.
+
+---
+
 ## 4. What DXB has today — measured 2026-08-05, this session
 
 | Question | Measurement (command → output) | Result |

@@ -97,6 +97,25 @@ The transcript file is left as the machine produced it; the correction lives her
 
 ---
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**Read from this report's own record** (watched 2026-08-08, before law 8 existed).
+
+- **Moves without being asked — CLAIMED ON SCREEN, NOT MEASURED.** Two chips assert it:
+  **`◆ WORKING 24/7`** and **`◆ UPTIME 300d 01:5…`**. A claim printed by the system about itself is
+  not proof that work is happening; recorded as a claim. To verify: the same board filmed twice,
+  hours apart, with different content.
+- **Changes while it is watched — YES.** The **`STRATEGY CHANNEL // INTER-AGENT COMMS`** strip has
+  new lines appearing at the bottom and older ones scrolling up, **the content differing on every
+  frame**, carrying clock stamps `[20:34:07]`–`[20:34:11]`. The 3-D particle field drifts
+  continuously — **position changes on every frame**.
+- **Reacts to the human — NOT SHOWN.** Nobody speaks to it and nothing is clicked in 82 seconds.
+- **Decorative motion — named without contempt.** The particle field moves beautifully and carries no
+  stated signal; the comms strip, by contrast, carries sentences with senders, recipients and
+  numbers, which is motion that means something.
+
+---
+
 ## 4. What DXB has today — measured this session, by command
 
 | Thing | DXB, measured 2026-08-08 | How measured |

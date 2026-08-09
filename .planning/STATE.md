@@ -99,6 +99,17 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    happened.** Project **P10-1** closes that and needs no install; **P10-2** (the desk map) and
    **P10-3** (the gate drawn where it stands) enter the design package and are not built.
 
+   **His live order of 2026-08-09 changed how the whole queue is read.** After that report he named
+   the property the author had failed to weigh: *"Operating System'i rakip bir canlı organizma gibi
+   çalışıyor yaşayan bir varlık. bu holdigimizdeki en önemli özellik olmalı. bunu zaten defalarca
+   söylemişliğim var."* **He had said it before and the record proves it** — the board's
+   **FIRST LAW OF V2, "IT MUST BE ALIVE" (2026-08-02)**, in his words *"CANSIZ DÜZ KİTAP GİBİ
+   ORGANİZMA YOK SIFIR CANLILIK."* The failure was the reading, not the record: ten sources studied
+   and none ever asked whether the thing on the screen was alive. Repaired the same hour —
+   **ledger law 8** makes the aliveness reading compulsory, a machine check enforces it (proven to
+   bite), and **all nine finished reports were given that reading** from their own measured records.
+   The synthesis at the end of this queue is built on that lens. <!-- OPEN: B22 -->
+
    Sources 07-11 had been reported in the night session of 2026-08-08 and
    **the CEO deleted all five reports the same morning** — his words:
    *"BOZUK OLAN BOKTAN RAPORLAR HEPSİNİ sil. 7 8 9 10 11."* The five rows are back to `fetched` and

@@ -289,6 +289,23 @@ means he also warns about some of them.
 
 ---
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**Read from this report's own record** (watched 2026-08-04, before law 8 existed).
+
+- **Moves without being asked — YES, once and clearly.** At 00:16 a notification card announces
+  **`…ODE Akşam Review` / `Ready`** with a green tick: a scheduled routine finished **on its own
+  clock** and told him so. That is work happening while the human was doing something else.
+- **Changes while it is watched — YES.** His speech is transcribed into the chat **live, growing word
+  by word** (00:27–00:31); the conversation scrolls as it runs; each unit of work stamps itself
+  (`Worked for 1m 3s`, `Worked for 37s`, `Worked for 9s`, `Worked for 10s`).
+- **Reacts to the human — YES, in a full loop.** He reported a bug by voice, the agent fixed it and
+  reported back, **twice**; later the page **scrolls itself on voice command**.
+- **Decorative motion — one item, named.** The robotic arm moving chess pieces at 00:59–01:03 is
+  **stock footage, not his system**, and was recorded as illustration when it was first read.
+
+---
+
 ## 4. What DXB has today — measured this session, 2026-08-04
 
 Every row below is a command run this session, not a memory.

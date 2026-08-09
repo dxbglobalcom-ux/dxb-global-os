@@ -262,6 +262,25 @@ Two observations that belong together, neither of them a criticism of the system
 
 ---
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**Read from this report's own record** (watched 2026-08-04, before law 8 existed).
+
+- **Moves without being asked — NOT SHOWN.** Nothing in this source runs on its own clock. It is a
+  teardown, filmed to camera.
+- **Changes while it is watched — barely, and only inside the clip it quotes.** The one recorded
+  change is at 00:29, where the inset of source 01 returns and **the monitors have changed** —
+  wallpapers gone, a line chart on the left, a text panel on the right. Everything else on screen is
+  a diagram or a web page held still.
+- **Reacts to the human — NOT SHOWN.** No interaction with any system is filmed.
+- **What it does contribute to the question:** the loop is *drawn* even though it is not *run* — the
+  architecture card wires **`SUPERVISOR FEEDBACK & ESCALATION`** back into the Actions layer. That is
+  the shape of a living system on paper.
+- **Honest line:** **this source does not show a living system; it shows the anatomy of one.** Its
+  value is the parts list, and this report already treats it that way.
+
+---
+
 ## 4. What DXB has today — measured this session, 2026-08-04
 
 | Her component | What we have, measured today | Command / source |

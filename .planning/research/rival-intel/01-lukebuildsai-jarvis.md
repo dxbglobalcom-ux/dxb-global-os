@@ -119,6 +119,26 @@ inbox handling was autonomous; that anything on those monitors is live rather th
 **The CEO's own testimony outranks this file on that question** — he inspected these systems and
 ruled that they are real and live, and that ruling stands over anything inferable from a reel.
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**Read from this report's own record, not from a fresh watch.** The source was studied on 2026-08-02,
+before law 8 existed; every line below cites what that reading already measured.
+
+- **Moves without being asked — NOT ESTABLISHED.** This report already recorded the limit: nothing
+  proves that what is on those monitors is live rather than pre-opened. No work is seen starting on
+  its own clock. To verify: a second recording of the same wall with no human in the room.
+- **Changes while it is watched — YES, and it is the strongest thing in the source.** Recorded here:
+  a clock ticking in hundredths, a live `AUDIO I/O` waveform, a `PROXIMITY` radar with a sweeping arm
+  and a scrolling diagnostics log — *"whatever else is true, that page is never a photograph."*
+- **Reacts to the human — YES.** At 00:05–00:06 the sphere lights from its centre and the waveform
+  begins to move as he speaks: the display answers the voice. Screens then change **without a
+  keystroke**, each time to the artefact the current sentence is about, ending at 00:59 on a real
+  GitHub pull request (`backend #2`) with its merge button live.
+- **Decorative motion — none is asserted.** The radar and the waveform move; whether their needles
+  carry real signal is **Unverified**, and this report does not convert that into an accusation.
+
+---
+
 ## 4. What DXB has today — measured 2026-08-02, this session
 
 | Their behaviour | Ours, measured | Command |

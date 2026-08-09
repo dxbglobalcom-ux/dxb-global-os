@@ -109,6 +109,14 @@ own words about it. This table carries **only sources that have been watched who
 sound, and reported**: **7 of 34** today. A source earns its row here when its report exists.
 
 These rows are **sources studied**, not tools installed — a tool named inside a source gets its own
+**EVERY ROW BELOW IS NOW READ THROUGH ONE LENS — IS IT ALIVE?** On the CEO's live order of
+2026-08-09 (*"Operating System'i rakip bir canlı organizma gibi çalışıyor yaşayan bir varlık. bu
+holdigimizdeki en önemli özellik olmalı"*), **ledger law 8** makes an `Aliveness` reading compulsory
+in every report — what moves without being asked, what changes while it is watched, what reacts to
+the human, what is decorative — and the eleventh case of `tests/c42/rival-intel-ledger.test.ts`
+fails any report that skips it. All nine reports already written carry it. The verdict cells below
+were written before that law; **the aliveness reading lives in the reports, which are the record.**
+
 row in the main table when it is chosen. **There is no synthesis yet**: the old
 `00-SYNTHESIS.md` was built on the binned verdicts and was deleted with them. A new one is written
 only when every ledger row reads `reported`. The build programme itself is [[00-BOARD-OPEN-WORK]]

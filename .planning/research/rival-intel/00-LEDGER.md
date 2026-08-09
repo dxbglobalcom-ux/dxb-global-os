@@ -136,6 +136,26 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
      advertisement"* (his own correction, 2026-08-01).
    - The tenth case of `tests/c42/rival-intel-ledger.test.ts` enforces this. A report that breaks it
      cannot be `reported` — the machine fails the commit, not the CEO's eye three days later.
+8. **A RIVAL IS READ FOR ITS LIFE — IS IT A LIVING ORGANISM, OR A PRINTED PAGE?** Added 2026-08-09 on
+   his live order, given after he read report 10: *"Operating System'i rakip bir canlı organizma gibi
+   çalışıyor yaşayan bir varlık. bu holdigimizdeki en önemli özellik olmalı. bunu zaten defalarca
+   söylemişliğim var."* **He has said it before and the record proves it** — the property is owned by
+   **the FIRST LAW OF V2 on `00-BOARD-OPEN-WORK.md`, "IT MUST BE ALIVE (2026-08-02)"**, in his words
+   *"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK."* That law is not repeated here; this law is
+   the **reading rule** it was missing. The defect it repairs is the author's: ten sources studied and
+   **not one of them was ever asked whether the thing on the screen was alive.**
+   - **Every report carries an `Aliveness` section**, and it answers the four questions the first law
+     of V2 is written in: (1) what **moves without being asked** — does work happen on its own clock?
+     (2) what **changes while it is watched** — is any number, line or shape different from one second
+     to the next, and how was that measured? (3) what **reacts to the human** — does the thing respond
+     to the person in front of it, and how fast? (4) what is **decorative** — motion that is not real
+     work, named as such without contempt.
+   - **Measured, never impressionistic.** "It feels alive" is not a reading. Frame-to-frame difference,
+     a scrolling log whose lines differ, a gauge that changes value inside one unbroken take, a
+     watchdog that fires on change in the code — those are readings. Where a source shows no life,
+     the report says so plainly, and that is a finding too.
+   - **The eleventh case of `tests/c42/rival-intel-ledger.test.ts` enforces the section's existence.**
+     The machine can only check that the question was asked; the CEO's eye checks the answer.
 
 ## Status vocabulary
 

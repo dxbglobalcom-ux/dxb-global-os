@@ -181,6 +181,28 @@ music, documents and at least two more.
 
 ---
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**Read from this session's own watching**, 2026-08-09, 30 native frames at 0.5 s steps plus 14 more
+at 0.1–0.2 s.
+
+- **Moves without being asked — ALMOST NOTHING, and this is the honest limit of the source.** The
+  only self-driven motion in fifteen seconds is the **idle clock** (`23:59`, Wednesday 29 April). No
+  work starts, no alert arrives, nothing changes because the world changed. **Unverified** whether
+  anything runs behind it; to verify would take a recording with nobody speaking.
+- **Changes while it is watched — YES, in three measured ways.** The ring's broken arcs are at a
+  different rotation on every frame while the voice speaks; the ring **travels from centre to corner
+  inside a 0.2 s window** (12.8 s → 13.0 s); the map **paints in** between 13.6 s and 14.0 s rather
+  than appearing at once.
+- **Reacts to the human — YES, and it is the best reaction measured on this queue so far.** Request
+  ends at **10.82 s**; a finished, rendered answer stands on the screen by **14.0 s** — **2.8–3.2 s**,
+  inside a single continuous take. And the reaction is polite: the machine's own face **steps out of
+  the way first**, then the answer occupies the stage.
+- **Decorative motion — one item, named without contempt.** The ring of tick marks around the orb
+  carries no stated signal; it is a face, and a face is allowed to be a face.
+
+---
+
 ## 4. What DXB has today — measured by command, this session
 
 | # | Measured | Command |

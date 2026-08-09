@@ -138,6 +138,28 @@ guess which.
 
 ---
 
+### Aliveness — is it a living organism? (ledger law 8, added 2026-08-09)
+
+**A repository is read for the life its code can produce, not for what a screen does** — this source
+was never installed or run, by decision (`STACK.md` and the standing boundary), so every line below
+is **R** (code read at live HEAD) and none of it is **V**.
+
+- **Moves without being asked — YES, and this is the mechanism worth taking.** `issue_watchdogs`
+  carries `last_observed_fingerprint` / `last_reviewed_fingerprint`: a watchdog that fires **when
+  something changed**, not when a timer expired. Recovery actions and a continuation policy sit on
+  the decision object, so a run can resume itself rather than wait for a human.
+- **Changes while it is watched — UNVERIFIED, and deliberately so.** No interface of theirs was run
+  here. To verify would mean installing a second agent framework, which the boundary forbids.
+- **Reacts to the human — YES, in the shape that matters to this holding:** a decision is an object
+  with a signature, a snapshot and a **deadline**, and approved effects execute exactly once.
+- **The project itself is alive, measured:** ~**529 commits in thirty days**, three releases in three
+  weeks, ~166 contributors, and a push roughly **two hours before the reading**.
+- **What this teaches the holding:** the first kind of life to build is not animation on a screen —
+  it is **a machine that notices a change and acts on it without being asked.** That is project
+  P08-2, and it costs nothing to install.
+
+---
+
 ## 4. What DXB has today — measured by command, this session
 
 **Where we already match them.** This is stated because the directive forbids inventing gaps as
