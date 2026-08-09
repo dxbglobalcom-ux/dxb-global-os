@@ -146,10 +146,78 @@ to the stage being spoken about** (12-C2).
 
 ## 3. Capabilities — what this system demonstrably has
 
-Everything row 11 recorded about the board itself (the five stages, the per-stage file, the rule
-chips, the tethered constraint, the brain with its read/write edge, the clock on the header, the
-`RUN BY COO` badge, the footer invariant) is **visible again here and re-measured above**. What
-follows is only what this source adds, because it is the one that could be measured to the pixel.
+### 3.0 What this system IS, and the job it does — end to end
+
+**Written from this report's own record of the 52 seconds watched here. It does not lean on row 11,
+and it must not: a report that cannot say what the rival's system is has not read the rival.**
+
+**In one line.** It is a **back-office clerk for one man's mailbox** — a set of five small Python
+scripts driven by a language model, woken twice a day by a clock, that takes over the entire job a
+person does with an inbox: triage, filing, reading, unsubscribing, and reporting back. It is not a
+product with users and not a web application. It is one owner's private machine, and its whole
+interface is a diagram plus a text message on his phone.
+
+**What goes in.** Every new message arriving in **one iCloud mailbox**, reached over **IMAP** — the
+standard protocol a program uses to read someone's mailbox from outside (V, `STAGE 01` monospace line
+`inbox-manager/bulk_sweep.py · iCloud IMAP`).
+
+**What happens to it — the five jobs, in order, each naming the file that performs it (V):**
+
+| Stage | The job it actually does | What runs it | The rules written on its own card |
+|---|---|---|---|
+| **01 Sweep** — badge `SORTS` | Before any thinking happens, bulk-moves mail from senders it **already trusts**. This is the cheap deterministic pass that clears the obvious bulk without asking a model anything | `inbox-manager/bulk_sweep.py` · iCloud IMAP | `High-confidence sender moves` · `Never delete, move only` |
+| **02 Classify** — badge `ROUTES` | For every message left, **picks one of ~22 folders** (Clickup, Receipts, to-dos, inbound leads…) and **loops until nothing is left unfiled**. This is the judgement step, and it is the only place a model is doing the deciding | `sort_batch.py` + `sort_state.json` — **the state file is what makes the loop resumable**: it remembers where the pass got to, so a half-finished run continues rather than restarting | `Classify every new message` · `22 folders (Clickup, Receipts…)` · `Loops until to-do hits 0` · and, hung off the card on a separate tether, **`Personal mail stays in INBOX`** — the machine is forbidden from filing away the thing a human wants to see |
+| **03 Curate** — badge `ARCHIVES` | **Reads the newsletters** and promotes only the ones carrying a real insight into a `To Look Over` folder; the rest stay filed. This is the "do not make me read forty newsletters" job | `Business/Newsletters → To Look Over` | `Read new newsletters` · `Move the real-insight ones` |
+| **04 Unsubscribe** — badge `PUBLISHES` | **Sends an unsubscribe request by e-mail** to repeat offenders. This is the only stage that acts outward, on the owner's behalf, in his name | iCloud **SMTP** `smtp.mail.me.com:587` — the outgoing-mail transport | `University spam + Spam/Auto` · `Never web one-click links` · and, hung above it as its own object on a dotted tether, **`CONSTRAINT / mailto List-Unsubscribe only`** — it uses the standardised mail-based unsubscribe route and **never clicks a link in a web page**, because an unattended machine clicking unknown links is the one way this stage could do real damage |
+| **05 Report** — badge `TEXTS YOU` | **Texts the owner one message** with everything the machine did not settle: unfiled mail, open leads with how many days they have been waiting, and anything urgent | `pending_inbox_report.py → iMessage` | `Every INBOX UID accounted for` — an **accounting promise**: every single message the run was handed is accounted for, none silently dropped · `All Business/Leads items daily` · `Flag urgent + leads >3 days` |
+
+**What binds the whole board.** One invariant printed along the bottom edge where it is always in
+view: **`Fully autonomous. Hard rule: never deletes, only moves.`** The machine is never allowed to
+destroy anything — the worst it can do is put a message in the wrong folder, which a human can undo.
+That single line is what makes it safe to leave running unattended.
+
+**What runs across all five stages.** An **`AGENT BRAIN`** — a shared memory drawn as its own body
+beside the pipeline, joined to it by a labelled edge reading **`READS · WRITES BRAIN`**. What one
+stage learns is available to the others (V, `zoom/12/reads-writes-brain-45.0.jpg`).
+
+**When it runs, and who owns it.** The clock is printed as the first line above the board's own name:
+**`WORKFLOW · 8:00 AM AND 4:00 PM, EVERY DAY`** — twice daily, unattended. The owner of the run is
+named in a badge at the top right: **`RUN BY COO`** — a *department*, not a person and not a model
+name (V, `zoom/12/clock-header-20.0.jpg`, `zoom/12/run-by-20.0.jpg`).
+
+**What comes out, and to whom.** Exactly one thing: **a text message to the owner's phone**, and it is
+**sent even on quiet days** (V, footer strip). Silence is never allowed to stand in for a report.
+
+**What it replaces.** In the author's own words on the face of the reel and in the narration: the
+inbox work he used to do himself — **`Saves me 15hrs/week w/ ChatGPT`** (V, 0.0–3.0 s) and *"the free
+AI system that makes it so that I never have to check my email inbox again"* (T, 0.00–6.08).
+
+**The shape of the thinking, and this is the part worth taking.** The model is used in exactly two
+places — *which folder does this belong in* and *is this newsletter worth reading*. Everything that
+could go wrong is either a deterministic script (the trusted-sender sweep), a written refusal on the
+card (`never delete`, `never click a web link`), a constraint object bound to the acting stage
+(`mailto List-Unsubscribe only`), or an accounting promise (`every INBOX UID accounted for`).
+**Judgement where judgement is needed; a rule everywhere else.**
+
+**Its honest limits, as a system.** It serves **one mailbox and one person**. There is no
+conversation with it, no request-and-reply, no dashboard to open, no second user, and no revenue
+function — this is a personal operations agent, not a business. Every stage is single-purpose and the
+whole thing is small: five scripts, one state file, two mail transports, one messaging channel out,
+one shared memory, one scheduler.
+
+**Why the shape matters to DXB.** It is a department specification in miniature, and every element of
+it has a counterpart we owe the CEO: a clock the surface states about itself; a cheap deterministic
+pre-filter before any model is paid to think; model judgement confined to the steps that need it;
+hard rules written on the thing they bind; **one outward-facing act, fenced by a constraint attached
+to that act** — which in this holding is the approval gate; an accounting invariant so nothing is
+silently dropped; and a push report to the owner that arrives even when there is nothing to say.
+
+---
+
+### The rest of §3 — what this source adds that row 11 could not measure
+
+Row 11 read the same board through a phone pointed at a laptop. What follows is what **only a clean
+screen recording** could establish, and it is the reason this row was watched.
 
 ### 12-C1 · The pulse law, exact: a fixed **duration per edge**, not a fixed speed — **V**
 
@@ -254,6 +322,28 @@ standing measurement until a measurement replaces it.
 - **UNVERIFIED** — what the `AGENT BRAIN` is made of. The label and the read/write edge are drawn; the
   clip never opens it.
 - **UNREADABLE** — the two glyphs before `Brain · shared memory` (see 12-C4).
+
+### What the CEO confirms (C), and what is technically verified (R)
+
+**C — CEO-confirmed first-hand evidence, which is valid project evidence and outranks a reading of an
+advertisement.** Two things on this page rest on it and are labelled as his, not as the author's
+finding. **(1)** That this system, and every source on this queue, is a live running system: *"onların
+hepsi canlı ve gerçek zaten… bu rakiplerin tüm sistemleri canlı kanlı"* (2026-08-09). Aliveness is
+therefore the premise of the reading below, never its question. **(2)** The travelling pulse itself —
+he saw it on this author's board before the author of this report did, and described it: *"bağlantı
+dallarından böyle bir nokta akıyor damarın içinden geçen kan gibi"* (2026-08-09, handing over the
+neighbouring reel by the same creator). §3 measures what he pointed at; it does not discover it.
+**This must not be relabelled as independent technical verification** (directive §2).
+
+**R — nothing in this report is repository- or backend-verified, and that is a fact about what is
+available, not a judgement about the system.** There is no repository, no public deployment, no login
+and no API for this source; it is a 52-second recording of one man's private machine. Every statement
+here is therefore V (visible), T (transcript) or C (his), and the DXB side of §4 is R — measured by
+command against this holding's own database and code. **What would produce R evidence for the rival:**
+the author's own scripts, which he offers by comment (*"just comment system down below"*, T,
+50.56–52.08), or a recording of one full run from an arriving message to the text message on his
+phone. Neither is in hand, and neither was requested — asking a rival for his source is the CEO's
+call, not the author's.
 
 ### Aliveness — how this living system is built (ledger law 8)
 
@@ -410,3 +500,13 @@ exists to forbid.
 **The second thing needs no approval and no money: P12-2's data half** — an answer that names where it
 lives. Measured today, `api/chat/route.ts` holds **0** references to a page or a route, which is why
 Hamza cannot take the CEO anywhere, in either direction.
+
+---
+
+## Change log
+
+| Date | What changed, and why |
+|---|---|
+| 2026-08-09 | **File opened from nothing** and written from the watching of all 52 seconds with sound, plus a 10-fps dense pass over the whole film. Ledger row 12 moved `fetched` → `claimed` → `reported`; `NEXT` advanced to 13, which is carried by board row **B22** and by no other record <!-- OPEN: B22 -->; the board row **B22** and `.planning/STATE.md` corrected in the same session (ledger parity, U38) |
+| 2026-08-10 | **Three defects in this file, found by auditing it against the CEO's directive §4 and fixed at source.** **(1) §3 had no `### 3.0`** — the report explained the *mechanism* and deferred what the system IS to row 11, so it did not stand on its own. **The CEO's own words on finding it: *"sistemi anladın mı ne yapıyor ne iş yapıyorlar"*.** A full end-to-end explanation of the system — input, the five jobs and the file that runs each, the rules that bind them, the invariant, the shared memory, the clock, the owner, the output, what it replaces, and its honest limits — now opens §3. **(2) Question 3 of the directive (`What has the CEO confirmed?`) was unanswered — 0 `C` labels.** Now answered in its own subsection, with his two confirmations quoted and the warning that C must not be dressed as independent verification. **(3) Question 4 (`What is technically verified?`) was unanswered — 0 `R` labels and no statement of why.** Now answered: no repository, no deployment, no API exists for this source, so R is absent by availability and not by omission, and the subsection names what would produce it. **What did NOT change:** the second-by-second record, every measurement in §3, the DXB measurements in §4, and the projects in §5 |
+| 2026-08-10 | **A defect committed against the neighbouring file, recorded here because it was this reading that caused it.** Two corrections were written into `11-rinaldojanjua-a.md` from measurements taken on **this** film — the sphere's flicker and one mis-cited command. **The author of this report did not watch source 11.** The corrections are defensible (same author, same board, a cleaner recording) but they are cross-source inference, and **they stand or fall on the CEO's ruling, not on this file's authority** |
