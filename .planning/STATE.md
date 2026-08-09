@@ -65,10 +65,10 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 ## Next — read this before doing anything
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
-   **8 of 34 sources reported**, `NEXT: 10`. **Sources 07, 08 and 09 were rewritten from nothing on
-   his order — *"7'den tekrar başla, bu sefer doğru yap"*** — the first three reports
-   written under law 7, which judges a rival by what it PRODUCES. Rows 10-11 stand at `fetched` with
-   their raw material intact.
+   **9 of 34 sources reported**, `NEXT: 11`. **Sources 07, 08, 09 and 10 were rewritten from nothing on
+   his order — *"7'den tekrar başla, bu sefer doğru yap"*** — the first four reports
+   written under law 7, which judges a rival by what it PRODUCES. Row 11 stands at `fetched` with
+   its raw material intact.
 
    **The one thing on this page he should read first — from source 08 (`paperclip`, read at live HEAD
    on 2026-08-08, 75,865 stars, pushed two hours before the reading).** Measured: **nothing in this
@@ -88,6 +88,16 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    last of them on 2026-07-28, and the voice surface can render **only text** — a spoken request
    cannot draw anything at all. Projects **P09-1** (the answer lands on the screen) and **P09-2**
    (the 32-second answer) need no install and no money; the design half waits for his design package.
+
+   **Source 10 (`cloud9.markets`, watched whole with sound on 2026-08-09) found the third thing.**
+   A rival draws his nine workers as one living screen where the one that is working lights up and
+   the centre says its name — and he draws **the permission to act as a diamond sitting on the wire
+   between the one who decides and the one who acts.** That is this whole product in one symbol.
+   Measured against us: we have 205 written employees and **not one picture of any of them** — three
+   files in the entire dashboard draw a shape, two are a logo and a ring. And our decision record
+   cannot learn: **`decision_log` holds 4,730 rows and 3,248 of them (68.7 %) never say what
+   happened.** Project **P10-1** closes that and needs no install; **P10-2** (the desk map) and
+   **P10-3** (the gate drawn where it stands) enter the design package and are not built.
 
    Sources 07-11 had been reported in the night session of 2026-08-08 and
    **the CEO deleted all five reports the same morning** — his words:
