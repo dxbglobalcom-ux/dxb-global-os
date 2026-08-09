@@ -1,11 +1,12 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 11**
+**NEXT: 12**
 
 > ### ⛔ REPORTS 07, 08, 09, 10 AND 11 WERE DELETED ON 2026-08-08 — the CEO's live order (LAW A)
-> *(Status today: 07, 08, 09 and 10 have been rewritten from nothing under law 7. Row 11 is still
-> `fetched`. The live queue marker is at the top of this file and nowhere else.)*
+> *(Status today: 07, 08, 09, 10 and 11 have all been rewritten from nothing under law 7 — row 11 on
+> 2026-08-09, and it is the first report written under law 8's second clause, which times the movement
+> on the rival's screen. The live queue marker is at the top of this file and nowhere else.)*
 > His words: *"yaptığın son raporlar hangileri BOZUK OLAN BOKTAN RAPORLAR HEPSİNİ sil. 7 8 9 10 11."*
 > The five report files are **removed from disk.** Not archived, not marked void — deleted, exactly as
 > he ordered the sixteen July reports deleted on 2026-08-02.
@@ -154,16 +155,32 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
      living system is built**, and hands the holding the mechanism.
    - **REQUIRED — four readings, all of them mechanism:** (1) **what runs on its own clock**, and by
      what machinery; (2) **what makes the surface breathe** — how a change inside the system reaches
-     the screen; (3) **how it answers the human**, and how fast, measured where the source allows it;
-     (4) **what DXB takes** — the buildable mechanism, named as a project where one exists. Every
-     report carries this section under a heading beginning `Aliveness`.
+     the screen, **and the screen's own movement, TIMED**; (3) **how it answers the human**, and how
+     fast, measured where the source allows it; (4) **what DXB takes** — the buildable mechanism,
+     named as a project where one exists. Every report carries this section under a heading beginning
+     `Aliveness`.
+   - **THE MOVEMENT ON THE SCREEN IS MEASURED, NEVER ADMIRED.** Added 2026-08-09 on his live order,
+     given while handing over source 11: *"zaten 11 de göreceksiniz bağlantı dallarından böyle bir
+     nokta akıyor damarın içinden geçen kan gibi. bu sistemler güzel. 1'den 10'a kadar hepsi canlı
+     kanlı. şimdi raporlarda bunlar gözden kaçmamalı, ki inşaa sürecinde değerlendirilsin."* These
+     details are **parts for the build**, so an adjective is worthless and a number is the whole
+     point. For every reel and every video the Aliveness section records **what moves · in which
+     direction · how long it takes · how often it repeats**, with the figures. **One frame per second
+     is not enough to see it** — a pulse on a wire aliases at 1 fps and its direction cannot be read;
+     cut a dense pass (`-ss <t> … -vf "crop=…"` at 5-10 frames per second, native, from the video)
+     over the moving region and read the positions against fixed corners of the frame. Where the
+     movement genuinely cannot be timed, the section says so with **UNVERIFIED** and names what would
+     be needed — it never fills the hole with a word like *fluid*, *alive* or *beautiful*.
    - **FORBIDDEN**, in any language, however dressed: *"not alive"* · *"does not show a living
      system"* · *"no self-driven movement"* · *"NOT ESTABLISHED / NOT SHOWN"* used as a verdict on
      life · *"the face of an organism without the pulse"* · any sentence that grades how alive a rival
      is. Where the source does not display a mechanism, the report writes what it DOES show and what
      that implies — and says the clip did not display it, never that the rival lacks it.
    - **The eleventh case of `tests/c42/rival-intel-ledger.test.ts`** requires the section, fails the
-     forbidden verdicts inside it, and fails a section that never says what DXB takes.
+     forbidden verdicts inside it, and fails a section that never says what DXB takes. **The twelfth
+     case** fails a reel or video whose Aliveness section carries no timed figure at all — measured
+     when the clause was written: of the nine finished reports, only **02, 09 and 10** had timed the
+     screen's own movement; the other five films had not, and were repaired the same session.
 
 ## Status vocabulary
 
@@ -188,7 +205,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 08 | https://github.com/paperclipai/paperclip | repo | reported   | 2026-08-08T10:38:00Z | `08-paperclip-repo.md`  | *"BAK BAK İNCELE DE GÖR!!!!!"* — 74,953 stars, "the open-source app everyone uses to manage agents at work" |
 | 09 | https://www.instagram.com/reel/DYK2IWyoEWh/ — Huw Prosser (`huwprosser`) | reel | reported | 2026-08-09T14:21:34Z | `09-huwprosser.md`  | listed without a note |
 | 10 | https://www.instagram.com/reel/DbBAOdVBjka/ — `cloud9.markets` | reel | reported | 2026-08-09T16:29:05Z | `10-cloud9-markets.md`  | listed without a note |
-| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | claimed  | 2026-08-09T19:04:02Z | `11-rinaldojanjua-a.md`  | listed without a note |
+| 11 | https://www.instagram.com/reel/DbA3JgbphEs/ — Rinaldo Janjua (`rinaldojanjua.ai`) | reel | reported | 2026-08-09T19:04:02Z | `11-rinaldojanjua-a.md`  | listed without a note |
 | 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:47:15Z | `12-rinaldojanjua-b.md` | listed without a note |
 | 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:51:40Z | `13-rinaldojanjua-c.md` | listed without a note |
 | 14 | https://www.instagram.com/reel/DbKe90ETKfB/ — Rinaldo Janjua | reel | fetched  | 2026-07-28T11:55:20Z | `14-rinaldojanjua-d.md` | listed without a note |

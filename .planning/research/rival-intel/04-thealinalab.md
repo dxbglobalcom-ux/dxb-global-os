@@ -158,6 +158,18 @@ seconds of this source carry more visible machinery than any other film on the q
   and then **amber `59`** — value *and* colour changing **inside five seconds of one unbroken take**,
   with no input shown: something behind the screen was working while the camera ran, and the surface
   was wired to it.
+- **The movement, TIMED** (ledger law 8, second clause; measured 2026-08-09 with a dense native pass
+  cut from the video — `zoom/04/flow/gauge-<t>.jpg`, `crop=300:200:720:1150` at ×3, sampled every
+  0.5 s from 2.0 to 5.0 and then every 0.1 s across the change):
+  - **3.5 s · 4.0 s · 4.1 s** — green ring, **`11`**, status word **`Stable`** on a blue tick.
+  - **4.2 s** — **amber ring, `59`, and the status word has gone red.** The panel's header chip flips
+    with it.
+  - **The whole tile therefore turns over inside a single 0.1 s step — one repaint.** Number, ring
+    colour and status word change **together**, not in a sequence the eye can catch, and nothing was
+    typed: the take is unbroken and no hand touches the machine.
+  - **What that is worth to the build:** this is the cheapest kind of aliveness to build and the most
+    convincing — **one tile whose number, colour and word are a single atomic render off one live
+    value.** A tile that updates its number now and its colour a beat later reads as broken.
 - **What makes the surface breathe — each panel loads its own data, independently.** Between 00:02
   and 00:04 the board **fills progressively**: the frame draws first, then every panel fetches for
   itself (blank grey map → drawn map; *loading…* widgets → content), and live broadcast video plays

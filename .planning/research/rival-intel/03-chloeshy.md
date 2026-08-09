@@ -276,6 +276,14 @@ record (watched 2026-08-04).
 - **What makes the surface breathe — the one live window she opens.** At 00:29 the inset of source 01
   returns and **the monitors have changed**: wallpapers gone, a line chart on the left, a text panel
   on the right — the same wall in a different state, minutes apart.
+- **The movement, TIMED — `UNVERIFIED`, and here is exactly why** (ledger law 8, second clause;
+  checked 2026-08-09 against the file, at 29.3 s among others). This source **draws its mechanism on
+  a board and films its author**: what is on screen for almost the whole 74 seconds is a person
+  talking and an architecture diagram, so **there is no surface of her own running system in the
+  frame to time.** The only moving screen in the file is the **inset re-used from source 01** — that
+  wall is timed in report 01 (clock to the hundredth, radar sweep ≈ 3.3-4 s), and it belongs to
+  source 01, not to her. **What would settle it:** a screen recording of her own system running.
+  A clip is an advertisement, and what it does not put in frame is a limit of the film.
 - **How it answers the human — the escalation edge is where the person sits.** In the anatomy she
   draws, the human is not the operator of every step; the human is the destination of the escalation.
 - **What DXB takes — the supervisor loop as a wire, not as a policy sentence.** Every act that can

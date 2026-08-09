@@ -111,6 +111,21 @@ Read here for the **mechanism**, from this report's own record (watched 2026-08-
   older ones up, **the content differing on every frame**, each line carrying a sender, a recipient
   and numbers. Behind it a 3-D particle field drifts continuously, changing position every frame —
   the room's ambient motion, carrying no stated signal of its own.
+- **The movement, TIMED** (ledger law 8, second clause; measured 2026-08-09 with a dense native pass
+  cut from the video — `zoom/07/flow/comms-<t>.jpg`, `crop=640:75:0:1232` at ×3, at 19.0 · 19.5 ·
+  20.0 · 20.5 · 21.0 s):
+  - **19.0 s** — under the header, four lines, top one **`STUDIO-IG → Representative`**.
+  - **20.5 s** — the header is still in frame and the top line is now **`RESEARCHER → CEO`**: the
+    strip itself has advanced by one line, and this is content scrolling, not the camera.
+  - **21.0 s** — the visible lines start at **`DATA ANALYST → CEO`**, the fourth line of 19.0 s.
+  - **Three lines in 2.0 s — a new line roughly every 0.7 s on screen.** The messages' own clock
+    stamps run `[20:34:07] → [20:34:11]` across four lines, i.e. **about 1.3 s per message in the
+    system's own time.** The two figures do not agree, and **this film cannot settle which is the
+    true production rate** — the camera is moving in the same seconds. Both are recorded; neither is
+    smoothed into the other.
+  - **What that is worth to the build:** the readable cadence is **under one line per second** —
+    fast enough that the strip is visibly alive, slow enough that a person can read a line before it
+    leaves. That is the number to design our own agent-comms strip against.
 - **How it answers the human — the film is a board tour, so the answering loop is not what it puts on
   camera.** What it does put on camera is the state a person walks up to and reads without asking.
 - **What DXB takes — the workforce's talk becomes something the CEO can watch.** Agent-to-agent

@@ -73,10 +73,34 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    until every source is watched.** A sentence not traceable to the source is `UNVERIFIED`, or it
    is not written. Full reason: `.claude/skills/dxb-rival-intel` + ledger §Why this exists.
 
-   **9 of 34 sources reported**, `NEXT: 11`. **Sources 07, 08, 09 and 10 were rewritten from nothing on
-   his order — *"7'den tekrar başla, bu sefer doğru yap"*** — the first four reports
-   written under law 7, which judges a rival by what it PRODUCES. Row 11 stands at `fetched` with
-   its raw material intact.
+   **10 of 34 sources reported**, `NEXT: 12`. **Sources 07, 08, 09, 10 and 11 were rewritten from
+   nothing on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — under law 7, which judges a
+   rival by what it PRODUCES. Row 12 stands at `fetched` with its raw material intact.
+
+   **His live order of 2026-08-09 gave the queue its second reading law, and it is now machine-held.**
+   His words, handing over source 11: *"zaten 11 de göreceksiniz bağlantı dallarından böyle bir nokta
+   akıyor damarın içinden geçen kan gibi. bu sistemler güzel. 1'den 10'a kadar hepsi canlı kanlı. şimdi
+   raporlarda bunlar gözden kaçmamalı, ki inşaa sürecinde değerlendirilsin."* **The movement on a
+   rival's screen is a PART FOR THE BUILD, so it is measured, never admired** — what moves, in which
+   direction, how long it takes, how often it repeats, with the figures, cut at 5-10 frames per second
+   because at one frame per second a travelling pulse aliases and its direction cannot be read. A
+   twelfth case in `tests/c42/rival-intel-ledger.test.ts` fails a reel that only admires it. Measured
+   when the clause was written: **only 3 of the 9 finished reports had timed anything**, and **the
+   other five films were measured and repaired the same session** (01, 03, 04, 05, 07).
+
+   **From source 11 (`rinaldojanjua.ai`, watched whole with sound on 2026-08-09):** a five-stage mail
+   pipeline drawn as a circuit — its clock printed on its own header (`8:00 AM AND 4:00 PM, EVERY
+   DAY`), each stage naming the file that runs it, hard rules as chips on each card, the one
+   outward-facing limit hung beside the acting stage as its own object (`CONSTRAINT / mailto
+   List-Unsubscribe only`), a shared `AGENT BRAIN` with its read/write edge drawn, and the human as the
+   last stage (`TEXTS YOU`, *sent even on quiet days*). **His pulse, measured:** the bead crosses a wire
+   in **≈ 1.0-1.2 s**, a new one every **≈ 2.3 s**, always in the arrow's direction. **Measured here the
+   same session:** `workflows`/`workflow_steps`/`workflow_runs` hold **0 / 0 / 0 rows**, `memory_index`
+   holds **13,194 rows with `run_id` NULL on every one**, and **exactly 3 files in the whole dashboard
+   draw a shape** — so there is no wire for anything to travel along. We do have the clock (15 scheduled
+   jobs) and live data on the screen (15 realtime subscriptions). Projects **P11-2** (a step declares its
+   constraint) and **P11-3** (a run accounts for every item; memory names its run) need no install and no
+   money; **P11-1** (the wire that carries the work) enters the design package and waits on his approval.
 
    **The one thing on this page he should read first — from source 08 (`paperclip`, read at live HEAD
    on 2026-08-08, 75,865 stars, pushed two hours before the reading).** Measured: **nothing in this

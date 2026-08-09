@@ -132,6 +132,22 @@ this report's own record — the source was studied on 2026-08-02.
 - **What makes the surface breathe — four separate live channels on one wall.** A clock ticking in
   hundredths, a live `AUDIO I/O` waveform, the sweeping radar and the moving log — *"whatever else is
   true, that page is never a photograph."*
+- **The movement, TIMED** (ledger law 8, second clause; measured 2026-08-09 with a dense native pass
+  cut from the video — `zoom/01/flow/`, `crop=190:45:895:480` for the clock and `crop=120:120:925:550`
+  for the radar, both at ×6):
+  - **The clock is real time, to the hundredth.** At film second **20.0** it reads
+    **`20:43:53.91`**; at **20.2** it reads **`20:43:54.11`** — **0.20 s of wall clock in 0.20 s of
+    film.** The hundredths digits are legible and different, so that panel is repainting many times a
+    second, and the recording is neither slowed nor sped.
+  - **The `PROXIMITY` arm sweeps continuously, in one direction.** Wedge positions read against the
+    dial's own rim at 20.0 · 20.3 · 20.6 · 20.9 · 21.5 · 22.1 · 23.3 s run **6 o'clock → 7-8 → 8-9 →
+    9-10 → 10-11 → 12 → 4-5**: anticlockwise, never reversing, advancing **≈ 90-110° per second**, so
+    **one full sweep takes ≈ 3.3-4 s**. The angles are read by eye off a filmed screen, so the figure
+    is a range, not a constant — the direction and the continuity are exact.
+  - **What that is worth to the build:** a wall is alive at two different speeds at once — a
+    sub-second channel that proves the room is awake (the clock), and a multi-second channel that the
+    eye can actually follow (the sweep). Copying only the fast one gives a strobe; only the slow one
+    gives a poster.
 - **How it answers the human — the room follows the sentence.** At 00:05–00:06 the sphere lights from
   its centre and the waveform moves as he speaks. The screens then change **without a keystroke**,
   each time to the artefact the current sentence is about, ending at 00:59 on a real GitHub pull

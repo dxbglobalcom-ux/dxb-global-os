@@ -215,6 +215,35 @@ describe("C42 rival-intel ledger", () => {
     }
   });
 
+  // LAW 8, second clause — added 2026-08-09 on his live order, given while he handed
+  // over source 11: "zaten 11 de göreceksiniz bağlantı dallarından böyle bir nokta
+  // akıyor damarın içinden geçen kan gibi… şimdi raporlarda bunlar gözden kaçmamalı,
+  // ki inşaa sürecinde değerlendirilsin."
+  //
+  // The movement on a rival's screen is a PART FOR THE BUILD, so it is measured, never
+  // admired. A word test would be worthless here — the section's own required heading
+  // contains "breathe", so every report on disk already matched a motion vocabulary
+  // while five of them had never timed anything. What cannot be faked is a figure:
+  // what moves, how long it takes, how often it repeats. Measured when this case was
+  // written: of nine finished reports only 02, 09 and 10 carried one.
+  //
+  // The escape is the project's own grammar, not a loophole: where the movement cannot
+  // be timed, the section writes UNVERIFIED and names what would be needed.
+  const TIMED_FIGURE =
+    /\b\d+(?:\.\d+)?\s*(?:[–-]\s*\d+(?:\.\d+)?\s*)?(?:ms|s|sec|secs|seconds?|fps|Hz|px\/s)\b/i;
+  it("a reel or video TIMES the movement on the rival's screen instead of admiring it", () => {
+    for (const r of ledgerRows().filter(
+      (x) => x.status === "reported" && (x.kind === "reel" || x.kind === "video"),
+    )) {
+      const body = readFileSync(join(DIR, r.report), "utf8");
+      const section = ALIVENESS_SECTION.exec(body)?.[1] ?? "";
+      expect(
+        TIMED_FIGURE.test(section) || /\bUNVERIFIED\b/.test(section),
+        `row ${r.n} (${r.report}) never times the movement on the screen — ledger law 8 requires what moves, in which direction, how long it takes and how often it repeats, with the figures (cut a dense pass at 5-10 fps; at 1 fps a travelling pulse aliases and its direction cannot be read). If it genuinely cannot be timed, write UNVERIFIED in the section and name what would be needed`,
+      ).toBe(true);
+    }
+  });
+
   it("a reported row records the fingerprint of what was actually studied", () => {
     for (const r of ledgerRows().filter((x) => x.status === "reported")) {
       const body = readFileSync(join(DIR, r.report), "utf8");
@@ -242,7 +271,13 @@ describe("C42 rival-intel ledger", () => {
       const row = ledgerRows().find((r) => r.n === n && r.status === "reported");
       if (!row) continue;
       const body = readFileSync(join(DIR, row.report), "utf8");
-      const claimed = body.match(/\*\*sha256\*\*\s*\|\s*`([a-f0-9]{64})`/i)?.[1];
+      // The label is written both ways in the corpus — `| **sha256** |` in the
+      // earliest reports, `| sha256 |` in every report from 09 onward. Matching
+      // only the bold form meant rows 09, 10 and 11 fell through the `continue`
+      // below and were never checked against their bytes at all: a silent skip
+      // in the one gate whose whole purpose is that a fingerprint is not
+      // decoration. Measured and fixed 2026-08-09.
+      const claimed = body.match(/\|\s*\*{0,2}sha256\*{0,2}\s*\|\s*`([a-f0-9]{64})`/i)?.[1];
       if (!claimed) continue; // repo rows name a commit instead; covered above
       const actual = createHash("sha256").update(readFileSync(join(mediaDir, file))).digest("hex");
       expect(

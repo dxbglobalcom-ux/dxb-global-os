@@ -249,6 +249,22 @@ it is in money and people moving through the numbers on the page. From this repo
 - **What makes the surface breathe — the state of the business IS the interface.** Every card carries
   a live pair (spent against budget, views against target), so the page is a set of gauges over real
   money rather than a catalogue.
+- **The movement, TIMED — what the film actually times, and what stays `UNVERIFIED`** (ledger law 8,
+  second clause; measured 2026-08-09 with a dense native pass — `zoom/05/flow/card-<t>.jpg`,
+  `crop=1000:260:60:940` at ×2, at 40.0 · 41.0 · 42.0 s):
+  - **40.0 s** — one campaign card open: `Earn Your Leisure Clipping | $10k Budget | $1.5 CPM`,
+    counter **`$0/$10,000`**, 4 participants.
+  - **42.0 s** — **two seconds later the card is gone** and the grid is back, showing three other
+    campaigns mid-consumption (`$4,733/$20,000` · `$583/$2,417` · `$…/$1,195`).
+  - So **what this film times is a person navigating — about one view every two seconds — not the
+    page repainting itself.** Different numbers on different cards are not a number changing on
+    screen.
+  - **`UNVERIFIED`: whether these counters advance on their own while the page sits still.** Nothing
+    in 102 seconds holds one card still long enough to tell. **What would settle it:** a fixed
+    recording of a single campaign card over several minutes during a live campaign.
+  - **What that is worth to the build:** the life of this surface is in **what the numbers are**, not
+    in how they move — and that is the one kind of aliveness DXB can build before any animation
+    exists, because it is made only of real rows.
 - **How it answers the human — it hands the visitor a position, not a page.** The grid, the publisher
   pages and the leaderboard exist so a clipper can see where they stand and what is still unspent.
 - **What DXB takes — the kind of life that needs no picture, and it is the kind we can build first.**
