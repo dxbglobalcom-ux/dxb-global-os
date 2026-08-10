@@ -73,11 +73,32 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    until every source is watched.** A sentence not traceable to the source is `UNVERIFIED`, or it
    is not written. Full reason: `.claude/skills/dxb-rival-intel` + ledger §Why this exists.
 
-   **HIS EYE ACCEPTED THE ELEVEN FINISHED REPORTS ON 2026-08-10** — *"ŞUANA KADAR BEKLEYEN RAPOR
-   ONAYLARINI BENİM BAKIP GÖRMEM İLE İLGİLİ: ONAYLIYORUM. GÖZ TESTİ İLE İLİGİLİ RAPORLARA BAKTIM."*
-   <!-- CEO-OK: rival-reports-seen-2026-08-10 --> The acceptance covers the reports, **not the
-   queue**: 23 sources are still unwatched and B22 stays open.
-   **13 of 34 sources reported**, `NEXT: 16` (measured 2026-08-10 by `scripts/rival-intel/next.sh`).
+   **14 of 35 sources reported**, `NEXT: 17` (measured 2026-08-10 by `scripts/rival-intel/next.sh`).
+   **The queue grew to 35 on his live order of 2026-08-10** — *"kuyruğa ekle 36 olarak, sırası gelince
+   izle."* He noticed row 16 was absent from the directive's §11 list, and the answer exposed a
+   dropped source of his own: the YouTube link standing beside the OpenJarvis repository in the very
+   sentence that orders the Jarvis system (`docs/source-architecture-notes-sanitized.md` line 17) had
+   **never owned a ledger row** — the repository half became row 16 on 2026-07-28 and the video half
+   was lost. It is now **row 36**, fetched at 1912×1080 with audio. Defect fixed at source the same
+   turn: `scripts/rival-intel/fetch.sh` named every YouTube source `watch`, because it read the slug
+   out of the path while YouTube carries its identity in the query — the second such source would
+   have collided with the first.
+   **Source 16 (2026-08-10) is the queue's second repository and the only source that can be READ
+   rather than watched** — Stanford's OpenJarvis, 8,492 stars, Apache-2.0, pushed the morning it was
+   read; our clone measured **28 commits behind** and the drift written into the report. Its shape is
+   the finding: **the measurement harness is larger than the agents** (37,178 lines of `evals`
+   against 22,181 of `agents`). Measured here the same session: we have spent **5,721,728,099 tokens
+   across 1,590 `cost_ledger` rows and priced none of them — €0.0000 on every row**, and `cost_eur`
+   is 0 on all 378 `agent_runs`; **128 of 378 runs failed (33.9 %)** with configuration failures and
+   stale zombies counted as agent error, where their trace carries `harness_error` vs `agent_error`;
+   and we hold **zero outside-world connectors against their 39** (a search for gmail/calendar/slack/
+   rss/weather/imap returns two hits, both the word "calendar" in a date comment). Projects **P16-1**
+   (price the tokens — no install, no money, no approval), **P16-2** (error taxonomy), **P16-3** (the
+   briefing contract: importance first, connect related items, interpret don't enumerate, never name
+   an empty source, word ceiling — a surface change, his eye), **P16-4** (the first connector — his
+   identity), **P16-5** (a standing scorecard for our own agents). Installing the framework is
+   refused on our own stack rules and K1; its energy metric is refused as irrelevant to a rented box.
+   **13 of 34 sources reported at the previous measurement, `NEXT: 16`.**
    **Source 15 (2026-08-10) is the queue's only PDF** — a two-page Turkish lead magnet naming four
    hosted services against four infrastructure jobs. Its checklist is the finding: of the four,
    **DXB has finished exactly one.** Measured the same session in the company database — background

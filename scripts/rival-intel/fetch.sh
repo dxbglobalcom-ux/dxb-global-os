@@ -52,7 +52,20 @@ case "$kind" in
     # The slug is the last path segment, taken BEFORE any '?tracking=…' tail —
     # the CEO's supplementary links carry share parameters ending in '=', which
     # the old end-of-string match could not read at all (measured 2026-08-02).
-    slug="$(printf '%s' "$url" | sed -E 's#\?.*$##; s#/+$##; s#.*/##')"
+    #
+    # A YouTube watch URL carries its identity in the QUERY, not in the path, so
+    # the rule above would name every one of them "watch" and the second one
+    # would collide with the first (measured 2026-08-10, when row 36 — the CEO's
+    # own link, added that day — became the queue's first YouTube source). The
+    # video id is taken from `v=` there, and every other host keeps the old rule.
+    case "$url" in
+      *youtube.com/watch*|*youtu.be/*)
+        slug="$(printf '%s' "$url" | sed -E 's#.*[?&]v=([A-Za-z0-9_-]{6,}).*#\1#; s#.*youtu\.be/([A-Za-z0-9_-]{6,}).*#\1#')"
+        ;;
+      *)
+        slug="$(printf '%s' "$url" | sed -E 's#\?.*$##; s#/+$##; s#.*/##')"
+        ;;
+    esac
     [ -n "$slug" ] || { echo "FAIL row $NN: cannot read a slug out of $url" >&2; exit 1; }
     base="$MEDIA/$NN-$slug"
     vid="$(ls "$MEDIA/$NN-"*.mp4 2>/dev/null | head -1 || true)"
