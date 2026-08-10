@@ -347,19 +347,47 @@ The work is accepted only when the evidence chain is clear, the old analyses are
 
 ---
 
-## 10. Required working method and Superpowers sequence
+## 10. Required working method
 
-Use the following sequence. Do not run multiple planning systems in parallel.
+> ### CORRECTED 2026-08-10 — LAW A. THE SUPERPOWERS SEQUENCE IS DELETED FROM THIS SECTION.
+>
+> **His live order this day:** *"diretifi güncellememişler … ör: superpowers çıkarılacaktı oradan."*
+>
+> This section used to open with *"Invoke `superpowers:brainstorming`"* and to end with *"invoke
+> `superpowers:writing-plans`"* and a line about `/ultraplan`. **Measured on 2026-08-10 in
+> `~/.claude/settings.json`: `"superpowers@superpowers-dev": false`** — the plugin is switched off,
+> and only `claude-mem` and `context7` are on, by his order of 2026-08-09. A directive that orders a
+> session to invoke a disabled tool is dead text: the session either fails the step or quietly skips
+> it and calls the method followed. Under LAW A the contradicting text goes rather than sitting
+> beside a footnote, so it is gone and what actually governs the work is written below in its place.
+>
+> **Recorded, not silently resolved:** the same disabled plugin is still named by **standing order
+> 11** in `HOLDING-OS-MASTER-PLAN/00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` and quoted by the door
+> `.claude/skills/dxb-start/SKILL.md`. That is **his own standing order of 2026-07-24** and no session
+> may delete it on its own initiative — it waits for his word.
 
-1. Invoke **`superpowers:brainstorming`**.
-2. Read this directive, the original ODT, existing complaint files, the rival-intelligence ledger and the reports written so far, transcripts, videos and relevant repository code. **The sixteen old analyses were deleted on the CEO's order and may not be restored from version history.**
-3. Complete **Phase 0** and propose the evidence methodology, rewrite policy, information-architecture approach and acceptance test.
-4. Ask questions **one at a time**, and only after inspecting the available material first.
-5. Do not edit production code and do not start design implementation.
-6. After the CEO approves the design/methodology, invoke **`superpowers:writing-plans`**.
-7. After the CEO approves the implementation plan, execute in controlled stages with review and verification before completion.
+Use the following sequence. Do not run two planning systems in parallel.
 
-Do not use `/ultraplan` on top of this workflow unless the CEO explicitly changes the instruction.
+1. **Read this directive in full, first.** It is the controlling document for competitor evidence,
+   the rival-source queue, Hamza and the redesign.
+2. **Then read `.planning/research/rival-intel/00-LEDGER.md` in full.** This directive was written
+   2026-07-29 and last corrected 2026-08-04; the CEO gave further live orders on 2026-08-07, 08, 09
+   and 10 that this text predates, and the ledger is where they live — among them **law 7** (a rival
+   is judged by what it PRODUCES, never by what it owns) and **law 8** (the movement on a rival's
+   screen is a part for the build, so it is measured, never admired). **Where the two disagree the
+   ledger is newer and wins**, per the authority order in `.claude/CLAUDE.md` §1.
+3. **Open the door `.claude/skills/dxb-rival-intel/SKILL.md`** — it carries the evidence labels, the
+   source-quality floor and the temporal-analysis requirement in working form.
+4. **Run `scripts/rival-intel/next.sh`** to learn which source is next, and work exactly that one.
+   Claim the row before working it; one commit per source.
+5. Read the original ODT, the existing complaint files, the reports already written, transcripts,
+   videos and the relevant repository code. **The sixteen old analyses were deleted on the CEO's
+   order and may not be restored from version history.**
+6. Ask questions **one at a time**, and only after inspecting the material that could answer them.
+7. **Do not edit production code and do not start design implementation.**
+8. After the CEO approves the design and the methodology, write the implementation plan **inside the
+   spec that already owns the contract** — no new plan file — and execute only after he approves it,
+   in controlled stages, with verification before any completion claim.
 
 ---
 
@@ -408,9 +436,15 @@ The screenshots are explanatory evidence only. **The high-quality full videos re
 
 Use this exact starting instruction:
 
+*(The `superpowers:brainstorming` line was deleted from this block on 2026-08-10 with the rest of the
+sequence — see the correction banner in §10. The plugin is switched off.)*
+
 ```text
 Read 00_READ_FIRST_MASTER_DIRECTIVE.md in full and treat it as the controlling CEO directive.
-Invoke superpowers:brainstorming.
+Then read .planning/research/rival-intel/00-LEDGER.md in full — it holds the live orders given
+after this directive was written, and where the two disagree the ledger is newer and wins.
+Open the door .claude/skills/dxb-rival-intel/SKILL.md, then run scripts/rival-intel/next.sh and
+work exactly the source it names.
 Do not implement or redesign production code.
 First inspect the repository and all existing artifacts, create a backup/checkpoint, and complete Phase 0: artifact inventory plus the KEEP / REUSE WITH CORRECTION / REPLACE / ARCHIVE matrix.
 Then present the revised video-analysis method, evidence standard, selective-rewrite plan and design-approval workflow.
