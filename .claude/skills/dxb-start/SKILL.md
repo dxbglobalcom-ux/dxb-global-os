@@ -16,13 +16,17 @@ a dependency or a contradiction forces you to.**
 Read in this order and stop when you can state the work:
 
 1. The always-on core — `.claude/CLAUDE.md` (already loaded)
-2. `.planning/STATE.md` — the current photo. **One page. If it has grown into a history again,
+2. **What this holding IS** — the core carries it in short. Open the long form
+   (`MASTER_PLAN.md` §1 · `HOLDING_OS_PRODUCT_SPEC.md` §§2-4 · `00-CEO-DIRECTIVE-BEKLENTILER.md`)
+   when the work touches what the product is, what it must never resemble, or the CEO's 19 control
+   areas — those three are exempt from the "do not read other specs" rule below.
+3. `.planning/STATE.md` — the current photo. **One page. If it has grown into a history again,
    that is a defect: move the history to `.planning/STATE-ARCHIVE.md` in the same turn.**
-3. `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md` — what is open, and only that
-4. The spec that owns the row you are taking — reached from the row itself, not by browsing
-5. `HOLDING-OS-MASTER-PLAN/00-INDEX.md` — **only** when you need the registered-adaptation table
+4. `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md` — what is open, and only that
+5. The spec that owns the row you are taking — reached from the row itself, not by browsing
+6. `HOLDING-OS-MASTER-PLAN/00-INDEX.md` — **only** when you need the registered-adaptation table
    (a deferral or deviation), or the corpus map. It is a ledger, not an orientation document.
-6. Only the code, tests, schemas and references that row needs
+7. Only the code, tests, schemas and references that row needs
 
 **Do not** read the whole repository, the archive, other specs, other rows' research, or the
 rival reports unless the row names them. `.planning/STATE-ARCHIVE.md` and `_ARCHIVE/` are history:

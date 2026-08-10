@@ -17,6 +17,40 @@ The plan exists **once**: `HOLDING-OS-MASTER-PLAN/` (the specs + the CEO's direc
 What is still open exists **once**: `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md`.
 Where the work stands today exists **once**: `.planning/STATE.md`.
 
+## WHAT THIS HOLDING IS — read once; it does not change
+
+**DXB Global AI-Native Holding OS** — the executive command platform for one whole holding:
+companies, departments, directors, AI employees, projects, tasks, models, costs, decisions,
+approvals, workflows, skills, knowledge, memory, risks and audit, all seen, entered, changed and
+controlled from one place. It is **not** an admin panel, a project dashboard, an approval screen,
+a task manager or a SaaS panel — each is a named rejection in the CEO's own directive, and a
+delivery that resembles one is refused on sight.
+
+**Three faces, all three required:** it runs itself 7/24 (anti-baby-sitting) · the CEO sees every
+detail to the bottom · he changes anything at any moment, without having to micro-manage.
+
+**The standard is the Ferrari** (CEO, 2026-08-01): he ordered the car, not the drive — first place
+in a world competition, award standard, never amateur. Revenue and new companies come after; they
+are what the finished machine DOES.
+
+**The first law of V2 — IT MUST BE ALIVE** (*"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK"*,
+2026-08-02). What the rival queue found, in one place:
+
+- The company is visibly working, and it keeps working when nobody is watching. A surface is
+  permanently attached to what the system is doing; it is not a page opened to find out.
+- You watch the work move: work travels between the workers on screen, the one who is working
+  lights up and is named, the idle one is still — **motion IS state**.
+- Movement means a real movement. A value moves until it is true and then stops; nothing loops for
+  decoration; rest is part of the design; **zero is a real answer**.
+- The surface follows the human: what is being talked about is what stands on the screen, put there
+  by the system and not by a click, within seconds.
+- The machine says when it last knew, and when it wakes next.
+- **His acceptance test:** he opens a screen, touches nothing, and within minutes something changes
+  because the company did work.
+
+Long form: `MASTER_PLAN.md` §1 · `HOLDING_OS_PRODUCT_SPEC.md` §§2-4 (his 19 control areas) ·
+`00-CEO-DIRECTIVE-BEKLENTILER.md`.
+
 ## 0. YOUR FIRST REPLY IN A SESSION STATES THE POSITION
 
 Whatever he opens with — a greeting, a question, an order — **your first reply tells him where the
@@ -113,11 +147,6 @@ only the boundary. If a rule appears in both, the door is wrong.
 - **The test suite writes to `dxb_test`, a clone.** The company database is never written by
   construction work. A gate that must prove what is true in the *company* reads the company
   database with SELECT only.
-- **Shipping runtime code is not shipping until the resident services are restarted** in the
-  same turn (`dxb-scheduler`, `dxb-jarvis`), and the restart is part of the evidence.
-- **A live login cannot be automated** — no MFA factor is enrolled, so a form login would
-  enrol one on the CEO's account. The browser leg of a visual check needs a session file he
-  minted himself.
 - **Internal technical identifiers still say `fable-5`** on purpose (live keys, undo chains,
   a persona-gate heading). Every label the CEO *sees* says Opus 5.
 - **Tools before packages:** `.planning/research/STACK.md` is read before installing,
