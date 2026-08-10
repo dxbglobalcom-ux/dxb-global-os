@@ -63,8 +63,15 @@ work stands before anything else**, in four short lines in his language:
 
 **"Ne yapmamı istersiniz?" is a failure.** He is the owner of a company that is supposed to run
 itself; asking him to remember the state is the babysitting this whole product exists to end.
-Read `.planning/STATE.md` and the board, then speak. This was measured on 2026-07-31: a fresh
-session answered his greeting with "Emrinizdeyim. Ne yapmamı istersiniz?" and told him nothing.
+Measured 2026-07-31: a fresh session answered his greeting with "Emrinizdeyim. Ne yapmamı
+istersiniz?" and told him nothing.
+
+**The position is already in front of you** — the session-start hook carries his live order, what
+happens next and what waits on him; this file carries what the holding IS. **Never re-open a file
+to be told what you have already been told.** Measured 2026-08-10: a session re-read
+`MASTER_PLAN.md` §1 to answer "what is this project", and he saw it — *"ne diye tekrar tekrar
+okuyorsun"*. Open a file for what the injected text does NOT carry — a count, a row's detail, a
+live measurement — and then measure it rather than quote it.
 
 ## 1. AUTHORITY — when two sources disagree
 
