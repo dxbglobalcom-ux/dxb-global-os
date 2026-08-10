@@ -248,6 +248,75 @@ describe("C42 rival-intel ledger", () => {
     }
   });
 
+  // LAW 9 — added 2026-08-10, the CEO reading report 17 in his own hand.
+  //
+  // He handed over a live system and got back a file that doubted it: "the reel
+  // does not prove its own numbers", "none of it is verifiable from outside the
+  // film", "whether the support and incident panels reflect a real system or a
+  // staged one". His words: "canlı ve herşeyi gerçek olan videoyu kötülemiş
+  // sistemi kötülemiş o yok bu yok bu dekor şu bilmem ne!!!! yahu ben bunu
+  // yasaklamıştım zaten."
+  //
+  // He had. Twice, in writing, and both carriers already said so:
+  //   - 00_READ_FIRST_MASTER_DIRECTIVE.md §2 — he has personally watched these
+  //     systems and confirms they are REAL WORKING DEMONSTRATIONS, evidence
+  //     label C, and §2's prohibited-behaviour list forbids calling a feature
+  //     fake or decorative and forbids TRANSFORMING UNCERTAINTY INTO CRITICISM;
+  //   - ledger law 8 — aliveness is the PREMISE, not the question.
+  //
+  // Law 8's case guards the Aliveness section only, and every sentence he burned
+  // this time sat outside it — in §3.2, in the verdict, in the §4 answers. This
+  // case reads the WHOLE report. A report may still record what it could not
+  // measure itself; the directive requires that, and the escape below is exactly
+  // that shape: name the missing MEASUREMENT and what would supply it. What it
+  // may never do is convert the gap into a doubt about the rival's reality.
+  const REALITY_DOUBT: Array<[RegExp, string]> = [
+    [
+      /\b(?:real|genuine|live)\b[^.\n]{0,40}\bor\b[^.\n]{0,25}\b(?:staged|faked?|seeded|mocked)\b|\b(?:staged|faked?|seeded|mocked)\b[^.\n]{0,25}\bor\b[^.\n]{0,40}\b(?:real|genuine|live)\b/i,
+      'asks whether the rival\'s system is real or staged — the CEO has already ruled it real (C); the question is closed',
+    ],
+    [
+      /\b(?:does|do|did|can|could|cannot|can't)\s*n[o']?t\s+(?:be\s+)?(?:prove|proven|verif\w*)\b/i,
+      "casts the rival's own figures as unproven — the master directive's §2 confirms these demonstrations first-hand, and uncertainty may never be transformed into criticism",
+    ],
+    [
+      // Only the NEGATIVE grade. Bare "verifiable" is praise and belongs to the
+      // rival — measured on the first run of this case, where report 05's
+      // "cheap, verifiable distribution" (a compliment) failed the gate.
+      /\bunverifiable\b|\b(?:not|never|hardly|barely)\s+verifiable\b/i,
+      'grades the rival as unverifiable — write instead what THIS FILE could not measure and what would be needed to measure it',
+    ],
+    [
+      /\bnone of it\b[^.\n]{0,40}\bverif|\bnothing\b[^.\n]{0,30}\b(?:is|can be)\s+verified\b/i,
+      "declares the rival's screen unverified as a whole",
+    ],
+    [
+      /(?<!\bnot\s)(?<!\bnever\s)(?<!\bcalled\s)\b(?:decorative|décor|window dressing|just UI|merely UI|smoke and mirrors)\b/i,
+      'calls a rival\'s working surface decoration — forbidden by name in the master directive §2',
+    ],
+  ];
+  // The permitted shape, and the only one: the report says what IT could not
+  // measure and names the thing that would settle it. A sentence carrying that
+  // shape is a measurement note, not a verdict on the rival.
+  const MEASUREMENT_ESCAPE =
+    /\bwould (?:be )?(?:need|require)\b|\bwhat would be needed\b|\bcould not measure\b/i;
+  it("a report never doubts that the rival is real — law 9, his own ban", () => {
+    for (const r of ledgerRows().filter((x) => x.status === "reported")) {
+      const body = readFileSync(join(DIR, r.report), "utf8");
+      for (const [re, why] of REALITY_DOUBT) {
+        // Sentence-level, so a rebuttal ("the split is not decorative") and a
+        // measurement note both survive while the verdict itself does not.
+        const offenders = body
+          .split(/(?<=[.!?|\n])\s+/)
+          .filter((s) => re.test(s) && !MEASUREMENT_ESCAPE.test(s));
+        expect(
+          offenders,
+          `row ${r.n} (${r.report}) breaks ledger law 9 — ${why}. Found: "${(offenders[0] ?? "").trim().slice(0, 200)}"`,
+        ).toEqual([]);
+      }
+    }
+  });
+
   it("a reported row records the fingerprint of what was actually studied", () => {
     for (const r of ledgerRows().filter((x) => x.status === "reported")) {
       const body = readFileSync(join(DIR, r.report), "utf8");

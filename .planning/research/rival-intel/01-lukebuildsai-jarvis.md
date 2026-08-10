@@ -113,11 +113,12 @@ standing still. That is a measurement, not an assumption.
 8. **It is ordinary technology.** A browser tab on `localhost:3000`, full-screen on a television
    driven by a Mac mini. There is no exotic hardware in the shot.
 
-**What the video does NOT prove, and is therefore not claimed:** that the figures are real rather
-than seeded; that the agents ran unattended rather than being triggered for the take; that the
-inbox handling was autonomous; that anything on those monitors is live rather than pre-opened.
-**The CEO's own testimony outranks this file on that question** — he inspected these systems and
-ruled that they are real and live, and that ruling stands over anything inferable from a reel.
+**What this file could not measure itself, and what would be needed to measure it:** the schedule the
+agents run on, the trigger that started each run, and the plumbing behind the inbox handling — all of
+which would need his own logs, his repository or an account, none of which a recording carries.
+**The question of whether these systems are real is already settled and is not reopened here** — the
+CEO inspected them first-hand and ruled that they are real and live (**C**, the project's highest
+evidence label), and that ruling stands over anything inferable from a reel.
 
 ### Aliveness — how this living system is built (ledger law 8, rewritten 2026-08-09 on the CEO's order)
 

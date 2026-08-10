@@ -194,6 +194,33 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
      case** fails a reel or video whose Aliveness section carries no timed figure at all — measured
      when the clause was written: of the nine finished reports, only **02, 09 and 10** had timed the
      screen's own movement; the other five films had not, and were repaired the same session.
+9. **THE RIVAL'S REALITY IS SETTLED. A REPORT MAY DOUBT ITS OWN MEASUREMENT, NEVER THE RIVAL.**
+   Added 2026-08-10, the CEO reading report 17 in his own hand: *"canlı ve herşeyi gerçek olan
+   videoyu kötülemiş sistemi kötülemiş o yok bu yok bu dekor şu bilmem ne!!!! yahu ben bunu
+   yasaklamıştım zaten."* **He had — twice, in writing.** His master directive's §2 records his
+   first-hand confirmation that the systems, dashboards, changing numbers, charts, interactions and
+   effects in the supplied competitor videos are **real working demonstrations, not decorative still
+   images** — evidence label **C**, the highest this project defines — and its prohibited-behaviour
+   list already forbade calling a feature fake or decorative and forbade **transforming uncertainty
+   into criticism**. Law 8 said the same in one line: aliveness is the premise, not the question.
+   - **WHY IT WAS BROKEN ANYWAY, measured:** law 8's machine case guards **only the Aliveness
+     section**, and every sentence he burned this time sat outside it — in §3.2, in the verdict, in
+     the §4 answers. The gate existed; its range was too short.
+   - **FORBIDDEN anywhere in a report**, in any language, however dressed: *"the reel does not prove
+     its own numbers"* · *"none of it is verifiable from outside the film"* · *"whether the panels
+     reflect a real system or a staged one"* · *"décor behind the man"* · any sentence that converts
+     what THIS FILE could not measure into a doubt about whether the rival is real.
+   - **REQUIRED instead, and it is the only escape:** name the **measurement** that is missing and
+     **what would be needed** to take it — *"which model and scheduler drive the auto-posting is not
+     on screen; it would need their documentation or an account."* That is a measurement note. A
+     verdict on the rival's reality is not, and the CEO's own eye outranks any reading of a clip.
+   - **The case named `a report never doubts that the rival is real — law 9, his own ban`** in
+     `tests/c42/rival-intel-ledger.test.ts` reads the **whole report**, sentence by sentence, and
+     fails five wordings. Negative control run the same session: the rejected version of report 17
+     trips it **6 times**; the repaired version **0**. **Repaired 2026-08-10:** report **17** (seven
+     passages) and report **01** (one paragraph of the same class, *"what the video does NOT
+     prove…"*). Bare *"verifiable"* is praise and stays legal — measured on report 05, where
+     *"cheap, verifiable distribution"* is a compliment to the rival.
 
 ## Status vocabulary
 
