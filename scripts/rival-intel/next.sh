@@ -18,9 +18,14 @@ STALE_MIN="${RIVAL_STALE_MINUTES:-45}"
 rows="$(grep -E '^\| [0-9]{2} \|' "$LEDGER" || true)"
 total="$(printf '%s\n' "$rows" | grep -c . || true)"
 done_n="$(printf '%s\n' "$rows" | awk -F'|' '{gsub(/ /,"",$5); print $5}' | grep -c '^reported$' || true)"
+# A row the CEO took out of the watching order himself (2026-08-10, row 13). It
+# is neither done nor waiting, so it is counted apart instead of inflating either
+# number, and the queue below steps over it.
+skipped_n="$(printf '%s\n' "$rows" | awk -F'|' '{gsub(/ /,"",$5); print $5}' | grep -c '^skipped$' || true)"
 
 echo "STAGE 1 of the C42 programme — rival intelligence"
 echo "progress: $done_n / $total sources reported"
+[ "$skipped_n" -gt 0 ] && echo "skipped on the CEO's order: $skipped_n (rows $(printf '%s\n' "$rows" | awk -F'|' '{gsub(/ /,"",$5); gsub(/ /,"",$2); if ($5=="skipped") printf "%s ", $2}' | sed 's/ $//'))"
 echo
 
 # A claimed row older than STALE_MIN means the session working it died.
@@ -44,7 +49,7 @@ done <<< "$rows"
 
 target="$stale"
 if [ -z "$target" ]; then
-  target="$(printf '%s\n' "$rows" | awk -F'|' '{gsub(/ /,"",$5); gsub(/ /,"",$2); if ($5!="reported") {print $2; exit}}')"
+  target="$(printf '%s\n' "$rows" | awk -F'|' '{gsub(/ /,"",$5); gsub(/ /,"",$2); if ($5!="reported" && $5!="skipped") {print $2; exit}}')"
 fi
 
 if [ -z "$target" ]; then

@@ -77,9 +77,20 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    ONAYLARINI BENİM BAKIP GÖRMEM İLE İLGİLİ: ONAYLIYORUM. GÖZ TESTİ İLE İLİGİLİ RAPORLARA BAKTIM."*
    <!-- CEO-OK: rival-reports-seen-2026-08-10 --> The acceptance covers the reports, **not the
    queue**: 23 sources are still unwatched and B22 stays open.
-   **11 of 34 sources reported**, `NEXT: 13`. **Sources 07, 08, 09, 10 and 11 were rewritten from
+   **12 of 34 sources reported**, `NEXT: 15`. **Sources 07, 08, 09, 10 and 11 were rewritten from
    nothing on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — under law 7, which judges a
-   rival by what it PRODUCES. Row 13 stands at `fetched` with its raw material intact.
+   rival by what it PRODUCES. **Row 13 is `skipped` on his live order of 2026-08-10** — *"13.videoyu
+   atla ama yanına not düş kısa CEO emri ile atlandı diye. şimdi 14. video ile devam et."* The row,
+   its number and its material stay; the queue steps over it, and `next.sh` counts it apart.
+   **Source 14 (2026-08-10) is the same product's AGENTS page, and it lands the data model the queue
+   was missing: an employee is a role, a live state and a list of NAMED SKILLS, each declaring the
+   sentences that trigger it, what it costs and where it was learned.** Measured here the same
+   session: `agents.skills` is `[]` on **all 205** of our rows — project **P14-1**, needs no install.
+   It also lands **P14-3** (51 of 57 `intents` sit at `received`, and nothing anywhere proposes who
+   should own a request — 0 matches in the dashboard and packages) and **P14-4** (the memory node
+   states its own provenance; we already carry richer provenance on 13,403 rows and lack the
+   inspector). The motion law of sources 11/12 gained its second clause and its second figure:
+   **1.5 s per edge, a 1.90 s round, and an `idle` employee receives NO pulse — 0 across 180 frames**.
 
    **His live order of 2026-08-09 gave the queue its second reading law, and it is now machine-held.**
    His words, handing over source 11: *"zaten 11 de göreceksiniz bağlantı dallarından böyle bir nokta

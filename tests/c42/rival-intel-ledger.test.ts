@@ -71,8 +71,12 @@ describe("C42 rival-intel ledger", () => {
     for (const r of rows) {
       expect(r.n, `row number on ${JSON.stringify(r)}`).toMatch(/^\d{2}$/);
       expect(["reel", "video", "pdf", "repo"], `kind on row ${r.n}`).toContain(r.kind);
+      // `skipped` exists because the CEO can take a source OUT of the watching
+      // order without striking it from the queue (2026-08-10, row 13). It is not
+      // the same act as row 06, which was deleted outright: a skipped row keeps
+      // its number, its material and its note, and the queue simply steps over it.
       expect(
-        ["pending", "claimed", "fetched", "watched", "reported"],
+        ["pending", "claimed", "fetched", "watched", "reported", "skipped"],
         `status on row ${r.n}`,
       ).toContain(r.status);
       expect(r.report, `report filename on row ${r.n}`).toMatch(/^\d{2}-[a-z0-9-]+\.md$/);
@@ -287,19 +291,42 @@ describe("C42 rival-intel ledger", () => {
     }
   });
 
-  it("the NEXT pointer names a row that is not yet reported", () => {
+  it("the NEXT pointer names a row that is neither reported nor skipped", () => {
     const text = readFileSync(LEDGER, "utf8");
     const m = text.match(/^\*\*NEXT:\s*(\d{2}|done)\s*\*\*/m);
     expect(m, "the ledger has no NEXT pointer — a fresh session cannot resume").not.toBeNull();
     const next = m![1];
     const rows = ledgerRows();
+    const settled = (s: string) => s === "reported" || s === "skipped";
     if (next === "done") {
-      expect(rows.every((r) => r.status === "reported")).toBe(true);
+      expect(rows.every((r) => settled(r.status))).toBe(true);
     } else {
       const row = rows.find((r) => r.n === next);
       expect(row, `NEXT points at row ${next}, which does not exist`).toBeDefined();
-      expect(row!.status, `NEXT points at row ${next}, already reported`).not.toBe("reported");
+      // A skipped row must never be handed to a session as the next thing to
+      // watch: the CEO took it out of the order himself.
+      expect(
+        settled(row!.status),
+        `NEXT points at row ${next}, which is already ${row!.status}`,
+      ).toBe(false);
     }
+  });
+
+  // The CEO's order of 2026-08-10 is only obeyed if the machine that hands out
+  // the next row obeys it too — a note in the ledger that `next.sh` ignores is
+  // a note that gets skipped instead of the video.
+  it("a skipped row carries the CEO's order as its note, and next.sh steps over it", () => {
+    for (const r of ledgerRows().filter((x) => x.status === "skipped")) {
+      const line = readFileSync(LEDGER, "utf8")
+        .split("\n")
+        .find((l) => new RegExp(`^\\|\\s*${r.n}\\s*\\|`).test(l))!;
+      expect(line, `row ${r.n} is skipped without naming the order that skipped it`).toMatch(
+        /SKIPPED ON THE CEO'S LIVE ORDER/,
+      );
+    }
+    expect(readFileSync(join(process.cwd(), "scripts/rival-intel/next.sh"), "utf8")).toMatch(
+      /\$5!="skipped"/,
+    );
   });
 
   // THE SECOND GATE, and it exists because of a measured miss, not a worry.
