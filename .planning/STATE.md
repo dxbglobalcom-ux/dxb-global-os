@@ -66,6 +66,27 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
 
+   **⛔ READ TWO FILES IN FULL BEFORE YOU TOUCH THIS ROW — measured 2026-08-10, this is how a session
+   fails it.** (a) `docs/ceo-directives/2026-07-reanalysis/00_READ_FIRST_MASTER_DIRECTIVE.md` — his
+   controlling directive, whose own title is **RE-ANALYSIS AND DESIGN**; its §3.2 lists nine things a
+   report must read off the screen (assistant movement, repositioning, waveform, animated
+   relationships, data points travelling through connections, page transitions, live numbers, audio
+   rhythm, *"whether the UI feels like a living operating system rather than static cards"*), its §4
+   lists eight questions every report must answer, and its §9 **rejects** work where *"'living UI'
+   becomes meaningless decoration"*. (b) `.planning/research/rival-intel/00-LEDGER.md` — the eight
+   laws he gave **after** the directive was written; **where the two disagree the ledger is newer.**
+   On 2026-08-10 a session opened this row having read the door but not the directive, wrote source
+   14's report with no design reading at all, and he caught it: *"peki görünürlükle ilgili şeyler
+   yazdın mı rapora? … her zaman söylüorm."* Measured that hour: of the six carriers a session
+   actually reads, **only the `dxb-rival-intel` door names the directive at all.**
+
+   **AND THE SECOND HALF OF THAT CORRECTION, in his words:** *"ben canlı organizma gibi tanımla
+   derken örnek olsun diye söyledim"* — "describe it like a living organism" is **how the product
+   should FEEL**, not a licence to write organ prose. **Describe the object on the screen — its
+   shape, size and colour — and prove the life with figures.** Row 10 (Nimbus) is the warning on
+   disk: 13 body/organ words in its Aliveness section and **zero** measurements, so it never says
+   what Nimbus looks like. Row 14 is the shape the reports take from now on.
+
    **WHY IT EXISTS — order C42, sharpened 2026-08-09:** *"bu rakip video raporlarını niye
    hazırlıyoruz adam gibi hatırlamanız lazım."* He hands over a rival; the author watches it whole,
    reports what that rival **PRODUCES**, then builds the same **or better** — *"RAKİPLERİMİZDEN ÇOK
@@ -77,6 +98,10 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    ONAYLARINI BENİM BAKIP GÖRMEM İLE İLGİLİ: ONAYLIYORUM. GÖZ TESTİ İLE İLİGİLİ RAPORLARA BAKTIM."*
    <!-- CEO-OK: rival-reports-seen-2026-08-10 --> The acceptance covers the reports, **not the
    queue**: 23 sources are still unwatched and B22 stays open.
+   **HE ALSO ACCEPTED THE 2026-08-10 WORK ITSELF** — row 13's skip, source 14's report with both
+   corrections in it, and the directive's Superpowers deletion: *"bunu yap sonra yaptığın işi de
+   onayla ben baktım tamam."* <!-- CEO-OK: rival-14-and-directive-2026-08-10 --> Same boundary: it
+   does **not** close B22, and it is **not** an approval of the Phase-4 visual package.
    **12 of 34 sources reported**, `NEXT: 15`. **Sources 07, 08, 09, 10 and 11 were rewritten from
    nothing on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — under law 7, which judges a
    rival by what it PRODUCES. **Row 13 is `skipped` on his live order of 2026-08-10** — *"13.videoyu
