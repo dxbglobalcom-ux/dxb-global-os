@@ -205,6 +205,88 @@ owner's raw, unpolished sentences are kept verbatim — *"automate everything th
 my business please"* — with a source (`Attu OS · Brain Dump`), an outcome chip (`completed`) and an
 age (`5d ago`).
 
+### The design system, measured — what this surface is actually made of
+
+His directive requires this and it is the half a mechanism reading leaves out: §3.2 asks for the
+visual hierarchy and the feel of the interface, and §4's seventh question asks for the **design
+principle** to adopt, not only the capability. Every figure below was sampled **out of the native
+1080 × 1920 frames this session** — colours read as pixels, sizes measured as cap heights and runs,
+contrast computed from the sampled values. Nothing here is an impression of a look.
+
+#### 14-D1 · The palette: one cool ground, three planes, and a hue per employee — **V**
+
+| Role | Sampled | Hue / lightness |
+|---|---|---|
+| Page + header ground | `#0e1821` | 208° · **L 9 %** — a cool blue-black, never pure black |
+| Left rail plane | `#1a2636` | 214° · L 16 % |
+| Card body plane | `#222934` | 217° · L 17 % |
+| Command-card fill | `#1c1d2b` | slightly violet — the router is not the same plane as a worker |
+
+Three planes, each a step lighter than the last, all inside a **6–17 % lightness band**: the product
+never uses white space to separate things, it uses **elevation**. And on that grey ground **every
+employee owns a hue**, carried on four different objects at once:
+
+| Employee | Icon tile | Card header band | Modal top accent line |
+|---|---|---|---|
+| CMO | cyan `#a3ffff` | `#192e37` | `#84dcf0` |
+| Sales Rep | magenta `#fd5eb8` | `#2a1e2f` | `#c45a9c` |
+| Dev *(idle)* | green `#99dcb0` | `#192b28` | — |
+| COO | indigo `#857bfe` | `#1b2336` | `#757acc` |
+| Data Analyst | amber `#edc484` | `#262623` | — |
+| CEO/Orchestrator | violet `#ce4aff` | — | — |
+
+**The principle, stated plainly:** identity is a colour and the colour follows the employee
+everywhere — the dot in the rail, the tile on the card, the tint under the card's header, and the
+2-pixel line stamped across the top of its modal. The operator never reads a name to know whose
+panel is open.
+
+#### 14-D2 · The status vocabulary is three words and three colours, and the dead one is desaturated — **V**
+
+`working` `#74e8a1` (green) · `idle` `#839393` (grey) · `waiting` `#f7cc88` (amber). Measured against
+the card fill: green **9.62:1**, grey **4.57:1**. The idle state is not red and not an alarm — it is
+**drained of colour and dropped in contrast**, so a stopped desk goes quiet on the page instead of
+shouting. Nothing on this screen uses red at all.
+
+#### 14-D3 · The wire is nearly invisible until it carries something — **V**
+
+Wire against the page: **1.50:1** — a line you can barely see. The pulse on it: **12.23:1** against
+the page and **8.15:1** against the wire itself. **The structure recedes by 8× so the traffic reads.**
+This is the single most transferable visual decision in the reel: draw the org chart faintly, and let
+the work be the only bright thing on it.
+
+#### 14-D4 · The type scale is four steps, and the KPI numeral is the loudest object on the card — **V**
+
+Cap heights measured on the native frame: eyebrow `AGENT NETWORK` **7 px** (uppercase, letter-spaced,
+`#8693c7`, 5.99:1) · body copy **11 px** (`#acb6c0`, 8.71:1) · card title `CMO` **12 px** · page title
+`Agents` **25 px** (`#f7ffff`, 17.68:1) · **the numeral `954` 30 px** — larger than the page title
+itself, sitting over a **7 px** grey label `READS`. The number is the biggest thing in its region and
+its label is the smallest; a counter is read before it is explained.
+
+#### 14-D5 · The geometry is one rhythm, and the router breaks it on purpose — **V**
+
+Five employee cards of **141 px** on a **153 px pitch** (12 px gutters), all identical, all on one
+row. Above them the **CEO/Orchestrator card is 292 px wide and alone on its row** — a little over
+twice a worker and centred. Hierarchy is stated by **size and solitude**, not by a label saying
+"manager". The left rail is **157 px**, a lighter plane than the page (1.17:1 — separated by
+elevation, not by a border line).
+
+#### 14-D6 · The empty and disabled states are designed, not left blank — **V**
+
+The inspector before anything is clicked reads *"Click a node to inspect it."* in the middle of an
+otherwise empty panel; the graph page states its own default out loud — *"Every folder is open two
+levels deep by default. Hover to trace connections — click + on a node to go further in."*; and the
+**"Send to CEO" button is drawn disabled** while the field is empty rather than hidden. The interface
+explains itself in place, and never shows an empty rectangle.
+
+#### 14-D7 · The sound is mastered to a platform target, and the film never breathes — **V/T**
+
+`ffmpeg ebur128`, this session: **integrated loudness −14.3 LUFS**, which is the normalisation target
+social platforms use — the audio was mastered, not recorded and uploaded. The narration runs at
+**154 words per minute**, and speech covers **60.84 s of the 61.05 s film — 99.7 %**, with a longest
+single unbroken sentence of **7.64 s** and **0 ms** of gap between transcript segments. There is no
+music bed and no pause: the reel's rhythm is one continuous take, and every screen event is cut to
+land on the word that names it (the CMO modal opens on *"my CMO"*, the COO modal on *"my COO"*).
+
 ### What this source PRODUCES — law 7
 
 Stated exactly, with nothing added:
@@ -393,6 +475,35 @@ whether the thing is real and where it lives. Applied to our memory surface it c
 new data, and it answers the one question a memory graph must never dodge — *is this node a real
 thing or a model of one?*
 
+### P14-5 — The design channel the holding does not have: an identity colour per employee, and a fourth motion duration · **into the Phase-4 visual package, which is the CEO's gate**
+
+Measured against our own tokens this session (`apps/dashboard/src/app/globals.css`), the holding's
+design system is disciplined where the rival's is: dark is primary, pure black and pure white are
+forbidden, colours are OKLCH, the z-index scale is semantic, and the type scale is fixed at
+11.5 / 14 / 15 / 22 / 28 px. Two specific things it does **not** have, both visible in this reel:
+
+1. **No identity channel.** We carry **one** `--accent` (amber, `oklch(0.8 0.115 92)`) for the whole
+   product, plus `--ok / --warn / --danger / --info`. The rival gives **every employee a hue** and
+   repeats it on four objects (rail dot → icon tile → card header tint → the 2 px line across the top
+   of its modal). A holding with Hamza and ~20 directors — which §6 of his directive requires — has
+   no way to say *whose* panel is open except by reading the name. This is a token-level addition, not
+   a redesign: an identity hue per employee, derived once and bound to the persona.
+2. **No travel duration.** Our motion tokens are `--dur-fast 150ms`, `--dur 250ms`,
+   `--dur-slow 400ms`. The rival's defining motion is **1500 ms** — 3.75× our slowest token — because
+   it is not a transition, it is **a thing crossing the screen**. A vocabulary that stops at 400 ms
+   cannot express work moving from one desk to another. One more token, and the rule from §14-D3 with
+   it: **the wire sits at ≈1.5:1 against the ground and the thing travelling on it at ≈12:1**, so the
+   structure recedes 8× and only the work is bright.
+
+Three further principles from §14-D1…D6 belong in the same package and cost nothing to state: the
+**three-word status vocabulary** where idle is desaturated rather than alarming; **hierarchy by size
+and solitude** (the router is 2× a worker and alone on its row) instead of a label; and the
+**KPI numeral larger than the page title** over a 7 px label.
+
+**The boundary, from his own directive §5:** the **left navigation bar and its icons are the one
+pre-approved visual element** of DXB and nothing here proposes touching them. Everything above enters
+the Phase-4 visual package, which may not be implemented before he approves it <!-- OPEN: B22 -->.
+
 ### What is NOT taken, and why
 
 - **`localhost:3001`.** The reel is filmed against a development server on the author's machine. That
@@ -427,6 +538,16 @@ gets no pulse. A wire that always flows tells the owner nothing; a wire that goe
 where to look. That is one boolean, and it turns the motion work from decoration into instrumentation
 before a single pixel of it is designed.
 
+**The third finding is the design system, and it is the reason this file was reopened.** Sampled from
+the native frames: one cool blue-black ground at 9 % lightness with three planes stacked inside a
+6–17 % band, **a hue per employee carried on four objects at once**, a three-word status vocabulary
+whose idle state is desaturated rather than alarming, a wire drawn at **1.50:1** against the ground
+with its traffic at **12.23:1**, a KPI numeral (30 px) set larger than the page title (25 px) over a
+7 px label, hierarchy stated by size and solitude, and empty and disabled states that explain
+themselves in place. Against our own tokens the two concrete absences are an **identity colour
+channel** and a **travel duration** — our motion vocabulary stops at 400 ms where this product's
+defining movement is 1500 ms.
+
 What this reel does not give is any read on the rival's commercial output — no revenue, no customers,
 no price. Its measurable production is internal and real: 26 logged requests with the visible ones
 `completed`, 954 memory records, files on disk with byte sizes, and a content pipeline counted in
@@ -441,3 +562,4 @@ install-free steps that close the distance this source exposes.
 | Date | Change |
 |---|---|
 | 2026-08-10 | File opened from nothing and written in one pass: whole reel watched in order at 1 fps at native 1080 × 1920, audio read as 16 timestamped segments, movement measured with a 30 fps dense pass and a linking tracker over 5.0–11.0 s and 38.0–43.0 s, seven native zoom crops cut for the small type, and nine DXB facts measured against the company database read-only and against the repository the same session. |
+| 2026-08-10 | **DEFECT FOUND BY THE CEO AND FIXED AT ITS SOURCE THE SAME TURN.** His question: *"peki görünürlükle ilgili şeyler yazdın mı rapora? … yani design ile ilgili şeyler. her zaman söylüorm."* He was right. The controlling directive — `docs/ceo-directives/2026-07-reanalysis/00_READ_FIRST_MASTER_DIRECTIVE.md`, whose own title is **RE-ANALYSIS AND DESIGN** — **was not opened before the first pass was written**; the door `dxb-rival-intel` names it in its first line and the pointer was not followed. Its §3.2 requires the visual hierarchy and the feel of the interface, and its §4 question 7 requires the **design principle** to adopt. The first pass carried the mechanism and the motion and **no measured design reading at all**. Added this turn: **§14-D1…D7** (palette and identity hue, status colour vocabulary, wire-to-traffic contrast, type scale, geometry, empty/disabled states, audio mastering) — every figure sampled from the native frames or computed from those samples — plus project **P14-5** measured against our own `globals.css` tokens, and a third paragraph in the verdict. |
