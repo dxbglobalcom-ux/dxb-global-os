@@ -1,7 +1,7 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 15**
+**NEXT: 16**
 
 > ### ✅ THE ELEVEN FINISHED REPORTS WERE SEEN AND ACCEPTED BY THE CEO — 2026-08-10 (LAW B)
 > His words: *"ŞUANA KADAR BEKLEYEN RAPOR ONAYLARINI BENİM BAKIP GÖRMEM İLE İLGİLİ: ONAYLIYORUM.
@@ -222,7 +222,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 12 | https://www.instagram.com/reel/DbF2AUQh0MQ/ — Rinaldo Janjua | reel | reported | 2026-08-09T20:12:00Z | `12-rinaldojanjua-b.md` | listed without a note |
 | 13 | https://www.instagram.com/reel/DbHOTOqhBXE/ — Rinaldo Janjua | reel | skipped | 2026-07-28T11:51:40Z | `13-rinaldojanjua-c.md` | **SKIPPED ON THE CEO'S LIVE ORDER, 2026-08-10** — *"13.videoyu atla ama yanına not düş kısa CEO emri ile atlandı diye. şimdi 14. video ile devam et."* Never watched, never reported. Unlike row 06 it is **not** struck: the row stays, the material stays on disk, and the number is not re-used |
 | 14 | https://www.instagram.com/reel/DbKe90ETKfB/ — Rinaldo Janjua | reel | reported | 2026-08-10T10:39:22Z | `14-rinaldojanjua-d.md` | listed without a note |
-| 15 | https://drive.google.com/file/d/105ejHFZg-07mYEJwT4vZ5rxFClS-h9G4/view | pdf | fetched  | 2026-07-28T11:59:59Z | `15-vibecoder-4-sites-pdf.md` | measured 2026-07-28: not a video — the PDF *"Her Vibe Coder'ın Bilmesi Gereken 4 Site - Part 5"* |
+| 15 | https://drive.google.com/file/d/105ejHFZg-07mYEJwT4vZ5rxFClS-h9G4/view | pdf | reported | 2026-08-10T12:17:00Z | `15-vibecoder-4-sites-pdf.md` | measured 2026-07-28: not a video — the PDF *"Her Vibe Coder'ın Bilmesi Gereken 4 Site - Part 5"* |
 | 16 | https://github.com/open-jarvis/OpenJarvis | repo | fetched  | 2026-07-28T11:59:59Z | `16-openjarvis-repo.md` | *"JARVIS REPOSU"* — 8,065 stars, "Personal AI, On Personal Devices". Studied once on 2026-07-27 in a session that died; that study is NOT on disk, so it is redone here |
 | 17 | https://www.instagram.com/reel/DZoJOLQoQY2/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ== | reel | fetched | 2026-08-01T23:33:18Z | `17-dzojolqoqy2.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
 | 18 | https://www.instagram.com/reel/DZC-H3tRH7C/?igsh=Y3d6Y3Y3MTR5dm5k | reel | fetched | 2026-08-01T23:35:39Z | `18-dzc-h3trh7c.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |

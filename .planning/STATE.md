@@ -77,7 +77,23 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    ONAYLARINI BENİM BAKIP GÖRMEM İLE İLGİLİ: ONAYLIYORUM. GÖZ TESTİ İLE İLİGİLİ RAPORLARA BAKTIM."*
    <!-- CEO-OK: rival-reports-seen-2026-08-10 --> The acceptance covers the reports, **not the
    queue**: 23 sources are still unwatched and B22 stays open.
-   **12 of 34 sources reported**, `NEXT: 15`. **Sources 07, 08, 09, 10 and 11 were rewritten from
+   **13 of 34 sources reported**, `NEXT: 16` (measured 2026-08-10 by `scripts/rival-intel/next.sh`).
+   **Source 15 (2026-08-10) is the queue's only PDF** — a two-page Turkish lead magnet naming four
+   hosted services against four infrastructure jobs. Its checklist is the finding: of the four,
+   **DXB has finished exactly one.** Measured the same session in the company database — background
+   work runs (`pgboss.job` **141,856** rows, both resident services `active`), while **no e-mail has
+   ever left the system** (`outbox` 51 rows, **0 executed**; the only handler targets a Mailpit
+   sandbox), **no euro has ever entered the ledger** (`revenue_ledger` **0** rows, **€0**, against 6
+   written revenue engines) and **no deploy artefact exists on disk** (no compose file; two systemd
+   units). Its sharpest item costs nothing: Trigger.dev's resume-from-step was adopted as an idea and
+   never exercised — `workflow_runs.current_step` exists and `workflows`/`workflow_runs`/
+   `workflow_steps` are all **0 rows** — project **P15-3**. Also **P15-1** (real outward mail behind
+   the outbox seam that is already built; Resend free at 3,000/month — needs his domain), **P15-2**
+   (a Merchant of Record at 5 % + 50¢ as the entry path to a first euro — needs his identity),
+   **P15-4** (the `.md` → headless-Chrome → A4 PDF press; Playwright + `chromium-1228` already on
+   disk, €0) and **P15-5** (symptom-before-remedy panels, into the design package). Coolify and
+   Trigger.dev-as-runtime stay refused on our own stack rules.
+   **Sources 07, 08, 09, 10 and 11 were rewritten from
    nothing on his order — *"7'den tekrar başla, bu sefer doğru yap"*** — under law 7, which judges a
    rival by what it PRODUCES. **Row 13 is `skipped` on his live order of 2026-08-10** — *"13.videoyu
    atla ama yanına not düş kısa CEO emri ile atlandı diye. şimdi 14. video ile devam et."* The row,
