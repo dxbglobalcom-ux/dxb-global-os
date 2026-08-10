@@ -73,7 +73,21 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    until every source is watched.** A sentence not traceable to the source is `UNVERIFIED`, or it
    is not written. Full reason: `.claude/skills/dxb-rival-intel` + ledger §Why this exists.
 
-   **15 of 35 sources reported**, `NEXT: 18` (measured 2026-08-10 by `scripts/rival-intel/next.sh`).
+   **16 of 35 sources reported**, `NEXT: 19` (measured 2026-08-10 by `scripts/rival-intel/next.sh`).
+   **Source 18 (2026-08-10, on his live order "18. video ile devam et") is the other half of source
+   01 — the same man's Slack workspace, where his six agents are members of seven rooms named after
+   the business.** Its receipt is timed by the workspace's own clock: a customer e-mail at **12:47 PM**
+   becomes an escalation the same minute (with a permission to refuse and a permalink back to the
+   letter), a diagnosis with file and line numbers at **12:49**, the owner's one-line *"Yes @Tom, go
+   ahead"* at **12:50**, and **pull request #15 at 1:06 PM** — 19 minutes, one sentence and one
+   approval from him. Its advertising room ends every briefing with **`Approval needed`** whose first
+   line is *"No changes were made"* and which asks him to **refuse** one of its own options. Measured
+   against us the same session: our whole chat history is **102 messages between exactly two
+   participants** (hamza 53, ceo 49), **no room, no colleague, no handover**; **`approvals` holds 51
+   rows and 0 pending** although the page already renders recommendation, reasoning, alternatives,
+   risk and cost; **`outbox` holds 51 rows and all 51 failed**. Six projects **P18-1 … P18-6**, three
+   needing no install, no money and no account. Its screen motion is **UNVERIFIED and says so** — the
+   film is handheld and the static control moved 25.83 % against the screen's 43.47 %.
    **Source 17 (2026-08-10) is Higgsfield, and it films the anti-babysitting contract end to end** —
    85.6 s in one take: the owner speaks once, the machine reports the week, **raises the goal itself**
    from $105,200 to $150,000, admits an outage he never saw with its root cause and its 23-minute
@@ -89,7 +103,7 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    written employees are marketing or social, among them `social-scheduler-publisher` and
    `marketing-content-creator` — and **all 205 are dormant**). Refused: autonomous account creation
    and unapproved outward posting, both on his identity gate.
-   **14 of 35 reported at the previous measurement, `NEXT: 17`.**
+   **15 of 35 reported at the previous measurement, `NEXT: 18`.**
    **The queue grew to 35 on his live order of 2026-08-10** — *"kuyruğa ekle 36 olarak, sırası gelince
    izle."* He noticed row 16 was absent from the directive's §11 list, and the answer exposed a
    dropped source of his own: the YouTube link standing beside the OpenJarvis repository in the very

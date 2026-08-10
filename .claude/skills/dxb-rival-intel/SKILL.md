@@ -14,6 +14,19 @@ downloads and sparse frames, it called working systems decorative without eviden
 criticised systems he knows personally and reports as live and earning. *"Sen karayı çekiyorsun,
 bakıyorsun ona. İzlemek farklı."*
 
+## Before the media is opened (ledger law 11, CEO 2026-08-10)
+
+*"Projeyi tam anlamıyla anlamaları lazım … ne yapıyoruz amacımız ne bu Holding nedir öğrendikten
+sonra videoyu o gözle işlemeli. Hikaye roman kısımları çok fazla yazılmamalı."*
+
+1. Read `.claude/CLAUDE.md`, `.planning/STATE.md` and board row **B22** first. You are reading the
+   source **for a holding that is meant to run itself with one human in it**, and for the gaps that
+   holding has today — measure them before you watch, not after.
+2. The report opens with **`WHY IT MATTERS TO THIS HOLDING`**: the measured DXB gaps this source is
+   read against. A report that would fit any company has failed.
+3. **Write short.** Tables and measurements, not narrative. Every paragraph carries a number, a
+   quotation from the source, or a named project.
+
 ## Evidence labels — every substantive statement carries one
 
 | Label | Meaning |

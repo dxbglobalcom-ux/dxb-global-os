@@ -81,4 +81,9 @@ case "$st" in
                    echo "what was watched — summarising is forbidden (CEO order C42)." ;;
 esac
 echo
-echo "Read first, before anything: $LEDGER (its law section)."
+echo "Read first, before anything (ledger law 11, his order of 2026-08-10):"
+echo "  1. .claude/CLAUDE.md      — what this holding IS, and its boundaries"
+echo "  2. .planning/STATE.md     — where the work stands, and our measured gaps"
+echo "  3. $LEDGER (its law section)"
+echo "Watch the source AGAINST those gaps. Open the report with WHY IT MATTERS TO"
+echo "THIS HOLDING. Tables and measurements — no story, no scene-setting."

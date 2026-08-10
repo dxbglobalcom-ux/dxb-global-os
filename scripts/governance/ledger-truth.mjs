@@ -139,7 +139,10 @@ const TRIGGERS = [
 // sentence is not written. A phrase list, not an oracle — same stated limit as
 // TRIGGERS.
 const FUTURE_WORK = [
-  /\bNEXT\b[^|]{0,60}\b(milestones?|waves?|slots?|rows?|phases?)\b/i,
+  // "next to" is a preposition, never a promise — measured 2026-08-10 on a
+  // verbatim quotation inside rival report 18: *"show green 'Copied' text or
+  // checkmark under/next to the Account ID row"* tripped this as future work.
+  /\bNEXT\b(?!\s+to\b)[^|]{0,60}\b(milestones?|waves?|slots?|rows?|phases?)\b/i,
   /\bfuture (roadmap )?(rows?|waves?|slots?|milestones?)\b/i,
   /\b(ADOPT|EMBED)\s*=\s*\S/,
   /\bileride\b/i,
