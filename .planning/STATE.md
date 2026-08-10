@@ -73,7 +73,27 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    until every source is watched.** A sentence not traceable to the source is `UNVERIFIED`, or it
    is not written. Full reason: `.claude/skills/dxb-rival-intel` + ledger §Why this exists.
 
-   **16 of 35 sources reported**, `NEXT: 19` (measured 2026-08-10 by `scripts/rival-intel/next.sh`).
+   **The queue position is NOT copied here.** It has one home — the `NEXT:` line at the top of
+   `.planning/research/rival-intel/00-LEDGER.md`, printed by `scripts/rival-intel/next.sh`. A copy
+   in this file is exactly the stale number he caught on the board on 2026-08-10 (it said
+   `16 of 35 · NEXT: 19` while the ledger said 18 and 21). Run the script; never quote a count.
+
+   **Source 20 (2026-08-10) is No Hype Ai (`_no_hype_ai`) — a complete four-stage loop with no
+   human inside it**, and it lands on our sorest measurement. A sentence dictated into a phone
+   becomes a filed note: `cron · hourly` wakes a **read-only** classifier (`Haiku 4.5`) that emits
+   one typed intent with a **confidence**, and a **separate** program performs the write —
+   `folder = state`. A Telegram bot then *edits* the same store by conversation
+   (*"I already bought tomatoes, please remove that"* → `✓ Done`, stamped `recalled from vault ·
+   0.3s`), and the wall prints the human's cost as a number: **`manual filing 0 · you typed
+   1 sentence`**. Measured against us the same session: **51 of our 57 captured intents stand at
+   `received`** — never classified, never routed — and the last `intents` row (`2026-07-28
+   09:03:27`) and the last `task_events` row (`09:04:56`) stop in the same minute, **13 days ago**,
+   with `0` task events in 24 h. Our chat can be told things but changes nothing:
+   `api/chat/route.ts` is 91 lines with **0** write calls. The cheap model tier we already pay for
+   (`deepseek-v4-flash`, `qwen3.6-flash`, …) is wired and unused while all **205** agents sit on
+   `claude-sonnet-5`/`fable-5`. Six projects **P20-1 … P20-6**; the first two need no install, no
+   money and no account. Its screen motion IS measured: the Obsidian graph moves at **4.52×** the
+   floor of static text on the same screen (0.677 vs 0.150 per 100 ms over 63 camera-still pairs).
    **Source 18 (2026-08-10, on his live order "18. video ile devam et") is the other half of source
    01 — the same man's Slack workspace, where his six agents are members of seven rooms named after
    the business.** Its receipt is timed by the workspace's own clock: a customer e-mail at **12:47 PM**
