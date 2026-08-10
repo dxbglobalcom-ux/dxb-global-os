@@ -1,7 +1,23 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 21**
+**NEXT: 22**
+
+> ### ✅ SOURCE 20's REPORT WAS READ TO HIM AND ACCEPTED — 2026-08-10 (LAW B)
+> His words: *"20. raporu onaylıyorum, 21. videoya geç."* <!-- CEO-OK: rival-source-20-2026-08-10 -->
+> **His report only.** Measured the same minute: rows **15, 16, 17, 18 and 19** stand at `reported`
+> and are registered in `scripts/governance/ceo-approvals.json` **nowhere** — author-finished and
+> unaccepted. Row B22 stays open. <!-- OPEN: B22 -->
+>
+> ### ⚙ HIS STANDING CAPABILITY ORDER FOR HAMZA, given with source 21 — 2026-08-10
+> *"…jarvis geliyor konuşuor konuşurken hareket ediyor canlılık tepkisi var. ve kamerayı aktif edip
+> sahibinin elinde ne var onu tanımlıyor. bu da hamzanın yapabilmesi gereken şeylerden. Zaten bütün
+> teknolojik herşeyi yapabilmeli hamza ve bunun için hangi skill tool plugin mcp hook vb şeyler
+> gerekiyorsa kurulmalı."* <!-- CEO-OK: hamza-must-do-everything-2026-08-10 -->
+> A capability target, not a start: the design-package gate and the identity gate are untouched, so
+> the report NAMES what must be installed, with cost and licence, and installs nothing that costs
+> money or touches an outside account. **He also set the report's shape:** *"çok özet yaz bu raporda
+> kaynak falan filan vs en baştaki yazıları geç md hazırlarken ne işe yarıor ne yapıyor yeter."*
 
 > ### ✅ THE ELEVEN FINISHED REPORTS WERE SEEN AND ACCEPTED BY THE CEO — 2026-08-10 (LAW B)
 > His words: *"ŞUANA KADAR BEKLEYEN RAPOR ONAYLARINI BENİM BAKIP GÖRMEM İLE İLGİLİ: ONAYLIYORUM.
@@ -303,7 +319,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 18 | https://www.instagram.com/reel/DZC-H3tRH7C/?igsh=Y3d6Y3Y3MTR5dm5k | reel | reported | 2026-08-10T14:43:57Z | `18-dzc-h3trh7c.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
 | 19 | https://www.instagram.com/reel/DZc0F3Nx2rb/?igsh=ZHV5YXpwZTBzdzcx | reel | reported | 2026-08-10T17:11:28Z | `19-dzc0f3nx2rb.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* — **handed over live, 2026-08-10: *"continue with 19 th video Opus 5! Burada luke sistemin detayını anlatıyor kurduğu jarvis ile ilgili."*** |
 | 20 | https://www.instagram.com/reel/Da0EUZAu0ve/?igsh=MWI2Nm13bng3b2l4cg== | reel | reported | 2026-08-10T18:36:39Z | `20-da0euzau0ve.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
-| 21 | https://www.instagram.com/reel/DXyvXCNITAK/?igsh=MWgyM3R1eWFpdmI0bg== | reel | fetched | 2026-08-01T23:44:34Z | `21-dxyvxcnitak.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
+| 21 | https://www.instagram.com/reel/DXyvXCNITAK/?igsh=MWgyM3R1eWFpdmI0bg== | reel | reported | 2026-08-10T21:47:00Z | `21-dxyvxcnitak.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
 | 22 | https://www.instagram.com/reel/DanLpQ2KdzV/?igsh=aTVieWdmbDBpNXZs | reel | fetched | 2026-08-01T23:45:32Z | `22-danlpq2kdzv.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
 | 23 | https://www.instagram.com/reel/DaTUI9xChIR/?igsh=cWsxbDBmN3BsNDFx | reel | fetched | 2026-08-01T23:46:19Z | `23-datui9xchir.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |
 | 24 | https://www.instagram.com/reel/Da1NGf0sfs3/?igsh=NXVnazFmZ2V5cm1j | reel | fetched | 2026-08-01T23:47:15Z | `24-da1ngf0sfs3.md` | Supplementary list, section 11 of his directive of 2026-07-29: *"Analyse all previously collected competitor videos and all additional URLs below. The new links are supplementary; do not reduce the entire product vision to only the features shown in them."* |

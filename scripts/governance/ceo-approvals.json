@@ -141,5 +141,19 @@
     "verbatim": "sana sadece 14. video işini onayladım dedim",
     "conditions": "Source 14's report and nothing else. Not the queue, not row B22, not the directive change, not any other report.",
     "where": ".planning/research/rival-intel/14-rinaldojanjua-d.md change log"
+  },
+  "rival-source-20-2026-08-10": {
+    "date": "2026-08-10",
+    "what": "Source 20's report only — 20-da0euzau0ve.md, read to him in full before he ruled. He accepted it and ordered the queue to move to source 21 in the same sentence.",
+    "verbatim": "20. raporu onaylıyorum, 21. videoya geç.",
+    "conditions": "Source 20's report and nothing else. It does not accept reports 15, 16, 17, 18 or 19 — measured the same minute in .planning/research/rival-intel/00-LEDGER.md, those five rows stand at 'reported' and are registered nowhere here, so they remain AUTHOR-finished and unaccepted under LAW B. It does not close row B22, does not lift the design-package gate, and authorises no implementation of P20-1 … P20-6.",
+    "where": ".planning/research/rival-intel/20-da0euzau0ve.md change log; .planning/research/rival-intel/00-LEDGER.md row 20"
+  },
+  "hamza-must-do-everything-2026-08-10": {
+    "date": "2026-08-10",
+    "what": "STANDING CAPABILITY ORDER for Hamza, given while handing over source 21. Hamza must be able to do everything the rival's Jarvis does and everything technological beyond it — speak, move and react visibly while speaking, and SEE: open the camera on command and identify the object in the CEO's hand. Whatever skill, tool, plugin, MCP server or hook is required for that is to be installed.",
+    "verbatim": "21. videoda jarvis geliyor konuşuor konuşurken hareket ediyor canlılık tepkisi var. ve kamerayı aktif edip sahibinin elinde ne var onu tanımlıyor. bu da hamzanın yapabilmesi gereken şeylerden. Zaten bütün teknolojik herşeyi yapabilmeli hamza ve bunun için hangi skill tool plugin mcp hook vb şeyler gerekiyorsa kurulmalı.",
+    "conditions": "This is an ORDER OF INTENT and a capability target, not a licence to start building: his own directive of 2026-07-29 still forbids implementation before he approves the visual design package, and the identity/money-out gates are untouched. It is registered here so no later session can treat Hamza's vision and speaking-motion as optional. What it authorises immediately: the source is read against it, and the required skills/tools/plugins/MCP servers/hooks are NAMED with their cost and their licence — installing anything that costs money, needs an account, or touches an outside identity still stops at him (W-C42-4, B06/B09).",
+    "where": ".planning/research/rival-intel/21-dxyvxcnitak.md; board row B22"
   }
 }
