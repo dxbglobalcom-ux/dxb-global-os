@@ -2,7 +2,8 @@
 
 > **Status:** BINDING on every construction session until the project ends.
 > **Ruling:** CEO, 2026-07-26 — *"B onayla, W5.1 denetimini bu kurallarla koş. bunu claude md ve olması gereken yerlere nakşet en mükemmel şekilde."*
-> **Registered as:** U36 in `00-INDEX.md`. Amends Standing Order 11 in `.claude/CLAUDE.md`.
+> **Registered as:** U36 in `00-INDEX.md`. (It amended Standing Order 11, which the CEO deleted on
+> 2026-08-10 — "sil"; this directive stands on its own and is unaffected.)
 > **Does NOT amend:** K1 (inline authorship), RULE #0, RULE #0-A, RULE #0-B. Those stand unchanged.
 
 ---

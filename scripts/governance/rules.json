@@ -62,10 +62,10 @@
     "fingerprint": "One row per open thing",
     "what": "The board's first law. The board owns its own laws; the closing door points at them."
   },
-  "so11_process_skill_first": {
+  "inline_authorship_k1": {
     "owner": ".claude/skills/dxb-start/SKILL.md",
-    "fingerprint": "The process skill comes before the work",
-    "what": "Standing order 11 — the matching process skill is invoked before the work, and subagents never author. Registered after this rule was found to have lost its home during the 2026-07-30 consolidation: it existed in a complaint ledger and in nothing a session reads."
+    "fingerprint": "Every repo line is the session author's, inline",
+    "what": "K1 — the session author writes every repo line inline; subagents audit and sweep, never write. Replaced the so11 entry on 2026-08-10 when the CEO deleted standing order 11 (\"sil\") because the superpowers plugin it invoked is switched off; K1 was the part of that rule that never depended on the plugin."
   },
   "onboarding_read_order": {
     "owner": ".claude/skills/dxb-start/SKILL.md",

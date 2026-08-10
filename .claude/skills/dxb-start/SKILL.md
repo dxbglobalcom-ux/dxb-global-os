@@ -46,24 +46,16 @@ The CEO approves the plan before any file changes. The plan states scope, the su
 affected, ordered steps, data and interface effects, migration and rollback where relevant, how
 it will be verified, and the risks. **This gate cannot be inferred away.**
 
-## The process skill comes before the work — STANDING ORDER 11
+## The working discipline
 
-**CEO order 2026-07-24.** Every session on this project works through the superpowers process
-skills, and the matching one is invoked **before** the work, not after it goes wrong:
+> Standing order 11 (invoke the superpowers process skills) was **deleted on the CEO's word "sil",
+> 2026-08-10, LAW A** — the plugin is off (`~/.claude/settings.json`, measured).
 
-| Situation | Skill |
-|---|---|
-| any defect, test failure or unexpected behaviour | `systematic-debugging` — root cause before fix |
-| a written plan to carry out | `executing-plans` |
-| new code | `test-driven-development` — red before green |
-| about to say something is done | `verification-before-completion` |
-| a new feature or a change in behaviour | `brainstorming` first, then the implementation skills |
-
-**Excluded: `subagent-driven-development` and agent dispatch for authorship** — every repo line is
-the session author's, written inline (K1). Subagents audit and sweep; they never write. The two
-required subagent uses are in door `dxb-verify`.
-
-Full text: `HOLDING-OS-MASTER-PLAN/00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md`, standing order 11.
+- Root cause before fix; an obstacle is the start of the work (standing order 12).
+- New code is proven by a test that failed before it existed.
+- Nothing is called done before `dxb-verify` maps every criterion to a command and its output.
+- Every repo line is the session author's, inline (`.claude/CLAUDE.md` §2). Subagents audit and
+  sweep; they never write. The two required subagent uses are in `dxb-verify`.
 
 ## Phase 3 — implementation
 

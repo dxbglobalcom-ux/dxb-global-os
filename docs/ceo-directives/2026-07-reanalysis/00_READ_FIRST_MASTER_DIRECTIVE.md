@@ -361,10 +361,10 @@ The work is accepted only when the evidence chain is clear, the old analyses are
 > it and calls the method followed. Under LAW A the contradicting text goes rather than sitting
 > beside a footnote, so it is gone and what actually governs the work is written below in its place.
 >
-> **Recorded, not silently resolved:** the same disabled plugin is still named by **standing order
-> 11** in `HOLDING-OS-MASTER-PLAN/00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` and quoted by the door
-> `.claude/skills/dxb-start/SKILL.md`. That is **his own standing order of 2026-07-24** and no session
-> may delete it on its own initiative — it waits for his word.
+> **Standing order 11 went with it.** It named the same disabled plugin in the complaint ledger and
+> in the door `.claude/skills/dxb-start/SKILL.md`. Being his own order of 2026-07-24, no session
+> could delete it alone; shown the contradiction on 2026-08-10 he answered **"sil"**. Both carriers
+> are clean. **Standing order 11 is not a live order and nothing may cite it as one.**
 
 Use the following sequence. Do not run two planning systems in parallel.
 
