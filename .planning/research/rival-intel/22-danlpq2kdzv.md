@@ -74,6 +74,29 @@ belongs to the manager.
 | 6 | **The machine coaches the human back** when he says his own work is not good enough | V, `Chief → Jake` |
 | 7 | **The messages carry engineering detail** — ports, HTTP codes, file names, what was deployed | V |
 
+### 3.1 What the machine IS — read out of the agents' own messages
+
+The feed is not chatter; it is the architecture describing itself. Read at native resolution from
+six crops across 7.6–9.6 s:
+
+| The agents' own words (V) | What it says about the machine |
+|---|---|
+| `Ned → Chief`: *"Confirmed. Design backlog logged to **memory (atlas-design-backlog.md)** — all 5 lifts staged"* | **Memory is a markdown file in the project**, and work items are staged INTO it. The same `folder = state` principle source 20 showed — the store is the filesystem, not a hidden table |
+| `Chief → Jake`: *"🔒 Sealed + live. Your new locked link: `https://developed-gui-worm-cult.**trycloudflare.com**` user: adm…"* | **The whole company dashboard is served off a home machine through a free Cloudflare quick tunnel, behind a login.** No cloud, no hosting bill |
+| `Chief → Ned`: *"Tunnel restarted + verified: new locked URL live (**401 no-creds / 200 with admin:…**), old URL dead"* | **An agent performs an operations task and then PROVES it with HTTP status codes.** Restart, verify, confirm the old door is shut — unprompted |
+| `Ned → Chief`: *"**DEPLOYED. Port 3008 is live** on the new build: - 401 on unauthenticated — gate active - 200 with admin/…"* | **The agents deploy the software that runs them**, and report the port and the gate state as evidence |
+| `Ned → Chief`: *"AI dashboard research complete. Here is the breakdown: --- **REPO EVALS**: 1. soheru/Business-AI-Claude (0 s…"* | **A research agent evaluates rival repositories and returns a ranked breakdown with star counts** — the same job as this C42 queue, run by an employee instead of by the owner |
+| `Chief → Jake`: *"That's the OLD link (gen-resolution) — it's DEAD on purpose. That's the security working exactly right"* | The machine **explains its own defensive behaviour** to the owner when he mistakes it for a fault |
+
+**The finding under all six:** every claim in that feed carries its own proof — a code, a port, a
+file name, a dead URL. That is our own *evidence before done* law, being practised by agents, without
+a human asking. **What DXB takes: an agent message is not finished until it carries the measurement
+that proves it.**
+
+**⛔ The one thing NOT to copy:** the feed prints a live username and password in plain text, on a
+screen filmed for the public. Our own rule — secrets never enter a prompt, a repo or any printed
+output — stands against it, and P22-3 below carries a redaction seam so ours cannot repeat it.
+
 ### Aliveness — how this system is built to live, and what DXB takes
 
 **1 — What runs on its own clock.** *"Communicating with each other 24-7, completely unprompted"* (T),
@@ -122,7 +145,8 @@ design, exactly as our own first law demands.
 |---|---|---|---|
 | **P22-1** | **Draw the company, and let it move.** 205 nodes and **198 manager edges are already in the database** — the graph is a rendering job, not a data job. Working = lit, idle = still, the edge carries the manager's colour | No install beyond a graph renderer; no money; no account | Design package |
 | **P22-2** | **Agents get a channel to each other.** Today the only conversation in this holding is `hamza ↔ ceo`. An `agent_messages` seam, written through the same audited function every mutation uses | No install, no money | — |
-| **P22-3** | **The Communications feed** with his filters: all · agent→agent · inbound · outbound · by agent | Front-end over P22-2 | Design package |
+| **P22-3** | **The Communications feed** with his filters: all · agent→agent · inbound · outbound · by agent — **through the redaction seam `packages/dxb-mcp/src/redact.ts` we already own**, so no credential can ever be rendered the way his feed renders one | Front-end over P22-2; the redactor exists | Design package |
+| **P22-7** | **An agent's message is not finished until it carries its proof** — a code, a port, a file, a measurement, the way `Ned → Chief` reports `401 / 200` and `Port 3008`. Our own *evidence before done* law, applied to what an employee SAYS, not only to what a session claims | Message contract + the `packages/hook` post-task gate that already exists | — |
 | **P22-4** | **`STATUS` + `HEARTBEAT` on every employee card.** `status` exists and reads `dormant` for all 205; the heartbeat column does not exist | Migration + surface | — |
 | **P22-5** | **The three counters over the graph** — tasks running · agents online · completed today, each drilling into its own list | Data all exists | Design package |
 | **P22-6** | **Sub-agents actually spawn.** `agent_runs.parent_run_id` was built for this and is NULL on all 378 runs | Kernel change, no install | — |
@@ -137,6 +161,12 @@ Our manager tree is already 198 edges deep in the database and has never been dr
 coloured by manager, and lit only where work is happening. His agents write to each other all day; in
 this holding **not one agent has ever spoken to another**, and no run has ever spawned a child. His
 idle agents sit still, which is the same law we wrote for ourselves — rest is part of the design.
+
+And the machine underneath is legible from the agents' own sentences: **memory is a markdown file,
+the dashboard is served off a home machine through a free tunnel behind a login, and the agents
+deploy the build, restart the tunnel and verify the gate themselves — reporting `401 / 200` and
+`Port 3008` as proof.** They are not decorating a company; they are operating the machine that runs
+them, and every claim they make carries its own evidence.
 
 **This source does not show what it produces** — no revenue, customer or user figure appears on screen
 or in the caption; the CEO knows these systems first-hand and his knowledge outranks a reading of a
