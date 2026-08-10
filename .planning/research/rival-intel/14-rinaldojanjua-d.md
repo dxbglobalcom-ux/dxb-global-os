@@ -213,7 +213,60 @@ principle** to adopt, not only the capability. Every figure below was sampled **
 1080 × 1920 frames this session** — colours read as pixels, sizes measured as cap heights and runs,
 contrast computed from the sampled values. Nothing here is an impression of a look.
 
-#### 14-D1 · The palette: one cool ground, three planes, and a hue per employee — **V**
+#### 14-D1 · The shape law: the machine is drawn as rectangles, the life is drawn as circles — **V**
+
+Every object on these two pages belongs to one of two families, and the split is not decorative — it
+marks what is a **container** and what is **alive**.
+
+| Family | Corner | What is drawn this way |
+|---|---|---|
+| **Rounded rectangle**, radius ≈ **10 px** (measured by walking the card's top-left corner: the fill reaches the full left edge only 10 rows down) | soft | the left-rail item, the five employee cards, the command card, the two counter tiles, the five icon tiles, every status pill, the `New \| Classic` toggle, the Inbox badge, the modal, the orb's own panel, the node inspector |
+| **Circle** | round | the status dots, **the pulse travelling on the wire**, **every node in the memory graph**, and **the voice orb** |
+
+**The two roundest, most volumetric objects in the whole product are exactly the two living things —
+the brain and the voice.**
+
+- **The orb is a sphere, not a disc.** Measured at t=40 s: **111 × 108 px, aspect 1.028** — a true
+  circle — and its **brightest point sits 10 px below the geometric centre**, so it is lit from one
+  direction and reads as a body with volume. Luminance falls **226 → 155** across the first 45 px and
+  then drops to **71** at the rim: a soft interior inside a hard edge, the way a lit sphere behaves
+  and the way a flat disc does not.
+- **Every memory node is a hollow ring, not a dot.** Radial scan of the `Business` node: centre
+  luminance **51**, rising to **111 at 8–9 px**, falling away outside it. A dark nucleus inside a
+  bright membrane — a **cell**, drawn as a cell.
+- **The `Projects` cell has 39 leaf dots on a true circle** (ring radius 102–114 px, mean 108 —
+  measured by clustering the lit pixels). Not a scatter, not a list: a body with a corona.
+
+Rectangles hold; circles live. It is one rule, and it is obeyed on both pages.
+
+#### 14-D2 · The organism: a skeleton, blood, five organs, one brain, one lung — **V/T/C**
+
+Read as a body, which is how the CEO named this movement himself — *"damarın içinden geçen kan
+gibi"*, blood going through a vein — this is what the two pages are made of:
+
+| Organ | What is on screen | Its measured vital sign |
+|---|---|---|
+| **Skeleton** | the tree: one trunk from the command card, one horizontal bus, five branches to the five cards | static; it is the frame everything hangs on |
+| **Blood** | the green dots travelling trunk → bus → branch | **1.5 s** from the command card to any employee, whatever the distance |
+| **Heartbeat** | the emission cycle at the command card | one round every **1.90 s**, always in the same order |
+| **Five organs** | the employee cards, each with one job written under its name | four receive blood; **the one marked `idle` receives none — 0 pulses in 180 frames** |
+| **Lung** | the voice orb, breathing while nothing is happening | **2.83 s** per breath, **1.70 s** in and **1.13 s** out — an asymmetric breath, not a metronome |
+| **Brain** | the Knowledge Vault graph, labelled in words: **`Rinaldo's Brain — 954 RECORDS`** | its cell body carries 39 dendrite dots on a ring; hovering **dims the whole body** so one path can be traced |
+| **Nerve between brain and body** | the command card's counter **`READS 954`** | **the same 954** as the brain node — the body's counter is a live read of the brain |
+| **Vital sign** | the header clock beside a green `Agentic System Operational` pill | advances **1 s per second**, 00:46:47 → 00:47:24 across the opening |
+
+Two further body facts, both from his directive's own §3.2 checklist:
+
+- **How the assistant sits when the screen changes.** The orb does **not** float over the product and
+  does not follow the scroll. It is **anchored underneath the workforce** — you scroll past the five
+  organs and arrive at the mouth. The voice is part of the body, in a fixed place, not a chat bubble
+  pinned to a corner.
+- **Does it feel like a living operating system rather than static cards?** The measured answer is
+  that **three independent clocks run at once and none of them is a loading state**: 1.90 s
+  (circulation), 2.83 s (breath), 1.00 s (the uptime tick). Nothing on the page is waiting for a
+  request in order to move.
+
+#### 14-D3 · The palette: one cool ground, three planes, and a hue per employee — **V**
 
 | Role | Sampled | Hue / lightness |
 |---|---|---|
@@ -240,21 +293,21 @@ everywhere — the dot in the rail, the tile on the card, the tint under the car
 2-pixel line stamped across the top of its modal. The operator never reads a name to know whose
 panel is open.
 
-#### 14-D2 · The status vocabulary is three words and three colours, and the dead one is desaturated — **V**
+#### 14-D4 · The status vocabulary is three words and three colours, and the dead one is desaturated — **V**
 
 `working` `#74e8a1` (green) · `idle` `#839393` (grey) · `waiting` `#f7cc88` (amber). Measured against
 the card fill: green **9.62:1**, grey **4.57:1**. The idle state is not red and not an alarm — it is
 **drained of colour and dropped in contrast**, so a stopped desk goes quiet on the page instead of
 shouting. Nothing on this screen uses red at all.
 
-#### 14-D3 · The wire is nearly invisible until it carries something — **V**
+#### 14-D5 · The wire is nearly invisible until it carries something — **V**
 
 Wire against the page: **1.50:1** — a line you can barely see. The pulse on it: **12.23:1** against
 the page and **8.15:1** against the wire itself. **The structure recedes by 8× so the traffic reads.**
 This is the single most transferable visual decision in the reel: draw the org chart faintly, and let
 the work be the only bright thing on it.
 
-#### 14-D4 · The type scale is four steps, and the KPI numeral is the loudest object on the card — **V**
+#### 14-D6 · The type scale is four steps, and the KPI numeral is the loudest object on the card — **V**
 
 Cap heights measured on the native frame: eyebrow `AGENT NETWORK` **7 px** (uppercase, letter-spaced,
 `#8693c7`, 5.99:1) · body copy **11 px** (`#acb6c0`, 8.71:1) · card title `CMO` **12 px** · page title
@@ -262,7 +315,7 @@ Cap heights measured on the native frame: eyebrow `AGENT NETWORK` **7 px** (uppe
 itself, sitting over a **7 px** grey label `READS`. The number is the biggest thing in its region and
 its label is the smallest; a counter is read before it is explained.
 
-#### 14-D5 · The geometry is one rhythm, and the router breaks it on purpose — **V**
+#### 14-D7 · The geometry is one rhythm, and the router breaks it on purpose — **V**
 
 Five employee cards of **141 px** on a **153 px pitch** (12 px gutters), all identical, all on one
 row. Above them the **CEO/Orchestrator card is 292 px wide and alone on its row** — a little over
@@ -270,7 +323,7 @@ twice a worker and centred. Hierarchy is stated by **size and solitude**, not by
 "manager". The left rail is **157 px**, a lighter plane than the page (1.17:1 — separated by
 elevation, not by a border line).
 
-#### 14-D6 · The empty and disabled states are designed, not left blank — **V**
+#### 14-D8 · The empty and disabled states are designed, not left blank — **V**
 
 The inspector before anything is clicked reads *"Click a node to inspect it."* in the middle of an
 otherwise empty panel; the graph page states its own default out loud — *"Every folder is open two
@@ -278,7 +331,7 @@ levels deep by default. Hover to trace connections — click + on a node to go f
 **"Send to CEO" button is drawn disabled** while the field is empty rather than hidden. The interface
 explains itself in place, and never shows an empty rectangle.
 
-#### 14-D7 · The sound is mastered to a platform target, and the film never breathes — **V/T**
+#### 14-D9 · The sound is mastered to a platform target, and the film never breathes — **V/T**
 
 `ffmpeg ebur128`, this session: **integrated loudness −14.3 LUFS**, which is the normalisation target
 social platforms use — the audio was mastered, not recorded and uploaded. The narration runs at
@@ -491,11 +544,11 @@ forbidden, colours are OKLCH, the z-index scale is semantic, and the type scale 
 2. **No travel duration.** Our motion tokens are `--dur-fast 150ms`, `--dur 250ms`,
    `--dur-slow 400ms`. The rival's defining motion is **1500 ms** — 3.75× our slowest token — because
    it is not a transition, it is **a thing crossing the screen**. A vocabulary that stops at 400 ms
-   cannot express work moving from one desk to another. One more token, and the rule from §14-D3 with
+   cannot express work moving from one desk to another. One more token, and the rule from §14-D5 with
    it: **the wire sits at ≈1.5:1 against the ground and the thing travelling on it at ≈12:1**, so the
    structure recedes 8× and only the work is bright.
 
-Three further principles from §14-D1…D6 belong in the same package and cost nothing to state: the
+Three further principles from §14-D4…D8 belong in the same package and cost nothing to state: the
 **three-word status vocabulary** where idle is desaturated rather than alarming; **hierarchy by size
 and solitude** (the router is 2× a worker and alone on its row) instead of a label; and the
 **KPI numeral larger than the page title** over a 7 px label.
@@ -562,4 +615,4 @@ install-free steps that close the distance this source exposes.
 | Date | Change |
 |---|---|
 | 2026-08-10 | File opened from nothing and written in one pass: whole reel watched in order at 1 fps at native 1080 × 1920, audio read as 16 timestamped segments, movement measured with a 30 fps dense pass and a linking tracker over 5.0–11.0 s and 38.0–43.0 s, seven native zoom crops cut for the small type, and nine DXB facts measured against the company database read-only and against the repository the same session. |
-| 2026-08-10 | **DEFECT FOUND BY THE CEO AND FIXED AT ITS SOURCE THE SAME TURN.** His question: *"peki görünürlükle ilgili şeyler yazdın mı rapora? … yani design ile ilgili şeyler. her zaman söylüorm."* He was right. The controlling directive — `docs/ceo-directives/2026-07-reanalysis/00_READ_FIRST_MASTER_DIRECTIVE.md`, whose own title is **RE-ANALYSIS AND DESIGN** — **was not opened before the first pass was written**; the door `dxb-rival-intel` names it in its first line and the pointer was not followed. Its §3.2 requires the visual hierarchy and the feel of the interface, and its §4 question 7 requires the **design principle** to adopt. The first pass carried the mechanism and the motion and **no measured design reading at all**. Added this turn: **§14-D1…D7** (palette and identity hue, status colour vocabulary, wire-to-traffic contrast, type scale, geometry, empty/disabled states, audio mastering) — every figure sampled from the native frames or computed from those samples — plus project **P14-5** measured against our own `globals.css` tokens, and a third paragraph in the verdict. |
+| 2026-08-10 | **DEFECT FOUND BY THE CEO AND FIXED AT ITS SOURCE THE SAME TURN.** His question: *"peki görünürlükle ilgili şeyler yazdın mı rapora? … yani design ile ilgili şeyler. her zaman söylüorm."* He was right. The controlling directive — `docs/ceo-directives/2026-07-reanalysis/00_READ_FIRST_MASTER_DIRECTIVE.md`, whose own title is **RE-ANALYSIS AND DESIGN** — **was not opened before the first pass was written**; the door `dxb-rival-intel` names it in its first line and the pointer was not followed. Its §3.2 requires the visual hierarchy and the feel of the interface, and its §4 question 7 requires the **design principle** to adopt. The first pass carried the mechanism and the motion and **no measured design reading at all**. Added this turn: **§14-D1…D9** — led by **the shape law** (rectangles hold, circles live; the orb measured as a lit sphere at aspect 1.028 with its highlight 10 px off centre, every memory node a hollow ring, 39 dendrite dots on a true circle) and **the organism reading** (skeleton, blood at 1.5 s, heartbeat at 1.90 s, five organs of which the idle one gets no blood, a lung breathing at 2.83 s, a brain literally labelled `954 RECORDS` sharing its number with the body, and three independent clocks none of which is a loading state) — then palette and identity hue, status colour vocabulary, wire-to-traffic contrast, type scale, geometry, empty/disabled states, audio mastering — every figure sampled from the native frames or computed from those samples — plus project **P14-5** measured against our own `globals.css` tokens, and a third paragraph in the verdict. |
