@@ -272,6 +272,27 @@ Slack workspace — is where that timing was measured.
 **The columns his card displays, we already compute.** What is missing is the surface, the
 freshness stamp and the status word — not the arithmetic.
 
+### 4.2 His runtime against ours — the six parts of §3.1, each measured here
+
+The surface is half of what this source carries. The other half is the **machine underneath it**,
+which he names part by part in the voice. Each part is put against our own, measured this session
+(2026-08-10, 20:30-20:40 local).
+
+| # | His part | Ours, measured | Command |
+|---|---|---|---|
+| 1 | **Always-on host** — a Mac mini, *"the home base, this is where everything is hosted"* | **Three resident services alive** — `dxb-jarvis` (wake daemon), `dxb-scheduler` (queues + voice drain), `dxb-freeze-guard`, all `active running`. The host itself is the CEO's laptop, and it went down 40 min before this measurement: **`dxb_speaches_local` came back `Exited (255)` and did not restart itself** — restarted by hand this session. **No unattended host.** | `systemctl --user list-units --type=service` · `docker ps -a` |
+| 2 | **Agentic harness** — `Hermes`, *"lets Jarvis connect to tools, remember context, and actually do work"* | **We have the equivalent, built**: `packages/kernel` (workflow + triggers), `packages/orchestrator`, `packages/dxb-mcp` (the tool gateway), `packages/memory-router`, `packages/outbox-executor`. Not a gap. | `ls packages/` |
+| 3 | **Per-agent profiles** — one profile per sub-agent with **its own instructions, skills, memory and knowledge base**, *"so they're not all pulling from the same generic setup"* | **THE GAP, and it is total on three of four.** 205 agents: `skills` is **`[]` on all 205** (1 distinct value); `mcp_profile` is **`inherit` on all 205** (1 distinct value); `memory_index` holds **13,702 rows under exactly 1 scope, `holding`** — no agent owns a memory; **no knowledge-base table exists at all** (only `memory_embeddings` and `memory_index` match `%knowledge%\|%memor%\|%skill%`). Only instructions are individual — 199 distinct `persona_path` over 205 agents. Two brains: `claude-sonnet-5` ×183, `fable-5` ×22. **This is his exact sentence, failed by measurement, not by opinion.** | `select count(distinct skills::text), count(distinct mcp_profile::text) from agents` · `select count(distinct scope) from memory_index` · `information_schema.tables` |
+| 3b | *(defect found while measuring 3)* | **6 agents carry another agent's identity file**: `revops/revenue-reporting-agent.md` ×3, and ×2 each for `support-support-responder`, `finance-fpa-analyst`, `project-management-project-shepherd`, `sales-outbound-strategist` — 11 agents on 5 files | `select persona_path, count(*) … having count(*)>1` |
+| 4 | **Four channels** — Slack, Telegram, iMessage, Voice, *"so I can talk to my agents from pretty much anywhere"* | **Two of four, and neither of his two messaging channels.** Over `apps` + `packages`: `slack` **0 files**, `telegram` **0**, `imessage` **0**, `whatsapp` **0**; `email` 19 files, `voice` 52 files. The CEO reaches his company from the dashboard and by voice, from one machine. | `grep -rli <channel> apps packages --include=*.ts --include=*.tsx \| wc -l` |
+| 5 | **The UI**, built with Codex | Built — 61 pages under `apps/dashboard`. The gap is what §4 above measures (no wall, 3 of 61 freshness stamps), not the existence of a UI. | `find apps/dashboard/src -name page.tsx \| wc -l` |
+| 6 | **The voice**, trained on ElevenLabs | `apps/jarvis` + a local Speaches container — **our voice is self-hosted, which is stronger than his hosted one on cost and on privacy**, and weaker on restart discipline (part 1). | `docker ps` |
+
+**The reading:** of his six parts we already hold three outright (harness, UI, voice) and beat him
+on one (self-hosted speech). **We fail part 3 completely and part 1 and 4 in half.** Part 3 is the
+one he stops to explain, and it is the difference between 205 employees and 205 copies of the same
+employee wearing different name tags.
+
 ---
 
 ## 5. The build project
@@ -282,7 +303,11 @@ freshness stamp and the status word — not the arithmetic.
 | P19-2 | **Wall mode** — one route that is opened once and left running: clock, objective card, work telemetry, no navigation chrome | `CEO_COMMAND_CENTER_SPEC` (shell) | Opened, untouched, it visibly changes when the company does work — the CEO's own acceptance test |
 | P19-3 | **`SYNC` stamp as a shell primitive** — every panel says when it last knew | `DESIGN_SYSTEM.md` + `OBSERVABILITY_SPEC` | 61 of 61 pages carry it, from one component |
 | P19-4 | **Single-hue palette law** — one hue family, brightness the only variable, near-white reserved for figures, bright ink ≤ 2 % of a page | `DESIGN_SYSTEM.md` | A Phase-4 design pass measures the page and the figure holds |
-| P19-5 | **Per-employee context isolation check** — his rule is that no two sub-agents pull from the same generic setup: own instructions, own skills, own memory, own knowledge base | `dxb-hamza-context` two-layer contract + `MEMORY_ARCHITECTURE` | Measured per agent, not asserted. **Not measured this session** — this row opens as a check, not a claim |
+| P19-5 | **Per-employee context isolation** — his rule is that no two sub-agents pull from the same generic setup: own instructions, own skills, own memory, own knowledge base. **MEASURED 2026-08-10 and failed on three of four** (§4.2 part 3): `skills=[]` on all 205, `mcp_profile='inherit'` on all 205, one memory scope for 13,702 rows, no knowledge base. This row is no longer a check — it is a repair | `dxb-hamza-context` two-layer contract + `MEMORY_ARCHITECTURE` | Every agent's row carries a skills list and a tool profile that are **not** the same string as its neighbour's, and the count of distinct values is measured, not asserted |
+| P19-6 | **Memory belongs to someone** — `memory_index.scope` stops being one word for the whole holding; a row is written under the agent (or the department) that learned it, and an agent's recall reads its own scope first | `MEMORY_ARCHITECTURE` | `select count(distinct scope) from memory_index` returns a number that grows with the workforce, and an agent's recall is shown to exclude another agent's private rows |
+| P19-7 | **A knowledge base per employee** — the fourth of his four, which we do not have in any form: no table matches `%knowledge%` | `MEMORY_ARCHITECTURE` | The table exists, an employee's own documents are attached to it, and its content reaches that employee's runtime context and no other's |
+| P19-8 | **Reach the company from anywhere** — his four channels against our two; the two we lack are Slack and Telegram, both **waiting on the CEO for accounts** (`W-C42-4`) | `HOLDING_OS_PRODUCT_SPEC` (channels) | A message sent from the phone reaches the same agent and the same memory as the dashboard, and the reply comes back on the channel it arrived on. **Blocked on the connector accounts — not startable by the author** |
+| P19-9 | *(defect, not a rival part)* **6 agents share another agent's identity file** — 11 agents on 5 persona files (§4.2 row 3b) | persona system, door `dxb-persona` | 205 agents, 205 distinct `persona_path`, each file written for the agent that points at it |
 
 **No implementation starts before the CEO approves the visual design package** — the
 2026-07-29 directive, and it is unchanged by this report.
@@ -311,3 +336,4 @@ build on numbers `v_objective_progress` already computes, and which today have n
 | Date | Change |
 |---|---|
 | 2026-08-10 | Written from the source. Row 19 claimed at `2026-08-10T17:11:28Z`, watched as 41 native frames in order with the transcript plus a 10 fps dense pass, all figures cut from the video; transcript reused after its duration was validated against `ffprobe`. Reported the same session. |
+| 2026-08-10 (later) | **§4.2 added on the CEO's live order** — *"mesele bu adamın sistemi… holdingimizde kullanacağımız tarafları not alındı mı"*. The first writing measured our side against his **surface** only and left the **runtime** half as six quoted sentences; his six named parts are now each measured against ours. P19-5 was carried as an unmeasured check and is now a measured failure; P19-6 … P19-9 opened from what the measurement found (memory scope, knowledge base, channels, duplicate persona files). One live defect repaired the same turn: `dxb_speaches_local` had come back `Exited (255)` after the host crash and was restarted. |
