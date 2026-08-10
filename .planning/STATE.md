@@ -73,7 +73,23 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
    until every source is watched.** A sentence not traceable to the source is `UNVERIFIED`, or it
    is not written. Full reason: `.claude/skills/dxb-rival-intel` + ledger §Why this exists.
 
-   **14 of 35 sources reported**, `NEXT: 17` (measured 2026-08-10 by `scripts/rival-intel/next.sh`).
+   **15 of 35 sources reported**, `NEXT: 18` (measured 2026-08-10 by `scripts/rival-intel/next.sh`).
+   **Source 17 (2026-08-10) is Higgsfield, and it films the anti-babysitting contract end to end** —
+   85.6 s in one take: the owner speaks once, the machine reports the week, **raises the goal itself**
+   from $105,200 to $150,000, admits an outage he never saw with its root cause and its 23-minute
+   repair, and closes *"My recommendation: double the budget on the Street interview ad… **what would
+   you like me to handle first, sir?**"* Measured here the same session: our own briefing closes
+   *"Sormak istediğiniz bir şey olursa buraya yazın"* — an open door, no recommendation, no
+   answerable question (**P17-1**, a surface change, his eye). Also **P17-2** (no incident record
+   exists: 149 alerts, 0 open, none carrying a root cause, a repair or a duration, and no provider
+   fallback configured — which is why a missing key becomes 18 failed runs instead of a reroute),
+   **P17-3** (the motion law, measured from the film: a counter eases to its true value in ≈ 5.6 s
+   with the last second moving 0.002 % of its range, and then **stops** — while the only animation
+   machinery in our whole product sits on the **login page**), **P17-4** and **P17-5** (46 of our 205
+   written employees are marketing or social, among them `social-scheduler-publisher` and
+   `marketing-content-creator` — and **all 205 are dormant**). Refused: autonomous account creation
+   and unapproved outward posting, both on his identity gate.
+   **14 of 35 reported at the previous measurement, `NEXT: 17`.**
    **The queue grew to 35 on his live order of 2026-08-10** — *"kuyruğa ekle 36 olarak, sırası gelince
    izle."* He noticed row 16 was absent from the directive's §11 list, and the answer exposed a
    dropped source of his own: the YouTube link standing beside the OpenJarvis repository in the very
