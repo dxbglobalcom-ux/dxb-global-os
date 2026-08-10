@@ -350,6 +350,14 @@ When every row reads `reported`, one synthesis lands at `00-SYNTHESIS.md`: repea
 collapse into single rows, competing approaches are compared openly, and the target definition
 for stages 2-6 comes out of it. The CEO reads that synthesis; the next stage opens on his word.
 
+**HIS LIVE ORDER, 2026-08-10 — the author does not write it, and it is not written now.**
+His words: *"sentez raporu şimdi yazılmayacak … tüm 34 video bitince, sen yapmayacaksın onu."*
+Two binding clauses: **(1) not before every source is reported** — no early draft, no partial
+synthesis, no "collecting as we go" file; **(2) not by this author** — he owns who writes it and
+has not named them. A session that creates `00-SYNTHESIS.md` before both conditions are met is
+violating a live CEO order. What the author owes stage 1 is the per-source reports, each one
+carrying its own §5 build parts — the material, not the synthesis.
+
 ---
 
 # MOVED HERE FROM THE OPEN WORK BOARD — 2026-08-10, on the CEO’s order
