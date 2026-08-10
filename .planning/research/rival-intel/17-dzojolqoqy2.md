@@ -14,6 +14,16 @@
 > second** over the counter region to time the movement — because at 1 frame per second a
 > count-up cannot be timed. Nothing was downscaled and no frame was enlarged; every crop is
 > `ffmpeg -ss … -vf "crop=…" -q:v 1` from the video itself.
+>
+> **The second reading, added on his order of 2026-08-10 (§2.2).** *"HEM SİSTEMİN KENDİ ÖZELLİKLERİ
+> HEM DE BU YAŞAYAN SİSTEMLERİN DESIGN VE GÖRÜNÜMSEL ÖZELLİKLERİ."* The first pass recorded what the
+> screens **say** and never what they **look like** — measured in this file when he asked: zero colour
+> values, zero type measurements, zero layout geometry. The film was therefore read a second time as
+> a **design object**: six further native crops (`zoom/17/design/`), **every colour value sampled
+> from the pixels** rather than named by eye, the composition measured in pixels against the screen's
+> own rectangle, and a **30-frame dense pass at 10 fps over the identity orb with a static-wall
+> control** to separate real artwork motion from camera noise. Its own directive puts this in scope on
+> its first page — *"Scope: … UI/UX and visual design"* — and Phase 4 spends it.
 
 ---
 
@@ -26,6 +36,7 @@
 | sha256 | `a5ccfacac3b09c494fe2b2aa616a0cefa21c01daf1027d974f0dcb2447ad6bab` (this session) |
 | Duration · resolution · frame rate | **85.583 s** · **1080 × 1920** · **24 fps** · video `vp9`, audio `aac` — **above his 720p floor, sound intact** |
 | Frames · zooms · dense pass | `frames/17/` 86 + 1 scene cut · `zoom/17/` 7 native crops · `zoom/17/dense/` 80 crops at 10 fps over 2.0–10.0 s |
+| Design crops · design dense pass | `zoom/17/design/` 6 native lossless crops (whole frame, wall display, orb, desk row, work panel at 74.5 s and at 9.0 s) · `zoom/17/design/orbdense/` 30 crops at 10 fps over 44.0–47.0 s, with `ctrldense/` 30 control crops of blank wall over the same seconds |
 | Transcript | `transcripts/17.json` — en, 11 segments |
 | Brand on screen | **Higgsfield** (wall display and the right-hand monitor's application) |
 | CEO's note on this row | none on this individual row — it came in the supplementary block of §11, and his §2 first-hand confirmation that the supplied videos are **real working demonstrations** covers it (evidence label **C**) |
@@ -110,6 +121,142 @@ budget on the Street interview ad while momentum is high, and let me scale the t
 
 ---
 
+## 2.2 Design and appearance — the visual language, measured in pixels
+
+**How every value below was taken.** Native crops cut straight from the video
+(`ffmpeg -ss <t> -i <video> -vframes 1 -vf "crop=W:H:X:Y"`, PNG, no downscale, no enlargement), then
+sampled with a script that reports a region's dominant colours by median-cut quantisation and the
+mean and brightest pixel of a named patch. **What is measured is the film's rendering of their
+screens** — a camera, a panel and a room's light sit between us and their stylesheet — so the values
+are exact for the film and indicative for the source. **The relationships between them are the part
+worth building from, and those survive the camera:** which hue carries identity, which carries
+status, how much of the screen is ground, where the centre goes.
+
+### 2.2.1 The stage: two tiers of screen, and they do different jobs
+
+| Tier | What it is | What it carries |
+|---|---|---|
+| **The presence surface** | One wall-sized display behind the desk, **≈ 807 × 420 px of the 1080 × 1920 frame** (screen rectangle measured at x 146–953, y 506–926) — about **8 %** of the whole frame's area and the brightest object in the room | **No business data at all.** An identity object, a brand mark, one gauge, one status word, one command line. It is the machine's face |
+| **The work surface** | Three desk monitors in a row below it, each ≈ 350 px wide in frame, filling the strip y ≈ 940–1200 | **Everything numeric.** Performance, accounts, virality, trends, support. All five application switches happen here, never on the wall |
+
+**This split is the finding.** The face never shows a number and the numbers never show a face. When
+the man speaks at 00:01, the **work** tier wakes (three monitors change together at 00:02) while the
+**presence** tier does not change state at all — it was already alive before he spoke and stays so
+after he stops.
+
+### 2.2.2 The composition law: the centre belongs to the identity, the margins carry the information
+
+Measured on the presence surface at t = 0.5 s, against its own screen rectangle:
+
+| Object | Measurement |
+|---|---|
+| Identity orb — **halo** | **Ø 314 px** (luma ≥ 60 across the orb's horizontal mid-line) = **75 % of the screen's height** |
+| Identity orb — **bright core** | **Ø 246 px** (luma ≥ 150) = **59 % of screen height**, i.e. the glow is ⅓ wider than the mass inside it |
+| Orb centre | **(530, 715)** in frame vs the screen's own centre **(549, 716)** — **1 px off vertically, 19 px (2.4 % of screen width) off horizontally.** It is dead centre |
+| Everything else | Four margins. **Top:** `ELECTRICITY` badge + a tick ruler + the `Higgsfield` wordmark. **Left:** two label bars and a four-item bullet list. **Right:** a radial gauge and an 8-line paragraph. **Bottom:** a two-column command list, `PRESS SPACE TO START`, a spectrum bar strip, a hexagonal node glyph |
+| Ground | The three near-black families cover **≈ 39 %** of the display area (`#04050A` 17.2 % + `#08070B` 13.4 % + `#020105` 8.4 %) |
+
+**Nothing overlaps the halo.** The margin objects stop where the glow begins, so the identity has a
+clear field around it — the opposite of a dashboard, which spends the centre on its most important
+table.
+
+### 2.2.3 The palette, sampled from the pixels
+
+**Presence surface — two hues and one type colour, nothing else:**
+
+| Role | Value | Where taken |
+|---|---|---|
+| Ground | **`#04050A` → `#060506`** (near-black, blue-shifted) | screen field above the orb |
+| Identity, mid | **`#7B881C`** (acid yellow-green) | halo body |
+| Identity, peak | **`#EBF789`** | brightest halo pixel |
+| Identity core | **`#C4D591`**, peak **`#F0FFC5`** | filament mass |
+| Ring edge | **`#92940C`** | segmented ring |
+| Gauge wedge | peak **`#B8BD4B`** | radial gauge, right |
+| Micro-bars | **`#9DA26B`**, peak **`#DDF3CA`** | left label bars |
+| Type | **`#DCEDF9` / `#E4F2FF`** (cool white, blue-shifted) | wordmark, `ELECTRICITY`, right paragraph |
+| Frame furniture | **`#333239`** (dim grey) | corner brackets |
+
+**One accent hue for the entire face.** No second brand colour, no gradient across hues — the only
+gradient is the same green falling into black.
+
+**Work surface — near-black cards and exactly four status hues** (support panel, t = 74.5 s):
+
+| Role | Value | Carried by |
+|---|---|---|
+| Card ground | **`#1A1A1D`** | all four KPI cards |
+| Neutral quantity | **`#FFFFFF`** | `173` total tickets |
+| Good / resolved | **`#4F9E59`**, peak **`#B8DBBF`** | `165` auto-resolved |
+| Money / danger | **`#813246`**, peak **`#E7809B`** (pink-magenta) | `0` refund requests |
+| Time / attention | **`#97A557`**, peak **`#E9FB98`** | `23m` average resolution |
+| Status pill | fill **`#1F3D26`** with light green type | `ALL RESOLVED` |
+| Secondary counts | **`#DBE2AA`** | the seven category counts |
+| Timeline dots | **`#DE92A7`** (first symptom) → **`#C9B797`** (repair) | incident timeline |
+
+**The colour is the meaning.** `0` refunds is drawn in the danger hue even though zero is the good
+news — the hue marks the **domain** (money), not the sentiment. A build can copy that rule directly.
+
+### 2.2.4 Type and ornament
+
+- **Every label is uppercase with wide letter-spacing**, at a fraction of the size of the number it
+  labels: `TOTAL TICKETS`, `AUTO-RESOLVED`, `TICKETS BY CATEGORY`, `INCIDENT TIMELINE`,
+  `PRESS SPACE TO START`. **The numeral is the largest object on any work panel** — the four KPI
+  numbers stand roughly 4× the height of their own captions.
+- **The right-hand paragraph on the wall display is texture, not reading.** Eight lines of body type
+  about prompt engineering, rendered at ≈ 4 px per line in the frame: unreadable at the camera's
+  distance by construction, present so the surface reads as an instrument under load.
+- **Frame furniture, and it is what makes a screen read as an instrument rather than an app:** four
+  L-shaped corner brackets around the whole display, a horizontal tick ruler across the top centre, a
+  hexagonal node glyph bottom-left, a segmented ring around the orb, a small radial gauge, and a
+  spectrum bar strip bottom-right. None of them carry data. **All of them say "this is measuring
+  something."**
+- **Typeface identity is `UNVERIFIED`** — a filmed panel cannot settle a font. What is measurable and
+  is enough for a build: a geometric sans, uppercase for every label, letter-spacing well above
+  default, and a condensed numeral face for the large figures.
+
+### 2.2.5 The room is part of the design
+
+The film's set is lit, and the lighting agrees with the screen: the wall behind the display is washed
+red-brown (**`#7B332D`** left, **`#67464E`** right), a warm white lamp column stands at
+**`#F8F5ED`**, the desk reads **`#4E3D46`**, and the three work monitors carry a blue-violet
+cyberpunk wallpaper (**`#7A96D0`** / **`#8795E1`**) before they wake. **The green face is the only
+green in the room**, so the identity object owns a hue nothing else competes for. Shelves of phones
+either side, plants at floor level, one seated figure from behind, never his face.
+
+### 2.2.6 The identity object's own motion, measured with a control
+
+Ledger law 8 requires the movement to be timed rather than admired, and §2.1 requirement 1 said the
+filaments *"shift continuously"* — that was a word, so it was measured. A **30-frame dense pass at
+10 fps over 44.0–47.0 s** on the orb, and **30 control frames of blank wall over the same seconds**:
+
+| Region | Mean pixel change per 100 ms | Pixels changed > 12/255 | Range |
+|---|---|---|---|
+| **Identity orb** | **5.74 / 255** | **10.87 %** of the region, every tenth of a second | 5.25 % – 17.12 % |
+| **Blank wall (control)** | **0.05 / 255** | **0.00 %** | 0.00 % – 0.00 % |
+
+The control is flat, so the camera is locked and the change is the artwork. **The face never rests:
+about a tenth of it redraws every 100 ms, without travelling, growing or looping through a visible
+cycle.** It is Brownian rather than periodic — no repeat is detectable across the 3-second pass.
+
+### 2.2.7 What DXB takes from the design
+
+Four rules, each buildable and each landing in the Phase-4 visual package:
+
+1. **Two tiers of surface** — a presence surface that carries the face and no numbers, and work
+   surfaces that carry numbers and no face. **P17-6.**
+2. **The centre belongs to the identity** at ~75 % of the surface's height, with every informational
+   object pushed to the four margins and nothing overlapping its glow. **P17-6.**
+3. **One identity hue, one near-black ground, and exactly four status hues where the hue marks the
+   domain rather than the mood.** **P17-7.**
+4. **The presence object loops forever; data never does.** This corrects P17-3 rather than
+   contradicting it — measured here, the only perpetual motion in 85.6 seconds is the face itself at
+   ~10.9 % of its pixels per 100 ms, while every number moves once, to become true, and stops.
+   **P17-8.**
+5. **Instrument furniture and one type scale** — corner brackets, a tick ruler, a radial gauge, a
+   spectrum strip, uppercase letter-spaced labels at a fraction of the numeral they caption. None of
+   it carries data; all of it makes a surface read as an instrument instead of a web page. **P17-9.**
+
+---
+
 ## 3. Capabilities — what is on the screen, measured
 
 ### 3.1 The seven objects and their figures
@@ -172,9 +319,13 @@ provider outage*), a hotfix rerouted traffic to a secondary provider, and the wh
 - **The panel switches** land on the sentence that explains them, four times: 00:24, 00:54, 00:58,
   00:74. Between two of them (00:70) the monitor is **blank for under a second** — the seam is
   visible and the film does not hide it.
-- **No perpetual motion exists anywhere in 85.6 s.** There is no spinner, no looping pulse and no
-  idle animation. **Every moving thing on this screen is a value on its way to being correct**, and
-  when it arrives it stops.
+- **No perpetual motion exists anywhere in the DATA, and exactly one exists on the face.**
+  **CORRECTED 2026-08-10 by measurement** — this line previously read *"no perpetual motion exists
+  anywhere in 85.6 s"*, and the design pass disproved it: the identity orb redraws **10.87 % of its
+  own pixels every 100 ms, continuously**, against a **0.00 %** static-wall control (§2.2.6). On the
+  work surfaces the original finding stands unchanged: no spinner, no looping pulse, no idle
+  animation. **Every moving thing on a data surface is a value on its way to being correct, and when
+  it arrives it stops; the only thing that never stops is the machine's face.**
 
 **3 — How it answers the human.** The man asks one question out loud at 00:01 and says nothing else
 for the remaining 84 seconds. The machine answers in a fixed order — **what you achieved · what I did
@@ -229,9 +380,13 @@ road, so this report does not count it as a lead.
 |---|---|---|---|---|---|
 | **P17-1** | **The closing contract — a briefing that ends with a decision** | Every briefing, alert and report the CEO reads ends with **one recommendation in the author's own voice and one question he can answer with one word**, never an open door. Measured need: our morning briefing's last line invites him to think of a question himself. This is the anti-babysitting law of this whole product, and the rival has it in one sentence | **none** | **€0** | **surface change** — `dxb-surface` + RULE #0, his eye |
 | **P17-2** | **The incident timeline** | An `incidents` record: first symptom, the threshold that fired, root cause, the repair, total downtime — written by the machine, shown as five lines. Today 149 alerts carry none of it, and the failover half is missing too: no provider fallback is configured, so a provider outage becomes 18 failed runs instead of a reroute | **none** | **€0** | none for the record; the fallback config touches runtime — restart is part of the evidence |
-| **P17-3** | **The counter that stops** | One motion rule for the whole cockpit, taken from a measurement rather than taste: **a number eases to its true value in ≈ 1.5–2 s and stops; nothing loops.** It replaces the current position, where the only animation in the product is on the login page. Lands in the Phase-4 visual package beside P10-3 and P12-1 | none | €0 | **design package** — waits on him <!-- OPEN: B22 --> |
+| **P17-3** | **The counter that stops** | One motion rule for the whole cockpit, taken from a measurement rather than taste: **a number eases to its true value in ≈ 1.5–2 s and stops; no DATA loops.** (Corrected by the design pass: the one thing that may loop forever is the presence object — P17-8.) It replaces the current position, where the only animation in the product is on the login page. Lands in the Phase-4 visual package beside P10-3 and P12-1 | none | €0 | **design package** — waits on him <!-- OPEN: B22 --> |
 | **P17-4** | **Wake the creative line** | 46 written marketing and social employees exist and all are dormant. The narrow first step is **one** of them — `social-creative-asset` or `marketing-content-creator` — producing **one** asset end to end into a store, with the outward publication still stopping at his gate. It is also the manufacturing step the clipping business (B28, source 05) needs | none for the first asset | €0 | none to produce; **CEO** to publish |
 | **P17-5** | **The scored batch** | Their generator does not hand over 578 assets — it hands over **2 winners** out of 578, scored before anything is spent. Our own council already scores answers; the same shape applied to produced work means the CEO is shown a shortlist with a reason, never a folder. Depends on P17-4 | none | €0 | none — internal |
+| **P17-6** | **Two tiers of surface, and the centre belongs to the face** | A **presence surface** carrying Hamza's identity object and no business numbers, and **work surfaces** carrying numbers and no face. On the presence surface the identity occupies the middle **≈ 75 % of the height**, dead centre, with every informational object in the four margins and nothing overlapping its glow (§2.2.1–2.2.2, measured). Today the holding has no presence surface at all: Hamza appears as a chat panel inside a work page | none | €0 | **design package** — waits on him <!-- OPEN: B22 --> |
+| **P17-7** | **The colour law: one identity hue, one ground, four status hues** | Near-black ground covering ~40 % of a surface; **one** hue reserved for identity and used nowhere else; and exactly four status hues where the hue marks the **domain** — neutral quantity, resolved/good, money, time — rather than the mood (their `0 refund requests` is drawn in the money hue although zero is good news). The measured reference values are in §2.2.3; ours are the holding's own palette, not theirs | none | €0 | **design package** — waits on him <!-- OPEN: B22 --> |
+| **P17-8** | **The motion budget: the face loops, the data does not** | One rule for the whole product, from measurement: **the presence object redraws continuously** (theirs: 10.87 % of its pixels per 100 ms, no visible cycle, against a 0.00 % control) **and nothing else on any surface loops** — every number moves once, eases to its true value and stops. It corrects P17-3, which had banned looping outright | none | €0 | **design package** — waits on him <!-- OPEN: B22 --> |
+| **P17-9** | **Instrument furniture and one type scale** | Corner brackets, a tick ruler, a radial gauge, a spectrum strip — objects that carry no data and exist to make a surface read as an instrument — plus the type rule measured here: **uppercase, letter-spaced labels at roughly a quarter of the height of the numeral they caption**, the numeral being the largest object on any panel | none | €0 | **design package** — waits on him <!-- OPEN: B22 --> |
 
 **Refused, with the reason.** **Autonomous account creation is refused** — an agent minting
 identities is on the CEO's approval gate and no rival practice moves that line. **Auto-posting
@@ -284,7 +439,7 @@ the wording, because it is a surface he reads every morning.
 | 4 | What is technically verified? | The file's hash, duration, resolution, frame rate and audio codec; every on-screen figure read from native crops; the motion timings from an 80-frame 10 fps dense pass; and eight DXB measurements from the company database and the repository (R) |
 | 5 | What remains unverified, and what would be needed? | The figures themselves are **not** in this list: they are read from the screen (V) and confirmed by the CEO as a real working demonstration (C). What this file could not measure is the **machinery**, and each needs a named thing to settle it. **U-1:** which model, queue and scheduler drive the auto-posting and the virality scoring — would need their own documentation or an account. **U-2:** the incident timeline's own plumbing (what fired the alert at 6 reports in 20 minutes, how the failover was routed) — would need their engineering write-up. **U-3:** whether the 109-account posting sits inside the platforms' own account rules — outside this source entirely |
 | 6 | What does this system demonstrably do better than DXB today? | It **closes with a decision instead of an invitation**; it **shows a failure it already fixed**; it **publishes at scale on its own clock**; and **its numbers move and then stop being interesting**, where ours never move at all |
-| 7 | What capability, design principle or architecture should DXB adopt? | **Capability:** P17-2 (incident timeline + provider fallback), P17-4 (wake one creative employee), P17-5 (hand over winners, not batches). **Design principle:** P17-3 — a number eases to its true value and stops; nothing in this product loops forever. **Architecture:** P17-1 — the closing contract: one recommendation, one answerable question, on every surface the CEO reads |
+| 7 | What capability, design principle or architecture should DXB adopt? | **Capability:** P17-2 (incident timeline + provider fallback), P17-4 (wake one creative employee), P17-5 (hand over winners, not batches). **Design, measured in §2.2 and all of it Phase-4 material:** P17-6 — two tiers of surface, the presence surface carrying the face at ~75 % of its height dead centre and no numbers; P17-7 — one identity hue, a near-black ground and four status hues where the hue marks the domain; P17-8 — the face loops forever and the data never does (this corrects P17-3, which had banned looping outright); P17-9 — instrument furniture and one type scale, uppercase letter-spaced labels at ~¼ the height of their numeral. **Architecture:** P17-1 — the closing contract: one recommendation, one answerable question, on every surface the CEO reads |
 | 8 | What should **not** be copied, and why? | **Creating accounts autonomously** (00:30) and **posting outward without approval** — both cross the CEO's identity and outward-communication gate, and no rival practice moves that line. **The figures themselves** — they are an advertisement's numbers and may not become our targets. **The faceless voice** is not copied either, but for a different reason: it is a deliberate choice that suits a single-founder tool, while his own directive requires Hamza to have a visible presence that responds while speaking (§6) |
 
 ---
@@ -293,5 +448,6 @@ the wording, because it is a surface he reads every morning.
 
 | Date | Change |
 |---|---|
+| 2026-08-10 (third) | **THE DESIGN READING WAS MISSING ENTIRELY AND WAS ADDED — his order, an hour after the second repair:** *"YAHU BENİM İSTEDİĞİM ŞEY BU RAPORLARDA HEM SİSTEMİN KENDİ ÖZELLİKLERİ HEM DE BU YAŞAYAN SİSTEMLERİN DESIGN VE GÖRÜNÜMSEL ÖZELLİKLERİ ULAN BU DİREKTİFTE YAZMIOR MU."* It does — the directive's own scope line reads *"UI/UX and visual design"* and its Phase 4 is a visual design package. **Measured in this file the minute he asked: 0 colour values, 0 type measurements, 0 layout geometry** in 292 lines. New **§2.2** was written from five further native crops and a 30-frame dense pass with a static-wall control: the two-tier stage (presence surface vs work surfaces), the composition in pixels (identity Ø 314 px = 75 % of screen height, dead centre, margins carrying everything else), the palette sampled pixel by pixel (presence: ground `#04050A`, identity `#7B881C`→`#EBF789`, type `#DCEDF9`; work: card `#1A1A1D` with four status hues `#FFFFFF` / `#4F9E59` / `#813246` / `#97A557`), the type and instrument furniture, the room's own light, and the identity object's motion — **10.87 % of its pixels every 100 ms against a 0.00 % control.** That measurement **corrected an error in the Aliveness section**, which had claimed no perpetual motion existed anywhere in the film; it exists, on the face alone. Four new build projects: **P17-6 · P17-7 · P17-8 · P17-9**, all Phase-4 and all waiting on his eye. |
 | 2026-08-10 (second) | **REPAIRED ON THE CEO'S OWN READING — he opened this file and found it belittling a system he had already ruled real:** *"canlı ve herşeyi gerçek olan videoyu kötülemiş sistemi kötülemiş o yok bu yok bu dekor şu bilmem ne!!!! yahu ben bunu yasaklamıştım zaten."* Seven passages were rewritten at source, not footnoted (LAW A): the §1 identity row, §2.1 requirement 3, **§3.2 in full** (*"the reel does not prove its own numbers… none of it can be verified"* → what this source **produces**, measured, under evidence label **C**), the §4 governance note, the §5 refusal wording, **§6's opening verdict** (*"None of it is verifiable from outside the reel"* → the figures with their label), and **§6.1 questions 3 and 5** (*"no CEO-confirmed claim is asserted here"* → his §2 confirmation is binding and covers this reel; *"a real system or a staged one"* deleted, replaced by the three measurements this file could not take and what each would need). Requirements 1, 2 and 5 of §2.1 had been repaired in the same class earlier the same day and were uncommitted; they are committed here. **Ledger law 9 and its machine case were written the same session** so the whole report is scanned, not only its Aliveness section — the rejected version trips the new gate 6 times, this one 0. |
 | 2026-08-10 | File opened from nothing and written in one pass. Watched whole in order with its sound: all **86 native 1080 × 1920 frames** read one by one, the burned-in captions read against the audio transcript, **7 native zoom crops** cut from the video for the small type (`stats-locked-9.0`, `accounts-header-26.0`, `virality-54.0`, `trends-62.0`, `trend1-62.0`, `trend2-62.0`, `support-74.0`, `incident-78.0`, `pipeline-13.0`), and an **80-frame dense pass at 10 fps** over 2.0–10.0 s to time the counter animation, which 1 fps cannot resolve. A transcript defect was measured and recorded rather than hidden: our speech-to-text left the first 30 seconds nearly empty and the captions carry that half-minute. Eight DXB facts measured against the company database (`SELECT` only) and the repository the same session. The directive's §3.2 nine requirements and §4 eight questions are answered one by one in §2.1 and §6.1. |

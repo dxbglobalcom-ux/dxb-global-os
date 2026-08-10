@@ -222,6 +222,39 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
      prove…"*). Bare *"verifiable"* is praise and stays legal — measured on report 05, where
      *"cheap, verifiable distribution"* is a compliment to the rival.
 
+10. **EVERY REPORT READS THE SOURCE TWICE: WHAT THE SYSTEM DOES, AND WHAT IT LOOKS LIKE.**
+    Added 2026-08-10 on his live order, given while holding the opening frame of source 17 in his
+    hand: *"BU GÖRÜNTÜLERİN ANLATIMI VAR MI? HEEEE?"* and then *"BENİM İSTEDİĞİM ŞEY BU RAPORLARDA
+    HEM SİSTEMİN KENDİ ÖZELLİKLERİ HEM DE BU YAŞAYAN SİSTEMLERİN DESIGN VE GÖRÜNÜMSEL ÖZELLİKLERİ
+    ULAN BU DİREKTİFTE YAZMIOR MU."*
+    - **IT DOES, on the directive's own first page:** *"Scope: … UI/UX and visual design"*, and its
+      **Phase 4** is a visual design approval package — design system and motion principles, the
+      global shell, every page, every state, Hamza in six states. **The rival queue is where that
+      package's parts come from.** A report that records only what a screen SAYS hands Phase 4
+      nothing.
+    - **MEASURED THE DAY THE LAW WAS WRITTEN, across the fifteen finished reports:** twelve carried
+      **zero** colour values, **zero** type measurements and **zero** layout geometry. Only **14**
+      had a design section (13 colour values) and **15** carried colour values at all. **Source 17,
+      the one he opened, had 0 of each in 292 lines.**
+    - **REQUIRED — a section `2.2 Design and appearance` in every report**, and every line of it a
+      measurement rather than an adjective: the **composition** in pixels against the surface's own
+      rectangle (what owns the centre, what is pushed to the margins, how much of the area is
+      ground); the **palette sampled from the pixels** with hex values and the ROLE each hue carries;
+      **type** — case, letter-spacing, and the size relationship between a label and the figure it
+      captions; the **ornament that carries no data** and makes a surface read as an instrument; the
+      **room or page around it** where the source shows one; and **what DXB takes**, named as
+      Phase-4 build projects.
+    - **HOW, so the numbers are honest:** crops come out of the video with `ffmpeg -ss … -vf crop=…`
+      at native size, colour is sampled from the pixels (median-cut for a region's dominant colours,
+      mean and brightest pixel for a named patch) and never named by eye, and where a filmed panel
+      cannot settle a question — a typeface, an exact brand hex — the report writes **UNVERIFIED**
+      and says what would settle it. What is measured is the FILM's rendering of their screen; the
+      relationships between the values are what survives the camera, and they are what a build uses.
+    - **A motion claim about an identity object is measured against a static control** — source 17's
+      orb redraws **10.87 %** of its pixels every 100 ms while a blank-wall control over the same
+      seconds moves **0.00 %**. That measurement corrected a wrong sentence in the same report
+      (*"no perpetual motion exists anywhere"*), which is exactly what the control is for.
+
 ## Status vocabulary
 
 | Value | Meaning |
