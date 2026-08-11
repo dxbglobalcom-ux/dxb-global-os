@@ -16,8 +16,7 @@
 > gerekiyorsa kurulmalı."* <!-- CEO-OK: hamza-must-do-everything-2026-08-10 -->
 > A capability target, not a start: the design-package gate and the identity gate are untouched, so
 > the report NAMES what must be installed, with cost and licence, and installs nothing that costs
-> money or touches an outside account. **He also set the report's shape:** *"çok özet yaz bu raporda
-> kaynak falan filan vs en baştaki yazıları geç md hazırlarken ne işe yarıor ne yapıyor yeter."*
+> money or touches an outside account.
 
 > ### ✅ THE ELEVEN FINISHED REPORTS WERE SEEN AND ACCEPTED BY THE CEO — 2026-08-10 (LAW B)
 > His words: *"ŞUANA KADAR BEKLEYEN RAPOR ONAYLARINI BENİM BAKIP GÖRMEM İLE İLGİLİ: ONAYLIYORUM.
