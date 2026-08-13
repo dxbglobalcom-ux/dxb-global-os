@@ -123,6 +123,15 @@ the date. The battery fails on an unregistered approval claim.
   file, no row, no note — **silence is the record.** Only real, ordered, unfinished work is written
   anywhere. The reflex to keep a dropped idea "just in case" is what grew the always-on layer to 27
   pages, and he should never have to be the one who catches it.
+- **NOTHING BECOMES A LAW UNLESS HE SAYS "MAKE IT A LAW".** His order, 2026-08-13, and it is a
+  prohibition: *"ben bir şey kanun olsun demeden onu asla kanun yapma bunu yasaklıyorum… ben bir
+  kuralı sadece belirli bir session için söylüorm."* **A rule he states is for THAT session only**
+  — obey it fully while it runs, and let it die with the session. Writing it into a law file, a
+  banner, a skill or a standing order **without his explicit word to do so is forbidden.** He
+  authorised this one sentence, and only this one, to be written as a rule. When a session thinks a
+  remark deserves to be permanent, it **asks him** in one line; his answer decides. Measured the day
+  he gave it: his passing *"write it short"* had been promoted into the rival ledger's permanent
+  banner beside his registered orders, and he caught it.
 - **Secrets** never enter the repo, a prompt, or any printed output.
 - **No laziness.** The standard he set, and the forms of laziness that break it, are
   re-injected on every prompt by `.claude/hooks/no-laziness.sh`, which owns that text.

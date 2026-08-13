@@ -270,10 +270,9 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
       seconds moves **0.00 %**. That measurement corrected a wrong sentence in the same report
       (*"no perpetual motion exists anywhere"*), which is exactly what the control is for.
 
-11. **LEARN THE HOLDING BEFORE YOU OPEN THE FILM — AND WRITE SHORT.** His live order, 2026-08-10:
+11. **LEARN THE HOLDING BEFORE YOU OPEN THE FILM.** His live order, 2026-08-10:
     *"Bir sonraki sessionlar projeyi tam anlamıyla anlamaları lazım tanımaları lazım ne yapıyoruz
-    amacımız ne bu Holding nedir öğrendikten sonra videoyu o gözle işlemeli. Hikaye roman kısımları
-    çok fazla yazılmamalı."*
+    amacımız ne bu Holding nedir öğrendikten sonra videoyu o gözle işlemeli."*
     - **READ FIRST, in this order, before any media is opened:** `.claude/CLAUDE.md` (what this
       product is, the authority order, the boundaries) · `.planning/STATE.md` (where the work stands)
       · board row **B22** · this law section. **Watching before knowing produces a review; the queue
@@ -281,9 +280,9 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
     - **THE REPORT OPENS WITH `WHY IT MATTERS TO THIS HOLDING`** — which of OUR measured gaps this
       source is being read against, with the numbers. A report that could have been written about any
       company has not obeyed this law.
-    - **WRITE SHORT.** Tables over prose. No scene-setting, no atmosphere, no story. Every paragraph
-      carries a number, a quotation from the source, or a named project. Report **18** is the first
-      written under this law.
+    *(A clause about report length stood here and was **deleted on his live order of 2026-08-13** —
+    *"özet kısa yaz falan bunları sil"*. He had never asked for it to be made a law; a session
+    promoted a passing remark. Length is his call, per session, and is not written down.)*
 
 ## Status vocabulary
 

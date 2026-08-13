@@ -137,4 +137,4 @@ second one.
 
 | Date | Change |
 |---|---|
-| 2026-08-11 | Written from the source. Row claimed at `2026-08-10T21:56:09Z` **before** the media was opened (law 1). Every latency measured from the waveform at 50 ms resolution. The sphere's pulse recorded **UNVERIFIED** with its reason and remedy named; the state word, the system panel and the two buttons read from native zoom crops. Written short on his live order — *"önemli noktaları yaz, gereksiz bilgi ekleme"*. |
+| 2026-08-11 | Written from the source. Row claimed at `2026-08-10T21:56:09Z` **before** the media was opened (law 1). Every latency measured from the waveform at 50 ms resolution. The sphere's pulse recorded **UNVERIFIED** with its reason and remedy named; the state word, the system panel and the two buttons read from native zoom crops. |

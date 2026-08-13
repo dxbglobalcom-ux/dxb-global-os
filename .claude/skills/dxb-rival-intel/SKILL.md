@@ -17,15 +17,16 @@ bakıyorsun ona. İzlemek farklı."*
 ## Before the media is opened (ledger law 11, CEO 2026-08-10)
 
 *"Projeyi tam anlamıyla anlamaları lazım … ne yapıyoruz amacımız ne bu Holding nedir öğrendikten
-sonra videoyu o gözle işlemeli. Hikaye roman kısımları çok fazla yazılmamalı."*
+sonra videoyu o gözle işlemeli."*
 
 1. Read `.claude/CLAUDE.md`, `.planning/STATE.md` and board row **B22** first. You are reading the
    source **for a holding that is meant to run itself with one human in it**, and for the gaps that
    holding has today — measure them before you watch, not after.
 2. The report opens with **`WHY IT MATTERS TO THIS HOLDING`**: the measured DXB gaps this source is
    read against. A report that would fit any company has failed.
-3. **Write short.** Tables and measurements, not narrative. Every paragraph carries a number, a
-   quotation from the source, or a named project.
+
+*(A third item told the author how long to write. **Deleted on his live order, 2026-08-13** — he
+never asked for it to be a rule. How long a report should be is his call in the session he is in.)*
 
 ## Evidence labels — every substantive statement carries one
 
