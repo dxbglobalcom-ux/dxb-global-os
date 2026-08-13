@@ -478,6 +478,20 @@ exactly what changed.
   Hamza's face. **Corrected in §5** — the main face answers heard / doing / step / result; the
   technical figures open in `System / Diagnostics`.
 
+**The final parts DXB takes from this source** — the whole list in one place, built in §5:
+
+| # | The part | Why this source earns it |
+|---|---|---|
+| P23-1 | ask for the missing parameter | 1.30 s, one short question, no invented caption |
+| P23-2 | prepare while he is still speaking; never close the microphone | the act began 5.65 s before his last word |
+| P23-3 | one door — voice, typing and files in one column | its whole right-hand stack |
+| P23-4 | what I heard / what I will do, **before** the act | `You: video nedir?` sits in the log where its owner can see it |
+| P23-5 | a state-aware spoken refusal: in progress · completed · failed · retryable | the refusal at 00:19.60 described a job still in flight |
+| P23-6 | one universal `INTERRUPT`, every surface, every state | `⏸ INTERRUPT [ESC]`, the same width as the microphone |
+| P23-7 | the real hand, behind the CEO's gate | Start menu → browser → file dialog → composer → Share |
+| P23-8 | visible step-by-step progress and a completion receipt | `[UploadVideo] Posted to …` in its own log |
+| P23-9 | Hamza's continuous presence — one state word, one glyph, one colour, and a level strip only while he speaks | the three states, and the two desk objects that give presence without information |
+
 ---
 
 ## Change log
