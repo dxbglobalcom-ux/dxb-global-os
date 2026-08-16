@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/ghost/DxB Global OS/.codex/hooks/spec-bootstrap.sh'"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/tools/hooks/dist/tag-subscription-call.js\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/ghost/DxB Global OS/.codex/hooks/no-laziness.sh'"
+          },
+          {
+            "type": "command",
+            "command": "bash '/home/ghost/DxB Global OS/.codex/hooks/ceo-language.sh'"
+          }
+        ]
+      }
+    ]
+  }
+}
