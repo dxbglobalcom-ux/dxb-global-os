@@ -1,30 +1,33 @@
-# 23 — J.A.R.V.I.S · it opens the Start menu, launches the browser and posts a reel while he is still talking
+# 23 — J.A.R.V.I.S · a complete spoken request becomes a posted reel in 22.8 seconds
 
 **WHY IT MATTERS TO THIS HOLDING.** This source lands on the two measurements where DXB is
 weakest, and it lands on both at once.
 
-The first is **the hand.** Our whole product is intent → autonomous execution. This machine takes
-one spoken sentence, **opens the Windows Start menu itself, types the name of a browser, launches
-it, types a URL, drives Instagram through five of its own screens, opens a Windows file dialog,
-searches for the file, crops to 9:16, writes a 242-character caption and submits the post** —
-23 seconds, end to end, with the man's hands never touching the keyboard. Measured against us the
+The first is **the hand.** Our whole product is intent → autonomous execution. Across two short
+conversational turns, this machine receives the posting request, asks for the missing caption brief,
+and then **opens the Windows Start menu itself, types the name of a browser, launches it, types a
+URL, drives Instagram through five of its own screens, opens a Windows file dialog, searches for
+the file, crops to 9:16, writes a 242-character caption and submits the post** — 22.8 seconds from
+the first command to `Share`, with the man's hands never touching the keyboard. Measured against us the
 same session: our `outbox` holds **51 rows and all 51 are `failed`**; **not one outward act has
 ever completed.** Playwright with `chromium-1223` and `chromium-1228` is installed on this machine
 (`ls ~/.cache/ms-playwright`) and has never been pointed at an outward task.
 
 The second is **the mouth and the ear.** It answers the first command in **1.30 s** and the second
-in **under 0.20 s**. Our voice loop's median, over the 80 calls that carry timings, is **36.40 s**
-(`stt_ms + answer_ms + tts_ms`), fastest 12.90 s, last call **2026-07-28** — 16 days before this
-reading. The CEO's standing figure is 1.5 s.
+in **under 0.20 s**, measured to the beginning of its reply. Our voice loop's median over the 80
+calls that carry timings is **36.40 s** for the entire hear → answer → speak cycle
+(`stt_ms + answer_ms + tts_ms`), fastest 12.90 s, last call **2026-07-28**. These are not the same
+measurement, so no speed multiplier is claimed; DXB does not yet record the matching
+end-of-command → first-audio boundary. The CEO's target remains 1.5 s.
 
 And it lands on our oldest open wound: **51 of our 57 captured intents still stand at `received`**,
 never classified, never routed; the last `intents` row is `2026-07-28 09:03:27` and the last
-`task_events` row `2026-07-28 09:04:56`. This machine took an intent and finished it while its
-owner was still finishing the sentence that created it.
+`task_events` row `2026-07-28 09:04:56`. This machine received an intent, asked for the one missing
+detail, and then carried the completed instruction through to `Share` without another human action.
 
 | Its mechanism, measured here | Ours, measured 2026-08-13 |
 |---|---|
-| Asks for the missing parameter **1.30 s** after the command, then acts | Our loop answers at a median of **36.40 s** (n=80, `voice_calls`) |
+| Starts its reply **1.30 s** after the command, then acts after the answer is complete | Our full hear → answer → speak cycle is **36.40 s** median (n=80); a matching response-start measurement is not recorded, so no direct ratio is claimed |
 | Answers the duplicate command in **≤ 0.20 s**, out loud, and performs no second act | The duplicate guard is built and unused: **51 of 51 `outbox` rows carry an idempotency key, and 51 of 51 are `failed`** |
 | Drives the OS shell, the browser and the file system by itself | Playwright + two Chromium builds on disk, never aimed at an outward task |
 | A crimson **`⏸ INTERRUPT [ESC]`** bar, permanently visible beside the microphone | We have three partial stops and no universal one — see §4 |
@@ -69,15 +72,14 @@ in the gap between them.
 | 00:00.00 | man, 1.50 s | *"Hey Jarvis, post a video on Instagram."* | The J.A.R.V.I.S console, full screen. Centre: the sphere. Under it **`● LISTENING`** in cyan. `ACTIVITY LOG` holds one line: `SYS: JARVIS online.` `SYS MONITOR`: `CPU 14%` `MEM 47%` `NET 54KB/s` `GPU 25%` `TMP N/A` `UP 02:45` `PROC 247` `OS WIN` |
 | 00:01.50 | — | *(silence)* | — |
 | 00:02.80 | **JARVIS**, 1.25 s | *"What would you like the caption to be, sir?"* | **Latency 1.30 s.** State turns **`● SPEAKING`** in orange and **a live audio-level bar strip appears beneath it**, moving with the voice. The log gains `You: video nedir?` and `J.A.R.V.I.S: What would you like the caption to be, sir?` |
-| 00:04.45 | man, burst 1 (4.80 s) | *"I don't know, Jarvis, just say that I created a Jarvis that can post on Instagram…"* | State back to **`● LISTENING`**; the bar strip is gone |
-| 00:09.25 | — | *(1.55 s pause in his sentence)* | — |
-| 00:10.15 | — | *(he is not speaking)* | **The Windows Start menu opens over the console by itself** and `oper` is typed into its search box. `Recently added: Bambu Studio, CapCut`; tiles `Üretkenlik`, `Keşfet` |
-| 00:10.80 | man, burst 2 (2.65 s) | *"…but of course…"* | **`Opera GX Browser — App`** stands as `Best match`; the right pane offers `Open · New tab · New window · New private window` |
+| 00:04.45 | man | *"I don't know, Jarvis, just say that I created a Jarvis that can post on Instagram, but of course, make it longer."* | State back to **`● LISTENING`**; the bar strip is gone. He completes the requested caption instruction before the execution begins |
+| 00:10.15 | machine | — | **After the instruction, the Windows Start menu opens over the console by itself** and `oper` is typed into its search box. `Recently added: Bambu Studio, CapCut`; tiles `Üretkenlik`, `Keşfet` |
+| 00:10.80 | machine | — | **`Opera GX Browser — App`** stands as `Best match`; the right pane offers `Open · New tab · New window · New private window` |
 | 00:11.50 | — | — | The Start menu is gone; the console is back with **`◇ THINKING`** in yellow. `CPU 29%`, `GPU 5%`, `NET 86KB/s`, `PROC 253` |
 | 00:12.00 | — | — | **Opera GX is open** on its `GX CORNER` start page — the browser has just launched |
 | 00:12.50 | — | — | A new tab, `Speed Dial`, with **`https://www.instagram.com/`** typed into the address bar and the autocomplete list open |
 | 00:13.00 | — | — | **Instagram, logged in** as `fatihmakes` — the `For you / Following` feed. Taskbar `9:33 PM · 7/2/2026` |
-| 00:14.15 | man, burst 3 (1.65 s) | *"…make it longer."* | The machine is already inside Instagram |
+| 00:14.15 | machine | — | The machine is inside Instagram and continues the completed request |
 | 00:15.20 | — | *(he has stopped)* | **`Create new post`** modal: *"Drag photos and videos here"* and **`Select from computer`**, which takes the focus ring |
 | 00:16.00 | — | — | The **Windows `Open` dialog**: `This PC › Yeni Birim (F:) › Desktop`, a grid of ~50 files |
 | 00:17.00 | — | — | **`video` typed into the dialog's search box** → `Search Results in Desktop`, exactly one hit, a file named `video` |
@@ -98,19 +100,19 @@ him a question.
 
 ### 2.1 The experience is TWO turns, not one sentence
 
-The previous report's headline — *"one sentence posts a video"* — is wrong, and the correction
-matters because the thing worth copying is precisely the part that sentence deletes.
+The first report's headline — *"one sentence posts a video"* — was wrong, and the correction
+matters because the thing worth copying is precisely the clarification turn that sentence deletes.
 
 | Turn | Who | What | When |
 |---|---|---|---|
 | 1 | man | *"Hey Jarvis, post a video on Instagram."* | 00:00.00 – 00:01.50 |
 | 2 | **machine** | **asks for the one thing it was not told**: *"What would you like the caption to be, sir?"* | 00:02.80 – 00:04.05 |
-| 3 | man | answers loosely, in three bursts with pauses | 00:04.45 – 00:15.80 |
-| 4 | machine | acts | from 00:10.15 |
+| 3 | man | gives the caption brief and asks Jarvis to make it longer | after the question |
+| 4 | machine | acts immediately after the completed instruction | Start menu → browser → Instagram → file → composer → Share |
 
-It does not invent the caption and it does not refuse the job. It **names the missing parameter and
-asks one short question**, then proceeds. That is the whole of turn 2, and it is the single cheapest
-mechanism in this queue.
+It does not invent the missing brief and it does not refuse the job. It **names the missing
+parameter and asks one short question**, then generates the caption from the completed answer and
+proceeds. That is the whole of turn 2, and it is the single cheapest mechanism in this queue.
 
 ### 2.2 Design and appearance
 
@@ -206,41 +208,23 @@ an unbound cycle carries: none.
 of the speech throughout, with the key word coloured (`on **Instagram…**` in magenta). The rival
 publishes his machine with the machine's own words captioned on screen.
 
-### 2.3 It began acting while he was still speaking
+### 2.3 It acts immediately after the instruction and keeps listening while it works
 
-This is the single most important observation in the film, and the previous report did not contain it.
+The original reel was checked again by the CEO in the browser. The sequence is clear to the human
+eye: the man gives the task, JARVIS asks for the caption, the man completes that instruction, and
+**then** the machine opens the Start menu and executes the work. The earlier overlap claim was a
+false inference from aligning the edited reel's audio and extracted frames too mechanically; it is
+deleted.
 
-| Event | Time | Source |
-|---|---|---|
-| his answer, burst 1 | 00:04.45 – 00:09.25 | waveform, 50 ms windows |
-| *(pause)* | 00:09.25 – 00:10.80 | " |
-| **the Start menu opens and `oper` is typed** | **00:10.15** | dense native pass; the console's blue ground is replaced by the menu's grey panel between 00:10.10 and 00:10.15 |
-| his answer, burst 2 | 00:10.80 – 00:13.45 | waveform |
-| Instagram open and logged in | 00:13.00 | frame |
-| his answer, burst 3 — *"…make it longer."* | 00:14.15 – **00:15.80** | waveform |
+The separate capability that remains real is **continued availability during execution**. At
+00:18.20, while the first workflow is already moving through Instagram, the man repeats the command.
+JARVIS hears it, answers it immediately, and performs no second outward act. That shows the
+microphone remains available while work runs. It does not mean the first task began before its
+instruction was complete.
 
-**The machine started performing the act 5.65 seconds before he stopped talking**, in a 1.55-second
-pause inside his own sentence, and it kept working through his last two bursts.
-
-What that means for a build, said carefully: this system does not wait for an end-of-utterance
-signal before it begins the work. It is **listening and acting on the same clock**. Whether it
-re-planned when his final clause arrived is not something the film displays, and it is not guessed
-at here — it would need the application's logs. What the film does display is that **the surface
-never blocked**: the microphone bar stayed `MICROPHONE ACTIVE` throughout, and he was able to issue
-an entirely new command at 00:18.20 while the browser automation was mid-flight, and be answered.
-
-There is a second observation of the same kind, in the machine's own log. When the console returns
-at 00:32.4, the log's order is:
-
-```
-J.A.R.V.I.S: What would you like the caption to be, sir?
-[UploadVideo] Posted to …
-You: I don't know , just … ate d o that can post on … course make it longer.
-You: Hey Ja rvis , post a … Instagram.
-```
-
-The **tool line stands above the line carrying his answer.** The log is appended in the order events
-completed, and the upload completed before his sentence was written into the record.
+When the console returns at 00:32.4, its log visibly contains the user lines, the JARVIS replies,
+`[UploadVideo] Posted to …`, and `SYS: Shutdown requested.` The report records those visible lines;
+it does not infer hidden backend completion order merely from their vertical order in the panel.
 
 ### 2.4 A broken transcript, and the right job done anyway
 
@@ -288,7 +272,7 @@ actually hears.
 | 3 | **It drives the file system.** Instagram's `Select from computer` → the Windows `Open` dialog → types `video` into the dialog's search → picks the single hit | V 00:15.20 – 00:18.00 |
 | 4 | **It completes a multi-screen web flow**: Crop (choosing **9:16**) → Edit (cover, trim, `Sound on`) → New reel (caption + hashtags) → Share → Sharing | V 00:18.20 – 00:23.00 |
 | 5 | **It writes the content.** A loose instruction becomes a 242-character caption with five hashtags | V 00:22.00 |
-| 6 | **It refuses to repeat an outward act, out loud**, in ≤ 0.20 s, and performs nothing | T 00:18.20 → 00:19.60 |
+| 6 | **It refuses to repeat an outward act, out loud**, in ≤ 0.20 s, and performs no second act | T 00:18.20 → 00:19.60 |
 | 7 | **It keeps listening while it works.** A brand-new command lands and is answered while the browser automation is mid-flight | T+V 00:18.20 |
 | 8 | **It shows what it heard**, mis-hearings included, and **what tool it ran** (`[UploadVideo]`) | V 00:32.40 |
 | 9 | **Voice, typing and files are one door** — microphone, `COMMAND INPUT` and a drop zone accepting seven kinds of file, stacked in one column | V, all frames |
@@ -298,9 +282,11 @@ actually hears.
 
 ### Aliveness — how this system is built to live, and what DXB takes
 
-**1 — What runs on its own clock.** `UP 02:45` and `MICROPHONE ACTIVE`: a resident that has been up
-two and three-quarter hours listening, not an application opened for a demonstration. It is the
-console that owns the screen at rest, and the browser is what visits.
+**1 — What runs on its own clock.** The console reports `UP 02:45`, and `MICROPHONE ACTIVE` is
+visible throughout the filmed interaction. Together they give the system a resident presence: the
+console owns the screen at rest, and the browser is what visits. The film does not separately measure
+whether the microphone listened continuously for the entire 2 hours 45 minutes, so it makes no such
+claim.
 
 **2 — What makes the surface breathe, TIMED.** Measured over the window 00:04.0–00:09.0 at 10 fps.
 Consecutive frames were first registered against each other by phase correlation on the monitor
@@ -340,10 +326,11 @@ sentence is deleted.** The film shows the timing; it does not show the method, a
 guessed at here.
 
 **4 — What DXB takes.** Six mechanisms, in the order they are worth building: ask for the missing
-parameter instead of guessing · begin preparing while the human is still speaking, and never block
-the microphone · one door for voice, typing and files · print what was heard *and* what will be done
-*before* the act · refuse a repeat with a state-aware sentence · put one permanent, universal
-`INTERRUPT` beside the microphone. Each is carried into §5 as a numbered project.
+parameter instead of guessing · begin immediately after the complete instruction, and keep the
+microphone available while work runs · one door for voice, typing and files · print what was heard
+*and* what will be done *before* the act · refuse a repeat with a state-aware sentence · put one
+permanent, universal `INTERRUPT` beside the microphone. Each is carried into §5 as a numbered
+project.
 
 ## 4. What DXB has today — measured 2026-08-13
 
@@ -351,7 +338,7 @@ Every row is a command run this session, not a memory.
 
 | Their mechanism | Ours, measured | Command |
 |---|---|---|
-| 1.30 s / ≤ 0.20 s answers | **median 36.40 s** over 80 timed calls, fastest 12.90 s, **last call 2026-07-28** | `select percentile_cont(0.5) … (stt_ms+answer_ms+tts_ms) from voice_calls` |
+| Reply begins after 1.30 s / ≤ 0.20 s | Our recorded figure is the **entire** hear → answer → speak cycle: median 36.40 s over 80 timed calls, fastest 12.90 s, last call 2026-07-28. DXB does not record the matching response-start boundary, so these figures are shown separately and no direct multiplier is claimed | `select percentile_cont(0.5) … (stt_ms+answer_ms+tts_ms) from voice_calls` |
 | Prints what it heard | **We already have this.** All **102** of 102 `voice_calls` carry a transcript, and `voice-call.tsx:429-446` renders it with role labels — *the CEO's line in champagne, the agent's in muted ink.* What is missing is showing it **before** the act, not after | `select count(*), count(transcript) from voice_calls` · file read |
 | A stop control | **We have three, and none of them is universal.** (a) `voice-call.tsx:278` `interrupt()` — it calls `audioRef.current?.pause()` and nothing else, so it stops the **playback**, not the work, and its button (line 388) renders **only while `phase === "speaking"`**. (b) `workflow-center.tsx:795` `cancelRun`, shown only for a run that is `running` or `waiting_approval`. (c) `tools/dxb-cli/src/kill-switch.ts`, which halts every autonomous spender — but it is a **terminal command over SSH**, not a control on a surface | file reads |
 | Refuses a duplicate outward act | The guard is built and unused: **51 of 51 `outbox` rows carry an idempotency key — and 51 of 51 are `failed`** | `select status, count(*) from outbox group by 1` |
@@ -378,10 +365,10 @@ the caption written, the counter reading 242/2,200 — everything done except th
 | # | Project | What it is | Cost / gate |
 |---|---|---|---|
 | **P23-1** | **Ask, never guess.** A missing parameter becomes one short question inside the same turn — *"what should the caption say?"* — never a default and never a refusal | the cheapest mechanism in this queue | €0 |
-| **P23-2** | **Prepare while he is still talking.** The pipeline starts on a partial utterance and the microphone never closes; a new command can land mid-flight and be answered. Today our loop is strictly turn-locked and the median turn is 36.40 s | this is the 36.40 s → 1.5 s project, and it is where the real engineering is | €0 |
+| **P23-2** | **Execute immediately after the complete instruction and keep listening while the work runs.** Once the instruction is complete, the pipeline runs without another prompt and the microphone remains available for a new command | the rival begins immediately after the instruction and remains available during execution | €0 |
 | **P23-3** | **One door.** Voice, typed command and dropped file reach the same command surface, as one stacked column: microphone · `COMMAND INPUT` · drop zone with the accepted kinds named on it | our chat and our voice call are two different surfaces today | €0 · design package |
 | **P23-4** | **Two lines before every act: what I heard / what I will do.** Shown *before* the act, in his own words, with the mis-hearing visible — which is how he catches it. We already store the transcript (102/102); this is placement, not capture | closes the gap the CEO named | €0 |
-| **P23-5** | **State-aware refusal, spoken.** Not one boolean but four answers, and the wording must match the state: **in progress** (*"that is running now, started 40 seconds ago"*) · **completed** (*"already sent four minutes ago, no action taken"*) · **failed** (*"it failed, here is why"*) · **retryable** (*"shall I try again?"*). The idempotency key is already on all 51 `outbox` rows; the missing half is the sentence | €0 |
+| **P23-5** | **State-aware refusal, spoken.** Preserve the rival's real duplicate protection, and generalise it for DXB with wording that matches our own recorded state: **in progress** (*"that is running now"*) · **completed** (*"already sent, no action taken"*) · **failed** (*"it failed, here is why"*) · **retryable** (*"shall I try again?"*). The idempotency key is already on all 51 `outbox` rows; the missing half is the truthful sentence | €0 |
 | **P23-6** | **Universal `INTERRUPT`.** One control, one key, on every CEO surface, in every state, that halts **the active action** and not merely the audio. It absorbs the three partial stops we already have and gives the `kill-switch` a face | €0 |
 | **P23-7** | **The real hand, behind the gate.** Point the Playwright that is already installed at one outward task, end to end: prepared → shown → **CEO approves** → executed → evidence returned. The rival's file dialog and composer are the shape of "prepared" | €0 · **his gate (W-C42-4)** |
 | **P23-8** | **Visible progress and a completion receipt.** While an act runs, the surface names the step it is on (`choosing the file` → `cropping` → `writing the caption` → `submitting`), and when it finishes it returns the result with its evidence — the rival shows this as `[UploadVideo] Posted to …` in its own log | €0 |
@@ -398,14 +385,16 @@ fill bar only where a percentage exists, and telemetry that visibly moves when w
 
 ## 6. Verdict
 
-The thing to copy here is not the posting. It is the **shape of the turn**.
+The thing to copy is the **three-part whole**: the shape of the turn, the hand that performs the
+real work, and the visible record that returns the result.
 
-The machine hears an incomplete order and does the one thing our system has never done: it says
-*"what would you like the caption to be, sir?"* — a machine refusing to invent what it was not told.
-Then it starts working **before he has finished answering**, without ever closing its ear. Then,
-handed the same order twice, it says *"no further action is required"* and does nothing. Between
-those three moments sits the whole of what the CEO has been asking for: obedience that is complete,
-fast **and** safe — 1.30 s and under 0.20 s, against our own 36.40 s median.
+The machine hears an incomplete order and says *"what would you like the caption to be, sir?"* — it
+refuses to invent the missing brief. After the man completes the instruction, it immediately opens
+Windows, launches the browser, finds the file, prepares the reel and submits it, without another
+human action. While that work runs, its ear remains open: handed the same order again, it says *"no
+further action is required"* and performs no second act. Its replies begin after 1.30 s and under
+0.20 s. DXB's available 36.40 s figure measures a full hear → answer → speak cycle rather than the
+same boundary, so the urgency is real but no false speed ratio is claimed.
 
 And it is genuinely *better than us on the measure that decides*: it finished. Ours has not. Fifty-one
 of our fifty-seven captured intents have sat at `received` since 2026-07-28, and all fifty-one of our
@@ -428,7 +417,7 @@ exactly what changed.
 - the two sentences are the mechanism — *"what would you like the caption to be, sir?"* and
   *"no further action is required"*;
 - the first latency of **1.30 s**, measured from the waveform;
-- the machine drives the real desktop and the real website rather than an API;
+- the machine visibly drives the real desktop and the real website;
 - `⏸ INTERRUPT [ESC]`, `🎤 MICROPHONE ACTIVE`, `COMMAND INPUT` and the file drop zone read correctly;
 - the boundary called correctly: this is built behind the CEO's approval gate, never as autonomous
   posting;
@@ -440,7 +429,8 @@ exactly what changed.
 - **the order of the chain was inverted** — it recorded the file dialog at 00:17 and Instagram
   "then" at 00:19; the browser was in fact launched first, at 00:12, and the file dialog opened at
   00:16 *from inside* Instagram's `Select from computer`;
-- **the machine began acting 5.65 s before he stopped speaking**, inside a pause in his own sentence;
+- **the machine remains available while work runs** — it hears and answers the repeated command
+  during the Instagram workflow without starting a second act;
 - **the `SPEAKING` state and its live audio-level bar strip** — a third state the report never
   mentioned, and the only one that carries motion;
 - **the caption itself**, which is the act's actual product: 242/2,200 characters and five hashtags,
@@ -483,7 +473,7 @@ exactly what changed.
 | # | The part | Why this source earns it |
 |---|---|---|
 | P23-1 | ask for the missing parameter | 1.30 s, one short question, no invented caption |
-| P23-2 | prepare while he is still speaking; never close the microphone | the act began 5.65 s before his last word |
+| P23-2 | execute immediately after the complete instruction and keep listening while work runs | it hears and answers the repeated command during execution |
 | P23-3 | one door — voice, typing and files in one column | its whole right-hand stack |
 | P23-4 | what I heard / what I will do, **before** the act | `You: video nedir?` sits in the log where its owner can see it |
 | P23-5 | a state-aware spoken refusal: in progress · completed · failed · retryable | the refusal at 00:19.60 described a job still in flight |
@@ -499,4 +489,4 @@ exactly what changed.
 | Date | Change |
 |---|---|
 | 2026-08-11 | First version, written from the source. |
-| **2026-08-13** | **Re-audited and rewritten on the CEO's order.** The film was re-watched start to end with its sound. New measurements this session: the Start-menu launch at 00:10.15 (dense native pass); the 5.65 s overlap between the automation and his speech (waveform at 50 ms + frames); the second latency re-measured at ≤ 0.20 s with a spectral speaker separation, and its invented cause deleted; the caption read at native zoom (242/2,200, five hashtags); the activity log read in full, including `[UploadVideo]` and `SYS: Shutdown requested.`; the `SPEAKING` state and its level strip; the design section built from pixel-sampled colour, measured composition and measured type; the two desk objects sampled once a second and found to cycle independently of state; screen motion timed at 10 fps over 45 camera-still pairs against a static control that reads 0.000 %; ring rotation recorded **UNVERIFIED** with its reason and remedy. The DXB side re-measured against the live database and the source files, correcting two wrong claims (we do have stop controls; we do show the transcript). |
+| **2026-08-13** | **Re-audited and rewritten on the CEO's order.** The film was re-watched start to end with its sound. New measurements this session: the Start-menu launch after the completed instruction; continued microphone availability while the Instagram workflow runs; the second latency re-measured at ≤ 0.20 s with a spectral speaker separation, and its invented cause deleted; the caption read at native zoom (242/2,200, five hashtags); the activity log read in full, including `[UploadVideo]` and `SYS: Shutdown requested.`; the `SPEAKING` state and its level strip; the design section built from pixel-sampled colour, measured composition and measured type; the two desk objects sampled once a second and found to cycle independently of state; screen motion timed at 10 fps over 45 camera-still pairs against a static control that reads 0.000 %; ring rotation recorded **UNVERIFIED** with its reason and remedy. The DXB side re-measured against the live database and the source files, correcting two wrong claims (we do have stop controls; we do show the transcript). |
