@@ -76,9 +76,22 @@ case "$st" in
                    echo "SOUND — every second in order, the transcript beside it — the way a person"
                    echo "watches (CEO, 2026-08-01: \"İNSAN GÖZÜYLE İZLENİR GİBİ İZLENSİN kötü karelere"
                    echo "bakıp değil\"). $DIR/frames/$target is a zoom aid for a detail already seen," ;&
-  watched)         echo "never the reading itself. Then write the six-section report at $DIR/$rep, set"
-                   echo "the row to 'reported', and commit. Section 2 must be a timestamped record of"
-                   echo "what was watched — summarising is forbidden (CEO order C42)." ;;
+  watched)         echo "never the reading itself. Then write the report at $DIR/$rep, set the row to"
+                   echo "'reported', and commit."
+                   echo ""
+                   echo "WHAT THE REPORT CARRIES — LEDGER LAW 12, his live order of 2026-08-17:"
+                   echo "  \"bundan sonraki raporlari da hazirlarken TASARIM, MEKANIZMA ve NASIL PARA"
+                   echo "   KAZANDIGINI sadece yazsin. mekanizmalardaki canlilik olayini da...\""
+                   echo "THREE THINGS, NOTHING ELSE. They are already laws 10 (design), 8 (the"
+                   echo "mechanism and how it is built to live) and 7 (what it earns); law 12 adds the"
+                   echo "word ONLY. The reason is his: every report is read again by ONE synthesis"
+                   echo "session at the end, and 25 reports already weigh ~183,000 tokens."
+                   echo ""
+                   echo "THE WATCHING DOES NOT SHRINK — only the writing does. Section 2 stays a"
+                   echo "timestamped record (the gate needs 8+ rows), but every row now carries a"
+                   echo "design, mechanism or money observation instead of a transcript of the film."
+                   echo "Section 5 opens with the figures a builder needs, so the synthesis can read"
+                   echo "that section alone." ;;
 esac
 echo
 echo "Read first, before anything (ledger law 11, his order of 2026-08-10):"

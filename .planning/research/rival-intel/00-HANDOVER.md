@@ -109,8 +109,13 @@ The programme is built to absorb one more source without a redesign:
    order of 2026-08-01. Frames are opened ONE AT A TIME, at native resolution, only to zoom into a
    detail already seen while watching. Never a grid, never a downscaled copy, never a substitute
    for the watching.
-5. Write the six-section report. **Section 2 must be a record, never a summary** — the gate
-   enforces ≥ 8 timestamped rows for a reel or video.
+5. Write the report. **It carries three things and nothing else — the design, the mechanism
+   (including how the thing is built to live), and how it earns. Ledger law 12, his live order of
+   2026-08-17.** Section 2 is still a record, never a summary — the gate enforces ≥ 8 timestamped
+   rows for a reel or video — but each row now carries a design, mechanism or money observation
+   rather than a transcript of the film. **The watching itself does not shrink; only the writing
+   does.** Section 5 opens with the figures a builder needs, so the synthesis session can read that
+   section alone.
 6. Mark the row `reported`, run `npx vitest run tests/c42/rival-intel-ledger.test.ts`, commit.
 7. Correct the board and the tracker in the same session. The synthesis is written once, at the end.
 
