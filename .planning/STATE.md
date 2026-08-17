@@ -21,8 +21,24 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 **2026-08-16/17 — the holding moved to the workstation, and it is measured, not assumed.** He
 ordered a clean move ("tertemiz cillop gibi bir taşıma") with one binding condition: **nothing is
-deleted on the X230**. The laptop is still the live machine. `DXB-Center` (192.168.178.44, user
-`dxb`) is proven and idle.
+deleted on the X230**.
+
+**THE CUTOVER HAPPENED ON HIS ORDER, 2026-08-17 16:23 — `DXB-Center` (192.168.178.44, user `dxb`)
+IS THE LIVE MACHINE.** His words: *"git geçmişini de birleştir, servisleri PC de kur"*, after
+*"oradaki opus 5 ile devam ederim ben"*. The sentence that stood here — *"the laptop is still the
+live machine"* — is deleted by that order (LAW A). Measured, not assumed: the two histories had
+genuinely **diverged** (the workstation committed the same work separately at 16:09 while this
+session was running) and are now **one history, merged with no conflict and nothing lost** — both
+machines read commit `8046e767` with the identical tree `c80e13db`, both working trees clean,
+`tsc` exit 0, governance gates **23/23**. The resident services are **stopped and disabled on the
+X230** (unit files left in place — nothing deleted) and **installed and running on the
+workstation** through the repo's own `scripts/systemd/install.sh`: both `active`, **0 restarts**,
+`linger` on so they survive logout, exactly one node process each, and the queue is demonstrably
+working — **117 pg-boss jobs in ten minutes, 15 schedules live**. Nothing of the company was lost
+in the switch: company memory is **74 rows on both machines**, and the entire 367-row difference
+is the construction diary. **JARVIS runs but cannot speak or hear yet** — its log says
+`speaches unreachable for cue synthesis — retrying in 30s`, which is the fail-soft behaviour
+working as designed and is exactly the gap board row **B12** now carries.
 
 **The machine, measured 2026-08-17:** Ryzen 9 7900X — **24 threads against the X230's 4** · 30 GB
 RAM against 7.4 GB (which sat at 385 MB free with 3 GB of swap in use) · 1.8 TB NVMe at 2 % against
