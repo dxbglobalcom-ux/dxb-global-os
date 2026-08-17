@@ -16,14 +16,24 @@ This source is 50 seconds of one man naming **three jobs and one file**, and eve
 lands on something this holding already owns and has never wired. Read against what was measured
 here today:
 
-- He wants a worker that **scores a person against a written ideal client profile**. We hold
-  **22 named seats** for that work — `head-of-sales`, `sales-discovery-coach`, `sales-outreach`,
-  `crm-data-steward` among them — and **zero** references to an ideal client profile anywhere in
-  the repository, and **no scoring column on any of the 60 tables**.
-- He wants a worker that **builds content out of what buyers actually say**. The only conversation
-  this holding has ever held is **105 messages between exactly two people** — hamza 56, the CEO 49.
-- He wants **a brief before every call** about the person on the other side. Our only briefing is
-  the company-wide morning one, and **no meeting, calendar, appointment or reminder table exists**.
+- He wants a worker that **scores a person against a written ideal client profile**. **This holding
+  already runs a scoring engine** — `control_opportunity_score` is live, its weights are a setting
+  the CEO tunes without a deploy (`revenue.score_weights`, *"Fırsat skorlama ağırlıkları (12
+  boyut)"*), and a halal gate sits beside it. But **all twelve of its dimensions describe a market**
+  — market, trend, demand, competition, price_gap, logistics, platform_fees, tax_constraints,
+  ad_cost, est_margin, time_to_revenue_days, scalability — and of the six scoring columns on the
+  60 tables (`opportunities.score`, `opportunities.score_dims`, `projects.health_score`,
+  `library_items.quality_score`, `model_catalog.quality_score`, `model_catalog.speed_score`)
+  **not one scores a person.** The engine exists; the object does not.
+- He wants a worker that **builds content out of what buyers actually say**. **That worker is
+  already ordered** — the Social Inbox Agent in his own directive
+  (`00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md:21`, *"comments, mentions, reviews, DMs in one unified
+  inbox"*). What is measured today is that no outside sentence has ever reached this company: the
+  whole chat history is **105 messages between exactly two people** — hamza 56, the CEO 49.
+- He wants **a brief before every call** about the person on the other side. We already produce two
+  briefings — the 07:00 company one (`morning-briefing.ts`) and the daily revenue one
+  (`revenue.brief`) — and **both are about the company on a clock.** No meeting, calendar,
+  appointment or reminder table exists.
 - He calls the shared knowledge base **the glue that makes the other three work**. Our knowledge
   base is **13,919 rows, of which 13,845 (99.47 %) are the construction diary** and **74** belong
   to the company.
@@ -32,6 +42,14 @@ The holding is at the stage he describes at the start of that sentence, not the 
 factory is being built and the money mechanism has not been switched on by his own decision, so
 the empty tables here are the expected state and are read for their **shape**, never for their
 count.
+
+**AND THE HONEST FRAME, WRITTEN BEFORE THE PARTS LIST SO IT CANNOT BE MISSED.** This source is a
+**one-person coaching business** hiring three workers. Three of its four ideas already have an owner
+in this corpus — the scoring engine (`REVENUE_ENGINE_SPEC` §§3, 11), the customer-language inbox
+(`00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT`), the outside calendar (board **W-C42-4**) — and the fourth,
+the shared knowledge base, is the memory brain he approved on 2026-08-01. **So the yield of this
+source is not five new parts; it is one sentence and two gaps**, and §5 below is written to say
+exactly that rather than to look productive.
 
 ## 1. Source identity
 
@@ -175,7 +193,11 @@ All database figures read over TCP with `SELECT` only, against the company datab
 |---|---|---|
 | Do we have the seats for these three jobs? | `SELECT count(*) FROM public.agents WHERE slug/role/title ILIKE '%sales%\|%lead%\|%crm%\|%account%'` → **22 of 205**, among them `head-of-sales`, `sales-coach`, `sales-discovery-coach`, `sales-outreach`, `sales-outbound-strategist`, `sales-deal-strategist`, `sales-proposal-strategist`, `sales-pipeline-analyst`, `sales-account-strategist`, `crm-data-steward`, `onboarding-implementation-lead` | **The staff for his three agents is already written.** Two of the seats even carry his own word — `sales-coach` and `sales-discovery-coach`. |
 | Do those seats carry the abilities the jobs need? | `SELECT count(*) FROM public.agents WHERE jsonb_array_length(skills) > 0` → **0 of 205** | Every seat's ability list is empty. Already owned by **P14-1**; this source is its second independent demand. |
-| Is there an ideal client profile anywhere? | `rg -ci "ideal client\|ideal customer\|buyer persona\|icp"` over `apps`, `packages`, `HOLDING-OS-MASTER-PLAN`, `docs` → **1 hit, and it is a false match** (`MicPermission` in `docs/kelam/ARCHITECTURE.md:149`). Column search over all 60 tables for `%icp%`, `%lead_score%`, `%fit_score%`, `%qualif%` → **NONE** | The thing his first agent scores **against** does not exist in this holding in any form. |
+| **Do we already have a scoring engine?** | **Yes, and it is live.** `SELECT proname FROM pg_proc WHERE proname LIKE 'control_opportunity%'` → `register`, **`score`**, `set_halal_verdict`, `advance`, `reject`; its signature is `(p_id uuid, p_score_dims jsonb, p_idempotency_key text)`; its weights are a CEO-tunable setting (`revenue.score_weights`, category `revenue`, risk `medium`, *"Fırsat skorlama ağırlıkları (12 boyut)"*) | **The machine his first agent needs is already built and already the CEO's to tune.** Any report claiming this holding cannot score is wrong. |
+| What does that engine score? | The 12 dimensions, from `REVENUE_ENGINE_SPEC.md:182-184`: market, trend, demand, competition, price_gap, logistics, platform_fees, tax_constraints, ad_cost, est_margin, time_to_revenue_days, scalability. Every scoring column in the database: `opportunities.score`, `opportunities.score_dims`, `projects.health_score`, `library_items.quality_score`, `model_catalog.quality_score`, `model_catalog.speed_score` (+ their views) | **We score markets, projects, shelves and models. We score no person.** That is the whole distance between his first agent and ours. |
+| Is there an ideal client profile anywhere? | `rg -ci "ideal client\|ideal customer\|buyer persona\|icp"` over `apps`, `packages`, `HOLDING-OS-MASTER-PLAN`, `docs` → **1 hit, and it is a false match** (`MicPermission` in `docs/kelam/ARCHITECTURE.md:149`). Column search over all 60 tables for `%icp%`, `%lead_score%`, `%fit_score%`, `%qualif%` → **NONE** | The engine exists; the thing his first agent scores **against** does not. |
+| Is the customer-language inbox already ordered? | `00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md:21` — **"Social Inbox Agent — comments, mentions, reviews, DMs in one unified inbox"**, one of the 12 roles he accepted whole (line 42, *"12 rol AYNEN kabul"*) | His second agent is **already a written order of the CEO's**, not a discovery of this report. |
+| Who owns the CRM family, and for what? | `DATA_MODEL.md:31` — *"`crm_clients/contacts/deals/requests` · CRM ailesi · **KALIR (Outleteuro fazına hazır)**"*, and `CEO_COMMAND_CENTER_SPEC.md:258` puts its home at `/revenue/crm/*` | **The register was kept ready for the Outleteuro phase — and `00-INDEX.md:128` records U19: *"Outleteuro pilot cancelled entirely"*, CEO 2026-07-19, given twice, reopenable only by a future intent of his.** So the four tables stand pointed at a phase that is not running — which is why they carry no score, no profile and no field for what a person said. |
 | Is there anywhere to keep the people being scored? | Four tables exist — `crm_clients`, `crm_contacts`, `crm_deals`, `crm_requests`. Their whole shape: `crm_clients(id, name, status, meta, created_at, company_id)` · `crm_contacts(id, client_id, name, email, phone, role, created_at)` · `crm_deals(id, client_id, title, value_eur, stage, created_at)` · `crm_requests(id, client_id, task_id, summary, status, created_at)` | The register exists. **It has no score, no profile, no field for what the person said, and no qualifying state beyond `crm_deals.stage`.** The shape is the finding, not the row count — the money mechanism is off by his own decision. |
 | Has anyone outside this holding ever spoken to it? | `SELECT role, count(*) FROM public.chat_messages GROUP BY 1` → **hamza 56 · ceo 49 = 105, two participants** | His second agent's raw material — *"what your buyers are actually saying"* — has never entered this company. |
 | Does anything brief the CEO about the person he is about to meet? | `packages/orchestrator/src/morning-briefing.ts` reads `v_ceo_briefing` and renders a dated **company** briefing at 07:00 (W2.6). Table search over all 60 tables for `%calendar%`, `%meeting%`, `%remind%`, `%appoint%` → only `task_events` and `v_automation_schedules`, both matched on a substring; `rg -i "reminder\|appointment"` over `packages` and `apps` → **1 hit, and it is a comment** (`packages/kernel/src/workflow/steps/approval.ts:3`) | We brief the **company at a fixed hour**. He briefs about a **person before an event**. Neither the trigger nor the subject exists here. |
@@ -188,17 +210,31 @@ All database figures read over TCP with `SELECT` only, against the company datab
 
 Nothing starts before his design approval, and nothing here touches an outside account. `<!-- OPEN: B22 -->`
 
+**First, what this source does NOT add, because it already has an owner.** This list is written
+before the parts on purpose: a report that renames existing work as its own discovery is how a
+board fills with duplicates, and three of this source's four ideas are already owned.
+
+| The source's idea | Who already owns it | Status |
+|---|---|---|
+| Score a candidate against weighted criteria | `REVENUE_ENGINE_SPEC` §§3, 11 — `control_opportunity_score` live, weights CEO-tunable at `revenue.score_weights`, halal gate beside it | **Built.** Not re-proposed. |
+| An inbox of what customers say — comments, mentions, reviews, DMs | `00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md:21`, the **Social Inbox Agent**, one of the 12 roles he accepted whole | **Ordered by the CEO.** Not re-proposed. |
+| Calendar and scheduling reaching the outside world | Board **W-C42-4** (connectors — which accounts may be connected) | **Open, his decision.** Not re-proposed. |
+| Everything in your head goes into an actual file | `v2-memory-brain-2026-08-01` — the memory brain he approved | **Approved.** Not re-proposed. |
+| What does the team cost | **P16-1** — price the tokens (1,598 rows, 6,076,244,196 tokens, €0.000000) | **Open.** This source is its second independent reason, and that is all. |
+
+**What is genuinely left, and it is two things, not five.**
+
 | Part | What it requires | Cost / install | Waits on | <!-- OPEN: B22 -->
 |---|---|---|---|
-| **P27-1** | **The counterparty brief.** Before any meeting or call with a named party, the holding produces a brief on that party: what they are working on, what their status is, what their goals are — assembled from what the company already holds. Its trigger is the appointment, not the hour. | none | AUTHOR |
-| **P27-2** | **The ideal client profile becomes an object, and a person carries a score against it.** A written definition the CEO owns, stored once, and a score per contact computed against it with the reason for the score readable. Today there is no such definition and no such column. | none | AUTHOR |
-| **P27-3** | **A counterparty's own words are kept where the content workers can read them.** Every outside sentence this holding ever receives lands in one place, attributed, so the marketing seats write from what was actually said instead of from an idea of it. | none | AUTHOR |
-| **P27-4** | **The knowledge base is treated as the condition, not a feature.** *"Everything that's stuck in your head needs to be put in an actual file"* — the company's own 74 rows against 13,845 of construction diary is the measurement this part is judged by, and it feeds the memory brain he already approved (`v2-memory-brain-2026-08-01`). | none | AUTHOR |
-| **P27-5** | **Reminders and scheduling.** The clock his third agent runs on. No calendar, meeting, appointment or reminder table exists in the 60, and the one mention of a reminder in the whole codebase is a comment. The internal half needs nothing; the outside half needs a calendar account. | none internally | **CEO** — which outside account may be connected (**W-C42-4**) |
+| **P27-1** | **A PERSON becomes a scoreable object in the engine we already own.** The scoring machine exists and all twelve of its dimensions describe a market; nothing in this holding scores a human being. This matters here for one reason and it is his own approved decision, not this reel: the **agency seat (B28)** was approved because *"the agency seat's only durable asset is a scored roster of people"*, and a scored roster needs the object this holding does not have. The part is the object and its dimensions — not a second scoring engine. | none | AUTHOR, and it lands in `REVENUE_ENGINE_SPEC` beside the engine it extends, never in a new spec |
+| **P27-2** | **A brief whose trigger is a meeting, not a clock, and whose subject is the other party.** We produce two briefings and both are about the company at a fixed hour (`morning-briefing.ts` 07:00, `revenue.brief` daily). Nothing tells the CEO who he is about to sit across from, what they are working on, what their status is and what they want. | none | AUTHOR |
 
-**Not opened as new work, on purpose:** the closing line's demand — *what does the team cost* — is
-already **P16-1** (price the tokens). This source is its second independent reason and adds nothing
-that would justify a second row.
+**Where P27-1 and P27-2 must NOT go:** into a new spec, a new register or a second scoring engine.
+P27-1 extends the object model the revenue engine already carries; P27-2 extends the briefing that
+already exists. The CRM family is the register they would use, and its own owner
+(`DATA_MODEL.md:31`) has it standing by for a phase the CEO cancelled — **so the first question
+before either is built is his: does the agency seat reopen that register, or does a scored roster
+live somewhere else.** That question is named here rather than answered by the author.
 
 ### What must NOT be copied, and why
 
@@ -217,15 +253,26 @@ The shortest source on the queue so far to hand over a complete working set: **t
 file that makes them work.** It does not show what it produces, and the CEO's own knowledge of these
 systems outranks any reading of a 50-second advertisement.
 
-Its value to this holding is precise, and it is not the three agents — **it is the fourth part.** He
-spends 19.1 % of the reel on a shared knowledge base and says outright that the other three do not
-function without it. Measured here tonight: our knowledge base holds **74 rows about the company
-against 13,845 about its own construction**, and the seats his three agents describe are **already
-written, 22 of them, with empty hands and an empty ability list**.
+**But most of it is not ours to take, and this report says so plainly.** He is describing a
+one-person coaching business. Three of his four ideas already have an owner in this corpus — the
+scoring engine, the customer-language inbox and the outside calendar — and the fourth is the memory
+brain the CEO approved on 2026-08-01 (`v2-memory-brain-2026-08-01`). <!-- CEO-OK: v2-memory-brain-2026-08-01 -->
+The 22 seats his three agents describe are **already written
+here**, with an empty ability list on all 205. **A parts list that re-proposed those would be
+padding, and §5 refuses it: two parts survive, not five.**
 
-So the gap this source measures is not the workforce and not the register — both exist. It is that
-**nothing in this holding yet writes down what it knows about anyone outside it**, and the three
-jobs he names all read from exactly that file.
+Its value to this holding is therefore one sentence and one gap.
+
+**The sentence** is the glue — 19.1 % of the reel spent saying the other three workers do not
+function without a shared knowledge base, *"everything that's stuck in your head, needs to be put in
+an actual file."* Measured here tonight, that is our thinnest asset: **74 rows about the company
+against 13,845 about its own construction.**
+
+**The gap** is narrower than it first looks and it is real: this holding scores markets, projects,
+shelves and models, and **it scores no person** — while the seat the CEO already approved (**B28**,
+the agency) was approved precisely because a scored roster of people is the only durable asset in
+it. That is the one thing this source measures that nothing else on the queue has put a number
+against.
 
 The report follows his listen-only order, so it carries no reading of this source's screen, and no
 design work follows from it: the design package still waits on him. <!-- OPEN: B22 -->
