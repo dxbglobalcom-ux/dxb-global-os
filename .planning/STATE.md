@@ -19,6 +19,43 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
+**2026-08-16/17 — the holding moved to the workstation, and it is measured, not assumed.** He
+ordered a clean move ("tertemiz cillop gibi bir taşıma") with one binding condition: **nothing is
+deleted on the X230**. The laptop is still the live machine. `DXB-Center` (192.168.178.44, user
+`dxb`) is proven and idle.
+
+**The machine, measured 2026-08-17:** Ryzen 9 7900X — **24 threads against the X230's 4** · 30 GB
+RAM against 7.4 GB (which sat at 385 MB free with 3 GB of swap in use) · 1.8 TB NVMe at 2 % against
+164 GB at 92 % · **RTX 5060 Ti, 16,311 MB, CUDA proven from Python** against no GPU at all. The
+test battery: **701 passed / 6 failed / 37.6 s** there against **685 / 22 / 125.2 s** here. The new
+machine is not merely bigger — it fails less.
+
+**What the move exposed, and what it means.** Three defects were the author's own and are fixed
+(the `.env.example` files excluded by a rule-ordering mistake; the workstation's own Codex config
+overwritten with `/home/ghost` paths; and `--no-privileges` on the restore, which stripped **131
+privilege grants** and left `anon` able to truncate tables the dashboard reads — all 824 grants now
+match). One was the repository's and is fixed in commit `388ef52`: **`packages/hr` and
+`packages/revenue` were never compiled at all** — absent from the root tsconfig — and nine
+build-order links were missing across three packages. It passed on the X230 only because stale
+`dist/` folders masked it. **A clean machine is an auditor.** One claim the author made was wrong
+and was withdrawn by measurement: the repository *can* be installed from scratch — `bootstrap-db.sh`
+applied 154 of 154 migrations to an empty database; `supabase start` was simply the wrong door.
+
+**B12 is unblocked and is now the most valuable open row.** Its hardware arrived. The gap it must
+close was measured against the rivals the same session: J.A.R.V.I.S answers in **1.30 s**, source 21
+in 2.55-5.40 s, and **our 102 voice calls sit at a median 32,684 ms** — of which **hearing is
+20,083 ms**. The killer is `faster-whisper-small` on a CPU, and rival report 21 already fixed the
+target in his own words: **"1.5 s round trip — HIS FIGURE, no exception."** Row 4.2 (STT →
+`whisper large-v3-turbo`) takes 20 seconds out of 32.7 in one move. No local model runner is
+installed on the workstation yet.
+
+**Open legs of the move live on board row B29** — the bulk folders still transferring, three
+root-owned MySQL files that permissions refused, the resident services deliberately not started
+(two machines running them would act twice and split the database), and his workstation password,
+which was typed into a transcript and should be changed.
+
+---
+
 **2026-07-30 — the context architecture, both layers.** His session focus, in his words:
 *"şuan sadece odak noktamız bu directive paketi o kadar ve bu context engineering işi… rakip
 analizi vs bunlar hepsi sonra."* He approved the eight-step plan, Hamza included, and added two
