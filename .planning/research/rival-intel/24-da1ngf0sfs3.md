@@ -278,7 +278,7 @@ moves.**
 
 | # | Project | Needs | Depends on |
 |---|---|---|---|
-| **P24-1** | **Make the event stream produce again.** 199 agents ran once and stopped; `task_events` has been silent since 2026-07-28. Find the cause, restart the flow, prove it with a row whose `created_at` is today | Nothing to install, no money, no account | The resident services, which the CEO stopped deliberately — **waits on his word** |
+| **P24-1** | **Make the event stream produce again.** 199 agents ran once and stopped; `task_events` has been silent since 2026-07-28. Find the cause, restart the flow, prove it with a row whose `created_at` is today | Nothing to install, no money, no account | The resident services, which the CEO stopped deliberately — **waits on his word** <!-- OPEN: B22 --> |
 | **P24-2** | **Agent action feed with names.** One line per action — agent, verb, object, age — newest first, the acting agent emphasised. Reads `agent_runs` + `task_events` only | Nothing to install, no money, no account | P24-1 (a feed with no events is forbidden) |
 | **P24-3** | **Vitals of our own machine on the face.** Hardware load, memory, GPU — this workstation's real figures, measured. **The one panel that can be honest today**, because those numbers exist whether the company works or not | Nothing to install, no money, no account | — |
 | **P24-4** | **The one-line self-description.** What the system last knew, what it is doing, when it wakes next — the `AWAITING OPERATOR` clause, ours; including the honest present state, *services stopped by the CEO's order* | Nothing to install | — |
@@ -307,7 +307,7 @@ pieces for exactly this reason — self-hosted Supabase, **LiteLLM** as the mode
 Caddy. Two measurements against that on this machine today: LiteLLM **is running on port 4000 and
 answers, but has 0 models defined** — a router routing nothing; and **speaches is absent
 altogether**, which is why 4 of the 9 failing tests fail (`ECONNREFUSED 127.0.0.1:8969`) and why
-B12's hearing gap is still open.
+B12's hearing gap is still open. <!-- OPEN: B12 -->
 
 **What the open-source route would have to cover to replace what §3.6 sells** — recorded as the
 question to answer before any money is spent, not as an answer: image and video generation on our
