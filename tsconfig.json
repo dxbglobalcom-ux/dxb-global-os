@@ -29,6 +29,12 @@
       "path": "packages/hook"
     },
     {
+      "path": "packages/hr"
+    },
+    {
+      "path": "packages/revenue"
+    },
+    {
       "path": "packages/outbox-executor"
     },
     {

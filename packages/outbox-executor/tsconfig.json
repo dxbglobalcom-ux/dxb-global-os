@@ -10,7 +10,11 @@
     { "path": "../shared" },
     { "path": "../memory-router" },
     { "path": "../gateway" },
-    { "path": "../kernel" }
+    { "path": "../kernel" },
+    { "path": "../hr" },
+    { "path": "../orchestrator" },
+    { "path": "../revenue" },
+    { "path": "../voice" }
   ],
   "include": ["src"]
 }

@@ -5,6 +5,11 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "references": [{ "path": "../shared" }, { "path": "../observability" }],
+  "references": [
+    { "path": "../shared" },
+    { "path": "../observability" },
+    { "path": "../gateway" },
+    { "path": "../hook" }
+  ],
   "include": ["src"]
 }

@@ -23,6 +23,9 @@
     },
     {
       "path": "../voice"
+    },
+    {
+      "path": "../gateway"
     }
   ],
   "include": [
