@@ -65,5 +65,8 @@
         ]
       }
     ]
+  },
+  "env": {
+    "RIPGREP_CONFIG_PATH": "${CLAUDE_PROJECT_DIR}/.ripgreprc"
   }
 }
