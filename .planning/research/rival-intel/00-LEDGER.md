@@ -294,32 +294,19 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
     *"özet kısa yaz falan bunları sil"*. He had never asked for it to be made a law; a session
     promoted a passing remark. Length is his call, per session, and is not written down.)*
 
-12. **A REPORT CARRIES THREE THINGS: THE DESIGN, THE MECHANISM, AND HOW IT EARNS. NOTHING ELSE.**
-    His live order, 2026-08-17: *"bundan sonraki raporları da hazırlarken tasarım, mekanizma ve nasıl
-    para kazandığını sadece yazsın. mekanizmalardaki canlılık olayını da…"*
-    - **THE REASON IS THE SYNTHESIS, and it is his:** *"en sonda bu raporların hepsi yeni bir
-      sessionda sentezlenecek… tüm 1 den sonuna kadar olan raporlar sessionın contextini
-      doldurmamalı."* **Measured the day he said it: the 25 finished reports hold 140,777 words —
-      roughly 183,000 tokens.** A session that must read that before it can think has spent its
-      window on reading. The report is a parts list for the Ferrari, not a record of an evening.
-    - **THE THREE ARE NOT NEW — laws 10, 8 and 7 already own them.** Design is law 10; the mechanism
-      and its aliveness is law 8, whose second clause is **his own sentence** about the dot flowing
-      through the connection branches *"damarın içinden geçen kan gibi"*; how it earns is law 7.
-      **What law 12 adds is the word ONLY.** Everything that is not one of those three comes out.
-    - **WHAT DOES NOT CHANGE, stated so this is never read wider than he said it: THE WATCHING.**
-      His order of 2026-08-01 stands untouched — *"O VİDEOLARIN TAMAMI … İNSAN GÖZÜYLE İZLENİR GİBİ
-      İZLENSİN kötü karelere bakıp değil."* The source is still watched whole, with its sound, start
-      to end. **What shrinks is the WRITTEN RECORD, never the reading.** Section 2 remains a
-      timestamped record and keeps its rows, but each row now carries a **design, mechanism or money**
-      observation rather than a transcript of the film. A report that skips the watching is the defect
-      that cost this queue sixteen reports on 2026-08-01 and five more on 2026-08-08.
-    - **AND §5 STAYS SELF-CONTAINED** — his order of the same evening: *"mekanizma ve tasarımı da
-      sentezleyecek opus 5 görür değil mi okur önemli çünkü holdingin inşaasında."* Section 5 opens
-      with the figures a builder needs, so the synthesis can read that section alone. Measured after
-      that repair: §5 across all reports is **19,225 words, 14.8 % of the corpus**.
-    - **THIS IS WRITTEN AS A LAW BECAUSE HE ADDRESSED FUTURE SESSIONS** (*"bir sonraki session
-      geçsin… bundan sonraki raporları"*), which is the one thing his prohibition of 2026-08-13
-      requires before a remark becomes permanent. **One word from him strikes it.**
+12. **THREE THINGS, AND NOTHING ELSE: THE DESIGN · THE MECHANISM AND HOW IT LIVES · HOW IT EARNS.**
+    His live order, 2026-08-17: *"bundan sonraki raporları da hazırlarken tasarım, mekanizma ve
+    nasıl para kazandığını sadece yazsın. mekanizmalardaki canlılık olayını da…"*
+    - The three are **already laws 10, 8 and 7**. **This law adds one word — ONLY.** Everything
+      outside those three comes out of the report.
+    - **THE WATCHING DOES NOT SHRINK, ONLY THE WRITING DOES** (law 4 stands). §2 stays a timestamped
+      record with its 8-row floor, but each row carries a design, mechanism or money observation, not
+      a transcript of the film.
+    - **§5 must be readable alone** — it opens with the figures a builder needs.
+    - **Why:** one later session synthesises every report, and the 25 finished ones already weigh
+      **140,777 words ≈ 183,000 tokens**.
+    - Written as a law because he addressed future sessions (*"bundan sonraki raporları"*), which is
+      what his prohibition of 2026-08-13 requires. **One word from him strikes it.**
 
 ## Status vocabulary
 
