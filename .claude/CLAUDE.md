@@ -112,6 +112,14 @@ the date. The battery fails on an unregistered approval claim.
 - **Evidence before done.** A completion claim cites the command and its decisive output, or
   it is forbidden. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
   human-eye confirmation` and listed apart. Door: `dxb-verify`.
+- **A fix repairs its target and breaks nothing around it.** His order, 2026-08-17, written on
+  his word: *"birşeyi yaparken veya düzeltirken onu etkileyecek başka şeyleri bozmasın."*
+  Before the change, name what stands on the thing being changed; after it, **measure those
+  dependants and print what the check printed** — the intention to be careful is not the check.
+  Replacing a file, deleting a duplicate, installing a package, enabling a service, repointing a
+  link: each names its blast radius in the same turn, and the report says what was re-measured
+  and found intact. A change delivered without that sweep is unfinished, whatever it fixed.
+  Door: `dxb-verify`.
 - **Speak to the CEO in his language.** He is the owner, not a developer. Door: `dxb-ceo-report`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
