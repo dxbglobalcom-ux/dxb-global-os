@@ -27,11 +27,21 @@ describe("search blindness — .planning and .claude stay reachable", () => {
     expect(body, ".ripgreprc no longer excludes the git object store").toMatch(/^--glob=!\.git\/$/m);
   });
 
-  it("the harness loads it for every session", () => {
+  it("the harness loads it for every session, and the path it names really exists", () => {
     const settings = JSON.parse(readFileSync(join(process.cwd(), ".claude/settings.json"), "utf8"));
+    const configured = settings.env?.RIPGREP_CONFIG_PATH;
     expect(
-      settings.env?.RIPGREP_CONFIG_PATH,
+      configured,
       "settings.json no longer sets RIPGREP_CONFIG_PATH — the config exists and nothing loads it",
     ).toMatch(/\.ripgreprc$/);
+    // The second half exists because the first attempt at this fix BROKE rg for a
+    // whole session: the value was written as "${CLAUDE_PROJECT_DIR}/.ripgreprc" and
+    // the harness passed that string through unexpanded, so every rg call printed
+    // "failed to read the file specified in RIPGREP_CONFIG_PATH" and silently fell
+    // back to the blind default. A path that does not resolve is worse than no path.
+    expect(
+      existsSync(configured),
+      `RIPGREP_CONFIG_PATH points at ${configured}, which does not exist — rg will warn and fall back to skipping dot-directories. Unexpanded placeholders like \${CLAUDE_PROJECT_DIR} are the known cause`,
+    ).toBe(true);
   });
 });

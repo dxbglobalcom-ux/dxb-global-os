@@ -67,6 +67,6 @@
     ]
   },
   "env": {
-    "RIPGREP_CONFIG_PATH": "${CLAUDE_PROJECT_DIR}/.ripgreprc"
+    "RIPGREP_CONFIG_PATH": "/home/dxb/DxB Global OS/.ripgreprc"
   }
 }
