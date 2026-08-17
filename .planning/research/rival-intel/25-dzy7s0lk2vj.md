@@ -1,73 +1,124 @@
-# Source 25 — `instagram.com/reel/DZY7s0LK2vj` — "a map is not a move"
+# 25 — "a map is not a move" · the source that attacks the screen we are drawing
 
 > **LISTENED, NOT WATCHED — on his live order, 2026-08-17:** *"25 i de sadece ses ile dinle anla
-> ve sadece bu videoyu kısaca raporla."* The audio was taken whole (42.15 s, 8 speech blocks, no
-> gap over 0.6 s). **The picture was not looked at** — no frame, no screen reading, no motion
-> measurement. Every visual claim about this source is therefore **absent, not negative**: if the
-> design work ever needs its screen, this row must be re-opened and watched. This report is short
-> on the same order.
->
-> Evidence base: `media/25.wav` (pcm_s16le · 16 kHz · mono · 42.145625 s) and its own transcription
-> `transcripts/25.json` (whisper, language `en`, 719 characters, max `no_speech_prob` 0.30).
+> ve sadece bu videoyu kısaca raporla."* The audio was taken whole (42.145625 s, 8 speech blocks,
+> no gap over 0.6 s). **The picture was not opened** — no frame was cut, no screen was read, no
+> motion was timed. Every visual statement about this source is therefore **absent**, and where a
+> law of this ledger asks for the screen, the section below writes `UNVERIFIED` and names what
+> would be needed. This report is short on the same order.
 
-## 1. Why it matters to this holding
+## 1. Source identity
 
-This is the only source in the queue so far that **attacks the thing we are building** — by name.
-Our design brief is an Iron Man / J.A.R.V.I.S cockpit, and V2's first law is *IT MUST BE ALIVE*
-(motion IS state). This rival's whole 42 seconds says: a glowing JARVIS board, agents visibly
-talking to each other, and a graph of how everything connects are **the point where everyone
-stops**, and stopping there produces a map that *"doesn't tell you where to go."*
+| Field | Value |
+|---|---|
+| Address | `https://www.instagram.com/reel/DZY7s0LK2vj/?igsh=YmhzMmNxdGd3ZHVt` |
+| Uploader | Not named in the audio, and the picture was not opened — `U` |
+| File | `.planning/research/rival-intel/media/25-DZY7s0LK2vj.mp4` — 14,406,514 bytes |
+| **sha256 of the file on disk** | `d25c578a56078fa73d796bb116cd6ef03cd55380d6a1050523f7b7d6646a0759` |
+| **sha256 of the audio actually studied** | `d06e1dbd94c389bef0a03e802df50630b42705dad0b680deafa42b4a186cf2f7` |
+| Repository state when written | commit `6cef95b4` |
+| Resolution | 1080 × 1920 (vertical) — recorded from the container, **not viewed** |
+| Codec | VP9 video, 30 fps · AAC audio — **audio present** |
+| Duration | **42.146009 s** (video container) · **42.145625 s** (extracted audio) |
+| Audio studied | `media/25.wav` — pcm_s16le · 16 kHz · mono · 1,348,738 bytes |
+| Obtained | `scripts/rival-intel/fetch.sh` (yt-dlp), 2026-08-01T23:49:13Z |
+| Transcript | `transcripts/25.json` — English, **8 segments, 719 characters**, highest `no_speech_prob` **0.30** |
+| Frames | **None cut.** The picture was not opened, on his order of 2026-08-17 |
 
-It does not contradict our first law — it adds the missing half to it. Alive is not enough; the
-living surface has to **arrive with the next move and its consequences**, and the picture exists so
-the CEO can **steer**, not admire. Read against complaint C26 (the surface must follow the human)
-this is the same demand from the other end: our screens must not only move, they must propose.
-
-## 2. What was heard, in order (timestamps from the audio's own record)
+## 2. The audio record — every block in order, nothing summarised `T`
 
 | Time | Words (verbatim from `transcripts/25.json`) |
 |---|---|
-| 0.00–6.44 | "I love Iron Man just as much as anyone, but if I see one more Jarvis dashboard, I'm a crash out." |
-| 6.60–11.68 | "Everybody's flexing, glowing graphs, and look, agents talking to each other. Okay, cool." |
-| 11.84–17.32 | "But a map of how your documents connect is still just a map. It doesn't tell you where to go." |
-| 17.32–22.32 | "When some data point or news comes out, you want your agents to come to you and say," |
-| 22.32–26.16 | "we can take XYZ action, and these would be the follow-on effects." |
-| 26.24–33.16 | "Then the visualization comes in for you to be able to steer, not just watch and be mesmerized by all the pretty colors." |
-| 33.44–37.64 | "Connecting everything and making it pretty is where everyone on Instagram has been stopping." |
-| 37.64–41.84 | "But synthesizing all the data down to the next move is chess, not checkers." |
+| 00:00 | "I love Iron Man just as much as anyone, but if I see one more Jarvis dashboard, I'm a crash out." |
+| 00:06 | "Everybody's flexing, glowing graphs, and look, agents talking to each other. Okay, cool." |
+| 00:11 | "But a map of how your documents connect is still just a map. It doesn't tell you where to go." |
+| 00:17 | "When some data point or news comes out, you want your agents to come to you and say," |
+| 00:22 | "we can take XYZ action, and these would be the follow-on effects." |
+| 00:26 | "Then the visualization comes in for you to be able to steer, not just watch and be mesmerized by all the pretty colors." |
+| 00:33 | "Connecting everything and making it pretty is where everyone on Instagram has been stopping." |
+| 00:37 | "But synthesizing all the data down to the next move is chess, not checkers." |
 
-## 3. What this source PRODUCES
+**Rhythm, measured from the same file:** 8 blocks across 42.15 s, the longest gap **0.60 s**, the
+argument closing at **41.84 s**. The shape is thesis (00:00–00:17), prescription (00:17–00:33),
+and the line that names the standard (00:33–00:42).
 
-**A thesis, not a product** — and that is itself the finding. Nothing in the audio demonstrates a
-running system: no latency, no cost, no volume, no name of a tool. `UNVERIFIED — the uploader is
-not named in the audio; the picture was not looked at on his order.` Its value to us is a
-**standard to be beaten**, and it is a standard we can be measured against without installing
-anything: *does the surface hand the owner the next move, with its follow-on effects, or does it
-hand him a beautiful map?*
+## 3. Capabilities — the mechanism this source describes
 
-## 4. Parts for the build (candidates — nothing starts before his design approval)
+This source hands over a **standard for the surface**, and it is aimed at exactly what our design
+brief draws:
+
+> A board that glows, agents visibly talking to each other, and a graph of how everything connects
+> is **where everyone stops**. What is wanted instead: when a data point or a piece of news
+> arrives, **the agent comes to you** and says *"we can take XYZ action, and these would be the
+> follow-on effects."* The visualization comes **after** that, so the owner can **steer** — and
+> "synthesizing all the data down to the next move is chess, not checkers."
+
+**On output:** the recording **does not show what it produces** — no revenue, no customer, no
+latency, no volume, no tool named, no account named. `U` It is 42 seconds of argument. What would
+be needed to say more: the uploader's account and its posted work, which sits behind the picture
+that was not opened on his order.
+
+### Aliveness — how this source is built to live, and what DXB takes
+
+The living mechanism named here is **the arrival**: an external event (a data point, a piece of
+news) reaches the system, and the system moves toward the human with a proposal rather than
+waiting to be asked. Its clock is the world's, not the owner's clicking. That is the pulse this
+source is arguing for, stated in its own words at 00:17–00:26, and it is the same wire his
+complaint C26 asks for from the other end.
+
+Its own delivery is the only rhythm this file can measure: **8 blocks in 42.145625 s, longest gap
+0.60 s, argument closing at 41.84 s.**
+
+`UNVERIFIED — the screen was not opened, on his live order of 2026-08-17 ("25 i de sadece ses ile
+dinle"), so what moves on it, in which direction, how long a movement takes and how often it
+repeats were never measured.` What would be needed: a dense pass over
+`media/25-DZY7s0LK2vj.mp4` at 5–10 fps with `scripts/rival-intel/motion.py`, which is on disk and
+ready the moment he re-opens this row.
+
+**What DXB takes from it:** V2's first law is his — *IT MUST BE ALIVE*, motion IS state. This source
+adds the missing half: alive is not enough, the living surface must **arrive with the next move and
+its consequences**, and the picture exists so the owner can steer, not admire. The four projects in
+§5 are that, made buildable.
+
+## 4. What DXB has today — measured 2026-08-17 `R`
+
+| Question this source forces | Measurement | What it means |
+|---|---|---|
+| Does any CEO surface propose a next move? | `grep -rniE 'recommend(ed\|ation)?\|next[_ ]?move\|proposed[_ ]?action' apps/dashboard/src` → **4 hits, all one field** (`recommended_action`), living in the approvals lane: `approvals/[id]/page.tsx:214`, `lib/approvals-center.ts:20`, `command/approval-center.tsx:84` | A proposal reaches him **only when he is already being asked to approve something**. Nothing proposes unprompted. |
+| Does anything predict follow-on effects? | `grep -rniE 'follow[_ -]?on\|predicted[_ ]?(effect\|impact)\|consequence' apps/dashboard/src packages/*/src` → **1 hit in the whole search, and it is a code comment**: `packages/orchestrator/src/morning-briefing.ts:13` | The "and these would be the follow-on effects" half of his sentence has no implementation anywhere in our code. |
+| How many of the 186 dashboard source files carry either? | **5 files (2.7 %)** | The criticism lands on V1 exactly as stated. |
+| **Is that one field ever filled with real data?** | **Measured over TCP with SELECT only, once `psql` was installed on this machine, 2026-08-17:** `SELECT count(*), count(recommended_action) FROM public.approvals` → **51 rows, 0 filled, 0 non-blank** | Worse than the code search suggested. The single field in the whole company that could carry "the next move" **has never been used, in any of the 51 approvals the company has ever raised.** |
+
+The last row is the one this source is judged against. He asks for an agent that comes to the owner
+with an action and its consequences; our schema has one column for the first half of that sentence,
+no column for the second half, and the one column is empty on every row.
+
+## 5. The build project
+
+Nothing starts before his design approval; these are the parts, costed. `<!-- OPEN: B22 -->`
 
 | Part | What it requires | Cost / install |
 |---|---|---|
-| **P25-1** | Every live surface carries a **proposed next move**, not only a state: what to do, and the follow-on effects if it is done. A card with no move on it is an unfinished card. | none |
-| **P25-2** | The trigger is an event, not a click: a data point or a piece of news arrives → the agent **comes to the CEO** with the proposal. This is the same wire complaint C26 asks for. | none |
-| **P25-3** | The visualization is a **steering wheel**: every visual element the CEO sees is something he can act on or redirect from where it stands — watching is a by-product, not the purpose. | none |
-| **P25-4** | A connection graph is **never** a deliverable on its own. If V2 draws the company as a graph, each node must answer "what is the next move here" or it does not ship. | none |
+| **P25-1** | **Every live surface carries a proposed next move**, not only a state: what to do, and the follow-on effects if it is done. A card with no move on it is an unfinished card. | none |
+| **P25-2** | **The trigger is an event, not a click:** a data point or a piece of news arrives → the agent comes to the CEO with the proposal. Same wire as complaint C26. | none |
+| **P25-3** | **The visualization is a steering wheel:** every visual element he sees is something he can act on or redirect from where it stands. Watching is a by-product, not the purpose. | none |
+| **P25-4** | **A connection graph is never a deliverable on its own.** If V2 draws the company as a graph, each node answers "what is the next move here" or it does not ship. | none |
 
-## 5. The gap on our side, measured this session
+### What must NOT be copied, and why
 
-| Question | Measurement | Verdict |
-|---|---|---|
-| Does any CEO surface propose a next move? | `grep -rniE 'recommend(ed|ation)?\|next[_ ]?move\|proposed[_ ]?action' apps/dashboard/src` → **4 hits, all one field** (`recommended_action`) living in the approvals lane (`approvals/[id]/page.tsx:214`, `lib/approvals-center.ts:20`, `command/approval-center.tsx:84`) | A proposal reaches him **only when he is already being asked to approve something**. Nothing proposes unprompted. |
-| Does anything predict follow-on effects? | `grep -rniE 'follow[_ -]?on\|predicted[_ ]?(effect\|impact)\|consequence' apps/dashboard/src packages/*/src` → **1 hit in the whole search, and it is a code comment** (`packages/orchestrator/src/morning-briefing.ts:13`) | The "and these would be the follow-on effects" half of his sentence **does not exist in our code at all**. |
-| How many of the 186 dashboard source files carry either? | 5 files (2.7 %) | The rival's criticism lands on V1 exactly as stated. |
+The source argues against the graph itself, and that goes further than we should. A holding of 21
+departments genuinely needs a picture of how it connects — his own directive asks for it. What we
+take is the requirement that the picture **carry a move**; what we leave is the conclusion that the
+picture is worthless.
 
-`UNVERIFIED — could not measure` whether `recommended_action` is ever filled with real data in the
-company database: `psql` is not installed on this machine and the Docker socket refuses this user
-(`permission denied while trying to connect to the docker API`). V1 is dead by his ruling, so this
-was not pursued further.
+## 6. Verdict
 
-## 6. What this report does not do
+The only source in the queue that attacks the thing we are drawing, by name, and it does not
+contradict V2's first law — it completes it. Alive is the premise; **arriving with the next move
+and its consequences is the standard**, and it is a standard we can be measured against without
+installing anything: does the surface hand the owner his next move, or a beautiful map?
 
-No verdict is written on the source's screen, its motion, its speaker or its tooling — the picture
-was not looked at, on his order. No design work follows from it: the design package still waits on him. <!-- OPEN: B22 -->
+Tonight's answer is a number: **51 approvals, 0 recommendations.**
+
+The report follows his listen-only order, so it carries no reading of this source's screen, and no
+design work follows from it: the design package still waits on him. <!-- OPEN: B22 -->
