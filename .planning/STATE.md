@@ -40,6 +40,13 @@ is the construction diary. **JARVIS runs but cannot speak or hear yet** — its 
 `speaches unreachable for cue synthesis — retrying in 30s`, which is the fail-soft behaviour
 working as designed and is exactly the gap board row **B12** now carries.
 
+**AND THE SAME HOUR HE STOPPED BOTH SERVICES: *"iki serviside şimdilik durdur"*.** The reason
+outranks the machinery: **V1 is dead and everything is built again**, so the engine was turning
+for a product with no future — 20 minutes of `chat.drain`, `voice.drain`, `intent-intake`,
+`task.worker` and `outbox-tick` against 0 open tasks, 0 pending approvals, no incoming message
+and no revenue. Both services are now **installed, `disabled` and `inactive` on BOTH machines**,
+unit files in place, zero processes. They start again the day V2's spine exists.
+
 **The machine, measured 2026-08-17:** Ryzen 9 7900X — **24 threads against the X230's 4** · 30 GB
 RAM against 7.4 GB (which sat at 385 MB free with 3 GB of swap in use) · 1.8 TB NVMe at 2 % against
 164 GB at 92 % · **RTX 5060 Ti, 16,311 MB, CUDA proven from Python** against no GPU at all. The
