@@ -124,6 +124,21 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 
 ## Next — read this before doing anything
 
+**READ THIS FIRST — WHAT IS BEING BUILT IS V2, AND V1 IS DEAD.** His ruling of 2026-08-01, twice
+registered on the board (§Decisions, `v2-location-and-v1-dead-2026-08-01`) and never softened
+since: *"bu versiyon 1 olarak kayıt altına alınmalı ve yeni versiyona OPUS 5 ile beraber
+başlamalıyız"* · *"V1 kesinlikle ölü yani."* The interface is written **from zero in a clean new
+folder inside this repository**; the old screens get no repairs, no polish and no defence, and
+**copying from the old code into the new folder is forbidden** — whatever is needed is written
+again. What does NOT move: the company itself — its database, its 199 written employees, the
+approvals register, the record gates and the board all stay where they are. **The 40 complaint rows
+C26-C65 are his own words about what he did not like, and they are no longer work to do on V1 —
+they are the specification V2 must satisfy.** V2's first law is his: **IT MUST BE ALIVE**
+(2026-08-02). Nothing is built before he has seen it drawn, screen by screen, and said yes.
+**Measured 2026-08-17: the new folder does not exist yet** — the repository still holds only V1's
+`apps/dashboard`, `apps/jarvis` and twelve packages. The rival parts list (item 1) is what stands
+between here and the first drawing.
+
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
 
    **WHY IT EXISTS — order C42, sharpened 2026-08-09:** *"bu rakip video raporlarını niye
