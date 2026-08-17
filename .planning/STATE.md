@@ -111,6 +111,29 @@ session so authenticated surfaces can be checked by eye (B03-bis) · the connect
 fixes behind the editor crashes (C65) · the acceptance session itself (B13).
 Waiting on hardware: the workstation, and the local voice models chosen by measurement (B12).
 
+**THE WORKSTATION, AFTER THE EVENING OF 2026-08-17 — measured, not assumed.** It froze hard at
+18:04 and he was owed an answer. Cause, from the kernel's own record: a `grep` written by a session
+became `ugrep` (Claude Code shadows `grep` with its bundled binary at
+`~/.local/share/claude/versions/2.1.233`), and the bounded-repetition pattern `.{0,70}(…7 alternatives…).{0,70}`
+built a **26 GB** matcher for a **380-byte** input — 30 GB RAM and 8 GB swap gone, `Free swap = 0kB`.
+The kernel then killed the wrong processes (a 341 MB `python` and a 68 MB `kilo`, both at
+`oom_score_adj 1000` because VS Code marks its children to die first) while the 26 GB offender at
+`100` survived. **Never write `.{0,N}` on both sides of an alternation in a shadowed `grep`; use
+`python3` or `rg` for that shape.** What was installed that evening, on his order and with his
+password: `earlyoom` **in `--dryrun`** (`-m 10 -s 10`, avoid list covering code/chrome/claude/node,
+prefer list covering ugrep/vite/esbuild/tsc — it closes NOTHING and only records what it would have
+closed; **arming it is his decision and he has not taken it**), plus `psql`, `tesseract-ocr` (+tur/eng),
+`imagemagick`, `gh`, `wl-clipboard`, and `dxb-screenshot` at `/usr/local/bin` (Wayland blocks
+scrot/grim/import; it goes through the desktop portal and works — output lands in
+`~/Pictures/dxb-screenshots`, swept after 7 days by a user timer, because `/tmp` here is a **15 GB
+RAM disk** and screenshots left there eat the memory we are short of).
+**Two live gotchas for the next session:** `dxb` is in the `docker` group in `/etc/group` but this
+desktop session predates the change, so `docker exec` is refused until he logs out and back in —
+until then the governance gate must be run with a `docker` shim on `PATH` that rewrites
+`docker exec … psql …` into `psql -h 127.0.0.1 -p 54322` (`PGPASSWORD=postgres`), which is the same
+server and returns the same numbers. And a `sudo` timestamp does **not** survive between Bash tool
+calls, so anything needing root must prime and run inside one command.
+
 ## Honest position
 
 The holding **does not earn yet and has never been switched on end to end.** Revenue realised:
@@ -138,6 +161,27 @@ they are the specification V2 must satisfy.** V2's first law is his: **IT MUST B
 **Measured 2026-08-17: the new folder does not exist yet** — the repository still holds only V1's
 `apps/dashboard`, `apps/jarvis` and twelve packages. The rival parts list (item 1) is what stands
 between here and the first drawing.
+
+**WHAT "V1 IS DEAD" DOES NOT MEAN — his correction, 2026-08-17, given after a session got it wrong:**
+*"V1 in motoru kullanılacak sakın saçma sapan şeyler kendince yazma."* **The dead thing is the
+INTERFACE.** The engine underneath stays and is what V2 is built on: the orchestrator, the claim
+path, the pre-task gate, the halal screen at birth, the work generator, the revenue engine's
+objective→opportunity→allocation→project chain, the 205 agents and every control function. A
+session that treats the engine as scrap, or that invents a new structure beside the one already
+specified, is doing the thing he named. **Before proposing any structure, read the spec that
+already owns it** — `REVENUE_ENGINE_SPEC.md` §3 carries the whole venture lifecycle, and
+`00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md` owns the content side.
+
+**AND THE EMPTY TABLES ARE NOT A DEFECT.** `00-NOTE-FACTORY-COMPLETION-ROADMAP-2026-07-26.md:16`,
+in his words: *"şuan biz üretim aşamasında değiliz fabrikayı tam anlamıyla kurmamız lazım"* ·
+*"ben bilerek henüz aktif para üretme mekanizmasını başlatmadım"* — therefore **zero revenue, zero
+opportunities and zero running work are the EXPECTED state**, and that line ends: *"Any report that
+frames the empty tables as a failure is wrong and has already been corrected twice in chat."* It
+was corrected a **third** time on 2026-08-17, in a rival report that read 205 dormant agents and
+217 lifetime tasks as our failure. The cause was named by him and it is the standing risk for every
+session: **the author knows where the plan is, not what it says.** 59 files · 11,353 lines ·
+151,838 words in `HOLDING-OS-MASTER-PLAN/`, and no session has read them end to end. He was offered
+that reading as the next job and had not answered when the session closed.
 
 1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
 
