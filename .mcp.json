@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "scrapling": {
+      "command": "/home/dxb/scrapling-env/bin/scrapling",
+      "args": ["mcp"]
+    }
+  }
+}
