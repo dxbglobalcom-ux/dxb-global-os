@@ -206,6 +206,21 @@ deserves before the answer is composed.
 
 ## 5. The build project
 
+> **MECHANISM — the figures a builder needs, carried here so §5 can be read alone.**
+> **This source is a repository, not a film: there is no screen, so no motion or colour figure exists
+> and none is invented.** What it hands over is structure, read at live HEAD:
+> - **Three execution modes declared and present in the code:** **on-demand**, **scheduled**,
+>   **continuous**. `scheduler/scheduler.py` keeps `cron` / `interval` / `once` tasks in SQLite behind
+>   a background polling thread, and **each task declares its `context_mode`**, so a 07:00 run starts
+>   clean instead of dragging last night's conversation behind it.
+> - **Memory is a background service, not a step.** It runs inside `jarvis serve` / `jarvis chat` and
+>   extracts durable facts out of conversations **as they happen**, so the next session opens knowing
+>   more than the last one closed with.
+> - **The assistant goes where the human already is: `channels/` holds 34 files** — Slack, Discord,
+>   Signal, Matrix, iMessage, e-mail, WhatsApp and fourteen more.
+> - **The shape is the finding: the measurement harness is larger than the agents** —
+>   **37,178 lines of `evals` against 22,181 of `agents`**.
+
 | # | Project | What it is | Install | Money | Gate |
 |---|---|---|---|---|---|
 | **P16-1** | **Put a price on the 5.72 billion tokens we have already spent** | `cost_ledger` counts tokens and writes `€0.0000` on every row, so this holding cannot say what a single run cost, what a department costs per month, or which model is worth its answer. The price table exists in the catalogue; applying it at write time and backfilling the 1,590 rows turns a counter into a cost. It also makes the CEO's monthly cap mean something — today the briefing prints a cost line computed from zeros | **none** | **€0** | none — internal |

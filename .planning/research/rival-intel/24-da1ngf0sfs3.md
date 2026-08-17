@@ -273,6 +273,23 @@ his own first law forbids.
 
 ## 5. The build project
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **Five separable, cheap mechanisms for "visibly working":** (1) an **event feed with names** —
+>   not *"3 tasks running"* but **who** is doing **what**, one line each, newest first, the acting one
+>   emphasised; (2) **velocity, not totals** — a number with a rate beside it reads as alive, the same
+>   number alone reads as a report, **and where the rate is genuinely zero, zero is the honest
+>   answer**; (3) **the machine's own vitals on the face** (load, memory, bandwidth); (4) **a
+>   self-description in one line** — `AWAITING OPERATOR`, which is *"the machine says when it last
+>   knew"* in two words; (5) **the surface follows the talk**.
+> - **The motion figure, and the honest way it was taken:** mean luminance difference between
+>   consecutive one-second frames, console interior against **a patch of brick wall carrying no
+>   screen**. Across all 74 pairs the ratio is a worthless **1.38×** (two thirds contain a pan); on the
+>   **25 pairs where the wall barely moves (< 3.0)** the console reads **17.03** against the wall's
+>   **1.48** — **11.5×**. Console range on those pairs: **0.06** at 00:74, the final held frame —
+>   **the screen rests, and rest is a real state** — up to **43.0**.
+> - Reproducible with the committed tool:
+>   `scripts/rival-intel/motion.py 24 --screen 70,620,590,920 --control 0,200,200,500`.
+
 Six projects. The order is deliberate: **nothing here draws a surface before the data behind it
 moves.**
 

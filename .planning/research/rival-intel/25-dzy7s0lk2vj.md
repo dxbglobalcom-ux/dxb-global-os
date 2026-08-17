@@ -95,6 +95,21 @@ no column for the second half, and the one column is empty on every row.
 
 ## 5. The build project
 
+> **MECHANISM — the figures a builder needs, carried here so §5 can be read alone.**
+> - **The living mechanism named here is THE ARRIVAL:** an external event — a data point, a piece of
+>   news — reaches the system, and **the system moves toward the human with a proposal** rather than
+>   waiting to be asked. Its clock is the world's, not the owner's clicking (stated at 00:17–00:26).
+> - **The order of the two halves is the design rule:** the agent arrives with *"we can take XYZ
+>   action, and these would be the follow-on effects"* **first**, and the picture comes **after**, so
+>   the owner **steers** instead of watching. *"Synthesizing all the data down to the next move is
+>   chess, not checkers."*
+> - **The only rhythm this file can measure is the source's own delivery: 8 blocks in 42.145625 s,
+>   longest gap 0.60 s, the argument closing at 41.84 s.**
+> - **`UNVERIFIED` — the screen was never opened**, on his live order of 2026-08-17 (*"25 i de sadece
+>   ses ile dinle"*), so no motion, colour or geometry figure exists for this source. What would
+>   settle it: a 5–10 fps dense pass over `media/25-DZY7s0LK2vj.mp4` with
+>   `scripts/rival-intel/motion.py`, which is on disk and ready the moment he re-opens the row.
+
 Nothing starts before his design approval; these are the parts, costed. `<!-- OPEN: B22 -->`
 
 | Part | What it requires | Cost / install |

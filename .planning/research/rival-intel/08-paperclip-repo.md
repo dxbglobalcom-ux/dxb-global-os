@@ -191,6 +191,21 @@ firmly as it forbids hiding them.
 
 ## 5. The build project — *"yaparım, yapılır"*
 
+> **MECHANISM — the figures a builder needs, carried here so §5 can be read alone.**
+> **`UNVERIFIED` — this source is a repository, not a film: there is no screen, so no motion, colour
+> or geometry figure exists for it and none is invented.** Nothing would settle it short of running
+> the product, which `STACK.md` and the standing boundary refuse. What it hands over is structure, read at live HEAD:
+> - **The clock is a CHANGE, not a timer.** `issue_watchdogs` carries `last_observed_fingerprint` and
+>   `last_reviewed_fingerprint`: the watchdog wakes because something **became different**, not
+>   because a schedule expired.
+> - **State lives on the objects, so any surface can read it.** A decision is an object carrying a
+>   **signature**, a **snapshot** and a **deadline**; a run carries its own continuation, so it
+>   **resumes itself** instead of waiting to be noticed.
+> - **Approval is an object with a deadline, and an approved effect executes exactly once** — the
+>   human's answer is a durable thing the machine holds, not a moment that passes.
+> - **The organism around the code, measured:** ~**529 commits in thirty days**, three releases in
+>   three weeks, ~**166 contributors**.
+
 **Nothing below is built.** Implementation stops at his approval — his written directive of
 2026-07-29 and the standing boundary in `.claude/CLAUDE.md`.
 

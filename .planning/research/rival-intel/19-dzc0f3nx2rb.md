@@ -297,6 +297,20 @@ employee wearing different name tags.
 
 ## 5. The build project
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **The page renders against the machine's own clock while nobody touches it.** Read from four
+>   native crops: film **06.5 s → `18:06:24.5`**, **20.5 s → `18:06:38.54`**, **24.5 s →
+>   `18:06:42.56`**, **36.5 s → `18:06:54.54`** — **30.04 s of dashboard time across 30.0 s of film,
+>   a rate of 1.001× with drift under 0.05 s.** Because the clock never jumps, the 41 s take is
+>   continuous.
+> - **The page is written to say *when*, everywhere:** the `TELEMETRY` and `DIAGNOSTICS` columns carry
+>   their own timestamps in the same format.
+> - **The identity object moves above the floor that fixed text sets.** A 10 fps dense pass over
+>   24.0–30.0 s (59 pairs), phase-aligned to remove the handheld camera, each region normalised by its
+>   own contrast: **orb 0.520** against static-text controls at **0.347** and **0.418** — the orb sits
+>   **24–50 % above the floor**. **UNVERIFIED as an absolute figure** because the film is handheld; a
+>   screen recording would settle it.
+
 | # | Project | Lands in | Definition of done |
 |---|---|---|---|
 | P19-1 | **`PRIMARY OBJECTIVE` card** over `v_objective_progress`: target, actual, gap, progress %, status word, ETA, volume, and a `SYNC · hh:mm:ss` stamp, in one rectangle at 24 % of page width with the 4:1 figure-to-label ratio | `CEO_COMMAND_CENTER_SPEC` | The card renders our two live objectives with the gap computed on screen, and its sync stamp advances |

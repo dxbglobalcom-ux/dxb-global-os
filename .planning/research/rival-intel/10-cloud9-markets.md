@@ -214,6 +214,20 @@ protects him standing where it actually stands.
 
 ## 5. The build project — *"yaparım, yapılır"*
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **The whole workforce is ONE screen, and the working organ lights up.** Nine named agents stand
+>   permanently constituted around a core — `CAPITOL / SMART MONEY`, `ATLAS / MACRO`, `SCOUT / RECON`,
+>   `ATHENA / ANALYST`, `CHARTIST / TECHNICIAN`, `ORACLE / QUANT`, `SENTINEL / RISK OFFICER`,
+>   `PILOT / EXECUTION`, `LEDGER / THE BOOK` — each with one job, present whether or not anyone looks.
+> - **Nine handovers inside one unbroken take**, and each one does three things at once: raises one
+>   node to full colour, **dims the other eight**, and **renames the chip under the core with the
+>   speaker's name**. Who is working is never guessed.
+> - **The desk has a resting pulse.** Between turns, with no chip under the core and nobody speaking
+>   (**00:12**), the core keeps breathing — the organism is **idling, not stopped**.
+> - **The design object worth the most on this queue:** the permission to act is drawn as a **diamond
+>   sitting ON the wire** between the one who decides and the one who acts — this whole product in one
+>   symbol.
+
 ### P10-1 — Every decision gets its outcome written back · **buildable now, needs nothing**
 
 | | |

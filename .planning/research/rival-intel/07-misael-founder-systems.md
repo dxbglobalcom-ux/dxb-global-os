@@ -160,6 +160,21 @@ objective rows worth €125 between them, one still a draft, and the holding has
 
 ## 5. The build project — *"yaparım, yapılır"*
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **The board states its own clock as a fact about itself:** two chips, **`◆ WORKING 24/7`** and
+>   **`◆ UPTIME 300d 01:5…`** — three hundred days of continuous operation printed where the owner
+>   looks.
+> - **The agents' own conversation is a visible organ.** A `STRATEGY CHANNEL // INTER-AGENT COMMS`
+>   strip takes new lines at the **bottom** and scrolls older ones up, **its content differing on
+>   every frame**, each line carrying **a sender, a recipient and a number**.
+> - **Timed:** the strip's own stamps run **`[20:34:07]` → `[20:34:11]` — 4.0 s apart**, so the
+>   traffic is being produced as it is filmed rather than replayed, and the board's own uptime chip
+>   reads **300 days**.
+> - **`UNVERIFIED` — the particle field's period and direction were never measured**, and no figure
+>   for it is quoted. What would settle it: a 5–10 fps dense pass with `scripts/rival-intel/motion.py`.
+> - **Deliberately NOT taken:** the 3-D particle field drifting behind it carries no stated signal —
+>   decoration by our own registered ruling.
+
 **Nothing below is built. Nothing below may be built before the CEO approves it** — his written
 directive of 2026-07-29 prohibits implementation until the visual design package is approved, and
 P07-2 is squarely inside that gate.

@@ -362,6 +362,21 @@ filled by a working machine.** Their thinner form is filled several times a day.
 
 ## 5. The build project
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **The surface does not animate; it ACCUMULATES.** A room whose last message is an hour old is a
+>   room where nothing happened. **The freshness signal is a timestamp, not a pulse** — on the wall
+>   page the same idea is a field: **`SYNC · 14:02:47`**, the machine saying when it last knew.
+> - **The receipt, timed by the workspace's own clock:** a customer e-mail at **12:47 PM** becomes an
+>   escalation the same minute (carrying a permission to refuse and a permalink back to the letter) ·
+>   a diagnosis **with file and line numbers at 12:49** · the owner's one-line *"Yes @Tom, go ahead"*
+>   at **12:50** · **pull request #15 at 1:06 PM**. **Nineteen minutes, one sentence and one approval
+>   from the human.**
+> - **Every briefing ends in `Approval needed`, whose first line is *"No changes were made"*** and
+>   which asks the owner to **refuse** one of its own options.
+> - **The one motion figure is UNVERIFIED and says so:** the orb changed **43.47 %** of its pixels per
+>   100 ms against a blank-wall control that moved **25.83 %** over the same seconds — the film is
+>   handheld, so the control does not clear and the figure may not be quoted as the rival's.
+
 | # | Project | What it is | Install | Money | Gate |
 |---|---|---|---|---|---|
 | **P18-1** | **The work room — the CEO's rooms, and agents who are members of them** | Rooms named after the business (`ops`, `revenue`, `ads`, `customer`, `dev`, `gov`), each carrying the work of the employees assigned to it, each agent appearing as a **name, a face and a badge that says it is software**. It replaces a single chat thread with two speakers. Measured need: `chat_messages` has 102 rows and exactly two participants. **Vendor is not part of the copy** — the shape is taken, the workspace stays inside the holding, because outward communication and identity sit on his gate | none | €0 | **surface change** — `dxb-surface` + RULE #0, his eye <!-- OPEN: B22 --> |

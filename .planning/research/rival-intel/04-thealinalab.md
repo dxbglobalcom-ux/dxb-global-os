@@ -210,14 +210,11 @@ Two candidates come out of the screen instead. Both are **design questions, and 
 prohibited until the CEO approves the visual design package** (`docs/ceo-directives/2026-07-reanalysis/`
 §8). They are written here as findings for that package, and they open nothing:
 
-1. **An outside-the-company layer for the Intelligence page.** Today it answers "what did we do";
-   this screen answers "what is happening to us". Which outside sources are permissible, and what
-   they would cost, is his decision and touches the connector-accounts question already waiting on
-   him (W-C42-4).
-2. **Progressive fill as a rule for every panel we redesign** — the frame draws first, each panel
-   fills as its own data lands, and a panel that has nothing says so honestly. This is exactly the
-   *"living, not static cards"* requirement in his own directive (§6), and 3.1 is a working example
-   of what it looks like.
+| Part | What to build | **The mechanism, with its measured figure** | Our measured gap | Cost · waits on | <!-- OPEN: B22 -->
+|---|---|---|---|---|
+| **P04-1** | **An outside-the-company layer for the Intelligence page** — today it answers *"what did we do"*; this screen answers *"what is happening to us"* | A situation board filmed in use: broadcast video plays inside the panels and a voice speaks **one owner-addressed sentence built out of what is on the screen** | **No outside-world surface exists at all** — a route search for map / world / geo / news / situation returns **no output**, and our Intelligence page reads only internal sources (overnight brief, approvals, cost, alerts, decisions, live) | none to build · **CEO** — which outside sources may be connected (**W-C42-4**) |
+| **P04-2** | **The atomic tile** — one tile whose number, colour and status word are a **single** render off one live value | **Measured from a dense native pass (`crop=300:200:720:1150` ×3):** at **3.5 · 4.0 · 4.1 s** the ring is green, reads **`11`**, status word **`Stable`** on a blue tick; at **4.2 s** the ring is **amber**, reads **`59`**, and the status word has gone **red** — number, ring colour and word turn over **together inside one 0.1 s repaint**, in an unbroken take with nothing typed. **The build rule: a tile that updates its number now and its colour a beat later reads as broken.** This is the cheapest aliveness to build and the most convincing | Not measured on our side this session — **⚠ UNVERIFIED**, nothing claimed | none · AUTHOR, into the design package |
+| **P04-3** | **Progressive fill as a rule for every redesigned panel** | The frame draws **first**, then each panel fills as its own data lands, and a panel with nothing says so honestly. His own directive's *"living, not static cards"* (§6), shown working | Not measured on our side this session — **⚠ UNVERIFIED** | none · AUTHOR, into the design package |
 
 ---
 

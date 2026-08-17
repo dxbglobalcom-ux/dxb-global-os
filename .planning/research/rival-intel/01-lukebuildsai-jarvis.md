@@ -179,30 +179,13 @@ is not an impression; the 61/0 measurement above is that sentence in numbers.
 Scoped to what THIS source justifies. It changes no plan by itself: it feeds the synthesis, and
 nothing is built before the CEO has approved the drawn screens (his directive of 2026-07-29).
 
-**A. The room obeys the voice** — the capability worth the most, and the one we do not have at all.
-Hamza gains an action that says *"show this"*: a named surface, opened on the CEO's screen, at the
-moment the sentence is spoken. Existing pieces: the voice line (V9 / Speaches), the chat-and-voice
-mirror (U31), the command surfaces. Missing: the channel that lets an agent push a navigation into
-an open browser. No new package is needed for the transport — Supabase Realtime is already in the
-stack and already carries the company's own data — but **`.planning/research/STACK.md` is read
-before anything is installed.**
-
-**B. Every surface breathes.** The 0 above is the defect. Each command surface subscribes to the
-rows it displays, so a page changes because the company changed. Already the first law of V2 on the
-board; this source is the outside evidence for it.
-
-**C. The wall carries the objective.** One panel, permanently visible: target, achieved, gap,
-progress, status, ETA. Ours is not `$30,000 MRR` — the CEO sets the number. What we take is the
-**form**: a target the machine is measured against, on screen, always.
-
-**D. Delegation that comes back as a reviewable artefact.** Their pattern is exact and worth
-copying: a standing approval authorises an agent to build; the agent builds; what returns is a
-**pull request awaiting the human's eye**, never a silent merge. That is LAW B — *finished ≠
-approved* — already our law, and here it is someone else's working software.
-
-**E. The support line.** Inbox in, resolved / escalated split reported, and a feature request
-counted **across** messages so a pattern becomes a decision. We have the outbox allowlist and the
-approval gate; what is missing is the counting and the escalation rule.
+| Part | What to build | **The mechanism, with its measured figure** | Our measured gap | Cost · waits on | <!-- OPEN: B22 -->
+|---|---|---|---|---|
+| **P01-1** | **The room obeys the voice** — Hamza gains an action that says *"show this"*: a named surface opened on the CEO's screen as the sentence is spoken | His wall is **permanently attached to what the system is doing** — it is not a page opened to find out. The transport we need already exists in our stack (Supabase Realtime, already carrying company data); what is missing is the channel that lets an agent push a navigation into an open browser | **No surface is opened by him today** — Hamza answers in chat and by voice only (board rows B03 / B03-bis) | none · AUTHOR (`STACK.md` read before any install) |
+| **P01-2** | **Every surface breathes** — each command surface subscribes to the rows it displays, so a page changes because the company changed | **Four independent live channels on one wall, timed from a dense native pass:** a clock true to the hundredth (film second **20.0 → `20:43:53.91`**, **20.2 → `20:43:54.11`** — **0.20 s of wall clock in 0.20 s of film**, so that panel repaints many times a second and the recording is neither slowed nor sped) · a live `AUDIO I/O` waveform · a `PROXIMITY` arm sweeping **continuously anticlockwise at ≈ 90-110° per step, never reversing** · a scrolling diagnostics log. **The lesson for the build: several small always-on channels, not one big animation** | **61 pages under the command interface and 0 that update themselves** (`find apps -name page.tsx -path "*app*" \| wc -l` → 61; the realtime/interval search → **0**) | none · AUTHOR |
+| **P01-3** | **The wall carries the objective** — one permanently visible panel: target, achieved, gap, progress, status, ETA | The form is the capability, not his number: a target the machine is **measured against**, on screen, always | **No surface carries a target and a gap**, and revenue realised to date is **zero** | none · AUTHOR; the number itself is **CEO** |
+| **P01-4** | **Delegation returns a reviewable artefact** | A standing approval authorises an agent to build; what comes back **waits for the human's eye** rather than merging itself. This is LAW B running as somebody else's software | Our approval gate exists; nothing returns a built artefact for review | none · AUTHOR |
+| **P01-5** | **The support line** | Inbox in · a resolved / escalated split reported · a feature request counted **across** messages, so a repeated request becomes a decision rather than five separate notes | We hold the outbox allowlist and the approval gate; **the counting and the escalation rule are missing** | none · AUTHOR |
 
 **Explicitly NOT taken from this source: the aesthetic.** Radar dials, sweeping arms, packet-loss
 readouts and latitude/longitude are decoration on a business dashboard. Our own registered ruling

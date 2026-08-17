@@ -293,6 +293,18 @@ marketing and social employees, thirteen of them purpose-built for exactly this 
 
 ## 5. The build project — the recommendation, and what it rests on
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **The state of the business IS the interface.** Every campaign card carries a **live pair** —
+>   spent against budget, views against target — so the page is a set of gauges over real money, not
+>   a catalogue. Budgets are shown **mid-consumption**: `$1,877/$4,000`, `$4,063/$6,250`, one at
+>   `$120,000/$120,000`.
+> - **The board reorders itself because the crowd earns, not because anyone clicks** — a public
+>   top-earners leaderboard over **12K participants** and **114.2M views**.
+> - **Economics computed from the screen:** blended **`$1.05/1,000 views`** paid by the brand,
+>   **`$10.00`** average per participant, **`15.5 %`** of all views taken by the top three.
+> - **No motion figure is invented:** this is a business filmed on its own platform, and its life is
+>   money moving through the numbers rather than animation.
+
 The CEO asked for this **as a project**, so this section does not hand him a menu. It names the
 seat DXB should take, says why, says what would prove it wrong, and marks the one line that is
 genuinely his.

@@ -262,6 +262,21 @@ was adopted and this session measured what became of it: the column exists, the 
 
 ## 5. The build project
 
+> **MECHANISM — the figures a builder needs, carried here so §5 can be read alone.**
+> **This source is a printed document, not a film: it has no screen, so no motion or colour figure
+> exists and none is invented.** What it hands over is four clocks:
+> - **Trigger.dev — the freeze clock.** A task that is *waiting* is written to disk with **CRIU** and
+>   its memory handed back, then thawed when the wait ends, so **idle hours cost nothing**. The idea
+>   we adopted and never exercised is **resume-from-step**.
+> - **Resend — the outward heartbeat.** Transactional mail is how a system reaches a human who is not
+>   looking at it: password reset, welcome, then bulk campaigns and notifications.
+> - **Lemon Squeezy — the settlement clock.** Subscriptions, invoices and tax filed on the **state's**
+>   calendar rather than the builder's.
+> - **Coolify — the deployment clock** (refused on our own stack rules): a git push becomes a running
+>   service.
+> - **Its own page design is the one thing to copy:** the reader arrives with a **symptom** and the
+>   panel answers with the **remedy** — symptom before remedy, not a feature list.
+
 | # | Project | What it is | Install | Money | Gate |
 |---|---|---|---|---|---|
 | **P15-1** | **The first e-mail that actually leaves the building** | Put a real provider behind the outbox seam that already exists. The handler interface, the idempotency key, the at-most-once replay check and the audit row are all built and proven against Mailpit; what is missing is a provider whose domain is real. Resend's **free tier is 3,000 e-mails/month at $0**, and its `llms.txt` documentation is written for exactly the agent that would wire it. Closes the measurement that **0 of 51 outbox rows have ever executed** | account only | **€0** at 3,000/mo; $20/mo if it ever exceeds it | **CEO** — outward e-mail and a sending identity are both on the approval gate, and the domain is his |

@@ -203,6 +203,25 @@ not animate between pages; it arrives.
 
 ## 5. The build project
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **Two speeds of life, measured against the left navigation as a static control:** control
+>   **0.063** and **0.055** mean change per 100 ms · **the chat orb 6.061 (96× the control, peak
+>   28.07)** · **the memory graph 0.455 (8×)**. Everything else is genuinely still — outside 25 page
+>   transitions the whole screen moves a mean of **0.96**. **The stillness is what makes the two
+>   moving things read.**
+> - **Page changes arrive, they do not animate:** of 25 transitions the longest is **2.7 s** and most
+>   are **0.1–1.0 s**.
+> - **Palette sampled from the pixels:** ground `#162842` · left rail `#0C131B` · **orchestrator card
+>   `#252E3E`, LIGHTER than the specialists' `#151F27`** — the command layer is raised by brightness
+>   alone, with no badge and no extra size · `working` `#21675B` · `waiting` `#6B6243` · **`idle`
+>   `#38495C`, a NEUTRAL grey-blue and never an alarm**.
+> - **Type rule that carries the whole instrument feel:** every measurement is captioned in
+>   letter-spaced small capitals **above** its figure, and the figure is always larger than its label.
+> - **Geometry:** the product window is **768 × 550** inside a 1080 × 1920 frame (**≈ 20 %**), a fixed
+>   left rail plus one working surface, and **the six employees with their live pills sit permanently
+>   below the navigation** — the workforce's state is visible from every page, not only from the page
+>   about agents.
+
 Nothing is built before the CEO approves the design package. Every part below extends a spec that
 already owns its contract; none opens a new one. `<!-- OPEN: B22 -->`
 

@@ -141,6 +141,18 @@ design, exactly as our own first law demands.
 
 ## 5. The build project
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **A heartbeat is a property of the employee, not of the page.** Every card carries a `HEARTBEAT`
+>   field, and the claim beside it is *"communicating with each other 24-7, completely unprompted"* —
+>   liveness is tracked per worker rather than produced by refreshing a screen.
+> - **The connections move, and the figure is clean because this film is tripod-steady:** a 10 fps
+>   dense pass across 14.0–19.0 s with **camera translation 0.0 px on all 49 pairs**, each region
+>   normalised by its own contrast — **connection curves 0.884** against **static card labels 0.348**,
+>   i.e. **the wires move at 2.54× the text that cannot move on the same screen**.
+> - **UNVERIFIED, and named rather than guessed:** the flow's **period and direction**. The edge
+>   signal's autocorrelation peaks at 0.8 s but only at r = 0.15, too weak to call a repeat rate. A
+>   screen recording of that canvas would settle both in one pass.
+
 | # | Project | Why it is cheap | Gate |
 |---|---|---|---|
 | **P22-1** | **Draw the company, and let it move.** 205 nodes and **198 manager edges are already in the database** — the graph is a rendering job, not a data job. Working = lit, idle = still, the edge carries the manager's colour | No install beyond a graph renderer; no money; no account | Design package |

@@ -355,6 +355,21 @@ halts whatever is actually running, on every surface, in every state**, and (b) 
 
 ## 5. The build project
 
+> **MECHANISM AND DESIGN — the figures a builder needs, carried here so §5 can be read alone.**
+> - **The console owns the screen at rest and the browser is what visits.** `UP 02:45` and
+>   `MICROPHONE ACTIVE` stand throughout the filmed interaction — a resident presence rather than an
+>   application that is opened.
+> - **Three regions breathe at three different rates, and the control is perfect.** A 10 fps pass over
+>   00:04.0–00:09.0, phase-registered, **45 of 50 pairs camera-still to within 1 px**; change counted
+>   as the share of pixels differing by more than 30 grey levels:
+>   **the sphere and its rings (430 × 430 px) 3.291 % median · the `SYS MONITOR` panel (90 × 160 px)
+>   4.722 % · the `ACTIVITY LOG` panel (200 × 300 px) 1.928 % · static control (the dark room above
+>   the monitor, 600 × 260 px) 0.000 % on every one of the 45 pairs.**
+>   **The build rule that follows: the busiest region is the smallest one** — a 90 × 160 px monitor
+>   panel out-moves a 430 × 430 px identity sphere, so liveness is carried by small dense readouts,
+>   not by a large ornament.
+> - **Colours sampled from the pixels:** `#A9BDE5` · `#B1B09C` · `#AFAF90`.
+
 **⛔ The boundary first, because this source crosses it.** Posting to an outside account is an
 outward, identity-bearing act. It stops at the CEO by our own constitution, and **W-C42-4** — which
 accounts may be connected — is his and unanswered. So nothing here is built as *"the machine posts
