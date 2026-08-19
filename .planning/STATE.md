@@ -88,7 +88,7 @@ laws now written into `.claude/CLAUDE.md`:
 - **LAW B** — finished ≠ approved. *"iş tamamlanınca bitti anlamına gelmez, ben bakmam lazım."*
   Only his own eye accepts. No record may claim his approval without a registered entry.
 
-Board row **B21** carried this work and is **CLOSED — he tested it himself and accepted it**:
+This work was **accepted by the CEO himself** (registered in `scripts/governance/ceo-approvals.json`):
 *"kabul ediyorum"* (2026-07-31). His first test failed and is recorded on the board with its two
 causes; his second passed. Nothing else on the board is accepted by that word.
 
@@ -107,8 +107,7 @@ context work.
 
 Waiting on him, not on the author: his approval of the design package · one hand-minted browser
 session so authenticated surfaces can be checked by eye (B03-bis) · the connector accounts (W-C42-4)
-· money for the paid model exams (B06, B09) · the administrator password for the two root-level
-fixes behind the editor crashes (C65) · the acceptance session itself (B13).
+· money for the paid model exams (B06, B09) · the acceptance session itself (B13).
 Waiting on hardware: the workstation, and the local voice models chosen by measurement (B12).
 
 **THE WORKSTATION, AFTER THE EVENING OF 2026-08-17 — measured, not assumed.** It froze hard at
@@ -418,8 +417,7 @@ that reading as the next job and had not answered when the session closed.
 3. **What is blocked on him, and cannot move without him:** his approval of a visual design package
    before any redesign is built · one hand-minted browser session so authenticated surfaces can be
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two
-   paid model exams (B06, B09) · the machine's administrator password for the two root-level fixes
-   behind the editor crashes (C65) · the acceptance session itself (B13) · replacing the Gemini key
+   paid model exams (B06, B09) · the acceptance session itself (B13) · replacing the Gemini key
    after the work, his own ruling *"ben iş bitince değersiz kılıcam"* (B26) · **whether to pursue the
    three document skills he approved but whose licence forbids copying them here (B27) — the
    capability he wanted already works without them, so this is a choice, not a blocker** · **money

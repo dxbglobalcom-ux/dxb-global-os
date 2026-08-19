@@ -14,6 +14,10 @@ WorkingDirectory=%h/DxB Global OS
 ExecStart=/bin/bash -lc 'set -a; for f in ./.env ./.env.local ./.env.daemon; do [ -f "$f" ] && source "$f"; done; exec pnpm scheduler'
 Restart=always
 RestartSec=5
+# The user manager default is OOMPolicy=continue (see ~/.config/systemd/user.conf,
+# added 2026-08-19 so a runaway child can no longer close the CEO's editor).
+# A resident daemon wants the opposite: die clean, let Restart=always rebuild it.
+OOMPolicy=stop
 StandardOutput=append:%h/DxB Global OS/var/scheduler.log
 StandardError=append:%h/DxB Global OS/var/scheduler.log
 
