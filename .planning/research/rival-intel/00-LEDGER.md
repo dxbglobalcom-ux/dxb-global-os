@@ -308,6 +308,28 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
     - Written as a law because he addressed future sessions (*"bundan sonraki raporları"*), which is
       what his prohibition of 2026-08-13 requires. **One word from him strikes it.**
 
+13. **SECTION 1 IS THE ADDRESS AND THE OPERATOR. NOTHING ELSE.**
+    His live order, 2026-08-19: *"1.kaynağın kimiliği: adress ve sadece operatörün adı kimliği ör:
+    adress: hetpps: operatör: bennett os bla bla bla... bunun dışında hiç bir şey olmasın 1 ile
+    ilgili yani kaynağın kimliği ile ilgili. bir sürü gereksiz detay yazıor."*
+    - **Two rows, and that is the whole section:** `Address` and `Operator`.
+    - Codec, resolution, duration, byte size, transcript statistics, frame counts and how-it-was-read
+      **come out.** They told the synthesis session nothing it could build with.
+    - **The fingerprint still has to survive**, because the gate requires a report to name the exact
+      bytes it read. It moved to a `**What was read**` footer at the end of the file — a `sha256`
+      row, or a `commit` row for a repository.
+    - Applied to **all 27 reports** the day he gave it, not only to the ones written after it — his
+      words were *"bundan sonraki raporlarda ve hatta tüm raporları da bu şekilde güncelle."*
+    - Written as a law because he addressed future reports, which is what his prohibition of
+      2026-08-13 requires. **One word from him strikes it.**
+
+12b. **AND THE COLOUR STOPS AT THE RULE.** His live order the same day: *"renkle ilgili çok aşırı
+    çok fazla detay yazma… sonraki sessionların kafası dolsun istemiyorum. balance çalış dengeli."*
+    Colour stays — the department hues, the ground, a two-theme rule — as **one compact line**.
+    What goes: hex tables with hue/saturation/lightness columns, brightness profiles, edge-pitch
+    tables, particle counts, glyph heights in pixels. **He is not banning the measurement, he is
+    banning the dump:** measure it to be sure, then write the rule it proves.
+
 ## Status vocabulary
 
 | Value | Meaning |

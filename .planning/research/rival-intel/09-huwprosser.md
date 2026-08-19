@@ -11,18 +11,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DYK2IWyoEWh/` |
-| Handle | `huwprosser` — Huw Prosser, ML engineer, London (GitHub bio, read at live HEAD this session) |
-| File | `media/09-DYK2IWyoEWh.mp4` — 2,804,997 bytes |
-| sha256 | `26a91b04f9e9e4ea5292fd9f03000c24ba60741afce8786ca1bbdc2e31115979` |
-| Resolution | **1080 × 1920** (`ffprobe`, this session) |
-| Codec / frame rate | `vp9` / 30 fps · video bitrate 1,418,585 |
-| Duration | **15.100000 s** (audio track 15.118005 s) |
-| Audio | present — `aac`, 61,568 bit/s |
-| How obtained | `yt-dlp` via `scripts/rival-intel/fetch.sh`, 2026-07-28 12:42. Nothing left this machine |
-| Transcript | `transcripts/09.json` — en, **3 segments**, the holding's own Speaches container (`Systran/faster-whisper-small`) |
+| Address | https://www.instagram.com/reel/DYK2IWyoEWh/ |
+| Operator | Huw Prosser — `huwprosser` |
 
 ### How the temporal analysis was performed — stated exactly, as §3.2 of his directive requires
 
@@ -302,3 +294,12 @@ there.
 holding knows — 199 written employees, the objectives, the costs, the approvals — is reachable only
 by a man clicking through pages. On the measure that decides, this source runs and is watched, and
 DXB has never run end to end with `realized_revenue_eur` at 0. We are behind it.
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `26a91b04f9e9e4ea5292fd9f03000c24ba60741afce8786ca1bbdc2e31115979` |

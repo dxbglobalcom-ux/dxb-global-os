@@ -18,20 +18,10 @@ such surface.
 
 ## 1. Source identity
 
-| Field | Value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DZc0F3Nx2rb/?igsh=ZHV5YXpwZTBzdzcx` |
-| Uploader | **Luke Cutting — `lukebuildsai`** (same author as sources 01 and 18; identified from the wall dashboard and the room, which match `01-lukebuildsai-jarvis.md`) |
-| File | `media/19-DZc0F3Nx2rb.mp4`, 14,638,492 bytes |
-| sha256 | `2c340df407753e7c64b1ffd48eb0bc0415080a9de0ae82ee84c5930a8628590d` |
-| Video | **1080 × 1920**, VP9, **30 fps**, **41.31 s** — above the 720p floor |
-| Audio | **kept** — AAC, 44.1 kHz, stereo |
-| Transcript | `transcripts/19.json` — English, 9 segments, duration `41.3096875` s, which matches `ffprobe` (`41.310000`) to 0.01 s; reused after that check, not regenerated |
-| How watched | the 41 native frames of `frames/19/` in order with the transcript beside them, then a **10 fps dense pass** (`zoom/19/dense/`, 60 frames over 24.0-30.0 s) and native crops cut from the video with `ffmpeg -ss … -vf crop=…` for every figure below |
-| Caption burned into the film | **"My $30K/mo app runs on this AI setup 👀"** |
-| Shot | one continuous take, handheld, of a wall TV running Chrome at **`localhost:3000`**; the dashboard clock advances 1:1 across the whole take (§ Aliveness), so the film carries no cut |
-
----
+| Address | https://www.instagram.com/reel/DZc0F3Nx2rb/?igsh=ZHV5YXpwZTBzdzcx |
+| Operator | Luke Cutting — `lukebuildsai` |
 
 ## 2. Watched record — 41 s in order, with the voice and what stood on the wall
 
@@ -351,3 +341,12 @@ build on numbers `v_objective_progress` already computes, and which today have n
 |---|---|
 | 2026-08-10 | Written from the source. Row 19 claimed at `2026-08-10T17:11:28Z`, watched as 41 native frames in order with the transcript plus a 10 fps dense pass, all figures cut from the video; transcript reused after its duration was validated against `ffprobe`. Reported the same session. |
 | 2026-08-10 (later) | **§4.2 added on the CEO's live order** — *"mesele bu adamın sistemi… holdingimizde kullanacağımız tarafları not alındı mı"*. The first writing measured our side against his **surface** only and left the **runtime** half as six quoted sentences; his six named parts are now each measured against ours. P19-5 was carried as an unmeasured check and is now a measured failure; P19-6 … P19-9 opened from what the measurement found (memory scope, knowledge base, channels, duplicate persona files). One live defect repaired the same turn: `dxb_speaches_local` had come back `Exited (255)` after the host crash and was restarted. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `2c340df407753e7c64b1ffd48eb0bc0415080a9de0ae82ee84c5930a8628590d` |

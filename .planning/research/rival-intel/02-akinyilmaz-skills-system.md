@@ -14,16 +14,8 @@ the whole system. Section 3 answers exactly that, and section 5 turns it into wo
 
 | | |
 |---|---|
-| **Address** | https://www.instagram.com/reel/DbTuJhOo69k/ |
-| **Uploader** | `akinyilmaz.ai` — "Okyanusi \| Akın Yılmaz", verified, **14,623 posts · 85.5k followers · 202 following**, category *Education* (V, 01:31-01:37) |
-| **Kind** | Instagram reel, vertical, hand-held phone filming physical screens |
-| **File** | `media/02-DbTuJhOo69k.mp4` |
-| **sha256** | `55b778b16a879059e36fe80b3e6f61910f5102fb4da87de67e3f593be940d37e` |
-| **Duration** | 143.152993 s |
-| **Resolution / codec / rate** | **1080 × 1920**, VP9, 30 fps — above the CEO's 720p floor |
-| **Audio** | present, AAC. Kept |
-| **How obtained** | `scripts/rival-intel/fetch.sh 02`, 2026-07-28T11:12:31Z. Not re-downloaded for this reading |
-| **Transcript** | `transcripts/02.json` — `Systran/faster-whisper-small`, Turkish, 40 segments. **Unreliable; used only as a lead. Three of its errors are corrected below.** |
+| Address | https://www.instagram.com/reel/DbTuJhOo69k/ |
+| Operator | Okyanusi · Akın Yılmaz — `akinyilmaz.ai` |
 
 ### How the temporal analysis was performed — stated exactly
 
@@ -391,3 +383,12 @@ that turns the other way.
 
 *Watched and written 2026-08-04 by the session author (Opus 5), inline, under ledger law 4 and
 law 5. Row 02 of 34.*
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `55b778b16a879059e36fe80b3e6f61910f5102fb4da87de67e3f593be940d37e` |

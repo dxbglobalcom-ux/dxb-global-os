@@ -9,28 +9,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value, this session |
+| | |
 |---|---|
-| Address | `https://github.com/paperclipai/paperclip` |
-| Licence | **MIT** |
-| Homepage | `https://paperclip.ing` |
-| Clone on disk | `repos/paperclip` — 112 MB |
-| **Clone HEAD when this reading started** | `7797995` — **2026-07-27**, i.e. **12 days stale** |
-| **Clone HEAD it was brought to, and read at** | **`19be4cf9278b70bc151063778a94bf38bfd5c903`** — `refactor(a11y): add scope=col to the agent costs table headers (#1789)`, **2026-08-08 08:46 +0700** |
-| Stars | **75,865** |
-| Forks | **14,124** |
-| Open issues | **5,062** |
-| Watchers | 375 |
-| Contributors | **~166** |
-| Commits in the last 30 days | **~529** — about eighteen a day |
-| Releases | `v2026.722.0` (2026-07-22) · `v2026.720.0` (2026-07-20) · `v2026.707.0` (2026-07-07) — three in three weeks |
-| Created | 2026-03-02 |
-| **Last push** | **2026-08-08 08:11:55 UTC — roughly two hours before this reading** |
-| Archived / disabled | no / no |
-
-The CEO's own note on this row records **74,953 stars**. Measured today: **75,865** — it gained ~900
-in the days between his note and this reading. The repository is not a snapshot; it moves while you
-read it, which is why the stale clone was brought forward before anything was judged.
+| Address | https://github.com/paperclipai/paperclip |
+| Operator | Paperclip — `paperclipai/paperclip` |
 
 ### How it was read — stated exactly
 
@@ -289,3 +271,12 @@ theirs.
 
 **Row 08 is `reported`. Nothing is built, nothing is installed. <!-- OPEN: B22 --> P08-1, P08-2 and P08-3 wait on his
 word.**
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| commit | `19be4cf9278b70bc151063778a94bf38bfd5c903` |

@@ -38,28 +38,10 @@ detail, and then carried the completed instruction through to `Share` without an
 
 ## 1. Source identity
 
-| Field | Value |
+| | |
 |---|---|
-| URL | `https://www.instagram.com/reel/DaTUI9xChIR/` |
-| file | `media/23-DaTUI9xChIR.mp4` |
-| sha256 | `393eef92ec4a00f6548ba5c1422a6c1251f8d63c3a14a192efe33e936d5ca419` |
-| format | 1080×1920, vp9, 30 fps, **33.369 s**, aac 44.1 kHz kept (`ffprobe`) |
-| account | **`fatihmakes`** — read from the Instagram composer at 00:22 |
-| the system's own name on screen | `J.A.R.V.I.S` · *"Just A Rather Very Intelligent System"* · footer `FatihMakes Industries · MARK XLIX · CLASSIFIED · ⊕ STARK INDUSTRIES` |
-| what the machine is | Windows (Turkish locale — the Start menu reads `Üretkenlik`, `Keşfet`), taskbar clock **9:33 PM, 7/2/2026**, keyboard **TUR**, browser **Opera GX** |
-
-**How it was read.** Watched start to end with its sound, in order. Then: the audio measured from
-the waveform at **50 ms** windows and, where the boundary mattered, **20 ms**; the two speakers
-separated by cross-correlating each 100 ms window's spectrum against a template taken from a known
-human passage (00:00.00–00:01.50) and a known machine passage (00:02.85–00:04.00). 33 native frames
-at 1 fps for the reading; dense native passes at 5–10 fps over the three moments where 1 fps was
-not enough (the Start menu opening, the UI switch, the machine's return); native `ffmpeg -ss … -vf
-crop=…` cut-outs, enlarged with lanczos for the eye only, for every piece of text quoted below.
-Colour is sampled from the pixels, never named by eye.
-
-**The premise, stated once.** The CEO knows this system first-hand and has confirmed it: this is
-his friend's real, working J.A.R.V.I.S, and everything in the film happened. Nothing below tests
-that. Where a *measurement* is missing, this report names the measurement and what would supply it.
+| Address | https://www.instagram.com/reel/DaTUI9xChIR/?igsh=cWsxbDBmN3BsNDFx |
+| Operator | `fatihmakes` |
 
 ## 2. Watched record
 
@@ -505,3 +487,12 @@ exactly what changed.
 |---|---|
 | 2026-08-11 | First version, written from the source. |
 | **2026-08-13** | **Re-audited and rewritten on the CEO's order.** The film was re-watched start to end with its sound. New measurements this session: the Start-menu launch after the completed instruction; continued microphone availability while the Instagram workflow runs; the second latency re-measured at ≤ 0.20 s with a spectral speaker separation, and its invented cause deleted; the caption read at native zoom (242/2,200, five hashtags); the activity log read in full, including `[UploadVideo]` and `SYS: Shutdown requested.`; the `SPEAKING` state and its level strip; the design section built from pixel-sampled colour, measured composition and measured type; the two desk objects sampled once a second and found to cycle independently of state; screen motion timed at 10 fps over 45 camera-still pairs against a static control that reads 0.000 %; ring rotation recorded **UNVERIFIED** with its reason and remedy. The DXB side re-measured against the live database and the source files, correcting two wrong claims (we do have stop controls; we do show the transcript). |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `393eef92ec4a00f6548ba5c1422a6c1251f8d63c3a14a192efe33e936d5ca419` |

@@ -24,12 +24,10 @@ sürekli aktif olarak devam eden canlı mekanizma."* Measured in our company dat
 
 ## 1. Source identity
 
-Instagram reel `DanLpQ2KdzV` · `media/22-DanLpQ2KdzV.mp4` · **720×1280, vp9, 30 fps, 24.96 s, aac
-kept**, sha256 `0227393fde4c90cdb78dcc4e26f2f5e5f904cbebe1a6fd9fb3112106765a9d76` (R — `ffprobe`,
-`sha256sum`). **At the source floor**: 720p is the minimum the directive allows, so the
-small type on the filmed monitor is read where it is legible and marked `UNREADABLE` where it is not.
-Watched as 25 native frames in order with the sound, plus a 10 fps dense pass over 14–19 s and 6
-native zoom crops (R).
+| | |
+|---|---|
+| Address | https://www.instagram.com/reel/DanLpQ2KdzV/?igsh=aTVieWdmbDBpNXZs |
+| Operator | Not named on the source |
 
 ## 2. Watched record — 25 s in order
 
@@ -192,3 +190,12 @@ each other and to the one human, with the traffic visible on a wire.
 | Date | Change |
 |---|---|
 | 2026-08-10 | Written from the source. Row claimed at `2026-08-10T21:36:21Z` **before** the media was opened (law 1). Watched as 25 native frames in order with the audio; the flow measured over a 10 fps dense pass with the camera's translation removed pair by pair (0.0 px on all 49) against a **static same-screen control** — the card labels. Period and direction of the flow recorded **UNVERIFIED** with the recording that would settle them named. Counter values marked **UNREADABLE**: the source is at the 720p floor and they are filmed off a monitor. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `0227393fde4c90cdb78dcc4e26f2f5e5f904cbebe1a6fd9fb3112106765a9d76` |

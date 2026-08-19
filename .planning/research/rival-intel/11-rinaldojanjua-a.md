@@ -15,25 +15,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DbA3JgbphEs/` |
-| Handle | Rinaldo Janjua — `rinaldojanjua.ai` (the workflow's own copy names him: *"…that actually need Rinaldo."*) |
-| File | `media/11-DbA3JgbphEs.mp4` — 17,829,131 bytes |
-| sha256 | `c76361d6bee7dad583cfe422bf97e7ecd4ce72a9edd683ce6241dfdb47bec014` |
-| Resolution | **720 × 1280** (`ffprobe`, this session) — **the floor, not above it**; see the limit note below |
-| Codec / frame rate | `h264` / 30 fps · video bitrate 1,419,322 |
-| Duration | **97.033333 s** (audio 97.038005 s) |
-| Audio | present — `aac`, 44,100 Hz, 43,876 bit/s |
-| How obtained | `yt-dlp` via `scripts/rival-intel/fetch.sh`, 2026-07-28 12:42. Nothing left this machine |
-| Transcript | `transcripts/11.json` — en, **25 segments**, the holding's own Speaches container |
-
-**The source-quality limit, stated as the skill requires.** This file is 720p — the minimum the law
-allows, and the highest the source provides. It is a **phone filming a laptop screen** in a lamp-lit
-room, held in one hand, with a promotional pen ("GOT CRABS AT HUMPY'S") sliding across the frame
-repeatedly. Small type on the far side of the screen is therefore soft in many seconds. Every
-sentence below that depends on small type is tied to a native zoom crop cut from the video itself
-(ledger law 5); where the pixels ran out this report writes **UNREADABLE** and does not guess.
+| Address | https://www.instagram.com/reel/DbA3JgbphEs/ |
+| Operator | Rinaldo Janjua — `rinaldojanjua.ai` |
 
 ### How the temporal analysis was performed — stated exactly, as §3.2 of his directive requires
 
@@ -373,3 +358,12 @@ our shared memory learn to say who wrote them).
 | Date | What changed, and why |
 |---|---|
 | 2026-08-09 | **Two corrections, both forced by measurements taken while reading source 12** (`12-rinaldojanjua-b.md`), which films the same board as a clean screen recording instead of a phone pointed at a laptop. **(1) The sphere.** This file read the `AGENT BRAIN` sphere as *"the body turns on its own"*, from 1-fps frames. Measured on source 12 at 10 fps: the body's best rigid displacement over 2.0 s is **(0, 0) px**, **64 %** of its lit pixels are still lit at the identical pixel 0.1 s later and **50 %** a full second later — the vertices switch on and off in place, 1–2 of them every 0.1 s. At one frame per second a flicker field and a rotation cannot be told apart. Corrected in §2 (00:36, 01:18), §Aliveness (2) and the opening paragraph of §2; the observation is kept, the inference is replaced. **(2) The realtime citation** in §4: the count of 15 is right — one helper plus 14 consumers — but the command printed beside it returns 1. The correct command is now in the cell. Nothing else in this file was touched, and **P11-2 and P11-3 are unaffected** |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `c76361d6bee7dad583cfe422bf97e7ecd4ce72a9edd683ce6241dfdb47bec014` |

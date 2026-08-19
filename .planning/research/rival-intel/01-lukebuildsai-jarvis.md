@@ -9,18 +9,8 @@
 
 | | |
 |---|---|
-| URL | https://www.instagram.com/reel/DY4o8dluXdK/ |
-| Author | Luke Cutting — `lukebuildsai` |
-| Kind | Instagram reel, 71.9 s |
-| File | `media/01-DY4o8dluXdK.mp4` |
-| **sha256** | `8edba9f274fb7c9baa46ea26e47b674993ac7677e5876d1d83c6433140151726` |
-| Picture | 1080×1920, H.264 |
-| Sound | AAC, kept — transcribed on the holding's own Speaches box, nothing uploaded |
-| Transcript | `transcripts/01.json`, segment-level timestamps |
-| Working crops | `work/01/` — native-resolution crops of the screen region of each 1-fps frame, plus zooms cut from the VIDEO |
-| **The CEO's words** | *"Bizim DxB Global Holdigimiz için tam da istediğimiz Jarvis sistemi bu short videoda mevcut"* — he supplied this link **three times** (items 1, 15 and 16 of his list) |
-
-**Why this source outranks the others:** he named it as the thing he wants, by name, three times.
+| Address | https://www.instagram.com/reel/DY4o8dluXdK/ |
+| Operator | Luke Cutting — `lukebuildsai` |
 
 ## 2. Timestamped record of what was WATCHED
 
@@ -214,3 +204,12 @@ screensaver.** Underestimating that is what he objected to, and the objection wa
 
 **Status:** watched, read, reported. It feeds `00-SYNTHESIS.md` when the queue is finished; it
 authorises nothing on its own.
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `8edba9f274fb7c9baa46ea26e47b674993ac7677e5876d1d83c6433140151726` |

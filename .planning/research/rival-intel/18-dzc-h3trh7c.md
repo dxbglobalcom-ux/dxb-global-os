@@ -21,23 +21,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DZC-H3tRH7C/` |
-| File | `media/18-DZC-H3tRH7C.mp4` — 11,578,356 bytes |
-| sha256 | `9f59f661ae674c4c56833e33c878415b09b9376f0313481006181528e3787dd3` (this session) |
-| Duration · resolution · frame rate | **66.016 s** · **1080 × 1920** · **30 fps** · video `vp9`, audio `aac` 44.1 kHz — **above his 720p floor, sound intact** |
-| Frames · design crops | `frames/18/` 66 + 1 scene cut · `zoom/18/design/` 6 native crops (HUD, objective card, #dev escalation, thread pane, #ads-optimizations, #customer-reviews) + 30 orb frames at 10 fps with 30 control frames |
-| Transcript | `transcripts/18.json` — en, **25 segments, first at 0.00 s** |
-| Author | The same creator as **source 01** (`lukebuildsai`); the human in the workspace is **Luke** |
-| Brands on screen | **Slack** (workspace named `Jarvis`), **GitHub** (`cutluk/BibleBreakMaster`), **Vercel** (bot), his own product **Bible Break** |
-| CEO's note on this row | none on this individual row — supplementary block of §11; his §2 first-hand confirmation that the supplied videos are **real working demonstrations** covers it (evidence label **C**) |
-
-**Transcript quality (law 4).** Our speech-to-text produced 25 segments beginning at 0.00 s and
-agreeing with the burned-in captions everywhere they overlap. No correction was needed — worth
-recording, because on source 17 the same transcriber lost the first 30 seconds.
-
----
+| Address | https://www.instagram.com/reel/DZC-H3tRH7C/?igsh=Y3d6Y3Y3MTR5dm5k |
+| Operator | Luke Cutting — `lukebuildsai` |
 
 ## 2. Frame-by-frame record — 66 frames in order, with the captions and the voice
 
@@ -423,3 +410,12 @@ Bible Break's results, earned in their business.
 | Date | Change |
 |---|---|
 | 2026-08-10 | File opened from nothing and written in one pass, on the CEO's live order *"18. video ile devam et"*. Watched whole in order with its sound: **all 66 native 1080 × 1920 frames plus the scene-cut frame read one by one**, the burned-in captions read against a 25-segment transcript that needed no correction, and **6 native crops** cut from the video (`hud-6.0`, `objective-card-6.0`, `dev-escalation-32.5`, `thread-approval-39.5`, `ads-51.5`, `reviews-53.5`). §2.2 written under **ledger law 10** with every colour sampled from pixels; **the motion measurement failed its own control and is recorded as UNVERIFIED with what would settle it** (orb 43.47 % vs blank-wall control 25.83 % per 100 ms — handheld camera). Eight DXB facts measured the same session against the company database (SELECT only) and the repository: `chat_messages=102` with roles `hamza=53 / ceo=49`, `agents 205 dormant / 0 active`, `approvals=51 pending=0`, `outbox 51 failed / 0 sent`, no escalation or channel table, and the `/approvals` page's rendered fields. Six build projects — **P18-1 … P18-6** — three of which need no install, no money and no account. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `9f59f661ae674c4c56833e33c878415b09b9376f0313481006181528e3787dd3` |

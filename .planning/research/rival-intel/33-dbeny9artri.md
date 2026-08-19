@@ -31,19 +31,10 @@ answer, on the surface, with the reason beside it.** Measured here the same sess
 
 ## 1. Source identity
 
-| Field | Value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DbeNY9aRtri/?igsh=MTBiaHZyOXNuc2VlZQ==` |
-| Product filmed | **BENNETT OS — `V3 · OPERATOR MODE`**, same build as source 30, in its **light theme** |
-| Operator | **Bennett Spooner** — named on the org chart, and **his face is on camera here**, which it never was in 30 |
-| File | `media/33-DbeNY9aRtri.mp4` — 16,405,279 bytes |
-| **sha256** | `4f1e44120b50ab0004720bf38bea43c1798f1bbb0a78d5824f81eb022f78411a` |
-| Repository state when written | commit `49d5290f` |
-| Resolution | **1080 × 1920**, 30 fps · VP9 · AAC — **audio present** |
-| Duration | **83.570000 s** (30 was 85.846) |
-| Transcript | `transcripts/33.json` — English, **26 segments**, highest `no_speech_prob` **0.155** — a cleaner read than 30's |
-| How it was read | **Watched whole with its sound**, 92 native frames in order against the transcript. Palette sampled from native pixels and set against source 30's dark measurements |
-| Relationship to 30 | **Same script, 19 of 26 lines identical in substance.** Two lines change the count (**37 → 112 agents**) and **two lines at the end are entirely new** |
+| Address | https://www.instagram.com/reel/DbeNY9aRtri/?igsh=MTBiaHZyOXNuc2VlZQ== |
+| Operator | Bennett Spooner — BENNETT OS |
 
 ## 2. The record — what 33 says that 30 did not
 
@@ -208,3 +199,12 @@ Measured against it: our orchestrator is real and reaches no page, our 205 emplo
 `autonomy_level = 0`, our `revenue_ledger` is empty and no surface admits it, and the CEO is not a
 node on his own organisation chart. **None of the six parts above needs money or an install.**
 <!-- OPEN: B22 -->
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `4f1e44120b50ab0004720bf38bea43c1798f1bbb0a78d5824f81eb022f78411a` |

@@ -27,19 +27,10 @@ behind any of them. **The part this queue was opened for is the SOP card and the
 
 ## 1. Source identity
 
-| Field | Value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DbcPo0dMQ3d/?igsh=MWIwOXZkYzg4Ymt5Yg==` |
-| Product filmed | **BENNETT OS — `V3 · OPERATOR MODE`** (read from its own sidebar); its knowledge page is **`OPTIMAL ENGINE`**, footed `localhost:4100 · sqlite · real agents` |
-| Operator | **Bennett Spooner**, named on his own org chart as `OPERATOR`. Filmed at his desk, pointing at the monitor |
-| File | `.planning/research/rival-intel/media/30-DbcPo0dMQ3d.mp4` — 19,265,333 bytes |
-| **sha256** | `66e2d485799ce39e583e8762f3f913d287911ad54d6be705f186d163d43a1e91` |
-| Repository state when written | commit `006e018e` |
-| Resolution | **1080 × 1920** (vertical), 30 fps · VP9 video · AAC audio — **audio present** |
-| Duration | **85.846009 s** |
-| Transcript | `transcripts/30.json` — English, **23 segments**, highest `no_speech_prob` **0.873** (the last line) |
-| How it was read | **Watched whole with its sound**, 86 native 1080 × 1920 frames in order against the transcript. Motion taken from **two 10 fps dense passes** cut from the video (4–12 s and 51–55 s), **camera-compensated**: each pair aligned by an integer-shift search on a static text region, then measured |
-| Format note | **Filmed off a physical monitor in a lit room, handheld** — not a screen recording. Every motion figure below therefore carries a camera-noise floor, and that floor is measured and printed beside the figure rather than assumed away |
+| Address | https://www.instagram.com/reel/DbcPo0dMQ3d/?igsh=MWIwOXZkYzg4Ymt5Yg== |
+| Operator | Bennett Spooner — BENNETT OS |
 
 ## 2. The record — what was said, and what the screen showed
 
@@ -298,3 +289,12 @@ And his surface never lies about its own state: `0/21 systems live` in the corne
 `DEMO DATA` on the funnel that carries sample numbers. **The cheapest thing on this whole report is
 also the most aligned with the CEO's first law** — a foot that says what is running, on every screen,
 always. <!-- OPEN: B22 -->
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `66e2d485799ce39e583e8762f3f913d287911ad54d6be705f186d163d43a1e91` |

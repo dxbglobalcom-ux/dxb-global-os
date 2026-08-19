@@ -43,45 +43,10 @@ last 24 hours; `cost_eur` totals **0** because nothing was ever metered. The out
 
 ## 1. Source identity
 
-| Field | Value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/Da1NGf0sfs3/?igsh=NXVnazFmZ2V5cm1j` |
-| **Uploader** | **Dauren Altynbek — account `downey.ai`**, posted **2026-07-15** |
-| **Engagement** | **9,045 likes · 5,048 comments** |
-| **Caption (the account's own words)** | *"Comment "baddie," and I'll send you the full guide on how to create a setup like this"* |
-| File | `.planning/research/rival-intel/media/24-Da1NGf0sfs3.mp4` — 20,639,124 bytes |
-| **sha256 of the file actually studied** | `b7ccb271eba3573a56b218e054593da58c19481b5289704778bfe67ce846c406` |
-| Repository state when written | commit `578785dc` |
-| Resolution | **1080 × 1920** (vertical) — above the 720p floor |
-| Codec | VP9 video, **24 fps**, 2,130,876 bit/s · AAC audio, 73,139 bit/s — **audio present** |
-| Duration | **74.84 s** |
-| Obtained | `scripts/rival-intel/fetch.sh` (yt-dlp), 2026-08-01T23:47:15Z. Metadata re-read live 2026-08-17 with `yt-dlp --simulate --print` |
-| Transcript | `transcripts/24.json` — English, 15 segments, 1,003 characters |
-| Frames | `frames/24/` — 75 at 1 fps (`t001…t075`) + 5 scene cuts, **native 1080 × 1920, never downscaled** |
-| Console shown | Branded **`HIGGSFIELD AI — AUTONOMOUS INTELLIGENCE CORE`**, served from **`localhost:8080/index.html`** in a Chrome tab titled **`JARVIS-Higgsfield.html`** **(V)** |
-
-**WHOSE SYSTEM IS THIS — the distinction that decides how every line below is read.** The console
-carries Higgsfield's wordmark, but **this is not Higgsfield's official channel and the console is
-not a Higgsfield product page.** The uploader is `downey.ai`, and searches for a connection between
-Dauren Altynbek and Higgsfield's founders (Alex Mashrabov, Yerzat Dulat, Mahi de Silva) returned
-**none** — so the relationship is **UNVERIFIED**: he may be a customer, an affiliate, or a partner,
-and the file cannot tell us which. What IS verifiable is that the console runs from `localhost` as
-a single `index.html`, and that its status bar names a **real Higgsfield product** — see §3.6.
-
-**Relation to source 17.** Source 17 on this queue is also Higgsfield-branded, filmed as a spoken
-exchange in one take. This one films an unattended night reported back. No conclusion is carried
-across; every statement here was measured from this file or from the live sources cited in §3.6.
-
-**How the temporal analysis was performed — stated plainly, because the method is the evidence.**
-The 75 one-per-second frames were read in sequence at native resolution against the timestamped
-transcript. Details too small to read were **enlarged from the frame with `crop` + lanczos, never
-by downscaling** (ledger law 5); where the pixels ran out the reading says **UNREADABLE** rather
-than guessing. Motion was measured numerically and the tool is committed so any auditor can re-run
-it: `scripts/rival-intel/motion.py 24 --screen 70,620,590,920 --control 0,200,200,500`. **This is a
-frame-sequence-plus-audio-transcript reading of a 24 fps file — it is not a claim to have watched
-the moving picture at full frame rate with its sound.**
-
----
+| Address | https://www.instagram.com/reel/Da1NGf0sfs3/?igsh=NXVnazFmZ2V5cm1j |
+| Operator | Dauren Altynbek — `downey.ai` |
 
 ## 2. Watched record
 
@@ -387,3 +352,12 @@ saying what it is doing and when it wakes — and a screen that comes to rest wh
 None of it needs a platform, a budget or an account. All of it needs the one thing we do not have:
 **events that keep arriving while nobody is watching.** That is P24-1, and it is the entire
 difference between a console and a poster.
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `b7ccb271eba3573a56b218e054593da58c19481b5289704778bfe67ce846c406` |

@@ -22,21 +22,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://github.com/open-jarvis/OpenJarvis` |
-| Clone on disk | `.planning/research/rival-intel/repos/openjarvis` — **146 MB**, **2,033 tracked files** |
-| Commit read | **`93fc7b9e7759717bdc618097debe7cd0c4abf6ef`** — `chore: update clone traffic data [skip ci]`, 2026-07-28T08:29:18Z |
-| **Drift, measured today** | The clone is **28 commits behind `main`** (GitHub compare API, `93fc7b9…main`: `ahead_by 28, behind_by 0`). The 28 are maintenance — a Windows daemon-detach fix, a `SessionStore` `:memory:` path fix, a dev WebSocket-proxy fix, docs on giving an agent OS-level access, and clone-traffic bot commits. **Nothing in this reading rests on a file those commits touched**, and the drift is recorded rather than hidden |
-| Stars · forks · watchers · open issues | **8,492** · **1,938** · **133** · **95** (GitHub API, this session) |
-| Licence · language · created · pushed | **Apache-2.0** · Python · **2026-02-15** · **2026-08-10T07:26:46Z** — pushed the morning of this reading |
-| Home · paper | `openjarvis.stanford.edu` · arXiv **2605.17172** |
-| Owners | Hazy Research + Scaling Intelligence Lab, Stanford SAIL. Sponsors printed in the README: Laude Institute, Stanford Marlowe, Google Cloud, Lambda Labs, Ollama, IBM Research, Stanford HAI |
-| Top contributor | `jonsaadfalcon` — **504 contributions** |
-| Releases | `1.0.0` 2026-05-15 · `1.0.1` 2026-05-17 · `1.0.2` 2026-05-24, then an open `[Unreleased]` section — tagged releases stopped in May while the pushes did not |
-| Tests | **575 test files** |
-
----
+| Address | https://github.com/open-jarvis/OpenJarvis |
+| Operator | OpenJarvis — `open-jarvis/OpenJarvis`, Hazy Research + Scaling Intelligence Lab, Stanford SAIL |
 
 ## 2. File-by-file record — the tree as it is on disk, module by module
 
@@ -286,3 +275,12 @@ money and no approval, and it makes the cost line in his morning briefing true f
 | Date | Change |
 |---|---|
 | 2026-08-10 | File opened from nothing and written in one pass. The clone at `93fc7b9` was read module by module — every package's file and line count counted, and `evals/core/trace.py`, `agents/morning_digest.py`, `learning/routing/complexity.py`, `learning/routing/router.py`, `scheduler/scheduler.py`, `skills/__init__.py`, `intelligence/model_catalog.py` and the connector and channel lists read in the source. The clone's 28-commit drift from `main` was measured against the GitHub compare API and recorded rather than hidden, and the live repository facts were measured the same day. Eleven DXB facts were measured against the company database (`SELECT` only) and this repository the same session. The CEO's own sentence that supplied this row was traced back to `docs/source-architecture-notes-sanitized.md` line 17, where the video beside it was found to own no ledger row — he ordered it added the same day as **row 36**. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| commit | `93fc7b9e7759717bdc618097debe7cd0c4abf6ef` |

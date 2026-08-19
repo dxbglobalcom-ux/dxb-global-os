@@ -17,27 +17,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://drive.google.com/file/d/105ejHFZg-07mYEJwT4vZ5rxFClS-h9G4/view` |
-| File on disk | `.planning/research/rival-intel/media/15-vibecoder-4-sites.pdf` |
-| sha256 | `fd2ffd0d1523b6ecfd186a286408b4e4646ff466174b7cdda65e5f6674cd7c0b` (this session, `sha256sum`) |
-| Size · pages | 115,940 bytes · **2 pages** |
-| Page size | 595.92 × 841.92 pt — **A4**, unrotated |
-| Producer · creator | `Skia/PDF m150` · `HeadlessChrome/150.0.0.0` — the file was **printed by a headless browser**, not authored in a design tool (V) |
-| Created | 2026-07-25 20:38:24 CEST (PDF `CreationDate`, = `ModDate`) |
-| Embedded title | `localhost:50674/topics/her-vibe-coder-ın-bilmesi-gereken-4-site-part-5/vibe-coding-saas-araclari.md#` (V) |
-| Audio · video | none — a document |
-| Encryption · forms · JavaScript | none · none · none |
-| How obtained | Fetched 2026-07-28 11:59 into the C42 queue; **not re-downloaded** — the bytes on disk are the source and their hash is recorded above |
-| Frames | `frames/15/` is empty (**0 frames**) and stays empty: a 2-page PDF is read at full page resolution, so a frame folder would add nothing |
-
-**The embedded title is itself a finding (V).** The document was rendered from a **Markdown file
-served by a local content system on port 50674** — `…/vibe-coding-saas-araclari.md`. The publisher
-writes a `.md`, a local server renders it, headless Chrome prints it to A4, and the PDF becomes the
-lead magnet. That pipeline is measured further in §3.5.
-
----
+| Address | https://drive.google.com/file/d/105ejHFZg-07mYEJwT4vZ5rxFClS-h9G4/view |
+| Operator | Not named on the document |
 
 ## 2. Page-by-page record — every block on both pages, in order
 
@@ -339,3 +322,12 @@ alone, which is exactly why it has been sitting unexercised.
 | Date | Change |
 |---|---|
 | 2026-08-10 | File opened from nothing and written in one pass. Both pages read whole and in order in two renderings — `pdftoppm -r 150` images and `pdftotext -layout` — with all 28 blocks recorded verbatim; the palette, the hero band, the 2.4 pt accent spine, the column width and the two panels measured from the rendered pixels; the four services measured against their own vendors and the GitHub API the same day; eleven DXB facts measured against the company database (`SELECT` only) and the repository the same session. The directive's §3.2 nine requirements and §4 eight questions are each answered one by one, in §2.1 and §6.1. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `fd2ffd0d1523b6ecfd186a286408b4e4646ff466174b7cdda65e5f6674cd7c0b` |

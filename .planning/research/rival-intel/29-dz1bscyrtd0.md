@@ -29,20 +29,10 @@ own knowledge vault reads `/home/agent/**.hermes**/profiles/dev/skills/.hub/taps
 
 ## 1. Source identity
 
-| Field | Value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DZ1BSCyRtD0/?igsh=NG1oaGN5MmIyYmdx` |
-| Product filmed | **Sureflow Agentic OS — "AGENTIC GROWTH OPERATIONS"** (read from its own sidebar) |
-| Uploader | Not named on screen or in the audio — `U`. One man at a desk, filmed at night against a city window |
-| File | `.planning/research/rival-intel/media/29-DZ1BSCyRtD0.mp4` — 10,082,292 bytes |
-| **sha256** | `eba4b7b3830fbec72d5a52d36767049d35ccce435825e055196e73c3eb6cef06` |
-| Repository state when written | commit `320e1143` |
-| Resolution | **1080 × 1920** (vertical), 30 fps |
-| Codec | VP9 video · AAC audio — **audio present** |
-| Duration | **79.809002 s** |
-| Transcript | `transcripts/29.json` — English, **16 segments, 1,062 characters**, highest `no_speech_prob` **0.061** |
-| How it was read | **Watched whole with its sound.** Frames cut native from the video; a dense pass at **10 fps over the screen region** (`crop=994:490:44:385`, 798 frames) for the motion figures, with the left navigation used as the **static control** |
-| Format note | The reel is a **split screen**: his product recording fills the upper half, the man fills the lower half, with a burned-in word-by-word caption between them. The product half is a clean screen recording, so its motion could be timed exactly |
+| Address | https://www.instagram.com/reel/DZ1BSCyRtD0/?igsh=NG1oaGN5MmIyYmdx |
+| Operator | Sureflow Agentic OS — operator not named on the source |
 
 ## 2. The record — what was said, and what the screen showed
 
@@ -266,3 +256,12 @@ off.** He has less of everything and it is wired together, visible and moving.
 The one part that needs no design decision and no approval is **P29-2**: this holding has no place
 to record that two things it knows are related. Until it does, no living organism can be drawn here,
 whatever the screens look like. <!-- OPEN: B22 -->
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `eba4b7b3830fbec72d5a52d36767049d35ccce435825e055196e73c3eb6cef06` |

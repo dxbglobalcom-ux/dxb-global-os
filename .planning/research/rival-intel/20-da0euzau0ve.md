@@ -17,18 +17,10 @@ on the surface as a number.
 
 ## 1. Source identity
 
-| Field | Value | Label |
-|---|---|---|
-| Address | `https://www.instagram.com/reel/Da0EUZAu0ve/` | R |
-| Uploader | **No Hype Ai** · `_no_hype_ai` · account id `26355014945`, uploaded **2026-07-15** | R — `yt-dlp --skip-download --print` this session |
-| File | `media/20-Da0EUZAu0ve.mp4` · **1080×1920**, `vp9`, **30 fps**, **74.006 s**, 2220 frames, 17,688,655 bytes | R — `ffprobe` |
-| Audio | `aac`, 48 kHz, **stereo — kept** | R |
-| Transcript | `transcripts/20.json` — en, **15 segments**, last end **73.76 s**, validated against the file's 74.006 s before reuse | R |
-| Watched | **74 native frames in order with the audio**, plus a **10 fps dense pass** (100 crops) over 64-74 s and 9 zoom crops cut from the video with `ffmpeg -ss … -vf crop=…` | R |
-| Caption | *"To me, 80% of a 'Jarvis' is having a personal assistant that can access, edit, and monitor the things that are important to me. … Comment 'workflow' if you want me to send it to you."* | R |
-| **Not the same author as 01 / 18 / 19.** Luke Cutting films a wall-mounted TV over a wooden desk with two code monitors; this room is a TV on a stand with a **VDO360** conference camera bar, a beige partition wall with yellow sticky notes, and one monitor running Obsidian | | V |
-
----
+| | |
+|---|---|
+| Address | https://www.instagram.com/reel/Da0EUZAu0ve/?igsh=MWI2Nm13bng3b2l4cg== |
+| Operator | No Hype Ai — `_no_hype_ai` |
 
 ## 2. Watched record — 74 s in order, the voice beside what stood on the wall
 
@@ -234,3 +226,12 @@ and the human-cost counter — six things, and the first two need nothing but th
 | Date | Change |
 |---|---|
 | 2026-08-10 | Written from the source. Row 20 claimed at `2026-08-10T18:36:39Z` **before** the media was opened (ledger law 1), read under laws 4-11 after `.claude/CLAUDE.md`, `.planning/STATE.md`, row B22 and the law section. Watched as **74 native frames in order with the audio and the 15-segment transcript**, transcript duration validated against `ffprobe` before reuse; 9 zoom crops and a 100-frame 10 fps dense pass cut native from the video. Uploader identified by `yt-dlp --skip-download` (No Hype Ai, `_no_hype_ai`, 2026-07-15) — the archive's "not yet identified" is now settled. Motion measured against a same-screen static control; node-level direction and period recorded **UNVERIFIED** with the recording that would settle them named. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `babd8e874406b219672251cd4675d29d74b6e696f0e396a136f691b2ba3c9e73` |

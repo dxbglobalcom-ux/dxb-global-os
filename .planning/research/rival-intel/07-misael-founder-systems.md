@@ -11,18 +11,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DbSGx3CCRQS/` |
-| Handle | `misael.systems` — "Misael · Founder Systems" |
-| File | `media/07-DbSGx3CCRQS.mp4` — 25,171,122 bytes |
-| sha256 | `56d2203b3333185e1f7c432904071bcc73daabcbe0271292bb1ef01a655964e6` |
-| Resolution | **1080 × 1920** (`ffprobe`, this session) |
-| Codec / frame rate | `vp9` / 30 fps |
-| Duration | **82.177007 s** |
-| Audio | present — `aac` |
-| How obtained | `yt-dlp` via `scripts/rival-intel/fetch.sh`, 2026-07-28 12:42. Nothing left this machine |
-| Transcript | `transcripts/07.json` — en, **18 segments**, produced by the holding's own Speaches container (`Systran/faster-whisper-small`) |
+| Address | https://www.instagram.com/reel/DbSGx3CCRQS/ |
+| Operator | Misael · Founder Systems — `misael.systems` |
 
 ### How the temporal analysis was performed — stated exactly, as §3.2 of his directive requires
 
@@ -252,3 +244,12 @@ as the work it will one day protect, which is not yet any.
 
 **Row 07 is `reported`. Nothing is built. <!-- OPEN: B22 --> P07-1 and P07-3 wait on his word; P07-2 waits behind his
 design gate.**
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `56d2203b3333185e1f7c432904071bcc73daabcbe0271292bb1ef01a655964e6` |

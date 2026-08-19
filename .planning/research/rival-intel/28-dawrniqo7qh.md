@@ -25,18 +25,10 @@ The rest of his ranking is read here against four measurements taken tonight:
 
 ## 1. Source identity
 
-| Field | Value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DaWrNiQO7QH/?igsh=YzRkazFkZWExbGkx` |
-| Uploader | Not named on screen or in the audio — `U`. One man, filmed selfie-style from below in a room with a ceiling fan |
-| File | `.planning/research/rival-intel/media/28-DaWrNiQO7QH.mp4` — 12,570,103 bytes |
-| **sha256** | `f65c57b268f31bcdfd4fb8f325461ccce02798c7bb15834f942ebbbe0d27ef38` |
-| Repository state when written | commit `84cd9a81` |
-| Resolution | **1080 × 1920** (vertical), 30 fps |
-| Codec | VP9 video · AAC audio — **audio present** |
-| Duration | **72.239002 s** |
-| Transcript | `transcripts/28.json` — English, **36 segments, 1,228 characters**, highest `no_speech_prob` **0.040** |
-| How it was read | **Watched whole with its sound.** Frames cut from the video at native size; a dense pass at **10 fps over the board region** (`crop=1000:520:40:260`, 722 frames) to time every card landing; colour sampled from the pixels of a native frame at 70 s |
+| Address | https://www.instagram.com/reel/DaWrNiQO7QH/?igsh=YzRkazFkZWExbGkx |
+| Operator | Not named on the source |
 
 ## 2. The record — what was said, and what landed on the screen, in order
 
@@ -328,3 +320,12 @@ alone by the spec's own rules. <!-- OPEN: B22 -->
 [Automated reminder effectiveness](https://appointmentreminder.com/guides/no-show-statistics/) ·
 [Consumer trust in AI-generated content, 2026](https://www.klaviyo.com/solutions/ai/consumer-trust-in-ai) ·
 [83 % can spot AI video; 36 % say it lowers brand trust](https://www.businesswire.com/news/home/20260121875037/en/83-of-Consumers-Can-Spot-AI-Videos-36-Say-It-Lowers-Brand-Trust-According-to-Animotos-New-Report)
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `f65c57b268f31bcdfd4fb8f325461ccce02798c7bb15834f942ebbbe0d27ef38` |

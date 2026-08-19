@@ -23,18 +23,8 @@ Iron Man, and the call to action.
 
 | | |
 |---|---|
-| **Address** | https://www.instagram.com/reel/DYG-_i9PPCM/ |
-| **Uploader** | `thealinalab` — the account handle as recorded by the CEO in his source list |
-| **Kind** | Instagram reel, vertical. Two parts: an 8-second screen recording, then a piece to camera |
-| **File** | `media/04-DYG-_i9PPCM.mp4` |
-| **sha256** | `91f19ae9e1a1042a3206a14f8898332227d257bfee00f58a841a55afc0fa7419` |
-| **Duration** | 32.115011 s |
-| **Resolution / codec / rate** | **1080 × 1920**, VP9, 30 fps — above the CEO's 720p floor |
-| **Audio** | present, AAC, 44.1 kHz stereo. Kept |
-| **How obtained** | `scripts/rival-intel/fetch.sh 04`, 2026-07-28T11:24:47Z. Not re-downloaded for this reading — the file already exceeds the standard |
-| **Transcript** | `transcripts/04.json` — faster-whisper, English, 8 segments, no word timings. **Two of its errors are corrected below from the burned-in captions.** |
-| **Captions** | Burned in, English only, present on almost every second. Treated as the authority over the machine transcript |
-| **The CEO's note on this source** | listed without a note; **narrowed by his live order of 2026-08-04 (above)** |
+| Address | https://www.instagram.com/reel/DYG-_i9PPCM/ |
+| Operator | The Alina Lab — `thealinalab` |
 
 ### How the temporal analysis was performed — stated exactly
 
@@ -233,3 +223,12 @@ it appears in section 2 only because it is on the screen. Nothing further was op
 
 **Not approved.** This report is the author's work, not an accepted finding — LAW B: only the CEO's
 own eye accepts it.
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `91f19ae9e1a1042a3206a14f8898332227d257bfee00f58a841a55afc0fa7419` |

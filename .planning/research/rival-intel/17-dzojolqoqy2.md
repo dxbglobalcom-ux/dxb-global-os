@@ -29,26 +29,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DZoJOLQoQY2/` |
-| File | `media/17-DZoJOLQoQY2.mp4` — 16,625,165 bytes |
-| sha256 | `a5ccfacac3b09c494fe2b2aa616a0cefa21c01daf1027d974f0dcb2447ad6bab` (this session) |
-| Duration · resolution · frame rate | **85.583 s** · **1080 × 1920** · **24 fps** · video `vp9`, audio `aac` — **above his 720p floor, sound intact** |
-| Frames · zooms · dense pass | `frames/17/` 86 + 1 scene cut · `zoom/17/` 7 native crops · `zoom/17/dense/` 80 crops at 10 fps over 2.0–10.0 s |
-| Design crops · design dense pass | `zoom/17/design/` 6 native lossless crops (whole frame, wall display, orb, desk row, work panel at 74.5 s and at 9.0 s) · `zoom/17/design/orbdense/` 30 crops at 10 fps over 44.0–47.0 s, with `ctrldense/` 30 control crops of blank wall over the same seconds |
-| Transcript | `transcripts/17.json` — en, 11 segments |
-| Brand on screen | **Higgsfield** (wall display and the right-hand monitor's application) |
-| CEO's note on this row | none on this individual row — it came in the supplementary block of §11, and his §2 first-hand confirmation that the supplied videos are **real working demonstrations** covers it (evidence label **C**) |
-
-**Transcript correction, and it changes the reading (law 4).** Our own speech-to-text produced its
-**first content segment at 30.37 s** and left the opening half-minute nearly empty — it captured
-*"Hey, peace of you all"* at 0.37 s and then nothing until 30.37 s. **The reel's burned-in captions
-carry that missing half-minute**, and they are what this report quotes for 00:01–00:30. The two
-sources agree everywhere they overlap, with one measured difference: the voice says *"I generated
-580 unique assets"* while the screen at 00:54 reads **578 generated / 580 analyzed** (§2).
-
----
+| Address | https://www.instagram.com/reel/DZoJOLQoQY2/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ== |
+| Operator | Not named on the source |
 
 ## 2. Frame-by-frame record — 86 frames in order, with the captions and the voice
 
@@ -451,3 +435,12 @@ the wording, because it is a surface he reads every morning.
 | 2026-08-10 (third) | **THE DESIGN READING WAS MISSING ENTIRELY AND WAS ADDED — his order, an hour after the second repair:** *"YAHU BENİM İSTEDİĞİM ŞEY BU RAPORLARDA HEM SİSTEMİN KENDİ ÖZELLİKLERİ HEM DE BU YAŞAYAN SİSTEMLERİN DESIGN VE GÖRÜNÜMSEL ÖZELLİKLERİ ULAN BU DİREKTİFTE YAZMIOR MU."* It does — the directive's own scope line reads *"UI/UX and visual design"* and its Phase 4 is a visual design package. **Measured in this file the minute he asked: 0 colour values, 0 type measurements, 0 layout geometry** in 292 lines. New **§2.2** was written from five further native crops and a 30-frame dense pass with a static-wall control: the two-tier stage (presence surface vs work surfaces), the composition in pixels (identity Ø 314 px = 75 % of screen height, dead centre, margins carrying everything else), the palette sampled pixel by pixel (presence: ground `#04050A`, identity `#7B881C`→`#EBF789`, type `#DCEDF9`; work: card `#1A1A1D` with four status hues `#FFFFFF` / `#4F9E59` / `#813246` / `#97A557`), the type and instrument furniture, the room's own light, and the identity object's motion — **10.87 % of its pixels every 100 ms against a 0.00 % control.** That measurement **corrected an error in the Aliveness section**, which had claimed no perpetual motion existed anywhere in the film; it exists, on the face alone. Four new build projects: **P17-6 · P17-7 · P17-8 · P17-9**, all Phase-4 and all waiting on his eye. |
 | 2026-08-10 (second) | **REPAIRED ON THE CEO'S OWN READING — he opened this file and found it belittling a system he had already ruled real:** *"canlı ve herşeyi gerçek olan videoyu kötülemiş sistemi kötülemiş o yok bu yok bu dekor şu bilmem ne!!!! yahu ben bunu yasaklamıştım zaten."* Seven passages were rewritten at source, not footnoted (LAW A): the §1 identity row, §2.1 requirement 3, **§3.2 in full** (*"the reel does not prove its own numbers… none of it can be verified"* → what this source **produces**, measured, under evidence label **C**), the §4 governance note, the §5 refusal wording, **§6's opening verdict** (*"None of it is verifiable from outside the reel"* → the figures with their label), and **§6.1 questions 3 and 5** (*"no CEO-confirmed claim is asserted here"* → his §2 confirmation is binding and covers this reel; *"a real system or a staged one"* deleted, replaced by the three measurements this file could not take and what each would need). Requirements 1, 2 and 5 of §2.1 had been repaired in the same class earlier the same day and were uncommitted; they are committed here. **Ledger law 9 and its machine case were written the same session** so the whole report is scanned, not only its Aliveness section — the rejected version trips the new gate 6 times, this one 0. |
 | 2026-08-10 | File opened from nothing and written in one pass. Watched whole in order with its sound: all **86 native 1080 × 1920 frames** read one by one, the burned-in captions read against the audio transcript, **7 native zoom crops** cut from the video for the small type (`stats-locked-9.0`, `accounts-header-26.0`, `virality-54.0`, `trends-62.0`, `trend1-62.0`, `trend2-62.0`, `support-74.0`, `incident-78.0`, `pipeline-13.0`), and an **80-frame dense pass at 10 fps** over 2.0–10.0 s to time the counter animation, which 1 fps cannot resolve. A transcript defect was measured and recorded rather than hidden: our speech-to-text left the first 30 seconds nearly empty and the captions carry that half-minute. Eight DXB facts measured against the company database (`SELECT` only) and the repository the same session. The directive's §3.2 nine requirements and §4 eight questions are answered one by one in §2.1 and §6.1. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `a5ccfacac3b09c494fe2b2aa616a0cefa21c01daf1027d974f0dcb2447ad6bab` |

@@ -25,18 +25,8 @@ them into work that lands on rows the board already owns.
 
 | | |
 |---|---|
-| **Address** | https://www.instagram.com/reel/DbBPiy4vcz4/ |
-| **Uploader** | `chloeshy.ai` — the account handle as recorded by the CEO in his source list |
-| **Kind** | Instagram reel, vertical. A reaction/teardown format: her own camera plus an embedded copy of another creator's reel |
-| **File** | `media/03-DbBPiy4vcz4.mp4` |
-| **sha256** | `e5a1d0d66c218e143b52d1889b1cabfb1069c9655fb9fb5c1f1bae4b0b841bc1` |
-| **Duration** | 74.049875 s |
-| **Resolution / codec / rate** | **1080 × 1920**, VP9, 30 fps — above the CEO's 720p floor |
-| **Audio** | present, AAC, 44.1 kHz stereo. Kept |
-| **How obtained** | `scripts/rival-intel/fetch.sh 03`, 2026-07-28T11:21:15Z. Not re-downloaded for this reading |
-| **Transcript** | `transcripts/03.json` — faster-whisper, English, 20 segments. **Unreliable; used only as a lead. Four of its errors are corrected below from the burned-in subtitles.** |
-| **Subtitles** | Burned in, **bilingual English + Chinese**, present on almost every second. Treated as the authority over the audio |
-| **The CEO's note on this source** | listed without a note in the original directive; **watched by him 2026-08-04 and narrowed to 00:12→end** |
+| Address | https://www.instagram.com/reel/DbBPiy4vcz4/ |
+| Operator | Chloe Shy — `chloeshy.ai` |
 
 ### How the temporal analysis was performed — stated exactly
 
@@ -375,3 +365,12 @@ The reel is the advertisement.**
 | Date | Change |
 |---|---|
 | 2026-08-04 | Written from nothing. The rejected sixteen reports were deleted on the CEO's order of 2026-08-02 and no sentence of them was reopened. Watched 00:12→01:13 with sound on his live order of 2026-08-04; 62 native frames read in order; three zooms cut from the video; four machine-transcript errors corrected from the burned-in subtitles; source 01 identified inside the frame; OpenJarvis measured against the GitHub API; every DXB comparison re-measured this session |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `e5a1d0d66c218e143b52d1889b1cabfb1069c9655fb9fb5c1f1bae4b0b841bc1` |

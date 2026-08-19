@@ -9,21 +9,10 @@
 
 ## 1. Source identity
 
-| Field | Value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DZY7s0LK2vj/?igsh=YmhzMmNxdGd3ZHVt` |
-| Uploader | Not named in the audio, and the picture was not opened — `U` |
-| File | `.planning/research/rival-intel/media/25-DZY7s0LK2vj.mp4` — 14,406,514 bytes |
-| **sha256 of the file on disk** | `d25c578a56078fa73d796bb116cd6ef03cd55380d6a1050523f7b7d6646a0759` |
-| **sha256 of the audio actually studied** | `d06e1dbd94c389bef0a03e802df50630b42705dad0b680deafa42b4a186cf2f7` |
-| Repository state when written | commit `6cef95b4` |
-| Resolution | 1080 × 1920 (vertical) — recorded from the container, **not viewed** |
-| Codec | VP9 video, 30 fps · AAC audio — **audio present** |
-| Duration | **42.146009 s** (video container) · **42.145625 s** (extracted audio) |
-| Audio studied | `media/25.wav` — pcm_s16le · 16 kHz · mono · 1,348,738 bytes |
-| Obtained | `scripts/rival-intel/fetch.sh` (yt-dlp), 2026-08-01T23:49:13Z |
-| Transcript | `transcripts/25.json` — English, **8 segments, 719 characters**, highest `no_speech_prob` **0.30** |
-| Frames | **None cut.** The picture was not opened, on his order of 2026-08-17 |
+| Address | https://www.instagram.com/reel/DZY7s0LK2vj/?igsh=YmhzMmNxdGd3ZHVt |
+| Operator | Not named on the source |
 
 ## 2. The audio record — every block in order, nothing summarised `T`
 
@@ -137,3 +126,12 @@ Tonight's answer is a number: **51 approvals, 0 recommendations.**
 
 The report follows his listen-only order, so it carries no reading of this source's screen, and no
 design work follows from it: the design package still waits on him. <!-- OPEN: B22 -->
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `d25c578a56078fa73d796bb116cd6ef03cd55380d6a1050523f7b7d6646a0759` |

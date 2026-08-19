@@ -13,18 +13,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DbBAOdVBjka/` |
-| Handle | `cloud9.markets` — bio read this session: *"📍🇦🇺🇺🇸 💻 AI Architect 🧠 I build AI systems that researches markets 📈 AI x Stocks x Investing x Wealth 👾 Not advice"*, link `www.cloud9markets.com` |
-| File | `media/10-DbBAOdVBjka.mp4` — 8,224,439 bytes |
-| sha256 | `36bf05ac45b79902e4ca10b462e7f7f9554dad15be12936f3a9c46f0bcb4083d` |
-| Resolution | **1080 × 1920** (`ffprobe`, this session) |
-| Codec / frame rate | `vp9` / 30 fps · video bitrate 811,613 |
-| Duration | **75.433333 s** (audio 75.442993 s) |
-| Audio | present — `aac`, 55,721 bit/s |
-| How obtained | `yt-dlp` via `scripts/rival-intel/fetch.sh`, 2026-07-28 12:42. Nothing left this machine |
-| Transcript | `transcripts/10.json` — en, **15 segments**, the holding's own Speaches container (`Systran/faster-whisper-small`) |
+| Address | https://www.instagram.com/reel/DbBAOdVBjka/ |
+| Operator | `cloud9.markets` |
 
 ### How the temporal analysis was performed — stated exactly, as §3.2 of his directive requires
 
@@ -302,3 +294,12 @@ already made will never say whether they were right.** On the measure that decid
 does it make money — we are behind it.
 
 **Row 10 is `reported`. Nothing is built and nothing is installed.** <!-- OPEN: B22 --> P10-1 waits on his word; P10-2 and P10-3 wait behind the visual design package his own directive requires first. <!-- OPEN: B22 -->
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `36bf05ac45b79902e4ca10b462e7f7f9554dad15be12936f3a9c46f0bcb4083d` |

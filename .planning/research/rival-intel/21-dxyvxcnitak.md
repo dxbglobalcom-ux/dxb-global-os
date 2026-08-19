@@ -23,9 +23,10 @@ in our own product and database this session:
 
 ## 1. Source identity
 
-Instagram reel `DXyvXCNITAK` · `media/21-DXyvXCNITAK.mp4` · **1080×1920, vp9, 24 fps, 34.67 s, aac
-stereo kept** (R — `ffprobe`) · watched as 35 native frames in order with the sound, plus a 10 fps
-dense pass, a 24 fps pass over the transition and 3 native zoom crops (R).
+| | |
+|---|---|
+| Address | https://www.instagram.com/reel/DXyvXCNITAK/?igsh=MWgyM3R1eWFpdmI0bg== |
+| Operator | Not named on the source |
 
 ## 2. Watched record — 34.7 s in order, the clock taken from the waveform
 
@@ -155,3 +156,12 @@ one that decides everything is the workstation.
 | Date | Change |
 |---|---|
 | 2026-08-10 | Written from the source. Row claimed at `2026-08-10T21:16:52Z` **before** the media was opened (law 1). Watched as 35 native frames in order with the audio; every quoted time comes from a **waveform measurement at 50 ms resolution**, not from transcript segment boundaries. The canvas swap was cut at native 24 fps; motion of the ring measured against a same-frame static control with the camera's translation removed pair by pair, and recorded **UNVERIFIED** with the recording that would settle it named. §1 is one line instead of the usual table; the six section headings are kept because `tests/c42/rival-intel-ledger.test.ts` fails the commit without them. **His standing capability order for Hamza** and **his 1.5 s round-trip figure**, both given this session, are registered in `scripts/governance/ceo-approvals.json`. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `3f5e3b17a604c8a3612297c8dca93099c6a7b7b3ae98dd27020085a3f629f7f4` |

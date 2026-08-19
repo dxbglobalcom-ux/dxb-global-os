@@ -31,19 +31,8 @@ built on: **the marketplace, the agency that sits on top of it, and the clipper 
 
 | | |
 |---|---|
-| **Address** | https://www.instagram.com/reel/DadfHYrkmr7/ |
-| **Uploader** | `cnn` — the account handle as recorded by the CEO in his source list |
-| **Kind** | Instagram reel. A produced news package: presenter to camera, screen recording, sit-down interviews |
-| **File** | `media/05-DadfHYrkmr7.mp4` |
-| **sha256** | `952104e0fdf8e1c97f44cd9ea83385adb9a9906435fd4717c0988bb9ba7168c1` |
-| **Duration** | 102.380000 s |
-| **Resolution / codec / rate** | **1080 × 1920**, VP9, 29.97 fps — above the CEO's 720p floor |
-| **Audio** | present, AAC, 48 kHz stereo. Kept |
-| **How obtained** | `scripts/rival-intel/fetch.sh 05`, 2026-07-28T11:26:33Z. Not re-downloaded — the file already exceeds the standard |
-| **Transcript** | `transcripts/05.json` — faster-whisper, English, 8 segments. **One meaning-changing error corrected below from the burned-in captions.** |
-| **Captions** | Burned in, English, present on almost every second. Treated as the authority over the machine transcript |
-| **People named on screen** | **Musa Mustafa** — chyron *CLIPPER* (V, 00:24) · **Eddie Cumberbatch** — chyron *CO-FOUNDER, PROPAGANDA MEDIA* (V, 00:81) |
-| **The CEO's note on this source** | *"BU SİSTEMİ DE PROJE OLARAK İSTİORZ (clipping business EN MÜKEMMEL ŞEKİLDE YAPMALI)"* |
+| Address | https://www.instagram.com/reel/DadfHYrkmr7/ |
+| Operator | CNN — `cnn` |
 
 ### How the temporal analysis was performed — stated exactly
 
@@ -466,3 +455,12 @@ seat, not a start**, and he said so in the same sentence.
 (`c42-agency-seat-2026-08-07`). **The rest of this report — the reading, the figures, the four
 operating loops — is still the author's work and is NOT approved.** A registered approval covers
 what he actually said and nothing beside it.
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `952104e0fdf8e1c97f44cd9ea83385adb9a9906435fd4717c0988bb9ba7168c1` |

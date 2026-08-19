@@ -20,26 +20,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DbF2AUQh0MQ/` |
-| Handle | Rinaldo Janjua (`rinaldojanjua.ai`) — the board's own subtitle names him: *"…then texts the items that actually need Rinaldo."* |
-| File | `media/12-DbF2AUQh0MQ.mp4` — 4,571,825 bytes |
-| sha256 | `5fde87b11bc847cf87467edfe1279fb37743e385135213ac0bea736e9a4cb352` |
-| Resolution | **720 × 1280** (`ffprobe`, this session) — the floor the law allows, and what the source provides |
-| Codec / frame rate | `h264` / **30 fps** |
-| Duration | **52.130 s** |
-| Audio | present — `aac`, 44,100 Hz, 2 channels |
-| How obtained | `yt-dlp` via `scripts/rival-intel/fetch.sh`, 2026-07-28 12:42. Nothing left this machine |
-| Transcript | `transcripts/12.json` — en, **21 segments**, 167 words, the holding's own Speaches container |
-
-**The source-quality note, stated as the skill requires.** The frame is split: the **upper 40 %** is a
-**screen recording of the board** (clean pixels, no glare, no camera shake — the canvas is stable to
-±0 px between the four camera moves, measured below), and the **lower 60 %** is the author speaking
-to a phone camera with a burned-in word-by-word caption. Small type on the board is soft at 720p, so
-**every sentence below that depends on small type is tied to a native zoom crop cut from the video
-itself** (ledger law 5, `zoom/12/`); where the pixels ran out this report writes **UNREADABLE** and
-does not guess.
+| Address | https://www.instagram.com/reel/DbF2AUQh0MQ/ |
+| Operator | Rinaldo Janjua — `rinaldojanjua.ai` |
 
 ### How the temporal analysis was performed — stated exactly, as §3.2 of his directive requires
 
@@ -510,3 +494,12 @@ Hamza cannot take the CEO anywhere, in either direction.
 | 2026-08-09 | **File opened from nothing** and written from the watching of all 52 seconds with sound, plus a 10-fps dense pass over the whole film. Ledger row 12 moved `fetched` → `claimed` → `reported`; `NEXT` advanced to 13, which is carried by board row **B22** and by no other record <!-- OPEN: B22 -->; the board row **B22** and `.planning/STATE.md` corrected in the same session (ledger parity, U38) |
 | 2026-08-10 | **Three defects in this file, found by auditing it against the CEO's directive §4 and fixed at source.** **(1) §3 had no `### 3.0`** — the report explained the *mechanism* and deferred what the system IS to row 11, so it did not stand on its own. **The CEO's own words on finding it: *"sistemi anladın mı ne yapıyor ne iş yapıyorlar"*.** A full end-to-end explanation of the system — input, the five jobs and the file that runs each, the rules that bind them, the invariant, the shared memory, the clock, the owner, the output, what it replaces, and its honest limits — now opens §3. **(2) Question 3 of the directive (`What has the CEO confirmed?`) was unanswered — 0 `C` labels.** Now answered in its own subsection, with his two confirmations quoted and the warning that C must not be dressed as independent verification. **(3) Question 4 (`What is technically verified?`) was unanswered — 0 `R` labels and no statement of why.** Now answered: no repository, no deployment, no API exists for this source, so R is absent by availability and not by omission, and the subsection names what would produce it. **What did NOT change:** the second-by-second record, every measurement in §3, the DXB measurements in §4, and the projects in §5 |
 | 2026-08-10 | **A defect committed against the neighbouring file, recorded here because it was this reading that caused it.** Two corrections were written into `11-rinaldojanjua-a.md` from measurements taken on **this** film — the sphere's flicker and one mis-cited command. **The author of this report did not watch source 11.** The corrections are defensible (same author, same board, a cleaner recording) but they are cross-source inference, and **they stand or fall on the CEO's ruling, not on this file's authority** |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `5fde87b11bc847cf87467edfe1279fb37743e385135213ac0bea736e9a4cb352` |

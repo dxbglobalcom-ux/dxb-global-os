@@ -23,35 +23,10 @@
 
 ## 1. Source identity
 
-| Field | Measured value |
+| | |
 |---|---|
-| Address | `https://www.instagram.com/reel/DbKe90ETKfB/` |
-| Handle | Rinaldo Janjua (`rinaldojanjua.ai`) — the same author as rows 11 and 12; his own name is burned into the product (*"Rinaldo's Brain"*, and every skill trigger reads *"Use when Rinaldo says…"*) |
-| File | `media/14-DbKe90ETKfB.mp4` — 6,302,727 bytes |
-| sha256 | `7e8ceb034a5ed3e140b1408e7896e2a9b182d8356617245385f59c0651f510b6` |
-| Resolution | **1080 × 1920** (`ffprobe`, this session) — above the floor his directive sets, and the reason the small type below could be read at all |
-| Codec / frame rate | `vp9` / **30 fps** container. Measured content rate over 5.0–11.0 s: **25.7 distinct frames per second** — the file carries duplicated frames, which is why the dense pass below de-duplicates before it measures |
-| Duration | **61.047 s** |
-| Audio | present — `aac`, 44,100 Hz, 2 channels |
-| How obtained | `yt-dlp` via `scripts/rival-intel/fetch.sh`, 2026-07-28 11:55. Nothing left this machine |
-| Transcript | `transcripts/14.json` — en, **16 segments**, 157 words, the holding's own Speaches container |
-
-**The source-quality note, stated as the skill requires.** The frame is split: the **upper ~42 %** is a
-**clean screen recording** of the product (no glare, no camera shake — the canvas is pixel-stable
-between the cuts), and the **lower ~58 %** is the author speaking to a phone camera with a burned-in
-one-word-at-a-time caption. Because the screen half is a real recording at 1080 px wide, the modal
-body text is legible **at native resolution**, and every sentence below that depends on small type is
-tied to a zoom crop cut from this file, listed here:
-
-| Zoom crop | What it proves |
-|---|---|
-| `frames/14/zoom/cmo-skills.jpg` | the CMO's four skills and their trigger sentences |
-| `frames/14/zoom/coo-skills.jpg` | the COO's five skills plus one **SCHEDULED** entry with its clock |
-| `frames/14/zoom/salesrep-skills.jpg` | the Sales Rep's three skills **and two SUB-AGENTS** |
-| `frames/14/zoom/vault-inspector.jpg` | the Knowledge Vault node inspector — the provenance chips and the file list with byte sizes |
-| `frames/14/zoom/agent-log.jpg` | the Agent Log — the owner's own raw sentences with an outcome and an age |
-| `frames/14/zoom/localhost-statusbar.jpg` | the browser status bar reading `localhost:3001/knowledge-vault` |
-| `frames/14/zoom/orchestrator-card.jpg` | `ROUTES 10` and `READS 954` on the command-layer card |
+| Address | https://www.instagram.com/reel/DbKe90ETKfB/ |
+| Operator | Rinaldo Janjua — `rinaldojanjua.ai` |
 
 ### How the temporal analysis was performed — stated exactly, as §3.2 of his directive requires
 
@@ -618,3 +593,12 @@ install-free steps that close the distance this source exposes.
 | 2026-08-10 | **SECOND CORRECTION BY THE CEO, THE SAME TURN.** His words: *"ben canlı organizma gibi tanımla derken örnek olsun diye söyledim"* — the organ language was a metaphor for how the product should feel, **not an instruction to write organ prose in place of the picture on the screen**. The first version of §14-D2 did exactly that, following the same error already on disk in row 10 (Nimbus), whose Aliveness section carries 13 body/organ words and **0 pixel measurements** — it never says what Nimbus looks like. The rule taken from his correction and applied here: **describe the object on the screen with its shape, size and colour, and prove the life with figures.** §14-D1 and §14-D2 were held to that: aspect ratios, radii, luminance profiles, ring counts and periods, not adjectives. |
 | 2026-08-10 | **HIS EYE ACCEPTED THIS REPORT — LAW B.** *"sana sadece 14. video işini onayladım dedim"* <!-- CEO-OK: rival-source-14-2026-08-10 --> Source 14's report only — nothing else. |
 | 2026-08-10 | **DEFECT FOUND BY THE CEO AND FIXED AT ITS SOURCE THE SAME TURN.** His question: *"peki görünürlükle ilgili şeyler yazdın mı rapora? … yani design ile ilgili şeyler. her zaman söylüorm."* He was right. The controlling directive — `docs/ceo-directives/2026-07-reanalysis/00_READ_FIRST_MASTER_DIRECTIVE.md`, whose own title is **RE-ANALYSIS AND DESIGN** — **was not opened before the first pass was written**; the door `dxb-rival-intel` names it in its first line and the pointer was not followed. Its §3.2 requires the visual hierarchy and the feel of the interface, and its §4 question 7 requires the **design principle** to adopt. The first pass carried the mechanism and the motion and **no measured design reading at all**. Added this turn: **§14-D1…D9** — led by **the shape law** (rectangles hold, circles live; the orb measured as a lit sphere at aspect 1.028 with its highlight 10 px off centre, every memory node a hollow ring, 39 dendrite dots on a true circle) and **the organism reading** (skeleton, blood at 1.5 s, heartbeat at 1.90 s, five organs of which the idle one gets no blood, a lung breathing at 2.83 s, a brain literally labelled `954 RECORDS` sharing its number with the body, and three independent clocks none of which is a loading state) — then palette and identity hue, status colour vocabulary, wire-to-traffic contrast, type scale, geometry, empty/disabled states, audio mastering — every figure sampled from the native frames or computed from those samples — plus project **P14-5** measured against our own `globals.css` tokens, and a third paragraph in the verdict. |
+
+<!-- FINGERPRINT -->
+---
+
+**What was read**
+
+| | |
+|---|---|
+| sha256 | `7e8ceb034a5ed3e140b1408e7896e2a9b182d8356617245385f59c0651f510b6` |
