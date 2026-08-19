@@ -20,6 +20,11 @@
 - Ships **one-click install/update scripts** and a Docker+CUDA path, so the install can be delegated to an agent (the source's own method).
 - Target hardware is exactly ours: the live machine carries an **NVIDIA RTX 5060 Ti, 16,311 MiB** (measured 2026-08-19) and no part of the holding uses it.
 
+
+- **Where it plugs in (merged 2026-08-19):** [[openmontage-opencut]] — measured on DXB-Center the same
+  day — runs with **`video_generation` 0 of 26 providers available** when no paid key is present. This
+  engine is a free local provider for that slot: the factory already exists, the shot-maker does not.
+
 ## Known Pitfalls
 
 1. Model weights are separate multi-GB downloads (Wan, Hunyuan, LTX-2, Flux) — plan disk space before the first run.

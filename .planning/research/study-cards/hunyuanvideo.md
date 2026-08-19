@@ -19,6 +19,11 @@
 - Reachable through **[[wan2gp]]**, which fronts it — meaning it can be benched in P37-2 without its own stack.
 - Weight size and VRAM ceiling are the open question for a 16 GB card; **UNVERIFIED until the bench runs.**
 
+
+- **Where it plugs in (merged 2026-08-19):** [[openmontage-opencut]] — measured on DXB-Center the same
+  day — runs with **`video_generation` 0 of 26 providers available** when no paid key is present. This
+  engine is a free local provider for that slot: the factory already exists, the shot-maker does not.
+
 ## Known Pitfalls
 
 1. Large-model class: the biggest VRAM risk of the four measured here.

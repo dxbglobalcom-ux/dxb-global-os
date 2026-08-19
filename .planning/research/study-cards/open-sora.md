@@ -20,6 +20,11 @@
 - **`9:16` is a first-class aspect ratio** (with `16:9`, `1:1`, `2.39:1`) — that is the shape this holding publishes in.
 - **Motion is a prompt parameter** (`motion score`, default 4) — direction becomes a number an agent can set, not a taste.
 
+
+- **Where it plugs in (merged 2026-08-19):** [[openmontage-opencut]] — measured on DXB-Center the same
+  day — runs with **`video_generation` 0 of 26 providers available** when no paid key is present. This
+  engine is a free local provider for that slot: the factory already exists, the shot-maker does not.
+
 ## Known Pitfalls
 
 1. The repo's prompt-refiner wants an **OpenAI key** — forbidden: `.planning/research/STACK.md` bans raw provider keys, and nothing about the holding leaves this box. Use it without the refiner, or refine through our own LiteLLM path.

@@ -16,6 +16,10 @@
 
 ## Key API / Usage Notes
 
+- **Merged 2026-08-19:** it is **vendored inside [[openmontage-opencut]]** as that system's second render
+  runtime, and it is half of what makes OpenMontage's zero-key render possible. Adopt it **through**
+  OpenMontage, not beside it.
+
 - **Re-measured 2026-08-19 (rival-intel source 37, GitHub API): `heygen-com/hyperframes` — 41,693 stars, Apache-2.0, last push 2026-08-19.** It has become the most-starred tool in this whole lane since the 07-17 pass.
 - **It installs as an agent SKILL, not as a dependency: `npx skills add heygen-com/hyperframes`** — this is the shape our `/ai/skills` page already draws (`library_items` where `kind='skill'`, measured 2 rows).
 - The composition is markup: the audio track is declared in the HTML itself (`data-start`, `data-duration`, `data-track-index`, `data-volume`) with a JS timeline driving it — an agent writes a film the way it writes a page.

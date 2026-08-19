@@ -131,6 +131,18 @@ to run on our own machine**. **One finding decides the bench:** WanGP is a
 launcher that already fronts **Wan, LTX-2, HunyuanVideo, Flux and Qwen Image**, so P37-2 needs one
 install, not four.
 
+**P37-6 — the factory already exists; these are the cameras it does not own.** Merged the same
+session with the deep re-measurement of **OpenMontage** (`study-cards/openmontage-opencut.md`), which
+was cloned, installed and **run on this machine**: 48,939★, AGPL-3.0, 13 pipelines, 121 tools,
+**1,393 tests green**, and one finished **1920×1080 · 30 fps · 23.06 s** film rendered **at $0.00**.
+Its measured limit is exactly our opening: with no paid key it has **`video_generation` 0 of 26 and
+`image_generation` 0 of 16 providers available**, so it can assemble a film but cannot invent a new
+shot. The four engines above are free local providers for that empty slot. **Order of work:
+OpenMontage first (it runs today, costs nothing), the engines second (they raise the ceiling from
+"assembled" to "shot").** Neither publishes anything — its `tools/publishers/` holds one local
+packaging tool — so the distribution leg stays ours under
+`00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md`.
+
 **The connection to what we already hold:** `video-editing-toolchain.md` picked the **editing**
 lane (OpenMontage + HyperFrames) and its generation lane pointed at paid tools; that card's
 generation half is **filled this session** with the four free engines above; these six are the

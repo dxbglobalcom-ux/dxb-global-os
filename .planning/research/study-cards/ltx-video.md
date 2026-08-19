@@ -21,6 +21,11 @@
 - **Built into ComfyUI core** — an existing node graph can drive it.
 - Also fronted by **[[wan2gp]]**.
 
+
+- **Where it plugs in (merged 2026-08-19):** [[openmontage-opencut]] — measured on DXB-Center the same
+  day — runs with **`video_generation` 0 of 26 providers available** when no paid key is present. This
+  engine is a free local provider for that slot: the factory already exists, the shot-maker does not.
+
 ## Known Pitfalls
 
 1. Every timing above is the vendor's on their reference card; **whether it holds on our RTX 5060 Ti (16,311 MiB) is UNVERIFIED until the P37-2 bench runs.**
