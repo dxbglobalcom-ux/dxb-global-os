@@ -1,8 +1,8 @@
 # 34 — cognee: the memory that draws the graph, sells the graph store, and gives the method away
 
 > **THE PLAN FOR THIS ALREADY EXISTS ON THE BOARD. THIS REPORT DOES NOT WRITE A SECOND ONE.**
-> `00-BOARD-OPEN-WORK.md` carries the CEO-approved decision **"V2 memory — one brain, three
-> abilities, written by us (2026-08-01)"** — marker `v2-memory-brain-2026-08-01`, his words
+> `00-BOARD-OPEN-WORK.md` carries the CEO-approved decision <!-- CEO-OK: v2-memory-brain-2026-08-01 -->
+> **"V2 memory — one brain, three abilities, written by us (2026-08-01)"** — his words
 > *"tamam onaylıyorum, bunu da not al v2 için"*. That decision already fixes the three abilities,
 > already names the measured cause (facts with no links), and already sets the boundary:
 > **cognee is read for its METHOD under Apache-2.0 and is NOT installed — no second brain, no
@@ -15,8 +15,8 @@
 The CEO put this source on the queue himself, into the DOCX on 2026-08-01 17:45:
 *"Önemli Memory Repo: … study it carefully and craft it if you find it correctly for real usefull."*
 
-He was aiming at a gap that is still open, and it was re-measured this session, 2026-08-19, against
-the live company database:
+He was aiming at the gap that decision names, and it was re-measured this session, 2026-08-19,
+against the live company database:
 
 | Measured now | Value |
 |---|---|
