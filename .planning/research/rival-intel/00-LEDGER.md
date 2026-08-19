@@ -450,6 +450,21 @@ When every row reads `reported`, one synthesis lands at `00-SYNTHESIS.md`: repea
 collapse into single rows, competing approaches are compared openly, and the target definition
 for stages 2-6 comes out of it. The CEO reads that synthesis; the next stage opens on his word.
 
+**THE SYNTHESIS SESSION READS THESE TOO — added 2026-08-19 on the CEO's own question,
+*"sentez rapor hazırlanırken ya atlanırsa falan?"*.** Not every finding of stage 1 lives inside a
+numbered report. Two of them landed in the holding's own registers instead, and a synthesis that
+reads only the 31 reports would miss them:
+
+| Also read | Why it is not in a report |
+|---|---|
+| `.planning/research/study-cards/openmontage-opencut.md` | The system was **cloned, installed and RUN on this machine** on 2026-08-19 — 48,939★, AGPL-3.0, 13 pipelines, 121 tools, 1,393 tests green, one 1920×1080 · 23.06 s film rendered at **$0.00**, and its zero-key limit measured: **`video_generation` 0/26, `image_generation` 0/16**. It is a repository study, not a filmed rival |
+| `.planning/research/study-cards/video-editing-toolchain.md` | The verdict card that now carries **the whole chain** — production/editing (OpenMontage, HyperFrames vendored inside it) joined to the free generation engines from source 37 (`wan2gp`, `open-sora`, `hunyuanvideo`, `ltx-video`), each with its own card and its own row in `INTEGRATION-TRACKER.md` |
+
+**The join, in one line, so it cannot be lost:** the factory runs today at zero cost and cannot
+invent a new shot; the four free engines are the cameras it lacks; nothing in either half publishes,
+so the distribution leg is ours under `00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md`. The buildable parts
+are **P37-1 … P37-6** in `37-dcat9zpd0cn.md` §5.
+
 ---
 
 # MOVED HERE FROM THE OPEN WORK BOARD — 2026-08-10, on the CEO’s order
