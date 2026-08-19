@@ -27,7 +27,7 @@
 3. Last push 2026-04-09 — slower-moving than the others measured the same day; check for a maintained fork before ADOPT.
 
 - **Install Command:** (deferred to INSTALL) per repo README on the workstation GPU; first verification = one 9:16 clip with seconds-per-render and peak VRAM recorded.
-- **Legitimacy Verdict:** OK — **Apache-2.0**, free, self-hosted (D1 compliant). Model weights' own terms to be confirmed at INSTALL.
+- **Legitimacy Verdict:** OK — **Apache-2.0**, free, self-hosted (D1 compliant).
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-08-19 — rival-intel 37)

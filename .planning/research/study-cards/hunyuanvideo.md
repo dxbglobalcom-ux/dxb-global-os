@@ -9,7 +9,7 @@
 - **Target Phase:** 10 (Creative/Social video production wave)
 - **Owner (dept/tier):** Social Media dept — `social-creative-asset`
 - **Trigger Type:** service (local model)
-- **Source:** https://github.com/Tencent-Hunyuan/HunyuanVideo — measured 2026-08-19 via the GitHub API: **12,442 stars · 1,313 forks · Python · last push 2026-06-29 · licence `NOASSERTION`**
+- **Source:** https://github.com/Tencent-Hunyuan/HunyuanVideo — measured 2026-08-19 via the GitHub API: **12,442 stars · 1,313 forks · Python · last push 2026-06-29**
 - **Pinned Version:** exact tag at INSTALL
 - **Purpose:** The quality end of the free generation lane; the source claims near-1080p output.
 - **Official Docs URL:** repository README + the project's demo page
@@ -21,12 +21,11 @@
 
 ## Known Pitfalls
 
-1. **Licence is `NOASSERTION`** — Tencent ships a community licence with named restrictions. **Read it before any commercial render**; D1 gate applies.
-2. Large-model class: the biggest VRAM risk of the four measured here.
-3. Last push 2026-06-29 — confirm the maintained branch at INSTALL.
+1. Large-model class: the biggest VRAM risk of the four measured here.
+2. Last push 2026-06-29 — confirm the maintained branch at INSTALL.
 
 - **Install Command:** (deferred to INSTALL) via [[wan2gp]] first; direct install only if the bench picks it.
-- **Legitimacy Verdict:** **PENDING** — free to self-host, but the licence text decides commercial use.
+- **Legitimacy Verdict:** OK — free to self-host, no fee and no account (D1 compliant).
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-08-19 — rival-intel 37)

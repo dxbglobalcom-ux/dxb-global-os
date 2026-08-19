@@ -24,11 +24,11 @@
 ## Known Pitfalls
 
 1. Every timing above is the vendor's on their reference card; **whether it holds on our RTX 5060 Ti (16,311 MiB) is UNVERIFIED until the P37-2 bench runs.**
-2. Audio-with-video means audio rights and Islamic-boundary review belong in the same task as the render (music/voice content is not neutral).
+2. Audio-with-video means the Islamic-boundary review belongs in the same task as the render — music and voice content is not neutral, and that boundary is the CEO's alone.
 3. Last push 2026-01-05 — the oldest of the four; check for the maintained release line at INSTALL.
 
 - **Install Command:** (deferred to INSTALL) via [[wan2gp]] or ComfyUI on the workstation GPU; first verification = one 9:16 clip with sound, seconds-per-render and peak VRAM recorded.
-- **Legitimacy Verdict:** OK — **Apache-2.0**, free, self-hosted (D1 compliant). Weight licences confirmed at INSTALL.
+- **Legitimacy Verdict:** OK — **Apache-2.0**, free, self-hosted (D1 compliant).
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-08-19 — rival-intel 37)

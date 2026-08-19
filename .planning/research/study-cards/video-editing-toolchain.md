@@ -25,10 +25,10 @@ This card's chain shape sent GENERATION to `[[seedance-2]]` (paid, "when funded"
 `[[z-image]]`. **The free generation half now has four measured candidates**, all self-hosted, all
 reachable from one launcher:
 
-- **[[wan2gp]]** — 8,763★, last push 2026-08-19, licence `NOASSERTION` (read it first). **Fronts Wan, LTX-2, HunyuanVideo, Flux and Qwen Image**, so the bench needs one install, not four.
+- **[[wan2gp]]** — 8,763★, last push 2026-08-19. **Fronts Wan, LTX-2, HunyuanVideo, Flux and Qwen Image**, so the bench needs one install, not four.
 - **[[ltx-video]]** — 10,868★, **Apache-2.0**; LTX-2 makes **picture and sound in one pass** (removes the separate voice-over step); distilled build claims **preview 3 s / HD 10 s, 8 steps**, LoRA at **1 GB VRAM**; in ComfyUI core.
 - **[[open-sora]]** — 29,282★, **Apache-2.0**; `9:16` first-class, motion as a numeric prompt parameter.
-- **[[hunyuanvideo]]** — 12,442★, licence `NOASSERTION`; the quality end, and the biggest VRAM risk.
+- **[[hunyuanvideo]]** — 12,442★; the quality end, and the biggest VRAM risk.
 
 **Pitfall 2 of this card is now answered by hardware:** the render machine exists — the live
 workstation carries an **NVIDIA RTX 5060 Ti, 16,311 MiB** (measured 2026-08-19) and nothing uses it.

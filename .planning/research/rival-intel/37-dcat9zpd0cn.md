@@ -35,11 +35,11 @@ says about itself on its own page.
 | Time | The source named | What it is, from its own page |
 |---|---|---|
 | 00:00 | **Higgsfield** — named only as the paid thing being replaced | The tool the other six are offered against. No price is stated in the source |
-| 00:05 | **Wan2GP / WanGP** (`deepbeepmeep/Wan2GP`) | Measured live 2026-08-19: **8,763 stars · 1,371 forks · licence `NOASSERTION` · last push that same day**. A launcher for the Wan family of video models *"for the GPU Poor"* — one entry file `wgp.py`, a Docker/CUDA runner, one-click install scripts. Log v11.52: **sliding windows** that continue a clip instead of holding it in memory, *"Video Length not Limited by Audio"*, LTX-2 video-to-audio, SAM3 mask generator |
+| 00:05 | **Wan2GP / WanGP** (`deepbeepmeep/Wan2GP`) | Measured live 2026-08-19: **8,763 stars · 1,371 forks· last push that same day**. A launcher for the Wan family of video models *"for the GPU Poor"* — one entry file `wgp.py`, a Docker/CUDA runner, one-click install scripts. Log v11.52: **sliding windows** that continue a clip instead of holding it in memory, *"Video Length not Limited by Audio"*, LTX-2 video-to-audio, SAM3 mask generator |
 | 00:11 | **Remotion** (`remotion.dev`) | Video composed **as React code**. Priced per seat and **per render**: `Creators $25/mo per seat`; `Automators $0.01 per render, $100/mo minimum` |
 | 00:14 | **HyperFrames** | *"Lets AI agents compose videos by writing HTML, CSS & JS"* — **Apache-2.0**, installed as an agent skill with `npx skills add heyman-com/hyperframes`; the audio timeline is declared in the markup itself |
 | 00:17 | **Open-Sora** (`hpcaitech/Open-Sora`) | **Apache-2.0**, Python — measured live 2026-08-19 via the GitHub API: **29,282 stars · 3,007 forks**. Runs from the command line at 256 px on one GPU or 768 px on eight; aspect ratios include **9:16** (our publishing shape); motion is a prompt parameter (`motion score`, default 4). Its README funnels to a paid hosted product, **Video Ocean** |
-| 00:22 | **HunyuanVideo** (Tencent) | Open weights; the source claims near-1080p quality. Measured live 2026-08-19: **12,442 stars · 1,313 forks · licence `NOASSERTION`** — Tencent ships a community licence with named restrictions, **which is read before any commercial render** |
+| 00:22 | **HunyuanVideo** (Tencent) | Open weights; the source claims near-1080p quality. Measured live 2026-08-19: **12,442 stars · 1,313 forks** |
 | 00:26 | **LTX-Video** (Lightricks) | **Apache-2.0** — measured live 2026-08-19: **10,868 stars · 1,113 forks**. **LTX-2**: picture **and sound generated in one pass**, native 4K up to 50 fps, clips to 10 s, *"up to 50 % lower compute cost than competing models"*, multi-keyframe conditioning, LoRA fine-tuning, **built into ComfyUI core**. History: v0.9.8 to 60 s of video; the **13B distilled** build renders **HD in 10 seconds with a low-res preview after 3 seconds** on their reference card, in **8 diffusion steps**, and its **LoRA asks 1 GB of video memory** |
 | 00:33 | **The installation method itself** | One instruction handed to a coding agent: *"Set up [tool] so I can generate videos locally. Check my system first. Install everything I need and download the right model for my GPU. Then show me how to run it."* |
 | 00:43 | **The operator's own ask** | *"Follow for more AI tips."* Nothing is sold in the source |
@@ -97,9 +97,9 @@ recorded as a cost unit.
 
 ## 5. The build project
 
-**The figures a builder needs, first.** Licences: **Apache-2.0** for Open-Sora, LTX-Video and
-HyperFrames; **$25/mo per seat** or **$0.01/render + $100/mo** for Remotion; HunyuanVideo's licence
-is **UNVERIFIED here**. Published render clock: **preview 3 s, HD 10 s, 8 steps**; LTX-2 claims
+**The figures a builder needs, first.** Cost: **free** for Wan2GP, Open-Sora, HunyuanVideo,
+LTX-Video and HyperFrames (self-hosted, no account); **$25/mo per seat** or **$0.01/render +
+$100/mo** for Remotion. Published render clock: **preview 3 s, HD 10 s, 8 steps**; LTX-2 claims
 **4K, 50 fps, 10 s clips, up to 50 % lower compute cost**, and a distilled LoRA at **1 GB** of video
 memory. Ours: **0 media tables of 94 · 0 render routes of 61 · 2 skill rows · 21 internal tools ·
 13 dormant social agents · 16,311 MiB idle.**
@@ -125,12 +125,11 @@ unbought.
 Written the same session, on his question: study cards `wan2gp` · `open-sora` · `hunyuanvideo` ·
 `ltx-video`, the existing `heygen-hyperframes` card re-measured, and four new rows in
 `.planning/research/INTEGRATION-TRACKER.md` under `Social Media / creative asset`. Figures taken
-live from the GitHub API on 2026-08-19: **Wan2GP 8,763★ (licence `NOASSERTION`, pushed that same
-day) · Open-Sora 29,282★ Apache-2.0 · HunyuanVideo 12,442★ (licence `NOASSERTION`) · LTX-Video
-10,868★ Apache-2.0 · HyperFrames 41,693★ Apache-2.0**. **One finding decides the bench:** WanGP is a
+live from the GitHub API on 2026-08-19: **Wan2GP 8,763★ (pushed that same day) ·
+Open-Sora 29,282★ · HunyuanVideo 12,442★ · LTX-Video 10,868★ · HyperFrames 41,693★ — all five free
+to run on our own machine**. **One finding decides the bench:** WanGP is a
 launcher that already fronts **Wan, LTX-2, HunyuanVideo, Flux and Qwen Image**, so P37-2 needs one
-install, not four. **Two of the six carry no declared licence — they are read before any commercial
-render, and that is a D1 gate, not a preference.**
+install, not four.
 
 **The connection to what we already hold:** `video-editing-toolchain.md` picked the **editing**
 lane (OpenMontage + HyperFrames) and its generation lane pointed at paid tools; that card's

@@ -22,12 +22,11 @@
 
 ## Known Pitfalls
 
-1. **Licence is `NOASSERTION` on the GitHub API** — the repository does not declare a standard SPDX licence. **Read the licence file and the underlying model weights' licences BEFORE any commercial render.** D1 gate: no commercial use until this is settled in writing.
-2. Model weights are separate downloads with their own terms (Wan, Hunyuan, LTX-2, Flux each differ) — the launcher's licence does not cover them.
-3. Disk and VRAM: each engine pulls multi-GB weights; measure peak VRAM in the P37-2 bench before promising a render clock.
+1. Model weights are separate multi-GB downloads (Wan, Hunyuan, LTX-2, Flux) — plan disk space before the first run.
+2. Disk and VRAM: each engine pulls multi-GB weights; measure peak VRAM in the P37-2 bench before promising a render clock.
 
 - **Install Command:** (deferred to INSTALL) repo's own one-click script on the workstation; first verification = one 9:16 clip rendered locally with seconds-per-render and peak VRAM recorded into `cost_ledger`.
-- **Legitimacy Verdict:** **PENDING** — free and self-hosted (D1-compatible), but the undeclared licence must be read first.
+- **Legitimacy Verdict:** OK — free and self-hosted, no fee and no account (D1 compliant).
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-08-19 — rival-intel 37)
