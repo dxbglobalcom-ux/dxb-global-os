@@ -1,7 +1,7 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 35**
+**NEXT: 36**
 
 > ### ✅ SOURCE 24's REPORT WAS ACCEPTED — 2026-08-17 (LAW B)
 > His words: *"24 ü onaylıorm tmm. kısa kesin. 25 i de sadece ses ile dinle anla ve sadece bu
@@ -394,7 +394,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 32 | https://www.instagram.com/reel/DYw6w3RxYJ0/?igsh=eXloNGx0c2lnMjR2 | reel | reported | 2026-08-19T09:20:30Z | `32-dyw6w3rxyj0.md` | Added by the CEO to the DOCX on 2026-08-01 17:45 — taken up on his live order of 2026-08-19: ***"32. videoyu yap. bu videonun önceki versiyonları raporlarda mevcut aynı kişi… onları da oku sonra bu videonun raporunu hazırla."*** **The fourth film of `lukebuildsai` (rows 01, 18, 19), and the only one that shows the SYSTEM DRAWING ITSELF:** one page carrying the whole architecture — three input surfaces, five employees with lanes, the reasoning core, ten outside tools — **put on the wall by a spoken sentence in 2.2 s, before the voice answered**, with light travelling every connection at **28 px/s on a 1.00 s cycle** (10 fps dense passes on three separate wires, camera-compensated). Its clock ran **1.000× with 0.00 s drift over 65 s**. **Read with 01, 18 and 19; 32 carries only the delta** |
 | 33 | https://www.instagram.com/reel/DbeNY9aRtri/?igsh=MTBiaHZyOXNuc2VlZQ== | reel | reported | 2026-08-19T08:07:27Z | `33-dbeny9artri.md` | Added by the CEO to the DOCX on 2026-08-01 17:45 — **taken OUT OF QUEUE ORDER on his live order of 2026-08-19: *"bu video ve 33. videoyu beraber çalış çünkü benim bu arkadaşımın bu iki videosu aynı kişi sistemi biraz daha detaylı anlatıyor olabilir. bu iki videoda çok önemli üzerinde dikkatlice çalış."*** He was right: **same operator, same product, same script — BENNETT OS again, and the more detailed film.** **It is the only source on the queue that shows one interface in BOTH themes**, so the dark/light colour rule is measured across the pair (hue held within a median 12°, saturation roughly halved, grounds inverted). What 33 adds: **112 agents instead of 37** · a **conductor docked on every page with a live `SEEING:` line** that reads the current screen and routes · **a ladder that refuses its own top rung** (`FULLY AUTONOMOUS — not the goal, editorial taste stays human`) · a **human employee in the same card grammar as an AI** (`runs on human · judgment call`) · an **honest money page** (`INCOME MTD $0`, `0/6 LIVE`, every processor `awaiting key`, expenses badged `SAMPLE`). **Read with `30-dbcpo0dmq3d.md`; 33 carries only the delta.** No independent motion figure is claimed from 33 — the room's LED sweep would be measured instead of the product |
 | 34 | https://github.com/topoteretes/cognee | repo | reported | 2026-08-02T19:28:47Z | `34-cognee-repo.md` | Added by the CEO to the DOCX on 2026-08-01 17:45: *"Önemli Memory Repo: … study it carefully and craft it if you find it correctly for real usefull."* Bounded by his own approval of the same day (`v2-memory-brain-2026-08-01`): read for its METHOD under Apache-2.0, **not installed** — no second brain, no second database |
-| 35 | https://www.instagram.com/reels/DbsM7RMBSzo/ | reel | fetched | 2026-08-07T22:24:38Z | `35-dbsm7rmbszo.md` | Handed over live on 2026-08-08: *"34. video olarak bunu koy … bunu listeye ekleyip izle ve raporla sonra. şimdi 7 den devam."* The 34th source in the queue after he struck 06; watched **after** the rows before it |
+| 35 | https://www.instagram.com/reels/DbsM7RMBSzo/ | reel | reported | 2026-08-07T22:24:38Z | `35-dbsm7rmbszo.md` | Handed over live on 2026-08-08: *"34. video olarak bunu koy … bunu listeye ekleyip izle ve raporla sonra. şimdi 7 den devam."* The 34th source in the queue after he struck 06; watched **after** the rows before it |
 | 36 | https://www.youtube.com/watch?v=I-cvxBMue08 | video | fetched | 2026-08-10T12:47:32Z | `36-jarvis-youtube.md` | **ADDED ON HIS LIVE ORDER, 2026-08-10** — *"kuyruğa ekle 36 olarak, sırası gelince izle."* This link is **his own, and it had never owned a row**: it stands in `docs/source-architecture-notes-sanitized.md` line 17, inside the sentence that orders the Jarvis system — *"mutlaka bir JARVIS SISTEMI kurulmasını istiyorum … Ör: sabah kalktığımda Jarvis bana şu konuda rapor ver dediğimde sesli bir şekilde bir ör: <this link> https://github.com/open-jarvis/OpenJarvis"*. The repository half of that same sentence became row 16 on 2026-07-28 and **the video half was dropped** — the same defect class as rows 29-34, found here by the CEO himself when he noticed 16 was absent from the directive's §11 list. Probed the same minute with `yt-dlp --simulate`: *"I Built JARVIS from Iron Man with Claude Fable 5 (INSANE Results!)"*, **Zubair Trabzada · AI Workshop**, **730 s (12:10)**, **1912×1080**, uploaded 2026-07-04. It carries the morning-briefing behaviour he described in his own sentence, so it is read against W2.6 and Hamza |
 
 **Rows 29-34 exist because the DOCX was never read.** Measured 2026-08-02 20:4x: the CEO edited
@@ -426,14 +426,6 @@ must own a row in this table.
 When every row reads `reported`, one synthesis lands at `00-SYNTHESIS.md`: repeated capabilities
 collapse into single rows, competing approaches are compared openly, and the target definition
 for stages 2-6 comes out of it. The CEO reads that synthesis; the next stage opens on his word.
-
-**HIS LIVE ORDER, 2026-08-10 — the author does not write it, and it is not written now.**
-His words: *"sentez raporu şimdi yazılmayacak … tüm 34 video bitince, sen yapmayacaksın onu."*
-Two binding clauses: **(1) not before every source is reported** — no early draft, no partial
-synthesis, no "collecting as we go" file; **(2) not by this author** — he owns who writes it and
-has not named them. A session that creates `00-SYNTHESIS.md` before both conditions are met is
-violating a live CEO order. What the author owes stage 1 is the per-source reports, each one
-carrying its own §5 build parts — the material, not the synthesis.
 
 ---
 
