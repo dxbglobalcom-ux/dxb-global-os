@@ -49,6 +49,33 @@ FOREVER = re.compile(r"\bwhile\s+(?:true|:)\b|\byes\b\s*\|")
 BOUNDS = ("timeout", "head -", "-m ", "--max-count", "break", "sleep")
 
 
+# A command string is a chain of segments: `a | b && c ; d`. A word only counts as a
+# COMMAND when it opens a segment. Without this, prose that merely contains "find" or
+# " / " — a commit message, an echo, a heredoc — is read as a disk scan. Measured
+# 2026-08-19: the gate blocked its own commit for exactly that reason.
+SEGMENT_SPLIT = re.compile(r"\|\||&&|[|;\n]")
+
+
+def command_segments(cmd):
+    """Yield (first_word, whole_segment) for every segment of a command chain."""
+    for seg in SEGMENT_SPLIT.split(cmd):
+        seg = seg.strip()
+        if not seg:
+            continue
+        # step over leading env assignments and simple prefixes
+        words = seg.split()
+        i = 0
+        while i < len(words) and ("=" in words[i].split("/")[0] and not words[i].startswith("-")):
+            i += 1
+        while i < len(words) and os.path.basename(words[i]) in ("sudo", "time", "nice", "nohup", "command", "timeout"):
+            i += 1
+            if i < len(words) and words[i].lstrip("-").isdigit():
+                i += 1
+        if i >= len(words):
+            continue
+        yield os.path.basename(words[i].strip("\"'")), " ".join(words[i:])
+
+
 def alternation_branches(pattern):
     """Largest number of branches inside any (a|b|c) group; escaped bars ignored."""
     best, counts, i = 0, [], 0
@@ -87,36 +114,32 @@ def search_bomb(cmd):
 
 
 def big_file_flood(cmd):
-    parts = cmd.strip().split()
-    if not parts:
-        return None
-    first = os.path.basename(parts[0])
-    if first not in DUMPERS or any(lim in cmd for lim in LIMITERS):
-        return None
-    for tok in parts[1:]:
-        path = tok.strip("\"'")
-        if path.startswith("-"):
+    for first, seg in command_segments(cmd):
+        if first not in DUMPERS or any(lim in cmd for lim in LIMITERS):
             continue
-        try:
-            size = os.path.getsize(os.path.expanduser(path))
-        except OSError:
-            continue
-        if size > FLOOD_BYTES:
-            return ("`%s` would pour %d MB from %s into the conversation with no size limit"
-                    % (first, size // 1024 // 1024, path))
+        for tok in seg.split()[1:]:
+            path = tok.strip("\"'")
+            if path.startswith("-"):
+                continue
+            try:
+                size = os.path.getsize(os.path.expanduser(path))
+            except OSError:
+                continue
+            if size > FLOOD_BYTES:
+                return ("`%s` would pour %d MB from %s into the conversation with no size limit"
+                        % (first, size // 1024 // 1024, path))
     return None
 
 
 def whole_disk_scan(cmd):
-    if not SCANNERS.search(cmd):
-        return None
-    recursive = re.search(r"(?:^|\s)(?:-r|-R|--recursive)(?:\s|$)", cmd) or re.search(
-        r"(?:^|\s)(?:find|fd)\s", cmd)
-    if not recursive:
-        return None
-    tail = cmd[recursive.end():]
-    if WHOLE_ROOT.search(tail):
-        return "a recursive scan rooted at the whole disk or the whole home directory"
+    for first, seg in command_segments(cmd):
+        if not SCANNERS.fullmatch(first):
+            continue
+        recursive = re.search(r"(?:^|\s)(?:-r|-R|--recursive)(?:\s|$)", seg) or first in ("find", "fd")
+        if not recursive:
+            continue
+        if WHOLE_ROOT.search(seg):
+            return "a recursive scan rooted at the whole disk or the whole home directory"
     return None
 
 
@@ -151,7 +174,7 @@ def main():
         target = tool_input.get("command", "") or ""
         label = "Bash command"
         checks = [big_file_flood, whole_disk_scan, endless_loop]
-        if SCANNERS.search(target):
+        if any(SCANNERS.fullmatch(w) for w, _ in command_segments(target)):
             checks.insert(0, search_bomb)
     else:
         return 0

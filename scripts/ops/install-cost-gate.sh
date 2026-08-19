@@ -47,6 +47,4 @@ else:
 PY
 
 echo "--- proof ---"
-printf '%s' '{"tool_name":"Bash","tool_input":{"command":"find /etc -name probe"}}' \
-  | python3 "$GATE_DST" >/dev/null 2>&1 && echo "FAIL: gate did not block an unbounded scan" && exit 1
-echo "gate blocks an unbounded scan (exit 2) — working"
+python3 "${REPO_ROOT}/scripts/ops/test-cost-gate.py"
