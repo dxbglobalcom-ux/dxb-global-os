@@ -1,7 +1,26 @@
 # RIVAL INTELLIGENCE LEDGER — stage 1 of the C42 programme
 
 
-**NEXT: 36**
+**NEXT: done**
+
+> ### 2026-08-19 evening — THE WATCHING OF STAGE 1 IS FINISHED
+> Measured by `scripts/rival-intel/next.sh` this minute: **31 of 36 reported · 5 skipped on his
+> order (13, 26, 27, 31, 36) · NEXT: done.** What happened in this session, on his live orders:
+> - **Row 36 skipped** — *"(buarada 36. video izlenmeyecek ) not düş"*. Material stays on disk.
+> - **Row 37 added and reported** — `https://www.instagram.com/reels/DcAT9zPD0Cn/`, `ericsocal`,
+>   six free video engines. **43 frames on disk, 43 opened.** Report `37-dcat9zpd0cn.md`.
+> - **Report 35 completed.** His finding: the first pass claimed 72 frames and had read 20.
+>   **83 files on disk (72 + 11 cuts), 83 opened.** Added: the whole sidebar, the liveness counter
+>   `16/22 systems live`, the CEO's own order to his agents, the company board with its six
+>   fanned-out tasks, `THE BRAIN IN NUMBERS`, `COST & RUNTIME $4.31`, `RUNS 295`, the skill card's
+>   `READY TO RUN` ladder — §§4.11-4.13 and build items 8-10.
+> - **Report 29 completed** — the `Content performance cockpit` (17 reels · 323,081 views ·
+>   86,166 on the top reel), the `Content relationship graph` (**20 nodes · 60 edges**), the
+>   `Content library` and the `Agent Log · LAST 50`; parts **P29-7**, **P29-8**.
+> - **Report 33 completed** — the screen's own name **`OPTIMAL ENGINE`**, `~107k words`, the eight
+>   `KNOWLEDGE DOMAINS`, the **`take-culler`** card with its `$2-3k per batch`; part **P33-7**.
+>
+> **What is left of stage 1 is the synthesis**, `00-SYNTHESIS.md`, and it waits on him.
 
 > ### ✅ SOURCE 24's REPORT WAS ACCEPTED — 2026-08-17 (LAW B)
 > His words: *"24 ü onaylıorm tmm. kısa kesin. 25 i de sadece ses ile dinle anla ve sadece bu
@@ -395,7 +414,8 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 33 | https://www.instagram.com/reel/DbeNY9aRtri/?igsh=MTBiaHZyOXNuc2VlZQ== | reel | reported | 2026-08-19T08:07:27Z | `33-dbeny9artri.md` | Added by the CEO to the DOCX on 2026-08-01 17:45 — **taken OUT OF QUEUE ORDER on his live order of 2026-08-19: *"bu video ve 33. videoyu beraber çalış çünkü benim bu arkadaşımın bu iki videosu aynı kişi sistemi biraz daha detaylı anlatıyor olabilir. bu iki videoda çok önemli üzerinde dikkatlice çalış."*** He was right: **same operator, same product, same script — BENNETT OS again, and the more detailed film.** **It is the only source on the queue that shows one interface in BOTH themes**, so the dark/light colour rule is measured across the pair (hue held within a median 12°, saturation roughly halved, grounds inverted). What 33 adds: **112 agents instead of 37** · a **conductor docked on every page with a live `SEEING:` line** that reads the current screen and routes · **a ladder that refuses its own top rung** (`FULLY AUTONOMOUS — not the goal, editorial taste stays human`) · a **human employee in the same card grammar as an AI** (`runs on human · judgment call`) · an **honest money page** (`INCOME MTD $0`, `0/6 LIVE`, every processor `awaiting key`, expenses badged `SAMPLE`). **Read with `30-dbcpo0dmq3d.md`; 33 carries only the delta.** No independent motion figure is claimed from 33 — the room's LED sweep would be measured instead of the product |
 | 34 | https://github.com/topoteretes/cognee | repo | reported | 2026-08-02T19:28:47Z | `34-cognee-repo.md` | Added by the CEO to the DOCX on 2026-08-01 17:45: *"Önemli Memory Repo: … study it carefully and craft it if you find it correctly for real usefull."* Bounded by his own approval of the same day (`v2-memory-brain-2026-08-01`): read for its METHOD under Apache-2.0, **not installed** — no second brain, no second database |
 | 35 | https://www.instagram.com/reels/DbsM7RMBSzo/ | reel | reported | 2026-08-07T22:24:38Z | `35-dbsm7rmbszo.md` | Handed over live on 2026-08-08: *"34. video olarak bunu koy … bunu listeye ekleyip izle ve raporla sonra. şimdi 7 den devam."* The 34th source in the queue after he struck 06; watched **after** the rows before it |
-| 36 | https://www.youtube.com/watch?v=I-cvxBMue08 | video | fetched | 2026-08-10T12:47:32Z | `36-jarvis-youtube.md` | **ADDED ON HIS LIVE ORDER, 2026-08-10** — *"kuyruğa ekle 36 olarak, sırası gelince izle."* This link is **his own, and it had never owned a row**: it stands in `docs/source-architecture-notes-sanitized.md` line 17, inside the sentence that orders the Jarvis system — *"mutlaka bir JARVIS SISTEMI kurulmasını istiyorum … Ör: sabah kalktığımda Jarvis bana şu konuda rapor ver dediğimde sesli bir şekilde bir ör: <this link> https://github.com/open-jarvis/OpenJarvis"*. The repository half of that same sentence became row 16 on 2026-07-28 and **the video half was dropped** — the same defect class as rows 29-34, found here by the CEO himself when he noticed 16 was absent from the directive's §11 list. Probed the same minute with `yt-dlp --simulate`: *"I Built JARVIS from Iron Man with Claude Fable 5 (INSANE Results!)"*, **Zubair Trabzada · AI Workshop**, **730 s (12:10)**, **1912×1080**, uploaded 2026-07-04. It carries the morning-briefing behaviour he described in his own sentence, so it is read against W2.6 and Hamza |
+| 36 | https://www.youtube.com/watch?v=I-cvxBMue08 | video | skipped | 2026-08-10T12:47:32Z | `36-jarvis-youtube.md` | **SKIPPED ON THE CEO'S LIVE ORDER, 2026-08-19** — *"(buarada 36. video izlenmeyecek ) not düş"*. No report is written. Like rows 13, 26, 27 and 31 the row is **not** struck: it keeps its number, its material stays on disk (`media/36-*.mp4`, `frames/36`, `transcripts/36.json`), and the number is not re-used. **ADDED ON HIS LIVE ORDER, 2026-08-10** — *"kuyruğa ekle 36 olarak, sırası gelince izle."* This link is **his own, and it had never owned a row**: it stands in `docs/source-architecture-notes-sanitized.md` line 17, inside the sentence that orders the Jarvis system — *"mutlaka bir JARVIS SISTEMI kurulmasını istiyorum … Ör: sabah kalktığımda Jarvis bana şu konuda rapor ver dediğimde sesli bir şekilde bir ör: <this link> https://github.com/open-jarvis/OpenJarvis"*. The repository half of that same sentence became row 16 on 2026-07-28 and **the video half was dropped** — the same defect class as rows 29-34, found here by the CEO himself when he noticed 16 was absent from the directive's §11 list. Probed the same minute with `yt-dlp --simulate`: *"I Built JARVIS from Iron Man with Claude Fable 5 (INSANE Results!)"*, **Zubair Trabzada · AI Workshop**, **730 s (12:10)**, **1912×1080**, uploaded 2026-07-04. It carries the morning-briefing behaviour he described in his own sentence, so it is read against W2.6 and Hamza|
+| 37 | https://www.instagram.com/reels/DcAT9zPD0Cn/ | reel | reported | 2026-08-19T18:07:47Z | `37-dcat9zpd0cn.md` | **HANDED OVER LIVE, 2026-08-19** — his own words opening the session: *"https://www.instagram.com/reels/DcAT9zPD0Cn/ bu içerikle ilgili rapor hazırla holdingimiz için"*, with the watching condition he wrote out in the same message: *"İZLEME — KISALAN SADECE YAZI, İZLEME ASLA … frames/<n>/t*.jpg altındaki KARELERİN HEPSİNİ tek tek açacaksın"*, and the count of frames on disk against the count opened written into the report itself |
 
 **Rows 29-34 exist because the DOCX was never read.** Measured 2026-08-02 20:4x: the CEO edited
 `DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.docx` at 2026-08-01 17:45 and the repository's copy was still
