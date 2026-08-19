@@ -99,11 +99,34 @@ removed):
 **Each wire is 86 px long, so three dashes are on it at once and one dash crosses in ≈3.0 s.**
 Nothing reverses, nothing loops back: the page reads left-to-right as work, upward as a question.
 
-**3 — Rest is drawn too, and the animation is ambient.** The mesh footer reads **`STATE · IDLE`**
-at 00:30 and still at 01:04, while the wires keep their 1.00 s cadence throughout. **The flow is a
-property of the wire, not a report of traffic** — the state word is what carries the truth here.
-UNVERIFIED, and what would settle it: whether those dashes change speed or colour when a real job
-runs; that would need a recording of the page during work, or its source.
+**3 — The flow is permanent, and THAT is what it reports.** The mesh footer reads **`STATE · IDLE`**
+at 00:30 and still at 01:04, and the wires hold their 1.00 s cadence throughout. **The CEO's ruling
+of 2026-08-19 governs this reading and deletes the sentence that first stood here (LAW A):** *"o
+akışkanlık sistemin canlı olarak çalıştığını gösterior… sadece iş olurken değil sistemin aktif her
+parçasının aktif olduğunu gösterior."* The travelling light is not tied to one job; it reports that
+**this link is live and this part of the system is up** — which is exactly why it runs while the
+mesh is idle.
+
+**Measured across the whole queue, this is what every filmed rival does** — permanent motion, on a
+stated period, each figure taken against a static control in the same frames:
+
+| Source | What moves, permanently | Its figure |
+|---|---|---|
+| 01 (same man) | `PROXIMITY` arm · clock to hundredths | one sweep **3.3–4 s**, never reversing |
+| 12 | every wire of the workflow board | **1.8 s** per edge, whole board **2.3–2.4 s**, staggered phases, **0.5 s** of each cycle at rest |
+| 14 (same product as 12) | beads emitted by the org chart | rotation **1.90 s**, one duration per edge **1.5 s** |
+| 17 | the identity orb | **10.87 %** of its pixels per 100 ms, continuous, against a **0.00 %** wall control |
+| 20 | the knowledge graph | **4.52×** the static-text floor, not decaying across the window |
+| 24 | the action feed | refresh bursts on a clean **2.0 s** period |
+| 29 | chat orb · memory graph | **96×** and **8×** a static control — two speeds of life |
+| 30 | graph core · spoke node | **6.78×** and **8.63×** the panel's own still ground |
+| **32, here** | the three connections | **28 px/s**, pitch 28 px, period **1.00 s**, three dashes on an 86 px wire |
+
+**And source 14 carries the discipline that completes the rule:** on that page the one card marked
+`idle` — the Dev branch — emitted **0 pulses across all 180 frames** of the dense pass while the four
+live branches kept their rotation. **The motion encodes the state: a live part flows always, a part
+that is not live is still.** It does not touch the separate rule already registered from source 17
+(P17-8): **a link flows, a VALUE does not** — a number moves once, reaches its true reading, stops.
 
 **4 — What DXB takes.** The self-drawn architecture page as a real surface (P32-1), the wire whose
 direction and speed mean something (P32-2), the lane printed on the employee (P32-3), the named tool
@@ -129,12 +152,12 @@ shelf (P32-4), and the spoken sentence that changes the wall in about two second
 > **Clock:** the page tracks the machine at **1.000×, 0.00 s drift over 65 s**. **Latency:** spoken
 > question ends **9.12 s**, the page changes **11.3–11.8 s** = **2.2 s**, and the voice answers
 > **after** the picture. **State:** the workforce box prints **`5 AGENTS · SHARED CONTEXT`** and
-> **`STATE · IDLE`** while the wires keep moving.
+> **`STATE · IDLE`** while the wires keep moving — **the flow reports that the parts are up, the state word reports what they are doing: two signals, two jobs.** A part that is not live shows no flow at all (source 14: the `idle` branch, 0 pulses in 180 frames).
 
 | # | Project | What it is | Definition of done | <!-- OPEN: B22 -->
 |---|---|---|---|
 | **P32-1** | **The holding drawn as one page, and it is a surface of the OS** | Four layers in the order work travels — input surfaces → the workforce → the reasoning layer → the tool shelf — in the product's own chrome, with its clock and its state words. Not an image, not a slide | Opened cold, it renders the live company: real departments, real agents, the tools actually connected, and it changes when the company changes <!-- OPEN: B22 --> |
-| **P32-2** | **A wire that means something** | Direction and speed carry the reading: **into** the holding on the input side, **out** to the tools on the act side, **up** to the model for a question. Copy the grammar, not the ornament: **a wire moves only while that link is carrying work, and rests when it is not** — his page animates while its own footer says `IDLE`, and our first law says movement means a real movement | A link with no traffic is visibly still; a link carrying a job moves, and the speed is tied to a real rate rather than a constant <!-- OPEN: B22 --> |
+| **P32-2** | **The connection flows while it is alive** | **Every live link carries a permanent travelling light on a stated period** — his **1.00 s / 28 px/s** here, source 12's **2.4 s** board, source 14's **1.90 s** rotation. It reports that the part is up and connected, not that one job is running. **Direction is the meaning:** in from the channels, out to the tools, up to the model. **A link that is not live carries none** — source 14's `idle` branch, 0 pulses in 180 frames. Rest inside the cycle is part of the design (source 12: 0.5 s of every 2.4 s with the wire empty) | Every connected link flows on the stated period with nobody watching; a link that is down or idle is visibly still; direction matches the way work travels <!-- OPEN: B22 --> |
 | **P32-3** | **The lane, printed on the employee** | `name · role · its own skills · its own tools`, on the agent's own row. Measured need: **1 distinct `skills` value and 1 distinct `mcp_profile` across 205 agents** — this is report 19's P19-5, still open, and this source is the picture of what it should look like when done | `count(distinct skills)` and `count(distinct mcp_profile)` grow with the workforce, and each agent's row names the tools it may use <!-- OPEN: B22 --> |
 | **P32-4** | **The tool shelf as a surface** | One panel listing every outside account the holding can act through, each with its state. Measured need: **15 tools ever called, all internal, none outward**; **no connector table exists** | The shelf exists as a table and a panel; a tool with no key says so on its own row <!-- OPEN: B22 --> |
 | **P32-5** | **The sentence changes the wall** | Hamza gains an action that puts a named surface on the CEO's screen as the sentence is spoken — the target is his **2.2 s**, with the picture arriving **before** the spoken answer. Board rows B03 / B03-bis | A spoken request changes what stands on the screen within seconds, measured, without a click <!-- OPEN: B22 --> |
@@ -153,8 +176,9 @@ the middle, ten outside tools on the right, and light travelling every wire at a
 a 1.00 s cycle.** Four of the five things it draws are the four holes measured on our side today.
 
 **Take first: P32-3 and P32-2.** The picture is worth little while `skills` is one empty list across
-205 employees; and when it is drawn, our wires must move **because** something moves — which is the
-one place this holding's own first law goes further than the source.
+205 employees; and when it is drawn, every live link on it flows on a stated period the way all nine
+filmed rivals do, while a link that is down or idle stays still — which is the holding being visibly
+alive when nobody is watching.
 
 <!-- FINGERPRINT -->
 ---
