@@ -150,18 +150,114 @@ this operator chose to show.
 
 ---
 
-## 4. What DXB has today — measured 2026-08-19
+## 4. What DXB has today — HIS SCREENS AGAINST OURS, every screen in the film, measured 2026-08-19
 
-| | DXB, measured this session | 35, measured on screen |
+He showed ten screens. Below, each one against the DXB route that answers it, with what our route
+actually renders — read from the page files and the live company database this session, never from
+memory. **Our surface is not short of pages: 61 routes against his 16 sidebar entries.** The
+differences are elsewhere, and they are named per row.
+
+### 4.1 The company drawn as a picture
+
+| | HIS | OURS |
 |---|---|---|
-| Agents | **205** written | `TOTAL 30 · ACTIVE 15`, roster page `10 agents`, title card `37+` |
-| Agents running now | **0** — `dxb-jarvis` and `dxb-scheduler` are `inactive` and `disabled` by CEO order | 1 running · 2 paused · 1 error, the rest idle with a last-activity time each |
-| Model shown per department | not on any surface | printed on every department card and every roster row, six tiers across two vendors |
-| Shared brain | `memory_index` **13,919** rows, **0 relations**, `memory-store/relation/` **0 files** | G-Brain: 6 folders, 1 cluster, a walkable four-layer map per department |
-| Open tasks | **0** | `OPEN TASKS 7` · `1 in progress, 6 open, 1 blocked` |
-| Scheduled work | 15 schedules existed when the services last ran; **0 running now** | `CRON JOBS 0` printed, plus one persisted daily monitor with its next wake time |
-| Money on the surface | lifetime revenue **€0.00** | `Stripe: 3229.23 USD available · 5 recent charges`; `Attio live: 100 deals on the roster`; `50+ deals on record`; `funnel backup holds 7 clients` |
-| The first reply to the owner | a written rule in `.claude/CLAUDE.md` §0 | a shipped behaviour: three items ordered by payoff, two open rulings, one question |
+| Route | the hierarchy screen, and G-Brain `Radial` / `Neural` | `/org` · `/org/departments` · `/org/employees` · `/ai/memory` |
+| What it renders | a drawn graph: operator at the top, conductor under it, six department nodes on spokes, ~40 people and ~40 tools in rings, a dense core labelled `tools · people · org · agents · sops · Claude Archive · Service active clients` | **`/org` contains 0 `svg` elements; `/ai/memory` contains 0 `svg` and 0 `node`.** Both are lists and tables. 571 lines of memory page, nothing drawn |
+| Behind it | 6 folders, 1 cluster, distilled-note counts `35 · 32 · 30 · 12 · 6 · 5`, `CLAUDE ARCHIVE 32↔`, `ORG 29↔` | `memory_index` **13,919** rows · `memory_embeddings` **37** · **0 relations, no relation table** · `v_org_graph` **221 nodes joined only parent→child** |
+| **The gap** | — | **We hold more remembered things than he does and cannot draw one of them, because there are no edges.** Not a rendering problem: a data problem the board's own approved decision already owns |
+
+### 4.2 Walking into a department
+
+| | HIS | OURS |
+|---|---|---|
+| Route | G-Brain drill-down: `‹ Communications ›`, `‹ Finances ›` | **none** |
+| What it renders | four layers in one grammar — tool (`Comms Feed · Slack · Imap · Whatsapp`) → worker (`Comms Agent · Slack Worker · Mia Torres · WhatsApp Worker · Gmail Worker`) → work item (*"Triage the four Gm…"*) → department node, with human names beside the agents | `/org/departments` lists **21 departments** as rows. There is no path from a department into its tools, its people and its open work as one picture |
+| **The gap** | — | **The drill-down does not exist in any form** |
+
+### 4.3 The agent roster
+
+| | HIS | OURS |
+|---|---|---|
+| Route | paperclip `AGENTS`, tabs `All · Active · Paused · Error` | `/org/employees` · `/ai/orchestration` |
+| What it renders | **10 agents** as job titles under `Conductor CEO` — Communications Lead, **Finances CFO**, **Forge Founding Engineer**, Hermes Workers, **Marketing/Growth CMO**, **Reflection Coach**, Sales Lead, **Summarizer**, **TECH CTO** | **205 agents** across **21 departments**. `/ai/orchestration` (91 lines) carries **13 role slots** with live assignments from `v_role_slots`, fallback chains, a guardrail audit and a routing simulator — **he shows nothing of this kind** |
+| Running now | 1 running · 2 paused · 1 error, the rest idle | **0 running.** `dxb-jarvis` and `dxb-scheduler` are `inactive` and `disabled` by CEO order |
+| **The gap** | — | **Ours is the larger and more governed roster, and none of it is switched on** |
+
+### 4.4 The model each worker runs
+
+| | HIS | OURS |
+|---|---|---|
+| Route | printed on every department card and every roster row | `/ai/models` — a separate page, 79 lines |
+| What it renders | `claude-fable-5` · `claude-opus-4-6` · `claude-sonnet-4-6` · `claude-haiku-4-6` · `claude-haiku-4-5` · `gpt-5.4 on Codex`, each with **last activity** and a **state pill**, and `TECH · gpt-5.4 · ERROR` shown in public | `/org` mentions a model **3 times** in 77 lines. The model is not on the employee, not on the department, not beside the work |
+| **The gap** | — | **We route across tiers and the CEO cannot see which employee runs on what, or which tier is failing** |
+
+### 4.5 The action layer — Hermes
+
+| | HIS | OURS |
+|---|---|---|
+| Route | `REAL AGENTS · HERMES WORKERS` tab | **none — `hermes` appears 0 times across all 61 pages and 0 times in `packages/`** |
+| What it renders | a full console: `CHAT · SESSIONS · FILES · MODELS · LOGS · CRON · SKILLS · PLUGINS · MCP · CHANNELS · WEBHOOKS · PAIRING · PROFILES · CONFIG`, with **`Gateway Status: Running`**, `Active Sessions: 1`, and `Restart Gateway` / `Update Hermes` buttons | — |
+| What is actually running | **Hermes Agent v0.19.1** on `glm-5.2`, **9 tools · 78 skills in 35 categories** | **Hermes Agent v0.18.2** on **`glm-5.2`** — the same tool and the same model — `systemctl is-active hermes` → **`active`**, up since **2026-08-19 08:05:21 UTC**, with **1 job contract** in `/opt/dxb/vps/hermes/jobs/` |
+| **The gap** | — | **The single sharpest finding in this film. We run the same action layer, on the same brain, right now — and it is invisible on every one of the CEO's 61 screens.** He has 78 skills on it; we have 1 job. A part that runs and cannot be seen is worse than a part that is missing, because when it dies nobody is told |
+
+### 4.6 The cockpit dashboard
+
+| | HIS | OURS |
+|---|---|---|
+| Route | paperclip `DASHBOARD` | `/overview` (121 lines, widget grid) · `/live` (40 lines) |
+| Live work | an agent card printing **its own plan while it runs** — *"Bennett wants six micro-tasks fanned out in parallel…"* — with `Working for 9 seconds · called 2 tools · startup step: workspace.resolve (0ms)` | `/live` is **Live Operations v2** over `v_live_ops` (agent runs + task events, 24 h window) with a broadcast layer batching at **1 second** — the pipe exists and is fast; **the in-flight reasoning card does not** |
+| Tiles | `10 Agents Enabled` (1 running, 2 paused, 1 errors) · `1 Tasks in Progress` (6 open, 1 blocked) · `TOTAL 30 · ACTIVE 15 · OPEN TASKS 7 · CRON JOBS 0` | `agents` **205** · `tasks` **217** (**4 open**) · `projects` **3** · `approvals` **51** (**0 pending**) · `alerts` **149** |
+| Charts | **Run Activity, 14 days: Succeeded · Recovered · Failed · Other** and Tasks by Priority | `/ops/runtime` (245 lines) reads `agent_runs` over 24 h — status mix, token and cost totals, model mix, recent runs with their hook verdict. **`agent_runs` holds 378 rows. There is no `Recovered` class** |
+| Feed | `RECENT ACTIVITY` incl. **`environment lease acquired` / `released`** | `audit_log` **29,636** rows · `decision_log` **4,730** — a deeper record than his, with **no lease concept** |
+| **The gap** | — | **Our pipe is faster (1 s against his 5 s) and our record is deeper; what is missing is the card that shows a running agent thinking, and the third outcome class** |
+
+### 4.7 The activity feed with real readings
+
+| | HIS | OURS |
+|---|---|---|
+| Route | the `ACTIVITY` block, one `CAST` line per worker | `/live` · `/sys/health` · `/sys/logs` · `/sys/integrations` |
+| What it renders | every line is a measured value from a real connector: `Stripe: 3229.23 USD available · 5 recent charges` · `Attio live: 100 deals on the roster` · `50+ deals on record` · `total 61683 unread` · and the failures printed beside them **with the fix named**: `WhatsApp Worker FAIL — ChatStorage.sqlite found but the read timed out. Likely permissions: grant Full Disk Access` · `Arcads DOWN` | our equivalent lines report **construction** events (runs, tasks, decisions), not **company** readings. Lifetime revenue `v_ceo_briefing.revenue_lifetime_eur` = **€0.00**; `opportunities` = **5** |
+| **The gap** | — | **His feed says what the company is worth today; ours says what the machine did today** |
+
+### 4.8 The skill card
+
+| | HIS | OURS |
+|---|---|---|
+| Route | a G-Brain node opened as a card | `/ai/skills` — **20 lines**, a kind-scoped view over the Holding Library (**23 skill assets** from the E9.5 intake) |
+| What it renders | `Confirm payments across pro…` · `Finance · Payment Verification` · **`FULLY AUTONOMOUS`** with a toggle · the rule it enforces · **`⤓ 1 runnable skill file`** · **BREAKS INTO** `claim-receiver · api-verifier · audit-writer` · **BUILDS ON** `Processor Registry` · **WHAT IT REPLACES**: *"Taking a salesperson's word that … was paid."* · **THE LADDER** `HUMAN-LED → HUMAN-ASSISTED → …` | a list of assets by kind. **No autonomy level, no sub-skills, no dependency, no ladder, and no line saying which human act the skill removes** |
+| **The gap** | — | **Ours answers "what skills exist"; his answers "what does this skill take off my desk, and how far can it go alone"** |
+
+### 4.9 The conductor seat
+
+| | HIS | OURS |
+|---|---|---|
+| Route | `Chat with Conductor — reaches …` on the hierarchy screen, and `Message the CEO — it can delegate … pull real data` on the runtime page | `/chat` · `/voice` |
+| What it renders | one box that delegates, creates tasks and reads the company's data, with the conductor's own board underneath carrying its incident reports — root cause, the monitor it registered, **the next wake time** (`next 2026-08-06 ~20:48 UTC`) | a chat surface exists. **No standing thread, no self-filed incident report, no next-wake line** |
+| **The gap** | — | **His conductor writes its own maintenance history where the owner reads it** |
+
+### 4.10 The report the machine gives its owner
+
+| | HIS | OURS |
+|---|---|---|
+| Route | printed by the agent, unprompted, at 00:60 | **nowhere on a screen** — `.claude/CLAUDE.md` §0 holds it as a rule addressed to sessions |
+| What it renders | *"Nothing is blocked on me right now. Three things are waiting on you, in order of payoff"* — each item with the number it moves (`11 → 20 of 22`, `2/9 → ~5/9`), the two rulings still owed, `"I haven't touched your machine without asking"`, and a closing question. Then what is NOT done: nothing committed, none of it live, neither service survives a reboot, `972/973` pass | — |
+| **The gap** | — | **We wrote the sentence. He renders it.** |
+
+### The two honest totals
+
+**Where we are ahead, measured:** 61 routes against 16 · 205 agents in 21 departments against 10 ·
+13 governed role slots with fallback chains, a guardrail audit and a routing simulator, against no
+routing surface at all · `audit_log` 29,636 and `decision_log` 4,730 against an activity list · a
+1-second live pipe against his 5-second refetch · an approval gate with 51 registered approvals
+against a `FULLY AUTONOMOUS` toggle on payment verification.
+
+**Where he is ahead, measured:** his company is drawn and ours is listed (0 `svg` on both our org and
+memory pages) · his every worker shows its model, its last activity and its state · his memory has
+edges and ours has none (13,919 facts, 0 relations) · his skills say what human act they remove and
+how far they may go alone · **his action layer has a console and ours has no pixel anywhere** ·
+his feed carries the company's money and ours carries the construction's traffic ·
+**his is running and earning; 0 of our agents ran today and lifetime revenue is €0.00.**
+
 
 ---
 
@@ -207,6 +303,14 @@ the `FULLY AUTONOMOUS` ceiling. What 35 adds is the rest of the card: **BREAKS I
 sentence), and **THE LADDER** from `HUMAN-LED` through `HUMAN-ASSISTED` to autonomous. Our 19 control
 areas each need that fourth line — *what human act does this remove* — before any of them can be
 called finished.
+
+**7. THE ACTION LAYER MUST APPEAR ON A SCREEN — IT IS ALREADY RUNNING.** `hermes` is `active` on the
+VPS on `glm-5.2`, the same tool and the same brain this rival uses, and it appears **0 times across
+all 61 CEO routes**. He gives it a console tab with `Gateway Status`, a session count, and
+`Restart Gateway` / `Update Hermes`. Ours needs the same three things and nothing more: is it up,
+what is it doing, and the two buttons. It carries **1 job contract** against his 78 skills — the
+loading is a separate job, but the seeing is not: **a running part nobody can see is how a system
+dies quietly.** This needs no install and no money; the service is already there.
 
 ### What must NOT be copied, and why
 
