@@ -64,37 +64,22 @@ walk-through is section 2 of report 30.
 | 01:18 | **"I also built this into every page so we can see what you're doing."** | **A docked side panel, present on every page.** Header **`CONDUCTOR`** with a live line **`SEEING: …`**; body *"Ask about this screen — the Conductor sees what you [see] and routes to the best-fit agent (`@agent-id` to force one)."*; footer input *"Ask about this screen…"*; `‹ ›` collapse arrows on its edge. Top-right of the shell: **three icon buttons — a palette, a search, and a robot** |
 | 01:20 | "If you guys want to see what the full OS looks like, just comment founder and I'll send it over." | His face, in a different room from 30's |
 
-### 2.2 Design — the same product in two themes, measured
+### 2.2 The design — the same product in two themes
 
-**The theme is a product control, not a build flag.** Top right of the shell in 33 sit three icon
-buttons: **a palette, a magnifier and a robot** — theme, search, conductor. The same application,
-the same six departments, the same radial graph, rendered on paper.
+**The theme is a product control, not a build flag.** Three icon buttons sit in the shell's top-right
+corner — **a palette, a search and a robot**: theme, find, conductor. Same application, same six
+departments, same radial graph, rendered on paper white instead of near-black.
 
-**The pair, sampled from native pixels of both films** (dark values from source 30 frame `t024`,
-light from source 33 frame `t019`; these are each camera's rendering of the same screen, so the
-RELATIONSHIP is the finding, not the absolute hex):
+**The rule that carries across, measured on both films:** the department **keeps its hue** and
+**loses about half its saturation** — Sales `#F55E93` → `#B33157`, Communications `#36BDFF` →
+`#6174C1`, Tech `#9076FD` → `#6E4EA1`, Marketing `#D2C07E` → `#BD965D`. **The grounds invert, but the
+ordering does not: in both themes the rail recedes and the card stands forward from the ground.**
+So a department keeps its identity across both skins; only its weight changes. (The light film's
+white reads grey because a camera is pointing at a lit monitor — the exact paper value is
+**UNVERIFIED** and would need his own screen capture; the ordering survives the camera.)
 
-| Department | Dark theme (30) | Light theme (33) | What the pair shows |
-|---|---|---|---|
-| Sales | `#F55E93` · h338 s88 **l66** | `#B33157` · h342 s57 **l44** | hue held **4°** |
-| Communications | `#36BDFF` · h199 s100 **l60** | `#6174C1` · h228 s43 **l56** | hue held **29°** |
-| Tech | `#9076FD` · h251 s97 **l72** | `#6E4EA1` · h263 s34 **l46** | hue held **12°** |
-| Marketing/Growth | `#D2C07E` · h47 s48 **l65** | `#BD965D` · h35 s42 **l55** | hue held **12°** |
-
-**The rule, and it is directly usable:** going dark → light he **keeps the hue** (median shift 12°),
-**roughly halves the saturation** (88→57, 100→43, 97→34) and **drops the lightness** (66→44, 72→46).
-The department keeps its identity across both skins; only its weight changes.
-
-**The grounds invert, and the card stays the lighter surface in BOTH.** Dark: ground `#0E0D1C`, rail
-`#040715` — *the rail is darker than the ground*. Light: ground `#C4C5C5`, rail `#C6C7BE`, card
-`#DDDBD1` — *the card is lighter than the ground*. **In both themes the rail recedes and the work is
-the surface that stands forward.** The light film's "white" reads at `#C4C5C5` because a camera is
-pointing at a lit monitor; the ordering survives that, the absolute value does not — **UNVERIFIED**
-for the exact paper white, and it would need his own screen capture.
-
-**Everything else is theme-independent** and is measured in report 30 §2.2: the radial geometry, the
-hollow-ring node with its halo, the beaded SOP path at a 9–10 px pitch against the unbroken tool
-line, the department particle cloud, the two-size type scale, the `//` kicker and the block cursor.
+**Everything else is theme-independent** and is in report 30 §2.2 — the radial shape, the hollow-ring
+nodes, the beaded SOP path against the unbroken tool line, the two type sizes, the two ornaments.
 
 ## 3. Capabilities — what 33 adds to the mechanism
 
@@ -173,11 +158,10 @@ money page, and the two-theme colour rule.
 >   `EXPENSES · /MO $3,946` badged **`SAMPLE`**; `NET · /MO −$3,946` in red; donut Contractors 50.7 % ·
 >   Advertising 38.0 % · Software 8.6 % · Infrastructure 1.4 % · CRM 1.2 %; six processor cards each
 >   with `CONNECT →` and **`awaiting key`**.
-> - **Two-theme colour rule, measured across the two films:** keep the hue (median shift **12°**),
->   **halve the saturation** (88→57, 100→43, 97→34, 48→42), drop the lightness (66→44, 60→56, 72→46,
->   65→55). Grounds invert; **the card stays lighter than the ground in both themes**; the rail
->   recedes in both. Dark ground `#0E0D1C` / rail `#040715`; light ground `#C4C5C5` / rail `#C6C7BE`
->   / card `#DDDBD1` (camera-rendered — exact paper white **UNVERIFIED**).
+> - **Two-theme rule:** keep the department's hue, **halve its saturation**, invert the ground —
+>   Sales `#F55E93`→`#B33157`, Communications `#36BDFF`→`#6174C1`, Tech `#9076FD`→`#6E4EA1`,
+>   Marketing `#D2C07E`→`#BD965D`. **In both themes the rail recedes and the card stands forward.**
+>   Theme control lives in the shell corner beside search and the conductor.
 > - **Clocks attached to data:** a lead **fades red after 21 days quiet and archives at 90**;
 >   social prints **`+18.5 % ↗ · 30d`** beside the absolute; `MOST-LINKED NOTES` prints each note's
 >   link count (`19↔`, `16↔`, `15↔`).

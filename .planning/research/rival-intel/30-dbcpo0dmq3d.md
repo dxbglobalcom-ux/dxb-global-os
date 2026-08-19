@@ -64,89 +64,54 @@ Speech verbatim from `transcripts/30.json`; the screen column is what the frames
 | 01:10 | "I have my finance tracking dashboard and all of this is accessible by my one Hermes harness that is in charge of all 37 of my other agents that I use as a delegator or conductor agent." | **`AGENT HIERARCHY`**: `Bennett Spooner · OPERATOR` → `CONDUCTOR (SUPER AGENT)` → an `AI HEAD` card, *"super agent · builtin runtime until the Mac mini lands"*, with a **chat box drawn inside the org chart** (`Send`) and `AGENT TOOLS: broadcast · openclaw · tmux`. Beneath it five crew cards, each with its agents and its own tool row (`stripe · paypal · square · whop · fanbasis` under Finances) |
 | 01:21 | "If you guys want to see how the full OS works, comment founder down below and I'll send it over." | Burned-in caption **`COMMENT "FOUNDER"`** over the full radial graph |
 
-### 2.2 Design and appearance — measured from the pixels
+### 2.2 The design
 
-> **This product was filmed twice.** Source **33** is the same build in its **light theme**, and the
-> two-theme colour rule is measured across the pair in `33-dbeny9artri.md` §2.2. Everything below is
-> theme-independent.
+> The same product is filmed again in its **light theme** in source **33**; the two-theme rule is in
+> `33-dbeny9artri.md`.
 
-**Composition.** The reel is **filmed, not recorded**: a physical monitor standing in a dark room
-with RGB strip lights, a hand entering the frame to point. Read off frame `t009`, where the whole
-application is in shot: the app spans **x 37 → 1080**, the **left rail ends at x ≈ 192 (14.9 % of the
-application's width)**, the working canvas runs to **x ≈ 1008 (78 %)**, and the right intelligence
-panel takes the rest. The right panel's full width is cut by the camera — **UNVERIFIED**, and it
-would need his own screen recording to settle.
+**One shape carries the whole product.** Department, persona and company are all drawn the same way:
+a hub at the centre, its agents on a ring, their tools on the ring beyond, and the SOP paths falling
+from the agents back to the hub. Learn the picture once and it reads on nine pages, with a
+`< Department >` pager, a `Radial | Neural` switch and `Fullscreen`.
 
-**One shape carries the whole product: the radial graph.** Every department, every persona and the
-company itself is drawn the same way — **a glowing hub at the centre, its agents on a ring, their
-tools on the ring beyond, and the SOP lines falling from the agents to the hub as dotted paths.**
-Learn the picture once and it reads on nine pages.
+**It is line-work, not blobs.** Nodes are hollow rings with a small figure inside and a soft halo —
+which is why ninety of them sit on one screen without turning into soup.
 
-**How a node is drawn — a hollow ring with a halo, never a disc.** Radial brightness profile through
-the Sales hub, frame `t024`, sampled at 72 angles per radius: centre **25.7** · r4-r8 **101 → 87**
-(the glyph) · **r12-r14 a second bump, 74.8 → 80.4 — the ring stroke itself** · then a decay to
-**25.1 at r26**. So the node is a **≈13 px-radius outline** containing a small figure glyph, and its
-glow dies out by **≈26 px** — the halo is as wide again as the ring. **The whole graph is line-work,
-which is why ninety nodes on one screen do not turn into soup.**
+**Two line types, and the difference is the point.** The path from an agent through its SOP to the
+hub is a **bead chain**; the line from a tool to an agent is **unbroken**. One glance separates the
+work from the wiring.
 
-**Edge grammar — two line types, and the difference is measurable.** Brightness profiles along the
-paths in frame `t011`, taking the maximum across a ±3 px band so a slight offset cannot fake it:
+**Every department carries a miniature of the company brain beneath it** — the same particle disc as
+the knowledge page's own graph, shrunk and labelled `Obsidian`.
 
-| Edge | Length | Lit | Rhythm |
-|---|---|---|---|
-| **Agent → SOP → department hub** (left path) | 253 px | 41 % | **26 peaks, median pitch 9 px** |
-| **Agent → SOP → department hub** (right path) | 254 px | 53 % | **31 peaks, median pitch 10 px** |
-| **Tool → agent** | 130 px | 16 % | 3 peaks — **no rhythm; an unbroken thin line** |
+**A department is a colour, and it is the same colour everywhere** — on the hub, the ring, the crew
+card and the directory row: Sales `#F55E93` · Communications `#36BDFF` · Finances `#21FFB9` ·
+Clients `#16ECEE` · Tech `#9076FD` · Marketing/Growth `#D2C07E`, on a near-black ground `#0E0D1C`.
+**A persona goes further: each of the eleven presets re-tints the whole graph to a single hue**, so
+you know which company you are looking at before reading a word.
 
-**A beaded 9–10 px path means "this is a procedure"; an unbroken line means "this is a connection".**
-One glance separates the work from the wiring.
+**The legend is the grammar, and it is printed on the page:** `Obsidian · Pillars · SOP tasks ·
+Humans · AI agents · Tools`, each with a live count. **A human and an AI employee are the same shape
+in a different colour** — Mia Torres stands in the Communications ring between two AI workers. One
+picture holds the mixed workforce.
 
-**The department's brain is a particle cloud, and it is dense.** Under each hub sits a disc labelled
-`Obsidian`. Measured in `t011` inside a **58 px radius: 215 separate bright particles**, with a bright
-vertical spine through the centre. It is the same object as the knowledge page's own graph, shrunk —
-**every department carries a miniature of the company brain beneath it.**
+**Two type sizes and nothing between them** — one heading, one body, everything monospaced, labels in
+letter-spaced small capitals above their value. **The only ornaments in the entire interface are the
+`//` prefix on page kickers and a block cursor.** No gradient, no glass, no shadow; the instrument
+feeling is bought with two characters.
 
-**Palette, sampled from the pixels** (most-saturated pixel above 35 % value per region, frame `t024`;
-these are the film's rendering of his screen — the relationships survive the camera, the exact brand
-hexes do not): ground **`#0E0D1C`** · left rail **`#040715`**, *darker than the ground, so the work is
-the brightest thing on the screen* · card **`#060A1A`**. **A department is a HUE and it is the same hue
-everywhere** — on the hub, on the ring, on the crew card and in the directory: Sales **`#F55E93`** ·
-Communications **`#36BDFF`** · Finances **`#21FFB9`** · Clients **`#16ECEE`** · Tech **`#9076FD`** ·
-Marketing/Growth **`#D2C07E`**.
+**The rail recedes and the work stands forward** — the navigation is darker than the ground it sits
+beside, so the brightest thing on the screen is always the work.
 
-**And a persona re-tints the ENTIRE graph to one colour.** Measured on three of the eleven variants:
-`01 Agency Owner` **`#18FDC2`** (green, h164) · `03 DTC Brand Operator` **`#B84995`** (magenta, h318) ·
-`07 Course Creator` **`#EBD858`** (yellow, h52). **Each preset is monochrome and owns a hue** — you
-know which company you are looking at before you read a word.
+**Two honesties printed permanently.** The rail foot carries `0/21 systems live` and
+`localhost:4100 · sqlite · real agents` on *every* page — the machine says what is running and where
+it lives, always. And the funnel wears its own `DEMO DATA` badge: **the product labels which numbers
+are sample data on the surface itself.**
 
-**The legend is the product's grammar, and it is on the page.** Six node kinds, six marks, each with
-a live count: `Obsidian` (the brain) · `Pillars` · `SOP tasks` · **`Humans`** · `AI agents` · `Tools`.
-**A human and an AI employee are the same shape in a different colour** — Mia Torres sits in the
-Communications ring in the `Humans` yellow, between two AI workers. One picture holds the mixed
-workforce without a second view for people.
-
-**Type — a two-size scale and nothing in between.** Glyph heights measured by row-profile on `t024`:
-the page title `OPTIMAL ENGINE` is **24 px**, its kicker `// KNOWLEDGE CORE` is **11 px**, and every
-rail entry — `Home`, `Comms`, `Funnel`, `Workflows`, `Social`, `Finances` — is **11–12 px**. **One
-heading size, one body size, a 2.2 × ratio, no third step.** Monospaced throughout; section labels in
-letter-spaced small capitals (`// PLATFORM VARIANTS`, `BREAKS INTO`, `WHAT IT REPLACES`, `THE LADDER`,
-`DONE BY`, `THE SOP, WRITTEN OUT`) with the value beneath in sentence case. **The `//` prefix and the
-block cursor after `OPTIMAL ENGINE` are the only two ornaments in the whole interface** — no gradient,
-no glass, no shadow. The instrument feeling is bought with two characters.
-
-**The room is part of the design, and it is timed.** Behind the monitor stands an LED bar; measured
-across all 86 frames by taking the most saturated bright pixel of the wall band, it is **readable in
-75 of 86 seconds and it sweeps the entire colour circle — 0° to 349°.** Consecutive-second hue steps:
-**median 4.8°, and 69 % of steps are under 25°** — a slow drift, not a strobe, closing a full circle
-in about **75 seconds**. The keyboard beneath is lit on the same sweep. **The product on screen never
-changes colour; the room around it does.** For a CEO who asked for a cockpit, that is the cheapest
-half of the effect and it is not code.
-
-**Two design honesties worth stealing outright.** The rail foot prints **`0/21 systems live`** and
-**`localhost:4100 · sqlite · real agents`** on *every* page — the machine says what is running and
-where it lives, permanently, in eight-point type. And the funnel page carries its own **`DEMO DATA`**
-badge beside the live-mode switch: **the product labels which numbers are sample data on the surface
-itself**, not in a footnote.
+**The room is part of the design.** The reel is filmed off a physical monitor in a dark room, and the
+LED bar behind it drifts slowly through the entire colour circle — about **one full circle every 75
+seconds** — with the keyboard on the same sweep. **The product on screen never changes colour; the
+room around it does.** That is the cheap half of a cockpit, and it is not code.
 
 ## 3. Capabilities — the mechanism this source shows
 
@@ -265,23 +230,18 @@ the way in is never more than the page you are already on. No response time is o
 >   @slack/web-api"*) · **`THE SOP, WRITTEN OUT`, numbered** · `TOOLS AT THE END OF THE CHAIN` as MCPs.
 > - **`THE LADDER`, three rungs, each a written sentence about the SAME job:** `HUMAN-LED` →
 >   `HUMAN-ASSISTED` → `FULLY AUTONOMOUS`, live rung marked by a bright vertical bar.
-> - **One shape for the whole product:** glowing hub → agent ring → tool ring → dotted SOP paths,
->   with `Radial | Neural`, a `< Department >` pager and `Fullscreen`. Left rail **14.9 %** of the
->   application width, working canvas **78 %**.
-> - **Node = a hollow ring, never a disc:** ≈**13 px** radius outline with a glyph inside, halo dying
->   out by ≈**26 px**. **Edge grammar:** agent→SOP→hub is **beaded at a 9–10 px pitch** (41–53 % lit);
->   tool→agent is an **unbroken thin line** (16 % lit, no rhythm). Each department carries a miniature
->   brain beneath it — **215 particles inside a 58 px radius**.
-> - **Type: a two-size scale, 2.2 ×, nothing between** — page title **24 px**, kicker and every rail
->   entry **11–12 px**.
-> - **A persona re-tints the whole graph to one hue** — `01` `#18FDC2` · `03` `#B84995` · `07` `#EBD858`.
-> - **The room, timed:** the LED bar behind the monitor sweeps the full colour circle at a median
->   **4.8° per second — one full circle in ~75 s** — while the product on screen never changes colour.
-> - **Palette, sampled from the pixels:** ground `#0E0D1C` · rail `#040715` (darker than the ground) ·
->   card `#060A1A` · **department hues used identically on hub, ring, crew card and directory** —
->   Sales `#F55E93` · Communications `#36BDFF` · Finances `#21FFB9` · Clients `#16ECEE` · Tech
->   `#9076FD` · Marketing/Growth `#D2C07E`. Monospaced throughout; labels in letter-spaced small
->   capitals; **the only ornaments are the `//` kicker prefix and a block cursor.**
+> - **One shape for the whole product:** hub → agent ring → tool ring → SOP paths, on every page,
+>   with `Radial | Neural`, a `< Department >` pager and `Fullscreen`. Nodes are hollow rings, so
+>   ninety fit on a screen. **A beaded path means a procedure; an unbroken line means a connection.**
+>   Each department carries a miniature of the company brain beneath it.
+> - **A department is a colour used identically everywhere** — Sales `#F55E93` · Communications
+>   `#36BDFF` · Finances `#21FFB9` · Clients `#16ECEE` · Tech `#9076FD` · Marketing `#D2C07E`, ground
+>   `#0E0D1C`; **each of the eleven personas re-tints the whole graph to its own single hue.** The
+>   rail recedes, the work stands forward.
+> - **Legend printed on the page** — `Obsidian · Pillars · SOP tasks · Humans · AI agents · Tools`,
+>   with live counts, and **a human and an AI drawn as the same shape in different colours.**
+> - **Two type sizes and nothing between**, monospaced, labels in letter-spaced small capitals above
+>   their value; **the only ornaments are a `//` kicker prefix and a block cursor.**
 > - **Motion, camera-compensated at 10 fps:** an empty patch of the live panel **0.925** mean change
 >   per 100 ms · the camera-noise floor (static text) **4.302** · **the graph's core 6.267 (6.78 ×
 >   the ground)** · **a spoke node 7.985 (8.63 ×)**. The core **brightens +41 % over 800 ms and fades
