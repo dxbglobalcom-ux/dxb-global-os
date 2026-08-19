@@ -467,9 +467,12 @@ adds a second figure for the same law:
 - **emission period 1.90 s** for a full round of the working employees;
 - **an employee marked `idle` receives nothing** — 0 pulses on the Dev branch across 180 frames.
 
-That last clause is the buildable half and it changes the design brief: a wire that always glows is a
-decoration, while a wire that goes quiet when a desk goes quiet is a **status display the CEO can read
-across the room**. It needs one boolean per employee — the same signal P14-3 needs — and no motion
+That last clause is the buildable half and it changes the design brief. **Under ledger law 13 (the
+CEO's ruling of 2026-08-19) the permanent flow is the surface reporting that the link is live** — so
+a wire glows *because its part is up*, and **a wire that goes quiet when a desk goes quiet** is the
+same signal telling the truth about a desk that is not: **a status display the CEO can read across
+the room.** What is refused is a wire that glows over a dead part, which is the one case where the
+movement would be saying something untrue. It needs one boolean per employee — the same signal P14-3 needs — and no motion
 work at all until the design package is approved.
 
 **Waits on the CEO** for the visual (the design package is his gate) <!-- OPEN: B22 -->. The data half

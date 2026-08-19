@@ -102,7 +102,8 @@ Read here for the **mechanism**, from this report's own record (watched 2026-08-
   **`STRATEGY CHANNEL // INTER-AGENT COMMS`** strip takes new lines at the bottom and scrolls the
   older ones up, **the content differing on every frame**, each line carrying a sender, a recipient
   and numbers. Behind it a 3-D particle field drifts continuously, changing position every frame —
-  the room's ambient motion, carrying no stated signal of its own.
+  **the surface saying it is up while nobody asks it anything** (ledger law 13, the CEO's ruling of
+  2026-08-19). It carries no label; what it reports is that this part of the system is running.
 - **The movement, TIMED** (ledger law 8, second clause; measured 2026-08-09 with a dense native pass
   cut from the video — `zoom/07/flow/comms-<t>.jpg`, `crop=640:75:0:1232` at ×3, at 19.0 · 19.5 ·
   20.0 · 20.5 · 21.0 s):
@@ -164,8 +165,10 @@ objective rows worth €125 between them, one still a draft, and the holding has
 >   reads **300 days**.
 > - **`UNVERIFIED` — the particle field's period and direction were never measured**, and no figure
 >   for it is quoted. What would settle it: a 5–10 fps dense pass with `scripts/rival-intel/motion.py`.
-> - **Deliberately NOT taken:** the 3-D particle field drifting behind it carries no stated signal —
->   decoration by our own registered ruling.
+> - **Taken as a mechanism, not as an aesthetic:** the 3-D particle field drifting behind the strip
+>   carries no label, and under ledger law 13 that is not what it is for — a permanently moving
+>   surface reports that the part is up. What we take is the *behaviour*; the particle art itself is
+>   his house style and is not copied.
 
 **Nothing below is built. Nothing below may be built before the CEO approves it** — his written
 directive of 2026-07-29 prohibits implementation until the visual design package is approved, and

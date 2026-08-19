@@ -313,6 +313,40 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
       what his prohibition of 2026-08-13 requires. **One word from him strikes it.**
 
 
+13. **THE TRAVELLING LIGHT IS THE SYSTEM REPORTING THAT IT IS ALIVE — IT IS NEVER CALLED DECORATION.**
+    His live order, 2026-08-19, given after a report called source 32's flowing connections ambient:
+    *"yahu neden süs olsun. o akışkanlık sistemin canlı olarak çalıştığını gösterior arkadaşım bütün
+    rakiplerde bu böyleeee sadece iş olurken değil sistemin aktif her parçasının aktif olduğuğunu
+    gösterior."* **He ordered it written as a law, the same day, in answer to a direct question.**
+    - **THE READING, and it is not optional:** continuous motion on a rival's surface reports that
+      **the link is live and that part of the system is up**. It is not bound to one running job, and
+      a surface that moves while its own state word says `IDLE` is **not** in contradiction — the flow
+      reports *up*, the state word reports *doing*. **Two signals, two jobs.**
+    - **THE OTHER HALF, measured on source 14 and it completes the rule:** on that page the one card
+      marked `idle` — the Dev branch — emitted **0 pulses across all 180 frames** of the dense pass
+      while the four live branches kept their **1.90 s** rotation. **The motion encodes the state: a
+      live part flows always, a part that is not live is still.**
+    - **THE CORPUS AGREES, and it was measured across all 27 reports before this law was written**
+      (2026-08-19): 25 carry a timed figure, and every filmed system surface on the queue moves
+      permanently on a stated period against a static control in the same frames — **01** one sweep
+      3.3-4 s · **12** 1.8 s per edge, 2.4 s board period, 0.5 s rest · **14** 1.90 s rotation ·
+      **17** 10.87 % of the orb's pixels per 100 ms against a 0.00 % wall control · **20** 4.52× the
+      static-text floor · **24** a 2.0 s refresh · **29** 96× and 8× · **30** 6.78× and 8.63× ·
+      **32** 28 px/s on a 1.00 s period.
+    - **FORBIDDEN in any report**, in any language, however dressed, of motion on a rival's SURFACE:
+      *decoration* · *süs* · *ornament* · *ambient* · *cosmetic* · *for show* · *not a report of
+      traffic* · any sentence whose effect is that the movement carries nothing. Physical hardware in
+      the room — desk lights, a lamp — is not a surface and is not covered.
+    - **REQUIRED instead:** the figure (what moves · which direction · how long · how often), and the
+      reading that the link is live. Where the film cannot settle whether an idle link also flows,
+      write **UNVERIFIED** and name what would be needed.
+    - **This law governs LINKS AND PARTS. It does not touch P17-8, the rule taken from source 17: a
+      link flows, a VALUE does not** — a number moves once, reaches its true reading and stops.
+    - **The build side of the same ruling is registered where the building happens**, in
+      `HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md` §9 (Motion tokens), on his same order.
+    - The fourteenth case of `tests/c42/rival-intel-ledger.test.ts` enforces the prohibition.
+
+
 ## Status vocabulary
 
 | Value | Meaning |

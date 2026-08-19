@@ -113,6 +113,31 @@ Tokens tek dosya: `apps/dashboard/src/styles/tokens.css` (`@theme` bloğu). Char
 
 Desenler: soft hover elevation (`translateY(-1px)` + e1→e2 + kenar ışığı fade-in) · data pulse (opacity .82→1, 1.2s, yalnız canlı değer değişiminde) · live status transition (renk cross-fade, zıplama yok) · premium press (scale .985, 120ms). `prefers-reduced-motion`: ambient katman + pulse kapanır, geçişler 0ms'e düşer (§30).
 
+### 9.1 KANUN — CANLI BAĞLANTI HAREKETİ (CEO hükmü, 2026-08-19; BAĞLAYICI)
+
+**Onun sözü:** *"o akışkanlık sistemin canlı olarak çalıştığını gösterior… sadece iş olurken değil
+sistemin aktif her parçasının aktif olduğuğunu gösterior."* Aynı gün, doğrudan sorulan soruya
+**"kanun olsun"** cevabıyla kanun yapılmıştır. Okuma tarafı rakip defterinin 13. kanunudur
+(`.planning/research/rival-intel/00-LEDGER.md`); burası inşaat tarafıdır.
+
+| # | Kural | Ölçülebilir karşılığı |
+|---|---|---|
+| M1 | **Canlı olan her bağlantı akar** — süs değil, "bu bağlantı ve bu parça ayakta" bildirimidir. Kimse ekrana bakmasa da akar | Her canlı kenar (edge) ilan edilmiş bir periyotla hareket eder; periyot tasarım belirtiminde yazılıdır |
+| M2 | **Canlı olmayan parça durur.** Ölü/boştaki bağlantıda hareket yoktur | Kaynak 14'te ölçüldü: `idle` işaretli tek dal 180 karede **0 atım**, canlı dört dal **1,90 sn** sırayla attı |
+| M3 | **Yön anlam taşır** — işin gittiği yön | Girdi kanallarından içeri, araçlara dışarı, modele yukarı (kaynak 32) |
+| M4 | **Kenar başına sabit SÜRE, sabit hız değil** — uzun kenar da kısa kenar da aynı sürede geçilir | Kaynak 12: kenar başına **1,8 sn**; kaynak 14: **1,5 sn**; hız 23-203 px/sn arası değişir, süre değişmez |
+| M5 | **Tek periyot, kaydırılmış fazlar** — tahtanın tamamı tek ritimde, komşu kenarlar aynı anda atmaz | Kaynak 12: tahta periyodu **2,3-2,4 sn**, komşu kenar arası kayma **≈1,2 sn** |
+| M6 | **Dinlenme tasarımın parçasıdır** — her turda kablo bir süre boş kalır | Kaynak 12: her **2,4 sn**'lik turun **≈0,5 sn**'si boş kablo |
+| M7 | **Bağlantı akar, RAKAM akmaz.** Bir sayı bir kez hareket eder, doğru değerine varır, durur | 17. kaynaktan gelen P17-8 kuralı; bu kanun ona dokunmaz |
+| M8 | **İki sinyal, iki iş:** akış "ayakta mı"yı, durum kelimesi (`STATE · …`) "ne yapıyor"u söyler. Boştaki bir sistemin kabloları akabilir; çelişki değildir | Kaynak 32: `STATE · IDLE` yazarken kablolar **1,00 sn** periyotla akıyordu |
+
+**`prefers-reduced-motion` (hareketi azalt ayarı) açıkken:** M1 akışı durur ve yerini **durağan bir
+canlılık işareti** alır (kenar üzerinde sabit bir nokta + panelin `SYNC · ss:dd:ss` damgası), çünkü
+bilgi kaybolmamalıdır — §9'un mevcut kuralı yalnızca hareketi kapatır, bildirimi değil.
+
+**Bu kanun hiçbir şeyi tek başına inşa ettirmez:** görsel paket CEO onayından geçmeden tek piksel
+çizilmez (2026-07-29 direktifi). <!-- OPEN: B22 -->
+
 ## 10. State yönetimi — Component states (§32.11 + §33)
 
 §33'ün 29 zorunlu component'i × 8 state matrisi. Genel kural seti (tek tek ezber yerine türetme kuralı — tutarlılık §31):

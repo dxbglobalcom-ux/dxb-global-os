@@ -334,7 +334,11 @@ binding on every surface in W-C42-2 and W-C42-3:
    *"the number on the wall is the business"*. **The failure mode we refuse is our own and needs no
    rival to illustrate it:** 61 pages, 0 live.
 2. **Zero is a real answer** — a quiet board says "nothing is running" and never animates to look
-   busy.
+   busy. **Read this with the CEO's ruling of 2026-08-19, which does not soften it and is not in
+   conflict with it** (`DESIGN_SYSTEM.md` §9.1, ledger law 13): a **value** never moves to look busy,
+   while a **live link** flows permanently because that flow is the surface reporting that the part
+   is up — and a link that is down or idle shows no flow at all. Two signals, two jobs: the flow says
+   *up*, the state word and the number say *doing*.
 3. **The refusals are visible** — every pipeline card names the rule it will not break.
 4. **Outward actions look different from reads** — the distinction the whole governance rests on
    must be visible in one glance.

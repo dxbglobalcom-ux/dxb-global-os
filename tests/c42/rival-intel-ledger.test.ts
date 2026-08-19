@@ -317,6 +317,50 @@ describe("C42 rival-intel ledger", () => {
     }
   });
 
+  // LAW 13 — added 2026-08-19 on the CEO's live order, and he ordered it made a law when asked.
+  //
+  // A report had just called source 32's flowing connections ambient — "a property of the wire, not
+  // a report of traffic". His answer: "yahu neden süs olsun. o akışkanlık sistemin canlı olarak
+  // çalıştığını gösterior arkadaşım bütün rakiplerde bu böyleeee sadece iş olurken değil sistemin
+  // aktif her parçasının aktif olduğuğunu gösterior."
+  //
+  // He is right and the corpus was measured before the law was written: every filmed system surface
+  // on this queue moves permanently on a stated period against a static control — 01 (3.3-4 s sweep),
+  // 12 (2.4 s board), 14 (1.90 s rotation), 17 (10.87 %/100 ms vs a 0.00 % control), 20 (4.52x),
+  // 24 (2.0 s), 29 (96x / 8x), 30 (6.78x / 8.63x), 32 (1.00 s). Source 14 carries the other half:
+  // the one card marked `idle` emitted 0 pulses in all 180 frames. The motion encodes the state.
+  //
+  // Law 9 already forbids "decorative" as a bare word. It did not catch this, because the sentence
+  // dressed the same verdict as "ambient" and as "not a report of traffic". This case reads the
+  // SENTENCE: a dismissal word landing in the same sentence as a surface-motion word.
+  //
+  // Physical hardware in the room is not a surface and is not covered — measured on report 23,
+  // whose "ambient hardware, not indicators" describes desk lights and must keep passing.
+  const SURFACE_MOTION =
+    /\b(?:flow|flows|flowing|travelling light|traveling light|pulse|pulses|pulsing|animation|animates|animated|dash|dashes|bead|beads|glow|glows|glowing|drift|drifts|drifting|repaint|repaints)\b/i;
+  const MOTION_DISMISSAL =
+    /\b(?:ambient|decoration|decorative|ornament(?:al)?|cosmetic|for show|eye candy|s[üu]s)\b|\bnot a report of\b/i;
+  // A rebuttal is not the defect: "rather than decoration", "is not decorative", "nothing here is
+  // ornament". Measured on report 11, whose "the rules that make it a mechanism rather than
+  // decoration" is the law being obeyed, not broken.
+  const DISMISSAL_REBUTTED =
+    /\b(?:not|never|isn't|aren't|nothing|rather than|instead of|no longer)\b[^.\n]{0,40}\b(?:decoration|decorative|ornament|cosmetic|ambient)\b/i;
+  it("a report never calls a rival's travelling light decoration — law 13, his own ruling", () => {
+    for (const r of ledgerRows().filter((x) => x.status === "reported")) {
+      const body = readFileSync(join(DIR, r.report), "utf8");
+      const offenders = body
+        .split(/(?<=[.!?|\n])\s+/)
+        // The law's own text quotes the banned words in order to ban them; a line that names the
+        // law is the record of the defect, never the defect.
+        .filter((sn) => !/law 13|FORBIDDEN|his own ruling/i.test(sn))
+        .filter((sn) => SURFACE_MOTION.test(sn) && MOTION_DISMISSAL.test(sn) && !DISMISSAL_REBUTTED.test(sn));
+      expect(
+        offenders,
+        `row ${r.n} (${r.report}) breaks ledger law 13 — it calls a rival's continuous surface motion decoration. The flow reports that the LINK IS LIVE and that part of the system is up; it is not bound to one running job. Write the figure and that reading. Found: "${(offenders[0] ?? "").trim().slice(0, 200)}"`,
+      ).toEqual([]);
+    }
+  });
+
   it("a reported row records the fingerprint of what was actually studied", () => {
     for (const r of ledgerRows().filter((x) => x.status === "reported")) {
       const body = readFileSync(join(DIR, r.report), "utf8");
