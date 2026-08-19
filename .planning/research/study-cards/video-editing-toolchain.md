@@ -15,9 +15,27 @@
 
 ## Verdict (2026-07-17)
 
-**Primary: [[openmontage-opencut]]** — calesthio/OpenMontage (23.6k★, #1 GitHub trending; 12 pipelines, 52 tools, 400+ agent skills; "turn your AI coding assistant into a video production studio") + OpenCut editor (67k★, rewrite merged 2026-07-14). Open-source, agent-native, free → D1-perfect; already a tracker row (stub filled this pass).
+**Primary: [[openmontage-opencut]]** — calesthio/OpenMontage (48.9k★ measured 2026-08-19, was 23.6k at the 07-17 pass; #1 GitHub trending; 13 pipelines, 121 registered tools, 1,096 skill files; AGPL-3.0; "turn your AI coding assistant into a video production studio") + OpenCut editor (67k★, rewrite merged 2026-07-14). Open-source, agent-native, free → D1-perfect; already a tracker row (stub filled this pass).
 **Secondary (programmatic/deterministic): [[heygen-hyperframes]]** — HTML→deterministic MP4, Apache-2.0, built for agents; best for templated/branded shorts, data-driven videos, product demos.
 **Rejected for v1:** SaaS AI editors (Descript/CapCut/VEED/Runway — paid, no agent-first API fit, D1 fail as defaults); Remotion-class React renderers (company-license cost >3 devs; HyperFrames covers the same niche free); MoneyPrinterTurbo stays a niche auto-shorts generator (existing stub row), not the editing lane.
+
+## Generation lane — filled 2026-08-19 (rival-intel source 37, the CEO's link)
+
+This card's chain shape sent GENERATION to `[[seedance-2]]` (paid, "when funded") and stills to
+`[[z-image]]`. **The free generation half now has four measured candidates**, all self-hosted, all
+reachable from one launcher:
+
+- **[[wan2gp]]** — 8,763★, last push 2026-08-19, licence `NOASSERTION` (read it first). **Fronts Wan, LTX-2, HunyuanVideo, Flux and Qwen Image**, so the bench needs one install, not four.
+- **[[ltx-video]]** — 10,868★, **Apache-2.0**; LTX-2 makes **picture and sound in one pass** (removes the separate voice-over step); distilled build claims **preview 3 s / HD 10 s, 8 steps**, LoRA at **1 GB VRAM**; in ComfyUI core.
+- **[[open-sora]]** — 29,282★, **Apache-2.0**; `9:16` first-class, motion as a numeric prompt parameter.
+- **[[hunyuanvideo]]** — 12,442★, licence `NOASSERTION`; the quality end, and the biggest VRAM risk.
+
+**Pitfall 2 of this card is now answered by hardware:** the render machine exists — the live
+workstation carries an **NVIDIA RTX 5060 Ti, 16,311 MiB** (measured 2026-08-19) and nothing uses it.
+**Which engine actually fits 16 GB is UNVERIFIED until the bench runs** — that bench is **P37-2** in
+`.planning/research/rival-intel/37-dcat9zpd0cn.md`, and the same report carries the money side:
+Remotion's `$0.01/render + $100/mo` against three Apache-2.0 engines at zero, and the paid bench row
+`CAPABILITY_ARSENAL_DOCTRINE.md:134` whose free-alternative column still reads `none`.
 
 ## Key API / Usage Notes
 

@@ -16,6 +16,10 @@
 
 ## Key API / Usage Notes
 
+- **Re-measured 2026-08-19 (rival-intel source 37, GitHub API): `heygen-com/hyperframes` — 41,693 stars, Apache-2.0, last push 2026-08-19.** It has become the most-starred tool in this whole lane since the 07-17 pass.
+- **It installs as an agent SKILL, not as a dependency: `npx skills add heygen-com/hyperframes`** — this is the shape our `/ai/skills` page already draws (`library_items` where `kind='skill'`, measured 2 rows).
+- The composition is markup: the audio track is declared in the HTML itself (`data-start`, `data-duration`, `data-track-index`, `data-volume`) with a JS timeline driving it — an agent writes a film the way it writes a page.
+
 - Core framework = free OSS local rendering; HeyGen's cloud rendering + Avatar V/LiveAvatar APIs = PAID SaaS → D1 gate (same class as [[seedance-2]]).
 - Determinism is the differentiator vs generative video: same input → same MP4; perfect for repeatable branded formats (weekly report videos, product cards).
 - TS/Node-native → fits our monorepo directly (unlike the Python research stack).
