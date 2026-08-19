@@ -35,12 +35,12 @@ says about itself on its own page.
 | Time | The source named | What it is, from its own page |
 |---|---|---|
 | 00:00 | **Higgsfield** — named only as the paid thing being replaced | The tool the other six are offered against. No price is stated in the source |
-| 00:05 | **Wan2GP / WanGP** (`deepbeepmeep/Wan2GP`) | A launcher for the Wan family of video models *"for the GPU Poor"* — one entry file `wgp.py`, a Docker/CUDA runner, one-click install scripts. Log v11.52: **sliding windows** that continue a clip instead of holding it in memory, *"Video Length not Limited by Audio"*, LTX-2 video-to-audio, SAM3 mask generator |
+| 00:05 | **Wan2GP / WanGP** (`deepbeepmeep/Wan2GP`) | Measured live 2026-08-19: **8,763 stars · 1,371 forks · licence `NOASSERTION` · last push that same day**. A launcher for the Wan family of video models *"for the GPU Poor"* — one entry file `wgp.py`, a Docker/CUDA runner, one-click install scripts. Log v11.52: **sliding windows** that continue a clip instead of holding it in memory, *"Video Length not Limited by Audio"*, LTX-2 video-to-audio, SAM3 mask generator |
 | 00:11 | **Remotion** (`remotion.dev`) | Video composed **as React code**. Priced per seat and **per render**: `Creators $25/mo per seat`; `Automators $0.01 per render, $100/mo minimum` |
 | 00:14 | **HyperFrames** | *"Lets AI agents compose videos by writing HTML, CSS & JS"* — **Apache-2.0**, installed as an agent skill with `npx skills add heyman-com/hyperframes`; the audio timeline is declared in the markup itself |
-| 00:17 | **Open-Sora** (`hpcaitech/Open-Sora`) | **Apache-2.0**, Python, **28.9k stars · 2.9k forks · 43 contributors**. Runs from the command line at 256 px on one GPU or 768 px on eight; aspect ratios include **9:16** (our publishing shape); motion is a prompt parameter (`motion score`, default 4). Its README funnels to a paid hosted product, **Video Ocean** |
-| 00:22 | **HunyuanVideo** (Tencent) | Open weights, demo page with a `Try It Now`; claimed near-1080p quality. **No price and no licence figure is stated in the source — UNVERIFIED here; the repository's own licence would settle it** |
-| 00:26 | **LTX-Video** (Lightricks) | **Apache-2.0**, **10.2k stars · 993 forks · 15 contributors**. **LTX-2**: picture **and sound generated in one pass**, native 4K up to 50 fps, clips to 10 s, *"up to 50 % lower compute cost than competing models"*, multi-keyframe conditioning, LoRA fine-tuning, **built into ComfyUI core**. History: v0.9.8 to 60 s of video; the **13B distilled** build renders **HD in 10 seconds with a low-res preview after 3 seconds** on their reference card, in **8 diffusion steps**, and its **LoRA asks 1 GB of video memory** |
+| 00:17 | **Open-Sora** (`hpcaitech/Open-Sora`) | **Apache-2.0**, Python — measured live 2026-08-19 via the GitHub API: **29,282 stars · 3,007 forks**. Runs from the command line at 256 px on one GPU or 768 px on eight; aspect ratios include **9:16** (our publishing shape); motion is a prompt parameter (`motion score`, default 4). Its README funnels to a paid hosted product, **Video Ocean** |
+| 00:22 | **HunyuanVideo** (Tencent) | Open weights; the source claims near-1080p quality. Measured live 2026-08-19: **12,442 stars · 1,313 forks · licence `NOASSERTION`** — Tencent ships a community licence with named restrictions, **which is read before any commercial render** |
+| 00:26 | **LTX-Video** (Lightricks) | **Apache-2.0** — measured live 2026-08-19: **10,868 stars · 1,113 forks**. **LTX-2**: picture **and sound generated in one pass**, native 4K up to 50 fps, clips to 10 s, *"up to 50 % lower compute cost than competing models"*, multi-keyframe conditioning, LoRA fine-tuning, **built into ComfyUI core**. History: v0.9.8 to 60 s of video; the **13B distilled** build renders **HD in 10 seconds with a low-res preview after 3 seconds** on their reference card, in **8 diffusion steps**, and its **LoRA asks 1 GB of video memory** |
 | 00:33 | **The installation method itself** | One instruction handed to a coding agent: *"Set up [tool] so I can generate videos locally. Check my system first. Install everything I need and download the right model for my GPU. Then show me how to run it."* |
 | 00:43 | **The operator's own ask** | *"Follow for more AI tips."* Nothing is sold in the source |
 
@@ -153,8 +153,7 @@ Open-Sora's **prompt refiner that wants an OpenAI key**: raw provider keys are b
 
 **What this source produces, measured:** attention — **709 likes, 30 comments**, uploaded
 **2026-08-14**; nothing is sold in it. The instruments it points at produce on their own scale and
-publish it: **Open-Sora 28.9k stars, 2.9k forks, 43 contributors**; **LTX-Video 10.2k stars, 993
-forks, 15 contributors**; **Remotion sells at $25/mo per seat and $0.01 per render**; Open-Sora's
+publish it: **Open-Sora 29,282 stars · 3,007 forks**; **LTX-Video 10,868 stars · 1,113 forks**; **HyperFrames 41,693 stars**; **Remotion sells at $25/mo per seat and $0.01 per render**; Open-Sora's
 README funnels to a paid product (**Video Ocean**).
 
 **What DXB takes, in one sentence:** the holding owns a 16 GB card, a written Social Media
