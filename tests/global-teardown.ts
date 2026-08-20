@@ -8,7 +8,46 @@
 // this teardown owns the one CEO-visible class: engine-call ':no-run' hook
 // alerts, which by construction come only from tests (engine calls without a
 // run happen nowhere in production — e10 suite comment).
-export default function globalSetup(): () => Promise<void> {
+/**
+ * BEFORE the suite runs: make sure today has a realtime partition.
+ *
+ * `realtime.messages` is partitioned by day. Supabase's realtime service creates
+ * the partitions ahead of time, and on this machine it stopped: measured
+ * 2026-08-21, the newest partition was `messages_2026_08_18` while the database
+ * clock read 2026-08-20. Every broadcast written on a day with no partition goes
+ * nowhere, so sixteen assertions across e8, e10, c5, c9, e125, r13 and r42
+ * failed at once — all of them reading `realtime.messages` and finding it empty.
+ * It looked like seven broken subsystems and it was one missing table.
+ *
+ * This runs BEFORE the suite so the battery heals itself instead of failing on a
+ * date rollover. It only ever CREATES a partition, never drops one.
+ */
+async function ensureRealtimePartitions(): Promise<void> {
+  const { getDb } = await import("../packages/shared/dist/index.js");
+  const { sql } = await import("kysely");
+  await sql`
+    DO $$
+    DECLARE d date; n text;
+    BEGIN
+      FOR d IN SELECT generate_series(current_date - 1, current_date + 14, '1 day')::date LOOP
+        n := 'messages_' || to_char(d, 'YYYY_MM_DD');
+        IF NOT EXISTS (
+          SELECT 1 FROM pg_class c JOIN pg_namespace s ON s.oid = c.relnamespace
+          WHERE c.relname = n AND s.nspname = 'realtime'
+        ) THEN
+          EXECUTE format(
+            'CREATE TABLE realtime.%I PARTITION OF realtime.messages FOR VALUES FROM (%L) TO (%L)',
+            n, d::timestamp, (d + 1)::timestamp);
+        END IF;
+      END LOOP;
+    END $$;
+  `.execute(getDb());
+}
+
+export default async function globalSetup(): Promise<() => Promise<void>> {
+  process.env.DXB_DATABASE_URL ??=
+    "postgresql://postgres:postgres@127.0.0.1:54322/dxb_test";
+  await ensureRealtimePartitions();
   return async function teardown(): Promise<void> {
     // Same target the suites use (vitest.config.ts `test.env`): the isolated
     // clone, never the company database. globalSetup runs in the main process
