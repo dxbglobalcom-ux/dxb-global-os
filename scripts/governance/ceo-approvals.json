@@ -162,5 +162,33 @@
     "verbatim": "24 ü onaylıorm tmm. kısa kesin. 25 i de sadece ses ile dinle anla ve sadece bu videoyu kısaca raporla.",
     "conditions": "Source 24's report and nothing else. Measured the same minute in .planning/research/rival-intel/00-LEDGER.md: rows 15, 16, 17, 18, 19, 21, 22 and 23 stand at 'reported' and are registered here nowhere, so they remain AUTHOR-finished and unaccepted under LAW B — and report 25, written on this same order, is not accepted either. It does not close row B22, does not lift the design-package gate, and authorises no implementation of anything either report proposes. His 'kısa kesin' and his audio-only instruction were given for THIS session's work and are recorded here as what he said, not as a standing rule.",
     "where": ".planning/research/rival-intel/00-LEDGER.md head; .planning/research/rival-intel/00-LEDGER.md row 24"
+  },
+  "agent-reach-all-channels-2026-08-19": {
+    "date": "2026-08-19",
+    "what": "EVERY Agent-Reach channel is to be opened, and the skill is never to be restricted. He ruled intelligence the holding's most important point: without correct and best information there is no success. This DELETES (LAW A) the channel restriction a session had written into .claude/skills/agent-reach/SKILL.md, which had held Twitter/X, Reddit, XiaoHongShu, LinkedIn, Xueqiu and Xiaoyuzhou behind his separate approval on the ToS gate.",
+    "verbatim": "twitter reddit gibi kanallar hayati önemde hepsini aç, bu beceriyi kesinlikle kısıtlama zira en derin bilgileri bulma en iyi araştırma yapma kaynak edinme holdinging en önemli noktası yani istihbarat HERŞEYDEN ÖNEMLİ. doğru ve en iyi bilgi yoksa başarı da yok.",
+    "conditions": "The reach is unrestricted; the quarantine rule on what comes back is unchanged (PITFALLS.md #7 — outside material enters memory tagged, never as fact). Six channels remain blocked by a CREDENTIAL, never by policy: Twitter/X and Reddit need a login, XiaoHongShu needs a one-click Chrome extension plus a logged-in session, Xueqiu needs a Xueqiu login, Xiaoyuzhou needs a free Groq key, LinkedIn needs its MCP server. Every backend for all of them is installed.",
+    "where": ".claude/skills/agent-reach/SKILL.md · .planning/research/study-cards/agent-reach.md · INTEGRATION-TRACKER.md row Agent-Reach · board row B30"
+  },
+  "open-source-arsenal-2026-08-19": {
+    "date": "2026-08-19",
+    "what": "The measured open-source tool arsenal proposed after rival source 38 is APPROVED IN FULL — both the five recommended (browser-use, markitdown, Crawl4AI, changedetection.io, SearXNG) and the three that had been put to him as decisions because of their licence or language (Firecrawl AGPL-3.0, Skyvern AGPL-3.0, Stagehand and Crawlee in TypeScript). His instruction on use: agents pick whichever fits the job in hand.",
+    "verbatim": "teki seçimler harika ve karar isteyenleri de onaylıorm. ajanlarımız hangisi uygunsa ilgili iş için onu kullanır hepsine ok!",
+    "conditions": "He approved the ARSENAL, not a start: each tool still gets its study card and static scan before install (INTEG-01, no blind installs), and the AGPL-3.0 §13 question on Firecrawl and Skyvern stays his the moment anything derived from them faces a paying customer — the same gate already recorded for OpenMontage. Rejected with reason and NOT covered by this approval: n8n and Activepieces (licence is not open source, and both are a second orchestration runtime, banned by .claude/CLAUDE.md and STACK.md).",
+    "where": ".planning/research/INTEGRATION-TRACKER.md · board row B30"
+  },
+  "mediacrawler-owner-permission-2026-08-19": {
+    "date": "2026-08-19",
+    "what": "MediaCrawler (NanmiCoder/MediaCrawler, 63,061 stars) is to be integrated into the holding. Its LICENSE file is a NON-COMMERCIAL LEARNING LICENSE 1.1, and the session raised that as a hard stop. The CEO overruled it on first-hand knowledge: the repository's owner is a friend of his, told DxB directly that it may be used, and explained that 'non-commercial' is meant to also permit learning-oriented work rather than only commercial use. DXB accepted that. Evidence label C — the CEO's own first-hand knowledge, the highest this project defines.",
+    "verbatim": "Mediacrawlerı da holdinge entegre edelim mutlaka, bunun sahibi bizim arkadaş DxB ye tamam siz kullanın dedi ve şunu eklerdi: non commercial derken, bunun öğrenmeye yönelik çalışmalarda da kullanılsın sadece commercial değil dedi. biz de tamam dedik. oyüzden kullanabiliriz. sıkıntı yok.",
+    "conditions": "Recorded as HIS ruling on a licence question, which is his to make. The permission is spoken, and the durable record would be one written line from the owner (an e-mail or a message) filed beside this entry — named here as the thing that would settle it, not as a condition he set. Until the tool is used in a customer-facing, money-earning path, nothing turns on it; that is the point where the written line matters.",
+    "where": ".planning/research/INTEGRATION-TRACKER.md row MediaCrawler · board row B30"
+  },
+  "two-sentence-plan-rule-2026-08-20": {
+    "date": "2026-08-20",
+    "what": "A plan is accepted only if it opens with two sentences: (1) what will be on the CEO's screen when the row closes, in one sentence with no technical word in it, and (2) which single command proves it. A plan that cannot answer both is not ready to be planned. The approved plan is written to the row's own PLAN.md before the planning session ends, because plan mode's output dies with the conversation; the execution session reads the PLAN, and the SUMMARY written afterwards is evidence, never instruction. Written as law 7 on 00-BOARD-OPEN-WORK.md.",
+    "verbatim": "kuralı kabul ediorm.",
+    "conditions": "Proposed by the session after he described why an earlier model's large planned build disappointed him — it decomposed, planned and coded, and the result was not what he wanted. The diagnosis the rule encodes: the plan described the WORK and never the RESULT he would look at. He accepted the rule explicitly, which is what CLAUDE.md requires before anything is written as a rule.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md — 'The law of this board', law 7"
   }
 }

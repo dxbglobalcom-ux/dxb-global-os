@@ -3,6 +3,29 @@
 
 **NEXT: done**
 
+> ### 2026-08-19 night — ROW 38 WAS ADDED AND REPORTED, ON HIS LIVE ORDER
+> His words: *"bunu izle SS ile. dinlemene gerek yok. dxb global OS projesinde ledger md sini oku ve
+> bunu raporla. Holdingte kullanabilir miyiz acaba diye? integraration research bolumunde. yani
+> bunlar paraliysa zaten biraz zor once sen bu programlari arastirip calismani istiyorum."*
+> `https://www.instagram.com/reel/Da4dEQvlOCG/`, **`ericsocal` again** — the same account as row 37.
+> - **Read with the eye only.** All **21 of the 21 frames** on disk were opened, plus a **10 fps dense
+>   pass** over 4.0-6.0 s; the audio track exists on the file and **was deliberately not read**. This
+>   is **the mirror image of row 25** and, like that one, **an exception granted to this one source,
+>   not a change to law 4**.
+> - **The brief was an integration question, not a ranking**, so the weight of the report is §3: each
+>   of the five programs opened at its own source and measured for **licence, price, free tier and
+>   API**. Result: **PagePilot $39-99/mo, Shopify-only, no API · ChatGPT seats $8-25 (LiteLLM already
+>   owns that seam) · Kalodata price behind a login wall, API Enterprise-only · Rytr free plan + the
+>   list's only documented API · Sell The Trend $19.97-99.97/mo, the only one that supports
+>   WooCommerce.** Running the reel's own stack = **~$142/month for one seat on a platform this
+>   holding does not own.**
+> - **What the reading measured on our side, and it is the finding:** the holding's one storefront is
+>   **WooCommerce** (`outleteuro-ai-os/README.md`), **63 commerce/marketing/social/paid-media personas
+>   are written**, and **no connector exists** — revenue reaches the CEO's screen because a person
+>   types it into `revenue-entry-form.tsx`. Projects **P38-1 ... P38-5**; five rows and one source row
+>   in `INTEGRATION-TRACKER.md`; five study cards. **Nothing installed, nothing bought, no account
+>   opened.**
+>
 > ### 2026-08-19 evening — THE WATCHING OF STAGE 1 IS FINISHED
 > Measured by `scripts/rival-intel/next.sh` this minute: **31 of 36 reported · 5 skipped on his
 > order (13, 26, 27, 31, 36) · NEXT: done.** What happened in this session, on his live orders:
@@ -419,6 +442,7 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
 | 35 | https://www.instagram.com/reels/DbsM7RMBSzo/ | reel | reported | 2026-08-07T22:24:38Z | `35-dbsm7rmbszo.md` | Handed over live on 2026-08-08: *"34. video olarak bunu koy … bunu listeye ekleyip izle ve raporla sonra. şimdi 7 den devam."* The 34th source in the queue after he struck 06; watched **after** the rows before it |
 | 36 | https://www.youtube.com/watch?v=I-cvxBMue08 | video | skipped | 2026-08-10T12:47:32Z | `36-jarvis-youtube.md` | **SKIPPED ON THE CEO'S LIVE ORDER, 2026-08-19** — *"(buarada 36. video izlenmeyecek ) not düş"*. No report is written. Like rows 13, 26, 27 and 31 the row is **not** struck: it keeps its number, its material stays on disk (`media/36-*.mp4`, `frames/36`, `transcripts/36.json`), and the number is not re-used. **ADDED ON HIS LIVE ORDER, 2026-08-10** — *"kuyruğa ekle 36 olarak, sırası gelince izle."* This link is **his own, and it had never owned a row**: it stands in `docs/source-architecture-notes-sanitized.md` line 17, inside the sentence that orders the Jarvis system — *"mutlaka bir JARVIS SISTEMI kurulmasını istiyorum … Ör: sabah kalktığımda Jarvis bana şu konuda rapor ver dediğimde sesli bir şekilde bir ör: <this link> https://github.com/open-jarvis/OpenJarvis"*. The repository half of that same sentence became row 16 on 2026-07-28 and **the video half was dropped** — the same defect class as rows 29-34, found here by the CEO himself when he noticed 16 was absent from the directive's §11 list. Probed the same minute with `yt-dlp --simulate`: *"I Built JARVIS from Iron Man with Claude Fable 5 (INSANE Results!)"*, **Zubair Trabzada · AI Workshop**, **730 s (12:10)**, **1912×1080**, uploaded 2026-07-04. It carries the morning-briefing behaviour he described in his own sentence, so it is read against W2.6 and Hamza|
 | 37 | https://www.instagram.com/reels/DcAT9zPD0Cn/ | reel | reported | 2026-08-19T18:07:47Z | `37-dcat9zpd0cn.md` | **HANDED OVER LIVE, 2026-08-19, AND READ FOR ITS SOURCES ONLY.** Later the same evening he corrected the brief: *"37 izlenmeyecekti unuttum. raporunda görüntülerle ilgili herşeyi sil oradaki sadece verdiği kaynaklar önemli."* The visual reading was **deleted from the report** (LAW A); what stands is the tool list, its licences and prices, and where each plugs in — plus five study cards and four tracker rows written from it. Original hand-over: *"https://www.instagram.com/reels/DcAT9zPD0Cn/ bu içerikle ilgili rapor hazırla holdingimiz için"*, with the watching condition he wrote out in the same message: *"İZLEME — KISALAN SADECE YAZI, İZLEME ASLA … frames/<n>/t*.jpg altındaki KARELERİN HEPSİNİ tek tek açacaksın"*, and the count of frames on disk against the count opened written into the report itself |
+| 38 | https://www.instagram.com/reel/Da4dEQvlOCG/ | reel | reported | 2026-08-19T20:52:33Z | `38-da4deqvlocg.md` | **HANDED OVER LIVE, 2026-08-19, TO BE READ WITH THE EYE ONLY.** His words: *"bunu izle SS ile. dinlemene gerek yok. dxb global OS projesinde ledger md sini oku ve bunu raporla. Holdingte kullanabilir miyiz acaba diye? integraration research bölümünde. yani bunlar paralıysa zaten biraz zor önce sen bu programları araştırıp çalışmanı istiyorum."* **The mirror image of row 25**, and an exception granted to this one source rather than a change to law 4: 25 was listened to and never opened, 38 is opened frame by frame and its audio is not read. The brief he set is an **integration question, not a ranking**: every program the film names is researched at its own source for **licence and price** first, because *"bunlar paralıysa zaten biraz zor"* — and the answer is written into `INTEGRATION-TRACKER.md` |
 
 **Rows 29-34 exist because the DOCX was never read.** Measured 2026-08-02 20:4x: the CEO edited
 `DXB_GLOBAL_OS_CEO_MASTER_DIRECTIVE.docx` at 2026-08-01 17:45 and the repository's copy was still
