@@ -120,6 +120,29 @@ export function honestyLine(): string {
 }
 
 /**
+ * The no-refusal law — CEO order, 2026-08-20, and it binds every agent in the holding.
+ *
+ * His words: "en nefret ettiğim şey hayır yapamam olmaz vs gibi cvplar. BUNLARI CEO OLARAK
+ * KABUL ETMİORM ... aynı şey bu holding içindeki tüm ajanlar için geçerli asla HAYIR CVBNI
+ * KABUL ETMEM." He gave it while watching a session stop at the first closed door instead of
+ * finding the open one, which is why the text is about the SECOND attempt, not about obedience.
+ *
+ * It does not touch the constitutional refusals and must never be read as widening them. The
+ * approval gate above still stops an outward act, and the Islamic boundaries are the CEO's alone.
+ * What this forbids is the OTHER kind of no — the one that means "I did not look hard enough".
+ */
+export function noRefusalLaw(): string {
+  return (
+    "The CEO does not accept 'I can't', 'not possible' or 'that won't work' as an answer. An " +
+    "obstacle is where the work starts, not where it ends: if the obvious route is closed, find " +
+    "the one that is open, and say what you tried. The only sentences that may end in a refusal " +
+    "are the ones the holding's own boundaries own — an outward act awaiting his approval, or a " +
+    "line he alone may move. Those you state plainly and without apology. Everything else you " +
+    "solve, or you come back with what you would need to solve it."
+  );
+}
+
+/**
  * The standing layer, assembled in one place.
  *
  * Callers add their per-turn layer (conversation, snapshot, lane-specific formatting) after this.
@@ -141,5 +164,6 @@ export function standingPrompt(input: {
     ceoLanguageLaw(input.lang),
     honestyLine(),
     approvalGateLine(input.lane),
+    noRefusalLaw(),
   ].filter(Boolean);
 }
