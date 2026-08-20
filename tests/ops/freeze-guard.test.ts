@@ -72,6 +72,32 @@ function adjOf(pid: number): number {
   return Number(readFileSync(path, "utf8").trim());
 }
 
+/**
+ * What an untouched process scores here — NOT necessarily zero.
+ *
+ * oom_score_adj is inherited from the parent, and a run started inside the
+ * editor's own terminal inherits the editor's value: measured 100 on this
+ * machine, 2026-08-21, which is why three "must never be touched" cases read
+ * 100 instead of 0 and looked like guard failures. The guard was innocent; the
+ * assertion was environment-blind. The contract is unchanged — the guard adds
+ * NOTHING on top of what a process already carries — it is now expressed
+ * against the baseline the run actually has instead of a hard-coded zero.
+ */
+const UNTOUCHED = Number(readFileSync("/proc/self/oom_score_adj", "utf8").trim());
+
+/**
+ * The guard logs only when it ACTS, so a clean machine leaves no file at all.
+ *
+ * The suite used to read the log directly and that worked by accident: stuck
+ * chroma-mcp helpers were always lying around, so something was always written.
+ * Once the guard runs as a resident and keeps the machine swept, a pass can end
+ * with nothing to say, and `readFileSync` threw ENOENT on a case whose intent —
+ * "this pid is NOT in a kill line" — is satisfied most strongly by an empty log.
+ */
+function logText(): string {
+  return existsSync(LOG) ? readFileSync(LOG, "utf8") : "";
+}
+
 // Every decoy this suite starts, so afterAll can guarantee none survives it.
 const decoys: ChildProcess[] = [];
 function start(pattern: string): number {
@@ -121,11 +147,11 @@ describe("freeze-guard — the editor is never the designated victim", () => {
   it("never raises the editor's own score", () => {
     // Electron already sets 300 on real windows. The guard's contract is that
     // it adds nothing on top of that, ever.
-    expect(adjOf(editorWindow)).toBe(0);
+    expect(adjOf(editorWindow)).toBe(UNTOUCHED);
   });
 
   it("never touches the browser process itself", () => {
-    expect(adjOf(browserItself)).toBe(0);
+    expect(adjOf(browserItself)).toBe(UNTOUCHED);
   });
 
   it("every claimed tier outranks the highest score an editor window reaches", () => {
@@ -153,14 +179,14 @@ describe("freeze-guard — the editor is never the designated victim", () => {
     for (const _ of [1, 2]) runGuard({});
     const adjWhileSuspended = adjOf(suspended);
     execFileSync("bash", ["-c", `kill -CONT ${suspended}`]);
-    expect(readFileSync(LOG, "utf8")).not.toContain(`would kill ${suspended}`);
+    expect(logText()).not.toContain(`would kill ${suspended}`);
     expect(existsSync(`/proc/${suspended}`)).toBe(true);
     // Nor is it offered as a victim. Measured 2026-07-29 17:15: the killer
     // fired six times in ninety seconds and three of its choices were
     // suspended helpers, which cannot act on the signal they are sent. Nothing
     // was freed and it fired again immediately. A suspended process must stay
     // out of the queue entirely, not stand at the front of it.
-    expect(adjWhileSuspended).toBe(0);
+    expect(adjWhileSuspended).toBe(UNTOUCHED);
   });
 
   it("closes a helper whose session is gone, and leaves a live one alone", () => {
@@ -188,7 +214,7 @@ describe("freeze-guard — the editor is never the designated victim", () => {
         .pop(),
     );
     runGuard({});
-    const log = readFileSync(LOG, "utf8");
+    const log = logText();
     expect(log).toMatch(/helper with no session/);
     // The live session's helper — started by this suite, parent still alive —
     // must never appear in a kill line.

@@ -1,0 +1,23 @@
+# dxb-freeze-guard — the machine's own safety valve, resident.
+#
+# CEO order 2026-07-18: "solve the freeze in the background, risk-free". The
+# unit was hand-written on the X230 and never committed, so the move to
+# DXB-Center left the workstation unprotected — measured 2026-08-21, and this
+# machine had already frozen hard once on 2026-08-17 at 18:04.
+#
+# Resident, not a cron slot: the 2026-07-28 cron version lost the race with
+# earlyoom by up to 59 seconds. FREEZE_GUARD_INTERVAL must stay in 1..15.
+[Unit]
+Description=DXB freeze guard — RAM safety valve (resident sweep)
+After=graphical-session.target
+
+[Service]
+Type=simple
+Environment=FREEZE_GUARD_INTERVAL=10
+ExecStart="%h/DxB Global OS/scripts/ops/freeze-guard.sh"
+Restart=always
+RestartSec=5
+Nice=-5
+
+[Install]
+WantedBy=default.target

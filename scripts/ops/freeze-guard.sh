@@ -53,7 +53,25 @@
 #   FREEZE_GUARD_INTERVAL   seconds between passes; 0/unset = single pass
 #   FREEZE_GUARD_DRY_KILL   1 = shield only, never kill (used by the suite)
 set -uo pipefail
-LOG="${FREEZE_GUARD_LOG:-/home/ghost/DxB Global OS/var/freeze-guard.log}"
+# The default log path used to name /home/ghost — the X230 user. The move to
+# DXB-Center left it pointing at a directory that does not exist, so the guard
+# ran blind: active, sweeping, and unable to write a single line (measured
+# 2026-08-21). It now derives its own repository root instead of naming a user.
+GUARD_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
+LOG="${FREEZE_GUARD_LOG:-$GUARD_ROOT/var/freeze-guard.log}"
+mkdir -p -- "$(dirname -- "$LOG")" 2>/dev/null || true
+
+# WHO ADOPTS AN ORPHAN HERE.
+#
+# The widow rule below was written against ppid==1. On a systemd user session
+# an orphan is NOT re-parented to init — it is adopted by the per-user manager
+# (`systemd --user`), which registers itself as a subreaper. Measured on
+# DXB-Center 2026-08-21: a helper deliberately orphaned came back with ppid
+# 2477, the user manager, so the rule matched nothing and this machine swept
+# NO widowed helpers at all — the exact pile-up the guard exists to prevent.
+REAPERS=" 1 "
+for _r in $(pgrep -x systemd -u "$(id -u)" 2>/dev/null); do REAPERS+="$_r "; done
+is_reaper() { [[ "$REAPERS" == *" $1 "* ]]; }
 DRY_KILL="${FREEZE_GUARD_DRY_KILL:-0}"
 
 # ── A SESSION IS NEVER JUNK, HOWEVER LONG IT STANDS STILL ───────────────────
@@ -149,7 +167,7 @@ run_once() {
     # idleness, never age, never being suspended (CEO ruling, top of file). By
     # 2026-07-29 four full tool stacks had piled up because nothing swept the
     # ones whose session had ended.
-    if [[ "$ppid" -eq 1 ]]; then
+    if is_reaper "$ppid"; then
       case "$args" in
         # The claude-mem worker is a resident daemon and is SUPPOSED to have no
         # parent; it hosts live sessions. It is never a widow.
