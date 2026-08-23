@@ -289,7 +289,7 @@ and `agent_runs` has 0 rows today; the last run on record started 2026-07-28 09:
 |---|---|---|
 | Route | the sidebar footer on **every** page, and the bottom bar of the runtime page | `/sys/health` · `/fin/costs` |
 | What it renders | **`● 16/22 systems live`** over `localhost:4100 · sqlite · real agents`, always visible, never a page you open; and **`COST & RUNTIME $4.31 ESTIMATED`** under the agents that spent it, plus a `$0.xx Month · Unlimited` tile on the cockpit | `/sys/health` is a page the CEO must navigate to; **`system_health_snapshots` holds 0 rows** (measured this session). `/fin/costs` reads `cost_ledger` on its own page — **the price of the work is never beside the work** |
-| **The gap** | — | **His two most important numbers — how much of the machine is up, and what today cost — follow the owner everywhere. Ours wait on two separate pages, one of them empty** |
+| **The gap** | — | **His two most important numbers — how much of the machine is up, and what today cost — follow the owner everywhere. Ours wait on two separate pages, one of them empty** <!-- OPEN: B22 --> |
 
 ### The two honest totals
 

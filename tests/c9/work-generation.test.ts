@@ -208,10 +208,27 @@ describe("W2.5 — a finished plan becomes staffed work with nobody in the loop"
         label: string | null; label_tr: string | null; parent_task_id: string | null;
         objective: string; output_contract: string; model_tier: string;
       }>`
-        select department, status, agent_id, project_id, label, label_tr,
-               parent_task_id, objective, output_contract, model_tier
-          from tasks where parent_task_id = ${plan}::uuid order by created_at
+        select t.department, t.status, t.agent_id, t.project_id, t.label, t.label_tr,
+               t.parent_task_id, t.objective, t.output_contract, t.model_tier
+          from tasks t
+          join generated_work g on g.task_id = t.id
+         where t.parent_task_id = ${plan}::uuid
+         order by g.step_index
       `.execute(trx);
+      // Ordered by the STEP, not by the clock. This read `order by created_at`
+      // until 2026-08-23: every task of one plan is written inside a single
+      // transaction, so they all carry the same `now()` and the tie was broken
+      // by whatever order the planner felt like — the case passed alone and
+      // failed inside the full battery, which is exactly the "nobody can count
+      // this project the same way twice" class. `generated_work.step_index` is
+      // the order the plan actually has.
+      // Counted WITHOUT the join first, so nothing can hide behind it. An audit
+      // caught that on 2026-08-23: a third task carrying no `generated_work` row
+      // would be dropped by the join and the length assertion would still pass.
+      const children = await sql<{ n: number }>`
+        select count(*)::int as n from tasks where parent_task_id = ${plan}::uuid
+      `.execute(trx);
+      expect(children.rows[0].n).toBe(2);
       expect(rows.rows.length).toBe(2);
       expect(rows.rows.map((r) => r.department)).toEqual(["commerce", "sales"]);
       for (const r of rows.rows) {

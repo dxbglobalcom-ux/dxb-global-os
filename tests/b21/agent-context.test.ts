@@ -44,11 +44,33 @@ describe("B21 — one standing context, both lanes", () => {
   it("gives voice and chat the IDENTICAL identity, persona, memory and law blocks", () => {
     const voice = standingPrompt({ ...base, lane: "voice" });
     const chat = standingPrompt({ ...base, lane: "chat" });
+    const voiceGate = approvalGateLine("voice");
+    const chatGate = approvalGateLine("chat");
     // Everything except the approval-gate line (the one legitimate lane difference) is identical.
-    expect(voice.slice(0, -1)).toEqual(chat.slice(0, -1));
-    expect(voice.at(-1)).not.toEqual(chat.at(-1));
-    expect(voice.at(-1)).toContain("never grant one");
-    expect(chat.at(-1)).toContain("approval gate");
+    //
+    // This used to compare `slice(0, -1)` — it assumed the approval-gate line was LAST. On
+    // 2026-08-21 01:11 the no-refusal law was appended after it (de149a53), and the assumption
+    // broke: the case then compared the gate line against the law line and failed. Measured
+    // 2026-08-23 — the battery had been green because the compiled package was older than that
+    // source change. The contract was never about position: it is that the two lanes differ in
+    // the approval-gate line and in nothing else. Identity, not index.
+    // Exactly ONE occurrence is removed, not every match. An audit caught the
+    // filter version on 2026-08-23: `filter` would erase a DUPLICATED line from
+    // both sides and the case would never see that a lane had gained a repeat.
+    const dropOne = (lines: readonly string[], line: string): string[] => {
+      const i = lines.indexOf(line);
+      expect(i, "the approval-gate line is missing from this lane").toBeGreaterThanOrEqual(0);
+      return [...lines.slice(0, i), ...lines.slice(i + 1)];
+    };
+    expect(dropOne(voice, voiceGate)).toEqual(dropOne(chat, chatGate));
+    // and it appears once, not twice
+    expect(voice.filter((l) => l === voiceGate).length).toBe(1);
+    expect(chat.filter((l) => l === chatGate).length).toBe(1);
+    expect(voiceGate).not.toEqual(chatGate);
+    expect(voice).toContain(voiceGate);
+    expect(chat).toContain(chatGate);
+    expect(voiceGate).toContain("never grant one");
+    expect(chatGate).toContain("approval gate");
   });
 
   it("carries the anti-impersonation clause on BOTH lanes, not only voice", () => {

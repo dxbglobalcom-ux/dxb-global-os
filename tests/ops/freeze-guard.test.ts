@@ -98,6 +98,18 @@ function logText(): string {
   return existsSync(LOG) ? readFileSync(LOG, "utf8") : "";
 }
 
+/**
+ * True only when the guard reported THIS pid as a session-less helper. The log
+ * line is `<time> helper with no session (parent gone): DRY RUN, would kill <pids>`
+ * (`freeze-guard.sh:101`), so the pid list is on the same line and can be checked.
+ */
+function sawOurOrphan(log: string, pid: number): boolean {
+  return log
+    .split("\n")
+    .filter((l) => l.includes("helper with no session"))
+    .some((l) => (l.split("would kill ")[1] ?? "").split(/\s+/).includes(String(pid)));
+}
+
 // Every decoy this suite starts, so afterAll can guarantee none survives it.
 const decoys: ChildProcess[] = [];
 function start(pattern: string): number {
@@ -192,30 +204,53 @@ describe("freeze-guard — the editor is never the designated victim", () => {
   it("closes a helper whose session is gone, and leaves a live one alone", () => {
     // Four full helper stacks had accumulated by 2026-07-29 because nothing
     // ever swept the ones whose session had ended.
-    const orphan = Number(
-      execFileSync("bash", [
-        "-c",
-        `setsid bash -c 'exec -a "npm exec @playwright/mcp@latest" sleep 120' >/dev/null 2>&1 & echo $!`,
-      ])
-        .toString()
-        .trim(),
-    );
-    // The shell above exits immediately, so its child is re-parented to init —
-    // exactly the state a helper reaches when its session dies.
-    execFileSync("bash", ["-c", "sleep 1"]);
-    const reparented = Number(
-      execFileSync("bash", [
-        "-c",
-        `pgrep -f 'exec -a .npm exec @playwright/mcp@latest. sleep 120' | head -1; pgrep -x sleep | tail -1`,
-      ])
-        .toString()
-        .trim()
-        .split("\n")
-        .pop(),
-    );
-    runGuard({});
-    const log = logText();
-    expect(log).toMatch(/helper with no session/);
+    // The RESIDENT guard (dxb-freeze-guard.service, FREEZE_GUARD_INTERVAL=10,
+    // installed on this machine 2026-08-21) sweeps with REAL kills and matches
+    // the very pattern this decoy carries. It can therefore reap the orphan
+    // inside the one second this case needs it, and then this case's own dry
+    // pass has nothing left to report — measured 2026-08-23: an empty log, the
+    // suite green when run alone and red inside the battery, with nothing at all
+    // wrong with the guard. So the fixture is held until this case's own pass has
+    // seen it, and the log starts empty so no earlier case can answer for it.
+    rmSync(LOG, { force: true });
+    let orphan = 0;
+    let reparented = 0;
+    let log = "";
+    for (let attempt = 0; attempt < 5; attempt++) {
+      orphan = Number(
+        execFileSync("bash", [
+          "-c",
+          `setsid bash -c 'exec -a "npm exec @playwright/mcp@latest" sleep 120' >/dev/null 2>&1 & echo $!`,
+        ])
+          .toString()
+          .trim(),
+      );
+      // The shell above exits immediately, so its child is re-parented to init —
+      // exactly the state a helper reaches when its session dies.
+      execFileSync("bash", ["-c", "sleep 1"]);
+      reparented = Number(
+        execFileSync("bash", [
+          "-c",
+          `pgrep -f 'exec -a .npm exec @playwright/mcp@latest. sleep 120' | head -1; pgrep -x sleep | tail -1`,
+        ])
+          .toString()
+          .trim()
+          .split("\n")
+          .pop(),
+      );
+      // Nothing to observe means the resident took it first: build it again.
+      if (!reparented || !existsSync(`/proc/${reparented}`)) continue;
+      runGuard({});
+      log = logText();
+      if (sawOurOrphan(log, reparented)) break;
+    }
+    // The line must name OUR process. An audit caught the weaker version on
+    // 2026-08-23: `/helper with no session/` alone would be satisfied by some
+    // OTHER orphan on the machine while this case's own decoy went unseen.
+    expect(
+      sawOurOrphan(log, reparented),
+      `guard never reported pid ${reparented} as a session-less helper. Log:\n${log}`,
+    ).toBe(true);
     // The live session's helper — started by this suite, parent still alive —
     // must never appear in a kill line.
     expect(log).not.toContain(`would kill ${scaffolding}`);

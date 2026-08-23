@@ -46,7 +46,7 @@
 > - **Report 33 completed** — the screen's own name **`OPTIMAL ENGINE`**, `~107k words`, the eight
 >   `KNOWLEDGE DOMAINS`, the **`take-culler`** card with its `$2-3k per batch`; part **P33-7**.
 >
-> **What is left of stage 1 is the synthesis**, `00-SYNTHESIS.md`, and it waits on him.
+> **What is left of stage 1 is the synthesis**, `00-SYNTHESIS.md`, and it waits on him. <!-- OPEN: B22 -->
 
 > ### ✅ SOURCE 24's REPORT WAS ACCEPTED — 2026-08-17 (LAW B)
 > His words: *"24 ü onaylıorm tmm. kısa kesin. 25 i de sadece ses ile dinle anla ve sadece bu

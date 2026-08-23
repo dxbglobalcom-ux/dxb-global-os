@@ -73,7 +73,7 @@ No summarising. Each row is what that frame carries; where the pixels run out th
 | 00:12 | t013 | Full-red page: `…our AI writing **assistant** fo… / …tent, accessible **(anywhere)**` — `assistant` underlined and `anywhere` circled in a hand-drawn stroke. Button **`Get Rytr It's Free`**. Below the fold: **`8,000,000+ happy copywriters, marketers & entrepreneurs`** and **`4.9/5`** |
 | 00:13 | t014 | Wordmark **`Rytr`** top-left; headline `Rytr is your AI … / form content, ac…`; a three-stroke "spark" mark sits on the first word |
 | 00:14 | t015 | Same, closer — the red ground fills the frame; tab `Kalodata - The Best Tool…` still first |
-| 00:15 | t016 | Magenta page. URL bar reads **`landing.sellthetrend.com`**. Headline `…ropshipping Software`; four ticked lines, blurred but readable in the next frames; `…40,000+ merchants`; two five-star rows, one against a red mark and one against `App Store`; bottom `…ck guarantee` |
+| 00:15 | t016 | Magenta page. URL bar reads **`landing.sellthetrend.com`**. Headline `…ropshipping Software`; four ticked lines, blurred but readable in the next frames; `…40,000+ merchants`; two five-star rows, one against a red mark and one against `App Store`; bottom `…ck guarantee` <!-- HISTORY --> |
 | 00:16 | t017 | Wordmark **`SellTheTrend`** with a rising-bars glyph. Headline **`#1 AI Dropshi…`**. Four green ticks: `Get your store built in minutes with …` · `Find and add winning products to yo…` · `Automate your Dropshipping Store a…` · `1-to-1 live chat support`. Dark pill **`Try for free`**, beside it `30 day mone…` |
 | 00:17 | t018 | Same, closest — the four ticks fully legible |
 | 00:18 | t019 | Back to the room. Caption has changed to **`Follow for More Videos on How to Put This Together`**; index finger raised |

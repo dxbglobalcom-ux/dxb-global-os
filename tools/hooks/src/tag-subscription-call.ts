@@ -57,13 +57,64 @@ async function sumTranscript(path: string): Promise<Map<string, UsageTotals>> {
   return perModel;
 }
 
+/**
+ * Where a Postgres address actually lands: server, port and database — not the
+ * text it was written in. Loopback spellings collapse to one token because they
+ * are one machine; an absent port is 5432 because that is what the driver uses.
+ * An address that cannot be parsed is treated as UNKNOWN and therefore as a
+ * possible match, so a malformed value can never buy a write.
+ */
+function target(url: string | undefined): string | null {
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace(/^\[|\]$/g, "").toLowerCase();
+    const server = host === "localhost" || host === "127.0.0.1" || host === "::1" ? "loopback" : host;
+    const db = decodeURIComponent(u.pathname.replace(/^\//, ""));
+    return `${server}:${u.port || "5432"}/${db}`;
+  } catch {
+    return "unparseable";
+  }
+}
+
+/** True when two addresses reach the same database — or when either cannot be read. */
+function sameTarget(a: string | undefined, b: string | undefined): boolean {
+  const ta = target(a);
+  const tb = target(b);
+  if (ta === null || tb === null) return false;
+  if (ta === "unparseable" || tb === "unparseable") return true;
+  return ta === tb;
+}
+
 async function main(): Promise<void> {
   const input = JSON.parse(await readStdin()) as HookInput;
   const sessionId = input.session_id;
   const transcriptPath = input.transcript_path;
   if (!sessionId || !transcriptPath || !existsSync(transcriptPath)) return;
 
-  process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+  // B36 (CEO order 2026-08-23, complaint C24/C47). What this hook records is the
+  // CONSTRUCTION session's own token burn, and a construction cost is not the
+  // holding's spend. Until 2026-08-23 the line here read
+  //   process.env.DXB_DATABASE_URL ??= "postgresql://…:54322/postgres"
+  // which is the COMPANY database, so every session that ended wrote a row into
+  // the CEO's own cost ledger — measured: 950 '<synthetic>' rows plus 282
+  // claude-fable-5 and 122 claude-opus-5 rows, the newest landing 2026-08-22.
+  // There is no fallback any more: a missing address means the construction has
+  // no ledger yet, never that the company's will do.
+  const constructionUrl = process.env.DXB_CONSTRUCTION_DATABASE_URL;
+  if (!constructionUrl) return;
+  // The construction ledger may never be the company's own database. Compared by
+  // TARGET, not by text: the first version of this guard compared the two strings
+  // and an independent audit broke it in one line — `localhost` and `127.0.0.1`
+  // name the same server, a default port and `:5432` name the same port, and a
+  // `?sslmode=` tail changes the text without changing where the write lands.
+  if (sameTarget(constructionUrl, process.env.DXB_DATABASE_URL)) {
+    console.error(
+      "tag-subscription-call: DXB_CONSTRUCTION_DATABASE_URL points at the company database — refusing to write",
+    );
+    return;
+  }
+  process.env.DXB_DATABASE_URL = constructionUrl;
   const db = getDb();
 
   // v1 idempotency: one SessionEnd per session wins (resume/clear can fire the

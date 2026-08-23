@@ -112,6 +112,18 @@ async function violationsSince(id: number) {
 }
 
 beforeAll(async () => {
+  // This suite drives `fn_hook_set_policy`, which is idempotent BY KEY: a key it
+  // has already seen returns the recorded response and DOES NOT APPLY the change
+  // (migration 20260714030000_e10_hook_engine.sql:231-236). The keys below are
+  // constant, and until 2026-08-23 they were cleared only in afterAll — so a run
+  // that never reached afterAll (killed, timed out, machine frozen) left them
+  // behind, and the NEXT run's "§17 invalid policy JSON → gate REJECTS" case got
+  // ok:true from a replay while the broken rule was never written. The gate then
+  // correctly answered PASS and the case failed for a reason that had nothing to
+  // do with the code under test. Measured 2026-08-23: reproduced on demand by
+  // inserting one `e10t-invalid-rule` row. A suite may not inherit the residue of
+  // a predecessor that was killed.
+  await sql`DELETE FROM control_idempotency WHERE key LIKE ${M + "-%"}`.execute(db());
   const v = await sql<{ mx: number | null }>`SELECT max(id)::int AS mx FROM hook_violations`.execute(db());
   baseViolationId = v.rows[0]?.mx ?? 0;
   const d = await sql<{ mx: number | null }>`SELECT max(id)::int AS mx FROM decision_log`.execute(db());

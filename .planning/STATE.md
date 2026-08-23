@@ -19,6 +19,26 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
+**2026-08-23 — THE CONSTRUCTION SITE IS BEING CUT OUT OF THE COMPANY. THIS IS THE LIVE ORDER.**
+He opened the day with it: the very important gap on the board, and the complaint born from it —
+*"inşaat sürecinin database'i ile holding kendi database'ini ferrari seviyesine yakışır şekilde
+ayıracağız"*. It is board row **B36**, and his three decisions are registered
+(`construction-company-db-separation-2026-08-23`): **two separate engines · the clone is a model,
+not a mirror · the residue is moved, not deleted.** He then approved the architectural reversal the
+measurement forced — *"tersini de onaylıyorum, blok 0 ile başla"*: **the company does NOT move; the
+construction moves out**, because his live surfaces depend on Supabase Realtime (ten components),
+his login on Supabase Auth, and the Supabase CLI pins the database name to `postgres`.
+**Two things are still his and only his:** the Block 5 dry-run list (which rows count as
+construction) goes in front of him before anything moves, and `hook_violations` / `audit_log` are
+not touched at all without his separate word.
+**He also had the work audited by Codex Solo 5.6 the same day**, which found seven defects — three
+serious, one of them a hole that was then exploited live in a test before it was closed. All seven
+are repaired; the answer is `.planning/quick/20260823-construction-company-separation/AUDIT-RESPONSE-1.md`.
+**His standing correction from that day, worth carrying:** when a test failed one run in five the
+author offered to set it aside, and he refused it in one line — *"o 5 test'in 1 hata ise neden hatalı
+testi yok saymayı teklif ediyorsun?"* Frequency does not shrink a defect.
+
+
 **2026-08-16/17 — the holding moved to the workstation, and it is measured, not assumed.** He
 ordered a clean move ("tertemiz cillop gibi bir taşıma") with one binding condition: **nothing is
 deleted on the X230**.
@@ -182,7 +202,37 @@ session: **the author knows where the plan is, not what it says.** 59 files · 1
 151,838 words in `HOLDING-OS-MASTER-PLAN/`, and no session has read them end to end. He was offered
 that reading as the next job and had not answered when the session closed.
 
-1. **B22 — the rival re-analysis is the work in hand.** <!-- OPEN: B22 -->
+1. **B36 — cutting the construction site out of the company. THIS IS THE WORK IN HAND.** <!-- OPEN: B36 -->
+   Plan: `.planning/quick/20260823-construction-company-separation/PLAN.md` (eight blocks, approved).
+   Evidence so far: `EVIDENCE.md` in the same folder · audit answer: `AUDIT-RESPONSE-1.md`.
+   **DONE — Block 1, the writer is dead.** The `SessionEnd` hook that wrote the author's own token
+   burn into the holding's `cost_ledger` writes only to `DXB_CONSTRUCTION_DATABASE_URL`, nothing when
+   that is unset, and refuses when the address REACHES the company (compared by server/port/database,
+   not by text — the text version was broken by the audit and the hole wrote a real row before it was
+   closed). `tests/b36/hook-never-writes-company.test.ts` 9/9.
+   **DONE — Block 0, the safety net.** `~/backups/dxb/dxb-b36-pre-separation-2026-08-23.dump`,
+   23,666,672 bytes, sha256 identical on the Hetzner Storage Box, restored WITH owners and privileges
+   and compared object by object: 60 tables · identical row counts · 226 functions · 117 indexes ·
+   57 RLS policies · 1 sequence · 1482 grants · 610 constraints · 42 triggers · 34 views. **Named
+   boundary:** the privileged restore reports 117 ignored errors, all of them Supabase's own
+   internals, so this is a DATABASE backup and not a whole-cluster backup — a recovery drill must
+   start a Supabase stack first.
+   **The measurement that settles the whole row:** the company today against the backup of
+   **2026-08-17**, all 60 tables — exactly one table moved, `cost_ledger` +20 rows, and **all 20 carry
+   `source='hook'`**. Everything that changed in the holding's records in six days was written by the
+   hook this row killed.
+   **NEXT IS BLOCK 2** — the construction moves out to its own Supabase stack (own container, own
+   ports, own credentials, project `DxB_Build`), schema from the same `supabase/migrations`, and its
+   data GENERATED, never copied from his real rows. Then Block 3 (the read-only window, `dxb_reader`
+   with SELECT and nothing else), Block 4 (the **94** remaining fallbacks — 83 tests · 7 scripts ·
+   3 seeds · 1 live route — which cannot move before Block 2 because the tests would have nowhere to
+   point), Block 5 (the residue move, his dry-run first), Block 6 (`pnpm verify:separation`),
+   Block 7 (records, including closing C36).
+   **State when this was written:** battery `96 files · 719 passed · 15 skipped`, three consecutive
+   runs · `tsc --build` exit 0 · `pnpm verify:ledger` OK · company `cost_ledger` 1612, untouched.
+
+
+2. **B22 — the rival re-analysis, which waits behind B36.** <!-- OPEN: B22 -->
 
    **WHY IT EXISTS — order C42, sharpened 2026-08-09:** *"bu rakip video raporlarını niye
    hazırlıyoruz adam gibi hatırlamanız lazım."* He hands over a rival; the author watches it whole,
@@ -406,7 +456,7 @@ that reading as the next job and had not answered when the session closed.
    to end and `realized_revenue_eur` is 0. On the measure that decides we are behind all of them, and
    any sentence that softens that is deleted on sight.
 
-2. **B28 — the clipping business, and he has decided its shape.** <!-- OPEN: B28 -->
+3. **B28 — the clipping business, and he has decided its shape.** <!-- OPEN: B28 -->
    **The AGENCY seat is approved in his own words** (2026-08-07): *"ajans koltuğunu onaylıyorum…"*
    <!-- CEO-OK: c42-agency-seat-2026-08-07 --> DXB wins brand clients, launches campaigns under its
    own name, keeps and scores a roster, guarantees delivery, keeps the spread — entering through the
@@ -414,7 +464,7 @@ that reading as the next job and had not answered when the session closed.
    *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"* — every
    campaign, every client, every clip, at any size. **Nothing is built: he approved the seat, not a
    start.** Everything about it is in `.planning/research/rival-intel/05-cnn-clipping-business.md` §5.
-3. **What is blocked on him, and cannot move without him:** his approval of a visual design package
+4. **What is blocked on him, and cannot move without him:** his approval of a visual design package
    before any redesign is built · one hand-minted browser session so authenticated surfaces can be
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two
    paid model exams (B06, B09) · the acceptance session itself (B13) · replacing the Gemini key
@@ -422,7 +472,7 @@ that reading as the next job and had not answered when the session closed.
    three document skills he approved but whose licence forbids copying them here (B27) — the
    capability he wanted already works without them, so this is a choice, not a blocker** · **money
    out to clippers once the agency seat starts operating (B28).**
-4. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
+5. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
    this (authority order, `.claude/CLAUDE.md` §1) — and it DELETES whatever contradicts it (LAW A).
 
 ## Where things live
