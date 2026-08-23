@@ -457,13 +457,13 @@ all: it asks the server for its cluster id and database oid and compares them wi
 guard uses. Every step reads FILES or invents rows:
 
 ```
-build-seed → 7677236350688722983/5 (postgres)
+build-seed → 7677291653303935015/5 (postgres)
 
-  holding core                                      1 company · 2 project(s)
+  generated holding, projects and memory stores     1 company · 2 project(s), 1 rewritten · 4 memory store(s)
   routing rules                                     37 enabled rules, tiers L1,L2,L3,L4
-  personas from the dossier files                   199 employee(s) · 199 version(s)
+  generated personas for every seat                 199 seat(s) · 199 version(s) · 199 written, 0 swept
   gate, bind and activate the generated workforce   199 active · 199 bound
-  employee records from the dossiers                199 record(s)
+  generated employee records                        199 record(s)
   tool pins from the live MCP servers               context7=2 dxb-mcp=21 git=12 playwright=24 scrapling=10
   library intake, arsenal and grants                493 item(s) · 252 grant(s)
   generated operating layer                         3 milestone(s) · 1 run(s) · 1 voice identity
@@ -471,8 +471,10 @@ build-seed → 7677236350688722983/5 (postgres)
 BUILD_SEED_DONE — a whole holding, and not one row of his.
 ```
 
-199 employees and 199 active — the same shape as the company's workforce, because the workforce is
-defined by 199 dossier files in this repository, not by anything in his database.
+199 employees and 199 active — the same shape as the company's workforce, because the SEATS are
+defined by this repository's own migration chain, not by anything in his database. What sits in each
+seat is invented here: see *The third audit* below, which is where the first version of this step —
+one that copied his 199 authored dossiers word for word — was found and removed.
 
 ### The whole thing rebuilt from empty, and the battery run against that
 
@@ -707,3 +709,445 @@ That is narrower in wording and stronger in fact, because it survives the compan
 - **The CEO's live surfaces and his login.** The company stack was not modified — no container was
   restarted, no schema changed, `public` shows zero writes — but "his tiles still move and he can
   still log in" is not something a terminal can see. It waits for his eye.
+
+---
+
+## The third audit — Codex Solo 5.6 on Block 2, three FAILs, all three real
+
+Read-only audit of Block 2, 2026-08-23 evening. Three findings, no argument with any of them, and
+the CEO's instruction was that these three and nothing else would be answered. Each was written as a
+test that was **shown failing before the fix and passing after it**.
+
+### 1 · The battery carried the company's address and its write-capable account
+
+**His finding:** *"Take the company's 54322/postgres connection out of the full battery.
+`tests/b36/block1-question.test.ts:26` hands the company's address and the write-capable `postgres`
+account to a subprocess."*
+
+**Measured RED first** — a sweep of every file `pnpm test` loads, judging a line by whether it could
+open a connection (a comment that records history is not a key; the inert
+`process.env.DXB_DATABASE_URL ??= …` fallback that `vitest.config.ts` defeats is Block 4's and is
+named as tolerated):
+
+```
+tests/b36/block1-question.test.ts:26        const COMPANY = "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+tests/b36/hook-never-writes-company.test.ts:58   const COMPANY_URL = "postgresql://…:54322/postgres";
+tests/b36/hook-never-writes-company.test.ts:63,65,66,67,68,69   the six escape spellings
+tests/b36/hook-never-writes-company.test.ts:218,276              …:54322/_supabase
+tests/phase3/crash-worker.mjs:14            process.env.DXB_DATABASE_URL ?? "postgresql://…:54322/postgres"
+→ 11 offenders
+```
+
+The eleventh is one the auditor did not cite and the sweep found: `crash-worker.mjs` is a process the
+battery **spawns**, and its fallback was a live `??`, not the inert `??=`. It now stops with an error
+instead of guessing an address.
+
+**What was done, and why nothing is lost.** The guard's rule was never about the company in
+particular — it is *ask the server who it is, and refuse unless the answer is on the allow list*.
+Every branch of that rule is now exercised on the CONSTRUCTION cluster, and the branches that need a
+forbidden database get one by rewriting the RECORD the guard reads instead of the address it is
+handed:
+
+- **Wall 1 (never the company)** — the record is made to say the construction engine IS the company,
+  and the six spellings are fired at it. Each was measured connecting; each is refused. This is
+  **stronger** than the case it replaces: a write that got through would land in the very database
+  the test then counts. Measured, all six against `127.0.0.1:54422`:
+  `?host=` · no database in the path · `127.1` · `2130706433` · `localhost.` · `127.0.0.2` —
+  **all seven spellings CONNECTED to `7677240194945613863/5 (postgres)`**.
+- **Walls 2 and 3 (a stale record, a database nobody listed)** — measured against `_supabase` on the
+  construction cluster, `7677240194945613863/16736`.
+- **The bridge to the holding needs no connection at all:** the company recorded in
+  `tools/hooks/ledger-identity.json` is **not** on the allow list, so *not on the list ⇒ refused* is
+  a statement about the CEO's own database.
+
+The one thing that genuinely requires reaching the holding — checking that the recorded company
+identity still names the live one — moved into the drill, which is now a **deliberate command and
+not `pnpm test`**:
+
+```
+$ pnpm b36:prove-block1
+conditions fired   : 18
+refused            : 18
+the hook's own signature in the company: 0 row(s) carrying any of the 18 session ids this drill handed it
+what the compiled hook can write at all: 1 × cost_ledger insert · 0 other write construct(s)
+the recorded company still names the live one: YES — record 7674907968528752679/5 (postgres) · live 7674907968528752679/5 (postgres)
+detector validated: YES — the permitted ledger recorded 1 new write statement(s) from the same hook in this run
+scan validated: YES — it found the hook's one known write in the built file
+ANSWER: NO — the hook cannot send an INSERT, UPDATE or DELETE to the company database.
+BLOCK1_CLOSED
+```
+
+**GREEN** — `tests/b36/battery-carries-no-company-key.test.ts` 3 passed;
+`tests/b36/hook-never-writes-company.test.ts` **21 passed**; `tests/b36/block1-question.test.ts`
+3 passed; `tests/phase3/crash.test.ts` 1 passed.
+
+**And the rewritten suite was proven to still have teeth.** `refusalFor` in the compiled hook was
+made to return `null` — a guard that refuses nothing — and the suite went red on **12 cases**: all
+seven Wall-1 spellings, the unlisted database, both stale-record cases, the wrong-record case, and
+the byte-for-byte build case. The guard was restored and the file is `git`-clean again.
+
+### 2 · The battery's global setup honoured an address handed in from outside
+
+**His finding:** *"globalSetup must verify the DxB_Build identity on the same connection before it
+starts, and must not be able to run a single SQL statement with a company address handed in from
+outside. `tests/global-teardown.ts:50` uses `??=`."*
+
+He was right, and this is the worst file in the battery to leave open: CREATE TABLE on the way in,
+DELETE and UPDATE across `alerts`, `tasks`, `agent_runs`, `cost_ledger`, `approvals` and the CEO's
+own chat board on the way out.
+
+**Measured RED first** (all three cases, each for the right reason):
+
+```
+(1) refuses an address handed in from outside, before it runs one statement
+    → expected 'schema "realtime" does not exist' to match /\[global-setup\]/
+      — it ACCEPTED the address and ran its work on a database nobody pinned
+(2) refuses even the pinned address when the server says it is the company
+    → promise resolved "[AsyncFunction teardown]" instead of rejecting
+(3) says which engine it verified, measured from that engine
+    → global setup announced nothing about where it stands
+```
+
+**The detector was corrected before it was believed.** The first version of case (1) used an
+unreachable address and passed BEFORE the fix — because `ECONNREFUSED` contains the word *"refused"*.
+It uses a real, reachable database on the construction cluster now, and asserts the refusal by name.
+
+**What was done:** the address is **pinned, not defaulted** — an address arriving from the
+environment that is not the one constant in `tests/construction-engine.ts` is refused before a pool
+is opened. Then the server is asked who it is **inside the transaction that does the work**, because
+a transaction pins one connection and a check made on another connection says nothing; the answer is
+held against `tools/hooks/ledger-identity.json`, the same record the hook obeys. Case (2) proves the
+gate fires by telling that record the construction engine is the company — nothing about the address
+changes and it still refuses.
+
+**GREEN** — 3 passed, and every battery run now opens with:
+
+```
+[global-setup] construction engine 7677240194945613863/5 (postgres) — verified on the connection that does the work.
+```
+
+### 3 · The seed copied his 199 personas and 975 sicil entries word for word
+
+**His finding:** *"The seed must not copy the real persona and employee-record entries; it must
+generate entirely synthetic data. `db/seed/build-seed.ts:137` … `:205` … The approved plan
+(PLAN.md:222) says `entirely fictional` and `not one row of his`."*
+
+The largest of the three, and the plan had already said the opposite of what was built.
+
+**Measured RED first:**
+
+```
+(1) no persona body stored here is a dossier file
+    → 199 of 199 persona rows held a dossier byte for byte
+      (accounts-payable-agent, agents-orchestrator, cfo, chro, ciso, cmo, general-counsel … all 199 named)
+(2) no persona body shares an authored line with a dossier   → 199 rows carry authored dossier lines
+(3) no employee record carries a sicil entry out of a dossier → 975 field values copied verbatim
+(0) the instrument first: 199 dossiers read · >1000 distinctive lines · 779 sicil values ·
+    positive control recognised — the comparison can see a copy    PASSED
+(4) the workforce is whole — 199/199/199                          PASSED
+```
+
+**What travels and what does not.** The **slugs** travel and must: `cfo`, `ciso`,
+`head-of-commerce` arrive through `db/migrations`, the same chain a deploy runs, and the E12.5
+workforce gate holds 67 of them to account **by name**. A slug is a key, not a record. What may not
+travel is what he had **written** — the authored persona body, the sicil entries, the dossier's own
+title row. `db/seed/generated-workforce.ts` invents those from the seat's own key: deterministic, so
+the same slug yields the same document character for character on every machine, and every document
+announces itself as a fixture in its own second line.
+
+It is also **the repair**: any persona row that is not the generated document for its seat is removed
+first, so a database seeded by the copying version heals without being rebuilt from empty. The
+database's own triggers dictate the order — an active employee may not be unbound
+(`enforce_persona_gate_on_activation`), so a seat being replaced is stood down to `dormant` and the
+gate/bind/activate step brings the workforce back up.
+
+```
+$ pnpm construction:seed
+  generated holding, projects and memory stores     1 company · 2 project(s), 1 rewritten · 4 memory store(s)
+  routing rules                                     37 enabled rules, tiers L1,L2,L3,L4
+  generated personas for every seat                 199 seat(s) · 199 version(s) · 199 written, 0 swept
+  gate, bind and activate the generated workforce   199 active · 199 bound
+  generated employee records                        199 record(s)
+BUILD_SEED_DONE — a whole holding, and not one row of his.
+
+$ pnpm construction:seed        # again — it must write nothing
+  generated personas for every seat                 199 seat(s) · 199 version(s) · 0 written, 0 swept
+```
+
+**GREEN** — `tests/b36/seed-is-fiction.test.ts` 5 passed. The company's own file-first tools
+(`scripts/sync-personas-to-db.sh`, `scripts/sync-employee-records.py`) are untouched and still do
+their real job on the company, where the dossier IS the source; the seed simply no longer calls them.
+
+### What stands on this, re-measured after the change
+
+| Check | Command | Result |
+|---|---|---|
+| the whole battery | `pnpm test` | **103 files · 753 passed · 15 skipped · exit 0** |
+| the workforce gate the CEO named | inside the battery | `tests/e125/workforce-gate.test.ts` **7 passed** |
+| types | `pnpm typecheck` | exit 0 |
+| one schema, two engines | `pnpm verify:schema-parity` | `SCHEMA_PARITY` |
+| the records | `pnpm verify:ledger` | `ledger truth OK` |
+| the Block 1 drill | `pnpm b36:prove-block1` | `BLOCK1_CLOSED` |
+| the seed runs twice | `pnpm construction:seed` ×2 | 199 written → 0 written |
+| **the company across the full battery** | `pg_stat_all_tables`, 186 tables, before and after | **0 tables moved in `public`** |
+
+The six tables that did move are the company running itself and nothing of ours: `pgboss.job`,
+`pgboss.job_common`, `pgboss.queue`, `pgboss.version` (its scheduler and heartbeat) and
+`realtime.messages` + today's partition (its broadcast log). **Not one of the holding's own `public`
+tables changed by a single tuple** — the company never sleeps, so the measurement names what moved
+rather than claiming stillness.
+
+### Records corrected in the same turn
+
+- Board row **B36**: the fallback figure follows the counter again — **97 → 95 files · 85 → 83
+  tests** (`tests/b36/fallback-count.test.ts` fails the battery when they disagree), the sentence
+  saying the drill runs *"in the battery"* is corrected, and the claim that the seed builds
+  *"199 employees from 199 dossiers"* is replaced by what it now does.
+- `.planning/STATE.md`: the same two claims.
+- `scripts/sync-personas-to-db.sh`: the comment saying the construction seed uses it is gone — it
+  does not, and that it once did was the defect.
+
+---
+
+## The re-audit — the third finding was only half closed, and the holding itself was still copied
+
+Codex Solo 5.6 read the answer above and returned **FAIL with no new defect**: two of the three
+findings were fully closed, and the third was not.
+
+> *"Employee persona and sicil are synthetic now, but `build-seed.ts:121` still runs
+> `db/seed/20260711_holding_core.sql` and copies the real DXB Global company, its mission and the
+> DXB Global OS project. The plan says `entirely fictional` and `not one row of his`
+> (PLAN.md:221)."*
+
+He was right, and the CEO's instruction was exact: generate the company and project records too;
+**structural keys may stay; the company name, the mission text, the project name and purpose and
+real file links may not**; extend `seed-is-fiction` to cover companies and projects; touch nothing
+else.
+
+### It was larger than the line he cited — measured on a database built from empty
+
+The chain alone, **before the seed runs**, on a stack destroyed and rebuilt the same evening:
+
+```
+companies=0
+projects=1
+agents(live)=199
+personas=0
+departments with NULL company_id=21
+revenue-discovery → Revenue Discovery
+```
+
+So the seed file was not the only source. `db/migrations/20260726009100_revenue_discovery_project.sql`
+seeds a **second** project with its own authored purpose and its own real document link
+(`HOLDING-OS-MASTER-PLAN/REVENUE_ENGINE_SPEC.md`), and `20260726011100` / `20260726012500` write the
+Turkish halves of both. A step that only stopped running the seed file would have left that behind.
+So the step **rewrites the text of every company and every project row on the engine, whatever wrote
+it**, and creates the one project the chain never creates.
+
+### What the fourteen copied values were — RED, measured
+
+The pre-fix state was reproduced exactly, by extracting the real values from the repository's own
+four sources and putting them back (nothing typed by hand), then running the gate:
+
+```
+companies.dxb-global.name                  carries "DXB Global"
+companies.dxb-global.mission               carries "AI-native technology consultancy holding: the CEO states intent once; the compan…"
+projects.dxb-global-os.name                carries "DXB Global" · "DXB Global OS"
+projects.revenue-discovery.name            carries "Revenue Discovery"
+projects.dxb-global-os.name_tr             carries "DXB Global" · "DXB Global OS"
+projects.revenue-discovery.name_tr         carries "Gelir Keşfi"
+projects.dxb-global-os.purpose             carries "The holding's own operating system — departments, manager agents, specialist age…"
+projects.revenue-discovery.purpose         carries "The standing home for market scanning: every research run that looks for revenue…"
+projects.dxb-global-os.purpose_tr          carries "Holdingin kendi işletim sistemi — departmanlar, yönetici ve uzman ajanlar, yeten…"
+projects.revenue-discovery.purpose_tr      carries "Piyasa taramasının kalıcı evi: gelir fırsatı arayan her araştırma koşusu buraya …"
+projects.dxb-global-os.strategy_link       carries "HOLDING-OS-MASTER-PLAN/MASTER_PLAN.md"
+projects.revenue-discovery.strategy_link   carries "HOLDING-OS-MASTER-PLAN/REVENUE_ENGINE_SPEC.md"
+
+cases (5) (6) (7) (8) RED · cases (0)-(4), the workforce leg, stayed GREEN
+```
+
+The four workforce cases staying green on the same run is the proof that the two legs are
+independent: the earlier fix was not disturbed to make this one.
+
+### What stays, and why it is a key rather than a record
+
+The CEO's line: *"Testlerin ihtiyaç duyduğu yapısal anahtarlar kalabilir."* Measured, each one:
+
+| Key | Read by |
+|---|---|
+| `companies.slug = 'dxb-global'` | four migrations, and a **live database function** (`20260712008000_hr_factory_fns_e54b.sql:61`) |
+| `projects.slug = 'dxb-global-os'` | `packages/orchestrator/src/intent-intake.ts:23`, `tests/r23/unified-constitution.test.ts:142` |
+| the four memory-store **names** | the CEO's Bellek page (`ai/memory/page.tsx`), `tests/phase8/memory-store-labels.test.ts` |
+| owner, company binding, status | the org tree, `v_project_command`, `tests/e124/crm-isolation.test.ts` |
+
+Everything a human would read is generated by `db/seed/generated-holding-core.ts` — deterministic,
+so the same slug yields the same text on every machine and a second run writes nothing:
+
+```
+dxb-global         → Stonebridge Fixture Holding
+                     "A holding that exists only inside the construction site's own database…"
+dxb-global-os      → Old Quarry Bench  / Eski Ocak Tezgâhı  / build-fixture://charter/dxb-global-os
+revenue-discovery  → Still Water Bench / Durgun Su Tezgâhı  / build-fixture://charter/revenue-discovery
+links              → {"repos":["build-fixture/<slug>"],"docs":[…],"deploys":[],"versions":["v0-fixture"]}
+```
+
+`strategy_link` and `links` keep the exact shape the CEO's project page reads — repos, docs, deploys,
+versions — and carry nothing that resolves to a real file: `build-fixture://` is not a path on any
+disk. **`db/seed/20260711_holding_core.sql` is not modified.** It is the company's own seed file and
+on the company it is correct; the construction site simply stops running it, and `runFile()` — the
+helper that existed only to run it — is gone with it. The seed now executes none of the company's
+`.sql` files.
+
+### GREEN, and the gate that keeps it
+
+`tests/b36/seed-is-fiction.test.ts` now holds nine cases and judges from **both sides**: cases (5)
+(6) (7) assert every company row, every project row and every memory-store note **IS** what the
+generator produces for it, recomputed in the test from the same module the seed uses; case (8)
+asserts that **none** of the authored text this repository carries appears anywhere in those tables.
+
+Case (8) reads the real text out of the four sources rather than quoting it, with a
+quote-aware statement splitter — measured: 9 of those literals contain a semicolon, the company's own
+mission among them (*"…states intent once; the company executes…"*), so a naive split truncates
+exactly the text the check exists to find. It validates itself before it judges: the extraction must
+contain `DXB Global`, `DXB Global OS`, `Revenue Discovery` and
+`HOLDING-OS-MASTER-PLAN/MASTER_PLAN.md`, and the real mission fed through the containment rule must
+be caught. The structural keys it exempts are read from the **live database**, never typed into the
+test, so that exemption cannot quietly grow.
+
+### Proven by destroying the stack and rebuilding it from empty
+
+Not "it works on the database I have been repairing all evening". `supabase stop --no-backup` (volume
+gone, new cluster identity `7677291653303935015`), then:
+
+| Step | Result |
+|---|---|
+| the guard, before the identity was re-taken | `[global-setup] refusing to run: postgres (cluster 7677291653303935015, oid 5) is not a permitted construction engine.` — **finding 2's own wall, firing in a real situation** |
+| `ledger-identity.mjs --allow` / `--forget` | allow list re-taken; the destroyed cluster dropped, 1 entry |
+| `pnpm construction:schema` | `applied 156, skipped 0, ledger total 156` · exit 0 |
+| `pnpm construction:seed` | `BUILD_SEED_DONE` — company created by the seed, `revenue-discovery` rewritten, 199 personas written / 0 swept |
+| `pnpm construction:seed` again | `0 rewritten · 0 written, 0 swept` — idempotent |
+| `pnpm test` | **103 files · 757 passed · 15 skipped · exit 0** |
+| `pnpm typecheck` | exit 0 |
+| `pnpm verify:schema-parity` | `SCHEMA_PARITY` |
+| `pnpm verify:ledger` | `ledger truth OK` |
+| `pnpm b36:prove-block1` | `BLOCK1_CLOSED` |
+| **the company across the from-empty battery** | 186 tables, **0 moved in `public`** |
+
+The four that moved are the company's own scheduler — `pgboss.job`, `pgboss.job_common`,
+`pgboss.queue`, `pgboss.version`. Not one of the holding's own `public` tables changed by a tuple.
+
+### Records corrected in the same turn
+
+- Board row **B36** and `.planning/STATE.md`: the seed's description now says what it does — a
+  generated company and generated projects as well as generated people — and names what stays and why.
+- `tools/hooks/ledger-identity.json` **changed**: the construction cluster was rebuilt, so its
+  identity is new (`7677240194945613863` → `7677291653303935015`) and the destroyed one was dropped.
+  The company's recorded identity is untouched and was re-confirmed live by `pnpm b36:prove-block1`.
+- The fallback counter is unmoved at **95 / 83 tests / 8 scripts / 3 seeds / 1 route**; the 82 older
+  fallbacks are Block 4's and were not touched.
+
+---
+
+## The final code review — the last counter-example, and it is closed
+
+Codex Solo 5.6, third pass. **FAIL, one counter-example, no new subject** — the last piece of the
+same third finding:
+
+> *"`agents` in DxB_Build still carries **205 real `personas/…` file paths** and **132 real Turkish
+> titles**. `build-seed.ts:292` only replaces the English title, and `seed-is-fiction.test.ts:238`
+> never checks those two fields."*
+
+Right on all four points, and the shape of the defect was the important part: the English title was
+stamped **inside the persona-creation branch**, so a second seeding — which creates no personas —
+repaired nothing. The CEO's instruction was exact: title, `title_tr` and `persona_path` synthetic for
+every employee **including the archived ones**, and the update **outside** the persona condition so a
+re-seed repairs old residue.
+
+### The English title was not synthetic either — measured
+
+Title-casing the slug looks generated and is not. Against the 113 dossiers that carry a Title row:
+
+```
+slug-derived title EQUALS the dossier's own Title for: 12 of 113
+   head-of-commerce → Head of Commerce      sales-coach       → Sales Coach
+   paid-media-auditor → Paid Media Auditor  sales-engineer    → Sales Engineer
+   social-copywriter → Social Copywriter    revenue-growth-specialist → Revenue Growth Specialist   …
+```
+
+So the title is invented now, from a fixture vocabulary — a place, a craft and the seat's **rank**,
+which is the one real thing in it (`role_level` is a structural key the org tree and the gates read).
+English and Turkish are indexed by the **same** salts, so the pair belongs together and the `_tr`
+column — a CEO-visible surface — is whole Turkish rather than a half-translated string.
+8 places × 8 crafts × 4 ranks = 256 titles for 205 seats:
+
+```
+cfo                  | Blue Harbour Signals Director        | Mavi Liman Sinyal Direktörü
+head-of-commerce     | Low Meadow Delivery Director         | Alçak Çayır Teslimat Direktörü
+agents-orchestrator  | Still Water Ledger Orchestrator      | Durgun Su Defter Orkestratörü
+treasury-ar-manager  | Still Water Records Senior Specialist| Durgun Su Kayıt Kıdemli Uzmanı
+```
+
+### The path had to stop pointing at his dossiers AND stay a real file
+
+`agents.persona_path` is not decoration: `tests/e125/workforce-gate.test.ts` case (4) opens **every**
+stored path on disk, `tests/phase3/registry.test.ts` requires the path to contain `personas/`, and
+the live answer lane (`packages/voice/src/persona.ts`) reads the file to give an employee its
+identity. So the seed **writes** the generated document to the path it stamps:
+`var/construction-fixtures/personas/<slug>.md` — one per seat, archived included, under `var/`, which
+is not in the repository (`.gitignore:76`). A fixture is a build artefact, not something to commit.
+
+### RED first, on the state the review found — reproduced exactly
+
+The chain's own values were put back: the dossier paths globbed from the repository's tree for the
+199 live seats, the six ARCHIVED seats' paths measured off this engine before the fix (they pointed
+at **other people's** dossiers), the 132 Turkish titles replayed from
+`db/migrations/20260713023000_org_bilingual_complete_v15.sql`, and the old slug-derived English title.
+
+```
+restored: 205 dossier paths (incl. 6 archived) · 132 Turkish titles · slug-derived English titles
+persona_path LIKE personas/% = 205
+title_tr NOT NULL = 132
+
+(9) no employee's persona document is one of his   → 205 employee(s) still point at the real dossier tree   RED
+(10) no employee wears a title the company gave him → 132 employee(s) wear a title taken from the company    RED
+(0)-(8)  the eight cases the earlier reviews passed                                                        GREEN
+```
+
+The eight staying green is the proof that nothing already accepted was disturbed to fix this.
+
+### The repair happens on a SECOND seeding — which is the whole point
+
+```
+$ pnpm construction:seed          # personas already exist; nothing is created
+  generated personas for every seat        199 seat(s) · 199 version(s) · 0 written, 0 swept
+  generated titles and persona documents   205 document(s) written · 205 employee(s) restamped · 0 still pointing at a dossier
+
+$ pnpm construction:seed          # and a third run writes nothing
+  generated titles and persona documents   205 document(s) written · 0 employee(s) restamped · 0 still pointing at a dossier
+```
+
+`0 written, 205 restamped` is the line the review asked for: the stamping depends on nothing, skips
+nothing, and is not behind the persona condition.
+
+```
+persona_path LIKE 'personas/%'                    = 0
+persona_path LIKE 'var/construction-fixtures/%'   = 205
+title NOT NULL = 205 · title_tr NOT NULL = 205 · files on disk = 205
+```
+
+### GREEN, and what stands on it — re-measured
+
+| Check | Result |
+|---|---|
+| `tests/b36/seed-is-fiction.test.ts` | **11 passed** |
+| the workforce gate the CEO named | `tests/e125/workforce-gate.test.ts` **7 passed** (case 4 opens all 205 paths on disk) |
+| the registry tool's path contract | `tests/phase3/registry.test.ts` **5 passed** |
+| the live answer lane's persona read | `tests/r31/persona-delivery.test.ts` **4 passed** |
+| the whole battery | **103 files · 759 passed · 15 skipped · exit 0** |
+| `pnpm typecheck` | exit 0 |
+| `pnpm verify:schema-parity` | `SCHEMA_PARITY` |
+| `pnpm verify:ledger` | `ledger truth OK` |
+| `pnpm b36:prove-block1` | `BLOCK1_CLOSED` |
+| **the company across the battery** | 186 tables, **0 moved in `public`** — the five that moved are its own `pgboss.*` scheduler and `realtime.messages` |
+| the company's own counters | `audit_log = 29636`, unchanged — the same figure the review reported |
+| `var/construction-fixtures/` | untracked (`.gitignore:76`) — the 205 fixture documents never enter a commit |

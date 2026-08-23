@@ -214,7 +214,7 @@ that reading as the next job and had not answered when the session closed.
    adopted by the CEO, is the only thing that can reopen it: *"can the SessionEnd hook send an INSERT,
    UPDATE or DELETE to the company's database, regardless of how the address is spelled, of a missing
    or stale identity record, or of a connection failure?"* **Measured answer: NO** —
-   `scripts/b36/prove-block1.mjs`, in the battery as `tests/b36/block1-question.test.ts`:
+   `scripts/b36/prove-block1.mjs`, run as `pnpm b36:prove-block1` (it left the battery on 2026-08-23: a construction battery may not hold the company's address and its write-capable account — the auditor's first FAIL on Block 2). What stays in the battery is `tests/b36/block1-question.test.ts`, which answers the same question without reaching the holding:
    **18 hostile conditions · 18 refused · 0 rows in the company carrying any of the 18 session ids the drill handed the hook · the compiled hook holds exactly one write construct and it is the `cost_ledger` insert**,
    and the drill proves in the same run that its detector can see a write. Every other finding —
    counting, backups, record wording, portable builds — goes to its own block and does not hold this
@@ -229,7 +229,7 @@ that reading as the next job and had not answered when the session closed.
    company's (`scripts/b36/make-construction-config.mjs`) and `tests/b36/construction-config.test.ts`
    fails the battery on drift or a port collision. **Its data is GENERATED, not copied** — his decision
    2: `db/seed/build-seed.ts` (`pnpm construction:seed`) builds a whole holding out of this repository's
-   own files, 199 employees from 199 dossiers gated/bound/active, and refuses to run against the company
+   own files, a GENERATED company and GENERATED projects plus 199 seats with GENERATED personas and sicils, gated/bound/active (the first version copied his 199 authored dossiers and 975 sicil values; the re-audit found it also still running the company's own `20260711_holding_core.sql` — his company name, mission, project name, purpose and real document links. A third review found the last of it: 205 real dossier paths and 132 real Turkish titles on `agents`, and the title stamped inside the persona-creation branch so a re-seed repaired nothing — the stamping is unconditional now and covers all 205 including the archived. All fixed at source; the keys code reads stay; guarded by `tests/b36/seed-is-fiction.test.ts`, eleven cases), and refuses to run against the company
    by asking the server who it is. **Proven by destroying the stack and rebuilding it from empty:**
    156 migrations through the canonical chain, then **`Test Files 99 passed · Tests 737 passed | 15
    skipped` exit 0**, `tsc` 0, `verify:ledger` OK, `i18n` PASS, `gitleaks` clean, and **`SCHEMA_PARITY`**

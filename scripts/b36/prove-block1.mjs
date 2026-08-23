@@ -336,8 +336,20 @@ const ambientWrites = allShapes.reduce(
 );
 
 // ── 1. THE HOOK'S OWN SIGNATURE, looked for in the company ───────────────────
+//
+// AND, IN THE SAME BREATH, WHETHER THE RECORD STILL NAMES THE LIVE COMPANY.
+// That question used to be asked inside the battery, which meant the battery
+// held the company's address and its write-capable account — the auditor's first
+// FAIL on Block 2, 2026-08-23. It belongs here: this drill is the one thing in
+// the repository that reaches the holding on purpose, and it is not `pnpm test`.
+// A rebuilt holding (a new cluster, or `supabase db reset`) changes its identity
+// and the record must be re-taken with
+// `node scripts/b36/ledger-identity.mjs --set-company`; until it is, Wall 1 is
+// aiming at something that is gone and this drill says so instead of passing.
 process.env.DXB_DATABASE_URL = company;
 let signature;
+let recorded;
+let live;
 try {
   const db = getDb();
   const { rows } = await sql`
@@ -345,9 +357,18 @@ try {
       from cost_ledger
      where meta->>'session_id' = ANY(${firedSessions})`.execute(db);
   signature = Number(rows[0].n);
+  const id = await sql`
+    select (select system_identifier::text from pg_control_system()) sysid,
+           (select oid::text from pg_database where datname = current_database()) dboid,
+           current_database() dbname`.execute(db);
+  live = id.rows[0];
+  recorded = JSON.parse(readFileSync(IDENTITY, "utf8")).company;
 } finally {
   await closeDb().catch(() => {});
 }
+const recordFresh =
+  !!recorded && !!live &&
+  recorded.sysid === live.sysid && recorded.dboid === live.dboid && recorded.dbname === live.dbname;
 
 // ── 2. WHAT THE COMPILED HOOK CAN DO AT ALL ──────────────────────────────────
 //
@@ -383,6 +404,12 @@ console.log(
   `what the company did on its own while the drill ran (context, not a verdict): ` +
     `${ambientWrites} statement(s)${allMoved.length ? " · " + allMoved.map(([k]) => k).join(", ") : ""}`,
 );
+console.log(
+  `the recorded company still names the live one: ${recordFresh ? "YES" : "NO"} — ` +
+    `record ${recorded ? `${recorded.sysid}/${recorded.dboid} (${recorded.dbname})` : "(absent)"} · ` +
+    `live ${live ? `${live.sysid}/${live.dboid} (${live.dbname})` : "(unreadable)"}` +
+    (recordFresh ? "" : " → re-take it with `node scripts/b36/ledger-identity.mjs --set-company`"),
+);
 console.log(`detector validated: ${detector.ok ? "YES" : "NO"} — ${detector.note}`);
 console.log(
   `scan validated: ${scanFoundItsTarget ? "YES" : "NO"} — it found the hook's one known write in the built file`,
@@ -399,7 +426,8 @@ if (!scanFoundItsTarget) {
   process.exit(2);
 }
 
-const clean = results.every((r) => r.refused) && signature === 0 && otherWrites === 0;
+const clean =
+  results.every((r) => r.refused) && signature === 0 && otherWrites === 0 && recordFresh;
 console.log(
   clean
     ? "ANSWER: NO — the hook cannot send an INSERT, UPDATE or DELETE to the company database.\nBLOCK1_CLOSED"

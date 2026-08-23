@@ -6,7 +6,7 @@ import { promisify } from "node:util";
 import { randomUUID } from "node:crypto";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
-import { closeDb, createListenClient, getDb } from "@dxb/shared";
+import { closeDb, getDb } from "@dxb/shared";
 
 // B36 — the SessionEnd hook may never write into the company's ledger.
 //
@@ -25,10 +25,9 @@ import { closeDb, createListenClient, getDb } from "@dxb/shared";
 //
 // WHY THE ADDRESS IS NOT READ ANY MORE. The first guard compared the two URLs as
 // text; a second compared them as `server:port/database`. An independent audit
-// broke the first, and the six cases below broke the second — every one of them
-// was run against the live engine on 2026-08-23 and every one CONNECTED TO THE
-// COMPANY while the parser called it a different database. They are permanent
-// cases now.
+// broke the first, and six spellings broke the second — every one of them was
+// run against a live engine on 2026-08-23 and every one CONNECTED while the
+// parser called it a different database. They are permanent cases below.
 //
 // WHY A DENY RULE WAS NOT ENOUGH EITHER. A third audit broke the guard that
 // replaced them without touching a line of it: a deny rule only knows what it
@@ -36,10 +35,35 @@ import { closeDb, createListenClient, getDb } from "@dxb/shared";
 // past it. The list is now an ALLOW list, and the cases below hold that shape —
 // a database nobody listed is refused even though it is not the company.
 //
-// This suite drives the COMPILED hook the way Claude Code drives it — stdin
-// JSON, a real transcript file — because the compiled file is what runs at
-// session end. Nothing here writes to the company: the escape cases all end in a
-// refusal, and the only reads of the company are SELECTs (CLAUDE.md §5).
+// ─────────────────────────────────────────────────────────────────────────────
+// AND THIS SUITE NO LONGER CARRIES A KEY TO THE COMPANY. The auditor's first
+// FAIL on Block 2, 2026-08-23: a battery that is being cut out of the company
+// must not hold the company's address and its write-capable `postgres` account.
+// It used to hold both, and it opened a real connection to the CEO's database on
+// every run to count rows there.
+//
+// Nothing is lost by taking it out, because the guard's rule was never about the
+// company in particular — it is "ask the server who it is, and refuse unless the
+// answer is on the list". Every branch of that rule is exercised here on the
+// CONSTRUCTION cluster, and the branches that need a forbidden database get one
+// by rewriting the RECORD the guard reads, not the address it is handed:
+//
+//   · WALL 1 (never the company) — the record is made to say that the
+//     construction engine IS the company, and the six spellings are then fired
+//     at it. Each connects; each is refused. This is a stronger form of the
+//     original case: if the guard let one through, the row would land in the
+//     very database this file then counts.
+//   · WALL 2 (a stale record) and WALL 3 (a database nobody listed) — measured
+//     against `_supabase`, a real, harmless database on the construction cluster.
+//   · The bridge to the holding itself is the last case in this file, and it
+//     needs no connection: the company recorded in the identity ledger is NOT on
+//     the allow list, so "not on the list ⇒ refused" is a statement about it.
+//
+// The one thing that does require reaching the holding — checking that the
+// recorded company identity still matches the live one — moved to the drill
+// that is run deliberately and is not part of `pnpm test`:
+// `pnpm b36:prove-block1` (scripts/b36/prove-block1.mjs).
+// ─────────────────────────────────────────────────────────────────────────────
 
 import { CONSTRUCTION_DATABASE_URL } from "../construction-engine.js";
 
@@ -52,21 +76,24 @@ const HOOK = join(process.cwd(), "tools/hooks/dist/tag-subscription-call.js");
 const CONSTRUCTION_URL = CONSTRUCTION_DATABASE_URL;
 const IDENTITY = join(process.cwd(), "tools/hooks/ledger-identity.json");
 
-// The holding's own database. It appears here as the ATTACK, never as a
-// fallback: no line in this file binds it to DXB_DATABASE_URL, and every case
-// that hands it to the hook asserts a refusal.
-const COMPANY_URL = "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+// A real database that is nobody's ledger: it lives on the construction
+// cluster, it answers, and it is not on the allow list. `_supabase` is
+// Supabase's own bookkeeping database and this suite only ever asks it who it
+// is — the point of the case is that the hook refuses before it writes.
+const UNLISTED_URL = "postgresql://postgres:postgres@127.0.0.1:54422/_supabase";
 
-// Six spellings of that one database. Each was measured connecting to it.
+// Six spellings of ONE database — the construction engine's own `postgres`.
+// Each was measured connecting to it on 2026-08-23, and each was measured being
+// read as a different database by the parser the second guard used.
 const ESCAPES: [string, string][] = [
   // the driver obeys ?host=, the URL parser reads the authority
-  ["a host= query parameter", "postgresql://postgres:postgres@example.invalid:54322/postgres?host=127.0.0.1"],
+  ["a host= query parameter", "postgresql://postgres:postgres@example.invalid:54422/postgres?host=127.0.0.1"],
   // libpq falls back to the USER name for the database, and the user is postgres
-  ["no database in the path", "postgresql://postgres:postgres@127.0.0.1:54322"],
-  ["a short IPv4", "postgresql://postgres:postgres@127.1:54322/postgres"],
-  ["an IPv4 written as one number", "postgresql://postgres:postgres@2130706433:54322/postgres"],
-  ["a hostname with a trailing dot", "postgresql://postgres:postgres@localhost.:54322/postgres"],
-  ["another address on the same loopback", "postgresql://postgres:postgres@127.0.0.2:54322/postgres"],
+  ["no database in the path", "postgresql://postgres:postgres@127.0.0.1:54422"],
+  ["a short IPv4", "postgresql://postgres:postgres@127.1:54422/postgres"],
+  ["an IPv4 written as one number", "postgresql://postgres:postgres@2130706433:54422/postgres"],
+  ["a hostname with a trailing dot", "postgresql://postgres:postgres@localhost.:54422/postgres"],
+  ["another address on the same loopback", "postgresql://postgres:postgres@127.0.0.2:54422/postgres"],
 ];
 
 const MODEL = "b36t-model";
@@ -74,6 +101,38 @@ const db = () => getDb();
 
 let tmp: string;
 let transcript: string;
+
+interface Identity {
+  sysid: string;
+  dboid: string;
+  dbname: string;
+}
+interface Ledger {
+  company: Identity | null;
+  allowed: Identity[];
+}
+
+const readLedger = (): Ledger => JSON.parse(readFileSync(IDENTITY, "utf8")) as Ledger;
+
+/**
+ * Run a case with the identity RECORD rewritten — the address stays whatever the
+ * case hands the hook. This is how a forbidden database is produced without one:
+ * the guard's answer comes from the server, and the record is what decides what
+ * that answer means.
+ */
+async function withRecord<T>(mutate: (l: Ledger) => void, body: () => Promise<T>): Promise<T> {
+  const parked = `${IDENTITY}.parked`;
+  const doctored = readLedger();
+  mutate(doctored);
+  renameSync(IDENTITY, parked);
+  writeFileSync(IDENTITY, JSON.stringify(doctored, null, 2));
+  try {
+    return await body();
+  } finally {
+    rmSync(IDENTITY, { force: true });
+    renameSync(parked, IDENTITY);
+  }
+}
 
 function hookEnv(extra: Record<string, string | undefined>): NodeJS.ProcessEnv {
   const env: NodeJS.ProcessEnv = { ...process.env };
@@ -101,31 +160,6 @@ async function rowsForSession(sessionId: string): Promise<number> {
     .executeTakeFirstOrThrow();
   return Number(r.n);
 }
-
-/**
- * A SELECT against the holding's own database, on the one access path this
- * repository allows (packages/shared/src/db.ts). Used to prove that a refused
- * write really did not land — the count is the only thing that can say so.
- */
-async function readCompany<T>(query: string): Promise<T> {
-  const saved = process.env.DXB_DATABASE_URL;
-  process.env.DXB_DATABASE_URL = COMPANY_URL;
-  const client = await createListenClient();
-  try {
-    const r = (await client.query(query)) as { rows: T[] };
-    return r.rows[0];
-  } finally {
-    await client.end();
-    if (saved === undefined) delete process.env.DXB_DATABASE_URL;
-    else process.env.DXB_DATABASE_URL = saved;
-  }
-}
-
-const companyRowsFor = async (model: string): Promise<number> =>
-  Number(
-    (await readCompany<{ n: string }>(`select count(*) n from cost_ledger where model = '${model}'`))
-      .n,
-  );
 
 beforeAll(() => {
   tmp = mkdtempSync(join(tmpdir(), "b36-"));
@@ -161,25 +195,38 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
     expect(await rowsForSession(sessionId)).toBe(1);
   });
 
-  it("refuses when the construction address IS the company address", async () => {
-    const before = await companyRowsFor(MODEL);
-    const stderr = await fireHook(
-      randomUUID(),
-      hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: COMPANY_URL }),
+  it("refuses the database the record calls the company — even on the allow list", async () => {
+    const sessionId = randomUUID();
+    await withRecord(
+      (l) => (l.company = { ...l.allowed[0] }),
+      async () => {
+        const stderr = await fireHook(
+          sessionId,
+          hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: CONSTRUCTION_URL }),
+        );
+        expect(stderr).toContain("reaches the company database");
+      },
     );
-    expect(stderr).toContain("reaches the company database");
-    expect(await companyRowsFor(MODEL)).toBe(before);
+    // The decisive line, and it is decisive precisely because the refused target
+    // is the database this query reads: a write that got through would be here.
+    expect(await rowsForSession(sessionId)).toBe(0);
   });
 
-  // The audit's own attack, and the five more it opened the door to.
+  // The audit's own attack, and the five more it opened the door to. Every one
+  // of these spellings was measured CONNECTING to the engine below while a
+  // text parser called it something else.
   it.each(ESCAPES)("refuses the company reached through %s", async (_name, url) => {
-    const before = await companyRowsFor(MODEL);
-    const stderr = await fireHook(randomUUID(), hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: url }));
-    expect(stderr, `this spelling was not refused: ${_name}`).toContain(
-      "reaches the company database",
+    const sessionId = randomUUID();
+    await withRecord(
+      (l) => (l.company = { ...l.allowed[0] }),
+      async () => {
+        const stderr = await fireHook(sessionId, hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: url }));
+        expect(stderr, `this spelling was not refused: ${_name}`).toContain(
+          "reaches the company database",
+        );
+      },
     );
-    // The decisive line: the holding's ledger did not grow by one.
-    expect(await companyRowsFor(MODEL)).toBe(before);
+    expect(await rowsForSession(sessionId), `${_name} got a row through`).toBe(0);
   });
 
   it("refuses when the address cannot be read at all", async () => {
@@ -190,33 +237,13 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
     expect(stderr).toContain("refusing to write");
   });
 
-  // The recorded company must still name the live one. A rebuilt stack (a new
-  // cluster, or `supabase db reset`) must fail the battery loudly — and the hook
-  // itself refuses while the record is stale, rather than trusting it.
-  it("still recognises the live company from its recorded identity", async () => {
-    const saved = (JSON.parse(readFileSync(IDENTITY, "utf8")) as { company: Record<string, string> })
-      .company;
-    const live = await readCompany<{ sysid: string; dboid: string; dbname: string }>(
-      `select (select system_identifier::text from pg_control_system()) sysid,
-              (select oid::text from pg_database where datname = current_database()) dboid,
-              current_database() dbname`,
-    );
-    expect(
-      { sysid: saved.sysid, dboid: saved.dboid, dbname: saved.dbname },
-      "tools/hooks/ledger-identity.json no longer names the live company — " +
-        "re-take it with `node scripts/b36/ledger-identity.mjs --set-company`",
-    ).toEqual(live);
-  });
-
   // THE HOLE THE THIRD AUDIT FOUND. `_supabase` is not the company, and it is
   // not on the allow list. A deny-only guard would have written into it.
   it("refuses a database that is real, harmless and simply not on the list", async () => {
     const sessionId = randomUUID();
     const stderr = await fireHook(
       sessionId,
-      hookEnv({
-        DXB_CONSTRUCTION_DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:54322/_supabase",
-      }),
+      hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: UNLISTED_URL }),
     );
     expect(stderr).toContain("is not a permitted construction ledger");
     expect(await rowsForSession(sessionId)).toBe(0);
@@ -224,93 +251,64 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
 
   // THE FAIL-OPEN THE THIRD AUDIT NAMED, written as two cases.
   //
-  // Rebuild the holding's database and its identity changes. A deny-only guard
-  // then does not recognise it, calls it "some other database", and writes. Here
-  // the recorded identity is deliberately made wrong in exactly that way — a
-  // different oid AND a different name, which is what a rebuild under another
-  // name looks like — and the hook must still refuse, because the holding is not
-  // on the list of places it may write.
-  it("refuses the company even when the recorded identity no longer matches it", async () => {
-    const parked = `${IDENTITY}.parked`;
-    const real = readFileSync(IDENTITY, "utf8");
-    const stale = JSON.parse(real) as { company: Record<string, string> };
-    stale.company = { ...stale.company, dboid: "999999", dbname: "postgres_before_the_rebuild" };
-    const before = await companyRowsFor(MODEL);
-    renameSync(IDENTITY, parked);
-    writeFileSync(IDENTITY, JSON.stringify(stale, null, 2));
-    try {
-      const stderr = await fireHook(
-        randomUUID(),
-        hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: COMPANY_URL }),
-      );
-      expect(stderr).toContain("is not a permitted construction ledger");
-      expect(await companyRowsFor(MODEL)).toBe(before);
-    } finally {
-      rmSync(IDENTITY, { force: true });
-      renameSync(parked, IDENTITY);
-    }
+  // Rebuild a database and its identity changes. A deny-only guard then does not
+  // recognise it, calls it "some other database", and writes. Here the recorded
+  // company is deliberately made wrong in exactly that way — a different oid AND
+  // a different name, which is what a rebuild under another name looks like —
+  // and an unlisted database must still be refused, because being unrecognised
+  // is not the same as being permitted.
+  it("refuses an unlisted database even when the recorded company no longer matches anything", async () => {
+    const sessionId = randomUUID();
+    await withRecord(
+      (l) => (l.company = { ...(l.company as Identity), dboid: "999999", dbname: "postgres_before_the_rebuild" }),
+      async () => {
+        const stderr = await fireHook(
+          sessionId,
+          hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: UNLISTED_URL }),
+        );
+        expect(stderr).toContain("is not a permitted construction ledger");
+      },
+    );
+    expect(await rowsForSession(sessionId)).toBe(0);
   });
 
-  // And when the record has gone stale in a way the hook CAN see — the holding's
-  // database still carries its recorded name on this cluster but under another
+  // And when the record has gone stale in a way the hook CAN see — a database
+  // still carrying the recorded company's name on this cluster but under another
   // oid — it stops and says why, rather than working on beside a wall that is
   // aiming at something that no longer exists.
-  //
-  // B36 Block 2 narrowed where this is visible AT ALL, and the narrowing is the
-  // point of the block: the construction site now lives on its OWN cluster, so a
-  // hook standing on it cannot see the company's server and has nothing to say
-  // about the freshness of the company's record. It can only see it while it is
-  // standing on the company's own cluster — which is what this case does, with
-  // `_supabase`, a real database there that is not on the allow list.
   it("stops and says so when the recorded company identity has gone stale", async () => {
     const sessionId = randomUUID();
-    const parked = `${IDENTITY}.parked`;
-    const stale = JSON.parse(readFileSync(IDENTITY, "utf8")) as { company: Record<string, string> };
-    stale.company = { ...stale.company, dboid: "999999" };
-    renameSync(IDENTITY, parked);
-    writeFileSync(IDENTITY, JSON.stringify(stale, null, 2));
-    try {
-      const stderr = await fireHook(
-        sessionId,
-        hookEnv({
-          DXB_CONSTRUCTION_DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:54322/_supabase",
-        }),
-      );
-      expect(stderr).toContain("recorded identity of the company is stale");
-      expect(await rowsForSession(sessionId)).toBe(0);
-    } finally {
-      rmSync(IDENTITY, { force: true });
-      renameSync(parked, IDENTITY);
-    }
+    await withRecord(
+      (l) => (l.company = { sysid: l.allowed[0].sysid, dboid: "999999", dbname: l.allowed[0].dbname }),
+      async () => {
+        const stderr = await fireHook(
+          sessionId,
+          hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: UNLISTED_URL }),
+        );
+        expect(stderr).toContain("recorded identity of the company is stale");
+      },
+    );
+    expect(await rowsForSession(sessionId)).toBe(0);
   });
 
-  // The wall that does NOT depend on seeing the company at all. With the record
-  // stale — the company rebuilt under an identity nobody recorded — the hook is
-  // handed the company's real address. Wall 1 cannot recognise it any more,
-  // because what it was told the company looks like is wrong. The allow list
-  // refuses it regardless: this is why the rule was inverted from deny to allow
-  // after the third audit, and it is the case that proves the inversion earns
-  // its keep.
-  it("refuses the company even when the record describing it is wrong", async () => {
+  // The wall that does NOT depend on recognising anything. With the recorded
+  // company describing a cluster that does not exist, Wall 1 and Wall 2 are both
+  // blind and only the allow list is left. This is why the rule was inverted
+  // from deny to allow after the third audit, and it is the case that proves the
+  // inversion earns its keep.
+  it("refuses an unlisted database even when the record describing the company is wrong", async () => {
     const sessionId = randomUUID();
-    const parked = `${IDENTITY}.parked`;
-    const stale = JSON.parse(readFileSync(IDENTITY, "utf8")) as {
-      company: Record<string, string>;
-      allowed: Array<Record<string, string>>;
-    };
-    // Not merely a wrong oid — a company on a cluster that does not exist, so
-    // Wall 1 and Wall 2 are both blind and only the allow list is left.
-    stale.company = { ...stale.company, sysid: "1", dboid: "999999" };
-    renameSync(IDENTITY, parked);
-    writeFileSync(IDENTITY, JSON.stringify(stale, null, 2));
-    try {
-      const stderr = await fireHook(sessionId, hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: COMPANY_URL }));
-      expect(stderr).toContain("refusing to write");
-      expect(await rowsForSession(sessionId)).toBe(0);
-    } finally {
-      rmSync(IDENTITY, { force: true });
-      renameSync(parked, IDENTITY);
-    }
+    await withRecord(
+      (l) => (l.company = { ...(l.company as Identity), sysid: "1", dboid: "999999" }),
+      async () => {
+        const stderr = await fireHook(
+          sessionId,
+          hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: UNLISTED_URL }),
+        );
+        expect(stderr).toContain("refusing to write");
+      },
+    );
+    expect(await rowsForSession(sessionId)).toBe(0);
   });
 
   // The guard fails CLOSED. With no allow list it has nothing it is permitted to
@@ -365,6 +363,24 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
     const sessionId = randomUUID();
     await fireHook(sessionId, hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: CONSTRUCTION_URL }));
     expect(await rowsForSession(sessionId)).toBe(1);
+  });
+
+  // THE BRIDGE TO THE HOLDING, and it needs no connection to it. Every case
+  // above proves the same rule: a database that is not on the allow list is
+  // refused, whatever it is and however its address is spelled. This is the
+  // statement that makes that rule a statement about the CEO's own database.
+  it("the company is recorded, and it is NOT on the list of places the hook may write", () => {
+    const l = readLedger();
+    expect(l.company?.sysid, "the record does not say who the company is").toBeTruthy();
+    expect(l.allowed.length, "the record permits nothing at all").toBeGreaterThan(0);
+    const permitted = l.allowed.filter(
+      (a) =>
+        a.sysid === l.company?.sysid &&
+        (a.dboid === l.company?.dboid || a.dbname === l.company?.dbname),
+    );
+    expect(permitted, "the company's own identity is on the hook's allow list").toEqual([]);
+    // And what IS on the list is the construction engine this battery stands on.
+    expect(l.allowed.some((a) => a.dbname === "postgres")).toBe(true);
   });
 
   // B21 taught this repository that a battery can be green because it is testing

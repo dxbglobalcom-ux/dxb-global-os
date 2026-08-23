@@ -1,14 +1,138 @@
-// Global post-suite sweep (vitest globalSetup teardown — runs ONCE after ALL
-// test files). Root cause 2026-07-25: the suite runs files SEQUENTIALLY
-// (fileParallelism false) and several suites (e10, r13, r23, r42) probe the
-// hook engine with ':no-run' calls — a file that runs AFTER the owning suite
-// re-raises the same probe alert with nobody left to sweep it (measured: the
-// halal_screen probe alert of full-suite run 05:57-06:01 reached the CEO's
-// Alerts page at 05:59). Per-file sweeps stay (they scope the data rows);
-// this teardown owns the one CEO-visible class: engine-call ':no-run' hook
-// alerts, which by construction come only from tests (engine calls without a
-// run happen nowhere in production — e10 suite comment).
+// Global pre- and post-suite work (vitest globalSetup — runs ONCE in the main
+// process, before any suite is loaded and again after the last one).
+//
+// ─────────────────────────────────────────────────────────────────────────────
+// WHERE THIS FILE IS ALLOWED TO STAND, and why it is asked rather than assumed.
+//
+// B36, the independent auditor's second FAIL on Block 2 (2026-08-23): this file
+// used to open with
+//     process.env.DXB_DATABASE_URL ??= CONSTRUCTION_DATABASE_URL
+// and `??=` is the shape of a DEFAULT — an address arriving from the outside
+// pointing at the company was not overridden, it was PRESERVED. And of every
+// file in the battery this is the worst one to leave open: on the way in it runs
+// CREATE TABLE, and on the way out it runs DELETE and UPDATE across alerts,
+// tasks, agent_runs, cost_ledger, approvals and the CEO's own chat board.
+//
+// Two things changed, and they are the contract this file now keeps:
+//
+//   1. THE ADDRESS IS PINNED, NOT DEFAULTED. An address handed in from the
+//      environment is a mistake to be refused, never a suggestion to be
+//      honoured. The construction engine named in tests/construction-engine.ts
+//      is the only place this file may work.
+//   2. THE ENGINE IS ASKED WHO IT IS, ON THE CONNECTION THAT DOES THE WORK.
+//      Block 1 taught this repository that an address never says where it goes:
+//      six spellings of one address were measured connecting to the holding
+//      while a parser called each of them a different database. So the check is
+//      not on the text — the server is asked for its cluster's system_identifier
+//      and this database's own oid and name, inside the SAME transaction that
+//      then creates or deletes anything, because a transaction pins one
+//      connection and a check made on another connection says nothing. The
+//      answer is held against tools/hooks/ledger-identity.json, the one record
+//      in this repository of who the company is and where construction work is
+//      permitted — the same record the SessionEnd hook obeys.
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// WHAT THE POST-SUITE SWEEP IS FOR. Root cause 2026-07-25: the suite runs files
+// SEQUENTIALLY (fileParallelism false) and several suites (e10, r13, r23, r42)
+// probe the hook engine with ':no-run' calls — a file that runs AFTER the owning
+// suite re-raises the same probe alert with nobody left to sweep it (measured:
+// the halal_screen probe alert of full-suite run 05:57-06:01 reached the CEO's
+// Alerts page at 05:59). Per-file sweeps stay (they scope the data rows); this
+// teardown owns the one CEO-visible class: engine-call ':no-run' hook alerts,
+// which by construction come only from tests (engine calls without a run happen
+// nowhere in production — e10 suite comment).
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import type { Kysely } from "kysely";
 import { CONSTRUCTION_DATABASE_URL } from "./construction-engine.js";
+
+const SAY = "[global-setup]";
+
+/** Anything kysely will run a statement on. Here it is always ONE pinned connection. */
+type Runner = Kysely<never>;
+
+interface Identity {
+  sysid: string;
+  dboid: string;
+  dbname: string;
+}
+interface LedgerIdentity {
+  company: Identity | null;
+  allowed: Identity[];
+}
+
+/** Same cluster AND (same database oid OR same database name) — the hook's own rule. */
+const isSame = (a: Identity | null | undefined, b: Identity | null | undefined): boolean =>
+  !!a && !!b && a.sysid === b.sysid && (a.dboid === b.dboid || a.dbname === b.dbname);
+
+/** An address with its password taken out, so a refusal can name it safely. */
+const redact = (url: string): string => url.replace(/:\/\/([^:@/]*):[^@]*@/, "://$1:***@");
+
+function ledgerIdentity(): LedgerIdentity {
+  const path = join(process.cwd(), "tools/hooks/ledger-identity.json");
+  const f = JSON.parse(readFileSync(path, "utf8")) as LedgerIdentity;
+  if (!Array.isArray(f.allowed) || f.allowed.length === 0) {
+    throw new Error(`${SAY} ${path} lists no permitted engine — refusing to touch any database.`);
+  }
+  if (!f.company?.sysid) {
+    throw new Error(`${SAY} ${path} does not record who the company is — refusing to run.`);
+  }
+  return f;
+}
+
+/**
+ * Pin the address before anything opens a connection. Called first, so a foreign
+ * address never reaches a pool, let alone a statement.
+ */
+function pinTheEngine(): void {
+  const given = process.env.DXB_DATABASE_URL;
+  if (given !== undefined && given !== CONSTRUCTION_DATABASE_URL) {
+    throw new Error(
+      `${SAY} refusing to run: DXB_DATABASE_URL arrived from the environment pointing at ` +
+        `${redact(given)}. This file creates tables on the way in and deletes rows on the way out, ` +
+        `and the one engine it may do that on is spelled in tests/construction-engine.ts. ` +
+        `Nothing was run.`,
+    );
+  }
+  process.env.DXB_DATABASE_URL = CONSTRUCTION_DATABASE_URL;
+}
+
+/**
+ * Ask the connection that is about to do the work who it is, and refuse unless
+ * the answer is a permitted construction engine. Runs INSIDE the caller's
+ * transaction — the same pinned connection every following statement uses.
+ */
+async function refuseUnlessConstruction(trx: Runner, announce: boolean): Promise<void> {
+  const { sql } = await import("kysely");
+  const ledger = ledgerIdentity();
+  const r = await sql<Identity>`
+    select (select system_identifier::text from pg_control_system()) sysid,
+           (select oid::text from pg_database where datname = current_database()) dboid,
+           current_database() dbname`.execute(trx);
+  const here = r.rows[0];
+  if (!here?.sysid) {
+    throw new Error(`${SAY} the server would not name its cluster — refusing to run.`);
+  }
+  if (isSame(here, ledger.company)) {
+    throw new Error(
+      `${SAY} refusing to run: this connection reaches the company database ` +
+        `(cluster ${here.sysid}, database ${here.dbname}). The battery works on the construction ` +
+        `engine and nowhere else.`,
+    );
+  }
+  if (!ledger.allowed.some((a) => isSame(here, a))) {
+    throw new Error(
+      `${SAY} refusing to run: ${here.dbname} (cluster ${here.sysid}, oid ${here.dboid}) is not a ` +
+        `permitted construction engine. Re-take it with scripts/b36/ledger-identity.mjs --allow.`,
+    );
+  }
+  if (announce) {
+    console.log(
+      `${SAY} construction engine ${here.sysid}/${here.dboid} (${here.dbname}) — verified on the ` +
+        `connection that does the work.`,
+    );
+  }
+}
 
 /**
  * BEFORE the suite runs: make sure today has a realtime partition.
@@ -24,8 +148,7 @@ import { CONSTRUCTION_DATABASE_URL } from "./construction-engine.js";
  * This runs BEFORE the suite so the battery heals itself instead of failing on a
  * date rollover. It only ever CREATES a partition, never drops one.
  */
-async function ensureRealtimePartitions(): Promise<void> {
-  const { getDb } = await import("../packages/shared/dist/index.js");
+async function ensureRealtimePartitions(trx: Runner): Promise<void> {
   const { sql } = await import("kysely");
   await sql`
     DO $$
@@ -43,24 +166,34 @@ async function ensureRealtimePartitions(): Promise<void> {
         END IF;
       END LOOP;
     END $$;
-  `.execute(getDb());
+  `.execute(trx);
 }
 
 export default async function globalSetup(): Promise<() => Promise<void>> {
-  process.env.DXB_DATABASE_URL ??= CONSTRUCTION_DATABASE_URL;
-  await ensureRealtimePartitions();
+  pinTheEngine();
+  // Root has no direct 'pg' dependency — ride the shared package's own pool
+  // exactly like the suites do (dist path: resolvable from vite-node without the
+  // test-runner alias map).
+  const { getDb, closeDb } = await import("../packages/shared/dist/index.js");
+  try {
+    await getDb().transaction().execute(async (trx) => {
+      await refuseUnlessConstruction(trx as unknown as Runner, true);
+      await ensureRealtimePartitions(trx as unknown as Runner);
+    });
+  } catch (e) {
+    // A refusal must not leave a pool open behind it, pointed at whatever it
+    // refused. Nothing ran; nothing is left holding a socket either.
+    await closeDb().catch(() => {});
+    throw e;
+  }
   return async function teardown(): Promise<void> {
-    // Same target the suites use (vitest.config.ts `test.env`): the
-    // construction site's own engine, never the company's. globalSetup runs in
-    // the main process where `test.env` does not apply, so it is named here
-    // explicitly — from the one spelling in tests/construction-engine.ts.
-    process.env.DXB_DATABASE_URL ??= CONSTRUCTION_DATABASE_URL;
-    // Root has no direct 'pg' dependency — ride the shared package's own
-    // pool exactly like the suites do (dist path: resolvable from vite-node
-    // without the test-runner alias map).
-    const { getDb, closeDb } = await import("../packages/shared/dist/index.js");
+    // The address is pinned again, and the engine asked again: this closure runs
+    // minutes to hours after the setup did, and it is the destructive half.
+    pinTheEngine();
     const { sql } = await import("kysely");
     try {
+      await getDb().transaction().execute(async (trx) => {
+        await refuseUnlessConstruction(trx as unknown as Runner, false);
       // 2026-07-28: this sweep is GONE, and its removal is the fix — not an
       // omission. It deleted every hook alert whose dedup_key ends in ':no-run',
       // and the pre-gate ALWAYS has a null run in production too (measured over
@@ -84,7 +217,7 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
       // carries it), so this is safe and belongs at the very end of the run.
       const wf = await sql`
         DELETE FROM alerts WHERE source = 'workflow' AND affected_area LIKE 'workflow:e9t-%'
-      `.execute(getDb());
+      `.execute(trx);
       const m = Number(wf.numAffectedRows ?? 0);
       if (m > 0) {
         console.log(`[global-teardown] swept ${m} test-probe workflow alert(s) (e9t- class)`);
@@ -109,7 +242,7 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
               GROUP BY p.gate, p.rule->>'check'
              HAVING count(DISTINCT p.severity) > 1
            )
-      `.execute(getDb());
+      `.execute(trx);
       const k = Number(hc.numAffectedRows ?? 0);
       if (k > 0) {
         console.log(
@@ -132,7 +265,7 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
          WHERE objective LIKE 'E8.1 observability%' OR objective LIKE 'E8.3 probe%'
             OR label LIKE 'E8.1 observability%' OR label LIKE 'E8.3 probe%'
       `;
-      await sql`UPDATE tasks SET parent_task_id = NULL WHERE parent_task_id IN (${probeWhere})`.execute(getDb());
+      await sql`UPDATE tasks SET parent_task_id = NULL WHERE parent_task_id IN (${probeWhere})`.execute(trx);
       // The run's own children first — measured 2026-07-27: deleting agent_runs
       // straight away trips tool_calls_run_id_fkey. Depth before breadth.
       const probeRuns = sql`SELECT id FROM agent_runs WHERE task_id IN (${probeWhere})`;
@@ -143,14 +276,14 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
         "tool_calls", "file_changes", "decision_log", "hook_violations",
         "library_usage_log", "memory_index", "alerts",
       ]) {
-        await sql`DELETE FROM ${sql.raw(gchild)} WHERE run_id IN (${probeRuns})`.execute(getDb());
+        await sql`DELETE FROM ${sql.raw(gchild)} WHERE run_id IN (${probeRuns})`.execute(trx);
       }
-      await sql`UPDATE approvals SET reanalysis_run_id = NULL WHERE reanalysis_run_id IN (${probeRuns})`.execute(getDb());
-      await sql`UPDATE agent_runs SET parent_run_id = NULL WHERE parent_run_id IN (${probeRuns})`.execute(getDb());
+      await sql`UPDATE approvals SET reanalysis_run_id = NULL WHERE reanalysis_run_id IN (${probeRuns})`.execute(trx);
+      await sql`UPDATE agent_runs SET parent_run_id = NULL WHERE parent_run_id IN (${probeRuns})`.execute(trx);
       for (const child of ["task_events", "agent_runs", "cost_ledger", "alerts", "approvals"]) {
-        await sql`DELETE FROM ${sql.raw(child)} WHERE task_id IN (${probeWhere})`.execute(getDb());
+        await sql`DELETE FROM ${sql.raw(child)} WHERE task_id IN (${probeWhere})`.execute(trx);
       }
-      const probes = await sql`DELETE FROM tasks WHERE id IN (${probeWhere})`.execute(getDb());
+      const probes = await sql`DELETE FROM tasks WHERE id IN (${probeWhere})`.execute(trx);
       const p = Number(probes.numAffectedRows ?? 0);
       if (p > 0) {
         console.log(`[global-teardown] swept ${p} test-probe task row(s) (e8 observability class)`);
@@ -178,7 +311,7 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
            -- probe … görevin nedir". Measured 2026-07-27: a case-sensitive
            -- pattern swept 178 rows and left 15 behind.
            AND (content ILIKE '%probe%şirketin görev%' OR content LIKE 'R31 %')
-      `.execute(getDb());
+      `.execute(trx);
       const c = Number(chatProbes.numAffectedRows ?? 0);
       if (c > 0) {
         console.log(`[global-teardown] swept ${c} voice-probe chat message(s) off the CEO board (r31 class)`);
@@ -188,10 +321,11 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
         const ghosts = await sql`
           DELETE FROM chat_sessions s
            WHERE NOT EXISTS (SELECT 1 FROM chat_messages m WHERE m.session_id = s.id)
-        `.execute(getDb());
+        `.execute(trx);
         const g = Number(ghosts.numAffectedRows ?? 0);
         if (g > 0) console.log(`[global-teardown] swept ${g} emptied chat thread(s)`);
       }
+      });
     } finally {
       await closeDb().catch(() => {});
     }
