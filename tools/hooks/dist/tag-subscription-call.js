@@ -63,6 +63,13 @@ function ledgerIdentity() {
             return null;
         if (f.allowed.some((a) => !a?.sysid || !a?.dboid || !a?.dbname))
             return null;
+        // The holding's own identity must be recorded too. Without it Wall 1 cannot
+        // fire, and a hand-edited file that dropped `company` while listing it under
+        // `allowed` would buy a write — the allow list is the wall, but the deny
+        // wall behind it may not simply be absent.
+        const c = f.company;
+        if (!c?.sysid || !c?.dboid || !c?.dbname)
+            return null;
         return f;
     }
     catch {
@@ -71,6 +78,47 @@ function ledgerIdentity() {
 }
 /** Same cluster AND (same database oid OR same database name). */
 const isSame = (a, b) => !!a && !!b && a.sysid === b.sysid && (a.dboid === b.dboid || a.dbname === b.dbname);
+/**
+ * Who answered — asked of the server on the handle given, so the answer belongs
+ * to that connection and not to some other one from the same pool.
+ */
+async function whoIsThis(run) {
+    const { sql } = await import("kysely");
+    const r = await sql `
+    select (select system_identifier::text from pg_control_system()) sysid,
+           (select oid::text from pg_database where datname = current_database()) dboid,
+           current_database() dbname,
+           (select array_agg(oid::text || ':' || datname) from pg_database) datmap`.execute(run);
+    return r.rows[0];
+}
+/** The three walls. Returns the reason to refuse, or null to proceed. */
+function refusalFor(here, ledger) {
+    if (!here?.sysid)
+        return "the server would not name its cluster (pg_control_system denied) — refusing to write";
+    // WALL 1 — never the holding, even if someone put it on the allow list.
+    if (isSame(here, ledger.company))
+        return (`DXB_CONSTRUCTION_DATABASE_URL reaches the company database ` +
+            `(cluster ${here.sysid}, database ${here.dbname}) — refusing to write`);
+    // WALL 2 — the recorded company must still exist as recorded. On the holding's
+    // own cluster, a database carrying its name under a DIFFERENT oid means it was
+    // rebuilt and Wall 1 is now aiming at something that is gone. The hook says so
+    // and stops, instead of trusting a stale record — this is the fail-open a
+    // third audit found, closed where it happens rather than where it is noticed.
+    const c = ledger.company;
+    const namedHere = c
+        ? (here.datmap ?? []).find((d) => d.slice(d.indexOf(":") + 1) === c.dbname)
+        : undefined;
+    if (c && here.sysid === c.sysid && namedHere && namedHere.slice(0, namedHere.indexOf(":")) !== c.dboid)
+        return (`the recorded identity of the company is stale — a database named '${c.dbname}' exists on ` +
+            `this cluster under a different oid. Refusing to write until ` +
+            `scripts/b36/ledger-identity.mjs --set-company is re-run.`);
+    // WALL 3 — and it must be one of the databases this hook was told it may
+    // write to. Anything not on that list is refused, whatever it is.
+    if (!ledger.allowed.some((a) => isSame(here, a)))
+        return (`${here.dbname} (cluster ${here.sysid}, oid ${here.dboid}) is not a permitted ` +
+            `construction ledger — refusing to write`);
+    return null;
+}
 async function main() {
     const input = JSON.parse(await readStdin());
     const sessionId = input.session_id;
@@ -108,81 +156,70 @@ async function main() {
     closeDb = shared.closeDb;
     const db = shared.getDb();
     const { sql } = await import("kysely");
-    // Asked of the server, before a single row is written. `datnames` comes back
-    // with it so a stale record can be SEEN rather than silently obeyed.
+    // FIRST ANSWER — cheap, and it refuses before a transaction is even opened.
     let here;
     try {
-        const identity = await sql `
-      select (select system_identifier::text from pg_control_system()) sysid,
-             (select oid::text from pg_database where datname = current_database()) dboid,
-             current_database() dbname,
-             (select array_agg(oid::text || ':' || datname) from pg_database) datmap`.execute(db);
-        here = identity.rows[0];
+        here = await whoIsThis(db);
     }
     catch (e) {
         console.error(`tag-subscription-call: could not ask the database who it is — refusing to write (${String(e).slice(0, 120)})`);
         return;
     }
-    if (!here?.sysid) {
-        console.error("tag-subscription-call: the server would not name its cluster (pg_control_system denied) — refusing to write");
+    const refusal = refusalFor(here, ledger);
+    if (refusal) {
+        console.error(`tag-subscription-call: ${refusal}`);
         return;
     }
-    // WALL 1 — never the holding, even if someone put it on the allow list.
-    if (isSame(here, ledger.company)) {
-        console.error(`tag-subscription-call: DXB_CONSTRUCTION_DATABASE_URL reaches the company database ` +
-            `(cluster ${here.sysid}, database ${here.dbname}) — refusing to write`);
-        return;
-    }
-    // WALL 2 — the recorded company must still exist as recorded. On the holding's
-    // own cluster, a database carrying its name under a DIFFERENT oid means it was
-    // rebuilt and Wall 1 is now aiming at something that is gone. The hook says so
-    // and stops, instead of trusting a stale record — this is the fail-open a
-    // third audit found, closed where it happens rather than where it is noticed.
-    const c = ledger.company;
-    const namedHere = c ? (here.datmap ?? []).find((d) => d.slice(d.indexOf(":") + 1) === c.dbname) : undefined;
-    if (c && here.sysid === c.sysid && namedHere && namedHere.slice(0, namedHere.indexOf(":")) !== c.dboid) {
-        console.error(`tag-subscription-call: the recorded identity of the company is stale — a database named ` +
-            `'${c.dbname}' exists on this cluster under a different oid. Refusing to write until ` +
-            `scripts/b36/ledger-identity.mjs --set-company is re-run.`);
-        return;
-    }
-    // WALL 3 — and it must be one of the databases this hook was told it may
-    // write to. Anything not on that list is refused, whatever it is.
-    if (!ledger.allowed.some((a) => isSame(here, a))) {
-        console.error(`tag-subscription-call: ${here.dbname} (cluster ${here.sysid}, oid ${here.dboid}) is not a ` +
-            `permitted construction ledger — refusing to write`);
-        return;
-    }
-    // v1 idempotency: one SessionEnd per session wins (resume/clear can fire the
-    // hook again with a longer transcript; refining to incremental rows is a
-    // recorded follow-up, not silent double-counting)
-    const existing = await db
-        .selectFrom("cost_ledger")
-        .select("id")
-        .where("mode", "=", "subscription")
-        .where(sql `meta->>'session_id' = ${sessionId}`)
-        .executeTakeFirst();
-    if (existing)
-        return;
     const perModel = await sumTranscript(transcriptPath);
     if (perModel.size === 0)
         return;
     const department = process.env.DXB_DEPARTMENT ?? "engineering";
     const taskId = process.env.DXB_TASK_ID ?? null;
-    await db
-        .insertInto("cost_ledger")
-        .values([...perModel.entries()].map(([model, totals]) => ({
-        task_id: taskId,
-        department,
-        model,
-        mode: "subscription",
-        prompt_tokens: totals.prompt,
-        completion_tokens: totals.completion,
-        cost_eur: 0,
-        source: "hook",
-        meta: JSON.stringify({ session_id: sessionId }),
-    })))
-        .execute();
+    // THE BINDING ANSWER — and the only one that can be trusted. A pool hands out
+    // a NEW connection for each statement, and one address can resolve to more
+    // than one server (`localhost` alone is 127.0.0.1 and ::1). A check made on
+    // one connection therefore says nothing about where the next statement lands.
+    //
+    // So the write happens inside a transaction, which pins ONE connection, and
+    // that connection is asked who it is before it is allowed to insert anything.
+    // A refusal throws, the transaction rolls back, and nothing was ever sent.
+    try {
+        await db.transaction().execute(async (trx) => {
+            const onThisConnection = await whoIsThis(trx);
+            const stop = refusalFor(onThisConnection, ledger);
+            if (stop)
+                throw new Error(stop);
+            // v1 idempotency: one SessionEnd per session wins (resume/clear can fire
+            // the hook again with a longer transcript; refining to incremental rows is
+            // a recorded follow-up, not silent double-counting)
+            const { sql } = await import("kysely");
+            const existing = await trx
+                .selectFrom("cost_ledger")
+                .select("id")
+                .where("mode", "=", "subscription")
+                .where(sql `meta->>'session_id' = ${sessionId}`)
+                .executeTakeFirst();
+            if (existing)
+                return;
+            await trx
+                .insertInto("cost_ledger")
+                .values([...perModel.entries()].map(([model, totals]) => ({
+                task_id: taskId,
+                department,
+                model,
+                mode: "subscription",
+                prompt_tokens: totals.prompt,
+                completion_tokens: totals.completion,
+                cost_eur: 0,
+                source: "hook",
+                meta: JSON.stringify({ session_id: sessionId }),
+            })))
+                .execute();
+        });
+    }
+    catch (e) {
+        console.error(`tag-subscription-call: ${String(e instanceof Error ? e.message : e).slice(0, 200)}`);
+    }
 }
 // Nothing this hook does may hold a session open. Above every per-leg deadline
 // there is one for the whole run: it fires, says so, and lets the session end.

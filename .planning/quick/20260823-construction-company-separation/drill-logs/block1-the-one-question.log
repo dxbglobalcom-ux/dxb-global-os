@@ -1,0 +1,49 @@
+company            : postgres
+tables watched     : 186
+write statements the server has been asked to run, before: 372 calls · 183 shapes
+
+REFUSED  · the company, as written
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · ?host= query parameter
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · no database in the path
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · short IPv4
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · IPv4 as one number
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · hostname with a trailing dot
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · another loopback address
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · the company, with DXB_DATABASE_URL also pointing at it
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · the identity record MISSING
+           tools/hooks/ledger-identity.json is missing, unreadable or empty — refusing to write (take it with scripts/b36/ledger-identity.mjs)
+REFUSED  · the allow list EMPTY
+           tools/hooks/ledger-identity.json is missing, unreadable or empty — refusing to write (take it with scripts/b36/ledger-identity.mjs)
+REFUSED  · the company record STALE (wrong oid)
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · the company record STALE (rebuilt under another name)
+           postgres (cluster 7674907968528752679, oid 5) is not a permitted construction ledger — refusing to write
+REFUSED  · the allow list POISONED with the company
+           DXB_CONSTRUCTION_DATABASE_URL reaches the company database (cluster 7674907968528752679, database postgres) — refusing to write
+REFUSED  · the company record DELETED and the company allowed
+           tools/hooks/ledger-identity.json is missing, unreadable or empty — refusing to write (take it with scripts/b36/ledger-identity.mjs)
+REFUSED  · a real database nobody listed
+           _supabase (cluster 7674907968528752679, oid 16736) is not a permitted construction ledger — refusing to write
+REFUSED  · an address that answers nothing
+           could not ask the database who it is — refusing to write (Error: Connection terminated due to connection timeout)
+REFUSED  · an address that cannot be read at all
+           could not ask the database who it is — refusing to write (Error: getaddrinfo EAI_AGAIN base)
+REFUSED  · a database that does not exist
+           could not ask the database who it is — refusing to write (error: database "no_such_database_b36" does not exist)
+
+conditions fired   : 18
+refused            : 18
+tables that moved  : 0
+write statements the server was asked to run during the run: 0
+detector validated: YES — the permitted ledger recorded 1 new write statement(s) from the same hook in this run
+
+ANSWER: NO — the hook cannot send an INSERT, UPDATE or DELETE to the company database.
+BLOCK1_CLOSED

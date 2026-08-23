@@ -151,6 +151,43 @@ stack, not a second database.
   URL exported and assert the company's `cost_ledger` count is unchanged; run it with no variable
   and assert it exits 0 and writes nothing.
 
+**THE FINISH LINE FOR THIS BLOCK — fixed 2026-08-23, and it is the only thing that reopens it.**
+Three audits rejected three different proofs of this block while the block itself was finished, so
+the question was narrowed to what Block 1 actually owns. The auditor's wording, put to the CEO and
+adopted by him the same day:
+
+> **Can the `SessionEnd` hook send an INSERT, UPDATE or DELETE to the company's database —
+> regardless of how the address is spelled, regardless of a missing or stale identity record, and
+> regardless of a connection failure?**
+>
+> **NO** → Block 1 closes and does not reopen. **YES** → only the write path found is repaired and
+> the same question is measured again. Counting, backups, record wording, portable builds and
+> anything else go to **their own blocks** and do not hold this one. *"Daha iyi olabilir"* is no
+> longer a reason to reopen it.
+
+**THE ANSWER, measured 2026-08-23 — `scripts/b36/prove-block1.mjs`, in the battery as
+`tests/b36/block1-question.test.ts`:**
+
+```
+conditions fired   : 18        (7 spellings of the company · identity record missing · allow list
+refused            : 18         empty · company record stale two ways · allow list poisoned with the
+tables that moved  : 0          company · company record deleted AND the company allowed · a real
+                                database nobody listed · an address that never answers · an
+                                unreadable address · a database that does not exist)
+write statements the server was asked to run during the run: 0
+detector validated: YES — the permitted ledger recorded 1 new write statement(s) from the same hook
+ANSWER: NO — the hook cannot send an INSERT, UPDATE or DELETE to the company database.
+BLOCK1_CLOSED
+```
+
+Measured from the server on both sides: the per-tuple counters of every table the holding owns, and
+`pg_stat_statements`, which records a statement that was **sent** even if it then failed. The drill
+refuses to pass unless it has also shown, in the same run, that the detector registers a real write —
+the first version of that detector was **blind**, because `\b` is a backspace in PostgreSQL's regular
+expressions and not a word boundary, and it reported a comfortable zero.
+
+---
+
 ### Block 2 — The construction stack moves out
 
 - New Supabase project directory for construction, its own `config.toml`

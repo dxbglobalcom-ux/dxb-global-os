@@ -209,6 +209,16 @@ that reading as the next job and had not answered when the session closed.
 1. **B36 — cutting the construction site out of the company. THIS IS THE WORK IN HAND.** <!-- OPEN: B36 -->
    Plan: `.planning/quick/20260823-construction-company-separation/PLAN.md` (eight blocks, approved).
    Evidence: `EVIDENCE.md` in the same folder · audit answers: `AUDIT-RESPONSE-1.md`, `AUDIT-RESPONSE-2.md`.
+   **BLOCK 1 IS CLOSED AND DOES NOT REOPEN — the finish line was fixed on 2026-08-23** after three
+   audits rejected three different proofs of a block that was already finished. The auditor's wording,
+   adopted by the CEO, is the only thing that can reopen it: *"can the SessionEnd hook send an INSERT,
+   UPDATE or DELETE to the company's database, regardless of how the address is spelled, of a missing
+   or stale identity record, or of a connection failure?"* **Measured answer: NO** —
+   `scripts/b36/prove-block1.mjs`, in the battery as `tests/b36/block1-question.test.ts`:
+   **18 hostile conditions · 18 refused · 0 tables moved · 0 write statements ever reached the server**,
+   and the drill proves in the same run that its detector can see a write. Every other finding —
+   counting, backups, record wording, portable builds — goes to its own block and does not hold this
+   one. **The next work is Block 2.**
    **DONE — Block 1, the writer is dead, and the SERVER is what says so.** The `SessionEnd` hook that
    wrote the author's own token burn into the holding's `cost_ledger` writes only to
    `DXB_CONSTRUCTION_DATABASE_URL`, nothing when that is unset, and refuses when the address REACHES
