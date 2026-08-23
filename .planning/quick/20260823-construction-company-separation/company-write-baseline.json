@@ -1,0 +1,429 @@
+{
+  "epoch": {
+    "engine_up": "2026-08-23 07:49:54.617414+00",
+    "stats_reset": null,
+    "taken_at": "2026-08-23 12:05:21.945324+00"
+  },
+  "state": {
+    "agent_runs": {
+      "relname": "agent_runs",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "378"
+    },
+    "agents": {
+      "relname": "agents",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "205"
+    },
+    "alerts": {
+      "relname": "alerts",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "149"
+    },
+    "approval_rules": {
+      "relname": "approval_rules",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "8"
+    },
+    "approvals": {
+      "relname": "approvals",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "51"
+    },
+    "audit_log": {
+      "relname": "audit_log",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "29636"
+    },
+    "budget_state": {
+      "relname": "budget_state",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "1"
+    },
+    "ceo_briefings": {
+      "relname": "ceo_briefings",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "7"
+    },
+    "chat_messages": {
+      "relname": "chat_messages",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "105"
+    },
+    "chat_sessions": {
+      "relname": "chat_sessions",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "9"
+    },
+    "companies": {
+      "relname": "companies",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "1"
+    },
+    "control_idempotency": {
+      "relname": "control_idempotency",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "2639"
+    },
+    "cost_ledger": {
+      "relname": "cost_ledger",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "1612"
+    },
+    "crm_clients": {
+      "relname": "crm_clients",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "crm_contacts": {
+      "relname": "crm_contacts",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "crm_deals": {
+      "relname": "crm_deals",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "crm_requests": {
+      "relname": "crm_requests",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "decision_log": {
+      "relname": "decision_log",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "4730"
+    },
+    "departments": {
+      "relname": "departments",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "21"
+    },
+    "employee_records": {
+      "relname": "employee_records",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "199"
+    },
+    "file_changes": {
+      "relname": "file_changes",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "generated_work": {
+      "relname": "generated_work",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "3"
+    },
+    "hook_policies": {
+      "relname": "hook_policies",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "21"
+    },
+    "hook_violations": {
+      "relname": "hook_violations",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "1963"
+    },
+    "intents": {
+      "relname": "intents",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "57"
+    },
+    "library_change_log": {
+      "relname": "library_change_log",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "809"
+    },
+    "library_grants": {
+      "relname": "library_grants",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "173"
+    },
+    "library_items": {
+      "relname": "library_items",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "412"
+    },
+    "library_usage_log": {
+      "relname": "library_usage_log",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "memory_embeddings": {
+      "relname": "memory_embeddings",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "37"
+    },
+    "memory_index": {
+      "relname": "memory_index",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "13919"
+    },
+    "model_catalog": {
+      "relname": "model_catalog",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "13"
+    },
+    "objectives": {
+      "relname": "objectives",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "2"
+    },
+    "opportunities": {
+      "relname": "opportunities",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "5"
+    },
+    "outbox": {
+      "relname": "outbox",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "51"
+    },
+    "personas": {
+      "relname": "personas",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "408"
+    },
+    "portfolio_allocations": {
+      "relname": "portfolio_allocations",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "project_members": {
+      "relname": "project_members",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "project_milestones": {
+      "relname": "project_milestones",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "13"
+    },
+    "project_risks": {
+      "relname": "project_risks",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "3"
+    },
+    "projects": {
+      "relname": "projects",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "3"
+    },
+    "revenue_engines": {
+      "relname": "revenue_engines",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "6"
+    },
+    "revenue_ledger": {
+      "relname": "revenue_ledger",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "revenue_scout_runs": {
+      "relname": "revenue_scout_runs",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "3"
+    },
+    "routing_rules": {
+      "relname": "routing_rules",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "37"
+    },
+    "settings_change_log": {
+      "relname": "settings_change_log",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "14"
+    },
+    "settings_registry": {
+      "relname": "settings_registry",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "112"
+    },
+    "settings_values": {
+      "relname": "settings_values",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "617"
+    },
+    "system_health_snapshots": {
+      "relname": "system_health_snapshots",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "task_dependencies": {
+      "relname": "task_dependencies",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "task_events": {
+      "relname": "task_events",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "1543"
+    },
+    "tasks": {
+      "relname": "tasks",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "217"
+    },
+    "tool_calls": {
+      "relname": "tool_calls",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "325"
+    },
+    "tool_pins": {
+      "relname": "tool_pins",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "69"
+    },
+    "voice_calls": {
+      "relname": "voice_calls",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "102"
+    },
+    "voice_daemon_state": {
+      "relname": "voice_daemon_state",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "1"
+    },
+    "voice_identities": {
+      "relname": "voice_identities",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "1"
+    },
+    "workflow_runs": {
+      "relname": "workflow_runs",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "workflow_steps": {
+      "relname": "workflow_steps",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    },
+    "workflows": {
+      "relname": "workflows",
+      "ins": "0",
+      "upd": "0",
+      "del": "0",
+      "rows": "0"
+    }
+  }
+}

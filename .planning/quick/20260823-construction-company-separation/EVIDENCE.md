@@ -43,16 +43,27 @@ transcript and inserted them into the holding's `cost_ledger` with `department='
 `DXB_CONSTRUCTION_DATABASE_URL` points, writes **nothing** when that is unset, and refuses when that
 address reaches the company's own database.
 
-> **CORRECTED, 2026-08-23, by the independent audit (LAW A).** The first version of this guard
-> compared the two addresses **as text**, and the audit broke it in one line: `localhost` and
-> `127.0.0.1` are one machine written two ways. The hole was not theoretical — written as a test, it
-> **wrote the row**. The comparison is now by TARGET (`server:port/database`, loopback spellings
-> collapsed, a missing port defaulted, an unparseable address treated as a match so it can never buy
-> a write), and four cases stand permanently over it. `AUDIT-RESPONSE-1.md` §1.
+> **CORRECTED TWICE, 2026-08-23, by two independent audits (LAW A — the superseded text is deleted,
+> not annotated).**
+>
+> **First correction.** The guard compared the two addresses **as text**, and the audit broke it in
+> one line: `localhost` and `127.0.0.1` are one machine written two ways. The hole was not
+> theoretical — written as a test, it **wrote the row**.
+>
+> **Second correction, and the one that matters.** The replacement compared `server:port/database`,
+> and the re-audit rejected that too. **Six spellings were measured connecting to the holding while
+> that comparison called each of them a different database** — `?host=`, an address with no database
+> in its path, `127.1`, `2130706433`, `localhost.` and `127.0.0.2`.
+>
+> **The address is no longer read at all.** The hook asks the server it actually reached for its
+> cluster `system_identifier` and the database's own `oid` and name, and compares those with
+> `tools/hooks/company-fingerprint.json`. It fails closed. Fifteen cases stand over it, and
+> `node scripts/b36/prove-address-escapes.mjs` re-runs the whole attack read-only:
+> **`ESCAPES THROUGH THE DELETED RULE: 6 of 6` · `ALL_ESCAPES_CLOSED`**. `AUDIT-RESPONSE-2.md` §1.
 
 ### Red first, then green — the same test, twice
 
-`tests/b36/hook-never-writes-company.test.ts` (4 cases) drives the **compiled** hook the way Claude
+`tests/b36/hook-never-writes-company.test.ts` (15 cases) drives the **compiled** hook the way Claude
 Code drives it: stdin JSON, a real transcript file. No case can reach the company database.
 
 **Against the pre-fix build:**
@@ -331,3 +342,35 @@ $ pnpm verify:ledger  → ledger truth OK
 
 - Nothing in this session changed a surface the CEO looks at, so no design pass was owed. The first
   visible change arrives in Block 5, when the coffee-token row leaves his risk register.
+
+
+---
+
+## The second audit, and what it cost — 2026-08-23 afternoon
+
+Codex Solo 5.6 re-audited the answer above and rejected it in full: **"7 bulgunun 0'ı bütünüyle
+kapandı."** It was right on all seven, and on the critical one it was more right than it knew — the
+guard had **six** reproducible escapes, not three.
+
+The full answer, command by command, is `AUDIT-RESPONSE-2.md`. What changed in the repository:
+
+| | Was | Is |
+|---|---|---|
+| The hook's guard | compared the ADDRESS (`server:port/database`) | asks the SERVER for its cluster id, database oid and name; fails closed; `tools/hooks/company-fingerprint.json` + `scripts/b36/company-fingerprint.mjs` |
+| The escape proof | none | `scripts/b36/prove-address-escapes.mjs` — read-only, re-runnable, `ALL_ESCAPES_CLOSED` |
+| The fallback count | a shell pipeline nobody kept (94, then 93) | `scripts/b36/count-company-fallbacks.mjs` — **96 executable**, every non-test file printed with its line |
+| The restore proof | a new database on the SAME engine | the off-site copy **fetched back** from Hetzner and restored into a **second cluster** in its own container, identical object for object and row for row |
+| "The company was not touched" | four table counts, six days apart | `scripts/b36/company-write-watch.mjs` — PostgreSQL's own per-tuple counters, **0 inserted · 0 updated · 0 deleted** across all 60 tables since the engine started, and it refuses to answer if the epoch changes |
+| The freeze-guard fixture | found by `pgrep -x sleep \| tail -1` — any sleep on the machine | the decoy reports its own pid, and the case proves the fixture is its own before testing it |
+| The stale-build case | compared modification times (`touch` defeats it) | compiles the source in the test and compares the built file **byte for byte** |
+| The records | approval register, board row and channel account each said something different | one measured account in each, the superseded text deleted |
+
+```
+$ npx vitest run
+Test Files  96 passed (96)
+     Tests  725 passed | 15 skipped (740)
+$ pnpm typecheck                    → exit 0
+$ pnpm verify:ledger                → ledger truth OK
+$ node scripts/b36/company-write-watch.mjs
+COMPANY UNTOUCHED SINCE THE BASELINE — 0 inserts, 0 updates, 0 deletes, 0 row-count changes
+```

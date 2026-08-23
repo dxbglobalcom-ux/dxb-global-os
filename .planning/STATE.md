@@ -31,9 +31,13 @@ his login on Supabase Auth, and the Supabase CLI pins the database name to `post
 **Two things are still his and only his:** the Block 5 dry-run list (which rows count as
 construction) goes in front of him before anything moves, and `hook_violations` / `audit_log` are
 not touched at all without his separate word.
-**He also had the work audited by Codex Solo 5.6 the same day**, which found seven defects — three
-serious, one of them a hole that was then exploited live in a test before it was closed. All seven
-are repaired; the answer is `.planning/quick/20260823-construction-company-separation/AUDIT-RESPONSE-1.md`.
+**He had the work audited by Codex Solo 5.6 TWICE the same day, and the second audit rejected the
+first answer in full** — *"7 bulgunun 0'ı bütünüyle kapandı"*. It was right on all seven. The
+critical one had **six** reproducible escapes, not three: six spellings of the company's address
+(`?host=`, no database in the path, `127.1`, `2130706433`, `localhost.`, `127.0.0.2`) each CONNECTED
+to the holding while the guard's parser called them a different database. **The guard no longer reads
+the address at all** — it asks the server for its cluster id and the database's oid and name. The two
+answers are `AUDIT-RESPONSE-1.md` and `AUDIT-RESPONSE-2.md` in the row's own folder.
 **His standing correction from that day, worth carrying:** when a test failed one run in five the
 author offered to set it aside, and he refused it in one line — *"o 5 test'in 1 hata ise neden hatalı
 testi yok saymayı teklif ediyorsun?"* Frequency does not shrink a defect.
@@ -204,32 +208,41 @@ that reading as the next job and had not answered when the session closed.
 
 1. **B36 — cutting the construction site out of the company. THIS IS THE WORK IN HAND.** <!-- OPEN: B36 -->
    Plan: `.planning/quick/20260823-construction-company-separation/PLAN.md` (eight blocks, approved).
-   Evidence so far: `EVIDENCE.md` in the same folder · audit answer: `AUDIT-RESPONSE-1.md`.
-   **DONE — Block 1, the writer is dead.** The `SessionEnd` hook that wrote the author's own token
-   burn into the holding's `cost_ledger` writes only to `DXB_CONSTRUCTION_DATABASE_URL`, nothing when
-   that is unset, and refuses when the address REACHES the company (compared by server/port/database,
-   not by text — the text version was broken by the audit and the hole wrote a real row before it was
-   closed). `tests/b36/hook-never-writes-company.test.ts` 9/9.
-   **DONE — Block 0, the safety net.** `~/backups/dxb/dxb-b36-pre-separation-2026-08-23.dump`,
-   23,666,672 bytes, sha256 identical on the Hetzner Storage Box, restored WITH owners and privileges
-   and compared object by object: 60 tables · identical row counts · 226 functions · 117 indexes ·
-   57 RLS policies · 1 sequence · 1482 grants · 610 constraints · 42 triggers · 34 views. **Named
-   boundary:** the privileged restore reports 117 ignored errors, all of them Supabase's own
-   internals, so this is a DATABASE backup and not a whole-cluster backup — a recovery drill must
-   start a Supabase stack first.
-   **The measurement that settles the whole row:** the company today against the backup of
-   **2026-08-17**, all 60 tables — exactly one table moved, `cost_ledger` +20 rows, and **all 20 carry
-   `source='hook'`**. Everything that changed in the holding's records in six days was written by the
-   hook this row killed.
+   Evidence: `EVIDENCE.md` in the same folder · audit answers: `AUDIT-RESPONSE-1.md`, `AUDIT-RESPONSE-2.md`.
+   **DONE — Block 1, the writer is dead, and the SERVER is what says so.** The `SessionEnd` hook that
+   wrote the author's own token burn into the holding's `cost_ledger` writes only to
+   `DXB_CONSTRUCTION_DATABASE_URL`, nothing when that is unset, and refuses when the address REACHES
+   the company. Two address-comparing guards were built and both were broken by audit; the third does
+   not compare addresses — it asks the database it reached for its cluster `system_identifier` and its
+   own `oid` and name, and compares those with `tools/hooks/company-fingerprint.json`. It fails
+   CLOSED. `tests/b36/hook-never-writes-company.test.ts` **15/15** ·
+   `node scripts/b36/prove-address-escapes.mjs` (read-only) → `ESCAPES THROUGH THE DELETED RULE: 6 of 6`
+   · `ALL_ESCAPES_CLOSED`.
+   **DONE — Block 0, the safety net, proven in a SECOND ENGINE.** The off-site copy was **fetched back**
+   from the Hetzner Storage Box and compared byte for byte (`sha256 cf87ca2d…9501fa`), and that fetched
+   file was restored WITH owners and privileges into its own container from the same Supabase image
+   (own port, own volume, own `system_identifier`), then compared with the live company: 60 base
+   tables · identical row counts in all 60 · 226 functions · 117 indexes · 57 RLS policies ·
+   1 sequence · 1482 grants · 34 views, and it answers real queries. **Named boundary:** 133 ignored
+   errors, all Supabase's own internals, so this is a DATABASE backup and not a whole-cluster backup —
+   a recovery drill must start a Supabase stack first. The probe container and the fetched copy of his
+   data were destroyed the same hour.
+   **The measurement that settles the whole row:** PostgreSQL's own per-tuple counters
+   (`pg_stat_all_tables`) — **0 inserted · 0 updated · 0 deleted across all 60 public tables** since
+   the engine came up at 2026-08-23 07:49:54Z, which is before this work began. That covers UPDATEs
+   and net-zero insert/delete pairs, which row counts cannot. `node scripts/b36/company-write-watch.mjs`
+   re-runs it, and REFUSES to answer if the engine restarts or the statistics are reset.
    **NEXT IS BLOCK 2** — the construction moves out to its own Supabase stack (own container, own
    ports, own credentials, project `DxB_Build`), schema from the same `supabase/migrations`, and its
    data GENERATED, never copied from his real rows. Then Block 3 (the read-only window, `dxb_reader`
-   with SELECT and nothing else), Block 4 (the **94** remaining fallbacks — 83 tests · 7 scripts ·
-   3 seeds · 1 live route — which cannot move before Block 2 because the tests would have nowhere to
-   point), Block 5 (the residue move, his dry-run first), Block 6 (`pnpm verify:separation`),
+   with SELECT and nothing else), Block 4 (the **96** remaining fallbacks — 84 tests · 8 scripts ·
+   3 seeds · 1 live route, counted by the committed `scripts/b36/count-company-fallbacks.mjs` after two
+   audits produced three disagreeing figures — which cannot move before Block 2 because the tests would
+   have nowhere to point), Block 5 (the residue move, his dry-run first), Block 6 (`pnpm verify:separation`),
    Block 7 (records, including closing C36).
-   **State when this was written:** battery `96 files · 719 passed · 15 skipped`, three consecutive
-   runs · `tsc --build` exit 0 · `pnpm verify:ledger` OK · company `cost_ledger` 1612, untouched.
+   **State when this was written:** battery `96 files · 725 passed · 15 skipped` · `tsc --build` exit 0 ·
+   `pnpm verify:ledger` OK · the company measured after the whole battery ran:
+   `COMPANY UNTOUCHED SINCE THE BASELINE — 0 inserts, 0 updates, 0 deletes, 0 row-count changes`.
 
 
 2. **B22 — the rival re-analysis, which waits behind B36.** <!-- OPEN: B22 -->

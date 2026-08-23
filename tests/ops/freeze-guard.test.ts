@@ -213,37 +213,60 @@ describe("freeze-guard — the editor is never the designated victim", () => {
     // wrong with the guard. So the fixture is held until this case's own pass has
     // seen it, and the log starts empty so no earlier case can answer for it.
     rmSync(LOG, { force: true });
-    let orphan = 0;
+    // CORRECTED 2026-08-23 by an independent audit. The earlier version found
+    // the decoy with `pgrep -f <pattern> | head -1; pgrep -x sleep | tail -1`
+    // and took the LAST line — which is `pgrep -x sleep`, ANY sleep process on
+    // the machine. On a box where something else is sleeping (this repository
+    // runs `sleep` in half a dozen scripts), the case would have measured a
+    // stranger's process and passed or failed on it. A test that cannot name its
+    // own fixture is not a test.
+    //
+    // The decoy now reports its own pid: `$$` inside the subshell, written
+    // BEFORE `exec` — and `exec` replaces the program without changing the pid,
+    // so the number in the file is the very process that becomes the helper.
+    const PIDFILE = join(tmpdir(), "freeze-guard-orphan.pid");
     let reparented = 0;
     let log = "";
     for (let attempt = 0; attempt < 5; attempt++) {
-      orphan = Number(
-        execFileSync("bash", [
-          "-c",
-          `setsid bash -c 'exec -a "npm exec @playwright/mcp@latest" sleep 120' >/dev/null 2>&1 & echo $!`,
-        ])
-          .toString()
-          .trim(),
-      );
+      rmSync(PIDFILE, { force: true });
+      execFileSync("bash", [
+        "-c",
+        `setsid bash -c 'echo $$ > ${PIDFILE}; exec -a "npm exec @playwright/mcp@latest" sleep 120' >/dev/null 2>&1 &`,
+      ]);
       // The shell above exits immediately, so its child is re-parented to init —
       // exactly the state a helper reaches when its session dies.
       execFileSync("bash", ["-c", "sleep 1"]);
-      reparented = Number(
-        execFileSync("bash", [
-          "-c",
-          `pgrep -f 'exec -a .npm exec @playwright/mcp@latest. sleep 120' | head -1; pgrep -x sleep | tail -1`,
-        ])
-          .toString()
-          .trim()
-          .split("\n")
-          .pop(),
-      );
+      reparented = existsSync(PIDFILE) ? Number(readFileSync(PIDFILE, "utf8").trim()) : 0;
       // Nothing to observe means the resident took it first: build it again.
       if (!reparented || !existsSync(`/proc/${reparented}`)) continue;
+      // It must be OUR decoy, in the state this case is about: carrying the
+      // pattern under test, and re-parented to init.
+      let cmdline: string;
+      let ppid: number;
+      try {
+        cmdline = readFileSync(`/proc/${reparented}/cmdline`, "utf8").split("\0").join(" ");
+        ppid = Number(readFileSync(`/proc/${reparented}/stat`, "utf8").split(" ")[3]);
+      } catch {
+        continue; // the resident reaped it between the two reads — build another
+      }
+      expect(cmdline, `pid ${reparented} is not the decoy this case started`).toContain(
+        "npm exec @playwright/mcp@latest",
+      );
+      // Re-parented — by the guard's OWN definition of who adopts an orphan
+      // here (freeze-guard.sh:66-74): pid 1, or this user's `systemd --user`,
+      // which registers itself as a subreaper. Measured on this machine: the
+      // decoy came back with ppid 7152, the user manager, not 1.
+      const reapers = execFileSync("bash", ["-c", `echo 1; pgrep -x systemd -u $(id -u)`])
+        .toString()
+        .trim()
+        .split("\n")
+        .map(Number);
+      expect(reapers, `pid ${reparented} was never re-parented (parent ${ppid})`).toContain(ppid);
       runGuard({});
       log = logText();
       if (sawOurOrphan(log, reparented)) break;
     }
+    rmSync(PIDFILE, { force: true });
     // The line must name OUR process. An audit caught the weaker version on
     // 2026-08-23: `/helper with no session/` alone would be satisfied by some
     // OTHER orphan on the machine while this case's own decoy went unseen.
@@ -254,7 +277,7 @@ describe("freeze-guard — the editor is never the designated victim", () => {
     // The live session's helper — started by this suite, parent still alive —
     // must never appear in a kill line.
     expect(log).not.toContain(`would kill ${scaffolding}`);
-    execFileSync("bash", ["-c", `kill -9 ${orphan} ${reparented} 2>/dev/null || true`]);
+    execFileSync("bash", ["-c", `kill -9 ${reparented} 2>/dev/null || true`]);
   });
 
   it("runs as a resident, not from a once-a-minute cron slot", () => {

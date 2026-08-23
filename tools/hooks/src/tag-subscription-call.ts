@@ -12,7 +12,7 @@
 // for per-dept/model/mode accounting (COST-04 view, Phase 8). Token counts
 // carry the volume signal.
 import { createInterface } from "node:readline";
-import { createReadStream, existsSync } from "node:fs";
+import { createReadStream, existsSync, readFileSync } from "node:fs";
 import { getDb, closeDb } from "@dxb/shared";
 
 interface HookInput {
@@ -58,32 +58,44 @@ async function sumTranscript(path: string): Promise<Map<string, UsageTotals>> {
 }
 
 /**
- * Where a Postgres address actually lands: server, port and database — not the
- * text it was written in. Loopback spellings collapse to one token because they
- * are one machine; an absent port is 5432 because that is what the driver uses.
- * An address that cannot be parsed is treated as UNKNOWN and therefore as a
- * possible match, so a malformed value can never buy a write.
+ * The holding's own database, taken from the SERVER and not from an address.
+ *
+ * Why the address is no longer read at all: on 2026-08-23 an independent audit
+ * proved that comparing connection STRINGS cannot protect the company. Six
+ * spellings that a URL comparison called "some other database" every one landed
+ * on the holding's own — measured, each one connected and reported
+ * `postgres`:
+ *
+ *   ?host=127.0.0.1      the driver obeys the query parameter, not the authority
+ *   no /database in path libpq then uses the USER name, which is `postgres`
+ *   127.1                a short IPv4 the URL parser leaves alone and the OS resolves
+ *   2130706433           the same address written as one decimal number
+ *   localhost.           a trailing dot is a different string and the same host
+ *   127.0.0.2            a different loopback address reaching the same server
+ *
+ * The parser was not wrong in one place; text is the wrong thing to compare. So
+ * the hook asks the server it actually reached who it is — a cluster's
+ * `system_identifier`, and the database's own `oid` and name. A connection
+ * cannot lie about those: whatever spelling got it there, that is where the next
+ * INSERT would land. `tools/hooks/company-fingerprint.json` carries the
+ * holding's answer, taken by `scripts/b36/company-fingerprint.mjs`; a test in
+ * `tests/b36/` fails if the recorded identity ever stops matching the live one.
  */
-function target(url: string | undefined): string | null {
-  if (!url) return null;
-  try {
-    const u = new URL(url);
-    const host = u.hostname.replace(/^\[|\]$/g, "").toLowerCase();
-    const server = host === "localhost" || host === "127.0.0.1" || host === "::1" ? "loopback" : host;
-    const db = decodeURIComponent(u.pathname.replace(/^\//, ""));
-    return `${server}:${u.port || "5432"}/${db}`;
-  } catch {
-    return "unparseable";
-  }
+interface CompanyFingerprint {
+  sysid: string;
+  dboid: string;
+  dbname: string;
 }
 
-/** True when two addresses reach the same database — or when either cannot be read. */
-function sameTarget(a: string | undefined, b: string | undefined): boolean {
-  const ta = target(a);
-  const tb = target(b);
-  if (ta === null || tb === null) return false;
-  if (ta === "unparseable" || tb === "unparseable") return true;
-  return ta === tb;
+function companyFingerprint(): CompanyFingerprint | null {
+  try {
+    const f = JSON.parse(
+      readFileSync(new URL("../company-fingerprint.json", import.meta.url), "utf8"),
+    ) as CompanyFingerprint;
+    return f.sysid && f.dboid && f.dbname ? f : null;
+  } catch {
+    return null;
+  }
 }
 
 async function main(): Promise<void> {
@@ -103,24 +115,58 @@ async function main(): Promise<void> {
   // no ledger yet, never that the company's will do.
   const constructionUrl = process.env.DXB_CONSTRUCTION_DATABASE_URL;
   if (!constructionUrl) return;
-  // The construction ledger may never be the company's own database. Compared by
-  // TARGET, not by text: the first version of this guard compared the two strings
-  // and an independent audit broke it in one line — `localhost` and `127.0.0.1`
-  // name the same server, a default port and `:5432` name the same port, and a
-  // `?sslmode=` tail changes the text without changing where the write lands.
-  if (sameTarget(constructionUrl, process.env.DXB_DATABASE_URL)) {
+
+  // The guard fails CLOSED. With no recorded identity for the holding there is
+  // nothing to compare against, and a hook that cannot prove where it is writing
+  // does not write.
+  const company = companyFingerprint();
+  if (!company) {
     console.error(
-      "tag-subscription-call: DXB_CONSTRUCTION_DATABASE_URL points at the company database — refusing to write",
+      "tag-subscription-call: tools/hooks/company-fingerprint.json is missing or unreadable — " +
+        "refusing to write (run scripts/b36/company-fingerprint.mjs)",
     );
     return;
   }
+
   process.env.DXB_DATABASE_URL = constructionUrl;
   const db = getDb();
+  const { sql } = await import("kysely");
+
+  // Asked of the server, before a single row is written.
+  let here: { sysid: string | null; dboid: string; dbname: string } | undefined;
+  try {
+    const identity = await sql<{ sysid: string | null; dboid: string; dbname: string }>`
+      select (select system_identifier::text from pg_control_system()) sysid,
+             (select oid::text from pg_database where datname = current_database()) dboid,
+             current_database() dbname`.execute(db);
+    here = identity.rows[0];
+  } catch (e) {
+    console.error(
+      `tag-subscription-call: could not ask the database who it is — refusing to write (${String(e).slice(0, 120)})`,
+    );
+    return;
+  }
+  if (!here?.sysid) {
+    console.error(
+      "tag-subscription-call: the server would not name its cluster (pg_control_system denied) — refusing to write",
+    );
+    return;
+  }
+  // Same cluster AND (same database oid OR same database name). The name is in
+  // the rule because a `supabase db reset` rebuilds the holding's database under
+  // a new oid, and the guard must not go blind the moment that happens; the oid
+  // is in it because a rename must not open the door either.
+  if (here.sysid === company.sysid && (here.dboid === company.dboid || here.dbname === company.dbname)) {
+    console.error(
+      `tag-subscription-call: DXB_CONSTRUCTION_DATABASE_URL reaches the company database ` +
+        `(cluster ${here.sysid}, database ${here.dbname}) — refusing to write`,
+    );
+    return;
+  }
 
   // v1 idempotency: one SessionEnd per session wins (resume/clear can fire the
   // hook again with a longer transcript; refining to incremental rows is a
   // recorded follow-up, not silent double-counting)
-  const { sql } = await import("kysely");
   const existing = await db
     .selectFrom("cost_ledger")
     .select("id")
