@@ -49,13 +49,32 @@ export async function checkVelocity(): Promise<VelocityCheckResult> {
   // "startTime" is timestamp(3) WITHOUT time zone written in UTC by the proxy;
   // the DB container runs UTC, so the naive comparison is sound locally and on
   // the VPS (both UTC).
-  const spend = await sql<{ total: number }>`
-    SELECT COALESCE(SUM(spend), 0) AS total
-    FROM ${sql.raw(`${LITELLM_SCHEMA}."${LITELLM_SPEND_TABLE}"`)}
-    WHERE "startTime" > (now() AT TIME ZONE 'utc') - interval '60 minutes'
+  //
+  // The proxy's spend table is ASKED FOR before it is read (B36 Block 2,
+  // 2026-08-23). Until then this query ran unguarded, so a database without the
+  // proxy's schema did not merely lose the proxy figure — it threw, and the
+  // whole velocity check stopped running. That is the opposite of what the trip
+  // below is built for ("the hard signal survives even if the proxy is down"):
+  // the brake died first and silently, and the same would happen on any install
+  // where the proxy keeps its spend in its own database. Measured on the
+  // construction site's own engine, which has no litellm schema: five
+  // velocity-breaker cases failed with `relation "litellm.LiteLLM_SpendLogs"
+  // does not exist`. `to_regclass` returns NULL instead of raising.
+  const proxyTable = `${LITELLM_SCHEMA}."${LITELLM_SPEND_TABLE}"`;
+  const present = await sql<{ there: boolean }>`
+    SELECT to_regclass(${proxyTable}) IS NOT NULL AS there
   `.execute(db);
+  let proxyEur = 0;
+  if (present.rows[0]?.there) {
+    const spend = await sql<{ total: number }>`
+      SELECT COALESCE(SUM(spend), 0) AS total
+      FROM ${sql.raw(proxyTable)}
+      WHERE "startTime" > (now() AT TIME ZONE 'utc') - interval '60 minutes'
+    `.execute(db);
+    proxyEur = Number(spend.rows[0]?.total ?? 0);
+  }
 
-  const windowEur = Number(ledger.total) + Number(spend.rows[0]?.total ?? 0);
+  const windowEur = Number(ledger.total) + proxyEur;
 
   const state = await db.selectFrom("budget_state").selectAll().executeTakeFirstOrThrow();
   const capEur = Number(state.velocity_cap_eur_per_hour);

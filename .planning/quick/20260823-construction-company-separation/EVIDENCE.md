@@ -383,3 +383,327 @@ $ pnpm verify:ledger                → ledger truth OK
 $ node scripts/b36/company-write-watch.mjs
 COMPANY UNTOUCHED SINCE THE BASELINE — 0 inserts, 0 updates, 0 deletes, 0 row-count changes
 ```
+
+---
+
+## Block 2 — the construction site moved out (COMPLETE)
+
+*2026-08-23, on the CEO's word "block 2 ye başlayabilirsin".*
+
+### What it was
+
+The battery wrote into `dxb_test`: a database that lived **inside the company's own Postgres
+engine**, holding a full copy of the holding — 205 agents, 217 tasks, 1,596 cost rows, **40,137
+audit rows**, 138 MB, every one of them a copy of his. It was a NAME, not a wall, and Block 1
+proved how thin a name is: six spellings of one address each connected to the holding while the
+guard reading them called it a different database.
+
+### What it is now
+
+The construction site has its own Supabase stack. Its own container set, its own ports, its own
+volume, **its own PostgreSQL cluster identifier** — and the company does not exist on it at all.
+A mistyped address no longer lands on the CEO's data; it lands on a port where the holding is not.
+
+```
+company      supabase_db_DxB_Global_OS   127.0.0.1:54322   cluster 7674907968528752679
+construction supabase_db_DxB_Build       127.0.0.1:54422   cluster 7677236350688722983
+```
+
+The address is spelled **once**, in `tests/construction-engine.ts`, and imported by
+`vitest.config.ts` and `tests/global-teardown.ts`. `dxb_test` is dropped; the company engine now
+carries `postgres`, `_supabase` and the two templates and nothing else.
+
+`construction/supabase/config.toml` is **generated, never hand-written** —
+`scripts/b36/make-construction-config.mjs` derives it from the company's config by exactly three
+rules (`project_id`, every `543NN` port → `544NN`, and the CLI's own migration runner off), and
+`tests/b36/construction-config.test.ts` fails the battery on any drift, on any port collision, and
+if the migrations folder ever stops being the SAME folder.
+
+### The schema is the same schema, and that is measured, not asserted
+
+`node scripts/b36/schema-parity.mjs` asks both servers the same nine questions about `public` and
+hashes the sorted answers:
+
+```
+company      : 7674907968528752679 / postgres
+construction : 7677236350688722983 / postgres
+
+columns      company   602 4e813c836f631ff7  construction   602 4e813c836f631ff7  same
+constraints  company   241 b48456af2b022d3a  construction   241 b48456af2b022d3a  same
+indexes      company   117 236b9fac86d3ce0a  construction   117 236b9fac86d3ce0a  same
+functions    company   226 afb2d504fe5411e5  construction   226 afb2d504fe5411e5  same
+views        company    34 …  construction    34 …  same after removing PostgreSQL's own default type labels
+view_columns company   461 72649692695f1e0b  construction   461 72649692695f1e0b  same
+policies     company    57 50677097944b0bcc  construction    57 50677097944b0bcc  same
+triggers     company    30 49c9ca13aa3cb76b  construction    30 49c9ca13aa3cb76b  same
+sequences    company    13 45ec7c9bf3fb88d5  construction    13 45ec7c9bf3fb88d5  same
+
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+```
+
+**The one normalisation is printed, never hidden.** `v_alerts_active` renders its UNION's second
+arm with PostgreSQL's own default type labels on the company (`'approval'::text AS text`) and
+without them on the construction engine. Same image `17.6.1.140`, same server version, and the
+migration that creates it has exactly one commit and was never edited. It cannot mean anything —
+a column alias in a non-first UNION arm is discarded, and the gate proves the two views' OUTPUT
+columns identical **strictly**, under `view_columns`, where nothing is normalised. The removal is
+bounded to one shape: ` AS x` where `x` is the very type the expression was just cast to.
+
+### Its data is GENERATED — not one row of his travels
+
+`db/seed/build-seed.ts`, run as `pnpm construction:seed`. It refuses to run against the company at
+all: it asks the server for its cluster id and database oid and compares them with
+`tools/hooks/ledger-identity.json` — the same one owner of "who the company is" that Block 1's
+guard uses. Every step reads FILES or invents rows:
+
+```
+build-seed → 7677236350688722983/5 (postgres)
+
+  holding core                                      1 company · 2 project(s)
+  routing rules                                     37 enabled rules, tiers L1,L2,L3,L4
+  personas from the dossier files                   199 employee(s) · 199 version(s)
+  gate, bind and activate the generated workforce   199 active · 199 bound
+  employee records from the dossiers                199 record(s)
+  tool pins from the live MCP servers               context7=2 dxb-mcp=21 git=12 playwright=24 scrapling=10
+  library intake, arsenal and grants                493 item(s) · 252 grant(s)
+  generated operating layer                         3 milestone(s) · 1 run(s) · 1 voice identity
+
+BUILD_SEED_DONE — a whole holding, and not one row of his.
+```
+
+199 employees and 199 active — the same shape as the company's workforce, because the workforce is
+defined by 199 dossier files in this repository, not by anything in his database.
+
+### The whole thing rebuilt from empty, and the battery run against that
+
+Not "it works on the database I have been poking at all afternoon". The stack was **destroyed**
+(`supabase stop --no-backup`, volume gone, new cluster identity) and rebuilt from nothing:
+
+```
+$ pnpm construction:start            → Started supabase local development setup.
+$ pnpm construction:schema           → [bootstrap] done — applied 156, skipped 0, ledger total 156
+$ pnpm construction:seed             → BUILD_SEED_DONE
+$ npx vitest run
+Test Files  99 passed (99)
+     Tests  737 passed | 15 skipped (752)
+$ pnpm typecheck                     → exit 0
+$ pnpm verify:ledger                 → ledger truth OK (8 state claims, 94 open markers, 70 approval claims)
+$ bash scripts/i18n-purity-check.sh  → I18N PURITY: PASS (en 2395 = tr 2395)
+$ gitleaks detect                    → 729 commits scanned, no leaks found
+```
+
+The schema is built by `scripts/bootstrap-db.sh` — **the project's own canonical chain** (audit
+F-08), the same command a deploy uses — and not by the Supabase CLI's migration runner, which
+cannot build it: measured on the first start of this stack, it walked 20260707000001 →
+20260712007950 and died on `relation "pgboss.queue" does not exist`, because pg-boss's schema is
+runtime-born by its own initializer. `[db.migrations] enabled = false` in the construction config
+is that measurement, written down.
+
+### The company, across all of it
+
+```
+$ node scripts/b36/company-write-watch.mjs
+objects watched   : 186 tables · 18 sequences · 2616 grants · 1614 structural objects
+HIS OWN TABLES, SINCE THAT EPOCH: 0 inserted · 0 updated · 0 deleted (73 tables)
+COMPANY UNTOUCHED SINCE THE BASELINE — 0 rows, 0 sequences, 0 grants, 0 structure
+```
+
+**And then the company moved — by its own hand, and the watch named it.** Shipping the runtime fix
+below required restarting the resident scheduler, and pg-boss ran its own retention sweep on boot:
+
+```
+COMPANY CHANGED — 5 place(s):
+   tables pgboss.job_common: ins 0 → 70 · upd 0 → 139 · del 0 → 276569 · rows 303136 → 26638
+   tables pgboss.queue/schedule/version: upd only
+   Supabase's own internals moved in 2 place(s): realtime.messages 7 → 8
+```
+
+That is the holding's own queue clearing 276,569 **completed** jobs it had been carrying (the
+303,136 the plan measured as M10), and at that moment his RECORD had not moved by one row:
+
+```
+$ select … from pg_stat_all_tables where schemaname='public' and (ins+upd+del) > 0
+NOTHING IN public HAS MOVED — 0 inserted, 0 updated, 0 deleted across all 60 tables
+```
+
+It is worth saying plainly what this proves: **the watch is not blind.** It reported zero for
+fifty minutes of construction work and then caught the company's own daemon within seconds.
+
+### ⚠ AND THEN IT CAUGHT SOMETHING THAT IS HIS TO RULE ON — a SECOND writer, still live
+
+At the end of the block the same watch reported `public.memory_index` growing by **1,818 rows**,
+13,919 → 15,737. Measured at source:
+
+```
+$ select store, scope, kind, count(*), max(created_at) from memory_index
+   where created_at > now() - interval '6 hours' group by 1,2,3
+ claude-mem | holding | fact | 1818 | 2026-08-23 15:00:29.771961+00
+
+$ select name, state, count(*), max(completed_on) from pgboss.job where name = 'claude-mem-sync' …
+ claude-mem-sync | completed | 9 | 2026-08-23 15:00:29.776863+00
+```
+
+**The writer is the company's own resident scheduler.** `claude-mem-sync` is an hourly job
+(`packages/outbox-executor/src/scheduler.ts:38`, cron from the memory lifecycle design) that pulls
+the **claude-mem store — the construction sessions' own diary — into the holding's `memory_index`
+at `scope='holding'`.** It fired once during this session, at 15:00:29, and put 1,818 rows of this
+afternoon's construction work into the holding's brain.
+
+So it is **not** construction reaching into the company; it is the company reaching out and pulling
+construction in, on purpose, on a schedule. But the effect is the disease this row exists to end,
+and it is the plan's own measurement M8 alive: **13,845 of 13,919 rows in the holding's memory came
+from that store**, and the count is climbing while the work runs.
+
+**Block 1 killed one writer. This is a second one, and nobody had named it as a writer.** It is
+NOT touched here, for two reasons, and both are the CEO's: `claude-mem` is one of the two plugins
+he ordered ON, and what the holding's memory is allowed to contain is a decision about his company,
+not a cleanup. It goes to **Block 5** beside the other residue, on his dry-run list, with this
+measurement attached.
+
+**⚠ UNVERIFIED — requires his ruling:** whether `claude-mem-sync` keeps running at all, whether it
+writes at a different scope, or whether it stops pointing at the company.
+
+### Seven defects this block found — none of them invented, all fixed at source
+
+**1 · The migration chain resurrects 15 employees the CEO ordered deleted.**
+On 2026-07-19 he said *"C8 sil."* and 15 dormant personas were deleted — files, archived `agents`
+rows and library mirrors — directly on the company database, in commit `3ae5ac95`. **The act was
+never written into the chain.** A database built from the chain therefore comes up with 220 agents
+against the company's 205, the extra 15 pointing at `personas/_library/*.md` files that same commit
+removed. Any fresh environment — a new machine, a disaster-recovery restore, a staging deploy —
+brings them back. Closed by `db/migrations/20260823001000_c8_persona_deletion_chain_parity.sql`,
+which is a **no-op on the company** (proven read-only: 0 agents, 0 library_items, 0 audit rows it
+would write) and performs his order everywhere else. After it: **205 agents, 199 active** — the
+company's own figures.
+
+**2 · The velocity breaker dies when the proxy's spend table is absent.**
+`packages/outbox-executor/src/breaker.ts` read `litellm."LiteLLM_SpendLogs"` unguarded. Its own
+comment promises the hard signal survives a proxy outage; it did not — the read threw first and the
+whole brake stopped running. Measured on an engine without that schema: five breaker cases failed,
+none of them at the trip. Now the table is asked for with `to_regclass` (which returns NULL instead
+of raising) and the ledger figure alone governs when it is absent. On the company `to_regclass`
+returns non-null, so the path there is byte-for-byte the old one — measured.
+
+**3 · The monthly cap swallowed an error that had already poisoned its transaction.**
+`monthly-cap.ts` wrapped the same read in `try/catch`. The catch runs, but PostgreSQL has already
+aborted the surrounding transaction — and this function is documented to run inside one, so every
+command after it died with *"current transaction is aborted"*. Same repair, same proof.
+
+**4 · The `git` MCP server has been DEAD for the whole holding, and nobody could see it.**
+`uvx mcp-server-git==2026.7.10` pinned the server and not the SDK it imports, so `uvx` resolved the
+newest `mcp` at every launch — and it had moved: `'Server' object has no attribute 'list_tools'`.
+Zero of its 12 tools could be enumerated. It was invisible because `tool_pins` still carried the 12
+rows pinned on the day it last worked: **a stale row and a live capability are not the same thing,
+and only a database built from scratch could tell them apart.** Pinned to `mcp==1.12.0`; the server
+answers again with all 12 tools, `git_status` among them.
+
+**6 · The whole senior layer reads a gap analysis as its own identity — on any fresh environment.**
+On the company the CFO's `persona_path` is `personas/finance/cfo.md`. On a database built from the
+chain it is `HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX.md` — a planning document — and so are the
+CISO's, the CMO's, the CHRO's, the Chief AI Officer's, the General Counsel's and seven more
+department heads': **thirteen rows.** The wave migrations created them with the matrix as a
+placeholder and a later session repointed them directly on the company database, outside the chain.
+Closed by `db/migrations/20260823002000_head_persona_path_chain_parity.sql`, an explicit slug→file
+map checked file by file against the repository (a path is never derived from a department name —
+`cfo` lives under `finance`, `ciso` under `security`, and no rule connects the two). **A no-op on
+the company: 0 rows there carry the matrix path.** Worth naming: `tests/e125/workforce-gate.test.ts`
+case (4) does not catch this, because it asserts the stored path EXISTS and the gap matrix does
+exist. A path can point at a real file and still be the wrong file.
+
+**7 · The sicil sync silently dropped 28 of 199 employees outside the company.**
+`scripts/sync-employee-records.py` matched each dossier to its employee by the **uuid** written in
+the dossier's first row. A uuid is a snapshot of ONE database: the migrations mint agent ids with
+`gen_random_uuid()`, so every environment gives the same employee a different id. Measured on the
+construction engine: **171 of 199 matched, 28 were dropped — the C-suite among them — and the
+script still reported success.** It now matches on the **slug**, which is the dossier's own file
+name and is the same everywhere. Result: 199 records, 0 live agents without one. Proven safe on
+the company read-only before the change: all 199 dossier slugs resolve to exactly one live agent
+there, and it already holds 199 records.
+
+**5 · `scrapling` pointed at a user who does not exist on this machine.**
+`packages/gateway/policy/grants.json` and the strategy profile carried
+`/home/ghost/scrapling-env/bin/scrapling` — the X230's user, the B29 class. The binary is at
+`/home/dxb/…` and works. Re-pinned: 10 tools. *(The remaining `/home/ghost` occurrences are frozen
+history documents and stale permission entries; they belong to board row B29, not to this one.)*
+
+### One test was pinned to one database, and it is not any more
+
+`tests/r23/unified-constitution.test.ts` carried `const PROJECT = "68ce909a-…"` — the literal uuid
+of one row in one database — so the suite could only ever run against that database, and three
+cases died on `workflows_project_id_fkey` the day the battery moved. It now finds the holding's own
+project by its **slug**, which the seed fixes.
+
+### And Block 1's drill was only green while the company was asleep — rebuilt
+
+Restarting the resident services as part of shipping the fixes above made
+`scripts/b36/prove-block1.mjs` answer **`BLOCK1_OPEN`**: it saw 4 tables move and 18 write
+statements. **Not one of them came from the hook.** The company runs its own pg-boss scheduler and
+its own JARVIS intent drain, and both write into its own tables continuously. The drill was
+measuring *"did anything write?"*, and it had been green only because those services happened to be
+quiet — which is not a state the company is ever in.
+
+**Two attempts were made to subtract that noise by sampling it, and both lost the race.** Measuring
+a 20-second control window and excluding whatever moved in it is not enough: pg-boss's cron
+heartbeat is on 60 seconds and its monitor and maintain passes on minutes, so each battery run
+flagged a different pg-boss statement — `pgboss.version`, then `pgboss.queue`, then `pgboss.bam`.
+Widening the window until it covers every cadence is a race a drill inside a test battery will keep
+losing, and an intermittent red is worse than a weak green. Both attempts are written down here
+because the third answer is only convincing if the first two are visible.
+
+**The verdict does not rest on the noise at all now.** It rests on two things nothing else on that
+server can imitate:
+
+1. **The hook's own signature.** It writes exactly one thing — a `cost_ledger` row carrying the
+   session id it was handed — and the drill hands it 18 ids nobody else has. If one of them appears
+   in the company, the hook wrote. That is attribution, not inference.
+2. **What the compiled hook can do at all**, read out of the artefact that actually runs at session
+   end: `tools/hooks/dist/tag-subscription-call.js` must contain exactly one write construct and it
+   must be the `cost_ledger` insert.
+
+Both self-validate in the same run, and the run REFUSES TO GIVE A VERDICT if either does not: a
+scanner that found no write would be broken rather than reassuring, and the detector must be shown
+registering a real write on the permitted ledger.
+
+```
+conditions fired   : 18
+refused            : 18
+the hook's own signature in the company: 0 row(s) carrying any of the 18 session ids this drill handed it
+what the compiled hook can write at all: 1 × cost_ledger insert · 0 other write construct(s)
+what the company did on its own while the drill ran (context, not a verdict): 14 statement(s)
+    · pgboss.job, pgboss.job_common, pgboss.queue, pgboss.version
+detector validated: YES — the permitted ledger recorded 1 new write statement(s) from the same hook in this run
+scan validated:     YES — it found the hook's one known write in the built file
+
+ANSWER: NO — the hook cannot send an INSERT, UPDATE or DELETE to the company database.
+BLOCK1_CLOSED
+```
+
+The before/after measurement stays and is still printed — as **what the company did while the drill
+ran**, named table by table. It is context a reader can see, and it is no longer asked to answer a
+question it cannot answer.
+
+**And the test that runs the drill was hiding its answer.** It used `execFileSync`, which throws away
+everything the drill printed when it exits 1 — so the battery's red line read only *"Command
+failed"*, with the eighteen conditions and the offending statement gone. It uses `spawnSync` now and
+asserts on the full output. **A red that does not say why is not a test result.**
+
+**Block 1's answer is unchanged and now stands while the company is awake** — which is the only
+state that matters. **What is honestly weaker than the earlier claim:** the headline
+*"0 write statements ever reached the server"* was only ever true of an idle company, and it is
+replaced by *"0 rows carrying the hook's own signature, and the compiled hook has no other write"*.
+That is narrower in wording and stronger in fact, because it survives the company doing its work.
+
+### Registered adaptations — where this block deviated from the plan, and why
+
+| Plan said | What was built | Why |
+|---|---|---|
+| the construction stack gets "its own password" | the Supabase CLI's fixed local credentials | Measured on CLI 2.109.0: `[db]` has `port`, `shadow_port` and `major_version` and **no password field**. The wall here is the engine and the port — a different cluster the company does not exist on. The credential wall is Block 3's `dxb_reader`, which takes the write privilege away at the server. |
+| schema built by the CLI from `supabase/migrations` | schema built by `scripts/bootstrap-db.sh` from the SAME `db/migrations` | The CLI's runner cannot build it from empty (pg-boss's runtime-born schema, measured above). The repository already owns the one command that can, and it is the one a deploy uses. |
+| `dxb_test` dropped last | dropped, after the battery was green on the new stack and `dxb-b36-pre-separation-2026-08-23.dump` was confirmed present (23,666,672 bytes, local and off-site) | as written |
+| — | `scripts/test/refresh-test-db.sh` deleted | Its one job was to clone the company's rows onto the construction side. Leaving it is leaving a loaded gun; `db/seed/build-seed.ts` replaces it. |
+
+### ⚠ UNVERIFIED — requires a human eye
+
+- **The CEO's live surfaces and his login.** The company stack was not modified — no container was
+  restarted, no schema changed, `public` shows zero writes — but "his tiles still move and he can
+  still log in" is not something a terminal can see. It waits for his eye.

@@ -82,16 +82,36 @@ export async function checkMonthlyCap(db: Kysely<DB> = getDb()): Promise<Monthly
     .where("created_at", ">=", sql<Date>`date_trunc('month', now())`)
     .executeTakeFirstOrThrow();
 
+  // The promise above — "never throws on the LiteLLM side" — was only half kept
+  // until 2026-08-23. A `try` around a failing statement catches the error, but
+  // PostgreSQL has ALREADY aborted the surrounding transaction, and this
+  // function is documented to run inside one: every command after the catch
+  // then died with "current transaction is aborted". Measured the day the
+  // construction site got its own engine, where the proxy's schema does not
+  // exist: five monthly-cap cases failed, none of them at the probe. The same
+  // would happen in production the day the proxy's table is renamed or its
+  // schema is dropped — precisely the monitoring outage the brake is supposed
+  // to survive.
+  //
+  // So the table is ASKED FOR first, with a catalogue lookup that returns NULL
+  // instead of raising. Nothing is left to be caught, and the ledger figure
+  // alone still governs when the proxy is not there.
   let proxyEur = 0;
-  try {
-    const spend = await sql<{ total: number }>`
-      SELECT COALESCE(SUM(spend), 0) AS total
-      FROM ${sql.raw(`${LITELLM_SCHEMA}."${LITELLM_SPEND_TABLE}"`)}
-      WHERE "startTime" >= date_trunc('month', (now() AT TIME ZONE 'utc'))
-    `.execute(db);
-    proxyEur = Number(spend.rows[0]?.total ?? 0);
-  } catch {
-    proxyEur = 0; // ledger-only is still a real brake
+  const proxyTable = `${LITELLM_SCHEMA}."${LITELLM_SPEND_TABLE}"`;
+  const present = await sql<{ there: boolean }>`
+    SELECT to_regclass(${proxyTable}) IS NOT NULL AS there
+  `.execute(db);
+  if (present.rows[0]?.there) {
+    try {
+      const spend = await sql<{ total: number }>`
+        SELECT COALESCE(SUM(spend), 0) AS total
+        FROM ${sql.raw(proxyTable)}
+        WHERE "startTime" >= date_trunc('month', (now() AT TIME ZONE 'utc'))
+      `.execute(db);
+      proxyEur = Number(spend.rows[0]?.total ?? 0);
+    } catch {
+      proxyEur = 0; // ledger-only is still a real brake
+    }
   }
 
   const monthEur = Number(ledger.total) + proxyEur;

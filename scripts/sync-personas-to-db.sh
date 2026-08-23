@@ -12,7 +12,13 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PSQL=(docker exec -i supabase_db_DxB_Global_OS psql -U postgres -d postgres -At)
+# B36 Block 2: the container is named by DXB_DB_CONTAINER. The DEFAULT is
+# unchanged (the company's own stack), so every existing caller behaves exactly
+# as before; the construction site's seed sets it to supabase_db_DxB_Build and
+# syncs the SAME persona files from the repository into its own engine.
+# Personas come from files, so nothing of the company's travels:
+# db/seed/build-seed.ts.
+PSQL=(docker exec -i "${DXB_DB_CONTAINER:-supabase_db_DxB_Global_OS}" psql -U postgres -d postgres -At)
 MODE="submit"
 [ "${1:-}" = "--verify" ] && { MODE="verify"; shift; }
 

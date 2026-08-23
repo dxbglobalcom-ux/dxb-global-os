@@ -8,6 +8,8 @@
 // this teardown owns the one CEO-visible class: engine-call ':no-run' hook
 // alerts, which by construction come only from tests (engine calls without a
 // run happen nowhere in production — e10 suite comment).
+import { CONSTRUCTION_DATABASE_URL } from "./construction-engine.js";
+
 /**
  * BEFORE the suite runs: make sure today has a realtime partition.
  *
@@ -45,15 +47,14 @@ async function ensureRealtimePartitions(): Promise<void> {
 }
 
 export default async function globalSetup(): Promise<() => Promise<void>> {
-  process.env.DXB_DATABASE_URL ??=
-    "postgresql://postgres:postgres@127.0.0.1:54322/dxb_test";
+  process.env.DXB_DATABASE_URL ??= CONSTRUCTION_DATABASE_URL;
   await ensureRealtimePartitions();
   return async function teardown(): Promise<void> {
-    // Same target the suites use (vitest.config.ts `test.env`): the isolated
-    // clone, never the company database. globalSetup runs in the main process
-    // where `test.env` does not apply, so it is named here explicitly.
-    process.env.DXB_DATABASE_URL ??=
-      "postgresql://postgres:postgres@127.0.0.1:54322/dxb_test";
+    // Same target the suites use (vitest.config.ts `test.env`): the
+    // construction site's own engine, never the company's. globalSetup runs in
+    // the main process where `test.env` does not apply, so it is named here
+    // explicitly — from the one spelling in tests/construction-engine.ts.
+    process.env.DXB_DATABASE_URL ??= CONSTRUCTION_DATABASE_URL;
     // Root has no direct 'pg' dependency — ride the shared package's own
     // pool exactly like the suites do (dist path: resolvable from vite-node
     // without the test-runner alias map).

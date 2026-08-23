@@ -21,6 +21,7 @@
 //
 //   DXB_COMPANY_URL=… node scripts/b36/ledger-identity.mjs --set-company
 //   DXB_LEDGER_URL=…  node scripts/b36/ledger-identity.mjs --allow "why this one"
+//                     node scripts/b36/ledger-identity.mjs --forget "<sysid>/<dboid>"
 //   DXB_COMPANY_URL=… node scripts/b36/ledger-identity.mjs --check
 //                     node scripts/b36/ledger-identity.mjs            (print)
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -81,10 +82,35 @@ if (mode === "--set-company") {
   const live = await identityOf(url);
   if (same(live, data.company))
     throw new Error(`REFUSED: ${show(live)} IS the holding's own database. It can never be a construction ledger.`);
+  // A rebuilt stack is a NEW cluster with the same database name, so it does not
+  // replace the old entry — it joins it, and the old one is then a standing
+  // permission aimed at a cluster that no longer exists. Measured twice on
+  // 2026-08-23 while rebuilding the construction stack. It is named here rather
+  // than removed automatically: this script never guesses which of two is dead.
+  const ghosts = (data.allowed ?? []).filter((a) => !same(a, live) && a.dbname === live.dbname);
   data.allowed = (data.allowed ?? []).filter((a) => !same(a, live));
   data.allowed.push({ ...live, why, measured_at: new Date().toISOString() });
   save(data);
   console.log(`ALLOWED: ${show(live)} — ${why}`);
+  for (const g of ghosts)
+    console.log(
+      `   ⚠ the list still holds ${show(g)} — another cluster with the same database name. ` +
+        `If that stack was destroyed, drop it: --forget "${g.sysid}/${g.dboid}"`,
+    );
+} else if (mode === "--forget") {
+  // An allow-list entry for a database that no longer exists is not harmless.
+  // It is a standing permission aimed at a name, and names get reused: drop a
+  // database and create another with the same name on the same cluster and the
+  // entry starts pointing at a stranger. B36 Block 2 dropped `dxb_test`, and
+  // this is how its permission left with it.
+  const target = process.argv[3];
+  if (!target) throw new Error('name it exactly as --print shows it: --forget "<sysid>/<dboid>"');
+  const before = (data.allowed ?? []).length;
+  data.allowed = (data.allowed ?? []).filter((a) => `${a.sysid}/${a.dboid}` !== target);
+  if (data.allowed.length === before)
+    throw new Error(`nothing on the allow list is "${target}" — run --print to see what is there`);
+  save(data);
+  console.log(`FORGOTTEN: ${target} — ${before} entry(ies) before, ${data.allowed.length} after`);
 } else if (mode === "--check") {
   const url = process.env.DXB_COMPANY_URL;
   if (!url) throw new Error("DXB_COMPANY_URL is not set.");

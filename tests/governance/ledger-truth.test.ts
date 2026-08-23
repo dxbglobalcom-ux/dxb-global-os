@@ -1,9 +1,11 @@
 // U41 — the gate that keeps the corpus honest, and its own regression.
 //
-// The gate itself (`scripts/governance/ledger-truth.mjs`) runs in the battery
-// against the COMPANY database, because a clone cannot prove what is true in
-// the company. This suite runs against `dxb_test` like every other test (C47),
-// so it deliberately covers only what can be checked WITHOUT a database: the
+// The gate itself (`scripts/governance/ledger-truth.mjs`) runs against the
+// COMPANY database, because nothing else can prove what is true in the company.
+// This suite runs against the construction site's own engine like every other
+// test (C47, and B36 Block 2 which gave the construction its own engine rather
+// than a clone inside the company's), so it deliberately covers only what can
+// be checked WITHOUT a database: the
 // marker grammar, the board's declared sections, and the read-only guarantee.
 // The stale-number check is the script's job and is proven red-first by hand.
 //

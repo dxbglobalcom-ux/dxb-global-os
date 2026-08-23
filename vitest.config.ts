@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
+import { CONSTRUCTION_DATABASE_URL } from "./tests/construction-engine.js";
 
 export default defineConfig({
   esbuild: { jsx: "automatic" },
@@ -48,24 +49,32 @@ export default defineConfig({
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
     // ── The company database is not a test fixture (CEO, 2026-07-28: "bu bok
     // inşaa sürecinin her boku neden bu şirkete yansıyor — burası ayrı bir
-    // platform"). Until tonight every suite wrote into the SAME Postgres
+    // platform"). Until that night every suite wrote into the SAME Postgres
     // database the CEO's dashboard reads, and six separate residue classes had
     // to be swept back out again by hand (global-teardown.ts). A sweep only
     // works if the run survives to reach it; on 2026-07-28 01:49 earlyoom
     // killed the editor mid-run and construction artifacts stood on his KRİTİK
     // UYARILAR panel.
     //
-    // `dxb_test` is a full clone of the company database in the same Postgres
-    // instance — same schema, same seeds, same roles and RLS — so the live-data
-    // acceptance proofs this corpus relies on still measure real rows, while
-    // every write the suite makes lands somewhere the CEO never sees. Refresh
-    // it with scripts/test/refresh-test-db.sh (after migrations, or before an
-    // acceptance run that must measure current reality).
+    // The first answer was `dxb_test`, a clone in the same engine. It held for
+    // three weeks and it was a NAME, not a wall: one mistyped character in an
+    // address and the suite was in the holding's own books again — six such
+    // spellings were reproduced on 2026-08-23, each of them connecting.
     //
-    // Every test file uses `process.env.DXB_DATABASE_URL ??= <live url>`, so
-    // setting it here wins for all of them without touching a single suite.
+    // B36 Block 2 replaces the name with an engine. The construction site runs
+    // its own Supabase stack on its own ports with its own cluster identifier,
+    // and the company does not exist there at all. The address is spelled once,
+    // in tests/construction-engine.ts, and imported.
+    //
+    // Its schema is built from the same db/migrations by the same canonical
+    // chain a deploy uses (scripts/bootstrap-db.sh). Its DATA is generated, not
+    // copied — the CEO's decision of 2026-08-23, decision 2: not one row of the
+    // holding's own record travels into the construction site.
+    //
+    // Every test file uses `process.env.DXB_DATABASE_URL ??= <url>`, so setting
+    // it here wins for all of them without touching a single suite.
     env: {
-      DXB_DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:54322/dxb_test",
+      DXB_DATABASE_URL: CONSTRUCTION_DATABASE_URL,
     },
     // Phase-3+ integration tests share one local Postgres — parallel files
     // interfere (cross-file claims/wipes). Sequential is correct at DXB scale.

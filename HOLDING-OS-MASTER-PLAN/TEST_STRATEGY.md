@@ -28,7 +28,7 @@ Yedi test katmanının (L1-L7) tek stratejisi: ne, hangi araçla, hangi kapıda,
 
 ## 4. Veri modeli (test verisi)
 
-- Test DB: `supabase start` yerel stack VEYA `dxb_test` şeması; ASLA canlı DB.
+- Test DB: **inşaatın kendi Supabase yığını** — `DxB_Build`, port 54422, kendi kümesi (kayıtlı uyarlama, B36 Blok 2, 2026-08-23). Şirket motorunda test veritabanı YOK; `dxb_test` klonu düşürüldü. ASLA canlı DB.
 - Fixture seti: `db/seed/test/` — 1 company, 3 departman, 5 çalışan (v2 persona'lı 3 + v2'siz 2 — negatif test için), 2 proje, 1 workflow (5 adım), 20 task, cost satırları. Deterministik ID'ler (uuid sabit) — snapshot karşılaştırılabilir.
 - Kural: fixture gerçek şemadan sapamaz (migration değişince fixture güncellenir, aynı commit'te).
 

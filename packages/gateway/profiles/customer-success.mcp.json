@@ -1,9 +1,9 @@
 {
   "_department": "customer-success",
-  "_generated_at": "2026-07-26T20:22:02.022Z",
+  "_generated_at": "2026-08-23T15:19:07.822Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
   "_skills": [],
-  "_source_hash": "84106766a78c903e1dbefdce56b8abb55ba17eac72802e1472e11195b3bb9afa",
+  "_source_hash": "f6fae9b632ae185a086aeda085fae15e61e55427a1126a2382a5411b0f0b7d14",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",

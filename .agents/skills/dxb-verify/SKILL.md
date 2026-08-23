@@ -24,7 +24,7 @@ measured outcomes take the past tense.
 
 | Check | What it proves |
 |---|---|
-| `pnpm test` (vitest) | behaviour, against the `dxb_test` clone |
+| `pnpm test` (vitest) | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
 | `pnpm typecheck` (`tsc --build`) | the interfaces still hold |
 | `pnpm verify:ledger` | the records still agree with the live company database |
 | `bash scripts/i18n-purity-check.sh` | both locales at parity, no leakage either way |

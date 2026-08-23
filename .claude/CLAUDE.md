@@ -168,9 +168,13 @@ only the boundary. If a rule appears in both, the door is wrong.
 
 ## 5. Gotchas — things the repository will not tell you
 
-- **The test suite writes to `dxb_test`, a clone.** The company database is never written by
-  construction work. A gate that must prove what is true in the *company* reads the company
-  database with SELECT only.
+- **The test suite writes to its OWN ENGINE, not to a database inside the company's.** The
+  construction site runs its own Supabase stack — `DxB_Build`, port 54422, its own cluster —
+  and the company does not exist there at all. The address is spelled once, in
+  `tests/construction-engine.ts`. Its schema comes from the same `db/migrations` through the
+  same canonical chain (`scripts/bootstrap-db.sh`); its data is GENERATED from the repository's
+  own files by `db/seed/build-seed.ts` and holds not one row of the holding's. A gate that must
+  prove what is true in the *company* reads the company database with SELECT only.
 - **Internal technical identifiers still say `fable-5`** on purpose (live keys, undo chains,
   a persona-gate heading). Every label the CEO *sees* says Opus 5.
 - **Tools before packages:** `.planning/research/STACK.md` is read before installing,

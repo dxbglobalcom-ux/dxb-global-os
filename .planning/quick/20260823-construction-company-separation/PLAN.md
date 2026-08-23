@@ -188,7 +188,31 @@ expressions and not a word boundary, and it reported a comfortable zero.
 
 ---
 
-### Block 2 — The construction stack moves out
+### Block 2 — The construction stack moves out — **DONE 2026-08-23**
+
+**Built on his word, "block 2 ye başlayabilirsin". Evidence: `EVIDENCE.md` §Block 2.**
+The construction site runs its own Supabase stack (`DxB_Build`, ports 544xx, its own cluster and
+volume); `dxb_test` is dropped and the company engine carries only `postgres`, `_supabase` and the
+templates. Schema parity proven object for object (`pnpm verify:schema-parity` → `SCHEMA_PARITY`).
+Data generated from the repository's own files (`pnpm construction:seed` → `BUILD_SEED_DONE`).
+Whole stack destroyed and rebuilt from empty, then **99 test files · 737 tests · exit 0**, with the
+company measured **UNTOUCHED** across it.
+
+**Registered adaptations (three), each measured:** the Supabase CLI has no local database-password
+field, so the wall is the engine and the port and the credential wall stays Block 3's `dxb_reader`
+· the schema is built by `scripts/bootstrap-db.sh` (the canonical chain) because the CLI's own
+runner dies on pg-boss's runtime-born schema · `scripts/test/refresh-test-db.sh` is deleted, since
+its one job was to clone his rows onto the construction side.
+
+**Seven defects it found, all fixed at source:** the chain resurrects 15 employees he ordered
+deleted (new migration `20260823001000`, a no-op on the company) · the velocity breaker and the
+monthly cap both die when the LiteLLM spend table is absent, the second one poisoning its own
+transaction · the `git` MCP server has been dead holding-wide behind stale pins · `scrapling`
+pointed at `/home/ghost` · on any fresh environment the entire senior layer's `persona_path` points
+at a planning document (`20260823002000`, also a no-op on the company) · and the sicil sync silently
+dropped 28 of 199 employees outside the company, because it matched on a uuid written in the file
+instead of on the slug.
+
 
 - New Supabase project directory for construction, its own `config.toml`
   (`project_id = "DxB_Build"`), its own ports, its own password, started alongside the company's.

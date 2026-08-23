@@ -32,11 +32,12 @@
 //   2. dangling open  an OPEN marker names a board row that is absent or closed
 //   3. unmarked promise  a line declaring open work with no OPEN/HISTORY marker
 //
-// WHY A SCRIPT AND NOT A TEST: the suite runs against `dxb_test` (C47), a clone.
-// A clone cannot prove what is true in the company. This reads the COMPANY
-// database — with SELECT only, so C47's law (construction never writes into the
-// company) still holds. Row counts are reported before and after so a write
-// would be visible (U36 audit discipline).
+// WHY A SCRIPT AND NOT A TEST: the suite runs against the construction site's
+// OWN engine (C47, and B36 Block 2 which replaced the clone with a separate
+// Supabase stack). Nothing there can prove what is true in the company. This
+// reads the COMPANY database — with SELECT only, so the law (construction never
+// writes into the company) still holds. Row counts are reported before and after
+// so a write would be visible (U36 audit discipline).
 //
 // CLI
 //   node scripts/governance/ledger-truth.mjs            check   (exit 0 = clean)

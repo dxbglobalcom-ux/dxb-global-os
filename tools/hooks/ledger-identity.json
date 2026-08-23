@@ -7,11 +7,11 @@
   },
   "allowed": [
     {
-      "sysid": "7674907968528752679",
-      "dboid": "41727",
-      "dbname": "dxb_test",
-      "why": "dxb_test — the construction side's ledger until Block 2 gives the site its own stack; then this entry is replaced by DxB_Build's own database",
-      "measured_at": "2026-08-23T12:32:07.263Z"
+      "sysid": "7677240194945613863",
+      "dboid": "5",
+      "dbname": "postgres",
+      "why": "DxB_Build — the construction site's own Supabase stack (B36 Block 2). Separate cluster, separate port 54422, separate volume; the company does not exist on this engine. Re-take this with --allow after any 'supabase stop --no-backup' — destroying the volume gives the cluster a NEW identity and the guard rightly refuses the old one.",
+      "measured_at": "2026-08-23T14:54:34.852Z"
     }
   ],
   "what": "Where tools/hooks/tag-subscription-call.ts may write. It writes ONLY into a database whose identity is in `allowed`, and never into `company`. Identity comes from the server: the cluster's system_identifier plus the database's own oid and name."

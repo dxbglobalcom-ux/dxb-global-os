@@ -11,7 +11,12 @@
     "test": "vitest run",
     "verify:ledger": "node scripts/governance/ledger-truth.mjs",
     "verify:ledger:update": "node scripts/governance/ledger-truth.mjs --update",
-    "video-learn": "node tools/video-learn/dist/cli.js"
+    "video-learn": "node tools/video-learn/dist/cli.js",
+    "construction:start": "supabase start --workdir construction",
+    "construction:stop": "supabase stop --workdir construction",
+    "construction:schema": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres DXB_PSQL='docker exec -i supabase_db_DxB_Build psql -U postgres -d postgres' DXB_PSQL_ADMIN='docker exec -i supabase_db_DxB_Build psql -U supabase_admin -d postgres' bash scripts/bootstrap-db.sh",
+    "construction:seed": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node --experimental-strip-types db/seed/build-seed.ts",
+    "verify:schema-parity": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",

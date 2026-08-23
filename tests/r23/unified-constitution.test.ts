@@ -28,10 +28,17 @@ const db = () => getDb();
 const M = `r23t-${randomUUID().slice(0, 8)}`;
 const SLUG = (s: string) => `${M}-${s}`;
 
-// The holding project is a live read-only fixture; the employee is a suite
+// The holding's own project is a read-only fixture; the employee is a suite
 // fixture with the FULL hook surface (v2 persona, gate passed, MCP profile) —
 // the e10 spawn-binding idiom.
-const PROJECT = "68ce909a-6d93-4e12-82cc-afa9cee57a9f"; // dxb-global-os
+//
+// B36 Block 2: this was the LITERAL uuid of one row in one database
+// ("68ce909a-6d93-4e12-82cc-afa9cee57a9f"), so the suite could only ever run
+// against that one database — the day the battery moved to the construction
+// site's own engine, three cases died on workflows_project_id_fkey. The row is
+// identified by what it IS (its slug, which db/seed/20260711_holding_core.sql
+// fixes) rather than by an id some environment happened to generate.
+let PROJECT = "";
 let EMPLOYEE = "";
 let personaId = "";
 let baseViolationId = 0;
@@ -131,6 +138,10 @@ beforeAll(async () => {
   // the file suite is sequential (fileParallelism false), the same reason the
   // e10 suite may use this idiom. Migration 20260728002000 then removes the
   // CEO projection along with the row.
+  const proj = await sql<{ id: string }>`
+    SELECT id FROM projects WHERE slug = 'dxb-global-os'`.execute(db());
+  if (!proj.rows[0]) throw new Error("the holding's own project row is missing — seed it first");
+  PROJECT = proj.rows[0].id;
   const bv = await sql<{ mx: number | null }>`
     SELECT max(id)::int AS mx FROM hook_violations`.execute(db());
   baseViolationId = bv.rows[0]?.mx ?? 0;

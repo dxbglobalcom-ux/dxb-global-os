@@ -41,10 +41,15 @@ import { closeDb, createListenClient, getDb } from "@dxb/shared";
 // session end. Nothing here writes to the company: the escape cases all end in a
 // refusal, and the only reads of the company are SELECTs (CLAUDE.md §5).
 
+import { CONSTRUCTION_DATABASE_URL } from "../construction-engine.js";
+
 const run = promisify(execFile);
 
 const HOOK = join(process.cwd(), "tools/hooks/dist/tag-subscription-call.js");
-const CONSTRUCTION_URL = "postgresql://postgres:postgres@127.0.0.1:54322/dxb_test";
+// B36 Block 2: the construction site's ledger is no longer a database sitting
+// INSIDE the company's engine — it is the DxB_Build stack's own database, on its
+// own cluster and its own port. Spelled once, in tests/construction-engine.ts.
+const CONSTRUCTION_URL = CONSTRUCTION_DATABASE_URL;
 const IDENTITY = join(process.cwd(), "tools/hooks/ledger-identity.json");
 
 // The holding's own database. It appears here as the ATTACK, never as a
@@ -143,8 +148,9 @@ afterAll(async () => {
 describe("B36 — the SessionEnd hook and the company ledger", () => {
   it("writes NOTHING when no construction ledger address is set", async () => {
     const sessionId = randomUUID();
-    // DXB_DATABASE_URL is pinned to dxb_test so the pre-fix `??=` fallback had a
-    // reachable target: before the fix this case wrote a row and went red here.
+    // DXB_DATABASE_URL is pinned to the construction engine so the pre-fix `??=`
+    // fallback had a reachable target: before the fix this case wrote a row and
+    // went red here.
     await fireHook(sessionId, hookEnv({ DXB_DATABASE_URL: CONSTRUCTION_URL }));
     expect(await rowsForSession(sessionId)).toBe(0);
   });
@@ -247,8 +253,15 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
 
   // And when the record has gone stale in a way the hook CAN see — the holding's
   // database still carries its recorded name on this cluster but under another
-  // oid — it stops even the legitimate write and says why, rather than working
-  // on beside a wall that is aiming at something that no longer exists.
+  // oid — it stops and says why, rather than working on beside a wall that is
+  // aiming at something that no longer exists.
+  //
+  // B36 Block 2 narrowed where this is visible AT ALL, and the narrowing is the
+  // point of the block: the construction site now lives on its OWN cluster, so a
+  // hook standing on it cannot see the company's server and has nothing to say
+  // about the freshness of the company's record. It can only see it while it is
+  // standing on the company's own cluster — which is what this case does, with
+  // `_supabase`, a real database there that is not on the allow list.
   it("stops and says so when the recorded company identity has gone stale", async () => {
     const sessionId = randomUUID();
     const parked = `${IDENTITY}.parked`;
@@ -259,9 +272,40 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
     try {
       const stderr = await fireHook(
         sessionId,
-        hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: CONSTRUCTION_URL }),
+        hookEnv({
+          DXB_CONSTRUCTION_DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:54322/_supabase",
+        }),
       );
       expect(stderr).toContain("recorded identity of the company is stale");
+      expect(await rowsForSession(sessionId)).toBe(0);
+    } finally {
+      rmSync(IDENTITY, { force: true });
+      renameSync(parked, IDENTITY);
+    }
+  });
+
+  // The wall that does NOT depend on seeing the company at all. With the record
+  // stale — the company rebuilt under an identity nobody recorded — the hook is
+  // handed the company's real address. Wall 1 cannot recognise it any more,
+  // because what it was told the company looks like is wrong. The allow list
+  // refuses it regardless: this is why the rule was inverted from deny to allow
+  // after the third audit, and it is the case that proves the inversion earns
+  // its keep.
+  it("refuses the company even when the record describing it is wrong", async () => {
+    const sessionId = randomUUID();
+    const parked = `${IDENTITY}.parked`;
+    const stale = JSON.parse(readFileSync(IDENTITY, "utf8")) as {
+      company: Record<string, string>;
+      allowed: Array<Record<string, string>>;
+    };
+    // Not merely a wrong oid — a company on a cluster that does not exist, so
+    // Wall 1 and Wall 2 are both blind and only the allow list is left.
+    stale.company = { ...stale.company, sysid: "1", dboid: "999999" };
+    renameSync(IDENTITY, parked);
+    writeFileSync(IDENTITY, JSON.stringify(stale, null, 2));
+    try {
+      const stderr = await fireHook(sessionId, hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: COMPANY_URL }));
+      expect(stderr).toContain("refusing to write");
       expect(await rowsForSession(sessionId)).toBe(0);
     } finally {
       rmSync(IDENTITY, { force: true });

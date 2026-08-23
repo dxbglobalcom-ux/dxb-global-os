@@ -5,7 +5,7 @@
       "Bash(scrot *)",
       "Bash(wmctrl -a *)",
       "Bash(mkdir -p *)",
-      "Bash(awk '/^#/{h=$0; getline; if\\($0==\"\" \\) {getline; if\\($0==\"\" || $0 ~ /^#/\\) print NR\": \"h\" [BOŞ]\"}}' \"/home/ghost/DxB Global OS/HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md\")",
+      "Bash(awk '/^#/{h=$0; getline; if\\($0==\"\" \\) {getline; if\\($0==\"\" || $0 ~ /^#/\\) print NR\": \"h\" [BO\u015e]\"}}' \"/home/ghost/DxB Global OS/HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md\")",
       "Bash(awk '{print $6, $7}')",
       "Bash(awk '{print $5, $9}')",
       "Bash(python3 -c \"import json,sys; print\\(json.load\\(sys.stdin\\).get\\('scripts'\\)\\)\")",
@@ -67,6 +67,7 @@
     ]
   },
   "env": {
-    "RIPGREP_CONFIG_PATH": "/home/dxb/DxB Global OS/.ripgreprc"
+    "RIPGREP_CONFIG_PATH": "/home/dxb/DxB Global OS/.ripgreprc",
+    "DXB_CONSTRUCTION_DATABASE_URL": "postgresql://postgres:postgres@127.0.0.1:54422/postgres"
   }
 }

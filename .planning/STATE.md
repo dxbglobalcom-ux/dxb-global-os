@@ -215,10 +215,46 @@ that reading as the next job and had not answered when the session closed.
    UPDATE or DELETE to the company's database, regardless of how the address is spelled, of a missing
    or stale identity record, or of a connection failure?"* **Measured answer: NO** —
    `scripts/b36/prove-block1.mjs`, in the battery as `tests/b36/block1-question.test.ts`:
-   **18 hostile conditions · 18 refused · 0 tables moved · 0 write statements ever reached the server**,
+   **18 hostile conditions · 18 refused · 0 rows in the company carrying any of the 18 session ids the drill handed the hook · the compiled hook holds exactly one write construct and it is the `cost_ledger` insert**,
    and the drill proves in the same run that its detector can see a write. Every other finding —
    counting, backups, record wording, portable builds — goes to its own block and does not hold this
-   one. **The next work is Block 2.**
+   one. **The next work is Block 3 — the one-way window.**
+   **DONE — Block 2, the construction site is OUT of the company's engine.** On his word,
+   *"block 2 ye başlayabilirsin"*. It runs its own Supabase stack — `DxB_Build`, ports 544xx, its own
+   container set, its own volume, its own PostgreSQL **cluster identifier** — so a mistyped address no
+   longer lands on his data; it lands on a port where the holding does not exist. **`dxb_test` is
+   dropped**: 138 MB holding 205 agents, 217 tasks, 1,596 cost rows and **40,137 audit rows**, every one
+   a copy of his. The company engine now carries `postgres`, `_supabase` and the two templates. The
+   address is spelled ONCE (`tests/construction-engine.ts`); the config is **generated** from the
+   company's (`scripts/b36/make-construction-config.mjs`) and `tests/b36/construction-config.test.ts`
+   fails the battery on drift or a port collision. **Its data is GENERATED, not copied** — his decision
+   2: `db/seed/build-seed.ts` (`pnpm construction:seed`) builds a whole holding out of this repository's
+   own files, 199 employees from 199 dossiers gated/bound/active, and refuses to run against the company
+   by asking the server who it is. **Proven by destroying the stack and rebuilding it from empty:**
+   156 migrations through the canonical chain, then **`Test Files 99 passed · Tests 737 passed | 15
+   skipped` exit 0**, `tsc` 0, `verify:ledger` OK, `i18n` PASS, `gitleaks` clean, and **`SCHEMA_PARITY`**
+   — the two engines' `public` identical in all nine categories, the single normalisation printed rather
+   than hidden. **The company: 0 inserted · 0 updated · 0 deleted across the block**, and when it moved
+   minutes later the same watch named it in seconds — the scheduler restart made pg-boss clear 276,569
+   completed jobs of its own while `public` stayed at 0/0/0 over all 60 tables. **Seven defects it found,
+   all fixed at source:** the chain **resurrects the 15 employees he ordered deleted** on 2026-07-19
+   (*"C8 sil."* was executed directly and never written into the chain — new migration `20260823001000`,
+   a proven no-op on the company) · the velocity breaker and the monthly cap both **die** when the
+   LiteLLM spend table is absent, the cap swallowing an error that had already poisoned its transaction
+   · the **`git` MCP server has been dead holding-wide** behind stale pins (the server was pinned, the
+   SDK it imports was not) · `scrapling` pointed at `/home/ghost` · on a fresh environment the holding's **entire senior layer**
+   (CFO, CISO, CMO, CHRO, Chief AI Officer, General Counsel and seven more heads) reads a gap-analysis
+   document as its own identity, because the chain never learned the repoint done directly on the
+   company (migration `20260823002000`, also a no-op there) · and the sicil sync **silently dropped 28
+   of 199 employees** outside the company, because it matched by a uuid written in the file instead of
+   by the slug. **AND A SECOND WRITER WAS FOUND, STILL LIVE, AND IT IS HIS TO RULE ON:** the company's
+   own hourly job `claude-mem-sync` pulls the construction sessions' diary into the holding's
+   `memory_index` at `scope='holding'` — measured today, it fired at 15:00:29 and put **1,818 rows** of
+   this afternoon's work into the holding's brain (13,919 → 15,737). It is the company reaching out and
+   pulling construction in, on a schedule, which is why Block 1 never saw it. Nothing was changed:
+   `claude-mem` is one of the two plugins he ordered ON, and what the holding's memory may contain is
+   his decision. It goes to Block 5, on his dry-run list. And one test carried the literal uuid
+   of a company row; it finds the project by slug now.
    **DONE — Block 1, the writer is dead, and the SERVER is what says so.** The `SessionEnd` hook that
    wrote the author's own token burn into the holding's `cost_ledger` writes only to
    `DXB_CONSTRUCTION_DATABASE_URL`, nothing when that is unset, and refuses when the address REACHES

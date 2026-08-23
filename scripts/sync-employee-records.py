@@ -17,8 +17,10 @@ Operational columns (performance/error/review histories, training_needs) are
 NOT touched — they fill with real operation, never from files.
 
 Usage: python3 scripts/sync-employee-records.py [--dry-run]
-Prints the generated SQL to stdout; apply via psql. Rows whose dossier UUID
-does not match a live agents row are SKIPPED and reported on stderr.
+Prints the generated SQL to stdout; apply via psql. Rows are matched to the
+employee by SLUG (the dossier's file name), not by the uuid the dossier
+carries — see the comment at the match itself. A dossier whose slug names no
+live agent is SKIPPED and reported on stderr.
 """
 import json
 import re
@@ -77,7 +79,20 @@ def main() -> int:
         if not re.fullmatch(r"[0-9a-f-]{36}", uuid):
             skipped.append(f"{f.relative_to(ROOT)}: no valid Employee ID")
             continue
-        cols, vals = ["employee_id"], [f"'{uuid}'::uuid"]
+        # WHO this row belongs to is the SLUG, not the uuid.
+        #
+        # B36 Block 2, 2026-08-23. The dossier's row 1 carries a literal uuid,
+        # and a uuid is a snapshot of ONE database: the migrations mint agent ids
+        # with gen_random_uuid(), so a database built from the chain gives every
+        # employee a different id from the company's. Measured on the
+        # construction site's own engine: 28 of 199 dossiers matched nothing and
+        # were silently dropped — the C-suite among them — and the script still
+        # reported success. The dossier's FILE NAME is the slug, `agents.slug` is
+        # unique, and it is the same in every environment. The uuid is still read
+        # and still required (a dossier without one is not a finished dossier),
+        # but it no longer decides which row this is.
+        slug = f.stem
+        cols, vals = ["employee_id"], [f"(SELECT id FROM agents WHERE slug = {sql_quote(slug)})"]
         for n, col in ROW_MAP.items():
             raw = fields.get(n, "").strip()
             if raw in EMPTY_MARKERS:
@@ -99,7 +114,7 @@ def main() -> int:
             # Guard: only live (non-archived) agents get a sicil row.
             f"INSERT INTO employee_records ({', '.join(cols)})\n"
             f"SELECT {', '.join(vals)}\n"
-            f"WHERE EXISTS (SELECT 1 FROM agents WHERE id = '{uuid}'::uuid AND employment_status <> 'archived')\n"
+            f"WHERE EXISTS (SELECT 1 FROM agents WHERE slug = {sql_quote(slug)} AND employment_status <> 'archived')\n"
             f"ON CONFLICT (employee_id) DO UPDATE SET {upd}, updated_at = now();"
         )
     print("BEGIN;")
