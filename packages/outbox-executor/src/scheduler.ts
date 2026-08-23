@@ -16,7 +16,7 @@ import {
   hrTrainingQueue,
 } from "@dxb/hr";
 import { drainWorkflowRuns, registerCronTriggers, triggerRunNow } from "@dxb/kernel";
-import { compactExpired, syncClaudeMem } from "@dxb/memory-router";
+import { compactExpired } from "@dxb/memory-router";
 import {
   deliverMorningBriefing,
   drainChatMessages,
@@ -35,7 +35,15 @@ export const QUEUES = {
   reaper: "lease-reaper",
   breaker: "velocity-breaker",
   compaction: "memory-compaction",
-  memSync: "claude-mem-sync",
+  // NO `claude-mem-sync`. It ran hourly and copied the CONSTRUCTION sessions'
+  // own diary into the holding's memory_index at scope='holding'. Measured
+  // 2026-08-23: 15,699 of the 15,773 rows in the holding's memory came from
+  // there, 1,818 of them landing at 15:00:29 while that afternoon's work was
+  // still running. The CEO's order the same day, in his own words:
+  // "ARTIK HİÇ BİR ŞEY SEN VEYA BAŞKASI ÇALIŞIRKEN YAZILMASIN."
+  // The queue, its cron, its worker and its schedule are gone, and
+  // tests/b36/company-memory-is-not-a-diary.test.ts fails the battery if any of
+  // them comes back.
   pinCheck: "tool-pin-check",
   intentIntake: "intent-intake",
   // HR lifecycle jobs (E5.4b, HR spec §3): run inside this scheduler worker — R5,
@@ -114,7 +122,6 @@ export const CADENCES = {
   reaperCron: "* * * * *", // every 60s
   breakerCron: "*/5 * * * *", // every 5min
   compactionCron: "0 3 * * *", // daily 03:00
-  memSyncCron: "0 * * * *", // hourly
   // Anti rug-pull drift check (07-02, MCP-03): daily 04:00 — after the 03:00
   // compaction so the two daily jobs never contend for the session-mode pool.
   pinCheckCron: "0 4 * * *", // daily 04:00
@@ -275,10 +282,6 @@ export async function startScheduler(): Promise<PgBoss> {
     await compactExpired(getDb());
   });
 
-  await boss.work(QUEUES.memSync, async () => {
-    await syncClaudeMem(getDb());
-  });
-
   await boss.work(QUEUES.pinCheck, async () => {
     // R4.3: the corpus now spans dxb-mcp + every external catalogued server.
     // Unreachable servers stay out of the missing-sweep scope (spawn hiccup ≠
@@ -415,7 +418,6 @@ export async function startScheduler(): Promise<PgBoss> {
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
-  await boss.schedule(QUEUES.memSync, CADENCES.memSyncCron);
   await boss.schedule(QUEUES.pinCheck, CADENCES.pinCheckCron);
   await boss.schedule(QUEUES.hrPerformance, CADENCES.hrPerformanceCron);
   await boss.schedule(QUEUES.hrStalePersona, CADENCES.hrStalePersonaCron);
