@@ -1,0 +1,434 @@
+[restore] platform preamble (admin plane — extensions/roles/stubs)
+NOTICE:  schema "auth" already exists, skipping
+NOTICE:  schema "realtime" already exists, skipping
+[restore] hardened default privileges (pre-ACL posture)
+[restore] pg_restore (/tmp/b36.dump)
+[restore] FAIL — unexpected restore errors:
+pg_restore: error: could not execute query: ERROR:  schema "auth" already exists
+pg_restore: error: could not execute query: ERROR:  schema "extensions" already exists
+pg_restore: error: could not execute query: ERROR:  schema "graphql" already exists
+pg_restore: error: could not execute query: ERROR:  schema "graphql_public" already exists
+pg_restore: error: could not execute query: ERROR:  schema "pgbouncer" already exists
+pg_restore: error: could not execute query: ERROR:  schema "realtime" already exists
+pg_restore: error: could not execute query: ERROR:  schema "storage" already exists
+pg_restore: error: could not execute query: ERROR:  schema "vault" already exists
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+    'ERROR'
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of function auth.email
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of function auth.role
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of function auth.uid
+pg_restore: error: could not execute query: ERROR:  function "grant_pg_cron_access" already exists with same argument types
+pg_restore: error: could not execute query: ERROR:  must be owner of function extensions.grant_pg_cron_access
+pg_restore: error: could not execute query: ERROR:  function "grant_pg_graphql_access" already exists with same argument types
+pg_restore: error: could not execute query: ERROR:  must be owner of function extensions.grant_pg_graphql_access
+pg_restore: error: could not execute query: ERROR:  function "grant_pg_net_access" already exists with same argument types
+pg_restore: error: could not execute query: ERROR:  must be owner of function extensions.grant_pg_net_access
+pg_restore: error: could not execute query: ERROR:  function "pgrst_ddl_watch" already exists with same argument types
+pg_restore: error: could not execute query: ERROR:  function "pgrst_drop_watch" already exists with same argument types
+pg_restore: error: could not execute query: ERROR:  function "set_graphql_placeholder" already exists with same argument types
+pg_restore: error: could not execute query: ERROR:  must be owner of function extensions.set_graphql_placeholder
+pg_restore: error: could not execute query: ERROR:  permission denied for schema graphql_public
+pg_restore: error: could not execute query: ERROR:  permission denied for schema pgbouncer
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+            else 'ERROR'
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of table audit_log_entries
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.flow_state" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of table instances
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_amr_claims" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_client_states" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of sequence refresh_tokens_id_seq
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of table schema_migrations
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_domains" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  column "is_sso_user" of relation "auth.users" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema auth
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  permission denied for schema realtime
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  column "ip_address" of relation "audit_log_entries" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.custom_oauth_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.flow_state" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_amr_claims" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_authorizations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_client_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_clients" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.one_time_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  column "parent" of relation "refresh_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for table schema_migrations
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_domains" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  column "email_confirmed_at" of relation "users" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_credentials" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_20" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_21" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_22" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_23" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_24" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_25" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_26" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.schema_migrations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription" does not exist
+pg_restore: error: could not execute query: ERROR:  permission denied for table secrets
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription_id_seq" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_amr_claims" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table audit_log_entries
+pg_restore: error: could not execute query: ERROR:  relation "auth.custom_oauth_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.custom_oauth_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.flow_state" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table instances
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_amr_claims" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_authorizations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_authorizations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_authorizations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_client_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_clients" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.one_time_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table schema_migrations
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_domains" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_credentials" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_20" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_21" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_22" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_23" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_24" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_25" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_26" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.schema_migrations" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table audit_log_entries
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  relation "auth.custom_oauth_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.custom_oauth_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.custom_oauth_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.custom_oauth_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.flow_state" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities_email_idx" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.flow_state" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_client_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.flow_state" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_authorizations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_clients" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.one_time_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.one_time_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.one_time_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_domains" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_domains" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  relation "auth.users_email_partial_key" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_credentials" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_credentials" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_20" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_21" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_22" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_23" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_24" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_25" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_26" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_inserted_at_topic_index" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of index messages_pkey
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_inserted_at_topic_index" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of index messages_pkey
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_inserted_at_topic_index" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of index messages_pkey
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_inserted_at_topic_index" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of index messages_pkey
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_inserted_at_topic_index" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of index messages_pkey
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_inserted_at_topic_index" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of index messages_pkey
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_inserted_at_topic_index" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of index messages_pkey
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_amr_claims" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_authorizations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_authorizations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.one_time_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_domains" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_credentials" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table audit_log_entries
+pg_restore: error: could not execute query: ERROR:  relation "auth.flow_state" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table instances
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_amr_claims" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.one_time_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table refresh_tokens
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table schema_migrations
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_domains" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  must be owner of table users
+pg_restore: error: could not execute query: ERROR:  must be owner of table messages
+pg_restore: error: could not execute query: ERROR:  publication "supabase_realtime" already exists
+pg_restore: error: could not execute query: ERROR:  role "supabase_realtime_admin" does not exist
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  function auth.jwt() does not exist
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  permission denied for function get_auth
+pg_restore: error: could not execute query: ERROR:  function realtime.apply_rls(jsonb, integer) does not exist
+pg_restore: error: could not execute query: ERROR:  type "realtime.wal_column[]" does not exist
+pg_restore: error: could not execute query: ERROR:  function realtime.cast(text, regtype) does not exist
+pg_restore: error: could not execute query: ERROR:  type "realtime.equality_op" does not exist
+pg_restore: error: could not execute query: ERROR:  type "realtime.equality_op" does not exist
+pg_restore: error: could not execute query: ERROR:  type "realtime.wal_column[]" does not exist
+pg_restore: error: could not execute query: ERROR:  function realtime.list_changes(name, name, integer, integer) does not exist
+pg_restore: error: could not execute query: ERROR:  function realtime.quote_wal2json(regclass) does not exist
+pg_restore: error: could not execute query: ERROR:  function realtime.send_binary(bytea, text, text, boolean) does not exist
+pg_restore: error: could not execute query: ERROR:  function realtime.subscription_check_filters() does not exist
+pg_restore: error: could not execute query: ERROR:  function realtime.to_regrole(text) does not exist
+pg_restore: error: could not execute query: ERROR:  function realtime.wal2json_escape_identifier(text) does not exist
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  relation "auth.custom_oauth_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.flow_state" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.identities" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_amr_claims" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.mfa_factors" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_authorizations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_client_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_clients" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.oauth_consents" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.one_time_tokens" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.saml_relay_states" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sessions" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_domains" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.sso_providers" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_challenges" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "auth.webauthn_credentials" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_20" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_21" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_22" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_23" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_24" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_25" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.messages_2026_08_26" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.schema_migrations" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription" does not exist
+pg_restore: error: could not execute query: ERROR:  relation "realtime.subscription_id_seq" does not exist
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  grant options cannot be granted back to your own grantor
+pg_restore: error: could not execute query: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+pg_restore: error: could not execute query: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+pg_restore: error: could not execute query: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+pg_restore: error: could not execute query: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+pg_restore: error: could not execute query: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function
+pg_restore: error: could not execute query: ERROR:  Non-superuser owned event trigger must execute a non-superuser owned function

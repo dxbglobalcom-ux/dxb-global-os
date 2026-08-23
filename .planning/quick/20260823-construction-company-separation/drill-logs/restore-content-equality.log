@@ -1,0 +1,6 @@
+# B36 — the off-site copy, restored through the project's own chain, compared BY CONTENT
+# 2026-08-23T12:45:07Z · scripts/b36/prove-restore-content.mjs
+live     : 71 tables in public, pgboss, supabase_migrations
+restored : 71 tables in public, pgboss, supabase_migrations
+tables compared BY CONTENT: 71
+CONTENT_IDENTICAL — every table holds the same rows, not merely the same number of them

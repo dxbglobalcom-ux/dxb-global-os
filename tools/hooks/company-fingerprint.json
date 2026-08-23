@@ -1,8 +1,0 @@
-{
-  "sysid": "7674907968528752679",
-  "dboid": "5",
-  "dbname": "postgres",
-  "measured_at": "2026-08-23T11:56:19.108Z",
-  "measured_by": "scripts/b36/company-fingerprint.mjs",
-  "what": "The holding's own database, identified by its cluster's system_identifier and its own oid and name. tools/hooks/tag-subscription-call.ts refuses to write anywhere this matches."
-}

@@ -68,7 +68,8 @@ function decoy(pattern: string): ChildProcess {
 
 function adjOf(pid: number): number {
   const path = `/proc/${pid}/oom_score_adj`;
-  if (!existsSync(path)) throw new Error(`decoy ${pid} died before measurement`);
+  if (!existsSync(path))
+    throw new Error(`decoy ${pid} died before measurement`);
   return Number(readFileSync(path, "utf8").trim());
 }
 
@@ -83,7 +84,9 @@ function adjOf(pid: number): number {
  * NOTHING on top of what a process already carries — it is now expressed
  * against the baseline the run actually has instead of a hard-coded zero.
  */
-const UNTOUCHED = Number(readFileSync("/proc/self/oom_score_adj", "utf8").trim());
+const UNTOUCHED = Number(
+  readFileSync("/proc/self/oom_score_adj", "utf8").trim(),
+);
 
 /**
  * The guard logs only when it ACTS, so a clean machine leaves no file at all.
@@ -107,7 +110,9 @@ function sawOurOrphan(log: string, pid: number): boolean {
   return log
     .split("\n")
     .filter((l) => l.includes("helper with no session"))
-    .some((l) => (l.split("would kill ")[1] ?? "").split(/\s+/).includes(String(pid)));
+    .some((l) =>
+      (l.split("would kill ")[1] ?? "").split(/\s+/).includes(String(pid)),
+    );
 }
 
 // Every decoy this suite starts, so afterAll can guarantee none survives it.
@@ -127,7 +132,9 @@ let browserItself = 0; // must NEVER be touched (killing it kills every tab)
 describe("freeze-guard — the editor is never the designated victim", () => {
   beforeAll(() => {
     scaffolding = start("chroma-mcp --stdio");
-    browserTab = start("/opt/google/chrome/chrome --type=renderer --lang=en-US");
+    browserTab = start(
+      "/opt/google/chrome/chrome --type=renderer --lang=en-US",
+    );
     editorWindow = start("/usr/share/code/code --type=renderer --lang=en-US");
     browserItself = start("/opt/google/chrome/chrome --user-data-dir=/home/x");
 
@@ -224,60 +231,106 @@ describe("freeze-guard — the editor is never the designated victim", () => {
     // The decoy now reports its own pid: `$$` inside the subshell, written
     // BEFORE `exec` — and `exec` replaces the program without changing the pid,
     // so the number in the file is the very process that becomes the helper.
+    //
+    // AND EVERY ATTEMPT IS SWEPT. A third audit caught the version above leaking:
+    // each retry started another decoy and only the last one was ever killed, so
+    // a run that needed three attempts left two `sleep 120` processes behind on
+    // the CEO's machine — and an assertion that threw left them all. Every pid
+    // this case creates goes into `started`, and `started` is emptied in a
+    // `finally` that no failure can skip.
     const PIDFILE = join(tmpdir(), "freeze-guard-orphan.pid");
+    const started: number[] = [];
+    const created: number[] = []; // never emptied — the roll call at the end
+    const sweep = () => {
+      for (const pid of started.splice(0)) {
+        try {
+          process.kill(pid, "SIGKILL");
+        } catch {
+          /* already gone — the resident guard or an earlier sweep took it */
+        }
+      }
+      rmSync(PIDFILE, { force: true });
+    };
     let reparented = 0;
     let log = "";
-    for (let attempt = 0; attempt < 5; attempt++) {
-      rmSync(PIDFILE, { force: true });
-      execFileSync("bash", [
-        "-c",
-        `setsid bash -c 'echo $$ > ${PIDFILE}; exec -a "npm exec @playwright/mcp@latest" sleep 120' >/dev/null 2>&1 &`,
-      ]);
-      // The shell above exits immediately, so its child is re-parented to init —
-      // exactly the state a helper reaches when its session dies.
-      execFileSync("bash", ["-c", "sleep 1"]);
-      reparented = existsSync(PIDFILE) ? Number(readFileSync(PIDFILE, "utf8").trim()) : 0;
-      // Nothing to observe means the resident took it first: build it again.
-      if (!reparented || !existsSync(`/proc/${reparented}`)) continue;
-      // It must be OUR decoy, in the state this case is about: carrying the
-      // pattern under test, and re-parented to init.
-      let cmdline: string;
-      let ppid: number;
-      try {
-        cmdline = readFileSync(`/proc/${reparented}/cmdline`, "utf8").split("\0").join(" ");
-        ppid = Number(readFileSync(`/proc/${reparented}/stat`, "utf8").split(" ")[3]);
-      } catch {
-        continue; // the resident reaped it between the two reads — build another
+    try {
+      for (let attempt = 0; attempt < 5; attempt++) {
+        rmSync(PIDFILE, { force: true });
+        execFileSync("bash", [
+          "-c",
+          `setsid bash -c 'echo $$ > ${PIDFILE}; exec -a "npm exec @playwright/mcp@latest" sleep 120' >/dev/null 2>&1 &`,
+        ]);
+        // The shell above exits immediately, so its child is re-parented to init —
+        // exactly the state a helper reaches when its session dies.
+        execFileSync("bash", ["-c", "sleep 1"]);
+        reparented = existsSync(PIDFILE)
+          ? Number(readFileSync(PIDFILE, "utf8").trim())
+          : 0;
+        if (reparented) {
+        started.push(reparented);
+        created.push(reparented);
       }
-      expect(cmdline, `pid ${reparented} is not the decoy this case started`).toContain(
-        "npm exec @playwright/mcp@latest",
-      );
-      // Re-parented — by the guard's OWN definition of who adopts an orphan
-      // here (freeze-guard.sh:66-74): pid 1, or this user's `systemd --user`,
-      // which registers itself as a subreaper. Measured on this machine: the
-      // decoy came back with ppid 7152, the user manager, not 1.
-      const reapers = execFileSync("bash", ["-c", `echo 1; pgrep -x systemd -u $(id -u)`])
-        .toString()
-        .trim()
-        .split("\n")
-        .map(Number);
-      expect(reapers, `pid ${reparented} was never re-parented (parent ${ppid})`).toContain(ppid);
-      runGuard({});
-      log = logText();
-      if (sawOurOrphan(log, reparented)) break;
+        // Nothing to observe means the resident took it first: build it again.
+        if (!reparented || !existsSync(`/proc/${reparented}`)) continue;
+        // It must be OUR decoy, in the state this case is about: carrying the
+        // pattern under test, and re-parented to init.
+        let cmdline: string;
+        let ppid: number;
+        try {
+          cmdline = readFileSync(`/proc/${reparented}/cmdline`, "utf8")
+            .split("\0")
+            .join(" ");
+          ppid = Number(
+            readFileSync(`/proc/${reparented}/stat`, "utf8").split(" ")[3],
+          );
+        } catch {
+          continue; // the resident reaped it between the two reads — build another
+        }
+        expect(
+          cmdline,
+          `pid ${reparented} is not the decoy this case started`,
+        ).toContain("npm exec @playwright/mcp@latest");
+        // Re-parented — by the guard's OWN definition of who adopts an orphan
+        // here (freeze-guard.sh:66-74): pid 1, or this user's `systemd --user`,
+        // which registers itself as a subreaper. Measured on this machine: the
+        // decoy came back with ppid 7152, the user manager, not 1.
+        const reapers = execFileSync("bash", [
+          "-c",
+          `echo 1; pgrep -x systemd -u $(id -u)`,
+        ])
+          .toString()
+          .trim()
+          .split("\n")
+          .map(Number);
+        expect(
+          reapers,
+          `pid ${reparented} was never re-parented (parent ${ppid})`,
+        ).toContain(ppid);
+        runGuard({});
+        log = logText();
+        if (sawOurOrphan(log, reparented)) break;
+      }
+      // The line must name OUR process. An audit caught the weaker version on
+      // 2026-08-23: `/helper with no session/` alone would be satisfied by some
+      // OTHER orphan on the machine while this case's own decoy went unseen.
+      expect(
+        sawOurOrphan(log, reparented),
+        `guard never reported pid ${reparented} as a session-less helper. Log:\n${log}`,
+      ).toBe(true);
+      // The live session's helper — started by this suite, parent still alive —
+      // must never appear in a kill line.
+      expect(log).not.toContain(`would kill ${scaffolding}`);
+    } finally {
+      sweep();
     }
-    rmSync(PIDFILE, { force: true });
-    // The line must name OUR process. An audit caught the weaker version on
-    // 2026-08-23: `/helper with no session/` alone would be satisfied by some
-    // OTHER orphan on the machine while this case's own decoy went unseen.
-    expect(
-      sawOurOrphan(log, reparented),
-      `guard never reported pid ${reparented} as a session-less helper. Log:\n${log}`,
-    ).toBe(true);
-    // The live session's helper — started by this suite, parent still alive —
-    // must never appear in a kill line.
-    expect(log).not.toContain(`would kill ${scaffolding}`);
-    execFileSync("bash", ["-c", `kill -9 ${reparented} 2>/dev/null || true`]);
+    // Nothing this case started may outlive it — measured on the pids it created,
+    // not by matching a pattern. (`pgrep -f` would match the shell running the
+    // check itself, which carries the pattern in its own command line: measured
+    // here, and it is exactly the kind of false witness this suite keeps
+    // catching.)
+    execFileSync("bash", ["-c", "sleep 0.2"]);
+    const survivors = created.filter((pid) => existsSync(`/proc/${pid}`));
+    expect(survivors, `this case left decoys running: ${survivors.join(", ")}`).toEqual([]);
   });
 
   it("runs as a resident, not from a once-a-minute cron slot", () => {

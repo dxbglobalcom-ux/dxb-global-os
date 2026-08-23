@@ -1,4 +1,4 @@
-import { execFile } from "node:child_process";
+import { execFile, execFileSync } from "node:child_process";
 import { mkdtempSync, renameSync, rmSync, writeFileSync, readFileSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -17,10 +17,11 @@ import { closeDb, createListenClient, getDb } from "@dxb/shared";
 // inserted its own token burn into the CEO's cost ledger — 950 '<synthetic>'
 // rows, 282 claude-fable-5, 122 claude-opus-5, the newest on 2026-08-22 18:11.
 //
-// The contract now: the hook writes ONLY where DXB_CONSTRUCTION_DATABASE_URL
-// points, writes NOTHING when that is unset, and refuses when that address
-// REACHES the holding's own database — decided by asking the server who it is,
-// never by reading the address.
+// The contract now: the hook writes NOTHING when DXB_CONSTRUCTION_DATABASE_URL
+// is unset, and otherwise writes ONLY into a database whose IDENTITY is on the
+// allow list in tools/hooks/ledger-identity.json — decided by asking the server
+// who it is, never by reading the address. Everything else is refused: the
+// holding, a rebuilt holding, a database nobody listed, an address that hangs.
 //
 // WHY THE ADDRESS IS NOT READ ANY MORE. The first guard compared the two URLs as
 // text; a second compared them as `server:port/database`. An independent audit
@@ -28,6 +29,12 @@ import { closeDb, createListenClient, getDb } from "@dxb/shared";
 // was run against the live engine on 2026-08-23 and every one CONNECTED TO THE
 // COMPANY while the parser called it a different database. They are permanent
 // cases now.
+//
+// WHY A DENY RULE WAS NOT ENOUGH EITHER. A third audit broke the guard that
+// replaced them without touching a line of it: a deny rule only knows what it
+// was told to refuse, so a rebuilt company under a new identity walks straight
+// past it. The list is now an ALLOW list, and the cases below hold that shape —
+// a database nobody listed is refused even though it is not the company.
 //
 // This suite drives the COMPILED hook the way Claude Code drives it — stdin
 // JSON, a real transcript file — because the compiled file is what runs at
@@ -38,7 +45,7 @@ const run = promisify(execFile);
 
 const HOOK = join(process.cwd(), "tools/hooks/dist/tag-subscription-call.js");
 const CONSTRUCTION_URL = "postgresql://postgres:postgres@127.0.0.1:54322/dxb_test";
-const FINGERPRINT = join(process.cwd(), "tools/hooks/company-fingerprint.json");
+const IDENTITY = join(process.cwd(), "tools/hooks/ledger-identity.json");
 
 // The holding's own database. It appears here as the ATTACK, never as a
 // fallback: no line in this file binds it to DXB_DATABASE_URL, and every case
@@ -177,13 +184,97 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
     expect(stderr).toContain("refusing to write");
   });
 
-  // The guard fails CLOSED. Without the recorded identity it has nothing to
-  // compare against, and a hook that cannot prove where it is writing must not
-  // write — not even somewhere harmless.
-  it("refuses when the company's recorded identity is missing", async () => {
+  // The recorded company must still name the live one. A rebuilt stack (a new
+  // cluster, or `supabase db reset`) must fail the battery loudly — and the hook
+  // itself refuses while the record is stale, rather than trusting it.
+  it("still recognises the live company from its recorded identity", async () => {
+    const saved = (JSON.parse(readFileSync(IDENTITY, "utf8")) as { company: Record<string, string> })
+      .company;
+    const live = await readCompany<{ sysid: string; dboid: string; dbname: string }>(
+      `select (select system_identifier::text from pg_control_system()) sysid,
+              (select oid::text from pg_database where datname = current_database()) dboid,
+              current_database() dbname`,
+    );
+    expect(
+      { sysid: saved.sysid, dboid: saved.dboid, dbname: saved.dbname },
+      "tools/hooks/ledger-identity.json no longer names the live company — " +
+        "re-take it with `node scripts/b36/ledger-identity.mjs --set-company`",
+    ).toEqual(live);
+  });
+
+  // THE HOLE THE THIRD AUDIT FOUND. `_supabase` is not the company, and it is
+  // not on the allow list. A deny-only guard would have written into it.
+  it("refuses a database that is real, harmless and simply not on the list", async () => {
     const sessionId = randomUUID();
-    const parked = `${FINGERPRINT}.parked`;
-    renameSync(FINGERPRINT, parked);
+    const stderr = await fireHook(
+      sessionId,
+      hookEnv({
+        DXB_CONSTRUCTION_DATABASE_URL: "postgresql://postgres:postgres@127.0.0.1:54322/_supabase",
+      }),
+    );
+    expect(stderr).toContain("is not a permitted construction ledger");
+    expect(await rowsForSession(sessionId)).toBe(0);
+  });
+
+  // THE FAIL-OPEN THE THIRD AUDIT NAMED, written as two cases.
+  //
+  // Rebuild the holding's database and its identity changes. A deny-only guard
+  // then does not recognise it, calls it "some other database", and writes. Here
+  // the recorded identity is deliberately made wrong in exactly that way — a
+  // different oid AND a different name, which is what a rebuild under another
+  // name looks like — and the hook must still refuse, because the holding is not
+  // on the list of places it may write.
+  it("refuses the company even when the recorded identity no longer matches it", async () => {
+    const parked = `${IDENTITY}.parked`;
+    const real = readFileSync(IDENTITY, "utf8");
+    const stale = JSON.parse(real) as { company: Record<string, string> };
+    stale.company = { ...stale.company, dboid: "999999", dbname: "postgres_before_the_rebuild" };
+    const before = await companyRowsFor(MODEL);
+    renameSync(IDENTITY, parked);
+    writeFileSync(IDENTITY, JSON.stringify(stale, null, 2));
+    try {
+      const stderr = await fireHook(
+        randomUUID(),
+        hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: COMPANY_URL }),
+      );
+      expect(stderr).toContain("is not a permitted construction ledger");
+      expect(await companyRowsFor(MODEL)).toBe(before);
+    } finally {
+      rmSync(IDENTITY, { force: true });
+      renameSync(parked, IDENTITY);
+    }
+  });
+
+  // And when the record has gone stale in a way the hook CAN see — the holding's
+  // database still carries its recorded name on this cluster but under another
+  // oid — it stops even the legitimate write and says why, rather than working
+  // on beside a wall that is aiming at something that no longer exists.
+  it("stops and says so when the recorded company identity has gone stale", async () => {
+    const sessionId = randomUUID();
+    const parked = `${IDENTITY}.parked`;
+    const stale = JSON.parse(readFileSync(IDENTITY, "utf8")) as { company: Record<string, string> };
+    stale.company = { ...stale.company, dboid: "999999" };
+    renameSync(IDENTITY, parked);
+    writeFileSync(IDENTITY, JSON.stringify(stale, null, 2));
+    try {
+      const stderr = await fireHook(
+        sessionId,
+        hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: CONSTRUCTION_URL }),
+      );
+      expect(stderr).toContain("recorded identity of the company is stale");
+      expect(await rowsForSession(sessionId)).toBe(0);
+    } finally {
+      rmSync(IDENTITY, { force: true });
+      renameSync(parked, IDENTITY);
+    }
+  });
+
+  // The guard fails CLOSED. With no allow list it has nothing it is permitted to
+  // write to, and it writes nothing — not even somewhere harmless.
+  it("refuses when the allow list is missing", async () => {
+    const sessionId = randomUUID();
+    const parked = `${IDENTITY}.parked`;
+    renameSync(IDENTITY, parked);
     try {
       const stderr = await fireHook(
         sessionId,
@@ -192,33 +283,43 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
       expect(stderr).toContain("refusing to write");
       expect(await rowsForSession(sessionId)).toBe(0);
     } finally {
-      renameSync(parked, FINGERPRINT);
+      renameSync(parked, IDENTITY);
     }
   });
 
-  // A fingerprint that no longer names the live company is a guard aiming at a
-  // database that does not exist. Recreating the stack (a new cluster, or
-  // `supabase db reset`) must fail the battery, not silently open the door.
-  it("still recognises the live company from its recorded identity", async () => {
-    const saved = JSON.parse(readFileSync(FINGERPRINT, "utf8")) as Record<string, string>;
-    const live = await readCompany<{ sysid: string; dboid: string; dbname: string }>(
-      `select (select system_identifier::text from pg_control_system()) sysid,
-              (select oid::text from pg_database where datname = current_database()) dboid,
-              current_database() dbname`,
-    );
-    expect(
-      { sysid: saved.sysid, dboid: saved.dboid, dbname: saved.dbname },
-      "tools/hooks/company-fingerprint.json no longer names the live company — " +
-        "re-take it with scripts/b36/company-fingerprint.mjs",
-    ).toEqual(live);
-  });
+  // An address that accepts the connection and never answers used to hang the
+  // hook for as long as the socket stayed open. A guard that cannot finish never
+  // refuses.
+  it("gives up on an address that answers nothing, instead of hanging", async () => {
+    const net = await import("node:net");
+    const held: import("node:net").Socket[] = [];
+    // Accept, hold, and say nothing at all. The sockets are kept so this case
+    // can close them itself — `server.close()` waits for every connection, and
+    // an abandoned one would hang the suite instead of the hook.
+    const silent = net.createServer((sock) => held.push(sock));
+    await new Promise<void>((r) => silent.listen(0, "127.0.0.1", r));
+    const port = (silent.address() as { port: number }).port;
+    const began = Date.now();
+    try {
+      const stderr = await fireHook(
+        randomUUID(),
+        hookEnv({
+          DXB_CONSTRUCTION_DATABASE_URL: `postgresql://postgres:postgres@127.0.0.1:${port}/anything`,
+        }),
+      );
+      expect(stderr).toContain("refusing to write");
+      expect(Date.now() - began, "the hook did not give up inside its own deadline").toBeLessThan(
+        15_000,
+      );
+    } finally {
+      for (const sock of held) sock.destroy();
+      await new Promise<void>((r) => silent.close(() => r()));
+    }
+  }, 30_000);
 
-  it("still writes when the two addresses really are different databases", async () => {
+  it("writes when — and only when — the target is on the allow list", async () => {
     const sessionId = randomUUID();
-    await fireHook(
-      sessionId,
-      hookEnv({ DXB_DATABASE_URL: COMPANY_URL, DXB_CONSTRUCTION_DATABASE_URL: CONSTRUCTION_URL }),
-    );
+    await fireHook(sessionId, hookEnv({ DXB_CONSTRUCTION_DATABASE_URL: CONSTRUCTION_URL }));
     expect(await rowsForSession(sessionId)).toBe(1);
   });
 
@@ -257,6 +358,22 @@ describe("B36 — the SessionEnd hook and the company ledger", () => {
       `tools/hooks/dist is not what tools/hooks/src compiles to — run \`pnpm typecheck\`. ` +
         `Built ${statSync(HOOK).size} bytes, source compiles to ${compiled.length}.`,
     ).toBe(compiled);
+  });
+
+  // A third audit: the commit did not contain the file Claude Code actually runs,
+  // so on any other machine the wall did not exist until somebody built it. The
+  // built hook now travels with the repository — and the case above keeps it
+  // honest, because a committed build that drifts from its source is worse than
+  // none at all.
+  it("travels with the repository — the built file is committed", async () => {
+    const tracked = execFileSync("git", ["ls-files", "tools/hooks/dist/tag-subscription-call.js"], {
+      encoding: "utf8",
+    }).trim();
+    expect(
+      tracked,
+      "tools/hooks/dist/tag-subscription-call.js is not tracked by git — " +
+        "the .gitignore exception for it has been lost, and the guard stops travelling",
+    ).toBe("tools/hooks/dist/tag-subscription-call.js");
   });
 
   it("carries no company-database fallback in its source or its build", async () => {

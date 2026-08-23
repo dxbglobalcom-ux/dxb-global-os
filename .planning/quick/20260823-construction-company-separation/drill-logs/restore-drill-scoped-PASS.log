@@ -1,0 +1,15 @@
+[restore] platform preamble (admin plane — extensions/roles/stubs)
+NOTICE:  schema "auth" already exists, skipping
+NOTICE:  schema "realtime" already exists, skipping
+[restore] hardened default privileges (pre-ACL posture)
+[restore] pg_restore (/tmp/b36.dump)
+[restore] scope: public pgboss supabase_migrations (schemas outside it are NOT restored by this drill)
+NOTICE:  schema "public" already exists, skipping
+NOTICE:  schema "supabase_migrations" already exists, skipping
+[restore] errors: tolerated platform/preamble collisions only
+[restore] ACL normalization (grant-hardening parity replay)
+[restore] verify (decisive counts)
+ledger 124
+agents 205
+memory_embeddings present: 1
+[restore] done in 3s (RTO for this dump size)

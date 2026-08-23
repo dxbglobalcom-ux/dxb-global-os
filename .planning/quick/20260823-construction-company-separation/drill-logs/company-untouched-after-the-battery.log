@@ -1,0 +1,13 @@
+company           : postgres
+HIS OWN schemas   : pgboss · public · supabase_migrations
+services in it    : litellm · net
+Supabase platform : _realtime · auth · realtime · supabase_functions · vault
+objects watched   : 186 tables · 18 sequences · 2616 grants · 1614 structural objects
+engine up since   : 2026-08-23 07:49:54.617414+00
+statistics reset  : never (counters run from the engine start above)
+taken at          : 2026-08-23 12:51:23.254815+00
+HIS OWN TABLES, SINCE THAT EPOCH: 0 inserted · 0 updated · 0 deleted (73 tables)
+baseline taken at : 2026-08-23 12:40:14.371987+00
+services living in his database: unchanged as well
+Supabase's own internals: unchanged as well
+COMPANY UNTOUCHED SINCE THE BASELINE — 0 rows, 0 sequences, 0 grants, 0 structure

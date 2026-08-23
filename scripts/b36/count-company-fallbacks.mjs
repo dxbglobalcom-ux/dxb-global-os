@@ -1,36 +1,128 @@
 #!/usr/bin/env node
-// B36 — the ONE counter for "how many files still fall back to the company database".
+// B36 — the ONE counter for "how many files can still fall back to the company
+// database", and the ONE definition of what that means.
 //
-// Why it exists as a committed script: the figure was published three times from
-// three ad-hoc shell pipelines and disagreed with an independent audit every
-// time (94 vs 93). A number that cannot be reproduced by running one command is
-// not a measurement. This script IS the definition.
+// Why it is a committed script: the figure was published from three throw-away
+// shell pipelines and disagreed with two independent audits every time (94, 93,
+// 96). A number nobody can reproduce by running one command is not a
+// measurement.
 //
-// WHAT IT COUNTS — a file is a FALLBACK when, on a line that is not a comment,
-// the company address appears bound to DXB_DATABASE_URL: `process.env.
-// DXB_DATABASE_URL ??=` / `??` / `=`, a `DXB_DATABASE_URL:` object value, or a
-// shell `DXB_DATABASE_URL=` / `export DXB_DATABASE_URL=`.
-// Everything else that merely contains the address is reported apart:
-//   MENTION  — the address appears with no DXB_DATABASE_URL binding on the line
-//              (an assertion, a permission allowlist entry, a comment).
-// The two lists together account for every occurrence in the repository, and the
-// script prints that reconciliation so a missing file cannot hide in the gap.
+// Why it PARSES instead of grepping: the third audit was right that counting
+// "the address and the variable name on the same line" is not behaviour. This
+// reads the code — TypeScript's own parser for every .ts/.tsx/.mts/.js/.mjs/.cjs
+// file — and counts a file only where the company address is really BOUND to
+// DXB_DATABASE_URL:
 //
-// Usage: node scripts/b36/count-company-fallbacks.mjs [--list]
+//     process.env.DXB_DATABASE_URL ??= "…"      (also  =  and  ||=)
+//     process.env.DXB_DATABASE_URL ?? "…"       (also  ||)
+//     { DXB_DATABASE_URL: "…" }                 (an env object handed to a child)
+//     …and the same four shapes where the value is a const holding the address,
+//        which a line-based counter cannot see at all.
+//
+// Shell and other non-parsed files fall back to a line rule, and say so.
+//
+// THE HEADLINE IS THE EXECUTABLE COUNT. Markdown files that merely quote the
+// address are listed separately and deliberately kept OUT of the arithmetic:
+// every report written about this work quotes it, so any total that includes
+// documentation is stale the moment the next report is written — which is
+// exactly how the last published reconciliation went wrong.
+//
+// Usage: node scripts/b36/count-company-fallbacks.mjs [--list] [--json]
 import { execFileSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
+import ts from "typescript";
 
 const COMPANY = "54322/postgres";
-const BIND = /DXB_DATABASE_URL/;
-const COMMENT = /^\s*(\/\/|\*|#|--)/;
+const VAR = "DXB_DATABASE_URL";
+const PARSED = /\.(ts|tsx|mts|cts|js|mjs|cjs)$/;
 
 const files = execFileSync("git", ["ls-files"], { encoding: "utf8" })
   .split("\n")
   .filter(Boolean)
   .filter((f) => !f.includes("node_modules/") && !f.includes("/dist/"));
 
-const fallback = []; // executable: a program or shell script that can really connect
-const doc = []; // a .md file that only quotes the line
+/** Does this expression evaluate to the company address? */
+function isCompanyValue(node, companyConsts) {
+  if (!node) return false;
+  if (ts.isStringLiteralLike(node)) return node.text.includes(COMPANY);
+  if (ts.isTemplateExpression(node)) return node.getText().includes(COMPANY);
+  if (ts.isIdentifier(node)) return companyConsts.has(node.text);
+  if (ts.isBinaryExpression(node))
+    return isCompanyValue(node.left, companyConsts) || isCompanyValue(node.right, companyConsts);
+  if (ts.isParenthesizedExpression(node)) return isCompanyValue(node.expression, companyConsts);
+  return false;
+}
+
+/** Is this expression the DXB_DATABASE_URL slot of some environment? */
+function isEnvSlot(node) {
+  if (ts.isPropertyAccessExpression(node)) return node.name.text === VAR;
+  if (ts.isElementAccessExpression(node))
+    return ts.isStringLiteralLike(node.argumentExpression) && node.argumentExpression.text === VAR;
+  return false;
+}
+
+function scanParsed(file, text) {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+  const companyConsts = new Set();
+  const hits = [];
+
+  // pass 1 — names that hold the company address
+  const collect = (n) => {
+    if (
+      ts.isVariableDeclaration(n) &&
+      ts.isIdentifier(n.name) &&
+      n.initializer &&
+      ts.isStringLiteralLike(n.initializer) &&
+      n.initializer.text.includes(COMPANY)
+    )
+      companyConsts.add(n.name.text);
+    ts.forEachChild(n, collect);
+  };
+  collect(sf);
+
+  // pass 2 — bindings of that value to DXB_DATABASE_URL
+  const walk = (n) => {
+    let shape = null;
+    if (ts.isBinaryExpression(n) && isEnvSlot(n.left)) {
+      const op = n.operatorToken.kind;
+      const assigns =
+        op === ts.SyntaxKind.EqualsToken ||
+        op === ts.SyntaxKind.QuestionQuestionEqualsToken ||
+        op === ts.SyntaxKind.BarBarEqualsToken;
+      const defaults =
+        op === ts.SyntaxKind.QuestionQuestionToken || op === ts.SyntaxKind.BarBarToken;
+      if ((assigns || defaults) && isCompanyValue(n.right, companyConsts))
+        shape = `${n.left.getText()} ${n.operatorToken.getText()} …`;
+    }
+    if (
+      ts.isPropertyAssignment(n) &&
+      (ts.isIdentifier(n.name) || ts.isStringLiteralLike(n.name)) &&
+      n.name.text === VAR &&
+      isCompanyValue(n.initializer, companyConsts)
+    )
+      shape = `{ ${VAR}: … }`;
+    if (shape) {
+      const { line } = sf.getLineAndCharacterOfPosition(n.getStart(sf));
+      hits.push({ line: line + 1, shape });
+    }
+    ts.forEachChild(n, walk);
+  };
+  walk(sf);
+  return hits;
+}
+
+function scanLines(text) {
+  const hits = [];
+  text.split("\n").forEach((l, i) => {
+    if (!l.includes(COMPANY)) return;
+    if (/^\s*(#|\/\/|--|\*)/.test(l)) return;
+    if (new RegExp(`${VAR}\\s*[:=]`).test(l)) hits.push({ line: i + 1, shape: "line rule" });
+  });
+  return hits;
+}
+
+const executable = [];
+const documented = [];
 const mention = [];
 let occurrences = 0;
 
@@ -40,37 +132,34 @@ for (const f of files) {
   try {
     text = readFileSync(f, "utf8");
   } catch {
-    continue; // binary
+    continue;
   }
   if (!text.includes(COMPANY)) continue;
-  const lines = text.split("\n");
-  let isFallback = null;
-  let isMention = null;
-  lines.forEach((line, i) => {
-    if (!line.includes(COMPANY)) return;
-    occurrences++;
-    const commented = COMMENT.test(line);
-    if (!commented && BIND.test(line)) isFallback ??= i + 1;
-    else isMention ??= i + 1;
-  });
-  if (isFallback) (f.endsWith(".md") ? doc : fallback).push(`${f}:${isFallback}`);
-  else if (isMention) mention.push(`${f}:${isMention}`);
+  const hits = PARSED.test(f) ? scanParsed(f, text) : f.endsWith(".md") ? [] : scanLines(text);
+  if (hits.length) {
+    occurrences += hits.length;
+    executable.push({ file: f, line: hits[0].line, shape: hits[0].shape, hits: hits.length });
+  } else if (f.endsWith(".md")) documented.push(f);
+  else mention.push(f);
 }
 
 const bucket = (p) => {
   const top = p.split("/")[0];
-  if (top === "tests") return "tests";
-  if (top === "scripts") return "scripts";
-  if (top === "db") return "db seeds";
-  if (top === "apps") return "apps";
-  if (top === "tools") return "tools";
-  return top;
+  return ["tests", "scripts", "db", "apps", "tools"].includes(top)
+    ? top === "db"
+      ? "db seeds"
+      : top
+    : top;
 };
 const tally = {};
-for (const p of fallback) tally[bucket(p)] = (tally[bucket(p)] ?? 0) + 1;
+for (const e of executable) tally[bucket(e.file)] = (tally[bucket(e.file)] ?? 0) + 1;
 
-const list = process.argv.includes("--list");
-console.log(`EXECUTABLE FALLBACKS (code or shell that can really connect): ${fallback.length}`);
+if (process.argv.includes("--json")) {
+  console.log(JSON.stringify({ executable, documented, mention, tally, occurrences }, null, 2));
+  process.exit(0);
+}
+
+console.log(`EXECUTABLE FALLBACKS (the address really bound to ${VAR}): ${executable.length}`);
 console.log(
   "   " +
     Object.entries(tally)
@@ -78,13 +167,14 @@ console.log(
       .map(([k, v]) => `${k}: ${v}`)
       .join(" · "),
 );
-for (const p of fallback.filter((p) => !p.startsWith("tests/"))) console.log(`     ${p}`);
-if (list) for (const p of fallback.filter((p) => p.startsWith("tests/"))) console.log(`     ${p}`);
-console.log(`DOCUMENTED, NOT EXECUTABLE (.md quoting the line): ${doc.length}`);
-for (const p of doc) console.log(`     ${p}`);
-console.log(`MENTION ONLY (address present, never bound): ${mention.length}`);
-for (const p of mention) console.log(`     ${p}`);
+console.log(`   ${occurrences} bindings inside them`);
+for (const e of executable)
+  if (!e.file.startsWith("tests/") || process.argv.includes("--list"))
+    console.log(`     ${e.file}:${e.line}   ${e.shape}`);
+console.log("");
 console.log(
-  `RECONCILIATION: ${fallback.length} executable + ${doc.length} documented + ${mention.length} mention = ` +
-    `${fallback.length + doc.length + mention.length} files · ${occurrences} occurrences`,
+  `Kept OUT of the count on purpose — these move whenever a report is written about this work:`,
 );
+console.log(`   ${documented.length} markdown files quote the address`);
+console.log(`   ${mention.length} files carry it without binding it (assertions, allowlists, comments)`);
+for (const f of mention) console.log(`     ${f}`);

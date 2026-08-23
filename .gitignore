@@ -31,6 +31,17 @@ graphify-out/
 dist/
 *.tsbuildinfo
 
+# B36, 2026-08-23 — ONE exception, and the reason is that this file is not run by
+# our toolchain. Claude Code executes tools/hooks/dist/tag-subscription-call.js
+# at the end of every session (.claude/settings.json), so on a machine where
+# nobody has run `pnpm typecheck` the wall that keeps construction costs out of
+# the holding's ledger would simply not exist. A third audit said so. The built
+# file therefore travels with the commit, and tests/b36 fails the battery if it
+# is ever not byte-for-byte what the source compiles to.
+!tools/hooks/dist/
+tools/hooks/dist/*
+!tools/hooks/dist/tag-subscription-call.js
+
 # pnpm local store — not committed, restored via lockfile
 .pnpm-store/
 

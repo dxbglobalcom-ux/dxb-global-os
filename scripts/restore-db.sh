@@ -58,8 +58,45 @@ start=$(date -u +%s)
 #      under --role=postgres another role's defacl cannot be altered. On a
 #      supabase image those defacls pre-exist identically (measured in the
 #      R2.5 inventory), so the skip loses nothing.
+# SCOPE — which schemas this drill restores. Empty (the default) means the whole
+# dump, which is what a schema-filtered dump needs and what every earlier drill
+# did.
+#
+# WHY IT EXISTS, measured 2026-08-23 when an audit demanded that the B36 safety
+# net be proven through THIS path instead of a hand-written pg_restore: the daily
+# backup (scripts/backup/laptop-pg-dump.sh:26) dumps the WHOLE database, and a
+# whole-database dump replayed into a running Supabase image collides with the
+# platform's own schemas — 426 errors, and this script correctly refused. Every
+# one of them was in auth / realtime / storage / graphql / vault / pgbouncer,
+# owned by roles the drill does not run as; `public` restored perfectly beside
+# them. Supabase's internals belong to a Supabase stack and are recreated by it,
+# so a drill proves the holding's OWN data:
+#
+#   DXB_RESTORE_SCHEMAS="public pgboss supabase_migrations"
+#
+# Anything left out of the scope is stated in the drill record as a named
+# boundary, never as a silent skip.
+SCHEMAS="${DXB_RESTORE_SCHEMAS:-}"
+scope=()
+for s in $SCHEMAS; do scope+=(-n "$s"); done
+if [ ${#scope[@]} -gt 0 ]; then
+  echo "[restore] scope: $SCHEMAS (schemas outside it are NOT restored by this drill)"
+  # `pg_restore -n X` selects the objects INSIDE schema X and NOT the CREATE
+  # SCHEMA entry itself — a schema's own TOC entry has no namespace to match.
+  # Measured 2026-08-23: without this line the drill produced 67 identical
+  # "schema pgboss does not exist" failures and every view that reads the queue
+  # went with them. The scope creates its own ground.
+  for s in $SCHEMAS; do
+    # AUTHORIZATION postgres, because the restore below runs --role=postgres:
+    # a schema created by the admin role leaves `postgres` without CREATE on it
+    # and every table inside it fails with "permission denied" (measured, 18
+    # denials and 52 objects lost behind them).
+    echo "CREATE SCHEMA IF NOT EXISTS $s AUTHORIZATION postgres;" | $PSQL_ADMIN -v ON_ERROR_STOP=1 -q
+  done
+fi
+
 errlog=$(mktemp)
-$PG_RESTORE -d postgres --no-owner --role=postgres "$DUMP" 2> "$errlog" || true
+$PG_RESTORE -d postgres --no-owner --role=postgres ${scope[@]+"${scope[@]}"} "$DUMP" 2> "$errlog" || true
 end=$(date -u +%s)
 residual=$(grep "ERROR" "$errlog" \
   | grep -v 'schema "public" already exists' \

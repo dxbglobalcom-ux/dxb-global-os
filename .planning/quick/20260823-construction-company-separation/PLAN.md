@@ -1,6 +1,8 @@
 # Quick ticket 20260823-construction-company-separation — board row B36
 
-**Trigger:** CEO order, 2026-08-23 — *"üçünü de onaylıyorum, tahtaya satırı aç ve planı yaz"*.
+**Trigger:** CEO order, 2026-08-23 — *"üçünü de onaylıyorum, tahtaya satırı aç ve planı yaz"*, then,
+after reading this plan the same day, *"tersini de onaylıyorum, blok 0 ile başla"* — the plan AND the
+architectural reversal in §3 are both approved, and Blocks 0 and 1 are built on that word.
 Approval registered: `scripts/governance/ceo-approvals.json` →
 `construction-company-db-separation-2026-08-23`. Board row: **B36**.
 
@@ -45,7 +47,7 @@ and requires that write to be **refused**. Any non-zero difference, or any succe
 | M5 | **`cost_ledger` inside the company:** 950 `<synthetic>` · 282 `claude-fable-5` · 122 `claude-opus-5` · 113 `claude-sonnet-5` · 109 `claude-opus-4-8` · 36 haiku | `select model, count(*) from cost_ledger group by 1` |
 | M6 | **It is live, not history** — one `<synthetic>` row landed **2026-08-22 18:11:51**, two `claude-opus-5` rows **2026-08-21 07:24 and 07:48** | `select created_at::date, model, count(*) from cost_ledger where created_at > now() - interval '10 days' group by 1,2` |
 | M7 | **`v_cost_breakdown`** — the view behind the CEO's cost page — **carries no filter**; it sums the whole `cost_ledger`. C24's *"construction separated"* holds only for `v_workforce_tokens`, which reads `agent_runs` | `pg_get_viewdef('public.v_cost_breakdown')` |
-| M8 | **`memory_index`** — 13,882 rows, of which **13,845** come from the `claude-mem` store (the construction sessions' own diary), every one at `scope='holding'` | `select store, scope, count(*) from memory_index group by 1,2` |
+| M8 | **`memory_index`** — **13,919** rows, of which **13,845** come from the `claude-mem` store (the construction sessions' own diary), every one at `scope='holding'`. *(Re-measured 2026-08-23: the 13,882 that stood here is the count of `kind='fact'`, not the total — 13,845 claude-mem + 37 pgvector + 32 obsidian + 5 notebook = 13,919. Two records carried the wrong total until a third audit found them disagreeing.)* | `select store, scope, count(*) from memory_index group by 1,2` |
 | M9 | **`project_risks`** — the coffee-token construction chore is still `open` on his risk page (C36, opened 2026-07-27) | `select title_tr, severity, status from project_risks` |
 | M10 | **`pgboss.job`** — 303,136 rows in the company database | `select count(*) from pgboss.job` |
 | M11 | **94 files** fall through to the company database when `DXB_DATABASE_URL` is unset — 83 tests, 6 scripts, 3 seeds, 1 tool, **1 live application route** (`apps/dashboard/src/app/api/voice/call/route.ts:53`) | `grep -rl "54322/postgres" --include=*.ts --include=*.mjs --include=*.js` |
@@ -83,15 +85,17 @@ Nothing in this plan is finished until that writer is corrected at its source.
 
 ---
 
-## 3. The architecture — and one honest correction to the approved wording
+## 3. The architecture — settled, and settled by him
 
-The CEO approved: *"the company gets its own Postgres, its own container, its own port, its own
-credentials, named `dxb`."* **Measured today, that direction has to be reversed, and the reversed
-form is stronger.**
+**THE COMPANY DOES NOT MOVE. THE CONSTRUCTION MOVES OUT.** That is the approved architecture and
+there is no open question in it <!-- CEO-OK: construction-company-db-separation-2026-08-23 -->.
 
-**HE APPROVED THE REVERSAL THE SAME DAY** <!-- CEO-OK: construction-company-db-separation-2026-08-23 -->
-— *"tersini de onaylıyorum, blok 0 ile başla"*. The sentence that stood here, *"He must say yes to
-the reversal before anything is executed"*, is answered and deleted (LAW A).
+His first wording had it the other way round — *"the company gets its own Postgres, its own
+container, its own port, its own credentials, named `dxb`"* — the measurement below showed that
+direction would break his own live surfaces, it was put back to him, and he answered the same day,
+before anything was built: *"tersini de onaylıyorum, blok 0 ile başla"*. That is history, not an
+open item; every line that said the reversal was still waiting on him is deleted (LAW A). A third
+audit found two of them still standing hours after he had answered.
 
 Why:
 
@@ -279,10 +283,16 @@ bozmasın."* Named before the change; re-measured and printed after it.
 
 ---
 
-## 8. Waiting on the CEO before Block 0 begins
+## 8. What is his, and what he has already answered
 
-1. **The reversal in §3** — the company stays, construction moves out. His approved sentence said
-   the opposite; the measurement says the reversal is safer and stronger. His word decides.
-2. **The dry-run in Block 5** — which rows count as construction and which are the holding's own
+**ANSWERED, 2026-08-23** <!-- CEO-OK: construction-company-db-separation-2026-08-23 -->
+— *"tersini de onaylıyorum, blok 0 ile başla"*. **The reversal in §3 is approved and Blocks 0 and 1
+are built on it.** The line that stood here — "the reversal waits on his word" — is deleted rather
+than annotated (LAW A); it was still standing after he had answered it, and a third audit caught the
+plan contradicting itself.
+
+**STILL HIS, and nothing moves without them:**
+
+1. **The dry-run in Block 5** — which rows count as construction and which are the holding's own
    record. He sees the list before anything moves.
-3. **`hook_violations` and `audit_log`** — whether they are touched at all.
+2. **`hook_violations` and `audit_log`** — whether they are touched at all.

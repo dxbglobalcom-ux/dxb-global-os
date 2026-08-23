@@ -13,7 +13,16 @@
 // carry the volume signal.
 import { createInterface } from "node:readline";
 import { createReadStream, existsSync, readFileSync } from "node:fs";
-import { getDb, closeDb } from "@dxb/shared";
+
+// @dxb/shared is loaded LATE, on purpose. It is compiled output, and on a
+// machine where nobody has run `pnpm typecheck` it does not exist — a static
+// import would then kill this file before its own error handling exists, with a
+// module-resolution stack trace at the end of the CEO's session. Loaded inside
+// main(), a missing build becomes one line and a clean exit. Nothing is written
+// either way, which is the property that matters.
+let closeDb: (() => Promise<void>) | null = null;
+/** Read through a call so the compiler cannot narrow it to the null it starts as. */
+const closer = (): (() => Promise<void>) | null => closeDb;
 
 interface HookInput {
   session_id?: string;
@@ -58,45 +67,59 @@ async function sumTranscript(path: string): Promise<Map<string, UsageTotals>> {
 }
 
 /**
- * The holding's own database, taken from the SERVER and not from an address.
+ * WHERE THIS HOOK MAY WRITE — an ALLOW list of identities, not a deny rule.
  *
- * Why the address is no longer read at all: on 2026-08-23 an independent audit
- * proved that comparing connection STRINGS cannot protect the company. Six
- * spellings that a URL comparison called "some other database" every one landed
- * on the holding's own — measured, each one connected and reported
- * `postgres`:
+ * Three guards were built here in one day and two audits broke the first two.
  *
- *   ?host=127.0.0.1      the driver obeys the query parameter, not the authority
- *   no /database in path libpq then uses the USER name, which is `postgres`
- *   127.1                a short IPv4 the URL parser leaves alone and the OS resolves
- *   2130706433           the same address written as one decimal number
- *   localhost.           a trailing dot is a different string and the same host
- *   127.0.0.2            a different loopback address reaching the same server
+ *   1. Compared the two addresses as TEXT. `localhost` and `127.0.0.1` are one
+ *      machine written two ways. It wrote a real row before it was closed.
+ *   2. Compared them as `server:port/database`. Six spellings were measured
+ *      CONNECTING to the holding while that rule called each of them a
+ *      different database: `?host=` (the driver obeys the query parameter), an
+ *      address with no database in its path (libpq then uses the USER name,
+ *      which is `postgres`), `127.1`, `2130706433`, `localhost.`, `127.0.0.2`.
+ *   3. Asked the server for its identity and compared it with the holding's —
+ *      right question, wrong shape. A DENY rule only knows what it was told to
+ *      refuse: rebuild the holding's database and its identity changes, the
+ *      recorded one stops matching, and the guard waves the write through.
+ *      **Fail-open on the unknown**, and a third audit said so.
  *
- * The parser was not wrong in one place; text is the wrong thing to compare. So
- * the hook asks the server it actually reached who it is — a cluster's
- * `system_identifier`, and the database's own `oid` and name. A connection
- * cannot lie about those: whatever spelling got it there, that is where the next
- * INSERT would land. `tools/hooks/company-fingerprint.json` carries the
- * holding's answer, taken by `scripts/b36/company-fingerprint.mjs`; a test in
- * `tests/b36/` fails if the recorded identity ever stops matching the live one.
+ * So the rule is inverted. The hook writes ONLY where the identity it finds is
+ * on the ALLOWED list in `tools/hooks/ledger-identity.json`, taken by
+ * `scripts/b36/ledger-identity.mjs`, which refuses to put the holding on it.
+ * Everything else is refused: a rebuilt company, a new cluster, a stranger's
+ * server, a typo, a hang. The holding's own identity is still recorded, so the
+ * wall can name what it refused and still fail even if the list is poisoned.
+ *
+ * Identity cannot be faked by a spelling: whatever address got the connection
+ * there, `system_identifier` + `oid` + `datname` is where the next INSERT lands.
  */
-interface CompanyFingerprint {
+interface Identity {
   sysid: string;
   dboid: string;
   dbname: string;
 }
+interface LedgerIdentity {
+  company: Identity | null;
+  allowed: Identity[];
+}
 
-function companyFingerprint(): CompanyFingerprint | null {
+function ledgerIdentity(): LedgerIdentity | null {
   try {
     const f = JSON.parse(
-      readFileSync(new URL("../company-fingerprint.json", import.meta.url), "utf8"),
-    ) as CompanyFingerprint;
-    return f.sysid && f.dboid && f.dbname ? f : null;
+      readFileSync(new URL("../ledger-identity.json", import.meta.url), "utf8"),
+    ) as LedgerIdentity;
+    if (!Array.isArray(f.allowed) || f.allowed.length === 0) return null;
+    if (f.allowed.some((a) => !a?.sysid || !a?.dboid || !a?.dbname)) return null;
+    return f;
   } catch {
     return null;
   }
 }
+
+/** Same cluster AND (same database oid OR same database name). */
+const isSame = (a: Identity | null, b: Identity | null): boolean =>
+  !!a && !!b && a.sysid === b.sysid && (a.dboid === b.dboid || a.dbname === b.dbname);
 
 async function main(): Promise<void> {
   const input = JSON.parse(await readStdin()) as HookInput;
@@ -116,29 +139,38 @@ async function main(): Promise<void> {
   const constructionUrl = process.env.DXB_CONSTRUCTION_DATABASE_URL;
   if (!constructionUrl) return;
 
-  // The guard fails CLOSED. With no recorded identity for the holding there is
-  // nothing to compare against, and a hook that cannot prove where it is writing
-  // does not write.
-  const company = companyFingerprint();
-  if (!company) {
+  // The guard fails CLOSED. With no allow list there is nothing this hook is
+  // permitted to write to, and it writes nothing.
+  const ledger = ledgerIdentity();
+  if (!ledger) {
     console.error(
-      "tag-subscription-call: tools/hooks/company-fingerprint.json is missing or unreadable — " +
-        "refusing to write (run scripts/b36/company-fingerprint.mjs)",
+      "tag-subscription-call: tools/hooks/ledger-identity.json is missing, unreadable or empty — " +
+        "refusing to write (take it with scripts/b36/ledger-identity.mjs)",
     );
     return;
   }
 
+  // A guard that cannot finish never refuses. An address that accepts a
+  // connection and never answers used to hang this hook for as long as the
+  // socket stayed open; now every leg has a deadline, and the whole hook has one
+  // above them all.
+  process.env.DXB_DB_CONNECT_TIMEOUT_MS ??= "4000";
+  process.env.DXB_DB_STATEMENT_TIMEOUT_MS ??= "8000";
   process.env.DXB_DATABASE_URL = constructionUrl;
-  const db = getDb();
+  const shared = await import("@dxb/shared");
+  closeDb = shared.closeDb;
+  const db = shared.getDb();
   const { sql } = await import("kysely");
 
-  // Asked of the server, before a single row is written.
-  let here: { sysid: string | null; dboid: string; dbname: string } | undefined;
+  // Asked of the server, before a single row is written. `datnames` comes back
+  // with it so a stale record can be SEEN rather than silently obeyed.
+  let here: (Identity & { datmap: string[] }) | undefined;
   try {
-    const identity = await sql<{ sysid: string | null; dboid: string; dbname: string }>`
+    const identity = await sql<Identity & { datmap: string[] }>`
       select (select system_identifier::text from pg_control_system()) sysid,
              (select oid::text from pg_database where datname = current_database()) dboid,
-             current_database() dbname`.execute(db);
+             current_database() dbname,
+             (select array_agg(oid::text || ':' || datname) from pg_database) datmap`.execute(db);
     here = identity.rows[0];
   } catch (e) {
     console.error(
@@ -152,14 +184,38 @@ async function main(): Promise<void> {
     );
     return;
   }
-  // Same cluster AND (same database oid OR same database name). The name is in
-  // the rule because a `supabase db reset` rebuilds the holding's database under
-  // a new oid, and the guard must not go blind the moment that happens; the oid
-  // is in it because a rename must not open the door either.
-  if (here.sysid === company.sysid && (here.dboid === company.dboid || here.dbname === company.dbname)) {
+
+  // WALL 1 — never the holding, even if someone put it on the allow list.
+  if (isSame(here, ledger.company)) {
     console.error(
       `tag-subscription-call: DXB_CONSTRUCTION_DATABASE_URL reaches the company database ` +
         `(cluster ${here.sysid}, database ${here.dbname}) — refusing to write`,
+    );
+    return;
+  }
+
+  // WALL 2 — the recorded company must still exist as recorded. On the holding's
+  // own cluster, a database carrying its name under a DIFFERENT oid means it was
+  // rebuilt and Wall 1 is now aiming at something that is gone. The hook says so
+  // and stops, instead of trusting a stale record — this is the fail-open a
+  // third audit found, closed where it happens rather than where it is noticed.
+  const c = ledger.company;
+  const namedHere = c ? (here.datmap ?? []).find((d) => d.slice(d.indexOf(":") + 1) === c.dbname) : undefined;
+  if (c && here.sysid === c.sysid && namedHere && namedHere.slice(0, namedHere.indexOf(":")) !== c.dboid) {
+    console.error(
+      `tag-subscription-call: the recorded identity of the company is stale — a database named ` +
+        `'${c.dbname}' exists on this cluster under a different oid. Refusing to write until ` +
+        `scripts/b36/ledger-identity.mjs --set-company is re-run.`,
+    );
+    return;
+  }
+
+  // WALL 3 — and it must be one of the databases this hook was told it may
+  // write to. Anything not on that list is refused, whatever it is.
+  if (!ledger.allowed.some((a) => isSame(here!, a))) {
+    console.error(
+      `tag-subscription-call: ${here.dbname} (cluster ${here.sysid}, oid ${here.dboid}) is not a ` +
+        `permitted construction ledger — refusing to write`,
     );
     return;
   }
@@ -199,11 +255,19 @@ async function main(): Promise<void> {
     .execute();
 }
 
+// Nothing this hook does may hold a session open. Above every per-leg deadline
+// there is one for the whole run: it fires, says so, and lets the session end.
+const watchdog = setTimeout(() => {
+  console.error("tag-subscription-call: took too long — giving up without writing");
+  process.exit(0);
+}, 20_000);
+
 try {
   await main();
 } catch (e) {
   // never block session teardown — report and exit clean
   console.error(`tag-subscription-call: ${String(e).slice(0, 300)}`);
 } finally {
-  await closeDb().catch(() => {});
+  clearTimeout(watchdog);
+  await closer()?.().catch(() => {});
 }

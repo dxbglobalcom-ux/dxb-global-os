@@ -26,7 +26,7 @@ import { closeDb, getDb } from "../../packages/shared/dist/db.js";
 const run = promisify(execFile);
 const REPO = fileURLToPath(new URL("../..", import.meta.url));
 const HOOK = join(REPO, "tools/hooks/dist/tag-subscription-call.js");
-const company = JSON.parse(readFileSync(join(REPO, "tools/hooks/company-fingerprint.json"), "utf8"));
+const { company } = JSON.parse(readFileSync(join(REPO, "tools/hooks/ledger-identity.json"), "utf8"));
 
 const url = process.env.DXB_COMPANY_URL;
 if (!url) {

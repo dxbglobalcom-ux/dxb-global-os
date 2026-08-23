@@ -1,0 +1,18 @@
+{
+  "company": {
+    "sysid": "7674907968528752679",
+    "dboid": "5",
+    "dbname": "postgres",
+    "measured_at": "2026-08-23T12:32:07.160Z"
+  },
+  "allowed": [
+    {
+      "sysid": "7674907968528752679",
+      "dboid": "41727",
+      "dbname": "dxb_test",
+      "why": "dxb_test — the construction side's ledger until Block 2 gives the site its own stack; then this entry is replaced by DxB_Build's own database",
+      "measured_at": "2026-08-23T12:32:07.263Z"
+    }
+  ],
+  "what": "Where tools/hooks/tag-subscription-call.ts may write. It writes ONLY into a database whose identity is in `allowed`, and never into `company`. Identity comes from the server: the cluster's system_identifier plus the database's own oid and name."
+}

@@ -2,428 +2,1506 @@
   "epoch": {
     "engine_up": "2026-08-23 07:49:54.617414+00",
     "stats_reset": null,
-    "taken_at": "2026-08-23 12:05:21.945324+00"
+    "taken_at": "2026-08-23 12:40:14.371987+00",
+    "dbname": "postgres"
   },
   "state": {
-    "agent_runs": {
-      "relname": "agent_runs",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "378"
+    "tables": {
+      "_realtime.extensions": {
+        "key": "_realtime.extensions",
+        "ins": "1",
+        "upd": "0",
+        "del": "1",
+        "rows": "1"
+      },
+      "_realtime.feature_flags": {
+        "key": "_realtime.feature_flags",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "_realtime.schema_migrations": {
+        "key": "_realtime.schema_migrations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "31"
+      },
+      "_realtime.tenants": {
+        "key": "_realtime.tenants",
+        "ins": "1",
+        "upd": "1",
+        "del": "1",
+        "rows": "1"
+      },
+      "auth.audit_log_entries": {
+        "key": "auth.audit_log_entries",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "71"
+      },
+      "auth.custom_oauth_providers": {
+        "key": "auth.custom_oauth_providers",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.flow_state": {
+        "key": "auth.flow_state",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.identities": {
+        "key": "auth.identities",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "auth.instances": {
+        "key": "auth.instances",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.mfa_amr_claims": {
+        "key": "auth.mfa_amr_claims",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.mfa_challenges": {
+        "key": "auth.mfa_challenges",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.mfa_factors": {
+        "key": "auth.mfa_factors",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.oauth_authorizations": {
+        "key": "auth.oauth_authorizations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.oauth_client_states": {
+        "key": "auth.oauth_client_states",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.oauth_clients": {
+        "key": "auth.oauth_clients",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.oauth_consents": {
+        "key": "auth.oauth_consents",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.one_time_tokens": {
+        "key": "auth.one_time_tokens",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.refresh_tokens": {
+        "key": "auth.refresh_tokens",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.saml_providers": {
+        "key": "auth.saml_providers",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.saml_relay_states": {
+        "key": "auth.saml_relay_states",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.schema_migrations": {
+        "key": "auth.schema_migrations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "77"
+      },
+      "auth.sessions": {
+        "key": "auth.sessions",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "auth.sso_domains": {
+        "key": "auth.sso_domains",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.sso_providers": {
+        "key": "auth.sso_providers",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.users": {
+        "key": "auth.users",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "auth.webauthn_challenges": {
+        "key": "auth.webauthn_challenges",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "auth.webauthn_credentials": {
+        "key": "auth.webauthn_credentials",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_AccessGroupTable": {
+        "key": "litellm.LiteLLM_AccessGroupTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_AdaptiveRouterSession": {
+        "key": "litellm.LiteLLM_AdaptiveRouterSession",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_AdaptiveRouterState": {
+        "key": "litellm.LiteLLM_AdaptiveRouterState",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_AgentsTable": {
+        "key": "litellm.LiteLLM_AgentsTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_AuditLog": {
+        "key": "litellm.LiteLLM_AuditLog",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_AutoRouterSession": {
+        "key": "litellm.LiteLLM_AutoRouterSession",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_BudgetTable": {
+        "key": "litellm.LiteLLM_BudgetTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_CacheConfig": {
+        "key": "litellm.LiteLLM_CacheConfig",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ClaudeCodePluginTable": {
+        "key": "litellm.LiteLLM_ClaudeCodePluginTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_Config": {
+        "key": "litellm.LiteLLM_Config",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ConfigOverrides": {
+        "key": "litellm.LiteLLM_ConfigOverrides",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_CredentialsTable": {
+        "key": "litellm.LiteLLM_CredentialsTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_CronJob": {
+        "key": "litellm.LiteLLM_CronJob",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DailyAgentSpend": {
+        "key": "litellm.LiteLLM_DailyAgentSpend",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DailyEndUserSpend": {
+        "key": "litellm.LiteLLM_DailyEndUserSpend",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DailyGatewayRequests": {
+        "key": "litellm.LiteLLM_DailyGatewayRequests",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DailyGuardrailMetrics": {
+        "key": "litellm.LiteLLM_DailyGuardrailMetrics",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DailyOrganizationSpend": {
+        "key": "litellm.LiteLLM_DailyOrganizationSpend",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DailyPolicyMetrics": {
+        "key": "litellm.LiteLLM_DailyPolicyMetrics",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DailyTagSpend": {
+        "key": "litellm.LiteLLM_DailyTagSpend",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "41"
+      },
+      "litellm.LiteLLM_DailyTeamSpend": {
+        "key": "litellm.LiteLLM_DailyTeamSpend",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "54"
+      },
+      "litellm.LiteLLM_DailyToolSpend": {
+        "key": "litellm.LiteLLM_DailyToolSpend",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DailyUserSpend": {
+        "key": "litellm.LiteLLM_DailyUserSpend",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "54"
+      },
+      "litellm.LiteLLM_DeletedTeamTable": {
+        "key": "litellm.LiteLLM_DeletedTeamTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_DeletedVerificationToken": {
+        "key": "litellm.LiteLLM_DeletedVerificationToken",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "3"
+      },
+      "litellm.LiteLLM_DeprecatedVerificationToken": {
+        "key": "litellm.LiteLLM_DeprecatedVerificationToken",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_EndUserTable": {
+        "key": "litellm.LiteLLM_EndUserTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ErrorLogs": {
+        "key": "litellm.LiteLLM_ErrorLogs",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_GuardrailsTable": {
+        "key": "litellm.LiteLLM_GuardrailsTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_HealthCheckTable": {
+        "key": "litellm.LiteLLM_HealthCheckTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_InvitationLink": {
+        "key": "litellm.LiteLLM_InvitationLink",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_JWTKeyMapping": {
+        "key": "litellm.LiteLLM_JWTKeyMapping",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_MCPServerOAuthClient": {
+        "key": "litellm.LiteLLM_MCPServerOAuthClient",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_MCPServerTable": {
+        "key": "litellm.LiteLLM_MCPServerTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_MCPToolsetTable": {
+        "key": "litellm.LiteLLM_MCPToolsetTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_MCPUserCredentials": {
+        "key": "litellm.LiteLLM_MCPUserCredentials",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_MCPUserEnvVars": {
+        "key": "litellm.LiteLLM_MCPUserEnvVars",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ManagedFileTable": {
+        "key": "litellm.LiteLLM_ManagedFileTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ManagedObjectTable": {
+        "key": "litellm.LiteLLM_ManagedObjectTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ManagedVectorStoreIndexTable": {
+        "key": "litellm.LiteLLM_ManagedVectorStoreIndexTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ManagedVectorStoreTable": {
+        "key": "litellm.LiteLLM_ManagedVectorStoreTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ManagedVectorStoresTable": {
+        "key": "litellm.LiteLLM_ManagedVectorStoresTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_MemoryTable": {
+        "key": "litellm.LiteLLM_MemoryTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ModelTable": {
+        "key": "litellm.LiteLLM_ModelTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ObjectPermissionTable": {
+        "key": "litellm.LiteLLM_ObjectPermissionTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_OrganizationMembership": {
+        "key": "litellm.LiteLLM_OrganizationMembership",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_OrganizationTable": {
+        "key": "litellm.LiteLLM_OrganizationTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_PolicyAttachmentTable": {
+        "key": "litellm.LiteLLM_PolicyAttachmentTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_PolicyTable": {
+        "key": "litellm.LiteLLM_PolicyTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ProjectTable": {
+        "key": "litellm.LiteLLM_ProjectTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_PromptTable": {
+        "key": "litellm.LiteLLM_PromptTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ProxyModelTable": {
+        "key": "litellm.LiteLLM_ProxyModelTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_SSOConfig": {
+        "key": "litellm.LiteLLM_SSOConfig",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_SSOIdentityAssertion": {
+        "key": "litellm.LiteLLM_SSOIdentityAssertion",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_SearchToolsTable": {
+        "key": "litellm.LiteLLM_SearchToolsTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_SkillsTable": {
+        "key": "litellm.LiteLLM_SkillsTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_SpendLogGuardrailIndex": {
+        "key": "litellm.LiteLLM_SpendLogGuardrailIndex",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_SpendLogToolIndex": {
+        "key": "litellm.LiteLLM_SpendLogToolIndex",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_SpendLogs": {
+        "key": "litellm.LiteLLM_SpendLogs",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "581"
+      },
+      "litellm.LiteLLM_TagTable": {
+        "key": "litellm.LiteLLM_TagTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_TeamMembership": {
+        "key": "litellm.LiteLLM_TeamMembership",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_TeamTable": {
+        "key": "litellm.LiteLLM_TeamTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_ToolTable": {
+        "key": "litellm.LiteLLM_ToolTable",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "litellm.LiteLLM_UISettings": {
+        "key": "litellm.LiteLLM_UISettings",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_UserNotifications": {
+        "key": "litellm.LiteLLM_UserNotifications",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_UserTable": {
+        "key": "litellm.LiteLLM_UserTable",
+        "ins": "0",
+        "upd": "1",
+        "del": "0",
+        "rows": "2"
+      },
+      "litellm.LiteLLM_VerificationToken": {
+        "key": "litellm.LiteLLM_VerificationToken",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "219"
+      },
+      "litellm.LiteLLM_WorkflowEvent": {
+        "key": "litellm.LiteLLM_WorkflowEvent",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_WorkflowMessage": {
+        "key": "litellm.LiteLLM_WorkflowMessage",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm.LiteLLM_WorkflowRun": {
+        "key": "litellm.LiteLLM_WorkflowRun",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "litellm._prisma_migrations": {
+        "key": "litellm._prisma_migrations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "146"
+      },
+      "net._http_response": {
+        "key": "net._http_response",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "net.http_request_queue": {
+        "key": "net.http_request_queue",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "pgboss.bam": {
+        "key": "pgboss.bam",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "pgboss.job": {
+        "key": "pgboss.job",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "303136"
+      },
+      "pgboss.job_common": {
+        "key": "pgboss.job_common",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "303136"
+      },
+      "pgboss.job_dependency": {
+        "key": "pgboss.job_dependency",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "pgboss.queue": {
+        "key": "pgboss.queue",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "23"
+      },
+      "pgboss.queue_stats": {
+        "key": "pgboss.queue_stats",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "pgboss.queue_stats_20260708": {
+        "key": "pgboss.queue_stats_20260708",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "pgboss.queue_stats_20260709": {
+        "key": "pgboss.queue_stats_20260709",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "pgboss.schedule": {
+        "key": "pgboss.schedule",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "15"
+      },
+      "pgboss.subscription": {
+        "key": "pgboss.subscription",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "pgboss.version": {
+        "key": "pgboss.version",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "pgboss.warning": {
+        "key": "pgboss.warning",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.agent_runs": {
+        "key": "public.agent_runs",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "378"
+      },
+      "public.agents": {
+        "key": "public.agents",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "205"
+      },
+      "public.alerts": {
+        "key": "public.alerts",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "149"
+      },
+      "public.approval_rules": {
+        "key": "public.approval_rules",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "8"
+      },
+      "public.approvals": {
+        "key": "public.approvals",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "51"
+      },
+      "public.audit_log": {
+        "key": "public.audit_log",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "29636"
+      },
+      "public.budget_state": {
+        "key": "public.budget_state",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "public.ceo_briefings": {
+        "key": "public.ceo_briefings",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "7"
+      },
+      "public.chat_messages": {
+        "key": "public.chat_messages",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "105"
+      },
+      "public.chat_sessions": {
+        "key": "public.chat_sessions",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "9"
+      },
+      "public.companies": {
+        "key": "public.companies",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "public.control_idempotency": {
+        "key": "public.control_idempotency",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "2639"
+      },
+      "public.cost_ledger": {
+        "key": "public.cost_ledger",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1612"
+      },
+      "public.crm_clients": {
+        "key": "public.crm_clients",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.crm_contacts": {
+        "key": "public.crm_contacts",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.crm_deals": {
+        "key": "public.crm_deals",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.crm_requests": {
+        "key": "public.crm_requests",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.decision_log": {
+        "key": "public.decision_log",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "4730"
+      },
+      "public.departments": {
+        "key": "public.departments",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "21"
+      },
+      "public.employee_records": {
+        "key": "public.employee_records",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "199"
+      },
+      "public.file_changes": {
+        "key": "public.file_changes",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.generated_work": {
+        "key": "public.generated_work",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "3"
+      },
+      "public.hook_policies": {
+        "key": "public.hook_policies",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "21"
+      },
+      "public.hook_violations": {
+        "key": "public.hook_violations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1963"
+      },
+      "public.intents": {
+        "key": "public.intents",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "57"
+      },
+      "public.library_change_log": {
+        "key": "public.library_change_log",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "809"
+      },
+      "public.library_grants": {
+        "key": "public.library_grants",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "173"
+      },
+      "public.library_items": {
+        "key": "public.library_items",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "412"
+      },
+      "public.library_usage_log": {
+        "key": "public.library_usage_log",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.memory_embeddings": {
+        "key": "public.memory_embeddings",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "37"
+      },
+      "public.memory_index": {
+        "key": "public.memory_index",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "13919"
+      },
+      "public.model_catalog": {
+        "key": "public.model_catalog",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "13"
+      },
+      "public.objectives": {
+        "key": "public.objectives",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "2"
+      },
+      "public.opportunities": {
+        "key": "public.opportunities",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "5"
+      },
+      "public.outbox": {
+        "key": "public.outbox",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "51"
+      },
+      "public.personas": {
+        "key": "public.personas",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "408"
+      },
+      "public.portfolio_allocations": {
+        "key": "public.portfolio_allocations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.project_members": {
+        "key": "public.project_members",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.project_milestones": {
+        "key": "public.project_milestones",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "13"
+      },
+      "public.project_risks": {
+        "key": "public.project_risks",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "3"
+      },
+      "public.projects": {
+        "key": "public.projects",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "3"
+      },
+      "public.revenue_engines": {
+        "key": "public.revenue_engines",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "6"
+      },
+      "public.revenue_ledger": {
+        "key": "public.revenue_ledger",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.revenue_scout_runs": {
+        "key": "public.revenue_scout_runs",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "3"
+      },
+      "public.routing_rules": {
+        "key": "public.routing_rules",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "37"
+      },
+      "public.settings_change_log": {
+        "key": "public.settings_change_log",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "14"
+      },
+      "public.settings_registry": {
+        "key": "public.settings_registry",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "112"
+      },
+      "public.settings_values": {
+        "key": "public.settings_values",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "617"
+      },
+      "public.system_health_snapshots": {
+        "key": "public.system_health_snapshots",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.task_dependencies": {
+        "key": "public.task_dependencies",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.task_events": {
+        "key": "public.task_events",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1543"
+      },
+      "public.tasks": {
+        "key": "public.tasks",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "217"
+      },
+      "public.tool_calls": {
+        "key": "public.tool_calls",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "325"
+      },
+      "public.tool_pins": {
+        "key": "public.tool_pins",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "69"
+      },
+      "public.voice_calls": {
+        "key": "public.voice_calls",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "102"
+      },
+      "public.voice_daemon_state": {
+        "key": "public.voice_daemon_state",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "public.voice_identities": {
+        "key": "public.voice_identities",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "public.workflow_runs": {
+        "key": "public.workflow_runs",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.workflow_steps": {
+        "key": "public.workflow_steps",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "public.workflows": {
+        "key": "public.workflows",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "realtime.messages": {
+        "key": "realtime.messages",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "7"
+      },
+      "realtime.messages_2026_08_20": {
+        "key": "realtime.messages_2026_08_20",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "4"
+      },
+      "realtime.messages_2026_08_21": {
+        "key": "realtime.messages_2026_08_21",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "2"
+      },
+      "realtime.messages_2026_08_22": {
+        "key": "realtime.messages_2026_08_22",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "1"
+      },
+      "realtime.messages_2026_08_23": {
+        "key": "realtime.messages_2026_08_23",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "realtime.messages_2026_08_24": {
+        "key": "realtime.messages_2026_08_24",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "realtime.messages_2026_08_25": {
+        "key": "realtime.messages_2026_08_25",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "realtime.messages_2026_08_26": {
+        "key": "realtime.messages_2026_08_26",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "realtime.schema_migrations": {
+        "key": "realtime.schema_migrations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "78"
+      },
+      "realtime.subscription": {
+        "key": "realtime.subscription",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "supabase_functions.hooks": {
+        "key": "supabase_functions.hooks",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      },
+      "supabase_functions.migrations": {
+        "key": "supabase_functions.migrations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "2"
+      },
+      "supabase_migrations.schema_migrations": {
+        "key": "supabase_migrations.schema_migrations",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "124"
+      },
+      "vault.secrets": {
+        "key": "vault.secrets",
+        "ins": "0",
+        "upd": "0",
+        "del": "0",
+        "rows": "0"
+      }
     },
-    "agents": {
-      "relname": "agents",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "205"
+    "sequences": {
+      "auth.refresh_tokens_id_seq": {
+        "key": "auth.refresh_tokens_id_seq",
+        "last_value": "84"
+      },
+      "litellm.LiteLLM_ModelTable_id_seq": {
+        "key": "litellm.LiteLLM_ModelTable_id_seq",
+        "last_value": "0"
+      },
+      "net.http_request_queue_id_seq": {
+        "key": "net.http_request_queue_id_seq",
+        "last_value": "0"
+      },
+      "public.audit_log_id_seq": {
+        "key": "public.audit_log_id_seq",
+        "last_value": "74525"
+      },
+      "public.cost_ledger_id_seq": {
+        "key": "public.cost_ledger_id_seq",
+        "last_value": "20707"
+      },
+      "public.decision_log_id_seq": {
+        "key": "public.decision_log_id_seq",
+        "last_value": "28415"
+      },
+      "public.file_changes_id_seq": {
+        "key": "public.file_changes_id_seq",
+        "last_value": "1175"
+      },
+      "public.generated_work_id_seq": {
+        "key": "public.generated_work_id_seq",
+        "last_value": "313"
+      },
+      "public.hook_violations_id_seq": {
+        "key": "public.hook_violations_id_seq",
+        "last_value": "9347"
+      },
+      "public.library_change_log_id_seq": {
+        "key": "public.library_change_log_id_seq",
+        "last_value": "2894"
+      },
+      "public.library_grants_id_seq": {
+        "key": "public.library_grants_id_seq",
+        "last_value": "2501"
+      },
+      "public.library_usage_log_id_seq": {
+        "key": "public.library_usage_log_id_seq",
+        "last_value": "132"
+      },
+      "public.revenue_ledger_id_seq": {
+        "key": "public.revenue_ledger_id_seq",
+        "last_value": "116"
+      },
+      "public.settings_change_log_id_seq": {
+        "key": "public.settings_change_log_id_seq",
+        "last_value": "568"
+      },
+      "public.task_events_id_seq": {
+        "key": "public.task_events_id_seq",
+        "last_value": "37854"
+      },
+      "public.tool_calls_id_seq": {
+        "key": "public.tool_calls_id_seq",
+        "last_value": "7556"
+      },
+      "realtime.subscription_id_seq": {
+        "key": "realtime.subscription_id_seq",
+        "last_value": "0"
+      },
+      "supabase_functions.hooks_id_seq": {
+        "key": "supabase_functions.hooks_id_seq",
+        "last_value": "0"
+      }
     },
-    "alerts": {
-      "relname": "alerts",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "149"
+    "grants": {
+      "_realtime": {
+        "key": "_realtime",
+        "n": "28",
+        "sum": "380a78390d2691083438eac648d242f5"
+      },
+      "auth": {
+        "key": "auth",
+        "n": "155",
+        "sum": "9e00919224610a64fc051b4bee9cb939"
+      },
+      "extensions": {
+        "key": "extensions",
+        "n": "14",
+        "sum": "103ab823d737f671f4a8970c3d8d49ce"
+      },
+      "litellm": {
+        "key": "litellm",
+        "n": "553",
+        "sum": "e0789f797f6434d361f3e83edadf8b2d"
+      },
+      "pgboss": {
+        "key": "pgboss",
+        "n": "84",
+        "sum": "70e31404f5498ceeb1a5741cdcfdd9c6"
+      },
+      "public": {
+        "key": "public",
+        "n": "1482",
+        "sum": "a1ab85aa77a6319f0062f33223f0f432"
+      },
+      "realtime": {
+        "key": "realtime",
+        "n": "211",
+        "sum": "99fb5a550f2c5a8096ac87e72c21aa6f"
+      },
+      "supabase_functions": {
+        "key": "supabase_functions",
+        "n": "70",
+        "sum": "61bd428510808ef5643f0df2bb79eb96"
+      },
+      "supabase_migrations": {
+        "key": "supabase_migrations",
+        "n": "7",
+        "sum": "d22147c9964f70cda47e9cadddb0901c"
+      },
+      "vault": {
+        "key": "vault",
+        "n": "12",
+        "sum": "59ae802e577d95c3ad56827e2d407eea"
+      }
     },
-    "approval_rules": {
-      "relname": "approval_rules",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "8"
-    },
-    "approvals": {
-      "relname": "approvals",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "51"
-    },
-    "audit_log": {
-      "relname": "audit_log",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "29636"
-    },
-    "budget_state": {
-      "relname": "budget_state",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "1"
-    },
-    "ceo_briefings": {
-      "relname": "ceo_briefings",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "7"
-    },
-    "chat_messages": {
-      "relname": "chat_messages",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "105"
-    },
-    "chat_sessions": {
-      "relname": "chat_sessions",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "9"
-    },
-    "companies": {
-      "relname": "companies",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "1"
-    },
-    "control_idempotency": {
-      "relname": "control_idempotency",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "2639"
-    },
-    "cost_ledger": {
-      "relname": "cost_ledger",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "1612"
-    },
-    "crm_clients": {
-      "relname": "crm_clients",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "crm_contacts": {
-      "relname": "crm_contacts",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "crm_deals": {
-      "relname": "crm_deals",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "crm_requests": {
-      "relname": "crm_requests",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "decision_log": {
-      "relname": "decision_log",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "4730"
-    },
-    "departments": {
-      "relname": "departments",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "21"
-    },
-    "employee_records": {
-      "relname": "employee_records",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "199"
-    },
-    "file_changes": {
-      "relname": "file_changes",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "generated_work": {
-      "relname": "generated_work",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "3"
-    },
-    "hook_policies": {
-      "relname": "hook_policies",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "21"
-    },
-    "hook_violations": {
-      "relname": "hook_violations",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "1963"
-    },
-    "intents": {
-      "relname": "intents",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "57"
-    },
-    "library_change_log": {
-      "relname": "library_change_log",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "809"
-    },
-    "library_grants": {
-      "relname": "library_grants",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "173"
-    },
-    "library_items": {
-      "relname": "library_items",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "412"
-    },
-    "library_usage_log": {
-      "relname": "library_usage_log",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "memory_embeddings": {
-      "relname": "memory_embeddings",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "37"
-    },
-    "memory_index": {
-      "relname": "memory_index",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "13919"
-    },
-    "model_catalog": {
-      "relname": "model_catalog",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "13"
-    },
-    "objectives": {
-      "relname": "objectives",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "2"
-    },
-    "opportunities": {
-      "relname": "opportunities",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "5"
-    },
-    "outbox": {
-      "relname": "outbox",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "51"
-    },
-    "personas": {
-      "relname": "personas",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "408"
-    },
-    "portfolio_allocations": {
-      "relname": "portfolio_allocations",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "project_members": {
-      "relname": "project_members",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "project_milestones": {
-      "relname": "project_milestones",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "13"
-    },
-    "project_risks": {
-      "relname": "project_risks",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "3"
-    },
-    "projects": {
-      "relname": "projects",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "3"
-    },
-    "revenue_engines": {
-      "relname": "revenue_engines",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "6"
-    },
-    "revenue_ledger": {
-      "relname": "revenue_ledger",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "revenue_scout_runs": {
-      "relname": "revenue_scout_runs",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "3"
-    },
-    "routing_rules": {
-      "relname": "routing_rules",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "37"
-    },
-    "settings_change_log": {
-      "relname": "settings_change_log",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "14"
-    },
-    "settings_registry": {
-      "relname": "settings_registry",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "112"
-    },
-    "settings_values": {
-      "relname": "settings_values",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "617"
-    },
-    "system_health_snapshots": {
-      "relname": "system_health_snapshots",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "task_dependencies": {
-      "relname": "task_dependencies",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "task_events": {
-      "relname": "task_events",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "1543"
-    },
-    "tasks": {
-      "relname": "tasks",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "217"
-    },
-    "tool_calls": {
-      "relname": "tool_calls",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "325"
-    },
-    "tool_pins": {
-      "relname": "tool_pins",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "69"
-    },
-    "voice_calls": {
-      "relname": "voice_calls",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "102"
-    },
-    "voice_daemon_state": {
-      "relname": "voice_daemon_state",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "1"
-    },
-    "voice_identities": {
-      "relname": "voice_identities",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "1"
-    },
-    "workflow_runs": {
-      "relname": "workflow_runs",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "workflow_steps": {
-      "relname": "workflow_steps",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
-    },
-    "workflows": {
-      "relname": "workflows",
-      "ins": "0",
-      "upd": "0",
-      "del": "0",
-      "rows": "0"
+    "structure": {
+      "_realtime": {
+        "key": "_realtime",
+        "n": "18",
+        "sum": "59034a7ba63efee8e1bdae8c786036f3"
+      },
+      "auth": {
+        "key": "auth",
+        "n": "209",
+        "sum": "7bca87bcff1f97dedffcb4d175c83629"
+      },
+      "extensions": {
+        "key": "extensions",
+        "n": "57",
+        "sum": "8c8685a08800e2effc018b398508a4ee"
+      },
+      "graphql_public": {
+        "key": "graphql_public",
+        "n": "1",
+        "sum": "8efd7f22a101da53f928de88e3030553"
+      },
+      "litellm": {
+        "key": "litellm",
+        "n": "386",
+        "sum": "f2adab503b13af169217dcfd3c3f4f72"
+      },
+      "net": {
+        "key": "net",
+        "n": "17",
+        "sum": "a1cdd5c5f092047fb2d1d254c0dd3fbb"
+      },
+      "pgboss": {
+        "key": "pgboss",
+        "n": "59",
+        "sum": "9692dc5afba7a154704ef58395815605"
+      },
+      "pgbouncer": {
+        "key": "pgbouncer",
+        "n": "1",
+        "sum": "ecd6e0b509e8125f76e28a12648b4a0b"
+      },
+      "public": {
+        "key": "public",
+        "n": "778",
+        "sum": "423cc6056e5c2e746ffc6ba33926a078"
+      },
+      "realtime": {
+        "key": "realtime",
+        "n": "65",
+        "sum": "c620be39a57cafadb240c09ac6f7d8bf"
+      },
+      "supabase_functions": {
+        "key": "supabase_functions",
+        "n": "10",
+        "sum": "79fb2204d4e917f2b5785facd3dd9dae"
+      },
+      "supabase_migrations": {
+        "key": "supabase_migrations",
+        "n": "3",
+        "sum": "2ea5529c33deb4333b91de4c196f994a"
+      },
+      "vault": {
+        "key": "vault",
+        "n": "10",
+        "sum": "e29f73e915aed393c4c77e83674d5ce0"
+      }
     }
   }
 }

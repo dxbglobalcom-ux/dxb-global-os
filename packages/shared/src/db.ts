@@ -9,6 +9,31 @@ import type { DB } from "./db-types.js";
 let db: Kysely<DB> | null = null;
 let pool: pg.Pool | null = null;
 
+/**
+ * Optional deadlines, OFF unless asked for.
+ *
+ * An audit on 2026-08-23 found the SessionEnd hook could hang forever on an
+ * address that accepts a connection and never answers: a guard that cannot
+ * finish is a guard that never refuses. A caller that must not wait sets these
+ * two variables; every existing caller sets neither and keeps today's behaviour
+ * byte for byte.
+ *
+ *   DXB_DB_CONNECT_TIMEOUT_MS    give up while opening the connection
+ *   DXB_DB_STATEMENT_TIMEOUT_MS  give up while waiting for an answer
+ */
+function timeouts(): {
+  connectionTimeoutMillis?: number;
+  statement_timeout?: number;
+  query_timeout?: number;
+} {
+  const connect = Number(process.env.DXB_DB_CONNECT_TIMEOUT_MS ?? 0);
+  const statement = Number(process.env.DXB_DB_STATEMENT_TIMEOUT_MS ?? 0);
+  return {
+    ...(connect > 0 ? { connectionTimeoutMillis: connect } : {}),
+    ...(statement > 0 ? { statement_timeout: statement, query_timeout: statement } : {}),
+  };
+}
+
 export function getDb(): Kysely<DB> {
   if (db) return db;
   const url = process.env.DXB_DATABASE_URL;
@@ -18,7 +43,7 @@ export function getDb(): Kysely<DB> {
         "(session-mode direct Postgres URL, e.g. local Supabase on port 54322).",
     );
   }
-  pool = new pg.Pool({ connectionString: url });
+  pool = new pg.Pool({ connectionString: url, ...timeouts() });
   db = new Kysely<DB>({ dialect: new PostgresDialect({ pool }) });
   return db;
 }
@@ -51,7 +76,10 @@ export async function createListenClient(): Promise<ListenClient> {
         "(session-mode direct Postgres URL, e.g. local Supabase on port 54322).",
     );
   }
-  const client = new pg.Client({ connectionString: url });
+  // A LISTEN client is long-lived, so it takes the connect deadline only — a
+  // statement deadline would cut the very session it exists to keep open.
+  const { connectionTimeoutMillis } = timeouts();
+  const client = new pg.Client({ connectionString: url, connectionTimeoutMillis });
   await client.connect();
   return client;
 }

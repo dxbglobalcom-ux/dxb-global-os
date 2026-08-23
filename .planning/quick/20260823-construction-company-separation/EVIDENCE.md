@@ -56,10 +56,19 @@ address reaches the company's own database.
 > in its path, `127.1`, `2130706433`, `localhost.` and `127.0.0.2`.
 >
 > **The address is no longer read at all.** The hook asks the server it actually reached for its
-> cluster `system_identifier` and the database's own `oid` and name, and compares those with
-> `tools/hooks/company-fingerprint.json`. It fails closed. Fifteen cases stand over it, and
-> `node scripts/b36/prove-address-escapes.mjs` re-runs the whole attack read-only:
+> cluster `system_identifier` and the database's own `oid` and name. `node
+> scripts/b36/prove-address-escapes.mjs` re-runs the whole attack read-only:
 > **`ESCAPES THROUGH THE DELETED RULE: 6 of 6` · `ALL_ESCAPES_CLOSED`**. `AUDIT-RESPONSE-2.md` §1.
+>
+> **Third correction, and the shape that holds.** Asking the server was the right question in the
+> wrong direction: comparing the answer with the HOLDING's identity is a deny rule, and a deny rule
+> is fail-open on anything it has not been told about — rebuild the holding's database and the
+> recorded identity stops matching, so the guard lets the write through. A third audit said so.
+> The hook now writes ONLY into an identity on the ALLOW list in `tools/hooks/ledger-identity.json`
+> (`scripts/b36/ledger-identity.mjs`, which refuses to put the holding on it), stops when the
+> recorded company identity has gone stale, has a deadline on every leg and a watchdog over the whole
+> run, and the built file travels with the commit. Twenty-one cases stand over it.
+> `AUDIT-RESPONSE-3.md` §1.
 
 ### Red first, then green — the same test, twice
 
@@ -356,7 +365,7 @@ The full answer, command by command, is `AUDIT-RESPONSE-2.md`. What changed in t
 
 | | Was | Is |
 |---|---|---|
-| The hook's guard | compared the ADDRESS (`server:port/database`) | asks the SERVER for its cluster id, database oid and name; fails closed; `tools/hooks/company-fingerprint.json` + `scripts/b36/company-fingerprint.mjs` |
+| The hook's guard | compared the ADDRESS (`server:port/database`) | asks the SERVER for its cluster id, database oid and name — and a third audit then replaced the DENY rule with an ALLOW list, because a deny rule is fail-open on a rebuilt company: `tools/hooks/ledger-identity.json` + `scripts/b36/ledger-identity.mjs` |
 | The escape proof | none | `scripts/b36/prove-address-escapes.mjs` — read-only, re-runnable, `ALL_ESCAPES_CLOSED` |
 | The fallback count | a shell pipeline nobody kept (94, then 93) | `scripts/b36/count-company-fallbacks.mjs` — **96 executable**, every non-test file printed with its line |
 | The restore proof | a new database on the SAME engine | the off-site copy **fetched back** from Hetzner and restored into a **second cluster** in its own container, identical object for object and row for row |

@@ -212,10 +212,14 @@ that reading as the next job and had not answered when the session closed.
    **DONE — Block 1, the writer is dead, and the SERVER is what says so.** The `SessionEnd` hook that
    wrote the author's own token burn into the holding's `cost_ledger` writes only to
    `DXB_CONSTRUCTION_DATABASE_URL`, nothing when that is unset, and refuses when the address REACHES
-   the company. Two address-comparing guards were built and both were broken by audit; the third does
-   not compare addresses — it asks the database it reached for its cluster `system_identifier` and its
-   own `oid` and name, and compares those with `tools/hooks/company-fingerprint.json`. It fails
-   CLOSED. `tests/b36/hook-never-writes-company.test.ts` **15/15** ·
+   the company. **Three guards were built and the first three audits broke all three.** Two compared the
+   ADDRESS (text, then `server:port/database`) — six spellings connected to the holding while the parser
+   called them a different database. The third asked the server for its identity but compared it against
+   the holding's, which is a DENY rule: rebuild the holding and the recorded identity stops matching, so
+   it fails OPEN. The fourth, and the shape that holds: an **ALLOW list**. The hook writes only into a
+   database whose identity is on `tools/hooks/ledger-identity.json`, refuses everything else, refuses
+   when the recorded company identity has gone stale, has a deadline on every leg and a watchdog over the
+   whole run, and the built file now travels with the commit. `tests/b36/` **21/21** ·
    `node scripts/b36/prove-address-escapes.mjs` (read-only) → `ESCAPES THROUGH THE DELETED RULE: 6 of 6`
    · `ALL_ESCAPES_CLOSED`.
    **DONE — Block 0, the safety net, proven in a SECOND ENGINE.** The off-site copy was **fetched back**
@@ -227,18 +231,20 @@ that reading as the next job and had not answered when the session closed.
    errors, all Supabase's own internals, so this is a DATABASE backup and not a whole-cluster backup —
    a recovery drill must start a Supabase stack first. The probe container and the fetched copy of his
    data were destroyed the same hour.
-   **The measurement that settles the whole row:** PostgreSQL's own per-tuple counters
-   (`pg_stat_all_tables`) — **0 inserted · 0 updated · 0 deleted across all 60 public tables** since
-   the engine came up at 2026-08-23 07:49:54Z, which is before this work began. That covers UPDATEs
-   and net-zero insert/delete pairs, which row counts cannot. `node scripts/b36/company-write-watch.mjs`
-   re-runs it, and REFUSES to answer if the engine restarts or the statistics are reset.
+   **The measurement that settles the whole row:** PostgreSQL's own per-tuple counters — **0 inserted ·
+   0 updated · 0 deleted across the 73 tables the holding owns** (`public`, `pgboss`,
+   `supabase_migrations`) since the engine came up at 2026-08-23 07:49:54Z, which is before this work
+   began. The watch covers **every** schema, 186 tables, 18 sequences, 2,616 grants and 1,614 structural
+   objects, splits them into HIS / services-inside-his-database / Supabase's own, treats an unknown
+   schema as HIS, and REFUSES to answer if the engine restarts or the statistics are reset.
+   `node scripts/b36/company-write-watch.mjs`.
    **NEXT IS BLOCK 2** — the construction moves out to its own Supabase stack (own container, own
    ports, own credentials, project `DxB_Build`), schema from the same `supabase/migrations`, and its
    data GENERATED, never copied from his real rows. Then Block 3 (the read-only window, `dxb_reader`
-   with SELECT and nothing else), Block 4 (the **96** remaining fallbacks — 84 tests · 8 scripts ·
-   3 seeds · 1 live route, counted by the committed `scripts/b36/count-company-fallbacks.mjs` after two
-   audits produced three disagreeing figures — which cannot move before Block 2 because the tests would
-   have nowhere to point), Block 5 (the residue move, his dry-run first), Block 6 (`pnpm verify:separation`),
+   with SELECT and nothing else), Block 4 (the **97** remaining fallbacks — 85 tests · 8 scripts ·
+   3 seeds · 1 live route, counted by `scripts/b36/count-company-fallbacks.mjs`, which PARSES the code
+   after three audits produced four disagreeing figures — which cannot move before Block 2 because the
+   tests would have nowhere to point), Block 5 (the residue move, his dry-run first), Block 6 (`pnpm verify:separation`),
    Block 7 (records, including closing C36).
    **State when this was written:** battery `96 files · 725 passed · 15 skipped` · `tsc --build` exit 0 ·
    `pnpm verify:ledger` OK · the company measured after the whole battery ran:
