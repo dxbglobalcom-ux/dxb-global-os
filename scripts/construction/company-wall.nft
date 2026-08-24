@@ -113,4 +113,49 @@ table inet dxb_wall {
     counter drop \
       comment "default-deny: and nothing that is not TCP leaves at all"
   }
+
+  # ---------------------------------------------------------------------------
+  # THE HOLDING'S OWN FRONT DOOR — a separate wall, facing the other way.
+  #
+  # Everything above confines the CONSTRUCTION. This chain confines nobody: it
+  # shuts a door the holding was leaving open to the whole house.
+  #
+  # Measured 2026-08-24, from a throwaway container on a different network — the
+  # nearest thing to "another machine on the wifi" that could be produced without
+  # a second device:
+  #
+  #     192.168.178.44:54322   REACHABLE     the holding's database
+  #     192.168.178.44:54321   REACHABLE     the holding's API gateway
+  #     172.17.0.1:54322       REACHABLE
+  #
+  # and the password behind that database is the Supabase CLI's documented local
+  # default. The CLI publishes both doors on 0.0.0.0 and offers no setting to bind
+  # them to this machine: supabase/config.toml has none, and db.network_restrictions
+  # is for the hosted project and is disabled. Changing the password is the wrong
+  # lever and was rejected on measurement — the repository's own canonical chain
+  # spells it in three named places (verify:schema-parity, scripts/bootstrap-db.sh
+  # through construction:schema, tests/construction-engine.ts), the live dxb_litellm
+  # container connects to the holding with it, and supabase start writes it back.
+  #
+  # So the door is shut in the kernel instead, where no tool reopens it by accident:
+  # at PREROUTING with priority -150, which runs BEFORE Docker's own address rewrite
+  # at -100 — so the rule still sees the port a stranger actually dialled, not the
+  # container port it has already been turned into.
+  #
+  # Nothing on this machine loses anything. Traffic the host itself originates never
+  # traverses prerouting at all; loopback returns on the first line; the holding's
+  # own containers speak to each other on their internal ports and were measured to
+  # hold no reference to these two doors; and dxb_litellm, which does use the
+  # database, runs on the host's own network and therefore over loopback.
+  # ---------------------------------------------------------------------------
+  chain company_front_door {
+    type filter hook prerouting priority -150; policy accept;
+
+    iifname "lo" return
+
+    tcp dport 54322 counter drop \
+      comment "the holding's database is for this machine, not for the network"
+    tcp dport 54321 counter drop \
+      comment "the holding's API gateway is for this machine, not for the network"
+  }
 }

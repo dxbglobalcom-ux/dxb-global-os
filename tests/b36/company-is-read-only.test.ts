@@ -55,6 +55,19 @@ function runNode(args: string[]): string {
   }
 }
 
+// The packet filter holds two walls facing opposite ways, so every test that reads
+// it reads ONE chain at a time — a rule that is right in one is wrong in the other.
+const WALL_NFT = join(REPO, "scripts/construction/company-wall.nft");
+const WALL_NFT_INSTALLED = "/usr/local/share/dxb-company-wall.nft";
+function rulesOfChain(nft: string, chain: string): string[] {
+  const i = nft.indexOf(`chain ${chain} {`);
+  if (i < 0) return [];
+  const j = nft.indexOf("\n  }", i);
+  return nft.slice(i, j < 0 ? undefined : j).split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0 && !l.startsWith("#"));
+}
+
 describe("B36 · Block 3 — the one-way window", () => {
   it("(1) the window's SQL gives each privilege back only to who already held it", () => {
     const sql = readFileSync(WINDOW_SQL, "utf8");
@@ -199,28 +212,29 @@ describe("B36 · Block 3 — the one-way window", () => {
     // into the default-deny. Measured on this machine, the wall was destroying the
     // loopback replies of the CEO's own editor processes, ten packets in two idle
     // seconds, for every user on the machine.
-    const SRC = join(REPO, "scripts/construction/company-wall.nft");
-    const nft = readFileSync(SRC, "utf8");
-    const rules = nft.split("\n")
-      .map((l) => l.trim())
-      .filter((l) => l && !l.startsWith("#"));
-    const denies = rules.filter((l) => /\b(reject|drop)\b/.test(l));
-    const allows = rules.filter((l) => /\baccept\b/.test(l));
+    const nft = readFileSync(WALL_NFT, "utf8");
 
-    expect(denies.length, "the wall forbids nothing at all").toBeGreaterThan(0);
+    // Read chain by chain. This file holds two walls facing opposite ways, and a
+    // rule that is right in one of them is wrong in the other: the outward wall may
+    // never name a port it forbids, and the inward one names nothing else.
+    const outward = [...rulesOfChain(nft, "output"), ...rulesOfChain(nft, "construction")];
+    const denies = outward.filter((l) => /\b(reject|drop)\b/.test(l));
+    const allows = outward.filter((l) => /\baccept\b/.test(l));
+
+    expect(denies.length, "the outward wall forbids nothing at all").toBeGreaterThan(0);
     for (const d of denies) {
       expect(d, `a rule forbids by port number — the shape that failed its audit: ${d}`)
         .not.toMatch(/dport/);
     }
     expect(denies.some((d) => /l4proto tcp/.test(d) && /reject/.test(d)),
-      "the wall has no default-deny for TCP").toBe(true);
+      "the outward wall has no default-deny for TCP").toBe(true);
     expect(denies.some((d) => !/l4proto/.test(d) && /drop/.test(d)),
-      "the wall lets through everything that is not TCP").toBe(true);
+      "the outward wall lets through everything that is not TCP").toBe(true);
 
     // Measured on the RULES, never on the file: this file explains the trap in its
     // own comments, and a test that reads the prose cannot tell the warning from
     // the mistake.
-    const ruleText = rules.join("\n");
+    const ruleText = outward.join("\n");
     expect(ruleText, "the wall stopped examining the construction identity by name")
       .toMatch(/meta skuid 997 jump/);
     expect(ruleText, "the wall tests `skuid != 997`, which destroys ownerless packets for every user")
@@ -235,11 +249,45 @@ describe("B36 · Block 3 — the one-way window", () => {
     }
 
     // And the file that is loaded is this one.
-    const INSTALLED = "/usr/local/share/dxb-company-wall.nft";
-    expect(existsSync(INSTALLED),
+    expect(existsSync(WALL_NFT_INSTALLED),
       "the packet filter is not installed — run: bash scripts/construction/install-wall.sh").toBe(true);
-    expect(readFileSync(INSTALLED, "utf8"),
-      `${INSTALLED} has drifted from ${SRC}`).toBe(nft);
+    expect(readFileSync(WALL_NFT_INSTALLED, "utf8"),
+      `${WALL_NFT_INSTALLED} has drifted from ${WALL_NFT}`).toBe(nft);
+  });
+
+  it("(7) the holding's own two doors are shut to the network, and this machine is not", () => {
+    // The other half of the same audit, and it is not about the construction at all.
+    // The Supabase CLI publishes the holding's database and API gateway on 0.0.0.0 —
+    // every interface this machine owns — and the password behind that database is
+    // the CLI's own documented local default. Measured 2026-08-24 from a container
+    // on a different network, which is the nearest thing to another machine on the
+    // wifi that can be produced without a second device:
+    //
+    //     192.168.178.44:54322   REACHABLE     the holding's database
+    //     192.168.178.44:54321   REACHABLE     the holding's API gateway
+    //
+    // Changing the password was rejected on measurement, not on taste: the
+    // repository's own canonical chain spells it in three named places, the live
+    // `dxb_litellm` container connects to the holding with it, and `supabase start`
+    // writes it back. The door is shut in the kernel instead, where no tool reopens
+    // it by accident. The live proof is in prove-wall.mjs; this test guards the shape.
+    const nft = readFileSync(WALL_NFT, "utf8");
+    const front = rulesOfChain(nft, "company_front_door");
+
+    // It must run BEFORE Docker rewrites the destination, or it would be looking for
+    // a port that no longer exists by the time it sees the packet.
+    expect(front.join("\n"), "the front door stopped running before Docker's address rewrite")
+      .toMatch(/hook prerouting priority (mangle|-150)/);
+
+    // This machine's own traffic is untouched.
+    expect(front.some((l) => /iifname "lo" return/.test(l)),
+      "the front door stopped letting this machine's own loopback past").toBe(true);
+
+    // And both of the holding's doors are shut to everything else.
+    for (const door of ["54322", "54321"]) {
+      expect(front.some((l) => l.includes(`dport ${door}`) && /\bdrop\b/.test(l)),
+        `the holding's door ${door} is open to the network`).toBe(true);
+    }
   });
 
   it("(5) the wall that runs is ROOT-OWNED, and the repository's copy has not drifted from it", () => {

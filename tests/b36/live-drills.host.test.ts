@@ -144,6 +144,32 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
       // And the one door that is supposed to work, works — including the gate.
       expect(out, `the read gateway stopped answering named questions:\n${out}`)
         .toMatch(/works\s+a named question is answered/);
+      // THE HOLDING'S OWN FRONT DOOR — the other half of the same audit, and it is
+      // not about the construction at all. The Supabase CLI publishes the holding's
+      // database and API gateway on every interface this machine owns, and the
+      // password behind that database is the CLI's documented local default. The
+      // door is shut in the kernel, and the drill dials it from a container on a
+      // different network — the nearest thing to another machine on the wifi that
+      // can be produced without a second device.
+      expect(out, `the drill stopped measuring the holding's own front door:\n${out}`)
+        .toContain("THE HOLDING'S OWN FRONT DOOR");
+      expect(out, `the holding's doors are open to the network:\n${out}`)
+        .not.toContain("STILL OPEN");
+      for (const shape of [
+        /refused\s+\d+\.\d+\.\d+\.\d+\/54322\s+refused/,
+        /refused\s+\d+\.\d+\.\d+\.\d+\/54321\s+refused/,
+        /the front-door chain is loaded\s+yes/,
+        /it runs BEFORE Docker rewrites the address\s+yes/,
+        /this machine's own loopback is let by untouched\s+yes/,
+        /both of the holding's doors are shut to the network\s+yes/,
+      ]) {
+        expect(out, `the holding's front door is open again:\n${out}`).toMatch(shape);
+      }
+      // And the same probe, from the same place, must still reach a door on this
+      // machine that is not the holding's — otherwise it is refusing nothing.
+      expect(out, `the front-door probe cannot reach anything, so it proves nothing:\n${out}`)
+        .toMatch(/works\s+a door on this machine that is NOT the holding's\s+REACHABLE/);
+
       expect(out, `the governance gate did not run through the gateway:\n${out}`)
         .toMatch(/with the gateway running\s+exit 0/);
       expect(out, `the governance gate found another way to read the holding:\n${out}`)

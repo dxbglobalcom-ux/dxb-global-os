@@ -273,20 +273,34 @@ for (const [id, what, want] of SECOND) {
  */
 const nft = sh("sudo", ["-n", "nft", "list", "table", "inet", "dxb_wall"]);
 const rules = (nft.stdout || "").split("\n").map((x) => x.trim()).filter(Boolean);
-const denies = rules.filter((r) => /\b(reject|drop)\b/.test(r));
+/**
+ * Read ONE chain at a time. This table now holds two walls facing opposite ways —
+ * the outward one confines the construction and may never name a port it forbids,
+ * the inward one shuts the holding's own two doors to the network and names
+ * nothing else. A check written across the whole table calls each of them a leak.
+ */
+const chainRules = (name) => {
+  const text = nft.stdout || "";
+  const i = text.indexOf(`chain ${name} {`);
+  if (i < 0) return [];
+  const j = text.indexOf("\n\t}", i);
+  return text.slice(i, j < 0 ? undefined : j).split("\n").map((x) => x.trim()).filter(Boolean);
+};
+const outward = [...chainRules("output"), ...chainRules("construction")];
+const denies = outward.filter((r) => /\b(reject|drop)\b/.test(r));
 const refused = denies.reduce((n, r) => n + Number((r.match(/counter packets (\d+)/) || [0, 0])[1]), 0);
 const refusedBytes = denies.reduce((n, r) => n + Number((r.match(/bytes (\d+)/) || [0, 0])[1]), 0);
 // EVERY accept in the table is printed, not only the ones that name a port, so a
 // door can never be opened where the report does not show it.
-const allowed = rules.filter((r) => /\baccept\b/.test(r) && /counter/.test(r));
+const allowed = outward.filter((r) => /\baccept\b/.test(r) && /counter/.test(r));
 // Written as `skuid 997 jump`, never as `skuid != 997 accept`. Measured
 // 2026-08-24: a packet the kernel emits with no owning socket carries no skuid,
 // so `!= 997` does not match it, it is not accepted either, and it falls into the
 // default-deny — which had this machine destroying the loopback replies of the
 // CEO's own editor processes for every user on it. The drill refuses a green
 // verdict if the wall is ever written back into that shape.
-const hasIdentity = rules.some((r) => /meta skuid 997 jump/.test(r));
-const negatedIdentity = rules.some((r) => /skuid\s*!=\s*997/.test(r));
+const hasIdentity = outward.some((r) => /meta skuid 997 jump/.test(r));
+const negatedIdentity = outward.some((r) => /skuid\s*!=\s*997/.test(r));
 const hasDefaultDeny = denies.some((r) => !/dport/.test(r) && /l4proto tcp/.test(r))
   && denies.some((r) => !/dport/.test(r) && !/l4proto/.test(r));
 const denyNamesPorts = denies.some((r) => /dport/.test(r));
@@ -301,6 +315,66 @@ line(`    the kernel's own count of refusals so far            ${refused} packet
 if (nft.status !== 0 || !hasIdentity || negatedIdentity || !hasDefaultDeny || denyNamesPorts) leaks++;
 
 // ------------------------------------------------------- the gate fails closed
+// ---------------------------------------- the holding's OWN front door
+/**
+ * A DIFFERENT WALL, FACING THE OTHER WAY.
+ *
+ * Everything above asks whether the construction can reach the holding. This asks
+ * whether ANYTHING THAT IS NOT THIS MACHINE can. It was found on 2026-08-24 while
+ * answering the audit that broke wall one: the Supabase CLI publishes the
+ * holding's database and API gateway on 0.0.0.0 — every interface this machine
+ * owns — and the password behind that database is the CLI's documented local
+ * default. Measured then, from a container on a different network, which is the
+ * nearest thing to another machine on the wifi that can be produced without a
+ * second device: 192.168.178.44:54322 REACHABLE, 54321 REACHABLE.
+ *
+ * The probe is fired from the CONSTRUCTION engine's own container. It is not this
+ * machine, it is not the holding's network, and it is disposable — and it is
+ * already a prerequisite of every run, so the drill needs nothing it does not
+ * already have.
+ */
+line("  THE HOLDING'S OWN FRONT DOOR — can anything that is NOT this machine dial it?");
+{
+  const hostAddr = (sh("bash", ["-c",
+    "ip -o -4 addr show scope global | awk '{print $4}' | cut -d/ -f1 | head -1"]).stdout || "").trim();
+  const fromOffHost = (target) => {
+    const r = sh("docker", ["exec", "supabase_db_DxB_Build", "bash", "-c",
+      "timeout 3 bash -c 'echo > /dev/tcp/" + target + "' 2>/dev/null && echo REACHABLE || echo refused"]);
+    return (r.stdout || "").trim() || "(not measured)";
+  };
+
+  if (!hostAddr) {
+    line("    BLIND   this machine has no routable address, so nothing could be dialled.");
+    blind++;
+  } else {
+    for (const door of [hostAddr + "/54322", hostAddr + "/54321", "172.17.0.1/54322"]) {
+      const v = fromOffHost(door);
+      const shut = v === "refused";
+      if (!shut) leaks++;
+      line(`    ${shut ? "refused " : "STILL OPEN"} ${door.padEnd(52)} ${v}`);
+    }
+    // The green half. The SAME probe, from the SAME place, at a door on this
+    // machine that is not the holding's. A refusal measured by a probe that
+    // cannot reach anything proves nothing.
+    const green = fromOffHost(hostAddr + "/3000");
+    if (green !== "REACHABLE") blind++;
+    line(`    ${green === "REACHABLE" ? "works   " : "BLIND   "} ${("a door on this machine that is NOT the holding's").padEnd(52)} ${green}`);
+  }
+
+  // And the shape of that chain, read from the live ruleset.
+  const front = chainRules("company_front_door");
+  const hasChain = front.length > 0;
+  const beforeDocker = front.some((r) => /hook prerouting/.test(r) && /(mangle|-150)/.test(r));
+  const letsLoopbackBy = front.some((r) => /iifname "lo" return/.test(r));
+  const shutsBothDoors = front.filter((r) => /dport 5432[12] counter .*drop/.test(r)).length === 2;
+  line(`    the front-door chain is loaded                       ${hasChain ? "yes" : "NO — LEAK"}`);
+  line(`    it runs BEFORE Docker rewrites the address           ${beforeDocker ? "yes" : "NO — LEAK"}`);
+  line(`    this machine's own loopback is let by untouched      ${letsLoopbackBy ? "yes" : "NO — LEAK"}`);
+  line(`    both of the holding's doors are shut to the network  ${shutsBothDoors ? "yes" : "NO — LEAK"}`);
+  if (!hasChain || !beforeDocker || !letsLoopbackBy || !shutsBothDoors) leaks++;
+}
+line();
+
 line("  THE GOVERNANCE GATE, from inside the sandbox:");
 const ledgerUp = sh("bash", [join(REPO, "scripts/construction/run.sh"), "node", "scripts/governance/ledger-truth.mjs"]);
 line(`    with the gateway running                             exit ${ledgerUp.status} — ${(ledgerUp.stdout || "").trim().split("\n").pop() || (ledgerUp.stderr || "").trim().split("\n").pop()}`);

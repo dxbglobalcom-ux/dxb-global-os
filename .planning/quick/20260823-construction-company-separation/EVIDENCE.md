@@ -1640,3 +1640,97 @@ every bridge gateway, and fires at all of them. If that list ever comes back emp
 
 **The holding did not move while any of this was measured:** `STATE_FINGERPRINT de359137ee1d7c79`
 before and after, `audit_log / hook_violations: 29637/1963` before and after.
+
+
+---
+
+## The holding's own front door was open to the whole house · 2026-08-24
+
+This is not about the construction. It came out of the same audit and it is the
+second thing that audit exposed: the auditor's login worked partly because the
+holding's database answers **every interface this machine owns**, behind a password
+the Supabase CLI documents publicly.
+
+**Measured, from off this machine.** A throwaway container on a different network is
+the nearest thing to another device on the wifi that can be produced without a second
+device. No login was attempted — only a knock:
+
+```
+$ docker run --rm --network bridge alpine nc -z 192.168.178.44 54322
+192.168.178.44:54322 REACHABLE          <- the holding's database
+$ docker exec supabase_db_DxB_Build …    # the construction engine's own container
+  192.168.178.44/54322     REACHABLE
+  192.168.178.44/54321     REACHABLE     <- the holding's API gateway
+  172.17.0.1/54322         REACHABLE
+  172.18.0.6/5432          refused       <- Docker's own network isolation holds here
+$ ss -ltn | grep 5432
+  0.0.0.0:54322   0.0.0.0:54321   [::]:54322   [::]:54321
+```
+
+And the password behind that database, compared without ever printing it:
+
+```
+$ docker inspect -f '…POSTGRES_PASSWORD…' supabase_db_DxB_Global_OS   # compared, not printed
+the company's postgres password IS the well-known default
+$ docker exec … grep '^host' pg_hba.conf
+host all all 127.0.0.1/32   trust
+host all all 172.16.0.0/12  scram-sha-256      <- a LAN caller arrives here: password required
+host all all 0.0.0.0/0      scram-sha-256
+```
+
+### Why the password was NOT the lever — measured, not preferred
+
+```
+supabase/config.toml            no setting binds the local doors to this machine;
+                                [db.network_restrictions] is for the hosted project, enabled = false
+verify:schema-parity            spells postgres:postgres against 54322
+construction:schema             scripts/bootstrap-db.sh, same
+tests/construction-engine.ts    same
+dxb_litellm (live container)    LITELLM_DATABASE_URL=postgresql://postgres:…@127.0.0.1:54322
+```
+
+Changing it breaks the repository's own canonical migration chain in three named
+places and the live model gateway, and `supabase start` writes it back. That is
+fighting the tool. **The network is the lever.**
+
+### What was built
+
+A second chain in the same `dxb_wall` table, facing the other way — at PREROUTING,
+priority -150, which runs **before** Docker's address rewrite at -100, so the rule
+still sees the port a stranger actually dialled:
+
+```
+chain company_front_door {
+  type filter hook prerouting priority -150; policy accept;
+  iifname "lo" return
+  tcp dport 54322 counter drop
+  tcp dport 54321 counter drop
+}
+```
+
+Traffic this machine originates never traverses prerouting; loopback returns on the
+first line; the holding's own containers were measured to hold no reference to these
+two doors (`supabase_auth`'s seven are e-mail URL strings, not connections); and
+`dxb_litellm`, which does use the database, runs on the host's network and therefore
+over loopback.
+
+### Measured after
+
+```
+construction container -> 192.168.178.44/54322     refused
+construction container -> 192.168.178.44/54321     refused
+construction container -> 172.17.0.1/54322         refused
+throwaway container    -> 192.168.178.44:54322     refused
+the same probe at a door on this machine that is NOT the holding's   REACHABLE
+
+this machine itself:  127.0.0.1:54322 works · 127.0.0.1:54321 works · [::1]:54322 works · 3000 works
+after `systemctl restart dxb-company-wall` (i.e. after a reboot): the chain is still there
+the holding's five containers: all Up 34 hours, four of them healthy
+dashboard /login 200 · company API gateway 200 · company auth 200
+dxb-scheduler active 0 restarts · dxb-jarvis active 0 restarts · dxb-company-read active 0 restarts
+```
+
+**Not closed, and named rather than hidden:** the CONSTRUCTION engine's own doors
+(54421/54422) remain open to the network with the same default password. They carry
+generated data and not one row of the holding's, so they are not a holding risk; that
+is a judgement, not a measurement, and it is written here so it can be overruled.
