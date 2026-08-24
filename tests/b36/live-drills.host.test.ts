@@ -119,7 +119,16 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
       // Docker every run, not written down, so a container that appears tomorrow
       // is swept tomorrow. An empty list would be a clean sweep that swept nothing.
       expect(out, `the address sweep went blind:\n${out}`)
-        .toMatch(/the holding answers on [1-9]\d* address\(es\)/);
+        .toMatch(/the holding was found at [1-9]\d* address\(es\)/);
+      // And the count that matters is not what was DISCOVERED but what actually
+      // answers. Measured 2026-08-24: the sweep had been counting 18 hostnames
+      // that never existed, because Docker's template prints the two words
+      // `invalid IP` for a container with no IPv6 address. Refusing to resolve a
+      // name that does not exist is padding, not evidence — so the red half now
+      // decides which of the discovered addresses are real doors, and the drill
+      // prints BLIND rather than a verdict if it reaches none of them.
+      expect(out, `not one discovered address is a real door — the sweep proves nothing:\n${out}`)
+        .toMatch(/of those, [1-9]\d* are real doors/);
       expect(out, `the address sweep found nothing to attack:\n${out}`)
         .toMatch(/reaches\s+the holding at EVERY address it answers on[^\n]*REACHED:/);
       expect(out, `the container-address login was never proven possible:\n${out}`)

@@ -77,7 +77,17 @@ function companyAddresses() {
       + "|{{range $p,$c := .Config.ExposedPorts}}{{$p}} {{end}}", n]);
     if (r.status !== 0) continue;
     const [ipPart = "", portPart = ""] = (r.stdout || "").trim().split("|");
-    const ips = ipPart.split(/\s+/).filter((x) => x && x !== "<no value>");
+    /**
+     * Only things that ARE an address. Measured 2026-08-24, and it was found by a
+     * second, independent measurement disagreeing with this one: when a container
+     * has no IPv6 address, Docker's template prints the two words `invalid IP`
+     * rather than an empty string, and a filter that only rejected `<no value>`
+     * let both words through as hostnames. The sweep then reported 39 addresses
+     * where 21 exist, and 18 of its refusals were refusals to resolve a name that
+     * never existed. A refusal against nothing is not evidence — it is padding.
+     */
+    const isAddress = (x) => /^\d+\.\d+\.\d+\.\d+$/.test(x) || /^[0-9a-f:]+:[0-9a-f:]+$/i.test(x);
+    const ips = ipPart.split(/\s+/).filter(isAddress);
     const ports = portPart.split(/\s+/).filter(Boolean).map((x) => x.split("/")[0]);
     for (const ip of ips) for (const port of ports) out.add(`${ip}:${port}`);
   }
@@ -196,7 +206,7 @@ line();
 
 // -------------------------------------------------------------- the two probes
 line("  THE ADDRESSES THE SWEEP USES — asked of Docker this run, not written down:");
-line(`    the holding answers on ${COMPANY_ADDRS.length} address(es):`);
+line(`    the holding was found at ${COMPANY_ADDRS.length} address(es):`);
 for (const a of COMPANY_ADDRS) line(`      ${a}`);
 line(`    the construction's own container address              ${CONSTRUCTION_ADDR || "(none found)"}`);
 if (COMPANY_ADDRS.length === 0 || !CONSTRUCTION_ADDR) {
@@ -215,6 +225,27 @@ for (const [id, what, , wantOutside] of [...MATRIX, ...MUST_WORK, ...RED_ONLY]) 
   line(`    ${ok ? "  " : "!!"} ${(wantOutside ? "reaches" : "refused").padEnd(8)} ${what.padEnd(52)} ${outside[id]?.detail ?? "(not measured)"}`);
 }
 line();
+
+/**
+ * How many of those addresses are REAL DOORS. An address nothing listens on refuses
+ * everyone, walled or not, and counting it inflates the sweep without strengthening
+ * it. So the red half decides: whatever the unsandboxed runtime could actually
+ * reach is what the walled runtimes have to be refused from, and if that number is
+ * zero the drill is blind and says so.
+ */
+{
+  const detail = outside["tcp-company-every-address"]?.detail || "";
+  const live = detail.startsWith("REACHED:")
+    ? detail.slice("REACHED:".length).split(",").map((x) => x.trim()).filter(Boolean)
+    : [];
+  line(`    of those, ${live.length} are real doors — the unsandboxed runtime reached them:`);
+  for (const a of live) line(`      ${a}`);
+  if (live.length === 0) {
+    line("    BLIND   not one of the discovered addresses answered even without a wall.");
+    blind++;
+  }
+  line();
+}
 
 line("  THE WALL — the same probe from INSIDE the construction sandbox.");
 const inside = probe("inside");

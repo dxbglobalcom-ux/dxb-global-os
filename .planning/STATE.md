@@ -128,7 +128,7 @@ destination of every non-loopback local address in the `nat` OUTPUT hook, which 
 filter hook. **A wall that names what it forbids is always shorter than the list of ways to spell an
 address**, so it now names what it ALLOWS — eight construction ports on the loopback address,
 everything else this identity emits refused, IPv4 and IPv6, TCP and non-TCP. Fired again with **no
-sandbox at all** between it and the company: **39 addresses asked of Docker that run, 39 refused**,
+sandbox at all** between it and the company: **21 addresses asked of Docker that run, the 19 of them that are real doors all refused**, **THAT COUNT WAS WRONG AND IS CORRECTED HERE, 2026-08-24:** a second, independent measurement built for the CEO's acceptance screen disagreed with the drill, and the drill was the one that was wrong. Docker's template prints the two words `invalid IP` when a container has no IPv6 address, and the sweep's filter turned both words into hostnames — so 18 of those 39 were names that never existed, and refusing to resolve a name that does not exist proves nothing. The real numbers, measured after the fix: **21 addresses discovered, 19 of them real doors** (two exposed ports have nothing listening behind them), **and every one of the 19 refused** from both walled runtimes. The drill now separates the two and prints `BLIND` if the red half reaches none of them.
 the live login at the container address **refused by the network before any credential was
 offered**, its own engine open. **The fix broke something else for thirty minutes and the sweep
 caught it:** `meta skuid != 997 accept` does not match a packet the kernel emits with **no owning

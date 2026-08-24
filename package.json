@@ -24,7 +24,8 @@
     "b36:prove-forged-event": "node scripts/b36/prove-forged-event.mjs",
     "b36:prove-wall": "node scripts/b36/prove-wall.mjs",
     "construction": "bash scripts/construction/run.sh",
-    "construction:battery": "bash scripts/construction/battery.sh"
+    "construction:battery": "bash scripts/construction/battery.sh",
+    "b36:eye-check": "node scripts/b36/eye-check.mjs"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",

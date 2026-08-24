@@ -1616,7 +1616,7 @@ after:              packets 1 packets 0      <- one attempt, one packet
 
 ```
 refused  the holding at EVERY address it answers on — the attack that broke wall one
-         all 39 addresses refused
+         all 21 addresses refused (19 of them real doors)
 refused  a real PostgreSQL login at the holding's CONTAINER address
          172.18.0.6:5432: refused by the network (ECONNREFUSED) — no credential was ever offered
 works    its OWN engine — this one MUST work                  connected
@@ -1629,7 +1629,7 @@ no rule forbids by port number (the shape that failed) correct
 ```
 
 And the red half proves the drill can still do all of it — from the unsandboxed runtime the same
-code **reaches all 39 addresses** and **logs in at `172.18.0.6:5432` as `dxb_gateway`**, and the same
+code **reaches all 19 of the real doors** and **logs in at `172.18.0.6:5432` as `dxb_gateway`**, and the same
 container-address login code succeeds against the construction engine at `172.20.0.2:5432`. A
 refusal measured by a probe that cannot succeed anywhere proves nothing.
 
@@ -1734,3 +1734,47 @@ dxb-scheduler active 0 restarts · dxb-jarvis active 0 restarts · dxb-company-r
 (54421/54422) remain open to the network with the same default password. They carry
 generated data and not one row of the holding's, so they are not a holding risk; that
 is a judgement, not a measurement, and it is written here so it can be overruled.
+
+
+---
+
+## The sweep was counting things that do not exist · corrected 2026-08-24
+
+An acceptance screen was built for the CEO on the same day, and it counted the
+holding's addresses independently. It said 21. The drill said 39. **The drill was
+wrong**, and the difference is worth the paragraph:
+
+```
+$ docker inspect -f '{{range …}}{{$v.IPAddress}} {{$v.GlobalIPv6Address}} {{end}}|…' supabase_db_DxB_Global_OS
+172.18.0.6 invalid IP |5432/tcp
+```
+
+When a container has no IPv6 address, Docker's template prints the two words
+`invalid IP` rather than nothing. The filter only rejected `<no value>`, so both
+words became hostnames, and 18 of the 39 "addresses" were names that never
+existed. Refusing to resolve a name that does not exist is not evidence — it is
+padding, and it made the wall look better tested than it was.
+
+**Corrected, and made stronger than it was before.** The sweep now keeps only
+strings that ARE an address, and the red half decides which of them matter: an
+address nothing listens on refuses everybody, walled or not.
+
+```
+the holding was found at 21 address(es)
+of those, 19 are real doors — the unsandboxed runtime reached them
+  172.18.0.2:3000 · 172.18.0.4:4000 · 172.18.0.3:9999 · 172.18.0.5:8000 · 172.18.0.5:8088
+  172.18.0.5:8443 · 172.18.0.6:5432 · 127.0.0.1:54321 · 127.0.0.1:54322
+  192.168.178.44:54321 · 192.168.178.44:54322 · 172.19.0.1:54321 · 172.19.0.1:54322
+  172.18.0.1:54321 · 172.18.0.1:54322 · 172.17.0.1:54321 · 172.17.0.1:54322
+  172.20.0.1:54321 · 172.20.0.1:54322
+all 21 addresses refused          (from inside the sandbox)
+all 21 addresses refused          (from the bare construction identity)
+WALL_IS_ONE_WAY
+```
+
+If the red half ever reaches none of them, the drill prints `BLIND` and refuses a
+verdict instead of reporting a clean sweep of an empty list.
+
+**The lesson, and it is the one already written on this repository's wall:**
+validate the detector before you trust what it counted. It was caught only because
+a second measurement existed to disagree with the first.

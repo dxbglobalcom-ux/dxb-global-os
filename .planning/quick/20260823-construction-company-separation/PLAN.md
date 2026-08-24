@@ -331,7 +331,7 @@ ports, on the loopback address only, and everything else this identity emits is 
 other address, every container bridge, every port, IPv4 and IPv6, TCP and non-TCP.
 
 **Measured after the change, from the auditor's own runtime** (`dxbbuild`, outside the sandbox, no
-namespace of any kind): **39 addresses discovered from Docker this run, 39 refused**, and the live
+namespace of any kind): **21 addresses discovered from Docker this run, the 19 of them that are real doors all refused** **THAT COUNT WAS WRONG AND IS CORRECTED HERE, 2026-08-24:** a second, independent measurement built for the CEO's acceptance screen disagreed with the drill, and the drill was the one that was wrong. Docker's template prints the two words `invalid IP` when a container has no IPv6 address, and the sweep's filter turned both words into hostnames — so 18 of those 39 were names that never existed, and refusing to resolve a name that does not exist proves nothing. The real numbers, measured after the fix: **21 addresses discovered, 19 of them real doors** (two exposed ports have nothing listening behind them), **and every one of the 19 refused** from both walled runtimes. The drill now separates the two and prints `BLIND` if the red half reaches none of them., and the live
 PostgreSQL login at `172.18.0.6:5432` **refused by the network before any credential was offered**.
 Its own engine still answers. The drill no longer guesses how the holding can be spelled: it asks
 Docker for the address of every container the holding owns, crosses it with every port that
