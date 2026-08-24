@@ -1320,3 +1320,142 @@ ledger truth OK: 8 state claims re-measured, 94 open markers resolved against 66
 | `authenticated` · `service_role` · `postgres` | `decide_approvals`, `fn_chat_post_message`, writes to `cost_ledger` — all unchanged |
 | The two resident services (`dxb-scheduler`, `dxb-jarvis`) | both `active` |
 | The CEO's login and his live tiles | Supabase Auth and Realtime are untouched — the block adds a role and moves privileges; ⚠ still to be confirmed by eye |
+
+---
+
+## Block 3-bis — THE WALL OUTSIDE THE DATABASE — 2026-08-24
+
+**Approved before a line was written:** *"onaylıyorum"* · *"önce bis-block3 yap ilk onayladığımı"* —
+registered as `b36-block3-bis-os-wall-2026-08-24`. LAW B still stands: this is permission to build.
+
+### Why Block 3 failed three audits — measured, not argued
+
+The third adversarial audit's sentence was *"the current gateway plan does not close host-level
+Docker access."* It was right, and the measurement below is why. Every attempt so far had built the
+wall **inside PostgreSQL**, while the construction runtime ran as the operating-system user `dxb`,
+a member of the `docker` group — and the Docker socket is root on this machine. Fired from the
+construction runtime, SELECT-only, **nothing changed in the company**:
+
+```
+docker exec -i supabase_db_DxB_Global_OS psql -U supabase_admin -c "select current_user, usesuper"
+  REACHED supabase_admin superuser=true
+
+docker exec -i supabase_db_DxB_Global_OS psql -U postgres -c "select has_table_privilege(...)"
+  postgres can INSERT into cost_ledger : true
+  postgres can DELETE from audit_log   : true
+  postgres can UPDATE approvals        : true
+
+test -r .env .env.daemon var/b36/company-window.env
+  READABLE: .env (73 bytes) · .env.daemon (1372) · var/b36/company-window.env (329)
+
+psql "$DXB_COMPANY_READONLY_URL" -c "select current_user"
+  TCP LOGIN SUCCEEDED as dxb_reader
+
+scripts/governance/ledger-truth.mjs:220-221
+  both branches were `docker exec …`; the fallback branch was `-U postgres`
+```
+
+So closing `dxb_reader`'s three self-directed capabilities would **not** have closed this row. A
+runtime that can become `supabase_admin` never needed `dxb_reader` at all.
+
+### What was built
+
+| # | The wall | What it is |
+|---|---|---|
+| 1 | **The sandbox** — `scripts/construction/run.sh` | Everything the construction runs goes through it: `bwrap` with its own **empty network namespace**, its own PID/IPC/UTS namespaces, an empty `HOME`, no Docker socket bound in, `var/b36` replaced by an empty directory, and a hosts file of its own because there is no resolver inside. **Default deny:** the only TCP ports that exist inside are the seven named in `ALLOW`, each carried in over a unix socket. 54322 and 54321 are not among them |
+| 2 | **The withdrawal** — `scripts/b36/withdraw-company-login.mjs` | `dxb_reader` no longer exists on the company's engine. It was **renamed**, not dropped and rebuilt: PostgreSQL keys every grant to the role's OID, so the whole audited privilege set moved with the identity and **not one GRANT was re-issued** — the act that broke the holding for eleven minutes on this row's first attempt |
+| 3 | **The read gateway** — `scripts/b36/company-read-gateway.mjs` | Runs on the company's side as its own resident service, holds the only connection, listens on a **unix socket**. The caller sends a **name**; the SQL behind it comes from a catalogue the gateway **freezes at startup**, so a construction run that rewrites `claims.json` cannot change what a running gateway executes. Read-only at four levels: the role's privileges, `default_transaction_read_only=on`, a `BEGIN READ ONLY` per answer, and a plain-SELECT check on every catalogue entry |
+| 4 | **Fail closed** — `scripts/governance/ledger-truth.mjs` | Both `docker exec` branches deleted, including the `-U postgres` fallback the auditor named. The file now holds no `child_process` import, no command name and no company address. Gateway down → the gate stops and says so |
+
+### The withdrawal — before and after
+
+```
+BEFORE   roles on the engine 17 · dxb_reader table grants 106 · routine 0 · usage 0
+         default privileges 0 · login/super/createdb/createrole/bypassrls = true/false/false/false/true
+         STATE_FINGERPRINT de359137ee1d7c79
+AFTER    dxb_reader on the engine 0  (was 1)
+         dxb_gateway table grants 106 · routine 0 · default privileges 0
+         attributes true/false/false/false/true — identical
+         STATE_FINGERPRINT de359137ee1d7c79
+         credential at ~/.config/dxb/company-gateway.env (600), outside the repository
+         var/b36/company-window.env — deleted
+COMPANY_LOGIN_WITHDRAWN
+```
+
+`postgres` could not perform the rename — *"permission denied to rename role"* — because on a
+Supabase stack it holds neither `CREATEROLE` nor `ADMIN` on it. The installer uses `supabase_admin`,
+the same role the window's own installer uses, and it is on the company's side of the wall.
+
+### The proof — `pnpm b36:prove-wall`
+
+Every attempt is fired **twice**: once from the unsandboxed runtime, where it MUST succeed, and once
+from inside the sandbox the construction actually runs in, where it must be refused. A refusal
+measured by a probe that cannot succeed anywhere proves nothing — the drill prints `PROBE_IS_BLIND`
+and exits 1 rather than a green verdict if the red half fails. It found that fault in itself on its
+first run (`Cannot find module 'pg-types'`: pnpm links `pg` through a symlink whose siblings are not
+beside it) and refused to pass.
+
+```
+THE ACCOUNT THAT WAS WITHDRAWN
+  dxb_reader on the company engine   gone
+  what holds the window now          dxb_gateway, on the company's side only
+WHAT THE WINDOW'S OWN ROLE MAY STILL DO, class by class:   all 9 classes are zero
+
+RED HALF, unsandboxed — every one reaches:
+  a direct TCP login (5 spellings)   reached as 127.0.0.1, localhost, 127.1, 2130706433, 127.0.0.2
+  the company's HTTP gateway         reached as all five spellings
+  the Docker socket / command        present · 15 containers
+  the company's container            supabase_admin
+  the credential files               readable: .env .env.daemon ~/.config/dxb/… ~/.config/systemd/…
+  a real login to the holding        logged in as dxb_gateway
+
+GREEN HALF, inside the sandbox — every one refused:
+  a direct TCP login (5 spellings)   every spelling refused
+  the company's HTTP gateway         every spelling refused
+  the Docker socket                  ENOENT
+  the Docker command / container     Command failed
+  the credential files               none readable
+  a real login to the holding        ENOENT … '/tmp/home/.config/dxb/company-gateway.env'
+  SQL smuggled through the gateway   all 6 refused
+  any operation but the named read   all 5 refused
+
+AND THE ONE DOOR THAT WORKS, from inside:
+  the construction's own engine      connected
+  a named question                   agents_total = 205
+
+THE GOVERNANCE GATE, from inside the sandbox:
+  with the gateway running           exit 0 — ledger truth OK: 8 state claims re-measured …
+  with the gateway stopped           exit 1 — the company's read gateway is not answering
+
+THE HOLDING, BEFORE AND AFTER THE WHOLE DRILL
+  STATE_FINGERPRINT de359137ee1d7c79  ->  de359137ee1d7c79
+  audit_log / hook_violations: 29637/1963  ->  29637/1963
+WALL_IS_ONE_WAY
+```
+
+### The battery, and which half ran where — `pnpm construction:battery`
+
+Nothing was moved out of the wall quietly. `scripts/construction/battery.sh` names the split in the
+file and prints it on every run:
+
+* **The construction runtime, sandboxed** — every test file but the two below.
+* **The author's hand, on the company's side** — `tests/b36/live-drills.host.test.ts` (it creates and
+  drops roles inside the construction container) and `tests/ops/freeze-guard.test.ts` (it reads this
+  machine's own process tree and systemd units). Neither can run inside a sandbox built to take a
+  container and a process tree away, and both are named in the script rather than filtered out of a
+  count.
+
+`tests/b36/wall-question.test.ts` holds the fixed question **inside** the battery, and its first
+assertion is that the battery is running inside the sandbox at all — so running `pnpm test` on the
+bare host is now a red test, not a quiet one.
+
+### Blast radius — named before the change, measured after
+
+| What stands on it | Measured after |
+|---|---|
+| The two resident services | `dxb-scheduler` **active**, `dxb-jarvis` **active**, 0 restarts each, after their credential files moved out of the repository |
+| The company's credential files | `.env`, `.env.daemon`, `apps/dashboard/.env.local` moved to `~/.config/dxb/` with **symlinks left at the old paths** — every reader outside the sandbox (the two units, `systemd/install.sh`, `set-gemini-key.sh`, `provision-dept-keys.sh`, `migration/push.sh`, Next.js) works unchanged; inside the sandbox `HOME` is a tmpfs, so the link dangles and the file cannot be opened |
+| `pnpm verify:ledger` | **OK: 8 state claims re-measured, 98 open markers, 70 CEO approval claims** — now through the gateway |
+| `pnpm typecheck` | `tsc --build`, exit 0 |
+| The superseded drill | `scripts/b36/prove-window.mjs` **deleted**, its command removed from `package.json`, and a test fails if either comes back — two drills answering two versions of one question is how three audits read two different answers |
+| The class sweep | Extracted to `scripts/b36/window-classes.mjs` so the seal and its proof cannot drift apart, and asked of `dxb_gateway` by `prove-wall` |

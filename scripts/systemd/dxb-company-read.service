@@ -1,0 +1,19 @@
+# B36 · Block 3-bis — THE COMPANY'S READ GATEWAY.
+# The construction site holds no account on the holding's database. It asks this
+# service, by name, over a unix socket. Nothing else reaches in.
+[Unit]
+Description=DXB — the holding's read gateway (named questions only, read-only)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/DxB Global OS
+ExecStart=/usr/bin/node "%h/DxB Global OS/scripts/b36/company-read-gateway.mjs"
+Restart=always
+RestartSec=5
+OOMPolicy=stop
+StandardOutput=append:%h/DxB Global OS/var/company-read-gateway.log
+StandardError=append:%h/DxB Global OS/var/company-read-gateway.log
+
+[Install]
+WantedBy=default.target

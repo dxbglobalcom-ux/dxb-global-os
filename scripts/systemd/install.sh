@@ -22,11 +22,16 @@ fi
 mkdir -p "${UNIT_DIR}"
 cp "${SRC_DIR}/dxb-scheduler.service" "${UNIT_DIR}/"
 cp "${SRC_DIR}/dxb-jarvis.service" "${UNIT_DIR}/"
+# B36 · Block 3-bis — the holding's read gateway. The construction side holds no
+# account on the company's database; it asks this service by name over a unix
+# socket. Without it, the governance gate fails closed by design.
+cp "${SRC_DIR}/dxb-company-read.service" "${UNIT_DIR}/"
 
 systemctl --user daemon-reload
-systemctl --user enable dxb-scheduler.service dxb-jarvis.service
+systemctl --user enable dxb-scheduler.service dxb-jarvis.service dxb-company-read.service
 systemctl --user restart dxb-scheduler.service
 systemctl --user restart dxb-jarvis.service
+systemctl --user restart dxb-company-read.service
 
 # Survive logout/idle on the CEO terminal (needs one-time sudo if not yet on;
 # failure is non-fatal — units still run while logged in).
@@ -35,3 +40,4 @@ loginctl enable-linger "$(whoami)" 2>/dev/null || true
 echo "--- status ---"
 systemctl --user --no-pager --lines 3 status dxb-scheduler.service || true
 systemctl --user --no-pager --lines 3 status dxb-jarvis.service || true
+systemctl --user --no-pager --lines 3 status dxb-company-read.service || true

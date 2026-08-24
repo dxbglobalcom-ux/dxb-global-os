@@ -45,7 +45,6 @@
 //                                                        values + dates in place
 //   node scripts/governance/ledger-truth.mjs --list      print every marker found
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -193,46 +192,39 @@ const LIST = argv.includes("--list");
 
 // ---------------------------------------------------------------- db access
 //
-// B36 · Block 3. This gate used to read the holding as `postgres`, the account
-// that owns everything in it — a read-only intention enforced by the regular
-// expression below and by nothing else. It now looks through the ONE-WAY WINDOW
-// (`dxb_reader`: SELECT and nothing else, refused by PostgreSQL itself), so a
-// query that slipped past the check would still be unable to write.
+// B36 · Block 3-bis. This gate used to reach the holding through the DOCKER
+// SOCKET — and, when no window was installed, as `postgres`, the owner of every
+// table in it. The third adversarial audit of 2026-08-24 named that fallback,
+// and it was right: a governance gate that quietly promotes itself to the owner
+// of the company is the widest hole in the wall this row exists to build.
 //
-// The address is not spelled here. It is read from var/b36/company-window.env,
-// which is outside the repository and holds the password minted by
-// scripts/b36/install-company-window.mjs; the gate falls back to the
-// administrator ONLY when no window is installed, and says so out loud, because
-// a governance gate that silently stops running is worse than one that fails.
-const WINDOW_ENV = path.join(REPO, "var/b36/company-window.env");
+// It now asks the company's read gateway, over a unix socket, BY NAME. There is
+// no SQL on this side, no credential, no container, no port and no second path.
+// If the gateway is not answering, this gate STOPS: a measurement that cannot be
+// taken is never quietly replaced by one taken another way.
+import { ask } from "../b36/company-read-client.mjs";
 
-function windowUrl() {
-  if (!existsSync(WINDOW_ENV)) return null;
-  const line = readFileSync(WINDOW_ENV, "utf8")
-    .split("\n").find((l) => l.startsWith("DXB_COMPANY_READONLY_URL="));
-  return line ? line.slice("DXB_COMPANY_READONLY_URL=".length).trim() : null;
-}
+const company = new Map();
 
-const WINDOW_URL = windowUrl();
-const PSQL = WINDOW_URL
-  // Inside the engine's own container, so no psql is needed on the host and the
-  // credential never appears in a host process list beyond this one call.
-  ? ["exec", "-i", "supabase_db_DxB_Global_OS", "psql", WINDOW_URL.replace(":54322/", ":5432/"), "-qtA", "-c"]
-  : ["exec", "-i", "supabase_db_DxB_Global_OS", "psql", "-U", "postgres", "-d", "postgres", "-qtA", "-c"];
-
-if (!WINDOW_URL) {
-  console.error("[ledger-truth] NOTE: no one-way window installed (var/b36/company-window.env);");
-  console.error("[ledger-truth]       reading the company as its administrator instead.");
-  console.error("[ledger-truth]       install it: node scripts/b36/install-company-window.mjs company");
-}
-
-function measure(sql) {
-  // Belt and braces. The privilege is the wall; this stays because a query that
-  // is not a SELECT is a defect in the claim, not only a risk to the database.
-  if (!/^\s*SELECT\b/i.test(sql) || /\b(INSERT|UPDATE|DELETE|DROP|ALTER|CREATE|TRUNCATE|GRANT|REVOKE)\b/i.test(sql)) {
-    throw new Error(`refused: claim query is not read-only -> ${sql}`);
+/** Ask the gateway for every registered claim, once, before the walk begins. */
+async function openTheWindow(ids) {
+  try {
+    await ask("ping");
+  } catch (e) {
+    console.error(`[ledger-truth] the company's read gateway is not answering: ${e.message}`);
+    console.error(`[ledger-truth] start it:  systemctl --user start dxb-company-read`);
+    console.error(`[ledger-truth] this gate reads the holding NO other way (B36 · Block 3-bis).`);
+    process.exit(1);
   }
-  return execFileSync("docker", [...PSQL, sql], { encoding: "utf8" }).trim();
+  for (const id of ids) company.set(id, await ask("ask", id));
+}
+
+/** A NAME, never a statement. The SQL behind it lives on the company's side. */
+function measure(id) {
+  if (!company.has(id)) {
+    throw new Error(`refused: "${id}" is not a question the company's read gateway carries`);
+  }
+  return company.get(id);
 }
 
 // ------------------------------------------------------------- file walking
@@ -327,6 +319,12 @@ function boardRows() {
 const failures = [];
 const found = { state: 0, open: 0, history: 0, triggers: 0, ceoOk: 0, rules: 0 };
 const claims = JSON.parse(readFileSync(path.join(REPO, CLAIMS), "utf8"));
+await openTheWindow([
+  ...Object.entries(claims)
+    .filter(([, v]) => v && typeof v === "object" && typeof v.sql === "string")
+    .map(([id]) => id),
+  "today",
+]);
 const rules = JSON.parse(readFileSync(path.join(REPO, RULES), "utf8"));
 const approvals = JSON.parse(readFileSync(path.join(REPO, APPROVALS), "utf8"));
 const board = boardRows();
@@ -391,11 +389,11 @@ for (const rel of corpusFiles()) {
           failures.push(`${rel}:${i + 1} — STATE claim "${here.id}" is not registered in ${CLAIMS}`);
           continue;
         }
-        if (!measured.has(here.id)) measured.set(here.id, measure(claim.sql));
+        if (!measured.has(here.id)) measured.set(here.id, measure(here.id));
         const actual = measured.get(here.id);
         if (actual !== here.value) {
           if (UPDATE) {
-            const today = measure("SELECT current_date");
+            const today = measure("today");
             lines[i] = lines[i].replace(
               new RegExp(`<!--\\s*STATE:\\s*${here.id}\\s*=.*?-->`),
               `<!-- STATE: ${here.id} = ${actual} @ ${today} -->`,

@@ -19,10 +19,12 @@
     "verify:schema-parity": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
     "b36:prove-block1": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_ALLOWED_LEDGER_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/prove-block1.mjs",
     "b36:window": "node scripts/b36/install-company-window.mjs company",
-    "b36:prove-window": "node scripts/b36/prove-window.mjs company",
     "b36:prove-window-preserves": "node scripts/b36/prove-window-preserves.mjs",
     "b36:prove-window-escapes": "node scripts/b36/prove-window-escapes.mjs",
-    "b36:prove-forged-event": "node scripts/b36/prove-forged-event.mjs"
+    "b36:prove-forged-event": "node scripts/b36/prove-forged-event.mjs",
+    "b36:prove-wall": "node scripts/b36/prove-wall.mjs",
+    "construction": "bash scripts/construction/run.sh",
+    "construction:battery": "bash scripts/construction/battery.sh"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",

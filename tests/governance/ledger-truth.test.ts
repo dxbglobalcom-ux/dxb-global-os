@@ -77,10 +77,30 @@ describe("U41 ledger-truth gate", () => {
     }
   });
 
-  it("the script refuses a non-SELECT query by construction, not by trust", () => {
+  // B36 · Block 3-bis, 2026-08-24. This gate used to hold the guard itself: it
+  // built the SQL, refused anything that was not a SELECT, and sent it to the
+  // holding through the Docker socket — with a fallback that connected as
+  // `postgres`, the owner of every table in the company. The third adversarial
+  // audit named that fallback, and the guard moved to where it cannot be talked
+  // past: the gate now sends a NAME, and the SQL behind it lives on the
+  // company's side of the wall, in a catalogue the gateway freezes at startup.
+  it("the gate cannot send a statement to the holding at all, and has no second path", () => {
     const src = readFileSync(SCRIPT, "utf8");
-    expect(src).toMatch(/refused: claim query is not read-only/);
-    expect(src).toMatch(/\^\\s\*SELECT\\b/);
+
+    // It asks by name.
+    expect(src, "the gate stopped asking the company's gateway").toContain("company-read-client.mjs");
+    expect(src, "the gate can name a question the gateway does not carry")
+      .toMatch(/is not a question the company's read gateway carries/);
+
+    // And there is no other way out of this file. Measured on the CODE: the
+    // file's comments explain the fallback it lost, so the word "docker" lives
+    // in its prose and must not be what this assertion reads.
+    expect(src, "the gate can run a program again").not.toContain("node:child_process");
+    expect(src, "the gate can run a program again").not.toMatch(/execFileSync|spawnSync|spawn\(/);
+    expect(src, "the gate names a command again").not.toMatch(/["'`]docker/i);
+    expect(src, "the gate spells a company address again").not.toContain("54322");
+    expect(src, "the gate no longer fails closed when the gateway is down")
+      .toContain("reads the holding NO other way");
   });
 
   it("reads EVERY marker on a line, not just the first", () => {

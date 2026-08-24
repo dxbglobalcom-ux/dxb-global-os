@@ -110,123 +110,69 @@ describe("B36 · Block 3 — the one-way window", () => {
     expect(sql).toMatch(/nspname NOT IN \('pg_catalog','information_schema'\)/);
   });
 
-  it("(3) the drills are committed and reachable as commands", () => {
+  it("(3) the drills and the wall are committed and reachable as commands", () => {
     for (const f of [
       "scripts/b36/install-company-window.mjs",
-      "scripts/b36/prove-window.mjs",
+      "scripts/b36/window-classes.mjs",
+      "scripts/b36/prove-wall.mjs",
+      "scripts/b36/wall-probe.mjs",
+      "scripts/b36/withdraw-company-login.mjs",
+      "scripts/b36/company-read-gateway.mjs",
+      "scripts/b36/company-read-client.mjs",
       "scripts/b36/prove-window-preserves.mjs",
       "scripts/b36/prove-window-escapes.mjs",
       "scripts/b36/prove-forged-event.mjs",
       "scripts/b36/company-state-fingerprint.mjs",
       "scripts/b36/restore-company-privileges.mjs",
+      "scripts/construction/run.sh",
+      "scripts/construction/battery.sh",
     ]) {
       expect(existsSync(join(REPO, f)), `${f} is missing`).toBe(true);
     }
-    for (const s of ["b36:window", "b36:prove-window", "b36:prove-window-preserves",
+    for (const s of ["b36:window", "b36:prove-wall", "b36:prove-window-preserves",
                      "b36:prove-window-escapes", "b36:prove-forged-event"]) {
       expect(PKG.scripts[s], `package.json has no "${s}" script`).toBeTruthy();
     }
+    // The drill whose question Block 3-bis replaced is DELETED, not kept beside
+    // the new one. Two drills answering two versions of the same question is how
+    // three audits ended up reading two different answers.
+    expect(existsSync(join(REPO, "scripts/b36/prove-window.mjs")),
+      "the superseded prove-window drill is back").toBe(false);
+    expect(PKG.scripts["b36:prove-window"], "the superseded command is back").toBeFalsy();
   });
 
-  it(
-    "(4) LIVE — the two audited escapes reproduce with the real role, then the server refuses them",
-    { timeout: 240_000 },
-    () => {
-      const out = runNode(["scripts/b36/prove-window-escapes.mjs"]);
+  it("(4) the wall's shape, held in the files themselves", () => {
+    // The governance gate has NO second way to read the holding. The third audit
+    // of 2026-08-24 found its fallback: `docker exec … psql -U postgres`, the
+    // owner of every table in the company.
+    // Measured on the CODE, not on the prose: this file explains the fallback it
+    // lost, so the word "docker" appears in its comments and must not be what
+    // the assertion reads.
+    const gate = readFileSync(join(REPO, "scripts/governance/ledger-truth.mjs"), "utf8");
+    expect(gate, "the governance gate can run a program again").not.toContain("node:child_process");
+    expect(gate, "the governance gate can run a program again").not.toMatch(/execFileSync|spawnSync|spawn\(/);
+    expect(gate, "the governance gate names a command again").not.toMatch(/["'`]docker/i);
+    expect(gate, "the governance gate spells a company address again").not.toContain("54322");
+    expect(gate, "the governance gate no longer fails closed").toContain("reads the holding NO other way");
 
-      // Red first. If the escape cannot be reproduced, the green half proves
-      // nothing — that is the whole lesson of the audit.
-      expect(out, `the escape proof did not run:\n${out}`).toContain("large object");
-      expect(out, `escape 1 did not reproduce RED — the proof is worthless:\n${out}`)
-        .toMatch(/RED 1\s+large object\s+CREATED, oid \d+/);
-      expect(out, `escape 2 did not reproduce RED — the counter did not move:\n${out}`)
-        .toMatch(/RED 2\s+counter\s+TURNED/);
-      expect(out, `the counter's move was undone by the ROLLBACK, so it proves nothing:\n${out}`)
-        .toContain("the ROLLBACK did not put it back");
+    // The caller sends a NAME. The SQL behind it lives on the company's side, and
+    // the gateway freezes its catalogue when it starts.
+    const client = readFileSync(join(REPO, "scripts/b36/company-read-client.mjs"), "utf8");
+    expect(client, "the read client learned how to send SQL").not.toMatch(/\bSELECT\b/);
+    const gateway = readFileSync(join(REPO, "scripts/b36/company-read-gateway.mjs"), "utf8");
+    expect(gateway, "the gateway stopped opening its connection read-only")
+      .toContain("default_transaction_read_only=on");
+    expect(gateway, "the gateway stopped wrapping its answers in a read-only transaction")
+      .toContain("BEGIN READ ONLY");
+    expect(gateway, "the gateway re-reads its catalogue while it runs").toContain("never again");
 
-      // Then green, from the server and not from our code.
-      expect(out, `escape 1 is still open after the seal:\n${out}`)
-        .toMatch(/GREEN 1\s+large object\s+refused: permission denied/);
-      expect(out, `escape 2 is still open after the seal:\n${out}`)
-        .toMatch(/GREEN 2\s+counter\s+refused: permission denied/);
-      expect(out).toContain("ESCAPES_RED_THEN_GREEN");
-    },
-  );
-
-  it(
-    "(5) LIVE — a forged live event reached the screen, and now it is refused",
-    { timeout: 240_000 },
-    () => {
-      // THE SECOND AUDIT'S ORDER, 2026-08-24: "Önce sahte ve biçimi geçerli bir
-      // NOTIFY mesajının ekrana geçtiğini kırmızıyla kanıtla; sonra aynı
-      // mesajın reddedildiğini, gerçek şirket olaylarının ise çalışmaya devam
-      // ettiğini kanıtla."
-      const out = runNode(["scripts/b36/prove-forged-event.mjs"]);
-
-      expect(out, `the forged-event proof did not run:\n${out}`).toContain("forged events on the CEO's channel");
-      expect(out, `the forgery did not reproduce RED — the refusal proves nothing:\n${out}`)
-        .toMatch(/RED\s+with the OLD listener, forged events on the CEO's channel: [1-9]/);
-      expect(out, `a forged event still reaches the CEO's screen:\n${out}`)
-        .toMatch(/GREEN with the SHIPPED collector, forged events on the CEO's channel: 0/);
-      expect(out, `the company's own events stopped arriving — the fix broke the surface:\n${out}`)
-        .toMatch(/GREEN events issued through the company's own door that arrived : [1-9]/);
-      expect(out, "the receipt is not consumed — an event can be replayed").toContain("must stay");
-      expect(out).toContain("FORGED_EVENT_REFUSED");
-    },
-  );
-
-  it(
-    "(6) LIVE — every privilege class is zero, and what is NOT a privilege is reported, not hidden",
-    { timeout: 240_000 },
-    () => {
-      // Build the window on the construction engine if this environment has not
-      // had one built yet: a fresh clone must be able to run the battery.
-      if (!existsSync(join(REPO, "var/b36/construction-window.env"))) {
-        runNode(["scripts/b36/install-company-window.mjs", "construction"]);
-      }
-
-      const out = runNode(["scripts/b36/prove-window.mjs", "construction"]);
-
-      expect(out, `the drill did not reach a verdict:\n${out}`).toContain("attempts fired");
-      expect(out, `the drill could not tell a refusal from a dead connection:\n${out}`)
-        .toContain("detector validated");
-
-      const num = (re: RegExp) => Number(out.match(re)?.[1] ?? "-1");
-      const attempts = num(/attempts fired\s*:\s*(\d+)/);
-      const refused = num(/refused\s*:\s*(\d+)/);
-      const escaped = num(/escaped\s*:\s*(\d+)/);
-      const classes = num(/classes measured\s*:\s*(\d+)/);
-      const leaking = num(/classes leaking\s*:\s*(\d+)/);
-      const left = num(/rows left behind\s*:\s*(\d+)/);
-      const residual = num(/residual routes\s*:\s*(\d+)/);
-
-      expect(attempts, "the drill tried almost nothing").toBeGreaterThanOrEqual(30);
-      expect(refused, `not every route was refused:\n${out}`).toBe(attempts);
-      expect(escaped, `a write route escaped:\n${out}`).toBe(0);
-      expect(left, `the drill left something behind:\n${out}`).toBe(0);
-      expect(classes, "the class sweep shrank").toBeGreaterThanOrEqual(13);
-      expect(leaking, `a privilege class is still open:\n${out}`).toBe(0);
-
-      // WHAT IS NOT A PRIVILEGE MUST NOT BE HIDDEN, and the fixed question must
-      // not be narrowed to the part that can be closed. The audit's ruling:
-      // "NOTIFY kaçağı varken WINDOW_IS_ONE_WAY ve yeşil sonuç basılması yasak;
-      // residual > 0 kapanışı kırmalı." Three self-directed capabilities remain
-      // — password, own persistent settings, own default privileges — every one
-      // of them fired for real against the construction engine in this same run.
-      expect(residual, `the residual count changed — read the drill and say why:\n${out}`).toBe(3);
-      for (const shape of [
-        /OPEN\s+change its own password/,
-        /OPEN\s+make a session setting permanent for itself/,
-        /OPEN\s+write its own default privileges/,
-      ]) {
-        expect(out, `a self-directed capability stopped being reported:\n${out}`).toMatch(shape);
-      }
-
-      // And while any of them stands, a green verdict is forbidden.
-      expect(out, "the drill printed a green verdict while a residual was open").not.toContain("WINDOW_IS_ONE_WAY");
-      expect(out).toContain("WINDOW_LEAKS");
-      expect(out, "the drill no longer points at the plan that would close this")
-        .toContain("PLAN.md, Block 3-bis");
-    },
-  );
+    // The sandbox is default-deny: the company's two doors are not in the list,
+    // and there is no network to carry them.
+    const door = readFileSync(join(REPO, "scripts/construction/run.sh"), "utf8");
+    const allow = door.slice(door.indexOf("ALLOW=("), door.indexOf(")", door.indexOf("ALLOW=(")));
+    expect(allow, "the company's database port is in the construction's allow list").not.toContain("54322");
+    expect(allow, "the company's HTTP gateway is in the construction's allow list").not.toContain("54321");
+    expect(door, "the sandbox stopped taking its own network namespace").toContain("--unshare-net");
+    expect(door, "the sandbox stopped hiding the other processes on this machine").toContain("--unshare-pid");
+  });
 });

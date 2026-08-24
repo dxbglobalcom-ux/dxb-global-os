@@ -92,20 +92,35 @@ governance gate itself reads the holding through that same socket, its fallback 
 **`-U postgres`** (`scripts/governance/ledger-truth.mjs:220-221`). **Closing the three
 self-directed capabilities would not have closed this row either** — a runtime that can become
 `supabase_admin` never needed `dxb_reader`.
-**The close is therefore an OS-LEVEL WALL, written as a PLAN and NOT built** <!-- OPEN: B36 --> —
-`.planning/quick/20260823-construction-company-separation/PLAN.md`, **Block 3-bis — THE WALL IS
-OUTSIDE THE DATABASE** (rewritten 2026-08-24; the gateway-only version deleted under LAW A): a
-separate operating-system identity `dxbbuild` with no `docker` and no `sudo`, an `nftables` rule
-rejecting that identity to ports 54322 **and 54321**, `dxb_reader` **dropped**, one read service on
-the company's side answering a **fixed catalogue of named questions over a unix socket** with no SQL
-from the caller, `ledger-truth.mjs` stripped of both `docker exec` branches so a missing gateway
-**fails closed**, and a drill `pnpm b36:prove-wall` whose eight attempts fire **from inside the
-sandbox the construction actually runs in**, each with its red half. **The finish line is fixed in
-the plan before the work starts** — the device that stopped Block 1 reopening — with three things
-named as explicitly outside it: the author's own administrative hand on his own laptop, the
-company's own roles and daemons, and poisoning the repository (a supply-chain question that would
-open as its own row). His order: *"onay almadan uygulama"*, and the auditor's ninth ruling says the
-same — **it waits on him.** <!-- OPEN: B36 -->
+**HE APPROVED THE CORRECTED PLAN AND IT WAS BUILT THE SAME DAY** — *"onaylıyorum"* · *"önce
+bis-block3 yap ilk onayladığımı"*, registered as `b36-block3-bis-os-wall-2026-08-24`.
+**`pnpm b36:prove-wall` → `WALL_IS_ONE_WAY`.** From inside the sandbox the construction actually
+runs in: a direct TCP login to the holding refused in **all five spellings**, its HTTP gateway
+refused in all five, the Docker socket `ENOENT`, the container unreachable, **no credential file
+readable**, a real login refused, **all 6** smuggled SQL strings and **all 5** other operations
+refused by the read gateway — while the construction's own engine, the gateway and a named question
+(`agents_total = 205`) all answer. **Every attempt is fired twice**: unsandboxed it must SUCCEED,
+and the drill prints `PROBE_IS_BLIND` and exits 1 instead of a verdict when it does not — it caught
+that fault in itself on its first run. What was built: a `bubblewrap` sandbox with **no network at
+all** and no Docker socket (`scripts/construction/run.sh`, seven named ports carried in over unix
+sockets; 54322 and 54321 are not among them); `dxb_reader` **gone from the company engine**, renamed
+to `dxb_gateway` so the audited privilege set moved on the role's OID and **not one GRANT was
+re-issued**, its credential now outside the repository at `~/.config/dxb/`; a read gateway on the
+company's side answering a **catalogue of named questions it freezes at startup**, over a unix
+socket, with no SQL from the caller; and `ledger-truth.mjs` stripped of both `docker exec` branches
+— gateway up `exit 0`, gateway stopped `exit 1`. **All 9 privilege classes are zero.**
+**THE BATTERY NOW RUNS INSIDE THE WALL** — `pnpm construction:battery` → **`BATTERY_GREEN`**:
+sandboxed **106 files / 768 passed / 15 skipped / exit 0**, plus a named host half of **2 files / 11
+tests** that must enter a container or read this machine's process tree, printed on every run so
+nothing leaves the wall quietly. `verify:ledger` OK · `SCHEMA_PARITY` · `I18N PURITY: PASS` ·
+gitleaks 740 commits no leaks · `typecheck` exit 0.
+**THREE DEVIATIONS, NAMED AND REPORTED TO HIM:** no new operating-system user and no firewall rule
+— `sudo -n true` answers *"interactive authentication is required"* and no session can type his
+password, so the auditor's own alternative was built (a sandbox with no network is default-deny,
+where a filter rule would have been a wall with named holes); and `dxb_reader` was renamed rather
+than dropped and rebuilt. **Both can still be added on top with his password, once; they would not
+change today's answer, only make it true a second way.**
+**LAW B: built is not accepted — the block waits on his eye.** <!-- OPEN: B36 -->
 **The block also broke the company and put it back**: its first version gave `anon` the right to
 call all 85 control functions, its own blast-radius photograph caught it, and Block 0's dated dump
 restored the exact prior state (`COMPANY_PRIVILEGES_RESTORED`).
