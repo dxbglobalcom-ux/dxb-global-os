@@ -18,6 +18,7 @@ cd "$REPO"
 HOST_FILES=(
   tests/b36/live-drills.host.test.ts   # enters the construction container: creates and drops roles
   tests/ops/freeze-guard.test.ts       # reads this machine's process tree and its systemd units
+  tests/ops/dashboard-launcher.host.test.ts  # asks WHICH process is serving the CEO's dashboard
 )
 
 echo "=== 1/2 · THE CONSTRUCTION RUNTIME — the sandboxed suite ==="

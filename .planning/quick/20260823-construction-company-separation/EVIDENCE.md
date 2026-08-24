@@ -2050,3 +2050,218 @@ and all four resident services `active`, `NRestarts=0`.
 gone and nothing has replaced it; whether it should be reinstalled, or whether
 `~/Pictures/operator` is now the only screenshot folder that matters, is the CEO's
 call and has not been taken.
+
+## The auditor's five instructions, carried out · 2026-08-24 night
+
+The CEO relayed them and ordered them carried out in full: restart the live
+dashboard through `scripts/dashboard.sh`, verify the actual listening
+`next-server` carries `DXB_DATABASE_URL`, add a gate that fails if the dashboard
+is started without the wrapper, prove the authenticated voice-call path end to
+end, and remeasure the company fingerprint before and after.
+
+**The company fingerprint, before any of it and after all of it:**
+
+```
+STATE_FINGERPRINT de359137ee1d7c79     (before)
+STATE_FINGERPRINT de359137ee1d7c79     (after)
+  60 tables · 46,735 rows · rows aecfcfa259c9c501 · 18 sequences 98258eb817d8e3b8
+  0 large objects · audit_log/hook_violations 29,637/1,963
+```
+
+### 1. The auditor was right, and the measurement is worse than the question
+
+Before touching anything:
+
+```
+$ ss -ltnp | grep :3000
+LISTEN  *:3000   users:(("next-server (v1",pid=3785656))          ← every interface
+$ parent chain of 3785656
+  pnpm --filter ./apps/dashboard dev   ← started by hand, from a session shell, 6h50m earlier
+$ tr '\0' '\n' < /proc/3785656/environ | grep -c '^DXB_DATABASE_URL='
+0
+```
+
+The dashboard serving the CEO right now carried **no company address at all**.
+Block 4 had removed the route's fallback and written the wrapper, and the live
+process predated both — so the voice line was already broken and nothing said so;
+his next call would have found out.
+
+**And it was not only mis-started. It was published to the house:**
+
+```
+127.0.0.1:3000        -> 307        192.168.178.44:3000   -> 307   ← the home network
+172.17.0.1:3000       -> 307        172.18.0.1:3000       -> 307
+```
+
+Anyone on the network reached the holding's front end. That is the same open door
+the CEO ordered shut on the database ports this morning, on a different port.
+
+### 2. Restarted through the wrapper, and the listening process was asked
+
+```
+$ pnpm dashboard          (scripts/dashboard.sh dev)
+dashboard: dev on 127.0.0.1:3000, address handed in from the company's env files.
+✓ Ready in 197ms
+[dashboard] started by scripts/dashboard.sh dev; the company address is in hand.
+
+$ ss -ltnp | grep :3000
+LISTEN  127.0.0.1:3000   users:(("next-server (v1",pid=854685))    ← loopback only
+$ tr '\0' '\n' < /proc/854685/environ | grep -E '^DXB_(DATABASE_URL|DASHBOARD_LAUNCHER)='
+DXB_DATABASE_URL=postgresql://***:***@127.0.0.1:54322/postgres
+DXB_DASHBOARD_LAUNCHER=scripts/dashboard.sh dev
+
+$ the LAN door, re-measured
+192.168.178.44:3000 -> refused        172.17.0.1:3000 -> refused
+127.0.0.1:3000      -> 307
+```
+
+The wrapper binds to `127.0.0.1` unless `DXB_DASHBOARD_HOST` says otherwise.
+
+### 3. The gate — and both of its refusals were run against a real server
+
+`apps/dashboard/src/instrumentation.ts` is Next's startup hook. It judges the
+environment before the first request and stops the process with a named reason.
+It is exempt during `next build` (several specs gate on that build) and in the
+edge runtime.
+
+```
+$ env -u DXB_DASHBOARD_LAUNCHER -u DXB_DATABASE_URL next dev -p 3000
+[dashboard] REFUSING TO SERVE — this dashboard was not started by
+scripts/dashboard.sh. Start it with `pnpm dashboard` … measured live on 2026-08-24.
+exit 2 · nothing left listening
+
+$ env -u DXB_DATABASE_URL DXB_DASHBOARD_LAUNCHER="a hand-typed command" next dev -p 3000
+[dashboard] REFUSING TO SERVE — started by a hand-typed command, but
+DXB_DATABASE_URL is empty. The wrapper maps DXB_COMPANY_DATABASE_URL …
+exit 1 · nothing left listening
+```
+
+**A first attempt at this proof was invalid and is recorded rather than quietly
+re-run:** the bare server was started while the good one was still up, and Next's
+own "another next dev server is already running" check killed it first. The
+refusal in that log was not the gate's. The test was redone with the port free.
+
+**In the battery, permanently:** `tests/ops/dashboard-launcher.host.test.ts`,
+named in `scripts/construction/battery.sh` HOST_FILES beside the freeze guard —
+the sandboxed half has its own PID namespace and must not be able to see this
+machine's processes. Five cases: the judgement refuses each fault shape and allows
+the wrapper's own environment; the wrapper really exports both things and really
+binds loopback; `register()` really consults the judgement and really exits; and
+**the live one** — whatever is serving the dashboard right now must carry both.
+Seen RED first, against an unstamped listener planted on the port:
+
+```
+× (4) LIVE — whatever is serving the dashboard right now was started properly
+  → the dashboard serving :3000 (pid 873351) was NOT started by scripts/dashboard.sh.
+    Stop it and run `pnpm dashboard`. This is exactly the state the auditor found
+    on 2026-08-24 …
+```
+
+### 4. The authenticated voice-call path, proven end to end
+
+**Where it was proven, and why there.** The CEO's standing order of 2026-08-23 is
+*"bundan sonra TEK BİR HARF DAHİ ŞİRKETİN VERİ TABANINA GİRMESİN"*, and a real
+voice call writes: `control_voice_call_log` inserts into `voice_calls` and the
+intake inserts an `intents` row. The conflict was named to him rather than decided
+quietly. The proof was run against the **construction engine** — which is what B36
+built the second engine FOR — through a dashboard started by the same wrapper, so
+every link in the chain is the real one and not one row of the holding's moved.
+
+```
+$ node_modules/.bin/supabase status --workdir construction        → API 54421, DB 54422
+$ POST {API}/auth/v1/admin/users                                  → HTTP 200, a proof-only user
+$ construction auth.users: 1 (proof user present: 1)
+$ company      auth.users: 1 (proof user present: 0)
+
+$ DXB_DATABASE_URL=<construction> NEXT_PUBLIC_SUPABASE_URL=<construction> pnpm dashboard
+[dashboard] started by scripts/dashboard.sh dev; the company address is in hand.
+pid 866120 → DXB_DATABASE_URL=postgresql://***:***@127.0.0.1:54422/postgres
+
+$ mint a session with @supabase/ssr itself (not a hand-rolled cookie)
+signed in as b36-proof@construction.local (id fe18d003-…)
+cookies minted: sb-127-auth-token   (2593 bytes, written mode 600, destroyed after)
+
+$ Piper TTS: "Bugünkü açık işleri özetle." → 75,820 bytes of wav
+$ POST /api/voice/call  WITH the session
+  → HTTP 201 in 4782 ms
+  → {"callId":"dedb323c-08c6-4e0a-a184-6b94069644c5",
+     "transcript":"bugünkü açık işleri özetle.",
+     "intentId":"b896638f-5658-4843-bcb1-d3793f0177fa","sttMs":4145}
+
+$ POST /api/voice/call  WITHOUT a session   → turned away before the route runs
+  (307 to /login for a plain POST; Next answers a multipart POST the wall rewrote
+   with 404 "Server action not found" — the wall is apps/dashboard/src/proxy.ts)
+```
+
+Real Turkish speech, real Whisper transcription inside the route, a real intent
+row, a real 201. **And it landed where it should:**
+
+```
+construction voice_calls: 1   → dedb323c-… status 'routing', the Turkish timeline
+construction intents:     1   → b896638f-…, the id the route returned
+company voice_calls: 102      → rows carrying the proof call id: 0
+company intents               → rows carrying the proof intent id: 0
+```
+
+The proof user was deleted afterwards (construction `auth.users` back to 0) and
+every credential file the proof used was shredded.
+
+**What was NOT proven, said plainly:** the same call has not been fired against the
+COMPANY's engine, because that would write into the holding and his order forbids
+it. What the company side carries instead: the live server holds the company
+address (measured, above), its authentication wall turns strangers away
+(307/`/login` 200, measured), and the two engines' `public` schemas are identical
+object for object (`SCHEMA_PARITY`, run tonight). **If he wants the last inch —
+one real call on the company, which will add one `voice_calls` row, one `intents`
+row, and let the scheduler's drain answer it — that is his word to give.**
+
+### 5. Fixing the dashboard's open door broke a gate, and the gate caught it
+
+Binding the dashboard to loopback made `pnpm b36:prove-wall` print
+`PROBE_IS_BLIND … WALL_UNPROVEN`. The reason is worth the paragraph: the drill's
+**control** probe — the green half that must succeed, so that a refusal means
+something — dialled `<this machine's LAN address>/3000`. It only ever answered
+there because the CEO's dashboard was published to the home network. **The drill's
+proof of its own eyesight was borrowing a security hole**, and closing the hole
+blinded it.
+
+Fixed at source: the drill now opens its **own** control door — a listener on port
+54499 bound to this machine's routable address, waited for, dialled from inside
+the container, then shut.
+
+```
+works    a door on this machine that is NOT the holding's     REACHABLE
+listeners left on 54499: 0
+WALL_IS_ONE_WAY
+```
+
+### The gates, after all of it
+
+```
+pnpm construction:battery   BATTERY_GREEN — 107 files / 775 passed / 15 skipped
+                                            + host 3 files / 16 passed  (was 2 / 11)
+pnpm typecheck              exit 0
+pnpm verify:ledger          ledger truth OK
+pnpm verify:schema-parity   SCHEMA_PARITY
+pnpm b36:prove-wall         WALL_IS_ONE_WAY
+count-company-fallbacks     0
+four resident services      active, NRestarts=0 · 0 failed units on the machine
+STATE_FINGERPRINT           de359137ee1d7c79 — unchanged, before and after
+```
+
+### Also on his word: the weekly screenshot sweep covers ONE folder
+
+*"sadece ~/Pictures/operator kalsın."* `scripts/ops/screenshot-sweep.sh` no longer
+looks at `~/Pictures/dxb-screenshots`; by his ruling that is not the screenshot
+folder any more. Proven live through systemd: with one old and one fresh file,
+`deleted 1 older than 7 days`, `fresh.png` still there, `Result=success`; with no
+folder at all, `nothing to sweep`, exit 0.
+
+### ⚠ UNVERIFIED — a terminal cannot settle these
+
+- **A root-owned `next-server` (pid 11180) has been running 1 day 12 hours.** Its
+  command line is truncated, its working directory is unreadable without root, and
+  it holds no listening socket. It is not ours to kill on a guess.
+- The dashboard has not been **looked at by eye** since the restart. It answers
+  `307 → /login` and `/login` returns `200`; that a human sees what he expects is
+  his eye's to confirm.

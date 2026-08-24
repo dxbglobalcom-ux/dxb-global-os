@@ -19,17 +19,17 @@
 # folder that is there and cannot be read, or a sweep that errors — still exits
 # non-zero, because a gate nobody can ever see go red is not a gate.
 #
-# WHICH FOLDERS, AND WHY NOT THE OTHERS. Measured 2026-08-24 on this machine:
+# WHICH FOLDER, AND WHY ONLY ONE. The CEO's ruling, 2026-08-24: *"sadece
+# ~/Pictures/operator kalsın."*
 #
-#   ~/Pictures/dxb-screenshots  the folder the design named (.planning/STATE.md).
-#                               Its producer, `dxb-screenshot` at /usr/local/bin,
-#                               is NOT on this machine any more, so nothing has
-#                               written here — swept anyway, because it is ours
-#                               and the tool may come back.
-#   ~/Pictures/operator         where the `operator` command ACTUALLY writes
-#                               (/opt/dxb-operator/cli.py:20, SHOTDIR). Sweeping
-#                               only the first folder would have been a weekly
-#                               chore that could never find anything.
+#   ~/Pictures/operator   where the `operator` command — what this machine
+#                         actually uses for the screen — writes its captures
+#                         (/opt/dxb-operator/cli.py:20, SHOTDIR).
+#
+# ~/Pictures/dxb-screenshots is NOT swept any more, and by his word it is not the
+# screenshot folder at all. It was the folder the old design named, its producer
+# `dxb-screenshot` is no longer on this machine (/usr/local/bin/dxb-screenshot
+# does not exist), and nothing had written to it. One folder, the live one.
 #
 # NOT SWEPT, deliberately: ~/Pictures/Screenshots (29 files, 7.2 MB when this was
 # written) is GNOME's own capture folder and those are the CEO's OWN pictures, and
@@ -42,7 +42,7 @@ if [ -n "${DXB_SCREENSHOT_DIRS:-}" ]; then
   # colon-separated, for the drills
   IFS=':' read -r -a DIRS <<< "${DXB_SCREENSHOT_DIRS}"
 else
-  DIRS=("$HOME/Pictures/dxb-screenshots" "$HOME/Pictures/operator")
+  DIRS=("$HOME/Pictures/operator")
 fi
 
 # `grep -c` on an empty string counts one empty line; count non-empty lines only.

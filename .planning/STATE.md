@@ -345,9 +345,11 @@ until today they existed ONLY on this machine, hand-written, in no repository at
 same hour: **`dxb-screenshot` is NOT on this machine any more** — `/usr/local/bin/dxb-screenshot`
 does not exist, so nothing has been writing to `~/Pictures/dxb-screenshots`; and the `operator`
 command, which is what this machine actually uses for the screen, writes to **`~/Pictures/operator`**
-(`/opt/dxb-operator/cli.py:20`). The sweep therefore covers **both** folders. It does **not** touch
-`~/Pictures/Screenshots` (GNOME's own, 29 files / 7.2 MB) or the loose files in `~/Pictures` — those
-are the CEO's own pictures. Machine after: **0 failed units**, next fire Mon 2026-08-31 00:11.
+(`/opt/dxb-operator/cli.py:20`). **His ruling on being shown that, the same evening:** *"sadece
+~/Pictures/operator kalsın."* The sweep covers that ONE folder; `~/Pictures/dxb-screenshots` is not
+the screenshot folder any more. It does **not** touch `~/Pictures/Screenshots` (GNOME's own, 29 files
+/ 7.2 MB) or the loose files in `~/Pictures` — those are the CEO's own pictures. Machine after:
+**0 failed units**, next fire Mon 2026-08-31 00:11.
 **Two live gotchas for the next session:** `dxb` is in the `docker` group in `/etc/group` but this
 desktop session predates the change, so `docker exec` is refused until he logs out and back in —
 until then the governance gate must be run with a `docker` shim on `PATH` that rewrites
@@ -407,6 +409,27 @@ that reading as the next job and had not answered when the session closed.
 1. **B36 — cutting the construction site out of the company. THIS IS THE WORK IN HAND.** <!-- OPEN: B36 -->
    Plan: `.planning/quick/20260823-construction-company-separation/PLAN.md` (eight blocks, approved).
    Evidence: `EVIDENCE.md` in the same folder · audit answers: `AUDIT-RESPONSE-1.md`, `AUDIT-RESPONSE-2.md`.
+   **AND HIS AUDITOR'S FIVE INSTRUCTIONS, CARRIED OUT THE SAME NIGHT — and the first measurement was
+   worse than the question.** Asked whether the LIVE dashboard was started through
+   `scripts/dashboard.sh`, the answer was **no**: the `next-server` serving :3000 had been started by
+   hand 6h50m earlier (`pnpm --filter ./apps/dashboard dev` from a session shell), carried **zero**
+   `DXB_DATABASE_URL`, and was bound to `*:3000` — **answering on 192.168.178.44:3000, the home
+   network**. His voice line was already broken and nothing said so. Restarted through the wrapper:
+   loopback only, and the listening process measured carrying both the address and the launcher stamp;
+   the LAN door now refuses. **The gate:** `apps/dashboard/src/instrumentation.ts` stops the server at
+   startup with a named reason if the wrapper did not start it — both refusal shapes run against a
+   real `next dev` (exit 2 and exit 1, nothing left listening) — and
+   `tests/ops/dashboard-launcher.host.test.ts` holds it in the battery's host half, seen RED first
+   against an unstamped listener planted on the port. **The authenticated voice-call path proven end
+   to end** — real Turkish speech through Piper, a real `@supabase/ssr` session, `HTTP 201` with
+   `transcript "bugünkü açık işleri özetle."` — run against the **construction** engine, because a
+   real call writes `voice_calls` and `intents` and his *"tek bir harf dahi"* order stands; the
+   conflict was named to him, not decided quietly, and the last inch (one real call on the company)
+   waits on his word. <!-- OPEN: B36 --> **Fixing the dashboard's open door blinded `pnpm b36:prove-wall`**, and that is
+   the best thing that happened all night: the drill's control probe — the green half that must
+   succeed for a refusal to mean anything — had been dialling the CEO's dashboard on the LAN, so its
+   proof of its own eyesight was borrowing a security hole. It opens its own control door now.
+   **STATE_FINGERPRINT de359137ee1d7c79 before and after all of it.**
    **DONE — Block 4, the company's address is no longer a default anywhere. 2026-08-24 evening.**
    **95 → 0.** Ninety-five files bound the holding's own address to `DXB_DATABASE_URL` as a fallback —
    82 suites opening with `??=`, three seeds, six operator tools, the Phase-5 exit gate in bash, and

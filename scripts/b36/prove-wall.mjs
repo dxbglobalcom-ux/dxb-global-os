@@ -20,7 +20,7 @@
  *
  * Usage:  pnpm b36:prove-wall
  */
-import { spawnSync } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -388,7 +388,38 @@ line("  THE HOLDING'S OWN FRONT DOOR — can anything that is NOT this machine d
     // The green half. The SAME probe, from the SAME place, at a door on this
     // machine that is not the holding's. A refusal measured by a probe that
     // cannot reach anything proves nothing.
-    const green = fromOffHost(hostAddr + "/3000");
+    //
+    // THE DRILL OPENS ITS OWN DOOR, and this is a correction, 2026-08-24 night.
+    // This line used to dial `hostAddr + "/3000"` — the CEO's dashboard. It only
+    // ever answered there because the dashboard was bound to `*:3000`, which is
+    // to say the control half of this drill was borrowing a security hole: the
+    // holding's own front end, published to the home network. The moment that
+    // hole was closed (B36 Block 4 binds the dashboard to loopback) the drill
+    // went BLIND and refused a verdict — correctly, and it is why the fault was
+    // found within the minute. A control probe may not depend on some other
+    // service happening to be exposed. It opens a listener of its own, on a port
+    // nothing uses, proves the probe reaches it, and shuts it again.
+    const CONTROL_PORT = 54499;
+    const control = spawn(process.execPath, [
+      "-e",
+      `require("node:net").createServer((s)=>s.end()).listen(${CONTROL_PORT}, ${JSON.stringify(hostAddr)});`,
+    ], { stdio: "ignore", detached: true });
+    let green = "(not measured)";
+    try {
+      // Wait for the door to actually be open — never dial a socket that is
+      // still being bound and call the miss evidence.
+      let up = false;
+      for (let i = 0; i < 50 && !up; i++) {
+        up = (sh("bash", ["-c",
+          `timeout 1 bash -c 'echo > /dev/tcp/${hostAddr}/${CONTROL_PORT}' 2>/dev/null && echo up`]
+        ).stdout || "").includes("up");
+        if (!up) sh("bash", ["-c", "sleep 0.1"]);
+      }
+      green = up ? fromOffHost(hostAddr + "/" + CONTROL_PORT) : "the control door never opened";
+    } finally {
+      try { process.kill(-control.pid); } catch { /* already gone */ }
+      try { control.kill("SIGKILL"); } catch { /* already gone */ }
+    }
     if (green !== "REACHABLE") blind++;
     line(`    ${green === "REACHABLE" ? "works   " : "BLIND   "} ${("a door on this machine that is NOT the holding's").padEnd(52)} ${green}`);
   }
