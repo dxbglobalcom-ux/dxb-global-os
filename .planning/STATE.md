@@ -115,10 +115,29 @@ own group, **not in `docker`, not in `sudo`**, shell `nologin`, no home; it hold
 through an access list and **nothing else on this machine**. Root performs the mounts and only then
 drops the payload with `setpriv --clear-groups` — the drill prints `identity that fired them:
 uid=997 gid=973 groups=973 sandbox=yes`. **(b)** The kernel refuses that identity a route to the
-holding: `nftables` table `dxb_wall`, loaded at boot by `dxb-company-wall.service` (`enabled`),
-`meta skuid 997 tcp dport { 54321, 54322 } reject`. Fired with **no sandbox at all** between it and
-the company: 54322 refused, 54321 refused, its own engine open, kernel counter **42 packets /
-2,520 bytes**. **(c)** The wall's definition is **root-owned** —
+holding: `nftables` table `dxb_wall`, loaded at boot by `dxb-company-wall.service` (`enabled`).
+**ITS FIRST SHAPE FAILED ITS AUDIT ON 2026-08-24 AND THAT SHAPE IS DELETED, NOT FOOTNOTED.** It
+forbade the two published port numbers; the auditor did not attack a port at all — he asked the
+holding's container for its own address and connected to **`172.18.0.6:5432`** from the real
+`dxbbuild` identity, a **live PostgreSQL login with INSERT/UPDATE/DELETE true**. Re-measured
+connect-only before anything changed, it was worse than the finding: the database, kong, rest, auth
+and realtime all answered on their container addresses, **and so did this machine's own LAN address
+and the docker gateway** on the published port; only the two `127.0.0.1` spellings were ever caught.
+**Two reasons, either one enough:** a container address is not a port, and Docker rewrites the
+destination of every non-loopback local address in the `nat` OUTPUT hook, which runs **before** the
+filter hook. **A wall that names what it forbids is always shorter than the list of ways to spell an
+address**, so it now names what it ALLOWS — eight construction ports on the loopback address,
+everything else this identity emits refused, IPv4 and IPv6, TCP and non-TCP. Fired again with **no
+sandbox at all** between it and the company: **39 addresses asked of Docker that run, 39 refused**,
+the live login at the container address **refused by the network before any credential was
+offered**, its own engine open. **The fix broke something else for thirty minutes and the sweep
+caught it:** `meta skuid != 997 accept` does not match a packet the kernel emits with **no owning
+socket**, so those packets fell into the default-deny — **ten packets of two of his own editor
+processes destroyed in two idle seconds, for every user on this machine** — and the same trap turned
+the wall's own refusal into a **2,769-packet storm from one connection attempt**. Written as
+`meta skuid 997 jump`, idle cost is **zero packets** and one refused attempt costs **one packet,
+answered in 32 ms**. Both lessons are in the battery, measured on the rules and not on the prose:
+`tests/b36/company-is-read-only.test.ts` (6). **(c)** The wall's definition is **root-owned** —
 `/usr/local/sbin/dxb-construction-sandbox` (`root:root 0755`), source
 `scripts/construction/sandbox.sh`, one `sudoers` entry, and `run.sh` reduced to three lines; the
 drill measures owner uid **0**, not writable by anyone else, **identical** to its source, and a test

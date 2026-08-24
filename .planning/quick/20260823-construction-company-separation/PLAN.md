@@ -311,6 +311,52 @@ this machine asks for a password at a terminal and no session can type one; **he
 password himself** and told the author to finish it. Both layers now stand. Evidence:
 `EVIDENCE.md` §Block 3-bis. Verdict of its own drill: `pnpm b36:prove-wall` → **`WALL_IS_ONE_WAY`**.
 
+**AND IT FAILED ITS AUDIT ON THE SAME DAY — ON THE SECOND WALL, NOT THE FIRST. FIXED, MEASURED,
+AND WRITTEN INTO THE BATTERY.** The auditor did not attack a port. He asked the holding's container
+for its own address and connected to it: **`172.18.0.6:5432`**, from the real `dxbbuild` identity,
+a live PostgreSQL login, with INSERT/UPDATE/DELETE true. Re-measured here, connect-only, before
+anything was changed — it was worse than the finding: the database, kong, rest, auth and realtime
+all answered on their container addresses, **and so did this machine's own LAN address and the
+docker gateway** on the published port. Only the two `127.0.0.1` spellings were ever caught.
+
+**Two independent reasons, either one of them enough.** (a) The wall named the ports it forbade,
+and the container address was never a named port at all. (b) For every local address except
+`127.0.0.0/8`, Docker rewrites the destination in the `nat` OUTPUT hook, which runs **before** the
+filter hook — so this host's LAN address on the published port had already become the container's
+address on 5432 by the time a port rule looked at the port. **A wall that names what it forbids will
+always be shorter than the list of ways to spell an address.** It now names what it ALLOWS: eight
+ports, on the loopback address only, and everything else this identity emits is refused — every
+other address, every container bridge, every port, IPv4 and IPv6, TCP and non-TCP.
+
+**Measured after the change, from the auditor's own runtime** (`dxbbuild`, outside the sandbox, no
+namespace of any kind): **39 addresses discovered from Docker this run, 39 refused**, and the live
+PostgreSQL login at `172.18.0.6:5432` **refused by the network before any credential was offered**.
+Its own engine still answers. The drill no longer guesses how the holding can be spelled: it asks
+Docker for the address of every container the holding owns, crosses it with every port that
+container exposes, adds this host's own addresses and every bridge gateway, and fires at all of
+them — and it prints `BLIND` and refuses a verdict if that list ever comes back empty.
+
+**THE FIX ITSELF BROKE SOMETHING ELSE FOR THIRTY MINUTES, AND THE SWEEP CAUGHT IT.** The first
+default-deny let everyone else past with `meta skuid != 997 accept`. A packet the kernel emits with
+**no owning socket** — the ACK and RST that close a connection whose socket is already gone —
+carries no skuid at all, so that rule does not MATCH it and therefore does not accept it either: it
+fell straight into the default-deny. Measured on this machine while nothing at all was running as
+the construction identity: **ten packets destroyed in two idle seconds, belonging to two of the
+CEO's own editor processes**, for every user on the machine. The same trap had a second symptom —
+the RST that `reject` generates is itself ownerless, so it fell into the deny, generated another,
+and became a self-feeding storm: **2,769 packets from one connection attempt**, with the caller
+never told anything and left to hang. Written instead as `meta skuid 997 jump construction`, an
+ownerless packet simply does not match, falls off the end of the base chain and meets `policy
+accept`. Measured after: **zero packets while idle**, and one refused attempt costs **exactly one
+packet** and answers `ECONNREFUSED` in **32 milliseconds**.
+
+**Both lessons are now in the battery, measured on the file and not on prose** —
+`tests/b36/company-is-read-only.test.ts` (6): no deny rule may name a port, every door must be
+bound to the loopback address, the wall must say `skuid 997 jump` and must never say `skuid != 997`,
+and the installed copy must be byte-identical to the repository's. `prove-wall.mjs` checks the same
+four things against the **live** ruleset and refuses a green verdict if the kernel is holding the
+shape that failed.
+
 **What actually runs, and where it lives.** The wall's definition is **not in the repository**. It
 is `/usr/local/sbin/dxb-construction-sandbox`, owned by **root**, mode 0755 — the construction
 holds write access to the repository (it has to build) and therefore must not hold write access to

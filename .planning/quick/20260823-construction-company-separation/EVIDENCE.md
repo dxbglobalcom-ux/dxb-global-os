@@ -1546,3 +1546,97 @@ PostgreSQL answered `Connection terminated unexpectedly`. **A wall that looks li
 is worse than one that is plainly shut.** The bridge now has two rooms: root's, holding the inner
 script and the hosts file so the payload cannot replace them, and the identity's, holding the
 sockets.
+
+
+---
+
+## The second wall failed its audit — the container address · 2026-08-24
+
+The auditor did not attack a port. He asked the holding's container for its own address and
+connected to it. Re-measured here **connect-only, no login**, from the real construction identity,
+before anything was changed:
+
+```
+$ sudo -u dxbbuild node knock.mjs …            # a bare TCP handshake, nothing spoken
+172.18.0.6:5432          HANDSHAKE SUCCEEDED   <- the holding's database
+172.18.0.5:8000          HANDSHAKE SUCCEEDED   <- kong
+172.18.0.2:3000          HANDSHAKE SUCCEEDED   <- rest
+172.18.0.3:9999          HANDSHAKE SUCCEEDED   <- auth
+172.18.0.4:4000          HANDSHAKE SUCCEEDED   <- realtime
+192.168.178.44:54322     HANDSHAKE SUCCEEDED   <- this machine's own LAN address
+172.17.0.1:54322         HANDSHAKE SUCCEEDED   <- the docker gateway
+127.0.0.1:54322          refused: ECONNREFUSED <- the only spelling the wall ever caught
+[::1]:54322              refused: ECONNREFUSED
+```
+
+**Two reasons, either one of them enough.** The wall named the ports it forbade, and a container
+address is not a port. And for every local address except `127.0.0.0/8`, Docker rewrites the
+destination in the `nat` OUTPUT hook, which runs **before** the filter hook — so
+`192.168.178.44:54322` had already become `172.18.0.6:5432` before any port rule looked at the port.
+
+The wall now names what it **allows**: eight ports, on the loopback address only, and refuses
+everything else this identity emits.
+
+### The fix broke something else, and the sweep caught it
+
+The first default-deny let everyone else past with `meta skuid != 997 accept`. A packet the kernel
+emits with **no owning socket** carries no skuid, so that rule does not match it and does not accept
+it either — it falls into the deny. Measured with **nothing at all running as the construction
+identity**:
+
+```
+$ ps -u dxbbuild --no-headers | wc -l
+0
+$ nft insert rule inet dxb_wall output index 3 meta l4proto tcp log prefix "DXBWALL " counter
+$ dmesg | grep DXBWALL | head -4
+DXBWALL OUT=lo SRC=127.0.0.1 DST=127.0.0.1 SPT=37700 DPT=45388 ACK    <- bun,  pid 20094
+DXBWALL OUT=lo SRC=127.0.0.1 DST=127.0.0.1 SPT=45388 DPT=37700 RST
+DXBWALL OUT=lo SRC=127.0.0.1 DST=127.0.0.1 SPT=44939 DPT=53246 ACK    <- kilo, pid 3991869
+DXBWALL OUT=lo SRC=127.0.0.1 DST=127.0.0.1 SPT=53246 DPT=44939 RST
+```
+
+Ten packets in two idle seconds, belonging to two of the CEO's own editor processes, for **every
+user on the machine**. The same trap had a second symptom: the RST that `reject` generates is itself
+ownerless, so it fell into the deny, generated another, and became a self-feeding storm — **2,769
+packets from one connection attempt**, with the caller never told anything and left to hang.
+
+Written as `meta skuid 997 jump construction`, an ownerless packet does not match, falls off the end
+of the base chain and meets `policy accept`:
+
+```
+at load:            packets 0 packets 0
+after idle seconds: packets 0 packets 0      <- nothing else on the machine is touched
+one refused attempt: result: ECONNREFUSED    real 0m0.032s
+after:              packets 1 packets 0      <- one attempt, one packet
+```
+
+### From the auditor's own runtime, after the fix
+
+`dxbbuild`, outside the sandbox, no namespace of any kind between it and the holding:
+
+```
+refused  the holding at EVERY address it answers on — the attack that broke wall one
+         all 39 addresses refused
+refused  a real PostgreSQL login at the holding's CONTAINER address
+         172.18.0.6:5432: refused by the network (ECONNREFUSED) — no credential was ever offered
+works    its OWN engine — this one MUST work                  connected
+
+the table is loaded                                    yes
+it examines the construction identity, and only it     yes
+it never tests `skuid != 997` (kills ownerless packets) correct
+it is a DEFAULT-DENY, not a list of forbidden ports    yes
+no rule forbids by port number (the shape that failed) correct
+```
+
+And the red half proves the drill can still do all of it — from the unsandboxed runtime the same
+code **reaches all 39 addresses** and **logs in at `172.18.0.6:5432` as `dxb_gateway`**, and the same
+container-address login code succeeds against the construction engine at `172.20.0.2:5432`. A
+refusal measured by a probe that cannot succeed anywhere proves nothing.
+
+The addresses are **not written down**. Every run asks Docker for the address of each container the
+holding owns, crosses it with every port that container exposes, adds this host's own addresses and
+every bridge gateway, and fires at all of them. If that list ever comes back empty the drill prints
+`BLIND` and refuses a verdict.
+
+**The holding did not move while any of this was measured:** `STATE_FINGERPRINT de359137ee1d7c79`
+before and after, `audit_log / hook_violations: 29637/1963` before and after.

@@ -4,8 +4,41 @@
 # The construction runs inside a sandbox that has no network at all, so this rule
 # should never fire. It exists for the case the sandbox is not used: anything
 # running as the construction identity (uid 997, dxbbuild) is refused at the
-# kernel, on its way out, to the company's database and to the company's HTTP
-# gateway. The construction's own engine (54421/54422) is untouched.
+# kernel on its way out.
+#
+# ---------------------------------------------------------------------------
+# WHY THIS IS WRITTEN AS A DESTINATION ALLOW-LIST AND NOT AS A PORT DENY-LIST
+#
+# The first version of this file denied `tcp dport { 54321, 54322 }`. An audit on
+# 2026-08-24 broke it in one move, and the measurement showed why:
+#
+#   Docker publishes the holding's database as 0.0.0.0:54322 -> 172.18.0.6:5432.
+#   For every local address EXCEPT 127.0.0.0/8, Docker rewrites the destination in
+#   the `nat` OUTPUT hook (priority -100), which runs BEFORE this filter hook
+#   (priority 0). By the time a port rule sees the packet, `54322` is already
+#   `5432` and the address is already the container's. And the container's own
+#   bridge address was never named at all, so a plain connection to
+#   172.18.0.6:5432 walked straight past.
+#
+#   Measured, as uid 997, with the old rule loaded:
+#     172.18.0.6:5432       HANDSHAKE SUCCEEDED   (the holding's database)
+#     172.18.0.5:8000       HANDSHAKE SUCCEEDED   (kong)
+#     172.18.0.2:3000       HANDSHAKE SUCCEEDED   (rest)
+#     172.18.0.3:9999       HANDSHAKE SUCCEEDED   (auth)
+#     172.18.0.4:4000       HANDSHAKE SUCCEEDED   (realtime)
+#     192.168.178.44:54322  HANDSHAKE SUCCEEDED   (the host's own LAN address)
+#     172.17.0.1:54322      HANDSHAKE SUCCEEDED   (the docker0 gateway)
+#     127.0.0.1:54322       refused                <- the only spelling it caught
+#
+# A wall that names what it forbids will always be shorter than the list of ways
+# to spell an address. So this one names what is ALLOWED — eight ports, on the
+# loopback address only, which is the one address family Docker does not rewrite —
+# and refuses everything else this identity emits: every other address, every
+# container bridge, every port, IPv4 and IPv6, TCP and everything that is not TCP.
+#
+# Adding a port here is a deliberate edit to a ROOT-OWNED file, and it must match
+# the ALLOW list in /usr/local/sbin/dxb-construction-sandbox.
+# ---------------------------------------------------------------------------
 #
 # Loaded at boot by dxb-company-wall.service.
 
@@ -13,10 +46,71 @@ table inet dxb_wall
 delete table inet dxb_wall
 
 table inet dxb_wall {
+  # The construction's OWN stack and the local tools it drives. Nothing here
+  # belongs to the holding. Mirror of ALLOW in dxb-construction-sandbox.
+  set construction_ports {
+    type inet_service
+    elements = {
+      54422,  # the construction site's own PostgreSQL (DxB_Build)
+      54421,  # the construction site's own Supabase gateway (DxB_Build kong)
+      3000,   # the dashboard under test, started by the construction itself
+      3100,   # the dashboard's alternate port
+      8025,   # mailpit's web interface
+      1025,   # mailpit's SMTP door
+      8969,   # the local speech model
+      5055    # the local open-notebook service
+    }
+  }
+
+  # ---------------------------------------------------------------------------
+  # ONLY the construction identity is examined here, and the test is written as
+  # `skuid 997`, never as `skuid != 997`.
+  #
+  # Measured 2026-08-24, and it is a trap worth the room it takes: a packet the
+  # kernel emits with NO owning socket — the ACK and RST that close a connection
+  # whose socket is already gone — carries no skuid at all. A rule written as
+  # `meta skuid != 997 accept` does not MATCH such a packet, so it does not accept
+  # it either; the packet falls through to the default-deny below and is destroyed.
+  # With the wall written that way, this machine was silently rejecting the
+  # loopback replies of two of the CEO's own editor processes (`bun` and `kilo`),
+  # ten packets in two idle seconds, for every user on the machine.
+  #
+  # Written as a jump taken only when the owner IS 997, an ownerless packet simply
+  # does not match, falls off the end of the base chain, and meets `policy accept`.
+  # The construction identity is confined; nothing else on the machine is touched.
+  #
+  # The same trap explains a second symptom seen while this wall was being built.
+  # With `skuid != 997`, the RST that `reject` generates — which is itself ownerless
+  # — fell into the deny, generated another, and became a self-feeding storm: 2,769
+  # packets from ONE connection attempt, with the caller never told anything and
+  # left to hang. Written as a jump, the refusal's own answer is untouched and the
+  # caller is told at once. Measured after the change: one refused attempt costs
+  # exactly one packet, and the answer is ECONNREFUSED in 27 milliseconds.
+  # ---------------------------------------------------------------------------
   chain output {
     type filter hook output priority filter; policy accept;
+    meta skuid 997 jump construction
+  }
 
-    meta skuid 997 tcp dport { 54321, 54322 } counter reject with tcp reset \
-      comment "the construction identity may not reach the holding"
+  chain construction {
+    # It may reach its own stack, on the loopback address only. 127.0.0.0/8 is the
+    # one destination Docker's DNAT does not rewrite, so what is written here is
+    # what the kernel actually matches.
+    ip  daddr 127.0.0.0/8 tcp dport @construction_ports counter accept \
+      comment "the construction may reach its own engine"
+    ip6 daddr ::1/128     tcp dport @construction_ports counter accept \
+      comment "the construction may reach its own engine (v6)"
+
+    # Everything else it emits is refused. This is the wall: not a list of the
+    # holding's addresses, but the absence of any route that is not named above.
+    # TCP is refused out loud, so the caller learns at once instead of hanging.
+    meta l4proto tcp counter reject with tcp reset \
+      comment "default-deny: the construction identity has no other route"
+
+    # And everything that is not TCP is dropped in silence rather than refused,
+    # because an ICMP refusal notice loops for exactly the same reason the RST did,
+    # and this identity has no legitimate use for a packet that is not TCP.
+    counter drop \
+      comment "default-deny: and nothing that is not TCP leaves at all"
   }
 }

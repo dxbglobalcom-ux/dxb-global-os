@@ -115,6 +115,18 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
       expect(out, `the unsandboxed probe could not enter the company's container:\n${out}`)
         .toMatch(/reaches\s+the company's container, entered as supabase_admin/);
 
+      // THE ATTACK THAT BROKE WALL ONE, 2026-08-24. The addresses are asked of
+      // Docker every run, not written down, so a container that appears tomorrow
+      // is swept tomorrow. An empty list would be a clean sweep that swept nothing.
+      expect(out, `the address sweep went blind:\n${out}`)
+        .toMatch(/the holding answers on [1-9]\d* address\(es\)/);
+      expect(out, `the address sweep found nothing to attack:\n${out}`)
+        .toMatch(/reaches\s+the holding at EVERY address it answers on[^\n]*REACHED:/);
+      expect(out, `the container-address login was never proven possible:\n${out}`)
+        .toMatch(/reaches\s+a real PostgreSQL login at the holding's CONTAINER address[^\n]*LOGGED IN as/);
+      expect(out, `the container-address login code was never shown working:\n${out}`)
+        .toMatch(/reaches\s+the same login code, at a CONTAINER address, on the construction engine[^\n]*LOGGED IN as/);
+
       // THE GREEN HALF, from inside the sandbox the construction actually runs in.
       for (const shape of [
         /refused\s+a direct TCP login to the company's engine \(5 spellings\)\s+every spelling refused/,
@@ -123,6 +135,8 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
         /refused\s+the company's container, entered as supabase_admin/,
         /refused\s+the credential files and the service environments\s+none readable/,
         /refused\s+SQL smuggled through the read gateway\s+all 6 refused/,
+        /refused\s+the holding at EVERY address it answers on[^\n]*all [1-9]\d* addresses refused/,
+        /refused\s+a real PostgreSQL login at the holding's CONTAINER address[^\n]*refused by the network/,
       ]) {
         expect(out, `a route into the holding is open from the construction runtime:\n${out}`).toMatch(shape);
       }
@@ -143,12 +157,28 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
         /refused\s+the company's HTTP gateway, every spelling\s+every spelling refused/,
         /refused\s+the Docker socket, talked to and not merely seen\s+EACCES/,
         /refused\s+the credential files and the service environments\s+none readable/,
+        /refused\s+the holding at EVERY address it answers on — the attack that broke wall one\s+all [1-9]\d* addresses refused/,
+        /refused\s+a real PostgreSQL login at the holding's CONTAINER address[^\n]*refused by the network/,
         /works\s+its OWN engine — this one MUST work/,
       ]) {
         expect(out, `the second wall is open:\n${out}`).toMatch(shape);
       }
       expect(out, `the packet filter is not loaded:\n${out}`)
         .toMatch(/the kernel's own count of refusals so far\s+\d+ packets/);
+
+      // And it is the RIGHT SHAPE. The wall that failed its audit was loaded,
+      // enabled and counting the whole time; it simply named the ports it forbade
+      // instead of the destinations it allowed, and it tested `skuid != 997`, which
+      // does not match a packet the kernel emits with no owning socket — so those
+      // packets, belonging to every user on this machine, fell into the deny.
+      for (const shape of [
+        /it examines the construction identity, and only it\s+yes/,
+        /it never tests `skuid != 997`[^\n]*correct/,
+        /it is a DEFAULT-DENY, not a list of forbidden ports\s+yes/,
+        /no rule forbids by port number \(the shape that failed\)\s+correct/,
+      ]) {
+        expect(out, `the packet filter is back in the shape that failed its audit:\n${out}`).toMatch(shape);
+      }
       expect(out, `the sandbox did not run as the construction identity:\n${out}`)
         .toMatch(/identity that fired them: uid=997\b/);
 

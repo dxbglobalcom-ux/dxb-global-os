@@ -22,6 +22,8 @@ import { accessSync, constants, statSync, realpathSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
+import * as nodeFs from "node:fs";
+const require_fs = () => nodeFs;
 
 const REPO = fileURLToPath(new URL("../..", import.meta.url));
 const HOME = process.env.HOME || "/tmp";
@@ -81,6 +83,114 @@ async function anySpellingReaches(port) {
 {
   const r = await reachable("127.0.0.1", 54422);
   record("tcp-construction-db", r.v, r.why);
+}
+
+// ------------------------------------- every address the holding actually has
+/**
+ * THE ATTACK THAT BROKE THE FIRST WALL, 2026-08-24.
+ *
+ * That wall named ports: `tcp dport { 54321, 54322 }`. An audit walked past it in
+ * one move, and the measurement found two separate reasons, either of which alone
+ * was enough:
+ *
+ *   1. The holding's database also answers on its own container address,
+ *      172.18.0.6:5432, which no port rule ever mentioned.
+ *   2. For every local address except 127.0.0.0/8, Docker rewrites the destination
+ *      in the `nat` OUTPUT hook, which runs BEFORE the filter hook. So
+ *      192.168.178.44:54322 had already become 172.18.0.6:5432 by the time a port
+ *      rule looked at the port.
+ *
+ * So this probe no longer guesses how the holding can be spelled. prove-wall.mjs
+ * asks Docker for the address of every one of the holding's containers, adds the
+ * host's own routable addresses and each bridge gateway, and hands the whole list
+ * in through DXB_PROBE_COMPANY_ADDRS. If it hands in nothing, the probe says BLIND
+ * and the drill fails — a sweep of an empty list is not a clean sweep.
+ */
+// Handed in on the command line, not through the environment: the sandbox is
+// entered through `sudo`, which resets the environment, so an env var would
+// arrive empty inside and the sweep would silently go blind.
+const flag = (name) => {
+  const hit = process.argv.find((a) => a.startsWith(`--${name}=`));
+  return hit ? hit.slice(name.length + 3) : "";
+};
+const ADDRS = (flag("company-addrs") || process.env.DXB_PROBE_COMPANY_ADDRS || "")
+  .split(",").map((x) => x.trim()).filter(Boolean);
+const splitAddr = (a) => [a.slice(0, a.lastIndexOf(":")), Number(a.slice(a.lastIndexOf(":") + 1))];
+
+{
+  if (ADDRS.length === 0) {
+    record("tcp-company-every-address", true, "BLIND — no addresses were handed to the probe");
+  } else {
+    const hits = [];
+    for (const a of ADDRS) {
+      const [h, port] = splitAddr(a);
+      const r = await reachable(h, port, 2000);
+      if (r.v) hits.push(a);
+    }
+    record("tcp-company-every-address", hits.length > 0,
+      hits.length ? `REACHED: ${hits.join(", ")}` : `all ${ADDRS.length} addresses refused`);
+  }
+}
+
+// ------ the auditor's own attack: a real PostgreSQL login at the container address
+/**
+ * A refused handshake and a refused login are not the same claim. This one speaks
+ * PostgreSQL to the holding's container address with the only company credential
+ * that exists on this machine, and reports WHICH layer stopped it — the network,
+ * or merely the password. If the network let the packet through and only the
+ * credential saved us, the wall is not a wall.
+ */
+async function loginAt(target, url, label) {
+  const [h, port] = splitAddr(target);
+  const knock = await reachable(h, port, 3000);
+  if (!knock.v) return { reached: false, detail: `${target}: refused by the network (${knock.why}) — no credential was ever offered` };
+  if (!url) return { reached: true, detail: `${target}: THE NETWORK LET IT THROUGH; only the missing ${label} credential stopped it` };
+  try {
+    const u = new URL(url); u.hostname = h; u.port = String(port);
+    const { Client } = loadPg();
+    const c = new Client({ connectionString: u.toString(), connectionTimeoutMillis: 5000 });
+    await c.connect();
+    const r = await c.query("SELECT current_user");
+    await c.end();
+    return { reached: true, detail: `${target}: LOGGED IN as ${r.rows[0].current_user}` };
+  } catch (e) {
+    return { reached: true, detail: `${target}: THE NETWORK LET IT THROUGH; PostgreSQL answered "${String(e.message || e).split("\n")[0]}"` };
+  }
+}
+
+function companyCredential() {
+  try {
+    const { readFileSync } = require_fs();
+    return readFileSync(join(HOME, ".config/dxb/company-gateway.env"), "utf8").split("\n")
+      .find((l) => l.startsWith("DXB_COMPANY_GATEWAY_URL="))
+      ?.slice("DXB_COMPANY_GATEWAY_URL=".length).trim() || null;
+  } catch { return null; }
+}
+
+{
+  const target = ADDRS.find((a) => a.endsWith(":5432"));
+  if (!target) record("company-login-at-container-address", true, "BLIND — no :5432 address in the list");
+  else {
+    const r = await loginAt(target, companyCredential(), "company");
+    record("company-login-at-container-address", r.reached, r.detail);
+  }
+}
+
+// ---- and the green half: the same code, over a container address, must succeed
+/**
+ * Everything above is a refusal. A refusal proves nothing unless the same code is
+ * shown succeeding, so it fires once more at the CONSTRUCTION engine's container
+ * address — the disposable one — with the credential the repository already spells
+ * in tests/construction-engine.ts. When this half fails, the drill is blind and
+ * says so instead of printing a green verdict.
+ */
+{
+  const target = flag("construction-addr") || process.env.DXB_PROBE_CONSTRUCTION_ADDR || "";
+  if (!target) record("construction-login-at-container-address", false, "BLIND — no construction address was handed to the probe");
+  else {
+    const r = await loginAt(target, "postgresql://postgres:postgres@placeholder:1/postgres", "construction");
+    record("construction-login-at-container-address", r.reached, r.detail);
+  }
 }
 
 // --------------------------------------------------------------- the socket

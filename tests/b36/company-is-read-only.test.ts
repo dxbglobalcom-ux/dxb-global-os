@@ -179,6 +179,69 @@ describe("B36 · Block 3 — the one-way window", () => {
       .toContain('--ro-bind "$REPO/.git"');
   });
 
+  it("(6) the packet filter is a DESTINATION allow-list, and it never tests `skuid != 997`", () => {
+    // Both halves of this test are an audit finding from 2026-08-24, written into
+    // the battery so no future author can quietly undo either one.
+    //
+    // FINDING ONE — the wall named the two published port numbers and forbade
+    // those. It was walked past in a single move, because the holding's database
+    // also answers on its own container address (172.18.0.6 port 5432), and because
+    // Docker rewrites the destination of every non-loopback local address in the
+    // `nat` OUTPUT hook, which runs BEFORE the filter hook — so the host's own LAN
+    // address on the published port had already become the container's address on
+    // port 5432 before any port rule looked at it. A wall that names what it
+    // forbids will always be shorter than the list of ways to spell an address, so
+    // this one names what it ALLOWS.
+    //
+    // FINDING TWO — the wall let everyone else past with `meta skuid != 997 accept`.
+    // A packet the kernel emits with no owning socket carries no skuid at all, so
+    // that rule does not MATCH it and therefore does not accept it either: it fell
+    // into the default-deny. Measured on this machine, the wall was destroying the
+    // loopback replies of the CEO's own editor processes, ten packets in two idle
+    // seconds, for every user on the machine.
+    const SRC = join(REPO, "scripts/construction/company-wall.nft");
+    const nft = readFileSync(SRC, "utf8");
+    const rules = nft.split("\n")
+      .map((l) => l.trim())
+      .filter((l) => l && !l.startsWith("#"));
+    const denies = rules.filter((l) => /\b(reject|drop)\b/.test(l));
+    const allows = rules.filter((l) => /\baccept\b/.test(l));
+
+    expect(denies.length, "the wall forbids nothing at all").toBeGreaterThan(0);
+    for (const d of denies) {
+      expect(d, `a rule forbids by port number — the shape that failed its audit: ${d}`)
+        .not.toMatch(/dport/);
+    }
+    expect(denies.some((d) => /l4proto tcp/.test(d) && /reject/.test(d)),
+      "the wall has no default-deny for TCP").toBe(true);
+    expect(denies.some((d) => !/l4proto/.test(d) && /drop/.test(d)),
+      "the wall lets through everything that is not TCP").toBe(true);
+
+    // Measured on the RULES, never on the file: this file explains the trap in its
+    // own comments, and a test that reads the prose cannot tell the warning from
+    // the mistake.
+    const ruleText = rules.join("\n");
+    expect(ruleText, "the wall stopped examining the construction identity by name")
+      .toMatch(/meta skuid 997 jump/);
+    expect(ruleText, "the wall tests `skuid != 997`, which destroys ownerless packets for every user")
+      .not.toMatch(/skuid\s*!=\s*997/);
+
+    // Every door it opens is bound to a loopback destination. 127.0.0.0/8 is the
+    // one address family Docker's DNAT leaves alone, so it is the only one where
+    // what is written is what the kernel matches.
+    for (const a of allows.filter((l) => /dport/.test(l))) {
+      expect(a, `a door is opened to something that is not the loopback address: ${a}`)
+        .toMatch(/(127\.0\.0\.0\/8|::1)/);
+    }
+
+    // And the file that is loaded is this one.
+    const INSTALLED = "/usr/local/share/dxb-company-wall.nft";
+    expect(existsSync(INSTALLED),
+      "the packet filter is not installed — run: bash scripts/construction/install-wall.sh").toBe(true);
+    expect(readFileSync(INSTALLED, "utf8"),
+      `${INSTALLED} has drifted from ${SRC}`).toBe(nft);
+  });
+
   it("(5) the wall that runs is ROOT-OWNED, and the repository's copy has not drifted from it", () => {
     // A wall the construction can rewrite is a suggestion. The program that
     // actually runs lives outside the repository and belongs to root; this file

@@ -54,16 +54,65 @@ function fingerprint() {
   return { stamp: of("STATE_FINGERPRINT"), governance: of("audit_log / hook_violations") };
 }
 
+// ------------------------------------ every address the holding answers on
+/**
+ * NOT A GUESS, AND NOT A LIST OF PORTS. The first wall was broken on 2026-08-24
+ * by an auditor who did not attack a port at all — he asked the container for its
+ * own address and connected to 172.18.0.6:5432, which no rule had ever named.
+ *
+ * So the drill now asks Docker the same question the attacker asked, every run:
+ * the address of every container belonging to the holding, crossed with every
+ * port that container exposes, plus every routable address this host owns and
+ * every bridge gateway, crossed with the two published doors. If the holding
+ * grows a container tomorrow, the sweep grows with it. If Docker answers nothing,
+ * the drill says so and refuses to print a verdict.
+ */
+function companyAddresses() {
+  const out = new Set();
+  const names = (sh("docker", ["ps", "--format", "{{.Names}}"]).stdout || "")
+    .split("\n").map((x) => x.trim()).filter((n) => n.endsWith("_DxB_Global_OS"));
+  for (const n of names) {
+    const r = sh("docker", ["inspect", "-f",
+      "{{range $k,$v := .NetworkSettings.Networks}}{{$v.IPAddress}} {{$v.GlobalIPv6Address}} {{end}}"
+      + "|{{range $p,$c := .Config.ExposedPorts}}{{$p}} {{end}}", n]);
+    if (r.status !== 0) continue;
+    const [ipPart = "", portPart = ""] = (r.stdout || "").trim().split("|");
+    const ips = ipPart.split(/\s+/).filter((x) => x && x !== "<no value>");
+    const ports = portPart.split(/\s+/).filter(Boolean).map((x) => x.split("/")[0]);
+    for (const ip of ips) for (const port of ports) out.add(`${ip}:${port}`);
+  }
+  // and the host's own addresses, and each bridge gateway, on the published doors
+  const hostIps = (sh("bash", ["-c",
+    "ip -o -4 addr show | awk '{print $4}' | cut -d/ -f1"]).stdout || "")
+    .split("\n").map((x) => x.trim()).filter(Boolean);
+  for (const ip of hostIps) for (const port of [54321, 54322]) out.add(`${ip}:${port}`);
+  return [...out];
+}
+
+function constructionAddress() {
+  const r = sh("docker", ["inspect", "-f",
+    "{{range $k,$v := .NetworkSettings.Networks}}{{$v.IPAddress}}{{end}}", "supabase_db_DxB_Build"]);
+  const ip = (r.stdout || "").trim();
+  return r.status === 0 && ip ? `${ip}:5432` : "";
+}
+
+const COMPANY_ADDRS = companyAddresses();
+const CONSTRUCTION_ADDR = constructionAddress();
+
 function probe(where) {
   const PROBE = join(REPO, "scripts/b36/wall-probe.mjs");
+  // Handed over as arguments, not as environment: the sandbox is entered through
+  // `sudo`, which resets the environment, and an env var would arrive empty
+  // inside — a sweep of an empty list that looks exactly like a clean sweep.
+  const pass = [`--company-addrs=${COMPANY_ADDRS.join(",")}`, `--construction-addr=${CONSTRUCTION_ADDR}`];
   const r = where === "inside"
-    ? sh("bash", [join(REPO, "scripts/construction/run.sh"), "node", "scripts/b36/wall-probe.mjs"])
+    ? sh("bash", [join(REPO, "scripts/construction/run.sh"), "node", "scripts/b36/wall-probe.mjs", ...pass])
     : where === "identity"
       // The construction identity, OUTSIDE the sandbox. This is the second wall
       // on its own: no namespace, no bwrap — just the operating system and the
       // kernel's own packet filter.
-      ? sh("sudo", ["-n", "-u", "dxbbuild", "node", PROBE])
-      : sh("node", [PROBE]);
+      ? sh("sudo", ["-n", "-u", "dxbbuild", "node", PROBE, ...pass])
+      : sh("node", [PROBE, ...pass]);
   const text = (r.stdout || "").trim();
   const start = text.indexOf("{");
   if (start < 0) throw new Error(`the ${where} probe printed nothing usable:\n${text}\n${r.stderr}`);
@@ -79,8 +128,20 @@ const MATRIX = [
   ["docker-exec-company", "the company's container, entered as supabase_admin", false, true],
   ["credential-files", "the credential files and the service environments", false, true],
   ["company-login", "a real login to the holding with a real credential", false, true],
+  ["tcp-company-every-address", "the holding at EVERY address it answers on — container, bridge, LAN", false, true],
+  ["company-login-at-container-address", "a real PostgreSQL login at the holding's CONTAINER address", false, true],
   ["gateway-arbitrary-sql", "SQL smuggled through the read gateway", false, false],
   ["gateway-other-operations", "any operation on the gateway but the named read", false, false],
+];
+/**
+ * Proven only in the unsandboxed runtime, on purpose. It fires the container-address
+ * login code at the CONSTRUCTION engine's container address, where nothing forbids
+ * it, so a refusal above can never be the code failing to work at all. It is not
+ * asked of the sandbox, which has no network of any kind and could not reach a
+ * container address even if it were allowed to.
+ */
+const RED_ONLY = [
+  ["construction-login-at-container-address", "the same login code, at a CONTAINER address, on the construction engine", null, true],
 ];
 const MUST_WORK = [
   ["tcp-construction-db", "the construction site's OWN engine", true, true],
@@ -134,11 +195,20 @@ line(`    ${classLeaks === 0 ? "all 9 classes are zero" : `${classLeaks} class(e
 line();
 
 // -------------------------------------------------------------- the two probes
+line("  THE ADDRESSES THE SWEEP USES — asked of Docker this run, not written down:");
+line(`    the holding answers on ${COMPANY_ADDRS.length} address(es):`);
+for (const a of COMPANY_ADDRS) line(`      ${a}`);
+line(`    the construction's own container address              ${CONSTRUCTION_ADDR || "(none found)"}`);
+if (COMPANY_ADDRS.length === 0 || !CONSTRUCTION_ADDR) {
+  line("    BLIND   Docker told the drill nothing; a sweep of an empty list is not a sweep.");
+}
+line();
+
 line("  THE RED HALF — the same probe from the UNSANDBOXED runtime, where every");
 line("  one of these MUST succeed, or the probe is not measuring anything.");
 const outside = probe("outside");
-let blind = 0;
-for (const [id, what, , wantOutside] of [...MATRIX, ...MUST_WORK]) {
+let blind = (COMPANY_ADDRS.length === 0 || !CONSTRUCTION_ADDR) ? 1 : 0;
+for (const [id, what, , wantOutside] of [...MATRIX, ...MUST_WORK, ...RED_ONLY]) {
   const got = outside[id]?.reached;
   const ok = got === wantOutside;
   if (!ok && wantOutside) blind++;
@@ -183,6 +253,8 @@ const SECOND = [
   ["docker-ps", "the Docker command", false],
   ["credential-files", "the credential files and the service environments", false],
   ["company-login", "a real login to the holding", false],
+  ["tcp-company-every-address", "the holding at EVERY address it answers on — the attack that broke wall one", false],
+  ["company-login-at-container-address", "a real PostgreSQL login at the holding's CONTAINER address", false],
   ["tcp-construction-db", "its OWN engine — this one MUST work", true],
 ];
 for (const [id, what, want] of SECOND) {
@@ -191,10 +263,42 @@ for (const [id, what, want] of SECOND) {
   const mark = want === null ? "        " : (got === want ? (want ? "works   " : "refused ") : "LEAK    ");
   line(`    ${mark} ${what.padEnd(52)} ${identity[id]?.detail ?? "(not measured)"}`);
 }
+// ------------------------------------------ and the shape of the wall itself
+/**
+ * Not "is a table loaded" — WHAT KIND of table. The wall that failed its audit on
+ * 2026-08-24 was loaded, enabled and counting the whole time; it was simply the
+ * wrong shape, because it named the ports it forbade instead of the destinations
+ * it allowed. So the drill reads the live ruleset and refuses a green verdict
+ * unless the kernel is actually holding a default-deny.
+ */
 const nft = sh("sudo", ["-n", "nft", "list", "table", "inet", "dxb_wall"]);
-const counter = (nft.stdout || "").match(/counter packets (\d+) bytes (\d+)/);
-line(`    the kernel's own count of refusals so far            ${counter ? `${counter[1]} packets, ${counter[2]} bytes` : "(the table is not loaded — LEAK)"}`);
-if (!counter) leaks++;
+const rules = (nft.stdout || "").split("\n").map((x) => x.trim()).filter(Boolean);
+const denies = rules.filter((r) => /\b(reject|drop)\b/.test(r));
+const refused = denies.reduce((n, r) => n + Number((r.match(/counter packets (\d+)/) || [0, 0])[1]), 0);
+const refusedBytes = denies.reduce((n, r) => n + Number((r.match(/bytes (\d+)/) || [0, 0])[1]), 0);
+// EVERY accept in the table is printed, not only the ones that name a port, so a
+// door can never be opened where the report does not show it.
+const allowed = rules.filter((r) => /\baccept\b/.test(r) && /counter/.test(r));
+// Written as `skuid 997 jump`, never as `skuid != 997 accept`. Measured
+// 2026-08-24: a packet the kernel emits with no owning socket carries no skuid,
+// so `!= 997` does not match it, it is not accepted either, and it falls into the
+// default-deny — which had this machine destroying the loopback replies of the
+// CEO's own editor processes for every user on it. The drill refuses a green
+// verdict if the wall is ever written back into that shape.
+const hasIdentity = rules.some((r) => /meta skuid 997 jump/.test(r));
+const negatedIdentity = rules.some((r) => /skuid\s*!=\s*997/.test(r));
+const hasDefaultDeny = denies.some((r) => !/dport/.test(r) && /l4proto tcp/.test(r))
+  && denies.some((r) => !/dport/.test(r) && !/l4proto/.test(r));
+const denyNamesPorts = denies.some((r) => /dport/.test(r));
+line(`    the table is loaded                                  ${nft.status === 0 ? "yes" : "NO — LEAK"}`);
+line(`    it examines the construction identity, and only it    ${hasIdentity ? "yes" : "NO — LEAK"}`);
+line(`    it never tests \`skuid != 997\` (kills ownerless packets) ${negatedIdentity ? "IT DOES — LEAK" : "correct"}`);
+line(`    it is a DEFAULT-DENY, not a list of forbidden ports   ${hasDefaultDeny ? "yes" : "NO — LEAK"}`);
+line(`    no rule forbids by port number (the shape that failed) ${denyNamesPorts ? "IT DOES — LEAK" : "correct"}`);
+line(`    every accept it holds, and what the kernel counted on each:`);
+for (const a of allowed) line(`      ${a.replace(/ comment "[^"]*"/, "").slice(0, 96)}`);
+line(`    the kernel's own count of refusals so far            ${refused} packets, ${refusedBytes} bytes`);
+if (nft.status !== 0 || !hasIdentity || negatedIdentity || !hasDefaultDeny || denyNamesPorts) leaks++;
 
 // ------------------------------------------------------- the gate fails closed
 line("  THE GOVERNANCE GATE, from inside the sandbox:");
