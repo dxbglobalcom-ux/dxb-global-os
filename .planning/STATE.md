@@ -58,6 +58,32 @@ author offered to set it aside, and he refused it in one line — *"o 5 test'in 
 testi yok saymayı teklif ediyorsun?"* Frequency does not shrink a defect.
 
 
+**2026-08-24 — LIVE OPERATIONS SAT AT "Connecting" FOR EVER, AND IT IS FIXED AT ITS SOURCE.**
+He saw it on his own screen: the badge on Live Operations never reached "Live" while the company
+was healthy. Not caused by Block 3 (0 privileges changed for any role but `dxb_reader`). **The
+cause is in the library, read in the shipped source of `@supabase/realtime-js` 2.110.0:**
+`RealtimeClient.channel(topic)` hands back the channel the socket ALREADY has for that topic
+(`RealtimeClient.js:330`), and `RealtimeChannel.subscribe()` does nothing at all unless the channel
+is closed (`RealtimeChannel.js:140`) — **it never calls the callback back.** Nine panels share four
+topics (`ops:live` 3, `alerts` 3, `approvals` 3, `settings` 2), so the first panel to ask was
+answered and the rest waited for a reply that was never coming; the badge shows the WORST of the
+channels a page watches, so one silent channel froze the whole surface. `removeChannel()` being
+async made it a race: a panel that unmounted and remounted inside that window got the leaving
+channel back and hung. **`apps/dashboard/src/lib/realtime.ts` now joins each topic ONCE and fans
+messages and status out to every panel**, keeps the registry on a global symbol so a hot module
+replacement cannot open a second channel on a topic the socket already joined, never leaves a
+topic while the tab lives, and can no longer sit at "connecting" — an unconfirmed join says `stale`
+after 10 s, which is a state the CEO can act on. **Measured:** battery **105 files / 769 passed /
+15 skipped / exit 0** · `tsc --build` 0 · `verify:ledger` OK · `verify:schema-parity`
+SCHEMA_PARITY · gitleaks no leaks. **Proved red first:** `tests/phase8/realtime-channel-sharing.test.ts`
+(6 cases) goes red when the sharing is mutated away. **Verified by eye in his browser:** the badge
+reads **Live**; across 13 navigations six topics stayed `joined` with **0** stuck, `ops:live` served
+two panels from one join, and wiping the registry to imitate a module replacement still came back
+`live`. **Not measured, and it is not measurable without breaking his order:** an end-to-end
+"a real company event lights the page" needs a write into the holding's database — *"TEK BİR HARF
+DAHİ ŞİRKETİN VERİ TABANINA GİRMESİN"* — so it was not attempted.
+
+
 **2026-08-16/17 — the holding moved to the workstation, and it is measured, not assumed.** He
 ordered a clean move ("tertemiz cillop gibi bir taşıma") with one binding condition: **nothing is
 deleted on the X230**.
