@@ -155,15 +155,16 @@ without re-issuing one GRANT, the act that already broke the holding for eleven 
 root-owned, the forwarders could not create their sockets, every TCP handshake inside still
 succeeded, and PostgreSQL answered *"Connection terminated unexpectedly"*. **A wall that looks like
 a working bridge is worse than one that is plainly shut.**
-**ACCEPTED BY THE CEO, 2026-08-24, AFTER HIS AUDITOR PASSED IT** — *"denetçi tamam dedi herşeyi kaydet. onaylıyorum."* Registered as `b36-block3-bis-accepted-2026-08-24`. LAW B is satisfied: the author's work was finished on 2026-08-24, his auditor examined it, and his own word makes it accepted. **The row B36 stays OPEN** — Block 3-bis is one block of eight, and Blocks 4-7 are untouched. <!-- OPEN: B36 -->
+**ACCEPTED BY THE CEO, 2026-08-24, AFTER HIS AUDITOR PASSED IT** — *"denetçi tamam dedi herşeyi kaydet. onaylıyorum."* Registered as `b36-block3-bis-accepted-2026-08-24`. LAW B is satisfied: the author's work was finished on 2026-08-24, his auditor examined it, and his own word makes it accepted. **The row B36 stays OPEN** — Block 3-bis is one block of eight; **Block 4 was built the same evening** and Blocks 5-7 are untouched. <!-- OPEN: B36 -->
 **The block also broke the company and put it back**: its first version gave `anon` the right to
 call all 85 control functions, its own blast-radius photograph caught it, and Block 0's dated dump
 restored the exact prior state (`COMPANY_PRIVILEGES_RESTORED`).
 **The company's data never moved through any of it:** 60 tables · 46,735 rows · `aecfcfa259c9c501`
 · 18 sequences `98258eb817d8e3b8` · 0 large objects · audit_log 29,637 / hook_violations 1,963 ·
 `STATE_FINGERPRINT de359137ee1d7c79`, identical at every step.
-**Block 4 is not started, on his order relayed with the audit** — *"Blok 4'e geçme; yalnız Blok
-3'ü düzelt."*
+**That evening's holding order — *"Blok 4'e geçme; yalnız Blok 3'ü düzelt"* — is spent:** Block 3-bis
+was corrected, audited and accepted by him, and Block 4 was then built. The sentence is kept here as
+history, not as a live instruction (LAW A).
 **He had the work audited by Codex Solo 5.6 TWICE the same day, and the second audit rejected the
 first answer in full** — *"7 bulgunun 0'ı bütünüyle kapandı"*. It was right on all seven. The
 critical one had **six** reproducible escapes, not three: six spellings of the company's address
@@ -393,6 +394,29 @@ that reading as the next job and had not answered when the session closed.
 1. **B36 — cutting the construction site out of the company. THIS IS THE WORK IN HAND.** <!-- OPEN: B36 -->
    Plan: `.planning/quick/20260823-construction-company-separation/PLAN.md` (eight blocks, approved).
    Evidence: `EVIDENCE.md` in the same folder · audit answers: `AUDIT-RESPONSE-1.md`, `AUDIT-RESPONSE-2.md`.
+   **DONE — Block 4, the company's address is no longer a default anywhere. 2026-08-24 evening.**
+   **95 → 0.** Ninety-five files bound the holding's own address to `DXB_DATABASE_URL` as a fallback —
+   82 suites opening with `??=`, three seeds, six operator tools, the Phase-5 exit gate in bash, and
+   **one live application route** that invented a database for itself on every request. Each was inert
+   while something else set the variable first and live the moment nothing did. They are gone. The
+   seeds, the tools and the gate now refuse with a named reason and a non-zero exit, and **all eleven
+   refusals were RUN, not predicted**. The battery's engine is named once, in `vitest.config.ts`, from
+   the one spelling in `tests/construction-engine.ts`. `scripts/systemd/install.sh` still writes the
+   company's address for the company's OWN daemons, under **`DXB_COMPANY_DATABASE_URL`** — a name
+   nothing reads by accident — and each unit maps it back inside its own `ExecStart`; both daemons were
+   measured carrying it, pg-boss reconnected, `NRestarts=0`. Removing the route's fallback left the
+   dashboard with no address at all (it is the only file there that calls `getDb()`, and Next.js does
+   not read the repository-root env files), so `scripts/dashboard.sh` / `pnpm dashboard` hands it one
+   the same way. **The gate:** `tests/b36/no-company-fallbacks.test.ts` imports the counter itself, so
+   the definition and the enforcement cannot drift apart; it proves its instrument can see a fallback
+   in seven shapes before it is allowed to report none, and it was **seen RED first**. A defect found
+   on the way and fixed at source: `scripts/library/intake.mjs` held **two raw NUL bytes**, which made
+   `ugrep` — what `grep` resolves to on this machine — skip the file in silence; an audit of it would
+   have reported clean. **Gates after:** `BATTERY_GREEN` 107 files / 775 passed / 15 skipped + host
+   2/11 · `tsc` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · `WALL_IS_ONE_WAY` · gitleaks clean ·
+   `STATE_FINGERPRINT de359137ee1d7c79` identical before and after. **NEXT IS BLOCK 5** — the residue
+   moves out of the company (moved, never deleted — his decision 3), and it begins with a dry-run
+   report put in front of him before one row moves.
    **BLOCK 1 IS CLOSED AND DOES NOT REOPEN — the finish line was fixed on 2026-08-23** after three
    audits rejected three different proofs of a block that was already finished. The auditor's wording,
    adopted by the CEO, is the only thing that can reopen it: *"can the SessionEnd hook send an INSERT,

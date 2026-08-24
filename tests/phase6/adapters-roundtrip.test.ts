@@ -22,7 +22,6 @@ import { readDoc, deleteDoc } from "../../packages/memory-router/src/adapters/no
 // negative. Deterministic seams where LLMs would fire; the notebook container
 // must be UP — beforeAll FAILS (never skips) when it is down
 // (Evidence-Before-Done stays honest).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const DIM = 1536;
 const AGENT = `roundtrip-test-${randomUUID().slice(0, 8)}`;

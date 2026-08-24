@@ -7,7 +7,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // an approval must move the linked task out of awaiting_approval — approved
 // ships the result (done), rejected sends it back for rework (returned).
 // Tests run inside rolled-back transactions against the live DB.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const SEED = "c5-task-sync-test";
 const ROLLBACK = new Error("rollback-sentinel");

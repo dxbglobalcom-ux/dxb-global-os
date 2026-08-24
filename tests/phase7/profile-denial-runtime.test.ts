@@ -14,7 +14,6 @@ import { generateProfilesFromPolicy } from "../../packages/gateway/src/index.js"
 // (filter-before-discovery, study-pass v1 model). This uses the real policy
 // files + real registry + real pins, not fixtures. The fuller proof (spawning
 // a live Claude Code session against the profile) is ⚠ UNVERIFIED in SUMMARY.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 interface Profile {
   mcpServers: Record<string, { command: string; args?: string[] }>;

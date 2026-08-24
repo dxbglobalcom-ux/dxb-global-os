@@ -7,7 +7,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // never-assigned seed placeholder ('default') from a real CEO assignment
 // ('ceo_override' — stamped by the §4b-regime door). Surfaces render the
 // placeholder honestly instead of echoing glm-5.2 as if it were chosen.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const SEED = "c9-brain-source-test";
 const ROLLBACK = new Error("rollback-sentinel");

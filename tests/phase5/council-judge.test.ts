@@ -35,7 +35,6 @@ import {
 //       (LOCKED procedure), final asserted state >= 8/10
 //   (c) live council run: 3 producers + judge on an outward task → 4
 //       cost_ledger rows meta.council=true — needs SDK + LiteLLM master key
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const LIVE_SDK = process.env.DXB_LIVE_SDK === "1";
 const LIVE_LITELLM = Boolean(process.env.LITELLM_MASTER_KEY);

@@ -480,22 +480,49 @@ have nothing to do with security; that is expected, and it is inside this block.
 It does not touch the company's own roles or daemons. It does not change a single screen. It does
 not move one row. It does not begin Block 4.
 
-**NOTHING HERE IS BUILT.** His standing word on this block is *"onay almadan uygulama"* — and the
-auditor's ninth ruling is the same: the corrected plan goes to Muhittin Bey, and not one line is
-written before he answers.
+**BUILT, AUDITED AND ACCEPTED — 2026-08-24.** The sentence that stood here — *"NOTHING HERE IS
+BUILT"* — is deleted by what happened (LAW A). The corrected plan went to Muhittin Bey, he answered,
+the block was built, its auditor passed it, and he then ran the acceptance screen with his own eye
+and accepted it: `scripts/governance/ceo-approvals.json` → `b36-block3-bis-accepted-2026-08-24`.
 
-### Block 4 — Delete every fallback, and add the guard
+### Block 4 — Delete every fallback, and add the guard — **DONE 2026-08-24**
 
-- All 94 files lose their `??=` company-database fallback. They throw instead.
-- `apps/dashboard/src/app/api/voice/call/route.ts:53` — a live route may never invent a database.
-- `vitest` `globalSetup` guard: if the resolved `DXB_DATABASE_URL` names the company's port or the
-  company's role, the run aborts before the first test.
-- `scripts/systemd/install.sh:17` keeps writing the company URL — that is correct, it is the
-  **company's** daemon — but the variable it writes is renamed so a construction tool can never
-  pick it up by accident.
-- `db/README.md:22` and `.claude/settings.local.json:81` updated to the new shape.
-- **Evidence:** `grep -rc "54322/postgres"` over the repository → **0** outside the company's own
-  daemon installer.
+Measured before: **95** files bound the company's address to `DXB_DATABASE_URL` as a default
+(83 tests · 8 scripts · 3 seeds · 1 live route). Measured after: **0**.
+Evidence: `EVIDENCE.md` §"Block 4 — the company's address is no longer a default".
+
+- 82 suites lost the `??=` line. The battery's engine is named once, in `vitest.config.ts`
+  `test.env`, from the one spelling in `tests/construction-engine.ts`. A suite that arrives without
+  an address now throws in `packages/shared/src/db.ts:39`.
+- `tests/phase5/slice-10of10.sh` — the Phase-5 exit gate drives ten real lifecycles and used to
+  default to the holding in bash. Now `${DXB_DATABASE_URL:?…}`, **exit 1**.
+- The three seeds and the six operator tools refuse with a named reason and **exit 2**. Each of the
+  eleven refusals was RUN, not predicted.
+- `apps/dashboard/src/app/api/voice/call/route.ts:53` — gone. It is the only file in the dashboard
+  that calls `getDb()`, and Next.js does not read the repository-root env files, so the fallback had
+  been its only address. `scripts/dashboard.sh` (`pnpm dashboard`) now hands it one, by the same
+  mechanism the daemons use.
+- `scripts/systemd/install.sh` keeps writing the company URL — it is the **company's** daemon — but
+  under `DXB_COMPANY_DATABASE_URL`. The two units map it back to `DXB_DATABASE_URL` inside their own
+  `ExecStart` and nowhere else. `.env.daemon` migrated; both daemons measured carrying it, pg-boss
+  reconnected, `NRestarts=0`.
+- `db/README.md` §Environment rewritten: the variable has no default anywhere, plus the table of who
+  sets it and how. `.claude/settings.local.json` lost the one permission that opened a direct `psql`
+  door to the company (202 → 201 entries).
+- **The gate:** `tests/b36/no-company-fallbacks.test.ts` imports `scan()`/`bindingsIn()` from
+  `scripts/b36/count-company-fallbacks.mjs`, so the definition and the enforcement cannot drift
+  apart. Its case (0) proves the instrument sees a fallback in all seven shapes before case (2) is
+  allowed to report none, and the gate was **seen RED first** on a probe file.
+  `tests/b36/battery-carries-no-company-key.test.ts` lost its one tolerated shape in the same turn.
+
+**Deviations, named.** (1) The `vitest` `globalSetup` guard the plan asked for **already existed** —
+Block 2 built it after the auditor's second FAIL (`pinTheEngine()` refuses a foreign address;
+`refuseUnlessConstruction()` asks the server for its cluster identity on the connection that does
+the work). It was measured, not rebuilt. (2) The planned evidence line, `grep -rc "54322/postgres"`
+→ 0, was **not used**: `package.json` binds the company address to `DXB_COMPANY_URL` for
+`verify:schema-parity` and `b36:prove-block1`, gates that must reach the holding on purpose, and
+several `tests/b36` files carry it as an assertion. The committed counter separates *binding* from
+*mentioning*, prints both lists, and its headline is the honest number.
 
 ### Block 5 — The residue moves out (moved, never deleted)
 

@@ -16,7 +16,6 @@ import { classifyDepartment, generateSections } from "../../tools/video-learn/sr
 // memory rows through the single door. Deterministic battery via the stage
 // seams; live e2e gated behind DXB_LIVE_SDK=1 (real yt-dlp + Speaches over the
 // VPS voice profile + real routing_rules models).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const LIVE = process.env.DXB_LIVE_SDK === "1";
 const db = getDb();

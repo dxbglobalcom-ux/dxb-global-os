@@ -10,7 +10,6 @@ import { resolveExecutionRoute } from "../../packages/orchestrator/src/index.js"
 // Every probe runs inside a rolled-back transaction: the resident scheduler is
 // live against this same database and must not see a fixture agent or a moved
 // brain even for a moment (the lesson from the 2026-07-24 live-DB residue).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const SEED = "c9-brain-floor";
 const ROLLBACK = new Error("rollback-sentinel");

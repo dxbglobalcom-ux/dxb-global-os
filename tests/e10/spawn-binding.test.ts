@@ -21,7 +21,6 @@ import { CURRENT_HOOK_VERSION } from "../../packages/orchestrator/src/hook-bindi
 //   5. ops:live terminal envelope carries payload.hook_result (§9).
 //   6. §21 SQL: zero active employees with NULL hook_version.
 // Suite deletes ONLY what it creates (id watermarks; E9.3 incident rule).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const M = "e102t";

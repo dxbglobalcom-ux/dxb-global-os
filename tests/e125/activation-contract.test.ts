@@ -7,7 +7,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // mutation tests ride a throwaway fixture agent (created dormant, deleted in
 // afterAll, FK-ordered) — the workforce-gate suite's hygiene assertions only
 // judge pre-suite rows, so the transient fixture cannot flake the battery.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const FIXTURE_SLUG = "e125t-activation-fixture";

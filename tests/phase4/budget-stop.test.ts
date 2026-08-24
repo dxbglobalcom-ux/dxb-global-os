@@ -21,7 +21,6 @@ import {
 // Gate: needs the live proxy + master key in the process env. Without them the
 // suite skips and the criteria are ⚠ UNVERIFIED (plan's no-guessing rule).
 // Alert plumbing follow-up: 70% budget webhook -> Phase 8 dashboard (COST-04).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const LIVE = Boolean(process.env.LITELLM_MASTER_KEY);
 const MODEL = "glm-5.2";

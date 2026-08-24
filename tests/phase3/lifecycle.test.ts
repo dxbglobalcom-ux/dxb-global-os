@@ -7,7 +7,6 @@ import { sweepByDepartment } from "../helpers/suite-scope.js";
 
 // Runs against the local Supabase stack (03-02). Real MCP protocol via linked
 // in-memory transports — no subprocess.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 // Suite-unique departments: queue_claim(departments) pulls the OLDEST queued
 // task in a department, so sharing 'engineering' with live rows would claim

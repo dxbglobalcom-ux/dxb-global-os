@@ -13,7 +13,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // These cases prove the DOOR, not the form: the function is reachable as the
 // CEO, the target lands active, the audit and decision trail exist, and the same
 // idempotency key cannot create the target twice.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const SEED = "c9-objective-door";
 const ROLLBACK = new Error("rollback-sentinel");

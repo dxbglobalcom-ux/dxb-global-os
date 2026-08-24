@@ -15,7 +15,6 @@ import { promote } from "../../tools/dxb-cli/src/promote.js";
 // (f) contradiction follow-through: after promote, recall returns X=B not X=A
 // (master step 6 retrieval clause). Deterministic: injected embedder +
 // classifier + judges; one live run is DXB_LIVE_SDK=1 gated.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const DIM = 1536;
 const AGENT = `recall-test-${randomUUID().slice(0, 8)}`;

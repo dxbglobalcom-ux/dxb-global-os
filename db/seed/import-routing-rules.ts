@@ -30,10 +30,20 @@ const rows: SeedRow[] = JSON.parse(
   readFileSync(join(ROOT, "packages/kernel/policy/routing-seed.json"), "utf8"),
 );
 
-const pool = new Pool({
-  connectionString:
-    process.env.DXB_DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres",
-});
+// B36 Block 4: the company's address used to stand here as a DEFAULT, so a
+// run that forgot to name an engine wrote into the holding's own books and
+// said nothing. This file now carries no address; where it writes is the
+// caller's stated decision, and a missing one is a loud stop.
+const DB_URL = process.env.DXB_DATABASE_URL;
+if (!DB_URL) {
+  console.error(
+    "import-routing-rules: DXB_DATABASE_URL is not set. This seed INSERTs routing rules and it carries no default — " +
+      "name the engine explicitly.",
+  );
+  process.exit(2);
+}
+
+const pool = new Pool({ connectionString: DB_URL });
 
 let inserted = 0;
 try {

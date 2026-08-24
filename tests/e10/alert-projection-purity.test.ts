@@ -27,7 +27,6 @@ import { closeDb, getDb } from "@dxb/shared";
 //      an orphaned projection; deleting a workflow now resolves its open
 //      alerts. Measured 2026-07-28 02:02: the r23 suite HAD deleted its
 //      fixture workflow rows (0 rows left) while its alert stood.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 

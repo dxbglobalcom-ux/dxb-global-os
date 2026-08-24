@@ -22,7 +22,6 @@ import { formatEur } from "../../apps/dashboard/src/lib/format.js";
 //   5. Threshold alarms on the `cost` channel: pushing month spend past 70%
 //      fires the attention alert via trigger (probe inside a rolled-back tx).
 // Suite deletes ONLY what it creates (meta seed marker).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const SEED = "e111t";

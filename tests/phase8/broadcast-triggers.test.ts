@@ -7,7 +7,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // (Broadcast-from-DB, Pattern 6 — postgres_changes is forbidden project-wide).
 // Rows created here are cleaned up surgically; no global wipes (hermes may own
 // live rows in this database).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ACTOR = "test:broadcast-triggers";
 let taskId: string;

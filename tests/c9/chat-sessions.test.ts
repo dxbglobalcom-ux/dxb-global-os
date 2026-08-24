@@ -12,7 +12,6 @@ import { drainChatMessages, type ChatAnswerInput } from "../../packages/orchestr
 //
 // The valuable half is not the navigation strip; it is that the answer half now
 // only sees its own conversation. These cases prove that.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
 // The dashboard reaches Postgres as `authenticated` carrying the CEO's jwt —

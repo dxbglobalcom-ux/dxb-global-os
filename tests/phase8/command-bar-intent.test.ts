@@ -10,7 +10,6 @@ import { deriveChainStatus } from "../../apps/dashboard/src/lib/intents.js";
 // carries the chain. LLM stages are injected (classify/decompose are
 // Phase-5-proven and live-gated); dispatch is REAL — the queue rows, the
 // transaction and the broadcast trigger all execute against the database.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const TR_FIXTURE = "Outleteuro için hafta sonu kampanya taslağı hazırla ve maliyet özetini çıkar";
 

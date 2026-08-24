@@ -8,6 +8,8 @@
     "typecheck": "tsc --build",
     "scheduler": "node packages/outbox-executor/dist/main.js",
     "jarvis": "node packages/voice/dist/jarvis-daemon.js",
+    "dashboard": "bash scripts/dashboard.sh dev",
+    "dashboard:start": "bash scripts/dashboard.sh start",
     "test": "vitest run",
     "verify:ledger": "node scripts/governance/ledger-truth.mjs",
     "verify:ledger:update": "node scripts/governance/ledger-truth.mjs --update",

@@ -22,8 +22,6 @@ import {
 } from "../../packages/orchestrator/src/worker-shim.js";
 import { extractEvidencePackage as orchExtract } from "../../packages/orchestrator/src/hook-binding.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 const db = () => getDb();
 const M = `r23t-${randomUUID().slice(0, 8)}`;
 const SLUG = (s: string) => `${M}-${s}`;

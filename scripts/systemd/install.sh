@@ -9,12 +9,20 @@ SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 REPO_ROOT="$(cd "${SRC_DIR}/../.." && pwd)"
 
-# Daemon env: the resident processes need DXB_DATABASE_URL outside any
-# interactive shell. If no committed-name env file carries it, materialize
-# the repo-documented local-dev value (db/README.md) into gitignored
-# .env.daemon — never echoed, never committed.
-if ! /bin/bash -c 'set -a; for f in "'"${REPO_ROOT}"'/.env" "'"${REPO_ROOT}"'/.env.local" "'"${REPO_ROOT}"'/.env.daemon"; do [ -f "$f" ] && source "$f"; done; [ -n "${DXB_DATABASE_URL:-}" ]'; then
-  printf 'DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres\n' \
+# Daemon env: the resident processes need the company's address outside any
+# interactive shell.
+#
+# B36 Block 4 — IT IS NOT WRITTEN UNDER THE NAME EVERY TOOL READS. Until
+# 2026-08-24 this file put `DXB_DATABASE_URL=<the company>` into .env.daemon, so
+# anything that sourced that file — a construction script, a helper, a shell
+# doing `set -a; source .env*` — silently inherited a live, write-capable
+# address for the holding's own database in the exact variable
+# packages/shared/src/db.ts picks up. The value is the same; the name is now
+# DXB_COMPANY_DATABASE_URL, which nothing reads by accident. The two company
+# daemons map it back to DXB_DATABASE_URL inside their own ExecStart, and only
+# there (scripts/systemd/dxb-scheduler.service, dxb-jarvis.service).
+if ! /bin/bash -c 'set -a; for f in "'"${REPO_ROOT}"'/.env" "'"${REPO_ROOT}"'/.env.local" "'"${REPO_ROOT}"'/.env.daemon"; do [ -f "$f" ] && source "$f"; done; [ -n "${DXB_COMPANY_DATABASE_URL:-}${DXB_DATABASE_URL:-}" ]'; then
+  printf 'DXB_COMPANY_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres\n' \
     > "${REPO_ROOT}/.env.daemon"
   echo "wrote .env.daemon (local-dev DB URL from db/README.md template)"
 fi

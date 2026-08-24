@@ -22,8 +22,6 @@ import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { runOnce } from "../../packages/outbox-executor/src/index.js";
 import { sweepByDepartment } from "../helpers/suite-scope.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 const MAIL = process.env.DXB_STAGING_MAIL_URL ?? "http://127.0.0.1:8025";
 const DEPT = `r24-${randomUUID().slice(0, 8)}`;
 const db = () => getDb();

@@ -16,7 +16,6 @@ import { resetBreaker } from "../../tools/dxb-cli/src/breaker.js";
 // audited, and an under-cap hour does NOT trip. Plus: the single scheduler
 // process registers exactly the mandated cadences (tick 15s / reaper 60s /
 // breaker 5min).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 // key blocking/unblocking talks to the live proxy; without the master key the
 // DB-state assertions still run and the key checks are skipped (⚠ UNVERIFIED)

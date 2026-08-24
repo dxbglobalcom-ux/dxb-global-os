@@ -17,7 +17,6 @@ import {
 // Coverage: non-research silent pass · research without report → REVISE ·
 // research with report → PASS + row + change_log · idempotent re-fire (one
 // row) · TR contract marker engages. Suite deletes only what it creates.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const M = "r42t";

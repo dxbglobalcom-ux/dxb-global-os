@@ -8,7 +8,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // by design (Phase-11 LOCKED: no outward handlers before then), so every
 // approved escalation became an eternally-'ready' outbox row. 51 such rows
 // from the 2026-07-18 wave blocked the phase4 suite guard and the r24 runner.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
 

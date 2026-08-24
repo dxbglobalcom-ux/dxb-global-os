@@ -8,8 +8,6 @@ import { sql } from "kysely";
 import { closeDb, getDb } from "@dxb/shared";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 const M = `r13-test-${randomUUID().slice(0, 8)}`;
 const db = () => getDb();
 

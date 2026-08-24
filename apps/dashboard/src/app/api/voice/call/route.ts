@@ -49,9 +49,6 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: "invalid_fields" }, { status: 400 });
   }
 
-  // Same session-mode local default as tests/launcher; VPS sets the env.
-  process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
   const intake = await intakeVoiceCall(
     { db: getDb() },
     {

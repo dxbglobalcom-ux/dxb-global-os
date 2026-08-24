@@ -11,7 +11,6 @@ import {
 // The reset test runs INSIDE a rolled-back transaction — control_cost_reset
 // deletes by cutoff (not by id), so a live-DB run outside a transaction would
 // eat real history. Rollback keeps the CEO's ledger untouched.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const SEED = "c9-data-controls-test";
 const ROLLBACK = new Error("rollback-sentinel");

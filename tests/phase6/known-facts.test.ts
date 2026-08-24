@@ -24,7 +24,6 @@ import { deleteDoc } from "../../packages/memory-router/src/adapters/notebook.js
 // Deterministic mode: classifier seam = the spike's recorded classifications
 // (20/20 diagonal — fixture labels), embed seam = fixture axis. Live gate run
 // (DXB_LIVE_SDK=1): real classifier + real embeddings, no seams on the read path.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const FIXTURE_PATH = "tests/phase6/fixtures/known-facts.json";
 const FIXTURE_SHA256 = "ec5547cae6cb800477b1b645cb707a54caf8ccc690395dea8db89aab200c37da";

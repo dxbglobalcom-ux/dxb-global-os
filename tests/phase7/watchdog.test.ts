@@ -16,7 +16,6 @@ import { killSwitch, type KillSwitchDeps } from "../../tools/dxb-cli/src/kill-sw
 // + kill-switch state transitions with the LiteLLM/systemctl seam mocked —
 // the live halves (real key block, real unit stop) are proven on the VPS in
 // Task 3. DB parts run against the local stack like every phase-3+ suite.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const BUDGET = { max_steps: 30, max_tokens: 150000, max_cost_eur: 0.5 };
 const NOW = new Date("2026-07-09T08:00:00Z");

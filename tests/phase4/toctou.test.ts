@@ -13,7 +13,6 @@ import { assertNoForeignReadyOutbox, sweepByDepartment } from "../helpers/suite-
 // GATE-02 proofs (04-03): the executor's same-transaction re-check (TOCTOU),
 // loud refusal of unknown action types, path-traversal confinement, and the
 // full e2e chain draft→finalize→approve→tick→file with an audit causal chain.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const PROOF_ROOT = resolve(process.cwd(), "tmp", "outbox-proof");
 

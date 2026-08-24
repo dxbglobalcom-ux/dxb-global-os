@@ -1778,3 +1778,168 @@ verdict instead of reporting a clean sweep of an empty list.
 **The lesson, and it is the one already written on this repository's wall:**
 validate the detector before you trust what it counted. It was caught only because
 a second measurement existed to disagree with the first.
+
+## Block 4 — THE COMPANY'S ADDRESS IS NO LONGER A DEFAULT · 2026-08-24 evening
+
+**What was still wrong after Block 3-bis.** The wall built that day stands *outside*
+the database: no login, no Docker, no network. It answers the question "can the
+construction runtime reach the holding?" — and the answer is no. It does not answer
+a smaller, older question: **what does a file in this repository do when nobody has
+told it where to work?** Measured at the start of this session, with the committed
+counter:
+
+```
+$ node scripts/b36/count-company-fallbacks.mjs
+EXECUTABLE FALLBACKS (the address really bound to DXB_DATABASE_URL): 95
+   tests: 83 · scripts: 8 · db seeds: 3 · apps: 1
+```
+
+Ninety-five files answered it the same way: *assume the holding*. Eighty-two suites
+opened with `process.env.DXB_DATABASE_URL ??= "…@127.0.0.1:54322/postgres"`, inert
+while `vitest.config.ts` set the variable first and live the moment anything else
+ran them. Three seeds and six operator tools carried the same address as a `??`
+default. `tests/phase5/slice-10of10.sh`, the Phase-5 exit gate that drives ten full
+task lifecycles and writes approvals and outbox rows, defaulted to it in bash. And
+one **live application route** — `apps/dashboard/src/app/api/voice/call/route.ts:53`
+— invented a database for itself on every request.
+
+**What was built.** The address is not a default anywhere:
+
+| What | Before | After |
+|---|---|---|
+| 82 suites | `??=` the company | the line is gone; `vitest.config.ts` is the only thing that names an engine |
+| `db/seed/apply-persona-v2`, `import-personas`, `import-routing-rules` | `??` the company | named refusal, **exit 2** |
+| `scripts/library/{enrich,intake,register-arsenal}` | `??` the company | named refusal, **exit 2** |
+| `scripts/dev/{ops-live-collector,voice-latency-probe}`, `scripts/org/workforce-gate`, `scripts/phase3-lifecycle-battery` | `??=` the company | named refusal, **exit 2** |
+| `tests/phase5/slice-10of10.sh` | `${DXB_DATABASE_URL:-<company>}` | `${DXB_DATABASE_URL:?…}`, **exit 1** |
+| `apps/dashboard/.../voice/call/route.ts` | `??=` the company | nothing; the route is handed an address by `scripts/dashboard.sh` |
+| `scripts/systemd/install.sh` | writes `DXB_DATABASE_URL=<company>` into `.env.daemon` | writes **`DXB_COMPANY_DATABASE_URL`**; each unit maps it back inside its own `ExecStart`, and nowhere else |
+
+```
+$ node scripts/b36/count-company-fallbacks.mjs
+EXECUTABLE FALLBACKS (the address really bound to DXB_DATABASE_URL): 0
+```
+
+**Every entry point was made to refuse, and the refusal was run.** Not "it should
+now throw" — the eleven commands, with the variable removed from the environment:
+
+```
+$ env -u DXB_DATABASE_URL node --experimental-strip-types db/seed/apply-persona-v2.ts
+apply-persona-v2: DXB_DATABASE_URL is not set. This seed UPDATEs the agents registry
+and it carries no default — name the engine explicitly.
+
+exit 2 — db/seed/apply-persona-v2.ts
+exit 2 — db/seed/import-personas.ts          (its input directory agency-agents/ had to be
+                                              created empty for the run to reach the guard)
+exit 2 — db/seed/import-routing-rules.ts
+exit 2 — scripts/library/enrich.mjs
+exit 2 — scripts/library/intake.mjs
+exit 2 — scripts/library/register-arsenal.mjs
+exit 2 — scripts/dev/ops-live-collector.mjs
+exit 2 — scripts/org/workforce-gate.mjs
+exit 2 — scripts/phase3-lifecycle-battery.mjs
+exit 1 — tests/phase5/slice-10of10.sh
+```
+
+**The gate that keeps it at zero, and it was seen RED first.**
+`tests/b36/no-company-fallbacks.test.ts` imports `scan()` and `bindingsIn()` from the
+counter itself, so the definition of "a fallback" and the thing that enforces it
+cannot drift apart. Case (0) shows the instrument finding a company fallback in all
+seven shapes it claims to read before case (2) is allowed to report none. A probe
+file carrying one `??=` line was added to the tree, and:
+
+```
+$ pnpm vitest run tests/b36/no-company-fallbacks.test.ts     # with the probe tracked
+- []
++ [ "scripts/b36/tmp-red-probe.mjs:2  process.env.DXB_DATABASE_URL ??= …  (1)" ]
+Tests  1 failed | 3 passed (4)
+```
+
+The probe was removed in the same turn and the case went green.
+`tests/b36/battery-carries-no-company-key.test.ts` lost its one tolerated shape at the
+same time — it used to excuse `DXB_DATABASE_URL ??=` because deleting those lines was
+this block's job; the job is done, so the excuse is gone and its self-test now asserts
+that shape IS a key.
+
+**A defect found on the way, fixed at its source.** `scripts/library/intake.mjs` did
+not appear in a `grep` for the company address, and it does contain it. The file held
+**two raw NUL bytes** (offsets 10449 and 10968) — a map-key separator written as a
+literal NUL inside a template string. GNU `grep` calls such a file binary and prints
+only "binary file matches"; `ugrep`, which is what `grep` resolves to on this machine,
+**skips it in silence**. An audit of that file's fallback would have found nothing and
+reported clean. The two bytes are now the six-character escape sequence for NUL —
+identical at runtime, both key-building sites changed together — and the file is text
+to every tool again. Same lesson as the address sweep: *validate the detector*. It was
+caught only because the counter, which reads bytes rather than shelling out, disagreed
+with grep.
+
+**What the removal broke, and how it was repaired in the same turn.**
+`apps/dashboard/.../voice/call/route.ts` is the **only** file in the dashboard that
+calls `getDb()`, and after the deletion no dashboard file mentions `DXB_DATABASE_URL`
+at all. Next.js reads env files from `apps/dashboard/`, not the repository root, so
+that fallback had been the only thing giving the route an address on this machine.
+`scripts/dashboard.sh` now does for the dashboard exactly what the units do for the
+daemons — source the company's env files, map `DXB_COMPANY_DATABASE_URL` onto
+`DXB_DATABASE_URL` for that process only — and `pnpm dashboard` / `pnpm dashboard:start`
+are wired to it. `db/README.md` §Environment carries the table of who sets the address
+and how.
+
+**The two resident daemons, measured across the rename.** `.env.daemon` was migrated
+(backup `.env.daemon.pre-b36-block4`, mode 600; 1372 → 1380 bytes, the eight added
+characters, 23 keys before and after), the units reinstalled and restarted:
+
+```
+$ tr '\0' '\n' < /proc/<pid>/environ | grep -E '^DXB_(COMPANY_)?DATABASE_URL='
+dxb-scheduler pid 598570 → DXB_COMPANY_DATABASE_URL=postgresql://***:***@127.0.0.1:54322/postgres
+                           DXB_DATABASE_URL=postgresql://***:***@127.0.0.1:54322/postgres
+dxb-jarvis    pid 598578 → (the same two)
+
+$ SELECT application_name, state, backend_start FROM pg_stat_activity …
+pgboss | idle | since 19:40:19   (x 9)
+dxb-company-read-gateway | idle | since 19:40:19
+```
+
+Both daemons carry the mapped variable, pg-boss reconnected to the company engine the
+second they came back, and **NRestarts=0** on all four resident units afterwards.
+
+**The gates, after.**
+
+```
+pnpm construction:battery   BATTERY_GREEN — 107 files / 775 passed / 15 skipped
+                                            + host 2 files / 11 passed
+pnpm typecheck              exit 0
+pnpm verify:ledger          ledger truth OK — 8 state claims, 97 open markers, 70 CEO approvals
+pnpm verify:schema-parity   SCHEMA_PARITY
+pnpm b36:prove-wall         WALL_IS_ONE_WAY
+gitleaks detect             no leaks found (748 commits)
+```
+
+**And the company did not move.** The fingerprint was taken before the battery and
+again after everything above:
+
+```
+STATE_FINGERPRINT de359137ee1d7c79      (before)
+STATE_FINGERPRINT de359137ee1d7c79      (after)
+  rows in public 46735 · sequences 18 · large objects 0 · audit_log/hook_violations 29637/1963
+```
+
+**One read of the company was NOT taken through the gateway**, and it is named here
+rather than left out: the `pg_stat_activity` query above, run with `psql` to prove the
+daemons reconnected. The gateway's frozen catalogue holds fourteen named questions and
+none of them is "which backends connected recently". It was a `SELECT`; the fingerprint
+either side of it is identical.
+
+**Deviations from the plan's Block 4 text, named.** (1) The plan said the `vitest`
+`globalSetup` needed a guard against a company address arriving from the environment —
+**it already has one**, built in Block 2 after the auditor's second FAIL: `pinTheEngine()`
+refuses any `DXB_DATABASE_URL` that is not the construction engine, and
+`refuseUnlessConstruction()` then asks the server for its cluster identity on the
+connection that does the work. Nothing was added; the existing guard was measured.
+(2) The plan's evidence line was `grep -rc "54322/postgres"` → 0 outside the daemon
+installer. That test is not honest any more and was not used: `package.json` binds the
+company address to `DXB_COMPANY_URL` for `verify:schema-parity` and `b36:prove-block1`,
+which are gates that must reach the holding on purpose, and several `tests/b36` files
+carry it as an assertion. The counter already separates *binding* from *mentioning* and
+prints both lists; the headline it prints is the number that matters, and it is 0.
+(3) `.claude/settings.local.json` lost its one permission entry that opened a direct
+`psql` door to the company (202 → 201 entries). It is a local, git-ignored file.

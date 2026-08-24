@@ -21,7 +21,6 @@ import {
 //   recompile → gateway resolution refused (tool AND skill legs),
 //   usage counter trigger (adaptation A7), anon zero grant.
 // Suite deletes ONLY what it creates (tests/helpers rule, E9.3 incident).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const M = "e95t"; // suite marker

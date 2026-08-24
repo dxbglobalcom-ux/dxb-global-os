@@ -15,7 +15,6 @@ import {
 // no code MCP, a worker sees neither, a benign allowlisted tool DOES appear
 // (positive control), and a quarantined pin is excluded even from a department
 // whose policy allows the server (07-02 quarantine meets 07-03 exclusion).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const FX = `t07p3-${randomUUID().slice(0, 8)}`;
 const RESEARCH = `${FX}-research`;

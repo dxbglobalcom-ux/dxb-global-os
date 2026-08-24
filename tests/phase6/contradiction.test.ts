@@ -10,7 +10,6 @@ import { promote } from "../../tools/dxb-cli/src/promote.js";
 // superseded_by chain, new row trusted, full audit. Deterministic: injected
 // embedder + judges (runWorkerOnce-style seams); one live contradiction run is
 // DXB_LIVE_SDK=1 gated. Retrieval-wins assertion lands with 06-05 recall.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const DIM = 1536;
 const AGENT = `contra-test-${randomUUID().slice(0, 8)}`;

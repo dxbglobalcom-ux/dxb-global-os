@@ -18,7 +18,6 @@ import { dispatch } from "../../packages/orchestrator/src/dispatch.js";
 // Pure DB against the local Supabase stack; probe rows cleaned in afterAll
 // (agent_runs/tool_calls/file_changes are append-only evidence — probe rows
 // are removed by run id, the same idiom as every E6/E7 battery).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 // Spill goes to a throwaway dir — never the real /var/lib path from a test.
 process.env.OBS_SPILL_DIR = mkdtempSync(join(tmpdir(), "obs-spill-test-"));
 

@@ -28,18 +28,20 @@
 // exactly how the last published reconciliation went wrong.
 //
 // Usage: node scripts/b36/count-company-fallbacks.mjs [--list] [--json]
+//
+// It is also the gate. tests/b36/no-company-fallbacks.test.ts imports scan()
+// from here and requires the executable count to be ZERO, so the definition of
+// "a fallback" and the thing that enforces it can never drift apart — there is
+// one of each, in this file.
 import { execFileSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import ts from "typescript";
 
 const COMPANY = "54322/postgres";
 const VAR = "DXB_DATABASE_URL";
 const PARSED = /\.(ts|tsx|mts|cts|js|mjs|cjs)$/;
 
-const files = execFileSync("git", ["ls-files"], { encoding: "utf8" })
-  .split("\n")
-  .filter(Boolean)
-  .filter((f) => !f.includes("node_modules/") && !f.includes("/dist/"));
 
 /** Does this expression evaluate to the company address? */
 function isCompanyValue(node, companyConsts) {
@@ -121,60 +123,88 @@ function scanLines(text) {
   return hits;
 }
 
-const executable = [];
-const documented = [];
-const mention = [];
-let occurrences = 0;
+/**
+ * The judgement for ONE file, as a pure function, so the gate can be shown to
+ * see a fallback before it is believed when it reports none. Markdown is not
+ * judged at all: every report written about this work quotes the address.
+ */
+export function bindingsIn(file, text) {
+  if (!text.includes(COMPANY)) return [];
+  return PARSED.test(file) ? scanParsed(file, text) : file.endsWith(".md") ? [] : scanLines(text);
+}
 
-for (const f of files) {
-  if (!existsSync(f)) continue;
-  let text;
-  try {
-    text = readFileSync(f, "utf8");
-  } catch {
-    continue;
+/**
+ * Every tracked file, read, judged. The return value IS the measurement — the
+ * CLI below only formats it.
+ */
+export function scan() {
+  const files = execFileSync("git", ["ls-files"], { encoding: "utf8" })
+    .split("\n")
+    .filter(Boolean)
+    .filter((f) => !f.includes("node_modules/") && !f.includes("/dist/"));
+
+  const executable = [];
+  const documented = [];
+  const mention = [];
+  let occurrences = 0;
+
+  for (const f of files) {
+    if (!existsSync(f)) continue;
+    let text;
+    try {
+      text = readFileSync(f, "utf8");
+    } catch {
+      continue;
+    }
+    if (!text.includes(COMPANY)) continue;
+    const hits = bindingsIn(f, text);
+    if (hits.length) {
+      occurrences += hits.length;
+      executable.push({ file: f, line: hits[0].line, shape: hits[0].shape, hits: hits.length });
+    } else if (f.endsWith(".md")) documented.push(f);
+    else mention.push(f);
   }
-  if (!text.includes(COMPANY)) continue;
-  const hits = PARSED.test(f) ? scanParsed(f, text) : f.endsWith(".md") ? [] : scanLines(text);
-  if (hits.length) {
-    occurrences += hits.length;
-    executable.push({ file: f, line: hits[0].line, shape: hits[0].shape, hits: hits.length });
-  } else if (f.endsWith(".md")) documented.push(f);
-  else mention.push(f);
+
+  const bucket = (p) => {
+    const top = p.split("/")[0];
+    return ["tests", "scripts", "db", "apps", "tools"].includes(top)
+      ? top === "db"
+        ? "db seeds"
+        : top
+      : top;
+  };
+  const tally = {};
+  for (const e of executable) tally[bucket(e.file)] = (tally[bucket(e.file)] ?? 0) + 1;
+
+  return { executable, documented, mention, tally, occurrences, scanned: files.length };
 }
 
-const bucket = (p) => {
-  const top = p.split("/")[0];
-  return ["tests", "scripts", "db", "apps", "tools"].includes(top)
-    ? top === "db"
-      ? "db seeds"
-      : top
-    : top;
-};
-const tally = {};
-for (const e of executable) tally[bucket(e.file)] = (tally[bucket(e.file)] ?? 0) + 1;
+// ── the CLI. Nothing below runs on import.
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  const { executable, documented, mention, tally, occurrences } = scan();
 
-if (process.argv.includes("--json")) {
-  console.log(JSON.stringify({ executable, documented, mention, tally, occurrences }, null, 2));
-  process.exit(0);
+  if (process.argv.includes("--json")) {
+    console.log(JSON.stringify({ executable, documented, mention, tally, occurrences }, null, 2));
+    process.exit(0);
+  }
+
+  console.log(`EXECUTABLE FALLBACKS (the address really bound to ${VAR}): ${executable.length}`);
+  console.log(
+    "   " +
+      Object.entries(tally)
+        .sort((a, b) => b[1] - a[1])
+        .map(([k, v]) => `${k}: ${v}`)
+        .join(" · "),
+  );
+  console.log(`   ${occurrences} bindings inside them`);
+  for (const e of executable)
+    if (!e.file.startsWith("tests/") || process.argv.includes("--list"))
+      console.log(`     ${e.file}:${e.line}   ${e.shape}`);
+  console.log("");
+  console.log(
+    `Kept OUT of the count on purpose — these move whenever a report is written about this work:`,
+  );
+  console.log(`   ${documented.length} markdown files quote the address`);
+  console.log(`   ${mention.length} files carry it without binding it (assertions, allowlists, comments)`);
+  for (const f of mention) console.log(`     ${f}`);
 }
-
-console.log(`EXECUTABLE FALLBACKS (the address really bound to ${VAR}): ${executable.length}`);
-console.log(
-  "   " +
-    Object.entries(tally)
-      .sort((a, b) => b[1] - a[1])
-      .map(([k, v]) => `${k}: ${v}`)
-      .join(" · "),
-);
-console.log(`   ${occurrences} bindings inside them`);
-for (const e of executable)
-  if (!e.file.startsWith("tests/") || process.argv.includes("--list"))
-    console.log(`     ${e.file}:${e.line}   ${e.shape}`);
-console.log("");
-console.log(
-  `Kept OUT of the count on purpose — these move whenever a report is written about this work:`,
-);
-console.log(`   ${documented.length} markdown files quote the address`);
-console.log(`   ${mention.length} files carry it without binding it (assertions, allowlists, comments)`);
-for (const f of mention) console.log(`     ${f}`);

@@ -20,7 +20,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 
-export DXB_DATABASE_URL="${DXB_DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres}"
+# B36 Block 4: this gate drives the FULL live loop — it claims tasks, runs the
+# worker, writes an approval and an outbox row. It used to default to the
+# company's address, so a run with no environment wrote into the holding. It
+# names no engine any more; the caller does.
+: "${DXB_DATABASE_URL:?DXB_DATABASE_URL required — this gate drives a real loop and carries no default address}"
+export DXB_DATABASE_URL
 
 # LOCKED verbatim step-8 intent text — do not edit.
 INTENT_TEXT='tek marka X için listeleme taslağı hazırla'

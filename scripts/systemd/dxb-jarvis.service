@@ -10,7 +10,10 @@ Type=simple
 WorkingDirectory=%h/DxB Global OS
 # .env may use `export KEY=…` lines — a login-shell source handles both
 # styles; systemd's EnvironmentFile does not.
-ExecStart=/bin/bash -lc 'set -a; for f in ./.env ./.env.local ./.env.daemon; do [ -f "$f" ] && source "$f"; done; exec pnpm jarvis'
+# B36 Block 4: .env.daemon carries the company's address as
+# DXB_COMPANY_DATABASE_URL — a name no other tool reads. This unit is the
+# company's own daemon, so here, and only here, it becomes DXB_DATABASE_URL.
+ExecStart=/bin/bash -lc 'set -a; for f in ./.env ./.env.local ./.env.daemon; do [ -f "$f" ] && source "$f"; done; export DXB_DATABASE_URL="${DXB_DATABASE_URL:-${DXB_COMPANY_DATABASE_URL:-}}"; exec pnpm jarvis'
 Restart=always
 RestartSec=5
 # The user manager default is OOMPolicy=continue (see ~/.config/systemd/user.conf,

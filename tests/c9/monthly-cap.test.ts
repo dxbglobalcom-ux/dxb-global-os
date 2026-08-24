@@ -20,7 +20,6 @@ import {
 // Every case runs inside a rolled-back transaction. This one matters more than
 // usual: the resident scheduler shares this database, and a leaked
 // hard_stopped=true would stop the real company.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 // The whole check runs on the transaction handle, not on getDb(). An earlier
 // version of this file called getDb() inside the probe helpers, so every write

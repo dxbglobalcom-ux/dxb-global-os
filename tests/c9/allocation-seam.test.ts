@@ -14,8 +14,6 @@ import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 const SEED = `c9-alloc-${randomUUID().slice(0, 8)}`;
 const ROLLBACK = new Error("rollback-sentinel");
 const CEO_JWT = JSON.stringify({

@@ -7,7 +7,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // DELTA against a baseline snapshot taken before seeding — plus shape
 // invariants that must hold on ANY database state (a quiet night must still
 // yield 3 well-formed blocks; the 07:00 cron can never crash on empty).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const SEED = "briefing-view-test";
 // Cost departments carry a per-run suffix: a prior aborted run's leftovers must

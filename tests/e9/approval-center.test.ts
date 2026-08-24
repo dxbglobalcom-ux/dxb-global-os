@@ -16,7 +16,6 @@ import { classifyOperation } from "../../packages/kernel/src/index.js";
 // The 0015 path (decide_approvals) is untouched — tests/phase4 + phase8
 // rerun green as the roadmap acceptance's other half.
 // Suite cleans up EVERYTHING it creates (E8.4b lesson).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const PROBE = "e93-probe";

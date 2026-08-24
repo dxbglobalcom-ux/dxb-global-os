@@ -29,7 +29,6 @@ import { recallMemory } from "../../packages/memory-router/src/index.js";
 // amnesia). Per-step measurements land in tests/phase6/context-rot.log — the
 // master step-9 ölçüm logu 06-08's verification cites. One DXB_LIVE_SDK=1 run
 // exercises the real summarize-class model end-to-end.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const DIM = 1536;
 const LIVE = process.env.DXB_LIVE_SDK === "1";

@@ -17,7 +17,6 @@ import { lineFor, type LiveEvent } from "../../apps/dashboard/src/lib/live-ops.j
 // label_tr) and the views resolve the fallback chain once, so every CEO surface
 // answers the same. This gate holds that invariant where it is visible: nothing
 // on the live feed or the morning briefing may be longer than a line.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 // A headline is a line. 200 leaves room for a long Turkish sentence and still
 // fails loudly on a paragraph — the shape this gate exists to catch.

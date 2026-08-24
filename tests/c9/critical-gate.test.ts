@@ -16,7 +16,6 @@ import {
 // in the ticket evidence. What these cases own is the part that would silently
 // rot: what counts as an objection, what happens when a challenger dies, and
 // whether the decision trail is actually written.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const answered = (verdict: "sound" | "flawed", objections: unknown[] = []): string =>
   JSON.stringify({ verdict, objections });

@@ -16,7 +16,6 @@ import {
 // reach a gated task's context through default recall (string-level assembly
 // proof below). Deterministic: injected embedder + classifier, no LLM.
 // Cleanup: tracked ids + this file's audit rows by unique actor.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const DIM = 1536;
 const AGENT = `poison-test-${randomUUID().slice(0, 8)}`;

@@ -8,7 +8,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // Gate criterion 3: a claimed task whose owner dies by kill -9 is re-claimable
 // after lease expiry — zero state loss, 'reaped' event recorded.
 // Timing: lease 2s, single 3s wait (margin, no polling) — flake-resistant.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const WORKER = fileURLToPath(new URL("./crash-worker.mjs", import.meta.url));
 const DEPT = "crash-test";

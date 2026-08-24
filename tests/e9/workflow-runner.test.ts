@@ -26,7 +26,6 @@ pinHookOff(() => getDb());
 //   the §24 smoke-wf end to end through the kernel runner library.
 // Suite cleans up EVERYTHING it creates (E8.4b lesson: suites must not
 // pollute /alerts or any other CEO surface).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const SLUG = (s: string) => `e9t-${s}`;

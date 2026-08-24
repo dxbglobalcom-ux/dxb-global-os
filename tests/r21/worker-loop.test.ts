@@ -21,8 +21,6 @@ import { drainTasks } from "../../packages/orchestrator/src/worker-loop.js";
 import type { Executor } from "../../packages/orchestrator/src/worker-shim.js";
 import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 const db = () => getDb();
 const M = "r21t";
 const WORKER = `${M}-resident`;

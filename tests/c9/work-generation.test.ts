@@ -18,8 +18,6 @@ import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { parsePlanSteps } from "../../packages/orchestrator/src/work-generation.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 const SEED = `c9-gen-${randomUUID().slice(0, 8)}`;
 const ROLLBACK = new Error("rollback-sentinel");
 

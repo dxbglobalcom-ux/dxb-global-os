@@ -9,7 +9,16 @@ import { fileURLToPath } from "node:url";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/dist/db.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+// B36 Block 4: the company's address used to stand here as a DEFAULT, so this
+// runner reached the holding whether or not anyone had said to. It now carries
+// no address of its own.
+if (!process.env.DXB_DATABASE_URL) {
+  console.error(
+    "workforce-gate: DXB_DATABASE_URL is not set. This gate measures a live registry and it carries no default — " +
+      "name the engine explicitly.",
+  );
+  process.exit(2);
+}
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "../..");

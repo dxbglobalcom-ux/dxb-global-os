@@ -9,7 +9,6 @@ import { readLibraryLayer } from "../../packages/gateway/src/library-profiles.js
 // R4.3 — Capability Arsenal Expansion verification. State-independent by
 // design (R4.2 lesson: live production DB): every assertion measures the
 // CURRENT live state that this wave's install created and future waves keep.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const FREE_TRANCHE = ["git", "context7", "playwright", "scrapling"] as const;

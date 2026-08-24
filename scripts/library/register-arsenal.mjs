@@ -11,8 +11,16 @@ const require = createRequire(new URL("../../packages/shared/package.json", impo
 const pg = require("pg");
 
 const APPLY = process.argv.includes("--apply");
-const DB_URL =
-  process.env.DXB_DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+// B36 Block 4: the company's address used to stand here as a DEFAULT. It does
+// not any more — this tool writes governed rows and will not guess where.
+const DB_URL = process.env.DXB_DATABASE_URL;
+if (!DB_URL) {
+  console.error(
+    "library/register-arsenal: DXB_DATABASE_URL is not set. This tool registers governed library rows and it carries no default — " +
+      "name the engine explicitly.",
+  );
+  process.exit(2);
+}
 
 // Quality per the R4.2 formula (gap-matrix doc): +40 source verified (catalog
 // entry + live pins measured this session) +20 owner +20 usage_notes

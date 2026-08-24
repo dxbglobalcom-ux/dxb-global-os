@@ -17,7 +17,6 @@ import {
 //   (b) KERN-02 — routing-as-data proof. Pure DB, never skipped.
 // Runs against the local Supabase stack; cleans its own mutations (afterAll
 // restores the exact original row) so the full suite stays pollution-free.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const LIVE = process.env.DXB_LIVE_SDK === "1";
 

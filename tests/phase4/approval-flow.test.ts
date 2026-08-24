@@ -8,7 +8,6 @@ import { sweepByDepartment } from "../helpers/suite-scope.js";
 
 // GATE-01 tool-layer proof (04-02): agents can only draft and hand over;
 // decisions exist solely in the human CLI; the outbox row is trigger-born.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 // Suite-unique department = isolation marker: fixtures and the scoped sweep
 // both key on it (E9.3 incident fix — table-wide wipes are forbidden).

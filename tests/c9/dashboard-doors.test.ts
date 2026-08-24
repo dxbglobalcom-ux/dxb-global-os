@@ -20,7 +20,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // dashboard calls through PostgREST must be callable by `authenticated`. It
 // reads the call sites from the source, so a new door is covered the moment it
 // is written — nobody has to remember to add it here.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 afterAll(async () => {
   await closeDb();

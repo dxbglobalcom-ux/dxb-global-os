@@ -11,7 +11,6 @@ import { closeDb, getDb } from "../../packages/shared/src/index.js";
 // Pure DB against the local Supabase stack; probe rows cleaned in afterAll
 // (audit probe rows removed as postgres — test hygiene, the append-only
 // grants under test bind authenticated, not the owner).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const probeTaskIds: string[] = [];

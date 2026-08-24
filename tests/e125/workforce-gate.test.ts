@@ -10,7 +10,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // (WORKFORCE-MUST-EXPANSION-PLAN §11.4). Activation waves (draft→probation→
 // active through the HR machine) are the row's remaining leg, blocked on the
 // CEO's open MUSTS-Talep decisions — NOT asserted here.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const REPO = join(__dirname, "../..");
 const { promised } = JSON.parse(

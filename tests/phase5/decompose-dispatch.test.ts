@@ -20,7 +20,6 @@ import {
 //       full task_events chain + live dependency-order claim proof.
 // Cleanup deletes ONLY rows this file created (tracked ids) — the suite runs
 // sequentially (fileParallelism: false) against the local Supabase stack.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const LIVE = process.env.DXB_LIVE_SDK === "1";
 

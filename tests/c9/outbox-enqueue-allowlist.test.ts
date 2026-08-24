@@ -11,7 +11,6 @@ import { handlers } from "../../packages/outbox-executor/src/actions/index.js";
 // attempts>=3 alert path, poisoning the phase4/r24 suite guards. The outward
 // queue now refuses at birth what it cannot execute, and leaves an audit trace
 // instead of a poison row.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
 

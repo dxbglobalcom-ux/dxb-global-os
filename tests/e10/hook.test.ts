@@ -29,7 +29,6 @@ import {
 //   invalid_policy reject, conflict → most-restrictive + alert, violations →
 //   alerts trigger, seed proof (17 distinct standards), anon zero grant.
 // Suite deletes ONLY what it creates (id watermarks; E9.3 incident rule).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const M = "e10t";

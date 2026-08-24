@@ -71,8 +71,13 @@ export default defineConfig({
     // copied — the CEO's decision of 2026-08-23, decision 2: not one row of the
     // holding's own record travels into the construction site.
     //
-    // Every test file uses `process.env.DXB_DATABASE_URL ??= <url>`, so setting
-    // it here wins for all of them without touching a single suite.
+    // B36 Block 4 (2026-08-24): this is now the ONLY place a suite is told where
+    // to work. Until today every test file opened with
+    // `process.env.DXB_DATABASE_URL ??= "…:54322/postgres"` — the company's own
+    // address, inert while this block set the variable first, and a live gun the
+    // moment a file was run by anything but this config. The 82 lines are gone;
+    // a suite that arrives without an address now throws in
+    // packages/shared/src/db.ts instead of quietly finding the holding.
     env: {
       DXB_DATABASE_URL: CONSTRUCTION_DATABASE_URL,
       // The gateway's compiled profiles are a COMMITTED company artefact, and

@@ -17,7 +17,6 @@ import {
 // control seam survives into a NEW session (settings_values row, not
 // localStorage). State-independent on the live DB: the suite parks any
 // pre-existing layout row and restores it afterAll.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const M = `e122t-${randomUUID().slice(0, 8)}`;

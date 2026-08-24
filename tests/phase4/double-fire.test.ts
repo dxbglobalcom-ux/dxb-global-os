@@ -12,7 +12,6 @@ import { assertNoForeignReadyOutbox, sweepByDepartment } from "../helpers/suite-
 // GATE-02 "one row, one effect, once": two parallel ticks race on ONE ready
 // outbox row — FOR UPDATE SKIP LOCKED must give exactly one execution.
 // The scenario runs twice (flake check per plan 04-03).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const PROOF_ROOT = resolve(process.cwd(), "tmp", "outbox-proof");
 

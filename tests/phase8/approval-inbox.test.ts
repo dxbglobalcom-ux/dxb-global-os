@@ -11,7 +11,6 @@ import {
 // 08-03: GATE-03 decision surface proofs — risk grouping (pure logic),
 // single-transaction batch decide with 1:1 audit rows, all-or-nothing
 // rollback on a poisoned batch, and the privilege wall (anon has no door).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 let taskId: string;
 const ids: Record<string, string> = {};

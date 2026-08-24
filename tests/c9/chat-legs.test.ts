@@ -15,7 +15,6 @@ import {
 // — so what these cases own is the BEHAVIOUR split: which leg answers, and
 // whether the report leg is actually handed measured numbers instead of being
 // left to remember them.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
 const inTrx = async (fn: (trx: never) => Promise<void>) =>

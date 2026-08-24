@@ -20,8 +20,6 @@ import { afterAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "@dxb/shared";
 import { intakeVoiceCall } from "../../packages/voice/src/index.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 const db = () => getDb();
 const createdCallIds: string[] = [];
 const createdIntentTexts: string[] = [];

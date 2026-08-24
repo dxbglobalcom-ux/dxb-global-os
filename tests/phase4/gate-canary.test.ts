@@ -12,7 +12,6 @@ import { assertNoForeignReadyOutbox, sweepByDepartment } from "../helpers/suite-
 // GATE-04 CI canary (04-05): three ⛔-locked scenarios from master-plan §3.
 // If any of these goes red, the approval gate has weakened — CI must block.
 // Scenarios may NOT be softened without a Fable-only master-plan change.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 // Verbatim injection text (⛔-locked): the canary's strength is that this exact
 // social-engineering payload flows through the full agent-visible surface and

@@ -8,7 +8,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // everywhere) — so /org/departments showed every department inactive with 0
 // active employees while /org/employees showed 199/199. Same disease as the
 // 2026-07-24 v_exec_overview catch; truth = agents.employment_status.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
 

@@ -11,7 +11,6 @@ import { closeDb, getDb } from "../../packages/shared/src/index.js";
 //   roadmap acceptance, resolve, assign, mute) idempotently behind grants.
 // Sources with system-wide side effects (cost, budget flags, catalog edits)
 // are probed inside ROLLBACK transactions — zero residue (E7.1 idiom).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const probeTaskIds: string[] = [];

@@ -14,7 +14,6 @@ import { sweepByDepartment } from "../helpers/suite-scope.js";
 //   VALIDATION_FAILED with the cycle path (§17),
 //   milestone.reached automation (§9): last done task stamps reached_at.
 // Suite deletes ONLY what it creates (tests/helpers rule, E9.3 incident).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const M = "e94t"; // suite marker: slugs, departments, idempotency keys

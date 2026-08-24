@@ -7,7 +7,16 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { createDxbMcpServer } from "../packages/dxb-mcp/dist/index.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+// B36 Block 4: the company's address used to stand here as a DEFAULT, so this
+// runner reached the holding whether or not anyone had said to. It now carries
+// no address of its own.
+if (!process.env.DXB_DATABASE_URL) {
+  console.error(
+    "phase3-lifecycle-battery: DXB_DATABASE_URL is not set. This battery drives real task lifecycles and it carries no default — " +
+      "name the engine explicitly.",
+  );
+  process.exit(2);
+}
 
 const DEPT = "battery";
 const server = createDxbMcpServer();

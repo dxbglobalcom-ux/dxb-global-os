@@ -24,7 +24,6 @@ import {
 //   · the same morning cannot be delivered twice, structurally;
 //   · the thread Hamza opens contains no CEO message — that is the whole point
 //     of the row.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
 // The door reads COMMITTED rows, so a real briefing delivered today would make

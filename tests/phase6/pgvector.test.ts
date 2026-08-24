@@ -12,7 +12,6 @@ import {
 // Negative proofs: FK orphan rejection (write-order contract) and the
 // trusted-default filter (T-06-08). Cleanup deletes ONLY rows this file
 // created (tracked ids); the suite runs sequentially (fileParallelism: false).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const DIM = 1536; // study-cards/litellm.md Embeddings pin — must equal the migration's vector(N)
 

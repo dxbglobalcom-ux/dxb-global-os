@@ -14,7 +14,6 @@ import { formatEur } from "../../apps/dashboard/src/lib/format.js";
 // string-compared at rendered precision across all three dimensions, plus
 // the local-midnight period boundary and a built-in sensitivity proof
 // (corrupt one tag inside a transaction → equality must break → rollback).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const SEED = "cost-view-test";
 const NOW = new Date();

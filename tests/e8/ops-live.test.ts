@@ -13,7 +13,6 @@ import { dispatch } from "../../packages/orchestrator/src/dispatch.js";
 // Pure DB against the local Supabase stack; probe rows cleaned in afterAll
 // (same idiom as the E8.1/E8.2 batteries). realtime.messages rows are
 // transient broadcast storage — left to Realtime's own retention.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const probeTaskIds: string[] = [];

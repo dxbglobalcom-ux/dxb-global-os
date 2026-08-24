@@ -9,7 +9,6 @@ import { sql } from "kysely";
 import { closeDb, getDb } from "@dxb/shared";
 
 // Repo live-DB test convention (phase4/phase6/e10 files): local Supabase default.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const M = `r12-test-${randomUUID().slice(0, 8)}`;
 const ENGINE_SLUG = `r12test_${M.slice(9)}`; // run-unique: no cross-run audit bleed

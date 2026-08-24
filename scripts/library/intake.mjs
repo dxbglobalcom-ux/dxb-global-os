@@ -38,8 +38,16 @@ const ROOT = fileURLToPath(new URL("../..", import.meta.url)).replace(/\/$/, "")
 const HOME = homedir();
 const APPLY = process.argv.includes("--apply");
 const DRY = process.argv.includes("--dry-run") || !APPLY;
-const DB_URL =
-  process.env.DXB_DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
+// B36 Block 4: the company's address used to stand here as a DEFAULT. It does
+// not any more — this tool writes governed rows and will not guess where.
+const DB_URL = process.env.DXB_DATABASE_URL;
+if (!DB_URL) {
+  console.error(
+    "library/intake: DXB_DATABASE_URL is not set. This tool registers governed library rows and it carries no default — " +
+      "name the engine explicitly.",
+  );
+  process.exit(2);
+}
 
 const KINDS = [
   "skill", "plugin", "tool", "mcp", "prompt_template", "persona", "policy",
@@ -310,7 +318,7 @@ async function main() {
   );
   const byKindName = new Map();
   for (const row of existing) {
-    const key = `${row.kind} ${row.name}`;
+    const key = `${row.kind}\u0000${row.name}`;
     byKindName.set(key, [...(byKindName.get(key) ?? []), row]);
   }
   const { rows: deptRows } = await client.query("SELECT id, slug FROM departments");
@@ -323,7 +331,7 @@ async function main() {
 
   for (const a of discovered) {
     stats[a.kind].discovered += 1;
-    const matches = byKindName.get(`${a.kind} ${a.name}`) ?? [];
+    const matches = byKindName.get(`${a.kind}\u0000${a.name}`) ?? [];
     const ownerDept = a.owner_dept && deptBySlug.has(a.owner_dept) ? a.owner_dept : null;
 
     if (matches.length === 0) {

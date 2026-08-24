@@ -8,7 +8,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // pinned against a real DB write; (b) DASH-05 purity — the dashboard owns
 // ZERO write paths — is a machine gate from this plan onward. 08-03/08-05
 // extend PURITY_ALLOWLIST explicitly when their write seams land.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ACTOR = "test:live-projection";
 let taskId: string;

@@ -7,7 +7,6 @@ import { CRM_EDIT_SCHEMAS, CRM_EDITABLE_FIELDS } from "../../apps/dashboard/src/
 // (action zod strips; crm_update door RAISEs), every edit audited, direct
 // column writes structurally denied (no UPDATE grant exists), agent-seeded
 // rows visible with derivable provenance.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 let clientId: string;
 let dealId: string;

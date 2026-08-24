@@ -9,7 +9,6 @@ import { qa } from "../../packages/orchestrator/src/qa.js";
 import { runWorkerOnce } from "../../packages/orchestrator/src/worker-shim.js";
 
 // E8.2 verification (roadmap: "decision_log 8 alan dolu satır"; AUDIT §10/§20).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const probeDecisionIds: string[] = [];

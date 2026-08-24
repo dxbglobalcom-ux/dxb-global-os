@@ -8,7 +8,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // company_id; children scope through the client_id inner join). State-
 // independent: fixtures are slug-prefixed and swept; the holding company
 // row is only READ.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const db = () => getDb();
 const M = `e124t-${randomUUID().slice(0, 8)}`;

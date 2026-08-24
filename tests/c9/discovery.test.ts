@@ -19,7 +19,6 @@ import {
 // These cases prove the seam. The live proof — a real scrapling fetch behind a
 // real opportunity row — is recorded in the roadmap row, because it costs a
 // model run and cannot be asserted from a test transaction.
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
 const inTrx = async (fn: (trx: never) => Promise<void>) =>

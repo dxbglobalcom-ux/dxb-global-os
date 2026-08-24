@@ -20,7 +20,6 @@ import {
 //   (b) low-confidence review (<0.6) converts to failed and the ladder engages
 //   (c) hard stop after fail 5: zero requeue, blocked report in tasks.feedback
 //       + audit_log, further escalate() is a no-op (T-05-13/15)
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const createdTaskIds: string[] = [];
 

@@ -25,8 +25,6 @@ import {
   resolveEvidenceToolCalls,
 } from "../../packages/orchestrator/src/worker-shim.js";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 const db = () => getDb();
 const M = `r22t-${randomUUID().slice(0, 8)}`;
 

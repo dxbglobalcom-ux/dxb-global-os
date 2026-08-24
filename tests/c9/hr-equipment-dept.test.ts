@@ -5,7 +5,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // C9 FilterBar rollout (2026-07-25): the HR equipment audit grid gets a
 // department filter — v_hr_equipment_check must expose the department so the
 // page can narrow server-side (205-row grid, 21 departments).
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const ROLLBACK = new Error("rollback-sentinel");
 

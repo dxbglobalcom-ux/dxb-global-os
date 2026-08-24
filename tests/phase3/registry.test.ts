@@ -5,8 +5,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { readFileSync } from "node:fs";
 
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
-
 let client: Client;
 
 async function call(name: string, args: Record<string, unknown>): Promise<any> {

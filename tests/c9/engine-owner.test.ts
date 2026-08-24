@@ -6,7 +6,6 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // validates engine + department, audited. Tests run inside rolled-back
 // transactions; the CEO jwt is impersonated via request.jwt.claims so the
 // SECURITY DEFINER fn sees auth.uid() (fn_org_actor → 'ceo').
-process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
 const SEED = "c9-engine-owner-test";
 const ROLLBACK = new Error("rollback-sentinel");
