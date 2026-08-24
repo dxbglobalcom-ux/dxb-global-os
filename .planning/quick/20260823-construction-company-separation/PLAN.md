@@ -240,68 +240,164 @@ instead of on the slug.
   `INSERT INTO cost_ledger …`, `UPDATE tasks …`, `DELETE FROM alerts …` and `TRUNCATE`; each must
   fail with `permission denied`. A test that passes because the write succeeded is the defect.
 
-### Block 3-bis — THE READ-ONLY GATEWAY — **A PLAN. NOT BUILT. IT WAITS ON THE CEO.**
+### Block 3-bis — THE WALL IS OUTSIDE THE DATABASE — **A PLAN. NOT BUILT. IT WAITS ON THE CEO.**
 
-**Why this exists.** Block 3 was audited twice on 2026-08-24 and failed twice. The second verdict
-found the thing no privilege can fix, and it is right:
+**Why the version that stood here was replaced (LAW A).** The first shape of this block — "withdraw
+the login, put a read-only gateway beside the company" — was audited on 2026-08-24 and **failed a
+third time**, and the auditor's reason is correct: *"the current gateway plan does not close
+host-level Docker access."* A gateway that guards the front door is decoration while the caller
+holds the key to the building. The old text is deleted rather than annotated, because it described
+a wall that would not have stood.
 
-> *"PostgreSQL sıradan bir hesabın kendi şifresini ve kalıcı oturum ayarlarını değiştirmesine izin
-> verir. Bu nedenle ham PostgreSQL giriş hesabıyla 'hiçbir kalıcı değişiklik yapamaz' sözü teknik
-> olarak mümkün görünmüyor."*
+**THE ROOT CAUSE OF THREE FAILED AUDITS, named once.** Every attempt so far fought **inside
+PostgreSQL** — roles, GRANTs, REVOKEs, event triggers, receipt walls. The route that defeats all of
+them is **outside** PostgreSQL: the construction runtime runs as the operating-system user `dxb`,
+which is a member of the `docker` group, and the Docker socket is root on this machine. Measured
+from the construction runtime on 2026-08-24, this session, with SELECT-only statements — **nothing
+was changed in the company**:
 
-Measured with the real role on the disposable construction engine, 2026-08-24 — three permanent
-changes, all made by a role that holds SELECT and nothing else:
+| # | Route out of the construction runtime | Command | Measured result |
+|---|---|---|---|
+| D1 | The company's engine as its **true superuser** | `docker exec -i supabase_db_DxB_Global_OS psql -U supabase_admin …` | `REACHED supabase_admin superuser=true` |
+| D2 | The company's engine as the **owner of every table** | `docker exec … psql -U postgres …` + `has_table_privilege` | `INSERT cost_ledger=true · DELETE audit_log=true · UPDATE approvals=true` |
+| D3 | The company's **credential files** | `test -r` on `.env`, `.env.daemon`, `var/b36/company-window.env` | all three **READABLE** (73 / 1372 / 329 bytes) |
+| D4 | A **direct TCP login** as the window role | `psql "$DXB_COMPANY_READONLY_URL"` | `TCP LOGIN SUCCEEDED as dxb_reader` |
+| D5 | **The governance gate itself** goes through the socket | `scripts/governance/ledger-truth.mjs:220-221` | both branches are `docker exec …`; the fallback branch is `-U postgres`, i.e. **the owner of everything** |
 
-| what it did to itself | measured |
-|---|---|
-| `ALTER ROLE dxb_reader PASSWORD …` | `ALTER ROLE` — and the NEXT connection failed with *password authentication failed*, because the hash in `pg_authid` had really changed |
-| `ALTER ROLE dxb_reader SET statement_timeout = '999s'` | `pg_db_role_setting` went from `120s` to `999s` and stayed there |
-| `ALTER DEFAULT PRIVILEGES FOR ROLE dxb_reader …` | one row in `pg_default_acl` owned by the window |
+D1 and D2 make every privilege measurement in Block 3 irrelevant: a runtime that can become
+`supabase_admin` does not need `dxb_reader` to hold anything. **That is why closing the three
+self-directed capabilities would still not have closed this row**, and why the honest verdict on
+2026-08-24 was `WINDOW_LEAKS` on both engines.
 
-There is no `REVOKE` for any of them. PostgreSQL gives every login role these three over itself, by
-design. **So the fixed question — "can `dxb_reader` make a permanent change or an outside effect in
-the company's database through any route given to it?" — is answered YES for as long as a direct
-login exists**, and `pnpm b36:prove-window` says so on both engines rather than narrowing the
-question to the parts that can be closed.
+---
 
-**What the gateway is, in one sentence.** The construction side stops holding a PostgreSQL account
-at all: it asks a small read-only service for the numbers it needs, and that service — not the
-caller — decides what may be asked.
+#### The finish line — fixed BEFORE the work starts, and it is the only thing that reopens this block
 
-**Shape.**
+Block 1 stopped reopening the moment its question was fixed in the CEO's own hearing. Block 3 gets
+the same device, and for the same reason: three audits have now rejected three different proofs by
+asking a wider question than the one the proof answered.
 
-1. **The account is withdrawn.** `dxb_reader` is dropped from the company's engine. Nothing on the
-   construction side can connect to the holding, with any credential, because it has none.
-2. **A gateway process** runs beside the company (its own systemd unit, loopback only), holding the
-   only connection. It exposes a **fixed catalogue of named questions** — row counts per table, the
-   ledger's state claims, the schema inventory — and no free-form SQL. A question that is not in
-   the catalogue cannot be asked, so there is no statement for a future session to get wrong.
-3. **It is read-only by construction, not by privilege**: it opens its connection with
-   `default_transaction_read_only`, runs every question inside a `READ ONLY` transaction it starts
-   itself, and holds a role that cannot log in over TCP at all.
-4. **Its callers are the two that exist**: `scripts/governance/ledger-truth.mjs` and the acceptance
-   drills. Both stop reading `DXB_COMPANY_READONLY_URL` and start calling the gateway.
-5. **The proof** becomes narrower and stronger: there is no company credential anywhere on the
-   construction side to attack, so the drill's question becomes "is there any path from the
-   construction site to the holding's engine at all", and the answer is a port that refuses.
+> **From the construction runtime — the identity that runs the tests, the batteries, the drills and
+> the night shifts — is there any route that reaches the company's database and changes it, or
+> produces any effect there beyond a read? The routes counted are: a direct TCP login; the Docker
+> socket; the company's container by any other means; any credential file; any service environment;
+> the company's HTTP gateway (Supabase REST / Realtime / Auth on 54321); and the read gateway
+> itself.**
+>
+> **NO** → Block 3 closes and does not reopen. **YES** → only the route found is closed and the same
+> question is measured again.
 
-**What it costs.** One more resident service to keep alive and to restart on deploy; a catalogue
-that has to grow whenever a gate needs a new number; and the loss of ad-hoc reading — a future
-session that wants a figure the catalogue does not carry must add it, in code, with a review.
+**Explicitly OUTSIDE this question, and named here so no audit reopens the block on them silently.**
+Each is either a different row or a thing that cannot be walled without ending the machine:
 
-**What it does NOT solve.** Nothing about the company's own roles: `postgres`, `anon`,
-`authenticated` and the Supabase platform roles are unchanged, and they are not what B36 is about.
+1. **The author's own administrative hand.** The session that builds this repository runs as the
+   human's own account and holds `sudo` and `docker` by definition. A machine on which the builder
+   cannot administer the machine has no builder. **What is being walled is the automated
+   construction runtime, not the human's hand on his own laptop.**
+2. **The company's own roles and daemons** — `supabase_admin`, `postgres`, `anon`, `authenticated`,
+   `dxb-scheduler`, `dxb-jarvis`. They are the company working; B36 is not about them.
+3. **Poisoning the repository and waiting for a human to run it.** The construction runtime writes
+   the repository — that is its job; a tree it cannot write is a build that cannot build. That is a
+   supply-chain question, it is real, and if the CEO wants it, it opens as its **own board row**.
+   It does not hold this one.
 
-**Alternatives measured and rejected.** (a) Revoking the three capabilities — impossible, there is
-no privilege for them. (b) An event trigger that blocks `ALTER ROLE` — event triggers fire on DDL
-in a database; role changes are cluster-level and are not covered. (c) Watching `pg_authid` and
-alerting — that is a detector, not a wall, and this row exists because seven detectors were built
-where a wall was needed.
+---
 
-**THIS IS A PLAN AND NOTHING HERE IS BUILT.** *"doğrudan giriş hesabını kaldıran salt-okunur geçit
-mimarisini plan olarak CEO'ya getir ve onay almadan uygulama"* — it waits on his word, and until he
-gives it the honest state of Block 3 is: the privilege classes are closed, the forged live event is
-closed, and three self-directed capabilities remain open and are reported on every run.
+#### The wall — four layers, and the first one is the operating system
+
+**Layer 1 — the construction runtime gets its own operating-system identity.**
+A new unix user **`dxbbuild`**: not in `docker`, not in `sudo`, no password. Measured today, this
+lands cleanly on the permissions that already exist — `/home/dxb` is `drwxr-x---` and `~/.config` is
+`drwx------`, so a member of the `dxb` group reaches the repository (`drwxrwxr-x`) and **nothing
+else**, and every credential file is mode `600` and therefore unreadable to it. Every construction
+command — `pnpm test`, the batteries, the drills, the seeds, the night shift — runs through one
+door, `scripts/construction/run.sh`, which is `sudo systemd-run --uid=dxbbuild` with
+`NoNewPrivileges=yes`, `PrivateDevices=yes`, `ProtectHome=` shaped to the repository, and
+`InaccessiblePaths=` on the Docker socket and on `var/b36`.
+
+**Layer 2 — the network is closed to that identity.**
+One `nftables` rule in the output path: packets owned by uid `dxbbuild` to `127.0.0.1:54322` (the
+company's database) and `127.0.0.1:54321` (the company's REST / Realtime / Auth gateway — a
+`service_role` key writes through it, so a wall that forgets the HTTP door is not a wall) are
+**rejected**. The construction's own ports, 54421 and 54422, stay open. The rule is installed by a
+unit so it survives a reboot, and the drill proves it is loaded before it proves anything else.
+
+**Layer 3 — the account is withdrawn, and the only reader is a named catalogue.**
+`dxb_reader` is **dropped** from the company's engine: there is no credential left to steal, and
+the three self-directed capabilities disappear with the role that held them. In its place, on the
+**company's** side, a small service — its own systemd unit, running as the company's identity —
+holds the only connection, opened with `default_transaction_read_only=on` and wrapping every answer
+in a `BEGIN READ ONLY` transaction it starts itself. It listens on a **unix socket**
+(`/run/dxb/company-read.sock`, group-readable by `dxbbuild`) so no TCP port exists to find, and it
+answers a **fixed catalogue of named questions** — row counts per table, the ledger's claim
+measurements, the schema inventory. **The caller never sends SQL.** A question that is not in the
+catalogue cannot be asked, so there is no statement for a future session to get wrong.
+
+**Layer 4 — fail closed.**
+`scripts/governance/ledger-truth.mjs` loses **both** `docker exec` branches, including the
+`-U postgres` fallback the auditor named. It asks the catalogue, or it stops with a non-zero exit and
+says why. There is no second way for it to read the company, and a missing gateway is a loud stop —
+never a quiet promotion to the owner of everything.
+
+---
+
+#### The proof — what `pnpm b36:prove-wall` must print, and it runs INSIDE the sandbox
+
+Every attempt below is fired **as `dxbbuild`, inside the sandbox that the real construction runs
+in** — the auditor's requirement, and the thing no previous proof did. Nothing that mutates is ever
+fired at the company: the company-side attempts are refusals by nature (a login that is rejected, a
+file that cannot be read, a socket that is not there), and every mutating attempt runs on the
+construction engine (54422), which is disposable.
+
+| # | Attempt, from the construction runtime | Must print |
+|---|---|---|
+| P1 | direct TCP login to 54322, every spelling, every role | refused — connection rejected |
+| P2 | `docker ps` / `docker exec` / a raw write to `/var/run/docker.sock` | refused — no such socket, no permission |
+| P3 | read `.env`, `.env.daemon`, `var/b36/*.env`, the systemd unit files | refused — permission denied, on each |
+| P4 | HTTP write to the company's gateway on 54321 (REST insert with any key found) | refused — connection rejected |
+| P5 | `ALTER ROLE`, `ALTER DEFAULT PRIVILEGES`, `NOTIFY`, any function call, through the catalogue | refused — not an operation in the catalogue |
+| P6 | every write verb against every company table, through the catalogue | refused — read-only transaction |
+| P7 | the catalogue's own read questions | **answered** — and `pnpm verify:ledger` runs to 23/23 through it |
+| P8 | the company's fingerprint and its two governance counters, before and after the whole drill | **identical** |
+
+**Red before green, on every line.** P1-P6 are re-fired from the unsandboxed identity against the
+**construction** engine and must SUCCEED there, in the same run — a refusal that was never tested
+against a working attempt is not a measurement. P7 is re-fired with the gateway stopped and must
+fail closed. A drill that cannot show its own red half does not print a green verdict.
+
+The verdict line is `WALL_IS_ONE_WAY` **only** when P1-P6 are all refused, P7 answers, and P8 is
+identical. Anything else prints `WALL_LEAKS` and the exact route, exits 1, and the block stays open.
+
+---
+
+#### Blast radius — named before the change, re-measured after it
+
+| What stands on it | Why it depends | How it is re-measured |
+|---|---|---|
+| The whole battery (106 files / 775 tests) | It will run as a different OS user, in a sandbox | Full battery green **inside the sandbox**, same counts |
+| `pnpm verify:ledger` (23/23) | Loses both `docker exec` branches | Gate run through the catalogue, still 23/23 |
+| The 15 company scripts that `docker exec` today (`i18n-purity-check.sh`, `sync-personas-to-db.sh`, the HR wave scripts, the backup dump, …) | They administer the **company**; they are the company's hand, not the construction's | Each is classified: company-side scripts keep the socket and are run by the company's identity; anything the battery calls moves to the catalogue. The classification is printed |
+| `scripts/b36/*` drills | They hold the company's address | `prove-window` is replaced by `prove-wall`; the old drill is deleted, not kept beside it |
+| The two resident services | They are the company's daemons, unchanged | `active`, 0 restarts, one node process each, queue moving |
+| The CEO's login and his live surfaces | Supabase Auth / Realtime on the company stack | Untouched — the company stack is not modified. Confirmed by eye |
+| Backup / restore, cron 02:30 | Runs as the company's identity | Drill re-run, `BACKUP_OK` + restore diff 0 |
+
+#### What it costs, honestly
+
+One more resident service to keep alive. A catalogue that must be extended, in code, whenever a gate
+needs a number it does not carry — and the end of ad-hoc reading of the company from a test. A
+sandbox that the battery must run inside, which will find every place that quietly assumed it was
+root. And the first run of the battery under a new identity will fail somewhere for reasons that
+have nothing to do with security; that is expected, and it is inside this block.
+
+#### What it does NOT do
+
+It does not touch the company's own roles or daemons. It does not change a single screen. It does
+not move one row. It does not begin Block 4.
+
+**NOTHING HERE IS BUILT.** His standing word on this block is *"onay almadan uygulama"* — and the
+auditor's ninth ruling is the same: the corrected plan goes to Muhittin Bey, and not one line is
+written before he answers.
 
 ### Block 4 — Delete every fallback, and add the guard
 

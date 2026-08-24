@@ -79,11 +79,33 @@ them. **So the fixed question — can `dxb_reader` make a permanent change or an
 through any route given to it? — is answered YES while a direct login exists**, and
 `pnpm b36:prove-window` prints `WINDOW_LEAKS` and exits non-zero on BOTH engines: **13 classes
 measured · 0 privilege classes leaking · residual 3**.
-**The close is an architecture change and it is written as a PLAN, not built** —
-`.planning/quick/20260823-construction-company-separation/PLAN.md`, **Block 3-bis, the read-only
-gateway**: the direct login is withdrawn and the construction side reads the holding through a
-service that holds no PostgreSQL account of its own, answering a fixed catalogue of named questions
-and no free-form SQL. His order: *"onay almadan uygulama"* — it waits on him. <!-- OPEN: B36 -->
+**THIRD AUDIT, 2026-08-24 — FAIL, and it named the reason all three failed: the route is not in the
+database at all.** *"the current gateway plan does not close host-level Docker access."* Every
+attempt so far fought inside PostgreSQL while the construction runtime runs as the operating-system
+user `dxb`, a member of the `docker` group — and the Docker socket is root on this machine.
+Re-measured from the construction runtime with SELECT-only statements, **nothing changed in the
+company**: `docker exec -U supabase_admin` → **`REACHED supabase_admin superuser=true`**;
+`docker exec -U postgres` → `has_table_privilege` INSERT `cost_ledger` **true**, DELETE `audit_log`
+**true**, UPDATE `approvals` **true**; `.env`, `.env.daemon`, `var/b36/company-window.env` all
+**readable**; `psql "$DXB_COMPANY_READONLY_URL"` → **`TCP LOGIN SUCCEEDED as dxb_reader`**; and the
+governance gate itself reads the holding through that same socket, its fallback branch as
+**`-U postgres`** (`scripts/governance/ledger-truth.mjs:220-221`). **Closing the three
+self-directed capabilities would not have closed this row either** — a runtime that can become
+`supabase_admin` never needed `dxb_reader`.
+**The close is therefore an OS-LEVEL WALL, written as a PLAN and NOT built** <!-- OPEN: B36 --> —
+`.planning/quick/20260823-construction-company-separation/PLAN.md`, **Block 3-bis — THE WALL IS
+OUTSIDE THE DATABASE** (rewritten 2026-08-24; the gateway-only version deleted under LAW A): a
+separate operating-system identity `dxbbuild` with no `docker` and no `sudo`, an `nftables` rule
+rejecting that identity to ports 54322 **and 54321**, `dxb_reader` **dropped**, one read service on
+the company's side answering a **fixed catalogue of named questions over a unix socket** with no SQL
+from the caller, `ledger-truth.mjs` stripped of both `docker exec` branches so a missing gateway
+**fails closed**, and a drill `pnpm b36:prove-wall` whose eight attempts fire **from inside the
+sandbox the construction actually runs in**, each with its red half. **The finish line is fixed in
+the plan before the work starts** — the device that stopped Block 1 reopening — with three things
+named as explicitly outside it: the author's own administrative hand on his own laptop, the
+company's own roles and daemons, and poisoning the repository (a supply-chain question that would
+open as its own row). His order: *"onay almadan uygulama"*, and the auditor's ninth ruling says the
+same — **it waits on him.** <!-- OPEN: B36 -->
 **The block also broke the company and put it back**: its first version gave `anon` the right to
 call all 85 control functions, its own blast-radius photograph caught it, and Block 0's dated dump
 restored the exact prior state (`COMPANY_PRIVILEGES_RESTORED`).
