@@ -155,7 +155,7 @@ without re-issuing one GRANT, the act that already broke the holding for eleven 
 root-owned, the forwarders could not create their sockets, every TCP handshake inside still
 succeeded, and PostgreSQL answered *"Connection terminated unexpectedly"*. **A wall that looks like
 a working bridge is worse than one that is plainly shut.**
-**LAW B: built is not accepted — the block waits on his eye.** <!-- OPEN: B36 -->
+**ACCEPTED BY THE CEO, 2026-08-24, AFTER HIS AUDITOR PASSED IT** — *"denetçi tamam dedi herşeyi kaydet. onaylıyorum."* Registered as `b36-block3-bis-accepted-2026-08-24`. LAW B is satisfied: the author's work was finished on 2026-08-24, his auditor examined it, and his own word makes it accepted. **The row B36 stays OPEN** — Block 3-bis is one block of eight, and Blocks 4-7 are untouched. <!-- OPEN: B36 -->
 **The block also broke the company and put it back**: its first version gave `anon` the right to
 call all 85 control functions, its own blast-radius photograph caught it, and Block 0's dated dump
 restored the exact prior state (`COMPANY_PRIVILEGES_RESTORED`).

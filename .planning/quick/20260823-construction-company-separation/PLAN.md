@@ -240,7 +240,9 @@ instead of on the slug.
   `INSERT INTO cost_ledger …`, `UPDATE tasks …`, `DELETE FROM alerts …` and `TRUNCATE`; each must
   fail with `permission denied`. A test that passes because the write succeeded is the defect.
 
-### Block 3-bis — THE WALL IS OUTSIDE THE DATABASE — **BUILT 2026-08-24 on his word. Not yet accepted (LAW B).**
+### Block 3-bis — THE WALL IS OUTSIDE THE DATABASE — **BUILT AND ACCEPTED 2026-08-24.**
+
+**ACCEPTED BY THE CEO ON 2026-08-24, AFTER HIS AUDITOR PASSED IT** — *"denetçi tamam dedi herşeyi kaydet. onaylıyorum."* Registered as `b36-block3-bis-accepted-2026-08-24`. The line that stood here — *"Not yet accepted (LAW B)"* — is deleted by that word, not footnoted beside it. His earlier *"onaylıyorum"* was permission to BUILD, in his own correction; this one is the acceptance of the result. **B36 itself stays OPEN:** Blocks 4-7 are untouched.
 
 **Why the version that stood here was replaced (LAW A).** The first shape of this block — "withdraw
 the login, put a read-only gateway beside the company" — was audited on 2026-08-24 and **failed a
