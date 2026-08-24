@@ -40,48 +40,58 @@ yapacağım"* — explain it in his language first, then decide and report; do n
 adjudicate. He also said, approving the residue move: *"bundan sonra TEK BİR HARF DAHİ ŞİRKETİN
 VERİ TABANINA GİRMESİN!"* **He has NOT been asked whether either sentence should become a standing
 rule, and neither has been written as one.**
-**The one-way window is open, and after the audit it is one-way against CLASSES and not
-examples.** `dxb_reader` on the holding's engine: SELECT on `public` and `pgboss`, nothing else
-anywhere, and it cannot read `auth`. **The audit of 2026-08-24 returned FAIL on two escapes the
-drill had never tried, and both were reproduced for real with the real role on the disposable
-construction engine:** a LARGE OBJECT (17 of the large-object functions were executable by it,
-because PostgreSQL hands them to `PUBLIC` by default — measured red, `lo_from_bytea` created oid
-29009, count 0 → 1) and a SEQUENCE (`net.http_request_queue_id_seq` carried `=rwU` to `PUBLIC` —
-measured red, `nextval` moved it 1 → 2 and the `ROLLBACK` did not put it back, which is the one
-write a rolled-back drill can never see). The auditor's sentence is the standard now: *"test yeşil,
-soru cevapsız kalmış"* — the test was green and the question was left unanswered.
-**The rebuilt seal closes classes:** every schema but `public`/`pgboss` (which took `net` away
-whole — the counter, `net.wake()`, `net.worker_restart()`, and REFERENCES/TRIGGER/MAINTAIN on two
-tables, all measured red first: the window really did VACUUM the holding's queue table); every
-sequence everywhere; every table on **seven** verbs; every SECURITY DEFINER function in every
-schema plus the large-object family and the catalogue functions that emit WAL, make replication
-slots, reset statistics, signal backends, read server files or take the holding's own advisory
-locks; and the default privileges that would have handed the window the next migration's function.
-The seal and its closing proof are written from ONE sentence in the SQL so they cannot drift.
-**Measured on the company: 47 functions walled · 1 schema closed · 1 sequence swept · 2 tables
-sealed · 4 default-privilege sets rewritten · 51 privileges changed for `dxb_reader` · 0 for any
-other role**, out of a 7,494-answer photograph — `BLAST_RADIUS_CLEAN`.
-**The proofs:** `pnpm b36:prove-window-escapes` → `ESCAPES_RED_THEN_GREEN` (red required first) ·
-`pnpm b36:prove-window construction` → **34 attempts · 34 refused · 0 escaped · 0 rows left · 8
-classes measured · 0 leaking** · `WINDOW_IS_ONE_WAY` · `pnpm b36:prove-window company` now
-**executes nothing against the holding** — it is a read-only privilege measurement, 8 classes, 0
-leaking · `pnpm b36:prove-window-preserves` → old rule 663 privileges moved, shipped rule 0.
-**The company's data did not move by one letter:** `company-state-fingerprint.mjs` before and
-after — 60 tables · 46,735 rows · `aecfcfa259c9c501` · 18 sequences `98258eb817d8e3b8` · 0 large
-objects · audit_log 29,637 / hook_violations 1,963 · `STATE_FINGERPRINT de359137ee1d7c79`,
-identical. And the seal writes its own way back before it changes anything
-(`var/b36/company-window-undo.sql`, 2,033 statements) — `pg_dump` does not carry catalogue-function
-privileges, so Block 0's dump could never have reversed it.
-**ONE ROUTE COULD NOT BE CLOSED BY A PRIVILEGE and it is board row B37:** the `NOTIFY` COMMAND has
-no privilege in PostgreSQL. The function `pg_notify()` is walled; the command is not, and it still
-commits. It writes no row, but the ops:live collector republishes anything that parses as an
-envelope, so a forged event could reach the CEO's live screen. It is measured on every drill run.
+**The one-way window is open, and it is one-way against CLASSES and not examples — but BLOCK 3 IS
+STILL NOT CLOSED, and the reason is in the second audit.** `dxb_reader` on the holding's engine:
+SELECT on `public` and `pgboss`, nothing else anywhere, and it cannot read `auth`.
+**FIRST AUDIT — FAIL, on two escapes the drill had never tried,** both reproduced with the real
+role on the disposable construction engine: a LARGE OBJECT (`lo_from_bytea` created oid 29009,
+count 0 → 1; PostgreSQL hands that family to `PUBLIC` by default and 17 of them were callable) and
+a SEQUENCE (`net.http_request_queue_id_seq` carried `=rwU` to `PUBLIC`; `nextval` moved it 1 → 2
+and the `ROLLBACK` did not put it back — the one write a rolled-back drill can never see). Four
+more the same sweep found: the window restarted the holding's outbound worker, VACUUMed one of its
+tables, held TRIGGER on the pg_net queue, and could notify the CEO's live channel. The seal now
+closes classes: every schema but `public`/`pgboss`, every sequence, every table on **seven** verbs,
+every SECURITY DEFINER function in every schema plus the large-object family and the catalogue
+functions that emit WAL, make replication slots, reset statistics, signal backends, read server
+files or take the holding's own advisory locks, and the default privileges for what does not exist
+yet. Seal and proof are interpolated from ONE constant so they cannot drift. **On the company: 47
+functions walled · 1 schema closed · 1 sequence swept · 2 tables sealed · 4 default-privilege sets
+rewritten · 51 privileges changed for `dxb_reader` · 0 for any other role** out of 7,494 answers —
+`BLAST_RADIUS_CLEAN` — and the seal writes its own reversal first
+(`var/b36/company-window-undo.sql`, 2,033 statements), because `pg_dump` does not carry
+catalogue-function privileges and Block 0's dump could never have undone it.
+**SECOND AUDIT — FAIL again, and it found the thing no privilege can fix. Its ruling is obeyed
+literally: the fixed question is not narrowed, and `residual > 0` breaks the close.**
+**(a) THE FORGED LIVE EVENT IS CLOSED.** `NOTIFY` is a COMMAND with no privilege in PostgreSQL, and
+the ops:live collector republished anything that parsed as an envelope. RED, with the real role and
+the listener exactly as committed: **a forged event reached the CEO's channel — 1**.
+`fn_opslive_notify` — the single door — now writes a RECEIPT into `dxb_internal.ops_live_issued` in
+the source write's own transaction (migration `20260824003000`); the collector verifies AND
+consumes it and fails closed. GREEN: **forged 0 · the company's own events still arriving 1 · a
+replay stays 1** · `FORGED_EVENT_REFUSED`. The window cannot reach the receipts: on the company,
+`schema usage=false table select=false insert=false`. Board row **B37 is closed by this.**
+**(b) WHAT A PLAIN POSTGRESQL LOGIN MAY DO TO ITSELF IS STILL OPEN** <!-- OPEN: B36 -->**, and it is why Block 3 is not
+closed.** Measured with the real role: it changed **its own password** (`ALTER ROLE` — the next
+connection then failed *password authentication failed*, because `pg_authid` really moved), made a
+setting **permanent for itself** (`statement_timeout` 120s → 999s in `pg_db_role_setting`), and
+wrote **its own default privileges** (a row in `pg_default_acl`). There is no `REVOKE` for any of
+them. **So the fixed question — can `dxb_reader` make a permanent change or an outside effect
+through any route given to it? — is answered YES while a direct login exists**, and
+`pnpm b36:prove-window` prints `WINDOW_LEAKS` and exits non-zero on BOTH engines: **13 classes
+measured · 0 privilege classes leaking · residual 3**.
+**The close is an architecture change and it is written as a PLAN, not built** —
+`.planning/quick/20260823-construction-company-separation/PLAN.md`, **Block 3-bis, the read-only
+gateway**: the direct login is withdrawn and the construction side reads the holding through a
+service that holds no PostgreSQL account of its own, answering a fixed catalogue of named questions
+and no free-form SQL. His order: *"onay almadan uygulama"* — it waits on him. <!-- OPEN: B36 -->
 **The block also broke the company and put it back**: its first version gave `anon` the right to
 call all 85 control functions, its own blast-radius photograph caught it, and Block 0's dated dump
 restored the exact prior state (`COMPANY_PRIVILEGES_RESTORED`).
-**Block 3 is NOT finished or accepted**: it goes back to the same adversarial audit with the same
-fixed question. **Block 4 is not started, on his order relayed with the audit** — *"Blok 4'e geçme;
-yalnız Blok 3'ü düzelt."*
+**The company's data never moved through any of it:** 60 tables · 46,735 rows · `aecfcfa259c9c501`
+· 18 sequences `98258eb817d8e3b8` · 0 large objects · audit_log 29,637 / hook_violations 1,963 ·
+`STATE_FINGERPRINT de359137ee1d7c79`, identical at every step.
+**Block 4 is not started, on his order relayed with the audit** — *"Blok 4'e geçme; yalnız Blok
+3'ü düzelt."*
 **He had the work audited by Codex Solo 5.6 TWICE the same day, and the second audit rejected the
 first answer in full** — *"7 bulgunun 0'ı bütünüyle kapandı"*. It was right on all seven. The
 critical one had **six** reproducible escapes, not three: six spellings of the company's address

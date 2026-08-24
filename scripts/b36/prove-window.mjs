@@ -143,6 +143,56 @@ const CLASSES = [
   ["roles it is a member of", `
     SELECT count(*) FROM pg_auth_members m JOIN pg_roles r ON r.oid = m.member
      WHERE r.rolname = 'dxb_reader'`],
+  // Asked by OID, not by name: resolving 'dxb_internal.ops_live_issued' as text
+  // needs USAGE on the schema, and the whole point is that the window does not
+  // have it — so the honest measurement would have thrown instead of answering.
+  ["ways to reach the live-event receipts (dxb_internal)", `
+    SELECT has_schema_privilege('dxb_reader','dxb_internal','USAGE')::int
+         + coalesce((SELECT has_table_privilege('dxb_reader', c.oid, 'SELECT')::int
+                          + has_table_privilege('dxb_reader', c.oid, 'INSERT')::int
+                       FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
+                      WHERE n.nspname = 'dxb_internal' AND c.relname = 'ops_live_issued'), 0)`],
+];
+
+/**
+ * THE CLASSES THAT ARE NOT PRIVILEGES, and the audit of 2026-08-24 was right to
+ * force them into their own section: "PostgreSQL sıradan bir hesabın kendi
+ * şifresini ve kalıcı oturum ayarlarını değiştirmesine izin verir. Bu nedenle
+ * ham PostgreSQL giriş hesabıyla 'hiçbir kalıcı değişiklik yapamaz' sözü
+ * teknik olarak mümkün görünmüyor."
+ *
+ * Nothing below can be closed by a GRANT or a REVOKE. They are what PostgreSQL
+ * gives EVERY login role over ITSELF, and the only way to close them is to stop
+ * handing out a login role at all — the read-only gateway written up as a PLAN
+ * in .planning/quick/20260823-construction-company-separation/PLAN.md and NOT
+ * built, because that is the CEO's decision and not the author's.
+ *
+ * Each one is FIRED on the construction engine so the finding is current rather
+ * than quoted, and each repairs itself immediately: the password is set to the
+ * one already in the env file (a new hash, the same secret), the setting is put
+ * back to what the seal states, and the default privilege is revoked again.
+ */
+const SELF_CLASSES = [
+  ["change its own password (ALTER ROLE dxb_reader PASSWORD …)",
+   (pw) => `SET default_transaction_read_only = off;
+            ALTER ROLE dxb_reader PASSWORD ${pw};`],
+  ["make a session setting permanent for itself (ALTER ROLE dxb_reader SET …)",
+   () => `SET default_transaction_read_only = off;
+          ALTER ROLE dxb_reader SET statement_timeout = '999s';`],
+  ["write its own default privileges (ALTER DEFAULT PRIVILEGES FOR ROLE …)",
+   () => `SET default_transaction_read_only = off;
+          ALTER DEFAULT PRIVILEGES FOR ROLE dxb_reader IN SCHEMA public
+            GRANT SELECT ON TABLES TO PUBLIC;`],
+];
+
+/** Undo, in the same order, so the engine is left exactly as it was found. */
+const SELF_REPAIR = [
+  () => null,
+  () => `SET default_transaction_read_only = off;
+         ALTER ROLE dxb_reader SET statement_timeout = '120s';`,
+  () => `SET default_transaction_read_only = off;
+         ALTER DEFAULT PRIVILEGES FOR ROLE dxb_reader IN SCHEMA public
+           REVOKE SELECT ON TABLES FROM PUBLIC;`,
 ];
 
 /**
@@ -358,6 +408,32 @@ const lastNumber = (out) =>
     console.log("");
   }
 
+  // ---- 3b. WHAT THE ACCOUNT MAY DO TO ITSELF ------------------------------
+  let selfOpen = 0;
+  console.log("  what a plain PostgreSQL login may do to ITSELF — no GRANT reaches these:");
+  if (FIRES) {
+    // The SAME secret it already holds: a new hash in pg_authid proves the
+    // capability, and the credential in var/b36 keeps working.
+    const secret = decodeURIComponent(new URL(URL_).password);
+    const pwLiteral = `'${secret.replaceAll("'", "''")}'`;
+    for (let i = 0; i < SELF_CLASSES.length; i += 1) {
+      const [what, build] = SELF_CLASSES[i];
+      const r = await asWindow(build(pwLiteral));
+      const open = r.code === 0;
+      selfOpen += open ? 1 : 0;
+      console.log(`  ${open ? "OPEN    " : "refused "} ${pad(what, 62)} ${open ? "it did it" : (r.stderr.match(/ERROR:\s*(.*)/) ?? [])[1]?.slice(0, 40) ?? ""}`);
+      const undo = SELF_REPAIR[i]();
+      if (undo) await asWindow(undo);
+    }
+  } else {
+    // NOT fired at the holding — the audit's own ruling, and the CEO's order.
+    selfOpen = SELF_CLASSES.length;
+    for (const [what] of SELF_CLASSES) {
+      console.log(`  OPEN     ${pad(what, 62)} PostgreSQL rule, proven on the construction engine`);
+    }
+  }
+  console.log("");
+
   // ---- 4. THE RESIDUAL POSTGRESQL DOES NOT GOVERN -------------------------
   // NOTIFY is a COMMAND, not a function: it has no ACL, and no GRANT or REVOKE
   // can reach it. Any role that may connect may notify any channel. It writes no
@@ -365,40 +441,72 @@ const lastNumber = (out) =>
   // put a forged event on the CEO's live screen, because the ops:live collector
   // republishes whatever parses as an envelope. Measured here every run so that
   // it is never quietly forgotten, and named as what it is.
-  let residual = 0;
+  // The NOTIFY COMMAND still runs — PostgreSQL grants no privilege over it and
+  // no GRANT or REVOKE can reach it. What matters is whether it can still put an
+  // event that never happened on the CEO's screen, so that is what is measured,
+  // end to end, by scripts/b36/prove-forged-event.mjs: it reproduces the forgery
+  // RED against the listener as it was committed, then requires the shipped one
+  // to refuse it while the company's own events still arrive.
+  let forgedOpen = 0;
   if (FIRES) {
-    const r = await asWindow(
-      `SET default_transaction_read_only = off;
-       BEGIN; NOTIFY dxb_ops_live, 'b36-residual-probe'; COMMIT;`);
-    residual = r.code === 0 ? 1 : 0;
-    console.log(`  RESIDUAL — the NOTIFY command: ${residual === 1
-      ? "still possible, and PostgreSQL grants no privilege over it"
-      : "refused (unexpected — PostgreSQL has no privilege for NOTIFY; check what refused it)"}`);
-    console.log("             it changes no row; it can forge a live event for the CEO's screen.");
-    console.log("             Closing it belongs to the listener, not to a GRANT. Board row B37.");
-    console.log("");
+    const proof = await psql(["node", join(REPO, "scripts/b36/prove-forged-event.mjs")], "");
+    const red = /RED\s+with the OLD listener, forged events on the CEO's channel: (\d+)/.exec(proof.stdout);
+    const green = /GREEN with the SHIPPED collector, forged events on the CEO's channel: (\d+)/.exec(proof.stdout);
+    const real = /GREEN events issued through the company's own door that arrived : (\d+)/.exec(proof.stdout);
+    forgedOpen = proof.stdout.includes("FORGED_EVENT_REFUSED") && Number(green?.[1] ?? 1) === 0 ? 0 : 1;
+    console.log(`  forged live event — reproduced RED with the old listener : ${red?.[1] ?? "?"}`);
+    console.log(`  forged live event — reaching the screen now              : ${green?.[1] ?? "?"}`);
+    console.log(`  the company's own events still arriving                  : ${real?.[1] ?? "?"}`);
+    if (forgedOpen) console.log(`  ${proof.stdout.split("\n").slice(-6).join("\n  ")}`);
+  } else {
+    // The holding is never notified by a drill. What CAN be measured here is the
+    // wall itself, and it is in the class sweep above: the window cannot reach
+    // dxb_internal, so it cannot read, guess or write a receipt.
+    console.log("  forged live event — the receipt wall is measured in the class sweep above;");
+    console.log("  the forgery itself is fired only on the construction engine.");
   }
+  console.log("");
 
-  console.log(`  attempts fired  : ${FIRES ? ATTEMPTS.length : 0}${FIRES ? "" : "   (read-only against the company by design)"}`);
+  const residual = selfOpen + forgedOpen;
+
+  console.log(`  attempts fired  : ${FIRES ? ATTEMPTS.length : 0}${FIRES ? "" : "   (nothing is executed against the holding, by the audit's ruling)"}`);
   if (FIRES) console.log(`  refused         : ${refused}`);
   if (FIRES) console.log(`  escaped         : ${escaped.length}`);
-  console.log(`  classes measured: ${CLASSES.length}`);
+  console.log(`  classes measured: ${CLASSES.length + SELF_CLASSES.length + 1}`);
   console.log(`  classes leaking : ${classLeaks}`);
   if (FIRES) console.log(`  rows left behind: ${left}`);
-  if (FIRES) console.log(`  residual routes : ${residual}   (NOTIFY — no privilege exists)`);
+  console.log(`  residual routes : ${residual}   (${selfOpen} the account holds over itself, ${forgedOpen} forged live events)`);
   for (const [name, why] of escaped) console.log(`    ESCAPE: ${name} — ${why}`);
 
   const attemptsClean = !FIRES || (escaped.length === 0 && left === 0 && refused === ATTEMPTS.length);
-  if (attemptsClean && classLeaks === 0) {
+
+  // THE FIXED QUESTION IS NOT NARROWED. The audit's ruling of 2026-08-24: while
+  // any residual stands, a green verdict is forbidden. "NOTIFY kaçağı varken
+  // WINDOW_IS_ONE_WAY ve yeşil sonuç basılması yasak; residual > 0 kapanışı
+  // kırmalı." So the close is broken by ANY of the three, not only by a
+  // privilege the catalogue happens to be able to name.
+  if (attemptsClean && classLeaks === 0 && residual === 0) {
     console.log("");
-    console.log("ANSWER: NO — through every route a PostgreSQL privilege can govern, the window");
-    console.log("cannot change a row, turn a counter, call an effectful function, stand in another");
-    console.log("schema or create anything. The NOTIFY command is named above as the one route no");
-    console.log("privilege reaches.");
+    console.log("ANSWER: NO — the window cannot make a permanent change or an outside effect in");
+    console.log("this database by any route tried or measured.");
     console.log("WINDOW_IS_ONE_WAY");
     return;
   }
+
   console.log("");
+  console.log("ANSWER: YES, STILL — and here is exactly what is left:");
+  if (selfOpen > 0) {
+    console.log(`  · ${selfOpen} thing(s) a plain PostgreSQL login may do to ITSELF: its password, its`);
+    console.log("    own persistent settings, its own default privileges. No GRANT or REVOKE");
+    console.log("    reaches any of them, so this cannot be closed while a direct login exists.");
+    console.log("    THE CLOSE IS AN ARCHITECTURE CHANGE, written as a plan and NOT built:");
+    console.log("    .planning/quick/20260823-construction-company-separation/PLAN.md, Block 3-bis");
+    console.log("    — the direct login is withdrawn and the construction side reads the company");
+    console.log("    through a gateway that holds no PostgreSQL account of its own. It needs the");
+    console.log("    CEO's approval before one line of it is built.");
+  }
+  if (forgedOpen > 0) console.log("  · a forged live event still reaches the CEO's screen.");
+  if (classLeaks > 0) console.log(`  · ${classLeaks} privilege class(es) still open — listed above.`);
   console.log("WINDOW_LEAKS");
   process.exit(1);
 })().catch((e) => {

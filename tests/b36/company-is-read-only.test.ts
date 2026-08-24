@@ -116,12 +116,14 @@ describe("B36 · Block 3 — the one-way window", () => {
       "scripts/b36/prove-window.mjs",
       "scripts/b36/prove-window-preserves.mjs",
       "scripts/b36/prove-window-escapes.mjs",
+      "scripts/b36/prove-forged-event.mjs",
+      "scripts/b36/company-state-fingerprint.mjs",
       "scripts/b36/restore-company-privileges.mjs",
     ]) {
       expect(existsSync(join(REPO, f)), `${f} is missing`).toBe(true);
     }
     for (const s of ["b36:window", "b36:prove-window", "b36:prove-window-preserves",
-                     "b36:prove-window-escapes"]) {
+                     "b36:prove-window-escapes", "b36:prove-forged-event"]) {
       expect(PKG.scripts[s], `package.json has no "${s}" script`).toBeTruthy();
     }
   });
@@ -152,7 +154,29 @@ describe("B36 · Block 3 — the one-way window", () => {
   );
 
   it(
-    "(5) LIVE — every route is refused AND every class is measured zero",
+    "(5) LIVE — a forged live event reached the screen, and now it is refused",
+    { timeout: 240_000 },
+    () => {
+      // THE SECOND AUDIT'S ORDER, 2026-08-24: "Önce sahte ve biçimi geçerli bir
+      // NOTIFY mesajının ekrana geçtiğini kırmızıyla kanıtla; sonra aynı
+      // mesajın reddedildiğini, gerçek şirket olaylarının ise çalışmaya devam
+      // ettiğini kanıtla."
+      const out = runNode(["scripts/b36/prove-forged-event.mjs"]);
+
+      expect(out, `the forged-event proof did not run:\n${out}`).toContain("forged events on the CEO's channel");
+      expect(out, `the forgery did not reproduce RED — the refusal proves nothing:\n${out}`)
+        .toMatch(/RED\s+with the OLD listener, forged events on the CEO's channel: [1-9]/);
+      expect(out, `a forged event still reaches the CEO's screen:\n${out}`)
+        .toMatch(/GREEN with the SHIPPED collector, forged events on the CEO's channel: 0/);
+      expect(out, `the company's own events stopped arriving — the fix broke the surface:\n${out}`)
+        .toMatch(/GREEN events issued through the company's own door that arrived : [1-9]/);
+      expect(out, "the receipt is not consumed — an event can be replayed").toContain("must stay");
+      expect(out).toContain("FORGED_EVENT_REFUSED");
+    },
+  );
+
+  it(
+    "(6) LIVE — every privilege class is zero, and what is NOT a privilege is reported, not hidden",
     { timeout: 240_000 },
     () => {
       // Build the window on the construction engine if this environment has not
@@ -174,21 +198,35 @@ describe("B36 · Block 3 — the one-way window", () => {
       const classes = num(/classes measured\s*:\s*(\d+)/);
       const leaking = num(/classes leaking\s*:\s*(\d+)/);
       const left = num(/rows left behind\s*:\s*(\d+)/);
+      const residual = num(/residual routes\s*:\s*(\d+)/);
 
       expect(attempts, "the drill tried almost nothing").toBeGreaterThanOrEqual(30);
       expect(refused, `not every route was refused:\n${out}`).toBe(attempts);
       expect(escaped, `a write route escaped:\n${out}`).toBe(0);
       expect(left, `the drill left something behind:\n${out}`).toBe(0);
+      expect(classes, "the class sweep shrank").toBeGreaterThanOrEqual(13);
+      expect(leaking, `a privilege class is still open:\n${out}`).toBe(0);
 
-      // The half the audit added: the catalogue's own answer, not a list of
-      // statements somebody remembered to write.
-      expect(classes, "the class sweep is gone").toBeGreaterThanOrEqual(8);
-      expect(leaking, `a whole class is still open:\n${out}`).toBe(0);
+      // WHAT IS NOT A PRIVILEGE MUST NOT BE HIDDEN, and the fixed question must
+      // not be narrowed to the part that can be closed. The audit's ruling:
+      // "NOTIFY kaçağı varken WINDOW_IS_ONE_WAY ve yeşil sonuç basılması yasak;
+      // residual > 0 kapanışı kırmalı." Three self-directed capabilities remain
+      // — password, own persistent settings, own default privileges — every one
+      // of them fired for real against the construction engine in this same run.
+      expect(residual, `the residual count changed — read the drill and say why:\n${out}`).toBe(3);
+      for (const shape of [
+        /OPEN\s+change its own password/,
+        /OPEN\s+make a session setting permanent for itself/,
+        /OPEN\s+write its own default privileges/,
+      ]) {
+        expect(out, `a self-directed capability stopped being reported:\n${out}`).toMatch(shape);
+      }
 
-      // And the one route no privilege reaches must be named every run, so it is
-      // never quietly dropped from the record.
-      expect(out, "the NOTIFY residual is no longer reported").toContain("RESIDUAL — the NOTIFY command");
-      expect(out).toContain("WINDOW_IS_ONE_WAY");
+      // And while any of them stands, a green verdict is forbidden.
+      expect(out, "the drill printed a green verdict while a residual was open").not.toContain("WINDOW_IS_ONE_WAY");
+      expect(out).toContain("WINDOW_LEAKS");
+      expect(out, "the drill no longer points at the plan that would close this")
+        .toContain("PLAN.md, Block 3-bis");
     },
   );
 });

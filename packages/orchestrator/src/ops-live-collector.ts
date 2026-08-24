@@ -8,11 +8,33 @@
 // exactly 1 event → envelope published verbatim (§24 probe contract).
 // Broadcast loss is tolerated by design (§10/§17) — a failed flush logs loudly
 // and drops; source-truth rows already exist, reconnect snapshot covers.
+//
+// NOTHING IS PUBLISHED THAT THE COMPANY DID NOT ISSUE. B36 Block 3, second
+// audit round, 2026-08-24: `NOTIFY` is a COMMAND and PostgreSQL has no
+// privilege over it, so any role that may connect — the read-only window
+// included — may notify any channel. This collector used to republish anything
+// that parsed as a §9a envelope, verbatim, onto the channel the CEO's Live
+// Operations page reads, and the envelope is entirely forgeable. The audit's
+// ruling: the listener must not publish a message without verifying the event
+// really came from the company's own records.
+//
+// It does that against a RECEIPT. `public.fn_opslive_notify` — the single door
+// every ops:live event goes through, SECURITY DEFINER — writes the event's id
+// into `dxb_internal.ops_live_issued` in the SAME transaction as the source
+// write and only then notifies (migration 20260824003000). Here the receipt is
+// verified and CONSUMED in one statement, so an event is published once and
+// only if the company itself issued it. A forged notification carries an id no
+// receipt was ever written for and is refused. `dxb_internal` is a schema the
+// one-way window cannot stand in, so the ids cannot be read or guessed either.
+//
+// IT FAILS CLOSED. If the receipt check itself cannot run, nothing is
+// published and the reason is logged — publishing unverified is the defect.
 import { createListenClient, EventEnvelope, type ListenClient } from "@dxb/shared";
 
 const NOTIFY_CHANNEL = "dxb_ops_live";
 const BROADCAST_CHANNEL = "ops:live";
 const DEFAULT_WINDOW_MS = 1000;
+const PRUNE_EVERY_MS = 300_000;
 
 export type OpsLiveCollector = {
   /** Drain the current window immediately (tests / shutdown). Returns events flushed. */
@@ -36,6 +58,34 @@ export async function startOpsLiveCollector(opts?: {
   let flushing: Promise<number> | null = null;
   let published = 0;
   let stopped = false;
+  let lastPruneAt = 0;
+
+  // Verify AND consume in one statement: an id can be spent once, so a replay
+  // of a real event is refused for the same reason a forgery is.
+  async function issuedByTheCompany(events: EventEnvelope[]): Promise<EventEnvelope[]> {
+    const result = (await client.query(
+      `DELETE FROM dxb_internal.ops_live_issued
+        WHERE event_id = ANY($1::uuid[])
+        RETURNING event_id`,
+      [events.map((e) => e.event_id)],
+    )) as { rows: { event_id: string }[] };
+    const issued = new Set(result.rows.map((r) => r.event_id));
+    return events.filter((e) => issued.has(e.event_id));
+  }
+
+  // A receipt nobody came to collect is rubbish, not evidence: if this process
+  // was down while the company worked, those ids are never published.
+  async function pruneReceipts(): Promise<void> {
+    if (Date.now() - lastPruneAt < PRUNE_EVERY_MS) return;
+    lastPruneAt = Date.now();
+    try {
+      await client.query(
+        `DELETE FROM dxb_internal.ops_live_issued WHERE issued_at < now() - interval '1 hour'`,
+      );
+    } catch (err) {
+      log(`[ops-live] receipt prune failed (harmless, retried later): ${String(err)}`);
+    }
+  }
 
   async function publish(envelope: EventEnvelope): Promise<void> {
     await client.query("SELECT public.notify_broadcast($1, $2, $3::jsonb)", [
@@ -57,17 +107,40 @@ export async function startOpsLiveCollector(opts?: {
         timer = null;
       }
       if (events.length === 0) return 0;
+
+      let real: EventEnvelope[];
+      try {
+        real = await issuedByTheCompany(events);
+      } catch (err) {
+        // Fail CLOSED. An unverifiable event is not published, ever.
+        log(
+          `[ops-live] receipt check failed — ${events.length} event(s) refused, nothing published ` +
+            `(source rows intact): ${String(err)}`,
+        );
+        return 0;
+      }
+      const refused = events.length - real.length;
+      if (refused > 0) {
+        log(
+          `[ops-live] ${refused} notification(s) carried no receipt from the company — REFUSED, ` +
+            `not published. Something notified ${NOTIFY_CHANNEL} that did not come through ` +
+            `fn_opslive_notify.`,
+        );
+      }
+      void pruneReceipts();
+      if (real.length === 0) return 0;
+
       const outer: EventEnvelope =
-        events.length === 1
-          ? events[0]!
-          : { ...events[events.length - 1]!, payload: { batch: events } };
+        real.length === 1
+          ? real[0]!
+          : { ...real[real.length - 1]!, payload: { batch: real } };
       try {
         await publish(outer);
       } catch (err) {
         // Tolerated loss (§17): never crash the host loop, never retry-block.
-        log(`[ops-live] publish failed, ${events.length} event(s) dropped from Broadcast (source rows intact): ${String(err)}`);
+        log(`[ops-live] publish failed, ${real.length} event(s) dropped from Broadcast (source rows intact): ${String(err)}`);
       }
-      return events.length;
+      return real.length;
     })();
     try {
       return await flushing;

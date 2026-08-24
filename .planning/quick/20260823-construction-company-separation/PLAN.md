@@ -240,6 +240,69 @@ instead of on the slug.
   `INSERT INTO cost_ledger …`, `UPDATE tasks …`, `DELETE FROM alerts …` and `TRUNCATE`; each must
   fail with `permission denied`. A test that passes because the write succeeded is the defect.
 
+### Block 3-bis — THE READ-ONLY GATEWAY — **A PLAN. NOT BUILT. IT WAITS ON THE CEO.**
+
+**Why this exists.** Block 3 was audited twice on 2026-08-24 and failed twice. The second verdict
+found the thing no privilege can fix, and it is right:
+
+> *"PostgreSQL sıradan bir hesabın kendi şifresini ve kalıcı oturum ayarlarını değiştirmesine izin
+> verir. Bu nedenle ham PostgreSQL giriş hesabıyla 'hiçbir kalıcı değişiklik yapamaz' sözü teknik
+> olarak mümkün görünmüyor."*
+
+Measured with the real role on the disposable construction engine, 2026-08-24 — three permanent
+changes, all made by a role that holds SELECT and nothing else:
+
+| what it did to itself | measured |
+|---|---|
+| `ALTER ROLE dxb_reader PASSWORD …` | `ALTER ROLE` — and the NEXT connection failed with *password authentication failed*, because the hash in `pg_authid` had really changed |
+| `ALTER ROLE dxb_reader SET statement_timeout = '999s'` | `pg_db_role_setting` went from `120s` to `999s` and stayed there |
+| `ALTER DEFAULT PRIVILEGES FOR ROLE dxb_reader …` | one row in `pg_default_acl` owned by the window |
+
+There is no `REVOKE` for any of them. PostgreSQL gives every login role these three over itself, by
+design. **So the fixed question — "can `dxb_reader` make a permanent change or an outside effect in
+the company's database through any route given to it?" — is answered YES for as long as a direct
+login exists**, and `pnpm b36:prove-window` says so on both engines rather than narrowing the
+question to the parts that can be closed.
+
+**What the gateway is, in one sentence.** The construction side stops holding a PostgreSQL account
+at all: it asks a small read-only service for the numbers it needs, and that service — not the
+caller — decides what may be asked.
+
+**Shape.**
+
+1. **The account is withdrawn.** `dxb_reader` is dropped from the company's engine. Nothing on the
+   construction side can connect to the holding, with any credential, because it has none.
+2. **A gateway process** runs beside the company (its own systemd unit, loopback only), holding the
+   only connection. It exposes a **fixed catalogue of named questions** — row counts per table, the
+   ledger's state claims, the schema inventory — and no free-form SQL. A question that is not in
+   the catalogue cannot be asked, so there is no statement for a future session to get wrong.
+3. **It is read-only by construction, not by privilege**: it opens its connection with
+   `default_transaction_read_only`, runs every question inside a `READ ONLY` transaction it starts
+   itself, and holds a role that cannot log in over TCP at all.
+4. **Its callers are the two that exist**: `scripts/governance/ledger-truth.mjs` and the acceptance
+   drills. Both stop reading `DXB_COMPANY_READONLY_URL` and start calling the gateway.
+5. **The proof** becomes narrower and stronger: there is no company credential anywhere on the
+   construction side to attack, so the drill's question becomes "is there any path from the
+   construction site to the holding's engine at all", and the answer is a port that refuses.
+
+**What it costs.** One more resident service to keep alive and to restart on deploy; a catalogue
+that has to grow whenever a gate needs a new number; and the loss of ad-hoc reading — a future
+session that wants a figure the catalogue does not carry must add it, in code, with a review.
+
+**What it does NOT solve.** Nothing about the company's own roles: `postgres`, `anon`,
+`authenticated` and the Supabase platform roles are unchanged, and they are not what B36 is about.
+
+**Alternatives measured and rejected.** (a) Revoking the three capabilities — impossible, there is
+no privilege for them. (b) An event trigger that blocks `ALTER ROLE` — event triggers fire on DDL
+in a database; role changes are cluster-level and are not covered. (c) Watching `pg_authid` and
+alerting — that is a detector, not a wall, and this row exists because seven detectors were built
+where a wall was needed.
+
+**THIS IS A PLAN AND NOTHING HERE IS BUILT.** *"doğrudan giriş hesabını kaldıran salt-okunur geçit
+mimarisini plan olarak CEO'ya getir ve onay almadan uygulama"* — it waits on his word, and until he
+gives it the honest state of Block 3 is: the privilege classes are closed, the forged live event is
+closed, and three self-directed capabilities remain open and are reported on every run.
+
 ### Block 4 — Delete every fallback, and add the guard
 
 - All 94 files lose their `??=` company-database fallback. They throw instead.

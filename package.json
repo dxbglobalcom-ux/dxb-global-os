@@ -21,7 +21,8 @@
     "b36:window": "node scripts/b36/install-company-window.mjs company",
     "b36:prove-window": "node scripts/b36/prove-window.mjs company",
     "b36:prove-window-preserves": "node scripts/b36/prove-window-preserves.mjs",
-    "b36:prove-window-escapes": "node scripts/b36/prove-window-escapes.mjs"
+    "b36:prove-window-escapes": "node scripts/b36/prove-window-escapes.mjs",
+    "b36:prove-forged-event": "node scripts/b36/prove-forged-event.mjs"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",
