@@ -1,0 +1,19 @@
+# DXB screenshot housekeeping — WEEKLY, on the CEO's ruling of 2026-08-24.
+#
+# It used to be OnCalendar=daily. A folder that holds at most a few days of
+# screenshots does not need a nightly visit, and a nightly visit is how a chore
+# with nothing to do became a nightly FAILED unit on his machine.
+#
+# Persistent=true: if the machine was off on Monday, the sweep runs at the next
+# boot instead of being silently skipped. RandomizedDelaySec keeps it off the
+# exact second every other weekly timer wakes on.
+[Unit]
+Description=Weekly sweep of DXB screenshots older than seven days
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+RandomizedDelaySec=15m
+
+[Install]
+WantedBy=timers.target

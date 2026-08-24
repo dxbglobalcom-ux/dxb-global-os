@@ -202,15 +202,30 @@ describe("dispatch — queue rows + events (deterministic)", () => {
       }),
     ]);
 
+    // Looked up BY ID, never by order. This read used to be
+    // `.orderBy("created_at")` and take rows[0] as A and rows[1] as B, and it
+    // was a coin flip: `tasks.created_at` defaults to `now()`, which in
+    // PostgreSQL is the TRANSACTION's timestamp, and dispatch() inserts the
+    // whole batch inside one transaction — so both rows carry the identical
+    // timestamp and the tie is broken however the planner feels. Measured
+    // 2026-08-24 on the construction engine: two rows inserted one after another
+    // in one transaction → `count(DISTINCT created_at) = 1`. It failed one full
+    // battery run in three, always here, always with A and B the other way
+    // round.
     const rows = await getDb()
       .selectFrom("tasks")
       .select(["id", "status", "depends_on"])
       .where("id", "in", [aId, bId])
-      .orderBy("created_at")
       .execute();
-    expect(rows.map((r) => r.status)).toEqual(["queued", "queued"]);
-    expect(rows[0].depends_on).toEqual([]);
-    expect(rows[1].depends_on).toEqual([aId]);
+    expect(rows).toHaveLength(2);
+    const byId = new Map(rows.map((r) => [r.id, r]));
+    const a = byId.get(aId);
+    const b = byId.get(bId);
+    expect(a, "task A was not queued at all").toBeTruthy();
+    expect(b, "task B was not queued at all").toBeTruthy();
+    expect([a!.status, b!.status]).toEqual(["queued", "queued"]);
+    expect(a!.depends_on).toEqual([]);
+    expect(b!.depends_on).toEqual([aId]);
 
     const events = await getDb()
       .selectFrom("task_events")

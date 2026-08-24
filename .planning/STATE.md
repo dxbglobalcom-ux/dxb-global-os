@@ -335,6 +335,19 @@ closed; **arming it is his decision and he has not taken it**), plus `psql`, `te
 scrot/grim/import; it goes through the desktop portal and works — output lands in
 `~/Pictures/dxb-screenshots`, swept after 7 days by a user timer, because `/tmp` here is a **15 GB
 RAM disk** and screenshots left there eat the memory we are short of).
+**CORRECTED 2026-08-24 on his ruling, and two things measured while doing it.** The sweep is
+**weekly**, not nightly, and having nothing to sweep is a **success**: his words, *"küçük bir
+haftalık temizlik görevi… yoksa neden başarısız diyor ki"* — the unit had been reporting FAILED
+every night at 00:00 because `find` exits 1 on a folder that does not exist. The work is
+`scripts/ops/screenshot-sweep.sh` and **both unit files are now in the repository**
+(`scripts/systemd/dxb-screenshot-cleanup.{service,timer}`, installed by `scripts/systemd/install.sh`);
+until today they existed ONLY on this machine, hand-written, in no repository at all. Measured the
+same hour: **`dxb-screenshot` is NOT on this machine any more** — `/usr/local/bin/dxb-screenshot`
+does not exist, so nothing has been writing to `~/Pictures/dxb-screenshots`; and the `operator`
+command, which is what this machine actually uses for the screen, writes to **`~/Pictures/operator`**
+(`/opt/dxb-operator/cli.py:20`). The sweep therefore covers **both** folders. It does **not** touch
+`~/Pictures/Screenshots` (GNOME's own, 29 files / 7.2 MB) or the loose files in `~/Pictures` — those
+are the CEO's own pictures. Machine after: **0 failed units**, next fire Mon 2026-08-31 00:11.
 **Two live gotchas for the next session:** `dxb` is in the `docker` group in `/etc/group` but this
 desktop session predates the change, so `docker exec` is refused until he logs out and back in —
 until then the governance gate must be run with a `docker` shim on `PATH` that rewrites
@@ -414,7 +427,13 @@ that reading as the next job and had not answered when the session closed.
    `ugrep` — what `grep` resolves to on this machine — skip the file in silence; an audit of it would
    have reported clean. **Gates after:** `BATTERY_GREEN` 107 files / 775 passed / 15 skipped + host
    2/11 · `tsc` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · `WALL_IS_ONE_WAY` · gitleaks clean ·
-   `STATE_FINGERPRINT de359137ee1d7c79` identical before and after. **NEXT IS BLOCK 5** — the residue
+   `STATE_FINGERPRINT de359137ee1d7c79` identical before and after. **One flaky test was found by
+running the battery five times and fixed at source, and it was never B36's:**
+`tests/phase5/decompose-dispatch.test.ts` read two rows with `ORDER BY created_at` and took the first
+as A — a coin flip, because `created_at` defaults to `now()`, which is the TRANSACTION's timestamp,
+and `dispatch()` inserts the batch in one transaction, so both rows carry the identical value
+(measured: `count(DISTINCT created_at) = 1`). It now looks the rows up by id. **12 consecutive runs
+of the file, 12 passed; then the whole battery three times, green each time.** **NEXT IS BLOCK 5** — the residue
    moves out of the company (moved, never deleted — his decision 3), and it begins with a dry-run
    report put in front of him before one row moves.
    **BLOCK 1 IS CLOSED AND DOES NOT REOPEN — the finish line was fixed on 2026-08-23** after three

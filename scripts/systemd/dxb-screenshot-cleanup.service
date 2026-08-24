@@ -1,0 +1,20 @@
+# DXB screenshot housekeeping — systemd USER unit (install: scripts/systemd/install.sh)
+#
+# Started by dxb-screenshot-cleanup.timer, once a week. It deletes screenshots
+# older than seven days from ~/Pictures/dxb-screenshots, which exists because
+# /tmp on this machine is a 15 GB RAM disk and images left there eat the memory
+# the workstation is short of.
+#
+# The CEO's ruling, 2026-08-24: this is *"küçük bir haftalık temizlik görevi"* —
+# a small weekly chore. Until that day it ran EVERY NIGHT as a bare
+# `find %h/Pictures/dxb-screenshots -type f -mtime +7 -delete`, and on a machine
+# where that folder does not exist `find` exits 1, so systemd reported a FAILED
+# unit every single night for having nothing to do. The work now lives in
+# scripts/ops/screenshot-sweep.sh, which treats "nothing to sweep" as success and
+# keeps a non-zero exit for a real fault.
+[Unit]
+Description=Weekly sweep of DXB screenshots older than seven days
+
+[Service]
+Type=oneshot
+ExecStart="%h/DxB Global OS/scripts/ops/screenshot-sweep.sh"

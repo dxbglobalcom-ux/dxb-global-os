@@ -1943,3 +1943,110 @@ carry it as an assertion. The counter already separates *binding* from *mentioni
 prints both lists; the headline it prints is the number that matters, and it is 0.
 (3) `.claude/settings.local.json` lost its one permission entry that opened a direct
 `psql` door to the company (202 → 201 entries). It is a local, git-ignored file.
+
+## Two things the Block-4 battery runs surfaced · 2026-08-24 night
+
+### 1. A test that failed one battery run in three, and it was never about B36
+
+Proving Block 4 meant running the whole battery repeatedly, and on the fifth run it
+went red on a file it had never named before:
+
+```
+FAIL tests/phase5/decompose-dispatch.test.ts > dispatch — queue rows + events
+     (deterministic) > 2-envelope chain: both queued, depends_on resolved to uuid
+AssertionError: expected [ Array(1) ] to deeply equal []
+  ❯ tests/phase5/decompose-dispatch.test.ts:212   expect(rows[0].depends_on).toEqual([])
+```
+
+Row A came back where row B should have been. The case read the two tasks with
+`ORDER BY created_at` and took the first as A and the second as B — and that is a
+coin flip, because `tasks.created_at` defaults to `now()`, which in PostgreSQL is
+the **transaction's** timestamp, while `dispatch()` inserts the whole batch inside
+**one** transaction. Both rows therefore carry the identical timestamp and the tie
+is broken however the planner feels that run. Measured on the construction engine:
+
+```
+BEGIN;
+CREATE TEMP TABLE t (id uuid DEFAULT gen_random_uuid(), created_at timestamptz DEFAULT now());
+INSERT INTO t DEFAULT VALUES;  INSERT INTO t DEFAULT VALUES;
+→ two rows inserted one after another in ONE transaction; identical created_at: true
+  (distinct values: 1)
+```
+
+**It is not Block 4's doing, and the record says why rather than asserting it.** The
+only change this block made to that file is one deleted line — `git show HEAD --
+tests/phase5/decompose-dispatch.test.ts` is a single `-process.env.DXB_DATABASE_URL
+??= …`, an inert fallback that `vitest.config.ts` already defeated. The failure is an
+ordering assertion, not a connection: the run's own `[global-setup]` line names
+construction cluster `7677291653303935015` as usual. The case had been a coin flip
+since it was written; a battery that runs five times in an evening is simply the
+first thing that flipped it.
+
+**Fixed at source, not retried.** The read no longer has an order to get wrong — the
+two rows are looked up by id:
+
+```ts
+const byId = new Map(rows.map((r) => [r.id, r]));
+expect([a!.status, b!.status]).toEqual(["queued", "queued"]);
+expect(a!.depends_on).toEqual([]);
+expect(b!.depends_on).toEqual([aId]);
+```
+
+The sibling assertion on `task_events` was checked and left alone: that table's `id`
+is `GENERATED ALWAYS AS IDENTITY` and `dispatch()` inserts the events as one
+multi-row `INSERT` in `taskIds` order, so `ORDER BY id` there really is determined.
+
+**Proof it is stable:** the file alone, **12 consecutive runs — 12 passed, 0 failed**;
+then the whole battery **three times in a row, BATTERY_GREEN each time**
+(107 files / 775 passed / 15 skipped, plus host 2 files / 11 passed).
+
+### 2. The nightly chore that reported FAILED for having nothing to do
+
+`dxb-screenshot-cleanup.service` had failed at 00:00 every night. His ruling:
+*"bu bir başarı değil ki, küçük bir haftalık temizlik görevi… SS varsa çalışsın."*
+
+The cause was one line: `ExecStart=/usr/bin/find %h/Pictures/dxb-screenshots -type f
+-mtime +7 -delete`, and `find` exits 1 when the folder does not exist. Two more facts
+came out of measuring it, and both matter more than the failure did:
+
+- **`dxb-screenshot` is not on this machine any more.** `/usr/local/bin/dxb-screenshot`
+  does not exist, so nothing had been writing to `~/Pictures/dxb-screenshots` at all.
+- **The `operator` command — what this machine actually uses for the screen — writes
+  somewhere else:** `~/Pictures/operator` (`/opt/dxb-operator/cli.py:20`, `SHOTDIR`).
+  A sweep of only the first folder would have been a weekly chore that could never
+  find anything, for ever.
+
+**Built:** `scripts/ops/screenshot-sweep.sh` sweeps **both** DXB folders, treats
+nothing-to-do as success and keeps a non-zero exit for a real fault. It does **not**
+touch `~/Pictures/Screenshots` (GNOME's own, 29 files / 7.2 MB) or the loose files in
+`~/Pictures` — those are the CEO's own pictures. The timer is **weekly** with
+`Persistent=true`, so a machine that was off on Monday sweeps at the next boot.
+
+**Both unit files are now in the repository.** Until tonight
+`dxb-screenshot-cleanup.service` and `.timer` existed ONLY in
+`~/.config/systemd/user/`, hand-written, tracked nowhere — the same disease as
+`dxb-freeze-guard.service` on 2026-08-21. `scripts/systemd/install.sh` owns them now.
+
+**Drilled in every state, then run through systemd for real:**
+
+```
+no folder at all                       → exit 0   "nothing to sweep"     (x2 folders)
+folder present, empty                  → exit 0   "held 0; deleted 0"
+two folders, 3 old files + 1 fresh     → exit 0   "deleted 3 in total"; the fresh one stays
+a folder that cannot be read           → exit 1   "1 folder(s) could not be swept"
+
+$ systemctl --user start dxb-screenshot-cleanup.service     (folder absent)
+ActiveState=inactive Result=success ExecMainStatus=0
+$ systemctl --user start dxb-screenshot-cleanup.service     (3 files, 2 of them old)
+screenshot-sweep: /home/dxb/Pictures/dxb-screenshots held 3 file(s); deleted 2 older than 7 days.
+Result=success        kalan: fresh.png
+```
+
+The demo folder was removed afterwards, so the machine stands as it was found.
+**Machine after: 0 failed units** (it was 1), next fire `Mon 2026-08-31 00:11:42 CEST`,
+and all four resident services `active`, `NRestarts=0`.
+
+**⚠ UNVERIFIED — requires a human decision, not a terminal.** `dxb-screenshot` is
+gone and nothing has replaced it; whether it should be reinstalled, or whether
+`~/Pictures/operator` is now the only screenshot folder that matters, is the CEO's
+call and has not been taken.

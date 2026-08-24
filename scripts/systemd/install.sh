@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-# Install/refresh the DXB systemd USER units (scheduler + JARVIS) and start
-# them. User units need no sudo; they live with the CEO's login session.
+# Install/refresh the DXB systemd USER units and start them. User units need no
+# sudo; they live with the CEO's login session.
 # Re-run safe: cp + daemon-reload + enable --now is idempotent.
+#
+# Three resident services — the scheduler, JARVIS and the company's read gateway
+# — plus one weekly housekeeping timer (screenshots).
 set -euo pipefail
 
 UNIT_DIR="${HOME}/.config/systemd/user"
@@ -35,8 +38,18 @@ cp "${SRC_DIR}/dxb-jarvis.service" "${UNIT_DIR}/"
 # socket. Without it, the governance gate fails closed by design.
 cp "${SRC_DIR}/dxb-company-read.service" "${UNIT_DIR}/"
 
+# B36 · 2026-08-24, on the CEO's ruling — the weekly screenshot sweep. Both files
+# used to exist ONLY on this machine, hand-written and in no repository, so the
+# nightly failure they produced could not be fixed anywhere but by hand. They are
+# under version control now and this installer owns them.
+cp "${SRC_DIR}/dxb-screenshot-cleanup.service" "${UNIT_DIR}/"
+cp "${SRC_DIR}/dxb-screenshot-cleanup.timer" "${UNIT_DIR}/"
+
 systemctl --user daemon-reload
 systemctl --user enable dxb-scheduler.service dxb-jarvis.service dxb-company-read.service
+# A oneshot unit is enabled by its TIMER, never by itself.
+systemctl --user reset-failed dxb-screenshot-cleanup.service 2>/dev/null || true
+systemctl --user enable --now dxb-screenshot-cleanup.timer
 systemctl --user restart dxb-scheduler.service
 systemctl --user restart dxb-jarvis.service
 systemctl --user restart dxb-company-read.service
@@ -49,3 +62,4 @@ echo "--- status ---"
 systemctl --user --no-pager --lines 3 status dxb-scheduler.service || true
 systemctl --user --no-pager --lines 3 status dxb-jarvis.service || true
 systemctl --user --no-pager --lines 3 status dxb-company-read.service || true
+systemctl --user --no-pager list-timers dxb-screenshot-cleanup.timer || true
