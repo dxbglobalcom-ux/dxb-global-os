@@ -112,12 +112,37 @@ topic while the tab lives, and can no longer sit at "connecting" — an unconfir
 after 10 s, which is a state the CEO can act on. **Measured:** battery **105 files / 769 passed /
 15 skipped / exit 0** · `tsc --build` 0 · `verify:ledger` OK · `verify:schema-parity`
 SCHEMA_PARITY · gitleaks no leaks. **Proved red first:** `tests/phase8/realtime-channel-sharing.test.ts`
-(6 cases) goes red when the sharing is mutated away. **Verified by eye in his browser:** the badge
-reads **Live**; across 13 navigations six topics stayed `joined` with **0** stuck, `ops:live` served
-two panels from one join, and wiping the registry to imitate a module replacement still came back
-`live`. **Not measured, and it is not measurable without breaking his order:** an end-to-end
-"a real company event lights the page" needs a write into the holding's database — *"TEK BİR HARF
-DAHİ ŞİRKETİN VERİ TABANINA GİRMESİN"* — so it was not attempted.
+(7 cases) goes red when the sharing is mutated away, and red again when the CLOSED status stops
+being reported. **The fix is in ONE commit, `d8100c0a`** — `d92baac6` the same day touches only
+`.claude/skills/dxb-operator/SKILL.md` and has nothing to do with the screen. A first report said
+"two commits" and that was wrong.
+**WHAT THOSE 7 CASES DO AND DO NOT PROVE, because an audit had to say it:** they drive the real
+`subscribeDxb` against a STAND-IN for the socket — a fake client that copies the two behaviours of
+`@supabase/realtime-js` 2.110.0 that caused the defect (`channel(topic)` dedupes; `subscribe()` is
+a silent no-op on a channel that is not closed). They prove the LOGIC. They cannot prove every
+transition of a real websocket, and the battery may not hold one: `tests/b36/battery-carries-no-
+company-key.test.ts` forbids it a key to the holding. Whoever reads them should read them as that.
+**AND THE AUDIT NAMED A GAP THAT WAS REAL — recovery after an outage LONGER than the 10 s deadline
+was never proved, only the permanent "Connecting" was.** Measured live on 2026-08-24 in the CEO's
+own browser, by holding the websocket down and letting it back up: baseline all three channels
+`live` → socket held down **17.4 s** → within **2.4 s** all three said `stale` → socket released →
+within **3 s** all three were `live` again, **with no reload and no navigation**. Eye evidence in
+the same run: the badge visibly read the red **"Stale — reconnecting"** during the outage and green
+**"Live"** afterwards. `tests/phase8/realtime-channel-sharing.test.ts` case 6 now holds that path.
+**A TRAP THAT COST THIS SESSION AN HOUR AND WILL COST THE NEXT ONE THE SAME — a screen measured
+through a HIDDEN browser tab lies.** Chrome defers React hydration in a background tab: the Live
+Operations panel read "Connecting" and its channels were never subscribed for **97 seconds**
+(the probe's own timestamps jump 47,322 ms → 97,322 ms, Chrome's intensive throttling), and the
+moment the tab came to the front it hydrated and the badge read **Live**. Anything read out of
+`javascript_tool` on a tab that is not in front is worthless. Take the screenshot FIRST; it brings
+the tab forward, and then read.
+**What was verified by eye and by whom:** the author's own session — badge **Live** on a full load
+and after navigation, `ops:live` serving two panels from one join, six topics `joined` with 0 stuck.
+That is a measurement, not an independent one: an auditor with no browser session cannot reproduce
+it, and it should not be quoted as if he could.
+**Not measured, and it is not measurable without breaking his order:** an end-to-end "a real
+company event lights the page" needs a write into the holding's database — *"TEK BİR HARF DAHİ
+ŞİRKETİN VERİ TABANINA GİRMESİN"* — so it was not attempted.
 
 
 **2026-08-16/17 — the holding moved to the workstation, and it is measured, not assumed.** He

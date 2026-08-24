@@ -56,6 +56,18 @@ class FakeChannel {
     this.reply?.("SUBSCRIBED");
   }
 
+  /** The socket dies under a joined channel — a network drop, a server restart. */
+  drop(): void {
+    this.state = "closed";
+    this.reply?.("CLOSED");
+  }
+
+  /** realtime-js rejoins on its own and the server confirms again. */
+  rejoin(): void {
+    this.state = "joined";
+    this.reply?.("SUBSCRIBED");
+  }
+
   /** A broadcast arrives on the topic. */
   deliver(payload: unknown): void {
     for (const handler of this.handlers) handler({ payload });
@@ -197,6 +209,32 @@ describe("subscribeDxb — one join per topic, shared by every panel", () => {
     // The join is never confirmed — the surface must still say what it knows.
     vi.advanceTimersByTime(10_000);
     expect(seen).toEqual(["connecting", "stale"]);
+  });
+
+  it("says `stale` when the socket dies and comes back to `live` on its own", async () => {
+    // THE GAP THE AUDIT OF 2026-08-24 NAMED: "on saniyeden uzun suren bir
+    // kesintiden sonra sistemin kendiliginden yeniden Live olması ayrıca
+    // kanıtlanmamış" — only the permanent "Connecting" had been proved
+    // impossible. A surface that goes stale and stays stale until the CEO
+    // reloads is the same law broken from the other side.
+    const client = install();
+    const seen: Array<DxbChannelState["status"]> = [];
+    subscribeDxb("ops:live", () => {}, (s) => seen.push(s.status));
+    await settle();
+    const channel = client.channels.get("dxb:ops:live");
+
+    channel?.ack();
+    expect(seen.at(-1)).toBe("live");
+
+    // The socket dies. The panel must say what it knows, not sit on a lie.
+    channel?.drop();
+    expect(seen.at(-1)).toBe("stale");
+
+    // It comes back by itself — no reload, no navigation, no second subscribe.
+    channel?.rejoin();
+    expect(seen.at(-1)).toBe("live");
+    expect(channel?.subscribeCalls, "recovery must not open a second join").toBe(1);
+    expect(seen).toEqual(["connecting", "live", "stale", "live"]);
   });
 
   it("keeps one registry when the module's own map is not shared", async () => {
