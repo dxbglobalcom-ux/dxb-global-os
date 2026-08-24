@@ -41,6 +41,12 @@ const results = {};
 
 const record = (id, reached, detail) => { results[id] = { reached, detail }; };
 
+// Who is asking. The wall's first layer is an operating-system identity, so the
+// drill has to be able to say which one fired each attempt.
+record("identity", true,
+  `uid=${process.getuid()} gid=${process.getgid()} groups=${process.getgroups().join(",")}`
+  + ` sandbox=${process.env.DXB_CONSTRUCTION_SANDBOX === "1" ? "yes" : "no"}`);
+
 // ------------------------------------------------------------------ TCP doors
 function reachable(host, port, ms = 3000) {
   return new Promise((resolve) => {
@@ -79,8 +85,19 @@ async function anySpellingReaches(port) {
 
 // --------------------------------------------------------------- the socket
 {
+  // Whether the inode is visible is not the question — whether this identity can
+  // TALK to it is. The construction identity can see the socket and is refused by
+  // it; inside the sandbox the socket is not there at all.
+  const socket = await new Promise((resolve) => {
+    let done = false;
+    const s = tcpConnect({ path: "/var/run/docker.sock" });
+    const end = (v, why) => { if (done) return; done = true; try { s.destroy(); } catch { /* gone */ } resolve({ v, why }); };
+    const t2 = setTimeout(() => end(false, "timed out"), 3000);
+    s.on("connect", () => { clearTimeout(t2); end(true, "connected"); });
+    s.on("error", (e) => { clearTimeout(t2); end(false, e.code || e.message); });
+  });
   let stat = null;
-  try { stat = statSync("/var/run/docker.sock"); } catch (e) { stat = e.code; }
+  try { statSync("/var/run/docker.sock"); stat = "visible"; } catch (e) { stat = e.code; }
   const dockerPs = await new Promise((resolve) => {
     execFile("docker", ["ps", "--format", "{{.Names}}"], { timeout: 8000 }, (err, out) =>
       resolve(err ? { ok: false, why: String(err.message).split("\n")[0] } : { ok: true, why: `${out.trim().split("\n").length} containers` }));
@@ -89,7 +106,7 @@ async function anySpellingReaches(port) {
     execFile("docker", ["exec", "-i", "supabase_db_DxB_Global_OS", "psql", "-U", "supabase_admin", "-d", "postgres", "-qtA", "-c", "select current_user"],
       { timeout: 12000 }, (err, out) => resolve(err ? { ok: false, why: String(err.message).split("\n")[0] } : { ok: true, why: out.trim() }));
   });
-  record("docker-socket", typeof stat === "object", typeof stat === "object" ? "present" : String(stat));
+  record("docker-socket", socket.v, socket.v ? "connected" : `${socket.why} (inode: ${stat})`);
   record("docker-ps", dockerPs.ok, dockerPs.why);
   record("docker-exec-company", exec.ok, exec.why);
 }

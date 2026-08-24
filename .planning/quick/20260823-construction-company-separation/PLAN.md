@@ -303,39 +303,44 @@ Each is either a different row or a thing that cannot be walled without ending t
 
 ---
 
-#### AS BUILT — 2026-08-24, and what differs from the four layers below
+#### AS BUILT — 2026-08-24, and it is now BOTH walls
 
 He approved this block — *"onaylıyorum"*, then *"önce bis-block3 yap ilk onayladığımı"* — and it was
-built the same day. Evidence: `EVIDENCE.md` §Block 3-bis. Verdict of its own drill:
-`pnpm b36:prove-wall` → **`WALL_IS_ONE_WAY`**. **Three deviations from the shape below, each named
-here rather than quietly delivered:**
+built the same day. It was first delivered without the two layers that need root, because `sudo` on
+this machine asks for a password at a terminal and no session can type one; **he then gave the
+password himself** and told the author to finish it. Both layers now stand. Evidence:
+`EVIDENCE.md` §Block 3-bis. Verdict of its own drill: `pnpm b36:prove-wall` → **`WALL_IS_ONE_WAY`**.
 
-1. **There is no new operating-system user `dxbbuild`.** Creating a unix account needs `sudo`, and
-   `sudo` on this machine asks for a password at a terminal — measured: `sudo -n true` →
-   *"interactive authentication is required"*. No session can type it. What was built instead is the
-   second half of the auditor's own wording (*"a separate OS identity **or sandbox**"*): a
-   `bubblewrap` sandbox with its own mount, network, PID, IPC and UTS namespaces, an empty `HOME`,
-   and no Docker socket bound in. The measured effect is the one the identity was for — from inside,
-   every credential file, the socket, the container and both company ports are refused.
-2. **There is no `nftables` rule**, for the same reason, and the sandbox does not need one: it has
-   **no network at all**. A filter rule would have been a wall with named holes; an empty network
-   namespace is the opposite — nothing exists until it is carried in, and the seven ports that are
-   carried in are listed in `scripts/construction/run.sh` where they can be read.
-3. **`dxb_reader` was renamed, not dropped and rebuilt.** The account is gone from the company's
-   engine either way; the rename carries the whole audited privilege set across on the role's OID
-   and re-issues **not one GRANT**. Re-issuing that privilege set is the single act that already
-   broke the holding for eleven minutes on this row.
+**What actually runs, and where it lives.** The wall's definition is **not in the repository**. It
+is `/usr/local/sbin/dxb-construction-sandbox`, owned by **root**, mode 0755 — the construction
+holds write access to the repository (it has to build) and therefore must not hold write access to
+the thing that confines it. `scripts/construction/sandbox.sh` is its reviewable source,
+`scripts/construction/install-wall.sh` installs it, and a test fails if the two ever drift apart or
+if the installed copy stops being root-owned. `scripts/construction/run.sh` is three lines: it calls
+the installed program through one `sudoers` entry and carries no wall definition of its own.
 
-**A fourth thing he should know, and it is a limit, not a deviation:** two test files cannot run
-inside the sandbox, because one enters the construction container and the other reads this machine's
-own process tree. They are named in `scripts/construction/battery.sh`, run on the company's side, and
-printed as their own half on every run. Neither of them touches the holding's data.
+**The one deviation that remains, and it is deliberate:** `dxb_reader` was **renamed** to
+`dxb_gateway` rather than dropped and rebuilt. The account is gone from the company's engine either
+way; the rename carries the whole audited privilege set across on the role's OID and re-issues **not
+one GRANT**. Re-issuing that privilege set is the single act that already broke the holding for
+eleven minutes on this row.
 
-**Still available, and it needs one thing only he can give — his password, once.** With it the
-separate OS identity and the firewall rule can be added on top of what now stands. They would not
-change the answer the drill prints today; they would make it true a second, independent way.
+**A limit, not a deviation:** two test files cannot run inside the sandbox, because one enters the
+construction container and the other reads this machine's own process tree. They are named in
+`scripts/construction/battery.sh`, run on the company's side, and printed as their own half on every
+run. Neither touches the holding's data.
+
+**And one thing that got better than the plan promised.** The third item named as outside the fixed
+question — poisoning the repository and waiting for a human to run it — is now **partly closed**
+rather than merely named: `.git` is bound **read-only** inside the sandbox, so the construction
+cannot rewrite the holding's history, and the wall's own definition is root-owned, so it cannot
+widen the room it is standing in. What remains open is the working tree, which the construction must
+be able to write in order to build at all.
 
 #### The wall — four layers, and the first one is the operating system
+
+*(This is the shape he approved. What was actually built is above; read them together — the layers
+are the same four, and the section above says exactly where each one ended up.)*
 
 **Layer 1 — the construction runtime gets its own operating-system identity.**
 A new unix user **`dxbbuild`**: not in `docker`, not in `sudo`, no password. Measured today, this

@@ -152,7 +152,13 @@ const who = await client.query("SELECT current_user, current_setting('transactio
 mkdirSync(dirname(SOCKET), { recursive: true });
 if (existsSync(SOCKET)) unlinkSync(SOCKET);
 server.listen(SOCKET, () => {
-  chmodSync(SOCKET, 0o660);
+  // 0666 on the socket, and the DIRECTORY is the gate. The socket lives inside
+  // /run/user/1000/dxb, which is the owner's own runtime directory (mode 700),
+  // so nothing on this machine can reach the path — except the construction
+  // sandbox, into which root binds this one file by name. Inside that sandbox
+  // the payload runs as `dxbbuild`, which is in none of the owner's groups, so
+  // 0660 would refuse the only caller the door exists for.
+  chmodSync(SOCKET, 0o666);
   console.error(`[gateway] listening on ${SOCKET}`);
   console.error(`[gateway] connected as ${who.rows[0].current_user}, transaction_read_only=${who.rows[0].ro}`);
   console.error(`[gateway] frozen catalogue: ${CATALOGUE.size} named questions`);

@@ -52,6 +52,12 @@ describe("B36 · Block 3-bis — can the construction runtime reach the holding?
     const p = probe();
     const detail = (k: string) => `${k}: ${p[k]?.detail ?? "(not measured)"}`;
 
+    // --- and it is the CONSTRUCTION IDENTITY asking, not the author ----------
+    // uid 997 is `dxbbuild`: not in `docker`, not in `sudo`, shell `nologin`,
+    // and it cannot even enter /home/dxb from outside this sandbox.
+    expect(p["identity"]?.detail, detail("identity")).toMatch(/uid=997\b/);
+    expect(p["identity"]?.detail, detail("identity")).toContain("sandbox=yes");
+
     // --- the routes that must be closed --------------------------------------
     expect(p["tcp-company-db"]?.reached, detail("tcp-company-db")).toBe(false);
     expect(p["tcp-company-http"]?.reached, detail("tcp-company-http")).toBe(false);

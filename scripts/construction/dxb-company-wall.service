@@ -1,0 +1,17 @@
+# B36 · Block 3-bis — load the company wall at boot.
+# The construction identity (uid 997) is refused at the kernel on its way to the
+# holding's database and HTTP gateway. Independent of the sandbox, which already
+# has no network at all.
+[Unit]
+Description=DXB — refuse the construction identity a route to the holding
+After=nftables.service network-pre.target
+Wants=network-pre.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/nft -f /usr/local/share/dxb-company-wall.nft
+ExecStop=/usr/sbin/nft delete table inet dxb_wall
+
+[Install]
+WantedBy=multi-user.target

@@ -21,6 +21,7 @@
  * Usage:  pnpm b36:prove-wall
  */
 import { spawnSync } from "node:child_process";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { classesFor } from "./window-classes.mjs";
@@ -54,9 +55,15 @@ function fingerprint() {
 }
 
 function probe(where) {
+  const PROBE = join(REPO, "scripts/b36/wall-probe.mjs");
   const r = where === "inside"
     ? sh("bash", [join(REPO, "scripts/construction/run.sh"), "node", "scripts/b36/wall-probe.mjs"])
-    : sh("node", [join(REPO, "scripts/b36/wall-probe.mjs")]);
+    : where === "identity"
+      // The construction identity, OUTSIDE the sandbox. This is the second wall
+      // on its own: no namespace, no bwrap — just the operating system and the
+      // kernel's own packet filter.
+      ? sh("sudo", ["-n", "-u", "dxbbuild", "node", PROBE])
+      : sh("node", [PROBE]);
   const text = (r.stdout || "").trim();
   const start = text.indexOf("{");
   if (start < 0) throw new Error(`the ${where} probe printed nothing usable:\n${text}\n${r.stderr}`);
@@ -89,6 +96,23 @@ const before = fingerprint();
 // ---------------------------------------------------------------- the account
 const readerGone = companySql(`SELECT count(*) FROM pg_roles WHERE rolname = 'dxb_reader';`) === "0";
 const gatewayRole = companySql(`SELECT coalesce(string_agg(rolname, ','), '(none)') FROM pg_roles WHERE rolname = 'dxb_gateway';`);
+// ------------------------------------------------------ the wall's own file
+// Measured HERE, on the host, because inside the sandbox a user namespace maps
+// the real root to `nobody` and uid 0 cannot be seen at all.
+{
+  const WALL = "/usr/local/sbin/dxb-construction-sandbox";
+  const st = existsSync(WALL) ? statSync(WALL) : null;
+  const sameAsSource = st
+    && readFileSync(WALL, "utf8") === readFileSync(join(REPO, "scripts/construction/sandbox.sh"), "utf8");
+  line("  THE WALL'S OWN FILE — the construction may not rewrite what confines it");
+  line(`    ${WALL}`);
+  line(`    owner uid                                            ${st ? st.uid : "(not installed)"}  (must be 0)`);
+  line(`    writable by anyone but its owner                     ${st ? ((st.mode & 0o022) ? "YES" : "no") : "-"}`);
+  line(`    identical to scripts/construction/sandbox.sh         ${sameAsSource ? "yes" : "NO — they have drifted"}`);
+  if (!st || st.uid !== 0 || (st.mode & 0o022) || !sameAsSource) leaks++;
+  line();
+}
+
 line("  THE ACCOUNT THAT WAS WITHDRAWN");
 line(`    dxb_reader on the company engine                     ${readerGone ? "gone" : "STILL THERE"}`);
 line(`    what holds the window now                            ${gatewayRole}, on the company's side only`);
@@ -128,6 +152,11 @@ for (const [id, what, wantInside] of MATRIX) {
   const got = inside[id]?.reached;
   say(got === wantInside ? "ok" : "leak", what, inside[id]?.detail ?? "(not measured)");
 }
+line(`    identity that fired them: ${inside["identity"]?.detail ?? "(not measured)"}`);
+if (!/uid=997\b/.test(inside["identity"]?.detail ?? "")) {
+  leaks++;
+  line("    LEAK    the sandbox did not run as the construction identity (uid 997).");
+}
 line();
 line("  AND THE ONE DOOR THAT IS SUPPOSED TO WORK, from inside:");
 for (const [id, what] of MUST_WORK) {
@@ -136,6 +165,36 @@ for (const [id, what] of MUST_WORK) {
   line(`    ${got ? "works   " : "BROKEN  "} ${what.padEnd(52)} ${inside[id]?.detail ?? "(not measured)"}`);
 }
 line();
+
+// ---------------------------------------------------------- the second wall
+//
+// The sandbox has no network at all, so the packet filter below should never
+// fire. It is here for the case the sandbox is not used: the construction
+// identity, on the bare machine, with nothing between it and the holding but the
+// operating system.
+line("  THE SECOND WALL — the construction identity `dxbbuild`, OUTSIDE the sandbox,");
+line("  with no namespace of any kind between it and the holding:");
+const identity = probe("identity");
+const SECOND = [
+  ["identity", "who is asking", null],
+  ["tcp-company-db", "the company's engine, every spelling", false],
+  ["tcp-company-http", "the company's HTTP gateway, every spelling", false],
+  ["docker-socket", "the Docker socket, talked to and not merely seen", false],
+  ["docker-ps", "the Docker command", false],
+  ["credential-files", "the credential files and the service environments", false],
+  ["company-login", "a real login to the holding", false],
+  ["tcp-construction-db", "its OWN engine — this one MUST work", true],
+];
+for (const [id, what, want] of SECOND) {
+  const got = identity[id]?.reached;
+  if (want !== null && got !== want) { leaks++; }
+  const mark = want === null ? "        " : (got === want ? (want ? "works   " : "refused ") : "LEAK    ");
+  line(`    ${mark} ${what.padEnd(52)} ${identity[id]?.detail ?? "(not measured)"}`);
+}
+const nft = sh("sudo", ["-n", "nft", "list", "table", "inet", "dxb_wall"]);
+const counter = (nft.stdout || "").match(/counter packets (\d+) bytes (\d+)/);
+line(`    the kernel's own count of refusals so far            ${counter ? `${counter[1]} packets, ${counter[2]} bytes` : "(the table is not loaded — LEAK)"}`);
+if (!counter) leaks++;
 
 // ------------------------------------------------------- the gate fails closed
 line("  THE GOVERNANCE GATE, from inside the sandbox:");

@@ -1459,3 +1459,90 @@ bare host is now a red test, not a quiet one.
 | `pnpm typecheck` | `tsc --build`, exit 0 |
 | The superseded drill | `scripts/b36/prove-window.mjs` **deleted**, its command removed from `package.json`, and a test fails if either comes back — two drills answering two versions of one question is how three audits read two different answers |
 | The class sweep | Extracted to `scripts/b36/window-classes.mjs` so the seal and its proof cannot drift apart, and asked of `dxb_gateway` by `prove-wall` |
+
+### The second wall — finished the same day, with his password
+
+The first delivery of this block stopped short of two layers because `sudo` on this machine asks for
+a password at a terminal (`sudo -n true` → *"interactive authentication is required"*) and no session
+can type one. He gave the password himself and told the author to finish it. Both layers now stand,
+and the drill measures them from the identity itself.
+
+**The identity.** `dxbbuild` — uid **997**, its own group, **not** in `docker`, **not** in `sudo`,
+shell `nologin`, and no home. It holds the repository through an ACL (access control list — a
+per-user permission entry) and **nothing else on this machine**:
+
+```
+id dxbbuild                       uid=997(dxbbuild) gid=973(dxbbuild) groups=973(dxbbuild)
+sudo -u dxbbuild test -r ~/.config/dxb/company-gateway.env    cannot read the gateway credential
+sudo -u dxbbuild ls /home/dxb                                 cannot even enter /home/dxb
+getfacl "DxB Global OS"           user:dxbbuild:rwx · default:user:dxbbuild:rwx · default:user:dxb:rwx
+```
+
+It cannot reach the repository from outside the sandbox at all — root performs the mount, and only
+then is the payload dropped to that identity with `setpriv --clear-groups`, so it carries uid 997,
+gid 973 and no supplementary group. The drill prints the identity that fired every attempt:
+`identity that fired them: uid=997 gid=973 groups=973 sandbox=yes`.
+
+**The wall's definition is root-owned.** A wall the construction can rewrite is a suggestion:
+
+```
+/usr/local/sbin/dxb-construction-sandbox   root:root 0755   ← what actually runs
+scripts/construction/sandbox.sh                             ← its reviewable source
+scripts/construction/install-wall.sh                        ← what puts it in place
+scripts/construction/run.sh                                 ← three lines; calls the installed program
+/etc/sudoers.d/dxb-construction-sandbox    parsed OK        ← the one entry that opens it
+```
+
+`tests/b36/company-is-read-only.test.ts` (5) fails if the installed copy is missing, stops being
+owned by root, becomes writable by anyone else, or drifts from the repository's source — and if the
+thin door ever grows a wall definition of its own.
+
+**The packet filter.** `nftables` (the kernel's own firewall), loaded at boot by
+`dxb-company-wall.service`:
+
+```
+table inet dxb_wall {
+  chain output {
+    type filter hook output priority filter; policy accept;
+    meta skuid 997 tcp dport { 54321, 54322 } counter reject with tcp reset
+  }
+}
+```
+
+Fired for real, from that identity, **with no sandbox of any kind between it and the holding**:
+
+```
+as dxb (the author)            reaches the company        ← expected; it is his own hand
+as dxbbuild -> 54322           REFUSED by the kernel
+as dxbbuild -> 54321           REFUSED by the kernel
+as dxbbuild -> 54422 (its own) open, as it should be
+nft counter                    42 packets, 2520 bytes rejected
+```
+
+The drill's third column measures exactly this — the same probe, same identity, **no namespace**:
+
+```
+THE SECOND WALL — the construction identity `dxbbuild`, OUTSIDE the sandbox
+  who is asking                                     uid=997 gid=973 groups=973 sandbox=no
+  refused  the company's engine, every spelling     every spelling refused
+  refused  the company's HTTP gateway               every spelling refused
+  refused  the Docker socket, talked to not seen    EACCES (inode: visible)
+  refused  the Docker command                       Command failed
+  refused  the credential files                     none readable
+  refused  a real login to the holding              ENOENT … company-gateway.env
+  works    its OWN engine — this one MUST work      connected
+  the kernel's own count of refusals so far         42 packets, 2520 bytes
+```
+
+Note the Docker line: the socket's inode is **visible** to that identity and **talking to it is
+refused** (`EACCES`). The drill was changed to measure the socket by connecting to it rather than by
+stating it, because "the file is there" and "I can use it" are not the same measurement.
+
+**A trap this block paid for, written down so it is not paid twice.** When the sandbox began running
+as `dxbbuild`, the port bridge broke in the most misleading way available: the bridge directory was
+root-owned, so the forwarders — now running as the build identity — could not create their sockets,
+while the listeners *inside* the sandbox still accepted every TCP handshake. `/dev/tcp` tests passed.
+PostgreSQL answered `Connection terminated unexpectedly`. **A wall that looks like a working bridge
+is worse than one that is plainly shut.** The bridge now has two rooms: root's, holding the inner
+script and the hosts file so the payload cannot replace them, and the identity's, holding the
+sockets.

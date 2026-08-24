@@ -87,6 +87,16 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
     () => {
       const out = runNode([join(REPO, "scripts/b36/prove-wall.mjs")]);
 
+      // The wall's own file, measured where uid 0 is visible.
+      expect(out, `the drill stopped checking what confines the construction:\n${out}`)
+        .toContain("THE WALL'S OWN FILE");
+      expect(out, `the installed wall is not owned by root:\n${out}`)
+        .toMatch(/owner uid\s+0\s+\(must be 0\)/);
+      expect(out, `the installed wall is writable by someone other than root:\n${out}`)
+        .toMatch(/writable by anyone but its owner\s+no/);
+      expect(out, `the installed wall and its source have drifted apart:\n${out}`)
+        .toMatch(/identical to scripts\/construction\/sandbox\.sh\s+yes/);
+
       // The account is gone, not merely restricted.
       expect(out, `the drill did not run:\n${out}`).toContain("THE ACCOUNT THAT WAS WITHDRAWN");
       expect(out, `dxb_reader is back on the company engine:\n${out}`)
@@ -124,6 +134,23 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
         .toMatch(/with the gateway running\s+exit 0/);
       expect(out, `the governance gate found another way to read the holding:\n${out}`)
         .toMatch(/with the gateway stopped\s+exit 1/);
+
+      // THE SECOND WALL — the construction identity on the bare machine, with no
+      // namespace between it and the holding, refused by the kernel itself.
+      expect(out, `the drill stopped measuring the second wall:\n${out}`).toContain("THE SECOND WALL");
+      for (const shape of [
+        /refused\s+the company's engine, every spelling\s+every spelling refused/,
+        /refused\s+the company's HTTP gateway, every spelling\s+every spelling refused/,
+        /refused\s+the Docker socket, talked to and not merely seen\s+EACCES/,
+        /refused\s+the credential files and the service environments\s+none readable/,
+        /works\s+its OWN engine — this one MUST work/,
+      ]) {
+        expect(out, `the second wall is open:\n${out}`).toMatch(shape);
+      }
+      expect(out, `the packet filter is not loaded:\n${out}`)
+        .toMatch(/the kernel's own count of refusals so far\s+\d+ packets/);
+      expect(out, `the sandbox did not run as the construction identity:\n${out}`)
+        .toMatch(/identity that fired them: uid=997\b/);
 
       expect(out, `the drill printed a leak:\n${out}`).not.toContain("WALL_LEAKS");
       expect(out).toContain("WALL_IS_ONE_WAY");

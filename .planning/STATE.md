@@ -109,17 +109,33 @@ re-issued**, its credential now outside the repository at `~/.config/dxb/`; a re
 company's side answering a **catalogue of named questions it freezes at startup**, over a unix
 socket, with no SQL from the caller; and `ledger-truth.mjs` stripped of both `docker exec` branches
 — gateway up `exit 0`, gateway stopped `exit 1`. **All 9 privilege classes are zero.**
-**THE BATTERY NOW RUNS INSIDE THE WALL** — `pnpm construction:battery` → **`BATTERY_GREEN`**:
-sandboxed **106 files / 768 passed / 15 skipped / exit 0**, plus a named host half of **2 files / 11
-tests** that must enter a container or read this machine's process tree, printed on every run so
-nothing leaves the wall quietly. `verify:ledger` OK · `SCHEMA_PARITY` · `I18N PURITY: PASS` ·
-gitleaks 740 commits no leaks · `typecheck` exit 0.
-**THREE DEVIATIONS, NAMED AND REPORTED TO HIM:** no new operating-system user and no firewall rule
-— `sudo -n true` answers *"interactive authentication is required"* and no session can type his
-password, so the auditor's own alternative was built (a sandbox with no network is default-deny,
-where a filter rule would have been a wall with named holes); and `dxb_reader` was renamed rather
-than dropped and rebuilt. **Both can still be added on top with his password, once; they would not
-change today's answer, only make it true a second way.**
+**AND THE SAME DAY HE GAVE HIS PASSWORD AND THE TWO ROOT LAYERS WERE FINISHED — the wall is
+doubled.** **(a)** The construction runs as its own operating-system identity `dxbbuild`, uid **997**,
+own group, **not in `docker`, not in `sudo`**, shell `nologin`, no home; it holds the repository
+through an access list and **nothing else on this machine**. Root performs the mounts and only then
+drops the payload with `setpriv --clear-groups` — the drill prints `identity that fired them:
+uid=997 gid=973 groups=973 sandbox=yes`. **(b)** The kernel refuses that identity a route to the
+holding: `nftables` table `dxb_wall`, loaded at boot by `dxb-company-wall.service` (`enabled`),
+`meta skuid 997 tcp dport { 54321, 54322 } reject`. Fired with **no sandbox at all** between it and
+the company: 54322 refused, 54321 refused, its own engine open, kernel counter **42 packets /
+2,520 bytes**. **(c)** The wall's definition is **root-owned** —
+`/usr/local/sbin/dxb-construction-sandbox` (`root:root 0755`), source
+`scripts/construction/sandbox.sh`, one `sudoers` entry, and `run.sh` reduced to three lines; the
+drill measures owner uid **0**, not writable by anyone else, **identical** to its source, and a test
+fails on drift. **(d)** `.git` is bound **read-only** inside, so the construction cannot rewrite the
+holding's history.
+**THE BATTERY RUNS INSIDE THE WALL, AS THAT IDENTITY** — `pnpm construction:battery` →
+**`BATTERY_GREEN`**: sandboxed **106 files / 769 passed / 15 skipped / exit 0**, plus a named host
+half of **2 files / 11 tests** that must enter a container or read this machine's process tree,
+printed on every run. `verify:ledger` OK · `SCHEMA_PARITY` · `I18N PURITY: PASS` · gitleaks no leaks
+· `typecheck` exit 0 · three resident services active, 0 restarts.
+**ONE DEVIATION REMAINS, deliberate:** `dxb_reader` was renamed rather than dropped and rebuilt —
+the account is gone either way, and the rename carries the audited privilege set on the role's OID
+without re-issuing one GRANT, the act that already broke the holding for eleven minutes here.
+**A TRAP PAID FOR:** when the sandbox first ran as the new identity, the bridge directory was
+root-owned, the forwarders could not create their sockets, every TCP handshake inside still
+succeeded, and PostgreSQL answered *"Connection terminated unexpectedly"*. **A wall that looks like
+a working bridge is worse than one that is plainly shut.**
 **LAW B: built is not accepted — the block waits on his eye.** <!-- OPEN: B36 -->
 **The block also broke the company and put it back**: its first version gave `anon` the right to
 call all 85 control functions, its own blast-radius photograph caught it, and Block 0's dated dump

@@ -1,0 +1,22 @@
+#!/usr/sbin/nft -f
+# B36 · Block 3-bis — the second, independent wall.
+#
+# The construction runs inside a sandbox that has no network at all, so this rule
+# should never fire. It exists for the case the sandbox is not used: anything
+# running as the construction identity (uid 997, dxbbuild) is refused at the
+# kernel, on its way out, to the company's database and to the company's HTTP
+# gateway. The construction's own engine (54421/54422) is untouched.
+#
+# Loaded at boot by dxb-company-wall.service.
+
+table inet dxb_wall
+delete table inet dxb_wall
+
+table inet dxb_wall {
+  chain output {
+    type filter hook output priority filter; policy accept;
+
+    meta skuid 997 tcp dport { 54321, 54322 } counter reject with tcp reset \
+      comment "the construction identity may not reach the holding"
+  }
+}

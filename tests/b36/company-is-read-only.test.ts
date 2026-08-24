@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -168,11 +168,44 @@ describe("B36 · Block 3 — the one-way window", () => {
 
     // The sandbox is default-deny: the company's two doors are not in the list,
     // and there is no network to carry them.
-    const door = readFileSync(join(REPO, "scripts/construction/run.sh"), "utf8");
-    const allow = door.slice(door.indexOf("ALLOW=("), door.indexOf(")", door.indexOf("ALLOW=(")));
+    const wall = readFileSync(join(REPO, "scripts/construction/sandbox.sh"), "utf8");
+    const allow = wall.slice(wall.indexOf("ALLOW=("), wall.indexOf(")", wall.indexOf("ALLOW=(")));
     expect(allow, "the company's database port is in the construction's allow list").not.toContain("54322");
     expect(allow, "the company's HTTP gateway is in the construction's allow list").not.toContain("54321");
-    expect(door, "the sandbox stopped taking its own network namespace").toContain("--unshare-net");
-    expect(door, "the sandbox stopped hiding the other processes on this machine").toContain("--unshare-pid");
+    expect(wall, "the sandbox stopped taking its own network namespace").toContain("--unshare-net");
+    expect(wall, "the sandbox stopped hiding the other processes on this machine").toContain("--unshare-pid");
+    expect(wall, "the sandbox stopped dropping to the construction identity").toContain("setpriv --reuid");
+    expect(wall, "the sandbox stopped keeping git out of the construction's reach")
+      .toContain('--ro-bind "$REPO/.git"');
+  });
+
+  it("(5) the wall that runs is ROOT-OWNED, and the repository's copy has not drifted from it", () => {
+    // A wall the construction can rewrite is a suggestion. The program that
+    // actually runs lives outside the repository and belongs to root; this file
+    // is its reviewable source, and the two must be identical.
+    const INSTALLED = "/usr/local/sbin/dxb-construction-sandbox";
+    expect(existsSync(INSTALLED),
+      `the wall is not installed — run: bash scripts/construction/install-wall.sh`).toBe(true);
+
+    // Inside the sandbox this test cannot see uid 0: the user namespace maps the
+    // real root to `nobody` (65534). What it CAN see is the thing that matters —
+    // the program is not owned by whoever is running it, and nobody but its owner
+    // may write it. That the owner is really root is measured on the host side,
+    // by prove-wall.mjs, where uid 0 is uid 0.
+    const st = statSync(INSTALLED);
+    expect(st.uid, `${INSTALLED} is owned by the identity that runs inside it`)
+      .not.toBe(process.getuid?.());
+    expect(st.mode & 0o022, `${INSTALLED} is writable by someone other than its owner`).toBe(0);
+
+    expect(readFileSync(INSTALLED, "utf8"),
+      "the installed wall and scripts/construction/sandbox.sh have drifted apart — "
+      + "re-install it with scripts/construction/install-wall.sh, or explain the difference")
+      .toBe(readFileSync(join(REPO, "scripts/construction/sandbox.sh"), "utf8"));
+
+    // And the door in the repository is thin on purpose: it must not carry a
+    // second definition of the wall beside the root-owned one.
+    const door = readFileSync(join(REPO, "scripts/construction/run.sh"), "utf8");
+    expect(door, "the door stopped calling the installed wall").toContain(INSTALLED);
+    expect(door, "the door grew a wall definition of its own").not.toContain("bwrap");
   });
 });
