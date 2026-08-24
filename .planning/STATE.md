@@ -28,7 +28,10 @@ not a mirror · the residue is moved, not deleted.** He then approved the archit
 measurement forced — *"tersini de onaylıyorum, blok 0 ile başla"*: **the company does NOT move; the
 construction moves out**, because his live surfaces depend on Supabase Realtime (ten components),
 his login on Supabase Auth, and the Supabase CLI pins the database name to `postgres`.
-**2026-08-24 — BLOCK 3 IS DONE, ON HIS WORD *"onaylıyorum"***, and the day started with him
+**2026-08-24 — BLOCK 3 FAILED ITS AUDIT AND WAS REBUILT THE SAME DAY.** His *"onaylıyorum"*
+was permission to BUILD, in his own correction: *"Benim ‘onaylıyorum’ sözüm yapım izniydi;
+sonuç kabulü değildi."* The line that stood here — *"BLOCK 3 IS DONE"* — is deleted by that
+(LAW A). The day started with him
 stopping the author twice: for beginning Block 3 before answering the question he had actually
 asked, and for writing his sentences into the records as standing rules without asking. Everything
 written that way was reverted in the same turn. **What he wants instead, in his own words:**
@@ -37,15 +40,48 @@ yapacağım"* — explain it in his language first, then decide and report; do n
 adjudicate. He also said, approving the residue move: *"bundan sonra TEK BİR HARF DAHİ ŞİRKETİN
 VERİ TABANINA GİRMESİN!"* **He has NOT been asked whether either sentence should become a standing
 rule, and neither has been written as one.**
-**The one-way window is open.** `dxb_reader` on the holding's engine: SELECT on `public` and
-`pgboss`, nothing else anywhere, and it cannot read `auth`. 23 hostile routes tried through it,
-23 refused, 0 rows left (`pnpm b36:prove-window` → `WINDOW_IS_ONE_WAY`). Two escapes it found and
-walled: 34 `SECURITY DEFINER` functions callable by `PUBLIC` that write to his tables, and the
-`pg_net` outbound-HTTP queue. **The block also broke the company and put it back**: its first
-version gave `anon` the right to call all 85 control functions, its own blast-radius photograph
-caught it, and Block 0's dated dump restored the exact prior state
-(`COMPANY_PRIVILEGES_RESTORED`). The correction is proved red-first
-(`pnpm b36:prove-window-preserves`: old rule 663 privileges moved, shipped rule 0).
+**The one-way window is open, and after the audit it is one-way against CLASSES and not
+examples.** `dxb_reader` on the holding's engine: SELECT on `public` and `pgboss`, nothing else
+anywhere, and it cannot read `auth`. **The audit of 2026-08-24 returned FAIL on two escapes the
+drill had never tried, and both were reproduced for real with the real role on the disposable
+construction engine:** a LARGE OBJECT (17 of the large-object functions were executable by it,
+because PostgreSQL hands them to `PUBLIC` by default — measured red, `lo_from_bytea` created oid
+29009, count 0 → 1) and a SEQUENCE (`net.http_request_queue_id_seq` carried `=rwU` to `PUBLIC` —
+measured red, `nextval` moved it 1 → 2 and the `ROLLBACK` did not put it back, which is the one
+write a rolled-back drill can never see). The auditor's sentence is the standard now: *"test yeşil,
+soru cevapsız kalmış"* — the test was green and the question was left unanswered.
+**The rebuilt seal closes classes:** every schema but `public`/`pgboss` (which took `net` away
+whole — the counter, `net.wake()`, `net.worker_restart()`, and REFERENCES/TRIGGER/MAINTAIN on two
+tables, all measured red first: the window really did VACUUM the holding's queue table); every
+sequence everywhere; every table on **seven** verbs; every SECURITY DEFINER function in every
+schema plus the large-object family and the catalogue functions that emit WAL, make replication
+slots, reset statistics, signal backends, read server files or take the holding's own advisory
+locks; and the default privileges that would have handed the window the next migration's function.
+The seal and its closing proof are written from ONE sentence in the SQL so they cannot drift.
+**Measured on the company: 47 functions walled · 1 schema closed · 1 sequence swept · 2 tables
+sealed · 4 default-privilege sets rewritten · 51 privileges changed for `dxb_reader` · 0 for any
+other role**, out of a 7,494-answer photograph — `BLAST_RADIUS_CLEAN`.
+**The proofs:** `pnpm b36:prove-window-escapes` → `ESCAPES_RED_THEN_GREEN` (red required first) ·
+`pnpm b36:prove-window construction` → **34 attempts · 34 refused · 0 escaped · 0 rows left · 8
+classes measured · 0 leaking** · `WINDOW_IS_ONE_WAY` · `pnpm b36:prove-window company` now
+**executes nothing against the holding** — it is a read-only privilege measurement, 8 classes, 0
+leaking · `pnpm b36:prove-window-preserves` → old rule 663 privileges moved, shipped rule 0.
+**The company's data did not move by one letter:** `company-state-fingerprint.mjs` before and
+after — 60 tables · 46,735 rows · `aecfcfa259c9c501` · 18 sequences `98258eb817d8e3b8` · 0 large
+objects · audit_log 29,637 / hook_violations 1,963 · `STATE_FINGERPRINT de359137ee1d7c79`,
+identical. And the seal writes its own way back before it changes anything
+(`var/b36/company-window-undo.sql`, 2,033 statements) — `pg_dump` does not carry catalogue-function
+privileges, so Block 0's dump could never have reversed it.
+**ONE ROUTE COULD NOT BE CLOSED BY A PRIVILEGE and it is board row B37:** the `NOTIFY` COMMAND has
+no privilege in PostgreSQL. The function `pg_notify()` is walled; the command is not, and it still
+commits. It writes no row, but the ops:live collector republishes anything that parses as an
+envelope, so a forged event could reach the CEO's live screen. It is measured on every drill run.
+**The block also broke the company and put it back**: its first version gave `anon` the right to
+call all 85 control functions, its own blast-radius photograph caught it, and Block 0's dated dump
+restored the exact prior state (`COMPANY_PRIVILEGES_RESTORED`).
+**Block 3 is NOT finished or accepted**: it goes back to the same adversarial audit with the same
+fixed question. **Block 4 is not started, on his order relayed with the audit** — *"Blok 4'e geçme;
+yalnız Blok 3'ü düzelt."*
 **He had the work audited by Codex Solo 5.6 TWICE the same day, and the second audit rejected the
 first answer in full** — *"7 bulgunun 0'ı bütünüyle kapandı"*. It was right on all seven. The
 critical one had **six** reproducible escapes, not three: six spellings of the company's address

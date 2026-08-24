@@ -10,14 +10,23 @@ import { describe, expect, it } from "vitest";
 // holds SELECT and nothing else, and the refusal is issued by PostgreSQL rather
 // than by our code.
 //
+// WHY THIS FILE WAS REWRITTEN. The block was audited on 2026-08-24 and FAILED.
+// The drill had fired 23 routes and refused 23, and had never tried the two that
+// worked: creating a LARGE OBJECT, and turning a SEQUENCE — the one write
+// PostgreSQL does not undo on ROLLBACK. The auditor's sentence is the standard
+// this file now holds: "test yeşil, soru cevapsız kalmış" — the test was green
+// and the question was left unanswered. So the battery no longer asks whether a
+// list of statements was refused; it asks the CATALOGUE what the role can still
+// do, class by class, and it re-opens both escapes for real before requiring
+// them to be closed.
+//
 // WHY THE LIVE HALF RUNS AGAINST THE CONSTRUCTION ENGINE AND NOT THE COMPANY.
 // tests/b36/battery-carries-no-company-key.test.ts forbids any file the battery
 // loads from carrying a connectable address for the holding, and it is right:
 // `pnpm test` must not hold the key to the CEO's database, not even a read-only
-// one. So the drill that runs here runs against the construction engine, whose
-// window is built by the same file, from the same code, with the same walls.
-// The company's own drill is `pnpm b36:prove-window` — run by hand and by
-// Block 6's `verify:separation`, exactly as `pnpm b36:prove-block1` is.
+// one. The company's own drill is `pnpm b36:prove-window`, which after the audit
+// executes NOTHING against the holding — it measures privilege out of the
+// catalogue and nothing else.
 //
 // WHAT THE STATIC HALF EXISTS FOR. On 2026-08-24 the first version of the window
 // took EXECUTE from PUBLIC on 85 SECURITY DEFINER functions and handed it back
@@ -34,6 +43,17 @@ const WINDOW_SQL = join(REPO, "scripts/b36/company-one-way-window.sql");
 const PKG = JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as {
   scripts: Record<string, string>;
 };
+
+/** execFileSync throws everything the script printed away unless it is read back
+ *  off the error — the mistake this row already made once. */
+function runNode(args: string[]): string {
+  try {
+    return execFileSync("node", args, { cwd: REPO, encoding: "utf8", stdio: "pipe" });
+  } catch (e) {
+    const err = e as { stdout?: string; stderr?: string };
+    return `${err.stdout ?? ""}\n${err.stderr ?? ""}`;
+  }
+}
 
 describe("B36 · Block 3 — the one-way window", () => {
   it("(1) the window's SQL gives each privilege back only to who already held it", () => {
@@ -54,12 +74,40 @@ describe("B36 · Block 3 — the one-way window", () => {
     expect(blanket.test(sql), "the blanket re-grant is back in the window's SQL").toBe(false);
   });
 
-  it("(2) the window's SQL refuses to succeed unless it left no write path", () => {
+  it("(2) the seal and its proof are written from ONE sentence, and it covers the audited classes", () => {
     const sql = readFileSync(WINDOW_SQL, "utf8");
-    // Asked of the catalogue over EVERY schema, not only the two it grants in.
-    expect(sql).toMatch(/the window can still WRITE to/);
-    expect(sql).toMatch(/nspname NOT IN \('pg_catalog','information_schema'\)/);
+
+    // The audit's deeper finding: a seal and a proof that had drifted apart.
+    // There is exactly one definition of "a function whose call can leave
+    // something behind", and both the sealing loop and the closing assertion
+    // interpolate it.
+    const predicate = sql.match(/c_effectful CONSTANT text := \$flt\$([\s\S]*?)\$flt\$;/);
+    expect(predicate, "c_effectful is gone — the seal and its proof can drift again").toBeTruthy();
+    expect(
+      (sql.match(/c_effectful\)/g) ?? []).length,
+      "c_effectful must be interpolated by BOTH the sealing loop and the assertion",
+    ).toBeGreaterThanOrEqual(2);
+
+    // The two escapes the audit found, by name, inside that one sentence.
+    expect(predicate![1], "the large-object family is not in the seal").toMatch(/\^lo_/);
+    expect(predicate![1], "pg_notify is not in the seal").toContain("pg_notify");
+
+    // Sequences — the write ROLLBACK does not undo — swept in every schema.
+    expect(sql).toMatch(/has_sequence_privilege\('dxb_reader'/);
+    expect(sql).toMatch(/the window can still turn a counter/);
+
+    // Seven table verbs, not four.
+    for (const verb of ["INSERT", "UPDATE", "DELETE", "TRUNCATE", "REFERENCES", "TRIGGER", "MAINTAIN"]) {
+      expect(sql, `${verb} is missing from the table seal`).toContain(`'${verb}'`);
+    }
+
+    // Every other room, and what does not exist yet.
+    expect(sql).toMatch(/the window can still stand inside/);
+    expect(sql).toMatch(/REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC/);
+
+    // And it must still be a window.
     expect(sql).toMatch(/the window is blind/);
+    expect(sql).toMatch(/nspname NOT IN \('pg_catalog','information_schema'\)/);
   });
 
   it("(3) the drills are committed and reachable as commands", () => {
@@ -67,56 +115,79 @@ describe("B36 · Block 3 — the one-way window", () => {
       "scripts/b36/install-company-window.mjs",
       "scripts/b36/prove-window.mjs",
       "scripts/b36/prove-window-preserves.mjs",
+      "scripts/b36/prove-window-escapes.mjs",
       "scripts/b36/restore-company-privileges.mjs",
     ]) {
       expect(existsSync(join(REPO, f)), `${f} is missing`).toBe(true);
     }
-    for (const s of ["b36:window", "b36:prove-window", "b36:prove-window-preserves"]) {
+    for (const s of ["b36:window", "b36:prove-window", "b36:prove-window-preserves",
+                     "b36:prove-window-escapes"]) {
       expect(PKG.scripts[s], `package.json has no "${s}" script`).toBeTruthy();
     }
   });
 
   it(
-    "(4) LIVE — connected as the window, every write route is refused by the server",
+    "(4) LIVE — the two audited escapes reproduce with the real role, then the server refuses them",
+    { timeout: 240_000 },
+    () => {
+      const out = runNode(["scripts/b36/prove-window-escapes.mjs"]);
+
+      // Red first. If the escape cannot be reproduced, the green half proves
+      // nothing — that is the whole lesson of the audit.
+      expect(out, `the escape proof did not run:\n${out}`).toContain("large object");
+      expect(out, `escape 1 did not reproduce RED — the proof is worthless:\n${out}`)
+        .toMatch(/RED 1\s+large object\s+CREATED, oid \d+/);
+      expect(out, `escape 2 did not reproduce RED — the counter did not move:\n${out}`)
+        .toMatch(/RED 2\s+counter\s+TURNED/);
+      expect(out, `the counter's move was undone by the ROLLBACK, so it proves nothing:\n${out}`)
+        .toContain("the ROLLBACK did not put it back");
+
+      // Then green, from the server and not from our code.
+      expect(out, `escape 1 is still open after the seal:\n${out}`)
+        .toMatch(/GREEN 1\s+large object\s+refused: permission denied/);
+      expect(out, `escape 2 is still open after the seal:\n${out}`)
+        .toMatch(/GREEN 2\s+counter\s+refused: permission denied/);
+      expect(out).toContain("ESCAPES_RED_THEN_GREEN");
+    },
+  );
+
+  it(
+    "(5) LIVE — every route is refused AND every class is measured zero",
     { timeout: 240_000 },
     () => {
       // Build the window on the construction engine if this environment has not
       // had one built yet: a fresh clone must be able to run the battery.
       if (!existsSync(join(REPO, "var/b36/construction-window.env"))) {
-        execFileSync("node", ["scripts/b36/install-company-window.mjs", "construction"], {
-          cwd: REPO,
-          encoding: "utf8",
-          stdio: "pipe",
-        });
+        runNode(["scripts/b36/install-company-window.mjs", "construction"]);
       }
 
-      let out = "";
-      try {
-        out = execFileSync("node", ["scripts/b36/prove-window.mjs", "construction"], {
-          cwd: REPO,
-          encoding: "utf8",
-          stdio: "pipe",
-        });
-      } catch (e) {
-        // execFileSync throws away everything the drill printed unless it is
-        // read back off the error — the mistake this row already made once.
-        const err = e as { stdout?: string; stderr?: string };
-        out = `${err.stdout ?? ""}\n${err.stderr ?? ""}`;
-      }
+      const out = runNode(["scripts/b36/prove-window.mjs", "construction"]);
 
-      expect(out, `the drill did not reach a verdict:\n${out}`).toContain("attempts");
+      expect(out, `the drill did not reach a verdict:\n${out}`).toContain("attempts fired");
       expect(out, `the drill could not tell a refusal from a dead connection:\n${out}`)
         .toContain("detector validated");
 
-      const attempts = Number(out.match(/attempts\s*:\s*(\d+)/)?.[1] ?? "0");
-      const refused = Number(out.match(/refused\s*:\s*(\d+)/)?.[1] ?? "-1");
-      const escaped = Number(out.match(/escaped\s*:\s*(\d+)/)?.[1] ?? "-1");
-      const left = Number(out.match(/rows left behind\s*:\s*(\d+)/)?.[1] ?? "-1");
+      const num = (re: RegExp) => Number(out.match(re)?.[1] ?? "-1");
+      const attempts = num(/attempts fired\s*:\s*(\d+)/);
+      const refused = num(/refused\s*:\s*(\d+)/);
+      const escaped = num(/escaped\s*:\s*(\d+)/);
+      const classes = num(/classes measured\s*:\s*(\d+)/);
+      const leaking = num(/classes leaking\s*:\s*(\d+)/);
+      const left = num(/rows left behind\s*:\s*(\d+)/);
 
-      expect(attempts, "the drill tried almost nothing").toBeGreaterThanOrEqual(20);
+      expect(attempts, "the drill tried almost nothing").toBeGreaterThanOrEqual(30);
       expect(refused, `not every route was refused:\n${out}`).toBe(attempts);
       expect(escaped, `a write route escaped:\n${out}`).toBe(0);
-      expect(left, `the drill left rows behind:\n${out}`).toBe(0);
+      expect(left, `the drill left something behind:\n${out}`).toBe(0);
+
+      // The half the audit added: the catalogue's own answer, not a list of
+      // statements somebody remembered to write.
+      expect(classes, "the class sweep is gone").toBeGreaterThanOrEqual(8);
+      expect(leaking, `a whole class is still open:\n${out}`).toBe(0);
+
+      // And the one route no privilege reaches must be named every run, so it is
+      // never quietly dropped from the record.
+      expect(out, "the NOTIFY residual is no longer reported").toContain("RESIDUAL — the NOTIFY command");
       expect(out).toContain("WINDOW_IS_ONE_WAY");
     },
   );
