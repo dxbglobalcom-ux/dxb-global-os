@@ -75,6 +75,16 @@ export default defineConfig({
     // it here wins for all of them without touching a single suite.
     env: {
       DXB_DATABASE_URL: CONSTRUCTION_DATABASE_URL,
+      // The gateway's compiled profiles are a COMMITTED company artefact, and
+      // tests/phase4/velocity.test.ts starts the REAL scheduler — whose library
+      // recompile job wrote them, from the construction database's records,
+      // into the CEO's tracked tree on every `pnpm test`. Measured 2026-08-24:
+      // 22 files dirty after each run. Same law as the database above — the
+      // construction site does not write into the company's things — so the
+      // battery compiles into var/, which is gitignored.
+      DXB_GATEWAY_PROFILE_DIR: fileURLToPath(
+        new URL("./var/construction-gateway-profiles", import.meta.url),
+      ),
     },
     // Phase-3+ integration tests share one local Postgres — parallel files
     // interfere (cross-file claims/wipes). Sequential is correct at DXB scale.

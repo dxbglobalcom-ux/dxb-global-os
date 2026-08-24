@@ -29,6 +29,7 @@ import { sql, type Kysely } from "kysely";
 import { type DB } from "@dxb/shared";
 import {
   generateProfilesFromPolicy,
+  profileDir,
   type GenerateProfilesResult,
   type LibraryLayer,
   type LibrarySubjectCaps,
@@ -160,7 +161,7 @@ export async function compileLibraryProfiles(
   overrides: { outDir?: string; generatedAt?: string } = {},
 ): Promise<CompileLibraryProfilesResult> {
   const packageRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
-  const outDir = overrides.outDir ?? join(packageRoot, "profiles");
+  const outDir = overrides.outDir ?? profileDir(packageRoot);
   mkdirSync(outDir, { recursive: true });
 
   const library = await readLibraryLayer(db);

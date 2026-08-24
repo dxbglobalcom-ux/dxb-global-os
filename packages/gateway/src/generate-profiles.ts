@@ -312,6 +312,26 @@ export async function generateProfiles(
 
 /** Production entry (07-04 calls this): reads policy/{grants,denials}.json
  *  from this package and emits packages/gateway/profiles/<dept>.mcp.json. */
+/**
+ * WHERE COMPILED PROFILES LAND.
+ *
+ * The repository's own `packages/gateway/profiles/` is a COMMITTED artefact: it
+ * is what the live gateway reads, and it belongs to the company. On 2026-08-24 a
+ * suite that starts the real scheduler (tests/phase4/velocity.test.ts) was
+ * measured recompiling those files on every battery run — from the CONSTRUCTION
+ * database's records, straight into the CEO's tracked tree. Nothing was
+ * corrupted, because the source hash matched; the timestamps moved, the working
+ * tree went dirty after every `pnpm test`, and it was the construction site
+ * writing into the company's things all the same, which is the whole of B36.
+ *
+ * DXB_GATEWAY_PROFILE_DIR moves the output somewhere disposable. vitest.config.ts
+ * sets it for the battery; production sets nothing and keeps the committed path.
+ */
+export function profileDir(packageRoot: string): string {
+  const override = process.env.DXB_GATEWAY_PROFILE_DIR;
+  return override && override.trim() !== "" ? override : join(packageRoot, "profiles");
+}
+
 export async function generateProfilesFromPolicy(
   db: Kysely<DB>,
   overrides: Partial<Pick<GenerateProfilesOptions, "outDir" | "generatedAt" | "library">> = {},
@@ -324,7 +344,7 @@ export async function generateProfilesFromPolicy(
   return generateProfiles(db, {
     denials: denials as DenialsMap,
     policy: { servers, grants },
-    outDir: overrides.outDir ?? join(packageRoot, "profiles"),
+    outDir: overrides.outDir ?? profileDir(packageRoot),
     generatedAt: overrides.generatedAt ?? new Date().toISOString(),
     library: overrides.library,
   });
