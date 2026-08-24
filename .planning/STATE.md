@@ -430,7 +430,7 @@ that reading as the next job and had not answered when the session closed.
    succeed for a refusal to mean anything — had been dialling the CEO's dashboard on the LAN, so its
    proof of its own eyesight was borrowing a security hole. It opens its own control door now.
    **STATE_FINGERPRINT de359137ee1d7c79 before and after all of it.**
-   **DONE — Block 4, the company's address is no longer a default anywhere. 2026-08-24 evening.**
+   **BUILT, NOT ACCEPTED — Block 4, the company's address is no longer a default anywhere. 2026-08-24 evening.** <!-- OPEN: B36 --> His ruling that night, and it governs every record of this block: *"denetçi onaylamadan asla 4 bitti diyemezsin. onayladıktan sonra da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."* The work is with his auditor. When the auditor passes it, the next step is NOT a report — it is a live screen he watches himself.
    **95 → 0.** Ninety-five files bound the holding's own address to `DXB_DATABASE_URL` as a fallback —
    82 suites opening with `??=`, three seeds, six operator tools, the Phase-5 exit gate in bash, and
    **one live application route** that invented a database for itself on every request. Each was inert

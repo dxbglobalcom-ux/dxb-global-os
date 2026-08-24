@@ -485,7 +485,9 @@ BUILT"* — is deleted by what happened (LAW A). The corrected plan went to Muhi
 the block was built, its auditor passed it, and he then ran the acceptance screen with his own eye
 and accepted it: `scripts/governance/ceo-approvals.json` → `b36-block3-bis-accepted-2026-08-24`.
 
-### Block 4 — Delete every fallback, and add the guard — **DONE 2026-08-24**
+### Block 4 — Delete every fallback, and add the guard — **BUILT 2026-08-24 · NOT ACCEPTED**
+
+**LAW B, and he said it again on the night it was built:** *"denetçi onaylamadan asla 4 bitti diyemezsin. onayladıktan sonra da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."* The author's work is finished; his auditor has the work now. Nothing here may be called done, closed or accepted until the auditor passes it AND he has seen it running with his own eyes.
 
 Measured before: **95** files bound the company's address to `DXB_DATABASE_URL` as a default
 (83 tests · 8 scripts · 3 seeds · 1 live route). Measured after: **0**.
