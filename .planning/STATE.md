@@ -431,10 +431,12 @@ that reading as the next job and had not answered when the session closed.
    succeed for a refusal to mean anything — had been dialling the CEO's dashboard on the LAN, so its
    proof of its own eyesight was borrowing a security hole. It opens its own control door now.
    **STATE_FINGERPRINT de359137ee1d7c79 before and after all of it.**
-   **HIS AUDITOR PASSED BLOCK 4 — 2026-08-24 night: *"Block 4 passes … Proceed to Block 5 under the
-   approved B36 plan."* IT IS STILL NOT ACCEPTED** <!-- OPEN: B36 --> — LAW B, and his own second
-   condition: *"onayladıktan sonra da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."*
-   **The live screen is built and was shown to him:** `pnpm b36:eye-check` → **http://127.0.0.1:4599/blok4**,
+   **BLOCK 4 IS ACCEPTED — 2026-08-24, and both halves of his own condition were met.**
+   <!-- CEO-OK: b36-block4-accepted-2026-08-24 --> His auditor passed it first — *"Block 4 passes … Proceed to Block 5
+   under the approved B36 plan."* — and he then ran the live screen himself and said *"göz onayı
+   tamamdır. kabul."* Registered as `b36-block4-accepted-2026-08-24`. **Row B36 stays OPEN** <!-- OPEN: B36 --> —
+   Block 4 is one block of eight and Blocks 5-7 are untouched.
+   **The live screen he accepted on:** `pnpm b36:eye-check` → **http://127.0.0.1:4599/blok4**,
    five panels that RUN while he watches — the counter over the whole repository (2,837 files scanned,
    **0** fallbacks, and it is first shown finding a planted one so a blind zero cannot pass); a real
    company seed run with no address (**exit 2**, and it names the variable); the dashboard serving him

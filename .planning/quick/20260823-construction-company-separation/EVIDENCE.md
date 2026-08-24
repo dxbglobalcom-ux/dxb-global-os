@@ -2317,7 +2317,10 @@ host 3 / 16 · `tsc` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · `WALL_IS_ONE_
 fallbacks **0** · four resident services `active`, `NRestarts=0` · 0 failed units ·
 `STATE_FINGERPRINT de359137ee1d7c79`.
 
-**What is NOT written anywhere yet, deliberately:** there is no entry in
-`scripts/governance/ceo-approvals.json` for Block 4. LAW B forbids it until he says
-the word himself, and no record in this repository may call Block 4 accepted before
-that entry exists.
+**HE ACCEPTED IT — 2026-08-24, on the screen above.** <!-- CEO-OK: b36-block4-accepted-2026-08-24 -->
+*"göz onayı tamamdır. kabul."* Registered in `scripts/governance/ceo-approvals.json`
+as `b36-block4-accepted-2026-08-24`, carrying his words, the auditor's verdict that
+preceded it, and the two rulings he attached. The paragraph that stood here — *"there
+is no entry … no record may call Block 4 accepted"* — was true for four hours and is
+deleted by his word rather than kept beside it (LAW A). **Row B36 stays open:** Block
+4 is one block of eight, and Block 5 is next.

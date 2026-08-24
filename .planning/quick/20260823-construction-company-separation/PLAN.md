@@ -485,9 +485,10 @@ BUILT"* — is deleted by what happened (LAW A). The corrected plan went to Muhi
 the block was built, its auditor passed it, and he then ran the acceptance screen with his own eye
 and accepted it: `scripts/governance/ceo-approvals.json` → `b36-block3-bis-accepted-2026-08-24`.
 
-### Block 4 — Delete every fallback, and add the guard — **BUILT 2026-08-24 · NOT ACCEPTED**
+### Block 4 — Delete every fallback, and add the guard — **ACCEPTED 2026-08-24**
 
-**LAW B, and he said it again on the night it was built:** *"denetçi onaylamadan asla 4 bitti diyemezsin. onayladıktan sonra da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."* The author's work is finished; his auditor has the work now. Nothing here may be called done, closed or accepted until the auditor passes it AND he has seen it running with his own eyes.
+<!-- CEO-OK: b36-block4-accepted-2026-08-24 -->
+**LAW B, and he set both halves before the work was judged:** *"denetçi onaylamadan asla 4 bitti diyemezsin. onayladıktan sonra da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."* His auditor passed it — *"Block 4 passes … Proceed to Block 5 under the approved B36 plan"* — and he then ran the live acceptance screen himself (`pnpm b36:eye-check` → `http://127.0.0.1:4599/blok4`, five panels, all green, the company's fingerprint identical before and after) and said *"göz onayı tamamdır. kabul."* Registered: `scripts/governance/ceo-approvals.json` → `b36-block4-accepted-2026-08-24`. The sentence that stood here — *"NOT ACCEPTED … nothing here may be called done"* — is spent and is deleted rather than kept beside the truth (LAW A).
 
 Measured before: **95** files bound the company's address to `DXB_DATABASE_URL` as a default
 (83 tests · 8 scripts · 3 seeds · 1 live route). Measured after: **0**.

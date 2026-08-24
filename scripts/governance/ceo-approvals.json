@@ -239,5 +239,12 @@
     "verbatim": "insaat motorunun kapilari hakkinda sen karar ver en uygun olanini.",
     "conditions": "The author decided; the CEO delegated it and it is his to overrule. Separately, the git-history rewrite he first ordered was countermanded in the same session and the repository was restored to its exact prior state — GitHub was never written to, and the password remains in the published history by his decision, which he paired with changing the password himself.",
     "where": ".planning/quick/20260823-construction-company-separation/EVIDENCE.md"
+  },
+  "b36-block4-accepted-2026-08-24": {
+    "date": "2026-08-24",
+    "what": "B36 Block 4 — ACCEPTED. The company's address is no longer a default anywhere: 95 files bound the holding's own address to DXB_DATABASE_URL as a fallback (83 tests, 8 scripts, 3 seeds and one LIVE application route) and the count is now 0, held by tests/b36/no-company-fallbacks.test.ts. The dashboard is started by scripts/dashboard.sh or not at all — apps/dashboard/src/instrumentation.ts stops the server with a named reason otherwise — and it listens on loopback, after being found published to the home network on *:3000 with no company address at all. His auditor passed the work first ('Block 4 passes … Proceed to Block 5 under the approved B36 plan'), and then he ran the live acceptance screen himself: pnpm b36:eye-check -> http://127.0.0.1:4599/blok4, five panels, all green, the company's fingerprint de359137ee1d7c79 identical before and after.",
+    "verbatim": "göz onayı tamamdır. kabul.",
+    "conditions": "Two rulings he attached the same night and both are closed, not to be reopened: the company's database gets NO synthetic voice call ('Do not write a synthetic voice call to the company database' — so the authenticated voice path was proven end to end on the construction engine instead, and the last inch against the holding is refused by his word, not deferred); and the root-owned process pid 11180 belongs to the open-notebook container and is left alone. His acceptance is of Block 4 only — row B36 stays open, and Block 5 (the residue moves out, moved and never deleted) begins with a dry-run report put in front of him before one row moves.",
+    "where": ".planning/quick/20260823-construction-company-separation/EVIDENCE.md"
   }
 }
