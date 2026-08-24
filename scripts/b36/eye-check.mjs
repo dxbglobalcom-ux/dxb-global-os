@@ -165,13 +165,110 @@ async function* sequence() {
   yield { step: "end" };
 }
 
+// -------------------------------------------------------- the sequence, BLOCK 4
+/**
+ * B36 · Block 4 — WHAT HIS EYE HAS TO SEE, and the auditor passed the work on
+ * 2026-08-24 before this screen was written.
+ *
+ * Block 4's claim in one sentence: no file in this repository assumes the
+ * company's database any more. Five things prove it, and every one of them is
+ * RUN here, live, while he watches:
+ *
+ *   1. the counter says zero — and it is first shown finding a planted one, so a
+ *      zero from a blind instrument cannot be mistaken for a clean house;
+ *   2. a real company tool, given no address, stops and says so instead of
+ *      guessing (a seed that INSERTs into the holding's registry);
+ *   3. the dashboard serving him right now really carries the address, and the
+ *      gate that enforces it refuses a bare environment — the same code Next
+ *      runs at startup, invoked in front of him;
+ *   4. the dashboard answers this machine and refuses the house;
+ *   5. the company's records are identical before and after all of it.
+ *
+ * Nothing here writes anywhere. Every company touch is a count or a connect.
+ */
+async function* sequence4() {
+  yield { step: "start", at: new Date().toISOString() };
+
+  yield { step: "records", state: "running" };
+  const before = await fingerprint();
+  yield { step: "records", state: "half", before };
+
+  // ---- 1. the counter, and the instrument first
+  yield { step: "counter", state: "running" };
+  const c = await sh("node", ["-e",
+    `import("${join(REPO, "scripts/b36/count-company-fallbacks.mjs")}").then(m=>{`
+    + `const r=m.scan();`
+    + `const planted=m.bindingsIn("ornek.ts",'process.env.DXB_DATABASE_URL ??= "postgresql://postgres:postgres@127.0.0.1:54322/postgres";').length;`
+    + `console.log(JSON.stringify({scanned:r.scanned,found:r.executable.length,planted,files:r.executable.map(e=>e.file+":"+e.line)}))})`]);
+  let counter = null;
+  try { counter = JSON.parse(c.out.slice(c.out.indexOf("{"))); }
+  catch { counter = { error: c.err || c.out || "okunamadı" }; }
+  yield { step: "counter", state: "done", counter };
+
+  // ---- 2. a real tool, with no address
+  yield { step: "refusal", state: "running" };
+  const seed = await sh("bash", ["-c",
+    "env -u DXB_DATABASE_URL node --experimental-strip-types db/seed/import-routing-rules.ts 2>&1 | tail -2; echo \"EXIT=${PIPESTATUS[0]}\""]);
+  const seedExit = Number((/EXIT=(\d+)/.exec(seed.out) || [])[1] ?? -1);
+  const seedSaid = seed.out.replace(/EXIT=\d+\s*$/, "").trim();
+  // The CEO's screen is 100 % Turkish (00-CEO-DIRECTIVE-LANGUAGE). The tool's own
+  // sentence is English because artefacts are English — so what travels to the
+  // page is the FACT that the refusal names the address variable and stops, not
+  // the English line itself. The line stays in the evidence file, where it belongs.
+  yield {
+    step: "refusal", state: "done", exit: seedExit,
+    namesVar: /DXB_DATABASE_URL/.test(seedSaid),
+    saidNothing: seedSaid.length === 0,
+  };
+
+  // ---- 3. the dashboard: what is serving him, and the gate itself
+  yield { step: "dashboard", state: "running" };
+  const live = await sh("bash", ["-c",
+    "P=$(ss -ltnp 2>/dev/null | grep '127.0.0.1:3000' | grep -oP 'pid=\\K[0-9]+' | head -1);"
+    + " if [ -z \"$P\" ]; then echo 'PID='; exit 0; fi;"
+    + " echo \"PID=$P\";"
+    + " tr '\\0' '\\n' < /proc/$P/environ | grep -E '^DXB_(DATABASE_URL|DASHBOARD_LAUNCHER)=' | sed 's#://[^:]*:[^@]*@#://***:***@#'"]);
+  const pid = ((/PID=(\d*)/.exec(live.out) || [])[1] || "").trim();
+  const carries = {
+    address: /DXB_DATABASE_URL=/.test(live.out),
+    stamp: (/DXB_DASHBOARD_LAUNCHER=(.*)/.exec(live.out) || [])[1]?.trim() || "",
+  };
+  const gate = await sh("bash", ["-c",
+    "env -u DXB_DASHBOARD_LAUNCHER -u DXB_DATABASE_URL node --experimental-strip-types -e "
+    + "'import(\"./apps/dashboard/src/instrumentation.ts\").then(m=>m.register())' 2>&1;"
+    + " echo \"EXIT=$?\""]);
+  const gateExit = Number((/EXIT=(\d+)/.exec(gate.out) || [])[1] ?? -1);
+  const gateSaid = gate.out.replace(/EXIT=\d+\s*$/, "").trim();
+  yield {
+    step: "dashboard", state: "done", pid, carries, gateExit,
+    gateRefused: /REFUSING TO SERVE/.test(gateSaid),
+    gateNamesWrapper: /scripts\/dashboard\.sh/.test(gateSaid),
+  };
+
+  // ---- 4. this machine yes, the house no
+  yield { step: "door", state: "running" };
+  const lan = (await sh("bash", ["-c",
+    "ip -o -4 addr show scope global | awk '{print $4}' | cut -d/ -f1 | head -1"])).out.trim();
+  const code = async (url) => (await sh("curl", ["-s", "-o", "/dev/null", "-w", "%{http_code}",
+    "--max-time", "6", url])).out || "000";
+  const doors = {
+    self: await code("http://127.0.0.1:3000/login"),
+    lan: lan ? await code(`http://${lan}:3000/`) : "000",
+    lanAddr: lan || "—",
+  };
+  yield { step: "door", state: "done", doors };
+
+  // ---- 5. the records, after everything above
+  yield { step: "records", state: "running-after" };
+  const after = await fingerprint();
+  yield { step: "records", state: "done", before, after };
+
+  yield { step: "end" };
+}
+
 // ------------------------------------------------------------------------- page
-const PAGE = String.raw`<!doctype html>
-<html lang="tr"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gözle Kabul — B36 Blok 3-bis</title>
-<style>
-  :root{
+// ------------------------------------------------------- one look, both pages
+const STYLE = String.raw`  :root{
     --ink:#e8eef5; --dim:#8b9bb0; --line:#1d2734; --bg:#080b10; --card:#0e131b;
     --ok:#35d0a5; --no:#ff5f6d; --wait:#ffc043; --accent:#4ea8ff;
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
@@ -225,11 +322,19 @@ const PAGE = String.raw`<!doctype html>
     border-radius:9px;padding:9px 17px;font-size:13px;cursor:pointer}
   button:hover{border-color:var(--accent)}
   .skel{color:#33404f;font:12.5px/1.6 var(--mono)}
-  .tiny{font:11.5px/1.5 var(--mono);color:var(--dim);margin-top:9px}
+  .tiny{font:11.5px/1.5 var(--mono);color:var(--dim);margin-top:9px}`;
+
+const PAGE = String.raw`<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gözle Kabul — B36 Blok 3-bis</title>
+<style>
+${STYLE}
 </style></head><body>
 <header>
   <h1>Gözle Kabul</h1>
   <span class="sub">B36 · Blok 3-bis — inşaat sahası ile holdingin ayrılması</span>
+  <a href="/blok4" style="color:var(--accent);font-size:13px;text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:8px">Blok 4 ekranı →</a>
   <span class="clock" id="clock">bağlanıyor…</span>
 </header>
 <main>
@@ -409,11 +514,218 @@ $('again').onclick = start;
 start();
 </script></body></html>`;
 
+
+// ------------------------------------------------------------------ page, BLOCK 4
+const PAGE4 = String.raw`<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gözle Kabul — B36 Blok 4</title>
+<style>
+${STYLE}
+</style></head>
+<body>
+<header>
+  <h1>Gözle Kabul</h1>
+  <span class="sub">B36 · Blok 4 — şirketin adresi artık hiçbir dosyanın varsayımı değil</span>
+  <a href="/" style="color:var(--accent);font-size:13px;text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:8px">← Blok 3-bis ekranı</a>
+  <span class="clock" id="clock">bağlanıyor…</span>
+</header>
+<main>
+  <div class="grid">
+    <section class="card" id="c1"><h2><span class="n">1</span>Hiçbir dosya şirketin adresini varsaymıyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c2"><h2><span class="n">2</span>Adres verilmeyen araç duruyor, uydurmuyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c3"><h2><span class="n">3</span>Panel elle başlatılamıyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c4"><h2><span class="n">4</span>Panel yalnız bu makineye açık<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c5"><h2><span class="n">5</span>Şirketin kayıtları kıpırdamadı<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+  </div>
+  <div class="bar" id="bar">
+    <span class="verdict" id="verdict">Ölçülüyor…</span>
+    <span class="sub" id="verdictSub" style="color:var(--dim);font-size:13px"></span>
+    <button id="again">Tekrar çalıştır</button>
+  </div>
+</main>
+<script>
+var $ = function (id) { return document.getElementById(id); };
+var t0 = Date.now();
+setInterval(function () {
+  $('clock').textContent = 'ekran açık: ' + Math.floor((Date.now() - t0) / 1000) + ' sn';
+}, 1000);
+
+function esc(s) {
+  return String(s === undefined || s === null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function card(id, cls, verdict, lead, rows) {
+  var el = $(id);
+  el.className = 'card ' + cls;
+  var html = '<p class="verdict">' + esc(verdict) + '</p>';
+  if (lead) html += '<p class="lead">' + esc(lead) + '</p>';
+  if (rows && rows.length) {
+    html += '<table>';
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      if (r.wide) {
+        html += '<tr class="wide"><td class="k">' + esc(r[0]) + '</td><td class="v">' + esc(r[1]) + '</td></tr>';
+      } else {
+        html += '<tr><td class="k">' + esc(r[0]) + '</td><td class="v">' + esc(r[1]) + '</td></tr>';
+      }
+    }
+    html += '</table>';
+  }
+  el.querySelector('.body').innerHTML = html;
+}
+function waiting(id, what) {
+  $(id).className = 'card live';
+  $(id).querySelector('.body').innerHTML = '<p class="verdict">' + esc(what) + '</p>';
+}
+
+var pass = {};
+function start() {
+  pass = {};
+  ['c1', 'c2', 'c3', 'c4', 'c5'].forEach(function (id) {
+    $(id).className = 'card';
+    $(id).querySelector('.body').innerHTML = '<p class="skel">bekliyor…</p>';
+  });
+  $('verdict').textContent = 'Ölçülüyor…';
+  $('verdictSub').textContent = '';
+  $('bar').className = 'bar';
+
+  var es = new EventSource('/stream4');
+  es.onmessage = function (m) {
+    var e = JSON.parse(m.data);
+
+    if (e.step === 'records' && e.state === 'running') waiting('c5', 'Şirketin kaydı sayılıyor…');
+    if (e.step === 'records' && e.state === 'half') {
+      card('c5', 'live', 'Ölçüldü, şimdi denenecek', 'Aşağıdaki her şey bittikten sonra aynı sayım tekrarlanacak.', [
+        ['kaydın parmak izi', e.before.stamp],
+        ['denetim kayıtları', e.before.gov]
+      ]);
+    }
+    if (e.step === 'records' && e.state === 'running-after') waiting('c5', 'Şirketin kaydı yeniden sayılıyor…');
+    if (e.step === 'records' && e.state === 'done') {
+      var same = e.before.stamp === e.after.stamp && e.before.gov === e.after.gov;
+      pass.c5 = same;
+      card('c5', same ? 'pass' : 'fail', same ? 'Aynı — tek satır değişmedi' : 'DEĞİŞTİ',
+        same ? 'Bu ekrandaki her deneme yapıldı ve şirketin defterinde hiçbir şey oynamadı.'
+             : 'Şirketin defteri bu ekran çalışırken değişti. Kabul edilmemeli.', [
+          ['önce', e.before.stamp],
+          ['sonra', e.after.stamp],
+          ['denetim kayıtları', e.before.gov + '  →  ' + e.after.gov]
+        ]);
+    }
+
+    if (e.step === 'counter' && e.state === 'running') waiting('c1', 'Bütün depo taranıyor…');
+    if (e.step === 'counter' && e.state === 'done') {
+      var c = e.counter || {};
+      var blind = c.planted !== 1;
+      var ok = c.found === 0 && !blind;
+      pass.c1 = ok;
+      card('c1', ok ? 'pass' : 'fail',
+        c.error ? 'Ölçülemedi' : (c.found === 0 ? '0 dosya' : c.found + ' dosya'),
+        blind ? 'DİKKAT: araç, kasten yerleştirilen sahte satırı GÖREMEDİ — sıfır bir şey ifade etmez.'
+              : 'Depodaki bütün dosyalar okundu. Hiçbiri şirketin adresini varsaymıyor.', [
+          ['taranan dosya', c.scanned],
+          ['şirketin adresini varsayan', c.found],
+          ['araç sahte bir satırı gördü mü', blind ? 'HAYIR' : 'evet (1 tane)'],
+          ['bu iş başlamadan önce', '95 dosya']
+        ]);
+    }
+
+    if (e.step === 'refusal' && e.state === 'running') waiting('c2', 'Gerçek bir araç adressiz çalıştırılıyor…');
+    if (e.step === 'refusal' && e.state === 'done') {
+      var ok2 = e.exit !== 0 && e.namesVar;
+      pass.c2 = ok2;
+      card('c2', ok2 ? 'pass' : 'fail', ok2 ? 'Durdu ve sebebini söyledi' : 'Durmadı',
+        'Şirketin yönlendirme kurallarını yazan gerçek bir araç, adres verilmeden çalıştırıldı.', [
+          ['çalıştırılan', 'db/seed/import-routing-rules.ts'],
+          ['çıkış kodu', e.exit + (e.exit !== 0 ? ' — hata verdi, doğrusu bu' : ' — sessizce çalıştı')],
+          ['sebebini söyledi mi', e.saidNothing ? 'HAYIR, sessizce durdu' : 'evet'],
+          ['adresin adını anıyor mu', e.namesVar ? 'evet' : 'HAYIR'],
+          { wide: true, 0: 'kısacası', 1: ok2
+              ? 'Nereye yazacağı söylenmediği için hiçbir şey yazmadı ve neden durduğunu bildirdi. Eskiden şirketin defterini varsayıp yazardı.'
+              : 'Adres verilmediği halde durmadı.' }
+        ]);
+    }
+
+    if (e.step === 'dashboard' && e.state === 'running') waiting('c3', 'Çalışan panel sorgulanıyor…');
+    if (e.step === 'dashboard' && e.state === 'done') {
+      var running = !!e.pid;
+      var ok3 = running && e.carries.address && !!e.carries.stamp
+        && e.gateExit !== 0 && e.gateRefused && e.gateNamesWrapper;
+      pass.c3 = ok3;
+      card('c3', ok3 ? 'pass' : 'fail',
+        !running ? 'Panel şu an kapalı' : (ok3 ? 'Doğru başlatılmış' : 'Yanlış başlatılmış'),
+        running ? 'Size hizmet eden panelin kendisine soruldu; sonra kapı çıplak bir ortamda denendi.'
+                : 'Panel çalışmıyor, bu madde şu an ölçülemez.', [
+          ['çalışan panel', running ? 'var (' + e.pid + ')' : 'yok'],
+          ['şirketin adresini taşıyor mu', e.carries.address ? 'evet' : 'HAYIR'],
+          ['nasıl başlatılmış', e.carries.stamp || '—'],
+          ['elle başlatılsa ne olur', e.gateExit !== 0 ? 'reddediyor, çıkış kodu ' + e.gateExit : 'KABUL EDİYOR'],
+          ['reddi doğru sebeple mi veriyor', e.gateRefused && e.gateNamesWrapper ? 'evet' : 'HAYIR'],
+          { wide: true, 0: 'kısacası', 1: (e.gateExit !== 0 && e.gateRefused)
+              ? 'Panel, doğru komutla başlatılmadığında hizmet vermeyi reddediyor ve kapanıyor. Böylece şirketin adresi elinde olmayan bir panel size hizmet edemez.'
+              : 'Panel elle başlatıldığında da hizmet veriyor — kapı çalışmıyor.' }
+        ]);
+    }
+
+    if (e.step === 'door' && e.state === 'running') waiting('c4', 'Kapılar deneniyor…');
+    if (e.step === 'door' && e.state === 'done') {
+      var self = e.doors.self, lan = e.doors.lan;
+      var ok4 = self !== '000' && lan === '000';
+      pass.c4 = ok4;
+      card('c4', ok4 ? 'pass' : 'fail', ok4 ? 'Bu makineye açık, eve kapalı' : 'Eve açık',
+        ok4 ? 'Panel yalnız bu bilgisayardan açılıyor. Ev ağındaki başka bir cihaz ulaşamıyor.'
+            : 'Ev ağındaki herkes holdingin ön yüzüne ulaşabiliyor.', [
+          ['bu makine (127.0.0.1:3000)', self === '000' ? 'cevap yok' : 'cevap veriyor (' + self + ')'],
+          ['ev ağı (' + e.doors.lanAddr + ':3000)', lan === '000' ? 'kapalı' : 'AÇIK (' + lan + ')'],
+          ['bu iş başlamadan önce', 'ev ağına açıktı']
+        ]);
+    }
+
+    if (e.step === 'end') {
+      es.close();
+      var all = pass.c1 && pass.c2 && pass.c3 && pass.c4 && pass.c5;
+      $('bar').className = 'bar ' + (all ? 'pass' : 'fail');
+      $('verdict').textContent = all
+        ? 'Beş maddenin beşi de gözünüzün önünde doğrulandı.'
+        : 'Bir madde geçmedi — kabul edilmemeli.';
+      $('verdictSub').textContent = all
+        ? 'Hiçbir dosya varsaymıyor · araç adressiz duruyor · panel elle açılamıyor · panel eve kapalı · şirket kıpırdamadı.'
+        : 'Yukarıdaki kırmızı kutuya bakın.';
+    }
+  };
+  es.onerror = function () { es.close(); };
+}
+$('again').onclick = start;
+start();
+</script></body></html>`;
+
 // ----------------------------------------------------------------------- server
 const server = createServer(async (req, res) => {
   if (req.url === "/") {
     res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
     res.end(PAGE);
+    return;
+  }
+  if (req.url === "/blok4") {
+    res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
+    res.end(PAGE4);
+    return;
+  }
+  if (req.url === "/stream4") {
+    res.writeHead(200, {
+      "content-type": "text/event-stream; charset=utf-8",
+      "cache-control": "no-store",
+      connection: "keep-alive",
+    });
+    try {
+      for await (const ev of sequence4()) {
+        res.write(`data: ${JSON.stringify(ev)}\n\n`);
+      }
+    } catch (e) {
+      res.write(`data: ${JSON.stringify({ step: "end", error: String(e.message || e) })}\n\n`);
+    }
+    res.end();
     return;
   }
   if (req.url === "/stream") {
@@ -436,5 +748,6 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, "127.0.0.1", () => {
-  console.error(`[eye-check] açık: http://127.0.0.1:${PORT}`);
+  console.error(`[eye-check] Blok 3-bis: http://127.0.0.1:${PORT}`);
+  console.error(`[eye-check] Blok 4    : http://127.0.0.1:${PORT}/blok4`);
 });

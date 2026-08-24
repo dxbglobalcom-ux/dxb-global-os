@@ -424,13 +424,29 @@ that reading as the next job and had not answered when the session closed.
    to end** — real Turkish speech through Piper, a real `@supabase/ssr` session, `HTTP 201` with
    `transcript "bugünkü açık işleri özetle."` — run against the **construction** engine, because a
    real call writes `voice_calls` and `intents` and his *"tek bir harf dahi"* order stands; the
-   conflict was named to him, not decided quietly, and the last inch (one real call on the company)
-   waits on his word. <!-- OPEN: B36 --> **Fixing the dashboard's open door blinded `pnpm b36:prove-wall`**, and that is
+   conflict was named to him, not decided quietly. **HE ANSWERED, 2026-08-24 night: NO** — *"Do not
+   write a synthetic voice call to the company database."* That leg is closed and does not reopen; the
+   voice line's own quality is B12's business, not Block 4's. **Fixing the dashboard's open door blinded `pnpm b36:prove-wall`**, and that is
    the best thing that happened all night: the drill's control probe — the green half that must
    succeed for a refusal to mean anything — had been dialling the CEO's dashboard on the LAN, so its
    proof of its own eyesight was borrowing a security hole. It opens its own control door now.
    **STATE_FINGERPRINT de359137ee1d7c79 before and after all of it.**
-   **BUILT, NOT ACCEPTED — Block 4, the company's address is no longer a default anywhere. 2026-08-24 evening.** <!-- OPEN: B36 --> His ruling that night, and it governs every record of this block: *"denetçi onaylamadan asla 4 bitti diyemezsin. onayladıktan sonra da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."* The work is with his auditor. When the auditor passes it, the next step is NOT a report — it is a live screen he watches himself.
+   **HIS AUDITOR PASSED BLOCK 4 — 2026-08-24 night: *"Block 4 passes … Proceed to Block 5 under the
+   approved B36 plan."* IT IS STILL NOT ACCEPTED** <!-- OPEN: B36 --> — LAW B, and his own second
+   condition: *"onayladıktan sonra da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."*
+   **The live screen is built and was shown to him:** `pnpm b36:eye-check` → **http://127.0.0.1:4599/blok4**,
+   five panels that RUN while he watches — the counter over the whole repository (2,837 files scanned,
+   **0** fallbacks, and it is first shown finding a planted one so a blind zero cannot pass); a real
+   company seed run with no address (**exit 2**, and it names the variable); the dashboard serving him
+   right now (its own process asked: carries the address, stamped `scripts/dashboard.sh dev`) plus the
+   gate refusing a bare environment live (**exit 2**); the door open to this machine (**200**) and shut
+   to the house (`192.168.178.44:3000` **closed**); and the company's fingerprint before and after
+   (`de359137ee1d7c79` → `de359137ee1d7c79`). **RULE #0 pass, and it caught a law being broken:** the
+   first render printed the tools' own ENGLISH sentences on his Turkish screen. Rewritten — the page
+   now carries the FACT (did it stop, does it name the address, did it refuse for the right reason) in
+   his language, and the English lines stay in the evidence file where artefacts belong.
+   **BUILT, NOT ACCEPTED — Block 4, the company's address is no longer a default anywhere.
+   2026-08-24 evening.** His ruling that night, and it governs every record of this block: *"denetçi onaylamadan asla 4 bitti diyemezsin. onayladıktan sonra da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."* The work is with his auditor. When the auditor passes it, the next step is NOT a report — it is a live screen he watches himself.
    **95 → 0.** Ninety-five files bound the holding's own address to `DXB_DATABASE_URL` as a fallback —
    82 suites opening with `??=`, three seeds, six operator tools, the Phase-5 exit gate in bash, and
    **one live application route** that invented a database for itself on every request. Each was inert

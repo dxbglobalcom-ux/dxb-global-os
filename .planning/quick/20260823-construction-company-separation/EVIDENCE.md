@@ -2259,9 +2259,65 @@ folder at all, `nothing to sweep`, exit 0.
 
 ### ⚠ UNVERIFIED — a terminal cannot settle these
 
-- **A root-owned `next-server` (pid 11180) has been running 1 day 12 hours.** Its
-  command line is truncated, its working directory is unreadable without root, and
-  it holds no listening socket. It is not ours to kill on a guess.
+- ~~**A root-owned `next-server` (pid 11180) has been running 1 day 12 hours.**~~
+  **ANSWERED BY HIM, 2026-08-24 night:** *"Leave PID 11180 alone; it belongs to the
+  open-notebook container."* It is not a stray; nothing to do, and it is not raised
+  again. The question was right to ask and the answer was his to give — a terminal
+  could see the process and could not see whose it was.
 - The dashboard has not been **looked at by eye** since the restart. It answers
   `307 → /login` and `/login` returns `200`; that a human sees what he expects is
   his eye's to confirm.
+
+## Block 4 — the auditor passed it, and the live screen his eye needs · 2026-08-24 night
+
+**His auditor's verdict, in his own relay:** *"Block 4 passes. Do not write a
+synthetic voice call to the company database. Leave PID 11180 alone; it belongs to
+the open-notebook container. Proceed to Block 5 under the approved B36 plan."*
+
+**Two of those are decisions, and both are now closed:** the company will NOT be
+given a synthetic voice call — the leg this evidence file left open waiting on his
+word is shut by his word — and the root-owned process that could not be identified
+from a terminal has an owner. Neither is raised again.
+
+**IT IS STILL NOT ACCEPTED.** LAW B, and his own second condition, given before the
+auditor answered: *"denetçi onaylamadan asla 4 bitti diyemezsin. onayladıktan sonra
+da gözümle gösterilecek şekilde canlı şekilde bana göstermelisin."* The auditor
+passing is the first half. The second half is his eye, on a screen that runs.
+
+**The screen:** `pnpm b36:eye-check` → **http://127.0.0.1:4599/blok4**. It lives in
+the same file and on the same door as the Block 3-bis screen he already accepted;
+that page's four panels are untouched, its stylesheet is now named once so the two
+screens cannot drift apart, and each links to the other. Five panels, all RUN while
+he watches, nothing pre-computed:
+
+| # | What his eye sees | Measured on the run he watched |
+|---|---|---|
+| 1 | No file assumes the company's address | 2,837 files scanned · **0** · and the counter is first shown finding a planted fallback (`1`), so a blind zero cannot pass for a clean house |
+| 2 | A tool given no address stops instead of guessing | `db/seed/import-routing-rules.ts` → **exit 2**, and the refusal names `DXB_DATABASE_URL` |
+| 3 | The dashboard cannot be started by hand | the process serving him (pid 874088) carries the address and the stamp `scripts/dashboard.sh dev`; the gate, run against a bare environment, **exit 2**, refusing for the right reason |
+| 4 | The dashboard answers this machine and no other | `127.0.0.1:3000` → **200** · `192.168.178.44:3000` → **closed** |
+| 5 | The company did not move | `de359137ee1d7c79` → `de359137ee1d7c79`, audit records `29637/1963` → `29637/1963` |
+
+**RULE #0 design pass — and it caught a law being broken.** The first render was
+looked at, not assumed: panels 2 and 3 printed the tools' own **English** sentences
+onto a screen that is his, and every CEO-visible surface is 100 % one locale
+(`00-CEO-DIRECTIVE-LANGUAGE`). The page was rewritten to carry the FACT in Turkish —
+*did it stop · does it name the address · did it refuse for the right reason* — with
+the English originals left in this file, where artefacts belong. The second render
+was looked at again and is clean.
+
+**One operator mistake, recorded because it is the standing trap.** A reload was
+sent with `operator key F5` without first confirming from a screenshot which window
+had focus, and it went to the editor rather than the browser. The skill's own second
+rule says exactly this. The page was brought forward by opening its address again
+instead — no keystroke, so nothing could land in his prompt box.
+
+**Gates on the final state:** `BATTERY_GREEN` 107 files / 775 passed / 15 skipped +
+host 3 / 16 · `tsc` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · `WALL_IS_ONE_WAY` ·
+fallbacks **0** · four resident services `active`, `NRestarts=0` · 0 failed units ·
+`STATE_FINGERPRINT de359137ee1d7c79`.
+
+**What is NOT written anywhere yet, deliberately:** there is no entry in
+`scripts/governance/ceo-approvals.json` for Block 4. LAW B forbids it until he says
+the word himself, and no record in this repository may call Block 4 accepted before
+that entry exists.
