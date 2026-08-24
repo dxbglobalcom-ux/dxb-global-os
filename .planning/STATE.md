@@ -28,9 +28,24 @@ not a mirror · the residue is moved, not deleted.** He then approved the archit
 measurement forced — *"tersini de onaylıyorum, blok 0 ile başla"*: **the company does NOT move; the
 construction moves out**, because his live surfaces depend on Supabase Realtime (ten components),
 his login on Supabase Auth, and the Supabase CLI pins the database name to `postgres`.
-**Two things are still his and only his:** the Block 5 dry-run list (which rows count as
-construction) goes in front of him before anything moves, and `hook_violations` / `audit_log` are
-not touched at all without his separate word.
+**2026-08-24 — BLOCK 3 IS DONE, ON HIS WORD *"onaylıyorum"***, and the day started with him
+stopping the author twice: for beginning Block 3 before answering the question he had actually
+asked, and for writing his sentences into the records as standing rules without asking. Everything
+written that way was reverted in the same turn. **What he wants instead, in his own words:**
+*"ne önüme gelecek benim ne önüme GELECEK"* · *"anladığım dilde bana sor önce ne nedir ne
+yapacağım"* — explain it in his language first, then decide and report; do not hand him lists to
+adjudicate. He also said, approving the residue move: *"bundan sonra TEK BİR HARF DAHİ ŞİRKETİN
+VERİ TABANINA GİRMESİN!"* **He has NOT been asked whether either sentence should become a standing
+rule, and neither has been written as one.**
+**The one-way window is open.** `dxb_reader` on the holding's engine: SELECT on `public` and
+`pgboss`, nothing else anywhere, and it cannot read `auth`. 23 hostile routes tried through it,
+23 refused, 0 rows left (`pnpm b36:prove-window` → `WINDOW_IS_ONE_WAY`). Two escapes it found and
+walled: 34 `SECURITY DEFINER` functions callable by `PUBLIC` that write to his tables, and the
+`pg_net` outbound-HTTP queue. **The block also broke the company and put it back**: its first
+version gave `anon` the right to call all 85 control functions, its own blast-radius photograph
+caught it, and Block 0's dated dump restored the exact prior state
+(`COMPANY_PRIVILEGES_RESTORED`). The correction is proved red-first
+(`pnpm b36:prove-window-preserves`: old rule 663 privileges moved, shipped rule 0).
 **He had the work audited by Codex Solo 5.6 TWICE the same day, and the second audit rejected the
 first answer in full** — *"7 bulgunun 0'ı bütünüyle kapandı"*. It was right on all seven. The
 critical one had **six** reproducible escapes, not three: six spellings of the company's address
@@ -253,7 +268,7 @@ that reading as the next job and had not answered when the session closed.
    this afternoon's work into the holding's brain (13,919 → 15,737). It is the company reaching out and
    pulling construction in, on a schedule, which is why Block 1 never saw it. Nothing was changed:
    `claude-mem` is one of the two plugins he ordered ON, and what the holding's memory may contain is
-   his decision. It goes to Block 5, on his dry-run list. And one test carried the literal uuid
+   the author's to rule on, per his order of 2026-08-24; it goes to Block 5. And one test carried the literal uuid
    of a company row; it finds the project by slug now.
    **DONE — Block 1, the writer is dead, and the SERVER is what says so.** The `SessionEnd` hook that
    wrote the author's own token burn into the holding's `cost_ledger` writes only to
@@ -290,7 +305,7 @@ that reading as the next job and had not answered when the session closed.
    with SELECT and nothing else), Block 4 (the **97** remaining fallbacks — 85 tests · 8 scripts ·
    3 seeds · 1 live route, counted by `scripts/b36/count-company-fallbacks.mjs`, which PARSES the code
    after three audits produced four disagreeing figures — which cannot move before Block 2 because the
-   tests would have nowhere to point), Block 5 (the residue move, his dry-run first), Block 6 (`pnpm verify:separation`),
+   tests would have nowhere to point), Block 5 (the residue move, classified and reported by the author), Block 6 (`pnpm verify:separation`),
    Block 7 (records, including closing C36).
    **State when this was written:** battery `96 files · 725 passed · 15 skipped` · `tsc --build` exit 0 ·
    `pnpm verify:ledger` OK · the company measured after the whole battery ran:

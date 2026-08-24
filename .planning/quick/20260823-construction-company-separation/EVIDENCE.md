@@ -1151,3 +1151,172 @@ title NOT NULL = 205 · title_tr NOT NULL = 205 · files on disk = 205
 | **the company across the battery** | 186 tables, **0 moved in `public`** — the five that moved are its own `pgboss.*` scheduler and `realtime.messages` |
 | the company's own counters | `audit_log = 29636`, unchanged — the same figure the review reported |
 | `var/construction-fixtures/` | untracked (`.gitignore:76`) — the 205 fixture documents never enter a commit |
+
+---
+
+## Block 3 — THE ONE-WAY WINDOW — 2026-08-24
+
+**His approval, given after the block was explained to him in his own language and before
+anything was built:** *"onaylıyorum."* Registered: `b36-block3-one-way-window-2026-08-24`.
+He had stopped the previous attempt for two reasons, both of them fair: the author started this
+block before answering the question he had actually asked, and it wrote his sentences into the
+records as standing rules without asking him. Everything written that way was reverted in the same
+turn (`git checkout` of four files, two new files deleted, `grep` → 0 hits), and the company was
+measured untouched by it.
+
+### What now exists on the company's engine
+
+A role `dxb_reader`: `LOGIN`, `NOINHERIT`, no `SUPERUSER`, no `CREATEDB`, no `CREATEROLE`, no
+`REPLICATION`, connection limit 8, `default_transaction_read_only = on`, `statement_timeout = 120s`.
+It holds `CONNECT` on the database, `USAGE` on `public` and `pgboss`, `SELECT` on every table in
+them plus default privileges for tables not yet created, and **nothing else anywhere**. It carries
+`BYPASSRLS` on purpose: all 60 tables in `public` have row-level security, and without it the window
+would connect happily and count zero rows — a silent false zero is the more dangerous failure, and
+`BYPASSRLS` changes what is VISIBLE, never what can be written.
+
+It cannot read `auth` (Supabase's own login table and its password hashes), `storage`, `vault`,
+`realtime` or `litellm`.
+
+Built by `pnpm b36:window` → `scripts/b36/install-company-window.mjs`, which applies
+`scripts/b36/company-one-way-window.sql` as the engine's own administrator. **It is deliberately not
+a migration:** it creates no schema object, only a role and privileges, and two of the objects it
+must seal (`net.*`) are owned by `supabase_admin`, which the application's role is not a member of.
+
+```
+$ pnpm b36:window
+B36 · Block 3 — the one-way window on the COMPANY engine (supabase_db_DxB_Global_OS)
+  privilege matrix photographed BEFORE : 1408 (role x object) answers
+  B36 one-way window: 34 security-definer functions walled off from PUBLIC
+  B36 one-way window: sealed net.http_request_queue (INSERT,UPDATE,DELETE,TRUNCATE taken from PUBLIC, returned to every other role)
+  B36 one-way window: sealed net._http_response  (same)
+  B36 one-way window: reads 60 tables in public, writes 0 tables anywhere
+  privilege matrix photographed AFTER  : 1496 (role x object) answers
+
+  privileges changed for dxb_reader   : 88
+  privileges changed for ANY OTHER ROLE: 0   <-- must be 0
+  BLAST_RADIUS_CLEAN — no role but the new window changed by one privilege.
+  password minted, stored mode 600 at var/b36/company-window.env  (DXB_COMPANY_READONLY_URL)
+WINDOW_INSTALLED
+```
+
+### The back door that SELECT-only does not close, and the one nobody thinks to lock
+
+**85 `SECURITY DEFINER` functions live in `public`** — a `SECURITY DEFINER` function runs with its
+OWNER's privileges, and the owner is `postgres`. **34 of them were executable by `PUBLIC`**, and
+`PUBLIC` includes every role that will ever exist. `control_ceo_briefing_post`,
+`fn_chat_post_message`, `control_voice_call_log`, `control_opportunity_register` and
+`fn_update_routing` all INSERT into the holding's own tables. A window holding SELECT and nothing
+else could have called any of them and written a row. Those 34 now have `EXECUTE` taken from
+`PUBLIC` and handed back, by name, to the roles that already held it.
+
+**`net.http_request_queue` and `net._http_response`** — the `pg_net` extension's outbound-HTTP
+queue — granted INSERT to `PUBLIC`. A role that can put a row there can make the server issue an
+HTTP request. Sealed the same way. **The window's own closing assertion is what found this**: it
+refuses to succeed while `dxb_reader` can write to any table in any schema, and on the first run it
+raised `the window can still WRITE to: net._http_response, net.http_request_queue`.
+
+`TEMPORARY` on the database was taken from `PUBLIC` and returned by name for the same reason: "not
+one letter" is the order.
+
+### THE MISTAKE THIS BLOCK MADE, AND HOW IT WAS CAUGHT AND UNDONE
+
+The first version handed `EXECUTE` back to **every role on the engine**. On the construction engine
+that is exact, because `PUBLIC` held all 85 there. **On the holding it was not: 34 were open and 51
+were deliberately restricted**, so the blanket re-grant gave **`anon` — the role an unauthenticated
+browser gets — the right to call all 85, `control_records_purge` and `decide_approvals` among
+them.** The installer's own blast-radius photograph caught it in the same run and refused to
+continue, which is what it is for; but the SQL had already committed.
+
+It was undone from the holding's own record — the dated dump Block 0 took before any of this work
+began — by `scripts/b36/restore-company-privileges.mjs`, which reads the exact `GRANT`/`REVOKE`
+statements out of `dxb-b36-pre-separation-2026-08-23.dump` and replays them:
+
+```
+$ node scripts/b36/restore-company-privileges.mjs
+the dump carries 749 function-privilege statements from before this work began
+the engine carries 85 security-definer functions in public/pgboss
+reset statements: 1700 · replayed from the dump: 110 · other: 52
+  PUBLIC can execute : 34 of 85   (measured before the mistake, 2026-08-24: 34 of 85)
+  anon   can execute : 34 of 85
+  PUBLIC may write the pg_net queue : true  (was true)
+  PUBLIC holds TEMP on the database : true  (was true)
+  dxb_reader roles on the engine    : 0  (was 0)
+COMPANY_PRIVILEGES_RESTORED
+```
+
+The rule was then corrected to measure, **per object**, who could already do the thing, and to give
+it back to exactly those roles minus the window. **The correction is proved red-first**, by
+rebuilding the holding's SHAPE (34 open / 51 restricted) on the disposable construction engine and
+running the OLD rule against it first:
+
+```
+$ pnpm b36:prove-window-preserves
+  fixture built: 51 functions that `anon` must NOT be able to call
+  the OLD rule changed 663 privileges belonging to other roles
+  under the OLD rule `anon` could call 85 of the functions — the defect, reproduced
+  the SHIPPED rule changed 0 privileges belonging to other roles   <-- must be 0
+  `anon` can call 34 functions — before the window it was 34
+  the installer's own verdict: BLAST_RADIUS_CLEAN
+WINDOW_PRESERVES
+```
+
+### The drill — can the window write to the holding?
+
+`pnpm b36:prove-window` connects **through the host's `psql`, as `dxb_reader`, over the mapped
+port** — the way a construction tool really would. Every attempt runs inside its own transaction
+that is rolled back whatever happens, so even a missing wall could not leave a trace; afterwards the
+drill looks for its own marker in every table it aimed at.
+
+```
+$ pnpm b36:prove-window
+  detector validated: the window really is connected — it reads 205 employees
+  refused  INSERT into the cost ledger / UPDATE a task / DELETE an alert / TRUNCATE the audit log
+  refused  INSERT into the governance register / the holding's memory / the job queue
+  refused  INSERT into the outbound HTTP queue (pg_net)
+  refused  CREATE a table / CREATE a schema / CREATE a TEMPORARY table / ALTER / DROP
+  refused  call a SECURITY DEFINER function that writes (briefing)  permission denied for function control_ceo_briefing_post
+  refused  call a SECURITY DEFINER function that writes (chat)      permission denied for function fn_chat_post_message
+  refused  read the login table (password hashes)                   permission denied for schema auth
+  refused  RAW  turn the read-only default off BEFORE the transaction, then INSERT   permission denied for table cost_ledger
+  refused  RAW  begin an explicitly READ WRITE transaction, then INSERT              permission denied for table cost_ledger
+  refused  RAW  READ WRITE, then the outbound HTTP queue (pg_net)                    permission denied for table http_request_queue
+  refused  RAW  READ WRITE, then a SECURITY DEFINER function that writes             permission denied for function control_ceo_briefing_post
+  refused  RAW  READ WRITE, then TRUNCATE the audit log                              permission denied for table audit_log
+  refused  RAW  READ WRITE, then create a table of its own                           permission denied for schema public
+  attempts: 23 · refused: 23 · escaped: 0 · rows left behind: 0
+ANSWER: NO — the window cannot change one row in the holding, by any route tried.
+WINDOW_IS_ONE_WAY
+```
+
+**The last six attempts are the ones that matter.** `default_transaction_read_only = on` is a
+SETTING and `dxb_reader` can switch it off, so a refusal reading *"cannot execute INSERT in a
+read-only transaction"* proves only that a setting is set. Those six take the setting out of the way
+properly — one turns it off **before** the transaction begins, the rest start the transaction
+`READ WRITE` explicitly — and what refuses them is `permission denied`, which is the privilege, which
+is the only thing that is a wall. The first run of this drill did not contain them and proved less
+than it looked like it proved.
+
+### The governance gate now looks through the window
+
+`scripts/governance/ledger-truth.mjs` read the holding as `postgres`, the account that owns
+everything in it, with a read-only intention enforced by a regular expression and nothing else. It
+now connects as `dxb_reader`, reading the URL from `var/b36/company-window.env` (outside the
+repository); when no window is installed it says so on stderr and falls back, because a governance
+gate that silently stops running is worse than one that fails.
+
+```
+$ pnpm verify:ledger
+ledger truth OK: 8 state claims re-measured, 94 open markers resolved against 66 board rows,
+96 trigger lines all accounted for, 17 rules each in exactly one owner,
+70 CEO approval claims each backed by a registered approval
+```
+
+### Blast radius — named before, measured after
+
+| What stands on it | Measured after |
+|---|---|
+| Every other role on the engine | **0** privileges changed, of 1,408 (role × object) answers photographed before and after |
+| `anon` (unauthenticated browser) | can call **34** of 85 control functions — exactly what it could before |
+| `authenticated` · `service_role` · `postgres` | `decide_approvals`, `fn_chat_post_message`, writes to `cost_ledger` — all unchanged |
+| The two resident services (`dxb-scheduler`, `dxb-jarvis`) | both `active` |
+| The CEO's login and his live tiles | Supabase Auth and Realtime are untouched — the block adds a role and moves privileges; ⚠ still to be confirmed by eye |

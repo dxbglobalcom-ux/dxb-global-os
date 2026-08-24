@@ -192,11 +192,43 @@ const UPDATE = argv.includes("--update");
 const LIST = argv.includes("--list");
 
 // ---------------------------------------------------------------- db access
-const PSQL = ["exec", "-i", "supabase_db_DxB_Global_OS", "psql", "-U", "postgres", "-d", "postgres", "-qtA", "-c"];
+//
+// B36 · Block 3. This gate used to read the holding as `postgres`, the account
+// that owns everything in it — a read-only intention enforced by the regular
+// expression below and by nothing else. It now looks through the ONE-WAY WINDOW
+// (`dxb_reader`: SELECT and nothing else, refused by PostgreSQL itself), so a
+// query that slipped past the check would still be unable to write.
+//
+// The address is not spelled here. It is read from var/b36/company-window.env,
+// which is outside the repository and holds the password minted by
+// scripts/b36/install-company-window.mjs; the gate falls back to the
+// administrator ONLY when no window is installed, and says so out loud, because
+// a governance gate that silently stops running is worse than one that fails.
+const WINDOW_ENV = path.join(REPO, "var/b36/company-window.env");
+
+function windowUrl() {
+  if (!existsSync(WINDOW_ENV)) return null;
+  const line = readFileSync(WINDOW_ENV, "utf8")
+    .split("\n").find((l) => l.startsWith("DXB_COMPANY_READONLY_URL="));
+  return line ? line.slice("DXB_COMPANY_READONLY_URL=".length).trim() : null;
+}
+
+const WINDOW_URL = windowUrl();
+const PSQL = WINDOW_URL
+  // Inside the engine's own container, so no psql is needed on the host and the
+  // credential never appears in a host process list beyond this one call.
+  ? ["exec", "-i", "supabase_db_DxB_Global_OS", "psql", WINDOW_URL.replace(":54322/", ":5432/"), "-qtA", "-c"]
+  : ["exec", "-i", "supabase_db_DxB_Global_OS", "psql", "-U", "postgres", "-d", "postgres", "-qtA", "-c"];
+
+if (!WINDOW_URL) {
+  console.error("[ledger-truth] NOTE: no one-way window installed (var/b36/company-window.env);");
+  console.error("[ledger-truth]       reading the company as its administrator instead.");
+  console.error("[ledger-truth]       install it: node scripts/b36/install-company-window.mjs company");
+}
 
 function measure(sql) {
-  // SELECT-only by construction: anything that could write is refused here
-  // rather than trusted to the query author.
+  // Belt and braces. The privilege is the wall; this stays because a query that
+  // is not a SELECT is a defect in the claim, not only a risk to the database.
   if (!/^\s*SELECT\b/i.test(sql) || /\b(INSERT|UPDATE|DELETE|DROP|ALTER|CREATE|TRUNCATE|GRANT|REVOKE)\b/i.test(sql)) {
     throw new Error(`refused: claim query is not read-only -> ${sql}`);
   }
