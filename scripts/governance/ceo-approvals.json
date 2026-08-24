@@ -228,9 +228,16 @@
   },
   "b36-block3-bis-accepted-2026-08-24": {
     "date": "2026-08-24",
-    "what": "ACCEPTANCE of B36 Block 3-bis — the wall outside the database, both walls, after three adversarial audits had rejected Block 3 and a fourth broke the first shape of the second wall. His auditor examined the corrected work and passed it; he then accepted it himself. This is an acceptance of the RESULT, not a permission to build: the permission was b36-block3-bis-os-wall-2026-08-24.",
-    "verbatim": "denetçi tamam dedi herşeyi kaydet. onaylıyorum.",
+    "what": "ACCEPTANCE of B36 Block 3-bis — the wall outside the database, both walls, after three adversarial audits had rejected Block 3 and a fourth broke the first shape of the second wall. His auditor examined the corrected work and passed it; he then accepted it himself. This is an acceptance of the RESULT, not a permission to build: the permission was b36-block3-bis-os-wall-2026-08-24. He then ran the acceptance screen himself and passed it with his own eye (pnpm b36:eye-check), which is what LAW B asks for and what his auditor set as the test: the construction works in its own area, the same construction is refused at the company at once, the company's screen and workers carry on, and the company's records are identical before and after.",
+    "verbatim": "denetci tamam dedi hersey kaydet. onayliyorum. || ayrica goz testimden gectim tmmdir. || kabul edildi tarafimdan block 3.",
     "conditions": "B36 as a row stays OPEN — Blocks 4-7 (the 95 executable company-database fallbacks, the residue move, the proof command, the records) are untouched. The construction engine's own doors (54421/54422) remain open to the network by judgement, named in the record.",
     "where": ".planning/quick/20260823-construction-company-separation/PLAN.md — Block 3-bis · EVIDENCE.md — 'Block 3-bis', 'The second wall', 'The second wall failed its audit', 'The holding's own front door'"
+  },
+  "b36-construction-doors-2026-08-24": {
+    "date": "2026-08-24",
+    "what": "Delegated to the author: whether the CONSTRUCTION engine's own two doors (54421/54422) should also be shut to the network. Decided: shut them, in the same kernel chain. Measured — nothing on this machine reaches that engine by any address but the loopback one, so closing costs nothing; open, it was a PostgreSQL with the Supabase CLI's documented default password reachable from the whole network.",
+    "verbatim": "insaat motorunun kapilari hakkinda sen karar ver en uygun olanini.",
+    "conditions": "The author decided; the CEO delegated it and it is his to overrule. Separately, the git-history rewrite he first ordered was countermanded in the same session and the repository was restored to its exact prior state — GitHub was never written to, and the password remains in the published history by his decision, which he paired with changing the password himself.",
+    "where": ".planning/quick/20260823-construction-company-separation/EVIDENCE.md"
   }
 }

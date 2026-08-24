@@ -157,5 +157,20 @@ table inet dxb_wall {
       comment "the holding's database is for this machine, not for the network"
     tcp dport 54321 counter drop \
       comment "the holding's API gateway is for this machine, not for the network"
+
+    # And the CONSTRUCTION engine's two doors, shut for the same reason on
+    # 2026-08-24. The CEO left this one to the author: it carries no row of the
+    # holding's — its data is generated from this repository's own files — so it is
+    # not a holding risk, and that was the argument for leaving it open. Rejected
+    # on measurement: nothing on this machine reaches it by any address but the
+    # loopback one. The sandbox bridge dials TCP:127.0.0.1, and
+    # tests/construction-engine.ts, verify:schema-parity and scripts/bootstrap-db.sh
+    # all spell 127.0.0.1. Open to the network it bought nothing and left a
+    # PostgreSQL with the Supabase CLI's documented default password, and a
+    # foothold on the CEO's own machine, standing in the open.
+    tcp dport 54422 counter drop \
+      comment "the construction engine is for this machine, not for the network"
+    tcp dport 54421 counter drop \
+      comment "the construction gateway is for this machine, not for the network"
   }
 }

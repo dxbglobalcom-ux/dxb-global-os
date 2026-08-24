@@ -378,7 +378,8 @@ line("  THE HOLDING'S OWN FRONT DOOR — can anything that is NOT this machine d
     line("    BLIND   this machine has no routable address, so nothing could be dialled.");
     blind++;
   } else {
-    for (const door of [hostAddr + "/54322", hostAddr + "/54321", "172.17.0.1/54322"]) {
+    for (const door of [hostAddr + "/54322", hostAddr + "/54321", "172.17.0.1/54322",
+                        hostAddr + "/54422", hostAddr + "/54421"]) {
       const v = fromOffHost(door);
       const shut = v === "refused";
       if (!shut) leaks++;

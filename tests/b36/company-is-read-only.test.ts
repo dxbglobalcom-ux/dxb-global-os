@@ -284,9 +284,13 @@ describe("B36 · Block 3 — the one-way window", () => {
       "the front door stopped letting this machine's own loopback past").toBe(true);
 
     // And both of the holding's doors are shut to everything else.
-    for (const door of ["54322", "54321"]) {
+    // Both engines. The construction's own two were shut on 2026-08-24 as well: it
+    // carries no holding row, but nothing on this machine reaches it by any address
+    // but the loopback one, so open to the network it bought nothing and left a
+    // PostgreSQL with a documented default password standing in the open.
+    for (const door of ["54322", "54321", "54422", "54421"]) {
       expect(front.some((l) => l.includes(`dport ${door}`) && /\bdrop\b/.test(l)),
-        `the holding's door ${door} is open to the network`).toBe(true);
+        `door ${door} is open to the network`).toBe(true);
     }
   });
 
