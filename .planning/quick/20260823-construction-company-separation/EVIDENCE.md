@@ -2575,13 +2575,27 @@ $ getfacl -p /run/user/1000        → user::rwx  group::---  other::---   (no A
 ```
 
 The root test sees the socket, arms the bind, and the unprivileged `bwrap` then
-cannot resolve it. **So the branch has never worked.** It has only ever been
-silent, because `[ -S … ]` is false whenever the gateway is not listening — and
-the gateway crash-loops whenever the company's engine is down
-(`var/company-read-gateway.log`: `Error: connect ECONNREFUSED 127.0.0.1:54322`,
-twice again at this morning's boot before the engine came up). Every green battery
-so far ran in that state: **the sandbox opened without the window, and nothing
-said so.**
+cannot resolve it.
+
+**A CLAIM THAT STOOD HERE FOR AN HOUR IS WRONG AND IS REPLACED, NOT ANNOTATED.** It
+said the branch had never worked and that every green battery had run with the
+gateway crash-looping. That was reasoning, not measurement, and the measurement
+refutes it: run with the gateway deliberately stopped,
+`tests/b36/wall-question.test.ts` **fails twice** — *"no route reaches the company,
+and the one door answers"* and *"the governance gate reads the holding through the
+door, and fails closed without it"*. A green battery therefore could **not** have run
+with the door shut. The bind was working before this morning's reboot.
+
+**What is measured, and what is not.** Measured: `bwrap` here is a plain
+`-rwxr-xr-x root root` binary with no file capabilities, it runs as uid 997, and uid
+997 cannot traverse `/run/user/1000` today. Therefore the bind fails today, and the
+repository contains nothing that would ever have made it succeed — no `setfacl`, no
+`chmod`, no tmpfiles rule; `getfacl /run/user/1000` shows no ACL. **UNVERIFIED —
+could not measure** how the directory was traversable before: `/run/user/1000` is a
+tmpfs recreated at every boot, so whatever loosened it was done by hand outside the
+repository and is gone. The lesson is the one that matters either way: **the wall
+depended on a permission that nothing in this repository sets and no reboot
+preserves.**
 
 **Why the obvious fix is refused.** Giving uid 997 a traverse bit on
 `/run/user/1000` would hand the construction identity the author's desktop: that
@@ -2790,3 +2804,34 @@ for the reason in the section above — the sandbox wall needs one root install 
 session has no right to perform. Block 5 is **built and measured**, not accepted: his
 auditor has not looked, and he has not seen it with his own eye. That was the order of
 work he set for Block 4 and it is expected again here.
+
+### And the rest of the battery is sound — measured, not assumed
+
+Run once with the gateway deliberately stopped (and restarted immediately after,
+`is-active` → `active`, socket back at 10:49), purely to see what else the wall
+defect was hiding:
+
+```
+$ bash scripts/construction/battery.sh
+=== 1/2 · THE CONSTRUCTION RUNTIME — the sandboxed suite ===
+ Test Files  2 failed | 105 passed (107)
+      Tests  3 failed | 772 passed | 15 skipped (790)
+=== 2/2 · THE AUTHOR'S HAND — outside the sandbox ===
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 15 passed (16)
+BATTERY_RED
+```
+
+**Every one of the four failures is this one defect, and nothing else:**
+
+| Failing test | Why |
+|---|---|
+| `company-is-read-only.test.ts` (5) — *the repository's copy has not drifted from the wall that runs* | **Correct behaviour.** The source is repaired and the root-owned copy is not. This gate is what forces the install rather than letting the two drift. |
+| `wall-question.test.ts` — *the one door answers* | the gateway was stopped for this run |
+| `wall-question.test.ts` — *the governance gate reads the holding through the door* | the gateway was stopped for this run |
+| `live-drills.host.test.ts` (6) — *from the construction runtime there is no route to the holding, and the probe proves it can succeed* | the inside probe cannot start: the same bind |
+
+**105 of 107 files and 772 of 790 tests pass**, including the whole of Block 5's
+neighbourhood. The battery goes green when one command is run:
+`bash scripts/construction/install-wall.sh` — and it will be run and printed here,
+not predicted.
