@@ -529,6 +529,17 @@ several `tests/b36` files carry it as an assertion. The committed counter separa
 
 ### Block 5 — The residue moves out (moved, never deleted)
 
+**BUILT AND MEASURED 2026-08-25 — NOT ACCEPTED (LAW B).** <!-- CEO-OK: b36-block5-residue-and-two-databases-2026-08-25 -->
+`node scripts/b36/move-residue.mjs --apply` → **RESIDUE_MOVED, 2,756 rows**: `cost_ledger` 1612 ·
+`project_risks` 1 · `decision_log` 1143, each copied to `dxb_archive` on the construction engine,
+each verified by row count **and** an identical checksum on both engines, only then deleted, each
+delete and its `audit_log` record in one transaction. The company: 46,735 → 43,983 rows
+(−2,756 +4 records, to the row); `STATE_FINGERPRINT de359137ee1d7c79 → 453b0ef99e03a1f3`;
+`hook_violations` 1,963 untouched; all 34 views still answer; his risk register carries business
+risk only (board C36 closed). Evidence: `EVIDENCE.md` §"Block 5 — the residue is OUT".
+**What is NOT done:** `construction:battery` is RED on a sandbox defect this session found and
+repaired but cannot install (root), his auditor has not looked, and he has not seen it by eye.
+
 Order is fixed and never varies: **copy → verify → delete → audit.**
 
 1. `dxb_archive` is created **on the construction engine**, so the archive is not stored in the
@@ -633,8 +644,35 @@ are built on it.** The line that stood here — "the reversal waits on his word"
 than annotated (LAW A); it was still standing after he had answered it, and a third audit caught the
 plan contradicting itself.
 
-**STILL HIS, and nothing moves without them:**
+**ANSWERED, 2026-08-25 — BOTH OF THEM, AND THE ROW GAINED ITS OWN SENTENCE.**
+<!-- CEO-OK: b36-block5-residue-and-two-databases-2026-08-25 -->
+The two questions that stood here as *"still his"* are spent and are deleted rather than kept beside
+the answers (LAW A). He was shown the measured dry-run — not a list to adjudicate, but each group
+explained in his language with the author's recommendation on it — and he ruled:
 
-1. **The dry-run in Block 5** — which rows count as construction and which are the holding's own
-   record. He sees the list before anything moves.
-2. **`hook_violations` and `audit_log`** — whether they are touched at all.
+1. **The residue: all three groups move.** `cost_ledger` **1,612** (the whole table; measured to hold
+   no company row at all) · `project_risks` **1 of 3** (the brown-token colour audit) · `decision_log`
+   **1,143 of 4,730** (the 19 test-shaped workers). Order unchanged: **copy → verify → delete → audit**.
+2. **The boundary stays shut.** `audit_log` and `hook_violations` — *"kapalı kalsın"*. Not one row,
+   including the 1,291 that carry a construction-shaped actor and the 1,789 `memory_commit` rows.
+3. **One write he authorised:** a single retrospective `audit_log` row for the 15,773 memory rows
+   deleted on 2026-08-23, which had left no trace in the company's own book.
+
+**AND HE SAID WHAT HE HAD ACTUALLY MEANT ON 2026-08-23 — this is B36 in one sentence, from its owner:**
+
+> *"artık sadece şirket çalışanlarının ve şirketle ilgili herşeyin sadece şirketin veritabanına
+> işlesin. Holdingi inşaa ederken yapılanlar da kendi veritabanına yazılsın ikisi tamamen ayrı olsun.
+> Şirkette iş yapıldı mı çat kendi veritabanına, holdingin bir parçasımı geliştiriliyor çat inşaat
+> veritabanına. Holdingin içinde yapılan geliştirme çalıştımı veya çalışıyor mu diye test edilmesi de
+> dahil."*
+
+**EACH THING WRITES TO ITS OWN DATABASE.** The company's employees and everything about the company →
+the company's engine. Everything done while BUILDING the holding — **including testing whether a piece
+of the holding works** → the construction's engine. His *"şirketin hafızasını tamamen temizle sıfır"*
+of 2026-08-23 was never an order that the holding may have no memory: **`memory_index` is free to fill
+again with the COMPANY's own memory**, and what is forbidden for ever is the construction writing into
+it (held by `tests/b36/company-memory-is-not-a-diary.test.ts`). Any reading of that day's order as
+"the holding's memory stays empty" is deleted by this (LAW A). Registered with his words in
+`scripts/governance/ceo-approvals.json` → `b36-block5-residue-and-two-databases-2026-08-25`; he
+authorised it being written down (*"bunu önemli gördüğün yere de yazabilirsin"*) as his decision, not
+as a new standing rule.

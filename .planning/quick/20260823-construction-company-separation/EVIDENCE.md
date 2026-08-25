@@ -2640,3 +2640,153 @@ $ node scripts/b36/count-company-fallbacks.mjs   EXECUTABLE FALLBACKS: 0
 $ gitleaks git --redact -v             754 commits scanned · no leaks found
 $ node scripts/b36/company-state-fingerprint.mjs STATE_FINGERPRINT de359137ee1d7c79
 ```
+
+---
+
+## Block 5 — the residue is OUT, moved and not deleted (2026-08-25)
+
+**His word, given on the measured dry-run above:** *"Üçü de çıksın."* · the boundary
+*"kapalı kalsın"* · and one retrospective record authorised, *"1. kabul ediyorum."*
+Registered: `scripts/governance/ceo-approvals.json` →
+`b36-block5-residue-and-two-databases-2026-08-25`. `scripts/b36/move-residue.mjs`
+refuses to run at all if that key is not in the register.
+
+**And he said what the whole row is FOR, unprompted, which is wider than the wipe:**
+
+> *"artık sadece şirket çalışanlarının ve şirketle ilgili herşeyin sadece şirketin
+> veritabanına işlesin. Holdingi inşaa ederken yapılanlar da kendi veritabanına
+> yazılsın ikisi tamamen ayrı olsun. Şirkette iş yapıldı mı çat kendi veritabanına,
+> holdingin bir parçasımı geliştiriliyor çat inşaat veritabanına. Holdingin içinde
+> yapılan geliştirme çalıştımı veya çalışıyor mu diye test edilmesi de dahil."*
+
+Each thing writes to its own database — and **testing whether a piece of the holding
+works is building, not company business.** His order of 2026-08-23 was therefore never
+"the holding may have no memory": `memory_index` is free to fill again with the
+COMPANY's own memory, and what is forbidden for ever is the construction writing into
+it. Any reading to the contrary is deleted (LAW A).
+
+### What was standing on the tables before anything was deleted
+
+```
+foreign keys pointing AT cost_ledger / project_risks / decision_log : 0   (no cascade, no refusal)
+triggers on them  : trg_alert_cost_threshold        AFTER INSERT ON cost_ledger
+                    trg_broadcast_cost_ledger       AFTER INSERT ON cost_ledger
+                    trg_broadcast_opslive_decisions AFTER INSERT ON decision_log
+                    → all three are INSERT-only; a DELETE fires nothing, raises no
+                      alert and puts no event on his live screen
+views reading them : 17 dependencies across 15 views (12 on cost_ledger, 4 on
+                     decision_log, 1 on project_risks) — photographed before and after
+```
+
+### The move, in the order he set: COPY → VERIFY → DELETE → AUDIT
+
+```
+$ node scripts/b36/move-residue.mjs --apply
+  his approval         : b36-block5-residue-and-two-databases-2026-08-25
+  boundary before      : audit_log/hook_violations 29637/1963
+  archive              : dxb_archive CREATED on the construction engine
+
+── cost_ledger      rows 1612 · checksum 9328b28e43145bc47cd5fb5e5ad41e7f
+                    archive 1612 · 9328b28e43145bc47cd5fb5e5ad41e7f · verified
+                    deleted from company: 1612   left behind: 0
+── project_risks    rows    1 · checksum 03c44b5227e952be87615c634416323a
+                    archive    1 · 03c44b5227e952be87615c634416323a · verified
+                    deleted from company: 1      left behind: 0
+── decision_log     rows 1143 · checksum e1a87e4309fad0abaee9ac09fb77f169
+                    archive 1143 · e1a87e4309fad0abaee9ac09fb77f169 · verified
+                    deleted from company: 1143   left behind: 0
+
+RESIDUE_MOVED   2,756 rows in total
+```
+
+Every group's delete and its `audit_log` record are ONE transaction: a row cannot
+leave the company without the company's own book saying so. The archive carries a
+`manifest` table with the same three checksums and his approval key against each.
+
+**A defect this run found in itself, named rather than hidden.** The first `--apply`
+moved two groups and then died on the third:
+`ERROR: syntax error at or near "ARRAY"`. The table DDL was being built from
+`information_schema.columns`, which calls **every** array column `ARRAY` — and
+`decision_log.data_used` is `text[]`. Nothing was deleted for that group, because the
+copy failed before the delete: **the order protected it.** The file now takes types
+from `format_type(atttypid, atttypmod)`, the only spelling that is always a real type
+name, and skips a group that is already empty so a re-run cannot write a second audit
+record for work already done. The re-run carried `decision_log` out cleanly.
+
+### The one write he authorised, and it is exactly one
+
+```
+$ … INSERT INTO public.audit_log … WHERE NOT EXISTS (… action='memory.cleared_on_ceo_order')
+audit_log_before 29640 · already_there 0 · INSERT 0 1 · audit_log_after 29641
+ id 74530 | 2026-08-25 08:43:03+00 | ceo | ceo | memory.cleared_on_ceo_order
+```
+
+It carries his order verbatim, the date, 15,773 + 37 rows, 15,699 of them
+`store='claude-mem'`, both export paths, the commit `9b65a4ae`, the feeder that was
+removed, and why it is late. The gap in the company's own book is closed.
+
+### After — measured on both engines
+
+```
+COMPANY                       ARCHIVE (supabase_db_DxB_Build / dxb_archive)
+  cost_ledger        0          cost_ledger    1612
+  project_risks      2          project_risks     1
+  decision_log    3587          decision_log   1143
+  memory_index       0          manifest: 3 rows, checksums identical to the company's
+  hook_violations 1963  ← his boundary, not one row moved
+  audit_log      29641  ← 29637 + 3 move records + 1 memory record
+  agents 205 · employee_records 199 · personas 408 · tasks 217  ← untouched
+```
+
+**His risk register now carries business risk only** — the acceptance test written in
+board row C36, met:
+
+```
+ Workforce activation gap: 219 of 220 employee records dormant   | high   | closed
+ Cost Intelligence surface (E11) pending                          | medium | closed
+```
+
+**Nothing broke around it (his law of 2026-08-17).** All 34 views in `public` still
+answer. The 15 that were photographed:
+
+```
+view                    before   after   verdict
+v_audit_trail            29637   29641   CHANGED — the four records of this work
+v_cost_breakdown            59       0   CHANGED — intended: construction burn off his cost page
+v_cost_entries            1612       0   CHANGED — intended
+v_pnl_daily                 28       0   CHANGED — intended
+v_decision_log            4730    3587   CHANGED — intended
+v_global_search          35277   34138   CHANGED — intended
+v_ceo_briefing               1       1   unchanged
+v_exec_overview              1       1   unchanged
+v_exec_overview_v1           1       1   unchanged
+v_morning_briefing           3       3   unchanged
+v_objective_progress         2       2   unchanged
+v_org_node_detail          199     199   unchanged
+v_org_tree                  21      21   unchanged
+v_project_command            3       3   unchanged
+v_snev                       1       1   unchanged
+```
+
+**The company's fingerprint moved, on purpose, and by exactly the right amount:**
+
+```
+before  46,735 rows  STATE_FINGERPRINT de359137ee1d7c79
+after   43,983 rows  STATE_FINGERPRINT 453b0ef99e03a1f3
+        46,735 − 2,756 moved + 4 audit records = 43,983   ✓ to the row
+```
+
+**Rollback, if he ever wants it:** every deleted row exists in two places —
+`dxb_archive` on the construction engine, and
+`~/backups/dxb/dxb-b36-pre-separation-2026-08-23.dump` (23,666,672 bytes, local and
+off-site), which predates all of it.
+
+**Gates after the move:** `verify:ledger` OK (72 CEO approval claims, each registered)
+· `SCHEMA_PARITY` · company fallbacks **0** · `typecheck` 0 · the kernel wall
+`table inet dxb_wall` loaded and holding after the reboot.
+
+**⚠ NOT FINISHED UNDER LAW B, AND SAID PLAINLY.** `construction:battery` is **RED**
+for the reason in the section above — the sandbox wall needs one root install this
+session has no right to perform. Block 5 is **built and measured**, not accepted: his
+auditor has not looked, and he has not seen it with his own eye. That was the order of
+work he set for Block 4 and it is expected again here.

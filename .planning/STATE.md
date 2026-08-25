@@ -409,7 +409,29 @@ that reading as the next job and had not answered when the session closed.
 1. **B36 — cutting the construction site out of the company. THIS IS THE WORK IN HAND.** <!-- OPEN: B36 -->
    Plan: `.planning/quick/20260823-construction-company-separation/PLAN.md` (eight blocks, approved).
    Evidence: `EVIDENCE.md` in the same folder · audit answers: `AUDIT-RESPONSE-1.md`, `AUDIT-RESPONSE-2.md`.
-   **2026-08-25 — BLOCK 5'S DRY-RUN IS MEASURED AND IT IS IN FRONT OF HIM. NOT A ROW HAS MOVED.**
+   **2026-08-25 — HE ANSWERED THE DRY-RUN AND THE RESIDUE IS OUT. BUILT, NOT ACCEPTED (LAW B).**
+   <!-- CEO-OK: b36-block5-residue-and-two-databases-2026-08-25 --> Shown each group explained in his
+   own language with a recommendation on it, he ruled **"Üçü de çıksın"** · the boundary **"kapalı
+   kalsın"** · and authorised **one** retrospective record for the memory deletion. `node
+   scripts/b36/move-residue.mjs --apply` → **RESIDUE_MOVED, 2,756 rows** — `cost_ledger` 1,612 ·
+   `project_risks` 1 · `decision_log` 1,143 — each copied to `dxb_archive` on the CONSTRUCTION engine,
+   verified by count **and** identical checksum on both engines, only then deleted, every delete in one
+   transaction with its own `audit_log` row. **The company:** 46,735 → 43,983 rows (−2,756 +4 records,
+   to the row) · `STATE_FINGERPRINT de359137ee1d7c79 → 453b0ef99e03a1f3` · `hook_violations` **1,963
+   untouched** · `agents` 205, `employee_records` 199, `personas` 408, `tasks` 217 untouched · all 34
+   views still answer, the six that changed changed on purpose · **his risk register now carries
+   business risk only — board C36 CLOSED.** Rollback exists twice: the archive, and
+   `~/backups/dxb/dxb-b36-pre-separation-2026-08-23.dump`.
+   **AND HE SAID WHAT B36 IS FOR, in one sentence:** *"...şirketle ilgili herşeyin sadece şirketin
+   veritabanına işlesin. Holdingi inşaa ederken yapılanlar da kendi veritabanına yazılsın ikisi tamamen
+   ayrı olsun... Holdingin içinde yapılan geliştirme çalıştımı veya çalışıyor mu diye test edilmesi de
+   dahil."* Each thing writes to its OWN database, and **testing whether a piece of the holding works is
+   BUILDING, not company business.** His 2026-08-23 order was therefore never "the holding may have no
+   memory": `memory_index` may fill again with the COMPANY's own memory; the construction writing into
+   it is what is forbidden for ever. Registered with his words in `ceo-approvals.json`.
+   **WHAT BLOCK 5 STILL OWES HIM:** the battery is RED (below), his auditor has not looked, and he has
+   not seen it by eye — the exact order he set for Block 4 and expects again.
+   **THE DRY-RUN THAT PRECEDED IT, MEASURED WITH NOT A ROW MOVING:**
    The plan's residue table was written on 2026-08-23 and three of its five rows had stopped being
    true; it is replaced by the measurement (registered adaptation in `PLAN.md` §Block 5, evidence in
    `EVIDENCE.md` §"Block 5 — the dry-run survey"). What the company actually holds: **`cost_ledger`
