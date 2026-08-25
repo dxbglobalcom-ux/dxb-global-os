@@ -2628,23 +2628,69 @@ refused: no such question: SELECT 1
 The relay was killed and its directory removed in the same turn (`ss -lx | grep -c
 dxbgw` → 0).
 
-**⚠ NOT INSTALLED — IT NEEDS ROOT, AND ROOT NEEDS HIS PASSWORD.** The wall that
-actually runs is `/usr/local/sbin/dxb-construction-sandbox`, owned by root by
-design so the construction cannot rewrite it. The sudoers file grants this session
-exactly three passwordless rights — open the sandbox, act as `dxbbuild`, read the
-packet filter — and installing a file is not one of them:
+**INSTALLED, 2026-08-25.** He supplied the one thing this session could not hold:
+root. The wall that runs is `/usr/local/sbin/dxb-construction-sandbox`, owned by
+root by design so the construction cannot rewrite it, and the sudoers file grants
+this session only three passwordless rights — open the sandbox, act as `dxbbuild`,
+read the packet filter. The credential was used through `SUDO_ASKPASS` from a file
+outside the repository, mode 600, shredded in the same command; the cached sudo
+timestamp was dropped afterwards with `sudo -k`. It was never written into the
+repository, a record, a log or any output.
 
 ```
-$ sudo -n -l
-    (ALL : ALL) ALL                                            ← needs a password
-    (root) NOPASSWD: /usr/local/sbin/dxb-construction-sandbox
-    (dxbbuild) NOPASSWD: ALL
-    (root) NOPASSWD: /usr/sbin/nft list table inet dxb_wall
+$ SUDO_ASKPASS=… bash scripts/construction/install-wall.sh
+WALL_INSTALLED /usr/local/sbin/dxb-construction-sandbox
+
+$ md5sum /usr/local/sbin/dxb-construction-sandbox scripts/construction/sandbox.sh
+8c2e510f091e81b51500c00be95b4657  /usr/local/sbin/dxb-construction-sandbox
+8c2e510f091e81b51500c00be95b4657  scripts/construction/sandbox.sh      ← no drift
+-rwxr-xr-x 1 root root 8355 Aug 25 10:56 /usr/local/sbin/dxb-construction-sandbox
 ```
 
-Until `bash scripts/construction/install-wall.sh` is run once, the repaired source
-and the installed wall differ and **the battery stays RED**. Everything the
-sandbox is not needed for was run and is green:
+**Nothing else moved with it (his law of 2026-08-17).** The sudoers file still
+carries the same four rules and no more; `/usr/local/share/dxb-company-wall.nft`
+and `/etc/systemd/system/dxb-company-wall.service` were byte-identical to the
+repository's copies before the run and after it; `dxb-company-wall.service` is
+`active`; the kernel table still holds its three chains; the gateway still answers
+(`agents_total = 205`).
+
+**AND THE BATTERY IS GREEN — the whole of it, with the window OPEN:**
+
+```
+$ bash scripts/construction/battery.sh
+=== 1/2 · THE CONSTRUCTION RUNTIME — the sandboxed suite ===
+ Test Files  107 passed (107)
+      Tests  775 passed | 15 skipped (790)
+=== 2/2 · THE AUTHOR'S HAND — outside the sandbox ===
+ Test Files  3 passed (3)
+      Tests  16 passed (16)
+sandboxed suite : exit 0 · host suite : exit 0
+BATTERY_GREEN
+```
+
+**And the drill that crashed this morning now answers its own question.** The
+decisive line is the governance gate speaking to the holding FROM INSIDE the
+sandbox, through the relay, and failing closed without it:
+
+```
+$ pnpm b36:prove-wall
+  THE GOVERNANCE GATE, from inside the sandbox:
+    with the gateway running   exit 0 — ledger truth OK: … 73 CEO approval claims …
+    with the gateway stopped   exit 1 — the company's read gateway is not answering
+  THE HOLDING'S OWN FRONT DOOR — can anything that is NOT this machine dial it?
+    192.168.178.44/54322 refused · /54321 refused · 172.17.0.1/54322 refused
+    192.168.178.44/54422 refused · /54421 refused
+    a door on this machine that is NOT the holding's   REACHABLE
+  THE HOLDING, BEFORE AND AFTER THIS WHOLE DRILL
+    STATE_FINGERPRINT 453b0ef99e03a1f3  ->  453b0ef99e03a1f3
+    audit_log / hook_violations 29641/1963 -> 29641/1963
+  ANSWER: NO. … The holding is unchanged by the asking.
+WALL_IS_ONE_WAY
+```
+
+The paragraph that stood here — *"NOT INSTALLED … the battery stays RED"* — is
+spent and is deleted rather than kept beside the truth (LAW A). Everything else
+was re-run with it:
 
 ```
 $ pnpm typecheck                       exit 0
@@ -2835,3 +2881,47 @@ BATTERY_RED
 neighbourhood. The battery goes green when one command is run:
 `bash scripts/construction/install-wall.sh` — and it will be run and printed here,
 not predicted.
+
+### A sweep the install made necessary, and what it found
+
+The credential this session was given for one command is also the CEO's **live
+dashboard password**. Before using it and again after, every place it sits was
+measured — the value itself is never written here, and the search was run on a
+prefix so the whole word is never spelled again.
+
+**Not in the repository, then or now.** `git grep -l HEAD` finds nothing, and the
+four files that held it are all ignored:
+
+```
+.env                                       untracked (.gitignore:16)  → symlink to ~/.config/dxb/.env
+apps/dashboard/.env.local                  untracked (.gitignore:17)  → symlink to ~/.config/dxb/
+.planning/.playwright-mcp/page-…42-443Z.yml  untracked (.gitignore:71)
+.planning/.playwright-mcp/page-…59-086Z.yml  untracked (.gitignore:71)
+```
+
+**Three places had it that had no business having it, and they are redacted:**
+
+- the session-memory note `design-direction-c-hybrid.md`, which is **loaded into
+  every session's context** — it carried the live password *and* the superseded
+  `DXB-AltinKule-2026` in plain text;
+- the two Playwright page dumps of 2026-07-13, which had captured the login form
+  with the password typed into it.
+
+Each now reads *«CEO ŞİFRESİ — .env dosyasında, burada tutulmaz»*. Re-swept after:
+the only two hits left on the whole machine's repository tree are `.env` and
+`apps/dashboard/.env.local`, which is where it belongs — both are symlinks into
+`~/.config/dxb/`, mode **600** inside a **700** directory, and the construction
+identity is refused by the operating system:
+
+```
+$ sudo -n -u dxbbuild cat /home/dxb/.config/dxb/.env
+cat: /home/dxb/.config/dxb/.env: Permission denied
+```
+
+**⚠ ONE TRACE LEFT, AND IT IS NOT THE AUTHOR'S TO REMOVE.** `~/.bash_history` line 2
+is the password on a line of its own. It was not written by this session — the
+commands here are compound lines — and it predates it. **Shell history is his**, and
+his standing decision of 2026-08-24 withdrew the history-cleaning order; so it is
+reported and left untouched. Removing that one line, or rotating the password, is
+his to decide. Git history is a separate, already-recorded item (commit `6c096852`)
+and is not reopened here.

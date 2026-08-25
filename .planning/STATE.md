@@ -455,14 +455,19 @@ that reading as the next job and had not answered when the session closed.
    repository never made it work:** measured, the battery's door tests FAIL when the gateway is down,
    so no green run ever happened with the door shut — yet nothing in this repository sets that
    permission and `/run/user/1000` is a tmpfs rebuilt at every boot. **The wall depended on something
-   done by hand that no reboot preserves.** The source is repaired — the socket is relayed in by its
-   own owner, proved end to end from uid 997 (`agents_total = 205` through the relay, `SELECT 1` still
-   refused) — **but the wall that RUNS is root-owned and this session has no passwordless right to
-   install it**: one command is his, `bash scripts/construction/install-wall.sh`. Measured with the
-   defect isolated: **105 of 107 files and 772 of 790 tests pass**, and all four failures are this one
-   defect, including the source-vs-installed drift gate correctly refusing. Everything the sandbox is
-   not needed for is green: `typecheck` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · fallbacks 0 ·
-   gitleaks clean.
+   done by hand that no reboot preserves.** The source was repaired — the socket is relayed in by its
+   own owner — and **he supplied the root this session could not hold, so it is INSTALLED**:
+   `WALL_INSTALLED`, and `md5sum` of the running wall and the repository's copy are identical
+   (`8c2e510f091e81b51500c00be95b4657`). The credential went through `SUDO_ASKPASS` from a mode-600
+   file outside the repository, shredded in the same command, `sudo -k` afterwards; it is in no
+   record, log or output. Nothing else moved: same four sudoers rules, the nft and unit files already
+   byte-identical, `dxb-company-wall.service` active, three kernel chains, gateway answering.
+   **BATTERY_GREEN — 107/107 files, 775 passed | 15 skipped, host 3/3 and 16/16** — and
+   `pnpm b36:prove-wall` → **WALL_IS_ONE_WAY**, with the decisive line being the governance gate
+   reading the holding FROM INSIDE the sandbox (exit 0 with the gateway up, exit 1 and fail-closed
+   with it stopped) while the holding's fingerprint is identical before and after the whole drill.
+   The rest: `typecheck` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · fallbacks 0 · gitleaks clean ·
+   0 failed units.
    **AND HIS AUDITOR'S FIVE INSTRUCTIONS, CARRIED OUT THE SAME NIGHT — and the first measurement was
    worse than the question.** Asked whether the LIVE dashboard was started through
    `scripts/dashboard.sh`, the answer was **no**: the `next-server` serving :3000 had been started by

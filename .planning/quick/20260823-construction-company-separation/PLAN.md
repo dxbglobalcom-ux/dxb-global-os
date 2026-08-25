@@ -537,8 +537,11 @@ delete and its `audit_log` record in one transaction. The company: 46,735 → 43
 (−2,756 +4 records, to the row); `STATE_FINGERPRINT de359137ee1d7c79 → 453b0ef99e03a1f3`;
 `hook_violations` 1,963 untouched; all 34 views still answer; his risk register carries business
 risk only (board C36 closed). Evidence: `EVIDENCE.md` §"Block 5 — the residue is OUT".
-**What is NOT done:** `construction:battery` is RED on a sandbox defect this session found and
-repaired but cannot install (root), his auditor has not looked, and he has not seen it by eye.
+**Gates on the final state:** `BATTERY_GREEN` (107/107 files · 775 passed | 15 skipped · host
+3/3 and 16/16) · `WALL_IS_ONE_WAY` · `typecheck` 0 · `verify:ledger` OK · `SCHEMA_PARITY` ·
+fallbacks 0 · gitleaks clean · 0 failed units.
+**What is NOT done, and it is the only thing left:** his auditor has not looked, and he has not seen
+it by eye. That is the order he set for Block 4 and it holds here (LAW B).
 
 Order is fixed and never varies: **copy → verify → delete → audit.**
 
