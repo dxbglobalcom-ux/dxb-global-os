@@ -55,12 +55,30 @@ type to convert to"*), and an image costs **0.0170 EUR per GB per month** — to
 snapshot is **0.19 EUR/month**. The domain `dxbglobal.online` is at Namecheap, not Hetzner, and
 survives whatever is decided.
 
-**THE DECISION IS HIS AND NOTHING IS DONE TO THAT BOX UNTIL HE GIVES IT.** ⚠ And the order of
-operations is forced: while the account is payment-blocked, no write to it can be relied on, so the
-invoice is settled FIRST and everything else follows. He was given the shape on 2026-08-25: pay ·
-then either keep the box or convert one backup to a snapshot and delete the server (15.93 → 0.19
-EUR/month, re-created in minutes when V2 is ready) · the Storage Box is a separate, smaller
-decision. Resetting the root password remains an identity step and remains unapproved.
+**HIS RULING, 2026-08-25, AND IT DELETES THE SNAPSHOT PLAN (LAW A):** *"yedekleyeceğimiz hiçbir halt
+yok. şirket olduğu gibi bu pc de. orada değerli hiç bir şey yok."* **He is right, and it is measured,
+not assumed.** The stack on that box is shipped from `vps/compose.yaml`, which is in this repository.
+The only files generated ON the box are the passwords of its own database (worthless the moment it
+is deleted). Its resident agent could not think: row **B09** — *"Hermes has no brain … credit
+exhausted + a retired model"* — and row **B11**'s first overnight run was never closed. So the disk
+holds no work the holding needs. The proposal to keep a 0.19 EUR/month snapshot is therefore
+withdrawn, not kept beside his ruling. **One thing on that disk is still worth something and it is
+not data:** the only answer to *why one core burned for 47 days*. If the machine was taken over,
+that matters before anything new is built on the same account — and it costs nothing to read once
+the block is lifted, because the SSH key still matches.
+
+**THE INVOICE IS A DEBT, NOT NEXT MONTH'S MONEY — measured, because he asked.** Hetzner's own
+billing FAQ: *"After the first invoice, we will create invoices based on full calendar months"* and
+*"we may create them up to 28 days after the last month was completed."* Invoices are raised AFTER a
+month is used, and a *"last warning for payment"* exists only for something already due. The Cloud
+API carries no billing endpoint of any kind, so the figure itself can only come from his account —
+**estimated from Hetzner's price list at roughly 24-25 EUR** for the 47 days since 2026-07-09
+(15.93/month), and that is an ESTIMATE, not a reading.
+
+**THE DECISION IS HIS AND NOTHING IS DONE TO THAT BOX UNTIL HE GIVES IT.** ⚠ The order of operations
+is forced: while the account is payment-blocked, no write to it can be relied on — the Storage Box
+already reads `locked` — so the invoice is settled FIRST and everything else follows. Resetting the
+root password remains an identity step and remains unapproved.
 
 **AND A SECOND THING WAS FOUND AND FIXED THE SAME SESSION, on row B39 — AND THE COMPANY WAS NEVER
 TOUCHED BY IT.** Both money brakes counted the SessionEnd hook's rows — **this repository's own
