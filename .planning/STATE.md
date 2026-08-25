@@ -19,6 +19,20 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
+**2026-08-26 — HE ACCEPTED EVERYTHING WITH HIS OWN EYE AND LEFT ONE APPOINTMENT.**
+<!-- CEO-OK: b39-and-session-work-accepted-by-his-eye-2026-08-26 -->
+*"şu hertz olayını yarın çözeceğiz. diğer herşeyi gözümle baktım ok diyorum. tamam mı. beni bekleyen
+diye karşıma çıkmasın."*
+
+**SO THE FIRST REPLY OF THE NEXT SESSION SAYS EXACTLY THIS AND NOTHING LONGER: everything built on
+2026-08-25 is ACCEPTED and closed — it is never listed to him again as work waiting on him — and
+there is ONE job today, which he booked himself: the rented Hetzner box and its unpaid invoice.**
+Read the measurement below before touching it; do not re-measure what is already written here, and
+do not put any of the accepted work back in front of him.
+
+⛔ **NOTHING ON THAT HETZNER ACCOUNT IS PAID, RESET, REBUILT, SHUT DOWN OR DELETED WITHOUT HIS WORD
+ON THE DAY.** <!-- OPEN: B39 --> The invoice is his to settle; every other step waits on that.
+
 **2026-08-25 — THE RENTED BOX WAS OPENED AND LOOKED INTO, ON HIS APPROVED ORDER. THE ANSWER IS IN.** <!-- OPEN: B39 -->
 *"A şıkkını onaylıyorum, önce içeride ne var gör."* — approval `ceo-vps-look-inside-first-2026-08-25`.
 
@@ -196,9 +210,24 @@ while their edit sat in the working tree. It is the mirror image of `48cfc277`, 
 deletions were carried into the peer's commit. The tree is right in both cases; only the attribution
 is mixed, and no history is rewritten to fix it.
 
-**STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
-eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count
-reaches no screen, and by his own ruling that V1 is dead it belongs to V2, not to the old dashboard.
+**✓ ACCEPTED BY HIS OWN EYE, 2026-08-26 — AND NEVER PUT IN FRONT OF HIM AGAIN.**
+<!-- CEO-OK: b39-and-session-work-accepted-by-his-eye-2026-08-26 --> *"diğer herşeyi gözümle baktım
+ok diyorum. tamam mı. beni bekleyen diye karşıma çıkmasın."* Everything this session built is
+accepted: the dispatch measurement and its two money brakes, the source filter in both queries, the
+lane case that calls the real decision, the abolition of the construction's token book, the named
+window question `cost_ledger_rows`, the shortened board, and every record correction his auditor
+forced. **None of it is a waiting item any more.** LAW B is satisfied for all of it; only the box is
+outside this approval.
+
+**THE ONE THING LEFT IS NOT WAITING ON HIM — HE SCHEDULED IT.** *"şu hertz olayını yarın
+çözeceğiz"* (2026-08-26). The rented box and its unpaid invoice are the next session's first job,
+with him, on the day. Nothing on that Hetzner account is paid, reset, rebuilt, shut down or deleted
+without his word on the day.
+
+**Older, unrelated, and still genuinely his — not raised by this session's work:** one hand-minted
+browser session, without which every eye-check of a logged-in screen stays ⚠ UNVERIFIED (row
+B03-bis) · the company's live hand-count reaches no screen, and by his own ruling that V1 is dead it
+belongs to V2, not to the old dashboard.
 
 **2026-08-23 — THE CONSTRUCTION SITE WAS CUT OUT OF THE COMPANY. ✓ CLOSED 2026-08-25 (row B36).**
 He opened the day with it: the very important gap on the board, and the complaint born from it —

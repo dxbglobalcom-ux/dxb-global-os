@@ -310,5 +310,12 @@
     "verbatim": "b36 8 block'ye ben tamam demiştim arkadaşım ne beni bekliyor … ben onları gözle kontrol ettim tmm dedim. ama sadece b36. için... b37 neydi … hatırladım eet b37 live olayı sanırım onu da görmüştüm gözle ok demiştim. bunları bir daha önüme getirmeyin.",
     "conditions": "Covers row B37 only.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B37"
+  },
+  "b39-and-session-work-accepted-by-his-eye-2026-08-26": {
+    "date": "2026-08-26",
+    "what": "ACCEPTED BY THE CEO'S OWN EYE — everything this session delivered EXCEPT the rented box. That is: row B39's dispatch measurement and its two money brakes; the SUBSCRIPTION_SPEND_SOURCE filter in packages/orchestrator/src/subscription-cap.ts and packages/outbox-executor/src/scheduler.ts; the behaviour-level lane case in tests/b39/dispatch-brakes.test.ts and its afterEach hygiene; the abolition of the construction's token book and the removal of the SessionEnd hook with everything that existed only to contain it; the named read-gateway question cost_ledger_rows; the shortening of the board's closed rows; and every record correction that followed his auditor's findings (commits 02333574, 99a91c52, 78817897, c3ba8f77, ffce9c33, 7ab530fa, 04a8ca04, 467e5494, 3b851555). He also ordered that none of it is ever put in front of him again as work waiting on him.",
+    "verbatim": "şu hertz olayını yarın çözeceğiz. diğer herşeyi gözümle baktım ok diyorum. tamam mı. beni bekleyen diye karşıma çıkmasın",
+    "conditions": "The rented box (dxb-vps-1) is NOT covered and is not accepted: he set it aside for 2026-08-26 in his own words, 'yarın çözeceğiz'. Nothing is paid, reset, rebuilt, shut down or deleted on that box or that Hetzner account without his word on the day. The approval covers what was delivered, not any later change to it: new work on any of these parts needs its own approval.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B39 · .planning/STATE.md"
   }
 }
