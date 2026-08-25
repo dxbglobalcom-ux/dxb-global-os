@@ -3153,3 +3153,160 @@ $ node scripts/b36/count-company-fallbacks.mjs   EXECUTABLE FALLBACKS: 0
 $ gitleaks git --redact -v               no leaks found
    four resident services active · 0 failed units · dashboard 127.0.0.1:3000 200, LAN refused
 ```
+
+---
+
+## Block 6 — the proof command, 2026-08-25
+
+**BUILT AND GREEN. NOT ACCEPTED — LAW B.** His auditor has not looked, and neither has he.
+
+### What was built
+
+| File | What it is |
+|---|---|
+| `scripts/governance/company-untouched.mjs` | the drill — `pnpm verify:separation` |
+| `tests/b36/separation-gate.test.ts` | 12 cases in the battery that keep its judgements honest |
+| `scripts/b36/eye-check.mjs` → `/blok6` | his screen: it runs the command and paints it live |
+| `package.json` | `"verify:separation": "node scripts/governance/company-untouched.mjs"` |
+
+### THE RED HALF — the instrument caught itself before the run did
+
+The first execution never reached a verdict. It stopped at step 0:
+
+```
+$ node scripts/governance/company-untouched.mjs --no-battery
+  RED SEEN the row differ notices one row appearing               _b36_red_proof_444836 null → 1
+  BLIND    the write prober sees every shape ACCEPTED where it can be 12/13 accepted on the construction engine
+           blind to: truncate  TRUNCATE public.agents… → cannot truncate a table referenced in a foreign key constraint
+  RED SEEN the repository sweep convicts a planted fallback       scripts/b36/red-proof-company-fallback.tmp.mjs:3
+INSTRUMENTS_NOT_PROVEN — an instrument could not be shown finding what it looks for.
+Nothing below would mean anything, so nothing below was run.
+SEPARATION_UNPROVEN                                                            (exit 1)
+```
+
+`TRUNCATE public.agents` is refused to **every** identity alive, a full superuser included, because a
+foreign key references that table — so its refusal on the company would have proved nothing at all.
+Measured, then retargeted:
+
+```
+$ docker exec -i supabase_db_DxB_Global_OS psql -U supabase_admin -d postgres -qtA -c \
+    "SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+      WHERE n.nspname='public' AND c.relkind='r'
+        AND NOT EXISTS (SELECT 1 FROM pg_constraint k WHERE k.contype='f' AND k.confrelid=c.oid)"
+… audit_log … hook_violations …                                (35 of the 60 have no inbound key)
+```
+
+The probe now empties **`public.audit_log`** — the legal record, which nothing references and which a
+real superuser really can empty. `tests/b36/separation-gate.test.ts` case (7) holds the lesson so the
+target cannot drift back.
+
+### THE FULL DRILL — 2026-08-25 12:13, every step
+
+```
+$ pnpm verify:separation
+=== 0/5 · THE INSTRUMENTS PROVE THEMSELVES RED — nothing green is printed before this ===
+  RED SEEN the row differ notices one row appearing               _b36_red_proof_502496 null → 1
+  green    and the table it was proven on is removed again        public._b36_red_proof_502496 dropped
+  RED SEEN the write prober sees every shape ACCEPTED where it can be 13/13 accepted on the construction engine
+  green    and the account it was proven with is withdrawn again  dxb_b36_redproof_502496 dropped
+  RED SEEN the repository sweep convicts a planted fallback       scripts/b36/red-proof-company-fallback.tmp.mjs:3
+  green    and the walk really covered this repository            2839 tracked files read
+  green    and the working tree is exactly as it was found        no change
+
+=== 1/5 · THE COMPANY, PHOTOGRAPHED ===
+  tables in public              : 60
+  rows in public                : 43983
+  audit_log / hook_violations   : 29641/1963
+  STATE_FINGERPRINT             : 453b0ef99e03a1f3
+  through the READ GATEWAY      : agents_total=205 library_items_total=412
+
+=== 2/5 · THE WHOLE BATTERY ===
+  sandboxed suite : exit 0     host suite : exit 0     BATTERY_GREEN      ran for 95s
+
+=== 3/5 · THE COMPANY, PHOTOGRAPHED AGAIN — and the two subtracted ===
+  rows in public                : 43983 → 43983
+  audit_log / hook_violations   : 29641/1963 → 29641/1963
+  STATE_FINGERPRINT             : 453b0ef99e03a1f3 → 453b0ef99e03a1f3
+  green    not one table in the company moved a row               all 60 tables identical
+  green    the legal and governance records are untouched         29641/1963
+  green    no sequence advanced — nothing even tried to write     8370adaf271d44f3
+  green    no large object appeared                               0
+  green    and the company's own read path still answers, unchanged agents_total=205 library_items_total=412
+
+=== 4/5 · A WRITE, ATTEMPTED AGAINST THE COMPANY AS dxb_gateway — 13 shapes ===
+  green  add a row to the employee registry       → cannot execute INSERT in a read-only transaction
+  green  change a row in the employee registry    → cannot execute UPDATE in a read-only transaction
+  green  delete a row from the employee registry  → cannot execute DELETE in a read-only transaction
+  green  take a write lock on an employee row     → cannot execute SELECT FOR UPDATE in a read-only transaction
+  green  create a table of its own in the company → cannot execute CREATE TABLE in a read-only transaction
+  green  write into the legal record (audit_log)  → cannot execute INSERT in a read-only transaction
+  green  write into the governance record         → cannot execute INSERT in a read-only transaction
+  green  empty the legal record (audit_log)       → cannot execute TRUNCATE TABLE in a read-only transaction
+  green  ask outright for a read-write transaction→ permission denied for table agents
+  green  turn its own read-only setting off       → permission denied for table agents
+  green  grant itself the right to write          → cannot execute GRANT in a read-only transaction
+  green  mint itself a superuser account          → permission denied to create role
+  green  run a program on the engine              → permission denied to COPY to or from an external program
+  green    all 13 write attempts were refused
+
+=== 5/5 · THE REPOSITORY, SWEPT ===
+  tracked files read            : 2838
+  green    no tracked file binds the company's address to DXB_DATABASE_URL   0 executable fallbacks
+
+  instruments proven red     : yes — differ, write prober and repository sweep each convicted first
+  battery                    : BATTERY_GREEN
+  company tables moved       : 0
+  write attempts accepted    : 0 of 13
+  executable fallbacks       : 0
+  company fingerprint        : 453b0ef99e03a1f3 → 453b0ef99e03a1f3
+SEPARATION_HOLDS                                                               (exit 0)
+```
+
+### WHAT THE DRILL FOUND OUT ABOUT THE WALL, and it is worth his knowing
+
+Two of the thirteen refusals do **not** say *read-only transaction*. `SET TRANSACTION READ WRITE` and
+`SET default_transaction_read_only = off` both **succeeded** — `default_transaction_read_only` is a
+setting the account is allowed to change about itself:
+
+```
+$ docker exec -i supabase_db_DxB_Global_OS psql -U supabase_admin -d postgres -qtA -c \
+    "SELECT rolname, rolconfig, rolsuper, rolcreaterole FROM pg_roles WHERE rolname='dxb_gateway'"
+dxb_gateway|{default_transaction_read_only=on,statement_timeout=120s,idle_in_transaction_session_timeout=60s}|f|f
+```
+
+Both attempts were then stopped one layer down, by the privilege matrix: `permission denied for table
+agents`. **The read-only setting is a convenience, not the wall.** The wall is the seal installed by
+`scripts/b36/company-one-way-window.sql` (13 classes, 0 leaking). The drill proves that layer every
+run, and `separation-gate.test.ts` case (6) fails the battery if either escape is ever dropped.
+
+### The blast radius, re-measured after the change
+
+| What stands on it | Re-measured | Result |
+|---|---|---|
+| the whole battery | `bash scripts/construction/battery.sh` | `BATTERY_GREEN` · sandboxed exit 0 · host exit 0 |
+| `pnpm typecheck` | `tsc --build` | exit 0 |
+| the governance gate | `pnpm verify:ledger` | OK · 74 approval claims, each registered |
+| the fallback counter (imported, not modified) | `node scripts/b36/count-company-fallbacks.mjs` | 0 executable |
+| the two engines' schemas | `pnpm verify:schema-parity` | `SCHEMA_PARITY` · 30/30 triggers, 13/13 sequences |
+| the wall | `pnpm b36:prove-wall` | `WALL_IS_ONE_WAY` · fingerprint unchanged across the drill |
+| secrets | `gitleaks git --redact -v` | 762 commits scanned, no leaks found |
+| the resident services | `systemctl --user` | 4 active, 0 failed |
+| the CEO's panel | `curl -L 127.0.0.1:3000` / LAN | 200 at `/login` · LAN 192.168.178.44:3000 refused (curl 7) |
+| the company itself | `company-state-fingerprint.mjs` | `453b0ef99e03a1f3`, before and after everything |
+
+**Residue swept, both engines and the tree:**
+
+```
+$ git status --porcelain                     M package.json · ?? the two new files. Nothing else.
+$ ls scripts/b36/red-proof-company-fallback.tmp.mjs        No such file or directory
+$ … pg_class  WHERE relname LIKE '\_b36\_%'  (construction)   <none>
+$ … pg_roles  WHERE rolname LIKE 'dxb\_b36\_%' (construction)  <none>
+$ … pg_roles / pg_class  LIKE 'dxb\_b36\_%' / '\_b36\_%' (company)  <none>  <none>
+```
+
+### ⚠ What a terminal cannot observe — confirmed by eye, screenshots kept
+
+`http://127.0.0.1:4599/blok6`, opened in Chrome on this machine and looked at twice
+(`operator shot`): six cards, all green, no truncation and no clipped text at a windowed width of
+~1490 px on a 3440-px screen. Card 0 shows the three RED SEEN lines before any green appears — he
+watches the gate convict before he watches it pass. The final bar reads **AYRIM SAĞLAM**.

@@ -27,7 +27,8 @@
     "b36:prove-wall": "node scripts/b36/prove-wall.mjs",
     "construction": "bash scripts/construction/run.sh",
     "construction:battery": "bash scripts/construction/battery.sh",
-    "b36:eye-check": "node scripts/b36/eye-check.mjs"
+    "b36:eye-check": "node scripts/b36/eye-check.mjs",
+    "verify:separation": "node scripts/governance/company-untouched.mjs"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",

@@ -466,8 +466,46 @@ that reading as the next job and had not answered when the session closed.
    *"kabul ediyorum."* Registered as `b36-block5-accepted-2026-08-25`. Both halves of the order he set
    for Block 4 were met: his auditor passed it, then his own eye did. The sentence that stood here —
    *"still owes him his own eye"* — is spent and is deleted rather than kept beside the truth (LAW A).
-   **HIS ORDER WITH THE ACCEPTANCE: BLOCK 6 IS NOT STARTED** — *"block 6 ya geçme yeni sessionda devam
-   edecek."* Nothing of Block 6 was begun. Row B36 stays OPEN: five blocks of eight are done.
+   **HIS ORDER WITH THE ACCEPTANCE WAS OBEYED AND IS NOW SPENT** — *"block 6 ya geçme yeni sessionda
+   devam edecek."* Nothing of Block 6 was begun in that session; it was begun in the next one, which is
+   what he asked for. The sentence that stood here — *"Nothing of Block 6 was begun … five blocks of
+   eight are done"* — is no longer true and is deleted rather than kept beside the truth (LAW A).
+   **BLOCK 6 IS BUILT AND GREEN, 2026-08-25 — AND NOT ACCEPTED (LAW B).** `pnpm verify:separation`
+   (`scripts/governance/company-untouched.mjs`) is one command that answers the only question this row
+   was opened for: **can the construction reach the company's database, write in it, or get round the
+   wall — and do the company's own things still work?** Five steps, and a sixth before them.
+   **THE RED HALF IS NOT A ONE-OFF; IT FIRES EVERY RUN.** Its plan sentence of 2026-08-23 — *run it
+   against today's configuration and it must FAIL* — named a configuration that no longer exists, and
+   obeying it literally would mean putting the withdrawn account and the 95 deleted fallbacks BACK into
+   his live company. So step 0 reproduces the red condition instead, on the CONSTRUCTION engine and in a
+   planted file, and **refuses to print anything else if an instrument cannot be shown convicting**:
+   a real table appears with one row and the differ must name it · the identical 13 write statements are
+   fired down a temporary superuser and **all 13 must come back ACCEPTED** · a fallback is really planted
+   in a really tracked file and the sweep must convict it by name. Each is undone in the same step and
+   the working tree is compared with how it was found. **It caught its own blindness on the very first
+   execution**, before any verdict: `TRUNCATE public.agents` is refused to a full superuser too (a
+   foreign key references that table), so its refusal on the company would have proved nothing —
+   retargeted to `audit_log`, which nothing references. Two registered adaptations in `PLAN.md` §Block 6.
+   **THE FULL DRILL, MEASURED 2026-08-25 12:13:** instruments proven red · `BATTERY_GREEN` (sandboxed
+   exit 0, host exit 0, 95s) · **0 of 60 company tables moved a row** · **0 of 13 write attempts
+   accepted** as `dxb_gateway` · **0 executable fallbacks** in 2,838 tracked files · fingerprint
+   `453b0ef99e03a1f3` → `453b0ef99e03a1f3`, `audit_log/hook_violations` 29641/1963 unchanged →
+   **`SEPARATION_HOLDS`**. Nothing is written to the company ever: every read a SELECT, every write
+   attempt opened with `BEGIN` and closed with `ROLLBACK`.
+   **WHAT THE DRILL FOUND OUT ABOUT THE WALL:** two of the thirteen refusals do NOT say *read-only
+   transaction*. `SET TRANSACTION READ WRITE` and `SET default_transaction_read_only = off` both
+   **succeed** — that setting is one `dxb_gateway` may change about itself. Both were then stopped one
+   layer down by the privilege matrix (`permission denied for table agents`). **The read-only setting is
+   a convenience; the seal installed by `company-one-way-window.sql` is the wall.**
+   **WIRED IN, but not the way the plan's word said** — step 2 IS the battery, so the battery cannot run
+   the command. `tests/b36/separation-gate.test.ts` (12 cases) sits in the battery instead and requires
+   the command's three judgements to convict on constructed input, every attempt to be wrapped
+   `BEGIN … ROLLBACK`, the three escapes and the two boundary tables to still be attempted, and the
+   command to stay registered. Evidence: `EVIDENCE.md` §"Block 6 — the proof command".
+   **HIS EYE IS WHAT IS LEFT:** `pnpm b36:eye-check` → `http://127.0.0.1:4599/blok6`. That screen
+   measures nothing of its own — it starts this exact command and paints its judgements as they arrive,
+   so he watches the gate go red before it goes green. Row B36 stays OPEN: **six blocks of eight are
+   built; Block 6 waits on his auditor and then on his own eye, and Block 7 (the records) is next.** <!-- OPEN: B36 -->
    **THE DRY-RUN THAT PRECEDED IT, MEASURED WITH NOT A ROW MOVING:**
    The plan's residue table was written on 2026-08-23 and three of its five rows had stopped being
    true; it is replaced by the measurement (registered adaptation in `PLAN.md` §Block 5, evidence in

@@ -586,15 +586,71 @@ Order is fixed and never varies: **copy → verify → delete → audit.**
 
 ### Block 6 — The proof command
 
-- `scripts/governance/company-untouched.mjs` → `pnpm verify:separation`:
-  1. photograph the row count of all 94 company tables;
+**BUILT AND GREEN, 2026-08-25. NOT ACCEPTED — LAW B: only his own eye makes it accepted.**
+
+`scripts/governance/company-untouched.mjs` → `pnpm verify:separation`, five steps and a sixth
+before them:
+
+  0. **the instruments prove themselves red**, every run, before a single green line is printed;
+  1. photograph the row count of all **60** company tables in `public`, plus the sequences, the
+     large objects and the two governance tables;
   2. run the whole battery;
   3. photograph again and diff — any non-zero difference is red;
-  4. attempt a write as `dxb_reader` — a successful write is red;
+  4. attempt a write as **`dxb_gateway`** — **13 shapes**, including the three escapes (turn its own
+     read-only setting off · grant itself the right to write · mint itself a superuser) — a single
+     accepted statement is red;
   5. scan the repository for a company-database fallback — any hit is red.
-- **Red-first:** the command is written and run **against today's configuration first**, and it
-  must FAIL on step 4 and step 5. A gate that has never been seen red has never been tested.
-- Wired into the battery so it runs with everything else.
+
+**MEASURED, NOT ESTIMATED — two numbers in the version written on 2026-08-23 had stopped being
+true and are replaced rather than annotated (LAW A):** the company holds **60** tables in `public`,
+not 94 (`node scripts/b36/company-state-fingerprint.mjs company`), and the account that still exists
+on that engine is **`dxb_gateway`**, not `dxb_reader` — Block 3-bis renamed it on 2026-08-24 so the
+whole privilege matrix moved with the OID (`scripts/b36/withdraw-company-login.mjs:37`).
+
+**REGISTERED ADAPTATION — what "red-first" means now.** The sentence written here on 2026-08-23 —
+*run it against today's configuration first, and it must FAIL on step 4 and step 5* — named a
+configuration that no longer exists: Block 3-bis withdrew the construction's login on 2026-08-24 and
+Block 4 deleted all 95 fallbacks the same day, both accepted. Obeying it literally would mean putting
+the account and the fallbacks BACK into the CEO's live company — the exact act this row exists to
+prevent. **His requirement is met instead by step 0, which reproduces the red condition every single
+run and refuses to print anything else if an instrument cannot be shown convicting:**
+
+- the row differ is shown a real table appearing with one row **on the construction engine**, and
+  must name it; the table is dropped in the same step;
+- the write prober fires the identical 13 statements down a login that really can do all of them —
+  a temporary superuser minted **on the construction engine** — and all 13 must come back ACCEPTED;
+  the account is withdrawn in the same step;
+- the repository sweep is shown a fallback really planted in a really tracked file, and must convict
+  it by name; the file is removed and the working tree is compared with how it was found.
+
+**IT CAUGHT ITS OWN BLINDNESS ON THE FIRST RUN, before any verdict was printed** — the probe
+`TRUNCATE public.agents` was refused to a full superuser too, because a foreign key references that
+table, so its refusal on the company would have proved nothing. Retargeted to `public.audit_log`,
+which nothing references. That is the whole reason step 0 exists.
+
+**REGISTERED ADAPTATION — where it is wired in.** *"Wired into the battery so it runs with
+everything else"* cannot be taken literally: step 2 IS the battery, so a battery that ran the command
+would run itself, and `tests/b36/battery-carries-no-company-key.test.ts` forbids any file the battery
+loads from carrying a way into the holding — which this command must have. What the battery holds is
+`tests/b36/separation-gate.test.ts` (12 cases): it imports the command's three judgements and requires
+each to convict on constructed input, requires every attempt to be wrapped `BEGIN … ROLLBACK`,
+requires the three escapes and the two boundary tables to still be attempted, and requires the
+command to stay registered as `verify:separation`. The brains of the gate are therefore tested on
+every battery run; the live five-step drill is the command, run whole.
+
+**Nothing is written to the company, ever.** Every read is a SELECT; every write attempt opens with
+`BEGIN` and closes with `ROLLBACK`, so even an accepted one would leave nothing behind — an accepted
+one is the failure the command exists to catch, not a change it is willing to make. The photograph is
+taken with `docker exec … psql -U supabase_admin`, SELECT only, and the run says so in its own output,
+because the read gateway answers **named questions only** and "the row count of every table" is not
+one of them; the gateway is still asked two of its own, before and after, because *do the company's
+own things still work* is half the question. Step 0's only mutations are on the CONSTRUCTION engine.
+
+**His eye:** `pnpm b36:eye-check` → `http://127.0.0.1:4599/blok6`. That screen measures nothing of its
+own — it starts this exact command with `--events` and paints its judgements as they arrive, so he
+watches the gate go red before he watches it go green.
+
+Evidence: `EVIDENCE.md` §"Block 6 — the proof command".
 
 ### Block 7 — Records, in the same session
 

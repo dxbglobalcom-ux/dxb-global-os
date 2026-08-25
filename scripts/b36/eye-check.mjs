@@ -20,7 +20,7 @@
  *   pnpm b36:eye-check      then open http://127.0.0.1:4599
  */
 import { createServer } from "node:http";
-import { execFile } from "node:child_process";
+import { execFile, spawn } from "node:child_process";
 import { promisify } from "node:util";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -835,6 +835,7 @@ ${STYLE}
   <h1>Gözle Kabul</h1>
   <span class="sub">B36 · Blok 5 — inşaat kalıntısı şirketten çıktı, taşındı, silinmedi</span>
   <a href="/blok4" style="color:var(--accent);font-size:13px;text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:8px">← Blok 4 ekranı</a>
+  <a href="/blok6" style="color:var(--accent);font-size:13px;text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:8px">Blok 6 ekranı →</a>
   <span class="clock" id="clock">bağlanıyor…</span>
 </header>
 <main>
@@ -1027,6 +1028,222 @@ $('again').onclick = start;
 start();
 </script></body></html>`;
 
+// ---------------------------------------------------------------- BLOCK 6
+//
+// THE PROOF COMMAND, WATCHED WHILE IT RUNS.
+//
+// This screen measures nothing of its own. It starts
+// `node scripts/governance/company-untouched.mjs --events` and paints the JSON
+// objects that command writes on stderr as they arrive — so what he is looking
+// at is the drill happening, not a page describing it. One source of truth: if
+// the command changes its mind about what a breach is, this screen changes with
+// it in the same second, and there is no second place where a verdict is decided.
+//
+// The command's own step 0 fires the red half first, on the CONSTRUCTION engine
+// and in a planted file, and refuses to print anything else if an instrument
+// cannot be shown convicting. He therefore watches the gate go red BEFORE he
+// watches it go green, every time, without anything being staged for him.
+
+/** Stream the proof command's judgements as they happen. */
+async function* sequence6(fast) {
+  const args = [join(REPO, "scripts/governance/company-untouched.mjs"), "--events"];
+  if (fast) args.push("--no-battery");
+  const child = spawn("node", args, { cwd: REPO, stdio: ["ignore", "ignore", "pipe"] });
+
+  const queue = [];
+  let waiter = null;
+  let done = false;
+  let buf = "";
+
+  const push = (ev) => { queue.push(ev); if (waiter) { const w = waiter; waiter = null; w(); } };
+
+  child.stderr.setEncoding("utf8");
+  child.stderr.on("data", (chunk) => {
+    buf += chunk;
+    let i;
+    while ((i = buf.indexOf("\n")) >= 0) {
+      const l = buf.slice(0, i);
+      buf = buf.slice(i + 1);
+      if (!l.startsWith("@@EV ")) continue;
+      try { push(JSON.parse(l.slice(5))); } catch { /* a half-written line is skipped */ }
+    }
+  });
+  child.on("close", (code) => { push({ t: "closed", code }); done = true; if (waiter) { const w = waiter; waiter = null; w(); } });
+  child.on("error", (e) => { push({ t: "closed", code: -1, error: String(e.message || e) }); done = true; if (waiter) { const w = waiter; waiter = null; w(); } });
+
+  yield { t: "opened", fast: Boolean(fast) };
+  for (;;) {
+    if (queue.length) { const ev = queue.shift(); yield ev; if (ev.t === "closed") return; continue; }
+    if (done) return;
+    await new Promise((r) => { waiter = r; });
+  }
+}
+
+const PAGE6 = String.raw`<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gözle Kabul — B36 Blok 6</title>
+<style>
+${STYLE}
+</style></head>
+<body>
+<header>
+  <h1>Gözle Kabul</h1>
+  <span class="sub">B36 · Blok 6 — tek komut: inşaat şirkete girebiliyor mu, yazabiliyor mu, duvarı aşabiliyor mu</span>
+  <a href="/blok5" style="color:var(--accent);font-size:13px;text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:8px">← Blok 5 ekranı</a>
+  <span class="clock" id="clock">bağlanıyor…</span>
+</header>
+<main>
+  <div class="grid">
+    <section class="card" id="c1"><h2><span class="n">0</span>Önce kırmızı — aletler kendini ispatlıyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c2"><h2><span class="n">1</span>Şirketin fotoğrafı çekiliyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c3"><h2><span class="n">2</span>İnşaat bütün gününü çalışıyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c4"><h2><span class="n">3</span>Fotoğraf tekrar çekiliyor, ikisi çıkarılıyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c5"><h2><span class="n">4</span>Şirketin kapısına yükleniliyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c6"><h2><span class="n">5</span>Depo, şirketin adresi için süpürülüyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+  </div>
+  <div class="bar" id="bar">
+    <span class="big" id="verdict">Bekliyor…</span>
+    <span class="sub" id="verdictSub" style="color:var(--dim);font-size:13px"></span>
+    <button id="fast">Hızlı koşu (sınavsız)</button>
+    <button id="again" style="margin-left:10px">Tam koşu</button>
+  </div>
+  <p class="tiny">Bu ekran hiçbir şeyi kendisi ölçmez. <span style="color:var(--ink)">pnpm verify:separation</span> komutunu başlatır ve
+  onun kararlarını geldikçe boyar. Şirkete tek harf yazılmaz: her okuma SELECT, her yazma denemesi
+  BEGIN ile açılıp ROLLBACK ile kapanır.</p>
+</main>
+<script>
+var $ = function (id) { return document.getElementById(id); };
+var t0 = Date.now();
+setInterval(function () {
+  $('clock').textContent = 'ekran açık: ' + Math.floor((Date.now() - t0) / 1000) + ' sn';
+}, 1000);
+
+function esc(s) {
+  return String(s === undefined || s === null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+var CARD = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
+var GREEN = [
+  'Üç aletin üçü de aradığını buldu',
+  'Fotoğraf çekildi',
+  'İnşaatın bütün sınavı yeşil',
+  'Tek satır kıpırdamadı',
+  'Denemelerin hepsi reddedildi',
+  'Depoda kaçak adres yok'
+];
+var RED = [
+  'BİR ALET KÖR — altındaki hiçbir ölçüm anlam taşımaz',
+  'Fotoğraf alınamadı',
+  'SINAV KIRMIZI',
+  'ŞİRKETTE BİR ŞEY DEĞİŞTİ',
+  'İÇERİ GİREN BİR YOL VAR',
+  'KAÇAK ADRES BULUNDU'
+];
+var LEAD = [
+  'Her alet, aradığı şeyi bilerek kurulmuş bir örnek üzerinde bulduğunu gösteriyor; bulamazsa komut devam etmiyor.',
+  'Şirketin bütün tabloları, satır satır sayıldı. Bu, karşılaştırmanın başlangıç noktası.',
+  'İnşaat, kendi motorunda bütün sınavını veriyor — şirketin motoruna hiç dokunmadan.',
+  'Aynı sayım tekrar yapıldı ve ilkinden çıkarıldı. Sıfır olmayan her fark kırmızıdır.',
+  'Şirkette kalan tek hesapla (dxb_gateway) yazmaya çalışılıyor. Kabul edilen tek ifade bile kırmızıdır.',
+  'Depodaki bütün kayıtlı dosyalar okunuyor: şirketin adresini varsayılan yapan bir satır var mı?'
+];
+
+var acc = {};
+function repaint(i, live) {
+  var a = acc[i]; if (!a) return;
+  var el = $(CARD[i]); if (!el) return;
+  var cls = live ? 'live' : (a.ok ? 'pass' : 'fail');
+  el.className = 'card ' + cls;
+  var html = '<p class="verdict">' + esc(live ? 'Ölçülüyor…' : (a.ok ? GREEN[i] : RED[i])) + '</p>';
+  html += '<p class="lead">' + esc(LEAD[i]) + '</p>';
+  if (a.rows.length) {
+    html += '<table>';
+    for (var j = 0; j < a.rows.length; j++) {
+      var r = a.rows[j];
+      html += '<tr class="wide"><td class="k">' + esc(r[0]) + '</td><td class="v ' + (r[2] || '') + '">' + esc(r[1]) + '</td></tr>';
+    }
+    html += '</table>';
+  }
+  el.querySelector('.body').innerHTML = html;
+}
+
+function reset() {
+  acc = {};
+  for (var i = 0; i < CARD.length; i++) {
+    $(CARD[i]).className = 'card';
+    $(CARD[i]).querySelector('.body').innerHTML = '<p class="skel">bekliyor…</p>';
+  }
+  $('verdict').textContent = 'Ölçülüyor…';
+  $('verdictSub').textContent = '';
+  $('bar').className = 'bar';
+}
+
+function start(fast) {
+  reset();
+  var es = new EventSource(fast ? '/stream6?fast=1' : '/stream6');
+  var last = -1;
+  es.onmessage = function (m) {
+    var e = JSON.parse(m.data);
+
+    if (e.t === 'opened') {
+      $('verdictSub').textContent = e.fast
+        ? 'hızlı koşu — inşaatın sınavı atlanıyor'
+        : 'tam koşu — inşaatın bütün sınavı da koşuyor, iki üç dakika sürer';
+      return;
+    }
+    if (e.t === 'step') {
+      if (last >= 0 && acc[last]) repaint(last, false);
+      last = e.step;
+      acc[e.step] = { ok: true, rows: [] };
+      repaint(e.step, true);
+      return;
+    }
+    if (e.t === 'closed') {
+      if (last >= 0 && acc[last]) repaint(last, false);
+      es.close();
+      return;
+    }
+    if (e.t === 'end') {
+      if (last >= 0 && acc[last]) repaint(last, false);
+      var held = e.verdict === 'SEPARATION_HOLDS';
+      $('bar').className = 'bar ' + (held ? 'pass' : 'fail');
+      $('verdict').textContent = held ? 'AYRIM SAĞLAM' : 'AYRIM KIRIK';
+      $('verdictSub').textContent = held
+        ? 'İnşaatın bütün sınavı koştu; şirkette tek satır kıpırdamadı, ' + (e.probes || 0) + ' yazma denemesinin ' + (e.probes || 0) + '’ü de reddedildi, depoda kaçak adres yok.'
+        : (e.why || 'Aşağıdaki kırmızı satırlar kabul edilmemeli.');
+      return;
+    }
+
+    var i = e.step;
+    if (!acc[i]) { acc[i] = { ok: true, rows: [] }; }
+    if (e.t === 'fact') {
+      acc[i].rows.push([e.tr || e.k, e.v, '']);
+    } else if (e.t === 'log') {
+      acc[i].rows.push(['·', e.v, '']);
+    } else if (e.t === 'moved') {
+      acc[i].ok = false;
+      acc[i].rows.push(['KIPIRDADI · ' + e.k, e.v, 'nope']);
+    } else if (e.t === 'red') {
+      if (!e.ok) acc[i].ok = false;
+      acc[i].rows.push([(e.ok ? 'KIRMIZI GÖRÜLDÜ · ' : 'KÖR · ') + (e.tr || e.what), e.trDetail || e.detail, e.ok ? 'amber' : 'nope']);
+    } else if (e.t === 'judge') {
+      if (!e.ok) acc[i].ok = false;
+      acc[i].rows.push([(e.ok ? '' : 'KIRMIZI · ') + (e.tr || e.what), e.trDetail || e.detail, e.ok ? 'yes' : 'nope']);
+    }
+    repaint(i, true);
+  };
+  es.onerror = function () {
+    if (last >= 0 && acc[last]) repaint(last, false);
+    es.close();
+  };
+}
+$('again').onclick = function () { start(false); };
+$('fast').onclick = function () { start(true); };
+start(false);
+</script></body></html>`;
+
 // ----------------------------------------------------------------------- server
 const server = createServer(async (req, res) => {
   if (req.url === "/") {
@@ -1042,6 +1259,27 @@ const server = createServer(async (req, res) => {
   if (req.url === "/blok5") {
     res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
     res.end(PAGE5);
+    return;
+  }
+  if (req.url === "/blok6") {
+    res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
+    res.end(PAGE6);
+    return;
+  }
+  if (req.url === "/stream6" || req.url === "/stream6?fast=1") {
+    res.writeHead(200, {
+      "content-type": "text/event-stream; charset=utf-8",
+      "cache-control": "no-store",
+      connection: "keep-alive",
+    });
+    try {
+      for await (const ev of sequence6(req.url.includes("fast=1"))) {
+        res.write(`data: ${JSON.stringify(ev)}\n\n`);
+      }
+    } catch (e) {
+      res.write(`data: ${JSON.stringify({ t: "closed", code: -1, error: String(e.message || e) })}\n\n`);
+    }
+    res.end();
     return;
   }
   if (req.url === "/stream5") {
@@ -1099,4 +1337,5 @@ server.listen(PORT, "127.0.0.1", () => {
   console.error(`[eye-check] Blok 3-bis: http://127.0.0.1:${PORT}`);
   console.error(`[eye-check] Blok 4    : http://127.0.0.1:${PORT}/blok4`);
   console.error(`[eye-check] Blok 5    : http://127.0.0.1:${PORT}/blok5`);
+  console.error(`[eye-check] Blok 6    : http://127.0.0.1:${PORT}/blok6`);
 });
