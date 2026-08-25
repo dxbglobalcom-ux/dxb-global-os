@@ -688,6 +688,83 @@ Six items. Every one was measured before it was written, and the measurement is 
    and replaced with what a session may now do: read the company with SELECT through the gateway, and
    write everything else to the construction engine.
 
+
+### After Block 7 — HE REOPENED THE ROW THE SAME DAY, AND HE WAS RIGHT TO
+
+Block 7 closed row B36 on evidence. Asked immediately afterwards whether he would
+still see construction junk in the corners of his own rooms, the author measured and
+answered honestly: **yes, on the Decisions page.** He gave two orders, both registered:
+
+1. `b36-no-construction-fragments-visible-2026-08-25` — *"ulan b36 yı neden yaptık biz.
+   0-7 blok bu ayrımı yapmak için tamamlanmadı mı arkdaşım adamın asabını bozmayın."*
+2. `b36-erase-construction-from-the-company-2026-08-25` — *"ŞİRKET İÇİNDEKİ BÜTÜN İNŞAATLA
+   İLGİLİ GEÇMİŞTE NE VARSA HEPSİNİ SİLİN. HERŞEYİ VERİLERİNDEN DE SİLİN. ŞİRKET ÇALIŞANLARI
+   VEYA HAMZA İNŞAATLA İLGİLİ HİÇ BİR ŞEY GÖRMEMELİ. ULAN İŞE MÜDÜR ALIORUZ NE DİYE
+   TUĞLALARIN NASIL ÖRÜLDÜĞÜNÜ ZORLA ONA GÖSTERELİM."*
+
+**The second one DELETES the boundary he set earlier the same day (LAW A).**
+`b36-block5-residue-and-two-databases-2026-08-25` had exempted `audit_log` and
+`hook_violations` — *"kapalı kalsın"* — and `b36-acceptance-criterion-and-block5-audit-2026-08-25`
+had closed the residue selection for ever. He reopened both himself, for the row's own reason.
+
+**"SİLİN" is obeyed as the path he has always required and never withdrew:** the rows leave the
+COMPANY — copied to `dxb_archive` on the CONSTRUCTION engine first, verified by row count **and**
+identical checksum on both engines, only then deleted. Nothing is destroyed; nothing about the
+construction stays in the holding.
+
+**THE PRINCIPLE THE CUT USES, and it is not "old = construction":** a row is the construction's
+when it is about **building or testing the machine**; it is the company's when it is about the
+company's own business — its employees, its library, its settings, its money, its decisions, its
+approvals. Measured consequences, each of which stopped a wrong deletion:
+
+- `resident-worker` is the **COMPANY's own worker identity** (`packages/orchestrator/src/worker-loop.ts:26`),
+  not a drill name. Its 214 tasks and 1,122 task events **stay**. A previous session had it on the
+  residue list; that was wrong.
+- `hook_violations` from **17-19 July are the company's own HR wave being quality-checked** and stay;
+  only the 271 rows of the 24-27 July orchestrator drill leave.
+- The purge **refused to run** rather than delete the separation's own `residue.moved_out` records —
+  they name the archive they wrote to, so an honest sweep convicts them, and they are the company's
+  proof of what left.
+- `engineering-worker` and `e10t` came **off** the text-marker list: the first convicted an
+  employee's own probation brief (*"scoped to engineering-worker execution discipline"*), the second
+  the CEO's own purge decision. They are caught as ACTORS instead.
+
+**WHAT LEFT, 2026-08-25 — 27,799 rows in `dxb_archive` on the construction engine:**
+
+| group | rows |
+|---|---|
+| `decision_log` — the 24-28 July drill week, all but his own 11 decisions | 3,576 |
+| `audit_log` — the gateway's tool-pin noise (`tool_missing`) | 18,051 |
+| `audit_log` — the author's diary sync (`memory_commit`) | 1,789 |
+| `audit_log` — identities the holding never employed | 322 |
+| `audit_log` — rows naming a construction identity or address | 25 |
+| `audit_log` — rows naming a drill round (R2.1 probe chain, r31 drain probe, gate canaries) | 26 |
+| `hook_violations` — the 24-27 July drill | 271 |
+| `control_idempotency` — the r23t drill's keys | 975 |
+| `tool_calls` — the e10t drill | 7 |
+| `alerts` — the queue alert whose stated root cause is stale probe tasks | 1 |
+| *(Block 5, earlier the same day)* `cost_ledger` 1,612 · `decision_log` 1,143 · `project_risks` 1 | 2,756 |
+
+**The company: 43,983 → 18,936 rows · `STATE_FINGERPRINT 453b0ef99e03a1f3 → d8beba3f99484a23` ·
+`audit_log/hook_violations` 29,641/1,963 → 9,438/1,692.**
+
+**AND THE RUNTIME SIDE OF THE SAME ORDER.** *"tüm çalışanlar ve üst düzey yetkililerin hepsinin bağı
+tamamen inşaat veritabanından kopmalı."* Measured: Hamza's live process and the scheduler carry the
+company's address and nothing else, and **no file in `apps/` or `packages/` reads the construction's
+address at all (0)**. But the CEO's own panel was carrying `DXB_CONSTRUCTION_DATABASE_URL`, inherited
+from the shell that launched it. `scripts/dashboard.sh` now unsets it before starting the panel, and
+the panel was restarted.
+
+**MADE PERMANENT — the proof command gained a sixth step.** `pnpm verify:separation` step 6 sweeps
+**every table in the company** for the construction's own names and fails on any hit, and checks that
+no live company process carries a path to the construction engine. Its instrument proves itself first,
+like the other four: a real construction row is written on the CONSTRUCTION engine and the sweep must
+convict the table it is in. The names live once, in `scripts/b36/construction-marks.mjs`, shared with
+the purge so the two can never disagree; `tests/b36/separation-gate.test.ts` (14 cases) fails the
+battery if an innocent name is ever put back on that list.
+
+Evidence: `EVIDENCE.md` §"After Block 7 — the company is emptied of the construction".
+
 ---
 
 ## 5. Blast radius — what stands on what is being changed

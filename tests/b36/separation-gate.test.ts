@@ -9,6 +9,10 @@ import {
   refusalTr,
   verdictForProbes,
 } from "../../scripts/governance/company-untouched.mjs";
+import {
+  CONSTRUCTION_MARKS,
+  SEPARATION_RECORDS,
+} from "../../scripts/b36/construction-marks.mjs";
 
 // B36 · Block 6 — THE BATTERY KEEPS THE PROOF COMMAND HONEST.
 //
@@ -75,12 +79,13 @@ describe("B36 Block 6 — the proof command is registered, and its judgements co
 
   it("(2) it still declares all five steps, and the red-first step before them", () => {
     for (const step of [
-      "0/5 · THE INSTRUMENTS PROVE THEMSELVES RED",
-      "1/5 · THE COMPANY, PHOTOGRAPHED",
-      "2/5 · THE WHOLE BATTERY",
-      "3/5 · THE COMPANY, PHOTOGRAPHED AGAIN",
-      "4/5 · A WRITE, ATTEMPTED AGAINST THE COMPANY",
-      "5/5 · THE REPOSITORY, SWEPT",
+      "0/6 · THE INSTRUMENTS PROVE THEMSELVES RED",
+      "1/6 · THE COMPANY, PHOTOGRAPHED",
+      "2/6 · THE WHOLE BATTERY",
+      "3/6 · THE COMPANY, PHOTOGRAPHED AGAIN",
+      "4/6 · A WRITE, ATTEMPTED AGAINST THE COMPANY",
+      "5/6 · THE REPOSITORY, SWEPT",
+      "6/6 · THE COMPANY'S OWN ROOMS, SWEPT FOR A CONSTRUCTION TRACE",
     ]) {
       expect(source, `the proof command no longer performs: ${step}`).toContain(step);
     }
@@ -230,7 +235,7 @@ describe("B36 Block 6 — the proof command is registered, and its judgements co
       missing,
       "these lines would reach the CEO's screen in English:\n" + missing.join("\n"),
     ).toEqual([]);
-    for (const step of ["0/5", "1/5", "2/5", "3/5", "4/5", "5/5"]) {
+    for (const step of ["0/6", "1/6", "2/6", "3/6", "4/6", "5/6", "6/6"]) {
       expect(table[step], `step ${step} has no Turkish title`).toBeTruthy();
     }
   });
@@ -254,6 +259,49 @@ describe("B36 Block 6 — the proof command is registered, and its judgements co
         turkish,
       );
     }
+  });
+
+  // ── what "construction" means, and the innocents it must not convict
+  it("(11) the construction marks are names, and each innocent one was left off deliberately", () => {
+    const marks = CONSTRUCTION_MARKS as string[];
+    expect(marks.length, "the list of construction names is empty — the sweep would find nothing").toBeGreaterThan(
+      10,
+    );
+    // MEASURED, EACH ONE, AND EACH WAS A REAL FALSE CONVICTION BEFORE IT WAS
+    // REMOVED. `resident-worker` is the COMPANY's own worker identity and it
+    // claimed 214 of the company's 217 tasks; the bare word `test` names the
+    // holding's eight real Quality employees; `engineering-worker` appeared in
+    // an employee's own probation brief; `e10t` appeared in the CEO's own purge
+    // decision; `smoke-e72-ui` is a model he added himself.
+    for (const innocent of [
+      "resident-worker",
+      "engineering-worker",
+      "e10t",
+      "smoke-e7",
+      "fable-5",
+    ]) {
+      expect(
+        marks,
+        `"${innocent}" is back on the construction list — it convicts the company of being the construction`,
+      ).not.toContain(innocent);
+    }
+    expect(marks.some((m) => m === "test"), "the bare word `test` convicts the Quality department").toBe(
+      false,
+    );
+    // and the company's own proof of the separation is never swept
+    expect(SEPARATION_RECORDS as string[]).toContain("residue.moved_out");
+  });
+
+  it("(12) the proof command and the purge share ONE definition of construction", () => {
+    expect(
+      source,
+      "the gate no longer reads the shared definition — it and the purge can now drift apart",
+    ).toContain("construction-marks.mjs");
+    const purge = readFileSync(join(REPO, "scripts/b36/move-residue.mjs"), "utf8");
+    expect(
+      purge,
+      "the purge no longer reads the shared definition — it and the gate can now drift apart",
+    ).toContain("construction-marks.mjs");
   });
 
   it("(7) the drill still records WHY the employee registry is not the truncate target", () => {

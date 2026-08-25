@@ -52,6 +52,21 @@ for f in ./.env ./.env.local ./.env.daemon; do [ -f "$f" ] && source "$f"; done
 set +a
 export DXB_DATABASE_URL="${DXB_DATABASE_URL:-${DXB_COMPANY_DATABASE_URL:-}}"
 
+# HIS ORDER OF 2026-08-25: "tüm şirketin en ince kılcal damarları dahi tüm
+# çalışanlar ve üst düzey yetkililerin hepsinin bağı tamamen inşaat
+# veritabanından kopmalı sadece kendi içinde kendi veritabanına bağlı kalmalı."
+#
+# The CEO's panel was measured carrying DXB_CONSTRUCTION_DATABASE_URL that
+# evening — not from any file, but inherited from the shell that happened to
+# launch it, because a session had exported it for `pnpm verify:schema-parity`.
+# Nothing in apps/ or packages/ reads that name (measured: 0 files), so it was a
+# path nobody was using and everybody could. A door is a door.
+#
+# The panel is the company's, so it leaves here with the company's address and
+# NOTHING ELSE. `pnpm verify:separation` step 6 fails if a live company process
+# is ever found carrying one again.
+unset DXB_CONSTRUCTION_DATABASE_URL DXB_CONSTRUCTION_URL DXB_ALLOWED_LEDGER_URL
+
 if [ -z "${DXB_DATABASE_URL}" ]; then
   echo "dashboard: no company address found." >&2
   echo "  Put DXB_COMPANY_DATABASE_URL=… in .env.daemon (db/README.md §Environment)," >&2

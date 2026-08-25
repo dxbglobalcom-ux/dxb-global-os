@@ -88,6 +88,7 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { randomBytes } from "node:crypto";
 import { scan } from "../b36/count-company-fallbacks.mjs";
+import { CONSTRUCTION_MARKS, sweepSql, parseSweep } from "../b36/construction-marks.mjs";
 
 const REPO = fileURLToPath(new URL("../..", import.meta.url));
 const COMPANY_CONTAINER = "supabase_db_DxB_Global_OS";
@@ -141,12 +142,13 @@ const emit = (o) => { if (EVENTS) process.stderr.write(`@@EV ${JSON.stringify({ 
  */
 export const TR = {
   // step titles
-  "0/5": "ÖNCE KIRMIZI — aletler aradıkları şeyi bulduklarını ispatlıyor",
-  "1/5": "ŞİRKETİN FOTOĞRAFI ÇEKİLDİ",
-  "2/5": "İNŞAAT BÜTÜN GÜNÜNÜ ÇALIŞTI",
-  "3/5": "FOTOĞRAF TEKRAR ÇEKİLDİ VE İKİSİ ÇIKARILDI",
-  "4/5": "ŞİRKETİN KAPISINA YÜKLENİLDİ",
-  "5/5": "DEPO, ŞİRKETİN ADRESİ İÇİN SÜPÜRÜLDÜ",
+  "0/6": "ÖNCE KIRMIZI — aletler aradıkları şeyi bulduklarını ispatlıyor",
+  "1/6": "ŞİRKETİN FOTOĞRAFI ÇEKİLDİ",
+  "2/6": "İNŞAAT BÜTÜN GÜNÜNÜ ÇALIŞTI",
+  "3/6": "FOTOĞRAF TEKRAR ÇEKİLDİ VE İKİSİ ÇIKARILDI",
+  "4/6": "ŞİRKETİN KAPISINA YÜKLENİLDİ",
+  "5/6": "DEPO, ŞİRKETİN ADRESİ İÇİN SÜPÜRÜLDÜ",
+  "6/6": "ŞİRKETİN KENDİ ODALARI İNŞAAT İZİ İÇİN SÜPÜRÜLDÜ",
   // step 0 — the instruments
   "the row differ notices one row appearing": "Satır sayacı, tek bir satırın belirdiğini fark ediyor",
   "and the table it was proven on is removed again": "Ve denemenin yapıldığı tablo geri kaldırıldı",
@@ -155,6 +157,12 @@ export const TR = {
   "the repository sweep convicts a planted fallback": "Depo taraması, bilerek yerleştirilen kaçak adresi yakalıyor",
   "and the walk really covered this repository": "Ve tarama gerçekten bütün depoyu gezdi",
   "and the working tree is exactly as it was found": "Ve depo bulunduğu gibi bırakıldı",
+  "the construction-trace sweep convicts a planted trace": "İnşaat izi taraması, bilerek yerleştirilen izi yakalıyor",
+  "and the trace it was proven on is removed again": "Ve denemenin yapıldığı satır geri silindi",
+  // step 6
+  "no live company process carries a path to the construction engine": "Hiçbir canlı şirket süreci inşaat motoruna giden bir yol taşımıyor",
+  "not one company table still names the construction": "Şirketin hiçbir tablosu artık inşaattan söz etmiyor",
+  "names looked for": "aranan inşaat adı",
   // step 2
   "the battery itself is green": "İnşaatın bütün sınavı yeşil",
   // step 3
@@ -280,6 +288,48 @@ export function diffRowMaps(before, after) {
     moved.push({ table: t, before: b, after: a, delta: (a ?? 0) - (b ?? 0) });
   }
   return moved;
+}
+
+
+/**
+ * The company's own long-running processes: the CEO's panel, Hamza, the
+ * scheduler. Found by what they are running, not by a pid written down anywhere.
+ */
+function listCompanyProcesses() {
+  const out = sh("ps", ["-eo", "pid=,args="]).stdout || "";
+  const want = [
+    [/next-server/, "the CEO's panel"],
+    [/jarvis-daemon\.js/, "Hamza"],
+    [/outbox-executor\/dist\/main\.js/, "the scheduler"],
+    [/company-read-gateway\.mjs/, "the read gateway"],
+  ];
+  const found = [];
+  for (const l of out.split("\n")) {
+    const m = /^\s*(\d+)\s+(.*)$/.exec(l);
+    if (!m) continue;
+    if (/\bsh -c\b/.test(m[2])) continue;
+    for (const [re, name] of want) if (re.test(m[2])) found.push({ pid: m[1], name });
+  }
+  return found;
+}
+
+/** One process's environment, as NAME=VALUE lines. Values are never printed. */
+function readEnv(pid) {
+  try {
+    return readFileSync(`/proc/${pid}/environ`, "utf8").split("\0").filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * EVERY TABLE IN AN ENGINE, ASKED WHETHER IT STILL CARRIES A CONSTRUCTION NAME.
+ * The names live in scripts/b36/construction-marks.mjs — one definition, shared
+ * with the tool that takes such rows out (scripts/b36/move-residue.mjs), so the
+ * gate and the purge can never disagree about what "construction" means.
+ */
+function sweepEngine(container) {
+  return parseSweep(psql(container, sweepSql()));
 }
 
 /** The stamp the rest of this row's records quote, taken by the one committed reader. */
@@ -419,7 +469,7 @@ async function main() {
   line("  the read gateway (named questions only) is asked two of its own, before and after");
 
   // ─────────────────────────────────────── 0/5 the instruments prove themselves
-  head("0/5 · THE INSTRUMENTS PROVE THEMSELVES RED — nothing green is printed before this");
+  head("0/6 · THE INSTRUMENTS PROVE THEMSELVES RED — nothing green is printed before this");
 
   // (a) the differ. A row really appears on the construction engine, and the
   //     differ must name that table with a delta of one.
@@ -500,6 +550,32 @@ async function main() {
         dirtyAfter === dirtyBefore ? "hiçbir değişiklik kalmadı" : "YERLEŞTİRİLEN DOSYA GERİDE KALDI");
   }
 
+  // (d) the construction-trace sweep. A real row carrying a real construction
+  //     name is written on the CONSTRUCTION engine, and the sweep must convict
+  //     the table it is in. It is deleted in the same step.
+  {
+    let found = false, detail = "the sweep walked past it";
+    let planted = null;
+    try {
+      planted = psql(CONSTRUCTION_CONTAINER,
+        "INSERT INTO public.audit_log (actor, actor_type, action) "
+        + `VALUES ('b36-red-proof', 'system', 'ctx-rot red proof ${PID}') RETURNING id;`);
+      const hit = sweepEngine(CONSTRUCTION_CONTAINER);
+      found = Number(hit.audit_log ?? 0) > 0;
+      detail = found ? `audit_log = ${hit.audit_log} (planted row seen)` : "the sweep walked past it";
+    } finally {
+      if (planted) psql(CONSTRUCTION_CONTAINER, `DELETE FROM public.audit_log WHERE id = ${planted};`);
+    }
+    redSeen(found, "the construction-trace sweep convicts a planted trace", detail, null,
+            found ? "inşaat motoruna gerçek bir inşaat izi yazıldı, tarama onu yakaladı"
+                  : "TARAMA ÖNÜNDEN GEÇTİ");
+    const gone = Number(psql(CONSTRUCTION_CONTAINER,
+      `SELECT count(*) FROM public.audit_log WHERE action = 'ctx-rot red proof ${PID}';`)) === 0;
+    say(gone, "and the trace it was proven on is removed again",
+        gone ? "planted row deleted" : "IT IS STILL THERE", null,
+        gone ? "yerleştirilen satır silindi" : "SATIR HÂLÂ ORADA");
+  }
+
   if (reds > 0) {
     line();
     line("INSTRUMENTS_NOT_PROVEN — an instrument could not be shown finding what it looks for.");
@@ -511,7 +587,7 @@ async function main() {
   }
 
   // ────────────────────────────────────────────────── 1/5 photograph the company
-  head("1/5 · THE COMPANY, PHOTOGRAPHED");
+  head("1/6 · THE COMPANY, PHOTOGRAPHED");
   const before = rowMap(COMPANY_CONTAINER);
   const fpBefore = fingerprint("company");
   const beforeRows = Object.values(before).reduce((a, b) => a + b, 0);
@@ -530,7 +606,7 @@ async function main() {
   }
 
   // ───────────────────────────────────────────────────────── 2/5 the whole battery
-  head("2/5 · THE WHOLE BATTERY — the construction site does its entire day's work");
+  head("2/6 · THE WHOLE BATTERY — the construction site does its entire day's work");
   let batteryVerdict = "not run (--no-battery)";
   if (skipBattery) {
     line("  skipped by --no-battery. Step 3 then measures only the time between the two photographs.");
@@ -559,7 +635,7 @@ async function main() {
   }
 
   // ──────────────────────────────────────── 3/5 photograph again, and subtract
-  head("3/5 · THE COMPANY, PHOTOGRAPHED AGAIN — and the two subtracted");
+  head("3/6 · THE COMPANY, PHOTOGRAPHED AGAIN — and the two subtracted");
   const after = rowMap(COMPANY_CONTAINER);
   const fpAfter = fingerprint("company");
   const moved = diffRowMaps(before, after);
@@ -595,7 +671,7 @@ async function main() {
   }
 
   // ─────────────────────────────────── 4/5 a write, attempted, as the real account
-  head(`4/5 · A WRITE, ATTEMPTED AGAINST THE COMPANY AS dxb_gateway — ${PROBES.length} shapes`);
+  head(`4/6 · A WRITE, ATTEMPTED AGAINST THE COMPANY AS dxb_gateway — ${PROBES.length} shapes`);
   const probeResults = await runProbes(gatewayUrl());
   const { accepted, refused } = verdictForProbes(probeResults);
   for (const r of probeResults) {
@@ -609,7 +685,7 @@ async function main() {
       `${PROBES.length} denemenin ${PROBES.length}'ü de reddedildi — içeri giren yok`);
 
   // ─────────────────────────────────── 5/5 the repository, swept for the address
-  head("5/5 · THE REPOSITORY, SWEPT FOR A LINE THAT BINDS THE COMPANY'S ADDRESS");
+  head("5/6 · THE REPOSITORY, SWEPT FOR A LINE THAT BINDS THE COMPANY'S ADDRESS");
   const sweep = scan();
   fact("tracked files read", sweep.scanned);
   line(`  (markdown is never counted — every report written about this row quotes the address)`);
@@ -621,6 +697,41 @@ async function main() {
       "Depoda şirketin adresini varsayılan yapan tek bir çalışır satır yok",
       sweep.executable.length === 0 ? "0 çalışır kaçak adres" : `${sweep.executable.length} dosya`);
 
+  // ────────────────────── 6/6 the company's own rooms, swept for a construction trace
+  head("6/6 · THE COMPANY'S OWN ROOMS, SWEPT FOR A CONSTRUCTION TRACE");
+  const trace = sweepEngine(COMPANY_CONTAINER);
+  const traceRows = Object.values(trace).reduce((a, b) => a + b, 0);
+  fact("names looked for", CONSTRUCTION_MARKS.length);
+  for (const [t, n] of Object.entries(trace)) {
+    line(`     TRACE  ${t.padEnd(30)} ${n} row(s)`);
+    emit({ t: "moved", k: t, v: `${n} satır inşaat izi` });
+  }
+  // AND THE RUNTIME SIDE OF THE SAME ORDER: "tüm şirketin en ince kılcal
+  // damarları dahi tüm çalışanlar ve üst düzey yetkililerin hepsinin bağı
+  // tamamen inşaat veritabanından kopmalı." A company process that merely CARRIES
+  // the construction's address has a path to it, whether or not any line of code
+  // reads the variable today — measured 2026-08-25, the CEO's own live panel was
+  // carrying it, inherited from the shell that launched it.
+  const carriers = [];
+  for (const p of listCompanyProcesses()) {
+    const env = readEnv(p.pid);
+    const bad = env.filter((l) => l.includes(`:${CONSTRUCTION_PORT}/`) || /DXB_CONSTRUCTION/.test(l));
+    if (bad.length) carriers.push(`${p.name} (pid ${p.pid}): ${bad.map((l) => l.split("=")[0]).join(", ")}`);
+  }
+  say(carriers.length === 0,
+      "no live company process carries a path to the construction engine",
+      carriers.length === 0 ? "panel, Hamza and the scheduler carry the company only" : carriers.join(" · "),
+      "Hiçbir canlı şirket süreci inşaat motoruna giden bir yol taşımıyor",
+      carriers.length === 0 ? "panel, Hamza ve zamanlayıcı yalnız şirketi taşıyor" : carriers.join(" · "));
+
+  say(Object.keys(trace).length === 0,
+      "not one company table still names the construction",
+      Object.keys(trace).length === 0 ? "0 traces in 60 tables"
+        : `${Object.keys(trace).length} table(s), ${traceRows} row(s)`,
+      "Şirketin hiçbir tablosu artık inşaattan söz etmiyor",
+      Object.keys(trace).length === 0 ? "60 tablonun hiçbirinde inşaat izi yok"
+        : `${Object.keys(trace).length} tabloda ${traceRows} satır`);
+
   // ─────────────────────────────────────────────────────────────────── verdict
   line();
   line("─".repeat(96));
@@ -629,13 +740,14 @@ async function main() {
   line(`  company tables moved       : ${moved.length}`);
   line(`  write attempts accepted    : ${accepted.length} of ${PROBES.length}`);
   line(`  executable fallbacks       : ${sweep.executable.length}`);
+  line(`  construction traces        : ${traceRows} in ${Object.keys(trace).length} table(s)`);
   line(`  company fingerprint        : ${fpBefore.stamp} → ${fpAfter.stamp}`);
   line("─".repeat(96));
   line(reds === 0 ? "SEPARATION_HOLDS" : "SEPARATION_BROKEN");
   emit({ t: "end", verdict: reds === 0 ? "SEPARATION_HOLDS" : "SEPARATION_BROKEN",
          battery: batteryVerdict, moved: moved.length,
          accepted: accepted.length, probes: PROBES.length,
-         fallbacks: sweep.executable.length,
+         fallbacks: sweep.executable.length, traces: traceRows,
          before: fpBefore.stamp, after: fpAfter.stamp });
   process.exit(reds === 0 ? 0 : 1);
 }

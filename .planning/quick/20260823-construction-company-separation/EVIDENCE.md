@@ -3432,3 +3432,168 @@ $ pnpm verify:ledger    ledger truth OK — 8 state claims re-measured, 93 open 
                         against 68 board rows, 98 trigger lines, 17 rules each in exactly one
                         owner, 75 CEO approval claims each backed by a registered approval
 ```
+
+---
+
+## After Block 7 — the company is emptied of the construction, 2026-08-25
+
+**He reopened the row minutes after it closed, and he was right to.** Asked whether he
+would still see construction junk in the corners of his rooms, the honest answer was
+**yes — on the Decisions page.** Two orders followed, both registered:
+`b36-no-construction-fragments-visible-2026-08-25` and
+`b36-erase-construction-from-the-company-2026-08-25`. The second one **deletes the
+boundary he had set earlier the same day** (LAW A): `audit_log` and `hook_violations`
+are no longer exempt where their rows are about the construction.
+
+### The measurement that made the cut, before a single row moved
+
+```
+$ … "SELECT created_at::date, count(*) FROM public.decision_log GROUP BY 1"
+2026-07-13 = 6 · 07-24 = 99 · 07-25 = 431 · 07-26 = 2927 · 07-27 = 120 · 07-28 = 4
+                                     ↑ 82% of the whole book, in ONE day
+$ … "SELECT count(*) FROM public.tasks WHERE created_at::date='2026-07-18'"        202
+$ … "SELECT count(*) FROM public.decision_log WHERE created_at::date='2026-07-18'"   0
+```
+
+The company's real hiring wave produced **zero** decisions. What the rows actually said:
+
+```
+orchestrator:dispatch | task_plan | dispatched 1 task(s): [0] ctx-rot-managed-63622a82:
+                                    run the 50-step synthetic long-task …
+orchestrator:dispatch | task_plan | dispatched 1 task(s): [0] orch-ladder-a: produce a
+                                    two-sentence summary of the DXB escalation ladder design
+orchestrator:dispatch | task_plan | dispatched 1 task(s): [0] orch-test-e2e: write a haiku
+                                    about the DXB task queue and store it as text
+```
+
+The orchestrator rehearsing on synthetic work — **his own definition of what belongs to the
+construction:** *"Holdingin içinde yapılan geliştirme çalıştımı veya çalışıyor mu diye test
+edilmesi de dahil."*
+
+### FOUR TIMES THE DETECTOR WAS WRONG, AND EACH TIME IT WAS CAUGHT BEFORE A DELETION
+
+1. **`resident-worker` is the COMPANY's own worker**, not a drill name —
+   `packages/orchestrator/src/worker-loop.ts:26  export const RESIDENT_WORKER_ID = "resident-worker"`.
+   It claimed **214 of the company's 217 tasks** and wrote **1,122 of its task events**. A previous
+   session had put it on the residue list. Its work **stays in the company**.
+2. **The purge REFUSED to run** rather than delete the separation's own records:
+   ```
+   REFUSED: he approved 29 rows for audit_log and the company now holds 32 that match.
+   Nothing is moved. Re-measure, put the new number in front of him …
+   ```
+   The three extra rows were the `residue.moved_out` records the same run had just written —
+   they name the archive they wrote to, so an honest sweep convicts them. They are the company's
+   own proof of what left, and they are now excluded by name.
+3. **`engineering-worker` convicted an employee's own probation brief** — *"5 priorities listed,
+   scoped to engineering-worker execution discipline"* — and **`e10t` convicted the CEO's own purge
+   decision** (*"e10t test-employee fixture escalation — rejected for purge (C20)"*). Both came off
+   the text-marker list and are caught as ACTORS instead. **The CEO's own acts are never residue.**
+4. **`max(uuid)` does not exist in PostgreSQL.** The mover's high-water mark died on a uuid-keyed
+   table after an earlier group had already moved. Fixed at source, not worked around.
+
+### What left — 27,799 rows, every one in `dxb_archive` on the CONSTRUCTION engine
+
+```
+$ docker exec -i supabase_db_DxB_Build psql -U supabase_admin -d dxb_archive -qtA \
+    -c "SELECT source_table, rows_moved, ceo_approval FROM public.manifest ORDER BY id"
+cost_ledger                      1612   b36-block5-residue-and-two-databases-2026-08-25
+project_risks                       1   b36-block5-residue-and-two-databases-2026-08-25
+decision_log                     1143   b36-block5-residue-and-two-databases-2026-08-25
+decision_log_drill_week          3576   b36-no-construction-fragments-visible-2026-08-25
+audit_log_tool_pin_noise        18051   b36-erase-construction-from-the-company-2026-08-25
+audit_log_author_diary           1789   b36-erase-construction-from-the-company-2026-08-25
+audit_log_construction_identity   322   b36-erase-construction-from-the-company-2026-08-25
+audit_log_construction_marker      25   b36-erase-construction-from-the-company-2026-08-25
+hook_violations_drill_week        271   b36-erase-construction-from-the-company-2026-08-25
+control_idempotency_drill_keys    975   b36-erase-construction-from-the-company-2026-08-25
+tool_calls_drill                    7   b36-erase-construction-from-the-company-2026-08-25
+audit_log_drill_rounds             26   b36-erase-construction-from-the-company-2026-08-25
+alerts_drill                        1   b36-erase-construction-from-the-company-2026-08-25
+ARŞİVDEKİ TOPLAM = 27799
+```
+
+Every group: **copy → verify (row count AND identical checksum on BOTH engines) → delete → one
+`audit_log` record.** Not one checksum differed.
+
+### The company, before and after
+
+```
+$ node scripts/b36/company-state-fingerprint.mjs company
+  tables in public           60      (unchanged)
+  rows in public             18936   (was 43,983)
+  audit_log / hook_violations 9438/1692   (was 29,641/1,963)
+  STATE_FINGERPRINT  d8beba3f99484a23    (was 453b0ef99e03a1f3)
+```
+
+**What stayed, and it is the point:** his own **11 decisions** in the decision book · the company's
+**199 employee records** and **197 `employee.evaluated`** audit rows · its **217 tasks** and **1,122
+task events** · its **1,692 hook violations** from its own HR wave · its library, settings, approvals
+and money records · and the **8 `residue.moved_out` records** that prove what left.
+
+### The runtime side of the same order
+
+*"tüm çalışanlar ve üst düzey yetkililerin hepsinin bağı tamamen inşaat veritabanından kopmalı."*
+
+```
+Hamza  (jarvis-daemon pid 3218)  DXB_DATABASE_URL → 127.0.0.1:54322   the COMPANY
+                                 the construction address: ABSENT
+scheduler (outbox-executor)      DXB_DATABASE_URL → 127.0.0.1:54322   the COMPANY
+apps/ and packages/ reading DXB_CONSTRUCTION_DATABASE_URL or 54422 :  0 files
+```
+
+**But the CEO's own panel was carrying `DXB_CONSTRUCTION_DATABASE_URL`** — from no file at all,
+inherited from the shell that launched it after a session exported it for `verify:schema-parity`.
+Nothing read it; a door nobody uses is still a door. `scripts/dashboard.sh` now unsets it before
+starting the panel, and the panel was restarted through its own launcher:
+
+```
+$ curl -sL -o /dev/null -w '%{http_code} %{url_effective}' http://127.0.0.1:3000/
+200 http://127.0.0.1:3000/login
+$ pnpm verify:separation  (step 6)
+  green  no live company process carries a path to the construction engine
+         panel, Hamza and the scheduler carry the company only
+```
+
+### Made permanent — so he never has to ask again
+
+`pnpm verify:separation` gained **step 6**: it sweeps **every table in the company** for the
+construction's own names and fails on any hit, and it fails if a live company process carries a path
+to the construction engine. Its instrument proves itself first, like the other four:
+
+```
+=== 0/6 · THE INSTRUMENTS PROVE THEMSELVES RED ===
+  RED SEEN the row differ notices one row appearing               _b36_red_proof_692316 null → 1
+  RED SEEN the write prober sees every shape ACCEPTED where it can be 13/13 on the construction engine
+  RED SEEN the repository sweep convicts a planted fallback       scripts/b36/red-proof-…tmp.mjs:3
+  RED SEEN the construction-trace sweep convicts a planted trace  audit_log = 59 (planted row seen)
+=== 6/6 · THE COMPANY'S OWN ROOMS, SWEPT FOR A CONSTRUCTION TRACE ===
+  names looked for              : 22
+  green  no live company process carries a path to the construction engine
+  green  not one company table still names the construction     0 traces in 60 tables
+SEPARATION_HOLDS                                                              (exit 0)
+```
+
+The 22 names live **once**, in `scripts/b36/construction-marks.mjs`, shared with the purge so the
+gate and the purge can never disagree. `tests/b36/separation-gate.test.ts` (14 cases) fails the
+battery if `resident-worker`, `engineering-worker`, `e10t`, `smoke-e7`, `fable-5` or the bare word
+`test` is ever put back on that list.
+
+### Gates, after everything
+
+```
+$ pnpm verify:separation   SEPARATION_HOLDS · BATTERY_GREEN (sandboxed exit 0, host exit 0)
+                           0 of 60 tables moved · 0 of 13 writes accepted · 0 fallbacks
+                           0 construction traces · fingerprint d8beba3f99484a23 unchanged
+$ pnpm typecheck           exit 0
+$ pnpm verify:ledger       OK · 75 approval claims, each registered
+$ npx vitest run tests/b36/separation-gate.test.ts    14 passed
+```
+
+### ⚠ ONE THING LEFT ALONE, DELIBERATELY, AND IT IS OUTSIDE HIS ORDER
+
+The project on his screen named **"HR Sandbox" / "İK Kum Havuzu"** is **not** construction: its 201
+tasks are the company's own hiring round (*"HR probation: first work sample"*, 18 July), and they are
+what produced the 199 employee records. Only its NAME reads like a test area. Its slug `hr-sandbox`
+is compiled into five places in the HR factory's own database functions
+(`db/migrations/20260712008000_hr_factory_fns_e54b.sql`), so renaming it is a change with a real
+blast radius and it is not what he ordered. Reported to him in one line instead.

@@ -534,6 +534,55 @@ that reading as the next job and had not answered when the session closed.
    false zeroes); **(5)** this file; **(6)** the board's own line 12 said **"THE DATABASE IS OFF"** —
    true on 2026-08-17, false today: both engines measured `Up (healthy)` and four resident services
    `active`, 0 failed. Deleted and replaced (LAW A).
+   **AND THEN HE REOPENED THE ROW, MINUTES AFTER IT CLOSED — AND HE WAS RIGHT TO.** <!-- HISTORY -->
+   <!-- CEO-OK: b36-erase-construction-from-the-company-2026-08-25 --> Asked whether he would still
+   see construction junk in the corners of his own rooms, the author measured and answered honestly:
+   **yes, on the Decisions page.** He answered with two orders, both registered:
+   *"ulan b36 yı neden yaptık biz. 0-7 blok bu ayrımı yapmak için tamamlanmadı mı arkdaşım adamın
+   asabını bozmayın"* and then, completely: *"ŞİRKET İÇİNDEKİ BÜTÜN İNŞAATLA İLGİLİ GEÇMİŞTE NE VARSA
+   HEPSİNİ SİLİN. HERŞEYİ VERİLERİNDEN DE SİLİN. ŞİRKET ÇALIŞANLARI VEYA HAMZA İNŞAATLA İLGİLİ HİÇ BİR
+   ŞEY GÖRMEMELİ. ULAN İŞE MÜDÜR ALIORUZ NE DİYE TUĞLALARIN NASIL ÖRÜLDÜĞÜNÜ ZORLA ONA GÖSTERELİM."*
+   **THE SECOND ORDER DELETES THE BOUNDARY HE SET EARLIER THE SAME DAY (LAW A):** `audit_log` and
+   `hook_violations` are no longer exempt where their rows are about the construction, and the residue
+   selection that `b36-acceptance-criterion-and-block5-audit-2026-08-25` had closed for ever is
+   reopened — by him, for the row's own reason.
+   **27,799 ROWS LEFT THE COMPANY, and "SİLİN" was obeyed the way he has always required:** copied to
+   `dxb_archive` on the CONSTRUCTION engine first, verified by row count **and identical checksum on
+   both engines**, only then deleted. `decision_log` 3,576 (the 24-28 July drill week, all but his own
+   11 decisions) · `audit_log` 20,213 in four groups (the gateway's tool-pin noise 18,051 · the
+   author's diary sync 1,789 · identities the holding never employed 322 · rows naming a construction
+   identity, address or drill round 51) · `hook_violations` 271 (the 24-27 July drill only) ·
+   `control_idempotency` 975 · `tool_calls` 7 · `alerts` 1 — plus Block 5's 2,756 earlier the same day.
+   **The company: 43,983 → 18,936 rows · `STATE_FINGERPRINT 453b0ef99e03a1f3 → d8beba3f99484a23` ·
+   `audit_log/hook_violations` 29,641/1,963 → 9,438/1,692.**
+   **THE PRINCIPLE, and it is not "old = construction":** a row is the construction's when it is about
+   BUILDING or TESTING the machine; it is the company's when it is about the company's own business.
+   **What stayed:** his own 11 decisions · 199 employee records and 197 `employee.evaluated` rows · 217
+   tasks and 1,122 task events · 1,692 hook violations from the company's own HR wave · the library,
+   the settings, the approvals, the money · and the 8 `residue.moved_out` records that PROVE what left.
+   **THE DETECTOR WAS WRONG FOUR TIMES AND WAS CAUGHT EACH TIME BEFORE A DELETION.** `resident-worker`
+   is the **COMPANY's own worker identity** (`packages/orchestrator/src/worker-loop.ts:26`), not a drill
+   name — it claimed 214 of the company's 217 tasks; a previous session had it on the residue list and
+   that was wrong. The purge **REFUSED to run** rather than delete the separation's own
+   `residue.moved_out` records (32 found against 29 approved). `engineering-worker` convicted an
+   employee's own probation brief and `e10t` convicted the CEO's own purge decision — both came off the
+   text list. And `max(uuid)` does not exist in PostgreSQL, which killed the first uuid-keyed run.
+   **THE RUNTIME SIDE OF THE SAME ORDER IS DONE TOO.** Hamza's live process and the scheduler carry the
+   company's address and nothing else, and **no file in `apps/` or `packages/` reads the construction's
+   address (0)** — but the CEO's own panel was carrying `DXB_CONSTRUCTION_DATABASE_URL`, inherited from
+   the shell that launched it. `scripts/dashboard.sh` now unsets it and the panel was restarted (200 at
+   `/login`).
+   **MADE PERMANENT SO HE NEVER HAS TO ASK AGAIN:** `pnpm verify:separation` gained **step 6** — it
+   sweeps EVERY table in the company for the construction's own names and fails on any hit, and fails
+   if a live company process carries a path to the construction engine. Its instrument proves itself
+   red first like the other four. The 22 names live once, in `scripts/b36/construction-marks.mjs`,
+   shared with the purge; `tests/b36/separation-gate.test.ts` (14 cases) fails the battery if an
+   innocent name is ever put back on that list.
+   **⚠ ONE THING LEFT ALONE, OUTSIDE HIS ORDER AND REPORTED TO HIM IN ONE LINE:** the project named
+   **"HR Sandbox" / "İK Kum Havuzu"** is NOT construction — its 201 tasks are the company's own hiring
+   round and they produced the 199 employee records. Only its name reads like a test area, and its slug
+   `hr-sandbox` is compiled into five places in the HR factory's own database functions, so renaming it
+   is a change with a real blast radius and was not ordered.
    **THE DRY-RUN THAT PRECEDED IT, MEASURED WITH NOT A ROW MOVING:**
    The plan's residue table was written on 2026-08-23 and three of its five rows had stopped being
    true; it is replaced by the measurement (registered adaptation in `PLAN.md` §Block 5, evidence in

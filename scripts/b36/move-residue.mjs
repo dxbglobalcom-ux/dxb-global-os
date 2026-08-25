@@ -41,6 +41,7 @@
 import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { MARK_RE } from "./construction-marks.mjs";
 import { join } from "node:path";
 
 const REPO = fileURLToPath(new URL("../..", import.meta.url));
@@ -48,6 +49,32 @@ const COMPANY = "supabase_db_DxB_Global_OS";
 const CONSTRUCTION = "supabase_db_DxB_Build";
 const ARCHIVE_DB = "dxb_archive";
 const APPROVAL = "b36-block5-residue-and-two-databases-2026-08-25";
+/**
+ * HIS LIVE ORDER OF 2026-08-25, given AFTER Block 7 had closed the row and after
+ * he was shown that July's rehearsal was still standing on his Decisions page:
+ * "artık ben holdingte inşaa bok parçaları yazıları görmeyeceğim değil mi …
+ *  0-7 blok bu ayrımı yapmak için tamamlanmadı mı".
+ * It REOPENS the residue selection that b36-acceptance-criterion-and-block5-audit
+ * -2026-08-25 had closed for ever, and it deletes that closure (LAW A) — he
+ * reopened it himself, for the row's own reason.
+ */
+const APPROVAL_VISIBLE = "b36-no-construction-fragments-visible-2026-08-25";
+/** His second order of the same day, which OPENS the audit_log / hook_violations boundary. */
+const APPROVAL_VISIBLE_2 = "b36-erase-construction-from-the-company-2026-08-25";
+
+/**
+ * The construction's own names and its own address, written out once. A row that
+ * carries one of these in its own text is talking about how the bricks were laid.
+ * They are IDENTITIES and ADDRESSES, never ordinary words: "test" alone would
+ * convict the holding's Quality department, whose eight employees are real.
+ */
+// ONE DEFINITION, TWO USERS. The same names decide what this file takes OUT of
+// the company and what scripts/governance/company-untouched.mjs step 6 fails on
+// if it is ever found again. They live in one file so the purge and the gate can
+// never disagree about what "construction" is.
+const MARK = MARK_RE;
+/** Actors that never existed in the holding. Measured against the agents registry. */
+const CONS_ID = "('test','tracer','e125t-test','engineering-worker')";
 const APPLY = process.argv.includes("--apply");
 
 // The 19 names, written out rather than matched by a pattern. A pattern is a
@@ -107,6 +134,178 @@ const GROUPS = [
     what: "the 19 test-shaped workers that were never employees",
     expected: 1143,
     shape: `decided_by IN (${TEST_WORKERS.map(quote).join(", ")})`,
+  },
+  {
+    // ── HIS LIVE ORDER, 2026-08-25 · the decision book he can actually SEE.
+    //
+    // `/gov/decisions` reads public.decision_log. MEASURED before this was
+    // written, and it is why the cut is where it is:
+    //
+    //   · the whole book is 3,587 rows and EVERY ONE is dated 2026-07-13..07-28;
+    //     the company has not written a decision since 28 July;
+    //   · 2,927 of them — 82% — were written on ONE day, 2026-07-26, the
+    //     construction's night-shift drill;
+    //   · the company's real hiring wave (2026-07-18, 202 tasks) produced
+    //     ZERO decisions, so none of this book is the hiring record;
+    //   · what the rows actually say: "orch-ladder-a: produce a two-sentence
+    //     summary of the DXB escalation ladder design", "ctx-rot-managed-…:
+    //     run the 50-step synthetic long-task", "orch-test-e2e: write a haiku
+    //     about the DXB task queue" — the orchestrator rehearsing on synthetic
+    //     work, which is his own definition of what belongs to the construction:
+    //     "Holdingin içinde yapılan geliştirme çalıştımı veya çalışıyor mu diye
+    //      test edilmesi de dahil."
+    //
+    // WHAT STAYS: the 11 rows he decided himself — the model-routing changes,
+    // the U21 quality-tier law, deepseek-v4-pro's activation, the kimi-3
+    // deferral, embed-small kept. Those are the holding's own governance record
+    // and no drill wrote them.
+    //
+    // NOTHING DEPENDS ON THIS TABLE — measured: no foreign key references
+    // public.decision_log, and 0 rows carry an approval_id.
+    table: "decision_log",
+    archiveTable: "decision_log_drill_week",
+    approval: APPROVAL_VISIBLE,
+    key: "id",
+    where: `decided_by <> 'ceo' AND created_at < ${quote(WRITER_DIED)}`,
+    what: "the 24-28 July orchestrator drill week — everything in the decision book except his own 11 decisions",
+    expected: 3576,
+    shape: "decided_by <> 'ceo'",
+  },
+  // ═══════════════════════════════════════════════════════════════════════
+  // HIS ORDER OF 2026-08-25, AND IT OPENS THE BOUNDARY HE HIMSELF SET EARLIER
+  // THE SAME DAY: "ŞİRKET İÇİNDEKİ BÜTÜN İNŞAATLA İLGİLİ GEÇMİŞTE NE VARSA
+  // HEPSİNİ SİLİN. HERŞEYİ VERİLERİNDEN DE SİLİN. ŞİRKET ÇALIŞANLARI VEYA HAMZA
+  // İNŞAATLA İLGİLİ HİÇ BİR ŞEY GÖRMEMELİ. ULAN İŞE MÜDÜR ALIORUZ NE DİYE
+  // TUĞLALARIN NASIL ÖRÜLDÜĞÜNÜ ZORLA ONA GÖSTERELİM."
+  //
+  // "SİLİN" is obeyed the way he has always required and never withdrawn: the
+  // rows leave the COMPANY. They are copied to the construction's own house
+  // first, verified by count AND identical checksum, and only then deleted here.
+  // Nothing is destroyed; nothing about the construction stays in the holding.
+  //
+  // THE PRINCIPLE THE CUT USES, and it is not "old = construction":
+  //   a row is the CONSTRUCTION'S when it is about BUILDING or TESTING the
+  //   machine; it is the COMPANY'S when it is about the company's own business
+  //   — its employees, its library, its settings, its money, its decisions, its
+  //   approvals. Measured consequence: `resident-worker` is the COMPANY's own
+  //   worker identity (packages/orchestrator/src/worker-loop.ts:26), so its 214
+  //   tasks and 1,122 task events stay; and hook_violations from 17-19 July are
+  //   the company's own HR wave being quality-checked, so they stay too.
+  {
+    table: "audit_log",
+    archiveTable: "audit_log_tool_pin_noise",
+    approval: APPROVAL_VISIBLE_2,
+    key: "id",
+    where: "action = 'tool_missing'",
+    what: "the gateway's own tool-pin check firing during construction runs — machine noise, never a company event",
+    expected: 18051,
+    shape: "action = 'tool_missing'",
+  },
+  {
+    table: "audit_log",
+    archiveTable: "audit_log_author_diary",
+    approval: APPROVAL_VISIBLE_2,
+    key: "id",
+    where: "action = 'memory_commit'",
+    what: "the construction author's diary sync into the holding's memory — the memory itself he already had wiped on 2026-08-23; this is the trail it left",
+    expected: 1789,
+    shape: "action = 'memory_commit'",
+  },
+  {
+    table: "audit_log",
+    archiveTable: "audit_log_construction_identity",
+    approval: APPROVAL_VISIBLE_2,
+    key: "id",
+    where: `actor IN ${CONS_ID} AND action NOT IN ('tool_missing','memory_commit')`,
+    what: "written by identities the holding never employed — test, tracer, e125t-test, engineering-worker",
+    expected: 322,
+    shape: `actor IN ${CONS_ID}`,
+  },
+  {
+    table: "audit_log",
+    archiveTable: "audit_log_construction_marker",
+    approval: APPROVAL_VISIBLE_2,
+    key: "id",
+    // THE SEPARATION'S OWN RECORDS ARE NOT RESIDUE, and this exclusion exists
+    // because the tool caught them: every `residue.moved_out` row names the
+    // archive it wrote to (DxB_Build/dxb_archive), so the marker rule convicted
+    // the company's own proof of what left. The run REFUSED rather than delete
+    // them — 32 found against 29 approved — which is exactly what that guard is
+    // for. They stay: they are the holding's evidence, in its own book, that the
+    // construction was taken out of it.
+    where: `action NOT IN ('tool_missing','memory_commit','residue.moved_out','memory.cleared_on_ceo_order')`
+      + ` AND actor NOT IN ${CONS_ID}`
+      + ` AND (coalesce(actor,'')||coalesce(action,'')||coalesce(payload::text,'')) ~* '${MARK}'`,
+    what: "rows that name a construction identity or the construction's own address in their own text — the separation's own audit records excluded, they are the company's proof",
+    expected: 25,
+    shape: `(coalesce(actor,'')||coalesce(action,'')||coalesce(payload::text,'')) ~* '${MARK}'`
+      + ` AND action NOT IN ('residue.moved_out','memory.cleared_on_ceo_order')`,
+  },
+  {
+    table: "hook_violations",
+    archiveTable: "hook_violations_drill_week",
+    approval: APPROVAL_VISIBLE_2,
+    key: "id",
+    where: "created_at::date BETWEEN '2026-07-24' AND '2026-07-27'",
+    what: "the gate firing on the orchestrator's 24-27 July drill; the 17-19 July rows are the company's own HR wave being quality-checked and STAY",
+    expected: 271,
+    shape: "created_at::date BETWEEN '2026-07-24' AND '2026-07-27'",
+  },
+  {
+    // The construction's own drill ROUNDS, named where they appear in a row's own
+    // words. Measured 2026-08-25 after the first purge: 26 rows left in the book
+    // still talking about the R2.1 probe chain, the r31 drain probe, the stale
+    // test-probes, the gate canaries and the trace tests. The COMPANY's own seven
+    // rows written by the same worker — market_scan_verified,
+    // discovery_engine.halt_reverified, measured_no_entity_found,
+    // verification_check, queue.transition — are its own business and STAY.
+    table: "audit_log",
+    archiveTable: "audit_log_drill_rounds",
+    approval: APPROVAL_VISIBLE_2,
+    key: "id",
+    where: "action NOT IN ('residue.moved_out','memory.cleared_on_ceo_order')"
+      + " AND (coalesce(action,'')||coalesce(payload::text,''))"
+      + " ~* '(R2\\.1 resident-worker probe chain|_drain_probe|test-probe|gate-canary|trace-test|orch-test|probe chain)'",
+    what: "rows still naming a construction drill round — the R2.1 probe chain, the r31 drain probe, the stale test-probes, the gate canaries",
+    expected: 26,
+    shape: "(coalesce(action,'')||coalesce(payload::text,''))"
+      + " ~* '(R2\\.1|_drain_probe|test-probe|gate-canary|trace-test|orch-test|probe chain)'",
+  },
+  {
+    // His monitor firing is the COMPANY's own work; what this row SAYS is not.
+    // Its own words: "Root cause: 28 stale test-probe tasks (trace-test,
+    // orch-test-dispatch haiku, pre-E9.3 gate-canary orphans)". Resolved on
+    // 2026-07-14, and he must not read it.
+    table: "alerts",
+    archiveTable: "alerts_drill",
+    approval: APPROVAL_VISIBLE_2,
+    key: "id",
+    where: "(coalesce(title,'')||coalesce(probable_cause,'')||coalesce(suggested_action,'')||coalesce(mitigation,''))"
+      + " ~* '(test-probe|trace-test|orch-test|gate-canary)'",
+    what: "the queue alert whose stated root cause is the construction's own stale probe tasks",
+    expected: 1,
+    shape: "(coalesce(title,'')||coalesce(probable_cause,'')||coalesce(suggested_action,'')||coalesce(mitigation,''))"
+      + " ~* '(test-probe|trace-test|orch-test|gate-canary)'",
+  },
+  {
+    table: "control_idempotency",
+    archiveTable: "control_idempotency_drill_keys",
+    approval: APPROVAL_VISIBLE_2,
+    key: "key",
+    where: "key LIKE 'r23t%'",
+    what: "the r23t drill's own idempotency keys",
+    expected: 975,
+    shape: "key LIKE 'r23t%'",
+  },
+  {
+    table: "tool_calls",
+    archiveTable: "tool_calls_drill",
+    approval: APPROVAL_VISIBLE_2,
+    key: "id",
+    where: "coalesce(tool,'') ~* 'e10t'",
+    what: "the e10t drill's own tool calls",
+    expected: 7,
+    shape: "coalesce(tool,'') ~* 'e10t'",
   },
 ];
 
@@ -204,7 +403,15 @@ const checksumSql = (schemaTable, colList, key, where) => `
 
   const results = [];
   for (const g of GROUPS) {
+    const approval = g.approval ?? APPROVAL;
+    const archiveTable = g.archiveTable ?? g.table;
+    if (!approvals[approval]) {
+      console.error(`REFUSED: ${approval} is not in the approvals register.`);
+      process.exit(2);
+    }
     line(`── ${g.table} — ${g.what}`);
+    if (archiveTable !== g.table) line(`   archived as         : ${ARCHIVE_DB}.public.${archiveTable}`);
+    if (approval !== APPROVAL) line(`   his approval        : ${approval}`);
 
     // The column list and the key's type come from the company itself, so the
     // archive cannot drift from what it is archiving.
@@ -228,8 +435,15 @@ const checksumSql = (schemaTable, colList, key, where) => `
     // A high-water mark on the key, so COPY and DELETE cannot disagree about
     // which rows they mean even if a writer appears between them. A predicate
     // that already names one row by its id needs none.
+    // A uuid HAS no max(): PostgreSQL defines no aggregate for it, and the first
+    // run against a uuid-keyed table died on `function max(uuid) does not exist`
+    // after an earlier group had already moved. A key with no order cannot carry
+    // a high-water mark, so the predicate stands on its own — which is safe here
+    // for the same reason `exact` is: nothing writes these rows any more, the
+    // construction having been cut out of the company before this ran.
+    const orderable = !/^uuid$/i.test(keyType);
     let predicate = g.where;
-    if (!g.exact) {
+    if (!g.exact && orderable) {
       const maxKey = await psql(COMPANY, "postgres",
         `SELECT coalesce(max("${g.key}")::text, '') FROM public.${g.table} WHERE ${g.where};`);
       predicate = maxKey === ""
@@ -237,6 +451,7 @@ const checksumSql = (schemaTable, colList, key, where) => `
         : `(${g.where}) AND "${g.key}" <= ${quote(maxKey)}::${keyType}`;
     }
 
+    if (!g.exact && !orderable) line(`   key type            : ${keyType} — no high-water mark is possible, the predicate stands alone`);
     const count = Number(await psql(COMPANY, "postgres",
       `SELECT count(*) FROM public.${g.table} WHERE ${predicate};`));
     const checksum = await psql(COMPANY, "postgres",
@@ -294,25 +509,25 @@ const checksumSql = (schemaTable, colList, key, where) => `
     // archived under this name, this file stops and says so.
     const held = Number(await psql(CONSTRUCTION, ARCHIVE_DB,
       `SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace`
-      + ` WHERE n.nspname = 'public' AND c.relname = ${quote(g.table)};`));
+      + ` WHERE n.nspname = 'public' AND c.relname = ${quote(archiveTable)};`));
     if (held > 0) {
-      const rows = Number(await psql(CONSTRUCTION, ARCHIVE_DB, `SELECT count(*) FROM public."${g.table}";`));
+      const rows = Number(await psql(CONSTRUCTION, ARCHIVE_DB, `SELECT count(*) FROM public."${archiveTable}";`));
       if (rows > 0) {
-        console.error(`   REFUSED: ${ARCHIVE_DB} already holds ${rows} archived rows for ${g.table}.`
+        console.error(`   REFUSED: ${ARCHIVE_DB} already holds ${rows} archived rows for ${archiveTable}.`
           + ` This file will not overwrite an archive. Nothing is moved.`);
         process.exit(1);
       }
-      await psql(CONSTRUCTION, ARCHIVE_DB, `DROP TABLE public."${g.table}";`);
+      await psql(CONSTRUCTION, ARCHIVE_DB, `DROP TABLE public."${archiveTable}";`);
     }
-    await psql(CONSTRUCTION, ARCHIVE_DB, `CREATE TABLE public."${g.table}" (${ddl});`);
+    await psql(CONSTRUCTION, ARCHIVE_DB, `CREATE TABLE public."${archiveTable}" (${ddl});`);
     await copyAcross(`SELECT ${colList} FROM public.${g.table} WHERE ${predicate}`,
-      `public."${g.table}"`, cols.map((c) => `"${c}"`));
+      `public."${archiveTable}"`, cols.map((c) => `"${c}"`));
 
     // --- 2. VERIFY ---------------------------------------------------------
     const archivedCount = Number(await psql(CONSTRUCTION, ARCHIVE_DB,
-      `SELECT count(*) FROM public."${g.table}";`));
+      `SELECT count(*) FROM public."${archiveTable}";`));
     const archivedSum = await psql(CONSTRUCTION, ARCHIVE_DB,
-      checksumSql(`public."${g.table}"`, colList, g.key, null));
+      checksumSql(`public."${archiveTable}"`, colList, g.key, null));
     line(`   rows in archive     : ${archivedCount}`);
     line(`   checksum (archive)  : ${archivedSum}`);
     if (archivedCount !== count || archivedSum !== checksum) {
@@ -333,16 +548,16 @@ const checksumSql = (schemaTable, colList, key, where) => `
         'what', ${quote(g.what)},
         'rows', ${count},
         'checksum', ${quote(checksum)},
-        'archive', ${quote(`${CONSTRUCTION}/${ARCHIVE_DB}/public.${g.table}`)},
-        'ceo_approval', ${quote(APPROVAL)}
+        'archive', ${quote(`${CONSTRUCTION}/${ARCHIVE_DB}/public.${archiveTable}`)},
+        'ceo_approval', ${quote(approval)}
       ));
       COMMIT;`)).split("\n")[0];
     const remaining = Number(await psql(COMPANY, "postgres",
       `SELECT count(*) FROM public.${g.table} WHERE ${g.where};`));
     await psql(CONSTRUCTION, ARCHIVE_DB, `
       INSERT INTO public.manifest (source_table, what, rows_moved, checksum, predicate, ceo_approval)
-      VALUES (${quote(g.table)}, ${quote(g.what)}, ${count}, ${quote(checksum)},
-              ${quote(predicate)}, ${quote(APPROVAL)});`);
+      VALUES (${quote(archiveTable)}, ${quote(g.what)}, ${count}, ${quote(checksum)},
+              ${quote(predicate)}, ${quote(approval)});`);
     line(`   deleted from company: ${deleted}    left behind: ${remaining}`);
     line("   audit record        : one row, action='residue.moved_out'");
     line();
