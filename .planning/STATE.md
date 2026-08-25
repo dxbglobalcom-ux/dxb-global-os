@@ -81,21 +81,15 @@ already reads `locked` — so the invoice is settled FIRST and everything else f
 root password remains an identity step and remains unapproved.
 
 **AND A SECOND THING WAS FOUND AND FIXED THE SAME SESSION, on row B39 — AND THE COMPANY WAS NEVER
-TOUCHED BY IT.** Both money brakes counted the SessionEnd hook's rows — **this repository's own
-coding sessions**, 487,924,277 tokens inside one hour — as if they were work. On the CONSTRUCTION
-engine that turned the same query's answer from **8 hands into 1**, so the bench and the suite were
-measuring a company that did not exist. **On the COMPANY's engine `cost_ledger` holds 0 rows and the
-hook cannot reach it** (B36, `tests/b36/hook-never-writes-company.test.ts`) — the wall held. The
-sentence first written here, *"the company would have given itself one hand"*, overstated it and is
-deleted (LAW A). Both queries now count only the company's own runs from one shared constant.
-
-**AND THE HOOK ITSELF IS FIXED, ON HIS ORDER** — *"kanca manca düzelt bir daha aynı problemler
-kesinlikle yaşanmasın."* It wrote cache re-reads as fresh input: **97-99 % of every figure**, so one
-coding session appeared to consume 153 million input tokens. It now records what was SENT and keeps
-the re-reads beside it (`meta.cache_read_tokens`, plus the turn count). The 16 rows already in the
-construction book were recomputed from their own transcripts: **1,567,252,545 → 23,185,592** fresh
-tokens, 1,544,066,953 re-reads preserved, one placeholder row left at zero because its transcript is
-gone. `tests/b39/hook-token-truth.test.ts` was red before the fix.
+TOUCHED BY IT.** Both money brakes counted spending that was not the company's own: a SessionEnd
+hook was writing **this repository's own coding sessions** into the same book, 487,924,277 tokens
+inside one hour. On the CONSTRUCTION engine that turned the same query's answer from **8 hands into
+1**, so the bench and the suite were measuring a company that did not exist. **The COMPANY's own
+book was untouched throughout — it holds 0 rows**, asked through B36's one-way window by the named
+question `cost_ledger_rows` and with no company credential in the asking process. Both queries now
+count only the company's own runs from one shared constant, and
+`tests/b39/dispatch-brakes.test.ts` calls the scheduler's real decision, so removing either half of
+that filter fails on its own.
 
 **2026-08-25 — THE HOLDING'S READING DOOR CAN NO LONGER BE TAKEN AWAY BY ACCIDENT. FIXED AT SOURCE ON HIS ORDER, THE SAME TURN IT WAS FOUND.** <!-- HISTORY -->
 A session ran `scripts/b36/company-read-gateway.mjs` by hand — the service that is the ONLY way
@@ -145,6 +139,15 @@ read it to refuse the company.
 Tokens page still carries a separately-labelled CONSTRUCTION panel, built for complaint C24. It has
 no writer any more and can only render zero. **V2 does not carry that panel at all** — his
 minimalism ruling forbids showing an empty box, and by this order there is nothing to show.
+
+**HIS ORDER ON THE BOARD, 2026-08-25, AND THE FIGURES THAT PROVE IT — MEASURED IN CHARACTERS.**
+*"yapılanları kapatılanları da uzun uzadıya yazmayın tahtada, sadece kısa ve net anlatım olsun."*
+One closed row had been eating a quarter of the whole register. Against commit `6f4641f8`, the last
+state before this session: **B36 49,346 → 1,505 · B37 2,421 → 619 · B39 6,137 → 4,117 · the whole
+board 181,795 → 130,778.** ⚠ **The figures in commit `02333574`'s message are wrong and are
+superseded by these** — that message counted the board in BYTES while counting rows in characters,
+and quoted B39 at a mid-edit 1,762 before the row was given the whole finding it now carries. Git
+history is not rewritten; this line is the correction, and these are the numbers to cite.
 
 **STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
 eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count
@@ -824,7 +827,7 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    adopted by the CEO, is the only thing that can reopen it: *"can the SessionEnd hook send an INSERT,
    UPDATE or DELETE to the company's database, regardless of how the address is spelled, of a missing
    or stale identity record, or of a connection failure?"* **Measured answer: NO** —
-   `scripts/b36/prove-block1.mjs`, run as `pnpm b36:prove-block1` (it left the battery on 2026-08-23: a construction battery may not hold the company's address and its write-capable account — the auditor's first FAIL on Block 2). What stays in the battery is `tests/b36/block1-question.test.ts`, which answers the same question without reaching the holding:
+   `scripts/b36/prove-block1.mjs`, run as `pnpm b36:prove-block1` — **both were deleted on 2026-08-25 when the CEO abolished the hook itself (*"artık yazılmasın"*), so neither can be re-run; what follows is the record of what they printed while they existed** (it left the battery on 2026-08-23: a construction battery may not hold the company's address and its write-capable account — the auditor's first FAIL on Block 2). What stays in the battery is `tests/b36/block1-question.test.ts`, which answers the same question without reaching the holding:
    **18 hostile conditions · 18 refused · 0 rows in the company carrying any of the 18 session ids the drill handed the hook · the compiled hook holds exactly one write construct and it is the `cost_ledger` insert**,
    and the drill proves in the same run that its detector can see a write. Every other finding —
    counting, backups, record wording, portable builds — goes to its own block and does not hold this

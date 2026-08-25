@@ -8,6 +8,10 @@ import { describe, expect, it } from "vitest";
 //    tests/b36/block1-question.test.ts:26 hands the company's address and the
 //    write-capable `postgres` account to a subprocess."
 //
+// (That file, and the hook it questioned, were deleted on 2026-08-25 on the
+// CEO's order — "artık yazılmasın". The quote stays because it is why this file
+// exists; the RULE below outlives both of them and is what is enforced here.)
+//
 // He was right, and the finding is larger than the line he cited: two files in
 // tests/b36 carried the holding's address together with its superuser password,
 // one of them opening a real connection to the CEO's own database on every

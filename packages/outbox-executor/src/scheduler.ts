@@ -247,7 +247,15 @@ function machineCeiling(): number {
   return Math.max(1, Math.min(cpus().length - 2, 8));
 }
 
-async function dispatchLanes(): Promise<number> {
+/**
+ * How many hands the company gives itself this tick.
+ *
+ * EXPORTED FOR ONE REASON, 2026-08-25: an audit found that the only case
+ * covering this decision held a COPY of the query below and tested the copy, so
+ * a predicate could be dropped here and the suite would stay green.
+ * `tests/b39/dispatch-brakes.test.ts` now calls this function itself.
+ */
+export async function dispatchLanes(): Promise<number> {
   const ceiling = machineCeiling();
   try {
     const r = await sql<{ pinned: number; waiting: number; room: number }>`

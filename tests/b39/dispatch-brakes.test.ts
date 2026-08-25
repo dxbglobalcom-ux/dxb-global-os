@@ -37,6 +37,7 @@ import { join } from "node:path";
 import { sql } from "kysely";
 import { closeDb, getDb } from "@dxb/shared";
 import { drainTasks } from "../../packages/orchestrator/src/worker-loop.js";
+import { dispatchLanes } from "../../packages/outbox-executor/src/scheduler.js";
 import {
   checkSubscriptionWindow,
   recordSubscriptionSpend,
@@ -299,6 +300,51 @@ describe("B39 · H1 — the subscription path spends where a brake can see it", 
 });
 
 describe("B39 · the decision — the company works out its own hands, the CEO sets no dial", () => {
+  it("the REAL lane decision ignores spending that is not the company's own — both halves of it", async () => {
+    // AUDIT FINDING, 2026-08-25: the case below this one holds a COPY of the
+    // scheduler's query and tests the copy. A predicate could be deleted in
+    // packages/outbox-executor/src/scheduler.ts and the suite would stay green.
+    // This case calls dispatchLanes() itself, and it is built so that removing
+    // EITHER `source = ${SUBSCRIPTION_SPEND_SOURCE}` predicate — the one on
+    // `spent` or the one on `avg_cost` — fails it on its own:
+    //
+    //   both present   spent 1,000 · avg 500  → room 4 → lanes 2   (this case)
+    //   drop `spent`   spent 1,001,000 > cap  → room 0 → lanes 1   (fails)
+    //   drop `avg`     avg 333,666            → room 0 → lanes 1   (fails)
+    const department = `${M}-lanes`;
+    await sql`DELETE FROM cost_ledger WHERE department LIKE ${`${M}%`}`.execute(db());
+
+    // Pin the count so the answer does not depend on how much work happens to be
+    // queued while this runs; the machine ceiling on this bench is 8.
+    await setSetting("orchestration.dispatch_lanes", "2");
+    await setSetting(SUBSCRIPTION_CAP_KEY, "3000");
+
+    // The company's own two runs: 1,000 spent, 500 a job.
+    for (let i = 0; i < 2; i++) {
+      const t = await makeTask(department);
+      await recordSubscriptionSpend({
+        taskId: t, agentId: null, department, model: "opus-5", tokensIn: 250, tokensOut: 250,
+      });
+    }
+    expect(await dispatchLanes(), "a clean book should afford the pinned two hands").toBe(2);
+
+    // Somebody else's million tokens, in the same window and the same book.
+    const foreign = await makeTask(department);
+    await sql`
+      INSERT INTO cost_ledger (task_id, department, model, mode, prompt_tokens,
+                               completion_tokens, cost_eur, source)
+      VALUES (${foreign}::uuid, ${department}, 'claude-opus-5', 'subscription',
+              1000000, 0, 0, 'manual')`.execute(db());
+
+    expect(
+      await dispatchLanes(),
+      "spending the company did not do collapsed the company's own hands",
+    ).toBe(2);
+
+    await sql`DELETE FROM cost_ledger WHERE department LIKE ${`${M}%`}`.execute(db());
+    await setSetting("orchestration.dispatch_lanes", "0");
+  });
+
   it("the lane count is registered, bounded, and seeded to DECIDE FOR ITSELF", async () => {
     const reg = await sql<{ schema: string }>`
       SELECT value_schema::text AS schema FROM settings_registry
