@@ -169,11 +169,32 @@ history.** The sentence that stood here, that nothing had been re-verified by an
 it was written and is now false; it is deleted (LAW A). What is still true under LAW B: **a PASS
 from his auditor is not his acceptance.**
 
-⚠ **AND ONE SENTENCE IN `04a8ca04`'s MESSAGE IS WITHDRAWN.** It said the board's B22 cell had
-falsely called the rival sources unwatched and that the peer deleted it in `7d93a305`. **The author
-repeated that from a peer's report without measuring it.** Measured now: `7d93a305`'s only change to
-the board is the **B36** row, and the B22 row is byte-identical across this whole session. Whatever
-the peer corrected, it was not that, and no record of this session may carry the claim.
+⚠ **AND THE WITHDRAWAL OF THE B22 SENTENCE WAS ITSELF WRONG. HIS AUDITOR CAUGHT IT, 2026-08-26.**
+The record here is now the measured one, in four lines:
+
+- **The B22 correction was real.** The row said *"Sources remain unwatched"* and now says
+  **"THE WATCHING IS FINISHED"** — 32 of 37 sources reported, 5 skipped on his own orders,
+  `scripts/rival-intel/next.sh` → `NEXT: done`. The row went from 706 to 1,352 characters.
+- **It was authored in `99a91c52`** — `git log -S'THE WATCHING IS FINISHED'` names that commit and
+  no other.
+- **`7d93a305` did not touch B22 at all**; its only board change is the **B36** row.
+- **So `04a8ca04` was wrong about WHO and WHERE, not about WHETHER.** The correction happened; it
+  was not in the commit that message named.
+
+**AND THE REASON THE AUTHOR GOT IT WRONG IS THE MEASUREMENT, NOT THE JUDGEMENT — which makes it the
+worse mistake.** The check was `git show … | grep '^[-+]| B22 ' | cut -c1-260`. The change begins
+past character 400. **A truncated view was read as proof of identity**, and the withdrawal was
+written on it. `.planning/memory` already carries this exact lesson under *validate the detector
+first*; it was not applied. **Any claim that two texts are the same is a claim about their WHOLE
+length, and the command must show that it looked at all of it.**
+
+⚠ **ONE THING THAT CANNOT BE MEASURED FROM GIT, and it is why these mix-ups keep happening.** Both
+sessions in this repository commit under the same identity (`DXB Global`), so the history cannot say
+which of them typed a line. `99a91c52` is the author's own commit and the B22 text inside it is the
+PEER's work by the peer's own account — carried in because the whole board file was staged by path
+while their edit sat in the working tree. It is the mirror image of `48cfc277`, where the author's
+deletions were carried into the peer's commit. The tree is right in both cases; only the attribution
+is mixed, and no history is rewritten to fix it.
 
 **STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
 eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count
