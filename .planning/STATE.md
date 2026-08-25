@@ -149,6 +149,15 @@ superseded by these** — that message counted the board in BYTES while counting
 and quoted B39 at a mid-edit 1,762 before the row was given the whole finding it now carries. Git
 history is not rewritten; this line is the correction, and these are the numbers to cite.
 
+**⚠ WHO AUDITED WHAT, 2026-08-25 — WRITTEN DOWN BECAUSE THE AUTHOR ALMOST GOT IT WRONG.** The five
+findings that reopened B39 came from **the CEO's own auditor**, the one running beside this session.
+They did NOT come from the peer Claude session in this repository: he stopped that session's audit
+in one line — *"denetime gerek yok. ben şunu istiorm tahtayı CEO olarak takip etmek istiyorum"* —
+and it built him a readable board view instead. **All five are fixed and each fix is proven by a
+command, but NOTHING HAS BEEN RE-VERIFIED BY ANYONE** (LAW B): re-verification goes back to the
+auditor that wrote the findings, or waits for his word. No session may report that a second author
+checked them, because none did.
+
 **STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
 eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count
 reaches no screen, and by his own ruling that V1 is dead it belongs to V2, not to the old dashboard.
