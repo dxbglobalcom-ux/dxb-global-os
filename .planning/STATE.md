@@ -429,8 +429,17 @@ that reading as the next job and had not answered when the session closed.
    BUILDING, not company business.** His 2026-08-23 order was therefore never "the holding may have no
    memory": `memory_index` may fill again with the COMPANY's own memory; the construction writing into
    it is what is forbidden for ever. Registered with his words in `ceo-approvals.json`.
-   **WHAT BLOCK 5 STILL OWES HIM:** the battery is RED (below), his auditor has not looked, and he has
-   not seen it by eye — the exact order he set for Block 4 and expects again.
+   **HIS EYE'S SCREEN IS BUILT AND WAITING:** `pnpm b36:eye-check` → **`http://127.0.0.1:4599/blok5`**,
+   five panels that RUN while he looks — the residue is out · every row still in the archive with the
+   checksums recomputed on the spot · his shut books untouched and their oldest records still in place ·
+   34/34 of his views answering and his risk page carrying business risk only · the company's fingerprint
+   identical before and after the screen itself. **The RULE #0 design pass caught three real defects** —
+   a boundary detector built on `max(id)` that would have called a healthy book broken (the ids have gaps:
+   1,963 rows between id 910 and 9149), text cut off in two panels, and a wrap fix that split a number in
+   half. All three repaired and re-looked-at, at 1600 px and at 1280 px. Block 4's accepted screen was
+   re-rendered after the shared-style change and is still five-for-five.
+   **WHAT BLOCK 5 STILL OWES HIM:** his auditor has not looked, and he has not seen it by eye — the exact
+   order he set for Block 4 and expects again (LAW B).
    **THE DRY-RUN THAT PRECEDED IT, MEASURED WITH NOT A ROW MOVING:**
    The plan's residue table was written on 2026-08-23 and three of its five rows had stopped being
    true; it is replaced by the measurement (registered adaptation in `PLAN.md` §Block 5, evidence in

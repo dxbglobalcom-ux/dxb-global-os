@@ -540,6 +540,9 @@ risk only (board C36 closed). Evidence: `EVIDENCE.md` §"Block 5 — the residue
 **Gates on the final state:** `BATTERY_GREEN` (107/107 files · 775 passed | 15 skipped · host
 3/3 and 16/16) · `WALL_IS_ONE_WAY` · `typecheck` 0 · `verify:ledger` OK · `SCHEMA_PARITY` ·
 fallbacks 0 · gitleaks clean · 0 failed units.
+**His eye's screen is built:** `pnpm b36:eye-check` → `http://127.0.0.1:4599/blok5`, five live panels;
+RULE #0 pass run three times and it caught three defects, all repaired (`EVIDENCE.md` §"The screen his
+eye needs for Block 5").
 **What is NOT done, and it is the only thing left:** his auditor has not looked, and he has not seen
 it by eye. That is the order he set for Block 4 and it holds here (LAW B).
 

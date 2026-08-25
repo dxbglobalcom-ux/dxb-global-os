@@ -2925,3 +2925,90 @@ his standing decision of 2026-08-24 withdrew the history-cleaning order; so it i
 reported and left untouched. Removing that one line, or rotating the password, is
 his to decide. Git history is a separate, already-recorded item (commit `6c096852`)
 and is not reopened here.
+
+### The screen his eye needs for Block 5
+
+`pnpm b36:eye-check` → `http://127.0.0.1:4599/blok5`. It shows no stored result:
+it asks both engines while he is looking, and every number on it was measured in
+the seconds he was watching. Five panels, in his language:
+
+| # | What it asks, live | What it answered |
+|---|---|---|
+| 1 | is the residue actually out of the company? | `cost_ledger` 0 (was 1,612) · brown-token 0 (was 1) · the 19 workers' decisions 0 (was 1,143) · the company's own 3,587 decisions still there |
+| 2 | is every deleted row still recoverable? | archive 1612/1612 · 1/1 · 1143/1143, **checksums recomputed on the spot** and identical to the manifest · the 2026-08-23 dump present, 23,666,672 bytes |
+| 3 | was the boundary he shut left alone? | `hook_violations` 1,963 — the same number measured this morning before the move · `audit_log` 29,641, i.e. 29,637 + 4 · **both books' oldest record still in place** (2026-07-17 id 910 · 2026-07-13 id 4873) · the four added records named |
+| 4 | do his own surfaces still stand? | 34/34 views answer · risk register 2 rows, 0 open construction chores · `127.0.0.1:3000` open, `192.168.178.44:3000` shut |
+| 5 | does the company move while he watches? | `453b0ef99e03a1f3` → `453b0ef99e03a1f3`, `29641/1963` → `29641/1963` |
+
+**RULE #0 design pass — run three times, and it caught three real defects, not one.**
+The page was rendered in a real browser (headless, so his desktop was not
+disturbed) and LOOKED AT, at 1600 px and again at 1280 px because a wide baseline
+hides truncation:
+
+1. **A detector that would have called a healthy system broken.** Panel 3's first
+   version proved the boundary with `max(id) === count(*)`. Measured: `hook_violations`
+   holds 1,963 rows between id **910** and **9149** — the ids have gaps from the
+   table's own history, so that test fails on a perfectly intact book. It was
+   replaced with what can actually be right: the count against the value measured
+   on this engine **before** the move, plus the oldest record still being the
+   oldest — which is what a trimmed history would move.
+2. **Text was cut off** in panels 3 and 4 — his ruling of 2026-08-02 forbids that on
+   any surface he reads. The long sentences were sitting in the narrow right-hand
+   column. They were moved into full-width rows, and `td.v` gained a wrap so it can
+   never clip again.
+3. **The first wrap fix split a number in half** — `23.666` / `.672` — because
+   `overflow-wrap:anywhere` breaks anywhere. Changed to `break-word`, and the units
+   moved into the labels so a figure never has to wrap at all. In the same pass the
+   query behind panel 4 stopped cutting the risk titles at 64 characters: it was the
+   screen doing the truncating.
+
+**Blast radius, measured rather than assumed.** The wrap rule lives in the STYLE
+shared with the two screens he has already ACCEPTED. Block 4's screen was
+therefore re-rendered and looked at after the change: five panels, all `pass`,
+verdict *"Beş maddenin beşi de gözünüzün önünde doğrulandı."*, no console error,
+`document.scrollWidth === window.innerWidth` (no sideways scroll). It also gained
+the one thing it was missing — a way forward to `/blok5`.
+
+### The archive was sitting on a rebuildable engine — it is not any more
+
+**The gap, found by asking where the archive actually lives.** `dxb_archive` is a
+database on the CONSTRUCTION cluster, and that cluster is the one the project
+treats as disposable — its `postgres` database is rebuilt from `db/migrations`
+plus generated seed whenever the schema moves. A `supabase db reset` would not
+touch a second database in the same cluster, but tearing the stack down or
+removing its volume takes every database with it. His order is *"kalıntı taşınır,
+silinmez"* — a home that a routine rebuild can erase is not a home.
+
+**Closed the same turn.** The archive was dumped off the cluster, restored into a
+throwaway database to prove the dump is real, and the checksums were RECOMPUTED
+from the restored copy rather than read back from the manifest:
+
+```
+$ docker exec supabase_db_DxB_Build pg_dump -U supabase_admin -d dxb_archive -Fc \
+    > ~/backups/dxb/dxb-archive-b36-block5-2026-08-25.dump      (84,442 bytes, mode 600)
+$ pg_restore -l …            TABLE DATA public cost_ledger / decision_log / manifest / project_risks
+$ … restored into dxb_archive_restore_check
+  cost_ledger 1612 · project_risks 1 · decision_log 1143 · manifest 3
+  cost_ledger  recomputed from the dump  9328b28e43145bc47cd5fb5e5ad41e7f
+  decision_log recomputed from the dump  e1a87e4309fad0abaee9ac09fb77f169
+  what the manifest recorded             9328b28e43145bc47cd5fb5e5ad41e7f · e1a87e4309fad0abaee9ac09fb77f169
+$ DROP DATABASE dxb_archive_restore_check     → _supabase, dxb_archive, postgres
+```
+
+**And off this machine**, by the same route Block 0's dump already uses, then
+compared byte for byte:
+
+```
+$ scp … dxb-storagebox:dxb-archive-b36-block5-2026-08-25.dump
+-rw------- 1 u629578-sub1 1053 84442 Aug 25 09:14 dxb-archive-b36-block5-2026-08-25.dump
+local  c0f873654177156da863ff5097ba608bb9f8183466dcc633d69a66aaf4e2a1ea
+remote c0f873654177156da863ff5097ba608bb9f8183466dcc633d69a66aaf4e2a1ea   IDENTICAL
+```
+
+The file is named so the daily retention sweep (which prunes `dxb-laptop-*.dump`
+after 14 days) cannot reach it. **The 2,756 moved rows now exist in four places:**
+the archive database, its own dump here, that dump off-site, and the whole-company
+dump of 2026-08-23 that predates the move.
+
+**Battery after all of it:** `BATTERY_GREEN` — 107/107 files, 775 passed | 15
+skipped, host 3/3 and 16/16.
