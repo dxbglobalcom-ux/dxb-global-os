@@ -19,7 +19,20 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
-**2026-08-23 — THE CONSTRUCTION SITE IS BEING CUT OUT OF THE COMPANY. THIS IS THE LIVE ORDER.**
+**2026-08-25, THE STANDING POSITION — NOTHING IS WAITING ON THE AUTHOR. TWO THINGS WAIT ON HIM.** <!-- OPEN: B39 -->
+He approved a two-part plan, ruled that the WORK happens in the next session — *"yapımı ise diğer
+sessionda olacak zira session çok şişti"* — and left the machine to it: *"Ben dışarı çıkıyorum sen
+işe devam et."* **Both parts are built, tested and committed** (`c20b9f8c`, `6ec09952`); the record
+of each is item 2 under *What happens next*. **Built is not accepted (LAW B) — his eye has not been
+on either.** What now waits on HIM, and only on him: <!-- OPEN: B39 -->
+1. **The rented Hetzner box** (board row **B39**): running 47 days, 48-59 % CPU, continuous network
+   traffic, and unreachable from this machine on every port. It bills, it works, and nobody can say
+   at what. Repair it, re-provision it, or release it — his call, not the author's.
+2. **Whether the company's migration ledger gets repaired** — 33 versions behind its own schema, so
+   the canonical `scripts/bootstrap-db.sh` cannot run against the company at all.
+The order of work otherwise stays what he set: **this board, oldest first**, unless he names a focus.
+
+**2026-08-23 — THE CONSTRUCTION SITE WAS CUT OUT OF THE COMPANY. ✓ CLOSED 2026-08-25 (row B36).**
 He opened the day with it: the very important gap on the board, and the complaint born from it —
 *"inşaat sürecinin database'i ile holding kendi database'ini ferrari seviyesine yakışır şekilde
 ayıracağız"*. It is board row **B36**, and his three decisions are registered
@@ -786,71 +799,67 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    `COMPANY UNTOUCHED SINCE THE BASELINE — 0 inserts, 0 updates, 0 deletes, 0 row-count changes`.
 
 
-2. **HIS TWO ORDERS OF 2026-08-25, PLANNED AND APPROVED — THE PLAN IS WRITTEN, THE WORK IS NOT DONE.** <!-- HISTORY -->
-   **He put the author in plan mode, approved the plan, and ruled that the WORK happens in the NEXT
-   session** — *"yapımı ise diğer sessionda olacak zira session çok şişti sevgili opus 5! zaten
-   yapacak olacak yine kardeşin Opus 5."* **The plan lives at
-   `/home/dxb/.claude/plans/i-te-bu-ekilde-her-jaunty-cat.md` — read it before touching either
-   item; it carries every measurement already taken, so they are not re-measured.**
+2. **HIS TWO ORDERS OF 2026-08-25 — BOTH BUILT AND DELIVERED THE SAME DAY. BUILT, NOT ACCEPTED (LAW B).** <!-- HISTORY -->
+   The line that stood here — *"THE PLAN IS WRITTEN, THE WORK IS NOT DONE"* — is spent and is deleted
+   rather than kept beside the truth (LAW A). The plan
+   (`/home/dxb/.claude/plans/i-te-bu-ekilde-her-jaunty-cat.md`) was executed in full, in order,
+   in the session he told to do it. Commits `c20b9f8c` (A) and `6ec09952` (B).
 
-   **(A) EVERY SESSION MUST EXPLAIN A THING IN A SHAPE HE CAN USE — his own order, and it is the
-   permission clause for making it a law:** *"işte bu şekilde her sessionda opus 5'ler böyle anlatsa
-   olmaz mı bu kuralı öyle bir yere yaz ki her session bana anlayacağım dilde raporu sunsun.
-   olabilir mi?"* It was earned the hard way in that session: the author put his own four mistakes
-   in front of him as a bare technical list and got *"hiçbir halt ANLAMADIMMMMMMM BANA ANLAYACAĞIM
-   DİLDE KONUŞ."* The same thing explained as **answer → a picture from his world (a postman) →
-   the measured numbers → what it means for him** landed at once. **Measured: that shape is written
-   NOWHERE.** `.claude/hooks/ceo-language.sh` governs the single WORD (real word + a bracketed
-   explanation); `dxb-ceo-report` governs what a REPORT contains; nothing governs how a THING is
-   explained — searches for `analogy` / `benzetme` / `metafor` across `.claude/`,
-   `HOLDING-OS-MASTER-PLAN/` and `docs/ceo-directives/` return **zero**. The plan writes six lines
-   into the hook (the only carrier that reaches mid-session drift — proven on 2026-07-30, when this
-   same rule was moved to a skill and was broken within the hour), registers it as
-   `so14_explain_shape` in `rules.json`, and repairs three stale copies of the old rule that still
-   enforce the ban list **he himself struck out on 2026-08-01** — `packages/voice/src/prompt-core.ts`
-   (the law Hamza's own agents carry), the test that pins it, and the memory file that still orders
-   evidence tables at his face. **C37 stays OPEN** — its closing condition is his own word, not the
-   author's.
+   **(A) EVERY SESSION NOW EXPLAINS A THING IN A SHAPE HE CAN USE — his own order, made law.**
+   `.claude/hooks/ceo-language.sh` carries four steps on **every prompt** (the answer first · one
+   picture from his world before any mechanism · the measured numbers beside it · what it changes for
+   him), emitted text 675 → 1175 bytes. Registered as `so14_explain_shape` in `rules.json` (17 → 18
+   rules, each in exactly one owner) and as his approval
+   `ceo-explain-shape-standing-order-2026-08-25` (41 → 42 entries) carrying his verbatim sentence.
+   The long form and the worked example — the list he rejected beside the telling he understood —
+   live in the `dxb-ceo-report` door. **AND THE BAN LIST HE STRUCK OUT ON 2026-08-01 IS FINALLY
+   GONE:** it had gone on binding three carriers for 24 days, including
+   `packages/voice/src/prompt-core.ts`, the law **Hamza's own agents read at runtime**, and the test
+   that pinned it. All repaired at source; the test now pins the NEW law and the ABSENCE of the old
+   one, and it was run against the old code first (3 of 11 red) before it went green (11/11).
+   **C37 STAYS OPEN** — its closing condition is his own report of messages he could read without
+   complaint, never the author's word. This session's violation is written into the row as the
+   fourth, with what was new about it: not a hard word, a bare chronology.
 
-   **(B) THE DISPATCH LINE — is one worker a bottleneck? He asked, and his instinct was right.**
-   *"NEDEN 1 İŞÇİ TÜM ŞİRKETİN 214 AJANIN GÖREVİNİ ÜSTLENMİŞ ARKADAŞIM. HERKES KENDİ İŞİNİ YAPMALI
-   DEĞİL Mİ?"* · *"şuan ki makine güçlü daha önceki 8gb'lik ram var diye mi acaba böyle yaptı
-   bilmiyoruz?"* **First, the answer to the question as asked: nobody did anybody else's work.**
-   `claimed_by` is one value — `resident-worker`, the COMPANY's own dispatcher
-   (`packages/orchestrator/src/worker-loop.ts:26`) — while `agent_id` is **199 different employees**
-   across 21 departments (189 did one task, 6 did two, 3 did three, 1 did four). **But the core of
-   his instinct measured true:** the line runs **`execCap = 1`** (`worker-loop.ts:63`) — one task per
-   tick, three legs strictly sequential, no `Promise.all` — with a **10-second GAP, not a period**
-   (`scheduler.ts:142-145`; the re-arm is in a `finally`, so the real cycle is *task duration + 10s*).
-   **The single line has exactly one written justification and it is `SYSTEM_ARCHITECTURE.md:16`
-   R5 — "8GB VPS RAM bütçesi aşılmaz"** → `:79` ⛔ *"(a) RAM bütçesi (R5)"* →
-   `AGENT_ORCHESTRATION_SPEC.md:145` → the code's own header. **R5 writes its own reopening
-   condition — *"ancak ölçüm kanıtıyla (latency/lock) ve CEO onayıyla"* — and that measurement has
-   never been taken:** the repository holds no tasks-per-hour, no latency, no queue-depth and no
-   lock-contention figure for `task.worker`, and **no document anywhere compares one drain against
-   two.** He ruled on both halves: **the workstation is home** (measured 30 GB · 24 threads · load
-   0.55) and **measure first, then decide, and the decision is delegated to the author** — *"1.
-   kabul ediyorum ve yetkiyi sana veriyorum sen en iyi kararı ver. Seviye: Ferrari."*
-   **THE PLAN'S MOST IMPORTANT FINDING, and it is why nothing is parallelised yet: what blocks a
-   second line is not RAM, it is a spending line with no brake.** Anthropic models bypass the
-   LiteLLM proxy entirely (his own order of 2026-07-19, C2), so `worker-shim.ts:322-325` writes
-   **`costEur = 0`** on the subscription path — and both brakes, the 60-minute velocity breaker and
-   the monthly cap, read `cost_ledger` + LiteLLM spend, so **neither can see subscription work at
-   all.** Double the line and the invisible spend doubles with no brake holding. Second hazard,
-   measured in the live database this session: **`employee.max_concurrent_runs` is not seeded** —
-   the settings registry returns nothing for it, and `assignEmployee` only *prefers* the least-loaded
-   employee, so two lines could put two jobs on one employee, which is the opposite of what he asked
-   for. **Both hazards close BEFORE any concurrency.** Technically a second line needs zero code
-   change: `drainTasks({workerId})` is already parameterised and `claim_next_task` is
-   `FOR UPDATE SKIP LOCKED`.
+   **(B) THE DISPATCH LINE — MEASURED, BRAKED, AND THE DELEGATED DECISION MADE.** Board row **B39**
+   (`00-BOARD-OPEN-WORK.md`) carries it. **The answer to his question as asked: nobody did anybody
+   else's work** — `claimed_by` is the company's own dispatcher, `agent_id` is 199 different
+   employees across 21 departments. **What the measurement then found, and he had not asked about:**
+   the company had spent **1,032,526 tokens over 378 runs with ZERO rows in its cost book**, because
+   Anthropic models bypass the LiteLLM proxy on his own order of 2026-07-19 and **both** money brakes
+   read `cost_ledger` + that proxy's tables (H1); and `employee.max_concurrent_runs` had **never been
+   seeded**, so selection only *preferred* an idle employee (H2). Both are closed —
+   `packages/orchestrator/src/subscription-cap.ts` records the tokens (no EUR: the single-source rule
+   is untouched) and holds the execution leg at an hourly ceiling, and a department at full stretch
+   now hands the task back to the queue instead of stacking a second job on one person. **A2 in
+   `AGENT_ORCHESTRATION_SPEC` closes with it.** **R5's reopening condition was met for the first
+   time** (`scripts/bench/drain-throughput.mjs`, construction engine, 24 tasks, real drains):
+   **8 lanes = 7.80× faster than 1 · 0 double-claims · 0 lock waits · 4.5 MB more memory** — the
+   detector proven red first on a planted collision. **RAM was never the obstacle.** Decision:
+   the lane count is a setting (`orchestration.dispatch_lanes`, max 8) read every tick **inside the
+   existing scheduler job** — no new resident service, so R5's discipline holds though its premise
+   did not — and **the default stays 1**, because the queue is empty today by his own design.
+   `SYSTEM_ARCHITECTURE` (R5, ALTYAPI, the ⛔ ruling), `RISK_REGISTER` R07 and
+   `AGENT_ORCHESTRATION_SPEC` A1/A2 are corrected on the measurement, not rewritten.
 
-   **⚠ ONE MEASUREMENT FROM THAT SESSION WAS WRONG AND IS CORRECTED HERE.** The author told him
-   *"nothing is installed on the rented server"*. False — the search used the pattern
-   `docker-compose*.yml` and the file is named `compose.yaml`. **`vps/compose.yaml` is 251 lines**,
-   `vps/README.md:3` names the box **`dxb-vps-1` (Hetzner cx33, 4 vCPU / 8 GB, nbg1)**, and board row
-   **B09** says *"the 24/7 server runs"*. **There are two stacks.** His ruling that the workstation
-   is home is recorded, but **what the rented box does today is measured before one line is written
-   into the architecture book** — it is the plan's first step, not an assumption.
+   **⚠ WHAT B39 STAYS OPEN FOR, AND IT IS HIS DECISION: THE RENTED BOX IS WORKING AND WE CANNOT SEE
+   WHAT IT DOES.** <!-- OPEN: B39 --> Measured 2026-08-25: Hetzner's own record says `dxb-vps-1`
+   (cx33 · 4 vCPU / 8 GB · nbg1 · Ubuntu 24.04) has been **running 47 days**, with **48-59 % CPU and
+   continuous network traffic through the last six hours** and **no firewall rule of its own**. From
+   this machine **nothing answers**: no ICMP, and ports 22, 80 and 443 all time out, including
+   `https://dxbglobal.online/health` (the domain resolves correctly — a public resolver returns the
+   same address). It is billing and it is busy, and nobody can say at what. The earlier claim that
+   *"nothing is installed on the rented server"* was wrong and was corrected in the plan: the search
+   used `docker-compose*.yml` and the file is `compose.yaml` — `vps/compose.yaml` is 251 lines.
+
+   **⚠ MEASURED THIS SESSION, DELIBERATELY NOT REPAIRED — a trap the next session will hit.** The
+   company's migration ledger is **33 versions behind its own schema** (125 recorded in
+   `supabase_migrations.schema_migrations`, 158 files in `db/migrations`), so the canonical chain
+   `scripts/bootstrap-db.sh` **stops on the company** with *"relation chat_messages already exists"*.
+   B39's migration was therefore applied directly and its version recorded by hand; the construction
+   engine took the same file through the normal chain. Repairing the ledger is a separate job and
+   his call — it was reported, not done.
+
 
 3. **B22 — the rival re-analysis, which waits behind B36.** <!-- OPEN: B22 -->
 
