@@ -70,7 +70,7 @@ the source write's own transaction (migration `20260824003000`); the collector v
 consumes it and fails closed. GREEN: **forged 0 · the company's own events still arriving 1 · a
 replay stays 1** · `FORGED_EVENT_REFUSED`. The window cannot reach the receipts: on the company,
 `schema usage=false table select=false insert=false`. Board row **B37 is closed by this.**
-**(b) WHAT A PLAIN POSTGRESQL LOGIN MAY DO TO ITSELF IS STILL OPEN** <!-- OPEN: B36 -->**, and it is why Block 3 is not
+**(b) WHAT A PLAIN POSTGRESQL LOGIN MAY DO TO ITSELF IS STILL OPEN** <!-- HISTORY -->**, and it is why Block 3 is not
 closed.** Measured with the real role: it changed **its own password** (`ALTER ROLE` — the next
 connection then failed *password authentication failed*, because `pg_authid` really moved), made a
 setting **permanent for itself** (`statement_timeout` 120s → 999s in `pg_db_role_setting`), and
@@ -155,7 +155,7 @@ without re-issuing one GRANT, the act that already broke the holding for eleven 
 root-owned, the forwarders could not create their sockets, every TCP handshake inside still
 succeeded, and PostgreSQL answered *"Connection terminated unexpectedly"*. **A wall that looks like
 a working bridge is worse than one that is plainly shut.**
-**ACCEPTED BY THE CEO, 2026-08-24, AFTER HIS AUDITOR PASSED IT** — *"denetçi tamam dedi herşeyi kaydet. onaylıyorum."* Registered as `b36-block3-bis-accepted-2026-08-24`. LAW B is satisfied: the author's work was finished on 2026-08-24, his auditor examined it, and his own word makes it accepted. **The row B36 stays OPEN** — Block 3-bis is one block of eight; **Block 4 was built the same evening** and Blocks 5-7 are untouched. <!-- OPEN: B36 -->
+**ACCEPTED BY THE CEO, 2026-08-24, AFTER HIS AUDITOR PASSED IT** — *"denetçi tamam dedi herşeyi kaydet. onaylıyorum."* Registered as `b36-block3-bis-accepted-2026-08-24`. LAW B is satisfied: the author's work was finished on 2026-08-24, his auditor examined it, and his own word makes it accepted. **The row B36 stays OPEN** — Block 3-bis is one block of eight; **Block 4 was built the same evening** and Blocks 5-7 are untouched. <!-- HISTORY -->
 **The block also broke the company and put it back**: its first version gave `anon` the right to
 call all 85 control functions, its own blast-radius photograph caught it, and Block 0's dated dump
 restored the exact prior state (`COMPANY_PRIVILEGES_RESTORED`).
@@ -406,7 +406,14 @@ session: **the author knows where the plan is, not what it says.** 59 files · 1
 151,838 words in `HOLDING-OS-MASTER-PLAN/`, and no session has read them end to end. He was offered
 that reading as the next job and had not answered when the session closed.
 
-1. **B36 — cutting the construction site out of the company. THIS IS THE WORK IN HAND.** <!-- OPEN: B36 -->
+1. **B36 — cutting the construction site out of the company. ✓ CLOSED 2026-08-25 ON EVIDENCE. NOT THE WORK IN HAND ANY MORE.** <!-- HISTORY -->
+   **All eight blocks are built and every block that needed his word has it** — Block 3-bis, Block 4,
+   Block 5 and Block 6, each registered in `scripts/governance/ceo-approvals.json` with his own
+   sentence. Row B36 is closed on the board (`00-BOARD-OPEN-WORK.md`). The line that stood here —
+   *"THIS IS THE WORK IN HAND"* — is spent and is deleted rather than kept beside the truth (LAW A).
+   **What is left standing is not a task but a guard:** `pnpm verify:separation` runs the whole thing
+   again on demand, and `tests/b36/separation-gate.test.ts` fails the battery if the gate's own
+   judgements ever stop being able to convict. Everything below is the record of how this was done.
    Plan: `.planning/quick/20260823-construction-company-separation/PLAN.md` (eight blocks, approved).
    Evidence: `EVIDENCE.md` in the same folder · audit answers: `AUDIT-RESPONSE-1.md`, `AUDIT-RESPONSE-2.md`.
    **2026-08-25 — HE ANSWERED THE DRY-RUN AND THE RESIDUE IS OUT. BUILT, NOT ACCEPTED (LAW B).**
@@ -470,7 +477,12 @@ that reading as the next job and had not answered when the session closed.
    devam edecek."* Nothing of Block 6 was begun in that session; it was begun in the next one, which is
    what he asked for. The sentence that stood here — *"Nothing of Block 6 was begun … five blocks of
    eight are done"* — is no longer true and is deleted rather than kept beside the truth (LAW A).
-   **BLOCK 6 IS BUILT AND GREEN, 2026-08-25 — AND NOT ACCEPTED (LAW B).** `pnpm verify:separation`
+   **BLOCK 6 IS ACCEPTED — 2026-08-25.** <!-- CEO-OK: b36-block6-accepted-2026-08-25 --> His auditor
+   (Solo 5.6) read commit `edad066d` and passed it; he then gave his own eye acceptance in the same
+   sentence that opened Block 7: *"tmm denetçi okledi. pass. ben de göz kabulu verdim. şimdi block 7
+   ye geçebilirsin."* Registered as `b36-block6-accepted-2026-08-25`. The words that stood here —
+   *"BUILT AND GREEN … AND NOT ACCEPTED"* — are spent and are deleted rather than kept beside the
+   truth (LAW A). What Block 6 IS: `pnpm verify:separation`
    (`scripts/governance/company-untouched.mjs`) is one command that answers the only question this row
    was opened for: **can the construction reach the company's database, write in it, or get round the
    wall — and do the company's own things still work?** Five steps, and a sixth before them.
@@ -502,10 +514,26 @@ that reading as the next job and had not answered when the session closed.
    the command's three judgements to convict on constructed input, every attempt to be wrapped
    `BEGIN … ROLLBACK`, the three escapes and the two boundary tables to still be attempted, and the
    command to stay registered. Evidence: `EVIDENCE.md` §"Block 6 — the proof command".
-   **HIS EYE IS WHAT IS LEFT:** `pnpm b36:eye-check` → `http://127.0.0.1:4599/blok6`. That screen
-   measures nothing of its own — it starts this exact command and paints its judgements as they arrive,
-   so he watches the gate go red before it goes green. Row B36 stays OPEN: **six blocks of eight are
-   built; Block 6 waits on his auditor and then on his own eye, and Block 7 (the records) is next.** <!-- OPEN: B36 -->
+   **HIS SCREEN, AND IT STAYS:** `pnpm b36:eye-check` → `http://127.0.0.1:4599/blok6`. It measures
+   nothing of its own — it starts this exact command and paints its judgements as they arrive, so he
+   watches the gate convict before he watches it pass. Six cards, all green, looked at by eye.
+   **BLOCK 7 — THE RECORDS — IS DONE, AND WITH IT ROW B36 IS CLOSED.** <!-- HISTORY --> Six items,
+   each measured before it was written: **(1)** row B36 closed on the board with its evidence and no
+   leg left — the company's own engine no longer carries a test database at all (`pg_database` on
+   `supabase_db_DxB_Global_OS`: `postgres`, `_supabase`, two templates; `dxb_test` gone); **(2)** C36
+   was already closed by Block 5 — re-measured, not re-closed; **(3)** the complaint ledger's
+   **C20 · C21 · C22 · C23 · C24/C25** closures are annotated with what they actually did: *they
+   SWEPT, they did not WALL.* Nothing is withdrawn — the purges really happened — but each close
+   carried an implied claim about the present that was false, and `cost_ledger` proved it by standing
+   at **1,612** construction rows five weeks after C24 closed as "construction separated" (separated
+   in a VIEW, not in the engine). Measured today: `cost_ledger` **0** · `workflows` like `r23t%` **0**
+   · `project_risks` still `open` **0**; **(4)** the registered adaptation is written into
+   [[SYSTEM_ARCHITECTURE]] §3 (its data layer drew ONE engine and now draws two with the wall between
+   them) and [[TEST_STRATEGY]] §4 (the battery runs in a sandbox with no network, no Docker socket and
+   no credential, and the proof command is named there with the two lessons that cost this block two
+   false zeroes); **(5)** this file; **(6)** the board's own line 12 said **"THE DATABASE IS OFF"** —
+   true on 2026-08-17, false today: both engines measured `Up (healthy)` and four resident services
+   `active`, 0 failed. Deleted and replaced (LAW A).
    **THE DRY-RUN THAT PRECEDED IT, MEASURED WITH NOT A ROW MOVING:**
    The plan's residue table was written on 2026-08-23 and three of its five rows had stopped being
    true; it is replaced by the measurement (registered adaptation in `PLAN.md` §Block 5, evidence in
@@ -516,7 +544,7 @@ that reading as the next job and had not answered when the session closed.
    `memory_embeddings` 0**, because he ordered the holding's memory cleared on 2026-08-23 and it was
    exported first, so Block 5 has NO work there · **`pgboss` is not residue**, it is the company's own
    self-pruning queue (79,178 jobs, oldest 2026-08-17, 22 queues and 14 schedules all the holding's) ·
-   **`project_risks` 1 of 3** (the brown-token chore, still open on his risk page) <!-- OPEN: B36 --> · **NEW, the plan
+   **`project_risks` 1 of 3** (the brown-token chore, still open on his risk page) <!-- HISTORY --> · **NEW, the plan
    never named it: `decision_log` 1,143 of 4,730 rows** decided by 19 test-shaped workers
    (`worker-lad-*`, `worker-hard-1..5`, `worker-orch-qa-*`, `r21t-resident`) inside 2026-07-24 → 07-28
    · **BOUNDARY, untouched:** `hook_violations` 1,963 · `audit_log` 29,637, of which 1,291 carry a
@@ -568,7 +596,7 @@ that reading as the next job and had not answered when the session closed.
    **BLOCK 4 IS ACCEPTED — 2026-08-24, and both halves of his own condition were met.**
    <!-- CEO-OK: b36-block4-accepted-2026-08-24 --> His auditor passed it first — *"Block 4 passes … Proceed to Block 5
    under the approved B36 plan."* — and he then ran the live screen himself and said *"göz onayı
-   tamamdır. kabul."* Registered as `b36-block4-accepted-2026-08-24`. **Row B36 stays OPEN** <!-- OPEN: B36 --> —
+   tamamdır. kabul."* Registered as `b36-block4-accepted-2026-08-24`. **Row B36 stays OPEN** <!-- HISTORY --> —
    Block 4 is one block of eight and Blocks 5-7 are untouched.
    **The live screen he accepted on:** `pnpm b36:eye-check` → **http://127.0.0.1:4599/blok4**,
    five panels that RUN while he watches — the counter over the whole repository (2,837 files scanned,

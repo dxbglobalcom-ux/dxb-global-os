@@ -28,9 +28,46 @@ Yedi test katmanının (L1-L7) tek stratejisi: ne, hangi araçla, hangi kapıda,
 
 ## 4. Veri modeli (test verisi)
 
-- Test DB: **inşaatın kendi Supabase yığını** — `DxB_Build`, port 54422, kendi kümesi (kayıtlı uyarlama, B36 Blok 2, 2026-08-23). Şirket motorunda test veritabanı YOK; `dxb_test` klonu düşürüldü. ASLA canlı DB.
+- Test DB: **inşaatın kendi Supabase yığını** — `DxB_Build`, port 54422, kendi kümesi (kayıtlı uyarlama, B36 Blok 2, 2026-08-23). Şirket motorunda test veritabanı YOK; `dxb_test` klonu düşürüldü. ASLA canlı DB. **Adres tek yerde yazılıdır: `tests/construction-engine.ts`.** Şemasını aynı `db/migrations`'tan aynı zincirle alır (`scripts/bootstrap-db.sh`); verisi bu deponun kendi dosyalarından **üretilir** (`db/seed/build-seed.ts`) ve holdingin tek satırını taşımaz.
 - Fixture seti: `db/seed/test/` — 1 company, 3 departman, 5 çalışan (v2 persona'lı 3 + v2'siz 2 — negatif test için), 2 proje, 1 workflow (5 adım), 20 task, cost satırları. Deterministik ID'ler (uuid sabit) — snapshot karşılaştırılabilir.
 - Kural: fixture gerçek şemadan sapamaz (migration değişince fixture güncellenir, aynı commit'te).
+
+**KAYITLI UYARLAMA — B36 Blok 3-bis / 4 / 6, 2026-08-24…25: BATARYA ŞİRKETE ULAŞAMAZ, VE BU HER
+KOŞUDA İSPATLANIR.** Blok 2 ayrı bir motor verdi; ayrı motor tek başına duvar değildi — üç denetim
+bunu reddetti, çünkü inşaat runtime'ı hâlâ Docker soketini, kimlik dosyalarını ve doğrudan TCP
+girişini elinde tutuyordu. Bugünkü disiplin:
+
+- **Batarya bir sandbox içinde koşar** — ağ yok, Docker soketi yok, kimlik yok
+  (`scripts/construction/run.sh` → root'a ait `/usr/local/sbin/dxb-construction-sandbox`). İçeri
+  uzanan tek şey, **adlı sorulara** cevap veren salt-okur geçit
+  (`scripts/b36/company-read-gateway.mjs`); soketten SQL geçmez.
+- **Bataryanın yüklediği hiçbir dosya şirkete bağlanabilir bir adres taşıyamaz**
+  (`tests/b36/battery-carries-no-company-key.test.ts`) ve **hiçbir kayıtlı dosya** şirketin adresini
+  `DXB_DATABASE_URL` için varsayılan yapamaz (`tests/b36/no-company-fallbacks.test.ts`; sayaç ve
+  tanım tek dosyada: `scripts/b36/count-company-fallbacks.mjs`, ölçülen 0).
+- **Batarya şirketin dosyalarına da yazamaz** — derlenen gateway profilleri `var/` altına düşer,
+  kayıtlı ağaca değil (`tests/b36/battery-writes-no-company-artefact.test.ts`).
+- **Bataryanın kendisi iki yarımdır ve ikisi de zorunludur:** sandbox içindeki takım, ve bu makinenin
+  kendi tarafında koşmak zorunda olan üç dosya — `scripts/construction/battery.sh` onları adıyla
+  sayar, böylece duvarın dışına sessizce bir şey taşınamaz.
+- **İSPAT KOMUTU — `pnpm verify:separation`** (`scripts/governance/company-untouched.mjs`, B36 Blok 6,
+  kabul 2026-08-25). Beş adım ve onlardan önce bir sıfırıncı: **aletler her koşuda önce kırmızıda
+  gösterilir** (inşaat motorunda gerçek bir tablo bir satırla belirir ve fark alıcı onu adıyla saymak
+  zorundadır · aynı 13 yazma ifadesi geçici bir süper yetkiliye ateşlenir ve **13'ünün de KABUL
+  EDİLDİ** dönmesi gerekir · gerçekten kayıtlı bir dosyaya gerçekten bir kaçak adres yerleştirilir ve
+  tarama onu adıyla yakalamak zorundadır); sonra şirket fotoğraflanır, **bütün batarya koşar**,
+  tekrar fotoğraflanır ve çıkarılır, `dxb_gateway` ile 13 şekilde yazma denenir, depo süpürülür.
+  Kıpırdayan tek satır, kabul edilen tek ifade, bulunan tek kaçak adres **kırmızıdır**.
+- **Komut bataryanın İÇİNDE koşmaz** — 2. adımı zaten bataryadır, ve bataryanın yüklediği bir dosya
+  şirkete giden yolu taşıyamaz. Bataryada duran şey `tests/b36/separation-gate.test.ts` (12 vaka):
+  komutun üç hükmünü kurgulanmış girdide mahkûm ettirir, her denemenin `BEGIN … ROLLBACK` içine
+  sarıldığını, üç kaçış denemesinin ve iki sınır defterinin hâlâ denendiğini, ve komutun
+  `verify:separation` adıyla kayıtlı kaldığını şart koşar.
+- **Aletini önce doğrula.** Bu blok bunu iki kere acıdan öğrendi: bir dedektör rahat bir sıfır bastı
+  çünkü PostgreSQL'in düzenli ifadelerinde `\b` bir geri-silme karakteridir; ve `TRUNCATE
+  public.agents` her kimliğe — tam süper yetkiliye bile — reddedilir, çünkü tabloya bir yabancı
+  anahtar bağlıdır, yani şirkette reddedilmesi hiçbir şey ispatlamazdı. **Hiçbir şey bulduğu
+  gösterilmemiş bir kapı, test edilmemiş kapıdır.**
 
 ## 5. Component yapısı / 6. Backend yapısı
 

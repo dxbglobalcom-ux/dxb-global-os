@@ -3310,3 +3310,125 @@ $ … pg_roles / pg_class  LIKE 'dxb\_b36\_%' / '\_b36\_%' (company)  <none>  <n
 (`operator shot`): six cards, all green, no truncation and no clipped text at a windowed width of
 ~1490 px on a 3440-px screen. Card 0 shows the three RED SEEN lines before any green appears — he
 watches the gate convict before he watches it pass. The final bar reads **AYRIM SAĞLAM**.
+
+---
+
+## Block 6 — ACCEPTED, 2026-08-25
+
+His auditor first, then his own eye — the order he set for Block 4, met for the third time.
+His auditor (Solo 5.6) read commit `edad066d` and passed it; he then said:
+
+> *"tmm denetçi okledi. pass. ben de göz kabulu verdim. şimdi block 7 ye geçebilirsin."*
+
+Registered: `scripts/governance/ceo-approvals.json` → `b36-block6-accepted-2026-08-25`.
+Every line in these records that said Block 6 was *"BUILT, NOT ACCEPTED"* is spent and is deleted
+rather than kept beside the truth (LAW A). The same sentence authorised Block 7 to begin.
+
+---
+
+## Block 7 — the records, 2026-08-25
+
+**Six items. Every one measured BEFORE it was written.**
+
+### 1 · Row B36 is closed on evidence, with no leg left
+
+The plan's §6 says the row does not delete `dxb_test` before the new stack is green. Measured before
+the row was closed:
+
+```
+$ docker exec -i supabase_db_DxB_Global_OS psql -U supabase_admin -d postgres -qtA \
+    -c "SELECT datname FROM pg_database ORDER BY 1"
+_supabase
+postgres
+template0
+template1                                   ← dxb_test is gone; the company carries no test database
+```
+
+All eight blocks of the approved plan are built (`PLAN.md` §4: 0 · 1 · 2 · 3+3-bis · 4 · 5 · 6 · 7),
+and the four that needed his word have it, each registered with his own sentence:
+`b36-block3-bis-accepted-2026-08-24` · `b36-block4-accepted-2026-08-24` ·
+`b36-block5-accepted-2026-08-25` · `b36-block6-accepted-2026-08-25` (ten B36 entries in all,
+measured `python3 -c "json.load(open('scripts/governance/ceo-approvals.json'))"`). The row's title — *"THE CONSTRUCTION SITE IS STILL INSIDE THE
+COMPANY"* — was true the day it was opened and is false today; deleted, not annotated (LAW A).
+
+### 2 · C36 needed no work — Block 5 had already closed it
+
+Board line 167: `✓ CLOSED 2026-08-25 ON MEASUREMENT — the chore left his risk register, moved and not
+deleted.` Re-measured, not re-closed.
+
+### 3 · C20 · C21 · C22 · C23 · C24/C25 — annotated, not reopened
+
+**Nothing is withdrawn.** The purges of 2026-07-19 really happened. What was wrong was the claim
+about the PRESENT each close carried by implication — that the problem could not come back. It
+could, and it did:
+
+```
+cost_ledger, company engine, 2026-08-23   1,612 construction rows
+                                          — five weeks AFTER C24 closed as "construction separated"
+                                          — separated in a VIEW, not in the engine
+```
+
+Measured today, in the company's own engine, with SELECT only:
+
+```
+$ docker exec -i supabase_db_DxB_Global_OS psql -U supabase_admin -d postgres -qtA -c "…"
+cost_ledger=0            (was 1,612)
+workflows like 'r23t%'=0
+project_risks status open=0
+intents=57               (the company's own; the 7 garbled ones went in July)
+```
+
+Each of the five rows now carries `✓ CLOSED · **+ WALLED 2026-08-25**` and the sentence *"The close
+SWEPT; it did not WALL"*, with one note under the table explaining the difference in his language
+and naming the blocks that built the wall.
+
+### 4 · The registered adaptation is in the two specs that own it
+
+Measured before writing — both still drew a one-database world:
+
+```
+$ grep -c "B36" HOLDING-OS-MASTER-PLAN/SYSTEM_ARCHITECTURE.md   0
+$ grep -c "B36" HOLDING-OS-MASTER-PLAN/TEST_STRATEGY.md         1
+```
+
+After: **3 and 3.** `SYSTEM_ARCHITECTURE.md` §3's data layer drew ONE engine; it now draws two with
+the wall between them (company `supabase_db_DxB_Global_OS` PG17, 60 tables · the wall: a networkless
+sandbox, no Docker socket, no credential, one unix socket to a named-question gateway · construction
+`DxB_Build` port 54422, same migrations, data generated from this repository, zero rows of the
+holding's), followed by the adaptation itself and the measured fact that
+`SET default_transaction_read_only = off` succeeds — so the seal, not the setting, is the wall.
+`TEST_STRATEGY.md` §4 carries the sandbox, the two battery halves, the fallback ban, the proof
+command, and the rule those two false zeroes bought: **a gate that has never been shown finding
+something has not been tested.**
+
+### 5 · `.planning/STATE.md`
+
+Block 6's acceptance registered, Block 7 recorded, the row's closure written, and the six
+`<!-- OPEN: B36 -->` markers converted to `<!-- HISTORY -->` because the work they pointed at is
+finished.
+
+### 6 · The board's own line 12 said the database was off
+
+```
+BEFORE  1. **THE DATABASE IS OFF, AND THAT IS DELIBERATE.** … a session can measure the code
+           and not the company; say so rather than guessing.
+MEASURED 2026-08-25 12:30
+$ docker ps --format '{{.Names}}\t{{.Status}}' | grep supabase_db_
+supabase_db_DxB_Build       Up 3 hours (healthy)
+supabase_db_DxB_Global_OS   Up 3 hours (healthy)
+$ systemctl --user list-units 'dxb-*' --state=failed   → 0
+$ systemctl --user is-active dxb-scheduler dxb-jarvis dxb-company-read dxb-freeze-guard
+active active active active
+```
+
+It was true on 2026-08-17 and is false today. Deleted and replaced (LAW A) with what a session may
+now actually do: **read the company with SELECT through the gateway; write everything else to the
+construction engine.**
+
+### The gates, after every record was written
+
+```
+$ pnpm verify:ledger    ledger truth OK — 8 state claims re-measured, 93 open markers resolved
+                        against 68 board rows, 98 trigger lines, 17 rules each in exactly one
+                        owner, 75 CEO approval claims each backed by a registered approval
+```

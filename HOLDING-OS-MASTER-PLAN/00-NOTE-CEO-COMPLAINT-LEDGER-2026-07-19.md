@@ -93,11 +93,40 @@ Plan ticket: `.planning/quick/20260719-c-series-remediation/PLAN.md`. Commits: d
 | C14/C15/C16 | ✓ ANSWERED | `00-NOTE-C-LEDGER-MEASURED-ANSWERS.md` — every claim cited |
 | C17 | ✓ CLOSED | action_type humanized; batch decisions collapse ×N; payload behind progressive disclosure |
 | C19 | ✓ CLOSED | Jargon labels reworded EN+TR; hook-violation EN-detail leg CEO-WAIVED 2026-07-24 (see 19e/19f audit row + CC-SPEC A4 Machine Room doctrine) |
-| C20 | ✓ CLOSED | r23t workflows(+steps/runs) and r23t alert purged, audited; 'kumar' absent from repo (grep 0) |
-| C21 | ✓ CLOSED | 7 garbled intents + 4 garble tasks purged, audited |
-| C22 | ✓ CLOSED | Stale workforce risk closed with measurement; wave-end refresh discipline noted |
-| C23 | ✓ CLOSED | v_model_stats alias fix (sonnet 0→327 runs); test-noise filtered from decisions panel |
-| C24/C25 | ✓ CLOSED | Tokens v2: 21 departments from v_workforce_tokens; construction separated; zero/`—` noise suppressed |
+| C20 | ✓ CLOSED · **+ WALLED 2026-08-25** | r23t workflows(+steps/runs) and r23t alert purged, audited; 'kumar' absent from repo (grep 0). **The close SWEPT; it did not WALL — see the B36 note under this table.** |
+| C21 | ✓ CLOSED · **+ WALLED 2026-08-25** | 7 garbled intents + 4 garble tasks purged, audited. **The close SWEPT; it did not WALL — see the B36 note under this table.** |
+| C22 | ✓ CLOSED · **+ WALLED 2026-08-25** | Stale workforce risk closed with measurement; wave-end refresh discipline noted. **The close SWEPT; it did not WALL — see the B36 note under this table.** |
+| C23 | ✓ CLOSED · **+ WALLED 2026-08-25** | v_model_stats alias fix (sonnet 0→327 runs); test-noise filtered from decisions panel. **The close SWEPT; it did not WALL — see the B36 note under this table.** |
+| C24/C25 | ✓ CLOSED · **+ WALLED 2026-08-25** | Tokens v2: 21 departments from v_workforce_tokens; construction separated; zero/`—` noise suppressed. **The close SWEPT; it did not WALL — see the B36 note under this table.** |
+
+
+> **B36, 2026-08-25 — WHAT THOSE FIVE CLOSURES ACTUALLY DID, AND WHAT THEY DID NOT DO.**
+>
+> **Nothing above is withdrawn.** C20, C21, C22, C23 and C24/C25 were closed on 2026-07-19 and the
+> work behind them was really done: the rows were really purged, the view was really fixed, the
+> measurement was really taken. Those are historical facts and they are not rewritten.
+>
+> **What was wrong was the claim about the PRESENT that each close carried by implication —
+> that the problem could not come back.** All five complaints are one disease with five faces:
+> *the construction site was writing into the company's own books.* A purge removes what is there
+> today. It builds no wall. Every one of those tables could refill on the next test run, and
+> `cost_ledger` did — it stood at **1,612** construction rows on 2026-08-23, five weeks after C24
+> was closed as "construction separated". Separated **in a view**, not in the engine.
+>
+> **The wall exists now, and it is row B36.** Block 1 killed the writer at its source; Block 2 gave
+> the construction its own engine (`DxB_Build`, port 54422, its own cluster, seeded from this
+> repository's own files and holding not one row of the holding's); Block 3-bis put the wall
+> OUTSIDE the database — the construction runs in a sandbox with no network, no Docker socket and
+> no credential, and the only thing reaching in is a read gateway that answers named questions
+> only; Block 4 deleted all 95 lines that could fall back to the company's address; Block 5 moved
+> the residue out on his word; Block 6 is the command that proves it, `pnpm verify:separation`.
+>
+> **Measured today, in the company's own engine, 2026-08-25 12:31:**
+> `cost_ledger` **0** rows (it was 1,612) · `workflows` matching `r23t%` **0** · `project_risks`
+> with status `open` **0** · and `pnpm verify:separation` says **0 of 13 write attempts accepted**
+> as the only account left on that engine, with the company's whole fingerprint unchanged across a
+> full battery run. **That is the difference between a sweep and a wall**, and it is why these five
+> rows are annotated rather than reopened.
 
 **Open legs (honest, not dropped):** voice lane of the chat board (U15 D-ledger) — CEO re-ordered 2026-07-19 morning: WisprFlow-style dictation INSIDE Chat with Hamza, Voice Line merges into the chat page, one-command activation; filter-bar rollout beyond Tokens+Costs; C8 deletion confirm; embed-small decision; hook-violation detail i18n; per-item skill exam records; HelpTip depth pass (CEO 2026-07-19: page help must explain the page's sections and what each is for, in plain non-programmer language, EN+TR — one-line generic texts are insufficient); approval purpose/DB strings render EN inside TR locale (same DB-content-i18n leg as C19). All carried in this ledger — the immediate queue. **[Current truth 2026-07-24 late night — the completeness-audit table below supersedes this paragraph:** voice/dictation lane ✓, C8 ✓, HelpTip depth ✓, DB-content i18n ✓/waived, C5 trigger leg ✓. STILL OPEN: FilterBar rollout beyond Tokens+Costs (measured 2026-07-24: FilterBar lives on exactly 2 pages; 11 further DataGrid list pages + approvals/alerts/decisions/library-class lists lack the standard; Machine Room routes exempt per A4); embed-small keep/kill (CEO one-liner); per-item skill exam records (kimi-3 / codex-5.6 / deepseek-v4-pro sit testing-until-exam); U15 daemon defects D1-D7; suite-hygiene debt (audit row below).**] **[Re-measured 2026-07-25 morning after the CEO's 4 answers: FilterBar rollout ✓ (audit row below), embed-small ✓ KEEP, deepseek-v4-pro exam ✓ PASSED + ACTIVATED (§4c step 4, audit 40635). STILL OPEN: kimi-3 exam (CEO deferred the OpenRouter top-up — "sonra yüklerim"), codex-5.6 exam (subscription-lane session needed), U15 daemon defects D1-D7, e8/e10 post-run sweep debt.]**
 

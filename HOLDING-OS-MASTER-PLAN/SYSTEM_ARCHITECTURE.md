@@ -37,13 +37,44 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 │ packages/outbox-executor (dışa dönük TEK kapı, onay sonrası)         │
 │ packages/gateway + dxb-mcp (8 MCP, 14 least-privilege profil)        │
 │ packages/memory-router (4-store kompozisyon)                         │
-├─ VERİ ───────────────────────────────────────────────────────────────┤
-│ Supabase self-hosted PG15: mevcut 18 tablo [KALIR]                   │
-│  + org/HR ailesi + settings ailesi + observability ailesi +          │
-│  workflow/project ailesi + library ailesi [YENİ — DATA_MODEL]        │
-│ Realtime Broadcast kanalları · PostgREST (read) · Auth (login kalır) │
+├─ VERİ — İKİ MOTOR, ARALARINDA DUVAR (B36, 2026-08-24) ───────────────┤
+│ ŞİRKET MOTORU  supabase_db_DxB_Global_OS · PG17 · public'te 60 tablo │
+│  org/HR · settings · observability · workflow/project · library      │
+│  Realtime Broadcast · PostgREST (read) · Auth (login kalır)          │
+│                                                                      │
+│ ═══ DUVAR ═══ inşaat: ağsız sandbox, docker soketi yok, kimlik yok   │
+│   tek geçit: unix soket → company-read-gateway (ADLI SORULAR, SELECT)│
+│                                                                      │
+│ İNŞAAT MOTORU  supabase_db_DxB_Build · port 54422 · kendi kümesi     │
+│  aynı db/migrations · verisi bu depodan üretilir · holdingin 0 satırı│
 └─ ALTYAPI: Hetzner 8GB VPS, Docker Compose + Caddy; X230 = terminal ──┘
 ```
+
+**KAYITLI UYARLAMA — B36, 2026-08-23…25: HER ŞEY KENDİ VERİ TABANINA YAZAR.** CEO'nun kendi
+cümlesi (2026-08-25, `b36-block5-residue-and-two-databases-2026-08-25`): *"Şirkette iş yapıldı mı
+çat kendi veritabanına, holdingin bir parçasımı geliştiriliyor çat inşaat veritabanına. Holdingin
+içinde yapılan geliştirme çalıştımı veya çalışıyor mu diye test edilmesi de dahil."* Bu satırdan
+önce tek motor vardı ve inşaat şirketin defterlerine yazıyordu; yukarıdaki kutu o dünyayı anlatan
+hâliyle silinip yerine ölçülen hâli yazıldı (KANUN A).
+
+- **Duvar veri tabanının İÇİNDE değil, DIŞINDA.** Üç denetim, duvarın PostgreSQL içinde kurulmuş
+  hâlini reddetti: inşaat runtime'ı Docker soketini, kimlik dosyalarını ve doğrudan TCP girişini
+  elinde tutuyordu. Şimdi inşaat, ağı olmayan bir sandbox'ta koşar
+  (`/usr/local/sbin/dxb-construction-sandbox`, root'a ait, inşaat onu değiştiremez); içeri uzanan
+  tek şey `scripts/b36/company-read-gateway.mjs` — bir unix soket üstünden **isimle** soru sorar,
+  SQL geçmez, kimlik bilgisi deponun dışında (`~/.config/dxb/company-gateway.env`, 600).
+- **Şirkette kalan tek hesap `dxb_gateway`** ve yalnız SELECT tutar (mühür:
+  `scripts/b36/company-one-way-window.sql`, 13 ayrıcalık sınıfı, 0'ı sızdırıyor). Ölçüldü
+  2026-08-25: `SET default_transaction_read_only = off` **başarılı olur** — o ayar hesabın kendi
+  üzerinde değiştirebildiği bir ayardır — ve yazma bir kat aşağıda, ayrıcalık matrisinde durur.
+  **Duvar o ayar değil, mühürdür.**
+- **Deponun hiçbir dosyası şirketin adresini `DXB_DATABASE_URL` için varsayılan yapamaz** (B36
+  Blok 4; sayaç ve kapı: `scripts/b36/count-company-fallbacks.mjs` +
+  `tests/b36/no-company-fallbacks.test.ts`, ölçülen değer 0).
+- **Tek komut bunun hepsini ispatlar:** `pnpm verify:separation`
+  (`scripts/governance/company-untouched.mjs`) — aletlerini önce kırmızıda gösterir, sonra şirketi
+  fotoğraflar, bütün bataryayı koşar, tekrar fotoğraflar ve çıkarır, `dxb_gateway` ile 13 şekilde
+  yazmayı dener ve depoyu süpürür. Kabul edildi 2026-08-25 (`b36-block6-accepted-2026-08-25`).
 
 Karar ilkesi (⛔ mimari-kritik): **kontrol düzlemi ayrı mikroservis DEĞİLDİR.** Gerekçe: (a) RAM bütçesi (R5), (b) tek yazım seamı zaten DB fonksiyon katmanında, (c) Opus devrinde işletilecek parça sayısını düşük tutmak. Ayrı servisleştirme ancak ölçüm kanıtıyla (latency/lock) ve CEO onayıyla açılır.
 

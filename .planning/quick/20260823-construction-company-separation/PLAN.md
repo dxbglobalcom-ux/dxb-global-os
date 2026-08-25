@@ -586,7 +586,11 @@ Order is fixed and never varies: **copy → verify → delete → audit.**
 
 ### Block 6 — The proof command
 
-**BUILT AND GREEN, 2026-08-25. NOT ACCEPTED — LAW B: only his own eye makes it accepted.**
+**ACCEPTED — 2026-08-25.** <!-- CEO-OK: b36-block6-accepted-2026-08-25 --> His auditor (Solo 5.6) read
+commit `edad066d` and passed it; his own eye then accepted it: *"tmm denetçi okledi. pass. ben de göz
+kabulu verdim. şimdi block 7 ye geçebilirsin."* The line that stood here — *"BUILT AND GREEN … NOT
+ACCEPTED"* — is spent and is deleted rather than kept beside the truth (LAW A). The order of work he
+set for Block 4 was met for the third time: his auditor first, then his own eye.
 
 `scripts/governance/company-untouched.mjs` → `pnpm verify:separation`, five steps and a sixth
 before them:
@@ -652,17 +656,37 @@ watches the gate go red before he watches it go green.
 
 Evidence: `EVIDENCE.md` §"Block 6 — the proof command".
 
-### Block 7 — Records, in the same session
+### Block 7 — Records, in the same session — **DONE 2026-08-25, and row B36 closes with it**
 
-- Board row **B36** closes with its evidence, or its remaining leg is named.
-- **C36 closes** — the coffee-token row leaves his risk register — and the board's C36 cell is
-  corrected in the same session (ledger parity, board law 5).
-- The complaint ledger's C20/C21/C22/C23/C24 closures are **annotated with the truth**: they swept,
-  they did not wall. Historical facts are not rewritten; the claim about the present is corrected.
-- The registered adaptation is written into [[TEST_STRATEGY]] and [[SYSTEM_ARCHITECTURE]].
-- `.planning/STATE.md` updated.
-- Board line 12 corrected: *"THE DATABASE IS OFF"* is false — the Supabase Postgres is up; what is
-  stopped is the two resident services.
+Six items. Every one was measured before it was written, and the measurement is in `EVIDENCE.md`
+§"Block 7 — the records".
+
+1. **Board row B36 is CLOSED on evidence**, with no leg left. The row's own title —
+   *"THE CONSTRUCTION SITE IS STILL INSIDE THE COMPANY"* — was true the day it was opened and is
+   false today, so it is deleted rather than kept beside the truth (LAW A). Measured: the company's
+   engine no longer carries a test database at all (`pg_database` on `supabase_db_DxB_Global_OS`:
+   `postgres`, `_supabase`, two templates — `dxb_test` is gone). The standing guard is
+   `pnpm verify:separation` plus `tests/b36/separation-gate.test.ts` in the battery.
+2. **C36 needed no work — Block 5 had already closed it** (board line 167, `✓ CLOSED 2026-08-25 ON
+   MEASUREMENT`). Re-measured, not re-closed.
+3. **C20 · C21 · C22 · C23 · C24/C25 are annotated with what they actually did: they SWEPT, they did
+   not WALL.** Nothing is withdrawn — the purges of 2026-07-19 really happened and are historical
+   fact. What was wrong was the claim about the PRESENT each close carried by implication: that the
+   problem could not come back. It could, and it did — `cost_ledger` stood at **1,612** construction
+   rows on 2026-08-23, five weeks after C24 was closed as *"construction separated"*: separated in a
+   **view**, not in the engine. Measured 2026-08-25 in the company's own engine: `cost_ledger` **0** ·
+   `workflows` matching `r23t%` **0** · `project_risks` with status `open` **0**.
+4. **The registered adaptation is written into the two specs that own it.** Measured before writing:
+   `SYSTEM_ARCHITECTURE.md` mentioned B36 **0** times and `TEST_STRATEGY.md` **1** — both still drew a
+   one-database world. §3 of the architecture now draws **two engines with the wall between them**,
+   and §4 of the test strategy carries the sandbox, the read gateway, the fallback ban, the proof
+   command, and the two lessons that cost this block two false zeroes.
+5. **`.planning/STATE.md` updated** — Block 6's acceptance, Block 7, and the row's closure.
+6. **The board's own line 12 corrected.** It said **"THE DATABASE IS OFF, AND THAT IS DELIBERATE"** —
+   true on 2026-08-17, false today. Measured 2026-08-25 12:30: `supabase_db_DxB_Global_OS` and
+   `supabase_db_DxB_Build` both **Up (healthy)**, four resident services `active`, 0 failed. Deleted
+   and replaced with what a session may now do: read the company with SELECT through the gateway, and
+   write everything else to the construction engine.
 
 ---
 
