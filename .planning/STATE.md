@@ -19,6 +19,46 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
+**2026-08-26 — HE CAN READ HIS OWN BOARD NOW, AND FOLLOW IT WITHOUT ASKING ANYONE.** <!-- HISTORY -->
+His order, in his own words: *"tahtayı buraya yaz demedim herşeyi görebilmem için aç dedim"* and then
+*"artık bu hazırladığın yerden herşeyi takip edeceğim değil mi? … çünkü takip etmek istiorm."*
+**The defect it closes is not a screen, it is a governance one:** the single register of what is left
+lived in a 126 KB English file with cells thousands of characters long, and the owner of the company
+could not open it. A register the owner cannot read is not a register.
+**What exists now:** `scripts/board/render.mjs` reads `00-BOARD-OPEN-WORK.md` and writes
+`var/board/tahta.html` — 69 rows in Turkish, grouped by **who it waits on**, nothing truncated, his <!-- HISTORY -->
+45 approvals beside them in his own words. `pnpm tahta` opens it. **It keeps no copy of the board and
+writes nothing back to it.**
+**Three faults were found ON HIS SCREEN and fixed the same night, each one his own standing rule:**
+(1) the parser read a date where a closed row's sentence should have been, so three CLOSED rows
+showed as open; (2) a 1,600 px column on his 3,440 px screen — **his own complaint C62, committed by
+the very page meant to show him C62**; (3) the "waits on" cell was printed raw, putting English <!-- HISTORY -->
+sentences on a surface he reads. **And a fourth he hit himself:** he searched `B12` with the
+"Bitenler" button pressed and the page showed him nothing, because the search only looked inside the
+pressed filter. **A search is a lookup, not a subset of a button** — it now looks everywhere and says
+where it found things.
+**AND THE PAGE HAD BEEN LYING ABOUT ITSELF.** Its header claimed it re-read the board at every open;
+it did not — it was a photograph taken whenever somebody ran the command. `scripts/board/watch.mjs` +
+`dxb-board.service` now redraw it within a second of the board, the Turkish index, the approvals
+register or `HEAD` moving, and the page reloads itself every 45 s keeping his scroll, his filter and
+his open rows.
+**FOLLOWING A ROW MEANS SEEING IT MOVE.** `scripts/board/movement.mjs` replays all **109** commits
+that ever touched the board, fingerprints every row in every version, and records only the commits
+where that row's OWN TEXT changed — no commit message is trusted for it. Every card carries
+*"Son hareket: <date> · BUGÜN çalışıldı / N gündür dokunulmadı · toplam N hareket"*, and the dated
+list inside. **80 rows have a history · 159 movements · 376 ms, cached against HEAD.**
+**The Turkish layer cannot go stale in silence:** each summary stores a fingerprint of the English it
+was written against, and a row whose English has moved says so **on itself**. It fired twice the same
+night while another session was editing B39.
+**Measured:** `BATTERY_GREEN` 109 files / 793 passed / 15 skipped + host 3 files / 16 tests ·
+`tsc --build` exit 0 · playwright at 3440×1440 and 1366×900, rows closed and every row open,
+`scrollWidth === clientWidth` on all four, 0 overflowing boxes · every "…" on the page is inside a
+quotation of his own words and the stylesheet holds no truncation rule at all.
+Commits `48cfc277` · `4db45bb5`.
+**⚠ ONE THING IS HIS AND IS NOT DONE:** this page shows the board. It is **not** the V2 cockpit, and
+building it changed nothing about V1 or V2 — it reads files and writes one HTML file, touches no
+database and leaves this machine never.
+
 **2026-08-26 — HE ACCEPTED EVERYTHING WITH HIS OWN EYE AND LEFT ONE APPOINTMENT.**
 <!-- CEO-OK: b39-and-session-work-accepted-by-his-eye-2026-08-26 -->
 *"şu hertz olayını yarın çözeceğiz. diğer herşeyi gözümle baktım ok diyorum. tamam mı. beni bekleyen
