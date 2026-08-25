@@ -41,6 +41,7 @@ import {
   checkSubscriptionWindow,
   recordSubscriptionSpend,
   SUBSCRIPTION_CAP_KEY,
+  SUBSCRIPTION_SPEND_SOURCE,
 } from "../../packages/orchestrator/src/subscription-cap.js";
 import type { Executor } from "../../packages/orchestrator/src/worker-shim.js";
 import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
@@ -178,6 +179,31 @@ describe("B39 · H1 — the subscription path spends where a brake can see it", 
     const w = await checkSubscriptionWindow();
     expect(w.cap).toBe(500_000);
     expect(w.open).toBe(true);
+  });
+
+  it("the CONSTRUCTION's own session accounting cannot shut the company's line", async () => {
+    // Regression, measured 2026-08-25. The window used to sum every
+    // mode='subscription' row in the hour. The SessionEnd hook writes rows with
+    // source='hook' — this repository's own coding sessions — and three of them
+    // landed carrying 487,924,277 tokens, which shut a 500,000 ceiling for an
+    // hour and turned this file red for reasons that had nothing to do with the
+    // company. B36's ruling is that the construction does not touch the company;
+    // its accounting may not govern the company's dispatch either.
+    const department = `${M}-hookrow`;
+    const taskId = await makeTask(department);
+    await setSetting(SUBSCRIPTION_CAP_KEY, "500000");
+
+    await sql`
+      INSERT INTO cost_ledger (task_id, department, model, mode, prompt_tokens,
+                               completion_tokens, cost_eur, source)
+      VALUES (${taskId}::uuid, ${department}, 'claude-opus-5', 'subscription',
+              487924277, 0, 0, 'hook')`.execute(db());
+
+    const w = await checkSubscriptionWindow();
+    expect(w.open, "a coding session's own tokens closed the company's line").toBe(true);
+    expect(w.tokens, "the window counted rows it does not govern").toBeLessThan(500_000);
+
+    await sql`DELETE FROM cost_ledger WHERE task_id = ${taskId}::uuid`.execute(db());
   });
 
   it("a subscription run leaves a row a brake can count — with no euro in it", async () => {
@@ -346,9 +372,11 @@ describe("B39 · the decision — the company works out its own hands, the CEO s
            SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
                   COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
                              WHERE mode = 'subscription'
+                               AND source = ${SUBSCRIPTION_SPEND_SOURCE}
                                AND created_at > now() - interval '60 minutes'), 0)        AS spent,
                   (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
                     WHERE mode = 'subscription'
+                      AND source = ${SUBSCRIPTION_SPEND_SOURCE}
                       AND created_at > now() - interval '60 minutes')                     AS avg_cost
          ) b)::int AS room`.execute(db());
     expect(room.rows[0].room, "one job's worth of allowance is left, so one hand").toBe(1);
@@ -368,9 +396,11 @@ describe("B39 · the decision — the company works out its own hands, the CEO s
            SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
                   COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
                              WHERE mode = 'subscription'
+                               AND source = ${SUBSCRIPTION_SPEND_SOURCE}
                                AND created_at > now() - interval '60 minutes'), 0)        AS spent,
                   (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
                     WHERE mode = 'subscription'
+                      AND source = ${SUBSCRIPTION_SPEND_SOURCE}
                       AND created_at > now() - interval '60 minutes')                     AS avg_cost
          ) b)::int AS room`.execute(db());
     expect(none.rows[0].room, "a spent hour buys no extra hands").toBe(0);

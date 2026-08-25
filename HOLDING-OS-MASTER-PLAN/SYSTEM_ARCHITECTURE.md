@@ -88,12 +88,18 @@ varsayımı burada geçerli değildir ve R5'in gerekçesi yukarıda düzeltilmi�
 **KİRALIK KUTU — ölçüldü 2026-08-25, ve durumu bir AÇIK SORUDUR (tahta satırı B39).** Hetzner'in
 kendi kaydı: `dxb-vps-1`, ID 149310629, **cx33 · 4 vCPU · 8 GB · 80 GB**, nbg1, Ubuntu 24.04,
 2026-07-09'dan beri ayakta (47 gün), durum **running**, IPv4 `46.225.89.249`, Hetzner tarafında
-**hiç güvenlik duvarı kuralı yok** (`hcloud server describe`, `hcloud firewall list`). Hetzner'in
-metrik grafikleri son altı saatte **kesintisiz %48-59 işlemci kullanımı ve sürekli ağ trafiği**
-gösteriyor — yani **kutu iş yapıyor.** Buna karşılık bu makineden **hiçbir kapısına ulaşılamıyor**:
-ICMP yanıtsız, 22 · 80 · 443 üçü de zaman aşımına düşüyor, `https://dxbglobal.online/health`
-15 saniyede cevapsız (alan adı doğru IP'ye çözülüyor — genel çözümleyici de aynı adresi veriyor).
-**Ne çalıştırdığı ÖLÇÜLMEDİĞİ için buraya yazılmamıştır**, ve bir rol atanmadan önce ölçülecektir.
+**hiç güvenlik duvarı kuralı yok** (`hcloud server describe`, `hcloud firewall list`).
+**SEBEP ÖLÇÜLDÜ 2026-08-25: HETZNER'İN KÖTÜYE KULLANIM BİRİMİ KUTUNUN HER İKİ IP ADRESİNİ DE
+KAPATMIŞ** — `public_net.ipv4.blocked = true`, IPv6 aynı; Hetzner'in kendi API tanımı bu alan için
+*"If the IP is blocked by our anti abuse dept"* diyor. İz sürme bunu bağımsız doğruluyor: paketler
+**Hetzner'in kendi ağının içinde**, yedinci sıçramada ölüyor, makineye hiç ulaşmıyor.
+**Makine sağlıklı:** konsolu `Ubuntu 24.04.4 LTS dxb-vps-1` temiz giriş satırını gösteriyor.
+İşlemci 30 gün boyunca aralıksız yaklaşık bir çekirdek yakıyor (%48-133 / 400) ve disk durmadan
+yazıyor (~14-17 işlem/sn); **ağ ise sessiz — saniyede 1 paket, ~100 bayt** (kapatma yüzünden).
+Buradan **hiçbir kapısına ulaşılamıyor**: ICMP yanıtsız, 22 · 80 · 443 zaman aşımı,
+`https://dxbglobal.online/health` cevapsız (alan adı doğru IP'ye çözülüyor).
+**⚠ Ne çalıştırdığı hâlâ ÖLÇÜLEMEDİ** — kalan tek kapı konsol, o da bilerek hiç oluşturulmamış bir
+parola istiyor (yalnız-anahtar SSH, root girişi kapalı). Karar CEO'ya aittir (tahta satırı B39).
 
 **KAYITLI UYARLAMA — B36, 2026-08-23…25: HER ŞEY KENDİ VERİ TABANINA YAZAR.** CEO'nun kendi
 cümlesi (2026-08-25, `b36-block5-residue-and-two-databases-2026-08-25`): *"Şirkette iş yapıldı mı

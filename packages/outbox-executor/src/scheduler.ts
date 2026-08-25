@@ -25,6 +25,7 @@ import {
   drainTasks,
   generateWorkFromPlans,
   RESIDENT_WORKER_ID,
+  SUBSCRIPTION_SPEND_SOURCE,
 } from "@dxb/orchestrator";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
 import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
@@ -264,6 +265,15 @@ async function dispatchLanes(): Promise<number> {
         -- What a job costs TODAY is the only figure that answers "how many more
         -- fit in this hour". With no runs in the window there is nothing to be
         -- careful about yet, so the bound lifts.
+        --
+        -- AND IT COUNTS ONLY THE COMPANY'S OWN RUNS. Measured 2026-08-25 on the
+        -- construction engine: with the SessionEnd hook's rows counted in (this
+        -- repository's own coding sessions, 487,924,277 tokens in one hour) this
+        -- query answered room = 0 and the company throttled itself to ONE hand;
+        -- with them excluded it answered 8. The company would have reproduced
+        -- the CEO's own complaint — one worker doing everything — every time a
+        -- session on this laptop ended. B36's ruling settles it: the
+        -- construction does not govern the company.
         (SELECT CASE
                   WHEN avg_cost IS NULL OR avg_cost <= 0 THEN 8
                   ELSE GREATEST(FLOOR(GREATEST(cap - spent, 0) / avg_cost), 0)
@@ -272,9 +282,11 @@ async function dispatchLanes(): Promise<number> {
              SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
                     COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
                                WHERE mode = 'subscription'
+                                 AND source = ${SUBSCRIPTION_SPEND_SOURCE}
                                  AND created_at > now() - interval '60 minutes'), 0)        AS spent,
                     (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
                       WHERE mode = 'subscription'
+                        AND source = ${SUBSCRIPTION_SPEND_SOURCE}
                         AND created_at > now() - interval '60 minutes')                     AS avg_cost
            ) b)::int                                                                     AS room
     `.execute(getDb());

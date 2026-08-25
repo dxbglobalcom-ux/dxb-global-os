@@ -45,6 +45,26 @@ export const SUBSCRIPTION_CAP_KEY = "orchestrator.subscription_tokens_per_hour";
 /** Used only when the setting is missing — the migration seeds the real one. */
 export const SUBSCRIPTION_CAP_FALLBACK = 500_000;
 
+/**
+ * The only `source` this brake governs — the company's own dispatch line.
+ *
+ * ⚠ MEASURED DEFECT, 2026-08-25, and this constant is the fix. The window used
+ * to sum EVERY `mode = 'subscription'` row in the hour, whatever wrote it. The
+ * SessionEnd hook (`tools/hooks/src/tag-subscription-call.ts`) writes rows of
+ * its own with `source = 'hook'` — the CONSTRUCTION session's token accounting,
+ * not the company's work — and three of them landed at 18:21 UTC carrying
+ * 487,924,277 tokens between them. Against a 500,000 ceiling that shut the
+ * company's line for a full hour and turned 7 of the 13 B39 cases red, while a
+ * run an hour earlier had been green: the suite's colour depended on whether a
+ * coding session happened to end nearby.
+ *
+ * Filtering here is not a convenience. It is the CEO's own ruling of 2026-08-23
+ * (row B36): the construction does not touch the company. Its accounting may
+ * not govern the company's dispatch either. `recordSubscriptionSpend` below
+ * writes this same constant, so the writer and the reader cannot drift apart.
+ */
+export const SUBSCRIPTION_SPEND_SOURCE = "worker";
+
 export interface SubscriptionWindow {
   /** Tokens the subscription path spent in the last 60 minutes. */
   tokens: number;
@@ -69,6 +89,7 @@ export async function checkSubscriptionWindow(): Promise<SubscriptionWindow> {
         (SELECT COALESCE(SUM(prompt_tokens + completion_tokens), 0)
            FROM cost_ledger
           WHERE mode = 'subscription'
+            AND source = ${SUBSCRIPTION_SPEND_SOURCE}
             AND created_at > now() - interval '60 minutes')      AS tokens,
         fn_setting_numeric(${SUBSCRIPTION_CAP_KEY}, ${SUBSCRIPTION_CAP_FALLBACK}) AS cap
     `.execute(getDb());
@@ -109,7 +130,7 @@ export async function recordSubscriptionSpend(args: {
         prompt_tokens: args.tokensIn,
         completion_tokens: args.tokensOut,
         cost_eur: 0, // subscription: no marginal EUR, and no second money source
-        source: "worker",
+        source: SUBSCRIPTION_SPEND_SOURCE,
         meta: JSON.stringify({ brake: SUBSCRIPTION_CAP_KEY }),
       })
       .execute();

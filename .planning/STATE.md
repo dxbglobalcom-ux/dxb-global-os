@@ -19,44 +19,46 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
-**2026-08-25, HANDED OVER ON HIS ORDER — THE NEXT SESSION HAS ONE JOB AND IT IS APPROVED.** <!-- OPEN: B39 -->
-*"A şıkkını onaylıyorum, önce içeride ne var gör. ama bunu senin kardeşin opus 5'e yeni sessionda
-yaptıralım zira çok şişti session 600k oldu … yani herşeyi lütfen ona devret o devam etsin."*
+**2026-08-25 — THE RENTED BOX WAS OPENED AND LOOKED INTO, ON HIS APPROVED ORDER. THE ANSWER IS IN.** <!-- OPEN: B39 -->
+*"A şıkkını onaylıyorum, önce içeride ne var gör."* — approval `ceo-vps-look-inside-first-2026-08-25`.
 
-**THE JOB: OPEN THE RENTED BOX AND READ WHAT IS RUNNING ON IT. Nothing else about that box.**
-Approval registered: `ceo-vps-look-inside-first-2026-08-25`. He was shown three options with their
-costs and risks — repair · rebuild · shut down — and chose **repair, in this order: look first,
-decide after.** What is measured about it (2026-08-25, and it need not be re-measured, only
-confirmed): Hetzner's own record says `dxb-vps-1` (cx33 · 4 vCPU · 8 GB · nbg1 · `46.225.89.249`)
-has run **47 days** at **48-59 % CPU with continuous network traffic** and carries **no firewall
-rule of its own**; from this machine **nothing answers** — no ICMP, ports 22 · 80 · 443 all time
-out, `https://dxbglobal.online/health` included. It bills **10.10 EUR/month**. An SSH key for it
-exists at `~/.ssh/dxb_vps_ed25519` and the stack it was built with is `vps/compose.yaml` (251 lines).
+**WHAT WAS FOUND, measured this session: HETZNER'S ANTI-ABUSE DEPARTMENT HAS BLOCKED BOTH OF THE
+BOX'S IP ADDRESSES.** `public_net.ipv4.blocked = true` and `ipv6.blocked = true`, straight from
+Hetzner's API; their own specification says of that field, *"If the IP is blocked by our anti abuse
+dept."* The route confirms it independently — packets die **inside Hetzner's own network**, seven
+hops out, and never reach the machine. **The machine itself is healthy:** its console shows
+`Ubuntu 24.04.4 LTS dxb-vps-1` at a clean login prompt, no crash and no kernel error. Nothing has
+been done to it since the day it was built (its entire action log: create · start · enable backups ·
+one reboot, all on 2026-07-09). Backups still run daily; today's is 11.40 GB. Our SSH key still
+matches Hetzner's record byte for byte, so no credential was lost.
 
-⛔ **WHAT THE APPROVAL DOES NOT COVER, and this line exists so it is not assumed away:** resetting
-that machine's root password. It was named as an **identity step** when the options were put to him,
-and the option text said plainly it would not be done without his word. **If the console cannot be
-entered without it, ASK HIM — do not reset.** Nothing is rebuilt, reinstalled, shut down or deleted
-under this approval either: he chose look-first, and the decision is a separate act he has not made.
+**⚠ WHAT COULD NOT BE READ, and why.** What is actually RUNNING on it. The box burns about one core
+without pause (48-133 % of 400 % over 30 days) and writes to disk continuously (~14-17 operations a
+second), while its network is silent — **1 packet a second, roughly 100 bytes** — because the block
+cuts it off. The console is the only door left and it needs a password that was deliberately never
+created (key-only SSH, root login off). **A correction to our own record (LAW A):** the line saying
+the box had *"continuous network traffic"* is false — it has none — and it is deleted, not footnoted.
 
-**TWO MORE THINGS HE WAS TOLD ABOUT AND THAT TRAVEL WITH THIS HANDOVER:**
-1. **⚠ One thing could not be machine-checked and is his to unblock (board row B03-bis).** The
-   dispatch-brake alert's WORDS are proven Turkish by test (`tests/b39/alert-language.test.ts`);
-   how it RENDERS on his authenticated screen is not, because automated login is forbidden — a form
-   login would enrol a second factor on his own account. He was asked for one hand-minted browser
-   session; until he gives it, every eye-check of an authenticated surface stays `⚠ UNVERIFIED`.
-2. **The lane count is invisible to him, on purpose, and it is written down rather than done.** The
-   company now decides its own hand count and says so in `var/scheduler.log`
-   (*"the company is working with 1 hand (first tick)"*), but that never reaches his screen. It was
-   NOT added to the current dashboard because **V1 is dead by his own ruling of 2026-08-01** and
-   dead screens get no new features. It belongs to V2's first law — motion IS state — and is
-   recorded as a boundary for the session that draws V2, not forgotten.
+**THE DECISION IS HIS AND NOTHING IS DONE TO THAT BOX UNTIL HE GIVES IT.** Three ways to get the box
+back, put to him 2026-08-25: answer the Hetzner abuse notice sent to his account e-mail (free, and
+the only route that returns the box itself) · read today's backup on a throw-away machine (costs
+cents, the original untouched) · reset the root password and enter by console (an identity step, and
+it stays unapproved).
 
-**Everything else this session touched is finished, tested and committed** (`c20b9f8c`, `6ec09952`,
-`9cf1d4de`, `dd123fde`) and **built is not accepted (LAW B)** — his eye has been on the reports, not
-on the work. The company's migration ledger, which was 32 versions behind, is repaired: the
-canonical chain now runs clean against the company. The order of work otherwise stays what he set:
-**this board, oldest first**, unless he names a focus.
+**AND A SECOND THING WAS FOUND AND FIXED THE SAME SESSION, on row B39.** Both of the money brakes
+built the day before counted the SessionEnd hook's rows — **this repository's own coding sessions**,
+487,924,277 tokens inside one hour — as if the company had spent them. Measured on the construction
+engine: with those rows counted the company answered **room = 0 and gave itself ONE hand**; with
+them excluded, **8**. It would have reproduced his own complaint — one worker doing everything —
+every time a session on this laptop ended. Both queries now count only the company's own runs, from
+one shared constant, and the case that was red before the fix is in the suite: **19/19 green**.
+**⚠ NOT FIXED AND NOT HIS ROW YET:** that same hook records **153 million "prompt tokens" for a
+single coding session** (cache re-reads counted as fresh input). The cost book is therefore telling
+a lie about the construction's own spending. He has been told in one line; the decision is his.
+
+**STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
+eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count
+reaches no screen, and by his own ruling that V1 is dead it belongs to V2, not to the old dashboard.
 
 **2026-08-23 — THE CONSTRUCTION SITE WAS CUT OUT OF THE COMPANY. ✓ CLOSED 2026-08-25 (row B36).**
 He opened the day with it: the very important gap on the board, and the complaint born from it —
@@ -906,15 +908,11 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    throttled itself to a single lane for ever on evidence from another era. The average is now taken
    over the SAME 60-minute window the ceiling governs.
 
-   **⚠ WHAT B39 STAYS OPEN FOR, AND IT IS HIS DECISION: THE RENTED BOX IS WORKING AND WE CANNOT SEE
-   WHAT IT DOES.** <!-- OPEN: B39 --> Measured 2026-08-25: Hetzner's own record says `dxb-vps-1`
-   (cx33 · 4 vCPU / 8 GB · nbg1 · Ubuntu 24.04) has been **running 47 days**, with **48-59 % CPU and
-   continuous network traffic through the last six hours** and **no firewall rule of its own**. From
-   this machine **nothing answers**: no ICMP, and ports 22, 80 and 443 all time out, including
-   `https://dxbglobal.online/health` (the domain resolves correctly — a public resolver returns the
-   same address). It is billing and it is busy, and nobody can say at what. The earlier claim that
-   *"nothing is installed on the rented server"* was wrong and was corrected in the plan: the search
-   used `docker-compose*.yml` and the file is `compose.yaml` — `vps/compose.yaml` is 251 lines.
+   **⚠ WHAT B39 STAYS OPEN FOR, AND IT IS HIS DECISION.** <!-- OPEN: B39 --> **Answered 2026-08-25:
+   Hetzner's anti-abuse department has blocked both of the box's IP addresses** — that is why nothing
+   answers from here, and the full measurement is in the live order at the top of this file. The
+   sentence that stood here, *"48-59 % CPU and continuous network traffic"*, is false: the network is
+   silent, 1 packet a second, and it is deleted rather than kept beside the truth (LAW A).
 
    **✓ AND THE TRAP THAT WAS FOUND ON THE WAY IS REPAIRED, ON HIS ORDER.** The company's migration
    ledger was **32 versions behind its own schema** (126 recorded, 158 files), so the canonical chain

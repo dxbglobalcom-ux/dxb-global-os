@@ -11,6 +11,13 @@ export type { IntentIntakeDeps, IntakeResult } from "./intent-intake.js";
 export { runWorkerOnce, makeSteppedExecutor } from "./worker-shim.js";
 // R2.1 — resident worker loop (audit F-01): the tasks-queue production consumer.
 export { drainTasks, RESIDENT_WORKER_ID } from "./worker-loop.js";
+export {
+  checkSubscriptionWindow,
+  recordSubscriptionSpend,
+  SUBSCRIPTION_CAP_KEY,
+  SUBSCRIPTION_CAP_FALLBACK,
+  SUBSCRIPTION_SPEND_SOURCE,
+} from "./subscription-cap.js";
 export type { DrainTasksDeps, DrainTasksResult } from "./worker-loop.js";
 // W2.5 — autonomous work generation: a finished plan opens its own next tasks.
 export { generateWorkFromPlans, parsePlanSteps, openGeneratedWork } from "./work-generation.js";
