@@ -64,6 +64,7 @@ chown "$BUILD_UID:$BUILD_GID" "$BRIDGE/sock"
 chmod 700 "$BRIDGE/sock"
 PIDS=()
 cleanup() { for p in "${PIDS[@]:-}"; do kill "$p" 2>/dev/null || true; done; rm -rf "$BRIDGE"; }
+# The relay below is one of $PIDS, so it dies with the run like every forwarder.
 trap cleanup EXIT
 
 # --------------------------------------------- carry the allowed ports inward
@@ -99,9 +100,44 @@ exec "\$@"
 INNEREOF
 chmod 755 "$BRIDGE/inner.sh"
 
+# ------------------------------------------- carry the read gateway inward
+# The gateway's socket lives under /run/user/1000, which logind creates 0700 and
+# owns as the author. `bwrap` below runs as uid 997 and resolves its OWN bind
+# sources, so it cannot even traverse that directory — while the `[ -S ]` test
+# here runs as root and sees the socket happily. The first version of this block
+# bound the socket directly and therefore ARMED A BIND THAT COULD NOT BE
+# RESOLVED: measured 2026-08-25, the entire sandboxed suite died before a single
+# test ran with
+#   bwrap: Can't find source path /run/user/1000/dxb/company-read.sock: Permission denied
+# and `sudo -u dxbbuild ls /run/user/1000/` refuses for the same reason.
+#
+# Opening /run/user/1000 to uid 997 is NOT the fix: it holds the author's session
+# bus and PipeWire sockets at srw-rw-rw-, so a traverse bit there would hand the
+# construction identity his desktop. The socket is relayed instead — the same
+# shape the allowed TCP ports already use — by a forwarder running AS THE OWNER
+# OF THE SOCKET, which is the only identity that has to reach in. It carries
+# bytes and nothing else: the gateway still answers 14 named questions and still
+# refuses SQL, measured through the relay from uid 997 itself.
 GATEWAY_ARGS=()
 if [ -S "$GATEWAY_SOCK" ]; then
-  GATEWAY_ARGS=(--bind "$GATEWAY_SOCK" /run/dxb/company-read.sock)
+  GW_UID="$(stat -c %u "$GATEWAY_SOCK")"
+  GW_GID="$(stat -c %g "$GATEWAY_SOCK")"
+  mkdir -p "$BRIDGE/gw"
+  chown "$GW_UID:$GW_GID" "$BRIDGE/gw"
+  chmod 755 "$BRIDGE/gw"
+  setpriv --reuid="$GW_UID" --regid="$GW_GID" --clear-groups \
+    socat "UNIX-LISTEN:$BRIDGE/gw/company-read.sock,fork,mode=666" \
+          "UNIX-CONNECT:$GATEWAY_SOCK" >/dev/null 2>&1 &
+  PIDS+=($!)
+  for _ in $(seq 1 50); do
+    [ -S "$BRIDGE/gw/company-read.sock" ] && break
+    sleep 0.1
+  done
+  if [ -S "$BRIDGE/gw/company-read.sock" ]; then
+    GATEWAY_ARGS=(--bind "$BRIDGE/gw/company-read.sock" /run/dxb/company-read.sock)
+  else
+    echo "dxb-construction-sandbox: the read gateway relay did not come up; the sandbox opens WITHOUT the window" >&2
+  fi
 fi
 
 # bwrap itself runs AS the construction identity — there is no root anywhere in

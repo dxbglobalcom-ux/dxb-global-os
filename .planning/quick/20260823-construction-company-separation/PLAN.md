@@ -47,9 +47,9 @@ and requires that write to be **refused**. Any non-zero difference, or any succe
 | M5 | **`cost_ledger` inside the company:** 950 `<synthetic>` · 282 `claude-fable-5` · 122 `claude-opus-5` · 113 `claude-sonnet-5` · 109 `claude-opus-4-8` · 36 haiku | `select model, count(*) from cost_ledger group by 1` |
 | M6 | **It is live, not history** — one `<synthetic>` row landed **2026-08-22 18:11:51**, two `claude-opus-5` rows **2026-08-21 07:24 and 07:48** | `select created_at::date, model, count(*) from cost_ledger where created_at > now() - interval '10 days' group by 1,2` |
 | M7 | **`v_cost_breakdown`** — the view behind the CEO's cost page — **carries no filter**; it sums the whole `cost_ledger`. C24's *"construction separated"* holds only for `v_workforce_tokens`, which reads `agent_runs` | `pg_get_viewdef('public.v_cost_breakdown')` |
-| M8 | **`memory_index`** — **13,919** rows, of which **13,845** come from the `claude-mem` store (the construction sessions' own diary), every one at `scope='holding'`. *(Re-measured 2026-08-23: the 13,882 that stood here is the count of `kind='fact'`, not the total — 13,845 claude-mem + 37 pgvector + 32 obsidian + 5 notebook = 13,919. Two records carried the wrong total until a third audit found them disagreeing.)* | `select store, scope, count(*) from memory_index group by 1,2` |
+| M8 | **`memory_index`** — **13,919** rows, of which **13,845** come from the `claude-mem` store (the construction sessions' own diary), every one at `scope='holding'`. *(Re-measured 2026-08-23: the 13,882 that stood here is the count of `kind='fact'`, not the total — 13,845 claude-mem + 37 pgvector + 32 obsidian + 5 notebook = 13,919. Two records carried the wrong total until a third audit found them disagreeing.)* **SPENT, 2026-08-25: the table is empty — 0 rows.** He ordered the holding's memory cleared to zero the same evening (commit `9b65a4ae`); the 15,773 rows it held by then live in `~/backups/dxb/memory_index-before-ceo-wipe-2026-08-23.sql`. | `select store, scope, count(*) from memory_index group by 1,2` |
 | M9 | **`project_risks`** — the coffee-token construction chore is still `open` on his risk page (C36, opened 2026-07-27) | `select title_tr, severity, status from project_risks` |
-| M10 | **`pgboss.job`** — 303,136 rows in the company database | `select count(*) from pgboss.job` |
+| M10 | **`pgboss.job`** — 303,136 rows in the company database. **RE-MEASURED 2026-08-25: 79,178, and falling on its own** — pg-boss deletes its own completed work, so the number was never residue to move; the oldest job on the engine is 2026-08-17 | `select count(*) from pgboss.job` |
 | M11 | **94 files** fall through to the company database when `DXB_DATABASE_URL` is unset — 83 tests, 6 scripts, 3 seeds, 1 tool, **1 live application route** (`apps/dashboard/src/app/api/voice/call/route.ts:53`) | `grep -rl "54322/postgres" --include=*.ts --include=*.mjs --include=*.js` |
 | M12 | `packages/shared/src/db.ts:14` already **throws** when the variable is missing — the production path is the one place that is correct today | source |
 | M13 | The governance gate reads the company as **superuser**: `docker exec … psql -U postgres -d postgres` | `scripts/governance/ledger-truth.mjs:194` |
@@ -537,13 +537,20 @@ Order is fixed and never varies: **copy → verify → delete → audit.**
    its exact row count and three sample rows, before a single row moves. His eye decides what is
    construction and what is the company's record. The classification rules the dry-run proposes:
 
-   | Group | Proposed rule | Measured today |
-   |---|---|---|
-   | `cost_ledger` | `model = '<synthetic>'`, or `source='hook'` with `task_id IS NULL` and `agent_id IS NULL` — i.e. a construction session's own burn | 950 + up to 662 |
-   | `memory_index` | `store = 'claude-mem'` — the construction sessions' diary | 13,845 |
-   | `pgboss` | completed/archived job history; the live queue tables stay | 303,136 |
-   | `project_risks` | the coffee-token row (C36) — a construction chore in a business register | 1 |
-   | `hook_violations` · `audit_log` | **BOUNDARY — nothing moves without his word.** These are the holding's governance and legal record; a construction-era row in them may still be the company's history | 1,963 · 29,636 |
+   **REGISTERED ADAPTATION, 2026-08-25 — THE TABLE BELOW IS THE MEASUREMENT, NOT THE ESTIMATE.**
+   The five rows written here on 2026-08-23 were re-measured against the live company engine before
+   the dry-run was drafted, and three of them had stopped being true. The old table is replaced
+   rather than annotated (LAW A). Evidence and the exact statements: `EVIDENCE.md`
+   §"Block 5 — the dry-run survey".
+
+   | Group | What it actually is | Plan said (08-23) | MEASURED 2026-08-25 | Verdict |
+   |---|---|---|---|---|
+   | `cost_ledger` | the construction author's own token burn: **every one of the 1,612 rows** is `source='hook'`, `department='engineering'`, `task_id`/`agent_id` NULL, `cost_eur` 0.0000, one `meta` key (`session_id`), models `<synthetic>` / fable-5 / opus-5 / sonnet-5 / opus-4-8 / haiku-4-5, dated 07-14 → 08-22 (the day Block 1 killed the writer). **The company has never written a row here** — 0 with a task, 0 with an agent, 0 in any other department, 0 from any other source | 950 + up to 662 | **1,612 — the whole table** | moves whole; the plan's two-part rule is redundant and would have moved exactly the same rows |
+   | `memory_index` · `memory_embeddings` | **already gone, on his own order.** *"şirketin hafızasını tamamen temizle sıfır"* — 15,773 + 37 rows exported to `~/backups/dxb/memory_*-before-ceo-wipe-2026-08-23.sql` and deleted the same evening (commit `9b65a4ae`, 18:59), together with the hourly `claude-mem-sync` job that fed them | 13,845 | **0 · 0** | **NOTHING TO MOVE.** Block 5 has no work here |
+   | `pgboss` | not residue: the **company's own** live queue, and it prunes itself. 22 queues and 14 schedules, all of them the holding's (`chat.drain`, `voice.drain`, `task.worker`, `ceo.briefing.morning`, `revenue.*`, `hr.*`); the job table holds only 2026-08-17 onward because pg-boss deletes its own completed work | 303,136 | **79,178, self-pruning** | **NOTHING TO MOVE.** Moving a self-pruning queue's history would be moving the holding's own record |
+   | `project_risks` | 3 rows, all on project *DXB Global OS*. One is the construction chore: *"Approvals brown-token audit deferred by CEO order (2026-07-14)"*, severity low, **still `open` on his risk page**. The other two are closed business risks (workforce activation, cost-intelligence surface) | 1 | **1 of 3** | moves — it is the only row in the group |
+   | `decision_log` | **NEW — the plan never named it.** 1,143 of 4,730 rows were decided by a test-shaped worker that never existed in the holding: `worker-lad-*`, `worker-hard-1..5`, `worker-dep-1/2`, `worker-e2e-1`, `worker-fail-1`, `worker-orch-qa-*`, `r21t-resident` — 19 names, all inside 2026-07-24 → 07-28, all writing *employee-selection* decisions about tasks in projects such as `orch-ladder-a` | — | **1,143 of 4,730** | **HIS DECISION.** It is the construction's rehearsal written into the holding's decision record |
+   | `hook_violations` · `audit_log` | **BOUNDARY — nothing moves without his word.** The holding's governance and legal record. For his eye when he rules on it: 1,291 of the 29,637 audit rows carry a construction-shaped actor (`fable-5` 809, `test` 127, `engineering` 127, `tracer` 127, `e125t-test` 66, `engineering-worker` 35), and 1,789 more are the `memory_commit` trail of the diary sync he has already had deleted | 1,963 · 29,636 | **1,963 · 29,637** | untouched until he says otherwise |
 
 3. Each group: copy into `dxb_archive`, verify row count **and** a checksum of the copied rows,
    only then delete from the company, and write one `audit_log` row in the company naming what

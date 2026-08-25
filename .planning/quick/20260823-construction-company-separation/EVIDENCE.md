@@ -2324,3 +2324,319 @@ preceded it, and the two rulings he attached. The paragraph that stood here — 
 is no entry … no record may call Block 4 accepted"* — was true for four hours and is
 deleted by his word rather than kept beside it (LAW A). **Row B36 stays open:** Block
 4 is one block of eight, and Block 5 is next.
+
+---
+
+## Block 5 — the dry-run survey (2026-08-25, nothing moved)
+
+**Nothing in this section changed a row.** Every statement is a `SELECT`, and the
+company's fingerprint is printed unchanged at the bottom. The plan's rule is that a
+dry-run report goes to the CEO before the first row moves; this is the measurement
+behind it.
+
+**How the company was read, said by name.** The construction side's gateway
+(`scripts/b36/company-read-client.mjs` → `dxb-company-read.service`) answers 14
+NAMED questions and no others:
+
+```
+$ node -e 'import("./scripts/b36/company-read-client.mjs").then(m=>m.ask("catalogue",null)).then(console.log)'
+agent_runs_total, agents_active, agents_archived, agents_legacy_version_live,
+agents_stale_persona_path, agents_total, hr_employees_evaluated, library_empty_kinds,
+library_grants_live, library_items_total, library_usage_log_rows, objectives_total,
+today, voice_calls_total
+```
+
+Not one of them is a residue question, and the survey needs row-level samples the
+gateway is not built to return (it answers with a single scalar). **So this survey
+was taken with `docker exec … psql -U supabase_admin -d postgres`, SELECT only** —
+the same read path `scripts/b36/company-state-fingerprint.mjs` already uses for what
+the window cannot reach. It is named here because a read that goes around the gate
+must be named in the report.
+
+### First: why `memory_index` was empty, and what the record said instead
+
+The handover asked for this before anything else — a plan that cannot count the rows
+it proposes to move is not a plan. Four measurements, in the order they were taken:
+
+```
+$ … -c "SELECT count(*) FROM public.memory_index"                    → 0
+$ … pg_stat_user_tables WHERE relname='memory_index'                 → n_tup_ins 0 · n_tup_del 0
+$ … SELECT pg_postmaster_start_time()                                → 2026-08-25 07:29:53+00
+$ … pg_stat_user_tables WHERE relname='audit_log' (29,637 rows)      → n_tup_ins 0 · n_live_tup 0
+```
+
+**The statistics prove nothing and are not used as evidence.** The engine had been
+running six minutes; every table on it, including the 29,637-row `audit_log`, reads
+zero inserts. A counter that says zero for a table with 29,637 rows in it is a
+counter that was reset, not a fact about the table.
+
+What the engine *does* carry from before that restart:
+
+```
+ relname            | relfilenode | relpages | xid_age
+--------------------+-------------+----------+---------
+ memory_index       |       28866 |        0 |  250778     ← rewritten far more recently
+ project_members    |       28947 |        0 |  478704     ← 0 rows, never populated: the control
+ hook_violations    |       28809 |       45 |  478480
+ audit_log          |       28640 |      912 |  478493
+ agents             |       28584 |       14 |  478818
+```
+
+```
+ index_name             | relpages | size
+------------------------+----------+--------
+ memory_index_pkey      |      109 | 872 kB      ← the ghost of ~15k rows on an empty heap
+ idx_memory_index_scope |       43 | 344 kB
+ idx_memory_kind        |       42 | 336 kB
+```
+
+`project_members` is the control: it holds 0 rows and always has, and its frozen-xid
+age sits with everything else at ~478,700. `memory_index` sits 227,900 transactions
+younger — it was emptied and vacuumed long after its neighbours — and its primary key
+still holds 109 pages over a heap of zero. **The table was full and was emptied.**
+
+**By whom, and on whose word — found outside the database, because the database has
+no record of it:**
+
+```
+$ ls -la ~/backups/dxb/
+-rw-rw-r-- 1 dxb dxb  3284938 Aug 23 18:55 memory_index-before-ceo-wipe-2026-08-23.sql
+-rw-rw-r-- 1 dxb dxb   721167 Aug 23 18:56 memory_embeddings-before-ceo-wipe-2026-08-23.sql
+
+$ git log -1 --format=%B 9b65a4ae
+fix(b36): the holding's memory stops being the construction site's diary
+CEO order, 2026-08-23, in his own words:
+  "ARTIK HİÇ BİR ŞEY SEN VEYA BAŞKASI ÇALIŞIRKEN YAZILMASIN"
+  "şirketin hafızasını tamamen temizle sıfır"
+```
+
+The two export files were counted from the files themselves, not from the commit
+message:
+
+```
+$ python3 scratchpad/count_wipe_file.py memory_index-…sql memory_embeddings-…sql
+memory_index       : 15,773 data rows · by store {claude-mem 15,699 · pgvector 37 ·
+                     obsidian 32 · notebook 5} · created_at 2026-07-09 → 2026-08-23 16:00
+memory_embeddings  :     37 data rows
+```
+
+**The answer:** the holding's memory is empty because he ordered it emptied on
+2026-08-23, and it was exported first. **Why nobody could explain it from the
+company's own record:** two things.
+
+1. **`audit_log` holds no entry for it.** Searched by every deletion-shaped name —
+   `action ILIKE '%memor%|%purge%|%truncate%|%delete%|%clear%|%reset%|%wipe%'` — the
+   only hit is the `library.purge` of 2026-08-01. The rows were deleted directly,
+   not through a path that writes an audit row. **Recorded as a real gap:** 15,773
+   rows left the company and its own book says nothing. Whether the holding's record
+   should carry a line for it is his to say; nothing was written into `audit_log` to
+   fix it, because that table is a boundary he has not opened.
+2. **`.planning/STATE.md` said the opposite.** It still carried *"Nothing was changed
+   … it goes to Block 5"* about the very job he had ordered dead five hours later.
+   That sentence is now deleted rather than annotated (LAW A) and replaced by what he
+   ordered, with the counts, the backup path and the commit.
+
+### The dry-run: every candidate group, counted, with samples
+
+**Group 1 — `cost_ledger`: 1,612 rows, and every one of them is the construction's.**
+
+```
+ source | model                     |   n | no_task_no_agent | first_day  | last_day   | eur
+--------+---------------------------+-----+------------------+------------+------------+------
+ hook   | <synthetic>               | 950 |              950 | 2026-07-14 | 2026-08-22 | 0.0000
+ hook   | claude-fable-5            | 282 |              282 | 2026-07-14 | 2026-07-25 | 0.0000
+ hook   | claude-opus-5             | 122 |              122 | 2026-07-25 | 2026-08-21 | 0.0000
+ hook   | claude-sonnet-5           | 113 |              113 | 2026-07-16 | 2026-07-30 | 0.0000
+ hook   | claude-opus-4-8           | 109 |              109 | 2026-07-14 | 2026-07-25 | 0.0000
+ hook   | claude-haiku-4-5-20251001 |  36 |               36 | 2026-07-17 | 2026-07-25 | 0.0000
+
+ rows with source <> 'hook'                     : 0
+ distinct meta keys across all 1,612 rows       : session_id (1,612)
+ distinct departments                           : engineering (1,612)
+ rows carrying a task_id / agent_id             : 0 / 0
+```
+
+Three sample rows (id 2430, 2551, 20707):
+
+```
+ 2430 | 2026-07-14 10:09:05+00 | hook | <synthetic>   | subscription | engineering | 0.000000 | {"session_id": "3485a34d-…"}
+ 2551 | 2026-07-14 11:09:29+00 | hook | claude-fable-5| subscription | engineering | 0.000000 | {"session_id": "dfd8ec7c-…"}
+20707 | 2026-08-22 18:11:51+00 | hook | <synthetic>   | subscription | engineering | 0.000000 | {"session_id": "0e95a2d8-…"}
+```
+
+The plan's fear — that a blind rule would carry the company's own spending out with
+the construction's — is answered by measurement rather than by narrowing the rule:
+**there is no company spending in this table to protect.** The last row is dated
+2026-08-22, the day before Block 1 killed the `SessionEnd` writer, and nothing has
+been written since.
+
+**Group 2 — `memory_index` · `memory_embeddings`: 0 and 0.** Already gone on his
+order (above). Block 5 has no work here.
+
+**Group 3 — `pgboss`: not residue.**
+
+```
+ job 79,178 · queue 22 · schedule 14 · job_dependency 0 · subscription 0
+ oldest job on the engine: 2026-08-17     (pg-boss deletes its own completed work)
+ queues: chat.drain · voice.drain · task.worker · intent-intake · workflow.run ·
+         outbox-tick · library.profile_recompile · lease-reaper · velocity-breaker ·
+         orchestration.work_generate · ceo.briefing.morning · revenue.{scan,score,rollup,brief} ·
+         hr.{training_queue,performance_daily,probation_check,stale_persona_scan} ·
+         tool-pin-check · memory-compaction · __pgboss__send-it
+```
+
+Every queue and every schedule is the holding's own. The 303,136 in the plan was a
+photograph of a self-pruning table, not a pile of residue; it is 79,178 today because
+pg-boss cleaned up after itself, not because anything was moved.
+
+**Group 4 — `project_risks`: 1 of 3.**
+
+```
+ 4e48b9a4… | DXB Global OS | Approvals brown-token audit deferred by CEO order (2026-07-14) | low    | OPEN
+ c03b0990… | DXB Global OS | Workforce activation gap: 219 of 220 employee records dormant  | high   | closed
+ 27643259… | DXB Global OS | Cost Intelligence surface (E11) pending                        | medium | closed
+```
+
+The first is the construction chore standing on his risk page. The other two are the
+company's own closed business risks and stay.
+
+**Group 5 — `decision_log`: 1,143 of 4,730, and the plan never named it.**
+
+```
+ decided_by matching ^(worker-|r21t|e2e|test) : 1,143      everything else : 3,587
+ names: worker-lad-1 (110) · r21t-resident (102) · worker-lad-lc · worker-lad-ok ·
+        worker-lad-2 · worker-e2e-1 · worker-fail-1 · worker-dep-1 · worker-dep-2 ·
+        worker-hard-1..5 · worker-orch-qa-{appr,mal,done,noc,fail}   — 19 names
+ window: 2026-07-24 → 2026-07-28, without exception
+```
+
+Three sample rows:
+
+```
+18584 | 2026-07-25 03:54:20+00 | worker-lad-1 | employee-selection | no active employee with an MCP profile in 'orch-ladder-a' …
+18586 | 2026-07-25 03:54:20+00 | worker-lad-1 | employee-selection | no active employee with an MCP profile in 'orch-ladder-a' …
+18588 | 2026-07-25 03:54:20+00 | worker-lad-2 | employee-selection | no active employee with an MCP profile in 'orch-ladder-a' …
+```
+
+These are the orchestrator ladder rehearsals of the E-series, written into the
+holding's decision record by workers that were never employees. **It goes to him with
+the others; nothing is assumed.**
+
+**Group 6 — the boundary, measured but not touched.** `hook_violations` 1,963 ·
+`audit_log` 29,637. For his eye when he rules on them: 1,291 audit rows carry a
+construction-shaped actor (`fable-5` 809 · `test` 127 · `engineering` 127 · `tracer`
+127 · `e125t-test` 66 · `engineering-worker` 35) and 1,789 more are the
+`memory_commit` trail of the diary sync he has already had removed.
+
+**Swept and found clean of construction residue:** `control_idempotency` (2,639,
+2026-07-12 → 07-28, request keys of the control surface itself), `task_events`
+(1,543), `library_change_log` (809), `agent_runs` (378), `tool_calls` (325), `tasks`
+(217, of which 213 done), `alerts` (149), and the 46 remaining tables in `public`.
+The row counts of all 60 tables were taken in one statement and are the same 46,735
+the fingerprint reports.
+
+**The company did not move while it was being read:**
+
+```
+$ node scripts/b36/company-state-fingerprint.mjs
+  tables in public 60 · rows in public 46735 · audit_log/hook_violations 29637/1963
+  STATE_FINGERPRINT de359137ee1d7c79
+```
+
+**Nothing in Block 5 proceeds until he has answered the dry-run.** Registered as
+still his in the plan §8: which groups are construction and which are the holding's
+own record, and whether `audit_log` and `hook_violations` are opened at all.
+
+---
+
+## Block 3-bis — the window into the holding could never open, and the reboot proved it
+
+**Found by running the battery, 2026-08-25, on a machine that had just rebooted.**
+The whole sandboxed suite — 107 files — died before a single test ran:
+
+```
+$ pnpm construction:battery
+=== 1/2 · THE CONSTRUCTION RUNTIME — the sandboxed suite ===
+bwrap: Can't find source path /run/user/1000/dxb/company-read.sock: Permission denied
+…
+sandboxed suite : exit 1 · host suite : exit 1 · BATTERY_RED
+```
+
+**The cause, measured, not deduced.** `scripts/construction/sandbox.sh` tests for
+the gateway socket as **root** and then binds it with `bwrap`, which
+`setpriv --reuid=997` has already dropped to the construction identity — and that
+identity cannot even traverse the directory the socket sits in:
+
+```
+$ sudo -n -u dxbbuild id           → uid=997(dxbbuild) gid=973(dxbbuild)
+$ sudo -n -u dxbbuild ls /run/user/1000/
+ls: cannot open directory '/run/user/1000/': Permission denied
+$ getfacl -p /run/user/1000        → user::rwx  group::---  other::---   (no ACL)
+```
+
+The root test sees the socket, arms the bind, and the unprivileged `bwrap` then
+cannot resolve it. **So the branch has never worked.** It has only ever been
+silent, because `[ -S … ]` is false whenever the gateway is not listening — and
+the gateway crash-loops whenever the company's engine is down
+(`var/company-read-gateway.log`: `Error: connect ECONNREFUSED 127.0.0.1:54322`,
+twice again at this morning's boot before the engine came up). Every green battery
+so far ran in that state: **the sandbox opened without the window, and nothing
+said so.**
+
+**Why the obvious fix is refused.** Giving uid 997 a traverse bit on
+`/run/user/1000` would hand the construction identity the author's desktop: that
+directory holds `bus` and `pipewire-0` at `srw-rw-rw-`.
+
+```
+srw-rw-rw- 1 dxb dxb 0 Aug 25 09:29 bus
+srw-rw-rw- 1 dxb dxb 0 Aug 25 09:29 pipewire-0
+```
+
+**The repair.** The socket is **relayed** into the bridge — the same shape the
+allowed TCP ports already use — by a forwarder running as the socket's own owner,
+the only identity that has to reach in. `bwrap` then binds a path inside the
+root-owned bridge, which uid 997 can resolve. It carries bytes and no privilege.
+**Proved end to end before it was written, with the real gateway and the real
+construction identity:**
+
+```
+$ socat UNIX-LISTEN:/tmp/dxbgw/company-read.sock,fork,mode=666 \
+        UNIX-CONNECT:/run/user/1000/dxb/company-read.sock &
+
+$ DXB_COMPANY_READ_SOCKET=/tmp/dxbgw/company-read.sock node …askClaim("agents_total")
+agents_total = 205
+$ sudo -n -u dxbbuild env DXB_COMPANY_READ_SOCKET=/tmp/dxbgw/… …askClaim("agents_total")
+uid997 agents_total = 205
+$ sudo -n -u dxbbuild env DXB_COMPANY_READ_SOCKET=/tmp/dxbgw/… …askClaim("SELECT 1")
+refused: no such question: SELECT 1
+```
+
+The relay was killed and its directory removed in the same turn (`ss -lx | grep -c
+dxbgw` → 0).
+
+**⚠ NOT INSTALLED — IT NEEDS ROOT, AND ROOT NEEDS HIS PASSWORD.** The wall that
+actually runs is `/usr/local/sbin/dxb-construction-sandbox`, owned by root by
+design so the construction cannot rewrite it. The sudoers file grants this session
+exactly three passwordless rights — open the sandbox, act as `dxbbuild`, read the
+packet filter — and installing a file is not one of them:
+
+```
+$ sudo -n -l
+    (ALL : ALL) ALL                                            ← needs a password
+    (root) NOPASSWD: /usr/local/sbin/dxb-construction-sandbox
+    (dxbbuild) NOPASSWD: ALL
+    (root) NOPASSWD: /usr/sbin/nft list table inet dxb_wall
+```
+
+Until `bash scripts/construction/install-wall.sh` is run once, the repaired source
+and the installed wall differ and **the battery stays RED**. Everything the
+sandbox is not needed for was run and is green:
+
+```
+$ pnpm typecheck                       exit 0
+$ pnpm verify:ledger                   ledger truth OK · 71 CEO approval claims each registered
+$ pnpm verify:schema-parity            SCHEMA_PARITY
+$ node scripts/b36/count-company-fallbacks.mjs   EXECUTABLE FALLBACKS: 0
+$ gitleaks git --redact -v             754 commits scanned · no leaks found
+$ node scripts/b36/company-state-fingerprint.mjs STATE_FINGERPRINT de359137ee1d7c79
+```

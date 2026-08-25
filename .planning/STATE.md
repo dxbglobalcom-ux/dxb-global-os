@@ -409,6 +409,33 @@ that reading as the next job and had not answered when the session closed.
 1. **B36 — cutting the construction site out of the company. THIS IS THE WORK IN HAND.** <!-- OPEN: B36 -->
    Plan: `.planning/quick/20260823-construction-company-separation/PLAN.md` (eight blocks, approved).
    Evidence: `EVIDENCE.md` in the same folder · audit answers: `AUDIT-RESPONSE-1.md`, `AUDIT-RESPONSE-2.md`.
+   **2026-08-25 — BLOCK 5'S DRY-RUN IS MEASURED AND IT IS IN FRONT OF HIM. NOT A ROW HAS MOVED.**
+   The plan's residue table was written on 2026-08-23 and three of its five rows had stopped being
+   true; it is replaced by the measurement (registered adaptation in `PLAN.md` §Block 5, evidence in
+   `EVIDENCE.md` §"Block 5 — the dry-run survey"). What the company actually holds: **`cost_ledger`
+   1,612 rows and every single one is the construction's own token burn** (all `source='hook'`, all
+   `department='engineering'`, 0 with a task, 0 with an agent, 0 EUR, one `meta` key `session_id`,
+   last row 2026-08-22 — the company has never written a row there) · **`memory_index` 0 and
+   `memory_embeddings` 0**, because he ordered the holding's memory cleared on 2026-08-23 and it was
+   exported first, so Block 5 has NO work there · **`pgboss` is not residue**, it is the company's own
+   self-pruning queue (79,178 jobs, oldest 2026-08-17, 22 queues and 14 schedules all the holding's) ·
+   **`project_risks` 1 of 3** (the brown-token chore, still open on his risk page) <!-- OPEN: B36 --> · **NEW, the plan
+   never named it: `decision_log` 1,143 of 4,730 rows** decided by 19 test-shaped workers
+   (`worker-lad-*`, `worker-hard-1..5`, `worker-orch-qa-*`, `r21t-resident`) inside 2026-07-24 → 07-28
+   · **BOUNDARY, untouched:** `hook_violations` 1,963 · `audit_log` 29,637, of which 1,291 carry a
+   construction-shaped actor and 1,789 are the `memory_commit` trail of the diary sync.
+   **THE COPY → VERIFY → DELETE → AUDIT ORDER DOES NOT START UNTIL HE ANSWERS.**
+   **AND THE BATTERY IS RED FOR A REASON THAT IS NOT THIS WORK.** The machine rebooted at 09:29 and
+   the read gateway came up healthy for the first time during a battery run — which exposed a bind
+   that could never have worked: `scripts/construction/sandbox.sh` tested for the gateway socket as
+   root and then handed it to a `bwrap` already dropped to uid 997, which cannot traverse
+   `/run/user/1000` (0700, the author's). The whole sandboxed suite died before test one. The source
+   is repaired (the socket is relayed in by its own owner, proved end to end from uid 997 —
+   `agents_total = 205` through the relay, `SELECT 1` still refused), **but the wall that runs is
+   root-owned and this session has no passwordless right to install it**: one command is his,
+   `bash scripts/construction/install-wall.sh`. Everything the sandbox is not needed for is green:
+   `typecheck` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · fallbacks 0 · gitleaks clean ·
+   `STATE_FINGERPRINT de359137ee1d7c79` unchanged across the whole session.
    **AND HIS AUDITOR'S FIVE INSTRUCTIONS, CARRIED OUT THE SAME NIGHT — and the first measurement was
    worse than the question.** Asked whether the LIVE dashboard was started through
    `scripts/dashboard.sh`, the answer was **no**: the `next-server` serving :3000 had been started by
@@ -515,13 +542,23 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    document as its own identity, because the chain never learned the repoint done directly on the
    company (migration `20260823002000`, also a no-op there) · and the sicil sync **silently dropped 28
    of 199 employees** outside the company, because it matched by a uuid written in the file instead of
-   by the slug. **AND A SECOND WRITER WAS FOUND, STILL LIVE, AND IT IS HIS TO RULE ON:** the company's
-   own hourly job `claude-mem-sync` pulls the construction sessions' diary into the holding's
-   `memory_index` at `scope='holding'` — measured today, it fired at 15:00:29 and put **1,818 rows** of
-   this afternoon's work into the holding's brain (13,919 → 15,737). It is the company reaching out and
-   pulling construction in, on a schedule, which is why Block 1 never saw it. Nothing was changed:
-   `claude-mem` is one of the two plugins he ordered ON, and what the holding's memory may contain is
-   the author's to rule on, per his order of 2026-08-24; it goes to Block 5. And one test carried the literal uuid
+   by the slug. **AND A SECOND WRITER WAS FOUND, STILL LIVE — AND HE KILLED IT THE SAME EVENING.** The company's
+   own hourly job `claude-mem-sync` pulled the construction sessions' diary into the holding's
+   `memory_index` at `scope='holding'`; it fired at 15:00:29 that afternoon and put **1,818 rows** of
+   work-in-progress into the holding's brain. It was the company reaching out and pulling construction
+   in, on a schedule, which is why Block 1 never saw it. **He ruled on it at once, in his own words:**
+   *"ARTIK HİÇ BİR ŞEY SEN VEYA BAŞKASI ÇALIŞIRKEN YAZILMASIN"* · *"şirketin hafızasını tamamen temizle
+   sıfır"*. Carried out the same evening (commit `9b65a4ae`, 2026-08-23 18:59): the queue, its cron, its
+   worker, its schedule and the import are gone from `packages/outbox-executor/src/scheduler.ts` and
+   from the live company's pg-boss; `memory_index` **15,773 → 0** and `memory_embeddings` **37 → 0**,
+   both exported first to `~/backups/dxb/memory_*-before-ceo-wipe-2026-08-23.sql` (re-counted
+   2026-08-25 from the files themselves: 15,773 and 37 rows, 15,699 of them `store='claude-mem'`);
+   `tests/b36/company-memory-is-not-a-diary.test.ts` fails the battery if any of it returns.
+   **THE LINE THAT STOOD HERE — "Nothing was changed … it goes to Block 5" — IS DELETED BY WHAT HE
+   ORDERED (LAW A), and with it the plan's residue row of 13,845 memory rows: there is nothing left in
+   that table for Block 5 to move.** The emptiness left no `audit_log` entry, because the deletion was
+   made directly rather than through an application path that writes one; that is why a later session
+   could not explain it from the company's own record and had to find it in the commit. And one test carried the literal uuid
    of a company row; it finds the project by slug now.
    **DONE — Block 1, the writer is dead, and the SERVER is what says so.** The `SessionEnd` hook that
    wrote the author's own token burn into the holding's `cost_ledger` writes only to
