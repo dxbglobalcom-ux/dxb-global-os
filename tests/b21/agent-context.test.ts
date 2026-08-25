@@ -92,10 +92,33 @@ describe("B21 — one standing context, both lanes", () => {
     for (const lane of ["voice", "chat"] as const) {
       const text = standingPrompt({ ...base, lane }).join("\n");
       expect(text).toContain("is not a developer");
-      // The classes of vocabulary the CEO banned on 2026-07-28.
-      for (const banned of ["migration", "schema", "endpoint", "commit", "suite"]) {
-        expect(text).toContain(banned);
-      }
+      // The WORD rule as he restated it on 2026-08-01: the real word survives, its meaning is
+      // added in brackets. This replaced the ban list below on 2026-08-25.
+      expect(text).toContain("in brackets right after it");
+      expect(text).toContain("never hide the word from him");
+    }
+  });
+
+  it("no longer enforces the ban list the CEO struck out on 2026-08-01", () => {
+    // His own sentence: "kelimeler kullanılsın ama parantez içinde açıklansın basitçe o kadar."
+    // This test pinned the OPPOSITE until 2026-08-25 — it required the prohibition to be present,
+    // which is how the rescind failed to reach Hamza's agents for 24 days.
+    const text = standingPrompt({ ...base, lane: "chat" }).join("\n");
+    expect(text).not.toContain("Never use construction vocabulary");
+    expect(text).not.toContain("Never use file names, command names");
+  });
+
+  it("carries the four steps of an explanation, on his order of 2026-08-25", () => {
+    // The shape that landed when a bare list did not: conclusion first, one comparison from his
+    // own world before any mechanism, the numbers beside it, and what it changes for him.
+    for (const lane of ["voice", "chat"] as const) {
+      const text = standingPrompt({ ...base, lane }).join("\n");
+      expect(text).toContain("conclusion in the first sentence");
+      expect(text).toContain("one comparison taken from a world");
+      expect(text).toContain("before you describe how anything works");
+      expect(text).toContain("measured numbers next");
+      expect(text).toContain("what it changes for");
+      expect(text).toContain("bare chronology");
     }
   });
 

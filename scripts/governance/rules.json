@@ -15,7 +15,12 @@
   "so14_boundary": {
     "owner": ".claude/hooks/ceo-language.sh",
     "fingerprint": "THE CEO IS THE OWNER, NOT A DEVELOPER",
-    "what": "Standing order 14, the BOUNDARY — the banned vocabulary and the self-test. A hook and not a skill because it governs every sentence he reads, not a particular job: on 2026-07-30 it was placed in a skill and was violated within the hour, because a rule that binds only when the author opens a door does not bind."
+    "what": "Standing order 14, the BOUNDARY — the WORD rule (use the real word, then one short bracketed explanation) and the self-test. It said 'the banned vocabulary' until 2026-08-25; that was stale, because the CEO struck the ban list out himself on 2026-08-01: 'kelimeler kullanılsın ama parantez içinde açıklansın basitçe o kadar.' A hook and not a skill because it governs every sentence he reads, not a particular job: on 2026-07-30 it was placed in a skill and was violated within the hour, because a rule that binds only when the author opens a door does not bind."
+  },
+  "so14_explain_shape": {
+    "owner": ".claude/hooks/ceo-language.sh",
+    "fingerprint": "A PICTURE FROM HIS WORLD before any mechanism",
+    "what": "Standing order 14, the SHAPE — how a technical THING is explained to him: the answer first, a picture from his world before any mechanism, the measured numbers beside it, and what it means for him. A hook and not a skill for the same reason the boundary is a hook: it governs every explanation he reads, and mid-session drift is exactly where it fails. Written on his own order of 2026-08-25, after a bare four-item list of the author's mistakes drew 'hiçbir halt ANLAMADIMMMMMMM'."
   },
   "so14_report_shape": {
     "owner": ".claude/skills/dxb-ceo-report/SKILL.md",

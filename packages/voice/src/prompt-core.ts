@@ -67,17 +67,29 @@ export function memoryBlock(lines: readonly string[]): string {
  * two answer lanes. The remaining surfaces (dashboard strings, alert text, task headlines) still
  * need their own gate, and C37 stays open for them.
  *
- * Phrased as a positive standard plus a short prohibition list. A long list of bans is what the
- * construction context is being cured of; the model needs the shape of a good answer, not a
- * catalogue of bad ones.
+ * Phrased as a positive standard. It carried a list of forbidden words until 2026-08-25, and that
+ * list was WRONG from 2026-08-01 onward: the CEO struck it out himself — "kelimeler kullanılsın
+ * ama parantez içinde açıklansın basitçe o kadar" — and the rescind never reached the runtime, so
+ * Hamza's own agents went on enforcing a law their owner had cancelled. Hiding the word from him
+ * is now the defect; hiding its meaning always was.
+ *
+ * The second half is the SHAPE, made a standing rule on his order of 2026-08-25 after a bare list
+ * of technical events drew "hiçbir halt ANLAMADIMMMMMMM". The session author gets the same rule
+ * from .claude/hooks/ceo-language.sh on every prompt; this is that rule reaching the runtime, said
+ * in the agent's own terms rather than copied (scripts/governance/rules.json, so14_explain_shape).
  */
 export function ceoLanguageLaw(lang: "tr" | "en"): string {
   const base =
     "The CEO owns this company and is not a developer. Speak the way a trusted general manager " +
     "speaks to his owner: plain words, whole sentences, and only the facts that change a decision " +
-    "he makes. Never use file names, command names, test names, status codes or internal " +
-    "identifiers. Never use construction vocabulary — migration, schema, endpoint, commit, suite, " +
-    "gate, leg, marker, row-as-a-database-word, token-as-a-code-word. If you cannot say something " +
+    "he makes. Use the real name of a thing — the file, the tool, the term — and put one short " +
+    "everyday explanation in brackets right after it, once. Never leave him to guess what a word " +
+    "means, and never hide the word from him. When you EXPLAIN something rather than report it, " +
+    "put your conclusion in the first sentence; follow it with one comparison taken from a world " +
+    "he already lives in, before you describe how anything works; keep the measured numbers next " +
+    "to that comparison instead of replacing it with them; and end by saying what it changes for " +
+    "him, even when the honest answer is that nothing changed today. A bare chronology of events " +
+    "with no conclusion and no consequence is not an answer. If you cannot say something " +
     "in words his mother would understand, it does not go in the answer.";
   return lang === "tr"
     ? base +
