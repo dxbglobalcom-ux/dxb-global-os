@@ -438,8 +438,32 @@ that reading as the next job and had not answered when the session closed.
    1,963 rows between id 910 and 9149), text cut off in two panels, and a wrap fix that split a number in
    half. All three repaired and re-looked-at, at 1600 px and at 1280 px. Block 4's accepted screen was
    re-rendered after the shared-style change and is still five-for-five.
-   **WHAT BLOCK 5 STILL OWES HIM:** his auditor has not looked, and he has not seen it by eye — the exact
-   order he set for Block 4 and expects again (LAW B).
+   **HIS AUDITOR HAS NOW LOOKED, AND IT PASSES — AND HE NARROWED WHAT THE AUDIT IS FOR.**
+   <!-- CEO-OK: b36-acceptance-criterion-and-block5-audit-2026-08-25 --> *"Denetçi"* is the reviewer HE
+   runs (Solo 5.6); a subagent the author opens is a self-check and carries no acceptance weight. His
+   criterion, his words: *"Kayıt taşıma işini denetleme … 10 tane dosya değil de 5 dosya gitmişse sorun
+   değil"* · *"silindi silinmedi kaldı kalmadı vs bunlar da önemli değil."* **The record move is OUTSIDE
+   the audit** — count, remainder, deleted or archived, short or over-reaching. What IS audited: can the
+   construction reach the company's database, write to it, or get past the protection, and do the
+   company's ordinary operations still work. His auditor withdrew an earlier FAIL and ruled **PASS** —
+   *"Do not pursue additional residue records merely for completeness. Proceed to Block 6."*
+   **THEREFORE CLOSED AND NOT TO BE REOPENED:** the same July rehearsal that stayed behind under other
+   names (`resident-worker` 46 · `ctx-rot-*` 104 · `orchestrator:dispatch` 221 · `system:exam` 2 · `e10t`
+   1) is measured, recorded in `EVIDENCE.md`, and **not a defect under his criterion.**
+   **TWO FINDINGS THAT FELL INSIDE IT WERE FIXED THE SAME TURN.** (a) The relay built this morning had
+   re-published the holding's read gateway in a **0755** room with a **0666** socket — every local
+   identity could ask it, through a forwarder running as the author. The room is now **0750**, owned by
+   the forwarder and carrying the construction's group; re-installed (`md5 1c374e22…` on both copies) and
+   proved with a validated instrument: uid 1000 REACHED · uid 997 REACHED · uid 65534 **EACCES**. The
+   gateway's own comment, which claimed the directory was the gate, was false for an hour and is
+   rewritten. (b) `move-residue.mjs` would have dropped its own archive on a re-run and could have
+   carried the COMPANY's own future cost rows out; it now has a hard date bound at the day the writer
+   died, a shape assertion on every candidate row, a refusal on any count he did not approve, and a
+   refusal to overwrite a non-empty archive — all four validated in both directions.
+   **Gates after both fixes:** `BATTERY_GREEN` 107/107 · 775 passed | 15 skipped · host 3/3 and 16/16 ·
+   `WALL_IS_ONE_WAY` · `verify:ledger` OK · fingerprint `453b0ef99e03a1f3` unchanged.
+   **WHAT BLOCK 5 STILL OWES HIM:** his own eye on `http://127.0.0.1:4599/blok5`. LAW B is untouched —
+   his auditor passing is the first half of the order he set for Block 4; his eye is the second.
    **THE DRY-RUN THAT PRECEDED IT, MEASURED WITH NOT A ROW MOVING:**
    The plan's residue table was written on 2026-08-23 and three of its five rows had stopped being
    true; it is replaced by the measurement (registered adaptation in `PLAN.md` §Block 5, evidence in

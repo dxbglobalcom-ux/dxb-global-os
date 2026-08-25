@@ -543,8 +543,15 @@ fallbacks 0 · gitleaks clean · 0 failed units.
 **His eye's screen is built:** `pnpm b36:eye-check` → `http://127.0.0.1:4599/blok5`, five live panels;
 RULE #0 pass run three times and it caught three defects, all repaired (`EVIDENCE.md` §"The screen his
 eye needs for Block 5").
-**What is NOT done, and it is the only thing left:** his auditor has not looked, and he has not seen
-it by eye. That is the order he set for Block 4 and it holds here (LAW B).
+**HIS AUDITOR HAS PASSED IT, 2026-08-25** <!-- CEO-OK: b36-acceptance-criterion-and-block5-audit-2026-08-25 -->
+— under the criterion he stated that day: the record move is outside the audit entirely (*"10 tane
+dosya değil de 5 dosya gitmişse sorun değil"*), and what is audited is whether the construction can
+reach, write to or get past the company's database while its ordinary work still runs. *"Do not
+pursue additional residue records merely for completeness. Proceed to Block 6."* Two findings inside
+that criterion were fixed the same turn — the relay's 0755 room (now 0750, a third identity measured
+at EACCES) and `move-residue.mjs`'s four missing refusals. `EVIDENCE.md` §"his auditor, his criterion".
+**What is NOT done, and it is the only thing left:** he has not seen it by eye. That is the second
+half of the order he set for Block 4 and it holds here (LAW B).
 
 Order is fixed and never varies: **copy → verify → delete → audit.**
 

@@ -122,9 +122,18 @@ GATEWAY_ARGS=()
 if [ -S "$GATEWAY_SOCK" ]; then
   GW_UID="$(stat -c %u "$GATEWAY_SOCK")"
   GW_GID="$(stat -c %g "$GATEWAY_SOCK")"
+  # THE DIRECTORY IS THE GATE, and it has to stay one. The gateway's own access
+  # control was /run/user/1000 at mode 0700 — the author and nobody else. The
+  # first version of this relay re-published that socket in a 0755 room with a
+  # 0666 socket, so ANY local identity could have asked the holding its named
+  # questions through a forwarder running as the author. Measured 2026-08-25 and
+  # confirmed by the audit; it is a widening, small in blast radius and real.
+  # This room is owned by the forwarder's identity and carries the CONSTRUCTION's
+  # group, at 0750: root, the author and uid 997 may enter, and nothing else can
+  # even reach the path.
   mkdir -p "$BRIDGE/gw"
-  chown "$GW_UID:$GW_GID" "$BRIDGE/gw"
-  chmod 755 "$BRIDGE/gw"
+  chown "$GW_UID:$BUILD_GID" "$BRIDGE/gw"
+  chmod 750 "$BRIDGE/gw"
   setpriv --reuid="$GW_UID" --regid="$GW_GID" --clear-groups \
     socat "UNIX-LISTEN:$BRIDGE/gw/company-read.sock,fork,mode=666" \
           "UNIX-CONNECT:$GATEWAY_SOCK" >/dev/null 2>&1 &

@@ -3012,3 +3012,109 @@ dump of 2026-08-23 that predates the move.
 
 **Battery after all of it:** `BATTERY_GREEN` — 107/107 files, 775 passed | 15
 skipped, host 3/3 and 16/16.
+
+---
+
+## Block 5 — his auditor, his criterion, and the two things it caught that matter
+
+**HE NAMED WHAT THE AUDIT IS FOR, and it is narrower than the audit that ran.**
+*"Denetçi"* is the reviewer he runs himself (Solo 5.6); a subagent the author opens
+is a self-check and carries no acceptance weight. His criterion, in his own words:
+
+> *"Kayıt taşıma işini denetleme … 10 tane dosya değil de 5 dosya gitmişse sorun
+> değil."* · *"silindi silinmedi kaldı kalmadı vs bunlar da önemli değil."*
+
+Everything about the record move is **outside** the audit — how many rows moved,
+whether some stayed, deleted or archived, short or over-reaching. What is audited
+is the real separation: **can the construction reach the company's database, write
+to it, or get past the protection — and do the company's ordinary operations still
+work.** Registered: `b36-acceptance-criterion-and-block5-audit-2026-08-25`.
+
+**HIS AUDITOR'S VERDICT, relayed by him:** an earlier FAIL was **withdrawn** once
+the criterion was stated — *"Block 5 passes under the CEO's clarified acceptance
+criterion. Do not pursue additional residue records merely for completeness.
+Proceed to Block 6."*
+
+**WHAT IS THEREFORE CLOSED AND MAY NOT BE REOPENED.** The author's own internal
+check had found that the same July rehearsal stayed behind under other names —
+`resident-worker` 46, `ctx-rot-*` 104, `orchestrator:dispatch` 221 rows that name
+`orch-ladder-a` by title, `system:exam` 2, `e10t` 1. Under his criterion those are
+not defects. Measured, recorded here, and **not pursued.**
+
+### The two findings that fall INSIDE his criterion — both fixed the same turn
+
+**1. The relay I built this morning had widened the holding's read gateway to every
+local identity.** The gateway's access control was `/run/user/1000` at mode 0700 —
+the author and nobody else. The relay re-published that socket in the bridge, and
+the first version put it in a **0755** room with a **0666** socket, while the TCP
+room beside it is 0700. Measured on a live run:
+
+```
+drwxr-xr-x 2 dxb  dxb       /run/dxb-bridge.kgaElB/gw          ← 0755, anyone may enter
+srw-rw-rw- 1 dxb  dxb       …/gw/company-read.sock             ← 0666
+drwx------ 2 dxbbuild       /run/dxb-bridge.kgaElB/sock        ← the TCP room, 0700
+```
+
+**The fix: the directory is the gate again.** The room is now owned by the
+forwarder and carries the CONSTRUCTION's group, at 0750. Re-installed
+(`WALL_INSTALLED`, `md5 1c374e22b3b160d6d6075563b8622815` on both the running wall
+and the repository's copy), and **proved with an instrument that was shown to work
+before it was believed** — the probe speaks to the socket with node's own `net`
+module and no repository file, so it measures the socket and not whether the caller
+can read the repo:
+
+```
+drwxr-x--- 2 dxb dxbbuild  /run/dxb-bridge.ZZT4JH/gw           ← 0750
+
+uid 1000: REACHED -> {"ok":true,"value":"205"}      ← the instrument can succeed
+uid  997: REACHED -> {"ok":true,"value":"205"}      ← the door still works
+uid 65534 (nobody): REFUSED -> EACCES               ← everyone else is out
+```
+
+And from inside the real wall, unchanged: `uid inside : 997` · named question
+`205` · `SELECT 1` → *"no such question"*. `company-read-gateway.mjs` carried a
+comment saying the directory was the gate and *"nothing on this machine can reach
+the path"*; that sentence had become false and is rewritten to say what is now
+true, with the defect named in it.
+
+**2. `move-residue.mjs` would have overwritten its own archive, and could have
+carried the COMPANY's own records out.** He has since ruled that the company itself
+writes to these tables again, so a rule of *"every `source='hook'` row"* is a
+loaded gun on a future run. Four refusals added, none of them a warning:
+
+- a **hard date bound** at `2026-08-23`, the day Block 1 killed the writer — the
+  newest archived row is `2026-08-22 18:11:51`, so nothing the company writes from
+  now on can ever be caught;
+- a **shape assertion** on every candidate row, aborting if one differs from what he
+  was shown;
+- **a count he did not approve stops the run** instead of printing `⚠` and carrying
+  on;
+- **it refuses to overwrite a non-empty archive.** The first version opened the copy
+  with `DROP TABLE IF EXISTS`, so a second run would have destroyed the very rows it
+  exists to protect while the manifest went on certifying their checksum.
+
+The guards were validated in BOTH directions before being believed, on the archive
+copy so the company was not touched:
+
+```
+shape guard on the 1612 archived rows                    → odd_rows 0
+the same guard with one condition flipped                → odd_rows 1612   (it can see)
+rows dated on or after the day the writer died           → 0   (newest 2026-08-22 18:11:51)
+archive already holds cost_ledger 1612 / decision_log 1143 / project_risks 1 / manifest 3
+                                                          → a re-run now REFUSES instead of dropping
+$ node scripts/b36/move-residue.mjs      → RESIDUE_DRY_RUN  0 rows   (a clean no-op today)
+```
+
+### One blemish the internal check reported that is simply wrong
+
+It said the rollback dump described as *"local and off-site"* is off-site only under
+a different name. Measured:
+
+```
+local  dxb-b36-pre-separation-2026-08-23.dump  062aff3d8ebe4cf64f79df8d6da6bc92
+remote dxb-b36-pre-separation-2026-08-23.dump  062aff3d8ebe4cf64f79df8d6da6bc92   ← identical
+remote dxb-laptop-2026-08-23.dump              cb7b4a51b07e68315d2c39d0b0940bd5   ← a second file
+```
+
+The record was right: that exact file is on the Storage Box and byte-identical.
+A second daily backup of the same day exists beside it; both are real.

@@ -155,9 +155,20 @@ server.listen(SOCKET, () => {
   // 0666 on the socket, and the DIRECTORY is the gate. The socket lives inside
   // /run/user/1000/dxb, which is the owner's own runtime directory (mode 700),
   // so nothing on this machine can reach the path — except the construction
-  // sandbox, into which root binds this one file by name. Inside that sandbox
-  // the payload runs as `dxbbuild`, which is in none of the owner's groups, so
-  // 0660 would refuse the only caller the door exists for.
+  // sandbox. Inside that sandbox the payload runs as `dxbbuild`, which is in
+  // none of the owner's groups, so 0660 would refuse the only caller the door
+  // exists for.
+  //
+  // HOW THE SANDBOX GETS IT, and why this comment had to be rewritten on
+  // 2026-08-25. `bwrap` runs as uid 997 and resolves its own bind sources, so it
+  // cannot traverse a 0700 directory owned by the author: root cannot simply
+  // hand it this path. scripts/construction/sandbox.sh relays the socket into
+  // its bridge instead — and the FIRST version of that relay put it in a 0755
+  // room, which handed the holding's named questions to every local identity on
+  // the machine. The audit caught it. The relay room is now 0750, owned by the
+  // forwarder and carrying the construction's group, so THE DIRECTORY IS AGAIN
+  // THE GATE at both ends: measured, a third identity gets EACCES while uid 997
+  // is answered.
   chmodSync(SOCKET, 0o666);
   console.error(`[gateway] listening on ${SOCKET}`);
   console.error(`[gateway] connected as ${who.rows[0].current_user}, transaction_read_only=${who.rows[0].ro}`);

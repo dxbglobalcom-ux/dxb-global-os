@@ -65,15 +65,29 @@ const TEST_WORKERS = [
 // rows, in dxb_archive.public.manifest.predicate.
 const BROWN_TOKEN_RISK_TITLE = "Approvals brown-token audit deferred by CEO order";
 
+// THE DAY THE CONSTRUCTION STOPPED WRITING INTO THE COMPANY. Block 1 killed the
+// SessionEnd hook on 2026-08-23 and the last row it ever wrote is dated
+// 2026-08-22 18:11:51. Nothing this file moves can be dated later than that, so
+// the bound is written here as a HARD one: he has since ruled that the company
+// itself may write to these tables again ("şirketle ilgili herşey ... sadece
+// şirketin veritabanına işlesin"), and a rule that says only "source='hook'"
+// would carry the COMPANY's own money records out on a later run. The audit of
+// 2026-08-25 named exactly that scenario.
+const WRITER_DIED = "2026-08-23T00:00:00+00:00";
+
 const quote = (s) => `'${String(s).replace(/'/g, "''")}'`;
 
 const GROUPS = [
   {
     table: "cost_ledger",
     key: "id",
-    where: "TRUE",
+    where: `created_at < ${quote(WRITER_DIED)}`,
     what: "the construction author's own token burn, the whole table",
     expected: 1612,
+    // Every candidate row must look like this or the run stops. It is the shape
+    // the dry-run measured and he was shown, asserted instead of assumed.
+    shape: "source = 'hook' AND task_id IS NULL AND agent_id IS NULL"
+      + " AND department = 'engineering' AND cost_eur = 0",
   },
   {
     table: "project_risks",
@@ -88,9 +102,11 @@ const GROUPS = [
   {
     table: "decision_log",
     key: "id",
-    where: `decided_by IN (${TEST_WORKERS.map(quote).join(", ")})`,
+    where: `decided_by IN (${TEST_WORKERS.map(quote).join(", ")})`
+      + ` AND created_at < ${quote(WRITER_DIED)}`,
     what: "the 19 test-shaped workers that were never employees",
     expected: 1143,
+    shape: `decided_by IN (${TEST_WORKERS.map(quote).join(", ")})`,
   },
 ];
 
@@ -226,8 +242,31 @@ const checksumSql = (schemaTable, colList, key, where) => `
     const checksum = await psql(COMPANY, "postgres",
       checksumSql(`public.${g.table}`, colList, g.key, predicate));
 
-    line(`   rows to move        : ${count}${count === g.expected ? "" : `   ⚠ the dry-run measured ${g.expected}`}`);
+    line(`   rows to move        : ${count}`);
     line(`   checksum (company)  : ${checksum}`);
+
+    // A DIFFERENT NUMBER IS A DIFFERENT JOB. The first version printed a warning
+    // and carried on, which is how a tool ends up moving rows nobody approved.
+    // The only counts this file may act on are the ones he was shown (or zero,
+    // meaning the group is already out).
+    if (count !== 0 && count !== g.expected) {
+      console.error(`   REFUSED: he approved ${g.expected} rows for ${g.table} and the company now`
+        + ` holds ${count} that match. Nothing is moved. Re-measure, put the new number in front of`
+        + ` him, and register his answer before this file runs again.`);
+      process.exit(1);
+    }
+
+    // AND EVERY ROW MUST LOOK LIKE WHAT HE WAS SHOWN.
+    if (count > 0 && g.shape) {
+      const odd = Number(await psql(COMPANY, "postgres",
+        `SELECT count(*) FROM public.${g.table} WHERE (${predicate}) AND NOT (${g.shape});`));
+      if (odd !== 0) {
+        console.error(`   REFUSED: ${odd} of the ${count} rows in ${g.table} do not have the shape`
+          + ` he was shown (${g.shape}). Nothing is moved.`);
+        process.exit(1);
+      }
+      line(`   shape check         : all ${count} rows match what he was shown`);
+    }
 
     if (!APPLY) { results.push({ ...g, count, checksum, moved: 0, verified: false }); line(); continue; }
     if (count === 0) {
@@ -248,8 +287,24 @@ const checksumSql = (schemaTable, colList, key, where) => `
         JOIN pg_namespace n ON n.oid = c.relnamespace
        WHERE n.nspname='public' AND c.relname=${quote(g.table)}
          AND a.attnum > 0 AND NOT a.attisdropped;`);
-    await psql(CONSTRUCTION, ARCHIVE_DB,
-      `DROP TABLE IF EXISTS public."${g.table}"; CREATE TABLE public."${g.table}" (${ddl});`);
+    // NEVER DROP AN ARCHIVE. The first version began the copy with
+    // `DROP TABLE IF EXISTS`, so a second run would have destroyed the rows it
+    // was supposed to be protecting — and the manifest would still have carried
+    // a checksum for data that no longer existed. If something is already
+    // archived under this name, this file stops and says so.
+    const held = Number(await psql(CONSTRUCTION, ARCHIVE_DB,
+      `SELECT count(*) FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace`
+      + ` WHERE n.nspname = 'public' AND c.relname = ${quote(g.table)};`));
+    if (held > 0) {
+      const rows = Number(await psql(CONSTRUCTION, ARCHIVE_DB, `SELECT count(*) FROM public."${g.table}";`));
+      if (rows > 0) {
+        console.error(`   REFUSED: ${ARCHIVE_DB} already holds ${rows} archived rows for ${g.table}.`
+          + ` This file will not overwrite an archive. Nothing is moved.`);
+        process.exit(1);
+      }
+      await psql(CONSTRUCTION, ARCHIVE_DB, `DROP TABLE public."${g.table}";`);
+    }
+    await psql(CONSTRUCTION, ARCHIVE_DB, `CREATE TABLE public."${g.table}" (${ddl});`);
     await copyAcross(`SELECT ${colList} FROM public.${g.table} WHERE ${predicate}`,
       `public."${g.table}"`, cols.map((c) => `"${c}"`));
 
