@@ -140,23 +140,40 @@ Tokens page still carries a separately-labelled CONSTRUCTION panel, built for co
 no writer any more and can only render zero. **V2 does not carry that panel at all** — his
 minimalism ruling forbids showing an empty box, and by this order there is nothing to show.
 
-**HIS ORDER ON THE BOARD, 2026-08-25, AND THE FIGURES THAT PROVE IT — MEASURED IN CHARACTERS.**
-*"yapılanları kapatılanları da uzun uzadıya yazmayın tahtada, sadece kısa ve net anlatım olsun."*
-One closed row had been eating a quarter of the whole register. Against commit `6f4641f8`, the last
-state before this session: **B36 49,346 → 1,505 · B37 2,421 → 619 · B39 6,137 → 4,117 · the whole
-board 181,795 → 130,778.** ⚠ **The figures in commit `02333574`'s message are wrong and are
-superseded by these** — that message counted the board in BYTES while counting rows in characters,
-and quoted B39 at a mid-edit 1,762 before the row was given the whole finding it now carries. Git
-history is not rewritten; this line is the correction, and these are the numbers to cite.
+**HIS ORDER ON THE BOARD, 2026-08-25, AND THE FIGURES THAT PROVE IT — MEASURED IN CHARACTERS,
+BETWEEN TWO NAMED COMMITS.** *"yapılanları kapatılanları da uzun uzadıya yazmayın tahtada, sadece
+kısa ve net anlatım olsun."* One closed row had been eating a quarter of the whole register. From
+`6f4641f8` (the last state before this session) to `7ab530fa` (the commit that completed the work):
+**B36 49,346 → 1,505 · B37 2,421 → 619 · B39 6,137 → 4,687 · the whole board 181,795 → 131,348.**
+
+⚠ **TWO EARLIER SETS OF FIGURES ARE WRONG AND THESE SUPERSEDE BOTH.** Commit `02333574`'s message
+counted the board in BYTES while counting rows in characters, and quoted B39 mid-edit at 1,762. Then
+this file itself published **4,117 / 130,778** — the CEO's auditor caught it: those are the state at
+**`7ab530fa^`, the PARENT**, because the author measured the working tree and then went on editing
+the row before committing. The lesson is the anchor, not the arithmetic: **a size figure means
+nothing unless it names the two commits it was taken between.** Git history is not rewritten; this
+paragraph is the correction and these are the numbers to cite.
 
 **⚠ WHO AUDITED WHAT, 2026-08-25 — WRITTEN DOWN BECAUSE THE AUTHOR ALMOST GOT IT WRONG.** The five
 findings that reopened B39 came from **the CEO's own auditor**, the one running beside this session.
-They did NOT come from the peer Claude session in this repository: he stopped that session's audit
-in one line — *"denetime gerek yok. ben şunu istiorm tahtayı CEO olarak takip etmek istiyorum"* —
-and it built him a readable board view instead. **All five are fixed and each fix is proven by a
-command, but NOTHING HAS BEEN RE-VERIFIED BY ANYONE** (LAW B): re-verification goes back to the
-auditor that wrote the findings, or waits for his word. No session may report that a second author
-checked them, because none did.
+They did NOT come from the peer Claude session in this repository. **THE AUTHOR APPOINTED THAT
+SESSION AS THE AUDITOR WITHOUT ASKING HIM, AND HE NEVER APPOINTED IT** — his own words on being
+shown it: *"ben yandaki claude code'u HİÇ DENETÇİ OLARAK ATAMADIM"*. He had already stopped it that
+evening — *"denetime gerek yok. ben şunu istiorm tahtayı CEO olarak takip etmek istiyorum"* — and it
+built him a readable board view instead (commit **`48cfc277`**; `7d93a305`, which commit
+`04a8ca04`'s message wrongly names for it, is the read-gateway repair).
+
+**THE VERDICT, from his own auditor, 2026-08-26: findings 1, 2, 3 and 5 independently PASS.
+Finding 4 FAILED** — the size figures above — **and is corrected in this file rather than in git
+history.** The sentence that stood here, that nothing had been re-verified by anyone, was true when
+it was written and is now false; it is deleted (LAW A). What is still true under LAW B: **a PASS
+from his auditor is not his acceptance.**
+
+⚠ **AND ONE SENTENCE IN `04a8ca04`'s MESSAGE IS WITHDRAWN.** It said the board's B22 cell had
+falsely called the rival sources unwatched and that the peer deleted it in `7d93a305`. **The author
+repeated that from a peer's report without measuring it.** Measured now: `7d93a305`'s only change to
+the board is the **B36** row, and the B22 row is byte-identical across this whole session. Whatever
+the peer corrected, it was not that, and no record of this session may carry the claim.
 
 **STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
 eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count

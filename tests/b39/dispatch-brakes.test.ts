@@ -142,6 +142,17 @@ const okExecutor: Executor = async () => ({
   confidence: 0.92,
 });
 
+// TEST HYGIENE, on his auditor's note, 2026-08-26. One case pins
+// `orchestration.dispatch_lanes` to 2 so its answer does not depend on how much
+// work happens to be queued. When that case is deliberately failed — which is
+// how the two scheduler predicates are proven necessary — its own restore line
+// never runs, the dial stays at 2, and the NEXT case fails as well. A mutation
+// must produce exactly one red, or the evidence stops being readable. So the
+// dial goes back after EVERY case, not after the file.
+afterEach(async () => {
+  await setSetting("orchestration.dispatch_lanes", "0");
+});
+
 afterAll(async () => {
   await sweepByDepartment(db(), M);
   await sql`DELETE FROM agent_runs WHERE employee_id IN
@@ -342,7 +353,6 @@ describe("B39 · the decision — the company works out its own hands, the CEO s
     ).toBe(2);
 
     await sql`DELETE FROM cost_ledger WHERE department LIKE ${`${M}%`}`.execute(db());
-    await setSetting("orchestration.dispatch_lanes", "0");
   });
 
   it("the lane count is registered, bounded, and seeded to DECIDE FOR ITSELF", async () => {
