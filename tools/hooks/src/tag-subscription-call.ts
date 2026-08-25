@@ -11,8 +11,8 @@
 // cost_eur stays 0: subscription calls have no marginal EUR — the row exists
 // for per-dept/model/mode accounting (COST-04 view, Phase 8). Token counts
 // carry the volume signal.
-import { createInterface } from "node:readline";
-import { createReadStream, existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { sumTranscript } from "./transcript-usage.js";
 
 // @dxb/shared is loaded LATE, on purpose. It is compiled output, and on a
 // machine where nobody has run `pnpm typecheck` it does not exist — a static
@@ -29,41 +29,10 @@ interface HookInput {
   transcript_path?: string;
 }
 
-interface UsageTotals {
-  prompt: number;
-  completion: number;
-}
-
 async function readStdin(): Promise<string> {
   const chunks: Buffer[] = [];
   for await (const chunk of process.stdin) chunks.push(chunk as Buffer);
   return Buffer.concat(chunks).toString("utf8");
-}
-
-async function sumTranscript(path: string): Promise<Map<string, UsageTotals>> {
-  const perModel = new Map<string, UsageTotals>();
-  const lines = createInterface({ input: createReadStream(path), crlfDelay: Infinity });
-  for await (const line of lines) {
-    let obj: any;
-    try {
-      obj = JSON.parse(line);
-    } catch {
-      continue;
-    }
-    if (obj?.type !== "assistant") continue;
-    const model = obj.message?.model;
-    const usage = obj.message?.usage;
-    if (!model || !usage) continue;
-    const totals = perModel.get(model) ?? { prompt: 0, completion: 0 };
-    // prompt side includes cache reads/writes — they are real input volume
-    totals.prompt +=
-      (usage.input_tokens ?? 0) +
-      (usage.cache_read_input_tokens ?? 0) +
-      (usage.cache_creation_input_tokens ?? 0);
-    totals.completion += usage.output_tokens ?? 0;
-    perModel.set(model, totals);
-  }
-  return perModel;
 }
 
 /**
@@ -288,7 +257,11 @@ async function main(): Promise<void> {
             completion_tokens: totals.completion,
             cost_eur: 0,
             source: "hook",
-            meta: JSON.stringify({ session_id: sessionId }),
+            meta: JSON.stringify({
+              session_id: sessionId,
+              cache_read_tokens: totals.cacheRead,
+              turns: totals.turns,
+            }),
           })),
         )
         .execute();

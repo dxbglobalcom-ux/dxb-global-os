@@ -58,10 +58,19 @@ export const SUBSCRIPTION_CAP_FALLBACK = 500_000;
  * run an hour earlier had been green: the suite's colour depended on whether a
  * coding session happened to end nearby.
  *
- * Filtering here is not a convenience. It is the CEO's own ruling of 2026-08-23
- * (row B36): the construction does not touch the company. Its accounting may
- * not govern the company's dispatch either. `recordSubscriptionSpend` below
- * writes this same constant, so the writer and the reader cannot drift apart.
+ * ⚠ WHAT THIS DID **NOT** DO, measured the same hour and written here so the
+ * repair is not read as bigger than it was: the COMPANY's book was never
+ * touched. `SELECT count(*) FROM cost_ledger` on the holding's own engine
+ * answered **0**, and `tests/b36/hook-never-writes-company.test.ts` (21 cases)
+ * holds the hook away from it. B36's wall held. What the unfiltered window
+ * corrupted was the CONSTRUCTION engine — the bench and the suite — so the
+ * damage was to our own MEASUREMENT of the company, not to the company.
+ *
+ * Filtering here is still the right shape, and it is the CEO's own ruling of
+ * 2026-08-23 (row B36): the construction does not touch the company, and its
+ * accounting may not govern the company's dispatch either.
+ * `recordSubscriptionSpend` below writes this same constant, so the writer and
+ * the reader cannot drift apart.
  */
 export const SUBSCRIPTION_SPEND_SOURCE = "worker";
 

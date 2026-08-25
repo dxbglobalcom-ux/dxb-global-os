@@ -89,9 +89,12 @@ varsayımı burada geçerli değildir ve R5'in gerekçesi yukarıda düzeltilmi�
 kendi kaydı: `dxb-vps-1`, ID 149310629, **cx33 · 4 vCPU · 8 GB · 80 GB**, nbg1, Ubuntu 24.04,
 2026-07-09'dan beri ayakta (47 gün), durum **running**, IPv4 `46.225.89.249`, Hetzner tarafında
 **hiç güvenlik duvarı kuralı yok** (`hcloud server describe`, `hcloud firewall list`).
-**SEBEP ÖLÇÜLDÜ 2026-08-25: HETZNER'İN KÖTÜYE KULLANIM BİRİMİ KUTUNUN HER İKİ IP ADRESİNİ DE
-KAPATMIŞ** — `public_net.ipv4.blocked = true`, IPv6 aynı; Hetzner'in kendi API tanımı bu alan için
-*"If the IP is blocked by our anti abuse dept"* diyor. İz sürme bunu bağımsız doğruluyor: paketler
+**SEBEP: ÖDENMEMİŞ FATURA (CEO, 2026-08-25 — Hetzner'in gönderdiği postada *"Services blocked"* ve
+*"last warning for payment"* yazıyor).** Hetzner kutunun her iki IP adresini de kapatmış:
+`public_net.ipv4.blocked = true`, IPv6 aynı. ⚠ Yazar önce bu alanın kendi API tanımına bakıp
+(*"If the IP is blocked by our anti abuse dept"*) sebebi kötüye kullanım sanmıştı; **CEO'nun okuduğu
+posta bunu siler (KANUN A)**. Aynı hesaptaki Storage Box `dxb-backup-1` de `locked` durumda.
+İz sürme kapatmayı bağımsız doğruluyor: paketler
 **Hetzner'in kendi ağının içinde**, yedinci sıçramada ölüyor, makineye hiç ulaşmıyor.
 **Makine sağlıklı:** konsolu `Ubuntu 24.04.4 LTS dxb-vps-1` temiz giriş satırını gösteriyor.
 İşlemci 30 gün boyunca aralıksız yaklaşık bir çekirdek yakıyor (%48-133 / 400) ve disk durmadan

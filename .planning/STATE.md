@@ -22,11 +22,17 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 **2026-08-25 — THE RENTED BOX WAS OPENED AND LOOKED INTO, ON HIS APPROVED ORDER. THE ANSWER IS IN.** <!-- OPEN: B39 -->
 *"A şıkkını onaylıyorum, önce içeride ne var gör."* — approval `ceo-vps-look-inside-first-2026-08-25`.
 
-**WHAT WAS FOUND, measured this session: HETZNER'S ANTI-ABUSE DEPARTMENT HAS BLOCKED BOTH OF THE
-BOX'S IP ADDRESSES.** `public_net.ipv4.blocked = true` and `ipv6.blocked = true`, straight from
-Hetzner's API; their own specification says of that field, *"If the IP is blocked by our anti abuse
-dept."* The route confirms it independently — packets die **inside Hetzner's own network**, seven
-hops out, and never reach the machine. **The machine itself is healthy:** its console shows
+**WHAT WAS FOUND: HETZNER HAS CUT THE BOX OFF THE NETWORK — AND THE CEO NAMED THE REASON.**
+`public_net.ipv4.blocked = true` and `ipv6.blocked = true`, straight from Hetzner's API, and the
+route confirms it independently: packets die **inside Hetzner's own network**, seven hops out, and
+never reach the machine. **THE CAUSE IS AN UNPAID INVOICE, NOT ABUSE.** The author read the API
+field's own documentation — *"If the IP is blocked by our anti abuse dept"* — and reported abuse.
+**The CEO then read the mail Hetzner actually sent: *"Services blocked"*, *"last warning for
+payment"*.** His account of the mail outranks a field description (authority order §1), it fits
+everything measured — nothing was ever done to the machine, it simply kept running while the network
+was cut — and the abuse reading is deleted rather than kept beside it (LAW A). The Storage Box
+`dxb-backup-1` reads `status: locked` on the same account, which is the same block reaching the
+second product. **The machine itself is healthy:** its console shows
 `Ubuntu 24.04.4 LTS dxb-vps-1` at a clean login prompt, no crash and no kernel error. Nothing has
 been done to it since the day it was built (its entire action log: create · start · enable backups ·
 one reboot, all on 2026-07-09). Backups still run daily; today's is 11.40 GB. Our SSH key still
@@ -39,22 +45,39 @@ cuts it off. The console is the only door left and it needs a password that was 
 created (key-only SSH, root login off). **A correction to our own record (LAW A):** the line saying
 the box had *"continuous network traffic"* is false — it has none — and it is deleted, not footnoted.
 
-**THE DECISION IS HIS AND NOTHING IS DONE TO THAT BOX UNTIL HE GIVES IT.** Three ways to get the box
-back, put to him 2026-08-25: answer the Hetzner abuse notice sent to his account e-mail (free, and
-the only route that returns the box itself) · read today's backup on a throw-away machine (costs
-cents, the original untouched) · reset the root password and enter by console (an identity step, and
-it stays unapproved).
+**WHAT THE ACCOUNT COSTS AND WHAT IT HOLDS, measured 2026-08-25 from Hetzner's own pricing:** the
+whole account is two paid things and nothing else — the server `dxb-vps-1` (cx33, **10.10 EUR/month
+gross**, plus the **20 % backup surcharge = 2.02**) and the Storage Box `dxb-backup-1` (bx11,
+**3.81 EUR/month**, 2.94 GB used of 1 TB, `status: locked`). **About 15.93 EUR a month.** Seven daily
+backups exist, each ~11.4 GB, and every one carries `bound_to: 149310629` — they belong to the
+server. A **snapshot** does not: `PUT /images/{id}` takes `type: "snapshot"` (*"Destination Image
+type to convert to"*), and an image costs **0.0170 EUR per GB per month** — today's backup kept as a
+snapshot is **0.19 EUR/month**. The domain `dxbglobal.online` is at Namecheap, not Hetzner, and
+survives whatever is decided.
 
-**AND A SECOND THING WAS FOUND AND FIXED THE SAME SESSION, on row B39.** Both of the money brakes
-built the day before counted the SessionEnd hook's rows — **this repository's own coding sessions**,
-487,924,277 tokens inside one hour — as if the company had spent them. Measured on the construction
-engine: with those rows counted the company answered **room = 0 and gave itself ONE hand**; with
-them excluded, **8**. It would have reproduced his own complaint — one worker doing everything —
-every time a session on this laptop ended. Both queries now count only the company's own runs, from
-one shared constant, and the case that was red before the fix is in the suite: **19/19 green**.
-**⚠ NOT FIXED AND NOT HIS ROW YET:** that same hook records **153 million "prompt tokens" for a
-single coding session** (cache re-reads counted as fresh input). The cost book is therefore telling
-a lie about the construction's own spending. He has been told in one line; the decision is his.
+**THE DECISION IS HIS AND NOTHING IS DONE TO THAT BOX UNTIL HE GIVES IT.** ⚠ And the order of
+operations is forced: while the account is payment-blocked, no write to it can be relied on, so the
+invoice is settled FIRST and everything else follows. He was given the shape on 2026-08-25: pay ·
+then either keep the box or convert one backup to a snapshot and delete the server (15.93 → 0.19
+EUR/month, re-created in minutes when V2 is ready) · the Storage Box is a separate, smaller
+decision. Resetting the root password remains an identity step and remains unapproved.
+
+**AND A SECOND THING WAS FOUND AND FIXED THE SAME SESSION, on row B39 — AND THE COMPANY WAS NEVER
+TOUCHED BY IT.** Both money brakes counted the SessionEnd hook's rows — **this repository's own
+coding sessions**, 487,924,277 tokens inside one hour — as if they were work. On the CONSTRUCTION
+engine that turned the same query's answer from **8 hands into 1**, so the bench and the suite were
+measuring a company that did not exist. **On the COMPANY's engine `cost_ledger` holds 0 rows and the
+hook cannot reach it** (B36, `tests/b36/hook-never-writes-company.test.ts`) — the wall held. The
+sentence first written here, *"the company would have given itself one hand"*, overstated it and is
+deleted (LAW A). Both queries now count only the company's own runs from one shared constant.
+
+**AND THE HOOK ITSELF IS FIXED, ON HIS ORDER** — *"kanca manca düzelt bir daha aynı problemler
+kesinlikle yaşanmasın."* It wrote cache re-reads as fresh input: **97-99 % of every figure**, so one
+coding session appeared to consume 153 million input tokens. It now records what was SENT and keeps
+the re-reads beside it (`meta.cache_read_tokens`, plus the turn count). The 16 rows already in the
+construction book were recomputed from their own transcripts: **1,567,252,545 → 23,185,592** fresh
+tokens, 1,544,066,953 re-reads preserved, one placeholder row left at zero because its transcript is
+gone. `tests/b39/hook-token-truth.test.ts` was red before the fix.
 
 **STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
 eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count
@@ -926,7 +949,15 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    `applied 0, skipped 158, ledger total 158`.
 
 
-3. **B22 — the rival re-analysis, which waits behind B36.** <!-- OPEN: B22 -->
+3. **B22 — THE RIVAL QUEUE. THE WATCHING IS FINISHED; THE SYNTHESIS IS WHAT IS LEFT, AND IT IS THE WORK IN HAND.** <!-- OPEN: B22 -->
+   The line that stood here putting this row behind B36 is spent — B36 closed 2026-08-25 — and it is
+   deleted rather than kept beside the truth (LAW A). **Measured 2026-08-25 by
+   `scripts/rival-intel/next.sh`: 32 of 37 sources reported · 5 skipped on his own orders (rows 13,
+   26, 27, 31, 36) · `NEXT: done`** — and `00-SYNTHESIS.md` **does not exist on disk** (`ls` → No such
+   file). So the one thing standing between this holding and the first V2 drawing is the unifying plan
+   he ordered on 2026-07-28 — *"HEPİSININ SONRA DA BİRLEŞTİRİCİ BİR PLAN ÇIKAR!"* — written through
+   the lens he fixed on 2026-08-09: how each rival is built to LIVE, and what DXB takes. **He reads it
+   before stage 2 opens**, and the design package (B32) feeds off it.
 
    **WHY IT EXISTS — order C42, sharpened 2026-08-09:** *"bu rakip video raporlarını niye
    hazırlıyoruz adam gibi hatırlamanız lazım."* He hands over a rival; the author watches it whole,
@@ -1150,7 +1181,7 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    to end and `realized_revenue_eur` is 0. On the measure that decides we are behind all of them, and
    any sentence that softens that is deleted on sight.
 
-3. **B28 — the clipping business, and he has decided its shape.** <!-- OPEN: B28 -->
+4. **B28 — the clipping business, and he has decided its shape.** <!-- OPEN: B28 -->
    **The AGENCY seat is approved in his own words** (2026-08-07): *"ajans koltuğunu onaylıyorum…"*
    <!-- CEO-OK: c42-agency-seat-2026-08-07 --> DXB wins brand clients, launches campaigns under its
    own name, keeps and scores a roster, guarantees delivery, keeps the spread — entering through the
@@ -1158,7 +1189,7 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"* — every
    campaign, every client, every clip, at any size. **Nothing is built: he approved the seat, not a
    start.** Everything about it is in `.planning/research/rival-intel/05-cnn-clipping-business.md` §5.
-4. **What is blocked on him, and cannot move without him:** his approval of a visual design package
+5. **What is blocked on him, and cannot move without him:** his approval of a visual design package
    before any redesign is built · one hand-minted browser session so authenticated surfaces can be
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the two
    paid model exams (B06, B09) · the acceptance session itself (B13) · replacing the Gemini key
@@ -1166,7 +1197,7 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    three document skills he approved but whose licence forbids copying them here (B27) — the
    capability he wanted already works without them, so this is a choice, not a blocker** · **money
    out to clippers once the agency seat starts operating (B28).**
-5. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
+6. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
    this (authority order, `.claude/CLAUDE.md` §1) — and it DELETES whatever contradicts it (LAW A).
 
 ## Where things live

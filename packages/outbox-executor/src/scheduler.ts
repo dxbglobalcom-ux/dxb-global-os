@@ -267,13 +267,13 @@ async function dispatchLanes(): Promise<number> {
         -- careful about yet, so the bound lifts.
         --
         -- AND IT COUNTS ONLY THE COMPANY'S OWN RUNS. Measured 2026-08-25 on the
-        -- construction engine: with the SessionEnd hook's rows counted in (this
+        -- CONSTRUCTION engine: with the SessionEnd hook's rows counted in (this
         -- repository's own coding sessions, 487,924,277 tokens in one hour) this
-        -- query answered room = 0 and the company throttled itself to ONE hand;
-        -- with them excluded it answered 8. The company would have reproduced
-        -- the CEO's own complaint — one worker doing everything — every time a
-        -- session on this laptop ended. B36's ruling settles it: the
-        -- construction does not govern the company.
+        -- query answered room = 0 — one hand; with them excluded, 8. On the
+        -- COMPANY's own engine cost_ledger held 0 rows and the hook cannot reach
+        -- it (B36, tests/b36/hook-never-writes-company.test.ts), so the company
+        -- itself never throttled: what was wrong was the bench that measures it.
+        -- The filter keeps the reading true wherever the rows land.
         (SELECT CASE
                   WHEN avg_cost IS NULL OR avg_cost <= 0 THEN 8
                   ELSE GREATEST(FLOOR(GREATEST(cap - spent, 0) / avg_cost), 0)

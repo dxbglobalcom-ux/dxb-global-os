@@ -41,6 +41,13 @@ dist/
 !tools/hooks/dist/
 tools/hooks/dist/*
 !tools/hooks/dist/tag-subscription-call.js
+# B39, 2026-08-25 — and its one import travels with it for the same reason. The
+# token arithmetic was moved out of the hook so it could be tested at all (the
+# hook runs its own main() at import time and no test can import it). The built
+# hook now does `import { sumTranscript } from "./transcript-usage.js"`, so a
+# clone without this file would fail the hook with a module-not-found at the end
+# of every session — exactly the silence the block above exists to prevent.
+!tools/hooks/dist/transcript-usage.js
 
 # pnpm local store — not committed, restored via lockfile
 .pnpm-store/
