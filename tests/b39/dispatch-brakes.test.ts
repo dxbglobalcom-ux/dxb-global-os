@@ -183,12 +183,14 @@ describe("B39 · H1 — the subscription path spends where a brake can see it", 
 
   it("the CONSTRUCTION's own session accounting cannot shut the company's line", async () => {
     // Regression, measured 2026-08-25. The window used to sum every
-    // mode='subscription' row in the hour. The SessionEnd hook writes rows with
-    // source='hook' — this repository's own coding sessions — and three of them
-    // landed carrying 487,924,277 tokens, which shut a 500,000 ceiling for an
-    // hour and turned this file red for reasons that had nothing to do with the
-    // company. B36's ruling is that the construction does not touch the company;
-    // its accounting may not govern the company's dispatch either.
+    // mode='subscription' row in the hour. A SessionEnd hook was writing rows
+    // with source='hook' — this repository's own coding sessions — and three of
+    // them landed carrying 487,924,277 tokens, which shut a 500,000 ceiling for
+    // an hour and turned this file red for reasons that had nothing to do with
+    // the company. The CEO ended that practice the same evening ("artık
+    // yazılmasın") and the hook is gone; this case stays because the rule
+    // outlives the hook — only the company's own line governs the company's own
+    // line, whoever else writes into the book.
     const department = `${M}-hookrow`;
     const taskId = await makeTask(department);
     await setSetting(SUBSCRIPTION_CAP_KEY, "500000");

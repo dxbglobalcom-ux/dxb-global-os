@@ -129,13 +129,22 @@ with a single failure whose name scrolled past unrecorded, and **four consecutiv
 been green**, so it was not reproduced and not identified. It is written here rather than dismissed,
 because his own ruling of 2026-08-24 is that a failure one run in five is a defect and not noise.
 
-**A V2 BOUNDARY FOUND WHILE ANSWERING HIS QUESTION, 2026-08-25 — NOT A V1 REPAIR.** His Tokens page
-(`apps/dashboard/src/app/(command)/fin/tokens/page.tsx`) carries a separately-labelled panel for
-CONSTRUCTION sessions, built as the answer to his own complaint C24. It reads the COMPANY's
-`cost_ledger` for `source='hook'` — and after B36 those rows are written to the CONSTRUCTION engine,
-so **that panel can now only ever show zero** (company `cost_ledger` = 0 rows, measured). V1 is dead
-by his ruling, so it is NOT repaired. **V2 must read the construction figure from the construction's
-own book**, or not show the panel at all — his minimalism ruling forbids showing an empty box.
+**HIS ORDER, 2026-08-25 EVENING — THE CONSTRUCTION'S OWN TOKEN BOOK IS ABOLISHED.** *"gerek yok abi
+niye yazıorsunuz aylık maliye gerek yok. bu şirket değil ki … artık yazılmasın."* The SessionEnd
+hook that recorded every coding session's tokens is **removed, not disabled**: its wiring is out of
+`.claude/settings.json` and `.codex/hooks.json`, its source and its build are deleted, the workspace
+package `@dxb/hooks` is gone from `tsconfig.json` and the lockfile, and the 16 rows it had already
+written were deleted from the construction book (now **0 rows**). The company's book was 0
+throughout and was never touched. **What went with it, because it existed only to contain that
+hook:** `tests/b36/hook-never-writes-company.test.ts` (21 cases), `tests/b36/block1-question.test.ts`,
+`scripts/b36/prove-block1.mjs`, `scripts/b36/prove-address-escapes.mjs` and the `b36:prove-block1`
+script — the danger they guarded cannot exist without the thing that caused it. **What stays:**
+`tools/hooks/ledger-identity.json`, because the test battery's own setup and `db/seed/build-seed.ts`
+read it to refuse the company.
+**AND ONE CONSEQUENCE FOR V2, recorded and NOT repaired in V1 (V1 is dead by his ruling):** his
+Tokens page still carries a separately-labelled CONSTRUCTION panel, built for complaint C24. It has
+no writer any more and can only render zero. **V2 does not carry that panel at all** — his
+minimalism ruling forbids showing an empty box, and by this order there is nothing to show.
 
 **STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
 eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count

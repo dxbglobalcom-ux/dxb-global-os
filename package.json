@@ -19,7 +19,6 @@
     "construction:schema": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres DXB_PSQL='docker exec -i supabase_db_DxB_Build psql -U postgres -d postgres' DXB_PSQL_ADMIN='docker exec -i supabase_db_DxB_Build psql -U supabase_admin -d postgres' bash scripts/bootstrap-db.sh",
     "construction:seed": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node --experimental-strip-types db/seed/build-seed.ts",
     "verify:schema-parity": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
-    "b36:prove-block1": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_ALLOWED_LEDGER_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/prove-block1.mjs",
     "b36:window": "node scripts/b36/install-company-window.mjs company",
     "b36:prove-window-preserves": "node scripts/b36/prove-window-preserves.mjs",
     "b36:prove-window-escapes": "node scripts/b36/prove-window-escapes.mjs",
@@ -29,7 +28,9 @@
     "construction:battery": "bash scripts/construction/battery.sh",
     "b36:eye-check": "node scripts/b36/eye-check.mjs",
     "verify:separation": "node scripts/governance/company-untouched.mjs",
-    "bench:drain": "node scripts/bench/drain-throughput.mjs"
+    "bench:drain": "node scripts/bench/drain-throughput.mjs",
+    "tahta": "node scripts/board/render.mjs --open",
+    "tahta:yaz": "node scripts/board/render.mjs"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",

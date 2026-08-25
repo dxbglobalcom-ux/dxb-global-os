@@ -14,5 +14,5 @@
       "measured_at": "2026-08-23T18:13:25.123Z"
     }
   ],
-  "what": "Where tools/hooks/tag-subscription-call.ts may write. It writes ONLY into a database whose identity is in `allowed`, and never into `company`. Identity comes from the server: the cluster's system_identifier plus the database's own oid and name."
+  "what": "Which database engine the CONSTRUCTION may write to, and which one it may never touch. Anything on `allowed` is a construction engine; `company` is the holding and is refused outright. Identity comes from the server — the cluster's system_identifier plus the database's own oid and name — never from the address, because six spellings of one address were measured reaching the same engine while a text comparison called each of them different. Read by tests/global-teardown.ts (the battery refuses to start against the company), tests/construction-engine.ts and db/seed/build-seed.ts. It was born for a SessionEnd token hook that the CEO abolished on 2026-08-25 (\"artık yazılmasın\"); the guard outlived it because the battery needs the same refusal."
 }

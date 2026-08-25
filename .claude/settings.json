@@ -5,7 +5,7 @@
       "Bash(scrot *)",
       "Bash(wmctrl -a *)",
       "Bash(mkdir -p *)",
-      "Bash(awk '/^#/{h=$0; getline; if\\($0==\"\" \\) {getline; if\\($0==\"\" || $0 ~ /^#/\\) print NR\": \"h\" [BO\u015e]\"}}' \"/home/ghost/DxB Global OS/HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md\")",
+      "Bash(awk '/^#/{h=$0; getline; if\\($0==\"\" \\) {getline; if\\($0==\"\" || $0 ~ /^#/\\) print NR\": \"h\" [BOŞ]\"}}' \"/home/ghost/DxB Global OS/HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-BEKLENTILER.md\")",
       "Bash(awk '{print $6, $7}')",
       "Bash(awk '{print $5, $9}')",
       "Bash(python3 -c \"import json,sys; print\\(json.load\\(sys.stdin\\).get\\('scripts'\\)\\)\")",
@@ -31,16 +31,6 @@
     ]
   },
   "hooks": {
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/tools/hooks/dist/tag-subscription-call.js\""
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "hooks": [

@@ -61,9 +61,14 @@ const show = (i) => `${i.sysid}/${i.dboid} (${i.dbname})`;
 const mode = process.argv[2] ?? "--print";
 const data = load();
 data.what =
-  "Where tools/hooks/tag-subscription-call.ts may write. It writes ONLY into a database whose " +
-  "identity is in `allowed`, and never into `company`. Identity comes from the server: the " +
-  "cluster's system_identifier plus the database's own oid and name.";
+  "Which database engine the CONSTRUCTION may write to, and which one it may never touch. Anything " +
+  "on `allowed` is a construction engine; `company` is the holding and is refused outright. Identit" +
+  "y comes from the server \u2014 the cluster's system_identifier plus the database's own oid and name \u2014" +
+  " never from the address, because six spellings of one address were measured reaching the same en" +
+  "gine while a text comparison called each of them different. Read by tests/global-teardown.ts (th" +
+  "e battery refuses to start against the company), tests/construction-engine.ts and db/seed/build-" +
+  "seed.ts. It was born for a SessionEnd token hook that the CEO abolished on 2026-08-25 (\"art\u0131k ya" +
+  "z\u0131lmas\u0131n\"); the guard outlived it because the battery needs the same refusal.";
 
 if (mode === "--set-company") {
   const url = process.env.DXB_COMPANY_URL;
@@ -122,6 +127,6 @@ if (mode === "--set-company") {
   process.exit(ok ? 0 : 1);
 } else {
   console.log(`company (never written to): ${data.company ? show(data.company) : "(none)"}`);
-  console.log(`allowed to receive construction cost rows: ${(data.allowed ?? []).length}`);
+  console.log(`construction engines the battery may write to: ${(data.allowed ?? []).length}`);
   for (const a of data.allowed ?? []) console.log(`   ${show(a)} — ${a.why}`);
 }

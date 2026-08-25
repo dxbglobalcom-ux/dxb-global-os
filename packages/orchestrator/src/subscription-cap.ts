@@ -48,29 +48,23 @@ export const SUBSCRIPTION_CAP_FALLBACK = 500_000;
 /**
  * The only `source` this brake governs — the company's own dispatch line.
  *
- * ⚠ MEASURED DEFECT, 2026-08-25, and this constant is the fix. The window used
- * to sum EVERY `mode = 'subscription'` row in the hour, whatever wrote it. The
- * SessionEnd hook (`tools/hooks/src/tag-subscription-call.ts`) writes rows of
- * its own with `source = 'hook'` — the CONSTRUCTION session's token accounting,
- * not the company's work — and three of them landed at 18:21 UTC carrying
- * 487,924,277 tokens between them. Against a 500,000 ceiling that shut the
- * company's line for a full hour and turned 7 of the 13 B39 cases red, while a
- * run an hour earlier had been green: the suite's colour depended on whether a
- * coding session happened to end nearby.
+ * The window used to sum EVERY `mode = 'subscription'` row in the hour, whatever
+ * wrote it. On 2026-08-25 a SessionEnd hook was still writing rows of its own
+ * (`source = 'hook'`) carrying the CONSTRUCTION session's token accounting, and
+ * three of them landed inside one hour with 487,924,277 tokens between them —
+ * against a 500,000 ceiling that answered "no room" and turned 7 of the 13 B39
+ * cases red. **The CEO ended that practice the same evening** — *"gerek yok abi
+ * niye yazıorsunuz aylık maliye gerek yok. bu şirket değil ki … artık
+ * yazılmasın"* — and the hook is gone, so nothing writes those rows any more.
  *
- * ⚠ WHAT THIS DID **NOT** DO, measured the same hour and written here so the
- * repair is not read as bigger than it was: the COMPANY's book was never
- * touched. `SELECT count(*) FROM cost_ledger` on the holding's own engine
- * answered **0**, and `tests/b36/hook-never-writes-company.test.ts` (21 cases)
- * holds the hook away from it. B36's wall held. What the unfiltered window
- * corrupted was the CONSTRUCTION engine — the bench and the suite — so the
- * damage was to our own MEASUREMENT of the company, not to the company.
+ * The filter stays, because it is the correct question in any case: this brake
+ * governs the company's own runs, and `manual` or proxy rows are other spenders
+ * with their own governance. `recordSubscriptionSpend` below writes this same
+ * constant, so the writer and the reader cannot drift apart.
  *
- * Filtering here is still the right shape, and it is the CEO's own ruling of
- * 2026-08-23 (row B36): the construction does not touch the company, and its
- * accounting may not govern the company's dispatch either.
- * `recordSubscriptionSpend` below writes this same constant, so the writer and
- * the reader cannot drift apart.
+ * ⚠ AND IT NEVER TOUCHED THE COMPANY: `SELECT count(*) FROM cost_ledger` on the
+ * holding's own engine answered 0 throughout. B36's wall held; what the
+ * unfiltered window corrupted was the CONSTRUCTION bench, not the company.
  */
 export const SUBSCRIPTION_SPEND_SOURCE = "worker";
 
