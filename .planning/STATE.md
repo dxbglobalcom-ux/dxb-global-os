@@ -786,7 +786,73 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    `COMPANY UNTOUCHED SINCE THE BASELINE — 0 inserts, 0 updates, 0 deletes, 0 row-count changes`.
 
 
-2. **B22 — the rival re-analysis, which waits behind B36.** <!-- OPEN: B22 -->
+2. **HIS TWO ORDERS OF 2026-08-25, PLANNED AND APPROVED — THE PLAN IS WRITTEN, THE WORK IS NOT DONE.** <!-- HISTORY -->
+   **He put the author in plan mode, approved the plan, and ruled that the WORK happens in the NEXT
+   session** — *"yapımı ise diğer sessionda olacak zira session çok şişti sevgili opus 5! zaten
+   yapacak olacak yine kardeşin Opus 5."* **The plan lives at
+   `/home/dxb/.claude/plans/i-te-bu-ekilde-her-jaunty-cat.md` — read it before touching either
+   item; it carries every measurement already taken, so they are not re-measured.**
+
+   **(A) EVERY SESSION MUST EXPLAIN A THING IN A SHAPE HE CAN USE — his own order, and it is the
+   permission clause for making it a law:** *"işte bu şekilde her sessionda opus 5'ler böyle anlatsa
+   olmaz mı bu kuralı öyle bir yere yaz ki her session bana anlayacağım dilde raporu sunsun.
+   olabilir mi?"* It was earned the hard way in that session: the author put his own four mistakes
+   in front of him as a bare technical list and got *"hiçbir halt ANLAMADIMMMMMMM BANA ANLAYACAĞIM
+   DİLDE KONUŞ."* The same thing explained as **answer → a picture from his world (a postman) →
+   the measured numbers → what it means for him** landed at once. **Measured: that shape is written
+   NOWHERE.** `.claude/hooks/ceo-language.sh` governs the single WORD (real word + a bracketed
+   explanation); `dxb-ceo-report` governs what a REPORT contains; nothing governs how a THING is
+   explained — searches for `analogy` / `benzetme` / `metafor` across `.claude/`,
+   `HOLDING-OS-MASTER-PLAN/` and `docs/ceo-directives/` return **zero**. The plan writes six lines
+   into the hook (the only carrier that reaches mid-session drift — proven on 2026-07-30, when this
+   same rule was moved to a skill and was broken within the hour), registers it as
+   `so14_explain_shape` in `rules.json`, and repairs three stale copies of the old rule that still
+   enforce the ban list **he himself struck out on 2026-08-01** — `packages/voice/src/prompt-core.ts`
+   (the law Hamza's own agents carry), the test that pins it, and the memory file that still orders
+   evidence tables at his face. **C37 stays OPEN** — its closing condition is his own word, not the
+   author's.
+
+   **(B) THE DISPATCH LINE — is one worker a bottleneck? He asked, and his instinct was right.**
+   *"NEDEN 1 İŞÇİ TÜM ŞİRKETİN 214 AJANIN GÖREVİNİ ÜSTLENMİŞ ARKADAŞIM. HERKES KENDİ İŞİNİ YAPMALI
+   DEĞİL Mİ?"* · *"şuan ki makine güçlü daha önceki 8gb'lik ram var diye mi acaba böyle yaptı
+   bilmiyoruz?"* **First, the answer to the question as asked: nobody did anybody else's work.**
+   `claimed_by` is one value — `resident-worker`, the COMPANY's own dispatcher
+   (`packages/orchestrator/src/worker-loop.ts:26`) — while `agent_id` is **199 different employees**
+   across 21 departments (189 did one task, 6 did two, 3 did three, 1 did four). **But the core of
+   his instinct measured true:** the line runs **`execCap = 1`** (`worker-loop.ts:63`) — one task per
+   tick, three legs strictly sequential, no `Promise.all` — with a **10-second GAP, not a period**
+   (`scheduler.ts:142-145`; the re-arm is in a `finally`, so the real cycle is *task duration + 10s*).
+   **The single line has exactly one written justification and it is `SYSTEM_ARCHITECTURE.md:16`
+   R5 — "8GB VPS RAM bütçesi aşılmaz"** → `:79` ⛔ *"(a) RAM bütçesi (R5)"* →
+   `AGENT_ORCHESTRATION_SPEC.md:145` → the code's own header. **R5 writes its own reopening
+   condition — *"ancak ölçüm kanıtıyla (latency/lock) ve CEO onayıyla"* — and that measurement has
+   never been taken:** the repository holds no tasks-per-hour, no latency, no queue-depth and no
+   lock-contention figure for `task.worker`, and **no document anywhere compares one drain against
+   two.** He ruled on both halves: **the workstation is home** (measured 30 GB · 24 threads · load
+   0.55) and **measure first, then decide, and the decision is delegated to the author** — *"1.
+   kabul ediyorum ve yetkiyi sana veriyorum sen en iyi kararı ver. Seviye: Ferrari."*
+   **THE PLAN'S MOST IMPORTANT FINDING, and it is why nothing is parallelised yet: what blocks a
+   second line is not RAM, it is a spending line with no brake.** Anthropic models bypass the
+   LiteLLM proxy entirely (his own order of 2026-07-19, C2), so `worker-shim.ts:322-325` writes
+   **`costEur = 0`** on the subscription path — and both brakes, the 60-minute velocity breaker and
+   the monthly cap, read `cost_ledger` + LiteLLM spend, so **neither can see subscription work at
+   all.** Double the line and the invisible spend doubles with no brake holding. Second hazard,
+   measured in the live database this session: **`employee.max_concurrent_runs` is not seeded** —
+   the settings registry returns nothing for it, and `assignEmployee` only *prefers* the least-loaded
+   employee, so two lines could put two jobs on one employee, which is the opposite of what he asked
+   for. **Both hazards close BEFORE any concurrency.** Technically a second line needs zero code
+   change: `drainTasks({workerId})` is already parameterised and `claim_next_task` is
+   `FOR UPDATE SKIP LOCKED`.
+
+   **⚠ ONE MEASUREMENT FROM THAT SESSION WAS WRONG AND IS CORRECTED HERE.** The author told him
+   *"nothing is installed on the rented server"*. False — the search used the pattern
+   `docker-compose*.yml` and the file is named `compose.yaml`. **`vps/compose.yaml` is 251 lines**,
+   `vps/README.md:3` names the box **`dxb-vps-1` (Hetzner cx33, 4 vCPU / 8 GB, nbg1)**, and board row
+   **B09** says *"the 24/7 server runs"*. **There are two stacks.** His ruling that the workstation
+   is home is recorded, but **what the rented box does today is measured before one line is written
+   into the architecture book** — it is the plan's first step, not an assumption.
+
+3. **B22 — the rival re-analysis, which waits behind B36.** <!-- OPEN: B22 -->
 
    **WHY IT EXISTS — order C42, sharpened 2026-08-09:** *"bu rakip video raporlarını niye
    hazırlıyoruz adam gibi hatırlamanız lazım."* He hands over a rival; the author watches it whole,
