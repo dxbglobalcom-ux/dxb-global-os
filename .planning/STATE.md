@@ -821,26 +821,64 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    complaint, never the author's word. This session's violation is written into the row as the
    fourth, with what was new about it: not a hard word, a bare chronology.
 
-   **(B) THE DISPATCH LINE — MEASURED, BRAKED, AND THE DELEGATED DECISION MADE.** Board row **B39**
-   (`00-BOARD-OPEN-WORK.md`) carries it. **The answer to his question as asked: nobody did anybody
-   else's work** — `claimed_by` is the company's own dispatcher, `agent_id` is 199 different
-   employees across 21 departments. **What the measurement then found, and he had not asked about:**
-   the company had spent **1,032,526 tokens over 378 runs with ZERO rows in its cost book**, because
-   Anthropic models bypass the LiteLLM proxy on his own order of 2026-07-19 and **both** money brakes
-   read `cost_ledger` + that proxy's tables (H1); and `employee.max_concurrent_runs` had **never been
-   seeded**, so selection only *preferred* an idle employee (H2). Both are closed —
-   `packages/orchestrator/src/subscription-cap.ts` records the tokens (no EUR: the single-source rule
-   is untouched) and holds the execution leg at an hourly ceiling, and a department at full stretch
-   now hands the task back to the queue instead of stacking a second job on one person. **A2 in
-   `AGENT_ORCHESTRATION_SPEC` closes with it.** **R5's reopening condition was met for the first
-   time** (`scripts/bench/drain-throughput.mjs`, construction engine, 24 tasks, real drains):
-   **8 lanes = 7.80× faster than 1 · 0 double-claims · 0 lock waits · 4.5 MB more memory** — the
-   detector proven red first on a planted collision. **RAM was never the obstacle.** Decision:
-   the lane count is a setting (`orchestration.dispatch_lanes`, max 8) read every tick **inside the
-   existing scheduler job** — no new resident service, so R5's discipline holds though its premise
-   did not — and **the default stays 1**, because the queue is empty today by his own design.
-   `SYSTEM_ARCHITECTURE` (R5, ALTYAPI, the ⛔ ruling), `RISK_REGISTER` R07 and
-   `AGENT_ORCHESTRATION_SPEC` A1/A2 are corrected on the measurement, not rewritten.
+   **(B) THE DISPATCH LINE — MEASURED, BRAKED, AND THE COMPANY NOW WORKS OUT ITS OWN HANDS.** Board
+   row **B39** (`00-BOARD-OPEN-WORK.md`) carries it. **The answer to his question as asked: nobody
+   did anybody else's work** — `claimed_by` is the company's own dispatcher, `agent_id` is 199
+   different employees across 21 departments.
+
+   ⚠ **HE CORRECTED TWO THINGS IN THE FIRST DELIVERY AND BOTH CORRECTIONS ARE THE RECORD NOW.**
+   *First:* the report framed the empty cost book as a defect. It is not — *"tabiki çalışmayan
+   şirkette masraf defteri 0 olur … ŞİRKET HENÜZ KURULMADI."* The holding is still being BUILT and
+   the earning machine is off by his own decision, so zero cost rows is the expected state, and this
+   was already written down twice before this session repeated it. **The real hole is the missing
+   WRITER:** on the day the company starts trading, the main working path would still have recorded
+   nothing — Anthropic models bypass the LiteLLM proxy on his order of 2026-07-19, and both money
+   brakes read only `cost_ledger` + that proxy's tables (H1). *Second:* the first answer handed him a
+   dial to manage. He struck it down — *"bak ben ayar mayar anlamam ki! … ben hedefi söylerim
+   yönetim kurulu başkanı olarak"* — and that is now the design: **the company recomputes its own
+   lane count every ten seconds** from the work waiting and what the machine can carry (cores − 2,
+   capped at 8). Empty queue, one hand; three waiting jobs, three hands; on the rented 4-core box the
+   same code decides 2, configured nowhere. He never touches it.
+
+   Both hazards are closed — `packages/orchestrator/src/subscription-cap.ts` records the tokens (no
+   EUR: the single-source rule is untouched) and holds the execution leg at an hourly ceiling, and a
+   department at full stretch hands the task back to the queue instead of stacking a second job on
+   one person (H2, `employee.max_concurrent_runs`, never seeded until now). **A2 in
+   `AGENT_ORCHESTRATION_SPEC` closes with it.**
+
+   **R5's REOPENING CONDITION WAS MET FOR THE FIRST TIME, AND THE NUMBERS ARE THESE**
+   (`scripts/bench/drain-throughput.mjs` — real department, real staff through the real activation
+   gate, a real project, quality gates ON, detector proven red on a planted collision first):
+
+   | lanes | 16 tasks | tasks/h | the line's OWN cost | double-claims | lock waits |
+   |---|---|---|---|---|---|
+   | 1 | 97.4 s | 591 | 87 ms | 0 | 0 |
+   | 2 | 48.8 s | 1,179 | 110 ms | 0 | 0 |
+   | 4 | 24.6 s | 2,343 | 156 ms | 0 | 0 |
+   | 8 | **12.4 s** | **4,655** | 169 ms | 0 | 0 |
+
+   **7.88× on eight lanes — 98.5% of perfect.** And the line's own cost does NOT grow with the
+   work: **144 ms at a 30-second turn, 170 ms at 60, 156 ms at 120** while the turn quadrupled.
+   **RAM was never the obstacle.** `SYSTEM_ARCHITECTURE` (R5, ALTYAPI, the ⛔ ruling),
+   `RISK_REGISTER` R07 and `AGENT_ORCHESTRATION_SPEC` A1/A2 are corrected on it, not rewritten.
+
+   ⚠ **THE BENCH ITSELF WAS WRONG THREE TIMES BEFORE IT WAS RIGHT, AND EACH FAULT IS RECORDED
+   BECAUSE THE NEXT SESSION WILL MEET THE SAME SHAPES.** (1) It seeded tasks into an EMPTY
+   department with no project, so the pre-task gate rejected every one and it reported a table of
+   zeroes in 0.2 s without saying so — it now builds the company's real conditions and names where
+   tasks ended whenever a level does not drain. (2) It read "60 seconds of overhead" where there was
+   none: a simulated turn can never pass the quality gate (A4), so each task is repeated
+   `orchestration.max_revision_rounds` times — **3.00 model runs per task, the WORST case.** The
+   real company measured **1.71 runs per task, 154 of 217 (71%) passing first time.** The bench now
+   counts model runs and reports them apart from the line's cost. (3) Killed part-way it left 12
+   tasks, 2 employees and a department inside the engine; it now sweeps on SIGINT/SIGTERM.
+
+   ⚠ **AND THE TEST CAUGHT A REAL CODE FAULT, which is what tests are for.** The lane count is
+   bounded by the hour's remaining allowance, and the first version averaged ALL history to work out
+   what a job costs. The construction engine carries 13 seeded rows of ~83 million tokens each, so
+   that average said one job costs 83M and no hour could ever afford one — the line would have
+   throttled itself to a single lane for ever on evidence from another era. The average is now taken
+   over the SAME 60-minute window the ceiling governs.
 
    **⚠ WHAT B39 STAYS OPEN FOR, AND IT IS HIS DECISION: THE RENTED BOX IS WORKING AND WE CANNOT SEE
    WHAT IT DOES.** <!-- OPEN: B39 --> Measured 2026-08-25: Hetzner's own record says `dxb-vps-1`
@@ -852,13 +890,16 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    *"nothing is installed on the rented server"* was wrong and was corrected in the plan: the search
    used `docker-compose*.yml` and the file is `compose.yaml` — `vps/compose.yaml` is 251 lines.
 
-   **⚠ MEASURED THIS SESSION, DELIBERATELY NOT REPAIRED — a trap the next session will hit.** The
-   company's migration ledger is **33 versions behind its own schema** (125 recorded in
-   `supabase_migrations.schema_migrations`, 158 files in `db/migrations`), so the canonical chain
-   `scripts/bootstrap-db.sh` **stops on the company** with *"relation chat_messages already exists"*.
-   B39's migration was therefore applied directly and its version recorded by hand; the construction
-   engine took the same file through the normal chain. Repairing the ledger is a separate job and
-   his call — it was reported, not done.
+   **✓ AND THE TRAP THAT WAS FOUND ON THE WAY IS REPAIRED, ON HIS ORDER.** The company's migration
+   ledger was **32 versions behind its own schema** (126 recorded, 158 files), so the canonical chain
+   `scripts/bootstrap-db.sh` **stopped on the company** at *"relation chat_messages already exists"*.
+   It was reported and left; he answered *"Ferrari seviyesi hakkında gereken her şeyi yap"* and it
+   was done — **but only after the schema was PROVEN current rather than assumed**:
+   `pnpm verify:schema-parity` → `SCHEMA_PARITY`, the two engines identical object for object across
+   columns, constraints, indexes, functions, views, policies, triggers and sequences. Only then were
+   the 32 ledger rows written, and nothing else: the company's data fingerprint is
+   `bad3f9ec860bc048` before and after. The chain now runs clean on the company —
+   `applied 0, skipped 158, ledger total 158`.
 
 
 3. **B22 — the rival re-analysis, which waits behind B36.** <!-- OPEN: B22 -->

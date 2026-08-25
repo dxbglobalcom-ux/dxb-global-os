@@ -374,35 +374,35 @@ function AlertCard({
             {row.affectedArea && (
               <>
                 <dt className="label-caps text-ink-muted">{labels.affectedArea}</dt>
-                <dd className="text-body-s text-ink-secondary">{row.affectedArea}</dd>
+                <dd className="text-body-s text-ink-secondary break-words">{row.affectedArea}</dd>
               </>
             )}
             {row.probableCause && (
               <>
                 <dt className="label-caps text-ink-muted">{labels.probableCause}</dt>
-                <dd className="text-body-s text-ink-secondary">{row.probableCause}</dd>
+                <dd className="text-body-s text-ink-secondary break-words">{row.probableCause}</dd>
               </>
             )}
             {row.suggestedAction && (
               <>
                 <dt className="label-caps text-ink-muted">{labels.suggestedAction}</dt>
-                <dd className="text-body-s text-ink-secondary">{row.suggestedAction}</dd>
+                <dd className="text-body-s text-ink-secondary break-words">{row.suggestedAction}</dd>
               </>
             )}
             {row.mitigation && (
               <>
                 <dt className="label-caps text-ink-muted">{labels.mitigationTaken}</dt>
-                <dd className="text-body-s text-ink-secondary">{row.mitigation}</dd>
+                <dd className="text-body-s text-ink-secondary break-words">{row.mitigation}</dd>
               </>
             )}
             {row.ceoAction && (
               <>
                 <dt className="label-caps text-ink-muted">{labels.ceoAction}</dt>
-                <dd className="text-body-s text-ink-secondary">{row.ceoAction}</dd>
+                <dd className="text-body-s text-ink-secondary break-words">{row.ceoAction}</dd>
               </>
             )}
             <dt className="label-caps text-ink-muted">{labels.owner}</dt>
-            <dd className="text-body-s text-ink-secondary">
+            <dd className="text-body-s text-ink-secondary break-words">
               {row.responsibleSlug ?? labels.unassigned}
             </dd>
           </dl>

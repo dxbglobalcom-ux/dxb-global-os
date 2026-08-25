@@ -8,13 +8,21 @@
 //
 // Anthropic models bypass that proxy entirely — the CEO's own order of
 // 2026-07-19 (C2) — so worker-shim's subscription branch writes no EUR anywhere
-// and touches no spend table. Measured in the company's database on 2026-08-25:
-// agent_runs held 378 runs and 1,032,526 tokens; cost_ledger held ZERO rows.
-// A million tokens of work, and the cost book had never seen a line of it.
+// and touches no spend table.
 //
-// That is survivable while one line runs one task at a time. It stops being
-// survivable the moment the line is multiplied, which is the question the CEO
-// asked that day — so the brake is built BEFORE the answer, not after it.
+// ⚠ THE EMPTY COST BOOK IS NOT THE DEFECT, AND THE CEO SAID SO ON 2026-08-25:
+// "tabiki çalışmayan şirkette masraf defteri 0 olur … ŞİRKET HENÜZ KURULMADI."
+// The holding is still being BUILT and he has deliberately not started the
+// earning machine, so zero cost rows is the EXPECTED state. THE DEFECT IS THAT
+// NOTHING WRITES THEM: on the day the company does start trading, this path
+// would still record nothing and both brakes would still read an empty book
+// while real work ran. Measured 2026-08-25 (construction-era work, not trading):
+// agent_runs held 378 runs and 1,032,526 tokens, cost_ledger 0 rows.
+//
+// The brake is fitted NOW because fitting it while the queue is empty costs
+// nothing and can be proven against synthetic load, and because the CEO's own
+// question — can the line be multiplied? — cannot honestly be answered yes
+// until the spending it would multiply is visible to something.
 //
 // WHY THE LEVER IS "STOP CLAIMING" AND NOT "BLOCK A KEY". The velocity breaker
 // stops runaway API spend by blocking the department's LiteLLM virtual key. The
@@ -122,10 +130,10 @@ export async function alertSubscriptionCapReached(w: SubscriptionWindow): Promis
       INSERT INTO alerts (level, source, title, affected_area, probable_cause,
                           suggested_action, dedup_key)
       VALUES ('attention', 'orchestrator',
-              'The work line has stopped itself — the hourly model ceiling is full',
+              'The company paused its own work — this hour''s working allowance is used up',
               'task dispatch',
-              ${`the subscription path spent ${w.tokens} tokens in 60 minutes, ceiling ${w.cap}`},
-              ${`Nothing is broken and nothing is lost: queued work waits and the line resumes by itself as the hour rolls off. Raise or lower the ceiling in settings (${SUBSCRIPTION_CAP_KEY}) if this is the wrong limit for the company's pace.`},
+              ${`the company used ${w.tokens} of the ${w.cap} it allows itself per hour`},
+              ${`Nothing is broken and nothing is lost. Waiting work stays in the queue and the company starts again on its own within the hour — you do not have to do anything. If this allowance is the wrong size for the company's pace, it is one number in Settings (${SUBSCRIPTION_CAP_KEY}).`},
               'orchestrator:subscription-cap')
       ON CONFLICT (dedup_key) WHERE resolved_at IS NULL AND dedup_key IS NOT NULL
       DO NOTHING`.execute(getDb());

@@ -4,7 +4,7 @@ import {
   type AlertRow,
 } from "@/components/command/alert-center";
 import { Panel, HelpTip } from "@/components/primitives";
-import { localizeAlertTitle } from "@/lib/alert-title";
+import { localizeAlertDetail, localizeAlertTitle } from "@/lib/alert-title";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
@@ -94,8 +94,8 @@ export default async function Page() {
       resolvedAt: null,
       responsibleSlug: r.responsible_slug,
       affectedArea: r.affected_area,
-      probableCause: d?.probable_cause ?? null,
-      suggestedAction: d?.suggested_action ?? null,
+      probableCause: localizeAlertDetail(d?.probable_cause ?? null, locale),
+      suggestedAction: localizeAlertDetail(d?.suggested_action ?? null, locale),
       mitigation: d?.mitigation ?? null,
       ceoAction: d?.ceo_action ?? null,
       escalatedFrom: d?.escalated_from ?? null,
@@ -115,8 +115,8 @@ export default async function Page() {
       resolvedAt: r.resolved_at,
       responsibleSlug: null,
       affectedArea: r.affected_area,
-      probableCause: r.probable_cause,
-      suggestedAction: r.suggested_action,
+      probableCause: localizeAlertDetail(r.probable_cause, locale),
+      suggestedAction: localizeAlertDetail(r.suggested_action, locale),
       mitigation: r.mitigation,
       ceoAction: r.ceo_action,
       escalatedFrom: r.escalated_from,

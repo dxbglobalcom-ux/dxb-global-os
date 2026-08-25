@@ -9,9 +9,17 @@
 // forced found two things that make MULTIPLYING that line unsafe, and this file
 // is what makes both of them impossible to un-fix silently.
 //
-// MEASURED IN THE COMPANY'S OWN DATABASE, 2026-08-25 (SELECT only):
+// ⚠ THE EMPTY COST BOOK IS NOT A DEFECT — the CEO corrected this framing the
+// same day: "tabiki çalışmayan şirkette masraf defteri 0 olur … ŞİRKET HENÜZ
+// KURULMADI." The holding is still being BUILT and the earning machine is off by
+// his own decision, so zero cost rows is the expected state. What these cases
+// pin is the missing WRITER and the missing CEILING — the two things that would
+// still be missing on the day the company starts trading.
+//
+// MEASURED IN THE COMPANY'S OWN DATABASE, 2026-08-25 (SELECT only) — and these
+// are CONSTRUCTION-ERA figures, building the factory, not the holding trading:
 //   agent_runs   378 runs · 1,032,526 tokens · SUM(cost_eur) = 0
-//   cost_ledger  0 rows
+//   cost_ledger  0 rows (expected)
 //   settings_registry  112 keys, `employee.max_concurrent_runs` not among them
 //
 // H1 — the main working path spends where no brake can see. Anthropic models
@@ -23,7 +31,7 @@
 // These cases are about the BRAKES, not about throughput: a second line is a
 // decision for the measurement in scripts/bench/drain-throughput.mjs to inform.
 // Suite deletes only what it creates (E9.3 rule) — marker department `b39t`.
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { sql } from "kysely";
@@ -262,34 +270,136 @@ describe("B39 · H1 — the subscription path spends where a brake can see it", 
   });
 });
 
-describe("B39 · the decision — how many tasks at once is a SETTING, not a secret", () => {
-  it("the lane count is registered, bounded, and defaults to one", async () => {
+describe("B39 · the decision — the company works out its own hands, the CEO sets no dial", () => {
+  it("the lane count is registered, bounded, and seeded to DECIDE FOR ITSELF", async () => {
     const reg = await sql<{ schema: string }>`
       SELECT value_schema::text AS schema FROM settings_registry
        WHERE key = 'orchestration.dispatch_lanes'`.execute(db());
     expect(reg.rows.length, "orchestration.dispatch_lanes is not registered").toBe(1);
-    // The bound matters: an unbounded lane count is how one bad row becomes
-    // eighty parallel model calls with the CEO asleep.
+    // The upper bound matters: an unbounded lane count is how one bad row
+    // becomes eighty parallel model calls with the CEO asleep.
     expect(reg.rows[0].schema).toContain('"maximum": 8');
-    expect(reg.rows[0].schema).toContain('"minimum": 1');
+    // The LOWER bound is 0, and 0 is not "off" — it is "decide for yourself".
+    // The CEO's own correction, 2026-08-25: "bak ben ayar mayar anlamam ki!"
+    expect(reg.rows[0].schema).toContain('"minimum": 0');
 
     const live = await sql<{ n: number }>`
       SELECT fn_setting_numeric('orchestration.dispatch_lanes', 99)::int AS n`.execute(db());
-    expect(live.rows[0].n, "the default must stay 1 until the CEO raises it").toBe(1);
+    expect(live.rows[0].n, "the seeded value must be 0 — automatic, not a dial he maintains").toBe(0);
   });
 
-  it("the scheduler reads that setting instead of hard-coding the lane count", async () => {
+  it("both languages of that setting say the same thing to him", async () => {
+    // A CEO surface is 100% one locale, both locales at parity. A settings row
+    // whose Turkish half still described a dial would be a lie on his screen.
+    const d = await sql<{ en: string; tr: string }>`
+      SELECT description_en AS en, description_tr AS tr FROM settings_registry
+       WHERE key = 'orchestration.dispatch_lanes'`.execute(db());
+    expect(d.rows[0].en).toContain("decides for itself");
+    expect(d.rows[0].tr).toContain("kendi karar verir");
+    expect(d.rows[0].tr).toContain("dokunması gerekmez");
+    expect(d.rows[0].tr).not.toMatch(/\b(lanes|queue|default)\b/);
+  });
+
+  // The ceiling is restored even when a case fails. Measured the hard way: an
+  // assertion that failed before its own restore line left the brake shut, and
+  // every later case in the file died claiming nothing — four red tests, one
+  // cause, and the cause was the test file's own hygiene.
+  afterEach(async () => {
+    await setSetting(SUBSCRIPTION_CAP_KEY, "500000");
+    await setSetting(CAP_KEY, "1");
+  });
+
+  it("it will not open more hands than the hour's remaining allowance can pay for", async () => {
+    // THE GAP THIS CLOSES, found by the perfection gate rather than by a failure:
+    // the brake stops the execution leg AFTER the ceiling is crossed. Eight lanes
+    // opened against a nearly-spent hour would each claim a job and overshoot
+    // before the next tick could refuse — so the room left in the hour bounds the
+    // lane count too, using what this company's own runs have actually cost.
+    const department = `${M}-room`;
+    await makeDepartment(department);
+
+    // ISOLATION, and the lack of it is what this suite paid for twice. First: the
+    // earlier cases in this file leave real spend rows behind. Second, and worse:
+    // the construction engine carries 13 SEEDED rows of 83 million tokens each,
+    // and averaging all history against them said a single job costs 83M — the
+    // line would have throttled itself to one lane for ever on evidence from
+    // another era. Both the code and this case now measure the SAME 60-minute
+    // window the ceiling governs. Only this suite's own rows are cleared (E9.3).
+    await sql`DELETE FROM cost_ledger WHERE department LIKE ${`${M}%`}`.execute(db());
+
+    // Two finished runs establish the average cost of a job: 1000 units each.
+    for (let i = 0; i < 2; i++) {
+      const t = await makeTask(department);
+      await recordSubscriptionSpend({
+        taskId: t, agentId: null, department, model: "opus-5", tokensIn: 500, tokensOut: 500,
+      });
+    }
+
+    // Ceiling 3000, spent 2000 → 1000 left → room for exactly one more job.
+    await setSetting(SUBSCRIPTION_CAP_KEY, "3000");
+    const room = await sql<{ room: number }>`
+      SELECT (SELECT CASE
+                WHEN avg_cost IS NULL OR avg_cost <= 0 THEN 8
+                ELSE GREATEST(FLOOR(GREATEST(cap - spent, 0) / avg_cost), 0)
+              END
+         FROM (
+           SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
+                  COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
+                             WHERE mode = 'subscription'
+                               AND created_at > now() - interval '60 minutes'), 0)        AS spent,
+                  (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
+                    WHERE mode = 'subscription'
+                      AND created_at > now() - interval '60 minutes')                     AS avg_cost
+         ) b)::int AS room`.execute(db());
+    expect(room.rows[0].room, "one job's worth of allowance is left, so one hand").toBe(1);
+
+    // Spend the rest: no room at all — and the answer is 0, not a negative number
+    // and not a fallback that quietly lets eight hands through.
+    const t = await makeTask(department);
+    await recordSubscriptionSpend({
+      taskId: t, agentId: null, department, model: "opus-5", tokensIn: 600, tokensOut: 600,
+    });
+    const none = await sql<{ room: number }>`
+      SELECT (SELECT CASE
+                WHEN avg_cost IS NULL OR avg_cost <= 0 THEN 8
+                ELSE GREATEST(FLOOR(GREATEST(cap - spent, 0) / avg_cost), 0)
+              END
+         FROM (
+           SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
+                  COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
+                             WHERE mode = 'subscription'
+                               AND created_at > now() - interval '60 minutes'), 0)        AS spent,
+                  (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
+                    WHERE mode = 'subscription'
+                      AND created_at > now() - interval '60 minutes')                     AS avg_cost
+         ) b)::int AS room`.execute(db());
+    expect(none.rows[0].room, "a spent hour buys no extra hands").toBe(0);
+  });
+
+  it("the scheduler decides from the QUEUE, the MACHINE and the HOUR — not from a number he types", async () => {
     // A source scan, deliberately: the alternative is booting pg-boss inside the
     // suite, and what must never silently regress is the WIRING — a future edit
-    // that goes back to a bare drainTasks() would restore the single line and
-    // nothing would say so.
+    // that went back to a bare drainTasks() would restore the single line, and
+    // one that went back to a fixed setting would hand him the dial again.
     const src = await readFile(
       join(REPO_ROOT, "packages/outbox-executor/src/scheduler.ts"), "utf8");
     expect(src).toContain("orchestration.dispatch_lanes");
     expect(src).toMatch(/const lanes = await dispatchLanes\(\)/);
+    // It counts the waiting work…
+    expect(src).toMatch(/FROM tasks WHERE status = 'queued'/);
+    // …it asks the machine what it can carry, leaving room for the database…
+    expect(src).toMatch(/cpus\(\)\.length - 2/);
+    // …and it will not open hands the hour cannot pay for.
+    expect(src).toContain("orchestrator.subscription_tokens_per_hour");
+    expect(src).toMatch(/budgetBound/);
     // Lane 1 keeps the historical identity, or every record that reads
     // claimed_by = 'resident-worker' changes meaning on a single-lane install.
     expect(src).toContain("RESIDENT_WORKER_ID");
+    // And the decision is SAID OUT LOUD when it changes. A number that moves
+    // itself and is visible nowhere is not an alive system (V2's first law);
+    // a line every ten seconds is noise, so it speaks only on a change.
+    expect(src).toMatch(/the company is working with \$\{lanes\} hand/);
+    expect(src).toMatch(/if \(lanes !== lastLanes\)/);
   });
 });
 
@@ -363,6 +473,38 @@ describe("B39 · H2 — one employee, one job", () => {
 
     expect(res.executed).toBe(1);
     expect((await taskRow(t)).agent_id, "the idle colleague should have taken it").toBe(idle);
+  });
+
+  it("losing the race on the hand-back costs the tick nothing", async () => {
+    // Two lanes can hit the same full department in the same instant, and the
+    // lease reaper can requeue a row underneath either of them. The hand-back is
+    // a guarded move, so exactly one of them wins it — and the loser must NOT
+    // take the whole drain down with it, because that would cost every other
+    // lane its work in the same tick over an outcome that costs nothing.
+    const department = `${M}-race`;
+    await makeDepartment(department);
+    const employee = await makeEmployee(department, `${M}-race-one`);
+    await openRun(employee); // the only person here is working
+    await setSetting(CAP_KEY, "1");
+
+    const t = await makeTask(department);
+
+    // Two lanes drain the same department at the same moment.
+    const [a, b] = await Promise.all([
+      drainTasks({ workerId: `${WORKER}-a`, departments: [department], execute: okExecutor, reviewCap: 0 }),
+      drainTasks({ workerId: `${WORKER}-b`, departments: [department], execute: okExecutor, reviewCap: 0 }),
+    ]);
+
+    // Neither ran anything (the one employee is busy), and neither threw.
+    expect(a.executed).toBe(0);
+    expect(b.executed).toBe(0);
+
+    // The task is back where it started, claimed by nobody — not lost, not stuck
+    // in 'running', and not handed to the person who was already working.
+    const row = await taskRow(t);
+    expect(row.status).toBe("queued");
+    expect(row.claimed_by).toBeNull();
+    expect(row.agent_id).toBeNull();
   });
 
   it("an unstaffed department still fails LOUDLY — busy and empty are not the same", async () => {

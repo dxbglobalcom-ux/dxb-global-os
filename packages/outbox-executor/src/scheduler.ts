@@ -5,6 +5,7 @@
 //
 // Connection MUST be the direct session-mode port (local 54322 / VPS 5432),
 // never a transaction pooler (pg-boss study card, CRITICAL pitfall).
+import { cpus } from "node:os";
 import { PgBoss } from "pg-boss";
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
@@ -200,22 +201,95 @@ async function enqueueLibraryRecompile(boss: PgBoss, delaySeconds: number): Prom
 }
 
 /**
- * B39 — how many tasks the company works on at once, read fresh every tick.
+ * B39 — HOW MANY TASKS THE COMPANY WORKS ON AT ONCE. IT DECIDES THIS ITSELF.
  *
- * Bounded here as well as in the setting's own schema, because a scheduler that
- * trusts a number it did not check is how one bad row becomes eighty lanes.
- * An unreadable setting means ONE lane: the safe direction is always the one
- * that spends less, and a dispatch line that keeps working while the settings
- * table is unhappy is worth more than one that stops.
+ * THE CEO'S OWN CORRECTION, 2026-08-25: "bak ben ayar mayar anlamam ki! … ben
+ * hedefi söylerim yönetim kurulu başkanı olarak." The first version of this
+ * function read a number he was expected to set. That was the babysitting this
+ * whole product exists to end — handing the owner a dial and calling it a
+ * feature. He states the goal; the machine works out how many hands it needs.
+ *
+ * HOW IT DECIDES, every ten seconds, from three things it can measure:
+ *   1. HOW MUCH WORK IS WAITING. An empty queue gets one lane — a listening
+ *      posture, not a stopped one. Three waiting jobs get three lanes. Nothing
+ *      is spun up to stare at an empty queue: rest is part of the design.
+ *   2. WHAT THIS MACHINE CAN CARRY. cores - 2, capped at eight. On the CEO's
+ *      workstation (24 threads, measured 2026-08-25) that is 8; on the rented
+ *      4-core box the same code decides 2, with no configuration anywhere. Two
+ *      cores are left to the database and the rest of the desktop, because a
+ *      machine that becomes unusable while it works is a machine that failed.
+ *
+ *   3. WHAT IS LEFT IN THE HOUR'S BUDGET. The subscription brake stops the
+ *      execution leg once the hourly token ceiling is crossed — but stopping
+ *      AFTER the fact is not the same as not overshooting. Eight lanes opened
+ *      against a nearly-full hour would each claim a job and blow through the
+ *      remaining budget before the next tick could say no. So the room left in
+ *      the hour is a third bound: how many average jobs still fit, measured
+ *      from what this company's own runs have actually cost, never assumed.
+ *
+ * THE MEASUREMENT THAT MAKES THIS SAFE lives in scripts/bench/drain-throughput.mjs
+ * and its figures are recorded in SYSTEM_ARCHITECTURE R5 rather than repeated
+ * here. What matters at this line: claim_next_task has been FOR UPDATE SKIP
+ * LOCKED since the beginning, and the bench proves its own collision detector
+ * red before it reports a number.
+ *
+ * THE OVERRIDE EXISTS BUT IS NOT THE DEFAULT. `orchestration.dispatch_lanes`
+ * is 0 = decide for yourself. If the CEO ever pins 1-8, that number wins, still
+ * clamped to the machine AND to the hour's remaining room — a pinned number may
+ * raise ambition, never the spending ceiling.
+ *
+ * An unreadable setting means ONE lane: the safe direction is the one that
+ * spends less, and a line that keeps working while the settings table is
+ * unhappy is worth more than one that stops.
  */
+function machineCeiling(): number {
+  return Math.max(1, Math.min(cpus().length - 2, 8));
+}
+
 async function dispatchLanes(): Promise<number> {
+  const ceiling = machineCeiling();
   try {
-    const r = await sql<{ n: number }>`
-      SELECT LEAST(GREATEST(fn_setting_numeric('orchestration.dispatch_lanes', 1), 1), 8)::int AS n
+    const r = await sql<{ pinned: number; waiting: number; room: number }>`
+      SELECT
+        LEAST(GREATEST(fn_setting_numeric('orchestration.dispatch_lanes', 0), 0), 8)::int AS pinned,
+        (SELECT count(*)::int FROM tasks WHERE status = 'queued')                        AS waiting,
+        -- How many more average jobs fit in what is left of this hour.
+        --
+        -- THE AVERAGE IS TAKEN OVER THE SAME WINDOW THE CEILING GOVERNS, and the
+        -- first version got this wrong: it averaged ALL history. Measured
+        -- 2026-08-25 on the construction engine, where 13 seeded rows carry
+        -- 83 million tokens apiece — an all-time average said one job costs 83M,
+        -- so no hour could ever afford one, and the line would have throttled
+        -- itself to a single lane for ever on evidence from another era.
+        -- What a job costs TODAY is the only figure that answers "how many more
+        -- fit in this hour". With no runs in the window there is nothing to be
+        -- careful about yet, so the bound lifts.
+        (SELECT CASE
+                  WHEN avg_cost IS NULL OR avg_cost <= 0 THEN 8
+                  ELSE GREATEST(FLOOR(GREATEST(cap - spent, 0) / avg_cost), 0)
+                END
+           FROM (
+             SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
+                    COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
+                               WHERE mode = 'subscription'
+                                 AND created_at > now() - interval '60 minutes'), 0)        AS spent,
+                    (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
+                      WHERE mode = 'subscription'
+                        AND created_at > now() - interval '60 minutes')                     AS avg_cost
+           ) b)::int                                                                     AS room
     `.execute(getDb());
-    return r.rows[0]?.n ?? 1;
+    const row = r.rows[0];
+    const room = Math.max(0, Math.min(row?.room ?? 8, 8));
+    const pinned = row?.pinned ?? 0;
+    // Zero room means the hour is spent: one lane still goes, and the brake in
+    // front of the execution leg is what actually refuses it. Never zero lanes —
+    // the review and escalation legs are pure code and must keep moving.
+    const budgetBound = Math.max(1, room);
+    if (pinned > 0) return Math.min(pinned, ceiling, budgetBound);
+    const waiting = row?.waiting ?? 0;
+    return Math.max(1, Math.min(waiting, ceiling, budgetBound));
   } catch (err) {
-    console.error("[scheduler] dispatch_lanes unreadable — running one lane:", err);
+    console.error("[scheduler] lane count unreadable — running one lane:", err);
     return 1;
   }
 }
@@ -405,14 +479,25 @@ export async function startScheduler(): Promise<PgBoss> {
   // not survive that; R5's DISCIPLINE does, so the lanes live INSIDE this job —
   // no second resident service, no second runtime.
   //
-  // The default is 1 and the queue is empty by the CEO's own design, so this
-  // changes nothing today. It means the day work arrives, the answer is a number
-  // in his settings screen instead of a code change nobody is around to make.
-  // Read every tick: raising it takes effect within ten seconds, and lowering it
-  // never interrupts a lane already working — the tick simply arms fewer.
+  // Recomputed every tick from the queue and the machine, so the company grows
+  // its own hands when work arrives and lets them go when it does not — within
+  // ten seconds, with nobody watching and nobody setting anything. Lowering the
+  // count never interrupts a lane already working; the next tick simply arms
+  // fewer. This is the anti-babysitting law applied to the company's own labour.
+  // What the company decided last tick. A number that changes itself and is
+  // visible nowhere is not an alive system — but a line every ten seconds is
+  // noise nobody reads, so it speaks only when the answer CHANGES.
+  let lastLanes = -1;
   await boss.work(QUEUES.taskWorker, async () => {
     try {
       const lanes = await dispatchLanes();
+      if (lanes !== lastLanes) {
+        console.log(
+          `[scheduler] the company is working with ${lanes} hand${lanes > 1 ? "s" : ""}` +
+            (lastLanes < 0 ? " (first tick)" : ` (was ${lastLanes})`),
+        );
+        lastLanes = lanes;
+      }
       // Lane 1 keeps the historical worker identity so nothing that reads
       // `claimed_by = 'resident-worker'` changes meaning on a single-lane install.
       await Promise.all(

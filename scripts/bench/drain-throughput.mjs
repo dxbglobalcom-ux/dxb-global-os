@@ -111,28 +111,130 @@ function lockWaits() {
 }
 
 // --------------------------------------------------------------- the fixtures
-function seedTasks(n, lane) {
+//
+// A DEPARTMENT WITH NO STAFF AND A TASK WITH NO PROJECT ARE NOT THE COMPANY, AND
+// MEASURING THEM MEASURES NOTHING. The first version of this file seeded bare
+// tasks into an empty department; the pre-task gate rejected every one of them
+// ("policy: missing_project_link" + "std.project_alignment"), the run finished in
+// 0.2 seconds, reported 0 done — and still printed a table of zeroes. That is the
+// exact failure this repository's own law exists to prevent, and it is why the
+// bench now says WHERE its tasks ended whenever a level does not drain.
+//
+// What the real company looks like, measured 2026-08-25 in its own database:
+// 205 active employees across 21 departments, and 214 of 217 tasks carry a
+// project. The bench reproduces both. Each employee is born the way the company
+// insists — dormant, given a persona, and only then activated
+// (trg_agents_activation_gate refuses any other order) — and every task hangs off
+// a real project row, because a benchmark that skips the gates measures a path
+// no real task will ever take.
+//
+// It also seeds ONE MORE employee than there are lanes. That is deliberate: with
+// employee.max_concurrent_runs = 1, N lanes need N free people, and the spare
+// proves the ceiling is being honoured rather than silently ignored.
+function seedLane(n, lane, staff) {
   const department = `${MARKER}-l${lane}`;
   psql(`
     INSERT INTO departments (slug, display_name, display_name_tr, status)
     VALUES ('${department}', 'B39 bench lane ${lane}', 'B39 ölçüm hattı ${lane}', 'active')
     ON CONFLICT (slug) DO NOTHING;
+
+    -- the project the work belongs to: the pre-task gate demands one (std.project_alignment)
+    INSERT INTO projects (slug, name, name_tr, purpose, purpose_tr, status)
+    VALUES ('${department}-p', 'B39 bench project ${lane}', 'B39 ölçüm projesi ${lane}',
+            'Measuring how much work the dispatch line carries.',
+            'Dağıtım hattının ne kadar iş taşıdığını ölçmek.', 'active')
+    ON CONFLICT (slug) DO NOTHING;
+
+    -- the workforce, through the company's own birth sequence
+    INSERT INTO agents (slug, department, role, role_level, persona_path, mcp_profile,
+                        employment_status, status)
+    SELECT '${department}-w' || g, '${department}', 'specialist', 'specialist',
+           'personas/${department}-w' || g || '.md', 'inherit', 'dormant', 'dormant'
+      FROM generate_series(1, ${staff}) g
+    ON CONFLICT (slug) DO NOTHING;
+
+    INSERT INTO personas (employee_id, version, author, body_md, quality_gate)
+    SELECT a.id, 1, 'hr-factory',
+           '# PERSONA — ' || a.slug || E'\n\n## 1. Role\nBench specialist.', 'passed'
+      FROM agents a WHERE a.department = '${department}'
+        AND NOT EXISTS (SELECT 1 FROM personas p WHERE p.employee_id = a.id);
+
+    UPDATE agents a SET persona_id = p.id, employment_status = 'active', status = 'active'
+      FROM personas p WHERE p.employee_id = a.id AND a.department = '${department}';
+
     INSERT INTO tasks (department, objective, output_contract, model_tier,
-                       approval_class, budget_max_tokens, priority, status)
-    SELECT '${department}', 'b39 bench probe ' || g, 'one line', 'L4', 'none', 1000, 5, 'queued'
+                       approval_class, budget_max_tokens, priority, status, project_id)
+    SELECT '${department}', 'b39 bench probe ' || g, 'one line', 'L4', 'none', 1000, 5, 'queued',
+           (SELECT id FROM projects WHERE slug = '${department}-p')
       FROM generate_series(1, ${n}) g;`);
   return department;
 }
 
+/** Where the tasks actually ended up — printed whenever a level does not drain. */
+function outcome(department) {
+  const out = psql(`
+    SELECT COALESCE(string_agg(status || '=' || n, ', ' ORDER BY status), '(none)') FROM (
+      SELECT status, count(*) AS n FROM tasks WHERE department = '${department}' GROUP BY status
+    ) x;`);
+  return out || "(none)";
+}
+
 function sweep() {
+  // EVERY TABLE THAT POINTS AT A RUN OR A TASK, IN DEPENDENCY ORDER.
+  // Measured from the engine itself rather than guessed
+  // (SELECT conname, conrelid::regclass FROM pg_constraint WHERE confrelid IN
+  //  ('agent_runs'::regclass,'tasks'::regclass) AND contype='f') — 21 links, and a
+  // sweep that knows only three of them fails halfway and leaves the bench's own
+  // rows inside the engine. E9.3's rule holds here: this deletes ONLY what the
+  // marker department created, and it deletes ALL of it.
   psql(`
-    DELETE FROM cost_ledger WHERE task_id IN (SELECT id FROM tasks WHERE department LIKE '${MARKER}%');
-    DELETE FROM agent_runs  WHERE task_id IN (SELECT id FROM tasks WHERE department LIKE '${MARKER}%');
-    DELETE FROM audit_log   WHERE task_id IN (SELECT id FROM tasks WHERE department LIKE '${MARKER}%');
-    DELETE FROM task_events WHERE task_id IN (SELECT id FROM tasks WHERE department LIKE '${MARKER}%');
-    DELETE FROM tasks       WHERE department LIKE '${MARKER}%';
+    -- the workforce is stood down before its personas go: the company refuses to
+    -- strip a persona from an ACTIVE employee, and the bench obeys that rule too
+    UPDATE agents SET employment_status = 'dormant', status = 'dormant'
+      WHERE department LIKE '${MARKER}%';
+    UPDATE agents SET persona_id = NULL WHERE department LIKE '${MARKER}%';
+    DELETE FROM personas WHERE employee_id IN (SELECT id FROM agents WHERE department LIKE '${MARKER}%');
+
+    CREATE TEMP TABLE IF NOT EXISTS _b39_t (id uuid PRIMARY KEY);
+    CREATE TEMP TABLE IF NOT EXISTS _b39_r (id uuid PRIMARY KEY);
+    TRUNCATE _b39_t; TRUNCATE _b39_r;
+    INSERT INTO _b39_t SELECT id FROM tasks WHERE department LIKE '${MARKER}%';
+    INSERT INTO _b39_r SELECT id FROM agent_runs
+      WHERE task_id IN (SELECT id FROM _b39_t)
+         OR employee_id IN (SELECT id FROM agents WHERE department LIKE '${MARKER}%');
+
+    -- everything hanging off the RUNS
+    DELETE FROM decision_log       WHERE run_id IN (SELECT id FROM _b39_r);
+    DELETE FROM decision_log       WHERE decision = 'employee-selection' AND rationale LIKE '%${MARKER}%';
+    DELETE FROM alerts             WHERE run_id IN (SELECT id FROM _b39_r);
+    DELETE FROM file_changes       WHERE run_id IN (SELECT id FROM _b39_r);
+    DELETE FROM hook_violations    WHERE run_id IN (SELECT id FROM _b39_r);
+    DELETE FROM library_usage_log  WHERE run_id IN (SELECT id FROM _b39_r);
+    DELETE FROM memory_index       WHERE run_id IN (SELECT id FROM _b39_r);
+    DELETE FROM tool_calls         WHERE run_id IN (SELECT id FROM _b39_r);
+    UPDATE approvals SET reanalysis_run_id = NULL WHERE reanalysis_run_id IN (SELECT id FROM _b39_r);
+    UPDATE agent_runs SET parent_run_id = NULL WHERE parent_run_id IN (SELECT id FROM _b39_r);
+    DELETE FROM agent_runs         WHERE id IN (SELECT id FROM _b39_r);
+
+    -- everything hanging off the TASKS
+    DELETE FROM alerts             WHERE task_id IN (SELECT id FROM _b39_t);
+    DELETE FROM approvals          WHERE task_id IN (SELECT id FROM _b39_t);
+    DELETE FROM cost_ledger        WHERE task_id IN (SELECT id FROM _b39_t);
+    DELETE FROM crm_requests       WHERE task_id IN (SELECT id FROM _b39_t);
+    DELETE FROM generated_work     WHERE task_id IN (SELECT id FROM _b39_t)
+                                      OR plan_task_id IN (SELECT id FROM _b39_t);
+    DELETE FROM revenue_scout_runs WHERE task_id IN (SELECT id FROM _b39_t);
+    DELETE FROM task_dependencies  WHERE task_id IN (SELECT id FROM _b39_t)
+                                      OR depends_on IN (SELECT id FROM _b39_t);
+    DELETE FROM task_events        WHERE task_id IN (SELECT id FROM _b39_t);
+    DELETE FROM audit_log          WHERE task_id IN (SELECT id FROM _b39_t);
+    UPDATE tasks SET parent_task_id = NULL WHERE parent_task_id IN (SELECT id FROM _b39_t);
+    DELETE FROM tasks              WHERE id IN (SELECT id FROM _b39_t);
+
+    DELETE FROM agents      WHERE department LIKE '${MARKER}%';
+    DELETE FROM projects    WHERE slug LIKE '${MARKER}%';
     DELETE FROM departments WHERE slug LIKE '${MARKER}%';
-    DELETE FROM decision_log WHERE decision = 'employee-selection' AND rationale LIKE '%${MARKER}%';`);
+    DELETE FROM alerts      WHERE dedup_key = 'orchestrator:subscription-cap' AND resolved_at IS NULL;`);
 }
 
 // ------------------------------------------------------------------ prove-red
@@ -142,7 +244,7 @@ function sweep() {
 async function proveRed() {
   console.log("=== PROVING THE DETECTOR RED — a collision is planted on purpose ===\n");
   sweep();
-  const department = seedTasks(1, "red");
+  const department = seedLane(1, "red", 1);
   const taskId = psql(`SELECT id FROM tasks WHERE department = '${department}' LIMIT 1;`);
 
   const before = doubleClaims();
@@ -171,11 +273,25 @@ async function proveRed() {
 // -------------------------------------------------------------------- one run
 async function runLanes(lanes) {
   sweep();
-  const department = seedTasks(TASKS, lanes);
+  const department = seedLane(TASKS, lanes, lanes + 1);
 
   // The model call, replaced by a sleep of a stated length. Everything else —
   // the claim, the gates, the transitions, the writes — is the real thing.
+  //
+  // AND IT IS COUNTED, BECAUSE THE LINE CALLS IT MORE THAN ONCE. Measured
+  // 2026-08-25: a task's median came out at 90s against a 30s turn, and the
+  // first reading of that was wrong — "60 seconds of overhead". There is no
+  // 60-second wait anywhere. The post-task quality gate REVISES and the runner
+  // re-executes (worker-shim's `for(;;)` loop), bounded by
+  // `orchestration.max_revision_rounds` = 2. So the work was done THREE times:
+  // one attempt plus two revisions, 3 x 30s = 90s.
+  //
+  // A bench that assumes one call per task reports the company's own quality
+  // standard as if it were overhead. This counts the calls and reports both:
+  // what the LINE costs on top of the model, and how many times the model ran.
+  let executions = 0;
   const execute = async () => {
+    executions += 1;
     await new Promise((r) => setTimeout(r, TURN_MS));
     return { result: { text: "bench deliverable" }, confidence: 0.92 };
   };
@@ -215,22 +331,46 @@ async function runLanes(lanes) {
   clearInterval(sampler);
   const rssAfter = process.memoryUsage().rss;
 
+  // WHAT "DONE" MEANS HERE, and why it is not "reached review".
+  //
+  // The gates are part of the path being measured, so they stay ON. With them on,
+  // a SIMULATED model turn can never reach 'review': the post-task gate demands a
+  // real tool_calls row (std 15, tool_call_proof) and a sleep produces none. That
+  // is a constitutional property of the text-only executor, written down as
+  // adaptation A4 in AGENT_ORCHESTRATION_SPEC — not a fault in this bench and not
+  // something to hide by switching the gates off.
+  //
+  // So the capacity figure counts tasks the LINE CARRIED end to end: claimed,
+  // staffed, gated, executed and moved out of the queue. The quality outcome is
+  // reported beside it and is expected to be 'failed' on synthetic output.
   const done = Number(psql(`
-    SELECT count(*) FROM tasks WHERE department = '${department}' AND status = 'review';`));
+    SELECT count(*) FROM tasks WHERE department = '${department}' AND status <> 'queued';`));
+  const passedQuality = Number(psql(`
+    SELECT count(*) FROM tasks WHERE department = '${department}' AND status IN ('review','done');`));
+  const where = outcome(department);
   const collisions = doubleClaims();
   latencies.sort((a, b) => a - b);
   const pct = (p) => latencies.length ? latencies[Math.min(latencies.length - 1, Math.floor(latencies.length * p))] : 0;
+  // Model turns per task the line actually asked for — 1 when the gate passes
+  // first time, up to 1 + max_revision_rounds when it does not.
+  const runsPerTask = done > 0 ? executions / done : 0;
 
   sweep();
 
   return {
     lanes,
     done,
+    passedQuality,
+    where,
     elapsedMs,
     perHour: done > 0 ? Math.round((done / elapsedMs) * 3_600_000) : 0,
     medianMs: pct(0.5),
     p95Ms: pct(0.95),
-    overheadMs: latencies.length ? Math.round(pct(0.5) - TURN_MS) : 0,
+    runsPerTask: Math.round(runsPerTask * 100) / 100,
+    // The LINE's own cost: what is left after the model turns the line actually
+    // asked for. Subtracting one turn when three were run is how a quality
+    // standard gets misread as overhead.
+    overheadMs: latencies.length ? Math.round(pct(0.5) - TURN_MS * runsPerTask) : 0,
     rssDeltaMb: Math.round(((rssAfter - rssBefore) / 1_048_576) * 10) / 10,
     lockPeak,
     collisions: collisions.length,
@@ -239,11 +379,11 @@ async function runLanes(lanes) {
 
 // ---------------------------------------------------------------------- print
 function table(rows) {
-  const head = ["lanes", "done", "wall s", "tasks/h", "median ms", "p95 ms", "overhead ms", "RSS Δ MB", "lock peak", "collisions"];
+  const head = ["lanes", "done", "wall s", "tasks/h", "median ms", "p95 ms", "model runs/task", "line cost ms", "RSS Δ MB", "lock peak", "collisions"];
   const body = rows.map((r) => [
     String(r.lanes), String(r.done), (r.elapsedMs / 1000).toFixed(1), String(r.perHour),
-    String(r.medianMs), String(r.p95Ms), String(r.overheadMs), String(r.rssDeltaMb),
-    String(r.lockPeak), String(r.collisions),
+    String(r.medianMs), String(r.p95Ms), r.runsPerTask.toFixed(2), String(r.overheadMs),
+    String(r.rssDeltaMb), String(r.lockPeak), String(r.collisions),
   ]);
   const w = head.map((h, i) => Math.max(h.length, ...body.map((b) => b[i].length)));
   const line = (cells) => "  " + cells.map((c, i) => c.padStart(w[i])).join("  ");
@@ -253,15 +393,21 @@ function table(rows) {
 }
 
 function projection(rows) {
-  // ARITHMETIC, and it is labelled as such. The measured overhead is what the
-  // line costs ON TOP of a model turn; a real turn is 30-120 seconds.
+  // ARITHMETIC, and it is labelled as such. Two things go into it: the line's own
+  // cost per task, and how many model turns the line asks for per task — because
+  // a task the gate revises twice pays for three turns, not one.
   const base = rows[0];
-  console.log("\n  COMPUTED, not measured — what the measured overhead implies for a real turn:");
-  console.log("  (tasks per hour = 3600 / (turn seconds + measured overhead) × lanes)\n");
+  const runs = base?.runsPerTask || 1;
+  console.log("\n  COMPUTED, not measured — what the measured figures imply for a real model turn:");
+  console.log(`  (tasks/hour = 3600 / (turn seconds × ${runs.toFixed(2)} model runs + line cost) × lanes)\n`);
   const head = ["turn", ...rows.map((r) => `${r.lanes} lane${r.lanes > 1 ? "s" : ""}`)];
   const body = [30, 60, 120].map((sec) => [
     `${sec}s`,
-    ...rows.map((r) => String(Math.floor((3600 / (sec + Math.max(0, r.overheadMs) / 1000)) * r.lanes))),
+    ...rows.map((r) =>
+      String(Math.floor(
+        (3600 / (sec * (r.runsPerTask || 1) + Math.max(0, r.overheadMs) / 1000)) * r.lanes,
+      )),
+    ),
   ]);
   const w = head.map((h, i) => Math.max(h.length, ...body.map((b) => b[i].length)));
   const line = (cells) => "  " + cells.map((c, i) => c.padStart(w[i])).join("  ");
@@ -272,6 +418,24 @@ function projection(rows) {
 }
 
 // ----------------------------------------------------------------------- main
+//
+// INTERRUPTED IS NOT AN EXCUSE FOR RESIDUE. Measured 2026-08-25: a run killed
+// part-way through left 12 tasks, 2 employees, a project and a department inside
+// the construction engine — a benchmark that dirties the very database the next
+// measurement reads. Ctrl-C and a kill signal now sweep on the way out, exactly
+// like the normal exit and the crash path already do.
+let sweeping = false;
+function sweepAndExit(signal) {
+  if (sweeping) return;
+  sweeping = true;
+  console.log(`\n[bench] ${signal} — sweeping before exit so the engine is left clean`);
+  try { sweep(); console.log("[bench] swept"); }
+  catch (e) { console.error("[bench] sweep on exit FAILED — residue may remain:", e.message); }
+  process.exit(130);
+}
+process.on("SIGINT", () => sweepAndExit("SIGINT"));
+process.on("SIGTERM", () => sweepAndExit("SIGTERM"));
+
 (async () => {
   // The address is stated out loud every run: a bench that silently moved to the
   // company would be the single worst thing this repository could do.
@@ -298,6 +462,11 @@ function projection(rows) {
     const r = await runLanes(lanes);
     rows.push(r);
     console.log(`${r.done}/${TASKS} in ${(r.elapsedMs / 1000).toFixed(1)}s`);
+    // A level that did not drain says WHERE its tasks went, in the same breath.
+    // Silence here is how the first version of this file reported a table of
+    // zeroes as if it were a measurement.
+    if (r.done !== TASKS) console.log(`      ⚠ did not drain — tasks ended: ${r.where}`);
+    else console.log(`      carried ${r.done}/${TASKS} through the full gated path — outcome: ${r.where}`);
   }
 
   console.log("\n=== MEASURED — every figure below came from a real drain on a real database ===\n");
@@ -315,6 +484,13 @@ function projection(rows) {
   engine                 : ${engine}
   simulated model turn   : ${TURN_MS} ms
   tasks per level        : ${TASKS}
+  gates                  : ON — the pre/post quality gates are part of the measured path
+  model runs per task    : ${rows.map((r) => r.runsPerTask.toFixed(2)).join(" · ")}
+                           (1 = the gate passed first time; up to 1 + orchestration.max_revision_rounds
+                            when it did not. A simulated turn can never pass — A4 — so this reads the
+                            company's WORST case, not its normal one.)
+  passed the quality gate: ${rows.map((r) => r.passedQuality).reduce((a, b) => a + b, 0)} (expected 0:
+                           a simulated turn produces no tool_calls row, so std 15 cannot pass — A4)
   double claims          : ${collisions}   (must be 0 — the detector is proven by --prove-red)
   levels that drained    : ${rows.length - incomplete.length} of ${rows.length}
   ${most.lanes}-lane speedup over 1 : ${speedup}×

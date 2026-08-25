@@ -5,6 +5,15 @@
 // Writers covered: fn_alerts_evaluate / fn_alert_on_* / fn_model_fallback /
 // fn_hook_violation_alert (20260713080000, 20260714030000), workflow
 // runner, observability run-scope, hook pre-task fail-closed.
+//
+// B39, 2026-08-25 — THE OTHER TWO LINES ARE LOCALIZED TOO, AND THEY NEVER WERE.
+// Measured that day: `title` came through here, while `probable_cause` and
+// `suggested_action` went to the CEO's screen as raw English. Those two are the
+// lines that tell him WHAT HAPPENED and WHAT TO DO — the half of an alert he
+// actually reads. The bilingual purity rule (00-CEO-DIRECTIVE-LANGUAGE) says a
+// CEO surface is 100% one locale; two of the three lines were not.
+// localizeAlertDetail below closes that for the patterns it knows, and falls
+// through verbatim for the rest rather than guessing — same contract as titles.
 
 type Rule = { re: RegExp; tr: (m: RegExpMatchArray) => string };
 
@@ -63,13 +72,42 @@ const RULES: Rule[] = [
     re: /^Workflow '(.+)' run failed \((.+)\)$/,
     tr: (m) => `'${m[1]}' iş akışı koşusu başarısız (${m[2]})`,
   },
+  {
+    // B39 — the dispatch line holding itself at the hourly model ceiling.
+    re: /^The company paused its own work — this hour's working allowance is used up$/,
+    tr: () => "Şirket kendi işini duraklattı — bu saat için ayırdığı çalışma payı doldu",
+  },
 ];
 
-export function localizeAlertTitle(title: string, locale: string): string {
-  if (locale !== "tr") return title;
-  for (const rule of RULES) {
-    const m = title.match(rule.re);
+// The other two lines of an alert: what probably caused it, and what to do.
+const DETAIL_RULES: Rule[] = [
+  {
+    re: /^the company used (\d+) of the (\d+) it allows itself per hour$/,
+    tr: (m) => `şirket bir saatte kendine ayırdığı ${m[2]} birimin ${m[1]}'ini kullandı`,
+  },
+  {
+    re: /^Nothing is broken and nothing is lost\. Waiting work stays in the queue and the company starts again on its own within the hour — you do not have to do anything\. If this allowance is the wrong size for the company's pace, it is one number in Settings \((.+)\)\.$/,
+    tr: (m) =>
+      "Bozulan bir şey yok, kaybolan bir şey yok. Bekleyen işler kuyrukta durur ve şirket saat " +
+      "içinde kendi kendine yeniden başlar — sizin bir şey yapmanız gerekmiyor. Bu pay şirketin " +
+      `temposuna göre yanlış ölçüldüyse, Ayarlar'da tek bir sayıdır (${m[1]}).`,
+  },
+];
+
+function localize(rules: Rule[], text: string, locale: string): string {
+  if (locale !== "tr") return text;
+  for (const rule of rules) {
+    const m = text.match(rule.re);
     if (m) return rule.tr(m);
   }
-  return title;
+  return text;
+}
+
+export function localizeAlertTitle(title: string, locale: string): string {
+  return localize(RULES, title, locale);
+}
+
+/** The cause and the suggested action — null passes through untouched. */
+export function localizeAlertDetail(text: string | null, locale: string): string | null {
+  return text === null ? null : localize(DETAIL_RULES, text, locale);
 }

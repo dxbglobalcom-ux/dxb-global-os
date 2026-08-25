@@ -329,9 +329,11 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
         });
         // B39: the same figures, written where a BRAKE can read them. agent_runs
         // records what a run consumed; only cost_ledger is read by the money
-        // brakes, and until 2026-08-25 this path wrote to neither of them — the
-        // company had done 1,032,526 tokens of work with an empty cost book.
-        // Still no EUR here, so the single-source rule above is untouched.
+        // brakes, and until 2026-08-25 this path wrote to neither of them. The
+        // empty cost book is NOT the defect (the holding is still being built and
+        // the earning machine is deliberately off) — the defect is that nothing
+        // would fill it on the day it matters. Still no EUR here, so the
+        // single-source rule above is untouched.
         await recordSubscriptionSpend({
           taskId: task.id,
           agentId: task.agent_id ?? null,
@@ -571,13 +573,32 @@ async function assignEmployee(task: ClaimedTask, workerId: string): Promise<bool
 
   if (!staffed) return true; // unchanged path: agent-less, the pre-gate speaks
 
-  // Everybody busy — hand the task back exactly as it was found. The guarded
-  // transition means a racing line that already moved this row cannot be undone
-  // by this one, and the event trail records why it came back.
-  await transition(task.id, "running", "queued", workerId, {
-    reason: "every eligible employee is at the concurrency ceiling",
-    setting: MAX_CONCURRENT_KEY,
-  });
+  // Everybody busy — hand the task back exactly as it was found.
+  //
+  // LOSING THE RACE HERE IS A NORMAL OUTCOME, NOT AN ERROR. `transition` throws
+  // when the row is no longer in the status it expected, which is the right
+  // behaviour for a lifecycle move that MUST happen. This one is different: a
+  // sibling lane may legitimately have moved this row in the same instant (the
+  // lease reaper requeues it, an escalation fails it), and in every one of those
+  // cases the task is already somewhere sane and this lane simply has nothing
+  // left to do. Letting the throw escape would take down the whole drain — and
+  // with it the other lanes' work in the same tick — over an outcome that costs
+  // nothing. So the race is caught, named on the task's own trail, and the lane
+  // reports "not claimed" exactly as it would have anyway.
+  try {
+    await transition(task.id, "running", "queued", workerId, {
+      reason: "every eligible employee is at the concurrency ceiling",
+      setting: MAX_CONCURRENT_KEY,
+    });
+  } catch (err) {
+    console.warn(
+      `[worker-shim] task ${task.id} moved on before it could be handed back (another lane or the reaper):`,
+      err instanceof Error ? err.message : err,
+    );
+    return false;
+  }
+  // Only clear the claim if the row is still the one we just put back: the
+  // status guard makes this a no-op if a sibling has already picked it up.
   await db
     .updateTable("tasks")
     .set({ claimed_by: null, updated_at: sql`now()` })

@@ -16,13 +16,34 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 - R5. Yeni yetenekler öncelikle **kütüphane + tablo + view** olarak eklenir, yeni resident servis
   olarak DEĞİL. **KAYITLI UYARLAMA — B39, 2026-08-25: bu maddenin GEREKÇESİ ölçümle değişti,
   DİSİPLİNİ aynı kaldı.** Madde 2026-07 boyunca *"8GB VPS RAM bütçesi aşılmaz"* diye yazıyordu ve
-  bu cümle, hiç sorulmamış bir soruya — "aynı anda kaç iş yürüsün?" — cevap vermiş gibi
-  kullanıldı. Ölçüldü (`scripts/bench/drain-throughput.mjs`, inşaat motoru, 24 görev, gerçek
-  boşaltma): **8 hat aynı kuyruğu tek hattan 7,80 kat hızlı bitirdi · 0 çifte üstlenme · 0 kilit
-  beklemesi · sekiz hattın toplam bellek maliyeti 4,5 MB.** RAM, eşzamanlılığın önündeki engel
-  değildi. **Mevcut bir servisin İÇİNDE eşzamanlılığı yükseltmek yeni servis açmak değildir** —
-  hat sayısı `orchestration.dispatch_lanes` ayarından okunur ve mevcut zamanlayıcı işinin içinde
-  çalışır. Varsayılan 1'dir. Ev artık iş istasyonudur (aşağı, ALTYAPI).
+  bu cümle, hiç sorulmamış bir soruya — "aynı anda kaç iş yürüsün?" — cevap vermiş gibi kullanıldı.
+
+  **ÖLÇÜM** (`scripts/bench/drain-throughput.mjs`, inşaat motoru, gerçek departman + gerçek kadro
+  + gerçek proje, kalite kapıları AÇIK, dedektör önce kırmızıda kanıtlanmış):
+
+  | hat | 16 iş | iş/saat | hattın kendi maliyeti | çifte üstlenme | kilit beklemesi |
+  |---|---|---|---|---|---|
+  | 1 | 97,4 sn | 591 | 87 ms | 0 | 0 |
+  | 2 | 48,8 sn | 1.179 | 110 ms | 0 | 0 |
+  | 4 | 24,6 sn | 2.343 | 156 ms | 0 | 0 |
+  | 8 | **12,4 sn** | **4.655** | 169 ms | 0 | 0 |
+
+  **8 hat = 7,88 kat hızlanma (kusursuzun %98,5'i).** Ve hattın kendi maliyeti **iş uzadıkça
+  büyümüyor**: 30 sn'lik turda 144 ms, 60 sn'likte 170 ms, 120 sn'likte 156 ms — tur süresi dört
+  katına çıkarken sabit kaldı. RAM, eşzamanlılığın önündeki engel hiç olmamıştı.
+
+  ⚠ **ÖLÇÜMÜN OKUNMASINDA BİR TUZAK VAR ve ilk okuyuş buna düştü.** Sahte bir çıktı kalite
+  kapısını **asla** geçemez (A4), bu yüzden ölçümde her iş `orchestration.max_revision_rounds`
+  kadar tekrarlanır — **iş başına 3,00 model turu**, yani şirketin EN KÖTÜ hâli. Gerçek şirkette
+  ölçüldü (2026-08-25, şirket veri tabanı): 217 görev, 370 çalışma → **iş başına 1,71**, ve
+  **154 görev (%71) ilk seferde geçmiş.** Aradaki farkı "hattın ek yükü" diye okumak ölçüm
+  aracının kendi kusuruydu; araç artık model turlarını sayıyor ve ikisini ayrı raporluyor.
+
+  **Mevcut bir servisin İÇİNDE eşzamanlılığı yükseltmek yeni servis açmak değildir.** Hat sayısı
+  CEO'ya bırakılmış bir düğme de değildir (onun kendi hükmü, 2026-08-25: *"ben ayar mayar anlamam
+  ki"*): mevcut zamanlayıcı işi her on saniyede **kendisi hesaplar** — bekleyen iş, makinenin
+  taşıyabileceği (çekirdek − 2, en fazla 8) ve saatin kalan harcama payı. Ev artık iş
+  istasyonudur (aşağı, ALTYAPI).
 - R6. Her ajan spawn'ı Opus 5 Hook policy katmanından geçer (pre/post-task validation) — madde 7.
 - R7. Güvenlik sertleştirme ertelenmiş sicilde; para-ÇIKIŞI onay kapısı + outbox tek-çıkış deseni DOKUNULMAZ.
 
@@ -103,14 +124,13 @@ hâliyle silinip yerine ölçülen hâli yazıldı (KANUN A).
 Karar ilkesi (⛔ mimari-kritik): **kontrol düzlemi ayrı mikroservis DEĞİLDİR.** Gerekçe: (a) RAM bütçesi (R5), (b) tek yazım seamı zaten DB fonksiyon katmanında, (c) Opus devrinde işletilecek parça sayısını düşük tutmak. Ayrı servisleştirme ancak ölçüm kanıtıyla (latency/lock) ve CEO onayıyla açılır.
 
 **Bu hüküm DURUYOR — ama açılma şartı ilk kez karşılandı ve neye götürdüğü buraya yazılır (B39,
-2026-08-25).** Şartın istediği ölçüm — gecikme ve kilit — alındı: `scripts/bench/drain-throughput.mjs`,
-1 · 2 · 4 · 8 hat, her seviyede gerçek boşaltma. Sonuç: **7,80 kat hızlanma, medyan gecikme 1520 →
-1560 ms (yani hattın kendi ek yükü 20 ms'den 60 ms'ye çıktı), kilit beklemesi her seviyede 0, çifte
-üstlenme her seviyede 0** — dedektörün kendisi bilerek yerleştirilmiş bir çakışmayla önce kırmızıda
-gösterildi (`pnpm bench:drain --prove-red`). **Bu ölçüm ayrı bir servis AÇMADI ve açılmasını da
-istemiyor:** eşzamanlılık, zaten var olan zamanlayıcı işinin içinde bir ayardan okunuyor
-(`orchestration.dispatch_lanes`, varsayılan 1). Yani hükmün lafzı da ruhu da korundu; değişen tek
-şey, artık cevabın tahmin değil ölçüm olması.
+2026-08-25).** Şartın istediği ölçüm — gecikme ve kilit — alındı ve tablosu R5'te duruyor:
+**7,88 kat hızlanma · kilit beklemesi her seviyede 0 · çifte üstlenme her seviyede 0 · hattın
+kendi maliyeti 87-169 ms ve iş uzadıkça büyümüyor.** Dedektörün kendisi bilerek yerleştirilmiş bir
+çakışmayla önce kırmızıda gösterildi (`pnpm bench:drain --prove-red`). **Bu ölçüm ayrı bir servis
+AÇMADI ve açılmasını da istemiyor:** eşzamanlılık, zaten var olan zamanlayıcı işinin içinde, her
+turda yeniden hesaplanıyor. Yani hükmün lafzı da ruhu da korundu; değişen tek şey, artık cevabın
+tahmin değil ölçüm olması.
 
 ## 4. Veri modeli
 
