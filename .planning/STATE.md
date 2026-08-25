@@ -129,6 +129,14 @@ with a single failure whose name scrolled past unrecorded, and **four consecutiv
 been green**, so it was not reproduced and not identified. It is written here rather than dismissed,
 because his own ruling of 2026-08-24 is that a failure one run in five is a defect and not noise.
 
+**A V2 BOUNDARY FOUND WHILE ANSWERING HIS QUESTION, 2026-08-25 — NOT A V1 REPAIR.** His Tokens page
+(`apps/dashboard/src/app/(command)/fin/tokens/page.tsx`) carries a separately-labelled panel for
+CONSTRUCTION sessions, built as the answer to his own complaint C24. It reads the COMPANY's
+`cost_ledger` for `source='hook'` — and after B36 those rows are written to the CONSTRUCTION engine,
+so **that panel can now only ever show zero** (company `cost_ledger` = 0 rows, measured). V1 is dead
+by his ruling, so it is NOT repaired. **V2 must read the construction figure from the construction's
+own book**, or not show the panel at all — his minimalism ruling forbids showing an empty box.
+
 **STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
 eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count
 reaches no screen, and by his own ruling that V1 is dead it belongs to V2, not to the old dashboard.
