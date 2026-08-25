@@ -1101,6 +1101,7 @@ ${STYLE}
     <section class="card" id="c4"><h2><span class="n">3</span>Fotoğraf tekrar çekiliyor, ikisi çıkarılıyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
     <section class="card" id="c5"><h2><span class="n">4</span>Şirketin kapısına yükleniliyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
     <section class="card" id="c6"><h2><span class="n">5</span>Depo, şirketin adresi için süpürülüyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
+    <section class="card" id="c7"><h2><span class="n">6</span>Şirketin kendi odaları inşaat izi için süpürülüyor<span class="dot"></span></h2><div class="body"><p class="skel">bekliyor…</p></div></section>
   </div>
   <div class="bar" id="bar">
     <span class="big" id="verdict">Bekliyor…</span>
@@ -1124,14 +1125,15 @@ function esc(s) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-var CARD = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
+var CARD = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'];
 var GREEN = [
   'Üç aletin üçü de aradığını buldu',
   'Fotoğraf çekildi',
   'İnşaatın bütün sınavı yeşil',
   'Tek satır kıpırdamadı',
   'Denemelerin hepsi reddedildi',
-  'Depoda kaçak adres yok'
+  'Depoda kaçak adres yok',
+  'Şirkette inşaattan eser yok'
 ];
 var RED = [
   'BİR ALET KÖR — altındaki hiçbir ölçüm anlam taşımaz',
@@ -1139,7 +1141,8 @@ var RED = [
   'SINAV KIRMIZI',
   'ŞİRKETTE BİR ŞEY DEĞİŞTİ',
   'İÇERİ GİREN BİR YOL VAR',
-  'KAÇAK ADRES BULUNDU'
+  'KAÇAK ADRES BULUNDU',
+  'İNŞAAT İZİ BULUNDU'
 ];
 var LEAD = [
   'Her alet, aradığı şeyi bilerek kurulmuş bir örnek üzerinde bulduğunu gösteriyor; bulamazsa komut devam etmiyor.',
@@ -1147,7 +1150,8 @@ var LEAD = [
   'İnşaat, kendi motorunda bütün sınavını veriyor — şirketin motoruna hiç dokunmadan.',
   'Aynı sayım tekrar yapıldı ve ilkinden çıkarıldı. Sıfır olmayan her fark kırmızıdır.',
   'Şirkette kalan tek hesapla (dxb_gateway) yazmaya çalışılıyor. Kabul edilen tek ifade bile kırmızıdır.',
-  'Depodaki bütün kayıtlı dosyalar okunuyor: şirketin adresini varsayılan yapan bir satır var mı?'
+  'Depodaki bütün kayıtlı dosyalar okunuyor: şirketin adresini varsayılan yapan bir satır var mı?',
+  'Şirketin 60 tablosunun tamamı, inşaatın kendi adları için taranıyor — ve hiçbir canlı şirket süreci inşaat motoruna giden bir yol taşıyor mu diye bakılıyor.'
 ];
 
 var acc = {};
