@@ -3118,3 +3118,38 @@ remote dxb-laptop-2026-08-23.dump              cb7b4a51b07e68315d2c39d0b0940bd5 
 
 The record was right: that exact file is on the Storage Box and byte-identical.
 A second daily backup of the same day exists beside it; both are real.
+
+---
+
+## Block 5 — ACCEPTED, 2026-08-25
+
+**His auditor first, then his own eye — the order he set for Block 4, met again.**
+His auditor (Solo 5.6) withdrew an earlier FAIL once he stated the criterion and
+ruled *"Block 5 passes … Proceed to Block 6."* He then opened
+`http://127.0.0.1:4599/blok5` himself, watched the five panels run, and said:
+
+> *"kabul ediyorum."*
+
+Registered: `scripts/governance/ceo-approvals.json` → `b36-block5-accepted-2026-08-25`.
+Every line in these records that said Block 5 was *"BUILT, NOT ACCEPTED"* is spent
+and is deleted rather than kept beside the truth (LAW A).
+
+**HIS ORDER GIVEN WITH THE ACCEPTANCE, and it was obeyed:** *"block 6 ya geçme yeni
+sessionda devam edecek."* **Nothing of Block 6 was begun.** Row B36 stays open —
+five blocks of eight are done; the proof command and the records remain.
+
+**The final state of this session, measured:**
+
+```
+$ git log -1 --format='%h %s'          (working tree clean)
+$ node scripts/b36/company-state-fingerprint.mjs   STATE_FINGERPRINT 453b0ef99e03a1f3
+                                                   audit_log / hook_violations 29641/1963
+$ bash scripts/construction/battery.sh   BATTERY_GREEN  107/107 files · 775 passed | 15 skipped
+                                                        host 3/3 · 16/16
+$ pnpm b36:prove-wall                    WALL_IS_ONE_WAY
+$ pnpm verify:ledger                     ledger truth OK · 74 CEO approval claims, each registered
+$ pnpm typecheck                         exit 0
+$ node scripts/b36/count-company-fallbacks.mjs   EXECUTABLE FALLBACKS: 0
+$ gitleaks git --redact -v               no leaks found
+   four resident services active · 0 failed units · dashboard 127.0.0.1:3000 200, LAN refused
+```

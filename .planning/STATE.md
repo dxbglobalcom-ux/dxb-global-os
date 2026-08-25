@@ -462,8 +462,12 @@ that reading as the next job and had not answered when the session closed.
    refusal to overwrite a non-empty archive — all four validated in both directions.
    **Gates after both fixes:** `BATTERY_GREEN` 107/107 · 775 passed | 15 skipped · host 3/3 and 16/16 ·
    `WALL_IS_ONE_WAY` · `verify:ledger` OK · fingerprint `453b0ef99e03a1f3` unchanged.
-   **WHAT BLOCK 5 STILL OWES HIM:** his own eye on `http://127.0.0.1:4599/blok5`. LAW B is untouched —
-   his auditor passing is the first half of the order he set for Block 4; his eye is the second.
+   **HE ACCEPTED IT — 2026-08-25, on the screen itself.** <!-- CEO-OK: b36-block5-accepted-2026-08-25 -->
+   *"kabul ediyorum."* Registered as `b36-block5-accepted-2026-08-25`. Both halves of the order he set
+   for Block 4 were met: his auditor passed it, then his own eye did. The sentence that stood here —
+   *"still owes him his own eye"* — is spent and is deleted rather than kept beside the truth (LAW A).
+   **HIS ORDER WITH THE ACCEPTANCE: BLOCK 6 IS NOT STARTED** — *"block 6 ya geçme yeni sessionda devam
+   edecek."* Nothing of Block 6 was begun. Row B36 stays OPEN: five blocks of eight are done.
    **THE DRY-RUN THAT PRECEDED IT, MEASURED WITH NOT A ROW MOVING:**
    The plan's residue table was written on 2026-08-23 and three of its five rows had stopped being
    true; it is replaced by the measurement (registered adaptation in `PLAN.md` §Block 5, evidence in

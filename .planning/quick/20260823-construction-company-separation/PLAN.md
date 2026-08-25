@@ -529,7 +529,7 @@ several `tests/b36` files carry it as an assertion. The committed counter separa
 
 ### Block 5 — The residue moves out (moved, never deleted)
 
-**BUILT AND MEASURED 2026-08-25 — NOT ACCEPTED (LAW B).** <!-- CEO-OK: b36-block5-residue-and-two-databases-2026-08-25 -->
+**ACCEPTED 2026-08-25 — his auditor passed it, then his own eye did.** <!-- CEO-OK: b36-block5-residue-and-two-databases-2026-08-25 -->
 `node scripts/b36/move-residue.mjs --apply` → **RESIDUE_MOVED, 2,756 rows**: `cost_ledger` 1612 ·
 `project_risks` 1 · `decision_log` 1143, each copied to `dxb_archive` on the construction engine,
 each verified by row count **and** an identical checksum on both engines, only then deleted, each
@@ -550,8 +550,10 @@ reach, write to or get past the company's database while its ordinary work still
 pursue additional residue records merely for completeness. Proceed to Block 6."* Two findings inside
 that criterion were fixed the same turn — the relay's 0755 room (now 0750, a third identity measured
 at EACCES) and `move-residue.mjs`'s four missing refusals. `EVIDENCE.md` §"his auditor, his criterion".
-**What is NOT done, and it is the only thing left:** he has not seen it by eye. That is the second
-half of the order he set for Block 4 and it holds here (LAW B).
+**ACCEPTED BY HIM — 2026-08-25** <!-- CEO-OK: b36-block5-accepted-2026-08-25 --> *"kabul ediyorum."*
+His auditor passed it first, then he ran the live screen himself. Registered as
+`b36-block5-accepted-2026-08-25`. **And with it, his order: BLOCK 6 IS NOT STARTED — it continues in a
+new session.**
 
 Order is fixed and never varies: **copy → verify → delete → audit.**
 
