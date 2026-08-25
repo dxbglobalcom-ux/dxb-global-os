@@ -1,0 +1,20 @@
+# THE BOARD'S NIGHT WATCHMAN — the CEO's readable open-work board, kept current.
+# His words, 2026-08-26: "takip etmek istiorm". The page is rewritten within a
+# second of the board, the Turkish index, his approval register or HEAD moving.
+# It reads files and writes one HTML file. No database, no credential, no network.
+[Unit]
+Description=DXB — the CEO's open work board, redrawn whenever the board moves
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/DxB Global OS
+ExecStart=/usr/bin/node "%h/DxB Global OS/scripts/board/watch.mjs"
+Restart=always
+RestartSec=5
+OOMPolicy=stop
+StandardOutput=append:%h/DxB Global OS/var/board-watch.log
+StandardError=append:%h/DxB Global OS/var/board-watch.log
+
+[Install]
+WantedBy=default.target

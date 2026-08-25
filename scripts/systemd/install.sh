@@ -45,14 +45,21 @@ cp "${SRC_DIR}/dxb-company-read.service" "${UNIT_DIR}/"
 cp "${SRC_DIR}/dxb-screenshot-cleanup.service" "${UNIT_DIR}/"
 cp "${SRC_DIR}/dxb-screenshot-cleanup.timer" "${UNIT_DIR}/"
 
+# 2026-08-26, on his order "takip etmek istiorm" — the readable open-work board.
+# It redraws var/board/tahta.html within a second of the board, the Turkish
+# index, his approval register or HEAD moving, so the page he keeps open is a
+# window rather than a photograph. Reads files, writes one HTML file, nothing else.
+cp "${SRC_DIR}/dxb-board.service" "${UNIT_DIR}/"
+
 systemctl --user daemon-reload
-systemctl --user enable dxb-scheduler.service dxb-jarvis.service dxb-company-read.service
+systemctl --user enable dxb-scheduler.service dxb-jarvis.service dxb-company-read.service dxb-board.service
 # A oneshot unit is enabled by its TIMER, never by itself.
 systemctl --user reset-failed dxb-screenshot-cleanup.service 2>/dev/null || true
 systemctl --user enable --now dxb-screenshot-cleanup.timer
 systemctl --user restart dxb-scheduler.service
 systemctl --user restart dxb-jarvis.service
 systemctl --user restart dxb-company-read.service
+systemctl --user restart dxb-board.service
 
 # Survive logout/idle on the CEO terminal (needs one-time sudo if not yet on;
 # failure is non-fatal — units still run while logged in).
@@ -62,4 +69,5 @@ echo "--- status ---"
 systemctl --user --no-pager --lines 3 status dxb-scheduler.service || true
 systemctl --user --no-pager --lines 3 status dxb-jarvis.service || true
 systemctl --user --no-pager --lines 3 status dxb-company-read.service || true
+systemctl --user --no-pager --lines 3 status dxb-board.service || true
 systemctl --user --no-pager list-timers dxb-screenshot-cleanup.timer || true
