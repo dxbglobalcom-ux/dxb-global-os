@@ -79,6 +79,38 @@ construction book were recomputed from their own transcripts: **1,567,252,545 �
 tokens, 1,544,066,953 re-reads preserved, one placeholder row left at zero because its transcript is
 gone. `tests/b39/hook-token-truth.test.ts` was red before the fix.
 
+**2026-08-25 — THE HOLDING'S READING DOOR CAN NO LONGER BE TAKEN AWAY BY ACCIDENT. FIXED AT SOURCE ON HIS ORDER, THE SAME TURN IT WAS FOUND.** <!-- HISTORY -->
+A session ran `scripts/b36/company-read-gateway.mjs` by hand — the service that is the ONLY way
+anything on this machine may read the company — and its start-up removed whatever sat on the socket
+path (the door). That door belonged to the RESIDENT service, which kept running, healthy, with
+nothing in front of it: the holding was unreadable (`ledger-truth` printed *"the company's read
+gateway is not answering"*) until the service was restarted. **Nothing was written to the company
+and no credential moved** — the gateway holds SELECT and nothing else.
+**Three faults, all three closed and each held by a test that was RED before the fix**
+(`tests/b36/gateway-door-is-not-stolen.test.ts`, 6 cases: **4 failed / 2 passed on the old code,
+6/6 green on the new**): (1) a second copy removed a socket that had a LIVE listener behind it —
+`scripts/b36/socket-guard.mjs` now decides *absent · stale · live* before any credential is read,
+and a live door is never taken; (2) an argument the file did not understand still started a
+service — an unknown argument is now a refusal that names the client instead; (3) on the way out a
+copy removed a socket it never opened — the shutdown path now matches the socket's inode against
+the one this process created. **And the other half of the defect is closed too:** the service used
+to run happily with no door in front of it; it now checks its own socket every five seconds and
+exits if it is gone, and `Restart=always` in its unit brings it back.
+**AND THE ROOT CAUSE UNDER ALL OF IT WAS THAT THE ONLY RUNNABLE FILE IN THAT FOLDER WAS THE
+SERVER.** `scripts/b36/company-read-client.mjs` is now a command as well as a library —
+`--ping · --list · --ask <id>` — so nobody ever needs to run the server to ask a question. It
+holds no credential and opens no door.
+**Measured after, on the live machine:** the exact accident re-fired — `--list-everything` →
+`exit 2`, a plain second copy → `exit 3`, **the socket untouched in both cases**; the client
+answers `company-read-gateway`, lists **14** named questions and returns a real value; the gate
+reads the company again (`ledger truth OK`); `tsc --build` exit 0; `SEPARATION_HOLDS` with the
+company fingerprint `bad3f9ec860bc048` unchanged; `BATTERY_GREEN` — **112 files / 820 passed /
+15 skipped**, host half 3 files / 16 tests.
+**⚠ ONE THING IS NOT SETTLED AND IS NOT CLAIMED AS FIXED:** one battery run out of five went red
+with a single failure whose name scrolled past unrecorded, and **four consecutive runs since have
+been green**, so it was not reproduced and not identified. It is written here rather than dismissed,
+because his own ruling of 2026-08-24 is that a failure one run in five is a defect and not noise.
+
 **STILL WAITING ON HIM, one line each:** one hand-minted browser session, without which every
 eye-check of a logged-in screen stays ⚠ UNVERIFIED (row B03-bis) · the company's live hand-count
 reaches no screen, and by his own ruling that V1 is dead it belongs to V2, not to the old dashboard.

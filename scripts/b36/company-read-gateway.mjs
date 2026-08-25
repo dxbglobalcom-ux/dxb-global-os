@@ -33,6 +33,7 @@ import { readFileSync, existsSync, mkdirSync, unlinkSync, chmodSync, realpathSyn
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
+import { probeSocket, socketIdentity, ownsSocket } from "./socket-guard.mjs";
 
 const REPO = fileURLToPath(new URL("../..", import.meta.url));
 // pnpm links `pg` into packages/shared/node_modules as a symlink into the store;
@@ -83,6 +84,62 @@ const CATALOGUE = (() => {
   out.set("today", { sql: "SELECT current_date", what: "the holding engine's own date" });
   return out;
 })();
+
+// -------------------------------------------------------------- the front door
+//
+// RUNNING THIS FILE STARTS A SERVICE. It is not a way to look something up, and
+// on 2026-08-25 it was used as one: `--list` was passed, this file ignored it,
+// started a second gateway, and took the door away from the resident service.
+// An argument it does not understand is now a refusal, and the refusal names the
+// file that DOES answer questions.
+const ARGV = process.argv.slice(2);
+
+function usage() {
+  console.error("dxb company read gateway — the holding's only readable door");
+  console.error("");
+  console.error("  node scripts/b36/company-read-gateway.mjs           start the service");
+  console.error("  node scripts/b36/company-read-gateway.mjs --list    print the frozen catalogue and exit");
+  console.error("");
+  console.error("To ASK the running service a question, use the client — it never touches the door:");
+  console.error("  node scripts/b36/company-read-client.mjs --list");
+  console.error("  node scripts/b36/company-read-client.mjs --ask <question-id>");
+}
+
+if (ARGV.includes("-h") || ARGV.includes("--help")) { usage(); process.exit(0); }
+
+if (ARGV.includes("--list")) {
+  // Reads the catalogue file and nothing else: no credential, no connection,
+  // and the socket is not looked at, let alone removed.
+  for (const [id, v] of [...CATALOGUE.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+    console.log(`${id}\t${v.what}`);
+  }
+  process.exit(0);
+}
+
+if (ARGV.length > 0) {
+  console.error(`[gateway] I do not understand: ${ARGV.join(" ")}`);
+  console.error("[gateway] starting this file starts the service; it is not a lookup command.");
+  usage();
+  process.exit(2);
+}
+
+// ------------------------------------------------------ the door is not stolen
+//
+// Before a credential is read and before a connection is opened: is somebody
+// already listening on this path? If they are, the door is theirs. The copy that
+// arrives second refuses to start rather than taking it — which is precisely
+// what was missing when a hand-started gateway silenced the resident service.
+const STANDING = await probeSocket(SOCKET);
+if (STANDING === "live") {
+  console.error(`[gateway] a gateway is already listening on ${SOCKET} — this one refuses to take its door.`);
+  console.error("[gateway] to see who: systemctl --user status dxb-company-read");
+  console.error("[gateway] to ask it a question: node scripts/b36/company-read-client.mjs --list");
+  process.exit(3);
+}
+if (STANDING === "stale") {
+  console.error(`[gateway] a dead socket was left at ${SOCKET}; nobody answers on it, so it is removed.`);
+  unlinkSync(SOCKET);
+}
 
 // ------------------------------------------------------------- the connection
 const client = new Client({
@@ -150,7 +207,13 @@ const server = createServer((sock) => {
 await client.connect();
 const who = await client.query("SELECT current_user, current_setting('transaction_read_only') AS ro");
 mkdirSync(dirname(SOCKET), { recursive: true });
-if (existsSync(SOCKET)) unlinkSync(SOCKET);
+// Nothing is removed here. The only path that may remove a socket is the guard
+// above, and only after it has proved nobody is listening on it.
+
+/** The door this process created — device and inode, so a socket somebody else
+ *  put at the same NAME is not mistaken for ours. */
+let OURS = null;
+
 server.listen(SOCKET, () => {
   // 0666 on the socket, and the DIRECTORY is the gate. The socket lives inside
   // /run/user/1000/dxb, which is the owner's own runtime directory (mode 700),
@@ -170,6 +233,22 @@ server.listen(SOCKET, () => {
   // THE GATE at both ends: measured, a third identity gets EACCES while uid 997
   // is answered.
   chmodSync(SOCKET, 0o666);
+  OURS = socketIdentity(SOCKET);
+
+  // AND THE OTHER HALF OF THE 2026-08-25 DEFECT: the resident service kept
+  // running perfectly with no door in front of it, so the holding was
+  // unreadable and nothing said so. If our socket is removed or replaced, we
+  // say it in the log and exit; systemd's Restart=always brings the service
+  // back in five seconds and it binds a door again.
+  const watchdog = setInterval(() => {
+    if (ownsSocket(SOCKET, OURS)) return;
+    console.error(`[gateway] the socket at ${SOCKET} is no longer the one this service opened — exiting so it can be re-opened.`);
+    clearInterval(watchdog);
+    try { server.close(); } catch { /* going down */ }
+    process.exit(1);
+  }, 5000);
+  watchdog.unref();
+
   console.error(`[gateway] listening on ${SOCKET}`);
   console.error(`[gateway] connected as ${who.rows[0].current_user}, transaction_read_only=${who.rows[0].ro}`);
   console.error(`[gateway] frozen catalogue: ${CATALOGUE.size} named questions`);
@@ -177,7 +256,9 @@ server.listen(SOCKET, () => {
 
 for (const sig of ["SIGINT", "SIGTERM"]) {
   process.on(sig, async () => {
-    try { server.close(); if (existsSync(SOCKET)) unlinkSync(SOCKET); } catch { /* shutting down */ }
+    // Only ever remove the door we opened. A copy that refused to start owns
+    // nothing, and must not tidy away a socket that belongs to the service.
+    try { server.close(); if (ownsSocket(SOCKET, OURS)) unlinkSync(SOCKET); } catch { /* shutting down */ }
     try { await client.end(); } catch { /* shutting down */ }
     process.exit(0);
   });
