@@ -448,16 +448,21 @@ that reading as the next job and had not answered when the session closed.
    construction-shaped actor and 1,789 are the `memory_commit` trail of the diary sync.
    **THE COPY → VERIFY → DELETE → AUDIT ORDER DOES NOT START UNTIL HE ANSWERS.**
    **AND THE BATTERY IS RED FOR A REASON THAT IS NOT THIS WORK.** The machine rebooted at 09:29 and
-   the read gateway came up healthy for the first time during a battery run — which exposed a bind
-   that could never have worked: `scripts/construction/sandbox.sh` tested for the gateway socket as
-   root and then handed it to a `bwrap` already dropped to uid 997, which cannot traverse
-   `/run/user/1000` (0700, the author's). The whole sandboxed suite died before test one. The source
-   is repaired (the socket is relayed in by its own owner, proved end to end from uid 997 —
-   `agents_total = 205` through the relay, `SELECT 1` still refused), **but the wall that runs is
-   root-owned and this session has no passwordless right to install it**: one command is his,
-   `bash scripts/construction/install-wall.sh`. Everything the sandbox is not needed for is green:
-   `typecheck` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · fallbacks 0 · gitleaks clean ·
-   `STATE_FINGERPRINT de359137ee1d7c79` unchanged across the whole session.
+   the wall stopped being able to open its own window: `scripts/construction/sandbox.sh` tests for the
+   read gateway's socket as **root** and then hands it to a `bwrap` already dropped to uid 997, which
+   cannot traverse `/run/user/1000` (0700, the author's — `sudo -u dxbbuild ls` refuses, `getfacl`
+   shows no ACL). The whole sandboxed suite died before test one. **It worked yesterday and the
+   repository never made it work:** measured, the battery's door tests FAIL when the gateway is down,
+   so no green run ever happened with the door shut — yet nothing in this repository sets that
+   permission and `/run/user/1000` is a tmpfs rebuilt at every boot. **The wall depended on something
+   done by hand that no reboot preserves.** The source is repaired — the socket is relayed in by its
+   own owner, proved end to end from uid 997 (`agents_total = 205` through the relay, `SELECT 1` still
+   refused) — **but the wall that RUNS is root-owned and this session has no passwordless right to
+   install it**: one command is his, `bash scripts/construction/install-wall.sh`. Measured with the
+   defect isolated: **105 of 107 files and 772 of 790 tests pass**, and all four failures are this one
+   defect, including the source-vs-installed drift gate correctly refusing. Everything the sandbox is
+   not needed for is green: `typecheck` 0 · `verify:ledger` OK · `SCHEMA_PARITY` · fallbacks 0 ·
+   gitleaks clean.
    **AND HIS AUDITOR'S FIVE INSTRUCTIONS, CARRIED OUT THE SAME NIGHT — and the first measurement was
    worse than the question.** Asked whether the LIVE dashboard was started through
    `scripts/dashboard.sh`, the answer was **no**: the `next-server` serving :3000 had been started by
