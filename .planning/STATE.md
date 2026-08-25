@@ -19,18 +19,44 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
-**2026-08-25, THE STANDING POSITION — NOTHING IS WAITING ON THE AUTHOR. TWO THINGS WAIT ON HIM.** <!-- OPEN: B39 -->
-He approved a two-part plan, ruled that the WORK happens in the next session — *"yapımı ise diğer
-sessionda olacak zira session çok şişti"* — and left the machine to it: *"Ben dışarı çıkıyorum sen
-işe devam et."* **Both parts are built, tested and committed** (`c20b9f8c`, `6ec09952`); the record
-of each is item 2 under *What happens next*. **Built is not accepted (LAW B) — his eye has not been
-on either.** What now waits on HIM, and only on him: <!-- OPEN: B39 -->
-1. **The rented Hetzner box** (board row **B39**): running 47 days, 48-59 % CPU, continuous network
-   traffic, and unreachable from this machine on every port. It bills, it works, and nobody can say
-   at what. Repair it, re-provision it, or release it — his call, not the author's.
-2. **Whether the company's migration ledger gets repaired** — 33 versions behind its own schema, so
-   the canonical `scripts/bootstrap-db.sh` cannot run against the company at all.
-The order of work otherwise stays what he set: **this board, oldest first**, unless he names a focus.
+**2026-08-25, HANDED OVER ON HIS ORDER — THE NEXT SESSION HAS ONE JOB AND IT IS APPROVED.** <!-- OPEN: B39 -->
+*"A şıkkını onaylıyorum, önce içeride ne var gör. ama bunu senin kardeşin opus 5'e yeni sessionda
+yaptıralım zira çok şişti session 600k oldu … yani herşeyi lütfen ona devret o devam etsin."*
+
+**THE JOB: OPEN THE RENTED BOX AND READ WHAT IS RUNNING ON IT. Nothing else about that box.**
+Approval registered: `ceo-vps-look-inside-first-2026-08-25`. He was shown three options with their
+costs and risks — repair · rebuild · shut down — and chose **repair, in this order: look first,
+decide after.** What is measured about it (2026-08-25, and it need not be re-measured, only
+confirmed): Hetzner's own record says `dxb-vps-1` (cx33 · 4 vCPU · 8 GB · nbg1 · `46.225.89.249`)
+has run **47 days** at **48-59 % CPU with continuous network traffic** and carries **no firewall
+rule of its own**; from this machine **nothing answers** — no ICMP, ports 22 · 80 · 443 all time
+out, `https://dxbglobal.online/health` included. It bills **10.10 EUR/month**. An SSH key for it
+exists at `~/.ssh/dxb_vps_ed25519` and the stack it was built with is `vps/compose.yaml` (251 lines).
+
+⛔ **WHAT THE APPROVAL DOES NOT COVER, and this line exists so it is not assumed away:** resetting
+that machine's root password. It was named as an **identity step** when the options were put to him,
+and the option text said plainly it would not be done without his word. **If the console cannot be
+entered without it, ASK HIM — do not reset.** Nothing is rebuilt, reinstalled, shut down or deleted
+under this approval either: he chose look-first, and the decision is a separate act he has not made.
+
+**TWO MORE THINGS HE WAS TOLD ABOUT AND THAT TRAVEL WITH THIS HANDOVER:**
+1. **⚠ One thing could not be machine-checked and is his to unblock (board row B03-bis).** The
+   dispatch-brake alert's WORDS are proven Turkish by test (`tests/b39/alert-language.test.ts`);
+   how it RENDERS on his authenticated screen is not, because automated login is forbidden — a form
+   login would enrol a second factor on his own account. He was asked for one hand-minted browser
+   session; until he gives it, every eye-check of an authenticated surface stays `⚠ UNVERIFIED`.
+2. **The lane count is invisible to him, on purpose, and it is written down rather than done.** The
+   company now decides its own hand count and says so in `var/scheduler.log`
+   (*"the company is working with 1 hand (first tick)"*), but that never reaches his screen. It was
+   NOT added to the current dashboard because **V1 is dead by his own ruling of 2026-08-01** and
+   dead screens get no new features. It belongs to V2's first law — motion IS state — and is
+   recorded as a boundary for the session that draws V2, not forgotten.
+
+**Everything else this session touched is finished, tested and committed** (`c20b9f8c`, `6ec09952`,
+`9cf1d4de`, `dd123fde`) and **built is not accepted (LAW B)** — his eye has been on the reports, not
+on the work. The company's migration ledger, which was 32 versions behind, is repaired: the
+canonical chain now runs clean against the company. The order of work otherwise stays what he set:
+**this board, oldest first**, unless he names a focus.
 
 **2026-08-23 — THE CONSTRUCTION SITE WAS CUT OUT OF THE COMPANY. ✓ CLOSED 2026-08-25 (row B36).**
 He opened the day with it: the very important gap on the board, and the complaint born from it —
