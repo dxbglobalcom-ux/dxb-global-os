@@ -28,7 +28,8 @@
     "construction": "bash scripts/construction/run.sh",
     "construction:battery": "bash scripts/construction/battery.sh",
     "b36:eye-check": "node scripts/b36/eye-check.mjs",
-    "verify:separation": "node scripts/governance/company-untouched.mjs"
+    "verify:separation": "node scripts/governance/company-untouched.mjs",
+    "bench:drain": "node scripts/bench/drain-throughput.mjs"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",

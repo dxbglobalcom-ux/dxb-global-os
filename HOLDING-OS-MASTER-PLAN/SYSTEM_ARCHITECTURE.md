@@ -13,7 +13,16 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 - R2. Her çalışan varlık (şirket/departman/müdür/çalışan/ajan) DB'de birinci-sınıf kayıttır; UI saf projeksiyondur (şema-önce ilkesi, roadmap kararıyla uyumlu).
 - R3. CEO'nun her ayar değişikliği tek yazım seamı üzerinden geçer (SECURITY DEFINER fonksiyon deseni — migration 0015 emsali) ve audit'e düşer.
 - R4. Canlılık: UI güncellemeleri Supabase Realtime **Broadcast** ile (postgres_changes YASAK — STACK.md sert kuralı).
-- R5. 8GB VPS RAM bütçesi aşılmaz: yeni yetenekler öncelikle **kütüphane + tablo + view** olarak eklenir, yeni resident servis olarak DEĞİL.
+- R5. Yeni yetenekler öncelikle **kütüphane + tablo + view** olarak eklenir, yeni resident servis
+  olarak DEĞİL. **KAYITLI UYARLAMA — B39, 2026-08-25: bu maddenin GEREKÇESİ ölçümle değişti,
+  DİSİPLİNİ aynı kaldı.** Madde 2026-07 boyunca *"8GB VPS RAM bütçesi aşılmaz"* diye yazıyordu ve
+  bu cümle, hiç sorulmamış bir soruya — "aynı anda kaç iş yürüsün?" — cevap vermiş gibi
+  kullanıldı. Ölçüldü (`scripts/bench/drain-throughput.mjs`, inşaat motoru, 24 görev, gerçek
+  boşaltma): **8 hat aynı kuyruğu tek hattan 7,80 kat hızlı bitirdi · 0 çifte üstlenme · 0 kilit
+  beklemesi · sekiz hattın toplam bellek maliyeti 4,5 MB.** RAM, eşzamanlılığın önündeki engel
+  değildi. **Mevcut bir servisin İÇİNDE eşzamanlılığı yükseltmek yeni servis açmak değildir** —
+  hat sayısı `orchestration.dispatch_lanes` ayarından okunur ve mevcut zamanlayıcı işinin içinde
+  çalışır. Varsayılan 1'dir. Ev artık iş istasyonudur (aşağı, ALTYAPI).
 - R6. Her ajan spawn'ı Opus 5 Hook policy katmanından geçer (pre/post-task validation) — madde 7.
 - R7. Güvenlik sertleştirme ertelenmiş sicilde; para-ÇIKIŞI onay kapısı + outbox tek-çıkış deseni DOKUNULMAZ.
 
@@ -47,8 +56,23 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 │                                                                      │
 │ İNŞAAT MOTORU  supabase_db_DxB_Build · port 54422 · kendi kümesi     │
 │  aynı db/migrations · verisi bu depodan üretilir · holdingin 0 satırı│
-└─ ALTYAPI: Hetzner 8GB VPS, Docker Compose + Caddy; X230 = terminal ──┘
+└─ ALTYAPI: iş istasyonu (ev) · Hetzner cx33 (kiralık, aşağıdaki nota bak) ──┘
 ```
+
+**ALTYAPI — CEO hükmü 2026-08-25 ve o günün ölçümleri.** *"İş istasyonu evdir."* Şirketin motoru,
+Hamza, zamanlayıcı ve panel bu makinede çalışır: **30 GB RAM · 24 iş parçacığı (Ryzen 9 7900X) ·
+1,8 TB NVMe**, ölçüm anında yük 0,32-0,55 (`free -h`, `lscpu`, `uptime`). Eski "8 GB kutu"
+varsayımı burada geçerli değildir ve R5'in gerekçesi yukarıda düzeltilmiştir.
+
+**KİRALIK KUTU — ölçüldü 2026-08-25, ve durumu bir AÇIK SORUDUR (tahta satırı B39).** Hetzner'in
+kendi kaydı: `dxb-vps-1`, ID 149310629, **cx33 · 4 vCPU · 8 GB · 80 GB**, nbg1, Ubuntu 24.04,
+2026-07-09'dan beri ayakta (47 gün), durum **running**, IPv4 `46.225.89.249`, Hetzner tarafında
+**hiç güvenlik duvarı kuralı yok** (`hcloud server describe`, `hcloud firewall list`). Hetzner'in
+metrik grafikleri son altı saatte **kesintisiz %48-59 işlemci kullanımı ve sürekli ağ trafiği**
+gösteriyor — yani **kutu iş yapıyor.** Buna karşılık bu makineden **hiçbir kapısına ulaşılamıyor**:
+ICMP yanıtsız, 22 · 80 · 443 üçü de zaman aşımına düşüyor, `https://dxbglobal.online/health`
+15 saniyede cevapsız (alan adı doğru IP'ye çözülüyor — genel çözümleyici de aynı adresi veriyor).
+**Ne çalıştırdığı ÖLÇÜLMEDİĞİ için buraya yazılmamıştır**, ve bir rol atanmadan önce ölçülecektir.
 
 **KAYITLI UYARLAMA — B36, 2026-08-23…25: HER ŞEY KENDİ VERİ TABANINA YAZAR.** CEO'nun kendi
 cümlesi (2026-08-25, `b36-block5-residue-and-two-databases-2026-08-25`): *"Şirkette iş yapıldı mı
@@ -77,6 +101,16 @@ hâliyle silinip yerine ölçülen hâli yazıldı (KANUN A).
   yazmayı dener ve depoyu süpürür. Kabul edildi 2026-08-25 (`b36-block6-accepted-2026-08-25`).
 
 Karar ilkesi (⛔ mimari-kritik): **kontrol düzlemi ayrı mikroservis DEĞİLDİR.** Gerekçe: (a) RAM bütçesi (R5), (b) tek yazım seamı zaten DB fonksiyon katmanında, (c) Opus devrinde işletilecek parça sayısını düşük tutmak. Ayrı servisleştirme ancak ölçüm kanıtıyla (latency/lock) ve CEO onayıyla açılır.
+
+**Bu hüküm DURUYOR — ama açılma şartı ilk kez karşılandı ve neye götürdüğü buraya yazılır (B39,
+2026-08-25).** Şartın istediği ölçüm — gecikme ve kilit — alındı: `scripts/bench/drain-throughput.mjs`,
+1 · 2 · 4 · 8 hat, her seviyede gerçek boşaltma. Sonuç: **7,80 kat hızlanma, medyan gecikme 1520 →
+1560 ms (yani hattın kendi ek yükü 20 ms'den 60 ms'ye çıktı), kilit beklemesi her seviyede 0, çifte
+üstlenme her seviyede 0** — dedektörün kendisi bilerek yerleştirilmiş bir çakışmayla önce kırmızıda
+gösterildi (`pnpm bench:drain --prove-red`). **Bu ölçüm ayrı bir servis AÇMADI ve açılmasını da
+istemiyor:** eşzamanlılık, zaten var olan zamanlayıcı işinin içinde bir ayardan okunuyor
+(`orchestration.dispatch_lanes`, varsayılan 1). Yani hükmün lafzı da ruhu da korundu; değişen tek
+şey, artık cevabın tahmin değil ölçüm olması.
 
 ## 4. Veri modeli
 

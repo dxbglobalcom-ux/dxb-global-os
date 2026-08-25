@@ -31,6 +31,7 @@ import {
   type SdkToolOptions,
 } from "@dxb/gateway";
 import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
+import { recordSubscriptionSpend } from "./subscription-cap.js";
 
 // R2.3: the R2.2 pieces moved to their dependency-clean homes so the workflow
 // agent step (kernel) shares ONE implementation — re-exported here verbatim
@@ -317,12 +318,27 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
           throw new Error(`worker-shim: agent-sdk result error (${msg.subtype})`);
         }
         const usage = (msg as { usage?: { input_tokens?: number; output_tokens?: number } }).usage;
+        const tokensIn = usage?.input_tokens ?? 0;
+        const tokensOut = usage?.output_tokens ?? 0;
         obs?.addUsage({
-          tokensIn: usage?.input_tokens ?? 0,
-          tokensOut: usage?.output_tokens ?? 0,
+          tokensIn,
+          tokensOut,
           // costEur stays 0 on the subscription path: no marginal cost, and the
           // single-source cost rule (litellm.ts LOCKED header) forbids a second
           // cost writer. API-mode cost lands with the Phase-7 LiteLLM wiring.
+        });
+        // B39: the same figures, written where a BRAKE can read them. agent_runs
+        // records what a run consumed; only cost_ledger is read by the money
+        // brakes, and until 2026-08-25 this path wrote to neither of them — the
+        // company had done 1,032,526 tokens of work with an empty cost book.
+        // Still no EUR here, so the single-source rule above is untouched.
+        await recordSubscriptionSpend({
+          taskId: task.id,
+          agentId: task.agent_id ?? null,
+          department: task.department,
+          model: rule.model,
+          tokensIn,
+          tokensOut,
         });
         raw = msg.structured_output ?? msg.result;
         break;
@@ -459,27 +475,69 @@ export function makeSteppedExecutor(args: SteppedExecutorArgs): Executor {
 // the hook gates run, the claim assigns the least-loaded eligible employee:
 // task department + employment_status='active' + an MCP profile (the
 // std.permission_bounds pre-gate demands one), workload = open running runs.
-// The spec's `employee.max_concurrent_runs` cap is not seeded in settings —
-// least-loaded ordering carries the workload rule until HR seeds it
-// (registered adaptation on roadmap row R2.1). No eligible employee is NOT
-// an error here: the task proceeds agent-less and the pre-gate rejects it
-// loudly (violation + ladder + blocked report = the CEO-visible signal that
-// a department has no activated workforce).
-async function assignEmployee(task: ClaimedTask, workerId: string): Promise<void> {
-  if (task.agent_id) return; // dispatch or a prior round already staffed it
+//
+// B39 (2026-08-25) — THE CEILING IS FINALLY IN FORCE. The spec has demanded
+// `employee.max_concurrent_runs` since §6 was written, and it was never seeded:
+// least-loaded ordering only PREFERRED an idle employee, it never refused a
+// busy one. With one dispatch line that difference is invisible, because one
+// line runs one task. With two lines it is the CEO's own sentence being broken —
+// "HERKES KENDİ İŞİNİ YAPMALI" — two jobs landing on one person while the rest
+// of the department sits idle. The setting is seeded by migration
+// 20260825001000_b39_dispatch_brakes and closes A2.
+//
+// TWO KINDS OF "NOBODY", and they must not be confused:
+//   · nobody EXISTS — the department has no activated workforce. Unchanged
+//     behaviour: the task proceeds agent-less and the pre-gate rejects it loudly
+//     (violation + ladder + blocked report = the CEO-visible signal).
+//   · everybody is BUSY — a healthy department at full stretch. That is not a
+//     defect and must never be reported as one, so the task goes back on the
+//     queue untouched and the next tick places it. Ten seconds later somebody
+//     is free.
+const MAX_CONCURRENT_KEY = "employee.max_concurrent_runs";
+
+/** Signals whether the claim survives: false = the task was returned to the queue. */
+async function assignEmployee(task: ClaimedTask, workerId: string): Promise<boolean> {
+  if (task.agent_id) return true; // dispatch or a prior round already staffed it
   const db = getDb();
-  const pick = await sql<{ id: string; slug: string; open_runs: number }>`
-    SELECT a.id, a.slug,
-           (SELECT count(*)::int FROM agent_runs r
-             WHERE r.employee_id = a.id AND r.status = 'running') AS open_runs
-    FROM agents a
-    WHERE a.department = ${task.department}
-      AND a.employment_status = 'active'
-      AND a.mcp_profile IS NOT NULL
-    ORDER BY open_runs, a.slug
+  const pick = await sql<{
+    id: string;
+    slug: string;
+    open_runs: number;
+    cap: number;
+    eligible: number;
+  }>`
+    WITH ceiling AS (
+      SELECT GREATEST(fn_setting_numeric(${MAX_CONCURRENT_KEY}, 1), 1)::int AS cap
+    ),
+    staff AS (
+      SELECT a.id, a.slug,
+             (SELECT count(*)::int FROM agent_runs r
+               WHERE r.employee_id = a.id AND r.status = 'running') AS open_runs
+      FROM agents a
+      WHERE a.department = ${task.department}
+        AND a.employment_status = 'active'
+        AND a.mcp_profile IS NOT NULL
+    )
+    SELECT s.id, s.slug, s.open_runs, c.cap,
+           (SELECT count(*)::int FROM staff) AS eligible
+    FROM staff s CROSS JOIN ceiling c
+    WHERE s.open_runs < c.cap
+    ORDER BY s.open_runs, s.slug
     LIMIT 1
   `.execute(db);
   const chosen = pick.rows[0];
+
+  // The row above returns nothing in BOTH cases, so the two are told apart by a
+  // second, cheap question: does the department have anybody at all?
+  const staffed = chosen
+    ? true
+    : ((
+        await sql<{ n: number }>`
+          SELECT count(*)::int AS n FROM agents
+          WHERE department = ${task.department}
+            AND employment_status = 'active' AND mcp_profile IS NOT NULL
+        `.execute(db)
+      ).rows[0]?.n ?? 0) > 0;
 
   await logDecision(
     {
@@ -487,23 +545,46 @@ async function assignEmployee(task: ClaimedTask, workerId: string): Promise<void
       decidedBy: workerId,
       decision: "employee-selection",
       rationale: chosen
-        ? `least-loaded active employee in '${task.department}': ${chosen.slug} (open runs ${chosen.open_runs})`
-        : `no active employee with an MCP profile in '${task.department}' — task proceeds agent-less, pre-gate will decide`,
-      dataUsed: ["agents", "agent_runs"],
-      alternatives: { rule: "AGENT_ORCHESTRATION §6 — department + active + least open runs" },
+        ? `least-loaded active employee in '${task.department}': ${chosen.slug} (open runs ${chosen.open_runs} of ${chosen.cap})`
+        : staffed
+          ? `every active employee in '${task.department}' is at the concurrency ceiling — task returned to the queue, next tick places it`
+          : `no active employee with an MCP profile in '${task.department}' — task proceeds agent-less, pre-gate will decide`,
+      dataUsed: ["agents", "agent_runs", "settings_values"],
+      alternatives: {
+        rule: `AGENT_ORCHESTRATION §6 — department + active + least open runs, below ${MAX_CONCURRENT_KEY}`,
+      },
       confidence: null,
       risk: chosen ? "low" : "medium",
     },
     { taskId: task.id },
   );
-  if (!chosen) return;
 
+  if (chosen) {
+    await db
+      .updateTable("tasks")
+      .set({ agent_id: chosen.id, updated_at: sql`now()` })
+      .where("id", "=", task.id)
+      .execute();
+    task.agent_id = chosen.id; // the hook ctx downstream reads the claimed row
+    return true;
+  }
+
+  if (!staffed) return true; // unchanged path: agent-less, the pre-gate speaks
+
+  // Everybody busy — hand the task back exactly as it was found. The guarded
+  // transition means a racing line that already moved this row cannot be undone
+  // by this one, and the event trail records why it came back.
+  await transition(task.id, "running", "queued", workerId, {
+    reason: "every eligible employee is at the concurrency ceiling",
+    setting: MAX_CONCURRENT_KEY,
+  });
   await db
     .updateTable("tasks")
-    .set({ agent_id: chosen.id, updated_at: sql`now()` })
+    .set({ claimed_by: null, updated_at: sql`now()` })
     .where("id", "=", task.id)
+    .where("status", "=", "queued")
     .execute();
-  task.agent_id = chosen.id; // the hook ctx downstream reads the claimed row
+  return false;
 }
 
 // Guarded transition: UPDATE succeeds only from the expected status (race-safe),
@@ -571,7 +652,10 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
   await transition(task.id, "claimed", "running", workerId);
 
   // R2.1 — staff the task BEFORE the gates (spec §3: employee seç → preTask).
-  await assignEmployee(task, workerId);
+  // B39: a department at full stretch hands the task back rather than stacking
+  // a second job on somebody already working. Reported as NOT claimed, because
+  // that is what happened — no run was born and nothing was consumed.
+  if (!(await assignEmployee(task, workerId))) return { claimed: false };
 
   // ── E10.2 hook binding (FABLE_5_HOOK §3) ──────────────────────────────────
   // Flag ON: preTask BEFORE the run is born (§6: a block rejection = the run

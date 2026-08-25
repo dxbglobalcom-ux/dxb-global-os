@@ -1,0 +1,393 @@
+// B39 — THE TWO BRAKES THE DISPATCH LINE NEVER HAD.
+//
+// THE QUESTION THE CEO ASKED, 2026-08-25: "NEDEN 1 İŞÇİ TÜM ŞİRKETİN 214 AJANIN
+// GÖREVİNİ ÜSTLENMİŞ ARKADAŞIM. HERKES KENDİ İŞİNİ YAPMALI DEĞİL Mİ?" — and
+// then whether the single line was a leftover of the old 8 GB rented box.
+//
+// The answer to the question as asked is no: `claimed_by` is the company's own
+// dispatcher and `agent_id` is 199 different employees. But the measurement it
+// forced found two things that make MULTIPLYING that line unsafe, and this file
+// is what makes both of them impossible to un-fix silently.
+//
+// MEASURED IN THE COMPANY'S OWN DATABASE, 2026-08-25 (SELECT only):
+//   agent_runs   378 runs · 1,032,526 tokens · SUM(cost_eur) = 0
+//   cost_ledger  0 rows
+//   settings_registry  112 keys, `employee.max_concurrent_runs` not among them
+//
+// H1 — the main working path spends where no brake can see. Anthropic models
+//      bypass the LiteLLM proxy (CEO order 2026-07-19, C2), and both money
+//      brakes read cost_ledger + that proxy's spend tables.
+// H2 — no per-employee ceiling. `assignEmployee` only PREFERRED an idle
+//      employee, so two lines could stack two jobs on one person.
+//
+// These cases are about the BRAKES, not about throughput: a second line is a
+// decision for the measurement in scripts/bench/drain-throughput.mjs to inform.
+// Suite deletes only what it creates (E9.3 rule) — marker department `b39t`.
+import { afterAll, describe, expect, it } from "vitest";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { sql } from "kysely";
+import { closeDb, getDb } from "@dxb/shared";
+import { drainTasks } from "../../packages/orchestrator/src/worker-loop.js";
+import {
+  checkSubscriptionWindow,
+  recordSubscriptionSpend,
+  SUBSCRIPTION_CAP_KEY,
+} from "../../packages/orchestrator/src/subscription-cap.js";
+import type { Executor } from "../../packages/orchestrator/src/worker-shim.js";
+import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
+
+const db = () => getDb();
+const REPO_ROOT = join(import.meta.dirname, "..", "..");
+const M = "b39t";
+const WORKER = `${M}-resident`;
+const CAP_KEY = "employee.max_concurrent_runs";
+
+pinHookOff(db);
+
+let seq = 0;
+
+async function makeTask(department: string, status = "queued"): Promise<string> {
+  seq += 1;
+  const row = await db()
+    .insertInto("tasks")
+    .values({
+      department,
+      objective: `${M} brake probe ${seq}`,
+      output_contract: "one line of probe text",
+      model_tier: "L4",
+      approval_class: "none",
+      budget_max_tokens: 1000,
+      priority: 5,
+      status,
+    } as never)
+    .returning("id")
+    .executeTakeFirstOrThrow();
+  return row.id;
+}
+
+/** agents.department is a foreign key: a person needs a department to belong to. */
+async function makeDepartment(slug: string): Promise<void> {
+  await sql`
+    INSERT INTO departments (slug, display_name, display_name_tr, status)
+    VALUES (${slug}, ${`B39 probe ${slug}`}, ${`B39 deneme ${slug}`}, 'active')
+    ON CONFLICT (slug) DO NOTHING`.execute(db());
+}
+
+// An employee is born dormant, is given a persona, and only then activates —
+// the company refuses any other order (trg_agents_activation_gate: "activation
+// denied: agent has no persona"). The fixture obeys the real gate rather than
+// working around it, because a fixture that bypasses a rule proves nothing
+// about the system that enforces it.
+async function makeEmployee(department: string, slug: string): Promise<string> {
+  const row = await db()
+    .insertInto("agents")
+    .values({
+      slug,
+      department,
+      role: "specialist",
+      role_level: "specialist",
+      persona_path: `personas/${slug}.md`,
+      mcp_profile: "inherit",
+      employment_status: "dormant",
+      status: "dormant",
+    } as never)
+    .returning("id")
+    .executeTakeFirstOrThrow();
+
+  const persona = await sql<{ id: string }>`
+    INSERT INTO personas (employee_id, version, author, body_md, quality_gate)
+    VALUES (${row.id}::uuid, 1, 'hr-factory', ${`# PERSONA — ${slug}\n\n## 1. Role\nProbe specialist.`}, 'passed')
+    RETURNING id`.execute(db());
+
+  await sql`UPDATE agents
+     SET persona_id = ${persona.rows[0].id}::uuid, employment_status = 'active', status = 'active'
+     WHERE id = ${row.id}::uuid`.execute(db());
+  return row.id;
+}
+
+/** An employee who is already working — the state a ceiling is about. */
+async function openRun(employeeId: string): Promise<string> {
+  const row = await sql<{ id: string }>`
+    INSERT INTO agent_runs (employee_id, status) VALUES (${employeeId}::uuid, 'running')
+    RETURNING id`.execute(db());
+  return row.rows[0].id;
+}
+
+async function setSetting(key: string, value: string): Promise<void> {
+  await sql`
+    INSERT INTO settings_values (key, scope, value, updated_by)
+    VALUES (${key}, 'global', ${value}::jsonb, ${M})
+    ON CONFLICT (key, scope) DO UPDATE SET value = EXCLUDED.value`.execute(db());
+}
+
+async function taskRow(id: string): Promise<{ status: string; claimed_by: string | null; agent_id: string | null }> {
+  const r = await sql<{ status: string; claimed_by: string | null; agent_id: string | null }>`
+    SELECT status, claimed_by, agent_id FROM tasks WHERE id = ${id}::uuid`.execute(db());
+  return r.rows[0];
+}
+
+const okExecutor: Executor = async () => ({
+  result: { text: "probe deliverable" },
+  confidence: 0.92,
+});
+
+afterAll(async () => {
+  await sweepByDepartment(db(), M);
+  await sql`DELETE FROM agent_runs WHERE employee_id IN
+    (SELECT id FROM agents WHERE department LIKE ${`${M}%`})`.execute(db());
+  await sql`DELETE FROM cost_ledger WHERE department LIKE ${`${M}%`}`.execute(db());
+  // Order matters and the company enforces it: an ACTIVE employee may not have
+  // his persona taken away (trg_agents_activation_gate). He is stood down first —
+  // the same sequence a real departure would follow.
+  await sql`UPDATE agents SET employment_status = 'dormant', status = 'dormant'
+    WHERE department LIKE ${`${M}%`}`.execute(db());
+  await sql`UPDATE agents SET persona_id = NULL WHERE department LIKE ${`${M}%`}`.execute(db());
+  await sql`DELETE FROM personas WHERE employee_id IN
+    (SELECT id FROM agents WHERE department LIKE ${`${M}%`})`.execute(db());
+  await sql`DELETE FROM agents WHERE department LIKE ${`${M}%`}`.execute(db());
+  await sql`DELETE FROM departments WHERE slug LIKE ${`${M}%`}`.execute(db());
+  await sql`DELETE FROM alerts WHERE dedup_key = 'orchestrator:subscription-cap'
+    AND resolved_at IS NULL`.execute(db());
+  await sql`DELETE FROM decision_log WHERE decision = 'employee-selection'
+    AND rationale LIKE ${`%${M}-%`}`.execute(db());
+  // The ceilings are the CEO's settings — put both back where the migration left them.
+  await setSetting(CAP_KEY, "1");
+  await setSetting(SUBSCRIPTION_CAP_KEY, "500000");
+  await closeDb();
+});
+
+describe("B39 · H1 — the subscription path spends where a brake can see it", () => {
+  it("the ceiling is a real setting, and the window reads it", async () => {
+    // The whole defect was that this key did not exist. If the migration is ever
+    // rolled back, this is the case that says so.
+    const reg = await sql<{ n: number }>`
+      SELECT count(*)::int AS n FROM settings_registry WHERE key = ${SUBSCRIPTION_CAP_KEY}
+    `.execute(db());
+    expect(reg.rows[0].n, `${SUBSCRIPTION_CAP_KEY} is not registered`).toBe(1);
+
+    await setSetting(SUBSCRIPTION_CAP_KEY, "500000");
+    const w = await checkSubscriptionWindow();
+    expect(w.cap).toBe(500_000);
+    expect(w.open).toBe(true);
+  });
+
+  it("a subscription run leaves a row a brake can count — with no euro in it", async () => {
+    const department = `${M}-spend`;
+    const taskId = await makeTask(department);
+
+    await recordSubscriptionSpend({
+      taskId,
+      agentId: null,
+      department,
+      model: "opus-5",
+      tokensIn: 1_000,
+      tokensOut: 2_000,
+    });
+
+    const row = await sql<{
+      mode: string; source: string; prompt_tokens: number;
+      completion_tokens: number; cost_eur: string;
+    }>`
+      SELECT mode, source, prompt_tokens, completion_tokens, cost_eur
+      FROM cost_ledger WHERE task_id = ${taskId}::uuid`.execute(db());
+
+    expect(row.rows.length, "the subscription path wrote no ledger row").toBe(1);
+    expect(row.rows[0].mode).toBe("subscription");
+    expect(row.rows[0].source).toBe("worker");
+    expect(row.rows[0].prompt_tokens).toBe(1_000);
+    expect(row.rows[0].completion_tokens).toBe(2_000);
+    // The single-source cost rule (litellm.ts LOCKED): tokens yes, euro never.
+    expect(Number(row.rows[0].cost_eur)).toBe(0);
+  });
+
+  it("crossing the hourly ceiling HOLDS the execution leg — and only that leg", async () => {
+    const department = `${M}-held`;
+    const held = await makeTask(department, "queued");
+
+    // A review-stage task proves the hold is surgical: grading finished work is
+    // pure code, costs nothing, and a full queue is no reason to stop it.
+    const reviewing = await makeTask(department, "review");
+    await sql`UPDATE tasks SET result = ${JSON.stringify({ text: "done", confidence: 0.9 })}::jsonb
+      WHERE id = ${reviewing}::uuid`.execute(db());
+
+    // Fill the hour: one row above the ceiling.
+    await setSetting(SUBSCRIPTION_CAP_KEY, "1000");
+    await recordSubscriptionSpend({
+      taskId: held,
+      agentId: null,
+      department,
+      model: "opus-5",
+      tokensIn: 900,
+      tokensOut: 900,
+    });
+
+    const w = await checkSubscriptionWindow();
+    expect(w.open, `window should be shut: ${w.tokens} of ${w.cap}`).toBe(false);
+
+    const res = await drainTasks({
+      workerId: WORKER,
+      departments: [department],
+      execute: okExecutor,
+      evaluate: async () => ({ pass: true, confidence: 0.95, notes: "contract met" }),
+    });
+
+    expect(res.executed, "the execution leg claimed work with the ceiling full").toBe(0);
+    expect((await taskRow(held)).status, "a held task must stay queued").toBe("queued");
+    expect(res.reviewed, "review is pure code and must keep running").toBe(1);
+
+    // The CEO is told, once, why his line went quiet.
+    const alert = await sql<{ n: number }>`
+      SELECT count(*)::int AS n FROM alerts
+      WHERE dedup_key = 'orchestrator:subscription-cap' AND resolved_at IS NULL`.execute(db());
+    expect(alert.rows[0].n).toBe(1);
+
+    await setSetting(SUBSCRIPTION_CAP_KEY, "500000");
+  });
+
+  it("with the ceiling raised again the same queue moves", async () => {
+    const department = `${M}-open`;
+    const t = await makeTask(department);
+    await setSetting(SUBSCRIPTION_CAP_KEY, "500000");
+
+    const res = await drainTasks({
+      workerId: WORKER,
+      departments: [department],
+      execute: okExecutor,
+      reviewCap: 0,
+    });
+
+    expect(res.executed).toBe(1);
+    expect((await taskRow(t)).status).toBe("review");
+  });
+});
+
+describe("B39 · the decision — how many tasks at once is a SETTING, not a secret", () => {
+  it("the lane count is registered, bounded, and defaults to one", async () => {
+    const reg = await sql<{ schema: string }>`
+      SELECT value_schema::text AS schema FROM settings_registry
+       WHERE key = 'orchestration.dispatch_lanes'`.execute(db());
+    expect(reg.rows.length, "orchestration.dispatch_lanes is not registered").toBe(1);
+    // The bound matters: an unbounded lane count is how one bad row becomes
+    // eighty parallel model calls with the CEO asleep.
+    expect(reg.rows[0].schema).toContain('"maximum": 8');
+    expect(reg.rows[0].schema).toContain('"minimum": 1');
+
+    const live = await sql<{ n: number }>`
+      SELECT fn_setting_numeric('orchestration.dispatch_lanes', 99)::int AS n`.execute(db());
+    expect(live.rows[0].n, "the default must stay 1 until the CEO raises it").toBe(1);
+  });
+
+  it("the scheduler reads that setting instead of hard-coding the lane count", async () => {
+    // A source scan, deliberately: the alternative is booting pg-boss inside the
+    // suite, and what must never silently regress is the WIRING — a future edit
+    // that goes back to a bare drainTasks() would restore the single line and
+    // nothing would say so.
+    const src = await readFile(
+      join(REPO_ROOT, "packages/outbox-executor/src/scheduler.ts"), "utf8");
+    expect(src).toContain("orchestration.dispatch_lanes");
+    expect(src).toMatch(/const lanes = await dispatchLanes\(\)/);
+    // Lane 1 keeps the historical identity, or every record that reads
+    // claimed_by = 'resident-worker' changes meaning on a single-lane install.
+    expect(src).toContain("RESIDENT_WORKER_ID");
+  });
+});
+
+describe("B39 · H2 — one employee, one job", () => {
+  it("an employee already at the ceiling is not handed a second task", async () => {
+    const department = `${M}-busy`;
+    await makeDepartment(department);
+    const employee = await makeEmployee(department, `${M}-busy-one`);
+    await openRun(employee); // he is working
+    await setSetting(CAP_KEY, "1");
+
+    const t = await makeTask(department);
+    const res = await drainTasks({
+      workerId: WORKER,
+      departments: [department],
+      execute: okExecutor,
+      reviewCap: 0,
+    });
+
+    expect(res.executed, "a busy employee was given a second job").toBe(0);
+    const row = await taskRow(t);
+    // Busy is not broken: the task goes back exactly as it was found.
+    expect(row.status).toBe("queued");
+    expect(row.claimed_by).toBeNull();
+    expect(row.agent_id).toBeNull();
+
+    // decision_log carries no task_id (the column does not exist — measured); the
+    // department marker is unique to this case, so the rationale is found by it.
+    const why = await sql<{ rationale: string }>`
+      SELECT rationale FROM decision_log
+      WHERE decision = 'employee-selection' AND rationale LIKE ${`%${department}%`}
+      ORDER BY created_at DESC LIMIT 1`.execute(db());
+    expect(why.rows[0]?.rationale).toContain("concurrency ceiling");
+  });
+
+  it("raising the ceiling lets the same employee take the same task", async () => {
+    const department = `${M}-raised`;
+    await makeDepartment(department);
+    const employee = await makeEmployee(department, `${M}-raised-one`);
+    await openRun(employee);
+    await setSetting(CAP_KEY, "2");
+
+    const t = await makeTask(department);
+    const res = await drainTasks({
+      workerId: WORKER,
+      departments: [department],
+      execute: okExecutor,
+      reviewCap: 0,
+    });
+
+    expect(res.executed).toBe(1);
+    expect((await taskRow(t)).agent_id).toBe(employee);
+    await setSetting(CAP_KEY, "1");
+  });
+
+  it("an idle colleague is chosen over the busy one — nobody waits for a person", async () => {
+    const department = `${M}-pair`;
+    await makeDepartment(department);
+    const busy = await makeEmployee(department, `${M}-pair-busy`);
+    const idle = await makeEmployee(department, `${M}-pair-idle`);
+    await openRun(busy);
+    await setSetting(CAP_KEY, "1");
+
+    const t = await makeTask(department);
+    const res = await drainTasks({
+      workerId: WORKER,
+      departments: [department],
+      execute: okExecutor,
+      reviewCap: 0,
+    });
+
+    expect(res.executed).toBe(1);
+    expect((await taskRow(t)).agent_id, "the idle colleague should have taken it").toBe(idle);
+  });
+
+  it("an unstaffed department still fails LOUDLY — busy and empty are not the same", async () => {
+    // The distinction this case pins: 'everybody is busy' is a healthy company
+    // at full stretch and must never be reported as a missing workforce.
+    const department = `${M}-empty`;
+    const t = await makeTask(department);
+
+    const res = await drainTasks({
+      workerId: WORKER,
+      departments: [department],
+      execute: okExecutor,
+      reviewCap: 0,
+    });
+
+    // No employee exists at all: unchanged pre-B39 path — the task is worked
+    // agent-less and the pre-gate is what speaks about it.
+    expect(res.executed).toBe(1);
+    const row = await taskRow(t);
+    expect(row.agent_id).toBeNull();
+
+    const why = await sql<{ rationale: string }>`
+      SELECT rationale FROM decision_log
+      WHERE decision = 'employee-selection' AND rationale LIKE ${`%${department}%`}
+      ORDER BY created_at DESC LIMIT 1`.execute(db());
+    expect(why.rows[0]?.rationale).toContain("no active employee");
+  });
+});

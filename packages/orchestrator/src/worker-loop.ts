@@ -17,11 +17,22 @@
 // Per-tick caps keep one drain bounded: execution runs LLM turns (minutes),
 // so it claims few; escalation is pure code, so it sweeps more. The chain
 // re-arms every tick — throughput comes from cadence, not batch size.
+//
+// B39 (2026-08-25) — THE EXECUTION LEG NOW ASKS BEFORE IT CLAIMS. The two money
+// brakes read cost_ledger + the LiteLLM proxy, and the subscription path appears
+// in neither, so until now this leg could spend without limit and nothing would
+// have noticed. `workerId` was always a parameter and claim_next_task has always
+// been SKIP LOCKED, which means N of these loops can run side by side the day
+// the measurement says they should — and the day that happens, the brake has to
+// already exist. It stops the EXECUTION leg only: review and escalation are
+// pure code and cost nothing, and a company whose queue is full still wants its
+// finished work graded.
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
 import { escalate } from "./escalate.js";
 import { qa, type QaEvaluator } from "./qa.js";
 import { runWorkerOnce, type Executor } from "./worker-shim.js";
+import { alertSubscriptionCapReached, checkSubscriptionWindow } from "./subscription-cap.js";
 
 export const RESIDENT_WORKER_ID = "resident-worker";
 const LOW_CONFIDENCE = 0.6; // mirror of escalate.ts LOCKED threshold
@@ -68,8 +79,22 @@ export async function drainTasks(deps: DrainTasksDeps = {}): Promise<DrainTasksR
 
   // Leg 1 — queued → claim + execute. runWorkerOnce owns the whole certified
   // chain (hook pre-gate, observability scope, post-gate, transitions).
+  //
+  // The ceiling is asked ONCE per drain, not once per claim: with execCap = 1
+  // that is the same thing, and with execCap > 1 a drain that started under the
+  // ceiling finishes the batch it started rather than stopping halfway through
+  // its own work. The next tick is ten seconds away either way.
   const departments = deps.departments ?? (await activeDepartments());
-  if (departments.length > 0) {
+  const window = await checkSubscriptionWindow();
+  if (!window.open) {
+    // Not an error and not a failure: the company reached the hour's ceiling and
+    // stopped itself. Nothing is lost — the queue waits, and the window rolls.
+    console.warn(
+      `[worker-loop] execution leg held: ${window.tokens} tokens in the last hour, ceiling ${window.cap}`,
+    );
+    await alertSubscriptionCapReached(window);
+  }
+  if (departments.length > 0 && window.open) {
     for (let i = 0; i < execCap; i++) {
       const run = await runWorkerOnce({
         workerId,

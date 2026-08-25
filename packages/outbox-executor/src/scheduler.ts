@@ -23,6 +23,7 @@ import {
   drainIntents,
   drainTasks,
   generateWorkFromPlans,
+  RESIDENT_WORKER_ID,
 } from "@dxb/orchestrator";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
 import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
@@ -196,6 +197,27 @@ async function enqueueLibraryRecompile(boss: PgBoss, delaySeconds: number): Prom
     {},
     { startAfter: delaySeconds, singletonKey: QUEUES.libraryRecompile },
   );
+}
+
+/**
+ * B39 — how many tasks the company works on at once, read fresh every tick.
+ *
+ * Bounded here as well as in the setting's own schema, because a scheduler that
+ * trusts a number it did not check is how one bad row becomes eighty lanes.
+ * An unreadable setting means ONE lane: the safe direction is always the one
+ * that spends less, and a dispatch line that keeps working while the settings
+ * table is unhappy is worth more than one that stops.
+ */
+async function dispatchLanes(): Promise<number> {
+  try {
+    const r = await sql<{ n: number }>`
+      SELECT LEAST(GREATEST(fn_setting_numeric('orchestration.dispatch_lanes', 1), 1), 8)::int AS n
+    `.execute(getDb());
+    return r.rows[0]?.n ?? 1;
+  } catch (err) {
+    console.error("[scheduler] dispatch_lanes unreadable — running one lane:", err);
+    return 1;
+  }
 }
 
 async function enqueueTaskWorker(boss: PgBoss, delaySeconds: number): Promise<void> {
@@ -373,9 +395,34 @@ export async function startScheduler(): Promise<PgBoss> {
   // R2.1 resident worker drain — same re-arm-even-on-throw discipline (a dead
   // chain = the anti-babysitting engine silently stops). Per-task errors are
   // contained inside drainTasks; only infrastructure faults reach this catch.
+  //
+  // B39 (2026-08-25) — HOW MANY TASKS AT ONCE IS NOW A SETTING, NOT A SECRET.
+  // The single line had one written justification, R5's 8 GB RAM budget, and R5
+  // writes its own reopening condition: "ancak ölçüm kanıtıyla (latency/lock) ve
+  // CEO onayıyla". The measurement exists now (scripts/bench/drain-throughput.mjs,
+  // 2026-08-25): eight lanes drained the same queue 7.80x faster than one, with
+  // ZERO double-claims, ZERO lock waits and 4.5 MB more memory. R5's premise does
+  // not survive that; R5's DISCIPLINE does, so the lanes live INSIDE this job —
+  // no second resident service, no second runtime.
+  //
+  // The default is 1 and the queue is empty by the CEO's own design, so this
+  // changes nothing today. It means the day work arrives, the answer is a number
+  // in his settings screen instead of a code change nobody is around to make.
+  // Read every tick: raising it takes effect within ten seconds, and lowering it
+  // never interrupts a lane already working — the tick simply arms fewer.
   await boss.work(QUEUES.taskWorker, async () => {
     try {
-      await drainTasks();
+      const lanes = await dispatchLanes();
+      // Lane 1 keeps the historical worker identity so nothing that reads
+      // `claimed_by = 'resident-worker'` changes meaning on a single-lane install.
+      await Promise.all(
+        Array.from({ length: lanes }, (_, i) =>
+          drainTasks(i === 0 ? {} : { workerId: `${RESIDENT_WORKER_ID}-${i + 1}` }).catch((err) => {
+            // One lane's infrastructure fault must not take its siblings down.
+            console.error(`[scheduler] dispatch lane ${i + 1} failed:`, err);
+          }),
+        ),
+      );
     } finally {
       await enqueueTaskWorker(boss, CADENCES.taskWorkerSeconds);
     }
