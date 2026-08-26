@@ -118,6 +118,8 @@ Yeni bir model çıktığında CEO onu dashboard'dan kataloğa ekler ve bağlar;
 
 Her adım audit_log + decision_log. Katalog satırı SİLİNMEZ — emekli model `status='retired'` (geçmiş decision_log referansları kırılmaz).
 
+**KAYITLI ADAPTASYON — Codex 5.6, CEO hükmü 2026-08-26.** <!-- CEO-OK: b07-codex-56-exam-waived-ceo-vouches-2026-08-26 --> Kendi sözleriyle: *"burada codex 5.6 sınavına gerek yok onu kaldır. ben kefilim ona."* Bu, yukarıdaki 3. adımın ("eval-önce") zaten tanıdığı **CEO atlama** hakkının bu model için kullanılmasıdır — yeni bir kural değil, var olan maddenin işletilmesi: uyarı + audit + 7 gün izleme rejimi aynen geçerlidir. Muafiyet **yalnızca Codex 5.6'yı** kapsar; başka hiçbir model sınavdan muaf değildir, yasaklı kadro (`banned=true`) etkilenmez ve buradan şirket veritabanına hiçbir yazma gitmez (B36). Tahtada B07 bu hükümle kapandı.
+
 ### 4d. THE QUALITY TIER LAW (CEO order 2026-07-26, normative, supersedes the §4 default table where they disagree)
 
 **The law, one sentence: judgment, taste, structure and every output a human — the CEO or a customer — actually sees is produced by Opus 5. A lower tier's output is never a finished product; it is the higher tier's input.**

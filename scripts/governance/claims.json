@@ -56,5 +56,25 @@
   "cost_ledger_rows": {
     "sql": "SELECT count(*) FROM cost_ledger",
     "what": "rows in the holding's own cost book. It is 0 while the earning machine is off by the CEO's decision, and that is the EXPECTED state, not a failure. The number exists as a named question so that a session can prove the company's book is untouched without ever holding a company credential — B36's one-way window answers it, nothing else has to."
+  },
+  "roadmap_rows": {
+    "repo": "roadmap",
+    "field": "total",
+    "what": "steps on the binding roadmap table — the denominator of every progress figure"
+  },
+  "roadmap_done": {
+    "repo": "roadmap",
+    "field": "done",
+    "what": "roadmap steps whose status cell opens with ✓ — finished work, machine-counted, never re-derived by hand"
+  },
+  "roadmap_partial": {
+    "repo": "roadmap",
+    "field": "partial",
+    "what": "roadmap steps opening with ◐ — started and not finished"
+  },
+  "roadmap_none": {
+    "repo": "roadmap",
+    "field": "none",
+    "what": "roadmap steps opening with — : frozen or never started"
   }
 }

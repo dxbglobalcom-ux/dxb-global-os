@@ -333,6 +333,100 @@ describe("freeze-guard — the editor is never the designated victim", () => {
     expect(survivors, `this case left decoys running: ${survivors.join(", ")}`).toEqual([]);
   });
 
+  it("sweeps a widow whose session leader is gone, even when a live subreaper adopted it", () => {
+    // B24, the gap this row was opened for (2026-07-30). The widow rule was
+    // written against classic pid-1 re-parenting; under a systemd user session
+    // an orphan is adopted by the user manager instead, and the rule matched
+    // nothing (fixed 2026-08-21 by naming the reapers). But a REAPER SET can
+    // only ever list the reapers somebody thought of: any process may call
+    // prctl(PR_SET_CHILD_SUBREAPER) and adopt orphans, and then a widow's
+    // parent is neither init nor systemd and the guard walks past it.
+    //
+    // The second rule closes that by evidence instead of by list: whoever
+    // adopted it, a helper whose SESSION LEADER is gone from the process table
+    // has lost its session. This case builds exactly that state — a real
+    // subreaper (not init, not systemd), a helper in a session whose leader has
+    // died — and proves the guard convicts it, and says which rule convicted it.
+    //
+    // It also proves the opposite half in the same pass: a second helper under
+    // the SAME live subreaper, whose session is alive, is never touched. That
+    // is the line this rule must never cross — an application that reaps its
+    // own children still has a home for them.
+    // AND IT IS BUILT MORE THAN ONCE ON PURPOSE. The resident guard
+    // (dxb-freeze-guard.service, real kills, every 10 s) matches this very
+    // pattern and now carries this very rule, so it can reap the decoy inside
+    // the second this case needs it — measured 2026-08-26, the first version of
+    // this case passed alone and failed inside the full battery with an EMPTY
+    // log, with nothing whatever wrong with the guard. The sibling case above
+    // learned the same lesson on 2026-08-23. So: build, observe, and if the
+    // resident got there first, build again.
+    const REAPER = join(REPO, "tests/ops/fixtures/b24-subreaper.py");
+    const ORPHAN_PID = join(tmpdir(), "dxb-b24-orphan.pid");
+    const LIVE_PID = join(tmpdir(), "dxb-b24-live.pid");
+    const cleanup: number[] = [];
+    const kill = (pid: number) => {
+      try {
+        if (pid) process.kill(pid, "SIGKILL");
+      } catch {
+        /* already gone — the resident guard or an earlier sweep took it */
+      }
+    };
+    const reapers = execFileSync("bash", ["-c", "echo 1; pgrep -x systemd -u $(id -u)"])
+      .toString()
+      .trim()
+      .split("\n")
+      .map(Number);
+
+    let convicted = false;
+    let liveHelper = 0;
+    let log = "";
+    try {
+      for (let attempt = 0; attempt < 5 && !convicted; attempt++) {
+        rmSync(LOG, { force: true });
+        rmSync(ORPHAN_PID, { force: true });
+        rmSync(LIVE_PID, { force: true });
+        const reaper = spawn("python3", [REAPER, ORPHAN_PID, LIVE_PID], { stdio: "ignore" });
+        cleanup.push(reaper.pid ?? 0);
+        execFileSync("bash", ["-c", "sleep 1.2"]);
+        if (!existsSync(ORPHAN_PID) || !existsSync(LIVE_PID)) continue;
+        const orphan = Number(readFileSync(ORPHAN_PID, "utf8").trim());
+        liveHelper = Number(readFileSync(LIVE_PID, "utf8").trim());
+        cleanup.push(orphan, liveHelper);
+        if (!existsSync(`/proc/${orphan}`)) continue; // the resident took it first
+
+        // The state under test, measured rather than assumed.
+        let ppid: number;
+        let sid: number;
+        try {
+          const stat = readFileSync(`/proc/${orphan}/stat`, "utf8").split(" ");
+          ppid = Number(stat[3]);
+          sid = Number(stat[5]);
+        } catch {
+          continue; // it died between two reads — build another
+        }
+        expect(ppid, "the orphan was not adopted by our subreaper").toBe(reaper.pid);
+        expect(reapers, "the old rule would have caught this — the case would prove nothing").not.toContain(ppid);
+        expect(sid, "the orphan is its own session leader; the session did not die").not.toBe(orphan);
+        if (existsSync(`/proc/${sid}`)) continue; // the leader has not gone yet
+
+        runGuard({});
+        log = logText();
+        convicted = log
+          .split("\n")
+          .filter((l) => l.includes("session leader gone"))
+          .some((l) => (l.split("would kill ")[1] ?? "").split(/\s+/).includes(String(orphan)));
+      }
+      expect(convicted, `guard never reported the adopted widow. Log:\n${log}`).toBe(true);
+      // The helper whose session is alive, under the very same subreaper, in
+      // the same pass. This is the line the rule must never cross.
+      expect(log).not.toContain(`would kill ${liveHelper}`);
+    } finally {
+      for (const pid of cleanup) kill(pid);
+      rmSync(ORPHAN_PID, { force: true });
+      rmSync(LIVE_PID, { force: true });
+    }
+  });
+
   it("runs as a resident, not from a once-a-minute cron slot", () => {
     // The 2026-07-28 fix lost the race with earlyoom by up to 59 seconds.
     const unit = join(

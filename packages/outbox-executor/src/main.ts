@@ -12,18 +12,26 @@
 // chain re-arms via singletonKey bootstrap sends — restart continuity is
 // startScheduler's construction, not this file's job.
 import { closeDb } from "@dxb/shared";
+import { hostOpsLiveCollector } from "./ops-live-host.js";
 import { startScheduler, stopScheduler } from "./scheduler.js";
 
 async function main(): Promise<void> {
   const boss = await startScheduler();
-  console.log("[scheduler] resident scheduler up — queues live, chains armed");
+  // B38: the ops:live debounce collector has no service of its own — EVENT_MODEL
+  // §26 (R5) put it inside this loop deliberately ("yeni servis AÇILMAZ"), and
+  // until 2026-08-26 nothing here started it, so the CEO's Live Operations page
+  // listened to a channel with no producer.
+  const opsLive = await hostOpsLiveCollector({ log: (line) => console.error(line) });
+  console.log("[scheduler] resident scheduler up — queues live, chains armed, ops:live hosted");
 
   let stopping = false;
   const shutdown = (signal: string) => {
     if (stopping) return;
     stopping = true;
     console.log(`[scheduler] ${signal} — graceful stop`);
-    void stopScheduler(boss)
+    void opsLive
+      .stop()
+      .then(() => stopScheduler(boss))
       .then(() => closeDb())
       .then(() => process.exit(0))
       .catch((err) => {

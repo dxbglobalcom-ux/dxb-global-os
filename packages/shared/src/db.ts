@@ -65,6 +65,11 @@ export interface ListenClient {
   query(text: string, values?: unknown[]): Promise<unknown>;
   on(event: "notification", listener: (msg: { channel: string; payload?: string }) => void): unknown;
   on(event: "error", listener: (err: Error) => void): unknown;
+  // B38: a LISTEN session can also simply END — the server closes it, the
+  // network drops it — without ever emitting an error. A listener that cannot
+  // hear that is a listener that goes deaf in silence, so the event is part of
+  // the contract, not an implementation detail of pg.
+  on(event: "end", listener: () => void): unknown;
   end(): Promise<void>;
 }
 

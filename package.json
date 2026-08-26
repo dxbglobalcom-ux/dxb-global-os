@@ -30,7 +30,10 @@
     "verify:separation": "node scripts/governance/company-untouched.mjs",
     "bench:drain": "node scripts/bench/drain-throughput.mjs",
     "tahta": "node scripts/board/render.mjs --open",
-    "tahta:yaz": "node scripts/board/render.mjs"
+    "tahta:yaz": "node scripts/board/render.mjs",
+    "roadmap:tally": "node scripts/governance/roadmap-tally.mjs",
+    "graph:refresh": "node scripts/governance/graph-refresh.mjs",
+    "graph:check": "node scripts/governance/graph-refresh.mjs --check"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",

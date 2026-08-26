@@ -48,6 +48,16 @@ export type OpsLiveCollector = {
 export async function startOpsLiveCollector(opts?: {
   windowMs?: number;
   log?: (line: string) => void;
+  /**
+   * The listen connection died. Called AT MOST ONCE, and never after stop().
+   *
+   * B38: the collector said "host loop restarts us" in a comment and told the
+   * host nothing, so a dropped connection left a process that was up, healthy
+   * and deaf — the CEO's Live Operations page stays empty and no terminal says
+   * why. The host is the only thing that can rebuild it, so it is the thing
+   * that gets told.
+   */
+  onLost?: (reason: string) => void;
 }): Promise<OpsLiveCollector> {
   const windowMs = opts?.windowMs ?? DEFAULT_WINDOW_MS;
   const log = opts?.log ?? ((line: string) => console.error(line));
@@ -165,10 +175,18 @@ export async function startOpsLiveCollector(opts?: {
     }, windowMs);
   });
 
+  let lostAnnounced = false;
+  const lost = (reason: string) => {
+    if (stopped || lostAnnounced) return;
+    lostAnnounced = true;
+    log(`[ops-live] listen connection lost: ${reason}`);
+    opts?.onLost?.(reason);
+  };
   client.on("error", (err) => {
-    // Connection death = liveness gap, not data loss; host loop restarts us.
-    log(`[ops-live] listen connection error: ${String(err)}`);
+    // Connection death = liveness gap, not data loss; the host rebuilds us.
+    lost(String(err));
   });
+  client.on("end", () => lost("connection ended"));
 
   await client.query(`LISTEN ${NOTIFY_CHANNEL}`);
 

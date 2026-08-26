@@ -64,11 +64,29 @@ function boardSections(): Map<string, "open" | "closed"> {
 
 describe("U41 ledger-truth gate", () => {
   it("every claim query is read-only — an audit may never mutate", () => {
-    const claims = JSON.parse(readFileSync(CLAIMS, "utf8")) as Record<string, { sql?: string }>;
+    // A claim is measured one of exactly two ways, and neither can write.
+    //   `sql`  — a bare SELECT the company's read gateway carries by name;
+    //   `repo` — a named measurement of THIS repository's own files (B20: the
+    //            roadmap tally). No database is touched at all, so there is no
+    //            SQL to inspect — which is why this case must know the second
+    //            kind rather than demand SQL of it.
+    const claims = JSON.parse(readFileSync(CLAIMS, "utf8")) as Record<
+      string,
+      { sql?: string; repo?: string; field?: string }
+    >;
+    const REPO_KINDS = new Set(["roadmap"]);
     const entries = Object.entries(claims).filter(([k]) => !k.startsWith("_"));
     expect(entries.length).toBeGreaterThan(0);
     for (const [id, c] of entries) {
-      expect(c.sql, `claim ${id} has no sql`).toBeTruthy();
+      expect(
+        Boolean(c.sql) !== Boolean(c.repo),
+        `claim ${id} must be measured exactly one way: a SELECT (sql) or a repository measurement (repo)`,
+      ).toBe(true);
+      if (c.repo) {
+        expect(REPO_KINDS.has(c.repo), `claim ${id} names an unknown repository measurement "${c.repo}"`).toBe(true);
+        expect(typeof c.field, `claim ${id} names no field to read`).toBe("string");
+        continue;
+      }
       expect(c.sql!, `claim ${id} must start with SELECT`).toMatch(/^\s*SELECT\b/i);
       expect(
         c.sql!,

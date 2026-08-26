@@ -69,9 +69,48 @@ mkdir -p -- "$(dirname -- "$LOG")" 2>/dev/null || true
 # DXB-Center 2026-08-21: a helper deliberately orphaned came back with ppid
 # 2477, the user manager, so the rule matched nothing and this machine swept
 # NO widowed helpers at all — the exact pile-up the guard exists to prevent.
+#
+# B24, 2026-08-26 — AND "ADOPTED BY A SUBREAPER" IS NOT THE SAME QUESTION AS
+# "IS ITS SESSION GONE". A live application can register itself as a subreaper
+# and adopt its own helper; that helper still has a home and must never be
+# swept. What this guard is allowed to act on is a REAPER OF LAST RESORT — pid
+# 1, this user's manager, or the init a container puts in their place — plus
+# the independent evidence below: a helper whose SESSION LEADER no longer
+# exists has lost its session whoever adopted it.
 REAPERS=" 1 "
 for _r in $(pgrep -x systemd -u "$(id -u)" 2>/dev/null); do REAPERS+="$_r "; done
+for _r in $(pgrep -x 'tini|dumb-init|docker-init|catatonit|s6-svscan' 2>/dev/null); do REAPERS+="$_r "; done
 is_reaper() { [[ "$REAPERS" == *" $1 "* ]]; }
+# A widow that no reaper list can name: its SESSION LEADER is gone AND its
+# parent is not from that session, so the parent cannot be the process that
+# started it — it adopted it.
+#
+# BOTH halves are needed, and the second half was learned the hard way on
+# 2026-08-26: the first draft of this rule convicted on a dead session leader
+# alone, and the full battery caught it inside a minute. A test run launched
+# from a shell that has since exited leaves EVERY process in that session with
+# a dead leader — the test runner, and the helpers it is actively using. Their
+# parent is alive and is their real owner; they are not widows, and killing
+# them would have been the guard eating the CEO's own live work.
+#
+# $1 = pid · $2 = sid · $3 = ppid
+adopted_widow() {
+  # Named FIRST: `set --` below replaces the positional parameters, and reading
+  # $2 after it would silently compare the wrong number.
+  local pid="$1" sid="$2" ppid="$3" pstat rest psid
+  [[ "$sid" == "$pid" ]] && return 1        # it IS the session leader, and it is alive
+  [[ -d "/proc/$sid" ]] && return 1         # the session leader is alive: the session lives
+  [[ -r "/proc/$ppid/stat" ]] || return 0   # the parent is gone too — a widow either way
+  read -r pstat < "/proc/$ppid/stat" || return 0
+  # /proc/<pid>/stat: comm can hold spaces and parentheses, so everything up to
+  # the LAST ") " is dropped; what follows is state ppid pgrp session …
+  rest=${pstat##*') '}
+  # shellcheck disable=SC2086
+  set -- $rest
+  psid=${4:-0}
+  [[ "$psid" == "$sid" ]] && return 1       # same dying session: this parent is the owner
+  return 0
+}
 DRY_KILL="${FREEZE_GUARD_DRY_KILL:-0}"
 
 # ── A SESSION IS NEVER JUNK, HOWEVER LONG IT STANDS STILL ───────────────────
@@ -137,10 +176,10 @@ run_once() {
   # Four `ps` calls plus a subshell per candidate cost 4% of a core at a 3s
   # cadence (measured 2026-07-29). A guard against resource exhaustion may not
   # itself be a resource problem: one read, no forks inside the loop.
-  local pid ppid etimes state args tier cur now
-  local stuck_chroma="" old_headless="" ghost_hosts=""
+  local pid ppid sid etimes state args tier cur now
+  local stuck_chroma="" old_headless="" ghost_hosts="" lost_sessions=""
   local raised_scaffolding=0 raised_tab=0
-  while read -r pid ppid etimes state args; do
+  while read -r pid ppid sid etimes state args; do
     [[ -z "${args:-}" ]] && continue
     # The editor is never a candidate for anything this script does.
     case "$args" in *"/usr/share/code/code"*) continue ;; esac
@@ -167,13 +206,16 @@ run_once() {
     # idleness, never age, never being suspended (CEO ruling, top of file). By
     # 2026-07-29 four full tool stacks had piled up because nothing swept the
     # ones whose session had ended.
-    if is_reaper "$ppid"; then
+    if is_reaper "$ppid" || adopted_widow "$pid" "$sid" "$ppid"; then
       case "$args" in
         # The claude-mem worker is a resident daemon and is SUPPOSED to have no
         # parent; it hosts live sessions. It is never a widow.
         *"/.bun/bin/bun"*) : ;;
         *"kilo serve"* | *app-server* | *mcp*)
-          ghost_hosts+="$pid"$'\n' ;;
+          # Two kinds of evidence, kept apart in the log so a human reading it
+          # can tell WHICH one convicted the process (B24).
+          if is_reaper "$ppid"; then ghost_hosts+="$pid"$'\n'
+          else lost_sessions+="$pid"$'\n'; fi ;;
       esac
     fi
 
@@ -202,7 +244,7 @@ run_once() {
     # the guard cheap. Measured 2026-07-29 at a 3s cadence: 6.2% of a core when
     # the shell examined all ~250 processes itself, against 0.x% when awk hands
     # it only the two dozen lines that can possibly match.
-  done < <(ps -weo pid=,ppid=,etimes=,stat=,args= \
+  done < <(ps -weo pid=,ppid=,sid=,etimes=,stat=,args= \
     | awk '!/\/usr\/share\/code\/code/ && !/freeze-guard/ && (/mcp/ || /headless_shell/ || /kilo serve/ || /app-server/ || /\/opt\/google\/chrome\/chrome/)')
 
   # 1. stuck chroma-mcp (child + uv wrapper both match the pattern)
@@ -211,6 +253,9 @@ run_once() {
   printf '%s' "$old_headless" | kill_pids "headless_shell orphan >30min"
   # 3. helper with no session left to serve (parent gone)
   printf '%s' "$ghost_hosts" | kill_pids "helper with no session (parent gone)"
+  # 3b. same widow, different evidence: whoever adopted it, its session leader
+  #     is gone from the process table (B24 — a subreaper is not always init).
+  printf '%s' "$lost_sessions" | kill_pids "helper with no session (session leader gone)"
 
   # Log only what a human would want to read: a change, under pressure, at most
   # once a minute — a three-second loop would otherwise write 20 lines a minute.

@@ -203,6 +203,7 @@ const LIST = argv.includes("--list");
 // If the gateway is not answering, this gate STOPS: a measurement that cannot be
 // taken is never quietly replaced by one taken another way.
 import { ask } from "../b36/company-read-client.mjs";
+import { roadmapTally } from "./roadmap-tally.mjs";
 
 const company = new Map();
 
@@ -221,6 +222,21 @@ async function openTheWindow(ids) {
 
 /** A NAME, never a statement. The SQL behind it lives on the company's side. */
 function measure(id) {
+  // B20: a claim about THIS REPOSITORY is measured here, not asked of the
+  // company — the roadmap is a file, and the company has never heard of it.
+  const repo = claims[id]?.repo;
+  if (repo === "roadmap") {
+    const t = roadmapTally(REPO);
+    if (t.unreadable.length) {
+      throw new Error(
+        `refused: the roadmap has ${t.unreadable.length} row(s) with no readable status token — run pnpm roadmap:tally`,
+      );
+    }
+    const field = claims[id].field;
+    const value = field === "total" ? t.total : t.count[field];
+    if (value === undefined) throw new Error(`refused: "${id}" names roadmap field "${field}", which does not exist`);
+    return String(value);
+  }
   if (!company.has(id)) {
     throw new Error(`refused: "${id}" is not a question the company's read gateway carries`);
   }

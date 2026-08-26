@@ -317,5 +317,19 @@
     "verbatim": "şu hertz olayını yarın çözeceğiz. diğer herşeyi gözümle baktım ok diyorum. tamam mı. beni bekleyen diye karşıma çıkmasın",
     "conditions": "The rented box (dxb-vps-1) is NOT covered and is not accepted: he set it aside for 2026-08-26 in his own words, 'yarın çözeceğiz'. Nothing is paid, reset, rebuilt, shut down or deleted on that box or that Hetzner account without his word on the day. The approval covers what was delivered, not any later change to it: new work on any of these parts needs its own approval.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B39 · .planning/STATE.md"
+  },
+  "b13-folded-into-v2-design-package-2026-08-26": {
+    "date": "2026-08-26",
+    "what": "The V1 acceptance session (board row B13) is CLOSED and its eye-criteria move into V2's design package (B32). The author put two roads in front of him — (A) close B13 and carry the 9 C-tier and 5 M+C criteria of ACCEPTANCE_CRITERIA §38 into B32, so the same questions are asked of the living interface; (B) hold the session anyway on V1's dead interface — and he took A. Nothing is dropped: the 14 criteria become the acceptance test of V2's drawings. In the same sentence he ordered the closable B-list rows to be closed at Ferrari level.",
+    "verbatim": "A yı kabul ediorum. B listesinde kapatacaklarını FERRARİ SEVİYESİNDE KAPAT.",
+    "conditions": "The 14 criteria are not retired — B32 cannot be closed until each of them has been put to his eye on V2's drawings. The 13 machine-checkable criteria stay where they are, against whatever V2 builds.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md rows B13 and B32 · ACCEPTANCE_CRITERIA.md §4 and the acceptance record"
+  },
+  "b07-codex-56-exam-waived-ceo-vouches-2026-08-26": {
+    "date": "2026-08-26",
+    "what": "The Codex 5.6 model exam (board row B07, MODEL_ROUTING_SPEC §4c onboarding chain) is WAIVED. Shown the list of rows the author would close today, he struck this one out and put his own guarantee in its place. The §4c chain's eval step is therefore not run for this model; the model enters on the CEO's warrant. Every other §4c step and every other model keeps its exam.",
+    "verbatim": "burada codex 5.6 sınavına gerek yok onu kaldır. ben kefilim ona.",
+    "conditions": "His guarantee covers Codex 5.6 only. It does not waive the exam for any other model, it does not touch the banned roster, and it changes nothing in the company database — no write reaches the company from here (B36).",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B07 · MODEL_ROUTING_SPEC.md §4c"
   }
 }

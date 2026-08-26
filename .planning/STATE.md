@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-07-30"
+last_updated: "2026-08-26"
 session_author: opus-5
 ---
 
@@ -18,6 +18,34 @@ that contradicted itself in three places until 2026-07-30; that narrative is fro
 lives in the corpus and nowhere else. This file says only where we stand and what happens next.
 
 ## The CEO's live order
+
+**2026-08-26, MIDDAY — HE CLOSED B13 HIMSELF AND ORDERED THE REST OF THE B-LIST CLOSED "AT FERRARI
+LEVEL".** <!-- HISTORY --> His words: *"A yı kabul ediorum. B listesinde kapatacaklarını FERRARİ
+SEVİYESİNDE KAPAT."* <!-- CEO-OK: b13-folded-into-v2-design-package-2026-08-26 --> and, on the list
+he was shown: *"burada codex 5.6 sınavına gerek yok onu kaldır. ben kefilim ona."*
+<!-- CEO-OK: b07-codex-56-exam-waived-ceo-vouches-2026-08-26 -->
+
+**Two rows closed on HIS ruling.** **B13** — the V1 acceptance session — is dead, because all 27 §38
+criteria describe the interface his own ruling of 2026-08-01 killed; the **9** criteria only his eye
+can settle and the **5** that need his eye beside a machine check moved into **B32**, V2's design
+package, and B32 cannot close until each has had his eye on V2's own screens. The figure had been
+wrong in two records (both said 11; measured C = 9, M+C = 5, M = 13) and both were corrected.
+**B07** — the Codex 5.6 exam — is waived on his guarantee; §4c's own step 3 already allowed him to
+skip the eval, so this is that clause exercised, for that model only.
+
+**Five rows closed on evidence, none of them waiting on him** (⚠ author's close, not his acceptance
+— LAW B): **B19** every CI action pinned to a commit with a check that refuses a moving tag ·
+**B20** one command counts the project (79 steps · 75 done) and the ledger re-measures it ·
+**B23** the knowledge graph rebuilt (5,742 nodes) with a post-commit hook and a staleness gate ·
+**B24** the crash guard now convicts a widow on evidence rather than on a list of reapers ·
+**B38** the ops:live collector is hosted inside the one resident process and rebuilds itself when
+its connection dies.
+
+**The lesson of the day, and it nearly cost him:** the first draft of B24's new rule convicted a
+helper on a dead session leader ALONE. The full battery caught it in under a minute — a test run
+launched from a shell that has since exited leaves every process in that session with a dead leader,
+so the guard would have killed the CEO's own live work. The rule now needs both halves: the session
+leader gone AND a parent from a different session. **The battery is what caught it, not the author.**
 
 **2026-08-26 — HE CAN READ HIS OWN BOARD NOW, AND FOLLOW IT WITHOUT ASKING ANYONE.** <!-- HISTORY -->
 His order, in his own words: *"tahtayı buraya yaz demedim herşeyi görebilmem için aç dedim"* and then
@@ -566,7 +594,7 @@ context work.
 
 Waiting on him, not on the author: his approval of the design package · one hand-minted browser
 session so authenticated surfaces can be checked by eye (B03-bis) · the connector accounts (W-C42-4)
-· money for the paid model exams (B06, B09) · the acceptance session itself (B13).
+· money for the paid model exams (B06, B09). **The acceptance session (B13) is no longer on this list — he closed it 2026-08-26** (*"A yı kabul ediorum"*) and its 14 eye-criteria became B32's acceptance test. <!-- CEO-OK: b13-folded-into-v2-design-package-2026-08-26 -->
 Waiting on hardware: the workstation, and the local voice models chosen by measurement (B12).
 
 **THE WORKSTATION, AFTER THE EVENING OF 2026-08-17 — measured, not assumed.** It froze hard at
