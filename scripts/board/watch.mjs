@@ -25,13 +25,14 @@ import { fileURLToPath } from "node:url";
 const REPO = fileURLToPath(new URL("../..", import.meta.url));
 const RENDER = join(REPO, "scripts/board/render.mjs");
 
-// The three things the page is made of. The movement history is derived from
-// git rather than from a file, so a new commit matters too — .git/HEAD and the
+// The things the page is made of. The movement history is derived from git
+// rather than from a file, so a new commit matters too — .git/HEAD and the
 // board file together catch every case that changes what he sees.
+// The approval register is NOT among them any more: his order of 2026-08-26
+// took the approval ledger off this page, so nothing here reads that file.
 const IZLENEN = [
   "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md",
   "scripts/board/tr.json",
-  "scripts/governance/ceo-approvals.json",
   ".git/HEAD",
 ];
 

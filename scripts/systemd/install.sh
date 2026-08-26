@@ -47,7 +47,7 @@ cp "${SRC_DIR}/dxb-screenshot-cleanup.timer" "${UNIT_DIR}/"
 
 # 2026-08-26, on his order "takip etmek istiorm" — the readable open-work board.
 # It redraws var/board/tahta.html within a second of the board, the Turkish
-# index, his approval register or HEAD moving, so the page he keeps open is a
+# index or HEAD moving, so the page he keeps open is a
 # window rather than a photograph. Reads files, writes one HTML file, nothing else.
 cp "${SRC_DIR}/dxb-board.service" "${UNIT_DIR}/"
 

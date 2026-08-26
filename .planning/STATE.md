@@ -54,9 +54,20 @@ His order, in his own words: *"tahtayı buraya yaz demedim herşeyi görebilmem 
 lived in a 126 KB English file with cells thousands of characters long, and the owner of the company
 could not open it. A register the owner cannot read is not a register.
 **What exists now:** `scripts/board/render.mjs` reads `00-BOARD-OPEN-WORK.md` and writes
-`var/board/tahta.html` — 69 rows in Turkish, grouped by **who it waits on**, nothing truncated, his <!-- HISTORY -->
-45 approvals beside them in his own words. `pnpm tahta` opens it. **It keeps no copy of the board and
-writes nothing back to it.**
+`var/board/tahta.html` — 69 rows in Turkish, grouped by **who it waits on**, nothing truncated. <!-- HISTORY -->
+`pnpm tahta` opens it. **It keeps no copy of the board and writes nothing back to it.**
+**THE APPROVAL LEDGER IS NO LONGER ON THAT PAGE — HIS ORDER, 2026-08-26, AND IT DELETES HIS OWN
+EARLIER ONE (LAW A).** He had asked for it (*"bitenler nerede? onlar icin de bir tahta yapar misin
+… hatta bunlarin icinde olsun"*), saw it on his screen and struck it out: *"bu resimdeki altta
+bitenler ve onaylananlar kısmı var ya bunun kaldırılmasını istiorm … zaten bizde kapananlar sekmesi
+var."* The section, its filter button, its counter box, its stylesheet and the watcher's fourth
+watched file were removed, not hidden. `scripts/governance/ceo-approvals.json` is untouched and
+remains the only place his acceptances live — the page simply no longer prints it.
+**Measured after (2026-08-26, 12:21-12:23):** page 430,298 → 305,244 bytes; `data-owner="biten"` occurrences
+0; five filter buttons, each showing 12 / 8 / 39 / 10 rows and 59 open under «Hepsi»; searching
+`B12` with «Kapananlar» pressed still answers *«B12» için 1 sonuç — Ortak bölümünde 1*; no console
+error and `scrollWidth === clientWidth` at 3440×1440 and 1366×900; `tsc --build` exit 0; the
+resident watcher restarted and its own log names the three files it now watches.
 **Three faults were found ON HIS SCREEN and fixed the same night, each one his own standing rule:**
 (1) the parser read a date where a closed row's sentence should have been, so three CLOSED rows
 showed as open; (2) a 1,600 px column on his 3,440 px screen — **his own complaint C62, committed by

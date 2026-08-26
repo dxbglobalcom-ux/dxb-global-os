@@ -1,6 +1,7 @@
 # THE BOARD'S NIGHT WATCHMAN — the CEO's readable open-work board, kept current.
 # His words, 2026-08-26: "takip etmek istiorm". The page is rewritten within a
-# second of the board, the Turkish index, his approval register or HEAD moving.
+# second of the board, the Turkish index or HEAD moving. The approval register
+# was taken off this page by his order of 2026-08-26 and is no longer watched.
 # It reads files and writes one HTML file. No database, no credential, no network.
 [Unit]
 Description=DXB — the CEO's open work board, redrawn whenever the board moves

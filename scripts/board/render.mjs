@@ -34,7 +34,6 @@ import { movement } from "./movement.mjs";
 const REPO = fileURLToPath(new URL("../..", import.meta.url));
 const BOARD = join(REPO, "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md");
 const TR = join(REPO, "scripts/board/tr.json");
-const ONAY = join(REPO, "scripts/governance/ceo-approvals.json");
 const OUT = join(REPO, "var/board/tahta.html");
 
 // ------------------------------------------------------------------ the rows
@@ -220,62 +219,6 @@ function card(row, tr, hareket) {
 </article>`;
 }
 
-// --------------------------------------------------------------- what is DONE
-//
-// HIS QUESTION, 2026-08-26: "bitenler nerede? onlar icin de bir tahta yapar
-// misin ... hatta bunlarin icinde olsun."
-//
-// The board is by design the register of what is LEFT — a row leaves it when it
-// closes. So "what is finished" was nowhere he could see it. The truthful
-// source is his OWN acceptance register, scripts/governance/ceo-approvals.json:
-// LAW B says nothing is accepted until his own eye accepts it, and that file is
-// the only place his acceptances live, each with the date and HIS OWN WORDS.
-//
-// Deliberately NOT counted here: the roadmap's finished rows. Board row B20
-// records, measured, that nobody can count that file the same way twice, and a
-// number nobody can reproduce is worse than no number. The page says so rather
-// than inventing one.
-function onaylar() {
-  const raw = JSON.parse(readFileSync(ONAY, "utf8"));
-  return Object.entries(raw)
-    .filter(([k]) => !k.startsWith("_"))
-    .map(([id, v]) => ({ id, ...v }))
-    .sort((a, b) => String(b.date).localeCompare(String(a.date)) || a.id.localeCompare(b.id));
-}
-
-function gunEtiketi(iso) {
-  const g = daysSince(iso);
-  if (g === null) return "";
-  if (g <= 0) return `<span class="bugun">BUGÜN</span>`;
-  if (g === 1) return `<span class="bugun dun">DÜN</span>`;
-  return `<span class="yas">${g} gün önce</span>`;
-}
-
-function onayKarti(o) {
-  const sozu = o.verbatim
-    ? `<blockquote class="sozu">${esc(o.verbatim)}</blockquote>`
-    : `<div class="uyari">⚠ Bu onayın sizin kendi cümleniz kayda geçmemiş — aşağıda yalnız kaydın kendi tarifi var.</div>`;
-  return `
-<article class="satir onay" data-owner="biten" data-id="${esc(o.id)}" data-ara="${esc(((o.verbatim || "") + " " + (o.what || "") + " " + o.id).toLowerCase())}">
-  <header class="ust">
-    <span class="rozet biten">ONAYLADINIZ</span>
-    <span class="tarih">${esc(String(o.date || "tarihsiz"))}</span>
-    ${gunEtiketi(String(o.date || ""))}
-  </header>
-  ${sozu}
-  <details>
-    <summary>Bu onayın tamamını aç</summary>
-    <div class="tam">
-      <p class="dilnot">Aşağısı onay defterinin kendi metnidir — kayıt dili İngilizcedir.</p>
-      <h4>Neyi onayladınız</h4><p>${md(String(o.what || "—"))}</p>
-      ${o.conditions ? `<h4>Şartınız</h4><p>${md(String(o.conditions))}</p>` : ""}
-      ${o.where ? `<h4>Kaydı nerede duruyor</h4><p>${md(String(o.where))}</p>` : ""}
-      <h4>Onayın kimliği</h4><p><code>${esc(o.id)}</code></p>
-    </div>
-  </details>
-</article>`;
-}
-
 // ----------------------------------------------------------------------- main
 const text = readFileSync(BOARD, "utf8");
 const rows = parse(text);
@@ -283,10 +226,6 @@ const tr = existsSync(TR) ? JSON.parse(readFileSync(TR, "utf8")) : {};
 
 const groups = { ceo: [], ortak: [], yazar: [], kapandi: [] };
 for (const r of rows) groups[owner(r)].push(r);
-
-const ONAYLAR = onaylar();
-const bugunOnay = ONAYLAR.filter((o) => daysSince(String(o.date || "")) === 0).length;
-const dunOnay = ONAYLAR.filter((o) => daysSince(String(o.date || "")) === 1).length;
 
 const sayim = {
   toplam: rows.length,
@@ -297,9 +236,6 @@ const sayim = {
   kapandi: groups.kapandi.length,
   ceviriYok: rows.filter((r) => !tr[r.id]).length,
   ceviriEski: rows.filter((r) => tr[r.id] && tr[r.id].hash !== fingerprint(r.body)).length,
-  onay: ONAYLAR.length,
-  bugunOnay,
-  dunOnay,
 };
 
 const HAREKET = movement({ refresh: process.argv.includes("--movement-refresh") }).hareket;
@@ -369,16 +305,7 @@ h2{font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--alti
 .rozet{font-size:11px;letter-spacing:.1em;padding:3px 10px;border-radius:999px;
   border:1px solid currentColor;text-transform:uppercase}
 .rozet.ceo{color:var(--ceo)} .rozet.ortak{color:var(--ortak)}
-.rozet.yazar{color:var(--yazar)} .rozet.kapandi{color:var(--kapandi)} .rozet.biten{color:var(--bitti)}
-.satir[data-owner=biten]{border-left-color:var(--bitti)}
-.kutu.bitti .sayi{color:var(--bitti)}
-.bugun{margin-left:auto;background:var(--bitti);color:#0a0c10;font-weight:700;
-  font-size:11px;letter-spacing:.1em;padding:3px 10px;border-radius:999px}
-.bugun.dun{background:var(--ortak)}
-.sozu{margin:12px 0 8px;padding:12px 16px;border-left:3px solid var(--bitti);
-  background:rgba(122,182,138,.07);border-radius:0 8px 8px 0;font-size:15.5px;
-  line-height:1.65;color:var(--metin);overflow-wrap:anywhere}
-.sozu::before{content:"« "}.sozu::after{content:" »"}
+.rozet.yazar{color:var(--yazar)} .rozet.kapandi{color:var(--kapandi)}
 .kimlik{font-weight:700;color:var(--metin);letter-spacing:.06em}
 .yas{margin-left:auto}
 .baslik{font-size:18px;font-weight:600;margin:10px 0 8px;line-height:1.45}
@@ -428,7 +355,6 @@ details[open] summary{color:var(--altin2)}
     <div class="kutu"><div class="sayi">${sayim.ortak}</div><div class="ad">ortak</div></div>
     <div class="kutu"><div class="sayi">${sayim.yazar}</div><div class="ad">beni bekliyor</div></div>
     <div class="kutu"><div class="sayi">${sayim.kapandi}</div><div class="ad">tahtada kapandı</div></div>
-    <div class="kutu bitti"><div class="sayi">${sayim.onay}</div><div class="ad">onayladığınız iş</div></div>
   </div>
   <p class="altyazi" style="margin-top:14px">Okunduğu an: <b>${CLOCK}</b>${
     sayim.ceviriYok || sayim.ceviriEski
@@ -443,7 +369,6 @@ details[open] summary{color:var(--altin2)}
   <button class="f" data-f="ortak" aria-pressed="false">Ortak</button>
   <button class="f" data-f="yazar" aria-pressed="false">Beni bekleyenler</button>
   <button class="f" data-f="kapandi" aria-pressed="false">Kapananlar</button>
-  <button class="f" data-f="biten" aria-pressed="false">Bitenler — onayladıklarınız</button>
   <input class="ara" type="search" placeholder="Ara — kelime, satır numarası (B39, C60), kişi…">
   <button class="f" id="hepsiniAc">Bütün satırları aç</button>
 </div>
@@ -454,20 +379,6 @@ ${bolum("ceo", "Sizi bekleyenler", "Bunlar bende değil, sizde. Bir cümlenizle 
 ${bolum("ortak", "Ortak — ben yaparım, onayı sizin", "İşi ben yaparım; kararı, onayı veya parayı siz verirsiniz.")}
 ${bolum("yazar", "Beni bekleyenler", "Sizden hiçbir şey beklemiyor. Bunlar benim işim; sıra bende.")}
 ${bolum("kapandi", "Tahtada kapanan satırlar", "Bitmiş ve kaydı kanıtıyla duran satırlar. Bir satır kapanınca tahtadan silinmez — kanıtıyla birlikte burada durur.")}
-
-<section id="bitenler"><h2>Bitenler — sizin kendi onay defteriniz <span class="adet">${sayim.onay}</span></h2>
-  <p class="aciklama">
-    Tahta "ne kaldı" sorusunun cevabıdır; bir iş bitince oradan çıkar. <b>"Ne bitti" sorusunun tek doğru cevabı ise bu defterdir:</b>
-    KANUN B gereği hiçbir iş siz kendi gözünüzle bakıp «tamam» demeden bitmiş sayılmaz, ve bu defter sizin
-    o «tamam»larınızın tamamını tutar — tarihiyle ve <b>sizin kendi cümlenizle</b>.
-    En yenisi üstte. ${sayim.bugunOnay > 0 ? `<b>Bugün: ${sayim.bugunOnay} onay.</b>` : `Bugün henüz yeni bir onayınız yok.`}
-    ${sayim.dunOnay > 0 ? `Dün: ${sayim.dunOnay}.` : ""}
-    <br><b>Burada olmayan bir şey var ve bilerek yok:</b> yol haritasındaki bitmiş satırların sayısı.
-    O dosyanın durumu makineyle okunamıyor, her oturum başka sayı çıkarıyor — tahtadaki <b>B20</b> satırı tam olarak bunu düzeltmek için açık.
-    Kimsenin tekrar üretemeyeceği bir sayıyı size vermektense hiç vermemeyi seçtim.
-  </p>
-  <div class="liste">${ONAYLAR.map(onayKarti).join("")}</div>
-</section>
 
 <p class="dip">
 Kaynak: <code>HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md</code> ·
@@ -488,24 +399,24 @@ let suzgec = 'hepsi';
 
 const BOLUM_ADI = {
   ceo: 'Sizi bekleyenler', ortak: 'Ortak', yazar: 'Beni bekleyenler',
-  kapandi: 'Tahtada kapananlar', biten: 'Bitenler — onay defteriniz',
+  kapandi: 'Tahtada kapananlar',
 };
 
 function uygula(){
   const q = arama.value.trim().toLowerCase();
 
   // ARAMA FİLTREYE TAKILMAZ. Measured on his own screen, 2026-08-26: he typed
-  // "B12" while the "Bitenler" button was pressed, and the page showed him
-  // nothing — B12 is an open row and the filter was hiding it. A search is a
-  // lookup, not a subset of whatever button happens to be pressed, so a
-  // non-empty search looks EVERYWHERE and then says where it found things.
+  // "B12" with a filter button pressed that did not contain it, and the page
+  // showed him nothing. A search is a lookup, not a subset of whatever button
+  // happens to be pressed, so a non-empty search looks EVERYWHERE and then
+  // says where it found things.
   const ariyor = q.length > 0;
   const bulunan = {};
   for (const s of satirlar){
     const eslesme = !q || s.dataset.ara.includes(q);
     const sahip = ariyor
       ? true
-      : (suzgec === 'hepsi' ? (s.dataset.owner !== 'kapandi' && s.dataset.owner !== 'biten')
+      : (suzgec === 'hepsi' ? s.dataset.owner !== 'kapandi'
                             : s.dataset.owner === suzgec);
     const goster = sahip && eslesme;
     s.style.display = goster ? '' : 'none';
