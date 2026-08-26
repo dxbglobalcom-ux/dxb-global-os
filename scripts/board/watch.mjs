@@ -26,13 +26,21 @@ const REPO = fileURLToPath(new URL("../..", import.meta.url));
 const RENDER = join(REPO, "scripts/board/render.mjs");
 
 // The things the page is made of. The movement history is derived from git
-// rather than from a file, so a new commit matters too — .git/HEAD and the
-// board file together catch every case that changes what he sees.
+// rather than from a file, so a new commit matters too.
+//
+// AND IT IS .git/logs/HEAD, NOT .git/HEAD. Measured 2026-08-26 12:24: a commit
+// was made, the page was NOT redrawn, and .git/HEAD's own mtime still read
+// 2026-07-05 — it holds the words "ref: refs/heads/master" and git does not
+// rewrite it to commit. The reflog is appended on every HEAD movement there is
+// (commit, checkout, reset, merge, rebase), so that is the file to watch.
+// .git/HEAD stays beside it for the case where reflogs are switched off.
+//
 // The approval register is NOT among them any more: his order of 2026-08-26
 // took the approval ledger off this page, so nothing here reads that file.
 const IZLENEN = [
   "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md",
   "scripts/board/tr.json",
+  ".git/logs/HEAD",
   ".git/HEAD",
 ];
 
