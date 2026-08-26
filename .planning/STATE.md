@@ -67,7 +67,17 @@ remains the only place his acceptances live — the page simply no longer prints
 0; five filter buttons, each showing 12 / 8 / 39 / 10 rows and 59 open under «Hepsi»; searching
 `B12` with «Kapananlar» pressed still answers *«B12» için 1 sonuç — Ortak bölümünde 1*; no console
 error and `scrollWidth === clientWidth` at 3440×1440 and 1366×900; `tsc --build` exit 0; the
-resident watcher restarted and its own log names the three files it now watches.
+resident watcher restarted and its own log names the files it now watches.
+**AND PROVING IT EXPOSED A SECOND DEFECT IN LAST NIGHT'S WORK, FIXED THE SAME TURN.** The commit
+that carried this change did NOT redraw his page: the watchman's fourth file was `.git/HEAD`, and
+git never rewrites it to commit — it holds the words `ref: refs/heads/master`, and its own mtime
+still read **2026-07-05 16:06:04** while the commit landed at **12:24:11.698948315**. So the
+movement line every row prints (*"son hareket … toplam N hareket"*, which is derived from git)
+stayed at the previous commit until something else happened to move. `.git/logs/HEAD` — the reflog,
+appended on every HEAD movement there is — is watched now, `.git/HEAD` kept beside it for the case
+where reflogs are switched off. **Proven on the live machine:** the next commit at 12:25 was
+followed by `[tahta] 2026-08-26 12:25:10 · .git/logs/HEAD` in the watcher's own log and the page's
+timestamp moved with it.
 **Three faults were found ON HIS SCREEN and fixed the same night, each one his own standing rule:**
 (1) the parser read a date where a closed row's sentence should have been, so three CLOSED rows
 showed as open; (2) a 1,600 px column on his 3,440 px screen — **his own complaint C62, committed by
