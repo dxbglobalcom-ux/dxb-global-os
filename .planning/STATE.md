@@ -121,6 +121,31 @@ measured and written below. What is left is his word on what happens to the mach
 Read the measurement below before touching it; do not re-measure what is already written here, and
 do not put any of the accepted work back in front of him.
 
+**2026-08-27 — HE ASKED WHETHER THE RENTED BOX IS NEEDED AT ALL, AND ANSWERING IT UNCOVERED A
+THIRTEEN-NIGHT HOLE IN THE HOLDING'S OWN BACKUP.** His question, in his own words: *"bu vps te bize
+bu süreçte baştan sonra lazım mı veya nerede artık lazım olacak … tahtaya bakarak."*
+**The answer measured off the board itself: of 57 open rows, exactly THREE touch that server — B09,
+B10, B11 — and all three exist BECAUSE it exists** (Hermes's brain, Hermes's invisibility, the box's
+own setup debt). Nothing else on the board needs an internet-facing machine; everything else runs on
+the workstation, which is home by his own ruling of 2026-08-25 (*"İş istasyonu evdir"*, 30 GB RAM ·
+24 threads · 1.8 TB). **But the same account's SECOND product is not optional:** Storage Box
+`dxb-backup-1` (3.81 EUR/month) carries the company's own dumps and is the only copy of the holding
+that is not on one desk.
+**AND IT HAD STOPPED.** Measured 2026-08-27: **no crontab for this user, no `dxb` timer of any kind,
+last automatic dump 2026-08-13** — the Storage Box's own listing agrees (`dxb-laptop-2026-08-13.dump`,
+then only two dumps taken by hand). The move to the workstation (row B29) carried the repository, the
+database, the keys and the toolchain and left the SCHEDULE on the X230: the script's own header still
+installs its cron line under `/home/ghost`. **Closed at source the same turn:** `dxb-backup.timer` +
+`dxb-backup.service`, 02:30 nightly, `Persistent=true` so a sleeping machine runs at next boot instead
+of skipping in silence; sources in `scripts/systemd/`, wired into `scripts/systemd/install.sh`.
+**Proven under systemd, not by hand:** `Result=success` · `ExecMainStatus=0` ·
+`BACKUP_OK 2026-08-27 14,628,245 bytes` · `OFFSITE_OK 2026-08-27`, the line above it in the same log
+reading `OFFSITE_OK 2026-08-13`. Company re-measured after: **94 tables · 205 agents · 21
+departments**; the dump being smaller than August's (14.6 MB against 23.6) is B36's separation having
+taken the construction residue out, not loss.
+**THE SERVER'S OWN FATE IS STILL HIS** — it waits on his word, and nothing on that account moves
+without it.
+
 **2026-08-26 — HE PAID IT, THE BOX IS BACK, AND THE LAST UNREADABLE THING IS READ.**
 Invoice `080001075196`, **14.22 EUR**, dated 2026-08-02, reads `settled` on his own screen.
 **Measured minutes later, not assumed:** `ipv4.blocked = false` · `ipv6.blocked = false` · server

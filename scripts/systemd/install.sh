@@ -51,11 +51,22 @@ cp "${SRC_DIR}/dxb-screenshot-cleanup.timer" "${UNIT_DIR}/"
 # window rather than a photograph. Reads files, writes one HTML file, nothing else.
 cp "${SRC_DIR}/dxb-board.service" "${UNIT_DIR}/"
 
+# 2026-08-27 — the holding's nightly copy, RESTORED after the move to the
+# workstation left its schedule behind on the X230 (the script's own header still
+# installs a cron line under /home/ghost). Measured that day: no crontab for this
+# user, no dxb timer, last automatic dump 2026-08-13 — thirteen nights in which
+# the company existed on one desk and nowhere else.
+cp "${SRC_DIR}/dxb-backup.service" "${UNIT_DIR}/"
+cp "${SRC_DIR}/dxb-backup.timer" "${UNIT_DIR}/"
+
 systemctl --user daemon-reload
 systemctl --user enable dxb-scheduler.service dxb-jarvis.service dxb-company-read.service dxb-board.service
 # A oneshot unit is enabled by its TIMER, never by itself.
 systemctl --user reset-failed dxb-screenshot-cleanup.service 2>/dev/null || true
 systemctl --user enable --now dxb-screenshot-cleanup.timer
+# A oneshot unit is enabled by its TIMER, never by itself (same rule as above).
+systemctl --user reset-failed dxb-backup.service 2>/dev/null || true
+systemctl --user enable --now dxb-backup.timer
 systemctl --user restart dxb-scheduler.service
 systemctl --user restart dxb-jarvis.service
 systemctl --user restart dxb-company-read.service
@@ -70,4 +81,4 @@ systemctl --user --no-pager --lines 3 status dxb-scheduler.service || true
 systemctl --user --no-pager --lines 3 status dxb-jarvis.service || true
 systemctl --user --no-pager --lines 3 status dxb-company-read.service || true
 systemctl --user --no-pager --lines 3 status dxb-board.service || true
-systemctl --user --no-pager list-timers dxb-screenshot-cleanup.timer || true
+systemctl --user --no-pager list-timers dxb-screenshot-cleanup.timer dxb-backup.timer || true

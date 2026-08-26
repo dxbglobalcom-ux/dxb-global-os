@@ -1,0 +1,23 @@
+# THE HOLDING'S DAILY COPY — systemd USER unit (install: scripts/systemd/install.sh).
+#
+# WHY IT EXISTS, and it is a repair, not a new idea. The company's database was
+# dumped nightly and shipped to the Hetzner Storage Box from 2026-07-18. The
+# move to the workstation (board row B29) carried the repository, the database,
+# the keys and the toolchain — and left the SCHEDULE behind on the X230: the
+# script's own header still installs a cron line under /home/ghost. Measured
+# 2026-08-27: no crontab for this user, no dxb timer of any kind, and the last
+# automatic dump was 2026-08-13. Thirteen days in which the holding existed on
+# one desk and nowhere else.
+#
+# It writes a custom-format pg_dump of the COMPANY engine
+# (supabase_db_DxB_Global_OS) to ~/backups/dxb, copies it to the Storage Box
+# over the `dxb-storagebox` SSH host block, and prunes local copies older than
+# 14 days. It opens no other door and carries no credential of its own.
+[Unit]
+Description=DXB — daily dump of the holding's database, with the off-site copy
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash "%h/DxB Global OS/scripts/backup/laptop-pg-dump.sh"
+StandardOutput=append:%h/backups/dxb/backup.log
+StandardError=append:%h/backups/dxb/backup.log

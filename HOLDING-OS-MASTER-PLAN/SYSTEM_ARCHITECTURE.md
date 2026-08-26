@@ -85,24 +85,43 @@ Hamza, zamanlayıcı ve panel bu makinede çalışır: **30 GB RAM · 24 iş par
 1,8 TB NVMe**, ölçüm anında yük 0,32-0,55 (`free -h`, `lscpu`, `uptime`). Eski "8 GB kutu"
 varsayımı burada geçerli değildir ve R5'in gerekçesi yukarıda düzeltilmiştir.
 
-**KİRALIK KUTU — ölçüldü 2026-08-25, ve durumu bir AÇIK SORUDUR (tahta satırı B39).** Hetzner'in
-kendi kaydı: `dxb-vps-1`, ID 149310629, **cx33 · 4 vCPU · 8 GB · 80 GB**, nbg1, Ubuntu 24.04,
-2026-07-09'dan beri ayakta (47 gün), durum **running**, IPv4 `46.225.89.249`, Hetzner tarafında
-**hiç güvenlik duvarı kuralı yok** (`hcloud server describe`, `hcloud firewall list`).
-**SEBEP: ÖDENMEMİŞ FATURA (CEO, 2026-08-25 — Hetzner'in gönderdiği postada *"Services blocked"* ve
-*"last warning for payment"* yazıyor).** Hetzner kutunun her iki IP adresini de kapatmış:
-`public_net.ipv4.blocked = true`, IPv6 aynı. ⚠ Yazar önce bu alanın kendi API tanımına bakıp
-(*"If the IP is blocked by our anti abuse dept"*) sebebi kötüye kullanım sanmıştı; **CEO'nun okuduğu
-posta bunu siler (KANUN A)**. Aynı hesaptaki Storage Box `dxb-backup-1` de `locked` durumda.
-İz sürme kapatmayı bağımsız doğruluyor: paketler
-**Hetzner'in kendi ağının içinde**, yedinci sıçramada ölüyor, makineye hiç ulaşmıyor.
-**Makine sağlıklı:** konsolu `Ubuntu 24.04.4 LTS dxb-vps-1` temiz giriş satırını gösteriyor.
-İşlemci 30 gün boyunca aralıksız yaklaşık bir çekirdek yakıyor (%48-133 / 400) ve disk durmadan
-yazıyor (~14-17 işlem/sn); **ağ ise sessiz — saniyede 1 paket, ~100 bayt** (kapatma yüzünden).
-Buradan **hiçbir kapısına ulaşılamıyor**: ICMP yanıtsız, 22 · 80 · 443 zaman aşımı,
-`https://dxbglobal.online/health` cevapsız (alan adı doğru IP'ye çözülüyor).
-**⚠ Ne çalıştırdığı hâlâ ÖLÇÜLEMEDİ** — kalan tek kapı konsol, o da bilerek hiç oluşturulmamış bir
-parola istiyor (yalnız-anahtar SSH, root girişi kapalı). Karar CEO'ya aittir (tahta satırı B39).
+**KİRALIK KUTU — 2026-08-26/27'de ödendi, geri geldi ve İÇİ OKUNDU; kaderi hâlâ CEO'nun kararıdır
+(tahta satırı B39).** Hetzner'in kendi kaydı: `dxb-vps-1`, ID 149310629, **cx33 · 4 vCPU · 8 GB ·
+80 GB**, nbg1, Ubuntu 24.04, 2026-07-09'dan beri ayakta, durum **running**, IPv4 `46.225.89.249`,
+Hetzner tarafında hiç güvenlik duvarı kuralı yok. **Ağ kapatması kalktı:** CEO `080001075196` numaralı
+**14,22 €**'luk faturayı ödedi (ekranında `settled`), ardından ölçüldü — `ipv4.blocked = false`,
+`ipv6.blocked = false`, Storage Box `dxb-backup-1` `status: active`, 3/3 ping 30 ms,
+`https://dxbglobal.online/health` → **200 `ok`**, geçerli sertifikayla, kutunun kendi adresinden.
+Bloka dair yazılmış her cümle — kapalı IP'ler, ulaşılamayan kapılar, *"ne çalıştırdığı ölçülemedi"* —
+harcanmıştır ve **silinmiştir (KANUN A)**.
+
+**BİR ÇEKİRDEĞİ 47 GÜN BOYUNCA NE YAKTI — CEVAP:** kutuya kimse girmedi; **kendi zamanlayıcımız**.
+`dxb-outbox-1` içinde `boss.work(QUEUES.intentIntake)`, `drainIntents()` çağırır ve işi bir `finally`
+bloğunda yeniden kurar (`packages/outbox-executor/src/scheduler.ts:415-421`) — bu kasıtlıdır, bir hata
+CEO'nun emrini asla yolda bırakmasın diye. **O kutuda hata kalıcıdır:** iş `intents` tablosunu ister,
+kutunun veritabanında `public` şemasında **17 tablo** vardır ve göç defteri hiç yoktur; `intents` ise
+bir gün sonrasının dosyasında doğar (`db/migrations/20260710000016_intents_intake.sql`). Her başarısız
+iş sebebi kendi üstünde taşır: `42P01 relation "intents" does not exist`. **Tam 60 saniyede ölçüldü:
+dakikada +30 iş satırı** (10'u denenip başarısız, 20'si asla erimeyecek yığına) → **617.964 bekleyen ·
+107.463 başarısız · 725.428 satır**, 1.071.095 satırlık ve **509 MB'lık veritabanının 492 MB'ı**.
+**Saldırgan yok, ölçümle:** yalnız 22 · 80 · 443 dinlemede; `last` 2026-07-09 açılışından bu yana
+**hiç elle giriş göstermiyor**; 48 günde **0** başarısız SSH şifresi; dokuz kapsayıcı bizim
+kurduğumuz dokuz, `restarts=0`; tek cron satırı kendi `pg_dump.sh`'ımız.
+Kutunun SSH kimlik parmak izi artık `vps/README.md`'de kayıtlıdır.
+⛔ O hesapta CEO'nun günün sözü olmadan hiçbir şey durdurulmaz, düzeltilmez, kurulmaz, kapatılmaz
+veya silinmez — döngü bu satır yazılırken hâlâ dönüyordu.
+
+**AYNI HESABIN İKİNCİ ÜRÜNÜ BİR LÜKS DEĞİL, HOLDİNGİN TEK DIŞ KOPYASIDIR.** Storage Box
+`dxb-backup-1` (bx11, fsn1, 3,81 €/ay) şirketin kendi `pg_dump` kopyalarını taşır —
+`backups/pg/dxb-laptop-*.dump`, 2026-07-18'den beri. **Ölçüldü 2026-08-27: en son otomatik kopya
+2026-08-13'tü.** İş istasyonuna taşınma (tahta satırı B29) depoyu, veritabanını, anahtarları ve alet
+zincirini getirdi; **gece kopyasının ZAMANLAMASINI getirmedi** — betiğin kendi başlığı hâlâ
+`/home/ghost` altına bir cron satırı kuruyor, bu kullanıcının hiç crontab'ı yok ve hiç `dxb` timer'ı
+yoktu. **On üç gece boyunca holding tek bir masanın üstünde ve başka hiçbir yerde var olmadı.**
+Onarıldı: `dxb-backup.timer` + `dxb-backup.service` (her gece 02:30, `Persistent=true`), kaynağı
+`scripts/systemd/`, kurulumu `scripts/systemd/install.sh`. Kanıt: `Result=success`,
+`ExecMainStatus=0`, `BACKUP_OK 2026-08-27 14.628.245 bayt` + `OFFSITE_OK 2026-08-27`, bir önceki
+satırı `OFFSITE_OK 2026-08-13`.
 
 **KAYITLI UYARLAMA — B36, 2026-08-23…25: HER ŞEY KENDİ VERİ TABANINA YAZAR.** CEO'nun kendi
 cümlesi (2026-08-25, `b36-block5-residue-and-two-databases-2026-08-25`): *"Şirkette iş yapıldı mı

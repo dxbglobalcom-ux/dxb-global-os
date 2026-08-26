@@ -1,0 +1,17 @@
+# 02:30 every night, the hour the old cron line used, so the record and the
+# machine say the same thing.
+#
+# Persistent=true is the whole point on a workstation that is not always on: if
+# the machine was asleep at 02:30, the dump runs at the next boot instead of
+# being silently skipped. A backup that quietly does not happen is worse than no
+# backup, because it is believed.
+[Unit]
+Description=DXB — nightly holding backup at 02:30
+
+[Timer]
+OnCalendar=*-*-* 02:30:00
+Persistent=true
+RandomizedDelaySec=5m
+
+[Install]
+WantedBy=timers.target
