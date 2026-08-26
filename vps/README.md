@@ -75,3 +75,31 @@ via `git archive`); secrets ONLY in `/opt/dxb/vps/.env` (0600, generated on the 
   catching the box up is worth doing, or the box is given up, is the CEO's.
   ⛔ Nothing on this account is stopped, fixed, reset, rebuilt, shut down or deleted without his
   word on the day.
+
+## STOPPED ON HIS ORDER, 2026-08-27 — and how it comes back
+
+*"elbette döngüyü durdur."* The stack that carried the futile loop is **stopped and disabled**, not
+deleted: `systemctl stop dxb-stack` + `systemctl disable dxb-stack` → `inactive` / `disabled`, so a
+reboot does not bring it back either.
+
+**Measured across the stop, on the box itself:**
+
+| | before (23:36:03) | after (23:36:30 → 23:37) |
+|---|---|---|
+| running containers | 9 | **0** |
+| CPU | 12.1 % user + 2.2 % sys, 85.6 % idle | **0.2 % + 0.2 %, 99.7 % idle** |
+| load average (1 min) | 0.86 | **0.49** and falling |
+| disk writes / interrupts | ~177 blk/s · 1,882 int/s | **102 blk/s · 99 int/s** |
+| `intent-intake` rows | 727,195 (growing +30/min) | frozen — the queue's own engine is down |
+
+**What stayed up, deliberately:** the box's public face — `https://dxbglobal.online/health` still
+answers **200 `ok`** over a valid certificate from `46.225.89.249`, because `/health` is a static
+`respond "ok" 200` in `/etc/caddy/Caddyfile` and never depended on the stack. `hermes.service` is
+still `active` and quiet (0.2 % CPU, no error loop — its last log line is this morning's startup).
+
+**One consequence was closed in the same turn:** the box's nightly `pg_dump` cron would now fail
+every night against a database container that no longer runs. It is **commented out, not deleted**,
+with the reason on the line above it — remove the `#` to restore it.
+
+**To bring the whole thing back:** `sudo systemctl enable --now dxb-stack`, then uncomment the cron
+line. Nothing was deleted, so this is a one-command reversal.

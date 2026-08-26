@@ -121,6 +121,30 @@ measured and written below. What is left is his word on what happens to the mach
 Read the measurement below before touching it; do not re-measure what is already written here, and
 do not put any of the accepted work back in front of him.
 
+**2026-08-27 — HE GAVE THE WORD AND THE LOOP IS STOPPED. MEASURED ACROSS THE STOP, NOT CLAIMED.**
+*"elbette döngüyü durdur."* `systemctl stop dxb-stack` + `systemctl disable dxb-stack` →
+`inactive` / `disabled`, so a reboot does not bring it back either.
+
+| | before (23:36:03) | after (23:36:30 → 23:37) |
+|---|---|---|
+| running containers | 9 | **0** |
+| CPU | 12.1 % user + 2.2 % sys, 85.6 % idle | **0.2 % + 0.2 %, 99.7 % idle** |
+| load average (1 min) | 0.86 | **0.49** and falling |
+| disk writes · interrupts | 177 blk/s · 1,882 int/s | **102 blk/s · 99 int/s** |
+| `intent-intake` rows | 727,195, growing +30/min | frozen — the queue's engine is down |
+
+**What stayed up on purpose:** `https://dxbglobal.online/health` still answers **200 `ok`** over a
+valid certificate from `46.225.89.249` — `/health` is a static `respond "ok" 200` in
+`/etc/caddy/Caddyfile` and never depended on the stack. `hermes.service` is still `active` and quiet
+(0.2 % CPU, no error loop). **One consequence was closed in the same turn:** the box's nightly
+`pg_dump` cron could now only fail against a database container that no longer runs, so it is
+**commented out, not deleted**, with the reason on the line above it. **Nothing was deleted and the
+reversal is one command:** `sudo systemctl enable --now dxb-stack` + uncomment the cron.
+
+⛔ **THE COPY ITSELF IS UNTOUCHED AND WAITS ON HIM.** He ASKED, he did not order:
+*"vps teki kopyayı silelim mi herşey kurulunca sıfırını yükler"*. Wiping the 2026-07-09 stack and its
+data off the box is a separate act, and no part of it happens without his word on the day.
+
 **2026-08-27 — HE ASKED WHETHER THE RENTED BOX IS NEEDED AT ALL, AND ANSWERING IT UNCOVERED A
 THIRTEEN-NIGHT HOLE IN THE HOLDING'S OWN BACKUP.** His question, in his own words: *"bu vps te bize
 bu süreçte baştan sonra lazım mı veya nerede artık lazım olacak … tahtaya bakarak."*
