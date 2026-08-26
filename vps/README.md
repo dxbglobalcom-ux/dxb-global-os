@@ -51,3 +51,27 @@ via `git archive`); secrets ONLY in `/opt/dxb/vps/.env` (0600, generated on the 
 - `_realtime` schema created manually (upstream init script isn't in the standalone image).
 - kong 2.8.1 (local CLI parity): `_format_version: '2.1'` single-quoted (survives env-subst), websocket via plain http upgrade, 2 nginx workers.
 - LiteLLM v1.91 real memory ~1.0GiB steady (master's 300–500MB line was optimistic) — mem_limit 1536m.
+
+## The box's own identity, and the 47-day core burn (2026-08-26)
+
+- **SSH host key, recorded here because it never was.** `SHA256:CK2DtESZwUHS1RdrNs2C2UpQkFa3Om3m4jCeB09LcIM`
+  (ed25519, read with `ssh-keyscan` on 2026-08-26). Until this line existed the first connection from
+  any machine was blind trust; check against it from now on. ⚠ It was itself accepted on first
+  contact — the corroboration is that the same address serves a valid Let's Encrypt certificate for
+  `dxbglobal.online` and answers `/health` with `200 ok`.
+- **Why one core burned from boot until 2026-08-26, and it is not an intruder.** `dxb-outbox-1` runs
+  `boss.work(QUEUES.intentIntake)`, which calls `drainIntents()` and re-arms the job in a `finally`
+  (`packages/outbox-executor/src/scheduler.ts:415-421`) so a throw can never orphan a CEO intent. On
+  this box the throw is permanent: the box's database stops at migration `20260709000012`, and the
+  table `intents` is created by `20260710000016_intents_intake.sql` — one day later. Every failure
+  carries `42P01 relation "intents" does not exist`. Fail → re-arm → fail, forever.
+  **Measured over 60 s: +30 job rows a minute** (10 failed, 20 net onto the backlog) →
+  617,964 waiting · 107,463 failed · 725,428 `intent-intake` rows, inside 1,071,095 rows and
+  **492 MB of a 509 MB database**, dumped nightly and shipped off-site.
+- **Deploying the missing migrations would end it.** How far behind cannot be counted exactly: the
+  box carries no migration ledger table (`schema_migrations`, `migrations`, `_dxb_migrations` all
+  absent), so what is measured is **17 tables in `public`** against **158 files in `db/migrations`**,
+  and the fact that `intents` — created by the 16th of those files — is not among them. Whether
+  catching the box up is worth doing, or the box is given up, is the CEO's.
+  ⛔ Nothing on this account is stopped, fixed, reset, rebuilt, shut down or deleted without his
+  word on the day.

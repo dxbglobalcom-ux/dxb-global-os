@@ -114,85 +114,48 @@ database and leaves this machine never.
 diye karşıma çıkmasın."*
 
 **SO THE FIRST REPLY OF THE NEXT SESSION SAYS EXACTLY THIS AND NOTHING LONGER: everything built on
-2026-08-25 is ACCEPTED and closed — it is never listed to him again as work waiting on him — and
-there is ONE job today, which he booked himself: the rented Hetzner box and its unpaid invoice.**
+2026-08-25 is ACCEPTED and closed — it is never listed to him again as work waiting on him — and the
+one job he booked himself, the rented Hetzner box, is DONE except for one decision that is his.**
+He paid the invoice on 2026-08-26, the box came back, and the reason it burned a core for 47 days is
+measured and written below. What is left is his word on what happens to the machine now.
 Read the measurement below before touching it; do not re-measure what is already written here, and
 do not put any of the accepted work back in front of him.
 
-⛔ **NOTHING ON THAT HETZNER ACCOUNT IS PAID, RESET, REBUILT, SHUT DOWN OR DELETED WITHOUT HIS WORD
-ON THE DAY.** <!-- OPEN: B39 --> The invoice is his to settle; every other step waits on that.
+**2026-08-26 — HE PAID IT, THE BOX IS BACK, AND THE LAST UNREADABLE THING IS READ.**
+Invoice `080001075196`, **14.22 EUR**, dated 2026-08-02, reads `settled` on his own screen.
+**Measured minutes later, not assumed:** `ipv4.blocked = false` · `ipv6.blocked = false` · server
+`running` · Storage Box `dxb-backup-1` `status: active` (it read `locked` yesterday) · 3 of 3 pings
+answered at 30 ms · `https://dxbglobal.online/health` → **200 `ok`** on a valid certificate served
+from **46.225.89.249**, the box's own address. Everything written above this line about the block,
+the unpaid invoice and the three-way choice is spent and has been deleted from board row B39 (LAW A).
 
-**2026-08-25 — THE RENTED BOX WAS OPENED AND LOOKED INTO, ON HIS APPROVED ORDER. THE ANSWER IS IN.** <!-- OPEN: B39 -->
-*"A şıkkını onaylıyorum, önce içeride ne var gör."* — approval `ceo-vps-look-inside-first-2026-08-25`.
+**WHY ONE CORE BURNED FOR 47 DAYS — ANSWERED. NOTHING TOOK THAT MACHINE OVER; IT HAS BEEN FAILING AT
+ITS OWN ERRAND.** Entered over SSH on his approved order (`ceo-vps-look-inside-first-2026-08-25`),
+read-only, nothing changed. The burner is `dxb-outbox-1`, our own scheduler:
+`boss.work(QUEUES.intentIntake)` calls `drainIntents()` and re-arms the job inside a `finally`
+(`packages/outbox-executor/src/scheduler.ts:415-421`) — the re-arm is deliberate, so a throw can
+never orphan a CEO intent. On THIS box the throw is permanent: the job asks for the table `intents`,
+and the box's database has **17 public tables** with migrations stopping at `20260709000012`, while
+`intents` is born a day later in `db/migrations/20260710000016_intents_intake.sql`. Every failed job
+carries the reason verbatim: `42P01 relation "intents" does not exist`. Fail → re-arm → fail.
+**Measured over exactly 60 seconds (box clock 22:40): +30 job rows a minute** — 10 executed-and-failed,
+**20 net onto a backlog that can never drain**. The pile: **617,964 waiting · 107,463 failed ·
+725,428 intent-intake rows**, inside **1,071,095** rows and **492 MB** of a **509 MB** database, and
+it is dumped into the nightly backup and shipped off-site every night (60 MB compressed).
 
-**WHAT WAS FOUND: HETZNER HAS CUT THE BOX OFF THE NETWORK — AND THE CEO NAMED THE REASON.**
-`public_net.ipv4.blocked = true` and `ipv6.blocked = true`, straight from Hetzner's API, and the
-route confirms it independently: packets die **inside Hetzner's own network**, seven hops out, and
-never reach the machine. **THE CAUSE IS AN UNPAID INVOICE, NOT ABUSE.** The author read the API
-field's own documentation — *"If the IP is blocked by our anti abuse dept"* — and reported abuse.
-**The CEO then read the mail Hetzner actually sent: *"Services blocked"*, *"last warning for
-payment"*.** His account of the mail outranks a field description (authority order §1), it fits
-everything measured — nothing was ever done to the machine, it simply kept running while the network
-was cut — and the abuse reading is deleted rather than kept beside it (LAW A). The Storage Box
-`dxb-backup-1` reads `status: locked` on the same account, which is the same block reaching the
-second product. **The machine itself is healthy:** its console shows
-`Ubuntu 24.04.4 LTS dxb-vps-1` at a clean login prompt, no crash and no kernel error. Nothing has
-been done to it since the day it was built (its entire action log: create · start · enable backups ·
-one reboot, all on 2026-07-09). Backups still run daily; today's is 11.40 GB. Our SSH key still
-matches Hetzner's record byte for byte, so no credential was lost.
+**NO INTRUDER — measured, not assumed:** only ports **22 · 80 · 443** listen, exactly as designed;
+`last` shows **no interactive login since the box booted on 2026-07-09** until this one; **0** failed
+SSH passwords in 48 days; the nine containers are the nine we shipped, started 2026-07-29 06:02 with
+`restarts=0`; cron holds a single line, our own `pg_dump.sh`. **The block's own date fell out of the
+backup log:** `OFFSITE_OK 2026-08-25`, then one `scp: Connection closed` on 2026-08-26 — the lock
+landed between those two nights and cost exactly one off-site copy; both local dumps succeeded.
+⚠ **The SSH host key was accepted on first contact** (`SHA256:CK2DtESZwUHS1RdrNs2C2UpQkFa3Om3m4jCeB09LcIM`)
+because no fingerprint was ever recorded for it; the identity rests on the valid certificate for
+`dxbglobal.online` served from the same address, which is strong but is not a recorded host key.
 
-**⚠ WHAT COULD NOT BE READ, and why.** What is actually RUNNING on it. The box burns about one core
-without pause (48-133 % of 400 % over 30 days) and writes to disk continuously (~14-17 operations a
-second), while its network is silent — **1 packet a second, roughly 100 bytes** — because the block
-cuts it off. The console is the only door left and it needs a password that was deliberately never
-created (key-only SSH, root login off). **A correction to our own record (LAW A):** the line saying
-the box had *"continuous network traffic"* is false — it has none — and it is deleted, not footnoted.
-
-**WHAT THE ACCOUNT COSTS AND WHAT IT HOLDS, measured 2026-08-25 from Hetzner's own pricing:** the
-whole account is two paid things and nothing else — the server `dxb-vps-1` (cx33, **10.10 EUR/month
-gross**, plus the **20 % backup surcharge = 2.02**) and the Storage Box `dxb-backup-1` (bx11,
-**3.81 EUR/month**, 2.94 GB used of 1 TB, `status: locked`). **About 15.93 EUR a month.** Seven daily
-backups exist, each ~11.4 GB, and every one carries `bound_to: 149310629` — they belong to the
-server. A **snapshot** does not: `PUT /images/{id}` takes `type: "snapshot"` (*"Destination Image
-type to convert to"*), and an image costs **0.0170 EUR per GB per month** — today's backup kept as a
-snapshot is **0.19 EUR/month**. The domain `dxbglobal.online` is at Namecheap, not Hetzner, and
-survives whatever is decided.
-
-**HIS RULING, 2026-08-25, AND IT DELETES THE SNAPSHOT PLAN (LAW A):** *"yedekleyeceğimiz hiçbir halt
-yok. şirket olduğu gibi bu pc de. orada değerli hiç bir şey yok."* **He is right, and it is measured,
-not assumed.** The stack on that box is shipped from `vps/compose.yaml`, which is in this repository.
-The only files generated ON the box are the passwords of its own database (worthless the moment it
-is deleted). Its resident agent could not think: row **B09** — *"Hermes has no brain … credit
-exhausted + a retired model"* — and row **B11**'s first overnight run was never closed. So the disk
-holds no work the holding needs. The proposal to keep a 0.19 EUR/month snapshot is therefore
-withdrawn, not kept beside his ruling. **One thing on that disk is still worth something and it is
-not data:** the only answer to *why one core burned for 47 days*. If the machine was taken over,
-that matters before anything new is built on the same account — and it costs nothing to read once
-the block is lifted, because the SSH key still matches.
-
-**THE INVOICE IS A DEBT, NOT NEXT MONTH'S MONEY — measured, because he asked.** Hetzner's own
-billing FAQ: *"After the first invoice, we will create invoices based on full calendar months"* and
-*"we may create them up to 28 days after the last month was completed."* Invoices are raised AFTER a
-month is used, and a *"last warning for payment"* exists only for something already due. The Cloud
-API carries no billing endpoint of any kind, so the figure itself can only come from his account —
-**estimated from Hetzner's price list at roughly 24-25 EUR** for the 47 days since 2026-07-09
-(15.93/month), and that is an ESTIMATE, not a reading.
-
-**THE DECISION IS HIS AND NOTHING IS DONE TO THAT BOX UNTIL HE GIVES IT.** ⚠ The order of operations
-is forced: while the account is payment-blocked, no write to it can be relied on — the Storage Box
-already reads `locked` — so the invoice is settled FIRST and everything else follows. Resetting the
-root password remains an identity step and remains unapproved.
-
-**AND A SECOND THING WAS FOUND AND FIXED THE SAME SESSION, on row B39 — AND THE COMPANY WAS NEVER
-TOUCHED BY IT.** Both money brakes counted spending that was not the company's own: a SessionEnd
-hook was writing **this repository's own coding sessions** into the same book, 487,924,277 tokens
-inside one hour. On the CONSTRUCTION engine that turned the same query's answer from **8 hands into
-1**, so the bench and the suite were measuring a company that did not exist. **The COMPANY's own
-book was untouched throughout — it holds 0 rows**, asked through B36's one-way window by the named
-question `cost_ledger_rows` and with no company credential in the asking process. Both queries now
-count only the company's own runs from one shared constant, and
-`tests/b39/dispatch-brakes.test.ts` calls the scheduler's real decision, so removing either half of
-that filter fails on its own.
+⛔ **NOTHING IS STOPPED, FIXED, REBUILT OR DELETED ON THAT BOX WITHOUT HIS WORD ON THE DAY.** The
+loop is still running as this is written. Stopping it is a change to the machine, not a reading of
+it, and it waits for him.
 
 **2026-08-25 — THE HOLDING'S READING DOOR CAN NO LONGER BE TAKEN AWAY BY ACCIDENT. FIXED AT SOURCE ON HIS ORDER, THE SAME TURN IT WAS FOUND.** <!-- HISTORY -->
 A session ran `scripts/b36/company-read-gateway.mjs` by hand — the service that is the ONLY way
@@ -308,10 +271,12 @@ window question `cost_ledger_rows`, the shortened board, and every record correc
 forced. **None of it is a waiting item any more.** LAW B is satisfied for all of it; only the box is
 outside this approval.
 
-**THE ONE THING LEFT IS NOT WAITING ON HIM — HE SCHEDULED IT.** *"şu hertz olayını yarın
-çözeceğiz"* (2026-08-26). The rented box and its unpaid invoice are the next session's first job,
-with him, on the day. Nothing on that Hetzner account is paid, reset, rebuilt, shut down or deleted
-without his word on the day.
+**THE THING HE SCHEDULED IS DONE, AND WHAT REPLACED IT IS A DECISION.** *"şu hertz olayını yarın
+çözeceğiz"* (2026-08-26) — he paid invoice `080001075196` (14.22 EUR) the same day, the block lifted,
+the box was entered on his approved order and the 47-day core burn is explained: our own scheduler
+re-arming a job that asks for a table this box has never had. **Nothing on that Hetzner account is
+stopped, fixed, reset, rebuilt, shut down or deleted without his word on the day** — so the loop is
+still running, and his word is what it waits on.
 
 **Older, unrelated, and still genuinely his — not raised by this session's work:** one hand-minted
 browser session, without which every eye-check of a logged-in screen stays ⚠ UNVERIFIED (row
