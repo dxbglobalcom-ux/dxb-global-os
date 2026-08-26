@@ -135,9 +135,12 @@ that suffices.
 | Seedance/z-image gen | per-generation credits | design/marketing visuals | paying client work requires gen assets | design dept manual + free tiers |
 | Gemini omni-video API | per-minute API cost | video analysis lanes | a revenue task needs video understanding | yt-dlp + frame sampling (free, slower) |
 | LiteLLM paid models via API | per-token | worker model diversity | subscription tiers saturated (cost monitor data) | subscription models (current) |
+| **SocialForge** (open-source engine, PAID PROVIDERS) | engine MIT/free; its providers are not — **Vertex AI Nano Banana Pro** (images) + **WaveSpeed Kling v3.0 Pro** (video), both usage-priced | the social-media department's whole production line: brief → per-platform copy (7 platforms) → asset-first imagery → review gallery → approval ledger → delivery audit, with C2PA AI-disclosure signing for EU markets | **the agency seat (B28) takes its first brand client** — the line is what delivers the month | the engine itself is free and installs on Claude Code; **the image half is already replaced** by the CEO's Google AI Pro subscription through Antigravity at $0.00 (B31, measured 2026-08-26), so only the video provider is genuinely paid |
 
 Bench maintenance: at every phase gate, rows re-checked — price drift updates the row;
 a fired trigger produces a CEO proposal, never an install.
+
+The SocialForge row was placed here by the CEO, 2026-08-26 — *"ücretliler başlığının altında"*. <!-- CEO-OK: gemini-subscription-connected-antigravity-2026-08-26 --> Studied, not installed. Card: `.planning/research/study-cards/socialforge.md`.
 
 ## 9. dxb-mcp internal growth list (deliverable (e))
 

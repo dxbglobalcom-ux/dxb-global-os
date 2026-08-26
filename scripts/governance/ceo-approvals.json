@@ -331,5 +331,19 @@
     "verbatim": "burada codex 5.6 sınavına gerek yok onu kaldır. ben kefilim ona.",
     "conditions": "His guarantee covers Codex 5.6 only. It does not waive the exam for any other model, it does not touch the banned roster, and it changes nothing in the company database — no write reaches the company from here (B36).",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B07 · MODEL_ROUTING_SPEC.md §4c"
+  },
+  "gemini-subscription-connected-antigravity-2026-08-26": {
+    "date": "2026-08-26",
+    "what": "FOUR approvals in one sentence, given after he was shown the measured picture of his own Gemini subscription. (1) INSTALL AND SIGN IN: Antigravity CLI (`agy`) may be installed on this machine and signed in with his Google account — an identity step, which is why it waited for him. (2) THE BOUNDARY HE RULED ON: Antigravity enters the holding as a DEPARTMENT TOOL — a hand that generates images — and NEVER as a second agent framework; `.claude/CLAUDE.md:177` forbids the latter and the DeerFlow precedent is followed exactly. The session author remains the only writer of this repository. (3) VIDEO: the subscription's video (Veo) has no programmatic door, so video is produced by driving the Gemini app on screen — free — and the paid API door stays SHUT until he opens it himself. (4) SOCIALFORGE: the open-source social-media production engine found in Google's own extension listing is STUDIED under the rival-intel standard, not installed blindly. He attached the standard himself: 'Ferrari seviyesinde gerçekleştir.'",
+    "verbatim": "tamamdır 4'ünü de onaylıorm. SS'te bana 3 karar bir de yolda bulduğum demişsin. Ferrari seviyesinde gerçekleştir. Onayları verdim.",
+    "conditions": "His approval covers installing and signing in, and the boundary above. It is NOT approval of a content production plan — the four production lanes he was shown (brand kit · 199 employee faces · agency showreel · the content factory) are still a plan awaiting his word. It authorises no money out: he ruled in the same conversation 'Sakın farklı bir paket alma ha.', so no upgrade, no API billing, no purchase of any kind. It does not authorise installing socialforge — only studying it.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md rows B28 and B31 (var/media-factory/ is git-ignored by design, so the boundary is recorded on the board, not only in that folder)"
+  },
+  "remote-operation-and-disclosure-deferred-2026-08-27": {
+    "date": "2026-08-27",
+    "what": "TWO RULINGS, given together. (1) THE COMPANY IS RUN FROM A DISTANCE AS WELL — not only from the desk in front of the workstation. He asked for it to be recorded. Its consequence for the hands the holding builds: a hand that needs the physical screen, mouse and keyboard is the LOCAL case, not the general one, so every capability must also exist in a form that works with no screen attached (headless). The two hands built on 2026-08-26 already satisfy that — Playwright headless and dxb-tui — and `operator` remains the local hand. (2) THE AI-CONTENT DISCLOSURE QUESTION IS DEFERRED — 'yapay zeka ürünüdürü şimdilik geçelim'. No work is opened for EU AI Act Article 50 marking or C2PA signing, and no row is written for it; it is his to raise again when he wants it. The visible provider watermark is a separate matter and it is already removed.",
+    "verbatim": "boşver şirketin tüm faaliyetleri ıraktan yürütülecek aynı zamanda. oyüzden sorun değil.bunu da not edin. yapay zeka ürünüdürü şimdilik geçelim.",
+    "conditions": "'şimdilik' — the disclosure deferral is for now, not forever, and it is not written as a law. Remote operation is recorded as a standing fact about how the holding runs, not as a new task: no new spec, no new plan file, no new board row.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md rows B35 and B28"
   }
 }

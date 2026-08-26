@@ -25,3 +25,26 @@ operator key alt+Tab        # bring a window to the front
 - **The CEO expects the machine to be verified by YOU** — *"sende insan gibi kullanma yetkisi
   var… operator olarak kullanıp herşeyi teyit edebilirsin"*. A `⚠ UNVERIFIED — requires
   human-eye confirmation` line is not written for anything you can open and look at yourself.
+
+## The second hand — a terminal program, driven WITHOUT the screen: `dxb-tui`
+
+`operator` is for the desktop. When the thing to be driven is a **full-screen terminal
+program** (an installer's wizard, a login flow, an agent's own text interface), do NOT drive it
+by clicking pixels — the CEO may be typing at that moment and the keystrokes land in his prompt
+box. Use `dxb-tui`, which opens the program in its own pseudo-terminal (a terminal with no
+window), reads what it is showing, and types into it.
+
+```bash
+export TUI_DIR=<a scratch folder>       # each driven program gets its own folder
+dxb-tui start /path/to/program          # open it
+dxb-tui screen                          # print what it is showing RIGHT NOW — then read it
+dxb-tui send "text"                     # type
+dxb-tui key enter                       # enter · up · down · left · right · tab · esc · ctrl-c
+dxb-tui stop                            # close it, leaving no orphan process
+```
+
+Written 2026-08-26 to install and sign in to Antigravity CLI without touching the CEO's screen.
+It lives in the holding's tool room — `/home/dxb/tools/tui/tui.py`, beside `operator` and
+`OpenMontage` — and `~/.local/bin/dxb-tui` makes it a command in every shell.
+Its screen rendering needs `pyte` (a terminal emulator written in Python), installed once at
+`/home/dxb/.venvs/tui`.

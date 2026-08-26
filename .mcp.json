@@ -2,7 +2,20 @@
   "mcpServers": {
     "scrapling": {
       "command": "/home/dxb/scrapling-env/bin/scrapling",
-      "args": ["mcp"]
+      "args": [
+        "mcp"
+      ]
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "playwright-mcp",
+      "args": [
+        "--headless",
+        "--isolated",
+        "--browser",
+        "chromium"
+      ],
+      "env": {}
     }
   }
 }
