@@ -379,5 +379,13 @@
       "B31",
       "B30"
     ]
+  },
+  "methodology-plugins-out-codex-hook-off-2026-08-27": {
+    "date": "2026-08-27",
+    "what": "THREE RULINGS THAT NARROWED WHAT MAY ENTER THE HOLDING, GIVEN THE SAME EVENING THE PLUGINS WERE OPENED. (1) THE METHODOLOGY CLASS IS OUT. His words: \"superpowers, gsd, ruflo, gstack vb pluginler holdingimize girmeyecek kaldirilabilir research alanindan da silinsin.\" Executed and measured: superpowers and ruflo uninstalled with their marketplaces removed from the machine (folders gone, known_marketplaces 13 to 11), GSD and gstack already off disk, the four study cards deleted from .planning/research/study-cards, and one exclusion line left in INTEGRATION-TRACKER.md so no future session studies them again. Nothing in the running system depended on them: 0 references across *.ts, *.mjs, *.sh. The rule this establishes is written in CAPABILITY_ARSENAL_DOCTRINE.md section 5b 1-ter: a plugin whose product is a WAY OF WORKING is refused, because the holding already has its own methodology; a plugin that does a JOB is judged on its merits. (2) CODEX: HOOK OFF, ARCHITECTURE UNTOUCHED. His words: \"codex eklentisinin kancasina gerek yok her oturumda aktif olmali degil. ama holding tarafinda mimari nasil kurulduysa oyle kalsin.\" The plugin is disabled, not uninstalled, so its SessionStart hook no longer runs; the adversarial council and the U36 audit twin keep spawning the codex binary directly (codex-cli 0.149.1, verified the same minute). Plugin state after both rulings: 15 on, 1 off, 2 removed. (3) claude-mem MAY FEED THE HOLDING'S OWN BRAIN -- a permission, not an instruction. His words: \"claude-mem holdingin hafiza kararinda da kullanilabilir icindeki sistemden faydalanilacak seyler varsa alinabilir tabi bu artik plani mimariyi ve kodu yazacak olan opus 5'lere bagli.\" The V2 memory decision of 2026-08-01 stands unchanged -- one brain, three abilities, written by us; claude-mem becomes an allowed source of parts and ideas for it, at the architect's judgement, and this grants no install anywhere near the company. SEPARATELY, ON B42: offered the choice between starting the arsenal watch now and leaving it for its turn, he took the second -- \"yaz plani ama tahtada isaret birak, B42'ye sira gelince kurulur kodu yazilir.\" The plan is written and parked; the row waits its place in the board's own order and is not blocked on him.",
+    "rows": [
+      "B41",
+      "B42"
+    ]
   }
 }

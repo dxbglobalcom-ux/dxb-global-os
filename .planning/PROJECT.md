@@ -55,7 +55,7 @@ DXB Global OS is an AI-native company operating system for **DXB Global Technolo
 
 - **Assets on disk**: `agency-agents/` (367 persona .md files, 18 departments, v1.0 quality, China-market flavored); empty Obsidian vault `DXB GLOBAL OS/`; source .odt (contains plaintext credentials — excluded from git via .gitignore until sanitized)
 - **Verified tooling** (research round 2026-07-05): Google Stitch SDK + Gemini Omni video API real; NVIDIA Build free tier confirmed (~40 RPM, dev only); hermes-agent/graphify/headroom/open-design/open-notebook active and healthy
-- **Already installed locally**: superpowers, GSD, gstack, ruflo, claude-mem, caveman, codex plugin, karpathy-skills, MoneyPrinterTurbo, voicebox
+- **Already installed locally** (re-measured 2026-08-27): claude-mem, caveman, codex plugin (disabled — only its session hook was unwanted; the CLI the council calls stays), karpathy-skills, context7, playwright, frontend-design, skill-creator, code-simplifier, claude-md-management, impeccable, taste-skill, ui-ux-pro-max, open-design, obsidian, headroom, MoneyPrinterTurbo, voicebox. **superpowers · GSD · gstack · ruflo are OUT by CEO order 2026-08-27** and are not candidates for this holding.
 - **outleteuro.com**: existing WooCommerce/WordPress store, 73 brands, hosting live — the pilot target
 - **CEO**: non-technical, Turkish-speaking; conversations in Turkish, project docs in English
 - **Security debt**: all credentials in the source doc must be rotated (CEO holds checklist duty); vault pattern mandatory from Phase 0
@@ -91,14 +91,14 @@ DXB Global OS is an AI-native company operating system for **DXB Global Technolo
 
 This document evolves at phase transitions and milestone boundaries.
 
-**After each phase transition** (via `/gsd-transition`):
+**After each phase transition** (the GSD commands this line used to name were deleted on his order of 2026-08-01; the steps are the author's own, run by hand):
 1. Requirements invalidated? → Move to Out of Scope with reason
 2. Requirements validated? → Move to Validated with phase reference
 3. New requirements emerged? → Add to Active
 4. Decisions to log? → Add to Key Decisions
 5. "What This Is" still accurate? → Update if drifted
 
-**After each milestone** (via `/gsd-complete-milestone`):
+**After each milestone** (same — no command behind it, the author does it):
 1. Full review of all sections
 2. Core Value check — still the right priority?
 3. Audit Out of Scope — reasons still valid?

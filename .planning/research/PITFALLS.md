@@ -251,7 +251,7 @@ P2 (task queue + gate + cost tables in Supabase are *the* state store from the s
 | Cloudflare / Namecheap | Reusing leaked tokens "temporarily"; account-wide tokens | Rotate first (P0), then zone-scoped tokens only, held by Secrets MCP |
 | Apify / Agent-Reach (scraping) | Scraped content flowing straight into memory/decisions | Quarantine tier + trust tags (Pitfall 7); Agent-Reach stays behind approval gate (ToS exposure) |
 | Supabase | Agents sharing one service-role key | Row-level security + per-role keys; the DB is the company's state store and gate ledger — worker compromise must not mean DB compromise |
-| claude-mem / ruflo / community plugins | Assuming installed = safe and compatible | Same study-pass security review as MCPs; verify what they auto-inject into context (they add to every session's token load) |
+| claude-mem / any community plugin | Assuming installed = safe and compatible | Same study-pass security review as MCPs; verify what they auto-inject into context (they add to every session's token load) |
 | yt-dlp + video-use (video learning) | Transcripts of arbitrary YouTube content written to the vault as facts | Untrusted-origin tier; summarized by a strong model before promotion |
 
 ## Performance Traps

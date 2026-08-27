@@ -135,9 +135,42 @@ rules apply to this class and only to this class:
    that only carries a written procedure is still installed as a skill under `~/.claude/skills/`;
    a plugin is opened deliberately, knowing its hooks come with it, and **its SessionStart /
    UserPromptSubmit hooks are measured before it is enabled** — that hook output, not the plugin,
-   is what actually crowds a session. Measured 2026-08-27: `superpowers` injects **3,530 bytes**
-   of instruction text at every session start, which re-establishes the Standing Order 11 he
-   DELETED on 2026-08-10 (*"sil"*). Named to him in the same report; his call, not the author's.
+   is what actually crowds a session. Measured 2026-08-27: `superpowers` injected **3,530 bytes**
+   of instruction text at every session start, re-establishing the Standing Order 11 he DELETED on
+   2026-08-10 (*"sil"*). Named to him in the same report — **and he ruled on it within the hour.**
+
+1-ter. **THE METHODOLOGY CLASS IS OUT OF THIS HOLDING — CEO order, 2026-08-27.** His words:
+   *"superpowers, gsd, ruflo, gstack vb pluginler holdingimize girmeyecek kaldırılabilir research
+   alanından da silinsin."* Executed the same hour and measured: `superpowers` and `ruflo`
+   uninstalled with their marketplaces removed from the machine (folders gone,
+   `known_marketplaces` **13 → 11**), GSD and gstack already off disk, and the four study cards
+   deleted from `.planning/research/study-cards/`. `INTEGRATION-TRACKER.md` keeps **one** line
+   naming the exclusion so no future session studies them again. Nothing in the running system
+   depended on them — measured: **0 references** across `*.ts`, `*.mjs`, `*.sh`.
+
+   **The class this excludes, so the rule can be applied and not just obeyed:** a plugin whose
+   product is a WAY OF WORKING — a method, a discipline, a set of gates it imposes on the session
+   author. This holding already has its own: the always-on core, the eight `dxb-*` doors, the
+   standing orders and the record gates. A second methodology on top of them does not add rigour,
+   it adds a competing voice. **A capability that does a JOB — reads the web, drives a browser,
+   builds a page, reads a document — is judged on its own merits and is not touched by this rule.**
+
+1-quater. **CODEX: THE PLUGIN IS OFF, THE COUNCIL IS UNTOUCHED — CEO order, 2026-08-27.** His
+   words: *"codex eklentisinin kancasına gerek yok her oturumda aktif olmalı değil. ama holding
+   tarafında mimari nasıl kurulduysa öyle kalsın."* The plugin is **disabled** (not uninstalled),
+   so its `SessionStart` hook no longer runs in a construction session. **The holding's adversarial
+   council is unaffected and was verified the same minute:** `packages/orchestrator/src/critical-gate.ts`
+   spawns the `codex` **binary** directly (`~/.local/bin/codex`, `codex-cli 0.149.1`, subscription
+   lane via `~/.codex/auth.json`), and the audit-twin door runs `codex exec -s read-only`. Neither
+   path goes through the plugin. Nothing about the U36 audit twin changes.
+
+1-quinquies. **claude-mem MAY FEED THE HOLDING'S OWN BRAIN — CEO permission, 2026-08-27, not an
+   instruction.** His words: *"claude-mem holdingin hafıza kararında da kullanılabilir içindeki
+   sistemden faydalanılacak şeyler varsa alınabilir tabi bu artık planı mimariyi ve kodu yazacak
+   olan Opus 5'lere bağlı."* The holding's memory is still the one he approved on 2026-08-01 —
+   ONE brain with three abilities, **written by us** — and claude-mem is now an allowed SOURCE OF
+   PARTS AND IDEAS for it, at the architect's judgement. It does not become the holding's memory,
+   and this permission grants no install anywhere near the company.
 2. **The holding keeps its own copy.** The skill is vendored under `tools/<slug>/`, pinned to an
    upstream commit, and INSTALLED FROM that copy by the slug's own `install.sh`, which proves by
    sha256 that the installed tree is byte-identical to the repository's. Upstream can vanish or

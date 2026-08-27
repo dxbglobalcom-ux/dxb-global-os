@@ -126,7 +126,7 @@ dxb-os/
 ├── profiles/                  # generated per-department MCP profiles (gitignored secrets)
 ├── vps/                       # hermes config, queue-worker shim, systemd units, cron
 ├── vault/                     # Obsidian vault (memory: notes plane)
-└── .planning/                 # GSD state
+└── .planning/                 # planning + research state
 ```
 
 ### Structure Rationale

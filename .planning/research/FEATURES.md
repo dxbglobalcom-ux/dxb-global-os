@@ -8,7 +8,7 @@
 
 No shipping product today is exactly "an AI company that runs a real business for one CEO." The feature landscape is assembled from four adjacent product classes that together define expectations:
 
-1. **Orchestration frameworks** (LangGraph, CrewAI, AutoGen/AG2, claude-flow/Ruflo, Claude Code Agent Teams) — define what an orchestration core must have.
+1. **Orchestration frameworks** (LangGraph, CrewAI, AutoGen/AG2, Claude Code Agent Teams) — define what an orchestration core must have.
 2. **AI-employee platforms** (Lindy, Relevance AI) — define what a non-technical operator expects: no-code triggers, 500+ integrations, built-in approvals, agents that hold context and coordinate.
 3. **Agent observability platforms** (Langfuse, AgentOps, LangSmith) — define the cost/audit/tracing baseline for anything running in production.
 4. **Agent mission-control dashboards** (OpenClaw Mission Control, builderz mission-control, MeisnerDan mission-control) — define the cockpit UX: kanban task boards (inbox → assigned → in progress → review → done), live agent roster, department/org hierarchy views, morning briefs, approval inboxes.
@@ -183,7 +183,7 @@ Confidence tiers assigned via classify-confidence seam: cross-checked websearch 
 - Observability: [Langfuse GitHub](https://github.com/langfuse/langfuse), [AIMultiple agent observability tools](https://aimultiple.com/agentic-monitoring), [Langfuse agent observability](https://langfuse.com/blog/2024-07-ai-agent-observability-with-langfuse)
 - HITL patterns: [Grizzly Peak HITL patterns](https://www.grizzlypeaksoftware.com/library/human-in-the-loop-patterns-for-ai-agents-n64sb2cm), [Permit.io HITL best practices](https://www.permit.io/blog/human-in-the-loop-for-ai-agents-best-practices-frameworks-use-cases-and-demo), [Cordum HITL production patterns](https://cordum.io/blog/human-in-the-loop-ai-patterns)
 - Memory systems: [n1n.ai memory comparison](https://explore.n1n.ai/blog/ai-agent-memory-comparison-2026-mem0-zep-letta-cognee-2026-04-23), [DEV memory systems benchmark](https://dev.to/varun_pratapbhardwaj_b13/5-ai-agent-memory-systems-compared-mem0-zep-letta-supermemory-superlocalmemory-2026-benchmark-59p3)
-- Claude-native orchestration: [claude-flow/Ruflo guide](https://pasqualepillitteri.it/en/news/774/claude-flow-ruflo-multi-agent-orchestration-guide), [Claude Code swarm/Agent Teams](https://www.atcyrus.com/stories/what-is-claude-code-swarm-feature)
+- Claude-native orchestration: [Claude Code swarm/Agent Teams](https://www.atcyrus.com/stories/what-is-claude-code-swarm-feature)
 - Autonomous-business lessons: [Anthropic Project Vend phase 1](https://www.anthropic.com/research/project-vend-1), [Project Vend phase 2](https://www.anthropic.com/research/project-vend-2), [Futurism coverage](https://futurism.com/future-society/anthropic-ai-vending-machine)
 - Agent-company simulators: [IBM on MetaGPT](https://www.ibm.com/think/topics/metagpt), [MetaGPT ICLR paper](https://arxiv.org/pdf/2308.00352), [SmythOS MetaGPT vs ChatDev](https://smythos.com/ai-agents/ai-agent-builders/metagpt-vs-chatdev/)
 - Mission-control dashboards: [builderz mission-control](https://github.com/builderz-labs/mission-control), [MeisnerDan mission-control](https://github.com/MeisnerDan/mission-control), [OpenClaw Mission Control](https://www.blog.brightcoding.dev/2026/07/03/openclaw-mission-control-real-time-agent-tracking-made-simple)

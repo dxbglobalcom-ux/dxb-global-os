@@ -10,15 +10,12 @@
 
 | Kaynak | Sınıf | Çekirdek fikir | DXB'deki yeri | Kombinasyon + gelir notu |
 |---|---|---|---|---|
-| superpowers | KURULU | Süreç-skilleri kütüphanesi: brainstorm→plan→TDD→debug disiplini agent'a zorlanır | Aktif (session skilleri) | Persona v2 output_contract'larına süreç-kapıları olarak gömülür; "disiplinli AI ekip" satış argümanı |
-| gsd-core | KURULU | Faz/plan/verify iskeleti; planlama artefaktları kod gibi versiyonlanır | Tüm proje bu iskelette | Müşteri projelerine "kanıtlı teslimat süreci" olarak taşınır (REVENUE #3, #8) |
+| **superpowers · gsd-core · gstack · ruflo** | **HOLDİNGE GİRMEZ — CEO emri 2026-08-27** | Ürünü bir *çalışma yöntemi*: süreç kapıları, faz iskeleti, ek QA katmanı, swarm disiplini | **Yok. Holdingin kendi yöntemi var** — daima-açık çekirdek, sekiz `dxb-*` kapısı, duran emirler ve kayıt kapıları | *"holdingimize girmeyecek… research alanından da silinsin."* Dört çalışma kartı silindi, `superpowers` ve `ruflo` makineden kaldırıldı (pazarları dâhil), gsd/gstack zaten yoktu. **Bu tek satır yeniden etüt edilmesinler diye durur — etüt değil, dışlamadır.** |
 | caveman | KURULU | Çıktı token diyeti (%65 ölçülü) kalite kaybetmeden | Aktif her session | İç maliyet düşürücü; müşteri API maliyet paketlerinde bileşen (REVENUE #13) |
 | headroom | KURULU | Bağlam sıkıştırma / context-rot önleme | MEM-04 hattı | claude-mem+memory-router ile birlikte "uzun-görev güvenilirliği" — 24/7 operasyonun sigortası |
 | claude-mem | KURULU | Oturumlar-arası kalıcı gözlem hafızası | Aktif (bu etüt onunla hızlandı) | Kurumsal "second brain" kurulum paketinin çekirdeği (REVENUE #9) |
 | graphify | KURULU | Her girdiyi bilgi grafına çevirme; god-node/community sorguları | EMBED (Phase 6) | Rapor ürünlerine "ilişki haritası" eki; video-learn çıktısıyla birleşir (REVENUE #6) |
 | Obsidian dörtlüsü (obsidian-mind, kepano/obsidian-skills, second-brain, claude-obsidian) | KURULU (kepano ADOPT; 3'ü runtime-DIŞI) | Vault = insan+ajan ortak bilgi alanı | EMBED (Phase 6); repo kökü vault | Danışmanlıklara kurulabilir bilgi altyapısı (REVENUE #9) |
-| ruflo | REF | Ajan-orkestrasyon MCP araçları (memory_store, swarm) | Kurulu ama diyette; STACK kilidi: orkestrasyon LangChain-siz | Desen referansı; kernel zaten kendi kuyruk/registry'sini kurdu — adoption YOK |
-| gstack | DIŞLANDI-diyet | GSD üstüne ek katman | Arşivde (skill-diet) | Değer katmıyor; gsd-core yeterli |
 | awesome-claude-code | REF | Ekosistem haritası | R&D referansı | Phase 10 dalga-başı plugin seçiminde tarama listesi |
 | system_prompts_leaks | REF | Büyük asistanların sistem-prompt desenleri | HR persona factory referansı | Persona v2 kalite çıtası; müşteri persona-paketlerinde iyi-pratik kaynağı (REVENUE #15) |
 | karpathy skills + llm-wiki | REF | Eğitimsel LLM iç-görüleri; skill yazım örnekleri | R&D | Ekip-içi eğitim; literatür sentezinde kavramsal omurga |
