@@ -28,8 +28,8 @@
     "hash": "403e3d8458fb"
   },
   "B07": {
-    "tr": "Codex 5.6 model sınavı — yol açık, sınav hâlâ yapılmadı.",
-    "hash": "a0b01f3718d3"
+    "tr": "Codex 5.6 model sınavı — SİZ kaldırdınız ve modele kendiniz kefil oldunuz: «ben kefilim ona». Sınav yapılmadan model içeri girdi, kefalet yalnız bu modeli kapsıyor. ✓ 26.08.2026 kapandı.",
+    "hash": "398fa584c058"
   },
   "B08": {
     "tr": "Çalışan başına beyin değiştirme — tek bir çalışanın modelini panelden siz değiştirecektiniz; 205 ajan hazır, değiştiren fonksiyon hiç yazılmadı.",
@@ -52,16 +52,16 @@
     "hash": "79c4608eb170"
   },
   "B35": {
-    "tr": "Makine insan gibi sürülür — fare, klavye ve gözler. İki teslimat bitti; holdingin kendi ajanlarının aynı ellere ulaşması ve «hayır» yasağının onların okuduğu yere yazılması kaldı.",
-    "hash": "018d0542c27e"
+    "tr": "Makine insan gibi sürülür — fare, klavye ve gözler. İki teslimat bitti ve size kanıtlandı; holdingin kendi ajanlarının aynı ellere ulaşması ve «hayır» yasağının onların okuduğu yere yazılması hâlâ duruyor. 27.08 hükmünüz: «şirketin tüm faaliyetleri ıraktan yürütülecek» — ekran gerektiren el artık istisna; ekransız iki el (Playwright, dxb-tui) kuruldu.",
+    "hash": "e0f6d3b12d9b"
   },
   "B34": {
     "tr": "YEREL İŞÇİ MODEL — Opus 5'in yapmaması gereken ucuz ve çok sayıda işi bu makinede yapacak modelin sınavı. Adaylar diskte, sınav yapılmadı, kazananı siz seçeceksiniz.",
     "hash": "123f0e06113b"
   },
   "B13": {
-    "tr": "CEO kabul oturumu hiç yapılmadı — 27 kabul şartının 11'i sizin bakmanızı bekliyor.",
-    "hash": "fd6a3d2fb2a1"
+    "tr": "V1 kabul oturumu — sizin hükmünüzle kapandı: «A yı kabul ediorum». Ölü V1 ekranı için oturum yapılmıyor; yalnız sizin gözünüzün karar verebileceği 14 soru V2 tasarım paketine (B32) taşındı, kalan 13'ü makine işi. Satırdaki «11» sayısı yanlıştı, kapanırken düzeltildi (9 + 5 + 13). ✓ 26.08.2026 kapandı.",
+    "hash": "bf202a1bdf94"
   },
   "B15": {
     "tr": "Yetki kadranı hiç kurulmadı — bir çalışanın yetkisini güven kazandıkça panelden yükseltecektiniz; 205 ajanın hepsi sıfırda duruyor.",
@@ -112,12 +112,12 @@
     "hash": "5d975d27d4af"
   },
   "B32": {
-    "tr": "V2 TASARIM PAKETİ — her ekran tek tek çizilip size onaylatılmadan V2'nin tek satırı yazılmayacak.",
-    "hash": "0f725b4cfb3a"
+    "tr": "V2 TASARIM PAKETİ — her ekran tek tek çizilip size onaylatılmadan V2'nin tek satırı yazılmayacak. Ve artık B13'ün kabul sınavını da taşıyor: sizin kendi gözünüzün karar vereceği 14 soru, her çizimde size sorulacak; hepsi cevaplanmadan bu satır kapanamaz. Başlamadı — önce rakip parça listesi (B22).",
+    "hash": "6df772d5f297"
   },
   "B31": {
-    "tr": "CEPHANELİK — tek sekme açıp silahlarınızı çekmece çekmece, parasızın yanında paralısıyla göreceksiniz. Bugün paralı taraf kimsenin açmadığı bir belgede altı satır.",
-    "hash": "473be9d85eea"
+    "tr": "CEPHANELİK — tek sekme açıp silahlarınızı çekmece çekmece, parasızın yanında paralısıyla göreceksiniz. Sekme hâlâ yok. 27.08 notu: üç bedava el cephaneliğe katıldı ve canlı (Antigravity, Playwright, dxb-tui); paralı tezgâha `socialforge` sizin emrinizle eklendi ve Gemini video fiyatları ölçülüp yazıldı.",
+    "hash": "fad805a19e9e"
   },
   "B30": {
     "tr": "Ajanların elleri ve gözleri — açık kaynak cephaneliği onayladınız, dokuz aletin hiçbiri kurulmadı; kurulan tek alet de altı kanalını hesap bekleyerek kapalı tutuyor.",
@@ -128,8 +128,8 @@
     "hash": "5bfcd3495456"
   },
   "B28": {
-    "tr": "Klip işi — AJANS koltuğunu onayladınız, inşaat hiç başlamadı. Bahis kesinlikle ve her boyutta dışarıda.",
-    "hash": "7c12c4d7bf4a"
+    "tr": "Klip işi — AJANS koltuğunu onayladınız, inşaat hiç başlamadı. Bahis kesinlikle ve her boyutta dışarıda. 27.08 notu: koltuğun artık bedava bir görsel eli var (Antigravity, resim başına 0 $), video eli YOK — video Gemini uygulaması ekrandan sürülerek çıkıyor; köşedeki 48×48 damga temiz siliniyor, ikisi sizin OUTLETEURO reklamınız olmak üzere iki dosyada kanıtlandı.",
+    "hash": "38876b043f8f"
   },
   "B27": {
     "tr": "Onayladığınız üç belge yeteneği kurulamıyor — lisansı kopyalamayı açıkça yasaklıyor. Aynı yetenek sizde zaten çalışıyor; bu bir engel değil, bir tercih ve tercih sizin.",
