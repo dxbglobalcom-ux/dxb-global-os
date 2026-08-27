@@ -41,9 +41,7 @@
  },
  {
   "mode": "subscription",
-  "match": {
-   "keyword": "listeleme"
-  },
+  "match": {},
   "model": "fable-5",
   "effort": "high",
   "priority": 20,

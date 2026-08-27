@@ -55,7 +55,19 @@ cap of 3`, refused twice, **nothing queued** (57 intents and 217 tasks before an
 §2 row 7), not an invented number; registered as adaptation **A14** in
 `AGENT_ORCHESTRATION_SPEC.md`, proven by a test written to fail against the old cap first.
 
-**AND THE SAME RUN FOUND THE NEXT WALL, WHICH WAITS ON HIM.** <!-- OPEN: B40 --> With the depth guard cleared the
+**HIS THIRD ORDER THE SAME EVENING — "listeleme şartını kaldır" — DONE, NOT ACCEPTED (LAW B).**
+<!-- OPEN: B40 --> The condition is gone through the canonical migration chain (applied 1, skipped
+158) and out of the repository's seed in the same commit. **One row moved and the table was dumped
+before and after to prove it:** `match` `{"keyword": "listeleme"}` → `{}`, every other field
+identical — L1, `needs_council` still true, priority 20, enabled — and 0 of 37 enabled rules now
+carry a condition. **The job he asked to watch then ran all the way through:** understood in 4.8 s,
+decomposed in 99.7 s into **6 tasks** across marketing, design, engineering, product, content and
+legal, `approval_class: outward`, depth 3; the plan names the skill installed the same day, by its
+pinned commit, as the tool for the build, and ends with an adversarial legal review against the
+Islamic boundaries, invented facts and TR/EN parity. Nothing was written to the company — 57
+intents and 217 tasks before and after. Row **B40** stays open on his eye alone.
+
+**HOW THAT WALL WAS FOUND.** <!-- OPEN: B40 --> With the depth guard cleared the
 intent reached the router and died on `NoRouteError: no enabled routing_rules row matches
 task_class 'content.outbound'`. The row exists and is enabled at L1, but its match condition is
 `{"keyword": "listeleme"}` — residue of the **Outleteuro** vertical slice he CANCELLED in U19. The
