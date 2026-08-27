@@ -300,12 +300,45 @@ function kindOf(line) {
 }
 
 // ------------------------------------------------------------- board parsing
-// The board already organises itself into open and closed sections. This makes
-// that organisation MACHINE-DECLARED instead of inferred: each section carries
-// one `<!-- BOARD-SECTION: open|closed -->` line. One marker per section beats
-// a status column on fifty rows, and the parser never guesses — a row found
-// outside any declared section is a hard failure, not a default.
+// The board organises itself into sections, each carrying one
+// `<!-- BOARD-SECTION: open|closed -->` line, and the parser never guesses — a
+// row found outside any declared section is a hard failure, not a default.
+//
+// BUT THE SECTION IS NOT THE WHOLE ANSWER, and believing it was cost this gate
+// its teeth. Board laws 2 and 4 keep a CLOSED row exactly where it was opened,
+// in historical order, inside a section that is still `open` because the rest
+// of its rows are — so every one of the 13 rows that had closed by 2026-08-27
+// still read as `open` to this parser, and check 2 (dangling open) could never
+// convict anything. Measured that day, while answering the CEO's question
+// "is all of this really finished?": `.planning/STATE-ARCHIVE.md` still carried
+// `<!-- OPEN: B19 -->` a day after B19 closed, and only a hand count found it.
+//
+// So the ROW's own words win over its section. A row is closed when one of its
+// cells OPENS with the ✓ CLOSED token — the closing entry's first characters.
+// Three traps, all measured on this board:
+//   · two table shapes live here (the B rows carry 7 columns, the C rows 6),
+//     so a fixed column index reads the wrong cell — the closed token is looked
+//     for in ANY cell instead;
+//   · description cells carry pipes inside backticks, so the pipes are masked
+//     before the split (the same trap `roadmap-tally.mjs` was written for);
+//   · a row may QUOTE another ledger's ✓ mid-sentence — B18 quotes complaint C9
+//     as *"✓ CLOSED (help+ambient) / ◐ filters"* and is itself wide open — so
+//     the token must be at the START of a cell, never merely present in it.
+// Anchoring at the cell start is what separates B18 (open) from C36 (closed).
 const BOARD_SECTION = /<!--\s*BOARD-SECTION:\s*(open|closed)\s*-->/i;
+const ROW_CLOSED = /^(?:\*\*)?✓\s*(?:CLOSED|closed)\b/;
+
+// Pipes inside `code spans` are not cell separators. Masking them before the
+// split is what lets a row's cells be read at all on this board.
+function boardCells(line) {
+  let inTick = false;
+  let masked = "";
+  for (const ch of line) {
+    if (ch === "`") inTick = !inTick;
+    masked += ch === "|" && inTick ? "\u0000" : ch;
+  }
+  return masked.split("|").map((c) => c.trim());
+}
 
 function boardRows() {
   const text = readFileSync(path.join(REPO, BOARD), "utf8");
@@ -320,13 +353,15 @@ function boardRows() {
       continue;
     }
     if (!/^\|/.test(line) || /^\|\s*-+/.test(line)) continue;
-    const id = line.split("|").map((c) => c.trim())[1];
+    const cells = boardCells(line);
+    const id = cells[1];
     if (!/^[BC]\d+(-bis)?$/.test(id || "")) continue;
     if (!section) {
       failures.push(`${BOARD}:${lineNo} — row "${id}" sits outside any declared BOARD-SECTION; the gate will not guess whether it is open`);
       continue;
     }
-    rows.set(id, section);
+    const closedHere = cells.slice(2).some((c) => ROW_CLOSED.test(c));
+    rows.set(id, closedHere ? "closed" : section);
   }
   return rows;
 }

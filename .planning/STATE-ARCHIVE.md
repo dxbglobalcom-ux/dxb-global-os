@@ -148,7 +148,7 @@ Recent decisions affecting current work:
 - [Roadmap]: Full schema (incl. memory_index + CRM tables) lands in Phase 3 — schema-first, "full architecture first" directive; UIs arrive later as pure projections
 - [Roadmap]: COST-04 (cost dashboard view) mapped to Phase 8 — cost *enforcement* is Phase 4; the CEO-visible per-dept/model/mode view needs the cockpit
 - [Roadmap]: Phase 1 is a hard exit gate — old keys verifiably dead (401 evidence), 2FA, sanitized .odt, clean secret scan; nothing else starts before it passes
-- [Phase 01]: 01-01: gitleaks v8.24.3 sha256-verified install; canary matched generic-api-key rule; gitleaks-action @v2 tag with SHA-pin TODO at remote go-live <!-- OPEN: B19 -->
+- [Phase 01]: 01-01: gitleaks v8.24.3 sha256-verified install; canary matched generic-api-key rule; gitleaks-action @v2 tag with SHA-pin TODO at remote go-live — SETTLED 2026-08-26 by board row B19: every CI action is now pinned to a commit SHA and `tests/b19/actions-are-sha-pinned.test.ts` refuses a moving tag <!-- HISTORY -->
 - [Phase 01-02]: A8 deny spot-check PASSED - agent file-read of .env refused at tool layer; real .env goes to repo root in Wave 2, no out-of-workspace relocation needed
 - [Phase 01-03]: probe commands copied byte-identically (original whitespace preserved) from RESEARCH recipes, guaranteeing exact-line matches for the reverse verbatim gate
 - [Phase 01-03]: CRED-20 (9Router) DEAD? pre-filled N/A (local software) unconditionally; CRED-09 (Cloudflare Global API Key) left blank since its applicability depends on a CEO-only fact
