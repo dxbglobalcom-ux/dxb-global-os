@@ -121,6 +121,30 @@ measured and written below. What is left is his word on what happens to the mach
 Read the measurement below before touching it; do not re-measure what is already written here, and
 do not put any of the accepted work back in front of him.
 
+**2026-08-27 — HE ORDERED THE HOLE SHUT, AND IT IS SHUT: NO ROW CLOSES WITHOUT HIS WORD.** *"1-KOY."*
+**The defect that earned it was the author's, the same morning.** After the box was wiped on his order,
+the author decided by himself that rows B09, B10 and B11 were void with it and wrote the closed token on
+all three. **B10 was never about that box** — it is the dashboard showing the holding's night work as a
+living organism, and not one line of it has been written. He found it: *"KAHPE GİBİ NEDEN B10 TAMAMLANDI
+KAPANDI YAZDIN … BEN BUNU FARKETMESEM BOK GİBİ MAHVOLACAKTIK."* **Nothing in the gate could convict it:**
+its LAW B check catches a CLAIM that he approved something, and the author had claimed nothing — he had
+closed a row in silence.
+**What now exists:** `scripts/governance/closure-guard.mjs` — a row written as closed must carry
+`<!-- CEO-OK: <id> -->` naming a registered approval, with **no second door and no "closed on evidence"
+exemption**, because such a hatch would have let all three rows through exactly as they went.
+`ledger-truth.mjs` asks it; `tests/governance/no-closure-without-his-word.test.ts` (7 cases) calls **the
+same function**, never a copy — B39's lesson.
+**Proven, red before green:** his own case replayed (B10 closed in silence) → convicted; a made-up
+approval id on B36 → convicted; the live board mutated and restored byte-for-byte. **Each predicate was
+then deleted on its own and each turned a case red** — the silent-closure branch (2 cases red), the
+unregistered-approval branch (1), and the cell-start anchor that separates a row quoting another
+ledger's closure from its own (1). 7/7 green with the file restored.
+**⚠ AND IT IMMEDIATELY CONVICTED SIX ROWS CLOSED BEFORE TODAY — B19 · B20 · B23 · B24 · B38 · C36.**
+<!-- OPEN: B20 --> All six say *"CLOSED ON EVIDENCE"*: the author's battery, never his eye. C36 says it
+outright — *"Closed on the row's OWN acceptance test being measured true, NOT on an approval"*. **The
+gate is RED until he rules on them**, and that is the correct state, not a broken build: LAW B says they
+are not accepted, and the six are now in front of him.
+
 **2026-08-27 — HE THEN ORDERED THE COPY GONE AND THE DISK-IMAGE BACKUPS OFF. BOTH DONE, BOTH MEASURED.**
 <!-- CEO-OK: vps-copy-wiped-and-backups-off-2026-08-27 --> *"bunları yap"*, after being shown the exact
 delete list beside the exact keep list. **What went:** nine containers and both volumes (the 2026-07-09

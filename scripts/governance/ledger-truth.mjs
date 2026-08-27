@@ -50,6 +50,8 @@ import path from "node:path";
 
 // fileURLToPath, not URL.pathname: this repository's directory name contains a
 // space, and pathname hands back "DxB%20Global%20OS".
+import { closuresWithoutHisWord, closedRowCount } from "./closure-guard.mjs";
+
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 const BOARD = "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md";
 const CLAIMS = "scripts/governance/claims.json";
@@ -380,6 +382,23 @@ const rules = JSON.parse(readFileSync(path.join(REPO, RULES), "utf8"));
 const approvals = JSON.parse(readFileSync(path.join(REPO, APPROVALS), "utf8"));
 const board = boardRows();
 
+// ------------------------------------------ check 6: no closure without his word
+//
+// HIS ORDER, 2026-08-27 — "1-KOY". The rule itself lives in
+// scripts/governance/closure-guard.mjs so this gate and the test that guards
+// this gate call THE SAME code; the file carries why it exists. Here it is only
+// asked, and its answers are turned into failures.
+{
+  const boardText = readFileSync(path.join(REPO, BOARD), "utf8");
+  for (const bad of closuresWithoutHisWord(boardText, approvals)) {
+    failures.push(
+      bad.reason === "no-marker"
+        ? `${BOARD}:${bad.lineNo} — row "${bad.id}" is written as closed with no <!-- CEO-OK: … --> marker. LAW B: only his own eye closes a row. Register his acceptance in ${APPROVALS} and mark the row, or reopen it`
+        : `${BOARD}:${bad.lineNo} — row "${bad.id}" is written as closed against approval "${bad.approvalId}", which is not registered in ${APPROVALS}`,
+    );
+  }
+}
+
 // ------------------------------------------------- check 4: one rule, one owner
 function dupScopeFiles() {
   const out = [...DUP_SCOPE_FILES];
@@ -543,5 +562,6 @@ if (failures.length) {
 console.log(
   `ledger truth OK: ${found.state} state claims re-measured, ${found.open} open markers resolved against ${board.size} board rows, ` +
     `${found.triggers} trigger lines all accounted for, ${found.rules} rules each in exactly one owner, ` +
-    `${found.ceoOk} CEO approval claims each backed by a registered approval`,
+    `${found.ceoOk} CEO approval claims each backed by a registered approval, ` +
+    `${closedRowCount(readFileSync(path.join(REPO, BOARD), "utf8"))} closed board rows each carrying his own acceptance`,
 );
