@@ -24,10 +24,12 @@
 
 ## Why it was taken
 
-The repository search of 2026-08-27 found that **no spec in `HOLDING-OS-MASTER-PLAN/` owns the
-production of a website for a company the holding creates** — three matches for
-`web site|websit|storefront`, none of them that. The revenue engine specifies
-objective → opportunity → allocation → project and stops before the storefront.
+**The CEO brought it himself**, with his own reading of what it was for: the websites of the
+companies the holding will create should be built this way. He settled the scope the same
+afternoon, when the session put a supposed spec gap to him: *"Holdingin kuracağı şirketlere web
+sitesi yapma işi holdinge söylenince yapar yani holding tam anlamıyla ferrari seviyesinde
+kurulunca. bir iş istenilince yapar. ayrıca bunun için satır açmaya gerek yok."* So this is a tool
+the finished holding reaches for when it is told to build a site — not a project of its own.
 
 Its discipline is the same law this holding already runs on, written for the web:
 interview the human before generating anything; a fingerprint gate that refuses a build unless it
@@ -104,5 +106,8 @@ Three house rules were written into the head of our copy of `SKILL.md`, above ev
       `no dead scroll detected`, `all 2 scrub clip(s) keep moving`, one real CONTRAST FAIL at
       2.37:1 correctly convicted on the placeholder art. Contact sheet read by the author's own
       eye and sent to the CEO.)
-- [ ] EMBED — no employee persona names this skill yet; it reaches the workforce when the row
-      that owns the holding's outward web work is opened.
+- [ ] EMBED — no employee persona names this skill yet. Per the CEO's ruling of 2026-08-27 there
+      is no row for this and there will not be one: the finished holding builds a site when it is
+      told to. The skill therefore embeds through the personas of the departments that would be
+      handed such a job — the same five the live test routed to (marketing, design, engineering,
+      product, commerce) — whenever those personas are next written.

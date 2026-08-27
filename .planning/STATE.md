@@ -63,12 +63,14 @@ classifier is told `content.outbound` is legal, picks it, and the router then re
 outward-content task that is not a product listing. It is a routing decision and a company-database
 row, so it was put to him and not changed by the author. Row **B40**. <!-- OPEN: B40 -->
 
-**AND IT UNCOVERED A GAP HE SHOULD SEE.** Measured the same session: **no spec in
-`HOLDING-OS-MASTER-PLAN/` owns the production of a website for a company the holding creates** —
-three matches for `web site|websit|storefront`, none of them that. The revenue engine specifies
-objective → opportunity → allocation → project and stops before the storefront. That is real,
-unfinished, unowned work, and it has no row. **It was put to him in one line and he has not yet
-answered whether to open one.** <!-- OPEN: B31 -->
+**AND HE SETTLED WHAT THE AUTHOR HAD MISREAD AS A GAP.** The session measured that no spec owns
+the production of a website for a company the holding creates, and put it to him as unowned work
+needing a row. **His ruling, the same afternoon:** *"Holdingin kuracağı şirketlere web sitesi yapma
+işi holdinge söylenince yapar yani holding tam anlamıyla ferrari seviyesinde kurulunca. bir iş
+istenilince yapar. ayrıca bunun için satır açmaya gerek yok."* <!-- HISTORY --> **So it is not a
+gap and it is not a row.** A finished holding does the job it is told to do; the machine is what
+gets built, and the jobs are what the machine DOES. The text that framed it as missing work was
+deleted rather than kept beside his ruling (LAW A).
 
 **2026-08-26, MIDDAY — HE CLOSED B13 HIMSELF AND ORDERED THE REST OF THE B-LIST CLOSED "AT FERRARI
 LEVEL".** <!-- HISTORY --> His words: *"A yı kabul ediorum. B listesinde kapatacaklarını FERRARİ
