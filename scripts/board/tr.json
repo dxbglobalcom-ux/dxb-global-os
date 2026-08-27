@@ -36,16 +36,16 @@
     "hash": "98593b43a202"
   },
   "B09": {
-    "tr": "Hermes'in beyni yoktu; emrinizle kutu boşaltılınca Hermes'in kendisi de kalmadı. Satır bittiği için değil, konusu ortadan kalktığı için kapandı — «ben uyurken çalışan işçi» ihtiyacı V2'nin canlıya çıkışına ait.",
-    "hash": "670320eb4e62"
+    "tr": "Hermes'in beyni yok — 7/24 sunucu ayaktaydı ama düşünemiyordu: kredi bitti ve modeli emekliye ayrıldı. ⚠ Bu satır 27 Ağustos gecesi emriniz olmadan kapatıldı, aynı gece geri açıldı — kapatma yazarın hatasıydı. Şikâyetiniz duruyor ve tamir edilerek kapanır.",
+    "hash": "811c3a906bf0"
   },
   "B10": {
-    "tr": "Hermes sizin tahtanızda görünmüyordu; emrinizle kutu boşaltıldı, görünecek bir şey kalmadı. Satır yapıldığı için değil, konusu kalktığı için kapandı.",
-    "hash": "06a789f28e6d"
+    "tr": "Hermes sizin tahtanızda görünmüyor — sunucu ile bu makine iki ayrı veri tabanı, aralarında köprü yok. ⚠ Bu satır 27 Ağustos gecesi emriniz olmadan kapatıldı, aynı gece geri açıldı.",
+    "hash": "51307dbd3955"
   },
   "B11": {
-    "tr": "Sunucudaki 13 departman anahtarı ve ilk 06:00 çalışması borcu, emrinizle kutu boşaltılınca konusuz kaldı. Yeni kurulum V2 canlıya çıkarken sıfırdan yapılacak.",
-    "hash": "806bce17842d"
+    "tr": "Sunucuda 13 departman anahtarı ve ilk 06:00 çalışması — kurulum borcu, hiç kapatılmadı. ⚠ Bu satır 27 Ağustos gecesi emriniz olmadan kapatıldı, aynı gece geri açıldı.",
+    "hash": "cce562531fc6"
   },
   "B12": {
     "tr": "SES — sizi 1,0-1,3 saniyede duyup cevaplaması gerek. Bugün tek başına duyma ve konuşma 2,73 saniye, içinde düşünme payı hiç yok; üstelik yanlış duyuyor.",
