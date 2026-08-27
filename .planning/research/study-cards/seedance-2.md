@@ -1,5 +1,14 @@
 # Study Card: Seedance 2.0
 
+> ⚠ **VERSION DRIFT — MEASURED 2026-08-27, AND THIS CARD IS THE EXHIBIT.** The CEO corrected it
+> himself (*"şuan seedance 2.5 var"*) and a live check confirmed him: **Seedance 2.5 launched
+> 2026-07-31** — 30 seconds in one pass, native 4K, audio in the same latent space, up to 50
+> reference inputs — while this card, the arsenal doctrine's paid bench and
+> `INTEGRATION-TRACKER.md` all still said 2.0. **27 days stale, and nothing in this holding was
+> watching.** That gap is board row **B42**. The body below is left as it was written for 2.0;
+> it is re-studied when the bench row is next proposed, not patched by hand here.
+> Sources: seed.bytedance.com · technode.com (2026-07-31).
+
 > FILLED 2026-07-17 (R4.1 Library research pass — D8 masaüstü item 15).
 
 - **Tool:** Seedance 2.0 — ByteDance video-generation model (text/image/video/audio-mixed input → audio-synced multi-shot video)

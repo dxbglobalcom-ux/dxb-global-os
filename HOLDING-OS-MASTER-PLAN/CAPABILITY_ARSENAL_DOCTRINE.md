@@ -30,7 +30,7 @@ A granted-but-uncatalogued server with no disposition row here is a governance d
    | Work that must win — a paying client, an outward face of the holding, a "first place in a world competition" deliverable | the paid twin is named with its price beside the free one, and surfaces to the CEO as ONE proposal before the work is priced |
 
    His own example is a video advertisement and he supplied the shelf himself: our own card
-   (LTX-Video) beside Runway Gen-4 Turbo, Hailuo 2.3 (1080p), Sora 2 Standard, Seedance 2.0 and
+   (LTX-Video) beside Runway Gen-4 Turbo, Hailuo 2.3 (1080p), Sora 2 Standard, Seedance 2.5 and
    Sora 2 Pro. **Nothing in D1-bis lets anything be bought without him** — §8 still holds: the bench
    proposes, it never buys. What changes is WHEN the bench is read: at the job, not only at a phase
    gate. Every §8 row therefore needs its capability DOMAIN and its free counterpart named, which is
@@ -120,9 +120,24 @@ code entering the machine, so INTEG-01 binds it in full — study card, SkillSpe
 findings triaged at source, and a live end-to-end proof before it is called installed. Two further
 rules apply to this class and only to this class:
 
-1. **Skill, never plugin.** The CEO's order of 2026-08-09 leaves every plugin disabled except
-   claude-mem and context7. A capability of this kind is installed into `~/.claude/skills/`, and
-   the marketplace/plugin route is not used.
+1. **PLUGINS ARE OPEN — his live order of 2026-08-27 replaces the order of 2026-08-09, and the
+   old sentence is deleted rather than kept beside it (LAW A).** What stood here — *"the CEO's
+   order of 2026-08-09 leaves every plugin disabled except claude-mem and context7… the
+   marketplace/plugin route is not used"* — is spent. **His words:** *"eklentiler açılsın.
+   eklentiler holding OS sisteminde açık olacak çalışanlar istedikleri zaman gerekli olanı ve en
+   iyi olanı ölçüp çağıracak tembellik etmeden."* Executed the same hour: **18 of 18 enabled**
+   (`claude plugin enable … -s user`, verified `enabledPlugins` → AÇIK 18 · KAPALI 0). The
+   measurement that made it safe: an enabled plugin costs only its skills' one-line descriptions
+   — **~10,743 tok for all eighteen together**, skill bodies load on invoke, MCP tool schemas are
+   resolved at runtime and hooks carry no model-context cost of their own.
+   **What is still true, and is now the ONLY reason to prefer a skill:** a skill cannot install a
+   HOOK that runs by itself, and cannot mount an MCP server. A plugin can do both. So a capability
+   that only carries a written procedure is still installed as a skill under `~/.claude/skills/`;
+   a plugin is opened deliberately, knowing its hooks come with it, and **its SessionStart /
+   UserPromptSubmit hooks are measured before it is enabled** — that hook output, not the plugin,
+   is what actually crowds a session. Measured 2026-08-27: `superpowers` injects **3,530 bytes**
+   of instruction text at every session start, which re-establishes the Standing Order 11 he
+   DELETED on 2026-08-10 (*"sil"*). Named to him in the same report; his call, not the author's.
 2. **The holding keeps its own copy.** The skill is vendored under `tools/<slug>/`, pinned to an
    upstream commit, and INSTALLED FROM that copy by the slug's own `install.sh`, which proves by
    sha256 that the installed tree is byte-identical to the repository's. Upstream can vanish or
@@ -176,7 +191,7 @@ that suffices.
 | Apify actors | usage-based, ~$49/mo starter | marketing/strategy scraping at scale | scrapling volume ceiling measured (blocked targets, >10k pages/mo) | scrapling + camoufox |
 | Composio tool cloud | free tier → $99/mo team | many SaaS integrations in one hand | ≥3 SaaS integrations needed simultaneously in Phase-10 | per-service free MCPs |
 | HeyGen | ~$24–72/mo | social-media video avatars | social wave ships + video content contract signed | none (defer content type) |
-| Seedance/z-image gen | per-generation credits | design/marketing visuals | paying client work requires gen assets | design dept manual + free tiers |
+| Seedance 2.5 / z-image gen | per-generation credits | design/marketing visuals | paying client work requires gen assets | design dept manual + free tiers |
 | Gemini omni-video API | per-minute API cost | video analysis lanes | a revenue task needs video understanding | yt-dlp + frame sampling (free, slower) |
 | LiteLLM paid models via API | per-token | worker model diversity | subscription tiers saturated (cost monitor data) | subscription models (current) |
 | **SocialForge** (open-source engine, PAID PROVIDERS) | engine MIT/free; its providers are not — **Vertex AI Nano Banana Pro** (images) + **WaveSpeed Kling v3.0 Pro** (video), both usage-priced | the social-media department's whole production line: brief → per-platform copy (7 platforms) → asset-first imagery → review gallery → approval ledger → delivery audit, with C2PA AI-disclosure signing for EU markets | **the agency seat (B28) takes its first brand client** — the line is what delivers the month | the engine itself is free and installs on Claude Code; **the image half is already replaced** by the CEO's Google AI Pro subscription through Antigravity at $0.00 (B31, measured 2026-08-26), so only the video provider is genuinely paid |
