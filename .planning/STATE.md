@@ -140,10 +140,14 @@ then deleted on its own and each turned a case red** — the silent-closure bran
 unregistered-approval branch (1), and the cell-start anchor that separates a row quoting another
 ledger's closure from its own (1). 7/7 green with the file restored.
 **⚠ AND IT IMMEDIATELY CONVICTED SIX ROWS CLOSED BEFORE TODAY — B19 · B20 · B23 · B24 · B38 · C36.**
-<!-- OPEN: B20 --> All six say *"CLOSED ON EVIDENCE"*: the author's battery, never his eye. C36 says it
-outright — *"Closed on the row's OWN acceptance test being measured true, NOT on an approval"*. **The
-gate is RED until he rules on them**, and that is the correct state, not a broken build: LAW B says they
-are not accepted, and the six are now in front of him.
+<!-- HISTORY --> All six said *"CLOSED ON EVIDENCE"*: the author's battery, never his eye. C36 said it
+outright — *"Closed on the row's OWN acceptance test being measured true, NOT on an approval"*.
+**HE RULED THE SAME HOUR AND ACCEPTED ALL SIX:** <!-- CEO-OK: six-closed-rows-accepted-by-his-eye-2026-08-27 -->
+*"6 sına da onay veriorm bunları önceden onaylamıştım."* Registered as
+`six-closed-rows-accepted-by-his-eye-2026-08-27`, each row marked, ⚠ and the register says plainly that
+this is the FIRST WRITTEN record of an acceptance he says he had already given — no earlier entry for any
+of the six existed, which is why the guard convicted them at all. **The gate turned green on his sentence,
+not on a weaker rule.**
 
 **2026-08-27 — HE THEN ORDERED THE COPY GONE AND THE DISK-IMAGE BACKUPS OFF. BOTH DONE, BOTH MEASURED.**
 <!-- CEO-OK: vps-copy-wiped-and-backups-off-2026-08-27 --> *"bunları yap"*, after being shown the exact
