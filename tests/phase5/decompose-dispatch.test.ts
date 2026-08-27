@@ -115,12 +115,20 @@ describe("decompose — guards (no LLM)", () => {
     ).toContain("önceki");
   });
 
-  it("hop guard: a 4-deep dependency chain is rejected, 3-deep passes", () => {
+  // The cap moved from 3 to 5 on the CEO's order of 2026-08-27, after a real intent —
+  // a website for a coffee brand the holding is founding — drew a 5-deep chain and was
+  // refused twice. Five is the master plan's own ceiling for genuinely complex work
+  // (PHASE-05 §2 row 7), so this is that clause exercised, not a new number.
+  it("hop guard: a 6-deep dependency chain is rejected, 5-deep passes", () => {
     const ok = (o: string) => ({ objective: `${o} — fully self-contained work order text`, deps: [] as number[] });
-    const four = [ok("a"), { ...ok("b"), deps: [0] }, { ...ok("c"), deps: [1] }, { ...ok("d"), deps: [2] }];
-    expect(chainDepth(four.map((d) => d.deps))).toBe(4);
-    expect(lintBatch(four).some((f) => f.includes("hop cap"))).toBe(true);
-    expect(lintBatch(four.slice(0, 3))).toEqual([]);
+    const chain = (n: number) =>
+      Array.from({ length: n }, (_, i) => (i === 0 ? ok("a") : { ...ok(`step ${i}`), deps: [i - 1] }));
+    const six = chain(6);
+    expect(chainDepth(six.map((d) => d.deps))).toBe(6);
+    expect(lintBatch(six).some((f) => f.includes("hop cap"))).toBe(true);
+    expect(lintBatch(chain(5))).toEqual([]);
+    // the depth that was refused before his order now passes
+    expect(lintBatch(chain(4))).toEqual([]);
   });
 
   it("forward references and oversized batches are rejected", () => {

@@ -44,6 +44,25 @@ Card: `.planning/research/study-cards/scrollcraft.md` · scan:
 generation — is shut: no key is set, and the house rules written into our copy put every
 generation call behind a registered approval.
 
+**HIS SECOND ORDER THE SAME AFTERNOON — RAISE THE DEPTH, AND IT IS DONE.** He asked for a live
+test of a job arriving at the holding. The intent *"Holdingin yeni kuracağı kahve markası için
+tanıtım web sitesi hazırlansın"* was understood in **4.7 seconds** — five departments (marketing,
+design, engineering, product, commerce, staffed by 81 agents), `approval_class: outward` so it
+stops at him, tier L1 — and then died at decomposition: `dependency chain depth 5 exceeds the hop
+cap of 3`, refused twice, **nothing queued** (57 intents and 217 tasks before and after). He ruled:
+*"derinliği ileride yapacağımız yoğun ve compleks işlere uyumlu şekilde yükselt"* <!-- HISTORY -->
+**The cap is now 5, which is the master plan's own ceiling for genuinely complex work** (PHASE-05
+§2 row 7), not an invented number; registered as adaptation **A14** in
+`AGENT_ORCHESTRATION_SPEC.md`, proven by a test written to fail against the old cap first.
+
+**AND THE SAME RUN FOUND THE NEXT WALL, WHICH WAITS ON HIM.** <!-- OPEN: B40 --> With the depth guard cleared the
+intent reached the router and died on `NoRouteError: no enabled routing_rules row matches
+task_class 'content.outbound'`. The row exists and is enabled at L1, but its match condition is
+`{"keyword": "listeleme"}` — residue of the **Outleteuro** vertical slice he CANCELLED in U19. The
+classifier is told `content.outbound` is legal, picks it, and the router then refuses every
+outward-content task that is not a product listing. It is a routing decision and a company-database
+row, so it was put to him and not changed by the author. Row **B40**. <!-- OPEN: B40 -->
+
 **AND IT UNCOVERED A GAP HE SHOULD SEE.** Measured the same session: **no spec in
 `HOLDING-OS-MASTER-PLAN/` owns the production of a website for a company the holding creates** —
 three matches for `web site|websit|storefront`, none of them that. The revenue engine specifies

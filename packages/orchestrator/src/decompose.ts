@@ -6,8 +6,8 @@
 //
 // Guards (code, post-parse — master-plan §5 risk 1 + §2 row 7 + T-05-12):
 //   - self-contained lint: objectives referencing "the above/previous" are rejected
-//   - hop-depth: longest dependency chain capped at 3 levels (raising it later is
-//     a routing/policy decision, not a code default)
+//   - hop-depth: longest dependency chain capped at 5 levels (the CEO made that
+//     routing/policy decision on 2026-08-27; the code default had been 3)
 //   - batch cap: > 10 envelopes per intent rejected (runaway decompose)
 //   - deps are forward-only local indices (deps[i] < i) — cycles impossible
 // A guard/parse failure triggers exactly ONE regeneration attempt with the
@@ -28,7 +28,14 @@ import {
 
 export type DecomposedEnvelope = TaskEnvelope & { deps: number[] };
 
-const MAX_HOP_DEPTH = 3; // LOCKED: aktif hop <= 3 (PHASE-05 §2 row 7)
+// Raised from 3 to 5 by the CEO's order of 2026-08-27 — *"derinliği ileride yapacağımız
+// yoğun ve compleks işlere uyumlu şekilde yükselt"* — after a real intent (a website for a
+// coffee brand the holding is founding) drew a 5-deep chain and was refused twice. FIVE is
+// the master plan's own ceiling, not a new number: PHASE-05 §2 row 7 reads *"aktif hop ≤3
+// çoğu görevde (head→specialist→worker); 5 katman yalnız gerçekten karmaşık işte"*. The same
+// row carries the reason not to go higher, and it is arithmetic rather than taste: at 95% per
+// hop, 5 hops finish 77% of the time and 6 hops 74%. Raising it further is the CEO's call.
+const MAX_HOP_DEPTH = 5; // PHASE-05 §2 row 7, complex-work clause exercised 2026-08-27
 const MAX_ENVELOPES = 10; // T-05-12 runaway-batch cap
 
 // What the model is allowed to draft. Deliberately NO model_tier (route() owns

@@ -274,5 +274,9 @@
   "C64": {
     "tr": "«UX'i 'U eks' diye okuyor» — yabancı kelimeler yabancı okunmalı.",
     "hash": "be07abc6b361"
+  },
+  "B40": {
+    "tr": "İş zinciri dışarıya bakan içerik işini yönlendiremiyor — sistem işi doğru anlıyor ama sonra kendi masasını bulamıyor. 27 Ağustos'ta sizin canlı testinizde çıktı: kahve markası web sitesi işi 4,7 saniyede beş departmana ve sizin onayınıza bağlandı, derinlik duvarını sizin emrinizle aştı, sonra yönlendirme satırında durdu. Sebep: o satır hâlâ iptal ettiğiniz Outleteuro pilotundan kalma «listeleme» kelimesini arıyor. Tek satırlık düzeltme hazır, sizin sözünüzü bekliyor.",
+    "hash": "0f89fe13d85e"
   }
 }
