@@ -16,6 +16,26 @@ A granted-but-uncatalogued server with no disposition row here is a governance d
 1. **D1 free-first law:** free tools are installed and mastered first; paid tools are NEVER
    installed or paid for — they live on the bench (§8) and surface as CEO proposals when
    profit funds them.
+1-bis. **D1-bis — THE QUALITY TIER (CEO ruling, 2026-08-27; amends D1 without weakening it).**
+   His words: *"ücretsizler seçilirken aynı anda bunun ücretli ve çok daha mükemmel kalitede olanı
+   da kontrol edilmeli… dünya yarışmalarında birinci olacak seviyede e-commerce web siteleri
+   yapılacaksa müşteri iyi para veriyorsa en iyi malzemeler, normal olanlar için ise bedava olanlar
+   kullanılabilir."* **Free-first still governs what gets INSTALLED. D1-bis governs what gets
+   CONSIDERED.** At the moment a job is scoped, the free hand and the best paid hand for that exact
+   job are named together, and the choice follows the job's own tier:
+
+   | Job tier | Rule |
+   |---|---|
+   | Ordinary internal or routine client work | the free hand, used to perfection (D1 unchanged) |
+   | Work that must win — a paying client, an outward face of the holding, a "first place in a world competition" deliverable | the paid twin is named with its price beside the free one, and surfaces to the CEO as ONE proposal before the work is priced |
+
+   His own example is a video advertisement and he supplied the shelf himself: our own card
+   (LTX-Video) beside Runway Gen-4 Turbo, Hailuo 2.3 (1080p), Sora 2 Standard, Seedance 2.0 and
+   Sora 2 Pro. **Nothing in D1-bis lets anything be bought without him** — §8 still holds: the bench
+   proposes, it never buys. What changes is WHEN the bench is read: at the job, not only at a phase
+   gate. Every §8 row therefore needs its capability DOMAIN and its free counterpart named, which is
+   board row **B31**; the request that reaches the bench at job time is board row **B41**.
+
 2. **Study before install (INTEG-01):** every tool has a study card
    (`.planning/research/study-cards/`) BEFORE install; third-party code passes the
    SkillSpector gate (static scan, archived report, findings TRIAGED not auto-accepted —

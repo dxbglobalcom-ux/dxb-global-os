@@ -768,6 +768,8 @@ context work.
 Waiting on him, not on the author: his approval of the design package · one hand-minted browser
 session so authenticated surfaces can be checked by eye (B03-bis) · the connector accounts (W-C42-4)
 · money for the paid model exam (B06). **B09 is no longer on this list either — it was closed 2026-08-27 as VOID BY ORDER when the rented box was emptied, so no money is owed on it.** **The acceptance session (B13) is no longer on this list — he closed it 2026-08-26** (*"A yı kabul ediorum"*) and its 14 eye-criteria became B32's acceptance test. <!-- CEO-OK: b13-folded-into-v2-design-package-2026-08-26 -->
+**NEW 2026-08-27 — B41, the supply chain, opened on his order** <!-- OPEN: B41 --> (*"aynen öyle tahtaya ilgili bölüme girsin"*): an employee mid-task cannot request a capability it does not hold, and Claude's own catalogue of **289 plugins** sits unopened beside a shelf of 412 items whose `library_usage_log` is **0 rows**. Two things wait on HIM on that row: every purchase the bench ever proposes, and **his ruling on plugin loading** — he asked whether plugins may stay enabled but load only on demand; measured answer given (all 18 installed plugins together ~10,743 tokens per session against ~1,776 today, skill bodies and MCP schemas load on invoke), and the 2026-08-09 order stands until he replaces it. His quality-tier ruling of the same hour is registered in `CAPABILITY_ARSENAL_DOCTRINE.md` §1 as **D1-bis**.
+
 Waiting on hardware: the workstation, and the local voice models chosen by measurement (B12).
 
 **THE WORKSTATION, AFTER THE EVENING OF 2026-08-17 — measured, not assumed.** It froze hard at
