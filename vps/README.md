@@ -103,3 +103,37 @@ with the reason on the line above it — remove the `#` to restore it.
 
 **To bring the whole thing back:** `sudo systemctl enable --now dxb-stack`, then uncomment the cron
 line. Nothing was deleted, so this is a one-command reversal.
+
+## EMPTIED ON HIS ORDER, 2026-08-27 — the box is a landing strip now
+
+*"vps teki kopyayı silelim mi herşey kurulunca sıfırını yükler … bunları yap."*
+Approval `vps-copy-wiped-and-backups-off-2026-08-27`.
+
+**What went:** nine containers and both volumes (`dxb_db_data` — the 2026-07-09 database — and
+`dxb_hf_hub_cache`), every image and the build cache, `/opt/dxb` (1.5 GB, including
+`vps/.env` and `vps/hermes/.env`, so two generated secrets left a public machine), and **47 of the
+box's 48 own `dxb-<date>.dump` copies** on the Storage Box.
+
+**What stayed, checked by name:** the machine and `46.225.89.249` · `dxbglobal.online` answering
+`/health` → **200 `ok`** on a Let's Encrypt certificate valid to **2026-10-07** · Caddy, docker and
+ssh active · the SSH keys · **the holding's own 21 dumps on the Storage Box, 499.2 MB, untouched**.
+
+**Measured after:** docker `0 containers · 0 images · 0 volumes · 0 build cache` · disk
+**29 GB → 12 GB of 75 GB (17 %)** · load **0.11** · `systemctl --failed` → **0 units** ·
+`dxb-stack` and `hermes` both `inactive` / `disabled`.
+
+**Hetzner disk-image backups are OFF:** `backup_window: None`, **0 backup images**, **2.02 EUR/month
+stopped**. The account is now the server 10.10 + the Storage Box 3.81 = **13.91 EUR/month**.
+
+**hermes.service and watchdog.timer were stopped and disabled in the same act** — both had
+`WorkingDirectory=/opt/dxb/vps/hermes` and `EnvironmentFile` under it, so the wipe would have left
+them broken. That is what voids board rows B09, B10 and B11.
+
+⚠ **One file was kept against the letter of the order and is reported, not hidden:**
+`dxb-2026-07-17.dump` (38.5 MB). **2026-07-09…17 is a window no holding-side dump covers** — the
+laptop pipeline starts on 07-18 — and destroying the only record of it is not reversible. It goes on
+his word.
+
+**Rebuilding it, when V2 has something to deploy:** `vps/provision/cloud-init.yaml` + `harden.sh` +
+`Caddyfile` (already applied and still in place) and `vps/compose.yaml`, then the full
+`db/migrations` chain — 158 files, not the 12 this box had.

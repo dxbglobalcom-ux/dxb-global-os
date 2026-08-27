@@ -108,8 +108,21 @@ dakikada +30 iş satırı** (10'u denenip başarısız, 20'si asla erimeyecek y�
 **hiç elle giriş göstermiyor**; 48 günde **0** başarısız SSH şifresi; dokuz kapsayıcı bizim
 kurduğumuz dokuz, `restarts=0`; tek cron satırı kendi `pg_dump.sh`'ımız.
 Kutunun SSH kimlik parmak izi artık `vps/README.md`'de kayıtlıdır.
-⛔ O hesapta CEO'nun günün sözü olmadan hiçbir şey durdurulmaz, düzeltilmez, kurulmaz, kapatılmaz
-veya silinmez — döngü bu satır yazılırken hâlâ dönüyordu.
+**2026-08-27 — CEO SÖZÜNÜ VERDİ: DÖNGÜ DURDU, KOPYA SİLİNDİ, DİSK İMAJI YEDEĞİ KAPATILDI.**
+<!-- CEO-OK: vps-copy-wiped-and-backups-off-2026-08-27 --> *"elbette döngüyü durdur"* · *"bunları yap"*.
+Yığın durduruldu ve devre dışı bırakıldı; dokuz kapsayıcı, iki hacim (9 Temmuz veri tabanı + 492 MB'lık
+boş kuyruk), bütün imajlar, derleme önbelleği ve `/opt/dxb` (1,5 GB, iki üretilmiş `.env` dâhil) silindi;
+Storage Box'taki **kutunun kendi 48 kopyasından 47'si** kaldırıldı. **Ölçüldü:** docker `0 kapsayıcı ·
+0 imaj · 0 hacim · 0 önbellek` · disk **29 GB → 12 GB / 75 GB (%17)** · yük **0,11** · `systemctl --failed`
+→ **0 birim**. **Ayakta kalan, adıyla kontrol edildi:** makine ve `46.225.89.249` · `dxbglobal.online`
+`/health` → **200 `ok`**, Let's Encrypt sertifikası **2026-10-07**'ye kadar geçerli · Caddy, docker, ssh
+aktif · SSH anahtarları · **holdingin kendi 21 kopyası (499,2 MB) el değmemiş**. Hetzner disk imajı yedeği
+kapalı (`backup_window: None`, 0 imaj) → hesap **13,91 €/ay**. `hermes.service` ve `watchdog.timer` aynı
+işlemde durduruldu ve devre dışı bırakıldı (ikisi de `/opt/dxb` üstünde duruyordu) — tahtadaki **B09 · B10 ·
+B11** satırlarını konusuz bırakan şey budur. **Kutu artık V2 için boş bir iniş pistidir**; yeniden kurulum
+`vps/provision/` + `vps/compose.yaml` ile sıfırdan ve **158 göç dosyasının tamamıyla** yapılacaktır.
+⚠ Emrin lafzına rağmen tek bir dosya bırakıldı ve saklanmadı: `dxb-2026-07-17.dump` (38,5 MB) —
+**2026-07-09…17 aralığını holding tarafındaki hiçbir kopya taşımıyor**; CEO'nun sözüyle o da gider.
 
 **AYNI HESABIN İKİNCİ ÜRÜNÜ BİR LÜKS DEĞİL, HOLDİNGİN TEK DIŞ KOPYASIDIR.** Storage Box
 `dxb-backup-1` (bx11, fsn1, 3,81 €/ay) şirketin kendi `pg_dump` kopyalarını taşır —

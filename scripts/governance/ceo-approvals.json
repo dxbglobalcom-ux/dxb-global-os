@@ -345,5 +345,12 @@
     "verbatim": "boşver şirketin tüm faaliyetleri ıraktan yürütülecek aynı zamanda. oyüzden sorun değil.bunu da not edin. yapay zeka ürünüdürü şimdilik geçelim.",
     "conditions": "'şimdilik' — the disclosure deferral is for now, not forever, and it is not written as a law. Remote operation is recorded as a standing fact about how the holding runs, not as a new task: no new spec, no new plan file, no new board row.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md rows B35 and B28"
+  },
+  "vps-copy-wiped-and-backups-off-2026-08-27": {
+    "date": "2026-08-27",
+    "what": "TWO approvals given together, after he was shown the exact delete list and the exact keep list. (1) WIPE THE COPY, NOT THE MACHINE: the 2026-07-09 V1 stack on the rented box — nine containers and their volumes (the July-9 database and the 492 MB futile queue), /opt/dxb (1.5 GB, including the two generated .env files), every docker image and build cache, and the box's own pg_dump copies on the Storage Box — is deleted. The machine itself, its IP 46.225.89.249, dxbglobal.online, the certificate, Caddy, the hardening, the SSH keys and the HOLDING'S OWN dumps on the Storage Box are untouched. When V2 has something to deploy, the box is rebuilt from zero from vps/provision/ + vps/compose.yaml. (2) TURN OFF THE HETZNER DISK-IMAGE BACKUPS: 2.02 EUR/month stopped, since backing up an empty machine is meaningless.",
+    "verbatim": "vps teki kopyayı silelim mi herşey kurulunca sıfırını yükler ve elbette döngüyü durdur. … bunları yap",
+    "conditions": "It authorises no deletion of the SERVER itself and none of the Storage Box's dxb-laptop-* / dxb-b36-* / dxb-archive-* files, which are the holding's own copies. The author kept ONE of the box's 48 dumps — dxb-2026-07-17.dump, 38.5 MB — because 2026-07-09..17 is a window no holding-side dump covers, and reported it for his word; it goes on his say-so. Hermes and its watchdog were stopped and disabled as part of the same act, because both stood on /opt/dxb and would otherwise have been left broken.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md rows B39, B09, B10, B11 · vps/README.md · .planning/STATE.md"
   }
 }

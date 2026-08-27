@@ -36,16 +36,16 @@
     "hash": "98593b43a202"
   },
   "B09": {
-    "tr": "Hermes'in beyni yok — 7/24 sunucu ayakta ama düşünemiyor: kredi bitti ve modeli emekliye ayrıldı.",
-    "hash": "6de1e9adfe21"
+    "tr": "Hermes'in beyni yoktu; emrinizle kutu boşaltılınca Hermes'in kendisi de kalmadı. Satır bittiği için değil, konusu ortadan kalktığı için kapandı — «ben uyurken çalışan işçi» ihtiyacı V2'nin canlıya çıkışına ait.",
+    "hash": "670320eb4e62"
   },
   "B10": {
-    "tr": "Hermes sizin tahtanızda görünmüyor — sunucu ile bu makine iki ayrı veri tabanı, aralarında köprü yok.",
-    "hash": "878cad78c33a"
+    "tr": "Hermes sizin tahtanızda görünmüyordu; emrinizle kutu boşaltıldı, görünecek bir şey kalmadı. Satır yapıldığı için değil, konusu kalktığı için kapandı.",
+    "hash": "06a789f28e6d"
   },
   "B11": {
-    "tr": "Sunucuda 13 departman anahtarı ve ilk 06:00 çalışması — kurulum borcu, hiç kapatılmadı.",
-    "hash": "4a5c97be70f6"
+    "tr": "Sunucudaki 13 departman anahtarı ve ilk 06:00 çalışması borcu, emrinizle kutu boşaltılınca konusuz kaldı. Yeni kurulum V2 canlıya çıkarken sıfırdan yapılacak.",
+    "hash": "806bce17842d"
   },
   "B12": {
     "tr": "SES — sizi 1,0-1,3 saniyede duyup cevaplaması gerek. Bugün tek başına duyma ve konuşma 2,73 saniye, içinde düşünme payı hiç yok; üstelik yanlış duyuyor.",
@@ -92,8 +92,8 @@
     "hash": "b5fcabb8c41f"
   },
   "B39": {
-    "tr": "Sevk hattı ölçüldü ve iki eksik freni kuruldu — bir işçi 199 kişinin işini yapmıyor. Kiralık kutunun faturası ödendi, içi okundu: kimse girmemiş, kendi zamanlayıcımız olmayan bir tabloyu durmadan soruyormuş. Emrinizle döngü durduruldu — kutu artık boşta bekliyor. Geriye tek soru kaldı: içindeki eski kopya silinsin mi.",
-    "hash": "6fafa4efda0f"
+    "tr": "Sevk hattı ölçüldü ve iki eksik freni kuruldu. Kiralık kutunun faturası ödendi, içi okundu — kimse girmemiş, kendi zamanlayıcımız olmayan bir tabloyu durmadan soruyormuş. Emrinizle döngü durduruldu, eski kopya silindi ve disk imajı yedeği kapatıldı: kutu artık boş bir pist, hesap ayda 13,91 €.",
+    "hash": "172964b36583"
   },
   "B38": {
     "tr": "Canlı Operasyonlar ekranını besleyen toplayıcı hiçbir yerde çalışmıyor — bu yüzden o ekran şirket ne yaparsa yapsın hiçbir zaman bir şey gösteremez.",
