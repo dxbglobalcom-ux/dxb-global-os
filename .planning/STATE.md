@@ -19,6 +19,20 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
+**2026-08-27, EVENING — HE ACCEPTED EVERYTHING THIS SESSION BUILT, WITH HIS OWN EYE.** His words:
+*"TMM BURAYA KADAR HERŞEY ONAYLADIM. göz testi de tmm. ok."*
+<!-- CEO-OK: scrollcraft-depth-and-routing-accepted-2026-08-27 --> <!-- HISTORY --> Four things,
+each ordered by him and then looked at by him: **the tool** (scrollcraft installed through INTEG-01
+in full — rows B30/B31, doctrine §5b), **the eye test** (the page opened and scrolled in his own
+browser, the 47-frame contact sheet and the upstream's three real example pages beside it so the
+mechanism could be told from the placeholder art), **the depth** (3 → 5, adaptation A14), and **the
+routing row** (the cancelled pilot's `listeleme` condition cleared — **row B40 closes on this
+acceptance**). He also asked twice whether any of it had reached the holding's own screens and was
+answered with measurement: `SEPARATION_HOLDS`, 0 of 13 write attempts accepted, exactly two rows
+moved in the whole company database all day (his own routing order and its audit line), 0 files
+touched under `apps/`. The coffee brand does not exist — the sentence was the author's, written to
+run the test; `dispatch()` was never called and 57 intents / 217 tasks stood unchanged.
+
 **2026-08-27, AFTERNOON — HE BROUGHT A TOOL HIMSELF AND ORDERED IT INSTALLED.** He handed over
 `github.com/nateherkai/scroll-craft` — Nate Herk's scrollcraft skill, which builds premium
 scroll-driven websites — and asked the right question about it: *"bunu tahtaya mı yazalım holdinge
@@ -56,7 +70,7 @@ cap of 3`, refused twice, **nothing queued** (57 intents and 217 tasks before an
 `AGENT_ORCHESTRATION_SPEC.md`, proven by a test written to fail against the old cap first.
 
 **HIS THIRD ORDER THE SAME EVENING — "listeleme şartını kaldır" — DONE, NOT ACCEPTED (LAW B).**
-<!-- OPEN: B40 --> The condition is gone through the canonical migration chain (applied 1, skipped
+<!-- HISTORY --> The condition is gone through the canonical migration chain (applied 1, skipped
 158) and out of the repository's seed in the same commit. **One row moved and the table was dumped
 before and after to prove it:** `match` `{"keyword": "listeleme"}` → `{}`, every other field
 identical — L1, `needs_council` still true, priority 20, enabled — and 0 of 37 enabled rules now
@@ -67,13 +81,13 @@ pinned commit, as the tool for the build, and ends with an adversarial legal rev
 Islamic boundaries, invented facts and TR/EN parity. Nothing was written to the company — 57
 intents and 217 tasks before and after. Row **B40** stays open on his eye alone.
 
-**HOW THAT WALL WAS FOUND.** <!-- OPEN: B40 --> With the depth guard cleared the
+**HOW THAT WALL WAS FOUND.** <!-- HISTORY --> With the depth guard cleared the
 intent reached the router and died on `NoRouteError: no enabled routing_rules row matches
 task_class 'content.outbound'`. The row exists and is enabled at L1, but its match condition is
 `{"keyword": "listeleme"}` — residue of the **Outleteuro** vertical slice he CANCELLED in U19. The
 classifier is told `content.outbound` is legal, picks it, and the router then refuses every
 outward-content task that is not a product listing. It is a routing decision and a company-database
-row, so it was put to him and not changed by the author. Row **B40**. <!-- OPEN: B40 -->
+row, so it was put to him and not changed by the author. Row **B40**. <!-- HISTORY -->
 
 **AND HE SETTLED WHAT THE AUTHOR HAD MISREAD AS A GAP.** The session measured that no spec owns
 the production of a website for a company the holding creates, and put it to him as unowned work
