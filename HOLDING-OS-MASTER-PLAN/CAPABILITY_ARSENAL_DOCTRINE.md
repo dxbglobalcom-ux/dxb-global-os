@@ -92,6 +92,30 @@ All four: catalog entry + `tool_pins` schema-hash + library `mcp` item + departm
 SkillSpector scan archived + live tools/call proof. Details in §3. Install quality bar per
 CEO: *"en mükemmel şekilde"* — each hand answered a REAL call before being called done.
 
+## 5b. Skill hands — installed as skills, not as MCP servers (opened 2026-08-27)
+
+A capability that arrives as a Claude Code **skill** is not a server: it declares no tools, takes
+no grant, and carries no schema hash, so §3's pin table cannot hold it. It is still third-party
+code entering the machine, so INTEG-01 binds it in full — study card, SkillSpector scan archived,
+findings triaged at source, and a live end-to-end proof before it is called installed. Two further
+rules apply to this class and only to this class:
+
+1. **Skill, never plugin.** The CEO's order of 2026-08-09 leaves every plugin disabled except
+   claude-mem and context7. A capability of this kind is installed into `~/.claude/skills/`, and
+   the marketplace/plugin route is not used.
+2. **The holding keeps its own copy.** The skill is vendored under `tools/<slug>/`, pinned to an
+   upstream commit, and INSTALLED FROM that copy by the slug's own `install.sh`, which proves by
+   sha256 that the installed tree is byte-identical to the repository's. Upstream can vanish or
+   change; the holding's copy does not. Adaptations for our boundaries are made in our copy and
+   commented there (doctrine D6: scan AND adapt).
+
+| Skill | Pinned | Vendored | Scan | Live proof | Money |
+|---|---|---|---|---|---|
+| **scrollcraft** — outward-facing scroll-driven websites for the holding's own companies and for client work | upstream `e957985` (2026-08-23), MIT | `tools/scrollcraft/` → `bash tools/scrollcraft/install.sh` | `.planning/research/skillspector/scrollcraft-e957985.txt` — CRITICAL headline, 15 issues, every one triaged at source in the study card; one REAL finding fixed in our copy (the `.env` walk) | 2026-08-27 proof build: page served, 47 frames shot, `no dead scroll detected`, contact sheet read by eye | free. `kie.ai` image generation is the only paid path and is shut: no key is set, and house rule 2 in our copy of `SKILL.md` puts every generation call behind a registered CEO approval |
+
+Card: `.planning/research/study-cards/scrollcraft.md`. Build workspace `var/scrollcraft/`
+(gitignored, outside the pnpm workspace globs), resolved through the repo-root `.scrollcraft.json`.
+
 ## 6. Ghost-server dispositions (audit F-07 closure; was: 9 declared, 8 uncatalogued)
 
 | Declared server | Disposition (named, CEO-visible) |

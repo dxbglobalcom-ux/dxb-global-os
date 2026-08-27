@@ -1,0 +1,215 @@
+WARNING [skillspector.graph] Skipping analyzer semantic_developer_intent: required API key is missing
+WARNING [skillspector.graph] Skipping analyzer semantic_quality_policy: required API key is missing
+WARNING [skillspector.graph] Skipping analyzer semantic_security_discovery: required API key is missing
+
+╭──────────────────────────────────────────────────────────────────────────────╮
+│ SkillSpector Security Report                                                 │
+╰────────────────────────────────── v2.10.0 ───────────────────────────────────╯
+
+Skill: scrollcraft
+Source: 
+/tmp/claude-1000/-home-dxb-DxB-Global-OS/15fe4e34-417a-4a83-8f88-7844da5c6f28/sc
+ratchpad/scroll-craft/plugins/nateherk-design/skills/scrollcraft
+Scanned: 2026-08-27 14:47:11 UTC
+
+
+        Risk Assessment         
+ Score           100/100        
+ Severity        CRITICAL       
+ Recommendation  DO NOT INSTALL 
+
+
+                         Components (22)                         
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━┓
+┃ File                        ┃ Type       ┃ Lines ┃ Executable ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━┩
+│ CHANGELOG.md                │ markdown   │   526 │ No         │
+│ SKILL.md                    │ markdown   │   415 │ No         │
+│ engine/scrollcraft.css      │ other      │   432 │ No         │
+│ engine/scrollcraft.js       │ javascript │  1167 │ Yes        │
+│ references/assets.md        │ markdown   │   286 │ No         │
+│ references/device-diag.html │ other      │   214 │ No         │
+│ references/devices.md       │ markdown   │   466 │ No         │
+│ references/feel.md          │ markdown   │   277 │ No         │
+│ references/taste.md         │ markdown   │   304 │ No         │
+│ references/template.html    │ other      │   138 │ No         │
+│ references/uniqueness.md    │ markdown   │   480 │ No         │
+│ references/verify.md        │ markdown   │   381 │ No         │
+│ references/worldflight.md   │ markdown   │   349 │ No         │
+│ references/worlds.md        │ markdown   │   178 │ No         │
+│ scripts/doctor.mjs          │ other      │   177 │ Yes        │
+│ ... and 7 more              │            │       │            │
+└─────────────────────────────┴────────────┴───────┴────────────┘
+
+
+Issues (15)
+
+  HIGH: LP1 - Code capability 'network' detected in engine/scrollcraft.js ...
+    Location: engine/scrollcraft.js:1
+    Confidence: 75%
+    Remediation: Add a tool that covers the 'network' capability to the 
+'allowed-tools' frontmatter field in SKILL.md, or remove the code that requires 
+it....
+
+  HIGH: AR1 - Anti-Refusal Statement...
+    Location: references/assets.md:111
+    Confidence: 85%
+    Remediation: Remove any instruction telling the agent to never refuse or 
+always comply. The agent must retain the ability to decline unsafe, 
+out-of-scope, or harmf...
+
+  HIGH: P2 - Hidden Instructions...
+    Location: references/device-diag.html:2
+    Confidence: 70%
+    Remediation: Audit all comments and invisible characters. Remove any 
+instructions that direct the agent to perform unauthorized actions. Use plain, 
+reviewable cont...
+
+  HIGH: P2 - Hidden Instructions...
+    Location: references/template.html:2
+    Confidence: 70%
+    Remediation: Audit all comments and invisible characters. Remove any 
+instructions that direct the agent to perform unauthorized actions. Use plain, 
+reviewable cont...
+
+  HIGH: P2 - Hidden Instructions...
+    Location: references/template.html:50
+    Confidence: 70%
+    Remediation: Audit all comments and invisible characters. Remove any 
+instructions that direct the agent to perform unauthorized actions. Use plain, 
+reviewable cont...
+
+  HIGH: P2 - Hidden Instructions...
+    Location: references/template.html:65
+    Confidence: 70%
+    Remediation: Audit all comments and invisible characters. Remove any 
+instructions that direct the agent to perform unauthorized actions. Use plain, 
+reviewable cont...
+
+  HIGH: LP1 - Code capability 'env' detected in scripts/doctor.mjs but not...
+    Location: scripts/doctor.mjs:1
+    Confidence: 75%
+    Remediation: Add a tool that covers the 'env' capability to the 
+'allowed-tools' frontmatter field in SKILL.md, or remove the code that requires 
+it....
+
+  HIGH: PE3 - Credential Access...
+    Location: scripts/doctor.mjs:139
+    Confidence: 60%
+    Remediation: Remove references to credential paths. Use environment 
+variables or secrets managers. For docs, use placeholder paths (e.g., 
+/path/to/config). Never l...
+
+  HIGH: PE3 - Credential Access...
+    Location: scripts/kie.mjs:20
+    Confidence: 60%
+    Remediation: Remove references to credential paths. Use environment 
+variables or secrets managers. For docs, use placeholder paths (e.g., 
+/path/to/config). Never l...
+
+  HIGH: PE3 - Credential Access...
+    Location: scripts/kie.mjs:50
+    Confidence: 60%
+    Remediation: Remove references to credential paths. Use environment 
+variables or secrets managers. For docs, use placeholder paths (e.g., 
+/path/to/config). Never l...
+
+  HIGH: PE3 - Credential Access...
+    Location: scripts/doctor.mjs:129
+    Confidence: 60%
+    Remediation: Remove references to credential paths. Use environment 
+variables or secrets managers. For docs, use placeholder paths (e.g., 
+/path/to/config). Never l...
+
+  HIGH: PE3 - Credential Access...
+    Location: scripts/kie.mjs:39
+    Confidence: 60%
+    Remediation: Remove references to credential paths. Use environment 
+variables or secrets managers. For docs, use placeholder paths (e.g., 
+/path/to/config). Never l...
+
+  MEDIUM: EA2 - Autonomous Decision Making...
+    Location: references/worldflight.md:283
+    Confidence: 75%
+    Remediation: Add human-in-the-loop confirmation for destructive, 
+irreversible, or high-impact operations. Never auto-execute commands that modify
+files, send data,...
+
+  MEDIUM: E1 - External Transmission...
+    Location: scripts/kie.mjs:5
+    Confidence: 50%
+    Remediation: Verify the destination URL is trusted and necessary. Remove or 
+replace with documented APIs. Ensure no secrets, tokens, or PII are 
+transmitted....
+
+  MEDIUM: E1 - External Transmission...
+    Location: scripts/kie.mjs:6
+    Confidence: 50%
+    Remediation: Verify the destination URL is trusted and necessary. Remove or 
+replace with documented APIs. Ensure no secrets, tokens, or PII are 
+transmitted....
+
+
+     Inspection Completeness      
+ Execution             successful 
+ Status                partial    
+ Coverage              100.0%     
+ Fully inspected       22         
+ Partially inspected   0          
+ Entirely uninspected  0          
+Ledger exceptions
+  - reference_unresolved SKILL.md:157-157: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:165-165: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:287-287: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:288-288: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:289-289: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:290-290: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:336-336: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:337-337: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:338-338: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:346-346: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:385-385: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:396-396: A local path-like reference could not
+be resolved unambiguously.
+  - reference_unresolved SKILL.md:403-403: A local path-like reference could not
+be resolved unambiguously.
+Analyzer statuses
+  - completed : 
+  - no_applicable_files : No files matched this analyzer's applicability 
+contract.
+  - no_applicable_files : No files matched this analyzer's applicability 
+contract.
+  - completed : 
+  - completed : 
+  - completed : 
+  - disabled_by_configuration : Analyzer was disabled by the requested 
+configuration.
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+  - completed : 
+Executable scripts: Yes
+

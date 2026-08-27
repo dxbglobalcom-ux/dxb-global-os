@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-08-26"
+last_updated: "2026-08-27"
 session_author: opus-5
 ---
 
@@ -18,6 +18,38 @@ that contradicted itself in three places until 2026-07-30; that narrative is fro
 lives in the corpus and nowhere else. This file says only where we stand and what happens next.
 
 ## The CEO's live order
+
+**2026-08-27, AFTERNOON — HE BROUGHT A TOOL HIMSELF AND ORDERED IT INSTALLED.** He handed over
+`github.com/nateherkai/scroll-craft` — Nate Herk's scrollcraft skill, which builds premium
+scroll-driven websites — and asked the right question about it: *"bunu tahtaya mı yazalım holdinge
+mi kuralım?"*, adding his own reading, that this is how the holding should build the websites of
+the companies it will create. Shown the measured picture and the recommendation, he answered
+**"Ozaman Kur."** <!-- HISTORY -->
+
+**It is installed, and it went in through the holding's own gate, not around it.** `scrollcraft`
+is vendored at `tools/scrollcraft/` pinned to upstream `e957985` (MIT), installed into
+`~/.claude/skills/scrollcraft` by `tools/scrollcraft/install.sh`, which proves by sha256 that the
+installed tree is byte-identical to the repository's copy. A **skill, deliberately not a plugin**,
+because his plugin order of 2026-08-09 still stands. INTEG-01 ran in full: SkillSpector's headline
+was `CRITICAL 100/100 · DO NOT INSTALL` with 15 issues, and **every one was triaged at source** —
+eleven false positives, and **one real defect fixed in our copy**: upstream walked up eight parent
+directories reading every `.env` it met, which inside this holding reaches company secrets; our
+copy reads the environment, then a `.env` in the current directory only. Live proof the same
+session: a page built from locally generated assets at zero spend, served, and shot at 47 scroll
+positions by the skill's own harness — `no dead scroll detected`, `all 2 scrub clip(s) keep
+moving` — with the contact sheet read by the author's eye and sent to him.
+Card: `.planning/research/study-cards/scrollcraft.md` · scan:
+`.planning/research/skillspector/scrollcraft-e957985.txt` · doctrine: `CAPABILITY_ARSENAL_DOCTRINE.md`
+§5b, opened for this class · rows: **B30** and **B31**. **Free.** The one paid path — kie.ai image
+generation — is shut: no key is set, and the house rules written into our copy put every
+generation call behind a registered approval.
+
+**AND IT UNCOVERED A GAP HE SHOULD SEE.** Measured the same session: **no spec in
+`HOLDING-OS-MASTER-PLAN/` owns the production of a website for a company the holding creates** —
+three matches for `web site|websit|storefront`, none of them that. The revenue engine specifies
+objective → opportunity → allocation → project and stops before the storefront. That is real,
+unfinished, unowned work, and it has no row. **It was put to him in one line and he has not yet
+answered whether to open one.** <!-- OPEN: B31 -->
 
 **2026-08-26, MIDDAY — HE CLOSED B13 HIMSELF AND ORDERED THE REST OF THE B-LIST CLOSED "AT FERRARI
 LEVEL".** <!-- HISTORY --> His words: *"A yı kabul ediorum. B listesinde kapatacaklarını FERRARİ
