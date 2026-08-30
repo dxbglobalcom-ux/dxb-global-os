@@ -40,8 +40,8 @@
     "hash": "811c3a906bf0"
   },
   "B10": {
-    "tr": "Hermes'in — ve gece çalışan her işçinin — DASHBOARD'DA CANLI KANLI BİR ORGANİZMA OLARAK izlenmesi. Bu satırın kutuyla hiç ilgisi yok, sizin ekranınızla ilgili. Kapanma şartı sizin dört sorunuz: dashboard'a işlendi mi, kodlandı mı, güzelce test edildi mi, siz gözünüzle bakıp «oldu» dediniz mi. Bugün dördüne de HAYIR — V2 dashboard'ı daha yazılmadı.",
-    "hash": "f80fe3263be9"
+    "tr": "Hermes'in — ve gece çalışan her işçinin — DASHBOARD'DA CANLI KANLI BİR ORGANİZMA OLARAK izlenmesi. Bu satırın kutuyla hiç ilgisi yok, sizin ekranınızla ilgili. Kapanma şartı sizin dört sorunuz: dashboard'a işlendi mi, kodlandı mı, güzelce test edildi mi, siz gözünüzle bakıp «oldu» dediniz mi. Bugün dördüne de HAYIR — V2 dashboard'ı daha yazılmadı. **30 Ağustos eki:** gecenin «rüya görme» özeti bu satırın ilk canlı kartı olarak öneriliyor — «bu gece N koşu okundu, 3 kalıp bulundu, 2 değişiklik öneriliyor, 1 sizi bekliyor». Ekrana bakıp hiçbir şeye dokunmadan sabah bir şeyin değişmiş olması, sizin kendi kabul testiniz. Bugün ölçüldü: şirketin bugüne kadarki toplam ajan koşusu 378.",
+    "hash": "b016d4091807"
   },
   "B11": {
     "tr": "Sunucuda 13 departman anahtarı ve ilk 06:00 çalışması — kurulum borcu, hiç kapatılmadı. ⚠ Bu satır 27 Ağustos gecesi emriniz olmadan kapatıldı, aynı gece geri açıldı.",
@@ -56,16 +56,16 @@
     "hash": "e0f6d3b12d9b"
   },
   "B34": {
-    "tr": "YEREL İŞÇİ MODEL — Opus 5'in yapmaması gereken ucuz ve çok sayıda işi bu makinede yapacak modelin sınavı. Adaylar diskte, sınav yapılmadı, kazananı siz seçeceksiniz.",
-    "hash": "123f0e06113b"
+    "tr": "YEREL İŞÇİ MODEL — Opus 5'in yapmaması gereken ucuz ve çok sayıda işi bu makinede yapacak modelin sınavı. Adaylar diskte, sınav yapılmadı, kazananı siz seçeceksiniz. **30 Ağustos eki:** yerel model taslağı YAZAR, kendi işini KABUL EDEMEZ — kabul her zaman ayrı ve daha güçlü bir örneğe aittir (bu ayrım bizde zaten var). Ve bu satırın sınavının sayısı belli oldu: kabul edilen değişiklik başına maliyet. Bugün token ölçülüyor, kabul oranı hiç ölçülmüyor. Yerel işçi zaten makinede — Gemma 4 E4B ve Qwen3.8-27B — ve tezgah politikası (B33) sizin onayınızla yazılı; geriye sizin dediğiniz sınav kalıyor, ölçüsü de bu kabul oranı.",
+    "hash": "fc7b274bd904"
   },
   "B13": {
     "tr": "V1 kabul oturumu — sizin hükmünüzle kapandı: «A yı kabul ediorum». Ölü V1 ekranı için oturum yapılmıyor; yalnız sizin gözünüzün karar verebileceği 14 soru V2 tasarım paketine (B32) taşındı, kalan 13'ü makine işi. Satırdaki «11» sayısı yanlıştı, kapanırken düzeltildi (9 + 5 + 13). ✓ 26.08.2026 kapandı.",
     "hash": "bf202a1bdf94"
   },
   "B15": {
-    "tr": "Yetki kadranı hiç kurulmadı — bir çalışanın yetkisini güven kazandıkça panelden yükseltecektiniz; 205 ajanın hepsi sıfırda duruyor.",
-    "hash": "7775b9b52907"
+    "tr": "Yetki kadranı hiç kurulmadı — bir çalışanın yetkisini güven kazandıkça panelden yükseltecektiniz; 205 ajanın hepsi sıfırda duruyor. **30 Ağustos eki:** özerklik kademesine nihayet bir ölçüt geldi — dört kutu: iş haftada bir tekrarlıyor mu · kötü çıktıyı otomatik reddeden bir kapı var mı · çalışan işi baştan sona yapabiliyor mu · «bitti» nesnel mi. Dördü birden dolmuyorsa o iş onaya gelir; kademeler bunun üstüne kurulur.",
+    "hash": "91ce6cd48431"
   },
   "B19": {
     "tr": "Sahibi olmayan bir güvenlik notu — tedarik zinciri iğnesi sabitlenmemiş, tetiği kimse izlemiyor. ✓ 27.08.2026 — SİZ GÖZÜNÜZLE ONAYLADINIZ: «6 sına da onay veriorm bunları önceden onaylamıştım.»",
@@ -168,8 +168,8 @@
     "hash": "63af91c2d77d"
   },
   "C29": {
-    "tr": "Skiller sayfası berbat — 23 skill, tek kaynak, düz bir liste; içinde başka skiller barındıran şey açılır grup olmalı.",
-    "hash": "f52f83cc0dc4"
+    "tr": "Skiller sayfası berbat — 23 skill, tek kaynak, düz bir liste; içinde başka skiller barındıran şey açılır grup olmalı. **30 Ağustos eki:** istediğiniz açılır-liste düzeninin mühendislik adı «kademeli açılım» — başlığı görürsün, gerekiyorsa içini açarsın, gerekmiyorsa hiç okumazsın. Aynı kuralın çalışan tarafındaki karşılığı B41 satırıdır; ikisi tek tarifle yapılmalı.",
+    "hash": "7113e537e325"
   },
   "C30": {
     "tr": "«Yüze yakın repo verdim. HİÇBİRİ düzgün incelenip kurulup sisteme entegre edilmedi.»",
@@ -208,12 +208,12 @@
     "hash": "85e58490f7d0"
   },
   "C39": {
-    "tr": "«Şirket doktoru nerede?» — şeklini onayladınız (tek kapı Hamza, arkasında sağlık ekibi); ekip hâlâ kurulmadı.",
-    "hash": "c2be07e2b6e0"
+    "tr": "«Şirket doktoru nerede?» — şeklini onayladınız (tek kapı Hamza, arkasında sağlık ekibi); ekip hâlâ kurulmadı. **30 Ağustos eki:** onayladığınız sağlık takımının hafıza yarısının adı kondu — «rüya görme»: gece bütün koşulara birden bakan, herkeste aynı şekilde tekrarlayan kusuru gören ve onarımı kanıtıyla teklif eden ikinci akıl. Yeni bir şekil önerilmiyor; şekil sizin, bu onun ilk mekanizması.",
+    "hash": "f71d02d6b720"
   },
   "C40": {
-    "tr": "«DÖNGÜ SİSTEMİ KURULDU MU? Repo verdim, emir verdim. Çok meşhur.» — hiç kurulmadı, kartı hâlâ taslak.",
-    "hash": "8c8ac9cd8a56"
+    "tr": "«DÖNGÜ SİSTEMİ KURULDU MU? Repo verdim, emir verdim. Çok meşhur.» — hiç kurulmadı, kartı hâlâ taslak. **30 Ağustos eki:** döngü sisteminin tarifi artık elimizde — beş aşama, denetim kapısı (bizde zaten var), durma şartı (bizde zaten var ve serttir), «kurmaya değer mi» dört kutu testi ve kurulum sırası. Bu satırda eksik kalan tek şey: kilitli bir skor ve «daha iyiyse sakla» karşılaştırması.",
+    "hash": "fc32800c9046"
   },
   "C41": {
     "tr": "«Burj Al Arab başta verdiğim tek bir örnekti — tasarım personasına sanki hedefmiş gibi yazılmış.» İki dosya taşıyor, hepsinin taranması gerek.",
@@ -280,11 +280,11 @@
     "hash": "1ac29477cb11"
   },
   "B41": {
-    "tr": "TEDARİK ZİNCİRİ. Çalışan işin ortasında «bu alet bende yok» diyemiyor; Claude'un 289 eklentilik kütüphanesi ile kendi 412 parçalık rafımız kullanılmıyor (kullanım kaydı 0 satır). Dört halka: talep fişi → arama (önce kendi rafımız, sonra katalog, sonra açık dünya; bedavanın yanında ücretli ikizi fiyatıyla) → gümrük taraması → yetki. Bedava·hesapsız·dışarıya kapalı·temiz olan makineye; para, hesap veya şifre isteyen her şey size. Eklenti hükümleriniz uygulandı: 15 açık · 1 kapalı (codex, sadece kancası sussun diye) · 2 tamamen atıldı (superpowers, ruflo).",
-    "hash": "78acfdab0061"
+    "tr": "TEDARİK ZİNCİRİ. Çalışan işin ortasında «bu alet bende yok» diyemiyor; Claude'un 289 eklentilik kütüphanesi ile kendi 412 parçalık rafımız kullanılmıyor (kullanım kaydı 0 satır). Dört halka: talep fişi → arama (önce kendi rafımız, sonra katalog, sonra açık dünya; bedavanın yanında ücretli ikizi fiyatıyla) → gümrük taraması → yetki. Bedava·hesapsız·dışarıya kapalı·temiz olan makineye; para, hesap veya şifre isteyen her şey size. eklenti hükümleriniz uygulandı: **30 Ağustos'ta ikinci yarısıyla birlikte** — «açık olsun ama kancalar kapansın». Bugün: 14 açık · 2 kapalı (codex ve headroom) · 2 tamamen atıldı (superpowers, ruflo); kancası çalışan tek eklenti, sizin onay verdiğiniz claude-mem. headroom'un içinde kancadan başka hiçbir şey olmadığı için «kancası sussun» = «kapansın» oldu ve hiçbir yetenek kaybedilmedi; ekranınızı kirleten «headroom: not found» satırı da böylece bitti. **30 Ağustos eki:** zincir bir halka erken bitiyor — yetki verildikten sonra çalışan elindekini bilmiyor. Bugün ölçüldü: rafta 412 kayıt, canlı 173 yetki, kullanım defteri 0 satır; profillerdeki `_skills` alanı üretiliyor ama 21 profilin 21'i de boş. Çaresi: her yeteneğe, ihtiyaç anında taranan tek paragraflık bir kart.",
+    "hash": "fa29274163b9"
   },
   "B42": {
-    "tr": "CEPHANE NÖBETİ. Dünya aletlerini her ay yeniliyor; biri sürekli takip etsin ve güncellemeyi Hamza size söylesin — abartmadan, ölçülü. Kanıtı sizin kendi düzeltmeniz: Seedance 2.5 (31 Temmuz'da çıkmış) bizim kayıtlarımızda hâlâ 2.0 yazıyordu — 27 gün eski, yakalayan siz oldunuz. Üç ayak: (1) bizde ne var, hangi sürüm, en son ne zaman bakıldı; (2) dünyada o iş için en iyisi ne; (3) bulgu dosyada kalmaz, Hamza'nın ağzından size gelir — geçilen bir şey yoksa susar. PLANI YAZILDI VE SİZİN SEÇİMİNİZLE PARK EDİLDİ: sırası gelince kurulacak, sizi beklemiyor.",
-    "hash": "eb8927a9e196"
+    "tr": "CEPHANE NÖBETİ. Dünya aletlerini her ay yeniliyor; biri sürekli takip etsin ve güncellemeyi Hamza size söylesin — abartmadan, ölçülü. Kanıtı sizin kendi düzeltmeniz: Seedance 2.5 (31 Temmuz'da çıkmış) bizim kayıtlarımızda hâlâ 2.0 yazıyordu — 27 gün eski, yakalayan siz oldunuz. Üç ayak: (1) bizde ne var, hangi sürüm, en son ne zaman bakıldı; (2) dünyada o iş için en iyisi ne; (3) bulgu dosyada kalmaz, Hamza'nın ağzından size gelir — geçilen bir şey yoksa susar. PLANI YAZILDI VE SİZİN SEÇİMİNİZLE PARK EDİLDİ: sırası gelince kurulacak, sizi beklemiyor. **30 Ağustos eki:** nöbete somut bir kalem girdi — Anthropic'in Claude Managed Agents hizmeti, derste anlatılan hafıza ve rüya görme altyapısını hazır ürün olarak veriyor (kurulum değil, çalışma kartı isteği; kurulum gümrük kapısından geçer). Ve planın yürütme sırası: elle kanıtla → skill yap → kapı ve durma şartıyla döngüye sar → en son zamanla.",
+    "hash": "58ac37ff6da7"
   }
 }

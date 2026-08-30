@@ -5,7 +5,7 @@
 - **Tool:** headroom (token-compression layer for LLM sessions)
 - **Slug:** headroom
 - **Category:** Claude Code ecosystem
-- **Status:** ADOPT (session layer)
+- **Status:** EXCLUDED (disabled 2026-08-30 — see "Disabled" below)
 - **Target Phase:** 6 (MEM-04 boundary defined here; OS-level mechanism lands 06-07)
 - **Owner (dept/tier):** Token-compression before worker LLMs
 - **Trigger Type:** hook / proxy
@@ -14,7 +14,21 @@
 - **Purpose:** CEO token-discipline constraint's session-layer half: compresses interactive Claude Code harness sessions (prompt/context compression) so orchestrator-side token burn stays low without quality loss.
 - **Official Docs URL:** headroom-marketplace README (plugin repo)
 
-## Activation state (verified 2026-07-08)
+## Disabled 2026-08-30 (CEO's rule applied)
+
+The CEO's rule of 2026-08-27, in his own correction of 2026-08-30: *"eklentiler açılsın, lakin
+kancalar kapansın… claude mem ve context7 zaten kancalarıyla çalışıyor bunlara ok vermiştim.
+diğerleri de kancasız açık olabilir."* Measured the same day with `claude plugin details`:
+headroom carries **0 skills, 0 agents, 0 MCP servers and 2 hooks — nothing else**. Silencing its
+hooks therefore leaves an empty plugin, and this CLI version (2.1.251) has no per-plugin hook
+switch: `claude plugin` offers only enable/disable, and `disableAllHooks` would silence the
+holding's own hooks as well. It was disabled outright and **no capability was lost**.
+
+Symptom that surfaced it: the PreToolUse hook ran `headroom init hook ensure` before every Bash
+call while the `headroom` binary was never installed — `/bin/sh: 1: headroom: not found` on every
+command from 2026-08-27 (the blanket plugin-enable) until 2026-08-30.
+
+## Activation state (verified 2026-07-08 — HISTORY, superseded by the section above)
 - Enabled: `~/.claude/settings.json` → `"headroom@headroom-marketplace": true` (line ~186); marketplace source `repo: headroomlabs-ai/headroom`.
 - Scope: THIS harness's sessions. It does not sit inside the DXB LiteLLM chain and no Phase-6 code depends on it.
 
