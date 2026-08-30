@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-08-27"
+last_updated: "2026-08-30"
 session_author: opus-5
 ---
 
@@ -18,6 +18,32 @@ that contradicted itself in three places until 2026-07-30; that narrative is fro
 lives in the corpus and nowhere else. This file says only where we stand and what happens next.
 
 ## The CEO's live order
+
+**2026-08-30, EVENING — HE CLOSED THIS SESSION AND SET THE NEXT ONE'S WORK HIMSELF.** Three things
+in his own words, and they are the next session's instructions, not a summary of them:
+*"biraz önceki ajanın önerisini de ölçtün bir sonraki sessionda onu değerlendirsin"* ·
+*"bizdeki şuanki minimax h3 iyi değildi ii çalışmadı"* ·
+*"15 saniyelik reklam videosunu minimax h3 bu pc'de nasıl çalıştırabilir bir araştırsın ayrıca."*
+**HIS VERDICT ON WHAT THIS SESSION PRODUCED IS THE FIRST FACT THE NEXT ONE INHERITS: the clip was not
+good enough.** It was 1.6 seconds, 640×384, four steps — the lowest rung of the lowest settings — and
+he is right that it is not an advertisement. **What it proved is narrower and still worth having:
+MiniMax H3 runs on this holding's own card, produced video with its own 32 kHz stereo audio, cost
+$0.00, and touched no account and no outward call.** Measured: 333 s wall clock, sampling 5.6 s per
+step, peak VRAM 12,360 MiB of 16,311, 179.2 W average. **And the way it was run was the wrong way**,
+which is the second fact the next session inherits — see the study card.
+**HE ALSO CORRECTED THE READING OF HIS OWN BOARD, TWICE, AND BOTH CORRECTIONS STAND AS LAW HERE:**
+*"ne klipçisi ya arkadaşım klipçi değil ajans işi o"* and *"üretim hattı da var tahtada… hepsi var
+wepgap2 bişey vardı içinde 4 üretim motoru vardı"*. **He is right on both counts and the record
+proves him right:** the agency seat, its four seats, its economics and his absolute betting
+exclusion are written in `.planning/research/rival-intel/05-cnn-clipping-business.md` §5, whose own
+closing line is *"that row is where the agency build lives from here"* — row **B28** — and the
+production line is written INSIDE B28: OpenMontage/OpenCut (installed, 1,393 tests green, no card
+needed), MoneyPrinterTurbo (his order, not installed), and the four free generation engines
+`wan2gp` · `ltx-video` · `hunyuanvideo` · `open-sora`, with the paid bench beside them. **A session
+that tells him any of this is missing has failed to read, and he has now had to say so twice.**
+**The row's title is the trap that caused it:** B28 still reads *"The clipping business"* while its
+content is the advertising-agency seat. Correcting that title was offered and he did not answer;
+it is not done.
 
 **2026-08-27, EVENING — HE ACCEPTED EVERYTHING THIS SESSION BUILT, WITH HIS OWN EYE.** His words:
 *"TMM BURAYA KADAR HERŞEY ONAYLADIM. göz testi de tmm. ok."*
@@ -822,6 +848,51 @@ machine-readable, so every session re-derives a different figure — the drift i
 archive and owned by board row **B20**. A number nobody can reproduce is worse than no number.
 
 ## Next — read this before doing anything
+
+**THE WORK HE NAMED FOR THE NEXT SESSION, 2026-08-30 — it is carried by board rows B28 (the agency seat and its production line), B42 (the arsenal watch, where the H3 measurement lives) and B33 (the bench that would run the engine exam); nothing below opens a new row.** <!-- OPEN: B28 -->
+
+**1. THE 15-SECOND ADVERTISEMENT ON THIS MACHINE — his question, in his words:** *"15 saniyelik
+reklam videosunu minimax h3 bu pc'de nasıl çalıştırabilir bir araştırsın."* **What is already
+measured, so it is not measured again:** this card (RTX 5060 Ti, 16,311 MiB) ran H3 through
+`sd-cli` (stable-diffusion.cpp, Vulkan) at 640×384 · 39 frames · 4 steps in **333 s**; the same
+runner **refused** 960×544 × 121 frames because the denoiser asked for a **7.79 GB** compute buffer
+on top of its 10.98 GB of weights. **The path that was used is the wrong one and the right one is
+already identified from two independent measurements taken on THE SAME CARD by other people:**
+ComfyUI (which carries H3 natively, `comfy/ldm/minimax/model.py`) + **PyTorch cu130** + the
+**LightX2V / Turbo 4-step LoRA** + **Sage Attention**. Their measured numbers: 864×480 · 5 s =
+**633 s**; 960×544 · 5 s = **809 s**, and **712 s** with Sage Attention; standard H3 at 0.6MP · 10 s
+= **43 min**, falling to **19 min** with LightX2V and to **9 min 55 s** after cu128 → cu130; the
+balanced setting they landed on is **0.8MP · 12 s · 4 steps = 14 min 8 s**, and 1.0MP · 15 s · 4
+steps completed in **46 min 13 s** with the card essentially full. **So a 15-second advertisement is
+possible on this machine and the honest expectation is tens of minutes, not minutes.** ⚠ **The one
+risk nobody has measured for us: both of those testers had ~80 GB of system RAM and this machine has
+30 GiB**, while ComfyUI stages **19,995 MB** of model and offloads the rest to RAM. Sources:
+`.planning/research/study-cards/minimax-h3.md`.
+
+**2. THE OTHER AGENT'S RECIPE — he asked for it to be evaluated again:** *"biraz önceki ajanın
+önerisini de ölçtün bir sonraki sessionda onu değerlendirsin."* It was ComfyUI + pruned INT8/FP8 +
+`python main.py --highvram`, promising a 4-5 second video in 2-3 minutes. **Measured verdict from
+this session: right about the tool (ComfyUI), right about the files (fp8_scaled 20.96 GB / int8
+20.97 GB), right about the text encoder (Qwen3-VL-32B) and right that 864×480 is the practical size
+— but `--highvram` is wrong on a 16 GB card** (it holds the whole model on the card and the model
+stages ~20 GB) **and the 2-3 minute figure is nobody's measurement**: the same card measured 633 s
+for a 5-second clip at that resolution. The next session tests the corrected recipe rather than the
+promise.
+
+**3. P37-2 IS STILL THE ROW'S OWN CONDITION AND STILL HAS NOT RUN.** B28 carries four free engines
+(`wan2gp` · `ltx-video` · `hunyuanvideo` · `open-sora`) and its own warning that **not one of them
+has ever been measured on this card**; W-C42-6 requires the engine to be chosen **on evidence**.
+MiniMax H3 is now the fifth candidate and the only one with a measured figure. One page, five
+engines, one card — that is what turns the agency's production line from a list into a choice. **He
+was asked whether to run it and had not answered when the session closed; he also asked that the
+hour be his to name, because the machine is loud while it runs.**
+
+**4. WHAT WAS INSTALLED THIS SESSION, OUTSIDE THE REPOSITORY, WITH NOTHING BOUGHT.** `sd-cli` at
+`/home/dxb/tools/sdcpp` (prebuilt Vulkan release, no compiler, no CUDA toolkit), ComfyUI cloned at
+`/home/dxb/tools/ComfyUI` (**no dependencies installed, not run**), and 35.5 GB of H3 weights at
+`/home/dxb/tools/ComfyUI-models/unsloth`. **None of it is inside the repository, none of it touched
+the company database, and no account, credential or payment exists anywhere in it.** If any of it
+graduates into the holding's own toolchain it goes through INTEG-01 (B41) like scrollcraft did.
 
 **READ THIS FIRST — WHAT IS BEING BUILT IS V2, AND V1 IS DEAD.** His ruling of 2026-08-01, twice
 registered on the board (§Decisions, `v2-location-and-v1-dead-2026-08-01`) and never softened
