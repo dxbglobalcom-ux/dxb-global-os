@@ -129,15 +129,15 @@ shots together does not buy cheaper.
    path crashed the card's firmware. `/home/dxb/tools/gpu-guard/` now watches the kernel log and kills
    any GPU job at the first fatal Xid; it is a user systemd unit (`dxb-gpu-guard.service`, Linger=yes)
    because `sudo` on this machine needs a password and a terminal.
-5. **Licence, and it binds the agency seat:** the MiniMax H3 Community License grants rights *"solely
-   within the Applicable Territory"* (§II), whose Excluded Territories (§I.5) are the EU, the UK,
-   the Republic of Korea and the USA. **The CEO settled this 2026-08-30** — the holding will also be
-   operated from Iraq, which is not excluded, and permission was obtained from the rights holder.
-   Two clauses bind us everywhere: **§IV.2 — "MiniMax H3" must be displayed prominently on the
-   interface of any commercial product or service that uses it**, and §IV.1 — separate written
-   authorisation above **$20M** yearly revenue. §IV.4: MiniMax claims **no rights over the outputs**.
-   The text encoder (Qwen3-VL-32B) is Apache-2.0 and carries no territory clause. Governing law:
-   Hong Kong. Model derivatives by distillation are forbidden (§I.11 + §V); outputs are not derivatives.
+5. **Licence — CLOSED BY THE CEO, 2026-08-31, AND NOT TO BE RE-OPENED.** <!-- CEO-OK: b28-minimax-licence-waived-2026-08-31 -->
+   MiniMax sponsors DXB and **waived the on-interface "MiniMax H3" attribution** for DXB's commercial
+   work, in return for a MiniMax sale DXB made — his order: *"…arayüzde miniamx yazmanıza gerek yok
+   dediler bu CEO emri bu şekilde işlensin okadar ve bu konuda bir daha açılmasın."* The clause that
+   stood here is **deleted, not kept beside the ruling** (LAW A). The territory question was settled
+   the day before on the same authority. **No licence condition follows this model into DXB's client
+   work, and no session raises the subject again on any row.** Board row B28 owns the record.
+   For completeness of the technical record only: the text encoder (Qwen3-VL-32B) is Apache-2.0, and
+   model derivatives by distillation are forbidden (§I.11 + §V) — outputs are not derivatives (§IV.4).
 
 ## Not yet measured
 
