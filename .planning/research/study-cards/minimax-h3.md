@@ -46,6 +46,8 @@ cfg 1.0, euler/simple, sigma shift 12.0/3.0, seed 42, 24 fps, one prompt.
 | 1280×720 | 0.92 | 15.08 s (362 f) | fails in 10 s | 15,824 MiB | 12.0 GiB | 1.4 GiB | ❌ OOM |
 | 1344×768 | 1.03 | 15.08 s (362 f) | fails in 10 s | 15,824 MiB | 12.5 GiB | 0 | ❌ OOM |
 
+| **1152×640 + FIRST FRAME** | 0.74 | 15.08 s (362 f) | **646.2 s = 10.77 min** | 15,396 MiB | 25.3 GiB | 5.9 GiB | ✅ |
+
 **The ceiling for a 15-second shot on this card is 1152×640 (0.74 MP).** 1280×720 — true HD — does
 not fit: `8.78 GiB allocated, 2.66 GiB requested, 23 MiB free`. Seven runs were made back to back
 and the GPU guard's log stayed empty; the card never faulted once on the CUDA path.
@@ -62,6 +64,30 @@ a 16,311 MiB card).
 and peak usage never passed **19.5 GiB**, with **at most 1.5 GiB of swap touched**. `--fast-disk`
 (disk-backed offload over unpinned RAM) plus `--cache-none` is what buys that, and this machine's
 NVMe is what pays for it.
+
+### ★ THE QUALITY LEVER, MEASURED 2026-08-31 — a first frame is worth more than any flag
+
+**The CEO refused the text-only clips** (*"üretilen ürünleri çok beğenmedim"*) and he was right:
+every run above drove the model in its WEAKEST mode — a sentence in, a whole world invented.
+**FL2VA exists precisely to avoid that.** One hero still was generated first by the holding's free
+image hand (**Antigravity CLI**, $0.00, board B28) at exactly the target canvas, handed to
+`MiniMaxH3ImageToVideo.first_frame`, and the prompt was rewritten to describe **motion only**.
+Same card, same canvas, same 362 frames, same 4 steps, same seed 42:
+
+| | text-only | **first frame** |
+|---|---|---|
+| Wall clock | 620.1 s | **646.2 s** (+26 s, +4.2 %) |
+| File size at identical codec/canvas/duration | 3.92 MB | **6.40 MB (+63 %)** |
+| Peak RAM · swap | 19.5 GiB · 1.5 GiB | 25.3 GiB · 5.9 GiB ⚠ |
+| Cost | $0.00 | $0.00 |
+
+**+63 % of encoded data at the same resolution and duration is detail the encoder could not throw
+away** — it is the numeric shadow of a visibly sharper picture, and frame 0 of the output is the
+supplied still, byte for byte in composition. **The lesson generalises past H3: most of what makes
+an advertisement frame right is PHOTOGRAPHY — angle, light, reflection, depth of field. Asking a
+video model for the photograph AND the motion in one breath gets both half-done.**
+⚠ The RAM and swap figures were taken while a 23 GB download ran on the same NVMe, so the clock and
+the swap peak are CONTAMINATED — the picture result is not.
 
 **Output is a real advertisement frame, verified by eye and by `ffprobe`:** h264 864×480 @ 24 fps
 + **aac 32 kHz stereo**, audio mean −16.8 dB / peak −0.4 dB (not silence), 15.083 s, 2.51 MB. Frames
@@ -93,8 +119,13 @@ its guess and better than the 633 s published for the same shot on the same card
 **The lane, exactly:**
 
 ```
+# ① make the hero still FIRST — this is the quality step, not an optional extra
+cd "$REPO/var/media-factory" && agy --dangerously-skip-permissions --print='...1152x640 still...'
+cp <that file> /home/dxb/tools/ComfyUI/input/hero_frame.png
+# ② then ask the model only for motion
 /home/dxb/tools/h3/start-server.sh          # ComfyUI, the flags that matter
-/home/dxb/tools/h3/run.py --seconds 15 --width 1152 --height 640
+/home/dxb/tools/h3/run.py --seconds 15 --width 1152 --height 640 \
+    --first-frame hero_frame.png --prompt '<motion only, not the scene>'
 ```
 
 Server flags and why each is there: `--use-sage-attention` (−12 % measured by the published tester)
@@ -141,11 +172,16 @@ shots together does not buy cheaper.
 
 ## Not yet measured
 
-- **8-step turbo LoRA** (`minimax_h3_fl2v_turbo_8step`) — twice the steps, better motion, unknown cost.
+- **8-step turbo LoRA** (`minimax_h3_fl2v_turbo_8step`, 1.82 GB) — **downloaded 2026-08-31 on the
+  CEO's order, NOT yet run.** Twice the steps, better motion, unknown cost. Every figure in this card
+  was taken at 4 steps, which is the floor and not the ceiling.
 - **`--fast fp8_matrix_mult` / `fp16_accumulation`** — ComfyUI marks them *"untested and potentially
   quality deteriorating… might crash your comfyui"*, and this session deliberately took the clean
   baseline first.
-- **`ref2va`** (reference images → video), which is how a real client brand enters a shot.
+- **`ref2va`** (`minimax_h3_ref2va_pruned_fp8_scaled`, 19.52 GB, + its own 4-step turbo LoRA) —
+  **downloaded 2026-08-31 on the CEO's order, NOT yet run.** It binds **up to 9 images, 3 videos and
+  3 audio references** into one shot, which is how a real client brand enters a shot; the first-frame
+  result above is the one-image case of the same idea, and it already moved the needle.
 - **Energy per clip.** The card averaged 147.9 W over the 5-second run and 170.0 W over the 15-second
   one; the cost per rendered minute belongs to B33 and is not computed here.
 
