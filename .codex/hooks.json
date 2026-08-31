@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash '/home/ghost/DxB Global OS/.codex/hooks/spec-bootstrap.sh'"
+            "command": "bash '/home/dxb/DxB Global OS/.codex/hooks/spec-bootstrap.sh'"
           }
         ]
       }
@@ -15,11 +15,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash '/home/ghost/DxB Global OS/.codex/hooks/no-laziness.sh'"
+            "command": "bash '/home/dxb/DxB Global OS/.codex/hooks/no-laziness.sh'"
           },
           {
             "type": "command",
-            "command": "bash '/home/ghost/DxB Global OS/.codex/hooks/ceo-language.sh'"
+            "command": "bash '/home/dxb/DxB Global OS/.codex/hooks/ceo-language.sh'"
           }
         ]
       }

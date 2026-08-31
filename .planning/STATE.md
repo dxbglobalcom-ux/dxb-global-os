@@ -19,18 +19,42 @@ lives in the corpus and nowhere else. This file says only where we stand and wha
 
 ## The CEO's live order
 
-**2026-08-30, EVENING — HE CLOSED THIS SESSION AND SET THE NEXT ONE'S WORK HIMSELF.** Three things
-in his own words, and they are the next session's instructions, not a summary of them:
-*"biraz önceki ajanın önerisini de ölçtün bir sonraki sessionda onu değerlendirsin"* ·
-*"bizdeki şuanki minimax h3 iyi değildi ii çalışmadı"* ·
-*"15 saniyelik reklam videosunu minimax h3 bu pc'de nasıl çalıştırabilir bir araştırsın ayrıca."*
-**HIS VERDICT ON WHAT THIS SESSION PRODUCED IS THE FIRST FACT THE NEXT ONE INHERITS: the clip was not
-good enough.** It was 1.6 seconds, 640×384, four steps — the lowest rung of the lowest settings — and
-he is right that it is not an advertisement. **What it proved is narrower and still worth having:
-MiniMax H3 runs on this holding's own card, produced video with its own 32 kHz stereo audio, cost
-$0.00, and touched no account and no outward call.** Measured: 333 s wall clock, sampling 5.6 s per
-step, peak VRAM 12,360 MiB of 16,311, 179.2 W average. **And the way it was run was the wrong way**,
-which is the second fact the next session inherits — see the study card.
+**2026-08-30, LATE NIGHT — HE OPENED THE SESSION ON A DEAD CARD AND ALL THREE OF HIS ORDERS ARE NOW
+ANSWERED BY MEASUREMENT.** His words this session: *"session durdu senden önceki gerizekalı sessionda
+minimax h3 için test çalıştırmaya çalıııordu gpu ekrankartı nvidiaa yu durdurdu… acil oku tanı kapıları
+aç ben seni uzaktan takip edeceğim pc başında değilm."* **WAITING FOR HIS EYE — nothing below is
+accepted (LAW B).**
+
+**① THE CARD IS ALIVE AND THE CRASH IS EXPLAINED.** The previous session's Vulkan run
+(`sd-cli … --max-vram 6 --stream-layers` at 960×544 × 121 frames) killed the card's **GSP firmware**
+16 seconds in: `Xid 62` (PMU halted) → `Xid 154` (GPU Reset Required) → a GSP-CrashCat report, then
+`Xid 109 CTX SWITCH TIMEOUT` every four seconds from 20:48:08 to 20:48:56, when the machine was hard
+reset. The card also drives the display, so it could not be reset from software. It is healthy now —
+driver 595.84, CUDA 13.2 — and **proven to compute: 48.7 TFLOP/s fp16, all results finite.**
+**A guard now stands over it:** `/home/dxb/tools/gpu-guard/`, `dxb-gpu-guard.service` (a **user**
+systemd unit with `Linger=yes`, because `sudo` here needs a password and a terminal and he is remote),
+which watches the kernel log and kills any GPU job at the first fatal Xid.
+
+**② HIS QUESTION IS ANSWERED: a 15-second advertisement runs on this PC in 10 minutes 20 seconds.**
+The researched lane was built and run — ComfyUI + PyTorch **2.13.0+cu130** + **fp8_scaled** denoiser
++ **nvfp4** text encoder + **4-step turbo LoRA** + **Sage Attention**, driven from `/home/dxb/tools/h3/`.
+**Seven runs, one prompt, seed 42, 4 steps:** 864×480 · 5.17 s in **90 s** · 864×480 · 15.08 s in
+**295 s** · 960×544 in **385 s** · 1024×576 in **450 s** · **1152×640 (0.74 MP) in 620 s = 10.34 min**;
+1280×720 and 1344×768 refuse cleanly with `torch.OutOfMemoryError`. **1152×640 is this card's ceiling
+for a 15-second shot.** Output verified: h264 24 fps + **aac 32 kHz stereo** (mean −14.0 dB, peak
+−0.3 dB), 15.083 s, and the frames are a coherent cinematic commercial shot. **Against the two figures
+published for this exact card on ~80 GB of RAM: 7.0× faster at 5 s and 2.0× faster at 15 s, on 0.37×
+the RAM.** Peak system RAM never passed **19.7 GiB of 30** and swap never passed **1.5 GiB** — the RAM
+gap nobody had measured turned out not to bite, because `--fast-disk` and `--cache-none` push the
+offload onto the NVMe.
+
+**③ THE OTHER AGENT'S RECIPE IS JUDGED, AS HE ORDERED** (*"biraz önceki ajanın önerisini de ölçtün bir
+sonraki sessionda onu değerlendirsin"*): **right** on the tool (ComfyUI), the files and the working
+resolution; **wrong** on `--highvram` — it pins ~20 GB on a 16,311 MiB card — and **wrong to present
+"4-5 seconds in 2-3 minutes" as a measurement**; the true figure is **90 seconds**, better than its
+guess. Full detail, with the flags and why each one is there:
+`.planning/research/study-cards/minimax-h3.md`; the board rows are **B42** (arsenal watch), **B28**
+(the agency seat's generation lane) and **B33** (the bench ledger's first real video-guest figures).
 **HE ALSO CORRECTED THE READING OF HIS OWN BOARD, TWICE, AND BOTH CORRECTIONS STAND AS LAW HERE:**
 *"ne klipçisi ya arkadaşım klipçi değil ajans işi o"* and *"üretim hattı da var tahtada… hepsi var
 wepgap2 bişey vardı içinde 4 üretim motoru vardı"*. **He is right on both counts and the record

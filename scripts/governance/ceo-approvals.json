@@ -395,5 +395,33 @@
       "B41",
       "B42"
     ]
+  },
+  "b28-minimax-licence-waived-2026-08-31": {
+    "date": "2026-08-31",
+    "what": "MiniMax sponsors DXB and waived the on-interface \"MiniMax H3\" attribution clause (SIV.2) for DXB's commercial work, in return for a MiniMax sale DXB made. The condition no longer binds the agency seat and the question is closed.",
+    "verbatim": "B28 in lisans sartini konustuk biz dxb olarak inisiyatif bize verildi minimax sponsor oldu bize bir arkadasa minimax sattigimiz icin arayuzde miniamx yazmaniza gerek yok dediler bu CEO emri bu sekilde islensin okadar ve bu konuda bir daha acilmasin.",
+    "conditions": "Do not raise this question again on any row.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B28"
+  },
+  "b33-voice-to-cloud-measurement-approved-2026-08-31": {
+    "date": "2026-08-31",
+    "what": "Approved MEASURING a metered cloud lane for the ear and the mouth, so the voice does not go down while the bench renders video: quality in Turkish AND English, end-to-end latency against the 1.0-1.3 s ceiling, and the hand-over time itself. The measurement is approved, not the design.",
+    "verbatim": "video uretirken holding sagir dilsiz kalmasin, boyle bir durumda kullandigimiz kadar odeyecegimiz ses ve kulak icin cok kaliteli ucuz secenek varsa bulutta devam edecek sekilde sistem ona donsun. video uretiminde tezgah videodaysa, otomatik bulut uzerinden saniyesinde devam etsin olmaz mi once bunu olc. / olcmen gereklere onay veiorm 3 tane sorumussun. / ben en fazla 4 euro veiririm aylik",
+    "conditions": "Ceiling of EUR 4 per month. Must serve Turkish and English, including switching mid-conversation. Measure before designing.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B33"
+  },
+  "client-confidentiality-settled-2026-08-31": {
+    "date": "2026-08-31",
+    "what": "Client confidentiality / NDA / data-residency is SETTLED and may never again be raised as an objection to renting a card, using a cloud lane, or any other decision. All licences are held and the matter is discussed and agreed with the client directly.",
+    "verbatim": "yahu su sacma salak NDA'li olaylari birak tamam mi, tum lisanslari aldik biz ve musterimizle de bu konu konusulup ikna edilir o yuzden gizlilige CEO onay var. o kadar bu konularda artik asla acilmasin nokta.",
+    "conditions": "Never raise it again on any row, in any session.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B33"
+  },
+  "headcount-205-settled-2026-08-31": {
+    "date": "2026-08-31",
+    "what": "The holding's workforce headcount is 205 — the live company database figure. Settles a four-way disagreement (220 spoken, 200 in persona files, 205 in the database, 63 assumed by B28's middle scenario).",
+    "verbatim": "205 dogru olan.",
+    "conditions": null,
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43"
   }
 }
