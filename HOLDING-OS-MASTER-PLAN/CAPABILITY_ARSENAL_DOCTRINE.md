@@ -261,3 +261,32 @@ fn) → recompile verify → `probe-arsenal.mjs` live call → roadmap/evidence 
 - RAM budget: browser hands (playwright, scrapling stealth) are the heavy class — VPS 8GB
   plan already accounts for one browser at a time (STACK.md); never grant browser hands to
   departments without a measured need.
+
+## 11. VIDEO AND IMAGE ENGINES — the studio's own drawer (opened 2026-09-01)
+
+Board **B43** owes the CEO a table with **both roads in the same row — the free way with its true
+cost, and the paid way with its price.** This is that drawer for the media engines, and every free
+number below was measured on DXB-Center (RTX 5060 Ti, 16,311 MiB), not read off a website.
+
+| Engine | Where it runs | What it is for | Measured cost here | Paid alternative |
+|---|---|---|---|---|
+| **MiniMax H3** (FL2VA + REF2VA) | our card, ComfyUI | video with native sound; REF2VA for people, FL2VA for products and exact camera | 15.08 s shot at 1152×640 = **620 s** card time · **$0.00** | MiniMax API; Veo 3.1 at $0.40/$0.12/$0.08 per second (§8) |
+| **FLUX.1-Krea-dev** | our card, ComfyUI | hero frames and reference sets — B43 step ③ | 1152×640, 28 steps = **25.5 s** · **$0.00** | ChatGPT Image (held, Plus) · Nano Banana 2 Lite $0.0336/image (§8) |
+| **ComfyUI** | our card | the bench both of the above run inside | — | — |
+| **RealESRGAN ×4** (Vulkan) | our card | enlargement to delivery size | **2.09 s per frame** — 428 frames = 893 s | any paid upscaler |
+| **edge-tts** | processor only | the spoken line in a talking advertisement | seconds, **$0.00** | ElevenLabs / HeyGen (§8) |
+| **FFmpeg** | processor only | cut, grade, type, sound, delivery | free, no card | DaVinci / Remotion |
+
+**Three numbers from the same day that decide the economics, and they are not in any vendor table:**
+
+- **A finished second costs 2–5 minutes of this machine**, drawing and post included.
+- **Cutting costs card time.** One continuous shot = **41.1 s of card per finished second**; the
+  same footage as eight shots = **56.4 s, +37 %**. Every cut restarts the engine, so a shot list is
+  a financial decision here, not only a creative one.
+- **Post is NOT free of the card on this station.** The ×4 enlargement runs on the same GPU and was
+  **37 %** of one film's whole clock. Any plan that says "steps 6-9 need no card" is wrong here.
+
+**The standing ban on one supplier is now actually satisfied for the image step.** Until 2026-09-01
+every storyboard photograph came from an outside service, and on that day its daily quota stopped
+production dead at 12:29. The local lane removes that single point of failure. Cards:
+`study-cards/minimax-h3.md` · `study-cards/flux-krea-dev.md` · `study-cards/comfyui.md`.

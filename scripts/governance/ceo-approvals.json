@@ -423,5 +423,12 @@
     "verbatim": "205 dogru olan.",
     "conditions": null,
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43"
+  },
+  "flux-krea-quality-approved-2026-09-01": {
+    "date": "2026-09-01",
+    "what": "FLUX.1-Krea-dev, the local image engine installed on DXB-Center this day, is APPROVED ON QUALITY by the CEO's own eye. He saw its first frame (1152x640, 28 steps, 25.5 s, /home/dxb/tools/h3/lab/flux-test1.png) and approved it. This settles the drawing lane: hero frames and reference sets may be drawn on the holding's own card, with no outside quota and no per-image fee.",
+    "verbatim": "flux cok guzel. … 1-kalite onaylandi.",
+    "conditions": "Quality of the engine only. No film made with it is approved by this entry; every delivery still needs his own eye (LAW B).",
+    "where": ".planning/research/study-cards/flux-krea-dev.md and HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43"
   }
 }

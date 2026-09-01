@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-08-30"
+last_updated: "2026-09-01"
 session_author: opus-5
 ---
 
@@ -18,6 +18,67 @@ that contradicted itself in three places until 2026-07-30; that narrative is fro
 lives in the corpus and nowhere else. This file says only where we stand and what happens next.
 
 ## The CEO's live order
+
+**2026-09-01 — THE ENGINE FLOOR WAS TESTED END TO END AND HE REJECTED THE RESULT. THIS IS THE
+CURRENT POSITION; everything under the 2026-08-30 heading below is the previous session's, already
+answered.**
+
+**His order:** *"Bugün ana hedefimiz yerele kurduğumuz Minimax H3'ün en mükemmel seviyede
+çalışmasını sağlama -TEST ETME- ve gerçek mükemmel bir video üretmek."* Four films were produced on
+this station under `/home/dxb/tools/h3/` — BEDIR v3 (17.97 s), BEDIR v3b (18.89 s), OUTLETEURO
+premium (10.25 s), OUTLETEURO UGC (9.73 s).
+
+**HIS VERDICT — ALL FOUR REJECTED (LAW B):** *"beğenmedim kesinlikle. gerçek insan gibi durmuorlar
+kesinlikle yapay zeka gibi duorlar."* And his ruling on where the fault lies, which is accepted and
+not disputed: *"burada sorunun senden kaynaklandığını düşünüorm minimax h3 den ziyade — sen yönetmen
+gerekmiyor muydu herşeyi kaliteli şekilde."*
+
+**WHAT THE TEST ACTUALLY MEASURED — the whole finding lives on board row B43 and is not repeated
+here.** In one line: the woman who read as a real person entered the machine as a REAL PHOTOGRAPH
+bound through Ref2VA; the warriors who read as artificial were DRAWN from sentences and moved
+through FL2VA, which has no identity engine. **The lever was never the video engine — it was the
+direction and what the direction handed the engine.**
+
+**WHAT WAS BUILT AND SURVIVES THE REJECTION:** the ref2va lane in `tools/h3/workflow.py` + `run.py`;
+the LoRA/step-pairing fault found and proven by measurement (`lab/exp1.sh`); the eye-check tool
+`lab/ai-tell.sh`; and **FLUX.1-Krea-dev installed complete on this station** (11,904,639,672 bytes)
+with `img.py` driving it, so the drawing step no longer depends on an outside supplier's quota.
+**⚠ FLUX has not been run once — its quality on this card is UNVERIFIED.**
+
+**THE REGISTERS ARE NOW TRUE.** Three of the four held nothing for today's engines and the fourth was
+stale; all are written — study cards for `minimax-h3` (refreshed), `flux-krea-dev` and `comfyui` (both
+new), three rows in the integration tracker, §11 of the armoury doctrine (the video drawer B43 owed),
+and **all three registered in the company's own library** via `scripts/library/register-media-engines.mjs`.
+**FLUX's quality is APPROVED by the CEO** (`ceo-approvals.json: flux-krea-quality-approved-2026-09-01`).
+
+**THE OPEN DEFECTS, BY THE CODE HE ORDERED — a next session fixes these without asking him anything.**
+Every product now carries a name and a code (`DXB-<TÜR>-<MÜŞTERİ>-<SIRA>`, catalogue at
+`/home/dxb/tools/h3/studio/KATALOG.md`), and these are the ones with work left in them:
+
+- **`DXB-V-OE-001` SPOT · ELİF** — hands break twice: the left hand on the box lid (~5 s) and the
+  right hand under the shoe (~11 s). ⚠ And measured, not guessed: **the mouth does NOT follow the
+  real English voice** — H3's `ref_audios` slot accepted the line but this checkpoint does not
+  lip-sync to it. Fix path: cut the shot into short beats so no hand is held long, and/or install a
+  LOCAL lip-sync engine (nothing is installed — the June kit used a web page, which the
+  single-supplier ban forbids).
+- **`DXB-V-OE-002` UGC · KONUŞAN SUNUCU** — same lip-sync limit; the voice is laid in post.
+- **`DXB-V-BDR-001/002` BEDİR** — rejected. The cause is settled and written on B43: the warriors
+  were DRAWN, not photographed. The rewrite (`badr/SCRIPT-V4.md`, `gen-v4.sh`, `shoot-v4.sh`) is
+  written and never ran; **it should now be drawn with FLUX on our own card, not the outside lane.**
+- **`DXB-V-OE-003` PREMIUM** — rejected; one frame catches a blink in shot 4.
+- **`DXB-G-...` the bloody Badr frames** — ⚠ UNVERIFIED: FLUX has not been asked for a wound, a
+  blade in a body or blood. The CEO lifted that restraint himself; nobody has measured the answer.
+
+**THE VITRIN IS PERMANENT AND SELF-STARTING:** `dxb-vitrin.service` (user unit, `Linger=yes`),
+`http://127.0.0.1:8899/` on this machine and `http://192.168.178.44:8899/` from his phone on the
+same wifi. It is a TEMPORARY review page and a SIMPLE reference — never a specification of B43.
+
+**WHAT IS OPEN AND WAITS ON HIM:** <!-- OPEN: B43 --> DXB Media Studio (B43) is unchanged as a row — nothing was drawn
+and nothing was built for the screen; today only proved what its engine floor can and cannot do.
+
+---
+
+## The CEO's live order — 2026-08-30 (previous session, answered)
 
 **2026-08-30, LATE NIGHT — HE OPENED THE SESSION ON A DEAD CARD AND ALL THREE OF HIS ORDERS ARE NOW
 ANSWERED BY MEASUREMENT.** His words this session: *"session durdu senden önceki gerizekalı sessionda

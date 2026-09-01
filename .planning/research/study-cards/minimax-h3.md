@@ -8,8 +8,10 @@
   stereo audio out**, 4-15 s at 24 fps, up to 2K
 - **Slug:** minimax-h3
 - **Category:** Media/content (video generation)
-- **Status:** INSTALL (running on DXB-Center 2026-08-30 — a 15-second advertisement with sound produced
-  in 10.34 min on this card; the CEO has not yet seen it, so it is not adopted — LAW B)
+- **Status:** INSTALL — **the CEO has now seen four finished films made with it (2026-09-01) and
+  REJECTED all four**: *"beğenmedim kesinlikle. gerçek insan gibi durmuorlar kesinlikle yapay zeka
+  gibi duorlar."* It stays the holding's volume engine; it is NOT adopted for a shot a client's eye
+  lands on. Cause measured, see §2026-09-01.
 - **Target Phase:** 10+ (the agency seat, B28)
 - **Owner (dept/tier):** Creative / Social Media — generation lane
 - **Trigger Type:** service (local ComfyUI at `/home/dxb/tools/ComfyUI`, driven by `/home/dxb/tools/h3/`)
@@ -191,3 +193,46 @@ shots together does not buy cheaper.
 - **Legitimacy Verdict:** OK to run — open weights, no account, no outward call, no credential. The
   territorial clause and the interface-attribution clause are the conditions that follow it into any
   client work.
+
+
+---
+
+## ★ 2026-09-01 — the full production test, five measurements that change how it is used
+
+Four films were made end to end on this card and **the CEO rejected all four** (board **B43**).
+What the day actually established:
+
+**① REF2VA is live, and it is the engine for people.** Second checkpoint wired this day
+(`workflow.py: build_ref`, `run.py --ref`). It takes up to **9 reference images, 3 videos, 3
+standalone sounds** and pins identity across separate shots. **The scene is written by the director
+in the prompt; the references carry identity only** — the earlier reading that "Ref2VA invents the
+action" was wrong and was disproved by measurement (`lab/exp3.sh`: all four written beats appeared).
+
+**② WHY ONE HUMAN READ AS REAL AND THE OTHERS DID NOT — and it is not the engine.** The woman in the
+UGC film entered as a **real photograph** bound through REF2VA. The Badr warriors were **drawn from
+sentences** and moved through FL2VA, which has no identity engine at all. **⇒ For any human the
+client's eye lands on: a real photograph, through REF2VA. FL2VA is for products and camera-exact
+moves. A drawn human is scrap.**
+
+**③ THE LORA/STEP PAIRING IS A LAW, NOT A SETTING.** A 4-step-distilled turbo LoRA sampled at 8
+steps is off its trained schedule and destroys fine structure — a sword vanished from a hand at
+frame 21. Proven on one shot, one seed, only the pairing moving (`lab/exp1.sh`): 4-step LoRA @ 4
+steps = 65 s ✅ · **8-step LoRA @ 8 steps = 95 s ✅ (blade whole)** · 8-step LoRA @ 4 steps = 65 s.
+**Match the LoRA to its own step count. Never run a 4-step LoRA at 8 steps.**
+
+**④ CUTTING COSTS CARD TIME — the shot list is a financial decision.** One 15.08 s shot = 620 s =
+**41.1 s of card per finished second**. The same 17.83 s delivered as **eight** shots = 1,006 s =
+**56.4 s per finished second, +37 %**. Every cut restarts the engine.
+
+**⑤ THE LENGTH CEILING IS THE MODEL'S OWN.** The node states `trained range is ~124-362` frames —
+**362 frames = 15.08 s is the longest single generation, and no prompt length changes it.** A
+594-word full director's brief was run against a 125-word one to test exactly that (`lab/t2v-max.log`).
+A 30-second film is 6-10 shots cut together; it is never one generation.
+
+**Also wired this day:** the node's `ref_audios` slot (up to 3 standalone sounds, dotted-path key
+`ref_audios.ref_audio_0`), used to hand the model a real spoken line. ⚠ Whether this checkpoint
+moves the mouth to that sound is **UNVERIFIED** — the cut lays the voice in post either way.
+
+**API-key trap, measured:** the node's dynamic inputs are addressed by their FULL DOTTED PATH —
+`ref_images.ref_image_0`, not `ref_image_0`. The bare name reaches `execute()` as an unknown keyword
+and the node raises `TypeError`.
