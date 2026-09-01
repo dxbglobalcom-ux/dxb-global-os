@@ -511,6 +511,84 @@ setInterval(() => { durumuSakla(); location.reload(); }, 45000);
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, html, "utf8");
 
+// -------------------------------------------------------------------- index
+//
+// THE TABLE OF CONTENTS THE BOARD NEVER HAD, AND WHY IT EXISTS.
+// The board is ONE file of ~66,000 tokens. An agent that opens it to read a
+// single row swallows all 73 rows to get there, and in a long session the row
+// it actually needed is then competing for attention with everything else it
+// read. Measured 2026-09-01: B43 alone is ~7,100 tokens, and the eight heaviest
+// rows are 65% of the board.
+//
+// This index is what an agent reads FIRST — every row on one line, with its
+// owner, its weight, and the neighbours the row itself links to. The agent then
+// pulls only the rows it needs, in full, by grep. Roughly 66,000 tokens becomes
+// roughly 8,600 for a read, or ~25,000 for a write that must also open the
+// neighbours.
+//
+// It is GENERATED, never hand-kept: a hand-written index goes stale the first
+// time somebody forgets it, and a stale map is worse than no map. It is written
+// on the same pass that renders his page, so it cannot drift from the board.
+// It lives beside the rendered page, NOT in the corpus directory: it is a
+// generated artefact, and the corpus audit (ledger-truth) rightly reads every
+// file under HOLDING-OS-MASTER-PLAN/ as hand-written record — an index row that
+// names open work without an OPEN marker fails that audit, as it should.
+const INDEX = join(REPO, "var/board/00-BOARD-INDEX.md");
+
+/** The row's own opening sentence — the board writes it in bold, first thing. */
+const ilkBaslik = (body) => {
+  // A closed row opens with its acceptance, not its subject — the subject is the
+  // NEXT bold run. Measured on B40, whose first bold is "✓ CLOSED … ACCEPTED BY
+  // THE CEO'S OWN EYE", which says nothing about what the row was for.
+  const bolds = [...body.matchAll(/\*\*(.+?)\*\*/gs)].map((m) => m[1]);
+  const pick = bolds.find((b) => !/^\s*✓?\s*CLOSED/i.test(b)) || bolds[0] || body.slice(0, 100);
+  const t = pick.replace(/\s+/g, " ").replace(/\|/g, "\\|").trim();
+  return t.length > 118 ? t.slice(0, 117) + "…" : t;
+};
+/** The rows this row itself points at, in its own [[wikilinks]]. */
+const komsular = (body) =>
+  [...new Set([...body.matchAll(/\[\[(B\d+(?:-bis)?|C\d+)\]\]/g)].map((m) => m[1]))];
+/** Measured 2026-09-01 on this board with cl100k: 3.65 characters per token. */
+const agirlik = (s) => {
+  const t = s.length / 3.65;
+  return t < 100 ? Math.max(1, Math.round(t)) : Math.round(t / 50) * 50;
+};
+
+const idxRows = rows.map((r) => {
+  const own = owner(r);
+  const k = komsular(r.body);
+  return `| ${r.id} | ${r.opened || "—"} | ${OWNER_LABEL[own].split(" —")[0]} | ~${agirlik(r.body).toLocaleString("tr-TR")} | ${ilkBaslik(r.body)} | ${k.length ? k.join(" ") : "—"} |`;
+});
+// What an agent actually pays to open the board is the WHOLE FILE, not the sum
+// of the row bodies — the headers, the law section and the other columns come
+// with it. Measured 2026-09-01 with cl100k: 66,348 tokens for 242,236 characters.
+const idxToplam = agirlik(text);
+
+const index = `# 00-BOARD — SATIR DİZİNİ (otomatik üretilir, elle düzenlemeyin)
+
+> Bu dosyayı \`scripts/board/render.mjs\` yazar, tahta her değiştiğinde yeniden.
+> Elle düzenlerseniz bir sonraki render siler. Kaynak: \`00-BOARD-OPEN-WORK.md\`.
+
+**⛔ BU DİZİN SATIRLARIN YERİNİ SÖYLER, İÇERİĞİNİ DEĞİL.**
+Bir satıra **YAZACAKSAN**, o satırı ve burada listelenen **komşularını TAM çekmeden yazma** —
+tahtanın kendi yasası budur, dizin onu görünür yere koyar, yerine geçmez.
+
+**Nasıl kullanılır (token için):** tahtanın tamamı ~${Math.round(idxToplam / 1000)}k token.
+Bu dizin ~${agirlik(idxRows.join("\n"))} token. Önce burayı oku, sonra sadece işine yarayan satırı çek:
+
+\`\`\`
+grep -n '^| B43 |' HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md
+\`\`\`
+
+Üretildi: ${new Date().toISOString().slice(0, 16).replace("T", " ")} · ${rows.length} satır
+
+| Satır | Açıldı | Bekleyen | ≈token | Konu (tahtanın kendi ilk cümlesi) | Komşular |
+|---|---|---|---|---|---|
+${idxRows.join("\n")}
+`;
+writeFileSync(INDEX, index, "utf8");
+console.log(`dizin yazıldı: ${INDEX} (${rows.length} satır, ~${agirlik(index).toLocaleString("tr-TR")} token)`);
+
 console.log(`tahta yazıldı: ${OUT}`);
 console.log(`satır: ${sayim.toplam} · açık ${sayim.acik} · sizi bekleyen ${sayim.ceo} · ortak ${sayim.ortak} · beni bekleyen ${sayim.yazar} · kapanan ${sayim.kapandi}`);
 console.log(`türkçe özeti olmayan: ${sayim.ceviriYok} · eskimiş olabilecek: ${sayim.ceviriEski}`);
