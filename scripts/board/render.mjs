@@ -132,6 +132,15 @@ const fingerprint = (s) => createHash("sha256").update(s).digest("hex").slice(0,
 // ------------------------------------------------------------------ rendering
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+/** Escaping for text that goes INSIDE an HTML attribute, not into the body.
+ *  Measured 2026-09-01: `data-ara` carried the row body, and every board row
+ *  quotes the CEO — so the first *"..."* in a row CLOSED the attribute and the
+ *  rest of the row was parsed as markup. B43 (25k characters, quoted six times
+ *  in its first paragraph) stopped rendering entirely: the search counted it,
+ *  the section header showed, and the card itself never appeared on his screen.
+ *  `esc` alone is not enough here; the quote must go too. */
+const escAttr = (s) => esc(s).replace(/"/g, "&quot;");
+
 /** The board's own markdown, as much of it as a reader needs. Nothing is cut:
  *  his ruling of 2026-07-18 forbids a "…" anywhere he can see it. */
 function md(s) {
@@ -193,7 +202,7 @@ function card(row, tr, hareket) {
   const tarih = row.opened ? `<span class="tarih">${row.opened}</span>` : `<span class="tarih">27.07.2026 şikâyet defteri</span>`;
 
   return `
-<article class="satir" data-owner="${own}" data-id="${row.id}" data-ara="${esc((baslik + " " + row.id + " " + row.body).toLowerCase())}">
+<article class="satir" data-owner="${own}" data-id="${row.id}" data-ara="${escAttr((baslik + " " + row.id + " " + row.body).toLowerCase())}">
   <header class="ust">
     <span class="rozet ${own}">${OWNER_LABEL[own]}</span>
     <span class="kimlik">${row.id}</span>
