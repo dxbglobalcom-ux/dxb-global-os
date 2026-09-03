@@ -81,3 +81,21 @@ A first attempt WITHOUT a project (task 788059cc…) was refused by the hook pre
 - The engine drivers in `media-lane.ts` for `shoot`, `still`, `upscale`, `voice`, `assemble` are exercised by the unit tests only through injected fakes (`probe` runs for real); their first live runs happen when the studio's first production job is submitted. Marked ⚠ UNVERIFIED-LIVE here on purpose.
 - A credential was typed into the chat by the CEO this session (his choice, for `sudo`); it is stored nowhere. It should be rotated.
 - Outside the repository: `~/.claude/hooks/dxb-prompt-gate.py` (bypass-mode permission prompt stopped at its source) and `~/.claude/settings.json` (its registration); `/home/dxb/tools/h3/upscale/ab.sh` hardening; `/home/dxb/Desktop/GOREV-CUDA-EXPO.md` result block; `memtester` installed via apt.
+
+## 7. The night of 2026-09-03, 20:30–22:25 — the studio's first productions, twice (commits cfc33e58 + the closing one)
+
+```
+psql agent_runs (3 h)                       → media-delivery-qc fable-5 (Opus 5) · media-character-identity fable-5 · media-creative-director fable-5 / fable-5.1
+psql agents media-studio + 2 seats          → 16/16 brain fable-5 after "hepsi opus 5 olsun" (was 14 + 2 claude-sonnet-5)
+bootstrap-db.sh (construction, company)     → applying 20260903210000_b43_two_brains.sql · ledger total 163 (both)
+psql routing_rules media.creative           → fable-5 xhigh 50 enabled · fable-5.1 xhigh 40 disabled (flipped for run B, restored after)
+psql media_jobs since 19:00+02              → stills 25 · shoots 13 · voices 11 · cuts 2 · upscales 4 (1 done 322.6 s = 4.199 s/frame, 3 cancelled under LAW D) · 44.4 card-minutes
+ffmpeg tblend/signalstats, face crop @2K    → src 0.840 · 7B 0.823 · 3B 1.439  (the 20:14 "titreme" is in the H3 take, not the upscaler)
+vitest b43 media-hands/task-lanes/sdk-schema + r21 + b39 → 12/12 · 5/5 · 1/1 · 38 green · tsc exit 0 · verify:ledger OK · i18n PURITY PASS
+node sdk-probe (SDK 0.3.201)                → claude-fable-5-1: "Claude Code 2.1.201 does not support this model; 2.1.251 or newer"
+node sdk-probe (SDK 0.3.259, zod default)   → "--json-schema is not a valid JSON Schema: no schema with key or ref …/2020-12/schema"; strip $schema → OK; both brains OK
+scheduler.log                               → "[scheduler] the company is working with 2 hands (was 1)" after the lane loops; QC task claimed 0–13 s after its dependency
+tasks (superseded, honest)                  → a001 (director run stopped for LAW D at its upscale), a002/b002/b004 (QC rows re-pointed), b001/b003 (Fable runs killed by the SDK version, then the schema), c002 (casting v2 LLM task: its 12 stills submitted by the session while the old tick held the worker)
+QC verdicts                                 → DXB-V-OE-005 PASS ×4 (a004, 21:53) · DXB-V-OE-007 PASS ×4 (b006, 22:22)
+```
+Known gaps added tonight: the worker's SDK runs inherit the repository cwd and the session plugins' start context (probe answered as the DXB assistant) — `cwd`/`settingSources` await the CEO's word; `control_project_action` create carries no `name_tr`/`purpose_tr`; the casting expert wrote skin-mark descriptors and the session let the frames pass (his rejection 21:20) — rule now: none, ever.
