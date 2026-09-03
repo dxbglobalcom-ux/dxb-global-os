@@ -430,5 +430,54 @@
     "verbatim": "flux cok guzel. … 1-kalite onaylandi.",
     "conditions": "Quality of the engine only. No film made with it is approved by this entry; every delivery still needs his own eye (LAW B).",
     "where": ".planning/research/study-cards/flux-krea-dev.md and HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43"
+  },
+  "medya-os-lab-cancelled-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The separate 'Medya OS' lab folder opened on 2026-09-02 is CANCELLED. Nothing is carried from it; its measured facts stand as leads only; the Media Studio work continues inside DxB Global OS on board row B43, step by step, each step with his word.",
+    "verbatim": "orası iptal normal Holding OS' projesi üzerinden ÇOK AMA ÇOK DİKKATLİ TİTİZLİKLE HATASIZ İLERLEMELİYİZ … karıştırmayın orayı artık bir daha",
+    "conditions": "The folder stays on disk untouched until he says otherwise; no session cites it as a plan.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
+  },
+  "media-studio-department-and-16-experts-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The DxB Media Studio department is founded in the company (slug media-studio) and his 16-expertise list is applied to the letter: 14 new employees written as tool-agnostic experts, 2 existing experts assigned (Prompt/Model Specialist, Editor). Personas are written by the session author in person and gated one by one; each comes to his eye.",
+    "verbatim": "Evet, başla (AskUserQuestion, 2026-09-03) — bunların içinde illaki comfyui minimax flux kullanacaksın başka bişey kullanmayacaksın şeklinde yazılmasın bunları ve bunun gibilerin uzmanı olsun",
+    "conditions": "Founding only; every employee stays draft/dormant until its persona passes the gate and he has seen the department (LAW B). Activation is a separate decision.",
+    "where": "db/migrations/20260903001000_b43_media_studio_department.sql; personas/media-studio/"
+  },
+  "creative-brain-effort-xhigh-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The studio's creative brain (concept, hook, script, shot design) runs on the holding's top tier at effort xhigh, not max. Recorded as routing data for the studio's task rows; no persona file carries a model name (MODEL_ROUTING_SPEC §4b).",
+    "verbatim": "max seviyesinin kullanılmasına gerek yok xhigh olsun",
+    "conditions": "Applies when the studio's routing rows are created; until then it is a recorded ruling on B43.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43"
+  },
+  "t2v-i2v-expert-choice-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "Step 4 of the B43 production line is amended: reference / image-to-video is the STRONG DEFAULT for faces, product identity, brand continuity and sensitive hero shots; direct text-to-video is a legitimate instrument where the expert on the seat judges it better (atmosphere, establishing shots, B-roll, experimental motion). Both roads stay alive at the highest quality; the expert chooses per shot.",
+    "verbatim": "Reference/I2V; yüz, ürün kimliği, marka sürekliliği ve hassas hero shot'larda güçlü default olsun. Ancak uzman persona daha iyi sonuç vereceğine karar verdiğinde doğrudan T2V kullanılabilsin. … sistem ikisini de desteklemeli, seçim uzman tarafından yapılmalıdır",
+    "conditions": "The storyboard/reference step is not abolished; it may not become a dogmatic gate against T2V.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; personas/media-studio/*.md §2"
+  },
+  "no-brand-restriction-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The holding has no brand restriction of its own: a third-party mark may appear exactly as it is in the real picture. The technical rule stays because the engines cannot write: the engine never draws lettering; a readable mark comes from the real file or the real photograph, laid in post.",
+    "verbatim": "resimde hangi marka yazılmışsa aynen resim olarak yerleştirilebilir. Marka riskimiz, disiplinimiz vs yok 3.markalar vs herşey açık ve kullanılabilir",
+    "conditions": "A client's own brand guideline is honoured as their instruction. The three prompt lines under tools/h3/oe that still ban third-party marks are corrected on this ruling (LAW A).",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43"
+  },
+  "working-mode-topic-by-topic-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "Working mode chosen for the Media Studio work: one topic at a time, each topic closed with one click-question (AskUserQuestion); the next session continues in the same mode as if the same author continued.",
+    "verbatim": "Konu konu, tıklamalı onay (AskUserQuestion, 2026-09-03) … bir sonraki fable 5.1 kardeşini aynı titizlik ve mükemmellikle, sanki sen devam ediyormuşsun gibi hazırla",
+    "conditions": "His stated preference for this work; not a law (nothing becomes a law unless he says so).",
+    "where": ".planning/STATE.md"
+  },
+  "expo-after-research-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "EXPO (the DDR5-6000 RAM profile) is switched on AFTER the upscaler research lands, not before; the research landed the same day, so EXPO is the next session's machine step, on his hand at the BIOS.",
+    "verbatim": "Araştırma bitince (AskUserQuestion, 2026-09-03) — EXPO'yu ben mi yapıcam sen yapamıyor musun? şimdi yapalım mı?",
+    "conditions": "The reboot closes every session; the after-run command is in project memory and in .planning/STATE.md.",
+    "where": ".planning/STATE.md; HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B42"
   }
 }
