@@ -11,7 +11,7 @@
 import { sql } from "kysely";
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import { getDb, llmCall } from "@dxb/shared";
+import { getDb, llmCall, sdkJsonSchema } from "@dxb/shared";
 import { logDecision } from "@dxb/observability";
 import { loadPolicy, route, SDK_MODEL_IDS, type ClassifiedIntent } from "@dxb/kernel";
 
@@ -83,7 +83,7 @@ async function defaultEvaluator(task: QaTask): Promise<unknown> {
         effort: routed.effort as "low" | "medium" | "high" | "xhigh" | "max",
         tools: [],
         maxTurns: 4,
-        outputFormat: { type: "json_schema", schema: z.toJSONSchema(QaVerdict) },
+        outputFormat: { type: "json_schema", schema: sdkJsonSchema(QaVerdict) },
       },
     });
     for await (const msg of q) {

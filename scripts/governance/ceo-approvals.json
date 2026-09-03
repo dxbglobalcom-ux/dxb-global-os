@@ -514,5 +514,33 @@
     "verbatim": "Denetçiye yapılan herşeyi denettirmemiz lazım. gözünden belki bişeyler kaçmıştır diye. Bağımsız bir denetçim var dışarıdan ona yaptıracağım. Ayrıca session baya şişti bir sonraki session için herşeyi hazırla kaydet, ki kardeşin fable 5.1 aynı kaliteyle ve titizlikle devam etsin.",
     "conditions": "No further build until the auditor's findings are in his hands; findings become work on B43. Evidence: .planning/quick/20260903-media-studio-founding/EVIDENCE-hands-2026-09-03.md.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
+  },
+  "two-brain-trial-run-approved-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The studio's first real production is a TRIAL RUN done twice with two brains — the same brief, the same cast (Deniz, DXB-A-004), the same four locked shots, once with the experts routed to Claude Opus 5 (the standing studio row) and once routed to Claude Fable 5.1 (a second department row, enabled only for that run) — put on his vitrin side by side with the QC expert's verdicts; his eye names the brain that stays. Before it: casting by the identity expert through the `still` hand. He was told plainly that the studio is NOT complete (no seat-to-seat handoff, no dashboard screen, engine drivers never run live) and that the missing parts change the workflow, not the picture; he chose the trial now.",
+    "verbatim": "O uzmanlar kim opus 5 mi fable 5.1 mi kim? iki beyinlede denemek lazım. → İki beyinle aynı iş (AskUserQuestion) → stüdyo tamamlandı mı ki bu testleri yapıorsunuz … → Şimdi deneme koşusu (AskUserQuestion, 2026-09-03 evening)",
+    "conditions": "Three reversible preparations only: the Fable 5.1 catalogue row + SDK map entry + a DISABLED second routing row (migration 20260903210000_b43_two_brains.sql); the 40-turn budget for a seat with the hands; the production engine service started. The Opus row is restored after run B. The independent audit (external-audit-before-next-leg-2026-09-03) follows the trial; the seat-to-seat dispatcher is still not started.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md; MODEL_ROUTING_SPEC.md §3; AGENT_ORCHESTRATION_SPEC.md A16"
+  },
+  "avatar-cast-men-and-elderly-women-only-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "From now on the holding's cast of presenters is MEN and ELDERLY WOMEN only. Elif (DXB-A-001) and Nora (DXB-A-003) are retired from use — their codes and files stay, the catalogue says 'kullanım dışı'. A few new faces are drawn with FLUX (through the studio's own identity expert and the `still` hand) and added to the vitrin; productions proceed with male presenters (Deniz DXB-A-004, Kenan DXB-A-002, and the new ones).",
+    "verbatim": "ayrıca sadece erkek ve yaşlı teyzelerle artık avatar olarak kullanılacak. flux ile bir kaç model daha oluşturulsun. eklensin vitrine. erkek modellerle ilerleyeceğiz. (2026-09-03 evening)",
+    "conditions": "Constitutional for the cast (CEO-only); code may refuse a brief that casts outside it and may never widen it. Every new face carries the three photographs (portrait · profile · half-body, same seed) the reference-to-video engine needs.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md; /home/dxb/tools/h3/studio/KATALOG.md"
+  },
+  "task-worker-lanes-are-loops-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The company's task worker is re-architected so that ONE long run never holds the other hands: a lane is its own loop (TaskLanes), the tick only counts and starts/retires loops (A17). Ordered by the CEO the minute the weakness was measured and reported (the identity expert's corrective task could not be claimed while a 30-minute director run held the tick).",
+    "verbatim": "arkadaşım yapısal zayıflık istemiorm BEN SENİ FABLE 5.1 NEDEN SATIN ALDIM EN İYİSİNİ EN MÜKEMMELİNİ YAP DİYE YA. ŞİRKETİN GÖREV İŞÇİSİ NEDEN BUNU YAPAMIYOR YAPILACAK MİMARİ NEYSE O YAPILSIN ÇÖZÜLSÜN SORUN. (2026-09-03 21:36)",
+    "conditions": "No second runtime, no second resident service (Phase 3 LOCKED); dispatchLanes and its brakes unchanged; a lane mid-drain is never cut; proven by tests/b43/task-lanes.test.ts and the existing b39/r21 suites; the resident scheduler restarted at a moment when no run is in flight.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A17; packages/outbox-executor/src/task-lanes.ts; .planning/STATE.md; 00-BOARD-OPEN-WORK.md row B43"
+  },
+  "law-d-draft-first-upscale-last-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "LAW D, made a law by the CEO's own word (\"BU KANUN OLSUN\"): every production is made and judged at the engine's native draft resolution first (the 768-class frame — on this station 640×1152 vertical / 864×480 horizontal); nothing is upscaled before the draft is accepted by his eye; upscaling (SeedVR2 or any other) is a finishing step on accepted work only. Applied the same minute: the running upscales of DXB-V-OE-005 were cancelled and the film cut at native resolution; the film brief template and three studio personas (creative director, VFX/post, delivery QC) carry the law.",
+    "verbatim": "LAN ÖNCEEEEEE 768 İLE YAPIN HERŞEYİ HERŞEY GÜZEL OLSUN SONRA UPSCALE EDİLİR BU KANUN OLSUN YAAAAA HERŞEY DÜZGÜN ÇALIŞMADAN NE DİYE 1K VEYA 2K YA ÇIKARIORSUNUZ (2026-09-03 21:47)",
+    "conditions": "Constitutional for the studio's production order; a seat may refuse an upscale request on unaccepted material and may never skip the draft. The upscaler measurements (SeedVR2 A/B on B43) stay valid as the finishing step's figures.",
+    "where": "HOLDING-OS-MASTER-PLAN/CAPABILITY_ARSENAL_DOCTRINE.md §11; personas/media-studio/{media-creative-director,media-vfx-post,media-delivery-qc}.md; 00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
   }
 }

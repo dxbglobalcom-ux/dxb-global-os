@@ -16,7 +16,7 @@
 // approval_class can be raised by the draft, never lowered below ci's (T-05-10).
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import { getDb, TaskEnvelope } from "@dxb/shared";
+import { getDb, TaskEnvelope, sdkJsonSchema } from "@dxb/shared";
 import {
   loadPolicy,
   route,
@@ -119,7 +119,7 @@ async function runDraftQuery(prompt: string, own: ResolvedRoute): Promise<unknow
       effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
       maxTurns: 4,
-      outputFormat: { type: "json_schema", schema: z.toJSONSchema(DraftBatch) },
+      outputFormat: { type: "json_schema", schema: sdkJsonSchema(DraftBatch) },
     },
   });
   for await (const msg of q) {

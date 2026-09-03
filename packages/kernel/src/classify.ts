@@ -7,7 +7,7 @@
 // auth — no raw provider keys, no LiteLLM bypass (api-mode rows are illegal here).
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import { getDb } from "@dxb/shared";
+import { getDb, sdkJsonSchema } from "@dxb/shared";
 import { loadPolicy, route, type ResolvedRoute } from "./policy.js";
 
 export const ClassifiedIntent = z.object({
@@ -31,6 +31,10 @@ export type ClassifiedIntent = z.infer<typeof ClassifiedIntent>;
 // resolve to moves. Both legacy slugs therefore land on the same real model.
 export const SDK_MODEL_IDS: Record<string, string> = {
   "fable-5": "claude-opus-5",
+  // B43 two-brain trial (CEO 2026-09-03: "iki beyinlede denemek lazım"): the second
+  // brain the studio can be routed to — own slug, own catalogue row (Claude Fable 5.1).
+  // "fable-5" above keeps meaning Opus 5 (U20 freeze); nothing else moves.
+  "fable-5.1": "claude-fable-5-1",
   "opus-5": "claude-opus-5",
   "opus-4.8": "claude-opus-5",
   "sonnet-5": "claude-sonnet-5",
@@ -59,7 +63,7 @@ async function runQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
       // tool call — with a single turn the SDK cannot retry when the model
       // answers inline first (observed live on opus-4.8 effort=high).
       maxTurns: 4,
-      outputFormat: { type: "json_schema", schema: z.toJSONSchema(ClassifiedIntent) },
+      outputFormat: { type: "json_schema", schema: sdkJsonSchema(ClassifiedIntent) },
     },
   });
   for await (const msg of q) {

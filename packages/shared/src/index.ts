@@ -73,3 +73,4 @@ export type {
 } from "./db-types.js";
 export { probeMedia, extractFrames, resolveMediaBinary } from "./media-probe.js";
 export type { MediaProbeSummary } from "./media-probe.js";
+export { sdkJsonSchema } from "./sdk-schema.js";

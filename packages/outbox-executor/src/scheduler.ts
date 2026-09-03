@@ -31,6 +31,7 @@ import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/rev
 import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
 import { tick } from "./index.js";
 import { runMediaLaneOnce } from "./media-lane.js";
+import { TaskLanes } from "./task-lanes.js";
 import { checkVelocity } from "./breaker.js";
 import { checkMonthlyCap } from "./monthly-cap.js";
 
@@ -353,6 +354,9 @@ async function enqueueChatDrain(boss: PgBoss, delaySeconds: number): Promise<voi
   );
 }
 
+// the company's hands, alive between ticks (B43 task-lanes); null until the scheduler starts
+let activeLanes: TaskLanes | null = null;
+
 export async function startScheduler(): Promise<PgBoss> {
   const url = process.env.DXB_DATABASE_URL;
   if (!url) throw new Error("DXB_DATABASE_URL is not set (session-mode direct URL required)");
@@ -524,26 +528,33 @@ export async function startScheduler(): Promise<PgBoss> {
   // visible nowhere is not an alive system — but a line every ten seconds is
   // noise nobody reads, so it speaks only when the answer CHANGES.
   let lastLanes = -1;
+  // B43 (2026-09-03 evening) — a lane is its own loop (task-lanes.ts): the tick only
+  // re-counts the hands and starts or retires loops, so one long run (a 30-minute media
+  // job) never holds the other hands or the tick itself. Measured before the change:
+  // one director run held the queue; the QC and the corrective casting could not be
+  // claimed until it ended. Lane 1 keeps the historical worker identity so nothing
+  // that reads `claimed_by = 'resident-worker'` changes meaning on a single-lane install.
+  activeLanes = new TaskLanes(
+    {
+      drain: (workerId) => drainTasks(workerId ? { workerId } : {}),
+      sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+      log: (line) => console.error(line),
+    },
+    CADENCES.taskWorkerSeconds * 1000,
+    (i) => (i === 0 ? undefined : `${RESIDENT_WORKER_ID}-${i + 1}`),
+  );
   await boss.work(QUEUES.taskWorker, async () => {
     try {
       const lanes = await dispatchLanes();
+      const r = activeLanes?.reconcile(lanes);
       if (lanes !== lastLanes) {
         console.log(
           `[scheduler] the company is working with ${lanes} hand${lanes > 1 ? "s" : ""}` +
-            (lastLanes < 0 ? " (first tick)" : ` (was ${lastLanes})`),
+            (lastLanes < 0 ? " (first tick)" : ` (was ${lastLanes})`) +
+            (r ? ` — loops running ${r.running}, started ${r.started}` : ""),
         );
         lastLanes = lanes;
       }
-      // Lane 1 keeps the historical worker identity so nothing that reads
-      // `claimed_by = 'resident-worker'` changes meaning on a single-lane install.
-      await Promise.all(
-        Array.from({ length: lanes }, (_, i) =>
-          drainTasks(i === 0 ? {} : { workerId: `${RESIDENT_WORKER_ID}-${i + 1}` }).catch((err) => {
-            // One lane's infrastructure fault must not take its siblings down.
-            console.error(`[scheduler] dispatch lane ${i + 1} failed:`, err);
-          }),
-        ),
-      );
     } finally {
       await enqueueTaskWorker(boss, CADENCES.taskWorkerSeconds);
     }
@@ -648,5 +659,10 @@ export async function startScheduler(): Promise<PgBoss> {
 }
 
 export async function stopScheduler(boss: PgBoss): Promise<void> {
+  // the lanes finish their current drain first (a task mid-run is never cut), then the ticks stop
+  if (activeLanes) {
+    await activeLanes.stop();
+    activeLanes = null;
+  }
   await boss.stop({ graceful: true });
 }

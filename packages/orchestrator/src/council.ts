@@ -18,7 +18,7 @@
 // spend. Judge (subscription) has no api EUR at all.
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import { getDb, llmCall } from "@dxb/shared";
+import { getDb, llmCall, sdkJsonSchema } from "@dxb/shared";
 import { SDK_MODEL_IDS } from "@dxb/kernel";
 
 const ACTOR_META = { council: true } as const;
@@ -94,7 +94,7 @@ export async function judgeCandidates(
       effort: COUNCIL_CONFIG.judge.effort,
       tools: [],
       maxTurns: 4,
-      outputFormat: { type: "json_schema", schema: z.toJSONSchema(JudgeVerdict) },
+      outputFormat: { type: "json_schema", schema: sdkJsonSchema(JudgeVerdict) },
     },
   });
   for await (const msg of q) {

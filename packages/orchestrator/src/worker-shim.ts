@@ -16,7 +16,7 @@
 import { sql } from "kysely";
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import { getDb, llmCall } from "@dxb/shared";
+import { getDb, llmCall, sdkJsonSchema } from "@dxb/shared";
 import {
   currentRunScope,
   logDecision,
@@ -221,6 +221,17 @@ export async function resolveExecutionRoute(task: ClaimedTask): Promise<Executio
   return { taskTier: task.model_tier, effectiveTier, rule, employee };
 }
 
+// B43 two-brain trial (CEO 2026-09-03). The 12-turn budget was set for verification
+// loops (2026-07-26); a seat that holds the studio's engine hands runs a whole job in
+// one sitting — four shots, their probes, the voice lines, the upscales and the cut
+// are ~20 tool calls — so a surface carrying media_submit gets 40 turns. The lease
+// heartbeat (A15) and media_wait keep such a run alive; the budget only stops it
+// from being cut off before the first cut.
+export const TURN_BUDGET = { toolless: 4, default: 12, hands: 40 } as const;
+export function turnBudgetFor(allowedTools: readonly string[]): number {
+  return allowedTools.some((t) => t.endsWith("__media_submit")) ? TURN_BUDGET.hands : TURN_BUDGET.default;
+}
+
 // Default executor: routing decided above; this function owns the SDK call.
 async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
   const { rule, employee } = await resolveExecutionRoute(task);
@@ -300,10 +311,10 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
               allowedTools: toolOpts.allowedTools,
               disallowedTools: toolOpts.disallowedTools,
               strictMcpConfig: toolOpts.strictMcpConfig,
-              maxTurns: 12, // verification tool loops need turns
+              maxTurns: turnBudgetFor(toolOpts.allowedTools), // 12 for verification loops, 40 for a seat with the hands
             }
-          : { maxTurns: 4 }),
-        outputFormat: { type: "json_schema", schema: z.toJSONSchema(WorkerJson) },
+          : { maxTurns: TURN_BUDGET.toolless }),
+        outputFormat: { type: "json_schema", schema: sdkJsonSchema(WorkerJson) },
       },
     });
     for await (const msg of q) {

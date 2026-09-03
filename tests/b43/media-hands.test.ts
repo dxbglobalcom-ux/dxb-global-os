@@ -14,6 +14,9 @@
 //   4. the lease heartbeat: a run longer than its lease is NOT reaped
 //   5. grant → profile: media_* tools are pinned, and the media-studio profile
 //      compiled from the record carries them
+//   6. the two-brain trial (CEO 2026-09-03 evening): Fable 5.1 is a brain the SDK
+//      map knows; a seat holding the hands gets the 40-turn budget; two department
+//      rows for one tier route by `enabled`, so flipping them flips the brain
 // Suite deletes ONLY what it creates (marker b43t-…, E9.3 rule). Construction
 // engine only — vitest.config.ts injects the address.
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
@@ -29,7 +32,8 @@ import { closeDb, getDb, resolveMediaBinary } from "@dxb/shared";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { assertProbeAllowed, parseMediaParams } from "../../packages/dxb-mcp/src/groups/media.js";
 import { runMediaLaneOnce, type EngineRunner } from "../../packages/outbox-executor/src/media-lane.js";
-import { resolveExecutionRoute, runWorkerOnce } from "../../packages/orchestrator/src/worker-shim.js";
+import { resolveExecutionRoute, runWorkerOnce, turnBudgetFor } from "../../packages/orchestrator/src/worker-shim.js";
+import { SDK_MODEL_IDS } from "../../packages/kernel/src/index.js";
 import { compileLibraryProfiles, pinAll, readDxbMcpInventory, readLibraryLayer } from "../../packages/gateway/src/index.js";
 import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
 
@@ -330,5 +334,45 @@ describe("5. grant → pins → compiled profile", () => {
     } finally {
       rmSync(outDir, { recursive: true, force: true });
     }
+  });
+});
+
+describe("6. the two-brain trial (CEO 2026-09-03 evening)", () => {
+  it("Fable 5.1 is a brain the SDK map knows; a seat with the hands gets the longer turn budget", () => {
+    expect(SDK_MODEL_IDS["fable-5.1"]).toBe("claude-fable-5-1");
+    expect(SDK_MODEL_IDS["fable-5"]).toBe("claude-opus-5"); // U20 freeze untouched
+    expect(turnBudgetFor(["mcp__dxb-mcp__queue_get"])).toBe(12);
+    expect(turnBudgetFor(["mcp__dxb-mcp__queue_get", "mcp__dxb-mcp__media_submit"])).toBe(40);
+  });
+
+  it("two department rows for one tier: only the enabled one routes, and flipping them flips the brain", async () => {
+    const deptId = (await sql<{ id: string }>`SELECT id FROM departments WHERE slug=${DEPT}`.execute(db())).rows[0].id;
+    const mk = async (model: string, priority: number, enabled: boolean) => {
+      const r = await db()
+        .insertInto("routing_rules")
+        .values({ task_class: `${M}.twobrain`, match: JSON.stringify({}), model_tier: "L4", model, mode: "subscription", effort: "xhigh", priority, enabled, department_id: deptId } as never)
+        .returning("id")
+        .executeTakeFirstOrThrow();
+      ruleIds.push(r.id);
+      return r.id;
+    };
+    // §3 leaves its own enabled row for this department at priority 99 (swept in afterAll), so the
+    // trial pair sits above it — the worker's department lookup ignores task_class, as in production.
+    const opus = await mk("fable-5", 300, true);
+    const fable = await mk("fable-5.1", 290, false);
+    const seat = await makeAgent(`${M}-twobrain`, DEPT);
+    const taskId = await makeTask(DEPT, seat);
+    const task = async () => (await db().selectFrom("tasks").selectAll().where("id", "=", taskId).executeTakeFirstOrThrow()) as never;
+    const before = await resolveExecutionRoute(await task());
+    expect(before.rule.id).toBe(opus);
+    expect(before.rule.model).toBe("fable-5");
+    // the flip the trial makes between run A and run B
+    await db().updateTable("routing_rules").set({ enabled: false }).where("id", "=", opus).execute();
+    await db().updateTable("routing_rules").set({ enabled: true }).where("id", "=", fable).execute();
+    const after = await resolveExecutionRoute(await task());
+    expect(after.rule.id).toBe(fable);
+    expect(after.rule.model).toBe("fable-5.1");
+    expect(after.rule.effort).toBe("xhigh");
+    expect(SDK_MODEL_IDS[after.rule.model]).toBe("claude-fable-5-1");
   });
 });

@@ -10,7 +10,7 @@
 // result for the hook post-gate.
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import { getDb, llmCall } from "@dxb/shared";
+import { getDb, llmCall, sdkJsonSchema } from "@dxb/shared";
 import { currentRunScope } from "@dxb/observability";
 import {
   buildSdkToolOptions,
@@ -114,7 +114,7 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
               maxTurns: 12,
             }
           : { maxTurns: 4 }),
-        outputFormat: { type: "json_schema", schema: z.toJSONSchema(WorkerJson) },
+        outputFormat: { type: "json_schema", schema: sdkJsonSchema(WorkerJson) },
       },
     });
     for await (const msg of q) {
