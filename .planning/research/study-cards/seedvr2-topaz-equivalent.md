@@ -193,7 +193,7 @@ EOF
 ```
 Optional accelerator, only after the baseline A/B: `sageattention` (v3 = Blackwell) — the 5070 Ti numbers above used it; it is not required by the native node.
 
-Blast-radius note for the executor: the only shared thing is the model directory; the production ComfyUI, its venv, port 8188 and its `extra_model_paths.yaml` are untouched. If the main install should later see the same weights, add the same four-line block to `/home/dxb/tools/ComfyUI/extra_model_paths.yaml` (separate, CEO-approved change).
+Blast-radius note for the executor: the only shared thing is the model directory; the production ComfyUI, its venv, port 8188 and its `extra_model_paths.yaml` are untouched. If the main install should later see the same weights, add the same four-line block to `/home/dxb/tools/ComfyUI/extra_model_paths.yaml` (a separate change, made only on the CEO's word — nothing of the kind is approved today).
 
 ### 3.5 First 3-clip A/B test (what to run, what to record)
 Clips: three real MiniMax H3 outputs from the download folder — (1) a face close-up with skin, (2) fast motion / camera move, (3) text or logo on a product. Each 5–15 s, 24 fps, 864×480 or 1152×640.
