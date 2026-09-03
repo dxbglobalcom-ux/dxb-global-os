@@ -185,25 +185,36 @@ export async function resolveExecutionRoute(task: ClaimedTask): Promise<Executio
   // instead of being re-derived here.
   let effectiveTier = task.model_tier;
   let employee: { slug: string; department: string } | null = null;
+  let departmentId: string | null = null;
   if (task.agent_id) {
-    const emp = await sql<{ slug: string; department: string; effective_tier: string }>`
-      SELECT a.slug, a.department,
+    const emp = await sql<{ slug: string; department: string; department_id: string | null; effective_tier: string }>`
+      SELECT a.slug, a.department, d.id AS department_id,
              fn_effective_tier(${task.model_tier}, a.id) AS effective_tier
         FROM agents a
+        LEFT JOIN departments d ON d.slug = a.department
        WHERE a.id = ${task.agent_id}::uuid
     `.execute(getDb());
     if (emp.rows[0]) {
       effectiveTier = emp.rows[0].effective_tier ?? effectiveTier;
       employee = { slug: emp.rows[0].slug, department: emp.rows[0].department };
+      departmentId = emp.rows[0].department_id ?? null;
     }
   }
 
+  // B43 (2026-09-03) — MODEL_ROUTING_SPEC §3 step 2 reads "kural taraması:
+  // routing_rules (rol, departman, …)": a rule scoped to the employee's own
+  // department wins at the same tier (the studio's creative row is L1 at
+  // effort xhigh, the CEO's ruling of that day); a department-scoped row is
+  // NEVER picked for another department, whatever its priority.
   // A raised tier with no enabled row would silently strand the task, so the
   // task's own tier stays the fallback: the floor is an upgrade path, never a
   // new failure mode.
   const rule: RoutingRule | undefined =
-    rules.find((r) => r.model_tier === effectiveTier) ??
-    rules.find((r) => r.model_tier === task.model_tier);
+    (departmentId
+      ? rules.find((r) => r.department_id === departmentId && r.model_tier === effectiveTier)
+      : undefined) ??
+    rules.find((r) => r.department_id == null && r.model_tier === effectiveTier) ??
+    rules.find((r) => r.department_id == null && r.model_tier === task.model_tier);
   if (!rule) {
     throw new Error(`worker-shim: no enabled routing_rules row for tier '${task.model_tier}'`);
   }
@@ -277,7 +288,7 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
       prompt,
       options: {
         model: SDK_MODEL_IDS[rule.model] ?? rule.model,
-        effort: rule.effort as "low" | "medium" | "high" | "max",
+        effort: rule.effort as "low" | "medium" | "high" | "xhigh" | "max",
         // R2.2: built-ins stay OFF (least privilege); the MCP surface is the
         // compiled gateway profile — allowed set mounted, everything else in
         // the inventory stripped from context, session pinned to these
@@ -716,6 +727,23 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
     if (task.agent_id) await stampHookVersion(task.agent_id);
   }
 
+  // B43 (2026-09-03) — a running task RENEWS its lease while its worker is
+  // alive. Measured that day: claim_next_task leases 900 s, reap_expired_leases
+  // runs every 60 s, and nothing anywhere renewed — so any run longer than
+  // fifteen minutes (a media render, a long gate) was handed back to the queue
+  // mid-flight and run twice. The reaper exists for DEAD workers; a live one
+  // says so on a cadence of a quarter lease (never faster than once a second,
+  // never slower than once a minute).
+  const heartbeat = setInterval(() => {
+    void sql`
+      UPDATE tasks SET lease_expires_at = now() + make_interval(secs => ${leaseSeconds}), updated_at = now()
+       WHERE id = ${task.id}::uuid AND claimed_by = ${workerId} AND status IN ('claimed', 'running')
+    `
+      .execute(db)
+      .catch((err) => console.error("[worker-shim] lease heartbeat:", err));
+  }, Math.max(1_000, Math.min(60_000, leaseSeconds * 250)));
+  heartbeat.unref?.();
+
   try {
     // E8.1: every execution runs inside an observability scope — agent_runs
     // open/close + buffered tool_calls/file_changes ride AsyncLocalStorage.
@@ -831,5 +859,7 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
     const message = err instanceof Error ? err.message : String(err);
     await transition(task.id, "running", "failed", workerId, { error: message });
     return { claimed: true, taskId: task.id, status: "failed", error: message };
+  } finally {
+    clearInterval(heartbeat);
   }
 }

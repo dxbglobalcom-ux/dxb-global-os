@@ -45,6 +45,15 @@ export interface RoutingRulesTable {
   priority: Generated<number>;
   enabled: Generated<boolean>;
   updated_at: Timestamptz;
+  // Live columns measured on the company engine 2026-09-03 (MODEL_ROUTING_SPEC §3
+  // E6.1 delta, applied): a rule may be scoped to one department — B43's studio
+  // row is the first such row (L1 / xhigh for media-studio).
+  model_id: string | null;
+  role_slot: string | null;
+  department_id: string | null;
+  risk_max: string | null;
+  min_context: number | null;
+  cost_cap_per_task: number | string | null;
 }
 
 export interface TaskEventsTable {
@@ -149,6 +158,32 @@ export interface OutboxTable {
   last_error: string | null;
   executed_at: Date | null;
   execution_result: Jsonb | null;
+}
+
+/** B43 — the Media Studio's job book (db/migrations/20260903190000_b43_media_hands.sql).
+ *  One row per engine job an expert submits through dxb-mcp `media_*`; the resident
+ *  scheduler's media lane executes them one at a time on the holding's own card. */
+export interface MediaJobsTable {
+  id: Generated<string>;
+  task_id: string | null;
+  employee_id: string | null;
+  department: string | null;
+  kind: "still" | "shoot" | "upscale" | "voice" | "assemble" | "probe";
+  params: Jsonb;
+  note: string | null;
+  status: Generated<"queued" | "running" | "done" | "failed" | "cancelled">;
+  cancel_requested: Generated<boolean>;
+  claimed_by: string | null;
+  started_at: Date | null;
+  ended_at: Date | null;
+  wall_seconds: number | string | null;
+  peak_vram_mib: number | null;
+  peak_ram_gib: number | string | null;
+  output_path: string | null;
+  result: Jsonb | null;
+  error: string | null;
+  created_at: Timestamptz;
+  updated_at: Timestamptz;
 }
 
 export interface CostLedgerTable {
@@ -495,6 +530,7 @@ export interface DB {
   approvals: ApprovalsTable;
   approval_rules: ApprovalRulesTable;
   outbox: OutboxTable;
+  media_jobs: MediaJobsTable;
   cost_ledger: CostLedgerTable;
   audit_log: AuditLogTable;
   budget_state: BudgetStateTable;

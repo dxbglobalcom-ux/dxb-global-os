@@ -35,8 +35,8 @@ afterAll(async () => {
 
 describe("E12.5 workforce completeness — machine gates", () => {
   it("(1) promise ledger holds exactly 67 slugs (53 matrix §3 + 14 plan §4)", () => {
-    expect(promised).toHaveLength(67);
-    expect(new Set(promised).size).toBe(67);
+    expect(promised).toHaveLength(81); // 67 (E12.5) + 14 (B43 studio, 2026-09-03)
+    expect(new Set(promised).size).toBe(81);
   });
 
   it("(2) promised-ADD absent = 0: every promised role is live with a gate-passed persona", async () => {

@@ -1,5 +1,5 @@
 {
-  "_source": "Frozen promise ledger for the E12.5 promised-ADD sweep (WORKFORCE-MUST-EXPANSION-PLAN §11.4). 67 slugs = 53 WORKFORCE-GAP-MATRIX §3 named ADD roles + 14 WORKFORCE-MUST-EXPANSION-PLAN §4 new MUST roles (D7-B/C minus the 5 promise-debt seats already counted in the 53). Doc-name to slug mapping validated in plan §9.1 (D7-D reconciliation) against wave-migration INSERT ground truth; arithmetic closes both directions: 36 pre-D7 non-social ADDs + 12 social + 19 D7 = 67.",
+  "_source": "Frozen promise ledger for the E12.5 promised-ADD sweep (WORKFORCE-MUST-EXPANSION-PLAN §11.4). 67 slugs = 53 WORKFORCE-GAP-MATRIX §3 named ADD roles + 14 WORKFORCE-MUST-EXPANSION-PLAN §4 new MUST roles (D7-B/C minus the 5 promise-debt seats already counted in the 53). Doc-name to slug mapping validated in plan §9.1 (D7-D reconciliation) against wave-migration INSERT ground truth; arithmetic closes both directions: 36 pre-D7 non-social ADDs + 12 social + 19 D7 = 67. | B43 (CEO order 2026-09-03, \"Evet, başla\" — ceo-approvals.json media-studio-department-and-16-experts-2026-09-03): the DxB Media Studio founded as a department with 14 new seats written in person (migration 20260903001000); 67 + 14 = 81. The two seats held by assignment (design-image-prompt-engineer, marketing-short-video-editing-coach) were already on the roster and are not promised twice.",
   "promised": [
     "ai-model-risk-officer",
     "ai-observability-finops-analyst",
@@ -67,6 +67,20 @@
     "social-reporting-agent",
     "social-approval-workflow",
     "social-client-workspace",
-    "social-mcp-api-agent"
+    "social-mcp-api-agent",
+    "media-creative-director",
+    "media-advertising-director",
+    "media-film-director",
+    "media-cinematographer",
+    "media-screenwriter",
+    "media-storyboard-previz",
+    "media-ai-video-engineer",
+    "media-character-identity",
+    "media-product-brand-consistency",
+    "media-continuity",
+    "media-vfx-post",
+    "media-sound-music",
+    "media-delivery-qc",
+    "media-failure-analysis"
   ]
 }

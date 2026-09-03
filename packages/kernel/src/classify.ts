@@ -53,7 +53,7 @@ async function runQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
     prompt,
     options: {
       model: SDK_MODEL_IDS[own.model] ?? own.model,
-      effort: own.effort as "low" | "medium" | "high" | "max",
+      effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
       // NOT 1: structured output is delivered via an internal StructuredOutput
       // tool call — with a single turn the SDK cannot retry when the model

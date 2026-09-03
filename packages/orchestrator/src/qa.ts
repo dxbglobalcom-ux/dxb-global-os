@@ -80,7 +80,7 @@ async function defaultEvaluator(task: QaTask): Promise<unknown> {
       prompt,
       options: {
         model: SDK_MODEL_IDS[routed.model] ?? routed.model,
-        effort: routed.effort as "low" | "medium" | "high" | "max",
+        effort: routed.effort as "low" | "medium" | "high" | "xhigh" | "max",
         tools: [],
         maxTurns: 4,
         outputFormat: { type: "json_schema", schema: z.toJSONSchema(QaVerdict) },

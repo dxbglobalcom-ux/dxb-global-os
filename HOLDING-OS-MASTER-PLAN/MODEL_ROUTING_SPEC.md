@@ -36,6 +36,8 @@ task (kernel) ─→ orchestrator.select_model(task)
 
 ⛔ mimari-kritik: seçim mantığı `packages/orchestrator` İÇİNDE kalır (ayrı servis değil — SYSTEM_ARCHITECTURE §3 kararı); kurallar DB'de, kod yalnız yorumlayıcı.
 
+**Kayıtlı adaptasyon (2026-09-03, B43 — CEO onaylı plan, `studio-hands-build-plan-approved-2026-09-03`):** adım 2'nin *departman* ayağı canlıdır. `routing_rules.department_id` (E6.1 deltası, canlı kolon) artık `resolveExecutionRoute` tarafından okunur: çalışanın kendi departmanına bağlı kural aynı katmanda önce gelir; departmana bağlı bir satır başka bir departman için ASLA seçilmez; departmansız satırlar eski davranışla devam eder. İlk departman satırı stüdyonundur: `media.creative` · L1 · `fable-5` · effort **`xhigh`** (CEO hükmü 2026-09-03: *"max gerek yok xhigh olsun"*) — `effort` CHECK kısıtı ve dört TS dökümü aynı gün `xhigh` ile genişletildi (migration `20260903190000_b43_media_hands.sql`). Kanıt: `tests/b43/media-hands.test.ts` §3.
+
 ## 4. Veri modeli
 
 [[DATA_MODEL]] kontrol ailesine (0021x) normatif tanım.

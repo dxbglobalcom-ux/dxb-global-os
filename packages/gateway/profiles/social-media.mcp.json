@@ -1,9 +1,9 @@
 {
   "_department": "social-media",
-  "_generated_at": "2026-09-03T12:13:39.928Z",
+  "_generated_at": "2026-09-03T17:26:00.229Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
   "_skills": [],
-  "_source_hash": "7367f230150ae41fb83ccdbd0cf7d702a27f37350dbf19096352f34a89de1068",
+  "_source_hash": "0c051a9a4e9d29f242157bd8df1f2a8f690cb96e7c0d0871b88322c649eb3487",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",

@@ -246,6 +246,7 @@ design; this list only registers the need — no silent tool additions):
 | memory | 2 | memory write door stays single (MEMORY_ARCHITECTURE); no growth until quarantine tier ships |
 | dashboard | 1 | widget/data tools follow E12.x as specs demand |
 | hr | 0 (registry carries org) | HR factory tools when HR_OS activation wave fires |
+| media | **5 (`media_submit` · `media_status` · `media_wait` · `media_probe` · `media_cancel`) — added 2026-09-03, B43, on the CEO's approved plan (ceo-approvals.json `studio-hands-build-plan-approved-2026-09-03`)** | the studio's HANDS: an expert births a `media_jobs` row (still · shoot · upscale · voice · assemble · probe), the resident scheduler's media lane runs it on the holding's card one at a time under a 26 GiB scope, `media_wait` renews the task lease while it waits, `media_probe` puts frames into the expert's own eye. Granted to `media-studio` through the library (item `mcp/dxb-mcp/media`, migrations 20260903190000/191000). No paid hand rides here. |
 
 Per-install checklist (every future hand, no exceptions): study card → SkillSpector scan
 (third-party) → catalog entry → `pin-arsenal.mjs` (pins) → library item + grants (control
@@ -276,6 +277,9 @@ number below was measured on DXB-Center (RTX 5060 Ti, 16,311 MiB), not read off 
 | **RealESRGAN ×4** (Vulkan) | our card | enlargement to delivery size | **2.09 s per frame** — 428 frames = 893 s | any paid upscaler |
 | **edge-tts** | processor only | the spoken line in a talking advertisement | seconds, **$0.00** | ElevenLabs / HeyGen (§8) |
 | **FFmpeg** | processor only | cut, grade, type, sound, delivery | free, no card | DaVinci / Remotion |
+| **SeedVR2** (3B / 7B-sharp INT8, ComfyUI 0.34 native nodes) | our card, a second ComfyUI on :8189 started per job | enlargement to delivery size with temporal consistency (the Topaz-equivalent chosen 2026-09-03, study card `seedvr2-topaz-equivalent.md`) | 3B → 1080-class: **4.1–4.25 s per frame** at 15.8 GB peak, 5-frame chunks (2026-09-03, 640×1152 clips); 2K and 7B figures on B43 as they land · **$0.00** | Topaz Video (no Linux build) |
+
+**Since 2026-09-03 this drawer is CALLABLE by the studio's own employees, not only by a session at a terminal:** the dxb-mcp `media` group (§9) is the one door — `media_submit` writes the job book, the resident media lane runs the driver above (`tools/h3/run.py`, `img.py`, `upscale/seedvr2_graph.py`, edge-tts, ffmpeg) and writes wall clock, peak VRAM/RAM and the output path back on the row. Two station facts are built into the lane because they were measured the same day: every GPU job runs in its own transient systemd scope (`MemoryMax=26G`, `MemorySwapMax=8G`) after a bench started from an interactive shell died at a 16 GiB scope, and the lane refuses to start a GPU job while the card holds >3 GB, the RAM has <12 GiB available or the swap is <25 % free, after a 1440p run drove the machine to earlyoom at 18:05.
 
 **Three numbers from the same day that decide the economics, and they are not in any vendor table:**
 

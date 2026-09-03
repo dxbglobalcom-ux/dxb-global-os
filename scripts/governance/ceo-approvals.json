@@ -479,5 +479,33 @@
     "verbatim": "Araştırma bitince (AskUserQuestion, 2026-09-03) — EXPO'yu ben mi yapıcam sen yapamıyor musun? şimdi yapalım mı?",
     "conditions": "The reboot closes every session; the after-run command is in project memory and in .planning/STATE.md.",
     "where": ".planning/STATE.md; HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B42"
+  },
+  "media-studio-department-accepted-by-his-eye-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The Media Studio department as founded — 14 employees written in person and 2 seats held by assignment, all sixteen personas gated, synced and bound — is ACCEPTED by his own eye. Activation (draft → probation → active through the HR chain) stays a separate decision on his word; the sixteen remain dormant until it.",
+    "verbatim": "1'i kabul etmekle birlikte, gözümü bekleyenleri de onaylıyorum kabul. (AskUserQuestion, 2026-09-03, answering the position that named the department and its sixteen as the thing waiting for his eye)",
+    "conditions": "Acceptance of the department and its sixteen as written and bound; not activation, not the studio's task/routing rows, not any screen (B32's design package governs every screen).",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
+  },
+  "media-studio-fourteen-activation-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "Activation of the Media Studio's fourteen draft employees is ORDERED: draft → probation → active through the HR chain (scripts/hr/activate-workforce.sh: intake → keys → probation task through the production worker → evaluate), one employee at a time, each mutation an fn_hr_* call. The two seats held by assignment were already active.",
+    "verbatim": "koşu bitince rakamı söyle, sonra SeedVR2'ye geç bundan önce aktivasyonu da onaylıoyorum tabiki. memtesterı da kur",
+    "conditions": "Through the same functions as every other employee (HR spec: bulk import forbidden); an employee that fails its probation evaluation stays in probation for a correction round — activation is earned, not stamped.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
+  },
+  "studio-hands-before-production-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The studio's HANDS are built before the next production: a `media` tool group the studio's seats can call (shoot · upscale · voice · post/assembly), grants to those seats, and the studio's routing rows (creative brain at effort xhigh). Only then are the two ordered videos — the sunglasses UGC with Elif speaking, and DXB-V-OE-001 re-made as short locked shots — produced BY the studio's experts end to end, not by the session by hand. Measured that day: the employee tool surface (packages/dxb-mcp) carried eight groups and no engine; the engines sat in the library as visible, not callable.",
+    "verbatim": "yazdığın uzman personalar hazırlayacak değil mi yani dxb medya ofisi hazırlayacak ugc mizi … Önce elleri kur, sonra stüdyo kendisi yapsın (AskUserQuestion, 2026-09-03) — ama konuşsun avatarımız ürünü tanıtsın mutlaka",
+    "conditions": "The build plan itself (scope, files, steps, tests, risks) is put in front of him and approved before the first file changes (dxb-start Phase 2). The UGC: OutletEuro sunglasses, 'getting ready' format, Elif SPEAKS and presents the product (his click + his note).",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
+  },
+  "studio-hands-build-plan-approved-2026-09-03": {
+    "date": "2026-09-03",
+    "what": "The six-part build plan for the studio's hands is APPROVED (dxb-start Phase 2): (1) media_jobs table — the studio's job book; (2) dxb-mcp `media` tool group — media_submit · media_status · media_wait · media_probe · media_cancel; (3) a media executor lane in the resident scheduler (no second job runtime), engine processes under a 26 GiB systemd scope; (4) lease heartbeat in the worker (a running task renews its 900 s lease every 60 s); (5) effort 'xhigh' made legal (CHECK + code casts) and the studio's creative routing row L1/xhigh; (6) library item dxb-mcp/media granted to department media-studio, pinned, profile recompiled. Out of scope: any studio screen (B32), paid engines, the engine scripts themselves.",
+    "verbatim": "Onaylıyorum, başla (AskUserQuestion, 2026-09-03) — hee anladm tmm eller derken bizim elemanlar",
+    "conditions": "Every part comes with its test on the construction engine; the battery and a resident-service restart are part of the evidence; the first real job by an expert is shown to him at the end.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md; HOLDING-OS-MASTER-PLAN/CAPABILITY_ARSENAL_DOCTRINE.md §9/§11"
   }
 }

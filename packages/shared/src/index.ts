@@ -54,6 +54,7 @@ export type {
 export type { DB } from "./db-types.js";
 export type {
   TasksTable,
+  MediaJobsTable,
   RoutingRulesTable,
   TaskEventsTable,
   DepartmentsTable,
@@ -70,3 +71,5 @@ export type {
   CrmRequestsTable,
   CrmDealsTable,
 } from "./db-types.js";
+export { probeMedia, extractFrames, resolveMediaBinary } from "./media-probe.js";
+export type { MediaProbeSummary } from "./media-probe.js";

@@ -13,8 +13,9 @@ import { registerMemory } from "./groups/memory.js";
 import { registerDashboard } from "./groups/dashboard.js";
 import { registerCrm } from "./groups/crm.js";
 import { registerApproval } from "./groups/approval.js";
+import { registerMedia } from "./groups/media.js";
 
-// One server, eight tool groups (MCP-01). Groups register incrementally
+// One server, nine tool groups (MCP-01; `media` added by B43, 2026-09-03). Groups register incrementally
 // across plan 03-04's tasks; this factory is the single assembly point.
 export function createDxbMcpServer(): McpServer {
   const server = new McpServer({ name: "dxb-mcp", version: "0.1.0" });
@@ -26,6 +27,7 @@ export function createDxbMcpServer(): McpServer {
   registerDashboard(server);
   registerCrm(server);
   registerApproval(server);
+  registerMedia(server);
   return server;
 }
 

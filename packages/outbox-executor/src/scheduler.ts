@@ -30,6 +30,7 @@ import {
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
 import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
 import { tick } from "./index.js";
+import { runMediaLaneOnce } from "./media-lane.js";
 import { checkVelocity } from "./breaker.js";
 import { checkMonthlyCap } from "./monthly-cap.js";
 
@@ -81,6 +82,12 @@ export const QUEUES = {
   // themselves STAY in the tasks table (Phase 3 LOCKED: two queues = two
   // sources of truth); this pg-boss job is only the drain vehicle.
   taskWorker: "task.worker",
+  // B43 media lane (2026-09-03, the studio's hands): the media_jobs job book
+  // drains here on a self-chain — one engine job at a time on the holding's own
+  // card, under a measured memory scope. Same vehicle idiom as task.worker: the
+  // jobs STAY in media_jobs (the CEO's screen reads that table), pg-boss only
+  // carries the tick. No second job runtime, no second resident service.
+  mediaLane: "media.lane",
   // W2.5 autonomous work generation (AGENT_ORCHESTRATION_SPEC §3, roadmap row
   // 2.5): the only task-creating path that does not start at a human. It reads
   // FINISHED plans inside already-approved projects and opens the steps those
@@ -146,6 +153,9 @@ export const CADENCES = {
   // pressure — an execution leg holds its job for the LLM's duration anyway,
   // and the chain re-arms only after the drain returns.
   taskWorkerSeconds: 10,
+  // Media lane (B43): a render holds its job for minutes anyway; 10 s keeps a
+  // freshly submitted job from waiting noticeably, without pool pressure.
+  mediaLaneSeconds: 10,
   // Voice drain (R3.1): the CEO is on the line waiting — 5s matches the
   // intent-intake cadence rationale; the answer leg holds its job for the
   // LLM+TTS duration, the chain re-arms after the drain returns.
@@ -323,6 +333,10 @@ async function enqueueTaskWorker(boss: PgBoss, delaySeconds: number): Promise<vo
   );
 }
 
+async function enqueueMediaLane(boss: PgBoss, delaySeconds: number): Promise<void> {
+  await boss.send(QUEUES.mediaLane, {}, { startAfter: delaySeconds, singletonKey: QUEUES.mediaLane });
+}
+
 async function enqueueVoiceDrain(boss: PgBoss, delaySeconds: number): Promise<void> {
   await boss.send(
     QUEUES.voiceDrain,
@@ -362,6 +376,7 @@ export async function startScheduler(): Promise<PgBoss> {
     QUEUES.taskWorker,
     QUEUES.voiceDrain,
     QUEUES.chatDrain,
+    QUEUES.mediaLane,
   ];
   for (const queue of Object.values(QUEUES)) {
     await boss.createQueue(queue, chainQueues.includes(queue) ? { policy: "short" } : {});
@@ -534,6 +549,18 @@ export async function startScheduler(): Promise<PgBoss> {
     }
   });
 
+  // B43 media lane — same re-arm-even-on-throw discipline (a dead chain = the
+  // studio's hands go still while its experts wait). Per-job errors land in the
+  // job's own failed state inside runMediaLaneOnce; a lane that finds the card
+  // or the RAM busy leaves the job queued and says why once.
+  await boss.work(QUEUES.mediaLane, async () => {
+    try {
+      await runMediaLaneOnce({ laneId: `${RESIDENT_WORKER_ID}-media` });
+    } finally {
+      await enqueueMediaLane(boss, CADENCES.mediaLaneSeconds);
+    }
+  });
+
   // R3.1 voice drain — same re-arm-even-on-throw discipline (a dead chain =
   // the CEO speaks into a line nobody answers). Per-call errors land in the
   // call's own failed state inside drainVoiceCalls/answerVoiceCall.
@@ -614,6 +641,8 @@ export async function startScheduler(): Promise<PgBoss> {
   // C1/C7/C10: bootstrap the chat drain chain (same continuity-by-construction
   // guarantee as the voice chain above).
   await enqueueChatDrain(boss, 0);
+  // B43: bootstrap the media lane chain (same continuity-by-construction guarantee).
+  await enqueueMediaLane(boss, 0);
 
   return boss;
 }

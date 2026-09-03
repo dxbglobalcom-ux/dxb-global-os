@@ -45,6 +45,7 @@
 | `head-of-design` | design | `design-ux-architect` | (uniform) |
 | `product-manager` | product | `product-sprint-prioritizer` | (uniform) |
 | `social-media-orchestrator` | social-media | `social-content-strategist` | (uniform) |
+| `media-creative-director` | media-studio | `media-advertising-director` | (uniform) — B43, department founded 2026-09-03; the Advertising Director is the studio's second seat by the CEO's own 16-expertise list |
 | `head-of-commerce` | commerce | `marketing-cross-border-ecommerce` | (uniform; matches the in-body record — P&L-committing decisions queue or go to CEO) |
 | `chro` | people-hr | `persona-workforce-architect` | (uniform) |
 

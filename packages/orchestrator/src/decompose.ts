@@ -116,7 +116,7 @@ async function runDraftQuery(prompt: string, own: ResolvedRoute): Promise<unknow
     prompt,
     options: {
       model: SDK_MODEL_IDS[own.model] ?? own.model,
-      effort: own.effort as "low" | "medium" | "high" | "max",
+      effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
       maxTurns: 4,
       outputFormat: { type: "json_schema", schema: z.toJSONSchema(DraftBatch) },
