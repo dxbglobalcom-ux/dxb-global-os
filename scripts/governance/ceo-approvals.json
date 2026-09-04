@@ -559,8 +559,8 @@
   },
   "ahmet-cast-member-born-in-engine-2026-09-04": {
     "date": "2026-09-04",
-    "what": "A presenter born inside MiniMax H3 from a text-only casting take (no picture given) is named AHMET and registered as DXB-A-010; three frames of the take are his references. A second engine-born presenter, the man of the accepted EYW-003, is registered as DXB-A-011 (name awaited).",
-    "verbatim": "ahmet olsun. gzl. doğal iyidir. deneme yapıoruz sadece. … bu sessionda üretilen kimliği de avatar kısmına ekle.",
+    "what": "A presenter born inside MiniMax H3 from a text-only casting take (no picture given) is named AHMET and registered as DXB-A-010; three frames of the take are his references. A second engine-born presenter, the man of the accepted EYW-003, is registered as DXB-A-011 and named JAMES by the CEO at 23:38.",
+    "verbatim": "ahmet olsun. gzl. doğal iyidir. deneme yapıoruz sadece. … bu sessionda üretilen kimliği de avatar kısmına ekle. … james olsun ismi",
     "conditions": "voice never taken from the casting take",
     "where": "~/tools/h3/avatars/ahmet_*.png, a011_*.png; showcase Avatarlar"
   },
