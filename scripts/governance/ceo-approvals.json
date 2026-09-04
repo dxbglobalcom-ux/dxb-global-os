@@ -598,5 +598,12 @@
     "verbatim": "1 kabul ama dxb stüdyo vitrininden bütün kadın ugc reklamlarını sil. bir de afrikalı arkadaşın ugc reklamını da sil. ayakkabı tanıtımı hepsi. en altta diğer üretimler kısmı kalsın. … yahu sana sadece şu vitrinden bunları kaldır at gitsin. hiç bir yerdede olmasın boşuna bir yerde kaplamasın sil at gitsin ya okadar. … yani bu projede de hiç bir yerde olmasın. küçük not dahi olmasın. silindi diye ceo emretti bunu yaz okadar.",
     "conditions": "not even a small note; the record says only 'silindi — CEO emretti'; the bottom section 'Diğer üretimler' stays",
     "where": "~/tools/h3/studio/KATALOG.md; STATE 2026-09-04; board row B43"
+  },
+  "studio-brain-fable-5-1-opus-5-standby-2026-09-05": {
+    "date": "2026-09-05",
+    "what": "The studio's creative brain is Claude Fable 5.1: the department-scoped routing row media.creative (L1, effort xhigh) for fable-5.1 is enabled at priority 50; the Claude Opus 5 row (fable-5) stays as the disabled standby at priority 40. Measured before his click: no agent_runs, tasks or media_jobs exist for 2026-09-04 — the EYW films he accepted were made by the session's own model (Fable 5.1) holding the seats, not through the department's worker; the department's own brain (Opus 5) had run only the casting and the first QC probe. loadPolicy reads enabled rows per run, no restart needed. Audit row 'routing_change' written.",
+    "verbatim": "Fable 5.1 olsun, Opus 5 yedek",
+    "conditions": "Opus 5 row kept, disabled; switchable on his word",
+    "where": "routing_rules (media.creative ×2); audit_log routing_change 2026-09-05 00:45; MODEL_ROUTING_SPEC §3 adaptation; STATE 2026-09-04; board B43"
   }
 }
