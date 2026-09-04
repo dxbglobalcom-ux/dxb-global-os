@@ -542,5 +542,54 @@
     "verbatim": "LAN ÖNCEEEEEE 768 İLE YAPIN HERŞEYİ HERŞEY GÜZEL OLSUN SONRA UPSCALE EDİLİR BU KANUN OLSUN YAAAAA HERŞEY DÜZGÜN ÇALIŞMADAN NE DİYE 1K VEYA 2K YA ÇIKARIORSUNUZ (2026-09-03 21:47)",
     "conditions": "Constitutional for the studio's production order; a seat may refuse an upscale request on unaccepted material and may never skip the draft. The upscaler measurements (SeedVR2 A/B on B43) stay valid as the finishing step's figures.",
     "where": "HOLDING-OS-MASTER-PLAN/CAPABILITY_ARSENAL_DOCTRINE.md §11; personas/media-studio/{media-creative-director,media-vfx-post,media-delivery-qc}.md; 00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
+  },
+  "tts-cancelled-engine-voice-only-2026-09-04": {
+    "date": "2026-09-04",
+    "what": "TTS (edge-tts, any TTS) is cancelled for every video production; MiniMax H3's own generated voice is the voice, never a TTS track and never a TTS voice reference. The spoken lines are written into the prompt on the clock; whisper measures them against the script.",
+    "verbatim": "şu yapay sesi iptal et tüm video üretimlerinde reklamdan tut filme kadar. MiniMax H3'ün kendi sesi olsun.",
+    "conditions": "one voice source per film; measured by WER against the script",
+    "where": "showcase cards EYW-001 v2 / EYW-002C / EYW-003; memory feedback-tts-iptal-motor-sesi"
+  },
+  "eyw-002c-accepted-2026-09-04": {
+    "date": "2026-09-04",
+    "what": "DXB-V-EYW-002C (15 s sunglasses UGC, text-to-video, one take, engine voice) accepted at 18:45 — both the native 640×1152 and its SeedVR2 7B 1080×1944 copy. The studio's second accepted film; the first made with no picture given to the engine. Earlier the same day EYW-001 v2 (photograph-bound Arda, 10 s) was accepted at 01:12.",
+    "verbatim": "çok bir fark göremedim ben ikide güzel. ikiside ok verdim.",
+    "conditions": null,
+    "where": "~/tools/h3/studio/index.html (card DXB-V-EYW-002C), KATALOG.md"
+  },
+  "ahmet-cast-member-born-in-engine-2026-09-04": {
+    "date": "2026-09-04",
+    "what": "A presenter born inside MiniMax H3 from a text-only casting take (no picture given) is named AHMET and registered as DXB-A-010; three frames of the take are his references. A second engine-born presenter, the man of the accepted EYW-003, is registered as DXB-A-011 (name awaited).",
+    "verbatim": "ahmet olsun. gzl. doğal iyidir. deneme yapıoruz sadece. … bu sessionda üretilen kimliği de avatar kısmına ekle.",
+    "conditions": "voice never taken from the casting take",
+    "where": "~/tools/h3/avatars/ahmet_*.png, a011_*.png; showcase Avatarlar"
+  },
+  "road-comes-from-the-brief-t2v-default-2026-09-04": {
+    "date": "2026-09-04",
+    "what": "The road of a shot is named by the brief — the CEO or the client says 'with a prompt' (text-to-video) or 'with a storyboard / pictures' (image-to-video), or says 'choose the best' and only then the seat chooses. The general default is text-to-video; image-to-video is not forbidden. No prohibition language of any kind in the personas (a wrong 'no picture to the engine' rewrite at 20:50 was reverted). Written into eight media-studio personas (v3), synced and gated.",
+    "verbatim": "uzman seçmez yaaa biz söyleriz ya promtla yada resimleri storyboardla oluştur ikisinden birini biz söyleriz sen en iyisini seç diye de direktif verebiliriz … genel kabul t2V ama I2V'da yasak değil / yasak masak yok",
+    "conditions": null,
+    "where": "personas/media-studio/*.md v3 (commits 6fcde440, 2a8293cf, f8fac848); board row B43; STATE"
+  },
+  "engine-standard-4-steps-no-upscale-unless-asked-2026-09-04": {
+    "date": "2026-09-04",
+    "what": "The engine standard is 4 sampling steps (a 15 s take ≈ 14 min; 8 steps = 19 min is too slow for him). Upscaling only when he asks for it; 1080p is the ceiling he chose over 2K for UGC.",
+    "verbatim": "15 saniye 10 dk 14 dk bitiriorlardu ya / 1k tmm / yok 1080 gerek yok.",
+    "conditions": null,
+    "where": "EYW-003 EKIP.md; STATE 2026-09-04"
+  },
+  "eyw-003-department-exam-accepted-2026-09-04": {
+    "date": "2026-09-04",
+    "what": "The media-studio department's first exam: the CEO, in the role of Hamza, handed his own 594-word prompt (four spoken lines on his amendment) to the Creative Director; nine seats produced DXB-V-EYW-003 through the station's hands (ses WER 0.000, OCR 0); the studio's own verdict was 'fails', his eye ACCEPTED it at 22:59 (LAW B).",
+    "verbatim": "en son yapılan videoyu onaylıyorum.",
+    "conditions": null,
+    "where": "showcase card DXB-V-EYW-003; ~/tools/h3/lab/out/2026-09-04/"
+  },
+  "medya-os-folder-deleted-by-his-hand-2026-09-04": {
+    "date": "2026-09-04",
+    "what": "The cancelled lab folder /home/dxb/Medya OS/ (cancelled 2026-09-03) is deleted by the CEO himself at session close, after the session had wrongly worked in it all day. The day's five masters were copied to ~/tools/h3/lab/out/2026-09-04/ and the showcase's 30 links into that folder were turned into real files before deletion. The work lives on board row B43 only.",
+    "verbatim": "mesya os dosyası iptal onu şimdi silicem komple kendi elimle",
+    "conditions": "never open or cite that folder again",
+    "where": "~/tools/h3/lab/out/2026-09-04/; ~/tools/h3/studio/media/; STATE 2026-09-04"
   }
 }
