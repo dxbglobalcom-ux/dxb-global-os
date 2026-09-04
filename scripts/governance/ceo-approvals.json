@@ -496,7 +496,7 @@
   },
   "studio-hands-before-production-2026-09-03": {
     "date": "2026-09-03",
-    "what": "The studio's HANDS are built before the next production: a `media` tool group the studio's seats can call (shoot · upscale · voice · post/assembly), grants to those seats, and the studio's routing rows (creative brain at effort xhigh). Only then are the two ordered videos — the sunglasses UGC with Elif speaking, and DXB-V-OE-001 re-made as short locked shots — produced BY the studio's experts end to end, not by the session by hand. Measured that day: the employee tool surface (packages/dxb-mcp) carried eight groups and no engine; the engines sat in the library as visible, not callable.",
+    "what": "The studio's HANDS are built before the next production: a `media` tool group the studio's seats can call (shoot · upscale · voice · post/assembly), grants to those seats, and the studio's routing rows (creative brain at effort xhigh). Only then are the two ordered videos — the sunglasses UGC with Elif speaking, and the 15 s spot (since deleted — CEO 2026-09-05) re-made as short locked shots — produced BY the studio's experts end to end, not by the session by hand. Measured that day: the employee tool surface (packages/dxb-mcp) carried eight groups and no engine; the engines sat in the library as visible, not callable.",
     "verbatim": "yazdığın uzman personalar hazırlayacak değil mi yani dxb medya ofisi hazırlayacak ugc mizi … Önce elleri kur, sonra stüdyo kendisi yapsın (AskUserQuestion, 2026-09-03) — ama konuşsun avatarımız ürünü tanıtsın mutlaka",
     "conditions": "The build plan itself (scope, files, steps, tests, risks) is put in front of him and approved before the first file changes (dxb-start Phase 2). The UGC: OutletEuro sunglasses, 'getting ready' format, Elif SPEAKS and presents the product (his click + his note).",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
@@ -538,7 +538,7 @@
   },
   "law-d-draft-first-upscale-last-2026-09-03": {
     "date": "2026-09-03",
-    "what": "LAW D, made a law by the CEO's own word (\"BU KANUN OLSUN\"): every production is made and judged at the engine's native draft resolution first (the 768-class frame — on this station 640×1152 vertical / 864×480 horizontal); nothing is upscaled before the draft is accepted by his eye; upscaling (SeedVR2 or any other) is a finishing step on accepted work only. Applied the same minute: the running upscales of DXB-V-OE-005 were cancelled and the film cut at native resolution; the film brief template and three studio personas (creative director, VFX/post, delivery QC) carry the law.",
+    "what": "LAW D, made a law by the CEO's own word (\"BU KANUN OLSUN\"): every production is made and judged at the engine's native draft resolution first (the 768-class frame — on this station 640×1152 vertical / 864×480 horizontal); nothing is upscaled before the draft is accepted by his eye; upscaling (SeedVR2 or any other) is a finishing step on accepted work only. Applied the same minute: the running upscales of a draft film (since deleted — CEO 2026-09-05) were cancelled and the film cut at native resolution; the film brief template and three studio personas (creative director, VFX/post, delivery QC) carry the law.",
     "verbatim": "LAN ÖNCEEEEEE 768 İLE YAPIN HERŞEYİ HERŞEY GÜZEL OLSUN SONRA UPSCALE EDİLİR BU KANUN OLSUN YAAAAA HERŞEY DÜZGÜN ÇALIŞMADAN NE DİYE 1K VEYA 2K YA ÇIKARIORSUNUZ (2026-09-03 21:47)",
     "conditions": "Constitutional for the studio's production order; a seat may refuse an upscale request on unaccepted material and may never skip the draft. The upscaler measurements (SeedVR2 A/B on B43) stay valid as the finishing step's figures.",
     "where": "HOLDING-OS-MASTER-PLAN/CAPABILITY_ARSENAL_DOCTRINE.md §11; personas/media-studio/{media-creative-director,media-vfx-post,media-delivery-qc}.md; 00-BOARD-OPEN-WORK.md row B43; .planning/STATE.md"
@@ -591,5 +591,12 @@
     "verbatim": "mesya os dosyası iptal onu şimdi silicem komple kendi elimle",
     "conditions": "never open or cite that folder again",
     "where": "~/tools/h3/lab/out/2026-09-04/; ~/tools/h3/studio/media/; STATE 2026-09-04"
+  },
+  "vitrin-women-ugc-and-deniz-cards-removed-2026-09-04": {
+    "date": "2026-09-04",
+    "what": "On his order the women's and Deniz's sneaker presentation films are DELETED — from the vitrin, from disk and from every record; the catalogue keeps one line per code: 'silindi, CEO emretti'. The same click approved the record repairs: catalogue rows for DXB-A-010 AHMET and DXB-A-011 JAMES, the vitrin's stale EYW-003 heading corrected to his 22:59 acceptance, and the LAW A leftover under tools/h3/oe/ (three third-party-brand-ban lines) deleted.",
+    "verbatim": "1 kabul ama dxb stüdyo vitrininden bütün kadın ugc reklamlarını sil. bir de afrikalı arkadaşın ugc reklamını da sil. ayakkabı tanıtımı hepsi. en altta diğer üretimler kısmı kalsın. … yahu sana sadece şu vitrinden bunları kaldır at gitsin. hiç bir yerdede olmasın boşuna bir yerde kaplamasın sil at gitsin ya okadar. … yani bu projede de hiç bir yerde olmasın. küçük not dahi olmasın. silindi diye ceo emretti bunu yaz okadar.",
+    "conditions": "not even a small note; the record says only 'silindi — CEO emretti'; the bottom section 'Diğer üretimler' stays",
+    "where": "~/tools/h3/studio/KATALOG.md; STATE 2026-09-04; board row B43"
   }
 }

@@ -96,6 +96,6 @@ node sdk-probe (SDK 0.3.201)                → claude-fable-5-1: "Claude Code 2
 node sdk-probe (SDK 0.3.259, zod default)   → "--json-schema is not a valid JSON Schema: no schema with key or ref …/2020-12/schema"; strip $schema → OK; both brains OK
 scheduler.log                               → "[scheduler] the company is working with 2 hands (was 1)" after the lane loops; QC task claimed 0–13 s after its dependency
 tasks (superseded, honest)                  → a001 (director run stopped for LAW D at its upscale), a002/b002/b004 (QC rows re-pointed), b001/b003 (Fable runs killed by the SDK version, then the schema), c002 (casting v2 LLM task: its 12 stills submitted by the session while the old tick held the worker)
-QC verdicts                                 → DXB-V-OE-005 PASS ×4 (a004, 21:53) · DXB-V-OE-007 PASS ×4 (b006, 22:22)
+QC verdicts                                 → two films PASS ×4 each (a004 21:53 · b006 22:22) — the films: silindi — CEO emri 2026-09-05
 ```
 Known gaps added tonight: the worker's SDK runs inherit the repository cwd and the session plugins' start context (probe answered as the DXB assistant) — `cwd`/`settingSources` await the CEO's word; `control_project_action` create carries no `name_tr`/`purpose_tr`; the casting expert wrote skin-mark descriptors and the session let the frames pass (his rejection 21:20) — rule now: none, ever.
