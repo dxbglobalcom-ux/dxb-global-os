@@ -51,7 +51,10 @@ export const MEDIA_LIMITS = {
   benchBootSeconds: 120,
 } as const;
 
-const GPU_KINDS: ReadonlySet<MediaKind> = new Set(["still", "shoot", "upscale"]);
+// The card is one: these kinds run one at a time, in the GPU lane. The others need only
+// the processor and run beside it (media-lanes.ts, CEO 2026-09-05 "Onaylıyorum, başla").
+export const GPU_KINDS: ReadonlySet<MediaKind> = new Set(["still", "shoot", "upscale"]);
+export const CPU_KINDS: ReadonlySet<MediaKind> = new Set(["voice", "assemble", "probe"]);
 
 export interface ResourceVerdict {
   ok: boolean;
@@ -534,6 +537,9 @@ export interface MediaLaneOptions {
   /** Claim only jobs of these departments (production omits it and spans all;
    *  a suite passes its own marker — the same isolation idiom as the task worker). */
   departments?: string[];
+  /** Claim only jobs of these kinds — the GPU lane takes still/shoot/upscale, a CPU lane
+   *  voice/assemble/probe (media-lanes.ts). Omitted = every kind (the historical single lane). */
+  kinds?: readonly MediaKind[];
   engines?: Partial<Record<MediaKind, EngineRunner>>;
   resourceCheck?: (kind: MediaKind) => Promise<ResourceVerdict>;
   workRoot?: string;
@@ -546,7 +552,8 @@ export interface MediaLaneResult {
   skipped?: string;
 }
 
-let lastSkipReason: string | null = null;
+// one remembered reason per lane, so a busy card is said once by the GPU lane and never by the others
+const lastSkipReason = new Map<string, string | null>();
 
 async function appendAudit(db: Kysely<DB>, action: string, job: MediaJobRow, payload: Record<string, unknown>): Promise<void> {
   await db
@@ -562,26 +569,29 @@ export async function runMediaLaneOnce(opts: MediaLaneOptions = {}): Promise<Med
   const check = opts.resourceCheck ?? defaultResourceCheck;
   const workRoot = opts.workRoot ?? MEDIA_PATHS.workRoot;
 
+  const kinds = opts.kinds ? [...opts.kinds] : null;
   let peek = db.selectFrom("media_jobs").select(["id", "kind"]).where("status", "=", "queued");
   if (opts.departments) peek = peek.where("department", "in", opts.departments);
+  if (kinds) peek = peek.where("kind", "in", kinds);
   const next = await peek.orderBy("created_at").limit(1).executeTakeFirst();
   if (!next) return { claimed: false };
 
   const verdict = await check(next.kind);
   if (!verdict.ok) {
-    if (verdict.reason !== lastSkipReason) {
-      console.log(`[media-lane] job ${next.id.slice(0, 8)} (${next.kind}) waits: ${verdict.reason}`);
-      lastSkipReason = verdict.reason ?? null;
+    if (verdict.reason !== lastSkipReason.get(laneId)) {
+      console.log(`[media-lane] ${laneId}: job ${next.id.slice(0, 8)} (${next.kind}) waits: ${verdict.reason}`);
+      lastSkipReason.set(laneId, verdict.reason ?? null);
     }
     return { claimed: false, skipped: verdict.reason };
   }
-  lastSkipReason = null;
+  lastSkipReason.set(laneId, null);
 
   const scope = opts.departments ?? null;
   const claimed = await sql<MediaJobRow>`
     UPDATE media_jobs SET status = 'running', claimed_by = ${laneId}, started_at = now(), updated_at = now()
      WHERE id = (SELECT id FROM media_jobs
                   WHERE status = 'queued' AND (${scope}::text[] IS NULL OR department = ANY(${scope}::text[]))
+                    AND (${kinds}::text[] IS NULL OR kind = ANY(${kinds}::text[]))
                   ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1)
     RETURNING *
   `.execute(db);

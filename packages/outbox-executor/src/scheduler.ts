@@ -31,6 +31,7 @@ import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/rev
 import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
 import { tick } from "./index.js";
 import { runMediaLaneOnce } from "./media-lane.js";
+import { MediaLanes, cpuLanesFromEnv } from "./media-lanes.js";
 import { TaskLanes } from "./task-lanes.js";
 import { checkVelocity } from "./breaker.js";
 import { checkMonthlyCap } from "./monthly-cap.js";
@@ -356,6 +357,8 @@ async function enqueueChatDrain(boss: PgBoss, delaySeconds: number): Promise<voi
 
 // the company's hands, alive between ticks (B43 task-lanes); null until the scheduler starts
 let activeLanes: TaskLanes | null = null;
+// the studio's hands, alive between ticks (B43 media-lanes, CEO 2026-09-05); null until the scheduler starts
+let activeMediaLanes: MediaLanes | null = null;
 
 export async function startScheduler(): Promise<PgBoss> {
   const url = process.env.DXB_DATABASE_URL;
@@ -560,13 +563,35 @@ export async function startScheduler(): Promise<PgBoss> {
     }
   });
 
-  // B43 media lane — same re-arm-even-on-throw discipline (a dead chain = the
-  // studio's hands go still while its experts wait). Per-job errors land in the
-  // job's own failed state inside runMediaLaneOnce; a lane that finds the card
-  // or the RAM busy leaves the job queued and says why once.
+  // B43 media lanes (CEO 2026-09-05, plan ①) — the hands are lanes too (media-lanes.ts):
+  // one GPU lane and N CPU lanes, each its own loop, so a voice line or a probe no
+  // longer waits behind a fourteen-minute shoot and no ten-second gap sits between
+  // jobs. Measured before the change: 30 jobs in the book, 0 overlapping pairs. The
+  // tick keeps the re-arm-even-on-throw discipline but never waits on a job — it only
+  // makes sure the loops exist. Per-job errors land in the job's own failed state
+  // inside runMediaLaneOnce; a lane that finds the card or the RAM busy leaves the
+  // job queued, says why once, and rests a tick.
+  const mediaCpuLanes = cpuLanesFromEnv();
+  activeMediaLanes = new MediaLanes(
+    {
+      runOnce: (o) => runMediaLaneOnce({ laneId: o.laneId, kinds: o.kinds }),
+      sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+      log: (line) => console.error(line),
+    },
+    { cpuLanes: mediaCpuLanes, restMs: CADENCES.mediaLaneSeconds * 1000, laneIdBase: RESIDENT_WORKER_ID },
+  );
+  let lastMediaRunning = -1;
   await boss.work(QUEUES.mediaLane, async () => {
     try {
-      await runMediaLaneOnce({ laneId: `${RESIDENT_WORKER_ID}-media` });
+      const r = activeMediaLanes?.reconcile();
+      if (r && r.running !== lastMediaRunning) {
+        console.log(
+          `[scheduler] the studio's hands: ${r.running} lane${r.running > 1 ? "s" : ""} running` +
+            (mediaCpuLanes > 0 ? ` — 1 for the card, ${mediaCpuLanes} for the processor` : " — one lane, every kind") +
+            (lastMediaRunning < 0 ? " (first tick)" : ` (was ${lastMediaRunning})`),
+        );
+        lastMediaRunning = r.running;
+      }
     } finally {
       await enqueueMediaLane(boss, CADENCES.mediaLaneSeconds);
     }
@@ -663,6 +688,11 @@ export async function stopScheduler(boss: PgBoss): Promise<void> {
   if (activeLanes) {
     await activeLanes.stop();
     activeLanes = null;
+  }
+  // the studio's hands likewise: a shoot mid-run is never cut
+  if (activeMediaLanes) {
+    await activeMediaLanes.stop();
+    activeMediaLanes = null;
   }
   await boss.stop({ graceful: true });
 }

@@ -605,5 +605,12 @@
     "verbatim": "Fable 5.1 olsun, Opus 5 yedek",
     "conditions": "Opus 5 row kept, disabled; switchable on his word",
     "where": "routing_rules (media.creative ×2); audit_log routing_change 2026-09-05 00:45; MODEL_ROUTING_SPEC §3 adaptation; STATE 2026-09-04; board B43"
+  },
+  "hands-lanes-plan-approved-2026-09-05": {
+    "date": "2026-09-05",
+    "what": "Plan ① approved and executed: the studio's hands run as lanes — one GPU lane and three CPU lanes, each its own loop (media-lanes.ts, adaptation A18); the pg-boss media tick only reconciles the loops. Live measurement through the company's own road the same hour: a still and three probes ran at once (6 overlapping pairs; the book had 0 before). He also fixed the session's order: plan ② (the seat-to-seat dispatcher) goes to the next session.",
+    "verbatim": "Onaylıyorum, başla … bu oturum %65'te 546K bu bitince plan2 olan sevk defterini yeni oturumda sanırım yaparız. umarım herşey güzelce ferrari seviyesinde yapılarak bu oturuma sığar.",
+    "conditions": "processor lane count 3 (his click accepted the plan's number); DXB_MEDIA_CPU_LANES=0 is the rollback",
+    "where": "packages/outbox-executor/src/media-lanes.ts, media-lane.ts, scheduler.ts; tests/b43/media-lanes.test.ts; AGENT_ORCHESTRATION_SPEC A18; STATE 2026-09-05; board B43"
   }
 }
