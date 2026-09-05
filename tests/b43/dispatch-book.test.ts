@@ -14,6 +14,9 @@
 //   6. a sheet naming an unknown seat, a seat of another department or a backward dependency
 //      writes ZERO rows; the same (author, code) twice returns the same sheet
 //   7. queue_create_task born staffed and under a project (the brief door)
+//   8. measured on the first film (02:22): a seat cannot move a task another hand holds, an
+//      employee cannot claim as if it were a lane, and the hands the company needs count the
+//      work already in flight, not only the queue
 import { randomUUID } from "node:crypto";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -30,6 +33,7 @@ import {
 import { composeSeatPrompt } from "../../packages/orchestrator/src/worker-shim.js";
 import { workerIsolation } from "../../packages/orchestrator/src/sdk-isolation.js";
 import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
+import { dispatchLanes } from "../../packages/outbox-executor/src/scheduler.js";
 
 const db = () => getDb();
 const M = `b43d-${randomUUID().slice(0, 6)}`;
@@ -281,6 +285,58 @@ describe("B43 plan ② · the dispatch book — on the construction engine", () 
   it("a closed author task cannot dispatch", async () => {
     const author = await authorTask("done");
     await expect(call("queue_dispatch", { task_id: author, code: `${M}-CLOSED`, seats: [seat("engineer")] })).rejects.toThrow(/closed task/);
+  });
+
+  it("a task held by a lane is moved only by that lane; a seat cannot move its own task", async () => {
+    const author = await authorTask();
+    const r = await call("queue_dispatch", { task_id: author, code: `${M}-HOLD`, seats: [seat("engineer")] });
+    const id: string = r.tasks[0].task_id;
+    await sql`UPDATE tasks SET status = 'done' WHERE department = ${DEPT} AND status = 'queued' AND id <> ${id}::uuid`.execute(db());
+    const claimed = await call("queue_claim", { worker_id: `${M}-lane`, departments: [DEPT] });
+    expect(claimed.id).toBe(id);
+    await call("queue_transition", { task_id: id, to_status: "running", actor: `${M}-lane` });
+    // the seat, from inside its run, tries to deliver by moving the row — refused
+    await expect(call("queue_transition", { task_id: id, to_status: "review", actor: `${M}-engineer` })).rejects.toThrow(/held by/);
+    expect((await sql<{ status: string }>`SELECT status FROM tasks WHERE id = ${id}::uuid`.execute(db())).rows[0].status).toBe("running");
+    // the hand that holds it moves it
+    const moved = await call("queue_transition", { task_id: id, to_status: "review", actor: `${M}-lane` });
+    expect(moved.status).toBe("review");
+  });
+
+  it("an employee is not a lane: queue_claim refuses an employee slug as worker id", async () => {
+    await expect(call("queue_claim", { worker_id: `${M}-qc`, departments: [DEPT] })).rejects.toThrow(/not a lane/);
+  });
+
+  it("the hands the company needs count every piece of work that still needs one — in flight, at the gate, on the ladder", async () => {
+    await sql`UPDATE tasks SET status = 'done' WHERE department = ${DEPT} AND status IN ('queued','claimed','running','review','failed')`.execute(db());
+    // the hour's budget bound is another suite's subject (b39) and its rows may still sit in the
+    // window: lift the ceiling for this case so only the COUNT is under test, then put it back
+    const cap = (await sql<{ v: string | null }>`SELECT value::text AS v FROM settings_values WHERE key = 'orchestrator.subscription_tokens_per_hour' AND scope = 'global'`.execute(db())).rows[0]?.v ?? null;
+    await sql`UPDATE settings_values SET value = '100000000'::jsonb WHERE key = 'orchestrator.subscription_tokens_per_hour' AND scope = 'global'`.execute(db());
+    // the same predicate the decision uses, measured before the fixtures go in: the decision
+    // is max(1, min(work, machine, hour)) — an empty book already gets ONE listening hand
+    const baseline = (await sql<{ n: number }>`SELECT count(*)::int AS n FROM tasks t
+      WHERE t.status IN ('queued', 'review')
+         OR (t.status IN ('claimed', 'running') AND t.claimed_by LIKE 'resident-worker%')
+         OR (t.status = 'failed' AND NOT EXISTS (SELECT 1 FROM audit_log a WHERE a.task_id = t.id AND a.action = 'task.blocked'))`.execute(db())).rows[0].n;
+    const ids: string[] = [];
+    const shapes: Array<{ status: string; claimed_by: string | null }> = [
+      { status: "running", claimed_by: "resident-worker-91" }, // held by a resident lane
+      { status: "review", claimed_by: "resident-worker-92" }, // waiting for the QA gate
+      { status: "failed", claimed_by: null }, // on the ladder
+    ];
+    for (const [i, sh] of shapes.entries()) {
+      const row = await db()
+        .insertInto("tasks")
+        .values({ department: DEPT, objective: `${M} work still needing a hand ${i} (${sh.status})`, output_contract: "counted by the lane decision", model_tier: "L4", approval_class: "none", budget_max_tokens: 1000, priority: 1, status: sh.status, claimed_by: sh.claimed_by } as never)
+        .returning("id")
+        .executeTakeFirstOrThrow();
+      ids.push(row.id);
+    }
+    const after = await dispatchLanes();
+    await sql`UPDATE tasks SET status = 'done', claimed_by = NULL WHERE id = ANY(${ids}::uuid[])`.execute(db());
+    if (cap !== null) await sql`UPDATE settings_values SET value = ${cap}::jsonb WHERE key = 'orchestrator.subscription_tokens_per_hour' AND scope = 'global'`.execute(db());
+    expect(after).toBe(Math.max(1, Math.min(8, baseline + 3)));
   });
 
   it("queue_create_task births a task staffed and under a project — the brief door", async () => {

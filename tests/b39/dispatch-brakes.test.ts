@@ -473,8 +473,11 @@ describe("B39 · the decision — the company works out its own hands, the CEO s
       join(REPO_ROOT, "packages/outbox-executor/src/scheduler.ts"), "utf8");
     expect(src).toContain("orchestration.dispatch_lanes");
     expect(src).toMatch(/const lanes = await dispatchLanes\(\)/);
-    // It counts the waiting work…
-    expect(src).toMatch(/FROM tasks WHERE status = 'queued'/);
+    // It counts the work that still needs a hand — waiting, in a resident hand, at the
+    // gate, on the ladder (B43 plan ②, 2026-09-05: the queue-only count let the lanes
+    // stand down while five reviewers ran and four reviews waited for one lane's QA)…
+    expect(src).toMatch(/FROM tasks t\s+WHERE t\.status IN \('queued', 'review'\)/);
+    expect(src).toMatch(/t\.status IN \('claimed', 'running'\) AND t\.claimed_by LIKE/);
     // …it asks the machine what it can carry, leaving room for the database…
     expect(src).toMatch(/cpus\(\)\.length - 2/);
     // …and it will not open hands the hour cannot pay for.

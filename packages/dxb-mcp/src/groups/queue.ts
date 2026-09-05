@@ -311,6 +311,12 @@ export function registerQueue(server: McpServer): void {
     },
     async ({ worker_id, departments, lease_seconds }) => {
       const db = getDb();
+      // B43 plan ②: an employee is not a lane. A seat holding this tool could otherwise claim a
+      // sibling's task under its own name and run two seats in one head.
+      const isEmployee = await db.selectFrom("agents").select("id").where("slug", "=", worker_id).executeTakeFirst();
+      if (isEmployee) {
+        throw new Error(`queue_claim: '${worker_id}' is an employee, not a lane — tasks are claimed by the resident worker, never by a seat`);
+      }
       const claimed = await db.transaction().execute(async (trx) => {
         const { rows } = await sql<Record<string, unknown>>`
           SELECT * FROM claim_next_task(${worker_id}, ${sql.val(departments)}::text[], ${lease_seconds ?? 900})
@@ -358,12 +364,23 @@ export function registerQueue(server: McpServer): void {
       const updated = await db.transaction().execute(async (trx) => {
         const current = await trx
           .selectFrom("tasks")
-          .select(["id", "status"])
+          .select(["id", "status", "claimed_by"])
           .where("id", "=", task_id)
           .forUpdate()
           .executeTakeFirst();
         if (!current) throw new Error(`task ${task_id} not found`);
         assertTransition(current.status, to_status);
+        // B43 plan ② (measured 2026-09-05 02:22 on DXB-V-EYW-004): the engineer seat moved its
+        // OWN task running→review from inside its run; the QA gate then judged a row with no
+        // result, failed it, the ladder requeued it and a second lane re-shot the take. A task
+        // in claimed/running belongs to the hand that holds it — the resident lane moves it when
+        // the run answers. A seat's answer IS its delivery; nobody else touches the row.
+        if ((current.status === "claimed" || current.status === "running") && current.claimed_by && actor !== current.claimed_by) {
+          throw new Error(
+            `task ${task_id} is held by '${current.claimed_by}' (${current.status}) — only the hand that holds it moves it; ` +
+              "a seat never moves its own task, its answer is the delivery",
+          );
+        }
         const row = await trx
           .updateTable("tasks")
           .set({

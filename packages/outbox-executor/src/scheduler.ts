@@ -273,7 +273,19 @@ export async function dispatchLanes(): Promise<number> {
     const r = await sql<{ pinned: number; waiting: number; room: number }>`
       SELECT
         LEAST(GREATEST(fn_setting_numeric('orchestration.dispatch_lanes', 0), 0), 8)::int AS pinned,
-        (SELECT count(*)::int FROM tasks WHERE status = 'queued')                        AS waiting,
+        -- B43 plan ② (measured 2026-09-05 02:24–02:26 on DXB-V-EYW-004): the count was of
+        -- QUEUED rows only, so the moment five reviewers were claimed the hands the company
+        -- "needed" fell from six to two ("2 hands (was 6)"), the surplus lanes stood down
+        -- after their run, the sixth reviewer waited for a busy lane, and then four finished
+        -- reviews queued behind ONE lane's QA leg while the machine had room. Every piece of
+        -- work that still needs a hand counts — waiting in the queue, held by a resident lane,
+        -- waiting for the QA gate, or on the ladder (a blocked task is terminal and does not).
+        -- The ceilings below are unchanged.
+        (SELECT count(*)::int FROM tasks t
+          WHERE t.status IN ('queued', 'review')
+             OR (t.status IN ('claimed', 'running') AND t.claimed_by LIKE ${RESIDENT_WORKER_ID + "%"})
+             OR (t.status = 'failed' AND NOT EXISTS (
+                   SELECT 1 FROM audit_log a WHERE a.task_id = t.id AND a.action = 'task.blocked'))) AS waiting,
         -- How many more average jobs fit in what is left of this hour.
         --
         -- THE AVERAGE IS TAKEN OVER THE SAME WINDOW THE CEILING GOVERNS, and the

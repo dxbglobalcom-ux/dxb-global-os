@@ -37,6 +37,15 @@ import { alertSubscriptionCapReached, checkSubscriptionWindow } from "./subscrip
 export const RESIDENT_WORKER_ID = "resident-worker";
 const LOW_CONFIDENCE = 0.6; // mirror of escalate.ts LOCKED threshold
 
+// B43 plan ② (measured 2026-09-05 02:23 on DXB-V-EYW-004): every lane drains the review and
+// the failed legs, and the review SELECT takes no lock — so with seven lanes the same task in
+// 'review' was judged by several lanes at once, each paying a QA model call, all but one
+// losing the guarded transition ("qa: transition review→done lost a race"). The lanes live in
+// ONE process (A17), so an in-process set is the whole fix: a task under judgement in this
+// process is skipped by the sibling lanes; the DB transition guard stays as the last word.
+const judging = new Set<string>();
+const laddering = new Set<string>();
+
 export interface DrainTasksDeps {
   workerId?: string;
   execute?: Executor; // tests inject; production = worker-shim defaultExecutor
@@ -117,6 +126,8 @@ export async function drainTasks(deps: DrainTasksDeps = {}): Promise<DrainTasksR
     LIMIT ${reviewCap}
   `.execute(db);
   for (const row of reviews.rows) {
+    if (judging.has(row.id)) continue; // a sibling lane is already judging it
+    judging.add(row.id);
     try {
       if (row.confidence !== null && Number(row.confidence) < LOW_CONFIDENCE) {
         await escalate(db, row.id);
@@ -129,6 +140,8 @@ export async function drainTasks(deps: DrainTasksDeps = {}): Promise<DrainTasksR
       // QA/ladder infrastructure error (LLM down, race lost): log and move on —
       // the task stays in its current guarded state for the next tick.
       console.error(`[worker-loop] review leg failed for task ${row.id}:`, err);
+    } finally {
+      judging.delete(row.id);
     }
   }
 
@@ -145,11 +158,15 @@ export async function drainTasks(deps: DrainTasksDeps = {}): Promise<DrainTasksR
     LIMIT ${failedCap}
   `.execute(db);
   for (const row of failed.rows) {
+    if (laddering.has(row.id)) continue; // a sibling lane is already on this rung
+    laddering.add(row.id);
     try {
       await escalate(db, row.id);
       result.escalated += 1;
     } catch (err) {
       console.error(`[worker-loop] ladder leg failed for task ${row.id}:`, err);
+    } finally {
+      laddering.delete(row.id);
     }
   }
 

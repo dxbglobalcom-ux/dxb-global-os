@@ -266,7 +266,10 @@ export function turnBudgetFor(allowedTools: readonly string[]): number {
 const TASK_LANE_LINE =
   "You are working ONE task from the company's queue, as this seat and nobody else. The task's " +
   "objective and output contract are the whole job: deliver exactly that with the tools you were " +
-  "given, verify with a real tool call before you answer, and never claim a check you did not run.";
+  "given, verify with a real tool call before you answer, and never claim a check you did not run. " +
+  "Your final answer IS the delivery: never move your own task's status (no queue_transition, no " +
+  "queue_return on it) and never claim tasks (no queue_claim) — the road moves your task the moment " +
+  "you answer, and a task you moved yourself is judged empty.";
 
 /** Pure: the standing layer for a seat at work. Exported so the delivery can be pinned. */
 export function composeSeatPrompt(employee: SeatIdentity, personaBody: string): string {
