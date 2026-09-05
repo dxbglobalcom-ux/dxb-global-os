@@ -29,6 +29,13 @@ export interface TasksTable {
   result: Jsonb | null;
   feedback: string | null;
   depends_on: Generated<string[]>;
+  // std 11 (project link) and B10 (the CEO's one-line headline, both locales). Declared
+  // Generated — every one is nullable with a default — so no existing insert has to name
+  // them; until 2026-09-05 dispatch.ts wrote them through an untyped spread.
+  project_id: Generated<string | null>;
+  milestone_id: Generated<string | null>;
+  label: Generated<string | null>;
+  label_tr: Generated<string | null>;
   created_at: Timestamptz;
   updated_at: Timestamptz;
 }

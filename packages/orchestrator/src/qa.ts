@@ -14,6 +14,7 @@ import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall, sdkJsonSchema } from "@dxb/shared";
 import { logDecision } from "@dxb/observability";
 import { loadPolicy, route, SDK_MODEL_IDS, type ClassifiedIntent } from "@dxb/kernel";
+import { workerIsolation } from "./sdk-isolation.js";
 
 const ACTOR = "orchestrator:qa";
 const QA_TASK_CLASS = "final-approval"; // routing row that owns the QA model
@@ -79,6 +80,8 @@ async function defaultEvaluator(task: QaTask): Promise<unknown> {
     const q = query({
       prompt,
       options: {
+        // B43 plan ② (2026-09-05): the gate judges in SDK isolation too — no construction settings
+        ...(workerIsolation() ?? {}),
         model: SDK_MODEL_IDS[routed.model] ?? routed.model,
         effort: routed.effort as "low" | "medium" | "high" | "xhigh" | "max",
         tools: [],

@@ -21,7 +21,7 @@
 // Anything that is neither is not context, it is noise.
 
 /** The lane an answer is going out on. The only thing that legitimately differs between them. */
-export type AnswerLane = "voice" | "chat";
+export type AnswerLane = "voice" | "chat" | "task";
 
 /** Slug of the orchestrator identity the CEO speaks to. */
 export const HAMZA_SLUG = "agents-orchestrator";
@@ -110,9 +110,32 @@ export function approvalGateLine(lane: AnswerLane): string {
   const shared =
     "If the topic implies an outward-facing act — money leaving, a contract, an external message, " +
     "ad spend — say plainly that it stops at the CEO's approval before anything happens.";
-  return lane === "voice"
-    ? shared + " On this line you may request an approval; you may never grant one."
-    : shared + " It passes through the approval gate on his dashboard.";
+  if (lane === "voice") return shared + " On this line you may request an approval; you may never grant one.";
+  if (lane === "task") {
+    // B43 plan ② (2026-09-05): the same law reaching an employee at WORK, not in conversation.
+    return (
+      shared +
+      " Inside a task that means the task's approval class carries it to his dashboard — you " +
+      "prepare the act and never perform it yourself."
+    );
+  }
+  return shared + " It passes through the approval gate on his dashboard.";
+}
+
+/**
+ * The language of what the agent produces. An answer lane speaks to the CEO in his language
+ * of the moment; the task lane (B43 plan ②, 2026-09-05) produces ARTIFACTS, and the holding's
+ * artifact language is English (CEO directive 2026-07-12) — while any field meant for his
+ * screen (a Turkish label) is written in Turkish where the tool asks for it.
+ */
+export function languageLine(lang: "tr" | "en", lane: AnswerLane): string {
+  if (lane === "task") {
+    return (
+      "Write every deliverable and every record in English — the holding's artifact language — " +
+      "and put Turkish only where a field is explicitly for the CEO's screen (a label_tr)."
+    );
+  }
+  return `Answer the CEO in ${lang === "tr" ? "Turkish" : "English"}.`;
 }
 
 /**
@@ -172,7 +195,7 @@ export function standingPrompt(input: {
     identityLine(input.agent),
     personaBlock(input.personaBody),
     memoryBlock(input.memoryLines),
-    `Answer the CEO in ${input.lang === "tr" ? "Turkish" : "English"}.`,
+    languageLine(input.lang, input.lane),
     ceoLanguageLaw(input.lang),
     honestyLine(),
     approvalGateLine(input.lane),

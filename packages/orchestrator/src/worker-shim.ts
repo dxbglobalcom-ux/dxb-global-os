@@ -31,7 +31,9 @@ import {
   type SdkToolOptions,
 } from "@dxb/gateway";
 import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
+import { loadPersonaBody, standingPrompt } from "@dxb/voice";
 import { recordSubscriptionSpend } from "./subscription-cap.js";
+import { workerIsolation } from "./sdk-isolation.js";
 
 // R2.3: the R2.2 pieces moved to their dependency-clean homes so the workflow
 // agent step (kernel) shares ONE implementation — re-exported here verbatim
@@ -167,8 +169,17 @@ export interface ExecutionRoute {
   effectiveTier: string;
   /** The routing row that won, and therefore the model. */
   rule: RoutingRule;
-  /** The employee, when the task is staffed — the tool surface rides on this. */
-  employee: { slug: string; department: string } | null;
+  /** The employee, when the task is staffed — the tool surface rides on this, and
+   *  (B43 plan ②) so does the seat's own identity: the persona file it was written in. */
+  employee: SeatIdentity | null;
+}
+
+/** What a seat's run needs to be THAT seat: the slug names it, the persona file carries it. */
+export interface SeatIdentity {
+  slug: string;
+  department: string;
+  role_level?: string | null;
+  persona_path?: string | null;
 }
 
 /**
@@ -184,11 +195,18 @@ export async function resolveExecutionRoute(task: ClaimedTask): Promise<Executio
   // so the quality ordering lives in one place (model_catalog.tier_floor)
   // instead of being re-derived here.
   let effectiveTier = task.model_tier;
-  let employee: { slug: string; department: string } | null = null;
+  let employee: SeatIdentity | null = null;
   let departmentId: string | null = null;
   if (task.agent_id) {
-    const emp = await sql<{ slug: string; department: string; department_id: string | null; effective_tier: string }>`
-      SELECT a.slug, a.department, d.id AS department_id,
+    const emp = await sql<{
+      slug: string;
+      department: string;
+      role_level: string | null;
+      persona_path: string | null;
+      department_id: string | null;
+      effective_tier: string;
+    }>`
+      SELECT a.slug, a.department, a.role_level, a.persona_path, d.id AS department_id,
              fn_effective_tier(${task.model_tier}, a.id) AS effective_tier
         FROM agents a
         LEFT JOIN departments d ON d.slug = a.department
@@ -196,7 +214,12 @@ export async function resolveExecutionRoute(task: ClaimedTask): Promise<Executio
     `.execute(getDb());
     if (emp.rows[0]) {
       effectiveTier = emp.rows[0].effective_tier ?? effectiveTier;
-      employee = { slug: emp.rows[0].slug, department: emp.rows[0].department };
+      employee = {
+        slug: emp.rows[0].slug,
+        department: emp.rows[0].department,
+        role_level: emp.rows[0].role_level,
+        persona_path: emp.rows[0].persona_path,
+      };
       departmentId = emp.rows[0].department_id ?? null;
     }
   }
@@ -230,6 +253,43 @@ export async function resolveExecutionRoute(task: ClaimedTask): Promise<Executio
 export const TURN_BUDGET = { toolless: 4, default: 12, hands: 40 } as const;
 export function turnBudgetFor(allowedTools: readonly string[]): number {
   return allowedTools.some((t) => t.endsWith("__media_submit")) ? TURN_BUDGET.hands : TURN_BUDGET.default;
+}
+
+// B43 plan ② (CEO 2026-09-05) — A SEAT RUNS AS THE SEAT. Measured before this line existed:
+// the only text a staffed run carried was "You are a DXB Global OS worker agent" plus the
+// task, while the persona — the employee's whole mind, 141 lines for the Creative
+// Director — reached nobody but Hamza's answer lanes. So "the Creative Director's plan"
+// was drafted by an anonymous worker holding the director's tools. The standing layer is
+// the ONE definition the answer lanes already share (prompt-core.ts, the door
+// dxb-hamza-context: identity line, the persona WHOLE, the CEO language law, honesty, the
+// approval gate, the no-refusal law); the task lane is a parameter of it, never a copy.
+const TASK_LANE_LINE =
+  "You are working ONE task from the company's queue, as this seat and nobody else. The task's " +
+  "objective and output contract are the whole job: deliver exactly that with the tools you were " +
+  "given, verify with a real tool call before you answer, and never claim a check you did not run.";
+
+/** Pure: the standing layer for a seat at work. Exported so the delivery can be pinned. */
+export function composeSeatPrompt(employee: SeatIdentity, personaBody: string): string {
+  return [
+    ...standingPrompt({
+      agent: { slug: employee.slug, department: employee.department, role_level: employee.role_level ?? null },
+      personaBody,
+      memoryLines: [],
+      lang: "en",
+      lane: "task",
+    }),
+    TASK_LANE_LINE,
+  ].join("\n\n");
+}
+
+/** The seat's standing prompt with its authored persona loaded from the roster file
+ *  (file-first: the .md is the source of authorship, `agents.persona_path` names it). */
+export async function seatStandingPrompt(
+  employee: SeatIdentity,
+  repoRoot: string = process.env.DXB_REPO_ROOT ?? process.cwd(),
+): Promise<string> {
+  const personaBody = await loadPersonaBody(repoRoot, employee.persona_path ?? null);
+  return composeSeatPrompt(employee, personaBody);
 }
 
 // Default executor: routing decided above; this function owns the SDK call.
@@ -295,11 +355,17 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
 
   let raw: unknown;
   if (rule.mode === "subscription") {
+    // B43 plan ②: the seat's identity is the system prompt; the run is the seat's, not the
+    // session's (sdk-isolation.ts). An unstaffed task keeps the CLI's default prompt.
+    const seatPrompt = employee ? await seatStandingPrompt(employee) : null;
+    const isolation = workerIsolation();
     const q = query({
       prompt,
       options: {
         model: SDK_MODEL_IDS[rule.model] ?? rule.model,
         effort: rule.effort as "low" | "medium" | "high" | "xhigh" | "max",
+        ...(seatPrompt ? { systemPrompt: seatPrompt } : {}),
+        ...(isolation ?? {}),
         // R2.2: built-ins stay OFF (least privilege); the MCP surface is the
         // compiled gateway profile — allowed set mounted, everything else in
         // the inventory stripped from context, session pinned to these

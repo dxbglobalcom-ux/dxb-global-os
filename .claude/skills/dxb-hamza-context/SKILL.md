@@ -21,6 +21,12 @@ the same disease the construction context has:
 ## The contract — two layers, nothing else
 
 **ALWAYS (standing).** Assembled in exactly one place: `packages/voice/src/prompt-core.ts`.
+**Three lanes carry it, as a parameter of that one definition:** `voice` and `chat` (Hamza's answer
+lanes) and, since 2026-09-05 (B43 plan ②, adaptation A20), `task` — every staffed employee run in
+the company receives its seat's standing layer as the system prompt of its SDK run
+(`composeSeatPrompt`, `packages/orchestrator/src/worker-shim.ts`), and runs in SDK isolation
+(`settingSources: []`, `sdk-isolation.ts`) so the construction site's CLAUDE.md and hooks never
+reach an employee.
 
 | Block | Rule |
 |---|---|
@@ -64,5 +70,7 @@ Stated, not hidden. Each has a board row:
 - **He does not know which page the CEO is standing on** (row C26) — the chat receives the message
   and nothing else.
 - **He cannot act, only answer** (rows C60, B15, B08) — the chat lane runs with no tools.
+- **The task lane's memory block is empty** — a seat at work gets no matched company memory yet;
+  what it needs travels in its task text (the dispatch book writes the upstream task ids in).
 - **The language law reaches these two lanes only.** Dashboard strings, alert text, task headlines
   and the briefing still need their own check (row C37).

@@ -1,9 +1,9 @@
 {
   "_department": "project-management",
-  "_generated_at": "2026-09-03T17:26:00.229Z",
+  "_generated_at": "2026-09-05T00:03:41.882Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
   "_skills": [],
-  "_source_hash": "0c051a9a4e9d29f242157bd8df1f2a8f690cb96e7c0d0871b88322c649eb3487",
+  "_source_hash": "78fe7eb33a6300ebf04a84a65fecbfb907ea76823435fb998cb296b0cc11c5a8",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",
@@ -19,6 +19,7 @@
       "memory_recall",
       "queue_claim",
       "queue_create_task",
+      "queue_dispatch",
       "queue_get",
       "queue_list",
       "queue_return",

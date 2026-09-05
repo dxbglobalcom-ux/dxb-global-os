@@ -23,6 +23,8 @@ export {
   ceoLanguageLaw,
   honestyLine,
   approvalGateLine,
+  languageLine,
+  noRefusalLaw,
 } from "./prompt-core.js";
 export type { AnswerLane } from "./prompt-core.js";
 export type { AnswerQuestion, VoiceAnswerDeps, VoiceAnswerResult } from "./answer.js";

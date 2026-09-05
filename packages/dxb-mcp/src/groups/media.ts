@@ -142,7 +142,14 @@ export function registerMedia(server: McpServer): void {
     {
       title: "Submit a media job (media.submit)",
       description:
-        "Put one engine job into the studio's job book: still (FLUX frame), shoot (MiniMax H3 take), upscale (SeedVR2), voice (TTS line), assemble (ffmpeg cut/grade/captions/logo/audio), probe (ffprobe + frames). Returns the job row; the resident media lane runs it on the holding's card, one job at a time. Follow with media_wait or media_status.",
+        "Put one engine job into the studio's job book. The tool returns in milliseconds with the job row; the minutes happen in the resident media lane — wait for it with media_wait, then read output_path. " +
+        "Kinds and their params (anything else is refused at submit): " +
+        "still {prompt, out: '<name>.png', w?, h?, steps? (28), guidance?, seed?} — a FLUX frame; " +
+        "shoot {prompt, seconds ≤ 15.1, width, height (multiples of 32 — the station's proven vertical draft is 640×1152, LAW D: draft first), steps? (4 = the studio standard, ≈ 14 min per 15 s), seed?, prefix (letters/digits/_/-), first_frame?, last_frame?, refs? (≤ 9 absolute paths), ref_audio? (≤ 3), ref_size? 'match'|'max', lora?, no_lora?, negative?, cfg?} — a MiniMax H3 take with the engine's own voice when the prompt carries spoken lines; " +
+        "upscale {file, model '3b'|'7b', target 720–2160, color? 'lab'|'wavelet'|'adain'|'none', seed?, overlap?} — SeedVR2, only on the CEO's word (LAW D); " +
+        "voice {text ≤ 2000, voice?, out: '<name>.wav'|'.mp3'} — a TTS line (the studio's films use the engine's own voice, CEO 2026-09-04); " +
+        "assemble {clips: [{file, trim_start?, trim_end?}] (≤ 40), width, height, fps? (24), grade? 'none'|'ugc'|'luxury', captions? [{text, from, to}], logo? {file, width_frac?, x_frac?, y_frac?, from?}, audio? [{file, at}], room_tone_db?, out: '<name>.mp4'} — ffmpeg cut/grade/captions/logo/mix; " +
+        "probe {file, at_seconds? (≤ 6)} — ffprobe plus frames (media_probe does the same into your own eye).",
       inputSchema: {
         task_id: z.string().uuid(),
         kind: z.enum(["still", "shoot", "upscale", "voice", "assemble", "probe"]),
