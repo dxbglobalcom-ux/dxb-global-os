@@ -6,10 +6,15 @@ import { assertTransition } from "../transitions.js";
 import {
   CallSheet,
   SEAT_SLUG,
+  SHEET_CODE,
   assertForwardDeps,
   groupByLevel,
   inputsParagraph,
+  sheetDeadlines,
   sheetLevels,
+  sheetTimes,
+  type BookEvent,
+  type BookJob,
   type SheetRecord,
   type SheetTaskRecord,
 } from "../dispatch-book.js";
@@ -142,13 +147,16 @@ export function registerQueue(server: McpServer): void {
     {
       title: "Dispatch a call sheet (queue.dispatch)",
       description:
-        "Turn a plan into one task per named seat of YOUR department, born under your task's project with dependencies (deps = indices of earlier seats on the sheet). Seats with the same dependencies run at the same time in separate lanes; name only the seats the job needs. Each seat gets objective, output_contract, label (EN) and label_tr (TR). Dependants are told which tasks to read (queue_get) before they start. Idempotent per (your task, code).",
+        "Turn a plan into one task per named seat of YOUR department, born under your task's project with dependencies (deps = indices of earlier seats on the sheet). Seats with the same dependencies run at the same time in separate lanes; name only the seats the job needs. Each seat gets objective, output_contract, label (EN) and label_tr (TR), and a budget_minutes (claim → done; the engineer's includes the engine's own time) — written into the task's due_at along the chain and measured by queue_sheet_times; a seat over budget is asked why, a film is never failed by the clock. Dependants are told which tasks to read (queue_get) before they start. Idempotent per (your task, code).",
       inputSchema: CallSheet.shape,
     },
     async (input) => {
       const sheet = CallSheet.parse(input);
       assertForwardDeps(sheet.seats);
       const levels = sheetLevels(sheet.seats);
+      // the clock (CEO 2026-09-13): a seat's due_at = the sheet's birth + its budget on top of
+      // the latest deadline it waits for; an unbudgeted seat keeps the column's default
+      const deadlines = sheetDeadlines(sheet.seats);
       const db = getDb();
 
       const author = await db
@@ -212,7 +220,10 @@ export function registerQueue(server: McpServer): void {
       const record = await db.transaction().execute(async (trx): Promise<SheetRecord> => {
         // first pass: every seat's task, queued, staffed, under the author's project
         const ids: string[] = [];
-        for (const seat of sheet.seats) {
+        const dueAts: Array<string | null> = [];
+        for (let i = 0; i < sheet.seats.length; i++) {
+          const seat = sheet.seats[i];
+          const offset = deadlines.due_offset_minutes[i];
           const row = await trx
             .insertInto("tasks")
             .values({
@@ -230,10 +241,13 @@ export function registerQueue(server: McpServer): void {
               label: seat.label,
               label_tr: seat.label_tr,
               status: "queued",
+              // now() is one instant for the whole transaction: every seat's deadline counts from the same birth
+              ...(offset === null ? {} : { due_at: sql<Date>`now() + (${offset} * interval '1 minute')` }),
             })
-            .returning("id")
+            .returning(["id", "due_at"])
             .executeTakeFirstOrThrow();
           ids.push(row.id);
+          dueAts.push(offset === null ? null : new Date(row.due_at).toISOString());
         }
         // second pass: resolve the local indices to uuids and tell each dependant what to read
         const tasks: SheetTaskRecord[] = [];
@@ -252,7 +266,16 @@ export function registerQueue(server: McpServer): void {
               .where("id", "=", ids[i])
               .execute();
           }
-          tasks.push({ index: i, seat: seat.seat, task_id: ids[i], depends_on: dependsOn, level: levels[i], label: seat.label });
+          tasks.push({
+            index: i,
+            seat: seat.seat,
+            task_id: ids[i],
+            depends_on: dependsOn,
+            level: levels[i],
+            label: seat.label,
+            budget_minutes: seat.budget_minutes ?? null,
+            due_at: dueAts[i],
+          });
         }
         await trx
           .insertInto("task_events")
@@ -263,7 +286,15 @@ export function registerQueue(server: McpServer): void {
               from_status: "inbox",
               to_status: "queued",
               actor,
-              payload: JSON.stringify({ sheet: sheet.code, index: t.index, seat: t.seat, deps: sheet.seats[t.index].deps, level: t.level }),
+              payload: JSON.stringify({
+                sheet: sheet.code,
+                index: t.index,
+                seat: t.seat,
+                deps: sheet.seats[t.index].deps,
+                level: t.level,
+                budget_minutes: t.budget_minutes,
+                due_offset_minutes: deadlines.due_offset_minutes[t.index],
+              }),
             })),
           )
           .execute();
@@ -273,6 +304,8 @@ export function registerQueue(server: McpServer): void {
           project_id: author.project_id ?? null,
           tasks,
           levels: groupByLevel(levels),
+          budget_minutes_total: deadlines.budget_minutes_total,
+          budgeted: deadlines.budgeted,
         };
         await appendAudit(trx, actor, "queue.dispatch", author.id, rec);
         // §10 "görev atama": the plan as a decision record, in the same transaction as the
@@ -285,7 +318,10 @@ export function registerQueue(server: McpServer): void {
             decision: "call_sheet",
             rationale:
               `sheet ${sheet.code}: ${tasks.length} seat(s) in ${rec.levels.length} level(s) — ` +
-              rec.levels.map((g, l) => `L${l}: ${g.map((i) => sheet.seats[i].seat).join(" · ")}`).join(" → "),
+              rec.levels.map((g, l) => `L${l}: ${g.map((i) => sheet.seats[i].seat).join(" · ")}`).join(" → ") +
+              (deadlines.budgeted === "none"
+                ? " — unbudgeted sheet"
+                : ` — budget ${deadlines.budget_minutes_total} min on the longest chain (${deadlines.budgeted} seats budgeted)`),
             data_used: ["tasks", "agents", "projects", "task_events"],
             alternatives: JSON.stringify({ dependency_graph: sheet.seats.map((s, i) => ({ index: i, seat: s.seat, deps: s.deps })) }),
             confidence: null,
@@ -295,6 +331,65 @@ export function registerQueue(server: McpServer): void {
         return rec;
       });
       return ok({ ...record, already_dispatched: false });
+    },
+  );
+
+  // THE TIMES TABLE (CEO 2026-09-13, budget-per-job-zero-idle-plan-approved, step 2): the book
+  // measures itself per seat — budget · idle before claim · claimed → done · the judge's
+  // milliseconds · the engine's seconds · the non-engine/engine ratio — and says it in one
+  // English line per seat. Read-only: nothing here moves a row. The verdict seat reads it and
+  // writes WHY for a seat over its budget; a film is never failed by the clock.
+  server.registerTool(
+    "queue_sheet_times",
+    {
+      title: "Read a call sheet's times (queue.sheet_times)",
+      description:
+        "Read-only. The times of a dispatched sheet (code; task_id = the author's task when the same code was dispatched by several authors): per seat — budget_minutes · ready→claimed idle · claimed→done actual · judge_ms · engine seconds from the job book · over budget by how much; for the sheet — planning, total, engine, non-engine, the non-engine/engine ratio, idle. `lines` carries one English line per seat to quote in the verdict. A seat over its budget is asked why; nothing is failed by the clock.",
+      inputSchema: { code: SHEET_CODE, task_id: z.string().uuid().optional() },
+    },
+    async ({ code, task_id }) => {
+      const db = getDb();
+      let q = db
+        .selectFrom("audit_log")
+        .select(["task_id", "payload", "created_at"])
+        .where("action", "=", "queue.dispatch")
+        .where(sql`payload ->> 'code'`, "=", code);
+      if (task_id) q = q.where("task_id", "=", task_id);
+      const row = await q.orderBy("created_at", "desc").executeTakeFirst();
+      if (!row) throw new Error(`queue_sheet_times: no sheet '${code}' in the book${task_id ? ` for task ${task_id}` : ""}`);
+      const record = (typeof row.payload === "string" ? JSON.parse(row.payload) : row.payload) as SheetRecord;
+      const ids = record.tasks.map((t) => t.task_id);
+      const eventRows = await db
+        .selectFrom("task_events")
+        .select(["task_id", "event", "from_status", "to_status", "created_at", "payload"])
+        .where("task_id", "in", [...ids, record.author_task_id])
+        .orderBy("created_at")
+        .execute();
+      const events: BookEvent[] = eventRows.map((e) => ({
+        task_id: e.task_id,
+        event: e.event,
+        from_status: e.from_status,
+        to_status: e.to_status,
+        created_at: new Date(e.created_at),
+        payload: (typeof e.payload === "string" ? JSON.parse(e.payload) : (e.payload ?? {})) as Record<string, unknown>,
+      }));
+      const jobRows = await db
+        .selectFrom("media_jobs")
+        .select(["task_id", "kind", "status", "created_at", "started_at", "ended_at", "wall_seconds"])
+        .where("task_id", "in", ids)
+        .execute();
+      const jobs: BookJob[] = jobRows.map((j) => ({
+        task_id: j.task_id,
+        kind: j.kind,
+        status: j.status,
+        created_at: new Date(j.created_at),
+        started_at: j.started_at ? new Date(j.started_at) : null,
+        ended_at: j.ended_at ? new Date(j.ended_at) : null,
+        wall_seconds: j.wall_seconds === null ? null : Number(j.wall_seconds),
+      }));
+      const nowRow = await sql<{ now: Date }>`SELECT now() AS now`.execute(db);
+      const times = sheetTimes({ record, sheet_born_at: new Date(row.created_at), events, jobs, now: new Date(nowRow.rows[0].now) });
+      return ok(times);
     },
   );
 

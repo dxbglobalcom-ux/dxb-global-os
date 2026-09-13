@@ -6,8 +6,10 @@
 //   3. lowering the count retires a lane only after its current drain; raising it starts loops
 //   4. a lane that throws does not spin and does not take its siblings down
 //   5. stop() resolves after the current drains and takes no new work
+//   6. (CEO 2026-09-13, zero idle) the rest between an idle lane's looks is 3 s by default,
+//      DXB_LANE_REST_SECONDS sets it (10 = the old behaviour), nonsense falls back, 60 s is the cap
 import { describe, expect, it } from "vitest";
-import { TaskLanes, type DrainOutcome } from "../../packages/outbox-executor/src/task-lanes.js";
+import { DEFAULT_LANE_REST_SECONDS, TaskLanes, laneRestMsFromEnv, type DrainOutcome } from "../../packages/outbox-executor/src/task-lanes.js";
 
 const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 const none: DrainOutcome = { executed: 0, reviewed: 0, escalated: 0 };
@@ -131,5 +133,19 @@ describe("B43 · task lanes — one long job never holds the other hands", () =>
     await wait(100);
     expect(drains).toBe(after);
     expect(lanes.reconcile(2)).toEqual({ desired: 0, started: 0, running: 0 });
+  });
+});
+
+describe("B43 · the rest between looks — DXB_LANE_REST_SECONDS", () => {
+  it("is 3 s by default, takes the environment's number, rolls back to 10 s on request, never spins and never sleeps past a minute", () => {
+    expect(DEFAULT_LANE_REST_SECONDS).toBe(3);
+    expect(laneRestMsFromEnv({})).toBe(3000);
+    expect(laneRestMsFromEnv({ DXB_LANE_REST_SECONDS: "" })).toBe(3000);
+    expect(laneRestMsFromEnv({ DXB_LANE_REST_SECONDS: "10" })).toBe(10_000); // the pre-2026-09-13 behaviour
+    expect(laneRestMsFromEnv({ DXB_LANE_REST_SECONDS: "0.5" })).toBe(500);
+    expect(laneRestMsFromEnv({ DXB_LANE_REST_SECONDS: "0" })).toBe(3000); // zero would spin
+    expect(laneRestMsFromEnv({ DXB_LANE_REST_SECONDS: "-4" })).toBe(3000);
+    expect(laneRestMsFromEnv({ DXB_LANE_REST_SECONDS: "ten" })).toBe(3000);
+    expect(laneRestMsFromEnv({ DXB_LANE_REST_SECONDS: "600" })).toBe(60_000);
   });
 });

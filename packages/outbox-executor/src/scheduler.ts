@@ -33,6 +33,7 @@ import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
 import { tick } from "./index.js";
 import { runMediaLaneOnce } from "./media-lane.js";
 import { MediaLanes, cpuLanesFromEnv } from "./media-lanes.js";
+import { laneRestMsFromEnv } from "./task-lanes.js";
 import { TaskLanes } from "./task-lanes.js";
 import { checkVelocity } from "./breaker.js";
 import { checkMonthlyCap } from "./monthly-cap.js";
@@ -152,12 +153,13 @@ export const CADENCES = {
   // 30s keeps a CEO grant change effective inside half a minute without
   // pressuring the session-mode pool.
   libraryRecompileSeconds: 30,
-  // Resident worker drain (R2.1): 10s keeps the queue moving without pool
-  // pressure — an execution leg holds its job for the LLM's duration anyway,
-  // and the chain re-arms only after the drain returns.
+  // Resident worker tick (R2.1 → A17): every 10 s the tick re-counts the hands the
+  // company should have and starts or retires lane loops (task-lanes.ts). Since
+  // 2026-09-13 this is NOT how long an idle lane waits between looks — that is
+  // DXB_LANE_REST_SECONDS (3 s, laneRestMsFromEnv), the CEO's zero-idle decision.
   taskWorkerSeconds: 10,
-  // Media lane (B43): a render holds its job for minutes anyway; 10 s keeps a
-  // freshly submitted job from waiting noticeably, without pool pressure.
+  // Media tick (B43): every 10 s makes sure the studio's lane loops exist
+  // (media-lanes.ts); the lanes' own rest between looks is the same 3 s.
   mediaLaneSeconds: 10,
   // Voice drain (R3.1): the CEO is on the line waiting — 5s matches the
   // intent-intake cadence rationale; the answer leg holds its job for the
@@ -552,13 +554,17 @@ export async function startScheduler(): Promise<PgBoss> {
   // one director run held the queue; the QC and the corrective casting could not be
   // claimed until it ended. Lane 1 keeps the historical worker identity so nothing
   // that reads `claimed_by = 'resident-worker'` changes meaning on a single-lane install.
+  // The rest between an idle lane's looks (CEO 2026-09-13, zero idle): DXB_LANE_REST_SECONDS,
+  // 3 s by default — the same for the company's hands and the studio's.
+  const laneRestMs = laneRestMsFromEnv();
+  console.log(`[scheduler] an idle lane rests ${laneRestMs / 1000} s between looks (DXB_LANE_REST_SECONDS; 10 = the pre-2026-09-13 behaviour)`);
   activeLanes = new TaskLanes(
     {
       drain: (workerId) => drainTasks(workerId ? { workerId } : {}),
       sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
       log: (line) => console.error(line),
     },
-    CADENCES.taskWorkerSeconds * 1000,
+    laneRestMs,
     (i) => (i === 0 ? undefined : `${RESIDENT_WORKER_ID}-${i + 1}`),
   );
   await boss.work(QUEUES.taskWorker, async () => {
@@ -593,7 +599,7 @@ export async function startScheduler(): Promise<PgBoss> {
       sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
       log: (line) => console.error(line),
     },
-    { cpuLanes: mediaCpuLanes, restMs: CADENCES.mediaLaneSeconds * 1000, laneIdBase: RESIDENT_WORKER_ID },
+    { cpuLanes: mediaCpuLanes, restMs: laneRestMs, laneIdBase: RESIDENT_WORKER_ID },
   );
   let lastMediaRunning = -1;
   await boss.work(QUEUES.mediaLane, async () => {

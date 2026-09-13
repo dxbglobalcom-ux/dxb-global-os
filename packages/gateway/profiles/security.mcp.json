@@ -1,9 +1,9 @@
 {
   "_department": "security",
-  "_generated_at": "2026-09-05T00:03:41.882Z",
+  "_generated_at": "2026-09-13T19:49:48.931Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
   "_skills": [],
-  "_source_hash": "78fe7eb33a6300ebf04a84a65fecbfb907ea76823435fb998cb296b0cc11c5a8",
+  "_source_hash": "d0bcaf265992183f4ffb10f7e87df7998bffa4e19e69ebe5901c4ad3a584439b",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",
@@ -23,6 +23,7 @@
       "queue_get",
       "queue_list",
       "queue_return",
+      "queue_sheet_times",
       "queue_transition",
       "registry_activate",
       "registry_create_department",

@@ -17,6 +17,7 @@
 //     beside a shoot and beside each other. N = DXB_MEDIA_CPU_LANES (default 3).
 //   · The pg-boss media tick no longer waits on any job: every ten seconds it only
 //     makes sure the loops exist (reconcile). Retiring never interrupts a lane mid-job.
+//     An idle lane rests DXB_LANE_REST_SECONDS (3 s) between looks, not the tick's ten.
 //   · DXB_MEDIA_CPU_LANES=0 is the rollback shape: one lane, every kind, the
 //     historical lane id — the old behaviour minus the idle gap.
 // No second runtime, no second process — the loops live inside the scheduler.
@@ -28,7 +29,8 @@ export const ALL_MEDIA_KINDS: readonly MediaKind[] = [...GPU_KINDS, ...CPU_KINDS
 export interface MediaLanesConfig {
   /** how many processor lanes beside the single card lane; 0 = one lane for every kind */
   cpuLanes: number;
-  /** how long an idle lane rests before looking again (the media tick cadence) */
+  /** how long an idle lane rests before looking again — DXB_LANE_REST_SECONDS (3 s by default
+   *  since 2026-09-13; it was the ten-second media tick before), see task-lanes.ts */
   restMs: number;
   /** the resident worker's identity; lane ids derive from it */
   laneIdBase: string;

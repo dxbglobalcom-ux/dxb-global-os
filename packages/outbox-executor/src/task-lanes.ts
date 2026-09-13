@@ -16,6 +16,24 @@
 // already working: a surplus lane finishes its current drain and only then stands
 // down. No second runtime, no second process — the loops live inside the scheduler,
 // exactly where the lanes lived before.
+//
+// THE REST BETWEEN LOOKS (CEO 2026-09-13, "zero idle waiting — measured, cut at the source"):
+// an idle lane used to rest the tick's ten seconds before looking again, so a task born just
+// after a look waited up to ten seconds for a hand — measured on DXB-V-EYW-005: the five
+// reviewers were claimed 0–8 s after the engineer's `done`, and of the 12 min 20 s outside
+// the engine ≈ 1 min 25 s was waiting of this kind. The rest is now DXB_LANE_REST_SECONDS
+// (3 s by default; `10` is the old behaviour, the rollback). Eight lanes looking every three
+// seconds are eight cheap SELECTs a second at most; a working lane still looks again at once.
+export const DEFAULT_LANE_REST_SECONDS = 3;
+
+/** how long an idle lane rests before looking at the queue again, in milliseconds */
+export function laneRestMsFromEnv(env: NodeJS.ProcessEnv = process.env): number {
+  const raw = env.DXB_LANE_REST_SECONDS;
+  const n = raw === undefined || raw.trim() === "" ? DEFAULT_LANE_REST_SECONDS : Number(raw);
+  const seconds = Number.isFinite(n) && n > 0 ? Math.min(60, n) : DEFAULT_LANE_REST_SECONDS;
+  return Math.round(seconds * 1000);
+}
+
 export interface DrainOutcome {
   executed: number;
   reviewed: number;

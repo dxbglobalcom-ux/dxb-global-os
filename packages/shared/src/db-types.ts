@@ -36,6 +36,9 @@ export interface TasksTable {
   milestone_id: Generated<string | null>;
   label: Generated<string | null>;
   label_tr: Generated<string | null>;
+  // the clock (B43, CEO 2026-09-13): NOT NULL DEFAULT now() + 7 days in the schema, CHECK due_at >
+  // created_at; the dispatch book writes it from a seat's minutes budget along the chain.
+  due_at: Generated<Date>;
   created_at: Timestamptz;
   updated_at: Timestamptz;
 }
