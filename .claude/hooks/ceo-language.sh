@@ -18,10 +18,9 @@
 # WHAT IT CARRIES, and why each half is here rather than in the door. The WORD
 # rule (use the real word, explain it in brackets) and the SHAPE rule (how a
 # thing is explained at all) both govern every sentence he reads, so both fire
-# on every prompt. The self-test closes the block. What stays in the
-# `dxb-ceo-report` door is the long form — what a REPORT must contain, the
-# worked example, and the scope over the dashboard and Hamza's own surfaces.
-# This is the boundary; that is the procedure.
+# on every prompt. What stays in the `dxb-ceo-report` door is the long form —
+# what a REPORT must contain, the worked example, and the scope over the
+# dashboard and Hamza's own surfaces. This is the boundary; that is the procedure.
 #
 # THE SHAPE HALF WAS ADDED 2026-08-25, ON HIS OWN ORDER. The author put four of
 # his own mistakes in front of him as a bare technical list and got "hiçbir halt
@@ -29,24 +28,32 @@
 # → a picture from his world (a postman) → the measured numbers → what it means
 # for him, landed at once, and he ordered it made permanent: "bu kuralı öyle bir
 # yere yaz ki her session bana anlayacağım dilde raporu sunsun."
+#
+# 2026-09-14 — ONE LINE PER PROMPT, on the CEO's order ("sadece bu ikisi bu
+# şekilde olsun uzun şeyler olmasın"; see no-laziness.sh for the measurement).
+# This file still OWNS the full text (scripts/governance/rules.json,
+# so14_boundary and so14_explain_shape); the LONG FORM below is its single home
+# and is no longer emitted. Open this file when the one line is not enough.
+#
+# LONG FORM (owned here, verbatim as it was emitted 2026-08-25 → 2026-09-14):
+#   === STANDING ORDER 14 — THE CEO IS THE OWNER, NOT A DEVELOPER ===
+#   His complaint, his words: "ben bu dilden anlamıorm yahu."
+#   NO BANNED WORDS. He struck the ban list out himself, 2026-08-01:
+#   "kelimeler kullanılsın ama parantez içinde açıklansın basitçe o kadar."
+#   THE RULE: use the real word — the file's name, the tool's name, the technical
+#   term — and put a short plain explanation in brackets right after it, once.
+#     Kelam'ın kayıtları 00-INDEX.md dosyasında (alınmış kararların listesi).
+#   Never leave him to guess what a word means, and never hide the word from him.
+#   THE SHAPE, when you explain a THING — a mistake, a measurement, a finding:
+#    1. THE ANSWER FIRST, one sentence, in his words.
+#    2. A PICTURE FROM HIS WORLD before any mechanism — what is this LIKE?
+#    3. THE MEASURED NUMBERS beside the picture, never instead of it.
+#    4. WHAT IT MEANS FOR HIM — or plainly "senin için bugün bir şey değişmedi".
+#   A bare list of technical events, with no answer, no picture and no consequence,
+#   is the defect he named on 2026-08-25: "hiçbir halt ANLAMADIMMMMMMM".
+#   SELF-TEST: would my mother understand what this work IS?
 set -euo pipefail
 
-cat <<'EOF'
-=== STANDING ORDER 14 — THE CEO IS THE OWNER, NOT A DEVELOPER ===
-His complaint, his words: "ben bu dilden anlamıorm yahu."
-NO BANNED WORDS. He struck the ban list out himself, 2026-08-01:
-"kelimeler kullanılsın ama parantez içinde açıklansın basitçe o kadar."
-THE RULE: use the real word — the file's name, the tool's name, the technical
-term — and put a short plain explanation in brackets right after it, once.
-  Kelam'ın kayıtları 00-INDEX.md dosyasında (alınmış kararların listesi).
-Never leave him to guess what a word means, and never hide the word from him.
-THE SHAPE, when you explain a THING — a mistake, a measurement, a finding:
- 1. THE ANSWER FIRST, one sentence, in his words.
- 2. A PICTURE FROM HIS WORLD before any mechanism — what is this LIKE?
- 3. THE MEASURED NUMBERS beside the picture, never instead of it.
- 4. WHAT IT MEANS FOR HIM — or plainly "senin için bugün bir şey değişmedi".
-A bare list of technical events, with no answer, no picture and no consequence,
-is the defect he named on 2026-08-25: "hiçbir halt ANLAMADIMMMMMMM".
-SELF-TEST: would my mother understand what this work IS?
-=== END STANDING ORDER 14 ===
-EOF
+cat <<'EOF2'
+STANDING ORDER 14 — CEO'NUN DİLİNDE KONUŞ (CEO 2026-07-27, the shape 2026-08-25): he is the owner, not a developer — the answer first, then a picture from his world, then the measured numbers, then what it means for him; use the real word and explain it once in brackets; would my mother understand it? The long form: .claude/hooks/ceo-language.sh and the dxb-ceo-report door.
+EOF2

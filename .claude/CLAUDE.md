@@ -141,8 +141,8 @@ the date. The battery fails on an unregistered approval claim.
   he gave it: his passing *"write it short"* had been promoted into the rival ledger's permanent
   banner beside his registered orders, and he caught it.
 - **Secrets** never enter the repo, a prompt, or any printed output.
-- **No laziness.** The standard he set, and the forms of laziness that break it, are
-  re-injected on every prompt by `.claude/hooks/no-laziness.sh`, which owns that text.
+- **No laziness.** The standard he set is re-injected on every prompt, in one line, by
+  `.claude/hooks/no-laziness.sh`, which owns the full text and the forms of laziness that break it.
 
 ## 3. Language
 
