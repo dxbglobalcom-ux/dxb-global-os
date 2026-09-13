@@ -15,6 +15,7 @@ import { getDb, llmCall, sdkJsonSchema } from "@dxb/shared";
 import { logDecision } from "@dxb/observability";
 import { loadPolicy, route, SDK_MODEL_IDS, type ClassifiedIntent } from "@dxb/kernel";
 import { workerIsolation } from "./sdk-isolation.js";
+import { QA_SPEND_SOURCE, recordSubscriptionSpend } from "./subscription-cap.js";
 
 const ACTOR = "orchestrator:qa";
 const QA_TASK_CLASS = "final-approval"; // routing row that owns the QA model
@@ -89,9 +90,24 @@ async function defaultEvaluator(task: QaTask): Promise<unknown> {
         outputFormat: { type: "json_schema", schema: sdkJsonSchema(QaVerdict) },
       },
     });
+    const t0 = Date.now();
     for await (const msg of q) {
       if (msg.type === "result") {
         if (msg.subtype !== "success") throw new Error(`qa: agent-sdk result error (${msg.subtype})`);
+        // B39 (CEO 2026-09-13, "düzelt"): the judge's receipt — the same book the
+        // seats pay into, source 'qa', with the gate's own milliseconds. Measured
+        // before: eight judge calls per film (Opus 5 at max) and not one row.
+        const usage = (msg as { usage?: { input_tokens?: number; output_tokens?: number } }).usage;
+        await recordSubscriptionSpend({
+          taskId: task.id,
+          agentId: null,
+          department: task.department,
+          model: routed.model,
+          tokensIn: usage?.input_tokens ?? 0,
+          tokensOut: usage?.output_tokens ?? 0,
+          source: QA_SPEND_SOURCE,
+          meta: { gate: "qa", effort: routed.effort, ms: Date.now() - t0 },
+        });
         return msg.structured_output ?? msg.result;
       }
     }
@@ -151,7 +167,10 @@ export async function qa(taskId: string, evaluate: QaEvaluator = defaultEvaluato
 
   let verdict: QaVerdict | undefined;
   let lastError = "";
+  let attempts = 0;
+  const t0 = Date.now();
   for (let attempt = 0; attempt < 2 && !verdict; attempt++) {
+    attempts = attempt + 1;
     try {
       verdict = QaVerdict.parse(unwrap(await evaluate(task)));
     } catch (err) {
@@ -159,12 +178,20 @@ export async function qa(taskId: string, evaluate: QaEvaluator = defaultEvaluato
     }
   }
   if (!verdict) throw new Error(`qa: verdict malformed twice: ${lastError}`);
+  // B39 (2026-09-13): the gate's own time, in the log and in the task's event —
+  // measured 2026-09-05 only by subtracting task_events timestamps (29 s twice).
+  const judgeMs = Date.now() - t0;
+  console.log(
+    `[qa] task ${taskId} ${verdict.pass ? "PASS" : "FAIL"} (confidence ${verdict.confidence}) — the judge took ${judgeMs} ms in ${attempts} call${attempts === 1 ? "" : "s"}`,
+  );
 
   if (!verdict.pass) {
     await transition(taskId, "failed", {
       reason: "qa-fail",
       notes: verdict.notes,
       confidence: verdict.confidence,
+      judge_ms: judgeMs,
+      judge_attempts: attempts,
     });
     // §10 "workflow adım dallanması": the QA verdict routed this task onto the
     // retry ladder instead of forward — a branch, not a micro choice.
@@ -188,6 +215,8 @@ export async function qa(taskId: string, evaluate: QaEvaluator = defaultEvaluato
     qa: "pass",
     confidence: verdict.confidence,
     notes: verdict.notes,
+    judge_ms: judgeMs,
+    judge_attempts: attempts,
   });
   if (toStatus === "awaiting_approval") {
     // §10 "approval'a dönüştürme": the pass verdict became a human gate.

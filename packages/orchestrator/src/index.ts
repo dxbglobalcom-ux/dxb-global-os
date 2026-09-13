@@ -16,6 +16,7 @@ export {
   recordSubscriptionSpend,
   SUBSCRIPTION_CAP_KEY,
   SUBSCRIPTION_CAP_FALLBACK,
+  QA_SPEND_SOURCE,
   SUBSCRIPTION_SPEND_SOURCE,
 } from "./subscription-cap.js";
 export type { DrainTasksDeps, DrainTasksResult } from "./worker-loop.js";

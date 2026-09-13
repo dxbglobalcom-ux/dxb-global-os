@@ -67,6 +67,14 @@ export const SUBSCRIPTION_CAP_FALLBACK = 500_000;
  * unfiltered window corrupted was the CONSTRUCTION bench, not the company.
  */
 export const SUBSCRIPTION_SPEND_SOURCE = "worker";
+// B39 (CEO 2026-09-13, "düzelt"): the QA judge rides the same subscription and
+// pays into the same book — source 'qa', so the receipt says who spent it.
+// Measured 2026-09-13 on DXB-V-EYW-005: eight judge calls (Opus 5 at max, 29 s
+// on the critical path twice) and not one row. The hourly window counts both
+// sources; the lane estimate's AVERAGE stays on the seats' own runs, because a
+// gate call is a fraction of a run and would halve the average — and double the
+// hands the hour appears to afford.
+export const QA_SPEND_SOURCE = "qa";
 
 export interface SubscriptionWindow {
   /** Tokens the subscription path spent in the last 60 minutes. */
@@ -92,7 +100,7 @@ export async function checkSubscriptionWindow(): Promise<SubscriptionWindow> {
         (SELECT COALESCE(SUM(prompt_tokens + completion_tokens), 0)
            FROM cost_ledger
           WHERE mode = 'subscription'
-            AND source = ${SUBSCRIPTION_SPEND_SOURCE}
+            AND source IN (${SUBSCRIPTION_SPEND_SOURCE}, ${QA_SPEND_SOURCE})
             AND created_at > now() - interval '60 minutes')      AS tokens,
         fn_setting_numeric(${SUBSCRIPTION_CAP_KEY}, ${SUBSCRIPTION_CAP_FALLBACK}) AS cap
     `.execute(getDb());
@@ -110,7 +118,9 @@ export async function checkSubscriptionWindow(): Promise<SubscriptionWindow> {
  * One subscription run's consumption, written where a brake can read it.
  *
  * `source: 'worker'` distinguishes it from the proxy's own rows ('litellm'), a
- * hook's ('hook') and a human's ('manual'). cost_eur stays 0 — see the header.
+ * hook's ('hook') and a human's ('manual'); the QA judge writes 'qa' (B39,
+ * 2026-09-13) and may add to `meta` (the gate, its effort, its milliseconds).
+ * cost_eur stays 0 — see the header.
  * Never throws: a task that finished must not fail because its receipt did.
  */
 export async function recordSubscriptionSpend(args: {
@@ -120,6 +130,8 @@ export async function recordSubscriptionSpend(args: {
   model: string;
   tokensIn: number;
   tokensOut: number;
+  source?: typeof SUBSCRIPTION_SPEND_SOURCE | typeof QA_SPEND_SOURCE;
+  meta?: Record<string, unknown>;
 }): Promise<void> {
   try {
     await getDb()
@@ -133,8 +145,8 @@ export async function recordSubscriptionSpend(args: {
         prompt_tokens: args.tokensIn,
         completion_tokens: args.tokensOut,
         cost_eur: 0, // subscription: no marginal EUR, and no second money source
-        source: SUBSCRIPTION_SPEND_SOURCE,
-        meta: JSON.stringify({ brake: SUBSCRIPTION_CAP_KEY }),
+        source: args.source ?? SUBSCRIPTION_SPEND_SOURCE,
+        meta: JSON.stringify({ brake: SUBSCRIPTION_CAP_KEY, ...(args.meta ?? {}) }),
       })
       .execute();
   } catch (err) {

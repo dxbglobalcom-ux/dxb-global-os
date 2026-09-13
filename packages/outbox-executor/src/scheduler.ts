@@ -25,6 +25,7 @@ import {
   drainTasks,
   generateWorkFromPlans,
   RESIDENT_WORKER_ID,
+  QA_SPEND_SOURCE,
   SUBSCRIPTION_SPEND_SOURCE,
 } from "@dxb/orchestrator";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
@@ -315,7 +316,9 @@ export async function dispatchLanes(): Promise<number> {
              SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
                     COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
                                WHERE mode = 'subscription'
-                                 AND source = ${SUBSCRIPTION_SPEND_SOURCE}
+                                 -- B39 (2026-09-13): the QA judge's rows count as spent —
+                                 -- the same subscription — but not in the average below.
+                                 AND source IN (${SUBSCRIPTION_SPEND_SOURCE}, ${QA_SPEND_SOURCE})
                                  AND created_at > now() - interval '60 minutes'), 0)        AS spent,
                     (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
                       WHERE mode = 'subscription'
