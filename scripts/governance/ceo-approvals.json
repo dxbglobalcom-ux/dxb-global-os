@@ -647,5 +647,12 @@
     "verbatim": "o zmaan öyle yapalım mı lütfen. şimdi session çok şişti bir sonraki sessiondaki fable 5.1 olan kardeşin aynen işlere devam etsin onun için güzel bi promt hazırla.",
     "conditions": "measured on the next film through the road; the seats' thinking effort untouched",
     "where": "STATE 2026-09-13 (next-session order); board B43 open legs"
+  },
+  "studio-persona-bindings-corrected-2026-09-13": {
+    "date": "2026-09-13",
+    "what": "Two words in one message, after the clock leg was put in front of him. FIRST, on his question what 'you have this many minutes' meant and whether that was what he had asked for: measured for him that a seat is never told its minutes (the seat's prompt carries only the task and its delivery, worker-shim.ts lines 342-343; the number sits in the book's due_at and is read after the fact by queue_sheet_times), and the per-seat estimate written by the Creative Director STAYS AS APPROVED (budget-per-job-zero-idle-plan-approved-2026-09-13) — option (a), no change. SECOND, the finding beside the leg — the HR record (agents.persona_id) bound 9 of the 16 studio seats to persona version 1 while versions 7 or 2 had passed the gate on 2026-09-04; the seats run from their files (worker-shim.ts line 294), so their work was never on v1 — is CORRECTED on his word: one transaction on the company engine re-bound the nine seats to their latest passed version (advertising-director, character-identity, failure-analysis, film-director, product-brand-consistency, storyboard-previz v1→v7; ai-video-engineer, delivery-qc, vfx-post v1→v2) with one audit_log row each (action persona.bound, actor fable-5), the gate trigger allowing only passed personas; measured after: 16 of 16 studio seats bound = latest passed. Found in the same measurement and NOT touched — his word decides: the same gap outside the studio (every other bound seat carries an older version than its latest passed one).",
+    "verbatim": "önce şu (a) şıkkı onayladığım gibi kalsın. 2.si ise evet sicilleri düzelt.",
+    "conditions": "the nine studio seats only; the holding-wide gap waits for his word",
+    "where": "company DB agents.persona_id (9 rows) + audit_log persona.bound (9 rows); EVIDENCE-clock-2026-09-13.md §6; board B43; STATE 2026-09-13"
   }
 }

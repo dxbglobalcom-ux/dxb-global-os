@@ -80,3 +80,37 @@ select a.slug, bp.version as bound, lp.max_passed as latest_passed from agents a
   where a.department='media-studio' …
 → 9 rows bound 1 with latest 7 or 2 · 7 rows bound = latest (creative-director 9/9, the two assigned seats 3/3, four seats 1/1)
 ```
+
+## 6. His two words on the leg (21:5x–22:0x) and the correction — `studio-persona-bindings-corrected-2026-09-13`
+
+**His question first:** *"niye kaç dakikan var deniniyor anlamadım … biz böyle mi istedik?"* Measured for him before answering: a seat is never told its minutes.
+
+```
+grep -n "due_at\|deadline\|minutes" packages/orchestrator/src/worker-shim.ts   → only line 813 (an unrelated comment)
+the seat's prompt: line 342 `Objective: ${task.objective}` · line 343 `Output contract: ${task.output_contract}`
+```
+His word: *"önce şu (a) şıkkı onayladığım gibi kalsın"* — the Creative Director's per-seat estimate stays as approved; nothing changed.
+
+**The correction, on his word** (*"2.si ise evet sicilleri düzelt"*), one transaction on the company engine through `docker exec … psql` (the same path the persona door and the 2026-07-18 hygiene migration used; no `fn_` door binds `agents.persona_id` — only the two triggers guard it: `trg_agents_persona_passed`, `trg_agents_activation_gate`):
+
+```
+--- BEFORE: seats whose HR record is behind the passed gate ---
+media-advertising-director: v1 -> v7        media-ai-video-engineer: v1 -> v2
+media-character-identity: v1 -> v7          media-delivery-qc: v1 -> v2
+media-failure-analysis: v1 -> v7            media-film-director: v1 -> v7
+media-product-brand-consistency: v1 -> v7   media-storyboard-previz: v1 -> v7
+media-vfx-post: v1 -> v2
+UPDATE 9 · INSERT 0 9 (audit_log action 'persona.bound', actor 'fable-5', payload slug/from/to/persona_id/why) · COMMIT
+--- AFTER: every studio seat, bound version = latest passed? ---
+16 rows, all OK (creative-director v9/v9 · the two assigned seats v3/v3 · six seats v7/v7 · three seats v2/v2 · four seats v1/v1)
+--- audit rows written --- 9
+```
+
+**Measured in the same hour, outside the studio, NOT touched — his word decides (SELECT only):**
+```
+select bp.version, lp.max_passed, count(*) … where the seat is not a studio seat
+→ bound v1 → latest v2: 190 seats · bound v2 → latest v3: 6 seats · bound v2 → latest v6: 1 seat   (197 of 197 bound seats behind)
+select count(*) from agents where persona_id is null → 6   — all six ARCHIVED (customer-service, data-consolidation-agent, project-manager-senior, report-distribution-agent, sales-outreach, support-finance-tracker): no binding is expected, not a defect
+when the later versions passed: 2026-07-16 · v2 · 190 seats · v3 · 6 · v4 · 1; 2026-07-27 · v6 · 1
+```
+The same class as the nine: the seats run from their files (`worker-shim.ts:294`), the HR record has pointed behind the gate since 2026-07-16. Fix, if he says so: the same one-transaction re-bind for the 197 rows, one audit row each.
