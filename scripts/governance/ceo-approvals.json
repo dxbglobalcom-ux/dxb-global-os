@@ -640,5 +640,12 @@
     "verbatim": "kapatabilirsin 005 i beğendim.",
     "conditions": null,
     "where": "HOLDING-OS-MASTER-PLAN/00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md row C27; board B43; STATE 2026-09-13"
+  },
+  "budget-per-job-zero-idle-plan-approved-2026-09-13": {
+    "date": "2026-09-13",
+    "what": "The plan that turns his decision of the same evening (time-line-retired-budget-per-job-zero-idle-2026-09-13) into code, approved as written in the conversation, six steps: (1) the call sheet carries a minutes budget per seat — queue_dispatch accepts it and writes it into the task's due_at; a sheet without budgets is accepted and recorded as unbudgeted; (2) a read tool queue_sheet_times measures the book per seat — budget · actual (claimed→done) · idle before claim · judge_ms · engine time from media_jobs · the non-engine/engine ratio — and the director's verdict seat reads it and writes why for any seat over budget; a film is never failed by the clock; (3) idle rest of the task lanes and the studio's media lanes drops from 10 s to 3 s, configurable (DXB_LANE_REST_SECONDS) and reversible; (4) one line in the Creative Director's persona: write the budget on the sheet, read the times table in the verdict (persona door: file → sync → gate); (5) tests: budget → due_at, the times table on a fixed book, the rest setting; then the battery, the scheduler restart, the records; (6) the gauge reaches the studio tab only when B32 draws it — until then it lives in the table and the evidence file. Touches: packages/dxb-mcp/src/dispatch-book.ts + groups/queue.ts, packages/outbox-executor/src/task-lanes.ts + scheduler.ts, personas/media-studio/media-creative-director.md, tests/b43/. Untouched: the seats' effort (xhigh), the QA judge, the engine recipe. Not built in this session — he closed it as too large and handed the work to the next Fable 5.1 session, which builds it first after stating the position, then plan ③ continuity, ④ the QC list, ⑤ the external audit.",
+    "verbatim": "o zmaan öyle yapalım mı lütfen. şimdi session çok şişti bir sonraki sessiondaki fable 5.1 olan kardeşin aynen işlere devam etsin onun için güzel bi promt hazırla.",
+    "conditions": "measured on the next film through the road; the seats' thinking effort untouched",
+    "where": "STATE 2026-09-13 (next-session order); board B43 open legs"
   }
 }
