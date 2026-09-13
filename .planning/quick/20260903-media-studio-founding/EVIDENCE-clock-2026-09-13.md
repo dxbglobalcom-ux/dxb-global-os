@@ -114,3 +114,31 @@ select count(*) from agents where persona_id is null → 6   — all six ARCHIVE
 when the later versions passed: 2026-07-16 · v2 · 190 seats · v3 · 6 · v4 · 1; 2026-07-27 · v6 · 1
 ```
 The same class as the nine: the seats run from their files (`worker-shim.ts:294`), the HR record has pointed behind the gate since 2026-07-16. Fix, if he says so: the same one-transaction re-bind for the 197 rows, one audit row each.
+
+## 7. The rest of the holding, on his word — `holding-persona-bindings-corrected-2026-09-13`
+
+What a version IS, shown to him on one seat (company DB, SELECT only):
+```
+personas of cmo (the marketing director): v1 · 79 lines · 2026-07-11   v2 · 93 lines · 2026-07-16
+diff v1 v2 → 14 lines added, 0 removed; the added heading: "## 12. Discipline DNA & Islamic conduct" (his rulings D5+D6, 2026-07-17)
+sync-personas-to-db.sh --verify personas/marketing/cmo.md → match: 1 · VERIFY: PASS   (the file the seat reads = v2)
+agents.persona_id for cmo → v1 (the record)
+```
+
+**First attempt (all 197) — rolled back whole, nothing written:**
+```
+ERROR: activation denied: persona 7c71a25b-… has quality_gate=passed, author=opus-5 (need passed + v2 author)
+CONTEXT: PL/pgSQL function enforce_persona_gate_on_activation() line 13 at RAISE
+after: still behind: 197 · audit rows from the aborted run: 0
+```
+Cause, measured: `pg_get_functiondef('enforce_persona_gate_on_activation')` → `v_author NOT IN ('fable-5','hr-factory')` — the trigger (migration `20260712008000_hr_factory_fns_e54b.sql`) never learned U30 (`joint-authorship-2026-07-26`: *"Fable 5 te aynı şekilde bu projeden sorumlu ve yetkilidir"* — both authors), while `personas_author_check` already reads `('opus-5','fable-5','hr-factory')`. Exactly one target is Opus-5-authored: Hamza, `agents-orchestrator` v6 (2026-07-27); his file = v6 (`--verify` MATCH, VERIFY PASS); his record stays v2.
+
+**Second attempt (the 196 the gate accepts) — one transaction:**
+```
+--- BEFORE: seats to correct, by step ---   v1 -> v2: 190 seats · v2 -> v3: 6 seats
+UPDATE 196 · INSERT 0 196 (audit_log persona.bound, actor fable-5, why "…corrected on the CEO's word 2026-09-13 ("sürümleri güncelle.")") · COMMIT
+--- AFTER: bound seats still behind ---     agents-orchestrator · v2 → v6   (the one the gate refused)
+--- AFTER: cmo ---                          v2 (passed, fable-5, 2026-07-16)
+--- employment status unchanged ---         active: 213 · archived: 6
+```
+Not done, waits for his word: aligning the activation gate's author list with U30 (a migration on both engines through the canonical chain, ledger 164 → 165, schema parity), after which Hamza's record is re-bound v2 → v6 the same way.

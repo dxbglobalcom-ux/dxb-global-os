@@ -654,5 +654,12 @@
     "verbatim": "önce şu (a) şıkkı onayladığım gibi kalsın. 2.si ise evet sicilleri düzelt.",
     "conditions": "the nine studio seats only; the holding-wide gap waits for his word",
     "where": "company DB agents.persona_id (9 rows) + audit_log persona.bound (9 rows); EVIDENCE-clock-2026-09-13.md §6; board B43; STATE 2026-09-13"
+  },
+  "holding-persona-bindings-corrected-2026-09-13": {
+    "date": "2026-09-13",
+    "what": "After the nine studio seats, the same record gap across the rest of the holding — 197 of 197 other bound seats carried an older persona version in agents.persona_id than their latest passed one (190 v1→v2 and 6 v2→v3, passed 2026-07-16 in the E12.5 wave that added §12 Discipline DNA & Islamic conduct to every persona; 1 v2→v6, Hamza, passed 2026-07-27) — explained to him on the marketing director's own two versions (v1 79 lines, v2 93 lines: 14 lines added, none removed, the added block is §12; the file the seat reads = v2, VERIFY PASS) and CORRECTED on his word: one transaction on the company engine re-bound 196 seats to their latest passed version with one audit_log row each (action persona.bound, actor fable-5); employment status untouched (213 active, 6 archived — the 6 unbound agents are all archived, expected). A first attempt covering all 197 rolled back whole and wrote nothing: the activation gate trigger enforce_persona_gate_on_activation (migration 20260712008000_hr_factory_fns_e54b) accepts authors ('fable-5','hr-factory') only and refused Hamza's v6, written by an Opus 5 session on 2026-07-27 — the trigger never learned U30 (joint-authorship-2026-07-26: both Opus 5 and Fable 5 are authorized authors; personas_author_check already accepts opus-5). Hamza's record stays at v2 (his file = v6, VERIFY PASS) until the CEO decides whether the gate's author list is aligned with U30 by a migration.",
+    "verbatim": "sürümleri güncelle.",
+    "conditions": "196 of 197 done; Hamza (agents-orchestrator v2 → v6) waits on his word about the activation gate's author list",
+    "where": "company DB agents.persona_id (196 rows) + audit_log persona.bound (196 rows); EVIDENCE-clock-2026-09-13.md §7; board B43; STATE 2026-09-13"
   }
 }
