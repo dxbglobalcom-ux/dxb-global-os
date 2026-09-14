@@ -1,4 +1,4 @@
-> **SUPERSEDED — 2026-09-14 evening.** Bu prompt 00:45'te yazıldı; öğleden sonra Astra'nın kuralı KABUL edildi, akşam günün işi denetlenip düzeltildi. Yapıştırma. Güncel konum: `.planning/STATE.md` (canlı emir bloğu, 2026-09-14 akşam) — oturum kapanırken yeni devir promptu yazılır.
+> **SUPERSEDED — 2026-09-14 evening.** Bu prompt 00:45'te yazıldı; öğleden sonra Astra'nın kuralı KABUL edildi, akşam günün işi denetlenip düzeltildi. Yapıştırma. Güncel konum: `.planning/STATE.md` (canlı emir bloğu, 2026-09-14 akşam). Yeni devir promptu yazılmadı (CEO, 2026-09-14 17:1x: "devir promtu yazma"); yeni oturum STATE.md ile başlar.
 
 # CEO → next session (Fable 5.1) — handover prompt, written 2026-09-14 00:5x on his order ("bu session şişti daha sonra bu işe devam etmesi için devir promotunu bir sonraki session için hazırla ve mükemmel şekilde devam etsin")
 
