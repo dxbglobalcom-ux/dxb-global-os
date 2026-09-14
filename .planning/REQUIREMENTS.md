@@ -79,6 +79,8 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 - [ ] **VOICE-02**: Spoken commands: STT → kernel intent path (voice = second kernel client). [CEO B2, 2026-07-09] Wake word is a runtime-configurable config value (openWakeWord; never hard-coded), default **"Selamünaleyküm ya Hamza"**. [CEO C1, 2026-07-10] Wake word is the **PRIMARY activation path** (not an optional layer): on the CEO laptop `wakeword.enabled=true` is the default, push-to-talk is the fallback. Microphone + wake listener run ONLY on the CEO laptop; the VPS never listens (LOCKED, reconfirmed). Verbatim clause binding on the Phase 9 spec: *"JARVIS, dashboard'a EŞİT tam komut kanalıdır — CEO'nun her sesli direktifi kernel intent yoluna iner ve ilgili departmana dağıtılır; asistan istenen işe itiraz etmez, risk ve faydayı bildirir, son karar CEO'nundur; outward aksiyonlar mevcut GATE-01 draft+onay akışından geçer."*
 - [ ] **VOICE-03**: [CEO C2, 2026-07-10] Conversational voice dialogue: after the briefing (and at any time), the CEO can hold a **multi-turn spoken dialogue** with the kernel — follow-up questions, drill-down, and chained commands (e.g. "onaylar neymiş?" → JARVIS lists them → "ikincisini onayla" → kernel executes). One-shot intents do NOT satisfy this. The dialogue brain is the kernel/orchestrator (session context, referent resolution across turns); JARVIS remains a pure STT/TTS channel (VOICE-02 principle). Outward actions still pass GATE-01.
 
+- [ ] **VOICE-04**: [CEO, 2026-09-14] **Silent-listening law:** nothing is transcribed and no transcript text is written to disk until the wake word fires. The microphone stays open but only its ENERGY is measured; the wake decision belongs to the openWakeWord model (VOICE-02), which classifies the waveform directly and never produces text. A segment that does not match is discarded in memory — no STT call, no log line carrying speech. Measured breach this closes (2026-09-14): the interim STT-scan wake path in `packages/voice/src/jarvis-daemon.ts` transcribed every ambient segment and wrote the first 40 characters of each non-matching transcript to `var/jarvis.log` — 16,708 lines / 1 MB of room speech resident on disk. V9 (audio never leaves CEO hardware) held throughout; V9 does not cover LOCAL transcription, and this requirement closes that gap.
+
 ### Video Learning (VID)
 
 - [ ] **VID-01**: CEO drops a video link → system downloads, transcribes, summarizes, and files it through the memory router (async, quarantine-tiered)
@@ -135,7 +137,7 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 
 ## Traceability
 
-Every v1 requirement maps to exactly one phase (56/56 mapped, no orphans, no duplicates). Phases in ROADMAP.md.
+Every v1 requirement maps to exactly one phase. Measured 2026-09-14: 58 rows in the phase table below and 53 open checklist lines above — the two counts have drifted apart and the "56/56" this line claimed until 2026-09-14 matched neither; the counting is owned by board row B20. Phases in ROADMAP.md.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
@@ -187,6 +189,7 @@ Every v1 requirement maps to exactly one phase (56/56 mapped, no orphans, no dup
 | VOICE-01 | Phase 9 | Pending |
 | VOICE-02 | Phase 9 | Pending |
 | VOICE-03 | Phase 9 (09-06, CEO onayı bekliyor) | Pending  <!-- HISTORY --> |
+| VOICE-04 | Phase 9 | Pending |
 | DEPT-01 | Phase 10 | Pending |
 | DEPT-02 | Phase 10 | Pending |
 | DEPT-03 | Phase 10 | Pending |

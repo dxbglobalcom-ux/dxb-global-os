@@ -1,3 +1,5 @@
+> **SUPERSEDED — 2026-09-14 evening.** Bu prompt 00:45'te yazıldı; öğleden sonra Astra'nın kuralı KABUL edildi, akşam günün işi denetlenip düzeltildi. Yapıştırma. Güncel konum: `.planning/STATE.md` (canlı emir bloğu, 2026-09-14 akşam) — oturum kapanırken yeni devir promptu yazılır.
+
 # CEO → next session (Fable 5.1) — handover prompt, written 2026-09-14 00:5x on his order ("bu session şişti daha sonra bu işe devam etmesi için devir promotunu bir sonraki session için hazırla ve mükemmel şekilde devam etsin")
 
 > Bu metin CEO'nun bir sonraki oturuma yapıştırması içindir. Her yol ve sayı 14 Eylül 2026 gecesi ölçüldü; yeni oturum makineyi yeniden ölçer, dosyaları ezbere söylemez.
