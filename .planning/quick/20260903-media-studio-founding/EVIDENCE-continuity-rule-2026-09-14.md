@@ -40,3 +40,49 @@ bash scripts/i18n-purity-check.sh → I18N PURITY: PASS
 ## Not done, on purpose
 - No exam of the rule: it runs on the first job that needs more than one take (the station's limit is one take ≤ 15.1 s; every accepted film is one take).
 - No route beyond the station exists yet (leg 6).
+
+---
+
+# SECOND PASS THE SAME DAY — the contradicting sentences removed, on his order
+
+His catch and order (2026-09-14): *"Yeni kuralı yazmışsın ama eski zıt talimatları bırakmışsın … İki yönetmenin ve bu yolu uygulayan çalışanların talimatlarını kontrol et; çelişen eski hükümleri kaldır … Bu düzeltmeyi yapmanı onaylıyorum. İlgili çalışanlara gerçekten ulaştığını ve çevresindeki işleyişi bozmadığını doğrula. Yalnız yeni cümleyi ekleyip eski emri bırakma."* Ledger: `continuity-rule-contradictions-removed-2026-09-14`.
+
+## The sweep — 16 seat files, every hit read in place
+Pattern: fixed-count cuts · short-shot mandates · long-take bans · drawn first/last frames handed to the motion engine · "chain of short shots". Files with contradictions: 12 (10 studio seats + the Prompt / Model Specialist `personas/design/design-image-prompt-engineer.md` + the Editor `personas/marketing/marketing-short-video-editing-coach.md`). None in: advertising-director, delivery-qc, vfx-post, sound-music.
+
+Replaced (44 sentences, one all-or-nothing script, each old string asserted unique in its file):
+- Creative Director: "(9) the Editor cuts six to ten perfect short shots into the piece"; "(5) … short shots"; "(4) … the first and last frames as stills" for the engine; "a product enters as an approved still handed as the first frame; a shot that carries identity is kept short"; "one long generation is cheaper than several short ones"; "a shot list built on one long take"; the registry cure "product shots are handed an approved first and last frame".
+- Film Director: "six to ten perfect short shots cut into thirty seconds beat one thirty-second take every time"; "a long take is where identity dies"; "a longer generation is cheaper"; "frames approved as stills"; product direction "approved still … first frame … short shots … long take"; "Declines: 'one take, thirty seconds'"; "the hold table beats the script's wish for a long take"; "identity-carrying shots short".
+- Storyboard / Previz: "the first and last frames handed to the motion lane" (dossier, methodology, §1, §3 ×3, §4, §9); "a panel rides as the first frame of a short shot".
+- Prompt / Model Specialist: "hero frames, first and last frames" (4); "an approved still handed as the first frame".
+- Editor: "six to ten short generated shots" (2); "the cut is built from short shots, not long takes"; "lived in one long take".
+- AI Video Engineer: "first-and-last-frame conditioning for products and exact camera" → joins with the engine's own frames; a native multi-shot run measured before a split.
+- Product & Brand: "Product shots travel through first-and-last-frame conditioning: an approved still … as the first frame" and 7 more (methodology, raw material, pattern, escalations, declines, registry cure, relations).
+- Character / Identity: "first-and-last-frame conditioning is for products and exact camera".
+- Continuity: "Anchors for chains: in a long form or a chained sequence …" → only when the job needs more than one take; the engine's own frame; a native multi-shot run measured first.
+- Screenwriter: "eight to twelve scenes, each scene a chain of short shots".
+- Failure Analysis: the cure "short identity shots and approved first and last frames".
+- Cinematographer: "the first and last frames are lit and framed here before they are drawn … the frame the engine is handed".
+Kept on purpose: the measured HOLD TABLE (a limit on take length per shot size, re-measured per engine — a limit, not a split); the continuity seat's "check every take at first and last frames" (a measurement, not a hand-off of drawn frames); the identity seat's "a talking face through first-and-last-frame conditioning is a defect" (a mode choice for faces).
+
+## Delivery (persona door)
+```
+DXB_PERSONA_AUTHOR=fable-5 bash scripts/sync-personas-to-db.sh <12 files>   → submit: 12 · fail: 0
+fn_persona_gate(<each new row>,'passed', …)                                   → 12 × passed
+BEGIN; UPDATE agents SET persona_id=<latest passed>; INSERT audit_log persona.bound ×12; COMMIT   → INSERT 0 12 · bound = latest passed: 12
+bash scripts/sync-personas-to-db.sh --verify <12 files>                      → match: 12 · diff: 0 · VERIFY: PASS
+```
+
+## "Did it really reach the employees?" — the runtime's own loader and compiler, not a grep of the file
+`node reach-check.mjs` imports `packages/voice/dist/persona.js` `loadPersonaBody` (the function `worker-shim.ts:294` calls at run time) and `packages/hr/dist/compiler.js` `compilePersonaPrompt`, renders each seat's prompt in full and compact mode, and tests for the rule's own words and for every old phrase:
+- FIRST render: **12/24** — six seats' prompts carried none of the four sentences in their own words (product-brand, character-identity, failure-analysis, cinematographer had only the scoped-Flux clause; the Prompt / Model Specialist's new sentence still read "approved still handed as the first frame"; the Editor kept "lived in one long take"). The very failure the CEO named — adding without removing — caught by measurement before the report.
+- Fix: the road's rule written into those six in the seat's own terms (one line each under §3), the two phrasings re-worded; re-submitted, gated (prompt-engineer v5, editing-coach v5, product-brand v9, character-identity v9, failure-analysis v9, cinematographer v3), bound (INSERT 0 6), verified 12/12.
+- SECOND render: **24/24** prompt renders carry the rule and none of the old sentences; no dossier leak.
+- Old-phrase sweep of all 16 seat files: **0** left.
+
+## Surrounding operation, re-measured after the change
+- `tests/r31/persona-delivery` + `tests/b43` + `tests/b39`: 9 files, **71/71** passed.
+- The seats' status untouched: department media-studio 14 × dormant (as before); the two assigned seats dormant / employment active (as before).
+- No code changed; no engine run; no film made.
+
+**Instruction corrected; not yet tried in production.** The first exam is the first job that needs more than one take. This is not an approval to produce a film or to start a paid service.
