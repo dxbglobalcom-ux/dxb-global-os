@@ -86,3 +86,50 @@ bash scripts/sync-personas-to-db.sh --verify <12 files>                      →
 - No code changed; no engine run; no film made.
 
 **Instruction corrected; not yet tried in production.** The first exam is the first job that needs more than one take. This is not an approval to produce a film or to start a paid service.
+
+---
+
+# THIRD PASS THE SAME DAY — his audit: "teslim doğrulandı, fakat çelişki temizliği tamamlanmamış"
+
+His words (2026-09-14, relayed from his auditor): three contradictions still stood, and the check was the fault — it searched one phrase and a list of old words instead of testing the four conditions and meaning. Ledger: `continuity-rule-third-pass-whole-sequences-2026-09-14`.
+
+## What was read
+The WHOLE persona body (§1–§11) of every one of the 16 seat files, sentence by sentence, against his four conditions — not a grep. Per seat, the verdict of that reading and what was changed:
+
+| Seat | Read | Found and replaced (this pass) |
+|---|---|---|
+| Storyboard / Previz | §1–§11 | §2 "the panel is the literal first frame the motion engine receives" (his point 1) → the panel is the frame the prompt is written to; §1 "the engine can only move the frame it is handed" and "what the engine receives is already the film"; §4 "is what the engine receives"; §5 "so nothing is re-framed by the engine"; + the road's rule in the seat's terms |
+| Prompt / Model Specialist | §1–§11 | §3 "the shot kept short" and "approved frames handed to the engineer for motion" (his point 2); "the product from its approved still"; §2 the 2026-09-03 "strong default" clause, out of date since his 2026-09-04 22:35 word → the road comes from the brief; §4 "conditioning method per shot" only where the brief says "choose the best"; §7 outputs |
+| Film Director | §1–§11 | §2 "text-to-video … the wrong one for faces and products" (his point 3); §1 "holds a face for a few seconds … before it is cut" and "a still made perfect … nobody asks one model to get thirty seconds right"; §2 "a close-up holds identity for about three seconds … a scene longer than the hold time is several shots, never one" — superseded by the measured one-take 15 s films (EYW-002C, 003, 005); §4 "no product shot without an approved still" |
+| Creative Director | §1–§11 | §1 "a six-second shot cut into a thirty-second film beats one thirty-second generation" |
+| AI Video Engineer | §1–§11 | §1 "frames from Storyboard / Previz", "hosted APIs"; §3 run pattern "frames"; route table "hosted API" → external hand; §7, §9; + the road's rule in the seat's terms |
+| Continuity | §1–§11 | §3 "anchor chains" → only where the job needed more than one take; + the road's rule in the seat's terms |
+| Product & Brand | §1–§11 | §1 "handed to it as a real photograph in a perfect still" |
+| Advertising Director | §1–§11 | §2 "approved still" in the strong road; §3 "close-ups planned as separate shots, never asked of one long generation" |
+| Screenwriter | §1–§11 | §2 "a shot holds a face for a few seconds"; + the road's rule in the seat's terms |
+| Failure Analysis | §1–§11 | §2 "the cause is the long single take"; "a shot-length and a first/last-frame decision" |
+| Editor | §1–§11 | + the road's rule in the seat's terms (R2 and R4 were absent) |
+| Character / Identity · Cinematographer · Delivery / QC · VFX / Post · Sound / Music | §1–§11 | consistent — nothing changed this pass (the identity seat's "a talking face through first-and-last-frame conditioning is a defect" is a mode choice for faces; the hold table everywhere is a measured length limit, not a split) |
+
+Total this pass: 30 sentences replaced + 5 rule lines in the seat's own terms + 1 re-wording (the Film Director's negation "or that it is the wrong road for a face" → "or unfit for a face", so no reader mistakes it).
+
+## The check, rebuilt (his order: not word absence — the whole sequence against the method)
+`tests/b43/road-consistency.test.ts` (kept in the studio battery): renders each seat's REAL prompt with `loadPersonaBody` (`@dxb/voice`, the runtime's call) and `compilePersonaPrompt` (`packages/hr`), full and compact; for the 12 applying seats every one of the four conditions must be present by CONCEPT (several wordings each, all required), for all 16 seats a broad contradiction list must be absent, and the dossier must not leak.
+```
+node road-check.mjs (same logic)  BEFORE the fixes: 20/32 — film-director (a negated "wrong road for a face" wording), storyboard (conditions 1, 2 absent in its own words), editor (2, 4), engineer (1, 4), continuity (4), screenwriter (1–4)
+                                  AFTER:  32/32
+pnpm exec vitest run tests/b43/road-consistency.test.ts → (result in the commit message)
+```
+
+## Delivery and surroundings (measured after the change)
+```
+DXB_PERSONA_AUTHOR=fable-5 bash scripts/sync-personas-to-db.sh <11 changed files>   → submit: 11 · fail: 0
+fn_persona_gate ×11 → passed (creative-director v12, film-director v10, storyboard v9, prompt-engineer v6, editing-coach v6, ai-video-engineer v4, product-brand v10, advertising-director v8, continuity v3, screenwriter v3, failure-analysis v10)
+BIND: INSERT 0 11 · COMMIT · bound = latest passed: 11
+--verify on all 16 seat files → match: 16 · diff: 0 · VERIFY: PASS
+LIVE_BOUND_MATCH (16 seats, bound row = latest passed) → 16
+old-phrase sweep (13 patterns) over 16 files → 0
+tests r31 + b43 + b39 → 71/71 (before the new test was added)
+seats' status: department media-studio 14 × dormant, unchanged
+```
+**Instruction corrected; not yet tried in production.** No film was produced; no paid service was started. The first exam is the first job that needs more than one take.
