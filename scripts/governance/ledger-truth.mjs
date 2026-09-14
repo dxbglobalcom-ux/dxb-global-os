@@ -94,6 +94,9 @@ const APPROVAL_CLAIM =
 const APPROVAL_NOT_A_CLAIM =
   /acceptance session|approving his own work|→\s*CEO-approved|CEO-approved →|becomes `APPROVED`|only by explicit CEO acceptance|CEO-accepted states/;
 const MARK_CEO_OK = /<!--\s*CEO-OK:\s*([a-z0-9\-]+)\s*-->/i;
+// Every marker on a line is checked, not the first: the board's rows are single lines carrying many
+// (row B43 carried 32 on 2026-09-14) and a non-global match saw only the first (audit 2026-09-14).
+const MARK_CEO_OK_ALL = new RegExp(MARK_CEO_OK.source, "gi");
 
 // The corpus this gate governs. Deliberately NOT included, each for a stated
 // reason: `.planning/quick/**` (execution tickets — one-shot by definition, not
@@ -497,15 +500,16 @@ for (const rel of corpusFiles()) {
     // the row was marked correctly and the gate never looked, because its
     // sentence was phrased as a quotation of the CEO rather than as an
     // assertion about him. A mistyped or stale approval id would have passed.
-    const ok = line.match(MARK_CEO_OK);
-    if (ok) {
+    const oks = [...line.matchAll(MARK_CEO_OK_ALL)];
+    for (const m of oks) {
       found.ceoOk++;
-      if (!approvals[ok[1]]) {
+      if (!approvals[m[1]]) {
         failures.push(
-          `${rel}:${i + 1} — CEO-OK marker names approval "${ok[1]}", which is not registered in ${APPROVALS}`,
+          `${rel}:${i + 1} — CEO-OK marker names approval "${m[1]}", which is not registered in ${APPROVALS}`,
         );
       }
     }
+    const ok = oks.length > 0;
 
     if (APPROVAL_CLAIM.test(line) && !APPROVAL_NOT_A_CLAIM.test(line)) {
       if (!ok && !MARK_HISTORY.test(line) && !cover[i]) {
