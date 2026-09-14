@@ -136,7 +136,10 @@ day's registered ruling with the same content. Then: `ledger truth OK … 193 CE
 
 Measured: `.planning/REQUIREMENTS.md` mtime 10:55:46, uncommitted, the only file naming VOICE-04;
 `var/jarvis.log` 1,033,831 bytes / 16,708 lines, last line 08:15Z "SIGTERM — stopping", git-ignored
-(`.gitignore:66`); `systemctl --user is-enabled dxb-jarvis.service` → disabled, inactive;
+(`.gitignore:66`) — and, measured only after his correction at 17:1x: the 306 speech fragments it held were replaced
+with "[silindi 2026-09-14]" by the morning session on his order (11:06, claude-mem #22016), 0 extractable speech
+remains (`grep -cE '\] (heard|transcript|said|stt)[^:]*: .{40,}'` → 0), the technical lines kept; the 102 `voice_calls`
+rows in the company database are the company's own conversations and stay by his word; `systemctl --user is-enabled dxb-jarvis.service` → disabled, inactive;
 `~/.local/state/wireplumber/backup-2026-09-14` present; `packages/voice/src/jarvis-daemon.ts` unchanged
 since 2026-07-28; claude-mem observations #22005–#22017 (10:37–11:07) carry the session's own record.
 The work itself was never in question — only that no repo record carried it. Registered on his word.
@@ -152,7 +155,10 @@ file per run — no restart needed for the seats to see the corrected text. Grap
 ## 5. Not done, by design
 
 - No film, no production run — *instruction corrected, not yet tried in production*.
-- `var/jarvis.log` not deleted (waits on his word; listed with its size).
+- The author's evening report told him the room speech was still on disk in `var/jarvis.log` and asked whether to
+  delete it — wrong: the file's size and line count were measured, its content was not, and the requirement's text
+  described the breach as it stood at 10:55, not after the 11:06 redaction. His correction: *"jarvis.log'u sil
+  demiştim ve silmişti sadece şirketle iligli konuşma kalsın demiştim okadar."* Measured, and the records corrected.
 - Hamza (record v2, file v6) untouched — B08 step 0, parked by his word.
 - The meaning-level check of a persona remains reading; no LLM judge was built (it would be a new design
   decision — his approval first).
