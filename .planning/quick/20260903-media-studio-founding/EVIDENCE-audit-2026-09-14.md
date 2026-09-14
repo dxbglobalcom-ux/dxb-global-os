@@ -95,6 +95,8 @@ The procedure for every persona: `DXB_PERSONA_AUTHOR=fable-5 bash scripts/sync-p
 | ⑦ | the records | STATE.md, STATE-ARCHIVE.md, 00-BOARD-OPEN-WORK.md row 146, ceo-approvals.json, this file, NEXT-SESSION-PROMPT-2026-09-14.md (superseded note, repo + Desktop copy) | — | battery below | the records commit |
 | ⑧ | VOICE-04 on his word | .planning/REQUIREMENTS.md | — | — | the records commit |
 
+④, corrected at 17:0x: the Advertising Director (4 replacements — "strong road" → the studio's best care, the road is the brief's; "frames to draw" → the panels to board) had been edited with the ten others and left out of their bind loop and commit; `git status` after the records commit showed it, and the DB still held v9 against the changed file. Bound v10 (md5-equal), road test 16/16, committed separately — the class of defect this audit exists for, caught by the same measure-before-claim.
+
 What each persona correction says now, in one line:
 - ① Sound: the engine's own generated voice is the only voice; a take that fails the line sheet's word-error
   line is shot again with the line in the prompt — no TTS, no recorded, cloned or synthesised replacement;
