@@ -133,3 +133,32 @@ tests r31 + b43 + b39 → 71/71 (before the new test was added)
 seats' status: department media-studio 14 × dormant, unchanged
 ```
 **Instruction corrected; not yet tried in production.** No film was produced; no paid service was started. The first exam is the first job that needs more than one take.
+
+---
+
+# FOURTH PASS THE SAME AFTERNOON — his three sentences, his (A), and the record's words corrected
+
+His sentences: *"Yerelde: MiniMax her şeyi baştan sona yapar; Flux kullanılmaz. Dışarıda: Üretimde Flux'tan faydalanılabilir. T2V ve I2V: İkisi de sistemde bulunur."* His correction of the record's words: *"bilgisayar dışında ne ya, belki dışarıda api ile oluşturacağımız vitrinin herşeyini biz burada üreteceğiz"* — everything of a piece is made HERE; only the engine that shoots the take differs. His answer to the author's one question: **(A)** — *"sadece minimax h3 iş yaptığı zaman flux'a ihtiyaç yok. bunun dışında dışarıda yapılacak işler için kullanılabilir bir kısıtlama yok. ama içeride kesinlikle öncelik yerel motor minimax begining to end."* Ledger: `flux-local-engine-only-everything-made-here-2026-09-14`.
+
+## Measured before the change ("bu yapıldı mı?")
+- (1) "no drawn frame to the local engine": 12 seat files carried it · (3) both roads: 8 seats say the road comes from the brief / both roads live; in the hands `media_submit shoot` takes `prompt` and optional `first_frame` / `last_frame` (`packages/dxb-mcp/src/groups/media.ts:77-78`) — text and picture roads both exist in code · (2) external Flux: 13 files said a still may ride for an external take.
+- The gap: the personas still described the still lane (Flux) drawing panels, hero frames and product stills for LOCAL takes (storyboard, prompt specialist, product, cinematographer, both directors, advertising director) — and the record said "on the station's own road / off the station", which he read as "outside the computer" and rightly rejected.
+
+## What changed
+- 122 place phrasings → engine phrasings in all 16 seat files: "on the station's own road" / "on this station's own route" → "for a local-engine take (MiniMax H3 on this card)"; "off the station" → "for an external engine's take"; "the station's (own) engine" → "the local engine (MiniMax H3)". "Measured on this station" (this machine as the place of measurement) untouched by design.
+- The local still lane closed for local takes in the six seats that described it (storyboard §1/§2/§3/§7/§9 and dossier; prompt specialist dossier/§1/§3/§9; product §3 twice + cure; cinematographer §3 twice + §9; creative director step (4), engine floor, §9; film director §3; advertising director §3): for a local-engine take the panels are written, the hero frame he judges is the engine's own frame, no still is produced; for an external engine's take the still lane draws here and a still may ride as the first frame.
+- His canonical sentence appended to the rule line of all 12 applying seats: everything made here on this computer on either route; only the engine that shoots differs; the local engine first, beginning to end; Flux plays no part in a local take; an external engine may be handed a Flux still or first frame made here, without restriction beyond the brief's road; T2V and I2V both open from the start on either route.
+- `tests/b43/road-consistency.test.ts`: condition 4 rewritten engine-wise (five wordings, all required in the 12 applying seats: "Flux plays no part / is not used" · "local-engine take" · "external engine's take" · "made here on this computer" · "both roads open" · "the local engine is the first choice"); the place words ("off the station", "on the station's own road", "outside the computer") and the local-still-lane sentences added to the contradiction list. Result **28/28**.
+- No code changed in the hands. The `still` hand (a FLUX frame on this card) stays — for external-engine takes and for his explicit orders.
+
+## Delivery and surroundings
+```
+DXB_PERSONA_AUTHOR=fable-5 bash scripts/sync-personas-to-db.sh <13 changed files>  → submit: 13 · fail: 0
+fn_persona_gate ×13 → passed (creative-director v13, film-director v11, storyboard v10, prompt-engineer v7, editing-coach v7, engineer v5, product v11, identity v10, cinematographer v4, continuity v4, screenwriter v4, failure-analysis v11, advertising v9)
+BIND: INSERT 0 13 · COMMIT
+--verify on all 16 seat files → match: 16 · diff: 0 · VERIFY: PASS
+LIVE_BOUND_MATCH (16 seats, bound row = latest passed) → 16
+tests r31 + b43 (incl. road-consistency 28) + b39 → 99/99 · typecheck clean
+seats' status: department media-studio 14 × dormant, unchanged
+```
+**Instruction corrected; not yet tried in production.** No film was produced; no paid service was started.

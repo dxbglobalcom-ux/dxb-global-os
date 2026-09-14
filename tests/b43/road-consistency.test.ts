@@ -6,7 +6,8 @@
 // each seat's prompt the way the runtime does (loadPersonaBody → compilePersonaPrompt, full and
 // compact) and tests his four conditions BY CONCEPT — several wordings each — plus a broad list of
 // the sentences that contradicted them. A new contradiction wording is added to CONTRA when found;
-// the four conditions never shrink.
+// the four conditions never shrink. 2026-09-14 afternoon: condition 4 grew — on the station Flux is not
+// used at all (panels written, the hero frame the engine's own); the still lane serves the external routes only.
 import { describe, expect, it } from "vitest";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -50,9 +51,13 @@ const CONDITIONS: Record<string, RegExp[]> = {
   "3 joins are the shooting engine's own frames": [
     /engine'?s own (last )?frame|frames of the engine that shot|shooting engine'?s own frames|taken from the engine that shot|the frame the engine itself shot/i,
   ],
-  "4 Flux closed on the station's local route only": [
-    /(station|local)('s own)? (route|road)[^.]*(only|never)|closed on th(is|e) station|scoped to the local route|local route only/i,
-    /RunPod, an API or an MCP|rented card or an external hand|off the station/i,
+  "4 Flux plays no part in the LOCAL engine's take; a Flux still made here may go to an EXTERNAL engine's take; everything is made here": [
+    /Flux (is not used|plays no part)/i,
+    /local[- ]engine('s)? take|shot by the local engine|the local engine \(MiniMax H3/i,
+    /external engine('s)? take|shot by an external engine|RunPod, an API or an MCP/i,
+    /made here on this computer|made here, on this computer|produced here on this computer/i,
+    /text-to-video and image-to-video are both open|image-to-video is not forbidden|both roads/i,
+    /local engine is the first choice|first choice, beginning to end/i,
   ],
 };
 
@@ -64,6 +69,13 @@ const CONTRA: RegExp[] = [
   /approved still handed as the first frame/i, /strong default wherever/i, /never asked of one long generation/i,
   /cut into thirty seconds/i, /chain of short shots/i, /handed to the motion lane/i,
   /a scene longer than the hold time is several shots/i, /the cause is the long single take/i,
+  // his three sentences of 2026-09-14 (afternoon): on the station Flux is not used at all — no local still lane
+  /panels produced with the Prompt \/ Model Specialist on the still lane, composited/i,
+  /the still lane produces the product frames first/i, /product stills built with the Prompt/i,
+  /the hero frame and the panels produced as stills/i, /who operates the still engine, to produce the panels/i,
+  /built to perfection here[^.]*and shown to the CEO before motion; it is the frame/i,
+  // his correction (2026-09-14 afternoon): place words were wrong — only the ENGINE that shoots the take differs
+  /off the station/i, /on the station'?s? own (road|route)/i, /on this station'?s own route/i, /outside the computer|bilgisayar dışında/i,
 ];
 
 async function render(path: string, mode: "full" | "compact"): Promise<string> {
