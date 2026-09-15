@@ -1,9 +1,9 @@
 {
   "_department": "marketing",
-  "_generated_at": "2026-09-15T11:53:05.828Z",
+  "_generated_at": "2026-09-15T12:01:22.751Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
   "_skills": [],
-  "_source_hash": "b1e5ec29d782cd9d3fbd75a6eca45d8059470e66bb1f8130eefe374ee7c4abf9",
+  "_source_hash": "aa6aff200a39333b2efaeac95c60790da4cc68acca08b835fd3c2dfe8928168a",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",

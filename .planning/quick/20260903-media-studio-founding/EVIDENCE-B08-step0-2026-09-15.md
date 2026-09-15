@@ -289,6 +289,11 @@ MATCH agents-orchestrator — DB↔dosya gövde eş (md5 6ce115f40198b2f0cfd9fca
 persona from the file at spawn and the gate from the catalogue at write time. In-flight = 0 was measured anyway, so a
 restart would have been safe had one been required.
 
+**⚠ Do not generalise that sentence.** It is true of THIS change and was false of W9 the same afternoon: a change to
+COMPILED CODE that a resident daemon holds in memory is not delivered until that daemon restarts, and W9's first
+commit shipped overlay files the five-hour-old scheduler had silently rewritten two minutes earlier. The two cases
+look alike from outside and are not alike — see `EVIDENCE-W9-2026-09-15.md` § 3 correction.
+
 ---
 
 ## 5. THE PERMANENT GATE AGAINST A FIFTH COPY
