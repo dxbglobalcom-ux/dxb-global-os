@@ -16,7 +16,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
-import { execFileSync } from "node:child_process";
+import { execFile, execFileSync, spawn } from "node:child_process";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
@@ -291,6 +291,42 @@ describe("W8 · the media lane's seams", () => {
     expect(row.rows[0].status).toBe("cancelled");
     // the old bug wrote the child's exit into the row; the reason for the kill wins now
     expect(row.rows[0].error ?? "").not.toMatch(/exited null/);
+    // and the row saying 'cancelled' is worth nothing if the process is still running:
+    // a cancel that leaves the engine alive is how a card stays busy after the job is gone
+    const alive = await new Promise<number>((resolve) => {
+      execFile("pgrep", ["-fx", "/bin/sleep 120"], (_e, out) => resolve(String(out).trim() ? String(out).trim().split("\n").length : 0));
+    });
+    expect(alive).toBe(0);
+  });
+
+  it("a child killed with SIGKILL — the hardest death — still gives its job back", async () => {
+    const dept = `${DEPT}-w8sigkill`;
+    const taskId = await makeTask(dept);
+    const job = await callJson("media_submit", { task_id: taskId, kind: "probe", params: { file: "/tmp/w8-sigkill.mp4" } });
+
+    // a real OS process standing in for the engine a lane was running
+    const child = spawn("/bin/sleep", ["300"], { stdio: "ignore" });
+    expect(child.pid).toBeGreaterThan(0);
+    await sql`UPDATE media_jobs SET status='running', claimed_by=${`lane-pid-${child.pid}`}, started_at=now()
+               WHERE id = ${job.id}::uuid`.execute(db());
+
+    // SIGKILL: no handler runs, no cleanup, nothing gets to write a status — the worst case
+    child.kill("SIGKILL");
+    await new Promise((r) => child.once("exit", r));
+    expect(() => process.kill(child.pid!, 0)).toThrow(); // genuinely gone
+
+    // the row is exactly what such a death leaves: 'running', with nobody running it
+    const stranded = await sql<{ status: string }>`SELECT status FROM media_jobs WHERE id = ${job.id}::uuid`.execute(db());
+    expect(stranded.rows[0].status).toBe("running");
+
+    const result = await recoverOrphanedMediaJobs(db());
+    expect(result.requeued).toBeGreaterThanOrEqual(1);
+    const after = await sql<{ status: string; claimed_by: string | null; error: string | null }>`
+      SELECT status, claimed_by, error FROM media_jobs WHERE id = ${job.id}::uuid
+    `.execute(db());
+    expect(after.rows[0].status).toBe("queued");
+    expect(after.rows[0].claimed_by).toBeNull();
+    expect(after.rows[0].error ?? "").toMatch(/orphaned/);
   });
 
   it("start-up recovery gives back a job a dead process was holding", async () => {
