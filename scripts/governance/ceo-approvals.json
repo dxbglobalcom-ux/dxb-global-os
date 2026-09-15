@@ -801,5 +801,12 @@
     "verbatim": "yaz",
     "conditions": "answer to the question whether the rule is holding-wide; the table carries no other text and lives in one place only (CLAUDE.md §4 — a rule written in two places is wrong)",
     "where": ".claude/skills/dxb-verify/SKILL.md (under the ruler rule) · the Part-1 amendment commit · EVIDENCE-W5-2026-09-15.md § \"Ruler + W6c\""
+  },
+  "studio-seats-w5-to-w6c-accepted-2026-09-15": {
+    "date": "2026-09-15",
+    "what": "HIS EYE, GIVEN: everything that stood waiting for it on the studio branch at 13:0x is ACCEPTED. What was in front of him when he said it, named here so a later session knows exactly what the word covered: (1) W5 + W5b — the sixteen studio seats brought to his September rulings, eight audit findings closed and the six residues his own re-measurement found; (2) W6 — the first writing pass, doctrine stated once where it is owned; (3) W6b — the writing pass widened to all sixteen seats on his order; (4) W6c commit 03ad139c — the persona ruler as runnable code (13 rules, one implementation behind a vitest case, a shell runner and a fail-closed gate in the persona sync); (5) W6c commit 3946c78c — the writing of all sixteen seats brought to that ruler's PASS, 554 failures to 0, no rule changed; (6) commit a772ed4e — his two words registered and the ruler rule written holding-wide in the dxb-verify door. Accepted as WRITING AND METHOD; it is not an approval to bind the seats (B08 step 0 still holds that), not an approval to produce a film, and not an approval to spend money.",
+    "verbatim": "gözümü beklenyenleri onaylıorm ok. hadi.",
+    "conditions": "acceptance of the six legs listed above and nothing beyond them; the bind of the sixteen seats stays blocked on B08 step 0 (the activation gate accepts fable-5 | hr-factory only and refuses an opus-5 author); ⚠ whether the prose reads better to him was never machine-checkable and he has now given his word on it",
+    "where": ".planning/STATE.md live block · board row B43 · EVIDENCE-W5-2026-09-15.md (W5/W5b/W6/W6b and § \"Ruler + W6c\") · commits 03ad139c · 3946c78c · a772ed4e"
   }
 }
