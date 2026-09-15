@@ -23,7 +23,7 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { sql } from "kysely";
 import { closeDb, getDb, resolveMediaBinary } from "@dxb/shared";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
-import { CPU_KINDS, GPU_KINDS, runMediaLaneOnce, type EngineRunner, type MediaKind, type MediaLaneResult } from "../../packages/outbox-executor/src/media-lane.js";
+import { CPU_KINDS, GPU_KINDS, runMediaLaneOnce, type EngineRunner, type MediaKind, type MediaLaneResult, recoverOrphanedMediaJobs } from "../../packages/outbox-executor/src/media-lane.js";
 import { ALL_MEDIA_KINDS, MediaLanes, cpuLanesFromEnv, desiredMediaLanes, mediaLaneId, mediaLaneKinds } from "../../packages/outbox-executor/src/media-lanes.js";
 import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
 
@@ -252,5 +252,79 @@ describe("B43 · media lanes on the engine — kinds are claimed by the right la
     const noop: EngineRunner = async () => ({ output_path: null, result: {} });
     const cpu = await runMediaLaneOnce({ ...base, laneId: `${M}-cpu-1`, kinds: [...CPU_KINDS], engines: { probe: noop } });
     expect(cpu).toMatchObject({ claimed: true, jobId: cpuJob.id, status: "done" });
+  });
+});
+
+// W8 (CEO 2026-09-15) — THE SEAMS: a killed process must end 'cancelled', not 'failed',
+// and a job a dead process was holding must come back.
+//
+// The defect these pin, measured 2026-09-15: `stopScoped` waits up to 10 s for the child to
+// die, so the process's own `close` event always settled the promise first and a cancellation
+// was recorded as a failure — job 16277dac carries cancel_requested=t, status=failed and the
+// error "python exited null: …". And nothing anywhere returned a 'running' row after the
+// process holding it was gone: the lane had 0 hits for recover/reap/heartbeat, while the
+// scheduler was restarted twice that same afternoon.
+describe("W8 · the media lane's seams", () => {
+  it("a REAL child process killed mid-run ends 'cancelled', never 'failed'", { timeout: 40_000 }, async () => {
+    const dept = `${DEPT}-w8kill`;
+    const taskId = await makeTask(dept);
+    const job = await callJson("media_submit", { task_id: taskId, kind: "probe", params: { file: "/tmp/w8-kill.mp4" } });
+
+    // a real child: `sleep` is a process, not a stub — it is what the cancel path must kill
+    const realChild: EngineRunner = async (ctx) => {
+      await ctx.exec("/bin/sleep", ["120"]);
+      return { output_path: null, result: {} };
+    };
+    const running = runMediaLaneOnce({
+      db: db(), laneId: `${M}-w8-kill`, workRoot, departments: [dept],
+      resourceCheck: async () => ({ ok: true }), engines: { probe: realChild },
+    });
+    // let the lane claim it and spawn the child, then ask for the cancel
+    await wait(1500);
+    await callJson("media_cancel", { job_id: job.id, reason: "W8 test" });
+    const out = await running;
+    expect(out).toMatchObject({ claimed: true, status: "cancelled" });
+
+    const row = await sql<{ status: string; error: string | null }>`
+      SELECT status, error FROM media_jobs WHERE id = ${job.id}::uuid
+    `.execute(db());
+    expect(row.rows[0].status).toBe("cancelled");
+    // the old bug wrote the child's exit into the row; the reason for the kill wins now
+    expect(row.rows[0].error ?? "").not.toMatch(/exited null/);
+  });
+
+  it("start-up recovery gives back a job a dead process was holding", async () => {
+    const dept = `${DEPT}-w8orph`;
+    const taskId = await makeTask(dept);
+    const orphan = await callJson("media_submit", { task_id: taskId, kind: "probe", params: { file: "/tmp/w8-orphan.mp4" } });
+    const goner = await callJson("media_submit", { task_id: taskId, kind: "probe", params: { file: "/tmp/w8-goner.mp4" } });
+
+    // exactly the state a killed lane leaves behind: claimed, running, no process
+    await sql`UPDATE media_jobs SET status='running', claimed_by='a-lane-that-died', started_at=now()
+               WHERE id IN (${orphan.id}::uuid, ${goner.id}::uuid)`.execute(db());
+    // the second one was already on its way out when the process died
+    await sql`UPDATE media_jobs SET cancel_requested = true WHERE id = ${goner.id}::uuid`.execute(db());
+
+    const result = await recoverOrphanedMediaJobs(db());
+    expect(result.requeued).toBeGreaterThanOrEqual(1);
+    expect(result.cancelled).toBeGreaterThanOrEqual(1);
+
+    const rows = await sql<{ id: string; status: string; claimed_by: string | null }>`
+      SELECT id, status, claimed_by FROM media_jobs WHERE id IN (${orphan.id}::uuid, ${goner.id}::uuid)
+    `.execute(db());
+    const byId = new Map(rows.rows.map((r) => [r.id, r]));
+    // ordered work comes back to the queue; work already being cancelled lands cancelled
+    expect(byId.get(orphan.id)!.status).toBe("queued");
+    expect(byId.get(orphan.id)!.claimed_by).toBeNull();
+    expect(byId.get(goner.id)!.status).toBe("cancelled");
+
+    const audit = await sql<{ n: number }>`
+      SELECT count(*)::int AS n FROM audit_log WHERE action = 'media.recovered'
+    `.execute(db());
+    expect(audit.rows[0].n).toBeGreaterThanOrEqual(1);
+
+    // and nothing is left 'running' for the next lane to trip over
+    const left = await sql<{ n: number }>`SELECT count(*)::int AS n FROM media_jobs WHERE status='running'`.execute(db());
+    expect(left.rows[0].n).toBe(0);
   });
 });

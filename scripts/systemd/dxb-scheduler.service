@@ -17,6 +17,12 @@ WorkingDirectory=%h/DxB Global OS
 ExecStart=/bin/bash -lc 'set -a; for f in ./.env ./.env.local ./.env.daemon; do [ -f "$f" ] && source "$f"; done; export DXB_DATABASE_URL="${DXB_DATABASE_URL:-${DXB_COMPANY_DATABASE_URL:-}}"; exec pnpm scheduler'
 Restart=always
 RestartSec=5
+# W8 (CEO 2026-09-15, audit F047): systemd's default stop timeout is 90 s. A shoot take
+# runs ~14 minutes for 15 seconds of film, so ANY restart during a take used to kill the
+# engine mid-render — and until W8 the job row then stayed 'running' for ever, because
+# nothing gave it back. Twenty minutes lets the longest measured take finish; the
+# start-up recovery in media-lane.ts is the second net, for the take that still does not.
+TimeoutStopSec=20min
 # The user manager default is OOMPolicy=continue (see ~/.config/systemd/user.conf,
 # added 2026-08-19 so a runaway child can no longer close the CEO's editor).
 # A resident daemon wants the opposite: die clean, let Restart=always rebuild it.

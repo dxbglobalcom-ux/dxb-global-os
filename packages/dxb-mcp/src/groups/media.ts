@@ -22,14 +22,25 @@ const ok = (data: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(data) }],
 });
 
-export const MEDIA_WORK_ROOT = process.env.DXB_MEDIA_WORK_ROOT ?? "/home/dxb/tools/h3/jobs";
+/** The job book's work root, read AT CALL TIME and never at import.
+ *
+ *  W8 (CEO 2026-09-15): this was an `export const` evaluated the moment this module was
+ *  imported. Both b43 suites set the env var inside `beforeAll`, which in ESM always runs
+ *  AFTER the imports are resolved, so the redirect could never take effect and every test
+ *  run wrote probe frames into the HOLDING'S PRODUCTION root. Measured before the fix: 105
+ *  directories, 79 MB, 17 of them written that day by the builder's and the checker's own
+ *  runs. A constant that reads the environment at import cannot be redirected by anything
+ *  that runs later — which is everything. */
+export function mediaWorkRoot(): string {
+  return process.env.DXB_MEDIA_WORK_ROOT ?? "/home/dxb/tools/h3/jobs";
+}
 
 /** Files an expert may probe: the job book's own work root plus the station's
  *  engine folders. Anything else is refused — a probe tool is not a file reader. */
 function allowedProbeRoots(): string[] {
   const extra = (process.env.DXB_MEDIA_PROBE_ROOTS ?? "").split(":").filter(Boolean);
   return [
-    MEDIA_WORK_ROOT,
+    mediaWorkRoot(),
     process.env.DXB_H3_DIR ?? "/home/dxb/tools/h3",
     process.env.DXB_COMFY_DIR ?? "/home/dxb/tools/ComfyUI",
     process.env.DXB_COMFY_UPSCALE_DIR ?? "/home/dxb/tools/ComfyUI-upscale",
@@ -258,7 +269,7 @@ export function registerMedia(server: McpServer): void {
             : summary.video
               ? [0]
               : [];
-      const frameDir = join(MEDIA_WORK_ROOT, "probes", `${Date.now()}`);
+      const frameDir = join(mediaWorkRoot(), "probes", `${Date.now()}`);
       const frames = stamps.length > 0 ? await extractFrames(abs, stamps, frameDir) : [];
       const content: Array<
         { type: "text"; text: string } | { type: "image"; data: string; mimeType: string }

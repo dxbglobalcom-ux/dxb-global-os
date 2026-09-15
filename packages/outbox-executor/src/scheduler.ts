@@ -31,7 +31,7 @@ import {
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
 import { drainVoiceCalls, voiceAudioDir } from "@dxb/voice";
 import { tick } from "./index.js";
-import { runMediaLaneOnce } from "./media-lane.js";
+import { recoverOrphanedMediaJobs, runMediaLaneOnce } from "./media-lane.js";
 import { MediaLanes, cpuLanesFromEnv } from "./media-lanes.js";
 import { laneRestMsFromEnv } from "./task-lanes.js";
 import { TaskLanes } from "./task-lanes.js";
@@ -592,6 +592,24 @@ export async function startScheduler(): Promise<PgBoss> {
   // makes sure the loops exist. Per-job errors land in the job's own failed state
   // inside runMediaLaneOnce; a lane that finds the card or the RAM busy leaves the
   // job queued, says why once, and rests a tick.
+  // W8 (CEO 2026-09-15, audit F023/F026): give back what a dead process was holding,
+  // BEFORE the lanes start looking for work. At this moment this process holds nothing,
+  // so a row still 'running' is an orphan by definition — it went down with a restart,
+  // a crash, or systemd's stop timeout expiring mid-take. Without this the row stays
+  // 'running' for ever: lanes claim 'queued', nothing watches it, and the seat waiting
+  // on media_wait waits out its own deadline for a job no process is doing.
+  try {
+    const recovered = await recoverOrphanedMediaJobs(getDb());
+    if (recovered.requeued + recovered.cancelled > 0) {
+      console.log(
+        `[scheduler] media start-up recovery: ${recovered.requeued} requeued, ${recovered.cancelled} cancelled`,
+      );
+    }
+  } catch (err) {
+    // never block the scheduler's start on it; the lanes still work, the orphans wait
+    console.error("[scheduler] media start-up recovery failed:", err);
+  }
+
   const mediaCpuLanes = cpuLanesFromEnv();
   activeMediaLanes = new MediaLanes(
     {

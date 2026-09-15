@@ -31,14 +31,18 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export type MediaJobRow = Selectable<MediaJobsTable>;
 export type MediaKind = MediaJobRow["kind"];
 
+/** Station paths, read AT CALL TIME. W8 (CEO 2026-09-15): this was a module-level object
+ *  literal, so every value froze at import — the same defect as media.ts's work-root
+ *  constant, and the reason a test could not redirect the lane away from the holding's
+ *  production directories. A getter costs nothing and cannot be frozen by an import. */
 export const MEDIA_PATHS = {
-  workRoot: process.env.DXB_MEDIA_WORK_ROOT ?? "/home/dxb/tools/h3/jobs",
-  h3Dir: process.env.DXB_H3_DIR ?? "/home/dxb/tools/h3",
-  comfyDir: process.env.DXB_COMFY_DIR ?? "/home/dxb/tools/ComfyUI",
-  comfyUrl: process.env.DXB_COMFY_URL ?? "http://127.0.0.1:8188",
-  upscaleDir: process.env.DXB_COMFY_UPSCALE_DIR ?? "/home/dxb/tools/ComfyUI-upscale",
-  upscaleUrl: process.env.DXB_COMFY_UPSCALE_URL ?? "http://127.0.0.1:8189",
-  upscalePort: Number(process.env.DXB_COMFY_UPSCALE_PORT ?? 8189),
+  get workRoot() { return process.env.DXB_MEDIA_WORK_ROOT ?? "/home/dxb/tools/h3/jobs"; },
+  get h3Dir() { return process.env.DXB_H3_DIR ?? "/home/dxb/tools/h3"; },
+  get comfyDir() { return process.env.DXB_COMFY_DIR ?? "/home/dxb/tools/ComfyUI"; },
+  get comfyUrl() { return process.env.DXB_COMFY_URL ?? "http://127.0.0.1:8188"; },
+  get upscaleDir() { return process.env.DXB_COMFY_UPSCALE_DIR ?? "/home/dxb/tools/ComfyUI-upscale"; },
+  get upscaleUrl() { return process.env.DXB_COMFY_UPSCALE_URL ?? "http://127.0.0.1:8189"; },
+  get upscalePort() { return Number(process.env.DXB_COMFY_UPSCALE_PORT ?? 8189); },
 } as const;
 
 export const MEDIA_LIMITS = {
@@ -508,14 +512,25 @@ function makeExec(ctx: { job: MediaJobRow; log: (l: string) => void; cancelled: 
         child.stderr?.on("data", (d) => { out = (out + String(d)).slice(-200_000); });
       }
       ctx.log(`$ ${cmd} ${args.map((a) => (a.length > 80 ? a.slice(0, 77) + "…" : a)).join(" ")}${useScope ? `  [scope ${unit}]` : ""}`);
+      // W8 (audit F022): WHY WE KILLED IT, remembered before the kill lands.
+      // stopScoped waits up to 10 s for the child to die, so the process's own `close`
+      // event always fires FIRST and used to settle the promise with
+      //   "<cmd> exited null: …"
+      // — a cancellation recorded as a failure. That is exactly what happened to job
+      // 16277dac (cancel_requested=t, status=failed, error "python exited null: …").
+      // The kill and the reason are set together; whichever handler wins the race now
+      // tells the same story.
+      let killedFor: "cancelled" | "deadline" | null = null;
       const watchdog = setInterval(() => {
         void (async () => {
           if (Date.now() > ctx.deadline) {
             clearInterval(watchdog);
+            killedFor = "deadline";
             await stopScoped(child, unit);
             reject(new Error("deadline passed"));
           } else if (await ctx.cancelled()) {
             clearInterval(watchdog);
+            killedFor = "cancelled";
             await stopScoped(child, unit);
             reject(new Error("cancelled"));
           }
@@ -524,10 +539,72 @@ function makeExec(ctx: { job: MediaJobRow; log: (l: string) => void; cancelled: 
       child.on("error", (err) => { clearInterval(watchdog); reject(err); });
       child.on("close", (code) => {
         clearInterval(watchdog);
+        if (killedFor !== null) {
+          reject(new Error(killedFor === "cancelled" ? "cancelled" : "deadline passed"));
+          return;
+        }
         if (code === 0) resolvePromise({ stdout: out, code: 0 });
         else reject(new Error(`${basename(cmd)} exited ${code}: ${out.slice(-600)}`));
       });
     });
+}
+
+// ── start-up recovery ─────────────────────────────────────────────────────────
+
+/** Give back the jobs a dead process was holding.
+ *
+ *  W8 (audit F023/F026): a media job is claimed with `status='running'` and the running
+ *  PROCESS is the only thing that would ever finish it. Kill that process — a restart, a
+ *  crash, systemd's stop timeout expiring — and the row stays 'running' for ever: no lane
+ *  will claim it (they claim 'queued'), no watchdog watches it, and the seat waiting on
+ *  media_wait waits until its own deadline. Measured 2026-09-15: the lane had no recovery
+ *  of any kind, and the scheduler was restarted twice that afternoon — both times safe only
+ *  because a human measured `queued|running = 0` by hand first.
+ *
+ *  Called once when the lanes start. At that moment this process holds nothing, so any row
+ *  still 'running' is an orphan by definition. It goes back to 'queued' rather than to
+ *  'failed': the work was ordered and never refused, and a re-run is what a person would do.
+ *  `cancel_requested` rows are the exception — they were on their way out, so they land in
+ *  'cancelled' where they belong instead of being run again. Every move is audited. */
+export async function recoverOrphanedMediaJobs(db: Kysely<DB>): Promise<{ requeued: number; cancelled: number }> {
+  // `old` is read in the same statement: RETURNING sees the NEW row, and the one thing a
+  // person needs from this log — WHICH lane was holding the job — is the value being erased.
+  const rows = await sql<{ id: string; kind: string; cancel_requested: boolean; held_by: string | null }>`
+    WITH old AS (SELECT id, claimed_by FROM media_jobs WHERE status = 'running' FOR UPDATE),
+    moved AS (
+      UPDATE media_jobs j
+         SET status = CASE WHEN j.cancel_requested THEN 'cancelled' ELSE 'queued' END,
+             claimed_by = NULL,
+             started_at = NULL,
+             error = CASE WHEN j.cancel_requested THEN j.error
+                          ELSE 'orphaned: the lane process that held this job is gone; requeued on start-up (W8)' END,
+             updated_at = now()
+        FROM old
+       WHERE j.id = old.id
+      RETURNING j.id, j.kind, j.cancel_requested, old.claimed_by AS held_by
+    )
+    SELECT * FROM moved
+  `.execute(db);
+  if (rows.rows.length === 0) return { requeued: 0, cancelled: 0 };
+
+  const requeued = rows.rows.filter((r) => !r.cancel_requested).length;
+  const cancelled = rows.rows.length - requeued;
+  for (const r of rows.rows) {
+    console.log(
+      `[media-lane] recovered orphan ${r.id.slice(0, 8)} (${r.kind}, held by ${r.held_by ?? "an unnamed lane"}) → ` +
+        (r.cancel_requested ? "cancelled" : "queued"),
+    );
+  }
+  await sql`
+    INSERT INTO audit_log (actor, actor_type, action, payload)
+    VALUES ('media-lane', 'system', 'media.recovered', ${JSON.stringify({
+      requeued,
+      cancelled,
+      jobs: rows.rows.map((r) => r.id),
+      reason: "start-up recovery: rows left running by a process that is gone (W8)",
+    })}::jsonb)
+  `.execute(db);
+  return { requeued, cancelled };
 }
 
 // ── the lane ──────────────────────────────────────────────────────────────────
