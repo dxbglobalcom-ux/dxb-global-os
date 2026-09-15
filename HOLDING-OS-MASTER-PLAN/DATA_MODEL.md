@@ -69,6 +69,14 @@ CREATE TABLE personas (
   employee_id uuid NOT NULL REFERENCES agents(id),
   version int NOT NULL,
   author text NOT NULL CHECK (author IN ('fable-5','hr-factory')),
+  -- REGISTERED ADAPTATION (U30, CEO 2026-07-26; written here 2026-09-15, B08 step 0):
+  -- the live set is ('opus-5','fable-5','hr-factory') — construction authorship is SHARED,
+  -- the model running the session is its author. The DDL line above is the founding text and
+  -- stays as written; the constraint was widened by 20260728001000_persona_author_u30.sql and
+  -- the activation trigger's own copy of the same list by
+  -- 20260915001000_activation_gate_author_list_u30.sql. Owner of the rule:
+  -- EMPLOYEE_PERSONA_STANDARD §G4-bis + §G4-ter. One list, two enforcers, kept equal by
+  -- tests/personas/activation-gate-author-list.test.ts.
   body_md text NOT NULL,                    -- rol kimliği→hook bağlantısı, madde 8 şablonu
   quality_gate text NOT NULL DEFAULT 'pending'
     CHECK (quality_gate IN ('pending','passed','failed')),
