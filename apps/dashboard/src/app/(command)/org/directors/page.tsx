@@ -25,7 +25,6 @@ type DirectorRow = {
   brain: string;
   brain_source: "default" | "slot" | "ceo_override";
   autonomy_level: number;
-  persona_version: string;
   hook_version: string | null;
   employment_status: "active" | "dormant" | "archived";
   persona_id: string | null;
@@ -57,7 +56,7 @@ export default async function DirectorsPage({
       // same 2026-07-24 catch as v_exec_overview); archived heads stay off
       // the CEO surface (C8 working-org rule).
       .select(
-        "id, slug, department, brain, brain_source, autonomy_level, persona_version, hook_version, employment_status, persona_id",
+        "id, slug, department, brain, brain_source, autonomy_level, hook_version, employment_status, persona_id",
       )
       .eq("role", "head")
       .neq("employment_status", "archived")
@@ -99,6 +98,28 @@ export default async function DirectorsPage({
       (!dept || r.department === dept) &&
       (!bound || (bound === "bound") === (r.hook_version != null)),
   );
+
+
+  // W10 (audit F024): the version the CEO reads is the BOUND persona's own
+  // version. Read as its own query rather than as an embedded relationship —
+  // a to-one embed's shape is decided by PostgREST at runtime, and a column on
+  // his page may not depend on a shape this session could not measure.
+  const personaVersions = new Map<string, number>();
+  const boundIds = Array.from(
+    new Set(rows.map((r) => r.persona_id).filter((v): v is string => !!v)),
+  );
+  if (boundIds.length > 0) {
+    const versionsRes = await supabase
+      .from("personas")
+      .select("id, version")
+      .in("id", boundIds);
+    for (const p of (versionsRes.data ?? []) as unknown as {
+      id: string;
+      version: number;
+    }[]) {
+      personaVersions.set(p.id, p.version);
+    }
+  }
 
   const personaBound = rows.filter((r) => r.persona_id != null).length;
   const hookBound = rows.filter((r) => r.hook_version != null).length;
@@ -147,16 +168,25 @@ export default async function DirectorsPage({
       render: (r) => `L${r.autonomy_level}`,
     },
     {
-      key: "persona_version",
-      label: t.colPersona,
-      render: (r) =>
-        r.persona_id ? (
-          <StatusBadge level="ok">
-            <span className="font-data">{r.persona_version}</span>
-          </StatusBadge>
-        ) : (
+      // W10 (audit F024): the bound persona's own version, not the version TAG
+      // column on agents, which read 'v2.0-fable' for every employee alike.
+      key: "persona_id",
+      label: (
+        <span className="inline-flex items-center gap-1">
+          {t.colPersona}
+          <HelpTip text={t.personaVersionHelp} />
+        </span>
+      ),
+      render: (r) => {
+        const version = r.persona_id ? personaVersions.get(r.persona_id) : undefined;
+        return version === undefined ? (
           <StatusBadge level="danger">{t.unbound}</StatusBadge>
-        ),
+        ) : (
+          <StatusBadge level="ok">
+            <span className="font-data">v{version}</span>
+          </StatusBadge>
+        );
+      },
     },
     {
       key: "hook_version",

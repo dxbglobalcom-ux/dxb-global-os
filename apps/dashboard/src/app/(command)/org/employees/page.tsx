@@ -14,8 +14,13 @@ import { fetchModelNames, modelLabel } from "@/lib/model-names";
 // /org/employees v1 (D-bloku dalga-2, C-Hibrit) — the agents registry is
 // seeded (153 legacy personas), so the roster renders REAL rows now.
 // KPIs answer the Overview "AI workforce" drill (?status=…); department
-// chips are doors into the same surface. persona_version makes the
-// legacy→v2 wave (roadmap E5) visible per hire — no invented progress.
+// chips are doors into the same surface. The Persona column reads the version of
+// the persona this employee is BOUND to (agents.persona_id → personas.version) —
+// NOT the version TAG column on agents, which W10 (2026-09-15, audit F024) measured
+// reading 'v2.0-fable' on all 213 live employees while their bound texts stood at
+// v21 · v18 · v17 · v16 …: his own page was showing a label, not a version. The tag
+// stays in the database for the eligibility gates that read it; it is no longer shown
+// to him as if it were the version of the text his employee runs on.
 
 export const metadata = { title: "Employees — DXB" };
 
@@ -26,7 +31,7 @@ type AgentRow = {
   role: "head" | "specialist" | "worker";
   brain: string;
   autonomy_level: number;
-  persona_version: string;
+  persona_id: string | null;
   hook_version: string | null;
   employment_status: "active" | "dormant" | "archived";
   brain_source: "default" | "slot" | "ceo_override";
@@ -65,7 +70,7 @@ export default async function EmployeesPage({
   let rowsQuery = supabase
     .from("agents")
     .select(
-      "id, slug, department, role, brain, brain_source, autonomy_level, persona_version, hook_version, employment_status",
+      "id, slug, department, role, brain, brain_source, autonomy_level, persona_id, hook_version, employment_status",
       { count: "exact" },
     )
     .neq("employment_status", "archived")
@@ -161,6 +166,27 @@ export default async function EmployeesPage({
     .map((r) => ({ department: r.department, count: Number(r.count) }))
     .sort((a, b) => a.department.localeCompare(b.department));
   const rows = (rowsRes.data ?? []) as AgentRow[];
+
+  // W10 (audit F024): the version the CEO reads is the BOUND persona's own
+  // version. Read as its own query rather than as an embedded relationship —
+  // a to-one embed's shape is decided by PostgREST at runtime, and a column on
+  // his page may not depend on a shape this session could not measure.
+  const personaVersions = new Map<string, number>();
+  const boundIds = Array.from(
+    new Set(rows.map((r) => r.persona_id).filter((v): v is string => !!v)),
+  );
+  if (boundIds.length > 0) {
+    const versionsRes = await supabase
+      .from("personas")
+      .select("id, version")
+      .in("id", boundIds);
+    for (const p of (versionsRes.data ?? []) as unknown as {
+      id: string;
+      version: number;
+    }[]) {
+      personaVersions.set(p.id, p.version);
+    }
+  }
   const matched = rowsRes.count ?? rows.length;
   const roleLabels = t.roles as Record<AgentRow["role"], string>;
 
@@ -226,13 +252,28 @@ export default async function EmployeesPage({
       render: (r) => `L${r.autonomy_level}`,
     },
     {
-      key: "persona_version",
-      label: t.colPersona,
+      // W10 (audit F024): the version of the persona text this employee is bound
+      // to, read from the bound persona itself. An unbound live employee shows as
+      // unbound rather than borrowing a number it does not have.
+      key: "persona_id",
+      label: (
+        <span className="inline-flex items-center gap-1">
+          {t.colPersona}
+          <HelpTip text={t.personaVersionHelp} />
+        </span>
+      ),
       align: "right",
       numeric: true,
-      render: (r) => (
-        <span className="whitespace-nowrap">{r.persona_version}</span>
-      ),
+      render: (r) => {
+        const version = r.persona_id ? personaVersions.get(r.persona_id) : undefined;
+        return version === undefined ? (
+          <span className="whitespace-nowrap text-caption text-ink-muted">
+            {t.personaUnbound}
+          </span>
+        ) : (
+          <span className="whitespace-nowrap font-data">v{version}</span>
+        );
+      },
     },
     {
       // FABLE_5_HOOK §5 row 3 / §21: the employee card carries the hook

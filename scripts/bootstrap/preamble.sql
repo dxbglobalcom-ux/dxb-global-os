@@ -50,6 +50,21 @@ DO $$ BEGIN
       PRIMARY KEY (id, inserted_at)
     );
     ALTER TABLE realtime.messages ENABLE ROW LEVEL SECURITY;
+    -- W10 (2026-09-15, audit F032): this stub is created on the ADMIN plane
+    -- (DXB_PSQL_ADMIN), so on a database where the platform's own realtime init has
+    -- never run it belongs to the admin role and the APP role cannot write the row
+    -- realtime.send() inserts. Measured: a fresh bootstrap died inside
+    -- 20260903001000_b43_media_studio_department.sql with "permission denied for table
+    -- messages" — raised by fn_hr_create_employee's own event, not by the migration.
+    -- Same parity act as the ledger ownership at the end of this file: what the preamble
+    -- creates belongs to the app role, and the platform roles get the grants a live
+    -- Supabase database gives them. Inside the IF, so a live database is never touched.
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'postgres') THEN
+      EXECUTE 'ALTER TABLE realtime.messages OWNER TO postgres';
+      EXECUTE 'GRANT USAGE ON SCHEMA realtime TO postgres';
+    END IF;
+    EXECUTE 'GRANT USAGE ON SCHEMA realtime TO anon, authenticated, service_role';
+    EXECUTE 'GRANT SELECT, INSERT, UPDATE ON TABLE realtime.messages TO anon, authenticated, service_role';
   END IF;
 END $$;
 

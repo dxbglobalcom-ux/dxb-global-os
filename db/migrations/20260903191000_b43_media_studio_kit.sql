@@ -17,6 +17,19 @@ BEGIN
     RAISE NOTICE 'b43 kit: media-studio absent on this engine — nothing to grant';
     RETURN;
   END IF;
+  -- W10 (2026-09-15, audit F032): the eight house groups are LIBRARY CATALOGUE rows, and the
+  -- catalogue is registered by the seed (db/seed/build-seed.ts → scripts/library/intake.mjs),
+  -- which runs after the whole migration chain. On a database built from zero they do not exist
+  -- yet, so this file demanded nine grants where one item existed and the chain died here:
+  -- "B43 kit: media-studio holds 1 dxb-mcp group grants (expected 9)". Same self-skip as the
+  -- sibling file 20260903190000: what is not on this engine cannot be granted on this engine.
+  IF NOT EXISTS (SELECT 1 FROM public.library_items
+                  WHERE kind = 'mcp' AND name IN ('dxb-mcp/approval','dxb-mcp/audit','dxb-mcp/cost',
+                                                  'dxb-mcp/crm','dxb-mcp/dashboard','dxb-mcp/memory',
+                                                  'dxb-mcp/queue','dxb-mcp/registry')) THEN
+    RAISE NOTICE 'b43 kit: the library catalogue is not registered on this engine — the seed''s library step owns the kit here';
+    RETURN;
+  END IF;
   PERFORM set_config('request.jwt.claims', '{"sub":"11111111-1111-4111-8111-111111111111","role":"authenticated"}', true);
   FOR v_item IN
     SELECT id, name FROM public.library_items
@@ -47,12 +60,20 @@ END $$;
 
 -- guardrail: on an engine that has the studio, the kit is complete (8 house groups + media)
 DO $$
-DECLARE v_n integer;
+DECLARE v_n integer; v_want integer;
 BEGIN
+  -- W10: the guarantee is measured against what this engine HOLDS in its catalogue, never
+  -- against a number that assumes a seeded machine — on a seeded engine that is the nine the
+  -- CEO's studio must have; on a bare chain it is the one this B43 pair registered itself.
   IF EXISTS (SELECT 1 FROM public.departments WHERE slug = 'media-studio') THEN
     SELECT count(*) INTO v_n FROM public.library_grants g JOIN public.library_items i ON i.id = g.item_id
      WHERE g.grantee_kind = 'department' AND g.grantee_id = 'media-studio' AND i.kind = 'mcp' AND i.name LIKE 'dxb-mcp/%';
-    IF v_n < 9 THEN RAISE EXCEPTION 'B43 kit: media-studio holds % dxb-mcp group grants (expected 9)', v_n; END IF;
+    SELECT count(*) INTO v_want FROM public.library_items
+     WHERE kind = 'mcp' AND name IN ('dxb-mcp/approval','dxb-mcp/audit','dxb-mcp/cost','dxb-mcp/crm',
+                                     'dxb-mcp/dashboard','dxb-mcp/memory','dxb-mcp/queue','dxb-mcp/registry','dxb-mcp/media');
+    IF v_n < v_want THEN
+      RAISE EXCEPTION 'B43 kit: media-studio holds % of the % dxb-mcp group items this engine carries', v_n, v_want;
+    END IF;
   END IF;
 END $$;
 

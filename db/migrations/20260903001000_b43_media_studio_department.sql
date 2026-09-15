@@ -16,10 +16,21 @@
 BEGIN;
 
 -- A) department row (bilingual — UI purity gate)
+-- W10 CORRECTION (2026-09-15, audit F032, measured before it was touched): this INSERT read
+-- `SELECT … FROM public.companies WHERE slug = 'dxb-global'` — a SET-RETURNING select, which inserts
+-- NOTHING when the holding company row does not exist yet. The company is born in
+-- db/seed/20260711_holding_core.sql, and the seed runs AFTER the whole migration chain, so from an
+-- EMPTY database this department was never created and (B) below died on agents_department_fkey:
+-- `[bootstrap] applying 20260903001000_…` → `Key (department)=(media-studio) is not present in table
+-- "departments"`. The canonical chain has therefore been broken from zero since 2026-09-03.
+-- The house idiom is a SCALAR subquery (20260712014000_org_mutations_e63.sql does exactly this for the
+-- other departments): the row is born with company_id NULL on a bare chain, and the seed's own
+-- `UPDATE departments SET company_id = … WHERE company_id IS NULL` binds it to the holding afterwards.
+-- Both live engines recorded this version on 2026-09-03 and skip the file by version (bootstrap-db.sh
+-- compares versions, never contents), so this correction changes nothing that has already run.
 INSERT INTO public.departments (slug, display_name, display_name_tr, company_id)
-SELECT 'media-studio', 'DxB Media Studio', 'DxB Medya Stüdyosu', c.id
-  FROM public.companies c
- WHERE c.slug = 'dxb-global'
+VALUES ('media-studio', 'DxB Media Studio', 'DxB Medya Stüdyosu',
+        (SELECT id FROM public.companies WHERE slug = 'dxb-global'))
 ON CONFLICT (slug) DO NOTHING;
 
 -- B) head — Creative Director (B43 seat: director of the studio; department director)
