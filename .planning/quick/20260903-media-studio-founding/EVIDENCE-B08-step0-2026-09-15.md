@@ -1,5 +1,7 @@
 # EVIDENCE — B08 step (0): the activation gate aligned with U30, then the bind (2026-09-15)
 
+**ACCEPTED BY HIS EYE, 2026-09-15** — *"göz tmm"* <!-- CEO-OK: studio-b08-step0-w9-w7-w8-accepted-2026-09-15 -->. Accepted as work delivered and looked at; the ⚠ UNVERIFIED list at the end of this file is NOT covered by it and still requires his own screen.
+
 **Author:** opus-5 in person (U30), builder session, branch `studio/b43-ferrari-implementation-20260915`.
 **His order, verbatim:** *"kapıyı U30'a hizala, sonra bağla ve onay."*
 Registered: `scripts/governance/ceo-approvals.json` → `activation-gate-aligned-with-u30-2026-09-15`.
