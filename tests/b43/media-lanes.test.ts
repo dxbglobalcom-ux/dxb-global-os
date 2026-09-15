@@ -56,14 +56,14 @@ describe("B43 · media lanes — the studio's hands are lanes too", () => {
     const q = fakeQueue([
       { kind: "shoot", ms: 600, name: "shoot" },
       { kind: "probe", ms: 20, name: "probe" },
-      { kind: "voice", ms: 20, name: "voice" },
+      { kind: "assemble", ms: 20, name: "assemble" },   // W7: was the retired voice kind
     ]);
     const lanes = new MediaLanes({ runOnce: q.runOnce, sleep: wait }, { cpuLanes: 2, restMs: 50, laneIdBase: "w" });
     expect(lanes.reconcile()).toEqual({ desired: 3, started: 3, running: 3 });
     await wait(150);
     expect(q.started.shoot).toBeLessThan(100);
     expect(q.started.probe).toBeLessThan(100); // taken by a CPU lane while the card lane is busy
-    expect(q.started.voice).toBeLessThan(100);
+    expect(q.started.assemble).toBeLessThan(100);
     expect(q.ended.shoot).toBeUndefined(); // the shoot is still running
     await lanes.stop();
     expect(lanes.running).toBe(0);
@@ -121,7 +121,9 @@ describe("B43 · media lanes — the studio's hands are lanes too", () => {
     expect([...mediaLaneKinds(0, 0)].sort()).toEqual([...ALL_MEDIA_KINDS].sort());
     expect([...mediaLaneKinds(0, 3)].sort()).toEqual([...GPU_KINDS].sort());
     expect([...mediaLaneKinds(1, 3)].sort()).toEqual([...CPU_KINDS].sort());
-    expect(ALL_MEDIA_KINDS.length).toBe(6);
+    // W7 (CEO 2026-09-15, "kaldır"): five, not six — the voice kind was retired.
+    expect(ALL_MEDIA_KINDS.length).toBe(5);
+    expect([...ALL_MEDIA_KINDS]).not.toContain("voice");
   });
 });
 
@@ -242,12 +244,13 @@ describe("B43 · media lanes on the engine — kinds are claimed by the right la
 
   it("a lane with kinds sees nothing when only other kinds are queued", { timeout: 15_000 }, async () => {
     const taskId = await makeTask(DEPT);
-    const voice = await callJson("media_submit", { task_id: taskId, kind: "voice", params: { text: "lanes", out: "l.mp3" } });
+    // W7: this needs any CPU-lane kind the job book still accepts; it was the voice kind.
+    const cpuJob = await callJson("media_submit", { task_id: taskId, kind: "probe", params: { file: "/tmp/w7-lanes-probe.mp4" } });
     const base = { db: db(), workRoot, departments: [DEPT], resourceCheck: async () => ({ ok: true }) };
     const gpu = await runMediaLaneOnce({ ...base, laneId: `${M}-gpu`, kinds: [...GPU_KINDS] });
     expect(gpu).toEqual({ claimed: false });
     const noop: EngineRunner = async () => ({ output_path: null, result: {} });
-    const cpu = await runMediaLaneOnce({ ...base, laneId: `${M}-cpu-1`, kinds: [...CPU_KINDS], engines: { voice: noop } });
-    expect(cpu).toMatchObject({ claimed: true, jobId: voice.id, status: "done" });
+    const cpu = await runMediaLaneOnce({ ...base, laneId: `${M}-cpu-1`, kinds: [...CPU_KINDS], engines: { probe: noop } });
+    expect(cpu).toMatchObject({ claimed: true, jobId: cpuJob.id, status: "done" });
   });
 });
