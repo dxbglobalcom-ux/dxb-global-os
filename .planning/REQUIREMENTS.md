@@ -114,6 +114,21 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 - [ ] **PILOT-03**: Autoresearch loop live on at least one Outleteuro asset (locked scorer, git commit/revert discipline)
 - [ ] **PILOT-04**: Stripe/DocuSign/Cloudflare integrations draft-only behind the outbox executor
 
+### Media Studio (MSTU) — board row B43, registered 2026-09-15 (W13)
+
+Founded on the CEO's order of 2026-09-03 as the `media-studio` department and run since; registered in the spec corpus on 2026-09-15 after the studio audit found it owned by no spec (F057). Built rows are marked done from the measurement, not from the plan.
+
+- [x] **MSTU-01**: The `media-studio` department exists with its seats staffed and on the road — 16 seats dispatchable (14 studio + 2 assigned), each bound to a gated persona
+- [x] **MSTU-02**: The studio's hands are machine-work lanes, not chat: `media_jobs` drained by one GPU lane, a job born inside a seat's own task run (AGENT_ORCHESTRATION A16/A18)
+- [x] **MSTU-03**: A film is produced by a dispatch book — the director turns a plan into one task per named seat with dependencies and per-seat `budget_minutes` (A19, A22)
+- [x] **MSTU-04**: The studio's time is measurable end to end: `queue_sheet_times` reports planning, engine, non-engine, idle and judge time per sheet and per seat (OBSERVABILITY)
+- [ ] **MSTU-05**: The studio's record layer carries the hierarchy the CEO ordered — job → scene → shot, each a record, each with its `DXB-` code (DATA_MODEL gap, W14 / his word)
+- [ ] **MSTU-06**: A shot's passage is a live event, broadcast, not polled — the first law of V2 applied to the studio (EVENT_MODEL gap, W14 / his word)
+- [ ] **MSTU-07**: The studio's cost is real: card time per job and cost per delivered second, shown before the decision (COST_CONTROL gap, W14 / his word)
+- [ ] **MSTU-08**: The CEO's accept or reject of a delivered film is recorded in the company's own books as a non-gating decision carrying the film's code (APPROVAL_ENGINE gap, W14 / his word)
+- [ ] **MSTU-09**: The production line is an object he can see and change from the cockpit, not persona prose (WORKFLOW_ENGINE gap, W14 / his word)
+- [ ] **MSTU-10**: The studio has its own section on the CEO's surface — the twentieth control area — drawn only after its design is approved (B32/B22)
+
 ## v2 Requirements (deferred)
 
 - **V2-01**: techshopeuro.com onboarded as second venture — after pilot proves the OS
@@ -199,3 +214,13 @@ Every v1 requirement maps to exactly one phase. Measured 2026-09-14: 58 rows in 
 | PILOT-02 | Phase 11 | Pending |
 | PILOT-03 | Phase 11 | Pending |
 | PILOT-04 | Phase 11 | Pending |
+| MSTU-01 | B43 media-studio | Built 2026-09-03..09-15, not accepted (LAW B) |
+| MSTU-02 | B43 media-studio | Built |
+| MSTU-03 | B43 media-studio | Built |
+| MSTU-04 | B43 media-studio | Built |
+| MSTU-05 | B43 media-studio | Registered gap — W13 2026-09-15 |
+| MSTU-06 | B43 media-studio | Registered gap — W13 2026-09-15 |
+| MSTU-07 | B43 media-studio | Registered gap — W13 2026-09-15 |
+| MSTU-08 | B43 media-studio | Registered gap — W13 2026-09-15 |
+| MSTU-09 | B43 media-studio | Registered gap — W13 2026-09-15 |
+| MSTU-10 | B43 media-studio | Pending — design first (B32) |

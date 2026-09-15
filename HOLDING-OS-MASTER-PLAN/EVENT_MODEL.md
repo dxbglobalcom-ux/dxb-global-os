@@ -136,6 +136,16 @@ psql "$DB" -c "INSERT INTO task_events(task_id,kind,detail) SELECT id,'probe','{
 
 Kanal kataloğu + zarf + adlandırma kapalı sözlüktür; Opus yeni olay eklerken §9b'ye satır ekler, zarfı değiştirmez. ⛔ kritik karar: zarf alan silme/anlam değişikliği + yeni kanal sınıfı (dışa yayın gibi) — eldeki en güçlü model + CEO onayı.
 
+## Registered adaptations — B43 the media studio (2026-09-15, W13)
+
+**Registered adaptation (2026-09-15, B43 — W13, audit F059):** <!-- OPEN: B43 --> **A shot produces no live event: `media_jobs` is in no channel of §9b and carries no broadcast trigger.**
+
+Measured on the company engine, 2026-09-15: non-internal triggers on `public.media_jobs` = **0**. The media lane records a job's passage by inserting into `audit_log` (`packages/outbox-executor/src/media-lane.ts`), and this spec's channel catalogue (§9b) contains no `media.*` or `job.*` type. Nothing is published when a card starts to paint, finishes or fails.
+
+**Why this is registered and not merely noted.** The first law of V2 is that the company must be visibly working — *motion IS state*, the worker who is working lights up and is named. A studio screen built on today's sources can only poll, and a polled surface is the "flat book with no life" the CEO named on 2026-08-02. As OBSERVABILITY_SPEC:149 puts it, `audit_log` answers *who changed what*; it is not the *what is happening now* channel.
+
+**The gap, named and not closed here.** A `media_jobs` type set in §9b (a job's `queued → running → done|failed|cancelled` passage, carrying the job's kind, its seat and its task) plus the **trigger** that broadcasts it is a schema and channel change. **Who closes it:** the studio's screen plan (W14), on the CEO's word — a channel is added to the closed envelope dictionary only with the strongest model and his approval (§ Opus-devralma notu). Until then the studio has no live source and any screen drawn for it must say so rather than poll silently.
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · kaynak-gerçek/canlı-yayın ayrımı ✓ · kanal kataloğu (8 kanal, type listeleri, debounce) ✓ · bağlayıcı zarf ✓ · reconnect/fallback kontratı ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓

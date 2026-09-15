@@ -160,6 +160,23 @@ Recorded at implementation time per the master-plan fidelity rule (adaptation �
 - **A7 — migration shipped as ONE file** `20260713110000_approval_center.sql` (0023a-c folded, repo idiom of one migration per roadmap row); TRUNCATE grant revoke on approvals/outbox included (broken grant found during recon = fixed immediately; B7b infrastructure is the explicit exception to the security-hardening deferral).
 - **A8 — probation-wave hook escalations are orchestrator-managed (CEO standing order 2026-07-18, in-session).** Precedent: the E12.5 activation wave parked 113 `hook_escalation` approvals in the CEO queue; by wave end 113/113 were success-superseded (85 original task `done` via ladder, 28 employee passed via correction round) — zero needed a real CEO decision; the CEO batch-approved in person (audit `approval.approve` ×113) and ruled the class delegated. Mechanism: `fn_approvals_supersede_sweep()` (migration `20260718214000`) closes pending `hook_escalation` approvals ONLY when success is proven in data (task `done`, or its agent holds a `done` HR-probation sample); `decided_by='orchestrator:success-supersede'`, audit row per closure; wave-monitor invokes it at wave close. Everything unproven stays pending for the CEO; money_out/contract/identity classes untouched (§13 CEO-only law intact).
 
+## Registered adaptations — B43 the media studio (2026-09-15, W13)
+
+**Registered adaptation (2026-09-15, B43 — W13, audit F060):** <!-- OPEN: B43 --> **The CEO's accept or reject of a film is not a decision this company records.**
+
+R7 (§4) binds *every* approval decision to `decision_log`. The studio has delivered films since 2026-09-03 and he has passed verdict on them. Measured on the company engine, 2026-09-15:
+
+| What | Measured |
+|---|---|
+| `approval_rules` | **8** rows — `payment.*` `transfer.*` `ad_spend.*` `refund.*` `payout.*` `contract.*` `identity.*` `email.send`. No media, delivery or film pattern |
+| `decision_log` rows naming a `DXB-V-` film code | **3** — and none is his verdict: two are the creative director's call sheets (`call_sheet`, DXB-V-EYW-004 and -005), one is a QA escalation (`workflow_branch`, `qa-fail`) |
+| `decision_log` rows with `decided_by = 'ceo'` | 31, **none of them about a film** |
+| Where his film verdicts actually live | `scripts/governance/ceo-approvals.json`, the catalogue and the vitrin — three records outside the company's own books |
+
+**Why this belongs here and not only on the studio's row.** LAW B says nothing is accepted until his eye passes over it; this spec says every decision is bound to `decision_log`. Between the two, his most frequent judgement — *this film is good, that one is not* — is the one decision the engine never sees. It also means the studio cannot be asked how many of its deliveries he accepted; only a human reading a JSON file can answer.
+
+**The gap, named and not closed here.** His verdict on a delivery is **not a gate** — a film is not money out, and no approval must block it. What is missing is a **non-gating record**: his acceptance or rejection written to `decision_log` with the film's `DXB-` code, `decided_by = 'ceo'`, and the four (now ten) historical verdicts backfilled from the governance ledger. Note for whoever builds it: `decision_log` has **no `kind` column** (its columns are `run_id · decided_by · decision · rationale · data_used · alternatives · confidence · risk · approval_id · outcome · created_at`), so the audit's wording "a decision_log kind" must become a `decision` value, not a new column invented without a migration. **Who closes it:** W14 with the studio's screen — he says it there, on that screen — on his word.
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · §21 + madde 11 alan/aksiyon eşlemesi eksiksiz ✓ · B7b üç-katman mekanizması + DB-kanıt komutu ✓ · madde 4 dengesi (yeni kapı yok, fail-closed) ✓ · mevcut-varlık eşlemesi (approvals/outbox/trigger KALIR) ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓

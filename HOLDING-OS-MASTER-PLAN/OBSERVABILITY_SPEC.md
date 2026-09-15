@@ -191,6 +191,22 @@ Opus-devralma: tablo-başı + bileşen-başı teslim; runScope sözleşmesi sabi
 - **Alt-ajan ağacı derinliği**: spawn zinciri derinlik ≤4 (orchestrator kuralı); ağaç UI'da lazy-load.
 - **Saat kayması**: tüm zamanlar `timestamptz` UTC; UI CEO yerelinde gösterir.
 
+## Registered adaptations — B43 the media studio (2026-09-15, W13)
+
+**Registered adaptation (2026-09-15, B43 — W13, audit F062):** <!-- OPEN: B43 --> **The studio's times table — `queue_sheet_times` — is a built and running observability surface that this spec never registered.**
+
+The CEO approved the studio's clock on 2026-09-13 <!-- CEO-OK: time-line-retired-budget-per-job-zero-idle-2026-09-13 --> (the decision) and its build plan the same evening <!-- CEO-OK: budget-per-job-zero-idle-plan-approved-2026-09-13 -->. It was built, it runs, and until today it was described in exactly one place in the whole company: a board row. Registered here as a **read** surface of this spec (it owns no table of its own — it is computed from `task_events` and `media_jobs` at read time):
+
+| Reader | `queue_sheet_times` — `packages/dxb-mcp/src/groups/queue.ts`, computed in `packages/dxb-mcp/src/dispatch-book.ts` |
+|---|---|
+| Per sheet | `planning_s` (his director's thinking, the author's claim → the sheet's birth) · `total_s` · `engine_s` · `non_engine_s` · `ratio_non_engine_to_engine` (the gauge he keeps) · `idle_s` (every second nobody was working on it) · `judge_ms_total` · `budget_minutes_total` · `seats_over_budget` |
+| Per seat | `budget_minutes` · `ready_at` · `claimed_at` · `done_at` · `idle_before_claim_s` · `actual_s` · `judge_ms` · `engine_s` (the card's time, from `media_jobs.wall_seconds`) · `job_pickup_s` (a job's wait for a hand) · `non_engine_s` · `over_budget_s` |
+| Kept separate from | `audit_log`. §"audit = KİM NEYİ DEĞİŞTİRDİ / observability = NE OLDU" holds: the times table answers *what happened and how long it took*, and writes nothing |
+
+**Why it is registered rather than left on the row.** A measurement the CEO relies on must be findable from the spec that owns measurement, not from a 7,961-word board row. The clock's environment knob `DXB_LANE_REST_SECONDS` and the QA judge's own time `judge_ms` are registered with the orchestration that produces them (AGENT_ORCHESTRATION A22).
+
+**The gap, named and not closed here.** Nothing of the studio reaches the CEO's observability *screens* — there is no panel, no retention rule and no alert threshold for a sheet that runs over its budget; `seats_over_budget` is computed and read by a tool, seen by no eye. **Who closes it:** the studio's screen plan (W14), on his word.
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · madde 10.1-10.6 tam eşleme (10.5 çapraz-ref) ✓ · madde 5.2'nin 20 sorusu şemaya bağlanmış ✓ · append-only + retention + spill kuralları ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ kararlar ✓

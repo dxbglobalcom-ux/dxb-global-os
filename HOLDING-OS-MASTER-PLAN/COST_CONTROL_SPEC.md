@@ -188,6 +188,24 @@ Mevcut cost_ledger + Cost Monitor (KALIR) · [[OBSERVABILITY_SPEC]] trigger/snap
 | A3 | The day grain reads `v_cost_breakdown` LIVE (no `cost_rollups` materialization yet). The §26 "rollup vs reality 5-min window" risk therefore does not exist in this stage. | Rollups are derived tables — premature before P7 job infra |
 | A4 | Daily panel window/rows = 30 days / 15 rows, mirroring the `/fin/pnl` daily precedent (E6.5); day boundary Europe/Berlin per the P&L D5 decision, identical to the view. | Established idiom, no new design decision |
 
+## Registered adaptations — B43 the media studio (2026-09-15, W13)
+
+**Registered adaptation (2026-09-15, B43 — W13, audit F058):** <!-- OPEN: B43 --> **The studio's real cost — the card's time — is in none of R1's eleven dimensions, and the company prices the studio at zero.**
+
+Measured on the company engine, 2026-09-15:
+
+| What | Measured |
+|---|---|
+| `cost_ledger` rows for `department = 'media-studio'` | **43** |
+| Their sum | **€0.000000** — not one row above zero |
+| Their `source` | `worker` (the CHECK admits `litellm` · `hook` · `manual` · `worker` · `qa`; `qa` has 0 rows) |
+| A cost column on `media_jobs` | **none.** The table measures `wall_seconds`, `peak_vram_mib`, `peak_ram_gib` — time and machine, never money |
+| This spec's cost dimensions | R1's eleven, all of them token- or provider-shaped; no engine-time dimension |
+
+**Why the zero is not an error to be fixed with a number.** The studio's work is not bought from a provider by the token: it is a graphics card running in this building for minutes at a time. `cost_ledger` is fed by the model router, and the router never sees a shot. So every euro the studio has ever spent is invisible to the CEO's cost intelligence, and any margin decision that reads this ledger (B28) is reading a zero that means "not measured", not "free".
+
+**The gap, named and not closed here.** The missing dimension is **card time** — a per-job cost written from `media_jobs.wall_seconds` against a measured machine rate, and above it the figure the CEO asked for by name on 2026-08-31: **cost per delivered second** of finished film, which needs the delivered length beside the engine time. It requires a cost column or a `source = 'media'` writer, and the two-roads cost table he ordered as a CEO-facing artefact. **Who closes it:** W14, on his word — it is on the board as an owned leg (audit F036, F066). W13 registers that this spec knows the dimension is missing and that its zero is a silence, not a price.
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · §20 11 boyut + 10 görselleştirme eşlenmiş ✓ · madde 10.5 alanları şemada ✓ · %70/100 Cost-Monitor kuralı mekanizmalı + kritik muafiyet ✓ · LiteLLM çift-katman senkronu ✓ · mevcut-varlık (ledger/monitor KALIR) ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓

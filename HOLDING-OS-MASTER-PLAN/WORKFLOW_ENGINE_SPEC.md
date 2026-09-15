@@ -150,6 +150,21 @@ psql "$DB" -c "SELECT status FROM workflow_runs ORDER BY started_at DESC LIMIT 1
 
 Adım kind semantiği + durum makinesi + snapshot kuralı kapalıdır; Opus yeni adım kind'ı eklemez (⛔ — en güçlü model + CEO onayı), yeni workflow TANIMLARI eklemek serbesttir (veri işi, kod işi değil). Runner iskeleti kind-başı handler dosyalarıyla mekanik genişler.
 
+## Registered adaptations — B43 the media studio (2026-09-15, W13)
+
+**Registered adaptation (2026-09-15, B43 — W13, audit F061):** <!-- OPEN: B43 --> **The studio's production line is a real, repeated, ten-step chain — and it is not a workflow. The exception is recorded here rather than left silent.**
+
+Measured on the company engine, 2026-09-15: the `workflows` table holds **0** rows. The studio has nevertheless produced films since 2026-09-03 along a fixed order of seats. That order lives in two places, neither of them this engine:
+
+1. **Persona text** — the production line is written as the Creative Director's responsibility in `db/migrations/20260903001000_b43_media_studio_department.sql` and in the seats' own files under `personas/media-studio/`.
+2. **The dispatch book** — `queue_dispatch` (`packages/dxb-mcp/src/groups/queue.ts`, contract and graph checks in `packages/dxb-mcp/src/dispatch-book.ts`, registered as AGENT_ORCHESTRATION A19): for each film the director turns a plan into one task per named seat, with dependencies, under his own task's project. It is a **per-job chain born at dispatch time**, not a stored template.
+
+**The registered exception.** §1 of this spec says a code-defined chain becomes a `workflows` row. The studio's chain is code-defined *per job*: the seats, their levels and their budgets differ from film to film, and the director chooses them. It was therefore built as a dispatch book and not as a workflow template, and that is the state of the company today — recorded here so no later reader concludes the engine simply failed to register it.
+
+**What it costs the CEO, named.** Because the **production line** is not an entity, he cannot see the studio's order of work from the cockpit, and he cannot change it without a persona being rewritten. That is the opposite of the third face of this product — *he changes anything at any moment*.
+
+**The gap, named and not closed here.** Either the **dispatch book** gains a stored, CEO-editable template for the standard ten steps (a `workflows` row the director instantiates and may deviate from, with the deviation recorded), or the studio's screen gives him the order as an editable object. Both are builds. **Who closes it:** W14 with the screen plan, on his word.
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · madde 6.4'ün 17 kalemi birebir eşlendi ✓ · durum makinesi + snapshot sürümleme ✓ · park≠retry ayrımı ✓ · B7b workflow karşılığı (approval'sız para-çıkışı reddi) ✓ · doğrulama komutları ✓ · KALIR/YENİ (motor=kütüphane kararı ⛔) ✓ · Opus-devralma ✓

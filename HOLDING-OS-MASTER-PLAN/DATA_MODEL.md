@@ -374,6 +374,24 @@ psql "$DB" -c "UPDATE decision_log SET decision='x' WHERE false;"               
 
 Bu dosyadaki DDL taslakları migration'a kopyala-uyarla düzeyindedir; Opus, aile sırası + rollback blokları + §22 doğrulama komutlarıyla duraksamadan uygulayabilir. ⛔ işaretli tek karar: `agents`→`employees` yeniden adlandırması YAPILMAZ (alias'la yaşar) — değiştirme kararı ancak eldeki en güçlü model + CEO onayıyla.
 
+## Registered adaptations — B43 the media studio (2026-09-15, W13)
+
+**Registered adaptation (2026-09-15, B43 — W13, audit F057):** <!-- OPEN: B43 --> **The studio's job book is `media_jobs`, and it is flat — the hierarchy the CEO ordered is not in it.**
+
+The media studio was founded on 2026-09-03 and has run ever since against a table this spec never knew existed. It is registered here, as measured on the company engine on 2026-09-15, so that the record layer is not invented a second time when the studio's screen is drawn.
+
+| What | As measured 2026-09-15 |
+|---|---|
+| Table | `media_jobs`, born in `db/migrations/20260903190000_b43_media_hands.sql` |
+| Columns (20) | `id` · `task_id` · `employee_id` · `department` · `kind` · `params` jsonb · `note` · `status` · `cancel_requested` · `claimed_by` · `started_at` · `ended_at` · `wall_seconds` · `peak_vram_mib` · `peak_ram_gib` · `output_path` · `result` jsonb · `error` · `created_at` · `updated_at` |
+| `kind` | `still` · `shoot` · `upscale` · `assemble` · `probe` — CHECK **VALIDATED** since `20260915020000` (W12). `voice` was removed with the TTS hand the CEO cancelled on 2026-09-04 |
+| Rows | 32 (`still` 26 done · `probe` 3 done · `shoot` 2 done, 1 failed) |
+| Owner of the row's life | the resident scheduler's media lane (`packages/outbox-executor/src/media-lane.ts`), one GPU lane — see AGENT_ORCHESTRATION A16/A18 |
+
+**The gap, named and not closed here.** The CEO's founding order of 2026-09-03 describes the studio's data model as a chain — *a job holds scenes, a scene holds shots, every level of that chain is a record*. **No such chain exists.** `media_jobs` has no `scene`, no `shot`, no parent and no code column; a film's structure lives in the per-job call sheet and in the seats' prose, nowhere a query can reach it. Equally, the studio's own naming system — the **`DXB-`** code family, measured on his catalogue: `DXB-A-001…011` for the cast, `DXB-V-<client>-00x` for a film (`DXB-V-EYW-001`, `DXB-V-OE-00x`, `DXB-V-BDR-00x`), `DXB-S-`/`DXB-G-` for stills and graphics — **is carried by a markdown file outside the repository and by no table at all.**
+
+**Who closes it:** <!-- OPEN: B43 --> not W13. A `job → scene → shot` record family and a `code` column are a schema change; they belong to the studio's screen plan (W14) and wait on the CEO's word. W13's duty was to make the company's data model say that the studio exists, what it actually stores today, and precisely what it does not.
+
 ## 27. Done definition (bu spec)
 
 27 başlık ✓ · mevcut 18 tablo sicili ✓ · 5 aile DDL taslağı (kolon+kısıt bağlayıcı) ✓ · ilişki haritası ✓ · RLS/append-only desenleri ✓ · migration/rollback haritası ✓ · doğrulama komutları ✓ · Opus-devralma notu ✓
