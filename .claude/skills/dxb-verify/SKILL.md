@@ -34,6 +34,20 @@ measured outcomes take the past tense.
 | resident restart | only when runtime code changed — see below |
 | **the ruler rule** (CEO, 2026-09-15: *"kural olsun"*) | Every audit's ruler is a runnable script, handed to the builder before the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. |
 
+| Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
+|---|---|---|
+| Code | the battery: typecheck · vitest · i18n-purity-check · verify:ledger · gitleaks | exists, runs on every commit |
+| Persona files | `tests/personas/persona-ruler.test.ts` (`scripts/persona-ruler.sh`) | built in this commit |
+| Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + records parity (`dxb-close-row`) | exists |
+| CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |
+| Specs / plan text | none yet — the ruler is written before the work, or the work is reported ⚠ UNVERIFIED | gap, named |
+
+Every commit runs its class's ruler automatically — no ruler green, no commit.
+
+A second session audits the CEO-visible and the risky work (personas, specs, money and identity
+paths, surfaces) on three things: the order against the diff (what was left out), the ruler output
+pasted into the evidence, and the blast radius measured; a class with no ruler gets its ruler first.
+
 **Green on the parts you like is not green.** Skipping any applicable check is a governance
 violation of the same tier as an invented number.
 

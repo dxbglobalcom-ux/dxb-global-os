@@ -787,5 +787,19 @@
     "verbatim": "kadro kanunu doğru ama şunu da ekleyelim eğer müşteri bayan içerikli reklam isterse oluşturulur bu onların sorumluluğunda.",
     "conditions": "applies to client briefs only; the holding's own cast (its avatars, its showcase) stays men and elderly women; the Islamic boundaries stay CEO-only and are not touched by this entry; the seats record the client's responsibility on the brief",
     "where": "board B43 dated index (g) · .planning/STATE.md live block · personas (W5) · EVIDENCE-W4b-2026-09-15.md"
+  },
+  "audit-ruler-is-a-runnable-script-2026-09-15": {
+    "date": "2026-09-15",
+    "what": "The method of every audit is now a rule, on his own word: an audit's ruler is a RUNNABLE SCRIPT, handed to the builder BEFORE the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. The day's cause: W6b was measured by its builder with a per-line ruler (118 sentences over 80 words → 0) and re-measured by the checker session with a period-to-period ruler (116 still over, longest 260 words) — nobody lied, the metre differed, and the checker's metre had been handed over as prose instead of as code. Written as ONE row of the dxb-verify battery table and nowhere else.",
+    "verbatim": "kural olsun ve başla",
+    "conditions": "one sentence only, in the dxb-verify door; nothing else in this session was promoted to a law (his prohibition of 2026-08-13); the ruler it produced is tests/personas/persona-ruler.test.ts + scripts/persona-ruler.sh, one implementation behind two doors",
+    "where": ".claude/skills/dxb-verify/SKILL.md (the battery table) · commits 03ad139c and the Part-1 amendment commit · EVIDENCE-W5-2026-09-15.md § \"Ruler + W6c\" · .planning/STATE.md live block · board row B43"
+  },
+  "ruler-table-holding-wide-2026-09-15": {
+    "date": "2026-09-15",
+    "what": "The ruler rule is HOLDING-WIDE, not studio-specific, and the dxb-verify door carries the table of artifact classes with the runnable ruler each one is measured by and the state of that ruler today (code · persona files · records · CEO-visible surfaces · specs and plan text, the last named as a gap). With it, two lines of his doctrine: (1) every commit runs its class's ruler automatically — no ruler green, no commit; (2) a second session audits the CEO-visible and the risky work (personas, specs, money and identity paths, surfaces) on three things — the order against the diff (what was left out), the ruler output pasted into the evidence, and the blast radius measured; a class with no ruler gets its ruler first.",
+    "verbatim": "yaz",
+    "conditions": "answer to the question whether the rule is holding-wide; the table carries no other text and lives in one place only (CLAUDE.md §4 — a rule written in two places is wrong)",
+    "where": ".claude/skills/dxb-verify/SKILL.md (under the ruler rule) · the Part-1 amendment commit · EVIDENCE-W5-2026-09-15.md § \"Ruler + W6c\""
   }
 }
