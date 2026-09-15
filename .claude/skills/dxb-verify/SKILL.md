@@ -25,12 +25,14 @@ measured outcomes take the past tense.
 | Check | What it proves |
 |---|---|
 | `pnpm test` (vitest) | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
+| `bash scripts/persona-ruler.sh` | only when a persona under the ruler's contract changed — the writing and the doctrine of those seats, by the one metre the battery case (`tests/personas/persona-ruler.test.ts`) and the DB gate (`scripts/sync-personas-to-db.sh`) both run |
 | `pnpm typecheck` (`tsc --build`) | the interfaces still hold |
 | `pnpm verify:ledger` | the records still agree with the live company database |
 | `bash scripts/i18n-purity-check.sh` | both locales at parity, no leakage either way |
 | `gitleaks detect` | no secret entered history |
 | the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
 | resident restart | only when runtime code changed — see below |
+| **the ruler rule** (CEO, 2026-09-15: *"kural olsun"*) | Every audit's ruler is a runnable script, handed to the builder before the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. |
 
 **Green on the parts you like is not green.** Skipping any applicable check is a governance
 violation of the same tier as an invented number.

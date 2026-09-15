@@ -1,0 +1,272 @@
+{
+  "$comment": [
+    "THE CONCEPT CONTRACT — rule 12 of the persona ruler (tests/personas/persona-ruler.ts).",
+    "It answers one question: after a writing pass, is the doctrine still in the seat that carried it?",
+    "The seat lists were DERIVED, not invented: every pattern below was grepped against the delivered",
+    "bodies at commit b1c099d0 (2026-09-15, before W6c) and the seats that carried it were written down.",
+    "A seat is never asked for a concept it never carried — the sound seat is not asked for the 1080p",
+    "ceiling and the delivery seat is not asked for the road rule.",
+    "Other departments stay out of this file until their own writing pass is ordered: a persona that is",
+    "not named here is NOT-MEASURED by the ruler and is submitted exactly as it was before."
+  ],
+  "departments": {
+    "media-studio": {
+      "seats": {
+        "media-creative-director": "personas/media-studio/media-creative-director.md",
+        "media-film-director": "personas/media-studio/media-film-director.md",
+        "media-storyboard-previz": "personas/media-studio/media-storyboard-previz.md",
+        "design-image-prompt-engineer": "personas/design/design-image-prompt-engineer.md",
+        "marketing-short-video-editing-coach": "personas/marketing/marketing-short-video-editing-coach.md",
+        "media-ai-video-engineer": "personas/media-studio/media-ai-video-engineer.md",
+        "media-product-brand-consistency": "personas/media-studio/media-product-brand-consistency.md",
+        "media-character-identity": "personas/media-studio/media-character-identity.md",
+        "media-continuity": "personas/media-studio/media-continuity.md",
+        "media-screenwriter": "personas/media-studio/media-screenwriter.md",
+        "media-failure-analysis": "personas/media-studio/media-failure-analysis.md",
+        "media-cinematographer": "personas/media-studio/media-cinematographer.md",
+        "media-advertising-director": "personas/media-studio/media-advertising-director.md",
+        "media-delivery-qc": "personas/media-studio/media-delivery-qc.md",
+        "media-vfx-post": "personas/media-studio/media-vfx-post.md",
+        "media-sound-music": "personas/media-studio/media-sound-music.md"
+      },
+      "concepts": [
+        {
+          "id": "three-roads",
+          "why": "a face enters by a real photograph, its own casting take, or a written sheet (CEO 2026-09-04)",
+          "pattern": "real photographs?|casting take|written sheet",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-storyboard-previz",
+            "design-image-prompt-engineer",
+            "media-product-brand-consistency",
+            "media-character-identity",
+            "media-failure-analysis",
+            "media-cinematographer",
+            "media-advertising-director",
+            "media-delivery-qc",
+            "media-vfx-post"
+          ]
+        },
+        {
+          "id": "no-face-drawn-outside-the-engine",
+          "why": "no new face is drawn outside the engine (CEO 2026-09-13)",
+          "pattern": "drawn outside the engine",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-storyboard-previz",
+            "design-image-prompt-engineer",
+            "media-character-identity"
+          ]
+        },
+        {
+          "id": "road-from-the-brief",
+          "why": "the road comes from the brief, or the CEO says 'choose the best' (CEO 2026-09-04 22:35)",
+          "pattern": "the road comes from the brief|choose the best|the brief's road",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-storyboard-previz",
+            "design-image-prompt-engineer",
+            "marketing-short-video-editing-coach",
+            "media-ai-video-engineer",
+            "media-product-brand-consistency",
+            "media-character-identity",
+            "media-continuity",
+            "media-screenwriter",
+            "media-failure-analysis",
+            "media-cinematographer",
+            "media-advertising-director"
+          ]
+        },
+        {
+          "id": "t2v-default-i2v-open",
+          "why": "text-to-video is the general default and image-to-video is not forbidden",
+          "pattern": "text-to-video and image-to-video are both open|image-to-video is not forbidden|general default is text-to-video|both roads",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-storyboard-previz",
+            "design-image-prompt-engineer",
+            "marketing-short-video-editing-coach",
+            "media-ai-video-engineer",
+            "media-product-brand-consistency",
+            "media-character-identity",
+            "media-continuity",
+            "media-screenwriter",
+            "media-failure-analysis",
+            "media-cinematographer",
+            "media-advertising-director"
+          ]
+        },
+        {
+          "id": "local-engine-first-no-flux",
+          "why": "the local engine is the first choice and Flux plays no part in its take (CEO 2026-09-14)",
+          "pattern": "local engine is the first choice|Flux (is not used|plays no part)|no drawn still or panel",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-storyboard-previz",
+            "design-image-prompt-engineer",
+            "marketing-short-video-editing-coach",
+            "media-ai-video-engineer",
+            "media-product-brand-consistency",
+            "media-character-identity",
+            "media-continuity",
+            "media-screenwriter",
+            "media-failure-analysis",
+            "media-cinematographer",
+            "media-advertising-director"
+          ]
+        },
+        {
+          "id": "one-take-when-it-suffices",
+          "why": "one take when it suffices; no film pre-split into a fixed number of parts (CEO 2026-09-14)",
+          "pattern": "one take when (it|one) suffic",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-storyboard-previz",
+            "design-image-prompt-engineer",
+            "marketing-short-video-editing-coach",
+            "media-ai-video-engineer",
+            "media-product-brand-consistency",
+            "media-character-identity",
+            "media-continuity",
+            "media-screenwriter",
+            "media-failure-analysis",
+            "media-cinematographer",
+            "media-advertising-director"
+          ]
+        },
+        {
+          "id": "joins-on-the-engines-own-frames",
+          "why": "a join is the shooting engine's own frame, never a drawn one",
+          "pattern": "engine's own (last )?frames?|the frame the engine itself shot|taken from the engine that shot|last frame of one take is the first",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-storyboard-previz",
+            "design-image-prompt-engineer",
+            "marketing-short-video-editing-coach",
+            "media-ai-video-engineer",
+            "media-product-brand-consistency",
+            "media-character-identity",
+            "media-continuity",
+            "media-screenwriter",
+            "media-failure-analysis",
+            "media-cinematographer"
+          ]
+        },
+        {
+          "id": "measured-hold",
+          "why": "a hold is measured, never guessed",
+          "pattern": "measured hold|hold is measured|held for a measured",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "design-image-prompt-engineer",
+            "marketing-short-video-editing-coach",
+            "media-product-brand-consistency",
+            "media-screenwriter",
+            "media-failure-analysis",
+            "media-advertising-director"
+          ]
+        },
+        {
+          "id": "engines-own-voice-only",
+          "why": "the engine's own generated voice is the only voice — no TTS, no recorded or cloned replacement (CEO 2026-09-04)",
+          "pattern": "engine's own (generated )?voice",
+          "seats": [
+            "media-creative-director",
+            "marketing-short-video-editing-coach",
+            "media-screenwriter",
+            "media-sound-music"
+          ]
+        },
+        {
+          "id": "law-d-order",
+          "why": "enlargement comes after the CEO's acceptance and only on his word (LAW D, 2026-09-03)",
+          "pattern": "after (his|the CEO's) acceptance|the CEO has accepted|LAW D|only when he asks",
+          "seats": [
+            "media-creative-director",
+            "media-cinematographer",
+            "media-delivery-qc",
+            "media-vfx-post"
+          ]
+        },
+        {
+          "id": "four-sampling-steps",
+          "why": "the measured sampling-step count of this station's engine",
+          "pattern": "4 sampling steps|four sampling steps",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-ai-video-engineer"
+          ]
+        },
+        {
+          "id": "1080p-ceiling",
+          "why": "the station's delivery ceiling",
+          "pattern": "1080",
+          "seats": [
+            "media-creative-director",
+            "media-vfx-post"
+          ]
+        },
+        {
+          "id": "cast-law",
+          "why": "the holding's own cast is men and elderly women only; a client's brief is the client's responsibility (CEO 2026-09-03, 2026-09-15)",
+          "pattern": "MEN and ELDERLY WOMEN|cast law",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-character-identity"
+          ]
+        },
+        {
+          "id": "skin-mark-board-rule",
+          "why": "no skin-mark descriptor enters a casting brief or a prompt (board row B43, CEO 2026-09-03 21:20)",
+          "pattern": "mole|freckle|blemish|skin-mark",
+          "seats": [
+            "design-image-prompt-engineer",
+            "media-character-identity"
+          ]
+        },
+        {
+          "id": "lettering",
+          "why": "the engine never writes letters; a readable mark comes from the real file in post",
+          "pattern": "letter(ing|s)|readable mark",
+          "seats": [
+            "media-creative-director",
+            "media-film-director",
+            "media-storyboard-previz",
+            "design-image-prompt-engineer",
+            "media-ai-video-engineer",
+            "media-product-brand-consistency",
+            "media-screenwriter",
+            "media-failure-analysis",
+            "media-advertising-director",
+            "media-delivery-qc",
+            "media-vfx-post"
+          ]
+        },
+        {
+          "id": "money-gate",
+          "why": "money out stops at the CEO",
+          "pattern": "money (out|leaves)|money-out|no money",
+          "seats": [
+            "media-creative-director",
+            "design-image-prompt-engineer",
+            "media-ai-video-engineer",
+            "media-failure-analysis",
+            "media-delivery-qc",
+            "media-vfx-post",
+            "media-sound-music"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -46,6 +46,21 @@ if [ ${#files[@]} -eq 0 ]; then
   mapfile -t files < <(find "$REPO_DIR/personas" -mindepth 2 -name '*.md' | sort)
 fi
 
+# THE RULER (CEO emri 2026-09-15) — bir denetimin cetveli çalıştırılabilir bir betiktir ve iş
+# BAŞLAMADAN önce yazarın eline verilir. Kural ihlali olan bir dosya DB'ye girmez: submit modunda
+# cetvel bir kez koşar, tablosu basılır ve FAIL alan dosya atlanır (fail closed). Cetvelin sözleşmesi
+# tests/personas/persona-ruler.concepts.json — orada adı geçmeyen persona ÖLÇÜLMEZ ve eskisi gibi
+# submit edilir; cetvel stüdyonun 16 koltuğu için yazıldı, yazım geçişi emredilmemiş bir departmanın
+# önüne dikilmez. --verify modu değişmedi.
+declare -A RULER_VERDICT=()
+if [ "$MODE" = "submit" ]; then
+  ruler_out="$(bash "$REPO_DIR/scripts/persona-ruler.sh" --verdicts "${files[@]}" 2>&1 || true)"
+  printf '%s\n' "$ruler_out" | grep -v '^RULER-VERDICT' || true
+  while IFS=$'\t' read -r _ rslug rverdict; do
+    [ -n "${rslug:-}" ] && RULER_VERDICT["$rslug"]="$rverdict"
+  done < <(printf '%s\n' "$ruler_out" | grep '^RULER-VERDICT' || true)
+fi
+
 extract_body() { # dosyadan persona gövdesi: ilk '# PERSONA — ' satırından sona
   awk '/^# PERSONA — /{f=1} f{print}' "$1"
 }
@@ -65,6 +80,10 @@ for f in "${files[@]}"; do
   if [ -z "$body" ]; then
     echo "SKIP  $slug — ⏳ Fable-yazımı bekliyor (persona gövdesi yok)"
     skipped=$((skipped+1)); continue
+  fi
+  if [ "$MODE" = "submit" ] && [ "${RULER_VERDICT[$slug]:-SKIP}" = "FAIL" ]; then
+    echo "FAIL  $slug — persona cetveli reddetti (yukarıdaki tablo; kural ihlali olan dosya DB'ye girmez)"
+    failed=$((failed+1)); continue
   fi
   if printf '%s' "$body" | grep -q '\$dxb_body\$'; then
     echo "FAIL  $slug — gövde dollar-quote çakışması"; failed=$((failed+1)); continue
