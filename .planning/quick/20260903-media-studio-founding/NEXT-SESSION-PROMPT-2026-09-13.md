@@ -1,3 +1,5 @@
+> **SUPERSEDED — marked 2026-09-15 (W2, audit F016 / F054). This file was composed by the author session of 2026-09-13 in the CEO's first person as a paste-ready handover; the sentences below are NOT his words and carry no authority of their own. Its first tasks were completed or superseded on 2026-09-13/14 (Astra's rule accepted 2026-09-14; the per-seat minute budget built 2026-09-13; the complaint numbering C26→C66 corrected). Do not paste it. The position is `.planning/STATE.md`; his words are in `scripts/governance/ceo-approvals.json`. Kept as history.**
+
 # CEO → next session (Fable 5.1) — handover prompt, written 2026-09-13 21:2x on his order
 
 > Bu metin CEO'nun bir sonraki oturuma yapıştırması içindir. Aşağıdaki her yol ve sayı 13 Eylül 2026 akşamı ölçüldü; yeni oturum hepsini yeniden ölçer, ezbere söylemez.

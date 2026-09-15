@@ -1,3 +1,5 @@
+> **CORRECTION 2026-09-15 (W2, audit F019) — read before the numbers below:** "122 place phrasings … in all 16 seat files" (line ~148) overstates — `git show --name-only afb7b553` → 13 persona files; the 122 was never reproduced by a command and is UNVERIFIED. "AFTER: 32/32" (line ~120) was a scratch script by concept, not the kept test (28 phrase checks at that hour); the check was rebuilt 2026-09-14 evening (`ea0ebebf`). The lines below are left as written.
+
 # EVIDENCE — B43 leg (3), the continuity rule written into the two directors' personas (2026-09-14)
 
 His word (2026-09-14, this session), after the rule had been put to him engine-agnostic: *"lakin işte flux kareleri sadece bu bilgisayardaki localdeki model için kapalı. diğer runpod veya api veya mcp için değil.çünkü burada yani localde üretim yaptığımızda herşeyi baştan sonra minimax H3 yapıyor. ok."* Read by the author as yes-with-the-amendment and said to him in the same turn. Ledger: `astra-rule-accepted-flux-scoped-to-local-2026-09-14`.
