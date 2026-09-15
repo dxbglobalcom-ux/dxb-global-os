@@ -33,6 +33,7 @@ measured outcomes take the past tense.
 | the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
 | resident restart | only when runtime code changed — see below |
 | **the ruler rule** (CEO, 2026-09-15: *"kural olsun"* <!-- CEO-OK: audit-ruler-is-a-runnable-script-2026-09-15 -->) | Every audit's ruler is a runnable script, handed to the builder before the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. |
+| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job on the open board is built by one session and checked by a second — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; the checker re-measures whether it was done and done right. The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
 
 | Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
 |---|---|---|

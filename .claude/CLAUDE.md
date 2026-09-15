@@ -124,7 +124,10 @@ the date. The battery fails on an unregistered approval claim.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
 - **One session, one author** — Opus 5 or Fable 5, whichever is running. Every repo line is
-  written by that author inline. Subagents audit, refute and sweep; they never write.
+  written by that author inline. Subagents audit, refute and sweep; they never write — and a
+  CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
+  ruler scripts included (the audit law, CEO 2026-09-15
+  <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).
 - **The plan exists once.** No new spec, no new plan file. A deviation is a registered
   adaptation inside the spec that already owns the contract.
 - **What the CEO drops is not written down.** A discussion that ends in *"forget it"* leaves no
