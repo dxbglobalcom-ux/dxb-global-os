@@ -87,6 +87,9 @@ if [[ $part == baseline || $part == battery || $part == A || $part == B ]]; then
   chk "i18n purity"            "$(bash "$D"/scripts/i18n-purity-check.sh 2>&1 | tail -1)" "PASS"
   chk "gitleaks (branch since 38381faa)" "$(gitleaks git --log-opts='38381faa..HEAD' "$D" --no-banner 2>&1 | tail -1 | grep -o 'no leaks found')" "no leaks"
   chk "tree clean"             "$(git -C "$D" status --short | wc -l)" "^0$"
+  # added 2026-09-15 by the checker after W11: the product register's gate (scripts/b43/vitrin-register-gate.sh) existed
+  # but nothing ran it — a gate no battery runs is decoration. It self-skips on a machine without the vitrin.
+  chk "vitrin register gate (W11)" "$(bash "$D"/scripts/b43/vitrin-register-gate.sh 2>&1 | tail -1)" "VITRIN REGISTER: PASS|nothing to gate"
   chk "migrations touched only in Part A/B commits" "$(git -C "$D" diff --stat 38381faa..HEAD -- db/migrations | tail -1 | grep -o '[0-9]* file' | head -1)" "^([0-9]* file)?$"
 fi
 
