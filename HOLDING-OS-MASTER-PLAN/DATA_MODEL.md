@@ -84,6 +84,22 @@ CREATE TABLE personas (
   UNIQUE (employee_id, version)
 );
 
+-- REGISTERED ADAPTATION (W9, CEO 2026-09-15 "onay" <!-- CEO-OK: w9-assigned-seats-plan-approved-2026-09-15 -->):
+-- an employee of one department may ALSO serve a seat in another. A second membership, never a
+-- move — agents.department stays the home department. Read by the dispatcher (A19) and by the
+-- gateway profile compiler, which raises the seat's ceiling to the assigned department's surface
+-- while granting nothing by itself (least privilege: the seat adds only what it holds BY NAME).
+CREATE TABLE agent_assignments (
+  id            bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  agent_id      uuid NOT NULL REFERENCES agents(id),
+  department_id uuid NOT NULL REFERENCES departments(id),
+  seat_title    text NOT NULL,            -- the title the seat carries THERE
+  since         date NOT NULL,
+  ledger_id     text NOT NULL,            -- the CEO approval that ordered it
+  created_at    timestamptz NOT NULL DEFAULT now(),
+  UNIQUE (agent_id, department_id)
+);
+
 CREATE TABLE employee_records (              -- kurumsal sicil (madde 8 listesi)
   employee_id uuid PRIMARY KEY REFERENCES agents(id),
   responsibilities text[],

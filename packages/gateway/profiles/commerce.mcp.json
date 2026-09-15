@@ -1,9 +1,9 @@
 {
   "_department": "commerce",
-  "_generated_at": "2026-09-13T19:49:48.931Z",
+  "_generated_at": "2026-09-15T11:53:05.828Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
   "_skills": [],
-  "_source_hash": "d0bcaf265992183f4ffb10f7e87df7998bffa4e19e69ebe5901c4ad3a584439b",
+  "_source_hash": "b1e5ec29d782cd9d3fbd75a6eca45d8059470e66bb1f8130eefe374ee7c4abf9",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",

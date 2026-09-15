@@ -9,6 +9,16 @@
 // role_level. Intersection with the policy profile happens in the generator
 // (G2: the narrowest cut wins). Expired grants (adaptation A2) are dead here.
 //
+// W9 (CEO 2026-09-15): an employee may be ASSIGNED to a second department
+// (`agent_assignments` — a second membership, never a move). The assignment raises
+// the employee's CEILING only: the generator intersects against the surface of every
+// department the employee belongs to, while the granted set stays employee ∪ home
+// department ∪ role_level. So a borrowed seat keeps its home kit and adds exactly what
+// it was granted BY NAME — not everything the host department happens to hold, now or
+// later. This does not loosen G2: the cut is still an intersection, and the employee
+// still cannot exceed the surface of a department it is a recorded member of. What
+// widened is the MEMBERSHIP, in the org record, not the library's power over policy.
+//
 // Atomic write (§17): the new set is generated into a staging directory and
 // moved into place only after full success — a failed compile leaves the old
 // profiles untouched and raises on the alerts path of the caller.
@@ -119,14 +129,38 @@ export async function readLibraryLayer(db: Kysely<DB>): Promise<LibraryLayer> {
            AND employment_status IS DISTINCT FROM 'archived'
       `.execute(db)
     ).rows;
+    // W9: the departments an employee is ASSIGNED to, beside its home one.
+    const assignedBy = new Map<string, string[]>();
+    for (const row of (
+      await sql<{ agent_id: string; department: string }>`
+        SELECT x.agent_id, d.slug AS department
+          FROM agent_assignments x
+          JOIN departments d ON d.id = x.department_id
+         WHERE x.agent_id = ANY(${employeeIds}::uuid[])
+         ORDER BY d.slug
+      `.execute(db)
+    ).rows) {
+      const list = assignedBy.get(row.agent_id) ?? [];
+      if (!list.includes(row.department)) list.push(row.department);
+      assignedBy.set(row.agent_id, list);
+    }
     for (const a of agents) {
       const union: LibrarySubjectCaps = { tools: [], skills: [] };
       mergeCaps(union, byEmployeeId[a.id]!);
       if (byDept[a.department]) mergeCaps(union, byDept[a.department]!);
+      // The assigned department raises the CEILING (below, in the generator) and grants
+      // nothing by itself: least privilege — the seat keeps its home kit and adds only
+      // what it was granted BY NAME as an employee. Merging the studio's whole grant set
+      // here would hand the borrowed seat every tool the studio ever gains, silently.
+      const assigned = assignedBy.get(a.id) ?? [];
       if (a.role_level && byRole[a.role_level]) mergeCaps(union, byRole[a.role_level]!);
       union.tools.sort();
       union.skills.sort();
-      employees[a.slug] = { department: a.department, ...union };
+      employees[a.slug] = {
+        department: a.department,
+        ...(assigned.length > 0 ? { assignedDepartments: assigned } : {}),
+        ...union,
+      };
     }
   }
 

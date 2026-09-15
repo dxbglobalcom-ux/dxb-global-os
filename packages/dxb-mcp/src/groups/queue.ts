@@ -27,6 +27,30 @@ const ok = (data: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(data) }],
 });
 
+/** A19, registered adaptation (W9, CEO 2026-09-15): a task may name a seat of the
+ *  author's own department OR a seat ASSIGNED to it (`agent_assignments` — a
+ *  second membership, never a move; `agents.department` stays the home one). A
+ *  seat that is neither stays refused, which is the whole point of the check.
+ *
+ *  The two doors below had their own copy of this test. There is now one
+ *  implementation and both call it — the defect class B08 step (0) closed the
+ *  same day was exactly a rule kept in two hand-written copies that drifted. */
+async function seatsAssignedTo(
+  db: Kysely<DB>,
+  agentIds: string[],
+  department: string,
+): Promise<Set<string>> {
+  if (agentIds.length === 0) return new Set();
+  const rows = await sql<{ agent_id: string }>`
+    SELECT x.agent_id
+      FROM agent_assignments x
+      JOIN departments d ON d.id = x.department_id
+     WHERE d.slug = ${department}
+       AND x.agent_id = ANY(${agentIds}::uuid[])
+  `.execute(db);
+  return new Set(rows.rows.map((r) => r.agent_id));
+}
+
 async function appendAudit(
   trx: Kysely<DB> | Transaction<DB>,
   actor: string,
@@ -85,7 +109,11 @@ export function registerQueue(server: McpServer): void {
           .executeTakeFirst();
         if (!seat) throw new Error(`queue_create_task: employee '${extras.agent_slug}' not found`);
         if (seat.department !== env.department) {
-          throw new Error(`queue_create_task: '${extras.agent_slug}' belongs to '${seat.department}', not '${env.department}'`);
+          // A19 (W9): an assigned seat is a member of the envelope's department too.
+          const assigned = await seatsAssignedTo(db, [seat.id], env.department);
+          if (!assigned.has(seat.id)) {
+            throw new Error(`queue_create_task: '${extras.agent_slug}' belongs to '${seat.department}', not '${env.department}'`);
+          }
         }
         if (seat.employment_status !== "active") {
           throw new Error(`queue_create_task: '${extras.agent_slug}' is '${seat.employment_status}', not active`);
@@ -206,11 +234,16 @@ export function registerQueue(server: McpServer): void {
         .where("slug", "in", slugs)
         .execute();
       const bySlug = new Map(staff.map((a) => [a.slug, a]));
+      // A19 (W9): one query for every named seat that is not a home-department
+      // member — an assignment row makes it one; anything else stays refused.
+      const strangers = staff.filter((a) => a.department !== author.department).map((a) => a.id);
+      const assigned = await seatsAssignedTo(db, strangers, author.department);
       const refused: string[] = [];
       for (const slug of slugs) {
         const a = bySlug.get(slug);
         if (!a) refused.push(`${slug}: not found`);
-        else if (a.department !== author.department) refused.push(`${slug}: belongs to '${a.department}', not '${author.department}'`);
+        else if (a.department !== author.department && !assigned.has(a.id))
+          refused.push(`${slug}: belongs to '${a.department}', not '${author.department}'`);
         else if (a.employment_status !== "active") refused.push(`${slug}: is '${a.employment_status}', not active`);
       }
       if (refused.length > 0) {

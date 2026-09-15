@@ -11,6 +11,7 @@ Kim (rol/çalışan) neye (kaynak) ne yapabilir (aksiyon) sorusunun TEK normatif
 
 - G1. Üç özne sınıfı: `ceo` (tek insan, Supabase Auth), `system` (kernel/worker/HR job service_role), `agent` (çalışan — MCP profil + virtual key ile).
 - G2. Ajan yetkisi üç eksenden BİLEŞKEdir: MCP profil (araç yüzeyi) ∩ library_grants (skill/plugin/tool) ∩ role_level tavanı (aşağıda §4) — en dar kesişim geçerli.
+  - **G2-bis (registered adaptation, W9, CEO 2026-09-15 <!-- CEO-OK: w9-assigned-seats-plan-approved-2026-09-15 -->).** Bir çalışan `agent_assignments` ile BAŞKA bir departmanın koltuğuna atanmış olabilir — ikinci bir üyelik, asla bir nakil: `agents.department` ev departmanı olarak kalır. Bu durumda MCP profil ekseninin TAVANI, çalışanın kayıtlı üyesi olduğu HER departmanın yüzeyinin birleşimidir; kesişim kuralı değişmez, en dar kesişim yine geçerlidir. Atanan departmanın kendi grant'ları çalışanın yetki kümesine EKLENMEZ (en dar yetki: ödünç koltuk yalnız adıyla verilmiş olanı alır). Ölçüm 2026-09-15: iki stüdyo koltuğu 23 → 28 araç, yalnız beş `media_*`; `design.mcp.json` ve `marketing.mcp.json` hâlâ 0 `media_*`.
 - G3. CEO her yetkiyi UI'dan görebilir ve değiştirebilir (madde 6.3); değişiklik audit'li + geri alınabilir.
 - G4. Para-çıkışı istisnasız: hiçbir özne (CEO dahil UI-tek-tık ile) approval kapısını atlayamaz — outbox tek çıkış (DOKUNULMAZ üçlü, SYSTEM_ARCHITECTURE §16).
 - G5. Madde 4: bu model yeni kimlik/mekanizma EKLEMEZ; sertleştirme adayları SECURITY_MODEL siciline.

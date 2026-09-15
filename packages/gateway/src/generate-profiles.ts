@@ -47,8 +47,15 @@ export interface LibrarySubjectCaps {
 
 export interface LibraryLayer {
   departments: Record<string, LibrarySubjectCaps>;
-  /** agent slug → dept + union caps (employee ∪ department ∪ role_level). */
-  employees: Record<string, { department: string } & LibrarySubjectCaps>;
+  /** agent slug → dept + union caps (employee ∪ department ∪ role_level).
+   *  W9: `assignedDepartments` names the OTHER departments the employee is a
+   *  recorded member of (`agent_assignments`). The overlay's ceiling is the
+   *  union of those departments' emitted surfaces and its home one — still an
+   *  intersection (G2), taken against every membership the org record gives. */
+  employees: Record<
+    string,
+    { department: string; assignedDepartments?: string[] } & LibrarySubjectCaps
+  >;
 }
 
 export interface GenerateProfilesOptions {
@@ -79,6 +86,8 @@ export interface DeptManifest {
 export interface EmployeeManifest {
   employee: string;
   department: string;
+  /** W9: the other departments this employee is a recorded member of. */
+  assignedDepartments?: string[];
   file: string;
   tools: Record<string, string[]>;
   skills: string[];
@@ -270,10 +279,23 @@ export async function generateProfiles(
   const employeeProfiles: EmployeeManifest[] = [];
   for (const slug of Object.keys(opts.library?.employees ?? {}).sort(byName)) {
     const emp = opts.library!.employees[slug]!;
-    const deptManifest = profiles.find((p) => p.department === emp.department);
+    // W9: the ceiling is every department the employee is a member of — its home
+    // one plus any it is ASSIGNED to. Where two memberships name the same server,
+    // the ceilings are unioned per server before the employee's grants cut them.
+    const memberships = [emp.department, ...(emp.assignedDepartments ?? [])];
+    const ceiling: Record<string, GrantValue> = {};
+    for (const dept of memberships) {
+      const m = profiles.find((p) => p.department === dept);
+      for (const [server, allowed] of Object.entries(m?.tools ?? {})) {
+        const have = ceiling[server];
+        if (have === undefined) ceiling[server] = allowed;
+        else if (have === "*" || allowed === "*") ceiling[server] = "*";
+        else ceiling[server] = [...new Set([...have, ...allowed])].sort(byName);
+      }
+    }
     const tools: Record<string, string[]> = {};
     const mcpServers: Record<string, ServerCatalogEntry> = {};
-    for (const [server, allowed] of Object.entries(deptManifest?.tools ?? {})) {
+    for (const [server, allowed] of Object.entries(ceiling)) {
       const granted = new Set(
         emp.tools.filter((t) => t.startsWith(`${server}.`)).map((t) => t.slice(server.length + 1)),
       );
@@ -289,6 +311,7 @@ export async function generateProfiles(
     const manifest: EmployeeManifest = {
       employee: slug,
       department: emp.department,
+      ...(emp.assignedDepartments?.length ? { assignedDepartments: emp.assignedDepartments } : {}),
       file: join(opts.outDir, `${slug}.employee.mcp.json`),
       tools,
       skills,
