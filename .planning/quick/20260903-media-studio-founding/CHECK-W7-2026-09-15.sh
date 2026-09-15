@@ -55,7 +55,8 @@ voice_rows_co(){ q $CO "select count(*)||'|'||coalesce(string_agg(distinct statu
 edge_refs(){ grep -rln "edge-tts" "$D/packages" "$D/scripts" "$D/tools" --include=*.ts --include=*.mjs --include=*.sh --include=*.py 2>/dev/null | grep -v "/dist/\|node_modules" | wc -l; }
 voice_fp(){ q $CO "select count(*)||' identities, md5='||coalesce(md5(string_agg(id::text||engine||coalesce(profile_ref,'')||status, ',' order by id)),'') from voice_identities"; }
 hamza_voice(){ q $CO "select a.slug||'|'||v.engine||'|'||v.profile_ref||'|'||v.status from voice_identities v join agents a on a.id=v.agent_id where a.slug='agents-orchestrator'"; }
-hands_green(){ (cd "$D" 2>/dev/null; npx vitest run tests/b43/media-hands.test.ts 2>&1 | grep -E '^ *Tests ' | grep -oE '[0-9]+ (passed|failed)' | head -2 | tr '\n' ' '); }
+# 2026-09-15: this ran media-hands ALONE, and W7 shipped with media-lanes red because of it.
+hands_green(){ (cd "$D" 2>/dev/null; npx vitest run tests/b43 2>&1 | grep -E '^ *Tests ' | grep -oE '[0-9]+ (passed|failed)' | head -2 | tr '\n' ' '); }
 daemon_delta(){ echo $(( $(date -d "$(systemctl --user show dxb-scheduler.service -p ExecMainStartTimestamp --value)" +%s) - $(stat -c %Y "$D/packages/outbox-executor/dist/media-lane.js") )); }
 
 if [[ $part == baseline ]]; then
@@ -83,7 +84,7 @@ if [[ $part == a ]]; then
   chk "a9 migration applied on both engines (ledger)"             "$(q $CO "select count(*) from supabase_migrations.schema_migrations where name ilike '%voice%' and version like '2026091%'")$(q $CB "select count(*) from supabase_migrations.schema_migrations where name ilike '%voice%' and version like '2026091%'")" "^11$"
   chk "a10 media-hands test submits no kind \"voice\""             "$(grep -c 'kind: "voice"' "$HANDS_TEST")" "^0$"
   chk "a11 media-hands cancel fixture re-pointed (no engines:{voice})" "$(grep -c 'engines: { voice:' "$HANDS_TEST")" "^0$"
-  chk "a12 media-hands suite green"                               "$(hands_green)" "^[0-9]+ passed $"
+  chk "a12 tests/b43 whole suite green"                               "$(hands_green)" "^[0-9]+ passed $"
   chk "a13 media-studio profile still the 5 media_* tool names"   "$(grep -o '"media_[a-z]*"' "$D/packages/gateway/profiles/media-studio.mcp.json" | sort -u | wc -l)" "^5$"
   chk "a14 approval registered (w7-voice-hand-removed-2026-09-15)" "$(grep -c 'w7-voice-hand-removed-2026-09-15' "$APPROVALS")" "^[1-9]"
   chk "a15 F009 closed on the board"                              "$(grep -ci 'F009 closed' "$BOARD")" "^[1-9]"

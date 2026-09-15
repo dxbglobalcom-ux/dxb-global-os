@@ -78,7 +78,10 @@ if [[ $part == baseline || $part == battery || $part == A || $part == B ]]; then
   chk "sync --verify"          "$(DXB_PERSONA_AUTHOR=fable-5 bash "$D"/scripts/sync-personas-to-db.sh --verify 2>&1 | tail -1)" "VERIFY: PASS"
   chk "persona ruler"          "$(bash "$D"/scripts/persona-ruler.sh 2>&1 | grep -o 'RULER: [0-9/]* PASS')" "16/16 PASS"
   chk "bound = newest passed, holding-wide (rows behind)" "$(q $CO "select count(*) from agents a join personas pb on pb.id=a.persona_id where pb.version <> (select max(version) from personas p2 where p2.employee_id=a.id and p2.quality_gate='passed')")" "^0$"   # added 2026-09-15 after B08 step 0: no metre in the house compared BOUND to NEWEST for 49 days
-  chk "road + delivery tests"  "$(cd "$D" 2>/dev/null; npx vitest run tests/b43/road-consistency.test.ts tests/r31/persona-delivery.test.ts 2>&1 | grep -E '^ *Tests ' | grep -o '[0-9]* passed')" "^20 passed"
+  # 2026-09-15, after W7 shipped broken for ~30 min: this line named TWO FILES, so a change to
+  # the media hand could turn tests/b43/media-lanes.test.ts red and every metre still read green.
+  # A battery that runs a chosen file is a battery that measures the author's attention, not the code.
+  chk "tests/b43 whole suite + delivery" "$(cd "$D" 2>/dev/null; npx vitest run tests/b43 tests/r31/persona-delivery.test.ts 2>&1 | grep -E '^ *Tests ' | grep -oE '[0-9]+ (passed|failed)' | tr '\n' ' ')" "^[0-9]+ passed $"
   chk "typecheck"              "$(cd "$D" 2>/dev/null; pnpm typecheck 2>&1 | tail -1 | grep -c -i 'error' )" "^0$"
   chk "verify:ledger"          "$(node "$D"/scripts/governance/ledger-truth.mjs 2>&1 | tail -1 | grep -o 'ledger truth OK')" "OK"
   chk "i18n purity"            "$(bash "$D"/scripts/i18n-purity-check.sh 2>&1 | tail -1)" "PASS"
