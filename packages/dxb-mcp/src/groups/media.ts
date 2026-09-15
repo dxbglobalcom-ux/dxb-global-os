@@ -8,7 +8,7 @@ import { extractFrames, getDb, probeMedia } from "@dxb/shared";
 // B43 — THE STUDIO'S HANDS (CEO 2026-09-03: "Önce elleri kur, sonra stüdyo kendisi
 // yapsın"). Five doors, the approval group's shape: an expert BIRTHS a job row and a
 // separate resident process (the scheduler's media lane) executes it on the card.
-//   media_submit  — a job into the job book (still · shoot · upscale · voice · assemble · probe)
+//   media_submit  — a job into the job book (still · shoot · upscale · assemble · probe)
 //   media_status  — read one job
 //   media_wait    — block up to 25 min for a job, renewing the calling task's lease
 //                   every loop (a 900 s lease would otherwise be reaped mid-render)
@@ -53,7 +53,7 @@ const BASENAME = z
 const ABSPATH = z.string().min(1).regex(/^\//, "an absolute path");
 
 // Per-kind parameter contracts. They mirror the station's own drivers
-// (tools/h3/run.py, img.py, upscale/seedvr2_graph.py, edge-tts, ffmpeg) so an
+// (tools/h3/run.py, img.py, upscale/seedvr2_graph.py, ffmpeg) so an
 // expert cannot submit a job the lane cannot run — the defect is refused at the
 // step that would produce it, not discovered twenty minutes later.
 export const PARAM_SCHEMAS = {
@@ -91,11 +91,6 @@ export const PARAM_SCHEMAS = {
     color: z.enum(["lab", "wavelet", "adain", "none"]).optional(),
     seed: z.number().int().min(0).optional(),
     overlap: z.number().int().min(0).max(16).optional(),
-  }),
-  voice: z.object({
-    text: z.string().min(1).max(2000),
-    voice: z.string().min(1).max(60).optional(),
-    out: BASENAME.regex(/\.(wav|mp3)$/, "a .wav or .mp3 name"),
   }),
   assemble: z.object({
     clips: z
@@ -147,12 +142,11 @@ export function registerMedia(server: McpServer): void {
         "still {prompt, out: '<name>.png', w?, h?, steps? (28), guidance?, seed?} — a FLUX frame; " +
         "shoot {prompt, seconds ≤ 15.1, width, height (multiples of 32 — the station's proven vertical draft is 640×1152, LAW D: draft first), steps? (4 = the studio standard, ≈ 14 min per 15 s), seed?, prefix (letters/digits/_/-), first_frame?, last_frame?, refs? (≤ 9 absolute paths), ref_audio? (≤ 3), ref_size? 'match'|'max', lora?, no_lora?, negative?, cfg?} — a MiniMax H3 take with the engine's own voice when the prompt carries spoken lines; " +
         "upscale {file, model '3b'|'7b', target 720–2160, color? 'lab'|'wavelet'|'adain'|'none', seed?, overlap?} — SeedVR2, only on the CEO's word (LAW D); " +
-        "voice {text ≤ 2000, voice?, out: '<name>.wav'|'.mp3'} — a TTS line (the studio's films use the engine's own voice, CEO 2026-09-04); " +
         "assemble {clips: [{file, trim_start?, trim_end?}] (≤ 40), width, height, fps? (24), grade? 'none'|'ugc'|'luxury', captions? [{text, from, to}], logo? {file, width_frac?, x_frac?, y_frac?, from?}, audio? [{file, at}], room_tone_db?, out: '<name>.mp4'} — ffmpeg cut/grade/captions/logo/mix; " +
         "probe {file, at_seconds? (≤ 6)} — ffprobe plus frames (media_probe does the same into your own eye).",
       inputSchema: {
         task_id: z.string().uuid(),
-        kind: z.enum(["still", "shoot", "upscale", "voice", "assemble", "probe"]),
+        kind: z.enum(["still", "shoot", "upscale", "assemble", "probe"]),
         params: z.record(z.string(), z.unknown()),
         note: z.string().max(300).optional(),
       },

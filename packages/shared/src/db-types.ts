@@ -178,6 +178,10 @@ export interface MediaJobsTable {
   task_id: string | null;
   employee_id: string | null;
   department: string | null;
+  /** "voice" is RETIRED (W7, CEO 2026-09-15 "kaldır"): the kind left the CHECK and
+   *  media_submit, so no NEW row can carry it. It stays in this union because five
+   *  historical rows still do, and a type that denied them would make every read of
+   *  the job book a lie. Removing those rows is W12 and needs his separate word. */
   kind: "still" | "shoot" | "upscale" | "voice" | "assemble" | "probe";
   params: Jsonb;
   note: string | null;

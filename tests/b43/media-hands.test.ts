@@ -154,7 +154,10 @@ describe("1. the media tool group", () => {
   it("cancel flips a queued job; wait times out honestly and renews the task lease", { timeout: 30_000 }, async () => {
     const taskId = await makeTask(DEPT);
     await sql`UPDATE tasks SET status='running', claimed_by='b43-w', lease_expires_at = now() + interval '5 seconds' WHERE id=${taskId}::uuid`.execute(db());
-    const job = await callJson("media_submit", { task_id: taskId, kind: "voice", params: { text: "hello", out: "l1.wav" } });
+    // W7 (CEO 2026-09-15, "kaldır"): this case needs ANY cheap kind the job book accepts —
+    // it never runs, it only has to be born queued. It used the voice kind until that kind
+    // was retired; probe carries the same weight here.
+    const job = await callJson("media_submit", { task_id: taskId, kind: "probe", params: { file: "/tmp/w7-lease-probe.mp4" } });
     jobIds.push(job.id);
     const before = await sql<{ t: Date }>`SELECT lease_expires_at AS t FROM tasks WHERE id=${taskId}::uuid`.execute(db());
     const waited = await callJson("media_wait", { job_id: job.id, max_seconds: 5 });
@@ -229,7 +232,9 @@ describe("2. the media lane", () => {
   it("cancel_requested reaches a running engine", { timeout: 30_000 }, async () => {
     const dept = legDept();
     const taskId = await makeTask(dept);
-    const job = await callJson("media_submit", { task_id: taskId, kind: "voice", params: { text: "t", out: "v.mp3" } });
+    // W7: the kind here is a vehicle for the cancel path, not the subject of the case —
+    // the engine below is a stub either way. It was the voice kind until 2026-09-15.
+    const job = await callJson("media_submit", { task_id: taskId, kind: "probe", params: { file: "/tmp/w7-cancel-probe.mp4" } });
     jobIds.push(job.id);
     const slow: EngineRunner = async (ctx) => {
       for (let i = 0; i < 50; i++) {
@@ -238,7 +243,7 @@ describe("2. the media lane", () => {
       }
       return { output_path: null, result: {} };
     };
-    const running = runMediaLaneOnce({ ...laneOpts(dept), engines: { voice: slow } });
+    const running = runMediaLaneOnce({ ...laneOpts(dept), engines: { probe: slow } });
     await new Promise((r) => setTimeout(r, 400));
     const c = await callJson("media_cancel", { job_id: job.id });
     expect(c.cancel_requested).toBe(true);

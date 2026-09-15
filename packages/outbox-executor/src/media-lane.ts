@@ -54,7 +54,7 @@ export const MEDIA_LIMITS = {
 // The card is one: these kinds run one at a time, in the GPU lane. The others need only
 // the processor and run beside it (media-lanes.ts, CEO 2026-09-05 "Onaylıyorum, başla").
 export const GPU_KINDS: ReadonlySet<MediaKind> = new Set(["still", "shoot", "upscale"]);
-export const CPU_KINDS: ReadonlySet<MediaKind> = new Set(["voice", "assemble", "probe"]);
+export const CPU_KINDS: ReadonlySet<MediaKind> = new Set(["assemble", "probe"]);
 
 export interface ResourceVerdict {
   ok: boolean;
@@ -302,20 +302,19 @@ const upscaleEngine: EngineRunner = async (ctx) => {
   }
 };
 
-const voiceEngine: EngineRunner = async (ctx) => {
-  const p = ctx.params;
-  const edge = resolveUserBinary("edge-tts", "DXB_EDGE_TTS");
-  const wantWav = String(p.out).endsWith(".wav");
-  const mp3 = join(ctx.workDir, wantWav ? String(p.out).replace(/\.wav$/, ".mp3") : String(p.out));
-  await ctx.exec(edge, ["--voice", String(p.voice ?? "en-US-AvaNeural"), "--text", String(p.text), "--write-media", mp3]);
-  let out = mp3;
-  if (wantWav) {
-    out = join(ctx.workDir, String(p.out));
-    await ctx.exec(resolveMediaBinary("ffmpeg"), ["-y", "-v", "error", "-i", mp3, "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le", out]);
-  }
-  const info = await probeMedia(out);
-  return { output_path: out, result: { file: out, duration_s: info.duration_s, voice: p.voice ?? "en-US-AvaNeural", text: p.text } };
-};
+// The voice engine stood here until 2026-09-15. It shelled out to a text-to-speech
+// binary (named in the ruling and in EVIDENCE-W7-2026-09-15.md; deliberately not
+// written here, so a grep for it over this repo's source answers zero) and wrote a
+// TTS track, which his ruling of 2026-09-04 cancelled for every video production
+// (tts-cancelled-engine-voice-only-2026-09-04: "şu yapay sesi iptal et tüm video
+// üretimlerinde reklamdan tut filme kadar. MiniMax H3'ün kendi sesi olsun"). The hand
+// went on offering it for eleven days. Removed on his word of 2026-09-15 — "kaldır",
+// road (a) of two he was given (w7-voice-hand-removed-2026-09-15): the kind is gone
+// from the job book's CHECK and from media_submit, so a seat cannot ask.
+// The studio's voice is the take's own: `shoot` carries the spoken lines in the prompt.
+// This says nothing about the HOLDING's speaking voice — Hamza speaks through
+// packages/voice (speaches:piper), which shares no table, no binary and no line of
+// code with this lane.
 
 const GRADES: Record<string, string> = {
   none: "",
@@ -444,11 +443,13 @@ const probeEngine: EngineRunner = async (ctx) => {
   return { output_path: file, result: { ...summary, frames } };
 };
 
-export const ENGINES: Record<MediaKind, EngineRunner> = {
+/** Every kind a seat can still submit has a runner. "voice" is absent by his word of
+ *  2026-09-15 and the type says so, so a future kind cannot be added to the enum and
+ *  quietly forgotten here — Exclude keeps this map exhaustive against MediaKind. */
+export const ENGINES: Record<Exclude<MediaKind, "voice">, EngineRunner> = {
   still: stillEngine,
   shoot: shootEngine,
   upscale: upscaleEngine,
-  voice: voiceEngine,
   assemble: assembleEngine,
   probe: probeEngine,
 };
