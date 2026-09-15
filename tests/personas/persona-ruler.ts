@@ -238,12 +238,16 @@ function cut(text: string): { text: string; offset: number }[] {
     if (!(RULER.TERMINATORS as readonly string[]).includes(c)) continue;
     const next = text[i + 1];
     if (next !== undefined && !/\s/.test(next)) continue;
-    const piece = text.slice(start, i + 1).trim();
-    if (piece) out.push({ text: piece, offset: start });
+    const raw = text.slice(start, i + 1);
+    const piece = raw.trim();
+    // the offset must point at the first WORD of the sentence: the space that follows the previous
+    // full stop still belongs to the previous line, and reporting it names the wrong line to edit.
+    if (piece) out.push({ text: piece, offset: start + (raw.length - raw.trimStart().length) });
     start = i + 1;
   }
-  const tail = text.slice(start).trim();
-  if (tail) out.push({ text: tail, offset: start });
+  const rawTail = text.slice(start);
+  const tail = rawTail.trim();
+  if (tail) out.push({ text: tail, offset: start + (rawTail.length - rawTail.trimStart().length) });
   return out;
 }
 
@@ -305,7 +309,8 @@ export function measureFile(repoRoot: string, path: string, contract: Contract):
 
   // 2 line-terminator
   for (const l of lines) {
-    if (l.kind !== "prose" && l.kind !== "list") continue;
+    // headings, comments, list items and enumerated steps are exempt by the rule's own definition
+    if (l.kind !== "prose") continue;
     if (!RULER.LINE_END.test(l.text.trim())) {
       failures["line-terminator"].push({ line: l.n, detail: `ends "${l.text.trim().slice(-28)}"` });
     }
@@ -334,7 +339,9 @@ export function measureFile(repoRoot: string, path: string, contract: Contract):
   // 5 no-duplicate-clause — the shared law paragraph is excluded by contract
   const law = lawParagraph(body);
   let forDuplicates = body;
-  if (law && law !== "UNTERMINATED") forDuplicates = forDuplicates.split(law).join(" ");
+  // The law paragraph is excluded from the duplicate search by BLANKING it, never by cutting it
+  // out: removing its newlines would shift every line number reported after it.
+  if (law && law !== "UNTERMINATED") forDuplicates = forDuplicates.split(law).join(law.replace(/[^\n]/g, " "));
   const tokens: { w: string; line: number }[] = [];
   {
     let lineNo = start + 1;
