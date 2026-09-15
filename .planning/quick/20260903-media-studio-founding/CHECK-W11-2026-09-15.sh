@@ -44,9 +44,13 @@ EVID="$D/.planning/quick/20260903-media-studio-founding/EVIDENCE-W11-2026-09-15.
 BOARD="$D/HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md"
 UNIT="$(systemctl --user show dxb-vitrin.service -p FragmentPath --value 2>/dev/null)"
 PROBE="/tmp/claude-1000/check-w11-render-probe.cjs"; OUT="/tmp/claude-1000/check-w11-render.txt"
-fail=0
-ok(){ printf "PASS  %-64s %s\n" "$1" "$2"; }
-no(){ printf "FAIL  %-64s %s\n" "$1" "$2"; fail=1; }
+fail=0; ran=0; verdict=0
+ok(){ printf "PASS  %-64s %s\n" "$1" "$2"; ran=$((ran+1)); }
+no(){ printf "FAIL  %-64s %s\n" "$1" "$2"; fail=1; ran=$((ran+1)); }
+# CORRECTION 2026-09-15 (the builder caught it): a `grep -c … || echo 0` fed "0\n0" into $(( )), bash died on line 7
+# and the last line still printed ALL PASS. A ruler that dies early must say so: the verdict is printed ONLY when
+# every line of the chosen mode has run (w11 = 29 lines, guard = 7); an early death prints FAIL from the EXIT trap.
+trap '[[ $verdict == 1 ]] || { echo; echo "CHECK $part: FAIL — the ruler died before its last line ($ran lines ran)"; }' EXIT
 chk(){ if [[ "$2" =~ $3 ]]; then ok "$1" "$2"; else no "$1" "$2 (expected: $3)"; fi; }
 info(){ printf "INFO  %-64s %s\n" "$1" "$2"; }
 part="${1:-baseline}"
@@ -111,7 +115,7 @@ if [[ $part == baseline ]]; then
   echo "a006-birth files: $(ls "$MEDIA" | grep -c '^a006-birth')  a010-birth files: $(ls "$MEDIA" | grep -c '^a010-birth')  index a006-birth refs: $(grep -c 'a006-birth' "$IDX")  'ARDA doğum' alt: $(grep -c 'ARDA doğum' "$IDX")"
   echo "LAB rows 003-006: $(grep -c 'LAB-00[3-6]' "$KAT")  hard-coded tab numbers in source: $(grep -c '<span class="c">[0-9]' "$IDX")  KATALOG -p convention: $(grep -c -- '`-p`' "$KAT")  av_ named in KATALOG: $(grep -c 'av_' "$KAT")"
   echo "socket: $(bind) unit: $(grep -o 'bind [0-9.]*' "$UNIT" 2>/dev/null)  gate script in repo: $(gate_script)  kabul lines without ledger id: $(kabul_without_id)  missing media refs: $(missing_media)  media files: $(ls "$MEDIA" | wc -l)"
-  rm -f "$PROBE"; exit 0
+  rm -f "$PROBE"; verdict=1; exit 0
 fi
 
 if [[ $part == w11 ]]; then
@@ -122,7 +126,7 @@ if [[ $part == w11 ]]; then
   chk "4  F025 cards without an origin tag (every person names how it was born)" "$(grep -c '^CARD .* ORIGIN=0' "$OUT")" "^0$"
   chk "5  F046 edge-tts on the vitrin + catalogue"                        "$(grep -c 'edge-tts' "$IDX" "$KAT" | awk -F: '{s+=$2} END{print s}')" "^0$"
   chk "6  F046 2K lines not marked cancelled / under the 1080p ceiling"   "$(two_k)" "^0$"
-  chk "7  F043 'Medya OS' in index + KATALOG + avatars/ahmet.md"           "$(( $(grep -c 'Medya OS' "$IDX") + $(grep -c 'Medya OS' "$KAT") + $(grep -c 'Medya OS' "$AHMET" 2>/dev/null || echo 0) ))" "^0$"
+  chk "7  F043 'Medya OS' in index + KATALOG + avatars/ahmet.md"           "$(( $(grep -c 'Medya OS' "$IDX") + $(grep -c 'Medya OS' "$KAT") + $(grep -c 'Medya OS' "$AHMET" 2>/dev/null | head -1) ))" "^0$"
   info "   F043 elsewhere (archive/evidence — the builder says in the evidence why each stays or goes)" "shoot.sh=$(grep -c 'Medya OS' "$HOME/tools/h3/lab/out/2026-09-04/shoot.sh" 2>/dev/null) EVIDENCE-position=$(grep -c 'Medya OS' "$D/.planning/quick/20260903-media-studio-founding/EVIDENCE-position.md")"
   chk "8  F044 a006-birth* files left"                                    "$(ls "$MEDIA" | grep -c '^a006-birth')" "^0$"
   chk "9  F044 a010-birth* files present (AHMET's six)"                   "$(ls "$MEDIA" | grep -c '^a010-birth')" "^[6-9]$"
@@ -163,4 +167,7 @@ if [[ $part == guard ]]; then
   chk "G7 no probe artefact left behind"                                   "$(ls "$PROBE" 2>/dev/null | wc -l)" "^0$"
 fi
 
+want=0; [[ $part == w11 ]] && want=29; [[ $part == guard ]] && want=7
+[[ $ran == $want ]] || { fail=1; echo "FAIL  lines ran $ran of $want"; }
+verdict=1
 echo; [[ $fail == 0 ]] && echo "CHECK $part: ALL PASS" || { echo "CHECK $part: FAIL"; exit 1; }
