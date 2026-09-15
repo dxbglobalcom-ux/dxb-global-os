@@ -30,6 +30,7 @@ measured outcomes take the past tense.
 | `pnpm verify:ledger` | the records still agree with the live company database |
 | `bash scripts/i18n-purity-check.sh` | both locales at parity, no leakage either way |
 | `gitleaks detect` | no secret entered history |
+| `bash scripts/b43/vitrin-register-gate.sh` | the product register the CEO opens — his vitrin and its catalogue (`~/tools/h3/studio`, outside git) — still tells the truth: every cast face names how it was born, no cancelled hand is advertised, no pointer into a folder he deleted, no acceptance claim without a registered ledger id, no media the page shows and the disk lacks, no hand-typed counter, and the page is served to him alone (loopback). Self-skips where there is no vitrin; run by the shared studio battery since W11 |
 | the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
 | resident restart | only when runtime code changed — see below |
 | **the ruler rule** (CEO, 2026-09-15: *"kural olsun"* <!-- CEO-OK: audit-ruler-is-a-runnable-script-2026-09-15 -->) | Every audit's ruler is a runnable script, handed to the builder before the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. |

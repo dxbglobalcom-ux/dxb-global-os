@@ -81,5 +81,24 @@ else
   ok "10 the vitrin service binds loopback only" "no unit on this machine"
 fi
 
+# 11. the page says when it last knew, and it is still true. W11 found "son değişiklik 13 Eylül"
+#     printed on a file that had changed that same afternoon: a surface that stops saying when it
+#     last knew is the first step back into the drift this gate exists to stop.
+stated_date_ok(){ python3 - "$IDX" <<'PYDATE'
+import datetime, re, sys, pathlib
+p = pathlib.Path(sys.argv[1]); text = p.read_text(encoding="utf-8")
+AYLAR = {"Ocak":1,"Şubat":2,"Mart":3,"Nisan":4,"Mayıs":5,"Haziran":6,
+         "Temmuz":7,"Ağustos":8,"Eylül":9,"Ekim":10,"Kasım":11,"Aralık":12}
+m = re.search(r"son değişiklik\s*(?:<b>)?\s*(\d{1,2})\s+([A-Za-zÇĞİÖŞÜçğıöşü]+)\s+(\d{4})", text)
+if not m:
+    print("no 'son değişiklik' line")
+else:
+    d = datetime.date(int(m.group(3)), AYLAR.get(m.group(2), 0), int(m.group(1)))
+    f = datetime.date.fromtimestamp(p.stat().st_mtime)
+    print("OK" if d >= f else "stated %s, file changed %s" % (d, f))
+PYDATE
+}
+chk "11 the page's stated last-change date is not older than the page" "$(stated_date_ok)" "^OK$"
+
 echo
 [[ $fail == 0 ]] && echo "VITRIN REGISTER: PASS" || { echo "VITRIN REGISTER: FAIL"; exit 1; }
