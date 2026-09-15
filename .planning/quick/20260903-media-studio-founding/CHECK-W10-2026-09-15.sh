@@ -25,6 +25,8 @@
 #  Records: EVIDENCE-W10 with this ruler's md5 in the header; board B43 "F032 closed" "F035 closed"
 #        "F024 closed"; MODEL_ROUTING_SPEC no longer says "corrected in W10"; STATE names W10.
 #  ⚠ UNVERIFIED by any terminal: RULE #0 eye pass on /org/employees and /org/directors — his screen.
+# CORRECTION 2026-09-15 (the builder caught it; the checker's own baseline had printed it): a boolean concatenated
+# in SQL renders as true/false, never t/f — lines 2, 7, 9 and G1 now expect the value the query produces.
 set -u
 D="/home/dxb/DxB Global OS"
 CO="supabase_db_DxB_Global_OS"   # company engine — SELECT ONLY in this file
@@ -85,7 +87,7 @@ if [[ $part == w10 ]]; then
   # F032 — the fresh bootstrap
   bs=$(fresh_up)
   chk "1  fresh bootstrap ran the whole chain (rc applied skipped total)" "$bs" "^0 applied [0-9]+, skipped 0, ledger total [0-9]+$"
-  chk "2  fresh: media.creative rows as ruled (fable-5 off, fable-5.1 on)" "$(qs "$ROWS")" "^fable-5\|f\|[0-9]+ ; fable-5\.1\|t\|[0-9]+$"
+  chk "2  fresh: media.creative rows as ruled (fable-5 off, fable-5.1 on)" "$(qs "$ROWS")" "^fable-5\|false\|[0-9]+ ; fable-5\.1\|true\|[0-9]+$"
   chk "3  fresh: exactly one enabled media.creative row" "$(qs "select count(*) from routing_rules where task_class='media.creative' and enabled")" "^1$"
   fseats=$(qs "select count(*) from agents where department='media-studio'")
   if [[ "$fseats" =~ ^[1-9] ]]; then chk "4  fresh: media-studio seats ($fseats) whose brain <> the enabled model (F035)" "$(qs "$SEAT_MISMATCH")" "^0$"
@@ -95,9 +97,9 @@ if [[ $part == w10 ]]; then
     chk "6  w10 migration idempotent (second run on the fresh db, exit code)" "$(docker exec -i "$CB" psql -U postgres -d "$SCR" -v ON_ERROR_STOP=1 -q < "$D/db/migrations/$MIG" >/dev/null 2>&1; echo $?)" "^0$"
   else no "6  w10 migration idempotent" "no file"; fi
   # F035 — the two live engines
-  chk "7  company: media.creative rows as ruled (SELECT only)" "$(q $CO "$ROWS")" "^fable-5\|f\|[0-9]+ ; fable-5\.1\|t\|[0-9]+$"
+  chk "7  company: media.creative rows as ruled (SELECT only)" "$(q $CO "$ROWS")" "^fable-5\|false\|[0-9]+ ; fable-5\.1\|true\|[0-9]+$"
   chk "8  company: media-studio seats whose brain <> the enabled model" "$(q $CO "$SEAT_MISMATCH")" "^0$"
-  chk "9  construction: media.creative rows as ruled" "$(q $CB "$ROWS")" "^fable-5\|f\|[0-9]+ ; fable-5\.1\|t\|[0-9]+$"
+  chk "9  construction: media.creative rows as ruled" "$(q $CB "$ROWS")" "^fable-5\|false\|[0-9]+ ; fable-5\.1\|true\|[0-9]+$"
   chk "10 construction: media-studio seats whose brain <> the enabled model" "$(q $CB "$SEAT_MISMATCH")" "^0$"
   info "   the two assigned seats (route by their own department; not judged)" "$(q $CO "$ASSIGNED")"
   chk "11 migration ledgers: repo = company = construction (count)" "$(ls "$D"/db/migrations/*.sql | wc -l) $(q $CO 'select count(*) from supabase_migrations.schema_migrations') $(q $CB 'select count(*) from supabase_migrations.schema_migrations')" "^([0-9]+) \1 \1$"
@@ -126,7 +128,7 @@ fi
 
 if [[ $part == guard ]]; then
   echo "== GUARD — what W10 must not have broken"
-  chk "G1 company media.creative rows unchanged as ruled" "$(q $CO "$ROWS")" "^fable-5\|f\|40 ; fable-5\.1\|t\|50$"
+  chk "G1 company media.creative rows unchanged as ruled" "$(q $CO "$ROWS")" "^fable-5\|false\|40 ; fable-5\.1\|true\|50$"
   chk "G2 brain floor still L1 for the 14 seats (fn_effective_tier('L3') <> 'L1')" "$(q $CO "select count(*) from agents a where a.department='media-studio' and fn_effective_tier('L3', a.id) <> 'L1'")" "^0$"
   chk "G3 catalogue rows fable-5 / fable-5.1 active L1 (company, construction)" "$(q $CO "select count(*) from model_catalog where id in ('fable-5','fable-5.1') and status='active' and tier_floor='L1'") $(q $CB "select count(*) from model_catalog where id in ('fable-5','fable-5.1') and status='active' and tier_floor='L1'")" "^2 2$"
   chk "G4 resident scheduler younger than kernel dist (s; negative = old code running)" "$(( $(date -d "$(systemctl --user show dxb-scheduler.service -p ActiveEnterTimestamp --value)" +%s) - $(stat -c %Y "$D/packages/kernel/dist/workflow/steps/agent.js") ))" "^[0-9]+$"
