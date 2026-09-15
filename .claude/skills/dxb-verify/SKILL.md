@@ -32,7 +32,7 @@ measured outcomes take the past tense.
 | `gitleaks detect` | no secret entered history |
 | the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
 | resident restart | only when runtime code changed — see below |
-| **the ruler rule** (CEO, 2026-09-15: *"kural olsun"*) | Every audit's ruler is a runnable script, handed to the builder before the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. |
+| **the ruler rule** (CEO, 2026-09-15: *"kural olsun"* <!-- CEO-OK: audit-ruler-is-a-runnable-script-2026-09-15 -->) | Every audit's ruler is a runnable script, handed to the builder before the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. |
 
 | Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
 |---|---|---|
@@ -41,6 +41,8 @@ measured outcomes take the past tense.
 | Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + records parity (`dxb-close-row`) | exists |
 | CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |
 | Specs / plan text | none yet — the ruler is written before the work, or the work is reported ⚠ UNVERIFIED | gap, named |
+
+The table is his, holding-wide, on his word *"yaz"* of 2026-09-15 <!-- CEO-OK: ruler-table-holding-wide-2026-09-15 -->.
 
 Every commit runs its class's ruler automatically — no ruler green, no commit.
 
