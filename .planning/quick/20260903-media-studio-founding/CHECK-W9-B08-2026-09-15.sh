@@ -60,7 +60,7 @@ if [[ $part == baseline || $part == B ]]; then
     chk "B2 assignment rows for the two seats"                "$rows" "^2$"
     chk "B3 employee grants of the media drawer (2 seats)"    "$grants" "^2$"
     chk "B4 per-employee mcp_profile set for both (not inherit/NULL)" "$(echo "$prof" | grep -c "=inherit\|=NULL")" "^0$"
-    chk "B5 home profiles still carry 0 media_* tools"        "$(grep -c 'media_' "$D"/apps/*/profiles/design.mcp.json "$D"/apps/*/profiles/marketing.mcp.json 2>/dev/null | awk -F: '{s+=$2} END{print s+0}')" "^0$"
+    chk "B5 home profiles still carry 0 media_* tools"        "$(grep -c 'media_' "$D"/packages/gateway/profiles/design.mcp.json "$D"/packages/gateway/profiles/marketing.mcp.json 2>/dev/null | awk -F: '{s+=$2} END{print s+0}')" "^0$"
     chk "B6 queue tests incl. two new (accept assigned / refuse stranger)" "$(cd "$D" 2>/dev/null; npx vitest run tests/b43 tests/r31 tests/b39 2>&1 | grep -E '^ *Tests ' | grep -o '[0-9]* passed' | head -1)" "^(10[2-9]|1[1-9][0-9]) passed"
     chk "B7 A19 adaptation registered in AGENT_ORCHESTRATION" "$(grep -c 'agent_assignments' "$D"/HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md)" "^[1-9]"
     chk "B8 F033 closed on the board"                         "$(grep -ci 'F033 closed' "$D"/HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md)" "^[1-9]"
