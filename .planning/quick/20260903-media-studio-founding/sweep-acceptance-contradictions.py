@@ -8,8 +8,13 @@
 # it. It is a SWEEP, not a gate: its DENY pattern is deliberately coarse and does not match subjects,
 # so it produces hits, not findings. On the day it was written, 23 hits held ONE real defect; every
 # other line was read in context and found honest. READ EVERY HIT BEFORE YOU CALL ANY OF THEM A
-# FINDING. Whether this becomes a permanent gate is the CEO's to decide, and he ordered the question
-# put to BOTH Codex/Astra and the checker first (his word, 2026-09-16).
+# FINDING. IT WILL NEVER BE A GATE: on 2026-09-16 the question was put to BOTH Codex/Astra and the
+# checker on his order; Codex said BUILD DIFFERENTLY under a condition the measurement failed, the
+# checker said DO NOT BUILD (three candidate gates run against this repo's own history: 8 rings on a
+# CORRECT tree, 1 of 4 defects caught on the wrong one), and shown both he CLOSED THE SUBJECT —
+# *"konu tamamemen kapansın denetçilerden geçmedi sen de baktın düştü zaten."* This file stays as a
+# read-only aid only. Do not propose it, attach it to a step, or re-open the question.
+# <!-- CEO-OK: inverse-gate-closed-both-said-no-2026-09-16 -->
 #
 # READ-ONLY sweep. For every registered CEO acceptance, open the files its own `where` field names
 # and look for a sentence still DENYING that his eye passed. Checker session dxb-global-os-e0.
