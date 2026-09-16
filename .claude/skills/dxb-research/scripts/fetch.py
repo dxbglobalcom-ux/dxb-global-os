@@ -9,15 +9,22 @@ So there is no such thing here as "the page could not be read". There is a CHAIN
 and a page is only unread when **every** link in it has failed — and then the
 report says which doors were tried and what each one answered.
 
-  1. scrapling get            plain HTTP with TLS impersonation — fastest
-  2. scrapling stealthy-fetch camoufox, solves the ordinary bot challenge
-  3. opencli <adapter> read   the platform's OWN reader, through a real session
-  4. tavily_extract           keyless MCP
-  5. firecrawl_scrape         keyless MCP
-  6. exa web_fetch            keyless MCP
-  7. playwright headless      a real browser, isolated, never on his screen
-  8. jina r.jina.ai           keyless, but a CACHED snapshot — labelled as one
-  9. curl + browser UA        the floor
+   1. media-transcript        a video's OWN WORDS: yt-dlp subtitles, else
+                              `agent-reach transcribe` (Whisper). A video page's
+                              MENU is not evidence.
+   2. pdf-text                curl + pdftotext -layout, for a paper or a spec
+   3. scrapling get           plain HTTP with TLS impersonation — fastest
+   4. scrapling stealthy-fetch camoufox, solves the ordinary bot challenge
+   5. opencli <adapter> read  the platform's OWN reader, through a real session
+   6. tavily_extract          keyless MCP
+   7. firecrawl_scrape        keyless MCP
+   8. exa web_fetch           keyless MCP
+   9. playwright headless     a real browser, isolated, never on his screen
+  10. jina r.jina.ai          keyless, but a CACHED snapshot — labelled as one
+  11. curl + browser UA       the floor
+
+Doors 1 and 2 return instantly for a url they do not match, so they cost nothing on
+an ordinary page.
 
 Every attempt is written to the tool ledger with its result, so "installed" can
 never be mistaken for "used", and a wall can never be mistaken for an absence.
@@ -182,7 +189,83 @@ def door_curl(url: str, tmo: int) -> tuple[str, str]:
     return re.sub(r"\s+", " ", text).strip(), ""
 
 
+
+MEDIA_RE = re.compile(r"(youtube\.com/watch|youtu\.be/|bilibili\.com/video|vimeo\.com/\d|"
+                      r"\.mp3($|\?)|\.m4a($|\?)|podcasts?\.|xiaoyuzhoufm\.com)", re.I)
+PDF_RE = re.compile(r"\.pdf($|\?)|arxiv\.org/pdf/", re.I)
+
+
+def _vtt_to_text(vtt: str) -> str:
+    """A subtitle file is the video's own words. Strip the timing and the duplicates."""
+    out, last = [], None
+    for line in vtt.splitlines():
+        line = line.strip()
+        if (not line or line.startswith(("WEBVTT", "Kind:", "Language:", "NOTE"))
+                or "-->" in line or line.isdigit()):
+            continue
+        line = re.sub(r"<[^>]+>", "", line).strip()
+        if line and line != last:
+            out.append(line)
+            last = line
+    return "\n".join(out)
+
+
+def door_media(url: str, tmo: int) -> tuple[str, str]:
+    """A video page's MENU is not evidence; the video's WORDS are.
+
+    Measured 2026-09-16: reading a YouTube page with an ordinary fetcher produced a
+    passage of navigation chrome - "About Press Copyright Contact us Creators" - and
+    the ledger counted it as a source. yt-dlp's auto-subtitles for the same video are
+    83 KB of what was actually said.
+    """
+    if not MEDIA_RE.search(url):
+        return "", "not a media url"
+    d = Path("/tmp") / f"dxbsub-{abs(hash(url))}"
+    d.mkdir(parents=True, exist_ok=True)
+    rc, out, err = _sh(
+        f'yt-dlp --skip-download --write-subs --write-auto-subs '
+        f'--sub-langs "en.*,tr.*,zh.*" --sub-format vtt --no-warnings '
+        f'-o {shlex.quote(str(d / "%(id)s"))} {shlex.quote(url)}', tmo)
+    texts = []
+    for f in sorted(d.glob("*.vtt")):
+        try:
+            texts.append(_vtt_to_text(f.read_text(encoding="utf-8", errors="replace")))
+        except Exception:
+            pass
+        f.unlink(missing_ok=True)
+    body = max(texts, key=len) if texts else ""
+    if body:
+        title, _, _ = _sh(f'yt-dlp --skip-download --print "%(title)s · %(upload_date)s · '
+                          f'%(channel)s · %(view_count)s views" --no-warnings '
+                          f'{shlex.quote(url)}', 60)[0:3]
+        head = (title or "").strip()
+        return ((head + "\n\n") if head else "") + body, ""
+    # no subtitles published: transcribe the audio (agent-reach, Whisper via Groq)
+    rc, out, err = _sh(f'agent-reach transcribe {shlex.quote(url)}', tmo * 2)
+    if rc == 0 and len(out.strip()) > MIN_BODY:
+        return out, ""
+    return "", f"no subtitles; transcribe rc={rc} {(err or out)[:100]}"
+
+
+def door_pdf(url: str, tmo: int) -> tuple[str, str]:
+    if not PDF_RE.search(url):
+        return "", "not a pdf url"
+    f = Path("/tmp") / f"dxbpdf-{abs(hash(url))}.pdf"
+    rc, _, err = _sh(f"curl -sSL -m {tmo} -A {shlex.quote(UA)} -o {shlex.quote(str(f))} "
+                     f"{shlex.quote(url)}", tmo + 5)
+    if rc != 0 or not f.exists():
+        return "", f"download rc={rc} {err}"
+    rc, out, err = _sh(f"pdftotext -layout {shlex.quote(str(f))} -", tmo)
+    f.unlink(missing_ok=True)
+    return out, ("" if rc == 0 else f"pdftotext rc={rc} {err}")
+
+
 CHAIN = [
+    # media and PDF go FIRST when the url is one - a video's subtitles and a paper's
+    # text are the evidence; the page around them is furniture. Both return
+    # "not a media/pdf url" instantly for everything else, so they cost nothing.
+    ("media-transcript", door_media),
+    ("pdf-text", door_pdf),
     ("scrapling", door_scrapling),
     ("scrapling-stealth", door_scrapling_stealth),
     ("opencli-reader", door_opencli),

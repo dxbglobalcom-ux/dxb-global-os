@@ -103,7 +103,7 @@ it is called; the body is where a quote and a date have to come from.
 
 **There is no such thing here as "I could not read it".** His order, 2026-09-16: *"sayfaya
 girdi agent reach ile bilgiyi çekicek, çekemiyorsa scrapling aletiyle çekicek… reddit'i
-açıyor bakıyor kapatıyor, böyle olmaz."* So reading is a **chain of nine doors**, walked in
+açıyor bakıyor kapatıyor, böyle olmaz."* So reading is a **chain of eleven doors**, walked in
 order until one opens:
 
 ```bash
@@ -111,13 +111,16 @@ python3 "$R/fetch.py" <url>                       # one page, shows every door i
 python3 "$R/fetch.py" --batch urls.txt --outdir D # many, in parallel
 ```
 
-`scrapling` → `scrapling stealthy-fetch` → **the platform's own reader** (`opencli reddit
+**the video's own subtitles** (`yt-dlp`, else `agent-reach transcribe`) → **the PDF's text**
+(`pdftotext`) → `scrapling` → `scrapling stealthy-fetch` → **the platform's own reader** (`opencli reddit
 read`, `hackernews read`, `twitter read`, `v2ex`, `youtube`, `zhihu`, `stackoverflow`) →
 `tavily_extract` → `firecrawl_scrape` → `exa web_fetch` → headless Playwright → `r.jina.ai`
 (a **cached** snapshot, labelled as one) → `curl` with a browser agent. A page is unread only
 when **every** door has failed, and then the log names each door and what it answered.
 Measured 2026-09-16: 14 of 14 pages read — scrapling 10, tavily-extract 3, stealth 1; four
-pages needed between two and four doors.
+pages needed between two and four doors. And on a YouTube page an ordinary fetcher returned
+the site menu (*"About Press Copyright Contact us Creators"*) as the passage; the transcript
+door returns **8 890 bytes of what was actually said in the video**.
 
 **The search side cascades too.** A channel that fails or comes back empty has its declared
 fallback (`config/registry.yaml`) fired automatically, and the report says which stand-in
@@ -163,9 +166,26 @@ and log the counter-search:
 python3 "$R/research.py" contradict --claim C1 --query "why we moved off X" --channel reddit
 ```
 
-Then hand the ledger and the claims — **never your reasoning** — to `agents/refuter.md` in
-a separate context and let it try to break the answer. A model auditing itself treats its
-own output as an established premise; the separation of context is the part that works.
+Then two checks, and **the adversary is not optional** — the gate refuses to close a run whose
+load-bearing claims nobody tried to break:
+
+```bash
+python3 "$R/verify.py"        # does the cited passage ENTAIL the claim? local, $0, advisory
+# then run agents/refuter.md in a SEPARATE context — ledger + claims, never your reasoning
+python3 "$R/research.py" refute --claim C1 --verdict stands|weakened|broken --note "…"
+```
+
+`verify.py` asks a grounding checker on this machine's own GPU (`bespoke-minicheck`, about a
+second for a whole run) whether each cited passage actually says the thing. Links resolve over
+94 % of the time and are topically relevant over 80 % — those prove almost nothing. Entailment
+is the discriminating check. **It never blocks**: a machine that scored judgment would
+manufacture the false assurance this gate exists to prevent. Where it disagrees with you, the
+disagreement is the finding.
+
+The refuter is a different matter. A model auditing itself treats its own output as an
+established premise, so the adversary reads the ledger and the claims in a **separate context**
+and tries to break them. A claim it **breaks goes back to the ground, not to the CEO** — the
+gate enforces that.
 
 ## Step 5 — what reaches him
 

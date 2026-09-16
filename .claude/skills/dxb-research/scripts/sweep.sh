@@ -256,8 +256,8 @@ total=$(wc -l < "$OUT/pages/urls.txt")
 # it answered. Measured on a Cloudflare-walled page: scrapling WALL -> stealth fail ->
 # no platform adapter -> tavily-extract OK in 407 ms.
 echo
-echo "sayfa okuma: $total adres, 9 kapili zincir (scrapling -> stealth -> opencli -> tavily ->"
-echo "             firecrawl -> exa -> playwright -> jina -> curl), paralel"
+echo "sayfa okuma: $total adres, 11 kapili zincir (video altyazisi -> pdf metni -> scrapling ->"
+echo "             stealth -> opencli -> tavily -> firecrawl -> exa -> playwright -> jina -> curl)"
 python3 "$SKILL/scripts/fetch.py" --batch "$OUT/pages/urls.txt" --outdir "$OUT/pages" \
         --timeout 45 --workers 6 || true
 

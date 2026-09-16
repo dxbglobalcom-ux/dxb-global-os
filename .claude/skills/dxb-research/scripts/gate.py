@@ -223,8 +223,39 @@ def check_report(run_id: str, st: dict) -> tuple[list[str], list[str], dict]:
         if c.get("load_bearing") and c.get("confidence") not in ("PROVEN", "LIKELY", "UNPROVEN"):
             fails.append(f"H15 load-bearing claim {cid} carries no PROVEN/LIKELY/UNPROVEN label")
 
-    return fails, todo, {"claims": len(claims),
-                         "load_bearing": sum(1 for c in claims if c.get("load_bearing"))}
+    # H17 — C guarantees the expedition happened; D guarantees the answer survived
+    # someone trying to break it. Neither alone is enough, and the failure of
+    # 2026-09-16 was both holes at once: a four-call expedition, unchallenged.
+    lb = [c for c in claims if c.get("load_bearing")]
+    ref_p = rlib.run_dir(run_id) / "refutation.json"
+    if lb:
+        if not ref_p.exists():
+            fails.append(f"H17 {len(lb)} load-bearing claim(s) and no adversary has tried to "
+                         f"break them — a researcher auditing itself treats its own output as "
+                         f"an established premise")
+            todo.append("run agents/refuter.md in a SEPARATE context with the ledger and the "
+                        "claims (never your reasoning), then record its verdict: "
+                        "scripts/research.py refute --claim <id> --verdict stands|weakened|broken "
+                        "--note '<what it found>'")
+        else:
+            try:
+                ref = json.loads(ref_p.read_text())
+                seen = {r.get("claim") for r in (ref.get("verdicts") or ref)}
+            except Exception:
+                seen = set()
+            for c in lb:
+                if c.get("id") not in seen:
+                    fails.append(f"H17 load-bearing claim {c.get('id')} was never put to the "
+                                 f"adversary")
+            broken = [r for r in (json.loads(ref_p.read_text()).get("verdicts") or [])
+                      if r.get("verdict") == "broken"]
+            for b in broken:
+                fails.append(f"H17 the adversary BROKE claim {b.get('claim')}: "
+                             f"{(b.get('note') or '')[:90]} — it goes back to the ground, "
+                             f"it does not go to the CEO")
+
+    return fails, todo, {"claims": len(claims), "load_bearing": len(lb),
+                         "adversary_ran": ref_p.exists()}
 
 
 DECLARED = [

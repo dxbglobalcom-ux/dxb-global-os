@@ -31,7 +31,7 @@ agent-reach doctor --json   # the map: channel -> tier -> backends -> what is mi
 |---|---|---|
 | Exa | `https://mcp.exa.ai/mcp` | `web_search_exa`, `web_fetch_exa` |
 | Parallel | `https://search.parallel.ai/mcp` | `web_search`, `web_fetch` |
-| Tavily | `https://mcp.tavily.com/mcp/` **+ header `X-Tavily-Access-Mode: keyless`** | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map` |
+| Tavily | `https://mcp.tavily.com/mcp/` **+ header `X-Tavily-Access-Mode: keyless`** | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research`, `tavily_feedback` |
 | Firecrawl | `https://mcp.firecrawl.dev/v2/mcp` | `firecrawl_scrape`, `firecrawl_search`, `firecrawl_parse` |
 | You.com | `https://api.you.com/mcp?profile=free` | `you-search`, `you-discover` |
 
@@ -44,14 +44,16 @@ Without the Tavily header the same endpoint returns **401** — a keyless claim 
 believed. None of the five publishes its rate limit and none owes us anything; that is why
 there are five and why every one has a fallback chain in `config/registry.yaml`.
 
-## The reading chain — nine doors, and a page is unread only when all nine fail
+## The reading chain — eleven doors, and a page is unread only when all eleven fail
 
 ```bash
 python3 scripts/fetch.py <url>                        # shows every door it tried
 python3 scripts/fetch.py --batch urls.txt --outdir D  # in parallel, writes FETCH-LOG.json
 ```
 
-`scrapling` → `scrapling stealthy-fetch` → **the platform's own reader** (`opencli reddit read`,
+**the video's own subtitles** (`yt-dlp --write-auto-subs`, else `agent-reach transcribe`) →
+**the PDF's text** (`pdftotext -layout`) → `scrapling` → `scrapling stealthy-fetch` →
+**the platform's own reader** (`opencli reddit read`,
 `hackernews read`, `twitter read`, `v2ex`, `youtube`, `zhihu`, `stackoverflow`) →
 `tavily_extract` → `firecrawl_scrape` → `exa web_fetch` → headless Playwright →
 `r.jina.ai` (**a cached snapshot**, labelled as one) → `curl` with a browser agent.

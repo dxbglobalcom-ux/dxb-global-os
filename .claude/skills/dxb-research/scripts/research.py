@@ -108,6 +108,25 @@ def cmd_contradict(a: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_refute(a: argparse.Namespace) -> int:
+    rid = a.run or rlib.current_run_id()
+    if not rid:
+        print("no open run", file=sys.stderr)
+        return 1
+    p = rlib.run_dir(rid) / "refutation.json"
+    try:
+        doc = json.loads(p.read_text())
+    except Exception:
+        doc = {"run_id": rid, "verdicts": []}
+    doc.setdefault("verdicts", []).append({
+        "ts": rlib.now(), "claim": a.claim, "verdict": a.verdict,
+        "note": a.note, "evidence": a.evidence,
+        "separate_context": bool(a.separate_context)})
+    p.write_text(json.dumps(doc, ensure_ascii=False, indent=2))
+    print(f"{a.claim}: {a.verdict}")
+    return 0
+
+
 def cmd_report(a: argparse.Namespace) -> int:
     rid = a.run or rlib.current_run_id()
     if not rid:
@@ -171,6 +190,14 @@ def main() -> int:
     c.add_argument("--hits", type=int, default=0)
     c.add_argument("--found", default="")
     c.set_defaults(fn=cmd_contradict)
+
+    rf = sub.add_parser("refute")
+    rf.add_argument("--claim", required=True)
+    rf.add_argument("--verdict", choices=["stands", "weakened", "broken"], required=True)
+    rf.add_argument("--note", default="")
+    rf.add_argument("--evidence", default="")
+    rf.add_argument("--separate-context", action="store_true", default=True)
+    rf.set_defaults(fn=cmd_refute)
 
     r = sub.add_parser("report"); r.set_defaults(fn=cmd_report)
 
