@@ -34,18 +34,30 @@ def out(obj: dict) -> int:
 
 
 def main() -> int:
-    try:
-        payload = json.load(sys.stdin)
-    except Exception:
-        payload = {}
-
+    # rlib re-execs this process into the research venv on import. That RESTARTS the
+    # process, and a stdin already consumed does not survive it — measured 2026-09-16:
+    # the payload came back empty, the hook lost the session id and fell back to the
+    # machine-wide pointer. Import first, read stdin in whichever process survives.
     try:
         import rlib
         import gate
     except Exception:
         return out({})
 
-    run_id = rlib.current_run_id()
+    try:
+        payload = json.load(sys.stdin)
+    except Exception:
+        payload = {}
+
+    sid = payload.get("session_id")
+    run_id = rlib.session_run_id(sid)
+    if not run_id:
+        run_id = rlib.current_run_id()
+        # A run another session has claimed is that session's to finish; its own Stop
+        # hook gates it. Blocking here refuses an exit this session cannot earn.
+        owner = rlib.read_state(run_id).get("session_id") if run_id else None
+        if owner and sid and owner != sid:
+            return out({})
     if not run_id:
         return out({})
 

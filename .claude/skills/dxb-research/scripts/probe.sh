@@ -28,20 +28,35 @@ done
 run_probe() {
   local name="$1"; shift
   local cmd="$*"
-  local s e out rc bytes state
+  local s e rc bytes state f
+  # VALIDATE THE DETECTOR BEFORE TRUSTING IT. Two ways this probe lied on its first
+  # run, both measured 2026-09-16:
+  #   * piping into `head -c` closes the pipe, the command dies of SIGPIPE, and a
+  #     channel that answered with 60 KB was recorded as FAILED;
+  #   * a size threshold called `gh api rate_limit --jq .rate.remaining` a failure
+  #     because a correct answer is four bytes ("4998").
+  # So: capture to a file, judge on the EXIT CODE and the CONTENT, never on size alone.
+  f=$(mktemp)
   s=$(date +%s%N)
-  out=$(timeout "$TMO" bash -c "$cmd" 2>&1 | head -c 8000); rc=$?
+  timeout "$TMO" bash -c "$cmd" > "$f" 2>&1
+  rc=$?
   e=$(( ($(date +%s%N) - s) / 1000000 ))
-  bytes=$(printf '%s' "$out" | wc -c)
-  if printf '%s' "$out" | grep -qiE 'AUTH_REQUIRED|please (open|log ?in)|login required'; then
+  bytes=$(wc -c < "$f")
+  local head8; head8=$(head -c 4000 "$f")
+  if printf '%s' "$head8" | grep -qiE 'AUTH_REQUIRED|please (open|log ?in)|login required|not authenticated'; then
     state=AUTH
   elif [ "$rc" -eq 124 ]; then
     state=TIMEOUT
-  elif [ "$bytes" -lt 60 ] || [ "$rc" -ne 0 ]; then
+  elif [ "$rc" -ne 0 ]; then
+    state=FAIL
+  elif [ "$bytes" -eq 0 ]; then
+    state=EMPTY
+  elif printf '%s' "$head8" | grep -qiE '^ok: false|"error"[[:space:]]*:|^error:|COMMAND_EXEC|EMPTY_RESULT'; then
     state=FAIL
   else
     state=LIVE
   fi
+  rm -f "$f"
   printf '%-14s %-8s %7sms %8s bytes\n' "$name" "$state" "$e" "$bytes"
   [ -n "$OUT" ] && printf '{"channel":"%s","state":"%s","ms":%s,"bytes":%s}\n' \
       "$name" "$state" "$e" "$bytes" >> "$OUT"

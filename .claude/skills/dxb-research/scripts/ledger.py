@@ -112,7 +112,17 @@ def cmd_add(a: argparse.Namespace) -> int:
         html = Path(a.passage_file).read_text(encoding="utf-8", errors="replace")
     title, author, pub, upd, dates_agree = a.title, a.author, a.pub_date, None, False
 
-    if a.kind == "evidence" and html:
+    # A plain-text passage is not a web page. Measured 2026-09-16: a 3107-byte
+    # measurement transcript went in through _extract_body (trafilatura), came out
+    # 1861 bytes with four of its six sections gone, and passage_sha256 then certified
+    # the mutilated text as faithful. The ledger exists so that the passage carries the
+    # fact; an HTML body-extractor run over plain text destroys exactly that.
+    _looks_html = ("<html" in html[:4000].lower() or "<body" in html[:4000].lower()
+                   or "<div" in html[:4000].lower() or "<p>" in html[:4000].lower())
+    if a.kind == "evidence" and html and not _looks_html:
+        if not passage:
+            passage = html[: a.max_passage]
+    elif a.kind == "evidence" and html:
         body, t2, au2 = _extract_body(html, a.url)
         title = title or t2
         author = author or au2

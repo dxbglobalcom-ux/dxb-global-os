@@ -153,7 +153,11 @@ the machine**, because a machine that scored them would be manufacturing exactly
 assurance this gate exists to prevent.
 
 **Stopping early is legal. Stopping early in silence is not.** When the budget is spent,
-write `runs/<id>/GAPS.md` naming what you did not reach, and the gate lets you out.
+write `runs/<id>/GAPS.md` naming what you did not reach — `policies/GAPS-TEMPLATE.md` is the
+shape — and the gate lets you out.
+
+*(Two sessions researching at once on this machine: set `DXB_RESEARCH_RUN=<run id>` so they
+do not fight over one pointer.)*
 
 ## Step 4 — claims, then the adversary
 

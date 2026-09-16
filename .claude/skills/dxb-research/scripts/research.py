@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -56,10 +57,21 @@ def cmd_open(a: argparse.Namespace) -> int:
     rlib.write_state(rid, {
         "run_id": rid, "status": "open", "phase": "expedition", "blocks": 0,
         "question_class": a.klass, "subject": a.subject, "opened_at": rlib.now(),
+        # Which session owns this run. The Stop gate uses it so that one session's
+        # unfinished research cannot refuse another session's finished turn.
+        "session_id": os.environ.get("CLAUDE_CODE_SESSION_ID"),
+        # the fingerprint of every file that enforces this run — see rlib
+        "enforcement_sha": rlib.enforcement_fingerprint(),
     })
     rlib.CURRENT.parent.mkdir(parents=True, exist_ok=True)
     rlib.CURRENT.write_text(rid)
     print(rid)
+    # CURRENT is one pointer for the whole machine. rlib.current_run_id() already honours
+    # DXB_RESEARCH_RUN so two sessions can research at once — but nothing told a session to
+    # set it, and on 2026-09-16 two sessions on this machine wrote into each other's run:
+    # 127 ledger rows crossed over, and one session's GAPS.md overwrote the other's.
+    # Printing the handle here is the cheapest place to make the variable unmissable.
+    print(f"pin this run to THIS session:  export DXB_RESEARCH_RUN={rid}", file=sys.stderr)
     return 0
 
 

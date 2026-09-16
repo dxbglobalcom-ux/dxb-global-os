@@ -140,6 +140,17 @@ def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]
             todo.append("scripts/research.py denominator --measure 'community members' "
                         "--value <N> --source <ledger id>")
 
+    # H18 — THE GATE WATCHES ITSELF. A run whose enforcement files changed under it
+    # is not a gated run any more, whatever the rest of the checks say.
+    drift = rlib.enforcement_drift(run_id)
+    if drift:
+        fails.append("H18 the enforcement surface CHANGED while this run was open — "
+                     + " · ".join(drift) + ". A gate that can be rewritten mid-run is "
+                     "not a gate. Close this run, then change the engine, then open a "
+                     "new run.")
+        todo.append("close or abandon this run before editing the engine: "
+                    "scripts/research.py close --force  (then re-open)")
+
     # H16 — a page that defeated EVERY door in the reading chain is a real hole. It may
     # stay unread; it may not stay unmentioned. This is the "silent hole" rule with teeth.
     shut = [t for t in rlib.read_jsonl(rlib.tools_path(run_id))
@@ -247,8 +258,17 @@ def check_report(run_id: str, st: dict) -> tuple[list[str], list[str], dict]:
                 if c.get("id") not in seen:
                     fails.append(f"H17 load-bearing claim {c.get('id')} was never put to the "
                                  f"adversary")
-            broken = [r for r in (json.loads(ref_p.read_text()).get("verdicts") or [])
-                      if r.get("verdict") == "broken"]
+            # The LATEST verdict per claim, not every verdict ever recorded. `refute`
+            # APPENDS, so a claim that was broken, sent back to the ground, repaired and
+            # re-judged carries two entries — and reading them all would make repair
+            # impossible: the run could never close however honestly it was fixed.
+            # Measured 2026-09-16 on run 20260916-164417, where the adversary broke one
+            # claim, the claim was re-measured and rewritten, and the adversary passed it.
+            # The full history stays in refutation.json; only the last word decides.
+            latest = {}
+            for r in (json.loads(ref_p.read_text()).get("verdicts") or []):
+                latest[r.get("claim")] = r
+            broken = [r for r in latest.values() if r.get("verdict") == "broken"]
             for b in broken:
                 fails.append(f"H17 the adversary BROKE claim {b.get('claim')}: "
                              f"{(b.get('note') or '')[:90]} — it goes back to the ground, "

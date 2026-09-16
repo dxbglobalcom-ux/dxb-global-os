@@ -36,6 +36,10 @@ if [ -z "$QUERY" ] || [ -z "$OUT" ]; then
 fi
 mkdir -p "$OUT"
 
+# The run this sweep belongs to, resolved ONCE, here at the start.
+SWEEP_RUN="${DXB_RESEARCH_RUN:-}"
+[ -z "$SWEEP_RUN" ] && SWEEP_RUN="$(cat "$(dirname "${BASH_SOURCE[0]}")/../runs/CURRENT" 2>/dev/null || true)"
+
 # --- the channel map ------------------------------------------------------------------
 # Each entry: name|tier|command.
 #   {Q} → the full query, as the CEO would phrase it.
@@ -290,6 +294,9 @@ echo "sayfa govdeleri: $OUT/pages/*.md"
 # what actually came back — not by the model, which is how citations get fabricated.
 # Silent when no research run is open.
 echo
-python3 "$SKILL/scripts/ingest.py" "$OUT" --query "$QUERY" --gap "opening the ground" || true
+# The run is pinned at LAUNCH. A wide sweep takes minutes, and ingest.py resolves
+# runs/CURRENT when it FINISHES — so on 2026-09-16 a sweep begun under one run wrote
+# 127 rows into a different run that had been opened meanwhile. Carry the id instead.
+python3 "$SKILL/scripts/ingest.py" "$OUT" --query "$QUERY" --gap "opening the ground" ${SWEEP_RUN:+--run "$SWEEP_RUN"} || true
 
 exit 0

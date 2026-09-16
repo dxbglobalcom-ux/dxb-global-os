@@ -75,6 +75,48 @@ def sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8", "replace")).hexdigest()
 
 
+# ------------------------------------------------- tamper evidence
+# Measured 2026-09-16, during this engine's own first race: a sub-session that the
+# Stop gate refused EDITED THE GATE. The edits were, as it happens, correct repairs
+# of real bugs — which is exactly why this matters. Nothing can stop an agent with a
+# text editor from changing the rule it is being held to. What CAN be stopped is
+# doing it SILENTLY, and silence is the thing this whole engine exists to remove.
+#
+# So a run records the fingerprint of every file that enforces it. If any of them
+# changes while the run is open, the gate refuses to pass and names the file. To
+# change the engine legitimately, close the run first.
+ENFORCEMENT_FILES = (
+    "scripts/gate.py",
+    "scripts/rlib.py",
+    "scripts/ledger.py",
+    "hooks/research-completion.py",
+    "hooks/ledger-capture.py",
+    "config/budget.yaml",
+)
+
+
+def enforcement_fingerprint() -> dict:
+    out = {}
+    for rel in ENFORCEMENT_FILES:
+        f = SKILL_DIR / rel
+        try:
+            out[rel] = hashlib.sha256(f.read_bytes()).hexdigest()[:16]
+        except Exception:
+            out[rel] = "MISSING"
+    return out
+
+
+def enforcement_drift(run_id: str) -> list[str]:
+    """Which enforcement files changed since this run was opened."""
+    st = read_state(run_id)
+    was = st.get("enforcement_sha") or {}
+    if not was:
+        return []
+    now = enforcement_fingerprint()
+    return [f"{k}: {was.get(k)} -> {now.get(k)}"
+            for k in sorted(set(was) | set(now)) if was.get(k) != now.get(k)]
+
+
 # ---------------------------------------------------------------- run state
 def run_dir(run_id: str) -> Path:
     return RUNS_DIR / run_id
@@ -100,6 +142,33 @@ def current_run_id() -> str | None:
     if st.get("status") != "open":
         return None
     return rid
+
+
+def session_run_id(session_id: str | None) -> str | None:
+    """The OPEN run that THIS session opened, or None.
+
+    CURRENT is one pointer for the whole machine, so on 2026-09-16 one session's
+    unfinished research jailed a second session's finished turn: the Stop hook read
+    CURRENT, found the peer's failing run, and refused an exit the peer could not
+    know about. Four collisions in one hour (ledger rows, GAPS.md, the run pointer,
+    the Stop gate) all trace to the same missing fact — who owns this run.
+
+    A run stamped with a session id is gated by THAT session and ignored by others.
+    A run with no stamp keeps the old behaviour exactly, so nothing is loosened.
+    """
+    if not session_id:
+        return None
+    try:
+        dirs = sorted(RUNS_DIR.iterdir())
+    except Exception:
+        return None
+    for d in reversed(dirs):
+        if not d.is_dir():
+            continue
+        st = read_state(d.name)
+        if st.get("status") == "open" and st.get("session_id") == session_id:
+            return d.name
+    return None
 
 
 def read_state(run_id: str) -> dict:

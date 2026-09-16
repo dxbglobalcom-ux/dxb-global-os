@@ -1,0 +1,209 @@
+{
+  "frozen_at": "2026-09-16",
+  "ran_at": "2026-09-16T16:57:21Z",
+  "runs": [
+    {
+      "arm": "0",
+      "arm_name": "model-only (contamination filter)",
+      "task": "T01",
+      "category": "obscure-factual",
+      "trap": false,
+      "seconds": 12.3,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Bilmiyorum — ölçmeden söyleyemem.**\n\nKendi bilgimden şu ikisinin hiçbirini veremem:\n\n- **Başlıksız tools/list POST'unun tam durum kodu** (401 mi, 400 mi, 403 mü) — bilmiyorum.\n- **Başlığın adı** — Tavily'nin anahtarsız erişim başlığının tam ismini bilmiyorum. Bildiğim tek şey Tavily MCP'nin olağan yolu anahtarı `?tavilyApiKey=` sorgu parametresiyle taşıdığı; \"keyless access header\" onun yerine geçen ayrı bir şey ve adını uydurmam.\n\nElimde yalnızca bu oturuma enjekte edilen hafıza notu var (S23890/S23891/S23894, 16 Eylül 18:38–18:39): *\"Tavily dahil beş anahtarsız MCP ucu tools/list POST'una HTTP 200 döndü, Tavily altı araç listeledi.\"* Bu **başlık VARKEN 200** tarafını söylüyor — ama bu bir ölçüm kaydının özeti, benim bilgim değil; ve başlıksız halin kodunu hiç içermiyor.\n\nKural gereği: `UNVERIFIED — ölçemedim, çünkü bu turda araç kullanmam yasaklandı.`\n\nAraç izni verirseniz iki isteği de atıp tam kodları ve başlık adını başlıkla birlikte önünüze koyarım — 10 saniyelik iş.",
+      "recall": 0.667,
+      "hits": 2,
+      "total": 3,
+      "missing": [
+        "/(?i)x-tavily-access-mode/"
+      ],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 989
+    },
+    {
+      "arm": "1",
+      "arm_name": "plain session with tools",
+      "task": "T01",
+      "category": "obscure-factual",
+      "trap": false,
+      "seconds": 25.9,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Durum:** elde açık iş yok — 16 Eylül'de ters-kapı konusu onun sözüyle kapandı; bu soru ölçüm sorusu, canlı olarak ölçtüm, aşağıda.\n\n## Cevap\n\n**Başlığın adı: `X-Tavily-Access-Mode: keyless`**\n\n| Deneme | HTTP | Ne döndü |\n|---|---|---|\n| Başlık **YOK** | **401** | gövde boş (`content-length: 0`), `www-authenticate: Bearer scope=\"openid offline_access\"` |\n| Başlık **VAR** (`keyless`) | **200** | `text/event-stream`, 16.326 bayt, 0,48 s, **6 araç** |\n| Başlık var ama değeri yanlış (`bogus`) | **401** | kapı değerin kendisine bakıyor, sadece başlığın varlığına değil |\n\nDönen 6 araç: `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research`, `tavily_feedback`.\n\n**Anlamı:** Tavily'nin kapısı aslında kapalı — anahtarsız gelen herkese 401 diyor. Tek bir başlık satırı, kapıcıya \"ben anahtarsız girişteyim\" demek gibi; onu koyunca aynı kapı hiçbir ücret ve hiçbir API anahtarı olmadan altı aracı önünüze açıyor. Yani bizim araştırma motorunun beş anahtarsız kapısından biri, o tek satır yazılmazsa **çalışmıyor gibi görünür** — bu yüzden `scripts/mcpx.sh` ve `config/registry.yaml` içinde başlık sabit yazılı.\n\n**Kanıt (bu oturumda koşuldu, 2026-09-16 16:41 GMT):**\n```\ncurl -X POST https://mcp.tavily.com/mcp/ -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json, text/event-stream' \\\n  -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\",\"params\":{}}'\n→ HTTP=401           (başlıksız; iki kez tekrarlandı, ikisi de 401)\n\n… aynı komut + -H 'X-Tavily-Access-Mode: keyless'\n→ HTTP=200  time=0.484361s  bytes=16326   → 6 tools\n```",
+      "recall": 1.0,
+      "hits": 3,
+      "total": 3,
+      "missing": [],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 1571
+    },
+    {
+      "arm": "0",
+      "arm_name": "model-only (contamination filter)",
+      "task": "T02",
+      "category": "obscure-factual",
+      "trap": false,
+      "seconds": 14.7,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Bunu ölçmeden bilemem — dürüst cevap: bilmiyorum.**\n\nSorunun cevabı bir ölçüm sonucudur: bir uç noktaya anahtarsız `tools/list` POST atıp dönen HTTP kodunu görmek gerekir. Ben o POST'u atmadan hangisinin 200, hangisinin 401/404 döndüğünü kendi bilgimle **söyleyemem** — ve bu projede tahmini gerçek gibi yazmak yasak (RULE #0-A).\n\nElimde sadece **URL biçimlerine dair hatırladıklarım** var; hiçbiri doğrulanmış değil:\n\n| Aday | Hatırladığım uç nokta biçimi | Anahtarsız 200 mü? |\n|---|---|---|\n| Exa | `https://mcp.exa.ai/mcp` (çoğu belgede `?exaApiKey=...` ile) | ⚠ UNVERIFIED |\n| Parallel | `https://mcp.parallel.ai/v1beta/search_mcp/` | ⚠ UNVERIFIED |\n| Tavily | `https://mcp.tavily.com/mcp/?tavilyApiKey=...` | ⚠ UNVERIFIED |\n| Firecrawl | `https://mcp.firecrawl.dev/{API_KEY}/v2/mcp` — anahtar **yolun içinde** | ⚠ UNVERIFIED, biçimi anahtar zorunlu gösteriyor |\n| You.com | Uç nokta adresini güvenilir şekilde hatırlamıyorum | ⚠ bilmiyorum |\n\nİki not, açık olsun diye:\n\n1. Bu oturuma enjekte edilen hafıza satırlarında *\"beş anahtarsız MCP uç noktası HTTP 200 ile doğrulandı\"* yazıyor (23890/23891/23894). Bu bir **ipucu**, cevap değil — başka bir oturumun kaydını kendi ölçümüm gibi önünüze koyamam. Kaydı açıp okuyabilirim ya da beşini de canlı yoklayabilirim; ikisi de araç ister, bu turda araç kullanmam yasaklandı.\n2. Firecrawl'ın biçimi anahtarı URL yoluna gömdüğü için \"anahtarsız 200\" ihtimali diğer dördünden düşük görünüyor — ama bu da çıkarım, ölçüm değil.\n\nİzin verirseniz beşine de tek tek anahtarsız `tools/list` POST atıp HTTP kodunu ve dönen araç listesini önünüze koyarım; o zaman tablo tahmin değil kanıt olur.",
+      "recall": 0.6,
+      "hits": 3,
+      "total": 5,
+      "missing": [
+        "search.parallel.ai",
+        "api.you.com"
+      ],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 1636
+    },
+    {
+      "arm": "0",
+      "arm_name": "model-only (contamination filter)",
+      "task": "T03",
+      "category": "technical-capability",
+      "trap": false,
+      "seconds": 10.2,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Pozisyon (kancadan, bu oturumda okundu):**\n1. Onun gözünü bekleyen: son iş — ters kapı konusu; **kapandı**, yeni bekleyen yok.\n2. Sırada: elde emir yok — son sözü *\"konu tamamen kapansın\"* idi.\n3. Ona bağlı bloke iş: yok.\n4. Sorunuzun cevabı:\n\n**`agent-reach` diye bir CLI'ı bilmiyorum.** Eğitim verimde böyle bir araç yok; adını duyduğum bir Anthropic/Claude Code bileşeni de değil. Bu yüzden komut yüzeyini — ne web sayfası çeken bir komutu var mı, ne de komut listesini — veremem. Vermeye kalksam uydurmuş olurum, ve bu projede uydurma cevap yasak (`ceo-no-stories`).\n\nİki ihtimal var, ikisini de ayırt edemem: ad yanlış hatırlanmış olabilir (benzer adlı gerçek araçlar var), ya da bu makineye sonradan kurulmuş yerel bir araç olabilir — o durumda cevabı benim hafızam değil, makinenin kendisi taşır.\n\nAraç kullanmamamı istediğiniz için ölçemiyorum: **⚠ UNVERIFIED — could not measure because tool use was forbidden for this turn.** İzin verirseniz tek komutla kesin cevabı önünüze koyarım (`agent-reach --help` ve kurulu olup olmadığı).",
+      "recall": 0.0,
+      "hits": 0,
+      "total": 4,
+      "missing": [
+        "doctor",
+        "transcribe",
+        "format",
+        "/(?i)(no|does not have|yok|hay\\u0131r).{0,60}(fetch|search|get)|(fetch|search|get).{0,40}(no|not|yok)/"
+      ],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 1042
+    },
+    {
+      "arm": "1",
+      "arm_name": "plain session with tools",
+      "task": "T03",
+      "category": "technical-capability",
+      "trap": false,
+      "seconds": 37.9,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Nerede duruyoruz (core §0):** Ters kapı konusu 16 Eylül öğleden sonra sizin sözünüzle tamamen kapandı; elinizde bekleyen başka iş yok, size bakmanız için sunulmuş bitmiş iş de yok. Sırada bekleyen tek şey bu soru. Cevap:\n\n## Hayır — agent-reach'in web sayfası çeken komutu yok\n\nCLI'ın 11 komutundan hiçbiri bir sayfayı indirip metnini vermiyor. Sayfa okuma işi **CLI'ın dışında** kalıyor: skill dosyasının kendisi \"bir sayfayı oku\" dediğinde `curl -s \"https://r.jina.ai/URL\"` yazmanızı söylüyor — yani komut satırı aracı değil, harici bir servis yapıyor.\n\nBenzetme: agent-reach bu holdingdeki **santral memuru** gibi — hangi kapının hangi anahtarla açıldığını bilir, anahtarları dağıtır, \"kapı çalışıyor mu\" diye yoklar. Odaya girip dosyayı okuyan o değil; okumayı size bıraktığı başka eller (`curl`, `opencli`, `gh`, `mcporter`) yapar.\n\n### Tam komut yüzeyi — agent-reach v1.5.0\n\n| Komut | Ne yapar | Bayrakları |\n|---|---|---|\n| `setup` | Etkileşimli kurulum sihirbazı | — |\n| `install` | Tek seferlik kurulum | `--env {local,server,auto}` · `--proxy` · `--system \\| --safe` · `--dry-run` · `--channels` |\n| `configure` | Bir ayarı yazar veya çerezi tarayıcıdan çeker | konum: `proxy\\|github-token\\|groq-key\\|openai-key\\|twitter-cookies\\|youtube-cookies\\|xhs-cookies` · `--stdin` · `--from-browser` · `--platform {twitter,xiaohongshu,bilibili,xueqiu}` · `--profile` · `--sync-legacy-twitter` |\n| `doctor` | Hangi platformu hangi arka ucun beslediğini yoklar | `--json` |\n| `uninstall` | Tüm yapılandırma, token ve skill dosyalarını siler | `--dry-run` · `--keep-config` |\n| `skill` | SKILL.md'yi ajan dizinlerine kurar/kaldırır | `--install \\| --uninstall` (biri zorunlu) |\n| `format` | Platform API çıktısını temizler | konum: `xhs` (tek seçenek) |\n| `transcribe` | Ses/video **URL'sini veya dosyasını** metne çevirir | konum: `source` · `--provider {auto,groq,openai}` · `--allow-provider-fallback` · `-o/--output` |\n| `check-update` | Yeni sürüm var mı (tek API çağrısı) | — |\n| `watch` | Hızlı sağlık + sürüm kontrolü (zamanlanmış görev için) | — |\n| `version` | Sürümü yazar | — |\n\nGenel bayraklar: `-h/--help`, `-v/--verbose`, `--version`.\n\n### İki ince nokta — yanlış \"evet\" buradan çıkabilirdi\n\n1. **`transcribe` bir URL alıyor**, ama sayfayı çekmiyor: kaynağı `yt-dlp` ile **ses olarak** indirip Groq/OpenAI Whisper'a yolluyor (`transcribe.py:251` — *\"Download audio with yt-dlp\"*). Sayfa metni dönmez, konuşma dökümü döner.\n2. Python kütüphanesinin içinde **gerçekten bir sayfa okuyucu var** — `channels/web.py:48`, `WebChannel.read()`, Jina Reader üzerinden tam Markdown döndürüyor. Ama **hiçbir CLI komutu onu çağırmıyor**: `cli.py`, `core.py`, `doctor.py`, `probe.py` içinde tek çağıran yok; `doctor` sadece kanalın `check()`'ini kullanıyor ve \"şu komutu sen çalıştır\" diye `curl https://r.jina.ai/URL` metnini basıyor. Yani yetenek kutunun içinde duruyor, kapısı dışarı açılmamış.\n\n### Kanıt (bu oturumda çalıştırıldı)\n\n```\n$ agent-reach --help\n  {setup,install,configure,doctor,uninstall,skill,format,transcribe,check-update,watch,version}\n\n$ agent-reach fetch https://example.com\nagent-reach: error: argument command: invalid choice: 'fetch'\n  (choose from 'setup','install','configure','doctor','uninstall','skill',\n   'format','transcribe','check-update','watch','version')\n   — aynı hata 'read' ve 'search' için de döndü\n\n$ grep -rn \"add_parser(\" .../agent_reach/   → tam 11 satır, gizli komut yok\n$ grep -rn \"\\.read(\" cli.py core.py doctor.py probe.py → WebChannel.read() çağıran yok\n$ agent-reach version → Agent Reach v1.5.0\n```\n\nKurulum yeri: `/home/dxb/.local/bin/agent-reach` → `/home/dxb/.local/share/uv/tools/agent-reach/` (uv tool).\n\n**Sizin için anlamı:** bir web sayfasının içeriği lazım olduğunda agent-reach'e komut yazılmaz; `curl https://r.jina.ai/<adres>` çalıştırılır ya da bu makinede zaten kurulu olan `scrapling` / `WebFetch` elleri kullanılır. agent-reach'in işi, hangi elin hangi platformda açık olduğunu söylemek.",
+      "recall": 0.75,
+      "hits": 3,
+      "total": 4,
+      "missing": [
+        "/(?i)(no|does not have|yok|hay\\u0131r).{0,60}(fetch|search|get)|(fetch|search|get).{0,40}(no|not|yok)/"
+      ],
+      "forbidden_present": [
+        "agent-reach fetch"
+      ],
+      "clean": false,
+      "chars": 3959
+    },
+    {
+      "arm": "1",
+      "arm_name": "plain session with tools",
+      "task": "T02",
+      "category": "obscure-factual",
+      "trap": false,
+      "seconds": 55.4,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Pozisyon:** Ters-kapı konusu dün akşam sizin sözünüzle kapandı; elde bekleyen iş yok. Bekleyen tek şey: araştırma motorunun (`dxb-research`) gözünüzden geçmesi. Size bağlı bekleyen bir karar yok. Şimdi sorduğunuz şey:\n\n## Cevap: beşi de 200 veriyor — ama ikisi ancak doğru kolu çevirince\n\nŞu an, bu makineden, hiçbir API anahtarı olmadan `tools/list` gönderdim. **Beşinin de kapısı açıldı.** Fark şu: üçü kapıyı öylece açık tutuyor, ikisinin kapısında bir kol var — kolu çevirmeyeni 401 ile geri çeviriyor.\n\n| Kapı | Adres | Anahtarsız 200 | Dönen araçlar |\n|---|---|---|---|\n| **Exa** | `https://mcp.exa.ai/mcp` | ✅ düz | `web_search_exa`, `web_fetch_exa` |\n| **Parallel** | `https://search.parallel.ai/mcp` | ✅ düz | `web_search`, `web_fetch` |\n| **Firecrawl** | `https://mcp.firecrawl.dev/v2/mcp` | ✅ düz | `firecrawl_scrape`, `firecrawl_search`, `firecrawl_parse` |\n| **Tavily** | `https://mcp.tavily.com/mcp/` **+ başlık `X-Tavily-Access-Mode: keyless`** | ✅ kollu | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research`, `tavily_feedback` |\n| **You.com** | `https://api.you.com/mcp?profile=free` | ✅ kollu | `you-search`, `you-discover` |\n\n**Kolun gerçek olduğunu ayrıca sınadım** (inanmadım, denedim):\n\n- Tavily, başlık **değeri** `banana` olunca → **401**. Uydurma bir başlıkla → **401**. Yani `keyless` değerinin kendisi kapıyı açıyor.\n- You.com, `?profile=banana` olunca → **401 \"OAuth authentication required\"**. Yani `free` profili gerçek.\n- Parallel'in başka bir adresi (`https://mcp.parallel.ai/v1beta/search_mcp`) → **401 \"No API key provided\"**. Doğru adres yukarıdaki.\n\n**Ölçümün kendisi** (2026-09-16 16:42 UTC, tek geçiş):\n\n```\nExa       https://mcp.exa.ai/mcp                     | HTTP 200 | web_search_exa web_fetch_exa\nParallel  https://search.parallel.ai/mcp             | HTTP 200 | web_search web_fetch\nTavily    https://mcp.tavily.com/mcp/ [keyless hdr]  | HTTP 200 | tavily_search tavily_extract tavily_crawl tavily_map tavily_research tavily_feedback\nFirecrawl https://mcp.firecrawl.dev/v2/mcp           | HTTP 200 | firecrawl_scrape firecrawl_search firecrawl_parse\nYou.com   https://api.you.com/mcp?profile=free       | HTTP 200 | you-search you-discover\n```\n\n**Yolda bulduğum bir kayıt sapması, düzelttim:** `references/channels.md` Tavily'yi 4 araçla yazıyordu; canlı sayım **6** dedi (`tavily_research` ve `tavily_feedback` eklenmiş). Satırı ölçülen hale getirdim. Blast radius: o tabloyu okuyan başka dosya yok (`grep -rln \"channels.md\"` → boş), `mcpx.sh` adresleri ve `keyless` başlığını zaten doğru taşıyor — kontrol ettim, bozulan bir şey yok.\n\n⚠ Bir not: `scripts/fetch.py` de değişmiş görünüyor — **ben dokunmadım**, aynı ağaçta çalışan diğer oturumun işi. Commit atmadım.",
+      "recall": 1.0,
+      "hits": 5,
+      "total": 5,
+      "missing": [],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 2743
+    },
+    {
+      "arm": "0",
+      "arm_name": "model-only (contamination filter)",
+      "task": "T11",
+      "category": "counting",
+      "trap": false,
+      "seconds": 10.5,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Bilmiyorum — ve uydurmam.**\n\nÖlçü ne olurdu: abone sayısı (subscriber count) ya da \"şu an çevrimiçi\" sayısı. Ama iki sayıyı da veremem:\n\n- Reddit'te bu iki isimde (`r/ClaudeDesign`, `r/OpenDesign` ya da benzer yazımları) bir topluluğun var olduğuna dair güvenilir bir bilgim yok; bir ad üretip sayı yakıştırmak hikâye olur.\n- Abone/çevrimiçi sayısı **canlı** bir sayıdır, her gün değişir. Eğitim verimden hatırlayacağım bir rakam bugünün gerçeği olmaz — yani hatırlasam bile ölçüm sayılmaz.\n\nAraç kullanmam yasaklandığı için bu turda ölçemiyorum: **⚠ UNVERIFIED — ölçülemedi, çünkü araç kullanımı kapatıldı.**\n\nİzin verirseniz bir sonraki turda iki sayıyı da canlı çeker, komutu ve çıktısını önünüze koyarım.",
+      "recall": 0.333,
+      "hits": 1,
+      "total": 3,
+      "missing": [
+        "r/ClaudeAI",
+        "/1[ ,.]?1[0-9]{2}[ ,.]?[0-9]{3}/"
+      ],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 710
+    },
+    {
+      "arm": "0",
+      "arm_name": "model-only (contamination filter)",
+      "task": "T18",
+      "category": "troubleshooting",
+      "trap": false,
+      "seconds": 8.8,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Bilmiyorum — uyduramam.**\n\n`opencli` adında, `hackernews search ... --window background` şeklinde bir alt komutu ve bayrağı olan bir araç benim bilgimde yok. Ne hatanın metnini ne de çözümünü biliyorum; bunları tahmin edip yazmak, bu projede yasak olan \"hikâye\" olur.\n\nİki ihtimal var, ikisini de ölçmeden ayıramam:\n- Böyle bir komut/bayrak gerçekten mevcut değil (yanlış komut adı ya da var olmayan bir bayrak),\n- Bu makineye özel, benim eğitim verimde bulunmayan yerel bir araç.\n\n⚠ UNVERIFIED — araç kullanımı bu turda kapalı olduğu için ölçemedim.\n\nÖlçmeme izin verirseniz cevabı kesin veririm: `command -v opencli`, `opencli --help`, `opencli hackernews --help` çıktıları hangi bayrakların gerçekten var olduğunu ve hatanın ne olduğunu tek seferde gösterir.",
+      "recall": 0.5,
+      "hits": 1,
+      "total": 2,
+      "missing": [
+        "/(?i)unknown option/"
+      ],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 763
+    },
+    {
+      "arm": "1",
+      "arm_name": "plain session with tools",
+      "task": "T18",
+      "category": "troubleshooting",
+      "trap": false,
+      "seconds": 40.7,
+      "rc": 0,
+      "stderr": "",
+      "answer": "**Pozisyon (hook'tan, dosya açmadan):** 2026-09-16 öğleden sonra ters-kapı konusunu kapattınız — elde başka emir yok; son iş B46 araştırma motoru commit'lendi. Sizden bekleyen bir şey yok. Şimdi sorunuz:\n\n---\n\n## Hata\n\n```\nerror: unknown option '--window'\n```\nçıkış kodu **1**. Ağ, login, Chrome ile ilgisi yok — komut daha başlamadan reddediliyor.\n\n## Sebep\n\n`--window` opencli'de **tarayıcı komutlarına ait bir bayrak**. opencli onu yalnızca adaptör \"ben tarayıcı kullanırım\" diyorsa komuta takıyor (`commanderAdapter.js:50-56` → `if (cmd.browser)`). **hackernews adaptörü tarayıcı kullanmaz** — kendi yardım çıktısı bunu yazıyor: `Access: read | Browser: no`. Yani bayrak o komutta hiç tanımlı değil, Commander da bilmediği bayrağı reddediyor.\n\nBizim holdingdeki karşılığı: Twitter/Reddit gibi kanallar **kapıdan girip içeride okuyan** işçilerdir — pencereyi açıp kapatmak onların işi. Hacker News ise **kapıdan hiç girmez**, veriyi doğrudan servis ağzından alır. Girmeyen adama \"pencereyi arkada aç\" diyorsunuz; elinde pencere yok.\n\n## Düzeltme\n\n**1) Amaç HN'de arama yapmaksa — bayrağı at:**\n```bash\nopencli hackernews search \"x\" --limit 20 -f yaml\n```\nBu komutun gerçek seçenekleri sadece: `--limit`, `--sort relevance|date`, `-f/--format`, `--trace`, `-v`.\n\n**2) Amaç \"ekrana tarayıcı penceresi fırlamasın\" ise — zaten öyle:**\n- hackernews'te hiç tarayıcı açılmıyor.\n- Tarayıcılı adaptörlerde (twitter, reddit, linkedin…) `--window background` geçerli — ama **zaten varsayılan** (`execution.js:574`, `defaultMode = 'background'`). Yazmaya gerek yok.\n- Makine geneli, bayrak yazmadan: `export OPENCLI_WINDOW=background` — aynı fonksiyon bunu okuyor, tarayıcısız adaptörlerde de sessizce yoksayılıyor (aşağıda ölçüldü).\n\n**3) Yazmadan önce bilmenin yolu:** `opencli <site> <komut> --help` çıktısının son satırı `Browser: yes/no` der. `no` ise pencere bayrakları yoktur.\n\n## Kanıt (bu oturumda ölçüldü — opencli 1.8.7)\n\n| Komut | Çıktı |\n|---|---|\n| `opencli hackernews search \"x\" --window background` | `error: unknown option '--window'` · exit **1** |\n| `opencli hackernews search --help` | seçenekler: `--limit`, `--sort` · `Browser: no` |\n| `opencli twitter search --help` | ayrıca \"Browser common options\": `--window`, `--site-session`, `--keep-tab` · `Browser: yes` |\n| `opencli hackernews search \"x\" --limit 3 -f yaml` | exit **0**, 3 canlı sonuç (xz backdoor / 4549 puan …) |\n| `OPENCLI_WINDOW=background opencli hackernews search \"x\" --limit 3` | exit **0**, aynı sonuçlar |",
+      "recall": 1.0,
+      "hits": 2,
+      "total": 2,
+      "missing": [],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 2487
+    },
+    {
+      "arm": "1",
+      "arm_name": "plain session with tools",
+      "task": "T11",
+      "category": "counting",
+      "trap": false,
+      "seconds": 900.1,
+      "rc": 124,
+      "stderr": "TIMEOUT",
+      "answer": "",
+      "recall": 0.0,
+      "hits": 0,
+      "total": 3,
+      "missing": [
+        "r/ClaudeAI",
+        "/1[ ,.]?1[0-9]{2}[ ,.]?[0-9]{3}/",
+        "/(?i)(404|does not exist|yok|no subreddit)/"
+      ],
+      "forbidden_present": [],
+      "clean": true,
+      "chars": 0
+    }
+  ]
+}
