@@ -79,18 +79,48 @@ def recluster(run_id: str) -> dict:
     used_lsh = False
     try:
         from datasketch import MinHash, MinHashLSH  # type: ignore
+        # The signature of a passage never changes, so it is computed ONCE and kept.
+        # Measured 2026-09-16: a full re-signing of a 469-row ledger costs 7.6 s, and
+        # the PostToolUse hook reclusters after every capture — which would have taxed
+        # every single tool call the agent makes, and eventually blown the hook's own
+        # 20 s timeout. Keyed by passage hash, so it survives row renumbering.
+        cache_p = rlib.run_dir(run_id) / "minhash-cache.json"
+        try:
+            cache = json.loads(cache_p.read_text())
+        except Exception:
+            cache = {}
+        scheme = getattr(MinHash(num_perm=128), "scheme", None)
         lsh = MinHashLSH(threshold=THRESHOLD, num_perm=128)
         mh: dict[int, object] = {}
+        fresh = 0
         for i in ev:
-            m = MinHash(num_perm=128)
-            for sh in rlib.shingles(rows[i]["passage"]):
-                m.update(sh.encode("utf-8"))
+            passage = rows[i]["passage"]
+            key = rows[i].get("passage_sha256") or rlib.sha256(passage)
+            hv = cache.get(key)
+            m = None
+            if hv:
+                try:
+                    m = (MinHash(num_perm=128, hashvalues=hv, scheme=scheme) if scheme
+                         else MinHash(num_perm=128, hashvalues=hv))
+                except Exception:
+                    m = None
+            if m is None:
+                m = MinHash(num_perm=128)
+                for sh in rlib.shingles(passage):
+                    m.update(sh.encode("utf-8"))
+                cache[key] = [int(x) for x in m.hashvalues]
+                fresh += 1
             mh[i] = m
             lsh.insert(str(i), m)
         for i in ev:
             for j in lsh.query(mh[i]):
                 if int(j) != i:
                     union(i, int(j))
+        if fresh:
+            try:
+                cache_p.write_text(json.dumps(cache))
+            except Exception:
+                pass
         used_lsh = True
     except Exception:
         for x in range(len(ev)):

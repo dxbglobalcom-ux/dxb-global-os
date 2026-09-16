@@ -89,6 +89,12 @@ ENFORCEMENT_FILES = (
     "scripts/gate.py",
     "scripts/rlib.py",
     "scripts/ledger.py",
+    # classify() decides the source_type that H2 and H6 COUNT, and cluster() decides the
+    # independent clusters H3 counts. Measured 2026-09-16 on run 20260916-200833: the
+    # classifier was repaired mid-run, first-hand rows went 2 -> 6, H6 flipped from
+    # blocking to passing, and H18 never noticed because neither file was watched.
+    "scripts/ingest.py",
+    "scripts/independence.py",
     "hooks/research-completion.py",
     "hooks/ledger-capture.py",
     "config/budget.yaml",
@@ -132,6 +138,16 @@ def current_run_id() -> str | None:
     env = os.environ.get("DXB_RESEARCH_RUN")
     if env:
         return env if read_state(env).get("status") == "open" else None
+    # A run belongs to the session that OPENED it, and every command a session runs
+    # carries CLAUDE_CODE_SESSION_ID in its environment — so the pointer can be scoped
+    # to the session without anyone remembering to export anything. Measured
+    # 2026-09-16: two gated benchmark arms ran at once, fought over this single file,
+    # and 127 ledger rows crossed from one run into the other.
+    sid = os.environ.get("CLAUDE_CODE_SESSION_ID")
+    if sid:
+        own = session_run_id(sid)
+        if own:
+            return own
     try:
         rid = CURRENT.read_text().strip()
     except FileNotFoundError:
@@ -140,6 +156,9 @@ def current_run_id() -> str | None:
         return None
     st = read_state(rid)
     if st.get("status") != "open":
+        return None
+    if sid and st.get("session_id") and st.get("session_id") != sid:
+        # someone else's open run: not this session's to write into, nor to be gated by
         return None
     return rid
 
@@ -169,6 +188,44 @@ def session_run_id(session_id: str | None) -> str | None:
         if st.get("status") == "open" and st.get("session_id") == session_id:
             return d.name
     return None
+
+
+def seconds_between(a: str, b: str) -> float | None:
+    """Seconds from ISO timestamp a to ISO timestamp b, or None if either is unreadable."""
+    try:
+        ta, tb = datetime.fromisoformat(str(a)), datetime.fromisoformat(str(b))
+    except Exception:
+        return None
+    if ta.tzinfo is None:
+        ta = ta.replace(tzinfo=timezone.utc)
+    if tb.tzinfo is None:
+        tb = tb.replace(tzinfo=timezone.utc)
+    return (tb - ta).total_seconds()
+
+
+def elapsed_seconds(run_id: str) -> float:
+    """How long this run has been open, in seconds.
+
+    The engine had a `max_seconds` in its budget file that NOTHING read — measured
+    2026-09-16, zero call sites. A gate with no clock cannot converge: on run
+    20260916-171413 it was still asking for more evidence 25 minutes in, and the
+    run died with no answer at all. A research run has to know the time.
+    """
+    t = read_state(run_id).get("opened_at")
+    if not t:
+        try:
+            t = json.loads((run_dir(run_id) / "question_lock.json").read_text()).get("opened_at")
+        except Exception:
+            t = None
+    if not t:
+        return 0.0
+    try:
+        started = datetime.fromisoformat(str(t))
+    except Exception:
+        return 0.0
+    if started.tzinfo is None:
+        started = started.replace(tzinfo=timezone.utc)
+    return max(0.0, (datetime.now(timezone.utc) - started).total_seconds())
 
 
 def read_state(run_id: str) -> dict:
@@ -287,9 +344,55 @@ _WALL = re.compile(
     r"javascript is disabled in your browser|please enable javascript|"
     r"you need to enable javascript|log ?in to access|sign in to continue|"
     r"subscribe to (read|continue)|create an account to continue|403 forbidden|"
-    r"access denied|rate limit)", re.I)
+    # `rate limit` alone was too loose: measured 2026-09-16 on run 20260916-192859, the
+    # Parallel and Firecrawl documentation pages — the very pages that ANSWER the question,
+    # because both describe their keyless tier's rate limits — were classified as bot walls
+    # and demoted to `secondary`, `liveness: blocked`, `primary: false`. A page about a rate
+    # limit is not a rate-limit wall. Only the refusal wordings are a wall.
+    r"access denied|rate limit exceeded|too many requests|"
+    # Reddit's WAF, measured 2026-09-16: it answers with an 87 KB base64 PNG and this
+    # sentence LAST, so a head-only test never reached it.
+    r"you've been blocked by network security|you have been blocked by network security|"
+    r"you (have been|are being) rate[- ]limited|429 too many)", re.I)
 
 _NAVISH = re.compile(r"\[[^\]]{0,80}\]\([^)]{0,200}\)")
+
+# The reader's own tool answering HTTP 200 with a refusal in the body. Measured
+# 2026-09-16 on run 20260916-192859: tavily_extract returned 2 628 bytes of
+# {"code":"monthly_cap_reached_bonus_eligible", ...} for THREE different pages,
+# the chain accepted all three as read, and the run printed "okunan 6/6" while
+# half of it had read nothing but the cap notice. A quota notice is a door
+# slammed shut, not a page — it belongs in the same bucket as a login wall.
+_ERR_KEYS = {"code", "error", "errors", "detail", "message", "next_actions", "retry_after_seconds"}
+_CONTENT_KEYS = {"markdown", "content", "contents", "html", "text", "body", "data",
+                 "results", "items", "articles", "raw"}
+
+
+def looks_like_api_error(text: str) -> bool:
+    """True when the body is an API's error/quota envelope rather than a page.
+
+    Narrow on purpose: it fires only on a SMALL leading JSON object that carries an
+    error-ish key and no content-ish key. A real JSON dataset keeps its payload under
+    `data`/`results`/`items`, and a real page is not JSON at all.
+
+    It reads the LEADING value with `raw_decode` rather than the whole string, because
+    the doors do not hand back one clean object. Measured 2026-09-16: `mcpx.sh` prints
+    the MCP `content` text AND the `structuredContent` beside it, so the quota notice
+    arrives as the same object twice, 2 630 bytes, and a whole-string `json.loads`
+    raises — which let the very body this function exists to catch through on the first
+    attempt at this fix.
+    """
+    s = (text or "").strip()
+    if not s.startswith("{") or len(s) > 16000:
+        return False
+    try:
+        d, _end = json.JSONDecoder().raw_decode(s)
+    except Exception:
+        return False
+    if not isinstance(d, dict):
+        return False
+    keys = {str(k).lower() for k in d}
+    return bool(keys & _ERR_KEYS) and not (keys & _CONTENT_KEYS)
 
 
 def looks_like_wall(text: str) -> bool:
@@ -305,6 +408,23 @@ def looks_like_wall(text: str) -> bool:
     printable = sum(1 for c in head if c.isprintable() or c in "\n\r\t")
     if printable / max(1, len(head)) < 0.85:      # binary / image bytes
         return True
+    if looks_like_api_error(text):
+        return True
+    # A page that is one giant embedded blob and almost no words was not read.
+    # Measured 2026-09-16: reddit's WAF answered SEVEN different about.json URLs with
+    # the same 87 KB base64 PNG. Every byte was printable, no wall phrase appeared in
+    # the first 4000 characters, and the reading chain reported "read: true · 87784b"
+    # seven times for seven different questions.
+    body = text or ""
+    if len(body) > 2000:
+        stripped = re.sub(r"data:[a-z.+-]+/[a-z.+-]+;base64,[A-Za-z0-9+/=]+", " ", body)
+        words = re.findall(r"[A-Za-z\u00c0-\u024f]{3,}", stripped)
+        cjk = re.findall(r"[\u3040-\u30ff\u4e00-\u9fff\uac00-\ud7af]", stripped)
+        if len(words) < 25 and len(cjk) < 40:
+            return True
+        # The refusal can sit AFTER the blob. Test the words, not the first 4000 bytes.
+        if len(stripped) < 4000 and _WALL.search(stripped):
+            return True
     return bool(_WALL.search(head))
 
 

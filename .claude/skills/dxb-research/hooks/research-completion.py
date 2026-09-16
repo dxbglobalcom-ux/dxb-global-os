@@ -74,6 +74,8 @@ def main() -> int:
         "RESEARCH COMPLETION GATE refuses this exit.",
         "",
         f"Run {run_id} · class {res['class']} · block {blocks}/{res['max_blocks']}.",
+        f"CLOCK: {res['elapsed_s']}s spent · converge at {res['converge_at_s']}s · "
+        f"hard stop at {res['hard_stop_at_s']}s · regime {res['regime'].upper()}.",
         f"Ledger right now: {f.get('evidence_rows', 0)} evidence rows · "
         f"{f.get('clusters', 0)} independent clusters · "
         f"{f.get('queries', 0)} queries · types {f.get('source_types', [])}.",
@@ -90,12 +92,25 @@ def main() -> int:
         "and a claim may only cite a row id that already exists in it.",
         f"Check yourself any time:  python3 '{SKILL}/scripts/gate.py'",
     ]
-    if blocks >= res["max_blocks"] - 1:
+    if res["regime"] != "expand":
         lines += [
             "",
-            "You are at the end of the block budget. If the evidence genuinely is not there, "
-            f"that is a legitimate ending — write runs/{run_id}/GAPS.md naming every channel "
-            "not reached and every question left open, and the gate will let you out.",
+            "PAST THE CONVERGE POINT — stop widening. From here the gate no longer asks for "
+            "work that adds scope, and a load-bearing claim you cannot finish testing has "
+            "three legal endings, all of them honest:",
+            "  · label it UNPROVEN and name its id in GAPS.md — the hole stays open, not silent",
+            '  · withdraw it ("withdrawn": true in claims.json) and say so in GAPS.md',
+            "  · drop load_bearing if the answer does not actually rest on it",
+            "What the clock NEVER waives: a citation not in the ledger, a quote whose hash does "
+            "not recompute, a dead URL, a vendor-only claim, a claim the adversary broke.",
+        ]
+    if blocks >= res["max_blocks"] - 1 or res["regime"] == "closing":
+        lines += [
+            "",
+            "If the evidence genuinely is not there, that is a legitimate ending — write "
+            f"runs/{run_id}/GAPS.md naming every channel not reached and every question left "
+            "open, then answer him with what you DID measure and close the run: "
+            f"scripts/research.py close",
         ]
 
     return out({"decision": "block", "reason": "\n".join(lines)})

@@ -36,7 +36,18 @@ BASH_RESEARCH = re.compile(
     r"|api\.you\.com|api\.crossref\.org|europepmc|export\.arxiv\.org|api\.openalex\.org"
     r"|r\.jina\.ai))\b")
 
-URL_RE = re.compile(r"https?://[^\s\"'<>)\]},]+")
+# A backslash and a backtick are not legal unescaped in a URL, and both end up glued to one
+# when the captured text came through `jq` (a literal `\n`) or through markdown (a closing
+# backtick). Measured 2026-09-16: six discovery rows in run 20260916-213702 carried URLs
+# like `.../issues/6359\nCOMMENTS:` and urlcheck.py called them dead, correctly.
+URL_RE = re.compile(r"https?://[^\s\"'<>)\]},`\\]+")
+
+# `fetch.py` is deliberately ABSENT from BASH_RESEARCH. A hand read through the chain writes its
+# own evidence row inside fetch.py (`_ledger_evidence`), which is the only place holding the url,
+# the door, the liveness and the body at once — this hook sees `--out "$SP/file.md"`, an
+# unexpanded shell variable it cannot resolve. Capturing it here as well would emit a discovery
+# row for every URL inside a fetched source file, and, under --batch, would steal the sweep's
+# evidence rows before ingest.py could stamp them with the channel that found each page.
 
 
 def _text(obj) -> str:
@@ -50,8 +61,22 @@ def _text(obj) -> str:
         return str(obj)
 
 
+# `opencli` must sit where a COMMAND sits - line start, after ; | && || ( or a backtick,
+# optionally behind VAR=value prefixes - and the token after it must look like a site.
+# The naive r"opencli\s+([a-z0-9-]+)" matched the word anywhere in a compound command and
+# invented channels that never ran: `npm view @jackwener/opencli version` became the channel
+# "opencli:version", `opencli --version` became "opencli:--version", the string
+# "opencli 1.8.7" inside a --version argument became "opencli:1", and the query text
+# "opencli unknown option" became "opencli:unknown". Measured 2026-09-16 on this session's
+# own 183 bash rows: 4 invented channels before, 0 after, and both real ones kept. They then
+# surfaced in coverage.py as HOLES reported to the CEO - a hole that never existed.
+OPENCLI_CALL = re.compile(
+    r"(?:^|[;|&(`]|\|\||&&)\s*(?:[A-Za-z_][A-Za-z0-9_]*=\S+\s+)*opencli\s+(?!-)([a-z][a-z0-9-]*)",
+    re.M)
+
+
 def _channel_from_bash(cmd: str) -> str:
-    m = re.search(r"opencli\s+([a-z0-9-]+)", cmd)
+    m = OPENCLI_CALL.search(cmd)
     if m:
         return "opencli:" + m.group(1)
     for name, pat in (("exa", r"mcp\.exa\.ai|exa\.web_search"), ("parallel", r"search\.parallel\.ai"),
@@ -66,15 +91,34 @@ def _channel_from_bash(cmd: str) -> str:
     return "bash"
 
 
-def main() -> int:
+def _classify(url: str, channel: str, subject: str | None) -> str:
+    """ingest.py's own classifier, or 'secondary' if it cannot be imported."""
     try:
-        payload = json.load(sys.stdin)
+        import ingest
+        return ingest.classify(url, channel, subject)
+    except Exception:
+        return "secondary"
+
+
+def main() -> int:
+    # ORDER MATTERS, and it cost this engine its central claim. `import rlib` re-execs
+    # the process into the research venv (system python has neither datasketch nor
+    # trafilatura), and os.execv does not carry a stdin that has already been read: the
+    # restarted process finds EOF, sees no payload, and exits silently.
+    #
+    # Measured 2026-09-16, across all 14 runs this engine had ever made: 2 327 ledger
+    # rows, and NOT ONE of them written by this hook. Every row came from sweep.sh or
+    # fetch.py, while "the ledger writes itself from your tool calls" stood in the
+    # doctrine. The Stop hook had already been repaired this way; this one had not.
+    # Import first, read stdin in whichever process survives.
+    try:
+        import rlib
+        import ledger as ledger_mod  # noqa: F401  (kept for row-id parity)
     except Exception:
         return 0
 
     try:
-        import rlib
-        import ledger as ledger_mod  # noqa: F401  (kept for row-id parity)
+        payload = json.load(sys.stdin)
     except Exception:
         return 0
 
@@ -93,7 +137,8 @@ def main() -> int:
     seen = {(r.get("url_canonical"), r.get("kind")) for r in rows_existing}
     next_n = len(rows_existing) + 1
 
-    def emit(kind: str, url: str, passage: str, channel: str, title=None, status=None):
+    def emit(kind: str, url: str, passage: str, channel: str, title=None, status=None,
+             stype: str = "secondary", tool_name: str | None = None, liveness: str = "unchecked"):
         nonlocal next_n
         cu = rlib.canonical_url(url)
         if not cu or (cu, kind) in seen:
@@ -104,7 +149,7 @@ def main() -> int:
             "run_id": run_id,
             "kind": kind,
             "retrieved_at": rlib.now(),
-            "tool": tool,
+            "tool": tool_name or tool,
             "channel": channel,
             "query_id": None,
             "gap": None,
@@ -119,11 +164,11 @@ def main() -> int:
             "version": None,
             "passage": passage,
             "passage_sha256": rlib.sha256(passage) if passage else None,
-            "source_type": "secondary",
-            "primary": False,
+            "source_type": stype,
+            "primary": stype in ("primary-doc", "code", "independent-test"),
             "cluster_id": None,
             "http_status": status,
-            "liveness": "unchecked",
+            "liveness": liveness,
             "bytes": len(passage),
             "notes": "auto-captured by PostToolUse",
         }
@@ -154,13 +199,22 @@ def main() -> int:
         rlib.append_jsonl(rlib.tools_path(run_id),
                           {"ts": rlib.now(), "channel": tool, "state": "returned",
                            "detail": str(url)[:180]})
+        # An auto-captured row used to be stamped "secondary" whatever it was, so a source file
+        # or an RFC read with WebFetch could never satisfy the gate's `primary-doc|code`. The
+        # classifier that ingest.py already applies to swept rows applies here too.
+        try:
+            subject = (rlib.read_state(run_id) or {}).get("subject")
+        except Exception:
+            subject = None
         if isinstance(tin.get("urls"), list) and len(tin["urls"]) > 1:
             chunk = max(1, len(body) // len(tin["urls"]))
             for i, u in enumerate(tin["urls"][:MAX_ROWS_PER_CALL]):
-                if emit("evidence", u, body[i * chunk:(i + 1) * chunk][:PASSAGE_CHARS], tool):
+                if emit("evidence", u, body[i * chunk:(i + 1) * chunk][:PASSAGE_CHARS], tool,
+                        stype=_classify(u, tool, subject), liveness="alive"):
                     written += 1
         elif url:
-            if emit("evidence", url, body[:PASSAGE_CHARS], tool):
+            if emit("evidence", url, body[:PASSAGE_CHARS], tool,
+                    stype=_classify(url, tool, subject), liveness="alive"):
                 written += 1
 
     elif SEARCH_TOOLS.match(tool):

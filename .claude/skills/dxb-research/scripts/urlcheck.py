@@ -20,6 +20,7 @@ import json
 import ssl
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -31,6 +32,17 @@ BLOCKED_CODES = {401, 402, 403, 405, 406, 409, 418, 429, 451, 503}
 
 
 def check(url: str, timeout: int = 12) -> dict:
+    # A local source — the installed binary, its source file, a bundled doc — is the
+    # STRONGEST row a capability question can carry, and it has no HTTP address. Measured
+    # 2026-09-16 on run 20260916-181735: eleven `file://` rows holding the CLI's own
+    # source were written "dead" by the old one-line rejection below, and the gate then
+    # refused to close a run whose evidence was the code itself. A local row is checked
+    # where it lives — on the filesystem.
+    if url and url.startswith("file://"):
+        path = urllib.parse.unquote(urllib.parse.urlsplit(url.split("#", 1)[0]).path)
+        if Path(path).exists():
+            return {"url": url, "liveness": "alive", "status": None, "note": "local file"}
+        return {"url": url, "liveness": "dead", "status": None, "note": "local file missing"}
     if not url or not url.startswith(("http://", "https://")):
         return {"url": url, "liveness": "dead", "status": None, "note": "not an http url"}
     ctx = ssl.create_default_context()

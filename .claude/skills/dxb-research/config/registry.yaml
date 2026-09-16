@@ -29,7 +29,7 @@ channels:
     fallback: [exa, parallel]
   google:
     tags: [search, serp]
-    probe: opencli google search "site reliability" --window background -f yaml
+    probe: opencli google search "site reliability" -f yaml
     fallback: [duckduckgo, exa, parallel]
   websearch:
     tags: [search, builtin]
@@ -40,11 +40,11 @@ channels:
   # ---- human voices
   reddit:
     tags: [first-hand, forum]
-    probe: opencli reddit search "site reliability" --window background -f yaml
+    probe: opencli reddit search "site reliability" -f yaml
     fallback: [google, hackernews]
   twitter:
     tags: [first-hand, fresh]
-    probe: opencli twitter search "site reliability" --window background -f yaml
+    probe: opencli twitter search "site reliability" -f yaml
     fallback: [bluesky, google]
   hackernews:
     tags: [first-hand, forum]
@@ -53,34 +53,34 @@ channels:
     fallback: [google]
   bluesky:
     tags: [first-hand, fresh]
-    probe: opencli bluesky search "site reliability" --window background -f yaml
+    probe: opencli bluesky search "site reliability" -f yaml
     fallback: [twitter]
   stackoverflow:
     tags: [first-hand, troubleshooting]
-    probe: opencli stackoverflow search "site reliability" --window background -f yaml
+    probe: opencli stackoverflow search "site reliability" -f yaml
     fallback: [google]
   linkedin:
     tags: [first-hand, market]
-    probe: opencli linkedin search "site reliability" --window background -f yaml
+    probe: opencli linkedin search "site reliability" -f yaml
     fallback: [google]
   youtube:
     tags: [first-hand, video, transcript]
-    probe: opencli youtube search "site reliability" --window background -f yaml
+    probe: opencli youtube search "site reliability" -f yaml
     fallback: [bilibili]
 
   # ---- Chinese-language channels: needed whenever the subject has a CN community
   zhihu:
     tags: [first-hand, cn]
-    probe: opencli zhihu search "可靠性" --window background -f yaml
+    probe: opencli zhihu search "可靠性" -f yaml
     note: AUTH_REQUIRED on 2026-09-16 — needs a Chrome login the CEO owns.
     fallback: [linux-do, weibo]
   linux-do:
     tags: [first-hand, cn]
-    probe: opencli linux-do search "claude" --window background -f yaml
+    probe: opencli linux-do search "claude" -f yaml
     fallback: [zhihu]
   weibo:
     tags: [first-hand, cn]
-    probe: opencli weibo search "可靠性" --window background -f yaml
+    probe: opencli weibo search "可靠性" -f yaml
     fallback: [zhihu]
   bilibili:
     tags: [first-hand, cn, video]
@@ -132,6 +132,68 @@ channels:
 
 # Channels deliberately NOT in the roster, and why. Written down so the next
 # session does not re-propose them.
+
+  # ---- the thirteen channels that were swept but never REGISTERED, added 2026-09-16
+  # after the CEO asked the obvious question: "Quora failed — why did nothing else try?"
+  # Nothing else tried because a channel with no entry here has no declared stand-in, and
+  # the fallback chain fires only from this file. Worse, SEVEN of them are DuckDuckGo
+  # site-searches underneath (lobsters · devto · producthunt · v2ex · quora-forums · juejin),
+  # so when DuckDuckGo refuses a navigation they all fall at once and none of them is an
+  # independent voice. Every stand-in below is therefore a DIFFERENT engine or a different
+  # community — never another DuckDuckGo query wearing a different name.
+  github-repos:
+    tags: [code, forge]
+    probe: gh search repos "site reliability" --limit 3 --json fullName
+    fallback: [github-trending, exa, google]
+  github-issues:
+    tags: [code, first-hand, troubleshooting]
+    probe: gh search issues "site reliability" --limit 3 --json title
+    fallback: [github-repos, exa, google]
+  github-trending:
+    tags: [code, fresh]
+    probe: opencli github-trending repos -f yaml
+    fallback: [github-repos, exa]
+  duckduckgo:
+    tags: [search, serp]
+    probe: opencli duckduckgo search "site reliability" -f yaml
+    fallback: [google, exa, parallel]
+  lobsters:
+    tags: [first-hand, forum]
+    probe: opencli duckduckgo search "site:lobste.rs site reliability" -f yaml
+    fallback: [hackernews, exa, google]
+  medium:
+    tags: [secondary, writing]
+    probe: opencli medium search "site reliability" -f yaml
+    fallback: [substack, exa, google]
+  devto:
+    tags: [secondary, writing]
+    probe: opencli duckduckgo search "site:dev.to site reliability" -f yaml
+    fallback: [medium, exa, hackernews]
+  producthunt:
+    tags: [market, launch]
+    probe: opencli duckduckgo search "site:producthunt.com site reliability" -f yaml
+    fallback: [exa, google, parallel]
+  substack:
+    tags: [secondary, writing]
+    probe: opencli substack search "site reliability" -f yaml
+    fallback: [medium, exa, google]
+  v2ex:
+    tags: [first-hand, cn, forum]
+    probe: opencli duckduckgo search "site:v2ex.com site reliability" -f yaml
+    fallback: [linux-do, zhihu, exa]
+  quora-forums:
+    tags: [first-hand, forum]
+    probe: opencli duckduckgo search "site:quora.com site reliability" -f yaml
+    fallback: [stackoverflow, reddit, exa]
+  rednote:
+    tags: [first-hand, cn]
+    probe: opencli rednote search "可靠性" -f yaml
+    fallback: [weibo, zhihu]
+  juejin:
+    tags: [first-hand, cn]
+    probe: opencli duckduckgo search "site:juejin.cn 可靠性" -f yaml
+    fallback: [zhihu, linux-do, exa]
+
 excluded:
   searxng: not installed; its Google leg returns 0 results (its own issue #5867). Sovereignty hedge only.
   crawl4ai: 16 published advisories, 4 CRITICAL, all 2026. Scrapling is installed and does the job.

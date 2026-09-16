@@ -37,6 +37,7 @@ from __future__ import annotations
 import argparse
 import concurrent.futures as cf
 import json
+import os
 import re
 import shlex
 import subprocess
@@ -58,12 +59,20 @@ UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
 PLATFORM_READERS = [
     (re.compile(r"reddit\.com/r/[^/]+/comments/([a-z0-9]+)", re.I), "reddit", "read"),
     (re.compile(r"news\.ycombinator\.com/item\?id=(\d+)", re.I), "hackernews", "read"),
-    (re.compile(r"(?:twitter|x)\.com/[^/]+/status/(\d+)", re.I), "twitter", "read"),
-    (re.compile(r"v2ex\.com/t/(\d+)", re.I), "v2ex", "read"),
-    (re.compile(r"youtube\.com/watch\?v=([\w-]+)", re.I), "youtube", "read"),
-    (re.compile(r"zhihu\.com/question/(\d+)", re.I), "zhihu", "read"),
+    # Measured 2026-09-16 on 1.8.7: only reddit, hackernews and stackoverflow HAVE a `read`.
+    # The other four named one that does not exist — `opencli v2ex read 123` answers
+    # `error: unknown command 'read'` — so four of the seven doors in the chain the CEO named
+    # were dead. These are the verbs those sites actually ship, each taking one positional id.
+    (re.compile(r"(?:twitter|x)\.com/[^/]+/status/(\d+)", re.I), "twitter", "thread"),
+    (re.compile(r"v2ex\.com/t/(\d+)", re.I), "v2ex", "topic"),
+    (re.compile(r"youtube\.com/watch\?v=([\w-]+)", re.I), "youtube", "transcript"),
+    (re.compile(r"zhihu\.com/question/(\d+)", re.I), "zhihu", "question"),
     (re.compile(r"stackoverflow\.com/questions/(\d+)", re.I), "stackoverflow", "read"),
 ]
+
+
+# Every opencli call from this file goes to the back door: the screen is the CEO's.
+os.environ.setdefault("OPENCLI_WINDOW", "background")
 
 
 def _sh(cmd: str, timeout: int) -> tuple[int, str, str]:
@@ -111,10 +120,11 @@ def door_opencli(url: str, tmo: int) -> tuple[str, str]:
         if not m:
             continue
         ident = m.group(1)
-        cmd = f'opencli {adapter} {verb} {shlex.quote(ident)} --window background -f yaml'
+        # No --window flag: opencli registers it only on browser-backed adapters, and the
+        # readers behind this door (hackernews, stackoverflow) are not. OPENCLI_WINDOW is
+        # exported at import and is honoured by the browser-backed ones instead.
+        cmd = f'opencli {adapter} {verb} {shlex.quote(ident)} -f yaml'
         rc, out, err = _sh(cmd, tmo)
-        if rc != 0 and "unknown option '--window'" in (err or ""):
-            rc, out, err = _sh(cmd.replace(" --window background", ""), tmo)
         return out, ("" if rc == 0 else f"rc={rc} {(err or '')[:120]}")
     return "", "no platform adapter for this url"
 
@@ -164,15 +174,42 @@ def _mcp(endpoint: str, body: str, headers: list[str], tmo: int) -> tuple[str, s
     return "\n".join(chunks), ""
 
 
+# The browser door, repaired 2026-09-17. It had been DEAD since it was written and nobody
+# had watched it fail: `node -e "require('playwright')"` cannot resolve a module that is not
+# installed beside the current directory, so every page that reached this door got
+# `rc=1 … node:internal/modules/cjs/loader` and walked straight past it. Measured when the
+# CEO asked why the other tools had not tried Quora — all eleven were fired at it, and this
+# one was the only one that failed for a reason of OUR OWN making.
+#
+# The repair is not "npm install playwright": Playwright's own browser downloads REFUSE this
+# machine ("Playwright does not support chromium on ubuntu26.04-x64"). The browser that IS
+# here is Google Chrome 153. So the door drives that, through the python playwright in the
+# scrapling venv — headless, and in a THROWAWAY profile, because the screen belongs to him.
+_PW_PY = "/home/dxb/scrapling-env/bin/python"
+_PW_SCRIPT = """
+import sys, tempfile
+from playwright.sync_api import sync_playwright
+with sync_playwright() as p:
+    ctx = p.chromium.launch_persistent_context(
+        user_data_dir=tempfile.mkdtemp(prefix="pw-isolated-"),
+        channel="chrome", headless=True,
+        args=["--no-first-run", "--no-default-browser-check"])
+    pg = ctx.new_page()
+    pg.goto(sys.argv[1], wait_until="domcontentloaded", timeout=int(sys.argv[2]) * 1000)
+    pg.wait_for_timeout(1200)
+    print(pg.evaluate("() => document.body.innerText"))
+    ctx.close()
+"""
+
+
 def door_playwright(url: str, tmo: int) -> tuple[str, str]:
-    """Headless and isolated. The screen belongs to the CEO."""
-    js = ("const {chromium}=require('playwright');(async()=>{const b=await chromium.launch"
-          "({headless:true});const p=await b.newPage();await p.goto(process.argv[2],"
-          "{waitUntil:'domcontentloaded',timeout:%d});await p.waitForTimeout(1200);"
-          "console.log(await p.evaluate(()=>document.body.innerText));await b.close();})()"
-          ".catch(e=>{console.error(e.message);process.exit(1)})" % (tmo * 1000))
-    rc, out, err = _sh(f"node -e {shlex.quote(js)} -- {shlex.quote(url)}", tmo + 20)
-    return out, ("" if rc == 0 else f"rc={rc} {err[:120]}")
+    """Headless, isolated profile, the machine's own Chrome. The screen belongs to the CEO."""
+    if not Path(_PW_PY).exists():
+        return "", "no playwright interpreter"
+    rc, out, err = _sh(
+        f"{shlex.quote(_PW_PY)} -c {shlex.quote(_PW_SCRIPT)} {shlex.quote(url)} {tmo}",
+        tmo + 25)
+    return out, ("" if rc == 0 else f"rc={rc} {err[-120:]}")
 
 
 def door_jina(url: str, tmo: int) -> tuple[str, str]:
@@ -279,7 +316,12 @@ CHAIN = [
 
 
 # ---------------------------------------------------------------- the chain
-def fetch(url: str, timeout: int = 45, stop_at: int = 0, record: bool = True) -> dict:
+def fetch(url: str, timeout: int = 45, stop_at: int = 0, record: bool = True,
+          ledger_evidence: bool = True) -> dict:
+    """`ledger_evidence=False` under --batch: there, ingest.py writes the evidence rows and
+    keeps the CHANNEL that discovered each page. Writing them here instead would stamp every
+    swept page `channel: fetch:scrapling`, and gate.py's H5 ("one door is not research")
+    measures exactly that share — the repair would have manufactured its own failure."""
     attempts: list[dict] = []
     run_id = rlib.current_run_id() if record else None
     best = {"door": None, "text": "", "cached": False}
@@ -323,7 +365,55 @@ def fetch(url: str, timeout: int = 45, stop_at: int = 0, record: bool = True) ->
         "bytes": len(best["text"]),
         "text": best["text"],
     }
+    if run_id and got and ledger_evidence:
+        _ledger_evidence(run_id, result)
     return result
+
+
+def _ledger_evidence(run_id: str, r: dict) -> None:
+    """A page this chain OPENED is an evidence row, written here, by the machine.
+
+    Measured 2026-09-16 on run 20260916-205829: the chain read the upstream `src/index.ts`
+    (37 364 bytes) and the vendor's keyless doc, both landed on disk, and `gate.py` still
+    printed *"H2 required evidence type 'primary-doc|code' present 0x"* — because only
+    `sweep.sh` → `ingest.py` ever wrote evidence rows, and a hand read went nowhere. The
+    PostToolUse hook cannot repair it from outside: the Bash command it sees says
+    `--out "$SP/verify-code.ts"`, an unexpanded shell variable it has no way to resolve. The
+    only place that holds the url, the door, the liveness AND the body at once is here.
+    """
+    try:
+        rows = rlib.ledger(run_id)
+        cu = rlib.canonical_url(r["url"])
+        if any(x.get("url_canonical") == cu and x.get("kind") == "evidence" for x in rows):
+            return
+        try:
+            import ingest
+            stype = ingest.classify(r["url"], "fetch",
+                                    (rlib.read_state(run_id) or {}).get("subject"))
+        except Exception:
+            stype = "secondary"
+        passage = r["text"][:6000]
+        rlib.append_jsonl(rlib.ledger_path(run_id), {
+            "id": "L%04d" % (len(rows) + 1), "run_id": run_id, "kind": "evidence",
+            "retrieved_at": rlib.now(), "tool": "fetch.py:" + str(r["door"]),
+            "channel": "fetch:" + str(r["door"]), "query_id": None,
+            "gap": "read by hand through the chain",
+            "url": r["url"], "url_canonical": cu,
+            "domain": rlib.registrable_domain(r["url"]), "title": None,
+            "author": None, "pub_date": None, "updated_date": None, "dates_agree": False,
+            "version": None, "passage": passage, "passage_sha256": rlib.sha256(passage),
+            "source_type": stype, "primary": stype in ("primary-doc", "code"),
+            "cluster_id": None, "http_status": None, "liveness": r["liveness"],
+            "bytes": r["bytes"],
+            "notes": "cached snapshot" if r.get("cached_snapshot") else None,
+        })
+        try:
+            import independence
+            independence.recluster(run_id)
+        except Exception:
+            pass
+    except Exception:
+        pass          # the ledger never breaks a fetch
 
 
 def main() -> int:
@@ -342,9 +432,20 @@ def main() -> int:
         urls = [u.strip() for u in Path(a.batch).read_text().splitlines() if u.strip()]
         outdir = Path(a.outdir or ".")
         outdir.mkdir(parents=True, exist_ok=True)
+        # ingest.py maps `NN-domain.md` back to its URL through `<outdir>/urls.txt`,
+        # and until 2026-09-16 only sweep.sh ever wrote that file: a hand-run batch
+        # read SIX pages and produced ZERO evidence rows, silently. The batch that
+        # reads the pages writes the map too -- unless it IS the file it was handed.
+        umap = outdir / "urls.txt"
+        try:
+            same = umap.exists() and umap.resolve() == Path(a.batch).resolve()
+        except OSError:
+            same = False
+        if not same:
+            umap.write_text("\n".join(urls) + "\n", encoding="utf-8")
         results = []
         with cf.ThreadPoolExecutor(max_workers=a.workers) as ex:
-            futs = {ex.submit(fetch, u, a.timeout, a.stop_at): (i, u)
+            futs = {ex.submit(fetch, u, a.timeout, a.stop_at, True, False): (i, u)
                     for i, u in enumerate(urls, 1)}
             for fut in cf.as_completed(futs):
                 i, u = futs[fut]
@@ -364,6 +465,9 @@ def main() -> int:
         (outdir / "FETCH-LOG.json").write_text(json.dumps(results, ensure_ascii=False, indent=2))
         read = sum(1 for r in results if r["read"])
         print(f"okunan {read}/{len(results)} · zincir günlüğü: {outdir}/FETCH-LOG.json")
+        if read and rlib.current_run_id():
+            print(f"  -> kanit satiri: python3 ingest.py {outdir.parent} "
+                  f"--query \"...\" --gap \"...\"")
         for r in results:
             if not r["read"]:
                 tried = " → ".join(x["door"] for x in r["attempts"])

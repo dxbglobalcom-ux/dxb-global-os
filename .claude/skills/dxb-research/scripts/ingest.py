@@ -26,7 +26,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rlib  # noqa: E402
 import independence  # noqa: E402
 
-URL_RE = re.compile(r"https?://[^\s\"'<>)\]},]+")
+# A backslash and a backtick are not legal unescaped in a URL, and both end up glued to one
+# when the captured text came through `jq` (a literal `\n`) or through markdown (a closing
+# backtick). Measured 2026-09-16: six discovery rows in run 20260916-213702 carried URLs
+# like `.../issues/6359\nCOMMENTS:` and urlcheck.py called them dead, correctly.
+URL_RE = re.compile(r"https?://[^\s\"'<>)\]},`\\]+")
 NOISE = re.compile(
     r"\.(png|jpe?g|gif|svg|webp|mp4|css|js|ico|woff2?)($|\?)|"
     r"(twimg|redditstatic|redditmedia|gstatic|googleusercontent|licdn|fbcdn|ytimg|"
@@ -34,6 +38,10 @@ NOISE = re.compile(
 
 PRIMARY_HINTS = (
     (re.compile(r"github\.com/[^/]+/[^/]+/(blob|tree|releases|issues|pull)", re.I), "code"),
+    # The file itself, not the page around it. Measured 2026-09-16: a `raw.githubusercontent.com`
+    # source file — the strongest evidence a capability question can have — classified as
+    # "secondary", so the gate's `primary-doc|code` requirement could not be met by reading code.
+    (re.compile(r"raw\.githubusercontent\.com|gitlab\.com/.+/-/raw/|/blob/", re.I), "code"),
     (re.compile(r"(docs?|developer|api)\.[^/]+/|/docs?/|readthedocs\.io", re.I), "primary-doc"),
     (re.compile(r"arxiv\.org|doi\.org|europepmc|ncbi\.nlm|crossref", re.I), "primary-doc"),
     (re.compile(r"(reddit|news\.ycombinator|stackoverflow|x\.com|twitter\.com|"
@@ -41,11 +49,25 @@ PRIMARY_HINTS = (
 )
 
 
+# A platform where the CROWD lives is never the vendor of the thing being researched.
+# Measured 2026-09-16: the subject "Claude Design vs Open Design - Reddit community size"
+# carries the token "reddit", so every reddit.com row was stamped "vendor"; the gate's
+# first-hand count stayed at 2 while 20 rows of people's own words sat in the ledger, and
+# the H6 check could not be satisfied by any amount of further reading.
+PLATFORM_DOMAINS = {
+    "reddit.com", "x.com", "twitter.com", "news.ycombinator.com", "ycombinator.com",
+    "stackoverflow.com", "stackexchange.com", "github.com", "gitlab.com", "youtube.com",
+    "bsky.app", "lobste.rs", "medium.com", "dev.to", "substack.com", "quora.com",
+    "zhihu.com", "v2ex.com", "linux.do", "weibo.com", "linkedin.com", "producthunt.com",
+    "discord.com", "google.com", "duckduckgo.com", "bing.com", "wikipedia.org",
+}
+
+
 def classify(url: str, channel: str, subject: str | None) -> str:
     if subject:
         dom = rlib.registrable_domain(url)
         toks = [t for t in re.split(r"[^a-z0-9]+", subject.lower()) if len(t) > 3]
-        if any(t in dom for t in toks):
+        if dom not in PLATFORM_DOMAINS and any(t in dom for t in toks):
             return "vendor"
     for pat, kind in PRIMARY_HINTS:
         if pat.search(url):

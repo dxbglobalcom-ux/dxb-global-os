@@ -13,6 +13,20 @@
 #   probe.sh [--out FILE] [--timeout S] [channel ...]
 
 set -uo pipefail
+
+# The probes below drive the CEO's Chrome. --window is registered only on browser-backed
+# adapters (opencli commanderAdapter.js `if (cmd.browser)`), so a probe that passed the flag
+# to bluesky or stackoverflow reported a healthy channel as BROKEN. The env var is opencli's
+# own adapter-independent override and is never rejected. Measured 2026-09-16 on 1.8.7.
+export OPENCLI_WINDOW=background
+
+# THE ONE EDGE THIS EXPORT HAS THAT A PER-CALL FLAG DOES NOT. Precedence is
+#   --window  >  OPENCLI_WINDOW  >  the command's own default
+# so a blanket export also OVERRIDES a deliberate foreground default. 69 commands declare
+# one; 66 are `login`, which exist to be SEEN by the human. Measured 2026-09-16:
+# `OPENCLI_WINDOW=bogus opencli mercury check-login` exits 2 with "OPENCLI_WINDOW must be one
+# of: foreground, background" — proof the variable reaches them. So nothing in this file may
+# call a login verb, and the guard below refuses to run if one ever appears.
 SKILL="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TMO=20
 OUT=""
@@ -69,18 +83,18 @@ P[parallel]="curl -sS -m 15 -X POST https://search.parallel.ai/mcp -H 'Content-T
 P[tavily]="curl -sS -m 15 -X POST https://mcp.tavily.com/mcp/ -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -H 'X-Tavily-Access-Mode: keyless' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'"
 P[firecrawl]="curl -sS -m 15 -X POST https://mcp.firecrawl.dev/v2/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'"
 P[youcom]="curl -sS -m 15 -X POST 'https://api.you.com/mcp?profile=free' -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'"
-P[google]="opencli google search 'site reliability' --window background -f yaml"
-P[duckduckgo]="opencli duckduckgo search 'site reliability' --window background -f yaml"
-P[reddit]="opencli reddit search 'site reliability' --window background -f yaml"
-P[twitter]="opencli twitter search 'site reliability' --window background -f yaml"
+P[google]="opencli google search 'site reliability' -f yaml"
+P[duckduckgo]="opencli duckduckgo search 'site reliability' -f yaml"
+P[reddit]="opencli reddit search 'site reliability' -f yaml"
+P[twitter]="opencli twitter search 'site reliability' -f yaml"
 P[hackernews]="opencli hackernews search 'site reliability' -f yaml"
-P[stackoverflow]="opencli stackoverflow search 'site reliability' --window background -f yaml"
-P[bluesky]="opencli bluesky search 'site reliability' --window background -f yaml"
-P[linkedin]="opencli linkedin search 'site reliability' --window background -f yaml"
-P[youtube]="opencli youtube search 'site reliability' --window background -f yaml"
-P[zhihu]="opencli zhihu search '可靠性' --window background -f yaml"
-P[linux-do]="opencli linux-do search 'claude' --window background -f yaml"
-P[weibo]="opencli weibo search '可靠性' --window background -f yaml"
+P[stackoverflow]="opencli stackoverflow search 'site reliability' -f yaml"
+P[bluesky]="opencli bluesky search 'site reliability' -f yaml"
+P[linkedin]="opencli linkedin search 'site reliability' -f yaml"
+P[youtube]="opencli youtube search 'site reliability' -f yaml"
+P[zhihu]="opencli zhihu search '可靠性' -f yaml"
+P[linux-do]="opencli linux-do search 'claude' -f yaml"
+P[weibo]="opencli weibo search '可靠性' -f yaml"
 P[bilibili]="bili search 'claude' --type video -n 3"
 P[github]="gh api rate_limit --jq .rate.remaining"
 P[crossref]="curl -sS -m 15 'https://api.crossref.org/works?rows=1&query=retrieval'"
@@ -91,6 +105,13 @@ P[jina]="curl -sS -m 15 'https://r.jina.ai/https://example.com'"
 
 [ ${#CHANNELS[@]} -eq 0 ] && CHANNELS=("${!P[@]}")
 [ -n "$OUT" ] && : > "$OUT"
+
+for c in "${CHANNELS[@]}"; do
+  case "${P[$c]:-}" in
+    *"opencli "*" login"*) echo "!! DUR: probe '$c' bir login komutu cagiriyor — OPENCLI_WINDOW=background" >&2
+                           echo "   onu arka plana zorlar ve CEO o pencereyi goremez." >&2; exit 3 ;;
+  esac
+done
 
 printf '%-14s %-8s %9s %14s\n' CHANNEL STATE LATENCY SIZE
 for c in "${CHANNELS[@]}"; do

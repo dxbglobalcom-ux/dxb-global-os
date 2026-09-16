@@ -15,14 +15,31 @@ Three things this gate deliberately does NOT do:
   * it never asks the model to fill an evidence field (that is how citations get
     fabricated). The ledger is written by the fetcher.
   * it never blocks a session that is not researching — no open run, no gate.
-  * it never traps a run forever. Past the block budget it stops demanding work
-    and starts demanding an honest exit: stopping early is legal, stopping early
-    in SILENCE is what is forbidden.
+  * it never traps a run forever. Past the block budget — or past the clock — it
+    stops demanding work and starts demanding an honest exit: stopping early is
+    legal, stopping early in SILENCE is what is forbidden.
+
+A run passes through three regimes, and the CLOCK moves it between them, never an
+argument it makes about itself:
+
+  expand    (< soft_seconds)  every check blocks, as written.
+  converge  (< max_seconds)   the gate stops demanding work that ADDS scope. A
+                              load-bearing claim with no contradiction search or no
+                              adversary verdict may pass by being DECLARED instead:
+                              labelled UNPROVEN and named in GAPS.md.
+  closing   (>= max_seconds)  only the honest exit is left: GAPS.md, then out.
+
+INTEGRITY never expires. A fabricated citation, a quote whose hash does not
+recompute, a dead URL, a claim resting only on the vendor's own page, a claim the
+adversary broke, a gate rewritten mid-run — none of these are waived by any budget.
+Running out of time is not a licence to lie.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
+import re
 import sys
 from pathlib import Path
 
@@ -31,6 +48,16 @@ import rlib  # noqa: E402
 import independence  # noqa: E402
 
 PASS, BLOCK = 0, 2
+
+# Checks that a spent budget may NEVER waive. Everything else is effort — more
+# queries, more clusters, another channel — and effort is what a budget is for.
+# Measured 2026-09-16: the old budget escape replaced the whole failure list, so a
+# run that ran out of blocks could have closed with a FABRICATED citation in it.
+INTEGRITY = ("H1 ", "H9 ", "H10 ", "H11 ", "H13 ", "H14 ", "H18 ")
+
+
+def is_integrity(msg: str) -> bool:
+    return msg.startswith(INTEGRITY) or msg.startswith("H17 the adversary BROKE")
 
 
 # ------------------------------------------------------------------ config
@@ -177,7 +204,30 @@ def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]
     return fails, todo, facts
 
 
-def check_report(run_id: str, st: dict) -> tuple[list[str], list[str], dict]:
+def _gaps_text(run_id: str) -> str:
+    gp = rlib.run_dir(run_id) / "GAPS.md"
+    try:
+        return gp.read_text()
+    except Exception:
+        return ""
+
+
+def _declared(c: dict, gaps: str) -> bool:
+    """Is this claim's hole OPEN but NOT SILENT?
+
+    The only escape from an untested load-bearing claim, and it is earned by the
+    CLOCK, never by an argument: the claim must be labelled UNPROVEN and named, by
+    id, in GAPS.md. The CEO then reads an answer that says which leg of it was
+    never put to the adversary — which is the whole point of the gate.
+    """
+    cid = str(c.get("id") or "")
+    # word boundary, or "C1" would be satisfied by a GAPS.md that only mentions C10
+    return bool(cid) and c.get("confidence") == "UNPROVEN" and bool(
+        re.search(r"\b" + re.escape(cid) + r"\b", gaps))
+
+
+def check_report(run_id: str, st: dict,
+                 regime: str = "expand") -> tuple[list[str], list[str], dict]:
     claims_p = rlib.run_dir(run_id) / "claims.json"
     fails: list[str] = []
     todo: list[str] = []
@@ -194,6 +244,21 @@ def check_report(run_id: str, st: dict) -> tuple[list[str], list[str], dict]:
     rows = {r["id"]: r for r in rlib.ledger(run_id)}
     queries = rlib.read_jsonl(rlib.queries_path(run_id))
     contra_for = {q.get("claim_id") for q in queries if q.get("kind") == "contradiction"}
+    gaps = _gaps_text(run_id)
+    may_declare = regime in ("converge", "closing")
+
+    # A WITHDRAWN claim is not in the answer, so it is not gated — but a claim that
+    # was pulled is a hole, and a hole may never be silent. This is the exit from a
+    # claim the adversary broke that does not cost another adversary round: pull it,
+    # and say in GAPS.md that you pulled it.
+    withdrawn = [c for c in claims if c.get("withdrawn")]
+    claims = [c for c in claims if not c.get("withdrawn")]
+    for c in withdrawn:
+        cid = str(c.get("id") or "?")
+        if not re.search(r"\b" + re.escape(cid) + r"\b", gaps):
+            fails.append(f"H19 claim {cid} was WITHDRAWN and GAPS.md does not name it — "
+                         f"a pulled claim is a hole, and a hole may stay open but never silent")
+            todo.append(f"name {cid} in runs/{run_id}/GAPS.md: what it claimed, and why it was pulled")
 
     for c in claims:
         cid = c.get("id", "?")
@@ -227,8 +292,12 @@ def check_report(run_id: str, st: dict) -> tuple[list[str], list[str], dict]:
             fails.append(f"H14 claim {cid} rests only on the vendor's own pages")
             todo.append(f"either add an independent source to {cid}, or mark it "
                         f'"about_the_source": true if the claim is ABOUT that page')
-        if c.get("load_bearing") and cid not in contra_for:
-            fails.append(f"H12 load-bearing claim {cid} had no contradiction search")
+        if c.get("load_bearing") and cid not in contra_for and not (
+                may_declare and _declared(c, gaps)):
+            fails.append(f"H12 load-bearing claim {cid} had no contradiction search"
+                         + ("" if not may_declare else
+                            " — past the converge point you may instead label it UNPROVEN "
+                            "and name it in GAPS.md"))
             todo.append(f"search the NEGATION of {cid} and log it: scripts/research.py contradict "
                         f"--claim {cid} --query '<the opposite>'")
         if c.get("load_bearing") and c.get("confidence") not in ("PROVEN", "LIKELY", "UNPROVEN"):
@@ -255,9 +324,20 @@ def check_report(run_id: str, st: dict) -> tuple[list[str], list[str], dict]:
             except Exception:
                 seen = set()
             for c in lb:
-                if c.get("id") not in seen:
-                    fails.append(f"H17 load-bearing claim {c.get('id')} was never put to the "
-                                 f"adversary")
+                if c.get("id") in seen:
+                    continue
+                # A claim written AFTER the adversary ran — a repair, usually — would
+                # demand a whole new adversary round, and each round is minutes long:
+                # measured 321 s on 2026-09-16. That is how a run stops converging,
+                # because every repair breeds the demand that forced it. Past the
+                # converge point the claim may be DECLARED instead of re-tested.
+                if may_declare and _declared(c, gaps):
+                    continue
+                fails.append(f"H17 load-bearing claim {c.get('id')} was never put to the "
+                             f"adversary"
+                             + ("" if not may_declare else
+                                " — past the converge point you may instead label it UNPROVEN "
+                                "and name it in GAPS.md, or withdraw it"))
             # The LATEST verdict per claim, not every verdict ever recorded. `refute`
             # APPENDS, so a claim that was broken, sent back to the ground, repaired and
             # re-judged carries two entries — and reading them all would make repair
@@ -273,9 +353,21 @@ def check_report(run_id: str, st: dict) -> tuple[list[str], list[str], dict]:
                 fails.append(f"H17 the adversary BROKE claim {b.get('claim')}: "
                              f"{(b.get('note') or '')[:90]} — it goes back to the ground, "
                              f"it does not go to the CEO")
+                todo.append(f"three legal moves on {b.get('claim')}, and only three: re-measure "
+                            f"it and record a fresh verdict · demote it (drop load_bearing) · "
+                            f'withdraw it ("withdrawn": true) and say so in GAPS.md')
 
+    rounds = 0
+    try:
+        ts = sorted(r.get("ts") or "" for r in (json.loads(ref_p.read_text()).get("verdicts") or []))
+        for i, t in enumerate(ts):
+            if i == 0 or (rlib.seconds_between(ts[i - 1], t) or 0) > 120:
+                rounds += 1
+    except Exception:
+        rounds = 0
     return fails, todo, {"claims": len(claims), "load_bearing": len(lb),
-                         "adversary_ran": ref_p.exists()}
+                         "withdrawn": len(withdrawn), "adversary_ran": ref_p.exists(),
+                         "adversary_rounds": rounds}
 
 
 DECLARED = [
@@ -288,6 +380,13 @@ DECLARED = [
 
 
 # ------------------------------------------------------------------ driver
+def _float_env(name: str, fallback) -> float:
+    try:
+        return float(os.environ.get(name) or fallback)
+    except Exception:
+        return float(fallback)
+
+
 def evaluate(run_id: str) -> dict:
     st = rlib.read_state(run_id)
     phase = st.get("phase", "expedition")
@@ -295,33 +394,61 @@ def evaluate(run_id: str) -> dict:
     blocks = int(st.get("blocks", 0))
     max_blocks = int(rules.get("max_blocks", 6))
 
+    # THE CLOCK. Not a suggestion to the model — a term in the gate itself.
+    elapsed = rlib.elapsed_seconds(run_id)
+    soft = _float_env("DXB_RESEARCH_SOFT_SECONDS", rules.get("soft_seconds", 600))
+    hard = _float_env("DXB_RESEARCH_MAX_SECONDS", rules.get("max_seconds", 1080))
+    if hard < soft:
+        hard = soft
+    regime = "expand" if elapsed < soft else ("converge" if elapsed < hard else "closing")
+
     fails, todo, facts = check_expedition(run_id, st)
     if phase == "report" or (rlib.run_dir(run_id) / "claims.json").exists():
-        f2, t2, facts2 = check_report(run_id, st)
+        f2, t2, facts2 = check_report(run_id, st, regime)
         fails += f2
         todo += t2
         facts.update(facts2)
+
+    facts.update({"elapsed_s": int(elapsed), "converge_at_s": int(soft),
+                  "hard_stop_at_s": int(hard), "regime": regime})
 
     gaps_ok = False
     gp = rlib.run_dir(run_id) / "GAPS.md"
     if gp.exists() and gp.read_text().strip():
         gaps_ok = True
 
-    over_budget = blocks >= max_blocks
+    over_budget = blocks >= max_blocks or regime == "closing"
     if over_budget:
-        # stop demanding work; demand honesty instead
-        hard_fails = [] if gaps_ok else [
-            "BUDGET SPENT and there is no GAPS.md — stopping early is legal, "
-            "stopping early in silence is not"]
-        todo = ["write runs/%s/GAPS.md naming every channel not reached, every question left "
-                "open, and every contradiction left standing" % run_id] if not gaps_ok else []
-        fails = hard_fails
+        # Stop demanding work; demand honesty instead — but INTEGRITY is not work and
+        # is never waived. Before 2026-09-16 this line dropped the whole failure list,
+        # fabricated citations included.
+        kept = [f for f in fails if is_integrity(f)]
+        if not gaps_ok:
+            kept.append("BUDGET SPENT and there is no GAPS.md — stopping early is legal, "
+                        "stopping early in silence is not")
+            todo = ["write runs/%s/GAPS.md naming every channel not reached, every question "
+                    "left open, and every contradiction left standing" % run_id] + todo
+        fails = kept
+        if not kept:
+            todo = []
+
+    # RECORD vs GATED — the CEO's order of 2026-09-16. Most questions open no run at all,
+    # so this gate never runs for them. When he DID say "kaydet", the run is RECORD: the
+    # ledger is kept, the same checks are computed and printed, and NONE of them blocks.
+    # GATED is his word on top of that, and only then does a check shut a door.
+    # ("light" is the older name for RECORD and is still honoured, for runs already on disk.)
+    mode = st.get("mode") or "gated"
+    advisory: list[str] = []
+    if mode in ("record", "light") and fails:
+        advisory, fails = fails, []
 
     return {
-        "run": run_id, "phase": phase, "class": st.get("question_class"),
+        "run": run_id, "phase": phase, "class": st.get("question_class"), "mode": mode,
         "blocks": blocks, "max_blocks": max_blocks, "over_budget": over_budget,
-        "hard_failures": fails, "todo": todo, "facts": facts, "declared": DECLARED,
-        "pass": not fails,
+        "regime": regime, "elapsed_s": int(elapsed), "converge_at_s": int(soft),
+        "hard_stop_at_s": int(hard),
+        "hard_failures": fails, "advisory": advisory, "todo": todo, "facts": facts,
+        "declared": DECLARED, "pass": not fails,
     }
 
 
@@ -344,9 +471,20 @@ def main() -> int:
     if a.json:
         print(json.dumps(res, ensure_ascii=False, indent=2))
     elif not a.quiet:
-        print(f"=== RESEARCH GATE · run {res['run']} · {res['class']} · {res['phase']} ===")
+        print(f"=== RESEARCH GATE · run {res['run']} · {res['class']} · {res['phase']} · "
+              f"{res['mode'].upper()} · {res['regime'].upper()} "
+              f"{res['elapsed_s']}s/{res['hard_stop_at_s']}s ===")
         for k, v in res["facts"].items():
             print(f"  {k:22s} {v}")
+        if res.get("advisory"):
+            print("\nADVISORY (record mode — these do NOT block; they are what a GATED run "
+                  "would have demanded):")
+            for f in res["advisory"]:
+                print("  · " + f)
+            if res["todo"]:
+                print("\nWorth doing anyway:")
+                for t in dict.fromkeys(res["todo"]):
+                    print("  → " + t)
         if res["hard_failures"]:
             print("\nHARD failures (these block):")
             for f in res["hard_failures"]:
@@ -354,6 +492,9 @@ def main() -> int:
             print("\nDo this next:")
             for t in dict.fromkeys(res["todo"]):
                 print("  → " + t)
+        elif res.get("advisory"):
+            print("\nNothing BLOCKS — this run only keeps a RECORD. The list above is "
+                  "advice; the answer still has to be true.")
         else:
             print("\nHARD checks: all pass")
         print("\nDECLARED (judgment — recorded, never machine-scored):")

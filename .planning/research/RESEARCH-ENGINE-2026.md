@@ -1202,7 +1202,7 @@ component that owns the fix.
 | 26 | Silent paid fallback | — | cost ledger per run; crossing $0 requires the CEO's word | `budget.yaml` |
 | 27 | **Ambiguous name** — two different things share a name | — | the disambiguation step resolves the entity before searching; the lock records which one | step 2 |
 | 28 | Recency trap — news answers a capability question | — | the evidence plan requires durable sources (docs, code, releases) for capability questions | evidence plan |
-| 29 | **Screen leakage** — a sweep opens the CEO's browser | he caught it the first hour the door existed | `--window background` on every opencli call; Playwright `--headless --isolated`; `operator` is never used for research | `sweep.sh` |
+| 29 | **Screen leakage** — a sweep opens the CEO's browser | he caught it the first hour the door existed | `export OPENCLI_WINDOW=background` once per script — **corrected 2026-09-16 21:07**: `--window background` is registered only on browser-backed adapters, so passing it to the other 321 commands exits 1 and the channel is lost (bluesky, stackoverflow, substack were, measured); Playwright `--headless --isolated`; `operator` is never used for research | `sweep.sh` · `probe.sh` · `fetch.py` |
 | 30 | Secret leakage into a query | a query is a message to an outside company, and it is logged there | allow-list check on every outward query before it leaves | `sweep.sh` |
 
 **Three that deserve to be read twice**, because they are the ones a well-meaning
@@ -1719,3 +1719,279 @@ gold (`benchmarks/GOLD-RECEIPT.txt`) and a four-arm runner, and the contaminatio
 exercised. The full race has not been run to completion, so **no claim of first place is made here**.
 The acceptance condition stands as written: arm 3 must beat arms 1 and 2 on recall at $0 external
 cost, and if it does not, the central hypothesis is falsified and that is what gets reported.
+
+---
+
+## 16.6 The race was run, the engine did not pass, and this is why (2026-09-16, evening)
+
+The acceptance race was run on five tasks. Arm 3 took the capability task **T03 at 100 % recall
+in 521 s** where a plain session took 75 % — and then **died on the counting task T11**: 1 500 s,
+`rc=124`, zero characters of answer. Arm 1 died on the same task at 900 s. A hypothesis about
+*why* was written into the handover ("the thresholds in `budget.yaml` are probably too high"),
+and the next session's first job was to measure instead of believing it.
+
+### The hypothesis was wrong. The measurement (run `20260916-171413`, session transcript)
+
+| window | seconds | what actually happened |
+|---|---|---|
+| 17:13:56 → 17:16:54 | 178 | run opened · sweep · 177 discovery + 14 evidence rows |
+| 17:16:54 → 17:21:24 | **270** | three calls to a CLI that hangs (`rdt sub-info`), 3 × 90 s timeout, **0 bytes** |
+| 17:21:24 → 17:26:13 | 289 | the real measurement — subscriber counts, post counts, mention counts |
+| 17:26:13 → 17:27:38 | 85 | **the gate printed `HARD checks: all pass`** at 17:26:46 — every threshold met at minute 12 |
+| 17:27:38 → 17:32:59 | **321** | the adversary, one round |
+| 17:32:59 → 17:38:02 | 303 | repairs → NEW load-bearing claims → the gate demanded a NEW adversary round → **timeout** |
+
+Tool time 1 014 s of 1 448 s (Bash 685.7 s over 88 calls · the adversary 321.5 s); the rest was
+the model. **`budget.yaml`'s counting thresholds were satisfied at minute 12 of 25** — evidence
+rows 21 ≥ 10, clusters 13 ≥ 8, first-hand 4 ≥ 3, denominator present, saturated. Tuning them
+would have fixed nothing.
+
+### The two real causes
+
+1. **The claims layer had no fixed point.** Every repair the adversary forced wrote new
+   load-bearing claims; each new claim re-armed H12 (a contradiction search) and H17 (another
+   adversary round, measured at 321 s). **The demand grew as fast as it was met.**
+2. **The escape hatch was never armed.** `evaluate()` waived the budget on `blocks >= max_blocks`,
+   and `blocks` is incremented only by the Stop hook — which never fired, because the model never
+   tried to stop. It read the gate's own output and kept working. `max_seconds: 2400` sat in
+   `budget.yaml` with **zero call sites in the entire engine**: the gate had no clock at all.
+
+### The repair — the clock is a term in the gate, never an argument the run makes about itself
+
+| regime | when | what the gate does |
+|---|---|---|
+| `expand` | < `soft_seconds` (600 s) | every check blocks, exactly as before |
+| `converge` | < `max_seconds` (1 080 s) | stops demanding work that ADDS scope |
+| `closing` | ≥ `max_seconds` | one exit left: `GAPS.md`, the measured answer, `close` |
+
+Past the converge point a load-bearing claim that could not be finished has three legal endings,
+and all three are visible to the CEO: **declare it** (`"confidence": "UNPROVEN"` + its id named in
+`GAPS.md`), **withdraw it** (`"withdrawn": true`, named in `GAPS.md` — new check H19), or **demote
+it**. Before the converge point none of them exist: the escape is earned by the CLOCK, never by
+the argument.
+
+**Integrity never expires.** A fabricated citation, a quote whose hash does not recompute, a dead
+URL, a vendor-only claim, a claim the adversary broke, a gate rewritten mid-run — none are waived
+by any budget. This is also a repair: the old budget escape replaced the *whole* failure list, so
+a run out of blocks could have closed carrying a fabricated citation.
+
+Proven on seven synthetic runs (`scratchpad/test_regimes.py`): declared-at-300 s blocks · declared-
+at-700 s passes · LIKELY-instead-of-UNPROVEN at 700 s blocks · UNPROVEN-not-in-GAPS at 700 s blocks
+· withdrawn-and-named passes · withdrawn-and-silent blocks (H19) · closing waives effort only.
+
+### Two further defects found by RUNNING the engine rather than reading it
+
+- **The machine-written ledger had never written a row.** Across all 14 runs this engine had made:
+  **2 327 ledger rows, 0 of them from the `PostToolUse` hook.** `ledger-capture.py` read stdin
+  *before* importing `rlib`, and importing `rlib` re-execs the process into the research venv —
+  `os.execv` does not carry an already-consumed stdin, so the restarted process found EOF and
+  exited silently. The Stop hook had been repaired this way in the morning; this one had not.
+  Fixed (import first, read stdin second) and measured: one `opencli` call → `L0001 discovery
+  opencli:reddit … auto-captured by PostToolUse`, 0.30 s.
+- **Two runs on one machine still fought over one pointer.** `runs/CURRENT` is machine-wide, and the
+  fix in the morning was a note telling the operator to export `DXB_RESEARCH_RUN`. A note is not a
+  mechanism. `CLAUDE_CODE_SESSION_ID` is in the environment of every command a session runs, so the
+  pointer is now session-scoped automatically: measured, two runs opened side by side, each session
+  saw its own, and a third session with no run of its own saw `None` instead of hijacking a peer's.
+- **Arm 2 of the race was not implemented.** `ARMS["2"]` was labelled "session + prose doctrine" and
+  `run_one()` handed it the arm-1 prompt: the race would have reported a fabricated arm. Arm 2 now
+  receives the doctrine as prose, derived from `SKILL.md` at run time (one source, no second copy),
+  with the fenced command blocks stripped — the commands ARE arm 3.
+
+### The counting doctrine gained one line, and it is in the shared doctrine, not in the engine
+
+A count is only as honest as the roster it counted over, so the answer names the whole roster:
+every candidate probed, the ones that **do not exist** (a 404 is a measurement — zero is a real
+answer), and the **parent community** the thing lives inside when it has no house of its own.
+Measured live 2026-09-16 for the T11 subject: r/ClaudeDesign **23 779** · r/ClaudeAI **1 134 000**
+· r/opendesignCLI **11** · r/OpenDesignAI **3** · r/OpenDesign **404**. The line lives in
+`SKILL.md`, which is exactly what arm 2 is handed — so it cannot privilege the gated arm over the
+prose arm, and the hypothesis under test (enforcement beats prose) stays honest.
+
+### One more repair, and one measurement of my own that was wrong
+
+Making the capture hook fire meant it would now recluster the ledger after every captured
+tool call, so the cost of clustering had to be measured before the race, not after. The first
+measurement said **7.6 s per call on a 469-row ledger** — which would have taxed every tool
+call the agent makes and eventually blown the hook's own 20 s timeout. The race was stopped on
+that number. **It was measured on the wrong interpreter.** `rlib` re-execs into the research
+venv, where `datasketch` exists; my throwaway benchmark ran under system python, where it does
+not, so it timed the stdlib fallback the hook never takes. Re-measured on the interpreter the
+hook actually uses: **0.36 s cold, 0.06 s warm, 469 rows, identical clustering (65 clusters,
+`minhash-lsh` both times)**. The regression I stopped the race for did not exist.
+
+The signature cache was kept anyway, because 0.36 s → 0.06 s is free: a passage's MinHash never
+changes, so it is computed once and stored in `runs/<id>/minhash-cache.json`, keyed by passage
+hash so it survives row renumbering.
+
+## 16.7 The ledger could not see the agent's own hands (2026-09-16, night) — repaired
+
+**How it surfaced.** A question with a single honest answer — *what HTTP status does
+`https://mcp.tavily.com/mcp/` return for a `tools/list` POST with and without the keyless access
+header* — was run through the engine at its default (LIGHT) standard, run `20260916-205829`. The
+code was read. The vendor doc was read. And `gate.py` printed:
+
+```
+H2 required evidence type 'primary-doc|code' present 0x, needs 1x
+```
+
+**The defect, in one sentence.** Only `sweep.sh → ingest.py` ever wrote an **evidence** row, so
+the gate was reporting its own capture path rather than the agent's work — the exact failure the
+capture hook was built to end, surviving one layer deeper. Three parts, all measured:
+
+1. **`fetch.py` — the skill's OWN reading chain — wrote no evidence row at all.** Run
+   `20260916-205829`: `src/index.ts` 37 364 bytes and `keyless.md` 4 820 bytes on disk, tool rows
+   at 20:59:11Z, ledger evidence rows **11, all from the sweep, none from the hand reads**.
+2. **The PostToolUse hook could not repair it from outside.** Its Bash branch emitted only
+   `discovery`, and the command it receives reads `--out "$SP/verify-code.ts"` — an unexpanded
+   shell variable it has no way to resolve. First attempt at fixing it there produced a row whose
+   passage was 83 bytes of the tool-response JSON tail. The only place holding the url, the door,
+   the liveness and the body at once is inside `fetch.py`.
+3. **Every auto-captured row was stamped `source_type: "secondary"`**, and
+   `raw.githubusercontent.com` was not in `ingest.classify`'s hint table either — so a source file,
+   the strongest evidence a `capability` question can have, could not register as `code` by any
+   path.
+
+**A fourth thing, already known and never installed.** Run `20260916-191822` had found that a live
+measurement had no door into the ledger at all: the probes had to be written to disk and pushed
+back through the page-reading chain, which stamped them `tool: scrapling`,
+`channel: page:tavily.com`, `source_type: vendor`. The measurement was in the ledger wearing a
+label that lied. A `probe` subcommand was written then and **not installed, because the engine was
+frozen for the benchmark race.** The race is over; it is installed now.
+
+**The repair.**
+
+| file | change |
+|---|---|
+| `scripts/fetch.py` | `_ledger_evidence()` — a page the chain OPENS writes its own evidence row, typed by `ingest.classify`, carrying the door, the liveness and the body. Never breaks a fetch (whole body in `try/except`). |
+| `scripts/fetch.py` | `fetch(..., ledger_evidence=True)`; the `--batch` path passes **False** — see the trap below. |
+| `scripts/research.py` | `probe` subcommand → a first-class `independent-test` row with the verbatim transcript, the status and the repeat count. |
+| `scripts/ingest.py` | `raw.githubusercontent.com`, `gitlab…/-/raw/` and `/blob/` classify as `code`. |
+| `hooks/ledger-capture.py` | auto-captured fetch rows now typed by `ingest.classify` instead of hardcoded `secondary`; `emit()` carries `stype` / `tool` / `liveness`. `fetch.py` deliberately stays OUT of `BASH_RESEARCH`. |
+| `SKILL.md` | the two new doors written down. |
+
+**The trap this repair walked into, and how it was caught.** Writing the evidence row inside
+`fetch.py` unconditionally would have made **every swept page** carry `channel: fetch:scrapling` —
+and `gate.py`'s H5 measures exactly that share (*"one door is not research"*). The repair would
+have manufactured its own hard failure. Batch mode therefore writes nothing; `ingest.py` keeps
+ownership of swept rows and the channel that discovered each page.
+
+**A second trap, caught by measuring rather than by reading.** `pb = sub.add_parser("probe")` was
+first written as `p = …`, shadowing the top-level parser three lines above, so `research.py --help`
+printed the probe subparser and **every subcommand would have broken**. Caught by running
+`--help` for all nine.
+
+**Verified — command → decisive output** (runs `20260916-210210`, `20260916-210312`):
+
+```
+fetch.py …/src/index.ts --out F   → L0001 | evidence | code          | fetch.py:scrapling | 37340 b
+fetch.py …/keyless.md   --out F   → L0002 | evidence | primary-doc   | fetch.py:scrapling |  4818 b
+research.py probe --status 401 …  → L0003 | evidence | independent-test | curl
+gate.py                           → source_types ['code','independent-test','primary-doc'] — H2 GONE
+```
+
+**Blast radius, re-measured after the change:**
+
+- **the sweep** — full `core` sweep on the verification run: 14/14 pages read, `evidence_added: 14`
+  by `ingest.py`, channels intact and NOT collapsed:
+  `page:github.com 3 · page:modelcontextprotocol.io 3 · page:reddit.com 2 · page:t.co 2 ·
+  page:githubassets.com 2 · page:youtube.com 1 · page:envoyproxy.io 1`, beside `fetch:scrapling 2`
+  and `probe 1`. Source types now span `code 3 · primary-doc 4 · first-hand 2 · independent-test 1
+  · secondary 7`.
+- **`--batch` writes no evidence rows** — ledger 3 → 3 across a two-URL batch.
+- **the hook stays silent on ordinary commands** — ledger 3 → 3 across a plain `ls`.
+- **all nine subcommands parse**; four files pass `ast.parse`.
+- **the closed run `20260916-205829` reads unchanged** through `gate.py`: 11 evidence · 111
+  discovery · 10 clusters · max channel share 0.20 — identical to before the edits.
+- **`SKILL.md` frontmatter untouched** (first diff hunk at line 50; the hook registration lives at
+  lines 4-16).
+- engine files re-frozen to the permissions they were found with (`SKILL.md` 444, executables 555).
+
+**What this does NOT claim.** The word Ferrari is still not earned; the acceptance race numbers in
+§16.6 stand un-rerun. This repairs a hole in the evidence path, nothing more.
+
+---
+
+## 16.7 The night the machinery was measured, judged and taken out (2026-09-16 → 17)
+
+### The race, run twice, the second time on an engine nobody could touch
+
+| arm | what it is | recall | sec/question |
+|---|---|---|---|
+| 0 | the model with no tools (contamination filter) | 28.7 % | 12 |
+| 1 | a plain session with tools | 81.7 % | 101 |
+| **2** | **this doctrine as PROSE, no machinery at all** | **95.0 %** | **159** |
+| 3 | the doctrine PLUS the ledger/gate/adversary | 80.0 % | 675 |
+
+**ACCEPTANCE: NOT MET. The central hypothesis is falsified on this sample and reported as such.**
+The gated engine lost to a plain session and lost badly to its own doctrine carried as prose.
+Five tasks, `results-race-frozen.json`; arm 3 repeated at 80.0 % in a third run with the gate in
+advisory mode, at 324 s — **half the clock, the same score**. The one place the machinery led
+(T03, 100 % against 75 %) it also led in the first race; the one place it consistently failed is
+the counting question (0.33 · 0.00 · 0.00 across three runs), where the prose arm scored 1.00.
+
+Honest caveat on the FIRST race (`results-race-after-clock.json`, arm 3 at 86.7 %): the engine
+was edited under it by its own benchmark sub-sessions — four repairs at 22:23-22:34, all of them
+correct, none of them mine. The second race froze 31 files and 12 directories read-only; a
+before/after fingerprint proved nothing changed. That is the number that counts.
+
+### What the CEO decided, in his own words, and what was built from it
+
+*"ciddi meselelerde sadece kayıt tutulsun diğer herşey sakın kayıt altına alma… önemli işlerde
+de ben derim bu sonuçları kaydet diye… benim amacım araştırma araçlarını en mükemmel şekilde
+kullanacak aksatmayacak. yoksa bu sonucu gidip çürütme yok bir yere kaydet falan filan hep çöp
+işler."*
+
+- **The skill now writes NOTHING by default** — no run folder, no ledger, no gate, no adversary,
+  no claims file. Proven after the change: `gate.py` → "the gate is silent"; the Stop hook → `{}`;
+  the capture hook → not one row from a live search.
+- **A record exists only on his word.** `research.py open` opens a RECORD run; `--mode gated`
+  adds the hard standard and is entered on his word alone.
+- **The money/contract/outward trigger is DELETED.** He asked what researching a subscription's
+  price had to do with money leaving the house. It had nothing to do with it: that rule was
+  lifted off the holding's approval gate — a rule about ACTS — and glued onto a tool about
+  KNOWING, to give the machinery a job after the race said it had none.
+
+*"20-30 farkli kanalda ayni anda … tembellik yapilamayacak. bir alet bir kanali acamazsa baska
+aletler deniyecek. giris istenirse bizim dxbglobalcom@gmail.com hesabimizla giris yapilacak …
+bizim icin her zaman en iyi alet ilk kullanilir."*
+
+- **The default sweep is now `max` — 33 channels at once**, not 22.
+- **Every channel has a declared stand-in.** 13 of the 33 had no registry entry at all, so when
+  one fell nothing covered it — which is exactly what he caught: *"Quora failed, why did the
+  others not try?"* Seven of those 13 were DuckDuckGo site-queries wearing different names, so
+  one refusal took six channels down together. Stand-ins are now deliberately different engines.
+- **A search that dies no longer kills the channel:** the sweep now walks to the site's own
+  search page and puts the eleven-door chain on it.
+
+### Four defects found by RUNNING it, each one measured
+
+1. **The machine-written ledger had never written a row.** 2 327 rows across 14 runs, 0 from the
+   `PostToolUse` hook: it read stdin before importing `rlib`, and that import re-execs the
+   process into the venv, so the payload was gone. Fixed; measured writing in 0.30 s.
+2. **The browser door had been dead since it was written.** `node -e "require('playwright')"`
+   cannot resolve a module that is not beside the working directory. Playwright's own browser
+   downloads refuse this machine (`does not support chromium on ubuntu26.04-x64`), so the door
+   now drives the machine's Google Chrome 153 headless in a throwaway profile: 1.8 s, 130 B.
+3. **Two sessions still fought over one run pointer.** Now scoped by `CLAUDE_CODE_SESSION_ID`.
+4. **The gate had no clock.** `max_seconds` sat in `budget.yaml` with zero call sites; the only
+   escape was a `blocks` counter the Stop hook increments, and the Stop hook never fires while a
+   model is still working. Three regimes now: expand → converge → closing.
+
+### Quora, and the lesson that outlived it
+
+He ordered the login done with his own Google account and watched it on screen. Before: all
+eleven doors walled. After: **19 594 characters** through the `opencli` bridge carrying his
+session. And the sting — the German account returned *"Wir konnten keine Ergebnisse finden"* for
+the same query the English one answered with a dated article. **A channel that looks empty may
+just be speaking another language. Check the account's locale before writing "nothing found".**
+
+### What is NOT done, and is the next session's work
+
+- The exam is **10 of 24 questions**. He stopped the rest himself, because the arm that was
+  producing run folders was producing the garbage he had just banned. The remaining 14 should be
+  run with arms 0/1/2 only — arm 3's configuration no longer exists.
+- The doctor's widening list is untouched: X (cookies), Facebook · Instagram · Xiaohongshu (his
+  login), Xueqiu (cookie), Xiaoyuzhou (a free Groq key).
+- `runs/` holds 23 MB across 38 folders of that banned garbage. It is gitignored, so it is not in
+  this commit; it waits for his one word to be deleted.

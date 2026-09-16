@@ -46,10 +46,59 @@ PROMPT_1 = (
     "Research this question and answer it. Use whatever tools you have.\n\nQUESTION: {q}"
 )
 PROMPT_3 = (
-    "Use the dxb-research skill to answer this question properly: open a research run, "
-    "sweep, read the pages, satisfy the completion gate, then give the answer.\n\n"
+    "Use the dxb-research skill to answer this question properly, at its own default "
+    "standard.\n\n"
     "QUESTION: {q}"
 )
+PROMPT_2 = (
+    "Research this question and answer it. Use whatever tools you have.\n\n"
+    "Follow the research doctrine below. It is PROSE ONLY: the scripts, the ledger, the "
+    "gate and the hooks it mentions do not exist for you — do not look for them, do not "
+    "run them. You hold yourself to it.\n\n"
+    "===== DOCTRINE =====\n{d}\n===== END DOCTRINE =====\n\n"
+    "QUESTION: {q}"
+)
+
+
+def doctrine_prose() -> str:
+    """Arm 2 is the architecture this engine claims to beat: the SAME doctrine, carried
+    as prose, with no machine behind it.
+
+    It is derived from SKILL.md at run time so there is exactly ONE copy of the doctrine
+    on disk — a second copy would drift, and the race would then compare the engine
+    against a doctrine nobody follows. The fenced command blocks are stripped: the
+    commands ARE the other arm.
+    """
+    t = (SKILL / "SKILL.md").read_text()
+    if t.startswith("---"):
+        t = t.split("\n---\n", 1)[-1]
+    return re.sub(r"```.*?```", "", t, flags=re.S).strip()
+
+
+# A forbidden phrase is a HALLUCINATION marker, not a banned word. Measured 2026-09-16 on
+# T03 ("does agent-reach have a command that fetches a web page?"): the honest answer proves
+# the absence by running the verb and quoting argparse — "agent-reach fetch -> invalid choice"
+# — and the old substring test scored that answer UNCLEAN. The detector punished the only
+# answer that had actually measured anything. A phrase counts only where it is ASSERTED:
+# stated as something the tool does, with no refutation in the same breath.
+_REFUTERS = (
+    "invalid choice", "unrecognized argument", "no such", "does not exist", "doesn't exist",
+    "does not have", "doesn't have", "no fetch", "never existed", "removed", "rejected",
+    "not a command", "no command", "error:", "exit 2",
+    "yok", "hay\u0131r", "reddedildi", "ge\u00e7ersiz", "b\u00f6yle bir komut",
+)
+
+
+def _asserted(answer: str, phrase: str, window: int = 220) -> bool:
+    """True when `phrase` appears at least once WITHOUT a refutation beside it."""
+    a, p = answer.lower(), phrase.lower()
+    i = a.find(p)
+    while i != -1:
+        near = a[max(0, i - window): i + len(p) + window]
+        if not any(r in near for r in _REFUTERS):
+            return True
+        i = a.find(p, i + len(p))
+    return False
 
 
 def score(answer: str, task: dict) -> dict:
@@ -73,7 +122,7 @@ def score(answer: str, task: dict) -> dict:
             hits += 1
         else:
             missing.append(" | ".join(group))
-    forbidden = [f for f in task.get("forbidden", []) if f.lower() in a.lower()]
+    forbidden = [f for f in task.get("forbidden", []) if _asserted(a, f)]
     return {
         "recall": round(hits / total, 3) if total else 0.0,
         "hits": hits, "total": total, "missing": missing,
@@ -87,11 +136,13 @@ def run_one(arm: str, task: dict, timeout: int, model: str | None) -> dict:
     cfg = ARMS[arm]
     q = task["question"]
     if arm == "0":
-        prompt, extra = PROMPT_0.format(q=q), ["--tools"]
+        prompt = PROMPT_0.format(q=q)
     elif arm == "3":
-        prompt, extra = PROMPT_3.format(q=q), []
+        prompt = PROMPT_3.format(q=q)
+    elif arm == "2":
+        prompt = PROMPT_2.format(q=q, d=doctrine_prose())
     else:
-        prompt, extra = PROMPT_1.format(q=q), []
+        prompt = PROMPT_1.format(q=q)
 
     cmd = ["claude", "-p", prompt, "--permission-mode", "bypassPermissions"]
     if model:
@@ -192,7 +243,6 @@ def summarise(rows: list[dict]) -> None:
         print("\nContamination filter: arm 0 answered none of these from memory. "
               "Every scored task required actually going and looking.")
 
-    a1 = by_arm.get("1"), by_arm.get("2"), by_arm.get("3")
     if by_arm.get("3") and (by_arm.get("1") or by_arm.get("2")):
         def rec(arm):
             rs = [r for r in by_arm.get(arm, []) if r["task"] not in contaminated]

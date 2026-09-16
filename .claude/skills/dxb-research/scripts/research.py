@@ -8,6 +8,8 @@ run_id; the gate only ever looks at the OPEN run; closing the run makes the gate
 silent again so ordinary conversation is never blocked.
 
   research.py open   --question "<his words, verbatim>" --class counting --subject "X vs Y"
+  research.py open   ... --mode gated     # only when HE asked for the hard standard
+  research.py escalate --why "his words, verbatim"
   research.py status
   research.py denominator --measure "community members" --value 23766 --source L0007
   research.py contradict  --claim C1 --query "why we moved off X" --channel reddit --hits 4
@@ -57,6 +59,14 @@ def cmd_open(a: argparse.Namespace) -> int:
     rlib.write_state(rid, {
         "run_id": rid, "status": "open", "phase": "expedition", "blocks": 0,
         "question_class": a.klass, "subject": a.subject, "opened_at": rlib.now(),
+        # A run EXISTS only because he said "kaydet". His order, 2026-09-16:
+        # "ciddi meselelerde sadece kayıt tutulsun diğer herşey sakın kayıt altına alma".
+        # RECORD keeps the ledger and blocks nothing. GATED adds the hard standard — the
+        # completion gate, the contradiction searches, the adversary — and is entered on
+        # his word alone. The rule that used to open it by itself for money, contracts and
+        # outward steps is DELETED: he asked what researching a price had to do with money
+        # leaving the house, and he was right — buying is a separate act that stops at him.
+        "mode": a.mode,
         # Which session owns this run. The Stop gate uses it so that one session's
         # unfinished research cannot refuse another session's finished turn.
         "session_id": os.environ.get("CLAUDE_CODE_SESSION_ID"),
@@ -103,6 +113,52 @@ def cmd_denominator(a: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_probe(a: argparse.Namespace) -> int:
+    """Record a LIVE MEASUREMENT as a first-class evidence row.
+
+    Measured 2026-09-16 on runs 20260916-191822 and 20260916-205829: for a question whose only
+    honest evidence is a measurement — *what status does this endpoint return* — the ledger had
+    no door. The transcripts had to be written to disk and pushed back through the page-reading
+    chain, which then stamped them `tool: scrapling`, `channel: page:tavily.com`,
+    `source_type: vendor`. The measurement was in the ledger with a lie on its label: it was not
+    a page anybody visited, it was a curl this machine ran. This writes what actually happened —
+    `source_type: independent-test`, the tool that ran, the status observed, the repeat count.
+    """
+    rid = a.run or rlib.current_run_id()
+    if not rid:
+        print("no open run", file=sys.stderr)
+        return 1
+    transcript = a.transcript
+    if a.transcript_file:
+        transcript = Path(a.transcript_file).read_text(encoding="utf-8")
+    if not transcript:
+        print("REFUSED: a probe row with no transcript is a claim, not a measurement",
+              file=sys.stderr)
+        return 2
+    rows = rlib.ledger(rid)
+    rid_n = "L%04d" % (len(rows) + 1)
+    row = {
+        "id": rid_n, "run_id": rid, "kind": "evidence", "retrieved_at": rlib.now(),
+        "tool": a.tool, "channel": "probe", "query_id": None, "gap": a.gap,
+        "url": a.url, "url_canonical": rlib.canonical_url(a.url),
+        "domain": rlib.registrable_domain(a.url), "title": a.what,
+        "author": None, "pub_date": None, "updated_date": None, "dates_agree": False,
+        "version": None, "passage": transcript[:12000],
+        "passage_sha256": rlib.sha256(transcript[:12000]),
+        "source_type": "independent-test", "primary": True, "cluster_id": None,
+        "http_status": a.status, "liveness": "alive", "bytes": len(transcript),
+        "notes": f"live probe · {a.repeats}x · run by {a.tool} on this machine",
+    }
+    rlib.append_jsonl(rlib.ledger_path(rid), row)
+    try:
+        import independence
+        independence.recluster(rid)
+    except Exception:
+        pass
+    print(rid_n)
+    return 0
+
+
 def cmd_contradict(a: argparse.Namespace) -> int:
     rid = a.run or rlib.current_run_id()
     if not rid:
@@ -136,6 +192,21 @@ def cmd_refute(a: argparse.Namespace) -> int:
         "separate_context": bool(a.separate_context)})
     p.write_text(json.dumps(doc, ensure_ascii=False, indent=2))
     print(f"{a.claim}: {a.verdict}")
+    return 0
+
+
+def cmd_escalate(a: argparse.Namespace) -> int:
+    """He asked, mid-run, for the hard standard.
+
+    It does not start again: the ledger, the queries and the reading already done all
+    stand. Only the standard changes, from here on.
+    """
+    rid = a.run or rlib.current_run_id()
+    if not rid:
+        print("no open run", file=sys.stderr)
+        return 1
+    rlib.patch_state(rid, mode="gated", escalated_at=rlib.now(), escalation_reason=a.why)
+    print(f"{rid}: mode=gated — the gate blocks from here. Reason: {a.why}")
     return 0
 
 
@@ -184,6 +255,9 @@ def main() -> int:
     o.add_argument("--freshness")
     o.add_argument("--locale")
     o.add_argument("--force", action="store_true")
+    o.add_argument("--mode", choices=["record", "gated"], default="record",
+                   help="record (default): keep the ledger, block nothing. gated: the hard "
+                        "standard — gate, contradiction searches, adversary. His word only.")
     o.set_defaults(fn=cmd_open)
 
     s = sub.add_parser("status"); s.set_defaults(fn=cmd_status)
@@ -194,6 +268,17 @@ def main() -> int:
     d.add_argument("--of")
     d.add_argument("--source", required=True)
     d.set_defaults(fn=cmd_denominator)
+
+    pb = sub.add_parser("probe")   # NOT `p` — that name is the top-level parser three lines up
+    pb.add_argument("--url", required=True, help="what was probed")
+    pb.add_argument("--what", required=True, help="one line: what this measurement shows")
+    pb.add_argument("--status", type=int, help="the HTTP status observed, when there is one")
+    pb.add_argument("--tool", default="curl")
+    pb.add_argument("--repeats", type=int, default=1)
+    pb.add_argument("--gap", default="a live measurement")
+    pb.add_argument("--transcript", default="", help="the verbatim output")
+    pb.add_argument("--transcript-file", help="…or the file holding it")
+    pb.set_defaults(fn=cmd_probe)
 
     c = sub.add_parser("contradict")
     c.add_argument("--claim", required=True)
@@ -210,6 +295,10 @@ def main() -> int:
     rf.add_argument("--evidence", default="")
     rf.add_argument("--separate-context", action="store_true", default=True)
     rf.set_defaults(fn=cmd_refute)
+
+    es = sub.add_parser("escalate")
+    es.add_argument("--why", required=True, help="his words, verbatim — nothing else opens it")
+    es.set_defaults(fn=cmd_escalate)
 
     r = sub.add_parser("report"); r.set_defaults(fn=cmd_report)
 

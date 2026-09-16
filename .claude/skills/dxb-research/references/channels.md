@@ -62,11 +62,65 @@ Measured 2026-09-16: 14 of 14 pages read — scrapling 10, tavily-extract 3, ste
 pages needed between two and four doors; the ones that beat Scrapling twice were opened by
 `tavily_extract` in about 400 ms.
 
-## Adapters that REJECT `--window background`
+## Adapters that REJECT `--window background` — and the one door that none of them reject
 
-`hackernews` is one: `error: unknown option '--window'`. It failed silently in every sweep
-before 2026-09-16. `sweep.sh` now retries without the flag on the evidence of the refusal and
-records it; a hand-written call must do the same.
+`--window`, `--site-session` and `--keep-tab` are registered only inside `if (cmd.browser)`
+(`commanderAdapter.js`), so an adapter whose `--help` footer says **`Browser: no`** does not
+have the option at all, and Commander exits 1 with `error: unknown option '--window'` before
+the command runs. Measured 2026-09-16 on opencli 1.8.7, eight adapters, no exceptions:
+
+| adapter | `Browser:` | `--window` accepted |
+|---|---|---|
+| hackernews · stackoverflow · bluesky · substack | no | **no — exit 1** |
+| reddit · google · twitter · youtube | yes | yes |
+
+**For one `Browser: no` command the fix is simply to DROP the flag** — not to set the
+environment variable. `OPENCLI_WINDOW` is never read on a command that has no browser, proved
+with a poison value: `OPENCLI_WINDOW=bogus opencli hackernews search` exits **0** with real
+results, while `OPENCLI_WINDOW=bogus opencli reddit search` exits **2** with
+`OPENCLI_WINDOW must be one of: foreground, background`.
+
+**For a SCRIPT that calls both kinds, one `export OPENCLI_WINDOW=background` and no flag
+anywhere is the right shape** — opencli's own adapter-independent override (README: *"Set to
+foreground or background to override Browser Bridge window placement. Browser-backed commands
+also accept `--window <foreground|background>`"*), read on both code paths
+(`resolveBrowserWindowMode` for adapters, `getBrowserWindowMode` for `opencli browser *`) and
+never readable, therefore never rejectable, by the rest. `sweep.sh`, `probe.sh` and `fetch.py`
+all carry that shape now.
+
+Nothing is lost by dropping the flag on a search command: the README states that
+*"browser-backed adapters use a background adapter window ... by default"*, and **no search
+command in the shipped `cli-manifest.json` declares a foreground default.** Do not turn that
+into "every foreground default is a login command" — measured, **66 of the 69 are**; the other
+three are `mercury check-login` (access read), `mercury reimbursement-draft` and
+`midjourney action`, which WILL open a foreground window unless `OPENCLI_WINDOW` is set.
+
+**One command in 1332 breaks the word "only".** `homebrew popular` is `Browser: no` and yet
+owns an option spelled `--window` — its own **time** window (`30d / 90d / 365d`). It answers
+`--window background` with `ARGUMENT / homebrew window "background" is not supported`, exit 2,
+not with `unknown option`. Probed across **all 1332 commands**, each by parsing its own
+`--help`: **1011 register the browser `--window <mode>` · 320 have no `--window` at all · 1
+owns its own** — 1011 + 320 + 1 = 1332, zero probe errors, zero mismatches against the
+manifest. (Do not copy the figure "310": that was a first pass whose probe left ten commands
+undecided, because Commander's missing-required-option check fires before its unknown-option
+check.)
+
+**The export has one edge a per-call flag does not, and it cuts.** Precedence is
+`--window` > `OPENCLI_WINDOW` > the command's own default, so a blanket export **overrides a
+deliberate foreground default** — and a `login` command exists to be seen by the human.
+Measured: `OPENCLI_WINDOW=bogus opencli mercury check-login` exits 2 with
+`OPENCLI_WINDOW must be one of: foreground, background`, which proves the variable reaches
+them. `sweep.sh` and `probe.sh` therefore both refuse to run if any channel line ever calls a
+`login` verb.
+
+**`background` is a request, not a guarantee.** Upstream issue **#2167** — *"Background window
+steals focus on initial creation on macOS"*, opened 2026-07-23 against 1.8.6 — is still open.
+macOS-scoped, no Linux equivalent found, but it is why nothing here promises the CEO's screen
+stays clean.
+
+A second, different cause of the same error string was upstream issue #1850 — the flag placed
+*after* the leaf subcommand on `opencli browser <session> open <url> --window background`.
+It is closed by PR #1963 and 1.8.7 carries the argv fix, so it is not what a sweep hits.
 
 The logged-in sessions live in Chrome's **Profile 5 (dxb)**. If the bridge is down:
 `opencli daemon restart`, then confirm Chrome is open. The `rdt` and `twitter` standalone
