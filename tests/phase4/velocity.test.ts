@@ -78,16 +78,43 @@ async function injectStorm(rows: number, eurEach: number): Promise<void> {
     .execute();
 }
 
+// ── B44, 2026-09-16: the scheduler is torn down in afterAll, not inside the case
+// The last case asserts REGISTRATION (tick 15s / reaper 60s / breaker 5min).
+// Starting the real scheduler is cheap and stopping it again is not, and the
+// stopping is cleanup, not the claim. Measured this day, inside the whole suite,
+// with the case's own marks: the boot took 88 ms, the three assertions 44 ms,
+// and the teardown took 5 984 ms at rest — and ran past 30 000 ms whenever a
+// worker was still in flight, which is how this file became board row B44.
+// Two numbers own that teardown, and neither of them belongs to this file:
+//   · stopScheduler awaits activeLanes.stop() and then activeMediaLanes.stop(),
+//     and a resting lane cannot hear stop() until its rest ends (task-lanes.ts
+//     runLane sleeps restMs BEFORE re-testing the flag; DXB_LANE_REST_SECONDS
+//     is 3 s) — a ~6 s floor with nothing whatever to do;
+//   · pg-boss 12.25.1 stop({ graceful: true }) then waits for its own pending
+//     work up to its DEFAULT timeout of 30 000 ms (dist/index.js:150 and 174) —
+//     the very number this case was given as its stopwatch, so a teardown that
+//     entered that wait could never finish inside the case that started it.
+// The case keeps its own 30 000 ms for the ~130 ms of work it really does; the
+// teardown gets a budget of its own, sized 6 s + 30 s + margin. Nothing here
+// widens the assertion's stopwatch, and nothing here is a runtime change.
+let bootedScheduler: Awaited<ReturnType<typeof startScheduler>> | null = null;
+
 beforeAll(async () => {
   await wipeCostAndAudit();
   await clearBreakerState();
 });
 
 afterAll(async () => {
+  // stop the company's engine BEFORE the pool it shares is closed
+  if (bootedScheduler) {
+    const boss = bootedScheduler;
+    bootedScheduler = null;
+    await stopScheduler(boss);
+  }
   await wipeCostAndAudit();
   await clearBreakerState();
   await closeDb();
-});
+}, 45_000);
 
 describe("velocity breaker (COST-03)", () => {
   it("under-cap hour does NOT trip the breaker", async (ctx) => {
@@ -182,7 +209,8 @@ describe("velocity breaker (COST-03)", () => {
 describe("scheduler (KERN: one process owns all system routines)", () => {
   it("registers tick 15s / reaper 60s / breaker 5min", async () => {
     const boss = await startScheduler();
-    try {
+    bootedScheduler = boss;
+    {
       expect(CADENCES.outboxTickSeconds).toBe(15);
 
       const schedules = await boss.getSchedules();
@@ -197,13 +225,15 @@ describe("scheduler (KERN: one process owns all system routines)", () => {
         WHERE name = ${QUEUES.tick} AND state IN ('created', 'active', 'completed')
       `.execute(getDb());
       expect(Number(rows[0].n)).toBeGreaterThanOrEqual(1);
-    } finally {
-      await stopScheduler(boss);
     }
     // Measured 2026-07-26: alone this case takes ~2.0s, but at the end of the
     // full sequential run a real pg-boss start crossed vitest's 5s DEFAULT and
     // failed the suite — a stopwatch verdict, not a behaviour verdict. The one
     // case here that boots a whole scheduler process gets a timeout sized for
     // what it actually does; every assertion above is unchanged.
+    // B44, 2026-09-16: this number is NOT raised. What was measured is that it
+    // never covered the assertions at all — they cost ~130 ms — it covered a
+    // teardown whose own library waits 30 000 ms. The teardown moved out; the
+    // stopwatch stayed exactly where it was.
   }, 30_000);
 });
