@@ -134,6 +134,27 @@ describe("B43 · task lanes — one long job never holds the other hands", () =>
     expect(drains).toBe(after);
     expect(lanes.reconcile(2)).toEqual({ desired: 0, started: 0, running: 0 });
   });
+
+  // B45 (2026-09-16, on the checker's yes under his delegation "denetçiye danış ok
+  // verirse yap vermezse yapma"): a resting lane used to hear stop() only when its rest
+  // ran out. There is NO STOPWATCH in this proof and no clock is read: the injected
+  // sleep never resolves on its own, so if stop() still had to wait a rest out this case
+  // would hang for ever. It resolves only because stop() ends the rest itself.
+  it("stop() wakes a resting lane at once — no rest is waited out", async () => {
+    let rests = 0;
+    const neverEnds = () => {
+      rests += 1;
+      return new Promise<void>(() => {});
+    };
+    const lanes = new TaskLanes({ drain: async () => none, sleep: neverEnds }, 50, () => undefined);
+    lanes.reconcile(1);
+    await wait(20); // the lane drained nothing and is now inside a rest that never ends
+    expect(rests).toBeGreaterThan(0);
+
+    await lanes.stop(); // would never resolve if the rest had to run its course
+
+    expect(lanes.reconcile(2)).toEqual({ desired: 0, started: 0, running: 0 });
+  });
 });
 
 describe("B43 · the rest between looks — DXB_LANE_REST_SECONDS", () => {

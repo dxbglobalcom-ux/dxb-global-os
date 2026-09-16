@@ -125,6 +125,30 @@ describe("B43 · media lanes — the studio's hands are lanes too", () => {
     expect(ALL_MEDIA_KINDS.length).toBe(5);
     expect([...ALL_MEDIA_KINDS]).not.toContain("voice");
   });
+
+  // B45 (2026-09-16): MediaLanes wraps TaskLanes, so the studio's hands inherit the
+  // interruptible rest — this case proves it through the wrapper rather than assuming
+  // it. NO STOPWATCH and no clock read: the injected sleep never resolves on its own,
+  // so stop() resolving is itself the proof that the rest was ended by the order.
+  it("stop() wakes a resting media lane at once", async () => {
+    let rests = 0;
+    const neverEnds = () => {
+      rests += 1;
+      return new Promise<void>(() => {});
+    };
+    const idle = async (): Promise<MediaLaneResult> => ({ claimed: false });
+    const lanes = new MediaLanes(
+      { runOnce: idle, sleep: neverEnds },
+      { cpuLanes: 2, restMs: 50, laneIdBase: "w" },
+    );
+    lanes.reconcile();
+    await wait(20); // every lane found an empty queue and is inside a rest that never ends
+    expect(rests).toBeGreaterThan(0);
+
+    await lanes.stop(); // would never resolve if a resting lane had to wait its rest out
+
+    expect(lanes.running).toBe(0);
+  });
 });
 
 // ── 5: the real lane on the construction engine ───────────────────────────────

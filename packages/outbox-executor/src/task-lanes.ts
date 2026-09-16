@@ -57,6 +57,14 @@ export class TaskLanes {
   private desired = 0;
   private stopping = false;
   private readonly loops = new Map<number, Promise<void>>();
+  // B45 (2026-09-16): every lane that is resting right now, and the handle that ends
+  // its rest early. A resting lane used to hear stop() only when its rest ran out, so
+  // shutting the company's hands down cost one full rest per lane set — measured
+  // 6068–6082 ms across six runs with nothing whatever to do, paid at every
+  // `systemctl --user restart dxb-scheduler.service`. The rest is unchanged in every
+  // other respect: it is still deps.sleep, still DXB_LANE_REST_SECONDS, and a lane
+  // that is WORKING is still never cut short.
+  private readonly resting = new Set<() => void>();
 
   constructor(
     private readonly deps: TaskLaneDeps,
@@ -86,7 +94,30 @@ export class TaskLanes {
   async stop(): Promise<void> {
     this.stopping = true;
     this.desired = 0;
+    // B45: a lane that is resting hears this at once instead of sleeping it out. A lane
+    // that is mid-drain is untouched — stop() still waits for the work it is doing.
+    for (const wake of this.resting) wake();
+    this.resting.clear();
     await Promise.allSettled([...this.loops.values()]);
+  }
+
+  /**
+   * B45: one idle rest, ended by whichever comes first — the rest itself, or stop().
+   * The lane still rests through deps.sleep (no busy loop, no spin); it simply no
+   * longer waits a rest out after the order to stand down has been given.
+   */
+  private async rest(): Promise<void> {
+    if (this.stopping) return;
+    let wake!: () => void;
+    const woken = new Promise<void>((resolve) => {
+      wake = resolve;
+    });
+    this.resting.add(wake);
+    try {
+      await Promise.race([this.deps.sleep(this.restMs), woken]);
+    } finally {
+      this.resting.delete(wake);
+    }
   }
 
   private async runLane(index: number): Promise<void> {
@@ -102,7 +133,7 @@ export class TaskLanes {
           this.deps.log?.(`[scheduler] lane ${index + 1} failed: ${err instanceof Error ? err.message : String(err)}`);
         }
         const didWork = outcome !== null && outcome.executed + outcome.reviewed + outcome.escalated > 0;
-        if (!didWork && !this.stopping && index < this.desired) await this.deps.sleep(this.restMs);
+        if (!didWork && !this.stopping && index < this.desired) await this.rest();
       }
     } finally {
       this.loops.delete(index);
