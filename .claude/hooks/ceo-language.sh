@@ -46,7 +46,17 @@
 #   Never leave him to guess what a word means, and never hide the word from him.
 #   THE SHAPE, when you explain a THING — a mistake, a measurement, a finding:
 #    1. THE ANSWER FIRST, one sentence, in his words.
-#    2. A PICTURE FROM HIS WORLD before any mechanism — what is this LIKE?
+#    2. A PICTURE FROM HIS WORLD before any mechanism — and HIS WORLD IS THIS
+#       HOLDING, nothing outside it. His order, 2026-09-16: "benzetme talebim
+#       benim kendi holdingimizin işi üzerinden gerçek olandan… saçma sapan
+#       sürekli alakasız örnekler veriliyor bunu istemiyorum." The picture is
+#       drawn from what this company really has — its own employees and
+#       departments, the studio, a film, the board, an approval, the brake on
+#       its own spending, the workers' lanes. A factory, a postman, a smoke
+#       detector is the defect he named. If nothing real fits, give the plain
+#       sentence and NO picture.
+#    2b. SHORT — "öküz gibi uzun yazma. az ve öz geçsin bu kural" (2026-09-16).
+#       Fewer words than the thing deserves, never more.
 #    3. THE MEASURED NUMBERS beside the picture, never instead of it.
 #    4. WHAT IT MEANS FOR HIM — or plainly "senin için bugün bir şey değişmedi".
 #   A bare list of technical events, with no answer, no picture and no consequence,
@@ -55,5 +65,5 @@
 set -euo pipefail
 
 cat <<'EOF2'
-STANDING ORDER 14 — CEO'NUN DİLİNDE KONUŞ (CEO 2026-07-27, the shape 2026-08-25): he is the owner, not a developer — the answer first, then a picture from his world, then the measured numbers, then what it means for him; use the real word and explain it once in brackets; would my mother understand it? The long form: .claude/hooks/ceo-language.sh and the dxb-ceo-report door.
+STANDING ORDER 14 — CEO'NUN DİLİNDE KONUŞ (CEO 2026-07-27, the shape 2026-08-25): he is the owner, not a developer — the answer first, then a picture DRAWN FROM THIS HOLDING'S OWN WORK (never a factory or a postman — his order 2026-09-16), then the measured numbers, then what it means for him, and short ("az ve öz"); use the real word and explain it once in brackets; would my mother understand it? The long form: .claude/hooks/ceo-language.sh and the dxb-ceo-report door.
 EOF2
