@@ -1,0 +1,161 @@
+{
+  "name": "DXB Research Benchmark",
+  "version": "1.0",
+  "frozen_at": "2026-09-16",
+  "design_note": "A benchmark a model can answer from memory measures memory. Arm 0 is the model with NO tools; any task Arm 0 answers correctly is DELETED from the benchmark, not scored. Gold answers are written from primary sources and never appear in a prompt. Every `verified_by` marked `author-measured` was measured in this session with the command shown.",
+  "scoring": {
+    "recall": "fraction of the task's gold elements present in the answer",
+    "precision_proxy": "no `forbidden` string present",
+    "composite": "0.30*Recall + 0.20*ClaimSupport + 0.15*CitationCorrectness + 0.10*IntentPreservation + 0.10*(1-Hallucination) + 0.10*Independence + 0.05*Timeliness",
+    "note": "Recall carries the heaviest weight because it is the measured weakness of every system in this field, including ours."
+  },
+  "tasks": [
+    {
+      "id": "T01", "category": "obscure-factual", "trap": false,
+      "question": "What exact HTTP status does a tools/list POST to https://mcp.tavily.com/mcp/ return WITHOUT the keyless access header, and what does it return WITH it? Name the header.",
+      "gold_all": ["401"], "gold_any": [["200"]], "gold_regex": ["(?i)x-tavily-access-mode"],
+      "verified_by": "author-measured 2026-09-16 (curl, both variants)"
+    },
+    {
+      "id": "T02", "category": "obscure-factual", "trap": false,
+      "question": "Name every keyless MCP search endpoint that answers a tools/list POST with HTTP 200 and no API key, from this list of candidates: Exa, Parallel, Tavily, Firecrawl, You.com. For each, give the endpoint URL.",
+      "gold_all": ["mcp.exa.ai", "search.parallel.ai", "mcp.tavily.com", "mcp.firecrawl.dev", "api.you.com"],
+      "verified_by": "author-measured 2026-09-16: all five returned HTTP 200, 0.22-0.50 s"
+    },
+    {
+      "id": "T03", "category": "technical-capability", "trap": false,
+      "question": "Does the agent-reach CLI have any command that fetches a web page? List its full command surface.",
+      "gold_all": ["doctor", "transcribe", "format"],
+      "gold_regex": ["(?i)(no|does not have|yok|hay\\u0131r).{0,60}(fetch|search|get)|(fetch|search|get).{0,40}(no|not|yok)"],
+      "forbidden": ["agent-reach fetch", "agent-reach search"],
+      "verified_by": "author-measured 2026-09-16: `agent-reach --help` lists setup, install, configure, doctor, uninstall, skill, format, transcribe, check-update, watch, version"
+    },
+    {
+      "id": "T04", "category": "technical-capability", "trap": false,
+      "question": "Can a Claude Code Stop hook prevent a session from ending? What JSON does it return to do that, and what is the ceiling on consecutive blocks?",
+      "gold_all": ["block", "8"], "gold_regex": ["(?i)\"?decision\"?\\s*[:=]\\s*\"?block", "(?i)reason"],
+      "verified_by": "author-measured 2026-09-16: built and fired; a sub-session ordered to do nothing was refused its exit and did the work in 26 s"
+    },
+    {
+      "id": "T05", "category": "technical-capability", "trap": false,
+      "question": "Can hooks be declared in a Claude Code SKILL.md frontmatter, so that they register only when the skill is invoked? Answer yes or no and say how you established it.",
+      "gold_regex": ["(?i)\\b(yes|evet)\\b"], "gold_all": ["frontmatter"],
+      "verified_by": "author-measured 2026-09-16 on Claude Code 2.1.273: a test skill with a Stop hook in frontmatter fired twice and blocked its sub-session"
+    },
+    {
+      "id": "T06", "category": "technical-capability", "trap": false,
+      "question": "In Claude Code, what fields does a PostToolUse hook receive on stdin? Name the field that carries the tool's result.",
+      "gold_all": ["tool_name", "tool_input", "tool_response"],
+      "verified_by": "author-measured 2026-09-16: captured payload keys included cwd, duration_ms, hook_event_name, permission_mode, prompt_id, session_id, tool_input, tool_name, tool_response, tool_use_id, transcript_path"
+    },
+    {
+      "id": "T07", "category": "github-comparison", "trap": false,
+      "question": "Is langchain-ai/open_deep_research still maintained in September 2026? Answer with its repository state.",
+      "gold_regex": ["(?i)archiv"],
+      "verified_by": "carried from the 2026-09-16 study (gh api); re-checkable with `gh api repos/langchain-ai/open_deep_research --jq .archived`"
+    },
+    {
+      "id": "T08", "category": "primary-source-challenge", "trap": false,
+      "question": "What does SearXNG's own issue tracker say about the Google engine in 2026? Give the issue number, its title and the date it was opened.",
+      "gold_all": ["5867", "403"], "gold_regex": ["2026-03-17|17 March 2026|March 17, 2026"],
+      "verified_by": "carried from the 2026-09-16 study (issue opened and read there)"
+    },
+    {
+      "id": "T09", "category": "conflicting-sources", "trap": true,
+      "question": "Is SearXNG a viable PRIMARY web-search layer in 2026? Sources disagree. Report the disagreement rather than resolving it into one story.",
+      "gold_regex": ["(?i)(captcha|403|blocked|suspend)", "(?i)(disagree|conflict|\\u00e7eli\\u015f|both|on the other hand|however)"],
+      "verified_by": "design: the answer must surface BOTH the project's own claims and the blocking evidence"
+    },
+    {
+      "id": "T10", "category": "conflicting-sources", "trap": true,
+      "question": "Is self-hosting a crawling stack cheaper than paying for search/crawl APIs? Answer with a first-hand production report and state its limits.",
+      "gold_regex": ["(?i)(\\u20ac|eur|euro|\\\\$)\\s?1[ .,]?[0-9]{3}", "(?i)(single company|one company|tek \\u015firket|one stack|limit)"],
+      "verified_by": "carried: a 2026-09-04 production report measured EUR 1 740 self-hosted against EUR 1 200 on APIs over three months"
+    },
+    {
+      "id": "T11", "category": "counting", "trap": false,
+      "question": "Which has the larger live community on Reddit: Claude Design or Open Design? Answer with the measure you used and BOTH numbers.",
+      "gold_regex": ["1[ ,.]?1[0-9]{2}[ ,.]?[0-9]{3}", "(?i)(404|does not exist|yok|no subreddit)"],
+      "gold_all": ["r/ClaudeAI"],
+      "verified_by": "author-measured 2026-09-16: `opencli reddit subreddit-info ClaudeAI` -> 1 133 889 subscribers; r/OpenDesign -> HTTP 404"
+    },
+    {
+      "id": "T12", "category": "counting", "trap": true,
+      "question": "Do people who tried BOTH Crawl4AI and Firecrawl end up self-hosting or paying? Answer with a distribution and a denominator, not with quotes.",
+      "gold_regex": ["(?i)(denominator|payda|n\\s?=|out of|sample|count)"],
+      "verified_by": "design: an answer without a denominator fails this task by construction"
+    },
+    {
+      "id": "T13", "category": "vendor-page-trap", "trap": true,
+      "question": "Which is better for page extraction, Firecrawl or Crawl4AI? Say what each of your sources is.",
+      "gold_regex": ["(?i)(vendor|sat\\u0131c\\u0131|their own (page|site|blog)|self-published|marketing)"],
+      "verified_by": "design: a vendor's own comparison page must be labelled and cannot carry the verdict"
+    },
+    {
+      "id": "T14", "category": "outdated-information-trap", "trap": true,
+      "question": "Verify this claim: 'Stanford STORM is the best free tool for structured literature synthesis in 2026.'",
+      "gold_regex": ["(?i)(2025|stale|eski|not (been )?(pushed|updated)|no commit)"],
+      "verified_by": "carried: last push 2025-09-30, so the claim is a year stale"
+    },
+    {
+      "id": "T15", "category": "ambiguous-name-trap", "trap": true,
+      "question": "Research 'Parallel' as a web-search API: who makes it, and can it be used without an API key?",
+      "gold_all": ["search.parallel.ai"], "gold_regex": ["(?i)(no (api )?key|keyless|anahtars\\u0131z|without a key)"],
+      "verified_by": "author-measured 2026-09-16: tools/list returned 200 with no credential"
+    },
+    {
+      "id": "T16", "category": "academic", "trap": false,
+      "question": "Which free scholarly API returns open-access FULL TEXT, and in what format?",
+      "gold_regex": ["(?i)europe\\s?pmc", "(?i)(xml|jats)"],
+      "verified_by": "carried: Europe PMC fullTextXML (JATS)"
+    },
+    {
+      "id": "T17", "category": "breaking-change", "trap": false,
+      "question": "What changed in OpenAlex's access model in 2026, when, and what remains free?",
+      "gold_regex": ["(?i)(meter|paid|usage|price|\\u00fccret)", "(?i)(bulk|snapshot|download)"],
+      "verified_by": "carried: metered from 2026-02; the CC0 bulk dataset remains free"
+    },
+    {
+      "id": "T18", "category": "troubleshooting", "trap": false,
+      "question": "On a machine where `opencli hackernews search \"x\" --window background` fails, what is the error and what is the fix?",
+      "gold_regex": ["(?i)unknown option", "(?i)--window"],
+      "verified_by": "author-measured 2026-09-16: `error: unknown option '--window'`; the adapter takes no window flag"
+    },
+    {
+      "id": "T19", "category": "due-diligence", "trap": false,
+      "question": "Who is behind the benchmark repository openbenchmarks-labs/multi-turn-company-search, and does any vendor fund it?",
+      "gold_regex": ["(?i)(no vendor|vendor-independent|not sponsor|no sponsor)"],
+      "verified_by": "carried: org created 2026-06-14, three contributors, its README states no vendor sponsors or controls it"
+    },
+    {
+      "id": "T20", "category": "multilingual-cn", "trap": true,
+      "question": "What do Chinese-language developer communities say about opencode versus Claude Code? Cite at least one Chinese-language source with its date.",
+      "gold_regex": ["(?i)(v2ex|zhihu|\\u77e5\\u4e4e|linux\\.do|juejin|\\u6398\\u91d1|bilibili)"],
+      "verified_by": "author-measured 2026-09-16: v2ex.com/t/1188193 is a live thread on exactly this question"
+    },
+    {
+      "id": "T21", "category": "multilingual-tr", "trap": true,
+      "question": "Find any Turkish-language discussion of the tool 'Scrapling' and report honestly if there is none.",
+      "gold_regex": ["(?i)(none found|bulunamad\\u0131|no turkish|hi\\u00e7bir|yok)"],
+      "verified_by": "design: 'none found' is a CORRECT answer here if the search is shown"
+    },
+    {
+      "id": "T22", "category": "deep-multi-hop", "trap": true,
+      "question": "Find a tool whose maintainers publicly said it cannot do something that a comparison page claims it can, and cite both sides.",
+      "gold_regex": ["(?i)(issue|maintainer|founder|author).{0,80}(said|wrote|stated)"],
+      "verified_by": "design: requires at least three hops - comparison page, repository, maintainer's own words"
+    },
+    {
+      "id": "T23", "category": "misinformation-trap", "trap": true,
+      "question": "Verify this claim: 'The DXB Research Engine scored 95.1 % on GAIA in 2026.'",
+      "gold_regex": ["(?i)(no such|cannot|unverifiab|false|not found|uydurma|do\\u011fru de\\u011fil|does not exist)"],
+      "verified_by": "design: the claim is fabricated; a correct answer refuses it"
+    },
+    {
+      "id": "T24", "category": "strategic-decision", "trap": false,
+      "question": "Should a one-person holding pay for a commercial search API in the next six months? Name the falsifiable trigger that would change the answer.",
+      "gold_regex": ["(?i)(recall|geri \\u00e7a\\u011f\\u0131rma|completeness)", "(?i)(trigger|e\\u015fik|threshold|if .{0,40}(rate limit|exceeds|more than))"],
+      "verified_by": "design: an answer with no falsifiable trigger fails"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "question_lock",
+  "description": "Written BEFORE the first search. Every later step is diffed against it. This is what stops 'which do people prefer' quietly becoming 'which should we delete'.",
+  "type": "object",
+  "required": ["run_id", "opened_at", "question_verbatim", "question_class"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "opened_at": {"type": "string", "format": "date-time"},
+    "question_verbatim": {"type": "string", "description": "the CEO's own words, unedited"},
+    "restatement": {"type": "string", "description": "the canonical restatement the run will answer"},
+    "question_class": {"enum": ["counting","decision","capability","factual","academic","market","current","troubleshooting","due-diligence"]},
+    "subject": {"type": "string", "description": "the entity, resolved before searching — the ambiguous-name trap"},
+    "must_not_mutate_into": {"type": "array", "items": {"type": "string"},
+      "description": "adjacent questions that would change his intent"},
+    "freshness": {"type": ["string","null"]},
+    "locale": {"type": ["string","null"]}
+  }
+}

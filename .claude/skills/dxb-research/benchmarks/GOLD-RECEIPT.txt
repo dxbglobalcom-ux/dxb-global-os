@@ -1,0 +1,8 @@
+DXB Research Benchmark — frozen gold receipt
+frozen_at      : 2026-09-16
+tasks          : 24
+tasks.json     : sha256 ad6ee4daca0d83f380a94871fd33ce6cef358f6b6c13aee76d4797d03e265c6d
+gold answers   : sha256 a072f91dfa125596f9bd978ac3fa728f5eec2d4649cab9ee921edaddcf74c964
+
+The gold answers never appear in any prompt. If either hash changes, the race that
+was run against the old hash no longer describes this benchmark.

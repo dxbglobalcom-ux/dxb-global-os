@@ -1,0 +1,6 @@
+# A research run is working data: ledgers, fetched passages, per-run state. It is
+# evidence for the answer that was given, not part of the engine, and a 200-row
+# ledger per question would drown the repository. The ANSWER and its citations go
+# into .planning/research/ where the CEO's standing order puts the proof.
+*
+!.gitignore

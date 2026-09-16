@@ -1,0 +1,140 @@
+# The capability registry. `agent-reach doctor` supplies the MAP; the live probe
+# supplies the TRUTH. Measured 2026-09-16: doctor reports reddit and twitter as
+# `warn` while both returned real results in 17-19 s. A static registry is not health.
+#
+# cost is $0 on every line in this file. A channel with a price does not belong here.
+
+channels:
+
+  # ---- discovery: five keyless doors, all measured HTTP 200 on 2026-09-16
+  exa:
+    tags: [search, neural, dates]
+    probe: mcporter call 'exa.web_search_exa(query: "site reliability", numResults: 2)'
+    fallback: [parallel, tavily, google, websearch]
+  parallel:
+    tags: [search, benchmark-leader]
+    probe: curl -sS -m 15 -X POST https://search.parallel.ai/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    fallback: [exa, tavily, google]
+  tavily:
+    tags: [search, extract, crawl]
+    probe: curl -sS -m 15 -X POST https://mcp.tavily.com/mcp/ -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -H 'X-Tavily-Access-Mode: keyless' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    fallback: [exa, parallel]
+  firecrawl:
+    tags: [search, scrape, parse]
+    probe: curl -sS -m 15 -X POST https://mcp.firecrawl.dev/v2/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    fallback: [scrapling, playwright]
+  youcom:
+    tags: [search, discover]
+    probe: curl -sS -m 15 -X POST 'https://api.you.com/mcp?profile=free' -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    fallback: [exa, parallel]
+  google:
+    tags: [search, serp]
+    probe: opencli google search "site reliability" --window background -f yaml
+    fallback: [duckduckgo, exa, parallel]
+  websearch:
+    tags: [search, builtin]
+    probe: builtin
+    note: the WebSearch tool. Free, always on, and called ZERO times in the run that failed.
+    fallback: [exa, google]
+
+  # ---- human voices
+  reddit:
+    tags: [first-hand, forum]
+    probe: opencli reddit search "site reliability" --window background -f yaml
+    fallback: [google, hackernews]
+  twitter:
+    tags: [first-hand, fresh]
+    probe: opencli twitter search "site reliability" --window background -f yaml
+    fallback: [bluesky, google]
+  hackernews:
+    tags: [first-hand, forum]
+    probe: opencli hackernews search "site reliability" -f yaml
+    note: this adapter REJECTS --window. It failed silently in every sweep before 2026-09-16.
+    fallback: [google]
+  bluesky:
+    tags: [first-hand, fresh]
+    probe: opencli bluesky search "site reliability" --window background -f yaml
+    fallback: [twitter]
+  stackoverflow:
+    tags: [first-hand, troubleshooting]
+    probe: opencli stackoverflow search "site reliability" --window background -f yaml
+    fallback: [google]
+  linkedin:
+    tags: [first-hand, market]
+    probe: opencli linkedin search "site reliability" --window background -f yaml
+    fallback: [google]
+  youtube:
+    tags: [first-hand, video, transcript]
+    probe: opencli youtube search "site reliability" --window background -f yaml
+    fallback: [bilibili]
+
+  # ---- Chinese-language channels: needed whenever the subject has a CN community
+  zhihu:
+    tags: [first-hand, cn]
+    probe: opencli zhihu search "可靠性" --window background -f yaml
+    note: AUTH_REQUIRED on 2026-09-16 — needs a Chrome login the CEO owns.
+    fallback: [linux-do, weibo]
+  linux-do:
+    tags: [first-hand, cn]
+    probe: opencli linux-do search "claude" --window background -f yaml
+    fallback: [zhihu]
+  weibo:
+    tags: [first-hand, cn]
+    probe: opencli weibo search "可靠性" --window background -f yaml
+    fallback: [zhihu]
+  bilibili:
+    tags: [first-hand, cn, video]
+    probe: bili search "claude" --type video -n 3
+    fallback: [youtube]
+
+  # ---- code and registries
+  github:
+    tags: [code, primary-doc, health]
+    probe: gh api rate_limit --jq .rate.remaining
+    note: authenticated 5000/hr. Health is the DEFAULT BRANCH's last commit, never pushed_at.
+    fallback: []
+
+  # ---- scholarship, keyless
+  crossref:
+    tags: [primary-doc, academic]
+    probe: curl -sS -m 15 "https://api.crossref.org/works?rows=1&query=retrieval"
+    fallback: [openalex, arxiv]
+  europepmc:
+    tags: [primary-doc, academic, fulltext]
+    probe: curl -sS -m 15 "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=retrieval&format=json&pageSize=1"
+    fallback: [crossref]
+  arxiv:
+    tags: [primary-doc, academic]
+    probe: curl -sS -m 15 "https://export.arxiv.org/api/query?search_query=all:retrieval&max_results=1"
+    note: https ONLY. Plain http returns 301 and a sweep built on it reads nothing.
+    fallback: [crossref]
+  openalex:
+    tags: [primary-doc, academic]
+    probe: curl -sS -m 15 "https://api.openalex.org/works?per-page=1"
+    note: metered since 2026-02 — keyless budget is $0.10/day. The free path is the CC0 bulk snapshot.
+    fallback: [crossref, europepmc]
+
+  # ---- reading
+  scrapling:
+    tags: [fetch, body, stealth]
+    probe: mcp
+    fallback: [playwright, firecrawl, jina]
+  playwright:
+    tags: [fetch, js]
+    probe: mcp
+    note: headless and isolated. NEVER headed — the screen belongs to him.
+    fallback: [scrapling, firecrawl]
+  jina:
+    tags: [fetch, pdf]
+    probe: curl -sS -m 15 "https://r.jina.ai/https://example.com"
+    note: the keyless reader returns a CACHED snapshot, not a live read. Label it.
+    fallback: [scrapling]
+
+# Channels deliberately NOT in the roster, and why. Written down so the next
+# session does not re-propose them.
+excluded:
+  searxng: not installed; its Google leg returns 0 results (its own issue #5867). Sovereignty hedge only.
+  crawl4ai: 16 published advisories, 4 CRITICAL, all 2026. Scrapling is installed and does the job.
+  firecrawl-selfhost: AGPL server, and fire-engine (the anti-bot part) has been proprietary for two years.
+  perplexity: $5/1000, no free tier, and it buys precision we already have.
+  brave: card required, and `opencli brave` fails here with "Navigation rejected".
