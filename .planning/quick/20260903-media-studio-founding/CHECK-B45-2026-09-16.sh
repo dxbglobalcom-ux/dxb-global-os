@@ -26,6 +26,10 @@
 #   5. HIS EVIDENCE IS THE RESTART: `RESTART BEFORE:` and `RESTART AFTER:` seconds in the evidence, measured by mode
 #      `restart` (printed, never judged — a number he reads, not a stopwatch verdict).
 #
+# REPAIRED 2026-09-16 by the checker session dxb-global-os-e0 (Opus 5): one gate only — the LAW B status line,
+# which had gone stale the moment his eye passed (see the comment at that line). Nothing else in this ruler moved;
+# the md5 below the repair is the one the builder must carry.
+#
 # MODES
 #   baseline | b45   — records + the code's and tests' substance (RED today by design)
 #   unit             — the two lane test files alone (fast, deterministic)
@@ -65,7 +69,27 @@ baseline|b45)
   echo "== B45 RECORDS AND SUBSTANCE ($mode)"
   eq  "board row B45 present" "$(grep -c '^| B45 |' "$BOARD")" "1"
   eq  "board B45 names the resting-lane / stop() wake" "$(grep '^| B45 |' "$BOARD" | grep -c -i 'wake\|interruptible')" "1"
-  eq  "board B45 carries the LAW B status (NOT ACCEPTED BY HIS EYE)" "$(grep '^| B45 |' "$BOARD" | grep -c 'NOT ACCEPTED BY HIS EYE')" "1"
+  # LAW B STATUS — REPAIRED 2026-09-16 by the checker session dxb-global-os-e0 (Opus 5), which took the
+  # checker's chair when dxb-global-os-c7 (Fable 5.1) reached its limit. The line replaced here demanded the
+  # row say "NOT ACCEPTED BY HIS EYE" — true when the ruler was dictated at 14:24 and A LIE from 13:00 the
+  # same day, when his eye passed over B44 and B45 (*"baktım göz tmm."*, registered as
+  # b44-and-b45-accepted-by-his-eye-2026-09-16, committed 38267c36). A gate that keeps demanding a sentence
+  # the truth has left is a gate that demands a lie, so it now demands the TRUE status, whichever it is:
+  # before his eye — the not-accepted sentence, and no acceptance claimed beside it; after his eye — an
+  # acceptance that NAMES a CEO-OK id, and that id must exist in the ledger. An unregistered "accepted"
+  # still fails (LAW B: only his own registered word makes a row accepted).
+  B45ROW="$(grep '^| B45 |' "$BOARD")"
+  n_acc=$(printf '%s' "$B45ROW" | grep -o 'ACCEPTED BY HIS EYE' | wc -l)
+  n_not=$(printf '%s' "$B45ROW" | grep -o 'NOT ACCEPTED BY HIS EYE' | wc -l)
+  ok_id=$(printf '%s' "$B45ROW" | grep -o 'CEO-OK: [a-z0-9-]*accepted-by-his-eye[a-z0-9-]*' | head -1 | sed 's/^CEO-OK: //')
+  if [ "$n_not" -ge 1 ]; then
+    eq  "board B45 LAW B status — NOT ACCEPTED BY HIS EYE (his eye has not passed)" "$n_not" "1"
+    eq  "board B45 claims no acceptance beside it" "$((n_acc - n_not))" "0"
+  else
+    ge  "board B45 LAW B status — ACCEPTED BY HIS EYE (his eye passed)" "$n_acc" "1"
+    eq  "that acceptance names a CEO-OK id" "$([ -n "$ok_id" ] && echo 1 || echo 0)" "1"
+    eq  "the id is registered in the ledger (${ok_id:-none})" "$(grep -c -F "\"${ok_id:-__none__}\"" "$LEDGER")" "1"
+  fi
   ge  "ledger carries his delegation verbatim" "$(grep -c -F "$HIS_WORD" "$LEDGER")" "1"
   # the code
   ge  "task-lanes.ts still rests through deps.sleep (no busy loop)" "$(grep -c 'deps.sleep' "$TL")" "1"
@@ -119,7 +143,21 @@ guard)
   eq  "timeout literals added in tests (no stopwatch, no escape here)" "$(git -C "$R" diff "$range" -- tests | grep -E '^\+' | grep -v '^\+\+' | grep -c -E 'testTimeout|hookTimeout|\b[0-9]{1,3}_?000\)|\b[0-9]{2,3}_000\b')" "0"
   add=$(git -C "$R" log --format=%h -1 --diff-filter=A -- "$Q/CHECK-B45-2026-09-16.sh")
   if [ -z "$add" ]; then line PASS "ruler changed inside the range" "n/a — ruler not yet in git"
-  else eq "ruler changed inside the range (adding commit $add excepted)" "$(git -C "$R" log --format=%h "$range" -- "$Q/CHECK-B45-2026-09-16.sh" | grep -v -c "^$add")" "0"; fi
+  else
+    # REPAIRED 2026-09-16 by the checker session dxb-global-os-e0 (Opus 5), in the same breath as the LAW B gate
+    # above and for the same reason: that gate's correction is itself a commit, and the audit law gives a ruler
+    # CORRECTION its own `records(ruler): …` commit — the ruler file and NOTHING else. Such a commit is excepted
+    # here exactly as the adding commit is, and ONLY while it stands alone. A commit that touches the ruler
+    # together with anything else still rings, which is the whole of this line: a metre changed inside the work
+    # it is judging has certified itself.
+    bad=0
+    for h in $(git -C "$R" log --format=%h "$range" -- "$Q/CHECK-B45-2026-09-16.sh"); do
+      [ "$h" = "$add" ] && continue
+      [ "$(git -C "$R" show --name-only --format= "$h" | grep -c .)" = 1 ] && continue
+      bad=$((bad+1))
+    done
+    eq "ruler changed inside the range (its adding commit, and a ruler-ONLY records(ruler) correction, excepted)" "$bad" "0"
+  fi
   ;;
 restart)
   echo "== B45 RESTART — the resident scheduler, measured (in-flight must be 0; the seconds are printed, not judged)"
