@@ -192,7 +192,8 @@ function sweep() {
     -- strip a persona from an ACTIVE employee, and the bench obeys that rule too
     UPDATE agents SET employment_status = 'dormant', status = 'dormant'
       WHERE department LIKE '${MARKER}%';
-    UPDATE agents SET persona_id = NULL WHERE department LIKE '${MARKER}%';
+    -- W15 / F056: through the door, one agent at a time, so each unbind is gate-checked and audited
+    SELECT fn_persona_bind(id, NULL, 'bench') FROM agents WHERE department LIKE '${MARKER}%' AND persona_id IS NOT NULL;
     DELETE FROM personas WHERE employee_id IN (SELECT id FROM agents WHERE department LIKE '${MARKER}%');
 
     CREATE TEMP TABLE IF NOT EXISTS _b39_t (id uuid PRIMARY KEY);

@@ -2,31 +2,21 @@
 
 > **SUPERSEDED — 2026-09-14 evening.** Bu prompt 00:45'te yazıldı; öğleden sonra Astra'nın kuralı KABUL edildi, akşam günün işi denetlenip düzeltildi. Yapıştırma. Güncel konum: `.planning/STATE.md` (canlı emir bloğu, 2026-09-14 akşam). Yeni devir promptu yazılmadı (CEO, 2026-09-14 17:1x: "devir promtu yazma"); yeni oturum STATE.md ile başlar.
 
-# CEO → next session (Fable 5.1) — handover prompt, written 2026-09-14 00:5x on his order ("bu session şişti daha sonra bu işe devam etmesi için devir promotunu bir sonraki session için hazırla ve mükemmel şekilde devam etsin")
+**THE BODY OF THIS FILE WAS REMOVED ON 2026-09-16 (W15, audit F016 / F054), UNDER LAW A.**
 
-> Bu metin CEO'nun bir sonraki oturuma yapıştırması içindir. Her yol ve sayı 14 Eylül 2026 gecesi ölçüldü; yeni oturum makineyi yeniden ölçer, dosyaları ezbere söylemez.
+What stood here was a paste-ready handover prompt composed by the author session in the CEO's
+first person: an opening line introducing himself as the holding's CEO, a paragraph on how he
+wants to be worked with, a first task and a list of his decisions — none of it written by him. LAW A (CEO, 2026-07-30) does not allow
+a contradicting record to be kept beside its correction: "superseded but retained" is the exact
+form the law names, and a banner saying "these are not his words" on top of 33 lines still
+written in his voice is that form. So the banner stays and the false voice goes.
 
----
+NOTHING OF HIS WAS TOUCHED. Every order he actually gave is in `scripts/governance/ceo-approvals.json`
+with his own verbatim; the file is not deleted, so git keeps every removed line addressable at
+this path in history. Where the work stands is `.planning/STATE.md`, and nowhere else.
 
-Selam, ben DxB Global OS'in CEO'su Muhittin Bey. Önceki oturum (Fable 5.1, 13→14 Eylül gecesi) kaldığı yerden aynen devam et; aynı titizlik, aynı yöntem, ama HIZLI: 14 Eylül'de bir oturum daha iş yapmadan 165 bin jeton okudu ve ben yakaladım. Kayıtlar o gece toplandı; artık az okuyup konuşacaksın, ölçmeyi bırakmadan.
+WHY A HANDOVER PROMPT EXISTED AT ALL, and why one will not be written again unless he asks:
+his ruling of 2026-09-15, `handover-prompt-only-on-his-session-request-2026-09-15` — a handover
+prompt is NOT a global or standing rule; he asks for one in the session that needs it, or there
+is none. `.claude/skills/dxb-start/SKILL.md` Phase 5 carries that ruling's consequence.
 
-**OKUMA LİSTESİ (hepsi bu; başka bir şey açma):** `.planning/STATE.md` (artık TEK SAYFA, 91 satır; oturum başı kancası zaten önüne koyar, yeniden açma) · tahtada B43 satırının SON bölümü "WHERE THIS ROW STANDS — 2026-09-14" (`sed -n '146p' "/home/dxb/DxB Global OS/HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md" | fold -s -w 200`) ve B08 satırı (95. satır) · hüküm defterinin 3–14 Eylül kayıtları (`scripts/governance/ceo-approvals.json`, `jq` ile, 35 kayıt ≈ 10 bin jeton): bir plan önüme gelmeden planın her ismi (motor, resim, ses, büyütme, beyin) için "bu konuda hükmüm var mı, daha SONRA verilmiş bir hüküm var mı" diye defteri KONUYA göre oku; planın kelimesini grep'lemek bu kontrol değildir; sonraki söz öncekini siler (KANUN A; C68 bu yüzden açıldı) · `~/tools/h3/studio/KATALOG.md` (filmler ve kadro). B43'ün 1–13 Eylül günlüğü ve STATE'in eski blokları `.planning/STATE-ARCHIVE.md`'de harfi harfine duruyor; konumu öğrenmek için ORAYI AÇMA, yalnız "niye böyle karar verildi" sorusu için gir. `MASTER_PLAN.md`'yi yeniden okuma (holdingi `.claude/CLAUDE.md` tanıtır, yüklü). `/home/dxb/Medya OS/` yok, açma.
-
-**İLK CEVABIN:** dört satır durum (1 bitmiş ve gözümü bekleyen · 2 sıradaki · 3 bende tıkalı · 4 söylediğime cevap), sonra ilk konu. "Ne yapmamı istersiniz" diye sorma. Konu konu, tek soru, düz yazıyla; tıklama kutusu (AskUserQuestion) bana ulaşmıyor.
-
-**İLK KONU — ASTRA'NIN KURALI, cevabımı bekliyor.** Kural: yönetmen en basit yolu seçer; tek çekim yetiyorsa doğrudan tek çekim üretir; bir iş birden fazla çekim gerektirirse ya da tek çekim bozulursa, çekimler MiniMax H3'ün kendi kareleriyle bağlanır (bir çekimin son karesi ötekinin başlangıcı olur); hiçbir film peşinen 4–6 parçaya bölünmez; Flux yok. Benzetmesi: terzi kumaş yetiyorsa ceketi tek parçadan biçer; kumaş kısa gelirse iki parçayı aynı toptan ekler, başka kumaştan değil; hiçbir ceketi baştan "altı parçadan dikelim" diye planlamaz. Sayısı: gözümle kabul ettiğim üç film (002C, 003, 005) tek prompt, tek çekim, 15 sn; reddettiğim "4 kusurlu" iki film dört kilitli parçadan kesilmişti; Astra da aynısını söyledi (`COUNSEL-gpt-6-astra-on-plan-3-2026-09-13.md`). Anlamı: bugün üretimde hiçbir şey değişmez, zaten tek çekimle çalışıyoruz; çok çekimli iş gelince yönetmen küçük bir sınavla motorun kendi kareleriyle bağlamayı dener, sonucu önüme koyar. Tavsiye: evet. **"Evet" dersem:** Yaratıcı Yönetmen ve Film Yönetmeni personalarına birer satır (persona kapısı: dosya → mekanik gate → senkron `DXB_PERSONA_AUTHOR=fable-5` → `fn_persona_gate` passed → `agents.persona_id` bağla → `--verify` MATCH; `tests/r31/persona-delivery.test.ts`), ③'ün tahtadaki tanımı bu kural olur ve park edilir; kod yok, film yok. "Hayır" dersem ③ yazıldığı gibi durur.
-
-**14 EYLÜL GECESİ OLANLAR (hepsi kayıtlı ve commit'li — `48b22105`, `a61d7ced` ve bu dosyanın commit'i; yeniden yazma):**
-- STATE.md 1.796 satırdan 91 satıra indi; 30 Temmuz → 13 Eylül blokları ve eski "Next" bölümü `STATE-ARCHIVE.md`'ye harfi harfine taşındı (1.633/1.633 satır birebir doğrulandı). Oturum başı notu 50.186 → 9.615 bayt.
-- B43 satırının 1–13 Eylül günlüğü (40.859 bayt) aynı arşive taşındı; satırda emrim, yasa, "sonraki hükümlerimin yasaya getirdiği düzeltmeler (a–k)", satırda doğan canlı kurallar, kurulmuş ve duran şeyler (defter numaralarıyla) ve açık bacaklar kaldı (36.748 bayt).
-- İki daimi emir kancası (`.claude/hooks/no-laziness.sh`, `ceo-language.sh`) her mesajda kalır ama birer satır oldu (2.923 → 793 bayt/mesaj); uzun metin dosyanın içinde, dosya sahibi. Codex aynası (`AGENTS.md`, `.codex/hooks`, `.agents/skills`) yeniden üretildi, `--check` temiz.
-- Kararlarım (oturumluk söz, kanun değil): B43 tahta kartına Türkçe özet YAZILMAYACAK ("türkçe özete gerek yok orası için ceo kararı") · ölçme alışkanlığı KALIR, önündeki cevabı yeniden ölçme ("cvp önündeyse ne diye ölçüorsun tekrar. ama bu da kalsın. okumuorsun ölçüorsun en azından").
-- Bekçi `pnpm verify:ledger` yeşil (11 state · 114 open · 140 history · 118 CEO-OK); tahta sayfası yeniden çizildi ve gözle bakıldı; i18n PASS.
-
-**SONRAKİ İŞLER SIRASIYLA:** (1) Astra'nın kuralına cevabım → evet ise iki persona satırı + ③ park. (2) ④ QC listesi: koltukların 3 Eylül "motor yazı çizmez" hükmünü 005'teki gibi okuması + dinleme eli (ses ↔ yazılı replikler); önce anlayış raporu ve plan, onayım, sonra kod. (3) ⑤ dış denetçi, ben getirince. (2b) saatin ilk gerçek ölçümü sıradaki filmde. B08 (beyinler) park; sırası gelince, altı adımı tahtada yazıldığı gibi onayladıktan sonra.
-
-**BENDE TIKALI:** Astra'nın kuralı (evet/hayır) · saatin gözümle kabulü (KANUN B) · C68'in kapanışı · Safiye/Kenan/Deniz (çizim kaynağı) · 004 dosyasının silinmesi (`~/tools/h3/lab/out/2026-09-05/DXB-V-EYW-004-master-640x1152.mp4`, 4.080.832 bayt) · C42 testinin kırmızısı (2026-08-19).
-
-**ÇALIŞMA TARZIM:** konu konu, tek soru, düz yazı; benim dilimde (cevap → benzetme → sayı → benim için anlamı); teknik kelimeyi parantezle bir kez açıkla; ölçmeden söyleme, ama önündekini yeniden ölçme; kanıtı komut çıktısıyla göster; KANUN C: değişiklikten önce konuş, "devam et" yalnız konuşulan adımı kapsar; bypass modda mutlak yol, `cd` yok (kanca engeller); bitti ≠ onaylandı (KANUN B); "bir bok yapma" = dur; kısa yaz.
-
-**DOLAPLAR (14 Eylül'de ölçüldü; sen yeniden ölç):** anayasa `.claude/CLAUDE.md` + `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-*.md` · tahta `00-BOARD-OPEN-WORK.md` (B43 satır 146; B08 satır 95) · şikâyet defteri `00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` (C66–C68 Eylül) · hüküm defteri `scripts/governance/ceo-approvals.json` (97 kayıt) · durum `.planning/STATE.md` (tek sayfa) · arşiv `.planning/STATE-ARCHIVE.md` · kanıt `.planning/quick/20260903-media-studio-founding/` · kapılar `.claude/skills/dxb-*/SKILL.md` · kadro `personas/media-studio/` (14) + 2 atama · motor `packages/dxb-mcp/src/dispatch-book.ts` + `groups/queue.ts` (`queue_dispatch`, `queue_sheet_times`), `groups/media.ts`, `packages/orchestrator/src/worker-shim.ts` (persona dosyadan okunur), `qa.ts`, `packages/outbox-executor/src/scheduler.ts` + `task-lanes.ts` + `media-lanes.ts` · veritabanı şirket `127.0.0.1:54322` (yalnız SELECT; yazmak kapılardan) · inşaat `54422` · testler `pnpm exec vitest run tests/b43 tests/b39`, derleme `pnpm typecheck` · kontroller `pnpm verify:ledger` · `bash scripts/i18n-purity-check.sh` · `bash scripts/governance/sync-codex-mirror.sh --check` · vitrin `http://127.0.0.1:8899/` (`~/tools/h3/studio/`) · nöbetçiler `systemctl --user list-units 'dxb-*'` (11 servis + 2 timer; yeniden başlatmadan önce uçuşta iş var mı ölç) · **ASLA açma:** `/home/dxb/Medya OS/` (silindi).

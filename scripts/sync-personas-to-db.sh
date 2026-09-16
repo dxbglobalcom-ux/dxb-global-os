@@ -7,8 +7,19 @@
 # Kullanım:
 #   scripts/sync-personas-to-db.sh <dosya>...        # verilen dosyaları submit eder (yeni sürüm açar)
 #   scripts/sync-personas-to-db.sh --verify [dosya]  # yazmaz; DB son sürüm ↔ dosya gövdesi hash karşılaştırır
+#   scripts/sync-personas-to-db.sh --bind [dosya]    # BINDS through fn_persona_bind; --dry-run to only list
 #   (dosya verilmezse personas/*/*.md tümü taranır)
 # Gate verdikti AYRI adımdır: fn_persona_gate (Fable 5-soru kontrolü sonrası).
+#
+# BINDING GOES THROUGH THE DOOR (W15, 2026-09-16, studio audit F056). Until that day NO function
+# set agents.persona_id: all 213 bindings had been written by raw UPDATEs from shell scripts, so
+# the act that decides which written identity a live employee speaks with had no gate of its own,
+# left no audit row, and could drift from agents.persona_version. fn_persona_bind is now the only
+# way in — it refuses a persona whose quality gate did not pass or whose author is not a v2 author,
+# refuses a persona belonging to another employee, copies persona_version across in the same
+# statement, writes one audit_log row, and is idempotent. This script never writes persona_id
+# itself. --bind CHANGES LIVE BINDINGS and is therefore never part of --verify or of a submit run:
+# it is invoked deliberately, and the 16 studio seats stay blocked by B08 step 0 regardless.
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -24,6 +35,11 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PSQL=(docker exec -i "${DXB_DB_CONTAINER:-supabase_db_DxB_Global_OS}" psql -U postgres -d postgres -At)
 MODE="submit"
 [ "${1:-}" = "--verify" ] && { MODE="verify"; shift; }
+DRY=0
+if [ "${1:-}" = "--bind" ]; then
+  MODE="bind"; shift
+  [ "${1:-}" = "--dry-run" ] && { DRY=1; shift; }
+fi
 
 # AUTHOR — U30 (CEO ruling 2026-07-26): construction authorship is shared between Opus 5 and
 # Fable 5, and the model running THIS session is the author. This was hardcoded to 'fable-5'
@@ -40,6 +56,41 @@ case "${AUTHOR:-x}" in
   opus-5|fable-5|x) ;;
   *) echo "HATA: DXB_PERSONA_AUTHOR='$AUTHOR' — U30 yalnız 'opus-5' veya 'fable-5' tanır." >&2; exit 2 ;;
 esac
+
+if [ "$MODE" = "bind" ]; then
+  # Every employee whose newest PASSED persona is not the one bound today. The door does the
+  # judging; this only names the candidates, so a refusal here is the door speaking, not the script.
+  rows="$("${PSQL[@]}" -c "
+    SELECT a.id::text || '|' || a.slug || '|' || p.id::text || '|v' || p.version::text
+      FROM public.agents a
+      JOIN LATERAL (
+        SELECT id, version FROM public.personas
+         WHERE employee_id = a.id AND quality_gate = 'passed'
+         ORDER BY version DESC LIMIT 1
+      ) p ON TRUE
+     WHERE a.persona_id IS DISTINCT FROM p.id
+     ORDER BY a.slug")"
+  bound=0; refused=0
+  if [ -z "${rows//[[:space:]]/}" ]; then
+    echo "BIND: nothing to bind — every employee already carries its newest passed persona"
+  else
+    while IFS='|' read -r aid slug pid pver; do
+      [ -n "$aid" ] || continue
+      if [ "$DRY" = 1 ]; then
+        echo "WOULD BIND $slug -> $pid ($pver)"; continue
+      fi
+      if "${PSQL[@]}" -c "SELECT public.fn_persona_bind('$aid'::uuid, '$pid'::uuid, 'persona-sync');" >/dev/null 2>&1; then
+        echo "BOUND $slug -> $pid ($pver)"; bound=$((bound+1))
+      else
+        echo "REFUSED $slug -> $pid — the door said no (gate, author or ownership); run the statement by hand to see its message"; refused=$((refused+1))
+      fi
+    done <<< "$rows"
+    echo "---"
+    echo "bind: $bound · refused: $refused"
+    [ "$refused" -eq 0 ] || exit 1
+  fi
+  exit 0
+fi
 
 files=("$@")
 if [ ${#files[@]} -eq 0 ]; then

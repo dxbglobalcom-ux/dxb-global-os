@@ -18,7 +18,8 @@ echo "== E5.4b demo:hire — probe slug: $SLUG =="
 # 0) pre-clean any previous probe (idempotent re-runs; unbind before persona delete)
 q "DELETE FROM tasks WHERE agent_id IN (SELECT id FROM agents WHERE slug='$SLUG');" >/dev/null
 q "UPDATE agents SET employment_status='draft', status='dormant' WHERE slug='$SLUG';" >/dev/null
-q "UPDATE agents SET persona_id=NULL WHERE slug='$SLUG';" >/dev/null
+# W15 / F056: personas are unbound through the door, never by a raw UPDATE
+q "SELECT fn_persona_bind(id, NULL, 'demo-hire') FROM agents WHERE slug='$SLUG' AND persona_id IS NOT NULL;" >/dev/null
 q "DELETE FROM personas WHERE employee_id IN (SELECT id FROM agents WHERE slug='$SLUG');" >/dev/null
 q "DELETE FROM settings_values WHERE scope IN (SELECT 'employee:'||id FROM agents WHERE slug='$SLUG');" >/dev/null
 q "DELETE FROM employee_records WHERE employee_id IN (SELECT id FROM agents WHERE slug='$SLUG');" >/dev/null
@@ -50,7 +51,8 @@ Sandbox probe employee proving the E5.4b activation chain end to end. This body 
 ## 4. Decision method
 Decides nothing alone; every action is the demo script. Escalation target: people-hr.', 'fable-5');")
 q "SELECT fn_persona_gate('$PID','passed','E5.4b demo probe — gate exercised for chain proof (Fable in person); probe is deleted at script end.');" >/dev/null
-q "UPDATE agents SET persona_id='$PID' WHERE id='$EMP';" >/dev/null
+# W15 / F056: the door gate-checks the persona, keeps persona_version true and writes the audit row
+q "SELECT fn_persona_bind('$EMP'::uuid, '$PID'::uuid, 'demo-hire');" >/dev/null
 echo "persona submitted+passed+bound: $PID"
 
 # 6) equipment now (expect 7/7)
@@ -89,7 +91,8 @@ echo "atomicity: duplicate-create raised, settings rows before=$BEFORE after=$AF
 # order matters: the activation lock forbids persona removal while active — de-activate first
 q "DELETE FROM tasks WHERE agent_id='$EMP';" >/dev/null
 q "UPDATE agents SET employment_status='draft', status='dormant' WHERE id='$EMP';" >/dev/null
-q "UPDATE agents SET persona_id=NULL WHERE id='$EMP';" >/dev/null
+# W15 / F056: unbind through the door (the agent was stood down on the line above, as the door requires)
+q "SELECT fn_persona_bind('$EMP'::uuid, NULL, 'demo-hire');" >/dev/null
 q "DELETE FROM personas WHERE employee_id='$EMP';" >/dev/null
 q "DELETE FROM settings_values WHERE scope='employee:$EMP';" >/dev/null
 q "DELETE FROM employee_records WHERE employee_id='$EMP';" >/dev/null

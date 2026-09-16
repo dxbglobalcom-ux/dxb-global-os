@@ -1,7 +1,7 @@
 # CEO Complaint Ledger — 2026-07-19 (C-series)
 
 > **THE SEQUENCE CONTINUES ON THE BOARD (2026-07-27, U38).** C1-C25 closed here. The CEO's next
-> **NUMBERING CORRECTED 2026-09-13 ON HIS WORD** (*"şikayet tahtasını düzelt"*): the rows this file gained on 2026-09-03/05/13 had been written as C26–C28, colliding with the board's series (C26–C64). They are now **C66, C67, C68** — one sequence across both places; the next complaint is C69. Ledger keys that carry the old number in their id (`c27-closed-on-his-word-2026-09-13`) stay as ids; their text says C67.
+> **NUMBERING CORRECTED 2026-09-13 ON HIS WORD** (*"şikayet tahtasını düzelt"*) <!-- CEO-OK: flux-avatars-retired-and-complaint-numbering-2026-09-13 -->: the rows this file gained on 2026-09-03/05/13 had been written as C26–C28, colliding with the board's series (C26–C64). They are now **C66, C67, C68** — one sequence across both places; the next complaint is C69. Ledger keys that carry the old number in their id (`c27-closed-on-his-word-2026-09-13`) stay as ids; their text says C67.
 > complaints — spoken on the night of 2026-07-27 while looking at the live dashboard — are
 > **C26-C42 on [[00-BOARD-OPEN-WORK]]**, section 2, each with the measurement taken that night.
 > They were numbered forward on purpose: the complaint history is ONE sequence, never a new

@@ -84,6 +84,15 @@ secrets or isolation move, a design pass for anything the CEO sees.
 
 A turn that changed the system and left its record stale is not finished.
 
+**No handover prompt is written here, or anywhere, unless he asks for one in that session.**
+<!-- CEO-OK: handover-prompt-only-on-his-session-request-2026-09-15 --> His ruling of
+2026-09-15: a handover prompt is not a global or standing rule — he asks for one in the session
+that needs it, and otherwise there is none. The next session starts from `.planning/STATE.md`,
+which this phase has just made true; that is the handover. When he does ask, it is written in
+English in the author's own voice, and he is quoted only from `scripts/governance/ceo-approvals.json`
+— never composed in his first person. Measured 2026-09-15 (audit F016, F017, F054): three such
+files existed, all speaking as him, and STATE ordered the next session to write another.
+
 ## Before ending any turn, answer in writing
 
 **measured? · complete? · recorded? · verified (command → output)?**

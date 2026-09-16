@@ -91,7 +91,7 @@ DXB Global OS is an AI-native company operating system for **DXB Global Technolo
 
 This document evolves at phase transitions and milestone boundaries.
 
-**After each phase transition** (the GSD commands this line used to name were deleted on his order of 2026-08-01; the steps are the author's own, run by hand):
+**After each phase transition** (the GSD commands this line used to name were deleted on his order of **2026-08-27** — *"superpowers, gsd, ruflo, gstack vb pluginler holdingimize girmeyecek"* <!-- CEO-OK: methodology-plugins-out-codex-hook-off-2026-08-27 -->; the date first written here, 2026-08-01, was wrong: `git log -S` puts this very sentence in commit e56dcc68 of 2026-08-27, the commit that executed that ruling. Corrected 2026-09-16, W15, audit F055. The steps are the author's own, run by hand):
 1. Requirements invalidated? → Move to Out of Scope with reason
 2. Requirements validated? → Move to Validated with phase reference
 3. New requirements emerged? → Add to Active

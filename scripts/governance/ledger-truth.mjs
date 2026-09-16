@@ -87,6 +87,28 @@ const DUP_EXCLUDE = (rel) =>
 const APPROVAL_CLAIM =
   /\bCEO[- ](APPROVED|approved|accepted)\b|CEO ONAYI VERİLDİ|CEO onayı (verildi|alındı)|CEO kabul etti|Accepted by the CEO|CEO acceptance \d{4}-\d{2}-\d{2}/;
 
+// THE QUOTATION-SHAPED CLAIM (added 2026-09-16, W15, audit F055). The hole this closes was
+// named in this file's own comment below: a line saying "done on his word" or "on the CEO's
+// order" asserts his authority just as hard as "CEO-approved", and check 5 could not see it.
+// Measured that day: four such claims stood in the corpus with no entry behind them — a commit
+// quoting "sadece bu ikisi", a migration header citing (CEO 2026-09-13, "düzelt"), the sentence
+// "devir promtu yazma", and a Turkish-summary decision. All four are now registered.
+const AUTHORITY_CLAIM = /\bon (his|the CEO'?s) (own )?(word|order)\b/i;
+// The same five words state a RULE far more often than they claim an event: "waits on his word",
+// "gate: his word", "(W14, on his word)" all say work MAY NOT START, which is the opposite of a
+// claim that it did. A tripwire ringing on those teaches people to ignore it (measured 2026-09-16:
+// 51 such lines against 4 real ones). So the claim must SAY the work happened — a completion verb
+// standing before it, or his own quoted words standing right after it.
+const AUTHORITY_ASSERTED_BEFORE =
+  /\b(done|built|closed|purged|deleted|removed|written|registered|corrected|applied|made|taken|cancelled|struck|rewritten|amended|restored|accepted|approved|fixed|merged|installed|enabled|disabled|ran|run)\b[^.!?]{0,60}$/i;
+const AUTHORITY_QUOTED_AFTER = /^\s*[*_`]*["“«]/;
+// WHERE IT APPLIES. F055's own words name the danger: "CEO orders quoted as authority in standing
+// files, hooks and migrations" — surfaces that BIND a future session. A rival-intel report or a
+// study card saying "read live, on the CEO's order" is a dated record of what happened that day;
+// annotating those is rewriting history, the same reason this file already excludes _ARCHIVE and
+// the dated notes from its duplication scope. Measured 2026-09-16: 21 of the 25 lines the pattern
+// found were such records, and 4 were on binding surfaces.
+const AUTHORITY_SCOPE = (rel) => !rel.startsWith(".planning/research/");
 // Naming the concept is not claiming the event. These forms describe a session that has NOT
 // happened, a rule about how approval works, or a pipeline state called "CEO-approved" — none of
 // them assert that he approved anything, and a tripwire that rings on them teaches people to
@@ -510,6 +532,20 @@ for (const rel of corpusFiles()) {
       }
     }
     const ok = oks.length > 0;
+
+    // A quotation-shaped claim: "done on his word", "on the CEO's order". Only the asserting
+    // form rings; the awaiting form ("waits on his word", "gate: his word") is a rule, not a claim.
+    const auth = line.match(AUTHORITY_CLAIM);
+    if (auth && !MARK_HISTORY.test(line) && !cover[i]) {
+      const before = line.slice(0, auth.index);
+      const after = line.slice(auth.index + auth[0].length);
+      const asserts = AUTHORITY_ASSERTED_BEFORE.test(before) || AUTHORITY_QUOTED_AFTER.test(after);
+      if (asserts && !ok && AUTHORITY_SCOPE(rel)) {
+        failures.push(
+          `${rel}:${i + 1} — rests work on the CEO's own word or order with no registered approval behind it (LAW B, audit F055). Register his words in ${APPROVALS} and mark the line with <!-- CEO-OK: id -->, or stop claiming it — ${line.trim().slice(0, 100)}`,
+        );
+      }
+    }
 
     if (APPROVAL_CLAIM.test(line) && !APPROVAL_NOT_A_CLAIM.test(line)) {
       if (!ok && !MARK_HISTORY.test(line) && !cover[i]) {
