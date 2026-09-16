@@ -1,6 +1,6 @@
 > **Provenance note, 2026-09-15 (W2, audit F016):** this file was composed by the author session in the CEO's first person as a paste-ready handover; the sentences below the banner are NOT his words and carry no authority of their own. His words are in `scripts/governance/ceo-approvals.json`. Kept as history.
 
-> **SUPERSEDED — 2026-09-14 evening.** Bu prompt 00:45'te yazıldı; öğleden sonra Astra'nın kuralı KABUL edildi, akşam günün işi denetlenip düzeltildi. Yapıştırma. Güncel konum: `.planning/STATE.md` (canlı emir bloğu, 2026-09-14 akşam). Yeni devir promptu yazılmadı (CEO, 2026-09-14 17:1x: "devir promtu yazma"); yeni oturum STATE.md ile başlar.
+> **SUPERSEDED — 2026-09-14, evening.** This prompt was written at 00:45. By the afternoon Astra's rule had been ACCEPTED, and in the evening the day's work was audited and corrected. Do not paste it. The live position is `.planning/STATE.md` (the live-order block of 2026-09-14 evening). No new handover prompt was written, on the CEO's order of 2026-09-14 17:1x — his words, kept in his own language because a quotation is his and not the artefact's: *"devir promtu yazma"* <!-- CEO-OK: ceo-no-handover-prompt-audit-what-you-did-2026-09-14 --> — and a new session starts from STATE.md. (Rewritten from Turkish into English 2026-09-16, W15, audit F016: the artefacts of this repository are English; only his own words stay as he said them.)
 
 **THE BODY OF THIS FILE WAS REMOVED ON 2026-09-16 (W15, audit F016 / F054), UNDER LAW A.**
 

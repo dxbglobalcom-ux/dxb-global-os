@@ -8,7 +8,13 @@
 # established docker-exec psql idiom, no new node DB dependency.
 set -euo pipefail
 
-PSQL=(docker exec -i supabase_db_DxB_Global_OS psql -U postgres -d postgres -At -v ON_ERROR_STOP=1)
+# The engine is named by DXB_DB_CONTAINER and DEFAULTS to the company's own stack, so every
+# existing caller behaves exactly as before. W15 (2026-09-16) made it nameable for one reason:
+# this script IS the end-to-end proof of the hire chain, and a proof that can only be run against
+# the live company is a proof nobody dares run. Against supabase_db_DxB_Build it exercises the
+# whole chain — submit, gate, BIND THROUGH fn_persona_bind, equip, activate, stand down, unbind —
+# on the construction engine, where a probe employee costs the company nothing.
+PSQL=(docker exec -i "${DXB_DB_CONTAINER:-supabase_db_DxB_Global_OS}" psql -U postgres -d postgres -At -v ON_ERROR_STOP=1)
 SLUG="hr-demo-probe"
 
 q() { "${PSQL[@]}" -c "$1"; }
