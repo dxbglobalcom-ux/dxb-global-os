@@ -135,5 +135,10 @@ echo
 SUMFILE="$OUT/SUMMARY.txt"
 python3 "$HERE/merge.py" "$OUT" | tee "$SUMFILE"
 
-# The answer is kept automatically — his ruling 2026-09-17. See fleet/keep.sh for why.
-bash "$HERE/keep.sh" "$QF" "$OUT" "$SUMFILE" || echo "!! cevap saklanamadi" >&2
+# NOTHING IS KEPT BY ITSELF — his ruling, 2026-09-17: *"genel olarak saklanmasin, bir test
+# yapilinca commitlemeden once veya uygun bir zamanda sorulsun testi kaydedelim mi diye."*
+# The reports stay where they are; the session ASKS him, and saves only if he says yes.
+echo
+echo "CEVAP HAZIR — SAKLANMADI.  $OUT/HUNTER-*.md"
+echo "ONA SOR (committen once): \"bu testi kaydedelim mi?\"  ->  evet derse:"
+echo "  bash \"$HERE/keep.sh\" \"$QF\" \"$OUT\" \"$SUMFILE\""

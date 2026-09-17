@@ -7,9 +7,9 @@
 # 60 KB where the run folders he deleted were 22 MB — the answer costs three parts in
 # a thousand of the garbage.
 #
-# Why it is automatic and not "on his word": he measured the cost of the other way
-# himself — "ben unutursam sorulsun ... unutmuşum". A record that waits to be asked for
-# is a record that is lost.
+# IT RUNS ONLY ON HIS WORD. His ruling, 2026-09-17: nothing is kept in general; after a
+# test, BEFORE the commit or at a fitting moment, he is asked "bu testi kaydedelim mi?"
+# and this script runs only if he says yes. He does not want a dump.
 #
 #   keep.sh <question-file> <out-dir> [summary-file]
 set -uo pipefail

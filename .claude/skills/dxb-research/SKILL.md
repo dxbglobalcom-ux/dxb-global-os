@@ -191,6 +191,15 @@ dropped and we go back to one hunter — decided by measurement, never by argume
 
 ## 7. The record — only when he says "kaydet"
 
+**ASK HIM ONCE, AND ONLY THEN KEEP ANYTHING.** His ruling, 2026-09-17: *"genel olarak
+saklanmasın, bir test yapılınca commitlemeden önce veya uygun bir zamanda sorulsun testi
+kaydedelim mi diye."* After a run or a test, before the commit, put ONE line in front of him
+— *"bu testi kaydedelim mi?"* — and keep it only if he says yes:
+`bash fleet/keep.sh <question-file> <out-dir> [summary]` writes the reports, the question and
+the summary to `.planning/research/answers/<stamp>-<slug>/` and nothing else. Silence is not a
+yes, and a record he did not ask for is the garbage he named.
+
+
 ```bash
 python3 "$R/research.py" open --question "<his words, verbatim>" --class counting
 #   … the ledger writes itself from the tool calls from here on …
