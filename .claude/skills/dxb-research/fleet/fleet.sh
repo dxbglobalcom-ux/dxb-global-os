@@ -133,7 +133,10 @@ for role in $PICK; do
     printf 'Name in block A which of those channels carried something for your lane.\n\n' 
     printf 'Work only your lane. Other hunters are covering the rest; do not duplicate them.\n'
     printf 'Spend your time READING what you find, not searching for more of it.\n'
-    printf 'Answer in Turkish. Hand back exactly the six blocks A-F.\n'
+    printf 'Answer in Turkish. Hand back the HUKUM line first, then exactly the six blocks A-F.\n'
+    printf 'EVERY voice and EVERY source carries its full address (https://...). A report with no\n'
+    printf 'address is named as uncheckable in the summary the CEO reads — measured 2026-09-17,\n'
+    printf 'seven lanes touched 1549 sources and cited none of them.\n'
   } > "$OUT/prompt-$role.txt"
 
   # K1 — WHAT A HUNTER IS ALLOWED TO DO. Measured 2026-09-17 from a hunter's own transcript:

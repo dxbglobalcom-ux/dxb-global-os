@@ -93,10 +93,22 @@ python3 "$R/fetch.py" <url>                   # TWELVE doors, in order, until on
 ## What you hand back — exactly these six blocks
 
 ```
-A) WHAT I READ      per source: how many comments / posts / minutes of transcript — NUMBERS
+HUKUM:              ONE LINE, first: your lane's own verdict on the question, no hedging.
+                    The merge puts every lane's HUKUM line side by side, which is the only
+                    place a contradiction between lanes can be seen at all. Measured on the
+                    first fleet run: four lanes disagreed and NONE of it surfaced.
+A) WHAT I READ      per source: how many comments / posts / minutes of transcript — NUMBERS,
+                    and THE ADDRESS of each source, written out in full (https://...)
 B) THE COUNT        the tally with its denominator (n=), split by the buckets the task names
-C) THE VOICES       5-10 verbatim quotes, each with author handle and date
+C) THE VOICES       5-10 verbatim quotes, each with author handle, date AND the address of the
+                    page it was taken from. A quote with no address cannot be checked by
+                    anybody, and this door's own rule refuses an answer that cannot be checked.
 D) CLOSED DOORS     every door that failed and what it answered
 E) DISTINCT PEOPLE  one number: how many separate humans' own words you actually read
 F) WHAT WOULD FLIP IT   the finding that would change the answer, and whether you went looking
+
+AN ADDRESS ON EVERY CLAIM IS NOT A FORMALITY. Measured 2026-09-17 on a seven-hunter run of this
+very fleet: the lanes touched 1 549 distinct sources between them and their seven reports carried
+ZERO full addresses — not one line could be checked by the commander, by the CEO, or by you
+tomorrow. The merge now names a report that cites nothing, and it will name yours.
 ```
