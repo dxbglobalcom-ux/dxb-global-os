@@ -48,13 +48,14 @@ QUERY="${1:-}"; OUT="${2:-}"; shift 2 2>/dev/null || true
 # getirecek". `wide` opened 22; `max` opens 33 and costs seconds, not minutes, because
 # every channel is fired in parallel. Narrow it by hand only when a question truly has
 # one home (--tier core), and say so in the answer.
-TIER=max; TMO=180; PAGES=14; WITH_BROWSER=0
+TIER=max; TMO=180; PAGES=14; WITH_BROWSER=1
 while [ $# -gt 0 ]; do
   case "$1" in
     --tier) TIER="$2"; shift 2 ;;
     --timeout) TMO="$2"; shift 2 ;;
     --pages) PAGES="$2"; shift 2 ;;
-    --browser) WITH_BROWSER=1; shift ;;   # opens a VISIBLE window on his screen — opt-in only
+    --browser) WITH_BROWSER=1; shift ;;
+    --no-browser) WITH_BROWSER=0; shift ;;  # for a run that must not touch his screen at all
     *) shift ;;
   esac
 done
@@ -162,14 +163,16 @@ MAP
 )
 
 want_tier() {  # core ⊂ wide ⊂ max ; `browser` is NEVER in any of them
-  # WHY `browser` IS ITS OWN TIER AND IS OFF BY DEFAULT. Measured 2026-09-17, on his screen:
-  # `opencli browser … open` drives a real window called "OpenCLI Browser", and it COMES TO
-  # THE FRONT — `--window background` and OPENCLI_WINDOW=background do not hold it back,
-  # because that flag places the CEO's own Chrome tabs, not the bridge's debugging window.
-  # He was working, a blank window jumped in front of him, and he asked what it was. A
-  # research sweep must never take his screen. The two channels that need the bridge
-  # (google-deep, quora-forums) are therefore opt-in: `--browser`, used when a door is
-  # genuinely walled and he knows a window will appear. Everything headless stays automatic.
+  # `browser` IS ITS OWN TIER, AND IT IS ON — HIS RULING, 2026-09-17.
+  # `opencli browser … open` drives a real window called "OpenCLI Browser" and brings it to
+  # the front; `--window background` cannot hold it back, because that flag places tabs
+  # inside his own Chrome, not the bridge's debugging window. It appeared while he was
+  # working and he asked what it was — then he ruled on it himself: *"pencere açılımı sorun
+  # değil yani iş aksamasın önemli olan bu."* So the two channels that need the bridge
+  # (google-deep, quora-forums) run by DEFAULT; `--no-browser` is there for the rare run that
+  # must not touch his screen. They cannot be made headless: measured the same day, the whole
+  # eleven-door chain against google.com/search returned a 921-byte cached snapshot and
+  # nothing else — Google shuts its own results page to every headless reader we have.
   case "$1" in
     browser) [ "$WITH_BROWSER" = "1" ] ;;
     *) case "$TIER" in
@@ -261,8 +264,20 @@ while IFS='|' read -r name tier cmd; do
   # rather than ||'d — an unwrapped `|| echo 0` prints the count AND the fallback.
   hits=$(awk '/^- |^[[:space:]]*\{|^Title:/{n++} END{print n+0}' "$OUT/$name.raw" 2>/dev/null)
   [ -z "$hits" ] && hits=0
+  # A PAGE THAT SAYS "SOMETHING WENT WRONG" IS NOT AN ANSWER. Measured 2026-09-17: the Quora
+  # channel returned 13 530 bytes and the table called it `ok` — the bytes were the site's own
+  # error page, "Something went wrong. Wait a moment and try again.", wrapped in its menu.
+  # Size is not success. These markers are exact sentences a site prints INSTEAD of content,
+  # and a channel that shows one is a hole, so its stand-in fires like any other failure.
+  broke=""
+  if [ "$size" -lt 60000 ] && grep -qiE "Something went wrong\. Wait a moment|Etwas ist schiefgelaufen|Are you a robot|Enable JavaScript to continue|Access Denied|unusual traffic from your computer" "$OUT/$name.raw" 2>/dev/null; then
+    broke=1
+  fi
   if [ "$code" != "0" ]; then
     status="FAIL (kod $code) — $(head -c 90 "$OUT/$name.err" 2>/dev/null | tr '\n' ' ')"
+    fail=$((fail+1)); FAILED_CHANNELS="$FAILED_CHANNELS $name"
+  elif [ -n "$broke" ]; then
+    status="FAIL — sayfa kendi hata metnini dondurdu (icerik yok)"
     fail=$((fail+1)); FAILED_CHANNELS="$FAILED_CHANNELS $name"
   elif [ "$size" -lt 40 ]; then
     status="BOS — kanal cevap verdi, sonuc yok"; empty=$((empty+1))

@@ -60,10 +60,10 @@ opencli youtube comments <url> --limit 100 -f yaml
 opencli twitter search "<q>" -f yaml         # full post text + urls
 opencli facebook search "<q>" -f yaml        # groups, pages, posts
 opencli browser <site> open <url> --window background && opencli browser <site> extract --window background
-#   ^ THIS ONE TAKES THE CEO'S SCREEN. The bridge raises a visible "OpenCLI Browser" window and
-#     --window background does not stop it (measured 2026-09-17, he saw it and asked what it
-#     was). Use it ONLY when a door is genuinely walled — a login, or a page no headless door
-#     can read — never as a first move, and say in block D that you used it.
+#   ^ This one raises a visible "OpenCLI Browser" window and --window background cannot stop
+#     it. The CEO ruled on 2026-09-17 that this is fine — "pencere açılımı sorun değil, iş
+#     aksamasın" — so use it whenever a door needs a login or defeats every headless reader.
+#     Say in block D that you used it, and never leave a page half-read behind it.
 #   ^ the universal key: it carries his session, so it reads what a logged-out fetcher cannot
 #     (Quora 19 739 B · a Facebook group's post bodies · an Instagram caption — all measured 2026-09-17)
 opencli browser <site> state|find|click|type|scroll   # when a page needs a hand, use it
