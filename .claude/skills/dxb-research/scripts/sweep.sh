@@ -147,6 +147,14 @@ v2ex|wide|opencli duckduckgo search "site:v2ex.com {Q}" -f yaml
 # Before the login every one of the eleven doors was walled. A login is worth more than a
 # fallback chain here, and it is the only channel on this list that needed one.
 quora-forums|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser quora open 'https://www.quora.com/search?q={U}' --window background >/dev/null 2>&1; opencli browser quora extract --window background"
+# QUORA IS READ THROUGH THE SITE, NOT THROUGH ITS SEARCH BOX. Measured 2026-09-17 in the
+# audit: the browser door returns Quora's own error page ("Something went wrong") on the
+# search page AND on the home page, in English and Turkish, while the session is alive —
+# so the site throttles the automated browser, and the login buys nothing here. The same
+# minute, a site-scoped Google query returned 8 real question pages and the reading chain
+# opened 3 of 3 (42-50 KB each, by the tenth door, jina-reader), carrying real answers.
+# So this channel finds the ADDRESSES and the chain takes what is inside them.
+quora|wide|opencli google search "site:quora.com {Q}" --limit 20 -f yaml
 linkedin|max|opencli linkedin search "{Q}" -f yaml
 zhihu|max|opencli zhihu search "{Q}" -f yaml
 linux-do|max|opencli linux-do search "{Q}" -f yaml

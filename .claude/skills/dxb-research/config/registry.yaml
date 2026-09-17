@@ -181,10 +181,30 @@ channels:
     tags: [first-hand, cn, forum]
     probe: opencli duckduckgo search "site:v2ex.com site reliability" -f yaml
     fallback: [linux-do, zhihu, exa]
+  quora:
+    # The door that WORKS, measured 2026-09-17: the site-scoped engine finds the question
+    # pages and the reading chain takes what is inside them. Quora's own search box, driven
+    # by the logged-in browser, answers with its error page.
+    tags: [first-hand, forum]
+    probe: opencli google search "site:quora.com site reliability" -f yaml
+    fallback: [duckduckgo, exa, reddit]
   quora-forums:
     tags: [first-hand, forum]
     probe: opencli duckduckgo search "site:quora.com site reliability" -f yaml
-    fallback: [stackoverflow, reddit, exa]
+    # `quora` first: it is the only stand-in that brings QUORA's own text back. The others
+    # cover the question, never the site.
+    fallback: [quora, stackoverflow, reddit, exa]
+  google-deep:
+    # It had NO stand-in at all until the 2026-09-17 audit, and it is one of the two doors
+    # onto Google. If the browser bridge dies, the CLI door and the keyless engines carry it.
+    tags: [search, serp]
+    probe: opencli google search "site reliability" -f yaml
+    fallback: [google, exa, parallel]
+  duckduckgo2:
+    # The second page of DuckDuckGo had no stand-in either; a different engine covers it.
+    tags: [search, serp]
+    probe: opencli duckduckgo search "site reliability" -f yaml
+    fallback: [exa, parallel, google]
   rednote:
     tags: [first-hand, cn]
     probe: opencli rednote search "可靠性" -f yaml
