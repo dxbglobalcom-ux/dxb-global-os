@@ -70,6 +70,15 @@ SWEEP_RUN="${DXB_RESEARCH_RUN:-}"
 
 # --- the channel map ------------------------------------------------------------------
 # Each entry: name|tier|command.
+#
+# EVERY CHANNEL ASKS FOR ITS MAXIMUM. Measured 2026-09-17, and the CEO caught it in one
+# glance: `google.raw` came back 1 971 bytes with SEVEN results while reddit returned
+# 149 KB. The engine was not weak — nobody had asked it for more: `opencli google search`
+# defaults to 10 results, reddit and twitter to 15, youtube to 20. The floors are raised to
+# the adapters' own maxima here (google 50, reddit 50, twitter 50, youtube 50, ddg two pages
+# of 10, which is its per-page ceiling). A search engine returns HEADLINES either way — the
+# bodies come from the reading chain below, which is why google's file is small by nature
+# and reddit's is large: reddit hands back the post text itself.
 #   {Q} → the full query, as the CEO would phrase it.
 #   {G} → the first four words only. Code forges match tokens, not sentences: measured
 #         2026-09-16, `gh search repos "Claude Design Open Design which is better"` returned
@@ -81,7 +90,13 @@ SWEEP_RUN="${DXB_RESEARCH_RUN:-}"
 export SKILL="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 UQ=$(python3 -c 'import urllib.parse,sys;print(urllib.parse.quote_plus(sys.argv[1]))' "$QUERY")
 # What {Q}/{G}/{U} become inside a channel line: a variable READ, not the text itself.
-Q_REF='$DXB_Q'; G_REF='$DXB_G'; U_REF='$DXB_U' 
+Q_REF='$DXB_Q'; G_REF='$DXB_G'; U_REF='$DXB_U'; S_REF='$DXB_S'
+# THE BROWSER CHANNELS NEED A SESSION OF THEIR OWN. Measured 2026-09-17: two sweeps running
+# at once (the same question in two languages) both drove the session named `google`, and the
+# second extract read the FIRST one's page — both files came back 15 221 bytes, byte for byte
+# identical, for two different queries. A shared tab lease is a shared answer. Each sweep now
+# leases its own, and closes it at the end.
+BSESS="dxb$$" 
 GQ=$(echo "$QUERY" | awk '{for(i=1;i<=4&&i<=NF;i++) printf "%s%s", $i, (i<4&&i<NF?" ":"")}')
 CHANNELS=$(cat <<'MAP'
 exa|core|"$SKILL/scripts/mcpx.sh" exa "{Q}" 8
@@ -89,17 +104,27 @@ parallel|core|"$SKILL/scripts/mcpx.sh" parallel "{Q}" 8
 tavily|core|"$SKILL/scripts/mcpx.sh" tavily "{Q}" 8
 firecrawl|core|"$SKILL/scripts/mcpx.sh" firecrawl "{Q}" 8
 youcom|core|"$SKILL/scripts/mcpx.sh" youcom "{Q}" 8
-google|core|opencli google search "{Q}" -f yaml
-reddit|core|opencli reddit search "{Q}" -f yaml
-hackernews|core|opencli hackernews search "{Q}" -f yaml
-twitter|core|opencli twitter search "{Q}" -f yaml
+google|core|opencli google search "{Q}" --limit 50 -f yaml
+# THE CLI DOOR TO GOOGLE IS CAPPED AT ONE PAGE. Measured 2026-09-17: `--limit 50` and
+# `--limit 10` both return NINE results — the adapter reads page one and stops, so raising
+# the flag changes nothing. The CEO saw the consequence in one glance ("koskoca bir arama
+# kaynağı değil mi?"). Google itself is not capped: its own results page, opened through the
+# browser bridge that carries his session, hands back 18 external links at num=30 — including
+# two Reddit threads the CLI channel never returned. So Google is entered twice, by two
+# different doors, and `hl=en` keeps the world's own language in the results.
+google-deep|core|opencli browser {S} open "https://www.google.com/search?q={U}&num=30&hl=en" --window background >/dev/null 2>&1; opencli browser {S} extract --window background
+google-forum|wide|opencli google search "{Q} site:reddit.com OR site:news.ycombinator.com OR site:stackoverflow.com" --limit 50 -f yaml
+reddit|core|opencli reddit search "{Q}" --limit 50 -f yaml
+hackernews|core|opencli hackernews search "{Q}" --limit 50 -f yaml
+twitter|core|opencli twitter search "{Q}" --limit 50 -f yaml
 github-repos|core|gh search repos "{G}" --limit 15 --json fullName,stargazersCount,description,updatedAt
 github-issues|core|gh search issues "{G}" --limit 20 --json repository,title,createdAt,state,url
-youtube|core|opencli youtube search "{Q}" -f yaml
-duckduckgo|wide|opencli duckduckgo search "{Q}" -f yaml
+youtube|core|opencli youtube search "{Q}" --limit 50 -f yaml
+duckduckgo|wide|opencli duckduckgo search "{Q}" --limit 10 -f yaml
+duckduckgo2|wide|opencli duckduckgo search "{Q}" --limit 10 --offset 10 -f yaml
 lobsters|wide|opencli duckduckgo search "site:lobste.rs {Q}" -f yaml
-stackoverflow|wide|opencli stackoverflow search "{Q}" -f yaml
-medium|wide|opencli medium search "{Q}" -f yaml
+stackoverflow|wide|opencli stackoverflow search "{Q}" --limit 50 -f yaml
+medium|wide|opencli medium search "{Q}" --limit 50 -f yaml
 devto|wide|opencli duckduckgo search "site:dev.to {Q}" -f yaml
 producthunt|wide|opencli duckduckgo search "site:producthunt.com {Q}" -f yaml
 bluesky|wide|opencli bluesky search "{Q}" -f yaml
@@ -111,7 +136,7 @@ v2ex|wide|opencli duckduckgo search "site:v2ex.com {Q}" -f yaml
 # from that first read: the page came back as "Profilfoto für Dxb Company", 13 088 chars.
 # Before the login every one of the eleven doors was walled. A login is worth more than a
 # fallback chain here, and it is the only channel on this list that needed one.
-quora-forums|wide|opencli browser quora open "https://de.quora.com/search?q={U}" --window background >/dev/null 2>&1; opencli browser quora extract --window background
+quora-forums|wide|opencli browser {S}q open "https://www.quora.com/search?q={U}" --window background >/dev/null 2>&1; opencli browser {S}q extract --window background
 linkedin|max|opencli linkedin search "{Q}" -f yaml
 zhihu|max|opencli zhihu search "{Q}" -f yaml
 linux-do|max|opencli linux-do search "{Q}" -f yaml
@@ -153,16 +178,18 @@ while IFS='|' read -r name tier cmd; do
   # confidentiality rule. The placeholders now become SHELL VARIABLE READS inside the
   # quotes the template already has, so bash passes the text as ONE argument and never
   # re-parses it. Q/G/U are exported to each child below.
-  run="${cmd//\{Q\}/$Q_REF}"
+  run="${cmd//\{S\}/$S_REF}"
+  run="${run//\{Q\}/$Q_REF}"
   run="${run//\{G\}/$G_REF}"
   run="${run//\{U\}/$U_REF}"
   # the same command with any --window flag stripped from the TEMPLATE, for the retry below
   cmd_nw="${cmd// --window background/}"
-  run_nw="${cmd_nw//\{Q\}/$Q_REF}"
+  run_nw="${cmd_nw//\{S\}/$S_REF}"
+  run_nw="${run_nw//\{Q\}/$Q_REF}"
   run_nw="${run_nw//\{G\}/$G_REF}"
   run_nw="${run_nw//\{U\}/$U_REF}"
   (
-    DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" timeout "$TMO" bash -c "$run" \
+    DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
         > "$OUT/$name.raw" 2> "$OUT/$name.err"
     rc=$?
     # Safety net for a hand-edited channel line that still carries the flag: an adapter that
@@ -173,7 +200,7 @@ while IFS='|' read -r name tier cmd; do
     # and the retry would re-send the flag. Measured 2026-09-16: that is exactly how
     # stackoverflow, bluesky and substack were lost from one sweep.
     if [ $rc -ne 0 ] && grep -q "unknown option '--window'" "$OUT/$name.err" 2>/dev/null; then
-      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" timeout "$TMO" bash -c "$run_nw" \
+      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run_nw" \
           > "$OUT/$name.raw" 2> "$OUT/$name.err"
       rc=$?
     fi
@@ -256,8 +283,8 @@ PYEOF
       if [ "$subcode" = "0" ] && [ "$subsize" -ge 40 ]; then
         echo "   $dead -> $sub (zaten bu turda calisti, kapak o)"; break
       fi
-      run="${subcmd//\{Q\}/$Q_REF}"; run="${run//\{G\}/$G_REF}"; run="${run//\{U\}/$U_REF}"
-      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" timeout "$TMO" bash -c "$run" \
+      run="${subcmd//\{S\}/$S_REF}"; run="${run//\{Q\}/$Q_REF}"; run="${run//\{G\}/$G_REF}"; run="${run//\{U\}/$U_REF}"
+      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
           > "$OUT/$dead-via-$sub.raw" 2> "$OUT/$dead-via-$sub.err"
       subrc=$?
       sz=$(wc -c < "$OUT/$dead-via-$sub.raw" 2>/dev/null || echo 0)
@@ -401,5 +428,10 @@ echo
 # runs/CURRENT when it FINISHES — so on 2026-09-16 a sweep begun under one run wrote
 # 127 rows into a different run that had been opened meanwhile. Carry the id instead.
 python3 "$SKILL/scripts/ingest.py" "$OUT" --query "$QUERY" --gap "opening the ground" ${SWEEP_RUN:+--run "$SWEEP_RUN"} || true
+
+# hand the browser leases back — a tab left open is a tab on his screen tomorrow
+for s in "$BSESS" "${BSESS}q"; do
+  OPENCLI_WINDOW=background timeout 30 opencli browser "$s" close --window background >/dev/null 2>&1 || true
+done
 
 exit 0

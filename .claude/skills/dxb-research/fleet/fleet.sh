@@ -63,15 +63,34 @@ echo
 # the 34-channel ground ITSELF, once, before a single hunter is launched, and hands every
 # lane the raw files. Google and DuckDuckGo are therefore searched on EVERY run, by
 # construction, and a hunter spends its minutes reading instead of deciding whether to look.
+# THE QUESTION FILE MAY CARRY MORE THAN ONE LINE, and every line becomes its own ground.
+# Line 1 is his question, verbatim, and it is what the hunters are told to answer. Lines 2+
+# are the SAME question in the language the subject actually lives in — usually English —
+# plus any token-shaped variant a forge needs. Measured 2026-09-17, and he caught it from
+# one glance at the output: asked in Turkish, Google answered in Turkish — datacamp.com/tr
+# and a Turkish YouTube short — while the argument itself is being had in English. A door
+# that is asked in the wrong language is a door half opened.
 GROUND="$OUT/ground"
-echo "genis zemin aciliyor (34 kanal, bir kez, filonun tamami icin)..."
-bash "$SKILL/scripts/sweep.sh" "$QUESTION" "$GROUND" --tier max --pages 8 \
-     > "$OUT/ground.log" 2>&1
-ok=$(grep -c '  ok$' "$OUT/ground.log" 2>/dev/null || echo 0)
-gsz=$(wc -c < "$GROUND/google.raw" 2>/dev/null || echo 0)
-dsz=$(wc -c < "$GROUND/duckduckgo.raw" 2>/dev/null || echo 0)
-pages=$(find "$GROUND/pages" -name '*.md' 2>/dev/null | wc -l)
-echo "   zemin hazir: $(ls "$GROUND"/*.raw 2>/dev/null | wc -l) kanal dosyasi · google ${gsz} bayt · duckduckgo ${dsz} bayt · okunan sayfa ${pages}"
+n_g=0
+while IFS= read -r gq || [ -n "$gq" ]; do
+  [ -z "$(printf '%s' "$gq" | tr -d '[:space:]')" ] && continue
+  n_g=$((n_g+1))
+  if [ "$n_g" -eq 1 ]; then d="$GROUND"; else d="$GROUND-$n_g"; fi
+  echo "genis zemin $n_g aciliyor (35 kanal): $(printf '%s' "$gq" | head -c 70)"
+  bash "$SKILL/scripts/sweep.sh" "$gq" "$d" --tier max --pages 8 > "$OUT/ground-$n_g.log" 2>&1 &
+done < "$QF"
+wait
+GROUND_DIRS=""
+for d in "$GROUND" "$GROUND"-*; do [ -d "$d" ] && GROUND_DIRS="$GROUND_DIRS $d"; done
+tg=0; tp=0
+for d in $GROUND_DIRS; do
+  tg=$(( tg + $(ls "$d"/*.raw 2>/dev/null | wc -l) ))
+  tp=$(( tp + $(find "$d/pages" -name '*.md' 2>/dev/null | wc -l) ))
+done
+gsz=0; [ -f "$GROUND/google.raw" ] && gsz=$(wc -c < "$GROUND/google.raw")
+gsz2=0; [ -f "$GROUND-2/google.raw" ] && gsz2=$(wc -c < "$GROUND-2/google.raw")
+dsz=0; [ -f "$GROUND/duckduckgo.raw" ] && dsz=$(wc -c < "$GROUND/duckduckgo.raw")
+echo "   zemin hazir: $n_g dil/sorgu · $tg kanal dosyasi · google ${gsz}+${gsz2} bayt · duckduckgo ${dsz} bayt · okunan sayfa ${tp}"
 echo
 
 ARSENAL="$(cat "$HERE/ARSENAL.md")"
@@ -83,9 +102,10 @@ for role in $PICK; do
     printf '%s\n\n' "$ARSENAL"
     printf 'YOUR LANE — %s\n\n' "$line"
     printf 'THE QUESTION THE FLEET IS ANSWERING:\n%s\n\n' "$QUESTION"
-    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 34 channels before you were launched.\n'
-    printf 'One file per channel, raw, including google.raw and duckduckgo.raw, plus the page\n'
-    printf 'bodies it already read:\n    %s/*.raw\n    %s/pages/*.md\n' "$GROUND" "$GROUND"
+    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 35 channels, in every language of the\n'
+    printf 'question, before you were launched. One file per channel, raw, including google.raw\n'
+    printf 'and duckduckgo.raw, plus the page bodies it already read:\n'
+    for gd in $GROUND_DIRS; do printf '    %s/*.raw   %s/pages/*.md\n' "$gd" "$gd"; done
     printf 'READ WHAT IS YOURS THERE FIRST (`ls`, `head -c`, grep) before you search again;\n'
     printf 'searching for what is already on disk is the laziness this fleet exists to end.\n'
     printf 'Name in block A which of those channels carried something for your lane.\n\n' 
