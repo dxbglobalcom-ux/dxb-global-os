@@ -213,12 +213,17 @@ def door_playwright(url: str, tmo: int) -> tuple[str, str]:
 
 
 def door_jina(url: str, tmo: int) -> tuple[str, str]:
-    rc, out, err = _sh(f"curl -sS -m {tmo} {shlex.quote('https://r.jina.ai/' + url)}", tmo + 5)
+    # ENGLISH, ALWAYS. Measured 2026-09-17: Quora answered this machine in German — its
+    # German corpus is a fraction of the English one, and the CEO caught it in one line
+    # ("almanla işimiz yok"). Without a language header the site guesses from the exit IP.
+    rc, out, err = _sh(f"curl -sS -m {tmo} -H 'Accept-Language: en-US,en;q=0.9' "
+                       f"{shlex.quote('https://r.jina.ai/' + url)}", tmo + 5)
     return out, ("" if rc == 0 else f"rc={rc} {err}")
 
 
 def door_curl(url: str, tmo: int) -> tuple[str, str]:
-    rc, out, err = _sh(f"curl -sSL -m {tmo} -A {shlex.quote(UA)} {shlex.quote(url)}", tmo + 5)
+    rc, out, err = _sh(f"curl -sSL -m {tmo} -H 'Accept-Language: en-US,en;q=0.9' "
+                       f"-A {shlex.quote(UA)} {shlex.quote(url)}", tmo + 5)
     if rc != 0:
         return "", f"rc={rc} {err}"
     text = re.sub(r"<script.*?</script>|<style.*?</style>", " ", out, flags=re.S | re.I)

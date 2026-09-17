@@ -66,6 +66,11 @@ if [ -z "$QUERY" ] || [ -z "$OUT" ]; then
 fi
 mkdir -p "$OUT"
 
+# The sentences a site prints INSTEAD of content. ONE owner, scripts/rlib.py — the reading
+# chain judges by the same list, which it did not until 2026-09-17.
+SITE_ERROR_RE=$(python3 -c "import sys;sys.path.insert(0,'$(dirname "${BASH_SOURCE[0]}")');import rlib;print(rlib.SITE_ERROR)" 2>/dev/null)
+[ -z "$SITE_ERROR_RE" ] && SITE_ERROR_RE="something went wrong\. wait a moment|etwas ist schiefgelaufen|are you a robot"
+
 # The run this sweep belongs to, resolved ONCE, here at the start.
 SWEEP_RUN="${DXB_RESEARCH_RUN:-}"
 [ -z "$SWEEP_RUN" ] && SWEEP_RUN="$(cat "$(dirname "${BASH_SOURCE[0]}")/../runs/CURRENT" 2>/dev/null || true)"
@@ -278,7 +283,7 @@ while IFS='|' read -r name tier cmd; do
   # Size is not success. These markers are exact sentences a site prints INSTEAD of content,
   # and a channel that shows one is a hole, so its stand-in fires like any other failure.
   broke=""
-  if [ "$size" -lt 60000 ] && grep -qiE "Something went wrong\. Wait a moment|Etwas ist schiefgelaufen|Are you a robot|Enable JavaScript to continue|Access Denied|unusual traffic from your computer" "$OUT/$name.raw" 2>/dev/null; then
+  if [ "$size" -lt 60000 ] && grep -qiE "$SITE_ERROR_RE" "$OUT/$name.raw" 2>/dev/null; then
     broke=1
   fi
   if [ "$code" != "0" ]; then

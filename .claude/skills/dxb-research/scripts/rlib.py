@@ -338,6 +338,13 @@ def registrable_domain(url: str) -> str:
 
 
 # ---------------------------------------------------------------- page quality
+# The exact sentences a site prints INSTEAD of content. ONE owner: sweep.sh reads this
+# string from here (`python3 -c "import rlib; print(rlib.SITE_ERROR)"`), so a sentence
+# added once is known by the sweep AND by the reading chain.
+SITE_ERROR = (r"something went wrong\. wait a moment|etwas ist schiefgelaufen|"
+              r"are you a robot|enable javascript to continue|"
+              r"unusual traffic from your computer")
+
 _WALL = re.compile(
     r"(sorry, you have been blocked|attention required!\s*\|\s*cloudflare|enable cookies|"
     r"checking your browser|just a moment\.\.\.|please verify you are a human|"
@@ -354,6 +361,13 @@ _WALL = re.compile(
     # sentence LAST, so a head-only test never reached it.
     r"you've been blocked by network security|you have been blocked by network security|"
     r"you (have been|are being) rate[- ]limited|429 too many)", re.I)
+
+# The site's own error sentence, judged separately: measured 2026-09-17, it can sit on TOP
+# of a page that also carries the content, so it is a wall only when nothing else is there.
+# sweep.sh reads this same string from here — it used to keep its own copy.
+_SITE_ERR = re.compile(SITE_ERROR, re.I)
+
+_SITE_ERR = re.compile(SITE_ERROR, re.I)
 
 _NAVISH = re.compile(r"\[[^\]]{0,80}\]\([^)]{0,200}\)")
 
@@ -424,6 +438,14 @@ def looks_like_wall(text: str) -> bool:
             return True
         # The refusal can sit AFTER the blob. Test the words, not the first 4000 bytes.
         if len(stripped) < 4000 and _WALL.search(stripped):
+            return True
+    # THE BANNER CAN SIT ON TOP OF THE CONTENT. Measured 2026-09-17: Quora prints
+    # "Something went wrong. Wait a moment" at the head of a page that also carries 46
+    # answers — 4 866 words. Its login shell carries 66. So the site's own error sentence
+    # is a wall only when there is nothing else on the page.
+    if _SITE_ERR.search(head):
+        words = re.findall(r"[A-Za-z\u00c0-\u024f]{3,}", _NAVISH.sub(" ", body))
+        if len(words) < 300:
             return True
     return bool(_WALL.search(head))
 
