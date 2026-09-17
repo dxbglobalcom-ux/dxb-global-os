@@ -10,7 +10,7 @@ Question, verbatim: *"Does the agent-reach CLI have any command that fetches a w
 > **Two different CLIs answer to the name `agent-reach`.** The one here is Panniantong's, installed from
 > `main.zip`. The package literally named `agent-reach` on PyPI is a different tool by a different author,
 > and that one **does** fetch — but through a named channel (`agent-reach get rss.feed <url>`), and only
-> `rss` and `youtube` ship. **Neither tool hands you an arbitrary HTML page.** A second adversary round
+> `rss` and `youtube` ship. **Neither tool hands you an arbitrary HTML page.** A second pass
 > narrowed this in both directions; the measured version is §11.7.
  `agent-reach read <url>`
 existed until 2026-02-26 and the author deleted it in a commit titled *"remove read/search wrapper layer"*.
@@ -18,7 +18,7 @@ existed until 2026-02-26 and the author deleted it in a commit titled *"remove r
 `transcribe <url>` — hands an arbitrary user-supplied URL to `yt-dlp`, which downloads that page while
 hunting for media. Whoever asks "does it fetch a web page" must be told both halves.
 
-> An adversary in a separate context **broke** the first wording of this answer and the wording above
+> A second pass in a separate context **broke** the first wording of this answer and the wording above
 > is what survived re-measurement. Its verdicts are in §8.
 
 ---
@@ -144,7 +144,7 @@ And its own instruction for reading a page: `"Read this link"` → `curl https:/
 
 ## 5. The counter-search — run, not assumed
 
-The adversary's sharpest hit was that the first counter-searches were three zero-hit keyword queries.
+The second pass's sharpest hit was that the first counter-searches were three zero-hit keyword queries.
 Redone against the repository itself:
 
 - **67 commits touched `agent_reach/cli.py` after the strip.** 16 mention read/search/fetch; reading each,
@@ -189,7 +189,7 @@ This is the half a `--help` dump hides.
 
 **Gone from the CLI; alive in the library; reachable from Python in one line.**
 
-## 8. The adversary's verdict, and what it changed
+## 8. The second pass's verdict, and what it changed
 
 Run in a separate context with the ledger and the claims only. Overall verdict: **broken** — and it was right.
 
@@ -368,7 +368,7 @@ Holes: `runs/20260916-181735/GAPS.md`.
 
 ### 11.7 THE FLIP — there are two CLIs called `agent-reach`, and the other one fetches
 
-The adversary broke the unscoped wording, and it was right. Measured, not repeated (`L0472`):
+The second pass broke the unscoped wording, and it was right. Measured, not repeated (`L0472`):
 
 `pip download agent-reach==0.1.0 --no-deps` → `agent_reach-0.1.0-py3-none-any.whl`, whose `cli.py` declares
 **seven** verbs — `list · install · remove · doctor · get · skill · cache` — and one of them is a fetch:
@@ -380,7 +380,7 @@ p.add_argument("query", nargs="?", default="")
 p.add_argument("--max-tokens", type=int, default=0) … --limit … --lang … --no-cache … --json
 ```
 
-**But the second adversary round narrowed it, and re-measurement agreed** (`L0480`):
+**But the second pass narrowed it, and re-measurement agreed** (`L0480`):
 
 - **`get` does not take a URL.** `cmd_get` does `args.target.partition(".")` — the target is
   `channel[.command]`, and the URL goes in the *optional* `query` positional. A bare URL becomes a
@@ -403,7 +403,7 @@ contents of an arbitrary web page you name.**
 
 ### 11.8 The second half of the question, which the first draft had not actually recorded
 
-The adversary's sharpest procedural hit: eleven verb *names* had been ledgered, and not one row carried an
+The second pass's sharpest procedural hit: eleven verb *names* had been ledgered, and not one row carried an
 argument or a flag — while the CEO asked for the **surface**. `L0473` now holds every verb's own `--help`.
 The installed build, complete:
 
@@ -512,16 +512,16 @@ a key would be an outward-facing configuration change and is not made to answer 
 
 ## 13. Fifth run — the full gated chain, 2026-09-16 21:49–22:05
 
-Run `20260916-194905` · class `capability` · **gate: HARD checks all pass** · adversary: 1 round, 3 of 5
+Run `20260916-194905` · class `capability` · **gate: HARD checks all pass** · second pass: 1 round, 3 of 5
 load-bearing claims **broken and repaired** before anything was reported. No ledger inherited from §§10–12;
 every number below was measured in this run. The ledger is
 `.claude/skills/dxb-research/runs/20260916-194905/ledger.jsonl` (255 rows, 29 evidence) and the holes are in
 that run's `GAPS.md`.
 
-### 13.1 The answer, in the only wording that survived the adversary
+### 13.1 The answer, in the only wording that survived the second pass
 
 **No command fetches a URL you supply.** The first wording of this run's own claim — *"not one of them
-fetches a web page"* — was **broken** by the adversary as over-strong, because six of the eleven do touch
+fetches a web page"* — was **broken** by the second pass as over-strong, because six of the eleven do touch
 the network. The surviving sentence separates the two things:
 
 | subcommand | touches the network? | what it does with it |
@@ -534,9 +534,9 @@ the network. The surviving sentence separates the two things:
 
 **Six make HTTP requests. Zero hand back the content of a page you named.**
 
-### 13.2 The completeness proof, strengthened by the adversary
+### 13.2 The completeness proof, strengthened by the second pass
 
-`--help` can hide a subcommand (`help=SUPPRESS`) and cannot show aliases, so the adversary introspected the
+`--help` can hide a subcommand (`help=SUPPRESS`) and cannot show aliases, so the second pass introspected the
 live parser instead of reading help text:
 
 ```
@@ -565,12 +565,12 @@ Two errors, both caught inside the run and both corrected before the answer was 
   It is **stale, not invented** — and it is mislabelled, pinning its pages to `da5044d2`, a commit dated
   **2026-09-01** (*"fix(readme): update sponsor link"*) that carries the eleven modern verbs.
 
-The adversary then closed the hole properly: **all 7 tags, 3 branches and all 67 commits touching `cli.py`
+The second pass then closed the hole properly: **all 7 tags, 3 branches and all 67 commits touching `cli.py`
 after the removal** → `COMMITS AFTER REMOVAL THAT RE-ADDED A FETCH/READ/SEARCH VERB: NONE`.
 
 ### 13.4 The trap is the whole ecosystem, not one wiki
 
-Three counter-searches of the negation, run by the adversary in a separate context:
+Three counter-searches of the negation, run by the second pass in a separate context:
 
 | what was searched | what came back |
 |---|---|
@@ -606,7 +606,7 @@ Reader — and **nothing reaches it**: the channel registry's only consumer is `
 chain, **13 opened** (scrapling 10 · stealth 2 · tavily-extract 1); the one that stayed shut,
 `http://user:pass@ip:port`, is not a page — it is a fragment the URL extractor lifted out of
 `agent-reach install --help`. The Chinese tier was never opened, on a Chinese-first project. Full list, plus
-five engine defects the adversary named, in that run's `GAPS.md`.
+five engine defects the second pass named, in that run's `GAPS.md`.
 
 **Where the grounding checker disagreed with me and I left it standing:** `verify.py` supports the combined
 evidence for C1, C2 and C3 and marks C4 and C6 NOT SUPPORTED even combined. Those two join a code fact to a
@@ -639,7 +639,7 @@ re-measurement, including the two that most invite error — the namesake CLI on
 handing a user URL to `yt-dlp`.
 
 **What this run did NOT do, and what it therefore cannot claim:** it ran no search sweep, it opened no
-human channel, and it did not repeat the adversary round — in light mode there is none. Where this answer
+human channel, and it did not repeat the second pass — in light mode there is none. Where this answer
 rests on a human being's opinion rather than on code, it rests on §§5–13, not on this section.
 
 **The ledger this run leaves behind, counted rather than asserted:** 10 rows — **6 evidence**

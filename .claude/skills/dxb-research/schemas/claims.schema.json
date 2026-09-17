@@ -11,7 +11,7 @@
       "text": {"type": "string"},
       "cites": {"type": "array", "items": {"type": "string", "pattern": "^L[0-9]{4}$"}, "minItems": 1},
       "type": {"enum": ["fact","user-report","interpretation","recommendation"]},
-      "load_bearing": {"type": "boolean", "description": "the 3-5 sentences the answer rests on; these get a contradiction search and an adversary"},
+      "load_bearing": {"type": "boolean", "description": "the 3-5 sentences the answer rests on; these get a contradiction search"},
       "confidence": {"enum": ["PROVEN","LIKELY","UNPROVEN"]},
       "about_the_source": {"type": "boolean", "description": "the claim is ABOUT the cited page (e.g. 'this is a vendor page'), so vendor-only citation is legitimate"},
       "caveat": {"type": ["string","null"]}

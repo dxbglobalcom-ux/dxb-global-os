@@ -108,10 +108,10 @@ is answered rather than rejected.
   tavily-extract 2.
 - **Grounding check** (`bespoke-minicheck`, local): 5 / 5 load-bearing claims supported by their
   cited passage.
-- **Adversary** (`agents/refuter.md`, separate context): **weakened**, not broken. C1, C2, C4, C5
+- **Second pass** (separate context): **weakened**, not broken. C1, C2, C4, C5
   stand; C3 weakened as an *answer shape* — Tavily's own page says *"Clients that only accept a URL
   can't send it; use an API key with those"*, so a bare URL is not a usable answer for Tavily and
-  the header travels with it. Every number the adversary reported was re-measured here before it
+  the header travels with it. Every number the second pass reported was re-measured here before it
   was written down. Its findings became rows L0239–L0241 and claims C11–C15, and it caught a
   citation defect that was repaired (C7 re-pointed from L0217 to L0237).
 
@@ -314,9 +314,9 @@ ceiling measured; four channels produced nothing (`producthunt` failed outright)
 doc pages were first recorded as READ when the reading chain had actually filed a Tavily quota
 error as the page body — a defect in `fetch.py` that belongs to B46 and is named there.
 
-## The adversary's round — verdict WEAKENED, and what it changed
+## The second pass's round — verdict WEAKENED, and what it changed
 
-The refuter ran in a separate context with the ledger and the claims and nothing else, re-ran
+The second pass ran in a separate context with the ledger and the claims and nothing else, re-ran
 every probe on this machine at 18:11–18:12 UTC, and reproduced **all five 200s and every negative
 control**. It broke one sentence:
 
@@ -339,11 +339,11 @@ not deleted; C1, C2, C4 and C5 stand.
 | keyless `tools/call` | result |
 |---|---|
 | Exa `web_search_exa` | real search results |
-| Parallel, Firecrawl, You.com (adversary's runs) | real search results |
+| Parallel, Firecrawl, You.com (second pass's runs) | real search results |
 | Tavily `tavily_search` via the header | 200 carrying `monthly_cap_reached_bonus_eligible` |
 | Tavily `tavily_search` via `?tavilyApiKey=` | 200 carrying `Invalid Tavily API key: … is empty` |
 
-**Parallel prices the anonymous call in its own reply** — the adversary read
+**Parallel prices the anonymous call in its own reply** — the second pass read
 `"parallel/usage":[{"name":"sku_search","count":1,"cost_usd":0.001}]` off the response body.
 Keyless, metered, and costed. Nothing is billed to us; the meter is theirs.
 
@@ -353,7 +353,7 @@ The independence check is **inoperative for a question shaped like this one.** C
 domain-keyed, so a vendor's own documentation page and a probe of that vendor's own server always
 collapse into a single cluster. C1, C3 and C4 each therefore rest on one cluster — by this
 engine's own rule, one citation apiece. What actually made this answer independent was the
-adversary's separate re-measurement, not the cluster count. **That belongs to B46.**
+second pass's separate re-measurement, not the cluster count. **That belongs to B46.**
 
 Full hole list: `.claude/skills/dxb-research/runs/20260916-180812/GAPS.md`.
 
@@ -439,7 +439,7 @@ whether any of the five changes behaviour for a datacentre IP.
 
 A fresh session, the same closed roster, the whole gated chain walked again from `open` to `close`:
 wide sweep (22 channels, 19 answered), 6 vendor documents fetched and read, 27 evidence rows,
-17 independent clusters, 5 contradiction searches, the local grounding checker, and an adversary in
+17 independent clusters, 5 contradiction searches, the local grounding checker, and a second pass in
 a separate context that issued **its own** POSTs.
 
 ## The answer — unchanged, and now reproduced by two independent probers
@@ -452,13 +452,13 @@ a separate context that issued **its own** POSTs.
 | **Firecrawl** | `https://mcp.firecrawl.dev/v2/mcp` | nothing but the transport `Accept` | **200**, 10476 B |
 | **You.com** | `https://api.you.com/mcp?profile=free` | the `?profile=free` parameter + transport `Accept` | **200**, 9105 B |
 
-Author's probe ran twice, 74 s apart, byte-identical. The **adversary re-ran all seven requests with
+Author's probe ran twice, 74 s apart, byte-identical. The **second pass re-ran all seven requests with
 its own curl ~10 minutes later: every status code, every tool name and every byte count matched.**
 Negative controls reproduced: `mcp.tavily.com/mcp/` bare → **401** (`www-authenticate: Bearer`),
 `api.you.com/mcp` without the parameter → **401** *"Unauthorized: OAuth authentication required"*.
 Host control: no `~/.curlrc`, no `~/.netrc`, no vendor `*_API_KEY` in the environment.
 
-## New this run — the named URL is not the only keyless URL (adversary's catch, author re-measured)
+## New this run — the named URL is not the only keyless URL (second pass's catch, author re-measured)
 
 **Aliases of the same server** — same tools, byte-identical bodies:
 `https://mcp.exa.ai/` (bare root) · `https://mcp.firecrawl.dev/mcp` · `https://mcp.firecrawl.dev/v1/mcp`.
@@ -498,7 +498,7 @@ caller, carrying no identity — but for three of the five it is not optional ei
   fixed it. Proof against the live capped door: `looks_like_api_error → True`, `fetch._ok → False`,
   so `fetch()` no longer breaks the chain there. 12/12 detector cases and 6/6 of this run's own
   pages green afterwards; all seven sibling scripts still execute.
-- Everything else the adversary named — `initialize` never sent, `L0226`'s URL artifact, three vendor
+- Everything else the second pass named — `initialize` never sent, `L0226`'s URL artifact, three vendor
   rows typed `secondary`, no dated documentary row — is written into
   `.claude/skills/dxb-research/runs/20260916-192859/GAPS.md` and left standing.
 

@@ -664,35 +664,6 @@ to let the turn end until machine-checkable conditions hold.
 
 **Verdict: necessary, not sufficient.** C guarantees *effort*. It cannot guarantee *truth*.
 
-### Architecture D — **Adversarial Two-Party Research**
-
-A second agent, in a **separate context**, whose only job is to falsify the draft answer. The
-research is not finished when the researcher says so; it is finished when the refuter fails to
-break it. The refuter receives the ledger and the claims, never the researcher's reasoning.
-
-**Why it is not just "self-review".** The evidence is unambiguous that self-critique does not
-work: *"LLMs struggle to self-correct their responses without external feedback, and at times,
-their performance even degrades after self-correction"* (ICLR 2024), with the mechanism named —
-*"self-reflection operates within the same reasoning context that produced the error. The model
-tends to treat its previous outputs as established premises."* The repair is precisely a
-separate context: *"Although the DeepVerifier shares the same base model, the separated prompt
-context prevents it from inheriting the reasoning assumptions of the main agent."* Measured
-elsewhere: ablating verification drops faithfulness **0.46 → 0.20**; a rubric-based verifier
-beats agent-as-judge by **12–48 % meta-eval F1**. And Anthropic's own production system does
-exactly this — a separate **CitationAgent** stage plus a five-criterion rubric judge.
-
-**Attack.**
-1. **Cost.** Anthropic measured multi-agent research at **~15× the tokens** of a chat. A refuter
-   on every claim is not free.
-2. **Same-family blindness.** A refuter built on the same model may share the researcher's
-   blind spots; separation of *context* is proven to help, separation of *model* is not.
-3. **It has no floor.** A refuter that finds nothing proves nothing if the researcher only
-   opened three channels. D without C audits a shallow expedition beautifully.
-4. **Adversarial drift.** An unbounded refuter can always find *something* to object to, and the
-   loop never closes.
-
-**Verdict: necessary, not sufficient.** D guarantees *scrutiny*. It cannot guarantee *effort*.
-
 ### Architecture E — **Own the Loop** (research as a binary outside Claude Code)
 
 Build the research engine on the Agent SDK as a separate process, where `tool_choice: "any"`,
@@ -711,24 +682,22 @@ runtime forever.
 **Verdict: rejected.** The one thing it uniquely offers (`minItems ≥ 2`) is worth less than the
 thing it costs, and it optimises the fabrication failure rather than the omission failure.
 
-### A vs B vs C vs D vs E
+### A vs B vs C vs E
 
-| | A prompt | B orchestrator | C gated ledger | D adversary | E own loop |
-|---|---|---|---|---|---|
-| forces more work | ❌ | partly | **✅ PROVEN §3** | ❌ | ❌ |
-| forces breadth across channels | ❌ | ✅ (frozen at design time) | ✅ (by evidence type) | ❌ | ❌ |
-| detects fabricated citations | ❌ | ❌ | ✅ (ledger-referent check) | ✅ | ❌ (**makes them**) |
-| judges whether evidence supports a claim | ❌ | ❌ | ❌ | **✅** | ❌ |
-| survives a compacted context / tired session | ❌ | ✅ | ✅ | ✅ | ✅ |
-| adapts to an unforeseen source | ✅ | ❌ | ✅ | ✅ | ✅ |
-| build cost | zero | high | **low** (2 scripts + 1 hook) | low–medium | very high |
-| running cost | zero | medium | near zero | **~15× tokens on the verified part** | medium |
-| forbidden by `STACK.md` | no | **yes** | no | no | **yes (second runtime)** |
+| | A prompt | B orchestrator | C gated ledger | E own loop |
+|---|---|---|---|---|
+| forces more work | ❌ | partly | **✅ PROVEN §3** | ❌ |
+| forces breadth across channels | ❌ | ✅ (frozen at design time) | ✅ (by evidence type) | ❌ |
+| detects fabricated citations | ❌ | ❌ | ✅ (ledger-referent check) | ❌ (**makes them**) |
+| judges whether evidence supports a claim | ❌ | ❌ | ❌ | ❌ |
+| survives a compacted context / tired session | ❌ | ✅ | ✅ | ✅ |
+| adapts to an unforeseen source | ✅ | ❌ | ✅ | ✅ |
+| build cost | zero | high | **low** (2 scripts + 1 hook) | very high |
+| running cost | zero | medium | near zero | medium |
+| forbidden by `STACK.md` | no | **yes** | no | **yes (second runtime)** |
 
-**Winner: C + D — a gated ledger with an adversary.** Not a compromise: the two cover each
-other's exact hole. C guarantees the expedition happened; D guarantees the report survives
-someone trying to break it. Neither alone is enough, and the measured failure of 2026-09-16 was
-*both* holes at once — a four-call expedition, unchallenged.
+**Winner: C — a gated ledger.** It guarantees the expedition actually happened, which is
+exactly the hole the measured failure of 2026-09-16 fell through: a four-call expedition.
 
 ### Now attack the winner
 
@@ -754,39 +723,26 @@ never a single query — and the gate keeps a counter. At block 6 it switches fr
 *requiring an honest exit*: the run may end, but only with a `GAPS` section naming what was not
 reached. **Stopping early is legal. Stopping early in silence is what the gate forbids.**
 
-**Attack 4 — the adversary is expensive.**
-*Repair:* the adversary runs **once, on the load-bearing claims only** — the three to five
-sentences the recommendation actually rests on — not on every line. Anthropic's finding applies:
-*"a single LLM call with a single prompt outputting scores from 0.0–1.0 and a pass-fail grade was
-the most consistent"*, better than multiple judges.
-
-**Attack 5 — the adversary shares the researcher's blind spots.**
-*Repair:* two separations, both cheap. (i) **Context**: the refuter sees the ledger and the
-claims, never the researcher's reasoning — this is the separation the literature proves. (ii)
-**Standing**: where a second mind is already reachable on this machine (the Codex/Astra channel),
-a genuine cross-model refutation is available at no extra infrastructure. Where it is not, the
-context separation stands alone and the report says so.
-
-**Attack 6 — a fetched page tells the agent what to do.**
+**Attack 4 — a fetched page tells the agent what to do.**
 *Repair:* fetched content enters the ledger as a **quoted field**, never as an instruction, and
 the synthesis prompt states that page text is data about that page. This is already the
 `dxb-research` boundary; it becomes a ledger invariant.
 
-**Attack 7 — the gate becomes a second CLAUDE.md.**
+**Attack 5 — the gate becomes a second CLAUDE.md.**
 This is the subtlest one, and §2.2 is the reason to take it seriously: rules accumulate and
 compliance falls. *Repair:* the gate is **code, not prose**. `SKILL.md` gets *shorter*, not
 longer — the doctrine moves into `gate.py`, where it cannot be forgotten under context pressure
 and cannot compete for the model's instruction budget. **Every rule that moves from the skill
 into the gate is a rule that stops costing compliance elsewhere.**
 
-**Attack 8 — the URL liveness check fails on paywalls and bot-walls.**
+**Attack 6 — the URL liveness check fails on paywalls and bot-walls.**
 *Repair:* liveness is three-state — `alive` / `dead` / `blocked` — and only `dead` fails the
 gate. A 403 from a page that Scrapling's stealth fetcher also cannot open is recorded as
 `blocked`, cited with that label, and counted as weaker evidence. (Measured here: Reddit JSON
 403, Mojeek 403, Wayback 503 — all three would false-positive a naive checker.)
 
-**Residual risk that no repair removes.** The gate cannot make a claim true, and the adversary
-can be wrong. What the pair guarantees is that **a shallow or unsupported answer cannot be
+**Residual risk that no repair removes.** The gate cannot make a claim true. What it
+guarantees is that **a shallow or unsupported answer cannot be
 delivered silently** — the failure becomes visible, in the report, as a GAPS line or a
 contradiction left standing. That is the honest ceiling of this architecture, and it is stated
 here so that no one later mistakes a green gate for a correct answer. — **UNPROVEN until §13
@@ -831,7 +787,7 @@ grounds its claims about one-seventh as often:**
 
 Blows 1 and 3 are not arguments against this design; they are **arguments for it**. The measured
 open-source weakness is precisely the one thing this architecture exists to fix: the open harness
-has no ledger, no citation gate and no adversary, so nothing in it ever forced a claim to point
+has no ledger and no citation gate, so nothing in it ever forced a claim to point
 at a stored passage. **We are not proposing an open harness. We are proposing the missing
 enforcement layer, on top of a strong model we already pay for.** And "no $0-search stack has
 been benchmarked" is not a defeat — it is why §13 exists.
@@ -973,13 +929,7 @@ Exa·Parallel opencli       Crossref      gh api       yt-dlp         npm·crate
 └───────────────┬───────────────┘
                 ▼
 ┌───────────────────────────────┐
-│ 11. ADVERSARY                 │  separate context, ledger + claims only, never the
-│     refuter.md subagent       │  researcher's reasoning. Its job is to BREAK the answer.
-│                               │  Anything it breaks goes back to step 3.
-└───────────────┬───────────────┘
-                ▼
-┌───────────────────────────────┐
-│ 12. SYNTHESIS → CEO           │  answer · the number that carries it · what would flip it
+│ 11. SYNTHESIS → CEO           │  answer · the number that carries it · what would flip it
 │     dxb-ceo-report            │  · contradictions left standing · GAPS · PROVEN/LIKELY/
 │                               │  UNPROVEN on every load-bearing claim
 └───────────────────────────────┘
@@ -1155,7 +1105,7 @@ tool_installed → tool_reachable → tool_invoked → results_returned
 ```
 
 **Links 1–7 are machine-checkable** and printed by `gate.py` from the ledger, with a per-channel
-table. **Link 8 is judgment** — it is declared by the agent, tested by the adversary (§9-D), and
+table. **Link 8 is judgment** — it is declared by the agent, tested against its opposite, and
 never scored by the machine. The report prints both lists under separate headings so that no one
 ever mistakes one for the other.
 
@@ -1304,7 +1254,7 @@ research engine from a search box.
 | **0** | the model, no tools — **the contamination filter**, not a competitor |
 | 1 | a plain session with web search, no skill |
 | 2 | the session + the **current** `dxb-research` skill (prose only) |
-| 3 | the session + the **DXB Research Engine** (ledger + gate + adversary) |
+| 3 | the session + the **DXB Research Engine** (ledger + gate) |
 | 4 | Perplexity |
 | 5 | Gemini Deep Research / OpenAI Deep Research, where reachable |
 
@@ -1318,7 +1268,7 @@ research engine from a search box.
 | source quality | mean tier of cited sources under the §10 contextual hierarchy | script |
 | **citation correctness** | the quote byte-matches the fetched body — `passage_sha256` | **script, deterministic** |
 | **URL liveness** | every cited URL resolves (3-state) | **script, deterministic** |
-| claim support | does the cited passage support the claim | **the adversary + blind human** |
+| claim support | does the cited passage support the claim | **a blind human** |
 | primary-source ratio | primary rows / total rows | script |
 | contradiction coverage | a counter-search was issued for each load-bearing claim | script (ledger) |
 | temporal accuracy | claims carrying the right version/date | human |
@@ -1370,8 +1320,6 @@ away and **no second skill is created** — the plan exists once.
 │   └── coverage.py           # NEW. Channel table incl. FAIL rows and single-channel share
 ├── hooks/
 │   └── research-completion.py   # NEW. The Stop hook. Calls gate.py. PROVEN to block (§3)
-├── agents/
-│   └── refuter.md            # NEW. The adversary (§9-D): sees ledger + claims, never the reasoning
 ├── schemas/
 │   ├── question_lock.schema.json
 │   ├── evidence_row.schema.json
@@ -1382,7 +1330,7 @@ away and **no second skill is created** — the plan exists once.
 ├── fleet/                    # ADDED 2026-09-17 — the seven hunters
 │   ├── fleet.sh              # opens the ground, then sends the lanes in parallel
 │   ├── ARSENAL.md            # every weapon and its boundary, carried by each hunter
-│   ├── roles.tsv             # crowd · rival · code · measure · video · adversary · foreign
+│   ├── roles.tsv             # crowd · rival · code · measure · video · counter · foreign
 │   └── merge.py              # what each lane cost, what only it brought, saturation
 └── references/
     └── channels.md           # EXISTS. Extend with the 96 searchable opencli adapters
@@ -1452,10 +1400,9 @@ crowd's answer what the numbers look like · what would flip this answer · what
    blocks with the §3 experiment, in the project.
 5. `sweep.sh` repairs — the five keyless doors, `WebSearch`, https arXiv, ledger writes.
 6. `probe.sh` + `registry.yaml` — health becomes a probe, not a status.
-7. `agents/refuter.md` — the adversary.
-8. ~~`benchmarks/tasks.json` + `run.py`~~ — **removed on his order 2026-09-17.**
-9. ~~Run the benchmark.~~ **The fleet reports its own measure instead** (`fleet/merge.py`).
-10. Only then is anything called finished. "Ferrari" is a measured result, not a label.
+7. ~~`benchmarks/tasks.json` + `run.py`~~ — **removed on his order 2026-09-17.**
+8. ~~Run the benchmark.~~ **The fleet reports its own measure instead** (`fleet/merge.py`).
+9. Only then is anything called finished. "Ferrari" is a measured result, not a label.
 
 **Dependencies to install (currently absent, §4):** `datasketch` (MinHash), `htmldate` (date
 extraction), `trafilatura` (body extraction fallback). Optional later: `lettucedetect`
@@ -1581,7 +1528,7 @@ baseline is **68.78 %**, which is the honest ceiling for any judge, ours include
 
 **If it were mine to build, I would build this:**
 
-> **A gated ledger with an adversary, on a five-door free stack.** The agent researches with
+> **A gated ledger, on a five-door free stack.** The agent researches with
 > full judgment. A script — not the model — writes every fetched page into an append-only
 > evidence ledger. A `Stop` hook reads that ledger and refuses to let the session finish until
 > the machine-checkable conditions hold. A second agent, in a separate context, is then handed
@@ -1624,7 +1571,7 @@ is precisely the thing the whole field is failing at.
 | the paid products lead no 2026 leaderboard | **LIKELY** — hunter-pulled primary data files |
 | prompts get worse as rules accumulate | **LIKELY** — three independent papers, abstracts quoted |
 | requiring an evidence TYPE forces the tool to be used | **UNPROVEN** — the central hypothesis; §13 exists to falsify it |
-| the gate + adversary raises recall against the prose skill | **UNPROVEN** — arm 3 vs arm 2 |
+| the gate raises recall against the prose skill | **UNPROVEN** — arm 3 vs arm 2 |
 
 ### Open risks I am not hiding
 
@@ -1749,19 +1696,18 @@ and the next session's first job was to measure instead of believing it.
 | 17:16:54 → 17:21:24 | **270** | three calls to a CLI that hangs (`rdt sub-info`), 3 × 90 s timeout, **0 bytes** |
 | 17:21:24 → 17:26:13 | 289 | the real measurement — subscriber counts, post counts, mention counts |
 | 17:26:13 → 17:27:38 | 85 | **the gate printed `HARD checks: all pass`** at 17:26:46 — every threshold met at minute 12 |
-| 17:27:38 → 17:32:59 | **321** | the adversary, one round |
-| 17:32:59 → 17:38:02 | 303 | repairs → NEW load-bearing claims → the gate demanded a NEW adversary round → **timeout** |
+| 17:27:38 → 17:38:02 | **624** | repairs → NEW load-bearing claims → the gate re-armed its checks → **timeout** |
 
-Tool time 1 014 s of 1 448 s (Bash 685.7 s over 88 calls · the adversary 321.5 s); the rest was
+Tool time 1 014 s of 1 448 s (Bash 685.7 s over 88 calls); the rest was
 the model. **`budget.yaml`'s counting thresholds were satisfied at minute 12 of 25** — evidence
 rows 21 ≥ 10, clusters 13 ≥ 8, first-hand 4 ≥ 3, denominator present, saturated. Tuning them
 would have fixed nothing.
 
 ### The two real causes
 
-1. **The claims layer had no fixed point.** Every repair the adversary forced wrote new
-   load-bearing claims; each new claim re-armed H12 (a contradiction search) and H17 (another
-   adversary round, measured at 321 s). **The demand grew as fast as it was met.**
+1. **The claims layer had no fixed point.** Every repair wrote new load-bearing claims, and
+   each new claim re-armed H12 (a contradiction search) and the checks behind it, each of them
+   minutes long. **The demand grew as fast as it was met.**
 2. **The escape hatch was never armed.** `evaluate()` waived the budget on `blocks >= max_blocks`,
    and `blocks` is incremented only by the Stop hook — which never fired, because the model never
    tried to stop. It read the gate's own output and kept working. `max_seconds: 2400` sat in
@@ -1782,7 +1728,7 @@ it**. Before the converge point none of them exist: the escape is earned by the 
 the argument.
 
 **Integrity never expires.** A fabricated citation, a quote whose hash does not recompute, a dead
-URL, a vendor-only claim, a claim the adversary broke, a gate rewritten mid-run — none are waived
+URL, a vendor-only claim, a gate rewritten mid-run — none are waived
 by any budget. This is also a repair: the old budget escape replaced the *whole* failure list, so
 a run out of blocks could have closed carrying a fabricated citation.
 
@@ -1959,7 +1905,7 @@ gate.py                           → source_types ['code','independent-test','p
 | 0 | the model with no tools (contamination filter) | 28.7 % | 12 |
 | 1 | a plain session with tools | 81.7 % | 101 |
 | 2 | this doctrine as PROSE, no machinery at all | 95.0 % | 159 |
-| 3 | the doctrine PLUS the ledger/gate/adversary | 80.0 % | 675 |
+| 3 | the doctrine PLUS the ledger and gate | 80.0 % | 675 |
 
 Five tasks, `results-race-frozen.json` (deleted); arm 3 repeated at 80.0 % in a third run with
 the gate in advisory mode, at 324 s. The place it "consistently failed" was the counting
@@ -1974,10 +1920,9 @@ before/after fingerprint proved nothing changed. That is the number that counts.
 
 *"ciddi meselelerde sadece kayıt tutulsun diğer herşey sakın kayıt altına alma… önemli işlerde
 de ben derim bu sonuçları kaydet diye… benim amacım araştırma araçlarını en mükemmel şekilde
-kullanacak aksatmayacak. yoksa bu sonucu gidip çürütme yok bir yere kaydet falan filan hep çöp
-işler."*
+kullanacak aksatmayacak. hep çöp işler."*
 
-- **The skill now writes NOTHING by default** — no run folder, no ledger, no gate, no adversary,
+- **The skill now writes NOTHING by default** — no run folder, no ledger, no gate,
   no claims file. Proven after the change: `gate.py` → "the gate is silent"; the Stop hook → `{}`;
   the capture hook → not one row from a live search.
 - **A record exists only on his word.** `research.py open` opens a RECORD run; `--mode gated`

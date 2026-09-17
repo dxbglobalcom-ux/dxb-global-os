@@ -119,7 +119,7 @@ Off-Reddit homes (Discord, GitHub Discussions, X) — a different question, not 
 weekly-visitor counters of the three 1-member Claude satellites · the sweep's `producthunt`
 channel **FAILED** (duckduckgo navigation error) and `hackernews`, `github-repos`,
 `github-issues`, `stackoverflow` returned **empty** (17 of 22 channels worked) · LIGHT mode, so
-**no adversary round in this run** — the 18:42 and 20:08 runs were gated and each ran one.
+**no second pass in this run** — the 18:42 and 20:08 runs were gated and each ran one.
 
 ---
 
@@ -130,7 +130,7 @@ r/ClaudeDesign **23,779 → 23,781 → 23,781 → 23,790 → 23,795 (this run)**
 r/opendesignCLI **11** in all five; r/OpenDesignAI **3** in all five; the three Claude
 satellites **1 · 1 · 1**; weekly visitors **26,450 vs 8**; weekly contributions **101 vs 0**;
 r/ClaudeAI 1,134,087 → 1,134,202 → 1,134,206 → **1,134,293**. **The Open Design side has not
-moved at all today.** The roster grew 3 → 5 → 6 communities as successive adversaries found
+moved at all today.** The roster grew 3 → 5 → 6 communities as successive second passes found
 misspelled variants, and has been stable at six across the last three runs. Two engine defects
 those runs found belong to **B46**, not here: `ingest.py:classify()` stamping every
 `reddit.com` row *vendor*, and H18 not watching `ingest.py`.

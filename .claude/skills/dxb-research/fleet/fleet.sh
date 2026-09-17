@@ -14,7 +14,7 @@
 #     Haiku 4.5  65 comments (48 %)   29 people   $0.18   147 s  — and reported
 #                "no failed doors" while a third of the crowd was unread.
 # Sonnet brings 95 % of Opus's harvest for 45 % of the money; Haiku is not cheap, it is
-# wrong. Judgment — the commander, the adversary's verdict, the final report — stays on Opus.
+# wrong. Judgment — the commander, the counter-case, the final report — stays on Opus.
 #
 #   fleet.sh <question-file> <outdir> [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #
@@ -45,8 +45,8 @@ QUESTION="$(cat "$QF")"
 
 # The default four are the ones that answer a "what do people prefer" question; the deep
 # seven add the measurement, the spoken word and the other languages.
-DEFAULT4="crowd rival adversary measure"
-DEFAULT7="crowd rival code measure video adversary foreign"
+DEFAULT4="crowd rival counter measure"
+DEFAULT7="crowd rival code measure video counter foreign"
 if [ -n "$ROLES" ]; then PICK="${ROLES//,/ }"
 elif [ "$N" -ge 7 ]; then PICK="$DEFAULT7"
 elif [ "$N" -le 4 ]; then PICK="$DEFAULT4"

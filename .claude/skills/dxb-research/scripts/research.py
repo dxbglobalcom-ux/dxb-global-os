@@ -62,7 +62,7 @@ def cmd_open(a: argparse.Namespace) -> int:
         # A run EXISTS only because he said "kaydet". His order, 2026-09-16:
         # "ciddi meselelerde sadece kayıt tutulsun diğer herşey sakın kayıt altına alma".
         # RECORD keeps the ledger and blocks nothing. GATED adds the hard standard — the
-        # completion gate, the contradiction searches, the adversary — and is entered on
+        # completion gate and the contradiction searches — and is entered on
         # his word alone. The rule that used to open it by itself for money, contracts and
         # outward steps is DELETED: he asked what researching a price had to do with money
         # leaving the house, and he was right — buying is a separate act that stops at him.
@@ -176,25 +176,6 @@ def cmd_contradict(a: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_refute(a: argparse.Namespace) -> int:
-    rid = a.run or rlib.current_run_id()
-    if not rid:
-        print("no open run", file=sys.stderr)
-        return 1
-    p = rlib.run_dir(rid) / "refutation.json"
-    try:
-        doc = json.loads(p.read_text())
-    except Exception:
-        doc = {"run_id": rid, "verdicts": []}
-    doc.setdefault("verdicts", []).append({
-        "ts": rlib.now(), "claim": a.claim, "verdict": a.verdict,
-        "note": a.note, "evidence": a.evidence,
-        "separate_context": bool(a.separate_context)})
-    p.write_text(json.dumps(doc, ensure_ascii=False, indent=2))
-    print(f"{a.claim}: {a.verdict}")
-    return 0
-
-
 def cmd_escalate(a: argparse.Namespace) -> int:
     """He asked, mid-run, for the hard standard.
 
@@ -257,7 +238,7 @@ def main() -> int:
     o.add_argument("--force", action="store_true")
     o.add_argument("--mode", choices=["record", "gated"], default="record",
                    help="record (default): keep the ledger, block nothing. gated: the hard "
-                        "standard — gate, contradiction searches, adversary. His word only.")
+                        "standard — gate and contradiction searches. His word only.")
     o.set_defaults(fn=cmd_open)
 
     s = sub.add_parser("status"); s.set_defaults(fn=cmd_status)
@@ -287,14 +268,6 @@ def main() -> int:
     c.add_argument("--hits", type=int, default=0)
     c.add_argument("--found", default="")
     c.set_defaults(fn=cmd_contradict)
-
-    rf = sub.add_parser("refute")
-    rf.add_argument("--claim", required=True)
-    rf.add_argument("--verdict", choices=["stands", "weakened", "broken"], required=True)
-    rf.add_argument("--note", default="")
-    rf.add_argument("--evidence", default="")
-    rf.add_argument("--separate-context", action="store_true", default=True)
-    rf.set_defaults(fn=cmd_refute)
 
     es = sub.add_parser("escalate")
     es.add_argument("--why", required=True, help="his words, verbatim — nothing else opens it")

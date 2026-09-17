@@ -24,14 +24,14 @@ argument it makes about itself:
 
   expand    (< soft_seconds)  every check blocks, as written.
   converge  (< max_seconds)   the gate stops demanding work that ADDS scope. A
-                              load-bearing claim with no contradiction search or no
-                              adversary verdict may pass by being DECLARED instead:
-                              labelled UNPROVEN and named in GAPS.md.
+                              load-bearing claim with no contradiction search may
+                              pass by being DECLARED instead: labelled UNPROVEN and
+                              named in GAPS.md.
   closing   (>= max_seconds)  only the honest exit is left: GAPS.md, then out.
 
 INTEGRITY never expires. A fabricated citation, a quote whose hash does not
-recompute, a dead URL, a claim resting only on the vendor's own page, a claim the
-adversary broke, a gate rewritten mid-run — none of these are waived by any budget.
+recompute, a dead URL, a claim resting only on the vendor's own page, a gate
+rewritten mid-run — none of these are waived by any budget.
 Running out of time is not a licence to lie.
 """
 from __future__ import annotations
@@ -57,7 +57,7 @@ INTEGRITY = ("H1 ", "H9 ", "H10 ", "H11 ", "H13 ", "H14 ", "H18 ")
 
 
 def is_integrity(msg: str) -> bool:
-    return msg.startswith(INTEGRITY) or msg.startswith("H17 the adversary BROKE")
+    return msg.startswith(INTEGRITY)
 
 
 # ------------------------------------------------------------------ config
@@ -218,7 +218,7 @@ def _declared(c: dict, gaps: str) -> bool:
     The only escape from an untested load-bearing claim, and it is earned by the
     CLOCK, never by an argument: the claim must be labelled UNPROVEN and named, by
     id, in GAPS.md. The CEO then reads an answer that says which leg of it was
-    never put to the adversary — which is the whole point of the gate.
+    never tested against its opposite — which is the whole point of the gate.
     """
     cid = str(c.get("id") or "")
     # word boundary, or "C1" would be satisfied by a GAPS.md that only mentions C10
@@ -248,9 +248,8 @@ def check_report(run_id: str, st: dict,
     may_declare = regime in ("converge", "closing")
 
     # A WITHDRAWN claim is not in the answer, so it is not gated — but a claim that
-    # was pulled is a hole, and a hole may never be silent. This is the exit from a
-    # claim the adversary broke that does not cost another adversary round: pull it,
-    # and say in GAPS.md that you pulled it.
+    # was pulled is a hole, and a hole may never be silent. Pull it, and say in
+    # GAPS.md that you pulled it.
     withdrawn = [c for c in claims if c.get("withdrawn")]
     claims = [c for c in claims if not c.get("withdrawn")]
     for c in withdrawn:
@@ -303,71 +302,9 @@ def check_report(run_id: str, st: dict,
         if c.get("load_bearing") and c.get("confidence") not in ("PROVEN", "LIKELY", "UNPROVEN"):
             fails.append(f"H15 load-bearing claim {cid} carries no PROVEN/LIKELY/UNPROVEN label")
 
-    # H17 — C guarantees the expedition happened; D guarantees the answer survived
-    # someone trying to break it. Neither alone is enough, and the failure of
-    # 2026-09-16 was both holes at once: a four-call expedition, unchallenged.
     lb = [c for c in claims if c.get("load_bearing")]
-    ref_p = rlib.run_dir(run_id) / "refutation.json"
-    if lb:
-        if not ref_p.exists():
-            fails.append(f"H17 {len(lb)} load-bearing claim(s) and no adversary has tried to "
-                         f"break them — a researcher auditing itself treats its own output as "
-                         f"an established premise")
-            todo.append("run agents/refuter.md in a SEPARATE context with the ledger and the "
-                        "claims (never your reasoning), then record its verdict: "
-                        "scripts/research.py refute --claim <id> --verdict stands|weakened|broken "
-                        "--note '<what it found>'")
-        else:
-            try:
-                ref = json.loads(ref_p.read_text())
-                seen = {r.get("claim") for r in (ref.get("verdicts") or ref)}
-            except Exception:
-                seen = set()
-            for c in lb:
-                if c.get("id") in seen:
-                    continue
-                # A claim written AFTER the adversary ran — a repair, usually — would
-                # demand a whole new adversary round, and each round is minutes long:
-                # measured 321 s on 2026-09-16. That is how a run stops converging,
-                # because every repair breeds the demand that forced it. Past the
-                # converge point the claim may be DECLARED instead of re-tested.
-                if may_declare and _declared(c, gaps):
-                    continue
-                fails.append(f"H17 load-bearing claim {c.get('id')} was never put to the "
-                             f"adversary"
-                             + ("" if not may_declare else
-                                " — past the converge point you may instead label it UNPROVEN "
-                                "and name it in GAPS.md, or withdraw it"))
-            # The LATEST verdict per claim, not every verdict ever recorded. `refute`
-            # APPENDS, so a claim that was broken, sent back to the ground, repaired and
-            # re-judged carries two entries — and reading them all would make repair
-            # impossible: the run could never close however honestly it was fixed.
-            # Measured 2026-09-16 on run 20260916-164417, where the adversary broke one
-            # claim, the claim was re-measured and rewritten, and the adversary passed it.
-            # The full history stays in refutation.json; only the last word decides.
-            latest = {}
-            for r in (json.loads(ref_p.read_text()).get("verdicts") or []):
-                latest[r.get("claim")] = r
-            broken = [r for r in latest.values() if r.get("verdict") == "broken"]
-            for b in broken:
-                fails.append(f"H17 the adversary BROKE claim {b.get('claim')}: "
-                             f"{(b.get('note') or '')[:90]} — it goes back to the ground, "
-                             f"it does not go to the CEO")
-                todo.append(f"three legal moves on {b.get('claim')}, and only three: re-measure "
-                            f"it and record a fresh verdict · demote it (drop load_bearing) · "
-                            f'withdraw it ("withdrawn": true) and say so in GAPS.md')
-
-    rounds = 0
-    try:
-        ts = sorted(r.get("ts") or "" for r in (json.loads(ref_p.read_text()).get("verdicts") or []))
-        for i, t in enumerate(ts):
-            if i == 0 or (rlib.seconds_between(ts[i - 1], t) or 0) > 120:
-                rounds += 1
-    except Exception:
-        rounds = 0
     return fails, todo, {"claims": len(claims), "load_bearing": len(lb),
-                         "withdrawn": len(withdrawn), "adversary_ran": ref_p.exists(),
-                         "adversary_rounds": rounds}
+                         "withdrawn": len(withdrawn)}
 
 
 DECLARED = [

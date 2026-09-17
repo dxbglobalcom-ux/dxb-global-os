@@ -35,8 +35,8 @@ fleet is for.
 ## HIS STANDING ORDERS — they govern everything below
 
 1. **NO PAPERWORK.** *"ciddi meselelerde sadece kayıt tutulsun diğer herşey sakın kayıt altına
-   alma… yoksa bu sonucu gidip çürütme yok bir yere kaydet falan filan hep çöp işler."*
-   **By default this skill writes NOTHING** — no run folder, no ledger, no gate, no adversary
+   alma… hep çöp işler."*
+   **By default this skill writes NOTHING** — no run folder, no ledger, no gate, no claims
    file. A record exists only when he says **"kaydet"** (§7).
 2. **Every channel at once, and no laziness.** *"20-30 farklı kanalda aynı anda… bir alet bir
    kanalı açamazsa başka aletler denenecek… bizim için her zaman en iyi alet ilk kullanılır."*
@@ -61,9 +61,9 @@ bash "$F/fleet.sh" /tmp/q.txt <outdir> --hunters 4          # ordinary
 Seven lanes, each its own context, all in the field together:
 **crowd** (the forums, and the count) · **rival** (the other side's own house) ·
 **code** (issues, PRs, Stack Overflow) · **measure** (leaderboards, papers, JS pages opened
-with the browser) · **video** (transcripts and comments) · **adversary** (hunts the OPPOSITE
+with the browser) · **video** (transcripts and comments) · **counter** (hunts the OPPOSITE
 of the obvious answer) · **foreign** (zhihu · v2ex · linux-do · weibo · quora.de).
-Four-hunter default: crowd · rival · adversary · measure.
+Four-hunter default: crowd · rival · counter · measure.
 
 Each hunter carries `fleet/ARSENAL.md` — the weapons, the settings and the boundaries — and
 hands back six blocks: **what it read (numbers) · the count with its denominator · verbatim
@@ -196,8 +196,8 @@ python3 "$R/research.py" open --question "<his words, verbatim>" --class countin
 #   … the ledger writes itself from the tool calls from here on …
 python3 "$R/research.py" close
 ```
-`--mode gated` additionally turns on the completion gate, the contradiction searches and the
-adversary round. **It is never entered on your own judgement** — it waits for his word.
+`--mode gated` additionally turns on the completion gate and the contradiction searches.
+**It is never entered on your own judgement** — it waits for his word.
 `gate.py`, `coverage.py` and `urlcheck.py` print nothing at all when no run is open.
 
 ## 8. Boundaries

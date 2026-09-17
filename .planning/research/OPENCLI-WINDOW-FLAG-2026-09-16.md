@@ -187,9 +187,9 @@ hijacking #2364).
 - Evidence ledger for the 21:00 run: `.claude/skills/dxb-research/runs/20260916-185948/`
   (28 evidence rows, 46 clusters, 22 queries, 4 contradiction searches logged).
 
-## 8. What the adversary broke — every item re-measured by the author before it was accepted
+## 8. What the second pass broke — every item re-measured by the author before it was accepted
 
-An adversary was run in a separate context against the ledger and the claims, and it did break
+A second pass was run in a separate context against the ledger and the claims, and it did break
 things. RULE #0-A: none of its numbers were taken on trust; each was re-run here first.
 
 **It broke the remedy as it was stated.** The claim had been *"the fix is
@@ -218,7 +218,7 @@ help: 'Allowed: 30d, 90d, 365d.'   exitCode: 2
 ```
 
 One command in 1 332, and the only one — but "only browser-backed commands have `--window`" is
-false as written. The adversary's first probe of all 1 332 left ten undecided (Commander's
+false as written. The second pass's first probe of all 1 332 left ten undecided (Commander's
 missing-required-option check fires before its unknown-option check), so the author re-probed
 every command by parsing its own `--help`: **1 011 register the browser `--window <mode>` · 320
 have no `--window` at all · 1 owns its own** = 1 332, **zero probe errors, zero mismatches**
@@ -249,7 +249,7 @@ this, because it is not broken. `gh search issues --repo jackwener/OpenCLI '"unk
 window'` returns **one** hit, #1850: nobody has ever reported expecting `--window` to work on a
 non-browser adapter.
 
-## 9. Two engine defects that fell out of the adversary's second round
+## 9. Two engine defects that fell out of the second pass's second round
 
 **The export's sharp edge.** Precedence is `--window` > `OPENCLI_WINDOW` > per-command default,
 so the blanket export **overrides a deliberate foreground default**: a `login` command, which
@@ -384,7 +384,7 @@ against sweep A's real raws · the hook re-imported and six naming cases checked
   claims rest on one kind of source — first-hand local measurement on this machine — with three external
   rows (vendor README, #1850, deepwiki). The 44-query, 22-channel web fan-out found the pages that framed
   the question; it contributed nothing to any load-bearing claim.
-- **The one route that exists**, found by the adversary: no *syntax* makes the flag work here, but
+- **The one route that exists**, found by the second pass: no *syntax* makes the flag work here, but
   `opencli adapter eject hackernews` copies the adapter to `~/.opencli/clis/` for local editing and
   flipping its `browser` flag would register the option — at the price of making a command that needs no
   browser try to drive one. `~/.opencli/clis/` is empty here, so the shipped manifest is what runs.
@@ -394,7 +394,7 @@ against sweep A's real raws · the hook re-imported and six naming cases checked
   2026-07-23, **still open**: `background` is a request, not a guarantee. macOS-scoped; no Linux  <!-- HISTORY -->
   equivalent found.
 
-### The adversary, run in a separate context — and every correction re-measured before acceptance
+### The second pass, run in a separate context — and every correction re-measured before acceptance
 
 RULE #0-A: not one of its numbers was taken on trust.
 

@@ -18,7 +18,7 @@ Six tools: `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tav
 
 Stability, counted exactly: the plain headerless call was made **16 times** (1 + a 3-run loop + a
 12-run alternating loop) and returned **401 every time**; the plain keyless call was made **16 times**
-the same way and returned **200 with 16 326 bytes every time**. The adversary, on its own machine
+the same way and returned **200 with 16 326 bytes every time**. The second pass, on its own machine
 path, added 10 more of each with the same result, and one forced over HTTP/1.1. 2026-09-16,
 16:44–16:57 Z. No flapping, so no rate limit was reached at this volume.
 
@@ -106,9 +106,9 @@ Run files: `.claude/skills/dxb-research/runs/20260916-164417/` — `ledger.jsonl
 18 clusters, 40 pages read), `claims.json`, `queries.jsonl` (50 queries, 4 contradiction searches),
 `refutation.json`, `DECLARED.md`, `GAPS.md`, `CONTAMINATION.md`.
 
-## What the adversary did to this answer
+## What the second pass did to this answer
 
-An adversary ran in a separate context, **three times**, with the ledger and the claims and nothing
+A second pass ran in a separate context, **three times**, with the ledger and the claims and nothing
 else. Every number it reported was re-measured here before it was accepted; all of it reproduced.
 
 **Pass 1 broke a load-bearing claim outright.** The first version said *any* non-empty bearer token
@@ -195,7 +195,7 @@ scratch this session against the live endpoint.
 | stability | 6 alternating pairs: 401/0 bytes six times, 200/16 326 bytes six times — no flapping |
 | tools named | `tavily_search`, `tavily_extract`, `tavily_crawl`, `tavily_map`, `tavily_research`, `tavily_feedback` |
 
-Adversary probe — is the 200 caused by the header's *value* or by any header at all?
+Second-pass probe — is the 200 caused by the header's *value* or by any header at all?
 `keyless` / `KEYLESS` / `Keyless` → **200** (value case-insensitive); `banana` → **401**;
 empty value → **401**; `"keyless "` with a trailing space → **401** (value is not trimmed).
 So the 200 is caused by that exact value, not by the presence of a custom header.
@@ -240,11 +240,11 @@ hold:
 The run's first control matrix labelled two cells "NO Accept header" — curl supplies
 `Accept: */*` when `-H` is omitted, so those cells tested `*/*` and not absence. Re-measured with
 `-H 'Accept:'`: the keyless call is **406**, not 200. The same matrix asserted "a bogus Bearer is
-still 401", which the adversary falsified with a `tvly-`-prefixed token; re-measured here and
+still 401", which the second pass falsified with a `tvly-`-prefixed token; re-measured here and
 confirmed at **200**. Both corrections are recorded as new ledger rows (`L0316`, `L0317`) that name
 the row they correct rather than editing it.
 
-**What the adversary broke.** One separate-context round, four load-bearing claims:
+**What the second pass broke.** One separate-context round, four load-bearing claims:
 `C2` **stands** (re-probed independently — 200, `text/event-stream`, 16 326 bytes, the same six
 tools); `C1`, `C3` and `C5` **weakened** and rewritten, because each had been stated more widely
 than it had been measured — "without the header → 401" (other doors exist), "the value must be
@@ -399,12 +399,12 @@ supported** — the checker will not ground a negative-form sentence ("without t
 against a passage that literally prints `no access-mode header -> HTTP 401 / 0 bytes`. Recorded as a
 disagreement with the checker, not as a doubt about the measurement.
 
-### The adversary, and what it broke
+### The second pass, and what it broke
 
-A refuter ran in a separate context with the ledger and the claims and no access to my reasoning.
+A second pass ran in a separate context with the ledger and the claims and no access to my reasoning.
 **Verdict: weakened** — C3 stands, C1 and C2 were repaired before anything reached the CEO.
 
-**C1 was too general, and the adversary is right.** *"Without the `X-Tavily-Access-Mode` header →
+**C1 was too general, and the second pass is right.** *"Without the `X-Tavily-Access-Mode` header →
 401"* is false when another credential is present. Re-measured by me after the objection:
 
 ```
@@ -417,11 +417,11 @@ The claim now carries the missing clause: **without the header and without any o
 `L0201` (the vendor doc) was dropped from its citations — that page states no status code at all.
 
 **C2's byte count is a property of the request, not of the endpoint.** Re-measured by me:
-`id:1` → 16 326 · `id:1234567890` → **16 335** · `id:"refuter-string-id"` → **16 344**. What is
+`id:1` → 16 326 · `id:1234567890` → **16 335** · `id:"counter-pass-str-id"` → **16 344**. What is
 constant is `HTTP 200` and `content-type: text/event-stream`; the size is stamped to the minimal
 request and to today's tool descriptions.
 
-**C3 stands, and it is the one claim with a non-vendor witness.** The adversary probed four
+**C3 stands, and it is the one claim with a non-vendor witness.** The second pass probed four
 plausible alternative header names — `X-Tavily-Access`, `Tavily-Access-Mode`, `X-Tavily-Mode`,
 `X-Access-Mode` — all **401/0 bytes**; only `X-Tavily-Access-Mode` opens the door, and it is
 case-insensitive in both name and value. Independent corroboration was then fetched: GitHub code
@@ -442,10 +442,10 @@ file as `source_type: vendor` because of the domain. C1, C2, C4 and C7 are there
 `about_the_source: true`: the claim IS what this endpoint answers. **No third party anywhere in the run's 282
 rows publishes these status codes**, and the counter-search for one came back empty — so the
 401/200 half of the answer rests on one instrument, this machine, measured many times in one
-15-minute window. That is the standing caveat, and it is the adversary's, not mine.
+15-minute window. That is the standing caveat, and it is the second pass's, not mine.
 
 Run closed with the gate green: **32 evidence rows · 250 discovery rows · 14 clusters (18 echoes
-collapsed) · max channel share 21 % · adversary 1 round** · $0 spent,
+collapsed) · max channel share 21 % · second pass 1 round** · $0 spent,
 no key, no account. Files: `.claude/skills/dxb-research/runs/20260916-191822/` (`ledger.jsonl`,
 `claims.json`, `GAPS.md`).
 

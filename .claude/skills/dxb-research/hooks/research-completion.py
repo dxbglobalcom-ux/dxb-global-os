@@ -102,7 +102,7 @@ def main() -> int:
             '  · withdraw it ("withdrawn": true in claims.json) and say so in GAPS.md',
             "  · drop load_bearing if the answer does not actually rest on it",
             "What the clock NEVER waives: a citation not in the ledger, a quote whose hash does "
-            "not recompute, a dead URL, a vendor-only claim, a claim the adversary broke.",
+            "not recompute, a dead URL, a vendor-only claim.",
         ]
     if blocks >= res["max_blocks"] - 1 or res["regime"] == "closing":
         lines += [
