@@ -57,6 +57,23 @@ echo "avcilar : $PICK"
 echo "beyin   : $MODEL   (komutan Opus'ta kalir)   zaman asimi ${TMO}s"
 echo
 
+# ---- THE GROUND IS OPENED BY THE MACHINE, NOT BY A SENTENCE -----------------------------
+# Measured twice on 2026-09-17: told in prose to sweep first, 2 of 7 hunters did it, and on
+# the repaired prompt 2 of 3. Instruction-following is not a mechanism. So the fleet opens
+# the 34-channel ground ITSELF, once, before a single hunter is launched, and hands every
+# lane the raw files. Google and DuckDuckGo are therefore searched on EVERY run, by
+# construction, and a hunter spends its minutes reading instead of deciding whether to look.
+GROUND="$OUT/ground"
+echo "genis zemin aciliyor (34 kanal, bir kez, filonun tamami icin)..."
+bash "$SKILL/scripts/sweep.sh" "$QUESTION" "$GROUND" --tier max --pages 8 \
+     > "$OUT/ground.log" 2>&1
+ok=$(grep -c '  ok$' "$OUT/ground.log" 2>/dev/null || echo 0)
+gsz=$(wc -c < "$GROUND/google.raw" 2>/dev/null || echo 0)
+dsz=$(wc -c < "$GROUND/duckduckgo.raw" 2>/dev/null || echo 0)
+pages=$(find "$GROUND/pages" -name '*.md' 2>/dev/null | wc -l)
+echo "   zemin hazir: $(ls "$GROUND"/*.raw 2>/dev/null | wc -l) kanal dosyasi · google ${gsz} bayt · duckduckgo ${dsz} bayt · okunan sayfa ${pages}"
+echo
+
 ARSENAL="$(cat "$HERE/ARSENAL.md")"
 launched=0
 for role in $PICK; do
@@ -66,6 +83,12 @@ for role in $PICK; do
     printf '%s\n\n' "$ARSENAL"
     printf 'YOUR LANE — %s\n\n' "$line"
     printf 'THE QUESTION THE FLEET IS ANSWERING:\n%s\n\n' "$QUESTION"
+    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 34 channels before you were launched.\n'
+    printf 'One file per channel, raw, including google.raw and duckduckgo.raw, plus the page\n'
+    printf 'bodies it already read:\n    %s/*.raw\n    %s/pages/*.md\n' "$GROUND" "$GROUND"
+    printf 'READ WHAT IS YOURS THERE FIRST (`ls`, `head -c`, grep) before you search again;\n'
+    printf 'searching for what is already on disk is the laziness this fleet exists to end.\n'
+    printf 'Name in block A which of those channels carried something for your lane.\n\n' 
     printf 'Work only your lane. Other hunters are covering the rest; do not duplicate them.\n'
     printf 'Spend your time READING what you find, not searching for more of it.\n'
     printf 'Answer in Turkish. Hand back exactly the six blocks A-F.\n'

@@ -19,6 +19,24 @@ Every channel is two steps: ① find the address ② **take what is inside it**
 (`extract` · `transcript` · `comments` · `read`). Step ② is the job. Step ① alone is the
 failure the CEO named on 2026-09-16: *"2 tane reddit 2 tane x açtın kapattın."*
 
+## STEP 0 — OPEN THE GROUND FIRST. It is not optional.
+
+Before you touch your lane's own doors, fire the wide sweep once with a query shaped for
+your lane. Measured on the first fleet run, 2026-09-17: only **3 of 7 hunters** opened the
+34-channel ground — the other four went straight to the platform they knew, and one lane
+used nothing but the model's own WebSearch. The CEO asked the obvious question the same
+hour — *"google'da da arama yapıldı mı?"* — and the honest answer was "in three lanes of
+seven". A lane is a SPECIALITY, never a reason to leave the ground unopened.
+
+```bash
+bash "$R/sweep.sh" "<your lane's query>" <outdir> --tier max --pages 8
+```
+
+It opens Google · DuckDuckGo · five keyless engines · Reddit · X · YouTube · HN ·
+Stack Overflow · Quora · the academic APIs · the Chinese-language doors — 34 at once, in
+parallel, in seconds. **Report in block A which channels answered and which failed**, with
+their names; `<outdir>` keeps one `.raw` per channel so the numbers are checkable.
+
 ## The weapons, with the settings that matter
 
 ```bash

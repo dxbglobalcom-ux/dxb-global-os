@@ -19,6 +19,19 @@ import re
 import sys
 
 URL = re.compile(r"https?://[^\s\"'<>)\]},`\\]+")
+
+# WHICH DOORS THIS LANE ACTUALLY OPENED. The CEO asked "was Google searched at all?" on the
+# first fleet run (2026-09-17) and nobody could answer it without reading seven transcripts.
+# A machine answers it now, on every run, from the hunter's own tool calls.
+CHANNEL_PAT = [
+    ("sweep", r"sweep\.sh"), ("google", r"opencli google search"),
+    ("ddg", r"opencli duckduckgo"), ("reddit", r"opencli reddit|crowd\.sh"),
+    ("x", r"opencli twitter"), ("youtube", r"opencli youtube|yt-dlp"),
+    ("hn", r"opencli hackernews|hn\.algolia"), ("github", r"gh search|gh api"),
+    ("browser", r"opencli browser"), ("quora", r"quora"), ("fb/ig", r"opencli facebook|opencli instagram"),
+    ("cn", r"opencli zhihu|linux-do|opencli weibo|bili"), ("akademik", r"arxiv|crossref|openalex|europepmc"),
+    ("zincir", r"fetch\.py"), ("model-arama", r'"WebSearch"|"WebFetch"'),
+]
 def people_count(text: str) -> str:
     """The E block's number: how many separate humans this lane actually read.
 
@@ -55,7 +68,7 @@ def stats(p: pathlib.Path) -> dict:
     The honest source is the tool call: what it fetched, not what it typed. Measured
     2026-09-17 on the first fleet run, which is why this is here.
     """
-    cost, tools, last, urls = 0.0, {}, None, set()
+    cost, tools, last, urls, doors = 0.0, {}, None, set(), set()
     for line in p.read_text(errors="replace").splitlines():
         try:
             d = json.loads(line)
@@ -67,12 +80,20 @@ def stats(p: pathlib.Path) -> dict:
             if isinstance(blk, dict) and blk.get("type") == "tool_use":
                 tools[blk.get("name")] = tools.get(blk.get("name"), 0) + 1
                 try:
-                    urls |= set(URL.findall(json.dumps(blk.get("input") or {}, ensure_ascii=False)))
+                    raw = json.dumps({"n": blk.get("name"), "i": blk.get("input") or {}},
+                                     ensure_ascii=False)
+                    urls |= set(URL.findall(raw))
+                    if "/ground" in raw:
+                        doors.add("zemin-okudu")
+                    for label, pat in CHANNEL_PAT:
+                        if re.search(pat, raw, re.I):
+                            doors.add(label)
                 except Exception:
                     pass
     if last:
         cost = last.get("total_cost_usd", 0.0) or 0.0
-    return {"cost": cost, "tools": tools, "touched": {u.rstrip('.,);\\"') for u in urls}}
+    return {"cost": cost, "tools": tools, "doors": doors,
+            "touched": {u.rstrip('.,);\\"') for u in urls}}
 
 
 def main() -> int:
@@ -91,14 +112,15 @@ def main() -> int:
                 if "=" in ln:
                     k, v = ln.split("=", 1); meta[k] = v
         st = stats(j)
-        reports[role] = {"text": txt, "urls": st.pop("touched"), **st, **meta}
+        reports[role] = {"text": txt, "urls": st.pop("touched"),
+                         "read_ground": "zemin-okudu" in (st.get("doors") or set()), **st, **meta}
         (out / f"HUNTER-{role}.md").write_text(txt, encoding="utf-8")
 
     if not reports:
         print("hicbir avci rapor getirmedi — .err dosyalarina bak"); return 1
 
     seen: set[str] = set()
-    print(f"{'AVCI':<12}{'SURE':>7}{'PARA':>8}{'KAYNAK':>8}{'YENI':>7}{'İNSAN':>7}  ARAÇLAR")
+    print(f"{'AVCI':<12}{'SURE':>7}{'PARA':>8}{'KAYNAK':>8}{'YENI':>7}{'İNSAN':>7}  ACILAN KAPILAR")
     total_cost = 0.0
     marginal = {}
     for role in order:
@@ -108,9 +130,35 @@ def main() -> int:
         marginal[role] = new
         ppl = people_count(r["text"])
         total_cost += r["cost"]
-        top = " ".join(f"{k}×{v}" for k, v in sorted(r["tools"].items(), key=lambda kv: -kv[1])[:3])
+        top = " ".join(sorted(r.get("doors") or {"-"}))
         print(f"{role:<12}{r.get('secs','?'):>6}s{r['cost']:>8.2f}{len(r['urls']):>8}{new:>7}{ppl:>7}  {top}")
     print(f"{'TOPLAM':<12}{'':>7}{total_cost:>8.2f}{len(seen):>8}")
+
+    # THE GROUND. Since 2026-09-17 the fleet opens it ITSELF before any hunter is launched,
+    # so the question "was Google searched at all?" is answered from the files on disk, not
+    # from what a hunter chose to do. (This detector had to be corrected twice: it first
+    # counted urls written in prose — 0 for every lane — and then called a machine-opened
+    # ground "HICBIRI" because no hunter had run the sweep by hand.)
+    ground = out / "ground"
+    raws = sorted(ground.glob("*.raw"))
+    if raws:
+        g = (ground / "google.raw"); d = (ground / "duckduckgo.raw")
+        gs = g.stat().st_size if g.exists() else 0
+        ds = d.stat().st_size if d.exists() else 0
+        pages = len(list((ground / "pages").glob("*.md"))) if (ground / "pages").exists() else 0
+        alive = sum(1 for r in raws if r.stat().st_size >= 40)
+        print(f"\nGENIS ZEMIN (filo acti, avcilardan once): {len(raws)} kanal dosyasi, "
+              f"{alive} tanesi dolu · GOOGLE {gs} bayt · DUCKDUCKGO {ds} bayt · "
+              f"okunan sayfa govdesi {pages}")
+        if gs < 40:
+            print("   !! GOOGLE BOS DONDU — bu bir deliktir, rapora yazilir.")
+        readers = [r for r in order if reports[r].get("read_ground")]
+        print(f"   zemini okuyan avci: {len(readers)}/{len(order)}"
+              f" ({', '.join(readers) if readers else 'hicbiri — kendi kapilarindan gittiler'})")
+    else:
+        swept = [r for r in order if "sweep" in (reports[r].get("doors") or set())]
+        print(f"\nGENIS ZEMIN: filo acmadi; {len(swept)}/{len(order)} avci kendisi tarama yapti "
+              f"({', '.join(swept) if swept else 'HICBIRI — bu bir kusurdur'}).")
 
     last = order[-1]
     share = (marginal[last] / len(reports[last]['urls']) * 100) if reports[last]["urls"] else 0.0
