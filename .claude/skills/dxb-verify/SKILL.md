@@ -25,6 +25,7 @@ measured outcomes take the past tense.
 | Check | What it proves |
 |---|---|
 | `pnpm test` (vitest) | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
+| `bash scripts/research-ruler.sh` | only when the research engine changed — the commit hook runs it by itself; `accept.sh` is the live half and is run before a claim that the engine works |
 | `bash scripts/persona-ruler.sh` | only when a persona under the ruler's contract changed — the writing and the doctrine of those seats, by the one metre the battery case (`tests/personas/persona-ruler.test.ts`) and the DB gate (`scripts/sync-personas-to-db.sh`) both run |
 | `pnpm typecheck` (`tsc --build`) | the interfaces still hold |
 | `pnpm verify:ledger` | the records still agree with the live company database |
@@ -42,6 +43,7 @@ measured outcomes take the past tense.
 | Persona files | `tests/personas/persona-ruler.test.ts` (`scripts/persona-ruler.sh`) | built in this commit |
 | Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + records parity (`dxb-close-row`) | exists |
 | CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |
+| Research engine (`.claude/skills/dxb-research`) | `bash scripts/research-ruler.sh` (11 rules) + `tests/b46/` (47 cases on the real scripts) + `bash .claude/skills/dxb-research/scripts/accept.sh` (a live run, judged from the files) | built 2026-09-17; the ruler runs on every commit that touches the engine |
 | Specs / plan text | none yet — the ruler is written before the work, or the work is reported ⚠ UNVERIFIED | gap, named |
 
 The table is his, holding-wide, on his word *"yaz"* of 2026-09-15 <!-- CEO-OK: ruler-table-holding-wide-2026-09-15 -->.

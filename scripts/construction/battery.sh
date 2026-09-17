@@ -19,6 +19,17 @@ HOST_FILES=(
   tests/b36/live-drills.host.test.ts   # enters the construction container: creates and drops roles
   tests/ops/freeze-guard.test.ts       # reads this machine's process tree and its systemd units
   tests/ops/dashboard-launcher.host.test.ts  # asks WHICH process is serving the CEO's dashboard
+  # B46 — the research engine's own battery. Each case COPIES the engine out of .claude/skills
+  # and runs the real scripts against stubbed binaries; inside the sandbox (uid 997) the copy
+  # is refused and every case dies on `cp`. The engine is the author's side of the house, not
+  # the construction site's, so these belong here beside the other host files.
+  tests/b46/research-ruler.test.ts
+  tests/b46/judge-is-one-metre.test.ts
+  tests/b46/the-number-he-sees.test.ts
+  tests/b46/the-crowd-is-read.test.ts
+  tests/b46/no-green-on-a-failure.test.ts
+  tests/b46/one-run-one-owner.test.ts
+  tests/b46/a-hunter-cannot-write.test.ts
 )
 
 echo "=== 1/2 · THE CONSTRUCTION RUNTIME — the sandboxed suite ==="

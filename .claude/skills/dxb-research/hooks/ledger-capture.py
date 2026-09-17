@@ -122,7 +122,18 @@ def main() -> int:
     except Exception:
         return 0
 
-    run_id = rlib.current_run_id()
+    # THE SESSION ID IS IN THE PAYLOAD. A hook runs in whatever process the harness gives it,
+    # so the environment may carry no session at all — and then `current_run_id()` falls back to
+    # the machine-wide marker, which on 2026-09-17 pointed at ANOTHER session's run and took an
+    # evidence row with it. What the payload says about its own session outranks a shared file.
+    sid = payload.get("session_id")
+    run_id = None
+    if sid:
+        run_id = rlib.session_run_id(sid)
+        if not run_id:
+            return 0          # this session has no open record: writing anywhere else is worse
+    else:
+        run_id = rlib.current_run_id()
     if not run_id:
         return 0
 

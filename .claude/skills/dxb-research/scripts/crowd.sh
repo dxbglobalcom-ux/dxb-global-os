@@ -87,12 +87,19 @@ with (out / "CROWD.txt").open("w", encoding="utf-8") as fh:
             if c.get("type") != "POST":
                 n_c += 1; authors.add(a)
             fh.write(f"{a} | {c.get('score')} | {txt}\n")
-        people |= {(u, a) for a in authors}
+        # ONE HUMAN IS ONE HUMAN. This set used to hold (thread, author) PAIRS, so the same
+        # person writing in two threads was counted twice and the CEO was shown the larger
+        # number. Identity is per PLATFORM, not per thread: the host plus the author name.
+        host = u.split("/")[2].lower() if len(u.split("/")) > 2 else u
+        people |= {(host, a) for a in authors}
         rows.append((u, n_c, len(authors)))
 print(f"{'okunan':>7} {'ayri insan':>11}  adres")
 for u, c, a in sorted(rows, key=lambda r: -r[1]):
     print(f"{c:>7} {a:>11}  {u[:80]}")
 print(f"\nTOPLAM: {sum(r[1] for r in rows)} yorum · {len(people)} ayri insan · {len(rows)} baslik")
+# THE MACHINE'S OWN COUNT, in a line a script can read back. The fleet's summary used to take
+# the denominator out of a hunter's prose; it takes it from here now.
+print("CROWD-COUNT\t%d\t%d\t%d" % (sum(r[1] for r in rows), len(people), len(rows)))
 if unread:
     print("\nACILMAYAN BASLIKLAR — bunlar rapordaki delik listesine girer:")
     for u, why in unread:

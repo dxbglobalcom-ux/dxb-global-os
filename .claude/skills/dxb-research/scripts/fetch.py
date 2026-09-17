@@ -168,6 +168,14 @@ def _mcp(endpoint: str, body: str, headers: list[str], tmo: int) -> tuple[str, s
             continue
         if d.get("error"):
             return "", json.dumps(d["error"])[:150]
+        # THE ERROR THAT LIVES INSIDE THE RESULT. MCP reports a failed tool call with
+        # `result.isError: true` and puts the diagnostic in the SAME `content` array a page
+        # would arrive in. Only the envelope's `error` key was being read, so a long enough
+        # diagnostic passed the length test and the chain reported `read: true, liveness:
+        # alive, doors_tried: 1` for a page it had never seen. An error is not a page.
+        if (d.get("result") or {}).get("isError"):
+            txt = " ".join(c.get("text", "") for c in (d.get("result") or {}).get("content", []) or [])
+            return "", "isError: " + txt.strip()[:150]
         for c in (d.get("result") or {}).get("content", []) or []:
             if c.get("type") == "text":
                 chunks.append(c["text"])
@@ -187,18 +195,28 @@ def _mcp(endpoint: str, body: str, headers: list[str], tmo: int) -> tuple[str, s
 # scrapling venv — headless, and in a THROWAWAY profile, because the screen belongs to him.
 _PW_PY = "/home/dxb/scrapling-env/bin/python"
 _PW_SCRIPT = """
-import sys, tempfile
+import shutil, sys, tempfile
 from playwright.sync_api import sync_playwright
-with sync_playwright() as p:
-    ctx = p.chromium.launch_persistent_context(
-        user_data_dir=tempfile.mkdtemp(prefix="pw-isolated-"),
-        channel="chrome", headless=True,
-        args=["--no-first-run", "--no-default-browser-check"])
-    pg = ctx.new_page()
-    pg.goto(sys.argv[1], wait_until="domcontentloaded", timeout=int(sys.argv[2]) * 1000)
-    pg.wait_for_timeout(1200)
-    print(pg.evaluate("() => document.body.innerText"))
-    ctx.close()
+# THE ENGINE CLEANS UP AFTER ITSELF. Measured 2026-09-17: 50 of these profiles were standing
+# in /tmp, 137 MB, because the directory was created and never removed.
+_PROFILE = tempfile.mkdtemp(prefix="pw-isolated-")
+try:
+    with sync_playwright() as p:
+        ctx = p.chromium.launch_persistent_context(
+            user_data_dir=_PROFILE,
+            channel="chrome", headless=True,
+            args=["--no-first-run", "--no-default-browser-check"])
+        pg = ctx.new_page()
+        pg.goto(sys.argv[1], wait_until="domcontentloaded", timeout=int(sys.argv[2]) * 1000)
+        pg.wait_for_timeout(1200)
+        print(pg.evaluate("() => document.body.innerText"))
+        ctx.close()
+finally:
+    # THE CLEAN-UP MUST SURVIVE THE FAILURE. The first version of this repair put the removal
+    # after the `with` block, so it ran only when the page OPENED — and a dead address, which
+    # is the common case for a door this far down the chain, left the profile behind exactly as
+    # before. Measured the same night: a profile stamped 21:42, minutes after the "fix".
+    shutil.rmtree(_PROFILE, ignore_errors=True)
 """
 
 
@@ -302,6 +320,60 @@ def door_pdf(url: str, tmo: int) -> tuple[str, str]:
     return out, ("" if rc == 0 else f"pdftotext rc={rc} {err}")
 
 
+# THE SITES WE READ WHILE SIGNED IN. The machine's Chrome (Profile 5) is the CEO's own and is
+# already signed in to these; his standing order of 2026-09-17 is that a login wall is not a
+# wall. Reddit, X, YouTube, Hacker News and Stack Overflow are read by their own adapters
+# above, so only the ones with no adapter at all are here.
+BROWSER_SITES = [
+    (re.compile(r"quora\.com/", re.I), "quora"),
+    (re.compile(r"facebook\.com/", re.I), "facebook"),
+    (re.compile(r"instagram\.com/", re.I), "instagram"),
+    (re.compile(r"linkedin\.com/", re.I), "linkedin"),
+]
+
+
+def door_browser(url: str, tmo: int) -> tuple[str, str]:
+    """Open the page in the bridge's own signed-in window and take what is inside it.
+
+    Measured 2026-09-17: the engine could reach Quora's SEARCH page this way (19 739 bytes of
+    real answers, eight separate people) while the general chain had no route for a quora.com
+    ANSWER page at all and said `no platform adapter for this url`. Being able to open one
+    page of a site was never the same as being able to read the page you found.
+    """
+    site = next((s for rx, s in BROWSER_SITES if rx.search(url)), "")
+    if not site:
+        return "", "no signed-in browser site for this url"
+    rc, out, err = _sh(
+        f"opencli browser {site} open {shlex.quote(url)} --window background >/dev/null 2>&1; "
+        f"opencli browser {site} extract --window background", tmo)
+    if rc != 0:
+        return "", f"{site} browser rc={rc} {err[:120]}"
+    return out, ""
+
+
+def sweep_stale_profiles(older_than_s: int = 3600) -> int:
+    """Remove browser profiles left behind by runs that were killed before they could tidy up.
+
+    Measured 2026-09-17: 53 of them, 134 MB, the oldest from 11:15 that morning. A `finally`
+    covers the door that raises; nothing covers the door that is killed by `timeout`, so the
+    next run sweeps what the last one could not. Only profiles older than an hour are touched,
+    so a run happening right now is never disturbed.
+    """
+    # tempfile is used by the browser door's own script text, not by this module, so it is
+    # imported here rather than at the top: the first version referenced it globally and the
+    # whole CLI died with NameError on its first call.
+    import shutil as _sh, tempfile as _tf, time as _t
+    n = 0
+    for d in Path(_tf.gettempdir()).glob("pw-isolated-*"):
+        try:
+            if d.is_dir() and _t.time() - d.stat().st_mtime > older_than_s:
+                _sh.rmtree(d, ignore_errors=True)
+                n += 1
+        except Exception:
+            pass
+    return n
+
+
 CHAIN = [
     # media and PDF go FIRST when the url is one - a video's subtitles and a paper's
     # text are the evidence; the page around them is furniture. Both return
@@ -311,6 +383,7 @@ CHAIN = [
     ("scrapling", door_scrapling),
     ("scrapling-stealth", door_scrapling_stealth),
     ("opencli-reader", door_opencli),
+    ("browser-signed-in", door_browser),
     ("tavily-extract", door_tavily),
     ("firecrawl-scrape", door_firecrawl),
     ("exa-fetch", door_exa),
@@ -319,10 +392,20 @@ CHAIN = [
     ("curl", door_curl),
 ]
 
+# THE DOOR THAT STARTS A BROWSER. `sweep.sh --no-browser` exists for the run that must not
+# start one, and until 2026-09-17 it only withheld the two browser CHANNELS: the last-resort
+# walk still went down this chain and reached playwright, so the flag did not mean what it
+# said. A run that was told not to open a browser does not open one.
+BROWSER_DOORS = {"playwright", "browser-signed-in"}
+
+
+def chain_for(no_browser: bool = False) -> list:
+    return [d for d in CHAIN if not (no_browser and d[0] in BROWSER_DOORS)]
+
 
 # ---------------------------------------------------------------- the chain
 def fetch(url: str, timeout: int = 45, stop_at: int = 0, record: bool = True,
-          ledger_evidence: bool = True) -> dict:
+          ledger_evidence: bool = True, no_browser: bool = False) -> dict:
     """`ledger_evidence=False` under --batch: there, ingest.py writes the evidence rows and
     keeps the CHANNEL that discovered each page. Writing them here instead would stamp every
     swept page `channel: fetch:scrapling`, and gate.py's H5 ("one door is not research")
@@ -331,7 +414,7 @@ def fetch(url: str, timeout: int = 45, stop_at: int = 0, record: bool = True,
     run_id = rlib.current_run_id() if record else None
     best = {"door": None, "text": "", "cached": False}
 
-    for i, (name, fn) in enumerate(CHAIN, 1):
+    for i, (name, fn) in enumerate(chain_for(no_browser), 1):
         if stop_at and i > stop_at:
             break
         t0 = time.time()
@@ -431,7 +514,10 @@ def main() -> int:
     ap.add_argument("--timeout", type=int, default=45)
     ap.add_argument("--stop-at", type=int, default=0)
     ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--no-browser", action="store_true",
+                    help="skip the door that starts a browser (a run told not to open one does not)")
     a = ap.parse_args()
+    sweep_stale_profiles()
 
     if a.batch:
         urls = [u.strip() for u in Path(a.batch).read_text().splitlines() if u.strip()]
@@ -450,7 +536,7 @@ def main() -> int:
             umap.write_text("\n".join(urls) + "\n", encoding="utf-8")
         results = []
         with cf.ThreadPoolExecutor(max_workers=a.workers) as ex:
-            futs = {ex.submit(fetch, u, a.timeout, a.stop_at, True, False): (i, u)
+            futs = {ex.submit(fetch, u, a.timeout, a.stop_at, True, False, a.no_browser): (i, u)
                     for i, u in enumerate(urls, 1)}
             for fut in cf.as_completed(futs):
                 i, u = futs[fut]
@@ -482,7 +568,7 @@ def main() -> int:
     if not a.url:
         print("usage: fetch.py <url> | fetch.py --batch urls.txt --outdir DIR", file=sys.stderr)
         return 2
-    r = fetch(a.url, a.timeout, a.stop_at)
+    r = fetch(a.url, a.timeout, a.stop_at, no_browser=a.no_browser)
     if a.out:
         Path(a.out).write_text(r["text"], encoding="utf-8")
     if a.json:

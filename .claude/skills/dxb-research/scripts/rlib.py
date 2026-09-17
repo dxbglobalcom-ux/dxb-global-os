@@ -68,7 +68,21 @@ def now() -> str:
 
 
 def new_run_id() -> str:
-    return time.strftime("%Y%m%d-%H%M%S", time.gmtime())
+    """A run id that no other run already has.
+
+    It was a timestamp to the SECOND and nothing checked it. Measured 2026-09-17 by an
+    independent auditor: two opens inside one second took the same id, both returned success,
+    and the first question's record ended up carrying the second question and the second
+    owner. A record that can be overwritten by the next question is not a record.
+
+    `DXB_RESEARCH_STAMP` pins the clock so that collision can be MEASURED rather than raced.
+    """
+    base = os.environ.get("DXB_RESEARCH_STAMP") or time.strftime("%Y%m%d-%H%M%S", time.gmtime())
+    rid, n = base, 2
+    while run_dir(rid).exists():
+        rid = "%s-%d" % (base, n)
+        n += 1
+    return rid
 
 
 def sha256(text: str) -> str:
@@ -367,7 +381,20 @@ _WALL = re.compile(
 # sweep.sh reads this same string from here — it used to keep its own copy.
 _SITE_ERR = re.compile(SITE_ERROR, re.I)
 
-_SITE_ERR = re.compile(SITE_ERROR, re.I)
+# A DOOR'S OWN REFUSAL, in plain prose rather than JSON. Measured 2026-09-17, both with
+# exit code 0 and both stamped `ok` by the coverage table: the keyless Tavily door answered
+# 135 bytes — "You reached the monthly keyless Tavily limit" — and Firecrawl answered 102 —
+# "You've hit Firecrawl's free MCP rate limit". The engine then told the CEO it had searched
+# with five engines when it had searched with three. A quota notice is the door saying no.
+#
+# It is judged WITH the word count, never alone: a page ABOUT rate limits is long, and the
+# Parallel and Firecrawl documentation pages — the very pages that answer a question about
+# keyless tiers — were once demoted for carrying the words. A notice is short.
+QUOTA_ERROR = (r"you reached the monthly|keyless [a-z]{0,12} ?limit|free mcp rate limit|"
+               r"monthly_cap_reached|add an api key|upgrade your plan|"
+               r"quota (exceeded|reached)|out of credits|no results found")
+_QUOTA = re.compile(QUOTA_ERROR, re.I)
+QUOTA_MAX_WORDS = 60
 
 _NAVISH = re.compile(r"\[[^\]]{0,80}\]\([^)]{0,200}\)")
 
@@ -446,6 +473,11 @@ def looks_like_wall(text: str) -> bool:
     if _SITE_ERR.search(head):
         words = re.findall(r"[A-Za-z\u00c0-\u024f]{3,}", _NAVISH.sub(" ", body))
         if len(words) < 300:
+            return True
+    # THE DOOR'S OWN REFUSAL. Short and carrying a quota wording = a notice, not a page.
+    if _QUOTA.search(head):
+        words = re.findall(r"[A-Za-z\u00c0-\u024f]{3,}", _NAVISH.sub(" ", body))
+        if len(words) < QUOTA_MAX_WORDS:
             return True
     return bool(_WALL.search(head))
 
@@ -557,3 +589,42 @@ def _mini_yaml(path: Path) -> dict:
 
 def config(name: str) -> dict:
     return load_yaml(SKILL_DIR / "config" / name)
+
+
+# --------------------------------------------------------------- the judge at the shell
+# ONE JUDGE, ONE OWNER — and the sweep is its second caller, not its second author.
+#
+# Until 2026-09-17 the sweep decided this question itself, with its own copy of the word
+# list and a plain `grep`. The two judges then disagreed in both directions on the same
+# day: a 135-byte quota notice was stamped `ok` while a Quora page carrying 420 paragraphs
+# of real answers under one banner line was thrown away, four runs in a row. The rule that
+# was already right lived here — count the words before calling a banner a wall — and it
+# had never been carried down. It is not carried down now either: the sweep ASKS.
+#
+#   python3 rlib.py --judge <file> ...        -> one line per file: BROKEN | OK
+#   python3 rlib.py --judge-dir <folder>      -> one line per *.raw: <name>\tBROKEN|OK
+def _judge_cli(argv: list) -> int:
+    # A FILE THAT CANNOT BE READ IS AN ERROR, NOT A VERDICT. The first version of this
+    # function swallowed the exception and judged the empty string, which reads as BROKEN —
+    # so a bug in the judge would have condemned every page in silence. It was caught by this
+    # engine's own test on the day it was written, and the lesson is the one this whole
+    # repair is about: a silent fallback is how a machine starts lying.
+    if not argv:
+        print("usage: rlib.py --judge <file>... | --judge-dir <folder>", file=sys.stderr)
+        return 2
+    if argv[0] == "--judge-dir":
+        for f in sorted(Path(argv[1]).glob("*.raw")):
+            print("%s\t%s" % (f.stem, "BROKEN" if looks_like_wall(
+                f.read_text(encoding="utf-8", errors="replace")) else "OK"))
+        return 0
+    if argv[0] == "--judge":
+        for f in argv[1:]:
+            print("BROKEN" if looks_like_wall(
+                Path(f).read_text(encoding="utf-8", errors="replace")) else "OK")
+        return 0
+    print("usage: rlib.py --judge <file>... | --judge-dir <folder>", file=sys.stderr)
+    return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(_judge_cli(sys.argv[1:]))

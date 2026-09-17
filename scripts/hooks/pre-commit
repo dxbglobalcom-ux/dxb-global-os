@@ -25,5 +25,23 @@ if ! command -v gitleaks >/dev/null 2>&1; then
   exit 1
 fi
 
-# (3) Scan staged changes only; redact matched values in all output.
+# (3) THE CLASS'S RULER RUNS BEFORE THE COMMIT — the CEO's ruling of 2026-09-15
+#     (ceo-approvals.json, `ruler-table-holding-wide-2026-09-15`): "every commit runs its
+#     class's ruler automatically — no ruler green, no commit". The research engine is a class
+#     of its own and its ruler is scripts/research-ruler.sh (~0.3 s). It runs ONLY when that
+#     engine, its tests or the ruler itself are in the staged change, so an ordinary commit
+#     pays nothing. Measured on 2026-09-17, the day it was written: the engine went into that
+#     commit at 10/10 PASS, having been at 4/10 with 18 failures that morning.
+RESEARCH_TOUCHED=$(git diff --cached --name-only | grep -E '^\.claude/skills/dxb-research/|^tests/b46/|^scripts/research-ruler\.sh$' || true)
+if [ -n "$RESEARCH_TOUCHED" ]; then
+  REPO_TOP=$(git rev-parse --show-toplevel)
+  if ! bash "$REPO_TOP/scripts/research-ruler.sh"; then
+    echo "" >&2
+    echo "COMMIT DURDURULDU — arastirma motorunun cetveli kirmizi (yukaridaki tablo)." >&2
+    echo "Duzelt, 'bash scripts/research-ruler.sh' yesil yansin, sonra tekrar commit et." >&2
+    exit 1
+  fi
+fi
+
+# (4) Scan staged changes only; redact matched values in all output.
 exec gitleaks git --pre-commit --staged --redact --verbose

@@ -45,15 +45,19 @@ export OPENCLI_WINDOW=background
 QUERY="${1:-}"; OUT="${2:-}"; shift 2 2>/dev/null || true
 # DEFAULT = max. His order, 2026-09-17: "20-30 farkli kanalda ayni anda arastirilacak…
 # ben ayni anda 100 tane siteden arastirma yapiyormusum gibi arastirma yapip sonuc
-# getirecek". `wide` opened 22; `max` opens 33 and costs seconds, not minutes, because
+# getirecek". `wide` opens 23; `max` opens all 37 channels and costs seconds, not minutes, because
 # every channel is fired in parallel. Narrow it by hand only when a question truly has
 # one home (--tier core), and say so in the answer.
-TIER=max; TMO=180; PAGES=14; WITH_BROWSER=1
+TIER=max; TMO=180; PAGES=14; WITH_BROWSER=1; NO_READ=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --tier) TIER="$2"; shift 2 ;;
     --timeout) TMO="$2"; shift 2 ;;
     --pages) PAGES="$2"; shift 2 ;;
+    # WHICH PAGES WOULD THIS SWEEP OPEN? Selecting and reading are two jobs, and until
+    # 2026-09-17 nobody could see the first one without paying for the second. The choice is
+    # where reading breadth is decided, so it has to be inspectable on its own.
+    --no-read) NO_READ=1; shift ;;
     --browser) WITH_BROWSER=1; shift ;;
     --no-browser) WITH_BROWSER=0; shift ;;  # for a run that must not touch his screen at all
     *) shift ;;
@@ -68,12 +72,16 @@ mkdir -p "$OUT"
 
 # The sentences a site prints INSTEAD of content. ONE owner, scripts/rlib.py — the reading
 # chain judges by the same list, which it did not until 2026-09-17.
-SITE_ERROR_RE=$(python3 -c "import sys;sys.path.insert(0,'$(dirname "${BASH_SOURCE[0]}")');import rlib;print(rlib.SITE_ERROR)" 2>/dev/null)
-[ -z "$SITE_ERROR_RE" ] && SITE_ERROR_RE="something went wrong\. wait a moment|etwas ist schiefgelaufen|are you a robot"
 
 # The run this sweep belongs to, resolved ONCE, here at the start.
+# WHICH RUN THIS SWEEP BELONGS TO — ASKED, NEVER GUESSED. These two lines used to read the
+# machine-wide `runs/CURRENT` marker directly, which knows nothing about who owns the run.
+# Measured 2026-09-17: the shared resolver answered `own-run` while this sweep wrote 1 evidence
+# row, 12 queries and 12 tool rows into `peer-run` — another session's ledger.
 SWEEP_RUN="${DXB_RESEARCH_RUN:-}"
-[ -z "$SWEEP_RUN" ] && SWEEP_RUN="$(cat "$(dirname "${BASH_SOURCE[0]}")/../runs/CURRENT" 2>/dev/null || true)"
+if [ -z "$SWEEP_RUN" ]; then
+  SWEEP_RUN="$(python3 -c "import sys;sys.path.insert(0,'$(dirname "${BASH_SOURCE[0]}")');import rlib;print(rlib.current_run_id() or '')" 2>/dev/null || true)"
+fi
 
 # --- the channel map ------------------------------------------------------------------
 # Each entry: name|tier|command.
@@ -149,7 +157,7 @@ v2ex|wide|opencli duckduckgo search "site:v2ex.com {Q}" -f yaml
 # channel changed shape the same minute. It is no longer a DuckDuckGo site-query — it is
 # Quora's OWN search page, read through the browser bridge that carries his session. Proof
 # from that first read: the page came back as "Profilfoto für Dxb Company", 13 088 chars.
-# Before the login every one of the eleven doors was walled. A login is worth more than a
+# Before the login every one of the doors then in the chain was walled (RULER-HISTORY: eleven that day). A login is worth more than a
 # fallback chain here, and it is the only channel on this list that needed one.
 quora-forums|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser quora open 'https://www.quora.com/search?q={U}' --window background >/dev/null 2>&1; opencli browser quora extract --window background"
 # QUORA IS READ THROUGH THE SITE, NOT THROUGH ITS SEARCH BOX. Measured 2026-09-17 in the
@@ -184,7 +192,7 @@ want_tier() {  # core ⊂ wide ⊂ max ; `browser` is NEVER in any of them
   # değil yani iş aksamasın önemli olan bu."* So the two channels that need the bridge
   # (google-deep, quora-forums) run by DEFAULT; `--no-browser` is there for the rare run that
   # must not touch his screen. They cannot be made headless: measured the same day, the whole
-  # eleven-door chain against google.com/search returned a 921-byte cached snapshot and
+  # reading chain against google.com/search returned a 921-byte cached snapshot and
   # nothing else — Google shuts its own results page to every headless reader we have.
   case "$1" in
     browser) [ "$WITH_BROWSER" = "1" ] ;;
@@ -202,12 +210,25 @@ echo "katman  : $TIER   (zaman asimi ${TMO}s/kanal)"
 echo "klasor  : $OUT"
 echo
 
+# --- the guard, BEFORE anything is fired ------------------------------------------------
+# A GUARD THAT LOOKS AFTER THE SHOT IS A WITNESS, NOT A GUARD. It used to stand below the
+# fan-out loop: every channel had already been launched in the background by the time it
+# looked, so a forbidden command would have run and then been reported. It also knew only
+# the word `login`, while the door's own boundary (SKILL.md section 8) forbids every write
+# verb — those are the CEO's signature and they stop at him.
+if printf '%s' "$CHANNELS" | grep -qE '(^|[|[:space:]])opencli [a-z0-9-]+ (login|post|comment|like|follow|share|join|message|reply|upvote|vote|dm)($|[[:space:]])'; then
+  echo "!! DUR: bir kanal satiri yasak bir fiil cagiriyor (giris ya da yazma)." >&2
+  echo "   Okumak serbest; yazmak CEO'nun imzasidir ve onda durur (SKILL.md 8)." >&2
+  printf '%s' "$CHANNELS" | grep -nE '(^|[|[:space:]])opencli [a-z0-9-]+ (login|post|comment|like|follow|share|join|message|reply|upvote|vote|dm)($|[[:space:]])' >&2
+  exit 3
+fi
+
 # --- fan out --------------------------------------------------------------------------
 n=0
 while IFS='|' read -r name tier cmd; do
   [ -z "${name:-}" ] && continue
   # THE MAP'S OWN COMMENTS ARE NOT CHANNELS. Measured 2026-09-17: a `max` sweep reported
-  # "50 channels" where 36 exist — the 14 explanatory `#` lines in the map were being run as
+  # "50 channels" where 36 existed (RULER-HISTORY) — the 14 explanatory `#` lines in the map were run as
   # channels with an empty command, each producing an empty .raw and a "BOS" row. The
   # coverage table was counting the file's own prose as failed doors.
   case "$name" in \#*) continue ;; esac
@@ -249,15 +270,25 @@ while IFS='|' read -r name tier cmd; do
   ) &
 done <<< "$CHANNELS"
 
-if printf '%s' "$CHANNELS" | grep -qE '(^|[|[:space:]])opencli [a-z0-9-]+ login($|[[:space:]])'; then
-  echo "!! DUR: bir kanal satiri bir 'login' komutu cagiriyor. OPENCLI_WINDOW=background onu" >&2
-  echo "   arka plana zorlar ve CEO o pencereyi goremez. Kanal satirini duzelt." >&2
-  exit 3
-fi
 
 echo "$n kanal aynı anda açıldı — bekleniyor..."
 wait
 echo
+
+# --- ONE JUDGE, ONE OWNER ---------------------------------------------------------------
+# WHAT A CHANNEL RETURNED IS JUDGED BY rlib, NOT BY THIS FILE. Until 2026-09-17 this script
+# kept its own copy of the word list and decided with a `grep`, and the two judges then
+# disagreed in BOTH directions on the same day: a 135-byte quota notice was stamped `ok`
+# (three search engines were reported as five) while a Quora page carrying 420 paragraphs of
+# real answers under one banner line was thrown away, four runs in a row. The rule that was
+# already right — count the words before calling a banner a wall — lived in rlib and had
+# never been carried down. So it is not carried down now either: this script ASKS.
+# It is fail-closed: a judge that cannot run is not a reason to call every page sound.
+if ! python3 "$SKILL/scripts/rlib.py" --judge-dir "$OUT" > "$OUT/.judge" 2> "$OUT/.judge.err"; then
+  echo "!! DUR: hakem (rlib --judge-dir) calistirilamadi — hicbir kanal degerlendirilemez." >&2
+  head -c 300 "$OUT/.judge.err" >&2; echo >&2
+  exit 4
+fi
 
 # --- coverage table, failures included -------------------------------------------------
 printf "%-16s %8s %10s  %s\n" "KANAL" "SONUC" "BOYUT" "DURUM"
@@ -265,7 +296,7 @@ ok=0; fail=0; empty=0; FAILED_CHANNELS=""
 while IFS='|' read -r name tier cmd; do
   [ -z "${name:-}" ] && continue
   # THE MAP'S OWN COMMENTS ARE NOT CHANNELS. Measured 2026-09-17: a `max` sweep reported
-  # "50 channels" where 36 exist — the 14 explanatory `#` lines in the map were being run as
+  # "50 channels" where 36 existed (RULER-HISTORY) — the 14 explanatory `#` lines in the map were run as
   # channels with an empty command, each producing an empty .raw and a "BOS" row. The
   # coverage table was counting the file's own prose as failed doors.
   case "$name" in \#*) continue ;; esac
@@ -277,13 +308,13 @@ while IFS='|' read -r name tier cmd; do
   # rather than ||'d — an unwrapped `|| echo 0` prints the count AND the fallback.
   hits=$(awk '/^- |^[[:space:]]*\{|^Title:/{n++} END{print n+0}' "$OUT/$name.raw" 2>/dev/null)
   [ -z "$hits" ] && hits=0
-  # A PAGE THAT SAYS "SOMETHING WENT WRONG" IS NOT AN ANSWER. Measured 2026-09-17: the Quora
-  # channel returned 13 530 bytes and the table called it `ok` — the bytes were the site's own
-  # error page, "Something went wrong. Wait a moment and try again.", wrapped in its menu.
-  # Size is not success. These markers are exact sentences a site prints INSTEAD of content,
-  # and a channel that shows one is a hole, so its stand-in fires like any other failure.
+  # A PAGE THAT SAYS "SOMETHING WENT WRONG" IS NOT AN ANSWER — AND A BANNER IS NOT A PAGE.
+  # The verdict comes from the engine's single judge (rlib.looks_like_wall), computed above
+  # for every raw file at once. This script no longer decides it: the old test was a `grep`
+  # against a second copy of the word list, and it was size-gated at 60 000 bytes, so the
+  # same page would have been accepted unread had it been one byte larger.
   broke=""
-  if [ "$size" -lt 60000 ] && grep -qiE "$SITE_ERROR_RE" "$OUT/$name.raw" 2>/dev/null; then
+  if [ "$(awk -F'\t' -v n="$name" '$1==n{print $2}' "$OUT/.judge" 2>/dev/null)" = "BROKEN" ]; then
     broke=1
   fi
   if [ "$code" != "0" ]; then
@@ -329,6 +360,7 @@ PYEOF
     # ground read ZERO page bodies and nothing said why. One missing default cost a whole
     # language's reading.
     sub=""
+    covered=""
     for sub in $subs; do
       grep -q "^$sub|" <<< "$CHANNELS" || continue
       subcmd=$(grep "^$sub|" <<< "$CHANNELS" | head -1 | cut -d'|' -f3)
@@ -344,8 +376,14 @@ PYEOF
       # redirections are applied left to right, so the failure happens before stderr is
       # silenced. Test the file first.
       subsize=0; [ -f "$OUT/$sub.raw" ] && subsize=$(wc -c < "$OUT/$sub.raw")
+      # A CHANNEL THAT ALREADY RAN IS NOT A COVER. Measured 2026-09-17, in the audit he
+      # ordered: 7 of 10 cascade lines said "zaten bu turda calisti, kapak o" — not one
+      # NEW byte was fetched for the dead channel, and `quora-forums -> reddit` was
+      # announced as a cover although reddit cannot carry Quora's text. It is reported as
+      # what it is, and the cascade keeps walking to something that has not run.
       if [ "$subcode" = "0" ] && [ "$subsize" -ge 40 ]; then
-        echo "   $dead -> $sub (zaten bu turda calisti, kapak o)"; break
+        echo "   $dead -> $sub  (bu turda zaten calisti — YENI BAYT YOK, delik duruyor)"
+        continue
       fi
       run="${subcmd//\{S\}/$S_REF}"; run="${run//\{Q\}/$Q_REF}"; run="${run//\{G\}/$G_REF}"; run="${run//\{U\}/$U_REF}"
       DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
@@ -353,23 +391,32 @@ PYEOF
       subrc=$?
       sz=$(wc -c < "$OUT/$dead-via-$sub.raw" 2>/dev/null || echo 0)
       echo "$subrc" > "$OUT/$dead-via-$sub.code"
-      if [ "$subrc" -eq 0 ] && [ "$sz" -ge 40 ]; then echo "   $dead -> $sub  ok ($sz bayt)"; break
+      if [ "$subrc" -eq 0 ] && [ "$sz" -ge 40 ]; then echo "   $dead -> $sub  ok ($sz bayt)"; covered=1; break
       elif [ "$subrc" -ne 0 ]; then echo "   $dead -> $sub  o da HATA (kod $subrc)"
       else echo "   $dead -> $sub  o da bos"; fi
     done
 
-    # LAST RESORT: go to the site ITSELF and read its own search page with the eleven-door
+    # LAST RESORT: go to the site ITSELF and read its own search page with the twelve-door
     # chain. The CEO's question, 2026-09-16: "Quora failed — why did the other tools not
     # open Quora?" They never got the chance: a site-scoped channel is a SEARCH-ENGINE query
     # ("site:quora.com …"), so when the engine refuses there is no address for the readers to
     # open. There is one, though — the site's own search page — and nothing was walking to it.
-    site=$(grep "^$dead|" <<< "$CHANNELS" | head -1 | sed -n 's/.*site:\([a-z0-9.-]*\).*/\1/p')
-    covered=""
-    [ -n "${sub:-}" ] && [ -s "$OUT/$dead-via-$sub.raw" ] && covered=1
+    # The site to walk to. It used to be read ONLY out of a `site:` query, so a channel
+    # that reaches its site through a URL (the browser doors) had no last resort at all —
+    # measured 2026-09-17: quora-forums fell and nothing ever walked to quora.com.
+    dline=$(grep "^$dead|" <<< "$CHANNELS" | head -1)
+    site=$(sed -n 's/.*site:\([a-z0-9.-]*\).*/\1/p' <<< "$dline")
+    [ -z "$site" ] && site=$(sed -n "s#.*https\?://\([a-z0-9.-]*\).*#\1#p" <<< "$dline")
+    # THE COVER IS THE ONE THAT ANSWERED, AND IT IS RECORDED WHERE IT ANSWERS. This used to be
+    # inferred here from `$sub` — whatever the loop variable happened to be left at, not the
+    # stand-in that worked — and from `-s` alone, so an 80-byte error text counted as a cover.
+    # Measured 2026-09-17: three stand-ins failed with exit 7, the last one left 80 bytes of
+    # diagnostics, and the walk to lobsters.rs was never attempted.
     if [ -n "$site" ] && [ -z "$covered" ]; then
-      echo "   $dead -> son care: $site adresine dogrudan gidiliyor (11 kapili zincir)"
+      echo "   $dead -> son care: $site adresine dogrudan gidiliyor (12 kapili zincir)"
+      NB=""; [ "$WITH_BROWSER" = "1" ] || NB="--no-browser"
       timeout "$TMO" python3 "$SKILL/scripts/fetch.py" \
-        "https://${site}/search?q=${UQ}" --out "$OUT/$dead-direct.md" >/dev/null 2>&1
+        "https://${site}/search?q=${UQ}" --out "$OUT/$dead-direct.md" ${NB} >/dev/null 2>&1
       dsz=$(wc -c < "$OUT/$dead-direct.md" 2>/dev/null || echo 0)
       if [ "$dsz" -gt 400 ]; then echo "   $dead -> $site  ACILDI ($dsz bayt)"
       else echo "   $dead -> $site  o da acilmadi — delik raporda kalir"; fi
@@ -405,7 +452,7 @@ NOISE = re.compile(r"\.(png|jpe?g|gif|svg|webp|mp4|css|js|ico|woff2?)($|\?)|"
 # A url lifted out of a SNIPPET is often truncated - google.raw printed
 # "dy-sync-bgtest2 open https://creator." and the rstrip below turned that into the host
 # "creator", which has no dot and cannot exist. Measured 2026-09-16: 1 url of 237, and it
-# burned all ELEVEN doors of the reading chain before being reported to the CEO as a page
+# burned every door of the reading chain before being reported to the CEO as a page
 # that could not be read. A host with no dot-plus-tld is not a page; it never enters the queue.
 HOST_OK = re.compile(r"^[A-Za-z0-9._~-]+\.[A-Za-z]{2,}$")
 
@@ -415,8 +462,22 @@ def _host(u):
     return parts[2].split("@")[-1].split(":")[0] if len(parts) > 2 else ""
 
 
+# WHERE PEOPLE TALK IS READ FIRST, AND THE ALPHABET DECIDES NOTHING. The round-robin below
+# takes ONE address per channel per round, and it used to visit the channels in glob order.
+# Measured 2026-09-17 on a live sweep of this engine: reddit.raw held 245 176 bytes and 445
+# addresses, the budget of 14 ran out around `openalex`, and the engine that exists to read
+# what people say opened NOT ONE Reddit page. The order is now the job's order.
+CROWD = ["reddit", "hackernews", "twitter", "stackoverflow", "youtube", "lobsters",
+         "quora", "quora-forums", "v2ex", "zhihu", "linux-do", "weibo", "rednote",
+         "bilibili", "juejin", "devto", "bluesky", "substack", "medium"]
+
+
+def _order(stem):
+    return (CROWD.index(stem) if stem in CROWD else len(CROWD) + 1, stem)
+
+
 per = {}
-for raw in sorted(out.glob("*.raw")):
+for raw in sorted(out.glob("*.raw"), key=lambda q: _order(q.stem)):
     seen, keep = set(), []
     for u in URL.findall(raw.read_text(encoding="utf-8", errors="replace")):
         u = u.rstrip(".,);")
@@ -435,7 +496,11 @@ while len(picked) < limit and per and guard < limit * 4:
         while q:
             u = q.pop(0)
             d = u.split("/")[2] if len(u.split("/")) > 2 else u
-            if u in seen or dom.get(d, 0) >= 2:
+            # Two pages per host keeps a search engine from filling the budget with one site.
+            # But a crowd channel's whole job is many threads on ONE host, and the same cap was
+            # holding reddit.com to two even after it got its turn.
+            cap = 6 if ch in CROWD else 2
+            if u in seen or dom.get(d, 0) >= cap:
                 continue
             seen.add(u); dom[d] = dom.get(d, 0) + 1
             picked.append(u)
@@ -447,6 +512,12 @@ print("\n".join(picked))
 PYEOF
 
 total=$(wc -l < "$OUT/pages/urls.txt")
+if [ "$NO_READ" = "1" ]; then
+  echo
+  echo "(okuma kapali: --no-read) secilen $total adres: $OUT/pages/urls.txt"
+  sed -n '1,40p' "$OUT/pages/urls.txt"
+  exit 0
+fi
 
 # --- stage 2b: the READING CHAIN ---------------------------------------------------------
 # His order, 2026-09-16: "sayfaya girdi agent reach ile bilgiyi cekicek, cekemiorsa scrapling
@@ -456,14 +527,15 @@ total=$(wc -l < "$OUT/pages/urls.txt")
 # it answered. Measured on a Cloudflare-walled page: scrapling WALL -> stealth fail ->
 # no platform adapter -> tavily-extract OK in 407 ms.
 echo
-echo "sayfa okuma: $total adres, 11 kapili zincir (video altyazisi -> pdf metni -> scrapling ->"
+echo "sayfa okuma: $total adres, 12 kapili zincir (video altyazisi -> pdf metni -> scrapling ->"
 echo "             stealth -> opencli -> tavily -> firecrawl -> exa -> playwright -> jina -> curl)"
+NB=""; [ "$WITH_BROWSER" = "1" ] || NB="--no-browser"
 python3 "$SKILL/scripts/fetch.py" --batch "$OUT/pages/urls.txt" --outdir "$OUT/pages" \
-        --timeout 45 --workers 6 || true
+        --timeout 45 --workers 6 ${NB} || true
 
 read_ok=$(find "$OUT/pages" -name '*.md' -size +1k 2>/dev/null | wc -l)
 python3 - "$OUT/pages/FETCH-LOG.json" <<'PYEOF' || true
-import json, sys, pathlib
+import json, re, sys, pathlib
 p = pathlib.Path(sys.argv[1])
 if p.exists():
     log = json.loads(p.read_text())
@@ -472,7 +544,18 @@ if p.exists():
     for r in log:
         if r.get("door"):
             doors[r["door"]] = doors.get(r["door"], 0) + 1
-    print("okunan sayfa: %d · okunamayan: %d" % (len(log) - len(unread), len(unread)))
+    # WHAT IS ON THE DISK, NOT WHAT THE LOG BELIEVES. The old line said "okunan 14/14 ·
+    # okunamayan: 0" while four of those fourteen were an XML descriptor, a donation page and
+    # two API endpoints — 623, 2 688 and 0 bytes of anything to read. A page counts as read
+    # when it carries enough words to be read.
+    REAL_WORDS = 200
+    real = 0
+    for f in sorted(p.parent.glob("*.md")):
+        body = f.read_text(errors="replace")
+        if len(re.findall(r"[A-Za-z\u00c0-\u024f]{3,}", body)) >= REAL_WORDS:
+            real += 1
+    print("okunan sayfa: %d (gercek icerikli: %d, >=%d kelime) · okunamayan: %d"
+          % (len(log) - len(unread), real, REAL_WORDS, len(unread)))
     if doors:
         print("   hangi kapi acti: " + " · ".join(f"{k}={v}" for k, v in
               sorted(doors.items(), key=lambda kv: -kv[1])))

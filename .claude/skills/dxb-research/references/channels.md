@@ -44,7 +44,7 @@ Without the Tavily header the same endpoint returns **401** — a keyless claim 
 believed. None of the five publishes its rate limit and none owes us anything; that is why
 there are five and why every one has a fallback chain in `config/registry.yaml`.
 
-## The reading chain — eleven doors, and a page is unread only when all eleven fail
+## The reading chain — twelve doors, and a page is unread only when all eleven fail
 
 ```bash
 python3 scripts/fetch.py <url>                        # shows every door it tried

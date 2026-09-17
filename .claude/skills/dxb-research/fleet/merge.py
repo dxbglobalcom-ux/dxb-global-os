@@ -82,6 +82,11 @@ def stats(p: pathlib.Path) -> dict:
     2026-09-17 on the first fleet run, which is why this is here.
     """
     cost, tools, last, urls, doors = 0.0, {}, None, set(), set()
+    # A CALL IS NOT A FETCH. Measured 2026-09-17: a URL written inside an `echo` whose tool
+    # result carried `is_error: true` was counted as one opened source AND as a ground read,
+    # and the saturation number the CEO is shown rests on exactly this count. So a call is
+    # held until its RESULT arrives, and it is harvested only if that result is not an error.
+    pending: dict = {}
     for line in p.read_text(errors="replace").splitlines():
         try:
             d = json.loads(line)
@@ -90,27 +95,60 @@ def stats(p: pathlib.Path) -> dict:
         if d.get("type") == "result":
             last = d
         for blk in (d.get("message") or {}).get("content") or []:
-            if isinstance(blk, dict) and blk.get("type") == "tool_use":
+            if not isinstance(blk, dict):
+                continue
+            if blk.get("type") == "tool_use":
                 tools[blk.get("name")] = tools.get(blk.get("name"), 0) + 1
-                try:
-                    raw = json.dumps({"n": blk.get("name"), "i": blk.get("input") or {}},
-                                     ensure_ascii=False)
-                    urls |= set(URL.findall(raw))
-                    if "/ground" in raw:
-                        doors.add("zemin-okudu")
-                    for label, pat in CHANNEL_PAT:
-                        if re.search(pat, raw, re.I):
-                            doors.add(label)
-                except Exception:
-                    pass
+                pending[blk.get("id")] = json.dumps(
+                    {"n": blk.get("name"), "i": blk.get("input") or {}}, ensure_ascii=False)
+            elif blk.get("type") == "tool_result":
+                raw = pending.pop(blk.get("tool_use_id"), "")
+                if blk.get("is_error"):
+                    continue          # the door did not open — nothing here was read
+                body = blk.get("content")
+                if not isinstance(body, str):
+                    body = json.dumps(body, ensure_ascii=False)
+                harvest = raw + "\n" + body
+                urls |= set(URL.findall(harvest))
+                if "/ground" in raw:
+                    doors.add("zemin-okudu")
+                for label, pat in CHANNEL_PAT:
+                    if re.search(pat, raw, re.I):
+                        doors.add(label)
     if last:
         cost = last.get("total_cost_usd", 0.0) or 0.0
     return {"cost": cost, "tools": tools, "doors": doors,
             "touched": {u.rstrip('.,);\\"') for u in urls}}
 
 
+def crowd_count(path: pathlib.Path) -> tuple | None:
+    """The machine's own count, read back from crowd.sh's CROWD-COUNT line.
+
+    THE DENOMINATOR IS THE WHOLE POINT OF THIS ENGINE, and until 2026-09-17 it was the only
+    number here that nothing measured: `people_count()` lifts the first bold figure out of a
+    hunter's prose, and on the one kept run it put 783 in front of the CEO while the hunter's
+    own report said "783 person-rows, NOT de-duplicated … ~10 people spoke to the question".
+    A number that is claimed is labelled a claim from here on; a number that is counted comes
+    through this function and says so.
+    """
+    try:
+        for line in path.read_text(errors="replace").splitlines():
+            if line.startswith("CROWD-COUNT\t"):
+                _, comments, people, threads = line.split("\t")[:4]
+                return int(comments), int(people), int(threads)
+    except Exception:
+        return None
+    return None
+
+
 def main() -> int:
-    out = pathlib.Path(sys.argv[1])
+    argv = sys.argv[1:]
+    crowd_file = None
+    if "--crowd" in argv:
+        i = argv.index("--crowd")
+        crowd_file = pathlib.Path(argv[i + 1])
+        del argv[i:i + 2]
+    out = pathlib.Path(argv[0])
     reports, order = {}, []
     for j in sorted(out.glob("*.jsonl")):
         role = j.stem
@@ -146,6 +184,16 @@ def main() -> int:
         top = " ".join(sorted(r.get("doors") or {"-"}))
         print(f"{role:<12}{r.get('secs','?'):>6}s{r['cost']:>8.2f}{len(r['urls']):>8}{new:>7}{ppl:>7}  {top}")
     print(f"{'TOPLAM':<12}{'':>7}{total_cost:>8.2f}{len(seen):>8}")
+    print("   (BEYAN = avcinin kendi cumlesinden okunan sayi — SAYIM DEGIL.)")
+
+    # THE DENOMINATOR, named for what it is.
+    cc = crowd_count(crowd_file) if crowd_file else None
+    if cc:
+        print(f"\nINSAN (sayildi): {cc[1]} ayri kisi · {cc[0]} yorum · {cc[2]} baslik "
+              f"— crowd.sh'in makine sayimi.")
+    else:
+        print("\nINSAN: SAYILMADI — bu kosuda makine sayimi yok. Yukaridaki BEYAN sutunu "
+              "avcilarin kendi cumlesidir ve payda olarak kullanilamaz.")
 
     # THE GROUND. Since 2026-09-17 the fleet opens it ITSELF before any hunter is launched,
     # so the question "was Google searched at all?" is answered from the files on disk, not
@@ -185,7 +233,10 @@ def main() -> int:
     doors = []
     for role in order:
         t = reports[role]["text"]
-        m = re.search(r"(?:^|\n)\s*D\)(.{0,1200})", t, re.S)
+        # EVERY SHAPE A HUNTER WRITES. `people_count` above was taught this on 2026-09-17
+        # and this line was not, so a lane that wrote "## D) Kapanan kapilar / Reddit
+        # AUTH_REQUIRED" had its warning dropped from the only summary the CEO reads.
+        m = re.search(r"(?:^|\n)[#*\s]{0,6}D[\)\.:](.{0,1200})", t, re.S)
         if m:
             doors.append((role, m.group(1).strip().splitlines()))
     if doors:
@@ -194,6 +245,38 @@ def main() -> int:
             head = [l for l in lines if l.strip()][:3]
             for l in head:
                 print(f"   [{role}] {l.strip()[:110]}")
+
+    # A REPORT WITH NO ADDRESS CANNOT BE CHECKED BY ANYBODY. Measured 2026-09-17 on the one
+    # kept run: SEVEN reports out of seven carried ZERO source addresses, three of them no date
+    # either, and the answer was saved and committed anyway. The skill's own rule says a quote
+    # with no date is a reason to refuse the answer — so the holes are named here, in the only
+    # summary the commander reads.
+    naked = [r for r in order if not URL.search(reports[r]["text"])]
+    if naked:
+        print("\nKAYNAKSIZ RAPOR — bu seritlerin metninde tek bir adres yok, denetlenemezler:")
+        for r in naked:
+            print(f"   [{r}] HUNTER-{r}.md")
+
+    # THE LANES' OWN VERDICTS, SIDE BY SIDE. On the first fleet run four hunters contradicted
+    # each other — measure said 4 of 6 sources one way, foreign said 5 of 5 the other, crowd
+    # said 6-2, video said 5 of 10 — and NONE of it surfaced: the merge laid seven reports next
+    # to each other and left the comparison to a human who had not read them. A machine cannot
+    # judge which lane is right, and this does not pretend to: it puts the sentences in one
+    # place so the contradiction cannot hide in file six of seven.
+    verdicts = []
+    for role in order:
+        m = re.search(r"(?:^|\n)[#*\s]{0,6}(?:HUKUM|HÜKÜM|SONUC|SONUÇ)[\)\.:]?\s*(.{0,220})",
+                      reports[role]["text"], re.S)
+        if not m:
+            m = re.search(r"(?:^|\n)[#*\s]{0,6}A[\)\.:][^\n]{0,90}\n+([^\n]{20,220})",
+                          reports[role]["text"], re.S)
+        if m:
+            verdicts.append((role, " ".join(m.group(1).split())[:200]))
+    if verdicts:
+        print("\nSERITLERIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:")
+        for role, v in verdicts:
+            print(f"   [{role}] {v}")
+        print("   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)")
 
     print(f"\nraporlar: {out}/HUNTER-*.md")
     return 0

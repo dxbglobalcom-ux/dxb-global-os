@@ -23,7 +23,7 @@ failure the CEO named on 2026-09-16: *"2 tane reddit 2 tane x açtın kapattın.
 
 Before you touch your lane's own doors, fire the wide sweep once with a query shaped for
 your lane. Measured on the first fleet run, 2026-09-17: only **3 of 7 hunters** opened the
-34-channel ground — the other four went straight to the platform they knew, and one lane
+37-channel ground — the other four went straight to the platform they knew, and one lane
 used nothing but the model's own WebSearch. The CEO asked the obvious question the same
 hour — *"google'da da arama yapıldı mı?"* — and the honest answer was "in three lanes of
 seven". A lane is a SPECIALITY, never a reason to leave the ground unopened.
@@ -48,10 +48,10 @@ bash "$R/crowd.sh" urls.txt OUTDIR --workers 6        # reddit threads -> OUTDIR
 opencli reddit read <url> --limit 100 --depth 10 --replies 50 --expand-more true --expand-rounds 5 -f yaml
 #   the DEFAULTS of that command read 35 records / 20 people of a 73-comment thread. Never use them.
 
-# the fan-out: 34 channels at once, keyless
+# the fan-out: 37 channels at once, keyless
 bash "$R/sweep.sh" "<query>" OUTDIR --tier max --pages 14
 
-# one page, eleven doors, in order, until one opens
+# one page, twelve doors, in order, until one opens
 python3 "$R/fetch.py" <url>                  |  python3 "$R/fetch.py" --batch urls.txt --outdir D
 
 # the platforms, through the CEO's own logged-in Chrome (READ ONLY)
@@ -70,7 +70,13 @@ opencli browser <site> state|find|click|type|scroll   # when a page needs a hand
 gh search issues|repos "<q>" --json ...      # what actually breaks, in the open
 yt-dlp --write-auto-sub --skip-download <url>
 pdftotext file.pdf -                          # the only door that reads a PDF
-mcp__scrapling__stealthy_fetch                # when a plain fetch is walled
+python3 "$R/fetch.py" <url>                   # TWELVE doors, in order, until one opens —
+#     subtitles, PDF text, scrapling, scrapling STEALTH, the platform's own reader, the
+#     signed-in browser, tavily, firecrawl, exa, a headless browser, jina, curl. Use this and
+#     never a single fetcher: a page is unread only when every door has failed, and then the
+#     log names each one and what it answered. (An MCP tool is not available to you — a hunter
+#     runs with the MCP servers switched off and the repository bound READ-ONLY, so it can read
+#     everything and change nothing here. The chain above is stronger than any one of them.)
 ```
 
 ## The boundaries, and they do not bend

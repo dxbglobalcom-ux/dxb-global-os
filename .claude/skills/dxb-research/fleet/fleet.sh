@@ -60,7 +60,7 @@ echo
 # ---- THE GROUND IS OPENED BY THE MACHINE, NOT BY A SENTENCE -----------------------------
 # Measured twice on 2026-09-17: told in prose to sweep first, 2 of 7 hunters did it, and on
 # the repaired prompt 2 of 3. Instruction-following is not a mechanism. So the fleet opens
-# the 34-channel ground ITSELF, once, before a single hunter is launched, and hands every
+# the 37-channel ground ITSELF, once, before a single hunter is launched, and hands every
 # lane the raw files. Google and DuckDuckGo are therefore searched on EVERY run, by
 # construction, and a hunter spends its minutes reading instead of deciding whether to look.
 # THE QUESTION FILE MAY CARRY MORE THAN ONE LINE, and every line becomes its own ground.
@@ -76,7 +76,7 @@ while IFS= read -r gq || [ -n "$gq" ]; do
   [ -z "$(printf '%s' "$gq" | tr -d '[:space:]')" ] && continue
   n_g=$((n_g+1))
   if [ "$n_g" -eq 1 ]; then d="$GROUND"; else d="$GROUND-$n_g"; fi
-  echo "genis zemin $n_g aciliyor (35 kanal): $(printf '%s' "$gq" | head -c 70)"
+  echo "genis zemin $n_g aciliyor (37 kanal): $(printf '%s' "$gq" | head -c 70)"
   bash "$SKILL/scripts/sweep.sh" "$gq" "$d" --tier max --pages 8 > "$OUT/ground-$n_g.log" 2>&1 &
 done < "$QF"
 wait
@@ -93,6 +93,21 @@ dsz=0; [ -f "$GROUND/duckduckgo.raw" ] && dsz=$(wc -c < "$GROUND/duckduckgo.raw"
 echo "   zemin hazir: $n_g dil/sorgu · $tg kanal dosyasi · google ${gsz}+${gsz2} bayt · duckduckgo ${dsz} bayt · okunan sayfa ${tp}"
 echo
 
+# THE REPOSITORY IS READ-ONLY TO A HUNTER — AND TOOLS ALONE CANNOT DO THAT.
+# Measured live on 2026-09-17 while this was being repaired: with every writing tool refused
+# and the MCP servers switched off, the hunter was down to SEVEN tools — and it created a file
+# in this repository anyway, with `echo >`, because a hunter needs Bash and Bash writes. A
+# permission list is not a wall. bubblewrap is: the repository is bound read-only and the run
+# folder is bound writable, so a hunter can read everything it needs and change nothing here.
+# Proven on this machine the same hour: `touch` inside the jail answers "Read-only file system".
+REPO_ROOT="$(builtin cd "$SKILL/../../.." && pwd)"
+JAIL=""
+if command -v bwrap >/dev/null 2>&1; then
+  JAIL="bwrap --dev-bind / / --ro-bind $REPO_ROOT $REPO_ROOT --bind $OUT $OUT --bind /tmp /tmp"
+else
+  echo "!! UYARI: bwrap yok — avcilar depoyu YAZILABILIR gorecek. Bu bir deliktir ve rapora yazilir." >&2
+fi
+
 ARSENAL="$(cat "$HERE/ARSENAL.md")"
 launched=0
 for role in $PICK; do
@@ -102,8 +117,11 @@ for role in $PICK; do
     printf '%s\n\n' "$ARSENAL"
     printf 'YOUR LANE — %s\n\n' "$line"
     printf 'THE QUESTION THE FLEET IS ANSWERING:\n%s\n\n' "$QUESTION"
-    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 35 channels, in every language of the\n'
-    printf 'question, before you were launched. One file per channel, raw, including google.raw\n'
+    # THE SENTENCE MATCHES THE RUN. It used to say "in every language of the question" on every
+    # run, including the single-language ones: measured 2026-09-17, the fleet computed the real
+    # number one line above and then told seven hunters something else.
+    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 37 channels, in %%s language/phrasing(s) of\n' "$n_g"
+    printf 'the question, before you were launched. One file per channel, raw, including google.raw\n'
     printf 'and duckduckgo.raw, plus the page bodies it already read:\n'
     for gd in $GROUND_DIRS; do printf '    %s/*.raw   %s/pages/*.md\n' "$gd" "$gd"; done
     printf 'READ WHAT IS YOURS THERE FIRST (`ls`, `head -c`, grep) before you search again;\n'
@@ -114,11 +132,36 @@ for role in $PICK; do
     printf 'Answer in Turkish. Hand back exactly the six blocks A-F.\n'
   } > "$OUT/prompt-$role.txt"
 
+  # K1 — WHAT A HUNTER IS ALLOWED TO DO. Measured 2026-09-17 from a hunter's own transcript:
+  # seven of them ran AT THE ROOT OF THIS REPOSITORY, in bypassPermissions, holding 115 tools —
+  # Write, Edit, NotebookEdit, Task, CronCreate, CronDelete, RemoteTrigger, ScheduleWakeup,
+  # SendMessage and a tool that deletes the CEO's cloud documents — and nothing asked. Nothing
+  # bad had happened; the risk was structural, and it stood against this project's own audit
+  # law: a subagent audits, refutes and sweeps, it NEVER writes.
+  #
+  # A hunter keeps exactly what its job needs: Bash (it drives crowd.sh, fetch.py and opencli),
+  # reading and searching, and the model's own search. Every writing, scheduling and messaging
+  # tool is refused by name, and it works in its OWN folder instead of in the repository.
+  # Measured live on 2026-09-17 while this was being written: `--allowed-tools` alone left a
+  # hunter holding 99 tools — the writing tools were gone, but `Workflow`, `TaskCreate`,
+  # `PushNotification`, a browser that runs arbitrary code, and `mcp__claude_ai_Claude_Docs__
+  # delete` — the one that deletes the CEO's own cloud documents — were all still there. An
+  # allow list that is not exclusive is a suggestion. So the MCP servers are switched off for a
+  # hunter (it reaches the outside world through Bash, not through them) and the rest are
+  # refused by name. Re-measured after: 20 tools, none of them able to change anything here.
+  HUNTER_ALLOW="Bash Read Glob Grep WebSearch WebFetch"
+  HUNTER_DENY="Write Edit MultiEdit NotebookEdit Task TaskOutput TaskStop TaskCreate TaskGet TaskList TaskUpdate CronCreate CronDelete CronList RemoteTrigger ScheduleWakeup SendMessage Artifact ArtifactComments ArtifactData Workflow Skill DesignSync PushNotification Monitor EnterWorktree ExitWorktree ListAgents ReportFindings"
+  mkdir -p "$OUT/work-$role"
   (
     s=$(date +%s)
-    timeout "$TMO" claude -p "$(cat "$OUT/prompt-$role.txt")" \
+    builtin cd "$OUT/work-$role" || exit 9
+    timeout "$TMO" $JAIL claude -p "$(cat "$OUT/prompt-$role.txt")" \
         --model "$MODEL" --effort high \
         --permission-mode bypassPermissions \
+        --allowed-tools $HUNTER_ALLOW \
+        --disallowed-tools $HUNTER_DENY \
+        --strict-mcp-config \
+        --add-dir "$SKILL" --add-dir "$OUT" \
         --output-format stream-json --verbose \
         > "$OUT/$role.jsonl" 2> "$OUT/$role.err"
     printf 'rc=%s\nsecs=%s\n' "$?" "$(( $(date +%s) - s ))" > "$OUT/$role.meta"
@@ -132,8 +175,45 @@ echo "$launched avci aynı anda çalışıyor — bekleniyor..."
 wait
 echo
 
+# THE DENOMINATOR IS COUNTED BEFORE IT IS PRINTED. The summary used to take "how many separate
+# people" out of a hunter's own sentence: on the one kept run it showed the CEO 783 while that
+# hunter's report said, twice, "783 person-rows, NOT de-duplicated … ~10 spoke to the question".
+# So the fleet harvests the thread addresses its own ground found and counts the people in them
+# with crowd.sh — a script, free, instant, and it never invents.
+CROWDF="$OUT/crowd-count.txt"
+: > "$CROWDF"
+for gd in $GROUND_DIRS; do
+  grep -ohE 'https?://(www\.)?(reddit\.com/r/[^ "]+/comments/[^ "]+|news\.ycombinator\.com/item\?id=[0-9]+)' \
+    "$gd"/*.raw 2>/dev/null | sed 's/[),.]*$//'
+done | sort -u | head -24 > "$OUT/crowd-urls.txt"
+if [ -s "$OUT/crowd-urls.txt" ]; then
+  echo "kalabalik sayiliyor: $(wc -l < "$OUT/crowd-urls.txt") baslik"
+  bash "$SKILL/scripts/crowd.sh" "$OUT/crowd-urls.txt" "$OUT/crowd" --workers 6 > "$OUT/crowd.log" 2>&1
+  grep -m1 '^CROWD-COUNT' "$OUT/crowd.log" > "$CROWDF" 2>/dev/null || true
+fi
+
 SUMFILE="$OUT/SUMMARY.txt"
-python3 "$HERE/merge.py" "$OUT" | tee "$SUMFILE"
+python3 "$HERE/merge.py" "$OUT" --crowd "$CROWDF" | tee "$SUMFILE"
+merge_rc=${PIPESTATUS[0]}
+
+# A RUN WHERE NOTHING WAS READ IS NOT A FINISHED RUN. Measured 2026-09-17 by an independent
+# auditor: both hunters exited 9, zero reports were produced, and this script printed
+# "hicbir avci rapor getirmedi" and "CEVAP HAZIR" in the same breath and left with exit 0.
+# The exit code is the only thing a caller can trust, so it now tells the truth, and the
+# hunters that died are named rather than counted.
+failed=""
+for role in $PICK; do
+  rc=$(sed -n 's/^rc=//p' "$OUT/$role.meta" 2>/dev/null | head -1)
+  [ "${rc:-1}" = "0" ] || failed="$failed $role(kod ${rc:-yok})"
+done
+reports=$(find "$OUT" -maxdepth 1 -name 'HUNTER-*.md' 2>/dev/null | wc -l)
+if [ "$reports" -eq 0 ] || [ "${merge_rc:-1}" -ne 0 ]; then
+  echo
+  echo "!! KOSU BASARISIZ — $reports avci raporu geldi. Basarisiz avcilar:${failed:- (yok)}"
+  echo "   sebepleri: $OUT/*.err"
+  exit 1
+fi
+[ -n "$failed" ] && echo "!! EKSIK AVCI:$failed — bu bir deliktir ve rapora yazilir."
 
 # NOTHING IS KEPT BY ITSELF — his ruling, 2026-09-17: *"genel olarak saklanmasin, bir test
 # yapilinca commitlemeden once veya uygun bir zamanda sorulsun testi kaydedelim mi diye."*

@@ -1,6 +1,6 @@
 ---
 name: dxb-research
-description: Use whenever the CEO asks to research, look into, find out, compare, or wonders what people think about anything — a tool, a product, a company, a market, a rival, a technology, a price, a trend. Sends a FLEET of hunters into the field at once, each carrying the whole arsenal (34 keyless channels, 167 sites, the platforms through his own logged-in browser, video transcripts, the code forge), reads the pages and the comments instead of the snippets, and COUNTS the crowd instead of quoting the loudest. It leaves no paperwork behind unless he says "kaydet". Also use when a previous answer was thin, when the CEO pushes back on a research result, or when a claim about the outside world needs checking before it reaches him.
+description: Use whenever the CEO asks to research, look into, find out, compare, or wonders what people think about anything — a tool, a product, a company, a market, a rival, a technology, a price, a trend. Sends a FLEET of hunters into the field at once, each carrying the whole arsenal (37 keyless channels, 167 sites, the platforms through his own logged-in browser, video transcripts, the code forge), reads the pages and the comments instead of the snippets, and COUNTS the crowd instead of quoting the loudest. It leaves no paperwork behind unless he says "kaydet". Also use when a previous answer was thin, when the CEO pushes back on a research result, or when a claim about the outside world needs checking before it reaches him.
 hooks:
   Stop:
     - hooks:
@@ -40,7 +40,7 @@ fleet is for.
    file. A record exists only when he says **"kaydet"** (§7).
 2. **Every channel at once, and no laziness.** *"20-30 farklı kanalda aynı anda… bir alet bir
    kanalı açamazsa başka aletler denenecek… bizim için her zaman en iyi alet ilk kullanılır."*
-   The default sweep is **`max` — 34 channels in parallel.**
+   The default sweep is **`max` — 37 channels in parallel.**
 3. **A login wall is not a wall.** *"giriş istenirse bizim dxbglobalcom@gmail.com hesabımızla
    giriş yapılacak."* The machine's Chrome (Profile 5) is already signed in to Facebook,
    Instagram, X, YouTube, Quora and Reddit; read through it. **Reading is authorised; writing
@@ -89,11 +89,11 @@ SCRIPT: free, instant, and it never invents.
 
 ```bash
 R='/home/dxb/DxB Global OS/.claude/skills/dxb-research/scripts'
-bash "$R/sweep.sh" "<query>" <outdir> --tier max            # 34 channels, parallel
+bash "$R/sweep.sh" "<query>" <outdir> --tier max            # 37 channels, parallel
 bash "$R/probe.sh"                                          # who is actually alive, right now
 ```
 
-34 channels: five keyless MCP search engines (Exa · Parallel · Tavily · Firecrawl · You.com),
+37 channels: five keyless MCP search engines (Exa · Parallel · Tavily · Firecrawl · You.com),
 Google and DuckDuckGo through `opencli`, the human channels, the code forge, the academic
 APIs (arxiv · crossref · europepmc · **openalex**). It prints a coverage table **with the
 FAIL rows**, fires each dead channel's declared stand-in from `config/registry.yaml`, and
@@ -134,7 +134,7 @@ opencli reddit read <url> --limit 100 --depth 10 --replies 50 --expand-more true
 ## 4. Reading a page that fights back
 
 ```bash
-python3 "$R/fetch.py" <url>                       # eleven doors, in order, until one opens
+python3 "$R/fetch.py" <url>                       # twelve doors, in order, until one opens
 python3 "$R/fetch.py" --batch urls.txt --outdir D
 ```
 
@@ -151,7 +151,7 @@ it back, because that flag places tabs inside his own Chrome, not the bridge's o
 saw it appear while he was working, asked what it was, and then decided: the work comes first.
 So `google-deep` and `quora-forums` run by default; `sweep.sh … --no-browser` exists for the
 rare run that must not touch his screen. They cannot be made headless — measured the same day,
-the whole eleven-door chain against `google.com/search` came back with a 921-byte cached
+the whole reading chain against `google.com/search` came back with a 921-byte cached
 snapshot and nothing else. Two sweeps at once share one window through a lock, so the screen
 sees one, not seven.
 
@@ -176,9 +176,15 @@ door hit a cookie wall, the retry button failed — and the question page itself
 
 ## 6. The utility measure — the fleet must earn its place
 
-Four numbers, machine-counted, in every run (`fleet/merge.py` prints them):
+Four numbers in every run (`fleet/merge.py` prints them), and the report says of each one
+whether a machine counted it or a hunter claimed it — they are not the same thing, and on
+2026-09-17 that difference put **783** in front of him for a question **ten** people had
+answered:
 
-1. **Distinct people whose own words were read** — the denominator. (Baseline to beat, measured
+1. **Distinct people whose own words were read** — the denominator, and it is **counted by
+   `scripts/crowd.sh`**, which the fleet runs over the thread addresses its own ground found.
+   When no count exists the summary says `INSAN: SAYILMADI` and the hunters' own figures stay
+   in a column headed **BEYAN** — a claim, never a denominator. (Baseline to beat, measured
    2026-09-17: single agent 127.)
 2. **Saturation** — the share of the last hunter's sources that nobody else brought. Below
    **5 %**, the expedition is over; adding another hunter is burning money.
@@ -207,7 +213,23 @@ python3 "$R/research.py" close
 ```
 `--mode gated` additionally turns on the completion gate and the contradiction searches.
 **It is never entered on your own judgement** — it waits for his word.
-`gate.py`, `coverage.py` and `urlcheck.py` print nothing at all when no run is open.
+`gate.py`, `coverage.py` and `urlcheck.py` do nothing at all when no run is open: each prints
+one line saying so (`no open research run — the gate is silent`) and the last two leave with
+exit 1. Measured 2026-09-17 — the sentence here used to say they print nothing, and they do.
+
+## 7-bis. Is the engine working today? — one command
+
+```bash
+bash "$R/accept.sh"                  # a real run, then the FILES are measured, not the printout
+bash "$R/accept.sh" --no-browser     # for a run that must not touch his screen
+bash "$REPO/scripts/research-ruler.sh"   # the static metre alone, ~0.3 s, runs on every commit
+```
+
+`accept.sh` runs one fixed question through the whole engine and then forgets everything the
+engine said about itself: it counts the page bodies on disk, checks that the crowd channels were
+really opened, re-judges every `ok` stamp, and takes the denominator from `crowd.sh`. It writes
+nothing and deletes its own run. Measured 2026-09-17 after the repairs: **7/7**, 36 channel files,
+10 pages with real content, 6 of them from where people talk, 88 people counted, 35 s, $0.
 
 ## 8. Boundaries
 

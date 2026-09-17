@@ -67,6 +67,14 @@ for line in raw.splitlines():
     res = d.get("result") or {}
     if d.get("error"):
         print("MCP ERROR:", json.dumps(d["error"])[:400]); sys.exit(1)
+    # THE ERROR INSIDE THE RESULT. A failed tool call arrives as `result.isError: true` with
+    # the diagnostic in the same `content` array a result would use. This file printed that
+    # diagnostic as the answer of the channel, exit 0 — which is how the coverage table stamped a
+    # 135-byte quota notice `ok` and the engine reported five search engines while three were
+    # answering. Measured 2026-09-17.
+    if res.get("isError"):
+        msg = " ".join(c.get("text", "") for c in res.get("content", []) or [])
+        print("MCP ERROR (isError):", msg.strip()[:400]); sys.exit(1)
     for c in res.get("content", []) or []:
         if c.get("type") == "text":
             chunks.append(c["text"])

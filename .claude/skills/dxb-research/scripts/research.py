@@ -43,7 +43,13 @@ def cmd_open(a: argparse.Namespace) -> int:
 
     rid = rlib.new_run_id()
     d = rlib.run_dir(rid)
-    d.mkdir(parents=True, exist_ok=True)
+    # exist_ok=False, on purpose: opening INTO an existing folder is how one question's record
+    # came to carry another question. If the id is taken, that is a fault, not a detail.
+    try:
+        d.mkdir(parents=True, exist_ok=False)
+    except FileExistsError:
+        print(f"run {rid} already exists — refusing to open into it", file=sys.stderr)
+        return 1
     lock = {
         "run_id": rid,
         "opened_at": rlib.now(),
