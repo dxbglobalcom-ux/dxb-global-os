@@ -48,18 +48,19 @@ QUERY="${1:-}"; OUT="${2:-}"; shift 2 2>/dev/null || true
 # getirecek". `wide` opened 22; `max` opens 33 and costs seconds, not minutes, because
 # every channel is fired in parallel. Narrow it by hand only when a question truly has
 # one home (--tier core), and say so in the answer.
-TIER=max; TMO=180; PAGES=14
+TIER=max; TMO=180; PAGES=14; WITH_BROWSER=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --tier) TIER="$2"; shift 2 ;;
     --timeout) TMO="$2"; shift 2 ;;
     --pages) PAGES="$2"; shift 2 ;;
+    --browser) WITH_BROWSER=1; shift ;;   # opens a VISIBLE window on his screen — opt-in only
     *) shift ;;
   esac
 done
 
 if [ -z "$QUERY" ] || [ -z "$OUT" ]; then
-  echo "kullanim: sweep.sh \"<sorgu>\" <cikti-klasoru> [--tier core|wide|max] [--timeout SN] [--pages N]" >&2
+  echo "kullanim: sweep.sh \"<sorgu>\" <cikti-klasoru> [--tier core|wide|max] [--timeout SN] [--pages N] [--browser]" >&2
   exit 2
 fi
 mkdir -p "$OUT"
@@ -91,12 +92,18 @@ export SKILL="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 UQ=$(python3 -c 'import urllib.parse,sys;print(urllib.parse.quote_plus(sys.argv[1]))' "$QUERY")
 # What {Q}/{G}/{U} become inside a channel line: a variable READ, not the text itself.
 Q_REF='$DXB_Q'; G_REF='$DXB_G'; U_REF='$DXB_U'; S_REF='$DXB_S'
-# THE BROWSER CHANNELS NEED A SESSION OF THEIR OWN. Measured 2026-09-17: two sweeps running
-# at once (the same question in two languages) both drove the session named `google`, and the
-# second extract read the FIRST one's page — both files came back 15 221 bytes, byte for byte
-# identical, for two different queries. A shared tab lease is a shared answer. Each sweep now
-# leases its own, and closes it at the end.
-BSESS="dxb$$" 
+# THE BROWSER CHANNELS TAKE TURNS — they do NOT get a session each.
+# Two sweeps running at once (the same question in two languages) both drove the session
+# named `google` and the second extract read the FIRST one's page: two files, byte for byte
+# identical at 15 221 B, for two different queries. The first repair gave each sweep its own
+# session name (`dxb<pid>`), and it cost the CEO a window on his screen: an unknown session
+# has no tab to attach to, so the Browser Bridge OPENED one — a bare `about:blank` window
+# titled "OpenCLI Browser", with Chrome's own "started debugging this browser" banner, in
+# front of him while he was working. He saw it within the minute and asked what it was.
+# So the names stay the ones the bridge already has bound (`google`, `quora`) — no new window
+# is ever created — and the collision is prevented with a lock instead: whichever sweep holds
+# `.browser.lock` drives the browser, the other waits its turn.
+BSESS="google" 
 GQ=$(echo "$QUERY" | awk '{for(i=1;i<=4&&i<=NF;i++) printf "%s%s", $i, (i<4&&i<NF?" ":"")}')
 CHANNELS=$(cat <<'MAP'
 exa|core|"$SKILL/scripts/mcpx.sh" exa "{Q}" 8
@@ -115,7 +122,7 @@ google|core|opencli google search "{Q}" --limit 50 -f yaml
 # (A third, forum-scoped query lived here until 2026-09-17 and was removed on the CEO's
 #  order: it returned 0 bytes on a Turkish phrasing, and a channel that fails half the
 #  time is a hole the coverage table has to carry for nothing.)
-google-deep|core|opencli browser {S} open "https://www.google.com/search?q={U}&num=30&hl=en" --window background >/dev/null 2>&1; opencli browser {S} extract --window background
+google-deep|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser google open 'https://www.google.com/search?q={U}&num=30&hl=en' --window background >/dev/null 2>&1; opencli browser google extract --window background"
 reddit|core|opencli reddit search "{Q}" --limit 50 -f yaml
 hackernews|core|opencli hackernews search "{Q}" --limit 50 -f yaml
 twitter|core|opencli twitter search "{Q}" --limit 50 -f yaml
@@ -138,7 +145,7 @@ v2ex|wide|opencli duckduckgo search "site:v2ex.com {Q}" -f yaml
 # from that first read: the page came back as "Profilfoto für Dxb Company", 13 088 chars.
 # Before the login every one of the eleven doors was walled. A login is worth more than a
 # fallback chain here, and it is the only channel on this list that needed one.
-quora-forums|wide|opencli browser {S}q open "https://www.quora.com/search?q={U}" --window background >/dev/null 2>&1; opencli browser {S}q extract --window background
+quora-forums|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser quora open 'https://www.quora.com/search?q={U}' --window background >/dev/null 2>&1; opencli browser quora extract --window background"
 linkedin|max|opencli linkedin search "{Q}" -f yaml
 zhihu|max|opencli zhihu search "{Q}" -f yaml
 linux-do|max|opencli linux-do search "{Q}" -f yaml
@@ -154,12 +161,23 @@ github-trending|max|opencli github-trending repos -f yaml
 MAP
 )
 
-want_tier() {  # core ⊂ wide ⊂ max
-  case "$TIER" in
-    core) [ "$1" = core ] ;;
-    wide) [ "$1" = core ] || [ "$1" = wide ] ;;
-    max)  return 0 ;;
-    *)    [ "$1" = core ] || [ "$1" = wide ] ;;
+want_tier() {  # core ⊂ wide ⊂ max ; `browser` is NEVER in any of them
+  # WHY `browser` IS ITS OWN TIER AND IS OFF BY DEFAULT. Measured 2026-09-17, on his screen:
+  # `opencli browser … open` drives a real window called "OpenCLI Browser", and it COMES TO
+  # THE FRONT — `--window background` and OPENCLI_WINDOW=background do not hold it back,
+  # because that flag places the CEO's own Chrome tabs, not the bridge's debugging window.
+  # He was working, a blank window jumped in front of him, and he asked what it was. A
+  # research sweep must never take his screen. The two channels that need the bridge
+  # (google-deep, quora-forums) are therefore opt-in: `--browser`, used when a door is
+  # genuinely walled and he knows a window will appear. Everything headless stays automatic.
+  case "$1" in
+    browser) [ "$WITH_BROWSER" = "1" ] ;;
+    *) case "$TIER" in
+         core) [ "$1" = core ] ;;
+         wide) [ "$1" = core ] || [ "$1" = wide ] ;;
+         max)  return 0 ;;
+         *)    [ "$1" = core ] || [ "$1" = wide ] ;;
+       esac ;;
   esac
 }
 
@@ -172,6 +190,11 @@ echo
 n=0
 while IFS='|' read -r name tier cmd; do
   [ -z "${name:-}" ] && continue
+  # THE MAP'S OWN COMMENTS ARE NOT CHANNELS. Measured 2026-09-17: a `max` sweep reported
+  # "50 channels" where 36 exist — the 14 explanatory `#` lines in the map were being run as
+  # channels with an empty command, each producing an empty .raw and a "BOS" row. The
+  # coverage table was counting the file's own prose as failed doors.
+  case "$name" in \#*) continue ;; esac
   want_tier "$tier" || continue
   n=$((n+1))
   # THE QUESTION IS NEVER PASTED INTO A COMMAND STRING. Measured 2026-09-17: a query
@@ -225,6 +248,11 @@ printf "%-16s %8s %10s  %s\n" "KANAL" "SONUC" "BOYUT" "DURUM"
 ok=0; fail=0; empty=0; FAILED_CHANNELS=""
 while IFS='|' read -r name tier cmd; do
   [ -z "${name:-}" ] && continue
+  # THE MAP'S OWN COMMENTS ARE NOT CHANNELS. Measured 2026-09-17: a `max` sweep reported
+  # "50 channels" where 36 exist — the 14 explanatory `#` lines in the map were being run as
+  # channels with an empty command, each producing an empty .raw and a "BOS" row. The
+  # coverage table was counting the file's own prose as failed doors.
+  case "$name" in \#*) continue ;; esac
   want_tier "$tier" || continue
   code=$(cat "$OUT/$name.code" 2>/dev/null || echo "?")
   size=$(wc -c < "$OUT/$name.raw" 2>/dev/null || echo 0)
@@ -439,9 +467,8 @@ echo
 # 127 rows into a different run that had been opened meanwhile. Carry the id instead.
 python3 "$SKILL/scripts/ingest.py" "$OUT" --query "$QUERY" --gap "opening the ground" ${SWEEP_RUN:+--run "$SWEEP_RUN"} || true
 
-# hand the browser leases back — a tab left open is a tab on his screen tomorrow
-for s in "$BSESS" "${BSESS}q"; do
-  OPENCLI_WINDOW=background timeout 30 opencli browser "$s" close --window background >/dev/null 2>&1 || true
-done
+# The bound sessions are NOT closed here. Closing them means the next sweep finds nothing to
+# attach to and the bridge opens a fresh window — which is exactly the window the CEO saw on
+# 2026-09-17. They are background tabs inside the browser he already runs; they are reused.
 
 exit 0

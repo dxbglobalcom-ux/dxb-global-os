@@ -144,7 +144,17 @@ firecrawl-scrape → exa-fetch → headless Playwright → `r.jina.ai` (a CACHED
 as one) → curl with a browser agent. **A page is unread only when every door has failed, and
 then the log names each door and what it answered.**
 
-**The universal key is his own browser**, and it opens what a logged-out fetcher cannot:
+**The universal key is his own browser — and it COSTS HIS SCREEN, so it is never automatic.**
+`opencli browser … open` drives a window called "OpenCLI Browser" and brings it to the FRONT;
+`--window background` does not hold it back, because that flag places tabs inside his own
+Chrome, not the bridge's debugging window. Measured 2026-09-17: a sweep opened a bare
+`about:blank` window in front of him while he was working and he asked what it was. So the two
+channels that need the bridge (`google-deep`, `quora-forums`) sit in their own tier and are
+**off by default** — `sweep.sh … --browser` turns them on, and it is used when a door is
+genuinely walled and he knows a window will appear. Everything headless runs automatically.
+Google's results page cannot be read any other way: measured the same day, the whole
+eleven-door chain against `google.com/search` returned a 921-byte cached snapshot and nothing
+else.
 
 ```bash
 export OPENCLI_WINDOW=background     # ALWAYS — he caught the tabs the first hour: "genelde arka planda"
