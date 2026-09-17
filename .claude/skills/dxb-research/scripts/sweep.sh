@@ -265,6 +265,12 @@ fb = (reg.get(sys.argv[2]) or {}).get("fallback") or []
 print(" ".join(fb if isinstance(fb, list) else [str(fb)]))
 PYEOF
 )
+    # `sub` must exist even when this channel has NO stand-in that the map carries. Measured
+    # 2026-09-17 on a live ground sweep: with `set -u`, the LAST RESORT test below read an
+    # unbound `$sub`, the script died at line 303 — and it died BEFORE stage 2, so that
+    # ground read ZERO page bodies and nothing said why. One missing default cost a whole
+    # language's reading.
+    sub=""
     for sub in $subs; do
       grep -q "^$sub|" <<< "$CHANNELS" || continue
       subcmd=$(grep "^$sub|" <<< "$CHANNELS" | head -1 | cut -d'|' -f3)
@@ -300,7 +306,9 @@ PYEOF
     # ("site:quora.com …"), so when the engine refuses there is no address for the readers to
     # open. There is one, though — the site's own search page — and nothing was walking to it.
     site=$(grep "^$dead|" <<< "$CHANNELS" | head -1 | sed -n 's/.*site:\([a-z0-9.-]*\).*/\1/p')
-    if [ -n "$site" ] && [ ! -s "$OUT/$dead-via-$sub.raw" ]; then
+    covered=""
+    [ -n "${sub:-}" ] && [ -s "$OUT/$dead-via-$sub.raw" ] && covered=1
+    if [ -n "$site" ] && [ -z "$covered" ]; then
       echo "   $dead -> son care: $site adresine dogrudan gidiliyor (11 kapili zincir)"
       timeout "$TMO" python3 "$SKILL/scripts/fetch.py" \
         "https://${site}/search?q=${UQ}" --out "$OUT/$dead-direct.md" >/dev/null 2>&1

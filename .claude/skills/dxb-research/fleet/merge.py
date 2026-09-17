@@ -39,13 +39,26 @@ def people_count(text: str) -> str:
     and the LARGEST such number in that block, because a lane usually lists its threads
     before it totals them.
     """
-    m = re.search(r"(?:^|\n)\s*\**\s*E\)(.{0,800})", text, re.S)
-    scope = m.group(1) if m else text
-    hits = re.findall(r"(\d{1,5})\s*(?:ayr[ıi]|farkl[ıi]|distinct|separate)?\s*"
-                      r"(?:insan|ki[şs]i|ki\u015fi|people|users?|kullan[ıi]c[ıi])", scope, re.I)
-    if not hits and not m:
-        return "-"
-    return max(hits, key=lambda s: int(s)) if hits else "-"
+    # The block's heading comes back in every markdown shape a hunter feels like using:
+    # "E)", "**E)**", "## E) AYRI İNSAN SAYISI". Measured 2026-09-17: a regex that allowed
+    # only asterisks read "?" for five lanes of seven that had written the block properly.
+    m = re.search(r"(?:^|\n)[#*\s]{0,6}E[\)\.:]\s*[^\n]{0,90}\n?(.{0,700})", text, re.S)
+    if not m:
+        # No E block means the lane did not state its denominator. A number lifted from
+        # somewhere else in the prose is not that denominator: on the first fleet run this
+        # printed 783 for a lane whose report had no E block at all. Say "?" and mean it.
+        return "?"
+    # STOP CHASING PROSE. Three regexes in one hour each read a different number out of the
+    # same seven reports — "783" became 10, "9 farklı gerçek kişi" became nothing — because
+    # every lane words its sentence differently. A hunter always BOLDS its denominator, so
+    # take the first bolded number of the block, else the block's first number, and label
+    # the column as what it is: the lane's own claim, not an independent count.
+    blk = m.group(1)
+    bold = re.search(r"\*\*\s*~?\s*([\d][\d.,]{0,6})", blk)
+    if bold:
+        return bold.group(1).rstrip(".,")
+    plain = re.search(r"~?\s*([\d][\d.,]{0,6})", blk)
+    return plain.group(1).rstrip(".,") if plain else "?"
 
 
 def final_text(p: pathlib.Path) -> str:
@@ -120,7 +133,7 @@ def main() -> int:
         print("hicbir avci rapor getirmedi — .err dosyalarina bak"); return 1
 
     seen: set[str] = set()
-    print(f"{'AVCI':<12}{'SURE':>7}{'PARA':>8}{'KAYNAK':>8}{'YENI':>7}{'İNSAN':>7}  ACILAN KAPILAR")
+    print(f"{'AVCI':<12}{'SURE':>7}{'PARA':>8}{'KAYNAK':>8}{'YENI':>7}{'BEYAN':>7}  ACILAN KAPILAR")
     total_cost = 0.0
     marginal = {}
     for role in order:
@@ -139,17 +152,21 @@ def main() -> int:
     # from what a hunter chose to do. (This detector had to be corrected twice: it first
     # counted urls written in prose — 0 for every lane — and then called a machine-opened
     # ground "HICBIRI" because no hunter had run the sweep by hand.)
-    ground = out / "ground"
-    raws = sorted(ground.glob("*.raw"))
+    grounds = [d for d in sorted(out.glob("ground*")) if d.is_dir()]
+    raws = [r for d in grounds for r in d.glob("*.raw")]
     if raws:
-        g = (ground / "google.raw"); d = (ground / "duckduckgo.raw")
-        gs = g.stat().st_size if g.exists() else 0
-        ds = d.stat().st_size if d.exists() else 0
-        pages = len(list((ground / "pages").glob("*.md"))) if (ground / "pages").exists() else 0
+        def tot(name):
+            # EVERY ground, not just the first. The fleet opens one per language, and the
+            # first version of this line printed the Turkish ground's Google alone — which
+            # is precisely the half-measure the CEO caught on 2026-09-17.
+            return sum((d / name).stat().st_size for d in grounds if (d / name).exists())
+        gs = tot("google.raw") + tot("google-deep.raw") + tot("google-forum.raw")
+        ds = tot("duckduckgo.raw") + tot("duckduckgo2.raw")
+        pages = sum(len(list((d / "pages").glob("*.md"))) for d in grounds if (d / "pages").exists())
         alive = sum(1 for r in raws if r.stat().st_size >= 40)
-        print(f"\nGENIS ZEMIN (filo acti, avcilardan once): {len(raws)} kanal dosyasi, "
-              f"{alive} tanesi dolu · GOOGLE {gs} bayt · DUCKDUCKGO {ds} bayt · "
-              f"okunan sayfa govdesi {pages}")
+        print(f"\nGENIS ZEMIN (filo acti, avcilardan once): {len(grounds)} dil/sorgu · "
+              f"{len(raws)} kanal dosyasi, {alive} tanesi dolu · GOOGLE (3 kapi) {gs} bayt · "
+              f"DUCKDUCKGO {ds} bayt · okunan sayfa govdesi {pages}")
         if gs < 40:
             print("   !! GOOGLE BOS DONDU — bu bir deliktir, rapora yazilir.")
         readers = [r for r in order if reports[r].get("read_ground")]
