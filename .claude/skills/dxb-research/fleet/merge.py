@@ -160,12 +160,12 @@ def main() -> int:
             # first version of this line printed the Turkish ground's Google alone — which
             # is precisely the half-measure the CEO caught on 2026-09-17.
             return sum((d / name).stat().st_size for d in grounds if (d / name).exists())
-        gs = tot("google.raw") + tot("google-deep.raw") + tot("google-forum.raw")
+        gs = tot("google.raw") + tot("google-deep.raw")
         ds = tot("duckduckgo.raw") + tot("duckduckgo2.raw")
         pages = sum(len(list((d / "pages").glob("*.md"))) for d in grounds if (d / "pages").exists())
         alive = sum(1 for r in raws if r.stat().st_size >= 40)
         print(f"\nGENIS ZEMIN (filo acti, avcilardan once): {len(grounds)} dil/sorgu · "
-              f"{len(raws)} kanal dosyasi, {alive} tanesi dolu · GOOGLE (3 kapi) {gs} bayt · "
+              f"{len(raws)} kanal dosyasi, {alive} tanesi dolu · GOOGLE (2 kapi) {gs} bayt · "
               f"DUCKDUCKGO {ds} bayt · okunan sayfa govdesi {pages}")
         if gs < 40:
             print("   !! GOOGLE BOS DONDU — bu bir deliktir, rapora yazilir.")

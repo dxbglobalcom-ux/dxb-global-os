@@ -112,8 +112,10 @@ google|core|opencli google search "{Q}" --limit 50 -f yaml
 # browser bridge that carries his session, hands back 18 external links at num=30 — including
 # two Reddit threads the CLI channel never returned. So Google is entered twice, by two
 # different doors, and `hl=en` keeps the world's own language in the results.
+# (A third, forum-scoped query lived here until 2026-09-17 and was removed on the CEO's
+#  order: it returned 0 bytes on a Turkish phrasing, and a channel that fails half the
+#  time is a hole the coverage table has to carry for nothing.)
 google-deep|core|opencli browser {S} open "https://www.google.com/search?q={U}&num=30&hl=en" --window background >/dev/null 2>&1; opencli browser {S} extract --window background
-google-forum|wide|opencli google search "{Q} site:reddit.com OR site:news.ycombinator.com OR site:stackoverflow.com" --limit 50 -f yaml
 reddit|core|opencli reddit search "{Q}" --limit 50 -f yaml
 hackernews|core|opencli hackernews search "{Q}" --limit 50 -f yaml
 twitter|core|opencli twitter search "{Q}" --limit 50 -f yaml
