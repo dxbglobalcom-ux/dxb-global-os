@@ -1238,7 +1238,7 @@ a row above. — **LIKELY** (hunter-fetched from the repositories' own issue tra
 **And the archive, dated precisely.** `langchain-ai/open_deep_research` — the highest-scoring open
 harness on the only board that measures open harnesses — was **archived 2026-08-21**, and *no
 reason was ever given*: no deprecation notice in the README, none on PyPI, and **the last eight
-commits before the lock were 100 % dependabot**. Two human pull requests were still open when it
+commits before the lock were 100 % dependabot**. Two human pull requests were still open when it  <!-- HISTORY -->
 was made read-only.
 
 > **The pattern across all eight rows is one thing, and it is the thing this architecture is
@@ -1661,7 +1661,7 @@ plan file was written.** The board row is **B46**.
 | rank | design | why |
 |---|---|---|
 | 1 | the v2 dossier (`12.md`) | the only one that BUILT and FIRED its enforcement mechanism, and the only one that found the five keyless doors |
-| 2 | the v1 study (`14.md`) | it owns the transcript-level diagnosis of why a loaded tool went unused; four of its measurements were superseded and it never built the gate |
+| 2 | the v1 study (`14.md`) | it owns the transcript-level diagnosis of why a loaded tool went unused; four of its measurements were superseded and it never built the gate |  <!-- HISTORY -->
 | 3 | the third design (`13.md`) | doctrine only. **Measured: every one of the six files its own first instruction depends on does not exist** — `research_doctor.py`, `evidence_lint.py`, `tool-routing.md`, `current-tool-snapshot.md`, `research-run.schema.json`, `benchmark-ruler.md`. Its recommended stack (SearXNG primary, Crawl4AI, trafilatura) is not installed here, and SearXNG's Google leg is blocked by its own issue tracker. **Three ideas of its own were kept:** `must_not_mutate_into` on the question lock, the discovery-vs-evidence separation, and the three-state tool ledger (installed / called-and-failed / actually used). |
 
 ## 16.2 The four things none of the three had, added here

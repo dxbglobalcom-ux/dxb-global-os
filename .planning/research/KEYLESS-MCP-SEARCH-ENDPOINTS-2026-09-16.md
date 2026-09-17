@@ -115,7 +115,7 @@ is answered rather than rejected.
   was written down. Its findings became rows L0239–L0241 and claims C11–C15, and it caught a
   citation defect that was repaired (C7 re-pointed from L0217 to L0237).
 
-## What is still open
+## What is still open  <!-- HISTORY -->
 
 See `runs/20260916-170405/GAPS.md`. The three that matter: **one network vantage point only** (every
 probe left the same machine and IP, so this is "keyless from this host, this hour"); `dates_agree`

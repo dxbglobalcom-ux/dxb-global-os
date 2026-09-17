@@ -239,7 +239,7 @@ installed package**, and its Universal-flags table holds exactly two rows — `-
 page corroborates the finding; there is no contradicting source.
 
 **It added a risk worth the CEO's attention.** Upstream **#2167**, *"Background window steals
-focus on initial creation on macOS"*, opened 2026-07-23 against 1.8.6, is **still open**
+focus on initial creation on macOS"*, opened 2026-07-23 against 1.8.6, is **still open**  <!-- HISTORY -->
 (`gh api` this session). macOS-scoped and no Linux equivalent found — but `background` is a
 request, not a guarantee, and this machine is his own screen.
 
@@ -391,7 +391,7 @@ against sweep A's real raws · the hook re-imported and six naming cases checked
 - ⚠ **UNVERIFIED — requires human-eye confirmation:** that no window appears on the CEO's screen.
   `wmctrl` cannot enumerate windows on this GNOME **Wayland** session.
 - Upstream **#2167** — *"Background window steals focus on initial creation on macOS"*, opened
-  2026-07-23, **still open**: `background` is a request, not a guarantee. macOS-scoped; no Linux
+  2026-07-23, **still open**: `background` is a request, not a guarantee. macOS-scoped; no Linux  <!-- HISTORY -->
   equivalent found.
 
 ### The adversary, run in a separate context — and every correction re-measured before acceptance

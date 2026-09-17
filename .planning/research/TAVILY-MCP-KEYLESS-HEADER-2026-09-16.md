@@ -259,7 +259,7 @@ not for this endpoint, and DeepWiki is generated from the same repository, so it
 independent leg. The header's support for **this host** rests on Tavily's keyless documentation —
 which names `https://mcp.tavily.com/mcp/` and the `--header` line explicitly — plus measurement.
 
-**Still open, this pass:** the keyless monthly allowance was **already spent** when the run started
+**Still open, this pass:** the keyless monthly allowance was **already spent** when the run started  <!-- HISTORY -->
 (`tavily_search` and `tavily_extract` both return HTTP 200 carrying
 `{"code":"monthly_cap_reached_bonus_eligible","retry_after_seconds":≈1700}`), and its scope
 (per-IP, per-account, global) is still unestablished — a fresh randomised `X-Session-Id` is still

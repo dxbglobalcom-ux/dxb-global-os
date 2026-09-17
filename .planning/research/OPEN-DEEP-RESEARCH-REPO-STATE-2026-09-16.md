@@ -62,7 +62,7 @@ The final pull requests were closed **by the people who opened them**, not by a 
   `guiyuanhu` **four minutes later**, unmerged.
 - `#323`–`#329` — six pull requests opened by `RerankerGuo`, all closed by `RerankerGuo`
   himself in one batch at 2026-08-17T03:50:4xZ, unmerged.
-- `#335` — opened 2026-08-10, **still open**, never triaged, now permanently frozen.
+- `#335` — opened 2026-08-10, **still open**, never triaged, now permanently frozen.  <!-- HISTORY -->
 
 Four days after that clean-up, the owner archived the repository.
 
