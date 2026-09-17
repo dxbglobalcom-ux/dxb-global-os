@@ -1376,9 +1376,14 @@ away and **no second skill is created** — the plan exists once.
 │   ├── question_lock.schema.json
 │   ├── evidence_row.schema.json
 │   └── report.schema.json
-├── benchmarks/
-│   ├── tasks.json            # the 30 tasks of §13 + frozen gold + SHA-256 receipt
-│   └── run.py                # 6 arms, the metrics of §13, composite score
+├── benchmarks/               # DELETED 2026-09-17 on his order — no longer on disk
+│   ├── tasks.json            # (gone) the 30 tasks of §13 + frozen gold + SHA-256 receipt
+│   └── run.py                # (gone) 6 arms, the metrics of §13, composite score
+├── fleet/                    # ADDED 2026-09-17 — the seven hunters
+│   ├── fleet.sh              # opens the ground, then sends the lanes in parallel
+│   ├── ARSENAL.md            # every weapon and its boundary, carried by each hunter
+│   ├── roles.tsv             # crowd · rival · code · measure · video · adversary · foreign
+│   └── merge.py              # what each lane cost, what only it brought, saturation
 └── references/
     └── channels.md           # EXISTS. Extend with the 96 searchable opencli adapters
 ```
@@ -1448,8 +1453,8 @@ crowd's answer what the numbers look like · what would flip this answer · what
 5. `sweep.sh` repairs — the five keyless doors, `WebSearch`, https arXiv, ledger writes.
 6. `probe.sh` + `registry.yaml` — health becomes a probe, not a status.
 7. `agents/refuter.md` — the adversary.
-8. `benchmarks/tasks.json` + `run.py` — write the gold from primary sources.
-9. **Run the benchmark. Report arm 3 against arms 0–4.**
+8. ~~`benchmarks/tasks.json` + `run.py`~~ — **removed on his order 2026-09-17.**
+9. ~~Run the benchmark.~~ **The fleet reports its own measure instead** (`fleet/merge.py`).
 10. Only then is anything called finished. "Ferrari" is a measured result, not a label.
 
 **Dependencies to install (currently absent, §4):** `datasketch` (MinHash), `htmldate` (date
@@ -1714,9 +1719,15 @@ rule but to make the exception **declared**:
 
 ## 16.5 What is NOT yet earned
 
-**"Ferrari" is a measured result, not a label.** The 24-task benchmark exists with SHA-256-frozen
-gold (`benchmarks/GOLD-RECEIPT.txt`) and a four-arm runner, and the contamination filter has been
-exercised. The full race has not been run to completion, so **no claim of first place is made here**.
+> **SUPERSEDED 2026-09-17: there is no benchmark any more.** The CEO removed it —
+> *"sınava gerek yok kaldır onları"* — so `benchmarks/` and everything named in this section
+> and in §§14.1/15 (`tasks.json`, `run.py`, `GOLD-RECEIPT.txt`, the result files) is deleted.
+> The measure that replaced it is the fleet's own: distinct people read, saturation, closed
+> doors, cost and minutes, printed by `fleet/merge.py` on every run.
+
+**"Ferrari" is a measured result, not a label.** ~~The 24-task benchmark exists with
+SHA-256-frozen gold (`benchmarks/GOLD-RECEIPT.txt`) and a four-arm runner, and the contamination
+filter has been exercised.~~ The full race has not been run to completion, so **no claim of first place is made here**.
 The acceptance condition stands as written: arm 3 must beat arms 1 and 2 on recall at $0 external
 cost, and if it does not, the central hypothesis is falsified and that is what gets reported.
 
@@ -1912,23 +1923,47 @@ gate.py                           → source_types ['code','independent-test','p
 
 ---
 
-## 16.7 The night the machinery was measured, judged and taken out (2026-09-16 → 17)
+## 16.7 The night the machinery was measured — AND THE RULER WAS WRONG (2026-09-16 → 17)
 
-### The race, run twice, the second time on an engine nobody could touch
+> **CORRECTED 2026-09-17, and the correction is the point of this section.** Everything below
+> the line was written from a scoring key that asked for the wrong thing. It is kept only so
+> the mistake can be traced; **the numbers that stand are these:**
+>
+> | arm | what it is | recall, re-scored | sec/question |
+> |---|---|---|---|
+> | 0 | the model with no tools | **22.0 %** | 12 |
+> | 1 | a plain session with tools | **95.0 %** | 101 |
+> | 2 | this doctrine as PROSE, no machinery | **95.0 %** | 159 |
+> | **3** | **the doctrine PLUS the machinery** | **100.0 %** | 675 |
+>
+> **ACCEPTANCE: MET on this sample of five questions.** The key for T11 demanded the string
+> `r/ClaudeAI` and its 1 133 889 members for a question about **Claude Design**; measured
+> 2026-09-17, `opencli reddit subreddit-info ClaudeDesign` returns Title *Claude Design*,
+> **23 837 subscribers**, and `opendesignCLI` returns 11. So the key scored **0** for the arm
+> that measured both named communities correctly and **1.0** for an arm that mentioned
+> r/ClaudeAI only as background. That single task produced the whole verdict: with it removed,
+> arm 3 read 1.000 against the prose arm's 0.938 even under the old key. The "counting question
+> failed three times" finding below is the same broken key, not a defect of the engine.
+> The one thing that survives unchanged: **the machinery is four times slower** (675 s against
+> 159 s), and five questions decide nothing on their own.
+>
+> **The exam itself no longer exists** — the CEO removed it on 2026-09-17
+> (*"sınava gerek yok kaldır onları"*): `benchmarks/tasks.json`, `run.py`, `GOLD-RECEIPT.txt`
+> and all four result files were deleted in commit `be5ec5e5`. Every file this section cites
+> is gone with it.
 
-| arm | what it is | recall | sec/question |
+### The race as it was FIRST scored — superseded, kept for the trace
+
+| arm | what it is | recall (BROKEN KEY) | sec/question |
 |---|---|---|---|
 | 0 | the model with no tools (contamination filter) | 28.7 % | 12 |
 | 1 | a plain session with tools | 81.7 % | 101 |
-| **2** | **this doctrine as PROSE, no machinery at all** | **95.0 %** | **159** |
+| 2 | this doctrine as PROSE, no machinery at all | 95.0 % | 159 |
 | 3 | the doctrine PLUS the ledger/gate/adversary | 80.0 % | 675 |
 
-**ACCEPTANCE: NOT MET. The central hypothesis is falsified on this sample and reported as such.**
-The gated engine lost to a plain session and lost badly to its own doctrine carried as prose.
-Five tasks, `results-race-frozen.json`; arm 3 repeated at 80.0 % in a third run with the gate in
-advisory mode, at 324 s — **half the clock, the same score**. The one place the machinery led
-(T03, 100 % against 75 %) it also led in the first race; the one place it consistently failed is
-the counting question (0.33 · 0.00 · 0.00 across three runs), where the prose arm scored 1.00.
+Five tasks, `results-race-frozen.json` (deleted); arm 3 repeated at 80.0 % in a third run with
+the gate in advisory mode, at 324 s. The place it "consistently failed" was the counting
+question (0.33 · 0.00 · 0.00) — the task whose key was wrong.
 
 Honest caveat on the FIRST race (`results-race-after-clock.json`, arm 3 at 86.7 %): the engine
 was edited under it by its own benchmark sub-sessions — four repairs at 22:23-22:34, all of them
@@ -1988,10 +2023,10 @@ just be speaking another language. Check the account's locale before writing "no
 
 ### What is NOT done, and is the next session's work
 
-- The exam is **10 of 24 questions**. He stopped the rest himself, because the arm that was
-  producing run folders was producing the garbage he had just banned. The remaining 14 should be
-  run with arms 0/1/2 only — arm 3's configuration no longer exists.
+- ~~The exam is 10 of 24 questions.~~ **THE EXAM IS DELETED** — his order 2026-09-17,
+  *"sınava gerek yok kaldır onları"*: questions, scorer and every stored result went in commit
+  `be5ec5e5` (7 files, 236 KB). There is no exam to finish, and no "10 of 24" anywhere.
 - The doctor's widening list is untouched: X (cookies), Facebook · Instagram · Xiaohongshu (his
   login), Xueqiu (cookie), Xiaoyuzhou (a free Groq key).
-- `runs/` holds 23 MB across 38 folders of that banned garbage. It is gitignored, so it is not in
-  this commit; it waits for his one word to be deleted.
+- ~~`runs/` holds 23 MB across 38 folders of that banned garbage.~~ **DELETED on his word
+  2026-09-17** (*"1-sil"*): 22 MB, 38 folders. The ledger gate went green the moment they left.
