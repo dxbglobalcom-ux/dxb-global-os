@@ -10,7 +10,7 @@ channels:
   exa:
     tags: [search, neural, dates]
     probe: mcporter call 'exa.web_search_exa(query: "site reliability", numResults: 2)'
-    fallback: [parallel, tavily, google, websearch]
+    fallback: [parallel, tavily, google, duckduckgo]
   parallel:
     tags: [search, benchmark-leader]
     probe: curl -sS -m 15 -X POST https://search.parallel.ai/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
@@ -22,7 +22,7 @@ channels:
   firecrawl:
     tags: [search, scrape, parse]
     probe: curl -sS -m 15 -X POST https://mcp.firecrawl.dev/v2/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
-    fallback: [scrapling, playwright]
+    fallback: [tavily, youcom, exa]
   youcom:
     tags: [search, discover]
     probe: curl -sS -m 15 -X POST 'https://api.you.com/mcp?profile=free' -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'

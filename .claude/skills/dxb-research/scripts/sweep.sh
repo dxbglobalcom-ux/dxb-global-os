@@ -80,6 +80,8 @@ SWEEP_RUN="${DXB_RESEARCH_RUN:-}"
 # they are reached through a site-scoped web search instead, which is what a person would do.
 export SKILL="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 UQ=$(python3 -c 'import urllib.parse,sys;print(urllib.parse.quote_plus(sys.argv[1]))' "$QUERY")
+# What {Q}/{G}/{U} become inside a channel line: a variable READ, not the text itself.
+Q_REF='$DXB_Q'; G_REF='$DXB_G'; U_REF='$DXB_U' 
 GQ=$(echo "$QUERY" | awk '{for(i=1;i<=4&&i<=NF;i++) printf "%s%s", $i, (i<4&&i<NF?" ":"")}')
 CHANNELS=$(cat <<'MAP'
 exa|core|"$SKILL/scripts/mcpx.sh" exa "{Q}" 8
@@ -120,6 +122,7 @@ juejin|max|opencli duckduckgo search "site:juejin.cn {Q}" -f yaml
 arxiv|max|curl -sS -m 40 "https://export.arxiv.org/api/query?search_query=all:{U}&max_results=10"
 crossref|max|curl -sS -m 40 "https://api.crossref.org/works?rows=10&query={U}"
 europepmc|max|curl -sS -m 40 "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={U}&format=json&pageSize=10"
+openalex|max|curl -sS -m 40 "https://api.openalex.org/works?per-page=10&search={U}"
 github-trending|max|opencli github-trending repos -f yaml
 MAP
 )
@@ -144,16 +147,23 @@ while IFS='|' read -r name tier cmd; do
   [ -z "${name:-}" ] && continue
   want_tier "$tier" || continue
   n=$((n+1))
-  run="${cmd//\{Q\}/$QUERY}"
-  run="${run//\{G\}/$GQ}"
-  run="${run//\{U\}/$UQ}"
+  # THE QUESTION IS NEVER PASTED INTO A COMMAND STRING. Measured 2026-09-17: a query
+  # carrying `"; touch FILE; echo "` executed, and a query containing `$HOME` expanded —
+  # the machine's own path travelled to an outside search box, against this door's own
+  # confidentiality rule. The placeholders now become SHELL VARIABLE READS inside the
+  # quotes the template already has, so bash passes the text as ONE argument and never
+  # re-parses it. Q/G/U are exported to each child below.
+  run="${cmd//\{Q\}/$Q_REF}"
+  run="${run//\{G\}/$G_REF}"
+  run="${run//\{U\}/$U_REF}"
   # the same command with any --window flag stripped from the TEMPLATE, for the retry below
   cmd_nw="${cmd// --window background/}"
-  run_nw="${cmd_nw//\{Q\}/$QUERY}"
-  run_nw="${run_nw//\{G\}/$GQ}"
-  run_nw="${run_nw//\{U\}/$UQ}"
+  run_nw="${cmd_nw//\{Q\}/$Q_REF}"
+  run_nw="${run_nw//\{G\}/$G_REF}"
+  run_nw="${run_nw//\{U\}/$U_REF}"
   (
-    timeout "$TMO" bash -c "$run" > "$OUT/$name.raw" 2> "$OUT/$name.err"
+    DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" timeout "$TMO" bash -c "$run" \
+        > "$OUT/$name.raw" 2> "$OUT/$name.err"
     rc=$?
     # Safety net for a hand-edited channel line that still carries the flag: an adapter that
     # reads an API directly never opens a browser and rejects --window, so the flag is
@@ -163,7 +173,8 @@ while IFS='|' read -r name tier cmd; do
     # and the retry would re-send the flag. Measured 2026-09-16: that is exactly how
     # stackoverflow, bluesky and substack were lost from one sweep.
     if [ $rc -ne 0 ] && grep -q "unknown option '--window'" "$OUT/$name.err" 2>/dev/null; then
-      timeout "$TMO" bash -c "$run_nw" > "$OUT/$name.raw" 2> "$OUT/$name.err"
+      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" timeout "$TMO" bash -c "$run_nw" \
+          > "$OUT/$name.raw" 2> "$OUT/$name.err"
       rc=$?
     fi
     echo "$rc" > "$OUT/$name.code"
@@ -231,12 +242,28 @@ PYEOF
       grep -q "^$sub|" <<< "$CHANNELS" || continue
       subcmd=$(grep "^$sub|" <<< "$CHANNELS" | head -1 | cut -d'|' -f3)
       [ -z "$subcmd" ] && continue
-      [ -s "$OUT/$sub.raw" ] && { echo "   $dead -> $sub (zaten bu turda calisti, kapak o)"; break; }
-      run="${subcmd//\{Q\}/$QUERY}"; run="${run//\{G\}/$GQ}"; run="${run//\{U\}/$UQ}"
-      timeout "$TMO" bash -c "$run" > "$OUT/$dead-via-$sub.raw" 2>/dev/null
+      # A stand-in only COVERS the hole when it truly answered. Two lies lived here until
+      # 2026-09-17: a substitute that had itself FAILED this round was announced as the
+      # cover on nothing but a non-empty file, and the substitute's real exit code was
+      # thrown away and replaced with a hardcoded 0 — which ingest.py then read as
+      # "returned". Both are gone: the same 40-byte floor as the main table, and the code
+      # that is written is the code the command actually returned.
+      subcode=$(cat "$OUT/$sub.code" 2>/dev/null || echo "?")
+      # `wc -c < missing 2>/dev/null` still prints the shell's own redirect error: the
+      # redirections are applied left to right, so the failure happens before stderr is
+      # silenced. Test the file first.
+      subsize=0; [ -f "$OUT/$sub.raw" ] && subsize=$(wc -c < "$OUT/$sub.raw")
+      if [ "$subcode" = "0" ] && [ "$subsize" -ge 40 ]; then
+        echo "   $dead -> $sub (zaten bu turda calisti, kapak o)"; break
+      fi
+      run="${subcmd//\{Q\}/$Q_REF}"; run="${run//\{G\}/$G_REF}"; run="${run//\{U\}/$U_REF}"
+      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" timeout "$TMO" bash -c "$run" \
+          > "$OUT/$dead-via-$sub.raw" 2> "$OUT/$dead-via-$sub.err"
+      subrc=$?
       sz=$(wc -c < "$OUT/$dead-via-$sub.raw" 2>/dev/null || echo 0)
-      echo 0 > "$OUT/$dead-via-$sub.code"
-      if [ "$sz" -gt 40 ]; then echo "   $dead -> $sub  ok ($sz bayt)"; break
+      echo "$subrc" > "$OUT/$dead-via-$sub.code"
+      if [ "$subrc" -eq 0 ] && [ "$sz" -ge 40 ]; then echo "   $dead -> $sub  ok ($sz bayt)"; break
+      elif [ "$subrc" -ne 0 ]; then echo "   $dead -> $sub  o da HATA (kod $subrc)"
       else echo "   $dead -> $sub  o da bos"; fi
     done
 

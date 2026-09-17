@@ -176,7 +176,17 @@ def main() -> int:
     a = ap.parse_args()
 
     if a.score_only:
+        # RE-SCORE, never replay the stored number. Measured 2026-09-17: this flag printed
+        # the recall that had been written at run time, so a repaired gold key changed
+        # nothing and the race kept reporting a verdict its own ruler no longer supported.
+        # T11's key had demanded r/ClaudeAI for a question about Claude Design; corrected,
+        # the same stored answers move arm 3 from 80.0 % to 100.0 %.
         rows = json.loads(Path(a.score_only).read_text())["runs"]
+        tasks_by_id = {t["id"]: t for t in json.loads(TASKS.read_text())["tasks"]}
+        for r in rows:
+            t_def = tasks_by_id.get(r.get("task"))
+            if t_def:
+                r.update(score(r.get("answer") or "", t_def))
         summarise(rows)
         return 0
 
