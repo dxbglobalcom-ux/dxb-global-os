@@ -1,0 +1,3 @@
+AI kodlama ajanlari — 2026 sonbaharinda insanlar uretimde gercekten hangisini calistiriyor, hangisini birakiyor ve neden?
+AI coding agents in production late 2026: which one are teams actually running, which are they abandoning, and why
+claude code vs codex vs cursor production experience 2026

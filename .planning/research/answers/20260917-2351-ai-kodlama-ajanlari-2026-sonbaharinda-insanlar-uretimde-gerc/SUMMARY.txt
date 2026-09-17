@@ -1,0 +1,62 @@
+AVCI           SURE    PARA  KAYNAK   YENI  BEYAN  ACILAN KAPILAR
+code           169s    0.61      66     66      6  github zemin-okudu
+counter        181s    0.95     150    150      6  cn quora zemin-okudu
+crowd          573s    1.62     150    148   2026  hn reddit zemin-okudu zincir
+foreign        233s    1.16     825    817    230  cn quora zemin-okudu zincir
+measure        122s    0.63     117    106     16  akademik zemin-okudu
+rival          234s    1.13     199    196     90  cn model-arama reddit zemin-okudu zincir
+video          444s    1.57      67     66    109  browser cn youtube zemin-okudu zincir
+TOPLAM                 7.67    1549
+   (BEYAN = avcinin kendi cumlesinden okunan sayi — SAYIM DEGIL.)
+
+INSAN (sayildi): 199 ayri kisi · 352 yorum · 22 baslik — crowd.sh'in makine sayimi.
+
+GENIS ZEMIN (filo acti, avcilardan once): 3 dil/sorgu · 115 kanal dosyasi, 88 tanesi dolu · GOOGLE (2 kapi) 52394 bayt · DUCKDUCKGO 36795 bayt · okunan sayfa govdesi 24
+   zemini okuyan avci: 7/7 (code, counter, crowd, foreign, measure, rival, video)
+
+DOYGUNLUK: son avci (video) getirdigi kaynaklarin %99'ini ilk kez getirdi.
+   (%5'in altina dustugunde sefer biter — yeni avci eklemek para yakmaktir.)
+
+KAPANAN KAPILAR (her avcinin D blogundan — delik sessiz kalmaz):
+   [code] KAPALI KAPILAR
+   [code] - **Stack Overflow** — üç bağımsız sweep (`ground`, `ground-2`, `ground-3`), üçü de `[]` (sıfır sonuç). Bu kon
+   [code] - **GitHub Issues (ilk sweep, `ground/github-issues.raw`)** — `[]` döndü, ama aynı kapı `ground-2` ve `ground-
+   [counter] KAPALI KAPILAR**
+   [counter] - **Reddit** (r/ClaudeAI, r/cursor gibi hedef subreddit'ler) — zemin taraması Türkçe/genel sorguyla geldiği iç
+   [counter] - **Quora** — arama sorgum ("claude code vs codex vs cursor production experience 2026") için Quora kendi moto
+   [crowd] KAPALI KAPILAR
+   [crowd] - **HN (sweep'in kendisi):** `hackernews.raw` her 3 turda da 4 byte döndü → **kapalı**, ama Algolia API'ye doğ
+   [crowd] - **StackOverflow (sweep):** 3 turda da boş → **kapalı**, Stack Exchange API'ye doğrudan gittim, **açıldı ama 
+   [foreign] KAPALI KAPILAR
+   [foreign] - **linux.do** — ground taramasının 3 turunda da (`linux-do.raw`) 0 byte döndü; hem doğrudan arama hem `juejin
+   [foreign] - **weibo** — 3 turda da 0 byte, sessiz kanal.
+   [measure] KAPANAN KAPILAR
+   [measure] - **arxiv.org API**: sorgu Türkçe soru cümlesinin tek tek kelimelerine bölünmüş (`all:kodlama OR all:ajanlari 
+   [measure] - **crossref.raw / europepmc.raw**: aynı bozuk sorgu sorunu, akademik hakemli kaynak bulunamadı.
+   [rival] KAPALI KAPILAR
+   [rival] - **community.openai.com/t/switched-to-claude-code-from-codex-for-coding-due-to-5-hour-rate-limits/1395400** —
+   [rival] - **r/codex** (OpenAI'nin kendi subreddit'i) — zemin taramasında hiç görünmedi, ayrı arama da doğrudan bir thr
+   [video] KAPANAN KAPILAR
+   [video] - **Bilibili `opencli bilibili subtitle`** → `COMMAND_EXEC: Navigation rejected` (2 kez denendi) — açık kapı: 
+   [video] - **Bilibili `opencli bilibili video`** (metadata) → geçersiz JSON hatası, siteden HTML döndü.
+
+KAYNAKSIZ RAPOR — bu seritlerin metninde tek bir adres yok, denetlenemezler:
+   [code] HUNTER-code.md
+   [counter] HUNTER-counter.md
+   [crowd] HUNTER-crowd.md
+   [foreign] HUNTER-foreign.md
+   [measure] HUNTER-measure.md
+   [rival] HUNTER-rival.md
+   [video] HUNTER-video.md
+
+SERITLERIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:
+   [code] Zeminde (`ground/`, `ground-2/`, `ground-3/`) benim alanıma (GitHub issues/PR/README, Stack Overflow) düşen kanallar: `github-issues.raw`, `github-repos.raw`, `github-trending.raw`, `stackoverflow.raw
+   [counter] Zemin taramasından (ground/ground-2/ground-3, 3 tekrar) kendi hattım için gerçek sinyal taşıyan kanallar:
+   [crowd] **Reddit** — sweep'in kendi `reddit.raw`'ı `ground-2`'de boştu (4 byte, kapalı kapı), ama `ground` ve `ground-3`'te toplam **15 alakalı thread** buldum. `opencli reddit read` varsayılan `--expand-more
+   [foreign] **Zemin (ground/ground-2/ground-3) taramasından benim alanıma düşenler:**
+   [measure] Zemin (ground/ground-2/ground-3) klasörlerini önce taradım — kendi lane'im için asıl değerli malzeme **ground-2/exa.raw** (60.499 byte, 8 makale) ve **ground-3/exa.raw** (57.021 byte, 8 makale) dosyal
+   [rival] **Zeminde benim alanıma (rakip toplulukların kendi evi) düşen kanallar:** `ground-3/reddit.raw` içinde `r/cursor`, `r/GithubCopilot`, `r/AgentContext_dev` thread'leri bulundu; `google.raw`/`google-dee
+   [video] **Ground sweep'ten kullanılanlar:** `ground/youtube.raw`, `ground-2/youtube.raw`, `ground-3/youtube.raw` (3 ayrı dilde/varyantta arama, toplam 52 video başlığı) ve `ground/bilibili.raw`, `ground-2/bil
+   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)
+
+raporlar: /tmp/claude-1000/-home-dxb-DxB-Global-OS/d3f9c6c3-d482-43cf-a93e-8c3a28cc9d85/scratchpad/filo/HUNTER-*.md

@@ -1,0 +1,33 @@
+AVCI           SURE    PARA  KAYNAK   YENI  BEYAN  ACILAN KAPILAR
+counter        223s    0.90     134    134      7  akademik quora zemin-okudu
+measure        306s    0.94      97     97     17  akademik browser zemin-okudu
+rival          414s    1.44     246    237     49  browser quora reddit sweep zemin-okudu zincir
+TOPLAM                 3.28     468
+   (BEYAN = avcinin kendi cumlesinden okunan sayi — SAYIM DEGIL.)
+
+INSAN (sayildi): 453 ayri kisi · 1067 yorum · 23 baslik — crowd.sh'in makine sayimi.
+
+GENIS ZEMIN (filo acti, avcilardan once): 2 dil/sorgu · 77 kanal dosyasi, 59 tanesi dolu · GOOGLE (2 kapi) 19292 bayt · DUCKDUCKGO 24167 bayt · okunan sayfa govdesi 16
+   zemini okuyan avci: 3/3 (counter, measure, rival)
+
+DOYGUNLUK: son avci (rival) getirdigi kaynaklarin %96'ini ilk kez getirdi.
+   (%5'in altina dustugunde sefer biter — yeni avci eklemek para yakmaktir.)
+
+KAPANAN KAPILAR (her avcinin D blogundan — delik sessiz kalmaz):
+   [counter] KAPALI KAPILAR
+   [counter] - `ground/devto.raw`, `ground/lobsters.raw` — sadece DuckDuckGo SERP satırları (başlık+snippet), tam makale me
+   [counter] - `ground-2/duckduckgo.raw`, `duckduckgo2.raw` — aynı sorun, Microsoft/InfoQ/vendor pazarlama sayfalarının baş
+   [measure] KAPANAN KAPILAR
+   [measure] - **europepmc.raw** (her iki ground): İçerik tamamen tıp/hemşirelik dergisi özetleri (Oncol Nurs Forum, J Pati
+   [measure] - **openalex.raw** (ground-2, 2450 sonuç): tam metin anahtar kelime eşleşmesi genel iş/eğitim/şehircilik kitap
+   [rival] CLOSED DOORS
+   [rival] - **community.openai.com genel arama** (`/search?q=...`) — statik fetch (scrapling/scrapling-stealth) sadece i
+   [rival] - **community.openai.com iş parçacığı içi gezinme** (`opencli browser ... /1382830/4`) — Discourse SPA, URL de
+
+SERITLERIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:
+   [counter] Karşı-kanıt gerçek ve tekrarlanan bir örüntü: kendi harness'ini kuranların bir kısmı token/maliyet patlaması, çoklu-ajan koordinasyon çöküşü ve "birkaç mühendise kilitli kalma" riskiyle karşılaşıp ger
+   [measure] Kendi harness'ini kuranlar ölçülebilir kazanıyor ama bağlama bağlı: SWE-bench Verified'da özel/ayarlanmış harness'ler aynı modelle minimal referans ajanına göre 3-5 puan daha yüksek çözüm oranı alıyor
+   [rival] Rakip cephenin (Codex/OpenAI, Cursor) kendi topluluklarında baskın görüş net: kendi harness'ini/loop'unu kurmak **kontrol, model-bağımsızlığı ve maliyet gözetimi kazandırıyor**, ama **quota/token patl
+   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)
+
+raporlar: /tmp/claude-1000/-home-dxb-DxB-Global-OS/d3f9c6c3-d482-43cf-a93e-8c3a28cc9d85/scratchpad/filo2/HUNTER-*.md

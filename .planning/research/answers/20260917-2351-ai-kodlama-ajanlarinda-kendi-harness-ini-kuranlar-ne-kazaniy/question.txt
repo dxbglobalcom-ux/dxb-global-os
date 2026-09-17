@@ -1,0 +1,2 @@
+AI kodlama ajanlarinda kendi harness'ini kuranlar ne kazaniyor, ne kaybediyor?
+teams building their own agent harness instead of using a vendor tool: what they gain and lose

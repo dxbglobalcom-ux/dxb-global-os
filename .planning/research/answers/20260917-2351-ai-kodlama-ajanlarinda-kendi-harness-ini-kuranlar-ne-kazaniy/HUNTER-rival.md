@@ -1,0 +1,47 @@
+## HUKUM
+Rakip cephenin (Codex/OpenAI, Cursor) kendi topluluklarında baskın görüş net: kendi harness'ini/loop'unu kurmak **kontrol, model-bağımsızlığı ve maliyet gözetimi kazandırıyor**, ama **quota/token patlaması, ToS-ihlali riski (hesap yasağı), "hard constraint yok" sorunu ve bakım yükü** olarak geri tepiyor — ve platform tarafı (Cursor'ın kendi mühendisi) bunu resmen "biz internals'ı paylaşmıyoruz, sadece dış temas noktaları var" diyerek sınırlıyor.
+
+## A) WHAT I READ
+Ground sweep (`/tmp/.../ground*/`) bu lane için (r/codex, r/cursor, community.openai.com, forum.cursor.com) **sıfır doğrudan isabet** getirmişti — sadece genel Türkçe subredditler yakalanmıştı. Bu yüzden lane'e özel yeni bir `sweep.sh` attım (37 kanal, `r/codex r/cursor community.openai.com forum.cursor.com own agent harness vs vendor tool` sorgusu) ve reddit birincil kanal boş dönünce quora→reddit yedek zinciri 610 KB / 50 gönderi getirdi.
+
+Okuduğum kaynaklar (tam adres + hacim):
+1. **forum.cursor.com** — "Can we actually build a Harness on top of Cursor agent?" — 20 gönderi, tam iş parçacığı — https://forum.cursor.com/t/can-we-actually-build-a-harness-on-top-of-cursor-agent/165028
+2. **forum.cursor.com** — "Cursor Pro vs OpenAI Codex vs Claude Code: Where does Cursor have the advantage?" — 9 gönderi — https://forum.cursor.com/t/cursor-pro-vs-openai-codex-vs-claude-code-where-does-cursor-have-the-advantage/167057
+3. **forum.cursor.com** — "Best way to integrate Cursor…Codex-style multi-agent workflow" (#14) — https://forum.cursor.com/t/best-way-to-integrate-cursor-into-an-existing-vs-code-repo-with-claude-code-codex-style-multi-agent-workflow-and-automation/164065/14
+4. **forum.cursor.com** — "Using Cursor Frontier Models…in External Harnesses (e.g. Codex)" — https://forum.cursor.com/t/using-cursor-frontier-models-like-composer-2-5-in-external-harnesses-e-g-codex/164676
+5. **community.openai.com** (Codex kategorisi) — "How to stop Codex from rushing fixes?" — Discourse JSON API'den 20 gönderinin tamamı — https://community.openai.com/t/how-to-stop-codex-from-rushing-fixes/1382830
+6. **r/codex** — "Anyone thinking of building a 'CodexClaw' — a personal agent on top of Codex harness?" — opencli reddit read ile ~15 yorum — https://www.reddit.com/r/codex/comments/1r70x34/anyone_thinking_of_building_a_codexclaw_a/
+7. **r/codex** — "Feeling scammed on the $200 Pro plan since Astra" — 645 upvote, 227 yorum, ~12 okundu — https://www.reddit.com/r/codex/comments/1wioij7/feeling_scammed_on_the_200_pro_plan_since_astra/
+8. **r/cursor** — "Codex vs Cursor agents: is Codex just the model or also the tool executing agent?" — ~11 yorum — https://www.reddit.com/r/cursor/comments/1qyebav/codex_vs_cursor_agents_is_codex_just_the_model_or/
+9. **r/cursor** — "Claude Code vs Codex vs Cursor, what are you sticking with and why?" — ~15 yorum — https://www.reddit.com/r/cursor/comments/1wfeim1/claude_code_vs_codex_vs_cursorwhat_are_you/
+
+## B) THE COUNT
+n=9 kaynak, ~112 gönderi/yorum okundu. Buket dağılımı (kendi harness'ini kurma konusunda tutum):
+- **Kazanç vurgusu** (kontrol, model-bağımsızlığı, kendi loop'unu yazma özgürlüğü, ölçüm/telemetri): 6 konu içinde ağırlıklı (forum.cursor.com #1,#3; r/codex CodexClaw)
+- **Kayıp vurgusu** (quota/token patlaması, ToS riski, hard-constraint yokluğu, bakım yükü): 4 konu (community.openai.com; r/codex $200 şikayeti; forum.cursor.com Composer proxy; forum.cursor.com Harness thread post #14-#20)
+- **Nötr/karşılaştırmalı** (harness modeli mi önemli, model mi önemli): 2 konu (r/cursor iki karşılaştırma)
+
+## C) THE VOICES
+1. **jochenschultz**, community.openai.com, 2026-06-06: *"I think it is a trade-off you have to make when you build a harness. When most users don't want to chat with codex but instead want it to just build then how do you do it? You want to let it waste tokens and time with an extra step..."* — https://community.openai.com/t/how-to-stop-codex-from-rushing-fixes/1382830/4
+2. **deanrie** (Cursor forumu, resmi/community moderatör tonlu), 2026-07-10: *"There are no public docs on the internal design of the agent harness itself, we do not share the internals. What is documented are the touchpoints you can use to influence the harness, like rules, hooks, permissions, and the CLI or SDK, not the internal implementation."* — https://forum.cursor.com/t/can-we-actually-build-a-harness-on-top-of-cursor-agent/165028
+3. **deanrie**, aynı konu, 2026-07-10: *"Rules and AGENTS.md get injected into context, but they are a soft constraint... Hard constraints do not live in the prompt text, they live in the layer around the model."* — aynı adres
+4. **deanrie**, 2026-07-04: *"Using subscription models like Composer 2.5 outside Cursor via your own proxy, no, you can't do that... using a subscription outside official clients can trigger abuse enforcement and may get your account banned."* — https://forum.cursor.com/t/using-cursor-frontier-models-like-composer-2-5-in-external-harnesses-e-g-codex/164676
+5. **stellarfirefly**, r/codex, tarih ~2026-09-16/17: *"a very detailed Sol High reproduction now identifies a concrete multi-agent/context-amplification failure mode... one GPT-5.6 Sol High task ran for 2h44m and generated 242.3 million telemetry-reported tokens across 1,545 model responses, consuming about 11 percentage points of the weekly allowance."* — https://www.reddit.com/r/codex/comments/1wioij7/feeling_scammed_on_the_200_pro_plan_since_astra/
+6. **FrontRaspberry5060** (gönderi sahibi), r/codex: *"you need to systematise your agentic token workflow and build your own harness backend api to call deepseek 4.1 and setup this special config file that blah blah blah. I just want what my $200 subscription paid for."* — aynı adres
+7. **Sachka**, r/codex, CodexClaw konusu: *"Codex itself can be configured as an MCP server, 'CodexClaw' is just one config away... My advice for you is to sit with Codex and write an MCP server that would expose the conversation, sessions and launch itself as subprocess in a controllable manner."* — https://www.reddit.com/r/codex/comments/1r70x34/anyone_thinking_of_building_a_codexclaw_a/
+8. **stvn_wthrsp**, aynı konu: *"I have built something similar on top of Opencode, with Discord as the first-class interaction layer... The entire application runs in a single Docker container... It's completely replaced Openclaw for me."* — aynı adres
+9. **Efficient_Loss_9928**, r/cursor: *"harness is much more important than model. You can't save a shit harness even with Opus 4.6. and there is no one-size-fits-all. You need to find the harness that works for your own skill level."* — https://www.reddit.com/r/cursor/comments/1qyebav/codex_vs_cursor_agents_is_codex_just_the_model_or/
+10. **Congzhi** (soru sahibi), forum.cursor.com: *"we do can configure these rules, but we don't actually have any control over whether the agent (the LLM) will obey them... I'm not sure the agent harness layer is applying any true hard constraints that guarantee rule compliance."* — https://forum.cursor.com/t/can-we-actually-build-a-harness-on-top-of-cursor-agent/165028
+
+## D) CLOSED DOORS
+- **community.openai.com genel arama** (`/search?q=...`) — statik fetch (scrapling/scrapling-stealth) sadece iskelet HTML döndürdü, JS-render gerekiyordu → `opencli browser` ile açtım, çalıştı (bu bir kapalı kapı değil, ikinci adımda açıldı).
+- **community.openai.com iş parçacığı içi gezinme** (`opencli browser ... /1382830/4`) — Discourse SPA, URL değişince sayfa yeniden render olmuyor, sadece ilk gönderiyi gösterdi → **çözüldü**: Discourse'un kendi `.json` API'siyle (`/t/slug/id.json`) tüm 20 gönderiyi çektim.
+- **quora.com doğrudan arama** — `NOT_FOUND: No search results found` (2 denemede) — bu sorgu için Quora'da hiç sonuç yok, sahiden kapalı kapı.
+- **weibo, linux.do, linkedin, stackoverflow (bu lane için), github-issues/repos** — bu sweep turunda boş/kimlik-doğrulama gerektiriyor (`AUTH_REQUIRED: linux.do requires an active signed-in browser`) — rival topluluk açısından malzeme taşımıyorlardı zaten.
+- **r/codex "$200 scammed" konusunun `--expand-more true` modu** — Reddit `/api/morechildren` "orphan" hatası verdi (COMMAND_EXEC) → `--expand-more false` ile tekrar denendi, çalıştı.
+
+## E) DISTINCT PEOPLE
+**49 farklı kişinin kendi ifadesi** okundu (Cursor forumu: Congzhi, deanrie, Chris_Bellairs, Osama_Faheem, G4Q4, FinDevAI, ANTIVATION = 7; r/codex iki konu = 21; r/cursor iki konu = 16; community.openai.com = 5).
+
+## F) WHAT WOULD FLIP IT
+Bulguyu tersine çevirecek şey: Cursor veya OpenAI'nin resmi olarak harness internals'ını açması ve harici bir orkestrasyon katmanının resmi API/SDK üzerinden **quota cezası olmadan** çalıştığını göstermesi (şu an tam tersi kanıtlandı — hem token-amplifikasyon bug'ı openai/codex#46023 hem de Cursor'ın "proxy = hesap yasağı" uyarısı). Bunu aradım: forum.cursor.com'daki "Does using Oh My Pi's Cursor provider... violate Cursor's ToS?" başlığı (2026-09-02, https://forum.cursor.com/t/does-using-oh-my-pi-s-cursor-provider-or-an-openai-compatible-proxy-to-the-same-endpoints-violate-cursor-s-tos/167778) tam bunu soruyor ama zaman kısıtı nedeniyle içeriğini okumadım — bu konu okunursa "resmi olmayan harness'lerin gerçek yasal/teknik akıbeti" netleşebilir, mevcut HUKUM'u güçlendirebilir ya da yumuşatabilir.
