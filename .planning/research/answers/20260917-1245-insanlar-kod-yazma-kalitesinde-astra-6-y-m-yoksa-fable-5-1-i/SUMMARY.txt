@@ -1,0 +1,36 @@
+soru    : insanlar kod yazma kalitesinde astra 6'yı mı yoksa fable 5.1'i mi tercih ediyor?
+do developers prefer GPT-6 Astra or C
+avcilar : crowd rival code measure video counter foreign
+beyin   : sonnet   (komutan Opus'ta kalir)   zaman asimi 1500s
+
+genis zemin 1 aciliyor (35 kanal): insanlar kod yazma kalitesinde astra 6'yı mı yoksa fable 5.1'i mi te
+genis zemin 2 aciliyor (35 kanal): do developers prefer GPT-6 Astra or Claude Fable 5.1 for code quality
+   zemin hazir: 2 dil/sorgu · 102 kanal dosyasi · google 1971+2114 bayt · duckduckgo 5289 bayt · okunan sayfa 8
+
+  avci sahada: crowd
+  avci sahada: rival
+  avci sahada: code
+  avci sahada: measure
+  avci sahada: video
+  avci sahada: counter
+  avci sahada: foreign
+
+7 avci aynı anda çalışıyor — bekleniyor...
+
+AVCI           SURE    PARA  KAYNAK   YENI  İNSAN  ACILAN KAPILAR
+counter      204s    1.12       0      0      9  zemin-okudu
+code           111s    0.62       0      0      3  github model-arama quora zemin-okudu
+crowd          199s    1.00      16     16    783  reddit zemin-okudu
+foreign        192s    1.20      16     16      5  browser cn quora zemin-okudu zincir
+measure        157s    0.68       0      0      -  akademik zemin-okudu
+rival          215s    1.31      13     13    232  reddit zemin-okudu zincir
+video          269s    0.77      10     10    108  cn youtube zemin-okudu
+TOPLAM                 6.69      55
+
+GENIS ZEMIN (filo acti, avcilardan once): 50 kanal dosyasi, 28 tanesi dolu · GOOGLE 1971 bayt · DUCKDUCKGO 5289 bayt · okunan sayfa govdesi 0
+   zemini okuyan avci: 7/7 (counter, code, crowd, foreign, measure, rival, video)
+
+DOYGUNLUK: son avci (video) getirdigi kaynaklarin %100'ini ilk kez getirdi.
+   (%5'in altina dustugunde sefer biter — yeni avci eklemek para yakmaktir.)
+
+raporlar: /tmp/claude-1000/-home-dxb-DxB-Global-OS/d50f8069-f5b0-4558-a052-b5cc8493bc76/scratchpad/final-fleet/out/HUNTER-*.md

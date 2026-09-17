@@ -1,0 +1,2 @@
+insanlar kod yazma kalitesinde astra 6'yı mı yoksa fable 5.1'i mi tercih ediyor?
+do developers prefer GPT-6 Astra or Claude Fable 5.1 for code quality

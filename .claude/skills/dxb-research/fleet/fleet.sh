@@ -132,4 +132,8 @@ echo "$launched avci aynı anda çalışıyor — bekleniyor..."
 wait
 echo
 
-python3 "$HERE/merge.py" "$OUT"
+SUMFILE="$OUT/SUMMARY.txt"
+python3 "$HERE/merge.py" "$OUT" | tee "$SUMFILE"
+
+# The answer is kept automatically — his ruling 2026-09-17. See fleet/keep.sh for why.
+bash "$HERE/keep.sh" "$QF" "$OUT" "$SUMFILE" || echo "!! cevap saklanamadi" >&2
