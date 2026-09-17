@@ -101,9 +101,13 @@ echo
 # folder is bound writable, so a hunter can read everything it needs and change nothing here.
 # Proven on this machine the same hour: `touch` inside the jail answers "Read-only file system".
 REPO_ROOT="$(builtin cd "$SKILL/../../.." && pwd)"
-JAIL=""
+# AN ARRAY, NOT A STRING. This repository's own path carries a space — "DxB Global OS" — and an
+# unquoted string would have handed bwrap three arguments where one was meant, so the jail would
+# have failed to start and the hunters would have run loose with no warning at all. Caught before
+# the first real fleet run, on 2026-09-17.
+JAIL=()
 if command -v bwrap >/dev/null 2>&1; then
-  JAIL="bwrap --dev-bind / / --ro-bind $REPO_ROOT $REPO_ROOT --bind $OUT $OUT --bind /tmp /tmp"
+  JAIL=(bwrap --dev-bind / / --ro-bind "$REPO_ROOT" "$REPO_ROOT" --bind "$OUT" "$OUT" --bind /tmp /tmp)
 else
   echo "!! UYARI: bwrap yok — avcilar depoyu YAZILABILIR gorecek. Bu bir deliktir ve rapora yazilir." >&2
 fi
@@ -155,7 +159,7 @@ for role in $PICK; do
   (
     s=$(date +%s)
     builtin cd "$OUT/work-$role" || exit 9
-    timeout "$TMO" $JAIL claude -p "$(cat "$OUT/prompt-$role.txt")" \
+    timeout "$TMO" "${JAIL[@]}" claude -p "$(cat "$OUT/prompt-$role.txt")" \
         --model "$MODEL" --effort high \
         --permission-mode bypassPermissions \
         --allowed-tools $HUNTER_ALLOW \

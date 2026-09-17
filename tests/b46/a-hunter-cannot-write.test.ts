@@ -49,8 +49,10 @@ describe("the fleet may not launch a hunter that can change this repository", ()
   });
 
   it("binds this repository read-only, because Bash writes and no tool list can stop it", () => {
-    expect(FLEET).toMatch(/bwrap .*--ro-bind \$REPO_ROOT \$REPO_ROOT/);
-    expect(launch).toMatch(/\$JAIL claude -p/);
+    // as an ARRAY: this repository's own path carries a space, and a string would have handed
+    // bwrap three arguments where one was meant — the jail would simply not have started.
+    expect(FLEET).toMatch(/JAIL=\(bwrap [^)]*--ro-bind "\$REPO_ROOT" "\$REPO_ROOT"/);
+    expect(launch).toMatch(/"\$\{JAIL\[@\]\}" claude -p/);
   });
 
   it("says so loudly when the jail is not available instead of going ahead in silence", () => {

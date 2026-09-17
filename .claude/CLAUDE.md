@@ -162,6 +162,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |
 | writing a message to the CEO | `dxb-ceo-report` |
+| researching anything in the outside world | `dxb-research` |
 | reading a rival system, video or repository | `dxb-rival-intel` |
 | writing or repairing an employee's identity | `dxb-persona` |
 | changing what Hamza or an agent knows at runtime | `dxb-hamza-context` |
