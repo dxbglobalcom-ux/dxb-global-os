@@ -41,7 +41,7 @@ measured outcomes take the past tense.
 |---|---|---|
 | Code | the battery: typecheck · vitest · i18n-purity-check · verify:ledger · gitleaks | exists, runs on every commit |
 | Persona files | `tests/personas/persona-ruler.test.ts` (`scripts/persona-ruler.sh`) | built in this commit |
-| Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + records parity (`dxb-close-row`) | exists |
+| Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + `tests/b43/records-truth.ts` (a record may not say his eye is awaited on what the ledger holds accepted; a new acceptance adds its row there or R4 is red) + records parity (`dxb-close-row`) | exists |
 | CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |
 | Research engine (`.claude/skills/dxb-research`) | `bash scripts/research-ruler.sh` (11 rules) + `tests/b46/` (47 cases on the real scripts) + `bash .claude/skills/dxb-research/scripts/accept.sh` (a live run, judged from the files) | built 2026-09-17; the ruler runs on every commit that touches the engine |
 | Specs / plan text | none yet — the ruler is written before the work, or the work is reported ⚠ UNVERIFIED | gap, named |
