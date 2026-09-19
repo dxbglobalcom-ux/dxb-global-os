@@ -9,6 +9,9 @@
 // (dxb-global-os-25, Fable 5.1) and committed by the builder (dxb-global-os-bd, Opus 5), under
 // the audit law of 2026-09-15.
 //
+// The fourth rule, R4, is why the ruler cannot be forgotten: an acceptance of his eye registered
+// in the ledger from 2026-09-15 on with no row here turns the ruler red until its row is added.
+//
 // What it is NOT. It is not the inverse acceptance gate he closed on 2026-09-16
 // (inverse-gate-closed-both-said-no-2026-09-16): that gate scanned prose for a pattern and rang on
 // correct trees. This ruler scans for NAMED subjects only — each row of ACCEPTED is one ledger
@@ -37,6 +40,7 @@ export const C = {
    * it. A sentence naming one of these subjects may no longer say his eye or his word is awaited.
    */
   accepted: [
+    { id: "w1-records-accepted-2026-09-15", subject: /\bW1\b(?![…/])/ },
     { id: "studio-seats-w5-to-w6c-accepted-2026-09-15", subject: /\bW5b?\b|\bW6[bc]?\b/ },
     { id: "studio-b08-step0-w9-w7-w8-accepted-2026-09-15", subject: /\bW[79]\b|\bW8\b(?! guard)|B08 step \(0\)/ },
     { id: "studio-b43-road-accepted-by-his-eye-2026-09-16", subject: /\bW1[0-3]\b|his eye on the clock/ },
@@ -44,6 +48,14 @@ export const C = {
     { id: "b44-and-b45-accepted-by-his-eye-2026-09-16", subject: /\bB4[45]\b/ },
     { id: "sept14-block-accepted-and-the-gate-asks-both-first-2026-09-16", subject: /2026-09-14 block/ },
   ],
+  /**
+   * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
+   * the day the ruler law was made (2026-09-15) must have a row above, or the ruler is red with
+   * the row it wants. An acceptance is recognised by its id ("-accepted") or its opening words.
+   */
+  acceptanceSince: "2026-09-15",
+  acceptanceId: /-accepted(-|$)/,
+  acceptanceOpening: /^(HIS EYE|ACCEPTED BY HIS|.{0,40}ACCEPTED BY (THE CEO'S OWN|HIS) EYE)/,
   /** the awaiting form — the sentence says his eye or his word has not come */
   awaiting:
     /\bwait(s|ing)? (only )?(on|for) (him|his (word|eye))\b|\bhis eye on\b|\bnot yet (looked at|accepted|confirmed)\b|\bhis word did not cover\b|\bNOT ACCEPTED BY HIS EYE\b|\bstill waits on\b/i,
@@ -102,9 +114,22 @@ export function r3TableIsRegistered(root: string): Verdict {
   return { rule: "R3 every subject row names a registered approval", pass: failures.length === 0, failures };
 }
 
+/** R4 — every acceptance of his eye in the ledger since the ruler law has its row here. */
+export function r4NoAcceptanceWithoutARow(root: string, ledgerOverride?: Record<string, unknown>): Verdict {
+  const ledger = (ledgerOverride ?? readLedger(root)) as Record<string, { date?: string; what?: string }>;
+  const named = new Set(C.accepted.map((r) => r.id));
+  const failures = Object.keys(ledger)
+    .filter((id) => !id.startsWith("_"))
+    .filter((id) => (ledger[id].date ?? "") >= C.acceptanceSince)
+    .filter((id) => C.acceptanceId.test(id) || C.acceptanceOpening.test(ledger[id].what ?? ""))
+    .filter((id) => !named.has(id))
+    .map((id) => `${id} (${ledger[id].date}) is an acceptance of his eye with no row in C.accepted — add its row, spelled as the records spell its subject`);
+  return { rule: "R4 every acceptance since the ruler law has its row", pass: failures.length === 0, failures };
+}
+
 export function runRuler(opts: { root?: string; texts?: Record<string, string> } = {}): RulerReport {
   const root = repoRoot(opts.root);
-  const verdicts = [r1LedgerGate(root), r2NoAwaitingOnAccepted(root, opts.texts), r3TableIsRegistered(root)];
+  const verdicts = [r1LedgerGate(root), r2NoAwaitingOnAccepted(root, opts.texts), r3TableIsRegistered(root), r4NoAcceptanceWithoutARow(root)];
   return { verdicts, pass: verdicts.every((v) => v.pass) };
 }
 

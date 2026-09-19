@@ -43,5 +43,23 @@ if [ -n "$RESEARCH_TOUCHED" ]; then
   fi
 fi
 
+# (3b) THE RECORDS RULER RUNS BEFORE THE COMMIT — same ruling, second class. The records
+#      (.planning/STATE.md, the open board, the approvals ledger) have had their ruler since
+#      2026-09-19, on the CEO's order of that day (ceo-approvals.json,
+#      `records-ruler-ordered-on-his-word-2026-09-19`): tests/b43/records-truth.ts (~0.3 s), which
+#      rings when a record still says his eye is awaited on something the ledger holds as
+#      accepted. It runs ONLY when a record or the ruler itself is in the staged change. It reads
+#      the working tree, as the research ruler does.
+RECORDS_TOUCHED=$(git diff --cached --name-only | grep -E '^\.planning/STATE\.md$|^HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK\.md$|^scripts/governance/ceo-approvals\.json$|^tests/b43/records-truth' || true)
+if [ -n "$RECORDS_TOUCHED" ]; then
+  REPO_TOP=$(git rev-parse --show-toplevel)
+  if ! node --no-warnings "$REPO_TOP/tests/b43/records-truth.ts"; then
+    echo "" >&2
+    echo "COMMIT DURDURULDU — kayit cetveli kirmizi (yukaridaki tablo): bir kayit, defterin kabul dedigine hala 'gozunu bekliyor' diyor, ya da bir kabulun cetvelde satiri yok." >&2
+    echo "Duzelt, 'node --no-warnings tests/b43/records-truth.ts' yesil yansin, sonra tekrar commit et." >&2
+    exit 1
+  fi
+fi
+
 # (4) Scan staged changes only; redact matched values in all output.
 exec gitleaks git --pre-commit --staged --redact --verbose

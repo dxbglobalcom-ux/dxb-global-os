@@ -5,7 +5,7 @@
 // red; then the records as they actually stand must pass every rule. Dictated by the checker
 // session on 2026-09-19, committed by the builder (audit law, 2026-09-15).
 import { describe, expect, it } from "vitest";
-import { C, r2NoAwaitingOnAccepted, runRuler } from "./records-truth.js";
+import { C, r2NoAwaitingOnAccepted, r4NoAcceptanceWithoutARow, runRuler } from "./records-truth.js";
 
 const root = process.cwd();
 const STATE = ".planning/STATE.md";
@@ -30,7 +30,17 @@ describe("the records ruler bites", () => {
     expect(r2NoAwaitingOnAccepted(root, withLine("the media_jobs row 16277dac, asked twice and unanswered (the W8 guard pins it).")).pass).toBe(true);
   });
   it("names every subject row against a registered approval", () => {
-    expect(C.accepted.length).toBeGreaterThanOrEqual(6);
+    expect(C.accepted.length).toBeGreaterThanOrEqual(7);
+  });
+  it("R4 rings when the ledger gains an acceptance of his eye that has no row here", () => {
+    const fake = { "b99-accepted-by-his-eye-2026-09-30": { date: "2026-09-30", what: "HIS EYE HAS PASSED OVER B99." } };
+    const v = r4NoAcceptanceWithoutARow(root, fake);
+    expect(v.pass).toBe(false);
+    expect(v.failures[0]).toContain("b99-accepted-by-his-eye-2026-09-30");
+    const older = { "old-accepted-2026-08-01": { date: "2026-08-01", what: "ACCEPTED BY HIS OWN EYE." } };
+    expect(r4NoAcceptanceWithoutARow(root, older).pass).toBe(true);
+    const order = { "x-ordered-2026-09-30": { date: "2026-09-30", what: "W99 ORDERED, not accepted." } };
+    expect(r4NoAcceptanceWithoutARow(root, order).pass).toBe(true);
   });
 });
 
