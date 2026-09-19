@@ -48,6 +48,7 @@ export const C = {
     { id: "b44-and-b45-accepted-by-his-eye-2026-09-16", subject: /\bB4[45]\b/ },
     { id: "sept14-block-accepted-and-the-gate-asks-both-first-2026-09-16", subject: /2026-09-14 block/ },
     { id: "b47-accepted-by-his-eye-2026-09-19", subject: /\bB47\b/ },
+    { id: "b39-closed-by-his-eye-2026-09-19", subject: /\bB39\b/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
