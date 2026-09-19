@@ -1039,5 +1039,12 @@
   "verbatim": "gerek yok. kalsın. şimdi bu işi bitirelim commitler tamamla. ve baş mühendise söyle",
   "conditions": "A closing word on a registered leg, not an acceptance of the row (LAW B): B47 still waits on his eye.",
   "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B47 · .planning/STATE.md"
+ },
+ "b47-accepted-by-his-eye-2026-09-19": {
+  "date": "2026-09-19",
+  "what": "ROW B47 — THE OPENING, THE WARRIOR KNOWS THE CUPBOARD — ACCEPTED BY HIS OWN EYE. Ten commits of the same evening (a7718334 · bc8836d5 · 36cf0403 · 8524b3fd · 861eea28 · 64677f5e · 3324beda · 30dc9fe3 · 0d16857a · 7b26b9a3), each verified by the chief engineer in the files: the cupboard page at the opening, the opening ruler on every commit, ten plugins off for this project on his word, L5 measured closed, L4 closed unchanged. He was told the row was finished on the author's side and waited on his eye only, and he gave it.",
+  "verbatim": "göz tmm.",
+  "conditions": "His eye on the row as built; the holding-side legs registered on B41 (A23–A24) stay to-be-done and are not covered by this word.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B47 · .planning/STATE.md · tests/b43/records-truth.ts (row)"
  }
 }
