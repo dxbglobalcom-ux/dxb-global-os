@@ -21,9 +21,16 @@
 # (tests/hooks/session-start-fits.test.ts holds the budget and proves it). HIS LAST ORDER keeps
 # the newest block and counts the older ones out loud; they are history and belong to
 # STATE-ARCHIVE.md.
+#
+# 2026-09-19, row B47, his order "savaşçı ajan geldiği zaman ne nerede, hangi alet nerede hemen
+# hepsini bilmesi lazım": a fourth block, THE CUPBOARD, delivers .claude/CUPBOARD.md — one page
+# naming every drawer (doors, plugins, MCP servers, the fleet, the operator) and how it opens. The
+# three budgets above it shrank to make room inside the same 8,000 bytes (3300/2700/1100 →
+# 2500/2200/1000 + 1500, the last equal to ruler R5 so a page the ruler passes arrives whole), measured; tests/hooks/opening-budget.ts R5 keeps the page one page.
 set -euo pipefail
 ROOT="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 STATE="$ROOT/.planning/STATE.md"
+CUPBOARD="$ROOT/.claude/CUPBOARD.md"   # B47 (2026-09-19): the warrior knows the cupboard at the opening
 
 # One reader for the state photograph's sections, so a heading change breaks in one place.
 section() {
@@ -63,6 +70,7 @@ clip() {
 position=$(section '^## The CEO.s live order')   # his live order, newest block first — the budget below keeps the newest and counts the rest
 next=$(section '^## Next')                                    # the work in hand, with its reason
 waiting=$(section '^## What is open')                         # what cannot move without him — core §0 line 3
+cupboard=$(cat "$CUPBOARD" 2>/dev/null || true)               # one page: what exists, where, how it opens (ruler R5 keeps it one page)
 
 cat <<EOF
 === DXB — WHERE THE WORK STANDS ===
@@ -75,12 +83,15 @@ Never ask him what to do. Everything below was read from .planning/STATE.md just
 answer him FROM IT. Re-opening a file to be told this again is the laziness he named.
 
 --- HIS LAST ORDER ---
-$(clip "${position:-"(.planning/STATE.md could not be read — read it yourself before any work)"}" 3300)
+$(clip "${position:-"(.planning/STATE.md could not be read — read it yourself before any work)"}" 2500)
 
 --- WHAT HAPPENS NEXT ---
-$(clip "${next:-"(no Next block found — read .planning/STATE.md before answering him)"}" 2700)
+$(clip "${next:-"(no Next block found — read .planning/STATE.md before answering him)"}" 2200)
 
 --- WHAT WAITS ON HIM ---
-$(clip "${waiting:-"(no open-work block found — read HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md)"}" 1100)
+$(clip "${waiting:-"(no open-work block found — read HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md)"}" 1000)
+
+--- THE CUPBOARD ---
+$(clip "${cupboard:-"(.claude/CUPBOARD.md is missing — the drawers are listed in .claude/CLAUDE.md §4)"}" 1500)
 === END ===
 EOF
