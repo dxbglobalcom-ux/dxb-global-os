@@ -1046,5 +1046,12 @@
   "verbatim": "göz tmm.",
   "conditions": "His eye on the row as built; the holding-side legs registered on B41 (A23–A24) stay to-be-done and are not covered by this word.",
   "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B47 · .planning/STATE.md · tests/b43/records-truth.ts (row)"
+ },
+ "claude-mem-terminal-echo-off-on-checker-ok-2026-09-19": {
+  "date": "2026-09-19",
+  "what": "THE MEMORY PLUGIN'S TERMINAL ECHO IS SWITCHED OFF, ON THE CHECKER'S OK. Shown, in his Çalışma1 window, the list claude-mem prints at every opening (the observation index plus the 'View Observations Live' and cmem.ai/pro lines) he asked whether he must always see it, and said: ask the checker, and if the checker approves, close it. Measured first (row B47 L5): the plugin renders the same index twice — a coloured copy for the terminal (hook systemMessage) and a compact copy for the model (additionalContext) — and the setting CLAUDE_MEM_CONTEXT_SHOW_TERMINAL_OUTPUT cuts only the terminal copy; the checker read the plugin's own code and confirmed. Written to ~/.claude-mem/settings.json (outside the repository, machine-wide, the four existing keys kept). Proven in fresh session eaee60de in Çalışma1: hook_system_message absent, hook_additional_context 2,259 bytes, and the model named the last observation (#16479) with no file opened.",
+  "verbatim": "denetçiye sor oklerse kapatın.onayını almadan iş yapma",
+  "conditions": "Done only after the checker's written OK (dxb-global-os-25, the same night). Revert is one line: the same key back to \"true\". The plugin's own files are untouched.",
+  "where": "~/.claude-mem/settings.json (outside the repository) · this ledger"
  }
 }
