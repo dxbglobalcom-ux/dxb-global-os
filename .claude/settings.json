@@ -57,6 +57,14 @@
   },
   "enabledPlugins": {
     "playwright@claude-plugins-official": false,
-    "skill-creator@claude-plugins-official": false
+    "skill-creator@claude-plugins-official": false,
+    "caveman@caveman": false,
+    "impeccable@impeccable": false,
+    "taste-skill@taste-skill": false,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": false,
+    "frontend-design@claude-plugins-official": false,
+    "obsidian@obsidian-skills": false,
+    "claude-md-management@claude-plugins-official": false,
+    "andrej-karpathy-skills@karpathy-skills": false
   }
 }

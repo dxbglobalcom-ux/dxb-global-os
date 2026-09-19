@@ -1025,5 +1025,12 @@
   "verbatim": "1-ölüleri kapat hata gerekliyse kaldır sil. yani iki tane boşuna kopya gereksiz",
   "conditions": "His word amends his ruling of 2026-08-27 (arsenal-quality-tier-and-plugins-open-2026-08-27) for these two plugins only, in this project only. Deleting the plugins from the machine is authorised by this sentence but was not needed and was not done; if it is ever done, his rule of 2026-09-05 applies (folder and size in front of him first).",
   "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B47 · .claude/settings.json (enabledPlugins) · .planning/STATE.md"
+ },
+ "eight-plugins-closed-for-this-project-2026-09-19": {
+  "date": "2026-09-19",
+  "what": "THE EIGHT UNUSED PLUGINS ARE CLOSED FOR THIS PROJECT. Told, after the measurements of row B47, that caveman, impeccable, taste-skill, ui-ux-pro-max, frontend-design, obsidian, claude-md-management and andrej-karpathy-skills were still on (0 calls in 402 session records over 30 days; the chief engineer had recommended keeping them on because a closed plugin cannot be opened by name and needs a new session, for ~5 % a request), he ordered all of them closed. Executed at project scope in .claude/settings.json (`claude plugin disable … -s project`), nothing uninstalled; user scope untouched; claude-mem and context7 stay on as his word of 2026-08-27 kept them. The cupboard page now says how a drawer is opened: the enable command plus a new session.",
+  "verbatim": "hepsini kapat.",
+  "conditions": "His word amends his ruling of 2026-08-27 (arsenal-quality-tier-and-plugins-open-2026-08-27) for these eight plugins in this project. The builder had put the cost in front of him first (a restart per drawer, ~5 % a request) and he reaffirmed. Revert is one line per plugin: `claude plugin enable <name>@<marketplace> -s project`, then a new session.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B47 · .claude/settings.json · .claude/CUPBOARD.md · .planning/STATE.md"
  }
 }
