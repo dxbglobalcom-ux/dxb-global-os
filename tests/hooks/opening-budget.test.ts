@@ -52,6 +52,16 @@ describe("the opening ruler bites on a copy", () => {
     expect(r.verdicts[2].pass).toBe(false);
     expect(r.verdicts[2].failures[0]).toContain("52329");
   });
+  it("rings on a cupboard page that is no longer one page", () => {
+    const r = measure({ ...collect(root), cupboard: "c".repeat(C.maxCupboard + 1) });
+    expect(r.verdicts[4].pass).toBe(false);
+    expect(r.verdicts[4].failures[0]).toContain(String(C.maxCupboard + 1));
+  });
+  it("names a cupboard page that does not exist instead of hiding it", () => {
+    const r = measure({ ...collect(root), cupboard: null });
+    expect(r.verdicts[4].pass).toBe(true);
+    expect(r.verdicts[4].rule).toContain("NOT YET WRITTEN");
+  });
   it("counts only the listed frontmatter, a multi-line description whole, and nothing of the body", () => {
     const md = "---\nname: a\ndescription: one\n  two\nother: no\n---\n# body that is not counted\n";
     expect(frontmatterBytes(md)).toBe(Buffer.byteLength("name: a") + Buffer.byteLength("description: one\n  two"));
@@ -65,6 +75,6 @@ describe("the repository as it stands", () => {
     const r = runRuler({ root });
     expect(r.verdicts.flatMap((v) => v.failures).join("\n")).toBe("");
     expect(r.pass).toBe(true);
-    expect(r.verdicts[4].rule).toContain("outside the repo, reported only");
+    expect(r.verdicts[5].rule).toContain("outside the repo, reported only");
   });
 });

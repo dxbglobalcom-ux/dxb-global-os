@@ -10,8 +10,8 @@
 // on 2026-09-19, and a threshold change is its own `records(ruler): …` commit.
 //
 // One thing, one ruler: the position hook already has its own (session-start-fits.ts) — this
-// ruler CALLS it and never measures the hook a second way. The cupboard page (B47 L3) gets its
-// rule here the day the page exists, not before.
+// ruler CALLS it and never measures the hook a second way. The cupboard page (B47 L3) has its
+// rule R5 since 2026-09-19; until the page exists the rule names its absence instead of hiding it.
 //
 //   node --no-warnings tests/hooks/opening-budget.ts        — the table, exit 1 on any failure
 //   npx vitest run tests/hooks/opening-budget.test.ts       — the same rules under vitest, biting on copies
@@ -33,15 +33,18 @@ export const C = {
   maxSkills: 5000,
   /** R4 — core + project skills + the position block the hook delivers; measured 24,128 */
   maxTotal: 26000,
+  /** R5 — the cupboard page (B47 L3): one page the warrior reads at the opening — what exists, where, how it opens */
+  cupboard: ".claude/CUPBOARD.md",
+  maxCupboard: 1500,
 };
 
 export type Verdict = { rule: string; pass: boolean; failures: string[] };
 export type Piece = { name: string; bytes: number };
-export type Inputs = { core: string; skills: Piece[]; hook: SessionStartReport; globalSkills: Piece[] };
+export type Inputs = { core: string; skills: Piece[]; hook: SessionStartReport; globalSkills: Piece[]; cupboard: string | null };
 export type RulerReport = {
   verdicts: Verdict[];
   pass: boolean;
-  bytes: { core: number; skills: number; hook: number; total: number; globalSkills: number };
+  bytes: { core: number; skills: number; hook: number; total: number; globalSkills: number; cupboard: number | null };
 };
 
 const here = fileURLToPath(new URL(".", import.meta.url));
@@ -72,6 +75,7 @@ export function collect(root: string): Inputs {
     skills: skillsIn(join(root, C.skillsDir)),
     hook: sessionStartRuler({ root }),
     globalSkills: skillsIn(C.globalSkillsDir),
+    cupboard: existsSync(join(root, C.cupboard)) ? readFileSync(join(root, C.cupboard), "utf8") : null,
   };
 }
 
@@ -81,6 +85,7 @@ export function measure(inp: Inputs): RulerReport {
   const hook = inp.hook.bytes;
   const total = core + skills + hook;
   const globalSkills = inp.globalSkills.reduce((n, p) => n + p.bytes, 0);
+  const cupboard = inp.cupboard === null ? null : bytes(inp.cupboard);
   const v: Verdict[] = [];
   v.push({ rule: `R1 the core (${C.core}) is ≤ ${C.maxCore} bytes`, pass: core <= C.maxCore, failures: core <= C.maxCore ? [] : [`${core} bytes`] });
   const heaviest = [...inp.skills].sort((a, b) => b.bytes - a.bytes).slice(0, 3).map((p) => `${p.name} ${p.bytes}`);
@@ -92,8 +97,13 @@ export function measure(inp: Inputs): RulerReport {
   const hookFailures = inp.hook.verdicts.flatMap((x) => (x.pass ? [] : [`${x.rule}: ${x.failures.join("; ")}`]));
   v.push({ rule: "R3 the position block passes its own ruler (tests/hooks/session-start-fits.ts)", pass: inp.hook.pass, failures: hookFailures });
   v.push({ rule: `R4 the repo-owned opening — core + project skills + position block — is ≤ ${C.maxTotal} bytes`, pass: total <= C.maxTotal, failures: total <= C.maxTotal ? [] : [`${total} bytes`] });
+  if (cupboard === null) {
+    v.push({ rule: `R5 the cupboard page (${C.cupboard}) is ≤ ${C.maxCupboard} bytes — NOT YET WRITTEN (row B47 L3)`, pass: true, failures: [] });
+  } else {
+    v.push({ rule: `R5 the cupboard page (${C.cupboard}) is ≤ ${C.maxCupboard} bytes`, pass: cupboard <= C.maxCupboard, failures: cupboard <= C.maxCupboard ? [] : [`${cupboard} bytes`] });
+  }
   v.push({ rule: `R0 outside the repo, reported only: global skills (${C.globalSkillsDir}) ${globalSkills} bytes over ${inp.globalSkills.length} skills`, pass: true, failures: [] });
-  return { verdicts: v, pass: v.every((x) => x.pass), bytes: { core, skills, hook, total, globalSkills } };
+  return { verdicts: v, pass: v.every((x) => x.pass), bytes: { core, skills, hook, total, globalSkills, cupboard } };
 }
 
 export function runRuler(opts: { root?: string } = {}): RulerReport {
@@ -103,7 +113,7 @@ export function runRuler(opts: { root?: string } = {}): RulerReport {
 function main() {
   const r = runRuler();
   const b = r.bytes;
-  console.log(`OPENING RULER — core ${b.core} · project skills ${b.skills} · position block ${b.hook} · total ${b.total} (bytes)`);
+  console.log(`OPENING RULER — core ${b.core} · project skills ${b.skills} · position block ${b.hook} · total ${b.total} · cupboard ${b.cupboard ?? "—"} (bytes)`);
   for (const v of r.verdicts) {
     console.log(`  ${v.pass ? "PASS" : "FAIL"}  ${v.rule}`);
     for (const f of v.failures) console.log(`        ${f}`);
