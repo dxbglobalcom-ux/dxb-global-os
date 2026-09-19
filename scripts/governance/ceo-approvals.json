@@ -1032,5 +1032,12 @@
   "verbatim": "hepsini kapat.",
   "conditions": "His word amends his ruling of 2026-08-27 (arsenal-quality-tier-and-plugins-open-2026-08-27) for these eight plugins in this project. The builder had put the cost in front of him first (a restart per drawer, ~5 % a request) and he reaffirmed. Revert is one line per plugin: `claude plugin enable <name>@<marketplace> -s project`, then a new session.",
   "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B47 · .claude/settings.json · .claude/CUPBOARD.md · .planning/STATE.md"
+ },
+ "memory-index-stays-l4-closed-2026-09-19": {
+  "date": "2026-09-19",
+  "what": "ROW B47 LEG L4 IS CLOSED WITHOUT CHANGE: the memory index (MEMORY.md, outside the repository) stays as it is. Shown the 26 July–August index lines grouped — 15 whose lesson is owned by a repository rule, 9 that are one day's history, 2 that are stale — and offered to move 24 to a second index, he said it is not needed. Nothing moved, nothing deleted, nothing corrected in the index by this session; the opening work of B47 is finished on the author's side with this word.",
+  "verbatim": "gerek yok. kalsın. şimdi bu işi bitirelim commitler tamamla. ve baş mühendise söyle",
+  "conditions": "A closing word on a registered leg, not an acceptance of the row (LAW B): B47 still waits on his eye.",
+  "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B47 · .planning/STATE.md"
  }
 }
