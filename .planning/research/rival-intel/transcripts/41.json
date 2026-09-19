@@ -1,0 +1,1830 @@
+{
+ "row": 41,
+ "source": "https://www.youtube.com/watch?v=4F1Xr3HX_es",
+ "title": "MCP Çok Daha İyi Hale Geldi",
+ "channel": "Mert Durmazer | Digital Academy",
+ "upload_date": "2026-09-16",
+ "duration_s": 439,
+ "view_count_at_read": 6279,
+ "language": "tr",
+ "subtitle_track": "tr (author-provided, downloaded with yt-dlp)",
+ "read_mode": "LISTENED WHOLE — CEO order 2026-09-19 'onu öğren dinle'",
+ "plain_text": "MCP artık her yerde cloud Code, Codex, Csor hepsi MCP ile araçlara bağlanıyor ve bu yavaşlamayacak. Ama aynı anda başka bir şey daha oluyor. Ajanlar araçları yönetme şeklini de değiştiriyor ve eskiden sunucunun işi olan sorumlulukları devr alıyor. Eskiden çok daha farklıydı, şimdi çok daha farklı. Aracınızın başarısı birazcık da MCP'yi nasıl ayarladığınızla alakalı. Bunu eee girişim yapacak, yazılım yapacak, sahas geliştirecek tüm arkadaşlarımız için söyleyebilirim yapay zekayla. Ama sadece bu değil. Artık ajanslar da artık kendi yazılımlarını geliştirerek, AI ajansı konseptinde kendi ürününüzü geliştirerek ilerliyorsunuz. Ve MCP yine burada da en önemli konseptlerden bir tanesi. Adım adım anlatıyorum. MCP ilk çıktığında en yaygın yaklaşım şuydu. API'ın her endpintini bir araca işle. Böylece ajan API'ın tamamına erişiyordu. Bu çalıştı ama iki büyük sorun çıkardı. Birincisi API yüzlerce endpint var. MCP sunucusunda yüzlerce araç var demekti. Ve hepsi oturumun başında bağlam penceresine yükleniyordu. Yani sen daha ilk mesajını yazmadan pencere ve araç tanımlarıyla şişmiş olabiliyordu. MCP'nin kendi dokümanında bunu çiziyor. Tüm araçları baştan yüklenince 150.000 token civarı sadece tanımlar için gidiyor. İkincisi birbirine benzeyen çok endp varsa ajan kafasını karıştırıp yanlış aracı seçebiliyordu. Şu anda tablo şöyle. Araçlar seçim birleştirme hepsi sunucu tarafında. İstemci sadece çağırıyor. Bu sorunları çözmek için birçok MTP sunucusu katmanlı bir yaklaşıma geçti. Yüzlerce aracı listelemek yerine iki ü araç, biri mevcut endpin'ti aramak için, biri tek endpin'e tamamına bakmak için bir de isteği çalıştırmak için. Ar incele çalıştır. Bu kalıp çok benimsendi. Epify'in MCP sunucusu tam böyle. Search actors, fetch actor details. Sonra çalıştır. Birazdan göstereceğim bu arada ama asıl büyük değişim burada başlıyor. Geleneksel olarak bu kalıp sunucu tarafında yapılıyordu. Ama son dönemde istemciler özellikle popüler kodlama ajanları aynı kalıbı kendi taraflarında uyguluyorlar. Adı Progressive Tool Discovery ve artık MCP'nin resmi dokümanında istemciler için önerilen kalıp bu. Somutlaştıralım. Cloud COD'da tool search varsayılan olarak açık. Codexle MTP araçları için tool search'ü varsayılan yaptı. Yani sunucu yüzlerce aracı listelese bile ajan hepsini bağlama almıyor. İhtiyaç oldukça arıyor. Ve bir detay doküman işlemciye araç tanımları bağlamanın %1 ile 5'i geçince keşfe geç diyor. Bu eşiği sunucu bilemez. Bağlam penceresi kimdeyse o bilir. Yani ajan bilir. İlk değişim burada. Bu seçim artık istencide. İkincisi kod mod. Program araç çağrısı. Normalde ajan araçları tek tek çağırır. Her çağrının sonucu modele döner. Model bakar sonrakini çağırır. Cod modda ajan bir script yazıyor. Script araçları sandbox'ta zincirliyor ve araç nihai sonuç modele döndürülüyor araç tarafından. Ara sonuçlar bağlama hiç girmiyor. Bu artık antropik API'da var. model Python yazıyor. Araçları sandbox'a çağırıyor. MCP dokümanında işlemcilere bunu öneriyor. Ajanlar bu yöne doğru gidiyor. Keşif seçimi çözüyor. Kod modda birleştirmeyi çözüyor. İslemciler sunucuların çözmeye çalıştığı eee sorunları da devre alıyor. O zaman herhalde şunu diyebiliriz. Eski yönteme dönelim. Her eee endpid bir araç gevisini istemci halleder değil mi? Hayır. Pek öyle çalışmıyor. Evet. Ajan her endpoin'te temsil edilen araçlarla her şeyi yapabilir ama bu bir API ile konuşmanın her zaman en verimli yolu değildir. Her API'da sık yapılan işler var ve bunlar birden fazla çağrıyı zincirlemeyi gerektiriyor. Ajan bu zinciri her seferinde sıfırdan çözmek zorunda kalırsa bu çok fazla boşa giden token anlamına geliyor. Skyp key'ler eee tam olarak bu yüzden var. Ham end point'leri veriyorlar ama yaygın iş akışlarını tek bir operasyona paketliyorlar. Aynı fikri MCP sunucusundan çıkardığımız araçlara uygulayabiliriz. Somut bir örnek verelim yine Happify tarafından. Happify'in MCP sunucusunda şöyle bir araç var. R web browser. Yaptığı iş dışarıdan tek şey gibi gözüküyor. Web'den güncel bilgi getiriyor. Ama altında üç adım var. Google'da ara. Çıkan sayfaları gerçek bir tarayıcıyla aç. İçeriğini temizleyip Markot çevir. Bunların her biri ayrı ayrı yapılabilir. Ayrı bir arama actörü var. Ayrı bir sayfa tarayıcı var. Epify üçünü tek araca sarmış. Ajan bunu parçalarla yapsaydı ara üç sayfa aç, üçünü temiz, her turda ara, sonuç bağlama gitsin. Bunlar çok zorlayıcı ve bağlamı şişiren şeyler. Ajanları yavaşlatan, sizin daha çok para harcamanıza sebep olan şeyler, daha çok token tüketmenize sebep olan şeyler. MCP istemcilerine eee en token verimli yolu vermek istiyorsan bu tür operasyonları kurgulaman önemli. Sık kullanılan işler için böyle paketlemeler yapmanız lazım. Tabii API'ınız basitse birebir eşleme gayet yeterli olabilir ama karmaşıklığın olduğu yerde bu kısa yollar ajanı aynı hataları tekrar yapmaktan kurtarıyor. Genel resim şöyle en altta ham API platformun her ucu'da actör çalıştırmak sonucunu okumak ver setini çekmek hepsi ayrı uç. Üstünde ergonomik katman az önceki web browser gibi birden çok adımı tek biçime saran hazır işler. Epify'da bunlara actor deniyor ve en üstte MCP sunucusu. Bu actorları araç olarak her MCP işlemcisine sunuyor. Epify'inki açık kaynak link açıklamada. Burada birincisi aynı araçları farklı ajan çerçeveleri için sarmalayabiliyorsun. Epified, Opent, AI agent, SD, Lhain, Versal için başka bir tane var aslında. Versal AISD var. İşte Google ADK için entegrasyonlar var. MCP kullanmayıp kendi ajanını yazan biri aynı işlevi alabiliyor. İkincisi araçlar kategorilere ayrılmış. Epify'da sunucuya bağlanırken burada epify sponsor değil örnek olsun. Herkesin erişip bakabildiği bir yer olsun diye verdim. Sunucuya bağlanırken adresin sonuna tools yazıyorsun. Actors, runs, storage, task. Ajana sadece şunları ver diyorsun. Ben de kendi kolumumda şöyle öyle yaptım aslında ve bu işi kolaylaştırıyor. Büyük fikir şu. Sunucu hangi araçların mevcut olduğunu kontrol ediyor. Ham araçlar, iş akışları, kategoriler, sunucunun işi. İstemci yani ajanlarımız o araçları nasıl keşfedip nasıl çalıştıracağına kendi karar veriyor. Keşif, birleştirme, çalıştırma ajanın işi. Şimdi tabloya bakalım. Kayma burada. Epify'in MCP sunucusu açık kaynak. Link açıklama. Ne? MCP'de değişen taraf bu. MCP'ye doğru algılarsanız e araçlarınızı bu şekilde doğru kurarsınız. Dediğim gibi aşağıya bıraktım. Açık kaynak bu testleri yapın. Ondan öğrenip kendi aracınızı eee MTP ile geliştirin. İzlediğiniz için çok teşekkürler. Beğenip abone olursanız da birlikte büyüyoruz. Hem videolardan haberdar olursunuz hem de biz de daha çok video yaparız. Bu şekilde bazen teknik anlatıyoruz. Bazen bundan bu işten nasıl para kazanabileceğinizi, yapay zekanın işinizde eee hangi noktada olduğunu konuşuyoruz. Bazen de tamamen iş fikirleriyle gidiyoruz. İzlediğiniz için çok teşekkürler. Bir sonraki videoda görüşürüz. Yeah.",
+ "timed_blocks": [
+  {
+   "start": "00:00:01.040",
+   "end": "00:00:03.149",
+   "text": "MCP artık her yerde cloud Code, Codex,"
+  },
+  {
+   "start": "00:00:03.149",
+   "end": "00:00:03.159",
+   "text": "MCP artık her yerde cloud Code, Codex,"
+  },
+  {
+   "start": "00:00:03.159",
+   "end": "00:00:05.390",
+   "text": "MCP artık her yerde cloud Code, Codex, Csor hepsi MCP ile araçlara bağlanıyor"
+  },
+  {
+   "start": "00:00:05.390",
+   "end": "00:00:05.400",
+   "text": "Csor hepsi MCP ile araçlara bağlanıyor"
+  },
+  {
+   "start": "00:00:05.400",
+   "end": "00:00:07.670",
+   "text": "Csor hepsi MCP ile araçlara bağlanıyor ve bu yavaşlamayacak. Ama aynı anda"
+  },
+  {
+   "start": "00:00:07.670",
+   "end": "00:00:07.680",
+   "text": "ve bu yavaşlamayacak. Ama aynı anda"
+  },
+  {
+   "start": "00:00:07.680",
+   "end": "00:00:09.790",
+   "text": "ve bu yavaşlamayacak. Ama aynı anda başka bir şey daha oluyor. Ajanlar"
+  },
+  {
+   "start": "00:00:09.790",
+   "end": "00:00:09.800",
+   "text": "başka bir şey daha oluyor. Ajanlar"
+  },
+  {
+   "start": "00:00:09.800",
+   "end": "00:00:11.950",
+   "text": "başka bir şey daha oluyor. Ajanlar araçları yönetme şeklini de değiştiriyor"
+  },
+  {
+   "start": "00:00:11.950",
+   "end": "00:00:11.960",
+   "text": "araçları yönetme şeklini de değiştiriyor"
+  },
+  {
+   "start": "00:00:11.960",
+   "end": "00:00:13.990",
+   "text": "araçları yönetme şeklini de değiştiriyor ve eskiden sunucunun işi olan"
+  },
+  {
+   "start": "00:00:13.990",
+   "end": "00:00:14.000",
+   "text": "ve eskiden sunucunun işi olan"
+  },
+  {
+   "start": "00:00:14.000",
+   "end": "00:00:16.230",
+   "text": "ve eskiden sunucunun işi olan sorumlulukları devr alıyor. Eskiden çok"
+  },
+  {
+   "start": "00:00:16.230",
+   "end": "00:00:16.240",
+   "text": "sorumlulukları devr alıyor. Eskiden çok"
+  },
+  {
+   "start": "00:00:16.240",
+   "end": "00:00:17.990",
+   "text": "sorumlulukları devr alıyor. Eskiden çok daha farklıydı, şimdi çok daha farklı."
+  },
+  {
+   "start": "00:00:17.990",
+   "end": "00:00:18.000",
+   "text": "daha farklıydı, şimdi çok daha farklı."
+  },
+  {
+   "start": "00:00:18.000",
+   "end": "00:00:20.670",
+   "text": "daha farklıydı, şimdi çok daha farklı. Aracınızın başarısı birazcık da MCP'yi"
+  },
+  {
+   "start": "00:00:20.670",
+   "end": "00:00:20.680",
+   "text": "Aracınızın başarısı birazcık da MCP'yi"
+  },
+  {
+   "start": "00:00:20.680",
+   "end": "00:00:23.509",
+   "text": "Aracınızın başarısı birazcık da MCP'yi nasıl ayarladığınızla alakalı. Bunu eee"
+  },
+  {
+   "start": "00:00:23.509",
+   "end": "00:00:23.519",
+   "text": "nasıl ayarladığınızla alakalı. Bunu eee"
+  },
+  {
+   "start": "00:00:23.519",
+   "end": "00:00:25.750",
+   "text": "nasıl ayarladığınızla alakalı. Bunu eee girişim yapacak, yazılım yapacak, sahas"
+  },
+  {
+   "start": "00:00:25.750",
+   "end": "00:00:25.760",
+   "text": "girişim yapacak, yazılım yapacak, sahas"
+  },
+  {
+   "start": "00:00:25.760",
+   "end": "00:00:27.750",
+   "text": "girişim yapacak, yazılım yapacak, sahas geliştirecek tüm arkadaşlarımız için"
+  },
+  {
+   "start": "00:00:27.750",
+   "end": "00:00:27.760",
+   "text": "geliştirecek tüm arkadaşlarımız için"
+  },
+  {
+   "start": "00:00:27.760",
+   "end": "00:00:29.630",
+   "text": "geliştirecek tüm arkadaşlarımız için söyleyebilirim yapay zekayla. Ama sadece"
+  },
+  {
+   "start": "00:00:29.630",
+   "end": "00:00:29.640",
+   "text": "söyleyebilirim yapay zekayla. Ama sadece"
+  },
+  {
+   "start": "00:00:29.640",
+   "end": "00:00:31.990",
+   "text": "söyleyebilirim yapay zekayla. Ama sadece bu değil. Artık ajanslar da artık kendi"
+  },
+  {
+   "start": "00:00:31.990",
+   "end": "00:00:32.000",
+   "text": "bu değil. Artık ajanslar da artık kendi"
+  },
+  {
+   "start": "00:00:32.000",
+   "end": "00:00:33.990",
+   "text": "bu değil. Artık ajanslar da artık kendi yazılımlarını geliştirerek, AI ajansı"
+  },
+  {
+   "start": "00:00:33.990",
+   "end": "00:00:34.000",
+   "text": "yazılımlarını geliştirerek, AI ajansı"
+  },
+  {
+   "start": "00:00:34.000",
+   "end": "00:00:36.389",
+   "text": "yazılımlarını geliştirerek, AI ajansı konseptinde kendi ürününüzü geliştirerek"
+  },
+  {
+   "start": "00:00:36.389",
+   "end": "00:00:36.399",
+   "text": "konseptinde kendi ürününüzü geliştirerek"
+  },
+  {
+   "start": "00:00:36.399",
+   "end": "00:00:38.630",
+   "text": "konseptinde kendi ürününüzü geliştirerek ilerliyorsunuz. Ve MCP yine burada da en"
+  },
+  {
+   "start": "00:00:38.630",
+   "end": "00:00:38.640",
+   "text": "ilerliyorsunuz. Ve MCP yine burada da en"
+  },
+  {
+   "start": "00:00:38.640",
+   "end": "00:00:41.190",
+   "text": "ilerliyorsunuz. Ve MCP yine burada da en önemli konseptlerden bir tanesi. Adım"
+  },
+  {
+   "start": "00:00:41.190",
+   "end": "00:00:41.200",
+   "text": "önemli konseptlerden bir tanesi. Adım"
+  },
+  {
+   "start": "00:00:41.200",
+   "end": "00:00:43.830",
+   "text": "önemli konseptlerden bir tanesi. Adım adım anlatıyorum. MCP ilk çıktığında en"
+  },
+  {
+   "start": "00:00:43.830",
+   "end": "00:00:43.840",
+   "text": "adım anlatıyorum. MCP ilk çıktığında en"
+  },
+  {
+   "start": "00:00:43.840",
+   "end": "00:00:46.590",
+   "text": "adım anlatıyorum. MCP ilk çıktığında en yaygın yaklaşım şuydu. API'ın her"
+  },
+  {
+   "start": "00:00:46.590",
+   "end": "00:00:46.600",
+   "text": "yaygın yaklaşım şuydu. API'ın her"
+  },
+  {
+   "start": "00:00:46.600",
+   "end": "00:00:49.830",
+   "text": "yaygın yaklaşım şuydu. API'ın her endpintini bir araca işle. Böylece ajan"
+  },
+  {
+   "start": "00:00:49.830",
+   "end": "00:00:49.840",
+   "text": "endpintini bir araca işle. Böylece ajan"
+  },
+  {
+   "start": "00:00:49.840",
+   "end": "00:00:52.029",
+   "text": "endpintini bir araca işle. Böylece ajan API'ın tamamına erişiyordu. Bu çalıştı"
+  },
+  {
+   "start": "00:00:52.029",
+   "end": "00:00:52.039",
+   "text": "API'ın tamamına erişiyordu. Bu çalıştı"
+  },
+  {
+   "start": "00:00:52.039",
+   "end": "00:00:54.189",
+   "text": "API'ın tamamına erişiyordu. Bu çalıştı ama iki büyük sorun çıkardı. Birincisi"
+  },
+  {
+   "start": "00:00:54.189",
+   "end": "00:00:54.199",
+   "text": "ama iki büyük sorun çıkardı. Birincisi"
+  },
+  {
+   "start": "00:00:54.199",
+   "end": "00:00:56.709",
+   "text": "ama iki büyük sorun çıkardı. Birincisi API yüzlerce endpint var. MCP"
+  },
+  {
+   "start": "00:00:56.709",
+   "end": "00:00:56.719",
+   "text": "API yüzlerce endpint var. MCP"
+  },
+  {
+   "start": "00:00:56.719",
+   "end": "00:00:59.029",
+   "text": "API yüzlerce endpint var. MCP sunucusunda yüzlerce araç var demekti."
+  },
+  {
+   "start": "00:00:59.029",
+   "end": "00:00:59.039",
+   "text": "sunucusunda yüzlerce araç var demekti."
+  },
+  {
+   "start": "00:00:59.039",
+   "end": "00:01:00.990",
+   "text": "sunucusunda yüzlerce araç var demekti. Ve hepsi oturumun başında bağlam"
+  },
+  {
+   "start": "00:01:00.990",
+   "end": "00:01:01.000",
+   "text": "Ve hepsi oturumun başında bağlam"
+  },
+  {
+   "start": "00:01:01.000",
+   "end": "00:01:03.869",
+   "text": "Ve hepsi oturumun başında bağlam penceresine yükleniyordu. Yani sen daha"
+  },
+  {
+   "start": "00:01:03.869",
+   "end": "00:01:03.879",
+   "text": "penceresine yükleniyordu. Yani sen daha"
+  },
+  {
+   "start": "00:01:03.879",
+   "end": "00:01:06.070",
+   "text": "penceresine yükleniyordu. Yani sen daha ilk mesajını yazmadan pencere ve araç"
+  },
+  {
+   "start": "00:01:06.070",
+   "end": "00:01:06.080",
+   "text": "ilk mesajını yazmadan pencere ve araç"
+  },
+  {
+   "start": "00:01:06.080",
+   "end": "00:01:07.910",
+   "text": "ilk mesajını yazmadan pencere ve araç tanımlarıyla şişmiş olabiliyordu."
+  },
+  {
+   "start": "00:01:07.910",
+   "end": "00:01:07.920",
+   "text": "tanımlarıyla şişmiş olabiliyordu."
+  },
+  {
+   "start": "00:01:07.920",
+   "end": "00:01:09.830",
+   "text": "tanımlarıyla şişmiş olabiliyordu. MCP'nin kendi dokümanında bunu çiziyor."
+  },
+  {
+   "start": "00:01:09.830",
+   "end": "00:01:09.840",
+   "text": "MCP'nin kendi dokümanında bunu çiziyor."
+  },
+  {
+   "start": "00:01:09.840",
+   "end": "00:01:12.310",
+   "text": "MCP'nin kendi dokümanında bunu çiziyor. Tüm araçları baştan yüklenince 150.000"
+  },
+  {
+   "start": "00:01:12.310",
+   "end": "00:01:12.320",
+   "text": "Tüm araçları baştan yüklenince 150.000"
+  },
+  {
+   "start": "00:01:12.320",
+   "end": "00:01:14.670",
+   "text": "Tüm araçları baştan yüklenince 150.000 token civarı sadece tanımlar için"
+  },
+  {
+   "start": "00:01:14.670",
+   "end": "00:01:14.680",
+   "text": "token civarı sadece tanımlar için"
+  },
+  {
+   "start": "00:01:14.680",
+   "end": "00:01:17.870",
+   "text": "token civarı sadece tanımlar için gidiyor. İkincisi birbirine benzeyen çok"
+  },
+  {
+   "start": "00:01:17.870",
+   "end": "00:01:17.880",
+   "text": "gidiyor. İkincisi birbirine benzeyen çok"
+  },
+  {
+   "start": "00:01:17.880",
+   "end": "00:01:20.870",
+   "text": "gidiyor. İkincisi birbirine benzeyen çok endp varsa ajan kafasını karıştırıp"
+  },
+  {
+   "start": "00:01:20.870",
+   "end": "00:01:20.880",
+   "text": "endp varsa ajan kafasını karıştırıp"
+  },
+  {
+   "start": "00:01:20.880",
+   "end": "00:01:23.030",
+   "text": "endp varsa ajan kafasını karıştırıp yanlış aracı seçebiliyordu. Şu anda"
+  },
+  {
+   "start": "00:01:23.030",
+   "end": "00:01:23.040",
+   "text": "yanlış aracı seçebiliyordu. Şu anda"
+  },
+  {
+   "start": "00:01:23.040",
+   "end": "00:01:26.590",
+   "text": "yanlış aracı seçebiliyordu. Şu anda tablo şöyle. Araçlar seçim birleştirme"
+  },
+  {
+   "start": "00:01:26.590",
+   "end": "00:01:26.600",
+   "text": "tablo şöyle. Araçlar seçim birleştirme"
+  },
+  {
+   "start": "00:01:26.600",
+   "end": "00:01:29.469",
+   "text": "tablo şöyle. Araçlar seçim birleştirme hepsi sunucu tarafında. İstemci sadece"
+  },
+  {
+   "start": "00:01:29.469",
+   "end": "00:01:29.479",
+   "text": "hepsi sunucu tarafında. İstemci sadece"
+  },
+  {
+   "start": "00:01:29.479",
+   "end": "00:01:31.670",
+   "text": "hepsi sunucu tarafında. İstemci sadece çağırıyor. Bu sorunları çözmek için"
+  },
+  {
+   "start": "00:01:31.670",
+   "end": "00:01:31.680",
+   "text": "çağırıyor. Bu sorunları çözmek için"
+  },
+  {
+   "start": "00:01:31.680",
+   "end": "00:01:34.270",
+   "text": "çağırıyor. Bu sorunları çözmek için birçok MTP sunucusu katmanlı bir"
+  },
+  {
+   "start": "00:01:34.270",
+   "end": "00:01:34.280",
+   "text": "birçok MTP sunucusu katmanlı bir"
+  },
+  {
+   "start": "00:01:34.280",
+   "end": "00:01:37.429",
+   "text": "birçok MTP sunucusu katmanlı bir yaklaşıma geçti. Yüzlerce aracı"
+  },
+  {
+   "start": "00:01:37.429",
+   "end": "00:01:37.439",
+   "text": "yaklaşıma geçti. Yüzlerce aracı"
+  },
+  {
+   "start": "00:01:37.439",
+   "end": "00:01:39.749",
+   "text": "yaklaşıma geçti. Yüzlerce aracı listelemek yerine iki ü araç, biri"
+  },
+  {
+   "start": "00:01:39.749",
+   "end": "00:01:39.759",
+   "text": "listelemek yerine iki ü araç, biri"
+  },
+  {
+   "start": "00:01:39.759",
+   "end": "00:01:41.830",
+   "text": "listelemek yerine iki ü araç, biri mevcut endpin'ti aramak için, biri tek"
+  },
+  {
+   "start": "00:01:41.830",
+   "end": "00:01:41.840",
+   "text": "mevcut endpin'ti aramak için, biri tek"
+  },
+  {
+   "start": "00:01:41.840",
+   "end": "00:01:44.910",
+   "text": "mevcut endpin'ti aramak için, biri tek endpin'e tamamına bakmak için bir de"
+  },
+  {
+   "start": "00:01:44.910",
+   "end": "00:01:44.920",
+   "text": "endpin'e tamamına bakmak için bir de"
+  },
+  {
+   "start": "00:01:44.920",
+   "end": "00:01:46.789",
+   "text": "endpin'e tamamına bakmak için bir de isteği çalıştırmak için. Ar incele"
+  },
+  {
+   "start": "00:01:46.789",
+   "end": "00:01:46.799",
+   "text": "isteği çalıştırmak için. Ar incele"
+  },
+  {
+   "start": "00:01:46.799",
+   "end": "00:01:48.990",
+   "text": "isteği çalıştırmak için. Ar incele çalıştır. Bu kalıp çok benimsendi."
+  },
+  {
+   "start": "00:01:48.990",
+   "end": "00:01:49.000",
+   "text": "çalıştır. Bu kalıp çok benimsendi."
+  },
+  {
+   "start": "00:01:49.000",
+   "end": "00:01:52.270",
+   "text": "çalıştır. Bu kalıp çok benimsendi. Epify'in MCP sunucusu tam böyle. Search"
+  },
+  {
+   "start": "00:01:52.270",
+   "end": "00:01:52.280",
+   "text": "Epify'in MCP sunucusu tam böyle. Search"
+  },
+  {
+   "start": "00:01:52.280",
+   "end": "00:01:55.030",
+   "text": "Epify'in MCP sunucusu tam böyle. Search actors, fetch actor details. Sonra"
+  },
+  {
+   "start": "00:01:55.030",
+   "end": "00:01:55.040",
+   "text": "actors, fetch actor details. Sonra"
+  },
+  {
+   "start": "00:01:55.040",
+   "end": "00:01:57.109",
+   "text": "actors, fetch actor details. Sonra çalıştır. Birazdan göstereceğim bu arada"
+  },
+  {
+   "start": "00:01:57.109",
+   "end": "00:01:57.119",
+   "text": "çalıştır. Birazdan göstereceğim bu arada"
+  },
+  {
+   "start": "00:01:57.119",
+   "end": "00:01:59.510",
+   "text": "çalıştır. Birazdan göstereceğim bu arada ama asıl büyük değişim burada başlıyor."
+  },
+  {
+   "start": "00:01:59.510",
+   "end": "00:01:59.520",
+   "text": "ama asıl büyük değişim burada başlıyor."
+  },
+  {
+   "start": "00:01:59.520",
+   "end": "00:02:01.749",
+   "text": "ama asıl büyük değişim burada başlıyor. Geleneksel olarak bu kalıp sunucu"
+  },
+  {
+   "start": "00:02:01.749",
+   "end": "00:02:01.759",
+   "text": "Geleneksel olarak bu kalıp sunucu"
+  },
+  {
+   "start": "00:02:01.759",
+   "end": "00:02:03.590",
+   "text": "Geleneksel olarak bu kalıp sunucu tarafında yapılıyordu. Ama son dönemde"
+  },
+  {
+   "start": "00:02:03.590",
+   "end": "00:02:03.600",
+   "text": "tarafında yapılıyordu. Ama son dönemde"
+  },
+  {
+   "start": "00:02:03.600",
+   "end": "00:02:05.429",
+   "text": "tarafında yapılıyordu. Ama son dönemde istemciler özellikle popüler kodlama"
+  },
+  {
+   "start": "00:02:05.429",
+   "end": "00:02:05.439",
+   "text": "istemciler özellikle popüler kodlama"
+  },
+  {
+   "start": "00:02:05.439",
+   "end": "00:02:08.270",
+   "text": "istemciler özellikle popüler kodlama ajanları aynı kalıbı kendi taraflarında"
+  },
+  {
+   "start": "00:02:08.270",
+   "end": "00:02:08.280",
+   "text": "ajanları aynı kalıbı kendi taraflarında"
+  },
+  {
+   "start": "00:02:08.280",
+   "end": "00:02:11.350",
+   "text": "ajanları aynı kalıbı kendi taraflarında uyguluyorlar. Adı Progressive Tool"
+  },
+  {
+   "start": "00:02:11.350",
+   "end": "00:02:11.360",
+   "text": "uyguluyorlar. Adı Progressive Tool"
+  },
+  {
+   "start": "00:02:11.360",
+   "end": "00:02:13.589",
+   "text": "uyguluyorlar. Adı Progressive Tool Discovery ve artık MCP'nin resmi"
+  },
+  {
+   "start": "00:02:13.589",
+   "end": "00:02:13.599",
+   "text": "Discovery ve artık MCP'nin resmi"
+  },
+  {
+   "start": "00:02:13.599",
+   "end": "00:02:16.070",
+   "text": "Discovery ve artık MCP'nin resmi dokümanında istemciler için önerilen"
+  },
+  {
+   "start": "00:02:16.070",
+   "end": "00:02:16.080",
+   "text": "dokümanında istemciler için önerilen"
+  },
+  {
+   "start": "00:02:16.080",
+   "end": "00:02:19.630",
+   "text": "dokümanında istemciler için önerilen kalıp bu. Somutlaştıralım. Cloud COD'da"
+  },
+  {
+   "start": "00:02:19.630",
+   "end": "00:02:19.640",
+   "text": "kalıp bu. Somutlaştıralım. Cloud COD'da"
+  },
+  {
+   "start": "00:02:19.640",
+   "end": "00:02:22.150",
+   "text": "kalıp bu. Somutlaştıralım. Cloud COD'da tool search varsayılan olarak açık."
+  },
+  {
+   "start": "00:02:22.150",
+   "end": "00:02:22.160",
+   "text": "tool search varsayılan olarak açık."
+  },
+  {
+   "start": "00:02:22.160",
+   "end": "00:02:24.830",
+   "text": "tool search varsayılan olarak açık. Codexle MTP araçları için tool search'ü"
+  },
+  {
+   "start": "00:02:24.830",
+   "end": "00:02:24.840",
+   "text": "Codexle MTP araçları için tool search'ü"
+  },
+  {
+   "start": "00:02:24.840",
+   "end": "00:02:27.350",
+   "text": "Codexle MTP araçları için tool search'ü varsayılan yaptı. Yani sunucu yüzlerce"
+  },
+  {
+   "start": "00:02:27.350",
+   "end": "00:02:27.360",
+   "text": "varsayılan yaptı. Yani sunucu yüzlerce"
+  },
+  {
+   "start": "00:02:27.360",
+   "end": "00:02:29.550",
+   "text": "varsayılan yaptı. Yani sunucu yüzlerce aracı listelese bile ajan hepsini"
+  },
+  {
+   "start": "00:02:29.550",
+   "end": "00:02:29.560",
+   "text": "aracı listelese bile ajan hepsini"
+  },
+  {
+   "start": "00:02:29.560",
+   "end": "00:02:31.990",
+   "text": "aracı listelese bile ajan hepsini bağlama almıyor. İhtiyaç oldukça arıyor."
+  },
+  {
+   "start": "00:02:31.990",
+   "end": "00:02:32.000",
+   "text": "bağlama almıyor. İhtiyaç oldukça arıyor."
+  },
+  {
+   "start": "00:02:32.000",
+   "end": "00:02:34.070",
+   "text": "bağlama almıyor. İhtiyaç oldukça arıyor. Ve bir detay doküman işlemciye araç"
+  },
+  {
+   "start": "00:02:34.070",
+   "end": "00:02:34.080",
+   "text": "Ve bir detay doküman işlemciye araç"
+  },
+  {
+   "start": "00:02:34.080",
+   "end": "00:02:37.350",
+   "text": "Ve bir detay doküman işlemciye araç tanımları bağlamanın %1 ile 5'i geçince"
+  },
+  {
+   "start": "00:02:37.350",
+   "end": "00:02:37.360",
+   "text": "tanımları bağlamanın %1 ile 5'i geçince"
+  },
+  {
+   "start": "00:02:37.360",
+   "end": "00:02:39.470",
+   "text": "tanımları bağlamanın %1 ile 5'i geçince keşfe geç diyor. Bu eşiği sunucu"
+  },
+  {
+   "start": "00:02:39.470",
+   "end": "00:02:39.480",
+   "text": "keşfe geç diyor. Bu eşiği sunucu"
+  },
+  {
+   "start": "00:02:39.480",
+   "end": "00:02:42.229",
+   "text": "keşfe geç diyor. Bu eşiği sunucu bilemez. Bağlam penceresi kimdeyse o"
+  },
+  {
+   "start": "00:02:42.229",
+   "end": "00:02:42.239",
+   "text": "bilemez. Bağlam penceresi kimdeyse o"
+  },
+  {
+   "start": "00:02:42.239",
+   "end": "00:02:44.229",
+   "text": "bilemez. Bağlam penceresi kimdeyse o bilir. Yani ajan bilir. İlk değişim"
+  },
+  {
+   "start": "00:02:44.229",
+   "end": "00:02:44.239",
+   "text": "bilir. Yani ajan bilir. İlk değişim"
+  },
+  {
+   "start": "00:02:44.239",
+   "end": "00:02:46.350",
+   "text": "bilir. Yani ajan bilir. İlk değişim burada. Bu seçim artık istencide."
+  },
+  {
+   "start": "00:02:46.350",
+   "end": "00:02:46.360",
+   "text": "burada. Bu seçim artık istencide."
+  },
+  {
+   "start": "00:02:46.360",
+   "end": "00:02:49.990",
+   "text": "burada. Bu seçim artık istencide. İkincisi kod mod. Program araç çağrısı."
+  },
+  {
+   "start": "00:02:49.990",
+   "end": "00:02:50.000",
+   "text": "İkincisi kod mod. Program araç çağrısı."
+  },
+  {
+   "start": "00:02:50.000",
+   "end": "00:02:52.350",
+   "text": "İkincisi kod mod. Program araç çağrısı. Normalde ajan araçları tek tek çağırır."
+  },
+  {
+   "start": "00:02:52.350",
+   "end": "00:02:52.360",
+   "text": "Normalde ajan araçları tek tek çağırır."
+  },
+  {
+   "start": "00:02:52.360",
+   "end": "00:02:54.830",
+   "text": "Normalde ajan araçları tek tek çağırır. Her çağrının sonucu modele döner. Model"
+  },
+  {
+   "start": "00:02:54.830",
+   "end": "00:02:54.840",
+   "text": "Her çağrının sonucu modele döner. Model"
+  },
+  {
+   "start": "00:02:54.840",
+   "end": "00:02:57.350",
+   "text": "Her çağrının sonucu modele döner. Model bakar sonrakini çağırır. Cod modda ajan"
+  },
+  {
+   "start": "00:02:57.350",
+   "end": "00:02:57.360",
+   "text": "bakar sonrakini çağırır. Cod modda ajan"
+  },
+  {
+   "start": "00:02:57.360",
+   "end": "00:02:59.110",
+   "text": "bakar sonrakini çağırır. Cod modda ajan bir script yazıyor. Script araçları"
+  },
+  {
+   "start": "00:02:59.110",
+   "end": "00:02:59.120",
+   "text": "bir script yazıyor. Script araçları"
+  },
+  {
+   "start": "00:02:59.120",
+   "end": "00:03:02.149",
+   "text": "bir script yazıyor. Script araçları sandbox'ta zincirliyor ve araç nihai"
+  },
+  {
+   "start": "00:03:02.149",
+   "end": "00:03:02.159",
+   "text": "sandbox'ta zincirliyor ve araç nihai"
+  },
+  {
+   "start": "00:03:02.159",
+   "end": "00:03:04.149",
+   "text": "sandbox'ta zincirliyor ve araç nihai sonuç modele döndürülüyor araç"
+  },
+  {
+   "start": "00:03:04.149",
+   "end": "00:03:04.159",
+   "text": "sonuç modele döndürülüyor araç"
+  },
+  {
+   "start": "00:03:04.159",
+   "end": "00:03:06.350",
+   "text": "sonuç modele döndürülüyor araç tarafından. Ara sonuçlar bağlama hiç"
+  },
+  {
+   "start": "00:03:06.350",
+   "end": "00:03:06.360",
+   "text": "tarafından. Ara sonuçlar bağlama hiç"
+  },
+  {
+   "start": "00:03:06.360",
+   "end": "00:03:09.070",
+   "text": "tarafından. Ara sonuçlar bağlama hiç girmiyor. Bu artık antropik API'da var."
+  },
+  {
+   "start": "00:03:09.070",
+   "end": "00:03:09.080",
+   "text": "girmiyor. Bu artık antropik API'da var."
+  },
+  {
+   "start": "00:03:09.080",
+   "end": "00:03:11.750",
+   "text": "girmiyor. Bu artık antropik API'da var. model Python yazıyor. Araçları sandbox'a"
+  },
+  {
+   "start": "00:03:11.750",
+   "end": "00:03:11.760",
+   "text": "model Python yazıyor. Araçları sandbox'a"
+  },
+  {
+   "start": "00:03:11.760",
+   "end": "00:03:14.110",
+   "text": "model Python yazıyor. Araçları sandbox'a çağırıyor. MCP dokümanında işlemcilere"
+  },
+  {
+   "start": "00:03:14.110",
+   "end": "00:03:14.120",
+   "text": "çağırıyor. MCP dokümanında işlemcilere"
+  },
+  {
+   "start": "00:03:14.120",
+   "end": "00:03:16.229",
+   "text": "çağırıyor. MCP dokümanında işlemcilere bunu öneriyor. Ajanlar bu yöne doğru"
+  },
+  {
+   "start": "00:03:16.229",
+   "end": "00:03:16.239",
+   "text": "bunu öneriyor. Ajanlar bu yöne doğru"
+  },
+  {
+   "start": "00:03:16.239",
+   "end": "00:03:19.030",
+   "text": "bunu öneriyor. Ajanlar bu yöne doğru gidiyor. Keşif seçimi çözüyor. Kod modda"
+  },
+  {
+   "start": "00:03:19.030",
+   "end": "00:03:19.040",
+   "text": "gidiyor. Keşif seçimi çözüyor. Kod modda"
+  },
+  {
+   "start": "00:03:19.040",
+   "end": "00:03:20.990",
+   "text": "gidiyor. Keşif seçimi çözüyor. Kod modda birleştirmeyi çözüyor. İslemciler"
+  },
+  {
+   "start": "00:03:20.990",
+   "end": "00:03:21.000",
+   "text": "birleştirmeyi çözüyor. İslemciler"
+  },
+  {
+   "start": "00:03:21.000",
+   "end": "00:03:23.430",
+   "text": "birleştirmeyi çözüyor. İslemciler sunucuların çözmeye çalıştığı eee"
+  },
+  {
+   "start": "00:03:23.430",
+   "end": "00:03:23.440",
+   "text": "sunucuların çözmeye çalıştığı eee"
+  },
+  {
+   "start": "00:03:23.440",
+   "end": "00:03:25.550",
+   "text": "sunucuların çözmeye çalıştığı eee sorunları da devre alıyor. O zaman"
+  },
+  {
+   "start": "00:03:25.550",
+   "end": "00:03:25.560",
+   "text": "sorunları da devre alıyor. O zaman"
+  },
+  {
+   "start": "00:03:25.560",
+   "end": "00:03:27.509",
+   "text": "sorunları da devre alıyor. O zaman herhalde şunu diyebiliriz. Eski yönteme"
+  },
+  {
+   "start": "00:03:27.509",
+   "end": "00:03:27.519",
+   "text": "herhalde şunu diyebiliriz. Eski yönteme"
+  },
+  {
+   "start": "00:03:27.519",
+   "end": "00:03:30.350",
+   "text": "herhalde şunu diyebiliriz. Eski yönteme dönelim. Her eee endpid bir araç"
+  },
+  {
+   "start": "00:03:30.350",
+   "end": "00:03:30.360",
+   "text": "dönelim. Her eee endpid bir araç"
+  },
+  {
+   "start": "00:03:30.360",
+   "end": "00:03:32.149",
+   "text": "dönelim. Her eee endpid bir araç gevisini istemci halleder değil mi?"
+  },
+  {
+   "start": "00:03:32.149",
+   "end": "00:03:32.159",
+   "text": "gevisini istemci halleder değil mi?"
+  },
+  {
+   "start": "00:03:32.159",
+   "end": "00:03:35.390",
+   "text": "gevisini istemci halleder değil mi? Hayır. Pek öyle çalışmıyor. Evet. Ajan"
+  },
+  {
+   "start": "00:03:35.390",
+   "end": "00:03:35.400",
+   "text": "Hayır. Pek öyle çalışmıyor. Evet. Ajan"
+  },
+  {
+   "start": "00:03:35.400",
+   "end": "00:03:38.110",
+   "text": "Hayır. Pek öyle çalışmıyor. Evet. Ajan her endpoin'te temsil edilen araçlarla"
+  },
+  {
+   "start": "00:03:38.110",
+   "end": "00:03:38.120",
+   "text": "her endpoin'te temsil edilen araçlarla"
+  },
+  {
+   "start": "00:03:38.120",
+   "end": "00:03:40.350",
+   "text": "her endpoin'te temsil edilen araçlarla her şeyi yapabilir ama bu bir API ile"
+  },
+  {
+   "start": "00:03:40.350",
+   "end": "00:03:40.360",
+   "text": "her şeyi yapabilir ama bu bir API ile"
+  },
+  {
+   "start": "00:03:40.360",
+   "end": "00:03:42.190",
+   "text": "her şeyi yapabilir ama bu bir API ile konuşmanın her zaman en verimli yolu"
+  },
+  {
+   "start": "00:03:42.190",
+   "end": "00:03:42.200",
+   "text": "konuşmanın her zaman en verimli yolu"
+  },
+  {
+   "start": "00:03:42.200",
+   "end": "00:03:44.630",
+   "text": "konuşmanın her zaman en verimli yolu değildir. Her API'da sık yapılan işler"
+  },
+  {
+   "start": "00:03:44.630",
+   "end": "00:03:44.640",
+   "text": "değildir. Her API'da sık yapılan işler"
+  },
+  {
+   "start": "00:03:44.640",
+   "end": "00:03:46.789",
+   "text": "değildir. Her API'da sık yapılan işler var ve bunlar birden fazla çağrıyı"
+  },
+  {
+   "start": "00:03:46.789",
+   "end": "00:03:46.799",
+   "text": "var ve bunlar birden fazla çağrıyı"
+  },
+  {
+   "start": "00:03:46.799",
+   "end": "00:03:48.910",
+   "text": "var ve bunlar birden fazla çağrıyı zincirlemeyi gerektiriyor. Ajan bu"
+  },
+  {
+   "start": "00:03:48.910",
+   "end": "00:03:48.920",
+   "text": "zincirlemeyi gerektiriyor. Ajan bu"
+  },
+  {
+   "start": "00:03:48.920",
+   "end": "00:03:51.309",
+   "text": "zincirlemeyi gerektiriyor. Ajan bu zinciri her seferinde sıfırdan çözmek"
+  },
+  {
+   "start": "00:03:51.309",
+   "end": "00:03:51.319",
+   "text": "zinciri her seferinde sıfırdan çözmek"
+  },
+  {
+   "start": "00:03:51.319",
+   "end": "00:03:53.229",
+   "text": "zinciri her seferinde sıfırdan çözmek zorunda kalırsa bu çok fazla boşa giden"
+  },
+  {
+   "start": "00:03:53.229",
+   "end": "00:03:53.239",
+   "text": "zorunda kalırsa bu çok fazla boşa giden"
+  },
+  {
+   "start": "00:03:53.239",
+   "end": "00:03:56.069",
+   "text": "zorunda kalırsa bu çok fazla boşa giden token anlamına geliyor. Skyp key'ler eee"
+  },
+  {
+   "start": "00:03:56.069",
+   "end": "00:03:56.079",
+   "text": "token anlamına geliyor. Skyp key'ler eee"
+  },
+  {
+   "start": "00:03:56.079",
+   "end": "00:03:57.949",
+   "text": "token anlamına geliyor. Skyp key'ler eee tam olarak bu yüzden var. Ham end"
+  },
+  {
+   "start": "00:03:57.949",
+   "end": "00:03:57.959",
+   "text": "tam olarak bu yüzden var. Ham end"
+  },
+  {
+   "start": "00:03:57.959",
+   "end": "00:03:59.789",
+   "text": "tam olarak bu yüzden var. Ham end point'leri veriyorlar ama yaygın iş"
+  },
+  {
+   "start": "00:03:59.789",
+   "end": "00:03:59.799",
+   "text": "point'leri veriyorlar ama yaygın iş"
+  },
+  {
+   "start": "00:03:59.799",
+   "end": "00:04:01.710",
+   "text": "point'leri veriyorlar ama yaygın iş akışlarını tek bir operasyona"
+  },
+  {
+   "start": "00:04:01.710",
+   "end": "00:04:01.720",
+   "text": "akışlarını tek bir operasyona"
+  },
+  {
+   "start": "00:04:01.720",
+   "end": "00:04:03.670",
+   "text": "akışlarını tek bir operasyona paketliyorlar. Aynı fikri MCP"
+  },
+  {
+   "start": "00:04:03.670",
+   "end": "00:04:03.680",
+   "text": "paketliyorlar. Aynı fikri MCP"
+  },
+  {
+   "start": "00:04:03.680",
+   "end": "00:04:05.390",
+   "text": "paketliyorlar. Aynı fikri MCP sunucusundan çıkardığımız araçlara"
+  },
+  {
+   "start": "00:04:05.390",
+   "end": "00:04:05.400",
+   "text": "sunucusundan çıkardığımız araçlara"
+  },
+  {
+   "start": "00:04:05.400",
+   "end": "00:04:07.470",
+   "text": "sunucusundan çıkardığımız araçlara uygulayabiliriz. Somut bir örnek verelim"
+  },
+  {
+   "start": "00:04:07.470",
+   "end": "00:04:07.480",
+   "text": "uygulayabiliriz. Somut bir örnek verelim"
+  },
+  {
+   "start": "00:04:07.480",
+   "end": "00:04:09.470",
+   "text": "uygulayabiliriz. Somut bir örnek verelim yine Happify tarafından. Happify'in MCP"
+  },
+  {
+   "start": "00:04:09.470",
+   "end": "00:04:09.480",
+   "text": "yine Happify tarafından. Happify'in MCP"
+  },
+  {
+   "start": "00:04:09.480",
+   "end": "00:04:12.350",
+   "text": "yine Happify tarafından. Happify'in MCP sunucusunda şöyle bir araç var. R web"
+  },
+  {
+   "start": "00:04:12.350",
+   "end": "00:04:12.360",
+   "text": "sunucusunda şöyle bir araç var. R web"
+  },
+  {
+   "start": "00:04:12.360",
+   "end": "00:04:14.750",
+   "text": "sunucusunda şöyle bir araç var. R web browser. Yaptığı iş dışarıdan tek şey"
+  },
+  {
+   "start": "00:04:14.750",
+   "end": "00:04:14.760",
+   "text": "browser. Yaptığı iş dışarıdan tek şey"
+  },
+  {
+   "start": "00:04:14.760",
+   "end": "00:04:16.430",
+   "text": "browser. Yaptığı iş dışarıdan tek şey gibi gözüküyor. Web'den güncel bilgi"
+  },
+  {
+   "start": "00:04:16.430",
+   "end": "00:04:16.440",
+   "text": "gibi gözüküyor. Web'den güncel bilgi"
+  },
+  {
+   "start": "00:04:16.440",
+   "end": "00:04:18.430",
+   "text": "gibi gözüküyor. Web'den güncel bilgi getiriyor. Ama altında üç adım var."
+  },
+  {
+   "start": "00:04:18.430",
+   "end": "00:04:18.440",
+   "text": "getiriyor. Ama altında üç adım var."
+  },
+  {
+   "start": "00:04:18.440",
+   "end": "00:04:20.670",
+   "text": "getiriyor. Ama altında üç adım var. Google'da ara. Çıkan sayfaları gerçek"
+  },
+  {
+   "start": "00:04:20.670",
+   "end": "00:04:20.680",
+   "text": "Google'da ara. Çıkan sayfaları gerçek"
+  },
+  {
+   "start": "00:04:20.680",
+   "end": "00:04:23.030",
+   "text": "Google'da ara. Çıkan sayfaları gerçek bir tarayıcıyla aç. İçeriğini temizleyip"
+  },
+  {
+   "start": "00:04:23.030",
+   "end": "00:04:23.040",
+   "text": "bir tarayıcıyla aç. İçeriğini temizleyip"
+  },
+  {
+   "start": "00:04:23.040",
+   "end": "00:04:25.749",
+   "text": "bir tarayıcıyla aç. İçeriğini temizleyip Markot çevir. Bunların her biri ayrı"
+  },
+  {
+   "start": "00:04:25.749",
+   "end": "00:04:25.759",
+   "text": "Markot çevir. Bunların her biri ayrı"
+  },
+  {
+   "start": "00:04:25.759",
+   "end": "00:04:28.629",
+   "text": "Markot çevir. Bunların her biri ayrı ayrı yapılabilir. Ayrı bir arama actörü"
+  },
+  {
+   "start": "00:04:28.629",
+   "end": "00:04:28.639",
+   "text": "ayrı yapılabilir. Ayrı bir arama actörü"
+  },
+  {
+   "start": "00:04:28.639",
+   "end": "00:04:30.990",
+   "text": "ayrı yapılabilir. Ayrı bir arama actörü var. Ayrı bir sayfa tarayıcı var. Epify"
+  },
+  {
+   "start": "00:04:30.990",
+   "end": "00:04:31.000",
+   "text": "var. Ayrı bir sayfa tarayıcı var. Epify"
+  },
+  {
+   "start": "00:04:31.000",
+   "end": "00:04:33.230",
+   "text": "var. Ayrı bir sayfa tarayıcı var. Epify üçünü tek araca sarmış. Ajan bunu"
+  },
+  {
+   "start": "00:04:33.230",
+   "end": "00:04:33.240",
+   "text": "üçünü tek araca sarmış. Ajan bunu"
+  },
+  {
+   "start": "00:04:33.240",
+   "end": "00:04:35.990",
+   "text": "üçünü tek araca sarmış. Ajan bunu parçalarla yapsaydı ara üç sayfa aç,"
+  },
+  {
+   "start": "00:04:35.990",
+   "end": "00:04:36.000",
+   "text": "parçalarla yapsaydı ara üç sayfa aç,"
+  },
+  {
+   "start": "00:04:36.000",
+   "end": "00:04:37.990",
+   "text": "parçalarla yapsaydı ara üç sayfa aç, üçünü temiz, her turda ara, sonuç"
+  },
+  {
+   "start": "00:04:37.990",
+   "end": "00:04:38.000",
+   "text": "üçünü temiz, her turda ara, sonuç"
+  },
+  {
+   "start": "00:04:38.000",
+   "end": "00:04:40.550",
+   "text": "üçünü temiz, her turda ara, sonuç bağlama gitsin. Bunlar çok zorlayıcı ve"
+  },
+  {
+   "start": "00:04:40.550",
+   "end": "00:04:40.560",
+   "text": "bağlama gitsin. Bunlar çok zorlayıcı ve"
+  },
+  {
+   "start": "00:04:40.560",
+   "end": "00:04:42.270",
+   "text": "bağlama gitsin. Bunlar çok zorlayıcı ve bağlamı şişiren şeyler. Ajanları"
+  },
+  {
+   "start": "00:04:42.270",
+   "end": "00:04:42.280",
+   "text": "bağlamı şişiren şeyler. Ajanları"
+  },
+  {
+   "start": "00:04:42.280",
+   "end": "00:04:44.189",
+   "text": "bağlamı şişiren şeyler. Ajanları yavaşlatan, sizin daha çok para"
+  },
+  {
+   "start": "00:04:44.189",
+   "end": "00:04:44.199",
+   "text": "yavaşlatan, sizin daha çok para"
+  },
+  {
+   "start": "00:04:44.199",
+   "end": "00:04:46.070",
+   "text": "yavaşlatan, sizin daha çok para harcamanıza sebep olan şeyler, daha çok"
+  },
+  {
+   "start": "00:04:46.070",
+   "end": "00:04:46.080",
+   "text": "harcamanıza sebep olan şeyler, daha çok"
+  },
+  {
+   "start": "00:04:46.080",
+   "end": "00:04:49.350",
+   "text": "harcamanıza sebep olan şeyler, daha çok token tüketmenize sebep olan şeyler. MCP"
+  },
+  {
+   "start": "00:04:49.350",
+   "end": "00:04:49.360",
+   "text": "token tüketmenize sebep olan şeyler. MCP"
+  },
+  {
+   "start": "00:04:49.360",
+   "end": "00:04:51.909",
+   "text": "token tüketmenize sebep olan şeyler. MCP istemcilerine eee en token verimli yolu"
+  },
+  {
+   "start": "00:04:51.909",
+   "end": "00:04:51.919",
+   "text": "istemcilerine eee en token verimli yolu"
+  },
+  {
+   "start": "00:04:51.919",
+   "end": "00:04:54.510",
+   "text": "istemcilerine eee en token verimli yolu vermek istiyorsan bu tür operasyonları"
+  },
+  {
+   "start": "00:04:54.510",
+   "end": "00:04:54.520",
+   "text": "vermek istiyorsan bu tür operasyonları"
+  },
+  {
+   "start": "00:04:54.520",
+   "end": "00:04:56.510",
+   "text": "vermek istiyorsan bu tür operasyonları kurgulaman önemli. Sık kullanılan işler"
+  },
+  {
+   "start": "00:04:56.510",
+   "end": "00:04:56.520",
+   "text": "kurgulaman önemli. Sık kullanılan işler"
+  },
+  {
+   "start": "00:04:56.520",
+   "end": "00:04:58.950",
+   "text": "kurgulaman önemli. Sık kullanılan işler için böyle paketlemeler yapmanız lazım."
+  },
+  {
+   "start": "00:04:58.950",
+   "end": "00:04:58.960",
+   "text": "için böyle paketlemeler yapmanız lazım."
+  },
+  {
+   "start": "00:04:58.960",
+   "end": "00:05:01.629",
+   "text": "için böyle paketlemeler yapmanız lazım. Tabii API'ınız basitse birebir eşleme"
+  },
+  {
+   "start": "00:05:01.629",
+   "end": "00:05:01.639",
+   "text": "Tabii API'ınız basitse birebir eşleme"
+  },
+  {
+   "start": "00:05:01.639",
+   "end": "00:05:03.670",
+   "text": "Tabii API'ınız basitse birebir eşleme gayet yeterli olabilir ama karmaşıklığın"
+  },
+  {
+   "start": "00:05:03.670",
+   "end": "00:05:03.680",
+   "text": "gayet yeterli olabilir ama karmaşıklığın"
+  },
+  {
+   "start": "00:05:03.680",
+   "end": "00:05:06.070",
+   "text": "gayet yeterli olabilir ama karmaşıklığın olduğu yerde bu kısa yollar ajanı aynı"
+  },
+  {
+   "start": "00:05:06.070",
+   "end": "00:05:06.080",
+   "text": "olduğu yerde bu kısa yollar ajanı aynı"
+  },
+  {
+   "start": "00:05:06.080",
+   "end": "00:05:08.270",
+   "text": "olduğu yerde bu kısa yollar ajanı aynı hataları tekrar yapmaktan kurtarıyor."
+  },
+  {
+   "start": "00:05:08.270",
+   "end": "00:05:08.280",
+   "text": "hataları tekrar yapmaktan kurtarıyor."
+  },
+  {
+   "start": "00:05:08.280",
+   "end": "00:05:11.670",
+   "text": "hataları tekrar yapmaktan kurtarıyor. Genel resim şöyle en altta ham API"
+  },
+  {
+   "start": "00:05:11.670",
+   "end": "00:05:11.680",
+   "text": "Genel resim şöyle en altta ham API"
+  },
+  {
+   "start": "00:05:11.680",
+   "end": "00:05:15.430",
+   "text": "Genel resim şöyle en altta ham API platformun her ucu'da actör çalıştırmak"
+  },
+  {
+   "start": "00:05:15.430",
+   "end": "00:05:15.440",
+   "text": "platformun her ucu'da actör çalıştırmak"
+  },
+  {
+   "start": "00:05:15.440",
+   "end": "00:05:17.870",
+   "text": "platformun her ucu'da actör çalıştırmak sonucunu okumak ver setini çekmek hepsi"
+  },
+  {
+   "start": "00:05:17.870",
+   "end": "00:05:17.880",
+   "text": "sonucunu okumak ver setini çekmek hepsi"
+  },
+  {
+   "start": "00:05:17.880",
+   "end": "00:05:20.150",
+   "text": "sonucunu okumak ver setini çekmek hepsi ayrı uç. Üstünde ergonomik katman az"
+  },
+  {
+   "start": "00:05:20.150",
+   "end": "00:05:20.160",
+   "text": "ayrı uç. Üstünde ergonomik katman az"
+  },
+  {
+   "start": "00:05:20.160",
+   "end": "00:05:23.390",
+   "text": "ayrı uç. Üstünde ergonomik katman az önceki web browser gibi birden çok adımı"
+  },
+  {
+   "start": "00:05:23.390",
+   "end": "00:05:23.400",
+   "text": "önceki web browser gibi birden çok adımı"
+  },
+  {
+   "start": "00:05:23.400",
+   "end": "00:05:25.710",
+   "text": "önceki web browser gibi birden çok adımı tek biçime saran hazır işler. Epify'da"
+  },
+  {
+   "start": "00:05:25.710",
+   "end": "00:05:25.720",
+   "text": "tek biçime saran hazır işler. Epify'da"
+  },
+  {
+   "start": "00:05:25.720",
+   "end": "00:05:28.670",
+   "text": "tek biçime saran hazır işler. Epify'da bunlara actor deniyor ve en üstte MCP"
+  },
+  {
+   "start": "00:05:28.670",
+   "end": "00:05:28.680",
+   "text": "bunlara actor deniyor ve en üstte MCP"
+  },
+  {
+   "start": "00:05:28.680",
+   "end": "00:05:31.270",
+   "text": "bunlara actor deniyor ve en üstte MCP sunucusu. Bu actorları araç olarak her"
+  },
+  {
+   "start": "00:05:31.270",
+   "end": "00:05:31.280",
+   "text": "sunucusu. Bu actorları araç olarak her"
+  },
+  {
+   "start": "00:05:31.280",
+   "end": "00:05:33.790",
+   "text": "sunucusu. Bu actorları araç olarak her MCP işlemcisine sunuyor. Epify'inki açık"
+  },
+  {
+   "start": "00:05:33.790",
+   "end": "00:05:33.800",
+   "text": "MCP işlemcisine sunuyor. Epify'inki açık"
+  },
+  {
+   "start": "00:05:33.800",
+   "end": "00:05:35.749",
+   "text": "MCP işlemcisine sunuyor. Epify'inki açık kaynak link açıklamada. Burada birincisi"
+  },
+  {
+   "start": "00:05:35.749",
+   "end": "00:05:35.759",
+   "text": "kaynak link açıklamada. Burada birincisi"
+  },
+  {
+   "start": "00:05:35.759",
+   "end": "00:05:37.710",
+   "text": "kaynak link açıklamada. Burada birincisi aynı araçları farklı ajan çerçeveleri"
+  },
+  {
+   "start": "00:05:37.710",
+   "end": "00:05:37.720",
+   "text": "aynı araçları farklı ajan çerçeveleri"
+  },
+  {
+   "start": "00:05:37.720",
+   "end": "00:05:39.670",
+   "text": "aynı araçları farklı ajan çerçeveleri için sarmalayabiliyorsun. Epified,"
+  },
+  {
+   "start": "00:05:39.670",
+   "end": "00:05:39.680",
+   "text": "için sarmalayabiliyorsun. Epified,"
+  },
+  {
+   "start": "00:05:39.680",
+   "end": "00:05:44.629",
+   "text": "için sarmalayabiliyorsun. Epified, Opent, AI agent, SD, Lhain, Versal için"
+  },
+  {
+   "start": "00:05:44.629",
+   "end": "00:05:44.639",
+   "text": "Opent, AI agent, SD, Lhain, Versal için"
+  },
+  {
+   "start": "00:05:44.639",
+   "end": "00:05:47.590",
+   "text": "Opent, AI agent, SD, Lhain, Versal için başka bir tane var aslında. Versal AISD"
+  },
+  {
+   "start": "00:05:47.590",
+   "end": "00:05:47.600",
+   "text": "başka bir tane var aslında. Versal AISD"
+  },
+  {
+   "start": "00:05:47.600",
+   "end": "00:05:50.629",
+   "text": "başka bir tane var aslında. Versal AISD var. İşte Google ADK için entegrasyonlar"
+  },
+  {
+   "start": "00:05:50.629",
+   "end": "00:05:50.639",
+   "text": "var. İşte Google ADK için entegrasyonlar"
+  },
+  {
+   "start": "00:05:50.639",
+   "end": "00:05:53.550",
+   "text": "var. İşte Google ADK için entegrasyonlar var. MCP kullanmayıp kendi ajanını yazan"
+  },
+  {
+   "start": "00:05:53.550",
+   "end": "00:05:53.560",
+   "text": "var. MCP kullanmayıp kendi ajanını yazan"
+  },
+  {
+   "start": "00:05:53.560",
+   "end": "00:05:56.270",
+   "text": "var. MCP kullanmayıp kendi ajanını yazan biri aynı işlevi alabiliyor. İkincisi"
+  },
+  {
+   "start": "00:05:56.270",
+   "end": "00:05:56.280",
+   "text": "biri aynı işlevi alabiliyor. İkincisi"
+  },
+  {
+   "start": "00:05:56.280",
+   "end": "00:05:59.150",
+   "text": "biri aynı işlevi alabiliyor. İkincisi araçlar kategorilere ayrılmış. Epify'da"
+  },
+  {
+   "start": "00:05:59.150",
+   "end": "00:05:59.160",
+   "text": "araçlar kategorilere ayrılmış. Epify'da"
+  },
+  {
+   "start": "00:05:59.160",
+   "end": "00:06:01.270",
+   "text": "araçlar kategorilere ayrılmış. Epify'da sunucuya bağlanırken burada epify"
+  },
+  {
+   "start": "00:06:01.270",
+   "end": "00:06:01.280",
+   "text": "sunucuya bağlanırken burada epify"
+  },
+  {
+   "start": "00:06:01.280",
+   "end": "00:06:03.070",
+   "text": "sunucuya bağlanırken burada epify sponsor değil örnek olsun. Herkesin"
+  },
+  {
+   "start": "00:06:03.070",
+   "end": "00:06:03.080",
+   "text": "sponsor değil örnek olsun. Herkesin"
+  },
+  {
+   "start": "00:06:03.080",
+   "end": "00:06:05.350",
+   "text": "sponsor değil örnek olsun. Herkesin erişip bakabildiği bir yer olsun diye"
+  },
+  {
+   "start": "00:06:05.350",
+   "end": "00:06:05.360",
+   "text": "erişip bakabildiği bir yer olsun diye"
+  },
+  {
+   "start": "00:06:05.360",
+   "end": "00:06:07.070",
+   "text": "erişip bakabildiği bir yer olsun diye verdim. Sunucuya bağlanırken adresin"
+  },
+  {
+   "start": "00:06:07.070",
+   "end": "00:06:07.080",
+   "text": "verdim. Sunucuya bağlanırken adresin"
+  },
+  {
+   "start": "00:06:07.080",
+   "end": "00:06:10.270",
+   "text": "verdim. Sunucuya bağlanırken adresin sonuna tools yazıyorsun. Actors, runs,"
+  },
+  {
+   "start": "00:06:10.270",
+   "end": "00:06:10.280",
+   "text": "sonuna tools yazıyorsun. Actors, runs,"
+  },
+  {
+   "start": "00:06:10.280",
+   "end": "00:06:12.990",
+   "text": "sonuna tools yazıyorsun. Actors, runs, storage, task. Ajana sadece şunları ver"
+  },
+  {
+   "start": "00:06:12.990",
+   "end": "00:06:13.000",
+   "text": "storage, task. Ajana sadece şunları ver"
+  },
+  {
+   "start": "00:06:13.000",
+   "end": "00:06:15.110",
+   "text": "storage, task. Ajana sadece şunları ver diyorsun. Ben de kendi kolumumda şöyle"
+  },
+  {
+   "start": "00:06:15.110",
+   "end": "00:06:15.120",
+   "text": "diyorsun. Ben de kendi kolumumda şöyle"
+  },
+  {
+   "start": "00:06:15.120",
+   "end": "00:06:16.990",
+   "text": "diyorsun. Ben de kendi kolumumda şöyle öyle yaptım aslında ve bu işi"
+  },
+  {
+   "start": "00:06:16.990",
+   "end": "00:06:17.000",
+   "text": "öyle yaptım aslında ve bu işi"
+  },
+  {
+   "start": "00:06:17.000",
+   "end": "00:06:19.749",
+   "text": "öyle yaptım aslında ve bu işi kolaylaştırıyor. Büyük fikir şu. Sunucu"
+  },
+  {
+   "start": "00:06:19.749",
+   "end": "00:06:19.759",
+   "text": "kolaylaştırıyor. Büyük fikir şu. Sunucu"
+  },
+  {
+   "start": "00:06:19.759",
+   "end": "00:06:21.670",
+   "text": "kolaylaştırıyor. Büyük fikir şu. Sunucu hangi araçların mevcut olduğunu kontrol"
+  },
+  {
+   "start": "00:06:21.670",
+   "end": "00:06:21.680",
+   "text": "hangi araçların mevcut olduğunu kontrol"
+  },
+  {
+   "start": "00:06:21.680",
+   "end": "00:06:23.670",
+   "text": "hangi araçların mevcut olduğunu kontrol ediyor. Ham araçlar, iş akışları,"
+  },
+  {
+   "start": "00:06:23.670",
+   "end": "00:06:23.680",
+   "text": "ediyor. Ham araçlar, iş akışları,"
+  },
+  {
+   "start": "00:06:23.680",
+   "end": "00:06:26.909",
+   "text": "ediyor. Ham araçlar, iş akışları, kategoriler, sunucunun işi. İstemci yani"
+  },
+  {
+   "start": "00:06:26.909",
+   "end": "00:06:26.919",
+   "text": "kategoriler, sunucunun işi. İstemci yani"
+  },
+  {
+   "start": "00:06:26.919",
+   "end": "00:06:29.790",
+   "text": "kategoriler, sunucunun işi. İstemci yani ajanlarımız o araçları nasıl keşfedip"
+  },
+  {
+   "start": "00:06:29.790",
+   "end": "00:06:29.800",
+   "text": "ajanlarımız o araçları nasıl keşfedip"
+  },
+  {
+   "start": "00:06:29.800",
+   "end": "00:06:31.629",
+   "text": "ajanlarımız o araçları nasıl keşfedip nasıl çalıştıracağına kendi karar"
+  },
+  {
+   "start": "00:06:31.629",
+   "end": "00:06:31.639",
+   "text": "nasıl çalıştıracağına kendi karar"
+  },
+  {
+   "start": "00:06:31.639",
+   "end": "00:06:34.110",
+   "text": "nasıl çalıştıracağına kendi karar veriyor. Keşif, birleştirme, çalıştırma"
+  },
+  {
+   "start": "00:06:34.110",
+   "end": "00:06:34.120",
+   "text": "veriyor. Keşif, birleştirme, çalıştırma"
+  },
+  {
+   "start": "00:06:34.120",
+   "end": "00:06:36.830",
+   "text": "veriyor. Keşif, birleştirme, çalıştırma ajanın işi. Şimdi tabloya bakalım. Kayma"
+  },
+  {
+   "start": "00:06:36.830",
+   "end": "00:06:36.840",
+   "text": "ajanın işi. Şimdi tabloya bakalım. Kayma"
+  },
+  {
+   "start": "00:06:36.840",
+   "end": "00:06:39.790",
+   "text": "ajanın işi. Şimdi tabloya bakalım. Kayma burada. Epify'in MCP sunucusu açık"
+  },
+  {
+   "start": "00:06:39.790",
+   "end": "00:06:39.800",
+   "text": "burada. Epify'in MCP sunucusu açık"
+  },
+  {
+   "start": "00:06:39.800",
+   "end": "00:06:42.350",
+   "text": "burada. Epify'in MCP sunucusu açık kaynak. Link açıklama. Ne? MCP'de"
+  },
+  {
+   "start": "00:06:42.350",
+   "end": "00:06:42.360",
+   "text": "kaynak. Link açıklama. Ne? MCP'de"
+  },
+  {
+   "start": "00:06:42.360",
+   "end": "00:06:44.189",
+   "text": "kaynak. Link açıklama. Ne? MCP'de değişen taraf bu. MCP'ye doğru"
+  },
+  {
+   "start": "00:06:44.189",
+   "end": "00:06:44.199",
+   "text": "değişen taraf bu. MCP'ye doğru"
+  },
+  {
+   "start": "00:06:44.199",
+   "end": "00:06:46.749",
+   "text": "değişen taraf bu. MCP'ye doğru algılarsanız e araçlarınızı bu şekilde"
+  },
+  {
+   "start": "00:06:46.749",
+   "end": "00:06:46.759",
+   "text": "algılarsanız e araçlarınızı bu şekilde"
+  },
+  {
+   "start": "00:06:46.759",
+   "end": "00:06:48.469",
+   "text": "algılarsanız e araçlarınızı bu şekilde doğru kurarsınız. Dediğim gibi aşağıya"
+  },
+  {
+   "start": "00:06:48.469",
+   "end": "00:06:48.479",
+   "text": "doğru kurarsınız. Dediğim gibi aşağıya"
+  },
+  {
+   "start": "00:06:48.479",
+   "end": "00:06:51.430",
+   "text": "doğru kurarsınız. Dediğim gibi aşağıya bıraktım. Açık kaynak bu testleri yapın."
+  },
+  {
+   "start": "00:06:51.430",
+   "end": "00:06:51.440",
+   "text": "bıraktım. Açık kaynak bu testleri yapın."
+  },
+  {
+   "start": "00:06:51.440",
+   "end": "00:06:54.270",
+   "text": "bıraktım. Açık kaynak bu testleri yapın. Ondan öğrenip kendi aracınızı eee MTP"
+  },
+  {
+   "start": "00:06:54.270",
+   "end": "00:06:54.280",
+   "text": "Ondan öğrenip kendi aracınızı eee MTP"
+  },
+  {
+   "start": "00:06:54.280",
+   "end": "00:06:55.990",
+   "text": "Ondan öğrenip kendi aracınızı eee MTP ile geliştirin. İzlediğiniz için çok"
+  },
+  {
+   "start": "00:06:55.990",
+   "end": "00:06:56.000",
+   "text": "ile geliştirin. İzlediğiniz için çok"
+  },
+  {
+   "start": "00:06:56.000",
+   "end": "00:06:58.430",
+   "text": "ile geliştirin. İzlediğiniz için çok teşekkürler. Beğenip abone olursanız da"
+  },
+  {
+   "start": "00:06:58.430",
+   "end": "00:06:58.440",
+   "text": "teşekkürler. Beğenip abone olursanız da"
+  },
+  {
+   "start": "00:06:58.440",
+   "end": "00:07:00.070",
+   "text": "teşekkürler. Beğenip abone olursanız da birlikte büyüyoruz. Hem videolardan"
+  },
+  {
+   "start": "00:07:00.070",
+   "end": "00:07:00.080",
+   "text": "birlikte büyüyoruz. Hem videolardan"
+  },
+  {
+   "start": "00:07:00.080",
+   "end": "00:07:02.110",
+   "text": "birlikte büyüyoruz. Hem videolardan haberdar olursunuz hem de biz de daha"
+  },
+  {
+   "start": "00:07:02.110",
+   "end": "00:07:02.120",
+   "text": "haberdar olursunuz hem de biz de daha"
+  },
+  {
+   "start": "00:07:02.120",
+   "end": "00:07:04.070",
+   "text": "haberdar olursunuz hem de biz de daha çok video yaparız. Bu şekilde bazen"
+  },
+  {
+   "start": "00:07:04.070",
+   "end": "00:07:04.080",
+   "text": "çok video yaparız. Bu şekilde bazen"
+  },
+  {
+   "start": "00:07:04.080",
+   "end": "00:07:06.430",
+   "text": "çok video yaparız. Bu şekilde bazen teknik anlatıyoruz. Bazen bundan bu"
+  },
+  {
+   "start": "00:07:06.430",
+   "end": "00:07:06.440",
+   "text": "teknik anlatıyoruz. Bazen bundan bu"
+  },
+  {
+   "start": "00:07:06.440",
+   "end": "00:07:08.150",
+   "text": "teknik anlatıyoruz. Bazen bundan bu işten nasıl para kazanabileceğinizi,"
+  },
+  {
+   "start": "00:07:08.150",
+   "end": "00:07:08.160",
+   "text": "işten nasıl para kazanabileceğinizi,"
+  },
+  {
+   "start": "00:07:08.160",
+   "end": "00:07:11.629",
+   "text": "işten nasıl para kazanabileceğinizi, yapay zekanın işinizde eee hangi noktada"
+  },
+  {
+   "start": "00:07:11.629",
+   "end": "00:07:11.639",
+   "text": "yapay zekanın işinizde eee hangi noktada"
+  },
+  {
+   "start": "00:07:11.639",
+   "end": "00:07:14.629",
+   "text": "yapay zekanın işinizde eee hangi noktada olduğunu konuşuyoruz. Bazen de tamamen"
+  },
+  {
+   "start": "00:07:14.629",
+   "end": "00:07:14.639",
+   "text": "olduğunu konuşuyoruz. Bazen de tamamen"
+  },
+  {
+   "start": "00:07:14.639",
+   "end": "00:07:16.629",
+   "text": "olduğunu konuşuyoruz. Bazen de tamamen iş fikirleriyle gidiyoruz. İzlediğiniz"
+  },
+  {
+   "start": "00:07:16.629",
+   "end": "00:07:16.639",
+   "text": "iş fikirleriyle gidiyoruz. İzlediğiniz"
+  },
+  {
+   "start": "00:07:16.639",
+   "end": "00:07:17.749",
+   "text": "iş fikirleriyle gidiyoruz. İzlediğiniz için çok teşekkürler. Bir sonraki"
+  },
+  {
+   "start": "00:07:17.749",
+   "end": "00:07:17.759",
+   "text": "için çok teşekkürler. Bir sonraki"
+  },
+  {
+   "start": "00:07:17.759",
+   "end": "00:07:20.560",
+   "text": "için çok teşekkürler. Bir sonraki videoda görüşürüz. Yeah."
+  }
+ ]
+}
