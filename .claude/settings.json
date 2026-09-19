@@ -1,4 +1,8 @@
 {
+  "env": {
+    "RIPGREP_CONFIG_PATH": "/home/dxb/DxB Global OS/.ripgreprc",
+    "DXB_CONSTRUCTION_DATABASE_URL": "postgresql://postgres:postgres@127.0.0.1:54422/postgres"
+  },
   "permissions": {
     "allow": [
       "Bash(graphify *)",
@@ -51,8 +55,8 @@
       }
     ]
   },
-  "env": {
-    "RIPGREP_CONFIG_PATH": "/home/dxb/DxB Global OS/.ripgreprc",
-    "DXB_CONSTRUCTION_DATABASE_URL": "postgresql://postgres:postgres@127.0.0.1:54422/postgres"
+  "enabledPlugins": {
+    "playwright@claude-plugins-official": false,
+    "skill-creator@claude-plugins-official": false
   }
 }
