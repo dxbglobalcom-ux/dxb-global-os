@@ -61,5 +61,24 @@ if [ -n "$RECORDS_TOUCHED" ]; then
   fi
 fi
 
+# (3c) THE OPENING RULER RUNS BEFORE THE COMMIT — same ruling, third class. The opening a
+#      fresh session pays for before the CEO's first word — the core (.claude/CLAUDE.md), the
+#      project skills' listed descriptions and the position block the session-start hook
+#      delivers — has had its byte budget since 2026-09-19, on his order of that day (board row
+#      B47, ceo-approvals.json `opening-discipline-ordered-for-construction-and-holding-2026-09-19`):
+#      tests/hooks/opening-budget.ts (~0.3 s), which calls the position block's own ruler and
+#      rings when any piece, or the three together, has grown past its budget. It runs ONLY when
+#      one of those pieces or the rulers themselves are in the staged change.
+OPENING_TOUCHED=$(git diff --cached --name-only | grep -E '^\.claude/CLAUDE\.md$|^\.claude/skills/|^\.claude/hooks/spec-bootstrap\.sh$|^tests/hooks/' || true)
+if [ -n "$OPENING_TOUCHED" ]; then
+  REPO_TOP=$(git rev-parse --show-toplevel)
+  if ! node --no-warnings "$REPO_TOP/tests/hooks/opening-budget.ts"; then
+    echo "" >&2
+    echo "COMMIT DURDURULDU — acilis butcesi asildi (yukaridaki tablo)." >&2
+    echo "Duzelt, 'node --no-warnings tests/hooks/opening-budget.ts' yesil yansin, sonra tekrar commit et." >&2
+    exit 1
+  fi
+fi
+
 # (4) Scan staged changes only; redact matched values in all output.
 exec gitleaks git --pre-commit --staged --redact --verbose
