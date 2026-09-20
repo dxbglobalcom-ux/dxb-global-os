@@ -48,7 +48,7 @@ QUERY="${1:-}"; OUT="${2:-}"; shift 2 2>/dev/null || true
 # getirecek". `wide` opens 23; `max` opens all 37 channels and costs seconds, not minutes, because
 # every channel is fired in parallel. Narrow it by hand only when a question truly has
 # one home (--tier core), and say so in the answer.
-TIER=max; TMO=180; PAGES=14; WITH_BROWSER=1; NO_READ=0
+TIER=max; TMO=180; PAGES=14; WITH_BROWSER=1; NO_READ=0; KISA=""; DRY=0
 while [ $# -gt 0 ]; do
   case "$1" in
     --tier) TIER="$2"; shift 2 ;;
@@ -58,6 +58,18 @@ while [ $# -gt 0 ]; do
     # 2026-09-17 nobody could see the first one without paying for the second. The choice is
     # where reading breadth is decided, so it has to be inspectable on its own.
     --no-read) NO_READ=1; shift ;;
+    # THE PLAN'S OWN BOX QUERY. Measured by the checker 2026-09-20: the session decided what a
+    # search box should be asked, wrote it into the plan as `kisa`, and this script threw it
+    # away and re-derived one from the sentence — the judgement of Layer 2 reached no channel
+    # at all. Given here, it is used as it stands (after the same gate everything else passes).
+    --kisa) KISA="$2"; shift 2 ;;
+    # WHAT WOULD THIS SWEEP SEND, AND TO WHOM — WITHOUT SENDING IT. `--no-read` already made the
+    # page CHOICE inspectable without paying for the reading; this does the same one floor up,
+    # for the QUERIES. It builds every channel's line, writes the ledger, and stops before the
+    # first channel is fired. It exists because a metre that must prove "the plan's own box query
+    # reaches the box" was otherwise reading the source instead of the behaviour, and an auditor
+    # walked through it on 2026-09-20 by parking the live branch on a dead `if false`.
+    --dry) DRY=1; shift ;;
     --browser) WITH_BROWSER=1; shift ;;
     --no-browser) WITH_BROWSER=0; shift ;;  # for a run that must not touch his screen at all
     *) shift ;;
@@ -68,7 +80,43 @@ if [ -z "$QUERY" ] || [ -z "$OUT" ]; then
   echo "kullanim: sweep.sh \"<sorgu>\" <cikti-klasoru> [--tier core|wide|max] [--timeout SN] [--pages N] [--browser]" >&2
   exit 2
 fi
+
+# ── THE WALL — A PARAGRAPH NEVER REACHES A SEARCH BOX ────────────────────────────────────
+# HIS OWN DIAGNOSIS, 2026-09-20: *"skill beni boru yaptı"*. He states a COMPLAINT — several
+# sentences, a decision he is weighing — and this door took the paragraph and pushed it down a
+# pipe into 37 search boxes. Measured the same night on his 650-character sentence: `quora`
+# answered NOT_FOUND and `hackernews` 400, because no human types a paragraph into a box.
+#
+# Shortening the paragraph was not the repair; it hid the symptom. The repair is a LAYER the
+# engine did not have: the session DECOMPOSES his complaint into sub-questions first, writes
+# them into `runs/<id>/plan.md` (SKILL.md, Layer 2), and only a single tagged sub-question is
+# fired here. This wall is what makes that non-optional — it stands ABOVE the fan-out, so a
+# paragraph is refused before one channel is opened, and it refuses on the engine's own
+# judgement (`shortq.py --gate`, ONE owner of what a box query is), never on a second copy of
+# the rule kept here.
+# FAIL-CLOSED, LIKE THE JUDGE ONE FLOOR DOWN. Measured by an independent auditor on
+# 2026-09-20: this test asked only whether the gate said "3", so a gate that could not RUN at
+# all — python missing, an import error, exit 127 — left the wall wide open and a 177-character
+# paragraph went to twelve channels. A judge that cannot sit does not acquit: any answer other
+# than a clean 0 stops the sweep, and the reason says which of the two happened.
+GATE_MSG="$(python3 "$(dirname "${BASH_SOURCE[0]}")/shortq.py" --gate "$QUERY" 2>&1)"
+GATE_RC=$?
+if [ "$GATE_RC" -ne 0 ]; then
+  if [ "$GATE_RC" = "3" ]; then
+    echo "!! DUR: $GATE_MSG. Arama kutusuna paragraf yazilmaz." >&2
+    echo "   Alt-soruyu plan.md'den ver: runs/<id>/plan.md (SKILL.md, Katman 2)." >&2
+  else
+    echo "!! DUR: kapi calisamadi (kod $GATE_RC): $GATE_MSG" >&2
+    echo "   Calisamayan bir kapi, paragrafi disari birakmanin sebebi degildir." >&2
+  fi
+  exit 3
+fi
+
 mkdir -p "$OUT"
+# THE LEDGER IS THIS RUN'S, NOT THE FOLDER'S. It was only ever appended to, so a second sweep
+# into the same folder doubled every row and an acceptance threshold ("at least 30 rows") could
+# be met by yesterday's lines. Measured 2026-09-20 by an independent auditor.
+: > "$OUT/.queries"
 
 # The sentences a site prints INSTEAD of content. ONE owner, scripts/rlib.py — the reading
 # chain judges by the same list, which it did not until 2026-09-17.
@@ -94,7 +142,14 @@ fi
 # of 10, which is its per-page ceiling). A search engine returns HEADLINES either way — the
 # bodies come from the reading chain below, which is why google's file is small by nature
 # and reddit's is large: reddit hands back the post text itself.
-#   {Q} → the full query, as the CEO would phrase it.
+#   {Q} → the full query, as the CEO would phrase it. Only for engines built to read a
+#         sentence: exa, parallel, tavily, firecrawl, youcom, google.
+#   {K} → the SHORT query — 3-6 words, the names in the question — for every channel that is
+#         a site's own SEARCH BOX. `shortq.py` owns the rule and never calls a model.
+#         Measured 2026-09-20: the 700-character question killed `quora` (NOT_FOUND) and
+#         `hackernews` (FETCH_ERROR); {K} brought both back the same minute, and the count
+#         that answered on the same question went 17 -> 25. {UK} is {K}, URL-encoded, for those
+#         that build an address (the academic APIs, Quora's own search page).
 #   {G} → the first four words only. Code forges match tokens, not sentences: measured
 #         2026-09-16, `gh search repos "Claude Design Open Design which is better"` returned
 #         nothing while the same subject has a 96k-star repository.
@@ -117,8 +172,31 @@ Q_REF='$DXB_Q'; G_REF='$DXB_G'; U_REF='$DXB_U'; S_REF='$DXB_S'
 # So the names stay the ones the bridge already has bound (`google`, `quora`) — no new window
 # is ever created — and the collision is prevented with a lock instead: whichever sweep holds
 # `.browser.lock` drives the browser, the other waits its turn.
-BSESS="google" 
+BSESS="google"
 GQ=$(echo "$QUERY" | awk '{for(i=1;i<=4&&i<=NF;i++) printf "%s%s", $i, (i<4&&i<NF?" ":"")}')
+# THE SHORT QUERY — {K} — what a human types into a site's OWN search box.
+# Measured 2026-09-20 on the CEO's own question: the whole 700-character task sentence went
+# verbatim into every channel, and the ones that are a search BOX answered with nothing —
+# `quora` NOT_FOUND ("We couldn't find any results for 'Do professional developers and…'"),
+# `hackernews` FETCH_ERROR on the URL-encoded paragraph. The same two, same minute, same
+# machine, with the short form: hackernews answered rank 1 in 1.4 s, quora's question page
+# opened with 19 739 bytes of real answers. He named it himself — *"yahu belki çıkmıorrr
+# benim sorduguğum şeyin aynısı orada"*: searching for the sentence is not searching.
+# `shortq.py` owns the rule (first sentence → the names in it); it never calls a model, so
+# the same question always produces the same sweep. The engines built to read a sentence —
+# exa, parallel, tavily, firecrawl, google — keep the WHOLE question. Only boxes get {K}.
+if [ -n "$KISA" ]; then
+  KQ="$KISA"              # the plan decided it — the engine does not second-guess the session
+  if ! python3 "$SKILL/scripts/shortq.py" --gate-box "$KQ" >/dev/null 2>&1; then
+    echo "!! DUR: --kisa kutuya yazilamaz: $(python3 "$SKILL/scripts/shortq.py" --gate-box "$KQ" 2>&1)" >&2
+    exit 3
+  fi
+else
+  KQ=$(python3 "$SKILL/scripts/shortq.py" "$QUERY" 2>/dev/null) || KQ=""
+  [ -n "$KQ" ] || KQ="$GQ" # shortq down → the four-word form, never the paragraph
+fi
+UKQ=$(python3 -c 'import urllib.parse,sys;print(urllib.parse.quote_plus(sys.argv[1]))' "$KQ")
+K_REF='$DXB_K'; UK_REF='$DXB_UK'
 CHANNELS=$(cat <<'MAP'
 exa|core|"$SKILL/scripts/mcpx.sh" exa "{Q}" 8
 parallel|core|"$SKILL/scripts/mcpx.sh" parallel "{Q}" 8
@@ -137,29 +215,29 @@ google|core|opencli google search "{Q}" --limit 50 -f yaml
 #  order: it returned 0 bytes on a Turkish phrasing, and a channel that fails half the
 #  time is a hole the coverage table has to carry for nothing.)
 google-deep|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser google open 'https://www.google.com/search?q={U}&num=30&hl=en' --window background >/dev/null 2>&1; opencli browser google extract --window background"
-reddit|core|opencli reddit search "{Q}" --limit 50 -f yaml
-hackernews|core|opencli hackernews search "{Q}" --limit 50 -f yaml
-twitter|core|opencli twitter search "{Q}" --limit 50 -f yaml
+reddit|core|opencli reddit search "{K}" --limit 50 -f yaml
+hackernews|core|opencli hackernews search "{K}" --limit 50 -f yaml
+twitter|core|opencli twitter search "{K}" --limit 50 -f yaml
 github-repos|core|gh search repos "{G}" --limit 15 --json fullName,stargazersCount,description,updatedAt
 github-issues|core|gh search issues "{G}" --limit 20 --json repository,title,createdAt,state,url
-youtube|core|opencli youtube search "{Q}" --limit 50 -f yaml
+youtube|core|opencli youtube search "{K}" --limit 50 -f yaml
 duckduckgo|wide|opencli duckduckgo search "{Q}" --limit 10 -f yaml
 duckduckgo2|wide|opencli duckduckgo search "{Q}" --limit 10 --offset 10 -f yaml
-lobsters|wide|opencli duckduckgo search "site:lobste.rs {Q}" -f yaml
-stackoverflow|wide|opencli stackoverflow search "{Q}" --limit 50 -f yaml
-medium|wide|opencli medium search "{Q}" --limit 50 -f yaml
-devto|wide|opencli duckduckgo search "site:dev.to {Q}" -f yaml
-producthunt|wide|opencli duckduckgo search "site:producthunt.com {Q}" -f yaml
-bluesky|wide|opencli bluesky search "{Q}" -f yaml
-substack|wide|opencli substack search "{Q}" -f yaml
-v2ex|wide|opencli duckduckgo search "site:v2ex.com {Q}" -f yaml
+lobsters|wide|opencli duckduckgo search "site:lobste.rs {K}" -f yaml
+stackoverflow|wide|opencli stackoverflow search "{K}" --limit 50 -f yaml
+medium|wide|opencli medium search "{K}" --limit 50 -f yaml
+devto|wide|opencli duckduckgo search "site:dev.to {K}" -f yaml
+producthunt|wide|opencli duckduckgo search "site:producthunt.com {K}" -f yaml
+bluesky|wide|opencli bluesky search "{K}" -f yaml
+substack|wide|opencli substack search "{K}" -f yaml
+v2ex|wide|opencli duckduckgo search "site:v2ex.com {K}" -f yaml
 # quora: the CEO logged this machine in on 2026-09-17 with his own Google account, and the
 # channel changed shape the same minute. It is no longer a DuckDuckGo site-query — it is
 # Quora's OWN search page, read through the browser bridge that carries his session. Proof
 # from that first read: the page came back as "Profilfoto für Dxb Company", 13 088 chars.
 # Before the login every one of the doors then in the chain was walled (RULER-HISTORY: eleven that day). A login is worth more than a
 # fallback chain here, and it is the only channel on this list that needed one.
-quora-forums|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser quora open 'https://www.quora.com/search?q={U}' --window background >/dev/null 2>&1; opencli browser quora extract --window background"
+quora-forums|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser quora open 'https://www.quora.com/search?q={UK}' --window background >/dev/null 2>&1; opencli browser quora extract --window background"
 # QUORA IS READ THROUGH THE SITE, NOT THROUGH ITS SEARCH BOX. Measured 2026-09-17 in the
 # audit: the browser door returns Quora's own error page ("Something went wrong") on the
 # search page AND on the home page, in English and Turkish, while the session is alive —
@@ -167,18 +245,18 @@ quora-forums|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser quo
 # minute, a site-scoped Google query returned 8 real question pages and the reading chain
 # opened 3 of 3 (42-50 KB each, by the tenth door, jina-reader), carrying real answers.
 # So this channel finds the ADDRESSES and the chain takes what is inside them.
-quora|wide|opencli google search "site:quora.com {Q}" --limit 20 -f yaml
-linkedin|max|opencli linkedin search "{Q}" -f yaml
-zhihu|max|opencli zhihu search "{Q}" -f yaml
-linux-do|max|opencli linux-do search "{Q}" -f yaml
-weibo|max|opencli weibo search "{Q}" -f yaml
-rednote|max|opencli rednote search "{Q}" -f yaml
-bilibili|max|bili search "{Q}" --type video -n 8
-juejin|max|opencli duckduckgo search "site:juejin.cn {Q}" -f yaml
-arxiv|max|curl -sS -m 40 "https://export.arxiv.org/api/query?search_query=all:{U}&max_results=10"
-crossref|max|curl -sS -m 40 "https://api.crossref.org/works?rows=10&query={U}"
-europepmc|max|curl -sS -m 40 "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={U}&format=json&pageSize=10"
-openalex|max|curl -sS -m 40 "https://api.openalex.org/works?per-page=10&search={U}"
+quora|wide|opencli google search "site:quora.com {K}" --limit 20 -f yaml
+linkedin|max|opencli linkedin search "{K}" -f yaml
+zhihu|max|opencli zhihu search "{K}" -f yaml
+linux-do|max|opencli linux-do search "{K}" -f yaml
+weibo|max|opencli weibo search "{K}" -f yaml
+rednote|max|opencli rednote search "{K}" -f yaml
+bilibili|max|bili search "{K}" --type video -n 8
+juejin|max|opencli duckduckgo search "site:juejin.cn {K}" -f yaml
+arxiv|max|curl -sS -m 40 "https://export.arxiv.org/api/query?search_query=all:{UK}&max_results=10"
+crossref|max|curl -sS -m 40 "https://api.crossref.org/works?rows=10&query={UK}"
+europepmc|max|curl -sS -m 40 "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query={UK}&format=json&pageSize=10"
+openalex|max|curl -sS -m 40 "https://api.openalex.org/works?per-page=10&search={UK}"
 github-trending|max|opencli github-trending repos -f yaml
 MAP
 )
@@ -243,15 +321,30 @@ while IFS='|' read -r name tier cmd; do
   run="${cmd//\{S\}/$S_REF}"
   run="${run//\{Q\}/$Q_REF}"
   run="${run//\{G\}/$G_REF}"
+  run="${run//\{UK\}/$UK_REF}"
   run="${run//\{U\}/$U_REF}"
+  run="${run//\{K\}/$K_REF}"
   # the same command with any --window flag stripped from the TEMPLATE, for the retry below
   cmd_nw="${cmd// --window background/}"
   run_nw="${cmd_nw//\{S\}/$S_REF}"
   run_nw="${run_nw//\{Q\}/$Q_REF}"
   run_nw="${run_nw//\{G\}/$G_REF}"
+  run_nw="${run_nw//\{UK\}/$UK_REF}"
   run_nw="${run_nw//\{U\}/$U_REF}"
+  run_nw="${run_nw//\{K\}/$K_REF}"
+  # WHAT THIS CHANNEL WAS ACTUALLY SENT, WRITTEN DOWN. The ruler used to read the file's own
+  # prose to learn what the engine sends; prose is a claim. Every run now leaves a ledger —
+  # one row per fired channel, `name<TAB>the text that left the machine` — so the question
+  # "did his paragraph go out?" is answered by a file instead of by a sentence.
+  case "$cmd" in
+    *"{K}"*|*"{UK}"*) sent="$KQ" ;;
+    *"{G}"*)          sent="$GQ" ;;
+    *)                sent="$QUERY" ;;
+  esac
+  printf '%s\t%s\n' "$name" "$sent" >> "$OUT/.queries"
+  [ "$DRY" = "1" ] && continue
   (
-    DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
+    DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_K="$KQ" DXB_UK="$UKQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
         > "$OUT/$name.raw" 2> "$OUT/$name.err"
     rc=$?
     # Safety net for a hand-edited channel line that still carries the flag: an adapter that
@@ -262,7 +355,7 @@ while IFS='|' read -r name tier cmd; do
     # and the retry would re-send the flag. Measured 2026-09-16: that is exactly how
     # stackoverflow, bluesky and substack were lost from one sweep.
     if [ $rc -ne 0 ] && grep -q "unknown option '--window'" "$OUT/$name.err" 2>/dev/null; then
-      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run_nw" \
+      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_K="$KQ" DXB_UK="$UKQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run_nw" \
           > "$OUT/$name.raw" 2> "$OUT/$name.err"
       rc=$?
     fi
@@ -270,6 +363,11 @@ while IFS='|' read -r name tier cmd; do
   ) &
 done <<< "$CHANNELS"
 
+
+if [ "$DRY" = "1" ]; then
+  echo "$n kanal icin gonderilecek sorgu yazildi (ATES EDILMEDI): $OUT/.queries"
+  exit 0
+fi
 
 echo "$n kanal aynı anda açıldı — bekleniyor..."
 wait
@@ -385,8 +483,18 @@ PYEOF
         echo "   $dead -> $sub  (bu turda zaten calisti — YENI BAYT YOK, delik duruyor)"
         continue
       fi
-      run="${subcmd//\{S\}/$S_REF}"; run="${run//\{Q\}/$Q_REF}"; run="${run//\{G\}/$G_REF}"; run="${run//\{U\}/$U_REF}"
-      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
+      run="${subcmd//\{S\}/$S_REF}"; run="${run//\{Q\}/$Q_REF}"; run="${run//\{G\}/$G_REF}"; run="${run//\{UK\}/$UK_REF}"; run="${run//\{U\}/$U_REF}"; run="${run//\{K\}/$K_REF}"
+      # THE LEDGER ANSWERS FOR EVERY OUTBOUND QUERY, NOT ONLY THE FIRST ROUND. Measured by an
+      # auditor 2026-09-20: the stand-in chain and the walk to a site's own search page both
+      # sent text outside and wrote no row, so "did his paragraph go out?" could be answered
+      # with a file that did not know about them.
+      case "$subcmd" in
+        *"{K}"*|*"{UK}"*) sent_sub="$KQ" ;;
+        *"{G}"*)          sent_sub="$GQ" ;;
+        *)                sent_sub="$QUERY" ;;
+      esac
+      printf '%s\t%s\n' "$dead-via-$sub" "$sent_sub" >> "$OUT/.queries"
+      DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_K="$KQ" DXB_UK="$UKQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
           > "$OUT/$dead-via-$sub.raw" 2> "$OUT/$dead-via-$sub.err"
       subrc=$?
       sz=$(wc -c < "$OUT/$dead-via-$sub.raw" 2>/dev/null || echo 0)
@@ -416,7 +524,8 @@ PYEOF
       echo "   $dead -> son care: $site adresine dogrudan gidiliyor (12 kapili zincir)"
       NB=""; [ "$WITH_BROWSER" = "1" ] || NB="--no-browser"
       timeout "$TMO" python3 "$SKILL/scripts/fetch.py" \
-        "https://${site}/search?q=${UQ}" --out "$OUT/$dead-direct.md" ${NB} >/dev/null 2>&1
+        "https://${site}/search?q=${UKQ}" --out "$OUT/$dead-direct.md" ${NB} >/dev/null 2>&1
+      printf '%s\t%s\n' "$dead-direct($site)" "$KQ" >> "$OUT/.queries"
       dsz=$(wc -c < "$OUT/$dead-direct.md" 2>/dev/null || echo 0)
       if [ "$dsz" -gt 400 ]; then echo "   $dead -> $site  ACILDI ($dsz bayt)"
       else echo "   $dead -> $site  o da acilmadi — delik raporda kalir"; fi
