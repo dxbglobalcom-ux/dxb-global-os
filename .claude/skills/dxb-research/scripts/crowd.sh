@@ -32,12 +32,9 @@ done
 [ -f "$URLS" ] || { echo "adres dosyasi yok: $URLS" >&2; exit 2; }
 mkdir -p "$OUT/threads"
 
-# ── THE THREAD CARRIES ITS DATE — HIS RULING, 2026-09-20 ─────────────────────────────────
-# *"yorumların tarihi önemli değil başlıkların önemli."* — and his own reason, the same night:
-# *"her yorumun tarihi olmuyor ama başlıkların olabiliyor o yüzden öyle dedim."*
-# <!-- CEO-OK: thread-date-not-comment-date-2026-09-20 -->
-# Measured the same minute, at the
-# source: NO reader on this machine hands back a comment's date — `opencli reddit read` and
+# ── THE THREAD CARRIES ITS DATE ──────────────────────────────────────────────────────────
+# A comment rarely has an obtainable date; a thread does, so the thread's date travels with
+# every quote. Measured 2026-09-20 at the source: NO reader on this machine hands back a comment's date — `opencli reddit read` and
 # `opencli hackernews read` both declare `type, author, score, text` and nothing else, no flag
 # adds one, and Reddit's own JSON answers 403 here. The THREAD's date is another matter and it
 # IS reachable: `opencli reddit search` returns `created_utc` beside every url, and Hacker News

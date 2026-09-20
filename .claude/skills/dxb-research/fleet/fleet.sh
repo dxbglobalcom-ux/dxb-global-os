@@ -16,108 +16,81 @@
 # Sonnet brings 95 % of Opus's harvest for 45 % of the money; Haiku is not cheap, it is
 # wrong. Judgment — the commander, the counter-case, the final report — stays on Opus.
 #
-#   fleet.sh <plan.md> <outdir> [--model NAME] [--timeout S] [--roles a,b,c]
+#   fleet.sh <outdir> --q "<short query>" [--q "..."]... [--dert FILE]
+#            [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #
-# THE FIRST ARGUMENT IS A PLAN, NOT A QUESTION — his ruling of 2026-09-20, *"skill beni boru
-# yaptı"*. The session decomposes his complaint into tagged sub-questions first (plan.py,
-# SKILL.md Layer 2); the fleet hunts the DISARIDA rows and refuses to start without them.
-# Nothing is ever pasted into a command string (2026-09-17: a query carrying a shell command
-# executed) — the text travels as one argument.
+# THE FIRST ARGUMENT IS THE OUTPUT DIR, AND THE QUERIES ARE TYPED BY THE SESSION — a few words
+# each, the way a person searches. Measured 2026-09-20: a several-sentence complaint was pushed
+# into 37 search boxes unchanged and the boxes answered with nothing, so the paragraph never
+# goes to a box: the wall is `shortq.py --gate`, and it stands above the ground and above the
+# hunters. Nothing is ever pasted into a command string (2026-09-17: a query carrying a shell
+# command executed) — the text travels as one argument.
 
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL="$(cd "$HERE/.." && pwd)"
 
-QF="${1:-}"; OUT="${2:-}"; shift 2 2>/dev/null || true
-N=4; MODEL=sonnet; TMO=1500; ROLES=""; PLAN=""
+OUT="${1:-}"; shift 2>/dev/null || true
+N=4; MODEL=sonnet; TMO=1500; ROLES=""; DERT=""
+QUERIES=()
 while [ $# -gt 0 ]; do
   case "$1" in
+    --q)       QUERIES+=("$2"); shift 2 ;;
+    --dert)    DERT="$2"; shift 2 ;;
     --hunters) N="$2"; shift 2 ;;
     --model)   MODEL="$2"; shift 2 ;;
     --timeout) TMO="$2"; shift 2 ;;
     --roles)   ROLES="$2"; shift 2 ;;
-    --plan)    PLAN="$2"; shift 2 ;;
     *) shift ;;
   esac
 done
-# The first positional IS the plan — `--plan` is the same thing said out loud.
-[ -z "$PLAN" ] && PLAN="$QF"
-if [ -z "$PLAN" ] || [ -z "$OUT" ]; then
-  echo "kullanim: fleet.sh <plan.md> <cikti-klasoru> [--model sonnet|opus] [--roles a,b]" >&2
-  exit 2
+if [ ${#QUERIES[@]} -eq 0 ] || [ -z "$OUT" ]; then
+  echo "kullanim: fleet.sh <cikti-klasoru> --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model sonnet|opus] [--roles a,b]" >&2
+  echo "!! DUR: sorgu yok, filo yok. --q ile birkaç kelimelik sorgu ver." >&2
+  exit 3
 fi
 
-# ── NO PLAN, NO FLEET ────────────────────────────────────────────────────────────────────
-# HIS DIAGNOSIS, 2026-09-20: *"skill beni boru yaptı"*. This door used to take whatever text
-# it was handed and fan it out; a complaint and a search term were the same thing to it. They
-# are not. A complaint is decomposed FIRST — by the session, which is the only thing here
-# capable of judgement — into sub-questions, each tagged with who can answer it:
-#   DISARIDA (the outside world) · MAKINE (a command on this machine) · ONUN_KARARI (only he can).
-# The fleet takes the DISARIDA rows and nothing else. Two of his three sub-questions that night
-# had no business leaving this machine at all, and the old engine sent all three to Quora.
-# The wall stands HERE, above the hunters and above the ground, so a paragraph cannot pass.
-PY_PLAN="$SKILL/scripts/plan.py"
-if [ ! -f "$PLAN" ] || ! python3 "$PY_PLAN" --check "$PLAN"; then
-  echo "!! DUR: plan yok, filo yok. Once DERT'i alt-sorulara ayir: runs/<id>/plan.md (SKILL.md, Katman 2)." >&2
-  echo "   Filo yalniz DISARIDA etiketli alt-soruyu alir; MAKINE bu makinede olculur, ONUN_KARARI ona sorulur." >&2
-  exit 3
-fi
+# ── A PARAGRAPH NEVER REACHES A SEARCH BOX ───────────────────────────────────────────────
+# Measured 2026-09-20: a several-sentence complaint was handed to this door and fanned out
+# unchanged — quora answered NOT_FOUND, hackernews 400 — because no human types a paragraph
+# into a search box. So every query is judged by the one owner of that rule BEFORE any ground
+# is opened and BEFORE any hunter is launched: one sentence, at most 120 characters, with at
+# least one real word in it. The sweep repeats the same judgement one floor below.
+for q in "${QUERIES[@]}"; do
+  if ! gate_msg="$(python3 "$SKILL/scripts/shortq.py" --gate "$q" 2>&1)"; then
+    echo "!! DUR: ${gate_msg}. Arama kutusuna paragraf yazilmaz." >&2
+    exit 3
+  fi
+done
+
 mkdir -p "$OUT"
-OUTSIDE="$OUT/outside.tsv"
-python3 "$PY_PLAN" --outside "$PLAN" > "$OUTSIDE" || exit 3
-if [ ! -s "$OUTSIDE" ]; then
-  echo "!! DUR: bu planda disari cikan tek bir alt-soru yok — bu soru disari cikmaz." >&2
-  echo "   MAKINE etiketli soru komutla olculur, ONUN_KARARI etiketli soru ona sorulur." >&2
-  exit 3
+# WHAT THE HUNTERS ARE TOLD: his own words when the session passed them (context, never
+# searched), then the queries the ground was opened with.
+QFILE="$OUT/question.txt"
+: > "$QFILE"
+if [ -n "$DERT" ] && [ -f "$DERT" ]; then
+  {
+    echo "DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):"
+    cat "$DERT"
+    echo
+  } >> "$QFILE"
 fi
-# WHAT THE HUNTERS ARE TOLD: his complaint verbatim (never searched), then the sub-questions
-# that are theirs, by id. A finding that names no S<n> is a finding that answers nobody.
-QUESTION="$(python3 - "$PLAN" "$SKILL/scripts" <<'PYQ'
-import sys, pathlib
-sys.path.insert(0, sys.argv[2])
-import plan as planmod
-p = planmod._load(pathlib.Path(sys.argv[1]))
-print("DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):")
-print((p.get("dert") or "").strip())
-print()
-print("SENIN CEVAPLAYACAGIN ALT-SORULAR — her biri kendi kutu sorgusu ve kabul olcusuyle:")
-for r in planmod.outside(p):
-    print(f"  {r['id']}: {r['soru']}")
-    if r["kisa"]:
-        print(f"      kutu sorgusu (zemin bununla acildi, sen de bunu kullan): {r['kisa']}")
-    if r["diller"]:
-        print(f"      DILLER — bu alt-soru bu dillerde aranir: {', '.join(r['diller'])}")
-    if r["kabul"]:
-        print(f"      KABUL OLCUSU — bu karsilanmadan {r['id']} cevaplanmis sayilmaz: {r['kabul']}")
-print()
-print("BU MAKINEDE OLCULUR YA DA ONA SORULUR — SEN ARAMA:")
-for sub in p.get("alt_sorular") or []:
-    tag = str(sub.get("etiket") or "").strip().upper()
-    if tag in ("MAKINE", "ONUN_KARARI"):
-        print(f"  {sub.get('id')} [{tag}]: {sub.get('soru')}")
-PYQ
-)"
+{
+  echo "SORGULAR (zemin bunlarla acildi):"
+  for q in "${QUERIES[@]}"; do echo "  - $q"; done
+} >> "$QFILE"
+QUESTION="$(cat "$QFILE")"
 
 # The default four are the ones that answer a "what do people prefer" question; the deep
 # seven add the measurement, the spoken word and the other languages.
 DEFAULT4="crowd rival counter measure"
 DEFAULT7="crowd rival code measure video counter foreign"
-# THE PLAN CHOOSES THE WEAPONS. `silah:` on each DISARIDA row says which lanes that question
-# needs; firing all seven at everything is not a decision, it is an absence of one. An explicit
-# --roles still wins (a repair run), and a plan whose rows name no weapon was refused above.
-PLAN_ROLES="$(cut -f4 "$OUTSIDE" | tr ',' '\n' | sed '/^$/d' | sort -u | tr '\n' ' ')"
-if [ -n "$ROLES" ]; then
-  PICK="${ROLES//,/ }"
-  # AN OVERRIDE IS A DECISION OVERTURNED, AND IT IS SAID OUT LOUD. The plan's `silah:` is a
-  # judgement the session made per sub-question; --roles replaces it silently otherwise, and a
-  # report that does not know its own weapons were changed cannot be checked against the plan.
-  [ -n "$PLAN_ROLES" ] && echo "!! --roles planin silah kararini EZIYOR: plan [$PLAN_ROLES] -> komut satiri [$PICK]"
-elif [ -n "$PLAN_ROLES" ]; then PICK="$PLAN_ROLES"
+if [ -n "$ROLES" ]; then PICK="${ROLES//,/ }"
 elif [ "$N" -ge 7 ]; then PICK="$DEFAULT7"
 elif [ "$N" -le 4 ]; then PICK="$DEFAULT4"
 else PICK="$(echo $DEFAULT7 | cut -d' ' -f1-$N)"; fi
 
-echo "plan    : $PLAN  ($(wc -l < "$OUTSIDE") alt-soru disariya cikiyor)"
+echo "sorgular: ${#QUERIES[@]}  ->  $(printf '%s | ' "${QUERIES[@]}")"
 echo "avcilar : $PICK"
 echo "beyin   : $MODEL   (komutan Opus'ta kalir)   zaman asimi ${TMO}s"
 echo
@@ -128,31 +101,34 @@ echo
 # the 37-channel ground ITSELF, once, before a single hunter is launched, and hands every
 # lane the raw files. Google and DuckDuckGo are therefore searched on EVERY run, by
 # construction, and a hunter spends its minutes reading instead of deciding whether to look.
-# THE LANGUAGE IS STILL DECIDED DELIBERATELY, and it is now the plan that decides it. Measured
+# THE LANGUAGE IS DECIDED DELIBERATELY, BY THE SESSION THAT TYPES THE QUERIES. Measured
 # 2026-09-17, and he caught it from one glance at the output: asked in Turkish, Google answered
 # in Turkish — datacamp.com/tr and a Turkish YouTube short — while the argument itself is being
 # had in English. A door asked in the wrong language is a door half opened. So a question that
-# lives in two languages is written as two DISARIDA rows, each with its own `diller`.
-# ONE GROUND PER SUB-QUESTION. It used to be one ground per LINE of a question file, where
-# line 2+ was the same question in another language. From 2026-09-20 the plan owns that: each
-# DISARIDA row is its own ground, and a question that must be asked in two languages is two
-# rows the session wrote deliberately. Every row has already passed the wall — `soru` is one
-# sentence of at most 120 characters — so no sweep is ever handed a paragraph again.
+# lives in two languages is typed as two queries, one per language.
+# ONE GROUND PER QUERY. Each `--q` gets its own 37-channel ground, and every query has already
+# passed the wall above — one sentence, at most 120 characters — so no sweep is ever handed a
+# paragraph again.
 GROUND="$OUT/ground"
 n_g=0
 # FOUR GROUNDS AT A TIME, NEVER ALL OF THEM. Each ground is 37 channels fired in parallel, so
-# every extra row multiplies processes: an auditor measured that twenty rows would put 740
-# children on a workstation with a freezing history, and one copy-pasted sub-question would do
-# it. The plan is capped at 20 rows (plan.py) and they are opened four at a time.
+# every extra query multiplies processes: an auditor measured that twenty of them would put 740
+# children on a workstation with a freezing history, and one copy-pasted query would do it.
 GROUND_PAR=4
-while IFS=$'\t' read -r sid kisa diller silah soru; do
-  [ -z "$soru" ] && continue
+for q in "${QUERIES[@]}"; do
   n_g=$((n_g+1))
   if [ "$n_g" -eq 1 ]; then d="$GROUND"; else d="$GROUND-$n_g"; fi
-  echo "genis zemin $n_g aciliyor ($sid · dil: ${diller:-?}): $(printf '%s' "$soru" | head -c 60)"
-  bash "$SKILL/scripts/sweep.sh" "$soru" "$d" --tier max --pages 8 --kisa "$kisa" > "$OUT/ground-$n_g.log" 2>&1 &
+  echo "genis zemin $n_g aciliyor: $(printf '%s' "$q" | head -c 60)"
+  # THE SESSION'S OWN QUERY GOES INTO THE BOX AS TYPED, when it is short enough to BE a box
+  # query (`--gate-box`: at most six words). A longer one-sentence query still opens a ground —
+  # the sentence engines take it whole and the sweep derives the box form itself.
+  if python3 "$SKILL/scripts/shortq.py" --gate-box "$q" >/dev/null 2>&1; then
+    bash "$SKILL/scripts/sweep.sh" "$q" "$d" --tier max --pages 8 --kisa "$q" > "$OUT/ground-$n_g.log" 2>&1 &
+  else
+    bash "$SKILL/scripts/sweep.sh" "$q" "$d" --tier max --pages 8 > "$OUT/ground-$n_g.log" 2>&1 &
+  fi
   [ $((n_g % GROUND_PAR)) -eq 0 ] && wait
-done < "$OUTSIDE"
+done
 wait
 GROUND_DIRS=""
 for d in "$GROUND" "$GROUND"-*; do [ -d "$d" ] && GROUND_DIRS="$GROUND_DIRS $d"; done
@@ -198,18 +174,13 @@ for role in $PICK; do
     # THE SENTENCE MATCHES THE RUN. It used to say "in every language of the question" on every
     # run, including the single-language ones: measured 2026-09-17, the fleet computed the real
     # number one line above and then told seven hunters something else.
-    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 37 channels, in %%s language/phrasing(s) of\n' "$n_g"
+    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 37 channels, in %s language/phrasing(s) of\n' "$n_g"
     printf 'the question, before you were launched. One file per channel, raw, including google.raw\n'
     printf 'and duckduckgo.raw, plus the page bodies it already read:\n'
     for gd in $GROUND_DIRS; do printf '    %s/*.raw   %s/pages/*.md\n' "$gd" "$gd"; done
     printf 'READ WHAT IS YOURS THERE FIRST (`ls`, `head -c`, grep) before you search again;\n'
     printf 'searching for what is already on disk is the laziness this fleet exists to end.\n'
-    printf 'Name in block A which of those channels carried something for your lane.\n\n' 
-    # EVERY FINDING NAMES THE SUB-QUESTION IT ANSWERS. Layer 2 exists so that an answer can be
-    # checked against what was actually asked; a finding that names no S<n> answers nobody, and
-    # that is how a fleet comes back with 1549 sources and no answer to his question.
-    printf 'EVERY HUKUM AND EVERY FINDING NAMES ITS SUB-QUESTION BY ID — "S1: ...", "S2: ...".\n'
-    printf 'A finding that names no S<n> is dropped from the summary he reads.\n\n'
+    printf 'Name in block A which of those channels carried something for your lane.\n\n'
     printf 'Work only your lane. Other hunters are covering the rest; do not duplicate them.\n'
     printf 'Spend your time READING what you find, not searching for more of it.\n'
     printf 'Answer in Turkish. Hand back the HUKUM line first, then exactly the six blocks A-F.\n'
@@ -311,4 +282,4 @@ fi
 echo
 echo "CEVAP HAZIR — SAKLANMADI.  $OUT/HUNTER-*.md"
 echo "ONA SOR (committen once): \"bu testi kaydedelim mi?\"  ->  evet derse:"
-echo "  bash \"$HERE/keep.sh\" \"$QF\" \"$OUT\" \"$SUMFILE\""
+echo "  bash \"$HERE/keep.sh\" \"$QFILE\" \"$OUT\" \"$SUMFILE\""

@@ -101,24 +101,14 @@ describe("N09 — a run where nothing was read does not end with 'the answer is 
       "-c",
       `printf '%s\\n' '#!/bin/bash' 'echo "hunter failed" >&2' 'exit 9' > ${JSON.stringify(join(b.bin, "claude"))} && chmod +x ${JSON.stringify(join(b.bin, "claude"))}`,
     ]);
-    // THE FLEET TAKES A PLAN, NOT A QUESTION — Layer 2, 2026-09-20. This test is about what
-    // happens when every hunter DIES, so it must get past the plan wall first: one sound
-    // sub-question that may leave the machine, and hunters that answer it with exit 9.
-    const q = sample(b, "plan.md", [
-      'dert: "a complaint no hunter will answer"',
-      "alt_sorular:",
-      "  - id: S1",
-      '    soru: "a question no hunter will answer"',
-      "    etiket: DISARIDA",
-      '    kisa: "no hunter answers"',
-      "    silah: [crowd, rival]",
-      "",
-    ].join("\n"));
+    // THE FLEET TAKES SHORT QUERIES, NOT A PARAGRAPH. This test is about what happens when
+    // every hunter DIES, so its query must get past the wall first: a few words, and hunters
+    // that answer them with exit 9.
     const out = join(b.root, "fleet-failed");
     let stdout = "";
     let code = 0;
     try {
-      stdout = execFileSync("bash", [join(b.engine, "fleet", "fleet.sh"), q, out, "--hunters", "2", "--timeout", "20"], {
+      stdout = execFileSync("bash", [join(b.engine, "fleet", "fleet.sh"), out, "--q", "no hunter answers", "--hunters", "2", "--timeout", "20"], {
         encoding: "utf8",
         env: { ...process.env, PATH: `${b.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1" },
         stdio: ["ignore", "pipe", "pipe"],
@@ -133,18 +123,18 @@ describe("N09 — a run where nothing was read does not end with 'the answer is 
     expect(code, "a run with zero reports is not a success").not.toBe(0);
   }, 120_000);
 
-  // HIS OWN DIAGNOSIS, 2026-09-20: *"skill beni boru yaptı"* — the door took his COMPLAINT and
-  // pushed it, unchanged, into 37 search boxes. The wall that ended it is proved by running it,
-  // not by reading the file: a paragraph must stop the fleet before one channel is opened.
-  it("refuses to launch on a paragraph — no plan, no fleet", () => {
-    const paragraph = sample(b, "dert.txt",
+  // MEASURED 2026-09-20: the door took a several-sentence complaint and pushed it, unchanged,
+  // into 37 search boxes. The wall that ended it is proved by running it, not by reading the
+  // file: a paragraph must stop the fleet before one channel is opened.
+  it("refuses to launch on a paragraph — the wall is above the hunters", () => {
+    const paragraph =
       "codex'in 200 dolarlık paketinde %50 astra sınırı yok ama fable 5.1'de var ve bu aşırı can " +
-      "sıkıcı, sırf bu yüzden fable 5.1'i bırakmayı düşünüyorum. Bu doğru bir karar mı?\n");
+      "sıkıcı, sırf bu yüzden fable 5.1'i bırakmayı düşünüyorum. Bu doğru bir karar mı?";
     const out = join(b.root, "fleet-paragraph");
     let stdout = "";
     let code = 0;
     try {
-      stdout = execFileSync("bash", [join(b.engine, "fleet", "fleet.sh"), paragraph, out], {
+      stdout = execFileSync("bash", [join(b.engine, "fleet", "fleet.sh"), out, "--q", paragraph], {
         encoding: "utf8",
         env: { ...process.env, PATH: `${b.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1" },
         stdio: ["ignore", "pipe", "pipe"],
@@ -154,7 +144,7 @@ describe("N09 — a run where nothing was read does not end with 'the answer is 
       stdout = String(err.stdout ?? "") + String(err.stderr ?? "");
       code = err.status ?? 1;
     }
-    expect(stdout, stdout.slice(-600)).toMatch(/plan yok, filo yok/);
+    expect(stdout, stdout.slice(-600)).toMatch(/paragraf/);
     expect(code, "a paragraph is refused, not fanned out").toBe(3);
     expect(existsSync(out), "not one channel folder is opened").toBe(false);
   }, 30_000);

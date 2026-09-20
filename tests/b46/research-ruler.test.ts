@@ -119,17 +119,17 @@ describe("the ruler bites", () => {
     expect(r.failures["door-count"].length).toBeGreaterThan(0);
   }, 30_000);
 
-  // ── LAYER 2 — his complaint is not a search term (2026-09-20) ───────────────────────
-  // Ten holes, every one of them real that night: his 650-character paragraph went to 37
-  // search boxes, two of his three sub-questions had no business leaving this machine, and
-  // afterwards the engine could not say what it had sent. Each bite below re-opens one hole.
+  // ── THE WALL BETWEEN A PARAGRAPH AND A SEARCH BOX (2026-09-20) ─────────────────────
+  // A several-sentence complaint went to 37 search boxes verbatim and the engine could not say
+  // afterwards what it had sent. Each bite below re-opens one of those holes.
 
-  it("catches the fleet firing without a plan", () => {
-    const r = biteOn("noplan", (d) =>
-      patch(join(d, "fleet/fleet.sh"), /if \[ ! -f "\$PLAN" \] \|\| ! python3 "\$PY_PLAN" --check "\$PLAN"; then/,
-        'if false; then'),
+  it("catches the fleet firing before its queries are judged", () => {
+    const r = biteOn("nogate", (d) =>
+      patch(join(d, "fleet/fleet.sh"),
+        /  if ! gate_msg="\$\(python3 "\$SKILL\/scripts\/shortq\.py" --gate "\$q" 2>&1\)"; then/,
+        '  # the wall used to stand here'),
     );
-    expect(r.failures["plan-before-fleet"].length).toBeGreaterThan(0);
+    expect(r.failures["queries-before-fleet"].length).toBeGreaterThan(0);
   }, 30_000);
 
   it("catches the sweep taking a paragraph again", () => {
@@ -138,28 +138,6 @@ describe("the ruler bites", () => {
         'GATE_MSG=""; GATE_RC=0; true'),
     );
     expect(r.failures["no-paragraph-to-a-box"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches a sub-question allowed to carry two tags", () => {
-    const r = biteOn("twotags", (d) =>
-      patch(join(d, "scripts/plan.py"), /tags = \[t\.strip\(\) for t in str\(raw_tag or ""\)\.replace\(",", " "\)\.split\(\) if t\.strip\(\)\]/,
-        'tags = str(raw_tag or "").replace(",", " ").split()[:1]'),
-    );
-    expect(r.failures["one-tag-per-question"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches a plan whose questions are all his, and the fleet starting anyway", () => {
-    const r = biteOn("hisonly", (d) =>
-      patch(join(d, "fleet/fleet.sh"), /disari cikan tek bir alt-soru yok/, "bos plan"),
-    );
-    expect(r.failures["his-question-never-leaves"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches a MAKINE question with no command — it would be searched instead of measured", () => {
-    const r = biteOn("nocmd", (d) =>
-      patch(join(d, "scripts/plan.py"), /if not \(sub\.get\("komut"\) or ""\)\.strip\(\):/, "if False:"),
-    );
-    expect(r.failures["machine-question-has-a-command"].length).toBeGreaterThan(0);
   }, 30_000);
 
   it("catches a box query with no word in it — \"200 %50 5.1\" is not a search", () => {
@@ -189,51 +167,6 @@ describe("the ruler bites", () => {
       patch(join(d, "scripts/sweep.sh"), /printf '%s\\t%s\\n' "\$name" "\$sent" >> "\$OUT\/\.queries"/, "true"),
     );
     expect(r.failures["queries-are-logged"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches hunters no longer told to name the sub-question they answer", () => {
-    const r = biteOn("nameless", (d) =>
-      patch(join(d, "fleet/fleet.sh"), /NAMES ITS SUB-QUESTION BY ID/, "answers something"),
-    );
-    expect(r.failures["finding-names-its-question"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches the keyword script being put back in charge of the decomposition", () => {
-    const r = biteOn("planner", (d) =>
-      patch(join(d, "fleet/fleet.sh"), /^PY_PLAN=/m, 'KQ="$(python3 "$SKILL/scripts/shortq.py" "$QUESTION")"\nPY_PLAN='),
-    );
-    expect(r.failures["shortq-is-not-the-planner"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  // ── the checker's three findings of 2026-09-20, each one now a rule with a bite ─────
-  it("catches the plan's own box query being thrown away before it reaches a box", () => {
-    const r = biteOn("kisa", (d) =>
-      patch(join(d, "fleet/fleet.sh"), /--kisa "\$kisa"/, ""),
-    );
-    expect(r.failures["plan-query-reaches-the-box"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches the reader writing to his plan file", () => {
-    const r = biteOn("rewrite", (d) => {
-      patch(join(d, "scripts/plan.py"), /^def outside/m,
-        "def _rewrite(path, plan):\n    path.write_text('')\n\n\ndef outside");
-    });
-    expect(r.failures["plan-is-not-rewritten"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches a plan that names no weapon being accepted", () => {
-    const r = biteOn("weapon", (d) =>
-      patch(join(d, "scripts/plan.py"), /if not isinstance\(weapons, list\) or not weapons:/, "if False:"),
-    );
-    expect(r.failures["weapon-is-a-decision"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches the S<n> rule going back to being a sentence in the briefing", () => {
-    const r = biteOn("nameless-merge", (d) =>
-      patch(join(d, "fleet/merge.py"), /named = \[\(role, v\) for role, v in verdicts if names_one\(v\)\]/,
-        "named = list(verdicts)"),
-    );
-    expect(r.failures["finding-names-its-question"].length).toBeGreaterThan(0);
   }, 30_000);
 
   // THE AUDITOR'S OWN THREE MUTATIONS, 2026-09-20. Each one took a wall down while leaving the
@@ -266,14 +199,6 @@ describe("the ruler bites", () => {
 
   // ── THE AUDITOR'S SECOND ROUND, 2026-09-20: five repairs that could still be taken down
   // ── silently, because the rules guarding them were reading source instead of behaviour.
-
-  it("catches the plan's box query being parked on a dead branch", () => {
-    // the exact walk-through: leave `KQ="$KISA"` in the file, make the branch unreachable
-    const r = biteOn("kisa-dead", (d) =>
-      patch(join(d, "scripts/sweep.sh"), /^if \[ -n "\$KISA" \]; then$/m, "if false; then"),
-    );
-    expect(r.failures["plan-query-reaches-the-box"].length).toBeGreaterThan(0);
-  }, 30_000);
 
   it("catches the stand-in chain and the last resort sending text with no ledger row", () => {
     const r = biteOn("fallback-silent", (d) => {
@@ -309,38 +234,9 @@ describe("the ruler bites", () => {
     expect(r.failures["guard-before-fanout"].length).toBeGreaterThan(0);
   }, 30_000);
 
-  it("catches the plan wall being switched off behind the check below it", () => {
-    // `--outside` also answers 3, so the exit code cannot tell the two apart; what separates
-    // them is the FOLDER — the wall stands above `mkdir -p "$OUT"`.
-    // The mutation leaves the wall's own line untouched, so the text rule stays green and only
-    // the behaviour can tell: the wall speaks and then does NOT stop, and `mkdir -p "$OUT"`
-    // below it creates the folder for a plan that was refused.
-    const r = biteOn("wall-hidden", (d) =>
-      patch(join(d, "fleet/fleet.sh"),
-        /(  echo "   Filo yalniz DISARIDA etiketli alt-soruyu alir; MAKINE bu makinede olculur, ONUN_KARARI ona sorulur\." >&2\n)  exit 3/,
-        "$1  : # the wall speaks and lets it through"),
-    );
-    expect(r.failures["plan-before-fleet"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches his own ruling being lifted out of the door's trigger sentence", () => {
-    const r = biteOn("hands", (d) =>
-      patch(join(d, "SKILL.md"), /THE HANDS, NEVER THE HEAD — one instrument/,
-        "Use whenever the CEO asks to research, look into, find out — one instrument"),
-    );
-    expect(r.failures["door-is-hands-not-head"].length).toBeGreaterThan(0);
-  }, 30_000);
-
-  it("catches the CEO-OK marker being taken off his ruling", () => {
-    const r = biteOn("mark", (d) =>
-      patch(join(d, "SKILL.md"), /<!-- CEO-OK: door-is-hands-not-head-2026-09-20 -->/, ""),
-    );
-    expect(r.failures["door-is-hands-not-head"].length).toBeGreaterThan(0);
-  }, 30_000);
-
   it("has a case for every rule it declares — a rule nobody proved is a rule nobody trusts", () => {
     // if this fails, a rule was added above without a bite case beneath it
-    expect(RULES.length).toBe(25);
+    expect(RULES.length).toBe(16);
   }, 30_000);
 });
 

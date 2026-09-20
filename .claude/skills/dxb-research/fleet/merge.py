@@ -32,30 +32,6 @@ CHANNEL_PAT = [
     ("cn", r"opencli zhihu|linux-do|opencli weibo|bili"), ("akademik", r"arxiv|crossref|openalex|europepmc"),
     ("zincir", r"fetch\.py"), ("model-arama", r'"WebSearch"|"WebFetch"'),
 ]
-# A SUB-QUESTION'S ID, AS THE PLAN WROTE IT. The first version matched any `S<digits>` token,
-# and an independent auditor measured what that lets through: "AWS S3 bucket daha ucuz" and
-# "Samsung S22 daha iyi" both counted as naming a sub-question, so the rule was free to skip.
-# The ids are therefore READ FROM THE RUN'S OWN PLAN (`outside.tsv`, written by the fleet), and
-# the loose pattern is only the fallback for a run that has no plan beside it.
-# The fallback demands the shape an ID is actually written in — "S2:", "S1 —", "S3)" — because
-# a bare token followed by a space is a product name: "AWS S3 bucket", "Samsung S22 daha iyi"
-# both satisfied the loose form, and the auditor used exactly those two to walk through it.
-SUBQ = re.compile(r"(?<![A-Za-z0-9])S\d{1,2}\s*[:.,)\-—]")
-
-
-def plan_ids(out: pathlib.Path) -> set:
-    """The sub-question ids this very run was opened for."""
-    f = out / "outside.tsv"
-    if not f.exists():
-        return set()
-    ids = set()
-    for line in f.read_text(errors="replace").splitlines():
-        head = line.split("\t", 1)[0].strip()
-        if head:
-            ids.add(head)
-    return ids
-
-
 def people_count(text: str) -> str:
     """The E block's number: how many separate humans this lane actually read.
 
@@ -296,36 +272,11 @@ def main() -> int:
                           reports[role]["text"], re.S)
         if m:
             verdicts.append((role, " ".join(m.group(1).split())[:200]))
-    # EVERY VERDICT NAMES THE SUB-QUESTION IT ANSWERS — AND THIS IS THE MECHANISM, NOT THE
-    # SENTENCE THAT ASKS FOR IT. Layer 2 (SKILL.md §0) splits his complaint into S1, S2, S3; a
-    # verdict that names none of them answers nobody, and the checker measured on 2026-09-20
-    # that the requirement lived only in the hunters' briefing — prose, which a tired lane
-    # ignores. A dropped verdict is COUNTED and printed: a hole may stay open, it may never
-    # stay silent. A run with no plan (no S<n> anywhere) drops nothing.
-    ids = plan_ids(out)
-    def names_one(v: str) -> bool:
-        """Does this verdict name a sub-question THIS run was opened for?"""
-        if ids:
-            return any(re.search(rf"(?<![A-Za-z0-9]){re.escape(i)}(?=[\s:.,)\-—]|$)", v) for i in ids)
-        return bool(SUBQ.search(v))
-    named = [(role, v) for role, v in verdicts if names_one(v)]
-    dropped = [role for role, v in verdicts if not names_one(v)]
     if verdicts:
-        # WHEN NOBODY NAMED ONE, THAT IS THE LOUDEST FINDING OF THE RUN. Measured by an
-        # independent auditor 2026-09-20: with every lane anonymised, the first version printed
-        # all of them and said nothing — the one case where the whole fleet broke the rule was
-        # the one case the mechanism was silent. Every hunt has a plan (the wall guarantees it),
-        # so "no lane named a sub-question" means every lane ignored the plan.
-        if not named:
-            print("\n!! HICBIR SERIT ALT-SORUSUNU ANMADI — filo planin disina cikti.")
-            print(f"   beklenen id'ler: {', '.join(sorted(ids)) if ids else '(plan yok)'}")
-            print("   asagidaki hukumler bu uyari ile birlikte okunur:")
         print("\nSERITLERIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:")
-        for role, v in (named or verdicts):
+        for role, v in verdicts:
             print(f"   [{role}] {v}")
         print("   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)")
-        if named and dropped:
-            print(f"   dusurulen: {len(dropped)} hukum — alt-soru (S<n>) anmadigi icin: {', '.join(dropped)}")
 
     print(f"\nraporlar: {out}/HUNTER-*.md")
     return 0

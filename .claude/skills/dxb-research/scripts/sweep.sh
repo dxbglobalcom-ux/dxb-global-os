@@ -58,10 +58,9 @@ while [ $# -gt 0 ]; do
     # 2026-09-17 nobody could see the first one without paying for the second. The choice is
     # where reading breadth is decided, so it has to be inspectable on its own.
     --no-read) NO_READ=1; shift ;;
-    # THE PLAN'S OWN BOX QUERY. Measured by the checker 2026-09-20: the session decided what a
-    # search box should be asked, wrote it into the plan as `kisa`, and this script threw it
-    # away and re-derived one from the sentence — the judgement of Layer 2 reached no channel
-    # at all. Given here, it is used as it stands (after the same gate everything else passes).
+    # THE SESSION'S OWN BOX QUERY. Measured 2026-09-20: the session had decided what a search
+    # box should be asked and this script threw it away and re-derived one from the sentence.
+    # Given here, it is used as it stands (after the same gate everything else passes).
     --kisa) KISA="$2"; shift 2 ;;
     # WHAT WOULD THIS SWEEP SEND, AND TO WHOM — WITHOUT SENDING IT. `--no-read` already made the
     # page CHOICE inspectable without paying for the reading; this does the same one floor up,
@@ -87,10 +86,9 @@ fi
 # pipe into 37 search boxes. Measured the same night on his 650-character sentence: `quora`
 # answered NOT_FOUND and `hackernews` 400, because no human types a paragraph into a box.
 #
-# Shortening the paragraph was not the repair; it hid the symptom. The repair is a LAYER the
-# engine did not have: the session DECOMPOSES his complaint into sub-questions first, writes
-# them into `runs/<id>/plan.md` (SKILL.md, Layer 2), and only a single tagged sub-question is
-# fired here. This wall is what makes that non-optional — it stands ABOVE the fan-out, so a
+# Shortening the paragraph was not the repair; it hid the symptom. The repair: the session
+# types SHORT queries itself, a few words each (SKILL.md §0), and only such a query is fired
+# here. This wall is what makes that non-optional — it stands ABOVE the fan-out, so a
 # paragraph is refused before one channel is opened, and it refuses on the engine's own
 # judgement (`shortq.py --gate`, ONE owner of what a box query is), never on a second copy of
 # the rule kept here.
@@ -104,7 +102,7 @@ GATE_RC=$?
 if [ "$GATE_RC" -ne 0 ]; then
   if [ "$GATE_RC" = "3" ]; then
     echo "!! DUR: $GATE_MSG. Arama kutusuna paragraf yazilmaz." >&2
-    echo "   Alt-soruyu plan.md'den ver: runs/<id>/plan.md (SKILL.md, Katman 2)." >&2
+    echo "   Birkac kelimelik kisa sorgu ver — bir insan kutuya nasil yazarsa (SKILL.md, §0)." >&2
   else
     echo "!! DUR: kapi calisamadi (kod $GATE_RC): $GATE_MSG" >&2
     echo "   Calisamayan bir kapi, paragrafi disari birakmanin sebebi degildir." >&2

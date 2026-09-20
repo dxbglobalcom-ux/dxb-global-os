@@ -21,10 +21,10 @@ benim sorduguğum şeyin aynısı orada"* — searching for the sentence is not 
 
 WHAT IT IS NOT — HIS SECOND FINDING, THE SAME NIGHT. *"skill beni boru yaptı"*: the door
 took his COMPLAINT and pushed it down a pipe into a search box. Shortening the paragraph
-is not thinking about it. From 2026-09-20 the decomposition is a PLAN the session writes
-(`runs/<id>/plan.md`, SKILL.md Layer 2), and this file is the LAST STEP of that plan plus
-its GATE — never the planner. It derives a box query for ONE already-decomposed
-sub-question, and it refuses anything that is still a paragraph.
+is not thinking about it. From 2026-09-20 the session types the short queries itself
+(SKILL.md §0), and this file is only the GATE beneath that — never the thinker. It derives a
+box query for ONE short question the session already chose, and it refuses anything that is
+still a paragraph.
 
 WHAT IT DOES NOT DO. It is not a summariser and never calls a model — a keyword line must
 be free, instant and identical on every run, or the same question produces two different
