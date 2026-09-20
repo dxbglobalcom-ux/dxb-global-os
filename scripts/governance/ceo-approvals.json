@@ -168,7 +168,7 @@
   "what": "EVERY Agent-Reach channel is to be opened, and the skill is never to be restricted. He ruled intelligence the holding's most important point: without correct and best information there is no success. This DELETES (LAW A) the channel restriction a session had written into .claude/skills/agent-reach/SKILL.md, which had held Twitter/X, Reddit, XiaoHongShu, LinkedIn, Xueqiu and Xiaoyuzhou behind his separate approval on the ToS gate.",
   "verbatim": "twitter reddit gibi kanallar hayati önemde hepsini aç, bu beceriyi kesinlikle kısıtlama zira en derin bilgileri bulma en iyi araştırma yapma kaynak edinme holdinging en önemli noktası yani istihbarat HERŞEYDEN ÖNEMLİ. doğru ve en iyi bilgi yoksa başarı da yok.",
   "conditions": "The reach is unrestricted; the quarantine rule on what comes back is unchanged (PITFALLS.md #7 — outside material enters memory tagged, never as fact). Six channels remain blocked by a CREDENTIAL, never by policy: Twitter/X and Reddit need a login, XiaoHongShu needs a one-click Chrome extension plus a logged-in session, Xueqiu needs a Xueqiu login, Xiaoyuzhou needs a free Groq key, LinkedIn needs its MCP server. Every backend for all of them is installed.",
-  "where": ".claude/skills/agent-reach/SKILL.md · .planning/research/study-cards/agent-reach.md · INTEGRATION-TRACKER.md row Agent-Reach · board row B30"
+  "where": "~/.claude/skills/agent-reach/SKILL.md (the repo copy of the door was deleted 2026-09-20 on his word: \"yap sil depodakini\"; the channels stay open through dxb-research) · .planning/research/study-cards/agent-reach.md · INTEGRATION-TRACKER.md row Agent-Reach · board row B30"
  },
  "open-source-arsenal-2026-08-19": {
   "date": "2026-08-19",
