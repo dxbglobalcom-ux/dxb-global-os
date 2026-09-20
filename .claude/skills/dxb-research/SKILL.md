@@ -1,6 +1,6 @@
 ---
 name: dxb-research
-description: THE HANDS, NEVER THE HEAD — one instrument inside YOUR answer, never a replacement for it. You keep your own method and your own judgement; this door is opened only for a sub-question you have already decided the OUTSIDE WORLD must answer (tagged DISARIDA in your plan — §0). It never receives his paragraph and it never speaks to him: what it brings back is folded into the ONE answer you give him. Open it for a tagged sub-question about a tool, a product, a company, a market, a rival, a technology, a price or a trend — what people actually say, compared, counted. It sends a FLEET of hunters into the field at once, each carrying the whole arsenal (37 keyless channels, 167 sites, the platforms through his own logged-in browser, video transcripts, the code forge), reads the pages and the comments instead of the snippets, and COUNTS the crowd instead of quoting the loudest. It leaves no paperwork behind unless he says "kaydet". Use it the same way when a previous answer was thin, when the CEO pushes back on a research result, or when a claim about the outside world needs checking before it reaches him.
+description: Use whenever the CEO asks to research, look into, find out, compare, or wonders what people think about anything — a tool, a product, a company, a market, a rival, a technology, a price, a trend. Sends a FLEET of hunters into the field at once, each carrying the whole arsenal (37 keyless channels, 167 sites, the platforms through his own logged-in browser, video transcripts, the code forge), reads the pages and the comments instead of the snippets, and COUNTS the crowd instead of quoting the loudest. It leaves no paperwork behind unless he says "kaydet". Also use when a previous answer was thin, when the CEO pushes back on a research result, or when a claim about the outside world needs checking before it reaches him.
 hooks:
   Stop:
     - hooks:
@@ -49,101 +49,13 @@ fleet is for.
 4. **Bring back text, not links.** *"sadece o sayfayı mı açıyor, oradaki bilgiyi alamıyor mu?"*
    — every channel is TWO steps and the second is the job (§3).
 
-## 0. LAYER 2 — HIS COMPLAINT IS NOT A SEARCH TERM
-
-**THE DOOR IS THE HANDS, NEVER THE HEAD.** His ruling, 2026-09-20 night, in his own words:
-*"sen bunu cevaplarken aynı zamanda bir araştırma da yapıyorsun… kendi yöntemini kullanıyorsun +
-benim skill'i de kullan destek için, olay buydu."* <!-- CEO-OK: door-is-hands-not-head-2026-09-20 -->
-The session keeps its own method and its own judgement and answers him itself; this door is
-SUPPORT, not a substitute, and it is one instrument inside that answer. On his own example —
-*"profesyoneller Fable mı Astra mı kullanıyor… %50 sınır… ne yapayım"* — **what professionals
-use** is DISARIDA and goes to the fleet as one short question · **why the quota burns** is
-MAKINE and is measured on this machine · **which to choose** is ONUN_KARARI and is put to him
-with the numbers beside it. **He sees ONE verdict, not three reports.**
-
-**His ruling, 2026-09-20: *"skill beni boru yaptı."*** He stated a COMPLAINT — several
-sentences, a decision he was weighing — and this door took the paragraph and pushed it,
-unchanged, into 37 search boxes. Measured the same night: `quora` answered NOT_FOUND and
-`hackernews` returned 400, because no human types a paragraph into a search box. Shortening
-the paragraph was not the repair; it hid the symptom. **What was missing was a layer where
-JUDGEMENT happens**, and the engine had been substituting itself for it.
-
-```
- (1) HIS COMPLAINT — the paragraph. NEVER searched, never shortened, never sent anywhere.
- (2) THE PLAN      — you write it. His complaint, broken into sub-questions, each TAGGED.
- (3) THE WEAPONS   — the fleet and the 37 channels. They receive ONE tagged sub-question.
-```
-
-**THE THREE TAGS. Every sub-question carries exactly one:**
-
-| tag | who answers it | what happens |
-|---|---|---|
-| `DISARIDA` | the outside world | the fleet may hunt it |
-| `MAKINE` | our own machine | a **command** answers it — it never leaves this machine |
-| `ONUN_KARARI` | only he can | it is put to him as a **question**, never searched |
-
-On his own complaint that night: *"dün neden %13'e çıktı"* is **MAKINE** (the transcripts on
-this machine hold it, no forum does) · *"Pro'nun 20 katı ne demek"* is **DISARIDA** ·
-*"Fable'ı bırakayım mı"* is **ONUN_KARARI**. The old engine sent all three to Quora.
-
-**YOU write the plan — a script cannot.** Deciding what is actually being asked is the very
-judgement this layer exists to restore. `scripts/plan.py` only reads it, refuses a broken one,
-and hands the `DISARIDA` rows to the fleet. **It writes NOTHING**: the first build filled a
-missing `kisa` itself and wrote the file back, and one such pass destroyed a plan's fence, its
-comments, its body and its `dert: |` block — on every hunt, because the fleet called it every
-time. A missing `kisa` is refused with the derivation printed as a suggestion; you write it in.
-
-```yaml
-# runs/<run-id>/plan.md
-dert: |
-  <his own words, verbatim — this text goes to NO channel>
-dil: [tr, en]
-alt_sorular:
-  - id: S1
-    soru: "one clean sentence, at most 120 characters"
-    etiket: DISARIDA          # exactly one tag
-    kisa: "3-6 words"         # the box query YOU decide; missing → refused with a suggestion
-    diller: [en]
-    silah: [crowd, measure]   # which lanes — empty is refused, firing everything is not a decision
-    kabul: "≥3 independent sources give the same number"
-  - id: S2
-    soru: "why did yesterday's work take the weekly meter to 13 %?"
-    etiket: MAKINE
-    komut: "bash scripts/probe.sh"       # its OUTPUT is the answer; it is not searched
-  - id: S3
-    soru: "should we drop Fable 5.1?"
-    etiket: ONUN_KARARI
-    soru_ona: "the measurement points to A — shall we spend another $200 on Codex?"
-```
-
-**THE TWO WALLS, and neither is optional:**
-
-* `fleet/fleet.sh` refuses to launch a single hunter without a plan — *"plan yok, filo yok"*,
-  exit 3 — and a plan with no `DISARIDA` row is refused too: **that question does not leave
-  this machine.**
-* `scripts/sweep.sh` refuses any text longer than 120 characters or carrying more than one
-  sentence, above the fan-out: *"bu bir sorgu değil, paragraf"*, exit 3. Every fired channel
-  is written down in `<outdir>/.queries` — one row, `channel<TAB>what was sent` — so the
-  question *"did his paragraph go out?"* is answered by a file, never by a sentence.
-
-**WHAT THE PLAN DECIDED IS WHAT THE CHANNEL IS ASKED.** The fleet hands each row's `kisa` to
-the sweep (`--kisa`), which uses it AS IT STANDS for every search box while the sentence
-engines keep the whole sub-question; a `--kisa` that is itself a paragraph, or longer than six
-words, is refused by the one owner of that rule (`shortq.box_reason`). And each hunter is given
-its row entire — the sub-question, its box query and its `kabul` measure — so a lane knows what
-would make its own answer sufficient. **A verdict that names no `S<n>` is DROPPED by
-`fleet/merge.py`, and the number dropped is printed**: the requirement is a mechanism, not a
-sentence in a briefing that a tired lane ignores.
-
 ## 1. The fleet — the default way to answer
 
 ```bash
 F='/home/dxb/DxB Global OS/.claude/skills/dxb-research/fleet'
-R='/home/dxb/DxB Global OS/.claude/skills/dxb-research/scripts'
-# 1. write the plan (Layer 2 above) — then the fleet reads it and hunts only what may leave.
-python3 "$R/plan.py" --check /tmp/plan.md --fix       # refuse early, and see the derived box queries
-bash "$F/fleet.sh" /tmp/plan.md <outdir>              # lanes come from the plan's `silah:`
-bash "$F/fleet.sh" /tmp/plan.md <outdir> --roles crowd,rival   # override, for a repair run
+printf '%s\n' "<his question, verbatim>" > /tmp/q.txt
+bash "$F/fleet.sh" /tmp/q.txt <outdir> --hunters 7          # deep
+bash "$F/fleet.sh" /tmp/q.txt <outdir> --hunters 4          # ordinary
 ```
 
 Seven lanes, each its own context, all in the field together:
@@ -256,20 +168,7 @@ door hit a cookie wall, the retry button failed — and the question page itself
 
 - A verdict on a counting question with no count and no denominator behind it.
 - A vendor's own page, or an SEO comparison blog, presented as what people think.
-- A quote whose THREAD carries no date, or "recently" standing in for one. **HIS RULING,
-  2026-09-20: *"yorumların tarihi önemli değil başlıkların önemli."*** — and, asked why, he
-  gave the reason himself the same night: *"her yorumun tarihi olmuyor ama başlıkların
-  olabiliyor o yüzden öyle dedim."* <!-- CEO-OK: thread-date-not-comment-date-2026-09-20 -->
-  The comment's own
-  date is NOT required, and measured at the source the same minute it is not even
-  obtainable: `opencli reddit read` and `opencli hackernews read` both return
-  `type, author, score, text`, no flag adds a date, and Reddit's own JSON answers 403
-  from this machine. The thread's date IS obtainable and now travels with every quote —
-  `scripts/threaddates.py` harvests `created_utc` from the ground's own search rows,
-  Hacker News fills its own from Algolia, and `CROWD.txt` carries `[BASLIK TARIHI: …]`
-  on every thread. A thread whose date could not be established prints **TARIHSIZ**, and
-  the count of them is printed under every run — a hole may stay open; it may never stay
-  silent.
+- A quote with no date, or "recently" standing in for one.
 - A channel that failed or was skipped and never mentioned — **a hole may stay open; it may
   never stay silent.**
 - Stopping because the answer looked plausible rather than because the ground stopped
