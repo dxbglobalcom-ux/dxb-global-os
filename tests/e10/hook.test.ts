@@ -667,15 +667,19 @@ describe("post-gate — evidence package (§6/§20)", () => {
 
     // ON THIS SUITE'S OWN RUN, and the unscoped count is what went red.
     // Measured 2026-09-21 on the construction engine: four OPEN high alerts
-    // carried this policy, none of them written by a test — every one came
-    // from a resident-worker drain against the W9 road proof's own kept task
-    // (runs 10:25, 10:28, 10:36, model fable-5.1, each a real post-gate
-    // ESCALATE). A suite may not delete another writer's alerts (E9.3), so
-    // the assertion, not the cleanup, was the defect. What this line proves
-    // is narrow and is all it ever proved: THIS escalation raised exactly one
-    // open high alert, none and no second copy. The dedup key's own shape —
-    // `hook:<policy>:<action>:<run>`, so an early 'revised' cannot mask a
-    // later 'escalated' — is asserted separately below, on the trigger.
+    // carried this policy and THE BENCH ITSELF WROTE THEM. `tests/phase4/
+    // velocity.test.ts` boots the real scheduler, whose drain carries no
+    // department fence (`scheduler.ts:563`, `drainTasks({})`), so while that
+    // case runs, the resident worker claims whatever the construction queue
+    // holds — here the W9 road proof's own kept task, three times (10:24:36
+    // reaped → 10:25:16 claimed → 10:25:18 failed, and again at 10:28 and
+    // 10:36), each a real post-gate ESCALATE. A suite may not delete another
+    // suite's rows (E9.3), so the assertion, not the cleanup, was the defect.
+    // What this line proves is narrow and is all it ever proved: THIS
+    // escalation raised exactly one open high alert, not none and not a
+    // second copy. The dedup key's own shape — `hook:<policy>:<action>:<run>`,
+    // so an early 'revised' cannot mask a later 'escalated' — is asserted
+    // separately below, on the trigger.
     const alert = await sql<{ n: number }>`
       SELECT count(*)::int AS n FROM alerts
        WHERE source = 'hook' AND level = 'high' AND resolved_at IS NULL

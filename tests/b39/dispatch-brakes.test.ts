@@ -423,13 +423,15 @@ describe("B39 · the decision — the company works out its own hands, the CEO s
     // Ceiling 3000, spent 2000 → 1000 left → room for exactly one more job.
     //
     // AND THE WINDOW IS READ ON THIS SUITE'S OWN DEPARTMENT, because clearing
-    // its own rows is not isolation when somebody ELSE writes into the same
-    // hour. Measured 2026-09-21 on the construction engine: the resident worker
-    // had claimed nine media-studio jobs of the generated fiction in the same
-    // 60 minutes and written nine ZERO-token receipts; they never entered the
-    // suite's own sweep (E9.3 — a suite deletes only what it creates), and they
-    // dragged the average from 1000 to 181.8, so the line answered five hands
-    // where one was due.
+    // its own rows is not isolation when ANOTHER SUITE writes into the same
+    // hour. Measured 2026-09-21 on the construction engine: `tests/phase4/
+    // velocity.test.ts` boots the real scheduler, whose drain carries no
+    // department fence (`scheduler.ts:563`, `drainTasks({})`), so the resident
+    // worker claimed nine media-studio jobs of the generated fiction in the
+    // same 60 minutes and wrote nine ZERO-token receipts. They never entered
+    // this suite's sweep (E9.3 — a suite deletes only what it creates), and
+    // they dragged the average from 1000 to 181.8, so the line answered five
+    // hands where one was due.
     //
     // THE QUERY BELOW IS A COPY OF THE SCHEDULER'S AND IT IS NOT IDENTICAL —
     // said plainly, because scheduler.ts:266-271 records the danger of a copy
