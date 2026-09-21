@@ -6,9 +6,24 @@ videonun deposu nerede? resimleri, altyazıları veya içerik yazıları nerede,
 tutuyorsun hepsini? Opus 5 geldiğinde tekrar bu videoları indirmek, resimleri kırpmak yerine
 nerede bulacak her şeyi?"*
 
-**Short answer: nothing has to be re-downloaded and nothing has to be re-cropped.** Everything is
-on this machine, under one directory, and the reading itself — every subtitle, every screen text,
-every panel label — is written as text inside the reports, which ARE committed to git. **Amended 2026-08-02:** the sixteen reports written in July were BINNED by the CEO (LAW A) and none of their sentences may be re-used; the material they were built from stays, and twelve further sources he supplied were fetched to the same standard.
+**Short answer, as it stood on 2026-07-28: nothing has to be re-downloaded and nothing has to be
+re-cropped, because everything is on this machine under one directory.** The half of that answer
+that still holds is the important half: the reading itself — every subtitle, every screen text,
+every panel label — is written as text inside the reports, and the reports ARE committed to git.
+
+> **AMENDED 2026-09-21 (B50), AND THE FIRST HALF IS DELETED RATHER THAN FOOTNOTED (LAW A): THE RAW
+> MATERIAL IS GONE, ON HIS OWN CLICK.** He ordered the house cleaned — *"Rakip videoları zaten
+> raporları hazırlandı. Sentezlenecek. Rakip videoların şeyine ihtiyacımız yok herhalde.
+> İhtiyacımız olmayan kısımları sil"* — saw the folder-by-folder list with its sizes, and clicked at
+> 19:12 (`b50-sweep-click-2026-09-21`). **So a path written below is the address the capture USED; it
+> is no longer a promise that the file is there.** Measured today, path by path, against the disk:
+> `media/` 1 of 30, `frames/` 11 of 36, `transcripts/` 29 of 30, `zoom/` 9 of 17, `repos/` 0 of 3 still exist. A video, a frame or a clone that went would
+> have to be fetched again — and that is what he decided, because the reading is already in the
+> reports and the reports are what get synthesised. The badge is not repeated on all sixty-six
+> vanished paths, which would bury the content; these counts are the check, and the three `repos/`
+> rows carry their own line because each names a clone's size and HEAD.
+
+**Amended 2026-08-02:** the sixteen reports written in July were BINNED by the CEO (LAW A) and none of their sentences may be re-used; twelve further sources he supplied were fetched to the same standard. *(The clause that followed — "the material they were built from stays" — was true until his sweep of 2026-09-21 and is deleted rather than footnoted: see the amendment above.)*
 
 Everything below was measured on 2026-07-28 by command, not recalled.
 
@@ -22,18 +37,29 @@ Everything below was measured on 2026-07-28 by command, not recalled.
 ├── 00-ARCHIVE.md       this file — the map                    (git: TRACKED)
 ├── <nn>-*.md           one report per finished row (git: TRACKED)
 ├── transcripts/*.json  spoken word, timestamped, per source   (git: TRACKED)
-├── media/              30 videos + the PDF, all ≥720p, audio kept (git: IGNORED)
-├── frames/             native-resolution zoom aid, never the reading (git: IGNORED)
-└── repos/              the three cloned repositories          (git: IGNORED)
+├── media/              WAS 30 videos + the PDF; 1 left after his sweep  (git: IGNORED)
+├── frames/             zoom aid, never the reading; 11 of 36 left       (git: IGNORED)
+├── zoom/               crops; 9 of 17 left                              (git: IGNORED)
+└── repos/              WAS three cloned repositories; the directory is gone (git: IGNORED)
 ```
 
 **Why media/frames/repos are gitignored and that is correct:** 1.1 GB of binaries would bloat the
 repository forever, and they are **reproducible byte-for-byte** — every report names the sha256 of
-the exact file it read, and `scripts/rival-intel/fetch.sh <nn>` rebuilds the media and the frames
-from the URL. If the hash does not match, the source changed underneath us and we know it.
-`tests/c42/rival-intel-ledger.test.ts` verifies each report's sha256 **against the file on disk**,
-so a fingerprint can never again describe some other bytes (it did for six reports on 2026-07-28;
-found, fixed, and the gate strengthened in the same turn).
+the exact file it read, and `scripts/rival-intel/fetch.sh <nn>` (still on disk, measured
+2026-09-21) rebuilds the media and the frames from the URL. If the hash does not match, the source
+changed underneath us and we know it. `tests/c42/rival-intel-ledger.test.ts` verifies a report's
+sha256 **against the file on disk**, so a fingerprint can never again describe some other bytes (it
+did for six reports on 2026-07-28; found, fixed, and the gate strengthened in the same turn).
+
+> **AND HIS SWEEP CHANGED WHAT THAT GATE CAN SEE — measured 2026-09-21, written here because no
+> other record names it.** The gate walks the files that are IN `media/`
+> (`rival-intel-ledger.test.ts:383-385`, and it returns early when the directory is absent —
+> *"media is gitignored; skip on a fresh clone"*). Since the sweep that directory holds **one** file,
+> `15-vibecoder-4-sites.pdf`, so the hash-against-bytes check now covers **1 source instead of 30**.
+> Nothing broke and nothing lies: the gate skips what is not there by design, the six red cases in
+> this suite are B22's and are about report text, not hashes, and the count was the same before the
+> sweep and after it. But the cover is thinner than the sentence above sounds, and re-fetching a
+> source with `fetch.sh <nn>` is what puts it back.
 
 ## 2. Source by source — measured
 
@@ -56,7 +82,7 @@ found, fixed, and the gate strengthened in the same turn).
 | **15** | `ozgurmode` — *"Vibe Coding İçin 4 Temel SaaS Altyapı Aracı"* (Part 5) | `media/15-vibecoder-4-sites.pdf` · **2 pages, A4 595.92 × 841.92 pt**, no audio, printed by `HeadlessChrome/150` | `fd2ffd0d1523b6ec…` | `frames/15/` — **0 frames**, and it stays empty: a 2-page PDF is read at full page resolution. The 2026-08-10 reading rendered both pages at **150 dpi** with `pdftoppm` into the session scratchpad and sampled the palette and geometry from those pixels; nothing was written into the repository | none — the document is its own text, read with `pdftotext -layout` | **`15-vibecoder-4-sites-pdf.md` — written from nothing 2026-08-10** under law 7. The queue's only PDF |
 | **16** | `open-jarvis/OpenJarvis` — *"Personal AI, On Personal Devices"* (Stanford Hazy Research + Scaling Intelligence Lab) | `repos/openjarvis` — 146M, **2,033 tracked files, 1,318 Python files, 273,577 lines** — **clone swept 2026-09-21 on his click (B50)** | HEAD `93fc7b9e7759717bdc618097debe7cd0c4abf6ef` (2026-07-28) — **measured 2026-08-10 as 28 commits behind `main`**, and the drift is written into the report rather than hidden | — the reading is the source tree itself | — | **`16-openjarvis-repo.md` — written from nothing 2026-08-10** under law 7. Read module by module; seven decisive files read in full (`evals/core/trace.py`, `agents/morning_digest.py`, `learning/routing/{complexity,router}.py`, `scheduler/scheduler.py`, `skills/__init__.py`, `intelligence/model_catalog.py`) |
 | **17** | **Higgsfield** — *"POV: Higgsfield is building you a $150k MRR app"* | `media/17-DZoJOLQoQY2.mp4` · **1080×1920, 24 fps, 85.583 s**, audio `aac` kept | `a5ccfacac3b09c49…` | `frames/17/` — **86 frames** + 1 scene cut, **and the 2026-08-10 reading's own material: `zoom/17/` — 7 native crops** (`stats-locked-9.0`, `accounts-header-26.0`, `virality-54.0`, `trends-62.0`, `trend1-62.0`, `trend2-62.0`, `support-74.0`, `incident-78.0`, `pipeline-13.0`) **+ `zoom/17/dense/` — 80 crops at 10 fps over 2.0–10.0 s**, cut to time the counter animation that 1 fps cannot resolve | `transcripts/17.json` — en, 11 segments; **defect measured and recorded, not hidden**: the first ~30 s came back nearly empty and the reel's burned-in captions carry that half-minute | **`17-dzojolqoqy2.md` — written from nothing 2026-08-10** under laws 7 and 8. All 86 frames read in order at native resolution |
-| **18** | **Luke Cutting — `lukebuildsai`** — *"This is the part of Jarvis I don't usually show"* (his Slack workspace) | `media/18-DZC-H3tRH7C.mp4` · **1080×1920**, audio kept | `9f59f661ae674c4c…` | `frames/18/` — **67 frames** + `zoom/18/` | `transcripts/18.json` — en, 25 segments | **`18-dzc-h3trh7c.md` — written 2026-08-10.** *(This cell said "not yet written" until 2026-08-10 while the report existed and the row read `reported` — corrected here under law 6, ledger parity.)* |
+| **18** | **Luke Cutting — `lukebuildsai`** — *"This is the part of Jarvis I don't usually show"* (his Slack workspace) | `media/18-DZC-H3tRH7C.mp4` · **1080×1920**, audio kept | `9f59f661ae674c4c…` | `frames/18/` — **67 frames** + `zoom/18/` | `transcripts/18.json` — en, 25 segments | **`18-dzc-h3trh7c.md` — written 2026-08-10.** *(Until 2026-08-10 this cell claimed the report was still unwritten, while the report existed and the row read `reported` — corrected then under law 6, ledger parity. The old wording is reported here rather than quoted, so a plain search for it no longer counts this corrected cell as a stale one.)* |
 | **19** | **Luke Cutting — `lukebuildsai`** (same author as 01 and 18) — *"My $30K/mo app runs on this AI setup"* | `media/19-DZc0F3Nx2rb.mp4` · **1080×1920, vp9, 30 fps, 41.310 s**, audio `aac` 44.1 kHz stereo kept | `2c340df407753e7c…` | `frames/19/` — **41 native frames**, **and the 2026-08-10 reading's own material: `zoom/19/` — the whole-screen crop plus 9 panel crops and their reading enlargements, `zoom/19/dense/` — 60 crops at 10 fps over 24.0–30.0 s** cut to separate the screen's own movement from the handheld camera | `transcripts/19.json` — en, 9 segments; duration `41.3096875` validated against `ffprobe` before reuse | **`19-dzc0f3nx2rb.md` — written 2026-08-10** under laws 4-11. All 41 frames read in order with the audio |
 | **20** | **No Hype Ai — `_no_hype_ai`** (account `26355014945`, uploaded 2026-07-15; **not the author of 01/18/19**) — *"My best ideas come when I'm NOT in front of my computer"* — his Obsidian idea-capture pipeline | `media/20-Da0EUZAu0ve.mp4` · **1080×1920, vp9, 30 fps, 74.006 s**, audio `aac` 48 kHz stereo kept | `babd8e874406b219…` | `frames/20/` — **74 native frames**, plus `zoom/20/` — 9 crops cut from the video and `zoom/20/dense/` — **100 crops at 10 fps over 64.0-74.0 s** to separate the screen's own movement from the handheld camera | `transcripts/20.json` — en, 15 segments; last end `73.76` validated against `ffprobe`'s `74.006` before reuse | **`20-da0euzau0ve.md` — written 2026-08-10** under laws 1-11. All 74 frames read in order with the audio |
 | **21** | *not yet identified — named after watching* | `media/21-DXyvXCNITAK.mp4` · **1080×1920**, audio kept | `3f5e3b17a604c8a3…` | `frames/21/` — **35 frames** | `transcripts/21.json` — en, 11 segments | `21-dxyvxcnitak.md` — **reported** |
