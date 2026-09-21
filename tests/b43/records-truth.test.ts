@@ -26,7 +26,15 @@ describe("the records ruler bites", () => {
   });
   it("stays quiet on a sentence that says the eye came, and on a subject it does not know", () => {
     expect(r2NoAwaitingOnAccepted(root, withLine("W13 was accepted by his eye on 2026-09-16 and waits for nothing.")).pass).toBe(true);
-    expect(r2NoAwaitingOnAccepted(root, withLine("B46 waits on his eye (LAW B).")).pass).toBe(true);
+    // THE FIXTURE MAY NOT NAME A LIVE SUBJECT. It said "B46 waits on his eye (LAW B)" as the
+    // example of a subject the ruler does not know. On 2026-09-21 the CEO closed B46 with one
+    // sentence (11879bfd), the ledger gained b46-closed-by-his-word-2026-09-21, the ruler began
+    // ringing CORRECTLY - and this test went red. The record was right and the fixture was stale:
+    // a fixture that names a subject whose status can change breaks on the day it changes. B99 is
+    // fictional, has no board row, and the guard on the line below says so out loud - so if it
+    // ever stops being fictional, this fails where the reason is written.
+    expect(C.accepted.some((row) => row.subject.test("B99"))).toBe(false);
+    expect(r2NoAwaitingOnAccepted(root, withLine("B99 waits on his eye (LAW B).")).pass).toBe(true);
     expect(r2NoAwaitingOnAccepted(root, withLine("the media_jobs row 16277dac, asked twice and unanswered (the W8 guard pins it).")).pass).toBe(true);
   });
   it("names every subject row against a registered approval", () => {
