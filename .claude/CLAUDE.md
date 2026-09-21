@@ -158,6 +158,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | When you are… | Open |
 |---|---|
 | starting a session, or picking up work | `dxb-start` |
+| running a job on its own — chief engineer + writer + refuter, phase loop, context-bounded handovers | `dxb-crew` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |
