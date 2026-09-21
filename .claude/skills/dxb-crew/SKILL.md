@@ -93,11 +93,18 @@ described to him.
    such — nothing becomes a law unless he said "make it a law".
 2. **The successor is opened by the chief engineer** (its own successor included; the writer
    never opens a Fable), in the VS Code editor area, through `operator` — look at the screen
-   first; if the CEO is typing, wait:
+   first; if the CEO is typing, wait. **Two measurements from this machine, 2026-09-21, and both
+   break the obvious version of this step:** `operator type` INVERTS THE CASE here — the palette
+   read `tERMINAL: cREATE nEW…` — and the palette matched it anyway, so a command NAME may still
+   be typed; a case-sensitive command line may not, and is pasted instead. And `claude` is not on
+   the PATH of a terminal VS Code opens (`claude: command not found`, 17:21), so the binary is
+   named by its own path: `/home/dxb/.local/bin/claude` (a symlink into `~/.local/share/claude/versions/`).
    `operator key ctrl+shift+p` → `operator type "Terminal: Create New Terminal in Editor Area"`
    → `operator key Return` → `operator shot` (is the new terminal focused?) →
-   `operator type 'claude --model <claude-opus-5|claude-fable-5-1> --effort <xhigh|high> "$(cat <note>)"'`
-   → `operator key Return` → `operator shot`.
+   `wl-copy '/home/dxb/.local/bin/claude --model <claude-opus-5|claude-fable-5-1> --effort <xhigh|high> "$(cat <note>)"'`
+   → `operator key ctrl+shift+v` (the terminal's own paste — `ctrl+v` does not reach it, measured)
+   → `operator shot` and READ the line before committing to it → `operator key Return` →
+   `operator shot`.
 3. **Prove it is alive:** `ListAgents` shows the new name; send it its first order; the outgoing
    session stops taking work and says so. A `SendMessage` "success" is a queue, not a delivery —
    the reply or the idle notice is the proof.
