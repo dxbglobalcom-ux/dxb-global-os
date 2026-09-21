@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { randomUUID } from "node:crypto";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/index.js";
-import { sweepByDepartment } from "../helpers/suite-scope.js";
+import { sweepByDepartment, watchLedgers } from "../helpers/suite-scope.js";
 
 // E9.4 verification — PROJECT_OPERATING_SYSTEM_SPEC §10/§13/§16/§17/§20/§27:
 //   project_health_breakdown: every §10 component exercised in isolation
@@ -16,6 +16,9 @@ import { sweepByDepartment } from "../helpers/suite-scope.js";
 // Suite deletes ONLY what it creates (tests/helpers rule, E9.3 incident).
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = "e94t"; // suite marker: slugs, departments, idempotency keys
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -102,6 +105,10 @@ async function sweep() {
 
 beforeAll(sweep);
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "ceo", action: "project.set_dependency" }] });
   await sweep();
   await closeDb();
 });

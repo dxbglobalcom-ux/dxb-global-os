@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { afterAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
-import { pinHookOff } from "../helpers/suite-scope.js";
+import { pinHookOff, watchLedgers } from "../helpers/suite-scope.js";
 import { commitMemory } from "../../packages/memory-router/src/index.js";
 import { promote } from "../../tools/dxb-cli/src/promote.js";
 
@@ -13,6 +13,9 @@ import { promote } from "../../tools/dxb-cli/src/promote.js";
 
 const DIM = 1536;
 const AGENT = `contra-test-${randomUUID().slice(0, 8)}`;
+
+// Its own footprints in audit_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 const LIVE = process.env.DXB_LIVE_SDK === "1";
 
 function vec(axis: number, value = 1, bleed?: { axis: number; value: number }): number[] {
@@ -42,7 +45,15 @@ afterAll(async () => {
     await db.deleteFrom("memory_embeddings").where("index_id", "in", createdIndexIds).execute();
     await db.deleteFrom("memory_index").where("id", "in", createdIndexIds).execute();
   }
-  await db.deleteFrom("audit_log").where("actor", "in", [AGENT, "ceo:cli"]).where("created_at", ">", new Date(Date.now() - 3_600_000)).execute();
+  // 2026-09-21: THE HOUR WAS NOT OWNERSHIP. This line used to delete every
+  // `ceo:cli` audit row written in the previous SIXTY MINUTES — and the
+  // battery runs `tests/phase7/watchdog` before this file, whose kill-switch
+  // rows carry that same actor. Measured that day, running each file alone:
+  // this suite ended a run with audit_log FIVE ROWS SMALLER than it started,
+  // and the five were the watchdog's. A suite may only delete what it can
+  // prove it wrote (E9.3), so the predicate is now its own watermark plus its
+  // own actors — and an hour of the company's real history is safe from it.
+  await ledgerScope.sweep({ audit: [{ actor: AGENT }, { actor: "ceo:cli" }] });
   await closeDb();
 });
 

@@ -7,6 +7,7 @@ import {
   fallbackModel,
   selectModel,
 } from "../../packages/orchestrator/src/select-model.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // E7.1 verification (roadmap: "routing testi: slot → beklenen model; fallback
 // zinciri decision_log'a"). Pure DB, runs against the local Supabase stack.
@@ -15,6 +16,9 @@ import {
 // audit_log in every E6 battery).
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 
 // Seed truth (migration 20260713040000): primary=fable-5, fast/low-cost=haiku,
 // the other ten slots=opus. The test reads EXPECTED from the live settings
@@ -33,6 +37,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "orchestrator", decision: "routing_decision" }, { decidedBy: "orchestrator", decision: "routing_fallback" }] });
   // Belt-and-braces: remove any probe rows even if an assertion aborted early.
   await sql`DELETE FROM routing_rules WHERE model_id LIKE 'test-e7-%' OR (role_slot IS NOT NULL AND priority = 9900)`.execute(db());
   await sql`DELETE FROM model_catalog WHERE id LIKE 'test-e7-%'`.execute(db());

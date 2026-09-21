@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
-import { pinHookOff } from "../helpers/suite-scope.js";
+import { pinHookOff, watchLedgers } from "../helpers/suite-scope.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import {
   departmentKeyEnvVar,
@@ -23,6 +23,9 @@ import {
   shouldCouncil,
   type DecomposedEnvelope,
 } from "../../packages/orchestrator/src/index.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // Master-plan step 7 verification (05-08, CNCL-01 + ORCH-02). Groups:
 //   (t) shouldCouncil truth table — deterministic
@@ -93,6 +96,10 @@ function loadGolden(): GoldenFixture[] {
 }
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "orchestrator:dispatch", decision: "task_plan" }, { decidedBy: "orchestrator:qa" }, { decidedBy: "orchestrator:escalate", decision: "escalation" }], decidedByLike: ["worker-orch-qa-%"] });
   const db = getDb();
   if (createdTaskIds.length > 0) {
     await db.deleteFrom("cost_ledger").where("task_id", "in", createdTaskIds).execute();

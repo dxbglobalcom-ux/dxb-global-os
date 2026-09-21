@@ -35,9 +35,12 @@ import { runMediaLaneOnce, type EngineRunner } from "../../packages/outbox-execu
 import { resolveExecutionRoute, runWorkerOnce, turnBudgetFor } from "../../packages/orchestrator/src/worker-shim.js";
 import { SDK_MODEL_IDS } from "../../packages/kernel/src/index.js";
 import { compileLibraryProfiles, pinAll, readDxbMcpInventory, readLibraryLayer } from "../../packages/gateway/src/index.js";
-import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
+import { pinHookOff, sweepByDepartment, watchLedgers } from "../helpers/suite-scope.js";
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = `b43t-${randomUUID().slice(0, 6)}`;
 const DEPT = `${M}-studio`;
 const OTHER = `${M}-other`;
@@ -123,6 +126,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decidedByLike: ["b43t-%"] });
   if (jobIds.length) await db().deleteFrom("media_jobs").where("id", "in", jobIds).execute();
   await sql`DELETE FROM media_jobs WHERE department LIKE ${M + "%"}`.execute(db());
   if (ruleIds.length) await db().deleteFrom("routing_rules").where("id", "in", ruleIds).execute();

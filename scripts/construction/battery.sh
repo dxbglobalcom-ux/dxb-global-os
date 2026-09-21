@@ -32,6 +32,31 @@ HOST_FILES=(
   tests/b46/a-hunter-cannot-write.test.ts
 )
 
+# ── THE BENCH'S OWN RULER (CEO 2026-09-21: "tezgah kendini temizlesin her zaman
+# bu sorunlarla karşılaşmayalım temiz işle ilerleyelim").
+#
+# A suite that leaves rows behind poisons the next audit, and for months the
+# only way to learn that was for a later run to go red for a reason that had
+# nothing to do with the code under test — three files did exactly that on
+# 2026-09-21, counting work another suite's scheduler had done. So the battery
+# now measures itself: every table in the construction engine's public schema
+# is counted before and after, and a table that GREW names itself and turns the
+# battery red. pg-boss's own schema is excluded — it is the queue's bookkeeping,
+# not the company's record.
+#
+# It measures the CONSTRUCTION engine and nothing else (port 54422).
+BENCH_URL="${DXB_CONSTRUCTION_URL:-postgresql://postgres:postgres@127.0.0.1:54422/postgres}"
+bench_counts() {
+  local q
+  q=$(psql -tA "$BENCH_URL" -c "SELECT string_agg(format('SELECT %L AS t, count(*)::bigint AS n FROM public.%I', tablename, tablename), ' UNION ALL ') FROM pg_tables WHERE schemaname='public';" 2>/dev/null) || return 1
+  [ -z "$q" ] && return 1
+  psql -tA -F'|' "$BENCH_URL" -c "SELECT t, n FROM ($q) s ORDER BY 1;" 2>/dev/null
+}
+BEFORE_ROWS="$(PGPASSWORD=postgres bench_counts || true)"
+if [ -z "$BEFORE_ROWS" ]; then
+  echo "⚠ UNVERIFIED — the bench ruler could not read $BENCH_URL; residue is NOT measured this run"
+fi
+
 echo "=== 1/2 · THE CONSTRUCTION RUNTIME — the sandboxed suite ==="
 EXCLUDES=()
 for f in "${HOST_FILES[@]}"; do EXCLUDES+=(--exclude "$f"); done
@@ -45,9 +70,30 @@ pnpm vitest run "${HOST_FILES[@]}"
 host=$?
 
 echo
+echo "=== THE BENCH'S OWN RULER — what this run left behind ==="
+residue=0
+if [ -n "$BEFORE_ROWS" ]; then
+  AFTER_ROWS="$(PGPASSWORD=postgres bench_counts || true)"
+  if [ -z "$AFTER_ROWS" ]; then
+    echo "⚠ UNVERIFIED — the bench could not be re-counted; residue unknown for this run"
+  else
+    grew=$(join -t'|' <(echo "$BEFORE_ROWS") <(echo "$AFTER_ROWS") \
+           | awk -F'|' '$3 > $2 {printf "    %-30s %s -> %s  (+%d)\n", $1, $2, $3, $3-$2}')
+    if [ -n "$grew" ]; then
+      echo "    a suite left rows in the construction engine — it must sweep what it writes:"
+      echo "$grew"
+      residue=1
+    else
+      echo "    every table is the size it was — no suite left a row behind"
+    fi
+  fi
+fi
+
+echo
 echo "sandboxed suite : exit $sandboxed"
 echo "host suite      : exit $host"
-if [ "$sandboxed" -ne 0 ] || [ "$host" -ne 0 ]; then
+echo "bench residue   : $([ "$residue" -eq 0 ] && echo none || echo LEFT_BEHIND)"
+if [ "$sandboxed" -ne 0 ] || [ "$host" -ne 0 ] || [ "$residue" -ne 0 ]; then
   echo "BATTERY_RED"
   exit 1
 fi

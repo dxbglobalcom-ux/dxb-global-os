@@ -17,6 +17,7 @@ import {
   type HookCtx,
   type PostTaskResult,
 } from "../../packages/hook/src/index.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // E10.1 verification — FABLE_5_HOOK_SPEC §20/§21 + roadmap acceptance:
 //   policy violation → RED + decision_log row. Coverage: every one of the 17
@@ -31,6 +32,9 @@ import {
 // Suite deletes ONLY what it creates (id watermarks; E9.3 incident rule).
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = "e10t";
 
 let baseViolationId = 0;
@@ -154,6 +158,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "ceo", action: "hook.set_policy" }] });
   // Restore every policy this suite may have touched, sweep only own rows.
   for (const [id, severity, enabled] of [
     ["std.task_completeness", "block", true],

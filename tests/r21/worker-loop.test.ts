@@ -19,9 +19,12 @@ import { sql } from "kysely";
 import { closeDb, getDb } from "@dxb/shared";
 import { drainTasks } from "../../packages/orchestrator/src/worker-loop.js";
 import type { Executor } from "../../packages/orchestrator/src/worker-shim.js";
-import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
+import { pinHookOff, sweepByDepartment, watchLedgers } from "../helpers/suite-scope.js";
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = "r21t";
 const WORKER = `${M}-resident`;
 
@@ -84,6 +87,10 @@ const okExecutor: Executor = async () => ({
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "orchestrator:escalate", decision: "escalation" }, { decidedBy: "orchestrator:qa", decision: "workflow_branch" }], decidedByLike: ["r21t-%"] });
   await sweepByDepartment(db(), M);
   await closeDb();
 });

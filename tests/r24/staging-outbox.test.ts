@@ -20,11 +20,14 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { runOnce } from "../../packages/outbox-executor/src/index.js";
-import { sweepByDepartment } from "../helpers/suite-scope.js";
+import { sweepByDepartment, watchLedgers } from "../helpers/suite-scope.js";
 
 const MAIL = process.env.DXB_STAGING_MAIL_URL ?? "http://127.0.0.1:8025";
 const DEPT = `r24-${randomUUID().slice(0, 8)}`;
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 
 let client: Client;
 
@@ -48,6 +51,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ idempotencyPrefix: ["r24"] });
   await sweepByDepartment(db(), DEPT);
   await client.close();
   await closeDb();

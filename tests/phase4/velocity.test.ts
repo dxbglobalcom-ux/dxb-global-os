@@ -112,12 +112,16 @@ async function injectStorm(rows: number, eurEach: number): Promise<void> {
 // clock with no hands can take nothing.
 let bootedScheduler: Awaited<ReturnType<typeof openScheduler>> | null = null;
 
-// The eight self-chaining queues `registerSchedules` bootstraps. Nothing runs
-// them here, so they would sit in pgboss.job as this file's own litter.
-const BOOTSTRAPPED_CHAINS = [
-  QUEUES.tick, QUEUES.intentIntake, QUEUES.workflowRun, QUEUES.libraryRecompile,
-  QUEUES.taskWorker, QUEUES.voiceDrain, QUEUES.chatDrain, QUEUES.mediaLane,
-] as const;
+// Every job this file's own clock armed, and NOT by a list of names: the eight
+// self-chaining bootstraps are only most of them. Measured 2026-09-21 by the
+// adversarial pass: one run also left `__pgboss__send-it` (pg-boss's own
+// maintenance job, minted by boss.start) and `lease-reaper` (the */1 cron
+// fired the moment its schedule was registered) — two rows a name list could
+// never have caught. The predicate is therefore TIME, and it is safe because
+// this file is the only pg-boss client on the bench while it runs
+// (vitest.config fileParallelism: false), so no other writer's job can fall
+// inside the window.
+let clockArmedFrom: Date | null = null;
 
 beforeAll(async () => {
   await wipeCostAndAudit();
@@ -130,11 +134,12 @@ afterAll(async () => {
     const boss = bootedScheduler;
     bootedScheduler = null;
     await stopScheduler(boss);
-    // …and the jobs its clock armed go with it. Only the eight this file's own
-    // call created, by name, and only while they are still waiting.
-    await sql`DELETE FROM pgboss.job
-               WHERE name = ANY(${[...BOOTSTRAPPED_CHAINS]})
-                 AND state = 'created'`.execute(getDb());
+    // …and every job its clock armed goes with it: still waiting, and born
+    // inside this file's own window.
+    if (clockArmedFrom) {
+      await sql`DELETE FROM pgboss.job
+                 WHERE state = 'created' AND created_on >= ${clockArmedFrom}`.execute(getDb());
+    }
   }
   await wipeCostAndAudit();
   await clearBreakerState();
@@ -233,6 +238,7 @@ describe("velocity breaker (COST-03)", () => {
 
 describe("scheduler (KERN: one process owns all system routines)", () => {
   it("registers tick 15s / reaper 60s / breaker 5min", async () => {
+    clockArmedFrom = new Date();
     const boss = await openScheduler();
     bootedScheduler = boss;
     await registerSchedules(boss);

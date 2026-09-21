@@ -25,7 +25,7 @@ import { closeDb, getDb, resolveMediaBinary } from "@dxb/shared";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { CPU_KINDS, GPU_KINDS, runMediaLaneOnce, type EngineRunner, type MediaKind, type MediaLaneResult, recoverOrphanedMediaJobs } from "../../packages/outbox-executor/src/media-lane.js";
 import { ALL_MEDIA_KINDS, MediaLanes, cpuLanesFromEnv, desiredMediaLanes, mediaLaneId, mediaLaneKinds } from "../../packages/outbox-executor/src/media-lanes.js";
-import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
+import { pinHookOff, sweepByDepartment, watchLedgers } from "../helpers/suite-scope.js";
 
 const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
@@ -154,6 +154,9 @@ describe("B43 · media lanes — the studio's hands are lanes too", () => {
 // ── 5: the real lane on the construction engine ───────────────────────────────
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = `b43l-${randomUUID().slice(0, 6)}`;
 const DEPT = `${M}-studio`;
 
@@ -206,6 +209,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "media-lane", action: "media.recovered" }] });
   await sql`DELETE FROM audit_log WHERE payload::text LIKE ${"%" + M + "%"}`.execute(db()).catch(() => {});
   await sql`DELETE FROM media_jobs WHERE department LIKE 'b43l-%'`.execute(db());
   await sweepByDepartment(db(), M);

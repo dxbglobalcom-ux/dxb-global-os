@@ -11,6 +11,10 @@ import {
   type RunningJobFacts,
 } from "../../tools/dxb-cli/src/watchdog-decide.js";
 import { killSwitch, type KillSwitchDeps } from "../../tools/dxb-cli/src/kill-switch.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // 07-06 Task 2 deterministic halves (plan): kill decisions + loader rejection
 // + kill-switch state transitions with the LiteLLM/systemctl seam mocked —
@@ -143,6 +147,15 @@ describe("kill-switch state transitions (deps seam; live halves in Task 3)", () 
   }
 
   afterAll(async () => {
+    // 2026-09-21: and the two append-only ledgers too. Measured by running
+    // every sandboxed file alone: this one left the rows named below, which
+    // no FK chain reaches. Watermark AND signature — never the watermark alone.
+    await ledgerScope.sweep({
+      audit: [
+        { actor: "ceo:cli", action: "kill_switch.off" },
+        { actor: "ceo:cli", action: "kill_switch.on" },
+      ],
+    });
     if (initialHardStop !== null) {
       await db.updateTable("budget_state").set({ hard_stopped: initialHardStop }).execute();
     }

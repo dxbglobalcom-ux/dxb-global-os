@@ -7,11 +7,19 @@ import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "@dxb/shared";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 const M = `r13-test-${randomUUID().slice(0, 8)}`;
 const db = () => getDb();
 
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
+
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "revenue.brief" }, { actor: "revenue.rollup" }, { actor: "revenue.scan" }, { actor: "revenue.score" }] });
   await sql`DELETE FROM opportunities WHERE title LIKE ${M + "%"}`.execute(db());
   await sql`DELETE FROM audit_log WHERE payload::text LIKE ${"%" + M + "%"}`.execute(db());
   await closeDb();

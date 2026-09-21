@@ -25,9 +25,12 @@ import { closeDb, getDb } from "@dxb/shared";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { readLibraryLayer } from "../../packages/gateway/src/library-profiles.js";
 import { generateProfiles } from "../../packages/gateway/src/generate-profiles.js";
-import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
+import { pinHookOff, sweepByDepartment, watchLedgers } from "../helpers/suite-scope.js";
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = `w9t-${randomUUID().slice(0, 8)}`;
 const STUDIO = `${M}-studio`;
 const HOME = `${M}-home`;
@@ -150,6 +153,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decidedByLike: ["w9t-%"] });
   await sql`DELETE FROM agent_assignments WHERE ledger_id = ${`${M}-ledger`}`.execute(db()).catch(() => {});
   await sql`DELETE FROM audit_log WHERE payload::text LIKE ${"%" + M + "%"} OR actor LIKE ${M + "%"}`
     .execute(db())

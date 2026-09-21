@@ -10,7 +10,7 @@ import {
   StepError,
   type WorkflowExecutor,
 } from "../../packages/kernel/src/index.js";
-import { pinHookOff } from "../helpers/suite-scope.js";
+import { pinHookOff, watchLedgers } from "../helpers/suite-scope.js";
 
 // R2.3: the workflow agent step now runs the SAME hook constitution as the
 // task path. This suite's fixtures predate the hook (no persona/project
@@ -28,6 +28,9 @@ pinHookOff(() => getDb());
 // pollute /alerts or any other CEO surface).
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const SLUG = (s: string) => `e9t-${s}`;
 const probeAgentIds: string[] = [];
 
@@ -706,6 +709,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "system:outbox", action: "outbox.enqueue_skipped_no_handler" }], idempotencyPrefix: ["wf"] });
   await sweepProbeRows();
   await closeDb();
 });

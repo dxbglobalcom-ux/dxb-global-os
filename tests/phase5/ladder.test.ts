@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
-import { pinHookOff } from "../helpers/suite-scope.js";
+import { pinHookOff, watchLedgers } from "../helpers/suite-scope.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import {
   bumpTier,
@@ -11,6 +11,9 @@ import {
   runWorkerOnce,
   type DecomposedEnvelope,
 } from "../../packages/orchestrator/src/index.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // Master-plan step 6 verification (05-06, ORCH-03). Deterministic — pure DB +
 // injectable executors, no LLM, never skipped. Groups:
@@ -48,6 +51,10 @@ const failingExecutor = (label: string) => async () => {
 };
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "orchestrator:escalate", decision: "escalation" }, { decidedBy: "orchestrator:dispatch", decision: "task_plan" }], decidedByLike: ["worker-lad-%", "worker-hard-%"] });
   const db = getDb();
   if (createdTaskIds.length > 0) {
     await db

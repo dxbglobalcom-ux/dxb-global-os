@@ -7,6 +7,10 @@ import {
   isMoneyOut,
   type InboxApproval,
 } from "../../apps/dashboard/src/lib/approvals.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // 08-03: GATE-03 decision surface proofs — risk grouping (pure logic),
 // single-transaction batch decide with 1:1 audit rows, all-or-nothing
@@ -53,6 +57,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "system:outbox", action: "outbox.enqueue_skipped_no_handler" }] });
   const db = getDb();
   const all = Object.values(ids);
   await sql`delete from audit_log where action = 'approval.decision' and payload->>'approval_id' = any(${all})`.execute(db);

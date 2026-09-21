@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/index.js";
 import { classifyOperation } from "../../packages/kernel/src/index.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // E9.3 verification — APPROVAL_ENGINE_SPEC §20/§21/§24:
 //   fn_classify_operation (priority scan, fail-closed unknown→gated),
@@ -18,6 +19,9 @@ import { classifyOperation } from "../../packages/kernel/src/index.js";
 // Suite cleans up EVERYTHING it creates (E8.4b lesson).
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const PROBE = "e93-probe";
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -515,6 +519,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "system:outbox", action: "outbox.enqueue_skipped_no_handler" }] });
   await sweepProbeRows();
   await closeDb();
 });

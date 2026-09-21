@@ -4,6 +4,10 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { readFileSync } from "node:fs";
+import { watchLedgers } from "../helpers/suite-scope.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 let client: Client;
 
@@ -54,6 +58,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "engineering", action: "queue.create_task" }, { actor: "registry" }, { actor: "test", action: "tool_call" }, { actor: "tracer", action: "decision" }] });
   await sweepCostProbes();
   await sweepTraceTasks();
   // legal-de is a probe department with no display_name_tr — leaving it live

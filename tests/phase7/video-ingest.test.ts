@@ -11,6 +11,7 @@ import {
   type IngestDeps,
 } from "../../tools/video-learn/src/ingest.js";
 import { classifyDepartment, generateSections } from "../../tools/video-learn/src/generate.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // 07-07 (VID-01, master step 10): link → transcript → sections → quarantined
 // memory rows through the single door. Deterministic battery via the stage
@@ -19,6 +20,9 @@ import { classifyDepartment, generateSections } from "../../tools/video-learn/sr
 
 const LIVE = process.env.DXB_LIVE_SDK === "1";
 const db = getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => db);
 
 const RUN = randomUUID().slice(0, 8);
 const FIXTURE_URL = `https://example.invalid/watch?v=fix-${RUN}`;
@@ -81,6 +85,10 @@ async function rowsForSource(source: string) {
 const cleanupSources: string[] = [FIXTURE_URL];
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "video-learn", action: "memory_commit" }, { actor: "memory-router", action: "quarantined_recall" }] });
   for (const src of cleanupSources) {
     const rows = await rowsForSource(src);
     for (const r of rows) {

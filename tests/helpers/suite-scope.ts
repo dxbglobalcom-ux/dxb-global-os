@@ -86,3 +86,101 @@ export async function assertNoForeignReadyOutbox(db: Kysely<DB>): Promise<void> 
     );
   }
 }
+
+// ── THE LEDGERS, 2026-09-21 ──────────────────────────────────────────────────
+// `sweepByDepartment` follows the FK chain out of a suite's own tasks, and
+// that chain does not reach the two append-only ledgers: `audit_log` and
+// `decision_log` hang off nothing. So a suite could clear every fixture it
+// made and still leave its footprints there — measured this day by running
+// each of the 129 sandboxed files alone against the construction engine:
+// 31 of them left rows behind, +98 audit and +82 decision rows per battery,
+// on top of 58,000 and 15,000 already accumulated.
+//
+// THE RULE THIS OBEYS. A watermark alone is not ownership: `id > max(id)`
+// deletes whatever ANY writer put there while the suite ran (that exact line
+// in tests/e10 was caught deleting another writer's rows). So a sweep here
+// needs BOTH — the suite's own watermark AND a signature the suite itself
+// produced: the actor and action it writes, the `decided_by` it dispatches
+// under, the idempotency prefix it keys on. Rows that match neither are
+// somebody else's and stay.
+export interface LedgerSignatures {
+  /** audit_log rows this suite causes: actor, and the action when the actor is shared. */
+  audit?: Array<{ actor: string; action?: string }>;
+  /** decision_log rows this suite causes. */
+  decisions?: Array<{ decidedBy: string; decision?: string }>;
+  /** decision_log rows whose `decided_by` is a generated fixture id — SQL LIKE. */
+  decidedByLike?: string[];
+  /** control_idempotency keys this suite mints, by their leading segment. */
+  idempotencyPrefix?: string[];
+  /** hook_violations this suite provokes, by the policy it breaks. A probe
+   *  with no run of its own is the shape that accumulates: 354 run-less
+   *  `std.knowledge_shelf` rows had been sitting on the bench since 08-23. */
+  hookViolations?: Array<{ policyId: string; runlessOnly?: boolean }>;
+}
+
+export interface LedgerScope {
+  /** Call inside the suite's own afterAll, BEFORE closeDb(). */
+  sweep(own: LedgerSignatures): Promise<void>;
+}
+
+/**
+ * Take the ledger watermarks before the suite runs, and hand back the sweep
+ * it must call in its own teardown. It is deliberately NOT an afterAll of its
+ * own: most suites close the pool in theirs, and a hook that fires after that
+ * would be sweeping through a closed connection.
+ */
+export function watchLedgers(db: () => Kysely<DB>): LedgerScope {
+  let auditFrom = 0;
+  let decisionFrom = 0;
+  let mintedFrom = new Date(0);
+
+  beforeAll(async () => {
+    const a = await sql<{ mx: string | null }>`SELECT max(id)::text AS mx FROM audit_log`.execute(db());
+    auditFrom = Number(a.rows[0]?.mx ?? 0);
+    const d = await sql<{ mx: string | null }>`SELECT max(id)::text AS mx FROM decision_log`.execute(db());
+    decisionFrom = Number(d.rows[0]?.mx ?? 0);
+    mintedFrom = new Date();
+  });
+
+  return {
+    async sweep(own: LedgerSignatures): Promise<void> {
+      for (const s of own.audit ?? []) {
+        if (s.action) {
+          await sql`DELETE FROM audit_log
+                     WHERE id > ${auditFrom} AND actor = ${s.actor} AND action = ${s.action}`.execute(db());
+        } else {
+          await sql`DELETE FROM audit_log
+                     WHERE id > ${auditFrom} AND actor = ${s.actor}`.execute(db());
+        }
+      }
+      for (const s of own.decisions ?? []) {
+        if (s.decision) {
+          await sql`DELETE FROM decision_log
+                     WHERE id > ${decisionFrom} AND decided_by = ${s.decidedBy}
+                       AND decision = ${s.decision}`.execute(db());
+        } else {
+          await sql`DELETE FROM decision_log
+                     WHERE id > ${decisionFrom} AND decided_by = ${s.decidedBy}`.execute(db());
+        }
+      }
+      for (const like of own.decidedByLike ?? []) {
+        await sql`DELETE FROM decision_log
+                   WHERE id > ${decisionFrom} AND decided_by LIKE ${like}`.execute(db());
+      }
+      for (const v of own.hookViolations ?? []) {
+        if (v.runlessOnly) {
+          await sql`DELETE FROM hook_violations
+                     WHERE created_at >= ${mintedFrom} AND policy_id = ${v.policyId}
+                       AND run_id IS NULL`.execute(db());
+        } else {
+          await sql`DELETE FROM hook_violations
+                     WHERE created_at >= ${mintedFrom} AND policy_id = ${v.policyId}`.execute(db());
+        }
+      }
+      for (const prefix of own.idempotencyPrefix ?? []) {
+        await sql`DELETE FROM control_idempotency
+                   WHERE created_at >= ${mintedFrom} AND key LIKE ${prefix + "%"}`.execute(db());
+      }
+    },
+  };
+}

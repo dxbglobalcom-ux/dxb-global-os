@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
-import { pinHookOff } from "../helpers/suite-scope.js";
+import { pinHookOff, watchLedgers } from "../helpers/suite-scope.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import { ClassifiedIntent } from "../../packages/kernel/src/index.js";
 import {
@@ -11,6 +11,9 @@ import {
   runWorkerOnce,
   type DecomposedEnvelope,
 } from "../../packages/orchestrator/src/index.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // Master-plan steps 4+5 verification (05-05). Three groups:
 //   (a) decompose — guards unit-tested without LLM; the live multi-intent
@@ -91,6 +94,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "orchestrator:dispatch", decision: "task_plan" }], decidedByLike: ["worker-dep-%", "worker-e2e-%", "worker-fail-%"] });
   await sweepTaskIds(createdTaskIds);
   await sweepStaleProbes();
   await closeDb();

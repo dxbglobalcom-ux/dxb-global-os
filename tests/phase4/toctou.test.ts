@@ -8,7 +8,10 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { approve } from "../../tools/dxb-cli/src/approve.js";
 import { tick } from "../../packages/outbox-executor/src/index.js";
-import { assertNoForeignReadyOutbox, sweepByDepartment } from "../helpers/suite-scope.js";
+import { assertNoForeignReadyOutbox, sweepByDepartment, watchLedgers } from "../helpers/suite-scope.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // GATE-02 proofs (04-03): the executor's same-transaction re-check (TOCTOU),
 // loud refusal of unknown action types, path-traversal confinement, and the
@@ -63,6 +66,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "system:outbox", action: "outbox.enqueue_skipped_no_handler" }] });
   await sweepByDepartment(getDb(), DEPT);
   await client.close();
   await closeDb();

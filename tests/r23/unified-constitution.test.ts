@@ -21,8 +21,12 @@ import {
   resolveEvidenceToolCalls as orchResolve,
 } from "../../packages/orchestrator/src/worker-shim.js";
 import { extractEvidencePackage as orchExtract } from "../../packages/orchestrator/src/hook-binding.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = `r23t-${randomUUID().slice(0, 8)}`;
 const SLUG = (s: string) => `${M}-${s}`;
 
@@ -164,6 +168,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "hook", decision: "hook_reject" }], idempotencyPrefix: ["r23t"] });
   const wfIds = (
     await sql<{ id: string }>`SELECT id FROM workflows WHERE slug LIKE ${M + "%"}`.execute(db())
   ).rows.map((r) => r.id);

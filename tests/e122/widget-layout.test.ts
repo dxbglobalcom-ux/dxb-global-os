@@ -12,6 +12,7 @@ import {
   WIDGET_META,
   WIDGET_TYPES,
 } from "../../apps/dashboard/src/components/widgets/types.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // E12.2 — widget system verification. Row gate: layout saved through the
 // control seam survives into a NEW session (settings_values row, not
@@ -19,6 +20,9 @@ import {
 // pre-existing layout row and restores it afterAll.
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = `e122t-${randomUUID().slice(0, 8)}`;
 const suiteStart = new Date().toISOString();
 
@@ -60,6 +64,10 @@ async function parkOnce(): Promise<void> {
 }
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "ceo", action: "settings.set" }, { actor: "ceo", action: "settings.undo" }] });
   if (parkedMeasured) {
     if (parked !== null) {
       await ceoSet(parked);

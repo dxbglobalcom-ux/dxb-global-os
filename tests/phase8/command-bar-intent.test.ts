@@ -4,6 +4,10 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { intakeIntentOnce } from "../../packages/orchestrator/src/intent-intake.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import { deriveChainStatus } from "../../apps/dashboard/src/lib/intents.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // 08-05 E2E (DB level): TR intent row → intake worker → task chain queued →
 // 'created' event broadcast in the shape the board consumes → intent row
@@ -50,6 +54,10 @@ const fakeDecompose = async () => [
 ];
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "ceo", action: "intent.submitted" }, { actor: "kernel", action: "intent.dispatched" }, { actor: "kernel", action: "intent.failed_dispatch" }], decisions: [{ decidedBy: "orchestrator:dispatch", decision: "task_plan" }] });
   const db = getDb();
   if (createdTasks.length > 0) {
     await sql`delete from task_events where task_id = any(${createdTasks}::uuid[])`.execute(db);

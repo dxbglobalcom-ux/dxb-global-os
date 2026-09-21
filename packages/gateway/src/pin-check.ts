@@ -167,6 +167,17 @@ export async function checkPins(
 
   for (const pin of pins) {
     if (liveKeys.has(`${pin.server} ${pin.tool}`)) continue;
+    // R4.3's scope, WHICH THIS LOOP NEVER APPLIED. The parameter has been
+    // accepted and documented since R4.3 — "its pins are excluded from the
+    // missing-sweep" — and the code above reads it nowhere, so every call
+    // stamped every pin of every server it had not even tried to reach.
+    // Measured 2026-09-21 on the construction engine: 38,811 `tool_missing`
+    // rows, 13,032 of them for `playwright` alone, and one battery run added
+    // 228 — exactly the 76 pins on that engine times the three calls
+    // `tests/phase7/pin-quarantine` makes with a scope of ONE fixture server.
+    // A server that was not reached is unreachable, not tool-less: saying its
+    // tools disappeared is a false statement written into the CEO's ledger.
+    if (serversInScope && !serversInScope.has(pin.server)) continue;
     result.missing.push({ server: pin.server, tool: pin.tool });
     await db
       .insertInto("audit_log")

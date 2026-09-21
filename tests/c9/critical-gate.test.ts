@@ -6,6 +6,10 @@ import {
   runCriticalGate,
   type ChallengerRunner,
 } from "../../packages/orchestrator/src/index.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // MODEL_ROUTING_SPEC §4e — the critical gate. Opus 5 writes, the challengers try
 // to refute, Opus 5 revises and signs.
@@ -26,6 +30,10 @@ const stub =
     per[model] ?? { ok: false, error: `no stub for ${model}` };
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "orchestrator", decision: "critical_gate" }] });
   await closeDb();
 });
 

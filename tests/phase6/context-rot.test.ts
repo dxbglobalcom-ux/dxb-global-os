@@ -3,7 +3,7 @@ import { writeFileSync } from "node:fs";
 import { sql } from "kysely";
 import { afterAll, describe, expect, it } from "vitest";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
-import { pinHookOff } from "../helpers/suite-scope.js";
+import { pinHookOff, watchLedgers } from "../helpers/suite-scope.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import {
   CONTEXT_BAND,
@@ -19,6 +19,9 @@ import {
   type WorkingContext,
 } from "../../packages/orchestrator/src/index.js";
 import { recallMemory } from "../../packages/memory-router/src/index.js";
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 
 // Master step 9 (06-07): context-rot demonstrated AND defeated. A 50-step
 // synthetic task (~800 estimated tokens/step) runs twice through the real
@@ -101,6 +104,10 @@ async function dispatchOne(department: string): Promise<string> {
 }
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "orchestrator:dispatch", decision: "task_plan" }], decidedByLike: ["ctx-rot-%"] });
   const db = getDb();
   const offloaded = await db
     .selectFrom("memory_index")

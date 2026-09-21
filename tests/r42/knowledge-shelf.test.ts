@@ -9,6 +9,7 @@ import {
   type HookCtx,
   type PostTaskResult,
 } from "../../packages/hook/src/index.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // R4.2 knowledge-shelf gate (HOLDING_LIBRARY A9, hook_policies row
 // std.knowledge_shelf): research-marked tasks must carry a file-kind report
@@ -19,6 +20,9 @@ import {
 // row) · TR contract marker engages. Suite deletes only what it creates.
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = "r42t";
 const REF_PREFIX = `.planning/research/${M}-`;
 
@@ -94,6 +98,10 @@ async function sweep() {
 
 beforeAll(sweep);
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ decisions: [{ decidedBy: "hook", decision: "hook_reject" }], hookViolations: [{ policyId: "std.knowledge_shelf", runlessOnly: true }] });
   await sweep();
   await closeDb();
 });

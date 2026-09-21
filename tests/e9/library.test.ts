@@ -10,6 +10,7 @@ import {
   generateProfilesFromPolicy,
   readLibraryLayer,
 } from "../../packages/gateway/src/index.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // E9.5 verification — HOLDING_LIBRARY_SPEC §5/§13/§14/§20/§21:
 //   control_library_action: CEO wall (§13), register/update/grant/revoke,
@@ -23,6 +24,9 @@ import {
 // Suite deletes ONLY what it creates (tests/helpers rule, E9.3 incident).
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const M = "e95t"; // suite marker
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -138,6 +142,20 @@ afterAll(async () => {
       action: "grant", item_id: itemId, grantee_kind: "department", grantee_id: "quality",
     });
   }
+  // 2026-09-21: and the two append-only ledgers too, which no FK chain reaches
+  // — watermark AND signature, never the watermark alone.
+  //
+  // LAST, AND THAT ORDER IS THE POINT. The restore above puts the standing
+  // quality grants back, and every one of them writes its own `library.grant`
+  // row. Measured that day: with the sweep placed first, a battery run still
+  // ended 13 audit rows heavier — the restoration's own footprints, written
+  // after the broom had passed.
+  await ledgerScope.sweep({
+    audit: [
+      { actor: "ceo", action: "library.grant" },
+      { actor: "ceo", action: "library.revoke_grant" },
+    ],
+  });
   await closeDb();
 });
 

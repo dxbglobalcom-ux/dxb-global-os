@@ -7,12 +7,16 @@ import { randomUUID } from "node:crypto";
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "@dxb/shared";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // Repo live-DB test convention (phase4/phase6/e10 files): local Supabase default.
 
 const M = `r12-test-${randomUUID().slice(0, 8)}`;
 const ENGINE_SLUG = `r12test_${M.slice(9)}`; // run-unique: no cross-run audit bleed
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 
 const FULL_DIMS = {
   market: 8, trend: 7, demand: 8, competition: 5, price_gap: 6,
@@ -27,6 +31,10 @@ async function fn(call: string): Promise<Record<string, unknown>> {
 }
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "system", action: "revenue.opportunity.advanced" }, { actor: "system", action: "revenue.opportunity.scored" }] });
   await sql`DELETE FROM opportunities WHERE title LIKE ${M + "%"}`.execute(db());
   await sql`DELETE FROM revenue_engines WHERE slug LIKE ${"r12test%"}`.execute(db());
   await sql`DELETE FROM audit_log WHERE payload::text LIKE ${"%" + M + "%"}

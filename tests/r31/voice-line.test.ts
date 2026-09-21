@@ -27,12 +27,20 @@ import {
   sttTranscribe,
   ttsSpeak,
 } from "../../packages/voice/src/index.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const createdCallIds: string[] = [];
 const createdIntentTexts: string[] = [];
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "ceo", action: "intent.submitted" }, { actor: "system", action: "voice.identity.retired" }, { actor: "system", action: "voice.identity.upserted" }] });
   for (const id of createdCallIds) {
     await db().deleteFrom("voice_calls").where("id", "=", id).execute();
   }

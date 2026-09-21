@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // E12.5 activation contract (CEO rulings D10/D11 2026-07-18, directive §3-bis,
 // adaptation U17; migrations 20260718090000/091000). Live-DB, state-independent:
@@ -9,6 +10,9 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 // judge pre-suite rows, so the transient fixture cannot flake the battery.
 
 const db = () => getDb();
+
+// Its own footprints in audit_log / decision_log, swept in afterAll below.
+const ledgerScope = watchLedgers(db);
 const FIXTURE_SLUG = "e125t-activation-fixture";
 let fixtureId = "";
 
@@ -26,6 +30,10 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // 2026-09-21: and the two append-only ledgers too. Measured by running
+  // every sandboxed file alone: this one left the rows named below, which
+  // no FK chain reaches. Watermark AND signature — never the watermark alone.
+  await ledgerScope.sweep({ audit: [{ actor: "e125t-test" }] });
   await sql`DELETE FROM settings_values WHERE scope = ${"employee:" + fixtureId}`.execute(db());
   await sql`DELETE FROM tasks WHERE agent_id = ${fixtureId}::uuid`.execute(db());
   await sql`DELETE FROM agents WHERE id = ${fixtureId}::uuid`.execute(db());
