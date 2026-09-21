@@ -41,6 +41,23 @@ if [ -n "$RESEARCH_TOUCHED" ]; then
     echo "Duzelt, 'bash scripts/research-ruler.sh' yesil yansin, sonra tekrar commit et." >&2
     exit 1
   fi
+  # ...AND THE RULER'S OWN BITE TESTS, because a ruler that has stopped biting still prints
+  # a green table. Measured 2026-09-21 and this is why the line exists: commit f6e41a68 that
+  # morning raised the channel count 37 -> 39 and corrected the prose the metre could see; the bite
+  # test patched the literal "37 channels", stopped matching, and went red - `1 failed | 63
+  # passed` - while scripts/research-ruler.sh printed 16/16 and this gate let the commit
+  # through. Three metres were watching and none of them ran the suite. It costs ~75 s and
+  # only on a commit that touches the engine; skip it deliberately with DXB_SKIP_B46=1 and
+  # say so out loud when you do.
+  if [ "${DXB_SKIP_B46:-0}" != "1" ]; then
+    if ! npx --prefix "$REPO_TOP" vitest run --root "$REPO_TOP" tests/b46 >/tmp/dxb-b46.log 2>&1; then
+      echo "" >&2
+      tail -20 /tmp/dxb-b46.log >&2
+      echo "COMMIT DURDURULDU — motorun kendi test takimi kirmizi (tests/b46)." >&2
+      echo "Duzelt, 'npx vitest run tests/b46' yesil yansin, sonra tekrar commit et." >&2
+      exit 1
+    fi
+  fi
 fi
 
 # (3b) THE RECORDS RULER RUNS BEFORE THE COMMIT — same ruling, second class. The records

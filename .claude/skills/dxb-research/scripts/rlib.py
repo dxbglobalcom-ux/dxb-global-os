@@ -374,7 +374,25 @@ _WALL = re.compile(
     # Reddit's WAF, measured 2026-09-16: it answers with an 87 KB base64 PNG and this
     # sentence LAST, so a head-only test never reached it.
     r"you've been blocked by network security|you have been blocked by network security|"
-    r"you (have been|are being) rate[- ]limited|429 too many)", re.I)
+    r"you (have been|are being) rate[- ]limited|429 too many|"
+    # INSTAGRAM'S ANONYMOUS LANDING DIALOG, measured 2026-09-21 and the reason this line
+    # exists: `scrapling-stealth` opened https://www.instagram.com/p/DTa2MBcEyFv/ and was
+    # handed 24 162 bytes with `wall: false` and `read: true` - the post's images, its
+    # author's avatar, and NOT ONE WORD of the post, because Instagram serves signed-out
+    # readers a sign-up dialog over the content. The chain then stopped, and the door that
+    # DOES carry the CEO's session (browser-signed-in, door 6) was never reached, where the
+    # same page reads 19 176 chars with its comments. The wording is Instagram's own and
+    # exact. WHAT IT STILL COSTS, measured rather than waved away: a sentence that QUOTES the
+    # dialog ("He told readers to sign up for Instagram to stay in the loop about the launch")
+    # is classified as a wall. That is a page about Instagram's sign-up prompt, which is a
+    # narrow thing to lose, and the corpus of 16 010 read pages contains zero of them - but the
+    # sentence "a page that merely discusses Instagram cannot trip it" was written here first
+    # and it was FALSE, so it is replaced by the measurement instead of softened. ONE PHRASE
+    # ONLY: the
+    # first draft also carried "never miss a post from", which is a generic newsletter call to
+    # action with no site name in it - an adversarial check found an 11 421-word article whose
+    # CTA would have been classified as a wall. It was removed before it shipped.
+    r"sign up for instagram to stay in the loop)", re.I)
 
 # The site's own error sentence, judged separately: measured 2026-09-17, it can sit on TOP
 # of a page that also carries the content, so it is a wall only when nothing else is there.

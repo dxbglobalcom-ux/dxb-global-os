@@ -37,8 +37,21 @@ const patch = (file: string, from: string | RegExp, to: string) => {
 };
 
 describe("the ruler bites", () => {
+  // THE BITE MUST NOT NAME THE NUMBER. It used to patch the literal "37 channels", and on
+  // 2026-09-21 the map grew to 39 (facebook and instagram) - the prose the metre could see
+  // was corrected (SKILL.md's frontmatter was NOT, and is corrected in this same commit
+  // together with the pattern that could not see it), the literal stopped matching, and
+  // this test went red while claiming the
+  // ruler had stopped biting. A bite test that hard-codes today's truth breaks on the day
+  // the truth changes, which is the one day it has to work. It now reads whatever number
+  // the prose currently carries and moves it by one.
   it("catches a prose number that no longer matches the map", () => {
-    const r = biteOn("count", (d) => patch(join(d, "SKILL.md"), /37 channels/, "34 channels"));
+    const r = biteOn("count", (d) => {
+      const f = join(d, "SKILL.md");
+      const m = /(\d+) channels/.exec(readFileSync(f, "utf8"));
+      if (!m) throw new Error("SKILL.md carries no '<n> channels' sentence to break");
+      patch(f, m[0], `${Number(m[1]) + 1} channels`);
+    });
     expect(r.failures["channel-count"].length).toBeGreaterThan(0);
   }, 30_000);
 

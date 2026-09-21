@@ -53,7 +53,13 @@ export const RULER = {
    * A CHANNEL-COUNT CLAIM: a number standing next to the word "channel"/"kanal". "102 channel
    * FILES" is a different quantity and is not a claim about how many channels exist.
    */
-  COUNT_CLAIM: /\b(\d{1,3})[ -](?:channels?|kanal)\b(?!\s*(?:files|dosya|dosyasi|dosyası))/g,
+  // AN ADJECTIVE BETWEEN THE NUMBER AND THE NOUN HID A WRONG NUMBER FOR A WHOLE DAY.
+  // Measured 2026-09-21 by an adversarial reader: SKILL.md's frontmatter `description:`
+  // - the one sentence every session is handed before it does anything - said "37 keyless
+  // channels" while the map held 39, and this pattern could not see it because of the word
+  // "keyless". One optional word is allowed between the two now. The `files|dosya` guard
+  // still stands: "36 channel files" is a measurement of a run, not a claim about the map.
+  COUNT_CLAIM: /\b(\d{1,3})[ -](?:[A-Za-z]+[ -])?(?:channels?|kanal)\b(?!\s*(?:files|dosya|dosyasi|dosyası))/g,
   /**
    * HISTORY IS NOT A CLAIM. A line that records what was measured on a past day keeps its old
    * number and says so with this token. Nothing else is exempt — the reflex to "leave the old

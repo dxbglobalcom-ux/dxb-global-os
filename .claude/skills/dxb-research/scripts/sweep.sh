@@ -255,9 +255,28 @@ quora|wide|opencli google search "site:quora.com {K}" --limit 20 -f yaml
 # browser bridge that already carries his login, read both: Facebook's own post search
 # 36 583 chars, Instagram's keyword search 1 309 chars carrying a full Dubai Holding post.
 # So these two follow the quora-forums shape — the bridge, under the same lock.
-# INSTAGRAM IS THIN BY CONSTRUCTION: its result page is images, and what comes back is the
-# post text inside their alt attributes. It is a real voice, not a large one.
-facebook|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser facebook open 'https://www.facebook.com/search/posts/?q={UK}' --window background >/dev/null 2>&1; opencli browser facebook extract --window background"
+# THE TWO CHANNELS HAVE DIFFERENT JOBS, and 2026-09-21 measured which is which.
+# INSTAGRAM IS AN ADDRESS PRODUCER, not a body: its search page carried 4 post addresses and
+# almost no text (136-1 993 chars across runs), while ONE of those post pages reads 19 176
+# chars with its comments. The bodies come from the reading chain, which already has these
+# two sites registered on its signed-in door (fetch.py BROWSER_SITES). FACEBOOK IS A BODY
+# CHANNEL: 20-40 KB of real post text on the search page and ZERO post permalinks
+# (permalink.php 0, story_fbid 0), so nothing is collected from it - it is read where it
+# stands. Its one defect was Facebook's own "See more" fold, which cut three posts to a
+# first line; ONE eval unfolds them before the extract - no scroll, no click loop, because
+# the whole channel holds .browser.lock while it runs. THE WAIT BEFORE THE EVAL IS NOT
+# DECORATION: measured 2026-09-21, an eval fired the instant after `open` sees a page that
+# has not rendered - `[role=button]` count 0 - and unfolds nothing; six seconds later the
+# same page reports 283 buttons, 5 of them "See more". A/B on the same query, same
+# machine, "dubai real estate": original (no wait, no eval) 'See more'=1 - wait alone, no eval
+# 'See more'=1 and BYTE-IDENTICAL - with the eval 'See more'=0. So the eval does the work and
+# the wait only lets it reach the page. AND IT IS QUERY-DEPENDENT: on "dubai holding" the same
+# probe finds 0 folds, all three variants are md5-identical, and the eval costs two seconds
+# for nothing. It stays because a fold that is not opened is a post read to its first line;
+# the cost of opening a fold that is not there is two seconds of a lock that runs for 27.
+# THE FIRST REPORT OF THIS A/B WAS NOT A CONTROLLED ONE - two separate page loads were
+# compared - and it is corrected here rather than left standing.
+facebook|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser facebook open 'https://www.facebook.com/search/posts/?q={UK}' --window background >/dev/null 2>&1; opencli browser facebook wait time 6 --window background >/dev/null 2>&1; opencli browser facebook eval \"document.querySelectorAll('[role=button]').forEach(b=>{if(/^See more$/i.test(b.textContent.trim()))b.click()})\" --window background >/dev/null 2>&1; opencli browser facebook wait time 2 --window background >/dev/null 2>&1; opencli browser facebook extract --window background"
 instagram|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser instagram open 'https://www.instagram.com/explore/search/keyword/?q={UK}' --window background >/dev/null 2>&1; opencli browser instagram extract --window background"
 linkedin|max|opencli linkedin search "{K}" -f yaml
 zhihu|max|opencli zhihu search "{K}" -f yaml
@@ -357,6 +376,11 @@ while IFS='|' read -r name tier cmd; do
   printf '%s\t%s\n' "$name" "$sent" >> "$OUT/.queries"
   [ "$DRY" = "1" ] && continue
   (
+    # HOW LONG A CHANNEL HELD THE MACHINE, written down per channel. The two browser
+    # channels share ONE lock (.browser.lock) with quora-forums and google-deep, so a slow
+    # one does not just cost its own seconds - it stalls the others behind it. The B48
+    # ruler reads this file (rule R8) instead of trusting a sentence about it.
+    __t0=$(date +%s)
     DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_K="$KQ" DXB_UK="$UKQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
         > "$OUT/$name.raw" 2> "$OUT/$name.err"
     rc=$?
@@ -373,6 +397,7 @@ while IFS='|' read -r name tier cmd; do
       rc=$?
     fi
     echo "$rc" > "$OUT/$name.code"
+    printf '%s\t%s\n' "$name" "$(( $(date +%s) - __t0 ))" >> "$OUT/.timing"
   ) &
 done <<< "$CHANNELS"
 
@@ -556,20 +581,64 @@ echo "ham cikti: $OUT/*.raw"
 mkdir -p "$OUT/pages"
 
 # --- stage 2a: WHICH pages to read, round-robin across channels ---------------------------
-python3 - "$OUT" "$PAGES" > "$OUT/pages/urls.txt" <<'PYEOF'
+# WHICH CHANNELS COME THROUGH THE BROWSER BRIDGE IS READ FROM THE MAP, NEVER TYPED TWICE.
+# The collector below has to know them, and a hand-kept second list would be a second
+# truth: add a browser channel to the map and the collector would silently not know it.
+BRIDGE_CH=$(printf '%s' "$CHANNELS" | awk -F'|' '$2=="browser"{print $1}' | tr '\n' ' ')
+python3 - "$OUT" "$PAGES" "$BRIDGE_CH" > "$OUT/pages/urls.txt" <<'PYEOF'
 # The obvious version - cat every .raw and take the first N distinct urls - reads them in
 # glob order, so the channels whose names sort first supply almost every page. Measured on
 # this engine's own first run: one channel supplied 69 % of the independent clusters and the
 # gate refused it. Reading breadth is built HERE; the gate can only catch its absence after.
 import re, sys, pathlib
+from urllib.parse import urljoin
 out, limit = pathlib.Path(sys.argv[1]), int(sys.argv[2])
-URL = re.compile(r"https?://[^\s\"'<>)\]},]+")
+BRIDGE = set((sys.argv[3] if len(sys.argv) > 3 else "").split())
+# THE BRACKET THAT WAS NOT CLOSED. The class stopped at "]" and not at "[", so a Facebook
+# address carrying its tracking suffix - `...?id=61575702628404&__cft__[0` - was taken whole
+# and read as a page. Measured 2026-09-21: two runs each opened one such address and got back
+# a profile behind "Log In" (7 829 bytes), which entered the evidence as a read page.
+URL = re.compile(r"https?://[^\s\"'<>)\[\]},]+")
+# A CHANNEL READ THROUGH THE BROWSER BRIDGE WRITES ITS LINKS RELATIVE, AND THE COLLECTOR
+# COULD NOT SEE THEM. Measured 2026-09-21 on instagram.raw: the page carried FOUR post
+# addresses, every one of them `](/p/DTa2MBcEyFv/)`, and exactly ONE absolute url reached
+# the queue - so the channel that hands the chain its addresses handed it nothing, while a
+# single one of those post pages reads 19 176 chars by hand. The bridge writes its own page
+# url in the JSON it returns, so the base is in the file: a relative link is joined onto it.
+# This is a GENERAL rule, not an Instagram one - quora-forums and google-deep come through
+# the same door.
+BRIDGE_BASE = re.compile(r'"url"\s*:\s*"(https?://[^"]+)"')
+BRIDGE_REL = re.compile(r"\]\((/[^)\s]+)\)")
+# THE JOIN IS SCOPED TO THE BRIDGE CHANNELS, AND THE REASON IS A REGRESSION THAT WAS CAUGHT
+# BEFORE IT SHIPPED. The first version keyed off the presence of a `"url"` field, which is
+# not a bridge signature at all: `parallel`, `youcom` and `github-issues` return JSON whose
+# FIRST `"url"` is a RESULT, not the page it was read from - so excluding "the page's own
+# address" deleted their best answer. Measured 2026-09-21 on four runs of "dubai holding":
+#   parallel      lost https://dubaiholding.com/            (the holding's own site)
+#   youcom        lost https://en.wikipedia.org/wiki/Dubai_Holding
+#   github-issues lost .../issues/128
+# and at the default budget of 14 the first two left the reading queue entirely. The map
+# says which channels are `browser`; nothing else is guessed.
+#
+# ...AND WITHIN THEM, ONE EXCLUSION, WHICH IS ARCHITECTURAL, NOT COSMETIC. Facebook is a BODY channel:
+# its search page carries 20-40 KB of real post text and, measured the same day, ZERO post
+# permalinks (permalink.php 0 - story_fbid 0 - /posts/ 1). What it does carry relative is
+# navigation: /search, /groups, /commerce, /stories. Absolutising those would spend up to
+# six of the run's fourteen page slots on Facebook's own chrome. So the body channels take
+# the absolute urls only.
+BODY_ONLY = {"facebook"}
 # The search providers' own domains are INFRASTRUCTURE, not evidence: their docs and favicon
 # urls ride in every result payload. Measured - tavily's docs and a you.com favicon became
 # evidence rows on the first run.
 NOISE = re.compile(r"\.(png|jpe?g|gif|svg|webp|mp4|css|js|ico|woff2?)($|\?)|"
                    r"(twimg|redditstatic|redditmedia|gstatic|googleusercontent|licdn|"
                    r"fbcdn|ytimg|w3\.org|schema\.org|doubleclick|"
+                   # A SEARCH ENGINE'S OWN HELP AND POLICY PAGES ARE ITS CHROME. Measured
+                   # 2026-09-21: google-deep put support.google.com/websearch/answer/181196
+                   # ("Accessibility in Google Search") into slot 10-11 of FOUR runs and the
+                   # chain read all 5 454 bytes of it. Filtering only relative /search links
+                   # missed this, because this one is absolute.
+                   r"support\.google\.com|policies\.google\.com|accounts\.google\.com|"
                    r"tavily\.com|you\.com|exa\.ai|firecrawl\.dev|parallel\.ai|jina\.ai)", re.I)
 # A url lifted out of a SNIPPET is often truncated - google.raw printed
 # "dy-sync-bgtest2 open https://creator." and the rstrip below turned that into the host
@@ -577,6 +646,17 @@ NOISE = re.compile(r"\.(png|jpe?g|gif|svg|webp|mp4|css|js|ico|woff2?)($|\?)|"
 # burned every door of the reading chain before being reported to the CEO as a page
 # that could not be read. A host with no dot-plus-tld is not a page; it never enters the queue.
 HOST_OK = re.compile(r"^[A-Za-z0-9._~-]+\.[A-Za-z]{2,}$")
+
+
+# A URL WHOSE LAST QUERY PARAMETER HAS NO VALUE WAS CUT, NOT WRITTEN. Measured 2026-09-21,
+# after the bracket fix: facebook photo addresses arrived as
+# `...&set=pcb.2017380635641402&__cft__` - the tracking blob had been chopped at the bracket,
+# leaving a parameter with no `=`. Three of them took three slots of one run and every one of
+# them is a page that cannot be opened. The same shape catches any address truncated inside
+# its query, whatever site it came from.
+def _cut_query(u):
+    q = u.split("?", 1)[1] if "?" in u else ""
+    return bool(q) and "=" not in q.split("&")[-1]
 
 
 def _host(u):
@@ -602,9 +682,34 @@ def _order(stem):
 per = {}
 for raw in sorted(out.glob("*.raw"), key=lambda q: _order(q.stem)):
     seen, keep = set(), []
-    for u in URL.findall(raw.read_text(encoding="utf-8", errors="replace")):
+    text = raw.read_text(encoding="utf-8", errors="replace")
+    found = URL.findall(text)
+    if raw.stem in BRIDGE:
+        m = BRIDGE_BASE.search(text[:4000])
+        if m and raw.stem in BODY_ONLY:
+            # A BODY CHANNEL COLLECTS NOTHING RELATIVE, BUT IT STILL MUST NOT HAND THE CHAIN
+            # ITS OWN PAGE. Measured 2026-09-21 on four runs: facebook's own search url took
+            # slot 6 of the default budget of 14 and the chain re-read, through the same
+            # browser, the 20 KB the sweep already had in facebook.raw.
+            base = m.group(1)
+            found = [u for u in found if u.rstrip("/") != base.rstrip("/")]
+        elif m:
+            base = m.group(1)
+            # THE ADDRESSES THE PAGE POINTS AT COME FIRST, AND THE PAGE ITSELF NEVER ENTERS
+            # THE QUEUE. Measured 2026-09-21: instagram's own search url was picked as the
+            # one address this channel contributed, so the chain re-read the page the sweep
+            # had already read and not one post was opened. A channel whose job is to hand
+            # over addresses must not spend its turn on its own front door.
+            # A RELATIVE LINK BACK INTO THE SITE'S OWN SEARCH SURFACE IS CHROME. Measured
+            # 2026-09-21: google-deep's page is full of `/search?...&tbs=qdr:h|d|w` - the
+            # 'past hour / past day / past week' filters - and two of them reached the
+            # reading queue inside the default budget on all four runs.
+            rel = [urljoin(base, r) for r in BRIDGE_REL.findall(text)
+                   if not r.startswith('/search')]
+            found = rel + [u for u in found if u.rstrip('/') != base.rstrip('/')]
+    for u in found:
         u = u.rstrip(".,);")
-        if NOISE.search(u) or u in seen or not HOST_OK.match(_host(u)):
+        if NOISE.search(u) or u in seen or not HOST_OK.match(_host(u)) or _cut_query(u):
             continue
         seen.add(u); keep.append(u)
     if keep:
