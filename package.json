@@ -18,6 +18,8 @@
     "construction:stop": "supabase stop --workdir construction",
     "construction:schema": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres DXB_PSQL='docker exec -i supabase_db_DxB_Build psql -U postgres -d postgres' DXB_PSQL_ADMIN='docker exec -i supabase_db_DxB_Build psql -U supabase_admin -d postgres' bash scripts/bootstrap-db.sh",
     "construction:seed": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node --experimental-strip-types db/seed/build-seed.ts",
+    "construction:pins:refresh": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts",
+    "construction:pins:check": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts --check",
     "verify:schema-parity": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
     "b36:window": "node scripts/b36/install-company-window.mjs company",
     "b36:prove-window-preserves": "node scripts/b36/prove-window-preserves.mjs",
