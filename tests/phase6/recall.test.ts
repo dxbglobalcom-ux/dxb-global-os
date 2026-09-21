@@ -7,6 +7,7 @@ import {
   recallMemory,
 } from "../../packages/memory-router/src/index.js";
 import { promote } from "../../tools/dxb-cli/src/promote.js";
+import { watchLedgers } from "../helpers/suite-scope.js";
 
 // Master step 5 (06-05): the read door. Behaviors (a)–(f) from the plan:
 // (a) kind given → classifier skipped, (b) trusted default hides quarantined,
@@ -18,6 +19,9 @@ import { promote } from "../../tools/dxb-cli/src/promote.js";
 
 const DIM = 1536;
 const AGENT = `recall-test-${randomUUID().slice(0, 8)}`;
+
+// Its own footprints in audit_log, swept in afterAll below.
+const ledgerScope = watchLedgers(() => getDb());
 const LIVE = process.env.DXB_LIVE_SDK === "1";
 
 function vec(axis: number, value = 1, bleed?: { axis: number; value: number }): number[] {
@@ -59,11 +63,23 @@ afterAll(async () => {
     await db.deleteFrom("memory_embeddings").where("index_id", "in", createdIndexIds).execute();
     await db.deleteFrom("memory_index").where("id", "in", createdIndexIds).execute();
   }
-  await db
-    .deleteFrom("audit_log")
-    .where("actor", "in", [AGENT, "ceo:cli"])
-    .where("created_at", ">", new Date(Date.now() - 3_600_000))
-    .execute();
+  // 2026-09-21: AN HOUR IS NOT OWNERSHIP, AND `ceo:cli` WAS NEVER OURS.
+  // This line deleted every `ceo:cli` audit row written in the previous SIXTY
+  // MINUTES — and measured that day, this file writes NOT ONE of them: the
+  // actor belongs to the breaker, the approvals, the kill switch and the
+  // promote path. It was caught eating two rows another run had just written.
+  // Own watermark, own actor, nothing else (E9.3).
+  await ledgerScope.sweep({
+    audit: [
+      { actor: AGENT },
+      // The promote path DOES write under `ceo:cli` — but only these two
+      // actions, and only from this file's own promote cases. (The first
+      // measurement missed them because the case that promotes was skipped
+      // in that run; the row turned up in the next one. Measure twice.)
+      { actor: "ceo:cli", action: "memory_promoted" },
+      { actor: "ceo:cli", action: "memory_promotion_declined" },
+    ],
+  });
   await closeDb();
 });
 

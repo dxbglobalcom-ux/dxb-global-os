@@ -53,7 +53,19 @@ afterAll(async () => {
   // and the five were the watchdog's. A suite may only delete what it can
   // prove it wrote (E9.3), so the predicate is now its own watermark plus its
   // own actors — and an hour of the company's real history is safe from it.
-  await ledgerScope.sweep({ audit: [{ actor: AGENT }, { actor: "ceo:cli" }] });
+  await ledgerScope.sweep({
+    audit: [
+      { actor: AGENT },
+      // `ceo:cli` is a SHARED actor — the breaker, the approvals, the kill
+      // switch and the promote path all write under it — so the actor alone
+      // is not a signature, and the adversarial pass proved it: with the
+      // action left out, this sweep deleted a foreign `kill_switch.on` row
+      // written while the suite ran. These two are what this file itself
+      // does, measured, and nothing else here is ours.
+      { actor: "ceo:cli", action: "memory_promoted" },
+      { actor: "ceo:cli", action: "memory_promotion_declined" },
+    ],
+  });
   await closeDb();
 });
 

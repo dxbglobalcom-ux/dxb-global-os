@@ -42,6 +42,16 @@ const db = getDb();
 const pinRows = () =>
   db.selectFrom("tool_pins").selectAll().where("server", "=", SERVER).orderBy("tool").execute();
 
+const missingAudits = () =>
+  db
+    .selectFrom("audit_log")
+    .selectAll()
+    .where("actor", "=", ACTOR)
+    .where("action", "=", "tool_missing")
+    .where(sql<string>`payload->>'server'`, "=", SERVER)
+    .orderBy("id")
+    .execute();
+
 const quarantineAudits = () =>
   db
     .selectFrom("audit_log")
@@ -134,5 +144,32 @@ describe("pin-quarantine (MCP-03 anti rug-pull)", () => {
 
     const [a] = await pinRows();
     expect(a!.quarantined).toBe(true); // …but quarantine is sticky: human-path only
+  });
+
+  // R4.3's scope, which the code carried in its signature and its comment for
+  // two months and applied nowhere. Measured 2026-09-21: 38,811 `tool_missing`
+  // rows on the construction bench, 13,032 of them for `playwright`, written
+  // by runs that had never even tried to reach that server — and no case in
+  // this repository asserted the behaviour either way, so the defect was
+  // invisible to the battery. These two are that assertion.
+  it("(6) a server that was NOT reached is unreachable, not tool-less — no tool_missing", async () => {
+    const before = await missingAudits();
+    const result = await checkPins(db, [], new Set(["some-server-nobody-asked-about"]));
+    expect(
+      result.missing.filter((m) => m.server === SERVER),
+      "pins of a server outside the scope must not be reported missing",
+    ).toEqual([]);
+    expect(await missingAudits(), "and nothing may be written about them").toHaveLength(
+      before.length,
+    );
+  });
+
+  it("(7) a server that WAS reached and dropped a tool still says so", async () => {
+    const before = await missingAudits();
+    const result = await checkPins(db, [toolA()], new Set([SERVER]));
+    expect(result.missing).toEqual([{ server: SERVER, tool: "beta_report" }]);
+    const after = await missingAudits();
+    expect(after).toHaveLength(before.length + 1);
+    expect((after.at(-1)!.payload as { tool: string }).tool).toBe("beta_report");
   });
 });

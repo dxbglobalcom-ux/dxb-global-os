@@ -112,16 +112,24 @@ async function injectStorm(rows: number, eurEach: number): Promise<void> {
 // clock with no hands can take nothing.
 let bootedScheduler: Awaited<ReturnType<typeof openScheduler>> | null = null;
 
-// Every job this file's own clock armed, and NOT by a list of names: the eight
-// self-chaining bootstraps are only most of them. Measured 2026-09-21 by the
-// adversarial pass: one run also left `__pgboss__send-it` (pg-boss's own
-// maintenance job, minted by boss.start) and `lease-reaper` (the */1 cron
-// fired the moment its schedule was registered) — two rows a name list could
-// never have caught. The predicate is therefore TIME, and it is safe because
-// this file is the only pg-boss client on the bench while it runs
-// (vitest.config fileParallelism: false), so no other writer's job can fall
-// inside the window.
-let clockArmedFrom: Date | null = null;
+// Every job this file's own clock armed, and it is swept BY IDENTITY.
+//
+// Not by a list of names: the eight self-chaining bootstraps are only most of
+// them — the adversarial pass found one run also left `__pgboss__send-it`
+// (pg-boss's own maintenance job, minted by boss.start) and `lease-reaper`
+// (the */1 cron fired the instant its schedule was registered), two rows a
+// name list could never have caught.
+//
+// And NOT by time alone, which is what the first version of this sweep used.
+// The excuse for it was that `fileParallelism: false` makes this file the only
+// pg-boss client on the bench — and that is false the moment a SECOND battery
+// runs against the same engine, which the adversarial pass demonstrated on
+// 2026-09-21 (two runs overlapped on port 54422 and audit_log moved under the
+// observer). `scripts/construction/battery.sh` now refuses to start beside a
+// twin, and this sweep no longer depends on that promise either: the ids are
+// read back the moment the clock is armed, and afterAll deletes exactly those
+// rows, still waiting, and nothing else.
+let armedJobIds: string[] = [];
 
 beforeAll(async () => {
   await wipeCostAndAudit();
@@ -134,11 +142,11 @@ afterAll(async () => {
     const boss = bootedScheduler;
     bootedScheduler = null;
     await stopScheduler(boss);
-    // …and every job its clock armed goes with it: still waiting, and born
-    // inside this file's own window.
-    if (clockArmedFrom) {
+    // …and every job its clock armed goes with it, by id, and only while it
+    // is still waiting — an ACTIVE job is somebody's work in flight.
+    if (armedJobIds.length > 0) {
       await sql`DELETE FROM pgboss.job
-                 WHERE state = 'created' AND created_on >= ${clockArmedFrom}`.execute(getDb());
+                 WHERE id = ANY(${armedJobIds}::uuid[]) AND state = 'created'`.execute(getDb());
     }
   }
   await wipeCostAndAudit();
@@ -238,10 +246,17 @@ describe("velocity breaker (COST-03)", () => {
 
 describe("scheduler (KERN: one process owns all system routines)", () => {
   it("registers tick 15s / reaper 60s / breaker 5min", async () => {
-    clockArmedFrom = new Date();
+    const armedFrom = new Date();
     const boss = await openScheduler();
     bootedScheduler = boss;
     await registerSchedules(boss);
+    // Read the ids back at once, while nothing has had time to run: from here
+    // on the sweep names these rows, not a moment in time.
+    armedJobIds = (
+      await sql<{ id: string }>`
+        SELECT id FROM pgboss.job WHERE state = 'created' AND created_on >= ${armedFrom}
+      `.execute(getDb())
+    ).rows.map((r) => r.id);
     {
       expect(CADENCES.outboxTickSeconds).toBe(15);
 
