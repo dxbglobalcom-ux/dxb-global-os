@@ -7,11 +7,11 @@
   },
   "allowed": [
     {
-      "sysid": "7677291653303935015",
+      "sysid": "7687979961685086247",
       "dboid": "5",
       "dbname": "postgres",
-      "why": "DxB_Build — the construction site's own Supabase stack (B36 Block 2). Separate cluster, separate port 54422, separate volume; the company does not exist on this engine. Re-take this with --allow after any 'supabase stop --no-backup' — destroying the volume gives the cluster a NEW identity and the guard rightly refuses the old one.",
-      "measured_at": "2026-08-23T18:13:25.123Z"
+      "why": "DxB_Build rebuilt from the canonical chain on 2026-09-21 (supabase db reset --workdir construction, then construction:schema 170/170 and construction:seed) to give the bench a clean base; a recreated volume means a new cluster identity and the guard rightly refused the old one",
+      "measured_at": "2026-09-21T13:30:09.967Z"
     }
   ],
   "what": "Which database engine the CONSTRUCTION may write to, and which one it may never touch. Anything on `allowed` is a construction engine; `company` is the holding and is refused outright. Identity comes from the server — the cluster's system_identifier plus the database's own oid and name — never from the address, because six spellings of one address were measured reaching the same engine while a text comparison called each of them different. Read by tests/global-teardown.ts (the battery refuses to start against the company), tests/construction-engine.ts and db/seed/build-seed.ts. It was born for a SessionEnd token hook that the CEO abolished on 2026-08-25 (\"artık yazılmasın\"); the guard outlived it because the battery needs the same refusal."
