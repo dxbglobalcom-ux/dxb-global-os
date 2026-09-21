@@ -40,6 +40,7 @@ import { drainTasks } from "../../packages/orchestrator/src/worker-loop.js";
 import { dispatchLanes } from "../../packages/outbox-executor/src/scheduler.js";
 import {
   checkSubscriptionWindow,
+  QA_SPEND_SOURCE,
   recordSubscriptionSpend,
   SUBSCRIPTION_CAP_KEY,
   SUBSCRIPTION_SPEND_SOURCE,
@@ -420,6 +421,25 @@ describe("B39 · the decision — the company works out its own hands, the CEO s
     }
 
     // Ceiling 3000, spent 2000 → 1000 left → room for exactly one more job.
+    //
+    // AND THE WINDOW IS READ ON THIS SUITE'S OWN DEPARTMENT, because clearing
+    // its own rows is not isolation when somebody ELSE writes into the same
+    // hour. Measured 2026-09-21 on the construction engine: the resident worker
+    // had claimed nine media-studio jobs of the generated fiction in the same
+    // 60 minutes and written nine ZERO-token receipts; they never entered the
+    // suite's own sweep (E9.3 — a suite deletes only what it creates), and they
+    // dragged the average from 1000 to 181.8, so the line answered five hands
+    // where one was due.
+    //
+    // THE QUERY BELOW IS A COPY OF THE SCHEDULER'S AND IT IS NOT IDENTICAL —
+    // said plainly, because scheduler.ts:266-271 records the danger of a copy
+    // that drifts. Two deliberate differences: each leg is narrowed to this
+    // suite's own department, and the `spent` leg now counts BOTH sources the
+    // scheduler counts (it had drifted to one, which the scheduler never did).
+    // The copy therefore proves the ARITHMETIC — a spent hour buys fewer
+    // hands — and nothing about the wiring. The wiring is proven where it can
+    // only be proven, on the real thing: the sibling case below calls
+    // `dispatchLanes()` itself and the source scan reads scheduler.ts.
     await setSetting(SUBSCRIPTION_CAP_KEY, "3000");
     const room = await sql<{ room: number }>`
       SELECT (SELECT CASE
@@ -430,11 +450,13 @@ describe("B39 · the decision — the company works out its own hands, the CEO s
            SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
                   COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
                              WHERE mode = 'subscription'
-                               AND source = ${SUBSCRIPTION_SPEND_SOURCE}
+                               AND source IN (${SUBSCRIPTION_SPEND_SOURCE}, ${QA_SPEND_SOURCE})
+                               AND department LIKE ${`${M}%`}
                                AND created_at > now() - interval '60 minutes'), 0)        AS spent,
                   (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
                     WHERE mode = 'subscription'
                       AND source = ${SUBSCRIPTION_SPEND_SOURCE}
+                      AND department LIKE ${`${M}%`}
                       AND created_at > now() - interval '60 minutes')                     AS avg_cost
          ) b)::int AS room`.execute(db());
     expect(room.rows[0].room, "one job's worth of allowance is left, so one hand").toBe(1);
@@ -454,11 +476,13 @@ describe("B39 · the decision — the company works out its own hands, the CEO s
            SELECT fn_setting_numeric('orchestrator.subscription_tokens_per_hour', 500000) AS cap,
                   COALESCE((SELECT SUM(prompt_tokens + completion_tokens) FROM cost_ledger
                              WHERE mode = 'subscription'
-                               AND source = ${SUBSCRIPTION_SPEND_SOURCE}
+                               AND source IN (${SUBSCRIPTION_SPEND_SOURCE}, ${QA_SPEND_SOURCE})
+                               AND department LIKE ${`${M}%`}
                                AND created_at > now() - interval '60 minutes'), 0)        AS spent,
                   (SELECT AVG(prompt_tokens + completion_tokens) FROM cost_ledger
                     WHERE mode = 'subscription'
                       AND source = ${SUBSCRIPTION_SPEND_SOURCE}
+                      AND department LIKE ${`${M}%`}
                       AND created_at > now() - interval '60 minutes')                     AS avg_cost
          ) b)::int AS room`.execute(db());
     expect(none.rows[0].room, "a spent hour buys no extra hands").toBe(0);

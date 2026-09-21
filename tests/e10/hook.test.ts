@@ -187,7 +187,16 @@ afterAll(async () => {
   await sql`DELETE FROM approvals WHERE action_type = 'hook_escalation'
               AND (payload->>'run_id' = ${fxRunId}
                    OR payload->>'employee' LIKE ${M + "%"})`.execute(db());
-  await sql`DELETE FROM hook_violations WHERE id > ${baseViolationId}`.execute(db());
+  // Own rows only, and until 2026-09-21 this line did not say so: `id >
+  // watermark` deletes whatever ANY writer put there while the suite ran.
+  // Proven by the adversarial pass that day — a foreign violation inserted
+  // while the fixture run was alive was gone when the suite ended, and its
+  // alert (swept by run, so kept) was left pointing at a row that no longer
+  // exists. This suite's violations carry the fixture run, or no run at all
+  // (the run-less probes above); a real writer always has a run of its own.
+  await sql`DELETE FROM hook_violations
+             WHERE id > ${baseViolationId}
+               AND (run_id IS NULL OR run_id = ${fxRunId})`.execute(db());
   await sql`DELETE FROM decision_log
              WHERE id > ${baseDecisionId}
                AND (decided_by IN ('hook', ${M}) OR rationale LIKE ${"%" + M + "%"})`.execute(db());
@@ -656,9 +665,21 @@ describe("post-gate — evidence package (§6/§20)", () => {
       SELECT status FROM approvals WHERE id = ${verdict.approvalId}`.execute(db());
     expect(approval.rows[0].status).toBe("pending");
 
+    // ON THIS SUITE'S OWN RUN, and the unscoped count is what went red.
+    // Measured 2026-09-21 on the construction engine: four OPEN high alerts
+    // carried this policy, none of them written by a test — every one came
+    // from a resident-worker drain against the W9 road proof's own kept task
+    // (runs 10:25, 10:28, 10:36, model fable-5.1, each a real post-gate
+    // ESCALATE). A suite may not delete another writer's alerts (E9.3), so
+    // the assertion, not the cleanup, was the defect. What this line proves
+    // is narrow and is all it ever proved: THIS escalation raised exactly one
+    // open high alert, none and no second copy. The dedup key's own shape —
+    // `hook:<policy>:<action>:<run>`, so an early 'revised' cannot mask a
+    // later 'escalated' — is asserted separately below, on the trigger.
     const alert = await sql<{ n: number }>`
       SELECT count(*)::int AS n FROM alerts
        WHERE source = 'hook' AND level = 'high' AND resolved_at IS NULL
+         AND run_id = ${fxRunId}
          AND dedup_key LIKE 'hook:std.no_unverified_done:%'`.execute(db());
     expect(alert.rows[0].n).toBe(1);
   });

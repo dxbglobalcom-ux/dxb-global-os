@@ -14,6 +14,16 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { sql } from "kysely";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/dist/index.js";
 import { getDb, closeDb } from "../../packages/shared/dist/index.js";
+// B36's law: on the construction engine EVERY project row's text is what
+// db/seed/build-seed.ts generates for its slug — the seed rewrites them all,
+// whoever wrote the row. This script was born writing its own prose, so its
+// row was fiction the seed did not own, and `tests/b36/seed-is-fiction` (6)
+// went red the moment the proof was dispatched (measured 2026-09-21: the row
+// carried "W9 road proof" against the generator's "Low Meadow Line"). The
+// proof is KEPT and must not be deleted, so the fix is ownership: the row is
+// written from the SEED'S OWN GENERATOR, at birth and on every re-run. Node
+// strips the types on import (v22.18+); the seed itself runs the same way.
+import { projectFictionFor } from "../../db/seed/generated-holding-core.ts";
 
 const url = process.env.DXB_DATABASE_URL ?? "";
 if (!url.includes("54422")) {
@@ -38,17 +48,21 @@ const call = async (name, args) => {
   return JSON.parse(res.content[0].text);
 };
 
-// the project and the director's own task, made once and reused on a re-run
-const project =
-  (await sql`SELECT id FROM projects WHERE slug = 'w9-road-proof'`.execute(db)).rows[0] ??
-  (
-    await sql`
-      INSERT INTO projects (slug, name, name_tr, purpose, purpose_tr, status)
-      VALUES ('w9-road-proof', 'W9 road proof', 'W9 yol kanıtı',
-              'The kept proof that a borrowed seat can be given studio work',
-              'Ödünç bir koltuğa stüdyo işi verilebildiğinin saklanan kanıtı', 'active')
-      RETURNING id`.execute(db)
-  ).rows[0];
+// the project and the director's own task, made once and reused on a re-run.
+// The text is the seed's, never this script's — see the import above.
+const PROJECT_SLUG = "w9-road-proof";
+const fiction = projectFictionFor(PROJECT_SLUG);
+await sql`
+  INSERT INTO projects (slug, name, name_tr, purpose, purpose_tr, strategy_link, links, status)
+  VALUES (${PROJECT_SLUG}, ${fiction.name}, ${fiction.name_tr}, ${fiction.purpose},
+          ${fiction.purpose_tr}, ${fiction.strategy_link}, ${fiction.links}::jsonb, 'active')
+  ON CONFLICT (slug) DO UPDATE
+     SET name = EXCLUDED.name, name_tr = EXCLUDED.name_tr, purpose = EXCLUDED.purpose,
+         purpose_tr = EXCLUDED.purpose_tr, strategy_link = EXCLUDED.strategy_link,
+         links = EXCLUDED.links`.execute(db);
+const project = (
+  await sql`SELECT id FROM projects WHERE slug = ${PROJECT_SLUG}`.execute(db)
+).rows[0];
 
 const existing = (
   await sql`SELECT id FROM tasks WHERE project_id = ${project.id}::uuid AND parent_task_id IS NULL`.execute(db)
