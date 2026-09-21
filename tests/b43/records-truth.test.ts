@@ -37,6 +37,20 @@ describe("the records ruler bites", () => {
     expect(r2NoAwaitingOnAccepted(root, withLine("B99 waits on his eye (LAW B).")).pass).toBe(true);
     expect(r2NoAwaitingOnAccepted(root, withLine("the media_jobs row 16277dac, asked twice and unanswered (the W8 guard pins it).")).pass).toBe(true);
   });
+
+  it("R2 knows his click on the delete list, and does NOT mistake it for accepting the row it served", () => {
+    // He clicked the list on 2026-09-21 19:12 (b50-sweep-click-2026-09-21), so no record may say
+    // that list still waits on him.
+    const v = r2NoAwaitingOnAccepted(root, withLine("The folder-by-folder list with sizes still waits on his eye."));
+    expect(v.pass).toBe(false);
+    expect(v.failures.join("\n")).toContain("b50-sweep-click-2026-09-21");
+
+    // But the click was on the LIST, not on the row. B50's own record must stay free to say the
+    // author is done and his eye has not come — that is LAW B, and a ruler that forbade it would
+    // be enforcing one of his laws by breaking another.
+    expect(r2NoAwaitingOnAccepted(root, withLine("B50 — AUTHOR DONE, WAITING ON HIS EYE (LAW B).")).pass).toBe(true);
+    expect(C.accepted.some((row) => row.subject.test("B50"))).toBe(false);
+  });
   it("names every subject row against a registered approval", () => {
     expect(C.accepted.length).toBeGreaterThanOrEqual(7);
   });

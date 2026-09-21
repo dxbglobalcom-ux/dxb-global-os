@@ -52,6 +52,16 @@ export const C = {
     { id: "b46-closed-by-his-word-2026-09-21", subject: /\bB46\b/ },
     { id: "b48-accepted-by-his-eye-2026-09-21", subject: /\bB48\b/ },
     { id: "b49-accepted-by-his-eye-2026-09-21", subject: /\bB49\b/ },
+    // HIS CLICK ON THE DELETE LIST — and the subject is spelled as narrowly as the thing he
+    // actually approved: the folder-by-folder list with sizes that had to stand in front of him
+    // before anything was removed (his gate of 2026-09-05, "ne 15 gb yaaa"). It is deliberately
+    // NOT /\bB50\b/. B50 is an OPEN row whose record must still be able to say his eye has not
+    // closed it (LAW B); a row spelled B50 would make R2 forbid exactly the sentence LAW B
+    // requires, and the ruler would enforce one of his laws by breaking another.
+    {
+      id: "b50-sweep-click-2026-09-21",
+      subject: /\b(folder-by-folder )?list with sizes\b|\bhis click of 19:12\b|\bthe sweep he clicked\b/i,
+    },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
