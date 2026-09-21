@@ -101,11 +101,17 @@ Three house rules were written into the head of our copy of `SKILL.md`, above ev
 - [x] STUDY (2026-08-27)
 - [x] INSTALL (2026-08-27 — doctor green from the build workspace; the skill was listed as live
       in the running session the moment it landed)
-- [x] ADOPT (2026-08-27 — end-to-end proof build at `var/scrollcraft/builds/_install-proof`:
-      assets made locally with ffmpeg at zero spend, page served, 47 frames shot by the harness,
-      `no dead scroll detected`, `all 2 scrub clip(s) keep moving`, one real CONTRAST FAIL at
-      2.37:1 correctly convicted on the placeholder art. Contact sheet read by the author's own
-      eye and sent to the CEO.)
+- [x] ADOPT (2026-08-27 — end-to-end proof build, run in the build workspace at
+      `var/scrollcraft/builds/_install-proof`: assets made locally with ffmpeg at zero spend,
+      page served, 47 frames shot by the harness, `no dead scroll detected`, `all 2 scrub
+      clip(s) keep moving`, one real CONTRAST FAIL at 2.37:1 correctly convicted on the
+      placeholder art. Contact sheet read by the author's own eye and sent to the CEO.
+      **The workspace itself no longer exists** — its 178 MB were swept on 2026-09-21 under
+      row B50 on the CEO's own click (`ceo-approvals.json` → `b50-sweep-click-2026-09-21`),
+      so this line records a proof that WAS run and is no longer re-openable at that path;
+      a fresh proof rebuilds the workspace from `tools/scrollcraft/`, which is tracked and
+      untouched. The earlier wording, which pointed at the path as if it still stood, is
+      deleted rather than annotated.)
 - [ ] EMBED — no employee persona names this skill yet. Per the CEO's ruling of 2026-08-27 there
       is no row for this and there will not be one: the finished holding builds a site when it is
       told to. The skill therefore embeds through the personas of the departments that would be

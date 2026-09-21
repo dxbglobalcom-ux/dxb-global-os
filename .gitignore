@@ -70,5 +70,24 @@ tests/e2e/evidence/
 # never as committed media. Repos are shallow clones of public upstreams.
 .planning/research/rival-intel/media/
 .planning/research/rival-intel/repos/
-.planning/research/rival-intel/frames/
+.planning/research/rival-intel/frames/**
+!.planning/research/rival-intel/frames/**/
+!.planning/research/rival-intel/frames/01/t002.jpg
+!.planning/research/rival-intel/frames/02/cut009-skill-line.jpg
+!.planning/research/rival-intel/frames/03/cut-github-70.2.jpg
+!.planning/research/rival-intel/frames/03/cut-jarvis-acronym-72.6.jpg
+!.planning/research/rival-intel/frames/03/cut-metaads-51.3.jpg
+!.planning/research/rival-intel/frames/04/cut-gauge-2.5.jpg
+!.planning/research/rival-intel/frames/04/cut-layers-3.6.jpg
+!.planning/research/rival-intel/frames/04/cut-panels-6.9.jpg
+!.planning/research/rival-intel/frames/05/cut-bizbet-42.2.jpg
+!.planning/research/rival-intel/frames/05/cut-donbet-29.5.jpg
+!.planning/research/rival-intel/frames/05/cut-propaganda-backoffice-66.4.jpg
+!.planning/research/rival-intel/frames/05/cut-topearners-52.3.jpg
+!.planning/research/rival-intel/frames/09/seq/t001_0s.jpg
+!.planning/research/rival-intel/frames/12/t001.jpg
+!.planning/research/rival-intel/frames/14/t001.jpg
+!.planning/research/rival-intel/frames/29/t001.jpg
+!.planning/research/rival-intel/frames/33/t001.jpg
+!.planning/research/rival-intel/frames/35/t001.jpg
 .planning/research/rival-intel/work/
