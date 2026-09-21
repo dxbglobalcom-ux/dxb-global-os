@@ -155,6 +155,23 @@ const fail = (why) => { failed = true; line(""); line(`  ${why}`); };
   else line("  applied db/migrations/20260824003000_ops_live_event_receipt.sql (idempotent)");
   line("");
 
+  // THE BENCH'S RECEIPTS ARE NOT THIS FILE'S TO SPEND. Two hands here reach
+  // rows nobody here wrote: the collector started below prunes EVERY receipt
+  // older than an hour on its first flush (`lastPruneAt = 0` beats the
+  // interval), and this file's own cleanup used to end with an unscoped
+  // `DELETE ... WHERE issued_at < now() + interval '1 second'` — the whole
+  // table, whoever filled it. Measured 2026-09-21 on the rebuilt bench: a
+  // battery ended dxb_internal.ops_live_issued 5 -> 0, and the seed's own four
+  // receipts had gone the same way the run before. So the receipts are
+  // BORROWED: take what the bench holds now, hand back exactly that, and keep
+  // nothing this proof minted.
+  const held = (await asAdmin(
+    `SELECT event_id::text || '|' || issued_at::text FROM dxb_internal.ops_live_issued;`))
+    .stdout.split("\n").map((s) => s.trim()).filter((s) => s.includes("|"))
+    .map((s) => { const [id, at] = s.split("|"); return { id, at }; });
+  line(`  the bench holds ${held.length} receipt(s) before this proof — they go back untouched`);
+  line("");
+
   // ── GREEN ─────────────────────────────────────────────────────────────────
   const collector = await startOpsLiveCollector({ windowMs: 300, log: () => {} });
   try {
@@ -196,7 +213,14 @@ const fail = (why) => { failed = true; line(""); line(`  ${why}`); };
     await collector.stop();
     await asAdmin(`DELETE FROM realtime.messages WHERE payload::text LIKE '%b36-forged-%'
                       OR payload::text LIKE '%b36-real-%';`);
-    await asAdmin(`DELETE FROM dxb_internal.ops_live_issued WHERE issued_at < now() + interval '1 second';`);
+    // Put back what was borrowed, then take away only what this proof minted.
+    await asAdmin(held.length > 0
+      ? `INSERT INTO dxb_internal.ops_live_issued (event_id, issued_at) VALUES ` +
+        held.map((r) => `('${r.id}','${r.at}'::timestamptz)`).join(",") +
+        ` ON CONFLICT (event_id) DO NOTHING;
+         DELETE FROM dxb_internal.ops_live_issued
+          WHERE event_id NOT IN (${held.map((r) => `'${r.id}'`).join(",")});`
+      : `DELETE FROM dxb_internal.ops_live_issued;`);
   }
 
   line("");

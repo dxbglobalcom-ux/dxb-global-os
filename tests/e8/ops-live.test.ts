@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb, createListenClient, EventEnvelope } from "../../packages/shared/src/index.js";
-import { pinHookOff } from "../helpers/suite-scope.js";
+import { pinHookOff, watchOpsLiveReceipts } from "../helpers/suite-scope.js";
 import { startOpsLiveCollector } from "../../packages/orchestrator/src/ops-live-collector.js";
 import { runWorkerOnce } from "../../packages/orchestrator/src/worker-shim.js";
 import { dispatch } from "../../packages/orchestrator/src/dispatch.js";
@@ -15,6 +15,10 @@ import { dispatch } from "../../packages/orchestrator/src/dispatch.js";
 // transient broadcast storage — left to Realtime's own retention.
 
 const db = () => getDb();
+// The collectors this file starts spend receipts and prune old ones, and
+// neither act asks who wrote the row. Take the bench's receipts before, put
+// back what was taken and remove what appeared — see the note in the helper.
+const receipts = watchOpsLiveReceipts(db);
 const probeTaskIds: string[] = [];
 const probeRunIds: string[] = [];
 const probeDecisionIds: string[] = [];
@@ -85,6 +89,10 @@ afterAll(async () => {
   await sql`DELETE FROM decision_log WHERE decided_by = 'e83-test-worker'
              OR (decided_by = 'orchestrator:dispatch'
                  AND rationale LIKE '%E8.3 probe task%')`.execute(db());
+  // LAST of the sweeps: the probe rows deleted above are themselves sources,
+  // so their deletion fires the e83 trigger and issues fresh receipts. A
+  // restore placed before them would be measuring a bench that is still moving.
+  await receipts.restore();
   await closeDb();
 });
 

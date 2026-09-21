@@ -116,6 +116,11 @@ export interface LedgerSignatures {
    *  with no run of its own is the shape that accumulates: 354 run-less
    *  `std.knowledge_shelf` rows had been sitting on the bench since 08-23. */
   hookViolations?: Array<{ policyId: string; runlessOnly?: boolean }>;
+  /** chat_sessions a probe utterance caused the mirror to open, by the title
+   *  the intake gave them — SQL ILIKE. Only a session with NO messages left
+   *  is taken: a session that still holds text is somebody's conversation,
+   *  and deleting it would take that text with it. */
+  chatSessionTitleILike?: string[];
 }
 
 export interface LedgerScope {
@@ -181,6 +186,109 @@ export function watchLedgers(db: () => Kysely<DB>): LedgerScope {
         await sql`DELETE FROM control_idempotency
                    WHERE created_at >= ${mintedFrom} AND key LIKE ${prefix + "%"}`.execute(db());
       }
+      for (const like of own.chatSessionTitleILike ?? []) {
+        await sql`DELETE FROM chat_sessions
+                   WHERE created_at >= ${mintedFrom} AND title ILIKE ${like}
+                     AND NOT EXISTS (SELECT 1 FROM chat_messages m
+                                      WHERE m.session_id = chat_sessions.id)`.execute(db());
+      }
+    },
+  };
+}
+
+// ── THE EVALUATOR'S SIDE-ALERTS, 2026-09-21 ──────────────────────────────────
+// `fn_alerts_evaluate()` is not a per-case helper: it sweeps the WHOLE engine,
+// so a suite that calls it to test one rule also raises every other rule the
+// bench happens to satisfy. Measured this day: `tests/e9/approval-center.test.ts`
+// left `alerts` +1 with dedup_key `queue-age` — "2 task(s) queued longer than
+// 30 min", pointing at the two tasks the W9 road proof deliberately keeps on
+// the bench. Nothing is wrong with the alert; it is simply not this suite's,
+// and it appears on every run once those fixtures are half an hour old.
+//
+// Ownership here is the snapshot: an alert whose dedup_key stood unresolved
+// BEFORE the suite is somebody's and survives untouched — only a key that was
+// not there and appeared while the suite ran is taken back.
+export interface AlertScope {
+  /** Call inside the suite's own afterAll, BEFORE closeDb(). */
+  sweep(): Promise<void>;
+}
+
+export function watchSideAlerts(db: () => Kysely<DB>): AlertScope {
+  let standing: string[] = [];
+  let from = new Date(0);
+
+  beforeAll(async () => {
+    const t = await sql<{ t: Date }>`SELECT now() AS t`.execute(db());
+    from = t.rows[0].t;
+    const open = await sql<{ dedup_key: string }>`
+      SELECT DISTINCT dedup_key FROM alerts WHERE resolved_at IS NULL AND dedup_key IS NOT NULL
+    `.execute(db());
+    standing = open.rows.map((r) => r.dedup_key);
+  });
+
+  return {
+    async sweep(): Promise<void> {
+      await sql`DELETE FROM alerts
+                 WHERE at >= ${from} AND resolved_at IS NULL AND dedup_key IS NOT NULL
+                   AND NOT (dedup_key = ANY(${standing}::text[]))`.execute(db());
+    },
+  };
+}
+
+// ── THE EVENT RECEIPTS, 2026-09-21 ───────────────────────────────────────────
+// `dxb_internal.ops_live_issued` holds one receipt per event the company
+// issued, and the live collector spends it on publish. Two things a suite that
+// starts a collector does to a bench it does not own, both measured this day
+// against the construction engine with age-labelled probe receipts:
+//
+//   · IT EATS WHAT IT DID NOT WRITE. `pruneReceipts()` fires on the collector's
+//     FIRST flush (`lastPruneAt = 0` beats `PRUNE_EVERY_MS`) and deletes every
+//     receipt older than an hour, whoever wrote it. Planted probes: the two
+//     aged 2 h were gone after `tests/e8/ops-live.test.ts` ran alone; the ones
+//     aged 10 min and 0 min survived. That is how the seed's four receipts
+//     vanished in the first battery on a freshly rebuilt bench (4 → 0).
+//   · IT LEAVES ITS OWN. The same single run ended 7 receipts heavier — events
+//     it issued that no publish came to collect.
+//
+// The prune is RIGHT in production (a receipt nobody collected is rubbish, not
+// evidence), so the repair belongs to the suite, not to the collector: take the
+// bench's receipts before, and put back exactly what was taken while removing
+// exactly what appeared. There is no author column to sign with, so ownership
+// here is "it was not on the bench when I started" — the watermark is the
+// snapshot itself, which is stronger than a timestamp alone.
+export interface ReceiptScope {
+  /** Call inside the suite's own afterAll, BEFORE closeDb(). */
+  restore(): Promise<void>;
+}
+
+export function watchOpsLiveReceipts(db: () => Kysely<DB>): ReceiptScope {
+  let heldIds: string[] = [];
+  let heldAt: string[] = [];
+  let from = new Date(0);
+
+  beforeAll(async () => {
+    // The bench's clock, not this process's — they are the same machine today,
+    // and a comparison that survives them not being is free.
+    const t = await sql<{ t: Date }>`SELECT now() AS t`.execute(db());
+    from = t.rows[0].t;
+    const held = await sql<{ event_id: string; issued_at: string }>`
+      SELECT event_id, issued_at::text AS issued_at FROM dxb_internal.ops_live_issued
+    `.execute(db());
+    heldIds = held.rows.map((r) => r.event_id);
+    heldAt = held.rows.map((r) => r.issued_at);
+  });
+
+  return {
+    async restore(): Promise<void> {
+      if (heldIds.length > 0) {
+        await sql`
+          INSERT INTO dxb_internal.ops_live_issued (event_id, issued_at)
+          SELECT * FROM unnest(${heldIds}::uuid[], ${heldAt}::timestamptz[])
+          ON CONFLICT (event_id) DO NOTHING`.execute(db());
+      }
+      await sql`
+        DELETE FROM dxb_internal.ops_live_issued
+         WHERE issued_at >= ${from} AND NOT (event_id = ANY(${heldIds}::uuid[]))`.execute(db());
     },
   };
 }

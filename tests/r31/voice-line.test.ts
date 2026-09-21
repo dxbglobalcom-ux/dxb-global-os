@@ -37,10 +37,6 @@ const createdCallIds: string[] = [];
 const createdIntentTexts: string[] = [];
 
 afterAll(async () => {
-  // 2026-09-21: and the two append-only ledgers too. Measured by running
-  // every sandboxed file alone: this one left the rows named below, which
-  // no FK chain reaches. Watermark AND signature — never the watermark alone.
-  await ledgerScope.sweep({ audit: [{ actor: "ceo", action: "intent.submitted" }, { actor: "system", action: "voice.identity.retired" }, { actor: "system", action: "voice.identity.upserted" }] });
   for (const id of createdCallIds) {
     await db().deleteFrom("voice_calls").where("id", "=", id).execute();
   }
@@ -65,6 +61,24 @@ afterAll(async () => {
     .deleteFrom("voice_identities")
     .where("agent_id", "in", db().selectFrom("agents").select("id").where("slug", "=", "cfo"))
     .execute();
+  // 2026-09-21: and the two append-only ledgers too, which no FK chain reaches
+  // — watermark AND signature, never the watermark alone.
+  //
+  // LAST, AND THAT ORDER IS THE POINT. The mirror above opens a chat SESSION
+  // for the probe turns as well as writing them, and the message sweep on its
+  // own leaves that empty session standing: measured on the rebuilt bench,
+  // chat_sessions 0 → 1, and deleting the row and running this file alone put
+  // it straight back ("ve 31 Probe şirketin görevi nedir?" — the intake had
+  // normalised the question again). The session can only be judged empty after
+  // its messages are gone, so the sweep follows them.
+  await ledgerScope.sweep({
+    audit: [
+      { actor: "ceo", action: "intent.submitted" },
+      { actor: "system", action: "voice.identity.retired" },
+      { actor: "system", action: "voice.identity.upserted" },
+    ],
+    chatSessionTitleILike: ["%probe%şirketin görev%", "R31 %"],
+  });
   await closeDb();
 });
 

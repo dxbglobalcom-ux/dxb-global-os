@@ -150,11 +150,18 @@ afterAll(async () => {
   // row. Measured that day: with the sweep placed first, a battery run still
   // ended 13 audit rows heavier — the restoration's own footprints, written
   // after the broom had passed.
+  //
+  // And the same order is why `control_idempotency` is swept HERE and not in
+  // sweep(). Every ceoAction mints an `e95t-<uuid>` key; sweep() clears them,
+  // then the restore above mints one more per standing grant. Measured on the
+  // rebuilt bench, 2026-09-21: 1342 → 1355, exactly the 13 grants quality
+  // holds, on every run — the shape that mints once and then looks stable.
   await ledgerScope.sweep({
     audit: [
       { actor: "ceo", action: "library.grant" },
       { actor: "ceo", action: "library.revoke_grant" },
     ],
+    idempotencyPrefix: [M],
   });
   await closeDb();
 });

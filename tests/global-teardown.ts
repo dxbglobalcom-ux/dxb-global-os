@@ -169,6 +169,74 @@ async function ensureRealtimePartitions(trx: Runner): Promise<void> {
   `.execute(trx);
 }
 
+// ── THE EVENT RECEIPTS, 2026-09-21 ───────────────────────────────────────────
+// `dxb_internal.ops_live_issued` holds one receipt per event the company
+// issued; the resident collector spends it on publish and prunes, after an
+// hour, whatever nobody came to collect. NOTHING PLAYS THAT PART ON THE BENCH,
+// so every suite that writes a source row leaves a receipt behind it — and no
+// per-file sweep can own them, because the row is written by a trigger, carries
+// no author, and belongs to the RUN rather than to any one suite.
+//
+// It stayed invisible because it was being hidden. `scripts/b36/prove-forged-
+// event.mjs` ended with `DELETE ... WHERE issued_at < now() + interval '1
+// second'` — the whole table, whoever filled it — and it runs in the host half,
+// last. The bench ruler therefore read 4 -> 0 and called it a loss of four.
+// With that unscoped delete repaired the same battery read 4 -> 655: the wipe
+// had been covering 651 receipts a run.
+//
+// So the run borrows them. Take what the bench holds before the first suite is
+// loaded; afterwards put every one of those back (the collector started inside
+// tests/e8 prunes the ones over an hour old, whoever wrote them — measured with
+// age-labelled probes) and remove exactly what appeared while the run was on.
+// There is no author column to sign with, so ownership here is "it was not on
+// the bench when this run started", which the snapshot proves outright.
+//
+// This sweep is bounded by the same refusal as everything else in this file:
+// the transaction it runs in has already asked the connection who it is, and a
+// connection reaching the company is refused before a single statement.
+let receiptsHeldIds: string[] = [];
+let receiptsHeldAt: string[] = [];
+let receiptsFrom = "";
+
+async function snapshotReceipts(trx: Runner): Promise<void> {
+  const { sql } = await import("kysely");
+  const t = await sql<{ t: string }>`SELECT now()::text AS t`.execute(trx);
+  receiptsFrom = t.rows[0].t;
+  const held = await sql<{ event_id: string; issued_at: string }>`
+    SELECT event_id::text AS event_id, issued_at::text AS issued_at
+      FROM dxb_internal.ops_live_issued
+  `.execute(trx);
+  receiptsHeldIds = held.rows.map((r) => r.event_id);
+  receiptsHeldAt = held.rows.map((r) => r.issued_at);
+}
+
+async function restoreReceipts(trx: Runner): Promise<void> {
+  const { sql } = await import("kysely");
+  if (!receiptsFrom) return; // the setup never got far enough to take one
+  if (receiptsHeldIds.length > 0) {
+    await sql`
+      INSERT INTO dxb_internal.ops_live_issued (event_id, issued_at)
+      SELECT * FROM unnest(${receiptsHeldIds}::uuid[], ${receiptsHeldAt}::timestamptz[])
+      ON CONFLICT (event_id) DO NOTHING
+    `.execute(trx);
+  }
+  const left =
+    receiptsHeldIds.length > 0
+      ? await sql`
+          DELETE FROM dxb_internal.ops_live_issued
+           WHERE issued_at >= ${receiptsFrom}::timestamptz
+             AND NOT (event_id = ANY(${receiptsHeldIds}::uuid[]))
+        `.execute(trx)
+      : await sql`
+          DELETE FROM dxb_internal.ops_live_issued
+           WHERE issued_at >= ${receiptsFrom}::timestamptz
+        `.execute(trx);
+  const n = Number(left.numAffectedRows ?? 0);
+  if (n > 0) {
+    console.log(`[global-teardown] handed back ${n} ops:live receipt(s) this run issued`);
+  }
+}
+
 export default async function globalSetup(): Promise<() => Promise<void>> {
   pinTheEngine();
   // Root has no direct 'pg' dependency — ride the shared package's own pool
@@ -179,6 +247,7 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
     await getDb().transaction().execute(async (trx) => {
       await refuseUnlessConstruction(trx as unknown as Runner, true);
       await ensureRealtimePartitions(trx as unknown as Runner);
+      await snapshotReceipts(trx as unknown as Runner);
     });
   } catch (e) {
     // A refusal must not leave a pool open behind it, pointed at whatever it
@@ -325,6 +394,11 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
         const g = Number(ghosts.numAffectedRows ?? 0);
         if (g > 0) console.log(`[global-teardown] swept ${g} emptied chat thread(s)`);
       }
+      // LAST. Every sweep above deletes source rows, and a source row leaving
+      // is itself an event: the e83 trigger issues a fresh receipt for each of
+      // them, inside this very transaction. A hand-back placed any earlier
+      // would be counting a bench that is still moving.
+      await restoreReceipts(trx as unknown as Runner);
       });
     } finally {
       await closeDb().catch(() => {});

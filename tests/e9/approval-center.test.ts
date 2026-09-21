@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/index.js";
 import { classifyOperation } from "../../packages/kernel/src/index.js";
-import { watchLedgers } from "../helpers/suite-scope.js";
+import { watchLedgers, watchSideAlerts } from "../helpers/suite-scope.js";
 
 // E9.3 verification — APPROVAL_ENGINE_SPEC §20/§21/§24:
 //   fn_classify_operation (priority scan, fail-closed unknown→gated),
@@ -22,6 +22,11 @@ const db = () => getDb();
 
 // Its own footprints in audit_log / decision_log, swept in afterAll below.
 const ledgerScope = watchLedgers(db);
+// The §9 cases below call fn_alerts_evaluate(), which sweeps the whole engine:
+// on the rebuilt bench it also raised `queue-age` over the two tasks the W9
+// road proof keeps there. Alerts standing before this file survive; the ones it
+// caused do not — see the note in the helper.
+const alertScope = watchSideAlerts(db);
 const PROBE = "e93-probe";
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -524,5 +529,8 @@ afterAll(async () => {
   // no FK chain reaches. Watermark AND signature — never the watermark alone.
   await ledgerScope.sweep({ audit: [{ actor: "system:outbox", action: "outbox.enqueue_skipped_no_handler" }] });
   await sweepProbeRows();
+  // After the probe rows, because removing an approval or a task is itself a
+  // thing the evaluator reacts to.
+  await alertScope.sweep();
   await closeDb();
 });
