@@ -107,6 +107,38 @@ console.log(
   `[w9-road-proof] sheet ${CODE}: ${sheet.tasks.length} task(s)` +
     (sheet.already_dispatched ? " (already dispatched — idempotent, no second crew)" : " born"),
 );
+
+// ── THE PROOF RESTORES ITSELF (2026-09-21) ──────────────────────────────────
+// The sheet is KEPT so it can be read afterwards, and between 09-16 and 09-21
+// the bench ate it: tests/phase4/velocity booted the real scheduler inside the
+// sandbox, its drain carried no department fence, and the resident worker
+// claimed this crew's take five times over and left it BLOCKED. The proof was
+// accepted on 2026-09-15 with both seats QUEUED (EVIDENCE-W9-2026-09-15.md
+// §5), so a run that finds them otherwise is looking at damage, not at work.
+// The fence is in place now; this puts the sheet back the way he accepted it,
+// and says so out loud. It touches ONLY the two seats of THIS sheet, only when
+// they are not queued, and it never moves a task that is genuinely running.
+const restored = (
+  await sql`
+    UPDATE tasks
+       SET status = 'queued', claimed_by = NULL, claimed_at = NULL,
+           lease_expires_at = NULL, feedback = NULL, result = NULL
+     WHERE parent_task_id = ${author.id}::uuid
+       AND status IN ('failed', 'blocked', 'review')
+    RETURNING id`.execute(db)
+).rows;
+if (restored.length > 0) {
+  // The ladder's terminal marker goes with it, or the dispatcher keeps
+  // counting a blocked task as retired and the row can never move again.
+  await sql`
+    DELETE FROM audit_log
+     WHERE action = 'task.blocked'
+       AND task_id = ANY(${restored.map((r) => r.id)}::uuid[])`.execute(db);
+  console.log(
+    `[w9-road-proof] RESTORED ${restored.length} seat(s) to 'queued' — the bench had taken them; ` +
+      `the proof was accepted on 2026-09-15 with both seats queued and is put back, not re-accepted`,
+  );
+}
 const rows = (
   await sql`
     SELECT a.slug, a.department AS home, t.department AS work_dept, t.status, t.id
