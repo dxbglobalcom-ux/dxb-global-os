@@ -45,7 +45,7 @@ export OPENCLI_WINDOW=background
 QUERY="${1:-}"; OUT="${2:-}"; shift 2 2>/dev/null || true
 # DEFAULT = max. His order, 2026-09-17: "20-30 farkli kanalda ayni anda arastirilacak…
 # ben ayni anda 100 tane siteden arastirma yapiyormusum gibi arastirma yapip sonuc
-# getirecek". `wide` opens 23; `max` opens all 37 channels and costs seconds, not minutes, because
+# getirecek". `wide` opens 23; `max` opens all 39 channels and costs seconds, not minutes, because
 # every channel is fired in parallel. Narrow it by hand only when a question truly has
 # one home (--tier core), and say so in the answer.
 TIER=max; TMO=180; PAGES=14; WITH_BROWSER=1; NO_READ=0; KISA=""; DRY=0
@@ -244,6 +244,21 @@ quora-forums|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser quo
 # opened 3 of 3 (42-50 KB each, by the tenth door, jina-reader), carrying real answers.
 # So this channel finds the ADDRESSES and the chain takes what is inside them.
 quora|wide|opencli google search "site:quora.com {K}" --limit 20 -f yaml
+# FACEBOOK AND INSTAGRAM ARE READ THROUGH THE BRIDGE, NOT THROUGH THEIR OWN `search`
+# ADAPTERS. Measured 2026-09-21 on this machine, after the CEO asked why two sites we are
+# logged in to were not channels: `opencli facebook whoami` and `opencli instagram whoami`
+# both answered `logged_in: true`, so the login was never the problem — the tool's own
+# adapters were: `opencli facebook search` returned "Failed to open facebook search:
+# Navigation rejected", `opencli facebook feed` rendered the page and extracted nothing
+# ("no feed rows could be extracted", articles=2), and `opencli instagram search` died at
+# "Pre-navigation ... Navigation rejected". The SAME session, driven by hand through the
+# browser bridge that already carries his login, read both: Facebook's own post search
+# 36 583 chars, Instagram's keyword search 1 309 chars carrying a full Dubai Holding post.
+# So these two follow the quora-forums shape — the bridge, under the same lock.
+# INSTAGRAM IS THIN BY CONSTRUCTION: its result page is images, and what comes back is the
+# post text inside their alt attributes. It is a real voice, not a large one.
+facebook|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser facebook open 'https://www.facebook.com/search/posts/?q={UK}' --window background >/dev/null 2>&1; opencli browser facebook extract --window background"
+instagram|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser instagram open 'https://www.instagram.com/explore/search/keyword/?q={UK}' --window background >/dev/null 2>&1; opencli browser instagram extract --window background"
 linkedin|max|opencli linkedin search "{K}" -f yaml
 zhihu|max|opencli zhihu search "{K}" -f yaml
 linux-do|max|opencli linux-do search "{K}" -f yaml
@@ -575,8 +590,9 @@ def _host(u):
 # addresses, the budget of 14 ran out around `openalex`, and the engine that exists to read
 # what people say opened NOT ONE Reddit page. The order is now the job's order.
 CROWD = ["reddit", "hackernews", "twitter", "stackoverflow", "youtube", "lobsters",
-         "quora", "quora-forums", "v2ex", "zhihu", "linux-do", "weibo", "rednote",
-         "bilibili", "juejin", "devto", "bluesky", "substack", "medium"]
+         "quora", "quora-forums", "facebook", "instagram", "v2ex", "zhihu",
+         "linux-do", "weibo", "rednote", "bilibili", "juejin", "devto",
+         "bluesky", "substack", "medium"]
 
 
 def _order(stem):

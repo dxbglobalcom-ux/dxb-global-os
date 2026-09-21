@@ -98,7 +98,7 @@ echo
 # ---- THE GROUND IS OPENED BY THE MACHINE, NOT BY A SENTENCE -----------------------------
 # Measured twice on 2026-09-17: told in prose to sweep first, 2 of 7 hunters did it, and on
 # the repaired prompt 2 of 3. Instruction-following is not a mechanism. So the fleet opens
-# the 37-channel ground ITSELF, once, before a single hunter is launched, and hands every
+# the 39-channel ground ITSELF, once, before a single hunter is launched, and hands every
 # lane the raw files. Google and DuckDuckGo are therefore searched on EVERY run, by
 # construction, and a hunter spends its minutes reading instead of deciding whether to look.
 # THE LANGUAGE IS DECIDED DELIBERATELY, BY THE SESSION THAT TYPES THE QUERIES. Measured
@@ -106,12 +106,12 @@ echo
 # in Turkish — datacamp.com/tr and a Turkish YouTube short — while the argument itself is being
 # had in English. A door asked in the wrong language is a door half opened. So a question that
 # lives in two languages is typed as two queries, one per language.
-# ONE GROUND PER QUERY. Each `--q` gets its own 37-channel ground, and every query has already
+# ONE GROUND PER QUERY. Each `--q` gets its own 39-channel ground, and every query has already
 # passed the wall above — one sentence, at most 120 characters — so no sweep is ever handed a
 # paragraph again.
 GROUND="$OUT/ground"
 n_g=0
-# FOUR GROUNDS AT A TIME, NEVER ALL OF THEM. Each ground is 37 channels fired in parallel, so
+# FOUR GROUNDS AT A TIME, NEVER ALL OF THEM. Each ground is 39 channels fired in parallel, so
 # every extra query multiplies processes: an auditor measured that twenty of them would put 740
 # children on a workstation with a freezing history, and one copy-pasted query would do it.
 GROUND_PAR=4
@@ -174,7 +174,7 @@ for role in $PICK; do
     # THE SENTENCE MATCHES THE RUN. It used to say "in every language of the question" on every
     # run, including the single-language ones: measured 2026-09-17, the fleet computed the real
     # number one line above and then told seven hunters something else.
-    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 37 channels, in %s language/phrasing(s) of\n' "$n_g"
+    printf 'THE GROUND IS ALREADY OPEN — the fleet swept 39 channels, in %s language/phrasing(s) of\n' "$n_g"
     printf 'the question, before you were launched. One file per channel, raw, including google.raw\n'
     printf 'and duckduckgo.raw, plus the page bodies it already read:\n'
     for gd in $GROUND_DIRS; do printf '    %s/*.raw   %s/pages/*.md\n' "$gd" "$gd"; done

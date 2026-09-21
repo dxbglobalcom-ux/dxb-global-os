@@ -40,7 +40,7 @@ fleet is for.
    file. A record exists only when he says **"kaydet"** (§7).
 2. **Every channel at once, and no laziness.** *"20-30 farklı kanalda aynı anda… bir alet bir
    kanalı açamazsa başka aletler denenecek… bizim için her zaman en iyi alet ilk kullanılır."*
-   The default sweep is **`max` — 37 channels in parallel.**
+   The default sweep is **`max` — 39 channels in parallel.**
 3. **A login wall is not a wall.** *"giriş istenirse bizim dxbglobalcom@gmail.com hesabımızla
    giriş yapılacak."* The machine's Chrome (Profile 5) is already signed in to Facebook,
    Instagram, X, YouTube, Quora and Reddit; read through it. **Reading is authorised; writing
@@ -116,11 +116,11 @@ SCRIPT: free, instant, and it never invents.
 
 ```bash
 R='/home/dxb/DxB Global OS/.claude/skills/dxb-research/scripts'
-bash "$R/sweep.sh" "<query>" <outdir> --tier max            # 37 channels, parallel
+bash "$R/sweep.sh" "<query>" <outdir> --tier max            # 39 channels, parallel
 bash "$R/probe.sh"                                          # who is actually alive, right now
 ```
 
-37 channels: five keyless MCP search engines (Exa · Parallel · Tavily · Firecrawl · You.com),
+39 channels: five keyless MCP search engines (Exa · Parallel · Tavily · Firecrawl · You.com),
 Google and DuckDuckGo through `opencli`, the human channels, the code forge, the academic
 APIs (arxiv · crossref · europepmc · **openalex**). It prints a coverage table **with the
 FAIL rows**, fires each dead channel's declared stand-in from `config/registry.yaml`, and

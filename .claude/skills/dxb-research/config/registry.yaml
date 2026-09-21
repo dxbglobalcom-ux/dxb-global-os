@@ -205,6 +205,22 @@ channels:
     tags: [search, serp]
     probe: opencli duckduckgo search "site reliability" -f yaml
     fallback: [exa, parallel, google]
+  facebook:
+    tags: [first-hand, login]
+    probe: opencli facebook whoami
+    note: >-
+      Read through the browser bridge that carries his login, NOT through `facebook search`.
+      Measured 2026-09-21: whoami logged_in true, `search` = "Navigation rejected",
+      `feed` = "no feed rows could be extracted", bridge on /search/posts = 36 583 chars.
+    fallback: [twitter, bluesky, google]
+  instagram:
+    tags: [first-hand, login]
+    probe: opencli instagram whoami
+    note: >-
+      Bridge only, same reason. Measured 2026-09-21: whoami logged_in true,
+      `search` = "Pre-navigation ... Navigation rejected", bridge on /explore/search =
+      1 309 chars. THIN BY CONSTRUCTION - the page is images and the text is their alt.
+    fallback: [rednote, twitter, google]
   rednote:
     tags: [first-hand, cn]
     probe: opencli rednote search "可靠性" -f yaml

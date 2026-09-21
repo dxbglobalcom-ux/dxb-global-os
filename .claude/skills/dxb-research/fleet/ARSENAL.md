@@ -23,7 +23,7 @@ failure the CEO named on 2026-09-16: *"2 tane reddit 2 tane x açtın kapattın.
 
 Before you touch your lane's own doors, fire the wide sweep once with a query shaped for
 your lane. Measured on the first fleet run, 2026-09-17: only **3 of 7 hunters** opened the
-37-channel ground — the other four went straight to the platform they knew, and one lane
+39-channel ground — the other four went straight to the platform they knew, and one lane
 used nothing but the model's own WebSearch. The CEO asked the obvious question the same
 hour — *"google'da da arama yapıldı mı?"* — and the honest answer was "in three lanes of
 seven". A lane is a SPECIALITY, never a reason to leave the ground unopened.
@@ -48,7 +48,7 @@ bash "$R/crowd.sh" urls.txt OUTDIR --workers 6        # reddit threads -> OUTDIR
 opencli reddit read <url> --limit 100 --depth 10 --replies 50 --expand-more true --expand-rounds 5 -f yaml
 #   the DEFAULTS of that command read 35 records / 20 people of a 73-comment thread. Never use them.
 
-# the fan-out: 37 channels at once, keyless
+# the fan-out: 39 channels at once, keyless
 bash "$R/sweep.sh" "<query>" OUTDIR --tier max --pages 14
 
 # one page, twelve doors, in order, until one opens
