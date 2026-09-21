@@ -80,6 +80,21 @@ const lastNumber = (out) =>
   out.split("\n").map((x) => x.trim()).filter((x) => /^-?\d+$/.test(x)).pop() ?? null;
 const line = (s) => console.log(s);
 
+// How far the outbound counter has been turned, as ONE number that moves on
+// EVERY nextval() — including the first one on a freshly built engine.
+//
+// `last_value` alone is not that number. A sequence is born `(last_value 1,
+// is_called false)`; the first nextval() hands out 1 and only flips `is_called`,
+// leaving `last_value` at 1. Measured 2026-09-21 on a bench rebuilt from empty
+// (B50 Phase 4): the RED leg read 1 -> 1 and called a reproduced escape a
+// failure, and the GREEN leg had the same blindness pointing the other way — a
+// seal that had been breached on a fresh engine would have printed "counter
+// unmoved" and PASSED. `last_value + is_called::int` is the count of values
+// already consumed, plus one: it steps by exactly one per nextval(), on the
+// first turn and on every turn after it.
+const COUNTER_TURNS =
+  "SELECT last_value + is_called::int FROM net.http_request_queue_id_seq;";
+
 /** Never leave the engine standing in the RED state, whatever goes wrong. */
 async function reseal() {
   const r = await asAdmin(readFileSync(WINDOW_SQL, "utf8"));
@@ -127,7 +142,7 @@ const REOPEN = `
   if (reopened.code !== 0) await fail(`could not re-open the pre-audit state: ${reopened.stderr.slice(0, 300)}`);
 
   const lo0 = Number(lastNumber((await asAdmin("SELECT count(*) FROM pg_largeobject_metadata;")).stdout) ?? "-1");
-  const seq0 = Number(lastNumber((await asAdmin("SELECT last_value FROM net.http_request_queue_id_seq;")).stdout) ?? "-1");
+  const seq0 = Number(lastNumber((await asAdmin(COUNTER_TURNS)).stdout) ?? "-1");
   line(`  before: large objects ${lo0} · outbound counter at ${seq0}`);
   line("");
 
@@ -140,7 +155,7 @@ const REOPEN = `
   const red2 = await asWindow(
     `SET default_transaction_read_only = off;
      BEGIN; SELECT nextval('net.http_request_queue_id_seq'); ROLLBACK;`);
-  const seq1 = Number(lastNumber((await asAdmin("SELECT last_value FROM net.http_request_queue_id_seq;")).stdout) ?? "-1");
+  const seq1 = Number(lastNumber((await asAdmin(COUNTER_TURNS)).stdout) ?? "-1");
   const advanced = red2.code === 0 && seq1 !== seq0;
   line(`  RED 2  counter       ${red2.code === 0
     ? `TURNED — ${seq0} -> ${seq1}, and the ROLLBACK did not put it back`
@@ -176,11 +191,11 @@ const REOPEN = `
   const g1err = (green1.stderr.match(/ERROR:\s*(.*)/) ?? [])[1] ?? "";
   line(`  GREEN 1 large object  ${green1.code === 0 ? "STILL POSSIBLE" : `refused: ${g1err.slice(0, 60)}`}`);
 
-  const seqBefore = Number(lastNumber((await asAdmin("SELECT last_value FROM net.http_request_queue_id_seq;")).stdout) ?? "-1");
+  const seqBefore = Number(lastNumber((await asAdmin(COUNTER_TURNS)).stdout) ?? "-1");
   const green2 = await asWindow(
     `SET default_transaction_read_only = off;
      BEGIN; SELECT nextval('net.http_request_queue_id_seq'); ROLLBACK;`);
-  const seqAfter = Number(lastNumber((await asAdmin("SELECT last_value FROM net.http_request_queue_id_seq;")).stdout) ?? "-1");
+  const seqAfter = Number(lastNumber((await asAdmin(COUNTER_TURNS)).stdout) ?? "-1");
   const g2err = (green2.stderr.match(/ERROR:\s*(.*)/) ?? [])[1] ?? "";
   line(`  GREEN 2 counter       ${green2.code === 0 && seqAfter !== seqBefore
     ? "STILL TURNS" : `refused: ${g2err.slice(0, 60)}  (counter unmoved at ${seqAfter})`}`);

@@ -33,6 +33,18 @@ function runNode(args: string[]): string {
   }
 }
 
+/** One statement on the CONSTRUCTION engine, as the owner of its `net` objects.
+ *  The holding's own engine is never addressed from here — this is the
+ *  disposable bench, the same one `prove-window-escapes.mjs` re-opens and
+ *  re-seals. */
+function benchSql(statement: string): string {
+  return execFileSync(
+    "docker",
+    ["exec", "supabase_db_DxB_Build", "psql", "-U", "supabase_admin", "-d", "postgres", "-At", "-c", statement],
+    { encoding: "utf8", stdio: "pipe" },
+  ).trim();
+}
+
 describe("B36 · Block 3-bis — the live drills, on the company's side", () => {
   it(
     "(4) LIVE — the two audited escapes reproduce with the real role, then the server refuses them",
@@ -54,6 +66,44 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
       expect(out, `escape 1 is still open after the seal:\n${out}`)
         .toMatch(/GREEN 1\s+large object\s+refused: permission denied/);
       expect(out, `escape 2 is still open after the seal:\n${out}`)
+        .toMatch(/GREEN 2\s+counter\s+refused: permission denied/);
+      expect(out).toContain("ESCAPES_RED_THEN_GREEN");
+    },
+  );
+
+  it(
+    "(4-bis) LIVE — the proof still sees the counter's FIRST turn, on a sequence in its born state",
+    { timeout: 240_000 },
+    () => {
+      // B50 Phase 4, 2026-09-21. `prove-window-escapes.mjs` read the outbound
+      // counter as `SELECT last_value`. A sequence is BORN `(last_value 1,
+      // is_called false)`: the first nextval() hands out 1 and only flips
+      // `is_called`, leaving `last_value` at 1. On an engine that had been up a
+      // while the first turn was long spent and the read moved, so this stayed
+      // invisible until a bench came up empty — and then the RED leg read
+      // `1 -> 1` and called a reproduced escape a failure. The GREEN leg carried
+      // the SAME blindness pointing the other way, which is the half that
+      // mattered: a seal breached on a fresh engine would have printed `counter
+      // unmoved` and the proof would have PASSED.
+      //
+      // Case (4) above cannot catch a return to that reading. It runs on
+      // whatever state the counter is already in, and past the first turn BOTH
+      // readings move. The born state is the one state that tells them apart, so
+      // this case puts the counter back into it before asking the same question.
+      benchSql("ALTER SEQUENCE net.http_request_queue_id_seq RESTART");
+      // Two COLUMNS, not a concatenation: psql's -At renders a boolean column as
+      // `f`, while `||` casts it to the word `false`. The pair is what matters —
+      // `last_value` alone cannot say whether the first turn is still unspent.
+      expect(
+        benchSql("SELECT last_value, is_called FROM net.http_request_queue_id_seq"),
+        "the counter could not be put back into its born state, so this case proves nothing",
+      ).toBe("1|f");
+
+      const out = runNode(["scripts/b36/prove-window-escapes.mjs"]);
+
+      expect(out, `the counter's FIRST turn was not seen — the proof is blind on a fresh engine:\n${out}`)
+        .toMatch(/RED 2\s+counter\s+TURNED — 1 -> 2/);
+      expect(out, `the seal's refusal was read off a counter the proof cannot see turn:\n${out}`)
         .toMatch(/GREEN 2\s+counter\s+refused: permission denied/);
       expect(out).toContain("ESCAPES_RED_THEN_GREEN");
     },
