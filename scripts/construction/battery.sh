@@ -34,6 +34,15 @@ if command -v flock >/dev/null 2>&1; then
     echo "         or point this one elsewhere with DXB_CONSTRUCTION_URL."
     exit 2
   fi
+  # 2026-09-21: the lock is no longer only battery-against-battery. It now names
+  # the ENGINE, and every vitest run takes it — because a single-file run beside
+  # a battery falls inside the battery's own before/after counting, and since the
+  # receipts are reconciled per run it would also hand back rows that are not
+  # its own. Measured that day: a `vitest run <one file>` started beside a
+  # battery took `dxb_internal.ops_live_issued` from 652 to 4. The two vitest
+  # halves below are this battery's own, so they are told the engine is already
+  # held rather than left to fight their parent for it.
+  export DXB_ENGINE_LOCK_HELD=1
 else
   echo "⚠ UNVERIFIED — flock is not installed, so a concurrent battery cannot be ruled out"
 fi

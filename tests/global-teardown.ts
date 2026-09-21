@@ -43,10 +43,91 @@
 // nowhere in production — e10 suite comment).
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { spawn, type ChildProcess } from "node:child_process";
 import type { Kysely } from "kysely";
 import { CONSTRUCTION_DATABASE_URL } from "./construction-engine.js";
 
 const SAY = "[global-setup]";
+
+// ── ONE RUN AT A TIME ON ONE ENGINE, 2026-09-21 ──────────────────────────────
+// `scripts/construction/battery.sh` has refused a second BATTERY since this
+// morning, and that was not enough: a plain `vitest run <one file>` beside a
+// running battery falls inside the battery's own before/after counting, and now
+// that the ops:live receipts are reconciled per RUN it also hands back rows that
+// belong to the other run. Measured that day, and it is why this exists: a
+// single-file run started beside a battery took `dxb_internal.ops_live_issued`
+// from 652 to 4 — the running battery's receipts, deleted by a watermark that
+// was never ownership. The rule is therefore one rule: THE ENGINE'S LOCK IS
+// EVERY VITEST RUN'S, not only every battery's.
+//
+// WHERE IT IS TAKEN, and why not here. Inside the construction wall `/tmp` is a
+// fresh tmpfs, so the lock file is not visible at all, and no environment
+// variable of ours crosses the wall either (both measured 2026-09-21:
+// `DXB_ENGINE_LOCK_HELD` read back empty inside, and `ls` could not find the
+// lock). So the HOST side takes it — `scripts/construction/run.sh` for a
+// sandboxed run, `battery.sh` for the battery — and this file only asks whether
+// somebody already holds the engine on its behalf. `DXB_CONSTRUCTION_SANDBOX`
+// is set by the root-owned wall itself, so it cannot be forged from in here.
+const ENGINE_LOCK = join(process.env.TMPDIR || "/tmp", "dxb-construction-battery.lock");
+let engineLockHolder: ChildProcess | null = null;
+
+async function takeTheEngine(): Promise<void> {
+  if (process.env.DXB_CONSTRUCTION_SANDBOX === "1") return; // the door holds it
+  if (process.env.DXB_ENGINE_LOCK_HELD === "1") return; // the battery holds it
+
+  const verdict = await new Promise<"held" | "refused" | "no-flock">((resolve) => {
+    let settled = false;
+    const done = (v: "held" | "refused" | "no-flock") => {
+      if (!settled) {
+        settled = true;
+        resolve(v);
+      }
+    };
+    // The child IS the lock: `flock` holds it for as long as the process it
+    // started lives. AND IT IS HELD OPEN BY A PIPE, not by a timer — the first
+    // shape of this, `exec sleep 1000000` closed with `child.kill()`, was caught
+    // by its own check the same hour: `kill` reaches `flock`, and `flock`'s
+    // grandchild goes on holding the inherited descriptor, so the engine stayed
+    // locked after the run ended (measured: `fuser` named `sleep 1000000`, pid
+    // 2054834, and the next run would have been refused for nothing). `cat`
+    // waits on this process's own pipe instead: ending it releases the lock, and
+    // so does this process dying for any reason at all, which is the half a
+    // hand-written lock file can never do.
+    const child = spawn("flock", ["-n", ENGINE_LOCK, "sh", "-c", "echo LOCKED; exec cat"], {
+      stdio: ["pipe", "pipe", "ignore"],
+    });
+    child.on("error", () => done("no-flock")); // same fallback as battery.sh
+    child.stdout?.on("data", (d: Buffer) => {
+      if (d.toString().includes("LOCKED")) {
+        engineLockHolder = child;
+        done("held");
+      }
+    });
+    child.on("exit", () => done("refused"));
+  });
+
+  if (verdict === "no-flock") {
+    console.log(`${SAY} ⚠ UNVERIFIED — flock is not installed, so a concurrent run cannot be ruled out`);
+    return;
+  }
+  if (verdict === "refused") {
+    console.error(
+      `${SAY} REFUSED: another run already holds the construction engine.\n` +
+        `         Two runs on one bench measure each other, not the code. Wait for it,\n` +
+        `         or point this one elsewhere with DXB_CONSTRUCTION_URL.`,
+    );
+    process.exit(2);
+  }
+}
+
+function releaseTheEngine(): void {
+  if (engineLockHolder) {
+    // Close the pipe, not the process: `cat` reads EOF, exits, and every
+    // descriptor on the lock file goes with it.
+    engineLockHolder.stdin?.end();
+    engineLockHolder = null;
+  }
+}
 
 /** Anything kysely will run a statement on. Here it is always ONE pinned connection. */
 type Runner = Kysely<never>;
@@ -238,6 +319,9 @@ async function restoreReceipts(trx: Runner): Promise<void> {
 }
 
 export default async function globalSetup(): Promise<() => Promise<void>> {
+  // FIRST, before an address is pinned or a socket opened: a run that may not
+  // have this engine must touch nothing at all.
+  await takeTheEngine();
   pinTheEngine();
   // Root has no direct 'pg' dependency — ride the shared package's own pool
   // exactly like the suites do (dist path: resolvable from vite-node without the
@@ -251,8 +335,10 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
     });
   } catch (e) {
     // A refusal must not leave a pool open behind it, pointed at whatever it
-    // refused. Nothing ran; nothing is left holding a socket either.
+    // refused. Nothing ran; nothing is left holding a socket either — and the
+    // engine goes back so the next run is not blocked by a run that never began.
     await closeDb().catch(() => {});
+    releaseTheEngine();
     throw e;
   }
   return async function teardown(): Promise<void> {
@@ -402,6 +488,7 @@ export default async function globalSetup(): Promise<() => Promise<void>> {
       });
     } finally {
       await closeDb().catch(() => {});
+      releaseTheEngine();
     }
   };
 }

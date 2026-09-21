@@ -24,4 +24,30 @@ if [ ! -x "$WALL" ]; then
   exit 2
 fi
 
-exec sudo -n "$WALL" "$@"
+# ── THE ENGINE IS TAKEN OUT HERE, ON THE HOST SIDE ──────────────────────────
+# One run at a time on one bench, and the door is where that is decided for
+# everything that goes through it. It cannot be decided on the other side:
+# measured 2026-09-21, inside the wall `/tmp` is a fresh tmpfs, so the lock file
+# is not even visible there, and no environment variable of ours crosses either.
+# So the lock is held HERE, by this shell, for as long as the command inside
+# runs — which is also why the wall is no longer `exec`ed: a shell that has been
+# replaced is a shell that is no longer holding anything.
+# The battery sets DXB_ENGINE_LOCK_HELD before it calls this door, because it is
+# already holding the same lock and must not queue behind itself.
+LOCK="${TMPDIR:-/tmp}/dxb-construction-battery.lock"
+if [ -z "${DXB_ENGINE_LOCK_HELD:-}" ] && command -v flock >/dev/null 2>&1; then
+  exec 200>"$LOCK"
+  if ! flock -n 200; then
+    echo "REFUSED: another run already holds the construction engine." >&2
+    echo "         Two runs on one bench measure each other, not the code. Wait for it," >&2
+    echo "         or point this one elsewhere with DXB_CONSTRUCTION_URL." >&2
+    exit 2
+  fi
+  export DXB_ENGINE_LOCK_HELD=1
+elif ! command -v flock >/dev/null 2>&1; then
+  echo "⚠ UNVERIFIED — flock is not installed, so a concurrent run cannot be ruled out" >&2
+fi
+
+rc=0
+sudo -n "$WALL" "$@" || rc=$?
+exit "$rc"
