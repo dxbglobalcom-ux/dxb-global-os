@@ -45,11 +45,19 @@ describe("the records ruler bites", () => {
     expect(v.pass).toBe(false);
     expect(v.failures.join("\n")).toContain("b50-sweep-click-2026-09-21");
 
-    // But the click was on the LIST, not on the row. B50's own record must stay free to say the
-    // author is done and his eye has not come — that is LAW B, and a ruler that forbade it would
-    // be enforcing one of his laws by breaking another.
-    expect(r2NoAwaitingOnAccepted(root, withLine("B50 — AUTHOR DONE, WAITING ON HIS EYE (LAW B).")).pass).toBe(true);
-    expect(C.accepted.some((row) => row.subject.test("B50"))).toBe(false);
+    // But the click was on the LIST, not on the row it served. While B50 was open its record had to
+    // stay free to say the author was done and his word had not arrived — LAW B — and a click row
+    // spelled B50 would have forbidden exactly that. He closed B50 the same evening and it now has
+    // an acceptance row of its own; the CLICK's row must still not be the one carrying it.
+    const click = C.accepted.find((r) => r.id === "b50-sweep-click-2026-09-21");
+    expect(click, "the click's row is gone — this case would prove nothing without it").toBeDefined();
+    expect(click?.subject.test("B50")).toBe(false);
+
+    // AND THE FIXTURE MAY NOT NAME A LIVE SUBJECT — the lesson this file learned on B46, and learned
+    // again here on B50: this half was written as "B50 … WAITING ON HIS EYE" while B50 was open, and
+    // went red the hour he closed it. B98 is fictional, has no board row, and the line below says so.
+    expect(C.accepted.some((row) => row.subject.test("B98"))).toBe(false);
+    expect(r2NoAwaitingOnAccepted(root, withLine("B98 — AUTHOR DONE, WAITING ON HIS EYE (LAW B).")).pass).toBe(true);
   });
   it("names every subject row against a registered approval", () => {
     expect(C.accepted.length).toBeGreaterThanOrEqual(7);
