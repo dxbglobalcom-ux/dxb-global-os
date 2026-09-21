@@ -5,8 +5,9 @@ import { keyInfo, listDxbKeys } from "../../packages/shared/src/litellm.js";
 import { checkVelocity } from "../../packages/outbox-executor/src/breaker.js";
 import {
   CADENCES,
+  openScheduler,
   QUEUES,
-  startScheduler,
+  registerSchedules,
   stopScheduler,
 } from "../../packages/outbox-executor/src/scheduler.js";
 import { resetBreaker } from "../../tools/dxb-cli/src/breaker.js";
@@ -97,7 +98,26 @@ async function injectStorm(rows: number, eurEach: number): Promise<void> {
 // The case keeps its own 30 000 ms for the ~130 ms of work it really does; the
 // teardown gets a budget of its own, sized 6 s + 30 s + margin. Nothing here
 // widens the assertion's stopwatch, and nothing here is a runtime change.
-let bootedScheduler: Awaited<ReturnType<typeof startScheduler>> | null = null;
+//
+// ── 2026-09-21: AND IT NEVER GROWS HANDS AGAIN
+// What this case asserts is the CLOCK — the cron table and the armed tick. It
+// used to boot the whole scheduler to read it, and the 23 handlers that came
+// with it went to work on the construction bench's own queue. Measured that
+// day, in task_events on the W9 road proof's kept task: the reaper put the row
+// back in the queue at 10:24:36, the resident worker claimed it at 10:25:16
+// and escalated it at 10:25:18 — three battery runs running, until the task
+// was BLOCKED for good — and the rows it left turned three other suites red,
+// each of them counting work it had never done. The scheduler's boot is now
+// three acts (scheduler.ts) and this file calls the first and the third: a
+// clock with no hands can take nothing.
+let bootedScheduler: Awaited<ReturnType<typeof openScheduler>> | null = null;
+
+// The eight self-chaining queues `registerSchedules` bootstraps. Nothing runs
+// them here, so they would sit in pgboss.job as this file's own litter.
+const BOOTSTRAPPED_CHAINS = [
+  QUEUES.tick, QUEUES.intentIntake, QUEUES.workflowRun, QUEUES.libraryRecompile,
+  QUEUES.taskWorker, QUEUES.voiceDrain, QUEUES.chatDrain, QUEUES.mediaLane,
+] as const;
 
 beforeAll(async () => {
   await wipeCostAndAudit();
@@ -110,6 +130,11 @@ afterAll(async () => {
     const boss = bootedScheduler;
     bootedScheduler = null;
     await stopScheduler(boss);
+    // …and the jobs its clock armed go with it. Only the eight this file's own
+    // call created, by name, and only while they are still waiting.
+    await sql`DELETE FROM pgboss.job
+               WHERE name = ANY(${[...BOOTSTRAPPED_CHAINS]})
+                 AND state = 'created'`.execute(getDb());
   }
   await wipeCostAndAudit();
   await clearBreakerState();
@@ -208,8 +233,9 @@ describe("velocity breaker (COST-03)", () => {
 
 describe("scheduler (KERN: one process owns all system routines)", () => {
   it("registers tick 15s / reaper 60s / breaker 5min", async () => {
-    const boss = await startScheduler();
+    const boss = await openScheduler();
     bootedScheduler = boss;
+    await registerSchedules(boss);
     {
       expect(CADENCES.outboxTickSeconds).toBe(15);
 

@@ -377,7 +377,26 @@ let activeLanes: TaskLanes | null = null;
 // the studio's hands, alive between ticks (B43 media-lanes, CEO 2026-09-05); null until the scheduler starts
 let activeMediaLanes: MediaLanes | null = null;
 
-export async function startScheduler(): Promise<PgBoss> {
+// THE SCHEDULER'S BOOT IS THREE ACTS, AND IT IS SPLIT SO A BENCH CAN STOP
+// AFTER THE FIRST TWO. Production still calls startScheduler() and gets the
+// same three in the same order, byte for byte: no switch, no environment
+// variable, no branch. The seam exists because of what was measured on
+// 2026-09-21 — tests/phase4/velocity.test.ts booted the WHOLE scheduler inside
+// the construction sandbox merely to read back its cron table, and the 23
+// handlers that came with it went to work on the bench's own queue: the reaper
+// put the W9 road proof's kept task back in the queue (10:24:36) and the
+// resident worker claimed it (10:25:16) and escalated it, three runs running,
+// until the task was BLOCKED for good. It also turned three other suites red,
+// because the rows it left were counted by tests that never wrote them.
+//
+// The three acts:
+//   openScheduler()      the connection and the queues — the boss exists
+//   startWorkers(boss)   the 23 handlers and the two lane pools — hands
+//   registerSchedules()  the cron table and the eight bootstrap sends — a clock
+//
+// A bench that wants to read the clock calls the first and the third. It never
+// grows hands, so it can never take work that is not its own.
+export async function openScheduler(): Promise<PgBoss> {
   const url = process.env.DXB_DATABASE_URL;
   if (!url) throw new Error("DXB_DATABASE_URL is not set (session-mode direct URL required)");
 
@@ -406,6 +425,15 @@ export async function startScheduler(): Promise<PgBoss> {
     await boss.createQueue(queue, chainQueues.includes(queue) ? { policy: "short" } : {});
   }
 
+  return boss;
+}
+
+/**
+ * The hands. Every handler this process answers with, plus the two lane pools.
+ * Called only by startScheduler: a caller that skips it gets a scheduler that
+ * keeps its own clock and touches no work.
+ */
+export async function startWorkers(boss: PgBoss): Promise<void> {
   await boss.work(QUEUES.tick, async () => {
     try {
       await tick();
@@ -669,7 +697,14 @@ export async function startScheduler(): Promise<PgBoss> {
         : `[briefing] not delivered: ${out.reason}`,
     );
   });
+}
 
+/**
+ * The clock. The cron table, the workflow cron triggers, and the eight sends
+ * that bootstrap the self-chaining queues. It creates JOBS, never a worker —
+ * a process that has not called startWorkers will not run a single one of them.
+ */
+export async function registerSchedules(boss: PgBoss): Promise<void> {
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
@@ -718,7 +753,16 @@ export async function startScheduler(): Promise<PgBoss> {
   await enqueueChatDrain(boss, 0);
   // B43: bootstrap the media lane chain (same continuity-by-construction guarantee).
   await enqueueMediaLane(boss, 0);
+}
 
+/**
+ * What production calls, and what it has always done: open, grow hands, start
+ * the clock — the same three, in the same order.
+ */
+export async function startScheduler(): Promise<PgBoss> {
+  const boss = await openScheduler();
+  await startWorkers(boss);
+  await registerSchedules(boss);
   return boss;
 }
 
