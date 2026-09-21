@@ -313,6 +313,108 @@ export function diffManifest(
   };
 }
 
+/** What a bench holds, measured against what this repository declares.
+ *
+ *  `pinAll` is first-sight by design: an existing pin is never overwritten. So
+ *  on an engine that already carries pins — taken from some machine, on some
+ *  day — a seed run writes nothing at all and the row counts look perfectly
+ *  healthy while the corpus is a stranger's. This is the arithmetic that says
+ *  so, kept here rather than inline in the seed so it can be proven by case
+ *  instead of by eye. */
+export interface BenchDiff {
+  /** Pinned on the bench, declared nowhere in this repository — `server.tool`. */
+  stranger: string[];
+  /** Pinned on the bench under a hash this repository does not compute. */
+  disagrees: string[];
+  /** Declared here, and still absent from the bench after pinning. */
+  absent: string[];
+}
+
+/** The corpus this repository declares: server → tool → the hash computed here.
+ *  NESTED on purpose, and for the reason this file has already been bitten by
+ *  once: a dotted `server.tool` is not an identity — `a.b` + `c` and `a` + `b.c`
+ *  share one string. The dotted spelling below appears in MESSAGES only. */
+export type DeclaredCorpus = ReadonlyMap<string, ReadonlyMap<string, string>>;
+
+/** `bench`: `[server, tool, schema_hash]` exactly as the engine stores them —
+ *  three columns, never one parsed string, so a separator can never split a
+ *  name. Both sides are read; neither is written. */
+export function diffAgainstBench(
+  want: DeclaredCorpus,
+  bench: Iterable<readonly [string, string, string]>,
+): BenchDiff {
+  const stranger: string[] = [];
+  const disagrees: string[] = [];
+  const seen = new Map<string, Set<string>>();
+  for (const [server, tool, hash] of bench) {
+    let tools = seen.get(server);
+    if (!tools) {
+      tools = new Set<string>();
+      seen.set(server, tools);
+    }
+    tools.add(tool);
+    const declared = want.get(server)?.get(tool);
+    if (declared === undefined) stranger.push(`${server}.${tool}`);
+    else if (declared !== hash) disagrees.push(`${server}.${tool}`);
+  }
+  const absent: string[] = [];
+  for (const [server, tools] of want) {
+    for (const tool of tools.keys()) {
+      if (!seen.get(server)?.has(tool)) absent.push(`${server}.${tool}`);
+    }
+  }
+  return {
+    stranger: stranger.sort(byName),
+    disagrees: disagrees.sort(byName),
+    absent: absent.sort(byName),
+  };
+}
+
+/** What one pin run of the seed did, and what it believed while doing it. */
+export interface PinnedCorpus {
+  want: DeclaredCorpus;
+  pinned: number;
+  existing: number;
+}
+
+/**
+ * THE SEED'S WHOLE PIN STEP, in one function that a case can call.
+ *
+ * It lives here rather than inline in `build-seed.ts` because a step written
+ * inline can only be guarded by reading the file's TEXT, and an adversarial
+ * round proved on 2026-09-21 that text is not behaviour: the pin calls were
+ * wrapped in `.then(ok, err)` — no `catch` anywhere in the file — and the
+ * text guard stayed green while a broken manifest was skipped in silence and
+ * the bench was built with 28 tools instead of 76. What must be true is a
+ * BEHAVIOUR, so it is measured as one.
+ *
+ * `inHouse` is dxb-mcp's inventory, read in-process by the caller (this
+ * repository's own source; never a file copy — see the header).
+ *
+ * **Verification happens before ANY row is written**, including the in-house
+ * half: a manifest that disagrees with itself leaves the engine untouched
+ * rather than half-seeded.
+ */
+export async function pinTheCorpus(
+  db: PinDb,
+  inHouse: ToolInventoryEntry[],
+  manifestPath: string = DEFAULT_MANIFEST_PATH,
+): Promise<PinnedCorpus> {
+  const declared = verifyManifest(readManifest(manifestPath));
+  const a = await pinAll(db, inHouse);
+  const b = await pinAll(db, declared);
+  const want = new Map<string, Map<string, string>>();
+  for (const e of [...inHouse, ...declared]) {
+    let tools = want.get(e.server);
+    if (!tools) {
+      tools = new Map<string, string>();
+      want.set(e.server, tools);
+    }
+    tools.set(e.tool, computeToolHash(e));
+  }
+  return { want, pinned: a.pinned.length + b.pinned.length, existing: a.existing + b.existing };
+}
+
 /** Pin the external corpus from the repository's own file. Verification runs
  *  first, so a drifted manifest writes nothing at all. `pinAll` itself is
  *  untouched: first-sight insert, existing pins never overwritten. */

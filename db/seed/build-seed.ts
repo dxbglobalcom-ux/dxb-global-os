@@ -9,7 +9,7 @@
  * the repository's own files and generates the rest.
  *
  * Every step below reads FILES — migrations, persona dossiers, the library
- * catalogue, the routing table, the live MCP servers — or writes rows this
+ * catalogue, the routing table, the pinned tool manifest — or writes rows this
  * script invents. No step reads the company database. The guard at the top
  * refuses to run against it at all, by asking the server who it is rather than
  * by looking at the address it was handed (the lesson of Block 1: six spellings
@@ -32,6 +32,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/dist/db.js";
+import { readDxbMcpInventory, DXB_MCP_SERVER_NAME } from "../../packages/gateway/dist/index.js";
 import {
   personaBodyFor,
   personaPathFor,
@@ -47,6 +48,13 @@ import {
   HOLDING_PROJECT_SLUG,
   MEMORY_STORES,
 } from "./generated-holding-core.ts";
+import {
+  diffAgainstBench,
+  pinTheCorpus,
+  readManifest,
+  MANIFEST_RELATIVE_PATH,
+  type PinnedCorpus,
+} from "./tool-pins-manifest.ts";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const CONTAINER = process.env.DXB_DB_CONTAINER ?? "supabase_db_DxB_Build";
@@ -128,6 +136,9 @@ let swpt = 0;
 let rewritten = 0;
 let stamped = 0;
 let files = 0;
+
+/** What the pin step believed and wrote this run, handed to its own measure(). */
+let pinRun: PinnedCorpus | null = null;
 
 const steps: Array<{ name: string; run: () => void | Promise<void>; measure: () => Promise<string> }> = [
   {
@@ -432,34 +443,89 @@ COMMIT;`);
     measure: async () => `${await one("SELECT count(*) FROM employee_records")} record(s)`,
   },
   {
-    // The hands: every MCP server on this machine is enumerated live and pinned
-    // with its schema hash. A server that cannot be reached is NOT invented —
-    // it is simply absent, and this step SAYS WHICH. pin-arsenal.mjs exits 1
-    // when any catalogued server failed to answer, which is right of it and
-    // must not stop the seed: an unreachable server is a fact about this
-    // machine, not a broken seed. It is caught here and printed by name.
-    name: "tool pins from the live MCP servers",
-    run: () => {
-      try {
-        node("scripts/gateway/pin-arsenal.mjs");
-      } catch {
-        /* named in measure() below — never swallowed silently */
-      }
+    // The hands: the external corpus is read from THIS REPOSITORY'S OWN FILE,
+    // and dxb-mcp's tools from this repository's own source.
+    //
+    // B49. The step that stood here shelled out to the arsenal pinner, which
+    // enumerated whatever MCP servers happened to be alive on the machine
+    // running the seed. It was honest about a server it could not reach, but
+    // honesty is not reproducibility: the same commit built a DIFFERENT bench
+    // on a different machine, and every count taken against it measured the
+    // workstation as much as the code. The live enumeration is now a hand-run
+    // refresh — `pnpm construction:pins:refresh`, checked with
+    // `pnpm construction:pins:check` — and never a thing the seed depends on.
+    // That script is untouched and still does exactly what it did when a human
+    // runs it; the whole history, and why dxb-mcp is deliberately absent from
+    // the manifest, is told once in `tool-pins-manifest.ts` and not repeated
+    // here.
+    //
+    // What "from the repository" means here, exactly, so no one reads more
+    // into it than it says: the in-process declarations arrive through
+    // `packages/*/dist`, which `pnpm build` produces from this repository's
+    // source and which git does not track. A stale build therefore still
+    // builds a stale bench — but that is true of every step of this seed and
+    // of the engine itself, and it is a build-freshness problem, not a
+    // machine-enumeration one. What this step no longer does is ask the
+    // MACHINE what it happens to be running.
+    //
+    // A manifest whose stored hashes no longer match the bodies beside them
+    // THROWS here, naming `server.tool`, and the seed stops with nothing
+    // pinned from it. Seeding a corpus that disagrees with the file it came
+    // from is the failure this row exists to end; there is no quiet
+    // continuation.
+    name: "tool pins from the repository (dxb-mcp in-process + manifest)",
+    // ONE statement, deliberately. The whole step is `pinTheCorpus`, where a
+    // case can call it with a broken manifest and MEASURE that it refuses;
+    // tests/b49 case (11) pins this body character for character, because an
+    // adversarial round proved that a guard reading for the word `catch` is
+    // walked straight past by `.then(ok, err)`.
+    run: async () => {
+      pinRun = await pinTheCorpus(getDb(), await readDxbMcpInventory(), join(REPO, MANIFEST_RELATIVE_PATH));
     },
     measure: async () => {
+      const run = pinRun;
+      if (!run) throw new Error("tool pins: measure ran without its step — nothing was pinned");
       const pinned = (await one(
         "SELECT string_agg(server || '=' || n, ' ' ORDER BY server) FROM (SELECT server, count(*) n FROM tool_pins GROUP BY 1) q",
       )) || "none";
+      const manifestPath = join(REPO, MANIFEST_RELATIVE_PATH);
+      const digest = createHash("sha256").update(readFileSync(manifestPath)).digest("hex").slice(0, 12);
       const catalogued = Object.keys(
         (JSON.parse(readFileSync(join(REPO, "packages/gateway/policy/grants.json"), "utf8")) as {
           servers?: Record<string, unknown>;
         }).servers ?? {},
       );
-      const have = new Set(
-        (await one("SELECT string_agg(DISTINCT server, ',' ORDER BY server) FROM tool_pins")).split(","),
+      // Asked of the FILES, not of the database. A catalogued server absent
+      // from the manifest is a gap in the REPOSITORY and reads the same on
+      // every machine; the old wording asked the machine ("NOT REACHABLE ON
+      // THIS MACHINE") and is deleted with the enumeration that earned it.
+      const known = new Set([
+        ...Object.keys(readManifest(manifestPath).servers),
+        DXB_MCP_SERVER_NAME,
+      ]);
+      const missing = catalogued.filter((sv) => !known.has(sv));
+
+      // AND THE ENGINE IS ASKED THE SAME QUESTION. `pinAll` is first-sight —
+      // an existing pin is never overwritten — so a bench already carrying
+      // some other machine's corpus takes this step in perfect silence while
+      // nothing is written. Three columns, never one parsed string: a
+      // separator cannot split a name that contains it.
+      const bench = await sql<{ server: string; tool: string; schema_hash: string }>`
+        SELECT server, tool, schema_hash FROM tool_pins ORDER BY server, tool`.execute(getDb());
+      const { stranger, disagrees, absent } = diffAgainstBench(
+        run.want,
+        bench.rows.map((r) => [r.server, r.tool, r.schema_hash] as const),
       );
-      const missing = catalogued.filter((sv) => !have.has(sv));
-      return pinned + (missing.length ? `  ⚠ NOT REACHABLE ON THIS MACHINE: ${missing.join(", ")}` : "");
+      const name = (all: string[]): string =>
+        all.length > 6 ? `${all.slice(0, 6).join(", ")} +${all.length - 6} more` : all.join(", ");
+
+      return (
+        `${pinned}  manifest sha256:${digest}  pinned ${run.pinned} new, ${run.existing} already pinned` +
+        (missing.length ? `  ⚠ CATALOGUED BUT NOT IN MANIFEST: ${missing.join(", ")}` : "") +
+        (stranger.length ? `  ⚠ ON THE BENCH BUT NOT IN THIS REPOSITORY: ${name(stranger)}` : "") +
+        (disagrees.length ? `  ⚠ BENCH HASH DISAGREES WITH THIS REPOSITORY: ${name(disagrees)}` : "") +
+        (absent.length ? `  ⚠ DECLARED BUT NOT PINNED: ${name(absent)}` : "")
+      );
     },
   },
   {

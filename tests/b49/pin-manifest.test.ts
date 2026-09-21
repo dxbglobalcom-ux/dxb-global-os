@@ -2,7 +2,7 @@
 //
 // Until `db/seed/tool-pins.manifest.json` existed, the seed pinned whatever MCP
 // servers happened to be alive on the workstation that ran it, so the same
-// `pnpm construction:seed` built a different bench elsewhere. These ten cases
+// `pnpm construction:seed` built a different bench elsewhere. These thirteen cases
 // are hermetic on purpose — NOT ONE of them spawns an MCP server or reads the
 // live machine; that is exactly the dependency being removed, and a test that
 // kept it would prove nothing. The live half is the hand-run
@@ -26,6 +26,8 @@ import {
   readManifest,
   serializeManifest,
   verifyManifest,
+  diffAgainstBench,
+  pinTheCorpus,
   DEFAULT_MANIFEST_PATH,
   MANIFEST_RELATIVE_PATH,
   type ToolPinsManifest,
@@ -321,5 +323,110 @@ describe("B49 the pin manifest", () => {
       extraLive: ["b49-fixture.toolC"],
       drifted: ["b49-fixture.toolA"],
     });
+  });
+
+  // The other ten cases prove the MANIFEST. This one proves the WIRING: that
+  // the seed actually reads it. Without it the row's whole promise lived in
+  // prose — `node("scripts/gateway/pin-arsenal.mjs")` could come back tomorrow,
+  // by hand or by a merge, and every suite would stay green. B36's twin
+  // promise has `tests/b36/seed-is-fiction.test.ts`; this is B49's.
+  it("(11) the seed pins from THIS REPOSITORY — the wiring is pinned, not merely described", () => {
+    const seed = readFileSync(join(ROOT, "db/seed/build-seed.ts"), "utf8");
+
+    // The dependency this row removed may not return under any spelling.
+    expect(seed).not.toMatch(/pin-arsenal/);
+
+    // AND THE STEP'S BODY IS PINNED CHARACTER FOR CHARACTER. The first shape of
+    // this case read the body for the word `catch`; the second adversarial
+    // round walked straight past it with `.then(ok, err)` — no `catch` in the
+    // whole file — and a broken manifest was skipped in silence while the bench
+    // built with 28 tools instead of 76 and printed no warning at all. There is
+    // no regex for "does not swallow". There is only: this, exactly, and the
+    // behaviour of what it calls, measured in case (13).
+    const RUN = [
+      "    run: async () => {",
+      "      pinRun = await pinTheCorpus(getDb(), await readDxbMcpInventory(), join(REPO, MANIFEST_RELATIVE_PATH));",
+      "    },",
+    ].join("\n");
+    expect(seed).toContain(RUN);
+
+    // And the step is still the step — the name the row and the records use.
+    expect(seed).toContain('name: "tool pins from the repository (dxb-mcp in-process + manifest)",');
+  });
+
+  it("(12) a bench that holds what this repository does not declare is NAMED, in all three directions", () => {
+    const want = new Map([
+      ["git", new Map([["git_add", "hash-a"], ["git_log", "hash-b"]])],
+      ["dxb-mcp", new Map([["board_open_work", "hash-c"]])],
+    ]);
+    const flat = (m: typeof want): Array<[string, string, string]> =>
+      [...m].flatMap(([s, tools]) => [...tools].map(([t, h]) => [s, t, h] as [string, string, string]));
+
+    // The healthy bench: the same pairs under the same hashes — silence.
+    expect(diffAgainstBench(want, flat(want))).toEqual({ stranger: [], disagrees: [], absent: [] });
+
+    // The three ways a bench can disagree, at once and each by name.
+    expect(
+      diffAgainstBench(want, [
+        ["git", "git_add", "hash-a"],
+        ["git", "git_log", "SOMETHING-ELSE"],
+        ["scrapling", "fetch", "hash-x"],
+        ["playwright", "browser_click", "hash-y"],
+      ]),
+    ).toEqual({
+      stranger: ["playwright.browser_click", "scrapling.fetch"],
+      disagrees: ["git.git_log"],
+      absent: ["dxb-mcp.board_open_work"],
+    });
+
+    // An empty bench is not a healthy one: everything declared is absent.
+    expect(diffAgainstBench(want, []).absent).toEqual(["dxb-mcp.board_open_work", "git.git_add", "git.git_log"]);
+
+    // IDENTITY IS THE PAIR. The dotted spelling is for the message only — this
+    // file has been bitten once already by `a.b` + `c` sharing a string with
+    // `a` + `b.c` (the duplicate gate, 2026-09-21), and the same trap is here.
+    // Declared `a` + `b.c`, pinned `a.b` + `c`: two different tools, and BOTH
+    // must be reported, not cancelled against each other.
+    const dotted = new Map([["a", new Map([["b.c", "same-hash"]])]]);
+    expect(diffAgainstBench(dotted, [["a.b", "c", "same-hash"]])).toEqual({
+      stranger: ["a.b.c"],
+      disagrees: [],
+      absent: ["a.b.c"],
+    });
+
+    // A server named `__proto__` is a server like any other (Map, not object).
+    expect(diffAgainstBench(new Map(), [["__proto__", "t", "h"]]).stranger).toEqual(["__proto__.t"]);
+  });
+
+  // The behaviour case (11) cannot express as text: the step REFUSES, and it
+  // refuses before it has written anything.
+  it("(13) the seed's whole pin step refuses a manifest that disagrees with itself — and pins nothing at all", async () => {
+    const HOUSE = "b49-fixture-house";
+    const OK = "b49-fixture-ok";
+
+    const good = await pinTheCorpus(db(), fixtureEntries(HOUSE), writeTemp(buildManifest(fixtureEntries(OK))));
+    expect(good.pinned).toBe(4);
+    expect(good.existing).toBe(0);
+    expect(good.want.get(HOUSE)?.size).toBe(2);
+    expect(good.want.get(OK)?.size).toBe(2);
+    expect(await pinCount(HOUSE)).toBe(2);
+    expect(await pinCount(OK)).toBe(2);
+
+    // A second run over the same file writes nothing and says so — this is the
+    // idempotence the row promises, taken through the step itself.
+    const again = await pinTheCorpus(db(), fixtureEntries(HOUSE), writeTemp(buildManifest(fixtureEntries(OK))));
+    expect(again.pinned).toBe(0);
+    expect(again.existing).toBe(4);
+
+    // And the refusal: a fresh in-house half that has NEVER been pinned does
+    // not land either, because the manifest is verified before the first write.
+    const HOUSE2 = "b49-fixture-house2";
+    const bad = buildManifest(fixtureEntries("b49-fixture-bad2"));
+    bad.tools[0].inputSchema = { type: "object", properties: { c: { type: "boolean" } } };
+    await expect(pinTheCorpus(db(), fixtureEntries(HOUSE2), writeTemp(bad))).rejects.toThrow(
+      /manifest hash mismatch: b49-fixture-bad2\.toolA/,
+    );
+    expect(await pinCount(HOUSE2)).toBe(0);
+    expect(await pinCount("b49-fixture-bad2")).toBe(0);
   });
 });
