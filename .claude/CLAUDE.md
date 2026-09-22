@@ -61,6 +61,14 @@ work stands before anything else**, in four short lines in his language:
 3. what is **blocked on him** and cannot move without it;
 4. then answer what he actually said.
 
+**Empty is silent, not announced** (CEO order, 2026-09-22: *"gözünüzü bekleyen bir şey yok diye
+açılışta önüme gelmesin"*). Line 1 or line 3 is spoken only when it is true — something really is
+waiting for his eye, or really is blocked on him. When there is nothing there, that line is
+**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". He reads
+four lines to find out what needs him; a line that exists only to say "nothing" costs him the read
+for zero content. This is scoped to this reply protocol only — it does not touch "zero is a real
+answer" above, which governs system state surfaces, not this greeting line.
+
 **"Ne yapmamı istersiniz?" is a failure.** He is the owner of a company that is supposed to run
 itself; asking him to remember the state is the babysitting this whole product exists to end.
 Measured 2026-07-31: a fresh session answered his greeting with "Emrinizdeyim. Ne yapmamı

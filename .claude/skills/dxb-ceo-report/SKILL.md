@@ -85,6 +85,41 @@ then I fixed Z"* passes every vocabulary check and still tells him nothing. Ask 
 my conclusion in the first line, is there one comparison from his world, are the numbers beside it,
 and have I said what it changes for him?
 
+## A report longer than a few lines is a designed Artifact, never a chat wall or a markdown dump
+
+**His ruling, the night of 2026-09-20/21, after comparing two reports side by side —
+*"neden eskisi kaliteli seninki ise bok gibi"*:** the difference was that one was authored as a
+designed Artifact and the other was `markdown_py` output with borrowed CSS. **Confirmed again,
+2026-09-22**, then corrected in the same breath — he named one specific past report as the model
+to imitate, and then withdrew that himself: *"benimkini örnek olmaktan çıkar sonra gidip aynısını
+yapıo salaklar. ben kaliteli istiorm her zaman okadar."* **No one report is the template.** A
+fixed example gets copied structure-for-structure by the next session instead of being rethought
+for what THIS finding needs — the standard he is holding every report to is **quality, every
+time**, not a shape to clone.
+
+- A finding that fits **the four steps above, in a few sentences**, is said in chat — that is
+  the fast path and stays fast.
+- A finding that has **sections, a table, a number the eye needs to compare, more than one
+  finding** goes through the Artifact tool with the `artifact-design` skill loaded first — never
+  a `.md` file, never a converter, never a wall of text in the terminal. Load that skill's own
+  design judgement fresh each time — the numbers that matter most stated plainly, a table only
+  where a table earns its place, direct quotes from the people actually counted, sources cited —
+  and build the shape the finding needs, not the shape a previous report happened to use.
+- **When he asks for a report outright** (e.g. "AI sistemlerinin geleceğini araştır" — a task
+  whose deliverable is a report, not a one-line finding), the format is **not** decided by this
+  rule's own size test in advance. The work runs, and only when it is done does the session ask
+  him in one line which he wants — `.md` file or a designed Artifact — and builds that. His order,
+  2026-09-22: *"rapor istediğimde bu şekilde sorulsun... md'mi istersiniz basit yoksa tasarlanmış
+  artifact mi diye."* This is the one place in this door where the choice is his, asked once, at
+  the end of the work — not decided for him.
+- **Nothing is written to his Desktop** — a report he will read belongs at a link, not a file
+  that the next session copies again (same night's ruling; the clutter itself becomes the
+  instruction when no rule names the folder).
+- **His keyboard is never driven and his screen is never typed into blind** — if a page must be
+  shown to him, it is opened for him to read (`mcp__claude-in-chrome`) or the link is handed to
+  him; `operator paste` landing inside his own prompt box while he was typing is the measured
+  failure that produced this line.
+
 ## Two more rules he has given
 
 - **Address him as "Muhittin Bey" or "CEO Bey"** — never the bare first name.
