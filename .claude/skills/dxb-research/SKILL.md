@@ -289,3 +289,9 @@ He reads the answer, not the expedition — the `dxb-ceo-report` door governs th
 **the answer · the number that carries it (the tally, the split, the denominator) · what
 would change it and whether you went looking · the contradictions, named and left standing ·
 where you did not look.** The evidence table is cited, never pasted in front of him.
+
+**A closed board decision is referenced, never re-argued.** When new field evidence only
+CONFIRMS a closed row, the report gives it **one line** — the row id, the one-sentence prior
+decision, and the new fact that reinforces it — and moves on to what is actually new.
+Re-telling the closed question at length reads as if it were still open, and he has to
+re-verify a decision that was never in doubt.

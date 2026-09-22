@@ -72,7 +72,7 @@ hiçbir panel gösteremez.
 |---|---|
 | **Finished** | C42 stage 1. 16/16 sources read frame by frame, reported, gated and merged. The ledger reads `NEXT: done`. Six commits, gitleaks clean on each. |
 | **NOT finished** | **Nothing in the six waves is built.** Stage 1 produced the target definition; the building starts on the CEO's word. |
-| **Blocked on the CEO** | Wave 4 (which accounts may be connected) · Wave 6 (whether to enter clipping, and the halal allowlist) · the RULE #0 browser leg (one login, B03-bis) |
+| **Blocked on the CEO** | Wave 4 (which accounts may be connected) · Wave 6 (the halal allowlist — the entry-seat question is closed on board row B28) · the RULE #0 browser leg (one login, B03-bis) |
 | **Blocked on hardware** | Turkish speech *quality* — the larger STT model waits for Friday's workstation. **The 44 % `empty_transcript` defect and the 29–35 s latency are NOT blocked** — they are software faults in our own daemon |
 
 ---

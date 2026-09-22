@@ -63,6 +63,7 @@ export const C = {
       subject: /\b(folder-by-folder )?list with sizes\b|\bhis click of 19:12\b|\bthe sweep he clicked\b/i,
     },
     { id: "b50-accepted-by-his-eye-2026-09-21", subject: /\bB50\b/ },
+    { id: "b52-accepted-by-his-eye-2026-09-22", subject: /\bB52\b/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from

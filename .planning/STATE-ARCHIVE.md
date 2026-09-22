@@ -415,18 +415,12 @@ guess. Full detail, with the flags and why each one is there:
 `.planning/research/study-cards/minimax-h3.md`; the board rows are **B42** (arsenal watch), **B28**
 (the agency seat's generation lane) and **B33** (the bench ledger's first real video-guest figures).
 **HE ALSO CORRECTED THE READING OF HIS OWN BOARD, TWICE, AND BOTH CORRECTIONS STAND AS LAW HERE:**
-*"ne klipçisi ya arkadaşım klipçi değil ajans işi o"* and *"üretim hattı da var tahtada… hepsi var
-wepgap2 bişey vardı içinde 4 üretim motoru vardı"*. **He is right on both counts and the record
-proves him right:** the agency seat, its four seats, its economics and his absolute betting
-exclusion are written in `.planning/research/rival-intel/05-cnn-clipping-business.md` §5, whose own
-closing line is *"that row is where the agency build lives from here"* — row **B28** — and the
-production line is written INSIDE B28: OpenMontage/OpenCut (installed, 1,393 tests green, no card
-needed), MoneyPrinterTurbo (his order, not installed), and the four free generation engines
-`wan2gp` · `ltx-video` · `hunyuanvideo` · `open-sora`, with the paid bench beside them. **A session
-that tells him any of this is missing has failed to read, and he has now had to say so twice.**
-**The row's title is the trap that caused it:** B28 still reads *"The clipping business"* while its
-content is the advertising-agency seat. Correcting that title was offered and he did not answer;
-it is not done.
+*"üretim hattı da var tahtada… hepsi var wepgap2 bişey vardı içinde 4 üretim motoru vardı"*.
+**He is right, and the record proves him right:** the production line is written INSIDE B28:
+OpenMontage/OpenCut (installed, 1,393 tests green, no card needed), MoneyPrinterTurbo (his order,
+not installed), and the four free generation engines `wan2gp` · `ltx-video` · `hunyuanvideo` ·
+`open-sora`, with the paid bench beside them. **A session that tells him any of this is missing
+has failed to read.**
 
 **2026-08-27, EVENING — HE ACCEPTED EVERYTHING THIS SESSION BUILT, WITH HIS OWN EYE.** His words:
 *"TMM BURAYA KADAR HERŞEY ONAYLADIM. göz testi de tmm. ok."*
@@ -2047,14 +2041,13 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    to end and `realized_revenue_eur` is 0. On the measure that decides we are behind all of them, and
    any sentence that softens that is deleted on sight.
 
-4. **B28 — the clipping business, and he has decided its shape.** <!-- HISTORY -->
+4. **B28 — the advertising business, and he has decided its shape.** <!-- HISTORY -->
    **The AGENCY seat is approved in his own words** (2026-08-07): *"ajans koltuğunu onaylıyorum…"*
    <!-- CEO-OK: c42-agency-seat-2026-08-07 --> DXB wins brand clients, launches campaigns under its
-   own name, keeps and scores a roster, guarantees delivery, keeps the spread — entering through the
-   clipper seat, never attempting the marketplace. **His absolute line binds all of it:**
-   *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE YAPMAYIN!"* — every
-   campaign, every client, every clip, at any size. **Nothing is built: he approved the seat, not a
-   start.** Everything about it is in `.planning/research/rival-intel/05-cnn-clipping-business.md` §5.
+   own name, keeps and scores a roster, guarantees delivery, keeps the spread. **His absolute line
+   binds all of it:** *"bahislerle asla işimiz yok ÇOK BÜYÜK UYARI SAKIN HEEE UFACIK ŞEKİLDE
+   YAPMAYIN!"* — every campaign, every client, every clip, at any size. **Nothing is built: he
+   approved the seat, not a start.** Everything about it is on board row **B28**.
 5. **What is blocked on him, and cannot move without him:** his approval of a visual design package
    before any redesign is built · one hand-minted browser session so authenticated surfaces can be
    checked by eye (B03-bis) · which outside accounts may be connected (W-C42-4) · money for the one
@@ -2062,7 +2055,7 @@ of the file, 12 passed; then the whole battery three times, green each time.** *
    after the work, his own ruling *"ben iş bitince değersiz kılıcam"* (B26) · **whether to pursue the
    three document skills he approved but whose licence forbids copying them here (B27) — the
    capability he wanted already works without them, so this is a choice, not a blocker** · **money
-   out to clippers once the agency seat starts operating (B28).**
+   out to any outside production hand once the agency seat starts operating (B28).**
 6. **Nothing else starts without a row on the board.** If he gives a new order, it outranks all of
    this (authority order, `.claude/CLAUDE.md` §1) — and it DELETES whatever contradicts it (LAW A).
 
