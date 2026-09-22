@@ -31,6 +31,8 @@ sub-subagents and burn the quota).
 phase. The CEO's worry (*"refute sonsuz, hep bir şey bulunabilir"*) is answered by the bar,
 not by skipping the refuter.
 
+**A minor finding is repaired in the SAME pass — his law, 2026-09-22.** <!-- CEO-OK: crew-minors-fixed-in-same-pass-law-2026-09-22 --> He read the rule and made it one: *"bu kural olsun. yani aynı anda düzeltilsin küçük hatalar."* The refuter's minor findings are **listed and repaired in the same pass**: a one-line fix the writer makes at once, anything larger becomes a board row through `dxb-close-row`, and a minor **never gets a round of its own**.
+
 ## 2. The loop
 
 ```
