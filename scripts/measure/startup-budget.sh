@@ -3,12 +3,23 @@
 #
 # WHY IT EXISTS. The CEO asked on 2026-09-22, seeing 69k on his own screen: "normalde %0 ile
 # başlaması gerekmiyor mu". The measured answer (var/measure/context-budget-2026-09-22.md) is
-# that ~40k of a 63.5k opening belongs to Claude Code, the model and interactive mode and
-# cannot be touched from here, while ~17k is OURS. Of that, MEMORY.md alone was 5,334 tokens:
-# 96 entries carried as full text on every single session, growing every day. The doors and
-# the deferred tool list obey progressive disclosure (a tool costs 9 tokens as a name and 563
-# as a schema); the memory index did not. THE GUARD THIS RULER PROVIDES is the MEMORY.md
-# threshold — that one number is what stops the index regrowing silently.
+# that most of a 63,541-token opening belongs to Claude Code, the model and interactive mode
+# and cannot be touched from here, while 18,715 of it was OURS on the day of that measurement.
+# Of that, MEMORY.md alone was 5,334 tokens: 96 entries carried as full text on every single
+# session, growing every day. The doors and the deferred tool list obey progressive disclosure
+# (a tool costs 9 tokens as a name and 563 as a schema); the memory index did not.
+#
+# THE GUARD THIS RULER PROVIDES is the MEMORY.md threshold — that one number is what stops the
+# index regrowing silently. The gate is the constant below, NOT the 1,500 first ruled, because a
+# row's SKELETON is not free: measured on 2026-09-22 with cl100k_base, the 96 bare filenames cost
+# 1,032 tokens, the markdown around them (`- [](file)`) brings the 96 rows to 1,320, and with the
+# ` — ` separator and the newline to 1,512. Against a 1,500 gate that leaves, at best, 468 tokens
+# for 96 titles AND 96 hooks — 4.9 tokens a row, which buys a title or a hook, never both — and
+# under the two fuller readings it leaves nothing at all. The first gate was impossible on any
+# reading; it was measured before a line was written and re-measured by the chief engineer before
+# he moved it, and the headroom in the constant below is measured too: about one memory file a
+# day is touched, so a gate sitting on today's number would be red tomorrow. Whether the rewritten index is GOOD is not this script's verdict and not
+# the author's: only the CEO's own eye accepts it (LAW B).
 #
 # WHAT IT MEASURES, and what it refuses to measure.
 #   1. THE TRUTH OF AN OPENING: the first assistant record carrying a REAL `usage` in a
@@ -50,8 +61,10 @@
 set -uo pipefail
 
 # ---- THE THRESHOLDS (the only numbers to change when he moves the gate) ---------------------
-MEMORY_MAX_TOKENS=1500      # MEMORY.md is an INDEX: one line per memory, detail in the files.
-BASKET_MAX_TOKENS=12000     # the four countable files above, summed.
+MEMORY_MAX_TOKENS=3600      # ruled 2026-09-22 with measured headroom: ~1 memory file a day is
+                            # touched, so the gate sits ~10 lines above today and then says so.
+BASKET_MAX_TOKENS=11000     # the four countable files, summed. Not tighter: the project CLAUDE.md
+                            # changes on the CEO's word, and a ruler must not go red on his word.
 # ---------------------------------------------------------------------------------------------
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -66,7 +79,7 @@ POSITIONALS=0
 for arg in "$@"; do
   case "$arg" in
     --json) WANT_JSON=1 ;;
-    -h|--help) sed -n '2,48p' "${BASH_SOURCE[0]}"; exit 0 ;;
+    -h|--help) awk 'NR>1 && /^#/ {print; next} NR>1 {exit}' "${BASH_SOURCE[0]}"; exit 0 ;;
     -*) echo "unknown flag: $arg (see --help)" >&2; exit 2 ;;
     *) SESSION_ARG="$arg"; POSITIONALS=$((POSITIONALS + 1)) ;;
   esac
@@ -296,6 +309,11 @@ if mem_tokens > MEM_MAX:
 if basket_total > BASKET_MAX:
     breaches.append(f"gated basket {basket_total} > {BASKET_MAX}")
 
+MEMORY_RED_INSTRUCTION = (
+    "the index has regrown — bring the CEO a merge/retire list and let him decide. "
+    "DO NOT raise this gate: it exists to force that question, and a silent raise is how the "
+    "index grew to 5,334 in the first place.")
+
 if breaches:
     verdict, code = "RED", 1
 elif holes:
@@ -314,6 +332,7 @@ if want_json:
         "items": [{"label": l, "tokens": t, "note": n} for l, t, n in basket],
         "not_gated_on_disk": [{"label": l, "tokens": t, "files": n} for l, t, n in context_rows],
         "breaches": breaches,
+        **({"what_to_do": MEMORY_RED_INSTRUCTION} if mem_tokens > MEM_MAX else {}),
     }, ensure_ascii=False, indent=2))
     sys.exit(code)
 
@@ -341,6 +360,8 @@ print()
 print(f"thresholds : MEMORY.md ≤ {MEM_MAX} · gated basket ≤ {BASKET_MAX}")
 if breaches:
     print(f"VERDICT    : RED — {'; '.join(breaches)}")
+    if mem_tokens > MEM_MAX:
+        print(f"WHAT TO DO : {MEMORY_RED_INSTRUCTION}")
 elif holes:
     print(f"VERDICT    : UNVERIFIED — {len(holes)} line(s) could not be measured; nothing here is guessed.")
 else:
