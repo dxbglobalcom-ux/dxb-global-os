@@ -1,8 +1,7 @@
 {
   "env": {
     "RIPGREP_CONFIG_PATH": "/home/dxb/DxB Global OS/.ripgreprc",
-    "DXB_CONSTRUCTION_DATABASE_URL": "postgresql://postgres:postgres@127.0.0.1:54422/postgres",
-    "CLAUDE_CODE_DISABLE_WORKFLOWS": "1"
+    "DXB_CONSTRUCTION_DATABASE_URL": "postgresql://postgres:postgres@127.0.0.1:54422/postgres"
   },
   "permissions": {
     "allow": [
