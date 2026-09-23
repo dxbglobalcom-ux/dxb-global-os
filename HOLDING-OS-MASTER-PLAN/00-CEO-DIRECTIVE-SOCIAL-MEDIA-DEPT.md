@@ -44,7 +44,7 @@
 3. **Marketing sınır sözleşmesi:** marketing = içerik/growth STRATEJİSİ ve kanal uzmanlığı (tiktok-strategist, instagram-curator vb. marketing'de KALIR); social-media = OPERASYON (hesap bağlama, takvim, yayın, inbox, onay akışı, müşteri workspace, rapor). Kampanya stratejisi marketing'den girdi alır; yayın operasyonu social-media'dan çıkar. Çatışma protokolü persona §7'lerde yazılır.
 4. **data-ai sınırı:** Social MCP/API Agent departmanın DIŞA AÇILAN yüzüdür (drafts/schedule/analyze API aksiyonları); MCP altyapı sahipliği data-ai/specialized-mcp-builder'da kalır.
 5. **Dış-yüz onay kapıları:** yayınlama (publish) DIŞA DÖNÜK eylemdir — Approval Workflow Agent'ın final-approver zinciri APPROVAL_ENGINE_SPEC'e bağlanır; müşteri-görünür rapor gönderimi rutin dış iletişim sınıfındadır (otonom, CEO onayı gerekmez), ücretli reklam/para-çıkışı bu departmanda YOKTUR (paid-media'da kalır).
-6. **Kadro etkisi:** ADD +12 → hedef aktif kadro **179** (WORKFORCE-GAP-MATRIX §4 güncellendi). Personaların TAMAMI inşaat yazarı bizzat (K2 — 2026-07-25'ten itibaren Opus 5); yazım sırası E5.3 müdürler sonrası (E5.6).
+6. **Kadro etkisi:** ADD +12 → hedef aktif kadro **179** (WORKFORCE-GAP-MATRIX §4 güncellendi). Personaların TAMAMI inşaat yazarı bizzat (K2 — oturumu süren model); yazım sırası E5.3 müdürler sonrası (E5.6).
 7. **Platform API'leri:** modüler bağlantı — persona/workflow katmanı şimdi, gerçek API entegrasyonları (IG/TikTok/LinkedIn… + Google Business) ilgili execute fazında; Speaches/hermes kaynak planına dokunmaz.
 
 ## 4. Roadmap bağlantısı

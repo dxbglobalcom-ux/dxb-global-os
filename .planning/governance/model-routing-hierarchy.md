@@ -3,16 +3,19 @@ name: model-routing-hierarchy
 description: "v13 (CEO 2026-09-23): İNŞAAT kadrosu Opus 5.5 — baş mühendis xhigh, yazar max, çürütücü/teşhisçi xhigh, tasarımda ikinci göz Fable 5.1; yazar = oturumu süren model; v10 runtime kalite kademe kanunu; v9 yedek katman yok; v8-v5 tarihsel kayıt"
 metadata:
   type: feedback
-  originSessionId: 6f44# v13 — İNŞAAT KADROSU OPUS 5.5 (CEO, 2026-09-23)
+  originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
+  modified: 2026-09-23T22:00:42.000Z
+---
+
+# v13 — İNŞAAT KADROSU OPUS 5.5 (CEO, 2026-09-23)
 
 1. **CEO emri (2026-09-23): "holdingi artık bu şekilde inşaa edeceğiz."** Koltuklar Anthropic'in resmî Opus 5.5 grafiklerine göre seçildi: **baş mühendis** = açılan oturum, `claude-opus-5-5` · `xhigh` · **yazar** = ayrı oturum, `claude-opus-5-5` · `max` · **çürütücü ve teşhisçi** alt-ajanları `claude-opus-5-5` · `xhigh` · **tasarımda ikinci göz** `design-eye`, `claude-fable-5-1` · `high`, yalnız okur, `Agent` aracı yok · `scout` haiku · low (yalnız konum). Kanonik tablo: `.claude/skills/dxb-crew/SKILL.md` §1; ajan dosyaları `~/.claude/agents/`.
 2. **İnşaat yazarı = oturumu süren model** (v11'in "Opus 5 VEYA Fable 5" hükmünün yerini alır). Model kimliği sabit yazılır; daha güçlü bir model çıktığında koltuk ölçülerek ve CEO'nun sözüyle değişir.
 3. **Yedek zinciri yoktur** (v9 madde 2 aynen): hata/timeout durumunda sessiz model değişimi yok, iş `blocked` raporuyla CEO'ya çıkar. Tek oturum = tek yazar.
 4. **K1 değişmez:** repo'ya giren her satır o oturumun yazarının, bizzat ve inline; alt-ajan yazarlığı ihlaldir.
 5. **Kapsam yalnız İNŞAAT.** Şirketin runtime çalışanlarının modeli (routing satırları, B51) bu kararla değişmedi; o karar CEO'nundur.
-6. Kayıt: `scripts/governance/ceo-approvals.json` → `crew-opus-5-5-seats-2026-09-23` · `MODEL_ROUTING_SPEC` A-2026-09-23 · ayna: `.planning/governance/model-routing-hierarchy.md`.
-
-`00-INDEX` U30 · ayna: `.planning/governance/model-routing-hierarchy.md`.
+6. **Tarihsel kayıt + iç teknik ID hükümleri** (v9 madde 4-5) aynen geçerli; U20'nin "CEO'ya görünen etiket" hükmü katalog satırlarını yönetmeye devam eder.
+7. Kayıt: `scripts/governance/ceo-approvals.json` → `crew-opus-5-5-seats-2026-09-23` · `MODEL_ROUTING_SPEC` A-2026-09-23 · ayna: `.planning/governance/model-routing-hierarchy.md`.
 
 # v10 — RUNTIME KALİTE KADEME KANUNU (CEO, 2026-07-26) — U21
 

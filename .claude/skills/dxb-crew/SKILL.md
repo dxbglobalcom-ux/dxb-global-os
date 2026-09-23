@@ -17,22 +17,35 @@ ve kalite düşmeden. sanki bir loop gibi."* This door is that system. The laws 
 
 | Seat | Model · effort | Does | Never |
 |---|---|---|---|
-| **Chief engineer** | Opus 5.5 · `xhigh` | writes the spec, splits the phases, names the dependants, re-measures EVERY number the writer reports with its own commands, rules ACCEPT / REJECT, reports to the CEO | writes a repository line while a writer is open; asks the CEO what to do |
-| **Writer** | Opus 5.5 · `max` | writes every repository line inline, runs its own measurements, runs the refuter on its own diff, commits per phase | touches the company engine (54322) for anything but SELECT; touches what the CEO said is his (today: `tests/c42`); guesses a number |
-| **Refuter** | Opus 5.5 · `xhigh` (subagent of the writer) | reads the diff, runs the battery itself, tries to break the work; every finding is `file:line` + a concrete scenario, or it is not a finding | writes; rules on taste; runs a third round |
+| **Chief engineer** | Opus 5.5 · `xhigh` | writes the spec, splits the phases, names the dependants, re-measures EVERY number the writer reports with its own commands, rules ACCEPT / REJECT, reports to the CEO | writes code while a writer is open; asks the CEO what to do |
+| **Writer** | Opus 5.5 · `max` | writes every line of code inline, runs its own measurements, runs the refuter on its own diff, commits per phase | touches the company engine (54322) for anything but SELECT; touches what the CEO said is his (today: `tests/c42`); guesses a number |
+| **Refuter** | Opus 5.5 · `xhigh` (subagent of the writer) | reviews the phase's diff against its acceptance items and runs them itself; sorts every finding (`file:line` + a concrete scenario) into A, B or C (below); the phase passes when A is empty | writes; rules on taste; hunts outside the diff; opens a new hunt in round 2 |
 
 The chief engineer and the writer are two Claude Code sessions in the VS Code editor-area
 terminals of this machine, addressed by their `ListAgents` names. The seats were set on
 2026-09-23 from Anthropic's official Opus 5.5 charts; the model id is pinned (`claude-opus-5-5`),
 so a newer model enters only when it is measured and the CEO says so. Subagents of either are
-the pinned roles in `~/.claude/agents/`; the one Fable seat, `design-eye` (Fable 5.1 · `high`,
-the design second eye), has no `Agent` tool, because Fable subagents were measured spawning
+the pinned roles in `~/.claude/agents/`: `refuter` and `debugger` Opus 5.5 · `xhigh`, `scout`
+Haiku · `low` (locations only), and the one Fable seat, `design-eye` (Fable 5.1 · `high`, the
+design second eye), which has no `Agent` tool, because Fable subagents were measured spawning
 their own sub-subagents and burning the quota.
 
-**Refutation is finite because the bar is fixed.** A refuter returns measurable defects, at most
-**two rounds** per phase; what survives round two becomes a board row and does not hold the
-phase. The CEO's worry (*"refute sonsuz, hep bir şey bulunabilir"*) is answered by the bar,
-not by skipping the refuter.
+The writer seat is for code; record and instruction text is written by the chief engineer
+itself, at `xhigh`. No seat but the writer goes to `max` unless a quality gain has been measured
+on our own work — Anthropic's own instruction: *"Reserve xhigh and max for work where you've
+measured a quality gain."* <!-- CEO-OK: crew-writer-code-max-only-2026-09-24 -->
+
+**Refutation ends because the line is drawn before the work — his decision, 2026-09-24.** <!-- CEO-OK: refuter-redesign-2026-09-24 -->
+Measured before it: 12 of the 13 refuter verdicts on record were a fail, because any finding anywhere
+rejected the work and every round was a fresh hunt (*"3 veya 10 sınırda koysanız yine de
+çürütecektir"*). The chief engineer writes each phase's acceptance items before the phase starts —
+numbered, each a command and its expected output. Pass or fail is those items plus the battery.
+The refuter reads only the diff and sorts every finding:
+**A** — breaks an acceptance item, or is a real defect this work made: the phase does not pass until
+it is fixed. **B** — a small defect this work made: repaired in the same pass (next paragraph).
+**C** — a defect older than this work: a board row through `dxb-close-row`, never a blocker.
+Round 2 re-checks only round 1's A list and opens no new hunt; an A item still open after round 2
+goes to the CEO with its reason.
 
 **A minor finding is repaired in the SAME pass — his law, 2026-09-22.** <!-- CEO-OK: crew-minors-fixed-in-same-pass-law-2026-09-22 --> He read the rule and made it one: *"bu kural olsun. yani aynı anda düzeltilsin küçük hatalar."* The refuter's minor findings are **listed and repaired in the same pass**: a one-line fix the writer makes at once, anything larger becomes a board row through `dxb-close-row`, and a minor **never gets a round of its own**.
 
@@ -40,11 +53,13 @@ not by skipping the refuter.
 
 ```
 INTAKE  → the job in ONE sentence, provable by measurement; the CEO's words verbatim;
-          what is his and untouchable; the phases (3–5), each with its own proof.
+          what is his and untouchable; the phases (3–5), each with its acceptance items
+          (numbered, each a command and its expected output), written before the phase starts.
 for each PHASE:
   1. DEPENDANTS FIRST  — name what stands on the thing about to change; measure it (numbers, file).
   2. BUILD             — the writer writes; every claim carries command → decisive output.
-  3. REFUTE            — the writer's refuter, ≤ 2 rounds, defects only.
+  3. REFUTE            — the refuter sorts the diff's findings into A / B / C (§1); B is
+                         repaired at once; round 2 re-checks round 1's A list only.
   4. RE-MEASURE        — the chief engineer takes every number again with its own hands
                          (battery, table counts, service state, company fingerprint).
                          Mismatch → REJECT with file:line + scenario. Match → ACCEPT.
@@ -106,7 +121,7 @@ described to him.
    named by its own path: `/home/dxb/.local/bin/claude` (a symlink into `~/.local/share/claude/versions/`).
    `operator key ctrl+shift+p` → `operator type "Terminal: Create New Terminal in Editor Area"`
    → `operator key Return` → `operator shot` (is the new terminal focused?) →
-   `wl-copy '/home/dxb/.local/bin/claude --model claude-opus-5-5 --effort <xhigh|max> "$(cat <note>)"'` (`xhigh` for a chief engineer, `max` for a writer)
+   `wl-copy 'systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model claude-opus-5-5 --effort <xhigh|max> "$(cat <note>)"'` (`xhigh` for a chief engineer, `max` for a writer; the `systemd-run` prefix is the memory box that `~/.bashrc`'s `claude()` wrapper gives a typed `claude` — a session opened by its full path skips that wrapper and ran unboxed, `MemoryMax=infinity`, measured 2026-09-24)
    → `operator key ctrl+shift+v` (the terminal's own paste — `ctrl+v` does not reach it, measured)
    → `operator shot` and READ the line before committing to it → `operator key Return` →
    `operator shot`.

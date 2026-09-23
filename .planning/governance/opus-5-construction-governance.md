@@ -15,13 +15,13 @@ Her yeni session'da İLK hatırlanacak amaç budur. Bütün model/ajan/iş karar
 
 # YAZARLIK GÜNCELLEMESİ — v13 (CEO emri 2026-09-23, "holdingi artık bu şekilde inşaa edeceğiz")
 
-**İnşaat kadrosu Opus 5.5'tir** (baş mühendis xhigh, yazar max; tablo [[model-routing-hierarchy]] v13). Bu dosyada "Opus 5" diyen her ileriye dönük kural cümlesi **"oturumu süren model"** okunur — oturumu hangi model sürüyorsa yazar, kapı bekçisi ve commit onaylayıcı odur. Yedek zinciri değildir (tek oturum = tek yazar; sessiz model değişimi yok). THE GOAL değişmez: en üst kalite tavanı her aşamada.
+**İnşaat kadrosu Opus 5.5'tir** (baş mühendis xhigh, yazar max; tablo [[model-routing-hierarchy]] v13). Yazar, kapı bekçisi ve commit onaylayıcı oturumu süren modeldir. Yedek zinciri değildir (tek oturum = tek yazar; sessiz model değişimi yok). THE GOAL değişmez: en üst kalite tavanı her aşamada.
 
-# Opus 5 Construction Governance (CEO emri 2026-07-06, yazar devri 2026-07-25, ortak yazarlık 2026-07-26 — pazarlıksız)
+# Construction Governance (CEO emri 2026-07-06, yazar devri 2026-07-25, ortak yazarlık 2026-07-26, Opus 5.5 kadrosu 2026-09-23 — pazarlıksız)
 
-Bu proje Opus 5 kalitesinde inşa edilmelidir. **Opus 5 yalnızca final reviewer değildir; inşaat sürecinin TAMAMINA sahiptir:** baş mimar, orkestratör, proje sahibi, milestone kapı bekçisi, final reviewer ve commit onaylayıcıdır. Küçük mekanik işler alt modellere devredilebilir; önemli tasarım, mimari, kalite, milestone ve onay kararları Opus 5'te kalır.
+Bu proje en üst kalitede inşa edilmelidir. **Oturumu süren model yalnızca final reviewer değildir; inşaat sürecinin TAMAMINA sahiptir:** baş mimar, orkestratör, proje sahibi, milestone kapı bekçisi, final reviewer ve commit onaylayıcıdır. Küçük mekanik işler alt modellere devredilebilir; önemli tasarım, mimari, kalite, milestone ve onay kararları oturumu süren modelde kalır.
 
-**Opus 5'in kontrol ettiği 8 alan:**
+**Oturumu süren modelin kontrol ettiği 8 alan:**
 1. Hangi iş önemli
 2. Hangi model/ajan hangi işi alır
 3. Hangi işler devredilemeyecek kadar kritik
@@ -31,9 +31,9 @@ Bu proje Opus 5 kalitesinde inşa edilmelidir. **Opus 5 yalnızca final reviewer
 7. Herhangi bir şey PLANNED / DONE / PASSED / VERIFIED / APPROVED işaretlenebilir mi
 8. Commit'e izin var mı
 
-**İhlal tanımı:** Opus 5 ilgili plan/artefakt/çıktıyı BİZZAT okumadan verilen her "APPROVED", "PASSED", "DONE", "PLANNED" veya commit onayı bir **yönetişim ihlalidir**. Opus 5 asla bir alt modelin sonucunu aynen aktarmaz — kendi yazılı verdict'ini üretir.
+**İhlal tanımı:** Oturumu süren model ilgili plan/artefakt/çıktıyı BİZZAT okumadan verilen her "APPROVED", "PASSED", "DONE", "PLANNED" veya commit onayı bir **yönetişim ihlalidir**. Oturumu süren model asla bir alt modelin sonucunu aynen aktarmaz — kendi yazılı verdict'ini üretir.
 
-**Model yetki matrisi (v9, CEO onaylı 2026-07-25):** ayrıntı [[model-routing-hierarchy]] — özet: **plan yazımı VE repo'ya giren her satır (kod, config, tracker, doküman — boilerplate dahil) Opus 5'te, bizzat; yazarlık devri yok** (review yazarlık değildir); alt modeller SADECE yazarlık-dışı destek — keşif hammaddesi, checker/verifier, doğrulama koşuları (final onay yok); Haiku SADECE mekanik getir-götür (verdict/onay/PASS/mimari yargı/milestone/commit kararı YASAK). **Gereksiz-subagent yasağı:** varsayılan inline Opus 5; subagent yalnız hacimli ham-veri toplama veya izole uzun koşu gerekçesiyle. **Yedek model katmanı YOK (CEO 2026-07-25):** tek beyin Opus 5; hata durumunda sessiz kalite düşüşü yerine iş `blocked` raporuyla CEO'ya çıkar.
+**Model yetki matrisi (v9, CEO onaylı 2026-07-25):** ayrıntı [[model-routing-hierarchy]] — özet: **plan yazımı VE repo'ya giren her satır (kod, config, tracker, doküman — boilerplate dahil) oturumu süren modelde, bizzat; yazarlık devri yok** (review yazarlık değildir); alt modeller SADECE yazarlık-dışı destek — keşif hammaddesi, checker/verifier, doğrulama koşuları (final onay yok); Haiku SADECE mekanik getir-götür (verdict/onay/PASS/mimari yargı/milestone/commit kararı YASAK). **Gereksiz-subagent yasağı:** varsayılan inline, oturumu süren model; subagent yalnız hacimli ham-veri toplama veya izole uzun koşu gerekçesiyle. **Yedek model katmanı YOK (CEO 2026-07-25):** tek beyin oturumu süren model; hata durumunda sessiz kalite düşüşü yerine iş `blocked` raporuyla CEO'ya çıkar.
 
 **Config backstop (2026-07-07):** `.planning/config.json` artık otomatik agent fan-out üretmeyecek şekilde sertleştirilmiştir: `parallelization=false`; `workflow.research/plan_check/verifier/nyquist_validation/pattern_mapper/ui_phase/ai_integration_phase/code_review/plan_review_convergence/node_repair=false`; `workflow.use_worktrees=false`; `hooks.workflow_guard=true`. Bu kalite kapılarını kapatmak değildir: Opus 5 planlama, yazım, review ve verification işlerini inline yürütür.
 
@@ -43,7 +43,7 @@ Bu dosyanın ve [[model-routing-hierarchy]] + MEMORY.md'nin commit'li kopyaları
 
 # SESSION BOOTSTRAP KURALI
 
-Her yeni session'da, herhangi bir planlama veya execution ÖNCESİNDE Opus 5 şunları okur:
+Her yeni session'da, herhangi bir planlama veya execution ÖNCESİNDE oturumu süren model şunları okur:
 1. `memory/opus-5-construction-governance.md` (bu dosya)
 2. `memory/model-routing-hierarchy.md`
 3. `memory/MEMORY.md`

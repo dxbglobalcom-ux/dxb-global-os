@@ -11,7 +11,7 @@
 
 ## 1. Amaç
 
-Holding'deki HER ajan — hangi temel modeli kullanırsa kullansın — inşaat yazarının (2026-07-25'ten itibaren Opus 5) tanımladığı merkezi çalışma standardına bağlanır. Hook = `packages/hook` kütüphanesi: ajan spawn yolunu saran policy motoru. Prompt değil, YÜRÜTME KATMANI: pre-task gate, post-task gate, koşu-içi kurallar, ihlal kaydı, escalation.
+Holding'deki HER ajan — hangi temel modeli kullanırsa kullansın — inşaat yazarının (oturumu süren model) tanımladığı merkezi çalışma standardına bağlanır. Hook = `packages/hook` kütüphanesi: ajan spawn yolunu saran policy motoru. Prompt değil, YÜRÜTME KATMANI: pre-task gate, post-task gate, koşu-içi kurallar, ihlal kaydı, escalation.
 
 ## 2. Gereksinimler — madde 7'nin 17 standardı (normatif eşleme)
 

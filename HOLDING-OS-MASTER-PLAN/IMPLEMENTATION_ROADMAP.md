@@ -16,7 +16,7 @@ Korpus (31 spec) → çalışan Holding OS dönüşümünün adım-adım, kanıt
 
 - G1. Her adım: dosya yolları + normatif spec referansı + "çalıştır → şu çıktıyı gör" kanıtı.
 - G2. Sıra MASTER_PLAN §7 P2 sırasına sadıktır (değer-öncelikli: görünür kokpit erken); CEO Faz eşlemesi her blokta.
-- G3. Yazar-only işler işaretli (persona ailesi — K2: inşaat yazarı bizzat, 2026-07-25'ten itibaren Opus 5); ⛔ kritik kararlar işaretli.
+- G3. Yazar-only işler işaretli (persona ailesi — K2: inşaat yazarı bizzat — oturumu süren model); ⛔ kritik kararlar işaretli.
 - G4. Paralellik yalnız devralma penceresinde ve yalnız işaretli bloklar arasında (aynı dosyaya iki el yasak — BACKUP_PLAN §8).
 
 ## 3. Mimari (yürütme blokları ve bağımlılık)

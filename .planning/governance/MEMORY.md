@@ -1,71 +1,110 @@
 # Memory Index
 
-- [W2.6 proaktif brifing](proactive-briefing-w26.md) — **2026-07-27 gecesi, U37**: Hamza sabah 07:00'de konuşmayı KENDİ açar (tek SQL görünümü, sıfır model çağrısı, iki dil bacağı, CEO'da anahtar+tavan, tz Europe/Berlin); tuzaklar: `date` sürücüden yerel-gece-yarısı gelir (toISOString takvimi geri alır), CREATE OR REPLACE VIEW kolon ekleyemez, bootstrap-db.sh canlı DB'de koşmaz
+Tek satır = tek hatıra. Detay dosyanın içinde; proje gerçeği `.planning/STATE.md` + açık iş tahtasında.
 
-- [U36 denetim ikizi](audit-twin-rule.md) — **CEO hükmü 2026-07-26**: inline yazarlık + düşman denetimi; subagent asla yazmaz, salt-okur MEKANİK (codex -s read-only / Read-Grep-Glob), üç tetik (kabul oturumu çapraz model · makineyle ölçülemeyen satır · CEO kusurunun sınıf taraması), bulgu kanıt hüküm değil, çözülemeyen anlaşmazlık ⚠ UNVERIFIED
-- [Stabilizasyon + U30/U31](stabilization-audit-2026-07-26.md) — **2026-07-26 öğleden sonra, 5 commit, yazar Fable 5**: U30 ortak yazarlık; U31 chat×ses (details-slot + pencere-bacağı dersi); outbox allowlist (denylist değil); U28 kayıt-gerçek uyuşmazlığı + yerleşik-restart ihlali yakalandı; batarya: HelpTip yanlış-pozitifi, 404="temiz" tuzağı, purpose_tr; yeni kapılar (ellipsis yasağı 8 rota, U31 vakası, teardown 3. sınıf)
-- [Chat tamiri + keşif motoru](chat-repair-discovery-2026-07-26.md) — **2026-07-26 sabahı, 4 commit**: CEO'nun chat'i ölüydü (kolon-bazlı grant tuzağı + yerleşik servis hiç restart edilmemiş = gecenin TÜM runtime işi yüklenmemiş); tek-kapı + şema değişmezi + kapı testi; W2.2 scrapling ilk kez canlı, 5 fırsat; motor artık CEO tetikler, canlı akış Türkçe
-- [Gece vardiyası: W1 kapandı + W2.1](night-shift-w1-closed-2026-07-26.md) — **2026-07-26 01:50-04:50, 12 commit**: U21-U26 + hedef kapısı; konsey CANLI kanıtlandı (7 kaynaklı itiraz); Hermes canlı ama beyinsiz (402, kovulmuş model) = CEO'nun para kararı; kendi 6 kusurum + storageState/dxb-locale/production-build/codex-stdin dersleri
-- [U21 kalite kademe kanunu + konsey](u21-quality-tier-law-2026-07-26.md) — **2026-07-26 gecesi, commit 649cb20+a7ddc65**: Sonnet kritik işlerden çıktı (L1=Opus 5 kalıcı: tasarım/site/mağaza), 8 model kovuldu, 205 beyin atandı; OpenAI anahtarı kotasız — abonelik hattı Codex CLI; konsey = Opus 5 yazar + Solo 5.6/GPT 5.5 çürütür (adaptör borç)
-- [U15 round 2: JARVIS kontrol + tek-konuşma](u15-round2-jarvis-control-2026-07-25.md) — **2026-07-25 öğleden sonra, commit 514f119**: CEO blok-8 FAIL; D9-D13 kapandı (mute state+audited kapı, half-duplex, chat↔voice ayna, session thread); daemon MUTED bekliyor ("aç" ile açılır); görsel batarya = CEO e2e-login re-mint borcu; rollback-trx test idiomu
+## Kanunlar ve CEO hükümleri
+- [Kanun A + Kanun B](ceo-law-a-law-b-2026-07-30.md) — çelişen iddia silinir, olgu kalır; bitti ≠ onaylandı
+- [Hikâye yasak](ceo-no-stories-2026-08-09.md) — belki cevap değildir; bilmiyorsan ölç
+- [Rakip raporları niçin](rival-intel-why-c42.md) — incele, raporla, aynısını veya daha iyisini kur
+- [Kanıtsız done yok](evidence-before-done.md) — ölçülemeyen iş UNVERIFIED yazılır
+- [Mükemmellik kapısı](perfection-gate-rule0b.md) — teslimattan önce üç soru ve gereği
+- [Tasarım doğrulama](design-verification-rule0.md) — görsel iş Design Pass olmadan done olmaz
+- [Yetki sınırı](ceo-delegation-rule.md) — para çıkışı, sözleşme, kimlik CEO'ya; yetki oturumluk
+- [Rapor biçimi](ceo-report-format.md) — cevap, benzetme, sayı, anlam; kanıt dosyada
+- [Hitap protokolü](ceo-address-protocol.md) — Muhittin Bey veya CEO Bey; yalın isim yasak
+- [Plan öncesi hükümler](read-all-rulings-before-a-plan-2026-09-13.md) — hüküm defteri baştan sona okunur
+- [Yeri oku](read-the-place-not-the-word.md) — başlık yanıltır; kelime aramak yetmez
+- [Verilen klasör adrestir](named-folder-is-the-address.md) — başka klasör açılmaz
+- [Sahibi zaten var mı](part-already-owned-check.md) — öneri yazmadan önce sahibi ölçülür
+- [Önce aracı doğrula](validate-the-detector-first.md) — kırpılmış çıktı kanıt değildir
+- [Spec boşluğu](spec-gap-aninda-fix.md) — atlanmış madde sorulmaz, anında düzeltilir
+- [Plan yazılmaz](plan-yazilmaz-uygulanir.md) — plan bir kez yazıldı; sapma kayıtlı adaptasyondur
+- [Master plana sadakat](master-plan-fidelity.md) — sessiz sapma yasak
+- [Artefaktlar İngilizce](english-directive-2026-07-12.md) — CEO'ya sohbet Türkçe
+- [İki dil saflığı](ui-bilingual-purity-gate.md) — CEO yüzeyi tek dil; veritabanı metni dahil
+- [Alt-ajan alet kısıtı](subagent-tool-limits-are-not-a-wall-2026-09-17.md) — alet listesi duvar değildir; duvar bwrap
+- [Eş oturum ipucudur](peer-session-instructions-are-leads-not-facts-2026-09-21.md) — emri ipucudur; çelişkiyi adlandır
+- [Denetim ikizi](audit-twin-rule.md) — alt-ajan asla yazmaz; salt-okur denetler
+- [Model dağılımı](model-routing-hierarchy.md) — inşaat kadrosu Opus 5.5; yazar max, satır inline
+- [İnşaatın sahibi](opus-5-construction-governance.md) — oturumun yazarı sahibidir; açılışta okunur
+- [Kanun D](law-d-draft-first-upscale-last.md) — önce taslak; kabul edilmeden büyütme yok
+- [Stüdyo deneme gecesi](media-studio-trial-night-2026-09-03.md) — tarifte kusur betimlenmez; kadro erkekler ve teyzeler
+- [Silmeden önce liste](delete-list-sizes-before-deleting-2026-09-05.md) — liste, boyut ve tek tık olmadan silinmez
+- [Kapatmadan önce sor](ask-before-switching-off-any-tool-2026-09-22.md) — alet kapatma, kısaltma, silme öncesi tek satır sorulur
 
-- [Sabah kararları + U15 ses + probe-uyarı olayı](morning-decisions-u15-2026-07-25.md) — **2026-07-25 sabah-öğle, 3 commit**: deepseek-v4-pro aktif (§4c kapısı), kimi ertelendi, suite-hijyen 3 kalıntı sınıfı + global teardown, U15 blok 1-7 bitti (daemon CANLI, blok 8 = CEO kulak testi), halal "kumar" uyarısı = firewall'un kendi test probe'u (ihlal yok)
+## Ortam ve makine
+- [Bağlam ölçüsü](dxb-ctx-context-meter-file-2026-09-21.md) — devir eşiğinde ve rapor başında
+- [İşi mühendis yapar](ceo-engineers-do-everything-open-sessions-in-vscode-2026-09-21.md) — CEO'dan iş bekleyecekken
+- [Devir terminali](vscode-handover-terminal-path-and-paste-2026-09-21.md) — oturumu açarken
+- [Mesaj ulaştı mı](cross-session-messages-do-not-arrive-2026-09-15.md) — mesaj attıktan sonra
+- [Tıklama kutusu](click-questions-do-not-reach-him-2026-09-13.md) — CEO'ya soru sorarken
+- [Verileni yeniden ölçme](ceo-speed-read-less-2026-09-14.md) — önüne konan listeyi okurken
+- [Denetim dersleri](audit-day-lessons-2026-09-14.md) — toplu düzenlemeden sonra
+- [Eklenti hükmü](plugins-state-2026-08-09.md) — eklenti gerekince
+- [Bağlam mimarisi](context-architecture-2026-07-30.md) — açılış yükünü değiştirirken
+- [Makineyi sen kullan](ceo-wants-human-operator-not-instructions.md) — ekran veya fare gerekince
+- [Dikte dili ayarı](turkish-dictation-language-setting.md) — dikte İngilizce yazarsa
+- [Kalıcı servisler](systemd-resident-services.md) — servis başlatırken
+- [Donma sebebi](x230-freeze-swap-orphans.md) — makine donunca
+- [Masaüstü makine gerçekleri](dxb-center-machine-facts.md) — tarama, ekran görüntüsü, docker, fan işinde
+- [İki oturum tek kimlik](two-sessions-one-git-identity.md) — ikinci oturum varken
+- [Test motoru ayrı](test-db-isolation-2026-07-28.md) — test koşmadan önce
+- [Migration defteri](company-migration-ledger-gap.md) — şema defterini onarırken
+- [Gizli silme tetikleri](company-engine-has-undeclared-delete-triggers-2026-09-21.md) — şirket motorunda silerken
+- [Skill perhizi](skill-diet.md) — kapalı skil ararken
+- [Hetzner ve kasa](hetzner-access-and-vault-drop.md) — sunucu veya parolada
+- [Eklemeler docx'te](ceo-writes-amendments-into-docx.md) — direktifi okurken
+- [cd yasağı](bypass-prompt-gate-2026-09-03.md) — bileşik Bash komutunda
 
-- [C5 tetik + işgücü gerçeği + suite tortusu](c5-trigger-workforce-truth-2026-07-24.md) — **2026-07-24 gece yarısı**: decide_approvals görev senkronu (20260724006000), employees/directors employment_status, defter 77 satır gerçeği, suite canlı-DB tortu dersi + council-judge FK kök nedeni
+## Tasarım
+- [Faz 8 brifi](phase8-design-brief.md) — dashboard tasarımında
+- [C-hibrit yönü](design-direction-c-hybrid.md) — görsel yön seçerken
+- [Tasarım eklentileri](design-bundle-phase8-bridge.md) — tasarım fazına girerken
+- [Minimalizm hükmü](ceo-design-minimalism-ruling.md) — kart, rozet veya yardım yazarken
+- [Katmanlı gösterim](ceo-ui-progressive-disclosure.md) — liste yerleştirirken
+- [Pencere genişliği](eye-test-windowed-width-gap.md) — göz testi görüntüsünde
+- [Göz testi hijyeni](eye-test-mutation-hygiene.md) — demo tıklamasından sonra
+- [Login RET](phase8-eye-test-verdict-login-fail.md) — giriş ekranında
 
-- [9c/9d/9e + 10d/10e kapanışı](data-controls-9c9d9e-2026-07-24.md) — **2026-07-24 akşam, commit d505348+fd59807**: cost reset kapısı + 14g karar-yaşlandırma, proje filtresi, gerçek takvim; portföy "Sorumlu kim" + motor sahibi/model kapıları; org seam Idempotency-Key ZORUNLU dersi, hayalet root next-server + pgrep tuzağı, reset/jwt testleri rollback içinde
+## Kadro ve persona
+- [Persona dosya önceliği](persona-file-first-architecture.md) — persona yazarken
+- [Persona kalite DNA](persona-quality-dna.md) — yeni persona yazarken
+- [Kadro kapsamı](persona-roster-scope.md) — kadro sorulunca
 
-- [Dikte v2 + kural 11 + Hamza dalga temizliği](voice-dictation-r2-superpowers-2026-07-24.md) — **2026-07-24 gündüz, 2 commit**: dikte canlı+hassas (vad/prompt/hotwords ölçülü), Esc iptal, queued purge, kural 11 superpowers-always, K1-ihlal dalga temizliği + knowledge_shelf kapı uyumsuzluğu, JARVIS=U15 borcu cevabı
-
-- [HelpTip derinlik + kural 10 + kararlar standardı](helptip-haram-decisions-2026-07-23.md) — **2026-07-23/24 gecesi, 5 commit**: 14c ✓ (98 derin yardım metni, batarya 195/196+elle), "bahis" krizi = benim çevirim (kural 10: kumar/bahis kelimesi total yasak), decisions C4 standardı + varsayılan önemli-görünüm, decision_log 10k inşaat tortusu temizlendi (6 CEO satırı kaldı)
-
-- [C-serisi gündüz oturumu 2026-07-19](c-series-morning-session-2026-07-19.md) — **8 commit e68f472..a3b1c16**: C8 silme yapıldı, kural 7/8/9 doğdu, FilterBar gerçek, rail collapse, voice konu+toplu sil+ortala; açık kuyruk 8 madde defterin audit tablosunda
-- [C-defteri + U19 + E13.1 kapanışı](ceo-complaint-ledger-u19.md) — **2026-07-19 gecesi**: şikayet.odt C1-C19 governed defter (d1f9f15), Outleteuro TAMAMEN iptal (U19), E13.1 ✓ F-09 üretim kanıtıyla (f563c8e), orkestratör=Hamza, OpenRouter=sadece ucuz modeller, sıra Wave A (C6 legacy kill + C5 truth + C2 routing)
-
-- [E12.5 donma-kurtarma akşamı](e125-freeze-recovery.md) — **2026-07-18 ~17:30**: dalga DB'de sağ (active 16→49), wave-monitor.sh commit 3142c20 (evaluate cadence + tek-seferlik correction round; ladder-blocked=terminal dersi), speaches 1.27GB stop+restart=no, QA "You've hit" transient, host speaches görüntüsü = konteynerin kendisi
-- [E12.5 CANLI dalga öğlesi](e125-golive-afternoon.md) — **2026-07-18 öğle**: keys 197 ✓ (`docker exec -i` kusuru), dept-key katmanı doğdu (U18, CEO koştu, .env.daemon), std15×D11 toolless-waiver (sonnet İLK kapı geçişi; kimi 0/20 ölü basamak), U17 skor = kapı-sonucu 1.0, 192 dalga kuyrukta + 4dk monitör/evaluate döngüsü, authed E2E 17/17 İLK tam geçiş, commit 65fc205; DERS: CEO'ya komut = MUTLAK YOL
-- [E12.5 aktivasyon sabahı + D10/D11 + E13.0 tatbikatları](e125-activation-morning.md) — **2026-07-18 sabah**: census 73→72 (%91, taban kayması), CEO kararları D10/D11 işlendi (§3-bis+U17), 197/197 donanımlı, keys=classifier-blok tek CEO satırı bekler (`activate-workforce.sh keys --execute`), evaluate=türetilmiş skor elle YASAK; E13.0: perf 10k <19ms, a11y bataryası, laptop yedek cron'u; authed pas = CEO Chrome oturumu, rotalar locale-prefix'siz
-- [E12 kapıları gecesi + E12.5 makine kapıları + E13 dalgaları](e12-gates-night.md) — **2026-07-18**: E12.2/3/4 ✓, E12.5 ◐ (9/9 makine kapısı, 67-slug vaat defteri 0 eksik, aktivasyon CEO MUSTS bekler), E13.3 ✓ (CEO kılavuzu), E13.1 ◐ (§24 5/5, db-suite+E2E runner doğdu; authed katman CEO storageState bekler — otomatik login TOTP enroll ederdi, YASAK); hayalet 3985 = open-notebook konteyneri (kovalamayı bırak); gece sonu: CEO girdisiz koşulabilir satır 0
-- [R4.3 capability arsenal ✓ + dersler](r43-capability-arsenal.md) — **2026-07-18 gecesi**: dış eller CANLI (pin korpusu 21→69 araç/5 sunucu: git READ, context7, playwright, scrapling+camoufox); doktrin korpusta, paid=öneri kulübesi CEO hükmü kazınmış, hayalet 9/9 isimli; SINIR: tek aktif çalışan finance — staffed dış-el E2E Phase-10 borcu; dersler: test fixture'ları canlı audit'e 3087 sahte tool_missing yazdı (scope guard), kaynakta NUL byte Edit'i kırar (od -c), SkillSpector npm'de 0 bileşen + bulgular triage ister
-- [R4.2 library enrichment ✓ + dersler](r42-library-enrichment-lessons.md) — **2026-07-18 gecesi**: library governed-data (grant 168 kimlik-aynası, review 423, quality 438, raf kancası std.knowledge_shelf CANLI); R-serisi kapandı → sıra E12.2; dersler: hayalet next-server pid ölç, canlı-DB testleri duruma-bağımsız, veri doldurmak = RULE #0 yüzey değişimi (dict veriyle iner)
-- [U15/U16: voice + design deferral](r32-voice-deferral-u15.md) — **2026-07-17 gecesi**: R3.2 = ◐, D1-D8 canlı kusur defteri AÇIK (selam cevapsız, Korece STT, 8/14 çağrı fail, ladder BLOCKED); çözüm bileti = korpus 00-NOTE-R32-VOICE-REMEDIATION-PLAN (E13.x'te ZORUNLU okuma); design simetri kusurları da ertelendi; ders: commit'siz + canlı-kanıtsız ✓ atmak YASAK
-- [RULE #0-B: Perfection gate](perfection-gate-rule0b.md) — **EN ŞİDDETLİ (CEO 2026-07-17)**: her teslimat öncesi 3 soru (mükemmel? mantıklı? daha iyisi?) cevaplanır + gereği yapılır; spec taban, kapı tavan; kanonik: 00-CEO-DIRECTIVE-PERFECTION-GATE.md
-- [CEO UI progressive-disclosure tercihi](ceo-ui-progressive-disclosure.md) — **2026-07-18**: dropdown/hover/alt-sekme sever, "herşey babak gibi ortada olmak zorunda değil"; yoğun listelerde özet+katmanlı detay önceliği
-- [CEO design minimalizm hükmü](ceo-design-minimalism-ruling.md) — "…" kesme YASAK (kaynağında kısalt), bilgi taşımayan alan gösterilmez ("Proposed by: ceo" RET; Hamza önerisi ise rozet), az yazı; grid'de min-w-0 + scrollWidth ölçümü zorunlu
-
-- [MUSTS-Talep audit 2026-07-16](musts-talep-audit-2026-07-16.md) — Talep ölçüm hükümleri: revenue-first anayasal DEĞİL (MASTER_PLAN 0 hit), objective contract yok, worker text-only (tools:[]), voice 0/14, İslami sınırlar hiçbir yerde kodlu değil; CEO karar soruları bekliyor
-- [CEO hitap protokolü](ceo-address-protocol.md) — asla yalın "Muhittin"; her zaman "Muhittin Bey" veya "CEO Bey" (hiyerarşi, CEO düzeltmesi 2026-07-13)
-- [Eye-test mutation hygiene](eye-test-mutation-hygiene.md) — design-pass kapanışında panel demo mutasyonları control-fn yoluyla geri alınır + arka plan collector/probe süreçleri pkill ile süpürülür (E8.3'te iki kirlilik yakalandı)
-- [RULE #0: Design verification](design-verification-rule0.md) — **EN ŞİDDETLİ (CEO 2026-07-13)**: görsel iş = Design Verification Pass olmadan done YASAK; iki locale × ≥2 genişlik render + CHECKLIST + references/design-bank baseline karşılaştırma; CEO QA katmanı değil
-- [Eye-test windowed-width gap](eye-test-windowed-width-gap.md) — full-screen 1280/1920 baseline'ları CEO'nun WINDOWED genişliğindeki "…" kesmesini gizler; windowed pass (~1280-1366 rail açık) zorunlu; truncate+tooltip yoksa kusur; auto-fit grid > sabit kolon; **2 saat CSS ping-pong = süreç dersi: kusuru direkt söyle, kararlı düzelt, doğru DOM'u ölç**
-- [UI bilingual purity gate](ui-bilingual-purity-gate.md) — CEO-görünür UI %100 tek dil/locale; DB metinleri de i18n yüzeyi (title_tr/display_name_tr); "done" öncesi scripts/i18n-purity-check.sh + iki locale Playwright grep zorunlu
-
-- [systemd kalıcı servisler](systemd-resident-services.md) — scheduler + JARVIS = `systemctl --user` unit'leri; çıplak `node main.js` env'siz ölür, pid kill = otomatik restart, `pgrep -fc` şişik sayar (cgroup ağacını oku)
-
-- [X230 freeze = swap + orphans](x230-freeze-swap-orphans.md) — freeze ≠ loss: swap doldu; hayalet kilo-serve process'leri öldür, TEK Playwright tarayıcı, MCP profili CEO oturumu taşıyor
-
-- [English directive 2026-07-12](english-directive-2026-07-12.md) — **BINDING mid-D4**: ALL project artifacts English until project end (personas/specs/commits/reports); **chat replies to CEO stay TURKISH** (CEO refinement ~02:10); gate is language-agnostic (section numbers); 86 TR personas stay, translation pass = optional follow-up; packages/hr canonical titles EN switch = listed follow-up
-
-- [Persona dosya-öncelikli mimari](persona-file-first-architecture.md) — **E5.2b 2026-07-11 (commit 31ee141)**: personas/<dept>/<slug>.md = yazım kaynağı, DB = runtime+gate; ayna/kart RET; uydurma isim yasak (Atlas kalktı); agency-agents gömme yasak; social-media dept +12 → hedef 179; kök README = kaynak haritası
-- [BEKLENTİLER direktifi 2026-07-10](beklentiler-directive-2026-07-10.md) — **AKTİF ANA DİREKTİF**: proje = HOLDING OS; dashboard sıfırdan Executive Command Center; 31 spec korpusu HOLDING-OS-MASTER-PLAN/ Fable bizzat; güvenlik sertleştirme ertelendi (para-çıkışı kapısı kalır); 12 Temmuz = Fable son günü; plan-first → Fable execution son geceye kadar → Opus devralır; TÜM personalar + HR ilk oluşumu Fable; bağlayıcı sözleşme+yasaklar: `~/.claude/plans/sana-s-yl-orm-konu-al-m-nce-agile-pebble.md`
-- [GAP-AUDIT direktifi 2026-07-11](gap-audit-directive-2026-07-11.md) — **BAĞLAYICI**: SILLE prompt işlendi; ModuleWaiting=0 final şartı, kanıtsız done=RET; E5.0 kadro gap matrisi persona dalgalarının ön şartı; yeni kapılar E6.0/E6.4/E8.4b/E12.3-5/E13.0; taban: 7/41 gerçek rota, personas 0, director 0/14; **K1-K3 hükmü:** modül kapanışı yalnız Fable+GPT 5.6 solo, TÜM personalar Fable bizzat, CRM E12.4 idiomu
-- [Persona kalite DNA](persona-quality-dna.md) — CEO E5.2 direktifi: jenerik/kopya/tembel persona yasak; sıfır-uydurma, proaktiflik DNA; Marketing+Sales satış-DNA zorunlu + Revenue Growth Specialist ADD; yazım-sonrası 5 kontrol
-- [Faz-8 göz testi: login RET](phase8-eye-test-verdict-login-fail.md) — CEO 2026-07-10 ~13:30: login ekranı jenerik + kahverengi glow + boş arka plan = RET; redesign en yüksek öncelik; göz testi öncesi giriş bilgileri verilmemesi ayrı ihlal
-
-- [Deadline & Faz-8 reopen](deadline-and-phase8-reopen.md) — SERT DEADLINE 2026-07-12 (Fable kalkıyor, 'ölüm kalım'); Faz 8 başında design plugin'leri + playwright yeniden açılır, STACK.md Broadcast notları okunur
-- [Design-bundle Phase-8 köprüsü](design-bundle-phase8-bridge.md) — CEO B3: Phase 8 GİRİŞ ŞARTI — impeccable+taste+open-design+Stitch re-enable + study, dashboard tasarımından ÖNCE; kapanmadan design işi başlamaz
-- [C-Hibrit tasarım yönü](design-direction-c-hybrid.md) — **BAĞLAYICI (2026-07-11 ~01:56)**: R-kapısı kapandı, CEO reçete C seçti; bağlantı kontratı command-nav.ts+module-live.ts; görsel iş öncesi R-kapısı zorunlu süreç; login kökü çözüldü («CEO'nun parolası — kayıttan çıkarıldı 2026-08-24» doğru, autofill+eski build suçluydu)
-- [Faz 8 design brief](phase8-design-brief.md) — **A4 KANUN (2026-07-11, kodifiye 2026-07-14): ANA kaynak Iron Man/JARVIS evreni — dashboard = Iron Man kokpiti/HUD; Burj Al Arab YALNIZ kalite çıtası; bağlayıcı metin DESIGN_SYSTEM.md 'Registered directive' bölümü; champagne=Mark zırhı altın-titanyum, kahve yasağı sürer; AÇIK: onaydaki kahve-görünüm token denetimi ertelendi**; A1: WebGL serbest, 34" ultrawide+TV modu, RTX 4090; A2: EN birincil TR tam; A3: JARVIS HUD pivotu
-- [Spec-gap = anında fix](spec-gap-aninda-fix.md) — CEO hükmü 2026-07-13: ✓-kapalı satırda atlanmış spec maddesi bulunca Fable ANINDA düzeltir ("buldum — yapayım mı?" YASAK, "buldum + düzelttim" tek format); gelecek satıra aitse sınır kaydı; hook rule 5
-- [Plan yazılmaz, uygulanır](plan-yazilmaz-uygulanir.md) — CEO hükmü 2026-07-13: plan BİR KEZ yazıldı (korpus); PLAN.md = uygulama fişi (spec işaretçi + kanıt kontratı), yeni tasarım kararı YASAK; sapma = spec'e kayıtlı adaptasyon; Opus devralınca yeniden plan yazmaz
-- [Master plan fidelity](master-plan-fidelity.md) — CEO emri: master plandan ASLA sapma (ölüm-kalım); zorunlu uyarlama = kayıtlı + CEO'ya görünür, sessiz sapma yasak
-- [Outleteuro tanımı](outleteuro-definition.md) — CEO düzeltmesi 2026-07-10: Faz 11 = mevcut WooCommerce/WordPress sitesi holding uzmanlarınca MÜKEMMELLEŞTİRİLİR + tam otonom mağaza (alış+satış) + AYRI alt-OS spawn şirket; öncelik değil, her şey bitince İLK PİLOT (MASTER_PLAN.md:26+:114, commit 0afb71f)
-- [Persona kadro kapsamı](persona-roster-scope.md) — CEO ek hükmü 2026-07-10 ~21:35: kadro = agency-agents 153 legacy (tümü Fable v2) + Fable'ın "olmazsa olmaz" EK personaları; hepsi canlı AGENT, belge değil; işlendi: EMPLOYEE_PERSONA_STANDARD G7 + HR spec :145
-
-- [Opus 5 construction governance](opus-5-construction-governance.md) — **ZORUNLU İLK OKUMA her session** — THE GOAL: en üst kalite output her aşamada; inşaatın sahibi = oturumun yetkili yazarı (**Opus 5 VEYA Fable 5 — U30, CEO 2026-07-26 "nihai karar"**; baş mimar + milestone kapıları + commit onayı); session bootstrap kuralı (BOOTSTRAP READ onayı olmadan proje işi yapılamaz); tarihsel kayıt: inşaatı 2026-07-06→07-25 arası Fable 5 yaptı, dosya eski adı fable-5-construction-governance.md
-- [Model routing hierarchy](model-routing-hierarchy.md) — **v11 (2026-07-26 CEO, U30): inşaat yazarlığı ORTAK — Opus 5 + Fable 5, oturumu süren model yazar; yedek zinciri DEĞİL (tek oturum = tek yazar, hata = blocked raporu)**; v10 (2026-07-26, U21): RUNTIME kalite kademe kanunu — Sonnet kritik işlerden çıktı; v9 (2026-07-25 CEO): inşaat yazarlığı Fable 5'ten OPUS 5'e devredildi; yedek model katmanı KALDIRILDI; tarihsel kayıt + iç teknik ID'ler dokunulmaz**; v8 (2026-07-12): iki ayrı ağaç — bu kurallar yalnız İNŞAAT yazarlığı; şirket RUNTIME ajan beyni olarak Sonnet SERBEST (MODEL_ROUTING_SPEC §4b, dashboard'dan CEO değiştirir)**; v7 (2026-07-11 K1-K2): modül kapanışı YALNIZ Fable + GPT 5.6 solo; TÜM personalar Fable bizzat (hr-factory ilk oluşumda yazamaz); v6 (2026-07-10): SONNET İNŞAATTA DEFEDİLDİ (yazarlık/verdict hiçbir rolde); zincir Fable bizzat → en kötü Opus 4.8; korpus sonrası Fable execution → 12'sinden sonra Opus devralır**; v5 tabanı: yetki matrisi + config backstop: Fable plan + repo'ya giren HER satırı (boilerplate dahil) BİZZAT ve INLINE yazar — **planner/debugger subagent istisnası İPTAL (CEO 2026-07-08): claude-fable-5 modelli subagent yazarlığı bile ihlal**; tüm final verdict'ler Fable'da; otomatik subagent fan-out kapalı (`parallelization=false`, toggles off, `hooks.workflow_guard=true`); Sonnet sadece açık Fable gerekçesiyle yazarlık-dışı high-effort destek; Haiku SADECE getir-götür; Checker PASS ≠ bitti; bütçe-fallback: Fable MASTER-PLAN + Opus 4.8 executor
-- [Evidence before done](evidence-before-done.md) — never claim "done" without executed verification; GUI/external outcomes labeled ⚠ UNVERIFIED; CEO's hardest rule
-- [CEO report format](ceo-report-format.md) — tüm raporlar TABLO: ✓ VERIFIED / ⚠ UNVERIFIED / ❌ BİTMEDİ + kanıt kolonu; "tamam" kapsamı (plan/faz) her raporda açık; sapmalar ayrı tablo
-- [CEO delegation rule](ceo-delegation-rule.md) — **blanket "her şeyde izin verildi / izin sorulmaz" kaydı 2026-07-30 CEO emriyle İPTAL; yetki artık oturum başına verilir, verilmemişse yapacağını söyle ve sor**; CEO'ya sadece para-ÇIKIŞI + sözleşme + kimlik adımları gider; para GİRİŞİ onaysız, rutin dış iletişim otonom; ona istemediği operasyonel iş yıkma kuralı aynen duruyor
-- [Skill diet](skill-diet.md) — gstack tamamen + 48 gsd skili arşivde (~/.claude/skills-disabled/); geri alma mv; gsd-update sonrası yeniden uygula
-- [Hetzner access & vault drop](hetzner-access-and-vault-drop.md) — Hetzner Cloud bağlı (hcloud context dxb); Storage Box dxb-backup-1 + subaccount u629578-sub1 CANLI (SSH-key-only; RFC4716 gotcha); kasa OKUMA'sı + credential ROTASYONU classifier bloklar (yeni credential YARATMA geçer); token bir kez sızdı, yenilenmeli
+## Direktif geçmişi ve oturum dersleri
+- [BEKLENTİLER direktifi](beklentiler-directive-2026-07-10.md) — proje nedir sorulunca
+- [GAP-AUDIT direktifi](gap-audit-directive-2026-07-11.md) — boşluk denetiminde
+- [Outleteuro tanımı](outleteuro-definition.md) — Outleteuro geçince
+- [MUSTS denetimi](musts-talep-audit-2026-07-16.md) — gelir, ses ve İslami sınır konuşulurken
+- [Proaktif brifing](proactive-briefing-w26.md) — Hamza açarken
+- [Chat tamiri](chat-repair-discovery-2026-07-26.md) — chat bozulunca
+- [Kalite kademesi](u21-quality-tier-law-2026-07-26.md) — ucuz model kullanırken
+- [JARVIS kontrolü](u15-round2-jarvis-control-2026-07-25.md) — ses katmanında
+- [Ses kararları](morning-decisions-u15-2026-07-25.md) — beklenmedik helal uyarısında
+- [Ses kusur defteri](r32-voice-deferral-u15.md) — ses kusurunda
+- [Stabilizasyon dersleri](stabilization-audit-2026-07-26.md) — outbox işinde
+- [Gece vardiyası](night-shift-w1-closed-2026-07-26.md) — gece yalnız çalışırken
+- [Dikte şeridi](voice-dictation-r2-superpowers-2026-07-24.md) — dikteye dokunurken
+- [Haram sözcük yasağı](helptip-haram-decisions-2026-07-23.md) — kumar veya bahis geçerse
+- [Görev tetikleri](c5-trigger-workforce-truth-2026-07-24.md) — görev senkronunda
+- [Veri kontrolleri](data-controls-9c9d9e-2026-07-24.md) — idempotency veya maliyet sıfırlamada
+- [C-serisi kuralları](c-series-morning-session-2026-07-19.md) — filtre ve listede
+- [Şikâyet defteri](ceo-complaint-ledger-u19.md) — CEO şikâyetinde
+- [Aktivasyon sabahı](e125-activation-morning.md) — toplu aktivasyonda
+- [Canlı dalga](e125-golive-afternoon.md) — dalga koşarken
+- [Donma kurtarma](e125-freeze-recovery.md) — dalga ortasında donarsa
+- [E12 kapıları](e12-gates-night.md) — otomatik login denemeden
+- [Dış eller](r43-capability-arsenal.md) — dış araç kurarken
+- [Kütüphane doldurma](r42-library-enrichment-lessons.md) — veri doldururken
+- [Tek sentez kuralı](rival-reports-feed-one-synthesis.md) — rakip raporu okurken
+- [Faz 8 reopen kaydı](deadline-and-phase8-reopen.md) — tasarım eklentilerini geri açarken
+- [EXPO ölçümü](expo-after-measurement-2026-09-03.md) — hız karşılaştırmasında
+- [Stüdyo kuruluşu ve Kanun C](media-studio-founding-2026-09-03.md) — değiştireceğini önce söyle, onayı bekle
+- [Stüdyonun elleri](studio-hands-built-2026-09-03.md) — medya aleti, iş defteri veya GPU işi
+- [Astra kanalı](astra-channel-codex-queue-2026-09-16.md) — Astra ile konuşurken
+- [Açılış dolabı](opening-cupboard-built-2026-09-19.md) — kapalı eklentide
+- [Kayıt cetveli](records-ruler-r4-new-acceptance-needs-a-row-2026-09-19.md) — göz kabulünde
+- [Pozisyon bloğu](position-block-must-sit-under-its-heading-2026-09-16.md) — STATE'e yazarken
+- [Araştırma benim işim](research-is-my-own-plus-the-door-2026-09-20.md) — araştırma sorusunda
+- [Göreli bağlantı tuzağı](bridge-extract-writes-relative-links-2026-09-21.md) — adres toplarken
+- [Mühür eski rolü](b36-seal-names-stale-window-role-2026-09-21.md) — mührü koşarken
