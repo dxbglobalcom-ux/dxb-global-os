@@ -25,6 +25,10 @@ operator key alt+Tab        # bring a window to the front
 - **The CEO expects the machine to be verified by YOU** — *"sende insan gibi kullanma yetkisi
   var… operator olarak kullanıp herşeyi teyit edebilirsin"*. A `⚠ UNVERIFIED — requires
   human-eye confirmation` line is not written for anything you can open and look at yourself.
+- **Claude Code's own commands are keys on this screen too.** `/goal` and the other slash commands
+  go into the session's prompt box by paste: `wl-copy` the line, `operator click` the box, `operator
+  shot` to see it focused, `operator key ctrl+shift+v`, read it, `operator key Return` (`operator
+  type` inverts case here). Why the engineer does it at all: `dxb-crew` §0.
 
 ## The second hand — a terminal program, driven WITHOUT the screen: `dxb-tui`
 

@@ -1169,5 +1169,13 @@
   "conditions": "A design approval and an order to write it, NOT a 'kanun olsun' and NOT a LAW B acceptance: the rewritten texts are the author's work until he looks at them. The second clause restates his seat order of the same night (crew-writer-code-max-only-2026-09-24): code at max, everything else at xhigh; this text, being instructions, was written by the chief engineer at xhigh. His earlier law that minor findings are repaired in the same pass (crew-minors-fixed-in-same-pass-law-2026-09-22) stands unchanged as box B.",
   "session": "Opus 5.5 (xhigh), session 6176c228-1529-4280-b4b4-74440cbfa8f3, heard first-hand.",
   "where": "~/.claude/agents/refuter.md · .claude/skills/dxb-crew/SKILL.md section 1 and section 2 · ~/.claude/CLAUDE.md (Kadro section) · .planning/STATE.md 2026-09-24 entry"
+ },
+ "engineers-do-what-he-says-by-operator-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "WHAT HE SAYS IS DONE BY THE ENGINEERS, AT THE MACHINE TOO, AND HE ORDERED IT WRITTEN INTO THE CREW SIDE. The same night he had ordered /goal before every commit; the chief engineer answered that only he could type it, and he objected: anything he would do himself with keyboard and mouse is done by the engineers through the operator skill, never handed back to him. Written into .claude/skills/dxb-crew/SKILL.md section 0, the crew lines of ~/.claude/CLAUDE.md and the dxb-operator door (the mechanics).",
+  "verbatim": "yani klavye ve mouse ile CEO'nun yapması gereken birşeyi CEO' size yap demişse önceden operator skill'ini kullanın örnek olarak da mesela önceden size /goal yapın demiştim ama bana söylediniz. HAYIR! benim söylediğim herşey mutlaka siz mühendislerim tarafından yapılmadı okadar. bunu crew tarafına da yazabilirsin. etkili olacak şekilde.",
+  "conditions": "His explicit word to write it on the crew side ('bunu crew tarafına da yazabilirsin. etkili olacak şekilde.'), which the 2026-08-13 prohibition requires before anything he says is written as a rule. The word 'yapılmadı' is his, as typed; the sense of the sentence is 'must be done'. NOT a LAW B acceptance: the written texts are the author's work until he looks. His earlier words the same hour ('... TECH İLE İLGİLİ HERŞEY MÜMKÜN ...') withdrew prompt-audit card H10.",
+  "session": "Opus 5.5 (xhigh), session 87b17da7-ddcd-4572-91f4-425f1f363cfb, heard first-hand.",
+  "where": ".claude/skills/dxb-crew/SKILL.md section 0 · ~/.claude/CLAUDE.md (Kadro section) · .claude/skills/dxb-operator/SKILL.md · .planning/STATE.md 2026-09-24 entry"
  }
 }

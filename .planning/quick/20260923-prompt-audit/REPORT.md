@@ -28,7 +28,7 @@ Nothing here is accepted until he looks (LAW B).
 
 - **Construction** (slice A, 28 rows):
   - 11 applied (bucket 1), plus one of the same pattern found by the refuter (B1-12);
-  - 12 go to him (bucket 2);
+  - 12 went to him (bucket 2); H10 was withdrawn by his words of 2026-09-24 00:47, 11 remain;
   - 2 overtaken by the night's refuter redesign;
   - 1 re-judged as keep-list;
   - 5 low flags.
@@ -74,6 +74,11 @@ Checked by `check-bucket1.py` (acceptance item 8). The diff is in `PROPOSED.diff
 Each goes to him in plain Turkish with the proposed rewrite. The hunks are in `PROPOSED.diff`
 section 2, where one exists; the others give their replacement text here.
 
+H10 (softening the global Tooling Mandate's "never answer I can't" and ranking a project's install
+rules above it) is withdrawn: his live words of 2026-09-24 00:47 (*"CEO OLARAK BU PROJEDE NE İSTERSEM
+YAPILACAK TECH İLE İLGİLİ HERŞEY MÜMKÜN ÇÖZÜMÜ SİZ ÜRETİP FERRARİ SEVİYESİNDEKİNİ SİZ YAPACAKSINIZ"*)
+reaffirm the mandate at full strength (LAW A). 20 rows remain.
+
 | id | Location | What is dated (pattern) | Proposed | Why it is his |
 |---|---|---|---|---|
 | H1 | `dxb-start/SKILL.md:96-98` | "Before ending any turn, answer in writing: measured? · complete? · recorded? · verified?" This is the self-check form he replaced on 2026-08-16 (1d, Opus 5 self-check) | remove; SO13's current line carries it on every prompt | restates SO13's old closing line (`no-laziness.sh:11-17`) |
@@ -85,17 +90,16 @@ section 2, where one exists; the others give their replacement text here.
 | H7 | `dxb-verify/SKILL.md:16-18` vs `dxb-operator/SKILL.md:25-27` | two opposite labels for what the author can look at with `operator` (1c) | only what cannot be observed is ⚠ UNVERIFIED; what was observed still waits for his eye | his operator quote; evidence law |
 | H8 | `dxb-close-row/SKILL.md:30-38` | capitals and the incident story around a rule the code enforces (1a + G2) | the rule, the order and the two enforcing files | his "1-KOY" order and quote |
 | H9 | `dxb-ceo-report/SKILL.md:12-16, 23-27` | capitals and history (C37; 2026-07-30) above the rule (1a + G2) | one sentence each; his quote of 07-30 goes | SO14; his quotes |
-| H10 | `~/.claude/CLAUDE.md:11-14` | "Tooling Mandate (highest priority)" and "never answer I can't" collide with the project's STACK.md install rule (1a + 1c) | the project's rules come first inside a project; "not possible" only after alternatives | his global instructions |
 | H11 | `no-laziness.sh`, `ceo-language.sh` (UserPromptSubmit) | two lines re-inserted on every prompt (1d, instruction re-insertion) | re-test on 5.5 with both at session start only; move only if drift does not reproduce. No hunk: a test comes first | his ruling `ceo-two-standing-orders-must-be-short-2026-09-14` |
-| H12 | `dxb-research/SKILL.md:3` | ~170-word description carrying behaviour in capitals (G3 behaviour-smuggling, G2 enumeration) | routing categories + one sentence of what the door is | carries his correction of 2026-09-20 (memory `research-is-my-own-plus-the-door-2026-09-20`) |
+| H12 | `dxb-research/SKILL.md:3` | 186-word description carrying behaviour in capitals (G3 behaviour-smuggling, G2 enumeration) | routing categories + one sentence of what the door is | carries his correction of 2026-09-20 (memory `research-is-my-own-plus-the-door-2026-09-20`) |
 | H13 | persona §12, 213 files (e.g. `finance/cfo.md:131-141`) | "Plan before execution" (1b), "Self-review before handoff" (Opus 5 self-check), "No lazy proposals" (1a), "Fable 5 and Solo 5.6 Ultra" (G2), "Inheritance…" (author text in a seat prompt, 1c) | the evidence, handoff and D4 substance kept; the rest out. Must move with ruler R9 canon `0195b993`, `packages/hr/src/fixtures.ts:65`, `EMPLOYEE_PERSONA_STANDARD.md` §4.1 | his rulings D4, D5, D6 and Talep §5.12 |
 | H14 | persona §8 "Format sabittir", 213 files (e.g. `cfo.md:104`) | fixed table format vs the later SO14 shape in the same prompt (1f) | conclusion first; the ✓/⚠/❌ labels kept | his directive `00-CEO-DIRECTIVE-AUDIT-2026-07-09.md` |
 | H15 | `personas/ceo/agents-orchestrator.md:165-170, 176-203` | SO13's construction laziness list inside Hamza (1a), plus IDs and gate text (G2, 1c) | replacement text in `slices/b-personas-1-107.md` rows 17-18 | his rulings 2026-07-27 |
 | H16 | `personas/data-ai/prompt-context-engineer.md:55,100` | "PERSONA YAZARLIĞI … Fable bizzat yazar", in capitals, naming a retired author (G2, 1a) | "…inşaat oturumunun yazarı bizzat yazar" | K2 (`00-CEO-DIRECTIVE-MUST-ROSTER.md:22`) |
 | H17 | studio seats: `design/design-image-prompt-engineer.md:64,77`; media-studio rows in `slices/c-…` row 9 | dated "the CEO rejected … on …" narratives; "later word governs" (G2, 1d) | the current rule stated alone | his B43 rulings |
-| H18 | `packages/voice/src/prompt-core.ts:111-119` vs four social-media seats and three sales/inbox seats (`slices/d3-personas.md` row 3). His own sources also disagree: `.claude/CLAUDE.md` §2 stops e-mail at the CEO; `00-CEO-DIRECTIVE-AUDIT-2026-07-09.md:85` lets routine mail run on its own | the standing approval line stops "an external message" at the CEO. The seats treat routine client reports as autonomous, which matches his directive (`00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md:46`) (1c) | text in `slices/d2-personas.md` row 3 | approval gate, CLAUDE.md §2 |
+| H18 | `packages/voice/src/prompt-core.ts:111-119` vs eight seats: four social-media seats in slice D2 and, in slice D3, two sales and two social seats (`slices/d3-personas.md` row 3). His own sources also disagree: `.claude/CLAUDE.md` §2 stops e-mail at the CEO; `00-CEO-DIRECTIVE-AUDIT-2026-07-09.md:85` lets routine mail run on its own | the standing approval line stops "an external message" at the CEO. The seats treat routine client reports as autonomous, which matches his directive (`00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md:46`) (1c) | text in `slices/d2-personas.md` row 3 | approval gate, CLAUDE.md §2 |
 | H19 | `prompt-core.ts:134-135` vs 3 seats | "every deliverable in English" vs client reports in the client's language (1c) | text in `slices/d2-personas.md` row 4 | language directive 2026-07-12 |
-| H20 | `prompt-core.ts:148-155` (honesty line, "never estimate") vs the seats whose job is a labelled estimate: ERM, corporate development, deal strategist, workflow optimizer and others (`slices/d1-personas.md` row 3, `slices/d3-personas.md` row 4) | the standing line is stricter than his RULE #0-A, which allows a hypothesis labelled as one (1c) | allow an estimate only where the role calls for one, labelled with its range and basis, never written as measured. Pinned by `tests/b21/agent-context.test.ts:132` | RULE #0-A |
+| H20 | `prompt-core.ts:148-155` (honesty line, "never estimate") vs the seats whose job is a labelled estimate: ERM, corporate development, deal strategist, workflow optimizer and others (`slices/d1-personas.md` row 3, `slices/d3-personas.md` row 4) | the standing line is stricter than his RULE #0-A, which allows a hypothesis labelled as one (1c) | allow an estimate only where the role calls for one, labelled with its range and basis, never written as measured; the current line's "never recall a figure from an earlier conversation" and "never answer a question you did not understand with a polite guess" are kept (slice D3 row 4 keeps them; slice D1 row 3's text dropped the second, refuter C-3 2026-09-24). Pinned by `tests/b21/agent-context.test.ts:132` | RULE #0-A |
 | H21 | `personas/social-media/social-commerce-creator-lead.md:55,70,74,79,99,102` | "MUST-B", "(F6)" and "rejected as vanity" archaeology in a seat prompt (G2) | text in `slices/d1-personas.md` row 7 | `00-CEO-DIRECTIVE-MUST-ROSTER.md:15,20` |
 
 ## Bucket 3 — runtime: report and diff only (applying waits for B51)

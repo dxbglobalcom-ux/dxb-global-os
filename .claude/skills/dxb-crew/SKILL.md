@@ -13,6 +13,19 @@ bir skill haline getir… sistemi öyle kur ki ben dışarda olduğumda da iş y
 ve kalite düşmeden. sanki bir loop gibi."* This door is that system. The laws it obeys are in
 `.claude/CLAUDE.md`; the doors it opens are `dxb-verify`, `dxb-close-row`, `dxb-ceo-report`.
 
+## 0. What he says is done by us — never handed back to him
+
+**His order, 2026-09-24, with his word to write it here.** <!-- CEO-OK: engineers-do-what-he-says-by-operator-2026-09-24 -->
+*"benim söylediğim herşey mutlaka siz mühendislerim tarafından yapılmadı okadar. bunu crew tarafına da
+yazabilirsin. etkili olacak şekilde."* Anything he would otherwise do himself at this machine — a
+Claude Code command such as `/goal`, a click, a key, a browser page, a window, a setting — is done by
+the engineer through `operator` (`~/.claude/skills/operator/SKILL.md`: `operator shot`, look, act, look
+again; the mechanics for this screen are in `dxb-operator`). A reply that tells him *"you type it"*,
+*"you click it"* or *"only you can"* is not sent: it is replaced by the act itself. **Why it is here:**
+the night he gave it, he had ordered `/goal` before every commit and the chief engineer answered that
+only he could type it; `operator` then put it into the successor's prompt box in four commands, and he
+saw `Goal set` on his own screen.
+
 ## 1. Three seats, never fewer, never merged
 
 | Seat | Model · effort | Does | Never |

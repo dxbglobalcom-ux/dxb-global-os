@@ -327,29 +327,8 @@ index b7e0b1c9..a47aa7ab 100644
  
  This door holds what a message must CONTAIN. The hook holds what it may never contain.
 
-# H10a — global CLAUDE.md: two sources both claim top priority over installing things
---- a/~/.claude/CLAUDE.md
-+++ b/~/.claude/CLAUDE.md
-@@ -9,5 +9,5 @@
- - Never re-read a whole repo when graph + planning docs + session memory already answer the question. Subagents inherit this rule — pass graph paths in their prompts instead of file lists where possible.
- 
--# Tooling Mandate (highest priority — applies to all projects)
-+# Tooling Mandate (all projects; inside a project its own install rules and approval gate come first — DXB: `.planning/research/STACK.md`)
- When the user asks for a capability, tool, skill, plugin, MCP server, or automation:
- 1. **Never answer with "I can't" / "not possible" / "not supported".** That response is not
-
-# H10b — global CLAUDE.md: "never answer I can't" (pressure form)
---- a/~/.claude/CLAUDE.md
-+++ b/~/.claude/CLAUDE.md
-@@ -11,6 +11,6 @@
- # Tooling Mandate (highest priority — applies to all projects)
- When the user asks for a capability, tool, skill, plugin, MCP server, or automation:
--1. **Never answer with "I can't" / "not possible" / "not supported".** That response is not
--   acceptable. If the obvious path is blocked, find another one.
-+1. **When the obvious path is blocked, find another.** Say "not possible" only after the
-+   alternatives were tried, and then deliver the closest working one (item 5).
- 2. **Research first, then install.** Actively search for the available skills, plugins, MCP
-    servers, CLIs, packages and system tools that deliver the requested capability. Compare the
+# H10 (a, b) — WITHDRAWN: his live words of 2026-09-24 00:47 reaffirm the Tooling Mandate at full
+# strength (LAW A); the hunks that softened it are deleted. See REPORT.md bucket 2.
 
 # H12 — dxb-research description: behaviour carried in the routing text (his 2026-09-20 correction)
 --- a/.claude/skills/dxb-research/SKILL.md
