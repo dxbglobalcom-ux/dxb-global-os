@@ -25,9 +25,6 @@ sonra videoyu o gözle işlemeli."*
 2. The report opens with **`WHY IT MATTERS TO THIS HOLDING`**: the measured DXB gaps this source is
    read against. A report that would fit any company has failed.
 
-*(A third item told the author how long to write. **Deleted on his live order, 2026-08-13** — he
-never asked for it to be a rule. How long a report should be is his call in the session he is in.)*
-
 ## Evidence labels — every substantive statement carries one
 
 | Label | Meaning |

@@ -166,10 +166,11 @@ python3 "$R/fetch.py" --batch urls.txt --outdir D
 ```
 
 video subtitles (`yt-dlp`) → PDF text (`pdftotext`) → scrapling → scrapling stealth →
-the platform's own reader (`opencli reddit|twitter|youtube|hackernews …`) → tavily-extract →
-firecrawl-scrape → exa-fetch → headless Playwright → `r.jina.ai` (a CACHED snapshot, labelled
-as one) → curl with a browser agent. **A page is unread only when every door has failed, and
-then the log names each door and what it answered.**
+the platform's own reader (`opencli reddit|twitter|youtube|hackernews …`) → his signed-in
+browser (`opencli browser`) → tavily-extract → firecrawl-scrape → exa-fetch → headless
+Playwright → `r.jina.ai` (a CACHED snapshot, labelled as one) → curl with a browser agent.
+**A page is unread only when every door has failed, and then the log names each door and what
+it answered.**
 
 **The universal key is his own browser, and it is ON — his ruling, 2026-09-17:** *"pencere
 açılımı sorun değil yani iş aksamasın önemli olan bu."* `opencli browser … open` drives a

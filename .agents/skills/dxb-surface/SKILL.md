@@ -74,6 +74,15 @@ Board row **B03-bis**.
   — comes before implementation. This is not bureaucracy: a working visual is the most precise
   specification a builder can be given.
 
+## Opus 5.5's default looks — a prompting aid, not his ruling
+
+Anthropic's Opus 5.5 migration guide ("Frontend design defaults"): left without direction, the
+model falls back on a few default looks. None of them is this holding's unless his approved design
+shows it — a cream or off-white page, italic accent words in headlines, numbered "01 / 02 / 03"
+section labels, pill-shaped buttons (the design system keeps full rounding for avatars and status
+dots, `DESIGN_SYSTEM.md:76`). When a draft falls back on another default, add it to this list,
+never to his rulings above.
+
 ## Cleaning up after a design pass
 
 Any demo mutation made to photograph a state is reverted through the same control function that

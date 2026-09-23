@@ -65,7 +65,7 @@ for each PHASE:
                          Mismatch → REJECT with file:line + scenario. Match → ACCEPT.
   5. DEPENDANTS AGAIN  — the same measurements as step 1; print what they printed.
   6. COMMIT            — one commit per phase; the tree is clean before the next phase.
-  7. TELL THE CEO      — 5–6 lines, `dxb-ceo-report` shape; the position first; never a question.
+  7. TELL THE CEO      — short, `dxb-ceo-report` shape; the position first; never a question.
   8. CONTEXT GATE      — §3. Hand over here if the rule says so; never mid-phase.
 RECORD  → STATE (LAW A: the contradicted sentence is deleted, not footnoted), the board row
           through `dxb-close-row`, EVIDENCE with a dated note, rulers green
@@ -136,8 +136,8 @@ described to him.
   and in the next report, and the loop moves to the next phase.
 - The approval gate is untouched: money out, contracts, e-mail, ad spend, identity steps stop.
   Deleting anything in the company engine stops too — first a list with sizes, then his click.
-- Every report he will read on return states the position in four lines (`CLAUDE.md` §0) and
-  then the phase result. *"Ne yapmamı istersiniz?"* is a failure.
+- Every report he will read on return opens with the position (`CLAUDE.md` §0 — a line with
+  nothing in it is dropped, not announced) and then the phase result. *"Ne yapmamı istersiniz?"* is a failure.
 
 ## 6. Traps already paid for
 

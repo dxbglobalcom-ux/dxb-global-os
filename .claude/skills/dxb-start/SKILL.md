@@ -52,14 +52,11 @@ it will be verified, and the risks. **This gate cannot be inferred away.**
 
 ## The working discipline
 
-> Standing order 11 (invoke the superpowers process skills) was **deleted on the CEO's word "sil",
-> 2026-08-10, LAW A** — the plugin is off (`~/.claude/settings.json`, measured).
-
 - Root cause before fix; an obstacle is the start of the work (standing order 12).
 - New code is proven by a test that failed before it existed.
 - Nothing is called done before `dxb-verify` maps every criterion to a command and its output.
 - Every repo line is the session author's, inline (`.claude/CLAUDE.md` §2). Subagents audit and
-  sweep; they never write. The two required subagent uses are in `dxb-verify`.
+  sweep; they never write. When a second pair of eyes is required: `dxb-verify` § The audit twin.
 
 ## Phase 3 — implementation
 
