@@ -1,6 +1,6 @@
 ---
 name: opus-5-construction-governance
-description: MANDATORY FIRST READ every session — THE GOAL (Opus 5 quality output at every stage) + construction owned by the session's authorized author (Opus 5 OR Fable 5, U30) + session bootstrap rule
+description: MANDATORY FIRST READ every session — THE GOAL (top-quality output at every stage) + construction owned by the model that runs the session (Opus 5.5 crew since 2026-09-23) + session bootstrap rule
 metadata: 
   node_type: memory
   type: feedback
@@ -10,12 +10,12 @@ metadata:
 
 # THE GOAL
 
-**OPUS 5 KALİTESİNDE OUTPUT — her aşamada, proje bitene kadar.**
+**EN ÜST KALİTEDE OUTPUT — her aşamada, proje bitene kadar.**
 Her yeni session'da İLK hatırlanacak amaç budur. Bütün model/ajan/iş kararları bu amaca hizmet eder; maliyet tasarrufu hiçbir zaman bu amacın önüne geçemez.
 
-# YAZARLIK GÜNCELLEMESİ — U30 (CEO emri 2026-07-26, "bu benim en son nihai kararım")
+# YAZARLIK GÜNCELLEMESİ — v13 (CEO emri 2026-09-23, "holdingi artık bu şekilde inşaa edeceğiz")
 
-**Fable 5 bu projede Opus 5 ile AYNI şekilde sorumlu ve yetkilidir.** Bu dosyada ve [[model-routing-hierarchy]] v11'de "Opus 5" diyen her ileriye dönük kural cümlesi **"oturumun yetkili yazarı (Opus 5 VEYA Fable 5)"** okunur — oturumu hangi model sürüyorsa yazar, kapı bekçisi ve commit onaylayıcı odur. Yedek zinciri değildir (tek oturum = tek yazar; sessiz model değişimi yok). THE GOAL değişmez: en üst kalite tavanı her aşamada.
+**İnşaat kadrosu Opus 5.5'tir** (baş mühendis xhigh, yazar max; tablo [[model-routing-hierarchy]] v13). Bu dosyada "Opus 5" diyen her ileriye dönük kural cümlesi **"oturumu süren model"** okunur — oturumu hangi model sürüyorsa yazar, kapı bekçisi ve commit onaylayıcı odur. Yedek zinciri değildir (tek oturum = tek yazar; sessiz model değişimi yok). THE GOAL değişmez: en üst kalite tavanı her aşamada.
 
 # Opus 5 Construction Governance (CEO emri 2026-07-06, yazar devri 2026-07-25, ortak yazarlık 2026-07-26 — pazarlıksız)
 
@@ -58,3 +58,5 @@ Bootstrap yapılmadıysa session proje işine devam edemez.
 # TARİHSEL KAYIT (değiştirilmez)
 
 Bu yönetişim çerçevesi 2026-07-06'da **Fable 5** için yazıldı ve inşaatın 2026-07-06 → 2026-07-25 arası TÜM yazarlığı (31-spec korpusu, 196 persona, E1-E13 uygulaması) fiilen Fable 5 tarafından yapıldı. CEO 2026-07-25'te yazarlığı Opus 5'e devretti; ileriye dönük tüm kural cümleleri Opus 5'i işaret eder, geçmiş kayıtlar (persona `Created by`, uygulanmış migration'lar, kanıt notları) olduğu gibi korunur. Dosyanın eski adı: `fable-5-construction-governance.md`.
+
+**U36 eki (CEO 2026-07-26):** yazarlık inline kalır, ama artık yazar kendi iddiasını tek başına onaylamaz — düşman denetimi + salt-okur taramalar için subagent ZORUNLU hâle geldi. Kural: [[audit-twin-rule]], kanonik metin `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.

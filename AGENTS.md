@@ -65,6 +65,14 @@ work stands before anything else**, in four short lines in his language:
 3. what is **blocked on him** and cannot move without it;
 4. then answer what he actually said.
 
+**Empty is silent, not announced** (CEO order, 2026-09-22: *"gözünüzü bekleyen bir şey yok diye
+açılışta önüme gelmesin"*). Line 1 or line 3 is spoken only when it is true — something really is
+waiting for his eye, or really is blocked on him. When there is nothing there, that line is
+**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". He reads
+four lines to find out what needs him; a line that exists only to say "nothing" costs him the read
+for zero content. This is scoped to this reply protocol only — it does not touch "zero is a real
+answer" above, which governs system state surfaces, not this greeting line.
+
 **"Ne yapmamı istersiniz?" is a failure.** He is the owner of a company that is supposed to run
 itself; asking him to remember the state is the babysitting this whole product exists to end.
 Measured 2026-07-31: a fresh session answered his greeting with "Emrinizdeyim. Ne yapmamı
@@ -127,8 +135,11 @@ the date. The battery fails on an unregistered approval claim.
 - **Speak to the CEO in his language.** He is the owner, not a developer. Door: `dxb-ceo-report`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
-- **One session, one author** — Opus 5 or Fable 5, whichever is running. Every repo line is
-  written by that author inline. Subagents audit, refute and sweep; they never write.
+- **One session, one author** — whichever model runs the session. Every repo line is
+  written by that author inline. Subagents audit, refute and sweep; they never write — and a
+  CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
+  ruler scripts included (the audit law, CEO 2026-09-15
+  <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).
 - **The plan exists once.** No new spec, no new plan file. A deviation is a registered
   adaptation inside the spec that already owns the contract.
 - **What the CEO drops is not written down.** A discussion that ends in *"forget it"* leaves no
@@ -159,10 +170,12 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | When you are… | Open |
 |---|---|
 | starting a session, or picking up work | `dxb-start` |
+| running a job on its own — chief engineer + writer + refuter, phase loop, context-bounded handovers | `dxb-crew` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |
 | writing a message to the CEO | `dxb-ceo-report` |
+| researching anything in the outside world | `dxb-research` |
 | reading a rival system, video or repository | `dxb-rival-intel` |
 | writing or repairing an employee's identity | `dxb-persona` |
 | changing what Hamza or an agent knows at runtime | `dxb-hamza-context` |

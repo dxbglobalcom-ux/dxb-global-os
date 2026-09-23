@@ -11,7 +11,7 @@ the ruler seven times and was right seven times, and every phase was re-measured
 engineer's own hands before it counted. The CEO's order on seeing it: *"Bu çalışma sistemini
 bir skill haline getir… sistemi öyle kur ki ben dışarda olduğumda da iş yürüsün context şişmeden
 ve kalite düşmeden. sanki bir loop gibi."* This door is that system. The laws it obeys are in
-`.claude/CLAUDE.md`; the doors it opens are `dxb-verify`, `dxb-close-row`, `dxb-ceo-report`.
+`AGENTS.md`; the doors it opens are `dxb-verify`, `dxb-close-row`, `dxb-ceo-report`.
 
 ## 1. Three seats, never fewer, never merged
 
@@ -74,7 +74,7 @@ iş çok uzun ve session %45'i geçicek, o zaman yeni devir yapsın."* A writer 
 forbids.
 
 - **Read the bar, in this order:** `dxb-ctx --pct` (the status bar's own number, written by
-  `~/.claude/hooks/dxb-statusline.js` for this session), and when it refuses (no record, or
+  `~/.codex/hooks/dxb-statusline.js` for this session), and when it refuses (no record, or
   older than 10 min) `operator shot` and READ the percentage beside the model name at the
   bottom of the terminal. Every report to the other seat opens with `CONTEXT: N% (tokens)`.
 - **When:** after every phase (step 8) and before starting one.

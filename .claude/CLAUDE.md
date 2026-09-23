@@ -131,7 +131,7 @@ the date. The battery fails on an unregistered approval claim.
 - **Speak to the CEO in his language.** He is the owner, not a developer. Door: `dxb-ceo-report`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
-- **One session, one author** — Opus 5 or Fable 5, whichever is running. Every repo line is
+- **One session, one author** — whichever model runs the session. Every repo line is
   written by that author inline. Subagents audit, refute and sweep; they never write — and a
   CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
   ruler scripts included (the audit law, CEO 2026-09-15

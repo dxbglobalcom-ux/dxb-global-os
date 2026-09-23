@@ -1,0 +1,98 @@
+# What the HARD gate requires, per question class, and what a run may spend.
+#
+# required_types: one entry per REQUIRED evidence type. "a|b" means either satisfies it.
+#   This is the tool-forcing table: the only way to obtain a `first-hand` row is to
+#   open a platform channel and read a human being's words. The tool becomes
+#   unavoidable because the EVIDENCE it produces is required.
+#
+# saturation_k / saturation_x: over the last K queries, fewer than X NEW independent
+#   clusters and no new contradiction = saturated. Never "I found 10 sources".
+#
+# max_usd is 0 everywhere. Crossing it needs the CEO's word, not a fallback.
+#
+# THE CLOCK. soft_seconds is where the run stops EXPANDING and starts CONVERGING:
+#   past it the gate no longer demands work that adds scope (a fresh contradiction
+#   search for a claim written after the first one). What
+#   it demands instead is honesty — label the untested claim UNPROVEN and name it in
+#   GAPS.md, or withdraw it. max_seconds is the hard stop: from there the only exit
+#   is a written GAPS.md. Integrity checks (a fabricated citation, a quote whose hash
+#   does not recompute, a dead URL, a vendor-only claim)
+#   are NEVER waived by the clock — running out of time is not a licence to lie.
+#
+#   Measured 2026-09-16 on run 20260916-171413: the expedition thresholds below were
+#   all satisfied at minute 12 ("HARD checks: all pass"), and then the run died at
+#   minute 25 with no answer, because every repair created new load-bearing claims
+#   and each new claim re-armed the checks behind it. The demand grew as fast as it
+#   was met. The clock is what makes it converge.
+#
+#   DXB_RESEARCH_SOFT_SECONDS / DXB_RESEARCH_MAX_SECONDS override both, per run.
+
+defaults:
+  min_clusters: 5
+  min_evidence_rows: 6
+  min_first_hand: 0
+  requires_denominator: false
+  max_channel_share: 0.5
+  saturation_k: 8
+  saturation_x: 2
+  max_queries: 60
+  soft_seconds: 600
+  max_seconds: 1080
+  max_blocks: 6
+  max_usd: 0
+
+classes:
+
+  counting:
+    # "millet hangisini tercih ediyor" — the answer is a distribution, not a verdict
+    min_clusters: 8
+    min_evidence_rows: 10
+    min_first_hand: 3
+    requires_denominator: true
+    required_types: [first-hand, first-hand, independent-test|secondary]
+    saturation_k: 10
+
+  decision:
+    # "silelim mi", "bunu mu alalım" — evidence first, then one line of recommendation
+    min_clusters: 8
+    min_evidence_rows: 10
+    min_first_hand: 2
+    required_types: [first-hand, independent-test|primary-doc|code, secondary|primary-doc]
+    saturation_k: 10
+
+  capability:
+    # "bunu gerçekten yapabiliyor mu" — a marketing claim is not an answer
+    min_clusters: 5
+    min_evidence_rows: 6
+    required_types: [primary-doc|code, independent-test|first-hand]
+
+  factual:
+    min_clusters: 3
+    min_evidence_rows: 3
+    required_types: [primary-doc|code]
+
+  academic:
+    min_clusters: 5
+    min_evidence_rows: 6
+    required_types: [primary-doc, primary-doc]
+
+  market:
+    min_clusters: 6
+    min_evidence_rows: 8
+    requires_denominator: true
+    required_types: [independent-test|primary-doc, secondary]
+
+  current:
+    min_clusters: 4
+    min_evidence_rows: 4
+    required_types: [primary-doc, secondary]
+
+  troubleshooting:
+    min_clusters: 4
+    min_evidence_rows: 4
+    required_types: [code|primary-doc, first-hand]
+
+  due-diligence:
+    min_clusters: 5
+    min_evidence_rows: 6
+    required_types: [primary-doc, code|independent-test]

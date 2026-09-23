@@ -340,3 +340,18 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
    `## 11. Fable 5 hook binding` and the historical `Created by: fable-5`
    line. This is deliberate (rows 3 + 4) and CEO-approved; the dashboard never  <!-- CEO-OK: identifier-preservation-2026-07-25 -->
    renders that heading verbatim.
+
+## Registered adaptation A-2026-09-23 (CEO order — the construction crew moves to Opus 5.5) <!-- CEO-OK: crew-opus-5-5-seats-2026-09-23 -->
+
+CONSTRUCTION tree only (§ the construction/runtime split above); no runtime routing row moves.
+His words: *"holdingi artık bu şekilde inşaa edeceğiz"*, after reading Anthropic's official Opus 5.5
+charts (2026-09-22 release) with his own eye.
+
+1. **Seats.** Chief engineer = the session he opens, `claude-opus-5-5` · `xhigh` · writer = a
+   separate session, `claude-opus-5-5` · `max` · refuter and debugger subagents
+   `claude-opus-5-5` · `xhigh` · design second eye `design-eye`, `claude-fable-5-1` · `high`,
+   read-only, no `Agent` tool. The canonical table is `.claude/skills/dxb-crew/SKILL.md` §1.
+2. **Author.** Construction authorship belongs to the model that runs the session; A-2026-07-25's
+   "Opus 5" names the author of that period and stays as history.
+3. **Pinned ids.** Model ids are pinned, never an alias; a stronger model takes a seat only when it
+   is measured and he says so.

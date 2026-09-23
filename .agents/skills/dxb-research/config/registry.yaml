@@ -1,0 +1,238 @@
+# The capability registry. `agent-reach doctor` supplies the MAP; the live probe
+# supplies the TRUTH. Measured 2026-09-16: doctor reports reddit and twitter as
+# `warn` while both returned real results in 17-19 s. A static registry is not health.
+#
+# cost is $0 on every line in this file. A channel with a price does not belong here.
+
+channels:
+
+  # ---- discovery: five keyless doors, all measured HTTP 200 on 2026-09-16
+  exa:
+    tags: [search, neural, dates]
+    probe: "mcporter call 'exa.web_search_exa(query: \"site reliability\", numResults: 2)'"
+    fallback: [parallel, tavily, google, duckduckgo]
+  parallel:
+    tags: [search, benchmark-leader]
+    probe: "curl -sS -m 15 -X POST https://search.parallel.ai/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'"
+    fallback: [exa, tavily, google]
+  tavily:
+    tags: [search, extract, crawl]
+    probe: "curl -sS -m 15 -X POST https://mcp.tavily.com/mcp/ -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -H 'X-Tavily-Access-Mode: keyless' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'"
+    fallback: [exa, parallel]
+  firecrawl:
+    tags: [search, scrape, parse]
+    probe: "curl -sS -m 15 -X POST https://mcp.firecrawl.dev/v2/mcp -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'"
+    fallback: [tavily, youcom, exa]
+  youcom:
+    tags: [search, discover]
+    probe: "curl -sS -m 15 -X POST 'https://api.you.com/mcp?profile=free' -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'"
+    fallback: [exa, parallel]
+  google:
+    tags: [search, serp]
+    probe: opencli google search "site reliability" -f yaml
+    fallback: [duckduckgo, exa, parallel]
+  websearch:
+    tags: [search, builtin]
+    probe: builtin
+    note: the WebSearch tool. Free, always on, and called ZERO times in the run that failed.
+    fallback: [exa, google]
+
+  # ---- human voices
+  reddit:
+    tags: [first-hand, forum]
+    probe: opencli reddit search "site reliability" -f yaml
+    fallback: [google, hackernews]
+  twitter:
+    tags: [first-hand, fresh]
+    probe: opencli twitter search "site reliability" -f yaml
+    fallback: [bluesky, google]
+  hackernews:
+    tags: [first-hand, forum]
+    probe: opencli hackernews search "site reliability" -f yaml
+    note: this adapter REJECTS --window. It failed silently in every sweep before 2026-09-16.
+    fallback: [google]
+  bluesky:
+    tags: [first-hand, fresh]
+    probe: opencli bluesky search "site reliability" -f yaml
+    fallback: [twitter]
+  stackoverflow:
+    tags: [first-hand, troubleshooting]
+    probe: opencli stackoverflow search "site reliability" -f yaml
+    fallback: [google]
+  linkedin:
+    tags: [first-hand, market]
+    probe: opencli linkedin search "site reliability" -f yaml
+    fallback: [google]
+  youtube:
+    tags: [first-hand, video, transcript]
+    probe: opencli youtube search "site reliability" -f yaml
+    fallback: [bilibili]
+
+  # ---- Chinese-language channels: needed whenever the subject has a CN community
+  zhihu:
+    tags: [first-hand, cn]
+    probe: opencli zhihu search "可靠性" -f yaml
+    note: AUTH_REQUIRED on 2026-09-16 — needs a Chrome login the CEO owns.
+    fallback: [linux-do, weibo]
+  linux-do:
+    tags: [first-hand, cn]
+    probe: opencli linux-do search "claude" -f yaml
+    fallback: [zhihu]
+  weibo:
+    tags: [first-hand, cn]
+    probe: opencli weibo search "可靠性" -f yaml
+    fallback: [zhihu]
+  bilibili:
+    tags: [first-hand, cn, video]
+    probe: bili search "claude" --type video -n 3
+    fallback: [youtube]
+
+  # ---- code and registries
+  github:
+    tags: [code, primary-doc, health]
+    probe: gh api rate_limit --jq .rate.remaining
+    note: authenticated 5000/hr. Health is the DEFAULT BRANCH's last commit, never pushed_at.
+    fallback: []
+
+  # ---- scholarship, keyless
+  crossref:
+    tags: [primary-doc, academic]
+    probe: curl -sS -m 15 "https://api.crossref.org/works?rows=1&query=retrieval"
+    fallback: [openalex, arxiv]
+  europepmc:
+    tags: [primary-doc, academic, fulltext]
+    probe: curl -sS -m 15 "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=retrieval&format=json&pageSize=1"
+    fallback: [crossref]
+  arxiv:
+    tags: [primary-doc, academic]
+    probe: curl -sS -m 15 "https://export.arxiv.org/api/query?search_query=all:retrieval&max_results=1"
+    note: https ONLY. Plain http returns 301 and a sweep built on it reads nothing.
+    fallback: [crossref]
+  openalex:
+    tags: [primary-doc, academic]
+    probe: curl -sS -m 15 "https://api.openalex.org/works?per-page=1"
+    note: metered since 2026-02 — keyless budget is $0.10/day. The free path is the CC0 bulk snapshot.
+    fallback: [crossref, europepmc]
+
+  # ---- reading
+  scrapling:
+    tags: [fetch, body, stealth]
+    probe: mcp
+    fallback: [playwright, firecrawl, jina]
+  playwright:
+    tags: [fetch, js]
+    probe: mcp
+    note: headless and isolated. NEVER headed — the screen belongs to him.
+    fallback: [scrapling, firecrawl]
+  jina:
+    tags: [fetch, pdf]
+    probe: curl -sS -m 15 "https://r.jina.ai/https://example.com"
+    note: the keyless reader returns a CACHED snapshot, not a live read. Label it.
+    fallback: [scrapling]
+
+# Channels deliberately NOT in the roster, and why. Written down so the next
+# session does not re-propose them.
+
+  # ---- the thirteen channels that were swept but never REGISTERED, added 2026-09-16
+  # after the CEO asked the obvious question: "Quora failed — why did nothing else try?"
+  # Nothing else tried because a channel with no entry here has no declared stand-in, and
+  # the fallback chain fires only from this file. Worse, SEVEN of them are DuckDuckGo
+  # site-searches underneath (lobsters · devto · producthunt · v2ex · quora-forums · juejin),
+  # so when DuckDuckGo refuses a navigation they all fall at once and none of them is an
+  # independent voice. Every stand-in below is therefore a DIFFERENT engine or a different
+  # community — never another DuckDuckGo query wearing a different name.
+  github-repos:
+    tags: [code, forge]
+    probe: gh search repos "site reliability" --limit 3 --json fullName
+    fallback: [github-trending, exa, google]
+  github-issues:
+    tags: [code, first-hand, troubleshooting]
+    probe: gh search issues "site reliability" --limit 3 --json title
+    fallback: [github-repos, exa, google]
+  github-trending:
+    tags: [code, fresh]
+    probe: opencli github-trending repos -f yaml
+    fallback: [github-repos, exa]
+  duckduckgo:
+    tags: [search, serp]
+    probe: opencli duckduckgo search "site reliability" -f yaml
+    fallback: [google, exa, parallel]
+  lobsters:
+    tags: [first-hand, forum]
+    probe: opencli duckduckgo search "site:lobste.rs site reliability" -f yaml
+    fallback: [hackernews, exa, google]
+  medium:
+    tags: [secondary, writing]
+    probe: opencli medium search "site reliability" -f yaml
+    fallback: [substack, exa, google]
+  devto:
+    tags: [secondary, writing]
+    probe: opencli duckduckgo search "site:dev.to site reliability" -f yaml
+    fallback: [medium, exa, hackernews]
+  producthunt:
+    tags: [market, launch]
+    probe: opencli duckduckgo search "site:producthunt.com site reliability" -f yaml
+    fallback: [exa, google, parallel]
+  substack:
+    tags: [secondary, writing]
+    probe: opencli substack search "site reliability" -f yaml
+    fallback: [medium, exa, google]
+  v2ex:
+    tags: [first-hand, cn, forum]
+    probe: opencli duckduckgo search "site:v2ex.com site reliability" -f yaml
+    fallback: [linux-do, zhihu, exa]
+  quora:
+    # The door that WORKS, measured 2026-09-17: the site-scoped engine finds the question
+    # pages and the reading chain takes what is inside them. Quora's own search box, driven
+    # by the logged-in browser, answers with its error page.
+    tags: [first-hand, forum]
+    probe: opencli google search "site:quora.com site reliability" -f yaml
+    fallback: [duckduckgo, exa, reddit]
+  quora-forums:
+    tags: [first-hand, forum]
+    probe: opencli duckduckgo search "site:quora.com site reliability" -f yaml
+    # `quora` first: it is the only stand-in that brings QUORA's own text back. The others
+    # cover the question, never the site.
+    fallback: [quora, stackoverflow, reddit, exa]
+  google-deep:
+    # It had NO stand-in at all until the 2026-09-17 audit, and it is one of the two doors
+    # onto Google. If the browser bridge dies, the CLI door and the keyless engines carry it.
+    tags: [search, serp]
+    probe: opencli google search "site reliability" -f yaml
+    fallback: [google, exa, parallel]
+  duckduckgo2:
+    # The second page of DuckDuckGo had no stand-in either; a different engine covers it.
+    tags: [search, serp]
+    probe: opencli duckduckgo search "site reliability" -f yaml
+    fallback: [exa, parallel, google]
+  facebook:
+    tags: [first-hand, login]
+    probe: opencli facebook whoami
+    note: >-
+      Read through the browser bridge that carries his login, NOT through `facebook search`.
+      Measured 2026-09-21: whoami logged_in true, `search` = "Navigation rejected",
+      `feed` = "no feed rows could be extracted", bridge on /search/posts = 36 583 chars.
+    fallback: [twitter, bluesky, google]
+  instagram:
+    tags: [first-hand, login]
+    probe: opencli instagram whoami
+    note: >-
+      Bridge only, same reason. Measured 2026-09-21: whoami logged_in true,
+      `search` = "Pre-navigation ... Navigation rejected", bridge on /explore/search =
+      1 309 chars. THIN BY CONSTRUCTION - the page is images and the text is their alt.
+    fallback: [rednote, twitter, google]
+  rednote:
+    tags: [first-hand, cn]
+    probe: opencli rednote search "可靠性" -f yaml
+    fallback: [weibo, zhihu]
+  juejin:
+    tags: [first-hand, cn]
+    probe: opencli duckduckgo search "site:juejin.cn 可靠性" -f yaml
+    fallback: [zhihu, linux-do, exa]
+
+excluded:
+  searxng: not installed; its Google leg returns 0 results (its own issue #5867). Sovereignty hedge only.
+  crawl4ai: 16 published advisories, 4 CRITICAL, all 2026. Scrapling is installed and does the job.
+  firecrawl-selfhost: AGPL server, and fire-engine (the anti-bot part) has been proprietary for two years.
+  perplexity: $5/1000, no free tier, and it buys precision we already have.
+  brave: card required, and `opencli brave` fails here with "Navigation rejected".

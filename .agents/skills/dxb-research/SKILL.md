@@ -5,13 +5,13 @@ hooks:
   Stop:
     - hooks:
         - type: command
-          command: python3 "$CLAUDE_PROJECT_DIR/.claude/skills/dxb-research/hooks/research-completion.py"
+          command: python3 "$CLAUDE_PROJECT_DIR/.agents/skills/dxb-research/hooks/research-completion.py"
           timeout: 30
   PostToolUse:
     - matcher: "WebSearch|WebFetch|Bash|mcp__.*"
       hooks:
         - type: command
-          command: python3 "$CLAUDE_PROJECT_DIR/.claude/skills/dxb-research/hooks/ledger-capture.py"
+          command: python3 "$CLAUDE_PROJECT_DIR/.agents/skills/dxb-research/hooks/ledger-capture.py"
           timeout: 20
 ---
 
@@ -70,7 +70,7 @@ machine, measure it here; if part of it is a choice, give your recommendation wi
 beside it.
 
 ```bash
-F='/home/dxb/DxB Global OS/.claude/skills/dxb-research/fleet'
+F='/home/dxb/DxB Global OS/.agents/skills/dxb-research/fleet'
 printf '%s\n' "<his own words>" > /tmp/dert.txt        # context for the hunters — NEVER searched
 bash "$F/fleet.sh" <outdir> --q "Astra 6 vs Fable 5.1 professionals" --q "Claude Max 20x limit" --dert /tmp/dert.txt
 ```
@@ -78,8 +78,8 @@ bash "$F/fleet.sh" <outdir> --q "Astra 6 vs Fable 5.1 professionals" --q "Claude
 ## 1. The fleet — the default way to answer
 
 ```bash
-F='/home/dxb/DxB Global OS/.claude/skills/dxb-research/fleet'
-R='/home/dxb/DxB Global OS/.claude/skills/dxb-research/scripts'
+F='/home/dxb/DxB Global OS/.agents/skills/dxb-research/fleet'
+R='/home/dxb/DxB Global OS/.agents/skills/dxb-research/scripts'
 # the queries are typed by you — a few words each; --dert is context for the hunters, never searched.
 bash "$F/fleet.sh" <outdir> --q "Astra 6 vs Fable 5.1 professionals" --dert /tmp/dert.txt
 bash "$F/fleet.sh" <outdir> --q "Claude Max 20x limit" --roles crowd,rival   # override, for a repair run
@@ -115,7 +115,7 @@ SCRIPT: free, instant, and it never invents.
 ## 2. The ground, opened in one command
 
 ```bash
-R='/home/dxb/DxB Global OS/.claude/skills/dxb-research/scripts'
+R='/home/dxb/DxB Global OS/.agents/skills/dxb-research/scripts'
 bash "$R/sweep.sh" "<query>" <outdir> --tier max            # 39 channels, parallel
 bash "$R/probe.sh"                                          # who is actually alive, right now
 ```

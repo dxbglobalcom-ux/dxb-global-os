@@ -12,9 +12,25 @@
 # 2026-08-10: the character cut below ended the position mid-word ("a diagnos"), a session went and
 # re-read the corpus, and he caught it: "ne diye tekrar tekrar okuyorsun". Cuts are on line
 # boundaries now, and what is left behind is counted out loud.
+#
+# Measured 2026-09-19: the line cut was no cut at all. STATE.md's lines are paragraphs of 1–3 KB, so
+# "20 lines" of the live order came to 29,515 bytes and the whole block to 51,738 — the harness
+# refuses hook output of that size and hands the session a 2 KB preview and a file path, and the
+# session opens the file by hand, which is the laziness of 2026-08-10 caused by this hook itself.
+# The cut is by BYTES now, at a sentence boundary, inside a budget the harness delivers whole
+# (tests/hooks/session-start-fits.test.ts holds the budget and proves it). HIS LAST ORDER keeps
+# the newest block and counts the older ones out loud; they are history and belong to
+# STATE-ARCHIVE.md.
+#
+# 2026-09-19, row B47, his order "savaşçı ajan geldiği zaman ne nerede, hangi alet nerede hemen
+# hepsini bilmesi lazım": a fourth block, THE CUPBOARD, delivers .claude/CUPBOARD.md — one page
+# naming every drawer (doors, plugins, MCP servers, the fleet, the operator) and how it opens. The
+# three budgets above it shrank to make room inside the same 8,000 bytes (3300/2700/1100 →
+# 2500/2200/1000 + 1500, the last equal to ruler R5 so a page the ruler passes arrives whole), measured; tests/hooks/opening-budget.ts R5 keeps the page one page.
 set -euo pipefail
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+ROOT="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 STATE="$ROOT/.planning/STATE.md"
+CUPBOARD="$ROOT/.claude/CUPBOARD.md"   # B47 (2026-09-19): the warrior knows the cupboard at the opening
 
 # One reader for the state photograph's sections, so a heading change breaks in one place.
 section() {
@@ -25,20 +41,36 @@ section() {
   ' "$STATE" 2>/dev/null | sed '/^$/d' | iconv -f UTF-8 -t UTF-8 -c 2>/dev/null || true
 }
 
-# Cut to a line boundary and say what was left behind. A session handed half a sentence goes
-# looking for the other half; a session told "+N lines, and where they are" does not.
+# Cut to a BYTE budget at a sentence boundary, and say what was left behind. A session handed half
+# a sentence goes looking for the other half; a session told "+N more paragraphs, and where they
+# are" does not. The boundary is the last ". " or " · " inside the budget; the paragraphs that did
+# not fit at all are counted.
 clip() {
-  local text="$1" limit="$2" total rest
+  local text="$1" budget="$2" total kept head rest
   total=$(printf '%s\n' "$text" | wc -l)
-  printf '%s\n' "$text" | head -n "$limit"
-  rest=$(( total - limit ))
-  [ "$rest" -gt 0 ] && printf '(+%d more lines — the rest of this section is in .planning/STATE.md)\n' "$rest"
+  if [ "$(printf '%s' "$text" | wc -c)" -le "$budget" ]; then
+    printf '%s\n' "$text"
+    return 0
+  fi
+  head=$(printf '%s' "$text" | head -c "$budget")
+  # back off to the last sentence boundary inside the budget (". " or " · "); keep the period
+  if [[ "$head" == *". "* || "$head" == *" · "* ]]; then
+    local a="${head%. *}" b="${head% · *}"
+    if [ "${#a}" -ge "${#b}" ]; then head="$a."; else head="$b."; fi
+  fi
+  kept=$(printf '%s\n' "$head" | wc -l)
+  printf '%s\n' "$head"
+  rest=$(( total - kept ))
+  [ "$rest" -lt 0 ] && rest=0
+  # a cut ALWAYS says so, even when it fell inside the first paragraph (rest = 0)
+  printf '(+%d more lines, and the cut paragraph continues — the rest of this section is in .planning/STATE.md)\n' "$rest"
   return 0
 }
 
-position=$(section '^## The CEO.s live order')     # his live order — outranks everything written
-next=$(section '^## Next')                          # the work in hand, with its reason
-waiting=$(section '^## What is open')               # what cannot move without him — core §0 line 3
+position=$(section '^## The CEO.s live order')   # his live order, newest block first — the budget below keeps the newest and counts the rest
+next=$(section '^## Next')                                    # the work in hand, with its reason
+waiting=$(section '^## What is open')                         # what cannot move without him — core §0 line 3
+cupboard=$(cat "$CUPBOARD" 2>/dev/null || true)               # one page: what exists, where, how it opens (ruler R5 keeps it one page)
 
 cat <<EOF
 === DXB — WHERE THE WORK STANDS ===
@@ -51,12 +83,15 @@ Never ask him what to do. Everything below was read from .planning/STATE.md just
 answer him FROM IT. Re-opening a file to be told this again is the laziness he named.
 
 --- HIS LAST ORDER ---
-$(clip "${position:-"(.planning/STATE.md could not be read — read it yourself before any work)"}" 20)
+$(clip "${position:-"(.planning/STATE.md could not be read — read it yourself before any work)"}" 2500)
 
 --- WHAT HAPPENS NEXT ---
-$(clip "${next:-"(no Next block found — read .planning/STATE.md before answering him)"}" 45)
+$(clip "${next:-"(no Next block found — read .planning/STATE.md before answering him)"}" 2200)
 
 --- WHAT WAITS ON HIM ---
-$(clip "${waiting:-"(no open-work block found — read HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md)"}" 15)
+$(clip "${waiting:-"(no open-work block found — read HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md)"}" 1000)
+
+--- THE CUPBOARD ---
+$(clip "${cupboard:-"(.claude/CUPBOARD.md is missing — the drawers are listed in AGENTS.md §4)"}" 1500)
 === END ===
 EOF

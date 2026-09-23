@@ -39,7 +39,7 @@ to the one who builds them.**
 
 | | Allowed | Forbidden |
 |---|---|---|
-| **Authorship** | The session's authorized author (Opus 5 / Fable 5, U30) writes every repo line **inline** | A subagent writing, editing, or generating any repo content — code, migration, spec, test, commit message. K1 is untouched. |
+| **Authorship** | The session's authorized author (the model that runs the session) writes every repo line **inline** | A subagent writing, editing, or generating any repo content — code, migration, spec, test, commit message. K1 is untouched. |
 | **Audit** | An independent agent given a *claim* and its *evidence pointers*, whose only job is to **refute** | An agent asked "does this look good?", or asked to approve, sign off, or close a row |
 | **Breadth** | Read-only sweeps that return a table ("which routes are still single-language", "which tables have no RLS") | Any sweep that edits, seeds, migrates, restarts, or otherwise mutates |
 | **Verdict** | The session author owns every verdict and every ✓ | A subagent's finding is EVIDENCE, never a verdict. No row closes on a subagent's word. |

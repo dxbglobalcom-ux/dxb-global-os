@@ -10,8 +10,8 @@ unclaimed asset in this holding.
 
 ## Authorship
 
-Every persona is written **personally and inline by the session's authorized author** — Opus 5 or
-Fable 5, whichever is running. A subagent may not write one, even a subagent running the same
+Every persona is written **personally and inline by the session's authorized author** — whichever
+model runs the session. A subagent may not write one, even a subagent running the same
 model. The HR factory does not author a first-generation persona.
 
 The database enforces it: `personas_author_check` accepts `opus-5 | fable-5 | hr-factory` only,
