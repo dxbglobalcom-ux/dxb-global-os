@@ -1282,5 +1282,12 @@
   "verbatim": "H2: önerni kabul edilrom. deneyelim",
   "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
   "where": "board row B53 · .planning/quick/20260924-caveman-on-5-5/arm-Q.txt"
+ },
+ "h16-persona-author-is-the-chief-engineer-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "Prompt-audit card H16 (board row B53), employee side: the prompt and context engineer's identity (personas/data-ai/prompt-context-engineer.md:55) says 'PERSONA YAZARLIĞI BU ROLDE YOKTUR — K2 hükmü gereği tüm personaları Fable bizzat yazar', naming a model that no longer holds the pen. The card proposed 'the construction session's author writes them in person'; he asked whether that meant the orchestrator (the chief engineer, Opus 5.5 xhigh) and not the builder, was told yes, and accepted a sharpened wording: 'Persona yazarlığı bu rolde yoktur: K2 hükmü gereği personaları inşaat oturumunu yöneten başmühendis bizzat yazar.' The rule itself is unchanged (dxb-persona § Authorship: the session's authorized author, never a subagent). Applied with B51. Not a law.",
+  "verbatim": "netleştirilmiş cümleyle evet.",
+  "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
+  "where": "board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H16 · applied with B51 to personas/data-ai/prompt-context-engineer.md"
  }
 }
