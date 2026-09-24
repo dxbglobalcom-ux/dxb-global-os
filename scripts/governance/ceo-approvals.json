@@ -1261,5 +1261,12 @@
   "verbatim": "ben bunu genel yapılan iş için diyorum mesela holdingin bir dashboard'ının crm kısmı yapılıor görev bu, bunun için söyledim ve aslında beklentimiz claude md de yazılan Kalitede Ölçü: Ferrari seviyesinde, ve dünya çapında yapılacak yarışmada birinciliğe aday olacak bir kalitede. Yani her ufak iş içinde değil.",
   "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
   "where": ".claude/skills/dxb-verify/SKILL.md § The perfection gate · HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-PERFECTION-GATE.md § Enforcement · memory perfection-gate-rule0b.md and MEMORY.md · board row B53 · page doc H6"
+ },
+ "model-watch-sonnet-judge-serious-only-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HIS ORDER ON THE MODEL WATCH (board row B55), after the first live run found 38 guidance items (35 of them Claude Code versions) and the notice pushed the session opening past its 8,000-byte limit: the watch must not come into the session or swell it; Sonnet can do the job; only news that seriously affects how our models work is brought to him, not daily small updates. Built as: a Sonnet 5 judge (claude -p, low effort, isolated, no API key) classifies each new guidance item serious or not against our setup; a new model id is always serious; when a serious item is pending the opening carries ONE line of at most 200 bytes, and the items, reasons and links live only in model-watch.py --status. Verbatim below. Not a law.",
+  "verbatim": "hayır ya oturuma gelmesin ya oturumu şişirmesin. bekçi kim sonnet mi? o yapabilir işi. yani sadece istediğimiz modellerimizin çalışmasını ciddi anlamda etkileyecek bir haber varsa getirsin okadar. hergün saçpa sapan haber getirip ufak güncellemelerle contexti şişirmesin.",
+  "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
+  "where": "board row B55 · scripts/model-watch/model-watch.py · .claude/hooks/spec-bootstrap.sh"
  }
 }
