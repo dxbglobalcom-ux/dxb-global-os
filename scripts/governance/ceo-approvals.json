@@ -1177,5 +1177,26 @@
   "conditions": "His explicit word to write it on the crew side ('bunu crew tarafına da yazabilirsin. etkili olacak şekilde.'), which the 2026-08-13 prohibition requires before anything he says is written as a rule. The word 'yapılmadı' is his, as typed; the sense of the sentence is 'must be done'. NOT a LAW B acceptance: the written texts are the author's work until he looks. His earlier words the same hour ('... TECH İLE İLGİLİ HERŞEY MÜMKÜN ...') withdrew prompt-audit card H10.",
   "session": "Opus 5.5 (xhigh), session 87b17da7-ddcd-4572-91f4-425f1f363cfb, heard first-hand.",
   "where": ".claude/skills/dxb-crew/SKILL.md section 0 · ~/.claude/CLAUDE.md (Kadro section) · .claude/skills/dxb-operator/SKILL.md · .planning/STATE.md 2026-09-24 entry"
+ },
+ "code-by-builder-at-max-hook-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HE ORDERED THAT CODE IS WRITTEN ONLY AT OPUS 5.5 MAX, BY A SUBAGENT THE MOMENT CODE WORK APPEARS, AND THAT A HOOK MAKES IT PERMANENT. Asked the same night whether any code had been written and at which effort, he was told: two audit scripts and a report page's script, all at xhigh, against his own order of that night that code is written at max. His answer is this entry. Anthropic's own pages decided subagent over teammate, as he asked: a subagent file carries its own effort (docs/en/sub-agents), while teammates inherit the lead's effort (docs/en/agent-teams). 'bu da bir hook ile sabitlensin' is his word for the PERMANENCE of the mechanism: ~/.claude/hooks/dxb-code-gate.py refuses a code-file write at any other effort and routes the builder to builder-lean (medium) only while the weekly quota is at or above 80 %. He also said 'önce test et sonra yaz' (tested first: seven probes, all passed) and asked for a measurement of medium against max on this repository's own code (T8, shown to him). It is registered as his order, not called a law.",
+  "verbatim": "hayır ben sorunum şu, normalde işte ben bunun bir hooklama olmasını istiorm yazar kolduğu kod yazmaya başlamadan önce kontrol o  an max olsun. kod işi mi var hemen bir agent opus 5.5 max açılır sub-agent veya agent teammate spawn edilir o kodu o seviyede yazması için! hangisi daha iyisi ise antropic'in kendi sayfasından öğrenilsin ve bu da bir hook ile sabitlensin. kod kalitesi kesinlikle iki modda normalde  max, rate limit daralmışsa haftalıkta o zaman medium'da yazar kodu.",
+  "session": "Opus 5.5 (xhigh), session 1ee0bc86-1f14-4b59-aa51-282485e87be2 (claude-code-quality-hooks) heard it first-hand at 01:18:01; registered from that session's verbatim handover by session fa4d10f2-131c-4369-9391-8762a60c0b5c.",
+  "where": "~/.claude/hooks/dxb-code-gate.py · ~/.claude/hooks/dxb-statusline.js · ~/.claude/settings.json · ~/.claude/agents/builder.md and builder-lean.md · .claude/CLAUDE.md section 2 · ~/.claude/CLAUDE.md (Kadro section) · .claude/skills/dxb-crew/SKILL.md · tests/hooks/code-gate.test.ts"
+ },
+ "code-gate-plan-click-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HE APPROVED THE CODE-GATE PLAN BY CLICK, in the plan dialog of session 1ee0bc86-1f14-4b59-aa51-282485e87be2, at about 01:25 local (time as recorded in that session's handover). The plan is saved at /home/dxb/.claude/plans/recursive-finding-puppy.md: phase A tests the mechanism in a scratch folder only (seven probes); phase B writes it permanently — the hook, the status line persisting the weekly quota, the builder and builder-lean agent files, the settings registration, and the written rules that contradict it rewritten under LAW A. A button is not a sentence, so verbatim is null.",
+  "verbatim": null,
+  "session": "Opus 5.5 (xhigh), session 1ee0bc86-1f14-4b59-aa51-282485e87be2; registered by session fa4d10f2-131c-4369-9391-8762a60c0b5c.",
+  "where": "/home/dxb/.claude/plans/recursive-finding-puppy.md"
+ },
+ "simple-code-at-medium-rule-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HE SAID YES TO THE SIMPLE-WORK RULE. The T8 measurement had been put to him (two of this repository's own past fixes written once at max and once at medium, judged by a refuter: simple work equal and 5.6x cheaper at medium, harder work better at max). He asked at 02:12:33 whether the rule had been added; he was told it had not, because it was his decision, and was shown it in full: one code file, at most 40 changed lines, no money / approval / database / security / governance path -> the builder-lean subagent at medium; everything else -> the builder at max; a medium writer that crosses the line is stopped by the hook and the work goes to max. His answer, 02:14:23 local, is the verbatim below. In the same message he ordered the work finished, committed and left clean for his eye the next day, and the computer put to sleep. The weekly-quota rule of code-by-builder-at-max-hook-2026-09-24 is unchanged. Registered as his order, not called a law and not a LAW B acceptance.",
+  "verbatim": "tmm güzel. yapın.",
+  "session": "Opus 5.5 (xhigh), session fa4d10f2-131c-4369-9391-8762a60c0b5c, heard first-hand.",
+  "where": "~/.claude/hooks/dxb-code-gate.py (the simple-work envelope) · ~/.claude/agents/builder-lean.md · .claude/skills/dxb-crew/SKILL.md section 1 · board row B54"
  }
 }

@@ -1,6 +1,6 @@
 ---
 name: dxb-crew
-description: Use when the CEO hands the construction a job that must run on its own — a chief engineer that measures and accepts, a writer that writes, a refuter that tries to break the work — in a phase loop with measurement gates and context-bounded handovers, so the work keeps moving while he is away without the sessions swelling or the quality dropping. Trigger `/dxb-crew <the job in one sentence>`.
+description: Use when the CEO hands the construction a job that must run on its own — a chief engineer that measures and accepts, a builder subagent that writes the code at max, a refuter that tries to break the work — in a phase loop with measurement gates and context-bounded handovers, so the work keeps moving while he is away without the sessions swelling or the quality dropping. Trigger `/dxb-crew <the job in one sentence>`.
 ---
 
 # The crew — how a job runs itself from intent to record
@@ -30,21 +30,34 @@ saw `Goal set` on his own screen.
 
 | Seat | Model · effort | Does | Never |
 |---|---|---|---|
-| **Chief engineer** | Opus 5.5 · `xhigh` | writes the spec, splits the phases, names the dependants, re-measures EVERY number the writer reports with its own commands, rules ACCEPT / REJECT, reports to the CEO | writes code while a writer is open; asks the CEO what to do |
-| **Writer** | Opus 5.5 · `max` | writes every line of code inline, runs its own measurements, runs the refuter on its own diff, commits per phase | touches the company engine (54322) for anything but SELECT; touches what the CEO said is his (today: `tests/c42`); guesses a number |
-| **Refuter** | Opus 5.5 · `xhigh` (subagent of the writer) | reviews the phase's diff against its acceptance items and runs them itself; sorts every finding (`file:line` + a concrete scenario) into A, B or C (below); the phase passes when A is empty | writes; rules on taste; hunts outside the diff; opens a new hunt in round 2 |
+| **Chief engineer** | Opus 5.5 · `xhigh` | writes the spec, splits the phases, names the dependants, hands every code change to the builder, re-measures EVERY number the builder reports with its own commands, rules ACCEPT / REJECT, commits per phase, reports to the CEO | writes a code file (the hook refuses it); asks the CEO what to do |
+| **Builder** | Opus 5.5 · `max` (subagent of the chief engineer); `builder-lean` · `medium` for simple work, and for all code while the weekly quota is ≥ 80 % | writes every line of code from the chief's spec, runs its own measurements, reports command → decisive output | commits; touches the company engine (54322) for anything but SELECT; touches what the CEO said is his (today: `tests/c42`); guesses a number |
+| **Refuter** | Opus 5.5 · `xhigh` (subagent of the chief engineer) | reviews the phase's diff against its acceptance items and runs them itself; sorts every finding (`file:line` + a concrete scenario) into A, B or C (below); the phase passes when A is empty | writes; rules on taste; hunts outside the diff; opens a new hunt in round 2 |
 
-The chief engineer and the writer are two Claude Code sessions in the VS Code editor-area
-terminals of this machine, addressed by their `ListAgents` names. The seats were set on
+The chief engineer is a Claude Code session in the VS Code editor-area terminals of this
+machine, addressed by its `ListAgents` name; the builder and the refuter are its subagents.
+**Code is written by the builder, at max — his order, 2026-09-24:** *"kod işi mi var hemen bir
+agent opus 5.5 max açılır sub-agent … o kodu o seviyede yazması için! … bu da bir hook ile
+sabitlensin."* <!-- CEO-OK: code-by-builder-at-max-hook-2026-09-24 --> Anthropic's pages chose the
+subagent over a teammate: a subagent file carries its own effort, a teammate inherits the lead's.
+The global hook `dxb-code-gate.py` refuses a code-file write (Write, Edit, a Bash redirect) made at
+any other effort, and turns a `builder` call into `builder-lean` only while the weekly quota the
+status line persists is at or above 80 %. **Simple work runs at medium — his yes, 2026-09-24:**
+*"tmm güzel. yapın."* <!-- CEO-OK: simple-code-at-medium-rule-2026-09-24 --> Measured first (T8, two
+of this repository's own past fixes written at both efforts and judged by a refuter): simple work
+equal at `medium` and 5.6× cheaper; harder work better at `max`. Simple = one code file, at most 40
+changed lines, no money / approval / database / security / governance path → the chief picks
+`builder-lean`; anything else, or any doubt → `builder`. The hook holds the line: a `builder-lean`
+write outside it is refused, and the work goes to the `builder`. The seats were set on
 2026-09-23 from Anthropic's official Opus 5.5 charts; the model id is pinned (`claude-opus-5-5`),
-so a newer model enters only when it is measured and the CEO says so. Subagents of either are
+so a newer model enters only when it is measured and the CEO says so. The other subagents are
 the pinned roles in `~/.claude/agents/`: `refuter` and `debugger` Opus 5.5 · `xhigh`, `scout`
 Haiku · `low` (locations only), and the one Fable seat, `design-eye` (Fable 5.1 · `high`, the
 design second eye), which has no `Agent` tool, because Fable subagents were measured spawning
 their own sub-subagents and burning the quota.
 
-The writer seat is for code; record and instruction text is written by the chief engineer
-itself, at `xhigh`. No seat but the writer goes to `max` unless a quality gain has been measured
+The builder seat is for code; record and instruction text is written by the chief engineer
+itself, at `xhigh`. No seat but the builder goes to `max` unless a quality gain has been measured
 on our own work — Anthropic's own instruction: *"Reserve xhigh and max for work where you've
 measured a quality gain."* <!-- CEO-OK: crew-writer-code-max-only-2026-09-24 -->
 
@@ -60,7 +73,7 @@ it is fixed. **B** — a small defect this work made: repaired in the same pass 
 Round 2 re-checks only round 1's A list and opens no new hunt; an A item still open after round 2
 goes to the CEO with its reason.
 
-**A minor finding is repaired in the SAME pass — his law, 2026-09-22.** <!-- CEO-OK: crew-minors-fixed-in-same-pass-law-2026-09-22 --> He read the rule and made it one: *"bu kural olsun. yani aynı anda düzeltilsin küçük hatalar."* The refuter's minor findings are **listed and repaired in the same pass**: a one-line fix the writer makes at once, anything larger becomes a board row through `dxb-close-row`, and a minor **never gets a round of its own**.
+**A minor finding is repaired in the SAME pass — his law, 2026-09-22.** <!-- CEO-OK: crew-minors-fixed-in-same-pass-law-2026-09-22 --> He read the rule and made it one: *"bu kural olsun. yani aynı anda düzeltilsin küçük hatalar."* The refuter's minor findings are **listed and repaired in the same pass**: a one-line fix the builder makes at once, anything larger becomes a board row through `dxb-close-row`, and a minor **never gets a round of its own**.
 
 ## 2. The loop
 
@@ -70,14 +83,15 @@ INTAKE  → the job in ONE sentence, provable by measurement; the CEO's words ve
           (numbered, each a command and its expected output), written before the phase starts.
 for each PHASE:
   1. DEPENDANTS FIRST  — name what stands on the thing about to change; measure it (numbers, file).
-  2. BUILD             — the writer writes; every claim carries command → decisive output.
+  2. BUILD             — the builder writes from the chief's spec; every claim carries
+                         command → decisive output.
   3. REFUTE            — the refuter sorts the diff's findings into A / B / C (§1); B is
                          repaired at once; round 2 re-checks round 1's A list only.
   4. RE-MEASURE        — the chief engineer takes every number again with its own hands
                          (battery, table counts, service state, company fingerprint).
                          Mismatch → REJECT with file:line + scenario. Match → ACCEPT.
   5. DEPENDANTS AGAIN  — the same measurements as step 1; print what they printed.
-  6. COMMIT            — one commit per phase; the tree is clean before the next phase.
+  6. COMMIT            — the chief engineer, one commit per phase; the tree is clean before the next.
   7. TELL THE CEO      — short, `dxb-ceo-report` shape; the position first; never a question.
   8. CONTEXT GATE      — §3. Hand over here if the rule says so; never mid-phase.
 RECORD  → STATE (LAW A: the contradicted sentence is deleted, not footnoted), the board row
@@ -104,7 +118,7 @@ forbids.
 - **Read the bar, in this order:** `dxb-ctx --pct` (the status bar's own number, written by
   `~/.codex/hooks/dxb-statusline.js` for this session), and when it refuses (no record, or
   older than 10 min) `operator shot` and READ the percentage beside the model name at the
-  bottom of the terminal. Every report to the other seat opens with `CONTEXT: N% (tokens)`.
+  bottom of the terminal. Every report to the CEO opens with `CONTEXT: N% (tokens)`.
 - **When:** after every phase (step 8) and before starting one.
 - **Hand over if** used ≥ 40 %, **or** used + the next phase's honest estimate > 45 %. A phase
   estimate comes from the phases already done in this job (tokens per phase so far), not from
@@ -119,7 +133,7 @@ forbids.
 described to him.
 
 1. **The note** — a file in the outgoing session's scratchpad, then `wl-copy < note`. It holds:
-   the two seats and the peer's `ListAgents` name · the CEO's words of this job, verbatim and in
+   the seats (chief engineer session; `builder` / `builder-lean` and `refuter` subagents) · the CEO's words of this job, verbatim and in
    order · the job sentence · every phase with its status and commit hash · the measurement
    method (commands, baselines, log paths) · the dependants and their measured values · the
    traps met · the first message the successor must send. Session-only orders stay marked as
@@ -134,7 +148,7 @@ described to him.
    named by its own path: `/home/dxb/.local/bin/claude` (a symlink into `~/.local/share/claude/versions/`).
    `operator key ctrl+shift+p` → `operator type "Terminal: Create New Terminal in Editor Area"`
    → `operator key Return` → `operator shot` (is the new terminal focused?) →
-   `wl-copy 'systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model claude-opus-5-5 --effort <xhigh|max> "$(cat <note>)"'` (`xhigh` for a chief engineer, `max` for a writer; the `systemd-run` prefix is the memory box that `~/.bashrc`'s `claude()` wrapper gives a typed `claude` — a session opened by its full path skips that wrapper and ran unboxed, `MemoryMax=infinity`, measured 2026-09-24)
+   `wl-copy 'systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model claude-opus-5-5 --effort xhigh "$(cat <note>)"'` (only chief engineer sessions are opened — code is written by the builder subagent inside the session; the `systemd-run` prefix is the memory box that `~/.bashrc`'s `claude()` wrapper gives a typed `claude` — a session opened by its full path skips that wrapper and ran unboxed, `MemoryMax=infinity`, measured 2026-09-24)
    → `operator key ctrl+shift+v` (the terminal's own paste — `ctrl+v` does not reach it, measured)
    → `operator shot` and READ the line before committing to it → `operator key Return` →
    `operator shot`.

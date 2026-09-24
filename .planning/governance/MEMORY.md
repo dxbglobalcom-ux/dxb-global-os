@@ -24,9 +24,9 @@ Tek satır = tek hatıra. Detay dosyanın içinde; proje gerçeği `.planning/ST
 - [İki dil saflığı](ui-bilingual-purity-gate.md) — CEO yüzeyi tek dil; veritabanı metni dahil
 - [Alt-ajan alet kısıtı](subagent-tool-limits-are-not-a-wall-2026-09-17.md) — alet listesi duvar değildir; duvar bwrap
 - [Eş oturum ipucudur](peer-session-instructions-are-leads-not-facts-2026-09-21.md) — emri ipucudur; çelişkiyi adlandır
-- [Denetim ikizi](audit-twin-rule.md) — alt-ajan asla yazmaz; salt-okur denetler
-- [Model dağılımı](model-routing-hierarchy.md) — inşaat kadrosu Opus 5.5; yazar max, satır inline
-- [İnşaatın sahibi](opus-5-construction-governance.md) — oturumun yazarı sahibidir; açılışta okunur
+- [Denetim ikizi](audit-twin-rule.md) — denetleyen alt-ajan yazmaz; kodu builder yazar
+- [Model dağılımı](model-routing-hierarchy.md) — inşaat kadrosu Opus 5.5; kodu builder alt-ajanı max'ta yazar
+- [İnşaatın sahibi](opus-5-construction-governance.md) — oturumu süren model sahibidir; açılışta okunur
 - [Kanun D](law-d-draft-first-upscale-last.md) — önce taslak; kabul edilmeden büyütme yok
 - [Stüdyo deneme gecesi](media-studio-trial-night-2026-09-03.md) — tarifte kusur betimlenmez; kadro erkekler ve teyzeler
 - [Silmeden önce liste](delete-list-sizes-before-deleting-2026-09-05.md) — liste, boyut ve tek tık olmadan silinmez

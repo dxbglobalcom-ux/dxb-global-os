@@ -131,8 +131,10 @@ the date. The battery fails on an unregistered approval claim.
 - **Speak to the CEO in his language.** He is the owner, not a developer. Door: `dxb-ceo-report`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
-- **One session, one author** — whichever model runs the session. Every repo line is
-  written by that author inline. Subagents audit, refute and sweep; they never write — and a
+- **Code: the `builder` subagent at `max`** (CEO 2026-09-24
+  <!-- CEO-OK: code-by-builder-at-max-hook-2026-09-24 -->; `builder-lean` · `medium` for simple
+  work or at weekly quota ≥ 80 %); `dxb-code-gate` refuses code at other efforts. Other subagents audit, refute
+  and sweep; they never write — and a
   CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
   ruler scripts included (the audit law, CEO 2026-09-15
   <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).

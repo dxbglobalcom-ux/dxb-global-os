@@ -1,18 +1,26 @@
 ---
 name: model-routing-hierarchy
-description: "v13 (CEO 2026-09-23): İNŞAAT kadrosu Opus 5.5 — baş mühendis xhigh, yazar max, çürütücü/teşhisçi xhigh, tasarımda ikinci göz Fable 5.1; yazar = oturumu süren model; v10 runtime kalite kademe kanunu; v9 yedek katman yok; v8-v5 tarihsel kayıt"
+description: "v14 (CEO 2026-09-24): kodu builder alt-ajanı Opus 5.5 · max yazar, kanca zorlar, kota darken medium; v13 İNŞAAT kadrosu Opus 5.5 — baş mühendis xhigh, çürütücü/teşhisçi xhigh, tasarımda ikinci göz Fable 5.1; v10 runtime kalite kademe kanunu; v9 yedek katman yok; v8-v5 tarihsel kayıt"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
-  modified: 2026-09-23T22:00:42.000Z
+  modified: 2026-09-24T00:06:41.286Z
 ---
+
+# v14 — KODU BUILDER ALT-AJANI YAZAR, KANCA ZORLAR (CEO, 2026-09-24)
+
+1. **CEO emri (2026-09-24 01:18):** *"kod işi mi var hemen bir agent opus 5.5 max açılır sub-agent … o kodu o seviyede yazması için! … bu da bir hook ile sabitlensin. kod kalitesi kesinlikle iki modda normalde max, rate limit daralmışsa haftalıkta o zaman medium'da yazar kodu."* Plan tıklamayla onaylandı (`/home/dxb/.claude/plans/recursive-finding-puppy.md`).
+2. **Yazar = `builder` alt-ajanı**, `claude-opus-5-5` · `max`; **basit iş** (tek kod dosyası, ≤ 40 satır değişiklik, para/onay/veritabanı/güvenlik/yönetim yolu değil) `builder-lean` · `medium` (CEO 2026-09-24 02:14: *"tmm güzel. yapın."*, T8 ölçümünden sonra — basit işte eşit ve 5,6× ucuz, zor işte max daha iyi); haftalık kota ≥ %80 iken her kod `builder-lean` · `medium`. Anthropic'in sayfaları alt-ajanı seçti: alt-ajan dosyası kendi effort'unu taşır, takım arkadaşı liderinkini miras alır. Ayrı yazar oturumu kalktı.
+3. **Kanca:** `~/.claude/hooks/dxb-code-gate.py` (PreToolUse) kod dosyası yazımını (Write/Edit/Bash yönlendirmesi) max dışında reddeder, `builder` çağrısını kotaya göre `builder-lean`'e çevirir. Kota `rate_limits` olarak durum çubuğundan `$XDG_RUNTIME_DIR/claude-ctx/rate-limits.json`'a yazılır.
+4. Baş mühendis spec yazar, ölçer, commit eder; kayıt ve talimat metnini kendisi yazar. Denetleyen alt-ajanlar yazmaz.
+5. Kayıt: `ceo-approvals.json` → `code-by-builder-at-max-hook-2026-09-24` + `code-gate-plan-click-2026-09-24` + `simple-code-at-medium-rule-2026-09-24` · kapı: `dxb-crew` §1.
 
 # v13 — İNŞAAT KADROSU OPUS 5.5 (CEO, 2026-09-23)
 
-1. **CEO emri (2026-09-23): "holdingi artık bu şekilde inşaa edeceğiz."** Koltuklar Anthropic'in resmî Opus 5.5 grafiklerine göre seçildi: **baş mühendis** = açılan oturum, `claude-opus-5-5` · `xhigh` · **yazar** = ayrı oturum, `claude-opus-5-5` · `max` · **çürütücü ve teşhisçi** alt-ajanları `claude-opus-5-5` · `xhigh` · **tasarımda ikinci göz** `design-eye`, `claude-fable-5-1` · `high`, yalnız okur, `Agent` aracı yok · `scout` haiku · low (yalnız konum). Kanonik tablo: `.claude/skills/dxb-crew/SKILL.md` §1; ajan dosyaları `~/.claude/agents/`.
+1. **CEO emri (2026-09-23): "holdingi artık bu şekilde inşaa edeceğiz."** Koltuklar Anthropic'in resmî Opus 5.5 grafiklerine göre seçildi: **baş mühendis** = açılan oturum, `claude-opus-5-5` · `xhigh` · **yazar** = `claude-opus-5-5` · `max` (v14: `builder` alt-ajanı) · **çürütücü ve teşhisçi** alt-ajanları `claude-opus-5-5` · `xhigh` · **tasarımda ikinci göz** `design-eye`, `claude-fable-5-1` · `high`, yalnız okur, `Agent` aracı yok · `scout` haiku · low (yalnız konum). Kanonik tablo: `.claude/skills/dxb-crew/SKILL.md` §1; ajan dosyaları `~/.claude/agents/`.
 2. **İnşaat yazarı = oturumu süren model** (v11'in "Opus 5 VEYA Fable 5" hükmünün yerini alır). Model kimliği sabit yazılır; daha güçlü bir model çıktığında koltuk ölçülerek ve CEO'nun sözüyle değişir.
-3. **Yedek zinciri yoktur** (v9 madde 2 aynen): hata/timeout durumunda sessiz model değişimi yok, iş `blocked` raporuyla CEO'ya çıkar. Tek oturum = tek yazar.
-4. **K1 değişmez:** repo'ya giren her satır o oturumun yazarının, bizzat ve inline; alt-ajan yazarlığı ihlaldir.
+3. **Yedek zinciri yoktur** (v9 madde 2 aynen): hata/timeout durumunda sessiz model değişimi yok, iş `blocked` raporuyla CEO'ya çıkar.
+4. **K1 v14 ile değişti:** kodu `builder` alt-ajanı yazar; kayıt ve talimat metni oturumundur.
 5. **Kapsam yalnız İNŞAAT.** Şirketin runtime çalışanlarının modeli (routing satırları, B51) bu kararla değişmedi; o karar CEO'nundur.
 6. **Tarihsel kayıt + iç teknik ID hükümleri** (v9 madde 4-5) aynen geçerli; U20'nin "CEO'ya görünen etiket" hükmü katalog satırlarını yönetmeye devam eder.
 7. Kayıt: `scripts/governance/ceo-approvals.json` → `crew-opus-5-5-seats-2026-09-23` · `MODEL_ROUTING_SPEC` A-2026-09-23 · ayna: `.planning/governance/model-routing-hierarchy.md`.
@@ -31,7 +39,7 @@ Bu blok **RUNTIME ağacıdır** (şirketin ajanları hangi modelle koşar), inş
 
 # v9 — YAZARLIK DEVRİ: Fable 5 → OPUS 5 + yedek katman kaldırıldı (CEO, 2026-07-25)
 
-1. **İnşaat yazarı artık OPUS 5.** v5-v8'de "Fable bizzat" diyen HER kural cümlesi bundan böyle **Opus 5 bizzat** okunur: plan yazımı, repo'ya giren her satır (boilerplate dahil), tüm personalar (K2), modül kapanışları (K1), her commit öncesi diff okuma + final verdict. Yazarlık devri yoktur; subagent yazarlığı — Opus 5 modelli subagent dahil — ihlaldir.
+1. **İnşaat yazarı artık OPUS 5.** v5-v8'de "Fable bizzat" diyen HER kural cümlesi bundan böyle **Opus 5 bizzat** okunur: plan yazımı, repo'ya giren her satır (boilerplate dahil), tüm personalar (K2), modül kapanışları (K1), her commit öncesi diff okuma + final verdict.
 2. **Yedek model katmanı KALDIRILDI.** v6'nın "Fable bizzat → en kötü ihtimal Opus 4.8" zinciri ve v5'in "bütçe-fallback: Opus 4.8 adım adım uygular" modu İPTAL. Zincir tek elemanlıdır: **Opus 5**. Hata/timeout/rate-limit durumunda sessizce alt modele düşülmez — iş `blocked` raporuyla CEO'ya çıkar (§"never a silent drop"). Gerekçe: birincil ve yedek aynı model olsaydı katman anlamsız; sessiz kalite düşüşü CEO'nun kalite tavanı hükmüne aykırı.
 3. **"4.8" ifadeleri.** Projede model sürümü olarak geçen `Opus 4.8` / `claude-opus-4-8` ileriye dönük kural metinlerinde **Opus 5**'e çevrildi; tek istisna, tarihsel kayıtlarda (kim ne zaman ne yazdı) olduğu gibi bırakılmasıdır.
 4. **Tarihsel kayıt dokunulmazdır (CEO kararı 2026-07-25).** Persona `Created by: fable-5`, canlı DB'deki `persona_version='v2.0-fable'`, uygulanmış migration dosyaları ve kanıt notları DEĞİŞTİRİLMEZ — inşaatı 2026-07-06 → 2026-07-25 arası gerçekten Fable 5 yaptı; bunu değiştirmek §35 sıfır-uydurma kuralının ihlali olurdu.
@@ -97,4 +105,4 @@ CEO-approved runtime build-workflow authority matrix (v5, 2026-07-08 — v4 kura
 - Haiku'ya verilebilecek işler: gsd-codebase-mapper tarzı salt mekanik tarama/özet, dosya listeleme, sayım. Verdict cümlesi kurduracak hiçbir prompt Haiku'ya gitmez.
 - Usage hygiene: 4+ paralel session'dan kaçın; 150k+ bağlam maratonu yerine faz başına taze session; terminal session'ı için düz Fable 5 yeterli (`[1m]` değil).
 
-**v12 (2026-07-26, U36): DENETİM HATTI ayrı bir hat oldu.** İnşaat yazarlığı hâlâ tek yazar (Opus 5 / Fable 5, inline). Yeni: en kritik kapıda (CEO kabul oturumu) denetçi ÇAPRAZ MODEL — Codex hattı (`codex exec -s read-only`), runtime konseyinin kullandığı borunun aynısı; Claude'u Claude denetlerse aynı kör noktayı paylaşır. Geniş salt-okur taramalarda Claude subagent yeter (Read/Grep/Glob, Bash yok). Detay: [[audit-twin-rule]].
+**v12 (2026-07-26, U36): DENETİM HATTI ayrı bir hat oldu.** Yeni: en kritik kapıda (CEO kabul oturumu) denetçi ÇAPRAZ MODEL — Codex hattı (`codex exec -s read-only`), runtime konseyinin kullandığı borunun aynısı; Claude'u Claude denetlerse aynı kör noktayı paylaşır. Geniş salt-okur taramalarda Claude subagent yeter (Read/Grep/Glob, Bash yok). Detay: [[audit-twin-rule]].

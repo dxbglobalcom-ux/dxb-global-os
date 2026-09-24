@@ -1,16 +1,16 @@
 ---
 name: audit-twin-rule
-description: "U36 denetim ikizi — inline yazarlık + düşman denetimi; subagent yalnız denetim/tarama, asla yazarlık"
+description: "U36 denetim ikizi — düşman denetimi; kodu builder alt-ajanı max'ta yazar (CEO 2026-09-24), denetleyen alt-ajanlar asla yazmaz"
 metadata: 
   node_type: memory
   type: feedback
   originSessionId: 2771dd36-00f5-41c5-b24a-ccec22a42bb2
-  modified: 2026-07-26T21:12:01.456Z
+  modified: 2026-09-24T00:06:25.197Z
 ---
 
 **U36 (CEO hükmü 2026-07-26): inşaatçı kendi işini kendi onaylamayı bıraktı.** Kanonik metin: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`; CLAUDE.md standing order 11 **Amendment A1**.
 
-- **K1 aynen duruyor:** repoya giren her satır oturum yazarının, inline. Subagent yazarlığı ihlal.
+- **K1 değişti (CEO 2026-09-24, `code-by-builder-at-max-hook-2026-09-24`):** kod dosyasını `builder` alt-ajanı Opus 5.5 · max'ta yazar (basit işte ve haftalık kota ≥ %80 iken `builder-lean` · medium); `~/.claude/hooks/dxb-code-gate.py` başka effort'ta yazılan kodu reddeder. Kayıt ve talimat metni oturumun kendisinindir. Denetleyen alt-ajanlar (refuter, scout, debugger, design-eye) asla yazmaz.
 - **Subagent iki işte ZORUNLU:** (a) düşman denetimi — eline iddia + nerede ölçüleceği verilir, görevi ÇÜRÜTMEK (benim sonucum verilmez); (b) salt-okur geniş tarama, sonucu tablo.
 - **Salt-okurluk mekanik:** `codex exec -s read-only` veya Read/Grep/Glob'a kısıtlı Claude ajanı. Ölçen komut serbest, YAZAN komut asla, test suite asla (fixture canlı DB'ye yazar — 3.087 sahte satır emsali). Yazar denetim öncesi/sonrası `audit_log`/`tasks`/`agent_runs` satır sayar; fark = denetim geçersiz.
 - **Üç tetik, başka yok:** CEO kabul oturumu (çapraz model, Codex — Claude'u Claude denetlerse aynı kör nokta), makineyle ölçülemeyen kanıt bacağı olan satır kapanışı, CEO'nun yakaladığı kusurun SINIFININ repo-geneli taraması. Her koşuda/commit'te DEĞİL.
