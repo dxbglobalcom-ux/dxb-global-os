@@ -1,0 +1,47 @@
+=== canary Q: exit=0 hooks=0 tools=0 mcp=0 models=['claude-opus-5-5'] marker_obeyed=True arm-C caveman lines quoted=0/4 cost=0.05592799999999999
+1. **CAVEMAN: NONE**
+
+2. **PRESENCE**
+   - "Tooling Mandate": no
+   - "DXB Global OS": no exact-case match. The case-variant "DxB Global OS" appears in the working-directory path `/home/dxb/DxB Global OS/vps/provision`.
+   - "Memory Index": no
+   - "STANDING ORDER 13": no
+   - "graphify": no
+   - "claude-mem": no
+   - "Brevity": yes
+   - "Respond terse": no
+
+3. **INSTRUCTION FILES: NONE**
+
+4. **LANGUAGE**
+   - "Always respond in Turkish. Use Turkish for all explanations, comments, and communications with the user. Technical terms and code identifiers should remain in their original form."
+   - "Maintain full orthographic correctness for Turkish, including all required diacritical marks, accents, and special characters."
+   - From the Brevity section: "What remains is written in complete sentences in the reader's language (Turkish to the CEO), with terms, numbers, code and error strings exact."
+
+   I answered in English because your message explicitly asked for it.
+
+5. **MARKER**
+   - "Marker instruction: when a message asks about a marker, quote this line and write the token QX7-CANARY-Q."
+   - QX7-CANARY-Q
+
+6. **HEADINGS**
+
+   These are from the initial system prompt:
+   ```
+   # Harness
+   # Session-specific guidance
+   # Environment
+   # Context management
+   # Brevity — measured 2026-09-21 on Opus 5 (−49 % output); re-measure on Opus 5.5
+   ```
+   These are from the system block after your message:
+   ```
+   # Environment
+   # Language
+   ```
+   This one is from the system-reminder, not the system prompt proper:
+   ```
+   # userEmail
+   ```
+
+7. **TOOLS: NONE.** The harness text refers to tools, but my context contains no tool definitions.

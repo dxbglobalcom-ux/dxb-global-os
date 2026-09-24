@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Caveman-on-Opus-5.5 measurement runner (audit card H2, 2026-09-24).
 
-Three arms, identical except the brevity text appended to Claude Code's default system prompt:
+Four arms, identical except the brevity text appended to Claude Code's default system prompt:
   N  no brevity text
   C  arm-C.txt  the caveman block, verbatim from ~/.claude/CLAUDE.md
   P  arm-P.txt  the proposed block, the '+' lines of hunk H2 in PROPOSED.diff
+  Q  arm-Q.txt  arm-P.txt plus one sentence: "Short, but every reason and every risk stays."
 
 Isolation (proved by the `canary` step, see SUMMARY.md):
   --safe-mode      drops every CLAUDE.md, auto-memory, hooks, plugins, MCP servers,
@@ -21,9 +22,17 @@ All calls run sequentially from one neutral, empty, non-git working directory.
 
 usage:
   run_arms.py canary [--cwd DIR]   one isolation probe per arm: arm text + a unique marker
-  run_arms.py run [--cwd DIR]      one warm-up per arm, then 4 questions x 2 runs x 3 arms
+  run_arms.py run [--cwd DIR]      one warm-up per arm, then 4 questions x 2 runs x each arm
   run_arms.py summarize            prints the full summary (markdown) from the recorded files;
                                    `run_arms.py summarize > SUMMARY.md` writes the deliverable
+  every step also takes:
+    --arms A,B  the arms to use, default N,C,P (round 1); summarize defaults to the arms
+                present in the results file
+    --tag T     a later round (e.g. r2): every output goes to a tagged path (results-T.jsonl,
+                warmup-T.jsonl, answers-T/, raw-T/, probes/canary-T.jsonl,
+                probes/canary-T-<arm>.stream.jsonl), so round 1's files are never touched;
+                `summarize --tag T` prints round T's summary, with the drift of its N against
+                round 1's N and its new arms against round 1's N, C, P
 """
 import argparse
 import json
@@ -41,13 +50,31 @@ MODEL = "claude-opus-5-5"
 EFFORT = "xhigh"
 BUDGET_USD = "3"  # per-call tripwire
 RUNS = 2
-ARMS = ("N", "C", "P")
+ARMS = ("N", "C", "P")  # default arm selection (round 1)
 ARM_TEXT = {
     "N": "",
     "C": (HERE / "arm-C.txt").read_text(encoding="utf-8"),
     "P": (HERE / "arm-P.txt").read_text(encoding="utf-8"),
+    "Q": (HERE / "arm-Q.txt").read_text(encoding="utf-8"),
 }
-MARKERS = {"N": "QX7-CANARY-N", "C": "QX7-CANARY-C", "P": "QX7-CANARY-P"}
+MARKERS = {"N": "QX7-CANARY-N", "C": "QX7-CANARY-C", "P": "QX7-CANARY-P", "Q": "QX7-CANARY-Q"}
+
+
+def tagged(name: str, tag: str) -> str:
+    """'results.jsonl' -> 'results-r2.jsonl', 'answers' -> 'answers-r2'; unchanged without a tag."""
+    stem, dot, ext = name.partition(".")
+    return f"{stem}-{tag}{dot}{ext}" if tag else name
+
+
+def arm_list(s: str) -> tuple:
+    arms = tuple(a.strip() for a in s.split(",") if a.strip())
+    if not arms or len(set(arms)) != len(arms) or any(a not in ARM_TEXT for a in arms):
+        raise argparse.ArgumentTypeError(f"a comma list of distinct arms from {','.join(ARM_TEXT)}")
+    return arms
+
+
+def present_arms(recs: list) -> tuple:
+    return tuple(a for a in ARM_TEXT if any(r["arm"] == a for r in recs))
 
 
 def child_env() -> dict:
@@ -134,15 +161,15 @@ def neutral_cwd(arg: str) -> str:
     return arg if arg else tempfile.mkdtemp(prefix="caveman-cwd-")
 
 
-def cmd_canary(cwd: str) -> None:
+def cmd_canary(cwd: str, arms: tuple, tag: str) -> None:
     probe = (HERE / "probes" / "probe-question.txt").read_text(encoding="utf-8")
-    out = HERE / "probes" / "canary.jsonl"
+    out = HERE / tagged("probes/canary.jsonl", tag)
     with out.open("w", encoding="utf-8") as fh:
-        for arm in ARMS:
+        for arm in arms:
             marker_line = (f"Marker instruction: when a message asks about a marker, "
                            f"quote this line and write the token {MARKERS[arm]}.")
             text = ARM_TEXT[arm] + ("\n" if ARM_TEXT[arm] else "") + marker_line
-            rec = call(probe, text, cwd, HERE / "probes" / f"canary-{arm}.stream.jsonl")
+            rec = call(probe, text, cwd, HERE / (tagged("probes/canary", tag) + f"-{arm}.stream.jsonl"))
             rec.update({"arm": arm, "arm_text_chars": len(text)})
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
             caveman_lines = [l for l in ARM_TEXT["C"].splitlines() if "caveman" in l.lower()]
@@ -155,18 +182,20 @@ def cmd_canary(cwd: str) -> None:
             print(rec["text"])
 
 
-def cmd_run(cwd: str) -> None:
+def cmd_run(cwd: str, arms: tuple, tag: str) -> None:
     questions = [q.strip() for q in (HERE / "questions.txt").read_text(encoding="utf-8").splitlines()
                  if q.strip()]
-    results = HERE / "results.jsonl"
-    warm = HERE / "warmup.jsonl"
+    results = HERE / tagged("results.jsonl", tag)
+    warm = HERE / tagged("warmup.jsonl", tag)
+    raw, answers = HERE / tagged("raw", tag), tagged("answers", tag)
     if results.exists() and results.stat().st_size > 0:
         raise SystemExit(f"{results} already holds data; move it aside before a new run")
+    (HERE / answers).mkdir(exist_ok=True)
     print(f"cwd={cwd}", flush=True)
     with warm.open("w", encoding="utf-8") as fh:
-        for arm in ARMS:  # identical warm-up per arm so every measured call reads a warm cache
+        for arm in arms:  # identical warm-up per arm so every measured call reads a warm cache
             rec = call("Reply with the single word: OK.", ARM_TEXT[arm], cwd,
-                       HERE / "raw" / f"warmup-{arm}.stream.jsonl")
+                       raw / f"warmup-{arm}.stream.jsonl")
             rec["arm"] = arm
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
             print(f"warm-up {arm}: exit={rec['exit_code']} cost={rec.get('total_cost_usd')}",
@@ -175,18 +204,18 @@ def cmd_run(cwd: str) -> None:
     order = 0
     with results.open("w", encoding="utf-8") as fh:
         for bi, (qi, r) in enumerate(blocks):
-            arms = ARMS[bi % 3:] + ARMS[:bi % 3]  # rotate the arm order per block
-            for arm in arms:
+            k = bi % len(arms)  # rotate the arm order per block
+            for arm in arms[k:] + arms[:k]:
                 order += 1
                 name = f"{arm}-q{qi}-r{r}"
                 for attempt in (1, 2):
                     rec = call(questions[qi - 1], ARM_TEXT[arm], cwd,
-                               HERE / "raw" / f"{name}-a{attempt}.stream.jsonl")
+                               raw / f"{name}-a{attempt}.stream.jsonl")
                     rec.update({"arm": arm, "q": qi, "run": r, "order": order,
-                                "attempt": attempt, "answer_file": f"answers/{name}.md"})
+                                "attempt": attempt, "answer_file": f"{answers}/{name}.md"})
                     if not rec["is_error"]:
-                        (HERE / "answers" / f"{name}.md").write_text(rec["text"] + "\n",
-                                                                    encoding="utf-8")
+                        (HERE / answers / f"{name}.md").write_text(rec["text"] + "\n",
+                                                                  encoding="utf-8")
                     fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
                     fh.flush()
                     print(f"[{order:02d}] {name} attempt={attempt} err={rec['is_error']} "
@@ -200,24 +229,29 @@ def pct(v: float, base: float) -> str:
     return f"{(v - base) / base * 100:+.1f} %" if base else "n/a"
 
 
-def cmd_summarize() -> None:
-    recs = [json.loads(l) for l in (HERE / "results.jsonl").read_text(encoding="utf-8").splitlines()
-            if l.strip()]
+def arm_mean(ok: list, arm: str, key: str, q=None) -> float:
+    vals = [r[key] for r in ok if r["arm"] == arm and (q is None or r["q"] == q)]
+    return statistics.mean(vals) if vals else float("nan")
+
+
+def cmd_summarize(tag: str, arms) -> None:
+    recs = [json.loads(l) for l in (HERE / tagged("results.jsonl", tag)).read_text(encoding="utf-8")
+            .splitlines() if l.strip()]
     ok = [r for r in recs if not r["is_error"]]
     failed = [r for r in recs if r["is_error"]]
+    arms = arms or present_arms(recs)  # rows follow the arms the round recorded
     metrics = (("output_tokens", "out tok", "{:.0f}"), ("visible_tokens", "visible tok", "{:.0f}"),
                ("total_cost_usd", "cost $", "{:.4f}"), ("wall_s", "time s", "{:.1f}"))
 
     def mean(arm, key, q=None):
-        vals = [r[key] for r in ok if r["arm"] == arm and (q is None or r["q"] == q)]
-        return statistics.mean(vals) if vals else float("nan")
+        return arm_mean(ok, arm, key, q)
 
     lines = ["| scope | arm | n | " + " | ".join(m[1] for m in metrics) + " | "
              + " | ".join(f"Δ {m[1]} vs N" for m in metrics) + " |",
              "|---" * (3 + 2 * len(metrics)) + "|"]
     for q in [None] + sorted({r["q"] for r in ok}):
         scope = "overall" if q is None else f"Q{q}"
-        for arm in ARMS:
+        for arm in arms:
             n = len([r for r in ok if r["arm"] == arm and (q is None or r["q"] == q)])
             vals = [fmt.format(mean(arm, k, q)) for k, _, fmt in metrics]
             deltas = ["—" if arm == "N" else pct(mean(arm, k, q), mean("N", k, q))
@@ -236,24 +270,14 @@ def cmd_summarize() -> None:
         return [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()] \
             if p.exists() else []
 
-    warm, canary, effort = jsonl("warmup.jsonl"), jsonl("probes/canary.jsonl"), \
-        jsonl("probes/effort-check.jsonl")
-    naive, safe = stream_facts(HERE / "probes" / "p0-naive.stream.jsonl"), \
-        stream_facts(HERE / "probes" / "p1-safe.stream.jsonl")
+    warm, canary = jsonl(tagged("warmup.jsonl", tag)), jsonl(tagged("probes/canary.jsonl", tag))
     cave = [l for l in ARM_TEXT["C"].splitlines() if "caveman" in l.lower()]
-    costs = {
-        "24 measured calls": sum(r.get("total_cost_usd") or 0 for r in recs),
-        "warm-up (3)": sum(r.get("total_cost_usd") or 0 for r in warm),
-        "canary (3)": sum(r.get("total_cost_usd") or 0 for r in canary),
-        "probes p0-naive + p1-safe": naive["cost"] + safe["cost"],
-        "effort checks": sum(r.get("total_cost_usd") or 0 for r in effort) + EFFORT_DEBUG_PROBE_USD,
-    }
     models = sorted({m for r in ok for m in r["models"]})
     hooks = sum(r["hook_events"] for r in recs)
     tools = sorted({(r["init_tools"], r["init_mcp_servers"]) for r in recs})
-    n_ctx = statistics.mean(sum(r.get(k) or 0 for k in ("input_tokens", "cache_creation_input_tokens",
-                                                       "cache_read_input_tokens"))
-                            for r in ok if r["arm"] == "N")
+    calls = (f"- {len(recs)} recorded, {len(ok)} successful, {len(failed)} failed"
+             + (": " + ", ".join(f"{r['arm']}-q{r['q']}-r{r['run']} attempt {r['attempt']}"
+                                 for r in failed) if failed else "") + ".")
 
     canary_lines = []
     for r in canary:
@@ -266,13 +290,76 @@ def cmd_summarize() -> None:
             f"{sum(l in t for l in cave)}/{len(cave)}; `CAVEMAN: NONE` {'CAVEMAN: NONE' in t}; "
             f"Brevity {presence(t, 'Brevity')}; Respond terse {presence(t, 'Respond terse')}; "
             f"marker {MARKERS[r['arm']]} obeyed {MARKERS[r['arm']] in t}")
+    if tag:  # a later round: its own summary, the drift of its N and its new arms against round 1
+        r1 = [r for r in jsonl("results.jsonl") if not r["is_error"]]
+        new = [a for a in arms if a != "N"]
+        drift = "; ".join(f"{label} {fmt.format(arm_mean(r1, 'N', k))} → {fmt.format(mean('N', k))} "
+                          f"({pct(mean('N', k), arm_mean(r1, 'N', k))})" for k, label, fmt in metrics[:3])
+        vs = ["| round | arm | n | " + " | ".join(m[1] for m in metrics) + " | "
+              + " | ".join(f"Δ {m[1]} vs r1 N" for m in metrics) + " |",
+              "|---" * (3 + 2 * len(metrics)) + "|"]
+        for rnd, src, sel in (("r1", r1, present_arms(r1)), (tag, ok, new)):
+            for arm in sel:
+                vals = [fmt.format(arm_mean(src, arm, k)) for k, _, fmt in metrics]
+                deltas = ["—" if src is r1 and arm == "N" else pct(arm_mean(src, arm, k), arm_mean(r1, "N", k))
+                          for k, _, _ in metrics]
+                vs.append(f"| {rnd} | {arm} | {sum(r['arm'] == arm for r in src)} | "
+                          + " | ".join(vals) + " | " + " | ".join(deltas) + " |")
+        costs = {f"{len(recs)} measured calls": sum(r.get("total_cost_usd") or 0 for r in recs),
+                 f"warm-up ({len(warm)})": sum(r.get("total_cost_usd") or 0 for r in warm),
+                 f"canary ({len(canary)})": sum(r.get("total_cost_usd") or 0 for r in canary)}
+        day = min((r["started_at"][:10] for r in recs), default="?")
+        print("\n".join([
+            f"# Caveman block on Opus 5.5 — round {tag}: arms {', '.join(arms)} (audit card H2, {day})", "",
+            f"Generated by `run_arms.py summarize --tag {tag}` from {tagged('results.jsonl', tag)}, "
+            f"{tagged('warmup.jsonl', tag)} and {tagged('probes/canary.jsonl', tag)}; round 1 (r1, "
+            "results.jsonl) is read only for the drift line and the r1 rows.", "",
+            "## Design", "",
+            "- Arms: " + "; ".join(f"{a} = " + ("no brevity text" if a == "N" else f"arm-{a}.txt")
+                                   for a in arms)
+            + ". Only difference: the text passed with `--append-system-prompt`.",
+            f"- `{MODEL}`, `--effort {EFFORT}`, tools off, the same isolation, questions.txt "
+            f"({len({r['q'] for r in recs})}) and {RUNS} runs per arm per question as round 1 "
+            "(SUMMARY.md); one warm-up per arm first; arm order rotated per (question, run) block.", "",
+            f"## Isolation canary (`run_arms.py canary --arms {','.join(r['arm'] for r in canary)} "
+            f"--tag {tag}`)", "", *(canary_lines or ["- no canary recorded for this tag"]), "",
+            f"## Means per arm (n = successful calls; Δ = change against arm N of {tag})", "",
+            "`out tok` = billed output tokens, thinking included; `visible tok` = out tok − thinking.", "",
+            *lines, "",
+            f"## {' + '.join(new)} against round 1", "",
+            f"- Control drift, N of {tag} against N of r1 (overall means): {drift}.",
+            "- r1 rows from results.jsonl; Δ is against N of r1, so read it with the drift line above.", "",
+            *vs, "",
+            "## Calls and cost", "",
+            calls,
+            f"- Models billed: {models}; hook events across the {len(recs)} calls: {hooks}; "
+            f"(tools, MCP servers) at init: {tools}.",
+            "- Cost: " + "; ".join(f"{k} ${v:.4f}" for k, v in costs.items())
+            + f"; all-in ${sum(costs.values()):.4f}.", "",
+            "## Every call", "", *per_call,
+        ]))
+        return
+
+    effort = jsonl("probes/effort-check.jsonl")
+    naive, safe = stream_facts(HERE / "probes" / "p0-naive.stream.jsonl"), \
+        stream_facts(HERE / "probes" / "p1-safe.stream.jsonl")
+    costs = {
+        "24 measured calls": sum(r.get("total_cost_usd") or 0 for r in recs),
+        "warm-up (3)": sum(r.get("total_cost_usd") or 0 for r in warm),
+        "canary (3)": sum(r.get("total_cost_usd") or 0 for r in canary),
+        "probes p0-naive + p1-safe": naive["cost"] + safe["cost"],
+        "effort checks": sum(r.get("total_cost_usd") or 0 for r in effort) + EFFORT_DEBUG_PROBE_USD,
+    }
+    n_ctx = statistics.mean(sum(r.get(k) or 0 for k in ("input_tokens", "cache_creation_input_tokens",
+                                                       "cache_read_input_tokens"))
+                            for r in ok if r["arm"] == "N")
     effort_line = "; ".join(f"--effort {r['effort_flag']}: {r['thinking_tokens']} thinking tok, "
                             f"{r['effort_rejected_lines']} `[effort]` rejections, "
                             f"{r['advisor_tool_lines']} `[AdvisorTool]` lines" for r in effort)
 
     think = ["| arm | thinking tok | visible tok | answer chars | Δ thinking | Δ visible | Δ chars |",
              "|---|---|---|---|---|---|---|"]
-    for arm in ARMS:
+    for arm in arms:
         vals = [mean(arm, k) for k in ("thinking_tokens", "visible_tokens", "result_chars")]
         base = [mean("N", k) for k in ("thinking_tokens", "visible_tokens", "result_chars")]
         think.append(f"| {arm} | {vals[0]:.0f} | {vals[1]:.0f} | {vals[2]:.0f} | "
@@ -329,9 +416,7 @@ def cmd_summarize() -> None:
         "- The 2026-09-21 counting method (thinking included or not) is not recorded: "
         "UNVERIFIED — could not measure because no record of that run's method was found.", "",
         "## Calls and cost", "",
-        f"- {len(recs)} recorded, {len(ok)} successful, {len(failed)} failed"
-        + (": " + ", ".join(f"{r['arm']}-q{r['q']}-r{r['run']} attempt {r['attempt']}"
-                            for r in failed) if failed else "") + ".",
+        calls,
         f"- Models billed: {models}; hook events across the 24 calls: {hooks}; "
         f"(tools, MCP servers) at init: {tools}.",
         "- Cost: " + "; ".join(f"{k} ${v:.4f}" for k, v in costs.items())
@@ -379,13 +464,17 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("step", choices=("canary", "run", "summarize"))
     ap.add_argument("--cwd", default="", help="neutral empty non-git working directory")
+    ap.add_argument("--arms", type=arm_list, default=None,
+                    help=f"comma list of arms from {','.join(ARM_TEXT)}; default {','.join(ARMS)} "
+                         "(summarize: the arms present in the results file)")
+    ap.add_argument("--tag", default="", help="round tag, e.g. r2: every output goes to tagged paths")
     a = ap.parse_args()
     if a.step == "canary":
-        cmd_canary(neutral_cwd(a.cwd))
+        cmd_canary(neutral_cwd(a.cwd), a.arms or ARMS, a.tag)
     elif a.step == "run":
-        cmd_run(neutral_cwd(a.cwd))
+        cmd_run(neutral_cwd(a.cwd), a.arms or ARMS, a.tag)
     else:
-        cmd_summarize()
+        cmd_summarize(a.tag, a.arms)
 
 
 if __name__ == "__main__":
