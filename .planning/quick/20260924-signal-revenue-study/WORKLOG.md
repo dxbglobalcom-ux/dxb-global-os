@@ -27,6 +27,9 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   içinde alkol var sadece aldinin reklamı yaplır"* and *"bu holding islam şeriat kanunları göre işleyen bir holding haram
   ürünler satılmaz gelir kesinlikle buralardan gelemez"* — no bank ads (any bank), no alcohol ads, supermarket chains are
   clients for the chain's own ad only; haram markets were never ours. Applied throughout STUDY; E11.1 corrected.
+- ~22:05: *"bak en ticari hacmi yüksek ülkeleri sen seç amerika canada rusya malezya avustralya almanya fransa vs vs anladın"* — the
+  engineer picks the countries by volume; never ask him. ~22:10: *"ve araştırmayı bitirmeye bak"*. ~22:30: *"amaç tüm ülkelerin didik
+  didik etmek değil tabiki ama her ülkede müşteri almak"* — stop dissecting; the goal is a client in every country (E13.1).
 
 ## Read (done)
 - CONVERSATION.md · PLAN.md · SOURCE-PROMPT.md · PRIOR-WORK.md whole; board rows B28 (whole), B43 (doctrine part);
@@ -63,8 +66,10 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
 - [x] L3a. Scope on his word: international, every continent at once; the "first three countries" sequence deleted (E12.1);
   STUDY §0, §2 verdicts, §2.7, §4.1–4.4, §5, §6, §7 rewritten in place. His halal rulings applied (banks none, alcohol
   none, supermarkets yes for the chain's own ad; haram markets were never ours, not "lost").
-- [ ] L4. §4.4's loud-advertiser lists cover three countries only; the other continents (US, Canada, France, Australia,
-  Japan, Korea, India, Indonesia, Brazil, Mexico, South Africa) are marked ⚠ unread — the next measurement.
+- [x] L4. Countries chosen by volume, 26 rows, each with how the first client is won there (STUDY §2.8); Russia measured (AKAR),
+  Netherlands, Poland, Malaysia, Mexico, Brazil-gross added; loud-advertiser lists read for US, Australia, India, Brazil, France
+  (pages opened), Indonesia, Russia, Mexico (summaries) — §4.4 second table. Digging stopped on his word; Korea, Canada, Japan
+  (beyond two names), Malaysia, Poland, Netherlands not read (E13.4). Research declared finished on his "araştırmayı bitirmeye bak".
 - [ ] L3. Open on him (STUDY §6): the plan order ("tamam"?) only. Closed by his word: the two halal doubts (supermarket
   chains that also sell alcohol/pork; an interest-based bank's Islamic window). Still open and non-legal: first-hand
   Ramadan ad-spend figure; Saudi buyers' own words (two attempts, none found); MiniMax H3 Turkish (a WER measurement,
@@ -91,4 +96,7 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   EVIDENCE E11; folder clean. 21:14 his ruling on the first three countries applied (E12.1); STUDY, EVIDENCE, WORKLOG,
   HANDOVER changed; committed by path (`d22d8c27`).
 - 21:20–21:50 his corrections: international, no specific countries; sharia boundary restated; halal rulings. STUDY
-  rewritten in place (no new measurement), EVIDENCE E11.1 corrected + E12 rewritten, WORKLOG, HANDOVER; committed by path.
+  rewritten in place (no new measurement), EVIDENCE E11.1 corrected + E12 rewritten, WORKLOG, HANDOVER; committed by path (`73b5893b`).
+- 22:00–22:45 round 4 second half: 4 searches + 4 fetches (dentsu, WPP, AKAR, smmplanner) + cbr rate; then 7 fetches + 8 searches
+  (US/AU/JP/BR/FR/IN pages; MY/ID, PL, NL, RU, KR, MX, CA, ID/MY advertisers); a Korean fetch stopped by him. STUDY §0, §2.2, §2.4,
+  §2.5, new §2.8, §4.2, §4.4, §6, §7; EVIDENCE E13; committed by path. Context 29 % before writing.

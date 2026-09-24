@@ -26,6 +26,10 @@ you here, in Turkish. This chain of sessions does research and thinking only. **
   ads (any bank), no alcohol ads, a supermarket chain is a client for the chain's own ad only; haram markets are never
   "lost revenue", they were never ours. **Never put a halal doubt to him as a question**; the boundary is constitutional.
   The plan order is NOT approved until he says so.
+- ~22:05–22:30 (third session): *"en ticari hacmi yüksek ülkeleri sen seç … vs vs anladın"* · *"araştırmayı bitirmeye bak"* ·
+  *"amaç tüm ülkelerin didik didik etmek değil tabiki ama her ülkede müşteri almak"* — the engineer chooses the countries by
+  volume (done: STUDY §2.8, 26 rows); the research is FINISHED; no more per-country dissection; what the study owes per country is
+  "how the first client is won there", nothing deeper (E13.1).
 - Standing: only read; no sign-ups, no outreach, no money; Islamic boundaries constitutional; nothing enters the board,
   the plan or the specs; commit only this folder's files by path (never `git add -A`; other sessions have uncommitted
   work in the tree); questions to him in plain prose (clickable boxes do not reach him).
@@ -49,6 +53,9 @@ you here, in Turkish. This chain of sessions does research and thinking only. **
   the ad itself is halal; an interest-based bank's Islamic window as a client.
 - **Asked, not answered:** whether the "helal çerçevede" ruling for advertising clients should be written permanently into
   `00-CEO-DIRECTIVE-REVENUE-FIRST.md` (asked in one line 20:20; write nothing unless he says so).
+- **Round 4 (this session) is in `73b5893b` and the commit after it:** the study is international (every continent at once), the
+  countries are chosen by volume in §2.8, Russia is measured (E13.2), eight more countries' loud advertisers are in §4.4. Not read,
+  on his word: Korea, Canada, Japan beyond two names, Malaysia/Poland/Netherlands advertisers (E13.4). Do not reopen them unless he asks.
 - **Open and non-legal, both dead ends so far:** a first-hand Ramadan ad-spend figure (IAB MENA is members-only; Ipsos
   gives consumer figures only); Saudi buyers' own words (r/saudiarabia and Arabic search: only agencies' pages). MiniMax H3
   Turkish is a WER measurement for Phase 0, not research.

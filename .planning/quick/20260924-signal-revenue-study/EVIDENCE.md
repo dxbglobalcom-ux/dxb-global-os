@@ -431,3 +431,79 @@ nine countries' price bands (§0, §2.1–2.4) · German and Brazilian buyers' w
   constitutional in the master plan); nothing in PLAN.md or the board.
 - Still open on him: the plan order (STUDY §6). §4.4's loud-advertiser lists exist for three countries only; the other
   continents are UNVERIFIED until read (next measurement).
+
+## E13. Round 4, second half — the same third session, 2026-09-24 22:00–22:45: countries chosen by volume on his word; Russia and the missing markets measured; the loud-advertiser lists of eight more countries read, then the digging stopped on his word
+
+### E13.1 His orders (first-hand, this session)
+- ~22:05, verbatim: *"bak en ticari hacmi yüksek ülkeleri sen seç amerika canada rusya malezya avustralya almanya fransa vs vs anladın"* — the
+  engineer selects the highest-commercial-volume countries; never ask him to pick. Measure used: ad spend (E1/E2/E13). STUDY §2.8.
+- ~22:10, verbatim: *"ve araştırmayı bitirmeye bak"* — finish the research.
+- ~22:30 (interrupting a Korean-statistics fetch), verbatim: *"yani en başındaki talebimi unutmayın anladınız mı amaç tüm ülkelerin didik
+  didik etmek değil tabiki ama her ülkede müşteri almak"* — the goal is winning clients in every country, not dissecting each; the
+  per-country advertiser digging stopped there (Korea, Canada, Malaysia, Poland, Netherlands, Japan beyond two names: not read).
+
+### E13.2 Russia (new; nothing on Russia existed before this round)
+- **AKAR — "Объем рынка маркетинговых коммуникаций в 2025 году"** (akarussia.ru, opened 2026-09-24): total advertising **₽981.6 bn
+  (+8.5 %)**; segments 2025: video (TV + OLV) ₽312.0 bn (+10 %), **internet services ₽510.1 bn (+9 %)**, OOH ₽109.1 bn (+12 %),
+  publishing ₽25.8 bn (−5 %), audio ₽24.6 bn (−4 %); marketing communications total ₽2.4 tn (+15 %); growth slowed from +24 % in
+  2024 (search summaries: Kommersant, seonews, habr agree on 981.6). First-hand.
+- **Rate:** Bank of Russia official, cbr-xml-daily.ru JSON opened 2026-09-24: USD 1 = ₽84.9057 (dated 2026-09-25). → total ≈ US$11.56 bn,
+  internet ≈ US$6.01 bn; US$8,000 = ₽679,000.
+- **Agency prices (vendor guides, search summaries 2026: yalstudio price list 2026-05-20, raketadigital, bokiva, ganiev, ingate; smmplanner
+  2022 opened):** average SMM agency package ≈ ₽45,000/month; basic VK from ₽15,000; mid packages ₽40,000–70,000; comprehensive from
+  ₽65,000–85,000; Moscow mid-tier agencies from ₽50,000, Demis ₽95,000 up to ₽250,000. → US$530–2,940/month; US$8,000 ≈ 2.7× the top of
+  the band. Video/reels production not priced.
+- **Loudest advertisers (Sostav/AKAR rating "Крупнейшие рекламодатели России 2026", search summary; the page itself is an image and could
+  not be read):** TV — Sber ₽17 bn (−27.8 %), VTB ₽13.4 bn (+31.1 %), Yandex ₽11.3 bn (+19.2 %); print — Sber, Chery, Yandex,
+  Sovcombank, T-Technologies; retail media (Ozon, Wildberries, Yandex Market) becoming a channel of its own. Halal filter: the banks
+  (Sber, VTB, Sovcombank, T-Bank) are out on his word; alcohol advertising is already restricted by Russian law (not researched further).
+- **Not measured, on his 20:10 word (no legal/official research):** payment corridor and sanctions exposure for invoicing a Russian client
+  from abroad. ⚠ UNVERIFIED; flagged in STUDY §2.2 and §2.8.
+
+### E13.3 Other markets measured or completed this round (search summaries unless stated)
+- **Netherlands:** Nielsen Jaarrapport Netto Mediabestedingen 2025 (Emerce, Adformatie, mediaonderzoek.nl summaries, May 2026): net media
+  spend **€6.8 bn (+6.1 %)**, digital +10 % = 63 % of spend. → US$7.73 bn at E0.
+- **Poland:** Publicis Groupe Polska annual report (PAP, mmponline, e-biznes summaries, 2026): net ad market **≈ PLN 14 bn (+6.9 %)**;
+  online video +17.3 %; linear TV +1.2 %; video 53.3 % of the market; retail +PLN 373.3 m (+11.7 %). USD 1 = PLN 3.8553 (ECB via
+  frankfurter, 2026-09-24) → ≈ US$3.63 bn. Agency prices not measured.
+- **Malaysia:** Kenanga Research on Nielsen adex (businesstoday.com.my 2025-10-24, marketech-apac summaries): CY2025 total **RM 4.74 bn
+  (−22 %)**; FY25 estimate RM 4.86 bn after RTM channels re-entered tracking; digital Q1 RM 343 m, Q2 RM 661 m. USD 1 = MYR 4.087 →
+  ≈ US$1.16 bn. Small market; chosen for the halal desk, not for volume (STUDY §2.8 says so).
+- **Indonesia:** total not found; Nielsen Ad Intel H1 2025 (marketech-apac, Nielsen news page in results): top advertisers Unilever, Wings,
+  Mayora, GoTo, Garena (Shopee), Nestlé, Indofood, Ajinomoto, Aqua, Tempo Scan; top categories beverages, laptops & smartphones, food.
+- **Brazil:** Kantar IBOPE Media (Tela Viva 2025-04-23 summary): 2024 ad investment R$ 88 bn (+10 %) — list-price ("tabela") basis ⚠;
+  Cenp's agency-intermediated R$ 28.9 bn (E2) is the net figure the study uses.
+- **Mexico:** Estudio Valor Total Media 2025 (PRODU summary): 2024 ad investment **US$7.722 bn / MX$140,306 m (+4 %)**; Nielsen Ad Intel
+  digital top 5 (merca20 summary): Mercado Libre, P&G, Chedraui, Walmart, Amazon.
+- **World ranking with USD figures from one source: not obtainable this round.** dentsu's mid-year-2026 and Dec-2025 pages (opened) and WPP
+  Media's mid-year-2026 release (opened, 2026-06-16, global US$1.3 tn +8.9 %) carry no country table (56 markets sit inside the
+  downloadable report); WARC's top-10 datapoint is paywalled; Statista summary values (US US$511 bn, China > US$251 bn, UK ≈ 63, Japan
+  ≈ 56, India 20.7 bn) are a vendor's forecast seen only in search summaries ⚠. STUDY §2.8 therefore ranks by the national bodies' own
+  figures (E2, E10, E13) in dentsu's top-12 order (E1.1) and states each figure's scope.
+
+### E13.4 Loud advertisers, eight more countries (for STUDY §4.4; halal filter counted)
+- **US — YouGov "U.S. Advertisers of the Month 2026"** (opened, published 2026-09-15; BrandIndex "seen an ad in the past two weeks"):
+  **August** ChatGPT +5.0, Dawn +4.6, Starbucks +4.5, Lexus +4.2, Meta +3.6, Skechers +3.4, Olive Garden +3.4, Crate & Barrel +3.4, Tesla
+  +3.3, NFL+ +3.3 · **July** Telemundo +4.8, DraftKings +4.7, Airbnb +4.4, ASPCA +4.4, Temu +4.3, Apple Watch +4.3, Tide +4.3, Bank of
+  America +4.3, Snickers +4.3, LG +4.1 · **June** Grand Theft Auto +6.3, Coca-Cola +5.8, CeraVe +5.0, Amazon Prime +4.7, Heineken +4.7,
+  Amazon Alexa +4.7, Kalshi +4.6, Pepsi +4.5, Juicy Juice +4.5, One A Day +4.3 · **May** Fox +4.7, Oscar Mayer +4.2, Hawaiian Punch +4.2,
+  Michelob ULTRA +4.1, Kool-Aid +3.8, Baskin Robbins +3.8, ChatGPT +3.6, Crown Royal +3.6, Raid +3.6, Johnson & Johnson +3.5. Excluded
+  **6 of 40**: alcohol (Heineken, Michelob ULTRA, Crown Royal), gambling/prediction markets (DraftKings, Kalshi), bank (Bank of America).
+- **Australia — Nielsen Ad Intel top 20 advertisers 2025** (nielsen.com, opened, 2026-02-09): Harvey Norman, Reckitt Benckiser, Amazon,
+  Hungry Jack's, Westpac, McDonald's, Chemist Warehouse, Commonwealth Bank, Woolworths, Coles, Youi, Big W, Disney, Mondelez, Qantas, Stan,
+  Budget Direct, Nestlé, Allianz, Kia. Categories: retail A$2.312 bn, finance A$756 m, travel A$684 m, communications A$656 m, motor
+  A$646 m. Excluded **5 of 20**: banks (Westpac, Commonwealth Bank), insurers (Youi, Budget Direct, Allianz).
+- **India — TAM AdEx TV Jan–Jul 2026** (afaqs, opened, 2026-08-21): top 10 advertisers Reckitt, HUL, Godrej, Cadbury, Coca-Cola, Nestlé,
+  P&G, Wipro, Britannia, Google (43 % of TV ad volume); top categories toilet soaps 6.3 %, toilet/floor cleaners 5.9 %, e-com media 3.8 %,
+  chocolates, toothpastes, washing powders, biscuits 2.4 %. Excluded 0 of 10.
+- **Brazil — Kantar IBOPE top 10 advertisers 2024** (Meio & Mensagem, opened, 2025-05-26; R$ thousand): EMS 1,493,112; Unilever 1,361,431;
+  Genomma 1,213,400; Amazon 999,056; Mercado Livre 947,099; Via Capitalização 935,348; Ambev 849,432; Ultrafarma 827,163; Sky 810,118;
+  Claro 782,588. Excluded 2 of 10: Ambev (beer), Via Capitalização (interest-based finance).
+- **France — Kantar Media Top 100 annonceurs 2025** (kantarmedia.fr, opened, 2026-04-01): E.Leclerc 1st (+9.9 %), Amazon (−12.9 %),
+  Carrefour; Lidl, Intermarché (8th); Booking.com, Temu, Shein, Zalando in the top 20; Airbnb, Uber, Leboncoin rising; distribution 19 %
+  of spend, automotive ≈ 7 %; top 100 = 47 % of spend. Excluded 0 named.
+- **Indonesia, Russia, Mexico:** E13.2–E13.3 above (summaries).
+- **Japan:** Toyo Keizai top-300 ad-expense ranking (opened, 2025-01-15): only Sony Group ¥422.7 bn and Nissan ¥321.7 bn (FY to March
+  2024) are shown; the rest is a paid data product. Nikkei Advertising Research Institute's 2025 edition is a paid book. Not pursued.
+- **Not read (his "didik didik değil"):** Korea (adic.or.kr advertiser statistics — the fetch was stopped by him), Canada (no first-hand
+  ranking surfaced; Ad Age country table paywalled), Malaysia advertisers, Poland, Netherlands.
