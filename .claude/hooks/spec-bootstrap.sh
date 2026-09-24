@@ -34,6 +34,9 @@
 # title — he is told first, and his order is that the session does not swell ("oturumu
 # şişirmesin"): every detail stays in --status. A source without a good read for three days adds
 # one line of its own: a watch that fails in silence is believed. Neither → not one byte is added.
+# The lines are paid for inside the same 8,000 bytes (the refuter's B4, 2026-09-24: they sat outside
+# the budget and broke it exactly when there was something to tell him): WHAT HAPPENS NEXT, the one
+# block no ruler pins, gives up as many bytes as they take.
 set -euo pipefail
 ROOT="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
 STATE="$ROOT/.planning/STATE.md"
@@ -103,6 +106,10 @@ if [ -r "$MODEL_WATCH/sources.tsv" ]; then
     watch+=$'\n'"--- MODEL WATCH: no good read of $stale since $since — python3 scripts/model-watch/model-watch.py --status ---"
   fi
 fi
+next_budget=2200
+if [ -n "$watch" ]; then
+  next_budget=$(( next_budget - $(printf '%s' "$watch" | wc -c) ))   # bytes, not characters: "—" is three
+fi
 
 cat <<EOF
 === DXB — WHERE THE WORK STANDS ===${watch}
@@ -118,7 +125,7 @@ answer him FROM IT. Re-opening a file to be told this again is the laziness he n
 $(clip "${position:-"(.planning/STATE.md could not be read — read it yourself before any work)"}" 2500)
 
 --- WHAT HAPPENS NEXT ---
-$(clip "${next:-"(no Next block found — read .planning/STATE.md before answering him)"}" 2200)
+$(clip "${next:-"(no Next block found — read .planning/STATE.md before answering him)"}" "$next_budget")
 
 --- WHAT WAITS ON HIM ---
 $(clip "${waiting:-"(no open-work block found — read HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md)"}" 1000)

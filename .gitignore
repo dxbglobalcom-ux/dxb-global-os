@@ -91,3 +91,6 @@ tests/e2e/evidence/
 !.planning/research/rival-intel/frames/33/t001.jpg
 !.planning/research/rival-intel/frames/35/t001.jpg
 .planning/research/rival-intel/work/
+
+# Python bytecode (scripts/model-watch and other python helpers)
+__pycache__/

@@ -19,9 +19,19 @@
 # failed unit. A source that stays unread for three days is named at the top of the opening
 # instead. The script keeps its own log (~/.local/state/dxb/model-watch/watch.log); stdout goes to
 # the journal.
+#
+# THE NETWORK (the refuter's C3, 2026-09-24): with Persistent=true a missed 09:00 runs at the next boot,
+# and a run before the network is up fails all five reads. The two network-online lines order the unit
+# after the network where a manager has that target — but a USER manager has none of its own (measured
+# that day: `systemctl --user show network-online.target` → LoadState=not-found), so here the wait is the
+# ExecStartPre: up to 60 s for NetworkManager to report a connection. Its "-" keeps the watch running
+# when it cannot tell (no connection, no nm-online): each failed read is then recorded as always.
 [Unit]
 Description=DXB — daily watch for a new Claude model or new usage guidance (tells, never applies)
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=oneshot
+ExecStartPre=-/usr/bin/nm-online -q --timeout=60
 ExecStart=/usr/bin/python3 "%h/DxB Global OS/scripts/model-watch/model-watch.py"

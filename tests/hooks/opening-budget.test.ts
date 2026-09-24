@@ -12,6 +12,16 @@ const root = process.cwd();
 const tmp: string[] = [];
 afterAll(() => { for (const d of tmp) rmSync(d, { recursive: true, force: true }); });
 
+// The model watch (row B55) puts its lines under the hook's title from its state directory. Pinned
+// here (the refuter's C2, 2026-09-24), so the ruler measures the repository and not whatever the
+// machine's watch holds today: a quiet watch by default, its loudest state in a case of its own.
+const quiet = mkdtempSync(join(tmpdir(), "model-watch-quiet-"));
+const loud = mkdtempSync(join(tmpdir(), "model-watch-loud-"));
+tmp.push(quiet, loud);
+writeFileSync(join(loud, "NOTICE.txt"), "--- MODEL WATCH: 99 serious items wait for him — python3 scripts/model-watch/model-watch.py --status ---\n");
+writeFileSync(join(loud, "sources.tsv"), ["models", "docs", "release-notes", "claude-code", "engineering", "judge"].map((n) => `${n}\tx\t0\tnever\terr\n`).join(""));
+process.env.DXB_MODEL_WATCH_STATE = quiet;
+
 /** a copy of the pieces the ruler reads, with the pieces needed for the hook to run, so a bite never touches the real tree */
 function copy(): string {
   const dir = mkdtempSync(join(tmpdir(), "opening-budget-"));
@@ -76,5 +86,15 @@ describe("the repository as it stands", () => {
     expect(r.verdicts.flatMap((v) => v.failures).join("\n")).toBe("");
     expect(r.pass).toBe(true);
     expect(r.verdicts[5].rule).toContain("outside the repo, reported only");
+  });
+  it("keeps it inside every budget with the model watch at its loudest: a notice, and every source and the judge stale", () => {
+    process.env.DXB_MODEL_WATCH_STATE = loud;
+    try {
+      const r = runRuler({ root });
+      expect(r.verdicts.flatMap((v) => v.failures).join("\n")).toBe("");
+      expect(r.pass).toBe(true);
+    } finally {
+      process.env.DXB_MODEL_WATCH_STATE = quiet;
+    }
   });
 });
