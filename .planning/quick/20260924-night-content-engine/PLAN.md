@@ -98,7 +98,7 @@ Frames and media stay in the session scratchpad; nothing from the source enters 
 
 ## 2. Holdinge nasıl oturur
 
-**Tek motor, çok masa.** "Aynı şablon eklediğim her hesapta çalışır" (T 0:52). Bizde bir **masa** = bir iş + onun alanı + izlenen hesaplar. Aynı motor stüdyonun kendi hesabı için, OUTLETEURO için ve ajansın her marka müşterisi için ayrı masa açar. Bu yüzden ürün baştan çok masalı kurulur. Bir gün satılacaksa da hazır olur.
+**Tek motor, çok masa.** "Aynı şablon eklediğim her hesapta çalışır" (T 0:52). Bizde bir **masa** = bir iş + onun alanı + izlenen hesaplar. Aynı motor stüdyonun kendi hesabı için ve ajansın her marka müşterisi için ayrı masa açar. Bu yüzden ürün baştan çok masalı kurulur. Bir gün satılacaksa da hazır olur.
 
 | Parça | Videoda | Holdingde (bugün ölçülen) | Karar |
 |---|---|---|---|
@@ -129,7 +129,7 @@ Frames and media stay in the session scratchpad; nothing from the source enters 
 
 ## 4. Sizin kararınız gereken üç şey
 
-1. **İlk masa hangisi?** Önerim: **stüdyonun kendi alanı + OUTLETEURO**. İkisinin de sonucu gerçek rakamla ölçülür; ajans müşterisi gelince onun masası aynı düğmeyle açılır.
+1. **İlk masa hangisi?** Önerim: **stüdyonun kendi alanı**; ajans müşterisi gelince onun masası aynı düğmeyle açılır. OUTLETEURO bu ürünün masası değildir (sizin sözünüz, 2026-09-24: *"Outleteuro DxB Holding kurulduktan sonra holding bir lüks marka e-ticaret sitesidir. gerek var şimdlik?"*).
 2. **Ücretli yol:** Köprü ve Speaches Faz 0'da yetmezse Apify (videoda ayda yaklaşık 5 dolar) ve Scribe fiyatlarıyla önünüze gelir. Para çıkışı sizin onayınızdır.
 3. **Paylaşım:** Önerim, motorun yalnız okuyup önermesi; paylaşma kararı her zaman sizde.
 
