@@ -1233,5 +1233,12 @@
   "verbatim": "a yı uygulayalım ama bana nasıl haber verilecek? haber şu ne olacak promt audit mi veya ne olacak?",
   "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
   "where": "~/.claude/settings.json line 70 (outside git) · board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc M1"
+ },
+ "model-watch-review-together-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HIS ORDER FOR THE WATCH BEHIND THE PINNED MODEL (board row B55). After card M1 pinned the main model, he asked how he would be told of a newer model and what the notice would be. He was offered four steps: a daily watch of Anthropic's official models page; the notice at the top of the next session's opening; the prompt audit started by the chief engineer without asking him; the switch on his 'geç'. He changed step 3 and confirmed step 4, in the verbatim below: the audit is never started without asking him -- first he and the chief engineer review the model together, and the audit starts on his OK; the setting moves to the new model when he says 'geç'. He ordered it built this way. Not a law.",
+  "verbatim": "denetimi bana sormadan başlatmasın önce beraber modeli inceleyelim sonra ok. bu şekilde kuralım.4-ben geç deyince de yeni modele geçer.",
+  "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
+  "where": "board row B55 · scripts/model-watch/ · .claude/hooks/spec-bootstrap.sh · scripts/systemd/dxb-model-watch.{service,timer}"
  }
 }
