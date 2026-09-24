@@ -1324,5 +1324,12 @@
   "verbatim": "haberler değersizse onunla ilgil herşey silinsin değersiz jiçbir birikim çöp istemiorm bu pc de veya depoda · ama işte o haberleri getirmesin boşuna token masraf gerek yok. o zaman bu işi hergün değil haftada 2 defalık yapalım pazartesi ve perşembe olsun. küçük ipucu listesi tutsun.onu da ayın sonunda silsin.",
   "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
   "where": "board row B55 · .planning/STATE.md · scripts/model-watch/model-watch.py and scripts/systemd/dxb-model-watch.timer (the builder's change)"
+ },
+ "h11-test-stopped-lines-stay-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "H11 closed without a move. The test (two arms on Opus 5.5: the two standing-order lines on every prompt vs at session start only, 15 turns x 2 replicates, design and decision rule committed in 6e15c06c before the first call) was stopped by its builder after 5 of 60 turns: one call with tools off wrote imitation tool calls as text, answered its own invented results and looped to the 128k output cap twice (258,180 output tokens, 6.9965 USD for one call; run total 7.61 USD against an estimate of 3-5). Finishing would have cost about 4 USD more plus a guard. Told in plain words what H11 is and offered 'stop: the lines stay on every prompt, the partial files are deleted' as the recommendation, he said the sentence below. The lines stay where they are (his rule of H11: they move only if the drift does not reproduce; no result, no move). The test folder was removed from the repository and the test sessions and scratch files from the machine, his order of the same afternoon against worthless accumulation. Not a law.",
+  "verbatim": "gereiğini yap",
+  "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
+  "where": "board row B53 · .planning/STATE.md · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H11 · git history 6e15c06c (the design) and the removal commit"
  }
 }
