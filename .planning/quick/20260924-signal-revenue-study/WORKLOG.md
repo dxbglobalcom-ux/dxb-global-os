@@ -11,6 +11,9 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   sağda ben açtım sana sen onunla iletişim kur." → HANDOVER.md written; delivery to the right-hand panel
   measured below.
 - (from BRIEF) no dxb-research door/fleet; the world, not one city; deep and long-running; produce ideas.
+- 20:10, to the successor: *"legalliği şuan için boşver biz müşterilere yurt dışında hizmet veriorz boşuna resmi
+  kaynakları araştırmada vakit token harcama"* — no more licence / permit / tax research, no more official-source reads.
+  What is already written stays; nothing legal is measured further.
 
 ## Read (done)
 - CONVERSATION.md · PLAN.md · SOURCE-PROMPT.md · PRIOR-WORK.md whole; board rows B28 (whole), B43 (doctrine part);
@@ -41,9 +44,10 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   Added: IAB MENA's own MENA total (E10.3); Ipsos × ArabyAds Ramadan 2026 consumer figures (E10.3); nine countries' price
   bands (E10.4); German and Brazilian buyers' own words, 7 threads, 246 comments, 111 people (E10.5). STUDY.md updated in
   place (list in E10.6).
-- [ ] L2. Corrections after his answers to STUDY §6; still open in E9: first-hand Ramadan ad-spend figure; Mawthooq fee
-  conflict (SAR 15,000 vs "free"); whether a company account is exempt like an individual's own-product post; Saudi
-  buyers' own words (two attempts, none found); MiniMax H3 Turkish (a WER measurement, Phase 0); the invoicing jurisdiction.
+- [ ] L2. Corrections after his answers to STUDY §6 (the legal question there, the UAE trade licence, is dropped on his
+  20:10 word; the four that remain: interest-based banks/insurers as clients, crypto companies as clients, the plan order,
+  the first three countries). Still open and non-legal: first-hand Ramadan ad-spend figure; Saudi buyers' own words (two
+  attempts, none found); MiniMax H3 Turkish (a WER measurement, Phase 0).
 
 ## Where the evidence is
 - EVIDENCE.md (this folder). Raw pulls: this session's scratchpad and tool-results (die with the session).
