@@ -9,22 +9,17 @@ description: Use before writing any message, report, alert, briefing or dashboar
 *"bu verdiğin şeyi ve anlatım şeklini HİÇ ANLAMADIM ULAN KURAL YAZDIRDIM CEONUN ANLAYACAĞI DİLDE
 KONUŞUN TEKNİK KONUŞMAYIN DİYE."*
 
-The rule already existed as complaint **C37** and had never been written where sessions actually
-read, so it bound nobody. That omission is the root cause, and it is why this door exists.
-
-**THE CEO IS NOT A DEVELOPER. He is the owner. A report he cannot read is not a report — it is a
-governance violation, the same tier as an invented number.**
+The CEO is the owner, not a developer: a report he cannot read has failed, whatever it contains —
+the same tier as an invented number.
 
 ## The boundary is not here — it fires on every prompt
 
 Two things live in `.claude/hooks/ceo-language.sh`, which injects them on **every** prompt: the
 **word** rule (use the real word, then one short bracketed explanation — he struck the old ban list
 out himself on 2026-08-01: *"kelimeler kullanılsın ama parantez içinde açıklansın basitçe o kadar"*)
-and the **four steps** an explanation follows. **Neither is repeated here on purpose**, and the
-reason is the defect that created that hook: on 2026-07-30 this rule was moved out of the always-on
-context into this door, and within the hour a report reached the CEO carrying three construction
-words. *A rule that only binds when the author remembers to open a door does not bind.* His answer:
-*"bu nedir şimdi ya? ben bu dilden anlamıorm yahu. kaç defa dedim sana bunu."*
+and the **four steps** an explanation follows. Neither is repeated here: they
+fire on every prompt, because a rule that binds only when the author remembers to open a door does
+not bind.
 
 This door holds what a message must CONTAIN. The hook holds what it may never contain.
 

@@ -1268,5 +1268,12 @@
   "verbatim": "hayır ya oturuma gelmesin ya oturumu şişirmesin. bekçi kim sonnet mi? o yapabilir işi. yani sadece istediğimiz modellerimizin çalışmasını ciddi anlamda etkileyecek bir haber varsa getirsin okadar. hergün saçpa sapan haber getirip ufak güncellemelerle contexti şişirmesin.",
   "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
   "where": "board row B55 · scripts/model-watch/model-watch.py · .claude/hooks/spec-bootstrap.sh"
+ },
+ "h7-to-h12-yes-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HIS YES TO CARDS H7, H8, H9, H11 AND H12 OF THE PROMPT AUDIT (board row B53; H10 was withdrawn earlier). Applied the same hour: H7, dxb-verify labels UNVERIFIED only what the author cannot observe through a terminal or an operator screenshot, and what was observed still waits for his eye; H8, dxb-close-row states the 1-KOY rule and its two enforcing files without the capitals and the incident story; H9, dxb-ceo-report opens with the rule in one sentence and drops the C37 history and the 2026-07-30 story with its quote; H12, dxb-research's description becomes routing text, and on his added word it says the door asks him once at the end whether to save the report (the door's section 7 already carried his 2026-09-17 ruling). H11 (the two per-prompt lines moved to session start) is a test first, on Opus 5.5; they move only if the drift does not reproduce. Verbatim below. Not a law.",
+  "verbatim": "h7-12 arasıda onaylıorm sadece h12 de rapor kaydedilsin mi diye sorulsun sonunda.",
+  "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
+  "where": ".claude/skills/dxb-verify, dxb-close-row, dxb-ceo-report, dxb-research SKILL.md · board row B53 · page docs H7, H8, H9, H11, H12"
  }
 }

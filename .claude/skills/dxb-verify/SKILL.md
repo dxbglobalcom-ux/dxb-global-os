@@ -13,9 +13,10 @@ decisive output line, or the claim is forbidden. This is the CEO's oldest and ha
 - `✓ VERIFIED` — command → output
 - `⚠ UNVERIFIED` — with the reason it cannot be machine-checked
 
-Anything outside a terminal's observation — how a page renders, an external dashboard, a
-third-party service's state, how a voice sounds — can **never** be reported as done. It is
-labelled `⚠ UNVERIFIED — requires human-eye confirmation` and listed separately.
+Anything you cannot observe yourself — through a terminal or your own `operator` screenshot — such
+as how a voice sounds or a third-party service's state, is labelled
+`⚠ UNVERIFIED — requires human-eye confirmation` and listed separately. What you observed is
+reported as observed; it is not accepted until his eye (LAW B).
 
 **A prediction is not a result.** "This should work" is a hypothesis and is written as one. Only
 measured outcomes take the past tense.
