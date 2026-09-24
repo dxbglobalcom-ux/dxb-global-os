@@ -17,6 +17,9 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
 - 20:20 / 20:21, his answers to STUDY §6: *"hayır kripto falan bunlar asla"* · *"helal çerçevede"* — crypto never a
   client; clients within the halal frame (no interest-based banks/insurers; Islamic banks and takaful yes). Recorded in
   STUDY and EVIDENCE E11.1; not written as a law (he has not said "kanun olsun"; asked in one line).
+- 20:23: *"session şişiyor bir sonraki sessionada söyle %50 de devredin herzaman başka bir fable' 5.1'e şuan session %60
+  devre hazırlan açık segme var zaten"* — hand over at 50 % always, to another Fable 5.1 xhigh; this session (62 %) hands
+  over now. HANDOVER.md rewritten for the successor (LAW A: the previous session's note is replaced; git keeps it).
 
 ## Read (done)
 - CONVERSATION.md · PLAN.md · SOURCE-PROMPT.md · PRIOR-WORK.md whole; board rows B28 (whole), B43 (doctrine part);
@@ -70,3 +73,5 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   hash in `git -C "/home/dxb/DxB Global OS" log -1 -- .planning/quick/20260924-signal-revenue-study/`.
 - 20:15–20:45 round 3 (see L2). Files changed: EVIDENCE.md (+E11), STUDY.md (§0, §2.2, §2.3, §3.3, §3.7, §4.2, §4.3, new
   §4.4, §5.1, §6, §7), WORKLOG.md.
+- 20:23–20:30 handover on his word at 62 %: HANDOVER.md rewritten, committed; the successor opened by this session in the
+  open editor-area bash terminal of his VS Code window (operator), verified by screenshot.

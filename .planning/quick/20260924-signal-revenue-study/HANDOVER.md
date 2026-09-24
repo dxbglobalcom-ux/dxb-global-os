@@ -1,39 +1,82 @@
-# DEVİR — SIGNAL + stüdyo dünya gelir çalışması (Fable 5.1 → Fable 5.1 xhigh), 2026-09-24 ~19:45
+# HANDOVER — SIGNAL + studio worldwide revenue study → the next Fable 5.1 xhigh session (2026-09-24 ~20:25)
 
-Bu yazı, bağlamı %84 dolan Fable 5.1 oturumundan, CEO'nun sağ panelde açtığı yeni Fable 5.1 xhigh
-oturumuna ("dxb ceosu solfaki fable araştırması") devirdir. CEO'nun sözü (19:40 civarı): *"acil devret
-şuan %84 şişmiş sesionun bundan sonra alttaki çubuk %37 olduğunda devir yazısını diğer fable 5.1 xhigh'a
-devretmen gerekecek diğerleri de bu şekilde olsun."* ve *"yeni session aç ve oraya devret … sağda ben
-açtım sana sen onunla iletişim kur."* Yeni oturuma kendi yazdığı: *"sen devralacaksın kaldığı yerden
-aynı titizlikle devam et."*
+You are a **Fable 5.1 · xhigh** session opened by the previous Fable 5.1 session (`dxb-global-os-3a`, transcript
+`6c7e82a4`) on the CEO's order. The CEO is Muhittin Bey ("Muhittin Bey" or "CEO Bey", never the bare name); he talks to
+you here, in Turkish. This chain of sessions does research and thinking only. **Nothing is built.**
 
-## 1. Önce oku (sırayla; hepsi bu klasörde, `/home/dxb/DxB Global OS/.planning/quick/20260924-signal-revenue-study/`)
-1. `BRIEF.md` — baş mühendisin açılış brifingi: iş, CEO'nun sözleri, sınırlar, çıktı biçimi. **Tamamı geçerli.**
-2. `WORKLOG.md` — ne yapıldı, ne kaldı, kanıt nerede.
-3. `STUDY.md` — CEO için Türkçe çalışma (bitti, 7 bölüm). `EVIDENCE.md` — her rakamın kaynağı ve etiketi (bitti, E0–E9).
-4. `CONVERSATION.md`, `PRIOR-WORK.md`, `../20260924-night-content-engine/PLAN.md` ve `SOURCE-PROMPT.md` — yalnız gerekirse; BRIEF ve STUDY bunları özetliyor.
+## 1. His orders for this job — every one still in force (session orders, not laws; written nowhere else)
+- *"kesinlikle dxb-research skillini kullanma"* — no `dxb-research` door or fleet. Your own tools only.
+- *"tüm dünya … her kıtada en yüksek gelir gelebilecek ülkelere"* — the world, not one city.
+- *"fable a sormana gerek yok sen kendin devam et"* — do not call the advisor tool as a routine; only if truly stuck.
+- 19:50: *"diğer oturumla asla iletişe artık geçme her devri para sen kendi yoluna devam et titizlikle"* — **no
+  SendMessage to any other session.** Do not reply to cross-session notices.
+- 20:10: *"legalliği şuan için boşver biz müşterilere yurt dışında hizmet veriorz boşuna resmi kaynakları araştırmada
+  vakit token harcama"* — **no licence, permit, tax or official-source research.** What is written stays.
+- 20:20 / 20:21: *"hayır kripto falan bunlar asla"* · *"helal çerçevede"* — crypto never a client; clients within the
+  halal frame (no interest-based banks or insurers; Islamic banks and takaful yes). Applied in STUDY; not written as a law.
+- 20:23: *"session şişiyor bir sonraki sessionada söyle %50 de devredin herzaman başka bir fable' 5.1'e"* — **hand over
+  at 50 % used context, always, to another Fable 5.1 xhigh session.** Measure with `/home/dxb/.local/bin/dxb-ctx --pct`
+  (falls back: `operator shot` and read the bar). At 50 %: rewrite this HANDOVER.md, update WORKLOG.md, commit, and open
+  the successor YOURSELF (§6) — never ask him to. Open every report with `CONTEXT: N%`.
+- Standing: only read; no sign-ups, no outreach, no money; Islamic boundaries constitutional; nothing enters the board,
+  the plan or the specs; commit only this folder's files by path (never `git add -A`; other sessions have uncommitted
+  work in the tree); questions to him in plain prose (clickable boxes do not reach him).
 
-## 2. Bu oturumun CEO'dan aldığı oturumluk emirler (kanun değil; bu iş için geçerli, yeni oturum aynen uyar)
-- *"fable a sormana gerek yok sen kendin devam et"* — danışman (advisor) aracına sorulmaz (artık `~/.claude/CLAUDE.md`'de de yazılı: yalnız zor kararda).
-- *"acele etmeden güzel bir çalışma çıkar lütfen."*
-- **Devir eşiği %37:** alttaki çubuk %37'ye gelince devir yazısı yazılıp bir sonraki Fable 5.1 xhigh oturumuna devredilir ("diğerleri de bu şekilde olsun"). Bu CEO'nun bu iş için sözüdür; kalıcı kural olması için "kanun olsun" demedi — kalıcı yazılmaz, ona tek satırla sorulur (CLAUDE.md §2). `dxb-ctx --pct` sayıyı verir; çalışmazsa `operator shot` ile çubuk okunur.
-- BRIEF'teki emirler: `dxb-research` kapısı/filosu KULLANILMAZ; dünya, tek şehir değil; derin ve uzun soluklu; fikirleri sen üret; yalnız oku (kayıt yok, dış yazışma yok, para yok); alt-ajan seyrek; Workflow aracı yok; tahtaya/plana/spec'e hiçbir şey girmez; commit yalnız bu klasörün dosyaları (`git add` ile tek tek yol; asla `-A`).
-- Bu makinede kod-kapısı (`dxb-code-gate`) script dosyası yazmayı engeller; analiz için `python3 - <<'EOF'` satır içi çalışır. Bash'te `cd` kullanılmaz (prompt-gate). Reddit doğrudan engelli; `safereddit.com` (Redlib aynası) `mcp__scrapling__stealthy_fetch` ile açılıyor. YouTube yorumları `/home/dxb/.local/bin/yt-dlp --write-comments` ile iniyor. Statista paywall'lı; Clutch, PwC tax summaries, ulusal IAB sayfaları açılıyor.
+## 2. Read first (all under `/home/dxb/DxB Global OS/.planning/quick/20260924-signal-revenue-study/`)
+1. `WORKLOG.md` — what was done in three rounds, what is open (L3).
+2. `STUDY.md` — the deliverable, Turkish, 7 sections + §4.4. **Complete.** Read §0, §4, §6 whole; the rest as needed.
+3. `EVIDENCE.md` — every number's source and tag; E10 and E11 are the successor rounds.
+4. `BRIEF.md` — the original brief (still valid, except the legal parts he dropped). `CONVERSATION.md`, `PRIOR-WORK.md`,
+   `../20260924-night-content-engine/PLAN.md` — only if a question needs them.
 
-## 3. Durum — ne bitti, ne kaldı
-**Bitti (ölçüldü):**
-- Para haritası 7 kıta / ~30 ülke: harcama (ulusal kurumlar), dil, ajans fiyat bantları (16 ülke + 15 ülkede Clutch), 8.000 $ nerede sığar, müşteri kazanma, kanun/izin/stopaj (15 ülke PwC), İslami süzgeç, insanların sözü (YouTube 1.548 yorum/1.332 kişi; Reddit 12 başlık/1.633 yorum/≈590 kişi; r10 12 kişi; Trustpilot 1.007 yorum; IAB anketi).
-- 14 gelir kalemi (6'sı yeni: yayın öncesi puan, çok ülkeli masa, helal/Ramazan masası, ortak ajans kanalı, dil çoğaltma, ihracatçı masası, zincir masası, aylık hesap raporu), saldırı sırası, ilk 90 gün, 3 senaryo (hesapla), tuzaklar, karşı argümanlar, CEO'ya 5 soru — hepsi `STUDY.md`'de.
-- Commit: bu devirle birlikte bu klasörün dosyaları commit edildi (WORKLOG'da hash).
+## 3. Where it stands
+- The study is complete and committed: `363dcbab` (round 1, the first Fable session), `94ddf0a8` (round 2: three claims
+  corrected on primary sources, nine countries priced, 111 buyers read), `04c4f37f` (legal research stopped), `17038d8b`
+  (round 3: his two rulings applied, price anchors, the loud advertisers of KSA/UK/DE read and filtered, sensitivity),
+  plus the commit of this handover.
+- **Waits on him (STUDY §6):** (1) the plan order — "önce ücretli inceleme, ilk masa ilk hedef markanın sektörü" — on his
+  "tamam" the CHIEF ENGINEER (an Opus 5.5 session) writes it into PLAN.md and board row B43; this chain does not touch
+  the plan or the board; (2) the first three countries (proposed: Saudi Arabia with a Mawthooq-registered partner agency,
+  UK, Germany); (3) two halal doubts only he can rule: a supermarket chain that also sells alcohol/pork as a client when
+  the ad itself is halal; an interest-based bank's Islamic window as a client.
+- **Asked, not answered:** whether the "helal çerçevede" ruling for advertising clients should be written permanently into
+  `00-CEO-DIRECTIVE-REVENUE-FIRST.md` (asked in one line 20:20; write nothing unless he says so).
+- **Open and non-legal, both dead ends so far:** a first-hand Ramadan ad-spend figure (IAB MENA is members-only; Ipsos
+  gives consumer figures only); Saudi buyers' own words (r/saudiarabia and Arabic search: only agencies' pages). MiniMax H3
+  Turkish is a WER measurement for Phase 0, not research.
+- The SIGNAL plan itself is NOT approved; no entry in `scripts/governance/ceo-approvals.json`; no code.
 
-**Kaldı (yeni oturumun işi):**
-1. **CEO'ya ilk mesaj**: CLAUDE.md §0 düzeni (gözünü bekleyen: STUDY.md; sırada: onun okuması ve §6'daki 5 soruya cevabı; bloke: lisans sorusu) + çalışmanın 6-8 cümlelik özeti (STUDY §0'dan) + soruları düz yazıyla. Ona "ne yapayım" sorulmaz.
-2. CEO'nun cevaplarına göre STUDY/EVIDENCE düzeltmeleri (ör. faizli banka müşterisi hükmü, ilk üç ülke sırası, plan sırası). Tahtaya/plana yazmak baş mühendisin işi ve CEO'nun sözüyle; bu oturum yazmaz.
-3. Açık ölçümler (EVIDENCE E9): Ramazan reklam harcaması birinci el rakam; Turquality'de yabancı ajans faturasının destek kapsamı (resmî Karar metni); Mawthooq'un şirket başvurusu; BAE izninin yabancı üreticiyi kapsayıp kapsamadığı; Japonya kategori tablosu; Kanada IAB sayfası; MiniMax H3 Türkçe ses. İstenirse ikinci tur: Suudi alıcılarının kendi sözü (X/LinkedIn erişilemedi; Arapça YouTube yorumları ve Suudi forumları denenebilir).
-4. Her raporun başında `CONTEXT: N%` (dxb-ctx --pct); %37'de devir.
+## 4. What to do — and what not to
+- Do not start a fourth research round on your own; the study is complete and he said not to spend tokens. Work only on
+  what he asks next (a correction from his answers, a new direction, a question).
+- If he gives an answer to §6: apply it in STUDY.md (and EVIDENCE if it changes a number), update WORKLOG L3, commit.
+- If he asks something the study already answers: answer from STUDY/EVIDENCE with the section; do not re-measure.
+- If he orders the plan to be written: that is the chief engineer's job (Opus 5.5); say so in one line and do not write
+  into PLAN.md or the board yourself.
 
-## 4. CEO'ya nasıl yazılır
-Türkçe, "siz", cevap önce, holdingin kendi işinden resim (stüdyonun 30 Ağustos klibi, Hamza, gece masası), sayı tabloda, terim bir kez parantezle; ölçülmeyen ⚠ DOĞRULANMADI; tıklama kutusu değil düz yazı soru. Hitap: "Muhittin Bey" ya da "CEO Bey".
+## 5. Tool gotchas measured in this chain
+- `dxb-prompt-gate` blocks `cd` inside a compound Bash command: use absolute paths / `git -C`. `dxb-code-gate` blocks
+  writing script files: use `python3 - <<'EOF'` inline. Edit/Write need the file Read first; Bash heredocs do not.
+- reddit.com blocks this machine; `safereddit.com` (Redlib) opens with `mcp__scrapling__stealthy_fetch`
+  (`solve_cloudflare=true`, `wait=5000–6000`, `timeout=60000`); thread links come from `css_selector=".post_title a"`
+  with `extraction_type="html"` and `main_content_only=false`; a 502 usually loads on a second try. Large results land in
+  tool-results files; parse them with inline python.
+- WebFetch cannot read a PDF: download with curl and `pdftotext -layout`. Statista is paywalled; national IAB pages,
+  PwC tax summaries, YouGov article pages, ticaret.gov.tr PDFs open.
+- YouTube comments: `/home/dxb/.local/bin/yt-dlp --write-comments`.
 
-## 5. Kanıt nerede
-`EVIDENCE.md` (E0 kur, E1 dünya, E2 ulusal kurumlar, E3 ajans fiyatları, E4 kanun/izin/stopaj, E5 İslami süzgeç, E6 insanlar, E7 karşılaştırmalar, E8 dil kapasitesi, E9 ölçülemeyenler). Ham çekimler bu oturumun scratchpad'inde (`/tmp/claude-1000/-home-dxb-DxB-Global-OS/356ddf76-4ae6-4f0e-af7a-768368efd120/scratchpad/`, YouTube yorum JSON'ları) ve tool-results klasöründe — oturumla gider; EVIDENCE'a giren her şey oradan alındı.
+## 6. Opening the successor at 50 % (the engineer does it; he never does)
+Read `~/.claude/skills/operator/SKILL.md` and the memories `vscode-handover-terminal-path-and-paste-2026-09-21` and
+`focus-vscode-before-palette-keys-2026-09-24`. Sequence: `operator shot` and LOOK → click inside a free editor-area
+terminal of THIS VS Code window (open one with ctrl+shift+p → "Terminal: Create New Terminal in Editor Area" only after
+confirming VS Code is focused) → put the launch line on the clipboard with `wl-copy` and paste with
+`operator key ctrl+shift+v` in the SAME command as the click → `operator shot` and read the pasted line → `Return` →
+`operator shot` to confirm the new session's first output. Launch line:
+`/home/dxb/.local/bin/claude --model claude-fable-5-1 --effort xhigh "$(cat '/home/dxb/DxB Global OS/.planning/quick/20260924-signal-revenue-study/HANDOVER.md')"`
+`operator type` inverts letter case on this machine — never type the command, paste it.
+
+## 7. Your first message to him
+CLAUDE.md §0 form, Turkish, short: `CONTEXT: N%` · waiting for his eye: the study (path) · next: his three answers in
+§6, then the chief engineer writes the plan order on his "tamam" · blocked on him: the same three. Then one sentence:
+the handover is done, you have read everything, you are not spending tokens until he speaks. Do not re-summarise the
+study unless he asks. Never "ne yapmamı istersiniz".
