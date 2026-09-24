@@ -1,0 +1,9 @@
+{
+ "h2-remeasure-with-reasons-clause-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "H2 (the caveman block) after its measurement on Opus 5.5 (.planning/quick/20260924-caveman-on-5-5/SUMMARY.md): neither arm won outright -- the caveman block cut billed output 3.7 percent and read worst (2.75/5); the proposed block cut it 16.9 percent and read best (4.12/5) but covered 62 percent of the points against 76 percent with no block. Proposal put to him: add one sentence to the proposed block, 'Short, but every reason and every risk stays.' (arm-Q.txt), and measure it in a second round with a fresh no-block control (about 1 USD) before anything replaces the caveman block. He accepted the proposal. Nothing changes in ~/.claude/CLAUDE.md until the result goes to him. Not a law.",
+  "verbatim": "H2: önerni kabul edilrom. deneyelim",
+  "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
+  "where": "board row B53 · .planning/quick/20260924-caveman-on-5-5/arm-Q.txt"
+ }
+}

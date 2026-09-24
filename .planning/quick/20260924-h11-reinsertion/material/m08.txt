@@ -1,0 +1,7 @@
+PreToolUse:Bash hook error: [python3 /home/dxb/.claude/hooks/dxb-prompt-gate.py]: BLOCKED by dxb-prompt-gate — Bash command: cd "/home/dxb/DxB Global OS" 2>/dev/null; git -C "/home/dxb/DxB Global OS" log --oneline -3; echo ---; grep -n "builder seat is for code" "/home/dxb/DxB Global OS/.claude/skills/dxb-crew/SKILL.md"; echo ---; grep -n -i "authorship\|K2" "/home/dxb/DxB Global OS/.claude/skills/dxb-persona/SKILL.md" |
+Reason: `cd` inside a compound command. While a Read() deny rule exists (.env/.secrets), Claude Code cannot resolve relative paths after a cd and asks the CEO for approval even in bypass mode (measured 2026-09-03: 'Compound command contains cd with a relative file read while a Read() deny rule exists').
+REWRITE WITHOUT cd — the CEO must never see a permission prompt in bypass mode:
+  the working directory already persists between calls; use ABSOLUTE paths for every file
+  a tool that needs a directory takes its flag:  git -C DIR · pnpm -C DIR · npm --prefix DIR · make -C DIR · tar -C DIR
+  a script may cd inside its own file; only the command line is gated
+  project root on this machine: /home/dxb/DxB Global OS
