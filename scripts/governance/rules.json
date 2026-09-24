@@ -7,6 +7,11 @@
 
   "_growing": "This registry does not claim to cover every rule in the corpus. It covers the rules that were relocated on 2026-07-30 plus the laws most likely to be re-copied. Entries are added as rules are consolidated; an unregistered rule is simply unguarded, never blessed.",
 
+  "kanun_c_say_then_wait": {
+    "owner": ".claude/CLAUDE.md",
+    "fingerprint": "before a plan or any change, say what will change and wait for his yes",
+    "what": "Kanun C — set by the CEO on 2026-09-03 because Opus 5 acted before his yes, confirmed and reworded by him on 2026-09-24 (a plan OR any change; 'plan' alone let sessions decide a change was not a plan). Ledger id kanun-c-restored-2026-09-24."
+  },
   "so13_full_capacity": {
     "owner": ".claude/hooks/no-laziness.sh",
     "fingerprint": "Full capacity, every turn.",
