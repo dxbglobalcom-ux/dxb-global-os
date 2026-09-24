@@ -29,6 +29,7 @@ word: *"senin session bitior devir notu hazırla"*. The handover rule is 40 % us
 
 ## Session orders (this job only — not laws, written nowhere else)
 - No `dxb-research` door for the revenue research. The world, not Dubai.
+- **The advisor (Fable 5.1) is consulted only when you are stuck or torn at a hard decision — never at the opening, never as a routine step.** His words: *"fable 5.1 advising olarak çalışıor ilk açılışta hemen ona soruluor neden böyle ya bunu istemiorduk. benim amacım o sessionda advisor olarak kalsın gerektiğinde danışılsın mesela sen zor anlarında arada kalıorsan baş mühendis sorsun danışsın diyeydi."* Whether this becomes permanent for every session was put to him; until he says so, it binds this job.
 
 ## How to speak to him — measured in this session
 - He could not follow compressed statistics and jargon: *"inan yazdıklarından çoğu şeyi anlamıormm … bu ne yaa ne diorsun"*. Say what a number MEANS with a concrete example; explain every term once.
