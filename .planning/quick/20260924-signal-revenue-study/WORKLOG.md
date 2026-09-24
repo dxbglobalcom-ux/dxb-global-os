@@ -71,8 +71,9 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   (pages opened), Indonesia, Russia, Mexico (summaries) — §4.4 second table. Digging stopped on his word; Korea, Canada, Japan
   (beyond two names), Malaysia, Poland, Netherlands not read (E13.4). Research declared finished on his "araştırmayı bitirmeye bak".
 - [x] L3. The plan order: approved by him 22:55 ("tamam plan sırasını baş mühendise yazdır…"; E13.1). Handed to a chief
-  engineer session (Opus 5.5 · xhigh, dxb-crew) opened by this session via operator; note in this session's scratchpad
-  (CREW-NOTE-plan-order.md). This chain does not touch PLAN.md, the board or the ledger. Was: Closed by his word: the two halal doubts (supermarket
+  engineer session (Opus 5.5 · xhigh, dxb-crew) — NOT opened tonight on his word ("boşver … yarın bakarız"); the note is
+  `CREW-NOTE-plan-order.md` in this folder and the launch line is in the desktop file §8. This chain does not touch PLAN.md,
+  the board or the ledger. Was: Closed by his word: the two halal doubts (supermarket
   chains that also sell alcohol/pork; an interest-based bank's Islamic window). Still open and non-legal: first-hand
   Ramadan ad-spend figure; Saudi buyers' own words (two attempts, none found); MiniMax H3 Turkish (a WER measurement,
   Phase 0).
@@ -102,5 +103,9 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
 - 22:00–22:45 round 4 second half: 4 searches + 4 fetches (dentsu, WPP, AKAR, smmplanner) + cbr rate; then 7 fetches + 8 searches
   (US/AU/JP/BR/FR/IN pages; MY/ID, PL, NL, RU, KR, MX, CA, ID/MY advertisers); a Korean fetch stopped by him. STUDY §0, §2.2, §2.4,
   §2.5, new §2.8, §4.2, §4.4, §6, §7; EVIDENCE E13; committed by path (`5686f050`). Context 29 % before writing.
-- 22:55–23:10 his "tamam" on the plan order registered (STUDY §6, E13.1); dxb-crew door read; chief engineer session opened
-  through operator (see the last entry).
+- ~22:50–22:55 his "tamam" on the plan order registered (STUDY §6, E13.1; `4ffe9c94`); dxb-crew door read; the crew note written;
+  the operator sequence STOPPED after the first click: he was typing in the middle session and the click captured three of his
+  keystrokes ("her") into this session's prompt box — reported, no keys sent. His word then: *"boşver herşeyi hazırla masa
+  üstüne koy md olarak yarın bakarız."* → the session opening is cancelled for tonight; everything compiled into
+  `/home/dxb/Desktop/SIGNAL-GELIR-CALISMASI-2026-09-24.md` (Turkish, 9 sections, built from STUDY.md's own text, 42.6 KB) and
+  the crew note kept durable as `CREW-NOTE-plan-order.md` in this folder (launch line in the desktop file §8). Nothing opened.

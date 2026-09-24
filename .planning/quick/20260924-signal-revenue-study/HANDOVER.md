@@ -47,8 +47,11 @@ you here, in Turkish. This chain of sessions does research and thinking only. **
   (round 3: his two rulings applied, price anchors, the loud advertisers of KSA/UK/DE read and filtered, sensitivity),
   plus the commit of this handover.
 - **Nothing waits on him in STUDY §6 any more.** The plan order was approved 22:55 ("tamam plan sırasını baş mühendise
-  yazdır. önce bir session aç kendin. dxb crew skill'ini kullan"); a chief engineer session (Opus 5.5 · xhigh, dxb-crew door)
-  was opened by this session to write it into PLAN.md and board row B43 and to register his word in the approvals ledger.
+  yazdır. önce bir session aç kendin. dxb crew skill'ini kullan"); then, at ~22:55, *"boşver herşeyi hazırla masa üstüne koy md
+  olarak yarın bakarız"* — the chief engineer session (Opus 5.5 · xhigh, dxb-crew door) is NOT opened yet; its note is
+  `CREW-NOTE-plan-order.md` in this folder; the launch line and everything he will read tomorrow are in
+  `/home/dxb/Desktop/SIGNAL-GELIR-CALISMASI-2026-09-24.md` (§8). Tomorrow, on his word, the engineer opens it through operator
+  (crew door §4.2; click your own pane first; if he is typing, wait).
   This chain does not touch the plan, the board or the ledger. The plan ITSELF is still not approved; nothing is built. CLOSED by his word (E12.1): the first-three-countries question (deleted: the study is international,
   every continent at once) and the two halal doubts (banks: none; supermarket chains: yes, for the chain's own ad only). Was: a supermarket chain that also sells alcohol/pork as a client when
   the ad itself is halal; an interest-based bank's Islamic window as a client.
