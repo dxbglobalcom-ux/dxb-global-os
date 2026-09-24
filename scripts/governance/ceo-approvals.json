@@ -1205,5 +1205,12 @@
   "verbatim": "önce gözümü b54 tmm.",
   "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
   "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md Section 5 row B54 · .planning/STATE.md (his last order, the B54 paragraph)"
+ },
+ "h18-routine-outward-autonomous-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HIS CHOICE ON CARD H18 OF THE PROMPT AUDIT (board row B53): routine outward communication does not stop at him. Put to him as two options -- A, his own directive of 2026-07-09 (7b): a routine client report, a routine mail and a post carrying its approval go out without asking him, and only money out, contracts, ad spend and the subjects he marks reach him; B, every outward message including a routine report reaches him. He asked 'senin önerin A sanırım'; he was told yes, with the reasons (it is his own 07-09 sentence; B puts every routine report in front of him; the risky acts still stop at him). His answer is the verbatim below. Applied at once to the construction text that contradicted it (LAW A): .claude/CLAUDE.md section 2 and dxb-crew no longer name every e-mail as stopping at him. The standing approval line the employees read (packages/voice/src/prompt-core.ts approvalGateLine) is rewritten with B51. Not a law.",
+  "verbatim": "yes",
+  "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
+  "where": ".claude/CLAUDE.md section 2 · .claude/skills/dxb-crew/SKILL.md · board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H18"
  }
 }

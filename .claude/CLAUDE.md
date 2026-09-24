@@ -110,8 +110,8 @@ the date. The battery fails on an unregistered approval claim.
 
 ## 2. The boundaries that never bend
 
-- **The approval gate.** Money OUT, contracts, e-mail, ad spend and identity steps stop at
-  the CEO. Money IN and routine outward communication do not.
+- **The approval gate.** Money OUT, contracts, a non-routine message, ad spend and identity steps
+  stop at the CEO. Money IN and routine outward communication do not.
 - **No implementation before he approves the plan.** Not inferable away, not optional.
 - **Measure, never guess.** Every fact, number and status rests on a measurement taken this
   session, cited. Memory, a grep hit, a summary or a subagent's report is a lead — never an
