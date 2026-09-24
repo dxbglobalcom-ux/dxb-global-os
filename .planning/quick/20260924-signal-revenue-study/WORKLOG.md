@@ -20,6 +20,8 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
 - 20:23: *"session şişiyor bir sonraki sessionada söyle %50 de devredin herzaman başka bir fable' 5.1'e şuan session %60
   devre hazırlan açık segme var zaten"* — hand over at 50 % always, to another Fable 5.1 xhigh; this session (62 %) hands
   over now. HANDOVER.md rewritten for the successor (LAW A: the previous session's note is replaced; git keeps it).
+- 21:14, to the third session: *"tamam, ilk üç ülke Suudi, İngiltere, Almanya olsun"* — first three countries decided
+  (E12.1). Applied in STUDY §0 and §6; the "tamam" asked back as to the plan order.
 
 ## Read (done)
 - CONVERSATION.md · PLAN.md · SOURCE-PROMPT.md · PRIOR-WORK.md whole; board rows B28 (whole), B43 (doctrine part);
@@ -53,7 +55,8 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
 - [x] L2. His answers on banks/insurers and crypto applied (E11.1). Round 3 (20:15–20:45, no legal): price anchors for
   lines 3.3 and 3.7 (E11.2); YouGov KSA/UK advertisers of the month May–Aug 2026 + Nielsen DE top 10 read and filtered
   (E11.3) → new STUDY §4.4 candidate sectors; scenario sensitivity (E11.4, STUDY §4.3).
-- [ ] L3. Open on him (STUDY §6): the plan order ("tamam"?), the first three countries, two halal doubts (supermarket
+- [x] L3a. First three countries decided by him 21:14: Saudi Arabia, UK, Germany (E12.1); STUDY §0, §6 updated.
+- [ ] L3. Open on him (STUDY §6): the plan order ("tamam"?), two halal doubts (supermarket
   chains that also sell alcohol/pork; an interest-based bank's Islamic window). Still open and non-legal: first-hand
   Ramadan ad-spend figure; Saudi buyers' own words (two attempts, none found); MiniMax H3 Turkish (a WER measurement,
   Phase 0).
@@ -75,3 +78,6 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   §4.4, §5.1, §6, §7), WORKLOG.md.
 - 20:23–20:30 handover on his word at 62 %: HANDOVER.md rewritten, committed; the successor opened by this session in the
   open editor-area bash terminal of his VS Code window (operator), verified by screenshot.
+- 21:05–21:20 third session (Fable 5.1 xhigh) took the handover at 7 % context; read WORKLOG, BRIEF, STUDY §0/§4/§6/§7,
+  EVIDENCE E11; folder clean. 21:14 his ruling on the first three countries applied (E12.1); STUDY, EVIDENCE, WORKLOG,
+  HANDOVER changed; committed by path.

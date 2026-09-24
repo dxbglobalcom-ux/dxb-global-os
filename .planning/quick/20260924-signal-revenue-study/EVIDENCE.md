@@ -400,3 +400,14 @@ nine countries' price bands (§0, §2.1–2.4) · German and Brazilian buyers' w
   = US$135,500/month → ≈ US$1.63 m. External fixed cost of the engine stays ≈ US$0 (transcription, research, scheduling
   measured at 0; the thinking step UNVERIFIED until Phase 0); the real cost of a downside is card time and selling hours,
   not cash.
+
+## E12. Round 4 — the third Fable 5.1 session (opened 2026-09-24 ~20:30 by the second), his ruling on the first three countries
+
+### E12.1 His ruling (first-hand, this session)
+- 2026-09-24 21:14, verbatim: *"tamam, ilk üç ülke Suudi, İngiltere, Almanya olsun"* — the first three countries are DECIDED:
+  Saudi Arabia (entry via a Mawthooq-registered Saudi partner agency or the client's own account, E10.1), the United Kingdom,
+  Germany. STUDY §0 (attack order) and §6 updated; the map, §4.1 and the 90 days already stood in this order and are unchanged.
+- The opening *"tamam"* is not read here as the answer to STUDY §6's FIRST question (the plan order); asked back in one line.
+  Nothing written into PLAN.md or the board (the chief engineer's job on his word).
+- Still open on him: the plan order; the two halal doubts (supermarket chains selling alcohol/pork; an interest-based bank's
+  Islamic window).
