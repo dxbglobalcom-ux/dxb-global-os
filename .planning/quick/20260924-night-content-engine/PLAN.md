@@ -156,4 +156,4 @@ Videoda ayda yaklaşık 5 dolar (V+T). Bizde yazıya dökme, araştırma ve zama
 - **Oku:** bu dosya + `SOURCE-PROMPT.md` + tahtada B43'ün "THE NIGHT CONTENT ENGINE" notu. Kaynağı yeniden izlemene gerek yok; yukarıdaki okuma bu oturumda kareler ve sesle yapıldı. Medya scratchpad'deydi ve oturumla gider.
 - **Kaynak adresleri:** orijinal video `https://www.instagram.com/p/Dah3raWzV4i/` (yt-dlp sesiyle indirir) · kıyas videosu `https://www.youtube.com/watch?v=vUjAgGa8tAU` (sistem 00:42–02:30, Opus'un ürünü 04:40–08:30, Astra 08:30–11:25, skor 11:25–11:58).
 - **CEO'nun bu işteki hükümleri:** Rakip analizi değil, **holding için ürün**. Özet ile iş yapılmaz, kaynak eksiksiz okunur. Soru sorup onu yorma; planı hazırla, onayını al. Her şey Ferrari seviyesinde.
-- **Sıradaki adım:** Bu plan CEO'nun gözünü bekliyor. "Yap" derse Faz 0 dxb-crew düzeniyle başlar. Onaysız tek satır kod yok.
+- **Sıradaki adım (2026-09-24 akşam):** Bu plan hâlâ CEO'nun gözünü bekliyor. Açık sorular ve Fable 5.1 oturumunda süren dünya çapındaki gelir çalışması `HANDOVER.md`'de. "Yap" derse Faz 0 dxb-crew düzeniyle başlar. Onaysız tek satır kod yok.
