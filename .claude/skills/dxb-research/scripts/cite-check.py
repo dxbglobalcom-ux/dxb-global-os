@@ -28,7 +28,8 @@ contain the cited number — re-opening the page is R4 here.
      unreachable are printed, outside the ratio; PASS at >= 80 % with at least
      max(5, 50 % of the sampled) sentences judged
   R5 "<n> kişi/users/Reddit kullanıcısı/hesap/…", "kişi sayısı: <n>" equals the machine count,
-     or carries a non-negated "beyan"/"claimed" beside it
+     or carries a non-negated "beyan"/"claimed" beside it (a Turkish unit is a whole word with its
+     own suffixes; a number after $ € £ AED USD TL ₺ is money, never people)
   R6 no URL anywhere, with or without a scheme      R7 ends with "## Takip soruları", >= 3 questions
   R8 words: quick 150–600, deep 1 500–4 000        R9 every quote carries YYYY-MM-DD or TARİHSİZ
 One PASS/FAIL row per rule, its decisive numbers, up to 5 offending lines. Exit 1 on any FAIL.
@@ -614,10 +615,22 @@ def build_ctx(units: list[Unit], reg: dict[int, dict], question: str) -> Ctx:
 # platform name or a listed adjective — may stand between the number and the noun (see
 # count_mentions), "'ten fazla / 'ü aşkın / 'ün üzerinde / 'e yakın" may follow the number, and
 # the count may come after the noun: "kişi sayısı: 2.904".
-PEOPLE = (r"kisi\w*|insan\w*|kullanici\w*|gelistirici\w*|yazilimci\w*|programci\w*|muhendis\w*|uye\w*|"
-          r"hesap\w*|yorumcu\w*|katilimci\w*|profesyonel\w*|people|persons?|users?|developers?|devs|engineers?|"
+# A TURKISH UNIT IS A WHOLE WORD: the unit, then only its own inflection — "-lık", plural,
+# possessive, case, "-ki", the copula and the person ending (hesap, hesabı, hesapları,
+# kullanıcılarımızın, kişilik). "Pro planda $10 hesaplama kredisi…" was flagged as ten people on
+# 2026-09-24: `hesap\w*` took "hesaplama" (computation). Measured on the repository's own Turkish
+# text the same day, the old `\w*` also took kısıt/kısıtlı (a constraint), kişisel (personal) and
+# insansız (unmanned); this grammar accepts all 98 real inflections found and none of those.
+TR_INFL = (r"(?:l[iu][kg])?(?:l[ae]r)?(?:[iu]?m[iu]z|[iu]?n[iu]z|[iu]?m|[iu]?n|s?[iu])?"
+           r"(?:n?[iu]n|y?[iu]|y?[ae]|n[ae]|n?[dt][ae]n?|y?l[ae])?(?:ki)?"
+           r"(?:y?[dt][iu]|y?m[iu]s)?(?:[dt][iu]r(?:l[ae]r)?|y?[iu]m|s[iu]n(?:[iu]z)?|y?[iu]z|l[ae]r|k)?")
+PEOPLE = (r"(?:kisi|insan|kullanici|gelistirici|yazilimci|programci|muhendis|uye|hesa[pb]|yorumcu|katilimci|"
+          r"profesyonel)" + TR_INFL + r"|people|persons?|users?|developers?|devs|engineers?|"
           r"programmers?|redditors?|members?|accounts?|commenters?|participants?|respondents?|individuals?|"
           r"humans?|professionals?")
+# A NUMBER AFTER A CURRENCY SIGN IS MONEY, NEVER PEOPLE: "$10 hesaplama kredisi", "AED 99 kullanıcı
+# başına". Matched on the text before the number, folded or as written.
+MONEY_BEFORE = re.compile(r"(?:[$€£¥₺]|\b(?:aed|usd|eur|gbp|tl))\s*~?\s*$", re.I)
 COMMENTS = r"yorum\w*|comments?"
 THREADS = r"baslik\w*|threads?"
 # "'ten fazla", "'ü aşkın", "'ün üzerinde", "'e yakın", "civarı" — folded: ı→i, ü→u
@@ -691,7 +704,7 @@ def count_mentions(text: str, ctx: "Ctx | None" = None) -> list[Mention]:
         while a < b and f[a].isspace():
             a += 1
         na = idx[m.start(g_num)] if idx else 0
-        if any(s <= na < e for s, e in names):
+        if any(s <= na < e for s, e in names) or MONEY_BEFORE.search(f[:m.start(g_num)]):
             return
         out.append(Mention(kind, m.group(g_num) + (m.group(g_mult) or ""),
                            p[idx[a]:idx[b] + 1].strip() if idx else m.group(0), m.start(), end,
@@ -1281,7 +1294,10 @@ def r5(units: list[Unit], machine: dict[str, set[int]], where: list[str], ctx: C
         for j, h in enumerate(u.header):
             if j < len(u.cells) and re.search(rf"\b({PEOPLE})\b", fold(plain(h))):
                 label = BEYAN.search(fold(plain(h))) or BEYAN.search(fold(plain(u.cells[j])))
-                for m in NUM.finditer(bare(u.cells[j])):
+                cell = bare(u.cells[j])
+                for m in NUM.finditer(cell):
+                    if MONEY_BEFORE.search(cell[:m.start(1)]):
+                        continue
                     found.append((u.line, m.group(1), f"{m.group(1)} ({plain(h).strip()} column)",
                                   u.text, bool(label)))
     bad, ok_count, ok_beyan = [], 0, 0
@@ -1394,12 +1410,21 @@ SELFTEST_PEOPLE = (   # R5 must FAIL each of these (the machine count is 82)
     "| Platform | Kişi | Kaynak |\n|---|---|---|\n| Reddit | 2.904 | [1] |",
     "| Platform | Konuşan | Kaynak |\n|---|---|---|\n| Reddit | 2.904 kullanıcı | [1] |",
     "| Platform | Katılımcı sayısı | Kaynak |\n|---|---|---|\n| Reddit | 2.904 | [1] |",
+    # 2026-09-24, the whole-word unit: its own suffixes still count ("hesabı" was missed before)
+    "2.904 hesabı yorum yazdı[1].",
+    "2.904 hesaplar yorum yazdı[1].",
 )
 SELFTEST_NOT_PEOPLE = (   # R5 must NOT fail these
     "Fable 5.1 kullanıcıları hızdan şikâyet ediyor[1].",
     "Bu koşuda makine 82 ayrı kişi saydı[1].",
     "Avcıların beyanına göre 2.904 kişi konuştu[1].",
     "2026'da 3 yeni model çıktı ve kullanıcılar memnun[1].",
+    # 2026-09-24 (quick mode, chief's acceptance): "hesaplama" is not "hesap"; money is not people
+    "Pro planda $10 hesaplama kredisi hangi sunucu boyutunu karşılıyor?",
+    "Pro planda 10 hesaplama kredisi var[1].",
+    "Takım planı $30 kullanıcı başına aylık ücret alır[1].",
+    "Kurumsal plan AED 99 kullanıcı başına faturalanır[1].",
+    "| Plan | Kullanıcı başına | Kaynak |\n|---|---|---|\n| Pro | $30 | [1] |",
 )
 SELFTEST_URLS = ("reddit.com/r/codex/comments/1wfaf7f/gpt_6_astra_vs_fable_51", "youtu.be/w9rLNOE7TjY",
                  "x.com/enzo/status/2100469552417046573",

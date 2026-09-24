@@ -107,6 +107,10 @@ def reject(u: str) -> str | None:
     """Why an address is not a source: 'invalid' · 'furniture' · 'search-page' — or None."""
     try:
         s = urlsplit(u)
+        # a port that is not a number is an address that does not parse — measured 2026-09-24: a
+        # README's "http://127.0.0.1:PORT/v1/chat/completions" in twitter.raw raised here and
+        # killed a whole quick run (exit 4) instead of being counted as invalid
+        s.port
     except ValueError:
         return "invalid"
     host = (s.hostname or "").lower().rstrip(".") if s.scheme.lower() in ("http", "https") else ""
@@ -246,9 +250,11 @@ def kind_of(url: str) -> str:
 HARVEST_EXT = {".md", ".txt", ".tsv", ".raw", ".yaml", ".yml", ".json", ".csv"}
 # The answer and everything written ABOUT the run is not the run: a previous report
 # (CEO-RAPORU), the prompts, the merge summary (it truncates addresses at 110 characters),
-# the logs (crowd.log truncates them at 60) and the transcripts are never harvested.
+# the logs (crowd.log truncates them at 60) and the transcripts are never harvested. Nor is
+# Perplexity's answer as its page drew it (pplx-raw.md): its citations are KAYNAKLAR.txt's rows,
+# and its HTML cut "…/wiki/Claude_(language_model)" at the ")" into a second, broken source.
 EXCLUDE_NAME = re.compile(r"^(answer.*\.md|final.*\.md|.*rapor.*\.md|summary\.txt|question\.txt|"
-                          r"prompt-.*|cite-check.*|sources.*\.json|citations.*\.json)$", re.I)
+                          r"prompt-.*|cite-check.*|sources.*\.json|citations.*\.json|pplx-raw\.md)$", re.I)
 MAX_BYTES = 16 * 1024 * 1024
 
 

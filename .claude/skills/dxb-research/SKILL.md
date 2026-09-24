@@ -75,6 +75,32 @@ printf '%s\n' "<his own words>" > /tmp/dert.txt        # context for the hunters
 bash "$F/fleet.sh" <outdir> --q "Astra 6 vs Fable 5.1 professionals" --q "Claude Max 20x limit" --dert /tmp/dert.txt
 ```
 
+## 0-bis. Quick or deep — which road a question takes
+
+**A one-sentence factual question** (a price, a limit, a rule, a date, a spec) takes the quick
+road — Perplexity's everyday answer, measured 2026-09-24 on three fixed questions: gather 12–21 s,
+end to end 28–73 s including the session's own writing, `cite-check` 9/9 on all three, re-opened
+citation accuracy 91–100 %, 8–9 distinct sources each.
+
+```bash
+R='/home/dxb/DxB Global OS/.claude/skills/dxb-research/scripts'
+bash "$R/ask.sh" "<one sentence, ≤ 120 chars>" <outdir>   # 5 keyless engines + Google via the hidden Chrome + Reddit,
+                                                          # RRF pick, 12 pages read → sources.json + digest.md (≤ 20 KB)
+# write <outdir>/answer.md from digest.md ONLY (its [n] ids), the §9 contract, quick band 150–600 words
+bash "$R/ask.sh" --check <outdir>                         # cite-check --mode quick → final.md; prints gather and end-to-end
+```
+
+**A question that needs people counted or opinions weighed** — how many prefer, what users say,
+who switched — takes the deep road, the fleet (§1). `ask.sh` refuses it by pattern (exit 5) and
+names the fleet; `--force-quick` overrides only when the session has a reason it can state.
+In quick mode there is no machine count: a number of people in the answer carries "beyan" (R5).
+
+`pplx.py "<question>" <outdir>` asks his free Perplexity account in the hidden Chrome and writes
+its answer as `answer.md` + `sources.json`, so the same `cite-check` judges both sides and
+`rubric.py <dir>…` puts them in one table. Perplexity's Terms of Service §5.2 forbid automated
+access to its web app (the API is the sanctioned route); the 2026-09-24 side-by-side ran on his
+word, with the account risk named to him first.
+
 ## 1. The fleet — the default way to answer
 
 ```bash
