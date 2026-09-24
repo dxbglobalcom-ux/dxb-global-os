@@ -335,3 +335,68 @@ Same tags as above. Everything below was opened or searched by this session on 2
 Saudi entry road (§0, §2.1, §2.7, §4.2, §4.3, §5.2) · UAE permit free for three years (§0, §2.1, §2.7) · Turquality on
 official text, 70/75 % (§2.7, §3.8) · IAB MENA total (§2.1) · Ipsos Ramadan figures replace an unsourced "25–50 %" (§3.5) ·
 nine countries' price bands (§0, §2.1–2.4) · German and Brazilian buyers' words (§2.2, §2.5) · §7 method line.
+
+## E11. Round 3 — the same successor session, 2026-09-24 20:15–20:45 (no legal or official-source research, on his 20:10 word)
+
+### E11.1 His rulings in this session (first-hand; the Islamic filter applied to ADVERTISING CLIENTS)
+- 20:20, verbatim: *"hayır kripto falan bunlar asla"* — crypto companies are never advertising clients.
+- 20:21, verbatim: *"helal çerçevede"* — his answer to STUDY §6's second question: clients are chosen within the halal frame;
+  interest-based (conventional) banks and insurers are not clients; Islamic banks and takaful are. Recorded here and in
+  STUDY §2.2, §2.3, §5.1, §6; written nowhere as a law (CLAUDE.md §2: only on his "make it a law").
+- Applied to the advertiser lists in E11.3 (measured counts): UK YouGov May–Aug 2026, **8 of 40 entries excluded** (alcohol:
+  Cruzcampo, Stella Artois, Hawkstone, Budweiser, Old Mout; finance: Santander, Nationwide, Compare the Market) — 20 %;
+  Saudi YouGov May–Aug 2026, **0 or 1 of 40**: Al Rajhi Bank is an Islamic bank (allowed), Saudi Investment Bank a
+  conventional bank with Islamic windows (doubt, not decided here); Germany Nielsen top 10: none is a finance, alcohol or
+  crypto brand, but four are supermarket chains that sell alcohol and pork (Rewe, Kaufland, Lidl, Aldi) — whether a
+  supermarket is a permitted client when the ad itself promotes no haram product is a doubt flagged for him, not decided.
+
+### E11.2 Price anchors for the two new lines that were still ⚠ (vendor comparison pages, search summaries; koji.so opened)
+- **Ad pre-testing by panel (the market STUDY line 3.3 competes with):** Zappi US$3,000–25,000 per study, 24–48 h;
+  Kantar LINK/LINK+ self-serve from ≈ US$4,500, serviced ≈ US$8,080 → 15,000; System1 Test Your Ad "per test, on request"
+  (creatify.ai, behaviolabs, sovran.ai, saliencylab compare pages — summaries; koji.so 2026-06-18/09-20 opened: it lists
+  Zappi "custom subscription, typically annual", Kantar "per-test, enterprise", System1 "custom / per-test", CreativeX and
+  Nielsen "enterprise custom", its own interviews €1–3 each). VidMob ARR US$18.3 m (July 2025, growthengineer.ai — vendor
+  claim). **Reading:** a single panel pre-test of one ad costs US$3,000–15,000; an engine score of five drafts against the
+  sector's measured patterns, without a panel, is a different product and can be priced at a fraction of one test.
+- **Video localisation (the market STUDY line 3.7 competes with):** agency dubs US$4,000–8,000 per language for a 90-second
+  video; "traditional localization agencies charge US$3,000 to US$10,000 per video per language"; US$100–500 per finished
+  minute per language; freelance translation + re-record US$800–2,000 per language; AI dubbing US$0.41–1.00 per minute;
+  transcreation US$0.25–1.00 per source word or US$75–250 per hour (arcade.software, perso.ai, pitchavatar, ekitaisolutions,
+  socialrails, translated.com — summaries).
+
+### E11.3 Who is advertising loudly in the first three countries (first-hand panels and Nielsen; pages opened)
+- **Saudi Arabia — YouGov "KSA Advertisers of the Month 2026"** (opened, published 2026-09-09; BrandIndex, "seen an ad in the
+  past two weeks", n ≥ 300): **August** Al Rajhi Bank +6.8 (48.5→55.3 %), Almarai +6.4, Dove +6.4, Kinder +5.9, Clorox +5.9,
+  Saudi Investment Bank +5.6, adidas +5.2, iPhone +5.0, Lifebuoy +4.9, Reebok +4.6 · **July** Pizza Hut +6.9, Huawei +6.7,
+  Tide +6.1, Al Hokair +5.5, Emaar +5.1, Gucci +5.0, Lay's +4.8, Almarai +4.7, NIVEA +4.7, Temu +4.6 · **June** Amazon Prime
+  +7.4, Tropicana +7.0, Al Rawda Park +5.1, Empire Cinemas +5.0, Ülker +4.2, Kinder Bueno +3.9, Shahid.net +3.8, Saudi
+  Investment Bank +3.8, Qatar Airways +3.7, Movenpick +3.7 · **May** Dove +8.8, Subway +6.2, Bounty +6.1, Dior Beauty +6.0,
+  BMW +6.0, Samsung +5.8, Cheetos +5.7, Al Salam Mall Jeddah +5.5, Comfort +5.4, Tasali +5.0. Sector count over 40 entries
+  (measured): food/snacks/dairy/confectionery 11 · personal care/household 8 · entertainment, malls, parks, cinema, streaming
+  6 · technology 4 · QSR 3 · finance 3 · sportswear/luxury 4 · other 1. Ipsos "Most Influential Brands KSA 2026" (search
+  summary): WhatsApp, stc, Google, Apple, YouTube, Al Rajhi Bank, ChatGPT, Almarai, Instagram, TikTok.
+- **UK — YouGov "UK Advertisers of the Month 2026"** (opened, published 2026-09-15): **August** Škoda +5.8, BBC +5.4, Oak
+  Furnitureland +4.0, Tesco Petrol +4.0, Jaffa Cakes +3.9, Old Mout +3.7, Sensodyne +3.6, Pets at Home +3.4, Listerine
+  +3.2, Apple Watch +3.1 · **July** Haribo +6.8, Samsung +6.1, Compare the Market +5.1, Budweiser +5.0, Lynx +4.9, WhatsApp
+  +4.9, Tesco Whoosh +4.8, Walkers +4.3, Apple +4.3, Grand Theft Auto +4.2 · **June** Google Gemini +7.2, Nationwide +6.2,
+  Coca-Cola +5.9, Amazon +4.7, Walkers +4.6, Quorn +4.6, trivago +4.5, McDonald's +4.3, Morrisons +4.2, Hawkstone +4.1 ·
+  **May** Santander +6.0, Argos +4.8, Currys +3.8, Oral-B +3.7, Diet Coke +3.6, Ben & Jerry's +3.5, Cruzcampo +3.5, Swatch
+  +3.5, Stella Artois +3.2, BT +3.1. Winmo "Top UK brands spending in digital, Q4 2024" (opened, 2024-10-02, older): Tesco
+  Mobile £16.78 m, TotalJobs £16.5 m, Vodafone £15.73 m, Volvo Cars UK £5.43 m, ITV £4.87 m — with agency rosters named.
+- **Germany — Nielsen top 10, January–August 2026** (drweb.de 2026-09-21, opened): P&G €1.07 bn · Rewe €352 m · Kaufland
+  €305 m · Lidl €283 m · Ferrero · Henkel · Deutsche Telekom €248 m · Aldi €232 m · (one not listed) · Amazon €193 m;
+  "Fünf der zehn größten Werbespender sind heute Händler oder Plattformen". TikTok Shop Germany's strongest categories:
+  beauty, health, household, skincare (bfg-nitro — vendor summary); TikTok Shop is #15 among German online retailers (NIQ,
+  summary).
+- **How this is used (STUDY §4.4):** the brands above are the loud ones, mostly global or national giants with network
+  agencies — not the 90-day targets. They show WHERE the short-form noise is per country; the paid sector review is sold to
+  the challengers in those sectors, and the challengers are named by SIGNAL's own account reading in Phase 0 (the
+  n ≥ 5 / 3-account rule), not invented here.
+
+### E11.4 Scenario sensitivity (arithmetic only; labelled scenarios, never forecasts)
+- A-downside (month 12): 3 brands × US$8,000 = US$24,000/month; 6 reviews × US$3,000 = US$18,000 once → ≈ US$288,000 + 18,000.
+- A-upside (month 12): 10 brands = US$80,000/month → ≈ US$960,000 (+ US$36,000 reviews).
+- B-downside (month 24): 12 brands (96,000) + 3 multi-country × 3 desks × 3,000 (27,000) + 5 partner desks × 2,500 (12,500)
+  = US$135,500/month → ≈ US$1.63 m. External fixed cost of the engine stays ≈ US$0 (transcription, research, scheduling
+  measured at 0; the thinking step UNVERIFIED until Phase 0); the real cost of a downside is card time and selling hours,
+  not cash.

@@ -14,6 +14,9 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
 - 20:10, to the successor: *"legalliği şuan için boşver biz müşterilere yurt dışında hizmet veriorz boşuna resmi
   kaynakları araştırmada vakit token harcama"* — no more licence / permit / tax research, no more official-source reads.
   What is already written stays; nothing legal is measured further.
+- 20:20 / 20:21, his answers to STUDY §6: *"hayır kripto falan bunlar asla"* · *"helal çerçevede"* — crypto never a
+  client; clients within the halal frame (no interest-based banks/insurers; Islamic banks and takaful yes). Recorded in
+  STUDY and EVIDENCE E11.1; not written as a law (he has not said "kanun olsun"; asked in one line).
 
 ## Read (done)
 - CONVERSATION.md · PLAN.md · SOURCE-PROMPT.md · PRIOR-WORK.md whole; board rows B28 (whole), B43 (doctrine part);
@@ -44,10 +47,13 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   Added: IAB MENA's own MENA total (E10.3); Ipsos × ArabyAds Ramadan 2026 consumer figures (E10.3); nine countries' price
   bands (E10.4); German and Brazilian buyers' own words, 7 threads, 246 comments, 111 people (E10.5). STUDY.md updated in
   place (list in E10.6).
-- [ ] L2. Corrections after his answers to STUDY §6 (the legal question there, the UAE trade licence, is dropped on his
-  20:10 word; the four that remain: interest-based banks/insurers as clients, crypto companies as clients, the plan order,
-  the first three countries). Still open and non-legal: first-hand Ramadan ad-spend figure; Saudi buyers' own words (two
-  attempts, none found); MiniMax H3 Turkish (a WER measurement, Phase 0).
+- [x] L2. His answers on banks/insurers and crypto applied (E11.1). Round 3 (20:15–20:45, no legal): price anchors for
+  lines 3.3 and 3.7 (E11.2); YouGov KSA/UK advertisers of the month May–Aug 2026 + Nielsen DE top 10 read and filtered
+  (E11.3) → new STUDY §4.4 candidate sectors; scenario sensitivity (E11.4, STUDY §4.3).
+- [ ] L3. Open on him (STUDY §6): the plan order ("tamam"?), the first three countries, two halal doubts (supermarket
+  chains that also sell alcohol/pork; an interest-based bank's Islamic window). Still open and non-legal: first-hand
+  Ramadan ad-spend figure; Saudi buyers' own words (two attempts, none found); MiniMax H3 Turkish (a WER measurement,
+  Phase 0).
 
 ## Where the evidence is
 - EVIDENCE.md (this folder). Raw pulls: this session's scratchpad and tool-results (die with the session).
@@ -62,3 +68,5 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   PRIOR-WORK, PLAN, SOURCE-PROMPT, B28/B43 rows; took the handover (363dcbab). 19:50 CEO: no more cross-session contact.
 - 19:45–20:35 round 2 (see L1). Files changed: EVIDENCE.md (+E10), STUDY.md (in place), WORKLOG.md. Committed as the
   hash in `git -C "/home/dxb/DxB Global OS" log -1 -- .planning/quick/20260924-signal-revenue-study/`.
+- 20:15–20:45 round 3 (see L2). Files changed: EVIDENCE.md (+E11), STUDY.md (§0, §2.2, §2.3, §3.3, §3.7, §4.2, §4.3, new
+  §4.4, §5.1, §6, §7), WORKLOG.md.

@@ -6,7 +6,7 @@
 
 ## 0. CEVAP
 
-**Ciddi para makinenin kendisini satmaktan değil, makineyle beş kıtada marka müşterisi kazanıp her birine ayda sabit ücretle kanıtlı reklam + sonuç hesabı satmaktan gelir; bunun üzerine bugüne kadar hiç düşünülmemiş dört kalem eklenir: aynı markanın birden çok ülkesi için ayrı masalar, helal/Ramazan masası, yerel ajanslara "gece analisti" olarak ortaklık ve bir kampanyanın 11 dilde doğal sürümleri.**
+**Ciddi para makinenin kendisini satmaktan değil, makineyle beş kıtada marka müşterisi kazanıp her birine ayda sabit ücretle kanıtlı reklam + sonuç hesabı satmaktan gelir; bunun üzerine bugüne kadar hiç düşünülmemiş dört kalem eklenir: aynı markanın birden çok ülkesi için ayrı masalar, helal/Ramazan masası, yerel ajanslara "gece analisti" olarak ortaklık ve bir kampanyanın 11 dilde doğal sürümleri.** Müşteri süzgeci sizin sözünüzle (2026-09-24) helal çerçevededir: faizli banka ve sigorta ile kripto müşteri değildir; İslami banka ve tekafül olur.
 
 Dünya reklam pastası bu yıl ilk kez 1 trilyon doları geçiyor; parası olan ülkeler bellidir: ABD, Çin, Japonya, İngiltere, Almanya, Fransa, Avustralya, Brezilya, Hindistan, Kanada, İtalya, İspanya (dentsu'nun kendi sırası, birinci el). Ama **para olan her yer bizim için kazanılabilir değildir.** Ölçtüğüm üç şey sırayı belirliyor:
 
@@ -73,7 +73,7 @@ MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; ra
 
 **Almanya'da alıcıların kendi ağzından (ikinci tur; r/selbststaendig, 3 başlık, 162 yorum, 75 ayrı kişi):** küçük işletme ajansa para vermiyor. 23 yaşındaki bir ajans sahibi restoranlara 10 video için 1.200–1.600 € teklif ediyor, cevap hep "haber veririz"; biri "birkaç ay 300-400 €", biri "kuzenim ayda 100 €'ya yapar" demiş. En beğenilen cevap: "her küçük dükkânın Insta'yı yanından yürüten bir kuzeni ya da öğrenci kızı var." Bir başkası: "sosyal medya ajansı kapıcı hizmeti gibi; herkes açıyor, fiyatta ve işte birbirini eziyor." Bir inşaat mühendisi: "ajansı karşılayamam; Fiverr'da üç serbest çalışana 2.000 € verdim, tek müşteri gelmedi." 10.000 €'luk ajans denemiş bir işletmeci: "ilan sitesindeki amatörlerden kötü iş çıkardılar." Yedi haneli reklam bütçesi yöneten bir performans pazarlamacısı: "en pahalı işler — yeni logo, imaj filmi — en az getiriyor; işe yarayan, müşteri kazanımını ölçülebilir biçimde artıran." En beğenilen tavsiye: "reklam getirisi (ROAS) ve müşteri edinme maliyeti tablosu vermeyen ajanstan uzak dur." Almanya'da telefonla soğuk arama tüketiciye yasak, şirkete riskli (UWG). **Ders:** Almanya'da hedef KOBİ değil, bütçesi ve ölçüm kültürü olan orta-büyük markadır; satılan şey hesap verebilirliktir — tam olarak kalem 10.
 
-**İslami süzgeç:** İngiltere'de kumar toplam reklamın %2,7'si (≈ 2 milyar £); finans üçüncü büyük kategori. Almanya'da banka/sigorta, ajansların en çok çalıştığı sektör (ajansların %53'ü). **Geleneksel (faizli) banka ve sigortaların müşterimiz olup olamayacağı kayıtlarda yazılı değil; §6'da size soruyorum.**
+**İslami süzgeç:** İngiltere'de kumar toplam reklamın %2,7'si (≈ 2 milyar £); finans üçüncü büyük kategori. Almanya'da banka/sigorta, ajansların en çok çalıştığı sektör (ajansların %53'ü). **Sizin hükmünüz (2026-09-24, "helal çerçevede"): faizli banka ve sigorta müşterimiz değildir; İslami banka ve tekafül olur; kripto asla.** İngiltere'nin son dört ayda en çok konuşulan 40 reklamvereninden 8'i bu süzgeçle dışarıda kalıyor (5 alkol, 3 faizli finans; EVIDENCE E11.1).
 
 **Hüküm:** İngiltere ve Almanya ilk 90 günde; Fransa 4-9. ayda (dil ve "Images virtuelles" kuralıyla); Türkiye yerel fiyatla değil, **ihracatçı markalar** üzerinden (§3, kalem 8).
 
@@ -86,7 +86,7 @@ MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; ra
 
 **Halkın sesi:** IAB'nin kendi araştırması (505 tüketici, 104 reklam yöneticisi): yöneticilerin %82'si gençlerin yapay zekâ reklamına olumlu baktığını sanıyor, gerçekte %45. Reddit'te 230 yorumlu bir başlık: pazarlama müdürünün patronu tüm ekibi yapay zekâyla değiştirmek istiyor; en beğenilen cevap (396 oy) "seni maliyet kalemi sanıyor". Omnicom çalışanı: "birkaç müşteri 2026'da sözleşmeyi yenilemeyeceğini açıkladı." **Büyük ajanslar müşteri kaybediyor, markalar ucuzu deniyor, tüketici ucuzu görünce cezalandırıyor: aradaki boşluk kanıtlı ve görünür kaliteli işin boşluğudur.**
 
-**İslami süzgeç:** finans sektörü ABD dijital reklamının yaklaşık %29'u (94 milyar $, satıcı beyanı) — süzgeç ABD'de en pahalıya mal olur; kumar (spor bahisleri) ve alkol ayrıca dışarıda.
+**İslami süzgeç:** finans sektörü ABD dijital reklamının yaklaşık %29'u (94 milyar $, satıcı beyanı) — süzgeç ABD'de en pahalıya mal olur; kumar (spor bahisleri) ve alkol ayrıca dışarıda. Sizin "helal çerçevede" hükmünüzle faizli banka, sigorta ve kripto reklam müşterisi de değildir; ABD'de bu, dijital reklam parasının yaklaşık üçte birinden vazgeçmek demektir ve baştan bilerek vazgeçiyoruz.
 
 **Hüküm:** ABD 4-9. ayda, ilk referanslar elde olunca; ilk günden değil.
 
@@ -168,7 +168,7 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 ### 3.3 Yayın öncesi puan — "uçuş öncesi kontrol" (**yeni**)
 - **Ne:** markanın (ya da başka ajansın) yayınlamadan önce gönderdiği taslak reklamı motor, o sektörün kalıp kütüphanesine karşı puanlar: açılış, ilk 2,5 saniye, açı, kapanış; "bu video hesabınızın normalinin altında kalır, şu üç değişiklikle üstüne çıkar."
 - **Kim öder:** kendi çeken markalar, yerel ajanslar, medya satın alan ekipler — reklam parasını yakmadan önce.
-- **Fiyat şekli:** parti başına (5 taslak) 500–1.500 $ veya ayda 2.000–5.000 $ koltuk; büyük kurumsal araçlar (Vidmob, CreativeX) "ayda birkaç bin dolardan başlayan" yıllık sözleşmeyle satıyor — fiyat ⚠ ölçülmedi, bant onlara göre.
+- **Fiyat şekli (üçüncü turda çapası ölçüldü):** pazar, tek bir reklamın yayın öncesi panel testine (gerçek izleyiciye gösterip ölçmeye) 3.000–15.000 $ ödüyor: Zappi çalışma başına 3–25 bin $, Kantar LINK 4.500–15.000 $, System1 "teste göre" (satıcı karşılaştırma sayfaları). Bizim puanımız panel değil motor: sektörün ölçülmüş kalıplarına karşı puanlar, saatler içinde gelir. Öneri: parti başına (5 taslak) 1.500–3.000 $ ya da ayda 3.000–6.000 $ koltuk; yani bir panel testinin onda biri ile yarısı. Büyük kurumsal araçlar (Vidmob, CreativeX) fiyat açıklamıyor, yıllık sözleşme.
 - **Eksik:** Faz 3–4 (puanlama ve kalıplar); bir "taslak yükle" yolu; puanın kaç kez doğru çıktığını gösteren kendi sicilimiz (kalem 10 bunu üretir).
 - **İlk para:** Faz 4 + ilk 3 müşterinin sicili.
 - **Risk:** sicil olmadan puan inandırıcı değil; platformlar (Meta) benzer sinyalleri bedava vermeye başlarsa fiyat düşer.
@@ -200,7 +200,7 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 ### 3.7 Dil çoğaltma — bir kampanya, 11 dil (**yeni**)
 - **Ne:** onaylanmış bir reklam filminin Arapça, İngilizce, Almanca, Fransızca, İspanyolca, Portekizce, Japonca, Korece, Çince, İtalyanca, Rusça sürümleri — dublaj değil, motorun kendi sesiyle doğal sürüm (MiniMax H3 11 dilde konuşuyor, satıcı beyanı; Türkçe listede yok ⚠).
 - **Kim öder:** ihracatçılar, çok ülkeli markalar, turizm kurumları.
-- **Fiyat şekli:** dil sürümü başına 800–2.500 $ (bölgeye göre); araçlar dakikası 0,33–1 $'a dublaj satıyor ama sonuç "dublaj" gibi durur, biz "o dilde çekilmiş" satarız; premium duruş burada da geçerli.
+- **Fiyat şekli (üçüncü turda çapası ölçüldü):** yerelleştirme ajansları dil başına 3.000–10.000 $ alıyor (90 saniyelik videoya 4.000–8.000 $; dakikası 100–500 $); serbest çevirmen + yeniden seslendirme 800–2.000 $; yapay zekâ dublajı dakikası 0,41–1 $ (satıcı rehberleri). Dublaj "dublaj" gibi durur; biz "o dilde çekilmiş" satarız. Öneri: dil sürümü başına 1.500–4.000 $, ajans bandının içinde, aracın çok üstünde; premium duruş burada da geçerli.
 - **Eksik:** her dilde ses doğruluğu ölçümü (WER); ülke başına yasal etiket şablonu.
 - **İlk para:** kalem 4 ile birlikte.
 - **Risk:** dil kalitesi bir ülkede kötüyse marka için utanç; TikTok Symphony 30 dilde dublajı bedava veriyor — fark kalite ve doğal sürüm.
@@ -251,7 +251,7 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 ### 4.2 İlk 90 gün (plan onayınızdan sonra; hiçbir adım onaysız başlamaz)
 1. **Gün 1-30:** SIGNAL Faz 0–4, ilk masa = kazanmak istediğimiz ilk markanın sektörü (öneri: Riyad'da bir perakende/gıda markası; stüdyonun kendi alanı ikinci masa). Üç dil kulağı ölçümü: Körfez Arapçası, İngilizce, Almanca (Whisper + Claude düzeltmesi). Stüdyo sesi 11 dilde WER ölçümü.
 2. **Gün 15-45:** "yasal temiz yapay zekâ reklamı" paketi: New York, Kaliforniya, AB md. 50, Kore, Türkiye etiketleri her klibin standart parçası (özellik olarak satılır). Suudi Arabistan için Mawthooq'lu ortak ajans adayları listesi (izin bize değil, Suudi içinde ücretli içerik yayınlayana veriliyor; yurt dışından alınmıyor). BAE Reklamveren İzni için lisans sorusu (§6).
-3. **Gün 30-60:** 10 ücretli sektör incelemesi teklifi: 4 Suudi, 3 İngiltere, 3 Almanya; 3 Turquality'li Türk ihracatçısına Almanya/Körfez masası teklifi. Hedef: 4 satılan inceleme.
+3. **Gün 30-60:** 10 ücretli sektör incelemesi teklifi: 4 Suudi, 3 İngiltere, 3 Almanya (aday sektörler §4.4); 3 Turquality'li Türk ihracatçısına Almanya/Körfez masası teklifi. Hedef: 4 satılan inceleme.
 4. **Gün 45-75:** ilk ortak ajans pilotu (Almanya ya da İngiltere'de bir ajans, kalem 6).
 5. **Gün 60-90:** incelemelerden 2 aylık anlaşma; her anlaşmada kalem 10 (hesap raporu) ilk günden. Ramazan 2027 masası için Kasım'da satış listesi.
 6. **Ekran** (Faz 7) bu 90 günde çizilmez; B32 onayınızı bekler. Para ekransız gelir.
@@ -264,9 +264,33 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 | **B — Üç kıta, 24. ay** | 20 marka × 8.000 = 160.000 $; 6 çok ülkeli marka × 4 ek masa × 3.000 = 72.000 $; 10 ortak ajans masası × 2.500 = 25.000 $ | 257.000 $ | ≈ 3,08 milyon $ |
 | **C — Beş kıta, 36. ay** | 40 marka × 8.000 = 320.000 $; 15 çok ülkeli × 5 masa × 3.000 = 225.000 $; 30 ortak masa × 2.500 = 75.000 $; 40 yayın öncesi koltuk × 1.500 = 60.000 $; Ramazan/mevsimlik projeler ort. 20.000 $ | 700.000 $ | ≈ 8,4 milyon $ |
 
+**Hassasiyet (üçüncü tur; aynı hesap, az ve çok müşteriyle):**
+
+| Senaryo | Kalemler | Aylık | Yıllık koşu hızı |
+|---|---|---|---|
+| A-aşağı (12. ay) | 3 marka × 8.000 $; 6 inceleme × 3.000 $ (tek sefer) | 24.000 $ | ≈ 288.000 $ (+18.000 $) |
+| A-yukarı (12. ay) | 10 marka × 8.000 $ | 80.000 $ | ≈ 960.000 $ (+36.000 $) |
+| B-aşağı (24. ay) | 12 marka; 3 çok ülkeli × 3 masa × 3.000 $; 5 ortak masa × 2.500 $ | 135.500 $ | ≈ 1,63 milyon $ |
+
+Aşağı senaryoda bile nakit kaybı yok: motorun dış maliyeti sıfıra yakın ölçüldü (yazıya dökme, araştırma, zamanlama 0 $; düşünme adımı ⚠ Faz 0'da ölçülür). Kötü senaryonun bedeli para değil, ekran kartı saati ve satışa giden zamandır.
+
 - **Tahtanın sınırı:** B28'de ölçüldü — bir ekran kartı gerçekçi %60 doluşta ≈ 32 marka, ayda 256.000 $. **Senaryo B tam bu sınırdadır; C bulut üretim katmanı ister; tahtaya göre bulut motoru gelirin ≈ %3'üne mal olur.** Yani sınır kart değil, satıştır.
 - **Kesintiler:** stopajlı ülkelerde fiyat brüte çekilmezse Hindistan'da %20, Brezilya'da %15 + ek vergiler, Türkiye'de %15-20 (tartışmalı) faturadan düşer; Körfez, Avrupa, İngiltere, Avustralya, ABD, Japonya, Kore'de düşmez.
 - **Maliyet:** tahtada ölçüldü — video motoru maliyeti bu işi belirlemez (en pahalı bulut motoru bile gelirin %3'ü); belirleyen kart saati ve sizin gözünüz. İzin masrafı bizde yok: BAE izni ilk üç yıl ücretsiz, Suudi izni ortak ajansta.
+
+---
+
+### 4.4 İlk 10 inceleme için aday sektörler — kapısı çalınacak markalar nereden çıkar (üçüncü tur)
+
+Üç ülkede "son dört ayda reklamı en çok fark edilen markalar" listelerini okudum (YouGov'un aylık paneli: "son iki haftada hangi markanın reklamını gördünüz?", Suudi ve İngiltere için Mayıs–Ağustos 2026; Almanya için Nielsen'in Ocak–Ağustos 2026 brüt harcama sıralaması; EVIDENCE E11.3). Bu listelerdeki markalar çoğunlukla dünya devleri ve büyük ajans ağlarıyla çalışıyor; **90 günde onlara satmayız.** Listenin işi başka: kısa videoda gürültünün hangi sektörde olduğunu gösteriyor. Ücretli sektör incelemesi, o sektörde devin gölgesinde kalan **ikinci sıradaki markaya** satılır: "sektörünüzün en gürültülü üç hesabı bu ay neyi tutturdu, sizin son 30 videonuz bunun neresinde." Hangi ikinci sıra markalar olduğunu ben uydurmam; motorun Faz 0'daki hesap okuması (en az 5 video, 3 hesap kuralı) adlarıyla çıkarır.
+
+| Ülke | Gürültünün olduğu sektörler (listelerden sayıldı) | Listedeki örnek gürültücüler | Süzgeç notu |
+|---|---|---|---|
+| Suudi Arabistan (4 inceleme) | gıda, atıştırmalık, süt, şekerleme (40 girişin 11'i) · kişisel bakım ve ev (8) · eğlence, AVM, park, sinema, dizi platformu (6) · hızlı servis restoran (3) · gayrimenkul | Almarai, Ülker, Tropicana, Lay's, Cheetos, Kinder · Dove, NIVEA, Lifebuoy, Tide, Clorox · Al Hokair, Al Salam Mall, Al Rawda Park, Tasali · Pizza Hut, Subway, Movenpick · Emaar | Al Rajhi İslami banka, olur; Saudi Investment Bank faizli, ⚠ sizin sözünüz; sinema ve dizi platformu içerik itibarıyla ⚠ |
+| İngiltere (3 inceleme) | perakende ve ev (Argos, Currys, Oak Furnitureland, Pets at Home, Morrisons, Tesco Whoosh) · gıda ve şekerleme (Haribo, Walkers, Jaffa Cakes, Quorn, Ben & Jerry's) · ağız ve kişisel bakım (Sensodyne, Listerine, Oral-B, Lynx) · telekom (BT), otomotiv (Škoda), seyahat (trivago) | aynı | 40 girişin 8'i dışarıda: 5 alkol markası, 3 faizli finans (Santander, Nationwide, Compare the Market) |
+| Almanya (3 inceleme) | perakende zincirleri (Rewe, Kaufland, Lidl, Aldi: ilk 10'un 4'ü) · hızlı tüketim ve kişisel bakım (P&G, Henkel, Ferrero) · telekom (Telekom) · TikTok Shop'un en güçlü kategorileri: güzellik, sağlık, ev, cilt bakımı | aynı | süpermarket zincirleri alkol ve domuz da satıyor; reklamın kendisi helal ürünse müşteri olur mu, ⚠ sizin sözünüz |
+
+**Türkiye'nin ihracatçıları (kalem 8) bu listeye ek:** Ülker'in Suudi listesinde Haziran'da 5. sırada olması, Türk gıda markasının Körfez'de zaten gürültü yaptığını gösteriyor; Almanya ve Körfez masası ilk önce Ülker'in gölgesindeki Türk gıda ihracatçılarına teklif edilir.
 
 ---
 
@@ -278,7 +302,7 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 3. **Kapalı ülkelere erken girmek.** Japonya/Kore (kulüp), Çin (yerel ajans), Nijerya (yabancı yüz yasağı = bizim kadro).
 4. **Stopajı görmeden fiyat vermek.** Brezilya'da faturanın yaklaşık üçte biri gidebilir.
 5. **Yasal etiketi unutmak.** New York'ta reklam başına 1.000/5.000 $, AB'de cironun %3'üne kadar, Türkiye'de 31,8 milyon ₺'ye kadar ceza. Etiket bir ceza değil kapı: etiketli içerik tam erişim ve gelir alıyor (tahta).
-6. **Kumar/bahis, alkol, tütün.** Mutlak; Brezilya'nın en hızlı büyüyen reklamvereni bize kapalı; İngiltere'de kumar %2,7, Avustralya'da finans + sigorta ikinci ve yedinci sırada — süzgeç en çok ABD/İngiltere/Avustralya'da para kaybettirir.
+6. **Kumar/bahis, alkol, tütün.** Mutlak; Brezilya'nın en hızlı büyüyen reklamvereni bize kapalı; İngiltere'de kumar %2,7, Avustralya'da finans + sigorta ikinci ve yedinci sırada — süzgeç en çok ABD/İngiltere/Avustralya'da para kaybettirir. Sizin hükmünüz (2026-09-24): faizli banka ve sigorta ile kripto da müşteri değil ("helal çerçevede", "kripto falan asla"); bu bilerek verilen bir karardır, tuzak değil.
 7. **Beyaz etiket ve kurs/eğitim satmak.** İlkinde parayı başkası alır, ikincisi zamanı paraya çevirir, birikmez.
 8. **Makineyi önce satmak.** Kiralama, faturalama, destek planda yok; araç pazarı 29-559 $/ay'a sıkışmış ve iki araç kapanmış.
 
@@ -293,7 +317,7 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 
 ## 6. SİZDEN CEVAP BEKLEYENLER (düz yazı; tıklama kutusu size ulaşmıyor)
 
-Birincisi, holdingin BAE'de elektronik medyayı kapsayan bir ticari lisansı var mı? Reklamveren İzni'nin ön şartı bu; yoksa BAE'de yayınlanan her müşteri işi için önce lisans gerekir, Suudi Mawthooq ise lisanssız ve uzaktan alınabiliyor. İkincisi, geleneksel yani faizli banka ve sigorta şirketleri müşterimiz olabilir mi? Kayıtlarda "uyumsuz finans" yazıyor ama bunun reklam müşterisi için ne anlama geldiği yazılı değil; İslami bankalar ve tekafül elbette olur. Ben bir sınırı ne genişletirim ne daraltırım, yalnız soruyorum; cevap ABD, İngiltere, Avustralya ve Almanya'daki pazarın büyüklüğünü değiştirir. Üçüncüsü, kripto para şirketlerinin reklamı: kayıtlarda kripto "fırsat taramasından dışlanmış"; reklam müşterisi olarak da dışlanmış sayayım mı? Dördüncüsü, planın sırası: bu çalışma baş mühendisin "önce ücretli inceleme, ekran sonra" önerisini güçlendiriyor ve ilk masanın stüdyonun kendi alanı değil, kazanmak istediğimiz ilk markanın sektörü olmasını öneriyor; "tamam" derseniz plan bu sırayla yazılır. Beşincisi, ilk üç ülke önerim Suudi Arabistan, İngiltere ve Almanya; siz başka bir sıra isterseniz harita ona göre yeniden dizilir.
+**Cevaplananlar (2026-09-24, sizin sözünüzle):** faizli banka ve sigorta müşteri değil, İslami banka ve tekafül olur ("helal çerçevede"); kripto şirketleri asla ("kripto falan asla"). **Düşen:** BAE lisans sorusu ve bütün hukuk/izin/vergi ölçümleri, "legalliği şuan için boşver" sözünüzle. **Hâlâ açık:** birincisi, planın sırası: bu çalışma baş mühendisin "önce ücretli inceleme, ekran sonra" önerisini güçlendiriyor ve ilk masanın stüdyonun kendi alanı değil, kazanmak istediğimiz ilk markanın sektörü olmasını öneriyor; siz "tamam" deyince plan bu sırayla yazılır, o zamana kadar çalışma bu sırayı varsayıyor. İkincisi, ilk üç ülke önerim Suudi Arabistan (ortak ajansla), İngiltere ve Almanya; başka bir sıra isterseniz harita ona göre yeniden dizilir. Üçüncüsü, iki şüphe yalnız sizin sözünüzle çözülür: alkol ve domuz da satan bir süpermarket zinciri, reklamın kendisi helal ürünse müşteri olur mu; Suudi Investment Bank gibi faizli bankanın İslami penceresi müşteri sayılır mı.
 
 ---
 
@@ -304,4 +328,5 @@ Birincisi, holdingin BAE'de elektronik medyayı kapsayan bir ticari lisansı var
 - **Fiyatlar:** 16 ülkenin ajans fiyat rehberi + 15 ülkede Clutch üzerinden 150 ajansın asgari proje ve saat ücreti + Fransa'da 122 gerçek bütçe.
 - **İnsanlar:** YouTube'da 10 videodan 1.548 yorum, 1.332 ayrı kişi (İngilizce, Japonca, Arapça, Türkçe); Reddit'te 12 başlık, 1.633 yorum, ≈ 590 ayrı kişi (ajans sahipleri, marka sahipleri, Dubai, Türkiye); r10.net'te 12 kullanıcı; Trustpilot'ta iki yapay zekâ video aracının 1.007 yorumu; IAB'nin 505 tüketici + 104 yönetici araştırması.
 - **İkinci tur (devralan oturum, 2026-09-24 akşam):** Mawthooq, BAE izni ve Turquality resmî metinlerden yeniden ölçüldü (üç düzeltme); IAB MENA'nın kendi MENA toplamı ve Ipsos'un Ramazan 2026 tüketici araştırması okundu; 9 ülkenin ajans fiyat bandı tamamlandı (Kanada, İspanya, İtalya, Hollanda, İsviçre, Singapur, Malezya, Katar, Kuveyt); Almanya'da 3, Brezilya'da 4 alıcı başlığı açıldı (246 yorum, 111 ayrı kişi). Hepsi EVIDENCE E10'da.
+- **Üçüncü tur (aynı oturum, 20:15–20:45; hukuk yok, sizin sözünüzle):** iki yeni kalemin fiyat çapası ölçüldü (panel testi 3–15 bin $/reklam; yerelleştirme 3–10 bin $/dil); üç ülkede son dört ayın en çok fark edilen 40'ar reklamvereni okundu (YouGov, Nielsen) ve helal süzgeci sayıldı; senaryolara aşağı/yukarı hassasiyet eklendi; sizin iki hükmünüz (kripto asla, helal çerçevede) işlendi. EVIDENCE E11.
 - **Ölçülemeyenler** EVIDENCE E9'da tek tek yazılı; en önemlileri: Ramazan reklam harcamasının birinci el rakamı, stüdyo sesinin Türkçe ve Körfez Arapçasında kalitesi, faturayı hangi ülkeden keseceğimiz (her vergi anlaşması buna bağlı), BAE izninin yabancı üreticiyi kapsayıp kapsamadığı.
