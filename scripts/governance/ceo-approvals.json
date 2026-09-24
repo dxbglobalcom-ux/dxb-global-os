@@ -1317,5 +1317,12 @@
   "verbatim": "3 olsun, yeni ayarı uygula",
   "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
   "where": "~/.claude/CLAUDE.md § Brevity · board row B53 · .planning/STATE.md · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H2 · .planning/quick/20260924-caveman-on-5-5/SUMMARY-r2.md"
+ },
+ "model-watch-twice-weekly-no-pileup-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "The model watch (board row B55) changes on his word, in two sentences said after he was told that Sonnet had called 13 of 45 items serious and the chief engineer's own read found none needing action: (1) worthless news leaves nothing behind, on this machine or in the repository -- the 13 shown items were cleared, the 32 not-serious records and the watch log emptied, the day's scratch folders deleted (the list with sizes was shown to him first); (2) such news is not brought at all -- no tokens spent on it -- so the judge's criteria become strict: serious only when we must act or would clearly do better; (3) the watch runs twice a week, Monday and Thursday, instead of daily; (4) it keeps a small hint list of what it has read, wiped at the end of every month. Not a law.",
+  "verbatim": "haberler değersizse onunla ilgil herşey silinsin değersiz jiçbir birikim çöp istemiorm bu pc de veya depoda · ama işte o haberleri getirmesin boşuna token masraf gerek yok. o zaman bu işi hergün değil haftada 2 defalık yapalım pazartesi ve perşembe olsun. küçük ipucu listesi tutsun.onu da ayın sonunda silsin.",
+  "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
+  "where": "board row B55 · .planning/STATE.md · scripts/model-watch/model-watch.py and scripts/systemd/dxb-model-watch.timer (the builder's change)"
  }
 }
