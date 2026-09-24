@@ -1310,5 +1310,12 @@
   "verbatim": "emeklilikle ilgili haber istemiorm gerek yok. diğer ikisi önemli okadar",
   "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
   "where": "board row B55 · .planning/STATE.md · scripts/model-watch/model-watch.py (the judge's criteria, in the builder's fix)"
+ },
+ "h2-brevity-block-replaces-caveman-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "H2 closed on his choice: the caveman block in ~/.claude/CLAUDE.md is replaced by the measured brevity block (arm Q: the proposed block plus 'Short, but every reason and every risk stays.'). He asked for examples before deciding, was shown the three arms' real answers to the same question (none / caveman / Q, from .planning/quick/20260924-caveman-on-5-5/), and chose the third. Blind judge, round 2: coverage 64 % (none 75, caveman 73, proposed 57), readability 4.50/5 (3.62, 2.75, 4.12), billed output -19.9 % against no block. Applied the same minute: ~/.claude/CLAUDE.md 6,522 -> 6,142 bytes, the word 'caveman' 0 times; a fresh flagless claude -p quoted the new heading and answered 'No.' to a Caveman section; startup-budget GREEN, opening-budget 6/6, session-start-fits 4/4. Not a law.",
+  "verbatim": "3 olsun, yeni ayarı uygula",
+  "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
+  "where": "~/.claude/CLAUDE.md § Brevity · board row B53 · .planning/STATE.md · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H2 · .planning/quick/20260924-caveman-on-5-5/SUMMARY-r2.md"
  }
 }
