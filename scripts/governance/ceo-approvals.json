@@ -1296,5 +1296,12 @@
   "verbatim": "h13 evet",
   "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
   "where": "board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H13 · .planning/quick/20260923-prompt-audit/PROPOSED.diff hunk H13 · applied with B51"
+ },
+ "h14-h15-h17-h21-yes-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "The last prompt-audit cards of board row B53, all on the employee side, accepted as the cards proposed them: H14 -- persona section 8 'Format sabittir' in 213 files (e.g. personas/finance/cfo.md:104) becomes 'the conclusion in the first sentence', the check/warning/cross labels and the approval-package contents kept (PROPOSED.diff hunk H14); H15 -- Hamza's text (personas/ceo/agents-orchestrator.md:165-170, 176-203) loses the construction's laziness list, IDs and gate text, replaced by the text in slices/b-personas-1-107.md rows 17-18; H17 -- the studio seats (design/design-image-prompt-engineer.md:64,77 and the media-studio rows in slices/c-*) lose the dated 'the CEO rejected ... on ...' narratives, the current rule stated alone; H21 -- the social commerce creator lead (personas/social-media/social-commerce-creator-lead.md:55,70,74,79,99,102) loses the 'MUST-B', '(F6)' and 'rejected as vanity' archaeology, replaced by the text in slices/d1-personas.md row 7. He tapped H14 'evet' on the page himself at 12:01 UTC and then said the sentence below in the conversation; H16 had been decided minutes earlier with the sharpened wording (h16-persona-author-is-the-chief-engineer-2026-09-24). With this every card on the page is decided. Applied with B51. Not a law.",
+  "verbatim": "14 15 16 (zaten konuştuk) 17 ve 21 de evet.",
+  "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
+  "where": "board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar docs H14, H15, H17, H21 · .planning/quick/20260923-prompt-audit/REPORT.md, PROPOSED.diff, slices/ · applied with B51"
  }
 }
