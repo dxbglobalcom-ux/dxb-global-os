@@ -42,3 +42,6 @@ word: *"senin session bitior devir notu hazırla"*. The handover rule is 40 % us
 
 ## Your first message
 The position (CLAUDE.md §0): the SIGNAL plan waits for his eye; next is the Fable study (say what its folder shows, measured) and the four open questions; name what is blocked on him. Then say in one or two plain sentences that you have read the handover and are following the Fable study. Do not ask him what to do.
+
+## Then — the follow-up he asked for ("sende takip et")
+Put a watch on `.planning/quick/20260924-signal-revenue-study/` (the `Monitor` tool with an until-loop on `STUDY.md` existing, with a long fallback) so you wake when the study lands, without polling him or the Fable session. When it lands, read `STUDY.md` and `EVIDENCE.md` against `BRIEF.md` (every number sourced and re-openable, the world and not one city, plain Turkish, premium positioning, no dxb-research) — re-open a sample of its sources yourself — and tell him in plain Turkish what holds, what does not, and what it changes in the SIGNAL plan's open questions.
