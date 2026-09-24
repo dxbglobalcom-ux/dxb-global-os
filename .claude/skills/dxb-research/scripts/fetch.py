@@ -19,7 +19,8 @@ report says which doors were tried and what each one answered.
    6. tavily_extract          keyless MCP
    7. firecrawl_scrape        keyless MCP
    8. exa web_fetch           keyless MCP
-   9. playwright headless     a real browser, isolated, never on his screen
+   9. playwright              a real browser: an isolated context of the hidden research
+                              Chrome (Xvfb :99), never headless, never on his screen
   10. jina r.jina.ai          keyless, but a CACHED snapshot — labelled as one
   11. curl + browser UA       the floor
 
@@ -73,6 +74,11 @@ PLATFORM_READERS = [
 
 # Every opencli call from this file goes to the back door: the screen is the CEO's.
 os.environ.setdefault("OPENCLI_WINDOW", "background")
+# ...and through bin/opencli first (2026-09-24): a browser-backed reader gets its own window in the
+# hidden research Chrome, never one in his. A caller that already put the shim first is left alone.
+_SHIM = str(SKILL / "bin")
+if os.environ.get("PATH", "").split(os.pathsep)[0] != _SHIM:
+    os.environ["PATH"] = _SHIM + os.pathsep + os.environ.get("PATH", "")
 
 
 def _sh(cmd: str, timeout: int) -> tuple[int, str, str]:
@@ -192,41 +198,44 @@ def _mcp(endpoint: str, body: str, headers: list[str], tmo: int) -> tuple[str, s
 # The repair is not "npm install playwright": Playwright's own browser downloads REFUSE this
 # machine ("Playwright does not support chromium on ubuntu26.04-x64"). The browser that IS
 # here is Google Chrome 153. So the door drives that, through the python playwright in the
-# scrapling venv — headless, and in a THROWAWAY profile, because the screen belongs to him.
+# scrapling venv. Until 2026-09-24 it launched it headless in a throwaway /tmp profile (and the
+# two clean-up repairs that profile needed are why sweep_stale_profiles below exists).
+# SINCE 2026-09-24 IT STARTS NO BROWSER OF ITS OWN. Headless is what Cloudflare refuses —
+# Perplexity answered 403 headless and 200 to a headful Chrome on Xvfb, measured that day — so
+# the door connects to the hidden research Chrome over DevTools and reads in a FRESH, isolated
+# context there: no cookies, as before, and its window lives on Xvfb :99, not on his screen.
+# Playwright creates that context with disposeOnDetach, so a reader that is killed takes its
+# window with it; the slot keeps it inside the hidden Chrome's window budget.
 _PW_PY = "/home/dxb/scrapling-env/bin/python"
 _PW_SCRIPT = """
-import shutil, sys, tempfile
+import sys
+sys.path.insert(0, sys.argv[3])
+import hidden
 from playwright.sync_api import sync_playwright
-# THE ENGINE CLEANS UP AFTER ITSELF. Measured 2026-09-17: 50 of these profiles were standing
-# in /tmp, 137 MB, because the directory was created and never removed.
-_PROFILE = tempfile.mkdtemp(prefix="pw-isolated-")
-try:
+if not hidden.version():
+    print(hidden.DOWN_MSG, file=sys.stderr)
+    sys.exit(69)
+with hidden.slot(float(sys.argv[2])):
     with sync_playwright() as p:
-        ctx = p.chromium.launch_persistent_context(
-            user_data_dir=_PROFILE,
-            channel="chrome", headless=True,
-            args=["--no-first-run", "--no-default-browser-check"])
-        pg = ctx.new_page()
-        pg.goto(sys.argv[1], wait_until="domcontentloaded", timeout=int(sys.argv[2]) * 1000)
-        pg.wait_for_timeout(1200)
-        print(pg.evaluate("() => document.body.innerText"))
-        ctx.close()
-finally:
-    # THE CLEAN-UP MUST SURVIVE THE FAILURE. The first version of this repair put the removal
-    # after the `with` block, so it ran only when the page OPENED — and a dead address, which
-    # is the common case for a door this far down the chain, left the profile behind exactly as
-    # before. Measured the same night: a profile stamped 21:42, minutes after the "fix".
-    shutil.rmtree(_PROFILE, ignore_errors=True)
+        b = p.chromium.connect_over_cdp(hidden.BASE, timeout=int(sys.argv[2]) * 1000)
+        ctx = b.new_context()
+        try:
+            pg = ctx.new_page()
+            pg.goto(sys.argv[1], wait_until="domcontentloaded", timeout=int(sys.argv[2]) * 1000)
+            pg.wait_for_timeout(1200)
+            print(pg.evaluate("() => document.body.innerText"))
+        finally:
+            ctx.close()
 """
 
 
 def door_playwright(url: str, tmo: int) -> tuple[str, str]:
-    """Headless, isolated profile, the machine's own Chrome. The screen belongs to the CEO."""
+    """An isolated context of the hidden research Chrome (Xvfb :99). The screen belongs to the CEO."""
     if not Path(_PW_PY).exists():
         return "", "no playwright interpreter"
     rc, out, err = _sh(
-        f"{shlex.quote(_PW_PY)} -c {shlex.quote(_PW_SCRIPT)} {shlex.quote(url)} {tmo}",
-        tmo + 25)
+        f"{shlex.quote(_PW_PY)} -c {shlex.quote(_PW_SCRIPT)} {shlex.quote(url)} {tmo} "
+        f"{shlex.quote(str(SKILL / 'scripts'))}", tmo + 25)
     return out, ("" if rc == 0 else f"rc={rc} {err[-120:]}")
 
 
@@ -322,8 +331,9 @@ def door_pdf(url: str, tmo: int) -> tuple[str, str]:
 
 # THE SITES WE READ WHILE SIGNED IN. The machine's Chrome (Profile 5) is the CEO's own and is
 # already signed in to these; his standing order of 2026-09-17 is that a login wall is not a
-# wall. Reddit, X, YouTube, Hacker News and Stack Overflow are read by their own adapters
-# above, so only the ones with no adapter at all are here.
+# wall. Since 2026-09-24 they are read in the hidden research Chrome, on a copy of that profile
+# (scripts/profile-sync.sh), and never in his own. Reddit, X, YouTube, Hacker News and Stack
+# Overflow are read by their own adapters above, so only the ones with no adapter at all are here.
 BROWSER_SITES = [
     (re.compile(r"quora\.com/", re.I), "quora"),
     (re.compile(r"facebook\.com/", re.I), "facebook"),
@@ -333,7 +343,8 @@ BROWSER_SITES = [
 
 
 def door_browser(url: str, tmo: int) -> tuple[str, str]:
-    """Open the page in the bridge's own signed-in window and take what is inside it.
+    """Open the page signed in, in its own window of the hidden research Chrome, and take what is
+    inside it — the same extract envelope the bridge's own extract command returned.
 
     Measured 2026-09-17: the engine could reach Quora's SEARCH page this way (19 739 bytes of
     real answers, eight separate people) while the general chain had no route for a quora.com
@@ -344,8 +355,8 @@ def door_browser(url: str, tmo: int) -> tuple[str, str]:
     if not site:
         return "", "no signed-in browser site for this url"
     rc, out, err = _sh(
-        f"opencli browser {site} open {shlex.quote(url)} --window background >/dev/null 2>&1; "
-        f"opencli browser {site} extract --window background", tmo)
+        f"{shlex.quote(sys.executable)} {shlex.quote(str(SKILL / 'scripts' / 'hidden.py'))} read "
+        f"{shlex.quote(url)} --timeout {max(10, tmo - 5)}", tmo)
     if rc != 0:
         return "", f"{site} browser rc={rc} {err[:120]}"
     return out, ""

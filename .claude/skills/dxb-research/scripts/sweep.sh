@@ -24,6 +24,11 @@
 # script calls both kinds and the browser-backed ones DO read it (OPENCLI_WINDOW=bogus opencli
 # reddit search exits 2: "OPENCLI_WINDOW must be one of: foreground, background").
 #
+# SINCE 2026-09-24 NO CALL FROM THIS FILE REACHES HIS CHROME. bin/opencli is put first on PATH
+# below: every browser-backed adapter gets its own window in the hidden research Chrome (Xvfb :99,
+# 127.0.0.1:9333, a copy of Profile 5 — scripts/hidden.py, scripts/profile-sync.sh), and `opencli
+# browser` is refused. The export above stays for any call that could still reach the Bridge.
+#
 #   sweep.sh "<query>" <outdir> [--tier core|wide|max] [--timeout SECONDS]
 #
 # Raw output lands in <outdir>/<channel>.raw — one file per channel, untouched, so the
@@ -70,7 +75,7 @@ while [ $# -gt 0 ]; do
     # walked through it on 2026-09-20 by parking the live branch on a dead `if false`.
     --dry) DRY=1; shift ;;
     --browser) WITH_BROWSER=1; shift ;;
-    --no-browser) WITH_BROWSER=0; shift ;;  # for a run that must not touch his screen at all
+    --no-browser) WITH_BROWSER=0; shift ;;  # for a run that must not use the hidden research Chrome
     *) shift ;;
   esac
 done
@@ -156,6 +161,8 @@ fi
 # command — verified against `opencli list`, not assumed. Dropping them would leave a hole;
 # they are reached through a site-scoped web search instead, which is what a person would do.
 export SKILL="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Every `opencli` below — and in fetch.py and crowd.sh under it — goes through the shim first.
+export PATH="$SKILL/bin:$PATH"
 UQ=$(python3 -c 'import urllib.parse,sys;print(urllib.parse.quote_plus(sys.argv[1]))' "$QUERY")
 # What {Q}/{G}/{U} become inside a channel line: a variable READ, not the text itself.
 Q_REF='$DXB_Q'; G_REF='$DXB_G'; U_REF='$DXB_U'; S_REF='$DXB_S'
@@ -167,9 +174,11 @@ Q_REF='$DXB_Q'; G_REF='$DXB_G'; U_REF='$DXB_U'; S_REF='$DXB_S'
 # has no tab to attach to, so the Browser Bridge OPENED one — a bare `about:blank` window
 # titled "OpenCLI Browser", with Chrome's own "started debugging this browser" banner, in
 # front of him while he was working. He saw it within the minute and asked what it was.
-# So the names stay the ones the bridge already has bound (`google`, `quora`) — no new window
-# is ever created — and the collision is prevented with a lock instead: whichever sweep holds
-# `.browser.lock` drives the browser, the other waits its turn.
+# So the names then stayed the ones the bridge had bound (`google`, `quora`) and a lock,
+# `.browser.lock`, made the sweeps take turns. RETIRED 2026-09-24: every browser channel now reads
+# through scripts/hidden.py, which opens its OWN window in the hidden research Chrome and closes it
+# after, so two sweeps can never read each other's page, and no lock, no session name and no
+# window on his screen are needed. (BSESS is the name that lock paired with; no line uses it now.)
 BSESS="google"
 GQ=$(echo "$QUERY" | awk '{for(i=1;i<=4&&i<=NF;i++) printf "%s%s", $i, (i<4&&i<NF?" ":"")}')
 # THE SHORT QUERY — {K} — what a human types into a site's OWN search box.
@@ -212,7 +221,14 @@ google|core|opencli google search "{Q}" --limit 50 -f yaml
 # (A third, forum-scoped query lived here until 2026-09-17 and was removed on the CEO's
 #  order: it returned 0 bytes on a Turkish phrasing, and a channel that fails half the
 #  time is a hole the coverage table has to carry for nothing.)
-google-deep|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser google open 'https://www.google.com/search?q={U}&num=30&hl=en' --window background >/dev/null 2>&1; opencli browser google extract --window background"
+# Since 2026-09-24 through the hidden research Chrome, on the copy of his signed-in profile: an
+# empty profile got Google's /sorry/ captcha on its first search from this house. If Google ever
+# answers /sorry/ here too, the row FAILs by name and Startpage, then Brave, are read into the same
+# file, so their addresses still reach the reading chain. The whole page is kept (hidden.py google).
+# SINCE THE COOKIES-ONLY COPY (2026-09-24 16:44) GOOGLE'S WEB SESSION DOES NOT SURVIVE IN THE COPY -
+# Chrome-level sign-in is kept out by decision - so this row meets Google's consent/sign-in wall,
+# FAILs by name, and Startpage/Brave carry it (measured 16:44 and again 16:54).
+google-deep|browser|python3 "$SKILL/scripts/hidden.py" google "{Q}"
 reddit|core|opencli reddit search "{K}" --limit 50 -f yaml
 hackernews|core|opencli hackernews search "{K}" --limit 50 -f yaml
 twitter|core|opencli twitter search "{K}" --limit 50 -f yaml
@@ -235,7 +251,7 @@ v2ex|wide|opencli duckduckgo search "site:v2ex.com {K}" -f yaml
 # from that first read: the page came back as "Profilfoto für Dxb Company", 13 088 chars.
 # Before the login every one of the doors then in the chain was walled (RULER-HISTORY: eleven that day). A login is worth more than a
 # fallback chain here, and it is the only channel on this list that needed one.
-quora-forums|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser quora open 'https://www.quora.com/search?q={UK}' --window background >/dev/null 2>&1; opencli browser quora extract --window background"
+quora-forums|browser|python3 "$SKILL/scripts/hidden.py" read "https://www.quora.com/search?q={UK}"
 # QUORA IS READ THROUGH THE SITE, NOT THROUGH ITS SEARCH BOX. Measured 2026-09-17 in the
 # audit: the browser door returns Quora's own error page ("Something went wrong") on the
 # search page AND on the home page, in English and Turkish, while the session is alive —
@@ -254,7 +270,8 @@ quora|wide|opencli google search "site:quora.com {K}" --limit 20 -f yaml
 # "Pre-navigation ... Navigation rejected". The SAME session, driven by hand through the
 # browser bridge that already carries his login, read both: Facebook's own post search
 # 36 583 chars, Instagram's keyword search 1 309 chars carrying a full Dubai Holding post.
-# So these two follow the quora-forums shape — the bridge, under the same lock.
+# So these two follow the quora-forums shape — the bridge, under the same lock. (Since 2026-09-24:
+# scripts/hidden.py, one window of the hidden research Chrome each, no lock.)
 # THE TWO CHANNELS HAVE DIFFERENT JOBS, and 2026-09-21 measured which is which.
 # INSTAGRAM IS AN ADDRESS PRODUCER, not a body: its search page carried 4 post addresses and
 # almost no text (136-1 993 chars across runs), while ONE of those post pages reads 19 176
@@ -264,7 +281,8 @@ quora|wide|opencli google search "site:quora.com {K}" --limit 20 -f yaml
 # (permalink.php 0, story_fbid 0), so nothing is collected from it - it is read where it
 # stands. Its one defect was Facebook's own "See more" fold, which cut three posts to a
 # first line; ONE eval unfolds them before the extract - no scroll, no click loop, because
-# the whole channel holds .browser.lock while it runs. THE WAIT BEFORE THE EVAL IS NOT
+# the whole channel holds .browser.lock while it runs (the lock is retired; the single eval
+# stays - `hidden.py read --expand`). THE WAIT BEFORE THE EVAL IS NOT
 # DECORATION: measured 2026-09-21, an eval fired the instant after `open` sees a page that
 # has not rendered - `[role=button]` count 0 - and unfolds nothing; six seconds later the
 # same page reports 283 buttons, 5 of them "See more". A/B on the same query, same
@@ -276,8 +294,10 @@ quora|wide|opencli google search "site:quora.com {K}" --limit 20 -f yaml
 # the cost of opening a fold that is not there is two seconds of a lock that runs for 27.
 # THE FIRST REPORT OF THIS A/B WAS NOT A CONTROLLED ONE - two separate page loads were
 # compared - and it is corrected here rather than left standing.
-facebook|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser facebook open 'https://www.facebook.com/search/posts/?q={UK}' --window background >/dev/null 2>&1; opencli browser facebook wait time 6 --window background >/dev/null 2>&1; opencli browser facebook eval \"document.querySelectorAll('[role=button]').forEach(b=>{if(/^See more$/i.test(b.textContent.trim()))b.click()})\" --window background >/dev/null 2>&1; opencli browser facebook wait time 2 --window background >/dev/null 2>&1; opencli browser facebook extract --window background"
-instagram|browser|flock -w 200 "$SKILL/.browser.lock" -c "opencli browser instagram open 'https://www.instagram.com/explore/search/keyword/?q={UK}' --window background >/dev/null 2>&1; opencli browser instagram extract --window background"
+facebook|browser|python3 "$SKILL/scripts/hidden.py" read "https://www.facebook.com/search/posts/?q={UK}" --wait 6 --expand "See more" --after 2
+# INSTAGRAM'S RESULTS ARRIVE AFTER THE PAGE SETTLES. Measured 2026-09-24 through hidden.py on
+# "dubai real estate": no dwell -> 0 chars; --wait 3 -> 596 chars carrying 24 post addresses.
+instagram|browser|python3 "$SKILL/scripts/hidden.py" read "https://www.instagram.com/explore/search/keyword/?q={UK}" --wait 3
 linkedin|max|opencli linkedin search "{K}" -f yaml
 zhihu|max|opencli zhihu search "{K}" -f yaml
 linux-do|max|opencli linux-do search "{K}" -f yaml
@@ -304,6 +324,8 @@ want_tier() {  # core ⊂ wide ⊂ max ; `browser` is NEVER in any of them
   # must not touch his screen. They cannot be made headless: measured the same day, the whole
   # reading chain against google.com/search returned a 921-byte cached snapshot and
   # nothing else — Google shuts its own results page to every headless reader we have.
+  # SINCE 2026-09-24 this tier runs in the hidden research Chrome (Xvfb :99, headful, his copied
+  # sign-ins) and never on his screen; `--no-browser` now only keeps a run away from that Chrome.
   case "$1" in
     browser) [ "$WITH_BROWSER" = "1" ] ;;
     *) case "$TIER" in
@@ -377,9 +399,9 @@ while IFS='|' read -r name tier cmd; do
   [ "$DRY" = "1" ] && continue
   (
     # HOW LONG A CHANNEL HELD THE MACHINE, written down per channel. The two browser
-    # channels share ONE lock (.browser.lock) with quora-forums and google-deep, so a slow
-    # one does not just cost its own seconds - it stalls the others behind it. The B48
-    # ruler reads this file (rule R8) instead of trusting a sentence about it.
+    # channels shared ONE lock (.browser.lock, retired 2026-09-24) with quora-forums and
+    # google-deep, so a slow one did not just cost its own seconds - it stalled the others
+    # behind it. The B48 ruler reads this file (rule R8) instead of trusting a sentence about it.
     __t0=$(date +%s)
     DXB_Q="$QUERY" DXB_G="$GQ" DXB_U="$UQ" DXB_K="$KQ" DXB_UK="$UKQ" DXB_S="$BSESS" timeout "$TMO" bash -c "$run" \
         > "$OUT/$name.raw" 2> "$OUT/$name.err"
@@ -806,8 +828,9 @@ echo
 # 127 rows into a different run that had been opened meanwhile. Carry the id instead.
 python3 "$SKILL/scripts/ingest.py" "$OUT" --query "$QUERY" --gap "opening the ground" ${SWEEP_RUN:+--run "$SWEEP_RUN"} || true
 
-# The bound sessions are NOT closed here. Closing them means the next sweep finds nothing to
-# attach to and the bridge opens a fresh window — which is exactly the window the CEO saw on
-# 2026-09-17. They are background tabs inside the browser he already runs; they are reused.
+# Nothing is left open here. Since 2026-09-24 every browser read opens its own window in the hidden
+# research Chrome and closes it itself (bin/opencli, scripts/hidden.py). The bridge sessions this
+# note used to keep open — closing them made the bridge open a fresh window on his screen, the one
+# he saw on 2026-09-17 — are not used by this file any more.
 
 exit 0
