@@ -29,10 +29,10 @@
 # 2500/2200/1000 + 1500, the last equal to ruler R5 so a page the ruler passes arrives whole), measured; tests/hooks/opening-budget.ts R5 keeps the page one page.
 #
 # 2026-09-24, row B55, the watch behind the pinned model: scripts/model-watch/model-watch.py runs
-# daily (dxb-model-watch.timer). While a new model id, or news its Sonnet judge calls serious for
+# Monday and Thursday (dxb-model-watch.timer). While a new model id, or news its Sonnet judge calls serious for
 # how our models work, waits for him, it leaves ONE line (NOTICE.txt) that goes right under the
 # title — he is told first, and his order is that the session does not swell ("oturumu
-# şişirmesin"): every detail stays in --status. A source without a good read for three days adds
+# şişirmesin"): every detail stays in --status. A source without a good read for five days adds
 # one line of its own: a watch that fails in silence is believed. Neither → not one byte is added.
 # The lines are paid for inside the same 8,000 bytes (the refuter's B4, 2026-09-24: they sat outside
 # the budget and broke it exactly when there was something to tell him): WHAT HAPPENS NEXT, the one
@@ -84,7 +84,7 @@ cupboard=$(cat "$CUPBOARD" 2>/dev/null || true)               # one page: what e
 
 # B55: the model watch's one line, and its staleness line, in plain bash (no python on this path).
 # Each is led by a newline and sits at the end of the title line: with nothing serious waiting and
-# every source read within three days, $watch is empty and the block is byte-for-byte what it was.
+# every source read within five days, $watch is empty and the block is byte-for-byte what it was.
 MODEL_WATCH="${DXB_MODEL_WATCH_STATE:-${HOME:-}/.local/state/dxb/model-watch}"
 watch=""
 if [ -s "$MODEL_WATCH/NOTICE.txt" ] && [ -r "$MODEL_WATCH/NOTICE.txt" ]; then
@@ -93,7 +93,7 @@ if [ -s "$MODEL_WATCH/NOTICE.txt" ] && [ -r "$MODEL_WATCH/NOTICE.txt" ]; then
 fi
 if [ -r "$MODEL_WATCH/sources.tsv" ]; then
   stale="" since=""
-  cutoff=$(( ${EPOCHSECONDS:-$(date +%s)} - 3 * 86400 ))       # three days, as in model-watch.py
+  cutoff=$(( ${EPOCHSECONDS:-$(date +%s)} - 5 * 86400 ))       # five days: the watch runs Monday and Thursday, 3-4 days apart
   # one line per source: name, what it is called, last good read (epoch, date), last error
   while IFS=$'\t' read -r name _ ok_epoch day _; do
     if [[ "$ok_epoch" =~ ^[0-9]+$ ]] && [ "$ok_epoch" -lt "$cutoff" ]; then

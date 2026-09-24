@@ -15,7 +15,8 @@ This script is step one — TELL — and nothing else. It never starts an audit,
 setting and never applies guidance. It reads public pages; its judge runs on the machine's own
 `claude` login. It holds no API key and no credential of its own.
 
-Once a day (dxb-model-watch.timer):
+Twice a week, Monday and Thursday at 09:00 (dxb-model-watch.timer; his order of 2026-09-24: "her gün
+değil haftada 2 defalık yapalım pazartesi ve perşembe olsun"):
   1. COLLECT five public sources, each on its own:
        models         the models overview: the "Claude API ID" row of its table, and the page's own
                       split of current and legacy models (its navigation)
@@ -30,29 +31,34 @@ Once a day (dxb-model-watch.timer):
      silently, dated items of the last 30 days go on to the judge. After that, anything not seen
      before goes on when it is current (dated, or first seen, within 30 days), does not concern
      legacy models only, and is not only the launch of a model we already run.
+     The keys seen (the hint list, his "küçük ipucu listesi") live one calendar month: the first run
+     of a new month wipes them, and each source then sends on only what is dated after its last good
+     read — the rest is recorded again silently, so the wipe never has anything judged twice.
   2. JUDGE: Sonnet 5 (`claude -p`, low effort, isolated as the H2 measurement proved clean — safe
      mode, no tools, no advisor, no inherited session variables) reads those items with our setup
-     and answers per item: serious or not, and why, in one Turkish sentence. Serious items wait
-     for him; the rest are recorded as judged and never shown. A judge that cannot answer leaves
-     its items unjudged, asked again the next day, never shown unjudged. A new model id needs no
-     judge: it is always serious, and the serious items that name it are told with it, as one.
+     and answers per item: serious — we must act, or would clearly do better — or not, and for a
+     serious one why, in one short Turkish sentence. Serious items wait for him; of the rest only
+     the key is kept (his order, 2026-09-24: "haberler değersizse onunla ilgili her şey silinsin").
+     A judge that cannot answer leaves its items unjudged, asked again at the next run, never shown
+     unjudged. A new model id needs no judge: it is always serious, and the serious items that name
+     it are told with it, as one.
   3. TELL: while anything serious waits, NOTICE.txt holds ONE line, which
      .claude/hooks/spec-bootstrap.sh puts under the opening's title. Every detail — the items, the
      reasons, the links — lives in --status.
 A read that fails changes no record of what was seen, is logged, and still exits 0: a network blip
-is not a failed unit. A source without a good read for three days is named in one line of the
-opening, because a watch that fails in silence is believed — and so is a judge that has left
-items unjudged for three days.
+is not a failed unit. A source without a good read for five days (runs are three or four days
+apart) is named in one line of the opening, because a watch that fails in silence is believed —
+and so is a judge that has left items unjudged for five days.
 
 State, outside the repository: $DXB_MODEL_WATCH_STATE, or ~/.local/state/dxb/model-watch/
-  seen.json        what was seen per source (with its first-seen date), the current/legacy split,
-                   what waits for him or for the judge ("pending"), and what was judged not serious
-  last-check.json  the last check per source (time, ok, error, items read, last good read) and the
-                   last judge call (items, verdicts, tokens, cost)
+  seen.json        the keys seen per source (the hint list, with the day first seen), the current/legacy
+                   split, and what waits for him or for the judge ("pending")
+  last-check.json  the last check per source (time, ok, error, items read, last good read: its time and
+                   its day) and the last judge call (items, verdicts, tokens, cost)
   sources.tsv      one line per source and one for the judge, for the session-start hook (plain bash)
   NOTICE.txt       the one line for the opening (absent when nothing serious waits)
   shown.json       what --status last showed, so an --ack clears only what was shown
-  watch.log        append-only, one line per event
+  watch.log        the last run only, one line per event; the journal gets one summary line per run
 
   python3 scripts/model-watch/model-watch.py                   one check (what the timer runs)
   python3 scripts/model-watch/model-watch.py --status          everything: items, reasons, links
@@ -102,7 +108,6 @@ SCRIPT = "python3 scripts/model-watch/model-watch.py"
 # excerpt hid 12 of Claude Code 2.1.251's 14 usable entries). Measured that day, the longest item of the
 # 30-day window was 2.1.281's usable entries, 4,439 characters; a longer one is cut here and ends in "…".
 EXCERPT = 6000
-KEEP_JUDGED = 500        # judged-not-serious items kept for --status
 # A reader that changes what an item IS has its source read again, as at its first read: what its old
 # reader sent on and is still current is judged again (2026-09-24, the refuter's A2/A3/B5: one item per
 # release-notes bullet; every usable Claude Code entry; three more verbs that give a user something).
@@ -113,26 +118,30 @@ JUDGE_BUDGET_USD = "1"   # per call: a tripwire, not a plan
 JUDGE_TIMEOUT = 600      # seconds
 SEATS = ("Opus 5.5 builds (writes the code); Fable 5.1 advises and orchestrates; "
          "Sonnet 5 is the cheap worker")
-# A model's retirement is not news for him (his order, 2026-09-24: "emeklilikle ilgili haber istemiyorum
-# gerek yok"); it is the judge's to call not serious — no word decides it before the judge, because usage
-# guidance reads "deprecated" too ("header X is deprecated, use Y").
+# Only what WE must act on reaches him (his order, 2026-09-24: "o haberleri getirmesin, boşuna token masraf
+# gerek yok"). A model's retirement is not news for him either (his order the same day: "emeklilikle ilgili
+# haber istemiyorum gerek yok"); it is the judge's to call not serious — no word decides it before the
+# judge, because usage guidance reads "deprecated" too ("header X is deprecated, use Y").
+SETUP = ("Claude Code, signed in with a Claude subscription; we hold no API key of our own, so what the "
+         "Claude API alone offers does not reach us")
 SERIOUS = (
-    "An item is SERIOUS only if it seriously changes how OUR models should be used or configured:\n"
-    "- a new model or a new version: a new model, or a new version of a model we use (a point release "
-    "such as Opus 5.6, or a new dated snapshot id of a family we use) is always serious;\n"
-    "- official prompting or usage guidance for a model we use;\n"
-    "- a Claude Code or API change that changes our setup: effort levels, the advisor, subagents, hooks, "
-    "settings defaults, context window, limits or pricing. A new Claude Code release is NOT serious by "
-    "itself — only if it changes our setup.\n"
+    "An item is SERIOUS only if WE must act on it, or would clearly do better by acting on it — one of:\n"
+    "- a new model or a new version not in our setup: a new model, or a new version of a model we use (a point "
+    "release such as Opus 5.6, or a new dated snapshot id of a family we use) is always serious;\n"
+    "- a change that breaks or changes something our setup uses now: the settings we read (\"model\" and "
+    "\"advisorModel\" in ~/.claude/settings.json), effort levels, the advisor, subagents, hooks, or Claude Code "
+    "behaviour we rely on. A new Claude Code release is NOT serious by itself — only if it changes our setup;\n"
+    "- official guidance on prompting or using a model we run that would change how we write our instructions.\n"
     "The launch of a model we ALREADY run (its id is in the list of ids we run, above) is NOT news: its "
     "launch note, its availability or its becoming a default is not serious. Usage guidance for it can be; "
     "a model or a version that is NOT in that list stays serious.\n"
+    "NOT serious: features of the Claude API alone, betas, prices, CLI or UI conveniences, enterprise, gateway, "
+    "cloud-provider and Compliance items, and anything we would not act on. "
     "The retirement or deprecation of a model — a notice that a model is deprecated, retired or will be — is "
     "NOT serious. A change that deprecates a parameter, a header or a setting in favour of another is usage "
-    "guidance, and is judged as such.\n"
-    "Everything else — small features, bug fixes, UI, docs edits — is NOT serious.")
+    "guidance, and is judged as such.")
 VERDICTS = {"type": "object", "required": ["verdicts"], "properties": {"verdicts": {"type": "array", "items": {
-    "type": "object", "required": ["id", "serious", "reason_tr"],
+    "type": "object", "required": ["id", "serious"],
     "properties": {"id": {"type": "integer"}, "serious": {"type": "boolean"}, "reason_tr": {"type": "string"}}}}}}
 MODEL_ID = re.compile(r"claude-[a-z0-9]+(?:-[a-z0-9]+)*")
 SLUG = re.compile(r"(?:claude-)?([a-z]+)-(\d{1,2})(?:-(\d{1,2}))?(?:-\d{8})?")
@@ -438,11 +447,14 @@ def judge_prompt(items: list, ours: set) -> str:
                 "excerpt": g.get("excerpt", "")} for i, g in enumerate(items, 1)]
     return (
         "You judge news from Anthropic for one company's Claude setup.\n"
-        f"Our setup: main model (Claude Code) {s['model'] or 'not set'}; advisor model {s['advisorModel'] or 'not set'}; "
-        f"seats: {SEATS}.\nThe model ids we already run: {', '.join(sorted(ours)) or 'none known'}.\n\n{SERIOUS}\n\n"
+        f"Our setup: {SETUP}; main model (Claude Code) {s['model'] or 'not set'}; advisor model "
+        f"{s['advisorModel'] or 'not set'}; seats: {SEATS}.\n"
+        f"The model ids we already run: {', '.join(sorted(ours)) or 'none known'}.\n\n{SERIOUS}\n\n"
         "Judge every item below. Answer with JSON only: "
-        '{"verdicts": [{"id": <id>, "serious": true or false, "reason_tr": "<one Turkish sentence: why>"}]}, '
-        "one verdict per item.\n\nItems:\n" + json.dumps(listing, ensure_ascii=False, indent=1) + "\n")
+        '{"verdicts": [{"id": <id>, "serious": true or false, "reason_tr": "<a serious item only: one short '
+        'Turkish sentence, what we must do and why>"}]}, one verdict per item; leave reason_tr out of a verdict '
+        "that is not serious. Write Turkish with its own letters (ç ğ ı ö ş ü), never their plain-ASCII "
+        "stand-ins.\n\nItems:\n" + json.dumps(listing, ensure_ascii=False, indent=1) + "\n")
 
 
 def judge_env() -> dict:
@@ -486,10 +498,11 @@ def ask_judge(items: list, now: datetime, ours: set) -> tuple[dict | None, dict]
             re.sub(r"^```(?:json)?\s*|\s*```$", "", (answer.get("result") or "").strip()))
         verdicts = {}
         for v in body.get("verdicts", []):      # a verdict for an item that was not asked about is no verdict (B7)
-            reason = v.get("reason_tr")
+            reason = " ".join(v["reason_tr"].split()) if isinstance(v.get("reason_tr"), str) else ""
+            # a serious verdict says why; one of "not serious" needs no reason, and none is kept
             if (isinstance(v.get("id"), int) and 1 <= v["id"] <= len(items) and isinstance(v.get("serious"), bool)
-                    and isinstance(reason, str) and reason.strip()):
-                verdicts[v["id"]] = (v["serious"], " ".join(reason.split()))
+                    and (reason or not v["serious"])):
+                verdicts[v["id"]] = (v["serious"], reason)
         if not verdicts:
             raise RuntimeError("the answer holds no usable verdict")
     except Exception as e:     # missing claude, no quota, bad JSON: nothing is decided, all is asked again
@@ -579,6 +592,7 @@ def render(sd: Path, seen: dict) -> int:
 
 def check(sd: Path, urls: dict, today: date) -> int:
     sd.mkdir(parents=True, exist_ok=True)
+    write(sd / "watch.log", "")    # the log holds the last run only (his order, 2026-09-24: no worthless accumulation)
     now = datetime.now().astimezone()
     stamp = now.isoformat(timespec="seconds")
     try:
@@ -589,21 +603,22 @@ def check(sd: Path, urls: dict, today: date) -> int:
         print(f"model-watch: {e}", file=sys.stderr)
         return 1
     before = json.dumps(seen, sort_keys=True)
+    seen.pop("judged", None)       # what the judge called not serious keeps only its key, in the hint list
     seen.setdefault("guidance", {})
     pending = seen.setdefault("pending", {"models": [], "guidance": []})
     today_s, cutoff = today.isoformat(), (today - timedelta(days=CURRENT_DAYS)).isoformat()
-    records, report = {}, []
+    records = {}
 
     def failed(name: str, err) -> None:
         prev = last.get("sources", {}).get(name, {})
         records[name] = {"ok": False, "error": clean(err), "count": 0, "last_ok": prev.get("last_ok"),
-                         "last_ok_epoch": prev.get("last_ok_epoch", 0), "url": urls[name]}
+                         "last_ok_epoch": prev.get("last_ok_epoch", 0), "last_ok_day": prev.get("last_ok_day"),
+                         "url": urls[name]}
         log(sd, now, f"FAILED {name}: {clean(err)} ({urls[name]}) — what was seen is kept as it was")
-        report.append(f"{name}: FAILED — {clean(err)}")
 
     def succeeded(name: str, count: int) -> None:
         records[name] = {"ok": True, "error": None, "count": count, "last_ok": stamp,
-                         "last_ok_epoch": int(now.timestamp()), "url": urls[name]}
+                         "last_ok_epoch": int(now.timestamp()), "last_ok_day": today_s, "url": urls[name]}
 
     # 1. the models page: new ids (always serious), and the current/legacy split for the filter
     try:
@@ -621,19 +636,26 @@ def check(sd: Path, urls: dict, today: date) -> int:
         if known is None:
             seen["models"] = {i: today_s for i in info["ids"]}
             log(sd, now, f"BASELINE models: {len(info['ids'])} ids: {', '.join(info['ids'])}")
-            report.append(f"models: ok — {len(info['ids'])} ids read: {', '.join(info['ids'])} — baseline recorded")
         else:
             new = [i for i in info["ids"] if i not in known]
             for i in new:
                 known[i] = today_s
                 pending["models"].append({"id": i, "first_seen": today_s, "url": urls["models"]})
                 log(sd, now, f"NEW model id {i} — serious without the judge")
-            report.append(f"models: ok — {len(info['ids'])} ids read: {', '.join(info['ids'])} — {len(new)} new"
-                          + (f": {', '.join(new)}" if new else ""))
 
     # 2. the guidance sources: what is new, current, not about legacy models only and not only the
-    #    launch of a model we already run goes on
+    #    launch of a model we already run goes on. The keys seen (the hint list) live one calendar month
+    #    (his order, 2026-09-24: "küçük ipucu listesi tutsun. onu da ayın sonunda silsin"): the first run
+    #    of a new month wipes them, and each source then sends on only what is dated after its own last
+    #    good read — what was judged or recorded before the wipe is not paid for again. The model ids
+    #    are not the hint list: wiped, a new id would pass as a baseline, untold.
     catalog, ours, readers = seen.get("catalog", {}), running(seen), seen.setdefault("readers", {})
+    reads = last.get("sources", {})               # each source's last good read, by the watch's own day
+    days = [r["last_ok_day"] for r in reads.values() if isinstance(r, dict) and r.get("last_ok_day")]
+    wiped = bool(seen["guidance"]) and bool(days) and max(days)[:7] < today_s[:7]
+    if wiped:
+        seen["guidance"] = {}
+        log(sd, now, f"WIPED the hint list for {today_s[:7]}: each source sends on only what is dated after its last good read")
     for name, reader in GUIDANCE.items():
         try:
             items = reader(fetch(urls[name]), urls[name])
@@ -647,71 +669,64 @@ def check(sd: Path, urls: dict, today: date) -> int:
         if again:                                 # its reader changed what an item is: read as at its first read
             del seen["guidance"][name]
             pending["guidance"] = [g for g in pending["guidance"] if g["source"] != name or g["date"] < cutoff]
-            seen["judged"] = [j for j in seen.get("judged", []) if j["source"] != name or j["date"] < cutoff]
             log(sd, now, f"READ AGAIN {name}: its reader changed (v{readers.get(name, 1)} to v{READERS[name]}); "
                          "what it sent on and is still current is judged again")
         readers[name] = READERS.get(name, 1)
         first = name not in seen["guidance"]
+        was = reads.get(name) if isinstance(reads.get(name), dict) else {}
+        # with no hints: after a wipe, the day of its last good read; with none on record, a baseline
+        since = None if again else was.get("last_ok_day") or (was.get("last_ok") or "")[:10] or None
         known = seen["guidance"].setdefault(name, {})
-        goes = skipped = old = 0
+        waits = {g["key"] for g in pending["guidance"] if g["source"] == name}
         for it in items:
             if it["key"] in known:
                 continue
             known[it["key"]] = today_s
+            if it["key"] in waits:
+                continue                          # it waits already, for him or for the judge: never twice
             if first and not it["date"]:
-                continue                          # an undated item at the baseline: recorded, silent
+                continue                          # an undated item at a baseline or after a wipe: recorded, silent
+            if first and since and it["date"] <= since:
+                continue                          # after a wipe, dated by its last good read: seen then, silent
             when = it["date"] or today_s
-            if when < cutoff:
-                old += 1                          # not current: recorded, never judged
+            if when < cutoff:                     # not current: recorded, never judged
                 if not first:
                     log(sd, now, f"NOT CURRENT {name}: {it['key']} dated {when}")
                 continue
             it = sift(it, ours, catalog)
             why = irrelevant(it, catalog)
             if why:
-                skipped += 1
                 log(sd, now, f"SKIPPED {name}: {it['title']} ({why}) — {it['url']}")
                 continue
             pending["guidance"].append({"source": name, "key": it["key"], "title": it["title"], "url": it["url"],
-                                        "date": when, "first_run": first, "excerpt": it.get("excerpt", ""),
-                                        "serious": None})
-            goes += 1
-        report.append(f"{name}: ok — {len(items)} items read — {'read again' if again else 'baseline' if first else 'new'}: "
-                      f"{goes} to the judge, {skipped} skipped (legacy, fixes only, or a model we run), "
-                      f"{old} older than {CURRENT_DAYS} days"
-                      + (" (undated items at a baseline are recorded silently)" if first and name == "docs" else ""))
+                                        "date": when, "first_run": first and not since,
+                                        "excerpt": it.get("excerpt", ""), "serious": None})
 
-    # 3. the judge: every item not yet judged, in one call
-    judge = last.get("judge")
+    # 3. the judge: every item not yet judged, in one call. Not serious: only its key is kept, in the hint
+    #    list (his order, 2026-09-24: "haberler değersizse onunla ilgili her şey silinsin").
+    judge, told = last.get("judge"), "judge: nothing new"
     unjudged = [g for g in pending["guidance"] if g.get("serious") is None]
     if unjudged:
         verdicts, judge = ask_judge(unjudged, now, ours)
         if verdicts is None:
             log(sd, now, f"JUDGE FAILED: {judge['error']} — {len(unjudged)} item(s) stay unjudged, asked again next run")
-            report.append(f"judge: FAILED — {judge['error']} — {len(unjudged)} item(s) asked again next run")
+            told = f"judge: FAILED — {len(unjudged)} item(s) asked again next run"
         else:
-            judged, lines = seen.setdefault("judged", []), []
             for n, g in enumerate(unjudged, 1):
                 if n not in verdicts:
                     continue                      # no verdict for it: asked again next run
                 serious, reason = verdicts[n]
-                g["reason_tr"] = reason
                 if serious:
-                    g["serious"] = True
+                    g["serious"], g["reason_tr"] = True, reason
                     log(sd, now, f"SERIOUS {g['source']}: {g['title']} — {reason}")
                 else:
                     pending["guidance"].remove(g)
-                    judged.append({k: g[k] for k in ("source", "key", "title", "url", "date", "reason_tr")} | {"judged": today_s})
-                    log(sd, now, f"NOT SERIOUS {g['source']}: {g['title']} — {reason}")
-                lines.append(f"  {'SERIOUS    ' if serious else 'not serious'} {g['source']} ({g['date']}): {g['title'][:90]} — {reason}")
-            del judged[:-KEEP_JUDGED]
+                    log(sd, now, f"NOT SERIOUS {g['source']}: {g['key']}")
             log(sd, now, f"JUDGE ok: {judge['items']} item(s), {judge['serious']} serious, {judge['input_tokens']} tokens in, "
                          f"{judge['output_tokens']} out, ${judge['cost_usd']:.4f}")
-            report.append(f"judge: ok — {judge['items']} item(s), {judge['serious']} serious · "
-                          f"{judge['input_tokens']} tokens in, {judge['output_tokens']} out · ${judge['cost_usd']:.4f}")
-            report.extend(lines)
+            told = f"judge: ok — {judge['items']} item(s), {judge['serious']} serious · ${judge['cost_usd']:.4f}"
 
-    # 4. the judge's own line for the opening's three-day rule (the refuter's B3, 2026-09-24: a judge that
+    # 4. the judge's own line for the opening's five-day rule (the refuter's B3, 2026-09-24: a judge that
     #    failed every day left its items unjudged and the opening silent, for good). Its good read is the
     #    last run that left nothing unjudged — nothing to judge, or a verdict for each; a run that leaves
     #    items unjudged keeps the one before, and a watch that never had one starts the clock at that run.
@@ -732,9 +747,10 @@ def check(sd: Path, urls: dict, today: date) -> int:
     rows.append("\t".join(["judge", "the Sonnet judge", str(clear["last_ok_epoch"]), clear["last_ok"][:10], why]))
     write(sd / "sources.tsv", "\n".join(rows) + "\n")
     count = render(sd, seen)
-    log(sd, now, "checked: " + " · ".join(f"{n} {'ok ' + str(r['count']) if r['ok'] else 'FAILED'}" for n, r in records.items())
-        + f" · waiting for him: {count}")
-    print("\n".join(report + [f"opening: {notice_line(count) if count else '(nothing)'}"]))
+    summary = (" · ".join(f"{n} {'ok ' + str(r['count']) if r['ok'] else 'FAILED'}" for n, r in records.items())
+               + f" · {told} · waiting for him: {count}" + (" · the hint list was wiped for a new month" if wiped else ""))
+    log(sd, now, "checked: " + summary)
+    print(f"model-watch {today_s}: {summary}")     # one line per run for the journal; the detail is in --status
     return 0
 
 
@@ -750,14 +766,14 @@ def status(sd: Path) -> int:
         print(f"last check   {last.get('time')}: " + " · ".join(
             f"{n} ok {r['count']}" if r["ok"] else f"{n} FAILED ({r['error']})" for n, r in recs.items()))
         print("last good    " + " · ".join(f"{n} {(r.get('last_ok') or 'never')[:16]}" for n, r in recs.items())
-              + " (the opening names a source after 3 days without one)")
+              + " (the opening names a source after 5 days without one)")
     j = last.get("judge")
     if j:
         print(f"judge        {j['time']}: " + (f"ok — {j['items']} item(s), {j['serious']} serious" if j["ok"] else f"FAILED ({j['error']})")
               + f" · {j['input_tokens']} tokens in, {j['output_tokens']} out · ${j['cost_usd']:.4f}")
     if last.get("judge_clear"):
         print(f"judge clear  {last['judge_clear'].get('last_ok', '')[:16]} — the last run that left nothing unjudged "
-              "(the opening names the judge after 3 days without one)")
+              "(the opening names the judge after 5 days without one)")
     groups, alone = news(seen)
     pinned = settings()["model"] or 'not set (no "model" in ~/.claude/settings.json)'
     print(f"waiting for him: {len(groups) + len(alone) or 'nothing'}")
@@ -787,11 +803,6 @@ def status(sd: Path) -> int:
         print(f"not yet judged: {len(unjudged)} (asked again at the next run, never shown to him unjudged)")
         for g in unjudged:
             print(f"  - {g['source']} ({g['date']}): {g['title']} — {g['url']}")
-    since = (date.today() - timedelta(days=CURRENT_DAYS)).isoformat()
-    recent = [g for g in seen.get("judged", []) if g.get("judged", "") >= since]
-    print(f"judged not serious in the last {CURRENT_DAYS} days: {len(recent)} (recorded, never shown to him)")
-    for g in recent:
-        print(f"  - {g['source']} ({g['date']}): {g['title'][:100]} — {g['reason_tr']}")
     print(f"state        {sd}")
     return 0
 

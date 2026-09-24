@@ -7,7 +7,13 @@
 // silent; a new model id (a dated snapshot of a family we use included) is one line without the
 // judge; "serious" is one line and "not serious" is nothing; a judge that fails shows nothing and is
 // asked again; old, legacy-only and fixes-only items never reach the judge — and the ways a watch
-// goes quiet: a failed read, one dead source, three days without a good read.
+// goes quiet: a failed read, one dead source, five days without a good read (it runs Monday and
+// Thursday, three or four days apart).
+//
+// His orders of the same day on what the watch costs and keeps: the judge is strict — serious only
+// when we must act — and says why only for a serious item; not serious keeps only its key; the log
+// holds the last run and the journal one line; the hint list is wiped at a new month's first run
+// without anything being judged twice.
 //
 // The refuter's pass of the same day added the rest: a retirement notice of a model we use is news
 // (A1); every release-notes bullet is read, a late one too (A2); the judge reads a version whole (A3);
@@ -148,18 +154,24 @@ describe("the model watch tells him one line, and only what is serious", () => {
       expect(r).toMatchObject({ ok: false, count: 0, last_ok: good.last_ok, last_ok_epoch: good.last_ok_epoch });
       expect(r.error).toBeTruthy();
       expect(s.read("seen.json")).toBe(seen);
+      expect(s.read("watch.log").match(/FAILED models:/g)).toHaveLength(1);   // the log holds the last run only
     }
-    expect(s.read("watch.log").match(/FAILED models:/g)).toHaveLength(2);
   });
 
-  it("an item the judge calls serious is one line; the judge was given our setup and the item", () => {
+  it("the strict judge: told our setup, serious only when we must act, a reason only for a serious item — and that item is one line", () => {
     const s = sandbox();
     s.watch(LATER);
-    s.watch("2027-06-02", { "claude-code": s.page("claude-code", VERSIONS(["2.1.283", "Added <code>maxEffortLevel</code> to cap the effort level"])) }, SERIOUS);
+    s.watch("2027-06-02", { "claude-code": s.page("claude-code", VERSIONS(
+      ["2.1.283", "Added <code>maxEffortLevel</code> to cap the effort level"], ["2.1.282", "Added a colour theme"])) }, SERIOUS);
     expect(s.read("NOTICE.txt")).toBe(`${LINE(1)}\n`);
     expect(s.hook().slice(0, 3)).toEqual([TITLE, LINE(1), CORE]);
+    expect(s.json("seen.json").pending.guidance).toMatchObject([{ key: "2.1.283", serious: true }]);   // "not serious" with no reason: accepted
     const asked = s.prompt();
-    expect(asked).toContain("Our setup: main model (Claude Code) claude-opus-5-5[1m]; advisor model claude-fable-5-1; seats: Opus 5.5 builds");
+    expect(asked).toContain("Our setup: Claude Code, signed in with a Claude subscription; we hold no API key of our own");
+    expect(asked).toContain("main model (Claude Code) claude-opus-5-5[1m]; advisor model claude-fable-5-1; seats: Opus 5.5 builds");
+    expect(asked).toContain("An item is SERIOUS only if WE must act on it, or would clearly do better by acting on it");
+    expect(asked).toContain("NOT serious: features of the Claude API alone, betas, prices, CLI or UI conveniences, enterprise, gateway, cloud-provider and Compliance items");
+    expect(asked).toContain("leave reason_tr out of a verdict that is not serious. Write Turkish with its own letters (ç ğ ı ö ş ü)");
     expect(asked).toContain("or a new dated snapshot id of a family we use) is always serious");
     expect(asked).toContain("A new Claude Code release is NOT serious by itself");
     expect(asked).toContain('"title": "2.1.283: Added maxEffortLevel to cap the effort level"');
@@ -168,14 +180,22 @@ describe("the model watch tells him one line, and only what is serious", () => {
     expect(status).toContain("Kullandığımız modellerin çaba ayarını değiştiren yeni bir ayar getiriyor.");
   });
 
-  it("what the judge calls not serious is recorded, never shown, and not asked again", () => {
+  it("what the judge calls not serious keeps only its key — no text, no reason — and is not asked again; the log holds the last run, the journal one line", () => {
     const s = sandbox();
     s.watch(LATER);
-    s.watch("2027-06-02", { "claude-code": s.page("claude-code", VERSIONS(["2.1.283", "Added a colour theme"])) }, NOT_SERIOUS);
+    const code = s.page("claude-code", VERSIONS(["2.1.283", "Added a colour theme"]));
+    const out = s.watch("2027-06-02", { "claude-code": code }, NOT_SERIOUS);    // the judge gives a reason anyway
+    expect(out.trimEnd().split("\n")).toHaveLength(1);
+    expect(out).toContain("judge: ok — 1 item(s), 0 serious");
     expect(s.has("NOTICE.txt")).toBe(false);
-    expect(s.json("seen.json").judged).toMatchObject([{ source: "claude-code", key: "2.1.283", reason_tr: expect.stringContaining("Küçük bir özellik") }]);
-    s.watch("2027-06-03", { "claude-code": s.page("claude-code", VERSIONS(["2.1.283", "Added a colour theme"])) });   // a failing judge, were it asked
-    expect(s.read("watch.log")).not.toContain("JUDGE FAILED");
+    const seen = s.json("seen.json");
+    expect(seen.judged).toBeUndefined();
+    expect(seen.pending.guidance).toEqual([]);
+    expect(seen.guidance["claude-code"]["2.1.283"]).toBe("2027-06-02");     // its key, and nothing else
+    for (const f of ["seen.json", "last-check.json", "sources.tsv", "watch.log"]) expect(s.read(f)).not.toMatch(/colour theme|Küçük bir özellik/);
+    s.watch("2027-06-03", { "claude-code": code });                          // a failing judge, were it asked
+    expect(s.read("watch.log")).not.toContain("JUDGE");
+    expect(s.read("watch.log").match(/ checked: /g)).toHaveLength(1);
     expect(s.hook()[1]).toBe(CORE);
   });
 
@@ -229,18 +249,18 @@ describe("the model watch tells him one line, and only what is serious", () => {
     expect(s.read("NOTICE.txt")).toBe(`${LINE(1)}\n`);
   });
 
-  it("a source without a good read for three days is one line in the opening", () => {
+  it("a source without a good read for five days is one line in the opening", () => {
     const s = sandbox();
     s.watch(LATER);
     s.watch("2027-06-02", { "release-notes": "file:///nonexistent/release-notes.html" });
     writeFileSync(join(s.state, "sources.tsv"), s.read("sources.tsv").split("\n").map((line) => {
       const f = line.split("\t");
-      if (f[0] === "models") [f[2], f[3]] = ago(5);
-      if (f[0] === "release-notes") [f[2], f[3]] = ago(4);
-      if (f[0] === "docs") [f[2], f[3]] = ago(2);                         // two days: not yet
+      if (f[0] === "models") [f[2], f[3]] = ago(7);
+      if (f[0] === "release-notes") [f[2], f[3]] = ago(6);
+      if (f[0] === "docs") [f[2], f[3]] = ago(4);                         // four days — a Monday after a Thursday: not yet
       return f.join("\t");
     }).join("\n"));
-    const line = `--- MODEL WATCH: no good read of models, release-notes since ${ago(5)[1]} — python3 scripts/model-watch/model-watch.py --status ---`;
+    const line = `--- MODEL WATCH: no good read of models, release-notes since ${ago(7)[1]} — python3 scripts/model-watch/model-watch.py --status ---`;
     expect(s.hook().slice(0, 3)).toEqual([TITLE, line, CORE]);
     expect(Buffer.byteLength(line)).toBeLessThanOrEqual(200);
   });
@@ -258,7 +278,7 @@ describe("the model watch tells him one line, and only what is serious", () => {
     expect(asked).toContain("We've deprecated Claude Sonnet 5 (claude-sonnet-5)");   // no word decides before the judge
     expect(s.read("NOTICE.txt")).toBe(`${LINE(1)}\n`);                   // the judge, as told, keeps the guidance only
     expect(s.run("--status").stdout).toMatch(/waiting for him: 1\n {2}- release-notes \(2027-06-02\): The thinking\.budget_tokens parameter is deprecated/);
-    expect(s.json("seen.json").judged).toMatchObject([{ title: expect.stringContaining("We've deprecated Claude Sonnet 5") }]);
+    expect(s.read("seen.json")).not.toContain("We've deprecated Claude Sonnet 5");   // judged not serious: its key alone stays
   });
 
   it("A2: every bullet under a date reaches the judge, and one added later under the same date is read, the others not again", () => {
@@ -321,12 +341,12 @@ describe("the model watch tells him one line, and only what is serious", () => {
     expect(s.read("NOTICE.txt")).toBe(`${LINE(2)}\n`);                  // everything judged serious: Opus 5.6 and 2.1.299 wait
   });
 
-  it("B3: a judge that leaves items unjudged for three days is one line in the opening, like a source", () => {
+  it("B3: a judge that leaves items unjudged for five days is one line in the opening, like a source", () => {
     const s = sandbox();
     s.watch(LATER);                                                      // nothing to judge: the judge is clear
     const row = () => s.read("sources.tsv").split("\n").find((l) => l.startsWith("judge\t"));
     expect(row()).toMatch(/^judge\tthe Sonnet judge\t\d+\t\d{4}-\d{2}-\d{2}\tnothing waits unjudged$/);
-    const [epoch, day] = ago(4);
+    const [epoch, day] = ago(6);
     writeFileSync(join(s.state, "last-check.json"), JSON.stringify({ ...s.json("last-check.json"), judge_clear: { last_ok: `${day}T09:00:00+00:00`, last_ok_epoch: Number(epoch) } }));
     const code = s.page("claude-code", VERSIONS(["2.1.283", "Added <code>maxEffortLevel</code> to cap the effort level"]));
     s.watch("2027-06-02", { "claude-code": code });                     // the stand-in fails: the item waits unjudged
@@ -373,5 +393,24 @@ describe("the model watch tells him one line, and only what is serious", () => {
       ["2.1.284", "Added the <code>/advisor</code> command"], ["2.1.283", "Added <code>maxEffortLevel</code> to cap the effort level"])) }, ALL_SERIOUS);
     expect(out).toContain("judge: ok — 2 item(s), 2 serious");            // ten verdicts came back, for two items
     expect(s.read("watch.log")).toMatch(/JUDGE ok: 2 item\(s\), 2 serious/);
+  });
+
+  it("the hint list is wiped at a new month's first run: only what is dated after the last good read reaches the judge, nothing twice", () => {
+    const s = sandbox();
+    s.watch(LATER);
+    const june: [string, string][] = [["2.1.283", "Added <code>maxEffortLevel</code> to cap the effort level"], ["2.1.282", "Added a colour theme"]];
+    s.watch("2027-06-02", { "claude-code": s.page("claude-code", VERSIONS(...june)) }, SERIOUS);   // 2.1.283 waits for him; 2.1.282 keeps its key alone
+    const july = s.page("claude-code", (p) => VERSIONS(["2.1.284", "Added the <code>/advisor</code> command"], ...june)(p).replace("June 2, 2027", "July 1, 2027"));
+    expect(s.watch("2027-07-01", { "claude-code": july }, NOT_SERIOUS)).toContain("the hint list was wiped for a new month");
+    expect(s.prompt()).toContain('"title": "2.1.284: Added the /advisor command"');
+    expect(s.prompt()).not.toMatch(/2\.1\.28[23]|whats-new/);            // still current, but dated by the last good read, or undated: silent
+    const seen = s.json("seen.json");
+    expect(seen.guidance["claude-code"]["2.1.283"]).toBe("2027-07-01");   // wiped, and recorded again
+    expect(Object.keys(seen.guidance.docs)).toHaveLength(4);
+    expect(seen.pending.guidance).toMatchObject([{ key: "2.1.283", serious: true }]);   // what waits for him is not the hint list
+    expect(s.read("NOTICE.txt")).toBe(`${LINE(1)}\n`);
+    s.watch("2027-07-05", { "claude-code": july });                       // the same month: no wipe, nothing new, no judge
+    expect(s.read("watch.log")).not.toMatch(/JUDGE|WIPED/);
+    expect(s.json("seen.json").guidance["claude-code"]["2.1.283"]).toBe("2027-07-01");
   });
 });

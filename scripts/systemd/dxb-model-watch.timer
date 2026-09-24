@@ -1,18 +1,19 @@
-# THE MODEL WATCH — DAILY at 09:00, row B55 (2026-09-24).
+# THE MODEL WATCH — MONDAY AND THURSDAY at 09:00, row B55 (2026-09-24).
 #
-# Once a day is enough: a model or a guidance page is announced, not slipped in by the hour, and
-# the notice waits for the next session's opening anyway. 09:00 so the day's first session already
-# carries what appeared since the day before.
+# Twice a week, his order the same day ("her gün değil haftada 2 defalık yapalım pazartesi ve
+# perşembe olsun"): a model or a guidance page is announced, not slipped in by the hour, and the
+# notice waits for the next session's opening anyway. 09:00 so that day's first session already
+# carries what appeared since the run before.
 #
 # Persistent=true: if the machine was off at 09:00, the watch runs at the next boot instead of
-# being silently skipped — and if it still cannot read a page for three days, the opening names
+# being silently skipped — and if it still cannot read a page for five days, the opening names
 # that page. A watch that fails in silence is believed. RandomizedDelaySec keeps it off the exact
 # second the other timers wake on.
 [Unit]
-Description=DXB — daily model watch at 09:00
+Description=DXB — model watch, Monday and Thursday at 09:00
 
 [Timer]
-OnCalendar=*-*-* 09:00:00
+OnCalendar=Mon,Thu *-*-* 09:00:00
 Persistent=true
 RandomizedDelaySec=5m
 

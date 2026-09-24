@@ -7,7 +7,7 @@
 # together; the prompt audit starts only on his OK; the setting moves only on his "geç". The same
 # day he widened it to Anthropic's new usage guidance, and ruled that what he is shown is current.
 #
-# This unit is step one — TELL — and nothing else. Once a day it reads Anthropic's public models
+# This unit is step one — TELL — and nothing else. Monday and Thursday it reads Anthropic's public models
 # page, docs sitemap, release notes, Claude Code changelog and engineering blog; asks Sonnet 5
 # (`claude -p` on this machine's own login, isolated) which new items seriously change how our
 # models work; and, while a new model id or a serious item waits, leaves ONE line that the next
@@ -16,9 +16,9 @@
 # carries no credential of its own.
 #
 # A page that cannot be read is recorded and the run still succeeds — a network blip is not a
-# failed unit. A source that stays unread for three days is named at the top of the opening
-# instead. The script keeps its own log (~/.local/state/dxb/model-watch/watch.log); stdout goes to
-# the journal.
+# failed unit. A source that stays unread for five days is named at the top of the opening
+# instead. The script keeps its own log of the last run (~/.local/state/dxb/model-watch/watch.log);
+# its one summary line per run goes to the journal.
 #
 # THE NETWORK (the refuter's C3, 2026-09-24): with Persistent=true a missed 09:00 runs at the next boot,
 # and a run before the network is up fails all five reads. The two network-online lines order the unit
@@ -27,7 +27,7 @@
 # ExecStartPre: up to 60 s for NetworkManager to report a connection. Its "-" keeps the watch running
 # when it cannot tell (no connection, no nm-online): each failed read is then recorded as always.
 [Unit]
-Description=DXB — daily watch for a new Claude model or new usage guidance (tells, never applies)
+Description=DXB — Monday and Thursday watch for a new Claude model or new usage guidance (tells, never applies)
 After=network-online.target
 Wants=network-online.target
 
