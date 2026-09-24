@@ -1339,5 +1339,26 @@
   "verbatim": "gereiğini yap",
   "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
   "where": "board row B53 · .planning/STATE.md · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H11 · git history 6e15c06c (the design) and the removal commit"
+ },
+ "pplx-tos-risk-his-word-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "Told that Perplexity's Terms of Service (last updated 2026-01-23, §5.2 (b)(d)(i)) forbid automated access to its web app, and asked to choose A (the paid API), B (his free account read by the hidden research Chrome) or C (no new query), he said the ban does not matter to him — if the account is closed, that is no problem — and that the API proposal stays a side option. The side-by-side reads of his free account (pplx.py, questions q2, q3 and q4, about 18:47-18:49) ran on these words. Session-only; not a law.",
+  "verbatim": "1- önemli değil o yasak hesap kapanırsa sorun değil. 2- önerin yan opsiyon olarak kalır.",
+  "session": "Opus 5.5 (xhigh), session 97159170-292d-490f-9f0a-e7fb81608573 (chief engineer, dxb-crew), heard first-hand; carried to session 15636eaa-079c-4bbb-a893-ccdc18ca3c1b in its handover note.",
+  "where": "board row B56 · .claude/skills/dxb-research/SKILL.md §0-bis"
+ },
+ "research-no-subscription-optional-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "After the Perplexity study (prices read at source: Free $0 · Pro $20/mo · Max $200/mo; Search API $5 per 1,000 requests) and the Apify answer for market data (apify.com/pricing: Free $0 with $5 of usage · Starter $19 · Scale $199 · Business $999 a month, each plus pay as you go), he ruled: no subscription; the Perplexity API stays optional for research, and Apify stays optional as board row B31 already says. B31's stale Apify price (~$49/mo) was corrected to the measured one in the same session. Nothing is bought; each stays a priced proposal. Not a law.",
+  "verbatim": "yok aboneliğe gerek yok. araştırma için apı kullanırız opsiyonel kalsın. apify'da aynı şekilde opsiyonel sanırım. bu tahtada ilgili yerde yazılı sanırım.",
+  "session": "Opus 5.5 (xhigh), session 97159170-292d-490f-9f0a-e7fb81608573 (chief engineer, dxb-crew), heard first-hand; carried to session 15636eaa-079c-4bbb-a893-ccdc18ca3c1b in its handover note.",
+  "where": "board rows B56 and B31 · HOLDING-OS-MASTER-PLAN/CAPABILITY_ARSENAL_DOCTRINE.md §8"
+ },
+ "research-no-window-on-his-screen-by-his-eye-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "During the seven-hunter re-run of the 2026-09-20 Astra/Fable question (about 20:10-20:20), the chief engineer told him nothing opened on his screen; he answered that windows do open — on the other desktop — and brought his own Chrome forward to look. The measurement the same minutes: the OpenCLI bridge log of his Chrome had no entry after 19:47:36, his Chrome main PID 21767 was unchanged, and every hunter's `command -v opencli` printed the research shim (`.claude/skills/dxb-research/bin/opencli`), which sends every read to the hidden research Chrome on Xvfb. After looking he said the sentence below. It is his eye on ONE leg of board row B56 — no window reaches his screen while research runs — not on the row as a whole. Not a law.",
+  "verbatim": "hee anladım eeet araştırma yapılırken çıkmıor saçma ekranlar artık ok güzel",
+  "session": "Opus 5.5 (xhigh), session 15636eaa-079c-4bbb-a893-ccdc18ca3c1b (chief engineer, dxb-crew), heard first-hand.",
+  "where": "board row B56"
  }
 }

@@ -314,18 +314,13 @@ MAP
 )
 
 want_tier() {  # core ⊂ wide ⊂ max ; `browser` is NEVER in any of them
-  # `browser` IS ITS OWN TIER, AND IT IS ON — HIS RULING, 2026-09-17.
-  # `opencli browser … open` drives a real window called "OpenCLI Browser" and brings it to
-  # the front; `--window background` cannot hold it back, because that flag places tabs
-  # inside his own Chrome, not the bridge's debugging window. It appeared while he was
-  # working and he asked what it was — then he ruled on it himself: *"pencere açılımı sorun
-  # değil yani iş aksamasın önemli olan bu."* So the two channels that need the bridge
-  # (google-deep, quora-forums) run by DEFAULT; `--no-browser` is there for the rare run that
-  # must not touch his screen. They cannot be made headless: measured the same day, the whole
-  # reading chain against google.com/search returned a 921-byte cached snapshot and
-  # nothing else — Google shuts its own results page to every headless reader we have.
-  # SINCE 2026-09-24 this tier runs in the hidden research Chrome (Xvfb :99, headful, his copied
-  # sign-ins) and never on his screen; `--no-browser` now only keeps a run away from that Chrome.
+  # `browser` IS ITS OWN TIER, AND IT IS ON.
+  # The two channels that need a real browser (google-deep, quora-forums) cannot be made headless:
+  # measured 2026-09-17, the whole reading chain against google.com/search returned a 921-byte
+  # cached snapshot and nothing else — Google shuts its own results page to every headless reader
+  # we have. SINCE 2026-09-24 this tier runs in the hidden research Chrome (Xvfb :99, headful, his
+  # copied sign-ins) and NEVER on his screen — his order that day, after two Chrome windows kept
+  # coming up in front of him while he worked. `--no-browser` only keeps a run away from that Chrome.
   case "$1" in
     browser) [ "$WITH_BROWSER" = "1" ] ;;
     *) case "$TIER" in

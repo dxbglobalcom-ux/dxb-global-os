@@ -221,7 +221,7 @@ that suffices.
 
 | Bench tool | Price class (studied) | Would serve | Trigger for proposal | Free alternative today |
 |---|---|---|---|---|
-| Apify actors | usage-based, ~$49/mo starter | marketing/strategy scraping at scale | scrapling volume ceiling measured (blocked targets, >10k pages/mo) | scrapling + camoufox |
+| Apify actors | Free $0 (with $5 of usage a month) · Starter $19/mo · Scale $199/mo · Business $999/mo, each plus pay as you go at $0.20–0.13 per compute unit (apify.com/pricing, read 2026-09-24). No subscription on his word of 2026-09-24 — it stays optional <!-- CEO-OK: research-no-subscription-optional-2026-09-24 --> | marketing/strategy scraping at scale | scrapling volume ceiling measured (blocked targets, >10k pages/mo) | scrapling + camoufox |
 | Composio tool cloud | free tier → $99/mo team | many SaaS integrations in one hand | ≥3 SaaS integrations needed simultaneously in Phase-10 | per-service free MCPs |
 | HeyGen | ~$24–72/mo | social-media video avatars | social wave ships + video content contract signed | none (defer content type) |
 | Seedance 2.5 / z-image gen | per-generation credits | design/marketing visuals | paying client work requires gen assets | design dept manual + free tiers |
