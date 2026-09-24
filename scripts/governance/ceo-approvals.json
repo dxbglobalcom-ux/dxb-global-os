@@ -1289,5 +1289,12 @@
   "verbatim": "netleştirilmiş cümleyle evet.",
   "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
   "where": "board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H16 · applied with B51 to personas/data-ai/prompt-context-engineer.md"
+ },
+ "h13-persona-discipline-section-trimmed-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "Prompt-audit card H13 (board row B53), employee side: section 12 'Discipline DNA' of the 213 persona files (e.g. personas/finance/cfo.md:129-141) is trimmed as PROPOSED.diff hunk H13 shows — the retired model names ('the discipline of Fable 5 and Solo 5.6 Ultra') go; 'Plan before execution' and 'Self-review before handoff' become 'Evidence before done' and 'Complete handoffs'; 'No lazy proposals' becomes the positive 'Researched proposals' (ruling D4); the 'Inheritance' line, an instruction to the persona author, leaves the seat's text while the rule stays in the HR template and the persona standard. Unchanged: 'Evidence before claim', 'Accountability for results' and the whole Islamic conduct part (ruling D5). The persona gate's canon (ruler R9, packages/hr/src/fixtures.ts, EMPLOYEE_PERSONA_STANDARD.md §4.1) moves in the same change, or the 213 files fail the gate. Applied with B51. Not a law.",
+  "verbatim": "h13 evet",
+  "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
+  "where": "board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H13 · .planning/quick/20260923-prompt-audit/PROPOSED.diff hunk H13 · applied with B51"
  }
 }
