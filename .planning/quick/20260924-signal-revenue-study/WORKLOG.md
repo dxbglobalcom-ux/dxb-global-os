@@ -32,8 +32,18 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   · [x] G. Africa (all at the depth EVIDENCE E2–E5 shows; secondary countries thinner, flagged)
 - [x] H. Revenue-line comparables (E7) · [x] I. People, not vendors (E6)
 - [x] J. STUDY.md written · EVIDENCE.md complete · HANDOVER.md written · committed (this folder only)
-- [ ] K. First message to the CEO in the successor session (position + summary + the five questions in prose)
-- [ ] L. Corrections after his answers; open measurements in EVIDENCE E9
+- [x] K. Handover taken by the successor session (Fable 5.1 xhigh, `dxb-global-os-3a`) 2026-09-24 19:40–19:45; his
+  order in that session (19:50): *"diğer oturumla asla iletişe artık geçme her devri para sen kendi yoluna devam et
+  titizlikle"* — no more cross-session messages; this session continues alone. First report to him written after round 2.
+- [x] L1. Round 2 (successor, 19:45–20:35): the three claims that did not survive a primary-source read were corrected —
+  Mawthooq is not obtainable from abroad (E10.1); the UAE permit page DOES say "free for the first three years" (E10.1);
+  Turquality/Tanıtım on the official Genelge text, +20/+5 points, foreign invoices eligible with attaché approval (E10.2).
+  Added: IAB MENA's own MENA total (E10.3); Ipsos × ArabyAds Ramadan 2026 consumer figures (E10.3); nine countries' price
+  bands (E10.4); German and Brazilian buyers' own words, 7 threads, 246 comments, 111 people (E10.5). STUDY.md updated in
+  place (list in E10.6).
+- [ ] L2. Corrections after his answers to STUDY §6; still open in E9: first-hand Ramadan ad-spend figure; Mawthooq fee
+  conflict (SAR 15,000 vs "free"); whether a company account is exempt like an individual's own-product post; Saudi
+  buyers' own words (two attempts, none found); MiniMax H3 Turkish (a WER measurement, Phase 0); the invoicing jurisdiction.
 
 ## Where the evidence is
 - EVIDENCE.md (this folder). Raw pulls: this session's scratchpad and tool-results (die with the session).
@@ -44,3 +54,7 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   (YouTube, Reddit, r10, Trustpilot), comparables, languages. 19:20–19:40 EVIDENCE.md and STUDY.md written.
 - 19:40 CEO: urgent handover at 84 %; new rule for this job: hand over at 37 %. HANDOVER.md written; commit next;
   then SendMessage to the new session + verification in its .jsonl; fallback keyboard delivery via operator.
+- 19:40–19:45 successor session (`dxb-global-os-3a`, Fable 5.1 xhigh) read BRIEF, WORKLOG, EVIDENCE, STUDY, CONVERSATION,
+  PRIOR-WORK, PLAN, SOURCE-PROMPT, B28/B43 rows; took the handover (363dcbab). 19:50 CEO: no more cross-session contact.
+- 19:45–20:35 round 2 (see L1). Files changed: EVIDENCE.md (+E10), STUDY.md (in place), WORKLOG.md. Committed as the
+  hash in `git -C "/home/dxb/DxB Global OS" log -1 -- .planning/quick/20260924-signal-revenue-study/`.

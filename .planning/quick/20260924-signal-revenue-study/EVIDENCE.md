@@ -188,3 +188,150 @@ SAR 30,000 · AED 29,380 · ¥1,270,800 · ₩10.95 M · ₹767,680 · Rp143.5 M
 - Absolute social/video spend per country from a single consistent source (national bodies use different scopes — OVK excludes search/social; Cenp is agency-placed only).
 - Any first-hand Ramadan ad-spend figure; Japan's category table; Kenya/Morocco/Kuwait totals; the Canva survey sample; Clutch review counts summed.
 - Whether a foreign AI-video producer needs the UAE Advertiser Permit when the client publishes; Mawthooq's treatment of a company (vs an individual) abroad; ARCON's treatment of synthetic performers; India ASCI final text; the holding's invoicing jurisdiction and therefore every treaty rate.
+
+## E10. Round 2 — the successor session (Fable 5.1, `dxb-global-os-3a`), opened 2026-09-24 19:40 on his order
+Same tags as above. Everything below was opened or searched by this session on 2026-09-24 between 19:45 and 20:30; the
+`dxb-research` door was not used; no sign-ups, no outreach, no money spent.
+
+### E10.1 Corrections to E4.1 — Saudi Mawthooq and the UAE Advertiser Permit
+- **Mawthooq is NOT obtainable from abroad — E4.1's "including creators located outside the Kingdom" is withdrawn.** Four
+  sources agree on who may hold it: Arab News 2022-10-07 (GCAM launch; opened): Saudi creators "whether based in the Kingdom
+  or abroad" and non-Saudi RESIDENTS (Ministry of Investment permit first); fee SR15,000 for three years · Saudipedia
+  (opened): "citizens, residents, and foreign investors advertising … about a brand, product, service … offered or located
+  within the Kingdom"; exempt: government events and "an individual's advertisement for their own product or service
+  through their personal account" · Lexis Middle East 2023-08-23 (opened): same three groups, three exemptions · vco.sa
+  service page (2026, opened): eligible Saudi nationals and residents 18+; a resident or foreign investor must hold a
+  licence and own ≥ 50 % of the company; government fee SAR 15,000 + service fee SAR 2,072; documents = ownership of the
+  social accounts · miqwal.com 2026-08-17 (consultancy, opened): "Currently, Mawthooq is designated for residents in the
+  Kingdom (citizens and residents)"; "Influencers from outside the Kingdom who wish to work with Saudi brands can contract
+  with Saudi agencies registered in Mawthooq, where the agency bears responsibility for regulatory compliance"; it also says
+  the platform is "completely free" (commercial registration SAR 200/yr) — **fee conflict with vco.sa's SAR 15,000, UNVERIFIED
+  which applies to whom** — and penalties up to SAR 500,000. gmedia.gov.sa's own service page timed out twice (60 s) — not
+  opened. **What it means for us:** a foreign agency does not hold Mawthooq; the road into Saudi Arabia is (a) the client
+  publishes our work on its own brand account (own-product advertising is the exemption for individuals; whether a company
+  account is treated the same is not written — UNVERIFIED), or (b) a Saudi Mawthooq-registered partner agency (STUDY line
+  3.6), or (c) a Saudi entity with ≥ 50 % foreign-investor ownership (MISA licence; cost and time not measured).
+- **UAE Advertiser Permit — the E4.1 conflict is resolved: the page DOES say it.** middleeastbriefing.com 2026-02-02, opened
+  by this session, verbatim: "To support the transition to the new regulatory framework, the permit is free for the first
+  three years." Also verbatim: affected parties "Influencers and content creators; Individual advertisers; Companies
+  publishing promotional content; Marketing, PR, and talent agencies; Visiting or non-resident creators producing content
+  while physically present in the UAE"; "Applications must be submitted through licensed UAE-based agencies rather than
+  directly by the individual"; prerequisite "a valid trade or freelance licence covering electronic media or related
+  activities"; penalties AED 5,000–10,000 (no licence), AED 5,000–1,000,000 (content), AED 10,000–40,000 (false information).
+  Whether a foreign producer whose UAE client publishes needs its own permit: still not stated.
+
+### E10.2 Türkiye — the official promotion-support texts, opened (ticaret.gov.tr PDFs, downloaded and read)
+- Two programmes under Presidential Decree 5973 (17.08.2022), both Genelge in force **26/06/2026**: **"Tanıtım Desteğine
+  İlişkin Genelge"** (10 pages; overseas promotion for any exporter holding a domestic trademark registration; 4 years from
+  the first payment document; "marka tesciline bağlı" or "birime bağlı"; the year's support may not exceed HALF of that
+  year's exports to the country, art. 6(5)) and **"Marka ve Turquality Desteğine ilişkin Genelge"** (26 pages; for brands
+  admitted to the programme; production costs supported when publication abroad is documented, art. 4(3); NOT supported:
+  promotion aimed at Turkey, promotion in Turkish, Turkish-language media abroad, art. 4(2)).
+- **A foreign agency's invoice is eligible:** documents issued abroad are approved by the Ministry's overseas representative
+  (ticaret müşaviri) in the issuing country, who checks conformity with local law and "ortalama rayiç" (art. 10 / art. 26);
+  for search-engine and social-media advertising and other electronically verifiable documents that approval is not even
+  required (art. 10(2) / 26(2)). Payments must leave the company's own bank account (art. 12(1)); customer cheques and
+  endorsed cheques are excluded; a contract is required above ₺75,000 per activity (art. 7(7)); foreign-currency invoices
+  are converted at the TCMB rate on the payment date.
+- **Extra points:** +20 for countries on the Ministry's target-country list, +5 more for target sectors in those countries
+  (art. 11 / art. 27) → 50 → 70 → 75 %. The base 50 % and the 2026 ceilings (**birime bağlı ₺12,329,397 · marka tesciline
+  bağlı ₺19,728,672**) are quoted from exporters' associations' circulars of the Ministry's limits (itkib.org.tr,
+  vergimerkezi.com.tr — search summaries); the Decree itself and the limits PDF were not opened → tag: first-hand (summary).
+  Also read: "Ülke Listesi.pdf" = the countries under transitional article 4 of Decree 5973: Bahrain, UAE, Qatar, Kuwait,
+  Egypt, Saudi Arabia, Oman (what that article grants them was not read — UNVERIFIED).
+- **What it means for STUDY line 3.8:** the line stands on official text now; the earlier "⚠ resmî karar açılmadı" is
+  withdrawn; the exporter's own trademark registration/application in the target country is a condition (art. 6(4)).
+
+### E10.3 MENA totals, Ramadan, Saudi prices
+- **IAB MENA (industry body, archive page opened):** MENA digital ad spend **2025 US$8.185 bn (+17.8 %)** (report 2026-06-08),
+  2024 US$6.95 bn (+19.8 %), 2023 US$6.25 bn, 2022 US$5.5 bn; reports members-only; no per-country, per-format or Ramadan
+  figure on the page. **Conflict with E1.5:** Research and Markets says "Middle East digital US$10.1 bn (2025)"; the two
+  scopes differ (R&M's own definition unknown) — the body's figure is the one to quote.
+- **Ipsos × ArabyAds "Ramadan Consumption 2026 — Advertising, influence, and behavior"** (PDF, 20 pages, downloaded and
+  converted; fieldwork "January 2026"; UAE + KSA; sample size not in the text layer): **70 % of UAE shoppers and 65 % of KSA
+  shoppers "say influencer recommendations can convince them to buy during Ramadan"**; what they buy on a recommendation
+  (UAE / KSA): personal care 58 / 64 %, Eid fashion 46 / 64 %, gifts & Eidiya 46 / 59 %, kitchen appliances 37 / 53 %,
+  Ramadan decor 35 / 51 %, groceries 33 / 48 %, ready-made iftar 23 / 36 %, automotive 23 / 27 %; "Influencer recommendations
+  convert only when they offer something tangible, such as real product use or clear savings, and not visibility alone."
+  **No ad-spend figure** — the first-hand Ramadan ad-spend number stays unmeasured (E9).
+- **Saudi agency prices, Arabic and English vendor pages (search summaries, 2026):** SAR 1,500 → 15,000+/month (naktublak,
+  sutoua, wamidah, mutasadir); "SAR 2,500–10,000 typical"; digitalgravityksa / ecsharks: retainers SAR 5,000–45,000, social
+  SAR 2,500–5,000 → 20,000+, growth campaigns SAR 25,000+ ex media; senior consulting SAR 350–700/h. Consistent with E3.
+  **Saudi BUYERS' own words: still none** — r/saudiarabia search "marketing agency price" (24 posts, none a buyer's price
+  thread); the Arabic web search returned only agencies' pages.
+
+### E10.4 Agency price bands — the countries E3 had left unmeasured (vendor guides via search summaries, 2026; USD by E0)
+| Country | Bands (monthly, management fee) | In USD | Where US$8,000 sits | Tag |
+|---|---|---|---|---|
+| Canada | freelancer C$500–1,500 · boutique C$1,500–5,000 · full-service C$5,000–20,000+; bands C$1,500–3,000 / 3,000–8,000 / 8,000–25,000; minimum retainers C$1,500–2,500 | C$5,000–20,000 = US$3,542–14,168 | inside full-service (US$8,000 = C$11,294) | vendor |
+| Spain | basic 200–1,200 €; agency 1,000–5,000 €; competitive 1,500–3,000 €+ | €1,000–5,000 = US$1,137–5,683 | above the band (top €5,000; we are €7,038) | vendor |
+| Italy | freelance 300–1,500 €; agency 500–5,000 €; enterprise 3,000–5,000 €+ | US$568–5,683 | above the band | vendor |
+| Netherlands | agency 500–5,000 €; retainers 750 € → 5,000 €+ full-service | US$568–5,683 | top of band | vendor |
+| Switzerland | CHF 1,000–7,000; full-service CHF 2,500–7,000; solo/KMU CHF 1,000–2,500 | CHF 7,000 = US$8,457 | top of band (US$8,000 = CHF 6,622) | vendor |
+| Singapore | S$500–6,000+; established agencies S$3,000–12,000; premium from S$5,000; enterprise S$15,000+ | S$3,000–12,000 = US$2,344–9,376 | inside (US$8,000 = S$10,239) | vendor |
+| Malaysia | freelancer RM 800; most SMEs RM 2,500–5,000; full-service RM 15,000+ | RM 2,500–5,000 = US$612–1,223; RM 15,000 = US$3,670 | 2× the top (US$8,000 = RM 32,696) | vendor |
+| Qatar | social QAR 3,000–10,000+; full-service QAR 5,000–15,000; comprehensive QAR 10,000–50,000+ | at the 3.64 peg: US$824–2,747 · 1,374–4,121 · 2,747–13,736 | inside "comprehensive" (US$8,000 = QAR 29,120) | vendor |
+| Kuwait | KWD 300–5,000+; starter KWD 1,000–3,000, regular 3,000–10,000; small business KWD 150–400 / 500–1,500 | at ≈ 0.306 KWD/US$ (not in the E0 feed, UNVERIFIED): KWD 1,000–3,000 = US$3,268–9,804 | inside starter/regular (US$8,000 ≈ KWD 2,450) | vendor |
+
+### E10.5 People, not vendors — round 2 (measured; threads opened via safereddit 2026-09-24)
+- **Germany — r/selbststaendig, 3 threads, 162 comments, 75 distinct named authors** (counted from the thread text; deleted
+  and moderator accounts excluded; two authors appear in two threads):
+  - "M/23: wie soll ich mich jetzt aufbauen" (u/Fearless-Ad-8316, 2026-09, 33 comments / 22 people): a young agency owner
+    quotes restaurants "ungefähr 1.200-1.600 brutto für zehn Social-Media-Videos" → "Wir melden uns"; one wanted "3-400
+    Euro erstmal für mehrere Monate", one said "sein Cousin das für 100 Euro im Monat machen würde". Top reply (8): "Fast
+    alle kleinen Geschäfte … haben irgendeinen Cousin oder die studierende Tochter, die 'unser Insta nebenbei mit macht'";
+    (5) "Social-Media-Agentur ist wie Hausmeisterservice … alle schaufeln damit gemeinschaftlich ihr Grab weil man sich im
+    Preis und der Leistung unterbietet"; (4) "Coldcalling … UWG-Verfahren sind teuer" and recruiting clips as the better
+    niche; (4) "Wenn du Leute erstmal davon überzeugen musst dass sie Social Media brauchen und dann noch 2000€ dafür im
+    Monat auszugeben…"; (2) "gefühlt jede 3. Gewerbeanmeldung für Marketing, der Markt ist nicht nur gesättigt sondern
+    überlaufen".
+  - "Ich finde Werbung total frustrierend" (u/ChristinausWE, civil engineer, 2025-06, 89 comments / 40 people): "Eine
+    Agentur kann ich mir schlichtweg nicht leisten"; three Fiverr freelancers, "Nicht ein zusätzlicher Kunde bei über
+    2000 € Investition". Top reply (18): "Meide Agenturen/Freelancer die keine KPI Tabellen bereitstellen mit ROAS bzw Cost
+    per Acquisition Kennzahlen"; (9) "Kaltakquise per Telefon ist nicht nur verboten sondern auch absolut sinnlos"; (8) a
+    B2B owner: "gehe niemals über den Preis … Google und Bing … 1500 € monatlich … 50-65.000 Umsatz"; (6) "hab schon
+    10.000€ Agenturen probiert und die haben schlechtere performance geliefert wie irgendwelche ebay kleinanzeigen ottos…
+    ich bete das AI die alle bald arbeitslos macht"; (6) a 25-employee owner: 95 % Google Ads, 17.5 % CAGR over 5 years.
+  - "Haben sich für euch die letzten große Investitionen im Bereich Marketing gelohnt?" (u/Bavariasnaps, 2025-11, 40
+    comments / 15 people): (10) a performance marketer managing seven-figure budgets: "Es sind immer wieder die teuren
+    Maßnahmen, die am wenigsten bringen: Das neue Logo oder der Werbefilm … Die wichtigen Marketing Investitionen sind für
+    mich die, die direkt messbar die Kundengewinnung verbessern"; "Die Marketing-Agenturen liefern zum allergrößten Teil
+    nicht, was sie versprechen"; "Hol mir meine Marketing Menschen immer aus meinem Netzwerk, dann müssen sie mir jede Woche
+    ins Gesicht schauen wenn's keine Resultate gibt"; (2026-02) a young agency's gastronomy videos "gingen viral".
+  - Read as: German SMEs do not buy retainers; the buyers who pay want measured acquisition and accountability, not
+    branding — which is STUDY line 3.10 sold to mid-size and large brands, not to the corner restaurant.
+- **Brazil — r/empreendedorismo, 4 threads opened, 84 comments, 36 distinct named authors** (two threads returned 502 on the
+  first attempt and loaded on the second):
+  - "Pra quem usa agência de marketing aqui, quanto vocês pagam?" (u/Branseed, aesthetics clinic, 2026-09-21, 7 comments):
+    a car-wash owner pays **R$997/month** for traffic + creatives; the clinic owner paid **R$4,000/month** to an agency, now
+    **R$1,800** to a traffic manager; an agency owner: "pelo menos a agência tem que cobrar 2 mil / mês".
+  - "Time de marketing interno?" (same owner, 2025-07, 7 comments): "testei já umas 5 empresas de marketing e até hoje tudo
+    deu errado … artezinhas meia boca e poucos videos … paga horrores"; the R$4,000 agency delivered "um grande copia e
+    cola do chat gpt"; ads at R$6,000/month bring 70–90 % of his clients; radio R$3,100/month; reply: "como eles conseguiram
+    te vender um contrato de 4k? achei que isso era muito raro"; a consultant: "meus colegas de profissão jogaram nosso
+    segmento na lama".
+  - "Responda honestamente, quanto estariam dispostos a pagar mensalmente por serviços de Marketing?" (u/Ready-Berry5827,
+    2025-05, 31 comments / 19 people): (11) an industrial-construction owner: "já gastei próximo de 100 mil em marketing
+    anualmente, e não senti diferença alguma em fechamento … fiquei só com um designer … 1000-1500 reais/mês … é um mercado
+    prostituído"; (9) an ex-agency worker: an agency charged R$5,000/month for 5–6 posts/videos a week "mas eles não faziam um
+    estudo do negócio"; (6) a B2B provider: "Sem entregar KPI positivo não pago nada"; (4) "Agência é um negócio cretino …
+    assim que der, vai internalizar também. Crie ferramentas que possam ajudar o setor de marketing"; a shop owner would
+    budget R$5–6k/month for ALL marketing only at R$150k monthly revenue; another: R$1,500/month; one outlier (2025-07):
+    "Pago 6.000 USD por mes + comissão … 8 dólares por cada dólar invertido".
+  - "Desabafo sobre o mercado B2B Brasileiro" (u/Erikjmf, agency owner, 2025-04, 39 comments / 15 people): a lead with two
+    branches and > R$50,000/month revenue "querendo chorar pra pagar R$ 1.000"; a luxury real-estate agency offering R$600
+    media + R$300 labour; "o cliente quer pagar 500 reais por mês + 500 em tráfego e fechar um cliente por dia". Top reply
+    (9): "Melhor coisa q fiz foi vender minha agência … O empresário pequeno enxerga marketing como uma despesa"; (3) "depois
+    que comecei a trabalhar com clientes gringos, nunca mais atendi empresas nacionais … O faturamento aumentou muito (várias
+    vezes)"; "Tem um número absurdo de agências de marketing por aí"; "Pior mercado possível".
+  - Read as: Brazilian SMEs pay R$1,000–4,000/month (US$190–770); R$4,000 is called rare; US$8,000 (≈ R$41,400) is a large
+    brand's number only — E3's "2× the band" verdict confirmed by buyers.
+- **Spain — r/EmprendedorES search (25 posts scanned):** agency-side only; one agency: "el compañero autónomo que necesita
+  una web y no tiene 4.000 €". No buyer thread found.
+- **France — r/france search (26 posts):** none about agency prices; r/AutoEntrepreneur returned 404. France stays on
+  lafabriquedunet's 118–122 real budgets (E3).
+
+### E10.6 What round 2 changed in STUDY.md
+Saudi entry road (§0, §2.1, §2.7, §4.2, §4.3, §5.2) · UAE permit free for three years (§0, §2.1, §2.7) · Turquality on
+official text, 70/75 % (§2.7, §3.8) · IAB MENA total (§2.1) · Ipsos Ramadan figures replace an unsourced "25–50 %" (§3.5) ·
+nine countries' price bands (§0, §2.1–2.4) · German and Brazilian buyers' words (§2.2, §2.5) · §7 method line.
