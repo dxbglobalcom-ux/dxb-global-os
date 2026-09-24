@@ -71,11 +71,13 @@ The same four facts, told again — and he understood immediately:
 
 1. **The answer, first, in one sentence.** Not the background, not the method — the conclusion he
    asked for. If he asked *"is one worker doing everyone's job?"*, the first sentence says yes or no.
-2. **Then a comparison drawn from a world he already lives in** — a company, a person, a door, a
-   postman, a warehouse. It comes **before** any explanation of how the machine works, never after,
-   because it is what makes the machinery readable at all. One comparison, not three.
+2. **Then a comparison drawn from this holding's own work** — its employees and departments, the
+   studio, the board, an approval, the brake on its own spending — before any explanation of how the
+   machine works, never after (his order, 2026-09-16: never a factory or a postman).
+   <!-- CEO-OK: ceo-analogies-from-our-own-holding-and-short-2026-09-16 --> One comparison; when
+   nothing real fits, the plain sentence and none.
 3. **Then the measured numbers, standing next to that comparison** — never in place of it, and never
-   as a table he has to interpret. *"one postman · 199 different employees"* is the number doing its
+   as a table he has to interpret. A number set beside the comparison is the number doing its
    job; a five-column table of counts is the complaint that created this whole standing order.
 4. **Then what it means for him.** If the answer is *"nothing changed for you today"*, that sentence
    is written, plainly. A finding with no consequence stated is a finding he cannot use.

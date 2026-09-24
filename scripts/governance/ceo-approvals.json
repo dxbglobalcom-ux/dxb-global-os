@@ -1212,5 +1212,19 @@
   "verbatim": "yes",
   "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
   "where": ".claude/CLAUDE.md section 2 · .claude/skills/dxb-crew/SKILL.md · board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H18"
+ },
+ "b53-tools-h2-h3-h5-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HIS DECISIONS ON TWO PARTS OF THE PROMPT-AUDIT PAGE (board row B53), put to him as four proposals. (1) The runtime finding that the seats' identity texts name tools no seat holds (notify_broadcast in 186 files, WebSearch/WebFetch in 76, 0 of 24 gateway profiles grant them): proposal -- give each seat the tool its role really needs, remove the tools it does not need from its text, carried out with B51 on the employee side. He accepted it and asked when and where it is written; answer: on board row B53, carried out when he gives B51 its start. (2) The 'old engine's recipe' section, three cards: H5 (the report door's postman example against his order of 2026-09-16) -> yes, applied at once; H3 (the standing-order-13 line's 'print the evidence before the turn ends' against the report door's 'proof only when he asks') -> yes: 'full capacity on every turn' leaves the emitted line, the proof stays in the work and out of his message until he asks, and the line carries two clauses of the long form as the audit's proposed text did (the blocked part named; the fix inside what he asked), rewritten by the builder subagent at max and kept at 426 bytes against the old 408 under his short-lines ruling of 2026-09-14; H2 (the caveman block, -49 percent measured on Opus 5) -> re-measure on Opus 5.5 first, the result goes to him before any change. Verbatim below. Not a law.",
+  "verbatim": "1-önerini kabul ediorm peki bugün değilse nezaman ve bunu nereye yazacaksınız? 2-ile ilgili önerine göre ilerleyelim.",
+  "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
+  "where": "board row B53 · .claude/skills/dxb-ceo-report/SKILL.md step 2-3 · .claude/hooks/no-laziness.sh (the one line) · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar docs H2, H3, H5"
+ },
+ "h20-labelled-estimate-where-role-needs-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HIS CHOICE ON CARD H20 OF THE PROMPT AUDIT (board row B53). The standing honesty line every employee reads (packages/voice/src/prompt-core.ts honestyLine: 'never estimate') is stricter than his RULE #0-A and contradicts seats whose job is a labelled estimate (the risk manager's 'expert estimate with a wide range', the deal strategist, the trend researcher and others). Put to him as A: a seat whose role calls for a forecast may give one, labelled as an estimate with its basis and range and never presented as a measurement, while the line's other bans stay (no figure recalled from an earlier conversation, no polite guess at a question not understood); or B: no employee estimates, and without data no risk score is produced. His answer is the verbatim below. Applied with B51 (the employee side); tests/b21/agent-context.test.ts pins the line and moves with it. Not a law.",
+  "verbatim": "A olsun.",
+  "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
+  "where": "board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H20 · packages/voice/src/prompt-core.ts honestyLine (with B51)"
  }
 }

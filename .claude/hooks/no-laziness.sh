@@ -24,6 +24,15 @@
 # so13_full_capacity); the LONG FORM below is its single home and is no longer
 # emitted. Open this file when the one line is not enough.
 #
+# 2026-09-24 — the one line rewritten on the CEO's yes to prompt-audit card H3
+# (registered as b53-tools-h2-h3-h5-2026-09-24): "full capacity on every turn"
+# left the emitted line (an effort booster Opus 5.5 over-applies; the award
+# standard stays in the long form below), and "print the evidence before the
+# turn ends" became proof in the work, kept out of his message until he asks,
+# which reconciles it with dxb-ceo-report step 5. Kept within a few bytes of
+# the old line (408 → 426) under his 2026-09-14 ruling that both per-prompt
+# lines stay short.
+#
 # LONG FORM (owned here, verbatim as it was emitted 2026-08-16 → 2026-09-14):
 #   THE ORDER, in his own words (2026-08-01): every piece of work is done to a
 #   standard worthy of an award — the fine details thought through, and then
@@ -53,5 +62,5 @@
 set -euo pipefail
 
 cat <<'EOF2'
-STANDING ORDER 13 — TEMBELLİK YASAK (CEO 2026-07-27): full capacity on every turn — measure before you state, finish the whole thing, leave no record behind reality, fix a defect at its source, and print the evidence (command → decisive output) before the turn ends; what a terminal cannot observe is labelled ⚠ UNVERIFIED. The eight forms of laziness: the LONG FORM in .claude/hooks/no-laziness.sh.
+STANDING ORDER 13 — TEMBELLİK YASAK (CEO 2026-07-27): measure before you state; finish all of it or name the blocked part; keep the record current; fix a defect at its source, inside what he asked; back every claim with its command and output in the work, and show him the proof only when he asks; what a terminal cannot observe is ⚠ UNVERIFIED. The eight forms of laziness: the LONG FORM in .claude/hooks/no-laziness.sh.
 EOF2
