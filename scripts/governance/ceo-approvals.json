@@ -1303,5 +1303,12 @@
   "verbatim": "14 15 16 (zaten konuştuk) 17 ve 21 de evet.",
   "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
   "where": "board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar docs H14, H15, H17, H21 · .planning/quick/20260923-prompt-audit/REPORT.md, PROPOSED.diff, slices/ · applied with B51"
+ },
+ "model-watch-no-retirement-news-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "The model watch (board row B55) brings NO news of a model's retirement or deprecation. Told that the refuter's pass on e90154ed had found three reading defects -- a retirement notice of a model we use was skipped, 18 of 26 release-note bullets in the last 30 days were never read, and Claude Code versions reached the judge cut to 400 characters -- he said retirement news is not needed and the other two matter. The judge's SERIOUS criteria lose 'the retirement of a model we use'; the watch still reads every release-note bullet and every usable Claude Code bullet whole. Not a law.",
+  "verbatim": "emeklilikle ilgili haber istemiorm gerek yok. diğer ikisi önemli okadar",
+  "session": "Opus 5.5 (xhigh), session 694056ec-d299-4496-8f22-710cee8252fe, heard first-hand.",
+  "where": "board row B55 · .planning/STATE.md · scripts/model-watch/model-watch.py (the judge's criteria, in the builder's fix)"
  }
 }
