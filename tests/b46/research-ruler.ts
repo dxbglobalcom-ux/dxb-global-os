@@ -30,7 +30,7 @@
 // Exit: 0 when every rule passes, 1 on any failure.
 
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 const HERE = dirname(resolve(import.meta.filename));
@@ -141,6 +141,17 @@ export const RULER = {
   TRUNCATE_LEDGER: /^: > "\$OUT\/\.queries"$/m,
   /** a channel line the guard MUST refuse — a writing verb, injected into a copy and fired */
   GUARD_BAIT: [/^reddit\|core\|opencli reddit search /m, "reddit|core|opencli reddit post "] as const,
+
+  /**
+   * NO CALL TO THE BRIDGE IN HIS OWN CHROME (2026-09-24). `opencli browser` drives the Browser
+   * Bridge inside the CEO's Chrome — the windows he complained about that day. Every browser read
+   * goes through scripts/hidden.py now; a comment may still name the command, an executable line
+   * may not. Scanned: the folder, and which of its files (not recursive).
+   */
+  BRIDGE_CALL: "opencli browser",
+  BRIDGE_SCAN: [["scripts", /\.(?:sh|py)$/], ["fleet", /\.sh$/]] as const,
+  /** the citation ruler, whose regression probes (the refuter's phrases) are RUN, not read */
+  CITE_CHECK: "scripts/cite-check.py",
 } as const;
 
 export const RULES = [
@@ -161,6 +172,9 @@ export const RULES = [
   "short-query-has-a-word",
   "first-word-counts",
   "queries-are-logged",
+  // the Bridge in his own Chrome, and the citation ruler's probes (2026-09-24)
+  "no-bridge-browser-call",
+  "cite-check-selftest",
 ] as const;
 export type RuleName = (typeof RULES)[number];
 
@@ -672,6 +686,42 @@ export function runRuler(input?: Partial<RulerInput>): RulerReport {
   if (!RULER.LASTRESORT_BOX.test(sweepText)) {
     add("no-paragraph-to-a-box", rel(join(skillDir, RULER.MAP_FILE)),
       "the last resort types the WHOLE question into a site's own search box — only boxes get the short form");
+  }
+
+  // R19 — NO EXECUTABLE LINE CALLS THE BRIDGE IN HIS CHROME.
+  for (const [folder, pattern] of RULER.BRIDGE_SCAN) {
+    const dir = join(skillDir, folder);
+    const names = existsSync(dir) ? readdirSync(dir).filter((n) => pattern.test(n)).sort() : [];
+    for (const n of names) {
+      const f = join(dir, n);
+      let isFile = false;
+      try {
+        isFile = statSync(f).isFile();
+      } catch {
+        // a dangling link is not a script; the grep this rule replaced skipped it too
+      }
+      if (!isFile) continue;
+      read(f).split("\n").forEach((line, i) => {
+        if (!line.includes(RULER.BRIDGE_CALL) || /^\s*#/.test(line)) return;
+        add("no-bridge-browser-call", `${rel(f)}:${i + 1}`, `an executable line calls it: ${line.trim().slice(0, 110)}`);
+      });
+    }
+  }
+
+  // R20 — THE CITATION RULER'S PROBES ARE FIRED: `--selftest` exits 0, or this rule is red.
+  const citePath = join(skillDir, RULER.CITE_CHECK);
+  if (!existsSync(citePath)) {
+    add("cite-check-selftest", rel(citePath), `${RULER.CITE_CHECK} is missing`);
+  } else {
+    try {
+      execFileSync("python3", [citePath, "--selftest"], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"],
+        env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" }, timeout: 60_000 });
+    } catch (e) {
+      const err = e as { status?: number | null; stdout?: string; stderr?: string };
+      const said = `${err.stdout ?? ""}\n${err.stderr ?? ""}`.trim().split("\n");
+      add("cite-check-selftest", rel(citePath),
+        (said[said.length - 1] || `--selftest left with exit ${err.status ?? "?"}`).trim().slice(0, 140));
+    }
   }
 
   return { channels, tiers, failures, pass: RULES.every((r) => failures[r].length === 0) };

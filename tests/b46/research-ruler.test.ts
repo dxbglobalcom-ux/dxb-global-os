@@ -247,9 +247,28 @@ describe("the ruler bites", () => {
     expect(r.failures["guard-before-fanout"].length).toBeGreaterThan(0);
   }, 30_000);
 
+  // ── 2026-09-24: TWO RULES THAT LIVED IN THE SHELL RUNNER FOR A DAY, NOW ORDINARY RULES ──────
+
+  it("catches an executable `opencli browser` line — the Bridge that opened windows on his screen", () => {
+    // THE BITE IS THE ORIGINAL LINE, PUT BACK: until 2026-09-24 google-deep read Google through the
+    // Browser Bridge in the CEO's own Chrome, and every run threw windows onto his screen.
+    const r = biteOn("bridge", (d) =>
+      patch(join(d, "scripts/sweep.sh"), /^google-deep\|browser\|.*$/m,
+        `google-deep|browser|opencli browser google open "https://www.google.com/search?q={U}&num=30&hl=en" --window background`),
+    );
+    expect(r.failures["no-bridge-browser-call"].length).toBeGreaterThan(0);
+  }, 30_000);
+
+  it("catches the citation ruler's own probes failing — the round-2 hole put back", () => {
+    // THE BITE IS THE ORIGINAL DEFECT: before the refuter's round 2 the checker did not know `.ph`,
+    // and `archive.ph/…` was not read as an address. Its probe misses, `--selftest` leaves with 1.
+    const r = biteOn("selftest", (d) => patch(join(d, "scripts/cite-check.py"), /"ph\|/, '"'));
+    expect(r.failures["cite-check-selftest"].length).toBeGreaterThan(0);
+  }, 30_000);
+
   it("has a case for every rule it declares — a rule nobody proved is a rule nobody trusts", () => {
     // if this fails, a rule was added above without a bite case beneath it
-    expect(RULES.length).toBe(16);
+    expect(RULES.length).toBe(18);
   }, 30_000);
 });
 

@@ -776,7 +776,7 @@ def _results(name: str, env: dict) -> tuple[int, str]:
     # copy's Google session had dropped, every search stopped at "Before you continue to Google",
     # and the FAIL line blamed "1 result link" instead of naming the cause.
     if name == "google" and ("consent.google." in url or "before you continue to google" in low):
-        return 0, "Google oturumu kapali (riza/giris duvari) — profile-sync.sh"
+        return 0, "Google imzasiz okunur (cerezle oturum tasinmaz) -> Startpage/Brave"
     if name == "google" and ("/sorry/" in url or "unusual traffic" in low):
         return 0, "Google /sorry/ (captcha; solving it is forbidden)"
     if "captcha" in low and len(text) < 4000:

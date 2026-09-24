@@ -253,10 +253,8 @@ echo
 # with crowd.sh — a script, free, instant, and it never invents.
 CROWDF="$OUT/crowd-count.txt"
 : > "$CROWDF"
-for gd in $GROUND_DIRS; do
-  grep -ohE 'https?://(www\.)?(reddit\.com/r/[^ "]+/comments/[^ "]+|news\.ycombinator\.com/item\?id=[0-9]+)' \
-    "$gd"/*.raw 2>/dev/null | sed 's/[),.]*$//'
-done | sort -u | head -24 > "$OUT/crowd-urls.txt"
+# One thread, one line: markdown's escapes are undone before the de-dup (crowd-urls.sh).
+bash "$HERE/crowd-urls.sh" $GROUND_DIRS | head -24 > "$OUT/crowd-urls.txt"
 if [ -s "$OUT/crowd-urls.txt" ]; then
   echo "kalabalik sayiliyor: $(wc -l < "$OUT/crowd-urls.txt") baslik"
   # HIS RULING, 2026-09-20 — every quote carries the DATE OF ITS THREAD. The ground that

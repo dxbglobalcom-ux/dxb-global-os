@@ -32,14 +32,18 @@
 # — Chrome's salted hash of his password plus his encrypted username, kept for password-reuse
 # warnings — sat in the copy's Preferences, identical to Profile 5's, and came back with every copy.
 # It is stripped with the rest of that family (below). If the strip fails or leaves a single key,
-# the hidden Chrome is NOT started: the copy is locked (go-rwx), one line goes to stderr, exit 1.
+# the hidden Chrome is NOT started: the copy's Preferences, Secure Preferences and Local State are
+# deleted, the copy is locked (go-rwx), one line goes to stderr, exit 1 — and so on every failure
+# exit once the copy has begun (fail_closed, below).
 #
 #   profile-sync.sh            stop the hidden Chrome, copy, start it again
 #   profile-sync.sh --strip    stop the hidden Chrome, strip the copy as it stands (no new copy), start it
 #   profile-sync.sh --check    the session guard, per site: the login cookie in Profile 5 (read-only),
 #                              the same cookie in the copy, and whether the copy is REALLY signed in —
 #                              asked of the site itself through the hidden Chrome (hidden.py
-#                              signed-in). Exit 1 naming every site that fails any of the three.
+#                              signed-in). Google is an INFO row: signed out in the copy by design
+#                              (above), printed with a note, never counted. Exit 1 naming every other
+#                              site that fails any of the three — and so when the copy cannot be asked.
 
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -101,24 +105,40 @@ if not copy_err:
             continue
     if q.returncode not in (0, 1) or not live:
         live_err = ((q.stderr or q.stdout).strip().splitlines() or ["?"])[-1][:160]
+# GOOGLE IS AN INFO ROW, NOT A HOLE: cookies alone do not carry a Google session into a second
+# browser and the Chrome-level sign-in stays out on purpose (the header), so the copy's Google is
+# signed out by design and google-deep reads Google's results through Startpage/Brave. Its row is
+# printed; it is never counted, so it can neither fail the guard nor pass it.
+INFO = {"google": "imzasiz okunur (cerezle oturum tasinmaz; Chrome girisi kapali, bilerek) "
+                  "-> google-deep Startpage/Brave"}
 print(f"{'site':<11} {'cookie':<34} {'Profile 5':<10} {'kopya':<8} canli oturum (kopyada)")
-bad = []
+bad, info_out = [], []
 for site, host, name in logins:
     a = "var" if src.get((host, name)) else ("HATA" if src_err else "YOK")
     b = "var" if copy.get((host, name)) else ("HATA" if copy_err else "YOK")
     ok, why = live.get(site, (False, live_err or copy_err or "sorulamadi"))
     c = ("evet · " if ok else "HAYIR · ") + why
     print(f"{site:<11} {name:<34} {a:<10} {b:<8} {c}")
+    if site in INFO:
+        if not ok:
+            info_out.append(site)
+        continue
     why_bad = [w for w, cond in (("Profile 5'te cerez yok", a != "var"), ("kopyada cerez yok", b != "var"),
                                  ("kopyada canli oturum yok", not ok)) if cond]
     if why_bad:
         bad.append(f"{site} ({'; '.join(why_bad)})")
+for site in info_out:
+    print(f"{site}: {INFO[site]}")
 if src_err:
     print("Profile 5: " + src_err)
 if copy_err:
     print("kopya: " + copy_err)
-print("OTURUM KORUMASI: " + ("tamam — her sitede cerez iki tarafta var ve kopya canli olarak giris yapmis"
-      if not bad else "EKSIK — " + ", ".join(bad) + " — bu siteler gizli Chrome'da oturumsuz okunur"))
+if bad:
+    verdict = "EKSIK — " + ", ".join(bad) + " — bu siteler gizli Chrome'da oturumsuz okunur"
+else:
+    verdict = ("tamam — " + (", ".join(info_out) + " disinda " if info_out else "")
+               + "her sitede cerez iki tarafta var ve kopya canli olarak giris yapmis")
+print("OTURUM KORUMASI: " + verdict)
 sys.exit(1 if bad else 0)
 PYEOF
   exit $?
@@ -140,6 +160,33 @@ if pgrep -f -- "--user-data-dir=$ROOT( |$)" >/dev/null; then
   echo "!! gizli Chrome durmadi; kopyaya dokunulmadi" >&2
   exit 1
 fi
+
+# A FAILED COPY KEEPS NONE OF HIS ACCOUNT. From here on the copy's settings may be his, unstripped:
+# rsync lays his Preferences and Secure Preferences down as they are, and only the strip below
+# takes his account out of them and out of Local State. The unit is enabled, Restart=always, and
+# starts at login, so a failure exit that only locked the copy handed those files to the next
+# start — measured 2026-09-24 on a scratch copy: after an rsync, a sqlite and a strip failure all
+# three files were still there, Local State's info_cache still carrying user_name and gaia_*.
+# So every failure exit below deletes the three (Chrome writes fresh ones without his account; a
+# copy that then reads sites signed out is acceptable, one that carries his account is not),
+# locks the copy and says so in its ONE stderr line. His own profile is never touched.
+fail_closed() {   # $1 = why, one line
+  rm -f -- "$DST/Preferences" "$DST/Secure Preferences" "$ROOT/Local State"
+  local gone="Preferences, Secure Preferences ve Local State silindi (Chrome hesapsiz yenilerini yazar)"
+  if [ -e "$DST/Preferences" ] || [ -e "$DST/Secure Preferences" ] || [ -e "$ROOT/Local State" ]; then
+    gone="Preferences / Secure Preferences / Local State SILINEMEDI"
+  fi
+  chmod -R go-rwx "$ROOT" 2>/dev/null
+  echo "!! $1 — $gone; gizli Chrome BASLATILMADI, kopya kilitlendi (go-rwx): $ROOT" >&2
+  exit 1
+}
+# The Python steps' stdout goes straight out (fd 3); their stderr is caught, and on a failure its
+# last line is the reason in fail_closed's one line — a traceback is not a line.
+exec 3>&1
+why() {   # $1 = what a Python step said on stderr, $2 = the reason when it said nothing
+  local last="${1##*$'\n'}"
+  printf '%s' "${last:-$2}"
+}
 
 # --strip skips the copy: it cleans the copy as it stands
 if [ "$STRIP_ONLY" -eq 0 ]; then
@@ -178,9 +225,9 @@ if [ "$STRIP_ONLY" -eq 0 ]; then
   rsync -a --delete --delete-excluded "${EXCLUDES[@]}" "$SRC/" "$DST/"
   rs_rc=$?
   # a file his Chrome deleted while it was being copied (rsync 24) is not a failure of the copy
-  if [ "$rs_rc" -ne 0 ] && [ "$rs_rc" -ne 24 ]; then echo "!! rsync basarisiz (kod $rs_rc)" >&2; exit 1; fi
+  if [ "$rs_rc" -ne 0 ] && [ "$rs_rc" -ne 24 ]; then fail_closed "rsync basarisiz (kod $rs_rc)"; fi
 
-  SRC="$SRC" DST="$DST" python3 - <<'PYEOF'
+  db_err=$(SRC="$SRC" DST="$DST" python3 - 2>&1 >&3 3>&- <<'PYEOF'
 import os, shutil, sqlite3, sys, tempfile, time, urllib.parse
 from pathlib import Path
 src_root, dst_root = Path(os.environ["SRC"]), Path(os.environ["DST"])
@@ -271,15 +318,17 @@ for dst in sorted(p for p in dst_root.rglob("*") if p.is_file() and is_db(p)):
         copied += 1
         continue
     if critical:
-        print("!! Cookies tutarli kopyalanamadi — kopya kullanilamaz", file=sys.stderr)
+        print("Cookies tutarli kopyalanamadi — kopya kullanilamaz", file=sys.stderr)
         sys.exit(1)
     dst.unlink(missing_ok=True)       # a torn database is worse than an empty one
     dropped.append(dst.relative_to(dst_root).as_posix())
 print(f"sqlite: {copied} veritabani tutarli kopyalandi"
       + (f" · {len(dropped)} bos baslayacak: {', '.join(dropped[:6])}" if dropped else ""))
 PYEOF
+)
   db_rc=$?
-  [ "$db_rc" -eq 0 ] || { chmod -R go-rwx "$ROOT"; exit 1; }
+  [ "$db_rc" -eq 0 ] || fail_closed "$(why "$db_err" "sqlite kopyasi durdu (python kodu $db_rc)")"
+  [ -z "$db_err" ] || printf '%s\n' "$db_err" >&2
 fi
 
 # HIS ACCOUNT IS TAKEN OUT OF THE COPY'S SETTINGS, not only out of its databases: account_info,
@@ -289,8 +338,9 @@ fi
 # store. Chrome sign-in is switched off in the copy itself as well as by the unit's flag.
 # HIS PASSWORDS' TRACES GO WITH IT (PASSWORDS below), from Preferences and Secure Preferences alike,
 # their MACs included. The result is read back from disk: an error or a single key left is fatal —
-# the hidden Chrome is not started on those settings, the copy is locked, exit 1.
-ROOT="$ROOT" python3 - <<'PYEOF'
+# fail_closed: the three settings files are deleted, the hidden Chrome is not started, the copy is
+# locked, exit 1.
+pf_err=$(ROOT="$ROOT" python3 - 2>&1 >&3 3>&- <<'PYEOF'
 import json, os, sys
 from pathlib import Path
 root = Path(os.environ["ROOT"])
@@ -375,8 +425,7 @@ def left(path, signin):
 
 
 def fail(why):
-    print(f"!! kopyanin ayarlarindan hesap/parola izleri cikarilamadi ({why}) — gizli Chrome "
-          f"BASLATILMADI, kopya kilitleniyor (go-rwx): {root}", file=sys.stderr)
+    print(f"kopyanin ayarlarindan hesap/parola izleri cikarilamadi ({why})", file=sys.stderr)
     sys.exit(1)
 
 
@@ -401,13 +450,11 @@ if kalan:
     fail("KALAN: " + ", ".join(kalan))
 print("hesap anahtarlari ve parola izleri kopyadan cikarildi")
 PYEOF
+)
 pf_rc=$?
-if [ "$pf_rc" -ne 0 ]; then
-  chmod -R go-rwx "$ROOT"
-  # exit 1 is the strip's own one line; any other code means it died before it could print it
-  [ "$pf_rc" -eq 1 ] || echo "!! kopyanin ayarlari temizlenemedi (python kodu $pf_rc) — gizli Chrome BASLATILMADI, kopya kilitlendi (go-rwx): $ROOT" >&2
-  exit 1
-fi
+# the strip's own reason is its last stderr line; with none, it died before it could say it
+[ "$pf_rc" -eq 0 ] || fail_closed "$(why "$pf_err" "kopyanin ayarlari temizlenemedi (python kodu $pf_rc)")"
+[ -z "$pf_err" ] || printf '%s\n' "$pf_err" >&2
 chmod -R go-rwx "$ROOT"
 du -sh "$DST" | awk '{print "kopya: " $1}'
 

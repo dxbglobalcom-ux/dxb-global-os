@@ -203,8 +203,11 @@ is refused by that door (exit 3): run bare, it still drives the Bridge in his Ch
 the window he complained about.
 
 ```bash
-bash "$R/profile-sync.sh" --check          # cookie in Profile 5 · cookie in the copy · LIVE signed-in in the copy, per site
-bash "$R/profile-sync.sh"                  # re-copy when a site in the copy has signed out
+bash "$R/profile-sync.sh" --check          # cookie in Profile 5 · cookie in the copy · LIVE signed-in in the copy, per site;
+                                           #   google is an info row (signed out by design), exit 1 only when another site is not live
+bash "$R/profile-sync.sh"                  # re-copy when a site in the copy has signed out (never brings Google back)
+bash "$R/profile-sync.sh" --strip          # stop the hidden Chrome, strip his account keys from the copy as it stands, start it
+#   any failed copy or strip deletes the copy's Preferences, Secure Preferences and Local State and leaves Chrome stopped
 python3 "$R/hidden.py" read <url> [--wait S] [--expand 'See more'] [--text]   # a page that needs a hand
 python3 "$R/hidden.py" google "<short query>"   # Google's page; consent wall or /sorry/ → named fallback to Startpage/Brave
 python3 "$R/hidden.py" status | reap            # open windows in the hidden Chrome / close strays
@@ -283,7 +286,7 @@ exit 1. Measured 2026-09-17 — the sentence here used to say they print nothing
 ```bash
 bash "$R/accept.sh"                  # a real run, then the FILES are measured, not the printout
 bash "$R/accept.sh" --no-browser     # keeps the run off the hidden browser (nothing reaches his screen either way)
-bash "$REPO/scripts/research-ruler.sh"   # the static metre alone, ~0.3 s, runs on every commit
+bash "$REPO/scripts/research-ruler.sh"   # the static metre alone, ~1 s, runs on every commit
 ```
 
 `accept.sh` runs one fixed question through the whole engine and then forgets everything the

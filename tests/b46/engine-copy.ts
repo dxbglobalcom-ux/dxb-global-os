@@ -75,7 +75,21 @@ else:
 sys.exit(rc)
 `;
 
+/**
+ * THE REAL RESEARCH BROWSER IS NOT A STAND-IN. Every browser read of the engine goes through
+ * scripts/hidden.py (bin/opencli and fetch.py's browser door import it) to the hidden research
+ * Chrome on 127.0.0.1:9333 — a copy of the CEO's signed-in sites. Measured 2026-09-24 with strace:
+ * this suite made 90 connections to that port and drove it for real; traced again with the port
+ * dead, every caller was N04's quora door or N09's fleet ground (its browser channels and its last
+ * resort). hidden.py takes its port from DXB_HIDDEN_PORT, so the bench points it at port 1, where
+ * nothing can listen (no user process may bind below 1024): every browser door fails at once with
+ * its own named line, exactly as it does when that Chrome is down.
+ */
+export const DEAD_HIDDEN_PORT = "1";
+
 export function makeBench(): Bench {
+  // every case builds its children's env from process.env, so this reaches every run on the bench
+  process.env.DXB_HIDDEN_PORT = DEAD_HIDDEN_PORT;
   const root = mkdtempSync(join(tmpdir(), "dxb-b46-"));
   const engine = join(root, "engine");
   execFileSync("cp", ["-a", SKILL, engine]);
