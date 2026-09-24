@@ -1,0 +1,29 @@
+cwd=/tmp/claude-1000/-home-dxb-DxB-Global-OS/89a2ab03-18b0-48da-9645-fdfe1b5393be/scratchpad/cwd
+warm-up N: exit=0 cost=0.007367800000000001
+warm-up C: exit=0 cost=0.016451999999999998
+warm-up P: exit=0 cost=0.015104
+[01] N-q1-r1 attempt=1 err=False out=2351 think=648 cost=0.052607799999999996 wall=28.81s
+[02] C-q1-r1 attempt=1 err=False out=3350 think=2081 cost=0.0726672 wall=36.24s
+[03] P-q1-r1 attempt=1 err=False out=1613 think=605 cost=0.037887000000000004 wall=19.85s
+[04] C-q1-r2 attempt=1 err=False out=3332 think=2092 cost=0.0671514 wall=37.08s
+[05] P-q1-r2 attempt=1 err=False out=1583 think=548 cost=0.0321312 wall=19.93s
+[06] N-q1-r2 attempt=1 err=False out=2253 think=691 cost=0.045492 wall=27.17s
+[07] P-q2-r1 attempt=1 err=False out=2455 think=1053 cost=0.054719000000000004 wall=28.41s
+[08] N-q2-r1 attempt=1 err=False out=3768 think=1543 cost=0.08093979999999998 wall=41.41s
+[09] C-q2-r1 attempt=1 err=False out=2313 think=657 cost=0.0519192 wall=28.67s
+[10] N-q2-r2 attempt=1 err=False out=3927 think=1630 cost=0.0789718 wall=43.56s
+[11] C-q2-r2 attempt=1 err=False out=2637 think=915 cost=0.053251200000000005 wall=32.01s
+[12] P-q2-r2 attempt=1 err=False out=3398 think=2377 cost=0.06843099999999999 wall=36.38s
+[13] C-q3-r1 attempt=1 err=False out=1223 think=572 cost=0.030103199999999997 wall=17.17s
+[14] P-q3-r1 attempt=1 err=False out=2028 think=1404 cost=0.046162999999999996 wall=20.91s
+[15] N-q3-r1 attempt=1 err=False out=1550 think=955 cost=0.0365638 wall=20.58s
+[16] P-q3-r2 attempt=1 err=False out=1470 think=826 cost=0.0298706 wall=18.17s
+[17] N-q3-r2 attempt=1 err=False out=1291 think=435 cost=0.026251400000000005 wall=17.09s
+[18] C-q3-r2 attempt=1 err=False out=1538 think=929 cost=0.0312708 wall=20.42s
+[19] N-q4-r1 attempt=1 err=False out=1548 think=496 cost=0.036563799999999994 wall=19.21s
+[20] C-q4-r1 attempt=1 err=False out=1611 think=836 cost=0.0379032 wall=19.16s
+[21] P-q4-r1 attempt=1 err=False out=1225 think=415 cost=0.030143000000000003 wall=15.87s
+[22] C-q4-r2 attempt=1 err=False out=1600 think=862 cost=0.0325118 wall=19.06s
+[23] P-q4-r2 attempt=1 err=False out=1430 think=685 cost=0.029071600000000003 wall=17.37s
+[24] N-q4-r2 attempt=1 err=False out=1599 think=420 cost=0.0324124 wall=19.04s
+runner exit=0

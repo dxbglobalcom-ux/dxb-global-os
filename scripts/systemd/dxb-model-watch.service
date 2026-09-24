@@ -1,0 +1,27 @@
+# THE MODEL WATCH — systemd USER unit (install: scripts/systemd/install.sh), board row B55.
+#
+# WHY IT EXISTS. On 2026-09-24 the CEO pinned the main model (~/.claude/settings.json "model":
+# "claude-opus-5-5[1m]"). A pinned model does not move when Anthropic ships a newer one, and a
+# newer one nobody notices is the pin quietly going stale. His order for that moment (ledger id
+# model-watch-review-together-2026-09-24): he is told; he and the chief engineer review the model
+# together; the prompt audit starts only on his OK; the setting moves only on his "geç". The same
+# day he widened it to Anthropic's new usage guidance, and ruled that what he is shown is current.
+#
+# This unit is step one — TELL — and nothing else. Once a day it reads Anthropic's public models
+# page, docs sitemap, release notes, Claude Code changelog and engineering blog; asks Sonnet 5
+# (`claude -p` on this machine's own login, isolated) which new items seriously change how our
+# models work; and, while a new model id or a serious item waits, leaves ONE line that the next
+# session's opening puts first (.claude/hooks/spec-bootstrap.sh) — his order that the session must
+# not swell. It never starts an audit, never changes a setting, never applies guidance, and
+# carries no credential of its own.
+#
+# A page that cannot be read is recorded and the run still succeeds — a network blip is not a
+# failed unit. A source that stays unread for three days is named at the top of the opening
+# instead. The script keeps its own log (~/.local/state/dxb/model-watch/watch.log); stdout goes to
+# the journal.
+[Unit]
+Description=DXB — daily watch for a new Claude model or new usage guidance (tells, never applies)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 "%h/DxB Global OS/scripts/model-watch/model-watch.py"

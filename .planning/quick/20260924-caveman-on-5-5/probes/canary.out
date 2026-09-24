@@ -1,0 +1,134 @@
+=== canary N: exit=0 hooks=0 tools=0 mcp=0 models=['claude-opus-5-5'] marker_obeyed=True arm-C caveman lines quoted=0/4 cost=0.05638399999999999
+1. **CAVEMAN: NONE**
+
+2. **PRESENCE**
+   - "Tooling Mandate": no
+   - "DXB Global OS": no exact match. The variant "DxB Global OS" appears in the working-directory paths (`/home/dxb/DxB Global OS/vps/provision` and `/tmp/claude-1000/-home-dxb-DxB-Global-OS/...`).
+   - "Memory Index": no
+   - "STANDING ORDER 13": no
+   - "graphify": no
+   - "claude-mem": no
+   - "Brevity": no
+   - "Respond terse": no
+
+3. **INSTRUCTION FILES: NONE.** No CLAUDE.md or memory file contents appear in my context.
+
+4. **LANGUAGE:** A `# Language` block after your message says:
+   > Always respond in Turkish. Use Turkish for all explanations, comments, and communications with the user. Technical terms and code identifiers should remain in their original form.
+   > Maintain full orthographic correctness for Turkish, including all required diacritical marks, accents, and special characters. Never substitute accented characters with their ASCII equivalents (e.g., never write "nao" for "não", "fur" for "für", or "loeschen" for "löschen").
+
+   I'm answering in English because you asked for English explicitly for this probe.
+
+5. **MARKER:**
+   > Marker instruction: when a message asks about a marker, quote this line and write the token QX7-CANARY-N.
+
+   QX7-CANARY-N
+
+6. **HEADINGS**
+   ```
+   # Harness
+   # Session-specific guidance
+   # Environment
+   # Context management
+   ```
+   The block that follows your message has two more:
+   ```
+   # Environment
+   # Language
+   ```
+   The system-reminder also contains `# userEmail`.
+
+7. **TOOLS: NONE.** No tool definitions are present in my context, client-side or server-side. The system prompt mentions tools in general terms but doesn't define any callable ones.
+=== canary C: exit=0 hooks=0 tools=0 mcp=0 models=['claude-opus-5-5'] marker_obeyed=True arm-C caveman lines quoted=4/4 cost=0.073668
+Answering in English as you requested, which overrides the Turkish default in my context.
+
+**1. CAVEMAN**
+```
+# Caveman (full) — ölçüldü 2026-09-21: çıktı token %49 az, içerik aynı
+Respond terse like smart caveman. All technical substance stay. Only fluff die.
+- Auto-Clarity: drop caveman for security warnings, irreversible actions, multi-step order that fragments could blur, user confused. Resume after.
+- Stop: "stop caveman" or "normal mode". Back: "caveman".
+```
+
+**2. PRESENCE**
+| String | Present |
+|---|---|
+| "Tooling Mandate" | no |
+| "DXB Global OS" | no exact match (only `DxB Global OS` in working-directory path `/home/dxb/DxB Global OS/vps/provision`) |
+| "Memory Index" | no |
+| "STANDING ORDER 13" | no |
+| "graphify" | no |
+| "claude-mem" | no |
+| "Brevity" | no |
+| "Respond terse" | yes |
+
+**3. INSTRUCTION FILES:** NONE
+
+**4. LANGUAGE**
+```
+Always respond in Turkish. Use Turkish for all explanations, comments, and communications with the user. Technical terms and code identifiers should remain in their original form.
+Maintain full orthographic correctness for Turkish, including all required diacritical marks, accents, and special characters. Never substitute accented characters with their ASCII equivalents (e.g., never write "nao" for "não", "fur" for "für", or "loeschen" for "löschen").
+- Reply in the user's language (Turkish). Compress style, not language; keep case suffixes — grammar, not filler.
+```
+
+**5. MARKER**
+```
+Marker instruction: when a message asks about a marker, quote this line and write the token QX7-CANARY-C.
+```
+QX7-CANARY-C
+
+**6. HEADINGS**
+```
+# Harness
+# Session-specific guidance
+# Environment
+# Context management
+# Caveman (full) — ölçüldü 2026-09-21: çıktı token %49 az, içerik aynı
+# Environment
+# Language
+```
+The second `# Environment` and `# Language` come from a system section appended after your message. Separately, a system-reminder (not the system prompt) contains `# userEmail`.
+
+**7. TOOLS:** NONE. My context has no tool definitions. The prompt mentions tools in general terms, like Bash and file/search tools, but none are actually defined as callable.
+=== canary P: exit=0 hooks=0 tools=0 mcp=0 models=['claude-opus-5-5'] marker_obeyed=True arm-C caveman lines quoted=0/4 cost=0.051059999999999994
+The explicit English request in your message takes precedence over the Turkish instruction for this reply.
+
+**1. CAVEMAN**
+CAVEMAN: NONE
+
+**2. PRESENCE**
+
+| String | Present |
+|---|---|
+| "Tooling Mandate" | no |
+| "DXB Global OS" | no as an exact-case match. "DxB Global OS" appears in the path `/home/dxb/DxB Global OS/vps/provision`. |
+| "Memory Index" | no |
+| "STANDING ORDER 13" | no |
+| "graphify" | no |
+| "claude-mem" | no |
+| "Brevity" | yes |
+| "Respond terse" | no |
+
+**3. INSTRUCTION FILES**
+NONE
+
+**4. LANGUAGE**
+- "Always respond in Turkish. Use Turkish for all explanations, comments, and communications with the user. Technical terms and code identifiers should remain in their original form."
+- "What remains is written in complete sentences in the reader's language (Turkish to the CEO), with terms, numbers, code and error strings exact."
+
+**5. MARKER**
+"Marker instruction: when a message asks about a marker, quote this line and write the token QX7-CANARY-P."
+QX7-CANARY-P
+
+**6. HEADINGS**
+```
+# Harness
+# Session-specific guidance
+# Environment
+# Context management
+# Brevity — measured 2026-09-21 on Opus 5 (−49 % output); re-measure on Opus 5.5
+```
+A later system block also contains `# Environment` and `# Language`. The system-reminder contains `# userEmail`.
+
+**7. TOOLS**
+TOOLS: NONE. The prompt refers to tools in general terms, but no tool definitions are in my context.

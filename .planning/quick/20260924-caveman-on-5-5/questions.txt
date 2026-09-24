@@ -1,0 +1,4 @@
+Daha güçlü bir model çıktığında, eski modele göre yazılmış talimatlar neden sorun olur ve ne yapmalıyız?
+Müşteriye giden rutin raporların CEO onayına takılmadan gitmesi hangi riskleri taşır, nasıl önleriz?
+Haftalık kullanım kotası yüzde elli iken hangi işleri öne almalıyız? Gerekçesiyle kısaca.
+Kod yazan yardımcının max ve medium çaba seviyeleri arasındaki fark nedir, hangisi ne zaman kullanılmalı?
