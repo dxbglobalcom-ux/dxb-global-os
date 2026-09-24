@@ -32,6 +32,15 @@ cp "$QF" "$DEST/question.txt" 2>/dev/null
 cp "$OUT"/HUNTER-*.md "$DEST/" 2>/dev/null
 [ -n "$SUM" ] && [ -f "$SUM" ] && cp "$SUM" "$DEST/SUMMARY.txt"
 
+# THE ANSWER CONTRACT'S OWN FILES (2026-09-24): the written answer, the run's numbered source
+# registry its [n] point into, the rendered deliverable, its citations.json (the material for the
+# hand-designed page) and the citation ruler's verdict are the answer too. Kept when the run has
+# them; a run from before the contract has none, and that is not an error.
+contract=0
+for f in "$OUT/answer.md" "$OUT/sources.json" "$OUT/final.md" "$OUT/citations.json" "$OUT"/cite-check*.txt; do
+  [ -f "$f" ] && cp "$f" "$DEST/" && contract=$((contract + 1))
+done
+
 # The raw machine files (jsonl, 3.4 MB on the same run) are NOT kept — they are the
 # noise, not the answer.
-echo "cevap saklandi: $DEST  ($(du -sh "$DEST" | cut -f1), $reports rapor)"
+echo "cevap saklandi: $DEST  ($(du -sh "$DEST" | cut -f1), $reports rapor, $contract sozlesme dosyasi)"
