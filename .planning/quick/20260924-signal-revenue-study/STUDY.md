@@ -6,7 +6,7 @@
 
 ## 0. CEVAP
 
-**Ciddi para makinenin kendisini satmaktan değil, makineyle beş kıtada marka müşterisi kazanıp her birine ayda sabit ücretle kanıtlı reklam + sonuç hesabı satmaktan gelir; bunun üzerine bugüne kadar hiç düşünülmemiş dört kalem eklenir: aynı markanın birden çok ülkesi için ayrı masalar, helal/Ramazan masası, yerel ajanslara "gece analisti" olarak ortaklık ve bir kampanyanın 11 dilde doğal sürümleri.** Müşteri süzgeci sizin sözünüzle (2026-09-24) helal çerçevededir: faizli banka ve sigorta ile kripto müşteri değildir; İslami banka ve tekafül olur.
+**Ciddi para makinenin kendisini satmaktan değil, makineyle her kıtada marka müşterisi kazanıp her birine ayda sabit ücretle kanıtlı reklam + sonuç hesabı satmaktan gelir; bunun üzerine bugüne kadar hiç düşünülmemiş dört kalem eklenir: aynı markanın birden çok ülkesi için ayrı masalar, helal/Ramazan masası, yerel ajanslara "gece analisti" olarak ortaklık ve bir kampanyanın 11 dilde doğal sürümleri.** Holding İslam şeriatına göre işler; haram ürün satılmaz, gelir oradan gelmez (sizin sözünüz, 2026-09-24). Müşteri süzgeci buna göredir: alkol reklamı yapılmaz; banka reklamı yapılmaz, hiçbir banka; kumar, tütün, faizli sigorta ve kripto müşteri değildir; tekafül ve helal markalar olur; alkol da satan bir süpermarket zinciri müşteridir, yalnız zincirin kendi reklamı yapılır, içindeki alkol ve domuzun asla.
 
 Dünya reklam pastası bu yıl ilk kez 1 trilyon doları geçiyor; parası olan ülkeler bellidir: ABD, Çin, Japonya, İngiltere, Almanya, Fransa, Avustralya, Brezilya, Hindistan, Kanada, İtalya, İspanya (dentsu'nun kendi sırası, birinci el). Ama **para olan her yer bizim için kazanılabilir değildir.** Ölçtüğüm üç şey sırayı belirliyor:
 
@@ -14,9 +14,9 @@ Dünya reklam pastası bu yıl ilk kez 1 trilyon doları geçiyor; parası olan 
 2. **Yabancı bir yapay zekâ reklam ajansı oraya ne kadar kolay girer?** İngiltere, Almanya, Avustralya, ABD, BAE: izin yok ya da basit izin, vergi kesintisi yok (BAE'de Reklamveren İzni ilk üç yıl ücretsiz, ama ön şartı BAE ticari lisansı). Suudi Arabistan: hizmet stopajı yalnız %5, ama sosyal medyada ücretli reklam içeriği için gereken Mawthooq izni **yurt dışından alınamıyor**; oraya ya Mawthooq'lu bir Suudi ajansla ortak, ya da müşterinin kendi hesabından yayınladığı işle girilir (ikinci turda resmî kaynaklardan ölçüldü, §2.1). Japonya ve Kore: kapalı kulüp (Japonya'da üç büyük ajans, Kore'de holdinglerin kendi ajansları). Çin ve Nijerya: yerel ajans şart, Nijerya yabancı yüz ve ses yasaklı. Hindistan, Brezilya, Türkiye, Mısır: faturamızdan yüzde 15-25 vergi kesilir (stopaj [müşterinin, bize ödediği paradan devlet adına kestiği vergi]).
 3. **Bizim üstünlüğümüz nerede en keskin?** Arapça ve İslami sınırlara sadık bir ajans Körfez'de yerli gibi durur; yapay zekâ reklamına yasal etiket zorunluluğu (New York, Kaliforniya, AB, Kore, Türkiye) "yasal olarak temiz yapay zekâ reklamı"nı satılabilir bir vaat yapar; gece çalışan motor ve 100 dilde yazıya döken kulak, tek bir markanın sekiz ülkesine aynı gece bakabilir.
 
-**Saldırı sırası (ilk üç ülke sizin kararınız, 2026-09-24 21:14: "ilk üç ülke Suudi, İngiltere, Almanya olsun"):** ① Suudi Arabistan (Mawthooq'lu bir Suudi ortak ajansla ya da müşterinin kendi hesabıyla) + Körfez, İngiltere, Almanya (ilk 90 gün; Türkiye'ye ihracatçı markalar üzerinden) → ② ABD, Avustralya, Fransa, Kanada, Endonezya/Malezya (4-9. ay) → ③ Japonya, Kore, Hindistan, Brezilya, Meksika (ikinci yıl, seçilmiş büyük markalarla) → ④ Çin, Nijerya, Mısır, Latin Amerika'nın kalanı (yerel ortak olmadan girilmez).
+**Nereye saldırılır (sizin emriniz, 2026-09-24: holding uluslararasıdır, belirli ülkeye sıkışmak yok):** her kıtaya aynı anda, her kıtada parası en büyük ülkelere. Kuzey Amerika'da ABD ve Kanada; Avrupa'da İngiltere, Almanya, Fransa (İspanya, İtalya, Hollanda, İsviçre büyük markayla); Körfez'de Suudi Arabistan, BAE, Katar, Kuveyt; Asya-Pasifik'te Avustralya, Japonya, Kore, Hindistan, Endonezya, Malezya, Singapur, Çin; Latin Amerika'da Brezilya ve Meksika; Afrika'da Güney Afrika, Nijerya, Mısır; Türkiye'ye ihracatçı markalar üzerinden. Harita (§2.7) ülke için "ne zaman" değil "nasıl" söyler: çoğuna doğrudan; Suudi Arabistan, Japonya, Kore, Çin ve Nijerya'ya yerel ortak ajansla (kalem 6); stopajlı ülkelerde fiyat brüte çekilerek. Gece çalışan ve 100 dilde dinleyen motorun üstünlüğü tam budur: bir gecede altı kıtanın masasına bakar; sıra beklemek bu üstünlüğü boşa harcar.
 
-**Ciddi gelir neye benzer (senaryo, tahmin değil, hesabı §4.3'te):** birinci yıl sonunda ayda 48 bin dolar koşu hızı (6 marka); ikinci yıl üç kıtada ayda ≈ 257 bin dolar (yılda ≈ 3,1 milyon) — bu tam da tahtadaki tek ekran kartının sınırıdır; üçüncü yıl beş kıtada ayda ≈ 700 bin dolar (yılda ≈ 8,4 milyon), ancak bulut üretim katmanıyla.
+**Ciddi gelir neye benzer (senaryo, tahmin değil, hesabı §4.3'te):** birinci yıl sonunda ayda 48 bin dolar koşu hızı (6 marka); ikinci yıl ayda ≈ 257 bin dolar (yılda ≈ 3,1 milyon) — bu tam da tahtadaki tek ekran kartının sınırıdır; üçüncü yıl ayda ≈ 700 bin dolar (yılda ≈ 8,4 milyon), ancak bulut üretim katmanıyla.
 
 **En büyük iki tuzak:** ucuza/hızlıya satmak (sizin reddettiğiniz yol; halk "yapay zekâ çöpü"nü görür görmez cezalandırıyor: bir Japon videosunda 612 bin izleyici, en beğenilen yorumlar hep aynı şeyi söylüyor) ve Meta/TikTok/Google'ın 2026 sonunda reklamı baştan sona kendisinin yapması — rakibimiz başka ajanslar değil, platformların bedava düğmesi. Cevabımız ikisine de aynı: platformun düğmesi kanıt üretmez, hesap vermez, sınır tanımaz; biz bunları satarız.
 
@@ -39,7 +39,7 @@ Dünya reklam pastası bu yıl ilk kez 1 trilyon doları geçiyor; parası olan 
 
 Her kıta için beş soru: para nerede · hangi dil · ajansa ne ödeniyor ve 8.000 dolar nerede duruyor · müşteri nasıl kazanılıyor · kanun, izin, vergi ve bizim İslami süzgecimiz. (Kaynaklar: EVIDENCE E1–E5.)
 
-### 2.1 Orta Doğu ve Körfez — evimiz, ilk saldırı
+### 2.1 Orta Doğu ve Körfez — evimiz
 
 MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; raporun kendisi üyelere özel; ikinci turda okundu): dijital reklam 2025'te **8,19 milyar $ (+%17,8)**, 2024'te 6,95 milyar $. Aşağıdaki ülke rakamları bir araştırma şirketinin beyanı (R&M) ve toplamda IAB'den yüksek çıkıyor; kapsamları farklı, ikisi de yazılı.
 
@@ -54,7 +54,7 @@ MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; ra
 
 **İslami süzgeç:** alkol ve kumar reklamı zaten yasak; süzgeç bize hiçbir şey kaybettirmez. Helal ekonomi göstergesinde ilk beş: Malezya, BAE, Suudi Arabistan, Endonezya, Bahreyn (DinarStandard, birinci el rapor sayfası).
 
-**Hüküm:** Suudi Arabistan birinci; BAE ikinci (ev, ama doymuş ve izin bizde açık soru); Mısır yalnız ihracatçı Körfez markaları için.
+**Hüküm:** Suudi Arabistan Körfez'in en büyük parası, Mawthooq'lu Suudi ortak ajansla ya da müşterinin kendi hesabıyla; BAE ev sahası, doymuş; Katar ve Kuveyt bandın içi, doğrudan; Mısır yerel fiyatla ulaşılmaz, ihracatçı Körfez markalarının masası olarak.
 
 ### 2.2 Avrupa — en kolay girilen büyük para
 
@@ -73,9 +73,9 @@ MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; ra
 
 **Almanya'da alıcıların kendi ağzından (ikinci tur; r/selbststaendig, 3 başlık, 162 yorum, 75 ayrı kişi):** küçük işletme ajansa para vermiyor. 23 yaşındaki bir ajans sahibi restoranlara 10 video için 1.200–1.600 € teklif ediyor, cevap hep "haber veririz"; biri "birkaç ay 300-400 €", biri "kuzenim ayda 100 €'ya yapar" demiş. En beğenilen cevap: "her küçük dükkânın Insta'yı yanından yürüten bir kuzeni ya da öğrenci kızı var." Bir başkası: "sosyal medya ajansı kapıcı hizmeti gibi; herkes açıyor, fiyatta ve işte birbirini eziyor." Bir inşaat mühendisi: "ajansı karşılayamam; Fiverr'da üç serbest çalışana 2.000 € verdim, tek müşteri gelmedi." 10.000 €'luk ajans denemiş bir işletmeci: "ilan sitesindeki amatörlerden kötü iş çıkardılar." Yedi haneli reklam bütçesi yöneten bir performans pazarlamacısı: "en pahalı işler — yeni logo, imaj filmi — en az getiriyor; işe yarayan, müşteri kazanımını ölçülebilir biçimde artıran." En beğenilen tavsiye: "reklam getirisi (ROAS) ve müşteri edinme maliyeti tablosu vermeyen ajanstan uzak dur." Almanya'da telefonla soğuk arama tüketiciye yasak, şirkete riskli (UWG). **Ders:** Almanya'da hedef KOBİ değil, bütçesi ve ölçüm kültürü olan orta-büyük markadır; satılan şey hesap verebilirliktir — tam olarak kalem 10.
 
-**İslami süzgeç:** İngiltere'de kumar toplam reklamın %2,7'si (≈ 2 milyar £); finans üçüncü büyük kategori. Almanya'da banka/sigorta, ajansların en çok çalıştığı sektör (ajansların %53'ü). **Sizin hükmünüz (2026-09-24, "helal çerçevede"): faizli banka ve sigorta müşterimiz değildir; İslami banka ve tekafül olur; kripto asla.** İngiltere'nin son dört ayda en çok konuşulan 40 reklamvereninden 8'i bu süzgeçle dışarıda kalıyor (5 alkol, 3 faizli finans; EVIDENCE E11.1).
+**İslami süzgeç:** İngiltere'de kumar toplam reklamın %2,7'si (≈ 2 milyar £); finans üçüncü büyük kategori. Almanya'da banka/sigorta, ajansların en çok çalıştığı sektör (ajansların %53'ü). **Sizin hükmünüz (2026-09-24): banka reklamı yapılmaz, hiçbir banka; faizli sigorta müşterimiz değildir, tekafül olur; kripto asla; alkol da satan süpermarket zinciri müşteridir, yalnız zincirin kendi reklamı yapılır.** Bu dilimler hiç bizim pazarımız değildi: Holding İslam şeriatına göre işler; haram ürün satılmaz, gelir oradan gelmez (sizin sözünüz, 2026-09-24). İngiltere'nin son dört ayda en çok konuşulan 40 reklamvereninden 8'i bu süzgeçle dışarıda kalıyor (5 alkol, 3 faizli finans; EVIDENCE E11.1).
 
-**Hüküm:** İngiltere ve Almanya ilk 90 günde; Fransa 4-9. ayda (dil ve "Images virtuelles" kuralıyla); Türkiye yerel fiyatla değil, **ihracatçı markalar** üzerinden (§3, kalem 8).
+**Hüküm:** İngiltere, Almanya ve Fransa Avrupa'nın üç büyük parası, üçüne de doğrudan (izin yok, stopaj yok; Fransa'da "Images virtuelles" yazısıyla); İspanya, İtalya, Hollanda, İsviçre büyük markayla; Türkiye yerel fiyatla değil, **ihracatçı markalar** üzerinden (§3, kalem 8).
 
 ### 2.3 Kuzey Amerika — en büyük para, en kalabalık pazar
 
@@ -86,9 +86,9 @@ MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; ra
 
 **Halkın sesi:** IAB'nin kendi araştırması (505 tüketici, 104 reklam yöneticisi): yöneticilerin %82'si gençlerin yapay zekâ reklamına olumlu baktığını sanıyor, gerçekte %45. Reddit'te 230 yorumlu bir başlık: pazarlama müdürünün patronu tüm ekibi yapay zekâyla değiştirmek istiyor; en beğenilen cevap (396 oy) "seni maliyet kalemi sanıyor". Omnicom çalışanı: "birkaç müşteri 2026'da sözleşmeyi yenilemeyeceğini açıkladı." **Büyük ajanslar müşteri kaybediyor, markalar ucuzu deniyor, tüketici ucuzu görünce cezalandırıyor: aradaki boşluk kanıtlı ve görünür kaliteli işin boşluğudur.**
 
-**İslami süzgeç:** finans sektörü ABD dijital reklamının yaklaşık %29'u (94 milyar $, satıcı beyanı) — süzgeç ABD'de en pahalıya mal olur; kumar (spor bahisleri) ve alkol ayrıca dışarıda. Sizin "helal çerçevede" hükmünüzle faizli banka, sigorta ve kripto reklam müşterisi de değildir; ABD'de bu, dijital reklam parasının yaklaşık üçte birinden vazgeçmek demektir ve baştan bilerek vazgeçiyoruz.
+**İslami süzgeç:** finans sektörü ABD dijital reklamının yaklaşık %29'u (94 milyar $, satıcı beyanı) — ABD'de pastanın en büyük dilimi haram sektördedir; kumar (spor bahisleri) ve alkol ayrıca dışarıda. Sizin hükmünüzle banka (hiçbiri), faizli sigorta ve kripto reklam müşterisi de değildir. ABD dijital reklam parasının yaklaşık üçte biri bu yüzden hiç bizim pazarımız değildir: Holding İslam şeriatına göre işler; haram ürün satılmaz, gelir oradan gelmez (sizin sözünüz, 2026-09-24).
 
-**Hüküm:** ABD 4-9. ayda, ilk referanslar elde olunca; ilk günden değil.
+**Hüküm:** ABD dünyanın en büyük parası, Kanada ile birlikte ilk günden masada; ABD'de kapıyı referans açar, bu yüzden orada ilk satılan şey ücretli sektör incelemesi ve ilk kanıttır (kalem 2 ve 10).
 
 ### 2.4 Asya-Pasifik — parası büyük, kapısı dar
 
@@ -96,13 +96,13 @@ MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; ra
 |---|---|---|---|---|---|
 | Japonya | toplam 8,06 trilyon ¥ (50,8 milyar $); internet 4,05 trilyon ¥ (25,5 milyar $); **video 1,03 trilyon ¥ (6,5 milyar $, +%22)** (dentsu, birinci el) | Japonca | video dahil 200–300 bin ¥ (1.260–1.890 $); tam destek 500 bin ¥+ (3.150 $+) | **bandın 2,5 katı** | yapay zekâ reklam kuralı yok; gizli reklam yasağı markaya yük. Üç büyük ajans pazarı tutuyor. Stopaj yok. |
 | Güney Kore | 17,27 trilyon ₩ (12,6 milyar $), %60 çevrimiçi (KOBACO) | Korece | 500 bin – 10 milyon ₩ (365–7.300 $) | bandın tepesi | **Yapay Zekâ Temel Kanunu (22 Ocak 2026):** yapay zekâ reklamı etiketlenecek; ilk yıl ceza ertelendi. En büyük 10 ajans holding içi (Samsung-Cheil, Hyundai-Innocean, LG-HS Ad), harcamanın %83'ü. |
-| Çin | ≈ 170 milyar $ dijital (⚠ satıcı) | Mandarin | — | — | **Yabancı reklamveren yerel Çinli ajans üzerinden çalışmak zorunda**; 1 Eylül 2025'ten beri tüm yapay zekâ içeriğine açık ve gizli etiket. **Girilmez.** |
+| Çin | ≈ 170 milyar $ dijital (⚠ satıcı) | Mandarin | — | — | **Yabancı reklamveren yerel Çinli ajans üzerinden çalışmak zorunda**; 1 Eylül 2025'ten beri tüm yapay zekâ içeriğine açık ve gizli etiket. **Yalnız yerel ortak ajansla (kalem 6).** |
 | Hindistan | 2026: 2 lakh crore ₹ (22,5 milyar $), dijital %68, sosyal/dijital 8,3 milyar $ (WPP) | Hintçe, İngilizce + 20 dil | tam hizmet 1–5 lakh ₹ (1.040–5.200 $); Clutch'ta bir müşteri "100 bin $ harcadım" | bandın üstü | ASCI taslak: sentetik sunucu ve yapay zekâ sesi etiketlenecek (Mayıs 2026); gerçek paralı oyun reklamı yasak (Ağustos 2025). **Stopaj %20+** (BAE anlaşmasında iş kazancı sayılırsa sıfır olabilir, ⚠). |
 | Endonezya | — (bölgesel toplam ⚠) | Bahasa | premium 35–75 milyon Rp (1.950–4.200 $), kurumsal 75–200 milyon Rp (4.200–11.200 $) | bandın tepesi | kural rehber düzeyinde; stopaj %20 (anlaşmayla 5–15). Helal göstergesinde dünya 4.'sü. |
 | Malezya, Singapur | — | Malayca/İngilizce | Singapur: yerleşik ajans S$3–12 bin/ay, premium S$5 bin+, kurumsal S$15 bin+; Malezya: çoğu KOBİ RM 2.500–5.000, tam hizmet RM 15.000+ (satıcı rehberleri) | Singapur'da bandın içi (8.000 $ = S$10.200); Malezya'da bandın 2 katı | Singapur mevcut kodu uygular; Malezya stopajı yalnız ülke içinde yapılan hizmete. Malezya helal göstergesinde 1. |
 | Avustralya | internet 18,4 milyar A$ (12,9 milyar $); **video 5,4 milyar A$, sosyal video +%35** (IAB Australia) | İngilizce | yerleşik işletme 10–30 bin A$ (7.000–21.000 $) | bandın ortası | yapay zekâ kuralı henüz yok (tartışılıyor); kumar reklamı 2027'den kısıtlı; izin yok; stopaj yok. Finans 2. büyük kategori (756 milyon A$), sigorta 7., kumar 18. (Nielsen, birinci el). |
 
-**Hüküm:** Avustralya ilk 90 gün adayı (İngilizce, fiyat bandı, kural boşluğu); Endonezya/Malezya helal masayla 4-9. ay; Japonya ve Kore ancak dil masası kurulup büyük bir marka referansla gelirse (ikinci yıl); Çin yok.
+**Hüküm:** Avustralya doğrudan (İngilizce, fiyat bandı, saat farkı gece işine uyar); Endonezya, Malezya ve Singapur helal masayla; Hindistan büyük markayla, stopaj fiyata eklenerek; Japonya ve Kore kapalı kulüp: Japonca ve Korece masa + yerel ortak ajans (kalem 6); Çin kanun gereği yalnız yerel Çinli ajans üzerinden, yani ortak ajans kanalıyla.
 
 ### 2.5 Latin Amerika — büyüyor, ama fiyat ve vergi düşük tutuyor
 
@@ -115,7 +115,7 @@ MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; ra
 
 **Brezilya'da alıcıların kendi ağzından (ikinci tur; r/empreendedorismo, 4 başlık, 84 yorum, 36 ayrı kişi):** bir estetik kliniği sahibi 5 ajans denemiş, hepsi kötü; ayda 4.000 R$ (≈ 770 $) ödediği ajans "ChatGPT'den kopyala-yapıştır blog yazısı ve birkaç video" vermiş, şimdi yalnız reklam yöneticisine 1.800 R$ ödüyor; bir oto yıkama sahibi ajansa ayda 997 R$ veriyor; bir başkası: "4 bin R$'lık sözleşmeyi nasıl sattılar, bu çok nadir." Bir sanayi müteahhidi: "yılda 100 bin R$'a yakın pazarlama harcadım, yeni işte hiç fark görmedim; şimdi yalnız bir tasarımcıya ayda 1.000-1.500 R$ veriyorum; bu pazar fahişeleşmiş." Bir B2B işletmecisi: "olumlu sonuç göstermeyene tek kuruş vermem." Bir ajans sahibi: "ayda 50 bin R$ ciro yapan müşteri 1.000 R$'a ağlıyor"; en beğenilen cevap: "en iyi yaptığım iş ajansımı satmak oldu; küçük işletmeci pazarlamayı gider görür"; bir başkası: "yabancı müşteriyle çalışmaya başlayınca bir daha Brezilya şirketi almadım, ciro kat kat arttı." Tek istisna, ayda 6.000 $ + satış komisyonu ödeyip "yatırdığım her dolara 8 dolar" alan bir e-ticaretçi. **Ders:** Brezilya'da KOBİ ayda 1.000–4.000 R$ öder; 8.000 $ (≈ 41.000 R$) yalnız büyük markanın ya da sonucu ölçüp gören e-ticaretçinin rakamıdır — tablodaki "bandın 2 katı" hükmü alıcı sözüyle doğrulandı; satılabilen tek şey ölçülmüş sonuç (kalem 10).
 
-**Hüküm:** Brezilya ve Meksika ikinci yıl, yalnız büyük markalarla ve stopaj fiyata eklenerek; Kolombiya/Arjantin yerel ortak olmadan girilmez.
+**Hüküm:** Brezilya ve Meksika Latin Amerika'nın iki büyük parası; büyük markayla, Portekizce ve İspanyolca masayla, stopaj fiyata eklenerek; Kolombiya ve Arjantin yerel ortak ajansla.
 
 ### 2.6 Afrika — en ucuz pazar, en sert kapı
 
@@ -125,25 +125,35 @@ MENA'nın toplamı, sektör kurumunun kendi rakamıyla (IAB MENA, birinci el; ra
 | Nijerya | çevrimiçi ≈ 1,1 milyar $ (satıcı) | İngilizce, Yoruba, Hausa, İgbo | kurumsal 1–3 milyon ₦ (≈ 670–2.000 $ ⚠ kur) | ulaşılmaz | **ARCON: her reklam yayından önce onaylanır; yabancı şirket yalnız kayıtlı Nijeryalı ajansla; yabancı model ve seslendirme 2022'den beri yasak.** Motorda doğan bir sunucu "Nijeryalı" değildir — bizim kadro burada yasal engel. Stopaj %10. |
 | Kenya | — | İngilizce, Svahili | — | — | reklam/pazarlama hizmetine stopaj %20. |
 
-**Hüküm:** Afrika ilk iki yıl saldırı hedefi değil; Güney Afrika ancak İngilizce konuşan bir markanın "çok ülkeli masası"nın bir ayağı olarak.
+**Hüküm:** Güney Afrika kıtada ölçülen en büyük para, İngilizce, izin yok, stopaj yok: doğrudan, çok uluslu markayla (yerel fiyat düşük, 8.000 $ yalnız onun rakamı); Nijerya kanun gereği kayıtlı Nijeryalı ortak ajans ve Nijeryalı yüz/sesle; Mısır ihracatçı Körfez markalarının masası olarak; Kenya ortak ajansla.
 
-### 2.7 Haritanın özeti — "para × girilebilirlik × üstünlük"
+### 2.7 Haritanın özeti — her kıtada parası en büyük ülkeler ve oraya nasıl girilir
 
-| Sıra | Ülke | Para | 8.000 $ sığar mı | Girilebilirlik | Üstünlüğümüz | Ne zaman |
-|---|---|---|---|---|---|---|
-| 1 | Suudi Arabistan | büyük ve en hızlı büyüyen MENA | evet | Mawthooq yurt dışından alınmaz: Suudi ortak ajans ya da müşterinin kendi hesabı; stopaj %5 | Arapça, helal, Ramazan | ilk 90 gün (ortak ajansla) |
-| 2 | İngiltere | çok büyük; sosyal +%21 | evet | izin yok, stopaj yok | İngilizce, "yasal temiz yapay zekâ" | ilk 90 gün |
-| 3 | Almanya | büyük; ajanslar avda | evet | md. 50 etiketiyle; stopaj yok | Almanca masa, kanıt | ilk 90 gün |
-| 4 | BAE | orta; doymuş | üst sınırda | Reklamveren İzni ilk 3 yıl ücretsiz, ama ticari lisans ön şart (açık soru) | ev sahası, ağ | ilk 90 gün (izin çözülünce) |
-| 5 | Avustralya | büyük; video +%20 | evet | kural boşluğu; stopaj yok | İngilizce, saat farkı = gece işi | 4-9. ay |
-| 6 | ABD | en büyük | evet, görünür kaliteyle | NY/CA etiketi; stopaj yok | referans gerek | 4-9. ay |
-| 7 | Fransa | büyük | evet | "Images virtuelles" | Fransızca masa | 4-9. ay |
-| 8 | Endonezya, Malezya | orta, ucuz | tepede | rehber düzeyi; stopaj | helal göstergesi 1. ve 4. | 4-9. ay (helal masa) |
-| 9 | Türkiye (ihracatçılar) | yerel düşük | yurt dışı reklam için devlet %50, hedef ülkede %70, hedef sektörde %75 öder (resmî genelge okundu) | yönetmelik etiketi; stopaj tartışmalı | sizin diliniz, Turquality | ilk 90 gün (kalem 8) |
-| 10 | Japonya, Kore | çok büyük | hayır (2,5 kat) | kapalı kulüp; Kore etiketi | yok | ikinci yıl, referansla |
-| 11 | Hindistan | büyük, hızlı | yalnız büyük marka | stopaj %20 | İngilizce | ikinci yıl |
-| 12 | Brezilya, Meksika | büyük | hayır (2 kat) | ağır vergi; bahis pazarı | yok | ikinci yıl |
-| 13 | Çin, Nijerya, Mısır, Afrika | — | hayır | yerel ajans şart / yabancı yüz yasak | — | yerel ortak olmadan asla |
+Sizin emriniz (2026-09-24): holding uluslararasıdır, her kıtaya aynı anda. Bu tablo "ne zaman" demez; "hangi ülke, nasıl" der. Rakamların kaynağı §2.1–2.6 ve EVIDENCE E2–E4, E10.
+
+| Kıta | Ülke | Para | 8.000 $ sığar mı | Nasıl girilir | Üstünlüğümüz |
+|---|---|---|---|---|---|
+| Körfez | Suudi Arabistan | MENA'nın en büyüğü, en hızlı büyüyen | evet | Mawthooq yurt dışından alınmaz: Suudi ortak ajans ya da müşterinin kendi hesabı; stopaj %5 | Arapça, helal, Ramazan |
+| Körfez | BAE | orta; doymuş | üst sınırda | Reklamveren İzni ilk 3 yıl ücretsiz, ön şartı ticari lisans (hukuk, sizin sözünüzle, bırakıldı) | ev sahası, ağ |
+| Körfez | Katar, Kuveyt | orta | evet | doğrudan; Katar hizmet stopajı %5 | Arapça, helal |
+| Avrupa | İngiltere | çok büyük; sosyal +%21 | evet | doğrudan; izin yok, stopaj yok | İngilizce, "yasal temiz yapay zekâ" |
+| Avrupa | Almanya | büyük; ajanslar avda | evet | doğrudan; md. 50 etiketiyle; stopaj yok | Almanca masa, hesap raporu (kalem 10) |
+| Avrupa | Fransa | büyük | evet | doğrudan; "Images virtuelles" yazısıyla; stopaj yok | Fransızca masa |
+| Avrupa | İspanya, İtalya, Hollanda, İsviçre | orta-büyük | bandın tepesi | doğrudan; büyük markayla | dil masaları |
+| Avrupa | Türkiye | yerel düşük | yerel pazar için hayır | ihracatçı markalar üzerinden (kalem 8): yurt dışı reklam için devlet %50–75 öder (resmî genelge okundu) | sizin diliniz, Turquality |
+| Kuzey Amerika | ABD | dünyanın en büyüğü | evet, görünür kaliteyle | doğrudan; NY/CA etiketi; stopaj yok; kapıyı referans açar | İngilizce + İspanyolca |
+| Kuzey Amerika | Kanada | büyük; video +%26 | evet | doğrudan; stopaj yok | İngilizce + Fransızca (Quebec) |
+| Asya-Pasifik | Avustralya | büyük; sosyal video +%35 | evet | doğrudan; kural boşluğu; stopaj yok | saat farkı = gece işi |
+| Asya-Pasifik | Japonya | çok büyük; video +%22 | hayır (bandın 2,5 katı): yalnız büyük marka | kapalı kulüp: Japonca masa + yerel ortak ajans (kalem 6) | gece motoru, kanıt |
+| Asya-Pasifik | Güney Kore | büyük | bandın tepesi | holding içi ajanslar: Korece masa + ortak ajans; etiket kanunu | "yasal temiz" |
+| Asya-Pasifik | Hindistan | büyük, hızlı | yalnız büyük marka | doğrudan, İngilizce; stopaj %20 fiyata eklenir | İngilizce + Hintçe |
+| Asya-Pasifik | Endonezya, Malezya, Singapur | orta | Singapur evet; diğerleri tepede | doğrudan; helal masa (kalem 5) | helal göstergesinde 1. ve 4. |
+| Asya-Pasifik | Çin | çok büyük (⚠ satıcı) | — | kanun gereği yalnız yerel Çinli ajans üzerinden: ortak ajans kanalı (kalem 6) | — |
+| Latin Amerika | Brezilya | büyük; en hızlı büyüyen büyük pazar | hayır (2 kat): yalnız büyük marka | doğrudan, Portekizce masa; ağır stopaj fiyata eklenir; bahis pazarı bize kapalı | ölçülmüş sonuç (kalem 10) |
+| Latin Amerika | Meksika | büyük | bandın üstü | doğrudan, İspanyolca masa; stopaj ⚠ | İspanyolca masa ABD ile ortak |
+| Afrika | Güney Afrika | kıtada ölçülen en büyük (≈ 2,4 milyar $, satıcı); CPM dünya medyanının %84 altı | hayır: yalnız çok uluslu marka | doğrudan; izin yok, stopaj yok | İngilizce |
+| Afrika | Nijerya | orta | hayır | kanun gereği kayıtlı Nijeryalı ortak ajans + Nijeryalı yüz ve ses | — |
+| Afrika | Mısır | orta (iki satıcı 2 kat farklı ⚠) | hayır | ihracatçı Körfez markalarının masası; stopaj %20 | Arapça |
 
 ---
 
@@ -182,7 +192,7 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 - **Risk:** stopajlı ülkelerde (Hindistan, Brezilya) masa fiyatı vergiyle erir; ülke sayısı arttıkça ekran kartı saati artar (tahtadaki sınır).
 
 ### 3.5 Helal masa ve Ramazan masası (**yeni**)
-- **Ne:** İslami bankalar ve tekafül (İslami sigorta), helal gıda, tesettür modası, umre/hac seyahati, helal kozmetik markaları için sektör masası; Ramazan'dan 60 gün önce açılan mevsimlik masa. Ipsos × ArabyAds'in Ramazan 2026 tüketici araştırması (Ocak 2026, BAE + Suudi, birinci el; ikinci turda okundu): **BAE'de alışveriş yapanların %70'i, Suudi'de %65'i "Ramazan'da bir içerik üreticisinin tavsiyesi beni satın almaya ikna edebilir" diyor**; tavsiye yalnız somut fayda (gerçek kullanım, açık indirim) gösterirse dönüşüyor; en çok kişisel bakım, bayramlık, hediye, mutfak eşyası. Meta CPM 14-18 $ satıcı beyanı; Ramazan reklam harcamasının birinci el rakamı ikinci turda da bulunamadı.
+- **Ne:** tekafül (İslami sigorta; bankalar sizin sözünüzle müşteri değil), helal gıda, tesettür modası, umre/hac seyahati, helal kozmetik markaları için sektör masası; Ramazan'dan 60 gün önce açılan mevsimlik masa. Ipsos × ArabyAds'in Ramazan 2026 tüketici araştırması (Ocak 2026, BAE + Suudi, birinci el; ikinci turda okundu): **BAE'de alışveriş yapanların %70'i, Suudi'de %65'i "Ramazan'da bir içerik üreticisinin tavsiyesi beni satın almaya ikna edebilir" diyor**; tavsiye yalnız somut fayda (gerçek kullanım, açık indirim) gösterirse dönüşüyor; en çok kişisel bakım, bayramlık, hediye, mutfak eşyası. Meta CPM 14-18 $ satıcı beyanı; Ramazan reklam harcamasının birinci el rakamı ikinci turda da bulunamadı.
 - **Neden biz:** kimse "reklamınız hiçbir zaman haram içeriğin yanında durmaz, kadromuz erkekler ve teyzelerdir, senaryo İslami sınırı bilir" diyemiyor. Halk buna tepki veriyor: Dubai'de kumar müşterisini reddeden yazarın hikâyesi 313 yorum aldı.
 - **Pazar:** Müslüman tüketici harcaması 2,6 trilyon $ (2024) → 3,56 trilyon $ (2029); İslami finans varlıkları 5,99 trilyon $; helal gıda 1,53 trilyon $; tesettür 347 milyar $ (DinarStandard). Ülkeler: Malezya, BAE, Suudi, Endonezya, Bahreyn; ayrıca Türkiye, Pakistan, Mısır, İngiltere'nin Müslüman kesimi.
 - **Fiyat şekli:** Körfez ve Malezya'da kalem 1'in fiyatı; Endonezya/Pakistan'da 3.000–5.000 $; Ramazan masası proje olarak 10.000–25.000 $ (Suudi kampanya kurulumu SAR 8–50 bin bandına göre).
@@ -241,18 +251,19 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 
 ---
 
-## 4. SALDIRI SIRASI, İLK 90 GÜN, SENARYOLAR
+## 4. SALDIRI — HER KITAYA AYNI ANDA, İLK 90 GÜN, SENARYOLAR
 
-### 4.1 Neden bu sıra
-- **Para × kazanılabilirlik × üstünlük** üçünün de yüksek olduğu yerler: Suudi Arabistan (Arapça + helal + fiyat bandı + uzaktan alınan izin), İngiltere ve Almanya (fiyat bandı + izin yok + ajanslar avda + etiket kuralı bizim lehimize), Avustralya (aynı, saat farkı gece işine uyuyor). BAE ev sahası ama doymuş; Reklamveren İzni'nin ön şartı olan lisans sizde açık soru.
-- ABD en büyük para ama en kalabalık; referanssız girilmez. Japonya/Kore para var, kapı yok. Çin/Nijerya kapı kapalı.
-- Türkiye yerel fiyatla değil, ihracatçı üzerinden — çünkü sizin dilinizde en hızlı satış oradadır ve devlet yarısını öder.
+### 4.1 Neden her kıta aynı anda — ve kıtada hangi ülke
+- **Sizin emriniz (2026-09-24):** holding uluslararasıdır; her kıtada parası en yüksek ülkelere saldırılır; belirli üç ülkeye sıkışmak yok. Bu çalışmanın önceki "önce üç ülke, sonra diğerleri" sırası bu emirle silindi.
+- **Neden bu bizim lehimize:** gece çalışan motor 100 dilde dinler ve bir gecede her kıtanın masasına bakar; şube açmadan on ülkede sektör okuyabilen tek şey odur. Sıra beklemek üstünlüğü boşa harcar; bir ülkeyi bekletmenin bize maliyeti sıfıra yakın (motorun dış maliyeti 0 $ ölçüldü), kaybettirdiği ise o ülkenin parası.
+- **Kıta başına para × girilebilirlik × üstünlük:** Körfez'de Suudi Arabistan (Arapça + helal + fiyat bandı; ortak ajansla), BAE, Katar, Kuveyt; Avrupa'da İngiltere, Almanya, Fransa (fiyat bandı, izin yok, etiket kuralı lehimize); Kuzey Amerika'da ABD ve Kanada (en büyük para; kapıyı referans açar, ilk kanıt ilk inceleme); Asya-Pasifik'te Avustralya (doğrudan), Hindistan, Endonezya/Malezya/Singapur (helal masa), Japonya/Kore/Çin (yerel ortak ajansla); Latin Amerika'da Brezilya ve Meksika (büyük marka, stopaj fiyata); Afrika'da Güney Afrika (doğrudan), Nijerya (Nijeryalı ortak + yerel yüz, kanun), Mısır (ihracatçı Körfez markaları). Türkiye ihracatçı markalar üzerinden (devlet yarısını öder).
+- **Nerede ne satılır:** 8.000 $/ay'ın bandın içinde olduğu ülkelerde (ABD, İngiltere, Almanya, Fransa, Avustralya, Kanada, Suudi Arabistan, Singapur, Katar, Kuveyt) doğrudan kalem 1; bandın üstünde olduğu ülkelerde (Japonya, Kore, Hindistan, Endonezya, Malezya, Brezilya, Meksika, İspanya, İtalya) büyük markaya kalem 1, yerel markaya kalem 2 ve 3 (inceleme, yayın öncesi puan) ve çok ülkeli markanın ek masası (kalem 4, 3.000 $); ulaşılmaz ülkelerde (Türkiye, Güney Afrika, Nijerya, Mısır) yalnız ihracatçı ya da çok uluslu markanın masası.
 
 ### 4.2 İlk 90 gün (plan onayınızdan sonra; hiçbir adım onaysız başlamaz)
-1. **Gün 1-30:** SIGNAL Faz 0–4, ilk masa = kazanmak istediğimiz ilk markanın sektörü (öneri: Riyad'da bir perakende/gıda markası; stüdyonun kendi alanı ikinci masa). Üç dil kulağı ölçümü: Körfez Arapçası, İngilizce, Almanca (Whisper + Claude düzeltmesi). Stüdyo sesi 11 dilde WER ölçümü.
-2. **Gün 15-45:** "yasal temiz yapay zekâ reklamı" paketi: New York, Kaliforniya, AB md. 50, Kore, Türkiye etiketleri her klibin standart parçası (özellik olarak satılır). Suudi Arabistan için Mawthooq'lu ortak ajans adayları listesi (izin bize değil, Suudi içinde ücretli içerik yayınlayana veriliyor; yurt dışından alınmıyor). BAE Reklamveren İzni için lisans sorusu (§6).
-3. **Gün 30-60:** 10 ücretli sektör incelemesi teklifi: 4 Suudi, 3 İngiltere, 3 Almanya (aday sektörler §4.4); 3 Turquality'li Türk ihracatçısına Almanya/Körfez masası teklifi. Hedef: 4 satılan inceleme.
-4. **Gün 45-75:** ilk ortak ajans pilotu (Almanya ya da İngiltere'de bir ajans, kalem 6).
+1. **Gün 1-30:** SIGNAL Faz 0–4; ilk masalar her kıtada birer, her biri kazanmak istediğimiz bir markanın sektörü (stüdyonun kendi alanı ayrı bir masa). Dil kulağı (yazıya dökme) ölçümü her kıtanın ana dillerinde: Arapça (Körfez lehçesi), İngilizce, Almanca, Fransızca, İspanyolca, Portekizce, Japonca, Korece, Hintçe, Bahasa/Malayca, Türkçe (Whisper + Claude düzeltmesi). Stüdyo sesi 11 dilde WER ölçümü (Türkçe satıcının listesinde yok, ölçülecek; EVIDENCE E8).
+2. **Gün 15-45:** "yasal temiz yapay zekâ reklamı" paketi: New York, Kaliforniya, AB md. 50, Fransa ("Images virtuelles"), Kore, Türkiye, Brezilya (CONAR), Çin etiketleri her klibin standart parçası (özellik olarak satılır). Yerel ortak şart olan ülkeler için ortak ajans adayları listesi (kalem 6): Suudi Arabistan (Mawthooq'lu), Japonya, Kore, Çin, Nijerya.
+3. **Gün 30-60:** her kıtada ücretli sektör incelemesi teklifi, 14 teklif: Körfez 3 (Suudi 2, BAE 1), Avrupa 3 (İngiltere, Almanya, Fransa), Kuzey Amerika 2 (ABD, Kanada), Asya-Pasifik 3 (Avustralya, Hindistan, Endonezya/Malezya), Latin Amerika 2 (Brezilya, Meksika), Afrika 1 (Güney Afrika); aday sektörler §4.4; 3 Turquality'li Türk ihracatçısına Almanya/Körfez masası teklifi. Hedef: 5 satılan inceleme.
+4. **Gün 45-75:** ilk ortak ajans pilotları: biri Avrupa'da bir ajansla (kalem 6, gece analisti), biri yerel ortak şart olan bir ülkede (Suudi Arabistan ya da Japonya).
 5. **Gün 60-90:** incelemelerden 2 aylık anlaşma; her anlaşmada kalem 10 (hesap raporu) ilk günden. Ramazan 2027 masası için Kasım'da satış listesi.
 6. **Ekran** (Faz 7) bu 90 günde çizilmez; B32 onayınızı bekler. Para ekransız gelir.
 
@@ -260,9 +271,11 @@ Her kalem: **kim öder · ne için · bölgeye göre fiyat şekli · ne eksik ·
 
 | Senaryo | Kalemler | Aylık | Yıllık koşu hızı |
 |---|---|---|---|
-| **A — Dar başlangıç, 12. ay** | 6 marka × 8.000 $ = 48.000 $; yıl içinde 12 inceleme × 3.000 $ = 36.000 $ (tek seferlik) | 48.000 $ | ≈ 576.000 $ (+36.000 $) |
-| **B — Üç kıta, 24. ay** | 20 marka × 8.000 = 160.000 $; 6 çok ülkeli marka × 4 ek masa × 3.000 = 72.000 $; 10 ortak ajans masası × 2.500 = 25.000 $ | 257.000 $ | ≈ 3,08 milyon $ |
-| **C — Beş kıta, 36. ay** | 40 marka × 8.000 = 320.000 $; 15 çok ülkeli × 5 masa × 3.000 = 225.000 $; 30 ortak masa × 2.500 = 75.000 $; 40 yayın öncesi koltuk × 1.500 = 60.000 $; Ramazan/mevsimlik projeler ort. 20.000 $ | 700.000 $ | ≈ 8,4 milyon $ |
+| **A — 12. ay** | 6 marka × 8.000 $ = 48.000 $; yıl içinde 12 inceleme × 3.000 $ = 36.000 $ (tek seferlik) | 48.000 $ | ≈ 576.000 $ (+36.000 $) |
+| **B — 24. ay** | 20 marka × 8.000 = 160.000 $; 6 çok ülkeli marka × 4 ek masa × 3.000 = 72.000 $; 10 ortak ajans masası × 2.500 = 25.000 $ | 257.000 $ | ≈ 3,08 milyon $ |
+| **C — 36. ay** | 40 marka × 8.000 = 320.000 $; 15 çok ülkeli × 5 masa × 3.000 = 225.000 $; 30 ortak masa × 2.500 = 75.000 $; 40 yayın öncesi koltuk × 1.500 = 60.000 $; Ramazan/mevsimlik projeler ort. 20.000 $ | 700.000 $ | ≈ 8,4 milyon $ |
+
+Markalar ilk günden her kıtaya dağılır; senaryo sayı sayar, kıta saymaz.
 
 **Hassasiyet (üçüncü tur; aynı hesap, az ve çok müşteriyle):**
 
@@ -280,15 +293,17 @@ Aşağı senaryoda bile nakit kaybı yok: motorun dış maliyeti sıfıra yakın
 
 ---
 
-### 4.4 İlk 10 inceleme için aday sektörler — kapısı çalınacak markalar nereden çıkar (üçüncü tur)
+### 4.4 Aday sektörler — kapısı çalınacak markalar nereden çıkar (üçüncü tur: üç ülke okundu; diğer kıtalar ⚠ henüz okunmadı)
 
 Üç ülkede "son dört ayda reklamı en çok fark edilen markalar" listelerini okudum (YouGov'un aylık paneli: "son iki haftada hangi markanın reklamını gördünüz?", Suudi ve İngiltere için Mayıs–Ağustos 2026; Almanya için Nielsen'in Ocak–Ağustos 2026 brüt harcama sıralaması; EVIDENCE E11.3). Bu listelerdeki markalar çoğunlukla dünya devleri ve büyük ajans ağlarıyla çalışıyor; **90 günde onlara satmayız.** Listenin işi başka: kısa videoda gürültünün hangi sektörde olduğunu gösteriyor. Ücretli sektör incelemesi, o sektörde devin gölgesinde kalan **ikinci sıradaki markaya** satılır: "sektörünüzün en gürültülü üç hesabı bu ay neyi tutturdu, sizin son 30 videonuz bunun neresinde." Hangi ikinci sıra markalar olduğunu ben uydurmam; motorun Faz 0'daki hesap okuması (en az 5 video, 3 hesap kuralı) adlarıyla çıkarır.
 
 | Ülke | Gürültünün olduğu sektörler (listelerden sayıldı) | Listedeki örnek gürültücüler | Süzgeç notu |
 |---|---|---|---|
-| Suudi Arabistan (4 inceleme) | gıda, atıştırmalık, süt, şekerleme (40 girişin 11'i) · kişisel bakım ve ev (8) · eğlence, AVM, park, sinema, dizi platformu (6) · hızlı servis restoran (3) · gayrimenkul | Almarai, Ülker, Tropicana, Lay's, Cheetos, Kinder · Dove, NIVEA, Lifebuoy, Tide, Clorox · Al Hokair, Al Salam Mall, Al Rawda Park, Tasali · Pizza Hut, Subway, Movenpick · Emaar | Al Rajhi İslami banka, olur; Saudi Investment Bank faizli, ⚠ sizin sözünüz; sinema ve dizi platformu içerik itibarıyla ⚠ |
-| İngiltere (3 inceleme) | perakende ve ev (Argos, Currys, Oak Furnitureland, Pets at Home, Morrisons, Tesco Whoosh) · gıda ve şekerleme (Haribo, Walkers, Jaffa Cakes, Quorn, Ben & Jerry's) · ağız ve kişisel bakım (Sensodyne, Listerine, Oral-B, Lynx) · telekom (BT), otomotiv (Škoda), seyahat (trivago) | aynı | 40 girişin 8'i dışarıda: 5 alkol markası, 3 faizli finans (Santander, Nationwide, Compare the Market) |
-| Almanya (3 inceleme) | perakende zincirleri (Rewe, Kaufland, Lidl, Aldi: ilk 10'un 4'ü) · hızlı tüketim ve kişisel bakım (P&G, Henkel, Ferrero) · telekom (Telekom) · TikTok Shop'un en güçlü kategorileri: güzellik, sağlık, ev, cilt bakımı | aynı | süpermarket zincirleri alkol ve domuz da satıyor; reklamın kendisi helal ürünse müşteri olur mu, ⚠ sizin sözünüz |
+| Suudi Arabistan | gıda, atıştırmalık, süt, şekerleme (40 girişin 11'i) · kişisel bakım ve ev (8) · eğlence, AVM, park, sinema, dizi platformu (6) · hızlı servis restoran (3) · gayrimenkul | Almarai, Ülker, Tropicana, Lay's, Cheetos, Kinder · Dove, NIVEA, Lifebuoy, Tide, Clorox · Al Hokair, Al Salam Mall, Al Rawda Park, Tasali · Pizza Hut, Subway, Movenpick · Emaar | Al Rajhi ve Saudi Investment Bank dışarıda (sizin sözünüz: banka reklamı yapılmaz; 40 girişin 2'si); sinema ve dizi platformu içerik itibarıyla ⚠ |
+| İngiltere | perakende ve ev (Argos, Currys, Oak Furnitureland, Pets at Home, Morrisons, Tesco Whoosh) · gıda ve şekerleme (Haribo, Walkers, Jaffa Cakes, Quorn, Ben & Jerry's) · ağız ve kişisel bakım (Sensodyne, Listerine, Oral-B, Lynx) · telekom (BT), otomotiv (Škoda), seyahat (trivago) | aynı | 40 girişin 8'i dışarıda: 5 alkol markası, 3 faizli finans (Santander, Nationwide, Compare the Market) |
+| Almanya | perakende zincirleri (Rewe, Kaufland, Lidl, Aldi: ilk 10'un 4'ü) · hızlı tüketim ve kişisel bakım (P&G, Henkel, Ferrero) · telekom (Telekom) · TikTok Shop'un en güçlü kategorileri: güzellik, sağlık, ev, cilt bakımı | aynı | süpermarket zincirleri müşteridir, yalnız zincirin kendi reklamı yapılır, içindeki alkol ve domuz asla (sizin sözünüz: "Aldi bir market ama içinde alkol var, sadece Aldi'nin reklamı yapılır"); 10'un 0'ı dışarıda |
+
+**Diğer kıtalar:** ABD, Kanada, Fransa, Avustralya, Japonya, Kore, Hindistan, Endonezya, Brezilya, Meksika ve Güney Afrika'nın gürültücü listeleri ⚠ henüz okunmadı; sıradaki ölçüm.
 
 **Türkiye'nin ihracatçıları (kalem 8) bu listeye ek:** Ülker'in Suudi listesinde Haziran'da 5. sırada olması, Türk gıda markasının Körfez'de zaten gürültü yaptığını gösteriyor; Almanya ve Körfez masası ilk önce Ülker'in gölgesindeki Türk gıda ihracatçılarına teklif edilir.
 
@@ -302,12 +317,12 @@ Aşağı senaryoda bile nakit kaybı yok: motorun dış maliyeti sıfıra yakın
 3. **Kapalı ülkelere erken girmek.** Japonya/Kore (kulüp), Çin (yerel ajans), Nijerya (yabancı yüz yasağı = bizim kadro).
 4. **Stopajı görmeden fiyat vermek.** Brezilya'da faturanın yaklaşık üçte biri gidebilir.
 5. **Yasal etiketi unutmak.** New York'ta reklam başına 1.000/5.000 $, AB'de cironun %3'üne kadar, Türkiye'de 31,8 milyon ₺'ye kadar ceza. Etiket bir ceza değil kapı: etiketli içerik tam erişim ve gelir alıyor (tahta).
-6. **Kumar/bahis, alkol, tütün.** Mutlak; Brezilya'nın en hızlı büyüyen reklamvereni bize kapalı; İngiltere'de kumar %2,7, Avustralya'da finans + sigorta ikinci ve yedinci sırada — süzgeç en çok ABD/İngiltere/Avustralya'da para kaybettirir. Sizin hükmünüz (2026-09-24): faizli banka ve sigorta ile kripto da müşteri değil ("helal çerçevede", "kripto falan asla"); bu bilerek verilen bir karardır, tuzak değil.
+6. **Kumar/bahis, alkol, tütün.** Mutlak; Brezilya'nın en hızlı büyüyen reklamvereni bize kapalı; İngiltere'de kumar %2,7, Avustralya'da finans + sigorta ikinci ve yedinci sırada — bu dilimler ABD, İngiltere ve Avustralya'da pastanın büyüğüdür, ama hiç bizim değildi. Holding İslam şeriatına göre işler; haram ürün satılmaz, gelir oradan gelmez (sizin sözünüz, 2026-09-24). Sizin hükmünüz aynı gün: alkol ve banka reklamı yapılmaz, hiçbir banka ("alkolün reklamı yapılmaz, banka reklamı da yapılmaz"); faizli sigorta ve kripto müşteri değil ("helal çerçevede", "kripto falan asla"); alkol da satan süpermarket zinciri müşteridir, yalnız zincirin kendi reklamı yapılır ("sadece Aldi'nin reklamı yapılır"). Tuzak, sınırın kendisi değil, sınırı "kayıp" diye yazmaktır; bu paragrafın eski hâli öyle yazmıştı, düzeltildi.
 7. **Beyaz etiket ve kurs/eğitim satmak.** İlkinde parayı başkası alır, ikincisi zamanı paraya çevirir, birikmez.
 8. **Makineyi önce satmak.** Kiralama, faturalama, destek planda yok; araç pazarı 29-559 $/ay'a sıkışmış ve iki araç kapanmış.
 
 ### 5.2 Kendi ilk seçimlerime karşı en güçlü argümanlar
-- **"Suudi Arabistan'ı birinci koydun; ama oradaki alıcının sesini ölçemedin."** Doğru: iki turda da (r/saudiarabia'da 24 başlık, Arapça aramada yalnız satıcı sayfaları) ajans fiyatı konuşan gerçek Suudi alıcı bulamadım; Dubai'de buldum (125 + 313 yorum). Suudi fiyat bantları ajansların kendi sayfalarından. Üstüne ikinci tur şunu buldu: Suudi izni yurt dışından alınmıyor; ilk pazara bir Suudi ortak ajansla ya da müşterinin kendi hesabıyla giriyoruz. Bu Suudi'yi birinci sıradan düşürmez, ama "uzaktan, tek başımıza" hayalini siler. Karşı-argüman güçlüdür; cevabım: ilk 10 ücretli incelemenin 4'ü Suudi'de ve inceleme satışı ölçümün kendisidir; satılmazsa sıra İngiltere/Almanya'ya kayar.
+- **"Körfez'i evimiz saydın; ama Suudi alıcının sesini ölçemedin."** Doğru: iki turda da (r/saudiarabia'da 24 başlık, Arapça aramada yalnız satıcı sayfaları) ajans fiyatı konuşan gerçek Suudi alıcı bulamadım; Dubai'de buldum (125 + 313 yorum). Suudi fiyat bantları ajansların kendi sayfalarından. Üstüne ikinci tur şunu buldu: Suudi izni yurt dışından alınmıyor; oraya Suudi ortak ajansla ya da müşterinin kendi hesabıyla giriyoruz. Bu Suudi'yi haritadan düşürmez, ama "uzaktan, tek başımıza" hayalini siler. Cevabım: Suudi'ye satılan ilk ücretli incelemeler ölçümün kendisidir; satılmazsa Körfez'in ağırlığı BAE, Katar ve Kuveyt'e kayar, öteki kıtalar zaten aynı anda yürüyor.
 - **"8.000 $'ın bantın içinde olması onu satılabilir yapmaz; alıcılar 1.500-10.000 $ bildirdi ve 3.500 $'lık teklife 'soygun' dediler (295 yorum, 130 kişi)."** Doğru; bant, ödeyenin değil ajansın sözü. Bu yüzden ilk para 2.500-5.000 $'lık incelemedir ve anlaşma ancak kanıt görülünce satılır.
 - **"Yapay zekâ reklamına halkın tepkisi seni de vurur; 'yasal temiz' etiketi bir dezavantajın reklamıdır."** IAB'nin verisi gençlerin %45'inin olumlu, %39'unun olumsuz olduğunu söylüyor; Japonya'da tepki en sert. Cevap: stüdyonun kalite yasası "çekilmiş gibi durmalı"; etiket olduğu hâlde beğenilen reklam tek kanıt olur, o kanıt kalem 10'dan çıkar. Bu kanıt bugün elde yok — en zayıf noktamız.
 - **"Ortak ajans kanalı, izlediğimiz rakipleri güçlendirir."** Evet; bu yüzden ortak yalnız bizim olmadığımız ülkede ya da bizim girmeyeceğimiz sektörde seçilir ve sözleşmede "yöntem bizde kalır" maddesi olur.
@@ -317,7 +332,7 @@ Aşağı senaryoda bile nakit kaybı yok: motorun dış maliyeti sıfıra yakın
 
 ## 6. SİZDEN CEVAP BEKLEYENLER (düz yazı; tıklama kutusu size ulaşmıyor)
 
-**Cevaplananlar (2026-09-24, sizin sözünüzle):** faizli banka ve sigorta müşteri değil, İslami banka ve tekafül olur ("helal çerçevede"); kripto şirketleri asla ("kripto falan asla"); ilk üç ülke Suudi Arabistan, İngiltere, Almanya (21:14, "ilk üç ülke Suudi, İngiltere, Almanya olsun") — harita ve ilk 90 gün bu sırayla duruyor, değişmedi. **Düşen:** BAE lisans sorusu ve bütün hukuk/izin/vergi ölçümleri, "legalliği şuan için boşver" sözünüzle. **Hâlâ açık:** birincisi, planın sırası: bu çalışma baş mühendisin "önce ücretli inceleme, ekran sonra" önerisini güçlendiriyor ve ilk masanın stüdyonun kendi alanı değil, kazanmak istediğimiz ilk markanın sektörü olmasını öneriyor; siz "tamam" deyince plan bu sırayla yazılır, o zamana kadar çalışma bu sırayı varsayıyor. İkincisi, iki şüphe yalnız sizin sözünüzle çözülür: alkol ve domuz da satan bir süpermarket zinciri, reklamın kendisi helal ürünse müşteri olur mu; Suudi Investment Bank gibi faizli bankanın İslami penceresi müşteri sayılır mı.
+**Cevaplananlar (2026-09-24, sizin sözünüzle):** holding uluslararasıdır, her kıtaya aynı anda, belirli ülkeye sıkışmak yok ("ben size uluslararası diyorum, bana spesifik şeyle gelmeyin"); Holding İslam şeriatına göre işler; haram ürün satılmaz, gelir oradan gelmez (sizin sözünüz, 2026-09-24) — "haram ürünler satılmaz, gelir kesinlikle buralardan gelemez"; alkol reklamı yapılmaz; banka reklamı yapılmaz, hiçbir banka ("banka reklamı da yapılmaz"); alkol da satan süpermarket zinciri müşteridir, yalnız zincirin kendi reklamı yapılır ("Aldi bir market ama içinde alkol var, sadece Aldi'nin reklamı yapılır"); faizli sigorta müşteri değil, tekafül olur ("helal çerçevede"); kripto asla ("kripto falan asla"). **Düşen:** hukuk, izin ve vergi ölçümleri ("legalliği şu an için boşver") ve "ilk üç ülke" sorusu (dünya emrinizle silindi; o soruyu ve helal şüphelerini size sormak bu çalışmanın hatasıydı: sınır anayasadır, soru değil). **Hâlâ açık, tek soru:** planın sırası. Bu çalışma "önce ücretli inceleme, ekran sonra; ilk masalar kazanmak istenen markaların sektörleri" sırasını öneriyor; siz "tamam" deyince baş mühendis planı bu sırayla yazar, o zamana kadar çalışma bu sırayı varsayıyor.
 
 ---
 
@@ -329,4 +344,5 @@ Aşağı senaryoda bile nakit kaybı yok: motorun dış maliyeti sıfıra yakın
 - **İnsanlar:** YouTube'da 10 videodan 1.548 yorum, 1.332 ayrı kişi (İngilizce, Japonca, Arapça, Türkçe); Reddit'te 12 başlık, 1.633 yorum, ≈ 590 ayrı kişi (ajans sahipleri, marka sahipleri, Dubai, Türkiye); r10.net'te 12 kullanıcı; Trustpilot'ta iki yapay zekâ video aracının 1.007 yorumu; IAB'nin 505 tüketici + 104 yönetici araştırması.
 - **İkinci tur (devralan oturum, 2026-09-24 akşam):** Mawthooq, BAE izni ve Turquality resmî metinlerden yeniden ölçüldü (üç düzeltme); IAB MENA'nın kendi MENA toplamı ve Ipsos'un Ramazan 2026 tüketici araştırması okundu; 9 ülkenin ajans fiyat bandı tamamlandı (Kanada, İspanya, İtalya, Hollanda, İsviçre, Singapur, Malezya, Katar, Kuveyt); Almanya'da 3, Brezilya'da 4 alıcı başlığı açıldı (246 yorum, 111 ayrı kişi). Hepsi EVIDENCE E10'da.
 - **Üçüncü tur (aynı oturum, 20:15–20:45; hukuk yok, sizin sözünüzle):** iki yeni kalemin fiyat çapası ölçüldü (panel testi 3–15 bin $/reklam; yerelleştirme 3–10 bin $/dil); üç ülkede son dört ayın en çok fark edilen 40'ar reklamvereni okundu (YouGov, Nielsen) ve helal süzgeci sayıldı; senaryolara aşağı/yukarı hassasiyet eklendi; sizin iki hükmünüz (kripto asla, helal çerçevede) işlendi. EVIDENCE E11.
+- **Dördüncü tur (üçüncü oturum, 21:05'ten sonra; yeni ölçüm yok):** sizin sözünüzle "önce üç ülke" sırası silindi; çalışma her kıtaya aynı anda saldıran uluslararası biçime çevrildi (§0, §2 hükümleri, §2.7, §4.1, §4.2, §4.3 etiketleri); şeriat sınırı "kayıp" değil "bizim olmayan pazar" diye yeniden yazıldı (§0, §2.2, §2.3, §5.1); üç helal hükmünüz (banka yok, alkol yok, süpermarketin yalnız kendi reklamı) her yere işlendi. EVIDENCE E12.
 - **Ölçülemeyenler** EVIDENCE E9'da tek tek yazılı; en önemlileri: Ramazan reklam harcamasının birinci el rakamı, stüdyo sesinin Türkçe ve Körfez Arapçasında kalitesi, faturayı hangi ülkeden keseceğimiz (her vergi anlaşması buna bağlı), BAE izninin yabancı üreticiyi kapsayıp kapsamadığı.

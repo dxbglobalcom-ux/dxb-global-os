@@ -18,8 +18,14 @@ you here, in Turkish. This chain of sessions does research and thinking only. **
   at 50 % used context, always, to another Fable 5.1 xhigh session.** Measure with `/home/dxb/.local/bin/dxb-ctx --pct`
   (falls back: `operator shot` and read the bar). At 50 %: rewrite this HANDOVER.md, update WORKLOG.md, commit, and open
   the successor YOURSELF (§6) — never ask him to. Open every report with `CONTEXT: N%`.
-- 21:14 (third session): *"tamam, ilk üç ülke Suudi, İngiltere, Almanya olsun"* — the first three countries are decided
-  (E12.1). His opening "tamam" was asked back as to the plan order; do not treat the plan order as approved until he says so.
+- After 21:14 (third session): *"ben size uluslararası diorm bana specific şeyle gelemyin"* · *"3 ülke emri nedir yaaa"* —
+  **international, every continent at once; never narrow the study to specific countries or ask him to pick some; there was
+  no three-country order from him** (E12.1). His earlier "ilk üç ülke" sentence is overridden and deleted (LAW A).
+  Same evening: *"alkolun reklamı yapılmaz banka reklamı da yapılmaz … sadece aldinin reklamı yaplır"* and *"bu holding
+  islam şeriat kanunları göre işleyen bir holding haram ürünler satılmaz gelir kesinlikle buralardan gelemez"* — no bank
+  ads (any bank), no alcohol ads, a supermarket chain is a client for the chain's own ad only; haram markets are never
+  "lost revenue", they were never ours. **Never put a halal doubt to him as a question**; the boundary is constitutional.
+  The plan order is NOT approved until he says so.
 - Standing: only read; no sign-ups, no outreach, no money; Islamic boundaries constitutional; nothing enters the board,
   the plan or the specs; commit only this folder's files by path (never `git add -A`; other sessions have uncommitted
   work in the tree); questions to him in plain prose (clickable boxes do not reach him).
@@ -38,8 +44,8 @@ you here, in Turkish. This chain of sessions does research and thinking only. **
   plus the commit of this handover.
 - **Waits on him (STUDY §6):** (1) the plan order — "önce ücretli inceleme, ilk masa ilk hedef markanın sektörü" — on his
   "tamam" the CHIEF ENGINEER (an Opus 5.5 session) writes it into PLAN.md and board row B43; this chain does not touch
-  the plan or the board; (2) DECIDED 21:14: the first three countries are Saudi Arabia (via a Mawthooq-registered partner
-  agency), UK, Germany — E12.1; (3) two halal doubts only he can rule: a supermarket chain that also sells alcohol/pork as a client when
+  the plan or the board. CLOSED by his word (E12.1): the first-three-countries question (deleted: the study is international,
+  every continent at once) and the two halal doubts (banks: none; supermarket chains: yes, for the chain's own ad only). Was: a supermarket chain that also sells alcohol/pork as a client when
   the ad itself is halal; an interest-based bank's Islamic window as a client.
 - **Asked, not answered:** whether the "helal çerçevede" ruling for advertising clients should be written permanently into
   `00-CEO-DIRECTIVE-REVENUE-FIRST.md` (asked in one line 20:20; write nothing unless he says so).

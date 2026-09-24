@@ -20,8 +20,13 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
 - 20:23: *"session şişiyor bir sonraki sessionada söyle %50 de devredin herzaman başka bir fable' 5.1'e şuan session %60
   devre hazırlan açık segme var zaten"* — hand over at 50 % always, to another Fable 5.1 xhigh; this session (62 %) hands
   over now. HANDOVER.md rewritten for the successor (LAW A: the previous session's note is replaced; git keeps it).
-- 21:14, to the third session: *"tamam, ilk üç ülke Suudi, İngiltere, Almanya olsun"* — first three countries decided
-  (E12.1). Applied in STUDY §0 and §6; the "tamam" asked back as to the plan order.
+- 21:14, to the third session: *"tamam, ilk üç ülke Suudi, İngiltere, Almanya olsun"* — applied, then OVERRIDDEN by his next
+  messages: *"ben size uluslararası diorm bana specific şeyle gelemyin"* · *"3 ülke emri nedir yaaa anlamaıdm"* — international,
+  every continent at once; there was no three-country order from him, only the study's own question (E12.1; LAW A: the
+  sequence deleted from STUDY). Same evening: *"alkolun reklamı yapılmaz banka reklamı da yapılmaz aldi bir market ama
+  içinde alkol var sadece aldinin reklamı yaplır"* and *"bu holding islam şeriat kanunları göre işleyen bir holding haram
+  ürünler satılmaz gelir kesinlikle buralardan gelemez"* — no bank ads (any bank), no alcohol ads, supermarket chains are
+  clients for the chain's own ad only; haram markets were never ours. Applied throughout STUDY; E11.1 corrected.
 
 ## Read (done)
 - CONVERSATION.md · PLAN.md · SOURCE-PROMPT.md · PRIOR-WORK.md whole; board rows B28 (whole), B43 (doctrine part);
@@ -55,8 +60,12 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
 - [x] L2. His answers on banks/insurers and crypto applied (E11.1). Round 3 (20:15–20:45, no legal): price anchors for
   lines 3.3 and 3.7 (E11.2); YouGov KSA/UK advertisers of the month May–Aug 2026 + Nielsen DE top 10 read and filtered
   (E11.3) → new STUDY §4.4 candidate sectors; scenario sensitivity (E11.4, STUDY §4.3).
-- [x] L3a. First three countries decided by him 21:14: Saudi Arabia, UK, Germany (E12.1); STUDY §0, §6 updated.
-- [ ] L3. Open on him (STUDY §6): the plan order ("tamam"?), two halal doubts (supermarket
+- [x] L3a. Scope on his word: international, every continent at once; the "first three countries" sequence deleted (E12.1);
+  STUDY §0, §2 verdicts, §2.7, §4.1–4.4, §5, §6, §7 rewritten in place. His halal rulings applied (banks none, alcohol
+  none, supermarkets yes for the chain's own ad; haram markets were never ours, not "lost").
+- [ ] L4. §4.4's loud-advertiser lists cover three countries only; the other continents (US, Canada, France, Australia,
+  Japan, Korea, India, Indonesia, Brazil, Mexico, South Africa) are marked ⚠ unread — the next measurement.
+- [ ] L3. Open on him (STUDY §6): the plan order ("tamam"?) only. Closed by his word: the two halal doubts (supermarket
   chains that also sell alcohol/pork; an interest-based bank's Islamic window). Still open and non-legal: first-hand
   Ramadan ad-spend figure; Saudi buyers' own words (two attempts, none found); MiniMax H3 Turkish (a WER measurement,
   Phase 0).
@@ -80,4 +89,6 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   open editor-area bash terminal of his VS Code window (operator), verified by screenshot.
 - 21:05–21:20 third session (Fable 5.1 xhigh) took the handover at 7 % context; read WORKLOG, BRIEF, STUDY §0/§4/§6/§7,
   EVIDENCE E11; folder clean. 21:14 his ruling on the first three countries applied (E12.1); STUDY, EVIDENCE, WORKLOG,
-  HANDOVER changed; committed by path.
+  HANDOVER changed; committed by path (`d22d8c27`).
+- 21:20–21:50 his corrections: international, no specific countries; sharia boundary restated; halal rulings. STUDY
+  rewritten in place (no new measurement), EVIDENCE E11.1 corrected + E12 rewritten, WORKLOG, HANDOVER; committed by path.

@@ -341,14 +341,12 @@ nine countries' price bands (§0, §2.1–2.4) · German and Brazilian buyers' w
 ### E11.1 His rulings in this session (first-hand; the Islamic filter applied to ADVERTISING CLIENTS)
 - 20:20, verbatim: *"hayır kripto falan bunlar asla"* — crypto companies are never advertising clients.
 - 20:21, verbatim: *"helal çerçevede"* — his answer to STUDY §6's second question: clients are chosen within the halal frame;
-  interest-based (conventional) banks and insurers are not clients; Islamic banks and takaful are. Recorded here and in
+  interest-based (conventional) insurers are not clients; takaful is; banks: NONE, on his later word the same evening (E12.1; the earlier reading "Islamic banks are clients" is deleted, LAW A). Recorded here and in
   STUDY §2.2, §2.3, §5.1, §6; written nowhere as a law (CLAUDE.md §2: only on his "make it a law").
 - Applied to the advertiser lists in E11.3 (measured counts): UK YouGov May–Aug 2026, **8 of 40 entries excluded** (alcohol:
   Cruzcampo, Stella Artois, Hawkstone, Budweiser, Old Mout; finance: Santander, Nationwide, Compare the Market) — 20 %;
-  Saudi YouGov May–Aug 2026, **0 or 1 of 40**: Al Rajhi Bank is an Islamic bank (allowed), Saudi Investment Bank a
-  conventional bank with Islamic windows (doubt, not decided here); Germany Nielsen top 10: none is a finance, alcohol or
-  crypto brand, but four are supermarket chains that sell alcohol and pork (Rewe, Kaufland, Lidl, Aldi) — whether a
-  supermarket is a permitted client when the ad itself promotes no haram product is a doubt flagged for him, not decided.
+  Saudi YouGov May–Aug 2026, **2 of 40** (Al Rajhi Bank, Saudi Investment Bank: banks, on his word E12.1); Germany Nielsen top 10: none is a finance, alcohol or
+  crypto brand, but four are supermarket chains that sell alcohol and pork (Rewe, Kaufland, Lidl, Aldi) — supermarket chains ARE clients on his word (E12.1: "sadece Aldi'nin reklamı yapılır"); only the chain's own ad is made, never the alcohol/pork inside; 0 of 10 excluded.
 
 ### E11.2 Price anchors for the two new lines that were still ⚠ (vendor comparison pages, search summaries; koji.so opened)
 - **Ad pre-testing by panel (the market STUDY line 3.3 competes with):** Zappi US$3,000–25,000 per study, 24–48 h;
@@ -401,13 +399,35 @@ nine countries' price bands (§0, §2.1–2.4) · German and Brazilian buyers' w
   measured at 0; the thinking step UNVERIFIED until Phase 0); the real cost of a downside is card time and selling hours,
   not cash.
 
-## E12. Round 4 — the third Fable 5.1 session (opened 2026-09-24 ~20:30 by the second), his ruling on the first three countries
+## E12. Round 4 — the third Fable 5.1 session (opened 2026-09-24 ~20:30 by the second): his rulings on scope and on the halal boundary
 
-### E12.1 His ruling (first-hand, this session)
-- 2026-09-24 21:14, verbatim: *"tamam, ilk üç ülke Suudi, İngiltere, Almanya olsun"* — the first three countries are DECIDED:
-  Saudi Arabia (entry via a Mawthooq-registered Saudi partner agency or the client's own account, E10.1), the United Kingdom,
-  Germany. STUDY §0 (attack order) and §6 updated; the map, §4.1 and the 90 days already stood in this order and are unchanged.
-- The opening *"tamam"* is not read here as the answer to STUDY §6's FIRST question (the plan order); asked back in one line.
-  Nothing written into PLAN.md or the board (the chief engineer's job on his word).
-- Still open on him: the plan order; the two halal doubts (supermarket chains selling alcohol/pork; an interest-based bank's
-  Islamic window).
+### E12.1 His rulings (first-hand, this session, 2026-09-24 evening)
+- 21:14, verbatim: *"tamam, ilk üç ülke Suudi, İngiltere, Almanya olsun"* — applied at 21:14 as "first three countries decided"
+  (commit `d22d8c27`); **overridden by his next messages (below). LAW A: the three-country decision is deleted from STUDY,
+  WORKLOG and HANDOVER; git keeps the earlier state.**
+- Next, verbatim: *"anlamıorm ya siz ne yapırosunuz anlamaıdm ingilitere almaya suud ne bu ben size uluslararası diorm bana
+  specific şeyle gelemyin ben talebimi ilk sessiomdaki promtta söyledim. aktarmadılar mı saana ya."* and *"3 ülke emri nedir
+  yaaa anlamaıdm"* — there never was a three-country ORDER from him; the sequence "first three countries, then the rest" was
+  the study's own proposal (round 1, §0/§4) and the question the earlier sessions put to him; his 21:14 "tamam" answered
+  that question, not his own intent. The holding is international; no narrowing to specific countries; the scope is his
+  first-session brief (BRIEF.md: every continent, the highest-revenue countries on each, all languages). The handover DID
+  carry his brief verbatim. Applied: STUDY §0 (the attack paragraph), §2.1–2.6 verdicts, §2.7 (the "when" column replaced
+  by "how to enter", rows grouped by continent), §3.5, §4 title, §4.1, §4.2 steps 1–4, §4.3 labels, §4.4 title and rows,
+  §5.1, §5.2, §6, §7. The measured facts of the map are unchanged; only the sequencing went.
+- Same message, verbatim: *"hayır alkolun reklamı yapılmaz banka reklamı da yapılmaz aldi bir market ama içinde alkol var
+  sadece aldinin reklamı yaplır."* — (a) no alcohol ads (already absolute); (b) **no bank ads, any bank** — this deletes the
+  round-3 reading "Islamic banks are clients" (E11.1 corrected in place; STUDY §0, §2.2, §2.3, §3.5, §4.4, §5.1): Al Rajhi
+  Bank drops with Saudi Investment Bank; takaful, not named by him, stays as the "helal çerçevede" reading left it;
+  (c) a supermarket chain that also sells alcohol (his example: Aldi) IS a client; only the chain's own ad is made, never
+  the alcohol or pork inside. E11.3 counts after this: Saudi 2 of 40 excluded (both banks); UK 8 of 40 (unchanged);
+  Germany 0 of 10 (the four chains are clients).
+- Next, verbatim: *"arkadaşım holdingi tanımıor musun ben mi söyliyeyim size alkol yok holding yok bu holding islam şeriat
+  kanunları göre işleyen bir holding haram ürünler satılmaz gelir kesinlikle buralardan gelemez."* — the constitutional
+  boundary restated by him (MASTER_PLAN.md:161-166 owns it): the holding operates under Islamic sharia; haram products
+  are not sold; revenue can never come from them. Consequence in STUDY: the excluded categories are not "money the filter
+  costs us" (round 1–3 wording in §2.3 and §5.1) but markets that were never ours; those sentences rewritten. Putting the
+  "Islamic window" and "supermarket" doubts to him as questions was the study's error; §6 says so.
+- Written nowhere as a law by this session (CLAUDE.md §2: only on his "make it a law"; the sharia boundary is already
+  constitutional in the master plan); nothing in PLAN.md or the board.
+- Still open on him: the plan order (STUDY §6). §4.4's loud-advertiser lists exist for three countries only; the other
+  continents are UNVERIFIED until read (next measurement).
