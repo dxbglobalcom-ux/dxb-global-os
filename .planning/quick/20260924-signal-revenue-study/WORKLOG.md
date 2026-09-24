@@ -70,7 +70,9 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   Netherlands, Poland, Malaysia, Mexico, Brazil-gross added; loud-advertiser lists read for US, Australia, India, Brazil, France
   (pages opened), Indonesia, Russia, Mexico (summaries) — §4.4 second table. Digging stopped on his word; Korea, Canada, Japan
   (beyond two names), Malaysia, Poland, Netherlands not read (E13.4). Research declared finished on his "araştırmayı bitirmeye bak".
-- [ ] L3. Open on him (STUDY §6): the plan order ("tamam"?) only. Closed by his word: the two halal doubts (supermarket
+- [x] L3. The plan order: approved by him 22:55 ("tamam plan sırasını baş mühendise yazdır…"; E13.1). Handed to a chief
+  engineer session (Opus 5.5 · xhigh, dxb-crew) opened by this session via operator; note in this session's scratchpad
+  (CREW-NOTE-plan-order.md). This chain does not touch PLAN.md, the board or the ledger. Was: Closed by his word: the two halal doubts (supermarket
   chains that also sell alcohol/pork; an interest-based bank's Islamic window). Still open and non-legal: first-hand
   Ramadan ad-spend figure; Saudi buyers' own words (two attempts, none found); MiniMax H3 Turkish (a WER measurement,
   Phase 0).
@@ -99,4 +101,6 @@ and EVIDENCE.md (every number with its source). Nothing is built; nothing enters
   rewritten in place (no new measurement), EVIDENCE E11.1 corrected + E12 rewritten, WORKLOG, HANDOVER; committed by path (`73b5893b`).
 - 22:00–22:45 round 4 second half: 4 searches + 4 fetches (dentsu, WPP, AKAR, smmplanner) + cbr rate; then 7 fetches + 8 searches
   (US/AU/JP/BR/FR/IN pages; MY/ID, PL, NL, RU, KR, MX, CA, ID/MY advertisers); a Korean fetch stopped by him. STUDY §0, §2.2, §2.4,
-  §2.5, new §2.8, §4.2, §4.4, §6, §7; EVIDENCE E13; committed by path. Context 29 % before writing.
+  §2.5, new §2.8, §4.2, §4.4, §6, §7; EVIDENCE E13; committed by path (`5686f050`). Context 29 % before writing.
+- 22:55–23:10 his "tamam" on the plan order registered (STUDY §6, E13.1); dxb-crew door read; chief engineer session opened
+  through operator (see the last entry).

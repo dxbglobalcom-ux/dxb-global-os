@@ -441,6 +441,12 @@ nine countries' price bands (§0, §2.1–2.4) · German and Brazilian buyers' w
 - ~22:30 (interrupting a Korean-statistics fetch), verbatim: *"yani en başındaki talebimi unutmayın anladınız mı amaç tüm ülkelerin didik
   didik etmek değil tabiki ama her ülkede müşteri almak"* — the goal is winning clients in every country, not dissecting each; the
   per-country advertiser digging stopped there (Korea, Canada, Malaysia, Poland, Netherlands, Japan beyond two names: not read).
+- ~22:50, verbatim: *"bir dakka sen şuan ne yapmak isitorsun?"* — answered: nothing on my own; the study's next step is the plan order.
+- ~22:55, verbatim: *"tamam plan sırasını baş mühendise yazdır. önce bir session aç kendin. dxb crew skill'ini kullan"* — the plan
+  ORDER is approved (paid sector review first, the screen later; first desks = the sectors of the brands we want to win); the
+  chief engineer (Opus 5.5 · xhigh, dxb-crew door) writes it into PLAN.md and board row B43 and registers his word in
+  `scripts/governance/ceo-approvals.json` (LAW B); this session opens that session itself through `operator`. The plan itself
+  is still NOT approved; nothing is built. STUDY §6 closed: no question left open on him.
 
 ### E13.2 Russia (new; nothing on Russia existed before this round)
 - **AKAR — "Объем рынка маркетинговых коммуникаций в 2025 году"** (akarussia.ru, opened 2026-09-24): total advertising **₽981.6 bn

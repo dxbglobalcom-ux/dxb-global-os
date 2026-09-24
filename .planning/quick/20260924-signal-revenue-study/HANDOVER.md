@@ -46,9 +46,10 @@ you here, in Turkish. This chain of sessions does research and thinking only. **
   corrected on primary sources, nine countries priced, 111 buyers read), `04c4f37f` (legal research stopped), `17038d8b`
   (round 3: his two rulings applied, price anchors, the loud advertisers of KSA/UK/DE read and filtered, sensitivity),
   plus the commit of this handover.
-- **Waits on him (STUDY §6):** (1) the plan order — "önce ücretli inceleme, ilk masa ilk hedef markanın sektörü" — on his
-  "tamam" the CHIEF ENGINEER (an Opus 5.5 session) writes it into PLAN.md and board row B43; this chain does not touch
-  the plan or the board. CLOSED by his word (E12.1): the first-three-countries question (deleted: the study is international,
+- **Nothing waits on him in STUDY §6 any more.** The plan order was approved 22:55 ("tamam plan sırasını baş mühendise
+  yazdır. önce bir session aç kendin. dxb crew skill'ini kullan"); a chief engineer session (Opus 5.5 · xhigh, dxb-crew door)
+  was opened by this session to write it into PLAN.md and board row B43 and to register his word in the approvals ledger.
+  This chain does not touch the plan, the board or the ledger. The plan ITSELF is still not approved; nothing is built. CLOSED by his word (E12.1): the first-three-countries question (deleted: the study is international,
   every continent at once) and the two halal doubts (banks: none; supermarket chains: yes, for the chain's own ad only). Was: a supermarket chain that also sells alcohol/pork as a client when
   the ad itself is halal; an interest-based bank's Islamic window as a client.
 - **Asked, not answered:** whether the "helal çerçevede" ruling for advertising clients should be written permanently into
