@@ -100,6 +100,12 @@ Frames and media stay in the session scratchpad; nothing from the source enters 
 
 **Tek motor, çok masa.** "Aynı şablon eklediğim her hesapta çalışır" (T 0:52). Bizde bir **masa** = bir iş + onun alanı + izlenen hesaplar. Aynı motor stüdyonun kendi hesabı için ve ajansın her marka müşterisi için ayrı masa açar. Bu yüzden ürün baştan çok masalı kurulur. Bir gün satılacaksa da hazır olur.
 
+**Ne işe yarar (2026-09-24 konuşmasındaki hâli; sizin sözünüz: *"neişe yarar kısmı da çok güzel"*):**
+1. **Her marka müşterisinin sektörü — asıl geliri getiren masa.** Örnek: Dubai'de bir restoranla anlaşılır; motor Dubai'deki diğer restoranların videolarında neyin tuttuğunu bulur, o restoranın reklamı buna göre yapılır. Marka aylık ücreti (B28'deki 8.000 dolar), reklam tahmine değil kanıta dayandığı için öder.
+2. **DxB Holding Media-Studio'nun kendi hesabı.** Hesap açılıp büyüdükçe markalar bizi oradan bulur. Hesap açmak kimlik adımıdır, sizin onayınızla açılır.
+3. **Rakip ajansların ne yaptığı.** Masanın hesapları rakip ajansların hesapları olur.
+4. **Makinenin kendisi.** Çok masalı kurulduğu için bir gün başka ajanslara satılabilir; fiyatı ölçülmedi.
+
 | Parça | Videoda | Holdingde (bugün ölçülen) | Karar |
 |---|---|---|---|
 | Çekme | Apify (ücretli) | Instagram okuma aracı **B48** (sizin girişinizi taşıyan köprü, kabul edilmiş); tek video yt-dlp ile iniyor (bu oturumda Jacob Lee'nin videosu böyle indi) | Önce B48 köprüsü. Yetmezse Apify fiyatıyla size gelir |
@@ -111,7 +117,7 @@ Frames and media stay in the session scratchpad; nothing from the source enters 
 | Ekran | Pano + Hat sekmesi | B43 stüdyo odası; **çizimi B32'de onaylanmadan çizilmez** | Canlı iş paneli ve yanan hat düğümleri ilk günden tasarımda |
 | Senaryo çıktısı | Kopyala / .md | B43'ün kendi sırası: senaryo → sahneler → çekimler | Sizin "evet"inizle stüdyo kuyruğuna |
 
-**Döngü kapanır, videodakinin yapmadığı şey budur.** Stüdyo senaryoyu çeker, siz onaylayıp paylaşırsınız. Ertesi sabah motor bizim videomuzun rakamlarını da okur ve senaryonun tahmini ile gerçek sonuç yan yana yazılır. Senaryo zayıflığının cevabı "daha çok veri" değil, **kendi sonucumuzdan geri bildirim** (1d).
+**Döngü kapanır, videodakinin yapmadığı şey budur.** Sizin sözünüz (2026-09-24): *"her müşteriye ürettiğimiz videonun analizini makinamız izlemeli."* Stüdyonun bir müşteri için ürettiği her video, müşterinin hesabında yayınlanınca motor onun rakamlarını okur ve çözümler; kendi hesabımız açılınca onun videolarını da. Senaryonun tahmini ile gerçek sonuç yan yana yazılır. **Sırf deneme için video üretilmez:** sistemin asıl işi başkalarının zaten yaptığı denemelerden öğrenmektir; yayınlanan video olmasa da motor çalışır. Senaryo zayıflığının cevabı "daha çok veri" değil, **kendi işimizin sonucundan geri bildirim** (1d).
 
 ## 3. Fazlar — her biri önce/sonra ölçülü; kabul maddesi işten önce yazılır; kodu builder (max) yazar, refuter çürütmeye çalışır, her faz tek commit (dxb-crew)
 
@@ -125,7 +131,7 @@ Frames and media stay in the session scratchpad; nothing from the source enters 
 | 5 | **Senaryo stüdyosu** | Tek özgün senaryo: kanıtlı konu, açılış, açı, yapı; 3 yedek açılış; editör puan kartı ve düzeltme geçişi; zaman kodlu çekim metni; "neden bu senaryo" kanıtlarıyla. B43 sırasına girer | Senaryo dayandığı videoları gösterir; "evet"le B43 kuyruğunda iş olur |
 | 6 | **Hafıza + Hamza** | Kapıdan geçen her videonun notu holding hafızasına yazılır; Hamza bu veriden cevap verir | Hamza'ya "bu hafta hangi açılış tuttu?" sorusu, kalıp tablosundaki ile aynı cevabı sesli verir |
 | 7 | **Ekran** | B32'de çizimini onayladığınız oda: Call sheet · Video tablosu · Kalıplar · Senaryo stüdyosu · Masalar · Hat. **Canlı iş paneli** her an açık ("çözümleniyor 156/435 · sonraki yenileme 23 sa"); Hat sekmesinde çalışan düğüm yanar | Sizin kabul testiniz: sayfayı açarsınız, dokunmazsınız, işin ilerlediği görünür |
-| 8 | **Döngü** | Bizim paylaşımlarımızın rakamları da okunur; senaryonun tahmini ile gerçek sonucu yan yana yazılır | Paylaşılan her senaryo için 7. günde "tahmin vs gerçek" satırı var |
+| 8 | **Döngü** | Her müşteriye ürettiğimiz video müşterinin hesabında yayınlanınca (ve kendi hesabımız açılınca onun videoları) okunur ve çözümlenir; senaryonun tahmini ile gerçek sonucu yan yana yazılır. Deneme için ayrıca video üretilmez | Yayınlanan her müşteri videosu için 7. günde çözümleme ve "tahmin vs gerçek" satırı var |
 
 ## 4. Sizin kararınız gereken üç şey
 
