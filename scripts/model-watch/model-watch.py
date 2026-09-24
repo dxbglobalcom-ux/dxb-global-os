@@ -102,7 +102,7 @@ SOURCES = {
 }
 CURRENT_DAYS = 30        # "güncel": an item older than this is recorded, never judged, never shown
 TIMEOUT = 30             # seconds per page
-USER_AGENT = "dxb-model-watch/1 (a daily read of Anthropic's public docs)"
+USER_AGENT = "dxb-model-watch/1 (a twice-weekly read of Anthropic's public docs)"
 SCRIPT = "python3 scripts/model-watch/model-watch.py"
 # The judge reads an item's own text whole, up to this cap (the refuter's A3, 2026-09-24: a 400-character
 # excerpt hid 12 of Claude Code 2.1.251's 14 usable entries). Measured that day, the longest item of the
@@ -137,6 +137,8 @@ SERIOUS = (
     "a model or a version that is NOT in that list stays serious.\n"
     "NOT serious: features of the Claude API alone, betas, prices, CLI or UI conveniences, enterprise, gateway, "
     "cloud-provider and Compliance items, and anything we would not act on. "
+    "What a request to the Claude API carries — thinking, tool_choice, headers, betas, toolsets — is Claude "
+    "Code's to send, not ours: a change to it is API-only, NOT serious. "
     "The retirement or deprecation of a model — a notice that a model is deprecated, retired or will be — is "
     "NOT serious. A change that deprecates a parameter, a header or a setting in favour of another is usage "
     "guidance, and is judged as such.")
