@@ -33,10 +33,14 @@ questions about it — and acted on the answers:**
   is incomplete — same standing as a missing Design Verification Pass.
 - "It satisfies the spec row" is NOT a defense. The spec is the floor.
   This directive makes quality the ceiling-check on top of every floor.
-- Applies at every altitude: a single component, a page, a migration, a
-  persona, a report sentence. The CEO seeing sloppy work that the author
-  never questioned = governance violation (RET + recorded), regardless of
-  whether the spec technically allowed it.
+- Applies to the holding's deliverables — a piece he will use, such as the
+  dashboard's CRM section — held to the Ferrari standard of `.claude/CLAUDE.md`,
+  a first-place candidate in a world competition; not to every small job (a
+  fix, a record, a one-line change). His word of 2026-09-24.
+  <!-- CEO-OK: h6-perfection-gate-for-deliverables-2026-09-24 --> The CEO
+  seeing sloppy work in a deliverable that the author never questioned =
+  governance violation (RET + recorded), regardless of whether the spec
+  technically allowed it.
 - Pairs with the existing laws: RULE #0 verifies the eye, RULE #0-A
   verifies the facts, PERFECTION GATE verifies the judgment.
 

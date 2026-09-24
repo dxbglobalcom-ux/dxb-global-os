@@ -102,12 +102,13 @@ Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.
 
 ## The perfection gate — RULE #0-B
 
-Before anything ships, answer three questions in writing and act on the answers:
-
-1. **Is this perfect** — would a world-class specialist sign it?
-2. **Is this logical** — does the structure match the CEO's mental model, not the implementer's convenience?
-3. **Could it be better** — name the concrete better version. Build it now if it is in scope;
-   record it as a boundary if it is not.
+A deliverable of the holding — a piece he will use, such as the dashboard's CRM section — is held
+to the standard of `.claude/CLAUDE.md`: the Ferrari, a first-place candidate in a world
+competition. It ships when a world-class specialist would sign it, its structure matches the
+CEO's mental model rather than the implementer's convenience, and a better version inside the
+approved scope has been built instead of the lesser one (one outside it is recorded as a
+boundary). Small work — a fix, a record, a one-line change — does not go through this gate
+(his word, 2026-09-24). <!-- CEO-OK: h6-perfection-gate-for-deliverables-2026-09-24 -->
 
 "It satisfies the spec row" is not a defence. The spec is the floor; this gate is the ceiling
 check. Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-PERFECTION-GATE.md`.

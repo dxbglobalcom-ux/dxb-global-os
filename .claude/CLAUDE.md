@@ -112,7 +112,7 @@ the date. The battery fails on an unregistered approval claim.
 
 - **The approval gate.** Money OUT, contracts, ad spend, identity steps and the subjects he
   marks stop at the CEO. Money IN and routine outward communication do not.
-- **Kanun C: before a plan or a change he did not ask for, say it, wait for his yes.**
+- **No implementation before he approves the plan.** Not inferable away, not optional.
 - **Measure, never guess.** Every fact, number and status rests on a measurement taken this
   session, cited. Memory, a grep hit, a summary or a subagent's report is a lead — never an
   answer. Cannot measure → write `UNVERIFIED — could not measure because …`. A prediction is
