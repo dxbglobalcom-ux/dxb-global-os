@@ -1247,5 +1247,12 @@
   "verbatim": "bir de yeni kullanım önerisi var mı diye baksın yani şöyle kullanılırsa daha mükemmel sonuç olur şeklinde.",
   "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
   "where": "board row B55 · scripts/model-watch/model-watch.py · .claude/hooks/spec-bootstrap.sh"
+ },
+ "h1-end-of-turn-questionnaire-removed-2026-09-24": {
+  "date": "2026-09-24",
+  "what": "HIS YES ON CARD H1 OF THE PROMPT AUDIT (board row B53). dxb-start still carried the written end-of-turn questionnaire 'measured? · complete? · recorded? · verified (command -> output)?', the self-check form he replaced on 2026-08-16 ('kanıtı göster şeklinde olur'), and a final-verification instruction Anthropic's guidance says makes current models over-verify. Proposed: delete it; the standing-order-13 line sent on every prompt carries the evidence rule. His answer is the verbatim below; the section was deleted the same minute (LAW A). Not a law.",
+  "verbatim": "evet, sil",
+  "session": "Opus 5.5 (xhigh), session 89a2ab03-18b0-48da-9645-fdfe1b5393be, heard first-hand.",
+  "where": ".claude/skills/dxb-start/SKILL.md · board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H1"
  }
 }

@@ -90,10 +90,6 @@ English in the author's own voice, and he is quoted only from `scripts/governanc
 — never composed in his first person. Measured 2026-09-15 (audit F016, F017, F054): three such
 files existed, all speaking as him, and STATE ordered the next session to write another.
 
-## Before ending any turn, answer in writing
-
-**measured? · complete? · recorded? · verified (command → output)?**
-
 ## Choosing the row
 
 Order of work is the CEO's: **this board, oldest first — half-finished older work outranks new
