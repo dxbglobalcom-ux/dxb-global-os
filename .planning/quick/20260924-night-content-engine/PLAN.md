@@ -1,79 +1,153 @@
-# B43 — THE NIGHT CONTENT ENGINE · PLAN
+# B43 — SIGNAL FOR THE HOLDING (the night content engine) · PLAN
 
-**Status: PLAN — written 2026-09-24 on the CEO's order; NOTHING IS BUILT; it waits for his eye.** <!-- OPEN: B43 -->
-Written by the session dxb-e4 (Opus 5.5). Committed by the construction session (dxb-global-os-13) in `ddc5aada` on his word ("gerekirse commiti o atsın").
-His order, in his words (2026-09-24): *"https://www.youtube.com/watch?v=vUjAgGa8tAU buradaki 00:42 ile 2.5 dakkaya kadar olan kısmı izlesin burada bir sistem var uzakdoğu bir adam anlatıor sistemi. onu biizm dxb global os holding projesi için hazıryalabilir miyiz bu özellikte olsun. planı projesi yazılsın hazırlansın tahtaya ilgili satırın altına konulabilir. 147dk sürmüş opus 5.5 ile yapıor zaten."*
-And his correction the same hour: *"rakiple alakası yok bunun ya orada bir sistemden bahsedior. onu istiorm holdinge olay bu"* · *"instagram okuma aracı da tahtaya yazılmıştı"*. **This is a SYSTEM TO BUILD for the holding, not a source on the rival queue: no rival-intel row, no rival report.** The Instagram reading hand is B48's, already accepted by his eye; this plan uses it and does not re-open it.
-Row it belongs to: **B43** (the Media Studio — the engine's output is what the studio films). Its screen may not be drawn before **B32** approves the drawing.
+**Status: PLAN — rewritten 2026-09-24 after the whole source was watched and heard; NOTHING IS BUILT; it waits for his eye.** <!-- OPEN: B43 -->
+Written by the session dxb-e4 (Opus 5.5). The first version (committed `ddc5aada`, corrected `cb23a49c`) was written from a delegated summary and is replaced whole (LAW A).
+His orders, in his words (2026-09-24): *"buradaki 00:42 ile 2.5 dakkaya kadar olan kısmı izlesin burada bir sistem var … onu biizm dxb global os holding projesi için hazıryalabilir miyiz bu özellikte olsun. planı projesi yazılsın hazırlansın tahtaya ilgili satırın altına konulabilir. 147dk sürmüş opus 5.5 ile yapıor zaten."* · *"rakiple alakası yok bunun ya orada bir sistemden bahsedior. onu istiorm holdinge olay bu"* · *"instagram okuma aracı da tahtaya yazılmıştı"* · *"yani bu bir ürün aslında"* · *"herşeyi izle dinle ve sonra planını hazırla neler yapılacak"*.
+**This is a PRODUCT to build for the holding, not a rival study: no rival-intel row, no rival report.**
+The build spec the video's builder gave Opus 5.5 is kept verbatim beside this file: `SOURCE-PROMPT.md`.
 Body in Turkish because he reads it (precedent: B47's PLAN.md).
+
+## What was watched and heard (measured this session)
+
+| Source | How it was read |
+|---|---|
+| Jacob Lee's original reel `instagram.com/p/Dah3raWzV4i` (2026-07-08, 63 s, 1440×2560 VP9 + AAC, sha256 `dcac858bd39dc4de2c419c04802fbe0af976412afd9d653c08998d5237d2bdf8`) | Downloaded with sound, transcribed whole on the holding's own Speaches; **all 52 visually distinct frames** (of 63 at 1 fps) viewed by the chief engineer |
+| `youtube.com/watch?v=vUjAgGa8tAU` 00:42–02:30 (Dubibubi, 2026-09-23) | Full transcript read; 1080p60 frames viewed by the chief engineer (the clip of Jacob Lee's reel, the pipeline screen, the prompt document, the scoreboard) |
+| The same video 03:36–12:10 (what Opus 5.5 built from the prompt, what Astra built, the scoreboard) | Full transcript read; **237 distinct frames OCR'd whole**; the call sheet, video detail, video board and script studio screens viewed by the chief engineer |
+| The build prompt (Google Doc in the video description) | Read whole; saved verbatim as `SOURCE-PROMPT.md` |
+
+Frames and media stay in the session scratchpad; nothing from the source enters the repo except the prompt text.
 
 ---
 
-# GECE ÇALIŞAN İÇERİK MOTORU — PLAN
+# SIGNAL — HOLDİNG İÇİN İÇERİK İSTİHBARATI ÜRÜNÜ — PLAN
 
 ## İki cümle (tahta kuralı 7)
 
-1. **Ekranınızda ne olacak:** Her sabah siz uyanmadan, seçtiğiniz alandaki hesapların son videoları tek sayfada okunmuş olarak durur: kim ne paylaşmış, hangi açılış cümlesi tutmuş, hangi konu izlenme çekmiş, hangi video kendi ortalamasının kaç katına çıkmış ve neden. Birine tıkladığınızda videoyu, söylenenlerin yazısını, sahne sahne kuruluşunu ve rakamlarını görürsünüz. Sayfanın sonunda stüdyomuzun bu hafta çekeceği video için hazır bir senaryo durur; evet ya da hayır dersiniz.
-2. **Bunu kanıtlayan tek komut:** `node scripts/content-engine/proof.mjs --today` Şunu basar: "N hesap · M yeni video · M'nin M'si yazıya döküldü ve puanlandı · sayfa bugün SS:DD'de yenilendi · bugünkü dış maliyet $X". Yalnız bu sabahki tur gerçekten koştuysa ve her yeni videonun yazısı, puanı ve kaynak adresi varsa 0 ile çıkar. Bu cetvel Faz 1'de, işten önce yazılır.
+1. **Ekranınızda ne olacak:** Siz uyurken makine seçilen alandaki hesapların yeni videolarını okur. Sabah tek sayfada "şu an önemli olan 5 kalıp" durur ve her kalıbın yanında kaç videoya dayandığı ve bir sonraki videomuzda ne yapılacağı yazar. Her videoya tıklandığında sahne sahne kırılımı, neden patladığı ve kendi ortalamasının kaç katı izlendiği açılır. Sayfanın sonunda stüdyomuz için kanıtlarını gösteren, çekime hazır bir senaryo durur. Evet derseniz stüdyonun sırasına girer.
+2. **Bunu kanıtlayan tek komut:** `node scripts/signal/proof.mjs --today`. Şunu basar: "N hesap · M yeni video · M'nin M'si indirildi / yazıya döküldü / çözümlendi · 5 kalıp bugün yeniden hesaplandı · senaryo bugün yazıldı · dış maliyet $X". Yalnız bu sabahki tur baştan sona koştuysa 0 ile çıkar. Cetvel Faz 1'de, işten önce yazılır.
 
-## Videodaki sistem — 00:42–02:30
+## 1. Sistem — tam olarak ne
 
-Anlatan kişi Jacob Lee. Sistemi Dubibubi kanalının 23 Eylül 2026 tarihli videosunda gösteriliyor. Videonun geri kalanında aynı sistem Opus 5.5'e ve GPT-6 Astra'ya sıfırdan yaptırılıyor. Etiketler: **T** = videoda söylenen (zaman damgalı) · **V** = videoda görülen · **C** = sizin söylediğiniz.
+### 1a. Jacob Lee'nin kendi sistemi (orijinal video, sesiyle ve bütün kareleriyle)
 
-- **Ne yapıyor:** Sahibi uyurken çalışıyor. Her sabah pano, alandaki hesapların son reels videolarıyla kendini yeniden kuruyor: kim paylaşıyor, hangi açılış cümleleri (hook) kullanılıyor, hangi konular erişim çekiyor. Herhangi bir videoya tıklayınca açılış tarzı, senaryonun her vuruşu, kapanış çağrısı (CTA) ve gerçek rakamlar geliyor. Sahibinin sözü: "Neyin tuttuğunu artık tahmin etmiyorum, fişleri okuyorum." (T 01:00–01:25)
-- **Hattı, beş adım:** videolar çekilir → yazıya dökülür → her biri alana uygunluk için puanlanır → videoda adı geçen araçlar araştırılır → pano yeniden kurulur (T 01:25–01:36).
-- **Hattın ekrandaki şeması** (V ~01:20–01:35): elle ya da zamanla başlatılan tur → videolar çekilir → aynısı ayıklanır → indirilir → yazıya dökülür → Claude her videoyu puanlar ve yazıyı "açılış / vuruşlar" diye böler → **kapı: puan 7 ve üstü mü?** 7'nin altındakiler deftere "atlandı" diye yazılır ve araştırılmaz. 7 ve üstü araştırılır, Claude her biri için bir not yazar, not panoya eklenir. Bu kapı sayesinde ücretli araştırma yalnız işe yarayan videoya harcanır. Panonun üç sekmesi var: Pano · Tüm videolar · Hat. Hat sekmesinde iş hangi düğümdeyse o düğüm yanıyor.
-- **Maliyeti ve kazancı:** Ayda yaklaşık 5 dolar. Haftada 3 saatlik kaydırma yerine 3 dakikalık okuma (T 01:36–01:42).
-- **Opus 5.5'in aynı istekle kurduğu sürüm** (T 04:55–08:20):
-  - 18 hesaptan 435 video; 150'si çözümlenmiş; 30 günde 35 "patlayan" video.
-  - Her video için: neden patladığı, yazısı, altyazısı, izleyici yorum örnekleri, kime yapıldığı, aynı konuyu yapan diğer hesaplar ve kendi ortalamasının kaç katı izlendiği (örnek: 304.000 izlenme, hesabın tipik 19.000'ine karşı 17 kat, güven derecesi 3).
-  - 90 günlük tablo: en uç videolar, patlama puanı, hesaba göre kat sayısı (479 kat), açılış gücü sırası.
-  - Senaryo üretici: açılış 8/10, izlenme süresi 9/10, açıklık 9/10, özgünlük ve "kazanan kalıba uyum" puanları, A/B için yedek açılışlar.
-- **Sunucunun kendi söylediği zayıf yer:** İki modelin de senaryosu iyi değil. Sunucunun tahmini: "Elinde fazla veri var, tutarlı bir senaryoya çeviremiyor" (T 07:57–08:20, 10:52–11:15). Bu plan bunu Faz 5'te ayrıca çözüyor.
-- **Opus 5.5 aynı sistemi 1 saat 24 dakikada kurdu:** 118,5 milyon token, API karşılığı 40,20 dolar; Astra 1 saat 27 dakika, yaklaşık 43,61 dolar (V 11:38, videodaki ölçüm panosu). Sizin "147" dediğiniz sayı 03:40'ta ekranda "147.7M TOKENS LATER" diye geçiyor (V). Yani dakika değil, iki modelin birlikte harcadığı token; ikisinin toplam süresi 2 saat 52 dakika, toplam maliyeti 83,81 dolar. Bizde de aynı model (Opus 5.5) kuracak.
+- **Ne yapıyor:** "Nişimdeki her hesabı ben uyurken tersine mühendislikle çözen bir sistem kurdum. **Asıl mesele pano.**" Pano her sabah hesapların son videolarıyla kendini yeniden kuruyor: kim paylaşıyor, hangi açılışlar kullanılıyor, hangi konu erişim çekiyor (T 0:00–0:13).
+- **Hat:** Başlığı "Yerel hat — Apify + Scribe + Perplexity, Claude tarafından yönetilir". Renk açıklaması da ekranda: mavi "dış API (ücretli)", kırmızı "Claude (ücretsiz, oturum içi)", gri "yerel", yeşil "çıktı" (V 0:25–0:37).
+  - `Elle başlat` → `Apify` (ücretli: videoları çeker) → `Ayıkla` (yerel) → `İndir` (yerel)
+  - → `Scribe` (ücretli: yazıya döker) → `Claude` (ücretsiz: **puanlar + böler**) → **Kapı: puan ≥ 7 ve karar?**
+  - Düşük puan → `defter: ATLANDI`
+  - **7 ve üstü** → `Perplexity` (ücretli: adı geçen araçları araştırır) → `Claude` (ücretsiz: **not yazar**) → `SCRAPED-*.md` (not dosyası) → `Pano`
+  - Alt yazı (V): "İki ücretli çağrı — Apify (çekme) + ElevenLabs (yazıya dökme). Claude her videoyu puanlar ve yazıyı Açılış / Vuruşlar'a böler … ücretsiz. Yalnız kapıdan geçen videolar Perplexity araştırmasını tetikler … buraya toplanan SCRAPED notu."
+- **Pano (V 0:06–0:57):**
+  - Başlık "COMPETITOR INTEL — Signal vs noise". Sağda @jlee.mov · 121 video · 7.064.826 izlenme · 2026-07-03.
+  - Üç sekme: Pano · Tüm videolar · Hat.
+  - Dört kutu: izlenen video 121 / 13 hesap · toplam izlenme 7.064.826 · en güçlü hesap @nateherkai 2.579.408 · **en çok tutan açılış "contrarian-claim" (karşı iddia), 35 video**. Sayılar açılışta sıfırdan sayarak yerine oturuyor.
+  - "Son tur · 2026-07-03 · 12 video kapıdan geçti · izlemek ve kırılım için tıkla" diye video kartları. Her kartta başlık, hesap, izlenme / beğeni / yorum, açılış türü etiketi, puan x/10 ve açılış cümlesinin kendisi var.
+  - "Hesaba göre erişim" çubuk sıralaması, "Tüm zamanların en iyi 10'u · performans × hedef kitleye uyum", "121 videonun hepsi".
+  - **"Açılış türleri, sahada"**, tanımlarıyla birlikte: karşı iddia 35 · sorun→vaat 25 ("Hissettiğin acıyı adlandırır, sonra çözümü vaat eder") · önce sonuç 20 ("Sonuçla açar, açıklamadan önce çalışırken gösterir") · liste merakı 17 ("N adım vaat eder, ödülü sona saklar") · veri şoku 15 · hikâye 6 · kimliğe seslen ("Belirli bir grubu çağırır — kimlik + kaçırma korkusu") · diğer.
+- **Video detayı (V 0:17–0:23):**
+  - Video sayfanın içinde oynuyor. Etiket, puan, "KIRILIM · AÇILIŞ → VURUŞLAR → KAPANIŞ" başlığı altında her vuruş işleviyle yazılı ("VURUŞ 2 çerçeve — penetrasyon fiyatı → bağımlılık → kıtlık → zam").
+  - **"Yazıya dökme notları"**: Claude, Scribe'ın yanlış duyduğu isimleri düzeltir ("N8N" → n8n).
+  - **"ContentBrain açısı"**: Bu konuyu kendi videosunda hangi açıdan anlatacağının önerisi.
+  - "Araçlar" (adı geçen araçlar), "Altyazı" ve iki düğme: "IG gönderisi ↗" · **"Obsidian'daki not"**. Her videonun notu sahibinin ikinci beynine yazılıyor.
+- **Maliyet ve kazanç:** ayda yaklaşık 5 dolar (V+T). Haftada 3 saat kaydırma yerine 3 dakika okuma (V+T).
+- **Kilit fikir, kendi sözü:** "Asıl kilidi açan açılış sınıflandırması: her video açılış türüyle etiketlenir; reel izlemeyi bırakır, **kalıp izlersin**." Ayrıca: "Aynı şablon eklediğim her hesapta çalışıyor" (T 0:38–0:54).
 
-## Parçaların bugün DxB'de nerede olduğu — ÖLÇÜLDÜ 2026-09-24, bu oturumda
+### 1b. Opus 5.5'e verilen talimat (tam metin `SOURCE-PROMPT.md`) — ürünün tarifi
 
-| Adım | Videoda | DxB'de bugün | Durum | Yapılacak |
-|---|---|---|---|---|
-| 1. Çekme | Apify (ücretli) | **Instagram okuma aracı: B48** (tarayıcı köprüsü, 21 Eylül'de gözünüzle kabul). Tek videoyu indirmeyi yt-dlp zaten yapıyor. | Tahtada, kabul edilmiş | Hesap başına "son videolar + izlenme sayıları" listesini her gün almak |
-| 2. Yazıya dökme | Scribe (ücretli) | Kendi makinemizdeki Speaches. Ses dışarı çıkmıyor, $0. | `curl localhost:8969/health` → **200** | Bağlantı kodu |
-| 3. Puanlama | Claude | LiteLLM model kapısı. Toplu iş için B34'ün yerel işçi modeli, pahalı iş için B51'in model düzeni. | `dxb_litellm` → **healthy** | Alan tanımı, puan ölçütleri |
-| 4. Araştırma | Perplexity (ücretli) | dxb-research filosu: 39 kanal, dış maliyet $0. | Çalışıyor | Bağlantı kodu |
-| 5. Her sabah yeniden kurma | zamanlayıcı | Tek yerleşik işlem `dxb-scheduler.service`. Yeni servis açılmaz, tur buraya eklenir. | `systemctl --user is-active` → **active** | Günlük iş kaydı |
-| Veri | — | Hesap, video ve çözümleme tablosu yok. | `db/migrations` araması → **0 dosya** | Göç (migration) |
-| Ekran | pano | `apps/dashboard`. Stüdyonun ekranı B43'te; çizimi B32'de onaylanmadan çizilmez. | — | Önce çizim onayı |
+- **Hesap ekle / çıkar.** Başlangıç listesi 18 hesap.
+- **Toplanacak bilgi:** izlenme, beğeni, yorum, paylaşım, tarih, altyazı, süre, adres.
+- **Her video için çözümleme:** açılış, açılış türü, ana konu, açı, biçim, yapı, vuruş vuruş kırılım, merak boşluğu, açık döngü, akış kırıcı, değer vaadi, duygusal tetik, kapanış çağrısı, neden tuttuğu, kopyalamadan neyin alınabileceği.
+- **Performans zekâsı:** Ham izlenme değil. Normali 20 bin olan hesabın 200 bin yapması, normali 1 milyon olanın 1,2 milyon yapmasından değerlidir. Patlama puanı yöntemi kurulacak.
+- **Kalıp bulma, "en önemli kısım":** tutan açılış türleri, yükselen konular, tekrar eden biçimler, benzer ilk cümleler, yapılar, kapanış çağrıları, hızlanan konular, rakiplerin boş bıraktığı alanlar. Hedef: "100 video izlemem lazım" yerine "şu an önemli olan 5 kalıp bunlar".
+- **Senaryo üretici, "en çok önemsediğim":** Tüm veriden en yüksek tutma ihtimalli **özgün** senaryo. Konu, açılış, açı ve yapı seçilir; yanında neden seçildiği, kanıtı, ekran yazısı, süre ve kapanış çağrısı gelir; dayandığı videolar gösterilir.
+- **Pano:** son videolar, en iyiler, en uç sapmalar, yükselen konu ve açılışlar, hesap karşılaştırması, fırsatlar, senaryo. Süzme, sıralama ve grafik var; tıklanınca detay açılır.
+- **Otomatik yenileme.** Anahtarlar yalnız sunucuda durur. Uçtan uca çalışan ürün olacak, düğmesi boş maket olmayacak.
 
-**Sonuç:** Beş adımın dördü bugün evde. Çekme aracı B48, yazıya dökme, araştırma ve zamanlama hazır ve dış maliyeti $0. Yazılacak olan, bunları birbirine bağlayan tur, veriyi tutacak tablolar, senaryo adımı ve ekran.
+### 1c. Opus 5.5'in bundan 1 sa 24 dk'da kurduğu ürün: "SIGNAL"
 
-## Fazlar — her biri önce/sonra ölçülü, kabul maddesi işten önce yazılır
+Ölçüm panosuna göre 118,5 milyon token, 40,20 dolar (V 11:38). Ekranda "147.7M TOKENS LATER" yazan sayı iki modelin toplamı.
 
-| # | Faz | Ne yapılır | Kabul maddesi (komut → beklenen) | Kimin sözü |
-|---|---|---|---|---|
-| 0 | **Alan ve hesap listesi** | Hangi alanı ve hangi hesapları okuyacağımızı siz seçersiniz (öneri aşağıda). B48'in aracı seçilen üç hesabın son 12 videosunu adres ve izlenme sayısıyla okur. | `scripts/content-engine/probe.sh 3` → 3 hesap × ≥10 video adresi + izlenme sayısı | **Sizin** (liste) · yazar |
-| 1 | **Cetvel + veri** | Önce `proof.mjs` cetveli yazılır. Sonra hesap, video, günlük rakam ve çözümleme tabloları kanonik göç zincirinden eklenir. Testler yalnız inşaat motorunda (54422) koşar. | `pnpm test tests/content-engine` yeşil; `proof.mjs --today` boş günde "0 yeni video" basar ve 1 ile çıkar | Yazar |
-| 2 | **Çekme + yazıya dökme** | Günlük tur yerleşik zamanlayıcıya, sabah 06:00'ya eklenir. Yeni videoların yalnız sesi indirilir, Speaches'te yazıya dökülür. Tur yarıda kesilirse yalnız eksik olanı yapar. | Aynı tur iki kez koşunca ikincisi 0 yeni iş üretir; yazısız video 0 | Yazar |
-| 3 | **Puanlama ve kırılım** | Her video için açılış tarzı, vuruşlar, kapanış çağrısı, konu, alana uygunluk ve "hesabın kendi 90 günlük ortancasının kaç katı" hesaplanır. **Videodaki kapı aynen alınır:** 7/10 altı video deftere "atlandı" diye yazılır, araştırmaya gitmez. **Az örnek kuralı:** Astra'nın 2 videodan "9,3 kat" çıkardığı hata (T 10:05–10:25) bizde olmasın diye bir kalıp en az 5 videoya dayanmadan "tutan kalıp" sayılmaz. Video başına maliyet ilk 50 videoda ölçülür. | 50 videoda her alan dolu; kat sayısı elle hesaplanan 5 örnekle birebir; ölçülen $/video basılır | Yazar |
-| 4 | **Araştırma** | Kapıdan geçen videolarda adı geçen araç ve ürünler dxb-research'ün hızlı katmanıyla araştırılır; kaynaklı not videoya bağlanır. | Kapıdan geçen ve adı geçen aracı olan her videoda ≥1 kaynaklı not; kapıda kalan video için 0 araştırma çağrısı | Yazar |
-| 5 | **Senaryo** | Haftada bir tek senaryo çıkar. Ham verinin tamamından değil, en uç 3–5 videodan beslenir; iki modelin de düştüğü yer burasıydı. Senaryo stüdyonun kendi sırasına girer (senaryo → sahneler → çekimler), altı ölçütle puanlanır, yedek açılışlarla gelir. Siz "evet" derseniz stüdyonun iş kuyruğuna düşer. | Senaryo beslendiği videoları adres adres gösterir; "evet"le B43 kuyruğuna geçer | **Sizin** (her senaryo) |
-| 6 | **Ekran** | B32'de çizimini onayladığınız sayfa B43'ün odası olarak kurulur. Canlıdır: sabah turu koşarken iş hattın düğümlerinde ekranda akar, o anda çalışan düğüm yanar, tur bitince durur (videodaki "Hat" sekmesinin bizdeki karşılığı; V ~01:20–01:35). Tur zamanla başlar, isterseniz elle de başlatılır. Makine en son ne zaman bildiğini ve ne zaman uyanacağını yazar. | Sizin kabul testiniz: sayfayı açarsınız, hiçbir şeye dokunmazsınız, sabah turunun yaptığı iş görünür | **Sizin** (çizim ve göz) |
+- **Sol menü:** Call sheet (günün işi) · Video board · Patterns · Script studio · Competitors · Pipeline · Settings.
+- **Canlı iş paneli, sol altta, hep açık:** "Videolar çözümleniyor · 222 iş · Medya 435/435 · Yazı 434/435 · Çözümleme 156/435 · Sonraki yenileme 23 saat sonra". İş ilerledikçe sayılar artıyor. **Makine ne yaptığını ve ne zaman uyanacağını kendisi söylüyor.**
+- **Call sheet:** üstte 435 video · 18 hesap · 149 çözümlendi · 30 günde 35 patlama · bu hafta 176. Altında **"Önemli olan beş kalıp"** var. Örneğin: "Ödül ilk karede, 2,5 saniyenin altında: 2,53 kat (n=12, 7 hesap, %98 isabet); 10 saniyeyi aşan girişler 0,72 kat (n=25)". Her kalıbın altında bir sonraki videoda ne yapılacağı yazılı. Yanda "Sıradaki çekim" senaryosu, "Yenile" ve "Tam brif".
+- **Video board:** 393 video; 7 / 30 / 90 gün / tümü; hesap, seviye, açılış, konu ve biçim süzgeçleri; "patlama puanına göre" sıralama. Açıklama: "Her video, kendi hesabının normalini ne kadar geçtiğine göre sıralı."
+- **Video detayı:**
+  - "Hesabın ortancasına göre 17 kat · Patlama · Yüksek güven", yanında hesabın 24 videosu arasında bu videonun yerini gösteren nokta grafiği.
+  - Puan 97/100 ve "Bu puan nasıl kurulur".
+  - İlk kare ve ekran yazısı; merak boşluğu, yenilik, akış kırıcı gibi etiketler.
+  - **"Yeniden kullanılabilir şablon"**: "[Araştırmacılar] az önce [bilimkurgu gibi bir şey yaptı] ve [onu daha da tuhaf bir şeye yaptırdı]".
+  - Konu, biçim, kitle, konuşma hızı (201 kelime/dk), kurgu hızı (28,8 kesme/dk), açı.
+  - **Storyboard**: 9 vuruş, her biri kendi karesi ve zaman koduyla (açılış, bağlam, yeniden kanca, kanıt …).
+  - "Neden patladı", "Aynı konu, başka hesaplar", yapım notları.
+  - Altında: "claude-opus-5 çözümledi · yazı ElevenLabs scribe_v2".
+- **Script studio:**
+  - "Söylenecek ilk cümle" ve "Ekran yazısı".
+  - **A/B için 3 yedek açılış**, her biri kendi gerekçesiyle.
+  - Editör puan kartı: açılış 8, izlenme 9, açıklık 9, özgüllük 8, özgünlük 9, kalıba uyum 9. "Tahmin: ortalamanın üstü."
+  - "Editör geçişinde 9 düzeltme".
+  - Zaman kodlu çekim metni: SUPER, sahne ve ses notlarıyla.
+  - "Neden bu senaryo", 79 videodan kanıtlarla.
+  - "Bir tur daha", kopyala / .md olarak indir.
 
-## Sizin kararınız gereken iki şey
+### 1d. Zayıf yerler (videonun kendisi söylüyor)
 
-1. **Hangi alan, hangi hesaplar?** Motor, hangi alandaki videoları okuyacağını bilmeden başlayamaz. Öneri: stüdyonun iş yaptığı alan (AI reklam ve kısa video üretimi) ile OUTLETEURO'nun alanı. Başlangıçta en çok 20 hesap.
-2. **Senaryo nereye gitsin?** Yalnız size mi gelsin, yoksa sizin "evet"inizle doğrudan stüdyo kuyruğuna mı düşsün?
+- **Senaryo:** İki modelin de senaryosu zayıf; "veri çok, tutarlı senaryoya çeviremiyor" (T 07:57–08:20, 10:52–11:15).
+- **Az örnekle kalıp:** Astra 2 videodan "9,3 kat" çıkarmış; biri 18 kat, öteki 0,4 kat (T 10:05–10:25).
+- **Ekran yükü:** Opus'un ilk ekranı yazı yığını; "karar yorgunluğu" (T 08:40–09:00). Derin sayfaları ise daha iyi bulunmuş.
 
-## Bu planın asla yapmadıkları
+## 2. Holdinge nasıl oturur
 
-- **Hiçbir şey paylaşmaz, yorum yapmaz, beğenmez.** Yalnız okur.
-- **Bahis içerikli hesap okunmaz, bahis senaryosu üretilmez.** B28'deki mutlak çizginiz bu motora da aynen bağlıdır.
-- **Yeni servis, yeni kuyruk ya da ücretli araç eklemez.** Ücretli bir yol gerekirse fiyatıyla size gelir.
-- **"Proje panosu" gibi bir ekran çıkmaz.** Ekran B43'ün canlı odasıdır; çizimi onaylanmadan tek satır ekran kodu yazılmaz (B32).
+**Tek motor, çok masa.** "Aynı şablon eklediğim her hesapta çalışır" (T 0:52). Bizde bir **masa** = bir iş + onun alanı + izlenen hesaplar. Aynı motor stüdyonun kendi hesabı için, OUTLETEURO için ve ajansın her marka müşterisi için ayrı masa açar. Bu yüzden ürün baştan çok masalı kurulur. Bir gün satılacaksa da hazır olur.
 
-## Maliyet
+| Parça | Videoda | Holdingde (bugün ölçülen) | Karar |
+|---|---|---|---|
+| Çekme | Apify (ücretli) | Instagram okuma aracı **B48** (sizin girişinizi taşıyan köprü, kabul edilmiş); tek video yt-dlp ile iniyor (bu oturumda Jacob Lee'nin videosu böyle indi) | Önce B48 köprüsü. Yetmezse Apify fiyatıyla size gelir |
+| Yazıya dökme | ElevenLabs Scribe (ücretli) | Kendi Speaches'imiz, $0 (bu oturumda 63 sn'lik video 1 çağrıda döküldü; "Apify" → "Appify", "Claude" → "Cloud" diye duydu) | Speaches + Jacob Lee'deki gibi **Claude'un isim düzeltmesi**; kalite yetmezse Scribe fiyatıyla size gelir |
+| Düşünme (puan, kırılım, not, kalıp, senaryo) | Claude, **oturum içi, ücretsiz** | Claude Code aboneliği; zamanlayıcıdan başsız (headless) oturum. **UNVERIFIED — could not measure yet**; Faz 0'da ölçülür | Ücretsiz yol birinci. API ancak ölçülmüş ihtiyaçla |
+| Araştırma | Perplexity (ücretli, yalnız kapıdan geçene) | dxb-research filosu (39 kanal, $0) | Filo, yalnız kapıdan geçene |
+| Not | Obsidian'a `SCRAPED-*.md` | Holdingin hafızası | Her not holding hafızasına girer. **Hamza'ya "bu hafta ne tuttu?" diye sorduğunuzda sesli cevap verir** |
+| Zamanlama | "Her sabah" + Elle başlat | `dxb-scheduler.service` (active) | Her sabah 06:00 + "şimdi çalıştır" düğmesi; yeni servis yok |
+| Ekran | Pano + Hat sekmesi | B43 stüdyo odası; **çizimi B32'de onaylanmadan çizilmez** | Canlı iş paneli ve yanan hat düğümleri ilk günden tasarımda |
+| Senaryo çıktısı | Kopyala / .md | B43'ün kendi sırası: senaryo → sahneler → çekimler | Sizin "evet"inizle stüdyo kuyruğuna |
 
-Videodaki iddia ayda yaklaşık 5 dolar (T 01:36). Bizde yazıya dökme, araştırma ve zamanlama $0; hepsi yerel ya da anahtarsız (ölçüldü). Puanlamanın maliyeti ölçülmeden söylenmez: Faz 3'ün ilk 50 videosunda ölçülür ve buraya yazılır.
+**Döngü kapanır, videodakinin yapmadığı şey budur.** Stüdyo senaryoyu çeker, siz onaylayıp paylaşırsınız. Ertesi sabah motor bizim videomuzun rakamlarını da okur ve senaryonun tahmini ile gerçek sonuç yan yana yazılır. Senaryo zayıflığının cevabı "daha çok veri" değil, **kendi sonucumuzdan geri bildirim** (1d).
 
-## Sıra
+## 3. Fazlar — her biri önce/sonra ölçülü; kabul maddesi işten önce yazılır; kodu builder (max) yazar, refuter çürütmeye çalışır, her faz tek commit (dxb-crew)
 
-Siz bu planı görüp "yap" demeden kimse bir şey yapmaz. Onaydan sonra fazlar dxb-crew düzeniyle koşar: baş mühendis ölçer, kodu builder yazar, refuter çürütmeye çalışır, her faz tek commit.
+| # | Faz | Ne yapılır | Kabul maddesi (komut → beklenen) |
+|---|---|---|---|
+| 0 | **Ölçüm** | B48 köprüsü bir hesabın son 12 videosunu adres ve izlenme sayısıyla okuyor mu? Zamanlayıcı başsız bir Claude oturumunu başlatıp JSON alabiliyor mu? Speaches ve Claude düzeltmesi 10 videoda isimleri doğru veriyor mu? | `scripts/signal/probe.sh` → 3 hesap × ≥10 video + izlenme · başsız Claude çağrısı JSON döner · 10 yazıda yanlış isim 0 |
+| 1 | **Cetvel + veri** | Önce `proof.mjs`, sonra kanonik göç: masa, hesap, video, günlük rakam, yazı, çözümleme, kalıp, senaryo, not tabloları. Testler inşaat motorunda (54422) | `pnpm test tests/signal` yeşil; boş günde `proof.mjs` "0 yeni video" basar, 1 ile çıkar |
+| 2 | **Çekme + yazıya dökme** | Tur: çek → ayıkla → indir (yalnız ses) → yazıya dök → isim düzeltme. Yarıda kesilirse yalnız eksiği yapar | Aynı tur iki kez: ikincisi 0 yeni iş; yazısız video 0 |
+| 3 | **Çözümleme + kapı** | Talimattaki 15 alan; **sabit açılış sınıflandırması** (Jacob Lee'nin 8 türü başlangıç; yeni tür yalnız kanıtla eklenir); patlama puanı = hesabın kendi ortancasına göre kat + güven derecesi; **az örnek kuralı** (bir kalıp en az 5 video ve 3 hesaptan beslenmeden "kalıp" sayılmaz); kapı ≥ 7 | 50 videoda 15 alan dolu; kat sayısı elle hesaplanan 5 örnekle birebir; kapıda kalan video için 0 araştırma çağrısı |
+| 4 | **Kalıplar** | "Önemli olan 5 kalıp": her biri kat, n, hesap sayısı ve isabetle ve **bir sonraki videoda ne yapılacağı** talimatıyla. Yükselen / soğuyan konular, boş alanlar | Her kalıp satırı kendi videolarına adres adres iner; n < 5 olan kalıp listede yok |
+| 5 | **Senaryo stüdyosu** | Tek özgün senaryo: kanıtlı konu, açılış, açı, yapı; 3 yedek açılış; editör puan kartı ve düzeltme geçişi; zaman kodlu çekim metni; "neden bu senaryo" kanıtlarıyla. B43 sırasına girer | Senaryo dayandığı videoları gösterir; "evet"le B43 kuyruğunda iş olur |
+| 6 | **Hafıza + Hamza** | Kapıdan geçen her videonun notu holding hafızasına yazılır; Hamza bu veriden cevap verir | Hamza'ya "bu hafta hangi açılış tuttu?" sorusu, kalıp tablosundaki ile aynı cevabı sesli verir |
+| 7 | **Ekran** | B32'de çizimini onayladığınız oda: Call sheet · Video tablosu · Kalıplar · Senaryo stüdyosu · Masalar · Hat. **Canlı iş paneli** her an açık ("çözümleniyor 156/435 · sonraki yenileme 23 sa"); Hat sekmesinde çalışan düğüm yanar | Sizin kabul testiniz: sayfayı açarsınız, dokunmazsınız, işin ilerlediği görünür |
+| 8 | **Döngü** | Bizim paylaşımlarımızın rakamları da okunur; senaryonun tahmini ile gerçek sonucu yan yana yazılır | Paylaşılan her senaryo için 7. günde "tahmin vs gerçek" satırı var |
+
+## 4. Sizin kararınız gereken üç şey
+
+1. **İlk masa hangisi?** Önerim: **stüdyonun kendi alanı + OUTLETEURO**. İkisinin de sonucu gerçek rakamla ölçülür; ajans müşterisi gelince onun masası aynı düğmeyle açılır.
+2. **Ücretli yol:** Köprü ve Speaches Faz 0'da yetmezse Apify (videoda ayda yaklaşık 5 dolar) ve Scribe fiyatlarıyla önünüze gelir. Para çıkışı sizin onayınızdır.
+3. **Paylaşım:** Önerim, motorun yalnız okuyup önermesi; paylaşma kararı her zaman sizde.
+
+## 5. Bu ürünün asla yapmadıkları
+
+- Hiçbir şey paylaşmaz, yorum yapmaz, beğenmez; yalnız okur.
+- **Bahis içerikli hesap okunmaz, bahis senaryosu yazılmaz** (B28'deki mutlak çizginiz).
+- Rakibin videosunu kopyalamaz. Talimattaki kural aynen geçerli: "kopyalamadan neyin alınabileceği".
+- Yeni servis, yeni kuyruk açmaz; ücretli araç ancak onayınızla girer.
+- Çizimi onaylanmadan tek satır ekran kodu yazılmaz (B32).
+
+## 6. Maliyet
+
+Videoda ayda yaklaşık 5 dolar (V+T). Bizde yazıya dökme, araştırma ve zamanlama $0 (ölçüldü). Düşünme işi abonelik içinde yürüyebilirse o da $0; bu Faz 0'da ölçülür, ölçülmeden söylenmez.
+
+## 7. Devir notu — bu işi alan oturum için
+
+- **Oku:** bu dosya + `SOURCE-PROMPT.md` + tahtada B43'ün "THE NIGHT CONTENT ENGINE" notu. Kaynağı yeniden izlemene gerek yok; yukarıdaki okuma bu oturumda kareler ve sesle yapıldı. Medya scratchpad'deydi ve oturumla gider.
+- **Kaynak adresleri:** orijinal video `https://www.instagram.com/p/Dah3raWzV4i/` (yt-dlp sesiyle indirir) · kıyas videosu `https://www.youtube.com/watch?v=vUjAgGa8tAU` (sistem 00:42–02:30, Opus'un ürünü 04:40–08:30, Astra 08:30–11:25, skor 11:25–11:58).
+- **CEO'nun bu işteki hükümleri:** Rakip analizi değil, **holding için ürün**. Özet ile iş yapılmaz, kaynak eksiksiz okunur. Soru sorup onu yorma; planı hazırla, onayını al. Her şey Ferrari seviyesinde.
+- **Sıradaki adım:** Bu plan CEO'nun gözünü bekliyor. "Yap" derse Faz 0 dxb-crew düzeniyle başlar. Onaysız tek satır kod yok.
