@@ -110,17 +110,20 @@ write (measured: a restore that re-granted quality grants wrote 13 rows after th
 
 ## 3. The context gate — measure it, never guess it
 
-The CEO's rule, 2026-09-21: *"%40 olsun maksimum"* and *"faz 3'ü bitirdi ve %30 … faz 4'te bu
-iş çok uzun ve session %45'i geçicek, o zaman yeni devir yapsın."* A writer once reported
-"~16 %" while the bar said 44 % — that estimate was a guess, and guessing is what this gate
-forbids.
+The CEO's numbers, 2026-09-26: **50 / 55** — *"tmm önerini yapalım"* on the recommendation put
+to him (a 1M window; a handover costs ≈ 8 % of it in the successor's opening alone; ~2 jobs a
+session under 40, ~3 under 50). They replace his 40 / 45 of 2026-09-21 (LAW A), which were set
+after a writer reported "~16 %" while the bar said 44 % — that estimate was a guess, and guessing
+is what this gate forbids. Since B59 (2026-09-26) a hook holds both numbers
+(`~/.codex/hooks/dxb-context-gate.py`): the red line on every prompt from 50 %, the Agent tool
+refused from 55 % in every session opened after it.
 
 - **Read the bar, in this order:** `dxb-ctx --pct` (the status bar's own number, written by
   `~/.codex/hooks/dxb-statusline.js` for this session), and when it refuses (no record, or
   older than 10 min) `operator shot` and READ the percentage beside the model name at the
   bottom of the terminal. Every report to the CEO opens with `CONTEXT: N% (tokens)`.
 - **When:** after every phase (step 8) and before starting one.
-- **Hand over if** used ≥ 40 %, **or** used + the next phase's honest estimate > 45 %. A phase
+- **Hand over if** used ≥ 50 %, **or** used + the next phase's honest estimate > 55 %. A phase
   estimate comes from the phases already done in this job (tokens per phase so far), not from
   hope.
 - **Only at a clean break:** no battery running, tree committed, the report sent. A handover in
