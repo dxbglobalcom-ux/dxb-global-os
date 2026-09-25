@@ -72,7 +72,10 @@ effort sweep on your own evals rather than carrying settings over"*) and the T8 
   *"often the best balance of quality and token efficiency"*); second look `xhigh` (*"exploratory
   tasks such as repeated tool calling"*); last look `max` (*"reserve for frontier problems"*).
   The gate holds the line mechanically: `builder-medium` never writes a guarded path; the size of
-  a medium lane is the lead's call, not a rule.
+  a medium lane is the lead's call, not a rule. When the weekly quota is tight (LEAN: ≥ 80 % with
+  more than 24 h to the reset, B60) the gate turns `builder` into `builder-lean` — except a lane
+  the lead DECLARES guarded: an `Agent(builder)` whose description starts with `guarded:` stays at
+  max, logged `keep-max-guarded`; a guarded path is never written at medium in any mode.
 
 ## 4. The loop
 
