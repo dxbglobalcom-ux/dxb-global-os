@@ -16,6 +16,9 @@
 
 set -uo pipefail
 export OPENCLI_WINDOW=background      # never throw a tab across his screen
+# Every opencli below goes through bin/opencli first (2026-09-24): each thread gets its own window
+# in the hidden research Chrome, so parallel reads can never drive, and overwrite, one shared tab.
+export PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/bin:$PATH"
 
 URLS="${1:-}"; OUT="${2:-}"; shift 2 2>/dev/null || true
 W=6; TMO=180

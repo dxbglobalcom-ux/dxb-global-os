@@ -41,7 +41,6 @@ their names; `<outdir>` keeps one `.raw` per channel so the numbers are checkabl
 
 ```bash
 R='/home/dxb/DxB Global OS/.agents/skills/dxb-research/scripts'
-export OPENCLI_WINDOW=background          # ALWAYS. Never throw a tab across the CEO's screen.
 
 # the crowd, at full power — 131 comments and 103 people in 3.9 s, measured 2026-09-17
 bash "$R/crowd.sh" urls.txt OUTDIR --workers 6        # reddit threads -> OUTDIR/CROWD.txt
@@ -54,25 +53,28 @@ bash "$R/sweep.sh" "<query>" OUTDIR --tier max --pages 14
 # one page, twelve doors, in order, until one opens
 python3 "$R/fetch.py" <url>                  |  python3 "$R/fetch.py" --batch urls.txt --outdir D
 
-# the platforms, through the CEO's own logged-in Chrome (READ ONLY)
+# the platforms, through the HIDDEN signed-in copy of the CEO's Chrome (READ ONLY)
+#   `opencli` here is the research door (bin/opencli, first on your PATH): every browser-backed
+#   call gets its own window in the hidden Chrome on a virtual screen and nothing reaches his.
 opencli youtube transcript <url> -f plain    # 18 965 B of what was actually SAID
 opencli youtube comments <url> --limit 100 -f yaml
 opencli twitter search "<q>" -f yaml         # full post text + urls
 opencli facebook search "<q>" -f yaml        # groups, pages, posts
-opencli browser <site> open <url> --window background && opencli browser <site> extract --window background
-#   ^ This one raises a visible "OpenCLI Browser" window and --window background cannot stop
-#     it. The CEO ruled on 2026-09-17 that this is fine — "pencere açılımı sorun değil, iş
-#     aksamasın" — so use it whenever a door needs a login or defeats every headless reader.
-#     Say in block D that you used it, and never leave a page half-read behind it.
-#   ^ the universal key: it carries his session, so it reads what a logged-out fetcher cannot
-#     (Quora 19 739 B · a Facebook group's post bodies · an Instagram caption — all measured 2026-09-17)
-opencli browser <site> state|find|click|type|scroll   # when a page needs a hand, use it
+python3 "$R/hidden.py" read <url> [--wait S] [--expand 'See more'] [--text]
+#   ^ the universal key: a page that needs his session or defeats every other reader (Quora
+#     19 739 B · a Facebook group's post bodies · an Instagram caption). X, Facebook, Instagram,
+#     Reddit, Quora and Perplexity read as him (his site cookies are copied into the hidden
+#     Chrome); Google and YouTube read signed out. It never touches his screen.
+python3 "$R/hidden.py" google "<short query>"   # Google's results; its consent wall or /sorry/ -> Startpage/Brave, named
+#   `opencli browser …` is REFUSED (exit 3): it drives the Bridge inside his own Chrome and throws
+#   the window onto his screen that he ordered gone on 2026-09-24. There is no click/type/scroll
+#   door; --expand is the one hand the hidden reader has — say in block D what that left unread.
 gh search issues|repos "<q>" --json ...      # what actually breaks, in the open
 yt-dlp --write-auto-sub --skip-download <url>
 pdftotext file.pdf -                          # the only door that reads a PDF
 python3 "$R/fetch.py" <url>                   # TWELVE doors, in order, until one opens —
 #     subtitles, PDF text, scrapling, scrapling STEALTH, the platform's own reader, the
-#     signed-in browser, tavily, firecrawl, exa, a headless browser, jina, curl. Use this and
+#     hidden signed-in browser, tavily, firecrawl, exa, Playwright in the hidden browser, jina, curl. Use this and
 #     never a single fetcher: a page is unread only when every door has failed, and then the
 #     log names each one and what it answered. (An MCP tool is not available to you — a hunter
 #     runs with the MCP servers switched off and the repository bound READ-ONLY, so it can read

@@ -23,6 +23,9 @@ set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL="$(cd "$HERE/.." && pwd)"
 REPO="$(cd "$SKILL/../../.." && pwd)"
+# Every opencli the run reaches goes through bin/opencli (2026-09-24): the browser channels run in
+# the hidden research Chrome on Xvfb :99, so no part of this run reaches his screen.
+export PATH="$SKILL/bin:$PATH"
 
 QUESTION="what do developers say about on-call burnout in site reliability engineering"
 OUT=""

@@ -161,7 +161,8 @@ described to him.
 - Acceptance inside the loop is by **measurement**; nothing waits for his eye to *continue*.
   What needs his eye to be *accepted* (LAW B) is listed under "waiting on him" in the record
   and in the next report, and the loop moves to the next phase.
-- The approval gate is untouched: money out, contracts, e-mail, ad spend, identity steps stop.
+- The approval gate is untouched: money out, contracts, ad spend, identity steps and the subjects he
+  marks stop.
   Deleting anything in the company engine stops too — first a list with sizes, then his click.
 - Every report he will read on return opens with the position (`CLAUDE.md` §0 — a line with
   nothing in it is dropped, not announced) and then the phase result. *"Ne yapmamı istersiniz?"* is a failure.

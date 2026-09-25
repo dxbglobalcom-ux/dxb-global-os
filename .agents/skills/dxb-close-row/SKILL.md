@@ -27,15 +27,11 @@ date — the battery fails on it.
 Rows whose closing evidence has a leg the machine cannot check go to the audit twin first
 (door `dxb-verify`), and then to him.
 
-**AND SINCE 2026-08-27 THE MACHINE ENFORCES IT — his order, "1-KOY".** A board row written as
-`✓ CLOSED` MUST carry `<!-- CEO-OK: <id> -->` naming a registered approval, or the battery goes
-red. There is no second door and no "closed on evidence" exemption. The rule is
-`scripts/governance/closure-guard.mjs`, the gate asks it, and
-`tests/governance/no-closure-without-his-word.test.ts` calls the same function — each predicate
-proven red by deleting it. **Why it exists:** that morning the author wiped the rented box on his
-order, decided by himself that rows B09, B10 and B11 were void with it, and closed all three. B10
-was never about the box. He caught it — *"BEN BUNU FARKETMESEM BOK GİBİ MAHVOLACAKTIK"* — and
-nothing in the gate could have. **So: you do not close a row. He does.**
+**The machine enforces it (his order "1-KOY", 2026-08-27).** A board row written `✓ CLOSED`
+carries `<!-- CEO-OK: <id> -->` naming a registered approval, or the battery goes red
+(`scripts/governance/closure-guard.mjs`, `tests/governance/no-closure-without-his-word.test.ts`).
+There is no "closed on evidence" exemption. You never close a row, including one whose premise
+seems gone; he does.
 
 ## Marking what you write, so the machine can check it
 

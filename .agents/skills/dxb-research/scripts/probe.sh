@@ -28,6 +28,9 @@ export OPENCLI_WINDOW=background
 # of: foreground, background" — proof the variable reaches them. So nothing in this file may
 # call a login verb, and the guard below refuses to run if one ever appears.
 SKILL="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Since 2026-09-24 the probes go through bin/opencli: a browser-backed probe is answered by the
+# hidden research Chrome (Xvfb :99), never by his.
+export PATH="$SKILL/bin:$PATH"
 TMO=20
 OUT=""
 CHANNELS=()

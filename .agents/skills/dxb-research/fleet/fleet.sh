@@ -29,6 +29,12 @@
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL="$(cd "$HERE/.." && pwd)"
+# EVERY opencli IN THE FLEET GOES THROUGH bin/opencli (2026-09-24): the grounds' and the hunters'.
+# For the grounds this export is enough. For a hunter it is not: its Bash tool sources the login
+# shell snapshot, and ~/.bashrc puts ~/.npm-global/bin (the real opencli) back in front of it.
+# Claude Code sources CLAUDE_ENV_FILE AFTER that snapshot (read in the 2.1.281 binary, not yet
+# watched in a live hunter), so each hunter is handed the shim through that file below.
+export PATH="$SKILL/bin:$PATH"
 
 OUT="${1:-}"; shift 2>/dev/null || true
 N=4; MODEL=sonnet; TMO=1500; ROLES=""; DERT=""
@@ -163,12 +169,19 @@ else
 fi
 
 ARSENAL="$(cat "$HERE/ARSENAL.md")"
+HUNTER_ENV="$OUT/hunter-env.sh"
+printf 'export PATH=%q:"$PATH"\n' "$SKILL/bin" > "$HUNTER_ENV"
 launched=0
 for role in $PICK; do
   line=$(grep -P "^${role}\t" "$HERE/roles.tsv" | head -1 | cut -f2-)
   [ -z "$line" ] && { echo "!! bilinmeyen rol: $role" >&2; continue; }
   {
     printf '%s\n\n' "$ARSENAL"
+    # The arsenal says `opencli` is the door first on the hunter's PATH. That PATH comes from
+    # CLAUDE_ENV_FILE below — read in the Claude Code binary, not yet watched in a live hunter — so
+    # the door's own address is given once more, as the fallback (2026-09-24).
+    printf 'If `command -v opencli` does not print %s, call that path instead of opencli.\n\n' \
+        "'$SKILL/bin/opencli'"
     printf 'YOUR LANE — %s\n\n' "$line"
     printf 'THE QUESTION THE FLEET IS ANSWERING:\n%s\n\n' "$QUESTION"
     # THE SENTENCE MATCHES THE RUN. It used to say "in every language of the question" on every
@@ -212,6 +225,7 @@ for role in $PICK; do
   (
     s=$(date +%s)
     builtin cd "$OUT/work-$role" || exit 9
+    export CLAUDE_ENV_FILE="$HUNTER_ENV"     # the shim first on every Bash call of the hunter
     timeout "$TMO" "${JAIL[@]}" claude -p "$(cat "$OUT/prompt-$role.txt")" \
         --model "$MODEL" --effort high \
         --permission-mode bypassPermissions \
@@ -239,10 +253,8 @@ echo
 # with crowd.sh — a script, free, instant, and it never invents.
 CROWDF="$OUT/crowd-count.txt"
 : > "$CROWDF"
-for gd in $GROUND_DIRS; do
-  grep -ohE 'https?://(www\.)?(reddit\.com/r/[^ "]+/comments/[^ "]+|news\.ycombinator\.com/item\?id=[0-9]+)' \
-    "$gd"/*.raw 2>/dev/null | sed 's/[),.]*$//'
-done | sort -u | head -24 > "$OUT/crowd-urls.txt"
+# One thread, one line: markdown's escapes are undone before the de-dup (crowd-urls.sh).
+bash "$HERE/crowd-urls.sh" $GROUND_DIRS | head -24 > "$OUT/crowd-urls.txt"
 if [ -s "$OUT/crowd-urls.txt" ]; then
   echo "kalabalik sayiliyor: $(wc -l < "$OUT/crowd-urls.txt") baslik"
   # HIS RULING, 2026-09-20 — every quote carries the DATE OF ITS THREAD. The ground that

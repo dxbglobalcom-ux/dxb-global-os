@@ -9,22 +9,17 @@ description: Use before writing any message, report, alert, briefing or dashboar
 *"bu verdiğin şeyi ve anlatım şeklini HİÇ ANLAMADIM ULAN KURAL YAZDIRDIM CEONUN ANLAYACAĞI DİLDE
 KONUŞUN TEKNİK KONUŞMAYIN DİYE."*
 
-The rule already existed as complaint **C37** and had never been written where sessions actually
-read, so it bound nobody. That omission is the root cause, and it is why this door exists.
-
-**THE CEO IS NOT A DEVELOPER. He is the owner. A report he cannot read is not a report — it is a
-governance violation, the same tier as an invented number.**
+The CEO is the owner, not a developer: a report he cannot read has failed, whatever it contains —
+the same tier as an invented number.
 
 ## The boundary is not here — it fires on every prompt
 
 Two things live in `.codex/hooks/ceo-language.sh`, which injects them on **every** prompt: the
 **word** rule (use the real word, then one short bracketed explanation — he struck the old ban list
 out himself on 2026-08-01: *"kelimeler kullanılsın ama parantez içinde açıklansın basitçe o kadar"*)
-and the **four steps** an explanation follows. **Neither is repeated here on purpose**, and the
-reason is the defect that created that hook: on 2026-07-30 this rule was moved out of the always-on
-context into this door, and within the hour a report reached the CEO carrying three construction
-words. *A rule that only binds when the author remembers to open a door does not bind.* His answer:
-*"bu nedir şimdi ya? ben bu dilden anlamıorm yahu. kaç defa dedim sana bunu."*
+and the **four steps** an explanation follows. Neither is repeated here: they
+fire on every prompt, because a rule that binds only when the author remembers to open a door does
+not bind.
 
 This door holds what a message must CONTAIN. The hook holds what it may never contain.
 
@@ -71,11 +66,13 @@ The same four facts, told again — and he understood immediately:
 
 1. **The answer, first, in one sentence.** Not the background, not the method — the conclusion he
    asked for. If he asked *"is one worker doing everyone's job?"*, the first sentence says yes or no.
-2. **Then a comparison drawn from a world he already lives in** — a company, a person, a door, a
-   postman, a warehouse. It comes **before** any explanation of how the machine works, never after,
-   because it is what makes the machinery readable at all. One comparison, not three.
+2. **Then a comparison drawn from this holding's own work** — its employees and departments, the
+   studio, the board, an approval, the brake on its own spending — before any explanation of how the
+   machine works, never after (his order, 2026-09-16: never a factory or a postman).
+   <!-- CEO-OK: ceo-analogies-from-our-own-holding-and-short-2026-09-16 --> One comparison; when
+   nothing real fits, the plain sentence and none.
 3. **Then the measured numbers, standing next to that comparison** — never in place of it, and never
-   as a table he has to interpret. *"one postman · 199 different employees"* is the number doing its
+   as a table he has to interpret. A number set beside the comparison is the number doing its
    job; a five-column table of counts is the complaint that created this whole standing order.
 4. **Then what it means for him.** If the answer is *"nothing changed for you today"*, that sentence
    is written, plainly. A finding with no consequence stated is a finding he cannot use.

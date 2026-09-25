@@ -23,12 +23,14 @@ URL = re.compile(r"https?://[^\s\"'<>)\]},`\\]+")
 # WHICH DOORS THIS LANE ACTUALLY OPENED. The CEO asked "was Google searched at all?" on the
 # first fleet run (2026-09-17) and nobody could answer it without reading seven transcripts.
 # A machine answers it now, on every run, from the hunter's own tool calls.
+# `browser`: since 2026-09-24 a browser read is scripts/hidden.py; `opencli browser` is refused
+# (exit 3) by bin/opencli and is matched only so an old transcript still reads the same.
 CHANNEL_PAT = [
     ("sweep", r"sweep\.sh"), ("google", r"opencli google search"),
     ("ddg", r"opencli duckduckgo"), ("reddit", r"opencli reddit|crowd\.sh"),
     ("x", r"opencli twitter"), ("youtube", r"opencli youtube|yt-dlp"),
     ("hn", r"opencli hackernews|hn\.algolia"), ("github", r"gh search|gh api"),
-    ("browser", r"opencli browser"), ("quora", r"quora"), ("fb/ig", r"opencli facebook|opencli instagram"),
+    ("browser", r"opencli browser|hidden\.py"), ("quora", r"quora"), ("fb/ig", r"opencli facebook|opencli instagram"),
     ("cn", r"opencli zhihu|linux-do|opencli weibo|bili"), ("akademik", r"arxiv|crossref|openalex|europepmc"),
     ("zincir", r"fetch\.py"), ("model-arama", r'"WebSearch"|"WebFetch"'),
 ]

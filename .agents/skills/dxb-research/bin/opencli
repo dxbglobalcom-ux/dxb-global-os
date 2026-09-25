@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+# DXB-HIDDEN-CHROME-SHIM — the research tool's one door to opencli. (hidden.py finds copies of this
+# file by the marker at the start of this line, so a shim never mistakes another shim for opencli.)
+"""
+WHY IT EXISTS. 2026-09-24: every research run threw two Chrome windows and an empty `about:blank`
+window onto the CEO's screen, because opencli drives HIS Chrome through the Browser Bridge.
+sweep.sh, crowd.sh, fetch.py, probe.sh, accept.sh and fleet.sh (and, through CLAUDE_ENV_FILE, the
+hunters it launches) put this folder first on PATH, so every `opencli` they run arrives here:
+
+  * a browser-backed command gets its OWN window in the hidden research Chrome (Xvfb :99,
+    127.0.0.1:9333) — opened here, handed to opencli as OPENCLI_CDP_ENDPOINT, and closed when
+    opencli ends: on success, on error and on timeout alike;
+  * an API-only command runs untouched;
+  * `opencli browser ...`, every other built-in that could reach the Bridge, sign-in and every
+    write verb are REFUSED with exit 3 and a line saying what to use instead;
+  * when 127.0.0.1:9333 does not answer: one line, a non-zero exit, and nothing is started.
+
+Why a window per call and not opencli's own `OPENCLI_CDP_ENDPOINT=http://…` mode: that mode picks
+ONE existing page (cdp.js selectCDPTarget), so parallel calls would drive and overwrite each other's
+tab. The sites themselves are routed to port 9333 by ~/.opencli/apps.yaml (hidden.py apps).
+"""
+import contextlib
+import os
+import signal
+import subprocess
+import sys
+from pathlib import Path
+
+sys.dont_write_bytecode = True     # the skill folder is read-only inside a hunter's jail
+SCRIPTS = Path(__file__).resolve().parent.parent / "scripts"
+sys.path.insert(0, str(SCRIPTS))
+import hidden  # noqa: E402
+
+REFUSED = 3
+# The built-ins that never touch a browser. Everything else that is not a site — `browser`,
+# `doctor`, `daemon`, `profile`, `plugin`, `adapter`, `external`, ... — is refused.
+HARMLESS = {"list", "help", "completion", "--help", "-h", "--version", "-V"}
+SLOT_WAIT = 600        # seconds a call queues for one of hidden.SLOTS windows
+MAX_SECONDS = 900      # a hung opencli may not hold a window for ever
+READER = f"python3 '{SCRIPTS / 'hidden.py'}' read '<adres>'"
+BROWSER_MSG = ("`opencli browser` bu makinede kapali: CEO'nun kendi Chrome'unu surer ve ekranina pencere "
+               f"acar (2026-09-24). Sayfayi gizli arastirma Chrome'unda oku: {READER} "
+               "[--wait SN] [--expand 'See more']")
+
+
+def say(msg: str) -> None:
+    print(f"opencli (dxb): {msg}", file=sys.stderr)
+
+
+def classify(argv: list[str], root: Path) -> tuple[str, str]:
+    """('plain' | 'hidden' | 'refuse', why)."""
+    first = argv[0] if argv else "--help"
+    if first in HARMLESS:
+        return "plain", ""
+    if first == "browser":
+        return "refuse", BROWSER_MSG
+    sites = hidden.commands(root)
+    registered = hidden.registered_sites()
+    if first not in sites:
+        return "refuse", (f"'{first}' opencli'nin bir sitesi degil; buradan yalniz site komutlari ve "
+                          "list/help calisir (baska yerlesik komutlar Browser Bridge'e gidebilir)")
+    cmd = argv[1] if len(argv) > 1 and not argv[1].startswith("-") else None
+    if cmd is None:
+        return "plain", ""                      # the site's own help
+    entry = sites[first].get(cmd)
+    if entry is None:
+        # not in the manifest: opencli will answer "unknown command" — but if it is a browser
+        # command after all, it must not find its way to the Bridge
+        return ("hidden", "") if first in registered else (
+            "refuse", f"'{first} {cmd}' opencli'nin listesinde yok ve '{first}' gizli Chrome'a kayitli degil")
+    browser_backed, access = entry
+    if access == "write" or cmd == "login":
+        return "refuse", (f"'{first} {cmd}' bir yazma/giris fiili: arastirma yalniz okur, yazmak CEO'nun "
+                          "imzasidir (SKILL.md 8)")
+    if not browser_backed:
+        return "plain", ""
+    if first not in registered:
+        return "refuse", (f"'{first}' ~/.opencli/apps.yaml'da gizli Chrome'a kayitli degil; opencli onu "
+                          "CEO'nun ekranindaki Browser Bridge'e gonderirdi. Kayit: "
+                          f"python3 '{SCRIPTS / 'hidden.py'}' apps")
+    return "hidden", ""
+
+
+def run(real: str, argv: list[str], env: dict) -> int:
+    child = subprocess.Popen([real, *argv], env=env)
+
+    def forward(signum, _frame):
+        with contextlib.suppress(ProcessLookupError):
+            child.send_signal(signum)
+
+    for s in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+        signal.signal(s, forward)
+    try:
+        rc = child.wait(timeout=MAX_SECONDS)
+    except subprocess.TimeoutExpired:
+        say(f"opencli {MAX_SECONDS} sn'yi asti; durduruldu, penceresi kapatiliyor")
+        child.terminate()
+        try:
+            child.wait(10)
+        except subprocess.TimeoutExpired:
+            child.kill()
+            child.wait()
+        return 124
+    return 128 - rc if rc < 0 else rc
+
+
+def _exit_now(signum, _frame):
+    raise SystemExit(128 + signum)   # unwinds the `with` blocks: a window already opened is closed
+
+
+def main() -> int:
+    for s in (signal.SIGTERM, signal.SIGHUP):
+        signal.signal(s, _exit_now)
+    argv = sys.argv[1:]
+    real = hidden.next_opencli()
+    if not real:
+        say("gercek opencli PATH'te bulunamadi")
+        return 127
+    if argv[:1] == ["browser"]:
+        say(BROWSER_MSG)
+        return REFUSED
+    root = hidden.package_root(real)
+    if root is None:
+        # a stand-in (the test benches and the ruler put one first on PATH): nothing behind it can
+        # reach a browser, and it must answer exactly as it would without this door
+        os.execv(real, [real, *argv])
+    kind, why = classify(argv, root)
+    if kind == "refuse":
+        say(why)
+        return REFUSED
+    if kind == "plain":
+        os.execv(real, [real, *argv])
+    if not hidden.apps_valid(root):
+        say(f"{hidden.APPS_YAML} opencli'nin kendi YAML okuyucusundan gecmiyor; opencli onu sessizce yok "
+            "sayar ve her tarayici cagrisini CEO'nun ekranina gonderir. Yeniden yaz: "
+            f"python3 '{SCRIPTS / 'hidden.py'}' apps")
+        return REFUSED
+    if not hidden.version():
+        say(hidden.DOWN_MSG)
+        return 69
+    try:
+        hidden.reap()
+        with hidden.slot(SLOT_WAIT):
+            with hidden.Tab() as tab:
+                env = dict(os.environ, OPENCLI_CDP_ENDPOINT=tab.ws)
+                env.pop("OPENCLI_CDP_TARGET", None)
+                return run(real, argv, env)
+    except hidden.Down:
+        say(hidden.DOWN_MSG)
+        return 69
+    except hidden.SlotTimeout as e:
+        say(str(e))
+        return 75
+    except (hidden.CDPError, OSError) as e:
+        say(f"gizli Chrome'da pencere acilamadi: {e}")
+        return 69
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
