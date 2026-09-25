@@ -48,7 +48,7 @@ you here, in Turkish. This chain of sessions does research and thinking only. **
   plus the commit of this handover.
 - **Nothing waits on him in STUDY §6 any more.** The plan order was approved 22:55 ("tamam plan sırasını baş mühendise
   yazdır. önce bir session aç kendin. dxb crew skill'ini kullan"); then, at ~22:55, *"boşver herşeyi hazırla masa üstüne koy md
-  olarak yarın bakarız"* — the chief engineer session (Opus 5.5 · xhigh, dxb-crew door) is NOT opened yet; its note is
+  olarak yarın bakarız"* — the chief engineer session was not opened that night. **DONE 2026-09-25 22:22–22:47 by the Fable 5.1 session he opened himself (his word: *"bizim çalışacağımız konus masa üstündeki SIGNAL-GELİR işi"*), `dxb-crew` door, commits 9e4820b8 · b14773c2 · 0113ee05 · 9bfc8a55 · 41f8603b; the plan's order is in PLAN.md §3a, the ledger entry is `signal-plan-order-tamam-2026-09-24`, the plan itself still unapproved.** Its note was
   `CREW-NOTE-plan-order.md` in this folder; the launch line and everything he will read tomorrow are in
   `/home/dxb/Desktop/SIGNAL-GELIR-CALISMASI-2026-09-24.md` (§8). Tomorrow, on his word, the engineer opens it through operator
   (crew door §4.2; click your own pane first; if he is typing, wait).

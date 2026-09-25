@@ -1,5 +1,7 @@
 # CREW — chief engineer session (Opus 5.5 · xhigh), opened 2026-09-24 ~23:10 by the Fable 5.1 research session on the CEO's order
 
+> **EXECUTED 2026-09-25 22:22–22:47** — not by an Opus 5.5 session: on his word that evening (*"bizim çalışacağımız konus masa üstündeki SIGNAL-GELİR işi. onu fable 5.1 hazırlamıştı."*) the Fable 5.1 session he opened took the chief engineer's seat (CLAUDE.md §1, live word wins; reported to him). P1 PLAN.md §3a `9e4820b8` · P2 ledger `b14773c2` · P3 board B43 `0113ee05` · refuter pass `9bfc8a55` · P4 STATE `41f8603b`. This note is kept as the briefing it was; nothing below is re-run.
+
 You are the CHIEF ENGINEER of a `dxb-crew` job. Your FIRST act: `Skill("dxb-crew")` with the job sentence below as args, then
 follow that door (INTAKE → phases with acceptance items written before each phase → refute → re-measure → commit per phase →
 report → context gate at 40 %). The CEO is Muhittin Bey ("Muhittin Bey" or "CEO Bey", never the bare name); he talks to you here,
