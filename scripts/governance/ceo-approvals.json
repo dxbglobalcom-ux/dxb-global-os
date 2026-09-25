@@ -1424,5 +1424,13 @@
   "conditions": "His acceptance of the recommendation as stated (handover first, hook as the successor's first job). Not a law; a job. The hook is a governance file → written by builder (max) from the chief engineer's spec, with tests; the numbers 40 / 45 are his own rule of 2026-09-21.",
   "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~00:25 on 2026-09-26, at dxb-ctx --pct = 48.",
   "where": "board row B59 · .planning/STATE.md · .planning/quick/20260925-dxb-team1/HANDOVER-2026-09-26.md"
+ },
+ "lean-rule-repaired-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "HE ASKED WHETHER THE 80 % WEEKLY-QUOTA RULE (code at medium once the seven-day quota is at or above 80 %, his 2026-09-24 rule) IS GOOD OR BAD, AND TOOK THE ENGINEER'S RECOMMENDATION: KEEP IT, REPAIRED IN TWO PLACES. Measured that night: the rule fired at 80 % with the reset 9.5 hours away (10:00 the same morning), in the middle of a hook repair — it reads the level, not the time left; and in LEAN mode the guarded paths (hooks, gates, money, database) may be written at medium, which the NORMAL mode forbids. The two repairs: (1) LEAN only when the seven-day quota is ≥ 80 % AND the reset is more than 24 hours away; (2) a guarded path is written at max in every mode — in LEAN a medium write on a guarded path is denied and the work waits or goes to max.",
+  "verbatim": "önerini yap.",
+  "conditions": "His acceptance of the recommendation as stated (three options were put to him: keep + two repairs (recommended) · keep as is · drop). Not a law; a job. The change is in the code gate (a governance file) → builder from the chief engineer's spec, with tests; the number 80 stays his; 24 h is the engineer's proposed constant, one place, named.",
+  "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~00:45 on 2026-09-26, after his question \"yahu %80 ne alaka anlamıorm\" and \"bu iyi mi kötü mü … senin önerin nedir kalsın mı gitsin mi?\".",
+  "where": "board row B60 · .planning/STATE.md · .planning/quick/20260926-b59-context-gate/EVIDENCE-B60-2026-09-26.md"
  }
 }
