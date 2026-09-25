@@ -11,7 +11,9 @@ bazen onu kullanırız"*). <!-- CEO-OK: dxb-team1-ordered-2026-09-25 --> His wor
 effort the same night: *"işin zorluk seviyesine göre ya max'li opus 5.5'e ya da mediumlu opus 5.5'e
 ver"* — the lead decides per lane, by difficulty, not a size envelope.
 <!-- CEO-OK: dxb-team1-effort-by-difficulty-2026-09-25 --> Build order: *"tmmdır dxb-team1
-yapılsın"*. <!-- CEO-OK: dxb-team1-build-order-2026-09-25 --> The laws this door obeys are in
+yapılsın"*. <!-- CEO-OK: dxb-team1-build-order-2026-09-25 --> **This is the construction's default
+door** — his word 2026-09-26 after the first live run: *"önerini kabul ediorum varsayılan kapı dxb-team1
+olsun."* <!-- CEO-OK: dxb-team1-default-door-2026-09-26 --> `dxb-crew` stays for a single-lane job. The laws this door obeys are in
 `AGENTS.md`; the doors it opens are `dxb-verify`, `dxb-close-row`, `dxb-ceo-report`.
 
 ## 1. The shape — his diagram

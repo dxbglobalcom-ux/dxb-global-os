@@ -1408,5 +1408,13 @@
   "conditions": "A build order, not a LAW B acceptance of the result. The first team job has not run; the door's §6 measurements are owed.",
   "session": "Fable 5.1 chief engineer session, heard first-hand on 2026-09-25 ~23:05, at the end of plan mode.",
   "where": ".claude/skills/dxb-team1/SKILL.md · board row B57 · .planning/STATE.md"
+ },
+ "dxb-team1-default-door-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "HE MADE dxb-team1 THE CONSTRUCTION'S DEFAULT DOOR. The chief engineer's recommendation, after the door's first live run on its own gate change (a fresh verifier at high caught a real hole the writer's 34 green tests had not; closed in the same pass; the same diff at xhigh found the same and nothing more): dxb-team1 as the default door for construction jobs, dxb-crew kept for a single-lane job. He accepted it in these words.",
+  "verbatim": "önerini kabul ediorum varsayılan kapı dxb-team1 olsun.",
+  "conditions": "His acceptance of a recommendation, given ~00:05 on 2026-09-26 after the B57 report; not a LAW B acceptance of the door itself (his eye is still owed) and not a law — a standing choice of which door opens first. dxb-crew stays untouched and available.",
+  "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand.",
+  "where": ".claude/CLAUDE.md §4 doors table (the row order and wording) · .claude/skills/dxb-team1/SKILL.md (Where it came from) · ~/.claude/CLAUDE.md (Kadro) · .planning/governance/model-routing-hierarchy.md v15 and its memory mirror · board row B57 · .planning/STATE.md"
  }
 }

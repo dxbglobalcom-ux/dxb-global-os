@@ -168,7 +168,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | When you are… | Open |
 |---|---|
 | starting a session, or picking up work | `dxb-start` |
-| running a job on its own — alone (crew) or as a team (Fable lead, parallel writers, verifier) | `dxb-crew` · `dxb-team1` |
+| running a job on its own — `dxb-team1` (the default); `dxb-crew` when the job is one lane | `dxb-team1` · `dxb-crew` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |

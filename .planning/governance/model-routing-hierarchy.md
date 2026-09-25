@@ -14,6 +14,7 @@ metadata:
 3. **Doğrulama seviyeleri** Anthropic'in resmî effort sayfasından (o gece okundu, sorusu *"çürütücü neden opus 5.5 xhigh?"*): ilk bakış `high`, ikinci `xhigh`, son `max`. `dxb-crew`'in çürütücüsü xhigh'ta kalır (onun 24 Eylül cümlesi); high/xhigh farkı ölçülmedi — ilk takım işinin borcu (kapı §6).
 4. **Kanca:** `dxb-code-gate.py` NORMAL kipte `medium` + `agent_type == "builder-medium"` → zarfsız serbest, korunan yol reddedilir; `builder-lean` zarfı ve LEAN yönlendirmesi aynen (v14 bozulmadı). `dxb-crew` dosyası bayt bayt aynı.
 5. **v14 aynen geçerli** — dxb-crew için. Bu sürüm v14'ü daraltmaz, yanına ikinci kapıyı koyar.
+6. **Varsayılan kapı dxb-team1** (CEO 2026-09-26 ~00:05: *"önerini kabul ediorum varsayılan kapı dxb-team1 olsun."*, `dxb-team1-default-door-2026-09-26`): inşaat işi önce bu kapıdan yürür; `dxb-crew` tek kulvarlı iş için durur.
 
 # v14 — KODU BUILDER ALT-AJANI YAZAR, KANCA ZORLAR (CEO, 2026-09-24)
 
