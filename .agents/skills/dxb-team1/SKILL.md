@@ -86,6 +86,11 @@ SPLIT    → ≤ 3 lanes; file sets never overlap (overlap → one writer; measu
            $5.67 on one writer, $11.99 split three ways when the parts were not independent);
            one effort per lane (§3); the done-list per lane and for the whole — numbered,
            each item a command and its expected output — written BEFORE the writers start.
+QUOTA    → before a lane is opened and when a lane closes (its writer has returned its report):
+           `dxb-quota` — used %, hours to the reset, the measured pace, the gate's verdict — and
+           the next lanes' effort and order are set by it (an expensive lane waits for the reset
+           when the pace says the week will not last; the hook is the floor, this is the judgment;
+           his word 2026-09-26: "iş yaparken işte bakacaksın").
 BUILD    → the writers are opened in ONE message, in parallel; each carries the full brief
            (goal · its files · what it may change · what it must verify · what it must not do ·
            output format · who reads it · what is already known); each runs only its lane's

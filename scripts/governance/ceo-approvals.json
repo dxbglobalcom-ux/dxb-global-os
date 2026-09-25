@@ -1464,5 +1464,21 @@
   "conditions": "External paid APIs stay as B56 already recorded them: no subscription, Perplexity API and Apify optional (research-no-subscription-optional-2026-09-24).",
   "session": "Fable 5.1, session e4dad022-546b-4918-88ef-8988c4491f54, heard first-hand.",
   "where": "PLAN.md §2 H · EVIDENCE-B56-2026-09-26.md"
+ },
+ "quota-pace-rule-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "HE STATED THE REAL WORRY BEHIND THE 80 % RULE AND ORDERED THE PACE RULE. His words ~01:20: the worry was never the level — it was an important job running at max while the quota reaches 99 % and everything stops (\"iş yaprken kota %99 e geldi maxtasında … çok önemli bir iş yapılıor … endişemiz bu\"), and he pointed at the other session's three max writers burning it now. Measured for him: 75 % at 23:05 → 82 % at 01:24, ~3 points an hour; 18 points left would run out ~07:30, before the 10:00 reset — so the engineer's 24-hour repair (B60) did not cover this night, said so. The recommendation: a pace rule — the status line keeps a short history of the quota it already writes; the code gate measures the burn rate from it and turns a NEW writer to medium when the remaining quota is less than hours-to-reset × rate × 1.5 (both the seven-day and the five-hour window); a running writer finishes; a guarded lane stays at max. His word: \"yani ok. çok karmaşık yapı işi bozmaz eminsin değil mi\" — answered: not sure, measured; the blast radius is which effort a NEW writer gets, nothing else.",
+  "verbatim": "yani ok. çok karmaşık yapı işi bozmaz eminsin değil mi",
+  "conditions": "His go on the pace rule as recommended, with his question about breakage answered by measurement (old vs new byte-identical on NORMAL inputs, the battery, a fresh verifier, a live run on the real record). Code by the builder (max — hooks); records by the lead. Not a law.",
+  "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~01:30 on 2026-09-26.",
+  "where": "board row B60 (third repair) · .planning/STATE.md · EVIDENCE-B60-2026-09-26.md §F"
+ },
+ "quota-read-per-lane-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "THE LEAD READS THE QUOTA WHILE WORKING — before every lane is opened and when every lane closes — AND DISTRIBUTES THE NEXT LANES' EFFORT AND ORDER BY IT. His idea ~01:35 (\"fable yönetici işleri max ve medium dağıtınca her yarım 25 dkda bir kotayı kontrol etse ve sonraki işleri ona göre dağıtsa\"), the engineer's answer: a session cannot wake on a timer, but the natural moment is every lane boundary (lanes ran 5-12 min that night, finer than 25 min); the hook stays as the floor that cannot be forgotten, the lead's reading is the judgment on top; a one-line command `dxb-quota` prints used %, hours to the reset, the measured pace and the gate's own verdict, so the lead reads rather than computes. His words: \"iş yaparken işte bakacaksın onu diorm.\" and, on the example of a lane closing (a writer returning its report), \"tmm devam et aynen öyle olsun.\" — and he asked whether it is better; answered yes: the hook does not forget but does not think, the lead thinks but may forget; together they beat either alone.",
+  "verbatim": "tmm devam et aynen öyle olsun. daha iyi değil mi sence ben sana soruorm işi bilen sensin",
+  "conditions": "His go on the door line (dxb-team1 §4 loop) and the `dxb-quota` command. Not a law; procedure inside the door that already owns the loop.",
+  "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~01:40 on 2026-09-26.",
+  "where": ".claude/skills/dxb-team1/SKILL.md §4 · ~/.local/bin/dxb-quota · board row B60 · .planning/STATE.md"
  }
 }
