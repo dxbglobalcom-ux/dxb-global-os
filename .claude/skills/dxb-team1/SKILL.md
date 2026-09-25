@@ -107,7 +107,8 @@ RECORD   → STATE (the contradicted sentence goes, LAW A), the board row, evide
 - **§1** — the A / B / C definitions, and his law of 2026-09-22 that a minor finding is repaired in
   the same pass, never in a round of its own.
 - **§3** — the context gate: read the bar (`dxb-ctx --pct`, else `operator shot`), never guess it;
-  hand over at ≥ 40 % used, or when used + the next phase's honest estimate > 45 %; only at a clean
+  hand over at ≥ 50 % used, or when used + the next phase's honest estimate > 55 % (his numbers
+  2026-09-26, held by the B59 hook); only at a clean
   break, never mid-phase.
 - **§4** — the handover, done by the engineer through `operator`, exactly as written there, with one
   difference: the successor is opened as `--model claude-fable-5-1`. **The note's first line is the

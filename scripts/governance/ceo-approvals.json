@@ -1432,5 +1432,13 @@
   "conditions": "His acceptance of the recommendation as stated (three options were put to him: keep + two repairs (recommended) · keep as is · drop). Not a law; a job. The change is in the code gate (a governance file) → builder from the chief engineer's spec, with tests; the number 80 stays his; 24 h is the engineer's proposed constant, one place, named.",
   "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~00:45 on 2026-09-26, after his question \"yahu %80 ne alaka anlamıorm\" and \"bu iyi mi kötü mü … senin önerin nedir kalsın mı gitsin mi?\".",
   "where": "board row B60 · .planning/STATE.md · .planning/quick/20260926-b59-context-gate/EVIDENCE-B60-2026-09-26.md"
+ },
+ "context-line-50-55-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "HE MOVED THE CONTEXT LINE FROM 40 / 45 TO 50 / 55. His question (~01:00): \"%50 mi yapsak sınırı 40 az mı acaba?\". The recommendation put to him: 50 / 55 — the window is 1M tokens (40 % ≈ 360k, 50 % ≈ 450k, both far under the ceiling); a handover costs about 8 % of a window in the successor's opening alone (72k tokens measured this night) plus the note and ten minutes of orientation; one job (B59) cost 14 %, so a session does ~2 jobs under 40 and ~3 under 50; the quality effect of a longer context is UNMEASURED in this project (one data point: the 2026-09-25 session worked to 48 % and its work passed every ruler); the 40 of 2026-09-21 was set after a writer GUESSED its percentage, and the hook now measures it. His word: \"tmm önerini yapalım\". LAW A: his 2026-09-21 numbers (\"%40 olsun maksimum\", \"%45'i geçicek … yeni devir\") are replaced — the red line at ≥ 50 %, the Agent tool refused at ≥ 55 %, the phase-estimate rule keeps the same shape with the new numbers.",
+  "verbatim": "tmm önerini yapalım",
+  "conditions": "His acceptance of the recommendation as stated (50 red line / 55 refusal). Not a law; the numbers of the context gate, one place (~/.claude/hooks/dxb-context-gate.py RED_LINE_PCT / AGENT_DENY_PCT) with the door texts (dxb-crew §3, dxb-team1 §5) and the memory notes following. Tests updated by the builder.",
+  "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~01:05 on 2026-09-26, right after B59 was committed (faadb3ce).",
+  "where": "board row B61 · .claude/skills/dxb-crew/SKILL.md §3 · .claude/skills/dxb-team1/SKILL.md §5 · .planning/STATE.md"
  }
 }
