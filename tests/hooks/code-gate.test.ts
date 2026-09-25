@@ -554,4 +554,159 @@ describe("the status line persists the quota for the gate", () => {
     statusLine(dir, { ...SAMPLE, rate_limits: { ...SAMPLE.rate_limits, seven_day: week } });
     expect(answer(gate(dir, spawnAgent("builder"))).updatedInput.subagent_type).toBe("builder-lean");
   });
+
+  // B60 §F: the pace rule needs to know how fast the quota rises, so the bar keeps a history.
+  const historyLines = (dir: string) =>
+    readFileSync(join(dir, "claude-ctx", "rate-limits-history.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
+  it("keeps a quota history beside the record: one line for the same numbers within a minute, a new line when they change", () => {
+    const dir = box();
+    statusLine(dir, SAMPLE);
+    statusLine(dir, SAMPLE);
+    expect(historyLines(dir)).toHaveLength(1);
+    expect(historyLines(dir)[0]).toMatchObject({ seven_day: SAMPLE.rate_limits.seven_day, five_hour: SAMPLE.rate_limits.five_hour });
+    expect(typeof historyLines(dir)[0].ts).toBe("number");
+    const week = { ...SAMPLE.rate_limits.seven_day, used_percentage: 48 };
+    statusLine(dir, { ...SAMPLE, rate_limits: { ...SAMPLE.rate_limits, seven_day: week } });
+    expect(historyLines(dir).map((l) => l.seven_day.used_percentage)).toEqual([47, 48]);
+  });
+  it("prunes a history past 2,000 lines to its last 24 hours", () => {
+    const dir = box();
+    const now = Date.now() / 1000;
+    const at = (ts: number) => JSON.stringify({ ts, seven_day: SAMPLE.rate_limits.seven_day, five_hour: SAMPLE.rate_limits.five_hour });
+    const old = Array.from({ length: 1100 }, (_, i) => at(now - 30 * HOUR + i));
+    const recent = Array.from({ length: 1000 }, (_, i) => at(now - 20 * HOUR + i * 60));
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "claude-ctx", "rate-limits-history.jsonl"), [...old, ...recent].join("\n") + "\n");
+    statusLine(dir, SAMPLE);
+    const kept = historyLines(dir);
+    expect(kept).toHaveLength(1001);
+    expect(Math.min(...kept.map((l) => l.ts))).toBeGreaterThanOrEqual(now - 24 * HOUR);
+  });
+});
+
+// His word of 2026-09-26 ("yani ok"): the level alone missed tonight's shape -- 75 % to 82 % in
+// 2.3 h with the reset 8.6 h away -- so the gate also asks how fast a window rises. LEAN when what is
+// left runs out before the reset: 100 - used < hours to the reset x rate x 1.5 (B60 §F).
+describe("the pace rule on his word 2026-09-26 (B60 §F)", () => {
+  type Win = { used_percentage: number; resets_at: number };
+  const w = (used_percentage: number, resets_at: number): Win => ({ used_percentage, resets_at });
+  /** the record the status line writes at `at`, whole unix seconds, with its two windows */
+  function record(dir: string, at: number, seven_day: Win, five_hour: Win): void {
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "claude-ctx", "rate-limits.json"), JSON.stringify({
+      session_id: "0d08dc67-test", seven_day, five_hour, written_at: new Date(at * 1000).toISOString(),
+    }));
+  }
+  /** the history the status line keeps, one JSON line each; a string is written as it stands */
+  function history(dir: string, lines: unknown[]): void {
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "claude-ctx", "rate-limits-history.jsonl"),
+      lines.map((l) => (typeof l === "string" ? l : JSON.stringify(l))).join("\n") + "\n");
+  }
+  const logged = (dir: string) =>
+    readFileSync(join(dir, "logs", "dxb-code-gate.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
+  const routed = (out: string) => (out === "" ? "not rerouted" : answer(out).updatedInput.subagent_type);
+  const nowS = () => Math.floor(Date.now() / 1000);
+  /** tonight's shape: 75 -> 82 over 2.3 h, the week resetting in 8.6 h, the five hours flat */
+  function tonight(dir: string): void {
+    const at = nowS();
+    const week = at + Math.round(8.6 * HOUR), five = at + 2 * HOUR;
+    history(dir, [
+      { ts: at - 2.3 * HOUR, seven_day: w(75, week), five_hour: w(10, five) },
+      { ts: at - 1.2 * HOUR, seven_day: w(78, week), five_hour: w(10, five) },
+      { ts: at, seven_day: w(82, week), five_hour: w(10, five) },
+    ]);
+    record(dir, at, w(82, week), w(10, five));
+  }
+
+  it("tonight's shape is LEAN (pace-7d): a main session at xhigh is told medium, and the log says why", () => {
+    const dir = box();
+    tonight(dir);
+    const a = answer(gate(dir, call("Write", write("Write", "/work/src/x.ts"))));
+    expect(a.permissionDecisionReason).toContain("Opus 5.5 · medium effort");
+    expect(logged(dir).map((l) => [l.mode, l.why, l.decision])).toEqual([["LEAN", "pace-7d", "deny"]]);
+  });
+  it("is strict at the boundary: 76 -> 82 in 2 h is 3 %/h; reset 4.0 h away gives 4 x 3 x 1.5 = 18 = what is left, NORMAL; 4.1 h, LEAN", () => {
+    for (const [hours, expected] of [[4.0, "not rerouted"], [4.1, "builder-lean"]] as const) {
+      const dir = box();
+      const at = nowS();
+      const week = at + Math.round(hours * HOUR), five = at + 2 * HOUR;
+      history(dir, [
+        { ts: at - 2 * HOUR, seven_day: w(76, week), five_hour: w(10, five) },
+        { ts: at, seven_day: w(82, week), five_hour: w(10, five) },
+      ]);
+      record(dir, at, w(82, week), w(10, five));
+      expect(routed(gate(dir, spawnAgent("builder"))), `${hours} h`).toBe(expected);
+    }
+  });
+  it("makes no pace decision on one line, two lines 10 min apart, another reset, a corrupt file or no file: used 60 stays NORMAL", () => {
+    const cases: [string, (at: number, week: number, five: number) => unknown[] | null][] = [
+      ["one line", (at, week, five) => [{ ts: at - 2 * HOUR, seven_day: w(50, week), five_hour: w(10, five) }]],
+      ["two lines 10 min apart", (at, week, five) => [
+        { ts: at - 600, seven_day: w(58, week), five_hour: w(10, five) },
+        { ts: at, seven_day: w(60, week), five_hour: w(10, five) }]],
+      ["another reset", (at, week, five) => [
+        { ts: at - 2 * HOUR, seven_day: w(50, week + 168 * HOUR), five_hour: w(10, five) },
+        { ts: at - HOUR, seven_day: w(55, week + 168 * HOUR), five_hour: w(10, five) }]],
+      ["corrupt file", () => ["{not json", "]]"]],
+      ["no file", () => null],
+    ];
+    for (const [name, lines] of cases) {
+      const dir = box();
+      const at = nowS();
+      const week = at + 48 * HOUR, five = at + 2 * HOUR;
+      const written = lines(at, week, five);
+      if (written) history(dir, written);
+      record(dir, at, w(60, week), w(10, five));
+      expect(routed(gate(dir, spawnAgent("builder"))), name).toBe("not rerouted");
+    }
+  });
+  it("watches the five-hour window too: 40 -> 70 in 1 h with its reset 1.5 h away is LEAN (pace-5h)", () => {
+    const dir = box();
+    const at = nowS();
+    const week = at + 100 * HOUR, five = at + Math.round(1.5 * HOUR);
+    history(dir, [
+      { ts: at - HOUR, seven_day: w(50, week), five_hour: w(40, five) },
+      { ts: at, seven_day: w(50, week), five_hour: w(70, five) },
+    ]);
+    record(dir, at, w(50, week), w(70, five));
+    expect(routed(gate(dir, spawnAgent("builder")))).toBe("builder-lean");
+    expect(logged(dir).map((l) => [l.decision, l.why])).toEqual([["reroute", "pace-5h"]]);
+  });
+  it("keeps the level rule: 80 % with the reset 48 h away and no history is LEAN (level)", () => {
+    const dir = box();
+    quota(dir, 80);
+    expect(routed(gate(dir, spawnAgent("builder")))).toBe("builder-lean");
+    expect(logged(dir).map((l) => [l.decision, l.why])).toEqual([["reroute", "level"]]);
+  });
+  it("keeps a declared guarded lane at max when the pace made it LEAN: keep-max-guarded, why pace-7d", () => {
+    const dir = box();
+    tonight(dir);
+    const lane = call("Agent", { description: "guarded: hooks", prompt: "p", subagent_type: "builder" });
+    expect(gate(dir, lane)).toBe("");
+    expect(logged(dir).map((l) => [l.target, l.mode, l.why, l.decision])).toEqual([["builder", "LEAN", "pace-7d", "keep-max-guarded"]]);
+  });
+  it("makes no pace decision on a window the real clock says has already reset: 40 -> 70 recorded 2 h ago, reset 1 h ago, NORMAL; reset 1 h ahead, LEAN (pace-5h)", () => {
+    for (const [resetFromNowH, expected] of [[-1, "not rerouted"], [1, "builder-lean"]] as const) {
+      const dir = box();
+      const now = nowS(), at = now - 2 * HOUR;
+      const week = now + 100 * HOUR, five = now + resetFromNowH * HOUR;
+      history(dir, [
+        { ts: at - HOUR, seven_day: w(50, week), five_hour: w(40, five) },
+        { ts: at, seven_day: w(50, week), five_hour: w(70, five) },
+      ]);
+      record(dir, at, w(50, week), w(70, five));
+      expect(routed(gate(dir, spawnAgent("builder"))), `reset ${resetFromNowH} h from now`).toBe(expected);
+      if (expected !== "not rerouted") expect(logged(dir).map((l) => l.why)).toEqual(["pace-5h"]);
+    }
+  });
+  it("trusts no record written in the future: 85 % with the reset 48 h away written 2 h ahead is NORMAL; written 1 min ago, LEAN (level)", () => {
+    const ahead = box();
+    quota(ahead, 85, { ageH: -2 });
+    expect(routed(gate(ahead, spawnAgent("builder")))).toBe("not rerouted");
+    const recent = box();
+    quota(recent, 85, { ageH: 1 / 60 });
+    expect(routed(gate(recent, spawnAgent("builder")))).toBe("builder-lean");
+    expect(logged(recent).map((l) => l.why)).toEqual(["level"]);
+  });
 });
