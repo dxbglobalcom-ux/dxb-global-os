@@ -6,7 +6,7 @@
 // lives) and as the gate's log directory, so nothing lands in the machine's own claude-ctx or
 // ~/.claude/logs.
 import { spawnSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
@@ -373,6 +373,113 @@ describe("NORMAL: builder-medium writes at medium with no envelope, and never a 
     expect(gate(lean, spawnAgent("builder-medium"))).toBe("");
     expect(answer(gate(lean, spawnAgent("builder-medium", "sonnet"))).updatedInput).toEqual(
       { description: "d", prompt: "p", subagent_type: "builder-medium" });
+  });
+});
+
+// His word of 2026-09-26 ("önerini yap."): LEAN at 80 % with the reset 9.5 h away fired in the middle of
+// a repair. LEAN now also needs the reset more than 24 h away, and in LEAN no writer at medium touches
+// a guarded path; max stays allowed everywhere.
+describe("LEAN repaired on his word 2026-09-26 (B60)", () => {
+  const GUARDED = "/home/x/.claude/hooks/x.py";
+  const TO_BUILDER = 'subagent_type "builder" (max)';
+  /** Agent(builder) with the description the lead gave it */
+  const lane = (description: string, model?: string) =>
+    call("Agent", { description, prompt: "p", subagent_type: "builder", ...(model ? { model } : {}) });
+  const logged = (dir: string) =>
+    readFileSync(join(dir, "logs", "dxb-code-gate.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
+
+  it("(a) 80 % with the reset 9 h away is NORMAL: xhigh is denied naming max, Agent(builder) is not rerouted", () => {
+    const dir = box();
+    quota(dir, 80, { resetsInH: 9 });
+    const a = answer(gate(dir, call("Write", write("Write", "/work/src/x.ts"))));
+    expect(a.permissionDecision).toBe("deny");
+    expect(a.permissionDecisionReason).toContain("Opus 5.5 · max effort (medium for simple work)");
+    expect(gate(dir, spawnAgent("builder"))).toBe("");
+  });
+  it("(b) 80 % is LEAN with the reset 25 h away, and NORMAL with it 23 h away", () => {
+    const far = box();
+    quota(far, 80, { resetsInH: 25 });
+    expect(answer(gate(far, spawnAgent("builder"))).updatedInput.subagent_type).toBe("builder-lean");
+    const near = box();
+    quota(near, 80, { resetsInH: 23 });
+    expect(gate(near, spawnAgent("builder"))).toBe("");
+  });
+  it("(c) LEAN at medium: builder-lean, builder-medium and a plain session are denied a guarded path, naming the guard; a plain path passes", () => {
+    const dir = box();
+    quota(dir, 90);
+    for (const agent of ["builder-lean", "builder-medium", undefined]) {
+      const a = answer(gate(dir, call("Write", write("Write", GUARDED), "medium", agent)));
+      expect(a.permissionDecision, String(agent)).toBe("deny");
+      expect(a.permissionDecisionReason, String(agent)).toContain(`${GUARDED} is a guarded path: it matches`);
+      expect(a.permissionDecisionReason, String(agent)).toContain(TO_BUILDER);
+      expect(a.permissionDecisionReason, String(agent)).toContain('with a description starting "guarded:"');
+      expect(gate(dir, call("Write", write("Write", "/work/src/x.ts"), "medium", agent)), String(agent)).toBe("");
+    }
+  });
+  it("(d) LEAN at medium: a Bash write to a guarded path is denied, and so is one whose target cannot be read", () => {
+    const dir = box();
+    quota(dir, 90);
+    const bash = (command: string) => answer(gate(dir, call("Bash", { command }, "medium", "builder-lean")));
+    const guarded = bash("echo x > /work/db/x.sql");
+    expect(guarded.permissionDecision).toBe("deny");
+    expect(guarded.permissionDecisionReason).toContain("/work/db/x.sql is a guarded path: it matches");
+    expect(guarded.permissionDecisionReason).toContain(TO_BUILDER);
+    const unreadable = bash("printf x > `echo /work/db`/x.sql");
+    expect(unreadable.permissionDecision).toBe("deny");
+    expect(unreadable.permissionDecisionReason).toContain("cannot be measured");
+  });
+  it("(e) LEAN at max: a guarded path is allowed", () => {
+    const dir = box();
+    quota(dir, 90);
+    expect(gate(dir, call("Write", write("Write", GUARDED), "max", "builder"))).toBe("");
+  });
+  it("(f) LEAN keeps a declared guarded lane at max: builder stays builder, its model key dropped, logged keep-max-guarded", () => {
+    const dir = box();
+    quota(dir, 90);
+    const a = answer(gate(dir, lane("guarded: hooks", "opus")));
+    expect(a.permissionDecision).toBe("allow");
+    expect(a.updatedInput).toEqual({ description: "guarded: hooks", prompt: "p", subagent_type: "builder" });
+    expect(gate(dir, lane("  GUARDED: db"))).toBe("");
+    expect(logged(dir).map((l) => [l.tool, l.target, l.mode, l.decision])).toEqual([
+      ["Agent", "builder", "LEAN", "keep-max-guarded"],
+      ["Agent", "builder", "LEAN", "keep-max-guarded"],
+    ]);
+  });
+  it("(g) LEAN: a description without the colon (Guarded lane) is rerouted as before", () => {
+    const dir = box();
+    quota(dir, 90);
+    expect(answer(gate(dir, lane("Guarded lane"))).updatedInput.subagent_type).toBe("builder-lean");
+  });
+  it("(h) NORMAL: a guarded: description changes nothing, and nothing is logged", () => {
+    const dir = box();
+    expect(gate(dir, lane("guarded: x"))).toBe("");
+    expect(existsSync(join(dir, "logs", "dxb-code-gate.jsonl"))).toBe(false);
+  });
+  const UNREADABLE = call("Bash", { command: "printf x > $D/db/x.sql" }, "medium", "builder-lean");
+  const XHIGH = call("Write", write("Write", "/work/db/x.sql"));
+  it('(i) LEAN, builder-lean: a Bash write whose target cannot be read names the "guarded:" exit', () => {
+    const dir = box();
+    quota(dir, 90);
+    const a = answer(gate(dir, UNREADABLE));
+    expect(a.permissionDecision).toBe("deny");
+    expect(a.permissionDecisionReason).toContain("cannot be measured");
+    expect(a.permissionDecisionReason).toContain('starting "guarded:"');
+  });
+  it('(j) LEAN, a plain session at xhigh: the general deny names the "guarded:" exit', () => {
+    const dir = box();
+    quota(dir, 90);
+    const a = answer(gate(dir, XHIGH));
+    expect(a.permissionDecision).toBe("deny");
+    expect(a.permissionDecisionReason).toContain('starting "guarded:"');
+  });
+  it('(k) NORMAL (79 %): the same two inputs are denied, and neither reason says "guarded:"', () => {
+    const dir = box();
+    quota(dir, 79);
+    for (const input of [UNREADABLE, XHIGH]) {
+      const a = answer(gate(dir, input));
+      expect(a.permissionDecision, input.tool_name).toBe("deny");
+      expect(a.permissionDecisionReason, input.tool_name).not.toContain("guarded:");
+    }
   });
 });
 
