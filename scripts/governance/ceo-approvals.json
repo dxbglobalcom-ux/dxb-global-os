@@ -1416,5 +1416,13 @@
   "conditions": "His acceptance of a recommendation, given ~00:05 on 2026-09-26 after the B57 report; not a LAW B acceptance of the door itself (his eye is still owed) and not a law — a standing choice of which door opens first. dxb-crew stays untouched and available.",
   "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand.",
   "where": ".claude/CLAUDE.md §4 doors table (the row order and wording) · .claude/skills/dxb-team1/SKILL.md (Where it came from) · ~/.claude/CLAUDE.md (Kadro) · .planning/governance/model-routing-hierarchy.md v15 and its memory mirror · board row B57 · .planning/STATE.md"
+ },
+ "context-gate-hook-ordered-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "HE ORDERED THE CONTEXT GATE TO BECOME A HOOK, AND THE HANDOVER FIRST. He caught the chief engineer at 48 % context without a handover (\"peki neden %48 e gelmene rağmen yeni session açmadın?\" … \"hayır soruma cvpla NEDEN DİYE SORDUM. bu dxb-team1 içinde yazılı talimat. neden uymadın bu büyük sıkıntı\"). The cause named to him: the 40 % rule is text only — every rule that holds in this project is held by a machine (code gate, ledger ruler, opening ruler), and the context gate has none; the same failure was measured 2026-09-21 (a writer said ~16 % at 44 %). The proposal he accepted: a hook that reads the number the status line already writes (claude-ctx) on every prompt; at ≥ 40 % a red line in front of the session (\"CONTEXT N% — hand over at the first clean break\"); at ≥ 45 % the Agent tool refused until the handover; the handover done now, the hook the successor's first job (B59).",
+  "verbatim": "tmm önerini uygula.",
+  "conditions": "His acceptance of the recommendation as stated (handover first, hook as the successor's first job). Not a law; a job. The hook is a governance file → written by builder (max) from the chief engineer's spec, with tests; the numbers 40 / 45 are his own rule of 2026-09-21.",
+  "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~00:25 on 2026-09-26, at dxb-ctx --pct = 48.",
+  "where": "board row B59 · .planning/STATE.md · .planning/quick/20260925-dxb-team1/HANDOVER-2026-09-26.md"
  }
 }
