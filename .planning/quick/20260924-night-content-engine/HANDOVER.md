@@ -18,11 +18,9 @@ word: *"senin session bitior devir notu hazırla"*. The handover rule is 40 % us
 - The agency is **premium**: never sell cheapness or speed (*"bu bir reklam ajansı kendini pahalı göstermesi gerekmez mi?"*).
 
 ## Where it stands
-- **The plan is NOT approved.** No entry in `scripts/governance/ceo-approvals.json`. Nothing is built.
-- **Open with him — asked, not answered:**
-  1. **First desk (PLAN §4 decision 1).** The plan text says "stüdyonun kendi alanı". The last recommendation to him (not written into the plan) changed it: the first desk is **the sector of the first brand we want to win**, producing a **paid sector review, credited to the first month** — paid, because of his own "look expensive" rule.
-  2. **Reorder the phases** so Phases 0–5 (measurement, data, reading + transcription, scoring, the 5 lessons, the script) come first and the paid review can be sold before the screen (Phase 7, which waits on B32 anyway).
-  3. **Decision 2** (free hands first; Apify / Scribe brought to him with their price if they fall short) and **decision 3** (the engine only reads and proposes) — put to him for a "tamam", no explicit answer yet.
+- **The plan is NOT approved.** Its phase ORDER is — his "tamam" of 2026-09-24 22:55, ledger `signal-plan-order-tamam-2026-09-24`, PLAN §3a (written 2026-09-25). Nothing is built.
+- **Answered 2026-09-24 22:55 (PLAN §3a):** the first desks are the sectors of the brands we want to win, one per continent, the studio's own field a separate desk; the paid sector review is Phase 5, the first money step, sold before the screen, which is Phase 9 and last since 2026-09-25 (it was Phase 7).
+- **Open with him — asked, not answered:** PLAN §4's two decisions — the paid path (free hands first; Apify / Scribe brought to him with their price if they fall short) and sharing (the engine only reads and proposes) — no explicit answer yet.
 - **Dropped, not to be raised again:** saving the `dxb-research` fleet run. He ordered that tool not be used for this job (*"kesinlikle dxb-research skillini kullanma çok kötü ve uzun"*); the run was left unsaved in the old scratchpad. Silence is the record.
 - **The revenue study runs in a Fable 5.1 session: `dxb-global-os-b8`**, VS Code tab "SIGNAL gelir çalışması, dünya çapında", opened ~19:01 with `BRIEF.md` (`6cd25ec3`). Worldwide — every continent and language, the highest-revenue countries on each; research and ideas only. He said *"sende takip et"*: **follow it, do not do its work.** Measure its progress from its folder (`WORKLOG.md`, `STUDY.md`, `EVIDENCE.md`, its commits) and `ListAgents`; a `SendMessage` "success" is a queue, not a delivery. When `STUDY.md` lands, check it against BRIEF.md's standard (every number sourced, the world not one city, plain Turkish, premium positioning, no dxb-research) and tell him in plain Turkish what holds and what does not.
 
