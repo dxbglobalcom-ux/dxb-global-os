@@ -13,7 +13,7 @@
 # DXB Global OS
 
 An AI-native operating system for one holding company. One human in it: the CEO. He states
-intent and approves the acts that face outward; the OS runs the company end to end.
+intent and approves what the approval gate stops at him; the OS runs the company end to end.
 That is the whole product — **anti-baby-sitting**. If everything else fails, intent →
 autonomous, quality-gated execution must still work.
 
@@ -114,8 +114,8 @@ the date. The battery fails on an unregistered approval claim.
 
 ## 2. The boundaries that never bend
 
-- **The approval gate.** Money OUT, contracts, e-mail, ad spend and identity steps stop at
-  the CEO. Money IN and routine outward communication do not.
+- **The approval gate.** Money OUT, contracts, ad spend, identity steps and the subjects he
+  marks stop at the CEO. Money IN and routine outward communication do not.
 - **No implementation before he approves the plan.** Not inferable away, not optional.
 - **Measure, never guess.** Every fact, number and status rests on a measurement taken this
   session, cited. Memory, a grep hit, a summary or a subagent's report is a lead — never an
@@ -172,7 +172,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | When you are… | Open |
 |---|---|
 | starting a session, or picking up work | `dxb-start` |
-| running a job on its own — chief engineer + writer + refuter, phase loop, context-bounded handovers | `dxb-crew` |
+| running a job on its own — alone (crew) or as a team (Fable lead, parallel writers, verifier) | `dxb-crew` · `dxb-team1` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |
@@ -182,8 +182,8 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | writing or repairing an employee's identity | `dxb-persona` |
 | changing what Hamza or an agent knows at runtime | `dxb-hamza-context` |
 
-Doors live in `.agents/skills/<name>/SKILL.md`. A door holds the procedure; this file holds
-only the boundary. If a rule appears in both, the door is wrong.
+Doors live in `.agents/skills/<name>/SKILL.md`. A door holds the procedure, this file only
+the boundary; a rule in both means the door is wrong.
 
 ## 5. Gotchas — things the repository will not tell you
 

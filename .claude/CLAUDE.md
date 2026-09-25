@@ -168,7 +168,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | When you are… | Open |
 |---|---|
 | starting a session, or picking up work | `dxb-start` |
-| running a job on its own — chief engineer + writer + refuter, phase loop, context-bounded handovers | `dxb-crew` |
+| running a job on its own — alone (crew) or as a team (Fable lead, parallel writers, verifier) | `dxb-crew` · `dxb-team1` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |
@@ -178,8 +178,8 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | writing or repairing an employee's identity | `dxb-persona` |
 | changing what Hamza or an agent knows at runtime | `dxb-hamza-context` |
 
-Doors live in `.claude/skills/<name>/SKILL.md`. A door holds the procedure; this file holds
-only the boundary. If a rule appears in both, the door is wrong.
+Doors live in `.claude/skills/<name>/SKILL.md`. A door holds the procedure, this file only
+the boundary; a rule in both means the door is wrong.
 
 ## 5. Gotchas — things the repository will not tell you
 

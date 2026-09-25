@@ -355,3 +355,25 @@ charts (2026-09-22 release) with his own eye.
    "Opus 5" names the author of that period and stays as history.
 3. **Pinned ids.** Model ids are pinned, never an alias; a stronger model takes a seat only when it
    is measured and he says so.
+
+## Registered adaptation A-2026-09-25 (CEO order — a second orchestrator door, `dxb-team1`, beside the crew) <!-- CEO-OK: dxb-team1-ordered-2026-09-25 --> <!-- CEO-OK: dxb-team1-effort-by-difficulty-2026-09-25 --> <!-- CEO-OK: dxb-team1-build-order-2026-09-25 -->
+
+CONSTRUCTION tree only; no runtime routing row moves. A-2026-09-23 stays whole for `dxb-crew`
+(*"dxb-crew üzerinde oynama yapma o kalsın bazen onu kullanırız"*). His diagram of 2026-09-25 and
+his three sentences are verbatim in the ledger under the three ids above; the canonical table is
+`.claude/skills/dxb-team1/SKILL.md` §2.
+
+1. **Seats.** Lead = the Fable 5.1 session he opens (splits the job into ≤ 3 disjoint lanes, picks
+   each lane's effort, writes the done-list before the writers start, re-measures every number,
+   final judgment) · writers, up to three at once, chosen per lane by difficulty — `builder-medium`
+   (`claude-opus-5-5` · `medium`, no size envelope, guarded paths refused by the gate) or `builder`
+   (`claude-opus-5-5` · `max`) · `verifier` (`claude-opus-5-5` · `high`, fresh, read-only: only the
+   diff, the done-list and the lane list) · on an A finding `refuter` (`xhigh`, that list only) ·
+   still unclear `arbiter` (`claude-opus-5-5` · `max`, read-only). Every seat below the lead is a
+   subagent of the lead's session and has no `Agent` tool.
+2. **Effort picker.** From Anthropic's official effort page (read 2026-09-25; Opus 5.5 default
+   `medium`; "run an effort sweep on your own evals") and T8 (2026-09-24): `medium` when the spec is
+   written, the path known, no new design, no guarded path; `max` otherwise or when unsure;
+   verification `high` → `xhigh` → `max`. The high/xhigh difference for verification is
+   UNMEASURED and owed by the first team job (door §6).
+3. **Pinned ids, as A-2026-09-23 §3.**

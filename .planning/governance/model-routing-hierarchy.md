@@ -1,11 +1,19 @@
 ---
 name: model-routing-hierarchy
-description: "v14 (CEO 2026-09-24): kodu builder alt-ajanı Opus 5.5 · max yazar, kanca zorlar, kota darken medium; v13 İNŞAAT kadrosu Opus 5.5 — baş mühendis xhigh, çürütücü/teşhisçi xhigh, tasarımda ikinci göz Fable 5.1; v10 runtime kalite kademe kanunu; v9 yedek katman yok; v8-v5 tarihsel kayıt"
+description: "v15 (CEO 2026-09-25): ikinci orkestratör dxb-team1 — Fable lider, yazarlar Opus 5.5 medium/max zorluğa göre, taze verifier high, refuter xhigh, arbiter max; v14 (CEO 2026-09-24): kodu builder alt-ajanı Opus 5.5 · max yazar, kanca zorlar, kota darken medium; v13 İNŞAAT kadrosu Opus 5.5 — baş mühendis xhigh, çürütücü/teşhisçi xhigh, tasarımda ikinci göz Fable 5.1; v10 runtime kalite kademe kanunu; v9 yedek katman yok; v8-v5 tarihsel kayıt"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
   modified: 2026-09-24T00:06:41.286Z
 ---
+
+# v15 — İKİNCİ ORKESTRATÖR: dxb-team1 (CEO, 2026-09-25)
+
+1. **CEO emri (2026-09-25 ~22:15, kendi çizimiyle):** *"dxb-team1 şeklinde bir skill açıp dxb-crew e ikinci bir arkestratör skill kursak olur mu? dxb-crew üzerinde oynama yapma o kalsın bazen onu kullanırız."* Kayıt: `ceo-approvals.json` → `dxb-team1-ordered-2026-09-25` · `dxb-team1-effort-by-difficulty-2026-09-25` · `dxb-team1-build-order-2026-09-25` (*"tmmdır dxb-team1 yapılsın"*).
+2. **Koltuklar (kapı: `.claude/skills/dxb-team1/SKILL.md`):** lider = Fable 5.1 oturumu (işi ≤ 3 kesişmeyen kulvara böler, her kulvarın effort'unu seçer, "bitti ne demek" listesini işten önce yazar, her sayıyı kendisi yeniden ölçer, son hüküm) · yazarlar aynı anda üçe kadar: `builder-medium` (Opus 5.5 · medium, boyut zarfı YOK, korunan yol kanca ile yasak) / `builder` (max) — *"yani işin zorluk seviyesine göre ya max'li opus 5.5'e yada mediumlu opus 5.5 e ver göre"* · `verifier` (Opus 5.5 · high, taze, salt-okur: yalnız diff + liste + kulvarlar) · A bulgusunda `refuter` (xhigh, yalnız o liste) · hâlâ belirsizse `arbiter` (Opus 5.5 · max, salt-okur). Liderin altındaki hiçbir koltukta `Agent` yok; hepsi alt-ajan, ayrı oturum değil.
+3. **Doğrulama seviyeleri** Anthropic'in resmî effort sayfasından (o gece okundu, sorusu *"çürütücü neden opus 5.5 xhigh?"*): ilk bakış `high`, ikinci `xhigh`, son `max`. `dxb-crew`'in çürütücüsü xhigh'ta kalır (onun 24 Eylül cümlesi); high/xhigh farkı ölçülmedi — ilk takım işinin borcu (kapı §6).
+4. **Kanca:** `dxb-code-gate.py` NORMAL kipte `medium` + `agent_type == "builder-medium"` → zarfsız serbest, korunan yol reddedilir; `builder-lean` zarfı ve LEAN yönlendirmesi aynen (v14 bozulmadı). `dxb-crew` dosyası bayt bayt aynı.
+5. **v14 aynen geçerli** — dxb-crew için. Bu sürüm v14'ü daraltmaz, yanına ikinci kapıyı koyar.
 
 # v14 — KODU BUILDER ALT-AJANI YAZAR, KANCA ZORLAR (CEO, 2026-09-24)
 

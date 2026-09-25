@@ -305,6 +305,77 @@ describe("NORMAL: simple work may be written at medium, by builder-lean only", (
   });
 });
 
+// The CEO's order of 2026-09-25 for dxb-team1: the lead gives each lane to Opus 5.5 at max or at
+// medium by how hard it is. builder-medium writes at medium with no envelope, guarded paths excepted.
+describe("NORMAL: builder-medium writes at medium with no envelope, and never a guarded path", () => {
+  const medium = (dir: string, tool: string, input: Record<string, unknown>) =>
+    gate(dir, call(tool, input, "medium", "builder-medium", "med-1"));
+  const TO_BUILDER = 'hand this change to subagent_type "builder" (max)';
+  const logged = (dir: string) =>
+    readFileSync(join(dir, "logs", "dxb-code-gate.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l));
+
+  it("allows a Write to a code path that is not guarded", () => {
+    expect(medium(box(), "Write", write("Write", "/work/src/x.ts"))).toBe("");
+  });
+  it("has no envelope: three code files, one of them 200 changed lines, all pass", () => {
+    const dir = box();
+    for (const [file, n] of [["a.ts", 200], ["b.py", 5], ["c.sh", 1]] as const) {
+      expect(medium(dir, "Write", { file_path: `/work/src/${file}`, content: lines(n) }), file).toBe("");
+    }
+  });
+  it("denies a guarded path — the database, the hooks — hands it to builder, and logs only the denies", () => {
+    const dir = box();
+    expect(medium(dir, "Write", write("Write", "/work/src/ok.ts"))).toBe("");
+    for (const path of ["/work/db/x.ts", "/work/.claude/hooks/y.py"]) {
+      const a = answer(medium(dir, "Write", { file_path: path, content: lines(1) }));
+      expect(a.permissionDecision, path).toBe("deny");
+      expect(a.permissionDecisionReason, path).toContain("builder-medium never writes a money, approval, database, security or governance path");
+      expect(a.permissionDecisionReason, path).toContain(TO_BUILDER);
+    }
+    expect(logged(dir).map((l) => [l.agent_type, l.tool, l.target, l.effort, l.mode, l.decision])).toEqual([
+      ["builder-medium", "Write", "/work/db/x.ts", "medium", "NORMAL", "deny"],
+      ["builder-medium", "Write", "/work/.claude/hooks/y.py", "medium", "NORMAL", "deny"],
+    ]);
+  });
+  it("lets a Bash write to a plain code path pass, and denies one that writes a guarded path, first or not", () => {
+    const dir = box();
+    expect(medium(dir, "Bash", { command: "printf 'x' > /work/src/y.py" })).toBe("");
+    for (const command of ["printf 'x' > /work/db/y.py", "printf 'x' > /work/src/y.py; printf 'y' | tee /work/db/z.ts"]) {
+      const a = answer(medium(dir, "Bash", { command }));
+      expect(a.permissionDecision, command).toBe("deny");
+      expect(a.permissionDecisionReason, command).toContain(TO_BUILDER);
+    }
+  });
+  it.each([
+    'D=/work/db; printf x > "$D/x.ts"',
+    'printf x | tee "${D}/x.ts"',
+    "printf x > `echo /work/db`/x.ts",
+    "printf x > ~/.claude/hooks/y.py",
+  ])("denies a Bash write whose target cannot be read as a literal path, and logs it: %s", (command) => {
+    const dir = box();
+    const a = answer(medium(dir, "Bash", { command }));
+    expect(a.permissionDecision).toBe("deny");
+    expect(a.permissionDecisionReason).toContain("builder-medium's Bash write target cannot be measured");
+    expect(logged(dir).map((l) => [l.agent_type, l.tool, l.mode, l.decision])).toEqual([["builder-medium", "Bash", "NORMAL", "deny"]]);
+  });
+  it("still denies the plain builder at medium, and names builder-medium as the third route", () => {
+    const a = answer(gate(box(), call("Write", write("Write", "/work/src/x.ts"), "medium", "builder")));
+    expect(a.permissionDecision).toBe("deny");
+    expect(a.permissionDecisionReason).toContain("Opus 5.5 · max effort");
+    expect(a.permissionDecisionReason).toContain('with subagent_type "builder-medium" (guarded paths still to "builder")');
+  });
+  it("routes Agent(builder-medium) as asked: the model key dropped, never rerouted in LEAN", () => {
+    const a = answer(gate(box(), spawnAgent("builder-medium", "opus")));
+    expect(a.permissionDecision).toBe("allow");
+    expect(a.updatedInput).toEqual({ description: "d", prompt: "p", subagent_type: "builder-medium" });
+    const lean = box();
+    quota(lean, 90);
+    expect(gate(lean, spawnAgent("builder-medium"))).toBe("");
+    expect(answer(gate(lean, spawnAgent("builder-medium", "sonnet"))).updatedInput).toEqual(
+      { description: "d", prompt: "p", subagent_type: "builder-medium" });
+  });
+});
+
 describe("the gate never breaks a session, and records only what it decided", () => {
   it("answers malformed stdin with exit 0 and nothing on stdout, and keeps the traceback", () => {
     const dir = box();

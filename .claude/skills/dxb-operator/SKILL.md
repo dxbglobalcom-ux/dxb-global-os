@@ -28,7 +28,7 @@ operator key alt+Tab        # bring a window to the front
 - **Claude Code's own commands are keys on this screen too.** `/goal` and the other slash commands
   go into the session's prompt box by paste: `wl-copy` the line, `operator click` the box, `operator
   shot` to see it focused, `operator key ctrl+shift+v`, read it, `operator key Return` (`operator
-  type` inverts case here). Why the engineer does it at all: `dxb-crew` §0.
+  type` inverts case here). Why the engineer does it at all: `dxb-crew` §0 (and `dxb-team1` §5, which points there).
 
 ## The second hand — a terminal program, driven WITHOUT the screen: `dxb-tui`
 
