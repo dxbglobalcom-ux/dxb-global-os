@@ -1440,5 +1440,29 @@
   "conditions": "His acceptance of the recommendation as stated (50 red line / 55 refusal). Not a law; the numbers of the context gate, one place (~/.claude/hooks/dxb-context-gate.py RED_LINE_PCT / AGENT_DENY_PCT) with the door texts (dxb-crew §3, dxb-team1 §5) and the memory notes following. Tests updated by the builder.",
   "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~01:05 on 2026-09-26, right after B59 was committed (faadb3ce).",
   "where": "board row B61 · .claude/skills/dxb-crew/SKILL.md §3 · .claude/skills/dxb-team1/SKILL.md §5 · .planning/STATE.md"
+ },
+ "research-basla-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "HIS 'BAŞLA' ON B56 PLAN v2 (the research door, Perplexity-shaped), at about 00:40, after the four decisions of PLAN.md §6 were put to him with a recommendation each and he asked only for the one word: (1) the page at once, no question — his earlier §9 ruling ('md mi sayfa mı' asked once at the end, the page designed by hand) is DELETED (LAW A); (2) the audit drawer (≈ 5,240 lines, PLAN.md §5) is deleted only AFTER the new road has passed his eye, in the morning — nothing is deleted tonight; (3) the growth ruler (recipe ≤ 120 lines, skill total ≤ 7,500) as a RULER in the battery, not a law — written and run tonight, WIRED only after the drawer, its threshold taken from the measured post-drawer count; (4) the door is dxb-team1 (his default-door word of 2026-09-26 ~00:05 replaces the plan's dxb-crew lines; this job is B57's first team job and pays its three measurements). The job runs in the Fable 5.1 session that heard it, as lead; every code change by Opus 5.5 writers at max.",
+  "verbatim": "başla. lakin şuan çalışan oturumla da anlaşın. işler karışmasın haberi olsun zira commit işi çok hassas ve sağlıklı olmalı ok. ben yatıorm",
+  "conditions": "Agree with the session already running (the B59/B60/B61 session) so the work does not mix; commits careful and healthy — file borders and a stage-by-path rule exchanged and accepted by that session at ~01:00 (cross-session message, its reply in this session's transcript). NOT an acceptance of the result (LAW B): his eye on the three answers side by side decides.",
+  "session": "Fable 5.1, session e4dad022-546b-4918-88ef-8988c4491f54, heard first-hand.",
+  "where": "board row B56 · .planning/STATE.md (B56 block) · .planning/quick/20260924-research-door-perplexity/PLAN.md status block and §6 · EVIDENCE-B56-2026-09-26.md"
+ },
+ "research-hunters-opus-low-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "THE HUNTERS ARE OPUS 5.5 AT LOW EFFORT, and the skill is the session's own helper in searches. Said at about 00:37 while confirming that his complaints are in the plan. LAW A: this deletes the plan's hunter-brain line ('Beyin Sonnet 5, 17 Eylül ölçümü') and fleet.sh's header rationale for Sonnet hunters; the launch line becomes --model claude-opus-5-5 --effort low. His other three sentences in the same breath are the plan's own core and are met by it: no past mistake repeated (the done-list before the code, a fresh verifier, his eye on the three answers); what is collected is not thrown away (every address read or accounted for, every quote an evidence row, the coverage table under the answer); 'a hundred pieces come and the man keeps two' (the measured cause: reading split by topic, X 294 found / 3 read / 0 cited).",
+  "verbatim": "benim istediğim olucak değil mi planda. Bu skill sizin yardımcınız aramalarda. opus 5.5 low olanlar olsun avcılar ve kesinlikle geçmişteki hatalar yapılmasın. neredeyse tüm sosyal medyaya girebiliyoruz toplanan bilgiler çöpe atılmasın hemen. 100 bilgi gelior konuyla iligli adam 2 sini alıp diğerlerini çöze atıor nse bununla iligli sorunlar dün konuşuldu hep. umarım buna göre yapılmıştır plan",
+  "conditions": "The 17 September hunter measurement (Sonnet 95 % of Opus's harvest at 45 % of the money) stays in the record as history; the first deep run measures Opus 5.5 · low against it.",
+  "session": "Fable 5.1, session e4dad022-546b-4918-88ef-8988c4491f54, heard first-hand.",
+  "where": "PLAN.md §2 C · fleet/fleet.sh header and launch line · EVIDENCE-B56-2026-09-26.md"
+ },
+ "research-no-cost-ceiling-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "NO COST CEILING ON THE RESEARCH RUNS. A 25 $ ceiling had been proposed; he struck it: the hunters run on his subscription. Measured the same minute: fleet.sh launches hunters with `claude -p` (the subscription CLI), no API key anywhere in the skill; the dollar figures Claude Code prints for a run (the '$11.65' of 2026-09-24) are notional, not money leaving the account; the real limit is the weekly quota (80 % at 00:32, reset 10:00), which is measured and reported, never a reason to stop the job.",
+  "verbatim": "maliyeti boşver yani maliyet 25 olunca ne yani iş yapılmayacak mı zaten subscriptionla ilerlioruz",
+  "conditions": "External paid APIs stay as B56 already recorded them: no subscription, Perplexity API and Apify optional (research-no-subscription-optional-2026-09-24).",
+  "session": "Fable 5.1, session e4dad022-546b-4918-88ef-8988c4491f54, heard first-hand.",
+  "where": "PLAN.md §2 H · EVIDENCE-B56-2026-09-26.md"
  }
 }

@@ -1,6 +1,6 @@
 # B56 — THE RESEARCH DOOR, PERPLEXITY-SHAPED · PLAN v2 (the architecture)
 
-**Status: PLAN — NOTHING IS BUILT; it waits for his word.** <!-- OPEN: B56 -->
+**Status: RUNNING — his "başla" came 2026-09-26 ~00:40; the job runs through `dxb-team1` in the Fable 5.1 session that heard it (lead), Opus 5.5 writers at max, a fresh verifier at high; his eye on the three answers side by side decides acceptance (LAW B).** <!-- OPEN: B56 --> <!-- CEO-OK: research-basla-2026-09-26 -->
 Written 2026-09-24 ~23:50 by the Fable 5.1 session he opened himself (`/model` → Fable 5.1) on his
 order: *"önemli bir plan mimari spece ihtiyacımız var."* <!-- CEO-OK: research-plan-v2-ordered-2026-09-24 --> On his "başla", §2 of this file replaces the
 conclusion sentence of the 14:55 plan (`~/.claude/plans/linear-plotting-breeze.md`: *"Derinlik bizde
@@ -17,6 +17,14 @@ sanırım baş mühendis olarak seninle devam edeceğiz. yazıcı da opus 5.5 ol
 session order for THIS job: chief engineer = this Fable 5.1 session; writer = the `builder` subagent
 (`claude-opus-5-5` · `max`); the work runs later, on his "başla". NOT an approval of the plan (LAW B): the
 four decisions of §6 and "başla" are still owed.
+**His four words, 2026-09-26 ~00:40** <!-- CEO-OK: research-basla-2026-09-26 -->: *"başla. lakin şuan çalışan oturumla da
+anlaşın. işler karışmasın haberi olsun zira commit işi çok hassas ve sağlıklı olmalı ok. ben yatıorm"* — the four
+decisions of §6 as recommended (page at once · drawer after his eye, in the morning · growth ruler as a ruler, wired
+after the drawer · the door `dxb-team1`, B57's first team job). Two more sentences of his the same quarter-hour, both
+registered: the hunters are **Opus 5.5 · low** <!-- CEO-OK: research-hunters-opus-low-2026-09-26 --> (LAW A: the
+Sonnet 5 hunter line below is gone), and **no cost ceiling** <!-- CEO-OK: research-no-cost-ceiling-2026-09-26 --> —
+the hunters run on his subscription, the dollar figures below are Claude Code's notional print, the real limit is the
+weekly quota. Evidence and the done-lists: `EVIDENCE-B56-2026-09-26.md` beside this file.
 
 ---
 
@@ -122,12 +130,12 @@ BUL (tarama, 40 kanal, saniyeler)
 |---|---|---|---|
 | **A. Tarif** | SKILL.md 383 satır, kurallar arasında aletler | ≈ 100 satır: önce **platform → tek satır komut** tablosu (öbür oturumun 52 satırlık taslağı temel), iki adım kanunu (bul → içini al), salt okunur, gizli Chrome, kısa sorgu, cevap biçimi | Yeniden yazılır; anlamı değişen sizin hükmünüz yok, yalnız §9 (karar 1) |
 | **B. Zemin** | sweep.sh 39 kanal; TikTok yok; LinkedIn satırı boş | 40 kanal: `tiktok` satırı eklenir, `linkedin` satırı exa yoluna alınır; gövde taşıyan ham dosyalar (X, Facebook, HN, Reddit arama) **avcı beklemeden kanıt satırına çevrilir** | 2 satır + küçük bir çevirici |
-| **C. Saha** | 7 avcı, konuya göre; 6 blok düzyazı | 7 avcı, **platforma göre**: ① X · Threads · Bluesky ② YouTube · TikTok · Instagram · Bilibili ③ Reddit · HN · lobste.rs · Stack Overflow · Quora (+ crowd.sh sayımı) ④ LinkedIn · Facebook · Substack · Medium ⑤ GitHub · npm/PyPI · liderlik tabloları · makaleler ⑥ diğer diller ⑦ karşı görüş (her platformda tersini arar). Her avcıya taramanın kendi platformlarında bulduğu **adres listesi** verilir; brifing tek cümledir: *bulduğun her adresi oku, okuyamadığını sebebiyle satıra yaz*; "yalnız kendi şeridinde çalış" cümlesi gider. Her avcı geri **kanıt satırları** + tek HÜKÜM satırı + her platform için durum verir: `bulundu N / okundu M / okunmadı: <sebep> / kapı kapalı: <hata>` | roles.tsv yeniden; fleet.sh satırları toplar; merge.py yalnız sayar. Beyin Sonnet 5 (17 Eylül ölçümü), komutan oturum |
+| **C. Saha** | 7 avcı, konuya göre; 6 blok düzyazı | 7 avcı, **platforma göre**: ① X · Threads · Bluesky ② YouTube · TikTok · Instagram · Bilibili ③ Reddit · HN · lobste.rs · Stack Overflow · Quora (+ crowd.sh sayımı) ④ LinkedIn · Facebook · Substack · Medium ⑤ GitHub · npm/PyPI · liderlik tabloları · makaleler ⑥ diğer diller ⑦ karşı görüş (her platformda tersini arar). Her avcıya taramanın kendi platformlarında bulduğu **adres listesi** verilir; brifing tek cümledir: *bulduğun her adresi oku, okuyamadığını sebebiyle satıra yaz*; "yalnız kendi şeridinde çalış" cümlesi gider. Her avcı geri **kanıt satırları** + tek HÜKÜM satırı + her platform için durum verir: `bulundu N / okundu M / okunmadı: <sebep> / kapı kapalı: <hata>` | roles.tsv yeniden; fleet.sh satırları toplar; merge.py yalnız sayar. Avcı beyni **Opus 5.5 · low** (sizin sözünüz, 26 Eylül 00:37; 17 Eylül'ün Sonnet ölçümü tarih olarak kalır), komutan oturum |
 | **D. Kanıt tablosu** | sources.json = adres listesi (2.208 adres, çoğu okunmamış) | koşu başına tek `evidence.jsonl`; şema zaten var (`schemas/evidence_row.schema.json`, 35 satır): alıntı **fetcher tarafından** yazılır, model yalnız var olan id'yi kullanır | sources.py id verme ve tekilleştirmeye küçülür |
 | **E. Yazar** | oturum; kaynak listesindeki numaralara göre yazar | oturum; **yalnız kanıt satırlarından** yazar. Alıntıyı yazar yazmaz: cevapta `[id]` durur, sayfa alıntıyı, yazarını, tarihini ve adresini **kanıt satırından basar**. Uydurma alıntı yapısal olarak imkânsız; denetçi yok | cite-check ve R4 gereksizleşir |
 | **F. Kapsama** | yok (cite-check kaynağı sayıyor, kapsamayı değil) | Kapsama scripti ≈ 50 satır: cevabın altına "platform · bulundu · okundu · cevapta · okunmadı/kapalı kapı: sebep" tablosunu basar. **Hiçbir şeyi durdurmaz, kapı değildir**; "X'ten 25 gönderi okundu, 3'ü kullanıldı" diye yazar, gerisini siz görürsünüz | Yeni, küçük |
 | **G. Sayfa** | render.py md üretir; "md mi sayfa mı" sonda sorulur; sayfa elle tasarlanır | render → sayfa olarak **hemen** önünüze konur, soru yok; elle tasarlanmış sayfa yalnız siz isterseniz. **Sayfanın biçimi = CEO raporu** (`dxb-ceo-report` kapısı): ilk cümle cevap · cevabı taşıyan sayı (sayım, pay, payda) · ne değiştirirdi ve bakıldı mı · ayakta bırakılan çelişkiler · en altta kapsama tablosu = nereye bakıldı, nereye bakılmadı · alıntılar yazar, tarih ve adresle | **Karar 1** (sizin §9 hükmünüze dokunur) |
-| **H. İki derinlik** | ask.sh (hızlı, 28–73 s ölçüldü) + filo | aynı: **hızlı** = oturum + ask.sh/tarama + okuyucu, ≤ 3 dk, dış maliyet 0 · **derin** = tarama + 7 platform avcısı + crowd.sh sayımı, ≤ 15 dk uçtan uca, ≈ 10–12 $. Derinliği oturum seçer, kimse sormaz | ask.sh'ın `--check` adımı denetçiyle gider |
+| **H. İki derinlik** | ask.sh (hızlı, 28–73 s ölçüldü) + filo | aynı: **hızlı** = oturum + ask.sh/tarama + okuyucu, ≤ 3 dk, dış maliyet 0 · **derin** = tarama + 7 platform avcısı + crowd.sh sayımı, ≤ 15 dk uçtan uca; dış para 0, koşu sizin aboneliğinizden (26 Eylül sözünüz: tavan yok; Claude Code'un bastığı "$" rakamı hayalidir). Derinliği oturum seçer, kimse sormaz | ask.sh'ın `--check` adımı denetçiyle gider |
 | **I. Kayıt** | Stop + PostToolUse kancaları, ledger, gate ("kaydet" deyince) | "kaydet" = `final.md` + `evidence.jsonl` `.planning/research/answers/<tarih>-<konu>/` klasörüne kopyalanır (klasör zaten var); kanca yok, defter yok | 17 Eylül emriniz aynen: varsayılan sıfır evrak |
 
 **Değişmeyen hükümleriniz:** varsayılan hiçbir şey yazılmaz (17 Eylül) · 20–30 kanal aynı anda, kapı
@@ -160,7 +168,7 @@ Makine maddeleri (baş mühendis koşar, çıktıyı yazar):
 Gözünüz: aynı soruya üç cevap tek sayfada yan yana — bugünkü skill'li (X 0), skill'siz (yalnız Reddit
 ve HN), yeni. Hangisi iyi, siz söylersiniz.
 
-## 4. Fazlar (dxb-crew: baş mühendis ölçer ve kabul eder · builder max'ta yazar · refuter çürütür)
+## 4. Fazlar (dxb-team1, sizin 26 Eylül sözünüzle: Fable 5.1 lider ölçer ve kabul eder · Opus 5.5 yazıcılar max'ta, aynı anda üçe kadar · taze verifier high'ta · sorun çıkarsa refuter xhigh, arbiter max)
 
 | Faz | İş | Kod |
 |---|---|---|
@@ -172,10 +180,9 @@ ve HN), yeni. Hangisi iyi, siz söylersiniz.
 | P5 | Çekmece (karar 2 "sil" ise): §5 listesi silinir, madde 5 yeniden ölçülür | silme + ölçüm |
 | P6 | Yan yana: üç cevap tek sayfada, gözünüze | — |
 
-Her fazın kabul maddesi fazdan önce yazılır; refuter yalnız değişikliğe bakar; faz başına commit;
-%40 bağlamda devir (`dxb-crew`). Baş mühendis koltuğu CLAUDE.md'ye göre Opus 5.5 · xhigh; bu planı
-yazan oturum sizin seçiminizle Fable 5.1 — "başla" deyince crew oturumunu kendim açarım (22:55'teki
-SIGNAL düzeni gibi), siz açmazsınız.
+Her fazın kabul maddesi fazdan önce yazılır; verifier yalnız diff'e ve listeye bakar; faz başına commit;
+%50 bağlamda devir (`dxb-team1` §5, sizin 26 Eylül 50/55 sözünüz). Lider, "başla"yı duyan Fable 5.1
+oturumu; kulvarlar ve kabul listeleri `EVIDENCE-B56-2026-09-26.md`'de.
 
 ## 5. Çekmece — yeni yolun çağırmadığı dosyalar (silme yalnız sözünüzle)
 
@@ -207,8 +214,11 @@ her biri koşulur (§3 madde 5). `.agents/skills/dxb-research` aynası da eski; 
 ## 6. Sizin kararınız — dört kelime
 
 1. **Sayfa hemen, soru yok** — sizin "md mi sayfa mı sonda bir kez sorulur, sayfa elle tasarlanır"
-   hükmünüz kalkar (Kanun A ile silinir, dipnot kalmaz): **evet / hayır**
-2. **Çekmece** (§5, ≈ 5.240 satır) yeni yol gözünüzden geçtikten sonra silinir: **sil / dursun**
-3. **Büyüme cetveli**: SKILL.md ≤ 120 satır ve skill toplamı ≤ 7.500 satır, bataryada; aşınca commit
-   düşer (B52'deki açılış cetveli gibi) — kanun değil, cetvel; yalnız siz derseniz: **olsun / gerek yok**
-4. **başla** — crew oturumu açılır, P0'dan gidilir.
+   hükmünüz kalkar (Kanun A ile silinir, dipnot kalmaz): **EVET** (26 Eylül 00:40).
+2. **Çekmece** (§5, ≈ 5.240 satır) yeni yol gözünüzden geçtikten sonra silinir: **SİL — sabah, gözünüzden
+   sonra; gece silme yok.**
+3. **Büyüme cetveli**: SKILL.md ≤ 120 satır ve skill toplamı bataryada bir cetvelle tutulur — kanun değil,
+   cetvel: **OLSUN.** Bu gece yazılır ve koşulur, bataryaya çekmece silindikten SONRA bağlanır; toplam
+   eşiği o günkü ölçümden alınır (bugün 12.824 satır − ≈ 5.240 = ≈ 7.584, yani 7.500 bu gece tutmaz;
+   eşik ölçülünce yazılır, tahmin edilmez).
+4. **başla** — geldi (00:40); kapı `dxb-team1`, P0'dan gidildi.
