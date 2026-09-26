@@ -42,8 +42,8 @@
 #   fleet.sh [<run-dir>|<name>] --q "<short query>" [--q "..."]... [--dert FILE]
 #            [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #            [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write]
-#            [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--crowd-cap N]
-#   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt]
+#            [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--crowd-cap N] [--no-split]
+#   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--no-split]
 #                                            # the tail alone — draft, claim rounds, answer, page — on a run that has its rows
 #
 # THE FIRST ARGUMENT IS THE RUN FOLDER — a path, or a bare name or nothing, which puts it under the
@@ -71,7 +71,7 @@ OUT=""
 case "${1:-}" in --*|"") ;; *) OUT="$1"; shift ;; esac
 N=4; MODEL=claude-opus-5-5; TMO=600; ROLES=""; DERT=""
 ROUNDS=3; FETCH_LIMIT=2000; FETCH_WORKERS=6; ALLOW_TMP=0; WRITE=1; WRITE_ONLY=""
-CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40
+CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1
 QUERIES=()
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -91,6 +91,7 @@ while [ $# -gt 0 ]; do
     --claim-timeout) CLAIM_TMO="${2:?--claim-timeout bir sayi ister}"; shift 2 ;;
     --no-claim-hunt) CLAIM_HUNT=0; shift ;;
     --crowd-cap)     CROWD_CAP="${2:?--crowd-cap bir sayi ister}"; shift 2 ;;
+    --no-split)      SPLIT=0; shift ;;
     *) shift ;;
   esac
 done
@@ -101,7 +102,7 @@ if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 
   echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout ve --crowd-cap en az 1 olur." >&2; exit 3
 fi
 if [ -z "$WRITE_ONLY" ] && [ ${#QUERIES[@]} -eq 0 ]; then
-  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt]" >&2
+  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N] [--no-split]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--no-split]" >&2
   echo "!! DUR: sorgu yok, filo yok. --q ile birkaç kelimelik sorgu ver." >&2
   exit 3
 fi
@@ -247,12 +248,46 @@ print(f"{tag}: cost {cost} · {secs} s -> {ans} · {len(text.splitlines())} sati
 PY
 }
 
+# ── HIS QUESTION, SPLIT BEFORE THE GROUND OPENS (B56 K3 stage 1) ────────────────────────────────────────────
+# The K2 answer stood in sections of the writer's own choosing: nothing on the page said which part of his
+# question a section answered, and a part no row spoke to was simply not there. So scripts/split.py names the
+# 3-6 sub-questions his DERT holds — one claude-opus-5-5 call at low effort, no tools, standing outside the
+# repository as every role does — writes <run>/subquestions.json and appends the ALT SORULAR block to
+# question.txt, which every role is handed as it stands: the hunters through $QUESTION (read after this step),
+# the writer and the claim hunters through {{QUESTION}}. The writer gives each sub-question its own section, a
+# gap included (writer-prompt.md rule 11). The run never waits on it: an answer that cannot be read leaves ONE
+# sub-question, the DERT itself (fallback, said on stderr), and a split.py that fails is named in one line while
+# the run goes on. --no-split leaves question.txt as the fleet wrote it; --write-only passes --reuse, so the
+# run's own subquestions.json is kept when it is there. What split.py said on stderr stands under its line.
+# A FULL RUN THAT DOES NOT SPLIT KEEPS NO EARLIER SPLIT: it wrote question.txt anew, so a subquestions.json an
+# earlier run left in its folder answers another question — measured by the lead: a folder used again with
+# --no-split kept four sub-questions, and kapsama.py printed `ALT SORU: 4 · tam 0 · boş 0 · eksik 4`.
+split_question() {
+  local rc
+  if [ "$SPLIT" -ne 1 ]; then
+    echo "alt sorular: atlandi (--no-split)"
+    [ -n "$WRITE_ONLY" ] || rm -f "$OUT/subquestions.json"
+    return 0
+  fi
+  # two calls of 120 s at most (an unreadable answer is asked for once more), and a margin
+  timeout 300 python3 "$SKILL/scripts/split.py" "$OUT" "$@" > "$OUT/split.out" 2> "$OUT/split.err"
+  rc=$?
+  if [ "$rc" -eq 0 ] && grep -q '^alt sorular: ' "$OUT/split.out"; then
+    grep -m1 '^alt sorular: ' "$OUT/split.out"
+  else
+    echo "!! alt sorular: split.py kod $rc — soru bolunmedi, question.txt oldugu gibi: $OUT/split.err"
+    [ -n "$WRITE_ONLY" ] || rm -f "$OUT/subquestions.json"
+  fi
+  sed 's/^/   /' "$OUT/split.err"
+}
+
 # --write-only: the run folder is the one given, THE FIELD below is skipped, and the tail runs once the
 # jail its claim hunters need is standing (THE TAIL, below the hunter's launch).
 if [ -n "$WRITE_ONLY" ]; then
   OUT="$(builtin cd "$WRITE_ONLY" 2>/dev/null && pwd)" || { echo "!! DUR: kosu klasoru yok: $WRITE_ONLY" >&2; exit 3; }
   [ -f "$OUT/evidence.jsonl" ] || { echo "!! DUR: $OUT/evidence.jsonl yok — yazara verilecek satir yok." >&2; exit 3; }
   echo "kosu    : $OUT  (yalniz kuyruk)"
+  split_question --reuse
 else   # ── THE FIELD — the run folder, the ground, the ledger, fetch-all, triage and the owners; a full run only
 
 # ── THE RUN LIVES ON DISK, UNDER THE REPOSITORY ─────────────────────────────────────────────────────
@@ -301,7 +336,6 @@ fi
   echo "SORGULAR (zemin bunlarla acildi):"
   for q in "${QUERIES[@]}"; do echo "  - $q"; done
 } >> "$QFILE"
-QUESTION="$(cat "$QFILE")"
 
 # SEVEN HUNTERS, EACH THE OWNER OF ITS PLATFORMS (roles.tsv). The default four read where people
 # talk — X, video, the forums — plus the counter-case; the deep seven add the professionals, the
@@ -329,6 +363,9 @@ echo "kosu    : $OUT"
 echo "sorgular: ${#QUERIES[@]}  ->  $(printf '%s | ' "${QUERIES[@]}")"
 echo "avcilar : $PICK"
 echo "beyin   : $MODEL · efor: low   zaman asimi ${TMO}s · tamamlama kapisi: en fazla $ROUNDS tur"
+split_question
+# the hunters are handed question.txt as the split left it: the ALT SORULAR block is in it
+QUESTION="$(cat "$QFILE")"
 echo
 
 # ---- THE GROUND IS OPENED BY THE MACHINE, NOT BY A SENTENCE -----------------------------
@@ -1206,7 +1243,9 @@ rmdir "$HUNT_TMP" 2>/dev/null
 echo
 echo "KAPSAMA — nereye bakildi (kapsama.py):"
 if [ -f "$SKILL/scripts/kapsama.py" ]; then
-  python3 "$SKILL/scripts/kapsama.py" "$OUT" || echo "!! kapsama.py calismadi (kod $?) — tablo yok, bu bir deliktir."
+  # with the answer when there is one: its Cevapta, İDDİA and KANIT lines and the sub-questions' table (ALT SORU, K3)
+  kap_answer=(); [ -f "$OUT/answer.md" ] && kap_answer=(--answer "$OUT/answer.md")
+  python3 "$SKILL/scripts/kapsama.py" "$OUT" "${kap_answer[@]}" || echo "!! kapsama.py calismadi (kod $?) — tablo yok, bu bir deliktir."
 else
   echo "!! kapsama.py yok — tablo basilamadi, bu bir deliktir."
 fi
@@ -1237,7 +1276,7 @@ echo
 echo "CEVAP HAZIR — SAKLANMADI.  $OUT/HUNTER-*.md"
 echo "ONA SOR (committen once): \"bu testi kaydedelim mi?\"  ->  evet derse:"
 echo "  bash \"$HERE/keep.sh\" \"$QFILE\" \"$OUT\" \"$SUMFILE\""
-echo "  keep.sh saklar: final.html · final.md · answer.md · evidence.jsonl · claims.jsonl · answer.draft.md · claims.draft.jsonl · SUMMARY.txt · HUNTER-*.md · soru · bodies/ (5 MB altindaysa)"
+echo "  keep.sh saklar: final.html · final.md · answer.md · evidence.jsonl · claims.jsonl · answer.draft.md · claims.draft.jsonl · subquestions.json · SUMMARY.txt · HUNTER-*.md · soru · bodies/ (5 MB altindaysa)"
 
 # A ROLE THE GATE COULD NOT MEASURE WAS NEVER ACCEPTED (its meta says `gate=time-up (unmeasured)`): the
 # run's last line names it, and the run leaves with code 1 even when every report came back. A claim role

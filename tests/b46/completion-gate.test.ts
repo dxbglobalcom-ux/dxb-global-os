@@ -20,11 +20,15 @@
 // (karsi) and a gap hunter (bosluk) work that ledger under a gate of their own, the writer's second pass
 // writes answer.md, its ledger carries the links, and the page is rendered. In the bench claims.py is a
 // contract stand-in too (claims-stub.py) — the real one is Lane A's — and `claude` plays both claim roles.
+//
+// B56 K3: every run here splits its question first (scripts/split.py) with this bench's `claude` stand-in, whose answer
+// holds no sub-question — so each run carries the fallback, ONE sub-question, the DERT itself (here the query), in its
+// question.txt; the split's own cases are fleet-by-platform.test.ts's.
 
 import { execFileSync } from "node:child_process";
 import { chmodSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { Bench, makeBench } from "./engine-copy.js";
 
 const FX = join(import.meta.dirname, "fixtures", "gate");
@@ -49,6 +53,11 @@ beforeAll(() => {
   chmodSync(join(b.bin, "claude"), 0o755);
 });
 afterAll(() => b?.dispose());
+// A TURN OF THE EVENT LOOP AFTER EVERY CASE. Each case blocks the worker in execFileSync and the runner awaits only
+// promises between cases, so the replies to vitest's own worker RPC wait behind them: at 61 s (K3, before the split's
+// cases moved to fleet-by-platform.test.ts) the run ended "Timeout calling onTaskUpdate", 1 error, every case green.
+// birpc waits 60 s; this file runs ~55 s.
+afterEach(() => new Promise<void>((resolve) => setImmediate(resolve)));
 
 function fleet(args: string[], env: Record<string, string> = {}): { code: number; out: string; run: string } {
   let out = "";
@@ -197,6 +206,8 @@ describe("the writer step — an Opus turns the rows into answer.md", () => {
       ["-p", "--model", "claude-opus-5-5", "--effort", "high", "--tools", "", "--strict-mcp-config", "--output-format", "json", ""]);
     const prompt = readFileSync(join(done.run, "writer", "writer-stdin.txt"), "utf8");
     expect(prompt).toContain(`SORGULAR (zemin bunlarla acildi):\n  - ${Q}`);
+    // K3: the split's block reaches the writer through {{QUESTION}} — here the fallback's one sub-question
+    expect(prompt).toContain(`ALT SORULAR (S-kimlik · başlık · soru):\n  - S1 · Sorunun tamamı · ${Q}\n`);
     expect(prompt).toContain("[x] HÜKÜM: x stand-in verdict, first round");
     expect(prompt).toMatch(/^RECONCILED$/m);
     expect(prompt).toContain('[L0001] x · @dev_one · 2026-09-20 · "Astra 6 won ten of fifteen tasks. The cost was lower too." · https://x.com/dev_one/status/1001');
@@ -215,15 +226,15 @@ describe("the writer step — an Opus turns the rows into answer.md", () => {
 });
 
 describe("every claude stands outside the repository — the run stays under var/", () => {
-  it("starts the hunter, both writer passes and the claim hunters outside the repository and brings their files back", () => {
+  it("starts the split, the hunter, both writer passes and the claim hunters outside the repository and brings their files back", () => {
     // A `claude` started inside this repository loads its CLAUDE.md and its hooks (the lead's
     // measurement, 2026-09-26), and the run folder is inside it now.
     const r = hunt("gate-where", "batch");
     expect(r.run, r.out.slice(-1500)).toMatch(new RegExp(`^${esc(repo)}/var/research/runs/\\d{8}-\\d{4}-gate-where$`));
     const w = fleet(["--write-only", r.run]);
     expect(w.code, w.out).toBe(0);
-    for (const where of [join(r.run, "work-x", "cwd.txt"), join(r.run, "writer-draft", "cwd.txt"), join(r.run, "writer", "cwd.txt"),
-      join(r.run, "work-karsi", "cwd.txt"), join(r.run, "work-bosluk", "cwd.txt")]) {
+    for (const where of [join(r.run, "split", "cwd.txt"), join(r.run, "work-x", "cwd.txt"), join(r.run, "writer-draft", "cwd.txt"),
+      join(r.run, "writer", "cwd.txt"), join(r.run, "work-karsi", "cwd.txt"), join(r.run, "work-bosluk", "cwd.txt")]) {
       const cwd = readFileSync(where, "utf8").trim();
       expect(cwd.startsWith(`${repo}/`), `${where}: ${cwd}`).toBe(false);
       expect(cwd.startsWith(`${engine}/`)).toBe(false);

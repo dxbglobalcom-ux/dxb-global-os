@@ -56,5 +56,12 @@ note — and these rules hold:
     `tekrar`, `aynı kişi`, `zayıf`, `konu dışı`, `daha güçlüsü alındı`; rows at one address share its line,
     `- [L0042, L0043] — tekrar`. Every id in the rows above is either cited in the answer or listed here.
     An id in this section is NOT a citation: it supports no claim, and the page does not count it as cited.
+11. When the question above ends with an `ALT SORULAR` block, the answer's `## ` sections are those
+    sub-questions, in the block's order, each headed exactly with its id and title as the block writes them:
+    `## S1 — <title>`, `## S2 — <title>`, …. The answer itself and the number that carries it (rules 1 and 2)
+    stay first, above them; `## Alınmayan kanıt` stays last. A sub-question no row above speaks to still gets
+    its section, holding the single line `Bu alt soruya satır yok.` — a visible gap, never dropped. Your own
+    sections — the contradictions, what would change the answer (rule 7) — may follow the S-sections, headed
+    as they would be without this rule. When the question holds no `ALT SORULAR` block, this rule does not apply.
 
 Return ONLY the text of answer.md — no code fence, no note to the reader, nothing before its first line.

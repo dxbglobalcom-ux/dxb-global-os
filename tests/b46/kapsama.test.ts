@@ -30,6 +30,11 @@
 // the ledger admits, what the writer is handed — stands before Cevapta, and with --answer a line under İDDİA
 // says what the answer did with them: KANIT: a kabul · c cevapta · k alınmadı · açıklanmadı u, u those the
 // answer's `## Alınmayan kanıt` section does not name; an id in that section is no citation.
+//
+// K3 (B56, stage 1 — the question split into sub-questions): with --answer and a subquestions.json beside the run, a
+// second table after those lines — one row per sub-question, its claims, rows, independent sources, counter rows and
+// its state, `tam` · `boş` (its section holds `Bu alt soruya satır yok.`) · `eksik` (the writer dropped it) — and its
+// `ALT SORU:` line; without subquestions.json nothing of it is printed.
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -228,6 +233,32 @@ describe("kapsama.py — prints, never blocks", () => {
     expect(r.code, r.out).toBe(0);
     expect(r.out).toContain("\n(cevaptaki bu kimlikler evidence.jsonl'da yok: L9999)\n");
     expect(r.out).toContain("\nKANIT: 4 kabul · 2 cevapta · 2 alınmadı · açıklanmadı 1\n");     // and still no citation
+  });
+
+  it("with subquestions.json, a second table: one row per sub-question, `tam` · `boş` · `eksik`, and its ALT SORU line", () => {
+    // run-drawer's rows under an answer with rule 11's headings: S1 cites three admitted rows (L0010 on both sides),
+    // S2 holds the gap line, S3 has no section at all
+    const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));
+    cpSync(join(FIX, "run-drawer"), dir, { recursive: true });
+    const answer = join(dir, "answer.md");
+    writeFileSync(answer, "Net bir kazanan yok [L0006] [L0001].\n\n## S1 — X'te iş bölümü\n- Plan Fable'da, hız Astra'da [L0006, L0001] ↔ [L0010].\n"
+      + "- Oyunda Fable önde [L0010].\n\n## S2 — Reddit'te tercih\nBu alt soruya satır yok.\n\n## Alınmayan kanıt\n- [L0007] — zayıf\n");
+    const without = kapsama([dir, "--answer", answer]);
+    const item = (id: string, title: string) => ({ id, title, question: `${title}?`, signals: [] });
+    writeFileSync(join(dir, "subquestions.json"), JSON.stringify({ source: "model", cost_usd: 0,
+      items: [item("S1", "X'te iş bölümü"), item("S2", "Reddit'te tercih"), item("S3", "YouTube'da test")] }));
+    const md = kapsama([dir, "--answer", answer]);
+    const tsv = kapsama([dir, "--answer", answer, "--format", "tsv"]);
+    const bare = kapsama([dir]);
+    rmSync(dir, { recursive: true, force: true });
+    expect(md.code, md.out).toBe(0);
+    // everything the first table printed stands as it was; the second table and its line follow it
+    expect(md.out).toBe(`${without.out}\n| Alt soru | İddia | Satır | Bağımsız kaynak | Karşı | Durum |\n|---|---:|---:|---:|---:|---|\n`
+      + "| S1 — X'te iş bölümü | 2 | 3 | 3 | 1 | tam |\n| S2 — Reddit'te tercih | 0 | 0 | 0 | 0 | boş |\n"
+      + "| S3 — YouTube'da test | 0 | 0 | 0 | 0 | eksik |\nALT SORU: 3 · tam 1 · boş 1 (S2) · eksik 1 (S3)\n");
+    expect(tsv.out).toContain("\n\nalt_soru\tiddia\tsatir\tbagimsiz_kaynak\tkarsi\tdurum\nS1\t2\t3\t3\t1\ttam\nS2\t0\t0\t0\t0\tboş\n"
+      + "S3\t0\t0\t0\t0\teksik\nALT SORU: 3 · tam 1 · boş 1 (S2) · eksik 1 (S3)\n");
+    expect(bare.out, "without --answer there is no answer to count").not.toContain("ALT SORU");
   });
 
   it("exits 1 only when the run folder does not exist", () => {

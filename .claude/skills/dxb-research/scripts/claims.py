@@ -36,6 +36,15 @@ N` / "unexplained_evidence": N, for any ledger: status reads --answer when given
 answer beside it (claims.jsonl ↔ answer.md, claims.draft.jsonl ↔ answer.draft.md), else <run>/answer.md,
 and says null only when that answer or the rows cannot be read.
 
+THE ANSWER'S SUB-QUESTIONS (B56 K3 stage 1, the CEO's word on the K3 plan, 2026-09-26 23:05): when the fleet split
+his question (scripts/split.py), the answer's sections are headed `## S1 — <title>` (fleet/writer-prompt.md rule
+11). A claim's `section` is the S-id of the section it stands in — "S0" for the verdict and whatever stands outside
+a sub-question (before the first S-heading, or under a section of the writer's own), "" when the answer has no
+S-heading. extract's last line ends `· sections k`, the distinct sub-questions its claims stand in; `status --format
+json` carries "sections", per sub-question its claims, the distinct admitted rows they stand on, the independent
+sources among those and the admitted counter rows (sub_counts — render.py's heading line and kapsama.py's second
+table count by it), when the ledger's claims carry S-ids.
+
 Exit: 0 done · 1 status: no ledger to count · 2 refused (a folder, an answer or a ledger that cannot be
 read, an unknown claim or id, an inadmissible id, a link the rules forbid, a bad argument).
 """
@@ -78,6 +87,11 @@ CONTENT_WORD = re.compile(r"[^\W\d_]{4,}")
 # THE WRITER'S LAST SECTION (fleet/writer-prompt.md rule 10): its heading, folded; the dash before a reason
 UNUSED = "alınmayan kanıt"
 REASON_LEAD = re.compile(r"^[\s\-–—:·]+")
+# THE ANSWER'S SUB-QUESTIONS (B56 K3): a heading `## S1 — <title>` opens sub-question S1's section, and a sub-question
+# no row speaks to holds the one line GAP (fleet/writer-prompt.md rule 11)
+SUB_HEAD = re.compile(r"^S([1-9]\d?)\s*[—–-]\s*(\S.*)$")
+SUB_ID = re.compile(r"S[1-9]\d?")
+GAP = "Bu alt soruya satır yok."
 
 
 def _uniq(ids) -> list[str]:
@@ -236,6 +250,54 @@ def unexplained(use: dict[str, dict]) -> int:
     return sum(1 for a in use.values() if not a["cited"] and a["reason"] is None)
 
 
+# =================================================================== the sub-questions
+def sub_heading(title: str) -> tuple[str, str] | None:
+    """A `## ` heading's text as a sub-question's: `S1 — <title>` → ("S1", "<title>"); None for any other heading."""
+    m = SUB_HEAD.match(claim_text(title))
+    return (f"S{m.group(1)}", m.group(2)) if m else None
+
+
+def is_gap(line: str) -> bool:
+    """The line a sub-question no row speaks to holds, `Bu alt soruya satır yok.` — list mark, decor and the full
+    stop aside. A line that cites is a claim, whatever it says."""
+    s = platforms.split_paired(line or "")
+    return not platforms.CITE_RE.search(s) and _folded(claim_text(s)).rstrip(".") == _folded(GAP).rstrip(".")
+
+
+def sub_sections(md: str) -> dict[str, dict]:
+    """The answer's sub-question sections in order: S-id -> {"title", "line" (its heading's), "gap" (the section
+    holds the GAP line)}; a section runs from its `## S<n> — ` heading to the next `## ` heading. Empty when the
+    answer has none (rule 11 did not apply, or the writer dropped them all)."""
+    out: dict[str, dict] = {}
+    here: dict | None = None
+    for n, line in enumerate((md or "").splitlines(), 1):
+        h = H2.match(line)
+        if h:
+            s = sub_heading(h.group(1))
+            here = out.setdefault(s[0], {"title": s[1], "line": n, "gap": False}) if s else None
+        elif here is not None and is_gap(line):
+            here["gap"] = True
+    return out
+
+
+def sub_counts(claims: list[dict], rows: dict[str, dict]) -> dict[str, dict]:
+    """Per sub-question, in S-order, the claims whose `section` is its S-id (S0 is no sub-question): {"claims": n,
+    "rows": the distinct admitted rows they stand on, "sources": the independent sources among those rows
+    (source_key), "counter": the distinct admitted rows on their counter side}. `rows` is the ledger by id."""
+    acc: dict[str, tuple[list, set, set]] = {}
+    for c in claims:
+        s = c.get("section")
+        if not (isinstance(s, str) and SUB_ID.fullmatch(s)):
+            continue
+        bad = set(c.get("inadmissible") or [])
+        n, sup, cou = acc.setdefault(s, ([0], set(), set()))
+        n[0] += 1
+        sup.update(i for i in c.get("support") or [] if i not in bad)
+        cou.update(i for i in c.get("counter") or [] if i not in bad)
+    return {s: {"claims": n[0], "rows": len(sup), "sources": len({source_key(rows[i]) for i in sup if i in rows}),
+                "counter": len(cou)} for s, (n, sup, cou) in sorted(acc.items(), key=lambda kv: int(kv[0][1:]))}
+
+
 # =================================================================== extract
 def _counted(ids: list[str], rows: dict[str, dict], index: dict, bad: list[str]) -> list[dict]:
     """The admitted rows among `ids`; a refused or unknown id goes to `bad` and is counted in nothing."""
@@ -253,18 +315,21 @@ def extract_claims(md: str, rows: dict[str, dict]) -> list[dict]:
     """Every line, list item or table body row of `md` that cites ≥ 1 row — never a table's header or
     separator row, never a line of the `## Alınmayan kanıt` section — as a claim, in order: C001, C002, …
     `rows` is the ledger by id (every row, so each quote row finds its address). The counts are over
-    ADMITTED rows only (evidence.admissible)."""
+    ADMITTED rows only (evidence.admissible). `section` is the S-id of the sub-question section the claim
+    stands in: "S0" outside every one, "" when the answer has no S-heading (B56 K3)."""
     index = evidence.address_index(list(rows.values()))
     lines = (md or "").splitlines()
     unused = unused_section(md)[0]
     out: list[dict] = []
-    section, headed = None, False
+    outside = "S0" if sub_sections(md) else ""
+    section, headed = outside, False
     for n, line in enumerate(lines, 1):
         if n in unused:
             continue
         h = H2.match(line)
         if h:
-            section, headed = claim_text(h.group(1)) or None, True
+            sub = sub_heading(h.group(1))
+            section, headed = sub[0] if sub else outside, True
         if "|" in line and SEP_ROW.match(line):
             continue
         if line.lstrip().startswith("|") and n < len(lines) and "|" in lines[n] and SEP_ROW.match(lines[n]):
@@ -394,7 +459,8 @@ def cmd_extract(run: Path, answer: Path, out: Path, keep: str | None) -> int:
     t = tally(claims)
     print(f"CLAIMS: {t['claims']} · verdict {t['verdict']} · thin {t['thin']} · counter-less {t['counter_less']}"
           f" · inadmissible-cited {t['inadmissible_cited']} · carried {carried}"
-          f" · unexplained-evidence {unexplained(evidence_use(md, list(rows.values())))}")
+          f" · unexplained-evidence {unexplained(evidence_use(md, list(rows.values())))}"
+          f" · sections {len({c['section'] for c in claims if SUB_ID.fullmatch(c['section'])})}")
     return 0
 
 
@@ -566,6 +632,8 @@ def cmd_status(run: Path, ledger: Path, fmt: str, answer: str | None = None,
         t.update(owed_counter=t["counter"]["sent"], owed_gap=t["gap"]["sent"],
                  new_for_links=sum(x.get("kind") == "for" for c in claims for x in c.get("links") or []),
                  unexplained_evidence=unexplained_of(run, answer_of(run, ledger, answer)))
+        if any(isinstance(c.get("section"), str) and re.fullmatch(r"S\d+", c["section"]) for c in claims):
+            t["sections"] = sub_counts(claims, _rows(run))          # the answer has S-headings (B56 K3)
         if reads is not None:
             r = claim_reads(run, claims, *reads)
             t["unread_links"] = r["unread_links"] if r is not None else None

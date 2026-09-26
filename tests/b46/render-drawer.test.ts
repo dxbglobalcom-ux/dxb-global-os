@@ -20,6 +20,12 @@
 // `## Alınmayan kanıt` section gives it (`alınmadı: açıklanmadı` when it gives none), and that section is not
 // the answer: no span, no chip, no quote card.
 //
+// K3 (B56, stage 1 — the question split into sub-questions): an answer whose sections are headed `## S1 — <title>`
+// (fleet/writer-prompt.md rule 11) shows each sub-question whole under "Cevabı taşıyan sayılar", its counts line
+// under its heading, a sub-question with no row as its gap line in the thin style, and kapsama.py's second table
+// under "Nereye bakıldı". A page whose answer has no S-heading is byte for byte the page of before: fixtures/render/
+// drawer-page.html is run-drawer's page as render.py made it at af919c84, before K3.
+//
 // HOW IT RUNS: the REAL render.py — with the real kapsama.py, evidence.py and claims.py beside it, the
 // engine's scripts copied to a temporary folder — on a temporary copy of fixtures/evidence/run-drawer:
 // thirteen rows on X, Reddit and YouTube in every ledger state (the cited L0001, L0002, L0007 and L0010
@@ -235,6 +241,46 @@ describe("final.html — the rows with a body the triage never judged (K2c)", ()
     expect([...got.page.matchAll(/<summary>([^<]*)<\/summary>/g)].map((m) => m[1])).toEqual(["X — 7 gönderi (kanıt 2 · 2 cevapta · 1 bekleyen)",
       "YouTube — 2 video (kanıt 1 · 1 cevapta)", "Reddit — 1 başlık (kanıt 1 · 1 cevapta)"]);
     expect(got.page).toContain('<span class="why-l">Elenen</span> bekleyen ×1 · ilgisiz: Opus vs Astra, not Fable ×2 · ');
+  });
+});
+
+describe("final.html — the answer's sub-questions, each whole with its own counts (B56 K3)", () => {
+  it("heads each S-section `S1 — <title>` with its counts line, shows the gap line thin, and the second table", () => {
+    const run = join(root, "subquestions");
+    cpSync(FIX, run, { recursive: true });
+    writeFileSync(join(run, "answer.md"), "Net bir kazanan yok: iş bölümü var [L0006] [L0001].\n\n## S1 — X'te iş bölümü\n"
+      + "- Plan Fable'da, hız Astra'da [L0006, L0001] ↔ [L0010].\n\n| İş | Öne çıkan | Satırlar |\n|---|---|---|\n"
+      + "| Oyun kıyası | Fable 5.1 | [L0010] |\n\n## S2 — Reddit'te tercih\n\nBu alt soruya satır yok.\n\n"
+      + "## Ayakta kalan çelişki\nTek video oyunda Fable'ı öne koyuyor [L0010].\n", "utf8");
+    const item = (id: string, title: string) => ({ id, title, question: `${title}?`, signals: [] });
+    writeFileSync(join(run, "subquestions.json"), JSON.stringify({ source: "model", cost_usd: 0,
+      items: [item("S1", "X'te iş bölümü"), item("S2", "Reddit'te tercih"), item("S3", "YouTube'da test")] }));
+    const got = render(run);
+    expect(got.said).toMatch(/^0 /);
+    const ours = got.page.split('id="sayilar"')[1]?.split("</section>")[0] ?? "";
+    // in the answer's order, before the writer's own section; no page section of their own
+    expect([...ours.matchAll(/<p class="from-t">([^<]*)<\/p>/g)].map((m) => m[1]))
+      .toEqual(["S1 — X'te iş bölümü", "S2 — Reddit'te tercih", "Ayakta kalan çelişki"]);
+    expect([...got.page.matchAll(/<section class="sec" id="([^"]+)">/g)].map((m) => m[1]))
+      .toEqual(["sayilar", "iddialar", "alintilar", "kapsama", "cekmece"]);
+    // S1: the list item and the table row — three rows (L0010 on both sides), three authors, one counter row
+    expect(ours).toContain('<p class="from-t">S1 — X\'te iş bölümü</p>\n<p class="from-n"><span class="count">'
+      + "(2 iddia · 3 satır · 3 bağımsız kaynak · 1 karşı)</span></p>");
+    expect(ours).toMatch(/<tr id="C\d{3}"><td data-label="İş"><span class="v">Oyun kıyası<\/span>/);
+    expect(ours).toContain('<p class="from-t">S2 — Reddit\'te tercih</p>\n<p class="from-n"><span class="count thin">'
+      + '(0 iddia · 0 satır · 0 bağımsız kaynak · 0 karşı)</span></p>\n<ul class="claims">\n'
+      + '<li><span class="count thin">Bu alt soruya satır yok.</span></li>\n</ul></div>');
+    const cov = got.page.split('id="kapsama"')[1]?.split("</section>")[0] ?? "";
+    const second = cov.split('<div class="tbl">')[2] ?? "";
+    expect([...second.matchAll(/<th[^>]*>([^<]*)<\/th>/g)].map((m) => m[1]))
+      .toEqual(["Alt soru", "İddia", "Satır", "Bağımsız kaynak", "Karşı", "Durum"]);
+    expect(second).toContain('<td data-label="Durum"><span class="v">eksik</span></td>');
+    expect(cov).toContain('<p class="note">ALT SORU: 3 · tam 1 · boş 1 (S2) · eksik 1 (S3)</p>');
+    expect(got.page).toContain(".from-n{");
+  });
+
+  it("builds a page whose answer has no S-heading byte for byte as before", () => {
+    expect(page).toBe(readFileSync(join(RENDER, "drawer-page.html"), "utf8"));
   });
 });
 

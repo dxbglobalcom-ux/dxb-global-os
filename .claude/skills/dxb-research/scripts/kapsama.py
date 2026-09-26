@@ -54,6 +54,18 @@ and a third, what the answer did with the admitted addresses (the CEO's word, 20
 a the Kanıt column's sum, c Cevapta's, k = a − c, and u those of the k whose ids the answer's
 `## Alınmayan kanıt` section does not name — all k when it has no such section.
 
+THE ANSWER'S SUB-QUESTIONS (B56 K3 stage 1). With --answer, when <run>/subquestions.json is there — the fleet split
+his question into the sub-questions his DERT holds (scripts/split.py), and the writer gave each its `## S1 — …`
+section (fleet/writer-prompt.md rule 11) — a second table follows those lines, one row per sub-question in S-order:
+
+    Alt soru | İddia | Satır | Bağımsız kaynak | Karşı | Durum
+
+  its claims and the distinct admitted rows, independent sources and counter rows they stand on (claims.py
+  sub_counts over claims.py's extract of this answer — render.py's line under each S-heading counts the same),
+  and Durum: `tam` ≥ 1 claim · `boş` no claim, its section holding `Bu alt soruya satır yok.` · `eksik` no claim
+  and no such line — the writer dropped it. Under it: `ALT SORU: N · tam t · boş b (S3 …) · eksik e (…)`.
+  Without subquestions.json nothing of this is printed.
+
 One row per platform present (it has an address, or a ground channel of it ran) plus `web`.
 --legacy reads a run made before v2 (no evidence.jsonl) and prints its old five columns, unchanged:
 Bulundu = the addresses in sources.json by platform (X = x.com + twitter.com + t.co), Okundu = addresses
@@ -83,6 +95,7 @@ READER = re.compile(r"opencli\s+twitter\s+(?:thread|comments)\b|opencli\s+reddit
 MEASURED = ("x", "youtube", "tiktok", "instagram", "facebook", "linkedin", "reddit")
 COLUMNS = ("Platform", "Bulundu", "İndirildi", "İlgili", "Okundu", "Kısmen", "Kanıt", "Cevapta", "Elenen",
            "Kapalı kapı")
+SUB_COLUMNS = ("Alt soru", "İddia", "Satır", "Bağımsız kaynak", "Karşı", "Durum")
 
 
 urls_in = P.urls_in
@@ -186,9 +199,10 @@ def by_count(c: Counter) -> list[tuple[str, int]]:
     return sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))
 
 
-def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str, str]:
+def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str, str, list[dict] | str | None]:
     """The ten columns, the notes, the ledger's line and, with an answer, the claim ledger's line
-    (claim_line) and the admitted addresses' (kanit_line); "" without one. evidence.py and claims.py are
+    (claim_line) and the admitted addresses' (kanit_line); "" without one — and the sub-questions' table
+    (sub_table; None without an answer or subquestions.json). evidence.py and claims.py are
     imported here, not at the top: --legacy never needs them, and a failure to load evidence.py is printed
     by main, never raised; without claims.py Kanıt is "-" and the KANIT line says why."""
     import evidence as E  # noqa: E402 — the ledger's owner: the address row, the states, their sums
@@ -248,7 +262,48 @@ def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str,
             if shut:
                 t["closed"][short_reason(shut[-1].get("notes"), shut[-1]["liveness"], shut[-1].get("http_status"))] += 1
     kanit = "" if cited is None else kanit_line(use, cited) if use is not None else f"KANIT: hesaplanamadı ({no_claims})"
-    return rows, notes, ledger_line(E, ledger, odd), said, kanit
+    alt = None if cited is None else sub_table(run, md, every, CL, no_claims)
+    return rows, notes, ledger_line(E, ledger, odd), said, kanit, alt
+
+
+def sub_table(run: Path, md: str, every: list[dict], CL, no_claims: str) -> list[dict] | str | None:
+    """One row per sub-question <run>/subquestions.json names, in its order: its claims, the distinct admitted
+    rows, independent sources and counter rows they stand on (claims.py sub_counts over the extract of this
+    answer) and its state — `tam` · `boş` (no claim, its section holds the gap line) · `eksik` (no claim, no gap
+    line). None without subquestions.json; one line saying why when it cannot be counted."""
+    path = run / "subquestions.json"
+    if not path.is_file():
+        return None
+    try:
+        items = [(str(i["id"]), one_line(i["title"], 60)) for i in json.loads(path.read_text(encoding="utf-8"))["items"]]
+    except (OSError, ValueError, KeyError, TypeError) as e:
+        return f"ALT SORU: hesaplanamadı (subquestions.json okunamadı: {type(e).__name__})"
+    if CL is None:
+        return f"ALT SORU: hesaplanamadı ({no_claims})"
+    by_id = {r["id"]: r for r in every if isinstance(r.get("id"), str)}
+    counts = CL.sub_counts(CL.extract_claims(P.split_paired(md), by_id), by_id)
+    held = CL.sub_sections(md)
+    out = []
+    for sid, title in items:
+        c = counts.get(sid) or {"claims": 0, "rows": 0, "sources": 0, "counter": 0}
+        state = "tam" if c["claims"] else "boş" if held.get(sid, {}).get("gap") else "eksik"
+        out.append({"id": sid, "title": title, **c, "state": state})
+    return out
+
+
+def render_sub(subs: list[dict], fmt: str) -> str:
+    """The sub-questions' table and its line — `ALT SORU: N · tam t · boş b (S…) · eksik e (S…)` — after a blank
+    line, so it stands as a table of its own under the platform table's lines."""
+    if fmt == "md":
+        lines = ["| " + " | ".join(SUB_COLUMNS) + " |", "|---|" + "---:|" * 4 + "---|"]
+        lines += [f"| {s['id']} — {s['title']} | {s['claims']} | {s['rows']} | {s['sources']} | {s['counter']} | "
+                  f"{s['state']} |" for s in subs]
+    else:
+        lines = ["alt_soru\tiddia\tsatir\tbagimsiz_kaynak\tkarsi\tdurum"]
+        lines += [f"{s['id']}\t{s['claims']}\t{s['rows']}\t{s['sources']}\t{s['counter']}\t{s['state']}" for s in subs]
+    said = [f"{st} {len(ids)}" + (f" ({' '.join(ids)})" if ids and st != "tam" else "")
+            for st in ("tam", "boş", "eksik") for ids in [[s["id"] for s in subs if s["state"] == st]]]
+    return "\n" + "\n".join(lines + [f"ALT SORU: {len(subs)} · " + " · ".join(said)])
 
 
 def kanit_line(use: dict, cited: set) -> str:
@@ -440,13 +495,15 @@ def main(argv: list[str] | None = None) -> int:
             rows, notes = table_legacy(run, answer, default_answer=not a.answer)
             print(render(rows, doors, present, a.format))
         else:
-            rows, notes, line, said, kanit = table_v2(run, answer)
+            rows, notes, line, said, kanit, alt = table_v2(run, answer)
             print(render_v2(rows, doors, present, a.format))
             print(line)
             if said:
                 print(said)
             if kanit:
                 print(kanit)
+            if alt is not None:
+                print(alt if isinstance(alt, str) else render_sub(alt, a.format))
         for n in notes:
             print(n)
     except Exception as e:                        # the ruler prints; it does not stop the page

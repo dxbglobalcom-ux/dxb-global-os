@@ -54,11 +54,13 @@ kept=""
 [ -f "$SUM" ] && cp "$SUM" "$DEST/SUMMARY.txt" && kept=" SUMMARY.txt"
 
 # THE ANSWER'S OWN FILES, kept when the run has them: the page, the written answer, the rows its
-# sources are printed from, its claim ledger, the draft and the draft's ledger, and — from a run of
+# sources are printed from, its claim ledger, the draft and the draft's ledger, the sub-questions its
+# sections answer (B56 K3: without them the page made again has no ALT SORU table), and — from a run of
 # the earlier contract — its numbered registry and the citation ruler's verdict. A file the run does
 # not have is not an error.
 for f in "$OUT/final.html" "$OUT/final.md" "$OUT/answer.md" "$OUT/evidence.jsonl" "$OUT/claims.jsonl" \
-         "$OUT/claims.draft.jsonl" "$OUT/answer.draft.md" "$OUT/sources.json" "$OUT"/cite-check*.txt; do
+         "$OUT/claims.draft.jsonl" "$OUT/subquestions.json" "$OUT/answer.draft.md" "$OUT/sources.json" \
+         "$OUT"/cite-check*.txt; do
   [ -f "$f" ] && cp "$f" "$DEST/" && kept="$kept ${f##*/}"
 done
 

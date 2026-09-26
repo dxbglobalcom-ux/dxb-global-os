@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Astra 6 vs Fable 5.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Public+Sans:wght@400;600&amp;display=swap">
+<style>
+:root{--bg:#f5f2ea;--paper:#fffdf8;--ink:#1c1a16;--ink-2:#46423a;--muted:#77716a;--rule:#e3ddd0;
+--rule-2:#cbc3b2;--accent:#a3301b;--on-accent:#fffdf8;--chip:#ebe5d7;--link:#1d4e89;--warm:#b0711a;
+--warm-bg:#f9efdb;--ok:#2c6a47;--bad:#a3301b;--serif:"Fraunces",Georgia,"Times New Roman",serif;
+--sans:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+--mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131210;--paper:#1b1916;--ink:#ece6dc;--ink-2:#c8c0b3;--muted:#958e82;--rule:#2d2a25;--rule-2:#3d3933;--accent:#ee8a72;--on-accent:#1b1916;--chip:#27241f;--link:#8fb6ee;--warm:#dda24d;--warm-bg:#2a2215;--ok:#7cc59c;--bad:#ee8a72;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#131210;--paper:#1b1916;--ink:#ece6dc;--ink-2:#c8c0b3;--muted:#958e82;--rule:#2d2a25;--rule-2:#3d3933;--accent:#ee8a72;--on-accent:#1b1916;--chip:#27241f;--link:#8fb6ee;--warm:#dda24d;--warm-bg:#2a2215;--ok:#7cc59c;--bad:#ee8a72;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16.5px/1.65 var(--sans);overflow-wrap:break-word}
+main{max-width:760px;margin:0 auto;padding:44px 16px 56px}
+a{color:var(--link);text-underline-offset:2px;text-decoration-thickness:1px}
+.eyebrow{margin:0 0 14px;font:500 12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{margin:0 0 28px;font:600 clamp(30px,6vw,44px)/1.1 var(--serif);letter-spacing:-.015em;text-wrap:balance}
+.verdict{margin:0 0 48px;padding:20px 22px 22px;background:var(--paper);border:1px solid var(--rule-2);border-top:3px solid var(--accent);border-radius:3px}
+.verdict .label{margin:0 0 10px;font:600 11.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.lede{margin:0;font:400 21px/1.5 var(--serif);text-wrap:pretty}
+.sec{margin:0 0 48px}
+.sec>h2{margin:0 0 18px;padding-top:12px;border-top:1.5px solid var(--ink);font:500 12px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.sec>h2 .no{color:var(--accent)}
+.intro{margin:0 0 16px;color:var(--muted);font-size:14.5px;line-height:1.55}
+h3{margin:26px 0 8px;font:600 19px/1.3 var(--serif)}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin:0 0 6px}
+li.d1{margin-left:18px}
+li.d2{margin-left:36px}
+li.d3{margin-left:54px}
+.claims{margin:0;padding:0;list-style:none;border-top:1px solid var(--rule)}
+.claims>li{margin:0;padding:12px 0;border-bottom:1px solid var(--rule)}
+.from{margin:22px 0 0}
+.from-t{margin:0 0 6px;font:500 11.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.caveat{padding:14px 18px 2px;background:var(--warm-bg);border-left:3px solid var(--warm);border-radius:0 3px 3px 0}
+.caveat .claims{border-top:0}
+.caveat .claims>li:last-child{border-bottom:0}
+.count{margin-left:2px;font:500 12.5px/1 var(--mono);color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
+.count.zero{padding:1px 5px;border:1px solid var(--warm);border-radius:3px;background:var(--warm-bg);color:var(--warm)}
+.count.thin{color:var(--warm)}
+.refs{white-space:nowrap}
+s.inadmissible{margin:0 2px;color:var(--muted);font:400 11.5px/1.3 var(--mono);white-space:nowrap}
+li:target,tr:target,p:target{outline:2px solid var(--accent);outline-offset:2px}
+a.ref{display:inline-block;min-width:20px;margin:0 1px;padding:2px 5px;border-radius:3px;background:var(--chip);color:var(--ink-2);font:500 11.5px/1.3 var(--mono);text-align:center;text-decoration:none;vertical-align:1px}
+a.ref:hover,a.ref:focus-visible{background:var(--accent);color:var(--on-accent)}
+code{padding:1px 4px;border-radius:3px;background:var(--chip);font:400 .9em var(--mono)}
+hr{margin:24px 0;border:0;border-top:1px solid var(--rule)}
+.tbl{margin:0 0 18px}
+table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5}
+th,td{padding:8px 12px 8px 0;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th:last-child,td:last-child{padding-right:0}
+th{font:500 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom-color:var(--rule-2)}
+.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.c{text-align:center}
+table.ledger{font-size:14px}
+table.ledger td.cid{font:400 12px/1.6 var(--mono);color:var(--muted);white-space:nowrap}
+table.ledger td.claim{overflow-wrap:anywhere}
+table.ledger td.flag{color:var(--warm)}
+table.cov{font-size:13.5px}
+table.cov td.h{font-weight:600;white-space:nowrap}
+table.cov tr.has-why td{padding-bottom:2px;border-bottom:0}
+table.cov tr.why td{padding:0 0 10px;font-size:13px;line-height:1.55;color:var(--ink-2)}
+.why-l{margin-right:6px;font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.recon{margin:12px 0 0;font:500 12.5px/1.55 var(--mono)}
+.recon.ok{color:var(--ok)}
+.recon.bad{color:var(--bad)}
+.note{margin:6px 0 0;font:400 12.5px/1.55 var(--mono);color:var(--muted)}
+.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.qcard{min-width:0;max-width:100%;margin:0;padding:2px 0 2px 16px;border-left:2px solid var(--accent)}
+.qcard blockquote{min-width:0;max-width:100%;margin:0 0 6px;font:italic 400 17.5px/1.55 var(--serif);overflow-wrap:anywhere}
+.qn{display:inline-block;min-width:20px;margin-right:8px;padding:2px 5px;border-radius:3px;background:var(--accent);color:var(--on-accent);font:normal 600 11.5px/1.3 var(--mono);text-align:center;vertical-align:2px}
+.qcard figcaption{min-width:0;max-width:100%;font:400 12.5px/1.55 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+details.plat{border-top:1px solid var(--rule)}
+details.plat:last-of-type{border-bottom:1px solid var(--rule)}
+summary{padding:14px 0;cursor:pointer;list-style:none;font:600 16px/1.4 var(--sans)}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";display:inline-block;width:1.5em;font:500 16px/1 var(--mono);color:var(--accent)}
+details[open]>summary::before{content:"−"}
+.drawer{margin:0;padding:0 0 16px;list-style:none}
+.drow{margin:0;padding:12px 0;border-top:1px solid var(--rule)}
+.drow.cited{padding-left:12px;border-left:2px solid var(--accent);background:var(--paper)}
+.drow:target,.drow:has(:target){outline:2px solid var(--accent);outline-offset:2px}
+.dm{font:400 12.5px/1.55 var(--mono);color:var(--muted)}
+.did{color:var(--ink-2)}
+.vd{color:var(--ink-2)}
+.mark{margin-left:6px;padding:1px 6px;border-radius:3px;background:var(--accent);color:var(--on-accent);font:600 11px/1.5 var(--mono);text-decoration:none;white-space:nowrap}
+.dt{margin:4px 0;font-size:15px;line-height:1.55}
+.du,.src{font:400 12.5px/1.45 var(--mono);overflow-wrap:anywhere;word-break:break-word}
+.none,.empty{color:var(--muted);font-style:italic}
+footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--rule);font:400 12px/1.6 var(--mono);color:var(--muted)}
+:target{scroll-margin-top:16px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:600px){
+main{padding-top:28px}
+.lede{font-size:19px}
+.verdict{padding:16px 16px 18px}
+table.stack thead{display:none}
+table.stack,table.stack tbody,table.stack tr{display:block;width:100%}
+table.stack tr{padding:10px 0;border-bottom:1px solid var(--rule)}
+table.stack td{display:block;padding:2px 0;border:0;text-align:left}
+table.stack td::before{content:attr(data-label);margin-right:8px;font:500 11px/1.7 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+table.stack td.n{display:flex;gap:8px;justify-content:space-between;align-items:baseline}
+table.stack td.n::before{margin-right:0}
+table.cov tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:16px}
+table.cov td.h{grid-column:1/-1;padding-bottom:4px;font-size:15px}
+table.cov td.h::before,table.cov tr.why td::before{content:none}
+table.cov tr.has-why{padding-bottom:4px;border-bottom:0}
+table.cov tr.why{display:block;padding-top:0}
+}
+</style>
+</head>
+<body>
+<main>
+<p class="eyebrow">Araştırma · 26 Eylül 2026, 02:30 · 2 avcı · 64–243 sn</p>
+<h1>İnsanlar hangisini seçiyor: Astra 6 mı, Fable 5.1 mi?</h1>
+<div class="verdict"><p class="label">Hüküm</p><p class="lede" id="C001">Net bir kazanan yok: iş bölümü var — plan ve kod Fable 5.1'de, hız ve ajan işi Astra 6'da <span class="refs"><a class="ref" href="#L0006" title="L0006">1</a><a class="ref" href="#L0007" title="L0007">2</a></span>. <span class="count">(2 satır · 2 bağımsız kaynak)</span></p></div>
+<section class="sec" id="sayilar">
+<h2><span class="no">01 —</span> Cevabı taşıyan sayılar</h2>
+<ul class="claims">
+<li id="C002">X'te okunan iki gönderi iş bölümünü anlatıyor <span class="refs"><a class="ref" href="#L0006" title="L0006">1</a><a class="ref" href="#L0001" title="L0001">3</a></span>. <span class="count">(2 satır · 2 bağımsız kaynak)</span></li>
+<li>Kalabalık sayımı bu koşuda yok; kişi sayısı verilmedi. <span class="count zero">(0 satır)</span></li>
+</ul>
+<div class="tbl"><table class="stack"><thead><tr><th>Sayı</th><th>Değer</th><th>Satırlar</th></tr></thead>
+<tbody>
+<tr id="C003"><td data-label="Sayı"><span class="v">İş bölümünü anlatan X gönderisi</span></td><td data-label="Değer"><span class="v">2</span></td><td data-label="Satırlar"><span class="v"><span class="refs"><a class="ref" href="#L0006" title="L0006">1</a><a class="ref" href="#L0001" title="L0001">3</a></span> <span class="count">(2 satır · 2 bağımsız kaynak)</span></span></td></tr>
+<tr><td data-label="Sayı"><span class="v">Kişi sayısı</span></td><td data-label="Değer"><span class="v">verilmedi</span></td><td data-label="Satırlar"><span class="v"> <span class="count zero">(0 satır)</span></span></td></tr>
+</tbody></table></div>
+<div class="from caveat"><p class="from-t">Ayakta kalan çelişki</p>
+<ul class="claims">
+<li id="C006">Tek video oyunda Fable'ı öne koyuyor, X gönderisi hızda Astra'yı <span class="refs"><a class="ref" href="#L0010" title="L0010">4</a><a class="ref" href="#L0001" title="L0001">3</a></span>. <span class="count">(2 satır · 2 bağımsız kaynak)</span></li>
+</ul></div>
+</section>
+<section class="sec" id="iddialar">
+<h2><span class="no">02 —</span> İddia defteri</h2>
+<p class="intro">Cevaptaki her iddia, dayandığı satırlarla: kaç satır, kaç bağımsız kaynak, kaç başlık ve alan adı, kaç karşı satır.</p>
+<div class="tbl"><table class="stack ledger"><thead><tr><th>#</th><th>İddia</th><th class="n">Satır</th><th class="n">Bağımsız kaynak</th><th class="n">Başlık</th><th class="n">Alan</th><th class="n">Karşı</th><th>Durum</th></tr></thead>
+<tbody>
+<tr><td data-label="#" class="cid"><span class="v">C001</span></td><td data-label="İddia" class="claim"><span class="v"><a href="#C001">Net bir kazanan yok: iş bölümü var — plan ve kod Fable 5.1'de, hız ve ajan işi Astra 6'da.</a></span></td><td data-label="Satır" class="n"><span class="v">2</span></td><td data-label="Bağımsız kaynak" class="n"><span class="v">2</span></td><td data-label="Başlık" class="n"><span class="v">2</span></td><td data-label="Alan" class="n"><span class="v">2</span></td><td data-label="Karşı" class="n"><span class="v">0</span></td><td data-label="Durum"><span class="v">tam</span></td></tr>
+<tr><td data-label="#" class="cid"><span class="v">C002</span></td><td data-label="İddia" class="claim"><span class="v"><a href="#C002">X'te okunan iki gönderi iş bölümünü anlatıyor.</a></span></td><td data-label="Satır" class="n"><span class="v">2</span></td><td data-label="Bağımsız kaynak" class="n"><span class="v">2</span></td><td data-label="Başlık" class="n"><span class="v">2</span></td><td data-label="Alan" class="n"><span class="v">1</span></td><td data-label="Karşı" class="n"><span class="v">0</span></td><td data-label="Durum"><span class="v">tam</span></td></tr>
+<tr><td data-label="#" class="cid"><span class="v">C003</span></td><td data-label="İddia" class="claim"><span class="v"><a href="#C003">İş bölümünü anlatan X gönderisi · 2</a></span></td><td data-label="Satır" class="n"><span class="v">2</span></td><td data-label="Bağımsız kaynak" class="n"><span class="v">2</span></td><td data-label="Başlık" class="n"><span class="v">2</span></td><td data-label="Alan" class="n"><span class="v">1</span></td><td data-label="Karşı" class="n"><span class="v">0</span></td><td data-label="Durum"><span class="v">tam</span></td></tr>
+<tr><td data-label="#" class="cid"><span class="v">C004</span></td><td data-label="İddia" class="claim"><span class="v"><a href="#C004">Ajan işi, hız · Astra 6</a></span></td><td data-label="Satır" class="n"><span class="v">2</span></td><td data-label="Bağımsız kaynak" class="n"><span class="v">2</span></td><td data-label="Başlık" class="n"><span class="v">2</span></td><td data-label="Alan" class="n"><span class="v">2</span></td><td data-label="Karşı" class="n"><span class="v">0</span></td><td data-label="Durum"><span class="v">tam</span></td></tr>
+<tr><td data-label="#" class="cid"><span class="v">C005</span></td><td data-label="İddia" class="claim"><span class="v"><a href="#C005">Oyun kıyası · Fable 5.1</a></span></td><td data-label="Satır" class="n"><span class="v">1</span></td><td data-label="Bağımsız kaynak" class="n"><span class="v">1</span></td><td data-label="Başlık" class="n"><span class="v">1</span></td><td data-label="Alan" class="n"><span class="v">1</span></td><td data-label="Karşı" class="n"><span class="v">0</span></td><td data-label="Durum" class="flag"><span class="v">tek kaynak</span></td></tr>
+<tr><td data-label="#" class="cid"><span class="v">C006</span></td><td data-label="İddia" class="claim"><span class="v"><a href="#C006">Tek video oyunda Fable'ı öne koyuyor, X gönderisi hızda Astra'yı.</a></span></td><td data-label="Satır" class="n"><span class="v">2</span></td><td data-label="Bağımsız kaynak" class="n"><span class="v">2</span></td><td data-label="Başlık" class="n"><span class="v">2</span></td><td data-label="Alan" class="n"><span class="v">2</span></td><td data-label="Karşı" class="n"><span class="v">0</span></td><td data-label="Durum"><span class="v">tam</span></td></tr>
+</tbody></table></div>
+<p class="note">6 iddia · 1 tek kaynak · 6 karşısız · 0 kabul edilmeyen alıntı · kaynak = ayrı yazar, yazar yoksa ayrı adres · aynı kişinin iki hesabı iki kaynak sayılır</p>
+</section>
+<section class="sec" id="s03">
+<h2><span class="no">03 —</span> Nerede kim önde</h2>
+<div class="tbl"><table class="stack"><thead><tr><th>İş</th><th>Öne çıkan</th><th>Satırlar</th></tr></thead>
+<tbody>
+<tr id="C004"><td data-label="İş"><span class="v">Ajan işi, hız</span></td><td data-label="Öne çıkan"><span class="v">Astra 6</span></td><td data-label="Satırlar"><span class="v"><span class="refs"><a class="ref" href="#L0006" title="L0006">1</a><a class="ref" href="#L0007" title="L0007">2</a></span> <span class="count">(2 satır · 2 bağımsız kaynak)</span></span></td></tr>
+<tr id="C005"><td data-label="İş"><span class="v">Oyun kıyası</span></td><td data-label="Öne çıkan"><span class="v">Fable 5.1</span></td><td data-label="Satırlar"><span class="v"><span class="refs"><a class="ref" href="#L0010" title="L0010">4</a></span> <span class="count thin">(1 satır · 1 bağımsız kaynak)</span></span></td></tr>
+</tbody></table></div>
+</section>
+<section class="sec" id="s04">
+<h2><span class="no">04 —</span> Ne değiştirirdi, bakıldı mı</h2>
+<div class="caveat">
+<ul>
+<li>Kapısı kapalı Reddit başlığı okunamadı; açılırsa tablo değişebilir.</li>
+</ul>
+</div>
+</section>
+<section class="sec" id="alintilar">
+<h2><span class="no">05 —</span> Alıntılar</h2>
+<p class="intro">Cevapta geçen her satır, kendi kaydından: alıntı, yazar, tarih, platform, adres.</p>
+<div class="cards">
+<figure class="qcard" id="q-L0006"><blockquote><span class="qn">1</span>“Astra 6 ajan işlerinde açık ara önde”</blockquote><figcaption>@bench_x_two · 22 Eyl 2026 · X · <a class="src" href="https://x.com/bench_x_two/status/1970000000000000102" target="_blank" rel="noopener noreferrer">x.com/bench_x_two/status/1970000000000000102</a> · <a href="#L0006">L0006</a></figcaption></figure>
+<figure class="qcard" id="q-L0007"><blockquote><span class="qn">2</span>“Kod incelemesinde Astra'ya güveniyorum; zor işlerde Fable'a dönüyorum.”</blockquote><figcaption>u/bench_r_one · 10 Eyl 2026 · Reddit · <a class="src" href="https://www.reddit.com/r/LocalLLaMA/comments/b46dr1/astra_6_or_fable_51/" target="_blank" rel="noopener noreferrer">reddit.com/r/LocalLLaMA/comments/b46dr1/astra_6_or_fable_51</a> · <a href="#L0007">L0007</a></figcaption></figure>
+<figure class="qcard" id="q-L0001"><blockquote><span class="qn">3</span>“Planlama ve kod tarafında Fable 5.1 daha düzenli çıktı; aynı depoda Astra 6 3D sahneleri çok daha hızlı kurdu. İki haftadır ikisini birlikte kullanıyorum: plan ve kod incelemesi Fable'da, görsel demo ve hızlı prototip Astra'da. Maliyet tarafında Astra ucuz görünüyor ama uzun oturumlarda önbellek yüzünden Fable daha az tuttu. Kısacası tek bir kazanan yok, iş bölümü var.”</blockquote><figcaption>@bench_x_one · 20 Eyl 2026 · X · <a class="src" href="https://x.com/bench_x_one/status/1970000000000000101" target="_blank" rel="noopener noreferrer">x.com/bench_x_one/status/1970000000000000101</a> · <a href="#L0001">L0001</a></figcaption></figure>
+<figure class="qcard" id="q-L0010"><blockquote><span class="qn">4</span>“Oyun kıyasında Fable 5.1 kazandı; hız testinde Astra 6.”</blockquote><figcaption>@bench_tube · Eyl 2026 · YouTube · <a class="src" href="https://www.youtube.com/watch?v=b46drawer01" target="_blank" rel="noopener noreferrer">youtube.com/watch?v=b46drawer01</a> · <a href="#L0010">L0010</a></figcaption></figure>
+</div>
+</section>
+<section class="sec" id="kapsama">
+<h2><span class="no">06 —</span> Nereye bakıldı</h2>
+<div class="tbl"><table class="stack cov"><thead><tr><th>Platform</th><th class="n">Bulundu</th><th class="n">İndirildi</th><th class="n">İlgili</th><th class="n">Okundu</th><th class="n">Kısmen</th><th class="n">Kanıt</th><th class="n">Cevapta</th></tr></thead>
+<tbody>
+<tr class="has-why"><td data-label="Platform" class="h"><span class="v">X</span></td><td data-label="Bulundu" class="n"><span class="v">7</span></td><td data-label="İndirildi" class="n"><span class="v">6</span></td><td data-label="İlgili" class="n"><span class="v">2</span></td><td data-label="Okundu" class="n"><span class="v">1</span></td><td data-label="Kısmen" class="n"><span class="v">1</span></td><td data-label="Kanıt" class="n"><span class="v">2</span></td><td data-label="Cevapta" class="n"><span class="v">2</span></td></tr>
+<tr class="why"><td colspan="8"><div><span class="why-l">Elenen</span> ilgisiz: Opus vs Astra, not Fable ×2 · ilgisiz: Free access tip only ×1 · tekrar ×1</div></td></tr>
+<tr class="has-why"><td data-label="Platform" class="h"><span class="v">YouTube</span></td><td data-label="Bulundu" class="n"><span class="v">2</span></td><td data-label="İndirildi" class="n"><span class="v">2</span></td><td data-label="İlgili" class="n"><span class="v">1</span></td><td data-label="Okundu" class="n"><span class="v">1</span></td><td data-label="Kısmen" class="n"><span class="v">0</span></td><td data-label="Kanıt" class="n"><span class="v">1</span></td><td data-label="Cevapta" class="n"><span class="v">1</span></td></tr>
+<tr class="why"><td colspan="8"><div><span class="why-l">Elenen</span> ilgisiz: Only a thumbnail, no words ×1</div></td></tr>
+<tr class="has-why"><td data-label="Platform" class="h"><span class="v">Reddit</span></td><td data-label="Bulundu" class="n"><span class="v">3</span></td><td data-label="İndirildi" class="n"><span class="v">1</span></td><td data-label="İlgili" class="n"><span class="v">1</span></td><td data-label="Okundu" class="n"><span class="v">0</span></td><td data-label="Kısmen" class="n"><span class="v">0</span></td><td data-label="Kanıt" class="n"><span class="v">1</span></td><td data-label="Cevapta" class="n"><span class="v">1</span></td></tr>
+<tr class="why"><td colspan="8"><div><span class="why-l">Kapalı kapı</span> opencli reddit read kod 1 ×1</div></td></tr>
+<tr><td data-label="Platform" class="h"><span class="v">Web (diğer)</span></td><td data-label="Bulundu" class="n"><span class="v">0</span></td><td data-label="İndirildi" class="n"><span class="v">0</span></td><td data-label="İlgili" class="n"><span class="v">0</span></td><td data-label="Okundu" class="n"><span class="v">0</span></td><td data-label="Kısmen" class="n"><span class="v">0</span></td><td data-label="Kanıt" class="n"><span class="v">0</span></td><td data-label="Cevapta" class="n"><span class="v">0</span></td></tr>
+</tbody></table></div>
+<p class="recon ok">RECONCILED — bulundu 12 = bekleyen 2 + ilgili 4 + ilgisiz 4 + tekrar 1 + kapalı 1 · ilgili 4 = okundu 2 + kısmen 1 + okunmadı 1 · okundu 2 = hüküm verilen 2 + hüküm bekleyen 0</p>
+<p class="note">İDDİA: 6 iddia · 1 tek kaynak · 6 karşısız · 0 kabul edilmeyen alıntı</p>
+<p class="note">KANIT: 4 kabul · 4 cevapta · 0 alınmadı · açıklanmadı 0</p>
+</section>
+<section class="sec" id="cekmece">
+<h2><span class="no">07 —</span> Getirilen bütün satırlar</h2>
+<p class="intro">Gövdesi indirilen her adres, platform platform — 9 adres. Cevapta kullanılanlar üstte ve işaretli, gerisi en yeniden eskiye; uzun metin 300 karakterde kesildi.</p>
+<details class="plat" id="p-x">
+<summary>X — 6 gönderi (kanıt 2 · 2 cevapta)</summary>
+<ol class="drawer">
+<li class="drow cited" id="L0002"><div class="dm"><span class="did">L0002</span> <span class="did" id="L0006">L0006</span> · @bench_x_two · 22 Eyl 2026 · <span class="vd">avcı: kanıt</span> <a class="mark" href="#q-L0006">cevapta · 1</a></div><p class="dt">Astra 6 ajan işlerinde açık ara önde; Fable 5.1 ise talimata daha sadık.</p><a class="du" href="https://x.com/bench_x_two/status/1970000000000000102" target="_blank" rel="noopener noreferrer">x.com/bench_x_two/status/1970000000000000102</a></li>
+<li class="drow cited" id="L0001"><div class="dm"><span class="did">L0001</span> · @bench_x_one · 20 Eyl 2026 · <span class="vd">avcı: kanıt</span> <a class="mark" href="#q-L0001">cevapta · 3</a></div><p class="dt">Planlama ve kod tarafında Fable 5.1 daha düzenli çıktı; aynı depoda Astra 6 3D sahneleri çok daha hızlı kurdu. İki haftadır ikisini birlikte kullanıyorum: plan ve kod incelemesi Fable'da, görsel demo ve hızlı prototip Astra'da. Maliyet tarafında Astra ucuz görünüyor ama uzun oturumlarda önbellek…</p><a class="du" href="https://x.com/bench_x_one/status/1970000000000000101" target="_blank" rel="noopener noreferrer">x.com/bench_x_one/status/1970000000000000101</a></li>
+<li class="drow" id="L0004"><div class="dm"><span class="did">L0004</span> · @bench_x_four · 21 Eyl 2026</div><p class="dt">Aynı gönderinin alıntısı: Fable plan, Astra 3D.</p><a class="du" href="https://x.com/bench_x_four/status/1970000000000000104" target="_blank" rel="noopener noreferrer">x.com/bench_x_four/status/1970000000000000104</a></li>
+<li class="drow" id="L0012"><div class="dm"><span class="did">L0012</span> · @bench_x_five · 19 Eyl 2026</div><p class="dt">Astra 6 ile Opus 5.5 arasında seçim yaptım.</p><a class="du" href="https://x.com/bench_x_five/status/1970000000000000112" target="_blank" rel="noopener noreferrer">x.com/bench_x_five/status/1970000000000000112</a></li>
+<li class="drow" id="L0003"><div class="dm"><span class="did">L0003</span> · @bench_x_three · 18 Eyl 2026</div><p class="dt">Opus 5.5 ile Astra 6'yı karşılaştırdım, Fable'ı denemedim.</p><a class="du" href="https://x.com/bench_x_three/status/1970000000000000103" target="_blank" rel="noopener noreferrer">x.com/bench_x_three/status/1970000000000000103</a></li>
+<li class="drow" id="L0013"><div class="dm"><span class="did">L0013</span> · @bench_x_six · 17 Eyl 2026</div><p class="dt">Astra 6 şu an ücretsiz denenebiliyor.</p><a class="du" href="https://x.com/bench_x_six/status/1970000000000000113" target="_blank" rel="noopener noreferrer">x.com/bench_x_six/status/1970000000000000113</a></li>
+</ol>
+</details>
+<details class="plat" id="p-youtube">
+<summary>YouTube — 2 video (kanıt 1 · 1 cevapta)</summary>
+<ol class="drawer">
+<li class="drow cited" id="L0010"><div class="dm"><span class="did">L0010</span> · @bench_tube · Eyl 2026 · <span class="vd">avcı: kanıt</span> <a class="mark" href="#q-L0010">cevapta · 4</a></div><p class="dt">Oyun kıyasında Fable 5.1 kazandı; hız testinde Astra 6.</p><a class="du" href="https://www.youtube.com/watch?v=b46drawer01" target="_blank" rel="noopener noreferrer">youtube.com/watch?v=b46drawer01</a></li>
+<li class="drow" id="L0011"><div class="dm"><span class="did">L0011</span> · Bench Channel · 15 Eyl 2026</div><p class="dt">Sadece küçük resim, konuşma yok.</p><a class="du" href="https://www.youtube.com/watch?v=b46drawer02" target="_blank" rel="noopener noreferrer">youtube.com/watch?v=b46drawer02</a></li>
+</ol>
+</details>
+<details class="plat" id="p-reddit">
+<summary>Reddit — 1 başlık (kanıt 1 · 1 cevapta)</summary>
+<ol class="drawer">
+<li class="drow cited" id="L0007"><div class="dm"><span class="did">L0007</span> · u/bench_r_one · 10 Eyl 2026 · <span class="vd">avcı: kanıt</span> <a class="mark" href="#q-L0007">cevapta · 2</a></div><p class="dt">Kod incelemesinde Astra'ya güveniyorum; zor işlerde Fable'a dönüyorum.</p><a class="du" href="https://www.reddit.com/r/LocalLLaMA/comments/b46dr1/astra_6_or_fable_51/" target="_blank" rel="noopener noreferrer">reddit.com/r/LocalLLaMA/comments/b46dr1/astra_6_or_fable_51</a></li>
+</ol>
+</details>
+</section>
+<footer>evidence.jsonl · 13 satır · alıntı, yazar, tarih ve adres satırların kendisinden basıldı, cevaptan değil</footer>
+</main>
+<script>(function(){function go(){var h=decodeURIComponent(location.hash.slice(1)),e=h&&document.getElementById(h),d=e&&e.closest("details");if(d&&!d.open){d.open=true;e.scrollIntoView();}}addEventListener("hashchange",go);go();})();</script>
+</body>
+</html>

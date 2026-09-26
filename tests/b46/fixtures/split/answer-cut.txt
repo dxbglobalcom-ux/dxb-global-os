@@ -1,0 +1,4 @@
+```json
+{"items": [
+  {"id": "S1", "title": "Platformlara göre kim neyi seçiyor", "question": "Her platformda profesyoneller bugün Astra 6'yı mı Fable 5.1'i mi seçiyor?", "signals": ["prefer Astra", "prefer Fable"]},
+  {"id": "S2", "title": "Hangi iş için hangisi", "question": "Hangi iş türünde hangisi öne

@@ -16,9 +16,16 @@
 // B56 K2: the roster carries the tail's two claim roles (karsi, bosluk), which own no platform and are
 // never launched as hunters; merge.py's PARA is a role's whole bill and Google read through hidden.py is
 // the Google door; the crowd's threads come from the ledger; keep.sh names the folder after the first query.
+//
+// B56 K3 — HIS QUESTION, SPLIT BEFORE THE GROUND OPENS. The K2 answer stood in sections of the writer's own choosing,
+// and a part of his question no row spoke to was simply not on the page. So the fleet runs scripts/split.py first: the
+// sub-questions his DERT holds go into subquestions.json and, as the ALT SORULAR block, into question.txt — which every
+// role is handed. FAKE_SPLIT hands split.py a kept answer (fixtures/split/) in place of the model's; without it the
+// split's `claude` is this bench's stand-in, whose answer holds no sub-question: the fallback, one sub-question. A full
+// run that does not split keeps no earlier run's subquestions.json; keep.sh keeps it with the answer.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { chmodSync, copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { chmodSync, copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Bench, makeBench } from "./engine-copy.js";
@@ -36,10 +43,15 @@ let run7 = "";
 let out7 = { code: 0, stdout: "" };
 
 function fleet(out: string, ...args: string[]): { code: number; stdout: string } {
+  return fleetWith({}, out, ...args);
+}
+
+/** The copy's fleet.sh with `env` on top of the bench's (FAKE_SPLIT for the split's cases, K3). */
+function fleetWith(env: Record<string, string>, ...args: string[]): { code: number; stdout: string } {
   try {
-    const stdout = execFileSync("bash", [join(b.engine, "fleet", "fleet.sh"), out, ...args], {
+    const stdout = execFileSync("bash", [join(b.engine, "fleet", "fleet.sh"), ...args], {
       encoding: "utf8",
-      env: { ...process.env, PATH: `${b.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1" },
+      env: { ...process.env, ...env, PATH: `${b.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1" },
       stdio: ["ignore", "pipe", "pipe"],
       timeout: 90_000,
     });
@@ -259,21 +271,105 @@ describe("merge.py — the summary counts; it does not narrate", () => {
 });
 
 describe("keep.sh — the kept answer is named after its question and carries its claim ledger", () => {
-  it("slugs the first query line, not the fleet's header, and keeps the ledger, the draft and its ledger", () => {
+  it("slugs the first query line, not the fleet's header, and keeps the ledger, the draft, its ledger and the sub-questions", () => {
     const out = join(b.root, "keep-run");
     mkdirSync(out, { recursive: true });
     const q = join(out, "question.txt");
     writeFileSync(q, "DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):\nWho prefers which one, and why?\n\n" +
-      "SORGULAR (zemin bunlarla acildi):\n  - astra 6 vs fable 5.1\n  - astra 6 reddit\n");
-    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl"]) writeFileSync(join(out, f), "x\n");
+      "SORGULAR (zemin bunlarla acildi):\n  - astra 6 vs fable 5.1\n  - astra 6 reddit\n\n" +
+      "ALT SORULAR (S-kimlik · başlık · soru):\n  - S1 · Kim neyi seçiyor · Kim hangisini seçiyor?\n");
+    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl", "subquestions.json"]) {
+      writeFileSync(join(out, f), "x\n");
+    }
     const kept = join(b.root, "kept");
     execFileSync("bash", [join(b.engine, "fleet", "keep.sh"), q, out], { encoding: "utf8",
       env: { ...process.env, DXB_RESEARCH_ANSWERS: kept } });
     const folders = readdirSync(kept);
     expect(folders).toHaveLength(1);
     expect(folders[0]).toMatch(/^\d{8}-\d{4}-astra-6-vs-fable-5-1$/);
-    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl", "question.txt"]) {
+    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl", "subquestions.json", "question.txt"]) {
       expect(existsSync(join(kept, folders[0], f)), f).toBe(true);
     }
   });
+});
+
+describe("K3 — his question is split into sub-questions before the ground opens, and every role is handed them", () => {
+  const SPLIT = join(import.meta.dirname, "fixtures", "split");
+  const BLOCK = "ALT SORULAR (S-kimlik · başlık · soru):";
+  const Q = "astra 6 vs fable 5.1";
+  const ARGS = ["--q", Q, "--roles", "x", "--timeout", "30", "--no-write"];
+  const GOOD = { FAKE_SPLIT: join(SPLIT, "answer-good.json") };
+
+  it("reads a model's answer bare, in a fence, and cut — the cut one falls back (split.py --selftest)", () => {
+    const out = execFileSync("python3", [join(b.engine, "scripts", "split.py"), "--selftest"],
+      { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
+    expect(out.trim().split("\n").at(-1), out).toBe("SELFTEST OK 3/3");
+  });
+
+  it("names the sub-questions before the ground, hands them to the hunter through question.txt; --write-only reuses them", () => {
+    const run = join(b.root, "split-good");
+    const r = fleetWith(GOOD, run, ...ARGS);
+    expect(r.stdout, r.stdout.slice(0, 2500)).toMatch(/^alt sorular: 4 \(kaynak: model · \$0\.00 · \d+s\) — S1 Platformlara göre kim neyi seçiyor · /m);
+    expect(r.stdout).toMatch(/ · S4 Kim geçti, neden$/m);
+    expect(r.stdout.search(/^alt sorular: /m)).toBeLessThan(r.stdout.indexOf("genis zemin 1 aciliyor"));
+    const q = readFileSync(join(run, "question.txt"), "utf8");
+    expect(q.endsWith(`\n\n${BLOCK}\n  - S1 · Platformlara göre kim neyi seçiyor · Her platformda profesyoneller bugün Astra 6'yı mı `
+      + "Fable 5.1'i mi seçiyor?\n  - S2 · Hangi iş için hangisi · Hangi iş türünde (kod, ajan işi, yazı, 3D) hangisi öne çıkıyor ve neden?\n"
+      + "  - S3 · Maliyet ve kota · Kullanıcılar hangi maliyet ve kota rakamlarını veriyor?\n"
+      + "  - S4 · Kim geçti, neden · Kim hangisinden hangisine geçti ve gerekçesi ne?\n"), q).toBe(true);
+    expect(readFileSync(join(run, "prompt-x.txt"), "utf8")).toContain(`${BLOCK}\n  - S1 · Platformlara göre kim neyi seçiyor · `);
+    expect(JSON.parse(readFileSync(join(run, "subquestions.json"), "utf8")))
+      .toMatchObject({ source: "model", items: [{ id: "S1" }, { id: "S2" }, { id: "S3" }, { id: "S4" }] });
+    // no FAKE_SPLIT now: a call would fall back to one sub-question, so four means the file was reused (the tail after
+    // it stops at this bench's ledger stand-in, which has no writer-rows: the line before it is what is measured)
+    const w = fleetWith({}, "--write-only", run);
+    expect(w.stdout, w.stdout.slice(0, 1500))
+      .toMatch(/^alt sorular: 4 \(kaynak: model · \$0\.00 · \d+s\) — S1 .* \(subquestions\.json yeniden kullanıldı\)$/m);
+    expect(readFileSync(join(run, "question.txt"), "utf8"), "the block is replaced, never doubled").toBe(q);
+  }, 90_000);
+
+  it("falls back to one sub-question, the DERT itself, when the answer cannot be read — and the run goes on", () => {
+    const run = join(b.root, "split-cut");
+    const dert = join(b.root, "dert-split.txt");
+    writeFileSync(dert, "Who prefers Astra 6 or Fable 5.1, and why?\n");
+    const r = fleetWith({ FAKE_SPLIT: join(SPLIT, "answer-cut.txt") }, run, ...ARGS, "--dert", dert);
+    expect(r.stdout, r.stdout.slice(0, 2500)).toMatch(/^alt sorular: 1 \(kaynak: fallback · \$0\.00 · \d+s\) — S1 Sorunun tamamı$/m);
+    expect(r.stdout).toMatch(/^ {3}split: model cevabı okunamadı — tek alt soru \(DERT\)$/m);
+    expect(readFileSync(join(run, "question.txt"), "utf8"))
+      .toMatch(/\nALT SORULAR \(S-kimlik · başlık · soru\):\n {2}- S1 · Sorunun tamamı · Who prefers Astra 6 or Fable 5\.1, and why\?\n$/);
+    expect(r.stdout).toMatch(/^gate: x round 1 — unread 0 → accepted /m);
+  }, 90_000);
+
+  it("--no-split leaves question.txt as the fleet wrote it", () => {
+    const run = join(b.root, "split-none");
+    const r = fleet(run, ...ARGS, "--no-split");
+    expect(r.stdout, r.stdout.slice(0, 2500)).toMatch(/^alt sorular: atlandi \(--no-split\)$/m);
+    expect(readFileSync(join(run, "question.txt"), "utf8")).toBe(`SORGULAR (zemin bunlarla acildi):\n  - ${Q}\n`);
+    expect(existsSync(join(run, "subquestions.json"))).toBe(false);
+  }, 90_000);
+
+  it("keeps no earlier split's subquestions.json in a full run that does not split: --no-split, or a split.py that fails", () => {
+    // the lead's measurement: a run folder used again with --no-split kept the first run's four sub-questions, and
+    // kapsama.py printed `ALT SORU: 4 · tam 0 · boş 0 · eksik 4` for a question.txt that holds none
+    const run = join(b.root, "split-again");
+    const json = join(run, "subquestions.json");
+    fleetWith(GOOD, run, ...ARGS);
+    expect(existsSync(json)).toBe(true);
+    expect(fleet(run, ...ARGS, "--no-split").stdout).toMatch(/^alt sorular: atlandi \(--no-split\)$/m);
+    expect(existsSync(json), "--no-split").toBe(false);
+    fleetWith(GOOD, run, ...ARGS);
+    expect(existsSync(json)).toBe(true);
+    const split = join(b.engine, "scripts", "split.py");       // this bench's copy, put back whatever happens
+    renameSync(split, `${split}.real`);
+    writeFileSync(split, "raise SystemExit(1)\n");
+    let failed = { code: 0, stdout: "" };
+    try {
+      failed = fleet(run, ...ARGS);
+    } finally {
+      renameSync(`${split}.real`, split);
+    }
+    expect(failed.stdout, failed.stdout.slice(0, 2500)).toMatch(/^!! alt sorular: split\.py kod 1 — /m);
+    expect(existsSync(json), "split.py failed").toBe(false);
+    expect(readFileSync(join(run, "question.txt"), "utf8")).toBe(`SORGULAR (zemin bunlarla acildi):\n  - ${Q}\n`);
+  }, 90_000);
 });

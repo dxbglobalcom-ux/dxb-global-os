@@ -71,6 +71,14 @@ THE WRITER'S LAST SECTION, `## Alınmayan kanıt` (fleet/writer-prompt.md rule 1
 ids, on neither page (claims.py without_unused empties them, every other line keeping its number); what it
 says stands in the drawer. The refusals below still read it.
 
+THE ANSWER'S SUB-QUESTIONS (B56 K3 stage 1): when the fleet split his question (scripts/split.py), the answer's
+sections are headed `## S1 — <title>` (fleet/writer-prompt.md rule 11). Each stands WHOLE under "Cevabı taşıyan
+sayılar", in the answer's order: `S1 — <title>`, under it its counts line `(n iddia · m satır · k bağımsız kaynak ·
+c karşı)` — claims.py sub_counts, the class `count`, `count thin` when n is 0 — then every line and table of the
+section with its count; the line of a sub-question no row speaks to, `Bu alt soruya satır yok.`, stands in the thin
+style: a gap made visible, never dropped. kapsama.py's second table, one row per sub-question, stands under
+"Nereye bakıldı" after the first. A page whose answer has no S-heading is built byte for byte as before.
+
 REFUSED — exit 2, one line on stderr, no page written — when the answer carries an id that is not in
 evidence.jsonl; a bracket that holds an id-like token but is not a citation (`[bkz. L0002]`,
 `[L0001 ]`, `[l0003]`, `[L0001; L0002]`, `[L0001 | L0002]` — only ↔ pairs two sides, and each side is
@@ -451,6 +459,8 @@ table.cov tr.has-why{padding-bottom:4px;border-bottom:0}
 table.cov tr.why{display:block;padding-top:0}
 }
 """.replace("%DARK%", DARK)
+# a sub-question's counts line (B56 K3), added only to a page that has one: a page without it stays byte for byte
+SUB_CSS = ".from-n{margin:-2px 0 10px;line-height:1.5}.from-n .count{margin-left:0;white-space:normal}"
 
 
 # every U+FFFD leaves as &#xFFFD; — 2026-09-26 the claude.ai Artifact publisher refused the K1 run's page for
@@ -543,7 +553,9 @@ def arrange(bl: list[dict]) -> tuple[str, dict | None, list[tuple[str | None, di
     """The answer cut into the page's parts (docstring): its H1, the verdict (the first paragraph), what
     goes under 'Cevabı taşıyan sayılar' — each block with the writer's section it came from, None for
     the part before any section and for the writer's own section of that name — and the writer's other
-    sections with what remains in them."""
+    sections with what remains in them. A sub-question's section (`## S1 — <title>`, B56 K3) goes under 'Cevabı
+    taşıyan sayılar' whole, titled `S1 — <title>`, its first entry a {"k": "none"} that keeps it there when
+    nothing follows its heading."""
     h1 = bl.pop(0)["text"] if bl and bl[0]["k"] == "h" and bl[0]["level"] == 1 else ""
     first = next((j for j, b in enumerate(bl) if b["k"] == "p"), None)
     verdict = bl.pop(first) if first is not None else None
@@ -551,13 +563,17 @@ def arrange(bl: list[dict]) -> tuple[str, dict | None, list[tuple[str | None, di
     sections: list[dict] = []
     here: dict | None = None
     for b in bl:
-        if b["k"] == "h" and b["level"] <= 2:
+        sub = CL.sub_heading(b["text"]) if CL is not None and b["k"] == "h" and b["level"] == 2 else None
+        if sub is not None:
+            here = {"title": f"{sub[0]} — {sub[1]}", "blocks": [], "sub": sub[0]}
+            ours.append((here["title"], {"k": "none"}))
+        elif b["k"] == "h" and b["level"] <= 2:
             here = None if norm(b["text"]) == norm(OWN) else {"title": b["text"], "blocks": []}
             if here is not None:
                 sections.append(here)
         elif here is None:
             ours.append((None, b))
-        elif b["k"] in ("p", "li") and CITE.search(b["text"]):
+        elif here.get("sub") or (b["k"] in ("p", "li") and CITE.search(b["text"])):
             ours.append((here["title"], b))
         else:
             here["blocks"].append(b)
@@ -672,6 +688,7 @@ class Page:
                  at: dict[int, str] | None = None, use: dict[str, dict] | None = None):
         self.rows, self.shelved, self.num = rows, shelved, {}
         self.struck, self.at, self.linked = struck or {}, at or {}, {}
+        self.subs: dict[str, dict] = {}       # claims.py sub_counts per S-id; html_page sets it (B56 K3)
         # claims.py evidence_use, by every row id at an admitted address; None without claims.py
         self.use = None if use is None else {i: u for u in use.values() for i in u["ids"]}
 
@@ -747,9 +764,10 @@ class Page:
         return (f'<div class="tbl"><table class="stack"><thead><tr>{ths}</tr></thead>\n<tbody>\n'
                 + "\n".join(trs) + "\n</tbody></table></div>")
 
-    def flow(self, bl: list[dict], claims: bool = False) -> str:
+    def flow(self, bl: list[dict], claims: bool = False, gaps: bool = False) -> str:
         """Blocks in their order. With `claims`, every paragraph and list item is one line of the ledger,
-        and it and every table row carry their count, `(0 satır)` included."""
+        and it and every table row carry their count, `(0 satır)` included. With `gaps` (a sub-question's
+        section) the line `Bu alt soruya satır yok.` is no claim: it stands in the thin style, uncounted."""
         out: list[str] = []
         opened = ""
         for b in bl:
@@ -760,6 +778,9 @@ class Page:
                     out += ["</ol>" if opened == "ol" else "</ul>"] if opened else []
                     out.append({"claims": '<ul class="claims">', "ol": "<ol>", "ul": "<ul>"}[want])
                     opened = want
+                if gaps and CL.is_gap(b["text"]):
+                    out.append(f'<li><span class="count thin">{self.inline(b["text"])}</span></li>')
+                    continue
                 depth = f' class="d{min(b["depth"], 3)}"' if k == "li" and b["depth"] and not claims else ""
                 out.append(f"<li{depth}{self.mark(b['line'], b['end'])}>{self.inline(b['text'])}"
                            f"{self.count(b['text'], claims)}</li>")
@@ -788,6 +809,10 @@ class Page:
             while j < len(ours) and ours[j][0] == title:
                 run.append(ours[j][1])
                 j += 1
+            sub = CL.sub_heading(title) if CL is not None and title is not None else None
+            if sub is not None:
+                out.append(self.sub_group(sub[0], title, [b for b in run if b["k"] != "none"]))
+                continue
             body = self.flow(run, claims=True)
             if title is None:
                 out.append(body)
@@ -795,6 +820,17 @@ class Page:
                 kind = "from caveat" if CAVEAT.search(title) else "from"
                 out.append(f'<div class="{kind}"><p class="from-t">{self.inline(title)}</p>\n{body}</div>')
         return "\n".join(out)
+
+    def sub_group(self, sid: str, title: str, bl: list[dict]) -> str:
+        """A sub-question's section (B56 K3): `S1 — <title>`; under it the counts line — its claims, the distinct
+        admitted rows they stand on, the independent sources among them, the admitted counter rows (claims.py
+        sub_counts), `count thin` when it has no claim —; then its lines and tables, each with its count, and the
+        line of a sub-question no row speaks to in the thin style."""
+        c = self.subs.get(sid) or {"claims": 0, "rows": 0, "sources": 0, "counter": 0}
+        said = f"({c['claims']} iddia · {c['rows']} satır · {c['sources']} bağımsız kaynak · {c['counter']} karşı)"
+        body = self.flow(bl, claims=True, gaps=True)
+        return (f'<div class="from"><p class="from-t">{self.inline(title)}</p>\n<p class="from-n"><span class="count'
+                f'{"" if c["claims"] else " thin"}">{said}</span></p>' + (f"\n{body}" if body else "") + "</div>")
 
     def cards(self) -> str:
         """A quote card for every cited id, in the page's order — quote, author, date, platform and
@@ -901,9 +937,15 @@ def question(run: Path) -> tuple[str, list[str]]:
         raw = (run / "question.txt").read_text(encoding="utf-8", errors="replace")
     except OSError:
         return "", []
-    his, queries = [], []
+    his, queries, alt = [], [], False
     for line in raw.splitlines():
         s = line.strip()
+        if s.startswith("ALT SORULAR ("):          # split.py's block (B56 K3): no query, and not his words
+            alt = True
+            continue
+        if alt and re.match(r"- S\d+ · ", s):
+            continue
+        alt = False
         if s.startswith("- "):
             queries.append(s[2:].strip())
         elif s and not re.match(r"(?:DERT|SORGULAR) \(", s):
@@ -970,35 +1012,66 @@ def coverage_html(table: str, ok: bool) -> str:
     if not ok:
         return f'<p class="note">{esc(table.strip().strip("_"))}</p>'
     lines = [line.strip() for line in table.splitlines() if line.strip()]
+    heads = [j for j in range(len(lines) - 1) if lines[j].startswith("|") and TABLE_RULE.match(lines[j + 1])]
+    if len(heads) > 1:                 # kapsama.py's second table, the sub-questions' (B56 K3): each where it stands
+        return "\n".join(coverage_parts(lines, heads))
     grid = [line for line in lines if line.startswith("|")]
     rest = [line for line in lines if not line.startswith("|")]
     out = []
     if len(grid) >= 2 and TABLE_RULE.match(grid[1]):
-        head = cells(grid[0])
-        num = [' class="n"' if c.endswith(":") else "" for c in cells(grid[1])]
-        num += [""] * len(head)
-        # a text column (neither the first nor a number) leaves the grid only when the table has numbers
-        wide = {j for j in range(1, len(head)) if not num[j]} if any(num[:len(head)]) else set()
-        main = [j for j in range(len(head)) if j not in wide]
-        cls = [num[j] or (' class="h"' if j == 0 else "") for j in range(len(head))]   # the platform · a number
-        ths = "".join(f"<th{num[j]}>{esc(head[j])}</th>" for j in main)
-        trs = []
-        for line in grid[2:]:
-            row = cells(line) + [""] * len(head)
-            tds = "".join(f'<td data-label="{attr(head[j])}"{cls[j]}><span class="v">{esc(unentity(row[j]))}</span></td>'
-                          for j in main)
-            why = [f'<div><span class="why-l">{esc(head[j])}</span> {esc(unentity(row[j]))}</div>' for j in sorted(wide)
-                   if row[j].strip() not in ("", "—", "-")]
-            trs.append(f'<tr class="has-why">{tds}</tr>\n<tr class="why"><td colspan="{len(main)}">{"".join(why)}</td></tr>'
-                       if why else f"<tr>{tds}</tr>")
-        out.append(f'<div class="tbl"><table class="stack cov"><thead><tr>{ths}</tr></thead>\n<tbody>\n'
-                   + "\n".join(trs) + "\n</tbody></table></div>")
+        out.append(coverage_grid(grid[0], grid[1], grid[2:], True))
     else:
         rest = lines
     for line in rest:
-        kind = "recon ok" if line.startswith("RECONCILED") else "recon bad" if line.startswith("MISMATCH") else "note"
-        out.append(f'<p class="{kind}">{esc(line)}</p>')
+        out.append(coverage_line(line))
     return "\n".join(out)
+
+
+def coverage_line(line: str) -> str:
+    kind = "recon ok" if line.startswith("RECONCILED") else "recon bad" if line.startswith("MISMATCH") else "note"
+    return f'<p class="{kind}">{esc(line)}</p>'
+
+
+def coverage_grid(head_line: str, rule_line: str, body: list[str], spread: bool) -> str:
+    """One of kapsama.py's tables. `spread` (its platform table): each text column but the first leaves the grid
+    for a labelled line under its row's numbers, and the first cell is the row's heading. Without it (the
+    sub-questions' table) every column stays in the grid and the table stacks as the answer's tables do."""
+    head = cells(head_line)
+    num = [' class="n"' if c.endswith(":") else "" for c in cells(rule_line)]
+    num += [""] * len(head)
+    # a text column (neither the first nor a number) leaves the grid only when the table has numbers
+    wide = {j for j in range(1, len(head)) if not num[j]} if spread and any(num[:len(head)]) else set()
+    main = [j for j in range(len(head)) if j not in wide]
+    cls = [num[j] or (' class="h"' if j == 0 and spread else "") for j in range(len(head))]   # the platform · a number
+    ths = "".join(f"<th{num[j]}>{esc(head[j])}</th>" for j in main)
+    trs = []
+    for line in body:
+        row = cells(line) + [""] * len(head)
+        tds = "".join(f'<td data-label="{attr(head[j])}"{cls[j]}><span class="v">{esc(unentity(row[j]))}</span></td>'
+                      for j in main)
+        why = [f'<div><span class="why-l">{esc(head[j])}</span> {esc(unentity(row[j]))}</div>' for j in sorted(wide)
+               if row[j].strip() not in ("", "—", "-")]
+        trs.append(f'<tr class="has-why">{tds}</tr>\n<tr class="why"><td colspan="{len(main)}">{"".join(why)}</td></tr>'
+                   if why else f"<tr>{tds}</tr>")
+    return (f'<div class="tbl"><table class="{"stack cov" if spread else "stack"}"><thead><tr>{ths}</tr></thead>\n'
+            "<tbody>\n" + "\n".join(trs) + "\n</tbody></table></div>")
+
+
+def coverage_parts(lines: list[str], heads: list[int]) -> list[str]:
+    """kapsama.py's lines when they hold more than one table: each table where it stands — the first spread, as
+    ever —, every other line a line."""
+    out, j = [], 0
+    while j < len(lines):
+        if j in heads:
+            end = j + 2
+            while end < len(lines) and lines[end].startswith("|") and end not in heads:
+                end += 1
+            out.append(coverage_grid(lines[j], lines[j + 1], lines[j + 2:end], j == heads[0]))
+            j = end
+        else:
+            out.append(coverage_line(lines[j]))
+            j += 1
+    return out
 
 
 def section(no: int, title: str, body: str, anchor: str) -> str:
@@ -1008,7 +1081,8 @@ def section(no: int, title: str, body: str, anchor: str) -> str:
 
 def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool] | None,
               book: list[dict] | None = None, struck: dict[str, str] | None = None,
-              whence: str = "", use: dict[str, dict] | None = None) -> tuple[str, dict]:
+              whence: str = "", use: dict[str, dict] | None = None,
+              full: list[dict] | None = None) -> tuple[str, dict]:
     """final.html, in the order of the docstring. Rendered top to bottom, so the ids are numbered in the
     order he reads them. The claim ledger's table is built after every claim line, though it stands
     second, so each claim in it links to the element that shows its line."""
@@ -1019,6 +1093,9 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
             at.setdefault(c["line"], text(c["id"]))
     page = Page(rows, {i for a in shelf for i in a["ids"]}, struck, at, use)
     h1, verdict, ours, sections = arrange(blocks(md))
+    subs = CL is not None and any(CL.sub_heading(t) for t, _b in ours if t is not None)
+    if subs:                           # the counts under each sub-question's heading: `full`, claims.py's extract
+        page.subs = CL.sub_counts(full if full is not None else CL.extract_claims(md, rows), rows)
     his, queries = question(run)
     h1 = h1 or his or (queries[0] if queries else "") or "Araştırma"
     secs = hunters(run)
@@ -1056,7 +1133,8 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
            '<meta name="color-scheme" content="light dark">', f"<title>{esc(title_of(queries, h1))}</title>",
            '<link rel="preconnect" href="https://fonts.googleapis.com">',
            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
-           f'<link rel="stylesheet" href="{attr(FONTS)}">', f"<style>{CSS}</style>", "</head>", "<body>",
+           f'<link rel="stylesheet" href="{attr(FONTS)}">', f"<style>{CSS + SUB_CSS if subs else CSS}</style>",
+           "</head>", "<body>",
            "<main>", *head, *parts, foot, "</main>", f"<script>{OPEN_DRAWER}</script>", "</body>", "</html>"]
     return "\n".join(doc) + "\n", {"cited": len(page.num), "platforms": plats, "shelved": len(shelf)}
 
@@ -1117,7 +1195,7 @@ def main(argv: list[str]) -> int:
     drawer = ""
     for out in outs:
         if out.suffix.lower() in (".html", ".htm"):
-            text_out, facts = html_page(shown, rows, answer.parent, table, book, struck, whence, use)
+            text_out, facts = html_page(shown, rows, answer.parent, table, book, struck, whence, use, full)
             drawer = f" · çekmece {facts['platforms']} platform, {facts['shelved']} adres"
         else:
             page = [body.rstrip("\n"), "", "## Kaynaklar", "",

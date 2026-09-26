@@ -1,0 +1,6 @@
+{"items": [
+  {"id": "S1", "title": "Platformlara göre kim neyi seçiyor", "question": "Her platformda profesyoneller bugün Astra 6'yı mı Fable 5.1'i mi seçiyor?", "signals": ["prefer Astra", "prefer Fable", "switched to"]},
+  {"id": "S2", "title": "Hangi iş için hangisi", "question": "Hangi iş türünde (kod, ajan işi, yazı, 3D) hangisi öne çıkıyor ve neden?", "signals": ["coding", "agentic", "computer use"]},
+  {"id": "S3", "title": "Maliyet ve kota", "question": "Kullanıcılar hangi maliyet ve kota rakamlarını veriyor?", "signals": ["quota", "usage limit", "price"]},
+  {"id": "S4", "title": "Kim geçti, neden", "question": "Kim hangisinden hangisine geçti ve gerekçesi ne?", "signals": ["switched from", "moved back", "cancelled"]}
+]}
