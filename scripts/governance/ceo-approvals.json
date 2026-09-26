@@ -1512,5 +1512,13 @@
     "conditions": "A start order for K2, not an acceptance: K2 is accepted only by his eye on a real run's page. K3 waits his word after K2 is measured. The proposal he approved, verbatim from the lead: 'K2 başla derseniz aynı kapıdan (dxb-team1), aynı kademeyle giderim; eski kusur listesini K2'nin kulvarlarına bölüp aynı turda kapatırım, ayrı bir iş açmam.' Hunters stay at Opus 5.5 · low with every tool (his 12:05 words) unless he says otherwise.",
     "session": "Fable 5.1 chief-engineer session a8b377a5 (successor of 09c52a7e), 2026-09-26 ~16:00 — heard first-hand, he was outside.",
     "where": "PLAN.md §7 (K2 = KANIT MOTORU), the K2 evidence file the successor writes, board B56, STATE"
+  },
+  "memory-index-merge-retire-tamam-2026-09-26": {
+    "date": "2026-09-26",
+    "what": "THE MEMORY INDEX MERGE/RETIRE LIST, done on his word: the opening ruler (scripts/measure/startup-budget.sh) was RED at 16:05 — MEMORY.md 3735 > 3600 tokens after four days of regrowth (3294 at B52's close) — and, on the ruler's own instruction, the list went to him. Three merges (E125 ×3 → e125-wave; the U15 voice notes ×4 → voice-layer-u15; six July-2026 one-off session lessons → july-2026-session-lessons), every old body kept verbatim inside the merged file (13/13 measured), 13 inbound [[links]] rewritten; two retirements the repository already carries (the R4 row rule — tests/b43/records-truth.ts + scripts/hooks/pre-commit; the hook tests' skip inside the wall — tests/hooks/code-gate.test.ts:30). Measured after: MEMORY.md 3359 (GREEN, 91 index lines ↔ 91 files); the gated basket 11260 > 11000 stays RED by 260 tokens in the OTHER three files (project CLAUDE.md 3379, global CLAUDE.md 2158, the session-start hook 2364) — not covered by this word.",
+    "verbatim": "Tamam sen yap o zaman önerdiğini.",
+    "conditions": "His word covers the four items proposed to him ('Sen neyi öneriyorsun?' → the four, 'şimdi, bu oturumda'); the gate itself was NOT raised (the ruler forbids it). The basket's remaining 260 tokens are a separate list for him if he wants one.",
+    "session": "Fable 5.1 chief-engineer session a8b377a5, 2026-09-26 ~16:25 — heard first-hand.",
+    "where": "STATE live block (2026-09-26); ~/.claude/projects/-home-dxb-DxB-Global-OS/memory/ (outside the repository; backup of the 104 files before the merge in the session scratchpad)"
   }
 }
