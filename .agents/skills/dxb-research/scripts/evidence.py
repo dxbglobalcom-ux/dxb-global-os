@@ -11,9 +11,16 @@ only when the quote really is in that body. A fabricated quote cannot become a r
 could not be read is written down as a closed door, never skipped in silence.
 
   evidence.py from-ground <run>             every ground*/*.raw and ground*/pages/*.md -> rows
-  evidence.py list <run> --platform <p> [--unread] [--kind all|discovery|evidence]
+  evidence.py list <run> --platform <p> [--unread] [--no-body] [--kind all|discovery|evidence]
   evidence.py fetch <run> --url <u> [--print]
   evidence.py add <run> --url <u> --quote "<text>" [--author A] [--date D] [--title T]
+  evidence.py triage <run> --id L0001 --status S [--reason R] [--duplicate-of L0002] [--by WHO]
+  evidence.py triage-bulk <run> --json FILE --by WHO
+  evidence.py batch <run> --hunter ROLE --platform P [--n 10] [--max-chars 20000]
+  evidence.py page <run> --id L0001 --from BYTES [--max-chars 20000]
+  evidence.py verdict <run> --hunter ROLE --id L0001 --verdict evidence|none [--reason R]
+  evidence.py verdict-bulk <run> --hunter ROLE --json FILE
+  evidence.py status <run> [--platform P[,Q]] [--format md|tsv|json]
   evidence.py show <run> <id>
   evidence.py platform-of <url>
 
@@ -22,7 +29,15 @@ fleet/fleet.sh and scripts/render.py are built against it. Rows follow schemas/e
 plus `platform` (scripts/platforms.py) and `hunter` (the role, or "ground"). Seven hunters write at
 once, so every write happens under an exclusive fcntl lock on <run>/evidence.lock.
 
-Exit: 0 done · 2 refused (a quote not in the body, an unknown id, a bad argument) · 3 closed door.
+EVERY ADDRESS ENDS IN A TERMINAL STATE (B56 K1 — the contract is EVIDENCE-B56-K1-2026-09-26.md
+§2.1-2.2, plus the lead's verdict addendum of the same day). The address row carries `triage`
+(pending · relevant · irrelevant · duplicate · inaccessible, with its reason and who judged),
+`read_status` (unread · partial · read — who, when, how many bytes; ONLY `batch` and `page` move it,
+see "reading" below for the morning that made it so) and the hunter's `verdict` on what it read
+(evidence · none). `status` counts all three per platform and reconciles them on every call.
+
+Exit: 0 done · 1 status MISMATCH · 2 refused (a quote not in the body, an unknown id, a bad argument,
+a triage or verdict without its reason) · 3 closed door.
 The time a reader may take: DXB_EVIDENCE_TIMEOUT seconds (default 300 — the hidden Chrome queues
 its eight windows, so a busy fleet waits before it reads).
 """
@@ -31,6 +46,7 @@ from __future__ import annotations
 import argparse
 import fcntl
 import hashlib
+import html
 import json
 import os
 import re
@@ -38,6 +54,7 @@ import subprocess
 import sys
 import tempfile
 import unicodedata
+from collections import Counter
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -394,11 +411,36 @@ def blocks(body: str) -> list[tuple[str, str, str, str]]:
     return out
 
 
+# WHAT A PASSAGE MAY NOT CARRY (the lead, 2026-09-26, from lane C's page on the fixture). Fetched bodies
+# are Markdown with HTML entities; measured on the 02:34 run's 682 passages: 15 carried entities
+# (&nbsp; ×29, &gt; ×15, &amp; ×8), 223 image syntax — 103 of them a `![](https:` cut at the 600th
+# character — and 141 empty `[](link)`. A passage is words, so the markup goes BEFORE the cut and an
+# entity is decoded. An image keeps its ALT TEXT: a first cut that dropped whole images still left 16
+# passages carrying one, and the six looked at were TikTok posts whose caption IS the image's alt
+# (L0382: "GPT-6 Astra vs Claude Fable 5.1 is a much closer fight than I expected…") — deleting the
+# image deletes the evidence. A bare `![` and an empty link go. Only a reference that ends in `;` is
+# decoded: html.unescape alone reads the `&para` of `?x=1&param=2` as "¶" (measured). Rows already on
+# disk keep their passage.
+_TARGET = r'\([^)\s]*(?:\s+"[^"]*")?\)?'                  # (url "title") — the ) may be cut off
+MD_LINKED_IMAGE = re.compile(r'\[!\[([^\]]{0,5000})\]' + _TARGET + r'\]' + _TARGET)
+MD_IMAGE = re.compile(r'!\[([^\]]{0,5000})\]' + _TARGET)
+MD_EMPTY_LINK = re.compile(r'\[\s*\]' + _TARGET)
+ENTITY = re.compile(r"&(?:#\d{1,7}|#[xX][0-9a-fA-F]{1,6}|[A-Za-z][A-Za-z0-9]{1,31});")
+
+
+def passage_text(s: str) -> str:
+    """Words only: an image keeps its alt text and loses its markup, a bare `![` and an empty link
+    go, entities are decoded, and the contract's normalisation runs last."""
+    s = MD_IMAGE.sub(r" \1 ", MD_LINKED_IMAGE.sub(r" \1 ", s or ""))
+    s = MD_EMPTY_LINK.sub(" ", s.replace("![", " "))
+    return normalize(ENTITY.sub(lambda m: html.unescape(m.group(0)), s))
+
+
 def passage_of(body: str) -> str:
-    """The body's first 600 characters, normalised — of the FIRST post when a reader wrote several,
-    so one row's passage never runs from one author's words into the next one's."""
+    """The body's first 600 characters of words (passage_text) — of the FIRST post when a reader
+    wrote several, so one row's passage never runs from one author's words into the next one's."""
     b = blocks(body)
-    return normalize(b[0][3] if b else body)[:PASSAGE_CHARS].rstrip()
+    return passage_text(b[0][3] if b else body)[:PASSAGE_CHARS].rstrip()
 
 
 def iso_date(v) -> str | None:
@@ -590,6 +632,44 @@ def hunter_name(run: Path) -> str | None:
     return None
 
 
+# =================================================================== terminal states (B56 K1)
+# THE CONTRACT: EVIDENCE-B56-K1-2026-09-26.md §2.1 and the lead's verdict addendum (2026-09-26). The
+# ADDRESS row carries them; a quote row of `add` is born relevant (a hunter's own quote, see _credit)
+# and is never counted as an address. A row written before K1 has none of these fields and reads as
+# pending / unread / no verdict — it is never migrated in bulk; a row gets the fields written when it
+# is itself updated.
+# `read_status` is moved by `batch` and `page` alone: on 2026-09-26 a hunter's "okundu 130" stood
+# for 73 bodies seen (the "reading" section below has the measurement).
+TRIAGE_STATES = ("pending", "relevant", "irrelevant", "duplicate", "inaccessible")
+NEEDS_REASON = ("irrelevant", "duplicate", "inaccessible")    # refused without one (exit 2)
+READ_STATES = ("unread", "partial", "read")
+VERDICTS = ("evidence", "none")                               # "none" is refused without a reason
+STATE_DEFAULTS = {"triage": "pending", "triage_reason": None, "duplicate_of": None, "triage_by": None,
+                  "read_status": "unread", "read_by": None, "read_at": None, "read_bytes": 0,
+                  "read_completeness": 0.0,
+                  "verdict": None, "verdict_reason": None, "verdict_by": None, "verdict_at": None}
+
+
+def ensure_states(row: dict) -> dict:
+    for k, v in STATE_DEFAULTS.items():
+        row.setdefault(k, v)
+    return row
+
+
+def triage_of(row: dict) -> str:
+    return row.get("triage") or "pending"
+
+
+def read_of(row: dict) -> str:
+    return row.get("read_status") or "unread"
+
+
+def row_platform(addr: dict, canon: str) -> str:
+    """The platform an address is counted under — kapsama.py's rule, so the two tables agree."""
+    p = addr.get("platform")
+    return p if p in platforms.PLATFORMS else platforms.platform_of(canon)
+
+
 def new_row(run: Path, rid: str, url: str, canon: str, channel: str, hunter: str | None,
             **kw) -> dict:
     st = source_type(url, channel)
@@ -598,18 +678,28 @@ def new_row(run: Path, rid: str, url: str, canon: str, channel: str, hunter: str
            "domain": rlib.registrable_domain(canon), "title": None, "author": None, "pub_date": None,
            "source_type": st, "primary": st in ("primary-doc", "code"), "http_status": None,
            "liveness": "unchecked", "bytes": 0, "notes": None,
-           "platform": platforms.platform_of(canon), "hunter": hunter}
+           "platform": platforms.platform_of(canon), "hunter": hunter, **STATE_DEFAULTS}
     row.update(kw)
     return row
 
 
 def set_body(row: dict, body: str) -> None:
-    """A row that now stands on a body: evidence, alive, its size and fingerprint, a passage if it had none."""
+    """A row that now stands on a body: evidence, alive, its size and fingerprint, a passage if it had none.
+    Its states follow the body (K1): a closed door that opened is `pending` again, for the triage to
+    judge the body it never saw; a body that CHANGED is `unread` again — the bytes a hunter was
+    printed belonged to the old one."""
     data = body.encode("utf-8", "replace")
-    row.update(kind="evidence", liveness="alive", bytes=len(data), body_sha256=hashlib.sha256(data).hexdigest())
+    sha = hashlib.sha256(data).hexdigest()
+    changed = row.get("body_sha256") not in (None, sha)
+    row.update(kind="evidence", liveness="alive", bytes=len(data), body_sha256=sha)
     if not row.get("passage"):
         row["passage"] = passage_of(body)
         row["passage_sha256"] = rlib.sha256(row["passage"])
+    ensure_states(row)
+    if row["triage"] == "inaccessible":
+        row.update(triage="pending", triage_reason=None, duplicate_of=None, triage_by=None)
+    if changed:
+        row.update(read_status="unread", read_by=None, read_at=None, read_bytes=0, read_completeness=0.0)
 
 
 # =================================================================== from the ground
@@ -879,7 +969,7 @@ def cmd_from_ground(run: Path) -> int:
 
 
 # =================================================================== list / show
-def cmd_list(run: Path, platform: str, unread: bool, kind: str) -> int:
+def cmd_list(run: Path, platform: str, unread: bool, no_body: bool, kind: str) -> int:
     for canon, rs in by_canon(read_rows(run)).items():
         addr = address_row(rs) or {}
         if platform != "all" and (addr.get("platform") or platforms.platform_of(canon)) != platform:
@@ -887,8 +977,10 @@ def cmd_list(run: Path, platform: str, unread: bool, kind: str) -> int:
         k = "evidence" if any(r.get("kind") == "evidence" for r in rs) else "discovery"
         if kind != "all" and k != kind:
             continue
-        if unread and has_body(run, canon):
+        if no_body and has_body(run, canon):       # no body yet: what --unread meant before K1
             continue
+        if unread and (triage_of(addr) != "relevant" or read_of(addr) != "unread"):
+            continue                               # K1: relevant, and never printed to a hunter
         title = next((r.get("title") for r in rs if r.get("title")), "") or ""
         title = re.sub(r"[\t\r\n]+", " ", title)
         print(f"{addr.get('id')}\t{canon}\t{title}\t{addr.get('liveness') or 'unchecked'}")
@@ -1060,6 +1152,7 @@ def _record(run: Path, url: str, canon: str, res: dict, hunter: str | None) -> d
     if addr is None:
         addr = new_row(run, fmt_id(next_num(rows)), url, canon, "fetch", hunter)
         rows.append(addr)
+    ensure_states(addr)
     if res["ok"]:
         write_body(run, canon, res["body"])
         set_body(addr, res["body"])
@@ -1075,6 +1168,11 @@ def _record(run: Path, url: str, canon: str, res: dict, hunter: str | None) -> d
         addr.update(liveness="alive", notes=f"refetch failed: {res['reason']}"[:400])
     else:
         addr.update(liveness=res["liveness"], http_status=res["http"], notes=res["reason"], retrieved_at=now())
+        # A CLOSED DOOR IS A TERMINAL STATE (K1 §2.1): the address cannot be read, and the fetcher's own
+        # words are the reason. A hunter's irrelevant / duplicate stands — that verdict needs no body.
+        if addr["triage"] not in ("irrelevant", "duplicate"):
+            addr.update(triage="inaccessible", triage_reason=res["reason"] or f"kapali kapi ({res['liveness']})",
+                        duplicate_of=None, triage_by="machine")
     rewrite_rows(run, rows)
     return addr
 
@@ -1097,14 +1195,35 @@ def cmd_fetch(run: Path, url: str, show: bool) -> int:
 
 
 # =================================================================== a quote becomes a row
+def _credit(addr: dict, quote: dict, hunter: str | None) -> bool:
+    """What a hunter's quote says about its rows; True when a row already on file changed.
+
+    A QUOTE IS EVIDENCE BY DEFINITION (the lead, 2026-09-26): the quote row, and its address while it
+    is still `pending`, become `relevant` by the hunter — otherwise the writer and the completion gate,
+    which look at relevant rows, never see what a hunter found by itself. A triage that removed the
+    address (irrelevant · duplicate · inaccessible) stands. The address's verdict becomes `evidence`
+    when it has none (the verdict addendum). The READING is not touched: a quote proves one sentence
+    was seen, not the body, so `add` never marks a row read (K1 §2.1) — `batch` prints it."""
+    changed = False
+    for r in (quote, addr):
+        if triage_of(r) == "pending":
+            ensure_states(r).update(triage="relevant", triage_reason=None, duplicate_of=None, triage_by=hunter)
+            changed = True
+    if addr.get("verdict") is None:
+        ensure_states(addr).update(verdict="evidence", verdict_by=hunter, verdict_at=now())
+        changed = True
+    return changed
+
+
 def cmd_add(run: Path, url: str, quote: str, author: str | None, date: str | None,
             title: str | None) -> int:
     if platforms.reject(url) == "invalid":
         print(f"REFUSED not an address: {url}")
         return 2
     canon = platforms.canonical_url(url)
-    nq = normalize(quote)
-    if not nq:
+    nq = normalize(quote)                         # what is looked for in the body, as it stands
+    kept = passage_text(quote)                    # what the row keeps: the quote's words
+    if not nq or not kept:
         print(f"REFUSED empty quote: {url}")
         return 2
     body, fetched = read_body(run, canon), None
@@ -1135,9 +1254,12 @@ def cmd_add(run: Path, url: str, quote: str, author: str | None, date: str | Non
         if not vouched(run, canon, addr):         # the body changed hands after it was read
             print(f"REFUSED body not fetched by evidence.py: {url}")
             return 2
-        sha = rlib.sha256(nq)
-        same = next((r for r in rs if r.get("tool") == ADD_TOOL and r.get("passage_sha256") == sha), None)
+        sha = rlib.sha256(kept)                   # a row written before the words rule kept nq's hash
+        same = next((r for r in rs if r.get("tool") == ADD_TOOL
+                     and r.get("passage_sha256") in (sha, rlib.sha256(nq))), None)
         if same:                                  # one quote, one row — a repeated add is the same quote
+            if _credit(addr, same, hunter):       # a quote row written before the credit rule
+                rewrite_rows(run, rows)
             print(same["id"])
             return 0
         # WHO SAID IT AND WHEN come from the body, never from the model (the B56 verifier: an
@@ -1159,14 +1281,498 @@ def cmd_add(run: Path, url: str, quote: str, author: str | None, date: str | Non
                       addr.get("channel") or "add", hunter,
                       kind="evidence", tool=ADD_TOOL, title=clean(title) or addr.get("title"),
                       author=who or a_arg or addr.get("author"), pub_date=when or d_arg or addr.get("pub_date"),
-                      passage=nq, passage_sha256=sha, source_type=addr.get("source_type") or source_type(url, ""),
-                      http_status=addr.get("http_status"), liveness="alive", bytes=len(body.encode("utf-8")))
+                      passage=kept, passage_sha256=sha, source_type=addr.get("source_type") or source_type(url, ""),
+                      http_status=addr.get("http_status"), liveness="alive", bytes=len(body.encode("utf-8")),
+                      triage="relevant", triage_by=hunter)
         row["primary"] = row["source_type"] in ("primary-doc", "code")
-        append_rows(run, [row])
+        if _credit(addr, row, hunter):            # the address changed: the file is rewritten
+            rewrite_rows(run, rows + [row])
+        else:
+            append_rows(run, [row])
     for n in notes:                               # stderr: stdout stays the id alone, for $(...)
         print(n, file=sys.stderr)
     print(row["id"])
     return 0
+
+
+# =================================================================== triage (B56 K1 §2.2)
+def address_index(rows: list[dict]) -> dict[str, dict]:
+    """id -> the row that stands for that id's ADDRESS. A quote row of `add` maps to its address, so
+    a triage, a read or a verdict given by a quote's id lands on the row `status` counts."""
+    out: dict[str, dict] = {}
+    for rs in by_canon(rows).values():
+        addr = address_row(rs)
+        for r in rs:
+            if r.get("id"):
+                out[str(r["id"])] = addr
+    return out
+
+
+def _entries(entries: list) -> tuple[dict[str, dict], list[tuple[str, str]]]:
+    """A bulk file's entries by id — the last one for an id wins, so a row is counted once."""
+    final: dict[str, dict] = {}
+    bad: list[tuple[str, str]] = []
+    for e in entries:
+        if isinstance(e, dict):
+            final[str(e.get("id") or "").strip()] = e
+        else:
+            bad.append(("?", f"not an object: {str(e)[:80]}"))
+    return final, bad
+
+
+def load_list(path: str, key: str) -> tuple[list | None, str]:
+    """The `key` list of a JSON file, or (None, why)."""
+    try:
+        data = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        return None, f"not readable as JSON: {path} ({type(e).__name__})"
+    if not isinstance(data, dict) or not isinstance(data.get(key), list):
+        return None, f'no "{key}" list in {path}'
+    return data[key], ""
+
+
+def is_hunter(by: str | None) -> bool:
+    """Is this judge a hunter role — not `machine`, not a triage model (`haiku-…`, `claude-…`)? The
+    verifier's B3, 2026-09-26: `triage-bulk --by x` marking its own unread rows irrelevant took them out
+    of what it owed, unread 0 without a byte printed. A hunter may take out only what batch printed it."""
+    b = str(by or "").strip().lower()
+    return bool(b) and b != "machine" and not b.startswith(("haiku", "claude"))
+
+
+def triage_fields(index: dict, rid, status, reason, dup, by,
+                  hunter: bool = False) -> tuple[str, dict | None, object]:
+    """One verdict checked against the contract: ("ok", its address row, the fields to write),
+    ("unknown-id", None, why) or ("refused", the row, why). A duplicate's reason may be the id it
+    repeats: the measured Haiku answer gave `duplicate_of` and no reason for both of its duplicates.
+    `hunter`: the judge is a hunter role (is_hunter), whose irrelevant / duplicate of an unread row is refused."""
+    rid = str(rid or "").strip()
+    addr = index.get(rid)
+    if addr is None:
+        return "unknown-id", None, f"no such id: {rid or '(empty)'}"
+    status = str(status or "").strip().lower()
+    if status not in TRIAGE_STATES:
+        return "refused", addr, f"{rid}: unknown status {status!r} (one of: {' '.join(TRIAGE_STATES)})"
+    if hunter and status in ("irrelevant", "duplicate") and read_of(addr) == "unread":
+        return "refused", addr, f"{rid}: a hunter may only eliminate what it has read — batch never printed {addr.get('id')}"
+    why = re.sub(r"\s+", " ", reason).strip()[:400] if isinstance(reason, str) else ""
+    orig = None
+    if status == "duplicate" and dup not in (None, ""):
+        target = index.get(str(dup).strip())
+        if target is None:
+            return "refused", addr, f"{rid}: duplicate of {dup}, which is no id of this run"
+        if target is addr:
+            return "refused", addr, f"{rid}: an address cannot duplicate itself ({dup})"
+        orig = target.get("id")
+        why = why or f"duplicate of {orig}"
+    if status in NEEDS_REASON and not why:
+        need = "--reason, or --duplicate-of the id it repeats" if status == "duplicate" else "--reason"
+        return "refused", addr, f"{rid}: {status} needs a reason ({need})"
+    return "ok", addr, {"triage": status, "triage_reason": why or None, "duplicate_of": orig,
+                        "triage_by": by or None}
+
+
+def cmd_triage(run: Path, rid: str, status: str, reason: str | None, dup: str | None,
+               by: str | None) -> int:
+    with locked(run):
+        rows = read_rows(run)
+        who = by or hunter_name(run)
+        kind, addr, val = triage_fields(address_index(rows), rid, status, reason, dup, who, is_hunter(who))
+        if kind != "ok":
+            print(f"REFUSED {val}")
+            return 2
+        ensure_states(addr).update(val)
+        rewrite_rows(run, rows)
+    print(f"OK {addr['id']} triage={val['triage']}")
+    return 0
+
+
+def apply_triage(run: Path, entries: list, by: str, only: set | None = None,
+                 hunter: bool | None = None) -> tuple[Counter, list, list]:
+    """A triage JSON's verdicts under ONE lock -> (the counts, the refused (id, why), the ids written).
+    `only` is the set of ids the caller asked about (triage.py: one batch): an id the model made up
+    is counted unknown-id and touches nothing. triage-bulk and triage.py both come through here, so
+    there is one path from a JSON to the ledger. `hunter` (None: judged from `by`, is_hunter) refuses
+    a hunter's irrelevant / duplicate of an unread row; triage.py passes False — its judge is a model."""
+    counts = Counter({k: 0 for k in ("relevant", "irrelevant", "duplicate", "unknown-id")})
+    final, refused = _entries(entries)
+    done: list[str] = []
+    h = is_hunter(by) if hunter is None else hunter
+    with locked(run):
+        rows = read_rows(run)
+        index = address_index(rows)
+        for rid, e in final.items():
+            if only is not None and rid not in only:
+                counts["unknown-id"] += 1
+                continue
+            kind, addr, val = triage_fields(index, rid, e.get("status"), e.get("reason"),
+                                            e.get("duplicate_of"), by, h)
+            if kind == "unknown-id":
+                counts["unknown-id"] += 1
+            elif kind == "refused":
+                refused.append((rid, val))
+            else:
+                ensure_states(addr).update(val)
+                counts[val["triage"]] += 1
+                done.append(rid)
+        if done:
+            rewrite_rows(run, rows)
+    return counts, refused, done
+
+
+def triaged_line(c: Counter) -> str:
+    return (f"triaged: relevant {c['relevant']} · irrelevant {c['irrelevant']} · duplicate {c['duplicate']}"
+            f" · unknown-id {c['unknown-id']}")
+
+
+def cmd_triage_bulk(run: Path, path: str, by: str) -> int:
+    entries, why = load_list(path, "triage")
+    if entries is None:
+        print(f"REFUSED {why}")
+        return 2
+    if not by.strip():
+        print("REFUSED --by is empty: say who judged (machine · haiku-4-5 · a hunter role)")
+        return 2
+    counts, refused, _done = apply_triage(run, entries, by.strip())
+    print(triaged_line(counts))
+    also = " · ".join(f"{k} {counts[k]}" for k in ("pending", "inaccessible") if counts[k])
+    if also:
+        print(f"also: {also}")
+    if refused:
+        print(f"refused {len(refused)}, left as they were: " + " · ".join(w for _, w in refused[:20]))
+        return 2
+    return 0
+
+
+# =================================================================== the hunter's verdict (K1 addendum)
+# WHY. The morning's experiment (x-deneme-2026-09-26): Haiku, Opus 5.5 low and Sonnet 5 high each
+# judged 130 of 130 bodies when the answer had to name EVERY id — demanding a verdict per id is what
+# made every model read everything. So a hunter owes each row it was printed a verdict: evidence (a
+# quote came from it; `add` sets that itself) or none, with the reason. `status` counts the read rows
+# judged / unjudged, and `batch` shows the hunter what it still owes.
+def verdict_fields(index: dict, rid, verdict, reason, hunter: str) -> tuple[str, dict | None, object]:
+    rid = str(rid or "").strip()
+    addr = index.get(rid)
+    if addr is None:
+        return "unknown-id", None, f"no such id: {rid or '(empty)'}"
+    v = str(verdict or "").strip().lower()
+    if v not in VERDICTS:
+        return "refused", addr, f"{rid}: unknown verdict {v!r} (evidence or none)"
+    why = re.sub(r"\s+", " ", reason).strip()[:400] if isinstance(reason, str) else ""
+    if v == "none" and not why:
+        return "refused", addr, f"{rid}: none needs a reason (--reason)"
+    return "ok", addr, {"verdict": v, "verdict_reason": why or None, "verdict_by": hunter, "verdict_at": now()}
+
+
+def cmd_verdict(run: Path, hunter: str, rid: str, verdict: str, reason: str | None) -> int:
+    with locked(run):
+        rows = read_rows(run)
+        kind, addr, val = verdict_fields(address_index(rows), rid, verdict, reason, hunter)
+        if kind != "ok":
+            print(f"REFUSED {val}")
+            return 2
+        ensure_states(addr).update(val)
+        rewrite_rows(run, rows)
+    print(f"OK {addr['id']} verdict={val['verdict']}")
+    return 0
+
+
+def cmd_verdict_bulk(run: Path, hunter: str, path: str) -> int:
+    entries, why = load_list(path, "verdicts")
+    if entries is None:
+        print(f"REFUSED {why}")
+        return 2
+    counts = Counter({k: 0 for k in ("evidence", "none", "unknown-id")})
+    final, refused = _entries(entries)
+    with locked(run):
+        rows = read_rows(run)
+        index = address_index(rows)
+        for rid, e in final.items():
+            kind, addr, val = verdict_fields(index, rid, e.get("verdict"), e.get("reason"), hunter)
+            if kind == "unknown-id":
+                counts["unknown-id"] += 1
+            elif kind == "refused":
+                refused.append((rid, val))
+            else:
+                ensure_states(addr).update(val)
+                counts[val["verdict"]] += 1
+        if counts["evidence"] or counts["none"]:
+            rewrite_rows(run, rows)
+    print(f"verdicts: evidence {counts['evidence']} · none {counts['none']} · unknown-id {counts['unknown-id']}")
+    if refused:
+        print(f"refused {len(refused)}, left as they were: " + " · ".join(w for _, w in refused[:20]))
+        return 2
+    return 0
+
+
+# =================================================================== reading (B56 K1 §2.2)
+# WHY READ IS ONLY WHAT THIS SCRIPT PRINTED. Measured 2026-09-26 on the deep run of 02:34: the x
+# hunter printed the first 350 characters of 128 bodies in ONE command whose output was cut at 20,000
+# characters, saw 73 of them, and declared "okundu 130" — and the coverage table took its word. So
+# `read_status` moves only here: `batch` and `page` print a row's bytes and count them, whole (read)
+# or up to where the print stopped (partial, with read_completeness = read_bytes / bytes). `add`
+# never marks a row, a hunter's sentence never does, and a raw `cat`/`head` over bodies/ counts
+# nothing. The rows are WRITTEN before a byte is printed: a print that dies half way can leave a row
+# marked that its hunter did not see to the end, never a printed row unread.
+READ_CHARS = 20000     # one print: the 20,000 characters the morning's one command was cut at
+MIN_CHARS = 500        # below it a long address's header leaves a body no room
+EVIDENCE_PY = Path(__file__).resolve()
+
+
+def header_of(addr: dict, canon: str) -> str:
+    """`### <id> | @<author> | <date> | <url>` — the shape of the triage prompt measured 2026-09-26."""
+    who = re.sub(r"[\s|]+", " ", str(addr.get("author") or "")).strip().lstrip("@") or "?"
+    return f"### {addr.get('id')} | @{who} | {addr.get('pub_date') or '?'} | {canon}"
+
+
+def _slice(raw: bytes, start: int, chars: int) -> tuple[str, int]:
+    """Up to `chars` characters of a body from byte `start`, and the byte they end at. A byte that is
+    not UTF-8 is carried one for one (surrogateescape), so the offset is always the file's own."""
+    part = raw[start:].decode("utf-8", "surrogateescape")[:max(chars, 0)]
+    data = part.encode("utf-8", "surrogateescape")
+    return data.decode("utf-8", "replace"), start + len(data)
+
+
+def _block(head: str, text: str) -> str:
+    return f"{head}\n{text}" + ("" if text.endswith("\n") else "\n") + "\n"
+
+
+def _mark(addr: dict, who: str | None, upto: int, size: int) -> str:
+    """Bytes 0..upto of a `size`-byte body have been printed: the row's reading; returns read_status."""
+    status = "read" if upto >= size else "partial"
+    ensure_states(addr).update(read_status=status, read_by=who, read_at=now(), read_bytes=upto,
+                               read_completeness=1.0 if status == "read" else min(0.9999, round(upto / size, 4)))
+    return status
+
+
+def _rest(run: Path, rid: str, upto: int) -> str:
+    return f'python3 "{EVIDENCE_PY}" page "{run}" --id {rid} --from {upto}'
+
+
+def _on(addr: dict, canon: str, platform: str) -> bool:
+    return platform == "all" or row_platform(addr, canon) == platform
+
+
+def _owed(groups: dict, platform: str) -> tuple[int, int, int]:
+    """(relevant rows still unread, relevant rows printed only in part, read rows with no verdict yet)
+    on a platform."""
+    unread = partial = unjudged = 0
+    for canon, rs in groups.items():
+        addr = address_row(rs)
+        if addr is None or triage_of(addr) != "relevant" or not _on(addr, canon, platform):
+            continue
+        if read_of(addr) == "unread":
+            unread += 1
+        elif read_of(addr) == "partial":
+            partial += 1
+        elif read_of(addr) == "read" and addr.get("verdict") is None:
+            unjudged += 1
+    return unread, partial, unjudged
+
+
+def _resume_at(raw: bytes, addr: dict) -> int:
+    """The byte a batch print of this row begins at: 0 for an unread row; for a partial one where its
+    last print stopped (read_bytes), never inside a character — as `page` begins."""
+    if read_of(addr) != "partial":
+        return 0
+    at = min(int(addr.get("read_bytes") or 0), len(raw))
+    while 0 < at < len(raw) and (raw[at] & 0xC0) == 0x80:
+        at -= 1
+    return at
+
+
+def cmd_batch(run: Path, hunter: str, platform: str, n: int, max_chars: int) -> int:
+    """The next ≤ n relevant, unread rows that have a body — SHORTEST FIRST — each as its header and
+    its whole body, stopping before the print would pass max-chars (headers count as well as bodies:
+    the limit is what reaches the hunter's screen; only the one-line trailer and a partial row's
+    `PARTIAL` line stand outside it). A row too long for a batch of its own goes alone, cut at
+    max-chars: partial, followed by the `page` line that prints the rest.
+
+    WHY SHORTEST FIRST, measured on the 2026-09-26 fixture: the first relevant X row in ledger order
+    is a 19,896-character article (L0112). In ledger order it alone fills a 20,000-character batch and
+    the ten posts behind it wait a turn; shortest first a batch carries ten whole posts, and the
+    article still comes, whole, in a batch of its own.
+
+    A PARTIAL ROW COMES FIRST, from where its last print stopped (the verifier's B1, 2026-09-26: with
+    L0112 partial at 0.2475, batch said "nothing left" and nothing counted it as owed). Its next slice is
+    printed as `page` prints one and said the same way (`PAGE: <id> bytes a-b of n · read|partial …`);
+    it turns `read` when its end has been printed."""
+    shown: list[tuple] = []
+    with locked(run):
+        rows = read_rows(run)
+        groups = by_canon(rows)
+        queue = []
+        for canon, rs in groups.items():
+            addr = address_row(rs)
+            if (addr is not None and _on(addr, canon, platform) and triage_of(addr) == "relevant"
+                    and read_of(addr) in ("unread", "partial") and has_body(run, canon)):
+                queue.append((read_of(addr) != "partial", body_path(run, canon).stat().st_size,
+                              str(addr.get("id")), canon, addr))
+        used = 0
+        for _later, _size, rid, canon, addr in sorted(queue, key=lambda q: q[:3]):
+            if len(shown) >= n:
+                break
+            raw = body_path(run, canon).read_bytes()
+            start = _resume_at(raw, addr)
+            head = header_of(addr, canon)
+            text, end = _slice(raw, start, len(raw))
+            if used + len(_block(head, text)) > max_chars:
+                if shown:
+                    break                             # stops before the total passes max-chars
+                text, end = _slice(raw, start, max(max_chars - len(head) - 3, 100))
+            used += len(_block(head, text))
+            status = _mark(addr, hunter, end, len(raw))
+            shown.append((rid, head, text, start, end, len(raw), status, addr["read_completeness"]))
+        if shown:
+            rewrite_rows(run, rows)                   # WRITTEN before a byte is printed
+        left, part, unjudged = _owed(groups, platform)
+    for rid, head, text, start, end, size, status, done in shown:
+        sys.stdout.write(_block(head, text))
+        rest = f" — the rest: {_rest(run, rid, end)}" if status == "partial" else ""
+        if start:
+            print(f"PAGE: {rid} bytes {start}-{end} of {size} · {status} {done}{rest}\n")
+        elif status == "partial":
+            print(f"PARTIAL {rid}: bytes 0-{end} of {size} printed{rest}\n")
+    owed = f" · unjudged {unjudged}"
+    remaining = f"remaining relevant unread {left} · partial {part} (platform {platform}){owed}"
+    if shown:
+        print(f"BATCH: printed {len(shown)} · {remaining}")
+    elif left or part:
+        print(f"BATCH: the {left + part} relevant addresses left unread or partial on {platform} have no body — "
+              f"fetch them first (`list --platform {platform} --unread` names the unread ones)")
+        print(f"BATCH: printed 0 · {remaining}")
+    else:
+        print(f"BATCH: nothing left — okunacak adres kalmadı{owed}")
+    return 0
+
+
+def cmd_page(run: Path, rid: str, start: int, max_chars: int) -> int:
+    """The rest of a body from byte `start` (a partial row's read_bytes), printed and counted. The
+    count grows only over bytes printed without a gap: a --from past what was printed is refused,
+    so a jump ahead can never be counted as read."""
+    with locked(run):
+        rows = read_rows(run)
+        addr = address_index(rows).get(rid)
+        if addr is None:
+            print(f"REFUSED no such id: {rid}")
+            return 2
+        rid = str(addr.get("id"))
+        canon = addr.get("url_canonical") or platforms.canonical_url(addr.get("url") or "")
+        if not has_body(run, canon):
+            print(f"REFUSED {rid} has no body — fetch it first")
+            return 2
+        raw = body_path(run, canon).read_bytes()
+        done = min(int(addr.get("read_bytes") or 0), len(raw)) if read_of(addr) != "unread" else 0
+        if not 0 <= start <= done:
+            print(f"REFUSED {rid}: --from {start} is outside what was printed (0-{done}); continue from {done}")
+            return 2
+        while 0 < start < len(raw) and (raw[start] & 0xC0) == 0x80:
+            start -= 1                                # never begin inside a character
+        head = header_of(addr, canon)
+        text, end = _slice(raw, start, max(max_chars - len(head) - 3, 100))
+        upto = max(done, end)
+        status = _mark(addr, hunter_name(run) or addr.get("read_by"), upto, len(raw))
+        rewrite_rows(run, rows)                       # WRITTEN before a byte is printed
+    sys.stdout.write(_block(head, text))
+    tail = f" — the rest: {_rest(run, rid, upto)}" if status == "partial" else ""
+    print(f"PAGE: {rid} bytes {start}-{end} of {len(raw)} · {status} {addr['read_completeness']}{tail}")
+    return 0
+
+
+# =================================================================== status (B56 K1 §2.2)
+# `pending_with_body` is the triage's own backlog (done-list item 3: "pending (with body) 0" after a
+# triage); it stands last, so the contract's columns keep their places.
+STATUS_COLUMNS = ("discovered", "pending", "relevant", "irrelevant", "duplicate", "inaccessible",
+                  "read", "partial", "unread", "judged", "unjudged", "pending_with_body")
+
+
+def ledger_counts(run: Path, rows: list[dict]) -> tuple[dict[str, Counter], dict[str, list[str]]]:
+    """Per platform, per DISTINCT ADDRESS (distinct url_canonical: kapsama.py's Bulundu), the address
+    row's states. A value outside the contract is counted nowhere and named, so no sum closes over it."""
+    per: dict[str, Counter] = {}
+    odd: dict[str, list[str]] = {}
+    for canon, rs in by_canon(rows).items():
+        addr = address_row(rs)
+        if not canon or addr is None:
+            continue
+        p = row_platform(addr, canon)
+        c = per.setdefault(p, Counter())
+        c["discovered"] += 1
+        t = triage_of(addr)
+        if t not in TRIAGE_STATES:
+            odd.setdefault(p, []).append(f"{addr.get('id')} triage={t!r}")
+            continue
+        c[t] += 1
+        if t == "pending" and has_body(run, canon):
+            c["pending_with_body"] += 1
+        if t != "relevant":
+            continue
+        s = read_of(addr)
+        if s not in READ_STATES:
+            odd.setdefault(p, []).append(f"{addr.get('id')} read_status={s!r}")
+            continue
+        c[s] += 1
+        if s == "read":
+            v = addr.get("verdict")
+            if v is None:
+                c["unjudged"] += 1
+            elif v in VERDICTS:
+                c["judged"] += 1
+            else:
+                odd.setdefault(p, []).append(f"{addr.get('id')} verdict={v!r}")
+    return per, odd
+
+
+def reconcile(table: dict[str, dict]) -> list[str]:
+    bad = []
+    for p, t in table.items():
+        triaged = sum(t[k] for k in TRIAGE_STATES)
+        if t["discovered"] != triaged:
+            bad.append(f"{p} discovered {t['discovered']} ≠ pending+relevant+irrelevant+duplicate+inaccessible {triaged}")
+        if t["relevant"] != t["read"] + t["partial"] + t["unread"]:
+            bad.append(f"{p} relevant {t['relevant']} ≠ read+partial+unread {t['read'] + t['partial'] + t['unread']}")
+        if t["read"] != t["judged"] + t["unjudged"]:
+            bad.append(f"{p} read {t['read']} ≠ judged+unjudged {t['judged'] + t['unjudged']}")
+    return bad
+
+
+def cmd_status(run: Path, wanted: list[str] | None, fmt: str) -> int:
+    per, odd = ledger_counts(run, read_rows(run))
+    order = {p: i for i, p in enumerate(platforms.PLATFORMS)}
+    names = wanted or sorted(per, key=lambda p: (order.get(p, len(order)), p))
+    table = {p: {k: per.get(p, Counter())[k] for k in STATUS_COLUMNS} for p in names}
+    total = {k: sum(t[k] for t in table.values()) for k in STATUS_COLUMNS}
+    bad = reconcile(table)
+    named = [x for p in names for x in odd.get(p, [])]
+    verdict = "RECONCILED" if not bad else \
+        "MISMATCH: " + "; ".join(bad) + (f" — rows: {', '.join(named[:8])}" if named else "")
+    if fmt == "json":
+        # `owed` (json only): what the hunters still owe there in ONE number for the completion gate —
+        # relevant rows unread or partial, and read rows with no verdict (the verifier's B1, 2026-09-26)
+        for t in (*table.values(), total):
+            t["owed"] = t["unread"] + t["partial"] + t["unjudged"]
+        out = {"platforms": table, "total": total, "reconciled": not bad}
+        if bad:
+            out["mismatch"] = verdict[len("MISMATCH: "):]
+        print(json.dumps(out, ensure_ascii=False))
+        return 1 if bad else 0
+    lines = [[p, *(table[p][k] for k in STATUS_COLUMNS)] for p in names]
+    lines.append(["TOTAL", *(total[k] for k in STATUS_COLUMNS)])
+    if fmt == "tsv":
+        print("\t".join(("platform",) + STATUS_COLUMNS))
+        for ln in lines:
+            print("\t".join(str(x) for x in ln))
+    else:
+        print(f"ledger status · {run.name} — per distinct address: discovered = pending + relevant + irrelevant"
+              " + duplicate + inaccessible │ relevant: read · partial · unread (bytes this script printed)"
+              " │ read: judged · unjudged (the hunter's verdict)")
+        print()
+        print("| platform | " + " | ".join(k.replace("_", " ") for k in STATUS_COLUMNS) + " |")
+        print("|---|" + "---:|" * len(STATUS_COLUMNS))
+        for ln in lines:
+            print("| " + " | ".join(str(x) for x in ln) + " |")
+        print()
+    print(verdict)
+    return 1 if bad else 0
 
 
 # =================================================================== the door
@@ -1178,7 +1784,8 @@ def main(argv: list[str] | None = None) -> int:
     li = sub.add_parser("list")
     li.add_argument("run")
     li.add_argument("--platform", required=True)
-    li.add_argument("--unread", action="store_true")
+    li.add_argument("--unread", action="store_true", help="relevant rows never printed to a hunter (K1)")
+    li.add_argument("--no-body", dest="no_body", action="store_true", help="rows with no body yet")
     li.add_argument("--kind", choices=("all", "discovery", "evidence"), default="all")
     f = sub.add_parser("fetch")
     f.add_argument("run")
@@ -1191,6 +1798,42 @@ def main(argv: list[str] | None = None) -> int:
     a.add_argument("--author")
     a.add_argument("--date")
     a.add_argument("--title")
+    t = sub.add_parser("triage")
+    t.add_argument("run")
+    t.add_argument("--id", required=True)
+    t.add_argument("--status", required=True, choices=TRIAGE_STATES)
+    t.add_argument("--reason")
+    t.add_argument("--duplicate-of", dest="duplicate_of")
+    t.add_argument("--by")
+    tb = sub.add_parser("triage-bulk")
+    tb.add_argument("run")
+    tb.add_argument("--json", dest="json_file", required=True)
+    tb.add_argument("--by", required=True)
+    b = sub.add_parser("batch")
+    b.add_argument("run")
+    b.add_argument("--hunter", required=True)
+    b.add_argument("--platform", required=True)
+    b.add_argument("--n", type=int, default=10)
+    b.add_argument("--max-chars", dest="max_chars", type=int, default=READ_CHARS)
+    pg = sub.add_parser("page")
+    pg.add_argument("run")
+    pg.add_argument("--id", required=True)
+    pg.add_argument("--from", dest="start", type=int, required=True)
+    pg.add_argument("--max-chars", dest="max_chars", type=int, default=READ_CHARS)
+    v = sub.add_parser("verdict")
+    v.add_argument("run")
+    v.add_argument("--hunter", required=True)
+    v.add_argument("--id", required=True)
+    v.add_argument("--verdict", required=True, choices=VERDICTS)
+    v.add_argument("--reason")
+    vb = sub.add_parser("verdict-bulk")
+    vb.add_argument("run")
+    vb.add_argument("--hunter", required=True)
+    vb.add_argument("--json", dest="json_file", required=True)
+    st = sub.add_parser("status")
+    st.add_argument("run")
+    st.add_argument("--platform", action="append", help="one, a comma list, or repeated; every platform when absent")
+    st.add_argument("--format", choices=("md", "tsv", "json"), default="md")
     s = sub.add_parser("show")
     s.add_argument("run")
     s.add_argument("id")
@@ -1211,11 +1854,42 @@ def main(argv: list[str] | None = None) -> int:
         if args.platform != "all" and args.platform not in platforms.PLATFORMS:
             print(f"REFUSED unknown platform: {args.platform} (one of: {' '.join(platforms.PLATFORMS)})")
             return 2
-        return cmd_list(run, args.platform, args.unread, args.kind)
+        return cmd_list(run, args.platform, args.unread, args.no_body, args.kind)
     if args.cmd == "fetch":
         return cmd_fetch(run, args.url, args.show)
     if args.cmd == "add":
         return cmd_add(run, args.url, args.quote, args.author, args.date, args.title)
+    if args.cmd == "triage":
+        return cmd_triage(run, args.id, args.status, args.reason, args.duplicate_of, args.by)
+    if args.cmd == "triage-bulk":
+        return cmd_triage_bulk(run, args.json_file, args.by)
+    if args.cmd == "status":
+        wanted = list(dict.fromkeys(p.strip() for v in args.platform or [] for p in v.split(",") if p.strip()))
+        unknown = [p for p in wanted if p != "all" and p not in platforms.PLATFORMS]
+        if unknown:
+            print(f"REFUSED unknown platform: {' '.join(unknown)} (one of: {' '.join(platforms.PLATFORMS)})")
+            return 2
+        return cmd_status(run, None if not wanted or "all" in wanted else wanted, args.format)
+    if args.cmd in ("batch", "verdict", "verdict-bulk") and not args.hunter.strip():
+        print("REFUSED --hunter is empty: name the role that reads")
+        return 2
+    if args.cmd == "verdict":
+        return cmd_verdict(run, args.hunter.strip(), args.id, args.verdict, args.reason)
+    if args.cmd == "verdict-bulk":
+        return cmd_verdict_bulk(run, args.hunter.strip(), args.json_file)
+    if args.cmd in ("batch", "page") and args.max_chars < MIN_CHARS:
+        print(f"REFUSED --max-chars {args.max_chars}: below {MIN_CHARS} a header leaves a body no room")
+        return 2
+    if args.cmd == "batch":
+        if args.platform != "all" and args.platform not in platforms.PLATFORMS:
+            print(f"REFUSED unknown platform: {args.platform} (one of: {' '.join(platforms.PLATFORMS)})")
+            return 2
+        if args.n < 1:
+            print(f"REFUSED --n {args.n}: a batch prints at least one row")
+            return 2
+        return cmd_batch(run, args.hunter.strip(), args.platform, args.n, args.max_chars)
+    if args.cmd == "page":
+        return cmd_page(run, args.id, args.start, args.max_chars)
     return cmd_show(run, args.id)
 
 

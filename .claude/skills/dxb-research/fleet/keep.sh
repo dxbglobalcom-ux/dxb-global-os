@@ -45,7 +45,7 @@ kept=""
 # THE ANSWER'S OWN FILES, kept when the run has them: the page, the written answer, the rows its
 # sources are printed from, and — from a run of the earlier contract — its numbered registry and
 # the citation ruler's verdict. A file the run does not have is not an error.
-for f in "$OUT/final.md" "$OUT/answer.md" "$OUT/evidence.jsonl" "$OUT/sources.json" "$OUT"/cite-check*.txt; do
+for f in "$OUT/final.html" "$OUT/final.md" "$OUT/answer.md" "$OUT/evidence.jsonl" "$OUT/sources.json" "$OUT"/cite-check*.txt; do
   [ -f "$f" ] && cp "$f" "$DEST/" && kept="$kept ${f##*/}"
 done
 

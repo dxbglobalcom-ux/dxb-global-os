@@ -1,0 +1,58 @@
+{
+ "triage": [
+  {
+   "id": "L0112",
+   "status": "relevant",
+   "reason": "Comprehensive 15-test comparison Astra vs Fable",
+   "duplicate_of": null
+  },
+  {
+   "id": "L0260",
+   "status": "relevant",
+   "reason": "Blender visual quality comparison",
+   "duplicate_of": null
+  },
+  {
+   "id": "L0401",
+   "status": "relevant",
+   "reason": "Game dev: Fable for code, Astra for 3D",
+   "duplicate_of": null
+  },
+  {
+   "id": "L0402",
+   "status": "duplicate",
+   "reason": null,
+   "duplicate_of": "L0401"
+  },
+  {
+   "id": "L0403",
+   "status": "relevant",
+   "reason": "Cost comparison with user testing",
+   "duplicate_of": null
+  },
+  {
+   "id": "L0405",
+   "status": "relevant",
+   "reason": "Both models max thinking comparison",
+   "duplicate_of": null
+  },
+  {
+   "id": "L0409",
+   "status": "relevant",
+   "reason": "Video generation side-by-side",
+   "duplicate_of": null
+  },
+  {
+   "id": "L0916",
+   "status": "irrelevant",
+   "reason": "Opus vs Astra, not Fable",
+   "duplicate_of": null
+  },
+  {
+   "id": "L0947",
+   "status": "irrelevant",
+   "reason": "Opus vs Astra, not Fable",
+   "duplicate_of": null
+  }
+ ]
+}

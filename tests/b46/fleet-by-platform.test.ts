@@ -101,9 +101,7 @@ describe("the fleet, run — what each hunter is handed and how it is launched",
     for (const verb of ["fetch", "add", "list", "show"]) expect(prompt).toContain(`${evi} ${verb} "${run7}"`);
     expect(prompt).toContain(`${run7}/bodies/<sha256 of the address>.txt`);
     const f = flat(prompt);
-    expect(f).toContain("An address that already carries a body is not finished until you have either added a quote " +
-      "from it or decided in one word that it says nothing (`evidence.py` needs no call for that — say it in your " +
-      "PLATFORM line's okunmadı count).");
+    expect(f).toContain("A batch whose ids carry no verdict is not finished reading.");
     expect(f).toContain("Read every address on your list. Every quote you keep goes in with `add`.");
     expect(f).toContain("recorded by `fetch` (it writes the closed door itself), never skipped in silence");
     expect(f).toContain("A decisive address on another platform is added the same way: it is never lost.");

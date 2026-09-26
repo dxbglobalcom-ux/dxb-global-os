@@ -1,0 +1,3 @@
+SORGULAR (zemin bunlarla acildi):
+  - Astra 6 vs Fable 5.1
+  - switched from Astra 6 to Fable 5.1

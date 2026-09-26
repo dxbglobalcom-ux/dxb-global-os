@@ -255,7 +255,9 @@ dendi, o tek komutta 20.000 harfte kesip 64. saniyede çıktı; kimse "bitti" de
 | **Sayfa** | md, tablo üstte | `render.py` tasarlanmış HTML: üstte hüküm kutusu · her iddianın yanında "(n satır)" · alıntı kartları (yazar, tarih, bağlantı) · kapsama · **altta platform platform çekmece**: gövdesi olan HER satır açılır bağlantı, yazar, kısaltılmış alıntı (X'te 130) |
 | **Kapsama** | bulundu · okundu · cevapta | bulundu · indirildi · ilgili · okundu · kısmen · cevapta · elenen (sebep) · kapalı kapı; altında RECONCILED / MISMATCH |
 
-**Kademe 1'in kapsamadığı (kademe 2-3, sözünüzle):** iddia defteri ve bağımsız kaynak sayımı, karşı-kanıt
+**Üç motor, sizin adlandırmanızla (26 Eylül öğle):** Kademe 1 = **KAPSAMA MOTORU** (ne bulundu, ne elendi, ne gerçekten okundu; "model tembel olabilir, sistem tembel olamaz") · Kademe 2 = **KANIT MOTORU** · Kademe 3 = **RAPOR MOTORU**.
+
+**Kademe 1'in kapsamadığı (Kanıt ve Rapor motorları, sözünüzle):** iddia defteri ve bağımsız kaynak sayımı, karşı-kanıt
 avcısı, boşluk turu, doygunluk, soru ayrıştırma, rapor tipine göre şekil, ayrı denetçi ajan.
 
 **Kabul maddeleri (koddan önce yazıldı; komut + beklenen çıktı, `EVIDENCE-B56-K1-2026-09-26.md` §3):**

@@ -60,6 +60,7 @@ describe("the fleet may not launch a hunter that can change this repository", ()
   });
 
   it("runs the hunter in its own folder, not at the root of the repository", () => {
-    expect(FLEET).toMatch(/builtin cd "\$OUT\/work-\$role"/);
+    // outside the repository altogether since B56 K1 (the run folder moved under var/): completion-gate.test.ts
+    expect(FLEET).toMatch(/builtin cd "\$HUNT_TMP\/work-\$role"/);
   });
 });

@@ -41,6 +41,19 @@ elif cmd == "list":
     for p, i, u, t, live, body in ROWS:
         if p == plat and not ("--unread" in sys.argv and body):
             print(f"{i}\t{u}\t{t}\t{live}")
+elif cmd == "status":
+    # nothing owed anywhere, so the fleet's completion gate accepts every role
+    args = sys.argv[3:]
+    plats = args[args.index("--platform") + 1].split(",") if "--platform" in args else ["all"]
+    fmt = args[args.index("--format") + 1] if "--format" in args else "md"
+    keys = ("discovered", "pending", "relevant", "irrelevant", "duplicate", "inaccessible",
+            "read", "partial", "unread", "judged", "unjudged", "owed")
+    zeros = dict.fromkeys(keys, 0)
+    if fmt == "json":
+        print(json.dumps({"platforms": {p: dict(zeros) for p in plats}, "total": dict(zeros),
+                          "reconciled": True}))
+    else:
+        print("RECONCILED")
 else:
     print(f"stand-in: no such subcommand here: {cmd}", file=sys.stderr)
     sys.exit(2)

@@ -22,7 +22,8 @@ S="/home/dxb/DxB Global OS/.agents/skills/dxb-research"; export PATH="$S/bin:$PA
   platforms and accounting for the unread:
   `bash "$S/fleet/fleet.sh" <outdir> --q "<3-6 words>" [--q "<another phrasing>"] [--dert <his-words.txt>]`.
   It opens the ground, turns it into evidence rows, launches the hunters, counts the crowd, and prints
-  the coverage table. Then YOU write `answer.md` from the rows (below).
+  the coverage table; its writer step then writes `answer.md` from the rows (below). You write it
+  yourself only for a quick question.
 
 ## Where to look — one command per platform
 
@@ -57,10 +58,10 @@ already brought carries it from the start (X, Reddit); `fetch` opens the thread 
 ```bash
 python3 "$S/scripts/evidence.py" from-ground <outdir>                      # the sweep's raw files -> rows
 python3 "$S/scripts/evidence.py" list <outdir> --platform x                 # every address of a platform: id · url · title · liveness
-python3 "$S/scripts/evidence.py" list <outdir> --platform x --unread        # only those with no body yet (skip blocked / dead)
+python3 "$S/scripts/evidence.py" list <outdir> --platform x --no-body       # only those with no body yet (skip blocked / dead)
 python3 "$S/scripts/evidence.py" fetch <outdir> --url <url> --print         # read a body; a closed door is recorded
 python3 "$S/scripts/evidence.py" add <outdir> --url <url> --quote "<verbatim>" [--author A --date D]   # -> L0042
-python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # platform · bulundu · okundu · cevapta
+python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # the coverage table, nine columns + RECONCILED
 ```
 
 ## How to work
@@ -73,16 +74,22 @@ python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # pl
 - Is the engine working today? `R="$S/scripts"; bash "$R/probe.sh"` — one line per channel, the closed ones named.
 
 ## The answer — like Perplexity, in the CEO's shape
-Write `<outdir>/answer.md` in Turkish, from the rows only:
+On the deep road the fleet's writer step writes `<outdir>/answer.md` — Opus 5.5 · high, from the rows the
+hunters left (on by default; `--no-write` skips it, `--write-only <outdir>` runs it alone). For a quick
+question you write it yourself, the same way — in Turkish, from the rows only:
 - The first 1–2 sentences ARE the answer. Then the number that carries it (count, share, denominator).
   Then what would change it and whether that was looked at. Contradictions left standing are named.
 - Every claim carries its row: `… [L0042]`. No address, no quote text in the answer — the page prints
   the quote, the author, the date and the address from the row. A number of people is a count only when
   `crowd.sh` counted it; anything else says "about". A comparison is a table.
-- Then `python3 "$S/scripts/render.py" <outdir>/answer.md --evidence <outdir>/evidence.jsonl --out <outdir>/final.md`
-  — it numbers the sources, lists them from the rows and appends "Nereye bakıldı", the coverage table:
-  where you looked, what was found, what was read, what reached the answer, which door was closed.
-- Publish `final.md` as a page (Markdown artifact — this skill instructs it) and put it in front of him
+- **Beside every claim, the count** (his order, 2026-09-26): how many rows say so, of how many read —
+  `9 of 16 X posts` — with the strongest two as the examples; the rest are not dropped. **Under the
+  page, one section per platform** (X, YouTube, Reddit …) listing EVERY row the hunters brought there
+  as an openable address with its author and quote, long ones shortened — so he can browse the 130.
+- Then `python3 "$S/scripts/render.py" <outdir>/answer.md --evidence <outdir>/evidence.jsonl` writes
+  `final.html` (and `final.md`) from the rows: the verdict on top, `(n satır)` beside every claim, a quote
+  card for every cited row, "Nereye bakıldı" (the coverage table) and the per-platform drawer.
+- Publish `final.html` as a designed Artifact through the Artifact tool and put it in front of him
   **at once**. No question first, no "md mi sayfa mı" (his word, 2026-09-26). Nothing is saved to the
-  repository unless he says **"kaydet"**: then copy `final.md` and `evidence.jsonl` to
+  repository unless he says **"kaydet"**: then copy `final.html`, `final.md` and `evidence.jsonl` to
   `.planning/research/answers/<YYYYMMDD-HHMM>-<slug>/`.

@@ -1,0 +1,288 @@
+I Tested GPT-6 Astra vs Fable 5.1 on 15 Real Use Cases. What You Need to Know. | Nate Herk (@nateherk) on X
+
+[![Article cover image](https://pbs.twimg.com/media/HRjdoSxaQAAWdGk?format=webp&name=medium)](/nateherk/article/2096669523956920530/media/2096669310844551168)
+
+I Tested GPT-6 Astra vs Fable 5.1 on 15 Real Use Cases. What You Need to Know.
+==============================================================================
+
+[![Nate Herk](https://pbs.twimg.com/profile_images/2046419318918037504/GFSBxbxy_normal.jpg)
+
+Nate Herk@nateherk·Sep 6](/nateherk)
+
+I put GPT-6 Astra head-to-head against Claude Fable 5.1 across 15 tasks, from presentations and sales copy to browser use, video editing, and building software.
+
+For every experiment, I looked at the deliverable, how long it took, and the usage cost. I went through multiple subscriptions and usage credits to do these comparisons because I wanted a better feel for which model I'd actually reach for during the day.
+
+These are my judgments from this set of tests. In several cases, I preferred one model's first output even though the other was cheaper, and your taste might lead you to a different winner.
+
+****TL;DR****
+
+→ Astra won 10 experiments. Fable won 5.
+
+→ Total usage cost: $326.98 for Astra and $513.36 for Fable.
+
+→ Astra cost $186.38 less, but took 1 hour, 43 minutes, and 39 seconds longer overall.
+
+→ Fable's wins included the presentation, sales letter, second-brain visual, learning guide, and reference-based website.
+
+→ I'm leaning toward Astra for more of my work, but I'm keeping both.
+
+### Experiment 1: A Branded Consulting Presentation
+
+I gave both models the same assignment: create a McKinsey-level presentation on the state of small and medium businesses for my fictional consulting brand. It needed to fit the branding and target audience.
+
+Astra immediately asked questions. Fable largely took the prompt and ran with it. That difference in behavior showed up in other tests, too.
+
+I checked the sources and research in both decks and was happy with that part. The deciding factor was how they presented the information.
+
+Fable's deck used structured columns, consistent branding, and a footer with detailed sources.
+
+[![](https://pbs.twimg.com/media/HRjZWqIWQAAQOYI.jpg)](/nateherk/article/2096669523956920530/media/2096664609830617088)
+
+It came out to 35 slides and felt more professional to me. But it was also very wordy. I'd be happier sending it as a document for someone to read than presenting over it in a room.
+
+Astra used fewer words and larger visual elements, so it might have been easier to present live. The layout felt more abstract, the branding was less consistent, and it didn't give me the same consulting-deck feel.
+
+I gave Fable the win on the output. It took 37 minutes, 12 seconds and cost $26.61, compared with 23 minutes, 30 seconds and $12.14 for Astra.
+
+That leaves a practical decision: Astra saved about 14 minutes and $14. Spending some of that on another revision might change the result, but I was judging the versions in front of me.
+
+### Experiment 2: A Sales Letter
+
+I asked both models to use my second brain and existing context to write a sales page for our certification program. They needed to understand the prospective student, their concerns, and what would help them decide whether the program was a fit.
+
+Fable wrote 2,782 words. Astra wrote 1,288. I initially estimated Astra's length incorrectly in the recording, then corrected it.
+
+I'm not an expert copywriter, and people on my team have been liking GPT's writing lately. In this particular comparison, though, I preferred Fable.
+
+It answered more of the questions I'd have before paying for a program: who teaches it, how it works, tuition, whether enrollment guarantees certification, whether it's suitable for someone already running an agency, and what happens if you miss a live class.
+
+Astra's version felt more high level. Fable's detail made me feel more informed about what I would be signing up for.
+
+Fable won this first-output comparison. It took 3 minutes, 51 seconds and cost $3.88, versus 2 minutes, 43 seconds and $1.43 for Astra.
+
+### Experiment 3: Organizing My Tax Information
+
+This involved private financial information, so I'm keeping the underlying figures out of the article.
+
+Both models assembled useful workbooks from the first two quarters of the year. Fable included inputs, sources, projections, payments, flags, and conditional decision logic.
+
+Astra asked roughly seven questions before starting. That made its eventual output feel more tailored to my situation.
+
+Its workbook had a clear starting point, monthly results, a forecast, payments, open items, source checks, and a transaction ledger with 3,739 rows. I also found the layout easier to read.
+
+Fable gave me branches to work through. Astra asked questions first and used the answers to narrow the output. For this task, I preferred that experience.
+
+Astra won, but cost more and took longer: $22.64 and 40 minutes, 40 seconds, compared with $13.29 and 22 minutes, 31 seconds for Fable. This was a judgment about the deliverable and how it handled my context, not a separate verification of the tax calculations.
+
+### Experiment 4: Auditing My Subscriptions
+
+I asked both models to search two email accounts for recurring payments, price increases, duplicates, and things I might need to cancel. That meant going through potentially years of messages.
+
+Fable organized active subscriptions by account, billing date, current price, and monthly equivalent. It flagged unpaid items, price jumps, seat increases, duplicate subscriptions, and larger contractor payments.
+
+But its All Charges tab was completely empty.
+
+Astra included the recurring baseline, annualized spending, payment history, other bills, and items that needed review. It also flagged expiring discounts, tier changes, price increases, term changes, and overlapping seats or tools.
+
+The payment history was present in Astra's output, which was a meaningful difference when the job was to audit the underlying charges.
+
+Astra won this test at $12.54 and 30 minutes, 47 seconds, versus Fable's $49.19 and 17 minutes, 1 second.
+
+[![](https://pbs.twimg.com/media/HRjZSwLXkAEhYtc.jpg)](/nateherk/article/2096669523956920530/media/2096664542734422017)
+
+### Experiment 5: Finding Problems Across Meetings
+
+I asked both models to review leadership meetings and relevant team conversations, identify the three biggest pain points, and recommend one high-value automation.
+
+Fable analyzed 58 meetings. Astra analyzed 79, giving it context from 21 more conversations.
+
+Their diagnoses overlapped around acquisition, delivery, and work depending too heavily on a small number of people. I preferred Astra's emphasis on ownership and the amount of personal intervention required to move people through the customer journey.
+
+Both recommended a customer-success workflow. That could combine onboarding status, Circle activity, attendance, mastery checks, unanswered questions, and missing submissions into a useful record for each student.
+
+The suggestions included collecting case readouts, preparing follow-ups, and sending reminders through tools such as Gmail or Beehiiv. This was a recommendation for an automation, rather than a completed automation from this test.
+
+Astra won for me at $5.62 and 10 minutes, 36 seconds, compared with $46.28 and 6 minutes, 1 second for Fable. Fable's cost surprised me given its short active agent time, even after checking the session logs and usage readout.
+
+### Experiment 6: An AIS Live Event Recap
+
+I gave both models a folder with more than 150 GB of recordings and resources from our July AIS Live event. The goal was an energetic 60-second recap we could use to promote future events.
+
+Both had to explore the material, find useful moments, build a story, and bring it together with music. I was impressed with both first versions given how vague the goal was.
+
+Fable did a good job framing the next event in October. Astra made better use of live speaker clips.
+
+Both still had mistakes. Fable had moments where the timing and voices felt out of sync. Astra showed one speaker while displaying another speaker's name.
+
+I gave Astra a slight edge. Its run cost $16.10 and took 30 minutes, 57 seconds, compared with Fable's $26.05 and 50 minutes, 6 seconds.
+
+[![](https://pbs.twimg.com/media/HRjZKurbkAAJOmQ.jpg)](/nateherk/article/2096669523956920530/media/2096664404893077504)
+
+### Experiment 7: A Motion Graphics Sizzle Reel
+
+For this one, I provided a reference reel with motion design I liked and asked both models to analyze it and create something for AIS.
+
+I preferred Astra's output. It felt more energetic, with 3D elements, shadows, and a stronger sense of depth.
+
+Astra also brought actual AIS course screenshots into the reel.
+
+[![](https://pbs.twimg.com/media/HRjYmMLa8AAeMa-.jpg)](/nateherk/article/2096669523956920530/media/2096663777156722688)
+
+I liked that it went and found material from the thing it was promoting. That was a better creative choice than keeping everything abstract.
+
+The music got a little annoying, so I'd still change that. But I gave Astra the win on the overall output.
+
+Fable took 32 minutes, 17 seconds and cost $16.43. Astra took 35 minutes, 32 seconds and cost $26.48, so this was another case where my preferred result cost more.
+
+### Experiment 8: A Pistachio Escape Game
+
+This was less representative of my daily work, but it was a useful test of building something I could actually play.
+
+The idea was a game where you're a pistachio trying to escape a kitchen. Both versions included collecting cereal or crumbs, moving through checkpoints, and interacting with the environment.
+
+Fable's version let me double jump. I could bump into objects and hit a spoon, and I finished in about 43 seconds, although I missed a collectible.
+
+Astra's kitchen had a more realistic visual finish, including the sink, countertop objects, and lighting.
+
+[![](https://pbs.twimg.com/media/HRjYkSqWoAA89dr.jpg)](/nateherk/article/2096669523956920530/media/2096663744537337856)
+
+The controls felt smoother to me. I couldn't double jump in that version, but I could interact with objects, fall into the sink, and run into a hot stove. I finished in about 46 seconds and collected all the crumbs.
+
+Both chose a similar route through the kitchen: drawer, books, stove, and sink. Astra got my vote because of the feel and presentation, but this is exactly the sort of comparison where someone else could reasonably prefer Fable.
+
+The scorecard showed $78.97 and 1 hour, 55 minutes for Fable, versus $70.24 and 2 hours, 39 minutes for Astra. Astra cost $8.73 less and took about 44 minutes longer.
+
+### Experiment 9: An Automation Evaluation App
+
+I wanted a small app for testing automations against known examples and seeing what improved between versions.
+
+Think of it like giving your automation an answer sheet: you supply test cases and the results you expect, then check how often it gets them right.
+
+Fable built an interface where I could register an automation, describe it, choose a Python script or API trigger, add test cases, and define how to grade the results. It stored runs, showed the code, and generated reports.
+
+The sample support-ticket router had 12 examples and missed two. Running it again without changing anything produced the same result, as expected for that simple deterministic script. A real evaluation would need more coverage than those 12 examples.
+
+Astra's version had a cleaner interface, a test library, run history, and a dedicated evaluation-reports view.
+
+[![](https://pbs.twimg.com/media/HRjYh9oWcAEv77v.jpg)](/nateherk/article/2096669523956920530/media/2096663704532054017)
+
+I liked its visual flow, the way it showed tests progressing, and the structure of the reports. Fable's felt more like a proof of concept. Astra's felt closer to something I could put in front of students and get feedback on.
+
+Astra won at $57.77, compared with $122.43 for Fable. The scorecard showed 2 hours, 25 minutes for Astra and 1 hour, 19 minutes for Fable. I still want to keep developing this idea because being able to see evaluation results makes it easier to improve an agent.
+
+### Experiment 10: Visualizing My Second Brain
+
+I asked for a local, interactive view of my knowledge system: videos, business notes, projects, skills, agents, and memory.
+
+Fable's version displayed 612 notes and roughly 2,500 connections. It let me toggle categories, show labels, filter for things needing attention, search, and open notes.
+
+Fable's graph showed clusters of notes connected by lines, with controls for switching knowledge sources.
+
+[![](https://pbs.twimg.com/media/HRjYfjzaIAA68U9.jpg)](/nateherk/article/2096669523956920530/media/2096663663239372800)
+
+Clicking a node showed its relationships. Navigation wasn't perfect because it felt like I needed to select a node to make it the center, but the overall experience was close to what I wanted.
+
+Astra had smaller nodes and a busier interface. I found it more overwhelming, even though it exposed similar categories and information.
+
+I expected to prefer Astra here, but Fable won. It gave me the simpler visual experience I'd asked for. Fable took 24 minutes, 33 seconds and cost $13.21, versus 41 minutes, 44 seconds and $14.48 for Astra.
+
+### Experiment 11: Turning A Video Into A Learning Guide
+
+I gave both models my video explaining 25 Grok Bot concepts and asked for a simple, visual HTML document. Someone should be able to read it and feel like they understood the tutorial.
+
+That meant explaining how the team fits together, including executive bots and operators, plus the tools, computers, plugins, skills, and controls shown in the video.
+
+Fable's guide used annotated screenshots to point out specific controls and explain them alongside the images.
+
+[![](https://pbs.twimg.com/media/HRjYdamWUAMhMvQ.jpg)](/nateherk/article/2096669523956920530/media/2096663626408939523)
+
+It took more screenshots, cropped and zoomed into details, and added more annotations. It was wordy, but the detail served the learning experience.
+
+Astra's HTML looked prettier to me. The instructional screenshots were less detailed, though, and I preferred Fable's version for a beginner trying to follow along.
+
+Fable won on the first output at $35.36 and 23 minutes, 14 seconds. Astra cost $8.14 and took 17 minutes, 57 seconds. That $27.22 saving could fund a revision, which might change the result, but it wasn't the version I was judging.
+
+### Experiment 12: Painting In Canva
+
+This was a browser-use and vision test: look at a reference picture, navigate Canva, and create a painting based on it.
+
+Astra's Canva result was a recognizable rendition of the reference portrait shown beside it.
+
+[![](https://pbs.twimg.com/media/HRjYaWgaAAAcFEV.jpg)](/nateherk/article/2096669523956920530/media/2096663573770665984)
+
+Fable's output looked very little like the reference. I expected it to do substantially better than it did.
+
+Astra won this one clearly at $25.36 and 42 minutes, 34 seconds. Fable cost $37.65 and took 1 hour, 14 minutes. The task required understanding the image and working through the interface to produce the result.
+
+### Experiment 13: Uploading A Course Through The Browser
+
+I supplied a document, videos, and links, then asked each model to add the first five lessons to our free Skool community as drafts.
+
+Each lesson needed its video, description, key points, quotes, and resources. The models had to navigate the classroom and build the pages through the browser.
+
+Astra's lesson page included an embedded video, a description, and key points, with the draft lessons listed beside it.
+
+[![](https://pbs.twimg.com/media/HRjYT7gWIAU1dKU.jpg)](/nateherk/article/2096669523956920530/media/2096663463443439621)
+
+Fable's text structure was arguably nicer in places, including the numbering. But the videos were missing. It ran into an issue with the upload or locally downloaded files and didn't complete that part.
+
+I gave Astra the win because the requested videos were a core part of the deliverable. Astra cost $13.11 and took 14 minutes, 26 seconds, compared with $16.47 and 19 minutes, 46 seconds for Fable.
+
+That also fit my previous experience using GPT-5.6 Sol for browser tasks in Skool. I've had better results with the GPT models there.
+
+### Experiment 14: Recreating A Reference Website
+
+I gave both models a website with a distinctive scroll experience and asked them to capture its structure and feel for my fictional PERKFORM coffee brand. I didn't explicitly tell them to use any skills.
+
+Fable's version used a 3D can, falling coffee beans, a DNA-like motif, and a large zoom-out sequence.
+
+Its finished can scene carried the PERKFORM branding and oversized copy.
+
+[![](https://pbs.twimg.com/media/HRjYKd_aQAA0e3X.jpg)](/nateherk/article/2096669523956920530/media/2096663300901847040)
+
+Astra also produced interesting layers and animations, including a coffee bean and a coffee-and-protein sequence. It generally felt smoother, but there was overflowing text and awkward behavior at the bottom of the page.
+
+Fable had scroll bugs, too. Neither version was something I'd call finished without more work.
+
+I gave Fable the win because it felt closer to the reference, which was the assignment. I generally preferred Astra's design in several other tests, but the prompt here was specifically about recreating a particular experience.
+
+Fable cost $19.01 and took 54 minutes, 23 seconds. Astra cost $14.30 and took 41 minutes, 43 seconds.
+
+### Experiment 15: A YouTube Review And Strategy
+
+The final task was to analyze the previous 12 months of my YouTube channel and recommend what to do next.
+
+Fable produced a 25-page document. Astra produced a 15-page document. Fable's opening numbers focused on January onward, while Astra's opening analysis reflected the rolling 12-month period I'd requested.
+
+Both covered useful ground: monthly performance, content types, packaging, titles, retention, audience demographics, comments, and a plan for the next 90 days.
+
+The recommendations included the difference between news bringing views and bringing subscribers, audience concerns about hype in packaging, and whether agency-mechanics topics still fit the channel's audience. Astra also made the new-viewer and regular-viewer distinction easy to see.
+
+I preferred Astra's visual presentation and readability. It won, but took 42 minutes, 15 seconds and cost $26.63, compared with 16 minutes, 50 seconds and $8.53 for Fable.
+
+### The Final Score, Cost, And Time
+
+My final score was 10 wins for Astra and 5 for Fable.
+
+I had both models calculate the totals and checked that they agreed:
+
+→ Fable 5.1: 9 hours, 35 minutes, 45 seconds. Total usage cost: $513.36.
+
+→ GPT-6 Astra: 11 hours, 19 minutes, 24 seconds. Total usage cost: $326.98.
+
+Astra was $186.38 cheaper, but took 1 hour, 43 minutes, and 39 seconds longer across these tests.
+
+[![](https://pbs.twimg.com/media/HRjX9YbaoAAGUjv.jpg)](/nateherk/article/2096669523956920530/media/2096663076070400000)
+
+Those are the usage totals from this comparison, separate from the price of a monthly subscription. They describe this set of runs, rather than what every similar task will cost.
+
+Astra has often felt quicker and more efficient to me in general use, but this particular set took longer in aggregate. Both observations belong in the comparison.
+
+I'm leaning toward Astra for more of my day-to-day work right now. I still think GPT-5.6 Sol is capable enough for much of my knowledge work, and even that can be more than the task needs.
+
+Fable still gave me outputs I preferred, so I'm keeping both and continuing to test as the models and my use cases change.
+
+I walk through all 15 comparisons in the full video. Link in the first reply.
+
+Pick a task you actually need done, look at the finished result, and apply your own judgment.

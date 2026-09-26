@@ -9,7 +9,9 @@
 // THE CONTRACT (EVIDENCE-B56 "THE CONTRACTS", render.py): the answer carries `[Lxxxx]` ids only;
 // render.py numbers them in first-appearance order, prints each quote, author, date, platform and
 // address FROM THE ROW under "Kaynaklar", appends kapsama.py's table under "Nereye bakıldı", and
-// refuses (exit 2, one line, no page) an unknown id, a typed address and a typed quote block.
+// refuses (exit 2, one line, no page) an unknown id, a typed address and a typed quote block. Since
+// 2026-09-26 the same answer also becomes final.html, the designed page (render-drawer.test.ts); without
+// --out both are written, and a refusal takes both earlier pages away.
 //
 // HOW IT RUNS: the real render.py is copied into a temporary folder beside a stand-in kapsama.py
 // (fixtures/render/kapsama.py). render.py calls the kapsama.py in its own folder, so the copy finds
@@ -149,5 +151,27 @@ describe("C3 — the coverage table stands under the answer, and never blocks it
     expect(r.code, r.said).toBe(0);
     expect(r.page).not.toContain("Nereye bakıldı");
     expect(existsSync(join(r.dir, "kapsama-argv.json"))).toBe(false);
+  });
+});
+
+describe("C4 — without --out the answer becomes both pages, and a refusal takes both away", () => {
+  it("writes final.md and final.html beside the answer; a refused answer removes both", () => {
+    const dir = join(root, `run-${++runs}`);
+    mkdirSync(dir);
+    copyFileSync(join(FIX, "evidence.jsonl"), join(dir, "evidence.jsonl"));
+    const run = (answer: string) => {
+      writeFileSync(join(dir, "answer.md"), answer, "utf8");
+      return spawnSync("python3", [join(root, "with-kapsama", "render.py"), join(dir, "answer.md"), "--evidence",
+        join(dir, "evidence.jsonl")], { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
+    };
+    const ok = run(ANSWER);
+    expect(ok.status, ok.stderr).toBe(0);
+    expect(readFileSync(join(dir, "final.md"), "utf8")).toContain("## Kaynaklar");
+    // render.py copied alone (no platforms.py beside it) still builds the page, the platform keys as labels
+    expect(readFileSync(join(dir, "final.html"), "utf8")).toMatch(/^<!doctype html>[\s\S]*<summary>X — 1 gönderi \(1 cevapta\)<\/summary>/);
+    const no = run(`${ANSWER}\nBir iddia daha [L0099].\n`);
+    expect(no.status, no.stderr).toBe(2);
+    expect(no.stderr).toMatch(/the earlier final\.md was removed; the earlier final\.html was removed/);
+    expect(existsSync(join(dir, "final.md")) || existsSync(join(dir, "final.html"))).toBe(false);
   });
 });

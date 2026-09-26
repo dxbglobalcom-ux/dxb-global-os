@@ -1,0 +1,445 @@
+Claude Opus 5.5 vs GPT-6 Astra vs GPT-6 Sol: the effort knob matters more than the model - DEV Community
+
+[Skip to content](#main-content)
+
+Navigation menu
+[![DEV Community](https://media2.dev.to/dynamic/image/quality=100/https://dev-to-uploads.s3.amazonaws.com/uploads/logos/resized_logo_UQww2soKuUsjaOGNB38o.png)](/)
+
+Search
+[Powered by Algolia
+Search](https://www.algolia.com/developers/?utm_source=devto&utm_medium=referral)
+
+[Log in](https://dev.to/enter?signup_subforem=1)
+[Create account](https://dev.to/enter?signup_subforem=1&state=new-user)
+
+DEV Community
+-------------
+
+Close
+
+![](https://assets.dev.to/assets/heart-plus-active-9ea3b22f2bc311281db911d416166c5f430636e76b15cd5df6b3b841d830eefa.svg)
+
+
+
+
+Add reaction
+
+![](https://assets.dev.to/assets/sparkle-heart-5f9bee3767e18deb1bb725290cb151c25234768a0e9a2bd39370c382d02920cf.svg)
+
+
+Like
+
+
+![](https://assets.dev.to/assets/multi-unicorn-b44d6f8c23cdd00964192bedc38af3e82463978aa611b4365bd33a0f1f4f3e97.svg)
+
+
+Unicorn
+
+
+![](https://assets.dev.to/assets/exploding-head-daceb38d627e6ae9b730f36a1e390fca556a4289d5a41abb2c35068ad3e2c4b5.svg)
+
+
+Exploding Head
+
+
+![](https://assets.dev.to/assets/raised-hands-74b2099fd66a39f2d7eed9305ee0f4553df0eb7b4f11b01b6b1b499973048fe5.svg)
+
+
+Raised Hands
+
+
+![](https://assets.dev.to/assets/fire-f60e7a582391810302117f987b22a8ef04a2fe0df7e3258a5f49332df1cec71e.svg)
+
+
+Fire
+
+Jump to Comments
+
+
+
+
+
+Save
+
+
+
+
+Boost
+
+Pick as gem
+
+More...
+
+Copy link
+Copy link
+
+Copied to Clipboard
+
+[Share to X](https://twitter.com/intent/tweet?text=%22Claude%20Opus%205.5%20vs%20GPT-6%20Astra%20vs%20GPT-6%20Sol%3A%20the%20effort%20knob%20matters%20more%20than%20the%20model%22%20by%20%40geneLab_999%20%23DEVCommunity%20https%3A%2F%2Fdev.to%2Fgenelab_999%2Fclaude-opus-55-vs-gpt-6-astra-vs-gpt-6-sol-the-effort-knob-matters-more-than-the-model-55gm)
+[Share to LinkedIn](https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fdev.to%2Fgenelab_999%2Fclaude-opus-55-vs-gpt-6-astra-vs-gpt-6-sol-the-effort-knob-matters-more-than-the-model-55gm&title=Claude%20Opus%205.5%20vs%20GPT-6%20Astra%20vs%20GPT-6%20Sol%3A%20the%20effort%20knob%20matters%20more%20than%20the%20model&summary=On%20September%2022%2C%202026%2C%20Anthropic%20shipped%20Claude%20Opus%205.5%20and%20OpenAI%20shipped%20GPT-6%20Sol%20on%20the%20same...&source=DEV%20Community)
+[Share to Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fdev.to%2Fgenelab_999%2Fclaude-opus-55-vs-gpt-6-astra-vs-gpt-6-sol-the-effort-knob-matters-more-than-the-model-55gm)
+[Share to Mastodon](https://s2f.kytta.dev/?text=https%3A%2F%2Fdev.to%2Fgenelab_999%2Fclaude-opus-55-vs-gpt-6-astra-vs-gpt-6-sol-the-effort-knob-matters-more-than-the-model-55gm)
+
+[Share Post via...](#)
+[Report Abuse](/report-abuse)
+
+[![Cover image for Claude Opus 5.5 vs GPT-6 Astra vs GPT-6 Sol: the effort knob matters more than the model](https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2F9c9p9xaxq4t6ktb0ytv1.png)](https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2F9c9p9xaxq4t6ktb0ytv1.png)
+
+[![GeneLab_999](https://media2.dev.to/dynamic/image/width=50,height=50,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F3743545%2Fe831cbea-2547-4969-b084-e435a8e2fc05.png)](/genelab_999)
+
+[GeneLab\_999](/genelab_999)
+
+Posted on Sep 23
+
+![](https://assets.dev.to/assets/sparkle-heart-5f9bee3767e18deb1bb725290cb151c25234768a0e9a2bd39370c382d02920cf.svg)
+ 
+ ![](https://assets.dev.to/assets/multi-unicorn-b44d6f8c23cdd00964192bedc38af3e82463978aa611b4365bd33a0f1f4f3e97.svg)
+ 
+ ![](https://assets.dev.to/assets/exploding-head-daceb38d627e6ae9b730f36a1e390fca556a4289d5a41abb2c35068ad3e2c4b5.svg)
+ 
+ ![](https://assets.dev.to/assets/raised-hands-74b2099fd66a39f2d7eed9305ee0f4553df0eb7b4f11b01b6b1b499973048fe5.svg)
+ 
+ ![](https://assets.dev.to/assets/fire-f60e7a582391810302117f987b22a8ef04a2fe0df7e3258a5f49332df1cec71e.svg)
+
+Claude Opus 5.5 vs GPT-6 Astra vs GPT-6 Sol: the effort knob matters more than the model
+========================================================================================
+
+[#claude](/t/claude)
+[#openai](/t/openai)
+[#llm](/t/llm)
+[#ai](/t/ai)
+
+On September 22, 2026, Anthropic shipped **Claude Opus 5.5** and OpenAI shipped **GPT-6 Sol** on the same day. OpenAI's flagship, **GPT-6 Astra**, had landed three weeks earlier.
+
+If you tried to pick one from the launch posts, you probably noticed the problem: **nobody compared against the right opponent.** Anthropic's table compares Opus 5.5 with GPT-6 Astra and the *previous* GPT-5.6 Sol. OpenAI's Sol post compares with Claude Opus 5 and Fable 5.1, not Opus 5.5. Every chart is technically true and none of them answers "which one should I call from my code today?"
+
+So I went to [Artificial Analysis](https://artificialanalysis.ai/) (AA), which ran all three through the same ten evaluations at every reasoning-effort level, and did the cost math.
+
+TL;DR
+-----
+
+* **Raw intelligence:** Opus 5.5 (max) scores **58** on AA's Intelligence Index. Astra (max) scores **53**, Sol (max) **48**.
+* **List price:** Sol is cheapest per token, Astra is 2.5x Opus 5.5.
+* **Per-task cost flips the ranking:** at max effort Opus 5.5 emits ~4x more output tokens than Astra, so Opus max ($5.98/task) costs more than Astra max ($3.26/task).
+* **The useful finding:** below ~$1.30 per task, Sol and Astra trade the lead. Above ~$1.30, Opus 5.5 is on top at every budget. **Opus 5.5 at `high` ($1.82) outscores Astra at `max` ($3.26).**
+* **The effort setting moves your bill more than the model choice does.**
+
+1. The price sheet (and its fine print)
+---------------------------------------
+
+Per 1M tokens, standard tier, as of September 23, 2026:
+
+|  | GPT-6 Sol | GPT-6 Astra | Claude Opus 5.5 |
+| --- | --- | --- | --- |
+| Input | $2.00 | $10.00 | $4.00 |
+| Output | $10.00 | $50.00 | $20.00 |
+| Cache read | $0.20 | $1.00 | $0.20 |
+| Cache write | $2.50 | $12.50 | $5.00 (5 min) / $8.00 (1 h) |
+| Prompt > 272K input tokens | 2x input & cache, 1.5x output, **whole request** | same as Sol | no surcharge up to 1M |
+
+Two things developers tend to miss:
+
+1. **Sol and Opus 5.5 have the same cache-read price.** Anthropic says cache reads make up the majority of agentic and coding costs. The more your agent re-reads a cached prefix, the less the 2x headline gap matters.
+2. **OpenAI's long-context surcharge applies to the entire request**, not just the tokens past 272K. For a cache-heavy, long-context agent, Opus 5.5 can end up *cheaper* than Sol per request.
+
+Also: tokenizers differ between vendors (Anthropic itself notes its newer tokenizer produces roughly 30% more tokens for the same text than its older one). Per-token prices are not a common currency. Compare cost per task instead.
+
+2. Tokens per task is the hidden multiplier
+-------------------------------------------
+
+[![ ](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fatu9cum6kw0bnhm9l2d5.png)](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fatu9cum6kw0bnhm9l2d5.png)
+
+At max effort on AA's suite, Opus 5.5 emits ~119k output tokens per task. Astra emits ~27k, Sol ~31k. That's why Astra, at 2.5x Opus's per-token price, still comes out cheaper per task at the top settings.
+
+Here's the full grid from AA (Intelligence Index score / estimated USD per task):
+
+| effort | GPT-6 Sol | GPT-6 Astra | Claude Opus 5.5 |
+| --- | --- | --- | --- |
+| low | 34 / $0.13 | 46 / $0.82 | 42 / $0.55 |
+| medium | 40 / $0.25 | 50 / $1.54 | 51 / $1.34 |
+| high | 43 / $0.37 | 51 / $1.73 | 54 / $1.82 |
+| xhigh | 44 / $0.53 | 52 / $2.31 | 56 / $3.46 |
+| max | 48 / $1.06 | 53 / $3.26 | 58 / $5.98 |
+
+Note that Opus 5.5 is *cheaper* than Astra at low and medium, roughly equal at high, and more expensive at xhigh and max.
+
+3. Buy intelligence by the dollar
+---------------------------------
+
+The question I actually care about: **for a given per-task budget, which (model, effort) pair gives the highest score?** That's a tiny script:
+
+```
+# Artificial Analysis Intelligence Index v4.3.2 (Sept 22, 2026): (score, est. USD per task)
+AA = {
+    ("gpt-6-sol", "low"): (34, 0.13),     ("gpt-6-sol", "medium"): (40, 0.25),
+    ("gpt-6-sol", "high"): (43, 0.37),    ("gpt-6-sol", "xhigh"): (44, 0.53),
+    ("gpt-6-sol", "max"): (48, 1.06),
+    ("gpt-6-astra", "low"): (46, 0.82),   ("gpt-6-astra", "medium"): (50, 1.54),
+    ("gpt-6-astra", "high"): (51, 1.73),  ("gpt-6-astra", "xhigh"): (52, 2.31),
+    ("gpt-6-astra", "max"): (53, 3.26),
+    ("claude-opus-5-5", "low"): (42, 0.55),    ("claude-opus-5-5", "medium"): (51, 1.34),
+    ("claude-opus-5-5", "high"): (54, 1.82),   ("claude-opus-5-5", "xhigh"): (56, 3.46),
+    ("claude-opus-5-5", "max"): (58, 5.98),
+}
+
+def best_under(budget_usd: float):
+    """Highest-scoring (model, effort) whose estimated cost fits the per-task budget."""
+    affordable = [(score, -cost, cfg) for cfg, (score, cost) in AA.items() if cost <= budget_usd]
+    if not affordable:
+        return None
+    score, neg_cost, cfg = max(affordable)  # ties go to the cheaper config
+    return cfg, score, -neg_cost
+
+for budget in (0.25, 0.60, 0.90, 1.10, 1.40, 2.00, 4.00, 6.00):
+    print(f"${budget:.2f} ->", best_under(budget))
+```
+
+Enter fullscreen modeExit fullscreen mode
+
+Output:
+
+```
+$0.25 -> (('gpt-6-sol', 'medium'), 40, 0.25)
+$0.60 -> (('gpt-6-sol', 'xhigh'), 44, 0.53)
+$0.90 -> (('gpt-6-astra', 'low'), 46, 0.82)
+$1.10 -> (('gpt-6-sol', 'max'), 48, 1.06)
+$1.40 -> (('claude-opus-5-5', 'medium'), 51, 1.34)
+$2.00 -> (('claude-opus-5-5', 'high'), 54, 1.82)
+$4.00 -> (('claude-opus-5-5', 'xhigh'), 56, 3.46)
+$6.00 -> (('claude-opus-5-5', 'max'), 58, 5.98)
+```
+
+Enter fullscreen modeExit fullscreen mode
+
+Plotted as "best score you can buy at each budget":
+
+[![ ](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fadp0adgyo6jcwex9fta1.png)](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fadp0adgyo6jcwex9fta1.png)
+
+* **Under ~$1.30/task:** Sol owns most of the range. Astra `low` wins a narrow band around $0.82–$1.05.
+* **Over ~$1.30/task:** Opus 5.5 leads everywhere (it ties Astra once, briefly, at score 51).
+* **Sol tops out at 48 and Astra at 53.** Past those points, paying more buys nothing.
+
+At 10,000 tasks a month, this stops being academic:
+
+[![ ](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fqaelx3b3mdgmw0eczdy2.png)](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fqaelx3b3mdgmw0eczdy2.png)
+
+Opus 5.5 `high` scores one point above Astra `max` and costs **$14,400/month less** in this illustration. Also note the gap between Opus 5.5 `medium` and `max`: about 4.5x the cost for 7 more points.
+
+4. Benchmarks have referees
+---------------------------
+
+Anthropic's launch table shows Opus 5.5 at 66.4% on Terminal-Bench 4.0 vs Astra at 57.9%. The footnotes matter: Opus ran at `xhigh` in Anthropic's setup, and Astra's number is OpenAI's own figure at `high`.
+
+When AA ran both in the same harness:
+
+[![ ](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fju3ny3j7da2ba7vnfabk.png)](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fju3ny3j7da2ba7vnfabk.png)
+
+**59.6% vs 59.6%.** A tie. This is the same lesson as Astra's ARC-AGI-3 score, which ARC Prize reported as 99.9% with a provider-specific harness and 62.7% with the standard one. Vendor tables are drawn under each vendor's best conditions. Read the footnotes, and prefer third-party runs that hold the harness constant.
+
+5. Where each model actually wins
+---------------------------------
+
+[![ ](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fge5bgn1zwzeucbdtr82u.png)](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Farticles%2Fge5bgn1zwzeucbdtr82u.png)
+
+From AA at max effort:
+
+|  | GPT-6 Sol | GPT-6 Astra | Claude Opus 5.5 |
+| --- | --- | --- | --- |
+| Terminal-Bench 4.0 | 43.9% | 59.6% | 59.6% |
+| AutomationBench-AA | 61.6% | 69% | 69.5% |
+| GDP.pdf (professional documents) | 24.8% | 31% | 26.2% |
+| Hallucination rate (lower is better) | 60.1% | 51% | 58.6% |
+| GDPval-AA (44 occupations, Elo) | 1487 | 1542 | **1846** |
+
+* **Opus 5.5** is far ahead on knowledge work (GDPval-AA is a ~300 Elo lead over Astra). AA's industry sub-indexes agree: finance, legal, and economics all favor Opus.
+* **Astra** leads on document reasoning and hallucinates least. In the vendors' own tables it also leads on Terminal-Bench Science (64.6% vs 58.7%, per Anthropic's table).
+* **Astra has several claims Opus 5.5 simply hasn't been measured on**: FrontierMath Tier 4 (97.6%), ScreenSpot-Pro (92.7%), MRCR v2 at 512K–1M (96.3%), ExploitBench (100%). No number means no verdict either way.
+* **Sol** is the fast, cheap one. It isn't built to win this table.
+
+6. Latency
+----------
+
+AA, all at `medium` effort:
+
+|  | GPT-6 Sol | GPT-6 Astra | Claude Opus 5.5 |
+| --- | --- | --- | --- |
+| Time to first answer token | ~2.0 s | ~6.2 s | ~24.4 s |
+| Output speed | ~114 tok/s | ~48 tok/s | ~75 tok/s |
+| Time per task | ~60 s | ~198 s | ~206 s |
+
+For a user-facing chat UI, Sol at `medium` is in a different league. Crank Astra to `max` and you're waiting over five minutes for the first answer token.
+
+7. Integration gotchas
+----------------------
+
+* **Opus 5.5 can't run with thinking disabled.** Effort is your only depth control. Sol offers a `none` reasoning setting (though AA found Sol's non-reasoning mode scored lower *and* cost more per task than `low`).
+* **Opus 5.5 routes some requests to other models.** When its safeguards trigger, most cybersecurity tasks are handled by Claude Opus 4.8. AA's numbers were measured with this default fallback on.
+* **Astra is rated "Critical" for cyber capability** under OpenAI's Preparedness Framework. It currently refuses advanced tasks like proof-of-concept exploits, and OpenAI's misalignment monitoring can stop a task outright in the API.
+* **Mind the 272K line on OpenAI models.** A prompt at 280K tokens is billed very differently from one at 270K.
+
+8. A routing recipe you can steal
+---------------------------------
+
+1. **Default to Opus 5.5 `medium`** for knowledge work and hard agent tasks. It beats Sol's best score and matches Astra `high`, for less.
+2. **Escalate to Opus 5.5 `high`** only when a task fails your acceptance check, rather than starting at `max`.
+3. **Send high-volume, well-specified work to Sol** (classification, extraction, first-line support), especially if latency matters.
+4. **Keep Astra in the pool** for document-heavy reasoning, low-hallucination requirements, science and GUI-heavy work, and verify on your own tasks.
+
+Then measure the only metric that matters, **cost per shipped output**, including human fix time:
+
+```
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Config:
+    name: str
+    cost_per_attempt: float  # USD, measured on YOUR tasks
+    accept_rate: float       # share of outputs you actually ship
+    fix_minutes: float       # human repair time per shipped output
+
+def cost_per_accepted(cfg: Config, hourly_rate: float = 60.0) -> float:
+    model_cost = cfg.cost_per_attempt / cfg.accept_rate
+    human_cost = cfg.fix_minutes / 60 * hourly_rate
+    return model_cost + human_cost
+
+# Hypothetical numbers, just to show the shape of the math
+for cfg in (
+    Config("cheap config", cost_per_attempt=0.25, accept_rate=0.60, fix_minutes=12),
+    Config("pricier config", cost_per_attempt=1.34, accept_rate=0.85, fix_minutes=4),
+):
+    print(f"{cfg.name:>15}: ${cost_per_accepted(cfg):.2f} per shipped output")
+```
+
+Enter fullscreen modeExit fullscreen mode
+
+```
+   cheap config: $12.42 per shipped output
+ pricier config: $5.58 per shipped output
+```
+
+Enter fullscreen modeExit fullscreen mode
+
+With any realistic hourly rate, human review time dominates the model bill. That is exactly why the "cheapest model" and the "cheapest workflow" are often different things.
+
+Caveats
+-------
+
+* AA's tasks are not your tasks. Treat the scores as a map, not a forecast.
+* Costs are AA's estimates, including typical cache-hit rates.
+* A few per-benchmark values above are rounded integers as AA published them.
+* AA re-based its index since Astra launched (v4.1.1 → v4.3.2). Scores from different versions aren't comparable.
+
+Sources
+-------
+
+* Anthropic, [Introducing Claude Opus 5.5](https://www.anthropic.com/claude-opus-5-5) and [Pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+* OpenAI, [Introducing GPT-6 Sol and Luna](https://openai.com/index/introducing-gpt-6-sol-and-luna/), [GPT-6 Astra](https://openai.com/index/gpt-6-astra/), [GPT-6 Sol model page](https://developers.openai.com/api/docs/models/gpt-6-sol), [GPT-6 Astra model page](https://developers.openai.com/api/docs/models/gpt-6-astra)
+* Artificial Analysis, [Opus 5.5 vs Astra](https://artificialanalysis.ai/models/releases/comparisons/claude-opus-5-5-vs-gpt-6-astra), [Sol vs Opus 5.5](https://artificialanalysis.ai/models/releases/comparisons/gpt-6-sol-vs-claude-opus-5-5), [Benchmarking GPT-6 Astra](https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra), [Opus 5.5 article](https://artificialanalysis.ai/articles/claude-opus-5-5), [Sol and Luna article](https://artificialanalysis.ai/articles/gpt-6-sol-and-luna-push-the-cost-efficiency-frontier)
+
+*Disclosure: I researched and drafted this with help from Claude, which makes Anthropic a party to this comparison. Every figure comes from Artificial Analysis or the vendors' own pages, linked above.*
+
+---
+
+* Qiita (Japanese): <https://qiita.com/GeneLab_999>
+* Zenn (Japanese): <https://zenn.dev/genelab_999>
+* YouTube: <https://www.youtube.com/@geneLab_999>
+* X: <https://x.com/geneLab_999>
+
+Top comments (0)
+----------------
+
+Subscribe
+
+![pic](https://media2.dev.to/dynamic/image/width=256,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F8j7kvp660rqzt99zui8e.png)
+
+Personal
+Trusted User
+[Create template](/settings/response-templates)
+
+Templates let you quickly answer FAQs or store snippets for re-use.
+
+Submit
+Preview
+[Dismiss](/404.html)
+
+[Code of Conduct](/code-of-conduct)
+•
+[Report abuse](/report-abuse)
+
+Are you sure you want to hide this comment? It will become hidden in your post, but will still be visible via the comment's [permalink](#).
+
+Hide child comments as well
+
+Confirm
+
+For further actions, you may consider blocking this person and/or [reporting abuse](/report-abuse)
+
+[![](https://media2.dev.to/dynamic/image/width=90,height=90,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.us-east-2.amazonaws.com%2Fuploads%2Fuser%2Fprofile_image%2F3743545%2Fe831cbea-2547-4969-b084-e435a8e2fc05.png)
+
+GeneLab\_999](/genelab_999)
+
+Follow
+
+https://github.com/hiroki-abe-58
+
+* Location
+
+  Tokyo
+* Joined
+
+  Jan 31, 2026
+
+### More from [GeneLab\_999](/genelab_999)
+
+[I didn't fix the bug: contributing to a 20k-star ML repo by measuring it
+
+#ai
+#opensource
+#machinelearning
+#python](/genelab_999/i-didnt-fix-the-bug-contributing-to-a-20k-star-ml-repo-by-measuring-it-1lg7)
+[I built a Jev-style decision model for Japanese in two days. Claude Code A/B-tested my architecture and killed it.
+
+#ai
+#machinelearning
+#nlp
+#opensource](/genelab_999/i-built-a-jev-style-decision-model-for-japanese-in-two-days-claude-code-ab-tested-my-architecture-4bi5)
+[🛠️ I Built a One-Click ComfyUI Setup for RTX 5090 on Windows — No WSL2, No Docker
+
+#comfyui
+#ai
+#showdev
+#python](/genelab_999/i-built-a-one-click-comfyui-setup-for-rtx-5090-on-windows-no-wsl2-no-docker-4n1i)
+
+[DEV Community](/) — A space to discuss and keep up software development and manage your software career
+
+- [Home](/)
+- [DEV Challenges](/challenges)
+- [DEV++](/++)
+- [Videos](/videos)
+- [DEV Education Tracks](/deved)
+- [DEV Help](/help)
+- [Advertise on DEV](/advertise)
+- [Organization Accounts](/organizations)
+- [DEV Showcase](/showcase)
+- [About](/about)
+- [Contact](/contact)
+- [Free Postgres Database](/free-postgres-database-tier)
+- [DEV Shop](https://shop.forem.com/)
+- [MLH](https://mlh.io/)
+
+- [Code of Conduct](/code-of-conduct)
+- [Privacy Policy](/privacy)
+- [Terms of Use](/terms)
+
+Built on [Forem](https://www.forem.com) — the [open source](https://dev.to/t/opensource) software that powers [DEV](https://dev.to) and other inclusive communities.
+
+Made with love and [Ruby on Rails](https://dev.to/t/rails). DEV Community © 2016 - 2026.
+
+![DEV Community](https://media2.dev.to/dynamic/image/width=190,height=,fit=scale-down,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F8j7kvp660rqzt99zui8e.png)
+
+We're a place where coders share, stay up-to-date and grow their careers.
+
+[Log in](https://dev.to/enter?signup_subforem=1)
+[Create account](https://dev.to/enter?signup_subforem=1&state=new-user)
+
+![](https://assets.dev.to/assets/sparkle-heart-5f9bee3767e18deb1bb725290cb151c25234768a0e9a2bd39370c382d02920cf.svg)![](https://assets.dev.to/assets/multi-unicorn-b44d6f8c23cdd00964192bedc38af3e82463978aa611b4365bd33a0f1f4f3e97.svg)![](https://assets.dev.to/assets/exploding-head-daceb38d627e6ae9b730f36a1e390fca556a4289d5a41abb2c35068ad3e2c4b5.svg)![](https://assets.dev.to/assets/raised-hands-74b2099fd66a39f2d7eed9305ee0f4553df0eb7b4f11b01b6b1b499973048fe5.svg)![](https://assets.dev.to/assets/fire-f60e7a582391810302117f987b22a8ef04a2fe0df7e3258a5f49332df1cec71e.svg)

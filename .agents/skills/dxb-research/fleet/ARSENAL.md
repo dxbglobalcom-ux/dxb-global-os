@@ -6,32 +6,54 @@ skill and do not launch other agents: you are one of several already in the fiel
 
 ## The law of the list — nothing found is thrown away
 Every address the fleet's ground found is already a row of the run's ledger (`evidence.jsonl`),
-and the rows of YOUR platforms are your list, in your prompt (a closed door is already recorded
-and left off it). His words, 2026-09-26: *"toplanan bilgiler çöpe atılmasın hemen. 100 bilgi gelior
-konuyla iligli adam 2 sini alıp diğerlerini çöze atıor"* — on the run he rejected on 2026-09-24 the
-ground had found 294 X addresses, and the answer cited none of them.
-- **Read every address on your list**: one that already carries a body from its cached text
-  (your prompt says where), one without a body with `fetch`.
+fetched and sorted by a triage model before you were launched, and the rows of YOUR platforms are
+your list, in your prompt (a closed door is already recorded and left off it). His words,
+2026-09-26: *"toplanan bilgiler çöpe atılmasın hemen. 100 bilgi gelior konuyla iligli adam 2 sini
+alıp diğerlerini çöze atıor"* — on the run he rejected on 2026-09-24 the ground had found 294 X
+addresses, and the answer cited none of them.
+- **Read with `batch`, and only with it.** It prints the next relevant rows of your platform not
+  yet printed to anyone, each body whole, and the ledger marks each one read by you. A body
+  printed any other way — `cat`, `head`, `grep` over `bodies/` — counts as unread. Measured
+  2026-09-26: the x hunter printed the first 350 characters of 128 bodies in one command, the
+  output was cut at 20,000 characters (73 seen), and it declared 130 read.
+- **A body too long for one batch is printed in part and marked `partial` — that is not read.**
+  The next `batch` of that platform continues it (`page`, below, prints the rest at once). Until it
+  is read to the end it is owed like an unread row; then it gets its verdict like any other.
+- **Every row batch printed gets a verdict before the next batch**: a sentence worth keeping goes
+  in with `add` (that marks the row evidence by itself); a row that says nothing on the question
+  gets `verdict … --verdict none --reason "<at most 6 words>"`. A batch whose ids carry no verdict
+  is not finished reading.
 - **Every quote you keep goes in with `add`** — a sentence copied from the fetched body, exactly;
   a paraphrase is refused. You never write the ledger yourself, and a quote that is not a row does
   not exist for the answer.
+- **When batch has nothing left, search further with every weapon below**; every page you read
+  that way goes through `fetch` and `add` too.
 - **An address you could not read is recorded by `fetch`** — it writes the closed door itself,
   with the reason. Never skipped in silence.
 - **A decisive address on another platform is added the same way.** It is never lost.
-- **Stop only when the list is exhausted** — then write `okunacak adres kalmadı` — **or when the
-  time is up.**
+- **Stop only when batch says `nothing left — okunacak adres kalmadı`** on every platform of
+  yours, **or when the time is up.** When you return, the fleet counts from the ledger what is
+  still unread, partial or unjudged on your platforms, and a hunter that left rows behind is sent back.
 
-## The three commands — the ledger is written by these, never by you
+## The commands — the ledger is written by these, never by you
 ```bash
 R='/home/dxb/DxB Global OS/.agents/skills/dxb-research/scripts'
+python3 "$R/evidence.py" batch <run> --hunter <you> --platform <p> --n 10
+#   the next relevant unread rows of <p>, whole, each marked read by you; the last line says how
+#   many are left and how many you have not judged — or `BATCH: nothing left — okunacak adres kalmadı`
+python3 "$R/evidence.py" page <run> --id <id> --from <bytes>     # the rest of a body batch marked partial
+python3 "$R/evidence.py" verdict <run> --hunter <you> --id <id> --verdict none --reason "<at most 6 words>"
+python3 "$R/evidence.py" verdict-bulk <run> --hunter <you> --json <file>   # {"verdicts": [{"id", "verdict", "reason"}]}
 python3 "$R/evidence.py" fetch <run> --url <address> --print
 #   reads it through the platform's own reader (an X post with its replies, a Reddit thread in
 #   full, a YouTube transcript and its comments, else the reading chain), keeps the body, prints
 #   `OK <id> <bytes>B <file>` and the text — or `KAPALI KAPI <address> <reason>` (exit 3), and
 #   then the closed door is a row too
 python3 "$R/evidence.py" add <run> --url <address> --quote "<a sentence copied from the body>" --author <who> --date <when>
-#   prints the new row's id; `REFUSED quote not in body` (exit 2) means it was not copied exactly
-python3 "$R/evidence.py" list <run> --platform <p> --unread     # what is still unread there
+#   prints the new row's id and marks the row evidence; `REFUSED quote not in body` (exit 2) means
+#   it was not copied exactly
+python3 "$R/evidence.py" list <run> --platform <p> --unread     # relevant rows not yet printed to anyone
+python3 "$R/evidence.py" list <run> --platform <p> --no-body    # the addresses still without a body
 ```
 Your prompt spells out `<run>` and the whole path of each command.
 
@@ -48,14 +70,16 @@ commands, so `warn` means *untried*, never *broken*. Measured 2026-09-16: it cal
 and twitter `warn` while both answered in 17-19 seconds. **Probe, then believe.**
 
 ## The law of the two steps
-Every address is two steps: ① find it ② **take what is inside it** (`fetch`, then `add`).
+Every address is two steps: ① find it ② **take what is inside it** (`batch` — or `fetch` for a
+page you found yourself — then `add` or `verdict`).
 Step ② is the job. Step ① alone is the failure the CEO named on 2026-09-16: *"2 tane reddit
 2 tane x açtın kapattın."*
 
 ## The ground is already open — read it before you search
 The fleet opened the ground ITSELF, on every channel of the map, before you were launched —
 measured on the first fleet run, 2026-09-17: left to themselves, only 3 of 7 hunters opened it —
-and every address it found is on a list. Search again only for what the lists do not hold, with
+and every address it found is on a list, fetched and sorted; `batch` hands you the relevant ones.
+Search again only for what the lists do not hold, with
 the doors of your platforms below, and every page you open that way goes through `fetch` too, so
 it becomes a row. The raw channel files stay on disk (your prompt names them) for when a row needs
 its context.
@@ -126,16 +150,18 @@ python3 "$R/fetch.py" <url>                   # TWELVE doors, in order, until on
 
 ```
 HÜKÜM: <one line — your platforms' verdict on the question, no hedging>
-PLATFORM <p>: bulundu N / okundu M / okunmadı: <how many, and why> / kapı kapalı: <how many, and each error>
+PLATFORM <p>: <one line — the verdict on that platform> — satırlar: L0001, L0007
 KULLANDIĞIM SATIRLAR: L0001, L0007, …
 okunacak adres kalmadı
 ```
-- **One PLATFORM line for each of your platforms**, a zero included — zero is a real answer, and a
-  platform you do not name looks unread. `bulundu`: the addresses you had and found; `okundu`: the
-  ones whose body you fetched; `okunmadı`: what is left and why (the clock, a dead thread);
-  `kapı kapalı`: each closed door with the error `fetch` printed.
+- **One PLATFORM line for each of your platforms**, one with nothing on it included (`ilgili satır
+  yok`) — a platform you do not name looks unread. **No numbers in it**: what was found, read,
+  judged and left is counted by the machine from the ledger (`batch` marks read, `add` and
+  `verdict` mark judged), and a number you write is read by no one. Measured 2026-09-26: a hunter
+  wrote "okundu 130" after 73 bodies seen. A closed door or a page a weapon could not open is
+  named there in words, with the error `fetch` printed.
 - **KULLANDIĞIM SATIRLAR** are the ledger ids your verdict stands on — your rows and the ground's.
-- **`okunacak adres kalmadı`** only when your list really was exhausted.
+- **`okunacak adres kalmadı`** only when `batch` printed it for every platform of yours.
 - **No prose blocks, no quotes, no addresses.** Your quotes are rows already, and every row carries
   its address by construction. The summary counts the ledger, prints your lines as your claim, and
   names an id the ledger does not hold. Measured 2026-09-17 on a seven-hunter run of this very
