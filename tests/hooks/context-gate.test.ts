@@ -7,14 +7,29 @@
 // as XDG_RUNTIME_DIR (where the status line keeps each session's context record) and as the gate's
 // log directory, so nothing lands in the machine's own claude-ctx or ~/.claude/logs.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, utimesSync, writeFileSync } from "node:fs";
+import { accessSync, constants, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, utimesSync, writeFileSync } from "node:fs";
 import { tmpdir, userInfo } from "node:os";
 import { join } from "node:path";
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe as vdescribe, expect, it } from "vitest";
 
 // The battery redirects HOME (HOME=/tmp/home), but the hooks live in the real home: read the passwd
 // entry, not $HOME (measured 2026-09-26 02:38: 73 failures). DXB_CLAUDE_HOME overrides explicitly.
-const CLAUDE_HOME = process.env.DXB_CLAUDE_HOME ?? userInfo().homedir;
+// The full battery runs sandboxed as another user (dxbbuild) who cannot read the CEO's home: then no
+// candidate is readable and every suite SKIPS with the reason in its title, instead of 73 red cases.
+// Candidates: DXB_CLAUDE_HOME, the passwd home, the repo owner's home (/home/<user> prefix of cwd).
+// DXB_HOOKS_FORCE_UNREADABLE=1 is test-only: it forces the no-readable-candidate path to prove the skip.
+const CANDIDATES = [...new Set([process.env.DXB_CLAUDE_HOME, userInfo().homedir,
+  /^\/home\/[^/]+/.exec(process.cwd())?.[0]].filter((h): h is string => !!h))];
+const readable = (h: string) => ["dxb-context-gate.py", "dxb-statusline.js", "../settings.json"].every((f) => {
+  try { accessSync(join(h, ".claude", "hooks", f), constants.R_OK); return true; } catch { return false; }
+});
+const FOUND = process.env.DXB_HOOKS_FORCE_UNREADABLE === "1" ? undefined : CANDIDATES.find(readable);
+const HOOKS_REASON = FOUND ? null : `hooks unreadable as ${userInfo().username} — tried ${CANDIDATES.join(", ")}; ` +
+  `the sandboxed battery cannot read the CEO's home; run "pnpm vitest run tests/hooks" as the host user`;
+if (HOOKS_REASON) console.warn(`SKIPPED — ${HOOKS_REASON}`);
+const describe = (title: string, fn: () => void) =>
+  HOOKS_REASON ? vdescribe.skip(`[SKIPPED — ${HOOKS_REASON}] ${title}`, fn) : vdescribe(title, fn);
+const CLAUDE_HOME = FOUND ?? CANDIDATES[0];
 const HOOKS = join(CLAUDE_HOME, ".claude", "hooks");
 const GATE = join(HOOKS, "dxb-context-gate.py");
 const STATUS_LINE = join(HOOKS, "dxb-statusline.js");
