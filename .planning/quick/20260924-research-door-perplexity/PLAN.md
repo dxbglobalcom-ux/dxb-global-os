@@ -149,6 +149,15 @@ ve diğerleri) bu planla kapanmaz; satırda açık kalır ve ayrıca ele alını
 
 ## 3. Kabul maddeleri (koddan önce yazıldı; gözünüz karar verir — Kanun B)
 
+**Ölçüm, 26 Eylül 02:34–02:45 (baş mühendis; ayrıntı `EVIDENCE-B56-2026-09-26.md`):** 1 ✔ tiktok.raw 5.267 B · linkedin.raw
+15.974 B (doğrulayıcı ayrıca 5.191 / 17.131) · 2 ✔ dünkü koşuda X `294 · 1 · 0` (okundu kuralı tabloda basılı) · 3 kısmen: X
+**272 · 130 · 4**, YouTube **41 · 30 · 3**, TikTok 38·38·0, Instagram 2·2·0, Facebook 19·19·0, LinkedIn 19·19·1, kapsama
+tablosu cevabın altında, sayfa 1 s, soru sorulmadı, uçtan uca **358 s**; ✘ avcılar 600 saniyenin 51–209'unda bıraktı ve
+ikisi dokunmadığı listeye "süre yetmedi" yazdı (Opus 5.5 · low; medium ölçülmedi) · 4 kısmen: ask.sh makine kısmı 14 s,
+sayfa oturumun cevabını bekler · 5: cetvel 18/18, b46 11 dosya yeşil, tam batarya bu işin dosyalarında yeşil, dışında
+kırmızı (öbür oturumun kanca testleri HOME sanal dizininde — düzeltildi 54817373, yeniden koşuluyor; c42 ×6 ve b23 graf
+×1 eski) · Gözünüz: `P6-UC-CEVAP-YAN-YANA-2026-09-26.md` (masaüstünde kopyası).
+
 Makine maddeleri (baş mühendis koşar, çıktıyı yazar):
 
 1. `bash sweep.sh "astra 6 vs fable 5.1" <dir> --tier max` → `tiktok.raw` ve `linkedin.raw` **> 0 bayt**.
