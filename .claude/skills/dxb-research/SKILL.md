@@ -79,6 +79,10 @@ Write `<outdir>/answer.md` in Turkish, from the rows only:
 - Every claim carries its row: `… [L0042]`. No address, no quote text in the answer — the page prints
   the quote, the author, the date and the address from the row. A number of people is a count only when
   `crowd.sh` counted it; anything else says "about". A comparison is a table.
+- **Beside every claim, the count** (his order, 2026-09-26): how many rows say so, of how many read —
+  `9 of 16 X posts` — with the strongest two as the examples; the rest are not dropped. **Under the
+  page, one section per platform** (X, YouTube, Reddit …) listing EVERY row the hunters brought there
+  as an openable address with its author and quote, long ones shortened — so he can browse the 130.
 - Then `python3 "$S/scripts/render.py" <outdir>/answer.md --evidence <outdir>/evidence.jsonl --out <outdir>/final.md`
   — it numbers the sources, lists them from the rows and appends "Nereye bakıldı", the coverage table:
   where you looked, what was found, what was read, what reached the answer, which door was closed.
