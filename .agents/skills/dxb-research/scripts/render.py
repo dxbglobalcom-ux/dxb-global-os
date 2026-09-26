@@ -54,12 +54,21 @@ answer (the claim hunters' links and states live there), else claims.py's extrac
 ledger's four numbers under it · the writer's other sections with what remains in
 them (a table stays whole, each row that cites counted in place: a comparison stays a table; a line there
 that cites nothing stays plain) · a quote card for every cited id, from its row · "Nereye bakıldı", kapsama.py's table · THE
-DRAWER: one <details> per platform, `X — 130 gönderi (4 cevapta)`, one entry per address whose body was
+DRAWER: one <details> per platform, `X — 130 gönderi (kanıt 43 · 17 cevapta · 26 alınmadı)` — the addresses
+the ledger admits (kapsama.py's Kanıt), the cited ones among them, the rest (said only when there are any;
+without claims.py, K1's `(4 cevapta)`) —, one entry per address whose body was
 fetched (kapsama.py's İndirildi) carrying every row id at it, the author, the date, the passage cut to
-300 characters and the address as a link — cited entries first and marked, then newest first.
+300 characters and the address as a link — cited entries first and marked, then newest first. An admitted
+address the answer does not cite says so, `alınmadı: <reason>`, the reason the answer's `## Alınmayan
+kanıt` section gives it — `alınmadı: açıklanmadı` when the section does not name it.
 Self-contained: inline CSS, one inline script (a link into a closed drawer opens it), fonts from Google
 Fonts only, light and dark tokens, readable at phone width. Designed here, not converted: the Markdown is
 our own small subset — headings, paragraphs, lists, tables, bold/italic/code, citations — no library.
+
+THE WRITER'S LAST SECTION, `## Alınmayan kanıt` (fleet/writer-prompt.md rule 10, the CEO's word of
+2026-09-26 ~19:45): its lines are not the answer — no span, no claim, no number and no quote card for its
+ids, on neither page (claims.py without_unused empties them, every other line keeping its number); what it
+says stands in the drawer. The refusals below still read it.
 
 REFUSED — exit 2, one line on stderr, no page written — when the answer carries an id that is not in
 evidence.jsonl; a bracket that holds an id-like token but is not a citation (`[bkz. L0002]`,
@@ -659,9 +668,11 @@ class Page:
     ledger's line -> claim id: the element that shows a claim's line carries that id as its anchor."""
 
     def __init__(self, rows: dict[str, dict], shelved: set[str], struck: dict[str, str] | None = None,
-                 at: dict[int, str] | None = None):
+                 at: dict[int, str] | None = None, use: dict[str, dict] | None = None):
         self.rows, self.shelved, self.num = rows, shelved, {}
         self.struck, self.at, self.linked = struck or {}, at or {}, {}
+        # claims.py evidence_use, by every row id at an admitted address; None without claims.py
+        self.use = None if use is None else {i: u for u in use.values() for i in u["ids"]}
 
     def cite(self, group: str) -> str:
         refs, gone = [], []
@@ -848,6 +859,10 @@ class Page:
             why = unentity(text(a["rows"][0].get("verdict_reason")))
             meta += f' · <span class="vd">avcı: {"kanıt" if said == "evidence" else "kanıt değil"}' \
                     f'{" — " + esc(why) if why else ""}</span>'
+        u = a.get("use")
+        if u and not a["cited"]:                          # admitted, not cited: the writer's word on it
+            told = "açıklanmadı" if u["reason"] is None else u["reason"] or "gerekçe yok"
+            meta += f' · <span class="vd">alınmadı: {esc(told)}</span>'
         body = esc(shorten(passage)) if passage else '<span class="none">metin yok</span>'
         return (f'<li class="{"drow cited" if a["cited"] else "drow"}" id="{attr(a["ids"][0])}">'
                 f'<div class="dm">{meta}{mark}</div><p class="dt">{body}</p>{link(url, "du")}</li>')
@@ -863,11 +878,15 @@ class Page:
             items = by[p]
             for a in items:
                 a["cited"], a["date"] = [i for i in a["ids"] if i in self.num], when(a["rows"])
+                a["use"] = self.use.get(a["ids"][0]) if self.use is not None else None
             items.sort(key=lambda a: a["date"], reverse=True)      # newest first, the undated last
             items.sort(key=lambda a: not a["cited"])               # stable: the cited ones on top
-            used = sum(1 for a in items if a["cited"])
+            used = f"{sum(1 for a in items if a['cited'])} cevapta"
+            if self.use is not None:                               # kapsama.py's Kanıt, Cevapta and the rest
+                left = sum(1 for a in items if a["use"] and not a["cited"])
+                used = f"kanıt {sum(1 for a in items if a['use'])} · {used}" + (f" · {left} alınmadı" if left else "")
             out.append(f'<details class="plat" id="p-{attr(p)}">\n<summary>{esc(label(p))} — {len(items)} '
-                       f'{NOUN.get(p, "sayfa")} ({used} cevapta)</summary>\n<ol class="drawer">\n'
+                       f'{NOUN.get(p, "sayfa")} ({used})</summary>\n<ol class="drawer">\n'
                        + "\n".join(self.entry(a, p) for a in items) + "\n</ol>\n</details>")
         return ("\n".join(out) if out else '<p class="empty">Gövdesi indirilen adres yok.</p>'), len(order)
 
@@ -985,7 +1004,7 @@ def section(no: int, title: str, body: str, anchor: str) -> str:
 
 def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool] | None,
               book: list[dict] | None = None, struck: dict[str, str] | None = None,
-              whence: str = "") -> tuple[str, dict]:
+              whence: str = "", use: dict[str, dict] | None = None) -> tuple[str, dict]:
     """final.html, in the order of the docstring. Rendered top to bottom, so the ids are numbered in the
     order he reads them. The claim ledger's table is built after every claim line, though it stands
     second, so each claim in it links to the element that shows its line."""
@@ -994,7 +1013,7 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
     for c in book or []:
         if isinstance(c.get("line"), int) and text(c.get("id")):
             at.setdefault(c["line"], text(c["id"]))
-    page = Page(rows, {i for a in shelf for i in a["ids"]}, struck, at)
+    page = Page(rows, {i for a in shelf for i in a["ids"]}, struck, at, use)
     h1, verdict, ours, sections = arrange(blocks(md))
     his, queries = question(run)
     h1 = h1 or his or (queries[0] if queries else "") or "Araştırma"
@@ -1083,14 +1102,16 @@ def main(argv: list[str]) -> int:
     table = None if a.no_coverage else coverage(answer.parent, answer)   # one call serves both pages
     said = "not asked (--no-coverage)" if table is None else "kapsama.py table" if table[1] else table[0].strip("_")
     full = CL.extract_claims(md, rows) if CL else None      # the claim ledger over this answer, claims.py's
-    struck = refused(rows, cited_in(md)) if CL else {}
+    shown = CL.without_unused(md) if CL else md             # its `## Alınmayan kanıt` section is not the answer
+    use = CL.evidence_use(md, list(rows.values())) if CL else None
+    struck = refused(rows, cited_in(shown)) if CL else {}
     book, whence = ledger_of(answer.parent, full)
-    body, cited = number(spans_md(md, rows) if CL else md, set(struck))
+    body, cited = number(spans_md(shown, rows) if CL else shown, set(struck))
     entries = [source_line(n, rows[i]) for n, i in enumerate(cited, 1)]
     drawer = ""
     for out in outs:
         if out.suffix.lower() in (".html", ".htm"):
-            text_out, facts = html_page(md, rows, answer.parent, table, book, struck, whence)
+            text_out, facts = html_page(shown, rows, answer.parent, table, book, struck, whence, use)
             drawer = f" · çekmece {facts['platforms']} platform, {facts['shelved']} adres"
         else:
             page = [body.rstrip("\n"), "", "## Kaynaklar", "",

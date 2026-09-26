@@ -10,7 +10,7 @@ and a machine-marked read state on every row (EVIDENCE-B56-K1 §2.1), and this t
 
     kapsama.py <run> [--answer <file>] [--legacy] [--format md|tsv]
 
-    Platform | Bulundu | İndirildi | İlgili | Okundu | Kısmen | Cevapta | Elenen | Kapalı kapı
+    Platform | Bulundu | İndirildi | İlgili | Okundu | Kısmen | Kanıt | Cevapta | Elenen | Kapalı kapı
 
   Bulundu     distinct url_canonical in <run>/evidence.jsonl, by platform (scripts/platforms.py)
   İndirildi   distinct addresses with a body (bytes > 0 and liveness alive)
@@ -18,10 +18,15 @@ and a machine-marked read state on every row (EVIDENCE-B56-K1 §2.1), and this t
   Okundu      relevant addresses whose read_status is `read` — set only by evidence.py batch/page, when
               the machine printed the body to a hunter; a hunter's own "okundu" line counts nothing
   Kısmen      relevant addresses whose read_status is `partial`
+  Kanıt       distinct addresses the ledger admits — ≥ 1 row evidence.admissible admits: what `evidence.py
+              writer-rows` hands the writer, by address (claims.py evidence_use, the one owner; render.py's
+              drawer counts the same); "-" when claims.py cannot be loaded
   Cevapta     distinct addresses behind the [Lxxxx] ids the answer cites and the ledger admits ("-"
               without --answer): a cited row evidence.admissible refuses (EVIDENCE-B56-K2 §2.1) is not in
               the answer — render.py strikes it, its drawer's "N cevapta" leaves it out, and so does this
-              column; a run older than the triage states admits none
+              column; a run older than the triage states admits none. An id in the answer's `## Alınmayan
+              kanıt` section is no citation (claims.py without_unused) — but one evidence.jsonl lacks is named
+              under the table like any unknown id of the answer: render.py refuses the page for it
   Elenen      `ilgisiz: <reason> ×k` per reason, then `tekrar ×k`
   Kapalı kapı `inaccessible` by its reason, `<reason> ×k`; a door that closed on a row no triage ever
               saw (a run made before the field) in the old words, `kapı kapalı: <reason> ×k`; and the
@@ -41,6 +46,10 @@ or `MISMATCH: <platform>: …` naming what broke it (a state the contract does n
 With --answer, a second line: the claim ledger (EVIDENCE-B56-K2 §2.4) — <run>/claims.jsonl beside the
 answer, else claims.py's extract over it; render.py prints the same four under its "İddia defteri":
     İDDİA: n iddia · t tek kaynak · c karşısız · i kabul edilmeyen alıntı
+and a third, what the answer did with the admitted addresses (the CEO's word, 2026-09-26 ~19:45):
+    KANIT: a kabul · c cevapta · k alınmadı · açıklanmadı u
+a the Kanıt column's sum, c Cevapta's, k = a − c, and u those of the k whose ids the answer's
+`## Alınmayan kanıt` section does not name — all k when it has no such section.
 
 One row per platform present (it has an address, or a ground channel of it ran) plus `web`.
 --legacy reads a run made before v2 (no evidence.jsonl) and prints its old five columns, unchanged:
@@ -69,7 +78,8 @@ BRACKET = re.compile(r"\[[^\[\]\n]*\]")
 READER = re.compile(r"opencli\s+twitter\s+(?:thread|comments)\b|opencli\s+reddit\s+read\b|"
                     r"opencli\s+youtube\s+(?:transcript|comments)\b|hidden\.py[\"']?\s+read\b|fetch\.py\b")
 MEASURED = ("x", "youtube", "tiktok", "instagram", "facebook", "linkedin", "reddit")
-COLUMNS = ("Platform", "Bulundu", "İndirildi", "İlgili", "Okundu", "Kısmen", "Cevapta", "Elenen", "Kapalı kapı")
+COLUMNS = ("Platform", "Bulundu", "İndirildi", "İlgili", "Okundu", "Kısmen", "Kanıt", "Cevapta", "Elenen",
+           "Kapalı kapı")
 
 
 urls_in = P.urls_in
@@ -156,11 +166,12 @@ def citations(text: str) -> tuple[list[str], Counter]:
     return ids, bad
 
 
-def tally(answered: bool, ledger: Counter | None = None) -> dict:
+def tally(answered: bool, ledger: Counter | None = None, admitted: bool = True) -> dict:
     """One platform's row: the ledger's own counts (evidence.py ledger_counts), plus what this table adds."""
     c = ledger or Counter()
     return {"found": c["discovered"], "relevant": c["relevant"], "read": c["read"], "partial": c["partial"],
-            "duplicate": c["duplicate"], "fetched": 0, "cited": 0 if answered else None,
+            "duplicate": c["duplicate"], "fetched": 0, "admitted": 0 if admitted else None,
+            "cited": 0 if answered else None,
             "irrelevant": Counter(), "inaccessible": Counter(), "closed": Counter()}
 
 
@@ -172,11 +183,17 @@ def by_count(c: Counter) -> list[tuple[str, int]]:
     return sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))
 
 
-def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str]:
-    """The nine columns, the notes, the ledger's line and, with an answer, the claim ledger's line
-    (claim_line; "" without one). evidence.py is imported here, not at the top:
-    --legacy never needs it, and a failure to load it is printed by main, never raised."""
+def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str, str]:
+    """The ten columns, the notes, the ledger's line and, with an answer, the claim ledger's line
+    (claim_line) and the admitted addresses' (kanit_line); "" without one. evidence.py and claims.py are
+    imported here, not at the top: --legacy never needs them, and a failure to load evidence.py is printed
+    by main, never raised; without claims.py Kanıt is "-" and the KANIT line says why."""
     import evidence as E  # noqa: E402 — the ledger's owner: the address row, the states, their sums
+    try:
+        import claims as CL  # noqa: E402 — the admitted addresses, the answer's `## Alınmayan kanıt` section
+        no_claims = ""
+    except Exception as e:
+        CL, no_claims = None, f"{type(e).__name__}: {e}"
     notes: list[str] = []
     ev = run / "evidence.jsonl"
     if not ev.is_file():
@@ -189,13 +206,14 @@ def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str]
         canon = r.get("url_canonical") or P.canonical_url(r.get("url") or "")
         if canon and r.get("id"):
             by_id[r["id"]], row_of[r["id"]] = canon, r
-    cited, said = None, ""
+    cited, said, md = None, "", ""
     if answer is not None:
         try:
             md = answer.read_text(encoding="utf-8", errors="replace")
-            ids, bad = citations(md)
+            ids, bad = citations(md)     # named when unknown or malformed wherever they stand, as render.py refuses them
+            body = citations(CL.without_unused(md))[0] if CL else ids      # its `## Alınmayan kanıt` section cites nothing
             index = E.address_index(every) if hasattr(E, "admissible") else None     # render.py's rule, one owner
-            cited = {by_id[i] for i in ids if i in by_id and (index is None or E.admissible(row_of[i], index.get(i))[0])}
+            cited = {by_id[i] for i in body if i in by_id and (index is None or E.admissible(row_of[i], index.get(i))[0])}
             unknown = sorted({i for i in ids if i not in by_id})
             if unknown:
                 notes.append("(cevaptaki bu kimlikler evidence.jsonl'da yok: " + " ".join(unknown[:12]) + ")")
@@ -203,15 +221,18 @@ def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str]
             said = claim_line(answer, md, every)
         except OSError:
             notes.append(f"(cevap dosyası okunamadı: {answer})")
+    use = CL.evidence_use(md, every) if CL else None
     rows: dict[str, dict] = {}
     for canon, rs in E.by_canon(every).items():
         addr = E.address_row(rs)
         if not canon or addr is None:
             continue
         p = E.row_platform(addr, canon)
-        t = rows.setdefault(p, tally(cited is not None, ledger.get(p)))
+        t = rows.setdefault(p, tally(cited is not None, ledger.get(p), use is not None))
         if any((r.get("bytes") or 0) > 0 and r.get("liveness") == "alive" for r in rs):
             t["fetched"] += 1
+        if use is not None and canon in use:
+            t["admitted"] += 1
         if cited is not None and canon in cited:
             t["cited"] += 1
         state = E.triage_of(addr)
@@ -223,7 +244,17 @@ def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str]
             shut = [r for r in rs if r.get("liveness") in ("blocked", "dead")]
             if shut:
                 t["closed"][short_reason(shut[-1].get("notes"), shut[-1]["liveness"], shut[-1].get("http_status"))] += 1
-    return rows, notes, ledger_line(E, ledger, odd), said
+    kanit = "" if cited is None else kanit_line(use, cited) if use is not None else f"KANIT: hesaplanamadı ({no_claims})"
+    return rows, notes, ledger_line(E, ledger, odd), said, kanit
+
+
+def kanit_line(use: dict, cited: set) -> str:
+    """What the answer did with the admitted addresses (the CEO's word, 2026-09-26 ~19:45), in one line: kabul
+    — the Kanıt column's sum; cevapta — of those, the ones Cevapta counts; alınmadı — the rest; açıklanmadı —
+    of the rest, the ones whose ids the answer's `## Alınmayan kanıt` section does not name."""
+    left = [a for canon, a in use.items() if canon not in cited]
+    quiet = sum(1 for a in left if a["reason"] is None)
+    return f"KANIT: {len(use)} kabul · {len(use) - len(left)} cevapta · {len(left)} alınmadı · açıklanmadı {quiet}"
 
 
 def claim_line(answer: Path, md: str, every: list[dict]) -> str:
@@ -334,17 +365,18 @@ def render_v2(rows: dict, doors: dict, present: set, fmt: str) -> str:
     plats = [p for p in P.PLATFORMS if p in rows or p in present or p in doors or p == "web"]
     empty = "—" if fmt == "md" else "-"
     answered = any(t.get("cited") is not None for t in rows.values())
-    lines = ["| " + " | ".join(COLUMNS) + " |", "|---|" + "---:|" * 6 + "---|---|"] if fmt == "md" \
-        else ["platform\tbulundu\tindirildi\tilgili\tokundu\tkismen\tcevapta\telenen\tkapali"]
+    counted = any(t.get("admitted") is not None for t in rows.values())
+    lines = ["| " + " | ".join(COLUMNS) + " |", "|---|" + "---:|" * 7 + "---|---|"] if fmt == "md" \
+        else ["platform\tbulundu\tindirildi\tilgili\tokundu\tkismen\tkanit\tcevapta\telenen\tkapali"]
     for p in plats:
-        t = rows.get(p) or tally(answered)
+        t = rows.get(p) or tally(answered, None, counted)
         gone = [f"ilgisiz: {k} ×{n}" for k, n in by_count(t["irrelevant"])]
         gone += [f"tekrar ×{t['duplicate']}"] if t["duplicate"] else []
         shut = [f"{k} ×{n}" for k, n in by_count(t["inaccessible"])]
         shut += [f"kapı kapalı: {k} ×{n}" for k, n in by_count(t["closed"])] + doors.get(p, [])
         cells = [P.LABEL[p] if fmt == "md" else p, t["found"], t["fetched"], t["relevant"], t["read"],
-                 t["partial"], "-" if t["cited"] is None else t["cited"], " · ".join(gone) or empty,
-                 " · ".join(shut) or empty]
+                 t["partial"], "-" if t["admitted"] is None else t["admitted"],
+                 "-" if t["cited"] is None else t["cited"], " · ".join(gone) or empty, " · ".join(shut) or empty]
         if fmt == "md":
             lines.append("| " + " | ".join(str(c).replace("|", "/") for c in cells) + " |")
         else:
@@ -404,11 +436,13 @@ def main(argv: list[str] | None = None) -> int:
             rows, notes = table_legacy(run, answer, default_answer=not a.answer)
             print(render(rows, doors, present, a.format))
         else:
-            rows, notes, line, said = table_v2(run, answer)
+            rows, notes, line, said, kanit = table_v2(run, answer)
             print(render_v2(rows, doors, present, a.format))
             print(line)
             if said:
                 print(said)
+            if kanit:
+                print(kanit)
         for n in notes:
             print(n)
     except Exception as e:                        # the ruler prints; it does not stop the page

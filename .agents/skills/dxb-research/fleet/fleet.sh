@@ -241,7 +241,7 @@ if rc != 0 or d.get("is_error") or not text:
     print(f"!! {tag}: basarisiz (kod {rc}) — cost {cost} · {secs} s · {ans.name} yazilmadi: {jf.with_suffix('.err')}")
     sys.exit(1)
 ans.write_text(text + "\n", encoding="utf-8")
-ids = set(re.findall(r"\bL\d{4,}\b", text))
+ids = set(re.findall(r"\bL\d{4,}\b", re.split(r"(?m)^##[ \t]*Alınmayan kanıt[ \t#]*$", text)[0]))  # its last section cites nothing
 http = len(re.findall(r"https?://", text))
 print(f"{tag}: cost {cost} · {secs} s -> {ans} · {len(text.splitlines())} satir · {len(ids)} kimlik · http {http}")
 PY

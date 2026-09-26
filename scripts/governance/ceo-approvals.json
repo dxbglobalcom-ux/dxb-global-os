@@ -1528,5 +1528,12 @@
     "conditions": "His second sentence the same minute: 'Dediğim gibi sen hangisini önerdiysen onu yap. Hangisi daha kaliteli iş çıktısı yapacaksa o şekilde devam et.' — the lead chose this session (the measurements were in hand) over a handover. The gate was not raised.",
     "session": "Fable 5.1 chief-engineer session a8b377a5, 2026-09-26 ~16:40 — heard first-hand.",
     "where": "STATE live block (2026-09-26); .claude/CUPBOARD.md; ~/.claude/projects/-home-dxb-DxB-Global-OS/memory/ (backup of every file before the merges in the session scratchpad)"
+  },
+  "research-k2b-alinmayan-kanit-oyle-olsun-2026-09-26": {
+    "date": "2026-09-26",
+    "what": "K2b — a registered adaptation inside B56 / EVIDENCE-B56-K2, on the lead's proposal after his question why only 17 of Reddit's 87 relevant addresses reached the answer (measured: 44 hunter 'kanıt değil' · 26 admitted evidence the writer did not use · 17 cited): the writer either binds every admitted 'kanıt' row to a claim or names in one word why it was not taken (an '## Alınmayan kanıt' section), and the page shows both numbers per platform ('kanıt 43 · 17 cevapta · 26 alınmadı'). Built through dxb-team1 (one guarded builder lane at max, a fresh verifier), then shown to him on the K2 live run's page regenerated with --write-only.",
+    "verbatim": "Tamam göster bakalım. Öyle olsun ya dediğin gibi.",
+    "conditions": "A build-and-show order for this one item, not an acceptance of K2 (LAW B: his eye on the page decides), and no word on F1 (triage retry) or F2 (the claim gate counts links, not reads) — those still wait him. The proposal he approved, verbatim from the lead: 'yazar \"kanıt\" denen her satırı ya bir iddiaya bağlar ya da neden almadığını tek kelimeyle yazar; sayfa da \"kanıt 43 · cevapta 17\" diye ikisini birden gösterir.'",
+    "where": ".planning/quick/20260924-research-door-perplexity/EVIDENCE-B56-K2-2026-09-26.md §5 (the K2b bullet) · .planning/STATE.md live block · board B56"
   }
 }

@@ -25,6 +25,11 @@
 // fixtures/render/k1-cut (five claim lines of the kept K1 answer and their 34 rows). And Cevapta leaves out
 // a cited row the ledger refuses (evidence.admissible), as the page's drawer does: an old run's rows, all
 // pending, count in nothing.
+//
+// K2b (the CEO's word, 2026-09-26 ~19:45: "kanıt 43 · cevapta 17"): a tenth column, Kanıt — the addresses
+// the ledger admits, what the writer is handed — stands before Cevapta, and with --answer a line under İDDİA
+// says what the answer did with them: KANIT: a kabul · c cevapta · k alınmadı · açıklanmadı u, u those the
+// answer's `## Alınmayan kanıt` section does not name; an id in that section is no citation.
 
 import { execFileSync } from "node:child_process";
 import { appendFileSync, cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -49,19 +54,19 @@ function kapsama(args: string[], script = KAPSAMA): { out: string; code: number 
   }
 }
 const row = (out: string, label: string) => out.split("\n").find((l) => l.startsWith(`| ${label} |`)) ?? "";
-const NINE = /^\| Platform \| Bulundu \| İndirildi \| İlgili \| Okundu \| Kısmen \| Cevapta \| Elenen \| Kapalı kapı \|$/m;
+const TEN = /^\| Platform \| Bulundu \| İndirildi \| İlgili \| Okundu \| Kısmen \| Kanıt \| Cevapta \| Elenen \| Kapalı kapı \|$/m;
 
 describe("kapsama.py — prints, never blocks", () => {
   it("an old run with zero X rows: the table is printed, every address reads as pending, the sums close", () => {
     const run = join(FIX, "run-coverage");
     const r = kapsama([run, "--answer", join(run, "answer.md")]);
     expect(r.code, r.out).toBe(0);
-    expect(r.out).toMatch(NINE);
+    expect(r.out).toMatch(TEN);
     expect(row(r.out, "X")).toBe("");                                   // no X address, no X row
     // the closed door of a row no triage ever saw is still named, in the old words; the two cited rows are
     // pending, so the ledger admits neither and Cevapta is 0 (K2; K1 printed 1 and 1)
-    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 2 | 0 | 0 | 0 | 0 | — | kapı kapalı: opencli reddit read kod 1 ×1 |");
-    expect(row(r.out, "Web (diğer)")).toBe("| Web (diğer) | 1 | 0 | 0 | 0 | 0 | 0 | — | — |");
+    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 2 | 0 | 0 | 0 | 0 | 0 | — | kapı kapalı: opencli reddit read kod 1 ×1 |");
+    expect(row(r.out, "Web (diğer)")).toBe("| Web (diğer) | 1 | 0 | 0 | 0 | 0 | 0 | 0 | — | — |");
     expect(r.out).toContain("RECONCILED — bulundu 4 = bekleyen 4 + ilgili 0 + ilgisiz 0 + tekrar 0 + kapalı 0 · "
       + "ilgili 0 = okundu 0 + kısmen 0 + okunmadı 0 · okundu 0 = hüküm verilen 0 + hüküm bekleyen 0");
   });
@@ -69,21 +74,21 @@ describe("kapsama.py — prints, never blocks", () => {
   it("a search door that failed stands in the table even with no address behind it", () => {
     const r = kapsama([join(FIX, "run-coverage"), "--format", "tsv"]);
     expect(r.code).toBe(0);
-    expect(r.out).toMatch(/^platform\tbulundu\tindirildi\tilgili\tokundu\tkismen\tcevapta\telenen\tkapali$/m);
-    expect(r.out).toMatch(/^chinese\t0\t0\t0\t0\t0\t-\t-\tkapı kapalı: arama linux-do kod 77 — AUTH_REQUIRED: linux\.do requires an active signed-in browser session ×1$/m);
-    expect(r.out).toMatch(/^linkedin\t0\t0\t0\t0\t0\t-\t-\tarama boş: linkedin ×1$/m);
+    expect(r.out).toMatch(/^platform\tbulundu\tindirildi\tilgili\tokundu\tkismen\tkanit\tcevapta\telenen\tkapali$/m);
+    expect(r.out).toMatch(/^chinese\t0\t0\t0\t0\t0\t0\t-\t-\tkapı kapalı: arama linux-do kod 77 — AUTH_REQUIRED: linux\.do requires an active signed-in browser session ×1$/m);
+    expect(r.out).toMatch(/^linkedin\t0\t0\t0\t0\t0\t0\t-\t-\tarama boş: linkedin ×1$/m);
   });
 
   it("the ledger's states move the columns; Okundu is what the machine printed, never a hunter's line", () => {
     const run = join(FIX, "run-drawer");
     const r = kapsama([run, "--answer", join(run, "answer.md")]);
     expect(r.code, r.out).toBe(0);
-    expect(r.out).toMatch(NINE);
+    expect(r.out).toMatch(TEN);
     // x.jsonl claims "okundu 130"; batch printed one X body whole and one in part
-    expect(row(r.out, "X")).toBe("| X | 7 | 6 | 2 | 1 | 1 | 2 | ilgisiz: Opus vs Astra, not Fable ×2 · "
+    expect(row(r.out, "X")).toBe("| X | 7 | 6 | 2 | 1 | 1 | 2 | 2 | ilgisiz: Opus vs Astra, not Fable ×2 · "
       + "ilgisiz: Free access tip only ×1 · tekrar ×1 | — |");
-    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 1 | 1 | 0 | 0 | 1 | — | opencli reddit read kod 1 ×1 |");
-    expect(row(r.out, "YouTube")).toBe("| YouTube | 2 | 2 | 1 | 1 | 0 | 1 | ilgisiz: Only a thumbnail, no words ×1 | — |");
+    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 1 | 1 | 0 | 0 | 1 | 1 | — | opencli reddit read kod 1 ×1 |");
+    expect(row(r.out, "YouTube")).toBe("| YouTube | 2 | 2 | 1 | 1 | 0 | 1 | 1 | ilgisiz: Only a thumbnail, no words ×1 | — |");
     // both read rows carry their hunter's verdict (L0010's was added with K2, so the ledger admits it)
     expect(r.out).toContain("RECONCILED — bulundu 12 = bekleyen 2 + ilgili 4 + ilgisiz 4 + tekrar 1 + kapalı 1 · "
       + "ilgili 4 = okundu 2 + kısmen 1 + okunmadı 1 · okundu 2 = hüküm verilen 2 + hüküm bekleyen 0");
@@ -132,8 +137,8 @@ describe("kapsama.py — prints, never blocks", () => {
     const r = kapsama([run, "--answer", answer]);
     rmSync(dir, { recursive: true, force: true });
     expect(r.code, r.out).toBe(0);
-    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 2 | 2 | 0 | 0 | 2 | — | kapı kapalı: opencli reddit read kod 1 ×1 |");
-    expect(row(r.out, "Web (diğer)")).toBe("| Web (diğer) | 1 | 0 | 0 | 0 | 0 | 0 | — | — |");
+    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 2 | 2 | 0 | 0 | 2 | 2 | — | kapı kapalı: opencli reddit read kod 1 ×1 |");
+    expect(row(r.out, "Web (diğer)")).toBe("| Web (diğer) | 1 | 0 | 0 | 0 | 0 | 0 | 0 | — | — |");
     for (const bad of ["[bkz. L0002]", "[L0001 ]", "[l0003]"]) expect(r.out).toContain(`biçimsiz atıf: ${bad} ×1`);
     expect(r.out).not.toContain("biçimsiz atıf: [L0001]");
     expect(r.out).not.toContain("biçimsiz atıf: [L0001, L0002]");
@@ -152,14 +157,55 @@ describe("kapsama.py — prints, never blocks", () => {
     rmSync(dir, { recursive: true, force: true });
     expect(computed.code, computed.out).toBe(0);
     const lines = computed.out.split("\n");
-    expect(lines[0]).toMatch(NINE);
-    // L1071's post (x.com), cited on line 71 and refused, is not in X's Cevapta — the drawer's "2 cevapta"
-    expect(row(computed.out, "X")).toBe("| X | 3 | 3 | 3 | 3 | 0 | 2 | — | — |");
+    expect(lines[0]).toMatch(TEN);
+    // L1071's post (x.com), cited on line 71 and refused, is not in X's Kanıt nor in its Cevapta — the drawer's "2 cevapta"
+    expect(row(computed.out, "X")).toBe("| X | 3 | 3 | 3 | 3 | 0 | 2 | 2 | — | — |");
     // the verdict, a table row, K1's lines 66, 69 (one source) and 71 (L1071, judged no evidence)
     expect(lines[lines.findIndex((l) => l.startsWith("RECONCILED")) + 1])
       .toBe("İDDİA: 5 iddia · 1 tek kaynak · 3 karşısız · 1 kabul edilmeyen alıntı");
     expect(fromFile.out).toContain("\nİDDİA: 1 iddia · 1 tek kaynak · 1 karşısız · 2 kabul edilmeyen alıntı\n");
     expect(bare.out).not.toContain("İDDİA");
+  });
+
+  it("counts the admitted addresses as Kanıt, and under İDDİA what the answer did with them — the KANIT line", () => {
+    // run-drawer admits four addresses: L0001's and L0002's X posts (L0006 is a hunter's quote on L0002's),
+    // L0007's Reddit thread and L0010's video. This answer cites the two posts; its `## Alınmayan kanıt`
+    // section then names L0007 — no citation, so Reddit's Cevapta stays 0 — and L0010 nowhere
+    const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));
+    cpSync(join(FIX, "run-drawer"), dir, { recursive: true });
+    const answer = join(dir, "answer.md");
+    const cites = "Net bir kazanan yok: iş bölümü var [L0006] [L0001].\n";
+    writeFileSync(answer, cites);
+    const bare = kapsama([dir, "--answer", answer]);
+    writeFileSync(answer, `${cites}\n## Alınmayan kanıt\n- [L0007] — zayıf\n`);
+    const named = kapsama([dir, "--answer", answer]);
+    const alone = kapsama([dir]);
+    rmSync(dir, { recursive: true, force: true });
+    expect(named.code, named.out).toBe(0);
+    expect(row(named.out, "X")).toMatch(/^\| X \| 7 \| 6 \| 2 \| 1 \| 1 \| 2 \| 2 \| /);
+    expect(row(named.out, "Reddit")).toBe("| Reddit | 3 | 1 | 1 | 0 | 0 | 1 | 0 | — | opencli reddit read kod 1 ×1 |");
+    expect(row(named.out, "YouTube")).toBe("| YouTube | 2 | 2 | 1 | 1 | 0 | 1 | 0 | ilgisiz: Only a thumbnail, no words ×1 | — |");
+    const kanit = (out: string) => out.split("\n").find((l) => l.startsWith("KANIT:"));
+    expect(kanit(bare.out)).toBe("KANIT: 4 kabul · 2 cevapta · 2 alınmadı · açıklanmadı 2");
+    expect(kanit(named.out)).toBe("KANIT: 4 kabul · 2 cevapta · 2 alınmadı · açıklanmadı 1");
+    const lines = named.out.split("\n");
+    expect(lines.findIndex((l) => l.startsWith("KANIT:"))).toBe(lines.findIndex((l) => l.startsWith("İDDİA:")) + 1);
+    // without --answer, Kanıt is still counted — it is the ledger's — and there is no KANIT line
+    expect(row(alone.out, "Reddit")).toBe("| Reddit | 3 | 1 | 1 | 0 | 0 | 1 | - | — | opencli reddit read kod 1 ×1 |");
+    expect(kanit(alone.out)).toBeUndefined();
+  });
+
+  it("names an id of the `## Alınmayan kanıt` section that evidence.jsonl lacks, as it names an unknown cited one", () => {
+    // render.py refuses the page for [L9999] wherever it stands in the answer: the ruler may not stay silent on it
+    const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));
+    cpSync(join(FIX, "run-drawer"), dir, { recursive: true });
+    const answer = join(dir, "answer.md");
+    writeFileSync(answer, "Net bir kazanan yok [L0006] [L0001].\n\n## Alınmayan kanıt\n- [L9999] — zayıf\n- [L0007] — tekrar\n");
+    const r = kapsama([dir, "--answer", answer]);
+    rmSync(dir, { recursive: true, force: true });
+    expect(r.code, r.out).toBe(0);
+    expect(r.out).toContain("\n(cevaptaki bu kimlikler evidence.jsonl'da yok: L9999)\n");
+    expect(r.out).toContain("\nKANIT: 4 kabul · 2 cevapta · 2 alınmadı · açıklanmadı 1\n");     // and still no citation
   });
 
   it("exits 1 only when the run folder does not exist", () => {

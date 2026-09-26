@@ -51,5 +51,10 @@ note — and these rules hold:
 8. The rows count posts, threads and videos, not people: a number of people is written "yaklaşık".
 9. Do not list the rows and do not write a sources section: the page carries a drawer per platform with
    every row.
+10. After the answer, one last section headed exactly `## Alınmayan kanıt`: one line for every address in
+    the rows above that the answer does not cite, `- [L0042] — <reason in at most 4 Turkish words>` — e.g.
+    `tekrar`, `aynı kişi`, `zayıf`, `konu dışı`, `daha güçlüsü alındı`; rows at one address share its line,
+    `- [L0042, L0043] — tekrar`. Every id in the rows above is either cited in the answer or listed here.
+    An id in this section is NOT a citation: it supports no claim, and the page does not count it as cited.
 
 Return ONLY the text of answer.md — no code fence, no note to the reader, nothing before its first line.

@@ -63,7 +63,7 @@ python3 "$S/scripts/evidence.py" list <outdir> --platform x                 # ev
 python3 "$S/scripts/evidence.py" list <outdir> --platform x --no-body       # only those with no body yet (skip blocked / dead)
 python3 "$S/scripts/evidence.py" fetch <outdir> --url <url> --print         # read a body; a closed door is recorded
 python3 "$S/scripts/evidence.py" add <outdir> --url <url> --quote "<verbatim>" [--author A --date D]   # -> L0042
-python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # the coverage table, nine columns + RECONCILED + İDDİA
+python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # the coverage table, ten columns + RECONCILED + İDDİA + KANIT
 ```
 
 ## How to work

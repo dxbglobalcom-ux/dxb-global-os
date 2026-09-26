@@ -20,7 +20,9 @@
 // is the K1 run's L0868 body, Tracxn's login shell; reddit-quotes-the-challenge.txt a K1 Reddit post that
 // quotes Cloudflare's "prove your humanity" inside a sentence. juejin-L0162.jsonl and .txt are the K1 run's
 // L0162 row and its 10,888-byte body, byte for byte: a juejin page whose title line is not chrome and whose
-// menu stands under it. No network, no model.
+// menu stands under it. answer-unused.md is that answer's first 25 lines (K1's line 71 left out, so four
+// admitted addresses are cited nowhere) and a `## Alınmayan kanıt` section naming them — the writer's last
+// section (fleet/writer-prompt.md rule 10, the CEO's word of 2026-09-26 ~19:45). No network, no model.
 
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -127,7 +129,7 @@ describe("extract — every line that cites is a claim, its rows counted by the 
     const run = fresh();
     const r = cl(["extract", run, "--answer", join(run, "answer.md"), "--out", join(run, "claims.jsonl")]);
     expect(r.code, r.out).toBe(0);
-    expect(last(r.out)).toBe("CLAIMS: 8 · verdict 1 · thin 1 · counter-less 6 · inadmissible-cited 1 · carried 0");
+    expect(last(r.out)).toBe("CLAIMS: 8 · verdict 1 · thin 1 · counter-less 6 · inadmissible-cited 1 · carried 0 · unexplained-evidence 0");
     const all = jsonl(join(run, "claims.jsonl"));
     expect(all.map((c) => c.line)).toEqual([1, 7, 13, 14, 20, 24, 25, 26]);      // never a header or separator row
     expect(all[0]).toMatchObject({ id: "C001", kind: "verdict", section: null, rows: 6, sources: 6, threads: 5 });
@@ -151,8 +153,46 @@ describe("extract — every line that cites is a claim, its rows counted by the 
     // one line more, citing two refused rows (L0429 hüküm yok, L0505 elendi): 3 refused ids on 2 claims
     writeFileSync(join(run, "answer2.md"), readFileSync(join(run, "answer.md"), "utf8") + "- İki satır daha [L0429, L0505]\n");
     const r = cl(["extract", run, "--answer", join(run, "answer2.md"), "--out", join(run, "claims2.jsonl")]);
-    expect(last(r.out)).toBe("CLAIMS: 9 · verdict 1 · thin 1 · counter-less 7 · inadmissible-cited 3 · carried 0");
+    expect(last(r.out)).toBe("CLAIMS: 9 · verdict 1 · thin 1 · counter-less 7 · inadmissible-cited 3 · carried 0 · unexplained-evidence 0");
     expect(cl(["status", run, "--ledger", join(run, "claims2.jsonl")]).out).toMatch(/ · inadmissible-cited 3\n$/);
+  });
+});
+
+describe("`## Alınmayan kanıt` — the writer names every admitted address it did not cite", () => {
+  it("is no claim and no citation; unexplained-evidence counts the admitted addresses neither cited nor named there", () => {
+    // K1's line 71 left out: L1608, L0180/L1640, L1676 and L1794 — four admitted addresses — are cited nowhere
+    const run = fresh();
+    const named = readFileSync(join(FIX, "answer-unused.md"), "utf8");
+    const extract = (md: string) => {
+      writeFileSync(join(run, "answer.md"), md, "utf8");
+      const r = cl(["extract", run]);
+      return { last: last(r.out), lines: jsonl(join(run, "claims.jsonl")).map((c) => c.line),
+        status: JSON.parse(cl(["status", run, "--format", "json"]).out).unexplained_evidence };
+    };
+    const all = extract(named);
+    expect(all.last).toBe("CLAIMS: 7 · verdict 1 · thin 1 · counter-less 5 · inadmissible-cited 0 · carried 0 · unexplained-evidence 0");
+    expect(all.lines).toEqual([1, 7, 13, 14, 20, 24, 25]);                // the section's four lines are no claim
+    expect(all.status).toBe(0);                                             // status reads the ledger's own answer.md
+    const none = extract(`${named.split("\n## Alınmayan kanıt\n")[0]}\n`);
+    expect(none.last).toBe("CLAIMS: 7 · verdict 1 · thin 1 · counter-less 5 · inadmissible-cited 0 · carried 0 · unexplained-evidence 4");
+    expect(none.status).toBe(4);
+    // a named address is not a cited one: drop its line and it is unexplained again
+    expect(extract(named.replace("- [L1794] — tekrar\n", "")).last).toMatch(/ · unexplained-evidence 1$/);
+  });
+
+  it("status --format json counts it for any ledger: --answer, else the ledger's own answer, else <run>/answer.md", () => {
+    const run = fresh();
+    const named = readFileSync(join(FIX, "answer-unused.md"), "utf8");
+    writeFileSync(join(run, "answer.md"), `${named.split("\n## Alınmayan kanıt\n")[0]}\n`, "utf8");  // four unexplained
+    writeFileSync(join(run, "answer2.md"), named, "utf8");                                           // none
+    cl(["extract", run, "--answer", join(run, "answer2.md"), "--out", join(run, "claims2.jsonl")]);
+    for (const other of ["ledger-x.jsonl", "claims3.jsonl"]) cpSync(join(run, "claims2.jsonl"), join(run, other));
+    const un = (...args: string[]) => JSON.parse(cl(["status", run, "--format", "json", ...args]).out).unexplained_evidence;
+    expect(un("--ledger", join(run, "claims2.jsonl"))).toBe(0);                          // its own answer, answer2.md
+    expect(un("--ledger", join(run, "ledger-x.jsonl"))).toBe(4);                         // no own answer by name
+    expect(un("--ledger", join(run, "claims3.jsonl"))).toBe(4);                          // answer3.md is not there
+    expect(un("--ledger", join(run, "ledger-x.jsonl"), "--answer", join(run, "answer2.md"))).toBe(0);
+    expect(un("--ledger", join(run, "ledger-x.jsonl"), "--answer", join(run, "no-such.md"))).toBeNull();
   });
 });
 
@@ -221,7 +261,7 @@ describe("list and link — the claim rounds' two doors", () => {
     const run = checked();
     const r = cl(["extract", run, "--out", join(run, "claims2.jsonl"), "--keep-links", join(run, "claims.jsonl")]);
     expect(r.code, r.out).toBe(0);
-    expect(last(r.out)).toBe("CLAIMS: 8 · verdict 1 · thin 1 · counter-less 6 · inadmissible-cited 1 · carried 5");
+    expect(last(r.out)).toBe("CLAIMS: 8 · verdict 1 · thin 1 · counter-less 6 · inadmissible-cited 1 · carried 5 · unexplained-evidence 0");
     expect(claim(run, "C008", "claims2.jsonl")).toMatchObject({ counter_status: "found", checked_by: "karsi",
       links: [{ kind: "against", id: "L1723" }, { kind: "against", id: "L1724" }] });
     expect(claim(run, "C002", "claims2.jsonl")).toMatchObject({ counter_status: "none", notes: ["karsi: defterde karşı satır bulunmadı"] });

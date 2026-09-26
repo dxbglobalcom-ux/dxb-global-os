@@ -15,7 +15,7 @@ and the writer's second pass is handed the result (`brief`).
   claims.py list <run> --todo counter|gap [--cap 20] [--candidates 5] [--ledger F]
   claims.py link <run> --claim C007 (--against L1[,L2…] | --for L3 | --none --kind counter|gap --reason R)
                  --by ROLE [--ledger F]
-  claims.py status <run> [--format md|json] [--ledger F]
+  claims.py status <run> [--format md|json] [--ledger F] [--answer F]
   claims.py brief <run> [--ledger F]
 
 The contract (fields, the pair rule, independence, flags, outputs, exit codes) is
@@ -25,6 +25,15 @@ WHICH LEDGER: extract writes --out (default <run>/claims.jsonl). list, link, sta
 --ledger; without it, on <run>/claims.draft.jsonl when the fleet's draft pass wrote one (its claim rounds
 link there, contract §2.3), else on <run>/claims.jsonl. Every write happens under the run's evidence
 lock (evidence.locked): the claim hunters write at once.
+
+THE WRITER'S LAST SECTION (the CEO's word, 2026-09-26 ~19:45: "kanıt 43 · cevapta 17"): `## Alınmayan
+kanıt`, one line per admitted address the answer does not cite, with its reason (fleet/writer-prompt.md
+rule 10). Its lines are no claim and its ids no citation: extract never reads them, and render.py and
+kapsama.py read the answer without them (without_unused). extract's last line and `status --format json`
+count the admitted addresses (evidence_use) the answer neither cites nor names there — `unexplained-evidence
+N` / "unexplained_evidence": N, for any ledger: status reads --answer when given, else the ledger's own
+answer beside it (claims.jsonl ↔ answer.md, claims.draft.jsonl ↔ answer.draft.md), else <run>/answer.md,
+and says null only when that answer or the rows cannot be read.
 
 Exit: 0 done · 1 status: no ledger to count · 2 refused (a folder, an answer or a ledger that cannot be
 read, an unknown claim or id, an inadmissible id, a link the rules forbid, a bad argument).
@@ -65,6 +74,9 @@ STATUS_KEY = {"counter": "counter_status", "gap": "gap_status"}
 NOTE_OF = {"counter": "karsi", "gap": "bosluk"}
 REASON_WORDS = 12
 CONTENT_WORD = re.compile(r"[^\W\d_]{4,}")
+# THE WRITER'S LAST SECTION (fleet/writer-prompt.md rule 10): its heading, folded; the dash before a reason
+UNUSED = "alınmayan kanıt"
+REASON_LEAD = re.compile(r"^[\s\-–—:·]+")
 
 
 def _uniq(ids) -> list[str]:
@@ -153,6 +165,76 @@ def content_words(text: str) -> set[str]:
     return set(CONTENT_WORD.findall("".join(ch for ch in s if not unicodedata.combining(ch))))
 
 
+# =================================================================== the writer's last section
+def _folded(s: str) -> str:
+    """A heading compared as words, Turkish capitals folded the Turkish way (I → ı, İ → i)."""
+    return " ".join(s.replace("I", "ı").replace("İ", "i").casefold().split())
+
+
+def unused_section(md: str) -> tuple[set[int], dict[str, str]]:
+    """The answer's `## Alınmayan kanıt` section: the numbers of its lines — from that heading, its own line
+    included, to the next `## ` heading or the end — and each id it lists in a citation bracket with its
+    line's reason: the line without its ids, its list mark and the dash before the words (the first line
+    that lists an id wins). Those lines are no claim, and an id on them is no citation."""
+    at: set[int] = set()
+    why: dict[str, str] = {}
+    inside = False
+    for n, line in enumerate((md or "").splitlines(), 1):
+        h = H2.match(line)
+        if h:
+            inside = _folded(claim_text(h.group(1))) == UNUSED
+        if not inside:
+            continue
+        at.add(n)
+        said = REASON_LEAD.sub("", claim_text(line))
+        for m in platforms.CITE_RE.finditer(platforms.split_paired(line)):
+            for i in ID.findall(m.group(0)):
+                why.setdefault(i, said)
+    return at, why
+
+
+def without_unused(md: str) -> str:
+    """The answer with its `## Alınmayan kanıt` section's lines emptied, each keeping its line end — so every
+    other line keeps the number the ledger and the page anchor it by; the answer itself when it has none."""
+    at = unused_section(md)[0]
+    if not at:
+        return md
+    out = []
+    for n, line in enumerate(md.splitlines(True), 1):
+        words = line.splitlines()[0] if n in at else ""
+        out.append(line[len(words):])
+    return "".join(out)
+
+
+def evidence_use(md: str, rows: list[dict]) -> dict[str, dict]:
+    """THE ADMITTED ADDRESSES and what the answer did with each (the CEO's word, 2026-09-26 ~19:45). An
+    address — url_canonical, else its url's canonical form (evidence.by_canon) — is admitted when
+    evidence.admissible admits ≥ 1 of its rows: what `evidence.py writer-rows` hands the writer, by address.
+    canon -> {"platform", "ids" (every row id at it), "cited", "reason"}: `cited` when the answer, its
+    `## Alınmayan kanıt` section left out, cites an admitted id there (kapsama.py's Cevapta rule); `reason`
+    the section's words for the first of its ids listed there — None when none is: not explained."""
+    body = platforms.split_paired(without_unused(md or ""))
+    cites = {i for m in platforms.CITE_RE.finditer(body) for i in ID.findall(m.group(0))}
+    why = unused_section(md)[1]
+    index = evidence.address_index(rows)
+    out: dict[str, dict] = {}
+    for canon, rs in evidence.by_canon(rows).items():
+        addr = evidence.address_row(rs)
+        ids = [str(r["id"]) for r in rs if r.get("id")]
+        admitted = [str(r["id"]) for r in rs if r.get("id") and evidence.admissible(r, index.get(str(r["id"])))[0]]
+        if not canon or addr is None or not admitted:
+            continue
+        listed = [i for i in why if i in ids]
+        out[canon] = {"platform": evidence.row_platform(addr, canon), "ids": ids,
+                      "cited": any(i in cites for i in admitted), "reason": why[listed[0]] if listed else None}
+    return out
+
+
+def unexplained(use: dict[str, dict]) -> int:
+    """The admitted addresses the answer neither cites nor names in its `## Alınmayan kanıt` section."""
+    return sum(1 for a in use.values() if not a["cited"] and a["reason"] is None)
+
+
 # =================================================================== extract
 def _counted(ids: list[str], rows: dict[str, dict], index: dict, bad: list[str]) -> list[dict]:
     """The admitted rows among `ids`; a refused or unknown id goes to `bad` and is counted in nothing."""
@@ -168,13 +250,17 @@ def _counted(ids: list[str], rows: dict[str, dict], index: dict, bad: list[str])
 
 def extract_claims(md: str, rows: dict[str, dict]) -> list[dict]:
     """Every line, list item or table body row of `md` that cites ≥ 1 row — never a table's header or
-    separator row — as a claim, in order: C001, C002, … `rows` is the ledger by id (every row, so each
-    quote row finds its address). The counts are over ADMITTED rows only (evidence.admissible)."""
+    separator row, never a line of the `## Alınmayan kanıt` section — as a claim, in order: C001, C002, …
+    `rows` is the ledger by id (every row, so each quote row finds its address). The counts are over
+    ADMITTED rows only (evidence.admissible)."""
     index = evidence.address_index(list(rows.values()))
     lines = (md or "").splitlines()
+    unused = unused_section(md)[0]
     out: list[dict] = []
     section, headed = None, False
     for n, line in enumerate(lines, 1):
+        if n in unused:
+            continue
         h = H2.match(line)
         if h:
             section, headed = claim_text(h.group(1)) or None, True
@@ -288,7 +374,8 @@ def cmd_extract(run: Path, answer: Path, out: Path, keep: str | None) -> int:
     if not evidence.ev_path(run).is_file():
         print(f"REFUSED the ledger cannot be read: {evidence.ev_path(run)}")
         return 2
-    claims = extract_claims(md, _rows(run))
+    rows = _rows(run)
+    claims = extract_claims(md, rows)
     carried = 0
     with evidence.locked(run):
         if keep:
@@ -305,7 +392,8 @@ def cmd_extract(run: Path, answer: Path, out: Path, keep: str | None) -> int:
               f"karşı {c['counter_status']} · boşluk {c['gap_status']} | {_cut(c['text'], TABLE_CHARS).replace('|', '/')} |")
     t = tally(claims)
     print(f"CLAIMS: {t['claims']} · verdict {t['verdict']} · thin {t['thin']} · counter-less {t['counter_less']}"
-          f" · inadmissible-cited {t['inadmissible_cited']} · carried {carried}")
+          f" · inadmissible-cited {t['inadmissible_cited']} · carried {carried}"
+          f" · unexplained-evidence {unexplained(evidence_use(md, list(rows.values())))}")
     return 0
 
 
@@ -440,7 +528,31 @@ def cmd_link(run: Path, ledger: Path, cid: str, against: str | None, for_ids: st
 
 
 # =================================================================== status and brief
-def cmd_status(ledger: Path, fmt: str) -> int:
+def answer_of(run: Path, ledger: Path, given: str | None) -> Path:
+    """The answer status counts `unexplained_evidence` over: --answer when given; else the one the ledger was
+    extracted from, by the fleet's names beside it — claims.jsonl ↔ answer.md, claims.draft.jsonl ↔
+    answer.draft.md — when it is there; else <run>/answer.md."""
+    if given:
+        return Path(given)
+    m = re.fullmatch(r"claims(.*)\.jsonl", ledger.name)
+    own = ledger.with_name(f"answer{m.group(1)}.md") if m else None
+    return own if own is not None and own.is_file() else run / "answer.md"
+
+
+def unexplained_of(run: Path, answer: Path) -> int | None:
+    """status's `unexplained_evidence` over `answer` and <run>'s rows; None — not measured — only when the
+    answer or the rows cannot be read."""
+    try:
+        md = answer.read_text(encoding="utf-8", errors="replace")
+        if not evidence.ev_path(run).is_file():
+            return None
+        rows = _rows(run)
+    except OSError:
+        return None
+    return unexplained(evidence_use(md, list(rows.values())))
+
+
+def cmd_status(run: Path, ledger: Path, fmt: str, answer: str | None = None) -> int:
     claims = read_ledger(ledger)
     if claims is None:
         print(f"no claim ledger: {ledger}")
@@ -448,7 +560,8 @@ def cmd_status(ledger: Path, fmt: str) -> int:
     t = tally(claims)
     if fmt == "json":
         t.update(owed_counter=t["counter"]["sent"], owed_gap=t["gap"]["sent"],
-                 new_for_links=sum(x.get("kind") == "for" for c in claims for x in c.get("links") or []))
+                 new_for_links=sum(x.get("kind") == "for" for c in claims for x in c.get("links") or []),
+                 unexplained_evidence=unexplained_of(run, answer_of(run, ledger, answer)))
         print(json.dumps(t, ensure_ascii=False))
         return 0
     part = lambda d: " · ".join(f"{name} {d[name]}" for name, _st in TALLY)  # noqa: E731
@@ -524,6 +637,8 @@ def main(argv: list[str] | None = None) -> int:
     st.add_argument("run")
     st.add_argument("--format", choices=("md", "json"), default="md")
     st.add_argument("--ledger")
+    st.add_argument("--answer", help="unexplained_evidence over this answer; default: the ledger's own "
+                                     "(claims.jsonl ↔ answer.md) when it is there, else <run>/answer.md")
     br = sub.add_parser("brief")
     br.add_argument("run")
     br.add_argument("--ledger")
@@ -531,7 +646,7 @@ def main(argv: list[str] | None = None) -> int:
 
     run = Path(args.run)
     if args.cmd == "status":
-        return cmd_status(ledger_of(run, args.ledger), args.format)
+        return cmd_status(run, ledger_of(run, args.ledger), args.format, args.answer)
     if not run.is_dir():
         print(f"REFUSED no such run folder: {run}")
         return 2

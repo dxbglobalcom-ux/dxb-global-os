@@ -14,6 +14,12 @@
 // a row the hunter judged no evidence (K1's L1071, cited on line 71) struck through and counted in nothing;
 // and "İddia defteri", the ledger as a table, under "Cevabı taşıyan sayılar".
 //
+// K2b (the CEO's word, 2026-09-26 ~19:45: "kanıt 43 · cevapta 17"): each drawer's summary counts the addresses
+// the ledger admits, the cited ones among them and the rest — `X — 6 gönderi (kanıt 2 · 2 cevapta)`, `· k
+// alınmadı` when there are any —, an admitted address the answer did not cite carries the reason the answer's
+// `## Alınmayan kanıt` section gives it (`alınmadı: açıklanmadı` when it gives none), and that section is not
+// the answer: no span, no chip, no quote card.
+//
 // HOW IT RUNS: the REAL render.py — with the real kapsama.py, evidence.py and claims.py beside it, the
 // engine's scripts copied to a temporary folder — on a temporary copy of fixtures/evidence/run-drawer:
 // thirteen rows on X, Reddit and YouTube in every ledger state (the cited L0001, L0002, L0007 and L0010
@@ -118,7 +124,7 @@ describe("final.html — counter-evidence in one bracket is the two citations it
     // refused, out of the answer: X's Cevapta is the drawer's "2 cevapta" (K1 counted L0003's post: 3)
     const cov = ok.page.split('id="kapsama"')[1]?.split("</section>")[0] ?? "";
     expect(cov.match(/<span class="v">X<\/span><\/td>[\s\S]*?data-label="Cevapta" class="n"><span class="v">(\d+)</)?.[1]).toBe("2");
-    expect(ok.page).toContain("<summary>X — 6 gönderi (2 cevapta)</summary>");
+    expect(ok.page).toContain("<summary>X — 6 gönderi (kanıt 2 · 2 cevapta)</summary>");
     expect(cov).not.toContain("biçimsiz atıf");
     const bad = run("paired-unknown", "[L0001 ↔ L9999]");
     expect(bad.said).toMatch(/^2 render: REFUSED \(no page written\) — id not in evidence\.jsonl: L9999 \(line 26\)/);
@@ -174,7 +180,8 @@ describe("final.html — a quote card for every cited row, printed from the row"
 describe("final.html — the drawer: every fetched address, per platform, the cited ones first", () => {
   it("opens one <details> per platform with a body and lists every fetched address with its link", () => {
     expect([...page.matchAll(/<summary>([^<]*)<\/summary>/g)].map((m) => m[1]))
-      .toEqual(["X — 6 gönderi (2 cevapta)", "YouTube — 2 video (1 cevapta)", "Reddit — 1 başlık (1 cevapta)"]);
+      .toEqual(["X — 6 gönderi (kanıt 2 · 2 cevapta)", "YouTube — 2 video (kanıt 1 · 1 cevapta)",
+        "Reddit — 1 başlık (kanıt 1 · 1 cevapta)"]);
     const x = items(drawer("x"));
     // cited first (L0006 is a hunter's quote on L0002's post), then newest first; L0005 has no body: not here
     expect(x.map((m) => m[2])).toEqual(["L0002", "L0001", "L0004", "L0012", "L0003", "L0013"]);
@@ -185,6 +192,31 @@ describe("final.html — the drawer: every fetched address, per platform, the ci
     expect(row("L0001").passage!.length).toBeGreaterThan(300);
     expect(cut.length).toBeLessThanOrEqual(300);
     expect(cut.endsWith("…")).toBe(true);
+  });
+});
+
+describe("final.html — the admitted rows the answer did not take (`## Alınmayan kanıt`)", () => {
+  it("counts `kanıt n · m cevapta · k alınmadı` per drawer and gives each untaken address its reason; the section is no claim", () => {
+    // run-drawer admits four addresses; this answer cites the two X posts, and its last section names
+    // L0007's Reddit thread — L0010's video it names nowhere
+    const run = join(root, "unused");
+    cpSync(FIX, run, { recursive: true });
+    writeFileSync(join(run, "answer.md"), "Net bir kazanan yok: iş bölümü var [L0006] [L0001].\n\n## Ne değiştirirdi, bakıldı mı\n"
+      + "- Kapısı kapalı Reddit başlığı okunamadı.\n\n## Alınmayan kanıt\n- [L0007] — zayıf\n", "utf8");
+    const got = render(run);
+    expect(got.said).toMatch(/^0 /);
+    expect([...got.page.matchAll(/<summary>([^<]*)<\/summary>/g)].map((m) => m[1])).toEqual(["X — 6 gönderi (kanıt 2 · 2 cevapta)",
+      "YouTube — 2 video (kanıt 1 · 0 cevapta · 1 alınmadı)", "Reddit — 1 başlık (kanıt 1 · 0 cevapta · 1 alınmadı)"]);
+    const entry = (p: string, id: string) => items(drawerOf(got.page, p)).find((m) => m[2] === id)?.[3] ?? "";
+    expect(entry("reddit", "L0007")).toContain('<span class="vd">alınmadı: zayıf</span>');
+    expect(entry("youtube", "L0010")).toContain('<span class="vd">alınmadı: açıklanmadı</span>');
+    for (const id of ["L0001", "L0002", "L0003"]) expect(entry("x", id)).not.toContain("alınmadı:");  // cited, cited, not admitted
+    // the section is not the answer: one span (the verdict's), no chip and no quote card for L0007, no heading
+    expect(got.page.match(/<span class="count/g)).toHaveLength(1);
+    expect(got.page).not.toMatch(/<a class="ref" href="#L0007"/);
+    expect(got.page).not.toContain('id="q-L0007"');
+    expect(got.page).not.toContain("Alınmayan kanıt");
+    expect(got.page).toContain('<p class="note">KANIT: 4 kabul · 2 cevapta · 2 alınmadı · açıklanmadı 1</p>');
   });
 });
 
@@ -203,7 +235,7 @@ describe("final.html — a page that stands alone", () => {
     const cov = page.split('id="kapsama"')[1]?.split("</section>")[0] ?? "";
     // the numbers stand as a grid; the reasons (Elenen, Kapalı kapı) run under their platform's numbers
     expect([...cov.matchAll(/<th[^>]*>([^<]*)<\/th>/g)].map((m) => m[1]))
-      .toEqual(["Platform", "Bulundu", "İndirildi", "İlgili", "Okundu", "Kısmen", "Cevapta"]);
+      .toEqual(["Platform", "Bulundu", "İndirildi", "İlgili", "Okundu", "Kısmen", "Kanıt", "Cevapta"]);
     expect(cov).toContain('<span class="why-l">Elenen</span> ilgisiz: Opus vs Astra, not Fable ×2 · ilgisiz: Free access tip only ×1 · tekrar ×1');
     expect(cov).toContain('<span class="why-l">Kapalı kapı</span> opencli reddit read kod 1 ×1');
     expect(cov).toContain("RECONCILED — bulundu 12");
