@@ -45,12 +45,16 @@
 # every deep record under .planning/research/answers/ holds a question.txt too — and any other
 # non-empty folder is refused (exit 2). So is any folder inside the repository, for the gather and
 # the judge alike: runs never write into the repo; a record is fleet/keep.sh's, on his "kaydet"
-# (SKILL.md §7).
+# (SKILL.md, "The answer").
 #
-# THE JUDGE (--check): cite-check.py --mode quick -> <outdir>/cite-check.txt; on PASS render.py ->
-# final.md + citations.json and .t2. Exit 1 on FAIL — and then none of those three exist: a previous
-# PASS's final.md and .t2 are removed before judging, so no end-to-end time stands beside a FAIL. It
-# needs only answer.md and sources.json, so the same judge runs on a pplx.py folder too.
+# THE JUDGE (--check): cite-check.py --mode quick -> <outdir>/cite-check.txt; then, whatever it said,
+# evidence.py from-ground turns <outdir>/ground* into evidence.jsonl rows and render.py builds final.md
+# from those rows. cite-check counts [n] marks, so it fails every [Lxxxx] answer by construction
+# (measured 2026-09-26: R2 0 %, R4 unmeasurable); it leaves with the drawer. A refused page prints
+# render's reason and a HATA line, and no final.md. .t2 is written, and the exit is 0, only when
+# cite-check PASSES and the page was written. A previous run's final.md and .t2 are removed before
+# judging, so no end-to-end time stands beside a FAIL. A folder with no ground* (a pplx.py folder)
+# has no rows for the page to print.
 set -uo pipefail
 
 R="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -72,7 +76,7 @@ in_repo() {  # $1: a folder, there or not yet
 }
 refuse_repo() {
   if in_repo "$1"; then
-    echo "!! $1 depo icinde — kosular depoya yazmaz (SKILL.md §7); depo disinda bir klasor ver" >&2
+    echo "!! $1 depo icinde — kosular depoya yazmaz (SKILL.md, \"The answer\"); depo disinda bir klasor ver" >&2
     exit 2
   fi
 }
@@ -96,22 +100,30 @@ if [ "${1:-}" = "--check" ]; then
   VERDICT=FAIL
   if [ "$CC_RC" -eq 0 ]; then
     VERDICT=PASS
-    if ! python3 "$R/render.py" "$OUT/answer.md" --sources "$OUT/sources.json" \
-          --out "$OUT/final.md" --json "$OUT/citations.json" > /dev/null; then
-      VERDICT="PASS (render.py HATA)"
-    fi
-    date +%s.%N > "$OUT/.t2"
   else
     # what the writer has to repair: every failing rule with its lines, and the ruler's own verdict
     awk '/^R[0-9]+  FAIL/ { on = 1; print; next } /^R[0-9]+  PASS/ { on = 0 } on && /^      / { print }' \
         "$OUT/cite-check.txt"
     tail -n 1 "$OUT/cite-check.txt"
   fi
+  # THE PAGE, from the rows, whatever cite-check said (the header says why); every failure is a line
+  if [ -f "$R/evidence.py" ]; then
+    python3 "$R/evidence.py" from-ground "$OUT" || echo "HATA: evidence.py from-ground cikis kodu $?"
+  else
+    echo "evidence.py yok — satır yok"
+  fi
+  PAGE=1
+  if python3 "$R/render.py" "$OUT/answer.md" --evidence "$OUT/evidence.jsonl" --out "$OUT/final.md"; then
+    PAGE=0
+    [ "$CC_RC" -eq 0 ] && date +%s.%N > "$OUT/.t2"
+  else
+    echo "HATA: render.py sayfayi yazmadi — final.md yok (sebep ustteki satirda)"
+  fi
   GATHER="—"; E2E="—"
   [ -f "$OUT/.t0" ] && [ -f "$OUT/.t1" ] && GATHER="$(secs "$(cat "$OUT/.t0")" "$(cat "$OUT/.t1")") s"
-  [ "$CC_RC" -eq 0 ] && [ -f "$OUT/.t0" ] && E2E="$(secs "$(cat "$OUT/.t0")" "$(cat "$OUT/.t2")") s"
+  [ -f "$OUT/.t0" ] && [ -f "$OUT/.t2" ] && E2E="$(secs "$(cat "$OUT/.t0")" "$(cat "$OUT/.t2")") s"
   echo "gather: $GATHER · uctan uca: $E2E · cite-check $VERDICT"
-  [ "$CC_RC" -eq 0 ] && exit 0
+  [ "$CC_RC" -eq 0 ] && [ "$PAGE" -eq 0 ] && exit 0
   exit 1
 fi
 
@@ -140,7 +152,7 @@ GATE_MSG="$(python3 "$R/shortq.py" --gate "$Q" 2>&1)"
 GATE_RC=$?
 if [ "$GATE_RC" -ne 0 ]; then
   if [ "$GATE_RC" = "3" ]; then
-    echo "!! DUR: $GATE_MSG. Hizli mod tek cumlelik soru alir; arama kutusuna paragraf yazilmaz (SKILL.md, §0)." >&2
+    echo "!! DUR: $GATE_MSG. Hizli mod tek cumlelik soru alir; arama kutusuna paragraf yazilmaz (SKILL.md, \"How to work\")." >&2
   else
     echo "!! DUR: kapi calisamadi (kod $GATE_RC): $GATE_MSG" >&2
   fi
