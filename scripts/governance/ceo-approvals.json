@@ -1488,5 +1488,13 @@
   "conditions": "An order, not an approval of any work; nothing is accepted by it (LAW B). The historical records that name the door (STATE-ARCHIVE, the board's dated rows, .planning/quick evidence, earlier approvals) are left as records of their day.",
   "session": "Fable 5.1 chief-engineer session 09c52a7e, 2026-09-26 morning — heard first-hand in this conversation.",
   "where": ".claude/CLAUDE.md §2 (the boundary line, dated); .claude/hooks/ceo-language.sh (the marker, in the hook's own history note); scripts/governance/rules.json (entry removed); git history of .claude/skills/dxb-ceo-report/SKILL.md"
+ },
+ "research-v2-k1-staged-opus-low-existing-plan-basla-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "HIS 'BAŞLA' ON RESEARCH ENGINE v2, STAGE 1, with the three decisions put to him answered in one line: STAGED (three stages, the completion gate first), HUNTERS AT OPUS 5.5 · LOW (the morning's experiment measured: the same Opus at low read all 130 X bodies when the material stood in front of it), and INTO THE EXISTING PLAN (no new architecture files — PLAN.md §7 as a registered adaptation; the 35-section text he pasted is evaluated and mined, not copied). Two of his own sentences the same hour bind the stage: 'tüm aletleri istiorm tabiki' (the hunters keep every tool — search, fetch, opencli, the hidden Chrome, the crowd count — the gate is added ON TOP), and 'tmm bunu tarife koy, ama başlama dur. x üzerinden deneme yap' (the count-beside-every-claim rule, written into the recipe before this; the experiment run and saved before this).",
+  "verbatim": "kademeli, opus low, mevcut plan. başla",
+  "conditions": "A start order, not an acceptance (LAW B): the stage is accepted only by his eye on a real run's page. Stage 1's scope is PLAN.md §7 and EVIDENCE-B56-K1-2026-09-26.md; stages 2 and 3 wait for his word after stage 1 is measured. Writer effort for the answer step (Opus 5.5 · high) is the lead's call, to be measured, not his order.",
+  "session": "Fable 5.1 chief-engineer session 09c52a7e, 2026-09-26 ~12:05 — heard first-hand.",
+  "where": "PLAN.md §7 (.planning/quick/20260924-research-door-perplexity/), EVIDENCE-B56-K1-2026-09-26.md, .planning/STATE.md live-order block, board row B56"
  }
 }

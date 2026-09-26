@@ -231,3 +231,38 @@ her biri koşulur (§3 madde 5). `.agents/skills/dxb-research` aynası da eski; 
    eşiği o günkü ölçümden alınır (bugün 12.824 satır − ≈ 5.240 = ≈ 7.584, yani 7.500 bu gece tutmaz;
    eşik ölçülünce yazılır, tahmin edilmez).
 4. **başla** — geldi (00:40); kapı `dxb-team1`, P0'dan gidildi.
+
+## 7. KADEME 1 — Araştırma Motoru v2 (kayıtlı adaptasyon, sizin 26 Eylül sabah sözünüzle) <!-- CEO-OK: research-v2-k1-staged-opus-low-existing-plan-basla-2026-09-26 -->
+
+**Sözünüz:** *"kademeli, opus low, mevcut plan. başla"* — ve aynı saat: *"tüm aletleri istiorm tabiki"*,
+*"tmm bunu tarife koy, ama başlama dur. x üzerinden deneme yap"*. Deneme yapıldı ve kaydedildi
+(`x-deneme-2026-09-26/`): aynı 130 X metni tek istemde önüne konunca Opus 5.5 low 130'un 130'unu okudu,
+40 gönderide kanıt buldu (gece avcısı: 75'ine bakmış, 16 gönderi); Sonnet 5 high 48; Haiku 4.5 eleme
+130/130, 0,14 $. **Bulgu: kayıp modelde değil düzende** — avcıya "adresleri kendin indir, kendin bastır"
+dendi, o tek komutta 20.000 harfte kesip 64. saniyede çıktı; kimse "bitti" demesini denetlemedi.
+
+**Kademe 1 ne kurar (mevcut arama/indirme aletleri aynen kalır; avcı bütün aletleriyle çalışır):**
+
+| Parça | Bugün | Kademe 1 |
+|---|---|---|
+| **Kader** | bulunan adresin sonu belirsiz | her satırda `triage` (bekliyor · ilgili · ilgisiz · tekrar · erişilemez) + sebep; `evidence.py status` toplamları denkleştirir, denk değilse kırmızı |
+| **İndirme** | avcı indirir, indirmediği kapalı kalır (142 X adresi) | makine önce hepsini dener (`fetch`), açılmayanı sebebiyle "erişilemez" yazar |
+| **Eleme** | yok | Haiku 4.5, 60'ar 60'ar, her gövdeli satıra ilgili/ilgisiz/tekrar + sebep (sabahki istem) |
+| **Okuma** | avcı `cat`/`head` ile basar, kesilir; "okundu" avcının beyanı | `evidence.py batch`: makine 10'ar 10'ar gövdeyi TAM basar ve o satırları "okundu" işaretler; ham basma hiçbir şeyi okundu yapmaz; yarım kalan "kısmen" |
+| **Kapı** | avcı "bitti" der, filo kabul eder | filo avcı dönünce sayar: ilgili-okunmamış > 0 ve süre varsa aynı avcıyı "N adres duruyor" ile geri gönderir (3 tura kadar); "okundu" sütunu defterden, avcıdan değil |
+| **Defter** | oturumun geçici klasörü (yeniden başlatmada silinir) | `var/research/runs/<tarih>-<konu>/`, diskte kalıcı; `/tmp` reddedilir |
+| **Yazar** | oturum (Fable) yazar | filo son adımda Opus 5.5 · high yazarı açar: girdi = HÜKÜM satırları + durum tablosu + ilgili satırlar; çıktı `answer.md`, her iddiada `[L…]` |
+| **Sayfa** | md, tablo üstte | `render.py` tasarlanmış HTML: üstte hüküm kutusu · her iddianın yanında "(n satır)" · alıntı kartları (yazar, tarih, bağlantı) · kapsama · **altta platform platform çekmece**: gövdesi olan HER satır açılır bağlantı, yazar, kısaltılmış alıntı (X'te 130) |
+| **Kapsama** | bulundu · okundu · cevapta | bulundu · indirildi · ilgili · okundu · kısmen · cevapta · elenen (sebep) · kapalı kapı; altında RECONCILED / MISMATCH |
+
+**Kademe 1'in kapsamadığı (kademe 2-3, sözünüzle):** iddia defteri ve bağımsız kaynak sayımı, karşı-kanıt
+avcısı, boşluk turu, doygunluk, soru ayrıştırma, rapor tipine göre şekil, ayrı denetçi ajan.
+
+**Kabul maddeleri (koddan önce yazıldı; komut + beklenen çıktı, `EVIDENCE-B56-K1-2026-09-26.md` §3):**
+sabit fikstür = 26 Eylül 02:34 koşusunun ham kopyası. 1 `status` denk · 2 eleme 130/130 sebepli · 3 `batch`
+10'ar basar, işaretler, ham basma işaretlemez, uzun gövde "kısmen" · 4 kapı: hemen çıkan sahte avcı geri
+gönderilir, bitiren kabul edilir, log satırı · 5 koşu klasörü `var/research/runs/`, `/tmp` reddedilir · 6 yazar
+adımı `answer.md` üretir, her iddia `[L…]` · 7 sayfa: hüküm üstte, sayılar iddia yanında, çekmecede X 130 ·
+8 kapsama yeni sütunlar + RECONCILED · 9 `tests/b46/*` yeşil, cetveller yeşil, batarya bir kez · 10 gözünüz:
+aynı soruya gerçek koşu, tasarlanmış sayfa. Kulvarlar: A defter+eleme · B kontrolcü+yazar · C kapsama+sayfa;
+üçü de korunan yol → `builder` max; taze `verifier` high; lider Fable 5.1 ölçer, commit eder.
