@@ -1520,5 +1520,13 @@
     "conditions": "His word covers the four items proposed to him ('Sen neyi öneriyorsun?' → the four, 'şimdi, bu oturumda'); the gate itself was NOT raised (the ruler forbids it). The basket's remaining 260 tokens are a separate list for him if he wants one.",
     "session": "Fable 5.1 chief-engineer session a8b377a5, 2026-09-26 ~16:25 — heard first-hand.",
     "where": "STATE live block (2026-09-26); ~/.claude/projects/-home-dxb-DxB-Global-OS/memory/ (outside the repository; backup of the 104 files before the merge in the session scratchpad)"
+  },
+  "opening-basket-green-gerekli-olani-yap-2026-09-26": {
+    "date": "2026-09-26",
+    "what": "THE OPENING BASKET BROUGHT BACK UNDER ITS GATE on his word, in the same session and by the same pattern he had just approved for the index: (1) the cupboard page .claude/CUPBOARD.md trimmed of its duplication with CLAUDE.md §4 and the MCP list, 426 → 361 tokens in the hook's output (R5 ruler 9/9), every drawer name and its opening command kept; (2) three more merges in the memory index — the July-2026 directive-history notes ×3 → directive-history-2026-07, the R4x-era lessons ×4 → r4x-era-lessons, the eye-test notes ×3 → eye-test-lessons — every old body verbatim inside the merged file (10/10 measured), links rewritten; (3) one retirement the repository carries (test-db-isolation-2026-07-28 → CLAUDE.md §5). Measured after: MEMORY.md 3154, gated basket 10994 ≤ 11000 — VERDICT GREEN. Not touched, on purpose: his global ~/.claude/CLAUDE.md roster text (his own orders, in force for every project) and the session-start hook's STATE budgets (the B52/B59 design he accepted).",
+    "verbatim": "Gerekli olanı yap. Önerdiğini yap.",
+    "conditions": "His second sentence the same minute: 'Dediğim gibi sen hangisini önerdiysen onu yap. Hangisi daha kaliteli iş çıktısı yapacaksa o şekilde devam et.' — the lead chose this session (the measurements were in hand) over a handover. The gate was not raised.",
+    "session": "Fable 5.1 chief-engineer session a8b377a5, 2026-09-26 ~16:40 — heard first-hand.",
+    "where": "STATE live block (2026-09-26); .claude/CUPBOARD.md; ~/.claude/projects/-home-dxb-DxB-Global-OS/memory/ (backup of every file before the merges in the session scratchpad)"
   }
 }
