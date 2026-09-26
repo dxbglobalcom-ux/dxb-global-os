@@ -14,7 +14,7 @@ ver"* — the lead decides per lane, by difficulty, not a size envelope.
 yapılsın"*. <!-- CEO-OK: dxb-team1-build-order-2026-09-25 --> **This is the construction's default
 door** — his word 2026-09-26 after the first live run: *"önerini kabul ediorum varsayılan kapı dxb-team1
 olsun."* <!-- CEO-OK: dxb-team1-default-door-2026-09-26 --> `dxb-crew` stays for a single-lane job. The laws this door obeys are in
-`.claude/CLAUDE.md`; the doors it opens are `dxb-verify`, `dxb-close-row`, `dxb-ceo-report`.
+`.claude/CLAUDE.md`; the doors it opens are `dxb-verify`, `dxb-close-row`.
 
 ## 1. The shape — his diagram
 
@@ -104,7 +104,7 @@ ESCALATE → an A finding → `refuter` (xhigh) re-checks that A list only.
            Two verifier rounds; an A still open after round 2 goes to the CEO with its reason.
 JUDGE    → the lead re-measures every number itself, runs the battery ONCE, measures the
            dependants again; ACCEPT → one commit per phase; REJECT → back with file:line + scenario.
-TELL     → the CEO, `dxb-ceo-report` shape: the position first, then the result; never a question.
+TELL     → the CEO, in his language (SO 14, the hook): the position first, then the result; never a question.
 RECORD   → STATE (the contradicted sentence goes, LAW A), the board row, evidence with a dated
            note, rulers green. A phase whose record is behind reality is not finished.
 ```

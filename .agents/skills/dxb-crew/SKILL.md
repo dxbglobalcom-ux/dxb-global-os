@@ -11,7 +11,7 @@ the ruler seven times and was right seven times, and every phase was re-measured
 engineer's own hands before it counted. The CEO's order on seeing it: *"Bu çalışma sistemini
 bir skill haline getir… sistemi öyle kur ki ben dışarda olduğumda da iş yürüsün context şişmeden
 ve kalite düşmeden. sanki bir loop gibi."* This door is that system. The laws it obeys are in
-`AGENTS.md`; the doors it opens are `dxb-verify`, `dxb-close-row`, `dxb-ceo-report`.
+`AGENTS.md`; the doors it opens are `dxb-verify`, `dxb-close-row`.
 
 ## 0. What he says is done by us — never handed back to him
 
@@ -92,7 +92,7 @@ for each PHASE:
                          Mismatch → REJECT with file:line + scenario. Match → ACCEPT.
   5. DEPENDANTS AGAIN  — the same measurements as step 1; print what they printed.
   6. COMMIT            — the chief engineer, one commit per phase; the tree is clean before the next.
-  7. TELL THE CEO      — short, `dxb-ceo-report` shape; the position first; never a question.
+  7. TELL THE CEO      — short, in his language (SO 14, the hook); the position first; never a question.
   8. CONTEXT GATE      — §3. Hand over here if the rule says so; never mid-phase.
 RECORD  → STATE (LAW A: the contradicted sentence is deleted, not footnoted), the board row
           through `dxb-close-row`, EVIDENCE with a dated note, rulers green

@@ -18,7 +18,7 @@
 # WHAT IT CARRIES, and why each half is here rather than in the door. The WORD
 # rule (use the real word, explain it in brackets) and the SHAPE rule (how a
 # thing is explained at all) both govern every sentence he reads, so both fire
-# on every prompt. What stays in the `dxb-ceo-report` door is the long form —
+# on every prompt. What stayed in the `dxb-ceo-report` door (deleted on his order, 2026-09-26 <!-- CEO-OK: ceo-report-door-deleted-2026-09-26 -->) was the long form —
 # what a REPORT must contain, the worked example, and the scope over the
 # dashboard and Hamza's own surfaces. This is the boundary; that is the procedure.
 #
@@ -65,5 +65,5 @@
 set -euo pipefail
 
 cat <<'EOF2'
-STANDING ORDER 14 — CEO'NUN DİLİNDE KONUŞ (CEO 2026-07-27, the shape 2026-08-25): he is the owner, not a developer — the answer first, then a picture DRAWN FROM THIS HOLDING'S OWN WORK (never a factory or a postman — his order 2026-09-16), then the measured numbers, then what it means for him, and short ("az ve öz"); use the real word and explain it once in brackets; would my mother understand it? The long form: .claude/hooks/ceo-language.sh and the dxb-ceo-report door.
+STANDING ORDER 14 — CEO'NUN DİLİNDE KONUŞ (CEO 2026-07-27, the shape 2026-08-25): he is the owner, not a developer — the answer first, then a picture DRAWN FROM THIS HOLDING'S OWN WORK (never a factory or a postman — his order 2026-09-16), then the measured numbers, then what it means for him, and short ("az ve öz"); use the real word and explain it once in brackets; would my mother understand it? The long form: .claude/hooks/ceo-language.sh.
 EOF2

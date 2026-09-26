@@ -132,7 +132,8 @@ the date. The battery fails on an unregistered approval claim.
   link: each names its blast radius in the same turn, and the report says what was re-measured
   and found intact. A change delivered without that sweep is unfinished, whatever it fixed.
   Door: `dxb-verify`.
-- **Speak to the CEO in his language.** He is the owner, not a developer. Door: `dxb-ceo-report`.
+- **Speak to the CEO in his language.** The hook fires it on every prompt; the report door was deleted
+  on his order, 2026-09-26.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
 - **Code: the `builder` subagent at `max`** (CEO 2026-09-24
@@ -176,7 +177,6 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |
-| writing a message to the CEO | `dxb-ceo-report` |
 | researching anything in the outside world | `dxb-research` |
 | reading a rival system, video or repository | `dxb-rival-intel` |
 | writing or repairing an employee's identity | `dxb-persona` |

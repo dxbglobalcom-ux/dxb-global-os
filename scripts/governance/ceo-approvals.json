@@ -1480,5 +1480,13 @@
   "conditions": "His go on the door line (dxb-team1 §4 loop) and the `dxb-quota` command. Not a law; procedure inside the door that already owns the loop.",
   "session": "Fable 5.1 chief engineer session (claude-fable-5-1), heard first-hand ~01:40 on 2026-09-26.",
   "where": ".claude/skills/dxb-team1/SKILL.md §4 · ~/.local/bin/dxb-quota · board row B60 · .planning/STATE.md"
+ },
+ "ceo-report-door-deleted-2026-09-26": {
+  "date": "2026-09-26",
+  "what": "HIS ORDER TO DELETE THE dxb-ceo-report DOOR (the report-shape procedure of standing order 14), given at about 10:50 while the chief engineer had just opened it to write him a report. The door was deleted (both the source and the .agents mirror), its rule-registry entry so14_report_shape removed, and every live line that named it repointed (.claude/CLAUDE.md §2 and §4, ceo-language.sh, dxb-team1, dxb-crew). What remains of standing order 14 is what fires on every prompt from .claude/hooks/ceo-language.sh (the word rule and the four steps). NOT a rule about report format — his standard is quality every time, and no report is written to a template.",
+  "verbatim": "yahu şu boktan ceo report skillni çalıştırma yaaa sil onu hatta her seferinde aynı tip boktan rapor çıkıor o skillle yaptığınızı beğenmişorm ben",
+  "conditions": "An order, not an approval of any work; nothing is accepted by it (LAW B). The historical records that name the door (STATE-ARCHIVE, the board's dated rows, .planning/quick evidence, earlier approvals) are left as records of their day.",
+  "session": "Fable 5.1 chief-engineer session 09c52a7e, 2026-09-26 morning — heard first-hand in this conversation.",
+  "where": ".claude/CLAUDE.md §2 (the boundary line, dated); .claude/hooks/ceo-language.sh (the marker, in the hook's own history note); scripts/governance/rules.json (entry removed); git history of .claude/skills/dxb-ceo-report/SKILL.md"
  }
 }
