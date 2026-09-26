@@ -29,7 +29,7 @@
 | Duration | **439 s (7 min 19 s)** | same |
 | View count at the minute it was read | **6 279** | same |
 | Language | Turkish, author-provided subtitles | `yt-dlp --write-subs --sub-langs tr` |
-| Media on disk | `media/41-4f1xr3hx_es.mp4`, 11 045 067 bytes | `ls -la` |
+| Media on disk | `media/41-4f1xr3hx-es.mp4`, 11 045 067 bytes | `ls -la` |
 | sha256 (media) | `63a3fb2d4c98afe0919e3918cf953e9ba18d18b13676844f28690f626e8e466d` | `sha256sum` |
 | sha256 (transcript) | `0ebb1caeda328faca2889c4234209b2771e6637aca34aa6f037eb977bcf114d9` | `sha256sum` |
 | Commercial interest | **None declared, and the speaker says so out loud** about the vendor he demonstrates: *"burada epify sponsor değil örnek olsun. Herkesin erişip bakabildiği bir yer olsun diye verdim."* The vendor is **Apify** (the transcript's auto-captions render it "Epify"/"Happify"), and its MCP server is open source | transcript |
@@ -263,5 +263,5 @@ rejection is a deliverable exactly as an acceptance is:
 
 ---
 
-**Material on disk:** `media/41-4f1xr3hx_es.mp4` · `transcripts/41.json` (full text + 363 timed blocks)
+**Material on disk:** `media/41-4f1xr3hx-es.mp4` · `transcripts/41.json` (full text + 363 timed blocks)
 **Written:** 2026-09-19, by the Opus 5 session, on the CEO's live order of the same day.

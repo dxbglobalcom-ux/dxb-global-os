@@ -186,7 +186,7 @@ psql "$DB" -c "SELECT status FROM agent_runs WHERE id='<id>';"    # → paused
 
 ### B41 additions (2026-09-19 — the film's holding side, registered on his word and NOT built) <!-- CEO-OK: opening-discipline-ordered-for-construction-and-holding-2026-09-19 -->
 
-Source: the MCP lecture (`.planning/research/rival-intel/41-4f1xr3hx_es.md` §5) and the chief engineer's opening plan; his order <!-- CEO-OK: opening-discipline-ordered-for-construction-and-holding-2026-09-19 --> and his sequence sentence the same evening (*"tahtadakini yapılacak diye koysun daha sonra yapılacak"*). Both rows below are REGISTERED so the board and the spec agree; each is built only when row B41 reaches it and after its own measurement.
+Source: the MCP lecture (`.planning/research/rival-intel/41-4f1xr3hx-es.md` §5) and the chief engineer's opening plan; his order <!-- CEO-OK: opening-discipline-ordered-for-construction-and-holding-2026-09-19 --> and his sequence sentence the same evening (*"tahtadakini yapılacak diye koysun daha sonra yapılacak"*). Both rows below are REGISTERED so the board and the spec agree; each is built only when row B41 reaches it and after its own measurement.
 
 | # | Adaptation | Why |
 |---|-----------|-----|
