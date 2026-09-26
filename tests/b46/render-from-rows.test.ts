@@ -13,12 +13,17 @@
 // 2026-09-26 the same answer also becomes final.html, the designed page (render-drawer.test.ts); without
 // --out both are written, and a refusal takes both earlier pages away.
 //
+// K2 (EVIDENCE-B56-K2 §2.4): every line of final.md that cites rows ends with the page's span in plain
+// text, `(3 satır · 3 bağımsız kaynak · 3 karşı)`, and a row the ledger refuses is written `~~[L1071]~~`,
+// unnumbered and not under Kaynaklar; a render.py without claims.py counts as K1 did and says so.
+//
 // HOW IT RUNS: the real render.py is copied into a temporary folder beside a stand-in kapsama.py
 // (fixtures/render/kapsama.py). render.py calls the kapsama.py in its own folder, so the copy finds
-// the stand-in; nothing is written into the repository and nothing leaves the machine.
+// the stand-in; the K2 cases run the engine's scripts copied whole, the real claims.py among them, on
+// fixtures/render/k1-cut. Nothing is written into the repository and nothing leaves the machine.
 
 import { spawnSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -39,15 +44,16 @@ beforeAll(() => {
     copyFileSync(join(SKILL, "scripts", "render.py"), join(root, dir, "render.py"));
     if (stub) copyFileSync(join(FIX, "kapsama.py"), join(root, dir, "kapsama.py"));
   }
+  cpSync(join(SKILL, "scripts"), join(root, "with-claims"), { recursive: true, filter: (s) => !s.includes("__pycache__") });
 });
 afterAll(() => rmSync(root, { recursive: true, force: true }));
 
 /** One fresh run folder per case — a refusal checked where a final.md already stands proves nothing. */
-function render(answer = ANSWER, o: { scripts?: string; flags?: string[]; env?: Record<string, string>; stale?: boolean } = {}) {
+function render(answer = ANSWER, o: { scripts?: string; flags?: string[]; env?: Record<string, string>; stale?: boolean; rows?: string } = {}) {
   const dir = join(root, `run-${++runs}`);
   mkdirSync(dir);
   writeFileSync(join(dir, "answer.md"), answer, "utf8");
-  copyFileSync(join(FIX, "evidence.jsonl"), join(dir, "evidence.jsonl"));
+  copyFileSync(o.rows ?? join(FIX, "evidence.jsonl"), join(dir, "evidence.jsonl"));
   const out = join(dir, "final.md");
   if (o.stale) writeFileSync(out, "a page an earlier render left here\n", "utf8");
   const p = spawnSync("python3", [join(root, o.scripts ?? "with-kapsama", "render.py"), join(dir, "answer.md"),
@@ -173,5 +179,38 @@ describe("C4 — without --out the answer becomes both pages, and a refusal take
     expect(no.status, no.stderr).toBe(2);
     expect(no.stderr).toMatch(/the earlier final\.md was removed; the earlier final\.html was removed/);
     expect(existsSync(join(dir, "final.md")) || existsSync(join(dir, "final.html"))).toBe(false);
+  });
+});
+
+describe("C5 — the claim ledger's numbers in final.md (EVIDENCE-B56-K2 §2.4)", () => {
+  const CUT = join(FIX, "k1-cut");
+
+  it("ends every claim line with the page's span in plain text; a refused id is struck, unnumbered, not a source", () => {
+    const r = render(readFileSync(join(CUT, "answer.md"), "utf8"), { scripts: "with-claims", rows: join(CUT, "evidence.jsonl"), flags: ["--no-coverage"] });
+    expect(r.code, r.said).toBe(0);
+    const line = (head: string) => r.page!.split("\n").find((l) => l.startsWith(head)) ?? "";
+    // K1's lines 66 and 69: one span at the end of a paired line; a table row keeps it inside its last cell
+    expect(line("- **Kota:**")).toMatch(/ \[\d+, \d+, \d+\] ↔ \[\d+, \d+, \d+\] \(3 satır · 3 bağımsız kaynak · 3 karşı\)$/);
+    expect(line("- **Uzun görev:**")).toMatch(/ \[\d+\]\. \(1 satır · 1 bağımsız kaynak · 1 karşı\)$/);
+    expect(line("| Fable daha çok")).toMatch(/ \| \[\d+, \d+\] \(2 satır · 2 bağımsız kaynak\) \|$/);
+    // line 71 cites L1071, which its hunter judged "benchmark/promo, no user preference"
+    expect(line("- **Benchmark:**")).toContain("Astra 53, Fable 50 ~~[L1071]~~.");
+    expect(line("- **Benchmark:**")).toMatch(/\(4 satır · 4 bağımsız kaynak\)$/);
+    const src = section(r.page!, "Kaynaklar").trim().split("\n\n");
+    expect(src).toHaveLength(19);                          // 20 ids cited, one refused
+    expect(src.join("\n")).not.toContain("https://x.com/i/status/2102034249016889670");
+  });
+
+  it("names the three citation shapes, ↔ among them, when it refuses a bracket", () => {
+    const r = render(`${ANSWER}\nBir iddia daha [L0001 | L0002].\n`);
+    expect(r.code, r.said).toBe(2);
+    expect(r.err).toContain("not a citation at line 13: [L0001 | L0002] — cite as [L0042], [L0042, L0043], or counter-evidence [L0042] ↔ [L0051]");
+  });
+
+  it("without claims.py beside it, counts as K1 did and says so on stderr", () => {
+    const r = render();                                    // render.py copied alone
+    expect(r.code, r.said).toBe(0);
+    expect(r.err).toMatch(/^render: note — claims\.py not loaded \(ModuleNotFoundError: No module named 'claims'\): K1's count/m);
+    expect(r.page).not.toContain("bağımsız kaynak");
   });
 });

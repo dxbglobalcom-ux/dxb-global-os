@@ -392,7 +392,19 @@ _WALL = re.compile(
     # first draft also carried "never miss a post from", which is a generic newsletter call to
     # action with no site name in it - an adversarial check found an 11 421-word article whose
     # CTA would have been classified as a wall. It was removed before it shipped.
-    r"sign up for instagram to stay in the loop)", re.I)
+    r"sign up for instagram to stay in the loop|"
+    # B56 K2 (2026-09-26): Tracxn's login shell (the K1 run's L0868, 1,523 bytes) opens "Your browser was
+    # unable to load all of Tracxn resources" and was judged a page. Anchored to its site: "unable to
+    # load" alone is a sentence any page about a failed load can carry.
+    r"unable to load all of tracxn)", re.I)
+
+# A CHALLENGE PAGE'S OWN HEADING (B56 K2, the lead's ruling of 2026-09-26): "Prove your humanity" is a wall
+# only where the page itself says it — at the start of a line in its first 400 characters. Anywhere else
+# it is a quotation: the K1 run's Reddit post whose agent "hit Cloudflare's "prove your humanity" check"
+# (3,970 bytes; the phrase at character 955, inside a sentence) is a page, and was judged a wall when the
+# phrase was matched anywhere in the head.
+_CHALLENGE = re.compile(r"(?m)^\W*prove your humanity", re.I)
+CHALLENGE_CHARS = 400
 
 # The site's own error sentence, judged separately: measured 2026-09-17, it can sit on TOP
 # of a page that also carries the content, so it is a wall only when nothing else is there.
@@ -497,7 +509,7 @@ def looks_like_wall(text: str) -> bool:
         words = re.findall(r"[A-Za-z\u00c0-\u024f]{3,}", _NAVISH.sub(" ", body))
         if len(words) < QUOTA_MAX_WORDS:
             return True
-    return bool(_WALL.search(head))
+    return bool(_WALL.search(head) or _CHALLENGE.search(body[:CHALLENGE_CHARS]))
 
 
 def strip_boilerplate(text: str, want: int = 6000) -> str:

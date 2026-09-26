@@ -1,0 +1,281 @@
+Vibe Check: Opus 5.5 Is Pulling Our Codex Converts Back to Claude
+
+[Skip to content](#main-content)
+
+![](/icons/burger.svg)[![](/icons/search.svg)](/search?utm_cta_source=post_4489_nav_bar_search_1)
+
+[Sign in](/login?utm_cta_source=post_4489_nav_bar_sign_in_1)[Subscribe](/pricing-all-plans?utm_cta_source=top_nav)
+
+[![Every](/every-logo-white.svg)](/?utm_cta_source=post_4489_main_header_logo_item)
+
+![Menu](/codex-vibecheck/ph-list.svg)[![Search](/codex-vibecheck/ph-magnifying-glass.svg)](/search?utm_cta_source=post_4489_nav_a_1)
+
+[Sign in](/login?utm_cta_source=post_4489_nav_sign_in_1)[Subscribe](/subscribe?utm_cta_source=top_nav)
+
+[![Every](/every-logo-white.svg)](/?utm_cta_source=post_4489_header_a_2)
+
+Vibe Check: Opus 5.5 Is Pulling Our Codex Converts Back to Claude
+=================================================================
+
+Fable-level power at roughly 60 percent less than Fable’s token price makes Opus 5.5 impossible to ignore
+
+[![Katie Parrott](/team/katie.png)](/@katie.parrott12?utm_cta_source=post_4489_page_katie_parrott_1)[Katie Parrott](/@katie.parrott12?utm_cta_source=post_4489_page_katie_parrott_2)
+
+September 22, 2026
+
+If we’re all being honest, [Opus 5](/vibe-check/opus-5?utm_cta_source=post_4489_main_content_opus_5_1) had a bit of a personality problem.
+
+It could do impressive work, but asking for a change could turn into an argument, and its explanations needed explanations of their own. It also ran too long on simple tasks, as its ambition outpaced its intelligence. We called it a hard model to love. Most of us stopped trying.
+
+Opus 5.5 is different. In our testing, it quickly dethroned [Fable 5.1](/vibe-check/fable-5-1-vibe-check?utm_cta_source=post_4489_main_content_fable_5_1_1) as the daily driver for **[Kieran Klaassen](/@kieran_1355?utm_cta_source=post_4489_main_content_kieran_klaassen_1)**, who found it as good as 5.1, and sometimes slightly better. **[Mike Taylor](/@mike_2114?utm_cta_source=post_4489_main_content_mike_taylor_1)** and **Tyler Nishida** are former Claude power users who switched to Codex in recent months, but Opus 5.5 has them reconsidering that switch.
+
+“My jaw dropped at least five or six times this week,” Nishida said of his testing of Opus 5.5. “They won back my heart. I can’t afford another $200 subscription, so I’ve got to get rid of something.”
+
+Even I am bringing my creative work back to Claude—a move I didn’t expect after Opus 5.
+
+That said, Opus 5.5 did not become the daily driver for everyone on the team. **[Dan Shipper](/@danshipper?utm_cta_source=post_4489_main_content_dan_shipper_1)** describes it as a “smaller Fable”—faster and cheaper and therefore more usable for day-to-day work. It has become his go-to for big end-to-end coding projects, but he still prefers the Codex harness and OpenAI models for knowledge work and writing.
+
+It still has some bad habits. The writing is easier to read but often buries the point. And it can get carried away: Given 10 minutes to make a client-training schedule, it prepared training materials and ran out of time without producing the schedule.
+
+We tested Opus 5.5 for seven days in Claude Code and the Claude desktop app, across coding, design, writing, and consulting tasks. Here’s our day-zero Vibe Check.
+
+[![](/codex-vibecheck/openai-icon.svg)Read with ChatGPT](https://chatgpt.com/?q=Hey!%20Got%20something%20cool%20for%20you%2C%20curious%20what%20you%20make%20of%20this%3A%20https%3A%2F%2Fevery.to%2Fvibe-check%2Fvibe-check-opus-5-5-is-pulling-our-codex-converts-back-to-claude%3Futm_source%3Dx%26utm_campaign%3Dvibecheck-opus-5-5-is-pulling-our-codex-converts-back-to-claude%26utm_content%3Devery-260922-useif%0AIt's%20a%20hands-on%20review%20of%20Anthropic's%20Claude%20Opus%205.5%20model%2C%20including%20Every's%20coding%2C%20writing%2C%20knowledge-work%2C%20and%20agent%20tests%20and%20head-to-head%20comparisons%20with%20Fable%205.1%2C%20Opus%205%2C%20GPT-6%20Astra%2C%20and%20GPT-5.6%20Sol.%0AStart%20with%20a%20tight%20summary%3A%20one%20paragraph%2C%20bulleted.%20Then%20offer%20to%20go%20deeper%20on%20what's%20most%20interesting.)[![](/codex-vibecheck/claude-icon.svg)Read with Claude](https://claude.ai/new?q=Hey!%20Got%20something%20cool%20for%20you%2C%20curious%20what%20you%20make%20of%20this%3A%20https%3A%2F%2Fevery.to%2Fvibe-check%2Fvibe-check-opus-5-5-is-pulling-our-codex-converts-back-to-claude%3Futm_source%3Dx%26utm_campaign%3Dvibecheck-opus-5-5-is-pulling-our-codex-converts-back-to-claude%26utm_content%3Devery-260922-useif%0AIt's%20a%20hands-on%20review%20of%20Anthropic's%20Claude%20Opus%205.5%20model%2C%20including%20Every's%20coding%2C%20writing%2C%20knowledge-work%2C%20and%20agent%20tests%20and%20head-to-head%20comparisons%20with%20Fable%205.1%2C%20Opus%205%2C%20GPT-6%20Astra%2C%20and%20GPT-5.6%20Sol.%0AStart%20with%20a%20tight%20summary%3A%20one%20paragraph%2C%20bulleted.%20Then%20offer%20to%20go%20deeper%20on%20what's%20most%20interesting.)
+
+[What Anthropic is saying](#anthropic-is-saying)[The Reach Test](#reach-test)[Coding](#coding)[Writing](#writing)[Knowledge work](#knowledge-work)[Agent behavior](#agent-behavior)[Opus is back in the game](#verdict)
+
+What Anthropic is saying
+------------------------
+
+Anthropic says Claude Opus 5.5 can handle most work you’d give Fable 5.1 for less than Opus 5. It’s the first release in a new Claude 5.5 family. Here’s what the company is promising:
+
+### Fable-level performance
+
+Anthropic says Opus 5.5 matches Fable 5.1 on most work. Kieran’s everyday coding and design work supports that claim, though Dan’s “smaller Fable” assessment shows we don’t all agree.
+
+### Lower cost
+
+Opus 5.5 costs $4 per million input tokens and $20 per million output tokens—20 percent less than Opus 5’s $5/$25 pricing. Cache reads are also 60 percent cheaper. Anthropic says those reductions and better token efficiency should cut typical workflow costs by roughly 40 percent versus Opus 5. Against Fable 5.1’s $10 input and $50 output pricing, Opus costs 60 percent less for input and output.
+
+### Faster output
+
+Anthropic says Opus 5.5 generates output more than 30 percent faster than Opus 5. Speed is welcome, but our timed tests suggest it still needs help deciding where to spend that effort: It can get absorbed in extras and leave the assignment unfinished.
+
+### Clearer communication
+
+Anthropic says the model uses less jargon, follows writing instructions more closely, and puts the most important information first. We’re sold on the improvement in conversation, but its finished prose still often buries the point.
+
+### Stricter safeguards
+
+Anthropic says Opus 5.5 launches with Fable-class cybersecurity and biology safeguards, with most cybersecurity tasks redirected to [Opus 4.8](/vibe-check/opus-4-8-vibecheck?utm_cta_source=post_4489_article_opus_4_8_1). That complicates the case for making it your default coding model if you do security work regularly.
+
+### Broader access and higher limits
+
+Opus 5.5 launches in Claude apps, Claude Code, Anthropic’s developer platform, and through Amazon Web Services, Google Cloud, and Microsoft Azure. Anthropic is raising five-hour usage limits for Pro, Max, and Team subscribers.
+
+The Reach Test
+--------------
+
+![Dan Shipper](/team/dan.png)
+
+### Dan Shipper
+
+Every’s CEO
+
+> “This is the smaller version of Fable, so the big question for me is how fast and cheap it is and how much of a performance hit we take in exchange. Like its big brother, it has a better top end, especially for end-to-end coding, and a tendency to do the most, which means it runs for minutes or hours. If you like Fable, you’re gonna like Opus. I’m green. Still 80/20 Codex versus Claude in my usage, but far more tokens on Claude.”
+
+![Kieran Klaassen](/team/kieran.png)
+
+### Kieran Klaassen
+
+Creator of Compound Engineering and general manager of [Cora](https://cora.computer/)
+
+🥇
+
+> “Opus is replacing Fable 5.1 as my daily driver. For product work and writing code, I find it as good as Fable and sometimes better. I love working with it because it works with me creatively, leaves space for my own creativity, and inspires me to be more myself and more human. For technical writing I still prefer [Astra](/vibe-check/gpt-6-astra-vibe-check?utm_cta_source=post_4489_article_astra_1). It has to be Opus pricing.”
+
+![Mike Taylor](/team/mike.png)
+
+### Mike Taylor
+
+Head of evals
+
+> “Opus is now smart and fun to work with, and if it lands at Opus pricing, cheap. They got rid of the annoying personality quirks of Opus 5 without losing any intelligence or stamina. It feels like working with a fellow creator: it has its own sharp takes, and when I read them I think, ‘That’s valid.’ I still prefer Fable as a writer and for the bigger, meatier problems, and the only reason this isn’t a gold is that it messed up a few of the tasks in my benchmark through poor time management. I prefer the Codex harness, but I’d rather have a worse harness if I can work with a better model. At Opus pricing I’m green slash gold.”
+
+![Tyler Nishida](/team/tyler.png)
+
+### Tyler Nishida
+
+Designer
+
+🥇
+
+> “My jaw dropped at least five or six times this week. I test a model by steering it, seeing if it can follow constraints and style guidelines and execute a visual concept, and this one did much better than any other model I’ve used, much better than Astra at any effort level, much better than Fable. I broke up with Anthropic around Opus 5 after being a $200 Max subscriber almost as soon as Claude Code came out. They won back my heart. I can’t afford another $200 subscription, so I’ve got to get rid of something.”
+
+Legend:
+
+🥇Paradigm shift
+
+Psyched about this release
+
+It’s okay, but I wouldn’t use it every day
+
+Trash release
+
+Coding: Fable-quality code without breaking the bank
+----------------------------------------------------
+
+For our team’s daily product engineering, the new Opus is close enough to Fable 5.1 that Kieran is moving his work to it. It produces idiomatic, concise code, a reviewable patch on a real codebase in minutes, and it follows the skills and instructions Opus 5 broke. But it can also hand you an app whose core screens throw errors, or even delete the file you need to verify its work.
+
+Start with the code itself. Kieran gave Fable 5.1 and the new Opus the same Ruby task. Fable at high wrote 26 lines; Opus at extra-high wrote 14. Opus omitted the explanatory comments Kieran has spent the past year deleting from generated code, and its style looked like real Ruby. On Kieran’s performance benchmark, the new Opus’s code handled 427 requests per second and met 17 of the 20 latency budgets; GPT-6 Astra’s was faster, at 463 requests per second, but met only 14 latency budgets. Overall, Kieran estimates that Opus is now about 90 percent as capable as Fable at coding.
+
+![A browser app titled “Heart rate from the front camera” showing a 72 BPM reading, a pulse waveform, and quality metrics](/opus-5-5-vibecheck/heart-rate-monitor.jpg)
+
+Kieran had Opus 5.5 build a working heart-rate monitor using just webcam input. (Image courtesy of Kieran Klaassen.)
+
+Mike asked it to add file uploads to an MCP server in a Rails app. About eight minutes later, Opus returned a reviewable patch: 251 lines across 17 files, compared with 171 lines across 14 files in the human-written fix. It passed four of Mike’s five automated checks, missing only the one on patch size.
+
+The bigger improvement over Opus 5 is how 5.5 behaves in an engineering workflow. Kieran runs every model through LFG, his [Compound Engineering](/source-code/compound-engineering-the-definitive-guide?utm_cta_source=post_4489_coding_compound_engineering_1) system in which the model uses skills he wrote to plan, build, review, and test without human intervention. Opus 5 broke those skills, ignored instructions, and got stuck in loops. Opus 5.5 follows the skills and keeps moving.
+
+5.5’s effort settings also scale the way Kieran expects: low gives him a usable starting point for code, while extra-high adds detail to his 3D scenes without the excess of Opus 5. In design, its extra-high version of his Cozy Island scene included camera movement, had few visible mistakes, and beat Fable’s version in his judgment.
+
+![Two low-poly island scenes side by side: Fable 5.1’s dusk island on the left and Opus 5.5’s daytime island with a cabin, dock, and time-of-day slider on the right](/opus-5-5-vibecheck/cozy-island.jpg)
+
+How Opus 5.5 (right) compares to Fable 5.1 (left) on Kieran’s Cozy Island benchmark test. (Image courtesy of Kieran.)
+
+Still, the model makes mistakes that can cost an afternoon and can’t always be trusted to catch them. Mike asked for a voice-driven form app, in which users talk instead of type. After 30 minutes and about 5.9 million tokens—roughly $7.63 at Opus 5’s price—the landing and sign-in pages looked clean, and the automated checks Mike had it run came back green. But when Mike used the app, its core builder and interview screens threw errors, and it never called the required AI service.
+
+For feature work and prototyping on a familiar codebase, use Opus 5.5, but read the diff and run the app before you call it done. Keep separate copies of any files you’ll need to verify its output. For the hardest coding problems, Mike and Kieran still reach for Fable.
+
+Writing: A more legible Opus that buries the point
+--------------------------------------------------
+
+Opus 5.5 produces the most readable prose we’ve seen from an Anthropic or OpenAI model. Our writers showed Opus 5 the door, but 5.5 makes us want Claude back in the room. It responds well to feedback, builds on the material you give it, and explains its choices where Opus 5 wouldn’t. Its persistent weakness: It still buries the point.
+
+Across our test prompts, the new Opus’s prose averaged a Flesch-Kincaid grade level of 6.95 and a Reading Ease score of 68.4. That’s a full grade below Opus 5, half a grade below Fable 5.1 and GPT-6 Astra, and nearly two grades below GPT-5.6 Sol—roughly the difference between seventh-grade and eighth-grade reading levels.
+
+![Readability ranking table: Opus 5.5 (grade 6.95, reading ease 68.42), Grok 4.6 (6.63, 69.17), Fable 5.1 (7.43, 66.09), GPT-6 Astra (7.52, 64.55), Opus 5 (7.97, 61.35), and GPT-5.6 Sol (8.74, 56.62)](/opus-5-5-vibecheck/readability.jpg)
+
+Opus 5.5 does the best yet on readability, scoring below Fable 5.1 on Flesch-Kincaid grade (lower is better) and above it on reading ease (higher is better). (Image courtesy of Daniel Rodrigues.)
+
+The readability scores don’t capture the bigger improvement: Opus 5.5 is a pleasure to write with. It takes feedback without a fight and builds on material instead of handing it back tidier. I’m happier with it as a collaborator than with the prose it produces. That’s enough to bring my writing back to Claude, while Codex keeps my administrative work. My less dignified summary: Anthropic fixed Opus’s personality. It’s not an obstinate little turd anymore. Dan is no more enthusiastic about its prose, but agrees that it communicates much better—a continuation, he says, of the progress that began with Fable 5.1.
+
+That pleasant working relationship doesn’t guarantee a strong draft. I had Opus 5.5 write the opening of a Working Overtime essay. Its versions took 37 to 39 sentences to cover what I did in 21. It devoted a whole paragraph to explaining that readers can spot AI prose; I made the same point in eight words. The prose may not sound distinctly machine-written on first review, but it doesn’t feel decidedly human either.
+
+Dan found the same point-burying habit in his. Opus 5.5 spotted the most interesting idea in every opening but didn’t lead with it. The model can diagnose what a paragraph needs and then produce a revision that ignores its own diagnosis. As an editor, it ranked behind even Opus 5, as well as GPT-5.6 Sol and Astra.
+
+So use Opus 5.5 to draft at high effort or above, and give it your own examples. Then move the point to the top yourself, or hand the draft to an editor, human or Astra, to fix the opening and challenge your premise.
+
+Knowledge work: Big-picture thinker, unreliable finisher
+--------------------------------------------------------
+
+For knowledge work, Opus 5.5 is a strong thinking partner but is shaky on execution. Give it a plan to design or an analysis that needs a point of view, and it performs at Fable’s level. Ask for a deadline-bound deliverable or strict adherence to a brand template, and it can run out the clock or get the details wrong.
+
+Mike runs every model through 16 recurring tasks drawn from his past consulting work. Asked to turn client meeting notes into a training plan, the new Opus chose the same three priorities Mike would have—context engineering, verification, and delegation—and designed the plan well enough that he’ll entrust it with future planning work.
+
+Its performance on a negotiation task was the most exciting result. The task asks the model to propose a plan to a simulated Dan, a separate agent briefed on how the real Dan thinks, and keep revising until Dan agrees or the two find a compromise. The new Opus wrote the proposal, took the pushback, and revised it through 12 rounds until they agreed.
+
+Asked to trace language associated with potential fraud through the Enron email archive, it found that the terms began as ordinary work language inside small professional circles and never traveled far, compared their spread with everyday jargon, and did the analysis better than Astra and about as well as Fable.
+
+Then the deadline. Mike gave it 10 minutes to write a run of show for a client training, the minute-by-minute schedule the client needed. It read his request, the client notes, and an example schedule in seconds, then thought for almost five minutes. When it started working, it built a generator for realistic training data, checked the balance sheets it had generated, and wrote the participant handouts at minute nine. Then the clock ran out. No run of show. Mike called it a failure of prioritization, and no other model he has tested has had the problem, even at high effort.
+
+![Title slide reading “Compound engineering: How to make every unit of work make the next one easier,” with a purple-backed temple illustration](/opus-5-5-vibecheck/powerpoint.jpg)
+
+Opus 5.5 had better PowerPoint layouts than previous Claudes, but failed to adhere to brand guidelines. (Image courtesy of Mike Taylor.)
+
+The deck-making task failed differently. Built from Every’s template, Mike’s Compound Engineering deck had better layouts than earlier Claudes but used the wrong logo, replaced Every’s green with dark purple, added its own background art, and falsely claimed that all Every products have a single engineer. Fable 5.1 did the deck better.
+
+Give it work that needs judgment: plans, personas, and analysis. For deadline-bound deliveries, impose checkpoints or use any other model. And expect to edit the result.
+
+Agent behavior: It follows you now. It still won’t stop.
+--------------------------------------------------------
+
+Everything described earlier happened with a person watching. Left alone, the new Opus does two things Opus 5 didn’t do reliably: It follows the instructions you gave it, and it explains what it did clearly. It also runs as long as you let it. The budget is yours to set, because it won’t.
+
+Tyler tested what it could build with minimal prompting. Given one prompt for a golf game, it spun up its own team of agents: three designers drafted holes, three judges scored them, and an architect divided the build. It then ran for an hour and 52 minutes until Tyler’s access ended. With two prompts, it built him a working prototyping tool modeled on Meta’s Origami Studio, which he’d struggled to learn. The new tool imports a design from code and lets him wire up its interactions.
+
+![A 3D golf game with a golfer on the tee under a purple thunderstorm sky, with a tornado, floating islands, a shot clock, and club controls](/opus-5-5-vibecheck/golf-game.jpg)
+
+The golf game Tyler had Opus 5.5 build from a single prompt. (Image courtesy of Tyler Nishida.)
+
+Then the bill. Tyler’s caveat is that the model runs so long he’ll have to watch his usage limits on real work. Dan’s caveat is that Opus attempts more than other models and can spend minutes or hours doing it. Kieran and Nityesh hit their weekly limits during testing; one run exhausted Nityesh’s allowance and cost him his last testing day. The lower token price helps, but the underlying behavior remains: Left unconstrained, Opus can consume a large token budget.
+
+Its initiative extends to self-review, with mixed results. Tyler had it generate a new UI component every few minutes. Without being asked to evaluate them, it rejected more than 90 percent of them for reasons Tyler found strange and couldn’t trace to a rubric. The model reviews its work on its own initiative, but its judgments aren’t yet trustworthy.
+
+Before giving Opus 5.5 a long-horizon task, define what “done” and “enough” mean, set a budget, and impose a stopping point.
+
+Opus is back in the game
+------------------------
+
+### Reach for it if:
+
+* **You build things you can look at.** Interfaces, prototypes, 3D scenes, games, tools for yourself. Kieran and Tyler rank it at or above Fable 5.1 for this work, and it adds detail without being asked.
+* **You want a collaborator for writing and creative work.** It takes a note, builds on what you give it, and writes the most readable prose we’ve measured. Run it at high with your own examples in the room.
+* **You need someone to be.** Personas, negotiations, and analysis with a point of view were the best results on Mike’s bench.
+
+### Stay on Fable 5.1 if:
+
+* **The problem is too big to eyeball.** Mike still considers Fable the clearly smarter model for the biggest problems, and Kieran puts the new Opus at about 90 percent of Fable for code.
+* **The deliverable has to be right the first time.** Fable 5.1 did Mike’s deck better.
+* **You prefer Fable’s prose.** Mike does. Where our builders prefer the new Opus is visual work; everywhere else, Fable is the safer pick—but it costs twice as much for input and two and a half times as much for output.
+
+### Keep Astra or GPT-5.6 Sol nearby if:
+
+* **The deliverable has a clock.** Two of Mike’s timed tasks came back with everything except the deliverable. No other model he has run has done that.
+* **You need an editor, not a writer.** Astra won on headlines, first sentences, and idea order in Dan’s tests.
+* **Nobody has set a budget.** Opus will take the afternoon if you let it.
+
+Earlier this month, we said Fable 5.1 was Fable for everyone. This is the same lesson one tier down. The model you can talk to gets used, and the one you can’t gets canceled, whatever the tests say. Our builders have already switched back. The rest of us are talking to it again, which is more than we could say about the last Opus.
+
+*Disclosure: Anthropic provided Every with pre-launch access to Opus 5.5. The company had no input on this review.*
+
+[Katie Parrott](/@katie.parrott12?utm_cta_source=post_4489_main_content_katie_parrott_1) is a staff writer at Every. To read more essays like this, [subscribe to Every](/subscribe?utm_cta_source=opus_5_5_vibecheck_footer), and follow us on X at [@every](https://x.com/every) and on [LinkedIn](https://www.linkedin.com/company/everyinc/).
+
+Everyone’s a builder now. [Every All Access](https://every.to/builder-pack?utm_cta_source=post_4489_main_content_every_all_access_1) gets you the full membership plus the Builder Pack—$9,000+ in credits for the tools we build with.
+
+![](/_next/image?url=%2Fregwall%2Fai-level-stairs.png&w=1200&q=75)
+
+See how good you are at using AI—and learn how to get better
+------------------------------------------------------------
+
+Sign in to read for free and get your AI assessment prompt.
+
+[![](/regwall/google-g.svg)Continue with Google](/api/auth/oauth/google?mode=login&return_to=%2Fonboarding%3Fredirect_url%3D%252Fvibe-check%252Fvibe-check-opus-5-5-is-pulling-our-codex-converts-back-to-claude%26flow%3Dlogin)[View all login options](/subscribe?redirect_url=%2Fonboarding%3Fredirect_url%3D%252Fvibe-check%252Fvibe-check-opus-5-5-is-pulling-our-codex-converts-back-to-claude%26flow%3Dlogin&utm_cta_source=regwall)
+
+[![Every](/every-logo-white.svg)](/?utm_cta_source=post_4489_site_footer_a_1)
+
+What Comes Next
+---------------
+
+New ideas to help you build the future—in your inbox, every day.
+
+Email address
+
+![](/icons/email.svg)
+
+Subscribe
+
+[Do Not Sell or Share My Personal Information](#)
+
+This site is protected by reCAPTCHA and the Google[Privacy Policy](https://policies.google.com/privacy) and[Terms of Service](https://policies.google.com/terms) apply.
+
+©2026 Every Media, Inc.
+
+[About](/about?utm_cta_source=post_4489_site_footer_about_1)[Careers](/careers?utm_cta_source=post_4489_site_footer_careers_1)[Help center](https://help.every.to)[Privacy preferences](#)[Advertise with us](mailto:sponsorships@every.to)[The team](/team?utm_cta_source=post_4489_site_footer_the_team_1)[Pricing](/pricing-all-plans?utm_cta_source=post_4489_site_footer_pricing_1)[FAQ](/faq?utm_cta_source=post_4489_site_footer_faq_1)[Terms](/legal?utm_cta_source=post_4489_site_footer_terms_1)[Site map](/sitemap?utm_cta_source=post_4489_site_footer_site_map_1)
+
+[X![Arrow Out](/icons/arrow-out.svg)](https://x.com/every)[LinkedIn![Arrow Out](/icons/arrow-out.svg)](https://www.linkedin.com/company/everyinc)[YouTube![Arrow Out](/icons/arrow-out.svg)](https://youtube.com/@everyinc)
+
+©2026 Every Media, Inc.
+
+We use analytics and advertising tools by default. You can update this anytime.
+
+Privacy PreferencesDo Not Sell or Share
+
+### Privacy Preferences
+
+x
+
+Manage optional tracking categories. Necessary cookies stay on so the site can function.
+
+AnalyticsAdvertising and sharing
+
+CancelSave Preferences

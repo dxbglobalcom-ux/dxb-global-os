@@ -18,7 +18,10 @@ and a machine-marked read state on every row (EVIDENCE-B56-K1 §2.1), and this t
   Okundu      relevant addresses whose read_status is `read` — set only by evidence.py batch/page, when
               the machine printed the body to a hunter; a hunter's own "okundu" line counts nothing
   Kısmen      relevant addresses whose read_status is `partial`
-  Cevapta     distinct addresses behind the [Lxxxx] ids the answer cites ("-" without --answer)
+  Cevapta     distinct addresses behind the [Lxxxx] ids the answer cites and the ledger admits ("-"
+              without --answer): a cited row evidence.admissible refuses (EVIDENCE-B56-K2 §2.1) is not in
+              the answer — render.py strikes it, its drawer's "N cevapta" leaves it out, and so does this
+              column; a run older than the triage states admits none
   Elenen      `ilgisiz: <reason> ×k` per reason, then `tekrar ×k`
   Kapalı kapı `inaccessible` by its reason, `<reason> ×k`; a door that closed on a row no triage ever
               saw (a run made before the field) in the old words, `kapı kapalı: <reason> ×k`; and the
@@ -35,6 +38,9 @@ UNDER THE TABLE, the ledger's arithmetic, per platform and in total, in one line
     RECONCILED — bulundu = bekleyen + ilgili + ilgisiz + tekrar + kapalı · ilgili = okundu + kısmen +
                  okunmadı · okundu = hüküm verilen + hüküm bekleyen (the hunter's verdict on a read row)
 or `MISMATCH: <platform>: …` naming what broke it (a state the contract does not know) and its rows.
+With --answer, a second line: the claim ledger (EVIDENCE-B56-K2 §2.4) — <run>/claims.jsonl beside the
+answer, else claims.py's extract over it; render.py prints the same four under its "İddia defteri":
+    İDDİA: n iddia · t tek kaynak · c karşısız · i kabul edilmeyen alıntı
 
 One row per platform present (it has an address, or a ground channel of it ran) plus `web`.
 --legacy reads a run made before v2 (no evidence.jsonl) and prints its old five columns, unchanged:
@@ -166,8 +172,9 @@ def by_count(c: Counter) -> list[tuple[str, int]]:
     return sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))
 
 
-def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str]:
-    """The nine columns, the notes, and the ledger's line. evidence.py is imported here, not at the top:
+def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str]:
+    """The nine columns, the notes, the ledger's line and, with an answer, the claim ledger's line
+    (claim_line; "" without one). evidence.py is imported here, not at the top:
     --legacy never needs it, and a failure to load it is printed by main, never raised."""
     import evidence as E  # noqa: E402 — the ledger's owner: the address row, the states, their sums
     notes: list[str] = []
@@ -177,19 +184,23 @@ def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str]:
     every = read_jsonl(ev)
     ledger, odd = E.ledger_counts(run, every)
     by_id: dict[str, str] = {}
+    row_of: dict[str, dict] = {}
     for r in every:
         canon = r.get("url_canonical") or P.canonical_url(r.get("url") or "")
         if canon and r.get("id"):
-            by_id[r["id"]] = canon
-    cited = None
+            by_id[r["id"]], row_of[r["id"]] = canon, r
+    cited, said = None, ""
     if answer is not None:
         try:
-            ids, bad = citations(answer.read_text(encoding="utf-8", errors="replace"))
-            cited = {by_id[i] for i in ids if i in by_id}
+            md = answer.read_text(encoding="utf-8", errors="replace")
+            ids, bad = citations(md)
+            index = E.address_index(every) if hasattr(E, "admissible") else None     # render.py's rule, one owner
+            cited = {by_id[i] for i in ids if i in by_id and (index is None or E.admissible(row_of[i], index.get(i))[0])}
             unknown = sorted({i for i in ids if i not in by_id})
             if unknown:
                 notes.append("(cevaptaki bu kimlikler evidence.jsonl'da yok: " + " ".join(unknown[:12]) + ")")
             notes += [f"biçimsiz atıf: {g} ×{k}" for g, k in bad.items()]
+            said = claim_line(answer, md, every)
         except OSError:
             notes.append(f"(cevap dosyası okunamadı: {answer})")
     rows: dict[str, dict] = {}
@@ -212,7 +223,25 @@ def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str]:
             shut = [r for r in rs if r.get("liveness") in ("blocked", "dead")]
             if shut:
                 t["closed"][short_reason(shut[-1].get("notes"), shut[-1]["liveness"], shut[-1].get("http_status"))] += 1
-    return rows, notes, ledger_line(E, ledger, odd)
+    return rows, notes, ledger_line(E, ledger, odd), said
+
+
+def claim_line(answer: Path, md: str, every: list[dict]) -> str:
+    """The claim ledger in one line: <run>/claims.jsonl beside the answer when it is there (the claim
+    hunters' links and states live in it), else claims.py's extract over the answer — imported here, not
+    at the top, like evidence.py. It prints, never blocks: a ledger that cannot be had is said."""
+    try:
+        if (answer.parent / "claims.jsonl").is_file():
+            book = read_jsonl(answer.parent / "claims.jsonl")
+        else:
+            import claims as CL  # noqa: E402 — the claim ledger's owner: sides, admitted rows, sources
+            book = CL.extract_claims(P.split_paired(md), {r["id"]: r for r in every if isinstance(r.get("id"), str)})
+    except Exception as e:
+        return f"İDDİA: hesaplanamadı ({type(e).__name__}: {e})"
+    thin = sum(1 for c in book if c.get("thin"))
+    bare = sum(1 for c in book if not c.get("counter_rows"))
+    gone = len({i for c in book for i in c.get("inadmissible") or []})
+    return f"İDDİA: {len(book)} iddia · {thin} tek kaynak · {bare} karşısız · {gone} kabul edilmeyen alıntı"
 
 
 def table_legacy(run: Path, answer: Path | None, default_answer: bool = True) -> tuple[dict, list[str]]:
@@ -375,9 +404,11 @@ def main(argv: list[str] | None = None) -> int:
             rows, notes = table_legacy(run, answer, default_answer=not a.answer)
             print(render(rows, doors, present, a.format))
         else:
-            rows, notes, line = table_v2(run, answer)
+            rows, notes, line, said = table_v2(run, answer)
             print(render_v2(rows, doors, present, a.format))
             print(line)
+            if said:
+                print(said)
         for n in notes:
             print(n)
     except Exception as e:                        # the ruler prints; it does not stop the page

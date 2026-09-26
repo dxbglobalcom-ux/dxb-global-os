@@ -162,6 +162,9 @@ okunacak adres kalmadı
   named there in words, with the error `fetch` printed.
 - **KULLANDIĞIM SATIRLAR** are the ledger ids your verdict stands on — your rows and the ground's.
 - **`okunacak adres kalmadı`** only when `batch` printed it for every platform of yours.
+- **The claim roles (`karsi`, `bosluk`) hand back the lines their own prompt names instead** — one line per
+  claim of their list. What they found is the links they wrote with `claims.py link`; the fleet counts the
+  claim ledger, never their lines.
 - **No prose blocks, no quotes, no addresses.** Your quotes are rows already, and every row carries
   its address by construction. The summary counts the ledger, prints your lines as your claim, and
   names an id the ledger does not hold. Measured 2026-09-17 on a seven-hunter run of this very

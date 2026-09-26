@@ -41,6 +41,7 @@ import json
 import os
 import re
 import shlex
+import shutil
 import subprocess
 import sys
 import time
@@ -50,7 +51,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rlib  # noqa: E402
 
 SKILL = Path(__file__).resolve().parent.parent
-SCRAPLING = Path("/home/dxb/scrapling-env/bin/scrapling")
+SCRAPLING = Path(os.environ.get("DXB_SCRAPLING") or shutil.which("scrapling") or "/home/dxb/scrapling-env/bin/scrapling")
 MCPX = SKILL / "scripts" / "mcpx.sh"
 MIN_BODY = 400          # below this it is a stub, not a page
 UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "

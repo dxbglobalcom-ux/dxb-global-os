@@ -73,6 +73,8 @@ HOST_FILES=(
   tests/b46/ledger-states.test.ts
   tests/b46/completion-gate.test.ts
   tests/b46/render-drawer.test.ts
+  # B56 K2
+  tests/b46/claim-ledger.test.ts
 )
 
 # ── THE BENCH'S OWN RULER (CEO 2026-09-21: "tezgah kendini temizlesin her zaman

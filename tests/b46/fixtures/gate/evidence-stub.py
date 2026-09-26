@@ -10,12 +10,17 @@ own cases; what is measured here is what the FLEET does with the answers.
 `batch` cuts a body longer than --max-chars (partial, read_bytes where it stopped) and the next batch
 continues a partial row; `status --format json` carries each platform's `owed` = unread + partial +
 unjudged. FAKE_STATUS=unreadable makes `status` print nothing and leave with code 2.
+
+B56 K2: `writer-rows` prints the rows `admissible` admits (EVIDENCE-B56-K2 §2.1) in the writer's line and
+its stderr trailer; the claim ledger's stand-in (claims-stub.py) imports `admissible` and `address_of`.
 """
 import argparse
 import fcntl
 import json
 import os
+import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 ADD = "evidence.py add"
@@ -62,10 +67,38 @@ def addresses(rows):
     return [r for r in rows if r.get("tool") != ADD]
 
 
+def address_of(rows, r):
+    """The row's ADDRESS row: itself, or — for a quote kept with `add` — the address row of its url."""
+    return r if r.get("tool") != ADD else next((a for a in addresses(rows) if a["url"] == r["url"]), None)
+
+
+def admissible(r, addr):
+    """The contract's rule: the address is relevant with a body, and the row is a hunter's quote or the
+    address is judged evidence. Refused with the reason otherwise."""
+    if addr is None or not (addr.get("bytes") or 0):
+        return False, "gövde yok"
+    if addr.get("triage") != "relevant":
+        return False, f"elendi: {addr.get('triage')}"
+    if r.get("tool") == ADD or addr.get("verdict") == "evidence":
+        return True, ""
+    if addr.get("verdict") == "none":
+        return False, f"avcı: kanıt değil — {addr.get('verdict_reason') or '-'}"
+    return False, "hüküm yok"
+
+
+def writer_line(r):
+    one = lambda v: re.sub(r"\s+", " ", str(v or "")).strip()  # noqa: E731
+    said = one(r.get("passage") or r.get("title"))
+    said = said if len(said) <= 300 else said[:299].rstrip() + "…"
+    return (f'[{r["id"]}] {one(r.get("platform")) or "?"} · @{one(r.get("author")) or "?"} · '
+            f'{one(r.get("pub_date")) or "?"} · "{said}" · {one(r.get("url") or r.get("url_canonical"))}')
+
+
 def main():
     ap = argparse.ArgumentParser(prog="evidence.py")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ("from-ground", "list", "fetch", "status", "batch", "add", "verdict", "verdict-bulk", "show"):
+    for name in ("from-ground", "list", "fetch", "status", "batch", "add", "verdict", "verdict-bulk", "show",
+                 "writer-rows"):
         s = sub.add_parser(name)
         s.add_argument("run")
         if name == "show":
@@ -121,6 +154,20 @@ def do(g, run, rows):
             if g.unread and not (r["triage"] == "relevant" and r["read_status"] == "unread"):
                 continue
             print(f"{r['id']}\t{r['url']}\t{r['title']}\t{r['liveness']}")
+        return 0
+    if g.cmd == "writer-rows":
+        ok, refused = [], Counter()
+        for r in rows:
+            yes, why = admissible(r, address_of(rows, r))
+            if yes:
+                ok.append(r)
+            else:
+                refused[why.split(":")[0].split(" —")[0]] += 1
+        for r in sorted(ok, key=lambda r: (r["platform"], r["id"])):
+            print(writer_line(r))
+        print(f"writer-rows: {len(ok)} admissible · {sum(refused.values())} refused (verdict none {refused['avcı']} · "
+              f"hüküm yok {refused['hüküm yok']} · elendi {refused['elendi']} · gövde yok {refused['gövde yok']})",
+              file=sys.stderr)
         return 0
     if g.cmd == "show":
         for r in rows:

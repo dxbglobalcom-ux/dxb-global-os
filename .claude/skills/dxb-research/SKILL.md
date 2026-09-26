@@ -22,7 +22,9 @@ S="/home/dxb/DxB Global OS/.claude/skills/dxb-research"; export PATH="$S/bin:$PA
   platforms and accounting for the unread:
   `bash "$S/fleet/fleet.sh" <outdir> --q "<3-6 words>" [--q "<another phrasing>"] [--dert <his-words.txt>]`.
   It opens the ground, turns it into evidence rows, launches the hunters, counts the crowd, and prints
-  the coverage table; its writer step then writes `answer.md` from the rows (below). You write it
+  the coverage table; its writer step then drafts `answer.md` from the rows (below), two claim rounds
+  follow — `karsi` hunts counter-evidence for every verdict-carrying claim, `bosluk` a second source for
+  every single-source claim — and the writer folds what they found into the final answer. You write it
   yourself only for a quick question.
 
 ## Where to look — one command per platform
@@ -61,7 +63,7 @@ python3 "$S/scripts/evidence.py" list <outdir> --platform x                 # ev
 python3 "$S/scripts/evidence.py" list <outdir> --platform x --no-body       # only those with no body yet (skip blocked / dead)
 python3 "$S/scripts/evidence.py" fetch <outdir> --url <url> --print         # read a body; a closed door is recorded
 python3 "$S/scripts/evidence.py" add <outdir> --url <url> --quote "<verbatim>" [--author A --date D]   # -> L0042
-python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # the coverage table, nine columns + RECONCILED
+python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # the coverage table, nine columns + RECONCILED + İDDİA
 ```
 
 ## How to work
@@ -83,12 +85,17 @@ question you write it yourself, the same way — in Turkish, from the rows only:
   the quote, the author, the date and the address from the row. A number of people is a count only when
   `crowd.sh` counted it; anything else says "about". A comparison is a table.
 - **Beside every claim, the count** (his order, 2026-09-26): how many rows say so, of how many read —
-  `9 of 16 X posts` — with the strongest two as the examples; the rest are not dropped. **Under the
-  page, one section per platform** (X, YouTube, Reddit …) listing EVERY row the hunters brought there
-  as an openable address with its author and quote, long ones shortened — so he can browse the 130.
+  `9 of 16 X posts` — with the strongest two as the examples; the rest are not dropped. The page adds
+  the claim ledger's three numbers (`scripts/claims.py`): `(3 satır · 3 bağımsız kaynak · 3 karşı)` —
+  rows, independent sources (a distinct author, else a distinct address), counter rows; a claim's
+  counter-evidence is written on its line as `[A] ↔ [B]`. **Under the page, one section per platform**
+  (X, YouTube, Reddit …) listing EVERY row the hunters brought there as an openable address with its
+  author and quote, long ones shortened — so he can browse the 130.
 - Then `python3 "$S/scripts/render.py" <outdir>/answer.md --evidence <outdir>/evidence.jsonl` writes
-  `final.html` (and `final.md`) from the rows: the verdict on top, `(n satır)` beside every claim, a quote
-  card for every cited row, "Nereye bakıldı" (the coverage table) and the per-platform drawer.
+  `final.html` (and `final.md`) from the rows: the verdict on top, the three numbers beside every claim
+  (one source only in the warning colour; a row its hunter judged no evidence struck through, counted in
+  nothing), "İddia defteri" (the claim ledger as a table), a quote card for every cited row, "Nereye
+  bakıldı" (the coverage table) and the per-platform drawer.
 - Publish `final.html` as a designed Artifact through the Artifact tool and put it in front of him
   **at once**. No question first, no "md mi sayfa mı" (his word, 2026-09-26). Nothing is saved to the
   repository unless he says **"kaydet"**: then copy `final.html`, `final.md` and `evidence.jsonl` to

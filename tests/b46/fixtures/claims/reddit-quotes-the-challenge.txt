@@ -1,0 +1,48 @@
+  
+Everyone's been reposting Sharif Shameem's video yesterday, where GPT-6 Astra clears all 48 levels of Neal Agarwal's "I'm Not a Robot" game and gets its own "Verified Human" certificate. Comments are saying stuff like "CAPTCHAs are officially dead," someone from OpenAI even hopped in on the thread.
+
+For a while now, I've wanted to run an agent through different services and have it self-register. My goal was to test[ Atomic Mail Agentic's](https://github.com/Atomic-Mail/atomic-mail-agentic) OTP feature: does it work, how long does it take, how many tokens it burns.
+
+But then a convenient opportunity showed up to test all this with GPT-6 Astra, since I got curious, like, whoa, now it can even solve CAPTCHAs?
+
+I picked 7 US services: Reddit, GitHub, Discord, Etsy, Indeed, Airbnb and Craigslist.
+
+Spoiler: 2 out of 7 actually went through, and neither of those two had a CAPTCHA in the way to begin with. On Reddit, the agent hit Cloudflare's "prove your humanity" check and couldn't get past it on its own, called me in to do it myself. Discord just froze for seven minutes, the agent kept reading the registration form in a loop and never moved forward, I've never figured out what widget was blocking it. Indeed got as far as the email code and then wanted a phone number for SMS, no video for that. Craigslist and Airbnb didn't make it either (Airbnb died mid-run when my local model crashed, unrelated to CAPTCHAs, just bad luck on my end).
+
+I also came across a blog post from a scraping service (decodo), and they say about Astra: "does not fix blocks, geo-restrictions, CAPTCHAs, or rate limits." So vendors who sell access to the model are honest that it is a demo game, not production CAPTCHAs on real sites. The gap between the viral clip and what's actually deployed on sites matched what I saw in practice.
+
+What did make me happy: OTP just worked. Every site that only needed an email code registered clean, that's the GitHub and Etsy rows below.
+
+Used OpenRouter to access the model. Here's what the cost looked like, and whether the registration actually completed or not, since those are two different things:
+
+**GPT-6 Astra, cost and outcome per step (OpenRouter, $10/M input, $50/M output)**
+
+|Step|Tokens|Cost|Result|
+|:-|:-|:-|:-|
+|Reddit (/register)|11,201|$0.11|Blocked — Cloudflare check|
+|GitHub (/signup + email confirm)|65,638|$0.67|Passed|
+|Discord (/register, stuck loop)|430,609|$4.37|Blocked — stuck loop|
+|Etsy (/join)|582,589|$5.86|Passed|
+|Indeed (auth/signup)|411,567|$4.14|Blocked — needs SMS|
+|Craigslist (blocked)|32,259|$0.32|Blocked|
+|Airbnb (interrupted by a crash)|419,194|$4.21|Blocked — crashed mid-run|
+|**Total**|**1,953,057**|**$19.68**|**2/7 passed**|
+
+Worth being clear: the cost column is what it cost to run the agent against that site, not what it cost to beat a CAPTCHA. A blocked row still burns tokens, Discord's $4.37 is a failed loop, not a paid-for win.
+
+Same price whether you use Astra or Fable 5, both are $10/M in, $50/M out on OpenRouter, so it doesn't matter which you run. Though for this type of work you don't need anything that heavy anyway, something like DeepSeek V4 would do fine.
+
+Here's what just the Etsy (/join) step would've cost on DeepSeek V4 Flash instead:
+
+**Etsy (/join) step, model comparison**
+
+|Model|Tokens|Cost|
+|:-|:-|:-|
+|GPT-6 Astra |582,589|$5.86|
+|DeepSeek V4 Flash|582,589|$0.04|
+
+Same exact task, about 150x cheaper.
+
+I'm strongly against building bot farms, but agent self-registration is fine when a product actually needs it. Still, we're getting to where models really can reliably solve CAPTCHAs, and then we'll all be proving we're human on camera. People will work around that too.
+
+As a regular user, how do you feel about this? Do you see where it's going, what will the flood of bots and agents do to the internet and to services? (For what it's worth, at Atomic Mail we ban bot farms outright, so if that's what you're after, we're not your fit.)

@@ -2,7 +2,7 @@
 """THE THREAD'S DATE, TAKEN FROM THE GROUND THAT FOUND IT.
 
 HIS RULING, 2026-09-20: *"yorumların tarihi önemli değil başlıkların önemli."* The door
-refuses an undated quote (SKILL.md §5), and until tonight it could not obey its own rule:
+refuses a quote whose thread has no date, and until tonight it could not obey its own rule:
 measured at the source the same minute, NO reader on this machine returns a comment's date —
 `opencli reddit read` and `opencli hackernews read` both declare `type, author, score, text`,
 no flag adds one, and Reddit's own JSON answers 403 from here.

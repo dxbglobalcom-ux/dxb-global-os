@@ -358,7 +358,7 @@ def _pages() -> int:
 
 
 # THE REPOSITORY this file lives in (…/.claude/skills/dxb-research/scripts → four folders up). A run
-# never writes there: a record is fleet/keep.sh's, and only on his "kaydet" (SKILL.md §7).
+# never writes there: a record is fleet/keep.sh's, and only when he says "kaydet".
 REPO = HERE.parents[3] if (HERE.parents[3] / ".git").exists() else None
 
 
@@ -373,7 +373,7 @@ def _prepare(out: Path) -> str | None:
     .planning/research/answers/ holds a question.txt (refuter, 2026-09-24), so question.txt proves
     nothing about whose folder it is."""
     if REPO and out.resolve().is_relative_to(REPO):
-        _refuse(f"{out} depo icinde — kosular depoya yazmaz (SKILL.md §7); depo disinda bir klasor ver")
+        _refuse(f"{out} depo icinde — kosular depoya yazmaz, kayit yalniz o \"kaydet\" deyince keep.sh ile; depo disinda bir klasor ver")
     if out.exists() and not out.is_dir():
         _refuse(f"{out} bir klasor degil")
     if out.is_dir() and any(out.iterdir()):

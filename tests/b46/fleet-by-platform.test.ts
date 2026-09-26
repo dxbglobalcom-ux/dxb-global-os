@@ -12,9 +12,13 @@
 // with. Who owns which platform, what each prompt carries, how a hunter is launched and what the
 // summary counts are the real fleet.sh and merge.py. The real evidence.py and kapsama.py are Lane
 // A's and have their own cases; a real hunter costs money and is the lead's live run.
+//
+// B56 K2: the roster carries the tail's two claim roles (karsi, bosluk), which own no platform and are
+// never launched as hunters; merge.py's PARA is a role's whole bill and Google read through hidden.py is
+// the Google door; the crowd's threads come from the ledger; keep.sh names the folder after the first query.
 
-import { execFileSync } from "node:child_process";
-import { chmodSync, copyFileSync, cpSync, readFileSync, readdirSync } from "node:fs";
+import { execFileSync, spawnSync } from "node:child_process";
+import { chmodSync, copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Bench, makeBench } from "./engine-copy.js";
@@ -22,6 +26,7 @@ import { Bench, makeBench } from "./engine-copy.js";
 const FLEET_DIR = join(process.cwd(), ".claude/skills/dxb-research/fleet");
 const FX = join(import.meta.dirname, "fixtures", "fleet");
 const SEVEN = ["x", "video", "forums", "pro", "code", "foreign", "counter"];
+const TAIL_ROLES = ["karsi", "bosluk"];
 // the one classifier's platform names (scripts/platforms.py, EVIDENCE-B56 "THE CONTRACTS")
 const PLATFORMS = ["x", "youtube", "tiktok", "instagram", "facebook", "linkedin", "reddit", "hackernews", "github",
   "bluesky", "threads", "quora", "stackoverflow", "chinese", "medium", "substack", "web"];
@@ -62,8 +67,11 @@ afterAll(() => b?.dispose());
 
 describe("the roster — seven hunters, every platform with one owner, on his model", () => {
   it("names the seven, gives each its platforms in the classifier's words, and owns no platform twice", () => {
-    const rows = roles().trim().split("\n").map((l) => l.split("\t"));
+    const all = roles().trim().split("\n").map((l) => l.split("\t"));
+    const rows = all.filter((r) => !TAIL_ROLES.includes(r[0]));
     expect(rows.map((r) => r[0]).sort()).toEqual([...SEVEN].sort());
+    // the tail's claim roles work the claim ledger, not a platform: their column is `all`
+    expect(all.filter((r) => TAIL_ROLES.includes(r[0])).map((r) => `${r[0]} ${r[1]}`)).toEqual(["karsi all", "bosluk all"]);
     const owned = rows.flatMap((r) => r[1].split(" ")).filter((p) => p !== "rest");
     for (const p of owned) expect(PLATFORMS, `"${p}" is not a platform of the classifier`).toContain(p);
     expect(new Set(owned).size, "a platform has two owners").toBe(owned.length);
@@ -147,7 +155,62 @@ describe("the fleet, run — what each hunter is handed and how it is launched",
   it("names a platform no hunter of the run owns, instead of dropping it", () => {
     const r = fleet(join(b.root, "run-two"), "--q", "astra 6 vs fable 5.1", "--roles", "x,forums", "--timeout", "30");
     expect(r.stdout).toMatch(/!! SAHIPSIZ PLATFORM: .*\byoutube\b.*\bweb\b/);
+    expect(r.stdout, "the claim roles' `all` is not a platform").not.toMatch(/!! SAHIPSIZ PLATFORM:[^\n]*\ball\b/);
   }, 90_000);
+
+  it("never launches a claim role as a hunter, even when --roles names it", () => {
+    const run = join(b.root, "run-tail-roles");
+    const r = fleet(run, "--q", "astra 6 vs fable 5.1", "--roles", "x,karsi,bosluk", "--timeout", "30");
+    expect(r.stdout, r.stdout.slice(-1500)).toMatch(/^avcilar : x$/m);
+    expect(readdirSync(run).filter((n) => /^list-.+\.tsv$/.test(n))).toEqual(["list-x.tsv"]);
+    expect(existsSync(join(run, "work-karsi", "launch.txt"))).toBe(false);
+  }, 90_000);
+});
+
+describe("crowd-urls.sh — the crowd's threads come from the ledger first", () => {
+  /** crowd-urls.sh beside a ledger that answers `list` from <run>/evidence.jsonl (the gate bench's stand-in). */
+  function crowdUrls(name: string, rows: object[], ...args: string[]): { out: string[]; err: string } {
+    const root = join(b.root, name);
+    mkdirSync(join(root, "fleet"), { recursive: true });
+    mkdirSync(join(root, "scripts"), { recursive: true });
+    mkdirSync(join(root, "run"), { recursive: true });
+    copyFileSync(join(b.engine, "fleet", "crowd-urls.sh"), join(root, "fleet", "crowd-urls.sh"));
+    copyFileSync(join(import.meta.dirname, "fixtures", "gate", "evidence-stub.py"), join(root, "scripts", "evidence.py"));
+    writeFileSync(join(root, "run", "evidence.jsonl"), rows.map((r) => JSON.stringify(r) + "\n").join(""));
+    const r = spawnSync("bash", [join(root, "fleet", "crowd-urls.sh"), join(root, "run"), ...args],
+      { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
+    return { out: r.stdout.split("\n").filter(Boolean), err: r.stderr };
+  }
+  const row = (id: number, platform: string, url: string, liveness = "alive") =>
+    ({ id: `L${String(id).padStart(4, "0")}`, platform, url, title: `row ${id}`, liveness, tool: "sweep" });
+
+  it("cuts a comment back to its thread, keeps one line per thread and at most --cap of them", () => {
+    // 45 threads, a comment of the first one, a thread with no body, and a Hacker News item
+    const rows = [...Array.from({ length: 45 }, (_, i) => row(i + 1, "reddit", `https://www.reddit.com/r/bench/comments/t${i}/thread_${i}/`)),
+      row(46, "reddit", "https://www.reddit.com/r/bench/comments/t0/thread_0/c9zz/"),
+      row(47, "reddit", "https://www.reddit.com/r/bench/comments/gone1/deleted/", "dead"),
+      row(48, "hackernews", "https://news.ycombinator.com/item?id=4957")];
+    const capped = crowdUrls("cu-cap", rows, "--cap", "40");
+    expect(capped.out).toHaveLength(40);
+    expect(new Set(capped.out).size).toBe(40);
+    expect(capped.out[0]).toBe("https://www.reddit.com/r/bench/comments/t0");
+    expect(capped.err).toMatch(/^crowd-urls: 40 baslik \(defterden\)$/m);
+    const whole = crowdUrls("cu-all", rows, "--cap", "100");
+    expect(whole.out).toHaveLength(46); // 45 threads + the HN item: the comment is its thread, the dead one has no body
+    expect(whole.out.filter((u) => u.endsWith("/comments/t0"))).toHaveLength(1);
+    expect(whole.out).toContain("https://news.ycombinator.com/item?id=4957");
+    expect(whole.out.join("\n")).not.toMatch(/gone1/);
+  });
+
+  it("falls back to the grounds' raw files when the ledger holds no thread, and says so", () => {
+    const ground = join(b.root, "cu-ground");
+    mkdirSync(ground, { recursive: true });
+    writeFileSync(join(ground, "reddit.raw"),
+      "url: https://www.reddit.com/r/bench/comments/abc123/update\\_employee\\_rules/\nurl: https://news.ycombinator.com/item?id=77).\n");
+    const r = crowdUrls("cu-fallback", [row(1, "x", "https://x.com/a/status/1")], ground);
+    expect(r.out).toEqual(["https://news.ycombinator.com/item?id=77", "https://www.reddit.com/r/bench/comments/abc123/update_employee_rules/"]);
+    expect(r.err).toMatch(/^crowd-urls: 2 baslik \(zeminden\)$/m);
+  });
 });
 
 describe("merge.py — the summary counts; it does not narrate", () => {
@@ -170,5 +233,47 @@ describe("merge.py — the summary counts; it does not narrate", () => {
     expect(out).not.toContain("nesir paragrafıdır");
     expect(out).toMatch(/\[x\] \+1 satir nesir — ozete alinmadi/);
     expect(out).toMatch(/INSAN \(sayildi\): 7 ayri kisi · 10 yorum · 2 baslik/);
+  });
+
+  it("sums PARA over every round of a role, and counts a Google search read through hidden.py as the Google door", () => {
+    const dir = join(b.root, "merge-para");
+    mkdirSync(dir, { recursive: true });
+    const events = [
+      { type: "assistant", message: { content: [{ type: "tool_use", id: "g1", name: "Bash",
+        input: { command: 'python3 "/engine/scripts/hidden.py" google "astra 6 vs fable 5.1"' } }] } },
+      { type: "user", message: { content: [{ type: "tool_result", tool_use_id: "g1", content: "1. https://example.org/a" }] } },
+      { type: "result", total_cost_usd: 0.41, result: "HÜKÜM: round one\n" },
+      { type: "result", total_cost_usd: 0.1, result: "HÜKÜM: round two\nKULLANDIĞIM SATIRLAR: L0001\n" },
+    ];
+    writeFileSync(join(dir, "forums.jsonl"), events.map((e) => JSON.stringify(e) + "\n").join(""));
+    writeFileSync(join(dir, "forums.meta"), "rc=0\nsecs=40\ntmo=600\nrounds=2\n");
+    for (const ledger of ["claims.jsonl", "claims.draft.jsonl"]) writeFileSync(join(dir, ledger), '{"id": "C001", "support": ["L0001"]}\n');
+    const out = execFileSync("python3", [join(b.engine, "fleet", "merge.py"), dir], { encoding: "utf8",
+      env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
+    const hunter = out.split("\n").find((l) => l.startsWith("forums")) ?? "";
+    expect(hunter.trim().split(/\s+/)[2], out).toBe("0.51");
+    expect(hunter).toMatch(/\bgoogle\b/);
+    expect(out).toMatch(/\[forums\] round two/); // the HÜKÜM that stands is the last round's
+    expect(out, "a claim ledger is not a hunter's transcript").not.toMatch(/^claims|\[claims(\.draft)?\]/m);
+  });
+});
+
+describe("keep.sh — the kept answer is named after its question and carries its claim ledger", () => {
+  it("slugs the first query line, not the fleet's header, and keeps the ledger, the draft and its ledger", () => {
+    const out = join(b.root, "keep-run");
+    mkdirSync(out, { recursive: true });
+    const q = join(out, "question.txt");
+    writeFileSync(q, "DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):\nWho prefers which one, and why?\n\n" +
+      "SORGULAR (zemin bunlarla acildi):\n  - astra 6 vs fable 5.1\n  - astra 6 reddit\n");
+    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl"]) writeFileSync(join(out, f), "x\n");
+    const kept = join(b.root, "kept");
+    execFileSync("bash", [join(b.engine, "fleet", "keep.sh"), q, out], { encoding: "utf8",
+      env: { ...process.env, DXB_RESEARCH_ANSWERS: kept } });
+    const folders = readdirSync(kept);
+    expect(folders).toHaveLength(1);
+    expect(folders[0]).toMatch(/^\d{8}-\d{4}-astra-6-vs-fable-5-1$/);
+    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl", "question.txt"]) {
+      expect(existsSync(join(kept, folders[0], f)), f).toBe(true);
+    }
   });
 });

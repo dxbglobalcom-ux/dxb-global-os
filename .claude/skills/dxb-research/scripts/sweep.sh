@@ -92,7 +92,7 @@ fi
 # answered NOT_FOUND and `hackernews` 400, because no human types a paragraph into a box.
 #
 # Shortening the paragraph was not the repair; it hid the symptom. The repair: the session
-# types SHORT queries itself, a few words each (SKILL.md §0), and only such a query is fired
+# types SHORT queries itself, a few words each, never his sentence, and only such a query is fired
 # here. This wall is what makes that non-optional — it stands ABOVE the fan-out, so a
 # paragraph is refused before one channel is opened, and it refuses on the engine's own
 # judgement (`shortq.py --gate`, ONE owner of what a box query is), never on a second copy of

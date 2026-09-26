@@ -128,7 +128,10 @@ if dp.exists():
             u_, d_ = line.split("\t", 1)
             dates[u_.strip()] = d_.strip()[:10]
 undated = []
-with (out / "CROWD.txt").open("w", encoding="utf-8") as fh:
+# CROWD.txt IS WRITTEN WHOLE OR NOT AT ALL (B56 K2): opened "w" in place, a re-run that failed half-way
+# wiped the earlier run's comments; now it is written beside, as CROWD.txt.tmp, and renamed over it.
+tmp = out / "CROWD.txt.tmp"
+with tmp.open("w", encoding="utf-8") as fh:
     for n, u in idx.items():
         y = td / f"{n}.yaml"
         if not y.exists() or y.stat().st_size == 0:
@@ -158,12 +161,14 @@ with (out / "CROWD.txt").open("w", encoding="utf-8") as fh:
         host = u.split("/")[2].lower() if len(u.split("/")) > 2 else u
         people |= {(host, a) for a in authors}
         rows.append((u, n_c, len(authors), when))
+tmp.replace(out / "CROWD.txt")
 print(f"{'okunan':>7} {'ayri insan':>11} {'baslik tarihi':>14}  adres")
 for u, c, a, when in sorted(rows, key=lambda r: -r[1]):
     print(f"{c:>7} {a:>11} {when:>14}  {u[:72]}")
 print(f"\nTOPLAM: {sum(r[1] for r in rows)} yorum · {len(people)} ayri insan · {len(rows)} baslik")
 # A DATE THAT COULD NOT BE ESTABLISHED IS PRINTED, NEVER PASSED OVER. The door refuses an
-# undated quote (SKILL.md §5); it can only do that if the count is in front of it.
+# undated quote — a quote is checked against the date of its thread; it can only do that if the count
+# is in front of it.
 print(f"TARIHSIZ: {len(undated)}/{len(rows)} baslik" + (" — " + ", ".join(u[:60] for u in undated[:3]) if undated else ""))
 # THE MACHINE'S OWN COUNT, in a line a script can read back. The fleet's summary used to take
 # the denominator out of a hunter's prose; it takes it from here now.

@@ -18,20 +18,28 @@
 // AUTH_REQUIRED (exit 77) and linkedin answered four empty bytes. run-legacy holds seven entries of
 // its sources.json, two tool calls from its hunters' transcripts (plus one constructed Bash call that
 // names an X address without a reader) and the first source line of its final.md.
+//
+// K2 (EVIDENCE-B56-K2 §2.4): with --answer a second footer line counts the claim ledger — İDDİA: n iddia ·
+// t tek kaynak · c karşısız · i kabul edilmeyen alıntı — from claims.jsonl beside the answer, else from
+// claims.py over the answer; that case runs the engine's scripts copied, the real claims.py among them, on
+// fixtures/render/k1-cut (five claim lines of the kept K1 answer and their 34 rows). And Cevapta leaves out
+// a cited row the ledger refuses (evidence.admissible), as the page's drawer does: an old run's rows, all
+// pending, count in nothing.
 
 import { execFileSync } from "node:child_process";
-import { appendFileSync, cpSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { SKILL } from "./engine-copy.js";
 
 const FIX = join(dirname(resolve(import.meta.filename)), "fixtures", "evidence");
+const RENDER = join(dirname(resolve(import.meta.filename)), "fixtures", "render");
 const KAPSAMA = join(SKILL, "scripts", "kapsama.py");
 
-function kapsama(args: string[]): { out: string; code: number } {
+function kapsama(args: string[], script = KAPSAMA): { out: string; code: number } {
   try {
-    const out = execFileSync("python3", [KAPSAMA, ...args], {
+    const out = execFileSync("python3", [script, ...args], {
       encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" }, stdio: ["ignore", "pipe", "pipe"],
     });
     return { out, code: 0 };
@@ -50,9 +58,10 @@ describe("kapsama.py — prints, never blocks", () => {
     expect(r.code, r.out).toBe(0);
     expect(r.out).toMatch(NINE);
     expect(row(r.out, "X")).toBe("");                                   // no X address, no X row
-    // the closed door of a row no triage ever saw is still named, in the old words
-    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 2 | 0 | 0 | 0 | 1 | — | kapı kapalı: opencli reddit read kod 1 ×1 |");
-    expect(row(r.out, "Web (diğer)")).toBe("| Web (diğer) | 1 | 0 | 0 | 0 | 0 | 1 | — | — |");
+    // the closed door of a row no triage ever saw is still named, in the old words; the two cited rows are
+    // pending, so the ledger admits neither and Cevapta is 0 (K2; K1 printed 1 and 1)
+    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 2 | 0 | 0 | 0 | 0 | — | kapı kapalı: opencli reddit read kod 1 ×1 |");
+    expect(row(r.out, "Web (diğer)")).toBe("| Web (diğer) | 1 | 0 | 0 | 0 | 0 | 0 | — | — |");
     expect(r.out).toContain("RECONCILED — bulundu 4 = bekleyen 4 + ilgili 0 + ilgisiz 0 + tekrar 0 + kapalı 0 · "
       + "ilgili 0 = okundu 0 + kısmen 0 + okunmadı 0 · okundu 0 = hüküm verilen 0 + hüküm bekleyen 0");
   });
@@ -75,8 +84,9 @@ describe("kapsama.py — prints, never blocks", () => {
       + "ilgisiz: Free access tip only ×1 · tekrar ×1 | — |");
     expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 1 | 1 | 0 | 0 | 1 | — | opencli reddit read kod 1 ×1 |");
     expect(row(r.out, "YouTube")).toBe("| YouTube | 2 | 2 | 1 | 1 | 0 | 1 | ilgisiz: Only a thumbnail, no words ×1 | — |");
+    // both read rows carry their hunter's verdict (L0010's was added with K2, so the ledger admits it)
     expect(r.out).toContain("RECONCILED — bulundu 12 = bekleyen 2 + ilgili 4 + ilgisiz 4 + tekrar 1 + kapalı 1 · "
-      + "ilgili 4 = okundu 2 + kısmen 1 + okunmadı 1 · okundu 2 = hüküm verilen 1 + hüküm bekleyen 1");
+      + "ilgili 4 = okundu 2 + kısmen 1 + okunmadı 1 · okundu 2 = hüküm verilen 2 + hüküm bekleyen 0");
   });
 
   it("its sums are evidence.py status's own, number for number", () => {
@@ -113,14 +123,43 @@ describe("kapsama.py — prints, never blocks", () => {
     const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));
     const answer = join(dir, "answer.md");
     writeFileSync(answer, "Bir [L0001]. İki [bkz. L0002]. Üç [L0001 ]. Dört [l0003]. Beş [L0001, L0002].\n");
-    const r = kapsama([join(FIX, "run-coverage"), "--answer", answer]);
+    // K2: a cited row counts only when the ledger admits it — the old run's two posts, judged evidence here
+    const run = join(dir, "run");
+    cpSync(join(FIX, "run-coverage"), run, { recursive: true });
+    const judged = readFileSync(join(run, "evidence.jsonl"), "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l))
+      .map((x) => ["L0001", "L0002"].includes(x.id) ? { ...x, triage: "relevant", verdict: "evidence" } : x);
+    writeFileSync(join(run, "evidence.jsonl"), judged.map((x) => JSON.stringify(x)).join("\n") + "\n");
+    const r = kapsama([run, "--answer", answer]);
     rmSync(dir, { recursive: true, force: true });
     expect(r.code, r.out).toBe(0);
-    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 2 | 0 | 0 | 0 | 2 | — | kapı kapalı: opencli reddit read kod 1 ×1 |");
+    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 2 | 2 | 0 | 0 | 2 | — | kapı kapalı: opencli reddit read kod 1 ×1 |");
     expect(row(r.out, "Web (diğer)")).toBe("| Web (diğer) | 1 | 0 | 0 | 0 | 0 | 0 | — | — |");
     for (const bad of ["[bkz. L0002]", "[L0001 ]", "[l0003]"]) expect(r.out).toContain(`biçimsiz atıf: ${bad} ×1`);
     expect(r.out).not.toContain("biçimsiz atıf: [L0001]");
     expect(r.out).not.toContain("biçimsiz atıf: [L0001, L0002]");
+  });
+
+  it("with --answer, counts the claim ledger under RECONCILED: claims.jsonl beside the answer, else claims.py", () => {
+    const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));
+    cpSync(join(SKILL, "scripts"), join(dir, "engine"), { recursive: true, filter: (s) => !s.includes("__pycache__") });
+    cpSync(join(RENDER, "k1-cut"), join(dir, "run"), { recursive: true });
+    const run = join(dir, "run");
+    const script = join(dir, "engine", "kapsama.py");
+    const computed = kapsama([run, "--answer", join(run, "answer.md")], script);
+    const bare = kapsama([run], script);
+    writeFileSync(join(run, "claims.jsonl"), JSON.stringify({ id: "C001", line: 1, thin: true, counter_rows: 0, inadmissible: ["L1071", "L0506"] }) + "\n");
+    const fromFile = kapsama([run, "--answer", join(run, "answer.md")], script);
+    rmSync(dir, { recursive: true, force: true });
+    expect(computed.code, computed.out).toBe(0);
+    const lines = computed.out.split("\n");
+    expect(lines[0]).toMatch(NINE);
+    // L1071's post (x.com), cited on line 71 and refused, is not in X's Cevapta — the drawer's "2 cevapta"
+    expect(row(computed.out, "X")).toBe("| X | 3 | 3 | 3 | 3 | 0 | 2 | — | — |");
+    // the verdict, a table row, K1's lines 66, 69 (one source) and 71 (L1071, judged no evidence)
+    expect(lines[lines.findIndex((l) => l.startsWith("RECONCILED")) + 1])
+      .toBe("İDDİA: 5 iddia · 1 tek kaynak · 3 karşısız · 1 kabul edilmeyen alıntı");
+    expect(fromFile.out).toContain("\nİDDİA: 1 iddia · 1 tek kaynak · 1 karşısız · 2 kabul edilmeyen alıntı\n");
+    expect(bare.out).not.toContain("İDDİA");
   });
 
   it("exits 1 only when the run folder does not exist", () => {

@@ -93,7 +93,10 @@ P[twitter]="opencli twitter search 'site reliability' -f yaml"
 P[hackernews]="opencli hackernews search 'site reliability' -f yaml"
 P[stackoverflow]="opencli stackoverflow search 'site reliability' -f yaml"
 P[bluesky]="opencli bluesky search 'site reliability' -f yaml"
-P[linkedin]="opencli linkedin search 'site reliability' -f yaml"
+# LinkedIn is probed where the research reads it — public posts. `opencli linkedin search` is LinkedIn's
+# JOB search (clis/linkedin/search.js asks voyagerJobsDashJobCards; read 2026-09-26), so a LIVE there
+# said nothing about the posts the pro hunter finds with `mcpx.sh exa "linkedin.com/posts <q>"`.
+P[linkedin]="bash \"$SKILL/scripts/mcpx.sh\" exa 'linkedin.com/posts claude' 3"
 P[youtube]="opencli youtube search 'site reliability' -f yaml"
 P[zhihu]="opencli zhihu search '可靠性' -f yaml"
 P[linux-do]="opencli linux-do search 'claude' -f yaml"

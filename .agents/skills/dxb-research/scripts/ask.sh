@@ -129,7 +129,10 @@ fi
 
 # ================================================================== the gather
 Q="${1:-}"; OUT="${2:-}"; OUT="${OUT%/}"
-shift 2 2>/dev/null || true
+# ONE BARE ARGUMENT IS A QUESTION WITHOUT A FOLDER, not an option: `shift 2` on one word shifts nothing,
+# and the question itself reached the loop below as "bilinmeyen secenek" (measured 2026-09-26, B56 K2).
+# What is there is shifted, and the usage answers.
+shift 2 2>/dev/null || shift $#
 PAGES=10; FORCE=0
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -166,8 +169,10 @@ fi
 # geliştirici"). "Which region is preferred" names nobody and stays here, and so does a plan's limit:
 # "how many monthly active users does the free plan allow" asks for a number the vendor wrote, not
 # for people — a count question beside a limit word (LIMIT) is not routed. Matched on folded text
-# (I/İ/ı/i one letter, accents off). Measured on 16 counting/opinion and 10 factual questions,
-# 2026-09-24 (P4 round-1 repairs, B1).
+# (I/İ/ı/i one letter, accents off, a typographic apostrophe ’ ‘ ʼ the ASCII '). Measured on 16
+# counting/opinion and 10 factual questions, 2026-09-24 (P4 round-1 repairs, B1); the apostrophe on
+# 2026-09-26 (B56 K2): "Kullanıcılar’ın Claude hakkında ne diyor" routed nowhere and fired the quick
+# road, while the same question typed with ' went to the fleet.
 ROUTE="$(python3 - "$Q" <<'PYEOF'
 import re, sys, unicodedata
 
@@ -199,7 +204,8 @@ ROUTES = [   # (name, phrase, a count question — silent beside a limit word)
     ("memnun mu", r"\bmemnun\w*(?: (?:kal|ol)\w*)? m[iu]\w*\b", False),
     ("<insanlar> memnun", rf"\b{TR} {gap(6)}memnun", False),
 ]
-q = unicodedata.normalize("NFKD", sys.argv[1].translate(str.maketrans({"I": "i", "İ": "i", "ı": "i"})).lower())
+q = unicodedata.normalize("NFKD", sys.argv[1].translate(str.maketrans(
+    {"I": "i", "İ": "i", "ı": "i", "’": "'", "‘": "'", "ʼ": "'"})).lower())
 q = " ".join("".join(c for c in q if not unicodedata.combining(c)).split())
 limit = LIMIT.search(q)
 print(", ".join(name for name, rx, count in ROUTES if re.search(rx, q) and not (count and limit)))

@@ -22,6 +22,8 @@ could not be read is written down as a closed door, never skipped in silence.
   evidence.py verdict-bulk <run> --hunter ROLE --json FILE
   evidence.py status <run> [--platform P[,Q]] [--format md|tsv|json]
   evidence.py show <run> <id>
+  evidence.py writer-rows <run> [--format writer|json]
+  evidence.py repassage <run>
   evidence.py platform-of <url>
 
 The contract (names, flags, outputs, exit codes) is EVIDENCE-B56-2026-09-26.md, "THE CONTRACTS";
@@ -35,6 +37,12 @@ EVERY ADDRESS ENDS IN A TERMINAL STATE (B56 K1 — the contract is EVIDENCE-B56-
 `read_status` (unread · partial · read — who, when, how many bytes; ONLY `batch` and `page` move it,
 see "reading" below for the morning that made it so) and the hunter's `verdict` on what it read
 (evidence · none). `status` counts all three per platform and reconciles them on every call.
+
+THE WRITER IS HANDED WHAT THE LEDGER ADMITS (B56 K2 — the contract is EVIDENCE-B56-K2-2026-09-26.md
+§2.1). `admissible` is the one rule: a hunter's quote, or an address the hunter judged `evidence`, on
+an address the triage kept with a body; `writer-rows` prints those rows and counts the rest by reason.
+A passage skips the page's navigation chrome (`passage_of`), and `repassage` rewrites the rows whose
+passage was cut from it before the rule existed.
 
 Exit: 0 done · 1 status MISMATCH · 2 refused (a quote not in the body, an unknown id, a bad argument,
 a triage or verdict without its reason) · 3 closed door.
@@ -436,11 +444,95 @@ def passage_text(s: str) -> str:
     return normalize(ENTITY.sub(lambda m: html.unescape(m.group(0)), s))
 
 
-def passage_of(body: str) -> str:
-    """The body's first 600 characters of words (passage_text) — of the FIRST post when a reader
-    wrote several, so one row's passage never runs from one author's words into the next one's."""
+# THE PASSAGE IS THE PAGE'S WORDS, NOT ITS MENU (B56 K2 §2.1, as the lead ruled it on 2026-09-26).
+# Measured on the kept K1 run (20260926-1414-k1-astra-fable): L1480 — t.co → an every.to article of
+# 25,795 characters — had the passage "Vibe Check: … [Skip to content](#main-content) [Sign in](/login?…":
+# a fetched page opens with its title and its navigation. So the passage starts at the body's FIRST LINE
+# THAT IS NOT CHROME and runs from there as it always ran from the head (600 characters of words,
+# passage_text). Chrome: a line ≥ 50 % inside `[…](…)` / `![…](…)`; a line of ≤ 3 words; a BOILERPLATE
+# line; a heading over a setext underline (`===` / `---`); and a page's HEAD — whatever stands above a
+# skip link among its first three lines, the title a fetched page prints first (L1480, 123 of the 126
+# GitHub pages). Without those last two L1480 keeps its title-first passage: its title line holds 11 words and
+# no link. No paragraph length is asked for: the first cut's "a paragraph of ≥ 40 words" moved the
+# passage of 49 X rows past the post's own opening (L0434, L0506). A body whose every line is chrome
+# keeps the head. A CJK character counts as a word: a Chinese post has no spaces.
+# A PAGE'S CHROME GOES WHEREVER IT STANDS (the K2 verifier's C1, the lead's ruling the same day). After
+# that rule, 33 of the K1 copy's 512 admitted rows still opened with a menu: juejin and rednote pages
+# whose title line is not chrome, followed by ~600 characters of `[首页](/) [沸点](/pins)…` (L0162). So
+# in a PAGE — a body that carries a navigation line, ≥ 50 % inside links — every chrome line is dropped
+# wherever it stands, by the same tests. A body with no navigation line is a post's own text and runs on
+# from its first line that is not chrome, as before: dropping its short lines everywhere cut words from 10
+# admitted X posts on the K1 copy — L1417's scores "GPT-6 Astra: 48/105 / Fable 5.1: 43/105 / GPT-5.6 Sol:
+# 42/105", L0506's closing t.co link — where L0434 and L0506 must keep their K1 passages.
+_LINKISH = re.compile(r"\[!\[([^\]\n]*)\]\([^)\n]*\)\]\([^)\n]*\)|!?\[([^\]\n]*)\]\([^)\n]*\)")
+_CJK = re.compile(r"[぀-ヿ㐀-䶿一-鿿가-힯]")
+_SETEXT = re.compile(r"^\s*(?:=+|-+)\s*$")
+CHROME_SHARE = 0.5     # a line this much inside link markup is navigation
+CHROME_WORDS = 3       # a line of this many words or fewer is a label, a date, a rule
+HEAD_LINES = 3         # a skip link among a page's first three lines closes the page's head
+# Sentences a page prints around its content, never in it — the lines that carry them, measured in the
+# K1 run's 1,518 bodies: GitHub's session banner (128 lines, one on every GitHub page, "Reload to refresh
+# your session" three times in it), the skip link (452 lines in 445 bodies; Reddit and arXiv say "Skip to
+# main content"), cookie notices (68 and 12 lines), a button's word alone on its line (258).
+BOILERPLATE = [re.compile(p, re.I) for p in (
+    r"you signed in with another tab or window",
+    r"reload to refresh your session",
+    r"you switched accounts on another tab",
+    r"skip to (?:main )?content",
+    r"we use cookies",
+    r"accept all cookies",
+    r"^\W*(?:sign in|subscribe)\W*$",
+)]
+SKIP_LINK = BOILERPLATE[3]
+
+
+def _words(s: str) -> int:
+    """The words a reader sees: a link counts its text, an image its alt; a CJK character is a word."""
+    seen = _LINKISH.sub(lambda m: f" {m.group(1) or m.group(2) or ''} ", s)
+    return len(_CJK.findall(seen)) + sum(1 for w in _CJK.sub(" ", seen).split() if re.search(r"\w", w))
+
+
+def _navigation(line: str) -> bool:
+    """A menu's line: ≥ 50 % inside `[…](…)` / `![…](…)`. An empty line is not one."""
+    s = line.strip()
+    inside = sum(len(m.group(0)) for m in _LINKISH.finditer(s))
+    return inside > 0 and inside >= CHROME_SHARE * len(s)
+
+
+def _chrome(line: str, below: str = "") -> bool:
+    """Is this line chrome? `below` is the line under it: a setext underline makes the line a heading."""
+    s = line.strip()
+    return (_navigation(s) or _words(s) <= CHROME_WORDS
+            or any(b.search(s) for b in BOILERPLATE) or bool(_SETEXT.match(below)))
+
+
+def passage_body(text: str) -> str:
+    """The text a passage is cut from: the lines from the first one past the page's head that is not
+    chrome — the whole text, the head, when there is none. In a PAGE (a line of it is navigation) every
+    chrome line is dropped wherever it stands; a post's own text runs on from there as it is."""
+    lines = (text or "").split("\n")
+    below = lines[1:] + [""]
+    head = [i for i, ln in enumerate(lines) if ln.strip()][:HEAD_LINES]
+    first = next((i + 1 for i in head if SKIP_LINK.search(lines[i])), 0)
+    start = next((i for i in range(first, len(lines)) if not _chrome(lines[i], below[i])), None)
+    if start is None:
+        return text or ""
+    if not any(_navigation(ln) for ln in lines):
+        return "\n".join(lines[start:])
+    return "\n".join(lines[i] for i in range(start, len(lines)) if not _chrome(lines[i], below[i]))
+
+
+def passage_source(body: str) -> str:
+    """The text a passage is taken from: the FIRST post when a reader wrote several, so one row's
+    passage never runs from one author's words into the next one's."""
     b = blocks(body)
-    return passage_text(b[0][3] if b else body)[:PASSAGE_CHARS].rstrip()
+    return b[0][3] if b else (body or "")
+
+
+def passage_of(body: str) -> str:
+    """600 characters of words (passage_text) of what passage_body keeps of the body's first post
+    (passage_source)."""
+    return passage_text(passage_body(passage_source(body)))[:PASSAGE_CHARS].rstrip()
 
 
 def iso_date(v) -> str | None:
@@ -1775,6 +1867,108 @@ def cmd_status(run: Path, wanted: list[str] | None, fmt: str) -> int:
     return 1 if bad else 0
 
 
+# =================================================================== the writer's rows (B56 K2 §2.1)
+# WHY. The K1 answer of 2026-09-26 cites 150 ids, and 12 of them are addresses a hunter had READ and
+# judged `none` — L1071, "benchmark/promo, no user preference", stands on its line 71 — because
+# fleet.sh handed the writer every relevant row. So a row reaches the writer only when the ledger
+# ADMITS it: a hunter's quote (`add`), or an address the hunter judged `evidence`, on an address the
+# triage kept (`relevant`) with a body. A quote row carries no verdict of its own (it sits on the
+# address, address_index): it is admitted on its address alone, because the sentence a hunter found
+# in a body stays evidence when the rest of that page is judged `none` (1 of the 150: L1645, whose
+# GitHub issue L1642 was judged "UI issue, model karşılaştırması yok").
+REFUSED_AS = ("verdict none", "hüküm yok", "elendi", "gövde yok")
+WRITER_PASSAGE = 300
+WRITER_JSON = ("id", "platform", "author", "pub_date", "passage", "url", "url_canonical", "domain")
+
+
+def _admission(row: dict, addr: dict | None) -> tuple[str | None, str]:
+    """(None, why it is admitted) or (the refusal's kind — one of REFUSED_AS —, its reason)."""
+    addr = addr or row
+    quote = row.get("tool") == ADD_TOOL
+    if not quote and addr.get("verdict") == "none":
+        why = re.sub(r"\s+", " ", str(addr.get("verdict_reason") or "")).strip() or "gerekçe yok"
+        return "verdict none", f"avcı: kanıt değil — {why}"
+    if triage_of(addr) != "relevant":
+        return "elendi", f"elendi: {triage_of(addr)}"
+    if addr.get("liveness") != "alive" or (addr.get("bytes") or 0) <= 0:
+        return "gövde yok", "gövde yok"
+    if quote:
+        return None, "avcı alıntısı"
+    if addr.get("verdict") == "evidence":
+        return None, "avcı: kanıt"
+    return "hüküm yok", "hüküm yok"
+
+
+def admissible(row: dict, addr: dict | None) -> tuple[bool, str]:
+    """May the writer be handed this row? `addr` is the row's ADDRESS row (address_index). Admitted:
+    the address is `relevant` and has a body, and the row is a hunter's quote or the address is judged
+    `evidence`. Refused, with the reason: `avcı: kanıt değil — <verdict_reason>` · `elendi: <triage>`
+    · `gövde yok` · `hüküm yok` (relevant, not a quote, no verdict yet — read or not)."""
+    kind, why = _admission(row, addr)
+    return kind is None, why
+
+
+def one_line(v) -> str:
+    return re.sub(r"\s+", " ", str(v or "")).strip()
+
+
+def writer_line(row: dict, limit: int = WRITER_PASSAGE, url: bool = True) -> str:
+    """`[id] platform · @author · date · "passage ≤ limit" · url` — the line fleet.sh's writer step
+    printed in K1, character for character; claims.py prints it cut at 160, without the url."""
+    said = one_line(row.get("passage") or row.get("title"))
+    said = said if len(said) <= limit else said[:limit - 1].rstrip() + "…"
+    line = (f'[{row["id"]}] {one_line(row.get("platform")) or "?"} · @{one_line(row.get("author")) or "?"} · '
+            f'{one_line(row.get("pub_date")) or "?"} · "{said}"')
+    return f'{line} · {one_line(row.get("url") or row.get("url_canonical"))}' if url else line
+
+
+def cmd_writer_rows(run: Path, fmt: str) -> int:
+    """The admitted rows, sorted (platform, id), one writer line (or one JSON object) each; every row
+    of the ledger is counted, admitted or refused by its reason, on stderr — stdout is the rows alone."""
+    rows = read_rows(run)
+    index = address_index(rows)
+    admitted: list[dict] = []
+    refused = Counter({k: 0 for k in REFUSED_AS})
+    for r in rows:
+        if not r.get("id"):
+            continue
+        kind, _why = _admission(r, index.get(str(r["id"])))
+        if kind is None:
+            admitted.append(r)
+        else:
+            refused[kind] += 1
+    for r in sorted(admitted, key=lambda r: (one_line(r.get("platform")), one_line(r.get("id")))):
+        print(json.dumps({k: r.get(k) for k in WRITER_JSON}, ensure_ascii=False) if fmt == "json" else writer_line(r))
+    print(f"writer-rows: {len(admitted)} admissible · {sum(refused.values())} refused ("
+          + " · ".join(f"{k} {refused[k]}" for k in REFUSED_AS) + ")", file=sys.stderr)
+    return 0
+
+
+def cmd_repassage(run: Path) -> int:
+    """Every row whose passage is the chrome of its body — the rule's passage is not the body's head cut,
+    the passage every row was given before the rule — gets the passage the rule gives; a body this script
+    did not cache (vouched) is not read. A quote row of `add` is never touched: its passage IS the
+    hunter's quote."""
+    k = 0
+    with locked(run):
+        rows = read_rows(run)
+        for canon, rs in by_canon(rows).items():
+            if not vouched(run, canon, address_row(rs)):
+                continue
+            text = passage_source(read_body(run, canon) or "")
+            new = passage_text(passage_body(text))[:PASSAGE_CHARS].rstrip()
+            if new == passage_text(text)[:PASSAGE_CHARS].rstrip():
+                continue
+            for r in rs:
+                if r.get("tool") != ADD_TOOL and r.get("passage") != new:
+                    r.update(passage=new, passage_sha256=rlib.sha256(new))
+                    k += 1
+        if k:
+            rewrite_rows(run, rows)
+    print(f"repassage: {k} rows")
+    return 0
+
+
 # =================================================================== the door
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="evidence.py", description="evidence rows, written by the fetcher")
@@ -1837,6 +2031,11 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("show")
     s.add_argument("run")
     s.add_argument("id")
+    wr = sub.add_parser("writer-rows")
+    wr.add_argument("run")
+    wr.add_argument("--format", choices=("writer", "json"), default="writer")
+    rp = sub.add_parser("repassage")
+    rp.add_argument("run")
     p = sub.add_parser("platform-of")
     p.add_argument("url")
     args = ap.parse_args(argv)
@@ -1850,6 +2049,10 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     if args.cmd == "from-ground":
         return cmd_from_ground(run)
+    if args.cmd == "writer-rows":
+        return cmd_writer_rows(run, args.format)
+    if args.cmd == "repassage":
+        return cmd_repassage(run)
     if args.cmd == "list":
         if args.platform != "all" and args.platform not in platforms.PLATFORMS:
             print(f"REFUSED unknown platform: {args.platform} (one of: {' '.join(platforms.PLATFORMS)})")

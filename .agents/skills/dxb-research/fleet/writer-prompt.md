@@ -13,9 +13,26 @@ where a claim and the rows disagree, the rows win.
 ## What was found, read and judged — the ledger's own count
 {{STATUS}}
 
-## The rows — {{N_ROWS}}: every row the triage found relevant and every quote a hunter kept
+## The rows — {{N_ROWS}}: every row the ledger admits — a hunter's quote, or an address a hunter judged evidence
 Each line: `[id] platform · @author · date · "quote or passage" · address`
 {{ROWS}}
+
+## The claim ledger of your draft
+{{CLAIMS}}
+
+On the first pass the line above says there is no ledger yet: write the answer from the rows. On the second
+pass it holds one line per claim of your draft — the rows it stands on, how many independent sources and
+threads they are, the counter rows the `karsi` hunter linked, the new rows the `bosluk` hunter found, and a
+note — and these rules hold:
+- Keep every claim that still stands.
+- Write the counter rows the `karsi` hunter linked on that claim's own line, as `[A] ↔ [B]`; the ↔ may stand
+  between two half-sentences, once per line.
+- Cite the `bosluk` hunter's new rows on the claim they support.
+- A claim the ledger calls `tek kaynak` says so in words: "tek kaynak".
+- `karşı arandı, yok` may be written as "karşı satır arandı, bulunmadı".
+- Never write an id that is not in the rows above or in this ledger.
+- An id the ledger lists as `kabul edilmeyen (YAZILMAZ)` is never written: drop it from the line and keep
+  the claim on its admitted rows; a claim with no admitted row goes.
 
 ## Write answer.md — the recipe's rules, every one of them
 1. Turkish, Markdown. The FIRST LINE is the answer itself: one or two plain sentences that answer the

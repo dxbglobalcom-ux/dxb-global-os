@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # THE ANSWER IS KEPT. HIS RULING, 2026-09-17.
 #
-# The paperwork he banned stays banned — no run folder, no ledger, no gate output, no
-# claims files. What is kept is the ANSWER and nothing else. Measured on the 12:45 run: the
+# The paperwork he banned stays banned — no run folder, no gate output, no transcripts. What
+# is kept is the ANSWER and nothing else. Measured on the 12:45 run: the
 # reports are 60 KB where the run folders he deleted were 22 MB — the answer costs three parts
 # in a thousand of the garbage.
 #
@@ -11,6 +11,10 @@
 # (evidence.jsonl — a page kept without them can no longer be checked against its own sources),
 # the one-screen summary (SUMMARY.txt), the hunters' reports and the question; the cached page
 # bodies (bodies/) only while they stay under 5 MB, else one line in the kept folder says so.
+# AND ITS CLAIM LEDGER (B56 K2): the page prints beside every claim its rows, its independent
+# sources and its counter rows from claims.jsonl, so that file travels with the answer, and so do
+# the draft and the draft's ledger (answer.draft.md, claims.draft.jsonl) — what the claim hunters
+# changed between the two passes can be seen.
 #
 # IT RUNS ONLY ON HIS WORD. His ruling, 2026-09-17: nothing is kept in general; after a
 # test, BEFORE the commit or at a fitting moment, he is asked "bu testi kaydedelim mi?"
@@ -30,9 +34,16 @@ if [ "$reports" -eq 0 ] && [ ! -f "$OUT/final.md" ] && [ ! -f "$OUT/answer.md" ]
   echo "keep: cevap yok (final.md · answer.md · HUNTER-*.md) — saklanacak bir sey yok" >&2; exit 1
 fi
 
+# THE FOLDER IS NAMED AFTER THE FIRST QUERY — the first `  - ` line of question.txt, where the fleet
+# writes the queries its ground was opened with; a question.txt without one (the quick road writes
+# the sentence alone) is named after its first line. Measured 2026-09-26 on the kept K1 run's
+# question.txt: its first line is the fleet's header, and the slug came out
+# "dert-ceo-nun-kendi-cumlesi-aranmaz-cevabin-bunu-karsilamasi" — the folder was renamed by hand.
 # LC_ALL=C on purpose: without it a Turkish 'ı' or 'ö' survives the class and lands in a
 # directory name. Measured 2026-09-17: the first folder came out ".astra-6-yı-mı-yoksa.".
-slug=$(head -1 "$QF" 2>/dev/null | tr '[:upper:]' '[:lower:]' \
+first="$(sed -n 's/^  - //p' "$QF" 2>/dev/null | head -1)"
+[ -n "$first" ] || first="$(head -1 "$QF" 2>/dev/null)"
+slug=$(printf '%s\n' "$first" | tr '[:upper:]' '[:lower:]' \
         | LC_ALL=C sed 's/[^a-z0-9]\+/-/g; s/^-*//; s/-*$//' | cut -c1-60 | sed 's/-*$//')
 DEST="$ROOT/$(date +%Y%m%d-%H%M)-${slug:-arastirma}"
 mkdir -p "$DEST" || exit 1
@@ -43,9 +54,11 @@ kept=""
 [ -f "$SUM" ] && cp "$SUM" "$DEST/SUMMARY.txt" && kept=" SUMMARY.txt"
 
 # THE ANSWER'S OWN FILES, kept when the run has them: the page, the written answer, the rows its
-# sources are printed from, and — from a run of the earlier contract — its numbered registry and
-# the citation ruler's verdict. A file the run does not have is not an error.
-for f in "$OUT/final.html" "$OUT/final.md" "$OUT/answer.md" "$OUT/evidence.jsonl" "$OUT/sources.json" "$OUT"/cite-check*.txt; do
+# sources are printed from, its claim ledger, the draft and the draft's ledger, and — from a run of
+# the earlier contract — its numbered registry and the citation ruler's verdict. A file the run does
+# not have is not an error.
+for f in "$OUT/final.html" "$OUT/final.md" "$OUT/answer.md" "$OUT/evidence.jsonl" "$OUT/claims.jsonl" \
+         "$OUT/claims.draft.jsonl" "$OUT/answer.draft.md" "$OUT/sources.json" "$OUT"/cite-check*.txt; do
   [ -f "$f" ] && cp "$f" "$DEST/" && kept="$kept ${f##*/}"
 done
 

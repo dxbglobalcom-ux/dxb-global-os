@@ -268,3 +268,33 @@ adımı `answer.md` üretir, her iddia `[L…]` · 7 sayfa: hüküm üstte, say�
 8 kapsama yeni sütunlar + RECONCILED · 9 `tests/b46/*` yeşil, cetveller yeşil, batarya bir kez · 10 gözünüz:
 aynı soruya gerçek koşu, tasarlanmış sayfa. Kulvarlar: A defter+eleme · B kontrolcü+yazar · C kapsama+sayfa;
 üçü de korunan yol → `builder` max; taze `verifier` high; lider Fable 5.1 ölçer, commit eder.
+
+## 8. KADEME 2 — KANIT MOTORU (kayıtlı adaptasyon, sizin 26 Eylül ~16:00 sözünüzle) <!-- CEO-OK: research-k1-run-kaydet-and-k2-basla-2026-09-26 -->
+
+**Sözünüz:** *"K1'e ben baktım şöyle bir gözüm tamam, göz tamam. Yani senin önerine göre tamam diyorum."* ·
+*"Tamam kaydet ve işe devam et."* Kabul ettiğiniz öneri, liderin sözüyle: *"K2 başla derseniz aynı kapıdan
+(dxb-team1), aynı kademeyle giderim; eski kusur listesini K2'nin kulvarlarına bölüp aynı turda kapatırım, ayrı bir
+iş açmam."* Ölçü: K1'in saklanan koşusu (`.planning/research/answers/20260926-1608-astra-6-vs-fable-5-1-k1-live-run/`,
+1840 satır, 150 alıntı). Orada ölçülen: alıntılanan 150 kimliğin 12'si avcının "kanıt değil" dediği satır (L1071 gibi);
+66. satırın "3 ↔ 3" karşılaştırması 6 yazar ama 2 Reddit başlığı; L1480'in alıntı kartı sayfanın menüsü
+("[Skip to content] [Sign in]…"), gövdesi ise 3.429 kelimelik bir yazı; kalabalık sayımı 0 başlık buldu
+(defterde 177 Reddit adresi varken). **Bulgu: cevap doğru satırlara dayanıyor ama kaç AYRI kaynağın
+altında durduğunu kimse saymıyor, karşı taraf yalnız yazarın aklına gelirse yazılıyor.**
+
+**Kademe 2 ne kurar (Kademe 1 aynen kalır; avcılar bütün aletleriyle, Opus 5.5 · low):**
+
+| Parça | Bugün (K1) | Kademe 2 |
+|---|---|---|
+| **İddia defteri** | yok; iddia = `[L…]` taşıyan satır, sayfa sayar | `claims.py extract` cevaptan `claims.jsonl` çıkarır: her iddia `C001…`, dayanak kimlikleri, karşı kimlikleri (`↔`'nin sağı), satır · **bağımsız kaynak** · başlık · alan sayıları, kabul edilmeyen alıntılar |
+| **Bağımsızlık** | "3 satır" = 3 kimlik | makine sayar: ayrı kaynak = ayrı (platform, yazar); yazar yoksa ayrı adres; başlık ve alan yanında — 6 kimlik 2 başlıkta ise sayfa bunu söyler |
+| **Yazar neyi alıntılayabilir** | ilgili her satır (hüküm "kanıt değil" olsa da) | yalnız KABUL EDİLEN satırlar: avcının `add` ile kattığı alıntı ya da adresin hükmü "kanıt"; "kanıt değil" ve hükümsüz satır yazara verilmez, alıntılanırsa sayfada üstü çizilir ve sayılmaz |
+| **Karşı-kanıt avcısı** | `counter` rolü genel karşı tezi arar | taslak cevaptan sonra `karsi` turu: her verdict taşıyan iddia için (satır ≥ 2, karşı 0; en çok 20) defterde aday arar, dışarıda arar, `claims.py link --against` bağlar ya da `--none` sebep yazar; kapı `claims.py status`tan sayar, bakılmamış iddia kaldıkça geri gönderir (≤ 2 tur) |
+| **Boşluk turu** | yok | `bosluk` turu: tek kaynaklı iddialara ikinci bağımsız kaynak arar (`--for`), bulamazsa sebep; yeni bağ katmayan tur = **doygunluk**, durur |
+| **Yazar** | tek geçiş | iki geçiş: taslak → iddia defteri → karşı ve boşluk turları → son cevap (karşı satırlar `[A] ↔ [B]`, tek kaynak sözle söylenir) |
+| **Sayfa** | `(n satır)` | her iddianın yanında **`n satır · m bağımsız kaynak · k karşı`**; tek kaynaklı iddia uyarı renginde; yeni bölüm "İddia defteri": iddia · satır · kaynak · başlık · karşı · durum (tam / tek kaynak / karşı arandı-yok / sınır dışı) |
+| **Alıntı kartı** | gövdenin ilk harfleri (menü çıkabiliyor) | `passage_of` menü ve bağlantı yığınını atlar, ilk gerçek paragrafı alır |
+| **Kalabalık** | zeminin ham dosyasından başlık avı (K1'de 0) | başlıklar DEFTERDEN (Reddit · HN, gövdesi olan), en çok 40; `INSAN: n` yeniden dolar |
+| **Eski kusurlar** | tahta satırında açık | ölçüldü: gerçek olanlar kulvarlara bölündü (rlib duvar sözcükleri, fetch.py scrapling yolu, merge.py PARA ve Google kuralı, keep.sh slug, crowd.sh, ölü § işaretleri, probe.sh, ask.sh kullanım satırı); kapananlar ölçümüyle kapandı; kalanlar sebebiyle adlandırıldı (`EVIDENCE-B56-K2` §1) |
+
+**Kademe 2'nin kapsamadığı (Rapor motoru, sözünüzle):** soru ayrıştırma, rapor tipine göre şekil, ayrı denetçi ajan.
+Kabul maddeleri, sözleşme ve kulvarlar koddan önce `EVIDENCE-B56-K2-2026-09-26.md`'de; gözünüz karar verir (Kanun B).

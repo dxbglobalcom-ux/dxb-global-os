@@ -16,9 +16,21 @@ A citation is EXACTLY `[L0042]` or `[L0002, L0001]` — the pattern platforms.CI
 and kapsama.py's Cevapta column count the same citations. Counter-evidence is two citations joined by ↔,
 `[L0042, L0043] ↔ [L0051]`; one bracket holding both sides, `[L0042, L0043 ↔ L0051]`, is read as those
 two (platforms.split_paired, kapsama.py's reading too; a render.py copied alone, without platforms.py,
-refuses it as before). final.md is the answer as written, each
-citation's ids turned into numbers in first-appearance order (a repeated id keeps its number; a group
-keeps its shape, `[1, 2]`), then:
+refuses it as before).
+
+THE CLAIM LEDGER'S NUMBERS (EVIDENCE-B56-K2 §2.4). Which side of a ↔ a citation stands on, which cited
+rows the ledger admits and how many independent sources they are is claims.py's — one owner, imported
+beside platforms.py. Every line that cites rows ends with ONE span, `(3 satır · 3 bağımsız kaynak ·
+3 karşı)`: the admitted rows on its support side, the distinct sources among them (a distinct author,
+else a distinct address) and, when there are any, the admitted rows on its counter side. Measured on
+the K1 page of 2026-09-26: line 66 carried `(3 satır) ↔ (3 satır)` — two numbers, no claim — and L1071,
+which its own hunter had judged "benchmark/promo, no user preference", stood on line 71 as chip 61 with
+a quote card. A row the ledger refuses is struck through with the reason, `[L1071]`, and counted in
+nothing — no number, no quote card, not in Kaynaklar — and the page is still built. Without claims.py
+(a render.py copied alone) the counts are K1's, `(n satır)`, and stderr says so. final.md is the answer
+as written, each line that cites rows ending with the same span in plain text, each citation's ids
+turned into numbers in first-appearance order (a repeated id keeps its number; a group keeps its shape,
+`[1, 2]`; a refused id follows its group as `~~[L1071]~~`), then:
   ## Kaynaklar       one entry per cited id: `n. **author** · date · platform — “passage” — url`, all
                      from the row. No author: the row's domain. No date, or `dates_agree` false (the
                      schema: treat as undated): "tarih yok". Never a guess. An uncited row is not listed.
@@ -30,13 +42,16 @@ final.html — THE PAGE HE SEES (EVIDENCE-B56-K1 §2.6). On 2026-09-26 the CEO a
 became 4 on the page and wanted to browse the 130 X posts himself ("130 gönderinin açıp okuyabileceğim
 linklerde olmalı"). Top to bottom: an eyebrow (the run's date, its hunters, their seconds) · the question
 as the title · the VERDICT, the answer's first paragraph · "Cevabı taşıyan sayılar": every paragraph and
-list item of the answer that cites rows, under the writer's section it came from, each with `(n satır)`
-— n = the distinct ids it cites; counter-evidence, `[A] ↔ [B]`, counted beside each side, and a line that
-cites nothing else prints no sum of the two — and each id a numbered link to its row in the drawer; what
-stands before
+list item of the answer that cites rows, under the writer's section it came from, each with its span
+(above; one source only, `thin`, in the warning colour) and each id a numbered link to its row in the
+drawer; what stands before
 the first section, and the writer's own section of that name, stand here whole · EVERY line and table row
-here carries its count: one that cites no row prints `(0 satır)` in the warning colour, the claim nothing
-supports made visible (the lead's ruling, 2026-09-26) · the writer's other sections with what remains in
+here carries its count: one that cites no row, or no row the ledger admits, prints `(0 satır)` in the
+warning colour, the claim nothing supports made visible (the lead's ruling, 2026-09-26) · "İddia
+defteri": the claim ledger as a table, one row per claim — the claim anchored to its line, its rows,
+independent sources, threads, domains, counter rows and state — from <run>/claims.jsonl beside the
+answer (the claim hunters' links and states live there), else claims.py's extract over the answer, the
+ledger's four numbers under it · the writer's other sections with what remains in
 them (a table stays whole, each row that cites counted in place: a comparison stays a table; a line there
 that cites nothing stays plain) · a quote card for every cited id, from its row · "Nereye bakıldı", kapsama.py's table · THE
 DRAWER: one <details> per platform, `X — 130 gönderi (4 cevapta)`, one entry per address whose body was
@@ -85,6 +100,11 @@ try:                               # the ledger's owner: which row stands for an
     import evidence as E           # noqa: E402 — is counted (kapsama.py uses the same two functions)
 except Exception:
     E = None
+NO_CLAIMS = ""
+try:                               # the claim ledger's owner (EVIDENCE-B56-K2 §2.2): a line's sides, the
+    import claims as CL            # noqa: E402 — rows it admits, how many independent sources they are;
+except Exception as e:             # without it K1's count, and main says so on stderr
+    CL, NO_CLAIMS = None, f"{type(e).__name__}: {e}"
 KAPSAMA_SECS = 60
 # a citation is EXACTLY [L0042] or [L0002, L0001] — same as platforms.CITE_RE (one pattern, one owner)
 CITE = re.compile(r"\[L\d{4}(?:,\s*L\d{4})*\]")
@@ -95,6 +115,7 @@ ROW_ID = re.compile(r"L\d{4}")
 RAW_ADDRESS = re.compile(r"https?://\S*", re.IGNORECASE)
 # a Markdown quote block, also inside a list item: "> …" · ">…" · "- > …" · "1. > …"
 QUOTE_BLOCK = re.compile(r"^[ \t]*(?:(?:[-*+]|\d{1,9}[.)])[ \t]+)*>")
+PIPE = re.compile(r"(?<!\\)\|")    # a cell's edge in a table row: a pipe nobody escaped
 
 
 def text(v) -> str:
@@ -138,7 +159,8 @@ def refusals(md: str, rows: dict[str, dict], evidence_name: str) -> list[str]:
     if loose:
         n, group = loose[0]
         more = f" (+{len(loose) - 1} more)" if len(loose) > 1 else ""
-        why.append(f"not a citation at line {n}: {group[:60]}{more} — cite as [L0042] or [L0042, L0043]")
+        why.append(f"not a citation at line {n}: {group[:60]}{more} — cite as [L0042], [L0042, L0043], "
+                   "or counter-evidence [L0042] ↔ [L0051]")
     addresses = [(line_of(m.start()), m.group(0)) for m in RAW_ADDRESS.finditer(md)]
     if addresses:
         n, url = addresses[0]
@@ -151,14 +173,97 @@ def refusals(md: str, rows: dict[str, dict], evidence_name: str) -> list[str]:
     return why
 
 
-def number(md: str) -> tuple[str, list[str]]:
-    """The answer with every cited id replaced by its number, and the ids in first-appearance order."""
+def number(md: str, struck: set[str] | frozenset[str] = frozenset()) -> tuple[str, list[str]]:
+    """The answer with every cited id replaced by its number, and the ids in first-appearance order. An
+    id the claim ledger refuses gets no number: it follows what is left of its group, `~~[L1071]~~`."""
     order: dict[str, int] = {}
 
     def one(m: re.Match) -> str:
-        return ROW_ID.sub(lambda i: str(order.setdefault(i.group(0), len(order) + 1)), m.group(0))
+        ids = ROW_ID.findall(m.group(0))
+        if not struck.intersection(ids):
+            return ROW_ID.sub(lambda i: str(order.setdefault(i.group(0), len(order) + 1)), m.group(0))
+        kept = [str(order.setdefault(i, len(order) + 1)) for i in ids if i not in struck]
+        return " ".join(([f"[{', '.join(kept)}]"] if kept else []) + [f"~~[{i}]~~" for i in ids if i in struck])
 
     return CITE.sub(one, md), list(order)
+
+
+def claim_of(s: str, rows: dict[str, dict]) -> dict | None:
+    """The claim ledger's reading of one line of the answer, claims.py's own (EVIDENCE-B56-K2 §2.2) —
+    None when the line cites no row, or without claims.py."""
+    if CL is None or not CITE.search(s):
+        return None
+    got = CL.extract_claims(s, rows)
+    return got[0] if got else None
+
+
+def tally(c: dict) -> str:
+    """`3 satır · 3 bağımsız kaynak · 3 karşı` — admitted rows, independent sources among them, admitted
+    counter rows (said only when there are any); a claim no admitted row carries is `0 satır`."""
+    n, k = c.get("rows") or 0, c.get("counter_rows") or 0
+    return f"{n} satır" + (f" · {c.get('sources') or 0} bağımsız kaynak" if n else "") + (f" · {k} karşı" if k else "")
+
+
+def spans_md(md: str, rows: dict[str, dict]) -> str:
+    """final.md's lines: every line that cites rows ends with the page's span in plain text; a table row
+    carries it in its last cell that cites, as the page does."""
+    lines = md.split("\n")
+    for j, line in enumerate(lines):
+        s = line.strip()
+        if not CITE.search(s) or TABLE_RULE.match(s) or (
+                s.startswith("|") and j + 1 < len(lines) and TABLE_RULE.match(lines[j + 1].strip())):
+            continue                                      # a table's header and rule are no claim
+        c = claim_of(" ".join(cells(s)) if s.startswith("|") else s, rows)
+        if c is None:
+            continue
+        bar = PIPE.search(line, list(CITE.finditer(line))[-1].end()) if s.startswith("|") else None
+        lines[j] = (f"{line[:bar.start()].rstrip()} ({tally(c)}) {line[bar.start():]}" if bar
+                    else f"{line.rstrip()} ({tally(c)})")
+    return "\n".join(lines)
+
+
+def refused(rows: dict[str, dict], ids: list[str]) -> dict[str, str]:
+    """The cited ids the ledger refuses, each with why: evidence.admissible's own words against the row's
+    address row (EVIDENCE-B56-K2 §2.1) — the one rule claims.py counts by and kapsama.py's Cevapta leaves
+    out by. None without that function beside this file."""
+    ids = [i for i in dict.fromkeys(ids) if i in rows]
+    if not ids or E is None or not hasattr(E, "admissible"):
+        return {}
+    index = E.address_index(list(rows.values()))
+    said = {i: E.admissible(rows[i], index.get(i)) for i in ids}
+    return {i: text(why) or "kabul edilmedi" for i, (ok, why) in said.items() if not ok}
+
+
+def ledger_of(run: Path, full: list[dict] | None) -> tuple[list[dict] | None, str]:
+    """The claim ledger the table prints: <run>/claims.jsonl beside the answer when it is there (the claim
+    hunters' links and states live in it), else `full`, claims.py's extract over the answer; None, and
+    why, when there is neither. A line of the file that is not a claim is skipped."""
+    try:
+        raw = (run / "claims.jsonl").read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        raw = None
+    if raw is not None:
+        book = []
+        for line in raw.splitlines():
+            try:
+                c = json.loads(line)
+            except ValueError:
+                continue
+            if isinstance(c, dict):
+                book.append(c)
+        return book, "claims.jsonl"
+    return (full, "cevaptan") if full is not None else (None, f"claims.py yüklenemedi ({NO_CLAIMS})")
+
+
+def state(c: dict) -> str:
+    """A claim's state in the ledger table (EVIDENCE-B56-K2 §2.4) — every one that holds, else `tam`."""
+    cited = set(c.get("support") or []) | set(c.get("counter") or [])
+    said = ["tek kaynak"] if c.get("thin") else []
+    said += {"none": ["karşı arandı, yok"], "not-sent (cap)": ["karşı gönderilmedi (sınır)"]}.get(
+        c.get("counter_status"), [])
+    if any(isinstance(x, dict) and x.get("kind") == "against" and x.get("id") not in cited for x in c.get("links") or []):
+        said.append("karşı bulundu, yazar kullanmadı")
+    return " · ".join(said + (["kabul edilmeyen alıntı"] if c.get("inadmissible") else [])) or "tam"
 
 
 def source_line(n: int, row: dict) -> str:
@@ -265,7 +370,10 @@ li.d3{margin-left:54px}
 .caveat .claims>li:last-child{border-bottom:0}
 .count{margin-left:2px;font:500 12.5px/1 var(--mono);color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
 .count.zero{padding:1px 5px;border:1px solid var(--warm);border-radius:3px;background:var(--warm-bg);color:var(--warm)}
+.count.thin{color:var(--warm)}
 .refs{white-space:nowrap}
+s.inadmissible{margin:0 2px;color:var(--muted);font:400 11.5px/1.3 var(--mono);white-space:nowrap}
+li:target,tr:target,p:target{outline:2px solid var(--accent);outline-offset:2px}
 a.ref{display:inline-block;min-width:20px;margin:0 1px;padding:2px 5px;border-radius:3px;background:var(--chip);color:var(--ink-2);font:500 11.5px/1.3 var(--mono);text-align:center;text-decoration:none;vertical-align:1px}
 a.ref:hover,a.ref:focus-visible{background:var(--accent);color:var(--on-accent)}
 code{padding:1px 4px;border-radius:3px;background:var(--chip);font:400 .9em var(--mono)}
@@ -277,6 +385,10 @@ th:last-child,td:last-child{padding-right:0}
 th{font:500 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom-color:var(--rule-2)}
 .n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .c{text-align:center}
+table.ledger{font-size:14px}
+table.ledger td.cid{font:400 12px/1.6 var(--mono);color:var(--muted);white-space:nowrap}
+table.ledger td.claim{overflow-wrap:anywhere}
+table.ledger td.flag{color:var(--warm)}
 table.cov{font-size:13.5px}
 table.cov td.h{font-weight:600;white-space:nowrap}
 table.cov tr.has-why td{padding-bottom:2px;border-bottom:0}
@@ -370,45 +482,49 @@ def cells(row: str) -> list[str]:
 
 def blocks(md: str) -> list[dict]:
     """The answer as blocks — our own small Markdown subset: h (level) · p · li (ordered, depth) · table
-    (head, align, rows) · hr. Any other line joins its paragraph; an indented line continues its item."""
+    (head, align, rows) · hr. Any other line joins its paragraph; an indented line continues its item.
+    Each block keeps the answer lines it came from — `line` and `end`, a table's `at` one per row — as
+    the claim ledger counts by line (claims.py), and the page anchors each claim where it stands."""
     out: list[dict] = []
-    para: list[str] = []
+    para: list[tuple[int, str]] = []
     lines = md.replace("\x00", "").splitlines()
 
     def flush() -> None:
         if para:
-            out.append({"k": "p", "text": " ".join(para)})
+            out.append({"k": "p", "text": " ".join(s for _, s in para), "line": para[0][0], "end": para[-1][0]})
             para.clear()
 
     i = 0
     while i < len(lines):
         line, s = lines[i], lines[i].strip()
-        i += 1
+        i += 1                                          # from here, the 1-based number of `line`
         if not s:
             flush()
         elif (m := HEADING.match(s)) and len(m.group(1)) <= 6:
             flush()
-            out.append({"k": "h", "level": len(m.group(1)), "text": m.group(2)})
+            out.append({"k": "h", "level": len(m.group(1)), "text": m.group(2), "line": i})
         elif s.startswith("|") and i < len(lines) and TABLE_RULE.match(lines[i].strip()):
             flush()
-            head, rule, body = cells(s), cells(lines[i]), []
+            head, rule, body, at = cells(s), cells(lines[i]), [], []
             i += 1
             while i < len(lines) and lines[i].strip().startswith("|"):
                 body.append(cells(lines[i]))
                 i += 1
+                at.append(i)
             align = ["c" if c.startswith(":") and c.endswith(":") else "r" if c.endswith(":") else "" for c in rule]
-            out.append({"k": "table", "head": head, "align": align, "rows": body})
+            out.append({"k": "table", "head": head, "align": align, "rows": body, "at": at})
         elif m := LIST_ITEM.match(line):
             flush()
-            out.append({"k": "li", "ordered": m.group(2)[0].isdigit(),
-                        "depth": len(m.group(1).expandtabs(4)) // 2, "text": m.group(3).strip()})
+            out.append({"k": "li", "ordered": m.group(2)[0].isdigit(), "depth": len(m.group(1).expandtabs(4)) // 2,
+                        "text": m.group(3).strip(), "line": i, "end": i})
         elif RULE.match(s):
             flush()
             out.append({"k": "hr"})
         elif not para and out and out[-1]["k"] == "li" and line[:1] in (" ", "\t"):
             out[-1]["text"] += " " + s
+            out[-1]["end"] = i
         else:
-            para.append(s)
+            para.append((i, s))
     flush()
     return out
 
@@ -443,12 +559,12 @@ def cited_in(s: str) -> list[str]:
     return list(dict.fromkeys(i for m in CITE.finditer(s) for i in ROW_ID.findall(m.group(0))))
 
 
-def count(s: str, zero: bool = False) -> str:
-    """The count beside the claim (his order, 2026-09-26): the distinct rows it cites. `zero` — the line
-    stands under 'Cevabı taşıyan sayılar' — prints a line that cites no row as `(0 satır)`, the warning
-    style; elsewhere such a line stays plain (the lead's ruling, 2026-09-26). Counter-evidence, `[A] ↔ [B]`,
-    is counted beside each side (Page.inline): a line that cites nothing but pairs carries no sum of the
-    two sides at its end — 3 rows against 3 are not "6 satır" for one claim."""
+def count_k1(s: str, zero: bool = False) -> str:
+    """K1's count — the page's own only without claims.py (a render.py copied alone): the distinct rows a
+    line cites. `zero` — the line stands under 'Cevabı taşıyan sayılar' — prints a line that cites no row
+    as `(0 satır)`, the warning style; elsewhere such a line stays plain (the lead's ruling, 2026-09-26).
+    Counter-evidence, `[A] ↔ [B]`, is counted beside each side (Page.inline): a line that cites nothing
+    but pairs carries no sum of the two sides at its end — 3 rows against 3 are not "6 satır"."""
     n = len(cited_in(s))
     if n and not CITE.search(PAIR.sub("", s)):
         return ""
@@ -538,17 +654,45 @@ def thousands(n: int) -> str:
 
 class Page:
     """Numbers the cited ids in the order the page shows them; each id links to its row in the drawer
-    (a cited row with no body has no drawer entry, so it links to its quote card)."""
+    (a cited row with no body has no drawer entry, so it links to its quote card). An id the claim
+    ledger refuses (`struck`: id -> why) is struck through instead and gets no number. `at` is the
+    ledger's line -> claim id: the element that shows a claim's line carries that id as its anchor."""
 
-    def __init__(self, rows: dict[str, dict], shelved: set[str]):
+    def __init__(self, rows: dict[str, dict], shelved: set[str], struck: dict[str, str] | None = None,
+                 at: dict[int, str] | None = None):
         self.rows, self.shelved, self.num = rows, shelved, {}
+        self.struck, self.at, self.linked = struck or {}, at or {}, {}
 
     def cite(self, group: str) -> str:
-        refs = []
+        refs, gone = [], []
         for i in ROW_ID.findall(group):
+            if i in self.struck:
+                gone.append(f'<s class="inadmissible" title="{attr(self.struck[i])}">[{i}]</s>')
+                continue
             n = self.num.setdefault(i, len(self.num) + 1)
             refs.append(f'<a class="ref" href="#{i if i in self.shelved else "q-" + i}" title="{i}">{n}</a>')
-        return '<span class="refs">' + "".join(refs) + "</span>"
+        return ('<span class="refs">' + "".join(refs) + "</span>" if refs else "") + "".join(gone)
+
+    def count(self, s: str, zero: bool = False) -> str:
+        """The span at the end of a claim line (his order, 2026-09-26; EVIDENCE-B56-K2 §2.4), ONE on a
+        paired line too: the claim ledger's numbers (tally). One source only is `thin`, no admitted row
+        `zero` — both the warning colour. A line that cites no row prints `(0 satır)` only with `zero`
+        (under 'Cevabı taşıyan sayılar', the lead's ruling, 2026-09-26). Without claims.py, K1's count."""
+        if CL is None:
+            return count_k1(s, zero)
+        c = claim_of(s, self.rows)
+        if c is None:
+            return ' <span class="count zero">(0 satır)</span>' if zero else ""
+        kind = " zero" if not c.get("rows") else " thin" if c.get("sources") == 1 else ""
+        return f' <span class="count{kind}">({tally(c)})</span>'
+
+    def mark(self, first: int | None, last: int | None = None) -> str:
+        """` id="C007"` for the element showing answer lines first–last when the ledger holds a claim there;
+        the ledger table links every claim there to that element."""
+        ids = [self.at[n] for n in range(first, (last or first) + 1) if n in self.at] if first else []
+        for cid in ids:
+            self.linked.setdefault(cid, ids[0])
+        return f' id="{attr(ids[0])}"' if ids else ""
 
     def inline(self, s: str) -> str:
         """Bold, italic, code and citations; every other character escaped — nothing typed becomes HTML."""
@@ -558,8 +702,10 @@ class Page:
             held.append(fragment)
             return f"\x00{len(held) - 1}\x00"
 
-        s = PAIR.sub(lambda m: hold(f"{self.cite(m[1])}{count(m[1], True)} ↔ {self.cite(m[2])}{count(m[2], True)}"),
-                     s.replace("\x00", ""))          # counter-evidence: each side its chips and its own count
+        s = s.replace("\x00", "")
+        if CL is None:                   # K1's count: each side of a pair its chips and its own count
+            s = PAIR.sub(lambda m: hold(f"{self.cite(m[1])}{count_k1(m[1], True)} ↔ "
+                                        f"{self.cite(m[2])}{count_k1(m[2], True)}"), s)
         s = CITES.sub(lambda m: hold(self.cite(m.group(0))), s)
         s = re.sub(r"`([^`\n]+)`", lambda m: hold(f"<code>{esc(m.group(1))}</code>"), s)
         s = esc(s)
@@ -570,7 +716,7 @@ class Page:
 
     def table(self, b: dict, zero: bool = False) -> str:
         """A table stays a table (a comparison is one); on a phone each row stands as a card, its cells
-        labelled by the header. A row that cites carries its `(n satır)` in the last cell that cites; with
+        labelled by the header. A row that cites carries its span in the last cell that cites; with
         `zero` (under 'Cevabı taşıyan sayılar') a row that cites nothing carries `(0 satır)` in its last."""
         head, align = b["head"], b["align"]
         cls = [' class="n"' if a == "r" else ' class="c"' if a == "c" else "" for a in align]
@@ -578,14 +724,14 @@ class Page:
         tags = [attr(re.sub(r"[*_`]", "", h)) for h in head]
         ths = "".join(f"<th{cls[j]}>{self.inline(h)}</th>" for j, h in enumerate(head))
         trs = []
-        for row in b["rows"]:
+        for r, row in enumerate(b["rows"]):
             row = row + [""] * (len(head) - len(row))
             last = max((j for j, c in enumerate(row) if CITE.search(c)), default=len(row) - 1 if zero else -1)
-            tail = count(" ".join(row), zero)
+            tail = self.count(" ".join(row), zero)
             tds = "".join(f'<td data-label="{tags[j] if j < len(tags) else ""}"{cls[j] if j < len(cls) else ""}>'
                           f'<span class="v">{self.inline(c)}{tail if j == last else ""}</span></td>'
                           for j, c in enumerate(row))
-            trs.append(f"<tr>{tds}</tr>")
+            trs.append(f"<tr{self.mark(b['at'][r])}>{tds}</tr>")
         return (f'<div class="tbl"><table class="stack"><thead><tr>{ths}</tr></thead>\n<tbody>\n'
                 + "\n".join(trs) + "\n</tbody></table></div>")
 
@@ -603,14 +749,15 @@ class Page:
                     out.append({"claims": '<ul class="claims">', "ol": "<ol>", "ul": "<ul>"}[want])
                     opened = want
                 depth = f' class="d{min(b["depth"], 3)}"' if k == "li" and b["depth"] and not claims else ""
-                out.append(f"<li{depth}>{self.inline(b['text'])}{count(b['text'], claims)}</li>")
+                out.append(f"<li{depth}{self.mark(b['line'], b['end'])}>{self.inline(b['text'])}"
+                           f"{self.count(b['text'], claims)}</li>")
                 continue
             out += ["</ol>" if opened == "ol" else "</ul>"] if opened else []
             opened = ""
             if k == "p":
-                out.append(f"<p>{self.inline(b['text'])}{count(b['text'])}</p>")
+                out.append(f"<p{self.mark(b['line'], b['end'])}>{self.inline(b['text'])}{self.count(b['text'])}</p>")
             elif k == "h":
-                out.append(f"<h3>{self.inline(b['text'])}{count(b['text'])}</h3>")
+                out.append(f"<h3{self.mark(b['line'])}>{self.inline(b['text'])}{self.count(b['text'])}</h3>")
             elif k == "table":
                 out.append(self.table(b, claims))
             else:
@@ -654,6 +801,36 @@ class Page:
             out.append(f'<figure class="qcard" id="q-{attr(i)}"><blockquote><span class="qn">{n}</span>{quote}'
                        f"</blockquote><figcaption>{source}</figcaption></figure>")
         return '<div class="cards">\n' + "\n".join(out) + "\n</div>"
+
+    def ledger(self, book: list[dict] | None, whence: str) -> str:
+        """'İddia defteri' (EVIDENCE-B56-K2 §2.4): one row per claim — the claim (≤ 120 characters, a link to
+        the element showing its line), its admitted rows, independent sources, threads, domains, counter
+        rows and state — and under it the ledger's four numbers (kapsama.py's İDDİA line prints the same
+        four) and what a source is. Built after every claim line, so each claim knows where it stands."""
+        if book is None:
+            return f'<p class="note">İddia defteri basılamadı: {esc(whence)}.</p>'
+        head = ("#", "İddia", "Satır", "Bağımsız kaynak", "Başlık", "Alan", "Karşı", "Durum")
+        num = ' class="n"'
+        trs = []
+        for c in book:
+            cid, said, st = text(c.get("id")), esc(shorten(text(c.get("text")), 120)), state(c)
+            to = self.linked.get(cid)
+            tds = [(' class="cid"', esc(cid)), (' class="claim"', f'<a href="#{attr(to)}">{said}</a>' if to else said)]
+            tds += [(num, str(c.get(k) or 0)) for k in ("rows", "sources", "threads", "domains", "counter_rows")]
+            tds.append((' class="flag"' if st != "tam" else "", esc(st)))
+            trs.append("<tr>" + "".join(f'<td data-label="{attr(h)}"{k}><span class="v">{v}</span></td>'
+                                        for h, (k, v) in zip(head, tds)) + "</tr>")
+        ths = "".join(f"<th{num if 2 <= j <= 6 else ''}>{esc(h)}</th>" for j, h in enumerate(head))
+        grid = (f'<div class="tbl"><table class="stack ledger"><thead><tr>{ths}</tr></thead>\n<tbody>\n'
+                + "\n".join(trs) + "\n</tbody></table></div>") if trs \
+            else '<p class="empty">Cevapta satıra dayanan iddia yok.</p>'
+        thin = sum(1 for c in book if c.get("thin"))
+        bare = sum(1 for c in book if not c.get("counter_rows"))
+        gone = len({i for c in book for i in c.get("inadmissible") or []})
+        return ('<p class="intro">Cevaptaki her iddia, dayandığı satırlarla: kaç satır, kaç bağımsız kaynak, kaç '
+                f"başlık ve alan adı, kaç karşı satır.</p>\n{grid}\n"
+                f'<p class="note">{len(book)} iddia · {thin} tek kaynak · {bare} karşısız · {gone} kabul edilmeyen '
+                "alıntı · kaynak = ayrı yazar, yazar yoksa ayrı adres · aynı kişinin iki hesabı iki kaynak sayılır</p>")
 
     def entry(self, a: dict, p: str) -> str:
         """One drawer row: its ids (each an anchor), author, date, passage ≤ 300 characters, address."""
@@ -806,11 +983,18 @@ def section(no: int, title: str, body: str, anchor: str) -> str:
             f"{body}\n</section>")
 
 
-def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool] | None) -> tuple[str, dict]:
+def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool] | None,
+              book: list[dict] | None = None, struck: dict[str, str] | None = None,
+              whence: str = "") -> tuple[str, dict]:
     """final.html, in the order of the docstring. Rendered top to bottom, so the ids are numbered in the
-    order he reads them."""
+    order he reads them. The claim ledger's table is built after every claim line, though it stands
+    second, so each claim in it links to the element that shows its line."""
     shelf = shelves(rows)
-    page = Page(rows, {i for a in shelf for i in a["ids"]})
+    at: dict[int, str] = {}
+    for c in book or []:
+        if isinstance(c.get("line"), int) and text(c.get("id")):
+            at.setdefault(c["line"], text(c["id"]))
+    page = Page(rows, {i for a in shelf for i in a["ids"]}, struck, at)
     h1, verdict, ours, sections = arrange(blocks(md))
     his, queries = question(run)
     h1 = h1 or his or (queries[0] if queries else "") or "Araştırma"
@@ -819,14 +1003,18 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
     if secs:
         brow += [f"{len(secs)} avcı", f"{min(secs)}–{max(secs)} sn" if min(secs) != max(secs) else f"{secs[0]} sn"]
     head = [f'<p class="eyebrow">{esc(" · ".join(brow))}</p>', f"<h1>{page.inline(h1)}</h1>"]
-    lede = (page.inline(verdict["text"]) + count(verdict["text"])) if verdict \
+    lede = (page.inline(verdict["text"]) + page.count(verdict["text"])) if verdict \
         else '<span class="none">Cevap metninde paragraf yok.</span>'
-    head.append(f'<div class="verdict"><p class="label">Hüküm</p><p class="lede">{lede}</p></div>')
+    mark = page.mark(verdict["line"], verdict["end"]) if verdict else ""
+    head.append(f'<div class="verdict"><p class="label">Hüküm</p><p class="lede"{mark}>{lede}</p></div>')
     parts = [section(1, esc(OWN), page.ours(ours), "sayilar")]
+    rest = []
     for s in sections:
         body = page.flow(s["blocks"])
-        body = f'<div class="caveat">\n{body}\n</div>' if CAVEAT.search(s["title"]) else body
-        parts.append(section(len(parts) + 1, page.inline(s["title"]), body, f"s{len(parts) + 1:02d}"))
+        rest.append((page.inline(s["title"]), f'<div class="caveat">\n{body}\n</div>' if CAVEAT.search(s["title"]) else body))
+    parts.append(section(2, "İddia defteri", page.ledger(book, whence), "iddialar"))
+    for title, body in rest:
+        parts.append(section(len(parts) + 1, title, body, f"s{len(parts) + 1:02d}"))
     parts.append(section(len(parts) + 1, "Alıntılar", '<p class="intro">Cevapta geçen her satır, kendi kaydından: '
                          "alıntı, yazar, tarih, platform, adres.</p>\n" + page.cards(), "alintilar"))
     if table is not None:
@@ -888,15 +1076,21 @@ def main(argv: list[str]) -> int:
         return refuse("; ".join(why + ([skipped] if skipped else [])), outs, keep)
     if skipped:
         print(f"render: note — {skipped}", file=sys.stderr)
+    if CL is None:
+        print(f"render: note — claims.py not loaded ({NO_CLAIMS}): K1's count, (n satır) beside each line, "
+              "no row struck through", file=sys.stderr)
 
     table = None if a.no_coverage else coverage(answer.parent, answer)   # one call serves both pages
     said = "not asked (--no-coverage)" if table is None else "kapsama.py table" if table[1] else table[0].strip("_")
-    body, cited = number(md)
+    full = CL.extract_claims(md, rows) if CL else None      # the claim ledger over this answer, claims.py's
+    struck = refused(rows, cited_in(md)) if CL else {}
+    book, whence = ledger_of(answer.parent, full)
+    body, cited = number(spans_md(md, rows) if CL else md, set(struck))
     entries = [source_line(n, rows[i]) for n, i in enumerate(cited, 1)]
     drawer = ""
     for out in outs:
         if out.suffix.lower() in (".html", ".htm"):
-            text_out, facts = html_page(md, rows, answer.parent, table)
+            text_out, facts = html_page(md, rows, answer.parent, table, book, struck, whence)
             drawer = f" · çekmece {facts['platforms']} platform, {facts['shelved']} adres"
         else:
             page = [body.rstrip("\n"), "", "## Kaynaklar", "",
@@ -907,8 +1101,9 @@ def main(argv: list[str]) -> int:
             out.write_text(text_out, encoding="utf-8")
         except OSError as e:
             raise SystemExit(f"render: cannot write {out}: {e.strerror}")
+    ledger = f" · iddia defteri {len(book)} ({whence})" if book is not None else " · iddia defteri yok"
     print(f"render: {len(cited)} cited id(s) -> {' + '.join(map(str, outs))} · Kaynaklar {len(entries)} · "
-          f"Nereye bakıldı: {said}{drawer}")
+          f"Nereye bakıldı: {said}{drawer}{ledger}" + (f" · kabul edilmeyen alıntı {len(struck)}" if struck else ""))
     return 0
 
 

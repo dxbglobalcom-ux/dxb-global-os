@@ -22,7 +22,7 @@ benim sorduguğum şeyin aynısı orada"* — searching for the sentence is not 
 WHAT IT IS NOT — HIS SECOND FINDING, THE SAME NIGHT. *"skill beni boru yaptı"*: the door
 took his COMPLAINT and pushed it down a pipe into a search box. Shortening the paragraph
 is not thinking about it. From 2026-09-20 the session types the short queries itself
-(SKILL.md §0), and this file is only the GATE beneath that — never the thinker. It derives a
+(never his sentence), and this file is only the GATE beneath that — never the thinker. It derives a
 box query for ONE short question the session already chose, and it refuses anything that is
 still a paragraph.
 

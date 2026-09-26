@@ -11,9 +11,15 @@ THE HUNTER, when launched as one (`--effort low`), plays what FAKE_HUNTER names 
   partial  reads two rows whole and judges them, prints the third only in part (batch --max-chars 20)
            and leaves; resumed (DEVAM), it reads on through batch, which continues the partial row
 Its answer names the round it was in ("first" or "resumed"), so a case can tell whose HÜKÜM stood.
+FAKE_HUNTER may be a comma list: a hunter plays its first mode that is not a claim role's (B56 K2).
+THE CLAIM HUNTERS (DXB_HUNTER karsi or bosluk) close every claim of the list in their prompt through the
+`link` line it hands them: karsi links its first `adaylar` row against the claim, else closes it with
+--none; bosluk links its first `adaylar` row for it, else `add`s a sentence of another author's relevant
+row and links that, else --none. `karsi-lazy` / `bosluk-lazy` in FAKE_HUNTER link nothing.
 THE WRITER, when launched as one (`--effort high`), keeps its arguments and its stdin beside it and
-answers with the text of FAKE_ANSWER_FILE in the `claude -p --output-format json` envelope.
-Both write the folder they stand in into cwd.txt there, so a case can see where a `claude` was started.
+answers with the text of FAKE_ANSWER_FILE in the `claude -p --output-format json` envelope — on the first
+pass (its prompt says there is no claim ledger yet) with FAKE_DRAFT_FILE when that is set.
+All of them write the folder they stand in into cwd.txt there, so a case can see where a `claude` started.
 """
 import json
 import os
@@ -28,20 +34,71 @@ effort = argv[argv.index("--effort") + 1] if "--effort" in argv else ""
 Path("cwd.txt").write_text(os.getcwd() + "\n", encoding="utf-8")
 if effort == "high":
     Path("writer-launch.txt").write_text("\n".join(argv) + "\n", encoding="utf-8")
-    Path("writer-stdin.txt").write_text(sys.stdin.read(), encoding="utf-8")
-    answer = Path(os.environ["FAKE_ANSWER_FILE"]).read_text(encoding="utf-8")
+    stdin = sys.stdin.read()
+    Path("writer-stdin.txt").write_text(stdin, encoding="utf-8")
+    draft = "(ilk geçiş — iddia defteri henüz yok)" in stdin and os.environ.get("FAKE_DRAFT_FILE")
+    answer = Path(draft or os.environ["FAKE_ANSWER_FILE"]).read_text(encoding="utf-8")
     print(json.dumps({"type": "result", "subtype": "success", "is_error": False, "result": answer,
                       "total_cost_usd": 0.4213, "duration_ms": 1234}))
     sys.exit(0)
 
 prompt = argv[argv.index("-p") + 1] if "-p" in argv else ""
-role, mode = os.environ.get("DXB_HUNTER", "?"), os.environ.get("FAKE_HUNTER", "exit")
+CLAIM_ROLES = ("karsi", "bosluk")
+modes = os.environ.get("FAKE_HUNTER", "exit").split(",")
+role = os.environ.get("DXB_HUNTER", "?")
+mode = next((m for m in modes if not m.startswith(CLAIM_ROLES)), "exit")
 resumed = prompt.startswith("DEVAM")
 batches = [shlex.split(c) for c in re.findall(r'^\s+(python3 ".+" batch ".+)$', prompt, re.M)]
 
 
 def call(*args):
     return subprocess.run(list(args), capture_output=True, text=True).stdout
+
+
+def claim_hunter():
+    """The karsi / bosluk stand-in: every claim block of the prompt's list, closed through its link line."""
+    cla, run = re.search(r'^\s+python3 "(.+?)" link "(.+?)" --claim', prompt, re.M).groups()
+    evi = re.search(r'^\s+python3 "(.+?)" add "(.+?)" --url', prompt, re.M).group(1)
+    claims, cur, part = [], None, None
+    for line in prompt.splitlines():
+        m = re.match(r"### (C\d+) \|", line)
+        if m:
+            cur = {"id": m.group(1), "authors": set(), "cands": []}
+            claims.append(cur)
+            part = None
+        elif cur is not None and line.startswith(("dayanak", "adaylar")):
+            part = line[:7]
+        elif cur is not None and part and re.match(r"\s*\[L\d+\]", line):
+            rid, who = re.match(r"\s*\[(L\d+)\] \S+ · @(\S+)", line).groups()
+            (cur["authors"].add(who) if part == "dayanak" else cur["cands"].append(rid))
+        elif not line.strip():
+            cur = None
+    added, out = {}, []
+    for c in [] if f"{role}-lazy" in modes else claims:
+        pick = c["cands"][0] if c["cands"] else None
+        if pick is None and role == "bosluk":
+            rows = [json.loads(x) for x in Path(run, "evidence.jsonl").read_text(encoding="utf-8").splitlines() if x.strip()]
+            other = next((r for r in rows if r.get("tool") != "evidence.py add" and r.get("triage") == "relevant"
+                          and r.get("bytes") and r.get("author") and r["author"] not in c["authors"]), None)
+            if other:
+                if other["url"] not in added:
+                    quote = other["passage"].split(". ")[0].rstrip(".") + "."
+                    added[other["url"]] = call("python3", evi, "add", run, "--url", other["url"], "--quote", quote).strip()
+                pick = added[other["url"]]
+        if pick:
+            call("python3", cla, "link", run, "--claim", c["id"], "--against" if role == "karsi" else "--for", pick,
+                 "--by", role)
+            out.append(f"{c['id']} — {'karşı' if role == 'karsi' else 'ikinci kaynak'}: {pick}")
+        else:
+            call("python3", cla, "link", run, "--claim", c["id"], "--none", "--kind",
+                 "counter" if role == "karsi" else "gap", "--reason", "stand-in searched, found nothing", "--by", role)
+            out.append(f"{c['id']} — yok: stand-in searched, found nothing")
+    print(json.dumps({"type": "result", "result": "\n".join(out) or "(liste bos)", "total_cost_usd": 0.03}))
+    sys.exit(int(os.environ.get("FAKE_RC", "0")))
+
+
+if role in CLAIM_ROLES:
+    claim_hunter()
 
 
 def read_all(judge, extra=(), once=False):

@@ -29,8 +29,10 @@ URL = re.compile(r"https?://[^\s\"'<>)\]},`\\]+")
 # A machine answers it now, on every run, from the hunter's own tool calls.
 # `browser`: since 2026-09-24 a browser read is scripts/hidden.py; `opencli browser` is refused
 # (exit 3) by bin/opencli and is matched only so an old transcript still reads the same.
+# `google`: the ground's Google is `hidden.py google` (fleet/ARSENAL.md), so a hunter that searched
+# Google through it opened the Google door too — the old pattern knew only `opencli google search`.
 CHANNEL_PAT = [
-    ("sweep", r"sweep\.sh"), ("google", r"opencli google search"),
+    ("sweep", r"sweep\.sh"), ("google", r"opencli google search|hidden\.py\W{0,3}google\b"),
     ("ddg", r"opencli duckduckgo"), ("reddit", r"opencli reddit|crowd\.sh"),
     ("x", r"opencli twitter"), ("youtube", r"opencli youtube|yt-dlp"),
     ("hn", r"opencli hackernews|hn\.algolia"), ("github", r"gh search|gh api"),
@@ -166,8 +168,12 @@ def stats(p: pathlib.Path) -> dict:
     0 for all seven lanes — a detector that measures nothing always agrees with itself.
     The honest source is the tool call: what it fetched, not what it typed. Measured
     2026-09-17 on the first fleet run, which is why this is here.
+
+    PARA IS THE ROLE'S WHOLE BILL (B56 K2): <role>.jsonl joins every round the completion gate launched,
+    each ending in its own `result` event, and the K1 run's summary printed 10.74 against the gate's own
+    11.16 because only the last round's cost was read. Every result event's total_cost_usd is summed.
     """
-    cost, tools, last, urls, doors = 0.0, {}, None, set(), set()
+    cost, tools, urls, doors = 0.0, {}, set(), set()
     calls = {"fetch": 0, "add": 0}
     # A CALL IS NOT A FETCH. Measured 2026-09-17: a URL written inside an `echo` whose tool
     # result carried `is_error: true` was counted as one opened source AND as a ground read,
@@ -180,7 +186,9 @@ def stats(p: pathlib.Path) -> dict:
         except Exception:
             continue
         if d.get("type") == "result":
-            last = d
+            c = d.get("total_cost_usd")
+            if isinstance(c, (int, float)) and not isinstance(c, bool):
+                cost += c
         for blk in (d.get("message") or {}).get("content") or []:
             if not isinstance(blk, dict):
                 continue
@@ -205,8 +213,6 @@ def stats(p: pathlib.Path) -> dict:
                 for label, pat in CHANNEL_PAT:
                     if re.search(pat, raw, re.I):
                         doors.add(label)
-    if last:
-        cost = last.get("total_cost_usd", 0.0) or 0.0
     return {"cost": cost, "tools": tools, "doors": doors, **calls,
             "touched": {u.rstrip('.,);\\"') for u in urls}}
 
@@ -241,7 +247,7 @@ def collect(out: pathlib.Path) -> dict:
     """
     found: dict = {}
     for j in sorted(out.glob("*.jsonl")):
-        if j.name == LEDGER:
+        if j.name in (LEDGER, "claims.jsonl", "claims.draft.jsonl"):    # the ledgers (B56 K2), not a transcript
             continue
         role = j.stem
         txt = final_text(j)
@@ -299,7 +305,8 @@ def main() -> int:
     if led is None:
         print("\nDEFTER YOK — evidence.jsonl bulunamadi: hicbir satir sayilamadi, satir kimlikleri denetlenemedi.")
     else:
-        plats = list(dict.fromkeys([p for _, ps in roles for p in ps if p != "rest"] + ["web"]))
+        # `rest` is the counter hunter's, `all` the claim roles' (karsi, bosluk): neither is a platform
+        plats = list(dict.fromkeys([p for _, ps in roles for p in ps if p not in ("rest", "all")] + ["web"]))
         plats += sorted(p for p in led["found"] if p not in plats and p != "?")
         plats += ["?"] if "?" in led["found"] else []
         print("\nDEFTER — evidence.jsonl, makine sayimi (BULUNDU = ayri adres · GOVDELI = govdesi okunmus ayri adres)")
