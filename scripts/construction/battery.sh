@@ -66,6 +66,13 @@ HOST_FILES=(
   tests/b46/kapsama.test.ts
   tests/b46/fleet-by-platform.test.ts
   tests/b46/render-from-rows.test.ts
+  # B56 K1 (2026-09-26): the three files the coverage engine added. Measured that day inside the
+  # wall: `completion-gate` starts the real fleet, whose hunters stand in a bwrap jail, and bwrap
+  # inside the wall is refused ("No permissions to create a new namespace", rc 1) — 10 cases red at
+  # 0 s. The engine's battery has one side, the host; every b46 file is listed here.
+  tests/b46/ledger-states.test.ts
+  tests/b46/completion-gate.test.ts
+  tests/b46/render-drawer.test.ts
 )
 
 # ── THE BENCH'S OWN RULER (CEO 2026-09-21: "tezgah kendini temizlesin her zaman

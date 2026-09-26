@@ -92,7 +92,10 @@ export function makeBench(): Bench {
   process.env.DXB_HIDDEN_PORT = DEAD_HIDDEN_PORT;
   const root = mkdtempSync(join(tmpdir(), "dxb-b46-"));
   const engine = join(root, "engine");
-  execFileSync("cp", ["-a", SKILL, engine]);
+  // -r, not -a: measured 2026-09-26 in the sandboxed battery (dxbbuild, tmpfs) — `cp -a` tries to
+  // preserve ACLs/xattrs and dies with "preserving permissions … Invalid argument"; -r keeps mode bits
+  // and symlinks, which is all the bench needs.
+  execFileSync("cp", ["-r", SKILL, engine]);
   rmSync(join(engine, "scripts", "__pycache__"), { recursive: true, force: true });
   rmSync(join(engine, "fleet", "__pycache__"), { recursive: true, force: true });
   rmSync(join(engine, "hooks", "__pycache__"), { recursive: true, force: true });
