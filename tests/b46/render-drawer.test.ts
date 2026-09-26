@@ -16,7 +16,7 @@
 // repository and nothing leaves the machine.
 
 import { spawnSync } from "node:child_process";
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -30,12 +30,13 @@ const row = (id: string) => ROWS.find((r) => r.id === id)!;
 let root: string;
 let page = "";
 let said = "";
-/** The real render.py on a run folder: its exit and what it said, and the page it wrote. */
+/** The real render.py on a run folder: its exit and what it said, and the page it wrote ("" when none). */
 function render(run: string): { said: string; page: string } {
   const p = spawnSync("python3", [join(SKILL, "scripts", "render.py"), join(run, "answer.md"), "--evidence",
     join(run, "evidence.jsonl"), "--out", join(run, "final.html")],
   { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
-  return { said: `${p.status} ${p.stdout}${p.stderr}`, page: readFileSync(join(run, "final.html"), "utf8") };
+  const out = join(run, "final.html");
+  return { said: `${p.status} ${p.stdout}${p.stderr}`, page: existsSync(out) ? readFileSync(out, "utf8") : "" };
 }
 beforeAll(() => {
   root = mkdtempSync(join(tmpdir(), "b46-drawer-"));
@@ -84,6 +85,32 @@ describe("final.html — the verdict first, the count beside every claim", () =>
   });
 });
 
+describe("final.html — counter-evidence in one bracket is the two citations it holds", () => {
+  it("renders [L0001, L0002 ↔ L0003] as two groups, a count beside each; [L0001 ↔ L9999] is still refused", () => {
+    // the live run of 2026-09-26 wrote `[L1720, L1722, L1755 ↔ L1721, L1723, L1724]` (answer.md line 66) and
+    // the whole page was refused; each side is held to the citation rule, so an unknown id still refuses
+    const run = (name: string, cite: string) => {
+      const dir = join(root, name);
+      cpSync(FIX, dir, { recursive: true });
+      writeFileSync(join(dir, "answer.md"), `${readFileSync(join(FIX, "answer.md"), "utf8")}\n- Kota: iki taraf birbirini yalanlıyor ${cite}.\n`, "utf8");
+      return render(dir);
+    };
+    const ok = run("paired", "[L0001, L0002 ↔ L0003]");
+    expect(ok.said).toMatch(/^0 /);
+    // each side its chips and its own count, ↔ between them, and no sum of the two sides at the line's end
+    expect(ok.page.match(/<li>Kota: [\s\S]*?<\/li>/)?.[0].replace(/<a class="ref" href="#(L\d{4})"[^>]*>\d+<\/a>/g, "$1"))
+      .toBe('<li>Kota: iki taraf birbirini yalanlıyor <span class="refs">L0001L0002</span> <span class="count">(2 satır)</span> ↔ '
+        + '<span class="refs">L0003</span> <span class="count">(1 satır)</span>.</li>');
+    // kapsama.py reads the pair the same way (platforms.split_paired): L0003's post is X's third cited address
+    const cov = ok.page.split('id="kapsama"')[1]?.split("</section>")[0] ?? "";
+    expect(cov.match(/<span class="v">X<\/span><\/td>[\s\S]*?data-label="Cevapta" class="n"><span class="v">(\d+)</)?.[1]).toBe("3");
+    expect(cov).not.toContain("biçimsiz atıf");
+    const bad = run("paired-unknown", "[L0001 ↔ L9999]");
+    expect(bad.said).toMatch(/^2 render: REFUSED \(no page written\) — id not in evidence\.jsonl: L9999 \(line 26\)/);
+    expect(bad.page).toBe("");
+  });
+});
+
 describe("final.html — a quote card for every cited row, printed from the row", () => {
   it("prints the passage, author, date, platform and address of each cited id, in the page's order", () => {
     const cards = [...page.matchAll(/<figure class="qcard" id="q-(L\d{4})">([\s\S]*?)<\/figure>/g)];
@@ -110,6 +137,22 @@ describe("final.html — a quote card for every cited row, printed from the row"
     expect(items(got.page).find((m) => m[2] === "L0007")?.[3]).toContain(once);
     expect(got.page).toContain("ilgisiz: Thumbnail &amp; no words ×1");
     expect(got.page).not.toMatch(/&amp;(?:amp|gt);/);
+  });
+
+  it("writes a U+FFFD a fetched body carries as &#xFFFD; — no raw one on the page, the text around it intact", () => {
+    // 2026-09-26 the claude.ai Artifact publisher refused the K1 run's page: 599 raw U+FFFD, bodies decoded with errors="replace"
+    const run = join(root, "replacement");
+    cpSync(FIX, run, { recursive: true });
+    const rows = ROWS.map((r) => r.id === "L0007" ? { ...r, passage: "Kod incelemesinde Astra\uFFFDya güveniyorum; zor işlerde Fable\uFFFDa dönüyorum." } : r);
+    writeFileSync(join(run, "evidence.jsonl"), rows.map((r) => JSON.stringify(r)).join("\n") + "\n", "utf8");
+    const got = render(run);
+    expect(got.said).toMatch(/^0 /);
+    expect(got.page).not.toContain("\uFFFD");
+    const text = "Kod incelemesinde Astra&#xFFFD;ya güveniyorum; zor işlerde Fable&#xFFFD;a dönüyorum.";
+    expect(got.page.match(/<figure class="qcard" id="q-L0007">[\s\S]*?<\/figure>/)?.[0]).toContain(`“${text}”`);
+    expect(items(got.page).find((m) => m[2] === "L0007")?.[3]).toContain(`<p class="dt">${text}</p>`);
+    const verdict = got.page.indexOf('<div class="verdict">');
+    expect(got.page.slice(verdict, got.page.indexOf("</div>", verdict))).toContain("Net bir kazanan yok: iş bölümü var");
   });
 });
 

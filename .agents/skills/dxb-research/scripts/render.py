@@ -13,7 +13,10 @@ prints from a row the fetcher wrote cannot. So the answer carries ids and nothin
 check: the quote, its author, its date and its address all come from evidence.jsonl.
 
 A citation is EXACTLY `[L0042]` or `[L0002, L0001]` — the pattern platforms.CITE_RE holds, so this page
-and kapsama.py's Cevapta column count the same citations. final.md is the answer as written, each
+and kapsama.py's Cevapta column count the same citations. Counter-evidence is two citations joined by ↔,
+`[L0042, L0043] ↔ [L0051]`; one bracket holding both sides, `[L0042, L0043 ↔ L0051]`, is read as those
+two (platforms.split_paired, kapsama.py's reading too; a render.py copied alone, without platforms.py,
+refuses it as before). final.md is the answer as written, each
 citation's ids turned into numbers in first-appearance order (a repeated id keeps its number; a group
 keeps its shape, `[1, 2]`), then:
   ## Kaynaklar       one entry per cited id: `n. **author** · date · platform — “passage” — url`, all
@@ -28,7 +31,9 @@ became 4 on the page and wanted to browse the 130 X posts himself ("130 gönderi
 linklerde olmalı"). Top to bottom: an eyebrow (the run's date, its hunters, their seconds) · the question
 as the title · the VERDICT, the answer's first paragraph · "Cevabı taşıyan sayılar": every paragraph and
 list item of the answer that cites rows, under the writer's section it came from, each with `(n satır)`
-— n = the distinct ids it cites — and each id a numbered link to its row in the drawer; what stands before
+— n = the distinct ids it cites; counter-evidence, `[A] ↔ [B]`, counted beside each side, and a line that
+cites nothing else prints no sum of the two — and each id a numbered link to its row in the drawer; what
+stands before
 the first section, and the writer's own section of that name, stand here whole · EVERY line and table row
 here carries its count: one that cites no row prints `(0 satır)` in the warning colour, the claim nothing
 supports made visible (the lead's ruling, 2026-09-26) · the writer's other sections with what remains in
@@ -43,7 +48,8 @@ our own small subset — headings, paragraphs, lists, tables, bold/italic/code, 
 
 REFUSED — exit 2, one line on stderr, no page written — when the answer carries an id that is not in
 evidence.jsonl; a bracket that holds an id-like token but is not a citation (`[bkz. L0002]`,
-`[L0001 ]`, `[l0003]`, `[L0001; L0002]`); a raw http(s):// address (R6: addresses come from the rows);
+`[L0001 ]`, `[l0003]`, `[L0001; L0002]`, `[L0001 | L0002]` — only ↔ pairs two sides, and each side is
+held to the same rule); a raw http(s):// address (R6: addresses come from the rows);
 or a `>` quote block (quotes come from the rows, never typed). A page an earlier render left at an
 output path goes too (never the answer or the rows file): a page built from an earlier answer never
 stands beside a refused one. A line of evidence.jsonl that does not parse is skipped and said: an id on it is
@@ -210,6 +216,7 @@ TABLE_RULE = re.compile(r"^\|?[ \t]*:?--+:?[ \t]*(?:\|[ \t]*:?--+:?[ \t]*)*\|?$"
 RULE = re.compile(r"^(?:---+|\*\*\*+|___+)$")
 SENTENCE_END = re.compile(r"[.?!](?:\s|$)")
 CITES = re.compile(rf"{CITE.pattern}(?:[ \t]+{CITE.pattern})*")   # `[L1] [L2]`: one run, one line of chips
+PAIR = re.compile(rf"({CITES.pattern})[ \t]*↔[ \t]*({CITES.pattern})")   # counter-evidence: `[A] ↔ [B]`
 ENTITY = re.compile(r"&(?:#[0-9]+|#[xX][0-9a-fA-F]+|[A-Za-z][A-Za-z0-9]*);")   # a whole entity, ";" included
 FONTS = ("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;"
          "1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;600&display=swap")
@@ -279,11 +286,11 @@ table.cov tr.why td{padding:0 0 10px;font-size:13px;line-height:1.55;color:var(-
 .recon.ok{color:var(--ok)}
 .recon.bad{color:var(--bad)}
 .note{margin:6px 0 0;font:400 12.5px/1.55 var(--mono);color:var(--muted)}
-.cards{display:grid;gap:18px}
-.qcard{margin:0;padding:2px 0 2px 16px;border-left:2px solid var(--accent)}
-.qcard blockquote{margin:0 0 6px;font:italic 400 17.5px/1.55 var(--serif)}
+.cards{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.qcard{min-width:0;max-width:100%;margin:0;padding:2px 0 2px 16px;border-left:2px solid var(--accent)}
+.qcard blockquote{min-width:0;max-width:100%;margin:0 0 6px;font:italic 400 17.5px/1.55 var(--serif);overflow-wrap:anywhere}
 .qn{display:inline-block;min-width:20px;margin-right:8px;padding:2px 5px;border-radius:3px;background:var(--accent);color:var(--on-accent);font:normal 600 11.5px/1.3 var(--mono);text-align:center;vertical-align:2px}
-.qcard figcaption{font:400 12.5px/1.55 var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.qcard figcaption{min-width:0;max-width:100%;font:400 12.5px/1.55 var(--mono);color:var(--muted);overflow-wrap:anywhere}
 details.plat{border-top:1px solid var(--rule)}
 details.plat:last-of-type{border-bottom:1px solid var(--rule)}
 summary{padding:14px 0;cursor:pointer;list-style:none;font:600 16px/1.4 var(--sans)}
@@ -299,7 +306,7 @@ details[open]>summary::before{content:"−"}
 .vd{color:var(--ink-2)}
 .mark{margin-left:6px;padding:1px 6px;border-radius:3px;background:var(--accent);color:var(--on-accent);font:600 11px/1.5 var(--mono);text-decoration:none;white-space:nowrap}
 .dt{margin:4px 0;font-size:15px;line-height:1.55}
-.du,.src{font:400 12.5px/1.45 var(--mono);overflow-wrap:anywhere}
+.du,.src{font:400 12.5px/1.45 var(--mono);overflow-wrap:anywhere;word-break:break-word}
 .none,.empty{color:var(--muted);font-style:italic}
 footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--rule);font:400 12px/1.6 var(--mono);color:var(--muted)}
 :target{scroll-margin-top:16px}
@@ -324,12 +331,17 @@ table.cov tr.why{display:block;padding-top:0}
 """.replace("%DARK%", DARK)
 
 
-def esc(s: str) -> str:
-    return html.escape(s, quote=False)
+# every U+FFFD leaves as &#xFFFD; — 2026-09-26 the claude.ai Artifact publisher refused the K1 run's page for
+# its 599 raw U+FFFD (drawer bodies decoded with errors="replace"): "write an intended U+FFFD as &#xFFFD;"
+FFFD = "&#xFFFD;"
+
+
+def esc(s: str, quote: bool = False) -> str:
+    return html.escape(s, quote=quote).replace("\ufffd", FFFD)
 
 
 def attr(s: str) -> str:
-    return html.escape(s, quote=True)
+    return esc(s, quote=True)
 
 
 def unentity(s: str) -> str:
@@ -434,8 +446,12 @@ def cited_in(s: str) -> list[str]:
 def count(s: str, zero: bool = False) -> str:
     """The count beside the claim (his order, 2026-09-26): the distinct rows it cites. `zero` — the line
     stands under 'Cevabı taşıyan sayılar' — prints a line that cites no row as `(0 satır)`, the warning
-    style; elsewhere such a line stays plain (the lead's ruling, 2026-09-26)."""
+    style; elsewhere such a line stays plain (the lead's ruling, 2026-09-26). Counter-evidence, `[A] ↔ [B]`,
+    is counted beside each side (Page.inline): a line that cites nothing but pairs carries no sum of the
+    two sides at its end — 3 rows against 3 are not "6 satır" for one claim."""
     n = len(cited_in(s))
+    if n and not CITE.search(PAIR.sub("", s)):
+        return ""
     return f' <span class="count{"" if n else " zero"}">({n} satır)</span>' if n or zero else ""
 
 
@@ -542,7 +558,9 @@ class Page:
             held.append(fragment)
             return f"\x00{len(held) - 1}\x00"
 
-        s = CITES.sub(lambda m: hold(self.cite(m.group(0))), s.replace("\x00", ""))
+        s = PAIR.sub(lambda m: hold(f"{self.cite(m[1])}{count(m[1], True)} ↔ {self.cite(m[2])}{count(m[2], True)}"),
+                     s.replace("\x00", ""))          # counter-evidence: each side its chips and its own count
+        s = CITES.sub(lambda m: hold(self.cite(m.group(0))), s)
         s = re.sub(r"`([^`\n]+)`", lambda m: hold(f"<code>{esc(m.group(1))}</code>"), s)
         s = esc(s)
         s = re.sub(r"\*\*(?=\S)(.+?)(?<=\S)\*\*", r"<strong>\1</strong>", s)
@@ -863,6 +881,7 @@ def main(argv: list[str]) -> int:
         rows, bad = load_rows(evidence)
     except OSError as e:
         return refuse(f"cannot read {e.filename}: {e.strerror}", outs, keep)
+    md = P.split_paired(md) if P else md   # `[A ↔ B]` is `[A] ↔ [B]`; each side still meets every rule below
     skipped = f"{len(bad)} line(s) of {evidence.name} are not a JSON row and were skipped (first: line {bad[0]})" if bad else ""
     why = refusals(md, rows, evidence.name)
     if why:

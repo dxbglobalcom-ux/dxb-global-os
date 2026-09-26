@@ -75,6 +75,21 @@ SUFFIX = (
 
 # A CITATION: exactly [L0042] or [L0042, L0043] — upper-case L, four digits, nothing else inside.
 CITE_RE = re.compile(r"\[L\d{4}(?:,\s*L\d{4})*\]")   # the only owner; render.py spells the same
+# A PAIRED CITATION: counter-evidence in one bracket, `[L0042, L0043 ↔ L0051]` — one ↔ (U+2194), and
+# nothing else joins the two sides. The writer put one on line 66 of the live run of 2026-09-26
+# (20260926-1414-k1-astra-fable) and render.py refused the whole page. It is the two citations it holds.
+PAIRED_RE = re.compile(r"\[([^\[\]\n↔]*)↔([^\[\]\n↔]*)\]")
+
+
+def split_paired(text: str) -> str:
+    """`[A ↔ B]` as the two citations it is, `[A] ↔ [B]` — when each side, the spaces beside ↔ dropped,
+    is a citation by CITE_RE itself. Any other bracket stays as written, so a side that is not a
+    citation is still refused by render.py and named by kapsama.py: both read the answer through here."""
+    def one(m: re.Match) -> str:
+        left, right = f"[{m.group(1).rstrip()}]", f"[{m.group(2).lstrip()}]"
+        return f"{left} ↔ {right}" if CITE_RE.fullmatch(left) and CITE_RE.fullmatch(right) else m.group(0)
+    return PAIRED_RE.sub(one, text)
+
 
 # THE SWEEP'S CHANNELS, BY PLATFORM (scripts/sweep.sh's map). kapsama.py needs it for one thing: a
 # channel that FAILED leaves no address, so without this a closed door on TikTok would leave no

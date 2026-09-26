@@ -137,10 +137,11 @@ def ground_doors(run: Path) -> tuple[set, dict]:
 
 def citations(text: str) -> tuple[list[str], Counter]:
     """The ids the answer cites, and the bracket groups that only LOOK like a citation. A citation is
-    exactly platforms.CITE_RE ([L0042] or [L0042, L0043]); `[bkz. L0002]`, `[L0001 ]` or `[l0003]`
+    exactly platforms.CITE_RE ([L0042] or [L0042, L0043]), a paired one ([L0042 ↔ L0051]) the two it
+    holds (platforms.split_paired, render.py's reading too); `[bkz. L0002]`, `[L0001 ]` or `[l0003]`
     is not one — render.py would not number it — so it is not counted, it is named."""
     ids, bad = [], Counter()
-    for m in BRACKET.finditer(text or ""):
+    for m in BRACKET.finditer(P.split_paired(text or "")):
         group = m.group(0)
         if P.CITE_RE.fullmatch(group):
             ids += re.findall(r"L\d{4}", group)
