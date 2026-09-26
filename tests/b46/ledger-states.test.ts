@@ -31,8 +31,17 @@ const OPENCLI = `#!/bin/sh
 [ -n "$DXB_STUB_ERR" ] && printf '%s\\n' "$DXB_STUB_ERR" >&2
 exit "\${DXB_STUB_RC:-0}"
 `;
-// a model call would leave this mark: --dry-run must never make one
+// a model call would leave this mark: --dry-run must never make one. A case that hands it answers
+// (DXB_TRIAGE_ANSWERS: claude envelopes, one file a call, the last again after that) gets them, the calls
+// counted in DXB_TRIAGE_CALLS
 const CLAUDE = `#!/bin/sh
+if [ -n "$DXB_TRIAGE_ANSWERS" ]; then
+  cat > /dev/null
+  n=$(( $(cat "$DXB_TRIAGE_CALLS" 2>/dev/null || echo 0) + 1 )); echo "$n" > "$DXB_TRIAGE_CALLS"
+  i=0; for f in $DXB_TRIAGE_ANSWERS; do i=$((i + 1)); last=$f; [ "$i" -eq "$n" ] && break; done
+  cat "$last"
+  exit 0
+fi
 touch "$DXB_CLAUDE_MARK"
 exit 99
 `;
@@ -189,6 +198,36 @@ describe("triage.py — the measured Haiku triage, applied through triage-bulk",
     expect(py(TRIAGE, [run, "--platform", "x", "--dry-run", file]).out).toMatch(
       /^triaged: relevant 0 · irrelevant 0 · duplicate 0 · unknown-id 1 · already-triaged 1\nnot applied: 1 prepared verdicts name pending rows/m);
     expect(row(run, "L0112").triage).toBe("relevant");
+  });
+
+  it("parses a ```json{…}``` answer; one with no JSON — the K2 run's X batch 2/5, cut — is asked once more: retry 1/1", () => {
+    // triage-k2-x-batch2-cut.txt: lines of that measured answer, the entry that lost its `{` (L0480) among them
+    const envelope = (result: string) => {
+      const f = join(root, `answer-${n++}.json`);
+      writeFileSync(f, JSON.stringify({ type: "result", is_error: false, result, total_cost_usd: 0.01 }));
+      return f;
+    };
+    const broken = envelope(readFileSync(join(FIX, "triage-k2-x-batch2-cut.txt"), "utf8"));
+    const fenced = envelope("```json" + JSON.stringify(JSON.parse(readFileSync(HAIKU, "utf8"))) + "```");
+    const call = (answers: string[]) => {
+      const run = fresh();
+      const calls = join(root, `calls-${n++}`);
+      const r = py(TRIAGE, [run, "--platform", "x"], { DXB_TRIAGE_ANSWERS: answers.join(" "), DXB_TRIAGE_CALLS: calls });
+      return { ...r, run, calls: Number(readFileSync(calls, "utf8")) };
+    };
+    const once = call([broken, fenced]);
+    expect(once.code, once.out + once.err).toBe(0);
+    expect(once.calls).toBe(2);
+    expect(once.out).toMatch(/^batch 1\/1 · x · 9 rows: no triage JSON in the answer: ```json \{ "triage": \[ .* · \$0\.01 · \d+ s → retry 1\/1$/m);
+    expect(once.out).toMatch(/^batch 1\/1 · x · 9 rows · retry 1\/1: relevant 6 · irrelevant 2 · duplicate 1 · unknown-id 0 · left pending 0 · /m);
+    expect(once.out).toMatch(/^cost: \$0\.02$/m);
+    const twice = call([broken]);
+    expect(twice.code, twice.out).toBe(1);
+    expect(twice.calls, "once more, never a third time").toBe(2);
+    expect(twice.out).toMatch(/^batch 1\/1 · x · 9 rows · retry 1\/1: FAILED — no triage JSON in the answer: /m);
+    expect(twice.out).toMatch(/^left pending: 9 rows with a body — run triage\.py again/m);
+    expect(status(twice.run).platforms.x).toMatchObject({ pending: 11, pending_with_body: 9 });
+    expect(existsSync(mark)).toBe(false);
   });
 });
 

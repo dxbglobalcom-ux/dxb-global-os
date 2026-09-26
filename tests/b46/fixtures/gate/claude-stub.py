@@ -15,12 +15,20 @@ FAKE_HUNTER may be a comma list: a hunter plays its first mode that is not a cla
 THE CLAIM HUNTERS (DXB_HUNTER karsi or bosluk) close every claim of the list in their prompt through the
 `link` line it hands them: karsi links its first `adaylar` row against the claim, else closes it with
 --none; bosluk links its first `adaylar` row for it, else `add`s a sentence of another author's relevant
-row and links that, else --none. `karsi-lazy` / `bosluk-lazy` in FAKE_HUNTER link nothing.
+row and links that, else --none. `karsi-lazy` / `bosluk-lazy` in FAKE_HUNTER link nothing. Every call they
+make is written out as the stream-json of `claude -p` (a tool_use, then its tool_result) before the result,
+and before each link a call of its own `show`s the row it links — for a --none the first row the claim stands
+on (K2c: the gate reads the transcript). `karsi-blind` / `bosluk-blind` link without that show on every round,
+`karsi-blind-once` / `bosluk-blind-once` on the first round only, and `karsi-fetch-blind` / `bosluk-fetch-blind`
+first fetch a page no claim stands on (the bench's Reddit thread) and then link without a show.
+FAKE_LATE_FETCH=<address>: a hunter, after its reading, fetches that address — a row whose body came after the
+triage, as the x hunter's L1688 and L1692 did on the K2 run.
 THE WRITER, when launched as one (`--effort high`), keeps its arguments and its stdin beside it and
 answers with the text of FAKE_ANSWER_FILE in the `claude -p --output-format json` envelope — on the first
 pass (its prompt says there is no claim ledger yet) with FAKE_DRAFT_FILE when that is set.
 All of them write the folder they stand in into cwd.txt there, so a case can see where a `claude` started.
 """
+import itertools
 import json
 import os
 import re
@@ -49,28 +57,46 @@ role = os.environ.get("DXB_HUNTER", "?")
 mode = next((m for m in modes if not m.startswith(CLAIM_ROLES)), "exit")
 resumed = prompt.startswith("DEVAM")
 batches = [shlex.split(c) for c in re.findall(r'^\s+(python3 ".+" batch ".+)$', prompt, re.M)]
+TOOL_IDS = itertools.count(1)
 
 
 def call(*args):
     return subprocess.run(list(args), capture_output=True, text=True).stdout
 
 
+def step(*args):
+    """One Bash call of the claim hunter: made, and written out as `claude -p --output-format stream-json` does."""
+    got = call(*args)
+    tid = f"toolu_stand_in_{next(TOOL_IDS)}"
+    print(json.dumps({"type": "assistant", "message": {"content": [
+        {"type": "tool_use", "id": tid, "name": "Bash", "input": {"command": shlex.join(args)}}]}}))
+    print(json.dumps({"type": "user", "message": {"content": [{"type": "tool_result", "tool_use_id": tid, "content": got}]}}))
+    return got
+
+
 def claim_hunter():
     """The karsi / bosluk stand-in: every claim block of the prompt's list, closed through its link line."""
     cla, run = re.search(r'^\s+python3 "(.+?)" link "(.+?)" --claim', prompt, re.M).groups()
     evi = re.search(r'^\s+python3 "(.+?)" add "(.+?)" --url', prompt, re.M).group(1)
+    blind = f"{role}-blind" in modes or f"{role}-fetch-blind" in modes or (f"{role}-blind-once" in modes and not resumed)
+    if f"{role}-fetch-blind" in modes:
+        step("python3", evi, "fetch", run, "--url", "https://www.reddit.com/r/bench/comments/abc/which_one/")
     claims, cur, part = [], None, None
     for line in prompt.splitlines():
         m = re.match(r"### (C\d+) \|", line)
         if m:
-            cur = {"id": m.group(1), "authors": set(), "cands": []}
+            cur = {"id": m.group(1), "authors": set(), "rows": [], "cands": []}
             claims.append(cur)
             part = None
         elif cur is not None and line.startswith(("dayanak", "adaylar")):
             part = line[:7]
         elif cur is not None and part and re.match(r"\s*\[L\d+\]", line):
             rid, who = re.match(r"\s*\[(L\d+)\] \S+ · @(\S+)", line).groups()
-            (cur["authors"].add(who) if part == "dayanak" else cur["cands"].append(rid))
+            if part == "dayanak":
+                cur["authors"].add(who)
+                cur["rows"].append(rid)
+            else:
+                cur["cands"].append(rid)
         elif not line.strip():
             cur = None
     added, out = {}, []
@@ -83,14 +109,16 @@ def claim_hunter():
             if other:
                 if other["url"] not in added:
                     quote = other["passage"].split(". ")[0].rstrip(".") + "."
-                    added[other["url"]] = call("python3", evi, "add", run, "--url", other["url"], "--quote", quote).strip()
+                    added[other["url"]] = step("python3", evi, "add", run, "--url", other["url"], "--quote", quote).strip()
                 pick = added[other["url"]]
+        if not blind and (pick or c["rows"]):
+            step("python3", evi, "show", run, pick or c["rows"][0])
         if pick:
-            call("python3", cla, "link", run, "--claim", c["id"], "--against" if role == "karsi" else "--for", pick,
+            step("python3", cla, "link", run, "--claim", c["id"], "--against" if role == "karsi" else "--for", pick,
                  "--by", role)
             out.append(f"{c['id']} — {'karşı' if role == 'karsi' else 'ikinci kaynak'}: {pick}")
         else:
-            call("python3", cla, "link", run, "--claim", c["id"], "--none", "--kind",
+            step("python3", cla, "link", run, "--claim", c["id"], "--none", "--kind",
                  "counter" if role == "karsi" else "gap", "--reason", "stand-in searched, found nothing", "--by", role)
             out.append(f"{c['id']} — yok: stand-in searched, found nothing")
     print(json.dumps({"type": "result", "result": "\n".join(out) or "(liste bos)", "total_cost_usd": 0.03}))
@@ -140,6 +168,8 @@ elif mode == "nojudge":
     call("python3", evi, "verdict-bulk", run, "--hunter", role, "--json", str(Path.cwd() / "verdicts.json"))
     used = owed
 
+if os.environ.get("FAKE_LATE_FETCH") and batches:
+    call("python3", batches[0][1], "fetch", batches[0][3], "--url", os.environ["FAKE_LATE_FETCH"])
 turn = "resumed" if resumed else "first"
 line = "bulundu 3 / okundu 130 / okunmadı: 0 / kapı kapalı: 0" if mode == "declare" else f"stand-in verdict ({turn})"
 text = (f"HÜKÜM: {role} stand-in verdict, {turn} round\n"

@@ -1,0 +1,11 @@
+```json
+{
+  "triage": [
+    {"id": "L0455", "status": "irrelevant", "reason": "No substantive content, title only"},
+    {"id": "L0479", "status": "duplicate", "duplicate_of": "L0475", "reason": "Same villa comparison"},"id": "L0480", "status": "duplicate", "duplicate_of": "L0475", "reason": "Villa comparison duplicate"},
+    {"id": "L0481", "status": "relevant", "reason": "Same prompt test, user says Astra did well, Fable not far behind"},
+    {"id": "L0940", "status": "irrelevant", "reason": "Claude for dummies guide"}
+  ],
+  "counts": {"relevant": 20, "irrelevant": 27, "duplicate": 13}
+}
+```

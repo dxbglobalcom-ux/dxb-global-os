@@ -317,3 +317,62 @@ describe("the tail — a draft, its claim ledger, two claim hunters, the answer,
     expect(inOrder(r.out, TAIL), r.out).not.toContain(-1);
   }, 60_000);
 });
+
+describe("K2c — a claim link counts after a read; a triage that leaves rows pending runs once more", () => {
+  // Measured on the K2 run (EVIDENCE-B56-K2 §5): karsi's round 1 was one Bash call of 20 links — no show, no
+  // search — and the gate said accepted; one X triage batch failed and 60 rows stayed pending, unread by anyone.
+  // The claim hunter's stand-in writes its calls as stream-json; `karsi-blind` links with no `show` before.
+  it("sends back a claim hunter that linked without reading, the claim kept on its list and named; a round that reads is accepted", () => {
+    const r = fleet(["read-once", "--q", Q, "--roles", "x", "--timeout", "60"], { FAKE_HUNTER: "batch,karsi-blind-once" });
+    expect(r.out, r.out.slice(-2500)).toMatch(/^claim-gate: karsi round 1 — unchecked 0 → relaunch \(okumadan bağ: C001 · found 0 · none 1 · /m);
+    const brief = readFileSync(join(r.run, "rounds", "prompt-karsi.r2.txt"), "utf8");
+    expect(brief).toMatch(/^DEVAM — you linked C001 without reading a row of them; read them, then link them again\n/);
+    expect(brief).toMatch(/^OKUMADAN BAĞ — your round 1 linked C001 without reading a row of them: /m);
+    expect(readFileSync(join(r.run, "rounds", "list-karsi.r2.txt"), "utf8")).toMatch(/^### C001 \| /m);
+    expect(readFileSync(join(r.run, "rounds", "prompt-karsi.r1.txt"), "utf8")).toMatch(/^YOU ARE A CLAIM HUNTER /);
+    expect(r.out).toMatch(/^claim-gate: karsi round 2 — unchecked 0 → accepted \(found 0 · none 1 · /m);
+    expect(r.code).toBe(0);
+  }, 60_000);
+
+  it("reads no claim with a fetch of a page none of its rows stands at: the links after it are sent back", () => {
+    // the lead's tightening (§F2 item 4): a fetch credits a claim only through the address of one of its rows
+    const r = fleet(["read-fetch", "--q", Q, "--roles", "x", "--timeout", "60"], { FAKE_HUNTER: "batch,karsi-fetch-blind" });
+    expect(readFileSync(join(r.run, "rounds", "karsi.r1.jsonl"), "utf8"), r.out.slice(-2500)).toMatch(/evidence\.py fetch \S+ --url https:\/\/www\.reddit\.com\//);
+    expect(r.out).toMatch(/^claim-gate: karsi round 1 — unchecked 0 → relaunch \(okumadan bağ: C001 · found 0 · none 1 · /m);
+    expect(readFileSync(join(r.run, "rounds", "prompt-karsi.r2.txt"), "utf8")).toMatch(/^OKUMADAN BAĞ — your round 1 linked C001 /m);
+  }, 60_000);
+
+  it("rounds out with links made without a read: the page is written, then !! OKUMADAN HÜKÜM and code 1", () => {
+    const r = fleet(["read-never", "--q", Q, "--roles", "x", "--timeout", "60"], { FAKE_HUNTER: "batch,karsi-blind" });
+    expect(r.out, r.out.slice(-2500)).toMatch(/^claim-gate: karsi round 2 — unchecked 0 → time-up \(okumadan bağ: C001 · found 0 · none 1 · .*tur 2\/2/m);
+    expect(existsSync(join(r.run, "final.html")), "the page is still written").toBe(true);
+    const marker = r.out.search(/^!! OKUMADAN HÜKÜM: karsi C001 — /m);
+    expect(marker).toBeGreaterThan(r.out.search(/^\s+render: /m));
+    expect(marker).toBeGreaterThan(r.out.indexOf("CEVAP HAZIR"));
+    expect(r.code).toBe(1);
+  }, 60_000);
+
+  it("sorts once more only a platform its triage left pending; still pending: !! ELEME EKSIK, the hunters run, code 1", () => {
+    const r = fleet(["triage-left", "--q", Q, "--roles", "x", "--timeout", "60"], { FAKE_HUNTER: "batch", FAKE_TRIAGE: "stuck" });
+    expect(r.out.match(/^ {6}\[x\] left pending: 1 rows with a body/gm), r.out.slice(0, 3000)).toHaveLength(2);
+    expect(r.out).toMatch(/^ {3}eleme ikinci tur: x — /m);
+    expect(existsSync(join(r.run, "triage-x.2.log"))).toBe(true);
+    expect(existsSync(join(r.run, "triage-reddit.2.log")), "reddit left nothing: not sent again").toBe(false);
+    const after = r.out.search(/^!! ELEME EKSIK \(eleme sonrası\): 1 satır gövdesiyle bekliyor \(x ×1\) — okunmadı sayılır$/m);
+    expect(after).toBeGreaterThan(-1);
+    expect(after).toBeLessThan(r.out.indexOf("  avci sahada: x"));
+    // measured again after the page: the same one row, the run's last lines, code 1
+    expect(r.out.search(/^!! ELEME EKSIK: 1 satır gövdesiyle bekliyor \(x ×1\) — okunmadı sayılır$/m)).toBeGreaterThan(r.out.indexOf("CEVAP HAZIR"));
+    expect(existsSync(join(r.run, "final.html"))).toBe(true);
+    expect(r.code).toBe(1);
+  }, 60_000);
+
+  it("names on its last lines, and leaves with 1 for, a body a hunter fetched after the triage, which the triage left none of", () => {
+    // on the K2 run the page said `bekleyen ×62` where the triage had left 60: the x hunter fetched L1688 and L1692 itself
+    const r = fleet(["late-fetch", "--q", Q, "--roles", "x", "--timeout", "60"],
+      { FAKE_HUNTER: "batch", FAKE_LATE_FETCH: "https://x.com/dev_seven/status/1007" });
+    expect(r.out, r.out.slice(0, 3000)).not.toMatch(/ELEME EKSIK \(eleme sonrası\)/);
+    expect(r.out.search(/^!! ELEME EKSIK: 1 satır gövdesiyle bekliyor \(x ×1\) — okunmadı sayılır$/m)).toBeGreaterThan(r.out.indexOf("CEVAP HAZIR"));
+    expect(r.code).toBe(1);
+  }, 60_000);
+});

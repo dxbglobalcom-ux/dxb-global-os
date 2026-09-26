@@ -15,8 +15,9 @@ and the writer's second pass is handed the result (`brief`).
   claims.py list <run> --todo counter|gap [--cap 20] [--candidates 5] [--ledger F]
   claims.py link <run> --claim C007 (--against L1[,L2…] | --for L3 | --none --kind counter|gap --reason R)
                  --by ROLE [--ledger F]
-  claims.py status <run> [--format md|json] [--ledger F] [--answer F]
+  claims.py status <run> [--format md|json] [--ledger F] [--answer F] [--transcript F --role R --round N]
   claims.py brief <run> [--ledger F]
+  claims.py reads <run> --role R --round N [--transcript F] [--ledger F] [--format md|json]
 
 The contract (fields, the pair rule, independence, flags, outputs, exit codes) is
 EVIDENCE-B56-K2-2026-09-26.md §2.2; fleet/fleet.sh, scripts/render.py and scripts/kapsama.py are built
@@ -552,7 +553,10 @@ def unexplained_of(run: Path, answer: Path) -> int | None:
     return unexplained(evidence_use(md, list(rows.values())))
 
 
-def cmd_status(run: Path, ledger: Path, fmt: str, answer: str | None = None) -> int:
+def cmd_status(run: Path, ledger: Path, fmt: str, answer: str | None = None,
+               reads: tuple[str, int, Path] | None = None) -> int:
+    """`reads` (role, round, transcript) — the fleet's claim gate hands it — adds `unread_links` to the json:
+    the claims that role closed in that round with no read (claim_reads); null when the transcript cannot be read."""
     claims = read_ledger(ledger)
     if claims is None:
         print(f"no claim ledger: {ledger}")
@@ -562,6 +566,9 @@ def cmd_status(run: Path, ledger: Path, fmt: str, answer: str | None = None) -> 
         t.update(owed_counter=t["counter"]["sent"], owed_gap=t["gap"]["sent"],
                  new_for_links=sum(x.get("kind") == "for" for c in claims for x in c.get("links") or []),
                  unexplained_evidence=unexplained_of(run, answer_of(run, ledger, answer)))
+        if reads is not None:
+            r = claim_reads(run, claims, *reads)
+            t["unread_links"] = r["unread_links"] if r is not None else None
         print(json.dumps(t, ensure_ascii=False))
         return 0
     part = lambda d: " · ".join(f"{name} {d[name]}" for name, _st in TALLY)  # noqa: E731
@@ -607,6 +614,172 @@ def cmd_brief(ledger: Path) -> int:
     return 0
 
 
+# =================================================================== reads — a link counts after a read (K2c F2)
+# WHY. On the K2 run of 2026-09-26 the counter hunter's round 1 was ONE Bash call chaining 20 `link` calls —
+# 7 --against rows taken from the list's one-line `adaylar`, 13 --none with one reason — no `show`, no search,
+# 18 s; the gate asked only whether anything was still owed, and said accepted. So the fleet reads the round's
+# transcript (rounds/<role>.r<N>.jsonl, the `claude -p` stream-json it keeps): a READ of a claim is a tool call
+# BEFORE the call that links it (its last one in the round) that reads one of the claim's rows — an `adaylar`
+# row of the list it was handed, a row it stands on or one it links: it `show`s that row, or an evidence.py
+# `fetch` / `batch` / `page` reads that row's address (url_canonical, else url — the --url it fetched, the
+# `OK <id>` it wrote, the `### <id> | … | <address>` it printed, page's --id) or writes that row (an id first
+# in the ledger after it). A fetch of any other page reads no claim (the lead's tightening, K2c §F2 item 4),
+# and a show and a link in one call is no read: the hunter saw nothing before it linked. The claims a round
+# answers for: those of the list it was handed (rounds/list-<role>.r<N>.txt) and those its transcript links;
+# `unread_links` are those of them the role closed (`checked_by`) with no read.
+CLAIM_ID = re.compile(r"\bC\d{3,}\b")
+ROW_ID = re.compile(r"\bL\d{4,}\b")
+STEP_SPLIT = re.compile(r"\n|;|&&|\|\|?")
+LINKED_OK = re.compile(r"^OK (C\d{3,}) (?:counter_status|gap_status) ", re.M)
+TRANSCRIPT_NAME = re.compile(r"(.+)\.r(\d+)\.jsonl")
+FETCHED_OK = re.compile(r"^OK (L\d{4,}) ", re.M)                       # evidence.py fetch: the row it wrote
+PRINTED = re.compile(r"^### (L\d{4,}) \|[^\n]*\| (\S+)$", re.M)          # batch / page: a row and its address
+CLOSED_DOOR = re.compile(r"^KAPALI KAPI (\S+)", re.M)                  # fetch: the address that stayed shut
+URL_ARG = re.compile(r"--url\s+([\"']?)(\S+?)\1(?=\s|$)")
+ID_ARG = re.compile(r"--id\s+[\"']?(L\d{4,})")
+
+
+def _call(sub: str) -> re.Pattern:
+    """A subcommand of evidence.py or claims.py, named or through a variable: `evidence.py" show`, `"$E" fetch`."""
+    return re.compile(r"(?:(?:evidence|claims)\.py[\"']?|\$\{?\w+\}?[\"']?)\s+(?:%s)\b(?!\.)" % sub)
+
+
+SHOW_CALL, LINK_CALL, READ_CALL = _call("show"), _call("link"), _call("fetch|batch|page")
+
+
+def transcript_calls(path: Path) -> list[dict] | None:
+    """The round's tool calls in order — each assistant `tool_use` of the stream-json (a Bash call's command,
+    else its input as JSON) with the text its `tool_result` brought back. None: the file cannot be read."""
+    try:
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return None
+    calls: list[dict] = []
+    by_id: dict[str, dict] = {}
+    for line in lines:
+        try:
+            ev = json.loads(line)
+        except ValueError:
+            continue
+        msg = ev.get("message") if isinstance(ev, dict) else None
+        for part in (msg.get("content") if isinstance(msg, dict) else None) or []:
+            if not isinstance(part, dict):
+                continue
+            if ev.get("type") == "assistant" and part.get("type") == "tool_use":
+                inp = part.get("input")
+                cmd = inp["command"] if isinstance(inp, dict) and isinstance(inp.get("command"), str) \
+                    else json.dumps(inp, ensure_ascii=False)
+                calls.append({"input": cmd, "result": ""})
+                by_id[str(part.get("id"))] = calls[-1]
+            elif ev.get("type") == "user" and part.get("type") == "tool_result" and str(part.get("tool_use_id")) in by_id:
+                got = part.get("content")
+                by_id[str(part.get("tool_use_id"))]["result"] += got if isinstance(got, str) else " ".join(
+                    str(x.get("text") or "") for x in got if isinstance(x, dict)) if isinstance(got, list) else ""
+    return calls
+
+
+def listed(path: Path) -> dict[str, list[str]] | None:
+    """A claim list as `list` printed it: claim id -> the ids of its `adaylar`, in order. None: no such file."""
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    out: dict[str, list[str]] = {}
+    cur, part = None, ""
+    for line in text.splitlines():
+        m = re.match(r"### (C\d{3,}) \|", line)
+        if m:
+            cur, part = out.setdefault(m.group(1), []), ""
+        elif cur is not None and line.startswith(("dayanak", "adaylar")):
+            part = line[:7]
+        elif cur is not None and part == "adaylar" and re.match(r"\s+\[L\d{4,}\]", line):
+            cur.append(re.match(r"\s+\[(L\d{4,})\]", line).group(1))
+    return out
+
+
+def shown_rows(cmd: str) -> set[str]:
+    """The row ids a tool call shows: a call with a `show` in it names them anywhere but in a `link` step."""
+    if not SHOW_CALL.search(cmd) or not re.search(r"(?:evidence|claims)\.py", cmd):
+        return set()
+    return {i for step in STEP_SPLIT.split(cmd) if not LINK_CALL.search(step) for i in ROW_ID.findall(step)}
+
+
+def read_targets(call: dict, rows: dict[str, dict]) -> tuple[set[str], set[str]]:
+    """(the addresses, canonical, and the row ids) an evidence.py fetch / batch / page call read: the --url it
+    fetched, the rows its output names — `OK <id>` (fetch wrote it), `### <id> | … | <address>` (batch or page
+    printed it), `KAPALI KAPI <address>` — and page's --id. Empty for any other call."""
+    cmd, out = call["input"], call["result"]
+    if not (READ_CALL.search(cmd) and "evidence.py" in cmd):
+        return set(), set()
+    steps = [s for s in STEP_SPLIT.split(cmd) if READ_CALL.search(s)]
+    urls = {m.group(2) for s in steps for m in URL_ARG.finditer(s)} | set(CLOSED_DOOR.findall(out))
+    ids = set(FETCHED_OK.findall(out)) | {i for s in steps for i in ID_ARG.findall(s)}
+    for rid, url in PRINTED.findall(out):
+        ids.add(rid)
+        urls.add(url)
+    canons = {platforms.canonical_url(u) for u in urls if u.startswith(("http://", "https://"))}
+    return canons | {_canon(rows[i]) for i in ids if i in rows}, ids
+
+
+def claim_reads(run: Path, claims: list[dict], role: str, rnd: int, transcript: Path) -> dict | None:
+    """What the round's transcript read for each claim it answers for (see `reads` above): {"reads": {id: n},
+    "linked": [...], "unread_links": [...], "tool_uses": n} — n the distinct rows of the claim shown before its
+    link, plus the fetch/batch/page calls before it that read one of its rows. None: the transcript cannot be
+    read."""
+    calls = transcript_calls(transcript)
+    if calls is None:
+        return None
+    rows = _rows(run)
+    targets = [read_targets(call, rows) for call in calls]
+    rounds = run / "rounds"
+    handed = listed(rounds / f"list-{role}.r{rnd}.txt")
+    adaylar = {**(listed(rounds / f"list-{role}.txt") or {}), **(handed or {})}
+    last_link: dict[str, int] = {}
+    for t, call in enumerate(calls):
+        cmd = call["input"]
+        ids = set(CLAIM_ID.findall(cmd)) if LINK_CALL.search(cmd) and "claims.py" in cmd else set()
+        for cid in ids | set(LINKED_OK.findall(call["result"])):
+            last_link[cid] = t
+    by_id = {str(c.get("id")): c for c in claims}
+    held = sorted(cid for cid in {*(handed or {}), *last_link} if cid in by_id)
+    reads: dict[str, int] = {}
+    for cid in held:
+        c = by_id[cid]
+        own = set(adaylar.get(cid) or []) | set(c.get("support") or []) | set(c.get("counter") or []) \
+            | {str(x.get("id")) for x in c.get("links") or [] if isinstance(x, dict)}
+        at = {_canon(rows[i]) for i in own if i in rows}
+        seen, fetched = set(), 0
+        end = last_link.get(cid, len(calls))
+        for call, (canons, ids) in zip(calls[:end], targets[:end]):
+            seen |= shown_rows(call["input"]) & own
+            fetched += bool(canons & at or ids & own)
+        reads[cid] = len(seen) + fetched
+    linked = [cid for cid in held if by_id[cid].get("checked_by") == role]
+    return {"reads": reads, "linked": linked, "unread_links": [cid for cid in linked if not reads[cid]],
+            "tool_uses": len(calls)}
+
+
+def cmd_reads(run: Path, ledger: Path, role: str, rnd: int, transcript: Path, fmt: str) -> int:
+    claims = read_ledger(ledger)
+    if claims is None:
+        print(f"REFUSED no claim ledger: {ledger}")
+        return 2
+    r = claim_reads(run, claims, role, rnd, transcript)
+    if r is None:
+        print(f"REFUSED the transcript cannot be read: {transcript}")
+        return 2
+    if fmt == "json":
+        print(json.dumps({"role": role, "round": rnd, "transcript": str(transcript), **r}, ensure_ascii=False))
+        return 0
+    for cid, n in r["reads"].items():
+        print(f"{cid} read={n}")
+    unread = r["unread_links"]
+    print(f"READS: {role} round {rnd} · {r['tool_uses']} tool calls · {len(r['reads'])} claims · linked "
+          f"{len(r['linked'])} · read {sum(1 for n in r['reads'].values() if n)} · unread-links {len(unread)}"
+          + (f": {' '.join(unread)}" if unread else ""))
+    return 0
+
+
 # =================================================================== the door
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="claims.py", description="the claim ledger: every claim on counted rows")
@@ -639,6 +812,16 @@ def main(argv: list[str] | None = None) -> int:
     st.add_argument("--ledger")
     st.add_argument("--answer", help="unexplained_evidence over this answer; default: the ledger's own "
                                      "(claims.jsonl ↔ answer.md) when it is there, else <run>/answer.md")
+    st.add_argument("--transcript", help="a claim round's stream-json: the json gains unread_links (reads)")
+    st.add_argument("--role", help="with --transcript; default: the transcript's name, <role>.r<N>.jsonl")
+    st.add_argument("--round", dest="rnd", type=int, help="with --transcript; default: the transcript's name")
+    rd = sub.add_parser("reads")
+    rd.add_argument("run")
+    rd.add_argument("--role", required=True)
+    rd.add_argument("--round", dest="rnd", type=int, required=True)
+    rd.add_argument("--transcript", help="default <run>/rounds/<role>.r<N>.jsonl")
+    rd.add_argument("--ledger")
+    rd.add_argument("--format", choices=("md", "json"), default="md")
     br = sub.add_parser("brief")
     br.add_argument("run")
     br.add_argument("--ledger")
@@ -646,7 +829,16 @@ def main(argv: list[str] | None = None) -> int:
 
     run = Path(args.run)
     if args.cmd == "status":
-        return cmd_status(run, ledger_of(run, args.ledger), args.format, args.answer)
+        reads = None
+        if args.transcript:
+            named = TRANSCRIPT_NAME.fullmatch(Path(args.transcript).name)
+            role = args.role or (named.group(1) if named else None)
+            rnd = args.rnd if args.rnd is not None else (int(named.group(2)) if named else None)
+            if not role or rnd is None or rnd < 1:
+                print("REFUSED --transcript needs --role and --round ≥ 1 (or a name <role>.r<N>.jsonl)")
+                return 2
+            reads = (role, rnd, Path(args.transcript))
+        return cmd_status(run, ledger_of(run, args.ledger), args.format, args.answer, reads)
     if not run.is_dir():
         print(f"REFUSED no such run folder: {run}")
         return 2
@@ -661,6 +853,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "link":
         return cmd_link(run, ledger_of(run, args.ledger), args.claim, args.against, args.for_ids, args.none,
                         args.kind, args.reason, args.by)
+    if args.cmd == "reads":
+        if args.rnd < 1 or not args.role.strip():
+            print("REFUSED reads needs --role and --round ≥ 1")
+            return 2
+        role = args.role.strip()
+        return cmd_reads(run, ledger_of(run, args.ledger), role, args.rnd,
+                         Path(args.transcript) if args.transcript else run / "rounds" / f"{role}.r{args.rnd}.jsonl",
+                         args.format)
     return cmd_brief(ledger_of(run, args.ledger))
 
 

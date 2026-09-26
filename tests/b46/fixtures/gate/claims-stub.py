@@ -10,7 +10,8 @@ is Lane A's and has its own cases; what is measured here is what the FLEET does 
 FAKE_CLAIM_STATUS=unreadable makes `status` print nothing and leave with code 2; FAKE_CLAIM_STATUS=garbage
 makes it print a line that is not JSON and leave with code 0. FAKE_CLAIM_EXTRACT=draft-fails makes the
 draft pass's extract (--out claims.draft.jsonl) write nothing and leave with code 2. A --keep-links ledger
-that cannot be read is refused with code 2, as the real claims.py refuses it.
+that cannot be read is refused with code 2, as the real claims.py refuses it. K2c: `status --transcript F
+--role R --round N` adds `unread_links` to the json — the contract's read rule, compact (unread_links below).
 """
 import argparse
 import fcntl
@@ -152,6 +153,9 @@ def main():
         a["link"].add_argument(k, dest=k[2:].replace("for", "for_ids"))
     a["link"].add_argument("--none", action="store_true")
     a["status"].add_argument("--format", choices=("md", "json"), default="md")
+    a["status"].add_argument("--transcript")
+    a["status"].add_argument("--role")
+    a["status"].add_argument("--round", type=int)
     for name in ("list", "link", "status", "brief"):
         a[name].add_argument("--ledger")
     g = ap.parse_args()
@@ -272,6 +276,45 @@ def cmd_link(run, ledger, g):
     return 0
 
 
+def unread_links(run, claims, role, rnd, transcript):
+    """The claims of the round's list (rounds/list-<role>.r<N>.txt) and those its transcript links, closed by the
+    role (checked_by), with no `show` of one of their rows and no evidence.py fetch of one of their rows' address
+    (the --url, or the `OK <id>` it printed) in a call BEFORE the call that last links them; a fetch of another
+    page reads no claim. None: the transcript cannot be read. The real rule is claims.py `reads`."""
+    try:
+        events = [json.loads(x) for x in Path(transcript).read_text(encoding="utf-8").splitlines() if x.strip()]
+    except (OSError, ValueError):
+        return None
+    calls, by_id = [], {}
+    for e in events:
+        for part in e.get("message", {}).get("content", []):
+            if e.get("type") == "assistant" and part.get("type") == "tool_use":
+                calls.append([part["input"]["command"], ""])
+                by_id[part["id"]] = calls[-1]
+            elif e.get("type") == "user" and part.get("type") == "tool_result" and part["tool_use_id"] in by_id:
+                by_id[part["tool_use_id"]][1] += part["content"]
+    shown = run / "rounds" / f"list-{role}.r{rnd}.txt"
+    held = set(re.findall(r"^### (C\d+) \|", shown.read_text(encoding="utf-8"), re.M)) if shown.is_file() else set()
+    last = {cid: t for t, (cmd, _) in enumerate(calls) for cid in re.findall(r"\blink\b.*?--claim (C\d+)", cmd)}
+    rows = rows_of(run)
+    where = lambda i: rows[i].get("url_canonical") or rows[i]["url"] if i in rows else None  # noqa: E731
+    out = []
+    for c in claims:
+        if c["id"] not in held | set(last) or c.get("checked_by") != role:
+            continue
+        own = set(c["support"]) | set(c["counter"]) | {x["id"] for x in c["links"]}
+        at = {where(i) for i in own} - {None}
+
+        def read(cmd, got):
+            if " show " in cmd and own & set(ID.findall(cmd)):
+                return True
+            fetched = set(re.findall(r"--url (\S+)", cmd)) | {where(i) for i in re.findall(r"^OK (L\d+)", got, re.M)}
+            return bool(re.search(r"evidence\.py\S* (?:fetch|batch|page) ", cmd) and fetched & at)
+        if not any(read(cmd, got) for cmd, got in calls[:last.get(c["id"], len(calls))]):
+            out.append(c["id"])
+    return out
+
+
 def cmd_status(run, ledger, g):
     if os.environ.get("FAKE_CLAIM_STATUS") == "unreadable":
         print("stand-in: the claim ledger's status cannot be read", file=sys.stderr)
@@ -291,6 +334,8 @@ def cmd_status(run, ledger, g):
     if g.format == "json":
         t.update(owed_counter=t["counter"]["sent"], owed_gap=t["gap"]["sent"],
                  new_for_links=sum(x["kind"] == "for" for c in claims for x in c["links"]))
+        if g.transcript:
+            t["unread_links"] = unread_links(run, claims, g.role, g.round, g.transcript)
         print(json.dumps(t))
         return 0
     part = lambda d: " · ".join(f"{n} {d[n]}" for n, _ in TALLY)  # noqa: E731

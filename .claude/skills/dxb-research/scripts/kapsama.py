@@ -27,7 +27,10 @@ and a machine-marked read state on every row (EVIDENCE-B56-K1 §2.1), and this t
               column; a run older than the triage states admits none. An id in the answer's `## Alınmayan
               kanıt` section is no citation (claims.py without_unused) — but one evidence.jsonl lacks is named
               under the table like any unknown id of the answer: render.py refuses the page for it
-  Elenen      `ilgisiz: <reason> ×k` per reason, then `tekrar ×k`
+  Elenen      `ilgisiz: <reason> ×k` per reason, then `tekrar ×k`; first of all `bekleyen ×n` when n of the
+              platform's addresses have a body and are still `pending` — the triage never judged them, so no
+              hunter's batch printed them (evidence.py's pending_with_body; K2c: a failed triage batch of the K2 run
+              left 60 X posts so)
   Kapalı kapı `inaccessible` by its reason, `<reason> ×k`; a door that closed on a row no triage ever
               saw (a run made before the field) in the old words, `kapı kapalı: <reason> ×k`; and the
               ground's own search doors — a channel that failed leaves no address, so its closed door
@@ -171,7 +174,7 @@ def tally(answered: bool, ledger: Counter | None = None, admitted: bool = True) 
     c = ledger or Counter()
     return {"found": c["discovered"], "relevant": c["relevant"], "read": c["read"], "partial": c["partial"],
             "duplicate": c["duplicate"], "fetched": 0, "admitted": 0 if admitted else None,
-            "cited": 0 if answered else None,
+            "cited": 0 if answered else None, "waiting": c["pending_with_body"],
             "irrelevant": Counter(), "inaccessible": Counter(), "closed": Counter()}
 
 
@@ -370,7 +373,8 @@ def render_v2(rows: dict, doors: dict, present: set, fmt: str) -> str:
         else ["platform\tbulundu\tindirildi\tilgili\tokundu\tkismen\tkanit\tcevapta\telenen\tkapali"]
     for p in plats:
         t = rows.get(p) or tally(answered, None, counted)
-        gone = [f"ilgisiz: {k} ×{n}" for k, n in by_count(t["irrelevant"])]
+        gone = [f"bekleyen ×{t['waiting']}"] if t["waiting"] else []
+        gone += [f"ilgisiz: {k} ×{n}" for k, n in by_count(t["irrelevant"])]
         gone += [f"tekrar ×{t['duplicate']}"] if t["duplicate"] else []
         shut = [f"{k} ×{n}" for k, n in by_count(t["inaccessible"])]
         shut += [f"kapı kapalı: {k} ×{n}" for k, n in by_count(t["closed"])] + doors.get(p, [])

@@ -30,7 +30,8 @@
 // is written into the repository and nothing leaves the machine.
 
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -217,6 +218,23 @@ describe("final.html — the admitted rows the answer did not take (`## Alınmay
     expect(got.page).not.toContain('id="q-L0007"');
     expect(got.page).not.toContain("Alınmayan kanıt");
     expect(got.page).toContain('<p class="note">KANIT: 4 kabul · 2 cevapta · 2 alınmadı · açıklanmadı 1</p>');
+  });
+});
+
+describe("final.html — the rows with a body the triage never judged (K2c)", () => {
+  it("ends the drawer's summary with ` · n bekleyen`, the number kapsama.py's Elenen cell leads with", () => {
+    // on the K2 run 60 X posts stayed pending with their bodies after a failed triage batch; here L0005 gets its body
+    const run = join(root, "waiting");
+    cpSync(FIX, run, { recursive: true });
+    const five = { ...row("L0005"), liveness: "alive", bytes: 120 };
+    writeFileSync(join(run, "evidence.jsonl"), ROWS.map((r) => JSON.stringify(r.id === "L0005" ? five : r)).join("\n") + "\n", "utf8");
+    mkdirSync(join(run, "bodies"));
+    writeFileSync(join(run, "bodies", `${createHash("sha256").update(five.url).digest("hex")}.txt`), "A post the triage never saw.\n");
+    const got = render(run);
+    expect(got.said).toMatch(/^0 /);
+    expect([...got.page.matchAll(/<summary>([^<]*)<\/summary>/g)].map((m) => m[1])).toEqual(["X — 7 gönderi (kanıt 2 · 2 cevapta · 1 bekleyen)",
+      "YouTube — 2 video (kanıt 1 · 1 cevapta)", "Reddit — 1 başlık (kanıt 1 · 1 cevapta)"]);
+    expect(got.page).toContain('<span class="why-l">Elenen</span> bekleyen ×1 · ilgisiz: Opus vs Astra, not Fable ×2 · ');
   });
 });
 

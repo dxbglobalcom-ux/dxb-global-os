@@ -9,7 +9,8 @@ own cases; what is measured here is what the FLEET does with the answers.
 
 `batch` cuts a body longer than --max-chars (partial, read_bytes where it stopped) and the next batch
 continues a partial row; `status --format json` carries each platform's `owed` = unread + partial +
-unjudged. FAKE_STATUS=unreadable makes `status` print nothing and leave with code 2.
+unjudged, and (K2c) its `pending_with_body`, the addresses still pending that have a body. FAKE_STATUS=unreadable
+makes `status` print nothing and leave with code 2.
 
 B56 K2: `writer-rows` prints the rows `admissible` admits (EVIDENCE-B56-K2 §2.1) in the writer's line and
 its stderr trailer; the claim ledger's stand-in (claims-stub.py) imports `admissible` and `address_of`.
@@ -200,6 +201,7 @@ def do(g, run, rows):
             c = table.setdefault(r["platform"], dict.fromkeys(COLS, 0))
             c["discovered"] += 1
             c[r["triage"]] += 1
+            c["pending_with_body"] = c.get("pending_with_body", 0) + (r["triage"] == "pending" and body(run, r) is not None)
             if r["triage"] == "relevant":
                 c[r["read_status"]] += 1
                 if r["read_status"] == "read":

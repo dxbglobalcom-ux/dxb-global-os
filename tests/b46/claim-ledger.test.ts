@@ -269,6 +269,43 @@ describe("list and link — the claim rounds' two doors", () => {
   });
 });
 
+describe("reads — a link counts only after a read of the claim (K2c)", () => {
+  it("counts the rows shown and the addresses fetched before each link, per claim; unread_links names the rest", () => {
+    // the K2 run's karsi round 1 was ONE Bash call chaining 20 links — no show, no fetch — and the gate said accepted.
+    // Here the five sent claims are linked in the stream-json of six calls: C001 after a show of the row it links,
+    // C008 in the SAME call as its show (it saw nothing before it linked), then a fetch of a page no claim stands on
+    // (it reads no claim — the lead's tightening, §F2 item 4), then a fetch of the Reddit thread whose quote row
+    // L1720 C004 links (L1492 is that thread's address row), then C004, C002 and C003 linked
+    const run = fresh();
+    cl(["extract", run]);
+    mkdirSync(join(run, "rounds"));
+    writeFileSync(join(run, "rounds", "list-karsi.r1.txt"), cl(["list", run, "--todo", "counter", "--cap", "5", "--candidates", "3"]).out);
+    const links: [string, string[]][] = [["C001", ["--against", "L1721"]], ["C008", ["--against", "L1723,L1724"]],
+      ["C004", ["--against", "L1720"]], ["C002", ["--none", "--kind", "counter", "--reason", "yok"]],
+      ["C003", ["--none", "--kind", "counter", "--reason", "yok"]]];
+    for (const [c, what] of links) cl(["link", run, "--claim", c, ...what, "--by", "karsi"]);
+    const E = `python3 "${EVIDENCE}"`;
+    const link = (i: number) => `python3 "${CLAIMS}" link "${run}" --claim ${links[i][0]} ${links[i][1].join(" ")} --by karsi`;
+    const calls: [string, string][] = [[`${E} show "${run}" L1721`, "{…}"], [link(0), "OK C001 …"],
+      [`${E} show "${run}" L1723 && ${link(1)}`, "…"],
+      [`for u in https://example.org/k2c; do ${E} fetch "${run}" --url "$u"; done`, "OK L9001 58B …"],
+      [`${E} fetch "${run}" --url "https://www.reddit.com/r/Anthropic/comments/1w9h3zh/gpt_6_astra_is_good_but_eats_up_tokens_faster/"`,
+        "OK L1492 26040B …"], [[link(2), link(3), link(4)].join("\n"), "…"]];
+    writeFileSync(join(run, "rounds", "karsi.r1.jsonl"), calls.flatMap(([command, out], i) => [
+      { type: "assistant", message: { content: [{ type: "tool_use", id: `t${i}`, name: "Bash", input: { command } }] } },
+      { type: "user", message: { content: [{ type: "tool_result", tool_use_id: `t${i}`, content: out }] } },
+    ]).map((e) => JSON.stringify(e)).join("\n") + "\n");
+    const r = cl(["reads", run, "--role", "karsi", "--round", "1"]);
+    expect(r.code, r.out).toBe(0);
+    expect(r.out).toBe("C001 read=1\nC002 read=0\nC003 read=0\nC004 read=1\nC008 read=0\n"
+      + "READS: karsi round 1 · 6 tool calls · 5 claims · linked 5 · read 2 · unread-links 3: C002 C003 C008\n");
+    const status = (...more: string[]) => JSON.parse(cl(["status", run, "--format", "json", "--transcript", ...more]).out);
+    expect(status(join(run, "rounds", "karsi.r1.jsonl"), "--role", "karsi", "--round", "1").unread_links).toEqual(["C002", "C003", "C008"]);
+    expect(status(join(run, "rounds", "karsi.r2.jsonl")).unread_links, "a transcript that cannot be read measures nothing").toBeNull();
+    expect(JSON.parse(cl(["status", run, "--format", "json"]).out)).not.toHaveProperty("unread_links");
+  });
+});
+
 describe("repassage — a passage starts at the first line that is not chrome", () => {
   it("L1480's passage starts past the page's title, menu and heading; the quote row on its address keeps its quote", () => {
     const run = fresh();

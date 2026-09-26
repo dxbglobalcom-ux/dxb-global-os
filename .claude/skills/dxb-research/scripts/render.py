@@ -56,8 +56,9 @@ them (a table stays whole, each row that cites counted in place: a comparison st
 that cites nothing stays plain) · a quote card for every cited id, from its row · "Nereye bakıldı", kapsama.py's table · THE
 DRAWER: one <details> per platform, `X — 130 gönderi (kanıt 43 · 17 cevapta · 26 alınmadı)` — the addresses
 the ledger admits (kapsama.py's Kanıt), the cited ones among them, the rest (said only when there are any;
-without claims.py, K1's `(4 cevapta)`) —, one entry per address whose body was
-fetched (kapsama.py's İndirildi) carrying every row id at it, the author, the date, the passage cut to
+without claims.py, K1's `(4 cevapta)`), and ` · n bekleyen` when n of its addresses have a body the triage
+never judged (evidence.py's pending_with_body, kapsama.py's `bekleyen ×n`; K2c) —, one entry per address
+whose body was fetched (kapsama.py's İndirildi) carrying every row id at it, the author, the date, the passage cut to
 300 characters and the address as a link — cited entries first and marked, then newest first. An admitted
 address the answer does not cite says so, `alınmadı: <reason>`, the reason the answer's `## Alınmayan
 kanıt` section gives it — `alınmadı: açıklanmadı` when the section does not name it.
@@ -867,8 +868,9 @@ class Page:
         return (f'<li class="{"drow cited" if a["cited"] else "drow"}" id="{attr(a["ids"][0])}">'
                 f'<div class="dm">{meta}{mark}</div><p class="dt">{body}</p>{link(url, "du")}</li>')
 
-    def drawer(self, shelf: list[dict]) -> tuple[str, int]:
-        """THE DRAWER: one <details> per platform, every fetched address in it — cited first, then newest."""
+    def drawer(self, shelf: list[dict], waiting: dict[str, int] | None = None) -> tuple[str, int]:
+        """THE DRAWER: one <details> per platform, every fetched address in it — cited first, then newest.
+        `waiting`: per platform, the addresses with a body still pending (the summary's ` · n bekleyen`)."""
         by: dict[str, list[dict]] = {}
         for a in shelf:
             by.setdefault(a["platform"], []).append(a)
@@ -885,6 +887,8 @@ class Page:
             if self.use is not None:                               # kapsama.py's Kanıt, Cevapta and the rest
                 left = sum(1 for a in items if a["use"] and not a["cited"])
                 used = f"kanıt {sum(1 for a in items if a['use'])} · {used}" + (f" · {left} alınmadı" if left else "")
+            if (waiting or {}).get(p):
+                used += f" · {waiting[p]} bekleyen"
             out.append(f'<details class="plat" id="p-{attr(p)}">\n<summary>{esc(label(p))} — {len(items)} '
                        f'{NOUN.get(p, "sayfa")} ({used})</summary>\n<ol class="drawer">\n'
                        + "\n".join(self.entry(a, p) for a in items) + "\n</ol>\n</details>")
@@ -1038,7 +1042,9 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
                          "alıntı, yazar, tarih, platform, adres.</p>\n" + page.cards(), "alintilar"))
     if table is not None:
         parts.append(section(len(parts) + 1, "Nereye bakıldı", coverage_html(*table), "kapsama"))
-    drawer, plats = page.drawer(shelf)
+    waiting = {p: c["pending_with_body"] for p, c in E.ledger_counts(run, list(rows.values()))[0].items()} \
+        if E is not None and hasattr(E, "ledger_counts") else {}
+    drawer, plats = page.drawer(shelf, waiting)
     parts.append(section(len(parts) + 1, "Getirilen bütün satırlar",
                          f'<p class="intro">Gövdesi indirilen her adres, platform platform — {thousands(len(shelf))} '
                          "adres. Cevapta kullanılanlar üstte ve işaretli, gerisi en yeniden eskiye; uzun metin "

@@ -1,3 +1,4 @@
+{{UNREAD}}
 YOU ARE A CLAIM HUNTER OF A RESEARCH RUN — the role `{{ROLE}}`. Hunters read the web for the question below,
 and every address they found is a row of the run's ledger (L0001 …). A writer turned those rows into a DRAFT
 answer, and every claim of the draft is now a row of the run's CLAIM LEDGER (C001 …) that names the ledger
@@ -35,6 +36,14 @@ The other commands — the ledgers are written by these, never by you:
 "kanıt değil", or one with no body), a counter row that is already one of the claim's own rows, and a second
 source that is the same source as one the claim already has ("aynı kaynak"). Read the reason and take another
 row; the same call twice changes nothing.
+
+READ BEFORE YOU LINK. The fleet reads your transcript, call by call. A link counts only after you have read
+the claim: in an EARLIER call you printed one of its rows with `show` — one of its `adaylar`, a row it stands
+on, or the row you link — or you `fetch`ed the address of one of those rows; a fetch of any other page reads
+no claim. A `--none` needs the same: show the claim's `adaylar` (a row it stands on when it has none) before
+you say there is nothing. A link made from the list's one-line snippets alone is refused by the gate, and so
+is a `show` in the same call as its `link` (you saw nothing before you linked): the round is relaunched with
+those claims named at the top of your brief.
 
 Nothing you declare is counted. When you return, the fleet asks the claim ledger (`claims.py status`) how many
 claims on your list are still unchecked — neither linked nor closed with a reason — and sends you back to them.

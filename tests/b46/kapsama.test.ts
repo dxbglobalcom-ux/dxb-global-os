@@ -32,7 +32,8 @@
 // answer's `## Alınmayan kanıt` section does not name; an id in that section is no citation.
 
 import { execFileSync } from "node:child_process";
-import { appendFileSync, cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { appendFileSync, cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -108,6 +109,27 @@ describe("kapsama.py — prints, never blocks", () => {
       tekrar: status.duplicate, kapalı: status.inaccessible, okundu: status.read, kısmen: status.partial,
       okunmadı: status.unread, "hüküm verilen": status.judged, "hüküm bekleyen": status.unjudged,
     });
+  });
+
+  it("names the rows with a body the triage never judged first in Elenen — `bekleyen ×n` — the sums untouched", () => {
+    // K2c: on the K2 run a failed triage batch left 60 X posts pending with their bodies, and the X row said nothing of them.
+    // Here L0005, run-drawer's pending X address, gets its body: it is fetched, and still pending
+    const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));
+    cpSync(join(FIX, "run-drawer"), dir, { recursive: true });
+    const rows = readFileSync(join(dir, "evidence.jsonl"), "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l));
+    const five = rows.find((x) => x.id === "L0005");
+    Object.assign(five, { liveness: "alive", bytes: 120 });
+    writeFileSync(join(dir, "evidence.jsonl"), rows.map((x) => JSON.stringify(x)).join("\n") + "\n");
+    mkdirSync(join(dir, "bodies"));
+    writeFileSync(join(dir, "bodies", `${createHash("sha256").update(five.url_canonical).digest("hex")}.txt`),
+      "Astra 6 or Fable 5.1? A post the triage never saw.\n");
+    const r = kapsama([dir, "--answer", join(dir, "answer.md")]);
+    rmSync(dir, { recursive: true, force: true });
+    expect(r.code, r.out).toBe(0);
+    expect(row(r.out, "X")).toBe("| X | 7 | 7 | 2 | 1 | 1 | 2 | 2 | bekleyen ×1 · ilgisiz: Opus vs Astra, not Fable ×2 · "
+      + "ilgisiz: Free access tip only ×1 · tekrar ×1 | — |");
+    expect(row(r.out, "Reddit")).toBe("| Reddit | 3 | 1 | 1 | 0 | 0 | 1 | 1 | — | opencli reddit read kod 1 ×1 |");
+    expect(r.out).toContain("RECONCILED — bulundu 12 = bekleyen 2 + ilgili 4 + ilgisiz 4 + tekrar 1 + kapalı 1 · ");
   });
 
   it("a state the contract does not know breaks the sums: MISMATCH names its row, and the exit stays 0", () => {

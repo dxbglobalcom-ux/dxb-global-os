@@ -443,21 +443,62 @@ echo "   fetch-all: tried $n_try · bodies $f_body · closed $f_shut  ($f_note)"
 # ONE triage.py PER PLATFORM, FOUR AT A TIME (as the grounds): the batches of one triage.py run one
 # after another, every write takes the ledger's lock, so the platforms are sorted side by side. A
 # platform with nothing pending prints nothing here.
+# A SECOND PASS FOR WHAT THE FIRST LEFT (K2c F1). On the K2 run of 2026-09-26 one X batch of 60 came back
+# with JSON triage.py could not read: its 60 rows stayed pending, the fleet printed the failure and sent the
+# hunters, and no hunter's batch ever printed those 60. So a platform whose log says `left pending: N rows
+# with a body` or `FAILED` is sorted ONCE MORE — triage.py sends only what is still pending —, its lines under
+# the same [platform]; what is still pending with a body after that (the ledger's pending_with_body) is named,
+# `!! ELEME EKSIK (eleme sonrası)`, and the hunters still run. After the page the ledger is measured AGAIN — a
+# hunter's own `fetch` of a new address leaves a body no triage judged too (L1688 and L1692 on the K2 run: the
+# page said `bekleyen ×62`, the triage had left 60) — and whatever it counts then is the run's `!! ELEME EKSIK`
+# line among its last, the same number the page shows, and code 1.
 TRIAGE_PAR=4
-if [ -f "$SKILL/scripts/triage.py" ]; then
-  n_t=0
-  for p in $FPLATS; do
-    { python3 "$SKILL/scripts/triage.py" "$OUT" --platform "$p"; echo "triage-rc=$?"; } > "$OUT/triage-$p.log" 2>&1 &
+# THE ROWS WITH A BODY NO TRIAGE JUDGED, measured from the ledger when it is called (evidence.py status,
+# pending_with_body per platform): the `!! ELEME EKSIK` line — $1 a label after those two words — or nothing.
+eleme_eksik() {
+  python3 "$EVI" status "$OUT" --format json 2>/dev/null | python3 -c '
+import json, sys
+try:
+    left = [(p, int(c.get("pending_with_body") or 0)) for p, c in json.load(sys.stdin)["platforms"].items()]
+except (ValueError, KeyError, TypeError, AttributeError):
+    raise SystemExit
+left = [(p, n) for p, n in left if n > 0]
+if left:
+    print(f"!! ELEME EKSIK{sys.argv[1]}: {sum(n for _, n in left)} satır gövdesiyle bekliyor ("
+          + " · ".join(f"{p} ×{n}" for p, n in left) + ") — okunmadı sayılır")
+' "${1:-}"
+}
+# one pass: $1 the logs' suffix ("" the first pass, ".2" the second), the rest its platforms
+triage_pass() {
+  local sfx="$1" p n_t=0
+  shift
+  for p in "$@"; do
+    { python3 "$SKILL/scripts/triage.py" "$OUT" --platform "$p"; echo "triage-rc=$?"; } > "$OUT/triage-$p$sfx.log" 2>&1 &
     n_t=$(( n_t + 1 )); [ $(( n_t % TRIAGE_PAR )) -eq 0 ] && wait
   done
   wait
+  for p in "$@"; do
+    grep -qx 'triage-rc=0' "$OUT/triage-$p$sfx.log" && grep -q '^nothing pending with a body' "$OUT/triage-$p$sfx.log" && continue
+    grep -v '^triage-rc=' "$OUT/triage-$p$sfx.log" | sed "s/^/      [$p] /"
+  done
+}
+if [ -f "$SKILL/scripts/triage.py" ]; then
+  triage_pass "" $FPLATS
+  t_again=""
+  for p in $FPLATS; do
+    grep -qE '^left pending: [0-9]+ rows with a body|: FAILED — ' "$OUT/triage-$p.log" && t_again="$t_again $p"
+  done
+  if [ -n "$t_again" ]; then
+    echo "   eleme ikinci tur:$t_again — ilk turun biraktigi satirlar yeniden gonderiliyor"
+    triage_pass .2 $t_again
+  fi
   t_bad=""
   for p in $FPLATS; do
-    grep -qx 'triage-rc=0' "$OUT/triage-$p.log" || t_bad="$t_bad $p"
-    grep -qx 'triage-rc=0' "$OUT/triage-$p.log" && grep -q '^nothing pending with a body' "$OUT/triage-$p.log" && continue
-    grep -v '^triage-rc=' "$OUT/triage-$p.log" | sed "s/^/      [$p] /"
+    t_log="$OUT/triage-$p.log"; [ -f "$OUT/triage-$p.2.log" ] && t_log="$OUT/triage-$p.2.log"
+    grep -qx 'triage-rc=0' "$t_log" || t_bad="$t_bad $p"
   done
   [ -z "$t_bad" ] || echo "!! TRIAGE BASARISIZ:$t_bad — ayiklanamayan satirlar 'pending' kaldi ve batch pending satir basmaz: $OUT/triage-<platform>.log"
+  eleme_eksik " (eleme sonrası)"
 else
   echo "!! triage.py yok — satirlar ayiklanmadi ve batch pending satir basmaz."
 fi
@@ -758,43 +799,52 @@ claims_extract() {
 # WHAT A CLAIM ROLE STILL OWES — counted from the claim ledger, never from what the hunter said: $1 the
 # kind (counter|gap). From `claims.py status --format json`: owed_<kind> (claims sent to the hunter and
 # neither found nor closed with none), new_for_links, and the kind's own found and none. Prints
-# "<owed> <new_for_links> <found> <none>", or "? ? ? ?" when the status cannot be read — an exit code
-# other than 0, or a JSON without those keys.
+# "<owed> <new_for_links> <found> <none> <unread>", or "? ? ? ? ?" when the status cannot be read — an exit
+# code other than 0, or a JSON without those keys. <unread> (K2c F2): with $2 the role and $3 the round,
+# status is handed that round's transcript and says which claims the role linked with no read of them
+# (`unread_links`, claims.py reads) — a comma list, `-` when none; without $2 it is `-`.
 claim_left() {
-  local sj
-  sj="$(python3 "$CLA" status "$OUT" --format json 2>/dev/null)" || { echo "? ? ? ?"; return 0; }
+  local sj args=(status "$OUT" --format json)
+  [ -n "${2:-}" ] && args+=(--transcript "$OUT/rounds/$2.r$3.jsonl" --role "$2" --round "$3")
+  sj="$(python3 "$CLA" "${args[@]}" 2>/dev/null)" || { echo "? ? ? ? ?"; return 0; }
   python3 -c '
 import json, sys
-kind = sys.argv[1]
+kind, asked = sys.argv[1], sys.argv[3] == "1"
 try:
     d = json.loads(sys.argv[2])
     owed, new_for = int(d["owed_" + kind]), int(d["new_for_links"])
+    unread = d["unread_links"] if asked else []
+    if not isinstance(unread, list):
+        raise TypeError("unread_links is not a list")
 except (ValueError, KeyError, TypeError):
-    print("? ? ? ?")
+    print("? ? ? ? ?")
     raise SystemExit
 k = d.get(kind) if isinstance(d.get(kind), dict) else {}
-print(owed, new_for, k.get("found", "?"), k.get("none", "?"))
-' "$1" "$sj"
+print(owed, new_for, k.get("found", "?"), k.get("none", "?"), ",".join(map(str, unread)) or "-")
+' "$1" "$sj" "$([ -n "${2:-}" ] && echo 1 || echo 0)"
 }
 
 # THE CLAIM HUNTER'S BRIEF, for every round: fleet/claim-prompt.md filled with the question, the arsenal,
 # its list and its commands. $1 the round, $2 the seconds left on its clock, $3 the resume line (empty on
 # the first round); role, kind, brief, t_end and CWRAP come from claim_rounds. A resumed round's list holds
-# only the claims the draft's ledger does not yet call found or none: what the hunter closed is done.
+# only the claims the draft's ledger does not yet call found or none: what the hunter closed is done —
+# except $4 (K2c F2), the claims the last round linked without reading one of their rows (a comma list):
+# they stay on the list, and {{UNREAD}}, the brief's first line, names them. Empty on the first round.
 # Every round's prompt is kept as rounds/prompt-<role>.r<n>.txt, as a hunter's is.
 write_claim_prompt() {
-  local r="$1" left="$2" devam="$3" shown="$OUT/rounds/list-$role.r$1.txt" prev found_arg word
+  local r="$1" left="$2" devam="$3" unread="${4:-}" shown="$OUT/rounds/list-$role.r$1.txt" prev found_arg word note=""
   if [ -z "$devam" ]; then
     cp "$OUT/rounds/list-$role.txt" "$shown"
   else
-    python3 - "$OUT/rounds/list-$role.txt" "$OUT/claims.draft.jsonl" "$kind" > "$shown" 2>/dev/null <<'PY' || cp "$OUT/rounds/list-$role.txt" "$shown"
+    python3 - "$OUT/rounds/list-$role.txt" "$OUT/claims.draft.jsonl" "$kind" "$unread" > "$shown" 2>/dev/null <<'PY' || cp "$OUT/rounds/list-$role.txt" "$shown"
 import json, re, sys
-lst, ledger, kind = sys.argv[1:4]
+lst, ledger, kind, unread = sys.argv[1:5]
+again = set(unread.split(","))            # linked without a read: sent back with the list
 done = set()
 for line in open(ledger, encoding="utf-8"):
     if line.strip():
         c = json.loads(line)
-        if c.get(kind + "_status") in ("found", "none"):
+        if c.get(kind + "_status") in ("found", "none") and c.get("id") not in again:
             done.add(c.get("id"))
 keep = False
 for line in open(lst, encoding="utf-8").read().splitlines():
@@ -809,6 +859,9 @@ PY
   fi
   if [ "$kind" = counter ]; then found_arg="--against <L0101>[,<L0102>…]"; word="karşı"
   else found_arg="--for <L0101>"; word="ikinci kaynak"; fi
+  [ -n "$unread" ] && note="OKUMADAN BAĞ — your round $(( r - 1 )) linked ${unread//,/ } without reading a row of them: \
+the gate does not count those links. Show a row of each (\`show\` one of its adaylar, a row it stands on or the row you \
+link) or \`fetch\` that row's address, THEN link it again — or close it with --none after you have looked."$'\n'
   {
     if [ -n "$devam" ]; then
       printf '%s\n\n' "$devam"
@@ -820,7 +873,7 @@ PY
     CP_STOP_AT="$(date -d "@$t_end" +%H:%M:%S)" CP_WRAP_AT="$(date -d "@$(( t_end - CWRAP ))" +%H:%M:%S)" \
     CP_LINK_FOUND="python3 \"$CLA\" link \"$OUT\" --claim <C007> $found_arg --by $role" \
     CP_LINK_NONE="python3 \"$CLA\" link \"$OUT\" --claim <C007> --none --kind $kind --reason \"<at most 12 words>\" --by $role" \
-    CP_FOUND_WORD="$word" \
+    CP_FOUND_WORD="$word" CP_UNREAD="$note" \
       python3 - "$HERE/claim-prompt.md" "$HERE/ARSENAL.md" "$OUT/question.txt" "$shown" <<'PY'
 import os, re, sys
 from pathlib import Path
@@ -830,7 +883,7 @@ listed = text(lst)
 vals = {k[3:]: v for k, v in os.environ.items() if k.startswith("CP_")}
 vals.update(ARSENAL=text(arsenal), QUESTION=text(question) or "(question.txt yok)",
             LIST=listed or "(listede iddia kalmadi)", N_CLAIMS=str(len(re.findall(r"^### C\d+", listed, re.M))))
-print(re.sub(r"\{\{([A-Z_]+)\}\}", lambda m: vals.get(m.group(1), m.group(0)), text(tpl)))
+print(re.sub(r"\{\{([A-Z_]+)\}\}", lambda m: vals.get(m.group(1), m.group(0)), text(tpl)).lstrip("\n"))
 PY
   } > "$OUT/prompt-$role.txt"
   cp "$OUT/prompt-$role.txt" "$OUT/rounds/prompt-$role.r$r.txt"
@@ -845,9 +898,16 @@ PY
 # a status that cannot be read is `unmeasured` and never accepted. SATURATION, the gap role only: a round
 # after which the ledger holds no more `for` links than before it found no second source anywhere, so its
 # label carries (saturated) and no further round is launched. Every decision is one `claim-gate:` line.
+# A LINK COUNTS AFTER A READ (K2c F2). On the K2 run karsi's round 1 was one Bash call of 20 links — no `show`,
+# no search, 18 s — and nothing was owed, so the gate said accepted. Now status is handed the round's
+# transcript too and names the claims the role linked with no read of them (`unread_links`, claims.py reads);
+# the round is accepted only when that list is empty as well. Else the gate line says `okumadan bağ: <ids>`
+# and the role is sent back with those claims kept on its list and named in the brief's first line; a round
+# that linked without reading searched nothing, so it is never `saturated`. Rounds out with such links:
+# `!! OKUMADAN HÜKÜM` on the run's last lines, and code 1 after the page.
 claim_rounds() {
   local role="$1" kind="$2" brief lrc n_sent t0 t_end r left devam spent s rc secs cost CWRAP
-  local owed for_now found none base_for measured el why verdict sat label seen note n
+  local owed for_now found none unread again base_for measured el why verdict sat label seen note n
   brief="$(awk -F'\t' -v r="$role" '$1 == r { print $3; exit }' "$HERE/roles.tsv")"
   if [ -z "$brief" ]; then
     printf 'claim-gate: %s — no row in roles.tsv → not launched\n' "$role" | tee -a "$OUT/gate.log"
@@ -869,29 +929,31 @@ claim_rounds() {
   fi
   mkdir -p "$HUNT_TMP/work-$role"
   CWRAP=90; [ "$CLAIM_TMO" -lt 360 ] && CWRAP=$(( CLAIM_TMO / 4 ))     # the hunters' WRAP rule, on this clock
-  read -r _ base_for _ _ <<< "$(claim_left "$kind")"
+  read -r _ base_for _ _ _ <<< "$(claim_left "$kind")"
   echo "  iddia avcisi sahada: $role — listesinde $n_sent iddia"
-  t0=$(date +%s); t_end=$(( t0 + CLAIM_TMO )); r=1; left=$CLAIM_TMO; devam=""; spent=0
+  t0=$(date +%s); t_end=$(( t0 + CLAIM_TMO )); r=1; left=$CLAIM_TMO; devam=""; again=""; spent=0
   while :; do
-    write_claim_prompt "$r" "$left" "$devam"
+    write_claim_prompt "$r" "$left" "$devam" "$again"
     s=$(date +%s)
     hunt_round "$role" "$r" "$left"; rc=$?
     secs=$(( $(date +%s) - s ))
     cost="$(round_result "$OUT/rounds/$role.r$r.jsonl" cost)"
     spent="$(awk -v a="$spent" -v b="$cost" 'BEGIN { if (b ~ /^[0-9.]+$/) a += b; printf "%.2f", a }')"
-    read -r owed for_now found none <<< "$(claim_left "$kind")"
-    measured=1                                   # two whole numbers, or the round was not measured
+    read -r owed for_now found none unread <<< "$(claim_left "$kind" "$role" "$r")"
+    measured=1                                   # two whole numbers and the unread list, or the round was not measured
     for n in "$owed" "$for_now"; do case "$n" in ''|*[!0-9]*) measured=0 ;; esac; done
+    case "$unread" in ''|'?') measured=0 ;; esac
     el=$(( $(date +%s) - t0 )); why=""; sat=""
-    if [ "$measured" -eq 1 ] && [ "$owed" -eq 0 ] && [ "$rc" -eq 0 ]; then verdict=accepted
+    if [ "$measured" -eq 1 ] && [ "$owed" -eq 0 ] && [ "$unread" = "-" ] && [ "$rc" -eq 0 ]; then verdict=accepted
     elif [ "$r" -ge "$CLAIM_ROUNDS" ]; then verdict=time-up; why=" · tur $r/$CLAIM_ROUNDS"
     elif [ $(( el * 10 )) -ge $(( CLAIM_TMO * 8 )) ]; then verdict=time-up; why=" · saat $el/$CLAIM_TMO s"
     else verdict=relaunch; fi
-    if [ "$kind" = gap ] && [ "$measured" -eq 1 ] && [ "$for_now" = "$base_for" ]; then
+    if [ "$kind" = gap ] && [ "$measured" -eq 1 ] && [ "$for_now" = "$base_for" ] && [ "$unread" = "-" ]; then
       sat=" (saturated)"; [ "$verdict" = relaunch ] && verdict=stopped
     fi
     if [ "$measured" -eq 1 ]; then
       seen="unchecked $owed"; label="$verdict$sat"; note="found $found · none $none · $secs s · \$$cost$why"
+      [ "$unread" = "-" ] || note="okumadan bağ: ${unread//,/ } · $note"
     else
       seen="status unreadable"; label=unmeasured; [ "$verdict" = relaunch ] || label="time-up (unmeasured)"
       note="$secs s · \$$cost$why · !! iddia defteri durumu okunamadi (claims.py status)"
@@ -904,13 +966,19 @@ claim_rounds() {
       devam="DEVAM — the claim ledger could not count your round $r; finish your list with link, then hand back your lines"
     elif [ "$owed" -gt 0 ]; then
       devam="DEVAM — $owed claims unchecked on your list; finish them with link"
+    elif [ "$unread" != "-" ]; then
+      devam="DEVAM — you linked ${unread//,/ } without reading a row of them; read them, then link them again"
     else
       devam="DEVAM — your round $r ended with exit code $rc; finish your list with link, then hand back your lines"
     fi
+    again=""; [ "$measured" -eq 1 ] && [ "$unread" != "-" ] && again="$unread"
     base_for="$for_now"
     r=$(( r + 1 )); left=$(( t_end - $(date +%s) )); [ "$left" -lt 1 ] && left=1
   done
   [ "$label" = "time-up (unmeasured)" ] && CLAIM_UNMEASURED="$CLAIM_UNMEASURED $role(unmeasured)"
+  if [ "$verdict" != accepted ] && [ "$measured" -eq 1 ] && [ "$unread" != "-" ]; then
+    CLAIM_UNREAD="$CLAIM_UNREAD$role ${unread//,/ }"$'\n'
+  fi
   bring_back "$HUNT_TMP/work-$role" "$OUT/work-$role"
 }
 
@@ -920,6 +988,14 @@ claim_rounds() {
 CLAIM_UNMEASURED=""
 claim_unmeasured_line() {
   echo "!! OLCULMEYEN IDDIA TURU:$CLAIM_UNMEASURED — iddia defteri durumu okunamadi, kapi kabul etmedi; kosu kodu 1: $OUT/gate.log"
+}
+# ...and one whose rounds ran out with links no read stands behind (K2c F2): one line per role, the claims named.
+CLAIM_UNREAD=""
+claim_unread_lines() {
+  local line
+  while IFS= read -r line; do
+    [ -z "$line" ] || echo "!! OKUMADAN HÜKÜM: $line — okunmadan baglandi, kapi kabul etmedi; kosu kodu 1: $OUT/gate.log"
+  done <<< "$CLAIM_UNREAD"
 }
 
 # THE TAIL ITSELF, steps (1)-(6). Returns 1 when a writer pass wrote nothing; every other hole is a named line.
@@ -953,9 +1029,10 @@ if [ -n "$WRITE_ONLY" ]; then
   run_tail
   tail_rc=$?
   rmdir "$HUNT_TMP" 2>/dev/null
-  if [ -n "$CLAIM_UNMEASURED" ]; then
+  if [ -n "$CLAIM_UNMEASURED" ] || [ -n "$CLAIM_UNREAD" ]; then
     echo
-    claim_unmeasured_line
+    [ -z "$CLAIM_UNMEASURED" ] || claim_unmeasured_line
+    [ -z "$CLAIM_UNREAD" ] || claim_unread_lines
     exit 1
   fi
   exit "$tail_rc"
@@ -1164,10 +1241,16 @@ echo "  keep.sh saklar: final.html · final.md · answer.md · evidence.jsonl ·
 
 # A ROLE THE GATE COULD NOT MEASURE WAS NEVER ACCEPTED (its meta says `gate=time-up (unmeasured)`): the
 # run's last line names it, and the run leaves with code 1 even when every report came back. A claim role
-# of THE TAIL that ended unmeasured is named the same way, on its own line (claim_unmeasured_line).
-if [ -n "$unmeasured" ] || [ -n "$CLAIM_UNMEASURED" ]; then
+# of THE TAIL that ended unmeasured is named the same way, on its own line (claim_unmeasured_line). So are
+# (K2c) a claim role whose rounds ran out with links made without a read (claim_unread_lines), and rows
+# with a body no triage judged, measured NOW, after the page (ELEME EKSIK, THE FIELD): the page's
+# `bekleyen ×n` and this line count the same rows, whether the triage or a hunter's fetch left them.
+ELEME_EKSIK="$(eleme_eksik)"
+if [ -n "$unmeasured" ] || [ -n "$CLAIM_UNMEASURED" ] || [ -n "$CLAIM_UNREAD" ] || [ -n "$ELEME_EKSIK" ]; then
   echo
   [ -n "$unmeasured" ] && echo "!! OLCULMEYEN AVCI:$unmeasured — defter durumu okunamadi, kapi kabul etmedi; kosu kodu 1: $OUT/gate.log"
   [ -n "$CLAIM_UNMEASURED" ] && claim_unmeasured_line
+  [ -z "$CLAIM_UNREAD" ] || claim_unread_lines
+  [ -z "$ELEME_EKSIK" ] || echo "$ELEME_EKSIK"
   exit 1
 fi

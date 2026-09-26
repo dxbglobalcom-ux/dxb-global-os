@@ -26,6 +26,12 @@ project hook fires. The JSON in `result` is applied through evidence.py's own tr
 (`total_cost_usd`); the last lines are the triage-bulk line for the whole run, `· already-triaged k`
 after it, and `cost: $x.xx`. The judge is a model, never a hunter role: evidence.py's rule that a
 hunter may eliminate only what it has read does not apply to it, whatever the model's name.
+AN ANSWER WITH NO JSON IS ASKED FOR ONCE MORE (K2c F1). On the K2 run of 2026-09-26 one X batch of 60
+answered in a ```json fence whose JSON had lost the `{` of one entry; nothing parsed, and the 60 rows stayed
+pending with no second call. Now a batch whose answer yields no triage JSON — fence stripped, brace matched
+(verdicts_in) — is sent again, the same rows in a fresh call, before it is FAILED: its first line ends
+`→ retry 1/1`, and the second call's line carries `· retry 1/1`. Once only: a batch that fails twice stays
+pending, and fleet.sh runs triage.py again for that platform.
 --dry-run FILE applies a prepared JSON instead of calling the model — a plain {"triage": [...]}, or
 the claude --output-format json envelope whose `result` holds it. Nothing is spent; the tests use it.
 A prepared id this run did not send is counted by the ledger, never applied: already-triaged (judged
@@ -62,6 +68,7 @@ PROMPT_CHARS = 240_000     # ≈ 103k tokens at the X prompt's measured 2.33 byt
                            # batch would run larger (the fixture's chinese bodies are 10 % CJK)
 QUESTION_CHARS = 4000
 TIMEOUT = int(os.environ.get("DXB_TRIAGE_TIMEOUT") or 600)
+NO_JSON = "no triage JSON in the answer"   # the model answered and nothing in it parses: the batch is asked once more
 KIND = {"x": "X (Twitter) posts", "reddit": "Reddit threads", "youtube": "YouTube videos (transcript and comments)",
         "hackernews": "Hacker News discussions", "chinese": "Chinese-language community posts", "web": "web pages"}
 
@@ -120,14 +127,32 @@ def batches(run: Path, groups: dict[str, list], size: int) -> list[tuple[str, li
     return out
 
 
+def objects(s: str):
+    """Every balanced {…} of `s`, in the order of its opening brace; a brace inside a JSON string is text."""
+    for start in (i for i, ch in enumerate(s) if ch == "{"):
+        depth, quoted, escaped = 0, False, False
+        for j in range(start, len(s)):
+            ch = s[j]
+            if quoted:
+                escaped, quoted = (False, True) if escaped else (ch == "\\", ch != '"')
+            elif ch == '"':
+                quoted = True
+            elif ch in "{}":
+                depth += 1 if ch == "{" else -1
+                if depth == 0:
+                    yield s[start:j + 1]
+                    break
+
+
 def verdicts_in(text) -> list | None:
-    """The `triage` list of a model's answer: bare JSON, or in a ``` fence (the measured Haiku answer
-    was fenced), or with words around it."""
+    """The `triage` list of a model's answer: bare JSON; in a ``` fence — a leading ```json (or ```) and a
+    trailing ``` stripped first (the Haiku answers of 2026-09-26 were fenced); or the first {…} object brace
+    matching finds that holds one, with words around it. None: nothing in the answer parses to one — the
+    K2 run's failed X batch was fenced, and its JSON dropped the `{` of one entry (L0480)."""
     if not isinstance(text, str):
         return None
-    s = text.strip()
-    fence = re.search(r"```(?:json)?\s*(.*?)\s*```", s, re.S)
-    for cand in ([fence.group(1)] if fence else []) + [s, s[s.find("{"):s.rfind("}") + 1]]:
+    s = re.sub(r"```\s*$", "", re.sub(r"^```[A-Za-z]*", "", text.strip())).strip()
+    for cand in (s, *objects(s)):
         try:
             obj = json.loads(cand)
         except ValueError:
@@ -167,7 +192,7 @@ def ask(prompt: str, model: str) -> tuple[list | None, float, str | None]:
         return None, cost, f"claude exit {p.returncode}: {str(env.get('result'))[:200]}"
     found = verdicts_in(env.get("result"))
     if found is None:
-        return None, cost, f"no triage JSON in the answer: {str(env.get('result'))[:200]}"
+        return None, cost, f"{NO_JSON}: {' '.join(str(env.get('result')).split())[:200]}"
     return found, cost, None
 
 
@@ -217,6 +242,7 @@ def main(argv: list[str] | None = None) -> int:
         ids = [rid for rid, _ in items]
         sent.update(ids)
         t0 = time.monotonic()
+        head = f"batch {i}/{len(plan)} · {p} · {len(ids)} rows"
         if ready is not None:
             found, spent, err = [e for e in ready if isinstance(e, dict) and str(e.get("id") or "").strip() in ids], 0.0, None
         else:
@@ -224,8 +250,12 @@ def main(argv: list[str] | None = None) -> int:
                                    kind=KIND.get(p, f"{platforms.LABEL.get(p, p)} posts"),
                                    items="\n".join(block for _, block in items))
             found, spent, err = ask(prompt, args.model)
+            if err is not None and err.startswith(NO_JSON):     # the same rows, a fresh call — once (K2c F1)
+                cost += spent
+                print(f"{head}: {err} · ${spent:.2f} · {time.monotonic() - t0:.0f} s → retry 1/1")
+                head, t0 = f"{head} · retry 1/1", time.monotonic()
+                found, spent, err = ask(prompt, args.model)
         cost += spent
-        head = f"batch {i}/{len(plan)} · {p} · {len(ids)} rows"
         if err:
             failed += 1
             left += len(ids)
