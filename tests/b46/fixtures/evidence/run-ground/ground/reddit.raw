@@ -1,0 +1,57 @@
+- id: 1wanm8p
+  title: Fable 5.1 vs GPT-6 Astra for 2D Sprites
+  subreddit: r/ClaudeAI
+  author: bobo-the-merciful
+  score: 958
+  comments: 165
+  url: https://www.reddit.com/r/ClaudeAI/comments/1wanm8p/fable_51_vs_gpt6_astra_for_2d_sprites/
+  created_utc: 1788872048
+  selftext: >-
+    Using the same simple prompt the models took very different approaches: Astra delivered one sheet with 16 key poses;
+    Fable delivered 992 frames across four palettes, plus a Python generator and browser preview.
+
+
+    Codex CLI with GPT-5.6 Astra in XHigh
+
+
+    Claude Code CLI with Fable 5.1 in XHigh
+
+
+    Details in the video which was made with Astra in Codex CLI using Remotion and Elevenlabs for voice. Music
+    programmatically generated.
+
+
+    Prompt for the sprites: 
+
+        Build me some knight sprites which I can use in my new medieval 2D isometric game. The game doesn't exist yet I am starting with sprites - this is the first thing we are building. Do not look at any other work in this directory. Start from scratch.
+  post_hint: hosted:video
+  url_overridden_by_dest: https://v.redd.it/i6c2ojunmaoh1
+  preview_image_url: >-
+    https://external-preview.redd.it/dTZnaTV0dm5tYW9oMZ1ypEcaqgx3oleaEP-18rfpKgYwrX1geBn_u-mOg3uO.png?format=pjpg&auto=webp&s=54f632475e080fe1b695bd756d599e3488414349
+  gallery_urls: []
+- id: 1wfaf7f
+  title: GPT 6 Astra vs Fable 5.1
+  subreddit: r/codex
+  author: ScreenPlayLife
+  score: 0
+  comments: 29
+  url: https://www.reddit.com/r/codex/comments/1wfaf7f/gpt_6_astra_vs_fable_51/
+  created_utc: 1789312592
+  selftext: 'Which one is better for coding ? '
+  post_hint: ''
+  url_overridden_by_dest: ''
+  preview_image_url: ''
+  gallery_urls: []
+- id: 1w6foe5
+  title: GPT 6 Astra Vs Gemini 3.8 Flash
+  subreddit: r/GeminiAI
+  author: Able-Line2683
+  score: 356
+  comments: 103
+  url: https://www.reddit.com/r/GeminiAI/comments/1w6foe5/gpt_6_astra_vs_gemini_38_flash/
+  created_utc: 1788460020
+  selftext: ''
+  post_hint: image
+  url_overridden_by_dest: https://i.redd.it/4vdh60pulcnh1.png
+  preview_image_url: https://preview.redd.it/4vdh60pulcnh1.png?auto=webp&s=3dd8f6f489083295969b16f500990630c4667a0f
+  gallery_urls: []

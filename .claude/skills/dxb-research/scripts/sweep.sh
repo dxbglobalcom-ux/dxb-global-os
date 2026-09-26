@@ -50,7 +50,7 @@ export OPENCLI_WINDOW=background
 QUERY="${1:-}"; OUT="${2:-}"; shift 2 2>/dev/null || true
 # DEFAULT = max. His order, 2026-09-17: "20-30 farkli kanalda ayni anda arastirilacak…
 # ben ayni anda 100 tane siteden arastirma yapiyormusum gibi arastirma yapip sonuc
-# getirecek". `wide` opens 23; `max` opens all 39 channels and costs seconds, not minutes, because
+# getirecek". `wide` opens 23; `max` opens all 40 channels and costs seconds, not minutes, because
 # every channel is fired in parallel. Narrow it by hand only when a question truly has
 # one home (--tier core), and say so in the answer.
 TIER=max; TMO=180; PAGES=14; WITH_BROWSER=1; NO_READ=0; KISA=""; DRY=0
@@ -298,7 +298,13 @@ facebook|browser|python3 "$SKILL/scripts/hidden.py" read "https://www.facebook.c
 # INSTAGRAM'S RESULTS ARRIVE AFTER THE PAGE SETTLES. Measured 2026-09-24 through hidden.py on
 # "dubai real estate": no dwell -> 0 chars; --wait 3 -> 596 chars carrying 24 post addresses.
 instagram|browser|python3 "$SKILL/scripts/hidden.py" read "https://www.instagram.com/explore/search/keyword/?q={UK}" --wait 3
-linkedin|max|opencli linkedin search "{K}" -f yaml
+# LINKEDIN'S OWN `search` IS A JOB BOARD. opencli's manifest gives `linkedin search` the columns
+# rank · title · company · location · listed · salary · url (read 2026-09-26), and on 2026-09-24 it
+# answered 4 bytes in all three grounds of the rejected run. People's posts live at linkedin.com/posts,
+# and the neural engine reaches them by that address (B56, 2026-09-26).
+linkedin|max|"$SKILL/scripts/mcpx.sh" exa "linkedin.com/posts {K}" 10
+# TIKTOK HAD NO CHANNEL AT ALL until B56 (2026-09-26) — the platform plan v2 counts had no door.
+tiktok|max|opencli tiktok search "{K}" --limit 20 -f yaml
 zhihu|max|opencli zhihu search "{K}" -f yaml
 linux-do|max|opencli linux-do search "{K}" -f yaml
 weibo|max|opencli weibo search "{K}" -f yaml

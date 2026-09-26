@@ -62,6 +62,10 @@ HOST_FILES=(
   tests/b46/no-green-on-a-failure.test.ts
   tests/b46/one-run-one-owner.test.ts
   tests/b46/a-hunter-cannot-write.test.ts
+  tests/b46/evidence-rows.test.ts
+  tests/b46/kapsama.test.ts
+  tests/b46/fleet-by-platform.test.ts
+  tests/b46/render-from-rows.test.ts
 )
 
 # ── THE BENCH'S OWN RULER (CEO 2026-09-21: "tezgah kendini temizlesin her zaman

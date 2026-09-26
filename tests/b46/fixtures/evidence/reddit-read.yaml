@@ -1,0 +1,59 @@
+- type: POST
+  author: Expert_Annual_19
+  score: 0
+  text: |-
+    Welcome to the AGI era
+
+    GPT-6 Astra is here, with OpenAI calling it “a generational leap in capability”.
+
+     
+
+    A few of the headline benchmarks:
+
+    \- ARC- AGI 3 – 98.6% (!), compared to 7.8% for 5.6 Sol
+
+    \- Exploit-Bench (cybersecurity) - 100% (!)
+
+    \- FrontierMath Tier 4 (v2) - 97.6%, vs. 87.8% for Fable 5.1
+
+    \- DeepSWE v1.1 - 74.1%, vs. 67.4% for Fable 5.1
+
+    New highs for the industry across math, science, health, computer use, coding, cybersecurity, and more.
+
+    OpenAI's Greg Brockman: "Welcome to the AGI era."
+  post_hint: ''
+  url_overridden_by_dest: ''
+  preview_image_url: ''
+  gallery_urls: []
+- type: L0
+  author: Flaxseed4138
+  score: 28
+  text: Y'all need to stop with the AGI talk
+  post_hint: ''
+  url_overridden_by_dest: ''
+  preview_image_url: ''
+  gallery_urls: []
+- type: L1
+  author: reddit_is_kayfabe
+  score: 2
+  text: '  > Yeah, it''s time to move to ASI talk. AGI is so 2025, gotta aim for those 2027 IPO dollars!'
+  post_hint: ''
+  url_overridden_by_dest: ''
+  preview_image_url: ''
+  gallery_urls: []
+- type: L0
+  author: br_k_nt_eth
+  score: 12
+  text: "Can it hold a conversation and do non-coding work though? Can it write?\n\nNot to shit on coding work. Obviously that’s important. But like, for the rest of the population, these benchmarks now mean fuck all. Look at Opus 5. It was incredible on the benchmarks but had major issues with straight up legibility.\_\n\nI don’t know. Folks have been warning about this benchmarkmaxxing for a while now, and I think we’ve hit that point. It’s just not compelling for wider adoption.\_"
+  post_hint: ''
+  url_overridden_by_dest: ''
+  preview_image_url: ''
+  gallery_urls: []
+- type: L1
+  author: DuxDucisHodiernus
+  score: 3
+  text: '  > Then just use one of the cheaper "shitter" models? I really don''t see the issue. AI writing has already been pretty well optimized in older models. '
+  post_hint: ''
+  url_overridden_by_dest: ''
+  preview_image_url: ''
+  gallery_urls: []

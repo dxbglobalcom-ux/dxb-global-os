@@ -17,6 +17,15 @@
 //
 // This case fixes the denominator in place: what is counted is counted by a machine, and what is
 // only claimed is labelled a claim and never dressed as a count.
+//
+// THE SHAPE CHANGED ON 2026-09-26, THE RULE DID NOT. The hunters now own platforms — `crowd` became
+// `forums` — and hand back lines, not six blocks: one HÜKÜM line, one `PLATFORM <p>: bulundu N /
+// okundu M / okunmadı: … / kapı kapalı: …` line per platform, and `KULLANDIĞIM SATIRLAR: L…`, the ids
+// of the ledger's rows (fleet/ARSENAL.md). So the merge cases below moved to that shape: a hunter's
+// number now stands in its own PLATFORM line and is printed under a heading that calls it a claim
+// (there is no E block and no BEYAN column any more); a closed door arrives in that line, in every
+// markdown shape a hunter writes it; a report is checked by its row ids, not by addresses in prose
+// (KAYNAKSIZ became SATIRSIZ); the verdicts still stand side by side. The crowd.sh cases are unchanged.
 
 import { execFileSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -68,7 +77,8 @@ describe("crowd.sh — one human is one human, in however many threads", () => {
 
 // ── the summary ─────────────────────────────────────────────────────────────
 
-/** One hunter transcript: a tool call whose result FAILED, and a final report full of claims. */
+/** One hunter transcript: a tool call whose result FAILED, and a final report whose number is a claim
+ *  and which cites no row of the ledger. */
 function failedHunterRun(dir: string): void {
   mkdirSync(dir, { recursive: true });
   const lines = [
@@ -95,13 +105,12 @@ function failedHunterRun(dir: string): void {
       type: "result",
       total_cost_usd: 0.01,
       result:
-        "## A) NE OKUDUM\nnothing opened.\n\n" +
-        "## D) Kapanan kapılar\nReddit AUTH_REQUIRED — the door never opened.\n\n" +
-        "## E) KAÇ AYRI İNSAN\nToplam **999** ayri insanin sozu okundu (hicbiri sayilmadi).\n",
+        "HÜKÜM: the crowd is for A\n" +
+        "PLATFORM reddit: bulundu 999 / okundu 999 / okunmadı: 0 / kapı kapalı: AUTH_REQUIRED\n",
     },
   ];
-  writeFileSync(join(dir, "crowd.jsonl"), lines.map((l) => JSON.stringify(l)).join("\n") + "\n", "utf8");
-  writeFileSync(join(dir, "crowd.meta"), "rc=0\nsecs=12\n", "utf8");
+  writeFileSync(join(dir, "forums.jsonl"), lines.map((l) => JSON.stringify(l)).join("\n") + "\n", "utf8");
+  writeFileSync(join(dir, "forums.meta"), "rc=0\nsecs=12\n", "utf8");
 }
 
 function merge(dir: string, extra: string[] = []): string {
@@ -121,11 +130,11 @@ describe("merge.py — what was fetched is a source; what was typed is not", () 
     const dir = join(b.root, "merge-failed");
     failedHunterRun(dir);
     const out = merge(dir);
-    // the hunter's row: SURE PARA KAYNAK YENI BEYAN, then the doors it opened
-    const row = out.split("\n").find((l) => l.startsWith("crowd")) ?? "";
+    // the hunter's row: SURE PARA KAYNAK FETCH ADD, then the doors it opened
+    const row = out.split("\n").find((l) => l.startsWith("forums")) ?? "";
     expect(row).not.toBe("");
-    const cells = row.replace(/^crowd\s+/, "").trim().split(/\s+/);
-    // …s  cost  KAYNAK  YENI  BEYAN  doors…
+    const cells = row.replace(/^forums\s+/, "").trim().split(/\s+/);
+    // …s  cost  KAYNAK  FETCH  ADD  doors…
     expect(cells[2]).toBe("0"); // KAYNAK — nothing was fetched
     expect(row).not.toMatch(/\bgoogle\b/); // a door named in a FAILED command was never opened
     expect(row).not.toMatch(/zemin-okudu/);
@@ -135,34 +144,39 @@ describe("merge.py — what was fetched is a source; what was typed is not", () 
     const dir = join(b.root, "merge-claim");
     failedHunterRun(dir);
     const out = merge(dir);
-    // The summary may carry the hunter's figure, but it must say plainly that nothing counted
-    // it, and it must never stand as the denominator.
-    expect(out).toMatch(/BEYAN = avcinin kendi cumlesinden okunan sayi — SAYIM DEGIL/);
+    // The summary may carry the hunter's figure, but only on the hunter's own line, under a heading
+    // that says nothing counted it — and it must never stand as the denominator.
+    expect(out).toMatch(/AVCILARIN KENDI SATIRLARI — avcinin BEYANI, sayim degil/);
+    const claimed = out.split("\n").filter((l) => /\b999\b/.test(l));
+    expect(claimed, out).toHaveLength(1);
+    expect(claimed[0]).toMatch(/^\s*\[forums\] PLATFORM reddit:/);
     expect(out).toMatch(/INSAN: SAYILMADI/);
   });
 
-  it("carries a closed door to the summary in every heading shape a hunter writes", () => {
-    for (const heading of ["D)", "## D)", "**D)**"]) {
-      const dir = join(b.root, `merge-door-${heading.replace(/\W+/g, "")}`);
+  it("carries a closed door to the summary in every markdown shape a hunter writes its line", () => {
+    const shapes = ["PLATFORM reddit:", "- PLATFORM reddit:", "**PLATFORM reddit:**", "## PLATFORM reddit:"];
+    shapes.forEach((shape, i) => {
+      const dir = join(b.root, `merge-door-${i}`);
       mkdirSync(dir, { recursive: true });
       const line = {
         type: "result",
         total_cost_usd: 0,
-        result: `## A) NE OKUDUM\nsomething.\n\n${heading} Kapanan kapılar\nReddit AUTH_REQUIRED — the door never opened.\n`,
+        result: `HÜKÜM: something.\n${shape} bulundu 5 / okundu 0 / okunmadı: 5 / kapı kapalı: AUTH_REQUIRED\n`,
       };
-      writeFileSync(join(dir, "crowd.jsonl"), JSON.stringify(line) + "\n", "utf8");
+      writeFileSync(join(dir, "forums.jsonl"), JSON.stringify(line) + "\n", "utf8");
       const out = merge(dir);
-      expect(out, `heading ${heading} disappeared from the summary`).toMatch(/AUTH_REQUIRED/);
-    }
+      expect(out, `the shape "${shape}" disappeared from the summary`).toMatch(/\[forums\] PLATFORM reddit: .*AUTH_REQUIRED/);
+    });
   });
 
-  it("names a report that carries no source address at all", () => {
-    // seven of seven did, on the only run that was kept, and it was committed anyway
+  it("names a report that cites no row of the ledger at all", () => {
+    // seven of seven carried no address, on the only run that was kept, and it was committed anyway;
+    // a row carries its address by construction, so the hole is now a report with no row id
     const dir = join(b.root, "merge-naked");
     failedHunterRun(dir);
     const out = merge(dir);
-    expect(out).toMatch(/KAYNAKSIZ RAPOR/);
-    expect(out).toMatch(/HUNTER-crowd\.md/);
+    expect(out).toMatch(/SATIRSIZ RAPOR/);
+    expect(out).toMatch(/HUNTER-forums\.md/);
   });
 
   it("puts the lanes' own verdicts side by side so a contradiction cannot hide", () => {
@@ -174,10 +188,10 @@ describe("merge.py — what was fetched is a source; what was typed is not", () 
         JSON.stringify({ type: "result", total_cost_usd: 0, result: `## HUKUM: ${verdict}\n\n## A) ...\n` }) + "\n",
         "utf8",
       );
-    lane("crowd", "the crowd is clearly for A");
+    lane("forums", "the crowd is clearly for A");
     lane("counter", "the strongest case is in fact for B");
     const out = merge(dir);
-    expect(out).toMatch(/SERITLERIN KENDI HUKUMLERI/);
+    expect(out).toMatch(/AVCILARIN KENDI HUKUMLERI/);
     expect(out).toMatch(/clearly for A/);
     expect(out).toMatch(/in fact for B/);
   });

@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
-"""Collect the hunters' reports and MEASURE whether the fleet earned its place.
+"""Count what the fleet brought back — never narrate it.
 
-The rule the CEO set on 2026-09-17: a fleet stays only if, at the same wall-clock, it at
-least doubles the people a single agent reached and closes the holes that agent named.
-So this file does not merely concatenate — it counts:
+Since 2026-09-26 every hunter owns PLATFORMS and hands back three kinds of lines and nothing else
+(fleet/ARSENAL.md, last section): one HÜKÜM line, one `PLATFORM <p>: bulundu N / okundu M /
+okunmadı: … / kapı kapalı: …` line per platform, and `KULLANDIĞIM SATIRLAR: L0001, …`. The quotes
+are rows of the run's ledger (evidence.jsonl), written by scripts/evidence.py and never by a model.
+So this file counts, and of what a hunter wrote it prints only those lines, labelled as its claim:
 
-  * how many separate humans each hunter actually read (its own E block, and the URLs it cites)
-  * what each hunter added that NOBODY else brought — the marginal contribution, which is
-    the only honest answer to "did the seventh hunter earn its money"
-  * saturation: the share of the last hunter's sources that were new
-  * the closed doors, gathered from every lane, because a hole must never stay silent
+  * the ledger, per platform: distinct addresses found, and distinct addresses whose body was read
+    — kapsama.py's Bulundu and Okundu, by the same rule, so the two tables cannot disagree
+  * each hunter: its seconds against the clock, its money, the addresses its tool calls actually
+    opened, and how often it called `evidence.py fetch` and `add`
+  * each hunter's own lines, the ids it cites that the ledger does not hold, and a report that
+    cites no row at all
+  * the crowd count from crowd.sh — the one number of people a machine counted
 """
 from __future__ import annotations
 
@@ -33,34 +37,114 @@ CHANNEL_PAT = [
     ("browser", r"opencli browser|hidden\.py"), ("quora", r"quora"), ("fb/ig", r"opencli facebook|opencli instagram"),
     ("cn", r"opencli zhihu|linux-do|opencli weibo|bili"), ("akademik", r"arxiv|crossref|openalex|europepmc"),
     ("zincir", r"fetch\.py"), ("model-arama", r'"WebSearch"|"WebFetch"'),
+    ("defter", r"evidence\.py"),
 ]
-def people_count(text: str) -> str:
-    """The E block's number: how many separate humans this lane actually read.
+# HOW OFTEN THE HUNTER CALLED THE TWO COMMANDS OF ITS BRIEF — read from its own Bash calls.
+EVI_CALL = re.compile(r"evidence\.py[\"']?\s+(fetch|add)\b")
 
-    Read from block E when it exists, else from any sentence that names distinct people —
-    and the LARGEST such number in that block, because a lane usually lists its threads
-    before it totals them.
+HERE = pathlib.Path(__file__).resolve().parent
+LEDGER = "evidence.jsonl"
+
+# THE LINES A HUNTER HANDS BACK, in every markdown shape it wraps them in — "- ", "**…**", "## ",
+# "> ", a backtick. Measured on 2026-09-17 with the old blocks: a regex that allowed only asterisks
+# read nothing for five lanes of seven that had written their block properly.
+DECOR = re.compile(r"^[\s#>*`\-•|]+")
+HUKUM_LINE = re.compile(r"^(?:H[UÜ]K[UÜ]M|SONU[CÇ])\s*[:.)\-–]?\s*(.*)$", re.I)
+PLATFORM_LINE = re.compile(r"^PLATFORM\s+[A-Za-z0-9._-]+\s*[:\-–]", re.I)
+ROWS_LINE = re.compile(r"^KULLAND\S*\s+SAT\S*RLAR\s*[:\-–]?\s*(.*)$", re.I)
+ROW_ID = re.compile(r"\bL\d{4}\b")
+ONLY_IDS = re.compile(r"^[\sL\d,;·.…\-]+$")
+NO_MORE = re.compile(r"okunacak\s+adres\s+kalmad", re.I)
+
+
+def parse_report(text: str) -> dict:
+    """A hunter's report, taken apart into the lines its contract names — and nothing else.
+
+    The HÜKÜM line, the PLATFORM lines as written, the row ids of KULLANDIĞIM SATIRLAR (also when
+    they run on over the next lines), whether it said "okunacak adres kalmadı", and how many other
+    lines it wrote: those are counted, never printed — the summary does not narrate.
     """
-    # The block's heading comes back in every markdown shape a hunter feels like using:
-    # "E)", "**E)**", "## E) AYRI İNSAN SAYISI". Measured 2026-09-17: a regex that allowed
-    # only asterisks read "?" for five lanes of seven that had written the block properly.
-    m = re.search(r"(?:^|\n)[#*\s]{0,6}E[\)\.:]\s*[^\n]{0,90}\n?(.{0,700})", text, re.S)
-    if not m:
-        # No E block means the lane did not state its denominator. A number lifted from
-        # somewhere else in the prose is not that denominator: on the first fleet run this
-        # printed 783 for a lane whose report had no E block at all. Say "?" and mean it.
-        return "?"
-    # STOP CHASING PROSE. Three regexes in one hour each read a different number out of the
-    # same seven reports — "783" became 10, "9 farklı gerçek kişi" became nothing — because
-    # every lane words its sentence differently. A hunter always BOLDS its denominator, so
-    # take the first bolded number of the block, else the block's first number, and label
-    # the column as what it is: the lane's own claim, not an independent count.
-    blk = m.group(1)
-    bold = re.search(r"\*\*\s*~?\s*([\d][\d.,]{0,6})", blk)
-    if bold:
-        return bold.group(1).rstrip(".,")
-    plain = re.search(r"~?\s*([\d][\d.,]{0,6})", blk)
-    return plain.group(1).rstrip(".,") if plain else "?"
+    rep = {"hukum": "", "platforms": [], "ids": [], "rows_line": False, "no_more": False, "prose": 0}
+    in_ids = False
+    for raw in text.splitlines():
+        line = re.sub(r"[*`]+", "", DECOR.sub("", raw)).strip()
+        if not line:
+            in_ids = False
+            continue
+        if in_ids and ONLY_IDS.match(line) and ROW_ID.search(line):
+            rep["ids"] += ROW_ID.findall(line)
+            continue
+        in_ids = False
+        m = ROWS_LINE.match(line)
+        if m:
+            rep["rows_line"], in_ids = True, True
+            rep["ids"] += ROW_ID.findall(m.group(1))
+        elif PLATFORM_LINE.match(line):
+            rep["platforms"].append(" ".join(line.split()))
+        elif NO_MORE.search(line):
+            rep["no_more"] = True
+        elif not rep["hukum"] and HUKUM_LINE.match(line):
+            rep["hukum"] = " ".join(HUKUM_LINE.match(line).group(1).split())
+        else:
+            rep["prose"] += 1
+    rep["ids"] = list(dict.fromkeys(rep["ids"]))
+    return rep
+
+
+def fleet_roles() -> list:
+    """roles.tsv as [(name, [platforms])], in the file's order — the order the summary prints in."""
+    try:
+        rows = (HERE / "roles.tsv").read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return []
+    return [(c[0].strip(), c[1].split()) for c in (r.split("\t") for r in rows) if len(c) >= 2 and c[0].strip()]
+
+
+def read_meta(p: pathlib.Path) -> dict:
+    meta = {}
+    if p.is_file():
+        for ln in p.read_text(errors="replace").splitlines():
+            if "=" in ln:
+                k, v = ln.split("=", 1)
+                meta[k.strip()] = v.strip()
+    return meta
+
+
+def ledger(out: pathlib.Path) -> dict | None:
+    """The run's ledger, counted: per platform the distinct addresses found and the distinct
+    addresses with a body read (`bytes` > 0, `liveness` alive — kapsama.py's rule), every id, who
+    wrote the rows, and how many lines could not be parsed at all. None when there is no ledger."""
+    p = out / LEDGER
+    if not p.is_file():
+        return None
+    led = {"found": {}, "body": {}, "owners": {}, "ids": set(), "bad": 0, "rows": 0}
+    for line in p.read_text(encoding="utf-8", errors="replace").splitlines():
+        if not line.strip():
+            continue
+        try:
+            r = json.loads(line)
+        except ValueError:
+            led["bad"] += 1
+            continue
+        if not isinstance(r, dict):
+            led["bad"] += 1
+            continue
+        led["rows"] += 1
+        if r.get("id"):
+            led["ids"].add(str(r["id"]))
+        if r.get("hunter"):
+            who = str(r["hunter"])
+            led["owners"][who] = led["owners"].get(who, 0) + 1
+        url = r.get("url_canonical") or r.get("url")
+        if not url:
+            continue
+        plat = str(r.get("platform") or "?")
+        led["found"].setdefault(plat, set()).add(url)
+        size = r.get("bytes")
+        if isinstance(size, (int, float)) and not isinstance(size, bool) and size > 0 \
+                and r.get("liveness") == "alive":
+            led["body"].setdefault(plat, set()).add(url)
+    return led
 
 
 def final_text(p: pathlib.Path) -> str:
@@ -84,9 +168,10 @@ def stats(p: pathlib.Path) -> dict:
     2026-09-17 on the first fleet run, which is why this is here.
     """
     cost, tools, last, urls, doors = 0.0, {}, None, set(), set()
+    calls = {"fetch": 0, "add": 0}
     # A CALL IS NOT A FETCH. Measured 2026-09-17: a URL written inside an `echo` whose tool
     # result carried `is_error: true` was counted as one opened source AND as a ground read,
-    # and the saturation number the CEO is shown rests on exactly this count. So a call is
+    # and the KAYNAK column of the summary rests on exactly this count. So a call is
     # held until its RESULT arrives, and it is harvested only if that result is not an error.
     pending: dict = {}
     for line in p.read_text(errors="replace").splitlines():
@@ -101,6 +186,9 @@ def stats(p: pathlib.Path) -> dict:
                 continue
             if blk.get("type") == "tool_use":
                 tools[blk.get("name")] = tools.get(blk.get("name"), 0) + 1
+                inp = blk.get("input") or {}
+                for verb in EVI_CALL.findall(str(inp.get("command") or "") if isinstance(inp, dict) else ""):
+                    calls[verb] += 1
                 pending[blk.get("id")] = json.dumps(
                     {"n": blk.get("name"), "i": blk.get("input") or {}}, ensure_ascii=False)
             elif blk.get("type") == "tool_result":
@@ -119,7 +207,7 @@ def stats(p: pathlib.Path) -> dict:
                         doors.add(label)
     if last:
         cost = last.get("total_cost_usd", 0.0) or 0.0
-    return {"cost": cost, "tools": tools, "doors": doors,
+    return {"cost": cost, "tools": tools, "doors": doors, **calls,
             "touched": {u.rstrip('.,);\\"') for u in urls}}
 
 
@@ -127,7 +215,7 @@ def crowd_count(path: pathlib.Path) -> tuple | None:
     """The machine's own count, read back from crowd.sh's CROWD-COUNT line.
 
     THE DENOMINATOR IS THE WHOLE POINT OF THIS ENGINE, and until 2026-09-17 it was the only
-    number here that nothing measured: `people_count()` lifts the first bold figure out of a
+    number here that nothing measured: `people_count()` lifted the first bold figure out of a
     hunter's prose, and on the one kept run it put 783 in front of the CEO while the hunter's
     own report said "783 person-rows, NOT de-duplicated … ~10 people spoke to the question".
     A number that is claimed is labelled a claim from here on; a number that is counted comes
@@ -143,6 +231,35 @@ def crowd_count(path: pathlib.Path) -> tuple | None:
     return None
 
 
+def collect(out: pathlib.Path) -> dict:
+    """Every hunter of the run, in roles.tsv's order.
+
+    A hunter's transcript (`<role>.jsonl`) is the source: its final answer becomes HUNTER-<role>.md
+    here — a hunter has no Write tool, so this is the only place that file is made. A transcript with
+    no answer is a hunter that died or was cut off by the clock; it stays in the list, named. A
+    HUNTER-<role>.md with no transcript beside it is read as it is.
+    """
+    found: dict = {}
+    for j in sorted(out.glob("*.jsonl")):
+        if j.name == LEDGER:
+            continue
+        role = j.stem
+        txt = final_text(j)
+        if txt:
+            (out / f"HUNTER-{role}.md").write_text(txt, encoding="utf-8")
+        found[role] = {"text": txt, "transcript": True, **stats(j), **read_meta(out / f"{role}.meta")}
+    for h in sorted(out.glob("HUNTER-*.md")):
+        role = h.stem[len("HUNTER-"):]
+        if role not in found:
+            found[role] = {"text": h.read_text(encoding="utf-8", errors="replace"), "transcript": False,
+                           **read_meta(out / f"{role}.meta")}
+    for h in found.values():
+        h["parsed"] = parse_report(h["text"])
+    known = [name for name, _ in fleet_roles()]
+    order = [r for r in known if r in found] + sorted(r for r in found if r not in known)
+    return {r: found[r] for r in order}
+
+
 def main() -> int:
     argv = sys.argv[1:]
     crowd_file = None
@@ -151,42 +268,102 @@ def main() -> int:
         crowd_file = pathlib.Path(argv[i + 1])
         del argv[i:i + 2]
     out = pathlib.Path(argv[0])
-    reports, order = {}, []
-    for j in sorted(out.glob("*.jsonl")):
-        role = j.stem
-        txt = final_text(j)
-        if not txt:
-            continue
-        order.append(role)
-        meta = {}
-        mf = out / f"{role}.meta"
-        if mf.exists():
-            for ln in mf.read_text().splitlines():
-                if "=" in ln:
-                    k, v = ln.split("=", 1); meta[k] = v
-        st = stats(j)
-        reports[role] = {"text": txt, "urls": st.pop("touched"),
-                         "read_ground": "zemin-okudu" in (st.get("doors") or set()), **st, **meta}
-        (out / f"HUNTER-{role}.md").write_text(txt, encoding="utf-8")
-
-    if not reports:
+    hunters = collect(out)
+    if not any(h["text"] for h in hunters.values()):
         print("hicbir avci rapor getirmedi — .err dosyalarina bak"); return 1
 
-    seen: set[str] = set()
-    print(f"{'AVCI':<12}{'SURE':>7}{'PARA':>8}{'KAYNAK':>8}{'YENI':>7}{'BEYAN':>7}  ACILAN KAPILAR")
-    total_cost = 0.0
-    marginal = {}
-    for role in order:
-        r = reports[role]
-        new = len(r["urls"] - seen)
-        seen |= r["urls"]
-        marginal[role] = new
-        ppl = people_count(r["text"])
-        total_cost += r["cost"]
-        top = " ".join(sorted(r.get("doors") or {"-"}))
-        print(f"{role:<12}{r.get('secs','?'):>6}s{r['cost']:>8.2f}{len(r['urls']):>8}{new:>7}{ppl:>7}  {top}")
-    print(f"{'TOPLAM':<12}{'':>7}{total_cost:>8.2f}{len(seen):>8}")
-    print("   (BEYAN = avcinin kendi cumlesinden okunan sayi — SAYIM DEGIL.)")
+    # EACH HUNTER, FROM ITS OWN TRANSCRIPT. A call is not a fetch: an address counts under KAYNAK
+    # only when the tool call that touched it came back without an error (measured 2026-09-17: a URL
+    # inside a failing `echo` was counted as an opened source). SURE is set against the clock, so a
+    # hunter that stopped at three minutes of ten is visible without opening a file.
+    print(f"{'AVCI':<10}{'SURE':>10}{'PARA':>7}{'KAYNAK':>8}{'FETCH':>7}{'ADD':>6}  ACILAN KAPILAR")
+    total_cost, seen = 0.0, set()
+    for role, h in hunters.items():
+        if not h["transcript"]:
+            print(f"{role:<10}{'-':>10}{'-':>7}{'-':>8}{'-':>7}{'-':>6}  (transkript yok — rapor dosyadan okundu)")
+            continue
+        secs = h.get("secs", "?")
+        sure = f"{secs}/{h['tmo']}s" if h.get("tmo") else f"{secs}s"
+        total_cost += h["cost"]
+        seen |= h["touched"]
+        top = " ".join(sorted(h.get("doors") or {"-"}))
+        print(f"{role:<10}{sure:>10}{h['cost']:>7.2f}{len(h['touched']):>8}{h['fetch']:>7}{h['add']:>6}  {top}")
+    print(f"{'TOPLAM':<10}{'':>10}{total_cost:>7.2f}{len(seen):>8}")
+    print("   (SURE = saniye / zaman asimi · KAYNAK = hatasiz arac cagrisinin actigi adres · "
+          "FETCH, ADD = evidence.py komutu)")
+
+    # THE LEDGER, COUNTED BY THE MACHINE. Every platform a hunter of this fleet owns is printed, a
+    # zero included — zero is a real answer, and a platform that is not printed cannot be asked about.
+    led = ledger(out)
+    roles = fleet_roles()
+    if led is None:
+        print("\nDEFTER YOK — evidence.jsonl bulunamadi: hicbir satir sayilamadi, satir kimlikleri denetlenemedi.")
+    else:
+        plats = list(dict.fromkeys([p for _, ps in roles for p in ps if p != "rest"] + ["web"]))
+        plats += sorted(p for p in led["found"] if p not in plats and p != "?")
+        plats += ["?"] if "?" in led["found"] else []
+        print("\nDEFTER — evidence.jsonl, makine sayimi (BULUNDU = ayri adres · GOVDELI = govdesi okunmus ayri adres)")
+        print(f"{'PLATFORM':<16}{'BULUNDU':>8}{'GOVDELI':>9}")
+        all_found, all_body = set(), set()
+        for p in plats:
+            f, b = led["found"].get(p, set()), led["body"].get(p, set())
+            all_found |= f
+            all_body |= b
+            print(f"{p:<16}{len(f):>8}{len(b):>9}")
+        print(f"{'TOPLAM':<16}{len(all_found):>8}{len(all_body):>9}")
+        tail = f"   satir: {led['rows']}"
+        if led["owners"]:
+            tail += " · satir sahibi: " + " · ".join(
+                f"{k} {v}" for k, v in sorted(led["owners"].items(), key=lambda kv: (-kv[1], kv[0])))
+        if led["bad"]:
+            tail += f" · OKUNAMAYAN SATIR: {led['bad']}"
+        print(tail)
+
+    # WHAT EACH HUNTER SAYS IT DID — its own lines, verbatim, and labelled as a claim. The count
+    # stands one table up; an id it cites that the ledger does not hold is named, because a quote
+    # that is not a row does not exist for the answer.
+    print("\nAVCILARIN KENDI SATIRLARI — avcinin BEYANI, sayim degil (sayim: yukaridaki DEFTER)")
+    for role, h in hunters.items():
+        if not h["text"]:
+            print(f"   [{role}] RAPOR YOK — kod {h.get('rc', '?')} · {h.get('secs', '?')}s: durum satiri gelmedi")
+            continue
+        rep = h["parsed"]
+        for ln in rep["platforms"]:
+            print(f"   [{role}] {ln[:220]}")
+        if not rep["platforms"]:
+            print(f"   [{role}] PLATFORM SATIRI YOK — hangi adresin okunup okunmadigini soylemedi")
+        if rep["ids"]:
+            if led is None:
+                check = "defter yok, denetlenemedi"
+            else:
+                missing = [i for i in rep["ids"] if i not in led["ids"]]
+                check = f"defterde {len(rep['ids']) - len(missing)} · DEFTERDE YOK {len(missing)}"
+                check += f": {', '.join(missing[:12])}" if missing else ""
+            print(f"   [{role}] KULLANDIGIM SATIRLAR: {len(rep['ids'])} kimlik — {check}")
+        if rep["no_more"]:
+            print(f"   [{role}] okunacak adres kalmadi (avcinin kendi satiri)")
+        if rep["prose"]:
+            print(f"   [{role}] +{rep['prose']} satir nesir — ozete alinmadi")
+
+    # A REPORT THAT CITES NO ROW CANNOT BE CHECKED BY ANYBODY. Measured 2026-09-17 on the one kept
+    # run: seven reports of seven carried zero source addresses and the answer was committed anyway.
+    # A row carries its address by construction, so the hole is now a report with no row id.
+    naked = [r for r, h in hunters.items() if h["text"] and not h["parsed"]["ids"]]
+    if naked:
+        print("\nSATIRSIZ RAPOR — bu avcilar defterden tek satir kimligi gostermedi, denetlenemezler:")
+        for r in naked:
+            print(f"   [{r}] HUNTER-{r}.md")
+
+    # THE HUNTERS' OWN VERDICTS, SIDE BY SIDE. On the first fleet run four hunters contradicted each
+    # other and NONE of it surfaced, because the comparison was left to a human who had not read
+    # seven reports. A machine cannot judge which one is right, and this does not pretend to: it
+    # puts the lines in one place so the contradiction cannot hide in file six of seven.
+    verdicts = [(r, h["parsed"]["hukum"]) for r, h in hunters.items() if h["text"] and h["parsed"]["hukum"]]
+    if verdicts:
+        print("\nAVCILARIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:")
+        for role, v in verdicts:
+            print(f"   [{role}] {v[:200]}")
+        print("   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)")
 
     # THE DENOMINATOR, named for what it is.
     cc = crowd_count(crowd_file) if crowd_file else None
@@ -194,21 +371,18 @@ def main() -> int:
         print(f"\nINSAN (sayildi): {cc[1]} ayri kisi · {cc[0]} yorum · {cc[2]} baslik "
               f"— crowd.sh'in makine sayimi.")
     else:
-        print("\nINSAN: SAYILMADI — bu kosuda makine sayimi yok. Yukaridaki BEYAN sutunu "
-              "avcilarin kendi cumlesidir ve payda olarak kullanilamaz.")
+        print("\nINSAN: SAYILMADI — bu kosuda makine sayimi yok. Bir avcinin kendi satirindaki sayi "
+              "payda olarak kullanilamaz.")
 
-    # THE GROUND. Since 2026-09-17 the fleet opens it ITSELF before any hunter is launched,
-    # so the question "was Google searched at all?" is answered from the files on disk, not
-    # from what a hunter chose to do. (This detector had to be corrected twice: it first
-    # counted urls written in prose — 0 for every lane — and then called a machine-opened
-    # ground "HICBIRI" because no hunter had run the sweep by hand.)
+    # THE GROUND. Since 2026-09-17 the fleet opens it ITSELF before any hunter is launched, so the
+    # question "was Google searched at all?" is answered from the files on disk, not from what a
+    # hunter chose to do.
     grounds = [d for d in sorted(out.glob("ground*")) if d.is_dir()]
     raws = [r for d in grounds for r in d.glob("*.raw")]
     if raws:
         def tot(name):
-            # EVERY ground, not just the first. The fleet opens one per language, and the
-            # first version of this line printed the Turkish ground's Google alone — which
-            # is precisely the half-measure the CEO caught on 2026-09-17.
+            # EVERY ground, not just the first: the fleet opens one per language, and the first
+            # version of this line printed the Turkish ground's Google alone (2026-09-17).
             return sum((d / name).stat().st_size for d in grounds if (d / name).exists())
         gs = tot("google.raw") + tot("google-deep.raw")
         ds = tot("duckduckgo.raw") + tot("duckduckgo2.raw")
@@ -219,66 +393,8 @@ def main() -> int:
               f"DUCKDUCKGO {ds} bayt · okunan sayfa govdesi {pages}")
         if gs < 40:
             print("   !! GOOGLE BOS DONDU — bu bir deliktir, rapora yazilir.")
-        readers = [r for r in order if reports[r].get("read_ground")]
-        print(f"   zemini okuyan avci: {len(readers)}/{len(order)}"
-              f" ({', '.join(readers) if readers else 'hicbiri — kendi kapilarindan gittiler'})")
     else:
-        swept = [r for r in order if "sweep" in (reports[r].get("doors") or set())]
-        print(f"\nGENIS ZEMIN: filo acmadi; {len(swept)}/{len(order)} avci kendisi tarama yapti "
-              f"({', '.join(swept) if swept else 'HICBIRI — bu bir kusurdur'}).")
-
-    last = order[-1]
-    share = (marginal[last] / len(reports[last]['urls']) * 100) if reports[last]["urls"] else 0.0
-    print(f"\nDOYGUNLUK: son avci ({last}) getirdigi kaynaklarin %{share:.0f}'ini ilk kez getirdi.")
-    print("   (%5'in altina dustugunde sefer biter — yeni avci eklemek para yakmaktir.)")
-
-    doors = []
-    for role in order:
-        t = reports[role]["text"]
-        # EVERY SHAPE A HUNTER WRITES. `people_count` above was taught this on 2026-09-17
-        # and this line was not, so a lane that wrote "## D) Kapanan kapilar / Reddit
-        # AUTH_REQUIRED" had its warning dropped from the only summary the CEO reads.
-        m = re.search(r"(?:^|\n)[#*\s]{0,6}D[\)\.:](.{0,1200})", t, re.S)
-        if m:
-            doors.append((role, m.group(1).strip().splitlines()))
-    if doors:
-        print("\nKAPANAN KAPILAR (her avcinin D blogundan — delik sessiz kalmaz):")
-        for role, lines in doors:
-            head = [l for l in lines if l.strip()][:3]
-            for l in head:
-                print(f"   [{role}] {l.strip()[:110]}")
-
-    # A REPORT WITH NO ADDRESS CANNOT BE CHECKED BY ANYBODY. Measured 2026-09-17 on the one
-    # kept run: SEVEN reports out of seven carried ZERO source addresses, three of them no date
-    # either, and the answer was saved and committed anyway. The skill's own rule says a quote
-    # with no date is a reason to refuse the answer — so the holes are named here, in the only
-    # summary the commander reads.
-    naked = [r for r in order if not URL.search(reports[r]["text"])]
-    if naked:
-        print("\nKAYNAKSIZ RAPOR — bu seritlerin metninde tek bir adres yok, denetlenemezler:")
-        for r in naked:
-            print(f"   [{r}] HUNTER-{r}.md")
-
-    # THE LANES' OWN VERDICTS, SIDE BY SIDE. On the first fleet run four hunters contradicted
-    # each other — measure said 4 of 6 sources one way, foreign said 5 of 5 the other, crowd
-    # said 6-2, video said 5 of 10 — and NONE of it surfaced: the merge laid seven reports next
-    # to each other and left the comparison to a human who had not read them. A machine cannot
-    # judge which lane is right, and this does not pretend to: it puts the sentences in one
-    # place so the contradiction cannot hide in file six of seven.
-    verdicts = []
-    for role in order:
-        m = re.search(r"(?:^|\n)[#*\s]{0,6}(?:HUKUM|HÜKÜM|SONUC|SONUÇ)[\)\.:]?\s*(.{0,220})",
-                      reports[role]["text"], re.S)
-        if not m:
-            m = re.search(r"(?:^|\n)[#*\s]{0,6}A[\)\.:][^\n]{0,90}\n+([^\n]{20,220})",
-                          reports[role]["text"], re.S)
-        if m:
-            verdicts.append((role, " ".join(m.group(1).split())[:200]))
-    if verdicts:
-        print("\nSERITLERIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:")
-        for role, v in verdicts:
-            print(f"   [{role}] {v}")
-        print("   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)")
+        print("\nGENIS ZEMIN: bu kosunun klasorunde zemin yok.")
 
     print(f"\nraporlar: {out}/HUNTER-*.md")
     return 0

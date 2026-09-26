@@ -61,8 +61,17 @@ channels:
     fallback: [google]
   linkedin:
     tags: [first-hand, market]
-    probe: opencli linkedin search "site reliability" -f yaml
-    fallback: [google]
+    probe: bash scripts/mcpx.sh exa "linkedin.com/posts site reliability" 5
+    note: >-
+      Read through the neural engine at linkedin.com/posts, NOT through `opencli linkedin search`,
+      which is a job board (manifest columns rank/title/company/location/listed/salary/url) and
+      answered 4 bytes in all three grounds of 2026-09-24. The channel IS exa, so exa is no stand-in.
+    fallback: [google, duckduckgo]
+  tiktok:
+    tags: [first-hand, video]
+    probe: opencli tiktok search "site reliability" --limit 3 -f yaml
+    note: the platform's own search, in the hidden research Chrome; added 2026-09-26 (B56).
+    fallback: [youtube, exa, google]
   youtube:
     tags: [first-hand, video, transcript]
     probe: opencli youtube search "site reliability" -f yaml

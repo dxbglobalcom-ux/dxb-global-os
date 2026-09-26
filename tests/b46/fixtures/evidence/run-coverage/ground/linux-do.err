@@ -1,0 +1,6 @@
+ok: false
+error:
+  code: AUTH_REQUIRED
+  message: linux.do requires an active signed-in browser session
+  help: Please open Chrome or Chromium and log in to https://linux.do
+  exitCode: 77

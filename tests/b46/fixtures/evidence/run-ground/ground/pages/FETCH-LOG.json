@@ -1,0 +1,73 @@
+[
+  {
+    "url": "https://www.reddit.com/r/ClaudeAI/comments/1wanm8p/fable_51_vs_gpt6_astra_for_2d_sprites/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 887,
+        "bytes": 5067,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 2345,
+    "file": "01-reddit.com.md"
+  },
+  {
+    "url": "https://www.quora.com/Which-is-better-for-coding-GPT-6-Astra-or-Claude-Fable-5-1",
+    "read": false,
+    "door": null,
+    "cached_snapshot": false,
+    "liveness": "blocked",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 812,
+        "bytes": 1840,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 2210,
+        "bytes": 1840,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "jina-reader",
+        "ok": false,
+        "ms": 640,
+        "bytes": 0,
+        "wall": false,
+        "error": "HTTP 451"
+      }
+    ],
+    "bytes": 0
+  }
+]

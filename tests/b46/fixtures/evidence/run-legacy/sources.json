@@ -1,0 +1,138 @@
+{
+ "count": 7,
+ "sources": [
+  {
+   "id": 15,
+   "url": "https://x.com/andonlabs/status/2097377692966633952",
+   "domain": "x.com",
+   "title": "GPT-6 Astra is better at making money, more ethical than Claude Fable 5.1",
+   "date": null,
+   "kind": "human",
+   "bytes_read": 0,
+   "seen_in": [
+    "HUNTER-counter.md",
+    "crowd/CROWD.txt",
+    "crowd/threads/85bf0114af.yaml",
+    "ground-3/hackernews.raw",
+    "work-crowd/crowdout2/CROWD.txt",
+    "work-crowd/crowdout2/threads/85bf0114af.yaml"
+   ]
+  },
+  {
+   "id": 16,
+   "url": "https://x.com/i/status/2097028124768632889",
+   "domain": "x.com",
+   "title": null,
+   "date": "2026-09-07",
+   "kind": "human",
+   "bytes_read": 0,
+   "seen_in": [
+    "HUNTER-counter.md",
+    "ground/twitter.raw"
+   ]
+  },
+  {
+   "id": 174,
+   "url": "https://t.co/3whEm4EHL0",
+   "domain": "t.co",
+   "title": null,
+   "date": null,
+   "kind": "other",
+   "bytes_read": 0,
+   "seen_in": [
+    "crowd/CROWD.txt",
+    "crowd/threads/8593767b17.yaml",
+    "ground/reddit.raw",
+    "ground-2/reddit.raw",
+    "work-crowd/crowdout/threads/8593767b17.md",
+    "work-crowd/crowdout2/CROWD.txt",
+    "work-crowd/crowdout2/threads/8593767b17.yaml"
+   ]
+  },
+  {
+   "id": 9,
+   "url": "https://www.reddit.com/r/Anthropic/comments/1w9lj56/astra_is_what_fable_should_be",
+   "domain": "reddit.com",
+   "title": "Astra is what Fable should be",
+   "date": "2026-09-07",
+   "kind": "human",
+   "bytes_read": 55558,
+   "seen_in": [
+    "HUNTER-counter.md",
+    "HUNTER-crowd.md",
+    "crowd-urls.txt",
+    "crowd-dates.tsv",
+    "crowd/CROWD.txt",
+    "crowd/threads/INDEX.tsv",
+    "crowd/threads/DATES.tsv",
+    "ground-3/reddit.raw",
+    "work-crowd/crowdout/threads/INDEX.tsv",
+    "work-crowd/crowdout2/CROWD.txt",
+    "work-crowd/crowdout2/threads/DATES.tsv",
+    "work-crowd/crowdout2/threads/INDEX.tsv",
+    "work-crowd/dates.tsv",
+    "work-crowd/reddit_urls_all.txt",
+    "work-crowd/urls_v2.txt"
+   ]
+  },
+  {
+   "id": 10,
+   "url": "https://www.reddit.com/r/Anthropic/comments/1w6q8f2/astra_crushed_fable_51_in_bench_and_price",
+   "domain": "reddit.com",
+   "title": "ASTRA crushed Fable 5.1 in Bench and Price",
+   "date": "2026-09-04",
+   "kind": "human",
+   "bytes_read": 47490,
+   "seen_in": [
+    "HUNTER-counter.md",
+    "HUNTER-crowd.md",
+    "crowd-urls.txt",
+    "crowd-dates.tsv",
+    "crowd/CROWD.txt",
+    "crowd/threads/INDEX.tsv",
+    "crowd/threads/DATES.tsv",
+    "ground-3/reddit.raw",
+    "work-crowd/crowdout/threads/INDEX.tsv",
+    "work-crowd/crowdout2/CROWD.txt",
+    "work-crowd/crowdout2/threads/DATES.tsv",
+    "work-crowd/crowdout2/threads/INDEX.tsv",
+    "work-crowd/dates.tsv",
+    "work-crowd/reddit_urls_all.txt",
+    "work-crowd/urls_v2.txt"
+   ]
+  },
+  {
+   "id": 49,
+   "url": "https://youtube.com/watch?v=grB2CXh7rPo",
+   "domain": "youtube.com",
+   "title": "I Tested GPT-6 Astra vs Fable 5.1 With Real Work (Here's What Matters)",
+   "date": null,
+   "kind": "human",
+   "bytes_read": 23996,
+   "seen_in": [
+    "HUNTER-video.md",
+    "ground/pages/urls.txt",
+    "ground/pages/FETCH-LOG.json",
+    "ground/youtube.raw",
+    "ground-2/pages/urls.txt",
+    "ground-2/pages/FETCH-LOG.json",
+    "ground-2/youtube.raw",
+    "ground-3/youtube.raw"
+   ]
+  },
+  {
+   "id": 1098,
+   "url": "https://support.x.com/articles/20170514",
+   "domain": "support.x.com",
+   "title": null,
+   "date": null,
+   "kind": "human",
+   "bytes_read": 0,
+   "seen_in": [
+    "ground/pages/03-t.co.md",
+    "ground-2/pages/02-x.com.md",
+    "ground-3/pages/03-t.co.md"
+   ]
+  }
+ ]
+}
