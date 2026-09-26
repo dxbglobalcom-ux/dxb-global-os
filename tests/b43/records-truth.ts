@@ -67,6 +67,8 @@ export const C = {
     { id: "b54-accepted-by-his-eye-2026-09-24", subject: /\bB54\b/ },
     // K1 — stage 1 of the research door (the KAPSAMA / coverage engine), accepted by his eye 2026-09-26 ~16:00; spelled "K1" in STATE and on board B56.
     { id: "research-k1-coverage-engine-accepted-by-his-eye-2026-09-26", subject: /\bK1\b/ },
+    // K2 — stage 2 of the research door (the KANIT / evidence engine), accepted by his eye 2026-09-26 ~21:10 ("tmmdır."); spelled "K2" in STATE and on board B56.
+    { id: "research-k2-kanit-engine-accepted-by-his-eye-2026-09-26", subject: /\bK2\b/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from

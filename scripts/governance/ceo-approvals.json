@@ -1535,5 +1535,12 @@
     "verbatim": "Tamam göster bakalım. Öyle olsun ya dediğin gibi.",
     "conditions": "A build-and-show order for this one item, not an acceptance of K2 (LAW B: his eye on the page decides), and no word on F1 (triage retry) or F2 (the claim gate counts links, not reads) — those still wait him. The proposal he approved, verbatim from the lead: 'yazar \"kanıt\" denen her satırı ya bir iddiaya bağlar ya da neden almadığını tek kelimeyle yazar; sayfa da \"kanıt 43 · cevapta 17\" diye ikisini birden gösterir.'",
     "where": ".planning/quick/20260924-research-door-perplexity/EVIDENCE-B56-K2-2026-09-26.md §5 (the K2b bullet) · .planning/STATE.md live block · board B56"
+  },
+  "research-k2-kanit-engine-accepted-by-his-eye-2026-09-26": {
+    "date": "2026-09-26",
+    "what": "K2 — stage 2 of the research door, the KANIT (evidence) engine — ACCEPTED BY HIS EYE on version 2 of the live run's page (https://claude.ai/artifact/DWwhVsZio6qWKW5ctBDTfy: every claim with 'n satır · m bağımsız kaynak · k karşı', the İddia defteri, and K2b's 'kanıt · cevapta · alınmadı' per platform), after the lead put it in front of him at 21:06 and said it waits his word.",
+    "verbatim": "tmmdır. … Tamamdır. Şu ana kadar yaptıklarını göz ile gözden geçirdim. Şimdilik tamam. Bir değişiklik yapılırsa sonra döneriz. Devam edelim.",
+    "conditions": "His two replies within a minute: the first one word, the second confirming he reviewed the work by eye and that it stands 'for now' — a change later reopens it. 'Devam edelim' read by the lead as the order to continue on the approved staging: F1/F2 (the two A findings, fix specs already in EVIDENCE-B56-K2 §5) next, then K3 on a plan put in front of him. No 'kaydet' for the run.",
+    "where": "board B56 · .planning/STATE.md live block · EVIDENCE-B56-K2-2026-09-26.md §5"
   }
 }
