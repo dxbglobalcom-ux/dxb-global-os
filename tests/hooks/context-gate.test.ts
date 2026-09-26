@@ -8,14 +8,17 @@
 // log directory, so nothing lands in the machine's own claude-ctx or ~/.claude/logs.
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, utimesSync, writeFileSync } from "node:fs";
-import { homedir, tmpdir } from "node:os";
+import { tmpdir, userInfo } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 
-const HOOKS = join(homedir(), ".claude", "hooks");
+// The battery redirects HOME (HOME=/tmp/home), but the hooks live in the real home: read the passwd
+// entry, not $HOME (measured 2026-09-26 02:38: 73 failures). DXB_CLAUDE_HOME overrides explicitly.
+const CLAUDE_HOME = process.env.DXB_CLAUDE_HOME ?? userInfo().homedir;
+const HOOKS = join(CLAUDE_HOME, ".claude", "hooks");
 const GATE = join(HOOKS, "dxb-context-gate.py");
 const STATUS_LINE = join(HOOKS, "dxb-statusline.js");
-const SETTINGS = join(homedir(), ".claude", "settings.json");
+const SETTINGS = join(CLAUDE_HOME, ".claude", "settings.json");
 const SID = "0d08dc67-e2e0-4000-8000-000000000000";
 const HOUR = 3600;
 
