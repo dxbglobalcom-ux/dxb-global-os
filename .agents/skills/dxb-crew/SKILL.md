@@ -40,15 +40,13 @@ machine, addressed by its `ListAgents` name; the builder and the refuter are its
 agent opus 5.5 max açılır sub-agent … o kodu o seviyede yazması için! … bu da bir hook ile
 sabitlensin."* <!-- CEO-OK: code-by-builder-at-max-hook-2026-09-24 --> Anthropic's pages chose the
 subagent over a teammate: a subagent file carries its own effort, a teammate inherits the lead's.
-The global hook `dxb-code-gate.py` refuses a code-file write (Write, Edit, a Bash redirect) made at
-any other effort, and turns a `builder` call into `builder-lean` only while the weekly quota the
-status line persists is at or above 80 %. **Simple work runs at medium — his yes, 2026-09-24:**
+This holds inside this door only; outside an orchestration the session writes its own code, and
+the code-gate hook is gone (CEO 2026-09-28). **Simple work runs at medium — his yes, 2026-09-24:**
 *"tmm güzel. yapın."* <!-- CEO-OK: simple-code-at-medium-rule-2026-09-24 --> Measured first (T8, two
 of this repository's own past fixes written at both efforts and judged by a refuter): simple work
 equal at `medium` and 5.6× cheaper; harder work better at `max`. Simple = one code file, at most 40
 changed lines, no money / approval / database / security / governance path → the chief picks
-`builder-lean`; anything else, or any doubt → `builder`. The hook holds the line: a `builder-lean`
-write outside it is refused, and the work goes to the `builder`. The seats were set on
+`builder-lean`; anything else, or any doubt → `builder`. The seats were set on
 2026-09-23 from Anthropic's official Opus 5.5 charts; the model id is pinned (`claude-opus-5-5`),
 so a newer model enters only when it is measured and the CEO says so. The other subagents are
 the pinned roles in `~/.claude/agents/`: `refuter` and `debugger` Opus 5.5 · `xhigh`, `scout`
