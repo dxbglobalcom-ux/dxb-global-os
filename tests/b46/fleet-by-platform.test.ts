@@ -23,6 +23,11 @@
 // role is handed. FAKE_SPLIT hands split.py a kept answer (fixtures/split/) in place of the model's; without it the
 // split's `claude` is this bench's stand-in, whose answer holds no sub-question: the fallback, one sub-question. A full
 // run that does not split keeps no earlier run's subquestions.json; keep.sh keeps it with the answer.
+//
+// B56 K3 — THE WRITER'S CLOCK. On the K3 stage-1 run `timeout 600` stopped the draft writer (kod 124) and the run still
+// printed CEVAP HAZIR and left with 0. The clock is --writer-timeout now (1500 s by default) and the writer's lines say
+// it; a full run whose tail wrote no answer.md says `!! CEVAP YOK` and leaves with 1. Those cases run on a bench of their
+// own, the gate's (fixtures/gate/), whose ledger answers writer-rows; this file's field cases run --no-write.
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { chmodSync, copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
@@ -48,10 +53,15 @@ function fleet(out: string, ...args: string[]): { code: number; stdout: string }
 
 /** The copy's fleet.sh with `env` on top of the bench's (FAKE_SPLIT for the split's cases, K3). */
 function fleetWith(env: Record<string, string>, ...args: string[]): { code: number; stdout: string } {
+  return fleetOn(b, env, ...args);
+}
+
+/** fleet.sh of `bench`'s engine copy — this file's bench, or the writer's clock's (fixtures/gate/, K3). */
+function fleetOn(bench: Bench, env: Record<string, string>, ...args: string[]): { code: number; stdout: string } {
   try {
-    const stdout = execFileSync("bash", [join(b.engine, "fleet", "fleet.sh"), ...args], {
+    const stdout = execFileSync("bash", [join(bench.engine, "fleet", "fleet.sh"), ...args], {
       encoding: "utf8",
-      env: { ...process.env, ...env, PATH: `${b.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1" },
+      env: { ...process.env, ...env, PATH: `${bench.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1" },
       stdio: ["ignore", "pipe", "pipe"],
       timeout: 90_000,
     });
@@ -73,7 +83,8 @@ beforeAll(() => {
   copyFileSync(join(FX, "claude-stub.sh"), join(b.bin, "claude"));
   chmodSync(join(b.bin, "claude"), 0o755);
   run7 = join(b.root, "run7");
-  out7 = fleet(run7, "--q", "astra 6 vs fable 5.1", "--hunters", "7", "--timeout", "30");
+  // --no-write: this ledger stand-in has no writer-rows, so a tail here would write no answer (!! CEVAP YOK, code 1)
+  out7 = fleet(run7, "--q", "astra 6 vs fable 5.1", "--hunters", "7", "--timeout", "30", "--no-write");
 }, 120_000);
 afterAll(() => b?.dispose());
 
@@ -372,4 +383,61 @@ describe("K3 — his question is split into sub-questions before the ground open
     expect(existsSync(json), "split.py failed").toBe(false);
     expect(readFileSync(join(run, "question.txt"), "utf8")).toBe(`SORGULAR (zemin bunlarla acildi):\n  - ${Q}\n`);
   }, 90_000);
+});
+
+describe("K3 — the writer's clock is --writer-timeout, and a tail that wrote no answer is no answer", () => {
+  // The gate's bench (completion-gate.test.ts): its ledger answers writer-rows, its `claude` writes — slower than its
+  // clock under FAKE_WRITER_SLEEP — and its coverage table carries the ledger's RECONCILED line under it, as kapsama.py's.
+  const GATE = join(import.meta.dirname, "fixtures", "gate");
+  const ARGS = ["--q", "astra 6 vs fable 5.1", "--roles", "x", "--timeout", "60", "--no-split", "--no-claim-hunt"];
+  let g: Bench;
+  const on = (env: Record<string, string>, ...args: string[]) => fleetOn(g, { FAKE_HUNTER: "batch",
+    FAKE_ANSWER_FILE: join(GATE, "writer-answer.md"), FAKE_DRAFT_FILE: join(GATE, "writer-draft.md"), ...env }, ...args);
+
+  beforeAll(() => {
+    g = makeBench();
+    for (const [stub, into] of [["evidence-stub.py", "evidence.py"], ["triage-stub.py", "triage.py"], ["render-stub.py", "render.py"],
+      ["claims-stub.py", "claims.py"]]) {
+      copyFileSync(join(GATE, stub), join(g.engine, "scripts", into));
+    }
+    writeFileSync(join(g.engine, "scripts", "kapsama.py"),
+      `${readFileSync(join(GATE, "kapsama-stub.py"), "utf8")}print("RECONCILED — the ledger's sums, under the table")\n`);
+    copyFileSync(join(FX, "sweep-stub.sh"), join(g.engine, "scripts", "sweep.sh"));
+    copyFileSync(join(GATE, "claude-stub.py"), join(g.bin, "claude"));
+    chmodSync(join(g.bin, "claude"), 0o755);
+  });
+  afterAll(() => g?.dispose());
+
+  it("names a writer its clock stopped `zaman asimi`, prints the coverage table, then !! CEVAP YOK — no CEVAP HAZIR, code 1", () => {
+    const run = join(g.root, "clock-short");
+    const r = on({ FAKE_WRITER_SLEEP: "5" }, run, ...ARGS, "--writer-timeout", "1");
+    const s = r.stdout;
+    expect(r.code, s.slice(-2500)).toBe(1);
+    expect(s).toMatch(/^writer \(taslak\): \d+ satir · \d+ KB -> claude-opus-5-5 · efor high · zaman siniri 1s$/m);
+    expect(s).toMatch(/^!! writer \(taslak\): zaman asimi \(1 s\) — cost \$\? · \d+ s · answer\.draft\.md yazilmadi: /m);
+    expect(s).not.toMatch(/CEVAP HAZIR|ONA SOR/);
+    // what the field measured stands: the coverage table and the ledger's sums print after the tail fell
+    const table = s.indexOf("KAPSAMA — nereye bakildi");
+    expect(table).toBeGreaterThan(s.indexOf("zaman asimi (1 s)"));
+    expect(s.slice(table)).toMatch(/^RECONCILED — /m);
+    expect(s.search(/^!! CEVAP YOK: kuyruk basarisiz \(kod 1\) — answer\.md yazilmadi, sayfa yok; kosu kodu 1: .*\/writer\*\.err$/m))
+      .toBeGreaterThan(table);
+    expect(existsSync(join(run, "answer.md"))).toBe(false);
+  }, 60_000);
+
+  it("says its clock on the launch line — 1500 s by default, the flag's after --write-only — and the model's time and tokens", () => {
+    const run = join(g.root, "clock-default");
+    const r = on({}, run, ...ARGS);
+    expect(r.code, r.stdout.slice(-2500)).toBe(0);
+    for (const [tag, ans] of [["taslak", "answer\\.draft\\.md"], ["son", "answer\\.md"]]) {
+      expect(r.stdout).toMatch(new RegExp(`^writer \\(${tag}\\): \\d+ satir · \\d+ KB -> claude-opus-5-5 · efor high · zaman siniri 1500s$`, "m"));
+      // the stand-in's envelope says duration_ms 1234 and no usage: its second, and `?` for the tokens it does not say
+      expect(r.stdout).toMatch(new RegExp(`^writer \\(${tag}\\): cost \\$0\\.42 · \\d+ s -> .*/${ans} · model 1 s · out \\? · `, "m"));
+    }
+    expect(r.stdout).toContain("CEVAP HAZIR");
+    const w = on({}, "--write-only", run, "--writer-timeout", "42", "--no-split", "--no-claim-hunt");
+    expect(w.code, w.stdout).toBe(0);
+    expect(w.stdout).toMatch(/^writer \(taslak\): .* -> claude-opus-5-5 · efor high · zaman siniri 42s$/m);
+    expect(w.stdout).toMatch(/^writer \(son\): .* -> claude-opus-5-5 · efor high · zaman siniri 42s$/m);
+  }, 60_000);
 });

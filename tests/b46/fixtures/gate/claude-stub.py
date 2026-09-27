@@ -25,7 +25,8 @@ FAKE_LATE_FETCH=<address>: a hunter, after its reading, fetches that address —
 triage, as the x hunter's L1688 and L1692 did on the K2 run.
 THE WRITER, when launched as one (`--effort high`), keeps its arguments and its stdin beside it and
 answers with the text of FAKE_ANSWER_FILE in the `claude -p --output-format json` envelope — on the first
-pass (its prompt says there is no claim ledger yet) with FAKE_DRAFT_FILE when that is set.
+pass (its prompt says there is no claim ledger yet) with FAKE_DRAFT_FILE when that is set. FAKE_WRITER_SLEEP=<s>:
+it sleeps that long before it answers — a writer slower than its clock (fleet.sh --writer-timeout), stopped by it.
 All of them write the folder they stand in into cwd.txt there, so a case can see where a `claude` started.
 """
 import itertools
@@ -35,6 +36,7 @@ import re
 import shlex
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 argv = sys.argv[1:]
@@ -44,6 +46,7 @@ if effort == "high":
     Path("writer-launch.txt").write_text("\n".join(argv) + "\n", encoding="utf-8")
     stdin = sys.stdin.read()
     Path("writer-stdin.txt").write_text(stdin, encoding="utf-8")
+    time.sleep(float(os.environ.get("FAKE_WRITER_SLEEP") or 0))
     draft = "(ilk geçiş — iddia defteri henüz yok)" in stdin and os.environ.get("FAKE_DRAFT_FILE")
     answer = Path(draft or os.environ["FAKE_ANSWER_FILE"]).read_text(encoding="utf-8")
     print(json.dumps({"type": "result", "subtype": "success", "is_error": False, "result": answer,

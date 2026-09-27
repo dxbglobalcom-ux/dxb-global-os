@@ -42,8 +42,8 @@
 #   fleet.sh [<run-dir>|<name>] --q "<short query>" [--q "..."]... [--dert FILE]
 #            [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #            [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write]
-#            [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--crowd-cap N] [--no-split]
-#   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--no-split]
+#            [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout S]
+#   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--no-split] [--writer-timeout S]
 #                                            # the tail alone — draft, claim rounds, answer, page — on a run that has its rows
 #
 # THE FIRST ARGUMENT IS THE RUN FOLDER — a path, or a bare name or nothing, which puts it under the
@@ -71,7 +71,7 @@ OUT=""
 case "${1:-}" in --*|"") ;; *) OUT="$1"; shift ;; esac
 N=4; MODEL=claude-opus-5-5; TMO=600; ROLES=""; DERT=""
 ROUNDS=3; FETCH_LIMIT=2000; FETCH_WORKERS=6; ALLOW_TMP=0; WRITE=1; WRITE_ONLY=""
-CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1
+CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1; WRITER_TMO=1500
 QUERIES=()
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -89,20 +89,21 @@ while [ $# -gt 0 ]; do
     --write-only)    WRITE_ONLY="${2:?--write-only bir kosu klasoru ister}"; shift 2 ;;
     --claim-rounds)  CLAIM_ROUNDS="${2:?--claim-rounds bir sayi ister}"; shift 2 ;;
     --claim-timeout) CLAIM_TMO="${2:?--claim-timeout bir sayi ister}"; shift 2 ;;
+    --writer-timeout) WRITER_TMO="${2:?--writer-timeout bir sayi ister}"; shift 2 ;;
     --no-claim-hunt) CLAIM_HUNT=0; shift ;;
     --crowd-cap)     CROWD_CAP="${2:?--crowd-cap bir sayi ister}"; shift 2 ;;
     --no-split)      SPLIT=0; shift ;;
     *) shift ;;
   esac
 done
-for v in "$ROUNDS" "$FETCH_LIMIT" "$FETCH_WORKERS" "$CLAIM_ROUNDS" "$CLAIM_TMO" "$CROWD_CAP"; do
-  case "$v" in ''|*[!0-9]*) echo "!! DUR: --rounds, --fetch-limit, --fetch-workers, --claim-rounds, --claim-timeout ve --crowd-cap tam sayi ister (verilen: $v)." >&2; exit 3 ;; esac
+for v in "$ROUNDS" "$FETCH_LIMIT" "$FETCH_WORKERS" "$CLAIM_ROUNDS" "$CLAIM_TMO" "$CROWD_CAP" "$WRITER_TMO"; do
+  case "$v" in ''|*[!0-9]*) echo "!! DUR: --rounds, --fetch-limit, --fetch-workers, --claim-rounds, --claim-timeout, --crowd-cap ve --writer-timeout tam sayi ister (verilen: $v)." >&2; exit 3 ;; esac
 done
-if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 ] || [ "$CLAIM_TMO" -lt 1 ] || [ "$CROWD_CAP" -lt 1 ]; then
-  echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout ve --crowd-cap en az 1 olur." >&2; exit 3
+if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 ] || [ "$CLAIM_TMO" -lt 1 ] || [ "$CROWD_CAP" -lt 1 ] || [ "$WRITER_TMO" -lt 1 ]; then
+  echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout, --crowd-cap ve --writer-timeout en az 1 olur." >&2; exit 3
 fi
 if [ -z "$WRITE_ONLY" ] && [ ${#QUERIES[@]} -eq 0 ]; then
-  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N] [--no-split]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--no-split]" >&2
+  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout SN]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--no-split] [--writer-timeout SN]" >&2
   echo "!! DUR: sorgu yok, filo yok. --q ile birkaç kelimelik sorgu ver." >&2
   exit 3
 fi
@@ -137,6 +138,12 @@ done
 # this machine 2026-09-26: 131,000 bytes pass, 140,000 answer "Argument list too long"), and the deep
 # run's 554 rows with a body make 222 KB of row lines. It stands in a folder of its own outside the
 # repository (env -C), as the hunters do — THE HUNTER'S FOLDER, below — and it has no tools at all.
+# ITS CLOCK IS --writer-timeout, 1500 s unless the run says otherwise (K3, 2026-09-27). It was a fixed 600: the
+# K2 run's draft writer took 548 s of it (duration_ms 547713, 64,329 output tokens, a 156 KB prompt), and the K3
+# run's draft writer, handed 186 KB, was stopped at 600 s (kod 124) while the run went on to say CEVAP HAZIR.
+# So the launch line says the clock (`zaman siniri`), the result line the model's own time and output tokens
+# from its envelope (`model <s> s · out <n>`, `?` where it says none), and a pass the clock stopped says
+# `zaman asimi`, not `basarisiz (kod 124)`.
 #
 # A FOLDER OUTSIDE THE REPOSITORY for a `claude` to stand in: $1 names it. What it left there is brought
 # back into the run (bring_back: $1 the outside folder, $2 its place in the run) and the folder goes.
@@ -214,17 +221,17 @@ PY
     return 1
   fi
   wd="$(away_dir "writer$sfx")" || { echo "!! $tag: disaridaki klasoru acilamadi — ${ans##*/} yazilmadi."; return 1; }
-  echo "$tag: $size -> claude-opus-5-5 · efor high"
+  echo "$tag: $size -> claude-opus-5-5 · efor high · zaman siniri ${WRITER_TMO}s"
   s=$(date +%s)
-  env -C "$wd" timeout 600 claude -p --model claude-opus-5-5 --effort high --tools "" --strict-mcp-config \
+  env -C "$wd" timeout "$WRITER_TMO" claude -p --model claude-opus-5-5 --effort high --tools "" --strict-mcp-config \
       --output-format json < "$filled" > "$OUT/writer$sfx.json" 2> "$OUT/writer$sfx.err"
   wrc=$?
   secs=$(( $(date +%s) - s ))
   bring_back "$wd" "$OUT/writer${sfx:+-draft}"
-  python3 - "$OUT/writer$sfx.json" "$ans" "$wrc" "$secs" "$tag" <<'PY'
+  python3 - "$OUT/writer$sfx.json" "$ans" "$wrc" "$secs" "$tag" "$WRITER_TMO" <<'PY'
 import json, re, sys
 from pathlib import Path
-jf, ans, rc, secs, tag = Path(sys.argv[1]), Path(sys.argv[2]), int(sys.argv[3]), sys.argv[4], sys.argv[5]
+jf, ans, rc, secs, tag, tmo = Path(sys.argv[1]), Path(sys.argv[2]), int(sys.argv[3]), sys.argv[4], sys.argv[5], sys.argv[6]
 try:
     d = json.loads(jf.read_text(encoding="utf-8", errors="replace"))
 except (OSError, ValueError):
@@ -239,12 +246,26 @@ fence = re.fullmatch(r"```[A-Za-z]*\n(.*?)\n?```", text, re.S)
 if fence:
     text = fence.group(1).strip()
 if rc != 0 or d.get("is_error") or not text:
-    print(f"!! {tag}: basarisiz (kod {rc}) — cost {cost} · {secs} s · {ans.name} yazilmadi: {jf.with_suffix('.err')}")
+    why = f"zaman asimi ({tmo} s)" if rc == 124 else f"basarisiz (kod {rc})"    # 124: `timeout` stopped it
+    print(f"!! {tag}: {why} — cost {cost} · {secs} s · {ans.name} yazilmadi: {jf.with_suffix('.err')}")
     sys.exit(1)
 ans.write_text(text + "\n", encoding="utf-8")
 ids = set(re.findall(r"\bL\d{4,}\b", re.split(r"(?m)^##[ \t]*Alınmayan kanıt[ \t#]*$", text)[0]))  # its last section cites nothing
 http = len(re.findall(r"https?://", text))
-print(f"{tag}: cost {cost} · {secs} s -> {ans} · {len(text.splitlines())} satir · {len(ids)} kimlik · http {http}")
+
+
+def whole(v):
+    """A number of the envelope as a whole number, None when it is not one."""
+    try:
+        return int(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None
+    except (ValueError, OverflowError):
+        return None
+
+
+ms = whole(d.get("duration_ms"))
+toks = whole(d["usage"].get("output_tokens")) if isinstance(d.get("usage"), dict) else None
+model = f"model {ms // 1000 if ms is not None else '?'} s · out {toks if toks is not None else '?'}"
+print(f"{tag}: cost {cost} · {secs} s -> {ans} · {model} · {len(text.splitlines())} satir · {len(ids)} kimlik · http {http}")
 PY
 }
 
@@ -1226,13 +1247,21 @@ reports=$(find "$OUT" -maxdepth 1 -name 'HUNTER-*.md' 2>/dev/null | wc -l)
 # ── THE TAIL, AFTER THE GATE (run_tail, above) ───────────────────────────────────────────────────────
 # Not on a run that failed — no hunter report, or a summary that could not be made: that run ends below.
 # The hunters' outside folder goes once the tail's claim hunters are back.
+# A TAIL THAT WROTE NO answer.md IS NO ANSWER (K3, 2026-09-27). On the K3 run the draft writer was stopped by
+# its clock, the tail wrote nothing, and the run printed CEVAP HAZIR and left with 0: the tail's code was never
+# read. Now it is kept, and a tail that failed, or left no answer.md behind it, is NO_ANSWER: no CEVAP HAZIR and
+# no keep lines, `!! CEVAP YOK` among the run's last lines, code 1. The coverage table and the other `!!` lines
+# print as before — what the field measured stands when the tail fell.
 echo
+tail_rc=0; NO_ANSWER=""
 if [ "$WRITE" -ne 1 ]; then
   echo "writer: atlandi (--no-write) — answer.md oturumun."
 elif [ "$reports" -eq 0 ] || [ "${merge_rc:-1}" -ne 0 ]; then
   echo "writer: cagrilmadi — kosu basarisiz (asagida)."
 else
   run_tail
+  tail_rc=$?
+  { [ "$tail_rc" -eq 0 ] && [ -f "$OUT/answer.md" ]; } || NO_ANSWER=1
 fi
 rmdir "$HUNT_TMP" 2>/dev/null
 
@@ -1271,25 +1300,30 @@ fi
 
 # NOTHING IS KEPT BY ITSELF — his ruling, 2026-09-17: *"genel olarak saklanmasin, bir test
 # yapilinca commitlemeden once veya uygun bir zamanda sorulsun testi kaydedelim mi diye."*
-# The reports stay where they are; the session ASKS him, and saves only if he says yes.
-echo
-echo "CEVAP HAZIR — SAKLANMADI.  $OUT/HUNTER-*.md"
-echo "ONA SOR (committen once): \"bu testi kaydedelim mi?\"  ->  evet derse:"
-echo "  bash \"$HERE/keep.sh\" \"$QFILE\" \"$OUT\" \"$SUMFILE\""
-echo "  keep.sh saklar: final.html · final.md · answer.md · evidence.jsonl · claims.jsonl · answer.draft.md · claims.draft.jsonl · subquestions.json · SUMMARY.txt · HUNTER-*.md · soru · bodies/ (5 MB altindaysa)"
+# The reports stay where they are; the session ASKS him, and saves only if he says yes. A run with no answer
+# (NO_ANSWER, above) is not ready and has nothing to keep: it says `!! CEVAP YOK` below instead.
+if [ -z "$NO_ANSWER" ]; then
+  echo
+  echo "CEVAP HAZIR — SAKLANMADI.  $OUT/HUNTER-*.md"
+  echo "ONA SOR (committen once): \"bu testi kaydedelim mi?\"  ->  evet derse:"
+  echo "  bash \"$HERE/keep.sh\" \"$QFILE\" \"$OUT\" \"$SUMFILE\""
+  echo "  keep.sh saklar: final.html · final.md · answer.md · evidence.jsonl · claims.jsonl · answer.draft.md · claims.draft.jsonl · subquestions.json · SUMMARY.txt · HUNTER-*.md · soru · bodies/ (5 MB altindaysa)"
+fi
 
 # A ROLE THE GATE COULD NOT MEASURE WAS NEVER ACCEPTED (its meta says `gate=time-up (unmeasured)`): the
 # run's last line names it, and the run leaves with code 1 even when every report came back. A claim role
 # of THE TAIL that ended unmeasured is named the same way, on its own line (claim_unmeasured_line). So are
 # (K2c) a claim role whose rounds ran out with links made without a read (claim_unread_lines), and rows
 # with a body no triage judged, measured NOW, after the page (ELEME EKSIK, THE FIELD): the page's
-# `bekleyen ×n` and this line count the same rows, whether the triage or a hunter's fetch left them.
+# `bekleyen ×n` and this line count the same rows, whether the triage or a hunter's fetch left them. A tail that
+# wrote no answer.md (K3, NO_ANSWER) is the last of them: `!! CEVAP YOK`.
 ELEME_EKSIK="$(eleme_eksik)"
-if [ -n "$unmeasured" ] || [ -n "$CLAIM_UNMEASURED" ] || [ -n "$CLAIM_UNREAD" ] || [ -n "$ELEME_EKSIK" ]; then
+if [ -n "$unmeasured" ] || [ -n "$CLAIM_UNMEASURED" ] || [ -n "$CLAIM_UNREAD" ] || [ -n "$ELEME_EKSIK" ] || [ -n "$NO_ANSWER" ]; then
   echo
   [ -n "$unmeasured" ] && echo "!! OLCULMEYEN AVCI:$unmeasured — defter durumu okunamadi, kapi kabul etmedi; kosu kodu 1: $OUT/gate.log"
   [ -n "$CLAIM_UNMEASURED" ] && claim_unmeasured_line
   [ -z "$CLAIM_UNREAD" ] || claim_unread_lines
   [ -z "$ELEME_EKSIK" ] || echo "$ELEME_EKSIK"
+  [ -z "$NO_ANSWER" ] || echo "!! CEVAP YOK: kuyruk basarisiz (kod $tail_rc) — answer.md yazilmadi, sayfa yok; kosu kodu 1: $OUT/writer*.err"
   exit 1
 fi
