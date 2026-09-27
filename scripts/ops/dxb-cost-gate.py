@@ -27,8 +27,10 @@ THE RULE THIS GATE ENFORCES — MEASURE BEFORE YOU SPEND.
      live fleet, a long timeout and a background job belong to the lead.
   7. Every Bash command it lets through runs with GNU grep (/usr/bin/grep), not with the
      embedded ugrep that Claude Code's shell snapshot defines as a `grep` function.
+  8. No SendMessage that resumes a subagent idle more than 4 minutes: its prompt cache died
+     at 5 and the resume writes its whole context again. The lead opens a fresh writer.
 
-Measured 2026-09-26/27 (rules 5 and 6): the weekly quota burned on NEW tokens entering
+Measured 2026-09-26/27 (rules 5, 6 and 8): the weekly quota burned on NEW tokens entering
 contexts. Writers poured 500-2,000-line files whole; a lead resumed writers idle 8-23
 minutes (a subagent's cache lives 5) six times and 2.4 M tokens were written again; three
 in-lane commands waited 10-18 minutes.
@@ -42,6 +44,7 @@ import os
 import re
 import sys
 import time
+from datetime import datetime, timezone
 
 # ── 1. search bombs ──────────────────────────────────────────────────────────
 # A bounded repetition with a large upper bound, twice over or beside a wide
@@ -93,6 +96,16 @@ RUNNERS = ("pnpm", "npm", "npx", "pnpx", "yarn", "bun", "bunx", "node")
 # FUNCTION grep that runs its embedded ugrep, which builds the giant matcher on counted
 # windows (anthropics/claude-code #78700, #78834). Dropping it gives back /usr/bin/grep.
 REBIND = "unset -f grep 2>/dev/null; "
+
+# ── 8. cold resumes ──────────────────────────────────────────────────────────
+# A SendMessage to a finished subagent resumes it. Its prompt cache lives 5 minutes; past that
+# the resume writes its whole context into the cache again as new tokens. Its transcript lies
+# beside the session's own: <session_id>.jsonl -> <session_id>/subagents/agent-<to>.jsonl, and
+# only its tail is read: the last timestamp gives the idle time, the last usage the context.
+COLD_AFTER_S = 240
+TAIL_BYTES = 64 * 1024
+CONTEXT_KEYS = ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens")
+SUBAGENTS_DIR = os.environ.get("DXB_COST_GATE_SUBAGENTS_DIR")   # test-only: holds agent-<id>.jsonl
 
 # The shell grammar rules 5 and 6 read: heredoc markers, wrappers, env assignments.
 HEREDOC = re.compile(r"(?<!<)<<-?(?!<)\s*(['\"]?)([A-Za-z_][\w.-]*)\1")
@@ -572,6 +585,75 @@ def long_wait(tool_input, cmd):
     return None
 
 
+def subagent_transcript(payload, to):
+    """Rule 8: the transcript of the subagent `to` names, or None when `to` names no subagent of
+    this session on this disk (a name, "main", another session's address, a team-mate)."""
+    if not isinstance(to, str) or not to.strip() or "/" in to or "\0" in to:
+        return None
+    folder = SUBAGENTS_DIR
+    if not folder:
+        main = payload.get("transcript_path")
+        if isinstance(main, str) and main:
+            session = os.path.splitext(main)[0]
+        else:
+            sid, cwd = payload.get("session_id"), payload.get("cwd")
+            if not (isinstance(sid, str) and sid and isinstance(cwd, str) and cwd):
+                return None
+            # a project's folder is its cwd with every character but A-Z a-z 0-9 made a dash:
+            # /home/dxb/DxB Global OS -> -home-dxb-DxB-Global-OS
+            session = os.path.join(os.path.expanduser("~"), ".claude", "projects",
+                                   re.sub(r"[^A-Za-z0-9]", "-", cwd), sid)
+        folder = os.path.join(session, "subagents")
+    path = os.path.join(folder, "agent-%s.jsonl" % to)
+    return path if os.path.isfile(path) else None
+
+
+def transcript_tail(path):
+    """Rule 8: (the timestamp of the last line that has one, the context of the last assistant
+    turn or None), from the last TAIL_BYTES of the transcript, never the whole file."""
+    with open(path, "rb") as f:
+        f.seek(0, os.SEEK_END)
+        start = max(0, f.tell() - TAIL_BYTES)
+        f.seek(start)
+        lines = f.read().split(b"\n")[1 if start else 0:]    # the seek cut the first line
+    stamp = tokens = None
+    for raw in reversed(lines):
+        try:
+            entry = json.loads(raw)
+        except Exception:
+            continue
+        if not isinstance(entry, dict):
+            continue
+        if stamp is None and "timestamp" in entry:
+            stamp = entry["timestamp"]
+        msg = entry.get("message")
+        usage = msg.get("usage") if entry.get("type") == "assistant" and isinstance(msg, dict) else None
+        if tokens is None and isinstance(usage, dict):
+            tokens = sum(int(usage.get(k) or 0) for k in CONTEXT_KEYS) or None  # a synthetic turn is all 0
+        if stamp is not None and tokens is not None:
+            break
+    return stamp, tokens
+
+
+def cold_resume(payload):
+    """Rule 8: (target, idle minutes, context tokens or None, transcript) when this SendMessage
+    resumes a subagent idle more than COLD_AFTER_S seconds, else None."""
+    to = (payload.get("tool_input") or {}).get("to")
+    path = subagent_transcript(payload, to)
+    if not path:
+        return None
+    stamp, tokens = transcript_tail(path)
+    if not isinstance(stamp, str):
+        return None
+    last = datetime.fromisoformat(stamp.replace("Z", "+00:00"))    # malformed raises: allowed
+    if last.tzinfo is None:
+        last = last.replace(tzinfo=timezone.utc)
+    idle = time.time() - last.timestamp()
+    if idle <= COLD_AFTER_S:          # a stamp in the future (clock skew) lands here too
+        return None
+    return to, int(idle // 60), tokens, path
+
+
 ADVICE = """MEASURE FIRST, THEN SPEND:
   size of the target      ls -l FILE | awk '{print $5}'      wc -l FILE
   a slice, not the whole  sed -n '1,80p' FILE                head -c 4000 FILE
@@ -593,9 +675,15 @@ LONG_WAIT = ("a command that waits more than 4 minutes belongs to the lead — t
 LONG_WAIT_ADVICE = ("Your lane's own tests stay yours: name the file, "
                     "pnpm exec vitest run tests/<dir>/<name>.test.ts")
 
+COLD_RESUME = ("`SendMessage` to %s resumes a subagent idle for %d min — its prompt cache died at 5; "
+               "a resume re-writes its whole context (%s tokens) as new tokens "
+               "(measured 2026-09-26/27: six resumes, 2.4 M)")
+COLD_RESUME_ADVICE = ("Open a FRESH `builder` (description `guarded: …`) with the verifier's A/B list, "
+                      "the lane's done-list and the diff to read; a fresh writer starts at ~22 k.")
+
 
 def refuse(where, target, reason, advice):
-    """Rules 5 and 6 refuse as rules 1-4 do: exit 2, the reason on stderr for the model."""
+    """Rules 5, 6 and 8 refuse as rules 1-4 do: exit 2, the reason on stderr for the model."""
     sys.stderr.write("BLOCKED by dxb-cost-gate — %s: %s\nReason: %s.\n%s\n"
                      % (where, target[:300], reason, advice))
     return 2
@@ -612,16 +700,18 @@ def rebind(tool_input, command):
         "hookEventName": "PreToolUse", "updatedInput": updated}}) + "\n")
 
 
-def log_decision(payload, decision, paths):
-    """One JSON line in DECISION_LOG: the paths only, never the command, so no secret a command
-    line carries lands in a log. A gate that cannot log still decides."""
+def log_decision(payload, decision, paths, **extra):
+    """One JSON line in DECISION_LOG: the paths and the decision's own fields only, never the
+    command or a message's text, so no secret a call carries lands in a log. A gate that cannot
+    log still decides."""
     try:
         os.makedirs(LOG_DIR, exist_ok=True)
         with open(DECISION_LOG, "a", encoding="utf-8") as f:
-            f.write(json.dumps({
+            f.write(json.dumps(dict({
                 "ts": time.strftime("%Y-%m-%dT%H:%M:%S+00:00", time.gmtime()),
                 "session_id": payload.get("session_id"), "agent_type": payload.get("agent_type"),
-                "tool": payload.get("tool_name"), "paths": paths[:20], "decision": decision}) + "\n")
+                "tool": payload.get("tool_name"), "paths": paths[:20], "decision": decision},
+                **extra)) + "\n")
     except Exception:
         pass
 
@@ -644,6 +734,18 @@ def main():
         if reason:
             return refuse("Read tool", str(tool_input.get("file_path")), reason, SLICE_ADVICE)
         return 0
+
+    if tool == "SendMessage":
+        try:
+            cold = cold_resume(payload)
+        except Exception:
+            return 0
+        if not cold:
+            return 0
+        to, minutes, tokens, path = cold
+        log_decision(payload, "deny", [path], why="resume-cold", idle_min=minutes, context_tokens=tokens)
+        return refuse("SendMessage to a subagent", to, COLD_RESUME % (
+            to, minutes, "unknown" if tokens is None else "{:,}".format(tokens)), COLD_RESUME_ADVICE)
 
     if tool == "Grep":
         target = tool_input.get("pattern", "") or ""

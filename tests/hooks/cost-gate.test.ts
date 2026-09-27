@@ -2,7 +2,8 @@
 // stands with a PreToolUse payload on stdin, exactly as Claude Code runs it. CEO order 2026-09-27:
 // every Bash command runs with GNU grep (Claude Code's shell snapshot shadows grep with its embedded
 // ugrep — 26 GB on 2026-08-17); no whole-file read over 400 lines; no wait over 4 minutes inside a
-// subagent (its cache dies at 5 — 2.4 M tokens were written again on 2026-09-26/27).
+// subagent (its cache dies at 5 — 2.4 M tokens were written again on 2026-09-26/27); and, by his order
+// of ~20:05 the same day, no SendMessage that resumes a subagent idle more than 4 minutes.
 import { spawnSync } from "node:child_process";
 import { accessSync, constants, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir, userInfo } from "node:os";
@@ -63,6 +64,22 @@ const ran = (r: { stdout: string }, command: string): string =>
   r.stdout ? JSON.parse(r.stdout).hookSpecificOutput.updatedInput.command : command;
 /** exit 2, the reason on stderr and nothing on stdout: a refused call is never rewritten */
 const denied = (r: { status: number | null; stdout: string }) => r.status === 2 && r.stdout === "";
+/** exit 0 and nothing on stdout or stderr: a non-Bash call goes through untouched */
+const allowed = (r: { status: number | null; stdout: string; stderr: string }) =>
+  r.status === 0 && r.stdout === "" && r.stderr === "";
+
+/** subagent transcripts as Claude Code keeps them — agent-<id>.jsonl, one JSON entry a line — in the
+ *  folder DXB_COST_GATE_SUBAGENTS_DIR points the gate at */
+const SUBS = join(tmp, "subagents");
+function transcript(id: string, entries: Record<string, unknown>[]): void {
+  mkdirSync(SUBS, { recursive: true });
+  writeFileSync(join(SUBS, `agent-${id}.jsonl`), entries.map((e) => JSON.stringify(e) + "\n").join(""));
+}
+/** an ISO timestamp `min` minutes back (negative: ahead), as the transcripts write it */
+const ago = (min: number) => new Date(Date.now() - min * 60_000).toISOString();
+/** the lead's SendMessage to `to` — a resume when `to` names a subagent in SUBS */
+const send = (to: string, message = "x") =>
+  gate("SendMessage", { to, message }, undefined, { DXB_COST_GATE_SUBAGENTS_DIR: SUBS });
 
 describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a subagent", () => {
   it("T1 an allowed Bash call comes back rewritten to drop the ugrep function, once; a denied one does not", () => {
@@ -116,11 +133,11 @@ describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a
     }
   });
 
-  it("T5 settings.json parses and sends Grep, Bash and Read through the cost gate", () => {
+  it("T5 settings.json parses and sends Grep, Bash, Read and SendMessage through the cost gate", () => {
     const settings = JSON.parse(readFileSync(join(CLAUDE, "settings.json"), "utf8"));
     const entry = settings.hooks.PreToolUse.find((g: { hooks: { command: string }[] }) =>
       g.hooks.some((h) => h.command.includes("dxb-cost-gate.py")));
-    expect(entry.matcher).toBe("Grep|Bash|Read");
+    expect(entry.matcher).toBe("Grep|Bash|Read|SendMessage");
   });
 
   it("T6 one call costs under 100 ms (the best of three, so a busy machine does not decide it)", () => {
@@ -156,5 +173,45 @@ describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a
     expect(ran(bash(cmd), cmd)).toBe(REBIND + cmd);
     const last = readFileSync(join(LOGS, "dxb-cost-gate.jsonl"), "utf8").trim().split("\n").at(-1) ?? "";
     expect(JSON.parse(last)).toMatchObject({ decision: "unmeasured-path", paths: ["$UNKNOWN/f"] });
+  });
+
+  // A SendMessage to a finished subagent resumes it; past 4 minutes its cache is dead and the resume writes
+  // its whole context again — six resumes, 2.4 M tokens on 2026-09-26/27. CEO order 2026-09-27 ~20:05.
+  it("T8a a resume of a subagent idle 10 minutes is refused with its idle time and context; the log keeps no message text", () => {
+    transcript("a10", [
+      { type: "user", timestamp: ago(12), message: { role: "user", content: "go" } },
+      { type: "assistant", timestamp: ago(10), message: { role: "assistant", usage: {
+        input_tokens: 2, cache_creation_input_tokens: 1_998, cache_read_input_tokens: 298_000, output_tokens: 700 } } },
+    ]);
+    const r = send("a10", "repair list: private words");
+    expect(denied(r)).toBe(true);
+    expect(r.stderr).toContain("idle for 10 min");
+    expect(r.stderr).toContain("300,000");
+    expect(r.stderr).toContain("Open a FRESH `builder`");
+    const last = readFileSync(join(LOGS, "dxb-cost-gate.jsonl"), "utf8").trim().split("\n").at(-1) ?? "";
+    expect(JSON.parse(last)).toMatchObject({ tool: "SendMessage", decision: "deny", why: "resume-cold", idle_min: 10 });
+    expect(last).not.toContain("private words");
+  });
+
+  it("T8b a subagent idle 2 minutes still holds its cache: the SendMessage passes", () => {
+    transcript("a2", [{ type: "assistant", timestamp: ago(2), message: { role: "assistant", usage: { input_tokens: 9 } } }]);
+    expect(allowed(send("a2"))).toBe(true);
+  });
+
+  it("T8c a target with no transcript here — main, an unknown id, another session's address — passes", () => {
+    for (const to of ["main", "a0000000000000000", "uds:/run/user/1000/cc-socks/1.sock"]) {
+      expect(allowed(send(to)), to).toBe(true);
+    }
+  });
+
+  it("T8d a transcript with no timestamp line passes", () => {
+    transcript("anostamp", [{ type: "summary", summary: "x" },
+      { type: "assistant", message: { role: "assistant", usage: { input_tokens: 9 } } }]);
+    expect(allowed(send("anostamp"))).toBe(true);
+  });
+
+  it("T8e a timestamp in the future — clock skew, a negative idle — passes", () => {
+    transcript("afuture", [{ type: "assistant", timestamp: ago(-10), message: { role: "assistant", usage: { input_tokens: 9 } } }]);
+    expect(allowed(send("afuture"))).toBe(true);
   });
 });

@@ -37,7 +37,7 @@ if any("dxb-cost-gate" in h.get("command", "") for b in pre for h in b.get("hook
     print("already registered")
 else:
     pre.append(collections.OrderedDict([
-        ("matcher", "Grep|Bash|Read"),
+        ("matcher", "Grep|Bash|Read|SendMessage"),
         ("hooks", [collections.OrderedDict([("type", "command"), ("command", cmd)])]),
     ]))
     with open(settings, "w") as f:
