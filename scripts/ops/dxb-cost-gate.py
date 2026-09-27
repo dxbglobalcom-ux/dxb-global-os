@@ -19,16 +19,22 @@ THE RULE THIS GATE ENFORCES — MEASURE BEFORE YOU SPEND.
   3. No scan rooted at the whole disk or the whole home directory.
   4. No loop without a bound.
   5. No whole-file read of more than 400 lines, through Bash or the Read tool: a slice.
+     Through Bash a file is poured by cat / nl / tac / pr / less / more, by tail -n +N and
+     head -n -N (what is left of it), by a sed with neither -n nor q and by an awk program
+     that prints every line; several files count together.
      A path is measured after the command line's own assignments (NAME=value, then $NAME
      or ${NAME}), $HOME, ~ and $CLAUDE_PROJECT_DIR are resolved; a path still holding a
      variable, a glob or a command substitution passes, logged as unmeasured-path in
-     ~/.claude/logs/dxb-cost-gate.jsonl (or $DXB_COST_GATE_LOG_DIR).
+     ~/.claude/logs/dxb-cost-gate.jsonl (or $DXB_COST_GATE_LOG_DIR); an awk or sed program
+     the gate cannot judge passes, logged as unmeasured-program.
   6. No wait of more than 4 minutes inside a subagent: the battery, a full test run, the
      live fleet, a long timeout and a background job belong to the lead.
   7. Every Bash command it lets through runs with GNU grep (/usr/bin/grep), not with the
      embedded ugrep that Claude Code's shell snapshot defines as a `grep` function.
   8. No SendMessage that resumes a subagent idle more than 4 minutes: its prompt cache died
-     at 5 and the resume writes its whole context again. The lead opens a fresh writer.
+     at 5 and the resume writes its whole context again. The lead opens a fresh writer. A
+     subagent still running (its last message a tool call or a tool result) is let through:
+     it spends the turn anyway.
 
 Measured 2026-09-26/27 (rules 5, 6 and 8): the weekly quota burned on NEW tokens entering
 contexts. Writers poured 500-2,000-line files whole; a lead resumed writers idle 8-23
@@ -71,14 +77,30 @@ BOUNDS = ("timeout", "head -", "-m ", "--max-count", "break", "sleep")
 # A read wider than MAX_LINES reaches the conversation whole unless something downstream in
 # the same pipeline bounds it: a file, a count, a slice, a filter, a digest.
 MAX_LINES = 400
-READERS = ("cat", "less", "more")
+READERS = ("cat", "less", "more", "nl", "tac", "pr")
+AWKS = ("awk", "gawk", "mawk", "nawk")
 BOUNDERS = ("head", "tail", "wc", "grep", "egrep", "fgrep", "rg", "ugrep", "cut", "awk", "gawk",
             "mawk", "python", "python3", "jq", "md5sum", "sha1sum", "sha256sum", "tee")
 NOT_LINES = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".ico", ".tif", ".tiff", ".pdf",
              ".ipynb")          # the Read tool shows these as images, pages or cells
 COUNT_CAP = 32 * 1024 * 1024    # past this without enough line breaks, rule 2 owns the file
 SED_RANGE = re.compile(r"(\d+)\s*,\s*(\d+|\$)\s*p")
-COUNT_OPT = re.compile(r"-n(\d+)|--lines=(\d+)|-(\d+)")
+# sed's q / Q command: at the script's start or after ; { } or a line break, behind at most one
+# address (a line, a step, $ or a /regex/), with an optional exit code
+SED_QUIT = re.compile(r"(?:^|[;{}\n])\s*(?:(?:\d+(?:~\d+)?|\$|/(?:[^/\\\n]|\\.)*/[IM]*)\s*!?\s*)?"
+                      r"[qQ]\s*\d*\s*(?=$|[;}\n#])")
+COUNT_OPT = re.compile(r"-n([+-]?\d+)|--lines=([+-]?\d+)|-(\d+)")
+BYTES_OPT = re.compile(r"-c.+|--bytes=.*")
+# awk: what bounds a program's printing (an NR / FNR comparison, an exit), what this gate cannot
+# judge (a loop, getline), a pattern true for every line (`1`), the blocks that run once, and the
+# characters after which a / opens a regex literal rather than a division
+AWK_PRINT = re.compile(r"\bprintf?\b")
+AWK_BOUND = re.compile(r"\bexit\b|\bF?NR\s*(?:[<>]=?|[!=]=)|(?:[<>]=?|[!=]=)\s*F?NR\b")
+AWK_LOOP = re.compile(r"\b(?:for|while|do|getline)\b")
+AWK_TRUE = re.compile(r"0*[1-9][\d.]*|0*\.0*[1-9]\d*")
+AWK_FUNCTION = re.compile(r"func(?:tion)?\s")
+AWK_ONCE = ("BEGIN", "END", "BEGINFILE", "ENDFILE")
+REGEX_AFTER = "{};\n(,!~&|?:=<>+-*%^"
 STDOUT_TO_FILE = re.compile(r"(?:^|[^0-9&>])>>?(?![&>])|(?:^|\s)[1&]>>?(?![&>])")
 REDIRECT_WORD = re.compile(r"[0-9&]?(?:>>?|>&|>\|)")
 
@@ -101,9 +123,13 @@ REBIND = "unset -f grep 2>/dev/null; "
 # A SendMessage to a finished subagent resumes it. Its prompt cache lives 5 minutes; past that
 # the resume writes its whole context into the cache again as new tokens. Its transcript lies
 # beside the session's own: <session_id>.jsonl -> <session_id>/subagents/agent-<to>.jsonl, and
-# only its tail is read: the last timestamp gives the idle time, the last usage the context.
+# only its tail is read, in growing chunks: the last message (a user or assistant entry; the
+# attachment, progress and system entries after it are stepped over) gives the state and the
+# idle time, the last usage the context. One transcript line can outgrow a small chunk (a
+# 108 KB line measured 2026-09-27).
 COLD_AFTER_S = 240
-TAIL_BYTES = 64 * 1024
+TAIL_CHUNKS = (256 * 1024, 1024 * 1024, 4 * 1024 * 1024)
+MESSAGES = ("assistant", "user")
 CONTEXT_KEYS = ("input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens")
 SUBAGENTS_DIR = os.environ.get("DXB_COST_GATE_SUBAGENTS_DIR")   # test-only: holds agent-<id>.jsonl
 
@@ -382,30 +408,25 @@ def remember(stages, known):
 
 
 def operands(ws):
-    """The file operands of a cat / less / more, sed -n, head or tail stage; [] for others."""
+    """The file operands of a stage rule 5 reads — cat / less / more / nl / tac / pr, sed, awk,
+    head or tail —; [] for others and for a sed that edits in place."""
     name = os.path.basename(ws[0])
     if name in READERS:
         return reader_files(ws)
-    if name not in ("head", "tail") and not quiet_sed(ws):
-        return []
-    takes = ("-e", "-f", "--expression", "--file") if name == "sed" else ("-n", "-c", "--lines", "--bytes")
-    found, skip = [], False
-    for w in ws[1:]:
-        if skip:
-            skip = False
-        elif w in takes:
-            skip = True
-        elif not w.startswith("-") and not re.match(r"[0-9&]?[<>]", w):
-            found.append(w)
-    if name == "sed" and not any(w in takes or w.startswith(("-e", "--expression=")) for w in ws[1:]):
-        found = found[1:]      # without -e the first operand is the script, not a file
-    return found
+    if name in ("head", "tail"):
+        return head_tail(ws)[1]
+    if name == "sed":
+        _, files, in_place = sed_parts(ws)
+        return [] if in_place else files
+    if name in AWKS:
+        return awk_parts(ws)[1]
+    return []
 
 
-def lines_over(path, cwd, limit=MAX_LINES, text_only=False):
-    """True when the file holds more than `limit` lines, counted as wc -l counts them; None
-    when it cannot be measured (missing, unreadable, not a regular file, a glob, an
-    expansion, or not text when text_only). The count stops at the first line past it."""
+def line_count(path, cwd, stop, text_only=False):
+    """The file's lines as wc -l counts them, read no further than the chunk that passes `stop`
+    (a count over `stop` means "more than stop"); None when it cannot be measured (missing,
+    unreadable, not a regular file, a glob, an expansion, or not text when text_only)."""
     if not path or any(ch in path for ch in UNRESOLVED):
         return None
     full = os.path.expanduser(path)
@@ -423,11 +444,42 @@ def lines_over(path, cwd, limit=MAX_LINES, text_only=False):
                     return None
                 seen += len(chunk)
                 count += chunk.count(b"\n")
-                if count > limit:
-                    return True
+                if count > stop:
+                    break
     except OSError:
         return None
-    return False
+    return count
+
+
+def lines_over(path, cwd, limit=MAX_LINES, text_only=False):
+    """True when the file holds more than `limit` lines, counted as wc -l counts them; None
+    when it cannot be measured. The count stops at the first chunk past it."""
+    count = line_count(path, cwd, limit, text_only)
+    return None if count is None else count > limit
+
+
+def poured(files, cwd, skip=0, take=None, limit=MAX_LINES):
+    """The lines a stage prints from `files` — of each, the lines past its first `skip`, at most
+    `take` — summed; the counting stops once the sum passes `limit`. A file that cannot be
+    measured adds nothing."""
+    total = 0
+    for path in files:
+        room = limit - total
+        count = line_count(path, cwd, skip + (room if take is None else min(room, take)))
+        if count is not None:
+            got = max(0, count - skip)
+            total += got if take is None else min(got, take)
+        if total > limit:
+            break
+    return total
+
+
+def pours(form, files, how=""):
+    """Rule 5's refusal: `form files` pours more than MAX_LINES lines whole; `how` says which."""
+    many = len(files) > 1
+    return "`%s %s` pours %s of more than %d lines%s whole%s" % (
+        form, " ".join(files), "%d files" % len(files) if many else "a file", MAX_LINES,
+        " together" if many else "", how)
 
 
 def reader_files(ws):
@@ -450,6 +502,26 @@ def reader_files(ws):
     return files
 
 
+def unredirect(ws):
+    """(the words without their redirections, the files a `< FILE` feeds the stage)."""
+    kept, fed, skip, feed = [], [], False, False
+    for w in ws:
+        if skip:
+            skip = False
+        elif feed:
+            fed.append(w)
+            feed = False
+        elif w in ("<", "0<"):
+            feed = True
+        elif REDIRECT_WORD.fullmatch(w):
+            skip = True
+        elif w.startswith("<") and not w.startswith("<<"):
+            fed.append(w[1:])
+        elif not re.match(r"[0-9&]?[<>]", w):
+            kept.append(w)
+    return kept, fed
+
+
 def quiet_sed(ws):
     """sed -n / --quiet / --silent: sed prints only what its script names."""
     return os.path.basename(ws[0]) == "sed" and any(
@@ -462,15 +534,152 @@ def counts(ws):
         w == "--count" or re.fullmatch(r"-[A-Za-z]*c[A-Za-z]*", w) for w in ws[1:])
 
 
-def line_count_arg(ws):
-    """The N of head / tail -n N, -nN, --lines=N, --lines N or -N; None without one."""
-    for j, w in enumerate(ws[1:], 1):
-        m = COUNT_OPT.fullmatch(w)
-        if m:
-            return int(next(g for g in m.groups() if g))
-        if w in ("-n", "--lines") and j + 1 < len(ws) and ws[j + 1].isdigit():
-            return int(ws[j + 1])
-    return None
+def head_tail(ws):
+    """(count, files) of a head / tail stage: the line count as written ("10" when none is given;
+    "+N" is tail's from-line-N, "-N" head's all-but-the-last-N) from -n N, -nN, --lines=N,
+    --lines N, -N or tail's obsolete +N; None when it counts bytes (-c, --bytes)."""
+    kept, files = unredirect(ws[1:])
+    tail = os.path.basename(ws[0]) == "tail"
+    count, j = "10", 0
+    while j < len(kept):
+        w, m = kept[j], COUNT_OPT.fullmatch(kept[j])
+        if w in ("-n", "--lines", "-c", "--bytes"):
+            j += 1
+            count = kept[j] if j < len(kept) and w in ("-n", "--lines") else None
+        elif m:
+            count = next(g for g in m.groups() if g)
+        elif BYTES_OPT.fullmatch(w):
+            count = None
+        elif tail and j == 0 and re.fullmatch(r"\+\d+", w):
+            count = w
+        elif w == "-" or not w.startswith("-"):
+            files.append(w)
+        j += 1
+    return count, files
+
+
+def sed_parts(ws):
+    """(scripts — None when a -f file holds one —, files, in_place) of a sed stage; without -e or
+    -f its first operand is the script."""
+    kept, fed = unredirect(ws[1:])
+    scripts, files, in_place, unseen = [], [], False, False
+    it = iter(kept)
+    for w in it:
+        if w in ("--expression", "--file", "--line-length"):
+            arg = next(it, "")
+            scripts += [arg] if w == "--expression" else []
+            unseen = unseen or w == "--file"
+        elif w.startswith("--"):
+            scripts += [w.split("=", 1)[1]] if w.startswith("--expression=") else []
+            unseen = unseen or w.startswith("--file=")
+            in_place = in_place or w.startswith("--in-place")
+        elif w.startswith("-") and w != "-":
+            for k, ch in enumerate(w[1:], 1):      # a cluster of short options: -n -E -s -z -u ...
+                if ch == "i":
+                    in_place = True
+                    break                          # the rest is a backup suffix
+                if ch in "efl":
+                    arg = w[k + 1:] or next(it, "")
+                    scripts += [arg] if ch == "e" else []
+                    unseen = unseen or ch == "f"
+                    break
+        else:
+            files.append(w)
+    if not scripts and not unseen and files:
+        scripts.append(files.pop(0))
+    return (None if unseen else scripts), files + fed, in_place
+
+
+def awk_parts(ws):
+    """(program — None when a file holds it —, files) of an awk stage; an operand NAME=value is an
+    assignment, not a file."""
+    kept, files = unredirect(ws[1:])
+    program, unseen = None, False
+    it = iter(kept)
+    for w in it:
+        if w in ("-f", "--file", "-E", "--exec", "-F", "--field-separator", "-v", "--assign",
+                 "-i", "--include", "-l", "--load"):
+            next(it, None)
+            unseen = unseen or w in ("-f", "--file", "-E", "--exec")
+        elif w in ("-e", "--source") or w.startswith("--source="):
+            text = w.split("=", 1)[1] if "=" in w else next(it, "")
+            program = text if program is None else program + "\n" + text
+        elif w.startswith("-") and w != "-":
+            unseen = unseen or w.startswith(("-f", "-E", "--file=", "--exec="))
+        elif program is None and not unseen:
+            program = w
+        elif not ASSIGNED.fullmatch(w):
+            files.append(w)
+    return (None if unseen else program), files
+
+
+def awk_rules(program):
+    """The top-level items of an awk program as (pattern, action or None), its strings and regex
+    literals emptied and its comments dropped; None when its braces do not pair."""
+    rules, cur, pattern, depth, prev, i, n = [], [], "", 0, "", 0, len(program)
+    while i < n:
+        c = program[i]
+        if c == '"' or (c == "/" and (not prev or prev in REGEX_AFTER)):
+            j = i + 1
+            while j < n and program[j] not in (c, "\n"):
+                j += 2 if program[j] == "\\" else 1
+            cur.append(c + c)
+            i, prev = j + 1, c
+            continue
+        if c == "#":
+            j = program.find("\n", i)
+            i = n if j < 0 else j
+            continue
+        if c == "{" and not depth:
+            pattern, cur, depth, i, prev = "".join(cur).strip(), [], 1, i + 1, c
+            continue
+        if c == "}" and depth == 1:
+            rules.append((pattern, "".join(cur)))
+            cur, depth, i, prev = [], 0, i + 1, c
+            continue
+        if not depth and c in ";\n":
+            if "".join(cur).strip():
+                rules.append(("".join(cur).strip(), None))
+            cur, i, prev = [], i + 1, c
+            continue
+        depth += (c == "{") - (c == "}")
+        if depth < 0:
+            return None
+        cur.append(c)
+        prev = prev if c.isspace() else c
+        i += 1
+    if depth:
+        return None
+    if "".join(cur).strip():
+        rules.append(("".join(cur).strip(), None))
+    return rules
+
+
+def awk_pours(program):
+    """"all" when an awk program prints every line it reads — `{print}`, `{print $0}`, `1`, or a
+    print outside BEGIN / END with no pattern guarding it —, "unknown" when this gate cannot judge
+    it (a loop or getline around the print, a function that prints, braces that do not pair), None
+    when its printing is bounded: END-only, pattern-guarded, an NR / FNR comparison or an exit."""
+    rules = awk_rules(program)
+    if rules is None:
+        return "unknown"
+    if any(AWK_BOUND.search("%s {%s}" % (p, a or "")) for p, a in rules if p not in ("END", "ENDFILE")):
+        return None
+    printing = any(AWK_FUNCTION.match(p) and AWK_PRINT.search(a or "") for p, a in rules)
+    verdict = None
+    for pattern, action in rules:
+        if pattern in AWK_ONCE or AWK_FUNCTION.match(pattern):
+            continue
+        if action is None:
+            if AWK_TRUE.fullmatch(pattern):
+                return "all"
+        elif not pattern and AWK_PRINT.search(action):
+            if not AWK_LOOP.search(action):
+                return "all"
+            verdict = "unknown"
+        elif not pattern and printing:
+            verdict = "unknown"            # it may call a function that prints
+    return verdict
 
 
 def bounded_after(stages, i):
@@ -485,13 +694,14 @@ def bounded_after(stages, i):
     return False
 
 
-def slice_wanted(ws, cwd):
-    """Why this stage would pour more than MAX_LINES lines, or None."""
+def slice_wanted(ws, cwd, unjudged):
+    """Why this stage would pour more than MAX_LINES lines, or None. Several files count together;
+    the files of an awk or sed program this gate cannot judge go to `unjudged`."""
     name = os.path.basename(ws[0])
     if name in READERS:
-        for path in reader_files(ws):
-            if lines_over(path, cwd):
-                return "`%s %s` pours a file of more than %d lines whole" % (name, path, MAX_LINES)
+        files = reader_files(ws)
+        if poured(files, cwd) > MAX_LINES:
+            return pours(name, files)
     elif quiet_sed(ws):
         ranges = [(int(a), b) for w in ws[1:] for a, b in SED_RANGE.findall(w)]
         span = sum(int(b) - a + 1 for a, b in ranges if b != "$" and int(b) >= a)
@@ -499,22 +709,52 @@ def slice_wanted(ws, cwd):
             return "`sed -n` asks for %d lines" % span
         files = [w for w in ws[1:] if not w.startswith("-") and not SED_RANGE.search(w)]
         for a in [a for a, b in ranges if b == "$"]:
-            for path in files:
-                if lines_over(path, cwd, a - 1 + MAX_LINES):
-                    return ("`sed -n '%d,$p'` pours %s from line %d to its end, more than %d lines"
-                            % (a, path, a, MAX_LINES))
+            if poured(files, cwd, limit=a - 1 + MAX_LINES) > a - 1 + MAX_LINES:
+                return ("`sed -n '%d,$p'` pours %s from line %d to its end, more than %d lines"
+                        % (a, " ".join(files), a, MAX_LINES))
+    elif name == "sed":
+        scripts, files, in_place = sed_parts(ws)
+        if in_place or (scripts is not None and SED_QUIT.search("\n".join(scripts))):
+            return None
+        if poured(files, cwd) > MAX_LINES:
+            if scripts is None:            # a -f file holds the script
+                unjudged.extend(files)
+                return None
+            return pours("sed", files, " (sed prints every line without -n or a q)")
+    elif name in AWKS:
+        program, files = awk_parts(ws)
+        verdict = "unknown" if program is None else awk_pours(program)
+        if verdict and poured(files, cwd) > MAX_LINES:
+            if verdict == "unknown":
+                unjudged.extend(files)
+                return None
+            return pours(name, files, " (the program prints every line)")
     elif name in ("head", "tail"):
-        n = line_count_arg(ws)
-        if n is not None and n > MAX_LINES:
+        count, files = head_tail(ws)
+        m = re.fullmatch(r"([+-]?)(\d+)", count or "")
+        if not m:
+            return None
+        sign, n = m.group(1), int(m.group(2))
+        if (name, sign) == ("tail", "+"):
+            if poured(files, cwd, skip=max(n, 1) - 1) > MAX_LINES:
+                return pours("tail -n +%d" % n, files, " (from line %d to its end)" % n)
+        elif (name, sign) == ("head", "-"):
+            if poured(files, cwd, skip=n) > MAX_LINES:
+                return pours("head -n -%d" % n, files, " (all but its last %d)" % n)
+        elif n > MAX_LINES:
             return "`%s` asks for %d lines" % (name, n)
+        elif len(files) > 1 and poured(files, cwd, take=n) > MAX_LINES:
+            return pours("%s -n %d" % (name, n), files, " (%d lines of each)" % n)
     return None
 
 
-def whole_file_bash(cmd, cwd, blind):
-    """Rule 5 for Bash: a cat / less / more of a file over MAX_LINES lines, or a sed -n / head /
-    tail window over MAX_LINES lines, with nothing downstream bounding it. Paths are read after
-    the command line's own assignments, $HOME and $CLAUDE_PROJECT_DIR are resolved; an operand
-    of an unbounded stage that stays unresolved is added to `blind`."""
+def whole_file_bash(cmd, cwd, blind, unjudged):
+    """Rule 5 for Bash: a stage that pours more than MAX_LINES lines of its files — cat / less /
+    more / nl / tac / pr, tail -n +N, head -n -N, a sed with neither -n nor q, an awk program that
+    prints every line, a sed -n / head / tail window — with nothing downstream bounding it. Paths
+    are read after the command line's own assignments, $HOME and $CLAUDE_PROJECT_DIR are
+    resolved; an operand of an unbounded stage that stays unresolved is added to `blind`, the
+    files of a program the gate cannot judge to `unjudged`."""
     known = {"HOME": os.path.expanduser("~")}
     if cwd:
         known["CLAUDE_PROJECT_DIR"] = cwd
@@ -527,7 +767,7 @@ def whole_file_bash(cmd, cwd, blind):
             ws = command_words(expand(stage, known))
             if not ws or bounded_after(stages, i):
                 continue
-            why = slice_wanted(ws, cwd)
+            why = slice_wanted(ws, cwd, unjudged)
             if why:
                 return why
             blind.extend(p for p in operands(ws) if any(ch in p for ch in UNRESOLVED))
@@ -609,43 +849,59 @@ def subagent_transcript(payload, to):
 
 
 def transcript_tail(path):
-    """Rule 8: (the timestamp of the last line that has one, the context of the last assistant
-    turn or None), from the last TAIL_BYTES of the transcript, never the whole file."""
+    """Rule 8: (the last message — a user or assistant entry with a timestamp — or None, the
+    context of the last assistant turn or None), from the transcript's tail, read in growing
+    TAIL_CHUNKS until a message is found; never more than the largest chunk."""
     with open(path, "rb") as f:
         f.seek(0, os.SEEK_END)
-        start = max(0, f.tell() - TAIL_BYTES)
-        f.seek(start)
-        lines = f.read().split(b"\n")[1 if start else 0:]    # the seek cut the first line
-    stamp = tokens = None
-    for raw in reversed(lines):
-        try:
-            entry = json.loads(raw)
-        except Exception:
-            continue
-        if not isinstance(entry, dict):
-            continue
-        if stamp is None and "timestamp" in entry:
-            stamp = entry["timestamp"]
-        msg = entry.get("message")
-        usage = msg.get("usage") if entry.get("type") == "assistant" and isinstance(msg, dict) else None
-        if tokens is None and isinstance(usage, dict):
-            tokens = sum(int(usage.get(k) or 0) for k in CONTEXT_KEYS) or None  # a synthetic turn is all 0
-        if stamp is not None and tokens is not None:
-            break
-    return stamp, tokens
+        size = f.tell()
+        for chunk in TAIL_CHUNKS:
+            start = max(0, size - chunk)
+            f.seek(start)
+            lines = f.read(size - start).split(b"\n")[1 if start else 0:]    # the seek cut the first line
+            last = tokens = None
+            for raw in reversed(lines):
+                try:
+                    entry = json.loads(raw)
+                except Exception:
+                    continue
+                if not isinstance(entry, dict):
+                    continue
+                if last is None and entry.get("type") in MESSAGES and isinstance(entry.get("timestamp"), str):
+                    last = entry
+                msg = entry.get("message")
+                usage = msg.get("usage") if entry.get("type") == "assistant" and isinstance(msg, dict) else None
+                if tokens is None and isinstance(usage, dict):
+                    tokens = sum(int(usage.get(k) or 0) for k in CONTEXT_KEYS) or None  # a synthetic turn is all 0
+                if last is not None and tokens is not None:
+                    break
+            if last is not None or not start:
+                return last, tokens
+    return None, None
+
+
+def at_work(entry):
+    """Rule 8: True when a subagent's last message shows it still running — a user tool_result
+    (the model is thinking over it) or an assistant tool_use (its result is pending)."""
+    msg = entry.get("message")
+    content = msg.get("content") if isinstance(msg, dict) else None
+    kinds = {b.get("type") for b in content if isinstance(b, dict)} if isinstance(content, list) else set()
+    return ("tool_result" if entry.get("type") == "user" else "tool_use") in kinds
 
 
 def cold_resume(payload):
     """Rule 8: (target, idle minutes, context tokens or None, transcript) when this SendMessage
-    resumes a subagent idle more than COLD_AFTER_S seconds, else None."""
+    resumes a FINISHED subagent — its last message a final report, or a user text no reply
+    followed (a stopped one) — idle more than COLD_AFTER_S seconds, else None. A subagent still
+    running spends the turn anyway: refusing it saves nothing."""
     to = (payload.get("tool_input") or {}).get("to")
     path = subagent_transcript(payload, to)
     if not path:
         return None
-    stamp, tokens = transcript_tail(path)
-    if not isinstance(stamp, str):
+    message, tokens = transcript_tail(path)
+    if message is None or at_work(message):
         return None
-    last = datetime.fromisoformat(stamp.replace("Z", "+00:00"))    # malformed raises: allowed
+    last = datetime.fromisoformat(message["timestamp"].replace("Z", "+00:00"))    # malformed raises: allowed
     if last.tzinfo is None:
         last = last.replace(tzinfo=timezone.utc)
     idle = time.time() - last.timestamp()
@@ -780,9 +1036,9 @@ def main():
         return 0
     agent = payload.get("agent_type")
     held = isinstance(agent, str) and bool(agent.strip())
-    blind = []
+    blind, unjudged = [], []
     for where, check, tail, advice in (
-            ("Bash command", lambda: whole_file_bash(target, cwd, blind), "", SLICE_ADVICE),
+            ("Bash command", lambda: whole_file_bash(target, cwd, blind, unjudged), "", SLICE_ADVICE),
             ("Bash command in a subagent (%s)" % agent, lambda: held and long_wait(tool_input, target),
              " — " + LONG_WAIT, LONG_WAIT_ADVICE)):
         try:
@@ -793,6 +1049,8 @@ def main():
             return refuse(where, target, reason + tail, advice)
     if blind:
         log_decision(payload, "unmeasured-path", blind)
+    if unjudged:
+        log_decision(payload, "unmeasured-program", unjudged)
     try:
         rebind(tool_input, target)
     except Exception:

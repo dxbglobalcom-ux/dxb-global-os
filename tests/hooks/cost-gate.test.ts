@@ -3,7 +3,8 @@
 // every Bash command runs with GNU grep (Claude Code's shell snapshot shadows grep with its embedded
 // ugrep — 26 GB on 2026-08-17); no whole-file read over 400 lines; no wait over 4 minutes inside a
 // subagent (its cache dies at 5 — 2.4 M tokens were written again on 2026-09-26/27); and, by his order
-// of ~20:05 the same day, no SendMessage that resumes a subagent idle more than 4 minutes.
+// of ~20:05 the same day, no SendMessage that resumes a subagent idle more than 4 minutes. His order of
+// ~20:22 closed the whole-file rule's escape routes and let a subagent that is still running be messaged.
 import { spawnSync } from "node:child_process";
 import { accessSync, constants, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir, userInfo } from "node:os";
@@ -44,6 +45,9 @@ function file(name: string, n: number): string {
 }
 const F401 = file("f401.txt", 401);
 const F400 = file("f400.txt", 400);
+const F402 = file("f402.txt", 402);
+const F250 = file("f250.txt", 250);
+const F200 = file("f200.txt", 200);
 const MISSING = join(tmp, "missing.txt");
 
 /** runs the real gate on one PreToolUse payload; `agent` makes it a subagent's call */
@@ -175,6 +179,46 @@ describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a
     expect(JSON.parse(last)).toMatchObject({ decision: "unmeasured-path", paths: ["$UNKNOWN/f"] });
   });
 
+  // The whole-file rule's escape routes (CEO order 2026-09-27 ~20:22): tail -n +N and head -n -N pour what is left
+  // of a file, a sed with neither -n nor q and an awk program that prints every line pour all of it, nl / tac / pr
+  // pour as cat does, and several files count together. The same 400-line line; a downstream bound still frees it.
+  // head -n -1 prints 400 of F401's lines — exactly the line, as cat F400 — so its refusal is shown on F402.
+  const escapes: [string, string, string | null][] = [
+    ["T9a", `tail -n +1 ${F401}`, "`tail -n +1"],
+    ["T9b", `tail -n +300 ${F401}`, null],
+    ["T9c", `head -n -1 ${F402}`, "`head -n -1"],
+    ["T9d", `head -n -1 ${F401}`, null],
+    ["T9e", `sed 's/a/b/' ${F401}`, "`sed"],
+    ["T9f", `sed '400q' ${F401}`, null],
+    ["T9g", `sed -i 's/a/b/' ${F401}`, null],
+    ["T9h", `awk '{print}' ${F401}`, "`awk"],
+    ["T9i", `awk 'END{print NR}' ${F401}`, null],
+    ["T9j", `awk '/x/{print}' ${F401}`, null],
+    ["T9k", `awk 'NR<=400' ${F401}`, null],
+    ["T9l", `nl ${F401}`, "`nl"],
+    ["T9m", `cat ${F250} ${F200}`, "2 files"],
+    ["T9n", `cat ${F200} ${F200} | head`, null],
+  ];
+  for (const [id, cmd, names] of escapes) {
+    it(`${id} ${cmd.replaceAll(`${tmp}/`, "")} ${names ? "is refused" : "passes"}`, () => {
+      const r = bash(cmd);
+      if (names) {
+        expect(denied(r), cmd).toBe(true);
+        expect(r.stderr).toContain("pours");
+        expect(r.stderr).toContain(names);
+      } else {
+        expect(ran(r, cmd), cmd).toBe(REBIND + cmd);
+      }
+    });
+  }
+
+  it("T9o an awk program the gate cannot judge — a -v bound around its print — passes, logged as unmeasured-program", () => {
+    const cmd = `awk -v n=3 '{for (i = 1; i <= n; i++) print}' ${F401}`;
+    expect(ran(bash(cmd), cmd)).toBe(REBIND + cmd);
+    const last = readFileSync(join(LOGS, "dxb-cost-gate.jsonl"), "utf8").trim().split("\n").at(-1) ?? "";
+    expect(JSON.parse(last)).toMatchObject({ decision: "unmeasured-program", paths: [F401] });
+  });
+
   // A SendMessage to a finished subagent resumes it; past 4 minutes its cache is dead and the resume writes
   // its whole context again — six resumes, 2.4 M tokens on 2026-09-26/27. CEO order 2026-09-27 ~20:05.
   it("T8a a resume of a subagent idle 10 minutes is refused with its idle time and context; the log keeps no message text", () => {
@@ -213,5 +257,45 @@ describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a
   it("T8e a timestamp in the future — clock skew, a negative idle — passes", () => {
     transcript("afuture", [{ type: "assistant", timestamp: ago(-10), message: { role: "assistant", usage: { input_tokens: 9 } } }]);
     expect(allowed(send("afuture"))).toBe(true);
+  });
+
+  // A subagent still running spends the turn anyway, so refusing it saves nothing; only a finished one — its final
+  // report, or a user text no reply followed (a stopped one) — is held to the 4 minutes. Its last MESSAGE decides:
+  // attachment entries after it do not, and a message line longer than the first tail chunk is still found.
+  const call = (id: string) => ({ type: "tool_use", id, name: "Bash", input: { command: "ls" } });
+  const answer = (id: string) => ({ type: "tool_result", tool_use_id: id, content: "ok" });
+  const said = (role: "assistant" | "user", min: number, content: unknown) =>
+    ({ type: role, timestamp: ago(min), message: { role, content, ...(role === "assistant" ? { usage: { input_tokens: 9 } } : {}) } });
+
+  it("T8f last message a tool result it is thinking over, 10 minutes old: running, the SendMessage passes", () => {
+    transcript("arun1", [said("assistant", 11, [call("t1")]), said("user", 10, [answer("t1")])]);
+    expect(allowed(send("arun1"))).toBe(true);
+  });
+
+  it("T8g last message a tool call whose result is pending, 10 minutes old: running, the SendMessage passes", () => {
+    transcript("arun2", [said("user", 12, "go"), said("assistant", 10, [call("t1")])]);
+    expect(allowed(send("arun2"))).toBe(true);
+  });
+
+  it("T8h last message a user text no reply followed — a stopped subagent — 10 minutes old: refused", () => {
+    transcript("astop", [said("assistant", 11, [call("t1")]), said("user", 11, [answer("t1")]),
+      said("user", 10, [{ type: "text", text: "[Request interrupted by user]" }])]);
+    const r = send("astop");
+    expect(denied(r)).toBe(true);
+    expect(r.stderr).toContain("idle for 10 min");
+  });
+
+  it("T8i a last message line of 300 KB, 10 minutes old, is found through the bigger tail: refused", () => {
+    transcript("along", [said("user", 12, "go"), said("assistant", 10, [{ type: "text", text: "r".repeat(300 * 1024) }])]);
+    const r = send("along");
+    expect(denied(r)).toBe(true);
+    expect(r.stderr).toContain("idle for 10 min");
+  });
+
+  it("T8j attachment entries after a final report 10 minutes old do not make the subagent look fresh: refused", () => {
+    transcript("aattach", [said("assistant", 10, [{ type: "text", text: "done" }]),
+      { type: "attachment", timestamp: ago(1), attachment: { type: "x" } },
+      { type: "attachment", timestamp: ago(0), attachment: { type: "y" } }]);
+    expect(denied(send("aattach"))).toBe(true);
   });
 });

@@ -29,21 +29,27 @@ import collections, json, sys
 
 settings, gate = sys.argv[1], sys.argv[2]
 cmd = "python3 %s" % gate
+matcher = "Grep|Bash|Read|SendMessage"
 with open(settings) as f:
     d = json.load(f, object_pairs_hook=collections.OrderedDict)
 
 pre = d.setdefault("hooks", collections.OrderedDict()).setdefault("PreToolUse", [])
-if any("dxb-cost-gate" in h.get("command", "") for b in pre for h in b.get("hooks", [])):
-    print("already registered")
-else:
+entries = [b for b in pre if any("dxb-cost-gate" in h.get("command", "") for h in b.get("hooks", []))]
+# a machine installed earlier keeps the matcher it was given then: bring it to the current one
+stale = [b for b in entries if b.get("matcher") != matcher]
+for b in stale:
+    b["matcher"] = matcher
+if not entries:
     pre.append(collections.OrderedDict([
-        ("matcher", "Grep|Bash|Read|SendMessage"),
+        ("matcher", matcher),
         ("hooks", [collections.OrderedDict([("type", "command"), ("command", cmd)])]),
     ]))
+if stale or not entries:
     with open(settings, "w") as f:
         json.dump(d, f, indent=2)
         f.write("\n")
-    print("registered in", settings)
+print("matcher updated to %s in %s" % (matcher, settings) if stale else
+      "registered in %s" % settings if not entries else "already registered")
 PY
 
 echo "--- proof ---"
