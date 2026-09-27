@@ -1,71 +1,71 @@
 {
   "B01": {
-    "tr": "Toplantı odası — birkaç müdür bir soruyu sesli tartışır, siz dinlersiniz. Sizin kendi kararınızla ertelenmişti.",
-    "hash": "ec940b16e130"
+    "tr": "Toplantı odası — birkaç müdür bir soruyu sesli tartışır, siz dinlersiniz; sizin kendi kararınızla ertelenmişti.",
+    "hash": "ba737379379c"
   },
   "B02": {
     "tr": "Beğenmediğiniz küçük tasarım simetri kusurları — hangi ekranlarda olduğu hiçbir zaman yazılmadı.",
-    "hash": "42795ccb1e20"
+    "hash": "71760cf5c83f"
   },
   "B03": {
     "tr": "Ses hattı, sizin kulak testiniz: selam deyince sesli karşılık, soru sorunca sesli cevap, «kapanabilirsin» deyince sesli veda.",
-    "hash": "22ddee900943"
+    "hash": "9df9d4c9436d"
   },
   "B03-bis": {
     "tr": "Giriş yapılmış her ekranın gerçek tarayıcıda gözle kontrolü — sizin elinizle bir kez oturum açmanız gerekiyor, aksi halde her göz kontrolü «doğrulanamadı» kalıyor.",
-    "hash": "03633df1ff11"
+    "hash": "b010aba4ff2b"
   },
   "B04": {
     "tr": "Üniversite ürün katmanı — ayrı bir ürün; hiç başlanmadı, mimarisi yazılmadı.",
-    "hash": "ad39e860d1dc"
+    "hash": "13280607663e"
   },
   "B05": {
     "tr": "Gerçek ödeme ve mağaza bağlantıları (Stripe, DocuSign, Gmail gönderimi) — Outleteuro'yu iptal ettiğinizde donduruldu.",
-    "hash": "9955f18fe896"
+    "hash": "f65f3e5f84d3"
   },
   "B06": {
     "tr": "kimi-3 model sınavı — bakiye bitti; sınav para istiyor.",
-    "hash": "403e3d8458fb"
+    "hash": "008ea913ec12"
   },
   "B07": {
     "tr": "Codex 5.6 model sınavı — SİZ kaldırdınız ve modele kendiniz kefil oldunuz: «ben kefilim ona». Sınav yapılmadan model içeri girdi, kefalet yalnız bu modeli kapsıyor. ✓ 26.08.2026 kapandı.",
     "hash": "398fa584c058"
   },
   "B08": {
-    "tr": "Çalışan başına beyin değiştirme — tek bir çalışanın modelini panelden siz değiştirecektiniz; 205 ajan hazır, değiştiren fonksiyon hiç yazılmadı.",
-    "hash": "98593b43a202"
+    "tr": "Çalışan başına beyin değiştirme — tek bir çalışanın modelini panelden ya da Hamza'ya söyleyerek siz değiştireceksiniz; ilk adım bitti ve gördünüz, kalan yedi adım sıra gelince planı onaylamanızla yapılacak.",
+    "hash": "7c143921d8f3"
   },
   "B09": {
-    "tr": "Hermes'in beyni yok — 7/24 sunucu ayaktaydı ama düşünemiyordu: kredi bitti ve modeli emekliye ayrıldı. ⚠ Bu satır 27 Ağustos gecesi emriniz olmadan kapatıldı, aynı gece geri açıldı — kapatma yazarın hatasıydı. Şikâyetiniz duruyor ve tamir edilerek kapanır.",
-    "hash": "811c3a906bf0"
+    "tr": "Hermes'in beyni yok — sunucu sizin emrinizle 19 Eylül'de kapatıldı ama şikâyetiniz duruyor; makine geri alınıp para ya da abonelik yolu açılınca tamir edilerek kapanır.",
+    "hash": "cb852a752c40"
   },
   "B10": {
-    "tr": "Hermes'in — ve gece çalışan her işçinin — DASHBOARD'DA CANLI KANLI BİR ORGANİZMA OLARAK izlenmesi. Bu satırın kutuyla hiç ilgisi yok, sizin ekranınızla ilgili. Kapanma şartı sizin dört sorunuz: dashboard'a işlendi mi, kodlandı mı, güzelce test edildi mi, siz gözünüzle bakıp «oldu» dediniz mi. Bugün dördüne de HAYIR — V2 dashboard'ı daha yazılmadı. **30 Ağustos eki:** gecenin «rüya görme» özeti bu satırın ilk canlı kartı olarak öneriliyor — «bu gece N koşu okundu, 3 kalıp bulundu, 2 değişiklik öneriliyor, 1 sizi bekliyor». Ekrana bakıp hiçbir şeye dokunmadan sabah bir şeyin değişmiş olması, sizin kendi kabul testiniz. Bugün ölçüldü: şirketin bugüne kadarki toplam ajan koşusu 378.",
-    "hash": "b016d4091807"
+    "tr": "Hermes'in ve gece çalışan her işçinin ekranınızda canlı bir organizma gibi izlenmesi — dört sorunuzun (işlendi mi, kodlandı mı, test edildi mi, siz «oldu» dediniz mi) dördüne de cevap hâlâ hayır, çünkü V2 ekranı henüz yazılmadı.",
+    "hash": "b497e4eb2b22"
   },
   "B11": {
-    "tr": "Sunucuda 13 departman anahtarı ve ilk 06:00 çalışması — kurulum borcu, hiç kapatılmadı. ⚠ Bu satır 27 Ağustos gecesi emriniz olmadan kapatıldı, aynı gece geri açıldı.",
-    "hash": "cce562531fc6"
+    "tr": "Sunucuda on üç departman anahtarı ve ilk gece çalışması — sunucu sizin emrinizle silindi ama satır kapanmadı; makineyi geri aldığınız gün kurulacak ve Hermes onarılacak.",
+    "hash": "7646b6761b29"
   },
   "B12": {
-    "tr": "SES — sizi 1,0-1,3 saniyede duyup cevaplaması gerek. Bugün tek başına duyma ve konuşma 2,73 saniye, içinde düşünme payı hiç yok; üstelik yanlış duyuyor.",
-    "hash": "79c4608eb170"
+    "tr": "SES — sizi 1,0-1,3 saniyede duyup cevaplaması gerek; bugün tek başına duyma ve konuşma 2,73 saniye, içinde düşünme payı hiç yok ve üstelik yanlış duyuyor.",
+    "hash": "c57694c3c8a7"
   },
   "B35": {
-    "tr": "Makine insan gibi sürülür — fare, klavye ve gözler. İki teslimat bitti ve size kanıtlandı; holdingin kendi ajanlarının aynı ellere ulaşması ve «hayır» yasağının onların okuduğu yere yazılması hâlâ duruyor. 27.08 hükmünüz: «şirketin tüm faaliyetleri ıraktan yürütülecek» — ekran gerektiren el artık istisna; ekransız iki el (Playwright, dxb-tui) kuruldu.",
-    "hash": "e0f6d3b12d9b"
+    "tr": "Makine insan gibi sürülür — fare, klavye ve gözler; iki teslimat bitti ve size kanıtlandı, holdingin kendi ajanlarının aynı ellere ulaşması ve «hayır» yasağının onların okuduğu yere yazılması hâlâ duruyor.",
+    "hash": "601ecd4c6615"
   },
   "B34": {
-    "tr": "YEREL İŞÇİ MODEL — Opus 5'in yapmaması gereken ucuz ve çok sayıda işi bu makinede yapacak modelin sınavı. Adaylar diskte, sınav yapılmadı, kazananı siz seçeceksiniz. **30 Ağustos eki:** yerel model taslağı YAZAR, kendi işini KABUL EDEMEZ — kabul her zaman ayrı ve daha güçlü bir örneğe aittir (bu ayrım bizde zaten var). Ve bu satırın sınavının sayısı belli oldu: kabul edilen değişiklik başına maliyet. Bugün token ölçülüyor, kabul oranı hiç ölçülmüyor. Yerel işçi zaten makinede — Gemma 4 E4B ve Qwen3.8-27B — ve tezgah politikası (B33) sizin onayınızla yazılı; geriye sizin dediğiniz sınav kalıyor, ölçüsü de bu kabul oranı.",
-    "hash": "fc7b274bd904"
+    "tr": "Yerel işçi model — ucuz ve çok sayıdaki işi bu makinede yapacak model; Gemma ve Qwen makinede ve tezgâh politikasına göre çalışacak, geriye kabul edilen iş başına maliyetle puanlanacak sınav ve kazananı sizin seçmeniz kaldı.",
+    "hash": "b8fdfb1e7c4b"
   },
   "B13": {
     "tr": "V1 kabul oturumu — sizin hükmünüzle kapandı: «A yı kabul ediorum». Ölü V1 ekranı için oturum yapılmıyor; yalnız sizin gözünüzün karar verebileceği 14 soru V2 tasarım paketine (B32) taşındı, kalan 13'ü makine işi. Satırdaki «11» sayısı yanlıştı, kapanırken düzeltildi (9 + 5 + 13). ✓ 26.08.2026 kapandı.",
     "hash": "bf202a1bdf94"
   },
   "B15": {
-    "tr": "Yetki kadranı hiç kurulmadı — bir çalışanın yetkisini güven kazandıkça panelden yükseltecektiniz; 205 ajanın hepsi sıfırda duruyor. **30 Ağustos eki:** özerklik kademesine nihayet bir ölçüt geldi — dört kutu: iş haftada bir tekrarlıyor mu · kötü çıktıyı otomatik reddeden bir kapı var mı · çalışan işi baştan sona yapabiliyor mu · «bitti» nesnel mi. Dördü birden dolmuyorsa o iş onaya gelir; kademeler bunun üstüne kurulur.",
-    "hash": "91ce6cd48431"
+    "tr": "Yetki kadranı hiç kurulmadı — bir çalışanın yetkisini güven kazandıkça panelden yükseltecektiniz, hepsi sıfırda duruyor; ölçüt artık belli: dört kutunun dördü birden dolmuyorsa o iş onayınıza gelir.",
+    "hash": "c050d4892af1"
   },
   "B19": {
     "tr": "Sahibi olmayan bir güvenlik notu — tedarik zinciri iğnesi sabitlenmemiş, tetiği kimse izlemiyor. ✓ 27.08.2026 — SİZ GÖZÜNÜZLE ONAYLADINIZ: «6 sına da onay veriorm bunları önceden onaylamıştım.»",
@@ -73,15 +73,15 @@
   },
   "B14": {
     "tr": "Video-öğrenme sizin ekranınıza hiç ulaşmadı — holding bir videoyu izleyip öğrendiğini dosyalayabiliyor, siz o kapıya erişemiyorsunuz.",
-    "hash": "0e648a826b31"
+    "hash": "e64bb6d83f4e"
   },
   "B16": {
     "tr": "Kendimize koyduğumuz sert kapıyı geçtik — derin çalışma dalgaları hiç yapılmadan departman aktivasyonu yapıldı; sizin C30 şikâyetinizin iç sesi.",
-    "hash": "07b5c87b9b79"
+    "hash": "7e364b69cc33"
   },
   "B17": {
     "tr": "Size söz verilen sürekli rapor hiç sunulmadı — on altı gelir yapısı her dalga sonunda tabloyla önünüze gelecekti; son güncelleme 9 Temmuz.",
-    "hash": "65629ea394b4"
+    "hash": "01e739e81e22"
   },
   "B20": {
     "tr": "Bu projeyi kimse iki kez aynı sayamıyor — ilerleme her oturumda başka çıkıyor. «Kalite artıyor mu, göremiyorum» şikâyetinizin makine tarafı. ✓ 27.08.2026 — SİZ GÖZÜNÜZLE ONAYLADINIZ: «6 sına da onay veriorm bunları önceden onaylamıştım.»",
@@ -89,7 +89,7 @@
   },
   "B18": {
     "tr": "Filtreler 58 komut sayfasının yalnız 9'unda çalışıyor — kalan 49'unda sayfa ne göstermeye karar verirse onu okuyorsunuz.",
-    "hash": "b5fcabb8c41f"
+    "hash": "f50e09c43e88"
   },
   "B39": {
     "tr": "Sevk hattı ölçüldü ve iki eksik freni kuruldu. Kiralık kutunun faturası ödendi, içi okundu — kimse girmemiş, kendi zamanlayıcımız olmayan bir tabloyu durmadan soruyormuş. Emrinizle döngü durduruldu, eski kopya silindi ve disk imajı yedeği kapatıldı: kutu artık boş bir pist, hesap ayda 13,91 €.",
@@ -108,40 +108,40 @@
     "hash": "4fdd6783ef37"
   },
   "B33": {
-    "tr": "TEZGÂH DÜZENİ — ekran kartı tek bir tezgâh: hiç inmeyen bir zemin, sıraya giren misafirler, ve tezgâhın tek sahibi. Mimarisini onayladınız, tek satırı kurulmadı. **30 Ağustos gecesi defter ilk gerçek video rakamlarını aldı:** MiniMax H3 iki ayrı yoldan ölçüldü. Eski yol kartın yönetici yongasını kilitledi ve emekliye ayrıldı; yeni yol kartın 16 GB'ına karşı 20 GB'lık modeli diske taşarak çalıştırıyor — tepe 15 GB kart belleği, 19,7 GB sistem belleği, en fazla 1,5 GB takas, ortalama 148-170 vat. **Dört tezgâh kuralı bu koşulardan doğdu**, en önemlisi şu: bir misafir ağırlıklarını diskten damla damla okuyorsa kartı öldürebilir — kapıcı sadece megabayt saymamalı, bu çalışma biçimini de reddetmeli. Kapıcı kurulana kadar yerine geçici bir bekçi program koyuldu.",
-    "hash": "2af3fe6cb347"
+    "tr": "TEZGÂH DÜZENİ — ekran kartı tek tezgâh: hiç inmeyen zemin, sırayla gelen misafirler ve tek kapıcı; mimariyi onayladınız, kapıcı ve geri kalanı henüz kurulmadı, yerinde geçici bir bekçi program duruyor.",
+    "hash": "5104e52e64c3"
   },
   "B32": {
-    "tr": "V2 TASARIM PAKETİ — her ekran tek tek çizilip size onaylatılmadan V2'nin tek satırı yazılmayacak. Ve artık B13'ün kabul sınavını da taşıyor: sizin kendi gözünüzün karar vereceği 14 soru, her çizimde size sorulacak; hepsi cevaplanmadan bu satır kapanamaz. Başlamadı — önce rakip parça listesi (B22).",
-    "hash": "6df772d5f297"
+    "tr": "V2 TASARIM PAKETİ — her ekran tek tek çizilip size gösterilmeden V2'nin tek satırı yazılmayacak; her çizimde sizin gözünüzün karar vereceği 14 soru sorulacak ve iş, rakip parça listesinin (B22) arkasında sırasını bekliyor.",
+    "hash": "6f1d58d2dfe8"
   },
   "B31": {
-    "tr": "CEPHANELİK — tek sekme açıp silahlarınızı çekmece çekmece, parasızın yanında paralısıyla göreceksiniz. Sekme hâlâ yok. 27.08 notu: üç bedava el cephaneliğe katıldı ve canlı (Antigravity, Playwright, dxb-tui); paralı tezgâha `socialforge` sizin emrinizle eklendi ve Gemini video fiyatları ölçülüp yazıldı. Aynı gün ilk çekmece de doldu: «web / tanıtım sayfası üretimi» — içinde bedava scrollcraft, arkasındaki paralı rafta kie.ai görsel üretimi; çekmece önerir, asla satın almaz.",
-    "hash": "4767b3d0403d"
+    "tr": "Cephanelik — tek sekmede silahlarınızı işe göre çekmece çekmece, bedavanın yanında fiyatıyla paralısını göreceksiniz; sekme, çekmece alanları ve her iş için paralı tezgâh hâlâ yok, yalnız tanıtım sayfası çekmecesi doldu.",
+    "hash": "2eacea38d97e"
   },
   "B30": {
-    "tr": "Ajanların elleri ve gözleri — açık kaynak cephaneliğini onayladınız. Onuncu el 27 Ağustos'ta girdi: kendi getirdiğiniz scroll-craft, kendi emrinizle kuruldu, güvenlik taramasından geçti ve içindeki gerçek bir kusur bizim kopyamızda düzeltildi. Kalan aletler hâlâ kurulmayı, kurulan bir alet de altı kanal hesabınızı bekliyor.",
-    "hash": "892819e0d1e3"
+    "tr": "Ajanların elleri ve gözleri — açık kaynak cephaneliğini onayladınız; Agent-Reach, Scrapling ve scroll-craft kurulu, onaylı dokuz alet ile MediaCrawler hâlâ kurulmayı, altı kanal sizin hesaplarınızı, Agent-Reach de fabrikaya bağlanmayı bekliyor.",
+    "hash": "92dabd8d3deb"
   },
   "B29": {
-    "tr": "Kumanda terminali iş istasyonuna taşındı; devrin son bacakları açık — bir de oturum kaydına düşen şifre değiştirilmeli. Taşınmada kimsenin listelemediği bir bacak bulundu ve kapatıldı: holdingin gece kopyası eski dizüstünde kalmıştı, on üç gece boyunca şirket tek bir masanın üstündeydi; artık her gece 02:30'da kendiliğinden alınıyor.",
-    "hash": "5bfcd3495456"
+    "tr": "Kumanda terminali iş istasyonuna taşındı ve eski dizüstünde unutulan gece kopyası artık her gece kendiliğinden alınıyor; açık kalan sizin şifre değişikliğiniz ve eski makinede bilerek bırakılan birkaç veritabanı dosyası.",
+    "hash": "87f9ae4416c0"
   },
   "B28": {
-    "tr": "Klip işi — AJANS koltuğunu onayladınız, inşaat hiç başlamadı. Bahis kesinlikle ve her boyutta dışarıda. 27.08 notu: koltuğun artık bedava bir görsel eli var (Antigravity, resim başına 0 $); video Gemini uygulaması ekrandan sürülerek çıkıyor; köşedeki 48×48 damga temiz siliniyor, ikisi sizin OUTLETEURO reklamınız olmak üzere iki dosyada kanıtlandı. **30 AĞUSTOS GECESİ — KOLTUĞUN ARTIK KENDİ VİDEO ELİ VAR.** Beğenmediğiniz MiniMax H3 klibi doğru yoldan yeniden kuruldu: **15 saniyelik, sesli, 1152×640 bir reklam çekimi bizim kartımızda 10 dakika 20 saniyede, 0 $'a çıkıyor** — taslak isterseniz 4,9 dakika. Yani üretim hattının saati artık ölçülü bir sayı. **Siz görmediniz, dolayısıyla kabul edilmiş değil.** Eksik kalanlar: bir müşteri, çekimin içine markanın kendi görselini koymak (henüz ölçülmedi) ve sizin gözünüz.",
-    "hash": "34fa54265eac"
+    "tr": "Reklam ajansı işi — ajans koltuğunu onayladınız ama inşaat başlamadı, bahis her boyutta dışarıda; bedava yerel video hattı çalışıyor fakat siz görmediniz, eksik kalanlar ilk müşteri, müşterinin kendi görseliyle çekim, motor sınavı ve sizin kararlarınız.",
+    "hash": "121f0d6ac720"
   },
   "B27": {
-    "tr": "Onayladığınız üç belge yeteneği kurulamıyor — lisansı kopyalamayı açıkça yasaklıyor. Aynı yetenek sizde zaten çalışıyor; bu bir engel değil, bir tercih ve tercih sizin.",
-    "hash": "810c36e3f7bf"
+    "tr": "Belge yetenekleri kurulamıyor — lisansları kopyalamayı açıkça yasaklıyor; aynı iş sizde zaten çalışıyor, bu bir engel değil bir tercih ve tercih sizin.",
+    "hash": "8f5ca5f952b0"
   },
   "B26": {
     "tr": "Gemini anahtarı bir oturum kaydına düştü, değiştirilmesi gerek — «ben iş bitince değersiz kılıcam» dediniz.",
-    "hash": "0f43d214699e"
+    "hash": "4bdb4a57dba6"
   },
   "B25": {
-    "tr": "Kelam — herhangi bir yerde tuşa basıp konuşunca temiz metin açık programa düşecek. «Şirketin her şeyi kurulduktan sonra» dediniz, tahtada bekliyor.",
-    "hash": "b048849447ed"
+    "tr": "Kelam — herhangi bir yerde tuşa basıp konuşunca temiz metin açık programa düşecek; «şirketin her şeyi kurulduktan sonra» dediniz, tahtada bekliyor.",
+    "hash": "93f3a87d647c"
   },
   "B24": {
     "tr": "Donma bekçisinin kör noktası — makine yüklüyken, süpürmesi gereken yığılmanın tam yanından geçiyor. ✓ 27.08.2026 — SİZ GÖZÜNÜZLE ONAYLADINIZ: «6 sına da onay veriorm bunları önceden onaylamıştım.»",
@@ -152,140 +152,140 @@
     "hash": "1d35acb24c07"
   },
   "B22": {
-    "tr": "RAKİP KUYRUĞU — 37 kaynağın hepsi izlendi ve raporlandı; geriye tek şey kaldı: birleştirici plan (sentez). V2'nin ilk çizimi bunun arkasında bekliyor.",
-    "hash": "c5284368b6ed"
+    "tr": "Rakip kuyruğu — kaynakların izlenmesi bitti; geriye tek şey kaldı, sizin istediğiniz birleştirici plan, ve V2'nin ilk çizimi onu okumanızı bekliyor.",
+    "hash": "35be8d9f8496"
   },
   "C26": {
     "tr": "«Hamza, bu sayfada ne oluyor anlat» dediğimde hangi sayfada olduğumu bilmeli — bilmiyor, sohbet ona nerede durduğunuzu hiç söylemiyor.",
-    "hash": "346465a6a66e"
+    "hash": "ced5ff10a928"
   },
   "C27": {
     "tr": "Sayfalar arası bağlar zayıf — ekranlar birbirinin içine açılmıyor.",
-    "hash": "5b28913fba06"
+    "hash": "66a5f4f3edf3"
   },
   "C28": {
-    "tr": "«Fırsat bulunmuş ama açamıyorsun. Detay nerede? YOK.» — bulunan fırsatın kendi detay sayfası hiç yazılmamış.",
-    "hash": "63af91c2d77d"
+    "tr": "«Fırsat bulunmuş ama açamıyorsun; detay nerede? Yok» — bulunan fırsatın kendi detay sayfası hiç yazılmamış.",
+    "hash": "f023156da20e"
   },
   "C29": {
-    "tr": "Skiller sayfası berbat — 23 skill, tek kaynak, düz bir liste; içinde başka skiller barındıran şey açılır grup olmalı. **30 Ağustos eki:** istediğiniz açılır-liste düzeninin mühendislik adı «kademeli açılım» — başlığı görürsün, gerekiyorsa içini açarsın, gerekmiyorsa hiç okumazsın. Aynı kuralın çalışan tarafındaki karşılığı B41 satırıdır; ikisi tek tarifle yapılmalı.",
-    "hash": "7113e537e325"
+    "tr": "Skiller sayfası berbat — düz bir liste; içinde başka skiller barındıran şey açılır grup olmalı ve çalışanların alet kartlarıyla tek tarifle yapılmalı.",
+    "hash": "892d6d1483c3"
   },
   "C30": {
     "tr": "«Yüze yakın repo verdim. HİÇBİRİ düzgün incelenip kurulup sisteme entegre edilmedi.»",
-    "hash": "6f054df6a41e"
+    "hash": "6e8bd5f11942"
   },
   "C31": {
-    "tr": "«Bu aletler ne? Cılız. Holdingin her şeyi cılız görünüyor.» — katalog gerçek, kullanım defteri sıfır.",
-    "hash": "c8210f45d389"
+    "tr": "«Bu aletler ne? Cılız; holdingin her şeyi cılız görünüyor» — katalog gerçek, kullanım defteri sıfır.",
+    "hash": "65e7f4728194"
   },
   "C32": {
     "tr": "«Yapılmış ama ZAYIF. Her sayfa mükemmel olana kadar tek tek yeniden yükseltilmeli.»",
-    "hash": "bb7b29c360a5"
+    "hash": "1ca1198c20eb"
   },
   "C33": {
-    "tr": "«TARİH YOK — sadece saat var. Bu iş ne zaman başladı?» — yedi ekran parçası saati tarihsiz yazıyor.",
-    "hash": "77e109708978"
+    "tr": "«Tarih yok, sadece saat var; bu iş ne zaman başladı?» — yedi ekran parçası saati tarihsiz yazıyor.",
+    "hash": "7e56f3ea8f68"
   },
   "C34": {
     "tr": "Tarih aptalca yerleştirilmiş — konumu kötü, estetik bir yargı yok.",
-    "hash": "f250251cc158"
+    "hash": "bc8579e86f3c"
   },
   "C35": {
     "tr": "Uzun açıklamalar açılır olmalı — tıklayınca açılsın; metin duvarı değil.",
-    "hash": "b6e8d54d87f4"
+    "hash": "862179f07abc"
   },
   "C36": {
     "tr": "KAPANDI — «Kahve jetonu» ölçümle risk defterinizden çıktı; defteriniz artık yalnız iş riski taşıyor. ✓ 27.08.2026 — SİZ GÖZÜNÜZLE ONAYLADINIZ: «6 sına da onay veriorm bunları önceden onaylamıştım.»",
     "hash": "a98f32b65d88"
   },
   "C37": {
-    "tr": "Hamza şifreli konuşuyor — size normal iş dili konuşmalı. Dört kez ihlal edildi; bu satır sizin «anladım» demenizle kapanır, benim sözümle değil.",
-    "hash": "2d1eedc29391"
+    "tr": "Hamza şifreli konuşuyor — size normal iş dili konuşmalı; dört kez ihlal edildi, bu satır sizin «anladım» demenizle kapanır, benim sözümle değil.",
+    "hash": "0da0fca9a050"
   },
   "C38": {
-    "tr": "«Hamza'yı açtım, mikrofon aç/kapa düğmesi var. Kimsenin JARVIS'inde düğme olmaz.» — uyanma kelimesiyle hep dinlemede olmalı.",
-    "hash": "85e58490f7d0"
+    "tr": "«Hamza'yı açtım, mikrofon aç/kapa düğmesi var; kimsenin JARVIS'inde düğme olmaz» — uyanma kelimesiyle hep dinlemede olmalı.",
+    "hash": "2c5f62859159"
   },
   "C39": {
-    "tr": "«Şirket doktoru nerede?» — şeklini onayladınız (tek kapı Hamza, arkasında sağlık ekibi); ekip hâlâ kurulmadı. **30 Ağustos eki:** onayladığınız sağlık takımının hafıza yarısının adı kondu — «rüya görme»: gece bütün koşulara birden bakan, herkeste aynı şekilde tekrarlayan kusuru gören ve onarımı kanıtıyla teklif eden ikinci akıl. Yeni bir şekil önerilmiyor; şekil sizin, bu onun ilk mekanizması.",
-    "hash": "f71d02d6b720"
+    "tr": "«Şirket doktoru nerede?» — şeklini onayladınız (tek kapı Hamza, arkasında sağlık ekibi) ve ekibin gece bütün koşulara bakan «rüya görme» aklının adı kondu; ekip hâlâ kurulmadı.",
+    "hash": "0c90f0390d2a"
   },
   "C40": {
-    "tr": "«DÖNGÜ SİSTEMİ KURULDU MU? Repo verdim, emir verdim. Çok meşhur.» — hiç kurulmadı, kartı hâlâ taslak. **30 Ağustos eki:** döngü sisteminin tarifi artık elimizde — beş aşama, denetim kapısı (bizde zaten var), durma şartı (bizde zaten var ve serttir), «kurmaya değer mi» dört kutu testi ve kurulum sırası. Bu satırda eksik kalan tek şey: kilitli bir skor ve «daha iyiyse sakla» karşılaştırması.",
-    "hash": "fc32800c9046"
+    "tr": "«Döngü sistemi kuruldu mu?» — hiç kurulmadı, kartı hâlâ taslak; iskelet zaten elimizde, eksik olan kilitli bir skor ve «daha iyiyse sakla» karşılaştırmasıyla kayda geçmiş gerçek bir koşu.",
+    "hash": "a390c9e91bb4"
   },
   "C41": {
-    "tr": "«Burj Al Arab başta verdiğim tek bir örnekti — tasarım personasına sanki hedefmiş gibi yazılmış.» İki dosya taşıyor, hepsinin taranması gerek.",
-    "hash": "e79e462b46a5"
+    "tr": "«Burj Al Arab başta verdiğim tek bir örnekti — tasarım personasına sanki hedefmiş gibi yazılmış»; iki dosya taşıyor, hepsinin taranması gerek.",
+    "hash": "e64e586d0f43"
   },
   "C42": {
     "tr": "SÜREKLİ EMİR — rakip sistemler bizim olur: izle, raporla, sonra aynısını veya daha iyisini kur. İzleme bitti; inşaat başlamadı.",
-    "hash": "66e007eea00d"
+    "hash": "ea91ff048dd9"
   },
   "C52": {
     "tr": "«TAMAMEN DATA BASETEN SİLİNSİN ÇOK YER KAPLAMASIN» — bir sohbet veri tabanından tümüyle silinebilmeli; silme kapısı hiç yok.",
-    "hash": "cd1da61b3a1a"
+    "hash": "22e2ca0853aa"
   },
   "C53": {
     "tr": "Sohbete resim gönderilebilmeli — yükleme yok. (Şikâyetinizin kendisi altı ekran görüntüsüyle gelmişti.)",
-    "hash": "14ee27bf316d"
+    "hash": "256336fac798"
   },
   "C54": {
-    "tr": "«Bir kısmı gidiyor bir kısmı gitmiyor» — o gün yaptığınız konuşmaların %44'ünde sesiniz kayboldu.",
-    "hash": "f61f51f33722"
+    "tr": "«Bir kısmı gidiyor bir kısmı gitmiyor» — o gün yaptığınız konuşmaların yüzde kırk dördünde sesiniz kayboldu.",
+    "hash": "8a63ad856ca9"
   },
   "C55": {
     "tr": "Bekliyorsunuz ve size hiçbir şey söylenmiyor — 29-35 saniye sessizlik, ekranda tek kelime durum yok.",
-    "hash": "58c8876d76c8"
+    "hash": "0a7c6528b491"
   },
   "C56": {
     "tr": "Sessizce başarısız olan düğme — «görev olarak gönder» çalışmazsa size hiçbir şey söylemiyor.",
-    "hash": "28e376c45a37"
+    "hash": "5bdda1c46d47"
   },
   "C57": {
     "tr": "«Aynı anda ses üstüne ses bindi» — iki ses aynı anda konuşabiliyor; koruma var ama duyabildiğiniz bir koruma koruma değil.",
-    "hash": "fb72b4fd4317"
+    "hash": "afaacbe92d5b"
   },
   "C58": {
     "tr": "«Her söylediğimde 'anlayamadım Muhittin Bey' diyor» — bu cümle kodun hiçbir yerinde yok; sesiniz boş geldiğinde model onu uyduruyor.",
-    "hash": "beeb7aadb48e"
+    "hash": "6a0b75ac1664"
   },
   "C59": {
     "tr": "«ÇOK BÜYÜK HALÜSİNASYON — ne kadar token yaktın diye sordum, alakasız şeyler anlattı.»",
-    "hash": "96ed9788524e"
+    "hash": "87a0c3a90008"
   },
   "C60": {
     "tr": "«GÖREV VERDİĞİMDE TAKİP EDECEĞİM ALAN YOK. BİTTİ, PEKİ SONUCU NEDİR İŞİN??? YOK!» — sonuç saklanıyor ama size hiç gösterilmiyor.",
-    "hash": "390cabfe357f"
+    "hash": "84d442be27bb"
   },
   "C61": {
     "tr": "«NEREDEN İÇİNE GİRİLİYOR? KARTLARA TIKLAYINCA HİÇBİR ŞEY YOK» — her sayfadaki her kart için geçerli.",
-    "hash": "1c15ec7722d4"
+    "hash": "195a33935770"
   },
   "C62": {
     "tr": "«34 İNÇ EKRAN KOCA BOŞ SAYFA! Sayfayı küçültünce sağa sola kaydırma» — genişlik kullanılmıyor, yatay kaydırma otomatik ret sebebi.",
-    "hash": "031890c652b6"
+    "hash": "d8eebab799db"
   },
   "C63": {
-    "tr": "«NE GRAFİK ANALİZLERİ NE CHARTLAR… KUTU KUTU KART KART» — panelde sıfır grafik var, oysa grafiğe hazır 34 veri kaynağı boşta duruyor.",
-    "hash": "d2a8e56ff6bf"
+    "tr": "«NE GRAFİK ANALİZLERİ NE CHARTLAR… KUTU KUTU KART KART» — panelde sıfır grafik var, oysa grafiğe hazır otuz dört veri kaynağı boşta duruyor.",
+    "hash": "9ecdf399aaa0"
   },
   "C64": {
     "tr": "«UX'i 'U eks' diye okuyor» — yabancı kelimeler yabancı okunmalı.",
-    "hash": "be07abc6b361"
+    "hash": "51b937eadea6"
   },
   "B40": {
     "tr": "✓ KAPANDI, sizin gözünüzle — «TMM BURAYA KADAR HERŞEY ONAYLADIM». Dışarıya bakan içerik işi artık yönlendiriliyor: «listeleme» şartı sizin emrinizle kaldırıldı, tabloda tek satır değişti, diğer 36'sına dokunulmadı. Kahve markası denemesi baştan sona aktı ve şirkete tek satır yazılmadı.",
     "hash": "1ac29477cb11"
   },
   "B41": {
-    "tr": "TEDARİK ZİNCİRİ. Çalışan işin ortasında «bu alet bende yok» diyemiyor; Claude'un 289 eklentilik kütüphanesi ile kendi 412 parçalık rafımız kullanılmıyor (kullanım kaydı 0 satır). Dört halka: talep fişi → arama (önce kendi rafımız, sonra katalog, sonra açık dünya; bedavanın yanında ücretli ikizi fiyatıyla) → gümrük taraması → yetki. Bedava·hesapsız·dışarıya kapalı·temiz olan makineye; para, hesap veya şifre isteyen her şey size. eklenti hükümleriniz uygulandı: **30 Ağustos'ta ikinci yarısıyla birlikte** — «açık olsun ama kancalar kapansın». Bugün: 14 açık · 2 kapalı (codex ve headroom) · 2 tamamen atıldı (superpowers, ruflo); kancası çalışan tek eklenti, sizin onay verdiğiniz claude-mem. headroom'un içinde kancadan başka hiçbir şey olmadığı için «kancası sussun» = «kapansın» oldu ve hiçbir yetenek kaybedilmedi; ekranınızı kirleten «headroom: not found» satırı da böylece bitti. **30 Ağustos eki:** zincir bir halka erken bitiyor — yetki verildikten sonra çalışan elindekini bilmiyor. Bugün ölçüldü: rafta 412 kayıt, canlı 173 yetki, kullanım defteri 0 satır; profillerdeki `_skills` alanı üretiliyor ama 21 profilin 21'i de boş. Çaresi: her yeteneğe, ihtiyaç anında taranan tek paragraflık bir kart.",
-    "hash": "fa29274163b9"
+    "tr": "Tedarik zinciri — çalışan işin ortasında eksik aletini isteyemiyor, kendi rafımız ve Claude'un eklenti kütüphanesi hiç kullanılmıyor; talep, arama, gümrük taraması, yetki ve çalışanın elindekini bildiği kart halkalarının hiçbiri kurulmadı, satın alma ve hesap sizde.",
+    "hash": "229d39db1133"
   },
   "B42": {
-    "tr": "CEPHANE NÖBETİ. Dünya aletlerini her ay yeniliyor; biri sürekli takip etsin ve güncellemeyi Hamza size söylesin — abartmadan, ölçülü. Kanıtı sizin kendi düzeltmeniz: Seedance 2.5 (31 Temmuz'da çıkmış) bizim kayıtlarımızda hâlâ 2.0 yazıyordu — 27 gün eski, yakalayan siz oldunuz. Üç ayak: (1) bizde ne var, hangi sürüm, en son ne zaman bakıldı; (2) dünyada o iş için en iyisi ne; (3) bulgu dosyada kalmaz, Hamza'nın ağzından size gelir — geçilen bir şey yoksa susar. PLANI YAZILDI VE SİZİN SEÇİMİNİZLE PARK EDİLDİ: sırası gelince kurulacak, sizi beklemiyor. **30 Ağustos eki:** nöbete somut bir kalem girdi — Anthropic'in Claude Managed Agents hizmeti, derste anlatılan hafıza ve rüya görme altyapısını hazır ürün olarak veriyor (kurulum değil, çalışma kartı isteği). Ve planın yürütme sırası: elle kanıtla → skill yap → kapı ve durma şartıyla döngüye sar → en son zamanla. **30 AĞUSTOS GECESİ — SORUNUZ ÖLÇÜMLE CEVAPLANDI: 15 saniyelik reklam videosu bu bilgisayarda 10 dakika 20 saniyede çıkıyor**, 1152×640 boyutunda, kendi stereo sesiyle, 0 $ — hiçbir hesaba girilmeden. Yedi koşu yapıldı: 5 saniye 90 saniyede, 15 saniye en küçük boyutta 4,9 dakikada, teslim kalitesinde 10,3 dakikada; 1280×720 kartın kapasitesini aşıyor ve temiz reddediyor. Aynı kartta yayınlanmış rakamların 7 katı hızlı (5 sn) ve 2 katı hızlı (15 sn) — üstelik onların yarısından az bellekle. **Önceki oturum bu işi yanlış yoldan zorlayınca kartın içindeki yönetici yongayı kilitlemişti; makine yeniden başlayınca düzeldi ve artık başında bir bekçi program var** — kart bir daha kilitlenirse işi anında durduruyor.",
-    "hash": "3934cc333a5a"
+    "tr": "CEPHANE NÖBETİ — dünyadaki aletlerin yenisini biri sürekli takip etsin ve Hamza size ölçülü tek bir cümleyle söylesin; plan yazıldı, sırası gelince kurulacak ve bugüne kadar yeni sürümleri (Seedance 2.5, MiniMax H3) yakalayan hep siz oldunuz.",
+    "hash": "74776dd3d89c"
   },
   "B46": {
     "tr": "Araştırma motoru — 7 avcı, 37 kanal, tek soruya aynı anda saldıran filo. On bir kusuru kaynağında kapatıldı, cetveli kuruldu (16/16 kural geçiyor), iki kez canlı koştu — ikinci koşuda 453 kişi sayıldı ve raporlar artık kaynak adresi veriyor. 21 Eylül sabahı sizin sözünüzle kapandı: *“b46 ile iligli kapatabiliriz.”*",
@@ -294,5 +294,45 @@
   "B50": {
     "tr": "EVİN TEMİZLİĞİ. İş bitince ev baştan aşağı temizlensin dediniz; tek şartınız vardı — *“ne 15 gb yaaa”*: hiçbir şey, klasör klasör boyutlu listeyi görüp tıklamadan silinmez. Listeyi gördünüz ve 19:12'de tıkladınız. Üç adımda yapıldı: **(1)** yarım kalmış ilk fazlar 01-07 gitti, 08 ve 09 kaldı; depo **4,9 GB → 1,5 GB**, `.git` **385 → 169 MB**; şirketin defterinden tıkladığınız üç silme, **3.493 satır**, her biri sayısı tutmazsa geri alınacak şekilde — kimsenin listelemediği bir tetik 1.692 kez ateşlendi ve yan hasarı **sıfır** ölçüldü. **(2)** inşaat tezgâhı yıkılıp yalnız depodan **iki kez** yeniden kuruldu: ikisi de aynı sonucu verdi, böylece B49'dan kalan tek açık soru kapandı. **(3)** bu arada güvenlik duvarının kaçış kanıtının bir yalanı yakalandı — sıfırdan doğan bir sayacın ilk dönüşünü göremiyordu, yani taze bir motorda duvar delinse bile *“kıpırdamadı”* deyip geçerdi; kaynağından düzeltildi ve geri alınırsa kırmızı verecek bekçisi yazıldı. Tezgâhın alet listesi, şirketin parmak izi ve sekiz tablosu, sekiz servis — hepsi öncesi ve sonrası aynı. **Aynı akşam kendi gözünüzle kapattınız:** *“Gerek yok. B50 tamamsa benim gözüm de tamam.”* Sorduğum tek şeye de cevap verdiniz — sildiğiniz 3.493 satırın izi şirketin kütüğüne yazılmadı, *“İkinci husus da kalabilir”* dediniz, öyle kaldı. O satırlar zaten dün akşamki tıkınızla gitmişti.",
     "hash": "08247391fac9"
+  },
+  "B43": {
+    "tr": "MEDYA STÜDYOSU: reklam işinin sizin panonuzdaki kendi odası — müşteri işleri, çekim listesi, her çekimin maliyeti ve süresi, bitmiş klibe orada evet ya da hayır diyorsunuz; arkadaki yol kuruldu ve sizin gözünüzden geçti, ekran ise çizim onayınızı bekliyor, on bir adım, gece içerik motoru ve sanal içerik üreticisi planı sizin sözünüzü bekliyor.",
+    "hash": "e730d8235221"
+  },
+  "B45": {
+    "tr": "Dinlenen bir iş kulvarı «dur» sözünü duyamıyordu — artık anında uyanıyor; 16 Eylül'de sizin gözünüzle kabul edildi.",
+    "hash": "b908e6303b30"
+  },
+  "B44": {
+    "tr": "Tek başına geçip toplu koşuda zaman aşımına düşen testler — sebep ölçüldü, düzeltildi ve 16 Eylül'de sizin gözünüzle kabul edildi.",
+    "hash": "b67f351dc528"
+  },
+  "B51": {
+    "tr": "Model mimarisi — işi kim yapar, kim denetler, kaça mal olur; altı adımlık teklif tahtada, denetim koltuğuna kimin oturacağı ve yürütme sizin kararınızı bekliyor.",
+    "hash": "8b232478f2e2"
+  },
+  "B53": {
+    "tr": "Opus 5.5 için talimat denetimi — kartların hepsine cevap verdiniz ve çoğu uygulandı; kalanlar model mimarisi (B51) kararınızla birlikte uygulanacak, yolda bulunan eski kusurlar da düzeltilecek.",
+    "hash": "95e70a69652d"
+  },
+  "B55": {
+    "tr": "Model nöbeti — yeni bir model ya da ciddi bir kullanım önerisi çıkınca size haber verilir, birlikte incelenir, geçiş yalnız sizin «geç» sözünüzle olur; kapanış ölçümleri ve sizin gözünüz kaldı.",
+    "hash": "86760456a19c"
+  },
+  "B58": {
+    "tr": "Kod kapısı kopyalama, taşıma veya tek satırlık betikle yapılan yazmayı görmüyor — korunan yollar yalnız dürüst bir yazara karşı korunuyor ve bu açığı kapatacak genişletme yazılmadı.",
+    "hash": "3587a5da0111"
+  },
+  "B61": {
+    "tr": "Bağlam sınırı sizin sözünüzle yüzde 50 / 55'e çekildi — iş bitti ve doğrulandı, yalnız sizin gözünüzü bekliyor.",
+    "hash": "ef04c75a4905"
+  },
+  "B62": {
+    "tr": "Donma bekçisi bir oturumun yazısını komut sanıyor — içinde tarayıcı aletinin adı geçen bir not yüzünden sizin çalışma oturumunuz bellek dolunca ilk öldürülecek sıraya kondu; tamir bekçinin, yalnız programın adına bakmalı.",
+    "hash": "968433b2059f"
+  },
+  "B63": {
+    "tr": "Ayna denetimi eski kalmış bir dosyayı gizleyebiliyordu, çünkü listesi onuncu satırda kesiliyordu; onarıldı ve sizin gözünüzü bekliyor.",
+    "hash": "00d98dcd919c"
   }
 }

@@ -28,21 +28,21 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-09-27 23:36 → 2026-09-28 00:50, Opus 5.5 session dba211ac, on his complaint that the opening named
+2026-09-27 23:36 → 2026-09-28 ~01:10, Opus 5.5 session dba211ac, on his complaint that the opening named
 B56 as waiting after he had approved it. Done on his words <!-- CEO-OK: code-gate-removed-2026-09-28 -->:
-B56 closed and moved to the board's closed section <!-- CEO-OK: b56-accepted-by-his-eye-2026-09-27 -->
-and the code-gate hook thrown away — outside `dxb-team1` / `dxb-crew` the session writes its own code
+B56 closed <!-- CEO-OK: b56-accepted-by-his-eye-2026-09-27 --> and the code-gate hook thrown away
 (`e18e0a33`); the ledger check that forced a board row for every open sentence removed, board law 1 now
-"a row is opened only on the CEO's word" (`b6084eae`) <!-- CEO-OK: opening-three-headings-and-board-archive-2026-09-28 -->; this file cut to three headings, the old blocks
-moved whole to the archive (§ 2026-09-28).
+"a row is opened only on the CEO's word" (`b6084eae`) <!-- CEO-OK: opening-three-headings-and-board-archive-2026-09-28 -->;
+this file cut to three headings (`dec64b54`); the board's 70 open rows cut from 306,522 to ~48,300 bytes,
+each row's old text kept word for word in `.planning/board-rows/<ID>.md` and linked from the row.
 
 ## Next
 
-1. **Thin the board without losing a word** — approved 2026-09-28
-   <!-- CEO-OK: opening-three-headings-and-board-archive-2026-09-28 -->: each open row keeps what it is ·
-   why open · who it waits on · what closes it · his words · its plan link; its full current text moves
-   verbatim to its own archive file; a checker compares old and new. 70 open rows, 305,733 bytes
-   (measured 2026-09-28 00:20). Not started.
+1. **Review what the construction costs** — his words 2026-09-28: the dxb-team1 system cost him
+   dearly, half the weekly quota went in one day; the verifier, refuter and arbiter seats and the
+   `dxb-verify` door are reviewed with him, seat by seat. Measured this session: three writer lanes
+   ~318 k new tokens for work one session would have done for ~160 k (estimate); one verifier pass,
+   stopped half way, ~258 k. His working rule: one worker in the session, handover at the context gate.
 2. Repository clean-up of old, unused things — he named it 2026-09-28; list and sizes go in front of
    him before anything is deleted.
 
@@ -50,7 +50,7 @@ moved whole to the archive (§ 2026-09-28).
 
 - **B61** — the context line at 50 / 55: waits his eye.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
-  "Sizi bekleyenler" lists them (his screen, 2026-09-28 00:12).
+  "Sizi bekleyenler" lists them.
 
 ## Where things live
 
