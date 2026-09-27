@@ -1618,5 +1618,21 @@
     "conditions": "His one sentence at ~07:17, typed in session 1d719ddd (the K3 stage-2 lead) after the position reply that listed exactly one subject waiting his eye: the stage-3 page. Covers that page only; B57 and B61 were not listed to him and stay as they are on the board. Not a law, not stage 2's page (that run was still in the field).",
     "where": ".planning/STATE.md (the live block + B56) · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B56 · .planning/quick/20260924-research-door-perplexity/EVIDENCE-B56-K3-2026-09-27.md (Stage 3 RETURNS)",
     "session": "1d719ddd-7d46-4484-a4b7-a40bc0d8f189 (the K3 stage-2 lead session), typed 2026-09-27 ~07:17 local"
+  },
+  "research-k3-stage2-accepted-by-his-eye-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "K3 stage 2 — ŞEKİL (the report's shape chosen by its type, proved on the 08:19→08:42 rerun of `16ffa06d`, a Karar/decision-shaped test run on Notion vs Obsidian) — ACCEPTED BY HIS EYE on the page https://claude.ai/artifact/5XKYV322RdHKfyFRGjEsuz, put before him at 13:2x as waiting his eye (LAW B).",
+    "verbatim": "önce şu salak göz şartı ile kapanması gerkenleri bir kaapat gitsin. göz tmm okadar. ayrıca eranda artık kilit milit yok.",
+    "conditions": "Given after a position reply that listed exactly two subjects as waiting his eye: this page and the B56 older-defect-list repair batch. Covers those two only — not B30, not the low/medium hunter-effort question (still open, his word closes it), not a 'kaydet' order on the 08:19 test run's data (a proof run of the shape engine, not a kept deliverable).",
+    "session": "this session, typed 2026-09-27 ~13:29 local, in reply to a position report naming the two subjects waiting his eye",
+    "where": ".planning/STATE.md B56 · board B56 · EVIDENCE-B56-K3-2026-09-27.md"
+  },
+  "b56-older-defect-list-repair-accepted-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "THE OLDER DEFECT LIST OF B56 — repaired at its source through dxb-team1, 2026-09-27 08:33 → 10:47 (commits e5eaf17c, 49e91d94, 509bded3, 3c220cda, 51473ee7), verified in two rounds by a fresh verifier (round 1: 9/A/B/D PASS with three A on C; round 2: all PASS, A/B/C empty) — ACCEPTED BY HIS EYE, put before him as waiting his eye in EVIDENCE-B56-K3 § the older defect list.",
+    "verbatim": "önce şu salak göz şartı ile kapanması gerkenleri bir kaapat gitsin. göz tmm okadar. ayrıca eranda artık kilit milit yok.",
+    "conditions": "Covers the repaired items only (C1–C8, D, E1, E2) as measured and returned in the commit record; does NOT cover B42's unrelated BATTERY_RED (r43 arsenal, named on B42, not repaired here) and does not touch B63 or B42, which were not put in front of him in this exchange.",
+    "session": "this session, typed 2026-09-27 ~13:29 local, in reply to a position report naming the two subjects waiting his eye",
+    "where": ".planning/STATE.md B56 · board B56 · EVIDENCE-B56-K3-2026-09-27.md § the older defect list"
   }
 }
