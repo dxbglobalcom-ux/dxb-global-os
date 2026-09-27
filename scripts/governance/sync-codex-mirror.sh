@@ -75,15 +75,21 @@ if grep -rqn '\.Codex' "$STAGE"; then
 fi
 
 if [ "$MODE" = "--check" ]; then
+  # Compiled Python is not part of a door. Running a door's scripts leaves
+  # __pycache__/*.pyc on whichever side ran them, so the check ignores both, on
+  # both sides; otherwise a fresh .pyc reads as a stale mirror (board row B63).
+  mirror_diff() { diff -rq --exclude=__pycache__ --exclude='*.pyc' "$1" "$2"; }
   stale=0
-  diff -rq "$STAGE/AGENTS.md" AGENTS.md >/dev/null 2>&1 || stale=1
-  diff -rq "$STAGE/skills" .agents/skills >/dev/null 2>&1 || stale=1
-  diff -rq "$STAGE/hooks" .codex/hooks   >/dev/null 2>&1 || stale=1
+  mirror_diff "$STAGE/AGENTS.md" AGENTS.md >/dev/null 2>&1 || stale=1
+  mirror_diff "$STAGE/skills" .agents/skills >/dev/null 2>&1 || stale=1
+  mirror_diff "$STAGE/hooks" .codex/hooks   >/dev/null 2>&1 || stale=1
   if [ "$stale" -ne 0 ]; then
     echo "SYNC_STALE: the Codex mirror does not match .claude/ — run scripts/governance/sync-codex-mirror.sh" >&2
-    diff -rq "$STAGE/AGENTS.md" AGENTS.md 2>&1 | head -5 >&2 || true
-    diff -rq "$STAGE/skills" .agents/skills 2>&1 | head -10 >&2 || true
-    diff -rq "$STAGE/hooks" .codex/hooks 2>&1 | head -5 >&2 || true
+    # Every differing path, uncut: a `head -10` here once pushed split.py out of
+    # the listing behind .pyc lines (B63), and a stale file nobody is shown stays.
+    mirror_diff "$STAGE/AGENTS.md" AGENTS.md >&2 || true
+    mirror_diff "$STAGE/skills" .agents/skills >&2 || true
+    mirror_diff "$STAGE/hooks" .codex/hooks >&2 || true
     exit 1
   fi
   echo "SYNC_OK mirror matches source"
