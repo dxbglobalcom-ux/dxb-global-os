@@ -1,0 +1,22 @@
+{
+  "source": "model",
+  "cost_usd": 0,
+  "shape": "karsilastirma",
+  "shape_name": "Karşılaştırma",
+  "shape_reason": "Soru iki modeli karşılaştırıyor.",
+  "shape_source": "model",
+  "items": [
+    {
+      "id": "S1",
+      "title": "X'te iş bölümü",
+      "question": "X'te kim neyi seçiyor?",
+      "signals": []
+    },
+    {
+      "id": "S2",
+      "title": "Geçiş yapanlar",
+      "question": "Kim hangisinden hangisine geçti ve neden?",
+      "signals": []
+    }
+  ]
+}

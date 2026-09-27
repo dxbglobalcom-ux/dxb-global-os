@@ -31,6 +31,11 @@
 // line under the verdict box, a `düzeltildi` mark after each corrected line, the two lists under the ledger — and a
 // page without it is still drawer-page.html, byte for byte.
 //
+// K3 stage 2 (the research type, scripts/split.py): with a `shape` in subquestions.json the page says the type under the
+// verdict box, above the auditor's line, and the writer's `## Şekil — <name>` section stands under "Cevabı taşıyan
+// sayılar" where rule 13 puts it — after the number that carries the verdict, before S1 — with its own counts, final.md
+// alike, the ids numbered alike; its `Toplam` row and a `—` alone are no claim and carry no (0 satır); fixtures/shape/.
+//
 // HOW IT RUNS: the REAL render.py — with the real kapsama.py, evidence.py and claims.py beside it, the
 // engine's scripts copied to a temporary folder — on a temporary copy of fixtures/evidence/run-drawer:
 // thirteen rows on X, Reddit and YouTube in every ledger state (the cited L0001, L0002, L0007 and L0010
@@ -323,6 +328,85 @@ describe("final.html — what the auditor corrected and removed (B56 K3 stage 3)
     expect(got.page).toContain('<p class="note">DENETÇİ: 6 okundu · 2 düzeltildi · 1 çıkarıldı · 1 denetlenmedi</p>');
     rmSync(join(run, "audit.jsonl"));
     expect(render(run).page).toBe(readFileSync(join(RENDER, "drawer-page.html"), "utf8"));
+  });
+});
+
+describe("final.html — the research type: its line under the verdict, its Şekil section before S1 (B56 K3 stage 2)", () => {
+  const SHAPE = join(dirname(resolve(import.meta.filename)), "fixtures", "shape");
+
+  it("says the type under the verdict box and stands the Şekil section after the number line, before S1; final.md alike", () => {
+    // fixtures/shape/answer.md: run-drawer's rows, the verdict, the number that carries it, S1, then the Şekil table (an
+    // id-less row, and a Toplam row that cites nothing) the writer put AFTER S1, then S2 with rule 12's geçiş table
+    const run = join(root, "shaped");
+    cpSync(FIX, run, { recursive: true });
+    for (const f of ["answer.md", "subquestions.json"]) cpSync(join(SHAPE, f), join(run, f));
+    const got = render(run);
+    expect(got.said).toMatch(/^0 /);
+    expect(got.page).toContain('</div>\n<p class="shape-n"><span class="count">rapor tipi: Karşılaştırma · kaynak: model</span></p>\n'
+      + '<section class="sec" id="sayilar">\n<h2><span class="no">01 —</span> Cevabı taşıyan sayılar</h2>\n'
+      + '<ul class="claims">\n<li id="C002">Okunan dört satırın ikisi Astra 6');
+    expect(got.page).toContain('<span class="count">(2 satır · 2 bağımsız kaynak)</span></li>\n</ul>\n'
+      + '<div class="from"><p class="from-t">Şekil — Karşılaştırma</p>\n<p class="from-n"><span class="count">'
+      + "(2 iddia · 4 satır · 4 bağımsız kaynak · 0 karşı)</span></p>\n<div class=\"tbl\">");
+    const ours = got.page.split('id="sayilar"')[1]?.split("</section>")[0] ?? "";
+    expect([...ours.matchAll(/<p class="from-t">([^<]*)<\/p>/g)].map((m) => m[1]))
+      .toEqual(["Şekil — Karşılaştırma", "S1 — X'te iş bölümü", "S2 — Geçiş yapanlar"]);
+    // the Toplam row is no claim and carries no count; the id-less row beside it keeps its warm (0 satır)
+    expect(ours).toContain('<tr><td data-label="Alt soru"><span class="v">Toplam</span></td><td data-label="Astra 6"><span class="v">2'
+      + '</span></td><td data-label="Fable 5.1"><span class="v">2</span></td><td data-label="Öne çıkan gerekçe"><span class="v">—'
+      + "</span></td></tr>");
+    expect(ours).toContain('<span class="v">satır yok <span class="count zero">(0 satır)</span></span></td></tr>');
+    // both tables are claims of the ledger; the page numbers L0007 fourth, as final.md does
+    const book = got.page.split('id="iddialar"')[1]?.split("</section>")[0] ?? "";
+    expect(book).toContain("S2 — Geçiş yapanlar · 1 · 1 · kota");
+    expect(book).toContain("r/LocalLLaMA kullanıcısı · Fable 5.1 → Astra 6 · kota bitti");
+    expect(ours).toContain('<a class="ref" href="#L0007" title="L0007">4</a>');
+    expect(got.page).toContain('<p class="note">ŞEKİL: karşılaştırma (model) · levha satırı 2 · geçiş tablosu var</p>');
+    expect(got.page).toContain(".shape-n{");
+    spawnSync("python3", [join(root, "engine", "render.py"), join(run, "answer.md"), "--evidence", join(run, "evidence.jsonl"),
+      "--out", join(run, "final.md")], { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
+    const md = readFileSync(join(run, "final.md"), "utf8");
+    expect(md.startsWith("Net bir kazanan yok: iş bölümü var [1] [2]. (2 satır · 2 bağımsız kaynak)\n\nOkunan dört satırın ikisi "
+      + "Astra 6'yı, ikisi Fable 5.1'i öne koyuyor [2, 3]. (2 satır · 2 bağımsız kaynak)\n\n## Şekil — Karşılaştırma\n\n"), md).toBe(true);
+    expect(md).toContain("| S2 — Geçiş yapanlar | 1 [4] | 1 [3] | kota [4] (2 satır · 2 bağımsız kaynak) |\n| Diğer | — | — | satır yok |\n"
+      + "| Toplam | 2 | 2 | — |\n\n## S1 — X'te iş bölümü\n");
+    expect(md.match(/^## .*$/gm)).toEqual(["## Şekil — Karşılaştırma", "## S1 — X'te iş bölümü", "## S2 — Geçiş yapanlar",
+      "## Kaynaklar", "## Nereye bakıldı"]);
+  });
+
+  it("keeps a karar section's three `### ` lists inside its block; a `—` alone carries no (0 satır), an id-less item does", () => {
+    const run = join(root, "shaped-karar");
+    cpSync(FIX, run, { recursive: true });
+    cpSync(join(SHAPE, "subquestions.json"), join(run, "subquestions.json"));
+    writeFileSync(join(run, "answer.md"), "Net bir kazanan yok: iş bölümü var [L0006] [L0001].\n\nİki satır ikisini birlikte "
+      + "kullanıyor [L0006, L0001].\n\n## Şekil — Karar\n\n### Hüküm\n- İkisini birlikte kullanın [L0006, L0001].\n\n### Riskler\n- —\n\n"
+      + "### Hükmü ne değiştirir\n- Kalabalık sayımı yapılmadı.\n\n## S1 — X'te iş bölümü\n- Plan Fable'da, hız Astra'da [L0006, L0001].\n",
+    "utf8");
+    const got = render(run);
+    expect(got.said).toMatch(/^0 /);
+    const block = got.page.split('<p class="from-t">Şekil — Karar</p>')[1]?.split("</div>")[0] ?? "";
+    expect(block).toContain('<p class="from-n"><span class="count">(1 iddia · 2 satır · 2 bağımsız kaynak · 0 karşı)</span></p>');
+    expect([...block.matchAll(/<h3>([^<]*)<\/h3>/g)].map((m) => m[1])).toEqual(["Hüküm", "Riskler", "Hükmü ne değiştirir"]);
+    expect(block).toContain("<h3>Riskler</h3>\n<ul class=\"claims\">\n<li>—</li>\n</ul>");
+    expect(block).toContain('<li>Kalabalık sayımı yapılmadı. <span class="count zero">(0 satır)</span></li>');
+    expect(got.page.indexOf("Şekil — Karar")).toBeLessThan(got.page.indexOf('<p class="from-t">S1 — X'));
+  });
+
+  it("puts the type's line above the auditor's; a subquestions.json without a shape gives neither the line nor its rule", () => {
+    const run = join(root, "shaped-audited");
+    cpSync(FIX, run, { recursive: true });
+    cpSync(join(dirname(resolve(import.meta.filename)), "fixtures", "audit", "render", "audit.jsonl"), join(run, "audit.jsonl"));
+    const doc = JSON.parse(readFileSync(join(SHAPE, "subquestions.json"), "utf8"));
+    writeFileSync(join(run, "subquestions.json"), JSON.stringify({ ...doc, shape: "pazar", shape_name: "Pazar levhası", shape_source: "ceo" }));
+    const got = render(run);
+    expect(got.said).toMatch(/^0 /);
+    expect(got.page).toContain('</div>\n<p class="shape-n"><span class="count">rapor tipi: Pazar levhası · kaynak: CEO</span></p>\n'
+      + '<p class="audit-n"><span class="count">denetçi: 6 iddia okundu · ');
+    expect(got.page).toContain(".shape-n+.audit-n{margin-top:-42px}");
+    writeFileSync(join(run, "subquestions.json"), JSON.stringify(Object.fromEntries(Object.entries(doc).filter(([k]) => !k.startsWith("shape")))));
+    const bare = render(run).page;
+    expect(bare).toContain('<p class="audit-n">');
+    expect(bare).not.toContain("shape-n");
   });
 });
 

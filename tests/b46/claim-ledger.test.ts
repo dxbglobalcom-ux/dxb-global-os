@@ -223,6 +223,24 @@ describe("the answer's sub-questions — every claim knows the `## S<n> — ` se
     cl(["extract", plain]);
     expect(JSON.parse(cl(["status", plain, "--format", "json"]).out)).not.toHaveProperty("sections");
   });
+
+  it("counts the research type's `## Şekil — ` section under SHAPE, listed first wherever it stands (B56 K3 stage 2)", () => {
+    // the work table becomes the Şekil section, between S1 and S2, with a Toplam row that cites nothing: no claim
+    const run = fresh();
+    writeFileSync(join(run, "answer.md"), readFileSync(join(run, "answer.md"), "utf8")
+      .replace("## Platform platform: kim hangisini seçiyor", "## S1 — Platform platform")
+      .replace("## İşe göre ayrışma", "## Şekil — Karşılaştırma")
+      .replace("hafif işte yavaş [L1681] |\n", "hafif işte yavaş [L1681] |\n| Toplam | — | 5 | — |\n")
+      .replace("## Kota ve maliyet", "## S2 — Kota ve maliyet"));
+    const r = cl(["extract", run]);
+    expect(last(r.out), r.out).toBe("CLAIMS: 8 · verdict 1 · thin 1 · counter-less 6 · inadmissible-cited 1 · carried 0 · unexplained-evidence 0 · sections 2");
+    expect(jsonl(join(run, "claims.jsonl")).map((c) => `${c.id} ${c.section} ${c.kind}`)).toEqual(
+      ["C001 S0 verdict", "C002 S1 claim", "C003 SHAPE claim", "C004 SHAPE claim", "C005 S2 claim", "C006 S0 claim", "C007 S0 claim",
+        "C008 S0 claim"]);
+    const sections = JSON.parse(cl(["status", run, "--format", "json"]).out).sections;
+    expect(Object.keys(sections)).toEqual(["SHAPE", "S1", "S2"]);
+    expect(sections.SHAPE).toEqual({ claims: 2, rows: 4, sources: 4, counter: 0 });
+  });
 });
 
 describe("writer-rows — the writer is handed only the rows the ledger admits", () => {

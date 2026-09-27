@@ -92,6 +92,7 @@ REASON_LEAD = re.compile(r"^[\s\-–—:·]+")
 SUB_HEAD = re.compile(r"^S([1-9]\d?)\s*[—–-]\s*(\S.*)$")
 SUB_ID = re.compile(r"S[1-9]\d?")
 GAP = "Bu alt soruya satır yok."
+SHAPE_HEAD = re.compile(r"^[Şş]ekil\s*[—–-]\s*\S")    # the research type's block, `## Şekil — <name>` (K3 stage 2)
 
 
 def _uniq(ids) -> list[str]:
@@ -257,6 +258,11 @@ def sub_heading(title: str) -> tuple[str, str] | None:
     return (f"S{m.group(1)}", m.group(2)) if m else None
 
 
+def shape_heading(title: str) -> bool:
+    """A `## ` heading's text as the research type's block (fleet/shapes/, B56 K3 stage 2): `Şekil — <name>`."""
+    return bool(SHAPE_HEAD.match(claim_text(title)))
+
+
 def is_gap(line: str) -> bool:
     """The line a sub-question no row speaks to holds, `Bu alt soruya satır yok.` — list mark, decor and the full
     stop aside. A line that cites is a claim, whatever it says."""
@@ -281,21 +287,23 @@ def sub_sections(md: str) -> dict[str, dict]:
 
 
 def sub_counts(claims: list[dict], rows: dict[str, dict]) -> dict[str, dict]:
-    """Per sub-question, in S-order, the claims whose `section` is its S-id (S0 is no sub-question): {"claims": n,
+    """Per sub-question, in S-order, the claims whose `section` is its S-id (S0 is no sub-question) — the research
+    type's block first, under "SHAPE" (K3 stage 2): {"claims": n,
     "rows": the distinct admitted rows they stand on, "sources": the independent sources among those rows
     (source_key), "counter": the distinct admitted rows on their counter side}. `rows` is the ledger by id."""
     acc: dict[str, tuple[list, set, set]] = {}
     for c in claims:
         s = c.get("section")
-        if not (isinstance(s, str) and SUB_ID.fullmatch(s)):
+        if not (isinstance(s, str) and (SUB_ID.fullmatch(s) or s == "SHAPE")):
             continue
         bad = set(c.get("inadmissible") or [])
         n, sup, cou = acc.setdefault(s, ([0], set(), set()))
         n[0] += 1
         sup.update(i for i in c.get("support") or [] if i not in bad)
         cou.update(i for i in c.get("counter") or [] if i not in bad)
+    first = lambda kv: -1 if kv[0] == "SHAPE" else int(kv[0][1:])  # noqa: E731 — the research type's block, then S1…
     return {s: {"claims": n[0], "rows": len(sup), "sources": len({source_key(rows[i]) for i in sup if i in rows}),
-                "counter": len(cou)} for s, (n, sup, cou) in sorted(acc.items(), key=lambda kv: int(kv[0][1:]))}
+                "counter": len(cou)} for s, (n, sup, cou) in sorted(acc.items(), key=first)}
 
 
 # =================================================================== extract
@@ -316,7 +324,7 @@ def extract_claims(md: str, rows: dict[str, dict]) -> list[dict]:
     separator row, never a line of the `## Alınmayan kanıt` section — as a claim, in order: C001, C002, …
     `rows` is the ledger by id (every row, so each quote row finds its address). The counts are over
     ADMITTED rows only (evidence.admissible). `section` is the S-id of the sub-question section the claim
-    stands in: "S0" outside every one, "" when the answer has no S-heading (B56 K3)."""
+    stands in: "S0" outside every one, "" when the answer has no S-heading (B56 K3); "SHAPE" under `## Şekil — `."""
     index = evidence.address_index(list(rows.values()))
     lines = (md or "").splitlines()
     unused = unused_section(md)[0]
@@ -329,7 +337,7 @@ def extract_claims(md: str, rows: dict[str, dict]) -> list[dict]:
         h = H2.match(line)
         if h:
             sub = sub_heading(h.group(1))
-            section, headed = sub[0] if sub else outside, True
+            section, headed = sub[0] if sub else "SHAPE" if shape_heading(h.group(1)) else outside, True
         if "|" in line and SEP_ROW.match(line):
             continue
         if line.lstrip().startswith("|") and n < len(lines) and "|" in lines[n] and SEP_ROW.match(lines[n]):

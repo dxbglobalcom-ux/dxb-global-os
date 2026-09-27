@@ -30,6 +30,10 @@
 // own, the gate's (fixtures/gate/), whose ledger answers writer-rows; this file's field cases run --no-write. The writer
 // runs at medium effort from K3 stage 3 on (the lead's measurement of 2026-09-27: medium ≥ high by a blind judge).
 //
+// B56 K3 STAGE 2 — THE RESEARCH TYPE. The split names the type of his question beside its sub-questions (karsilastirma ·
+// pazar · profil · karar: the model's, else a rule on the question's words), `rapor tipi:` stands under `alt sorular:`, and
+// the writer is handed that type's skeleton (fleet/shapes/) as {{SHAPE}}; his one word, --shape, overrides both.
+//
 // B56 K3 STAGE 3 — THE AUDITOR. Nothing read a final line against the rows it cites; now, after the answer's ledger, an
 // Opus that never saw the writer reads every claim with only its rows (scripts/audit.py), answer.md takes what it
 // corrected and removed, the ledger is extracted again and checked, then the page is made. FAKE_AUDIT hands audit.py a
@@ -323,11 +327,43 @@ describe("K3 — his question is split into sub-questions before the ground open
   const ARGS = ["--q", Q, "--roles", "x", "--timeout", "30", "--no-write"];
   const GOOD = { FAKE_SPLIT: join(SPLIT, "answer-good.json") };
 
-  it("reads a model's answer bare, in a fence, and cut — the cut one falls back (split.py --selftest)", () => {
+  it("reads a model's answer bare, in a fence, and cut — the cut one falls back — and its research type (split.py --selftest)", () => {
     const out = execFileSync("python3", [join(b.engine, "scripts", "split.py"), "--selftest"],
       { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
-    expect(out.trim().split("\n").at(-1), out).toBe("SELFTEST OK 3/3");
+    expect(out.trim().split("\n").at(-1), out).toBe("SELFTEST OK 4/4");
   });
+
+  it("types a question by the text rule when no answer names its type — karar before `mı yoksa` — and writes nothing (--shape-only)", () => {
+    const said: string[] = [];
+    for (const [n, dert, query] of [
+      ["vs", "Astra 6 mı yoksa Fable 5.1 mi, profesyoneller hangisini tercih ediyor?", "Astra 6 vs Fable 5.1"],
+      ["pazar", "Türkiye'de elektrikli bisiklet pazar büyüklüğü ne kadar?", "e-bike Turkey"],
+      ["profil", "Outleteuro'yu inceleyin: kim kurdu, ne satıyor, kaç kişi çalışıyor?", "Outleteuro"],
+      ["karar", "Bir ajan platformu var. Ona abone olalım mı, yoksa kendi filomuz yeter mi?", "agent platform"]]) {
+      const run = join(b.root, `shape-rule-${n}`);
+      mkdirSync(run, { recursive: true });
+      writeFileSync(join(run, "question.txt"), `DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):\n${dert}\n\n`
+        + `SORGULAR (zemin bunlarla acildi):\n  - ${query}\n`);
+      said.push(execFileSync("python3", [join(b.engine, "scripts", "split.py"), run, "--shape-only"],
+        { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } }).trim());
+      expect(readdirSync(run), "nothing is written").toEqual(["question.txt"]);
+    }
+    expect(said).toEqual([
+      'rapor tipi: karşılaştırma (kaynak: kural · soru adı geçenleri karşılaştırıyor: "mı yoksa")',
+      'rapor tipi: pazar levhası (kaynak: kural · soru bir pazarı, fiyatı ya da talebi soruyor: "pazar")',
+      "rapor tipi: profil (kaynak: kural · soruda karar, karşılaştırma ya da pazar işareti yok — tek konu inceleniyor)",
+      'rapor tipi: karar (kaynak: kural · soru ne yapılacağını soruyor: "abone olalım mı")']);
+  });
+
+  it("takes --shape as one of the four words or does not start; with --no-split his word is named unused", () => {
+    const run = join(b.root, "shape-bogus");
+    const r = fleet(run, ...ARGS, "--shape", "bogus");
+    expect(r.code, r.stdout).toBe(3);
+    expect(r.stdout).toContain("!! DUR: --shape karsilastirma | pazar | profil | karar ister (verilen: bogus)");
+    expect(existsSync(run), "nothing ran").toBe(false);
+    const n = fleet(join(b.root, "shape-no-split"), ...ARGS, "--no-split", "--shape", "karar");
+    expect(n.stdout, n.stdout.slice(0, 2500)).toMatch(/^alt sorular: atlandi \(--no-split\)\n!! rapor tipi: --shape karar kullanilmadi — --no-split, soru bolunmedi$/m);
+  }, 90_000);
 
   it("names the sub-questions before the ground, hands them to the hunter through question.txt; --write-only reuses them", () => {
     const run = join(b.root, "split-good");
@@ -371,7 +407,7 @@ describe("K3 — his question is split into sub-questions before the ground open
     expect(existsSync(join(run, "subquestions.json"))).toBe(false);
   }, 90_000);
 
-  it("keeps no earlier split's subquestions.json in a full run that does not split: --no-split, or a split.py that fails", () => {
+  it("keeps no earlier split's subquestions.json in a full run that does not split: --no-split, or a split.py that fails — and names his --shape unused", () => {
     // the lead's measurement: a run folder used again with --no-split kept the first run's four sub-questions, and
     // kapsama.py printed `ALT SORU: 4 · tam 0 · boş 0 · eksik 4` for a question.txt that holds none
     const run = join(b.root, "split-again");
@@ -386,11 +422,16 @@ describe("K3 — his question is split into sub-questions before the ground open
     renameSync(split, `${split}.real`);
     writeFileSync(split, "raise SystemExit(1)\n");
     let failed = { code: 0, stdout: "" };
+    let typed = { code: 0, stdout: "" };
     try {
       failed = fleet(run, ...ARGS);
+      writeFileSync(split, "raise SystemExit(124)\n");           // its clock's code, with his word on the run (K3 stage 2)
+      typed = fleet(join(b.root, "split-fails-typed"), ...ARGS, "--shape", "karar");
     } finally {
       renameSync(`${split}.real`, split);
     }
+    expect(typed.stdout, typed.stdout.slice(0, 2500))
+      .toMatch(/^!! alt sorular: split\.py kod 124 — .*\n!! rapor tipi: --shape karar kullanilmadi — split\.py kod 124, soru bolunmedi$/m);
     expect(failed.stdout, failed.stdout.slice(0, 2500)).toMatch(/^!! alt sorular: split\.py kod 1 — /m);
     expect(existsSync(json), "split.py failed").toBe(false);
     expect(readFileSync(join(run, "question.txt"), "utf8")).toBe(`SORGULAR (zemin bunlarla acildi):\n  - ${Q}\n`);
@@ -452,6 +493,43 @@ describe("K3 — the writer's clock is --writer-timeout, a tail that wrote no an
     expect(w.stdout).toMatch(/^writer \(taslak\): .* -> claude-opus-5-5 · efor medium · zaman siniri 42s$/m);
     expect(w.stdout).toMatch(/^writer \(son\): .* -> claude-opus-5-5 · efor medium · zaman siniri 42s$/m);
   }, 60_000);
+
+  // K3 STAGE 2 — THE RESEARCH TYPE: the writer is handed the skeleton of the run's type as {{SHAPE}} (fleet/shapes/).
+  it("hands the writer the skeleton of the run's research type — the model's, then his --shape on --write-only", () => {
+    const run = join(g.root, "shape-typed");
+    const typed = { FAKE_SPLIT: join(import.meta.dirname, "fixtures", "shape", "answer-karsilastirma.json") };
+    const split = ARGS.filter((a) => a !== "--no-split");
+    const prompt = (pass = ".draft") => readFileSync(join(run, `writer-prompt${pass}.txt`), "utf8");
+    const skeleton = (name: string) => readFileSync(join(g.engine, "fleet", "shapes", `${name}.md`), "utf8").trim();
+    const r = on(typed, run, ...split);
+    expect(r.code, r.stdout.slice(-2500)).toBe(0);
+    expect(r.stdout).toMatch(/^alt sorular: 4 \(kaynak: model · .*\nrapor tipi: karşılaştırma \(kaynak: model · Soru iki modeli, Astra 6 ile Fable 5\.1'i karşılaştırıyor\.\)$/m);
+    expect(JSON.parse(readFileSync(join(run, "subquestions.json"), "utf8"))).toMatchObject({ source: "model", shape: "karsilastirma",
+      shape_name: "Karşılaştırma", shape_source: "model", shape_reason: "Soru iki modeli, Astra 6 ile Fable 5.1'i karşılaştırıyor." });
+    expect(prompt()).toContain(`## Bu raporun şekli\nThe research type of this run and the skeleton of its Şekil section (rule 13) — `
+      + `or the one line saying there is none:\n${skeleton("karsilastirma")}\n\n## Write answer.md`);
+    // his word on the tail: the json takes it, the sub-questions stay; both passes are handed the karar skeleton
+    const w = on({}, "--write-only", run, "--shape", "karar", "--no-claim-hunt");
+    expect(w.code, w.stdout.slice(-2500)).toBe(0);
+    expect(w.stdout).toMatch(/\(subquestions\.json yeniden kullanıldı\)\nrapor tipi: karar \(kaynak: CEO · CEO'nun sözü: --shape karar\)$/m);
+    expect(JSON.parse(readFileSync(join(run, "subquestions.json"), "utf8")))
+      .toMatchObject({ source: "model", shape: "karar", shape_name: "Karar", shape_source: "ceo", items: [{ id: "S1" }, {}, {}, { id: "S4" }] });
+    for (const pass of [".draft", ""]) {
+      for (const line of ["## Şekil — Karar", "### Hüküm", "### Riskler", "### Hükmü ne değiştirir"]) expect(prompt(pass)).toContain(`\n${line}\n`);
+    }
+    // a type with no skeleton file is named on the log, and the writer is told there is none
+    const file = join(g.engine, "fleet", "shapes", "karar.md");
+    renameSync(file, `${file}.away`);
+    let gone = { code: 0, stdout: "" };
+    try {
+      gone = on({}, "--write-only", run, "--no-claim-hunt");
+    } finally {
+      renameSync(`${file}.away`, file);
+    }
+    expect(gone.stdout).toMatch(/^!! şekil: .*\/fleet\/shapes\/karar\.md yok — Şekil bölümü istenmedi\nwriter \(taslak\): /m);
+    expect(prompt()).toContain("## Bu raporun şekli\nThe research type of this run and the skeleton of its Şekil section (rule 13) — "
+      + "or the one line saying there is none:\n(bu koşuda şekil yok — Şekil bölümü yazılmaz)\n\n## Write answer.md");
+  }, 90_000);
 
   // K3 STAGE 3 — THE AUDITOR. The writer's answer here is fixtures/audit/fleet-answer.md: its verdict and two list items,
   // citing L0008 (the x hunter's quote, the one row this bench's ledger admits) and L0002 (judged no evidence).

@@ -264,6 +264,34 @@ describe("kapsama.py — prints, never blocks", () => {
     expect(bare.out, "without --answer there is no answer to count").not.toContain("ALT SORU");
   });
 
+  it("with a shape in subquestions.json, a last ŞEKİL line: the Şekil section's claims and rule 12's geçiş table", () => {
+    // fixtures/shape/: run-drawer's rows under an answer whose Şekil table has two rows that cite and a Toplam that cites
+    // nothing, and whose S2 ("Geçiş yapanlar", a rule-12 word) holds the `Kim | Nereden → nereye | Gerekçe` table
+    const SHAPE = join(dirname(resolve(import.meta.filename)), "fixtures", "shape");
+    const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));
+    cpSync(join(FIX, "run-drawer"), dir, { recursive: true });
+    const answer = join(dir, "answer.md");
+    const json = join(dir, "subquestions.json");
+    for (const f of ["answer.md", "subquestions.json"]) cpSync(join(SHAPE, f), join(dir, f));
+    const doc = JSON.parse(readFileSync(json, "utf8"));
+    const typed = kapsama([dir, "--answer", answer]);
+    writeFileSync(answer, readFileSync(join(SHAPE, "answer.md"), "utf8").replace("| Kim | Nereden → nereye | Gerekçe |", "| Kim | Geçiş | Gerekçe |"));
+    const noTable = kapsama([dir, "--answer", answer]);
+    writeFileSync(json, JSON.stringify({ ...doc, shape_source: "ceo", items: doc.items.map((i: { title: string }) => ({ ...i, title: "Kim neyi seçti", question: "Kim?" })) }));
+    const notAsked = kapsama([dir, "--answer", answer]);
+    writeFileSync(json, JSON.stringify(Object.fromEntries(Object.entries(doc).filter(([k]) => !k.startsWith("shape")))));
+    cpSync(join(SHAPE, "answer.md"), answer);
+    const without = kapsama([dir, "--answer", answer]);
+    rmSync(dir, { recursive: true, force: true });
+    expect(typed.code, typed.out).toBe(0);
+    expect(typed.out.endsWith("ALT SORU: 2 · tam 2 · boş 0 · eksik 0\nŞEKİL: karşılaştırma (model) · levha satırı 2 · geçiş tablosu var\n"),
+      typed.out).toBe(true);
+    expect(noTable.out).toMatch(/^ŞEKİL: karşılaştırma \(model\) · levha satırı 2 · geçiş tablosu yok$/m);
+    expect(notAsked.out).toMatch(/^ŞEKİL: karşılaştırma \(CEO\) · levha satırı 2 · geçiş tablosu gerekmiyor$/m);
+    // without a shape: every line as it was, and no ŞEKİL line
+    expect(without.out).toBe(typed.out.replace(/^ŞEKİL: .*\n/m, ""));
+  });
+
   it("with --answer and the auditor's audit.jsonl beside it, a DENETÇİ line right after KANIT — audit.py's tally", () => {
     // fixtures/audit/render/audit.jsonl: run-drawer's answer as the auditor left it — 3 ok, 2 corrected, 1 removed, 1 not read
     const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));

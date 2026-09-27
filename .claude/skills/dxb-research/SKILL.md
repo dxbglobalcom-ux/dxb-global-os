@@ -20,7 +20,7 @@ S="/home/dxb/DxB Global OS/.claude/skills/dxb-research"; export PATH="$S/bin:$PA
 - **Deep** (what people think, a comparison, a market; ≤ 15 minutes end to end): the fleet — seven hunters,
   one per platform group, Opus 5.5 · low (his word, 2026-09-26), each reading EVERY address of its
   platforms and accounting for the unread:
-  `bash "$S/fleet/fleet.sh" <outdir> --q "<3-6 words>" [--q "<another phrasing>"] [--dert <his-words.txt>] [--writer-timeout S] [--no-split] [--no-audit]`.
+  `bash "$S/fleet/fleet.sh" <outdir> --q "<3-6 words>" [--q "<another phrasing>"] [--dert <his-words.txt>] [--writer-timeout S] [--no-split] [--shape karsilastirma|pazar|profil|karar] [--no-audit]`.
   It opens the ground, turns it into evidence rows, launches the hunters, counts the crowd, and prints
   the coverage table; its writer step then drafts `answer.md` from the rows (below), two claim rounds
   follow — `karsi` hunts counter-evidence for every verdict-carrying claim, `bosluk` a second source for
@@ -78,7 +78,9 @@ python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # th
 ## The answer — like Perplexity, in the CEO's shape
 On the deep road the fleet's writer step writes `<outdir>/answer.md` — Opus 5.5 · medium (measured ≥ high, 2026-09-27), from the rows the
 hunters left (on by default; `--no-write` skips it, `--write-only <outdir>` runs it alone). Before the field, `scripts/split.py` cuts his question
-into 3–6 sub-questions (`ALT SORULAR` in question.txt; each a `## S1 — ` section with its own counts; `--no-split`); after the final answer,
+into 3–6 sub-questions (`ALT SORULAR` in question.txt; each a `## S1 — ` section with its own counts; `--no-split`) and names the
+research type — karşılaştırma · pazar levhası · profil · karar — whose skeleton (`fleet/shapes/<type>.md`) the writer fills as `## Şekil — …`
+first under the numbers, the page saying `rapor tipi: … · kaynak: model | CEO | kural`; his one word `--shape <type>` overrides it; after the final answer,
 `scripts/audit.py` — an Opus at low that never saw the writer — reads every claim against its rows, inline, corrects or removes it (the page lists
 both; `!! DENETLENMEYEN İDDİA` + exit 1 when a claim went unread; `--no-audit`). For a quick
 question you write it yourself, the same way — in Turkish, from the rows only:
