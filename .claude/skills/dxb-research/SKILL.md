@@ -20,7 +20,7 @@ S="/home/dxb/DxB Global OS/.claude/skills/dxb-research"; export PATH="$S/bin:$PA
 - **Deep** (what people think, a comparison, a market; ≤ 15 minutes end to end): the fleet — seven hunters,
   one per platform group, Opus 5.5 · low (his word, 2026-09-26), each reading EVERY address of its
   platforms and accounting for the unread:
-  `bash "$S/fleet/fleet.sh" <outdir> --q "<3-6 words>" [--q "<another phrasing>"] [--dert <his-words.txt>]`.
+  `bash "$S/fleet/fleet.sh" <outdir> --q "<3-6 words>" [--q "<another phrasing>"] [--dert <his-words.txt>] [--writer-timeout S] [--no-split] [--no-audit]`.
   It opens the ground, turns it into evidence rows, launches the hunters, counts the crowd, and prints
   the coverage table; its writer step then drafts `answer.md` from the rows (below), two claim rounds
   follow — `karsi` hunts counter-evidence for every verdict-carrying claim, `bosluk` a second source for
@@ -63,7 +63,7 @@ python3 "$S/scripts/evidence.py" list <outdir> --platform x                 # ev
 python3 "$S/scripts/evidence.py" list <outdir> --platform x --no-body       # only those with no body yet (skip blocked / dead)
 python3 "$S/scripts/evidence.py" fetch <outdir> --url <url> --print         # read a body; a closed door is recorded
 python3 "$S/scripts/evidence.py" add <outdir> --url <url> --quote "<verbatim>" [--author A --date D]   # -> L0042
-python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # the coverage table, ten columns + RECONCILED + İDDİA + KANIT
+python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # the coverage table, ten columns + RECONCILED + İDDİA + KANIT + DENETÇİ + ALT SORU
 ```
 
 ## How to work
@@ -76,8 +76,11 @@ python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # th
 - Is the engine working today? `R="$S/scripts"; bash "$R/probe.sh"` — one line per channel, the closed ones named.
 
 ## The answer — like Perplexity, in the CEO's shape
-On the deep road the fleet's writer step writes `<outdir>/answer.md` — Opus 5.5 · high, from the rows the
-hunters left (on by default; `--no-write` skips it, `--write-only <outdir>` runs it alone). For a quick
+On the deep road the fleet's writer step writes `<outdir>/answer.md` — Opus 5.5 · medium (measured ≥ high, 2026-09-27), from the rows the
+hunters left (on by default; `--no-write` skips it, `--write-only <outdir>` runs it alone). Before the field, `scripts/split.py` cuts his question
+into 3–6 sub-questions (`ALT SORULAR` in question.txt; each a `## S1 — ` section with its own counts; `--no-split`); after the final answer,
+`scripts/audit.py` — an Opus at low that never saw the writer — reads every claim against its rows, inline, corrects or removes it (the page lists
+both; `!! DENETLENMEYEN İDDİA` + exit 1 when a claim went unread; `--no-audit`). For a quick
 question you write it yourself, the same way — in Turkish, from the rows only:
 - The first 1–2 sentences ARE the answer. Then the number that carries it (count, share, denominator).
   Then what would change it and whether that was looked at. Contradictions left standing are named.
