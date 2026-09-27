@@ -77,6 +77,8 @@ export const C = {
     { id: "b60-accepted-by-his-eye-2026-09-27", subject: /\bB60\b/ },
     // P6-UC — the three answers side by side (P6-UC-CEVAP-YAN-YANA-2026-09-26.md), accepted by his eye 2026-09-27 03:15 (the same sentence).
     { id: "p6-uc-accepted-by-his-eye-2026-09-27", subject: /\bP6-UC\b/ },
+    // K3 stage 3 — AYRI DENETÇİ (the independent auditor), accepted by his eye 2026-09-27 ~07:17 ("Göz kısmı tamam."); spelled "K3 STAGE 3" / "K3 stage 3" / "stage 3 (ayrı denetçi)" / "stage 3's page" in STATE and on board B56. Deliberately NOT /\bK3\b/: stage 2 of K3 is open (LAW B, the B50 lesson above).
+    { id: "research-k3-stage3-accepted-by-his-eye-2026-09-27", subject: /\bK3 (STAGE|stage) 3\b|\b(STAGE|stage) 3 \(ayrı denetçi\)\b|\bstage 3's page\b/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
