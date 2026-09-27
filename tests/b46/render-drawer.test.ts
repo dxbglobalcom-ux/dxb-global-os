@@ -24,7 +24,8 @@
 // (fleet/writer-prompt.md rule 11) shows each sub-question whole under "Cevabı taşıyan sayılar", its counts line
 // under its heading, a sub-question with no row as its gap line in the thin style, and kapsama.py's second table
 // under "Nereye bakıldı". A page whose answer has no S-heading is byte for byte the page of before: fixtures/render/
-// drawer-page.html is run-drawer's page as render.py made it at af919c84, before K3.
+// drawer-page.html is run-drawer's page as render.py made it at af919c84, before K3 — made again once since, for the
+// overflow repair of 2026-09-27 (the `.refs` and `.tbl` rules, U+200B between two chips), nothing else in it changed.
 //
 // HOW IT RUNS: the REAL render.py — with the real kapsama.py, evidence.py and claims.py beside it, the
 // engine's scripts copied to a temporary folder — on a temporary copy of fixtures/evidence/run-drawer:
@@ -125,7 +126,7 @@ describe("final.html — counter-evidence in one bracket is the two citations it
     // each side its chips, ↔ between them, one span at the end; L0003's post was triaged irrelevant, so the
     // ledger refuses it: struck through, counted in nothing — and the page is still built
     expect(ok.page.match(/<li id="C\d{3}">Kota: [\s\S]*?<\/li>/)?.[0].replace(/<a class="ref" href="#(L\d{4})"[^>]*>\d+<\/a>/g, "$1"))
-      .toBe('<li id="C007">Kota: iki taraf birbirini yalanlıyor <span class="refs">L0001L0002</span> ↔ <s class="inadmissible" '
+      .toBe('<li id="C007">Kota: iki taraf birbirini yalanlıyor <span class="refs">L0001\u200BL0002</span> ↔ <s class="inadmissible" '
         + 'title="elendi: irrelevant">[L0003]</s>. <span class="count">(2 satır · 2 bağımsız kaynak)</span></li>');
     // kapsama.py reads the pair the same way (platforms.split_paired), and like the drawer it leaves L0003,
     // refused, out of the answer: X's Cevapta is the drawer's "2 cevapta" (K1 counted L0003's post: 3)
@@ -303,6 +304,30 @@ describe("final.html — a page that stands alone", () => {
     expect(cov).toContain('<span class="why-l">Elenen</span> ilgisiz: Opus vs Astra, not Fable ×2 · ilgisiz: Free access tip only ×1 · tekrar ×1');
     expect(cov).toContain('<span class="why-l">Kapalı kapı</span> opencli reddit read kod 1 ×1');
     expect(cov).toContain("RECONCILED — bulundu 12");
+  });
+
+  it("never grows wider than its column: a chain of chips breaks between two chips, a wide table scrolls in its own box", () => {
+    // 2026-09-27, the K3 page at 1280 px: scroll width 1802 — a 4-column table 1526 px wide, its cells holding up to
+    // ~20 chips on one line (`.refs{white-space:nowrap}`, the chips written with nothing between them)
+    const dir = join(root, "wide");
+    cpSync(join(RENDER, "k1-cut"), dir, { recursive: true });
+    const ids = readFileSync(join(dir, "evidence.jsonl"), "utf8").split("\n").filter(Boolean)
+      .map((l) => JSON.parse(l).id as string).filter((id) => id !== "L1071").slice(0, 25);   // L1071: the one refused
+    writeFileSync(join(dir, "answer.md"), "Net bir kazanan yok: iş bölümü var.\n\n| Platform | Fable lehine | Astra lehine | İş bölümü |\n"
+      + `|---|---|---|---|\n| X | Plan ve kod [${ids.join(", ")}] | Hız | Plan Fable'da, iş Astra'da |\n`, "utf8");
+    const got = render(dir);
+    expect(got.said).toMatch(/^0 /);
+    expect(got.page).toContain('<div class="tbl"><table class="stack"><thead><tr><th>Platform</th>');
+    expect(got.page.match(/\.tbl\{[^}]*\}/)?.[0]).toContain("overflow-x:auto");
+    const refs = got.page.match(/\.refs\{[^}]*\}/)?.[0] ?? "";
+    expect(refs).toMatch(/^\.refs\{/);
+    expect(refs).not.toContain("nowrap");
+    const cell = got.page.match(/<td data-label="Fable lehine">[\s\S]*?<\/td>/)?.[0] ?? "";
+    expect(cell.match(/<a class="ref"/g)).toHaveLength(25);
+    // between every two chips a place to break — a whitespace character or U+200B, never nothing
+    const gaps = [...cell.matchAll(/<\/a>([^<]*)<a class="ref"/g)].map((m) => m[1]);
+    expect(gaps).toHaveLength(24);
+    for (const g of gaps) expect(g).toMatch(/^[\s\u200B]+$/);
   });
 });
 

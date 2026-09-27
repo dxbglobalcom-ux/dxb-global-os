@@ -389,14 +389,14 @@ li.d3{margin-left:54px}
 .count{margin-left:2px;font:500 12.5px/1 var(--mono);color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
 .count.zero{padding:1px 5px;border:1px solid var(--warm);border-radius:3px;background:var(--warm-bg);color:var(--warm)}
 .count.thin{color:var(--warm)}
-.refs{white-space:nowrap}
+.refs{white-space:normal}
 s.inadmissible{margin:0 2px;color:var(--muted);font:400 11.5px/1.3 var(--mono);white-space:nowrap}
 li:target,tr:target,p:target{outline:2px solid var(--accent);outline-offset:2px}
 a.ref{display:inline-block;min-width:20px;margin:0 1px;padding:2px 5px;border-radius:3px;background:var(--chip);color:var(--ink-2);font:500 11.5px/1.3 var(--mono);text-align:center;text-decoration:none;vertical-align:1px}
 a.ref:hover,a.ref:focus-visible{background:var(--accent);color:var(--on-accent)}
 code{padding:1px 4px;border-radius:3px;background:var(--chip);font:400 .9em var(--mono)}
 hr{margin:24px 0;border:0;border-top:1px solid var(--rule)}
-.tbl{margin:0 0 18px}
+.tbl{margin:0 0 18px;overflow-x:auto;max-width:100%}
 table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5}
 th,td{padding:8px 12px 8px 0;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
 th:last-child,td:last-child{padding-right:0}
@@ -700,7 +700,9 @@ class Page:
                 continue
             n = self.num.setdefault(i, len(self.num) + 1)
             refs.append(f'<a class="ref" href="#{i if i in self.shelved else "q-" + i}" title="{i}">{n}</a>')
-        return ('<span class="refs">' + "".join(refs) + "</span>" if refs else "") + "".join(gone)
+        # a chain wraps between two chips, never inside one: U+200B, a break that takes no width (K3 page of
+        # 2026-09-27: ~20 chips on one unbroken line made a table 1526 px wide, the page 1802 px at 1280)
+        return ('<span class="refs">' + "\u200b".join(refs) + "</span>" if refs else "") + "".join(gone)
 
     def count(self, s: str, zero: bool = False) -> str:
         """The span at the end of a claim line (his order, 2026-09-26; EVIDENCE-B56-K2 §2.4), ONE on a
