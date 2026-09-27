@@ -1634,5 +1634,13 @@
     "conditions": "Covers the repaired items only (C1–C8, D, E1, E2) as measured and returned in the commit record; does NOT cover B42's unrelated BATTERY_RED (r43 arsenal, named on B42, not repaired here) and does not touch B63 or B42, which were not put in front of him in this exchange.",
     "session": "this session, typed 2026-09-27 ~13:29 local, in reply to a position report naming the two subjects waiting his eye",
     "where": ".planning/STATE.md B56 · board B56 · EVIDENCE-B56-K3-2026-09-27.md § the older defect list"
+  },
+  "dxb-now-hook-deleted-2026-09-27": {
+      "date": "2026-09-27",
+      "what": "HIS ORDER TO DELETE THE dxb-now PROMPT HOOK (the clock line printed on every prompt, built the same day at 17:38, eb1f74f0), given at 22:55 after the successor session wrote 'dün kurulan dört kilit' about locks built that same day at 20:05–20:52; conditional on the chief engineer's judgment that the hook's information is available on demand — judged true (the date sits in the session's opening context, the hour is one `date` command away; the error was about a past event, which the clock could not repair).",
+      "verbatim": "ya kanca manca ile istemiorm sen biryere atıfta buluorsun bir commite onun hangi tarihte yapıldığına neden bakılmıor sorun bu geçmişte yapılan 1 saat once olsun 1 gün önce olsun neden tam zaman verilmior baktığınız yerde yazmıor mu yaa? kanca sana şuanki saati ve tarihi benim her msgımda basmasını nbir anlamı hiç yok ki şuanı biliorsun zaten o kancada yanlış o zaman gereksiz. eğer öyle dediğim gibiyse kankcayı kaldır at sil gitsin.",
+      "conditions": "An order, not an approval of any work; nothing is accepted by it (LAW B). Not a law: he refused a hook-based remedy in the same breath ('kanca manca ile istemiorm'); the remedy he named is a working habit — a reference to past work carries the time read from its record. The dated record of the hook's building (STATE 2026-09-27 block) stays as history with the deletion appended.",
+      "session": "Fable 5.1 chief-engineer session d45b26da, opened Pazar 2026-09-27 20:55 — heard first-hand in this conversation, 22:55 local; his follow-ups 22:57 ('bu dün kurulmadı arkadşaım bugün kuruldu') and ~23:00 ('anladın mı derdimi?').",
+      "where": ".claude/settings.json (UserPromptSubmit entry removed) · .claude/hooks/dxb-now.sh, .codex/hooks/dxb-now.sh, tests/hooks/dxb-now.test.ts (deleted) · .planning/STATE.md 2026-09-27 block"
   }
 }
