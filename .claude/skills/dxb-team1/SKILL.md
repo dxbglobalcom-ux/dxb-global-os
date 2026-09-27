@@ -131,15 +131,22 @@ BUILD    → the writers are opened in ONE message, in parallel; each carries th
            (goal · its files · what it may change · what it must verify · what it must not do ·
            output format · who reads it · what is already known); each runs only its lane's
            tests, never the full battery (two batteries on one engine measure each other).
+           A command longer than 4 minutes (the battery, a full test run, the live fleet) is
+           the lead's, never a lane's: a lane that needs one writes it into its note (the cost
+           gate refuses it inside a subagent).
 VERIFY   → the fresh verifier: diff + done-list + lane list, nothing from the writers.
-           A — blocks · B — the lane's writer repairs it now · C — older than this work → a
-           board row through `dxb-close-row`.
+           A — blocks · B — repaired now by a FRESH writer · C — older than this work → a
+           board row through `dxb-close-row`. Every repair after the verifier goes to a FRESH
+           `builder` (description `guarded:`) carrying the verifier's A/B list, the lane's
+           done-list and the diff to read; the lead never resumes a writer idle more than 4
+           minutes (its cache is cold after 5; a resume writes its whole context again —
+           measured 2026-09-26/27: six resumes, 2.4 M tokens).
 ESCALATE → an A finding → `refuter` (xhigh) re-checks that A list only.
-           agreed → `builder` (max) writes the fix → verifier round 2, A list only.
+           agreed → a FRESH `builder` (max) writes the fix → verifier round 2, A list only.
            disagreed or cause unknown → `arbiter` (max) rules; its ruling is final for the machine.
            Two verifier rounds; an A still open after round 2 goes to the CEO with its reason.
 JUDGE    → the lead re-measures every number itself, runs the battery ONCE, measures the
-           dependants again; ACCEPT → one commit per phase; REJECT → back with file:line + scenario.
+           dependants again; ACCEPT → one commit per phase; REJECT → a FRESH writer with file:line + scenario.
 TELL     → the CEO, in his language (SO 14, the hook): the position first, then the result; never a question.
 RECORD   → STATE (the contradicted sentence goes, LAW A), the board row, evidence with a dated
            note, rulers green. A phase whose record is behind reality is not finished.

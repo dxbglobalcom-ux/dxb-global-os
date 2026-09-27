@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Test battery for dxb-cost-gate: every killer must be blocked, every normal command must pass."""
 import json
+import os
 import subprocess
 import sys
+import tempfile
 
 GATE = "/home/dxb/.claude/hooks/dxb-cost-gate.py"
 
@@ -10,7 +12,11 @@ W = chr(123) + "0,120" + chr(125)   # {0,120}  built at runtime so this file nev
 W70 = chr(123) + "0,70" + chr(125)
 W900 = chr(123) + "0,900" + chr(125)
 W5 = chr(123) + "2,5" + chr(125)
-BIG = "/home/dxb/.vscode/extensions/anthropic.claude-code-2.1.235-linux-x64/webview/index.js"
+# A 600 KB one-line file, the way a minified bundle is: over the gate's 512 KB flood line. Made here
+# and removed at the end, because the VS Code extension file this case once named (2.1.235) is gone.
+BIG = os.path.join(tempfile.gettempdir(), "dxb-cost-gate-%d.min.js" % os.getpid())
+with open(BIG, "w") as f:
+    f.write("var a=1;" * 75000)
 SLASH = "/"
 
 CASES = [
@@ -68,4 +74,5 @@ for name, tool, value, must_block in CASES:
 
 print()
 print("toplam %d vaka, %d hata" % (len(CASES), fails))
+os.remove(BIG)
 sys.exit(1 if fails else 0)
