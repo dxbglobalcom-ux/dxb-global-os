@@ -30,6 +30,19 @@ an ordinary page.
 Every attempt is written to the tool ledger with its result, so "installed" can
 never be mistaken for "used", and a wall can never be mistaken for an absence.
 
+A DOOR THAT TIMES OUT TAKES ITS WHOLE TREE WITH IT — orphaned processes filling RAM
+and swap is the class. A door is a tree: `scrapling extract stealthy-fetch` starts a
+patchright node, which starts a chromium and its renderers.
+`subprocess.run(shell=True, timeout=…)` killed the `sh -c` on top and nothing under
+it, so every door that outlived its timeout lived on. Measured 2026-09-27 08:38: 57
+such trees, 3 minutes to 3 days 14 hours old, 15–500 MB each; RAM 27,951 MB used,
+swap 16,007 of 16,383 MB; killed, 7,044 MB and 8,553 MB. So each door runs in a
+session of its own, and a timeout ends its whole process group (SIGTERM, SIGKILL
+2 s later). A signal to the CALLER's group no longer reaches a door on its own, so
+the CLI passes SIGTERM / SIGINT / SIGHUP on to every live door's group the same way
+before it dies of the signal — `timeout N fetch.py …` (sweep.sh, crowd.sh, ask.sh)
+still ends the door with the chain. (_sh, _end_door, _stop_doors)
+
   fetch.py <url> [--out FILE] [--json] [--timeout S] [--stop-at N]
   fetch.py --batch urls.txt --outdir DIR [--workers 6]
 """
@@ -37,13 +50,16 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures as cf
+import functools
 import json
 import os
 import re
 import shlex
 import shutil
+import signal
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -82,15 +98,86 @@ if os.environ.get("PATH", "").split(os.pathsep)[0] != _SHIM:
     os.environ["PATH"] = _SHIM + os.pathsep + os.environ.get("PATH", "")
 
 
-def _sh(cmd: str, timeout: int) -> tuple[int, str, str]:
+# THE DOORS RUNNING NOW, each the leader of its own process group (the module docstring says why).
+DOOR_GRACE = 2.0                  # seconds between SIGTERM and SIGKILL for a door's group
+_DOORS: set = set()               # live Popen objects
+_STOPPING = threading.Event()     # this process is being stopped: no door starts after it
+
+
+def _group_signal(pgid: int, sig: int) -> None:
     try:
-        p = subprocess.run(cmd, shell=True, capture_output=True, text=True,
-                           timeout=timeout)
-        return p.returncode, p.stdout, p.stderr[-300:]
-    except subprocess.TimeoutExpired:
-        return 124, "", "timeout"
+        os.killpg(pgid, sig)
+    except (ProcessLookupError, PermissionError):
+        pass
+
+
+def _group_alive(pgid: int) -> bool:
+    try:
+        os.killpg(pgid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def _end_door(p: subprocess.Popen) -> None:
+    """A door's whole process group: SIGTERM, then SIGKILL to whatever is left DOOR_GRACE s later."""
+    _group_signal(p.pid, signal.SIGTERM)
+    end = time.monotonic() + DOOR_GRACE
+    while time.monotonic() < end:
+        p.poll()                  # reap the leader: its zombie would keep the group "alive"
+        if not _group_alive(p.pid):
+            return
+        time.sleep(0.05)
+    _group_signal(p.pid, signal.SIGKILL)
+
+
+def _stop_doors(signum, _frame) -> None:
+    """The CLI's SIGTERM / SIGINT / SIGHUP: every live door's group ends as on a timeout, then this
+    process dies of the signal it got — as it did when the doors shared its group."""
+    _STOPPING.set()
+    for p in list(_DOORS):
+        _group_signal(p.pid, signal.SIGTERM)
+    end = time.monotonic() + DOOR_GRACE
+    while time.monotonic() < end and any(_group_alive(p.pid) for p in list(_DOORS)):
+        for p in list(_DOORS):
+            p.poll()
+        time.sleep(0.05)
+    for p in list(_DOORS):
+        _group_signal(p.pid, signal.SIGKILL)
+    signal.signal(signum, signal.SIG_DFL)
+    os.kill(os.getpid(), signum)
+
+
+def _sh(cmd: str, timeout: int) -> tuple[int, str, str]:
+    """One door's command in a session of its own. On timeout its whole group ends: (124, "", "timeout")."""
+    if _STOPPING.is_set():
+        return 143, "", "stopped"
+    try:
+        p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             text=True, start_new_session=True)
     except Exception as e:  # pragma: no cover
         return 1, "", str(e)[:200]
+    _DOORS.add(p)
+    try:
+        if _STOPPING.is_set():    # the stop began while this door was starting
+            _end_door(p)
+            return 143, "", "stopped"
+        try:
+            out, err = p.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            _end_door(p)
+            try:
+                p.communicate(timeout=DOOR_GRACE)    # drain the pipes, reap the leader
+            except Exception:
+                pass
+            return 124, "", "timeout"
+        return p.returncode, out, (err or "")[-300:]
+    except Exception as e:  # pragma: no cover — output that is not text, a broken pipe
+        return 1, "", str(e)[:200]
+    finally:
+        _DOORS.discard(p)
 
 
 def _ok(text: str) -> bool:
@@ -410,9 +497,49 @@ CHAIN = [
 # said. A run that was told not to open a browser does not open one.
 BROWSER_DOORS = {"playwright", "browser-signed-in"}
 
+# ...AND THE READERS BEHIND THE opencli DOOR THAT DRIVE ONE. The flag is "for a run that must not use the
+# hidden research Chrome" (sweep.sh), and it still walked opencli-reader, whose command bin/opencli hands to
+# a window of that Chrome when opencli's own manifest marks it `browser: true` and ~/.opencli/apps.yaml
+# registers its site there (classify() -> "hidden"; an unregistered one is refused) — so an x.com status
+# address went there on a --no-browser run too (the fresh verifier's finding,
+# 2026-09-27). Which readers those are is asked of the manifest bin/opencli routes by (hidden.commands),
+# never kept here. Measured 2026-09-27 on opencli 1.8.7's cli-manifest.json, and by bin/opencli's own
+# classify() on this machine: reddit read, twitter thread, youtube transcript and zhihu question go to the
+# hidden Chrome; hackernews read, v2ex topic and stackoverflow read run plain, over the site's API, and their
+# door stays open on a --no-browser run. A reader the manifest cannot vouch for — no
+# opencli package on PATH, a verb it does not list, a manifest that does not parse — counts as
+# browser-backed: a run told not to use that Chrome does not guess. (scrapling-stealth stays: camoufox is a
+# headless browser of its own, never the hidden Chrome.)
 
-def chain_for(no_browser: bool = False) -> list:
-    return [d for d in CHAIN if not (no_browser and d[0] in BROWSER_DOORS)]
+
+@functools.lru_cache(maxsize=1)
+def _opencli_manifest() -> dict | None:
+    """site -> {command: (browser-backed, access)} of the installed opencli, read once per process."""
+    try:
+        import hidden
+        found = hidden.genuine_opencli()
+        return hidden.commands(found[1]) if found else None
+    except Exception:
+        return None
+
+
+def reader_uses_browser(url: str) -> bool:
+    """Would the opencli-reader door open the hidden research Chrome for `url`? False when no platform
+    reader matches it: the door then answers "no platform adapter" and starts nothing."""
+    hit = next(((adapter, verb) for pat, adapter, verb in PLATFORM_READERS if pat.search(url)), None)
+    if hit is None:
+        return False
+    entry = (_opencli_manifest() or {}).get(hit[0], {}).get(hit[1])
+    return True if entry is None else entry[0]
+
+
+def chain_for(no_browser: bool = False, url: str | None = None) -> list:
+    """The doors in walking order. Under no_browser none that opens a browser: the two browser doors, and
+    opencli-reader when `url`'s reader is browser-backed — or when there is no url to ask about."""
+    shut = set(BROWSER_DOORS)
+    if no_browser and (url is None or reader_uses_browser(url)):
+        shut.add("opencli-reader")
+    return [d for d in CHAIN if not (no_browser and d[0] in shut)]
 
 
 # ---------------------------------------------------------------- the chain
@@ -426,7 +553,7 @@ def fetch(url: str, timeout: int = 45, stop_at: int = 0, record: bool = True,
     run_id = rlib.current_run_id() if record else None
     best = {"door": None, "text": "", "cached": False}
 
-    for i, (name, fn) in enumerate(chain_for(no_browser), 1):
+    for i, (name, fn) in enumerate(chain_for(no_browser, url), 1):
         if stop_at and i > stop_at:
             break
         t0 = time.time()
@@ -529,6 +656,9 @@ def main() -> int:
     ap.add_argument("--no-browser", action="store_true",
                     help="skip the door that starts a browser (a run told not to open one does not)")
     a = ap.parse_args()
+    # a door runs outside this process's group: a stop that reaches this process is passed on to it
+    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+        signal.signal(sig, _stop_doors)
     sweep_stale_profiles()
 
     if a.batch:

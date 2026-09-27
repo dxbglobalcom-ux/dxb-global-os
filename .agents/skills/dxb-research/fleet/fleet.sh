@@ -55,10 +55,10 @@
 #   fleet.sh [<run-dir>|<name>] --q "<short query>" [--q "..."]... [--dert FILE]
 #            [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #            [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write]
-#            [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout S]
-#            [--no-audit] [--shape karsilastirma|pazar|profil|karar]
-#   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--no-split] [--writer-timeout S]
-#            [--no-audit] [--shape karsilastirma|pazar|profil|karar]
+#            [--claim-rounds N] [--claim-timeout S] [--claim-cap N] [--no-claim-hunt] [--crowd-cap N] [--no-split]
+#            [--writer-timeout S] [--no-audit] [--shape karsilastirma|pazar|profil|karar] [--force-memory]
+#   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--claim-cap N] [--no-claim-hunt] [--no-split]
+#            [--writer-timeout S] [--no-audit] [--shape karsilastirma|pazar|profil|karar] [--force-memory]
 #                                    # the tail alone — draft, claim rounds, answer, auditor, page — on a run that has its rows
 #
 # THE FIRST ARGUMENT IS THE RUN FOLDER — a path, or a bare name or nothing, which puts it under the
@@ -87,7 +87,8 @@ OUT=""
 case "${1:-}" in --*|"") ;; *) OUT="$1"; shift ;; esac
 N=4; MODEL=claude-opus-5-5; TMO=600; ROLES=""; DERT=""
 ROUNDS=3; FETCH_LIMIT=2000; FETCH_WORKERS=6; ALLOW_TMP=0; WRITE=1; WRITE_ONLY=""
-CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1; WRITER_TMO=1500; AUDIT=1; SHAPE=""; SHAPE_GIVEN=0
+CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_CAP=20; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1; WRITER_TMO=1500; AUDIT=1; SHAPE=""; SHAPE_GIVEN=0
+FORCE_MEMORY=0
 QUERIES=()
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -105,20 +106,22 @@ while [ $# -gt 0 ]; do
     --write-only)    WRITE_ONLY="${2:?--write-only bir kosu klasoru ister}"; shift 2 ;;
     --claim-rounds)  CLAIM_ROUNDS="${2:?--claim-rounds bir sayi ister}"; shift 2 ;;
     --claim-timeout) CLAIM_TMO="${2:?--claim-timeout bir sayi ister}"; shift 2 ;;
+    --claim-cap)     CLAIM_CAP="${2:?--claim-cap bir sayi ister}"; shift 2 ;;
     --writer-timeout) WRITER_TMO="${2:?--writer-timeout bir sayi ister}"; shift 2 ;;
     --no-claim-hunt) CLAIM_HUNT=0; shift ;;
     --crowd-cap)     CROWD_CAP="${2:?--crowd-cap bir sayi ister}"; shift 2 ;;
     --no-split)      SPLIT=0; shift ;;
     --no-audit)      AUDIT=0; shift ;;
     --shape)         SHAPE="${2-}"; SHAPE_GIVEN=1; shift $(( $# > 1 ? 2 : 1 )) ;;
+    --force-memory)  FORCE_MEMORY=1; shift ;;
     *) shift ;;
   esac
 done
-for v in "$ROUNDS" "$FETCH_LIMIT" "$FETCH_WORKERS" "$CLAIM_ROUNDS" "$CLAIM_TMO" "$CROWD_CAP" "$WRITER_TMO"; do
-  case "$v" in ''|*[!0-9]*) echo "!! DUR: --rounds, --fetch-limit, --fetch-workers, --claim-rounds, --claim-timeout, --crowd-cap ve --writer-timeout tam sayi ister (verilen: $v)." >&2; exit 3 ;; esac
+for v in "$ROUNDS" "$FETCH_LIMIT" "$FETCH_WORKERS" "$CLAIM_ROUNDS" "$CLAIM_TMO" "$CLAIM_CAP" "$CROWD_CAP" "$WRITER_TMO"; do
+  case "$v" in ''|*[!0-9]*) echo "!! DUR: --rounds, --fetch-limit, --fetch-workers, --claim-rounds, --claim-timeout, --claim-cap, --crowd-cap ve --writer-timeout tam sayi ister (verilen: $v)." >&2; exit 3 ;; esac
 done
-if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 ] || [ "$CLAIM_TMO" -lt 1 ] || [ "$CROWD_CAP" -lt 1 ] || [ "$WRITER_TMO" -lt 1 ]; then
-  echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout, --crowd-cap ve --writer-timeout en az 1 olur." >&2; exit 3
+if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 ] || [ "$CLAIM_TMO" -lt 1 ] || [ "$CLAIM_CAP" -lt 1 ] || [ "$CROWD_CAP" -lt 1 ] || [ "$WRITER_TMO" -lt 1 ]; then
+  echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout, --claim-cap, --crowd-cap ve --writer-timeout en az 1 olur." >&2; exit 3
 fi
 # his one word on the research type (K3 stage 2): one of the four, or the run does not start
 if [ "$SHAPE_GIVEN" -eq 1 ]; then
@@ -128,7 +131,7 @@ if [ "$SHAPE_GIVEN" -eq 1 ]; then
   esac
 fi
 if [ -z "$WRITE_ONLY" ] && [ ${#QUERIES[@]} -eq 0 ]; then
-  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP]   ·   TIP: karsilastirma | pazar | profil | karar" >&2
+  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP] [--force-memory]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP] [--force-memory]   ·   TIP: karsilastirma | pazar | profil | karar" >&2
   echo "!! DUR: sorgu yok, filo yok. --q ile birkaç kelimelik sorgu ver." >&2
   exit 3
 fi
@@ -145,6 +148,38 @@ for q in "${QUERIES[@]}"; do
     exit 3
   fi
 done
+
+# ── THE MACHINE'S MEMORY, BEFORE ANYTHING IS STARTED ─────────────────────────────────────────────────
+# Measured 2026-09-27 by the lead: the K3 stage-2 re-run was launched at 08:19:43 with swap free 0 of 16,383 MiB and 9.5 % of
+# RAM available, and earlyoom sent 241 SIGTERMs until 08:38 — his Chrome's tabs, the hidden research Chrome, Xvfb,
+# the keyring, ollama. Nothing had looked before the launch. So every run looks first — a full run, and --write-only
+# too, whose writer, claim hunters and auditor are `claude -p` processes — and says on one line what it saw. With the
+# swap nearly full (SwapFree under 20 % of SwapTotal) or MemAvailable under 4 GiB it names the five largest processes
+# and does not start (code 3), before the split, the ground or any hunter; --force-memory prints the same line as
+# `!! UYARI` and goes on. The file is ${DXB_MEMINFO:-/proc/meminfo}, so a test bench can hand it one.
+MEMINFO="${DXB_MEMINFO:-/proc/meminfo}"
+mem_kb="$(awk '/^MemAvailable:/ {a = $2} /^SwapTotal:/ {t = $2} /^SwapFree:/ {f = $2}
+               END {if (a != "") print a + 0, t + 0, f + 0}' "$MEMINFO" 2>/dev/null)"
+if [ -z "$mem_kb" ]; then
+  echo "!! UYARI: bellek olculemedi — $MEMINFO okunamadi ya da MemAvailable yok; kosu bellege bakilmadan basliyor." >&2
+else
+  read -r mem_av swap_t swap_f <<< "$mem_kb"
+  mem_said="MemAvailable $(( mem_av / 1024 )) MiB · takas bos $(( swap_f / 1024 ))/$(( swap_t / 1024 )) MiB"
+  echo "bellek: $mem_said"
+  if { [ "$swap_t" -gt 0 ] && [ $(( swap_f * 5 )) -lt "$swap_t" ]; } || [ "$mem_av" -lt $(( 4 * 1024 * 1024 )) ]; then
+    top5="$(ps -eo rss=,pid=,comm= --sort=-rss 2>/dev/null | head -5 |
+            awk '{rss = $1; pid = $2; sub(/^[ \t]*[0-9]+[ \t]+[0-9]+[ \t]+/, "")
+                  printf "%s%d MiB %s %s", sep, rss / 1024, pid, $0; sep = " · "}')"
+    if [ "$FORCE_MEMORY" -eq 1 ]; then
+      echo "!! UYARI: bellek dar — $mem_said — en buyuk 5 surec: ${top5:-?}" >&2
+    else
+      echo "!! DUR: bellek dar — $mem_said — en buyuk 5 surec: ${top5:-?}" >&2
+      echo "   Baslarsa earlyoom surecleri oldurur (2026-09-27 08:19-08:38: 241 SIGTERM — Chrome, gizli Chrome, Xvfb," \
+           "anahtar kasasi, ollama). Bellegi bosalt; bilerek istiyorsan --force-memory ekle." >&2
+      exit 3
+    fi
+  fi
+fi
 
 # ── THE WRITER — AN OPUS TURNS THE ROWS INTO answer.md ──────────────────────────────────────────────
 # Measured on the deep run of 2026-09-26: the hunters kept 128 quotes, the ledger held 554 bodies, and
@@ -722,11 +757,47 @@ HUNT_TMP="$(away_dir hunters)" || {
 # unquoted string would have handed bwrap three arguments where one was meant, so the jail would
 # have failed to start and the hunters would have run loose with no warning at all. Caught before
 # the first real fleet run, on 2026-09-17.
+# THE HOME FOLDER IS READ-ONLY TO A HUNTER TOO (B56, 2026-09-27). The jail bound only the repository read-only, so the
+# rest of $HOME stayed writable: measured by the lead at 08:25 during a live run, files changed under ~/.cache, ~/.claude,
+# ~/.local/state, ~/.opencli and ~/.npm, and ~/.claude.json was rewritten. Now $HOME is bound read-only and a hunter
+# writes under it only what it must — measured the same morning with strace (every open for writing, mkdir, rename and
+# unlink under $HOME) on a hunter-shaped `claude -p` (this launch's flags, claude 2.1.283) and on one real call of every
+# weapon of ARSENAL.md, then run again inside this jail:
+#   HUNTER_HOME_RW   .local/share/dxb-research-chrome/run — hidden.py's window slots and tab registry (bin/opencli, hidden.py
+#                    read and google, fetch.py's playwright door). Every reader on the machine shares it, so it is the real
+#                    folder, bound; refused, every hidden-Chrome read stops at `[Errno 30] Read-only file system:
+#                    '…/run/slot.0'` (opencli: code 69).
+#   HUNTER_HOME_OWN  .claude/shell-snapshots and .claude/session-env — claude's scratch for its own session: the snapshot
+#                    its Bash sources (refused, the hunter's Bash loses claude's pkill guard and rg: 15 functions → 13) and
+#                    its hooks' env folder (refused, both SessionStart hooks answer `Failed to run: EROFS … mkdir
+#                    ~/.claude/session-env/<id>`). Each gets a private tmpfs, never the real folder: the snapshots and env
+#                    files there are sourced by every other claude on this machine, and a hunter that could write them
+#                    would run its commands outside this jail.
+# Everything else claude -p writes under $HOME is refused and it runs on (measured: exit 0, every tool answered):
+# ~/.claude.json (it takes a lock folder and a temp file in $HOME itself), its transcript under .claude/projects (the
+# fleet keeps the same stream in rounds/), .claude/sessions, the plugins' in-use markers, the synced skills and plugins
+# (code the other sessions load) and claude-mem's hook log. So are the weapons' own caches — ~/.pki/nssdb, the GPU shader
+# caches, ~/.config/google-chrome-for-testing/Crash Reports, opencli's update-check.json: every weapon answered inside the
+# jail as it did outside (the hidden Chrome's page loads timed out at Page.navigate on both sides that morning, after
+# the slot and the tab were taken). A NEW folder cannot appear either (`mkdir -p ~/.cache/<new>`: "Read-only file
+# system"); a tool that needs one joins these lists by measurement. The mount points are made before the jail: under a
+# read-only $HOME bwrap cannot make one (`Can't mkdir …: Read-only file system`, code 1), and a jail that does not start
+# starts no hunter.
+# WHAT THE JAIL TAKES AWAY ON PURPOSE — the account token's refresh (read in the claude 2.1.283 binary, not yet watched in
+# a hunter): claude refreshes it in the last 5 minutes before it expires, under a lock folder it makes in ~/.claude
+# (.oauth_refresh.lock), and saves it to ~/.claude/.credentials.json. Both are refused here, so a hunter never refreshes
+# the token: it reads the one a claude outside the jail refreshed, and one still running when the token expires before
+# any claude outside has refreshed it is left with an expired token.
+HUNTER_HOME_RW=(.local/share/dxb-research-chrome/run)
+HUNTER_HOME_OWN=(.claude/shell-snapshots .claude/session-env)
 JAIL=()
 if command -v bwrap >/dev/null 2>&1; then
-  JAIL=(bwrap --dev-bind / / --ro-bind "$REPO_ROOT" "$REPO_ROOT" --bind "$OUT" "$OUT" --bind "$HUNT_TMP" "$HUNT_TMP" --bind /tmp /tmp)
+  HOME_W=()
+  for d in "${HUNTER_HOME_RW[@]}"; do mkdir -p "$HOME/$d" && HOME_W+=(--bind "$HOME/$d" "$HOME/$d"); done
+  for d in "${HUNTER_HOME_OWN[@]}"; do mkdir -p "$HOME/$d" && HOME_W+=(--tmpfs "$HOME/$d"); done
+  JAIL=(bwrap --dev-bind / / --ro-bind "$HOME" "$HOME" "${HOME_W[@]}" --ro-bind "$REPO_ROOT" "$REPO_ROOT" --bind "$OUT" "$OUT" --bind "$HUNT_TMP" "$HUNT_TMP" --bind /tmp /tmp)
 else
-  echo "!! UYARI: bwrap yok — avcilar depoyu YAZILABILIR gorecek. Bu bir deliktir ve rapora yazilir." >&2
+  echo "!! UYARI: bwrap yok — avcilar depoyu ve ev klasorunu YAZILABILIR gorecek. Bu bir deliktir ve rapora yazilir." >&2
 fi
 
 ARSENAL="$(cat "$HERE/ARSENAL.md")"
@@ -965,29 +1036,30 @@ claims_extract() {
 
 # WHAT A CLAIM ROLE STILL OWES — counted from the claim ledger, never from what the hunter said: $1 the
 # kind (counter|gap). From `claims.py status --format json`: owed_<kind> (claims sent to the hunter and
-# neither found nor closed with none), new_for_links, and the kind's own found and none. Prints
-# "<owed> <new_for_links> <found> <none> <unread>", or "? ? ? ? ?" when the status cannot be read — an exit
-# code other than 0, or a JSON without those keys. <unread> (K2c F2): with $2 the role and $3 the round,
-# status is handed that round's transcript and says which claims the role linked with no read of them
-# (`unread_links`, claims.py reads) — a comma list, `-` when none; without $2 it is `-`.
+# neither found nor closed with none), new_for_links, the kind's own found and none, and its cap (the claims
+# the cap held back, `not-sent (cap)`). Prints "<owed> <new_for_links> <found> <none> <unread> <held>", or
+# "? ? ? ? ? ?" when the status cannot be read — an exit code other than 0, or a JSON without those keys.
+# <unread> (K2c F2): with $2 the role and $3 the round, status is handed that round's transcript and says
+# which claims the role linked with no read of them (`unread_links`, claims.py reads) — a comma list, `-`
+# when none; without $2 it is `-`.
 claim_left() {
   local sj args=(status "$OUT" --format json)
   [ -n "${2:-}" ] && args+=(--transcript "$OUT/rounds/$2.r$3.jsonl" --role "$2" --round "$3")
-  sj="$(python3 "$CLA" "${args[@]}" 2>/dev/null)" || { echo "? ? ? ? ?"; return 0; }
+  sj="$(python3 "$CLA" "${args[@]}" 2>/dev/null)" || { echo "? ? ? ? ? ?"; return 0; }
   python3 -c '
 import json, sys
 kind, asked = sys.argv[1], sys.argv[3] == "1"
 try:
     d = json.loads(sys.argv[2])
-    owed, new_for = int(d["owed_" + kind]), int(d["new_for_links"])
+    owed, new_for, held = int(d["owed_" + kind]), int(d["new_for_links"]), int(d[kind]["cap"])
     unread = d["unread_links"] if asked else []
     if not isinstance(unread, list):
         raise TypeError("unread_links is not a list")
 except (ValueError, KeyError, TypeError):
-    print("? ? ? ? ?")
+    print("? ? ? ? ? ?")
     raise SystemExit
 k = d.get(kind) if isinstance(d.get(kind), dict) else {}
-print(owed, new_for, k.get("found", "?"), k.get("none", "?"), ",".join(map(str, unread)) or "-")
+print(owed, new_for, k.get("found", "?"), k.get("none", "?"), ",".join(map(str, unread)) or "-", held)
 ' "$1" "$sj" "$([ -n "${2:-}" ] && echo 1 || echo 0)"
 }
 
@@ -997,6 +1069,8 @@ print(owed, new_for, k.get("found", "?"), k.get("none", "?"), ",".join(map(str, 
 # only the claims the draft's ledger does not yet call found or none: what the hunter closed is done —
 # except $4 (K2c F2), the claims the last round linked without reading one of their rows (a comma list):
 # they stay on the list, and {{UNREAD}}, the brief's first line, names them. Empty on the first round.
+# The claims the cap held back and claim_rounds listed at the relaunch stand in the role's list too, after the
+# first list's: they are neither found nor none, so they are on it.
 # Every round's prompt is kept as rounds/prompt-<role>.r<n>.txt, as a hunter's is.
 write_claim_prompt() {
   local r="$1" left="$2" devam="$3" unread="${4:-}" shown="$OUT/rounds/list-$role.r$1.txt" prev found_arg word note=""
@@ -1057,14 +1131,23 @@ PY
 }
 
 # (3) ONE CLAIM ROLE, ROUND BY ROUND: $1 the role (roles.tsv), $2 the kind it works (counter|gap). Its list
-# is `claims.py list --todo <kind> --candidates 5`, which records the sending; a list with nothing on it
-# launches nobody. The role is launched by hunt_round — the jail, the allow and deny lists, the model,
-# `--effort low` and the folder outside the repository of a hunter — on a clock of its own (--claim-timeout),
-# for at most --claim-rounds rounds. THE GATE asks `claims.py status --format json`: nothing owed on its
-# kind and exit 0 → accepted; else relaunch with the resume line, or time-up (rounds or 0.8 of the clock);
-# a status that cannot be read is `unmeasured` and never accepted. SATURATION, the gap role only: a round
-# after which the ledger holds no more `for` links than before it found no second source anywhere, so its
-# label carries (saturated) and no further round is launched. Every decision is one `claim-gate:` line.
+# is `claims.py list --todo <kind> --cap <--claim-cap> --candidates 5`, which records the sending; a list with
+# nothing on it launches nobody. The role is launched by hunt_round — the jail, the allow and deny lists, the
+# model, `--effort low` and the folder outside the repository of a hunter — on a clock of its own
+# (--claim-timeout), for at most --claim-rounds rounds. THE GATE asks `claims.py status --format json`:
+# nothing owed on its kind, nothing held back by the cap and exit 0 → accepted; else relaunch with the resume
+# line, or time-up (rounds or 0.8 of the clock); a status that cannot be read is `unmeasured` and never
+# accepted. SATURATION, the gap role only: a round after which the ledger holds no more `for` links than
+# before it found no second source anywhere, so its label carries (saturated) and no further round is
+# launched — unless the cap holds claims back, which no round has searched yet. Every decision is one
+# `claim-gate:` line.
+# WHAT THE CAP HELD BACK IS SENT IN THE NEXT ROUND (B56, 2026-09-27). The list sends --claim-cap claims (20
+# unless the run says otherwise) and marks the rest `not-sent (cap)`; it used to be listed once, before round
+# 1, so on the run of 2026-09-27 08:19 karsi sent 20 of 28 and bosluk 20 of 25, both were accepted after
+# round 1, and those 13 claims went to nobody. Now a claim the cap held back keeps the role from being accepted
+# (`not-sent (cap) <n>` on its gate line), and a relaunch lists again before the next round — `claims.py
+# list` sends the next --claim-cap of them, in the same order — appended to the role's list, one line saying
+# how many. What is still held when the rounds or the clock run out stays `not-sent (cap)` in the ledger.
 # A LINK COUNTS AFTER A READ (K2c F2). On the K2 run karsi's round 1 was one Bash call of 20 links — no `show`,
 # no search, 18 s — and nothing was owed, so the gate said accepted. Now status is handed the round's
 # transcript too and names the claims the role linked with no read of them (`unread_links`, claims.py reads);
@@ -1074,13 +1157,13 @@ PY
 # `!! OKUMADAN HÜKÜM` on the run's last lines, and code 1 after the page.
 claim_rounds() {
   local role="$1" kind="$2" brief lrc n_sent t0 t_end r left devam spent s rc secs cost CWRAP
-  local owed for_now found none unread again base_for measured el why verdict sat label seen note n
+  local owed for_now found none unread held again base_for measured el why verdict sat label seen note n n_more
   brief="$(awk -F'\t' -v r="$role" '$1 == r { print $3; exit }' "$HERE/roles.tsv")"
   if [ -z "$brief" ]; then
     printf 'claim-gate: %s — no row in roles.tsv → not launched\n' "$role" | tee -a "$OUT/gate.log"
     return 1
   fi
-  python3 "$CLA" list "$OUT" --todo "$kind" --candidates 5 > "$OUT/rounds/list-$role.txt" 2> "$OUT/rounds/list-$role.err"
+  python3 "$CLA" list "$OUT" --todo "$kind" --cap "$CLAIM_CAP" --candidates 5 > "$OUT/rounds/list-$role.txt" 2> "$OUT/rounds/list-$role.err"
   lrc=$?
   n_sent=$(grep -c '^### C[0-9]' "$OUT/rounds/list-$role.txt")
   if [ "$lrc" -ne 0 ]; then
@@ -1096,7 +1179,7 @@ claim_rounds() {
   fi
   mkdir -p "$HUNT_TMP/work-$role"
   CWRAP=90; [ "$CLAIM_TMO" -lt 360 ] && CWRAP=$(( CLAIM_TMO / 4 ))     # the hunters' WRAP rule, on this clock
-  read -r _ base_for _ _ _ <<< "$(claim_left "$kind")"
+  read -r _ base_for _ _ _ _ <<< "$(claim_left "$kind")"
   echo "  iddia avcisi sahada: $role — listesinde $n_sent iddia"
   t0=$(date +%s); t_end=$(( t0 + CLAIM_TMO )); r=1; left=$CLAIM_TMO; devam=""; again=""; spent=0
   while :; do
@@ -1106,20 +1189,21 @@ claim_rounds() {
     secs=$(( $(date +%s) - s ))
     cost="$(round_result "$OUT/rounds/$role.r$r.jsonl" cost)"
     spent="$(awk -v a="$spent" -v b="$cost" 'BEGIN { if (b ~ /^[0-9.]+$/) a += b; printf "%.2f", a }')"
-    read -r owed for_now found none unread <<< "$(claim_left "$kind" "$role" "$r")"
-    measured=1                                   # two whole numbers and the unread list, or the round was not measured
-    for n in "$owed" "$for_now"; do case "$n" in ''|*[!0-9]*) measured=0 ;; esac; done
+    read -r owed for_now found none unread held <<< "$(claim_left "$kind" "$role" "$r")"
+    measured=1                                   # three whole numbers and the unread list, or the round was not measured
+    for n in "$owed" "$for_now" "$held"; do case "$n" in ''|*[!0-9]*) measured=0 ;; esac; done
     case "$unread" in ''|'?') measured=0 ;; esac
     el=$(( $(date +%s) - t0 )); why=""; sat=""
-    if [ "$measured" -eq 1 ] && [ "$owed" -eq 0 ] && [ "$unread" = "-" ] && [ "$rc" -eq 0 ]; then verdict=accepted
+    if [ "$measured" -eq 1 ] && [ "$owed" -eq 0 ] && [ "$held" -eq 0 ] && [ "$unread" = "-" ] && [ "$rc" -eq 0 ]; then verdict=accepted
     elif [ "$r" -ge "$CLAIM_ROUNDS" ]; then verdict=time-up; why=" · tur $r/$CLAIM_ROUNDS"
     elif [ $(( el * 10 )) -ge $(( CLAIM_TMO * 8 )) ]; then verdict=time-up; why=" · saat $el/$CLAIM_TMO s"
     else verdict=relaunch; fi
-    if [ "$kind" = gap ] && [ "$measured" -eq 1 ] && [ "$for_now" = "$base_for" ] && [ "$unread" = "-" ]; then
+    if [ "$kind" = gap ] && [ "$measured" -eq 1 ] && [ "$for_now" = "$base_for" ] && [ "$unread" = "-" ] && [ "$held" -eq 0 ]; then
       sat=" (saturated)"; [ "$verdict" = relaunch ] && verdict=stopped
     fi
     if [ "$measured" -eq 1 ]; then
-      seen="unchecked $owed"; label="$verdict$sat"; note="found $found · none $none · $secs s · \$$cost$why"
+      seen="unchecked $owed"; [ "$held" -eq 0 ] || seen="$seen · not-sent (cap) $held"
+      label="$verdict$sat"; note="found $found · none $none · $secs s · \$$cost$why"
       [ "$unread" = "-" ] || note="okumadan bağ: ${unread//,/ } · $note"
     else
       seen="status unreadable"; label=unmeasured; [ "$verdict" = relaunch ] || label="time-up (unmeasured)"
@@ -1129,12 +1213,27 @@ claim_rounds() {
     [ "$verdict" = relaunch ] || note="$note · rol $r tur · \$$spent"
     printf 'claim-gate: %s round %s — %s → %s (%s)\n' "$role" "$r" "$seen" "$label" "$note" | tee -a "$OUT/gate.log"
     [ "$verdict" = relaunch ] || break
+    # the next --claim-cap of the claims the cap held back, listed now for the next round, after the role's list
+    n_more=0
+    if [ "$measured" -eq 1 ] && [ "$held" -gt 0 ]; then
+      n=$(grep -c '^### C[0-9]' "$OUT/rounds/list-$role.txt")
+      python3 "$CLA" list "$OUT" --todo "$kind" --cap "$CLAIM_CAP" --candidates 5 >> "$OUT/rounds/list-$role.txt" 2>> "$OUT/rounds/list-$role.err"
+      lrc=$?
+      n_more=$(( $(grep -c '^### C[0-9]' "$OUT/rounds/list-$role.txt") - n ))
+      if [ "$lrc" -eq 0 ]; then
+        echo "  iddia avcisi: $role — tur $(( r + 1 )) listesine sinirin tuttugu $n_more iddia eklendi ($(grep '^LIST:' "$OUT/rounds/list-$role.txt" | tail -1))"
+      else
+        echo "!! iddia avcisi: $role — sinirin tuttugu $held iddia listelenemedi (claims.py list kod $lrc · $OUT/rounds/list-$role.err)"
+      fi
+    fi
     if [ "$measured" -eq 0 ]; then
       devam="DEVAM — the claim ledger could not count your round $r; finish your list with link, then hand back your lines"
-    elif [ "$owed" -gt 0 ]; then
-      devam="DEVAM — $owed claims unchecked on your list; finish them with link"
+    elif [ $(( owed + n_more )) -gt 0 ]; then
+      devam="DEVAM — $(( owed + n_more )) claims unchecked on your list; finish them with link"
     elif [ "$unread" != "-" ]; then
       devam="DEVAM — you linked ${unread//,/ } without reading a row of them; read them, then link them again"
+    elif [ "$held" -gt 0 ]; then
+      devam="DEVAM — $held claims the cap held back could not be listed; hand back your lines"
     else
       devam="DEVAM — your round $r ended with exit code $rc; finish your list with link, then hand back your lines"
     fi

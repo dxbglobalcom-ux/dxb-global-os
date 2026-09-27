@@ -85,14 +85,17 @@ r çıkarıldı`, ` · u denetlenmedi` when it did not read them all (audit.py's
 count of a line it corrected, the mark `düzeltildi`, its reason in the mark's title; under the "İddia defteri" table two
 lists, `Denetçinin düzelttikleri` (`C007 — <the line as the writer wrote it> → <the auditor's line> — <reason>`) and
 `Denetçinin çıkardıkları` (`C012 — <the line> — <reason>`, the id it had when it was read), each only when it has an
-entry, a line cut at 200 characters. A page with no audit.jsonl beside its answer is built byte for byte as before.
+entry, a line cut at 200 characters. final.md carries the auditor's line too, in plain text, its own paragraph under the
+verdict paragraph (after the type's line, below) — where the page stands it. A page with no audit.jsonl beside its
+answer is built byte for byte as before, and so is its final.md.
 
 THE RESEARCH TYPE (B56 K3 stage 2): when <run>/subquestions.json carries a `shape` (scripts/split.py — the one owner of
 its name), a line under the verdict box, above the auditor's, `rapor tipi: <shape_name> · kaynak: model | CEO | kural`
 (the class `count`); and the writer's `## Şekil — <name>` section (fleet/shapes/, writer-prompt.md rule 13) stands under
 "Cevabı taşıyan sayılar" where rule 13 puts it — after the lines before the first titled group (the number that carries
 the verdict), before that group —, wherever the writer put it, as a sub-question's does: its counts line from claims.py
-sub_counts' "SHAPE", its tables and its `### ` lists inside it; final.md carries it in the same place. A page with
+sub_counts' "SHAPE", its tables and its `### ` lists inside it; final.md carries both in the same place, the type's line
+in plain text, its own paragraph under the verdict paragraph (under_verdict). A page with
 neither is built byte for byte as before. And under "Cevabı taşıyan sayılar" on EVERY page — not in the Şekil section
 alone — a table row whose first cell is `Toplam` (a skeleton table's sum) and a line or a row that holds `—` alone
 (zero said as an answer) carry no `(0 satır)`: without an id they are no claim. So a page is built byte for byte as
@@ -416,6 +419,7 @@ a.ref:hover,a.ref:focus-visible{background:var(--accent);color:var(--on-accent)}
 code{padding:1px 4px;border-radius:3px;background:var(--chip);font:400 .9em var(--mono)}
 hr{margin:24px 0;border:0;border-top:1px solid var(--rule)}
 .tbl{margin:0 0 18px;overflow-x:auto;max-width:100%}
+.tbl tr:target{outline-offset:-2px}
 table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5}
 th,td{padding:8px 12px 8px 0;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
 th:last-child,td:last-child{padding-right:0}
@@ -453,7 +457,7 @@ details[open]>summary::before{content:"−"}
 .dm{font:400 12.5px/1.55 var(--mono);color:var(--muted)}
 .did{color:var(--ink-2)}
 .vd{color:var(--ink-2)}
-.mark{margin-left:6px;padding:1px 6px;border-radius:3px;background:var(--accent);color:var(--on-accent);font:600 11px/1.5 var(--mono);text-decoration:none;white-space:nowrap}
+.mark{display:inline-block;max-width:calc(100% - 6px);margin-left:6px;padding:1px 6px;border-radius:3px;background:var(--accent);color:var(--on-accent);font:600 11px/1.5 var(--mono);text-decoration:none}
 .dt{margin:4px 0;font-size:15px;line-height:1.55}
 .du,.src{font:400 12.5px/1.45 var(--mono);overflow-wrap:anywhere;word-break:break-word}
 .none,.empty{color:var(--muted);font-style:italic}
@@ -1242,11 +1246,15 @@ def shape_of(run: Path) -> dict | None:
     return doc if isinstance(doc, dict) and text(doc.get("shape")) else None
 
 
-def shape_head(doc: dict) -> str:
-    """The type's line under the verdict box: `rapor tipi: <shape_name> · kaynak: model | CEO | kural`."""
+def shape_said(doc: dict) -> str:
+    """The type's line, `rapor tipi: <shape_name> · kaynak: model | CEO | kural` — the page's and final.md's."""
     src, name = text(doc.get("shape_source")), text(doc.get("shape_name")) or text(doc.get("shape"))
-    said = f"rapor tipi: {name} · kaynak: {SOURCE_WORD.get(src, src or '?')}"
-    return f'<p class="shape-n"><span class="count">{esc(said)}</span></p>'
+    return f"rapor tipi: {name} · kaynak: {SOURCE_WORD.get(src, src or '?')}"
+
+
+def shape_head(doc: dict) -> str:
+    """The type's line under the verdict box."""
+    return f'<p class="shape-n"><span class="count">{esc(shape_said(doc))}</span></p>'
 
 
 def shape_first(md: str) -> str:
@@ -1299,13 +1307,31 @@ def audit_clip(v) -> str:
     return s if len(s) <= AUDIT_CHARS else s[:AUDIT_CHARS - 1].rstrip() + "…"
 
 
-def audit_head(audit: dict) -> str:
-    """The auditor's line under the verdict box: `denetçi: N iddia okundu · d düzeltildi · r çıkarıldı`, and ` · u
+def audit_said(audit: dict) -> str:
+    """The auditor's line — the page's and final.md's: `denetçi: N iddia okundu · d düzeltildi · r çıkarıldı`, and ` · u
     denetlenmedi` when it did not read them all — or why its record could not be counted."""
     t = audit["tally"]
-    said = (f"denetçi: {t['read']} iddia okundu · {t['corrected']} düzeltildi · {t['removed']} çıkarıldı"
+    return (f"denetçi: {t['read']} iddia okundu · {t['corrected']} düzeltildi · {t['removed']} çıkarıldı"
             + (f" · {t['unaudited']} denetlenmedi" if t["unaudited"] else "")) if t else f"denetçi: {audit['why']}"
-    return f'<p class="audit-n"><span class="count">{esc(said)}</span></p>'
+
+
+def audit_head(audit: dict) -> str:
+    """The auditor's line under the verdict box."""
+    return f'<p class="audit-n"><span class="count">{esc(audit_said(audit))}</span></p>'
+
+
+def under_verdict(md: str, said: list[str]) -> str:
+    """final.md's lines under the verdict (K3 stages 2 and 3): the type's line, then the auditor's, where the page stands
+    them under the verdict box — right after the answer's first paragraph, the one arrange() makes the verdict (with
+    none, after its H1, else on top) —, each its own paragraph, plain text. The answer as it is when there is neither."""
+    if not said:
+        return md
+    bl = blocks(md)
+    first = next((b for b in bl if b["k"] == "p"), None)
+    at = first["end"] if first else bl[0]["line"] if bl and bl[0]["k"] == "h" and bl[0]["level"] == 1 else 0
+    lines = (md + "\n").splitlines(keepends=True)          # blocks()' numbering, every line break kept as it was
+    add = ("\n" if at else "") + "\n\n".join(said) + "\n" + ("\n" if lines[at:] and lines[at].strip() else "")
+    return ("".join(lines[:at]) + add + "".join(lines[at:]))[:-1]     # [:-1]: the line break added to md
 
 
 def refuse(reason: str, outs: list[Path], keep: tuple[Path, ...]) -> int:
@@ -1360,6 +1386,8 @@ def main(argv: list[str]) -> int:
     struck = refused(rows, cited_in(shown)) if CL else {}
     book, whence = ledger_of(answer.parent, full)
     audit = audit_of(answer.parent)                         # None without audit.jsonl: the page as before (K3 stage 3)
+    shape = shape_of(answer.parent)                         # None without a `shape`: final.md as before (K3 stage 2)
+    notes = ([shape_said(shape)] if shape is not None else []) + ([audit_said(audit)] if audit is not None else [])
     body, cited = number(shape_first(spans_md(shown, rows)) if CL else shown, set(struck))
     entries = [source_line(n, rows[i]) for n, i in enumerate(cited, 1)]
     drawer = ""
@@ -1368,7 +1396,7 @@ def main(argv: list[str]) -> int:
             text_out, facts = html_page(shown, rows, answer.parent, table, book, struck, whence, use, full, audit)
             drawer = f" · çekmece {facts['platforms']} platform, {facts['shelved']} adres"
         else:
-            page = [body.rstrip("\n"), "", "## Kaynaklar", "",
+            page = [under_verdict(body, notes).rstrip("\n"), "", "## Kaynaklar", "",
                     "\n\n".join(entries) if entries else "Cevapta kanıt satırı gösterilmedi."]
             page += ["", "## Nereye bakıldı", "", table[0]] if table is not None else []
             text_out = "\n".join(page) + "\n"

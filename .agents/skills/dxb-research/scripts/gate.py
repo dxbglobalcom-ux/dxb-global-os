@@ -126,7 +126,9 @@ def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]
     need_cl = int(rules.get("min_clusters", 5))
     if clusters < need_cl:
         fails.append(f"H3 independent clusters {clusters} < {need_cl} "
-                     f"({ind['echo_collapsed']} rows collapsed as echoes of each other)")
+                     f"(a cluster is a source, claims.source_key: {ind['echo_collapsed']} rows repeat a source "
+                     f"already counted; {ind['echo_flagged']} rows copy another source's passage — flagged, "
+                     f"counted apart)")
 
     present = _types_present(ev)
     for group in dict.fromkeys(str(g) for g in rules.get("required_types", [])):
