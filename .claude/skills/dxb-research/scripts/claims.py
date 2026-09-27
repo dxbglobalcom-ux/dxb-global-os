@@ -473,16 +473,23 @@ def cmd_extract(run: Path, answer: Path, out: Path, keep: str | None) -> int:
 
 
 # =================================================================== list — the sending
+# A CLAIM THE CAP HELD BACK IS TODO AGAIN (B56, 2026-09-27). `not-sent (cap)` was a dead end: nothing ever
+# listed it again, so on the run of 2026-09-27 08:19 (claims 49) karsi's list sent 20 and held 8 and bosluk's
+# sent 20 and held 5, and those 13 were never sent to anyone. Now the next list sends them — each list sends the
+# next `cap`, in the same order — and a claim already `sent`, `found` or `none` is never listed again.
+TODO_STATUS = ("unchecked", "not-sent (cap)")
+
+
 def is_todo(c: dict, kind: str) -> bool:
     if kind == "counter":
-        return (c.get("counter_status") == "unchecked" and (c.get("rows") or 0) >= 2
+        return (c.get("counter_status") in TODO_STATUS and (c.get("rows") or 0) >= 2
                 and not c.get("counter_rows"))
-    return bool(c.get("thin")) and c.get("gap_status") == "unchecked"
+    return bool(c.get("thin")) and c.get("gap_status") in TODO_STATUS
 
 
 def cmd_list(run: Path, ledger: Path, kind: str, cap: int, candidates: int) -> int:
     """The claims a hunter works, and the sending WRITTEN: todo in order (verdict first, then rows,
-    most first), the first `cap` become `sent`, the rest `not-sent (cap)`."""
+    most first), the first `cap` become `sent`, the rest `not-sent (cap)` — todo again for the next list."""
     key = STATUS_KEY[kind]
     with evidence.locked(run):
         claims = read_ledger(ledger)
@@ -868,7 +875,8 @@ def main(argv: list[str] | None = None) -> int:
     li = sub.add_parser("list")
     li.add_argument("run")
     li.add_argument("--todo", required=True, choices=("counter", "gap"))
-    li.add_argument("--cap", type=int, default=20)
+    li.add_argument("--cap", type=int, default=20,
+                    help="claims sent by this list; the rest are held (not-sent (cap)) and sent by the next list")
     li.add_argument("--candidates", type=int, default=5, help="0: no candidates")
     li.add_argument("--ledger")
     lk = sub.add_parser("link")

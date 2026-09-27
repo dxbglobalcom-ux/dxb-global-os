@@ -314,6 +314,34 @@ describe("list and link — the claim rounds' two doors", () => {
     expect(claim(run, "C002", "claims2.jsonl")).toMatchObject({ counter_status: "none", notes: ["karsi: defterde karşı satır bulunmadı"] });
     expect(claim(run, "C005", "claims2.jsonl")).toMatchObject({ counter_status: "not-sent (cap)", links: [], checked_by: null });
   });
+
+  // B56, 2026-09-27: a claim the cap held back was never listed again — the 08:19 run's karsi sent 20 of 28, bosluk 20 of 25
+  it("a claim the cap held back is sent by the next list, for both kinds; a claim already sent is never sent again", () => {
+    const run = fresh();
+    cl(["extract", run]);
+    // 25 claims every list must work, rows 26 down to 2 — the order the list sends them in
+    const ledger = Array.from({ length: 25 }, (_, i) => ({ ...claim(run, "C001"), id: `C${String(i + 1).padStart(3, "0")}`,
+      kind: "claim", rows: 26 - i, counter_rows: 0, counter_status: "unchecked", thin: true, gap_status: "unchecked" }));
+    writeFileSync(join(run, "claims.jsonl"), ledger.map((c) => JSON.stringify(c)).join("\n") + "\n");
+    const listed = (out: string) => [...out.matchAll(/^### (C\d{3}) \| /gm)].map((m) => m[1]);
+    const held = () => jsonl(join(run, "claims.jsonl")).filter((c) => c.counter_status === "not-sent (cap)").map((c) => c.id);
+    const first = cl(["list", run, "--todo", "counter", "--cap", "20", "--candidates", "0"]);
+    expect(first.code, first.out).toBe(0);
+    expect(listed(first.out)).toEqual(ledger.slice(0, 20).map((c) => c.id));
+    expect(last(first.out)).toBe("LIST: counter sent 20 · not-sent (cap) 5");
+    expect(held()).toEqual(["C021", "C022", "C023", "C024", "C025"]);
+    const second = cl(["list", run, "--todo", "counter", "--cap", "20", "--candidates", "0"]);
+    expect(listed(second.out)).toEqual(["C021", "C022", "C023", "C024", "C025"]);
+    expect(last(second.out)).toBe("LIST: counter sent 5 · not-sent (cap) 0");
+    expect(held()).toEqual([]);
+    expect(JSON.parse(cl(["status", run, "--format", "json"]).out)).toMatchObject({
+      owed_counter: 25, counter: { todo: 0, sent: 25, found: 0, none: 0, cap: 0 } });
+    expect(last(cl(["list", run, "--todo", "counter", "--cap", "20", "--candidates", "0"]).out))
+      .toBe("LIST: counter sent 0 · not-sent (cap) 0 · nothing to send");
+    // the gap round's list, the same rule
+    expect(last(cl(["list", run, "--todo", "gap", "--cap", "20", "--candidates", "0"]).out)).toBe("LIST: gap sent 20 · not-sent (cap) 5");
+    expect(last(cl(["list", run, "--todo", "gap", "--cap", "20", "--candidates", "0"]).out)).toBe("LIST: gap sent 5 · not-sent (cap) 0");
+  });
 });
 
 describe("reads — a link counts only after a read of the claim (K2c)", () => {

@@ -87,9 +87,16 @@ sys.exit(rc)
  */
 export const DEAD_HIDDEN_PORT = "1";
 
+/** A /proc/meminfo of a healthy machine: 21.5 GiB available, swap 95 % free. */
+export const MEMINFO_HEALTHY = join(HERE, "fixtures", "fleet", "meminfo-healthy.txt");
+
 export function makeBench(): Bench {
   // every case builds its children's env from process.env, so this reaches every run on the bench
   process.env.DXB_HIDDEN_PORT = DEAD_HIDDEN_PORT;
+  // fleet.sh's memory pre-flight reads ${DXB_MEMINFO:-/proc/meminfo} and stops at `!! DUR: bellek dar`
+  // on a tight machine. The bench hands it a healthy one — assigned, not defaulted, so an inherited
+  // value cannot redden the battery; a case that wants its own machine passes DXB_MEMINFO in its env.
+  process.env.DXB_MEMINFO = MEMINFO_HEALTHY;
   const root = mkdtempSync(join(tmpdir(), "dxb-b46-"));
   const engine = join(root, "engine");
   // -r, not -a: measured 2026-09-26 in the sandboxed battery (dxbbuild, tmpfs) — `cp -a` tries to

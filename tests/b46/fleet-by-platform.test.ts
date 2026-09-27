@@ -202,6 +202,22 @@ describe("the fleet, run — what each hunter is handed and how it is launched",
     expect(readdirSync(run).filter((n) => /^list-.+\.tsv$/.test(n))).toEqual(["list-x.tsv"]);
     expect(existsSync(join(run, "work-karsi", "launch.txt"))).toBe(false);
   }, 90_000);
+
+  // B56, 2026-09-27: the claim rounds' cap is his to set — a whole number of at least 1, named in both usage forms
+  it("takes --claim-cap as a whole number of at least 1 or does not start, and names it in the usage of both forms", () => {
+    for (const [v, said] of [["0", "en az 1 olur."], ["iki", "tam sayi ister (verilen: iki)."]]) {
+      const run = join(b.root, `claim-cap-${v}`);
+      const r = fleet(run, "--q", "astra 6 vs fable 5.1", "--roles", "x", "--claim-cap", v);
+      expect(r.code, r.stdout).toBe(3);
+      expect(r.stdout.split("\n").find((l) => l.startsWith("!! DUR:")), r.stdout).toMatch(/--claim-cap/);
+      expect(r.stdout).toContain(said);
+      expect(existsSync(run), "nothing ran").toBe(false);
+    }
+    const u = fleet(join(b.root, "claim-cap-usage"), "--claim-cap", "30");       // no --q: the usage, then DUR
+    expect(u.code, u.stdout).toBe(3);
+    const usage = u.stdout.split("\n").find((l) => l.startsWith("kullanim: fleet.sh")) ?? "";
+    expect(usage.split("   ·   ").slice(0, 2).map((form) => form.includes("[--claim-cap N]"))).toEqual([true, true]);
+  });
 });
 
 describe("crowd-urls.sh — the crowd's threads come from the ledger first", () => {
@@ -619,4 +635,56 @@ describe("K3 — the writer's clock is --writer-timeout, a tail that wrote no an
     expect(t.stdout.search(/^!! ELEME EKSIK: 1 satır gövdesiyle bekliyor \(x ×1\) — okunmadı sayılır$/m)).toBeGreaterThan(t.stdout.indexOf("CEVAP HAZIR"));
     expect(t.code).toBe(1);
   }, 60_000);
+});
+
+// B56, 2026-09-27 — THE MACHINE'S MEMORY (the lead's measurement). The K3 stage-2 re-run was launched at 08:19:43 with swap free 0 of 16,383 MiB and 9.5 %
+// of RAM available, and earlyoom sent 241 SIGTERMs until 08:38 — his Chrome's tabs, the hidden research Chrome, Xvfb, the
+// keyring, ollama. fleet.sh now reads /proc/meminfo before anything starts, --write-only included; DXB_MEMINFO hands it a file.
+describe("the machine's memory is read before anything starts", () => {
+  /** A /proc/meminfo in this bench's folder, the three fields in kB. */
+  const meminfo = (name: string, available: number, swapTotal: number, swapFree: number) => {
+    const p = join(b.root, `meminfo-${name}`);
+    writeFileSync(p, `MemTotal:       31462432 kB\nMemFree:         1048576 kB\nMemAvailable:   ${available} kB\n`
+      + `Cached:          4194304 kB\nSwapTotal:      ${swapTotal} kB\nSwapFree:       ${swapFree} kB\n`);
+    return p;
+  };
+  const Q = ["--q", "astra 6 vs fable 5.1", "--roles", "x", "--timeout", "30", "--no-write"];
+  const SWAP_5 = () => meminfo("swap-5", 22_626_260, 16_777_212, 838_860);      // swap free 5 %, RAM plenty
+  const PROCS = / — en buyuk 5 surec: \d+ MiB \d+ \S.*( · \d+ MiB \d+ \S.*){4}$/;
+
+  it("does not start with swap free under 20 % or MemAvailable under 4 GiB: its numbers, the five largest processes, code 3 — nothing ran", () => {
+    for (const [name, file, said] of [
+      ["swap", SWAP_5(), "MemAvailable 22095 MiB · takas bos 819/16383 MiB"],
+      ["ram", meminfo("ram-3g", 3_145_728, 16_777_212, 8_235_720), "MemAvailable 3072 MiB · takas bos 8042/16383 MiB"]]) {
+      const run = join(b.root, `mem-low-${name}`);
+      const r = fleetWith({ DXB_MEMINFO: file }, run, ...Q);
+      expect(r.code, r.stdout).toBe(3);
+      expect(r.stdout.split("\n")[0], name).toBe(`bellek: ${said}`);
+      const dur = r.stdout.split("\n").find((l) => l.startsWith("!! DUR:")) ?? "";
+      expect(dur.startsWith(`!! DUR: bellek dar — ${said} — en buyuk 5 surec: `), dur).toBe(true);
+      expect(dur).toMatch(PROCS);
+      expect(r.stdout, "the split, the ground and every hunter come after it").not.toMatch(/^(alt sorular|genis zemin|avcilar)/m);
+      expect(existsSync(run), "nothing ran: no run folder").toBe(false);
+    }
+  });
+
+  it("with --force-memory says the same line as !! UYARI and goes on to the next step, on --write-only too", () => {
+    const gone = join(b.root, "mem-force-no-such-run");
+    const r = fleetWith({ DXB_MEMINFO: SWAP_5() }, "--write-only", gone, "--force-memory");
+    const warn = r.stdout.split("\n").find((l) => l.startsWith("!! UYARI: bellek")) ?? "";
+    expect(warn.startsWith("!! UYARI: bellek dar — MemAvailable 22095 MiB · takas bos 819/16383 MiB — en buyuk 5 surec: "), r.stdout)
+      .toBe(true);
+    expect(warn).toMatch(PROCS);
+    expect(r.stdout).not.toMatch(/!! DUR: bellek/);
+    // the step after the gate refused on its own ground: the gate let the run through
+    expect(r.code).toBe(3);
+    expect(r.stdout).toContain(`!! DUR: kosu klasoru yok: ${gone}`);
+  });
+
+  it("says what it measured on a healthy machine, first, and starts", () => {
+    const r = fleetWith({ DXB_MEMINFO: meminfo("ok", 22_626_260, 16_777_212, 8_235_720) }, join(b.root, "mem-ok"), ...Q);
+    expect(r.code, r.stdout.slice(-1500)).toBe(0);
+    expect(r.stdout.split("\n")[0]).toBe("bellek: MemAvailable 22095 MiB · takas bos 8042/16383 MiB");
+    expect(r.stdout).toMatch(/^genis zemin 1 aciliyor: /m);
+  }, 90_000);
 });
