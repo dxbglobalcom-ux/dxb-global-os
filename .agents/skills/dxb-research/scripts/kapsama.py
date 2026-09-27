@@ -71,6 +71,14 @@ record stands beside it, <run>/audit.jsonl, a line after KANIT:
     DENETÇİ: N okundu · d düzeltildi · r çıkarıldı · u denetlenmedi
 audit.py's own tally — N the claims it gave a verdict, u those it did not read. Without audit.jsonl nothing is printed.
 
+THE RESEARCH TYPE (B56 K3 stage 2). With --answer, when <run>/subquestions.json carries a `shape` (scripts/split.py —
+the one owner of its name), a last line after ALT SORU:
+    ŞEKİL: <shape_name, lower case> (model | CEO | kural) · levha satırı n · geçiş tablosu var | yok | gerekmiyor
+n the claims of the answer's `## Şekil — ` section (claims.py sub_counts' "SHAPE"); gerekmiyor when no sub-question's
+title or question holds a word of fleet/writer-prompt.md rule 12 (geçiş · geçen · switched · moved · migrat), var when
+the section of every one that does holds a table whose header has a cell starting `kim` and one holding `nereden` or
+`→`, else yok. Without a shape nothing is printed.
+
 One row per platform present (it has an address, or a ground channel of it ran) plus `web`.
 --legacy reads a run made before v2 (no evidence.jsonl) and prints its old five columns, unchanged:
 Bulundu = the addresses in sources.json by platform (X = x.com + twitter.com + t.co), Okundu = addresses
@@ -101,6 +109,8 @@ MEASURED = ("x", "youtube", "tiktok", "instagram", "facebook", "linkedin", "redd
 COLUMNS = ("Platform", "Bulundu", "İndirildi", "İlgili", "Okundu", "Kısmen", "Kanıt", "Cevapta", "Elenen",
            "Kapalı kapı")
 SUB_COLUMNS = ("Alt soru", "İddia", "Satır", "Bağımsız kaynak", "Karşı", "Durum")
+SOURCE_WORD = {"model": "model", "ceo": "CEO", "fallback": "kural"}   # subquestions.json's shape_source, as printed
+MOVED = re.compile(r"geçiş|geçen|switched|moved|migrat")               # writer-prompt.md rule 12's words, folded
 
 
 urls_in = P.urls_in
@@ -204,10 +214,11 @@ def by_count(c: Counter) -> list[tuple[str, int]]:
     return sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))
 
 
-def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str, str, list[dict] | str | None]:
+def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str, str, list[dict] | str | None, str]:
     """The ten columns, the notes, the ledger's line and, with an answer, the claim ledger's line
     (claim_line) and the admitted addresses' (kanit_line); "" without one — and the sub-questions' table
-    (sub_table; None without an answer or subquestions.json). evidence.py and claims.py are
+    (sub_table; None without an answer or subquestions.json) and the research type's line (shape_line; "" without
+    an answer or a shape). evidence.py and claims.py are
     imported here, not at the top: --legacy never needs them, and a failure to load evidence.py is printed
     by main, never raised; without claims.py Kanıt is "-" and the KANIT line says why."""
     import evidence as E  # noqa: E402 — the ledger's owner: the address row, the states, their sums
@@ -268,7 +279,8 @@ def table_v2(run: Path, answer: Path | None) -> tuple[dict, list[str], str, str,
                 t["closed"][short_reason(shut[-1].get("notes"), shut[-1]["liveness"], shut[-1].get("http_status"))] += 1
     kanit = "" if cited is None else kanit_line(use, cited) if use is not None else f"KANIT: hesaplanamadı ({no_claims})"
     alt = None if cited is None else sub_table(run, md, every, CL, no_claims)
-    return rows, notes, ledger_line(E, ledger, odd), said, kanit, alt
+    shape = "" if cited is None else shape_line(run, md, every, CL, no_claims)
+    return rows, notes, ledger_line(E, ledger, odd), said, kanit, alt, shape
 
 
 def sub_table(run: Path, md: str, every: list[dict], CL, no_claims: str) -> list[dict] | str | None:
@@ -293,6 +305,52 @@ def sub_table(run: Path, md: str, every: list[dict], CL, no_claims: str) -> list
         c = counts.get(sid) or {"claims": 0, "rows": 0, "sources": 0, "counter": 0}
         state = "tam" if c["claims"] else "boş" if held.get(sid, {}).get("gap") else "eksik"
         out.append({"id": sid, "title": title, **c, "state": state})
+    return out
+
+
+def fold(s: str) -> str:
+    """Lower case, Turkish İ as i: `Kim` and `KİM` are `kim`, `GEÇİŞ` is `geçiş`, `MIGRAT` is `migrat`."""
+    return s.replace("İ", "i").casefold()
+
+
+def shape_line(run: Path, md: str, every: list[dict], CL, no_claims: str) -> str:
+    """`ŞEKİL: <shape_name> (<source>) · levha satırı n · geçiş tablosu var | yok | gerekmiyor` (the docstring) when
+    <run>/subquestions.json carries a `shape`; '' when it carries none or cannot be read (ALT SORU says so)."""
+    try:
+        doc = json.loads((run / "subquestions.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return ""
+    if not isinstance(doc, dict) or not one_line(doc.get("shape")):
+        return ""
+    src, name = one_line(doc.get("shape_source")), one_line(doc.get("shape_name")) or one_line(doc.get("shape"))
+    head = f"ŞEKİL: {name.lower()} ({SOURCE_WORD.get(src, src or '?')})"
+    if CL is None:
+        return f"{head} · hesaplanamadı ({no_claims})"
+    by_id = {r["id"]: r for r in every if isinstance(r.get("id"), str)}
+    n = CL.sub_counts(CL.extract_claims(P.split_paired(md), by_id), by_id).get("SHAPE", {}).get("claims", 0)
+    items = doc.get("items") if isinstance(doc.get("items"), list) else []
+    need = [str(i.get("id")) for i in items
+            if isinstance(i, dict) and MOVED.search(fold(f"{i.get('title') or ''} {i.get('question') or ''}"))]
+    held = moved_tables(md, CL)
+    state = "gerekmiyor" if not need else "var" if all(s in held for s in need) else "yok"
+    return f"{head} · levha satırı {n} · geçiş tablosu {state}"
+
+
+def moved_tables(md: str, CL) -> set[str]:
+    """The S-ids whose `## S<n> — ` section holds a table whose header row has a cell starting `kim` and one holding
+    `nereden` or `→` — fleet/writer-prompt.md rule 12's table."""
+    out: set[str] = set()
+    sid = None
+    lines = (md or "").splitlines()
+    for j, line in enumerate(lines):
+        h = CL.H2.match(line)
+        if h:
+            s = CL.sub_heading(h.group(1))
+            sid = s[0] if s else None
+        elif sid and line.lstrip().startswith("|") and j + 1 < len(lines) and CL.SEP_ROW.match(lines[j + 1]):
+            heads = [fold(re.sub(r"[*_`]", "", c)).strip() for c in line.strip().strip("|").split("|")]
+            if any(c.startswith("kim") for c in heads) and any("nereden" in c or "→" in c for c in heads):
+                out.add(sid)
     return out
 
 
@@ -519,7 +577,7 @@ def main(argv: list[str] | None = None) -> int:
             rows, notes = table_legacy(run, answer, default_answer=not a.answer)
             print(render(rows, doors, present, a.format))
         else:
-            rows, notes, line, said, kanit, alt = table_v2(run, answer)
+            rows, notes, line, said, kanit, alt, shape = table_v2(run, answer)
             print(render_v2(rows, doors, present, a.format))
             print(line)
             if said:
@@ -531,6 +589,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(audit)
             if alt is not None:
                 print(alt if isinstance(alt, str) else render_sub(alt, a.format))
+            if shape:
+                print(shape)
         for n in notes:
             print(n)
     except Exception as e:                        # the ruler prints; it does not stop the page

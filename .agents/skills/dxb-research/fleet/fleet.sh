@@ -45,13 +45,21 @@
 # only its own rows, answer.md takes what it corrected and removed, and the ledger is extracted again and checked
 # against its record (THE TAIL, step (6)); the page says what was corrected and what was removed.
 #
+# AND THE PAGE TAKES THE SHAPE OF THE RESEARCH TYPE (B56 K3 stage 2, 2026-09-27). The split names the type of his
+# question — karsilastirma · pazar · profil · karar — beside its sub-questions (subquestions.json, `rapor tipi:` on the
+# log); the writer is handed that type's skeleton, fleet/shapes/<type>.md, as {{SHAPE}} and writes its `## Şekil — …`
+# section after the number that carries the verdict, before the S-sections; the page stands it there and says the type
+# under the verdict. His one word changes it: --shape <type> (split.py --shape, `kaynak: CEO`), on a full run or again
+# on --write-only.
+#
 #   fleet.sh [<run-dir>|<name>] --q "<short query>" [--q "..."]... [--dert FILE]
 #            [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #            [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write]
 #            [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout S]
-#            [--no-audit]
+#            [--no-audit] [--shape karsilastirma|pazar|profil|karar]
 #   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--no-split] [--writer-timeout S]
-#            [--no-audit]            # the tail alone — draft, claim rounds, answer, auditor, page — on a run that has its rows
+#            [--no-audit] [--shape karsilastirma|pazar|profil|karar]
+#                                    # the tail alone — draft, claim rounds, answer, auditor, page — on a run that has its rows
 #
 # THE FIRST ARGUMENT IS THE RUN FOLDER — a path, or a bare name or nothing, which puts it under the
 # repository (THE RUN LIVES ON DISK, below) — AND THE QUERIES ARE TYPED BY THE SESSION — a few words
@@ -79,7 +87,7 @@ OUT=""
 case "${1:-}" in --*|"") ;; *) OUT="$1"; shift ;; esac
 N=4; MODEL=claude-opus-5-5; TMO=600; ROLES=""; DERT=""
 ROUNDS=3; FETCH_LIMIT=2000; FETCH_WORKERS=6; ALLOW_TMP=0; WRITE=1; WRITE_ONLY=""
-CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1; WRITER_TMO=1500; AUDIT=1
+CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1; WRITER_TMO=1500; AUDIT=1; SHAPE=""; SHAPE_GIVEN=0
 QUERIES=()
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -102,6 +110,7 @@ while [ $# -gt 0 ]; do
     --crowd-cap)     CROWD_CAP="${2:?--crowd-cap bir sayi ister}"; shift 2 ;;
     --no-split)      SPLIT=0; shift ;;
     --no-audit)      AUDIT=0; shift ;;
+    --shape)         SHAPE="${2-}"; SHAPE_GIVEN=1; shift $(( $# > 1 ? 2 : 1 )) ;;
     *) shift ;;
   esac
 done
@@ -111,8 +120,15 @@ done
 if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 ] || [ "$CLAIM_TMO" -lt 1 ] || [ "$CROWD_CAP" -lt 1 ] || [ "$WRITER_TMO" -lt 1 ]; then
   echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout, --crowd-cap ve --writer-timeout en az 1 olur." >&2; exit 3
 fi
+# his one word on the research type (K3 stage 2): one of the four, or the run does not start
+if [ "$SHAPE_GIVEN" -eq 1 ]; then
+  case "$SHAPE" in
+    karsilastirma|pazar|profil|karar) ;;
+    *) echo "!! DUR: --shape karsilastirma | pazar | profil | karar ister (verilen: $SHAPE)" >&2; exit 3 ;;
+  esac
+fi
 if [ -z "$WRITE_ONLY" ] && [ ${#QUERIES[@]} -eq 0 ]; then
-  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout SN] [--no-audit]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit]" >&2
+  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP]   ·   TIP: karsilastirma | pazar | profil | karar" >&2
   echo "!! DUR: sorgu yok, filo yok. --q ile birkaç kelimelik sorgu ver." >&2
   exit 3
 fi
@@ -198,8 +214,11 @@ write_answer() {
       printf '(iddia defteri okunamadi — claims.py brief kod %s)\n' "$brc" > "$OUT/writer-claims.txt"
     fi
   fi
+  # {{SHAPE}} (K3 stage 2): the skeleton of the run's research type, fleet/shapes/<shape>.md, when subquestions.json
+  # carries a shape; else the line that says there is none. A shape with no skeleton file is named on the log, one
+  # line above the pass's own, and the writer is told there is none.
   size="$(python3 - "$OUT" "$tpl" "$OUT/writer-status.md" "$filled" "$OUT/writer-rows$sfx.txt" "$OUT/writer-claims$sfx.txt" <<'PY'
-import re, sys
+import json, re, sys
 from pathlib import Path
 run, tpl, status, out, rows, claims = (Path(a) for a in sys.argv[1:7])
 
@@ -219,16 +238,27 @@ for h in sorted(run.glob("HUNTER-*.md")):
         if m and m.group(1).strip():
             verdicts.append(f"[{h.stem[len('HUNTER-'):]}] HÜKÜM: {one(m.group(1))}")
 lines = [ln for ln in text(rows).splitlines() if ln.strip()]      # evidence.py writer-rows, one row a line
+NO_SHAPE = "(bu koşuda şekil yok — Şekil bölümü yazılmaz)"
+try:
+    shape = json.loads((run / "subquestions.json").read_text(encoding="utf-8")).get("shape")
+except (OSError, ValueError, AttributeError):
+    shape = None
+skeleton = NO_SHAPE
+if isinstance(shape, str) and re.fullmatch(r"[a-z]+", shape):
+    skeleton = text(tpl.parent / "shapes" / f"{shape}.md") or NO_SHAPE
+    if skeleton == NO_SHAPE:
+        print(f"!! şekil: {tpl.parent / 'shapes' / (shape + '.md')} yok — Şekil bölümü istenmedi")
 vals = {"QUESTION": text(run / "question.txt") or "(question.txt yok)",
         "HUKUM": "\n".join(verdicts) or "(hicbir avci HÜKÜM satiri getirmedi)",
         "STATUS": text(status) or "(evidence.py status okunamadi)",
         "ROWS": "\n".join(lines), "N_ROWS": str(len(lines)),
-        "CLAIMS": text(claims) or "(iddia defteri yok)"}
+        "CLAIMS": text(claims) or "(iddia defteri yok)", "SHAPE": skeleton}
 filled = re.sub(r"\{\{([A-Z_]+)\}\}", lambda m: vals.get(m.group(1), m.group(0)), text(tpl)) + "\n"
 out.write_text(filled, encoding="utf-8")
 print(f"{len(lines)} satir · {len(filled.encode()) // 1024} KB")
 PY
 )" || { echo "!! $tag: istem doldurulamadi — ${ans##*/} yazilmadi."; return 1; }
+  case "$size" in *$'\n'*) printf '%s\n' "${size%$'\n'*}"; size="${size##*$'\n'}" ;; esac   # a line before the size: the log's
   if [ "${size%% *}" = "0" ]; then
     echo "!! $tag: yazara verilecek satir yok (kabul edilen 0) — cagrilmadi, ${ans##*/} yazilmadi."
     return 1
@@ -296,20 +326,27 @@ PY
 # A FULL RUN THAT DOES NOT SPLIT KEEPS NO EARLIER SPLIT: it wrote question.txt anew, so a subquestions.json an
 # earlier run left in its folder answers another question — measured by the lead: a folder used again with
 # --no-split kept four sub-questions, and kapsama.py printed `ALT SORU: 4 · tam 0 · boş 0 · eksik 4`.
+# THE RESEARCH TYPE (K3 stage 2) comes with the split: split.py names it — the model's, his --shape, else the text
+# rule's — and its `rapor tipi:` line stands under `alt sorular:`. --shape is handed to split.py on both calls; with
+# --no-split nothing is split and nothing is typed, and a line says his word was not used — as it does when split.py
+# fails (its clock's 124 included).
 split_question() {
   local rc
   if [ "$SPLIT" -ne 1 ]; then
     echo "alt sorular: atlandi (--no-split)"
+    [ -z "$SHAPE" ] || echo "!! rapor tipi: --shape $SHAPE kullanilmadi — --no-split, soru bolunmedi"
     [ -n "$WRITE_ONLY" ] || rm -f "$OUT/subquestions.json"
     return 0
   fi
   # two calls of 120 s at most (an unreadable answer is asked for once more), and a margin
-  timeout 300 python3 "$SKILL/scripts/split.py" "$OUT" "$@" > "$OUT/split.out" 2> "$OUT/split.err"
+  timeout 300 python3 "$SKILL/scripts/split.py" "$OUT" "$@" ${SHAPE:+--shape "$SHAPE"} > "$OUT/split.out" 2> "$OUT/split.err"
   rc=$?
   if [ "$rc" -eq 0 ] && grep -q '^alt sorular: ' "$OUT/split.out"; then
     grep -m1 '^alt sorular: ' "$OUT/split.out"
+    grep -m1 '^rapor tipi: ' "$OUT/split.out"
   else
     echo "!! alt sorular: split.py kod $rc — soru bolunmedi, question.txt oldugu gibi: $OUT/split.err"
+    [ -z "$SHAPE" ] || echo "!! rapor tipi: --shape $SHAPE kullanilmadi — split.py kod $rc, soru bolunmedi"
     [ -n "$WRITE_ONLY" ] || rm -f "$OUT/subquestions.json"
   fi
   sed 's/^/   /' "$OUT/split.err"

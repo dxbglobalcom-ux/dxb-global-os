@@ -11,6 +11,8 @@ table (kapsama.py); a sub-question no row speaks to stands there as a gap — `B
 never dropped.
 
     split.py <run> [--model claude-opus-5-5] [--effort low] [--timeout 120] [--reuse]
+             [--shape karsilastirma|pazar|profil|karar]
+    split.py <run> --shape-only
     split.py --selftest
 
 READS <run>/question.txt — fleet.sh writes its DERT block and its SORGULAR — less an ALT SORULAR block an
@@ -30,15 +32,27 @@ WRITES <run>/subquestions.json — {"source": "model"|"fallback", "cost_usd": x,
     ALT SORULAR (S-kimlik · başlık · soru):
       - S1 · <title> · <question>
 
-(an existing block is replaced, never doubled), which reaches every role through {{QUESTION}}. Its one line on
+(an existing block is replaced, never doubled), which reaches every role through {{QUESTION}}. Its first line on
 stdout: `alt sorular: N (kaynak: model|fallback · $cost · Ns) — S1 <title> · S2 <title> · …`.
 --reuse (fleet.sh --write-only): <run>/subquestions.json when it holds sub-questions — no call; the block is
 written from it again — else the split above.
 FAKE_SPLIT=<file>: the answer is read from that file — the model's text, or claude's JSON envelope — instead of
-calling claude (the fleet's tests). --selftest: the reading, on the three answers kept below (good · fenced ·
-cut → fallback); its last line `SELFTEST OK 3/3`.
-Exit: 0 split, fallen back or reused · 1 --selftest failed · 2 refused (no run folder, no question.txt, a bad
-argument).
+calling claude (the fleet's tests). --selftest: the reading, on the four answers kept below (good · fenced ·
+cut → fallback · shaped, its research type read beside its items); its last line `SELFTEST OK 4/4`.
+
+THE RESEARCH TYPE (B56 K3 stage 2, the CEO's word on the K3 plan, 2026-09-26 23:05): the page takes the shape of
+the kind of research his question is. The same call names it beside the items — "shape", one key of SHAPES below,
+and "shape_reason", one Turkish sentence — and subquestions.json carries `shape`, `shape_name` (SHAPES' name: the
+page's type line, kapsama.py's ŞEKİL line and the heading of fleet/shapes/<shape>.md, the skeleton the writer is
+handed, all read it from here), `shape_reason` and `shape_source`: `model`; `fallback` when the call failed or named
+no key of SHAPES — then the text rule, shape_of(), decides (the items stay the model's when it read them); `ceo`
+with --shape, his one word on the run (fleet.sh --shape), which overrides both. --reuse keeps the json's shape
+fields as they are — an older json without them stays without them — unless --shape is given. On stdout, right
+after the `alt sorular:` line and on every path: `rapor tipi: <shape_name, lower case> (kaynak: model | kural | CEO
+· <shape_reason>)` — none when the json carries no shape. --shape-only: the text rule's line on <run>/question.txt,
+and nothing is written or asked.
+Exit: 0 split, fallen back, reused or typed · 1 --selftest failed · 2 refused (no run folder, no question.txt, a
+bad argument).
 """
 from __future__ import annotations
 
@@ -67,6 +81,10 @@ HEADER = re.compile(r"^(DERT|SORGULAR|ALT SORULAR) \(")  # question.txt's three 
 ID_LEAD = re.compile(r"^S\d+\s*[—–:·.-]\s*")             # a title the model began with its own id
 WHOLE = "Sorunun tamamı"           # the fallback's one title: the DERT itself
 FELL_BACK = "split: model cevabı okunamadı — tek alt soru (DERT)"
+# THE RESEARCH TYPE (K3 stage 2): the one mapping, key → the name every reader prints; shape_source → the word it says
+SHAPES = {"karsilastirma": "Karşılaştırma", "pazar": "Pazar levhası", "profil": "Profil", "karar": "Karar"}
+SOURCE_WORD = {"model": "model", "fallback": "kural", "ceo": "CEO"}
+SHAPE_KEYS = ("shape", "shape_name", "shape_reason", "shape_source")
 
 PROMPT = """You split a research question into its sub-questions before a research run starts. Below is what the
 run was given: the CEO's own words (DERT — what the answer must meet; when there is no DERT, the queries are the
@@ -84,8 +102,15 @@ For each:
 - "question": one sentence, in Turkish
 - "signals": 2 to 4 short words or phrases a source that speaks to it would use, in the source's own language
 
+Then name the research type of the question — the shape its answer's page takes — as "shape", exactly one of:
+- "karsilastirma": two or more named things compared ("vs", "mı yoksa", "karşı", "hangisi")
+- "pazar": a market, a size, a price, a demand, a potential
+- "profil": one company, product, person or tool studied on its own
+- "karar": the question asks what to do, whether to do it, or which to choose for US
+and "shape_reason": one sentence in Turkish saying why.
+
 Output ONLY valid JSON, no code fence and nothing around it:
-{{"items":[{{"id":"S1","title":"...","question":"...","signals":["...","..."]}}]}}
+{{"shape":"...","shape_reason":"...","items":[{{"id":"S1","title":"...","question":"...","signals":["...","..."]}}]}}
 """
 
 # THE THREE ANSWERS --selftest reads: a bare one, the same shape in a ``` fence, and one cut in the middle of its
@@ -101,6 +126,8 @@ FENCED = "```json\n" + json.dumps({"items": [{"id": f"S{n}", "title": t, "questi
                                               for n, (t, q, s) in enumerate(SAMPLE[:3], 1)]},
                                    ensure_ascii=False, indent=1) + "\n```"
 CUT = GOOD[:GOOD.index('{"id": "S3"')]
+SHAPED = json.dumps({"shape": "karar", "shape_reason": "Soru bizim hangisine geçmemiz gerektiğini soruyor.",
+                     "items": json.loads(GOOD)["items"]}, ensure_ascii=False)
 SAMPLE_QUESTION = ("DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):\n"
                    "Who prefers Astra 6 or Fable 5.1, for what work, and why?\n\n"
                    "SORGULAR (zemin bunlarla acildi):\n  - Astra 6 vs Fable 5.1\n")
@@ -156,6 +183,57 @@ def fallback(text: str) -> list[dict]:
     return [{"id": "S1", "title": WHOLE, "question": dert or "; ".join(queries) or one(text), "signals": queries}]
 
 
+# THE TEXT RULE (K3 stage 2, the lead's A12): tried in this order on the question — its DERT and its queries, as
+# folded() writes them — the first that matches is the type. `karar` first: its own example, "hangisini seçelim",
+# holds `hangisi`, so tried after `karsilastirma` it would be typed a comparison.
+ASCII = str.maketrans("çğıöşüâîûÇĞİÖŞÜÂÎÛ", "cgiosuaiuCGIOSUAIU")
+DECIDE = re.compile(r"\b(?:abone olalim mi|yapalim mi|girelim mi|alalim mi|secelim)\b")
+DECIDE_LAST = re.compile(r"\b\w*(?:alim|elim) mi\b")          # "-alım mı / -elim mi", on the DERT's last sentence
+COMPARE = re.compile(r"\bvs\b|\bm[iu],?\s+yoksa\b|\bkarsi\b|\bhangisi")
+MARKET = re.compile(r"\bpazar(?!lam)|\bmarkets?\b|\bfiyat|\bpotansiyel|\bbuyuklu|\btale[pb]")  # not "pazarlama"
+RULE_SAYS = {"karar": "soru ne yapılacağını soruyor", "karsilastirma": "soru adı geçenleri karşılaştırıyor",
+             "pazar": "soru bir pazarı, fiyatı ya da talebi soruyor"}
+NO_SIGN = "soruda karar, karşılaştırma ya da pazar işareti yok — tek konu inceleniyor"
+
+
+def folded(s: str) -> str:
+    """Lower case without the Turkish letters — ş → s, ı and İ → i, ü → u … —, one character for one, so a match's
+    span is the span of the words as written."""
+    return s.translate(ASCII).lower()
+
+
+def shape_of(text: str) -> tuple[str, str]:
+    """The text rule on question.txt (its ALT SORULAR block aside): (a key of SHAPES, why, in Turkish, with the words
+    that decided it). karar — abone olalım mı · yapalım mı · girelim mi · alalım mı · seçelim anywhere, or a
+    "-alım mı / -elim mi" on the DERT's last sentence —, then karsilastirma (vs · mı yoksa · karşı · hangisi), then
+    pazar (pazar · market · fiyat · potansiyel · büyüklük · talep), else profil."""
+    base = without_block(text)
+    dert, queries = parts(base)
+    said = " ".join(x for x in (dert, "; ".join(queries)) if x) or " ".join(base.split())
+    last = ([s for s in re.split(r"(?<=[.!?…])\s+", dert or said) if s.strip()] or [""])[-1]
+    for key, where, pattern in (("karar", said, DECIDE), ("karar", last, DECIDE_LAST), ("karsilastirma", said, COMPARE),
+                                ("pazar", said, MARKET)):
+        m = pattern.search(folded(where))
+        if m:
+            return key, f'{RULE_SAYS[key]}: "{where[m.start():m.end()]}"'
+    return "profil", NO_SIGN
+
+
+def shaped(key: str, reason: str, source: str) -> dict:
+    """subquestions.json's four shape fields."""
+    return {"shape": key, "shape_name": SHAPES[key], "shape_reason": reason, "shape_source": source}
+
+
+def shape_line(doc: dict) -> str | None:
+    """`rapor tipi: <name, lower case> (kaynak: model | kural | CEO · <reason>)` for a json that carries a shape;
+    None for one that carries none."""
+    key = one(doc.get("shape"))
+    if not key:
+        return None
+    name, src, why = one(doc.get("shape_name")) or key, one(doc.get("shape_source")), one(doc.get("shape_reason"))
+    return f"rapor tipi: {name.lower()} (kaynak: {SOURCE_WORD.get(src, src or '?')}" + (f" · {why})" if why else ")")
+
+
 def write(path: Path, text: str) -> None:
     tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
     tmp.write_text(text, encoding="utf-8")
@@ -182,10 +260,9 @@ def objects(s: str):
                     break
 
 
-def entries(text) -> list | None:
-    """The sub-question entries of an answer: bare JSON — {"items": […]}, or the list itself —; the same in a
-    ``` fence, stripped first; or the first brace-matched {…} holding "items", with words around it. None:
-    nothing in it parses to one."""
+def answer_json(text) -> list | dict | None:
+    """An answer's JSON: bare — {"items": […]}, or the list itself —; the same in a ``` fence, stripped first; or
+    the first brace-matched {…} holding "items", with words around it. None: nothing in it parses to one."""
     if not isinstance(text, str):
         return None
     s = re.sub(r"```\s*$", "", re.sub(r"^```[A-Za-z]*", "", text.strip())).strip()
@@ -194,11 +271,23 @@ def entries(text) -> list | None:
             obj = json.loads(cand)
         except ValueError:
             continue
-        if isinstance(obj, list):
+        if isinstance(obj, list) or (isinstance(obj, dict) and isinstance(obj.get("items"), list)):
             return obj
-        if isinstance(obj, dict) and isinstance(obj.get("items"), list):
-            return obj["items"]
     return None
+
+
+def entries(text) -> list | None:
+    """The sub-question entries of an answer (answer_json): its list, or its "items". None: none parse."""
+    obj = answer_json(text)
+    return obj["items"] if isinstance(obj, dict) else obj
+
+
+def shape_in(text) -> tuple[str | None, str]:
+    """The research type an answer names beside its items — (a key of SHAPES, its reason) — or (None, ""): it names
+    none, or one SHAPES does not hold (A10: the text rule decides then)."""
+    obj = answer_json(text)
+    key = one(obj.get("shape")).lower() if isinstance(obj, dict) else ""
+    return (key, one(obj.get("shape_reason"))) if key in SHAPES else (None, "")
 
 
 def items_of(text) -> tuple[list[dict] | None, str]:
@@ -295,8 +384,8 @@ def ask(prompt: str, run: Path, model: str, effort: str, timeout: int) -> tuple[
 
 # =================================================================== the split
 def reused(run: Path) -> dict | None:
-    """<run>/subquestions.json when it holds sub-questions, each with an id, a title and a question; None when it
-    is not there or cannot be read."""
+    """<run>/subquestions.json when it holds sub-questions, each with an id, a title and a question — the json itself
+    as `doc`, whose shape fields --reuse keeps (K3 stage 2); None when it is not there or cannot be read."""
     try:
         doc = json.loads((run / "subquestions.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
@@ -306,7 +395,8 @@ def reused(run: Path) -> dict | None:
             isinstance(i, dict) and all(isinstance(i.get(k), str) and i[k].strip() for k in ("id", "title", "question"))
             for i in items):
         return None
-    return {"source": doc["source"] if doc.get("source") in ("model", "fallback") else "model", "items": items}
+    return {"source": doc["source"] if doc.get("source") in ("model", "fallback") else "model", "items": items,
+            "doc": doc}
 
 
 def summary(source: str, items: list[dict], cost: float, secs: float) -> str:
@@ -314,7 +404,16 @@ def summary(source: str, items: list[dict], cost: float, secs: float) -> str:
             + " · ".join(f"{one(i['id'])} {one(i['title'])}" for i in items))
 
 
-def split(run: Path, model: str, effort: str, timeout: int, reuse: bool) -> int:
+def by_ceo(key: str) -> dict:
+    """The shape fields of his one word on the run (fleet.sh --shape)."""
+    return shaped(key, f"CEO'nun sözü: --shape {key}", "ceo")
+
+
+def dump(doc: dict) -> str:
+    return json.dumps(doc, ensure_ascii=False, indent=2) + "\n"
+
+
+def split(run: Path, model: str, effort: str, timeout: int, reuse: bool, shape: str | None = None) -> int:
     qf = run / "question.txt"
     try:
         text = qf.read_text(encoding="utf-8", errors="replace")
@@ -327,14 +426,22 @@ def split(run: Path, model: str, effort: str, timeout: int, reuse: bool) -> int:
         again = with_block(text, kept["items"])
         if again != text:
             write(qf, again)
+        doc = kept["doc"]
+        if shape:              # his word again on --write-only: the json takes it, the rest of it as it was
+            doc = {**{k: v for k, v in doc.items() if k != "items" and k not in SHAPE_KEYS}, **by_ceo(shape),
+                   "items": doc["items"]}
+            write(run / "subquestions.json", dump(doc))
         print(summary(kept["source"], kept["items"], 0.0, time.monotonic() - t0)
               + " (subquestions.json yeniden kullanıldı)")
+        line = shape_line(doc)
+        if line:
+            print(line)
         return 0
     if reuse and (run / "subquestions.json").exists():
         print("split: subquestions.json okunamadı — soru yeniden bölünüyor", file=sys.stderr)
     base = without_block(text)
     prompt = PROMPT.format(question=base[:QUESTION_CHARS])
-    items, cost = None, 0.0
+    items, cost, named = None, 0.0, (None, "")
     for attempt in (1, 2):
         answer, spent, why = ask(prompt, run, model, effort, timeout)
         cost += spent
@@ -343,6 +450,7 @@ def split(run: Path, model: str, effort: str, timeout: int, reuse: bool) -> int:
             break
         items, note = items_of(answer)
         if items is not None:
+            named = shape_in(answer)
             if note:
                 print(f"split: {note}", file=sys.stderr)
             break
@@ -351,18 +459,22 @@ def split(run: Path, model: str, effort: str, timeout: int, reuse: bool) -> int:
     if items is None:
         items, source = fallback(base), "fallback"
         print(FELL_BACK, file=sys.stderr)
-    write(run / "subquestions.json", json.dumps({"source": source, "cost_usd": round(cost, 4), "items": items},
-                                                 ensure_ascii=False, indent=2) + "\n")
+    # the type: his word · the model's, beside the items it gave · the text rule's (A10)
+    kind = by_ceo(shape) if shape else shaped(*named, "model") if named[0] else shaped(*shape_of(text), "fallback")
+    doc = {"source": source, "cost_usd": round(cost, 4), **kind, "items": items}
+    write(run / "subquestions.json", dump(doc))
     write(qf, with_block(text, items))
     print(summary(source, items, cost, time.monotonic() - t0))
+    print(shape_line(doc))
     return 0
 
 
 def selftest() -> int:
-    """The reading on the three kept answers: GOOD → S1…S4 · FENCED → 3 · CUT → none, so the fallback: one
-    sub-question, the DERT itself."""
+    """The reading on the four kept answers: GOOD → S1…S4 · FENCED → 3 · CUT → none, so the fallback: one
+    sub-question, the DERT itself · SHAPED → S1…S4 and its research type, where GOOD names none."""
     good, fenced, cut = items_of(GOOD)[0], items_of(FENCED)[0], items_of(CUT)[0]
     whole = fallback(SAMPLE_QUESTION) if cut is None else []
+    typed, kind = items_of(SHAPED)[0], shape_in(SHAPED)
     checks = [
         ("good", good is not None and [i["id"] for i in good] == ["S1", "S2", "S3", "S4"]
          and good[0]["title"] == SAMPLE[0][0], f"{len(good or [])} alt soru"),
@@ -370,6 +482,8 @@ def selftest() -> int:
         ("cut", cut is None and len(whole) == 1
          and whole[0]["question"] == "Who prefers Astra 6 or Fable 5.1, for what work, and why?",
          "okunamadı → fallback: " + " · ".join(f"{i['id']} {i['title']}" for i in whole)),
+        ("shaped", typed is not None and len(typed) == 4 and kind[0] == "karar" and kind[1].startswith("Soru bizim")
+         and shape_in(GOOD) == (None, ""), f"{len(typed or [])} alt soru · rapor tipi {kind[0]} — {kind[1]}"),
     ]
     for name, ok, said in checks:
         print(f"{name}: {'OK' if ok else 'FAIL'} — {said}")
@@ -385,6 +499,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--effort", default=EFFORT)
     ap.add_argument("--timeout", type=int, default=TIMEOUT)
     ap.add_argument("--reuse", action="store_true", help="<run>/subquestions.json when it is there (--write-only)")
+    ap.add_argument("--shape", choices=tuple(SHAPES), help="his one word on the run, the research type (fleet.sh)")
+    ap.add_argument("--shape-only", action="store_true", help="the text rule's line on question.txt; writes nothing")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args(argv)
     if a.selftest:
@@ -392,10 +508,18 @@ def main(argv: list[str] | None = None) -> int:
     if not a.run or not Path(a.run).is_dir():
         print(f"split: REFUSED koşu klasörü yok: {a.run or '(verilmedi)'}", file=sys.stderr)
         return 2
+    if a.shape_only:
+        try:
+            text = (Path(a.run) / "question.txt").read_text(encoding="utf-8", errors="replace")
+        except OSError as e:
+            print(f"split: REFUSED {Path(a.run) / 'question.txt'} okunamadı ({type(e).__name__})", file=sys.stderr)
+            return 2
+        print(shape_line(shaped(*shape_of(text), "fallback")))
+        return 0
     if a.timeout < 1:
         print("split: REFUSED --timeout en az 1 saniye", file=sys.stderr)
         return 2
-    return split(Path(a.run), a.model, a.effort, a.timeout, a.reuse)
+    return split(Path(a.run), a.model, a.effort, a.timeout, a.reuse, a.shape)
 
 
 if __name__ == "__main__":

@@ -87,6 +87,17 @@ lists, `Denetçinin düzelttikleri` (`C007 — <the line as the writer wrote it>
 `Denetçinin çıkardıkları` (`C012 — <the line> — <reason>`, the id it had when it was read), each only when it has an
 entry, a line cut at 200 characters. A page with no audit.jsonl beside its answer is built byte for byte as before.
 
+THE RESEARCH TYPE (B56 K3 stage 2): when <run>/subquestions.json carries a `shape` (scripts/split.py — the one owner of
+its name), a line under the verdict box, above the auditor's, `rapor tipi: <shape_name> · kaynak: model | CEO | kural`
+(the class `count`); and the writer's `## Şekil — <name>` section (fleet/shapes/, writer-prompt.md rule 13) stands under
+"Cevabı taşıyan sayılar" where rule 13 puts it — after the lines before the first titled group (the number that carries
+the verdict), before that group —, wherever the writer put it, as a sub-question's does: its counts line from claims.py
+sub_counts' "SHAPE", its tables and its `### ` lists inside it; final.md carries it in the same place. A page with
+neither is built byte for byte as before. And under "Cevabı taşıyan sayılar" on EVERY page — not in the Şekil section
+alone — a table row whose first cell is `Toplam` (a skeleton table's sum) and a line or a row that holds `—` alone
+(zero said as an answer) carry no `(0 satır)`: without an id they are no claim. So a page is built byte for byte as
+before whenever its answer holds no id-less `Toplam` row and no `—`-only line or row there.
+
 REFUSED — exit 2, one line on stderr, no page written — when the answer carries an id that is not in
 evidence.jsonl; a bracket that holds an id-like token but is not a citation (`[bkz. L0002]`,
 `[L0001 ]`, `[l0003]`, `[L0001; L0002]`, `[L0001 | L0002]` — only ↔ pairs two sides, and each side is
@@ -477,6 +488,13 @@ AUDIT_CSS = (".audit-n{margin:-36px 0 48px;line-height:1.5}.audit-n .count{margi
              ".audit-t{margin:22px 0 6px}.audit-list{margin:0 0 12px;padding-left:20px;font-size:14px;line-height:1.55;"
              "overflow-wrap:anywhere}.audit-list li{margin:0 0 8px}")
 AUDIT_CHARS = 200                  # a line in the auditor's two lists, at most
+# the research type's line under the verdict box (B56 K3 stage 2), added only to a page whose subquestions.json carries
+# a shape: 12 px under the box, as the auditor's; the auditor's line under it pulled up to 6 px below, never over it
+SHAPE_CSS = (".shape-n{margin:-36px 0 48px;line-height:1.5}.shape-n .count{margin-left:0;white-space:normal}"
+             ".shape-n+.audit-n{margin-top:-42px}")
+SOURCE_WORD = {"model": "model", "ceo": "CEO", "fallback": "kural"}   # subquestions.json's shape_source, as printed
+TOTAL = ("Toplam", "toplam")       # a skeleton table's sum row (fleet/shapes/): it cites nothing, and is no claim
+DASH_ONLY = re.compile(r"[\s—]*—[\s—]*")   # a line, or a row's cells joined, holding `—` alone: zero as an answer
 
 
 # every U+FFFD leaves as &#xFFFD; — 2026-09-26 the claude.ai Artifact publisher refused the K1 run's page for
@@ -571,18 +589,26 @@ def arrange(bl: list[dict]) -> tuple[str, dict | None, list[tuple[str | None, di
     the part before any section and for the writer's own section of that name — and the writer's other
     sections with what remains in them. A sub-question's section (`## S1 — <title>`, B56 K3) goes under 'Cevabı
     taşıyan sayılar' whole, titled `S1 — <title>`, its first entry a {"k": "none"} that keeps it there when
-    nothing follows its heading."""
+    nothing follows its heading. The research type's section (`## Şekil — <name>`, K3 stage 2) goes there the same
+    way, titled as written, keyed "SHAPE", where rule 13 puts it, wherever the writer put it: after the untitled
+    entries before the first titled group — the number that carries the verdict —, before that group. A group's
+    {"k": "none"} carries its heading's line (shape_first)."""
     h1 = bl.pop(0)["text"] if bl and bl[0]["k"] == "h" and bl[0]["level"] == 1 else ""
     first = next((j for j, b in enumerate(bl) if b["k"] == "p"), None)
     verdict = bl.pop(first) if first is not None else None
     ours: list[tuple[str | None, dict]] = []
+    shaped: list[tuple[str | None, dict]] = []     # the Şekil section, to stand before the first titled group
     sections: list[dict] = []
     here: dict | None = None
     for b in bl:
-        sub = CL.sub_heading(b["text"]) if CL is not None and b["k"] == "h" and b["level"] == 2 else None
+        h2 = CL is not None and b["k"] == "h" and b["level"] == 2
+        sub = CL.sub_heading(b["text"]) if h2 else None
         if sub is not None:
             here = {"title": f"{sub[0]} — {sub[1]}", "blocks": [], "sub": sub[0]}
-            ours.append((here["title"], {"k": "none"}))
+            ours.append((here["title"], {"k": "none", "line": b["line"]}))
+        elif h2 and CL.shape_heading(b["text"]):
+            here = {"title": b["text"], "blocks": [], "sub": "SHAPE"}
+            shaped.append((here["title"], {"k": "none", "line": b["line"]}))
         elif b["k"] == "h" and b["level"] <= 2:
             here = None if norm(b["text"]) == norm(OWN) else {"title": b["text"], "blocks": []}
             if here is not None:
@@ -590,10 +616,12 @@ def arrange(bl: list[dict]) -> tuple[str, dict | None, list[tuple[str | None, di
         elif here is None:
             ours.append((None, b))
         elif here.get("sub") or (b["k"] in ("p", "li") and CITE.search(b["text"])):
-            ours.append((here["title"], b))
+            (shaped if here.get("sub") == "SHAPE" else ours).append((here["title"], b))
         else:
             here["blocks"].append(b)
-    return h1, verdict, ours, [s for s in sections if any(b["k"] not in ("h", "hr") for b in s["blocks"])]
+    slot = next((j for j, (t, _b) in enumerate(ours) if t is not None), len(ours))
+    return (h1, verdict, ours[:slot] + shaped + ours[slot:],
+            [s for s in sections if any(b["k"] not in ("h", "hr") for b in s["blocks"])])
 
 
 def cited_in(s: str) -> list[str]:
@@ -784,7 +812,8 @@ class Page:
         for r, row in enumerate(b["rows"]):
             row = row + [""] * (len(head) - len(row))
             last = max((j for j, c in enumerate(row) if CITE.search(c)), default=len(row) - 1 if zero else -1)
-            tail = self.count(" ".join(row), zero) + self.audited(b["at"][r])
+            quiet = row[0].strip() in TOTAL or DASH_ONLY.fullmatch("".join(row))   # no claim, no (0 satır) (K3 st. 2)
+            tail = self.count(" ".join(row), zero and not quiet) + self.audited(b["at"][r])
             tds = "".join(f'<td data-label="{tags[j] if j < len(tags) else ""}"{cls[j] if j < len(cls) else ""}>'
                           f'<span class="v">{self.inline(c)}{tail if j == last else ""}</span></td>'
                           for j, c in enumerate(row))
@@ -811,7 +840,8 @@ class Page:
                     continue
                 depth = f' class="d{min(b["depth"], 3)}"' if k == "li" and b["depth"] and not claims else ""
                 out.append(f"<li{depth}{self.mark(b['line'], b['end'])}>{self.inline(b['text'])}"
-                           f"{self.count(b['text'], claims)}{self.audited(b['line'], b['end'])}</li>")
+                           f"{self.count(b['text'], claims and not DASH_ONLY.fullmatch(b['text']))}"
+                           f"{self.audited(b['line'], b['end'])}</li>")
                 continue
             out += ["</ol>" if opened == "ol" else "</ul>"] if opened else []
             opened = ""
@@ -840,6 +870,8 @@ class Page:
                 run.append(ours[j][1])
                 j += 1
             sub = CL.sub_heading(title) if CL is not None and title is not None else None
+            if sub is None and CL is not None and title is not None and CL.shape_heading(title):
+                sub = ("SHAPE", title)                   # the research type's section (K3 stage 2)
             if sub is not None:
                 out.append(self.sub_group(sub[0], title, [b for b in run if b["k"] != "none"]))
                 continue
@@ -1146,7 +1178,8 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
             if r.get("verdict") == "corrected" and isinstance(n, int):
                 page.fixed.setdefault(n, text(r.get("reason")))
     h1, verdict, ours, sections = arrange(blocks(md))
-    subs = CL is not None and any(CL.sub_heading(t) for t, _b in ours if t is not None)
+    subs = CL is not None and any(CL.sub_heading(t) or CL.shape_heading(t) for t, _b in ours if t is not None)
+    shape = shape_of(run)              # None without a `shape` in subquestions.json: the page as before (K3 stage 2)
     if subs:                           # the counts under each sub-question's heading: `full`, claims.py's extract
         page.subs = CL.sub_counts(full if full is not None else CL.extract_claims(md, rows), rows)
     his, queries = question(run)
@@ -1161,6 +1194,8 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
         else '<span class="none">Cevap metninde paragraf yok.</span>'
     mark = page.mark(verdict["line"], verdict["end"]) if verdict else ""
     head.append(f'<div class="verdict"><p class="label">Hüküm</p><p class="lede"{mark}>{lede}</p></div>')
+    if shape is not None:
+        head.append(shape_head(shape))
     if audit is not None:
         head.append(audit_head(audit))
     parts = [section(1, esc(OWN), page.ours(ours), "sayilar")]
@@ -1190,10 +1225,53 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
            '<link rel="preconnect" href="https://fonts.googleapis.com">',
            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
            f'<link rel="stylesheet" href="{attr(FONTS)}">',
-           f"<style>{CSS + (SUB_CSS if subs else '') + (AUDIT_CSS if audit is not None else '')}</style>",
+           f"<style>{CSS + (SUB_CSS if subs else '') + (AUDIT_CSS if audit is not None else '')}"
+           f"{SHAPE_CSS if shape is not None else ''}</style>",
            "</head>", "<body>",
            "<main>", *head, *parts, foot, "</main>", f"<script>{OPEN_DRAWER}</script>", "</body>", "</html>"]
     return "\n".join(doc) + "\n", {"cited": len(page.num), "platforms": plats, "shelved": len(shelf)}
+
+
+def shape_of(run: Path) -> dict | None:
+    """THE RESEARCH TYPE beside the answer (B56 K3 stage 2): <run>/subquestions.json when it carries a `shape` —
+    split.py writes its name, `shape_name`, and where it came from, `shape_source` —; None otherwise: as before."""
+    try:
+        doc = json.loads((run / "subquestions.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return doc if isinstance(doc, dict) and text(doc.get("shape")) else None
+
+
+def shape_head(doc: dict) -> str:
+    """The type's line under the verdict box: `rapor tipi: <shape_name> · kaynak: model | CEO | kural`."""
+    src, name = text(doc.get("shape_source")), text(doc.get("shape_name")) or text(doc.get("shape"))
+    said = f"rapor tipi: {name} · kaynak: {SOURCE_WORD.get(src, src or '?')}"
+    return f'<p class="shape-n"><span class="count">{esc(said)}</span></p>'
+
+
+def shape_first(md: str) -> str:
+    """final.md in the page's order (K3 stage 2): the `## Şekil — <name>` section, from its heading to the next `#`/`##`
+    heading, moved up to where arrange() stands it on the page — right before the heading of the first titled group of
+    'Cevabı taşıyan sayılar', so the number that carries the verdict stays above it —, and both number the ids alike;
+    the answer as it is when it has no such section, when the section already stands there or above, when no titled
+    group follows it, and always without claims.py."""
+    ours = arrange(blocks(md))[2] if CL is not None else []
+    at = next((j for j, (t, b) in enumerate(ours) if b["k"] == "none" and CL.shape_heading(t)), None)
+    nxt = None if at is None else next((b for t, b in ours[at:] if t != ours[at][0]), None)
+    if nxt is None:
+        return md
+    lines = md.split("\n")
+    level = [len(m.group(1)) if (m := HEADING.match(s.strip())) else 0 for s in lines]
+    start = ours[at][1]["line"] - 1
+    into = nxt["line"] - 1 if nxt["k"] == "none" else next(
+        (j for j in range(nxt["line"] - 1, -1, -1) if 1 <= level[j] <= 2), start)    # a writer's section: its heading
+    if into >= start:
+        return md
+    end = next((j for j in range(start + 1, len(lines)) if 1 <= level[j] <= 2), len(lines))
+    block = lines[start:end]
+    while block and not block[-1].strip():
+        block.pop()
+    return "\n".join(lines[:into] + block + [""] + lines[into:start] + lines[end:])
 
 
 def audit_of(folder: Path) -> dict | None:
@@ -1282,7 +1360,7 @@ def main(argv: list[str]) -> int:
     struck = refused(rows, cited_in(shown)) if CL else {}
     book, whence = ledger_of(answer.parent, full)
     audit = audit_of(answer.parent)                         # None without audit.jsonl: the page as before (K3 stage 3)
-    body, cited = number(spans_md(shown, rows) if CL else shown, set(struck))
+    body, cited = number(shape_first(spans_md(shown, rows)) if CL else shown, set(struck))
     entries = [source_line(n, rows[i]) for n, i in enumerate(cited, 1)]
     drawer = ""
     for out in outs:

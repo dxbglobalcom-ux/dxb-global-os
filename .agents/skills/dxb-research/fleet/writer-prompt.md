@@ -34,6 +34,10 @@ note — and these rules hold:
 - An id the ledger lists as `kabul edilmeyen (YAZILMAZ)` is never written: drop it from the line and keep
   the claim on its admitted rows; a claim with no admitted row goes.
 
+## Bu raporun şekli
+The research type of this run and the skeleton of its Şekil section (rule 13) — or the one line saying there is none:
+{{SHAPE}}
+
 ## Write answer.md — the recipe's rules, every one of them
 1. Turkish, Markdown. The FIRST LINE is the answer itself: one or two plain sentences that answer the
    question. No heading, no title and no preamble above it.
@@ -63,5 +67,16 @@ note — and these rules hold:
     its section, holding the single line `Bu alt soruya satır yok.` — a visible gap, never dropped. Your own
     sections — the contradictions, what would change the answer (rule 7) — may follow the S-sections, headed
     as they would be without this rule. When the question holds no `ALT SORULAR` block, this rule does not apply.
+12. A sub-question whose title or question in the `ALT SORULAR` block says geçiş, geçen, switched, moved or
+    migrat… holds, inside its own section, a table headed exactly `| Kim | Nereden → nereye | Gerekçe |`: one
+    row per person the rows name — who, in a few words and never an address; what they left → what they went to;
+    why — each row ending with its ids, e.g. `| r/ClaudeAI kullanıcısı | Fable 5.1 → Astra 6 | kota bitti [L0042] |`.
+    A person no row gives a reason for says `—` there.
+13. When the section `## Bu raporun şekli` above holds a skeleton — not the line `(bu koşuda şekil yok — Şekil
+    bölümü yazılmaz)` — the answer carries ONE Şekil section: after rules 1 and 2 and BEFORE the S-sections, headed
+    exactly as the skeleton's first line (`## Şekil — …`) and built as the skeleton says. Every cell and item that
+    states a finding cites its ids like any claim line (rule 3); a cell or list no row speaks to is `—` — zero is an
+    answer; a `Toplam` row cites NO id and its last cell is `—`; nothing is estimated — a number is one a row states,
+    or a count of the rows cited beside it. When that section holds the "şekil yok" line, write no Şekil section.
 
 Return ONLY the text of answer.md — no code fence, no note to the reader, nothing before its first line.
