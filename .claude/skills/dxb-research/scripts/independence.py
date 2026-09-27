@@ -1,18 +1,30 @@
 #!/usr/bin/env python3
-"""Independence — clusters, never URLs.
+"""Independence — ONE rule says what an independent source is, and it is not this file's.
 
-Thirty sites carrying one press release are ONE piece of evidence, not thirty.
-Three tests, cheapest first:
+What makes two rows two sources is decided in one place, `claims.source_key` (the claim ledger,
+B56 K2): the platform and the author, folded, when the row names a real author — else the row's
+canonical address. Until 2026-09-27 test 1 below was a second definition of the word — a shared
+canonical URL OR a shared registrable domain (the B56 older-defect list) — and the passage test
+merged what it matched: measured that day on a six-row fixture (two Reddit authors, two X authors,
+one page), this file made 2 clusters where claims.source_key makes 5 sources. One rule now, and a
+copy does not bend it: thirty sites carrying one press release, none naming an author, are THIRTY
+clusters here — thirty addresses — and each later one whose passage matches an earlier one carries
+`echo_of` (test 3), a flag, never a merge. So report()'s `clusters` counts them apart,
+`echo_flagged` counts the flagged copies among its rows, and `echo_collapsed` (rows − clusters)
+counts only rows that repeat a source already counted: a second quote of one author, a second row
+of one address.
 
-  1. canonical URL / registrable domain  — a syndicated copy usually keeps the
-     origin's rel=canonical, and two pages on one domain are never independent.
-  2. publisher / wire attribution        — JSON-LD publisher or provider.
-  3. near-duplicate passage              — MinHash LSH (datasketch) when present,
-     an exact shingle Jaccard otherwise. Threshold 0.6.
+  1. one source, one cluster     — claims.source_key; rows with the same key share a cluster_id.
+  2. publisher / wire attribution — a FLAG that was never built: no row carries a JSON-LD
+     publisher or provider, so nothing is flagged by it.
+  3. near-duplicate passage      — a FLAG, never a merge: MinHash LSH (datasketch) when present,
+     an exact shingle Jaccard otherwise, threshold 0.6. The later of two rows of DIFFERENT
+     sources whose passages match gets `echo_of` = the earlier row's cluster_id; report()
+     counts them as echo_flagged.
 
-What this measures, said plainly so the report never over-claims: BYTE-LEVEL and
-CANONICAL-LEVEL copying. Editorial reuse is mostly non-literal, so this
-UNDER-counts syndication by design. cluster_id is evidence, never a verdict.
+What the flag measures, said plainly so the report never over-claims: BYTE-LEVEL copying.
+Editorial reuse is mostly non-literal, so it UNDER-counts syndication by design. cluster_id
+and echo_of are evidence, never a verdict.
 """
 from __future__ import annotations
 
@@ -23,12 +35,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rlib  # noqa: E402
+import claims  # noqa: E402  — source_key: what ONE independent source is, one owner
 
 THRESHOLD = 0.6
-
-
-def _key_domain(row: dict) -> str:
-    return row.get("domain") or rlib.registrable_domain(row.get("url") or "")
 
 
 def _near_dupe(a: dict, b: dict) -> bool:
@@ -39,42 +48,27 @@ def _near_dupe(a: dict, b: dict) -> bool:
 
 
 def recluster(run_id: str) -> dict:
-    """Assign cluster_id to every row. Rewrites the ledger in place."""
+    """Assign cluster_id (one per source, claims.source_key) and the echo_of flag to every row.
+    Rewrites the ledger in place."""
     rows = rlib.ledger(run_id)
     if not rows:
         return {}
 
-    parent: dict[int, int] = {i: i for i in range(len(rows))}
-
-    def find(x: int) -> int:
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
-
-    def union(x: int, y: int) -> None:
-        rx, ry = find(x), find(y)
-        if rx != ry:
-            parent[max(rx, ry)] = min(rx, ry)
-
-    # 1. same canonical url, or same registrable domain
-    by_canon: dict[str, int] = {}
-    by_domain: dict[str, int] = {}
+    # 1. one source, one cluster — a row with no key at all (no author, no address) is its own
+    labels: dict[str, str] = {}
     for i, r in enumerate(rows):
-        c = r.get("url_canonical") or ""
-        if c:
-            if c in by_canon:
-                union(i, by_canon[c])
-            else:
-                by_canon[c] = i
-        d = _key_domain(r)
-        if d:
-            if d in by_domain:
-                union(i, by_domain[d])
-            else:
-                by_domain[d] = i
+        key = claims.source_key(r) or f"row {i}"
+        if key not in labels:
+            labels[key] = "C%03d" % (len(labels) + 1)
+        r["cluster_id"] = labels[key]
+        r.pop("echo_of", None)
 
-    # 2. near-duplicate passages across domains (LSH when datasketch is present)
+    # 3. near-duplicate passages (LSH when datasketch is present) — pairs, flagged below
+    pairs: set[tuple[int, int]] = set()
+
+    def pair(x: int, y: int) -> None:
+        pairs.add((min(x, y), max(x, y)))
+
     ev = [i for i, r in enumerate(rows) if (r.get("passage") or "")]
     used_lsh = False
     try:
@@ -115,7 +109,7 @@ def recluster(run_id: str) -> dict:
         for i in ev:
             for j in lsh.query(mh[i]):
                 if int(j) != i:
-                    union(i, int(j))
+                    pair(i, int(j))
         if fresh:
             try:
                 cache_p.write_text(json.dumps(cache))
@@ -126,14 +120,12 @@ def recluster(run_id: str) -> dict:
         for x in range(len(ev)):
             for y in range(x + 1, len(ev)):
                 if _near_dupe(rows[ev[x]], rows[ev[y]]):
-                    union(ev[x], ev[y])
+                    pair(ev[x], ev[y])
 
-    labels: dict[int, str] = {}
-    for i in range(len(rows)):
-        root = find(i)
-        if root not in labels:
-            labels[root] = "C%03d" % (len(labels) + 1)
-        rows[i]["cluster_id"] = labels[root]
+    # a copy between two sources is a flag on the later row; it never makes them one source
+    for a, b in sorted(pairs):
+        if rows[a]["cluster_id"] != rows[b]["cluster_id"]:
+            rows[b].setdefault("echo_of", rows[a]["cluster_id"])
 
     path = rlib.ledger_path(run_id)
     with path.open("w", encoding="utf-8") as fh:
@@ -143,6 +135,7 @@ def recluster(run_id: str) -> dict:
     return {
         "rows": len(rows),
         "clusters": len(labels),
+        "echo_flagged": sum(1 for r in rows if r.get("echo_of")),
         "method": "minhash-lsh" if used_lsh else "shingle-jaccard",
     }
 
@@ -182,9 +175,11 @@ def report(run_id: str) -> dict:
         "evidence_rows": len(rows),
         "clusters": len(clusters),
         "echo_collapsed": len(rows) - len(clusters),
+        "echo_flagged": sum(1 for r in rows if r.get("echo_of")),
         "cluster_share_by_channel": dict(sorted(share.items(), key=lambda kv: -kv[1])),
         "max_channel_share": top,
-        "measures": "byte-level and canonical-level copying only; non-literal reuse is NOT detected",
+        "measures": "clusters are sources (claims.source_key); echo_flagged is byte-level copying between "
+                    "sources, flagged and never merged; non-literal reuse is NOT detected",
     }
 
 

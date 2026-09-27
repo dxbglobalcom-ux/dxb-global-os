@@ -1,0 +1,65 @@
+[
+  {
+    "site": "reddit",
+    "name": "read",
+    "description": "Read a Reddit post and its comments",
+    "access": "read",
+    "domain": "reddit.com",
+    "strategy": "cookie",
+    "browser": true
+  },
+  {
+    "site": "twitter",
+    "name": "thread",
+    "description": "Get a tweet thread (original + all replies)",
+    "access": "read",
+    "domain": "x.com",
+    "strategy": "cookie",
+    "browser": true
+  },
+  {
+    "site": "youtube",
+    "name": "transcript",
+    "description": "Get YouTube video transcript/subtitles",
+    "access": "read",
+    "domain": "www.youtube.com",
+    "strategy": "cookie",
+    "browser": true
+  },
+  {
+    "site": "zhihu",
+    "name": "question",
+    "description": "知乎问题详情和回答",
+    "access": "read",
+    "domain": "www.zhihu.com",
+    "strategy": "cookie",
+    "browser": true
+  },
+  {
+    "site": "hackernews",
+    "name": "read",
+    "description": "Read a Hacker News story and its comment tree",
+    "access": "read",
+    "domain": "news.ycombinator.com",
+    "strategy": "public",
+    "browser": false
+  },
+  {
+    "site": "v2ex",
+    "name": "topic",
+    "description": "V2EX 主题详情和回复",
+    "access": "read",
+    "domain": "www.v2ex.com",
+    "strategy": "public",
+    "browser": false
+  },
+  {
+    "site": "stackoverflow",
+    "name": "read",
+    "description": "Read a Stack Overflow question with answers and comments",
+    "access": "read",
+    "domain": "stackoverflow.com",
+    "strategy": "public",
+    "browser": false
+  }
+]

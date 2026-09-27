@@ -15,6 +15,8 @@
 #   bash accept.sh                       # the full run, with the browser channels
 #   bash accept.sh --no-browser          # for a run that must not touch his screen
 #   bash accept.sh --question "..."      # a question of your own
+#   bash accept.sh --crowd-cap 12        # how many crowd threads step 3 hands crowd.sh (default 12)
+#   bash accept.sh --help                # this text; nothing runs
 #
 # Exit 0 only when every threshold is met. NOTHING is written into the repository: the run lives
 # in a temporary folder and is deleted unless --keep is given (his paperwork ban).
@@ -31,15 +33,23 @@ QUESTION="what do developers say about on-call burnout in site reliability engin
 OUT=""
 KEEP=0
 BROWSER_FLAG=""
+CROWD_CAP=12
 while [ $# -gt 0 ]; do
   case "$1" in
     --question) QUESTION="$2"; shift 2 ;;
     --out) OUT="$2"; shift 2 ;;
     --keep) KEEP=1; shift ;;
     --no-browser) BROWSER_FLAG="--no-browser"; shift ;;
+    --crowd-cap) CROWD_CAP="${2:-}"; shift 2 2>/dev/null || shift $# ;;
+    # an unknown word is skipped and the LIVE run starts, so the one word a reader types to learn
+    # what this does must not be one of them
+    -h|--help) sed -n '2,/^$/{s/^# \{0,1\}//;p}' "${BASH_SOURCE[0]}"; exit 0 ;;
     *) shift ;;
   esac
 done
+case "$CROWD_CAP" in
+  ''|*[!0-9]*|0) echo "accept.sh: --crowd-cap 1 veya daha buyuk bir sayi ister (ornek: --crowd-cap 12)" >&2; exit 2 ;;
+esac
 [ -z "$OUT" ] && OUT="$(mktemp -d /tmp/dxb-accept-XXXXXX)"
 mkdir -p "$OUT"
 
@@ -133,10 +143,17 @@ echo
 
 # ── 3. THE DENOMINATOR, COUNTED BY A MACHINE ─────────────────────────────────────────────
 echo "── 3/5 · kalabaligin makine sayimi ──────────────────────────────────────────"
-grep -ohE 'https?://(www\.)?(reddit\.com/r/[^ "]+/comments/[^ "]+|news\.ycombinator\.com/item\?id=[0-9]+)' \
-  "$OUT/run"/*.raw 2>/dev/null | sed 's/[),.]*$//' | sort -u | head -12 > "$OUT/crowd-urls.txt"
+# THE THREADS COME FROM THE ONE HARVESTER, fleet/crowd-urls.sh: the run's ledger first, its raw files
+# when the ledger yields none, at most --crowd-cap of them. Until 2026-09-27 this step grepped the raw
+# files itself with `head -12` — the harvester the fleet left in B56 K2 (2026-09-26), when it was
+# measured on the K1 run handing crowd.sh 0 threads while the ledger held 177 Reddit addresses — so a
+# fix made to the harvesting (markdown escapes undone, a comment cut back to its thread) never reached
+# this run.
+bash "$SKILL/fleet/crowd-urls.sh" "$OUT/run" --cap "$CROWD_CAP" "$OUT/run" \
+  > "$OUT/crowd-urls.txt" 2> "$OUT/crowd-urls.err"
 crowd_n=$(wc -l < "$OUT/crowd-urls.txt")
-echo "   toplanan baslik adresi: $crowd_n"
+crowd_src=$(sed -n 's/^crowd-urls: [0-9]* baslik (\(.*\))$/\1/p' "$OUT/crowd-urls.err" | tail -n 1)
+echo "   toplanan baslik adresi: $crowd_n  (${crowd_src:-crowd-urls.sh satir yazmadi} · en fazla $CROWD_CAP)"
 people=0
 if [ "$crowd_n" -gt 0 ]; then
   # HIS RULING, 2026-09-20 — every quote carries the DATE OF ITS THREAD. The ground that

@@ -86,6 +86,16 @@ ASSET_DOMAINS = {"twimg.com", "ytimg.com", "ggpht.com", "redditmedia.com", "redd
 FURNITURE_PATH = re.compile(r"^/(share|sharer(\.php)?|sharearticle|intent/(tweet|post)|submit|submitlink|"
                             r"pin/create|send|login|log-in|signin|sign-in|signup|sign-up|register|logout|"
                             r"account|settings|password)(/|$)", re.I)
+# A SEARCH ENGINE'S AD CLICK is a door to an advertiser, not a page anybody read. reject() let
+# them all through: the B56 older-defect list (2026-09-24) named admarketplace.net, the ad bridge
+# of Startpage's results, and on 2026-09-27 reject() returned None for bridge.admarketplace.net,
+# googleadservices.com/pagead/aclk, google.com/aclk, bing.com/aclick and syndicatedsearch.goog.
+# Google's form is the one the kept runs hold: three googleadservices.com/pagead/aclk links in a
+# K1 body (20260926-1414, bodies/02757df6…). They are furniture: counted as dropped, never an id.
+# duckduckgo.com/y.js is already a script (ASSET_EXT), and doubleclick.net an asset domain (above).
+AD_CLICK_DOMAINS = {"admarketplace.net", "googleadservices.com", "syndicatedsearch.goog"}
+AD_CLICK_PAGE = re.compile(r"^(?:(?:[a-z]+\.)?google\.[a-z.]+/aclk|bing\.com/aclick|duckduckgo\.com/y\.js)"
+                           r"(?:/|$)", re.I)
 # A search engine's own result / captcha page. The CEO report of 2026-09-20 said it itself:
 # an engine is a door, not a source — and google.raw once carried google.com/sorry as a "url".
 SEARCH_PAGE = re.compile(r"^(?:(?:[a-z]+\.)?google\.[a-z.]+/(?:search|sorry|webhp)|bing\.com/search|"
@@ -118,8 +128,9 @@ def reject(u: str) -> str | None:
         return "invalid"
     if host.startswith("www."):
         host = host[4:]
+    reg = ".".join(host.split(".")[-2:])
     if host in ASSET_HOSTS or ASSET_EXT.search(s.path or "") or FURNITURE_PATH.match(s.path or "") \
-            or ".".join(host.split(".")[-2:]) in ASSET_DOMAINS:
+            or reg in ASSET_DOMAINS or reg in AD_CLICK_DOMAINS or AD_CLICK_PAGE.match(host + (s.path or "/")):
         return "furniture"
     if SEARCH_PAGE.match(host + (s.path or "/") + ("?" + s.query if s.query else "")):
         return "search-page"

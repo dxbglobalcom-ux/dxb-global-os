@@ -35,6 +35,12 @@
 # the hidden Chrome is NOT started: the copy's Preferences, Secure Preferences and Local State are
 # deleted, the copy is locked (go-rwx), one line goes to stderr, exit 1 — and so on every failure
 # exit once the copy has begun (fail_closed, below).
+# AN INTERRUPTED RUN FAILS CLOSED TOO. There was no trap (the B56 older-defect list, 2026-09-24), and
+# rsync wrote straight into Default: reproduced 2026-09-27 on a scratch root with a stand-in rsync that
+# had laid his Preferences down, a SIGTERM in the middle of the copy left Default/Preferences as his,
+# account keys unstripped, with no line said — for the unit's next start. The copy is now made in Default.new, stripped there, and put in Default's place
+# in one rename (mv --exchange); from the first byte copied until that rename, INT / TERM / ERR end
+# in fail_closed, which deletes Default.new as well.
 #
 #   profile-sync.sh            stop the hidden Chrome, copy, start it again
 #   profile-sync.sh --strip    stop the hidden Chrome, strip the copy as it stands (no new copy), start it
@@ -48,9 +54,13 @@
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC="/home/dxb/.config/google-chrome/Profile 5"
-# DXB_SYNC_ROOT is for tests only: `--strip` against a scratch copy (the unit stays the real one)
+# DXB_SYNC_ROOT is for tests only: a scratch root — and with it the unit is NEVER touched. Measured
+# 2026-09-27 with a PATH stand-in for systemctl: `DXB_SYNC_ROOT=<scratch> profile-sync.sh --strip`
+# called `systemctl --user stop dxb-research-chrome` and `… start` — the REAL hidden Chrome, stopped and
+# started by a test that only meant to strip a scratch copy.
 ROOT="${DXB_SYNC_ROOT:-/home/dxb/.local/share/dxb-research-chrome}"
 DST="$ROOT/Default"
+NEW="$DST.new"          # a copy is made here, stripped here, and only then put in Default's place
 UNIT=dxb-research-chrome
 
 # THE LOGINS THIS DOOR READS THROUGH, and the one cookie that proves each (names read from his cookie
@@ -112,7 +122,7 @@ if not copy_err:
 INFO = {"google": "imzasiz okunur (cerezle oturum tasinmaz; Chrome girisi kapali, bilerek) "
                   "-> google-deep Startpage/Brave"}
 print(f"{'site':<11} {'cookie':<34} {'Profile 5':<10} {'kopya':<8} canli oturum (kopyada)")
-bad, info_out = [], []
+bad, info_out, unknown = [], [], False
 for site, host, name in logins:
     a = "var" if src.get((host, name)) else ("HATA" if src_err else "YOK")
     b = "var" if copy.get((host, name)) else ("HATA" if copy_err else "YOK")
@@ -123,10 +133,20 @@ for site, host, name in logins:
         if not ok:
             info_out.append(site)
         continue
-    why_bad = [w for w, cond in (("Profile 5'te cerez yok", a != "var"), ("kopyada cerez yok", b != "var"),
-                                 ("kopyada canli oturum yok", not ok)) if cond]
+    # A READ THAT FAILED IS NOT A COOKIE THAT IS ABSENT (measured 2026-09-27 on a scratch copy: the
+    # table said HATA on both sides and this line said "kopyada cerez yok"). An error says so.
+    why_bad = []
+    if a != "var":
+        why_bad.append(f"Profile 5'te cerez okunamadi: {src_err.removeprefix('okunamadi: ')[:80]}"
+                       if a == "HATA" else "Profile 5'te cerez yok")
+    if b != "var":
+        why_bad.append(f"kopyada cerez okunamadi: {copy_err[:80]}" if b == "HATA" else "kopyada cerez yok")
+    if not ok:
+        why_bad.append("kopyada canli oturum yok" if site in live
+                       else f"kopyada canli oturum sorulamadi: {why[:80]}")
     if why_bad:
         bad.append(f"{site} ({'; '.join(why_bad)})")
+        unknown = unknown or a == "HATA" or b == "HATA" or site not in live
 for site in info_out:
     print(f"{site}: {INFO[site]}")
 if src_err:
@@ -134,7 +154,9 @@ if src_err:
 if copy_err:
     print("kopya: " + copy_err)
 if bad:
-    verdict = "EKSIK — " + ", ".join(bad) + " — bu siteler gizli Chrome'da oturumsuz okunur"
+    verdict = "EKSIK — " + ", ".join(bad) + (
+        " — okunamayan taraf olculemedi: bu sitelerin oturumu bilinmiyor" if unknown
+        else " — bu siteler gizli Chrome'da oturumsuz okunur")
 else:
     verdict = ("tamam — " + (", ".join(info_out) + " disinda " if info_out else "")
                + "her sitede cerez iki tarafta var ve kopya canli olarak giris yapmis")
@@ -150,8 +172,12 @@ if [ "$STRIP_ONLY" -eq 0 ]; then
   command -v rsync >/dev/null || { echo "!! rsync yok" >&2; exit 2; }
 fi
 
-echo "gizli Chrome durduruluyor ($UNIT) — CEO'nun kendi Chrome'una dokunulmaz"
-systemctl --user stop "$UNIT" 2>/dev/null || true
+if [ -n "${DXB_SYNC_ROOT:-}" ]; then
+  echo "DXB_SYNC_ROOT=$ROOT (test kopyasi): $UNIT birimine dokunulmaz — durdurulmaz, baslatilmaz"
+else
+  echo "gizli Chrome durduruluyor ($UNIT) — CEO'nun kendi Chrome'una dokunulmaz"
+  systemctl --user stop "$UNIT" 2>/dev/null || true
+fi
 for _ in $(seq 1 40); do
   pgrep -f -- "--user-data-dir=$ROOT( |$)" >/dev/null || break
   sleep 0.25
@@ -170,16 +196,23 @@ fi
 # So every failure exit below deletes the three (Chrome writes fresh ones without his account; a
 # copy that then reads sites signed out is acceptable, one that carries his account is not),
 # locks the copy and says so in its ONE stderr line. His own profile is never touched.
-fail_closed() {   # $1 = why, one line
+fail_closed() {   # $1 = why, one line · $2 = the exit code (1; 130 / 143 for a signal)
+  trap - INT TERM ERR
+  rm -rf -- "$NEW"
   rm -f -- "$DST/Preferences" "$DST/Secure Preferences" "$ROOT/Local State"
   local gone="Preferences, Secure Preferences ve Local State silindi (Chrome hesapsiz yenilerini yazar)"
   if [ -e "$DST/Preferences" ] || [ -e "$DST/Secure Preferences" ] || [ -e "$ROOT/Local State" ]; then
     gone="Preferences / Secure Preferences / Local State SILINEMEDI"
   fi
+  [ -e "$NEW" ] && gone="$gone; yarim kopya $NEW SILINEMEDI"
   chmod -R go-rwx "$ROOT" 2>/dev/null
   echo "!! $1 — $gone; gizli Chrome BASLATILMADI, kopya kilitlendi (go-rwx): $ROOT" >&2
-  exit 1
+  exit "${2:-1}"
 }
+# From here until the stripped copy stands in Default's place, a stop is a failure like any other.
+trap 'fail_closed "SIGINT ile kesildi" 130' INT
+trap 'fail_closed "SIGTERM ile kesildi" 143' TERM
+trap 'fail_closed "beklenmeyen hata (satir $LINENO)"' ERR
 # The Python steps' stdout goes straight out (fd 3); their stderr is caught, and on a failure its
 # last line is the reason in fail_closed's one line — a traceback is not a line.
 exec 3>&1
@@ -190,7 +223,9 @@ why() {   # $1 = what a Python step said on stderr, $2 = the reason when it said
 
 # --strip skips the copy: it cleans the copy as it stands
 if [ "$STRIP_ONLY" -eq 0 ]; then
-  install -d -m 700 "$ROOT" "$DST"
+  install -d -m 700 "$ROOT"
+  rm -rf -- "$NEW"            # what a SIGKILL left behind is never built upon
+  install -d -m 700 "$NEW"
   # WHAT IS NOT COPIED, AND WHY — each group is a reason, not a size:
   EXCLUDES=(
     # caches: Chrome rebuilds them, and Service Worker alone is 1.1 GB of the 1.5 GB
@@ -221,13 +256,16 @@ if [ "$STRIP_ONLY" -eq 0 ]; then
     --exclude="/.com.google.Chrome.*" --exclude="/Preferences.*-backup-*" --exclude=/LOCK
     --exclude=/LOG --exclude=/LOG.old
   )
-  echo "kopyalaniyor: $SRC -> $DST"
-  rsync -a --delete --delete-excluded "${EXCLUDES[@]}" "$SRC/" "$DST/"
-  rs_rc=$?
+  echo "kopyalaniyor: $SRC -> $NEW (tamam ve temiz olunca $DST yerine)"
+  # a file unchanged since the last copy is hard-linked from it: a sync still costs what changed
+  LINK=(); [ -d "$DST" ] && LINK=("--link-dest=$DST")
+  rs_rc=0
+  rsync -a --delete --delete-excluded ${LINK[@]+"${LINK[@]}"} "${EXCLUDES[@]}" "$SRC/" "$NEW/" || rs_rc=$?
   # a file his Chrome deleted while it was being copied (rsync 24) is not a failure of the copy
   if [ "$rs_rc" -ne 0 ] && [ "$rs_rc" -ne 24 ]; then fail_closed "rsync basarisiz (kod $rs_rc)"; fi
 
-  db_err=$(SRC="$SRC" DST="$DST" python3 - 2>&1 >&3 3>&- <<'PYEOF'
+  db_rc=0
+  db_err=$(SRC="$SRC" DST="$NEW" python3 - 2>&1 >&3 3>&- <<'PYEOF'
 import os, shutil, sqlite3, sys, tempfile, time, urllib.parse
 from pathlib import Path
 src_root, dst_root = Path(os.environ["SRC"]), Path(os.environ["DST"])
@@ -325,8 +363,7 @@ for dst in sorted(p for p in dst_root.rglob("*") if p.is_file() and is_db(p)):
 print(f"sqlite: {copied} veritabani tutarli kopyalandi"
       + (f" · {len(dropped)} bos baslayacak: {', '.join(dropped[:6])}" if dropped else ""))
 PYEOF
-)
-  db_rc=$?
+) || db_rc=$?
   [ "$db_rc" -eq 0 ] || fail_closed "$(why "$db_err" "sqlite kopyasi durdu (python kodu $db_rc)")"
   [ -z "$db_err" ] || printf '%s\n' "$db_err" >&2
 fi
@@ -340,11 +377,13 @@ fi
 # their MACs included. The result is read back from disk: an error or a single key left is fatal —
 # fail_closed: the three settings files are deleted, the hidden Chrome is not started, the copy is
 # locked, exit 1.
-pf_err=$(ROOT="$ROOT" python3 - 2>&1 >&3 3>&- <<'PYEOF'
+PROFILE="$DST"; [ "$STRIP_ONLY" -eq 0 ] && PROFILE="$NEW"
+pf_rc=0
+pf_err=$(ROOT="$ROOT" PROFILE="$PROFILE" python3 - 2>&1 >&3 3>&- <<'PYEOF'
 import json, os, sys
 from pathlib import Path
 root = Path(os.environ["ROOT"])
-PREFS, SECURE = root / "Default" / "Preferences", root / "Default" / "Secure Preferences"
+PREFS, SECURE = Path(os.environ["PROFILE"]) / "Preferences", Path(os.environ["PROFILE"]) / "Secure Preferences"
 DROP = ["account_info", "account_tracker_service_last_update", "account_values", "gaia_cookie",
         "google", "sync", "gcm", "invalidation", "sharing", "dual_layer_user_pref_store"]
 # dotted paths; a MAC under protection.macs follows the same path (and path + "_encrypted_hash")
@@ -450,14 +489,28 @@ if kalan:
     fail("KALAN: " + ", ".join(kalan))
 print("hesap anahtarlari ve parola izleri kopyadan cikarildi")
 PYEOF
-)
-pf_rc=$?
+) || pf_rc=$?
 # the strip's own reason is its last stderr line; with none, it died before it could say it
 [ "$pf_rc" -eq 0 ] || fail_closed "$(why "$pf_err" "kopyanin ayarlari temizlenemedi (python kodu $pf_rc)")"
 [ -z "$pf_err" ] || printf '%s\n' "$pf_err" >&2
+# THE STRIPPED COPY TAKES DEFAULT'S PLACE IN ONE RENAME: Default is the old copy or the new one, never
+# half of each. After the exchange Default.new holds the old copy, and it goes.
+if [ "$STRIP_ONLY" -eq 0 ]; then
+  if [ -d "$DST" ]; then
+    mv --exchange -T -- "$NEW" "$DST" || fail_closed "kopya $DST yerine konamadi (mv --exchange)"
+  else
+    mv -T -- "$NEW" "$DST" || fail_closed "kopya $DST yerine konamadi (mv)"
+  fi
+fi
+trap - INT TERM ERR
+[ "$STRIP_ONLY" -eq 0 ] && { rm -rf -- "$NEW" || echo "!! eski kopya silinemedi: $NEW" >&2; }
 chmod -R go-rwx "$ROOT"
 du -sh "$DST" | awk '{print "kopya: " $1}'
 
+if [ -n "${DXB_SYNC_ROOT:-}" ]; then
+  echo "DXB_SYNC_ROOT: $UNIT baslatilmadi (test kopyasi: $ROOT)"
+  exit 0
+fi
 echo "gizli Chrome baslatiliyor ($UNIT)"
 systemctl --user start "$UNIT"
 for _ in $(seq 1 60); do

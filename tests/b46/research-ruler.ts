@@ -508,7 +508,12 @@ export function runRuler(input?: Partial<RulerInput>): RulerReport {
     const dir = execFileSync("mktemp", ["-d"], { encoding: "utf8" }).trim();
     // `claude` is stubbed too: the fleet is fired here, and a wall that a future repair takes
     // down must not be able to launch a paid hunter from inside a ruler that runs on every commit.
-    for (const tool of ["opencli", "curl", "node", "npx", "wget", "claude"]) {
+    // `gh` and `bili` since 2026-09-27: the map's github-repos / github-issues lines call `gh` and
+    // the youtube → bilibili stand-in calls `bili`, and neither had a stand-in here. Measured on a
+    // copy with the paragraph wall down (the "paragraph" bite of research-ruler.test.ts): the core
+    // fire called `gh search repos`, `gh search issues` and `bili search`, and on this PATH they
+    // were the real /usr/bin/gh and ~/.local/bin/bili.
+    for (const tool of ["opencli", "curl", "node", "npx", "wget", "claude", "gh", "bili"]) {
       writeFileSync(join(dir, tool), "#!/bin/sh\nexit 1\n", { mode: 0o755 });
     }
     return dir;

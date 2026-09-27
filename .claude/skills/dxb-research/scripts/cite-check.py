@@ -13,13 +13,24 @@ contain the cited number — re-opening the page is R4 here.
 
     cite-check.py <answer.md> --sources sources.json [--run-dir D] [--question FILE]
                   [--mode quick|deep] [--sample 20] [--fetcher http|fetchpy] [--seed N] [-v]
+    cite-check.py <answer.md> --run-dir D ...      an answer that cites only ledger rows ([L0042])
+
+TWO ID SPACES, ONE RULER (2026-09-27). `[n]` is an id in sources.json. A K2-era answer cites the rows
+of the run's evidence.jsonl instead — `[L0042]`, `[L0002, L0001]` (platforms.CITE_RE's grammar; one
+bracket holding both sides, `[A ↔ B]`, read as `[A] ↔ [B]` by platforms.split_paired) — and until this
+date no rule saw them: such an answer failed R2 at 0 % and R4 unmeasurable by construction (ask.sh
+said so, 2026-09-26). A ledger id now resolves through <run-dir>/evidence.jsonl into the same kind of
+source record a sources.json id is — url, domain, title, date, kind — and R4 reads the body the ledger
+kept for that address (bodies/…) before anything else. A marker is one bracket: `[L0001, L0002]` is
+one marker citing two rows (R3 counts markers). `MARK` stays `[n]` alone — rubric.py reads it.
 
   R1 the first non-empty line is the answer: not a heading / quote / table, not "Bu rapor…", not a
      question, 1–2 sentences
   R2 >= 90 % of factual sentences (a number, %, date, price, a named product/person/company, a
      superlative or a share like "çoğu") carry [n] — headings, table header rows and the
      follow-up QUESTIONS excluded; any other line under "Takip soruları" is body
-  R3 every [n] is an id in sources.json; no sentence carries more than 3
+  R3 every [n] is an id in sources.json and every [L…] a row of evidence.jsonl; no sentence carries
+     more than 3 markers
   R4 re-open N sampled cited sentences (seeded), each judged ONCE against the union of the pages
      it cites: a quote must stand on the page verbatim (its numbers too); otherwise every claim
      number must (a version like "Fable 5.1" / "GPT-6" is part of a name, not a claim); with
@@ -68,6 +79,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import sources as S  # noqa: E402  — the registry, its URL key, and the bodies the run read
 import rlib  # noqa: E402  — the one judge of a wall
+import platforms  # noqa: E402  — CITE_RE and split_paired: what a ledger citation is, one owner
 
 UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/140.0 Safari/537.36")
@@ -88,7 +100,33 @@ def fold(s: str) -> str:
     return "".join(c for c in s if not unicodedata.combining(c))
 
 
-MARK = re.compile(r"(?<!!)\[(\d{1,4})\](?!\()")
+MARK = re.compile(r"(?<!!)\[(\d{1,4})\](?!\()")          # `[n]` alone: rubric.py reads this one
+# ANY MARKER: `[n]`, or a ledger citation `[L0042]` / `[L0002, L0001]` (the module docstring). The
+# ledger form is platforms.CITE_RE's; --selftest holds the two patterns together.
+_ID = r"(?:\d{1,4}|L\d{4}(?:,\s*L\d{4})*)"
+MARKS = re.compile(rf"(?<!!)\[({_ID})\](?!\()")
+ROW_ID = re.compile(r"L\d{4,}")
+
+
+def mark_ids(text: str) -> list:
+    """The ids a text's markers cite, in order: an int for `[n]`, the row id "L0042" for the ledger's."""
+    return [i for g in MARKS.findall(text) for i in (ROW_ID.findall(g) if g[:1] == "L" else [int(g)])]
+
+
+def _id_order(i) -> tuple:
+    return (1, 0, i) if isinstance(i, str) else (0, i, "")
+
+
+def as_written(md: str) -> str:
+    """The answer as the rest of the door reads it: `[A ↔ B]` as `[A] ↔ [B]` (platforms.split_paired) and,
+    in an answer that cites ledger rows, its `## Alınmayan kanıt` lines emptied — the claim ledger's reading:
+    those lines are no claim and their ids no citation (claims.without_unused; every line keeps its number).
+    Without it this ruler counted 85 ids in the K3 answer of 2026-09-27 where render.py counts 54."""
+    md = platforms.split_paired(md)
+    if any(isinstance(i, str) for i in mark_ids(md)):
+        import claims  # noqa: E402 — the answer's `## Alınmayan kanıt` section, one owner
+        md = claims.without_unused(md)
+    return md
 # AN ADDRESS WITHOUT A SCHEME IS STILL AN ADDRESS (refuter, 2026-09-24: "reddit.com/r/…",
 # "youtu.be/…", "x.com/…/status/…" all passed R6). A host whose last label is a real TLD, then a
 # path. The TLD list is what keeps "5.1/10", "24/7" and "Node.js/Deno" from counting as URLs.
@@ -121,7 +159,7 @@ def plain(s: str) -> str:
 
 def bare(s: str) -> str:
     """What a claim is judged on: plain text with its markers and addresses taken out."""
-    return re.sub(r"\s+", " ", URL_ANY.sub(" ", MARK.sub(" ", plain(s)))).strip()
+    return re.sub(r"\s+", " ", URL_ANY.sub(" ", MARKS.sub(" ", plain(s)))).strip()
 
 
 # ================================================================== numbers
@@ -365,7 +403,7 @@ yy sn av yrd uzm min max yak ca approx fig vol ed al jan feb mar apr jun jul aug
 e.g i.e cf ref op ibid bk""".split()}
 _MASK = {".": "", "!": "", "?": "", "…": ""}
 _UNMASK = {v: k for k, v in _MASK.items()}
-TERM = re.compile(r"[.!?…]+[\"”’»)\]*_]*(?:\s?\[\d{1,4}\])*(?=\s)")
+TERM = re.compile(rf"[.!?…]+[\"”’»)\]*_]*(?:\s?\[{_ID}\])*(?=\s)")
 
 
 def split_sentences(text: str) -> list[str]:
@@ -387,7 +425,7 @@ def split_sentences(text: str) -> list[str]:
         if not (head[0].isupper() or head[0].isdigit() or head[0] in "%$€£₺~"
                 or re.match(r"[a-zçğıöşü]+[A-Z]", head)):
             continue
-        if nxt.group(1).startswith("[") and re.match(r"\s+\[\d{1,4}\]", masked[m.end():]):
+        if nxt.group(1).startswith("[") and re.match(rf"\s+\[{_ID}\]", masked[m.end():]):
             continue
         if m.group(0).startswith(".") and not m.group(0).startswith(".."):
             w = re.search(r"([^\W\d_][\w.]*)$", masked[start:m.start()])
@@ -540,7 +578,7 @@ def parse(md: str) -> tuple[list[Unit], list[tuple[int, str]], list[int]]:
 
 def is_question(s: str) -> bool:
     """Ends with '?' once markers, emphasis, closing quotes and brackets are off the end."""
-    s = MARK.sub("", plain(s)).strip().rstrip("”\"'’»)]*_ ").strip()
+    s = MARKS.sub("", plain(s)).strip().rstrip("”\"'’»)]*_ ").strip()
     return s.endswith(("?", "？"))
 
 
@@ -1170,28 +1208,37 @@ def r1(md: str) -> Row:
 
 def r2(units: list[Unit], known: set[str]) -> tuple[Row, list[Unit]]:
     fact = [u for u in body_units(units) if is_factual(u.text, u.kind, known)]
-    cited = [u for u in fact if MARK.search(u.text)]
+    cited = [u for u in fact if MARKS.search(u.text)]
     cov = len(cited) / len(fact) if fact else 1.0
-    bad = [u for u in fact if not MARK.search(u.text)]
-    head = (f"coverage {cov:.1%} — {len(cited)} of {len(fact)} factual sentences carry [n] "
+    bad = [u for u in fact if not MARKS.search(u.text)]
+    # the heading names the marks the cited sentences carry: an answer citing ledger rows carries [L…]
+    found = {"[L…]" if g[:1] == "L" else "[n]" for u in cited for g in MARKS.findall(u.text)}
+    form = " or ".join(f for f in ("[n]", "[L…]") if f in found) or "a marker"
+    head = (f"coverage {cov:.1%} — {len(cited)} of {len(fact)} factual sentences carry {form} "
             f"(need >= {COVERAGE_MIN:.0%})")
     return Row("R2", cov >= COVERAGE_MIN, head, [f"L{u.line}  {short(u.text)}" for u in bad[:SHOW]]), fact
 
 
-def r3(md: str, units: list[Unit], code: list[int], ids: set[int]) -> Row:
+def r3(md: str, units: list[Unit], code: list[int], ids: set) -> Row:
     lines = md.splitlines()
     code_set = set(code)
-    marks = [(i, int(m.group(1))) for i, l in enumerate(lines, 1) if i not in code_set for m in MARK.finditer(l)]
+    live = [l for i, l in enumerate(lines, 1) if i not in code_set]
+    marks = [(i, n) for i, l in enumerate(lines, 1) if i not in code_set for n in mark_ids(l)]
     unresolved = [(i, n) for i, n in marks if n not in ids]
     crowded = []
     for u in units:
         for piece in (u.cells or [u.text]):
-            k = len(MARK.findall(piece))
+            k = len(MARKS.findall(piece))
             if k > MAX_MARKERS:
                 crowded.append((u.line, k, piece))
-    head = (f"{len(marks)} markers · {len({n for _, n in marks})} ids · {len(unresolved)} not in sources.json · "
+    kinds = {isinstance(n, str) for _, n in marks}
+    space = " / ".join(x for x, on in (("sources.json", False in kinds), ("evidence.jsonl", True in kinds)) if on)
+    n_marks = sum(len(MARKS.findall(l)) for l in live)
+    head = (f"{n_marks} markers · " + (f"{len(marks)} citations · " if n_marks != len(marks) else "")
+            + f"{len({n for _, n in marks})} ids · {len(unresolved)} not in {space or 'sources.json'} · "
             f"{len(crowded)} sentences with > {MAX_MARKERS} markers")
-    out = [f"L{i}  [{n}] is not an id in sources.json" for i, n in unresolved[:SHOW]]
+    out = [f"L{i}  [{n}] is not a row in evidence.jsonl" if isinstance(n, str) else
+           f"L{i}  [{n}] is not an id in sources.json" for i, n in unresolved[:SHOW]]
     out += [f"L{ln}  {k} markers: {short(p)}" for ln, k, p in crowded[:SHOW]]
     return Row("R3", not unresolved and not crowded, head, out)
 
@@ -1208,7 +1255,7 @@ def r4(units: list[Unit], reg: dict[int, dict], run: Path | None, sample: int, s
     # and judged against the union of the pages it cites.
     pop, dangling = [], 0
     for u in body:
-        ids = list(dict.fromkeys(int(x) for x in MARK.findall(u.text)))
+        ids = list(dict.fromkeys(mark_ids(u.text)))
         good = [i for i in ids if i in reg]
         dangling += len(ids) - len(good)
         if good:
@@ -1228,6 +1275,15 @@ def r4(units: list[Unit], reg: dict[int, dict], run: Path | None, sample: int, s
             if not f.is_file():
                 return i, (None, f"count file {entry.get('url')} is not in the run folder")
             return i, (Page(f.read_text(encoding="utf-8-sig", errors="replace"), f"run:{entry['url']}"), "")
+        if entry.get("body") and run:
+            # a ledger row: the body the ledger kept for its address, first — a short post is still
+            # the post, so only a wall is passed over
+            try:
+                text = (run / entry["body"]).read_text(encoding="utf-8-sig", errors="replace")
+            except OSError:
+                text = ""
+            if text.strip() and not (rlib.looks_like_wall(text) or EXTRA_WALL.search(text[:3000])):
+                return i, (Page(text, f"ledger:{entry['body']}"), "")
         c = S.canon(entry["url"])
         for label, text in (bodies.get(c[0], []) if c else []):
             if not (rlib.looks_like_wall(text) or EXTRA_WALL.search(text[:3000]) or thin(text)):
@@ -1236,7 +1292,7 @@ def r4(units: list[Unit], reg: dict[int, dict], run: Path | None, sample: int, s
 
     pages: dict[int, tuple[Page | None, str]] = {}
     with cf.ThreadPoolExecutor(max_workers=4) as ex:
-        for i, res in ex.map(load, sorted({i for _, ids in chosen for i in ids})):
+        for i, res in ex.map(load, sorted({i for _, ids in chosen for i in ids}, key=_id_order)):
             pages[i] = res
     sup, uns, unj, unr = [], [], [], []
     for u, ids in chosen:
@@ -1340,7 +1396,8 @@ def r8(md: str, mode: str) -> Row:
     # A word carries a letter or a digit: a table pipe, a list dash or an em dash is markup.
     # `wc -w` counts those too, so both are printed and the difference explains itself.
     toks = re.findall(r"\S+", md)
-    n = sum(1 for t in toks if re.search(r"\w", t) and not MARK.fullmatch(t.strip(".,;:")))
+    n = sum(1 for t in re.findall(r"\S+", platforms.CITE_RE.sub(" ", md))
+            if re.search(r"\w", t) and not MARK.fullmatch(t.strip(".,;:")))
     lo, hi = BANDS[mode]
     return Row("R8", lo <= n <= hi, f"{n:,} words (wc -w {len(toks):,}; markup tokens not counted) — "
                                     f"{mode} band {lo:,}–{hi:,}")
@@ -1371,7 +1428,7 @@ def is_quote(u: Unit) -> bool:
     if not m and re.match(r"[*_]{0,3}\s*‘", p):
         sq = single_quotes(p)
         span = sq[0][1] + 1 if sq else 0
-    return bool(span and span >= 0.6 * len(MARK.sub("", p).strip()))
+    return bool(span and span >= 0.6 * len(MARKS.sub("", p).strip()))
 
 
 def r9(units: list[Unit]) -> Row:
@@ -1379,6 +1436,28 @@ def r9(units: list[Unit]) -> Row:
     bad = [u for u in quotes if not DATED.search(fold(u.text))]
     return Row("R9", not bad, f"{len(quotes)} quote lines · {len(bad)} without a YYYY-MM-DD date or TARİHSİZ",
                [f"L{u.line}  {short(u.text)}" for u in bad[:SHOW]])
+
+
+# ================================================================== the ledger's rows as sources
+def ledger_sources(run: Path | None) -> dict[str, dict]:
+    """<run>/evidence.jsonl's rows as source records — the fields a sources.json entry carries (url,
+    domain, title, date, kind) — each with `body`: the page the ledger kept for its address, run-relative,
+    when it is on disk (evidence.py owns how a row is read and where that body lies). {} without a ledger."""
+    if not run or not (run / "evidence.jsonl").is_file():
+        return {}
+    import evidence as E  # noqa: E402 — the ledger's owner
+    out: dict[str, dict] = {}
+    for row in E.read_rows(run):
+        rid, url = str(row.get("id") or ""), str(row.get("url") or "")
+        if not ROW_ID.fullmatch(rid) or not url or rid in out:
+            continue
+        canon = str(row.get("url_canonical") or "")
+        body = E.body_path(run, canon) if canon else None
+        kept = body is not None and body.is_file() and body.stat().st_size > 0
+        out[rid] = {"id": rid, "url": url, "domain": row.get("domain") or S.domain_of(url),
+                    "title": row.get("title"), "date": row.get("pub_date"), "kind": S.kind_of(url),
+                    "body": body.relative_to(run).as_posix() if kept else None}
+    return out
 
 
 # ================================================================== regression probes
@@ -1509,6 +1588,31 @@ SELFTEST_R1 = (   # (first line, R1 must pass?) — r1-1 … r1-13, in order
 # ‘…’ with the Turkish apostrophe inside: the quote ends at the last ’ before the attribution dash
 SELFTEST_SINGLE = ("> ‘Fable 5.1’i kullanan ekip 24 saatte limiti doldurdu’ — Enzo, X, TARİHSİZ [1]",
                    "Fable 5.1’i kullanan ekip 24 saatte limiti doldurdu")
+# THE LEDGER'S IDS (2026-09-27): two rows and their kept bodies; one sentence the body carries, one it
+# does not, one id the ledger never wrote. R4 must judge both from the bodies on disk — no network.
+SELFTEST_LEDGER_ROWS = (
+    ("L0001", "https://www.reddit.com/r/Notion/comments/abc123/plus_price/",
+     "Notion Plus costs 10 dollars per member per month when it is billed yearly, the thread says, "
+     "and the team kept it for the shared databases."),
+    ("L0002", "https://x.com/someone/status/1234567890",
+     "Obsidian Sync costs 4 dollars a month for one person, and every member of a team needs their own."),
+)
+SELFTEST_LEDGER_MD = ("Notion Plus üye başına ayda 10 dolar [L0001].\n\n"
+                      "Obsidian Sync ayda 99 dolar tutuyor. [L0002, L0001]\n\n"
+                      "Bir satır defterde yok [L0999].\n\n"
+                      "## Alınmayan kanıt\n- [L0003] — tekrar\n")
+SELFTEST_CITE_STRINGS = ("a [L0042] b", "a [L0002, L0001] b [L0003]", "[L0001,L0002] [1] [l0003] [L0001 ]",
+                         "x [L12345] y [L0001; L0002]")
+
+
+def _offline_r4(*args) -> Row:
+    """r4 with the network door shut: what it judges must come from the disk."""
+    global fetch_http
+    real, fetch_http = fetch_http, (lambda url: (None, "the selftest reads no network"))
+    try:
+        return r4(*args)
+    finally:
+        fetch_http = real
 
 
 def selftest() -> int:
@@ -1549,6 +1653,38 @@ def selftest() -> int:
     got_q, r9row = quotes_of(bare(line)), r9(us)
     checks.append(("quotes", got_q == [want_q] and r9row.head.startswith("1 quote"),
                    f"‘…’ read as {got_q}; R9 {r9row.head}"))
+    for s in SELFTEST_CITE_STRINGS:
+        mine = [m.group(0) for m in MARKS.finditer(s) if m.group(1).startswith("L")]
+        checks.append(("ledger", mine == platforms.CITE_RE.findall(s),
+                       f"{s!r}: MARKS reads {mine}, platforms.CITE_RE {platforms.CITE_RE.findall(s)}"))
+    got_ids = mark_ids("a [L0001, L0002] b [3] c [L0003]")
+    checks.append(("ledger", got_ids == ["L0001", "L0002", 3, "L0003"], f"mark_ids read {got_ids}"))
+    got_s = split_sentences("İlk cümle bitti. [L0001, L0002] İkinci cümle burada [3].")
+    checks.append(("ledger", len(got_s) == 2 and got_s[0].endswith("[L0001, L0002]"), f"split as {got_s}"))
+    with tempfile.TemporaryDirectory() as td:
+        run = Path(td)
+        import evidence as E  # noqa: E402
+        rows = []
+        for rid, url, body in SELFTEST_LEDGER_ROWS:
+            canon = rlib.canonical_url(url)
+            E.write_body(run, canon, body)
+            rows.append({"id": rid, "kind": "evidence", "url": url, "url_canonical": canon,
+                         "domain": S.domain_of(url), "title": None, "pub_date": None, "passage": body[:60]})
+        (run / "evidence.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+        reg = ledger_sources(run)
+        lmd = as_written(SELFTEST_LEDGER_MD)
+        us, _, code = parse(lmd)
+        lctx = build_ctx(us, reg, "")
+        row2 = r2(us, lctx.known)[0]
+        row3 = r3(lmd, us, code, set(reg))
+        row4 = _offline_r4(us, reg, run, 20, 1, "http", False, lctx)
+        checks.append(("ledger", sorted(reg) == ["L0001", "L0002"] and all(v["body"] for v in reg.values()),
+                       f"evidence.jsonl resolved to {sorted(reg)} with bodies {[v['body'] for v in reg.values()]}"))
+        checks.append(("ledger", row2.ok and row2.head.startswith("coverage 100.0%"), f"R2 {row2.head}"))
+        checks.append(("ledger", not row3.ok and row3.lines == ["L5  [L0999] is not a row in evidence.jsonl"],
+                       f"R3 {row3.head} {row3.lines}"))
+        checks.append(("ledger", "— 1 supported / 1 unsupported" in row4.head and "unreachable 0" in row4.head,
+                       f"R4 {row4.head}"))
     groups = list(dict.fromkeys(g for g, _, _ in checks))
     passed = sum(1 for _, ok, _ in checks if ok)
     print(f"selftest: {passed}/{len(checks)} PASS — " + " · ".join(
@@ -1564,7 +1700,8 @@ def selftest() -> int:
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(prog="cite-check.py", description="the citation ruler (R1–R9)")
     ap.add_argument("answer", nargs="?")
-    ap.add_argument("--sources")
+    ap.add_argument("--sources", help="sources.json, the [n] id space — not needed when the answer cites only "
+                                      "ledger rows ([L0042]) and --run-dir holds evidence.jsonl")
     ap.add_argument("--selftest", action="store_true", help="re-run the refuter's regression probes and exit")
     ap.add_argument("--run-dir")
     ap.add_argument("--question")
@@ -1576,22 +1713,29 @@ def main(argv: list[str]) -> int:
     a = ap.parse_args(argv)
     if a.selftest:
         return selftest()
-    if not a.answer or not a.sources:
-        ap.error("the answer and --sources are required (or run --selftest)")
+    if not a.answer or not (a.sources or a.run_dir):
+        ap.error("the answer and --sources (or --run-dir holding evidence.jsonl) are required (or run --selftest)")
 
     try:
-        md = Path(a.answer).read_text(encoding="utf-8-sig", errors="replace")
+        md = as_written(Path(a.answer).read_text(encoding="utf-8-sig", errors="replace"))
     except OSError as e:
         raise SystemExit(f"cite-check: cannot read {a.answer}: {e}")
-    reg = {int(s["id"]): s for s in S.load(a.sources)}
+    reg: dict = {int(s["id"]): s for s in S.load(a.sources)} if a.sources else {}
+    n_src = len(reg)
     run = Path(a.run_dir).resolve() if a.run_dir else None
+    # the ledger is read only for an answer that cites it: an [n] answer is judged exactly as before
+    cites_rows = any(isinstance(i, str) for i in mark_ids(md))
+    ledger = ledger_sources(run) if cites_rows else {}
+    reg.update(ledger)
     qfile = Path(a.question) if a.question else (run / "question.txt" if run and (run / "question.txt").is_file() else None)
     question = qfile.read_text(encoding="utf-8-sig", errors="replace") if qfile and qfile.is_file() else ""
     machine, where = machine_counts(run)
     units, heads, code = parse(md)
     ctx = build_ctx(units, reg, question)
 
-    print(f"cite-check · {a.answer} · {len(reg)} sources · mode {a.mode} · run-dir {run or 'none'} · "
+    rows_said = (f" + {len(ledger)} ledger rows" if ledger else
+                 " + 0 ledger rows (no evidence.jsonl in the run-dir)" if cites_rows else "")
+    print(f"cite-check · {a.answer} · {n_src} sources{rows_said} · mode {a.mode} · run-dir {run or 'none'} · "
           f"question {qfile or 'none'}")
     rows = [r1(md)]
     row2, _ = r2(units, ctx.known)

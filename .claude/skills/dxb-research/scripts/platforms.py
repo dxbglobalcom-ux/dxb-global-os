@@ -229,26 +229,16 @@ def door_said(text: str) -> str:
     return ""
 
 # ---------------------------------------------------------------- what is not an address at all
-# A page's furniture, a search engine's own results page and an address that does not parse are
-# not sources. The same three verdicts sources.py gives sources.json (its lists, measured there on
-# the runs of 2026-09-20..24), kept here for the evidence rows: sources.py loads fleet/merge.py at
-# import, and the evidence CLI may not fall over because another file is half-edited.
-ASSET_EXT = re.compile(r"\.(png|jpe?g|gif|webp|svg|ico|bmp|avif|heic|css|js|mjs|map|woff2?|ttf|otf|eot|"
-                       r"mp4|webm|m3u8|mp3|m4a|wav|ogg)$", re.I)
-ASSET_HOSTS = {"i.redd.it", "preview.redd.it", "external-preview.redd.it", "styles.redditmedia.com",
-               "pbs.twimg.com", "video.twimg.com", "abs.twimg.com", "i.ytimg.com", "yt3.ggpht.com",
-               "yt3.googleusercontent.com", "avatars.githubusercontent.com",
-               "user-images.githubusercontent.com", "private-user-images.githubusercontent.com",
-               "camo.githubusercontent.com", "media2.dev.to", "dev-to-uploads.s3.amazonaws.com",
-               "fonts.googleapis.com", "fonts.gstatic.com", "external-content.duckduckgo.com",
-               "w3.org", "a9.com", "purl.org", "schema.org", "ogp.me", "xmlns.com"}
-ASSET_DOMAINS = {"twimg.com", "ytimg.com", "ggpht.com", "redditmedia.com", "redditstatic.com",
-                 "rednotecdn.com", "xhscdn.com", "sinaimg.cn", "hdslb.com", "zhimg.com", "gstatic.com",
-                 "fbcdn.net", "cdninstagram.com", "licdn.com", "githubassets.com", "gravatar.com",
-                 "googletagmanager.com", "google-analytics.com", "doubleclick.net"}
-FURNITURE_PATH = re.compile(r"^/(share|sharer(\.php)?|sharearticle|intent/(tweet|post)|submit|submitlink|"
-                            r"pin/create|send|login|log-in|signin|sign-in|signup|sign-up|register|logout|"
-                            r"account|settings|password)(/|$)", re.I)
+# ONE RULE FOR "THIS ADDRESS IS NOT A SOURCE". A page's furniture — a search engine's ad click among
+# it — and a search engine's own results page are sources.reject's verdicts, the ones sources.json is
+# built with; reject() below adds only what the evidence rows need beyond them. This file kept its own
+# copy of those lists until 2026-09-27, and the copy drifted: sources.py learned the ad clicks while
+# platforms.reject still returned None for bridge.admarketplace.net, googleadservices.com/pagead/aclk
+# and bing.com/aclick (measured 2026-09-27), and for two share buttons, wa.me and s2f.kytta.dev.
+# sources is imported inside reject(), not at the top: sources.py loads ../fleet/merge.py at import, and
+# a scripts folder copied without fleet/ (render.py's and kapsama.py's tests run one) raises there —
+# `import platforms` must still give the classifier, the canonical form and the citation pattern.
+#
 # A PLATFORM'S OWN PAGES ARE NOT ITS PEOPLE. The B56 verifier found x.com/, x.com/tos, x.com/privacy,
 # x.com/i/flow/…, x.com/i/trending/…, reddit.com/ and youtube.com/ on the hunters' address lists
 # (2026-09-26). A platform's front door and its legal, flow and search pages are refused; a
@@ -258,28 +248,30 @@ SITE_PAGE = re.compile(r"^/(?:tos|terms|privacy|rules|legal|about|help|home|expl
                        r"messages|i/flow|i/trending|i/jf|search|hashtag|feed|policies|t/terms|"
                        r"howyoutubeworks|results)(?:/|$)", re.I)
 PUBLICATIONS = ("substack.com", "medium.com", "quora.com")
-SEARCH_PAGE = re.compile(r"^(?:(?:[a-z]+\.)?google\.[a-z.]+/(?:search|sorry|webhp)|bing\.com/search|"
-                         r"(?:html\.|lite\.)?duckduckgo\.com/(?:html/?|lite/?)?(?:\?|$)|"
-                         r"search\.yahoo\.com/search|yandex\.[a-z.]+/search|baidu\.com/s(?:\?|$)|"
-                         r"search\.brave\.com/search|(?:[a-z0-9-]+\.)?startpage\.com/)", re.I)
+# Startpage answers on regional hosts too (eu.startpage.com …). sources.py's search-page rule names the
+# bare host only; the evidence rows refused the regional ones before the rule was shared, and still do.
+STARTPAGE_REGIONAL = re.compile(r"^[a-z0-9-]+\.startpage\.com/", re.I)
 
 
 def reject(url: str) -> str | None:
-    """Why an address is not a source — 'invalid' · 'furniture' · 'search-page' · 'site-page' — or None."""
+    """Why an address is not a source — 'invalid' · 'furniture' · 'search-page' · 'site-page' — or None.
+    'furniture' · 'search-page' are sources.reject's; 'invalid' is stricter: a host must look like one."""
+    u = (url or "").strip()
     try:
-        s = urlsplit((url or "").strip())
+        s = urlsplit(u)
         s.port   # a port that is not a number raises: the address does not parse
     except ValueError:
         return "invalid"
     host = (s.hostname or "").lower().rstrip(".") if s.scheme.lower() in ("http", "https") else ""
     if not host or "." not in host or not re.fullmatch(r"[a-z0-9._~-]+\.[a-z]{2,}", host):
         return "invalid"
+    import sources   # the one rule — imported here, not at the top (above)
+    why = sources.reject(u)
+    if why:
+        return why
     if host.startswith("www."):
         host = host[4:]
-    if host in ASSET_HOSTS or ASSET_EXT.search(s.path or "") or FURNITURE_PATH.match(s.path or "") \
-            or ".".join(host.split(".")[-2:]) in ASSET_DOMAINS:
-        return "furniture"
-    if SEARCH_PAGE.match(host + (s.path or "/") + ("?" + s.query if s.query else "")):
+    if STARTPAGE_REGIONAL.match(host + (s.path or "/")):
         return "search-page"
     if platform_of(url) != "web" and not any(host.endswith("." + d) for d in PUBLICATIONS) \
             and ((s.path or "/") == "/" or SITE_PAGE.match(s.path or "")):

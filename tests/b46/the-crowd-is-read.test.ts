@@ -41,7 +41,7 @@ describe("the page selector gives the crowd its turn", () => {
     const picked = urls.split("\n").filter(Boolean);
     expect(picked.length, `sweep said:\n${r.stdout.slice(-1800)}`).toBeGreaterThan(0);
     expect(urls, `the selector picked:\n${urls}`).toMatch(/reddit/);
-  });
+  }, 40_000);
 
   it("gives the crowd channels the larger share of a small budget", () => {
     const r = runSweep(b, "what do people say about it", ["--tier", "max", "--pages", "8", "--no-browser", "--no-read"], {
@@ -51,7 +51,7 @@ describe("the page selector gives the crowd its turn", () => {
     const crowd = picked.filter((u) => /reddit|hackernews|twitter|youtube|stackoverflow|lobsters|quora|v2ex|zhihu/.test(u));
     // On a budget of 8, at least half of what is read must come from where people talk.
     expect(crowd.length, `picked:\n${picked.join("\n")}`).toBeGreaterThanOrEqual(4);
-  });
+  }, 40_000);
 });
 
 describe("a cover is a cover only when new bytes came back", () => {
@@ -79,7 +79,9 @@ describe("a cover is a cover only when new bytes came back", () => {
       // door returning exit 7 there can be none.
       expect(line).not.toMatch(/->\s+\S+\s+ok \(\d+ bayt\)/);
     }
-  });
+    // every case here runs a whole sweep, so each carries its own clock: this one took 4.1 s alone and
+    // 6.3–7.2 s under load (2026-09-27), past vitest's 5 s default
+  }, 40_000);
 });
 
 describe("what the sweep prints about its own reading is measured from disk", () => {
@@ -91,7 +93,7 @@ describe("what the sweep prints about its own reading is measured from disk", ()
     // descriptor, a donation page and two API endpoints. The count now says how many of them
     // actually carry something to read.
     expect(r.stdout).toMatch(/gercek icerikli:/);
-  });
+  }, 40_000);
 });
 
 /** A page that answers, and says nothing — 12 words. */

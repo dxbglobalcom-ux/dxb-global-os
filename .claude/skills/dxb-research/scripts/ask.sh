@@ -49,10 +49,12 @@
 #
 # THE JUDGE (--check): cite-check.py --mode quick -> <outdir>/cite-check.txt; then, whatever it said,
 # evidence.py from-ground turns <outdir>/ground* into evidence.jsonl rows and render.py builds final.md
-# from those rows. cite-check counts [n] marks, so it fails every [Lxxxx] answer by construction
-# (measured 2026-09-26: R2 0 %, R4 unmeasurable); it leaves with the drawer. A refused page prints
-# render's reason and a HATA line, and no final.md. .t2 is written, and the exit is 0, only when
-# cite-check PASSES and the page was written. A previous run's final.md and .t2 are removed before
+# from those rows. cite-check reads both id spaces: `[n]` through <outdir>/sources.json, `[L0042]`
+# through <outdir>/evidence.jsonl — so a folder needs answer.md and one of the two, and a fleet run's
+# folder (evidence.jsonl, no sources.json) is judged too. Until 2026-09-27 it counted `[n]` alone and
+# failed every [Lxxxx] answer by construction (measured 2026-09-26: R2 0 %, R4 unmeasurable). A refused
+# page prints render's reason and a HATA line, and no final.md. .t2 is written, and the exit is 0, only
+# when cite-check PASSES and the page was written. A previous run's final.md and .t2 are removed before
 # judging, so no end-to-end time stands beside a FAIL. A folder with no ground* (a pplx.py folder)
 # has no rows for the page to print.
 set -uo pipefail
@@ -89,12 +91,16 @@ if [ "${1:-}" = "--check" ]; then
     exit 2
   fi
   refuse_repo "$OUT"
-  for f in answer.md sources.json; do
-    [ -f "$OUT/$f" ] || { echo "ask --check: $OUT/$f yok" >&2; exit 2; }
-  done
+  [ -f "$OUT/answer.md" ] || { echo "ask --check: $OUT/answer.md yok" >&2; exit 2; }
+  # the id space: sources.json for [n], the run's ledger for [L0042] — at least one must be there
+  SARG=(); [ -f "$OUT/sources.json" ] && SARG=(--sources "$OUT/sources.json")
+  if [ ${#SARG[@]} -eq 0 ] && [ ! -f "$OUT/evidence.jsonl" ]; then
+    echo "ask --check: $OUT icinde sources.json da evidence.jsonl de yok — cevabin kimlikleri cozulemez" >&2
+    exit 2
+  fi
   rm -f "$OUT/final.md" "$OUT/citations.json" "$OUT/.t2"     # a verdict never stands beside an old one
   QARG=(); [ -f "$OUT/question.txt" ] && QARG=(--question "$OUT/question.txt")
-  python3 "$R/cite-check.py" "$OUT/answer.md" --sources "$OUT/sources.json" --run-dir "$OUT" \
+  python3 "$R/cite-check.py" "$OUT/answer.md" ${SARG[@]+"${SARG[@]}"} --run-dir "$OUT" \
       "${QARG[@]}" --mode quick > "$OUT/cite-check.txt" 2>&1
   CC_RC=$?
   VERDICT=FAIL

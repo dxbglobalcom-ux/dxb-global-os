@@ -113,6 +113,39 @@ def version(timeout: float = 2.0) -> dict | None:
         return None
 
 
+# THE DESKTOP'S LOGIN KEYRING. The unit runs this Chrome with --password-store=gnome-libsecret, so the key to
+# the copy's cookies lives in the login collection of the secret service, and while that collection is locked
+# Chrome cannot decrypt them: on 2026-09-27 `busctl … Locked` has said `b true` since 08:35, and the lead's
+# reads of this Chrome hung until `Page.navigate: no answer in 30s`. Only the CEO's own password opens it —
+# nothing here tries. So every navigation of this module asks first and, on `b true`, fails AT ONCE with one
+# line that says why, as a CDPError — the failure its callers already handle for the 30 s hang. Any other
+# answer, an error or no answer in 5 s: the read goes on as before. DXB_BUSCTL stands in for busctl on a test
+# bench.
+LOCKED_MSG = ("gizli Chrome okunamaz: giris anahtar kasasi kilitli (login keyring locked) — yalniz CEO'nun "
+              "sifresi acar; Chrome cerezlerini cozemez")
+
+
+class Locked(CDPError):
+    """The login keyring is locked: the hidden Chrome cannot decrypt its cookies, and it does not navigate."""
+
+
+def keyring_locked() -> bool:
+    """True only when the secret service answers `b true` for the login collection's Locked property."""
+    try:
+        p = subprocess.run([os.environ.get("DXB_BUSCTL") or "busctl", "--user", "get-property",
+                            "org.freedesktop.secrets", "/org/freedesktop/secrets/collection/login",
+                            "org.freedesktop.Secret.Collection", "Locked"],
+                           capture_output=True, text=True, timeout=5)
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return p.returncode == 0 and p.stdout.strip() == "b true"
+
+
+def _unlocked() -> None:
+    if keyring_locked():
+        raise Locked(LOCKED_MSG)
+
+
 # ---------------------------------------------------------------- DevTools over a WebSocket
 class CDP:
     """A minimal DevTools WebSocket client, standard library only.
@@ -621,6 +654,7 @@ def read(url: str, wait: float = 1.5, expand: str | None = None, after: float = 
             raise CDPError(f"read took longer than {timeout:.0f}s")
         return min(cap, rest)
 
+    _unlocked()                   # before the Chrome is asked anything (THE DESKTOP'S LOGIN KEYRING)
     if not version():
         raise Down(DOWN_MSG)
     found = genuine_opencli()
@@ -670,6 +704,7 @@ _STATE_JS = ("JSON.stringify({url: location.href, title: document.title,"
 
 def _state(url: str, dwell: float = 3.0, timeout: float = 45.0) -> dict:
     """Where `url` ends up, its title and the start of its text — read in its own window."""
+    _unlocked()
     end = time.monotonic() + timeout
     with slot(timeout):
         with Tab() as tab:
@@ -752,7 +787,7 @@ def signed_in() -> list[tuple[str, bool, str]]:
     for site, url, judge in LIVE:
         try:
             ok, why = judge(_state(url))
-        except Down:
+        except (Down, Locked):    # the Chrome, not the site: one line, not six rows saying "no session"
             raise
         except Exception as e:
             ok, why = False, f"okunamadi: {str(e)[:80]}"
@@ -799,6 +834,8 @@ def google(query: str, timeout: float = 120.0) -> int:
         except Down as e:
             print(f"FAIL google-deep: {e}", file=sys.stderr)
             return 69
+        except Locked:            # Startpage and Brave go through the same locked Chrome
+            raise
         except Exception as e:
             fails.append(f"{name}: {str(e)[:120]}")
             continue
@@ -900,6 +937,9 @@ def main() -> int:
     except Down as e:
         print(str(e), file=sys.stderr)
         return 69
+    except Locked as e:           # its own line, whole — the code the CDPError below leaves with
+        print(str(e), file=sys.stderr)
+        return 1
     except SlotTimeout as e:
         print(str(e), file=sys.stderr)
         return 75
