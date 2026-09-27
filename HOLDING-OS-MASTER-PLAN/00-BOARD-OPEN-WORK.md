@@ -15,12 +15,14 @@ that the project "advances in a mess and specs stay half-finished".
 
 ## The law of this board
 
-1. **One row per open thing.** If work is open anywhere in the corpus, it has a row here. The
-   six ledgers keep their detail; this board keeps the truth about what is still open.
+1. **A row is opened only on the CEO's word.** The board holds the holding's special parts — the
+   Ferrari's parts still to be added — not every job. CEO, 2026-09-28: *"tahta holding için ferrarinin
+   eklenecek parçaları. özeller"* · *"bir daha ben söylemeden oraya yapılacak şeyler yazılmasın"*.
+   <!-- CEO-OK: opening-three-headings-and-board-archive-2026-09-28 -->
 2. **No row closes without evidence.** A row closes with a command and its decisive output, or
    with the CEO's own eye/ear where the machine cannot check it. A closed row keeps its evidence.
-3. **No work starts outside this board.** New work gets a row first. New design goes into the
-   spec that already owns the contract as a registered adaptation — never into a new spec.
+3. **New design goes into the spec that already owns the contract** as a registered adaptation —
+   never into a new spec.
 4. **Historical order.** Rows are ordered by the date the item was opened, oldest first, because
    the CEO's ruling of 2026-07-27 is that half-finished older work outranks new work.
 5. **Ledger parity.** When a row closes here, the ledger that owns it is corrected in the SAME
@@ -45,7 +47,7 @@ that the project "advances in a mess and specs stay half-finished".
 
    **And the plan lives in a FILE, not in the conversation.** Plan mode's output dies with the session; the approved plan is written to the row's own `PLAN.md` before that session ends. **The execution session reads the PLAN. The SUMMARY is written afterwards and is EVIDENCE, never instruction** — that is what keeps the detail from being lost behind a short summary, which he asked about the same day.
 
-### Laws 1 and 5 are enforced by machine (U41, 2026-07-28)
+### Law 5 is enforced by machine (U41, 2026-07-28)
 
 Until tonight these two laws were honour rules, and the honour failed in three measurable ways on
 one evening: two commitments written in a document were built nowhere and tracked on no ledger;
@@ -61,9 +63,7 @@ corpus. Every durable statement is now one of two kinds, and the distinction is 
 | **STATE** — what is true NOW | "199 active employees" | carries `<!-- STATE: id = value @ date -->`, **re-measured against the live company database on every run** |
 | **EVENT** — what happened ONCE | "restore drill 2026-07-17, RTO 5s" | frozen forever, and **must carry its date** |
 
-Any line declaring open work must carry `<!-- OPEN: <row> -->` naming a row on this board, or
-`<!-- HISTORY -->` if it merely describes the past. An unmarked declaration fails the battery.
-This board is exempt from that check — it IS the register; its rows are the declarations.
+An `<!-- OPEN: <row> -->` marker, where one is written, must name a row that exists and is open.
 Each section below declares `open` or `closed` for the machine, so the gate never guesses.
 
 ## How to read the "Waits on" column

@@ -1,6 +1,6 @@
 ---
 name: dxb-close-row
-description: Use when taking a row on the open work board from open to closed, or when new work appears that no row covers — the board's laws, what closing evidence must contain, and the ledger-parity rule that keeps records from drifting behind reality.
+description: Use when taking a row on the open work board from open to closed — the board's laws, what closing evidence must contain, and the ledger-parity rule that keeps records from drifting behind reality.
 ---
 
 # Closing a row on the open work board
@@ -42,11 +42,12 @@ The board defines the STATE-versus-EVENT rule; this is how you satisfy it.
   that is not a bare SELECT, and re-measures the value against the live company database on every
   run — so the number cannot go stale in silence.
 - A statement about what happened **once** carries its date and `<!-- HISTORY -->`.
-- A line declaring open work carries `<!-- OPEN: <row> -->` naming a live board row.
+- An `<!-- OPEN: <row> -->` marker, where one is written, names a live board row. A board row is
+  opened only on the CEO's word (board law 1).
 - A claim that the CEO approved something carries `<!-- CEO-OK: <id> -->` and an entry in
   `scripts/governance/ceo-approvals.json`.
 
-An unmarked declaration fails the battery. The board itself is exempt — it *is* the register.
+An unregistered approval claim fails the battery.
 
 ## What a closing entry contains
 

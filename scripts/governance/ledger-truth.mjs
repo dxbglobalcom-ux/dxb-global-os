@@ -30,7 +30,6 @@
 // CHECKS
 //   1. stale state    a STATE value no longer matches the live measurement
 //   2. dangling open  an OPEN marker names a board row that is absent or closed
-//   3. unmarked promise  a line declaring open work with no OPEN/HISTORY marker
 //
 // WHY A SCRIPT AND NOT A TEST: the suite runs against the construction site's
 // OWN engine (C47, and B36 Block 2 which replaced the clone with a separate
@@ -132,81 +131,6 @@ const SCOPE = [
   ".planning/research/study-cards",
   ".planning/research/rival-intel",
 ];
-
-// Vocabulary that, in THIS corpus, declares unfinished work. Tuned to zero by
-// the one-time sweep of 2026-07-28, which is where its value comes from: a
-// tripwire that rings constantly teaches people to ignore it, so after the
-// sweep any ring is real. It is a word list, not an oracle — a promise phrased
-// in words nobody anticipated will pass. That limit is written down rather than
-// papered over.
-const TRIGGERS = [
-  /\bREMAINING\b/,
-  /EMBED when/i,
-  /\bwaits? on\b/i,
-  /\bnot yet built\b/i,
-  /\bnever built\b/i,
-  /\bstill open\b/i,
-  /\bTODO\b/,
-  /\bbekliyor\b/i,
-  /\baçık kal/i,
-  /kalan bacak/i,
-  /◐/,
-];
-
-// Tried and rejected 2026-07-31: an unticked checkbox as a tripwire. It rang
-// 317 times — in this corpus a box shows state (requirement catalogues, the
-// study-card lifecycle line), it does not promise work. A bell that rings 317
-// times is a bell nobody hears.
-
-// A FINISHED row may not smuggle unfinished work inside its own closing
-// evidence. In a ledger the status token is the declaration, so a ✓ row is
-// never examined by LEDGER_TRIGGER — which is how "NEXT Kelam milestones M2-M6
-// = future roadmap rows" sat inside a ✓ COMPLETE row and rang nothing. A closed
-// row that announces future work names the board row that carries it, or the
-// sentence is not written. A phrase list, not an oracle — same stated limit as
-// TRIGGERS.
-const FUTURE_WORK = [
-  // "next to" is a preposition, never a promise — measured 2026-08-10 on a
-  // verbatim quotation inside rival report 18: *"show green 'Copied' text or
-  // checkmark under/next to the Account ID row"* tripped this as future work.
-  /\bNEXT\b(?!\s+to\b)[^|]{0,60}\b(milestones?|waves?|slots?|rows?|phases?)\b/i,
-  /\bfuture (roadmap )?(rows?|waves?|slots?|milestones?)\b/i,
-  /\b(ADOPT|EMBED)\s*=\s*\S/,
-  /\bileride\b/i,
-  /\bgelecek (dalga|faz|aşama)/i,
-];
-
-// Naming the future is not promising it: a rule about later work, a tool's
-// printed output, or the phrase quoted in order to forbid it. Each exclusion
-// measured against a real line on 2026-07-31.
-const FUTURE_NOT_A_PROMISE = [
-  /ileride bakarız/i, // the gap-audit directive quotes it to forbid it
-  /record it as a boundary/i, // the perfection gate: a rule for later slots
-  /this manual is updated/i, // the operating manual's own single-source rule
-  /the next row, and the exact command/i, // describes what the resume tool prints
-  /next\.sh/, // ditto — a script named "next"
-  /as the next rung/i, // a model-ladder position, not a task
-];
-
-// The board is exempt from the tripwire — it IS the register of open work.
-// Demanding that its own rows carry markers pointing at themselves would be
-// tautological noise. The tripwire's job is to find open-work declared
-// ANYWHERE ELSE, which is exactly the class that went untracked. The board is
-// still fully subject to checks 1 and 2.
-const TRIPWIRE_EXEMPT = new Set([BOARD]);
-
-// Ledgers track work with an explicit status token, so in a ledger the TOKEN is
-// the declaration and the surrounding prose is evidence. Running the full word
-// list over them flags closed rows for words buried in their own closing
-// evidence — noise that would train everyone to ignore the gate. Here the
-// tripwire fires on the unfinished token alone: every ◐ row must name the board
-// row that carries it. That is Law 1 stated exactly.
-const LEDGERS = new Set([
-  "HOLDING-OS-MASTER-PLAN/IMPLEMENTATION_ROADMAP.md",
-  "HOLDING-OS-MASTER-PLAN/00-INDEX.md",
-  "HOLDING-OS-MASTER-PLAN/00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md",
-]);
-const LEDGER_TRIGGER = /◐/;
 
 const MARK_STATE = /<!--\s*STATE:\s*([a-z0-9_]+)\s*=\s*(.+?)\s*@\s*(\d{4}-\d{2}-\d{2})\s*-->/i;
 const MARK_OPEN = /<!--\s*OPEN:\s*([A-Za-z0-9.\-]+)\s*-->/;
@@ -395,7 +319,7 @@ function boardRows() {
 
 // ------------------------------------------------------------------- checks
 const failures = [];
-const found = { state: 0, open: 0, history: 0, triggers: 0, ceoOk: 0, rules: 0 };
+const found = { state: 0, open: 0, history: 0, ceoOk: 0, rules: 0 };
 const claims = JSON.parse(readFileSync(path.join(REPO, CLAIMS), "utf8"));
 await openTheWindow([
   ...Object.entries(claims)
@@ -554,26 +478,6 @@ for (const rel of corpusFiles()) {
         );
       }
     }
-
-    // --- check 3: unmarked promise ----------------------------------------
-    if (TRIPWIRE_EXEMPT.has(rel)) continue;
-    // A line that is ONLY a marker carries no claim of its own. A line with an
-    // inline marker DOES, and is still counted — otherwise the totals would
-    // quietly shrink as the sweep progressed and look like the work vanished.
-    if (/^\s*<!--[^>]*-->\s*$/.test(line)) continue;
-    const isLedger = LEDGERS.has(rel);
-    const future = FUTURE_WORK.some((t) => t.test(line)) && !FUTURE_NOT_A_PROMISE.some((t) => t.test(line));
-    const worded = isLedger ? LEDGER_TRIGGER.test(line) : TRIGGERS.some((t) => t.test(line));
-    if (!worded && !future) continue;
-    found.triggers++;
-    if (!cover[i]) {
-      const why = future
-        ? "announces work still to come — a ✓ stamp cannot hold unfinished work inside it; name the board row that carries it, or do not write the sentence"
-        : isLedger
-          ? "a ◐ row with no OPEN marker: work is unfinished here and no board row carries it"
-          : "declares open work with no OPEN/HISTORY marker";
-      failures.push(`${rel}:${i + 1} — ${why} — ${line.trim().slice(0, 110)}`);
-    }
   }
 }
 
@@ -583,7 +487,6 @@ if (LIST) {
     `markers: STATE ${found.state} · OPEN ${found.open} · HISTORY ${found.history} · CEO-OK ${found.ceoOk}`,
   );
   console.log(`rules with a registered single owner: ${found.rules}`);
-  console.log(`open-work trigger lines seen: ${found.triggers}`);
   console.log(`board rows parsed: ${board.size} (${[...board.values()].filter((v) => v === "open").length} open)`);
 }
 
@@ -601,7 +504,7 @@ if (failures.length) {
 
 console.log(
   `ledger truth OK: ${found.state} state claims re-measured, ${found.open} open markers resolved against ${board.size} board rows, ` +
-    `${found.triggers} trigger lines all accounted for, ${found.rules} rules each in exactly one owner, ` +
+    `${found.rules} rules each in exactly one owner, ` +
     `${found.ceoOk} CEO approval claims each backed by a registered approval, ` +
     `${closedRowCount(readFileSync(path.join(REPO, BOARD), "utf8"))} closed board rows each carrying his own acceptance`,
 );

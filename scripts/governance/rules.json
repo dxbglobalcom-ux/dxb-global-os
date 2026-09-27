@@ -57,10 +57,10 @@
     "fingerprint": "ONLY REAL WORK ENTERS",
     "what": "The board's law 6 — what may be written on the board at all: real, ordered or approved, and unfinished. Nothing else."
   },
-  "board_law_one_row": {
+  "board_law_row_on_his_word": {
     "owner": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md",
-    "fingerprint": "One row per open thing",
-    "what": "The board's first law. The board owns its own laws; the closing door points at them."
+    "fingerprint": "A row is opened only on the CEO's word",
+    "what": "The board's first law since 2026-09-28: the board holds the holding's special parts, and a row is opened only when the CEO says so. Replaced 'One row per open thing' on his word."
   },
   "inline_authorship_k1": {
     "owner": ".claude/skills/dxb-start/SKILL.md",

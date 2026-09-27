@@ -1666,5 +1666,13 @@
     "conditions": "Narrows code-by-builder-at-max-hook-2026-09-24 and simple-code-at-medium-rule-2026-09-24 to orchestration doors (dxb-team1, dxb-crew); the hook itself is removed (LAW A). Not a new law.",
     "session": "Opus 5.5 session dba211ac — heard first-hand, 2026-09-28 ~00:10 local.",
     "where": "~/.claude/settings.json (PreToolUse entry removed) · ~/.claude/hooks/dxb-code-gate.py and tests/hooks/code-gate.test.ts moved to the trash · ~/.claude/CLAUDE.md · .claude/CLAUDE.md · dxb-crew door · builder / builder-lean agents"
+  },
+  "opening-three-headings-and-board-archive-2026-09-28": {
+    "date": "2026-09-28",
+    "what": "TWO ORDERS FOR THE RECORDS. (1) The opening answers three questions from one place: the top of .planning/STATE.md carries three headings — Where we left off · Next · Waiting on his approval — at most ~15 lines, REWRITTEN (never appended) by every session at its end; the opening prints only those; older history paragraphs go to an archive; the records ruler keeps an accepted subject out of 'waiting'; when he accepts the last part of a row the session asks in one line whether the whole row closes. (2) The board is thinned without losing anything: each open row keeps only what it is, why it is open, who it waits on, what closes it, his words and its plan link; the row's full current text moves verbatim to that row's own archive file, linked from the row; a checker compares old and new so no open part, order or plan is dropped. Rows are opened on the board only on his word — the board holds the Ferrari's special parts, not every job; a row's phases (done / accepted / left) live in the row's own file.",
+    "verbatim": "tmm güzel bunu yap. … Lakin yapmadan önce devam edelim. … bu arada önerini kanul ediorm bunu da kaydet.",
+    "conditions": "Orders, not laws, and nothing accepted by them (LAW B). Not yet built: to run in a fresh session. He also said: 'ulan sana kim dedi git bunu tahtaya yaz' — no board row is opened without his word; and the repository needs a later clean-up of old unused things (not started, not a row).",
+    "session": "Opus 5.5 session dba211ac — heard first-hand, 2026-09-28 ~00:15 and ~00:25 local.",
+    "where": ".planning/STATE.md live order block 2026-09-28 00:25"
   }
 }
