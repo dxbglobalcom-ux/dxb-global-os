@@ -380,12 +380,13 @@ describe("K2c — a claim link counts after a read; a triage that leaves rows pe
     expect(r.code).toBe(1);
   }, 60_000);
 
-  it("names on its last lines, and leaves with 1 for, a body a hunter fetched after the triage, which the triage left none of", () => {
-    // on the K2 run the page said `bekleyen ×62` where the triage had left 60: the x hunter fetched L1688 and L1692 itself
+  it("sorts a body a hunter fetched after the triage, which the triage left none of, before the tail: no !! ELEME EKSIK, code 0", () => {
+    // on the K2 run the page said `bekleyen ×62` where the triage had left 60: the x hunter fetched L1688 and L1692 itself.
+    // It was named on the last lines with code 1; from 2026-09-27 a late pass sorts it after the hunters' gate
+    // (fleet-by-platform.test.ts, THE LATE BODIES, has its line and the row a triage cannot sort)
     const r = fleet(["late-fetch", "--q", Q, "--roles", "x", "--timeout", "60"],
       { FAKE_HUNTER: "batch", FAKE_LATE_FETCH: "https://x.com/dev_seven/status/1007" });
-    expect(r.out, r.out.slice(0, 3000)).not.toMatch(/ELEME EKSIK \(eleme sonrası\)/);
-    expect(r.out.search(/^!! ELEME EKSIK: 1 satır gövdesiyle bekliyor \(x ×1\) — okunmadı sayılır$/m)).toBeGreaterThan(r.out.indexOf("CEVAP HAZIR"));
-    expect(r.code).toBe(1);
+    expect(r.out, r.out.slice(-3000)).not.toMatch(/ELEME EKSIK/);
+    expect(r.code).toBe(0);
   }, 60_000);
 });

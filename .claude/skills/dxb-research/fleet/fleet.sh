@@ -352,6 +352,65 @@ split_question() {
   sed 's/^/   /' "$OUT/split.err"
 }
 
+# ── THE TRIAGE'S PASSES — THE FIELD (below) says why each one exists ─────────────────────────────────────────────
+# They stand above THE FIELD because the tail runs late_triage on --write-only too, where THE FIELD is skipped.
+TRIAGE_PAR=4
+# one pass: $1 the logs' suffix ("" the first pass, ".2" the second, ".<label>" a late pass), the rest its platforms
+triage_pass() {
+  local sfx="$1" p n_t=0
+  shift
+  for p in "$@"; do
+    { python3 "$SKILL/scripts/triage.py" "$OUT" --platform "$p"; echo "triage-rc=$?"; } > "$OUT/triage-$p$sfx.log" 2>&1 &
+    n_t=$(( n_t + 1 )); [ $(( n_t % TRIAGE_PAR )) -eq 0 ] && wait
+  done
+  wait
+  for p in "$@"; do
+    grep -qx 'triage-rc=0' "$OUT/triage-$p$sfx.log" && grep -q '^nothing pending with a body' "$OUT/triage-$p$sfx.log" && continue
+    grep -v '^triage-rc=' "$OUT/triage-$p$sfx.log" | sed "s/^/      [$p] /"
+  done
+}
+# The platforms whose ledger holds a pending row with a body, one "<platform> <n>" line each (evidence.py status,
+# pending_with_body, read as eleme_eksik reads it): nothing when there is none, one line "?" when the status cannot be read.
+bodies_waiting() {
+  python3 "$EVI" status "$OUT" --format json 2>/dev/null | python3 -c '
+import json, sys
+try:
+    left = [(p, int(c.get("pending_with_body") or 0)) for p, c in json.load(sys.stdin)["platforms"].items()]
+except (ValueError, KeyError, TypeError, AttributeError):
+    print("?")
+    raise SystemExit
+for p, n in left:
+    if n > 0:
+        print(p, n)
+'
+}
+# A LATE PASS, $1 its label (THE FIELD, "A THIRD AND A FOURTH PASS"): every platform with a body no triage judged goes
+# through triage_pass once more — its logs triage-<platform>.<label>.log, where triage.py's own lines stay — and one line
+# per platform says, measured from the ledger before and after the pass, how many rows it sorted and how many still wait
+# (with triage.py's code and its log). Nothing waits, or the ledger's status cannot be read before it: nothing is printed.
+late_triage() {
+  local label="$1" before after p n left log
+  before="$(bodies_waiting)"
+  case "$before" in ''|'?') return 0 ;; esac
+  triage_pass ".$label" $(cut -d' ' -f1 <<< "$before") > /dev/null
+  after="$(bodies_waiting)"
+  while read -r p n; do
+    log="$OUT/triage-$p.$label.log"
+    if [ "$after" = "?" ]; then
+      echo "   [$p] eleme sonrası ($label): ? satır gövdesiyle elendi — defter durumu okunamadi (evidence.py status): $log"
+      continue
+    fi
+    left="$(awk -v p="$p" '$1 == p { print $2 }' <<< "$after")"
+    left="${left:-0}"
+    if [ "$left" -eq 0 ]; then
+      echo "   [$p] eleme sonrası ($label): $n satır gövdesiyle elendi"
+    else
+      echo "   [$p] eleme sonrası ($label): $(( n > left ? n - left : 0 )) satır gövdesiyle elendi · $left bekliyor —" \
+           "triage.py kod $(sed -n 's/^triage-rc=//p' "$log"): $log"
+    fi
+  done <<< "$before"
+}
+
 # --write-only: the run folder is the one given, THE FIELD below is skipped, and the tail runs once the
 # jail its claim hunters need is standing (THE TAIL, below the hunter's launch).
 if [ -n "$WRITE_ONLY" ]; then
@@ -556,11 +615,19 @@ echo "   fetch-all: tried $n_try · bodies $f_body · closed $f_shut  ($f_note)"
 # hunters, and no hunter's batch ever printed those 60. So a platform whose log says `left pending: N rows
 # with a body` or `FAILED` is sorted ONCE MORE — triage.py sends only what is still pending —, its lines under
 # the same [platform]; what is still pending with a body after that (the ledger's pending_with_body) is named,
-# `!! ELEME EKSIK (eleme sonrası)`, and the hunters still run. After the page the ledger is measured AGAIN — a
-# hunter's own `fetch` of a new address leaves a body no triage judged too (L1688 and L1692 on the K2 run: the
-# page said `bekleyen ×62`, the triage had left 60) — and whatever it counts then is the run's `!! ELEME EKSIK`
-# line among its last, the same number the page shows, and code 1.
-TRIAGE_PAR=4
+# `!! ELEME EKSIK (eleme sonrası)`, and the hunters still run.
+# A THIRD AND A FOURTH PASS FOR THE BODIES THAT CAME LATE (2026-09-27). A hunter's own `fetch` of a new address
+# leaves a body no triage judged (L1688 and L1692 on the K2 run: the page said `bekleyen ×62`, the triage had left
+# 60), and so does a claim hunter's in the tail — on the run of 2026-09-27 07:32, L1349 (a Hacker News thread the
+# counter hunter fetched) and L1362 (a web page karsi fetched) —, and `writer-rows` refuses even a hunter's own
+# quote on an address the triage never kept (`elendi: pending`): evidence found late never reached the writer, and
+# the run left with 1 on `!! ELEME EKSIK` alone. So late_triage (above THE FIELD) sends every platform that holds
+# such a row through triage_pass once more, before anyone reads it: after the hunters' gate, `avcilar` (before the
+# tail), and in the tail after the claim rounds, `iddialar` (before the writer's second pass, on --write-only too),
+# one line per platform — `[<platform>] eleme sonrası (<label>): <n> satır gövdesiyle elendi`, and what still
+# waits. After the page the ledger is measured AGAIN, and whatever it counts then — only what triage.py itself
+# could not sort, in any of its passes — is the run's `!! ELEME EKSIK` line among its last, the same number the
+# page shows, and code 1.
 # THE ROWS WITH A BODY NO TRIAGE JUDGED, measured from the ledger when it is called (evidence.py status,
 # pending_with_body per platform): the `!! ELEME EKSIK` line — $1 a label after those two words — or nothing.
 eleme_eksik() {
@@ -575,20 +642,6 @@ if left:
     print(f"!! ELEME EKSIK{sys.argv[1]}: {sum(n for _, n in left)} satır gövdesiyle bekliyor ("
           + " · ".join(f"{p} ×{n}" for p, n in left) + ") — okunmadı sayılır")
 ' "${1:-}"
-}
-# one pass: $1 the logs' suffix ("" the first pass, ".2" the second), the rest its platforms
-triage_pass() {
-  local sfx="$1" p n_t=0
-  shift
-  for p in "$@"; do
-    { python3 "$SKILL/scripts/triage.py" "$OUT" --platform "$p"; echo "triage-rc=$?"; } > "$OUT/triage-$p$sfx.log" 2>&1 &
-    n_t=$(( n_t + 1 )); [ $(( n_t % TRIAGE_PAR )) -eq 0 ] && wait
-  done
-  wait
-  for p in "$@"; do
-    grep -qx 'triage-rc=0' "$OUT/triage-$p$sfx.log" && grep -q '^nothing pending with a body' "$OUT/triage-$p$sfx.log" && continue
-    grep -v '^triage-rc=' "$OUT/triage-$p$sfx.log" | sed "s/^/      [$p] /"
-  done
 }
 if [ -f "$SKILL/scripts/triage.py" ]; then
   triage_pass "" $FPLATS
@@ -859,6 +912,7 @@ HUNTER_DENY="Write Edit MultiEdit NotebookEdit Task TaskOutput TaskStop TaskCrea
 #   (3) THE CLAIM ROUNDS    -> `karsi` hunts the counter-evidence of the claims that carry a verdict,
 #       then `bosluk` a second independent source for every single-source claim, each sent back by a
 #       gate of its own (`claim-gate:` lines, gate.log); --no-claim-hunt skips this step
+#       then, claim rounds or not, late_triage iddialar: a body no triage judged is sorted before (4) (THE FIELD)
 #   (4) write_answer final  -> answer.md, the writer handed the draft's ledger as {{CLAIMS}}
 #   (5) claims.py extract --keep-links claims.draft.jsonl -> claims.jsonl, what the rounds found carried
 #       onto the final answer's claims                                          log `claims: … carried j`
@@ -1198,6 +1252,8 @@ run_tail() {
     claim_rounds karsi counter
     claim_rounds bosluk gap
   fi
+  # THE FOURTH PASS (THE FIELD): what a claim hunter fetched is sorted before the second pass is handed the rows
+  late_triage iddialar
   write_answer final || return 1
   # the page reads claims.jsonl beside the answer when it is there: a ledger left by an earlier tail is
   # not this answer's, so it goes before step (5) writes this one
@@ -1323,6 +1379,8 @@ echo
 echo "$launched avci aynı anda çalışıyor — bekleniyor..."
 wait
 echo
+# THE THIRD PASS (THE FIELD): what a hunter fetched after the triage is sorted before the tail reads a row
+late_triage avcilar
 
 # THE DENOMINATOR IS COUNTED BEFORE IT IS PRINTED. The summary used to take "how many separate
 # people" out of a hunter's own sentence: on the one kept run it showed the CEO 783 while that
@@ -1446,7 +1504,7 @@ fi
 # of THE TAIL that ended unmeasured is named the same way, on its own line (claim_unmeasured_line). So are
 # (K2c) a claim role whose rounds ran out with links made without a read (claim_unread_lines), and rows
 # with a body no triage judged, measured NOW, after the page (ELEME EKSIK, THE FIELD): the page's
-# `bekleyen ×n` and this line count the same rows, whether the triage or a hunter's fetch left them. A tail that
+# `bekleyen ×n` and this line count the same rows, what triage.py itself could not sort in any pass. A tail that
 # wrote no answer.md (K3, NO_ANSWER) is the last of them: `!! CEVAP YOK`. The auditor's two (K3 stage 3, step (6)
 # of THE TAIL) follow the claim roles': claims it did not read, and a record the new ledger does not stand on.
 ELEME_EKSIK="$(eleme_eksik)"

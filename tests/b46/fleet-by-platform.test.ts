@@ -595,4 +595,28 @@ describe("K3 — the writer's clock is --writer-timeout, a tail that wrote no an
     expect(n.stdout).toMatch(/^denetçi: atlandi \(--no-audit\)$/m);
     expect(existsSync(join(run, "audit.jsonl")) || existsSync(join(run, "audit"))).toBe(false);
   }, 60_000);
+
+  // THE LATE BODIES (2026-09-27). On the run of 07:32 the counter hunter fetched a Hacker News thread during the hunt and
+  // karsi a web page during the tail: no triage sorted either, `writer-rows` admits nothing on an address the triage never
+  // kept, and the run left with 1 on `!! ELEME EKSIK` alone. A late pass sorts such a body after the hunters' gate (`avcilar`)
+  // and after the claim rounds (`iddialar`). Here the x stand-in fetches L0007 after its reading (FAKE_LATE_FETCH) — a
+  // closed door at the ground, so no triage saw it.
+  it("sorts a body a hunter fetched after the triage before the writer: its line, no !! ELEME EKSIK, code 0 — a row the triage cannot sort is still named", () => {
+    const late = { FAKE_LATE_FETCH: "https://x.com/dev_seven/status/1007" };
+    const r = on(late, join(g.root, "late-body"), ...ARGS);
+    const s = r.stdout;
+    expect(r.code, s.slice(-2500)).toBe(0);
+    const line = s.search(/^ {3}\[x\] eleme sonrası \(avcilar\): 1 satır gövdesiyle elendi$/m);
+    expect(line, s.slice(-2500)).toBeGreaterThan(s.search(/^gate: x round 1 — /m));
+    expect(line).toBeLessThan(s.search(/^writer \(taslak\): /m));
+    expect(s, "--no-claim-hunt: nothing new for the fourth pass").not.toMatch(/eleme sonrası \(iddialar\)/);
+    expect(s).not.toMatch(/ELEME EKSIK/);
+    // the triage stand-in made to fail on x (FAKE_TRIAGE=stuck never answers L0002, "Fable plans better"): the late pass
+    // sorts L0007 and says what still waits, and the row no pass could sort is named after the page — code 1
+    const t = on({ ...late, FAKE_TRIAGE: "stuck" }, join(g.root, "late-body-stuck"), ...ARGS);
+    expect(t.stdout, t.stdout.slice(-2500))
+      .toMatch(/^ {3}\[x\] eleme sonrası \(avcilar\): 1 satır gövdesiyle elendi · 1 bekliyor — triage\.py kod 0: .*\/triage-x\.avcilar\.log$/m);
+    expect(t.stdout.search(/^!! ELEME EKSIK: 1 satır gövdesiyle bekliyor \(x ×1\) — okunmadı sayılır$/m)).toBeGreaterThan(t.stdout.indexOf("CEVAP HAZIR"));
+    expect(t.code).toBe(1);
+  }, 60_000);
 });
