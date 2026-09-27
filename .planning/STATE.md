@@ -43,12 +43,14 @@ each row's old text kept word for word in `.planning/board-rows/<ID>.md` and lin
    `dxb-verify` door are reviewed with him, seat by seat. Measured this session: three writer lanes
    ~318 k new tokens for work one session would have done for ~160 k (estimate); one verifier pass,
    stopped half way, ~258 k. His working rule: one worker in the session, handover at the context gate.
+   Also on the list: the context gate hook (`~/.claude/hooks/dxb-context-gate.py`, 50 / 55) runs in
+   every session, while he meant it for the Fable 5.1 lead of dxb-team1 (his words 2026-09-28, B61 closed
+   the same minute <!-- CEO-OK: b61-accepted-by-his-eye-2026-09-28 -->).
 2. Repository clean-up of old, unused things — he named it 2026-09-28; list and sizes go in front of
    him before anything is deleted.
 
 ## Waiting on his approval
 
-- **B61** — the context line at 50 / 55: waits his eye.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 

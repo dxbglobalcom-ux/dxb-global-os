@@ -87,6 +87,8 @@ export const C = {
     { id: "b57-accepted-by-his-eye-2026-09-27", subject: /\bB57\b/ },
     // B56 — the research door, closed by his word 2026-09-27 23:44 ("evet b56 yı onayladık bitti"); spelled "B56" in STATE and on the board.
     { id: "b56-accepted-by-his-eye-2026-09-27", subject: /\bB56\b/ },
+    // B61 — the context line 50 / 55, closed by his eye 2026-09-28 ("ben de gördüm %50 de devrediordu"); spelled "B61".
+    { id: "b61-accepted-by-his-eye-2026-09-28", subject: /\bB61\b/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
