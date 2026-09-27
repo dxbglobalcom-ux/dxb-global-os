@@ -1679,7 +1679,7 @@
     "date": "2026-09-28",
     "what": "HE CLOSED B61 BY HIS OWN EYE — the context line at 50 / 55: he saw the lead hand over at 50 %.",
     "verbatim": "bu sadece fable 5.1 için geçerli birşeydi yaaa offf dxb-team1'de fable 5.1 yönetici olduğunda onun bağlam sınırı %50 olsun dedik devirde. ve sanırım bu dxb-team de fable 5.1 için geçerli ve ben de gördüm %50 de devrediordu.",
-    "conditions": "He stated the scope in the same breath: the 50 % line was meant for the Fable 5.1 lead of dxb-team1. Measured the same minute: ~/.claude/hooks/dxb-context-gate.py carries no model check and runs in every session — that scope question goes to the seat-by-seat review of dxb-team1 he set for the next session; nothing changed tonight.",
+    "conditions": "He stated the scope in the same breath: the 50 % line was meant for the Fable 5.1 lead of dxb-team1. Measured the same minute: ~/.claude/hooks/dxb-context-gate.py carries no model check and runs in every session — asked whether 50 % suits every model, he settled it minutes later: \"yok %50 sorusu çözüldü tmmdır kalabilir o\" — the hook stays as it is, for every session.",
     "session": "Opus 5.5 session dba211ac — heard first-hand, 2026-09-28 ~01:20 local.",
     "where": "board B61 (Section 5, closed) · .planning/STATE.md three headings"
   }
