@@ -632,15 +632,31 @@ def locked(run: Path):
             fcntl.flock(fh.fileno(), fcntl.LOCK_UN)
 
 
+def _no_lone_surrogates(v):
+    """The row as it is written: each lone surrogate in a string becomes U+FFFD, every whole character stays.
+
+    WHY (2026-09-27): a TikTok desc in the ground ended in the escape "\\uD83D", a snippet cut mid-emoji;
+    the reader turned it into a lone surrogate, UTF-8 cannot encode one, and the write of this ledger
+    killed from-ground before any hunter started. Both writers below pass every row through here."""
+    if isinstance(v, str):
+        return v.encode("utf-16", "surrogatepass").decode("utf-16", "replace")
+    if isinstance(v, dict):
+        return {k: _no_lone_surrogates(x) for k, x in v.items()}
+    if isinstance(v, (list, tuple)):
+        return [_no_lone_surrogates(x) for x in v]
+    return v
+
+
 def append_rows(run: Path, new: list[dict]) -> None:
     with open(ev_path(run), "a", encoding="utf-8") as fh:
         for r in new:
-            fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+            fh.write(json.dumps(_no_lone_surrogates(r), ensure_ascii=False) + "\n")
 
 
 def rewrite_rows(run: Path, rows: list[dict]) -> None:
     tmp = run / f".evidence.jsonl.{os.getpid()}.tmp"
-    tmp.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
+    lines = (json.dumps(_no_lone_surrogates(r), ensure_ascii=False) + "\n" for r in rows)
+    tmp.write_text("".join(lines), encoding="utf-8")
     os.replace(tmp, ev_path(run))
 
 

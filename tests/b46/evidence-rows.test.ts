@@ -106,6 +106,21 @@ describe("from-ground — the ground's raw files and pages become rows", () => {
     expect(r.out).toMatch(/satir: \+0 yeni · 0 govdeyle/);
     expect(fileSha()).toBe(before);
   });
+
+  it("a snippet cut mid-emoji is written with U+FFFD in its place; a whole emoji in the same row stays whole", () => {
+    // 2026-09-27: a TikTok desc in the ground ended in "\uD83D", half an emoji; the reader made it a lone
+    // surrogate and the UTF-8 write of the ledger killed from-ground before any hunter started
+    const cut = join(root, "run-cut");
+    mkdirSync(join(cut, "ground"), { recursive: true });
+    const url = "https://www.tiktok.com/@u/video/7528881362003168542";
+    // JSON.stringify writes the lone half as the escape \ud83d, the way the ground's file carried it
+    writeFileSync(join(cut, "ground", "tiktok.raw"), `- rank: 1\n  desc: ${JSON.stringify("x\ud83dy 😀")}\n  url: ${url}\n`);
+    const r = ev(["from-ground", cut]);
+    expect(r.code, r.err).toBe(0);
+    const lines = readFileSync(join(cut, "evidence.jsonl"), "utf8").split("\n").filter(Boolean);
+    expect(lines).toHaveLength(1);
+    expect(JSON.parse(lines[0])).toMatchObject({ url, title: "x\ufffdy 😀" });
+  });
 });
 
 describe("add — a quote becomes a row only when it is in the body", () => {
