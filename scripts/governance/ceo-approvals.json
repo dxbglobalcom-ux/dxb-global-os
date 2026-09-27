@@ -1556,5 +1556,12 @@
     "verbatim": "Tamam o zaman önerini kabul ediyorum. Devam edin.",
     "conditions": "A start order for K3 stage 1 and the handover, not an acceptance: each stage is accepted only by his eye on a real run's page (LAW B). The recommendation he accepted, verbatim from the lead: 'Yeni oturuma devir daha uygun … \"başla\" sözünüzü şimdi verirseniz devir notuna \"K3 kademe 1 onaylı, hemen başla\" yazarım; halef sizi beklemeden işe girer.' Order of stages 1 → 3 → 2 as proposed.",
     "where": ".planning/STATE.md live block · board B56 · the handover note HANDOVER-K3.md in the outgoing session's scratchpad"
+  },
+  "effort-seats-lead-decides-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "The effort (thinking depth) of the seats — the research door's writer and the construction's code and verification seats — is the chief engineer's decision, measured, not his: after the lead's evaluation of Anthropic's official effort pages and the measured writer test he handed the call to the lead. Applied the same night: the research door's writer moved high → medium on the blind-judged measurement (dxb-team1 §3 carries the numbers); the code seat's move max → high for the hard lane is decided but is a separate governance lane after K3 (hooks, agent files, the code-gate tests), not done in the middle of the run.",
+    "verbatim": "benim dediklerim sadece soru bilmiorm tam sadece soru. bai mühendis sensin en doğrusu neyse sen karar ver.",
+    "conditions": "His preceding words were questions, not orders (his own framing): 'max seviye denetlemeler mi acaba işi ck fazşa uzatıor … medium eforuyla yapılsa daha mı hızlı olur' · 'aynen şu mediumla high arasındaki kaliteyi ölç lütfen … opus 5.5 in resmi sitesinden değerlere bak' · 'x high frontiercode da … belki xhigh ı hiç kullanmazsın. ama son karar senin'. Every seat change rests on a measurement written beside it; the 2026-09-24 order that the builder writes at max stands until the lead's measured change lands in the gate.",
+    "where": ".claude/skills/dxb-team1/SKILL.md §3 (the official curve + the measured writer test) · .claude/skills/dxb-research/fleet/fleet.sh (writer effort) · EVIDENCE-B56-K3-2026-09-27.md RETURNS · .planning/STATE.md"
   }
 }

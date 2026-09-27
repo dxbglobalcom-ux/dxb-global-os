@@ -76,6 +76,42 @@ effort sweep on your own evals rather than carrying settings over"*) and the T8 
   more than 24 h to the reset, B60) the gate turns `builder` into `builder-lean` — except a lane
   the lead DECLARES guarded: an `Agent(builder)` whose description starts with `guarded:` stays at
   max, logged `keep-max-guarded`; a guarded path is never written at medium in any mode.
+- **The official curve, read 2026-09-27 on his word** (*"opus 5.5'in resmi sitesinden değerlere bak"*;
+  pages `optimizing-for-cost-and-intelligence` § Tune effort · `effort` · `prompting-claude-opus-5-5` ·
+  the launch page). **Research, reading and writing is a FLAT curve:** on WideSearch · DeepWideSearch ·
+  BrowseComp · GDPval *"`medium` matched the default's accuracy at about 70 % to 87 % of its cost"*,
+  *"`low` gave up 1 to 3 points for a third to a half off"*; DeepResearch Bench II: accuracy *"nearly the
+  same at low, medium and high"* while the cost per task rose $4.66 → $7.12. **Long-horizon coding is
+  the STEEP curve:** SWE-bench Pro on Opus 5.5 — `low` about 8 points under `high` at a third of the
+  cost, `medium` about 2.5 under at 70 %, `xhigh` about 1.4 over at 2.5× the cost. FrontierCode v1.1:
+  Opus 5.5 at `medium` 54.4 % above Fable 5.1 (50.3 %) and Opus 5 (48.0 %); *"Opus 5.5 at medium
+  matches or exceeds Opus 5 at high on coding and knowledge-work evaluations"*; *"Reserve xhigh and
+  max for work where you've measured a quality gain."* A time line in every message (`elapsed 340s /
+  1200s`) makes a team finish sooner at the same quality. **The launch page's five accuracy-vs-cost
+  charts, read from his own screenshots 2026-09-27 02:55 (a web-summary tool had misread them —
+  never trust a summary of a chart, look at the picture):** FrontierCode v1.1 (a real repository,
+  multi-file) — low ≈ 47.5 · **med ≈ 54.5** · high ≈ 54 · **xhigh ≈ 51.5** · max ≈ 54.5 at ~7× the cost
+  of med: `medium` is the top, `xhigh` below it; Terminal-Bench 4.0 — 38.5 · 58 · 64 · 66.4 · 64.5;
+  CursorBench 4.0 — 44 · 52.5 · 56 · 56 · 57.5; GDPval-AA v2.1 (professional deliverables, Elo) —
+  1225 · 1575 · 1700 · 1820 · 1846, a steep climb at ~10× the cost; AutomationBench (multi-app
+  workflows) — 23 · 28.5 · 32 · 34.5 · 40. **What the lead reads off it:** a code lane → `medium` on
+  the known path, `high` on the hard lane, `xhigh` never (below `high` on two of three coding charts),
+  `max` only where a measurement on THIS repository showed the gain (T8: one file equal, two files
+  `max` better; the charts show none over `high` on code); a writing, reading, auditing or research
+  role → `medium` measured (below), re-measured whenever the task changes shape — the GDPval curve
+  says a professional deliverable CAN climb with effort, so the number on our own work decides, not
+  the chart; a multi-step tool role (a hunter) → measure `low` against `medium` before trusting `low`
+  (AutomationBench loses 5.5 points from med to low). This block moves no seat: the builder writes
+  at `max` on his 2026-09-24 order until the lead's measured change lands in the gate (his word
+  *"sen karar ver"*, 2026-09-27; registered `effort-seats-lead-decides-2026-09-27`).
+  **Measured here, 2026-09-27 02:05–03:00 (B56 K3):** the research door's draft writer on the same
+  186 KB prompt (579 rows, six sub-questions) — `medium` 454 s · $1.10 · 54,062 output tokens · 103
+  claims · 25 single-source; `high` 822 s · $2.65 · 95,006 · 145 claims · 59 single-source; a fresh
+  Opus-high judge, blind to the setting, read 13 claims of each against their rows: medium 10 doğru ·
+  3 abartılı, high 11 · 2, no yanlış on either; every in-line count of the medium draft (35/35) matched
+  its ids, the high draft left 6 counts and 3 table cells without ids, wrote two quotes and one
+  "dört kişi" that was three — VERDICT medium. The flat curve held on this repository's own work; the
+  writer seat moved to `medium` on his word *"sen karar ver"* (2026-09-27 ~02:35).
 
 ## 4. The loop
 
