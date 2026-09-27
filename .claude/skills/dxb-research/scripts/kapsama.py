@@ -66,6 +66,11 @@ section (fleet/writer-prompt.md rule 11) — a second table follows those lines,
   and no such line — the writer dropped it. Under it: `ALT SORU: N · tam t · boş b (S3 …) · eksik e (…)`.
   Without subquestions.json nothing of this is printed.
 
+THE AUDITOR (B56 K3 stage 3). With --answer, when the fleet's auditor has read the answer (scripts/audit.py) and its
+record stands beside it, <run>/audit.jsonl, a line after KANIT:
+    DENETÇİ: N okundu · d düzeltildi · r çıkarıldı · u denetlenmedi
+audit.py's own tally — N the claims it gave a verdict, u those it did not read. Without audit.jsonl nothing is printed.
+
 One row per platform present (it has an address, or a ground channel of it ran) plus `web`.
 --legacy reads a run made before v2 (no evidence.jsonl) and prints its old five columns, unchanged:
 Bulundu = the addresses in sources.json by platform (X = x.com + twitter.com + t.co), Okundu = addresses
@@ -315,6 +320,25 @@ def kanit_line(use: dict, cited: set) -> str:
     return f"KANIT: {len(use)} kabul · {len(use) - len(left)} cevapta · {len(left)} alınmadı · açıklanmadı {quiet}"
 
 
+def audit_line(answer: Path) -> str:
+    """The auditor's numbers in one line (B56 K3 stage 3) — `DENETÇİ: N okundu · d düzeltildi · r çıkarıldı · u
+    denetlenmedi` — from <run>/audit.jsonl beside the answer, counted by audit.py's own tally (imported here, like
+    claims.py); '' when there is no such file. It prints, never blocks: a record that cannot be counted is said."""
+    path = answer.parent / "audit.jsonl"
+    if not path.is_file():
+        return ""
+    try:
+        import audit as AU  # noqa: E402 — the auditor's owner: its records and its tally
+        records = AU.read_jsonl(path)
+        if records is None:
+            return "DENETÇİ: hesaplanamadı (audit.jsonl okunamadı)"
+        t = AU.tally(records)
+    except Exception as e:
+        return f"DENETÇİ: hesaplanamadı ({type(e).__name__}: {e})"
+    return (f"DENETÇİ: {t['read']} okundu · {t['corrected']} düzeltildi · {t['removed']} çıkarıldı · "
+            f"{t['unaudited']} denetlenmedi")
+
+
 def claim_line(answer: Path, md: str, every: list[dict]) -> str:
     """The claim ledger in one line: <run>/claims.jsonl beside the answer when it is there (the claim
     hunters' links and states live in it), else claims.py's extract over the answer — imported here, not
@@ -502,6 +526,9 @@ def main(argv: list[str] | None = None) -> int:
                 print(said)
             if kanit:
                 print(kanit)
+            audit = audit_line(answer) if answer is not None else ""
+            if audit:
+                print(audit)
             if alt is not None:
                 print(alt if isinstance(alt, str) else render_sub(alt, a.format))
         for n in notes:

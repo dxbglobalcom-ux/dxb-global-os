@@ -39,12 +39,19 @@
 # hunter (`karsi`) and a gap hunter (`bosluk`) are sent over that ledger, each with a completion gate of
 # its own; and the writer's second pass folds what they found into answer.md (THE TAIL, below).
 #
+# AND AN AUDITOR THAT NEVER SAW THE WRITER READS EVERY CLAIM OF THE ANSWER AGAIN (B56 K3 stage 3, 2026-09-27). Nothing
+# read a final line against the rows it cites: on the K3 stage-1 run 7 counter rows the claim hunters linked to 4
+# claims are named on none of those 4 lines. So scripts/audit.py hands a claude-opus-5-5 at low effort each claim with
+# only its own rows, answer.md takes what it corrected and removed, and the ledger is extracted again and checked
+# against its record (THE TAIL, step (6)); the page says what was corrected and what was removed.
+#
 #   fleet.sh [<run-dir>|<name>] --q "<short query>" [--q "..."]... [--dert FILE]
 #            [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #            [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write]
 #            [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout S]
+#            [--no-audit]
 #   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--no-claim-hunt] [--no-split] [--writer-timeout S]
-#                                            # the tail alone — draft, claim rounds, answer, page — on a run that has its rows
+#            [--no-audit]            # the tail alone — draft, claim rounds, answer, auditor, page — on a run that has its rows
 #
 # THE FIRST ARGUMENT IS THE RUN FOLDER — a path, or a bare name or nothing, which puts it under the
 # repository (THE RUN LIVES ON DISK, below) — AND THE QUERIES ARE TYPED BY THE SESSION — a few words
@@ -65,13 +72,14 @@ SKILL="$(cd "$HERE/.." && pwd)"
 export PATH="$SKILL/bin:$PATH"
 EVI="$SKILL/scripts/evidence.py"
 CLA="$SKILL/scripts/claims.py"
+AUD="$SKILL/scripts/audit.py"
 REPO_ROOT="$(builtin cd "$SKILL/../../.." && pwd)"
 
 OUT=""
 case "${1:-}" in --*|"") ;; *) OUT="$1"; shift ;; esac
 N=4; MODEL=claude-opus-5-5; TMO=600; ROLES=""; DERT=""
 ROUNDS=3; FETCH_LIMIT=2000; FETCH_WORKERS=6; ALLOW_TMP=0; WRITE=1; WRITE_ONLY=""
-CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1; WRITER_TMO=1500
+CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1; WRITER_TMO=1500; AUDIT=1
 QUERIES=()
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -93,6 +101,7 @@ while [ $# -gt 0 ]; do
     --no-claim-hunt) CLAIM_HUNT=0; shift ;;
     --crowd-cap)     CROWD_CAP="${2:?--crowd-cap bir sayi ister}"; shift 2 ;;
     --no-split)      SPLIT=0; shift ;;
+    --no-audit)      AUDIT=0; shift ;;
     *) shift ;;
   esac
 done
@@ -103,7 +112,7 @@ if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 
   echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout, --crowd-cap ve --writer-timeout en az 1 olur." >&2; exit 3
 fi
 if [ -z "$WRITE_ONLY" ] && [ ${#QUERIES[@]} -eq 0 ]; then
-  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout SN]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--no-split] [--writer-timeout SN]" >&2
+  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout SN] [--no-audit]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit]" >&2
   echo "!! DUR: sorgu yok, filo yok. --q ile birkaç kelimelik sorgu ver." >&2
   exit 3
 fi
@@ -124,7 +133,7 @@ done
 # ── THE WRITER — AN OPUS TURNS THE ROWS INTO answer.md ──────────────────────────────────────────────
 # Measured on the deep run of 2026-09-26: the hunters kept 128 quotes, the ledger held 554 bodies, and
 # the answer the session wrote from them used 4 X posts of 130. So the fleet's last step is a writer of
-# its own — claude-opus-5-5 at high effort, with NO tools — handed the question, every hunter's HÜKÜM
+# its own — claude-opus-5-5 at medium effort, with NO tools — handed the question, every hunter's HÜKÜM
 # line, the ledger's own status table and the rows the ledger ADMITS, under the recipe's rules
 # (fleet/writer-prompt.md). WHICH ROWS (B56 K2): `evidence.py writer-rows` prints them — a hunter's quote,
 # or an address a hunter judged evidence, never a row judged "kanıt değil" (12 of the K1 answer's 150
@@ -144,6 +153,10 @@ done
 # So the launch line says the clock (`zaman siniri`), the result line the model's own time and output tokens
 # from its envelope (`model <s> s · out <n>`, `?` where it says none), and a pass the clock stopped says
 # `zaman asimi`, not `basarisiz (kod 124)`.
+# ITS EFFORT IS MEDIUM, both passes (K3, 2026-09-27, the lead's decision on his "sen karar ver"): the K3 draft prompt
+# written at medium took 454 s · $1.10 · 103 claims against high's 822 s · $2.65 · 145, and a blind verifier reading
+# 13 claims of each against their rows found medium 10 doğru · 3 abartılı · 0 yanlış, high 11 · 2 · 0, with every
+# in-line count of the medium draft bearing its ids (EVIDENCE-B56-K3, "The writer's effort").
 #
 # A FOLDER OUTSIDE THE REPOSITORY for a `claude` to stand in: $1 names it. What it left there is brought
 # back into the run (bring_back: $1 the outside folder, $2 its place in the run) and the folder goes.
@@ -221,9 +234,9 @@ PY
     return 1
   fi
   wd="$(away_dir "writer$sfx")" || { echo "!! $tag: disaridaki klasoru acilamadi — ${ans##*/} yazilmadi."; return 1; }
-  echo "$tag: $size -> claude-opus-5-5 · efor high · zaman siniri ${WRITER_TMO}s"
+  echo "$tag: $size -> claude-opus-5-5 · efor medium · zaman siniri ${WRITER_TMO}s"
   s=$(date +%s)
-  env -C "$wd" timeout "$WRITER_TMO" claude -p --model claude-opus-5-5 --effort high --tools "" --strict-mcp-config \
+  env -C "$wd" timeout "$WRITER_TMO" claude -p --model claude-opus-5-5 --effort medium --tools "" --strict-mcp-config \
       --output-format json < "$filled" > "$OUT/writer$sfx.json" 2> "$OUT/writer$sfx.err"
   wrc=$?
   secs=$(( $(date +%s) - s ))
@@ -813,7 +826,12 @@ HUNTER_DENY="Write Edit MultiEdit NotebookEdit Task TaskOutput TaskStop TaskCrea
 #   (5) claims.py extract --keep-links claims.draft.jsonl -> claims.jsonl, what the rounds found carried
 #       onto the final answer's claims                                          log `claims: … carried j`
 #       (no draft ledger — its extract failed — and the final one is written without links, said in a line)
-#   (6) render.py           -> final.html · final.md (the coverage table stays where it was: KAPSAMA)
+#   (6) THE AUDITOR         -> audit.py run: every claim of answer.md read against its own rows by a
+#       claude-opus-5-5 at low effort that never saw the writer              log `denetçi: …`
+#       · audit.py apply: answer.md takes what it corrected and removed, audit.jsonl the ids after the removals
+#       · step (5) once more · audit.py check: the new ledger stands on the record — both skipped when apply
+#         changed no line; --no-audit skips this step
+#   (7) render.py           -> final.html · final.md (the coverage table stays where it was: KAPSAMA)
 # THE ROUNDS WORK ON THE DRAFT'S LEDGER. `claims.py list`, `link` and `status` are called with the run
 # alone and work on claims.draft.jsonl while the draft pass's ledger is there; `brief` and --keep-links
 # read the same file, so what the two hunters linked reaches the second pass and the final ledger.
@@ -1056,7 +1074,81 @@ claim_unread_lines() {
   done <<< "$CLAIM_UNREAD"
 }
 
-# THE TAIL ITSELF, steps (1)-(6). Returns 1 when a writer pass wrote nothing; every other hole is a named line.
+# (6) THE AUDITOR (B56 K3 stage 3) — scripts/audit.py; its files are <run>/audit/: each batch's prompt and answer, and
+# what run, apply and check printed. `run` hands a claude-opus-5-5 at low effort that never saw the writer every claim
+# of answer.md with only the rows it cites, 12 to a call, 4 calls at once, and prints its `denetçi:` line — its cost
+# is there, beside the writer's; `apply` rewrites answer.md with the auditor's own line for a claim it corrected and
+# without the line of one it removed (never the verdict), and writes audit.jsonl again with the ids claims.py gives
+# after the removals; step (5) runs once more; `check` proves every record stands on the new ledger. A claim the
+# auditor did not read (a batch unreadable twice, a call that failed, an audit.py that did not run) is named after the
+# page, `!! DENETLENMEYEN İDDİA`, and so is an apply or a check that failed, `!! DENETİM UYUMSUZ` — the page stands and
+# the run leaves with 1, the hunters' pattern: what was not measured was never accepted. The page and the coverage
+# table read audit.jsonl beside the answer, so one an earlier tail left goes first, --no-audit or not. An apply that
+# changed no line skips step (5) and check, in one line: `denetçi: cevap değişmedi — …`.
+AUDIT_UNAUDITED=""; AUDIT_MISMATCH=""
+audit_answer() {
+  local rc said
+  rm -f "$OUT/audit.jsonl"
+  if [ "$AUDIT" -ne 1 ]; then
+    rm -rf "$OUT/audit"
+    echo "denetçi: atlandi (--no-audit)"
+    return 0
+  fi
+  mkdir -p "$OUT/audit"
+  python3 "$AUD" run "$OUT" > "$OUT/audit/run.out" 2> "$OUT/audit/run.err"
+  rc=$?
+  said="$(grep -m1 '^denetçi: [0-9]' "$OUT/audit/run.out")"
+  if [ "$rc" -ne 0 ] || [ -z "$said" ]; then
+    echo "!! denetçi: audit.py run kod $rc — iddialar denetlenmedi: $OUT/audit/run.err"
+    AUDIT_UNAUDITED="? (audit.py run kod $rc)"
+    return 0
+  fi
+  echo "$said"
+  sed 's/^/   /' "$OUT/audit/run.err"
+  python3 "$AUD" apply "$OUT" > "$OUT/audit/apply.txt" 2>&1
+  rc=$?
+  sed 's/^/   /' "$OUT/audit/apply.txt"
+  if [ "$rc" -eq 0 ] && grep -qxF 'apply: 0 satır düzeltildi · 0 satır silindi' "$OUT/audit/apply.txt"; then
+    # no line changed: answer.md is the one step (5) read, so claims.jsonl is byte for byte what a second extract
+    # would write, and check is true by construction — run built every record from that ledger (measured on the
+    # K3 stage-1 answer, 153 claims: cmp equal, check: OK 153). Two python starts fewer; an old check.txt goes.
+    rm -f "$OUT/audit/check.txt"
+    echo "denetçi: cevap değişmedi — yeniden çıkarım ve check atlandı"
+  elif [ "$rc" -eq 0 ]; then
+    # the ledger of the answer before apply is not this answer's: it goes before step (5) writes this one
+    rm -f "$OUT/claims.jsonl"
+    claims_extract final
+    python3 "$AUD" check "$OUT" > "$OUT/audit/check.txt" 2>&1
+    rc=$?
+    sed 's/^/   /' "$OUT/audit/check.txt"
+    if [ "$rc" -ne 0 ]; then
+      AUDIT_MISMATCH="$(sed -n 's/^!! DENETİM UYUMSUZ: //p' "$OUT/audit/check.txt" | head -1)"
+      [ -n "$AUDIT_MISMATCH" ] || AUDIT_MISMATCH="audit.py check kod $rc"
+    fi
+  else
+    AUDIT_MISMATCH="audit.py apply kod $rc — answer.md denetçinin kararıyla yeniden yazılmadı"
+  fi
+  # the claims it did not read, by the ids audit.jsonl gives them now — the ledger's and the page's
+  AUDIT_UNAUDITED="$(python3 - "$OUT/audit.jsonl" <<'PY'
+import json, sys
+try:
+    recs = [json.loads(x) for x in open(sys.argv[1], encoding="utf-8") if x.strip()]
+except (OSError, ValueError):
+    print("? (audit.jsonl okunamadi)")
+    raise SystemExit
+ids = [str(r.get("id") or r.get("id_before")) for r in recs
+       if isinstance(r, dict) and r.get("verdict") not in ("ok", "corrected", "removed")]
+if ids:
+    print(f"{len(ids)} ({' '.join(ids[:12])}{f' … +{len(ids) - 12}' if len(ids) > 12 else ''})")
+PY
+)"
+}
+audit_lines() {
+  [ -z "$AUDIT_UNAUDITED" ] || echo "!! DENETLENMEYEN İDDİA: $AUDIT_UNAUDITED — denetçi okumadı, kapı kabul etmedi; kosu kodu 1: $OUT/audit/"
+  [ -z "$AUDIT_MISMATCH" ] || echo "!! DENETİM UYUMSUZ: $AUDIT_MISMATCH; kapı kabul etmedi; kosu kodu 1: $OUT/audit/"
+}
+
+# THE TAIL ITSELF, steps (1)-(7). Returns 1 when a writer pass wrote nothing; every other hole is a named line.
 run_tail() {
   write_answer draft || return 1
   # a draft ledger left by an earlier tail is not this draft's: a failed step (2) would hand (5) its links
@@ -1074,7 +1166,8 @@ run_tail() {
   # not this answer's, so it goes before step (5) writes this one
   rm -f "$OUT/claims.jsonl"
   claims_extract final
-  # (6) no --out: render.py writes the page, final.html, and final.md beside it (Lane C, 2026-09-26)
+  audit_answer
+  # (7) no --out: render.py writes the page, final.html, and final.md beside it (Lane C, 2026-09-26)
   if python3 "$SKILL/scripts/render.py" "$OUT/answer.md" --evidence "$OUT/evidence.jsonl" > "$OUT/render.log" 2>&1; then
     sed 's/^/   /' "$OUT/render.log"
   else
@@ -1087,10 +1180,11 @@ if [ -n "$WRITE_ONLY" ]; then
   run_tail
   tail_rc=$?
   rmdir "$HUNT_TMP" 2>/dev/null
-  if [ -n "$CLAIM_UNMEASURED" ] || [ -n "$CLAIM_UNREAD" ]; then
+  if [ -n "$CLAIM_UNMEASURED" ] || [ -n "$CLAIM_UNREAD" ] || [ -n "$AUDIT_UNAUDITED$AUDIT_MISMATCH" ]; then
     echo
     [ -z "$CLAIM_UNMEASURED" ] || claim_unmeasured_line
     [ -z "$CLAIM_UNREAD" ] || claim_unread_lines
+    audit_lines
     exit 1
   fi
   exit "$tail_rc"
@@ -1307,7 +1401,7 @@ if [ -z "$NO_ANSWER" ]; then
   echo "CEVAP HAZIR — SAKLANMADI.  $OUT/HUNTER-*.md"
   echo "ONA SOR (committen once): \"bu testi kaydedelim mi?\"  ->  evet derse:"
   echo "  bash \"$HERE/keep.sh\" \"$QFILE\" \"$OUT\" \"$SUMFILE\""
-  echo "  keep.sh saklar: final.html · final.md · answer.md · evidence.jsonl · claims.jsonl · answer.draft.md · claims.draft.jsonl · subquestions.json · SUMMARY.txt · HUNTER-*.md · soru · bodies/ (5 MB altindaysa)"
+  echo "  keep.sh saklar: final.html · final.md · answer.md · evidence.jsonl · claims.jsonl · answer.draft.md · claims.draft.jsonl · subquestions.json · audit.jsonl · audit/ · SUMMARY.txt · HUNTER-*.md · soru · bodies/ (5 MB altindaysa)"
 fi
 
 # A ROLE THE GATE COULD NOT MEASURE WAS NEVER ACCEPTED (its meta says `gate=time-up (unmeasured)`): the
@@ -1316,13 +1410,16 @@ fi
 # (K2c) a claim role whose rounds ran out with links made without a read (claim_unread_lines), and rows
 # with a body no triage judged, measured NOW, after the page (ELEME EKSIK, THE FIELD): the page's
 # `bekleyen ×n` and this line count the same rows, whether the triage or a hunter's fetch left them. A tail that
-# wrote no answer.md (K3, NO_ANSWER) is the last of them: `!! CEVAP YOK`.
+# wrote no answer.md (K3, NO_ANSWER) is the last of them: `!! CEVAP YOK`. The auditor's two (K3 stage 3, step (6)
+# of THE TAIL) follow the claim roles': claims it did not read, and a record the new ledger does not stand on.
 ELEME_EKSIK="$(eleme_eksik)"
-if [ -n "$unmeasured" ] || [ -n "$CLAIM_UNMEASURED" ] || [ -n "$CLAIM_UNREAD" ] || [ -n "$ELEME_EKSIK" ] || [ -n "$NO_ANSWER" ]; then
+if [ -n "$unmeasured" ] || [ -n "$CLAIM_UNMEASURED" ] || [ -n "$CLAIM_UNREAD" ] || [ -n "$AUDIT_UNAUDITED$AUDIT_MISMATCH" ] \
+   || [ -n "$ELEME_EKSIK" ] || [ -n "$NO_ANSWER" ]; then
   echo
   [ -n "$unmeasured" ] && echo "!! OLCULMEYEN AVCI:$unmeasured — defter durumu okunamadi, kapi kabul etmedi; kosu kodu 1: $OUT/gate.log"
   [ -n "$CLAIM_UNMEASURED" ] && claim_unmeasured_line
   [ -z "$CLAIM_UNREAD" ] || claim_unread_lines
+  audit_lines
   [ -z "$ELEME_EKSIK" ] || echo "$ELEME_EKSIK"
   [ -z "$NO_ANSWER" ] || echo "!! CEVAP YOK: kuyruk basarisiz (kod $tail_rc) — answer.md yazilmadi, sayfa yok; kosu kodu 1: $OUT/writer*.err"
   exit 1

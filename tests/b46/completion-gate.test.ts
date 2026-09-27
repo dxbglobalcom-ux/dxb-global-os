@@ -65,7 +65,9 @@ function fleet(args: string[], env: Record<string, string> = {}): { code: number
   try {
     out = execFileSync("bash", [join(engine, "fleet", "fleet.sh"), ...args], {
       encoding: "utf8",
-      env: { ...process.env, ...env, PATH: `${b.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1",
+      // FAKE_AUDIT: the tail's auditor (K3 stage 3) reads its answers from an empty folder — it agrees, no call is made
+      env: { ...process.env, FAKE_AUDIT: join(import.meta.dirname, "fixtures", "audit", "agree"), ...env,
+        PATH: `${b.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1",
         FAKE_ANSWER_FILE: join(FX, "writer-answer.md"), FAKE_DRAFT_FILE: join(FX, "writer-draft.md") },
       stdio: ["ignore", "pipe", "pipe"],
       timeout: 90_000,
@@ -191,7 +193,7 @@ describe("what a hunter declares changes no count", () => {
 });
 
 describe("the writer step — an Opus turns the rows into answer.md", () => {
-  it("--write-only hands a tool-less Opus at high effort the question, the verdicts, the status and the rows", () => {
+  it("--write-only hands a tool-less Opus at medium effort the question, the verdicts, the status and the rows", () => {
     const done = hunt("gate-write", "batch");
     expect(existsSync(join(done.run, "answer.md")), done.out.slice(-1500)).toBe(false);
     const r = fleet(["--write-only", done.run]);
@@ -203,7 +205,7 @@ describe("the writer step — an Opus turns the rows into answer.md", () => {
     expect(answer).not.toMatch(/https?:/);
     // what the writer left in its own folder comes back under <run>/writer
     expect(readFileSync(join(done.run, "writer", "writer-launch.txt"), "utf8").split("\n")).toEqual(
-      ["-p", "--model", "claude-opus-5-5", "--effort", "high", "--tools", "", "--strict-mcp-config", "--output-format", "json", ""]);
+      ["-p", "--model", "claude-opus-5-5", "--effort", "medium", "--tools", "", "--strict-mcp-config", "--output-format", "json", ""]);
     const prompt = readFileSync(join(done.run, "writer", "writer-stdin.txt"), "utf8");
     expect(prompt).toContain(`SORGULAR (zemin bunlarla acildi):\n  - ${Q}`);
     // K3: the split's block reaches the writer through {{QUESTION}} — here the fallback's one sub-question

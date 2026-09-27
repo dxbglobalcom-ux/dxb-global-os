@@ -15,6 +15,9 @@
 # sources and its counter rows from claims.jsonl, so that file travels with the answer, and so do
 # the draft and the draft's ledger (answer.draft.md, claims.draft.jsonl) — what the claim hunters
 # changed between the two passes can be seen.
+# AND ITS AUDIT (B56 K3 stage 3): the page says what the auditor corrected and removed from
+# audit.jsonl, so it travels with the answer, and so does audit/ — each batch's prompt and answer —
+# when the run has it: what the auditor was shown and what it said can be read again.
 #
 # IT RUNS ONLY ON HIS WORD. His ruling, 2026-09-17: nothing is kept in general; after a
 # test, BEFORE the commit or at a fitting moment, he is asked "bu testi kaydedelim mi?"
@@ -55,14 +58,16 @@ kept=""
 
 # THE ANSWER'S OWN FILES, kept when the run has them: the page, the written answer, the rows its
 # sources are printed from, its claim ledger, the draft and the draft's ledger, the sub-questions its
-# sections answer (B56 K3: without them the page made again has no ALT SORU table), and — from a run of
-# the earlier contract — its numbered registry and the citation ruler's verdict. A file the run does
-# not have is not an error.
+# sections answer (B56 K3: without them the page made again has no ALT SORU table), the auditor's
+# record (K3 stage 3: without it the page made again says nothing of what was corrected), and — from a
+# run of the earlier contract — its numbered registry and the citation ruler's verdict. A file the run
+# does not have is not an error; nor is a run with no audit/ folder (--no-audit, or before K3 stage 3).
 for f in "$OUT/final.html" "$OUT/final.md" "$OUT/answer.md" "$OUT/evidence.jsonl" "$OUT/claims.jsonl" \
-         "$OUT/claims.draft.jsonl" "$OUT/subquestions.json" "$OUT/answer.draft.md" "$OUT/sources.json" \
-         "$OUT"/cite-check*.txt; do
+         "$OUT/claims.draft.jsonl" "$OUT/subquestions.json" "$OUT/audit.jsonl" "$OUT/answer.draft.md" \
+         "$OUT/sources.json" "$OUT"/cite-check*.txt; do
   [ -f "$f" ] && cp "$f" "$DEST/" && kept="$kept ${f##*/}"
 done
+[ -d "$OUT/audit" ] && cp -r "$OUT/audit" "$DEST/" && kept="$kept audit/"
 
 # THE BODIES, ONLY WHILE THEY ARE SMALL — the cached text behind every row that was read. Under
 # 5 MB they travel with the answer; above it, one line in the kept folder says how big they were

@@ -27,6 +27,10 @@
 // drawer-page.html is run-drawer's page as render.py made it at af919c84, before K3 — made again once since, for the
 // overflow repair of 2026-09-27 (the `.refs` and `.tbl` rules, U+200B between two chips), nothing else in it changed.
 //
+// K3 stage 3 (the auditor, scripts/audit.py): with audit.jsonl beside the answer the page says what the auditor did — a
+// line under the verdict box, a `düzeltildi` mark after each corrected line, the two lists under the ledger — and a
+// page without it is still drawer-page.html, byte for byte.
+//
 // HOW IT RUNS: the REAL render.py — with the real kapsama.py, evidence.py and claims.py beside it, the
 // engine's scripts copied to a temporary folder — on a temporary copy of fixtures/evidence/run-drawer:
 // thirteen rows on X, Reddit and YouTube in every ledger state (the cited L0001, L0002, L0007 and L0010
@@ -282,6 +286,43 @@ describe("final.html — the answer's sub-questions, each whole with its own cou
 
   it("builds a page whose answer has no S-heading byte for byte as before", () => {
     expect(page).toBe(readFileSync(join(RENDER, "drawer-page.html"), "utf8"));
+  });
+});
+
+describe("final.html — what the auditor corrected and removed (B56 K3 stage 3)", () => {
+  it("says under the verdict what it read, marks each line it corrected, lists both under the ledger; without it, byte for byte", () => {
+    // fixtures/audit/render/audit.jsonl: run-drawer's answer as the auditor left it — C002's list item and C004's table row
+    // its own lines, a line it removed (C003 when it was read), one claim it did not read, the rest ok
+    const run = join(root, "audited");
+    cpSync(FIX, run, { recursive: true });
+    cpSync(join(dirname(resolve(import.meta.filename)), "fixtures", "audit", "render", "audit.jsonl"), join(run, "audit.jsonl"));
+    const got = render(run);
+    expect(got.said).toMatch(/^0 /);
+    expect(got.page).toContain('</div>\n<p class="audit-n"><span class="count">denetçi: 6 iddia okundu · 2 düzeltildi · 1 çıkarıldı · '
+      + '1 denetlenmedi</span></p>\n<section class="sec" id="sayilar">');
+    // the mark after the count of each corrected line, its reason (escaped) in the title — and nowhere else
+    const mark = (why: string) => ` <span class="audit" title="denetçi: ${why}">düzeltildi</span>`;
+    const el = (id: string, tag: string) => got.page.match(new RegExp(`<${tag} id="${id}">[\\s\\S]*?</${tag}>`))?.[0] ?? "";
+    expect(el("C002", "li")).toMatch(/<span class="count">\(2 satır · 2 bağımsız kaynak\)<\/span> <span class="audit" /);
+    expect(el("C002", "li").endsWith(`${mark("Satırlar fiyattan söz etmiyor: &lt;fiyat&gt; &amp; maliyet yok.")}</li>`)).toBe(true);
+    expect(el("C004", "tr").endsWith(`</span>${mark("Satırlar yalnız ajan işini ve hızı söylüyor.")}</span></td></tr>`)).toBe(true);
+    expect(got.page.match(/class="audit"/g)).toHaveLength(2);
+    // under the ledger's table: the lines as they were → as the auditor wrote them, then the removed one by its old id
+    const book = got.page.split('id="iddialar"')[1]?.split("</section>")[0] ?? "";
+    const audit = readFileSync(join(run, "audit.jsonl"), "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l));
+    const cut = (s: string) => (s.length <= 200 ? s : `${s.slice(0, 199).trimEnd()}…`);
+    expect(book.indexOf("Denetçinin düzelttikleri")).toBeGreaterThan(book.indexOf("</table>"));
+    expect(book).toContain('<p class="from-t audit-t">Denetçinin düzelttikleri</p>\n<ul class="audit-list">\n'
+      + "<li><code>C002</code> — X'te okunan iki gönderi iş bölümünü ve fiyatı anlatıyor [L0006, L0001]. → X'te okunan iki gönderi "
+      + "iş bölümünü anlatıyor [L0006, L0001]. — Satırlar fiyattan söz etmiyor: &lt;fiyat&gt; &amp; maliyet yok.</li>\n"
+      + `<li><code>C004</code> — ${cut(audit[4].was)} → ${audit[4].line} — Satırlar yalnız ajan işini ve hızı söylüyor.</li>\n</ul>`
+      + '\n<p class="from-t audit-t">Denetçinin çıkardıkları</p>\n<ul class="audit-list">\n'
+      + "<li><code>C003</code> — Bir gönderi Fable'ı yazıda öne koyuyor [L0002]. — Gösterilen satır bunu söylemiyor.</li>\n</ul>");
+    expect(cut(audit[4].was).endsWith("…")).toBe(true);
+    // kapsama.py counts the same record under "Nereye bakıldı"
+    expect(got.page).toContain('<p class="note">DENETÇİ: 6 okundu · 2 düzeltildi · 1 çıkarıldı · 1 denetlenmedi</p>');
+    rmSync(join(run, "audit.jsonl"));
+    expect(render(run).page).toBe(readFileSync(join(RENDER, "drawer-page.html"), "utf8"));
   });
 });
 

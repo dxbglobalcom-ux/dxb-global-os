@@ -27,7 +27,14 @@
 // B56 K3 — THE WRITER'S CLOCK. On the K3 stage-1 run `timeout 600` stopped the draft writer (kod 124) and the run still
 // printed CEVAP HAZIR and left with 0. The clock is --writer-timeout now (1500 s by default) and the writer's lines say
 // it; a full run whose tail wrote no answer.md says `!! CEVAP YOK` and leaves with 1. Those cases run on a bench of their
-// own, the gate's (fixtures/gate/), whose ledger answers writer-rows; this file's field cases run --no-write.
+// own, the gate's (fixtures/gate/), whose ledger answers writer-rows; this file's field cases run --no-write. The writer
+// runs at medium effort from K3 stage 3 on (the lead's measurement of 2026-09-27: medium ≥ high by a blind judge).
+//
+// B56 K3 STAGE 3 — THE AUDITOR. Nothing read a final line against the rows it cites; now, after the answer's ledger, an
+// Opus that never saw the writer reads every claim with only its rows (scripts/audit.py), answer.md takes what it
+// corrected and removed, the ledger is extracted again and checked, then the page is made. FAKE_AUDIT hands audit.py a
+// kept answer per batch (fixtures/audit/); every fleet run here sets it to an empty folder by default — the auditor
+// agrees and no model is called. A claim it could not read is named after the page, `!! DENETLENMEYEN İDDİA`, code 1.
 
 import { execFileSync, spawnSync } from "node:child_process";
 import { chmodSync, copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, writeFileSync } from "node:fs";
@@ -37,6 +44,8 @@ import { Bench, makeBench } from "./engine-copy.js";
 
 const FLEET_DIR = join(process.cwd(), ".claude/skills/dxb-research/fleet");
 const FX = join(import.meta.dirname, "fixtures", "fleet");
+const AUDIT = join(import.meta.dirname, "fixtures", "audit");
+const AGREE = join(AUDIT, "agree");
 const SEVEN = ["x", "video", "forums", "pro", "code", "foreign", "counter"];
 const TAIL_ROLES = ["karsi", "bosluk"];
 // the one classifier's platform names (scripts/platforms.py, EVIDENCE-B56 "THE CONTRACTS")
@@ -61,7 +70,8 @@ function fleetOn(bench: Bench, env: Record<string, string>, ...args: string[]): 
   try {
     const stdout = execFileSync("bash", [join(bench.engine, "fleet", "fleet.sh"), ...args], {
       encoding: "utf8",
-      env: { ...process.env, ...env, PATH: `${bench.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1" },
+      // FAKE_AUDIT: the tail's auditor (K3 stage 3) reads its answers from an empty folder — it agrees, no call is made
+      env: { ...process.env, FAKE_AUDIT: AGREE, ...env, PATH: `${bench.bin}:${process.env.PATH}`, PYTHONDONTWRITEBYTECODE: "1" },
       stdio: ["ignore", "pipe", "pipe"],
       timeout: 90_000,
     });
@@ -282,14 +292,15 @@ describe("merge.py — the summary counts; it does not narrate", () => {
 });
 
 describe("keep.sh — the kept answer is named after its question and carries its claim ledger", () => {
-  it("slugs the first query line, not the fleet's header, and keeps the ledger, the draft, its ledger and the sub-questions", () => {
+  it("slugs the first query line, not the fleet's header, and keeps the ledger, the draft, its ledger, the sub-questions and the audit", () => {
     const out = join(b.root, "keep-run");
-    mkdirSync(out, { recursive: true });
+    mkdirSync(join(out, "audit"), { recursive: true });
     const q = join(out, "question.txt");
     writeFileSync(q, "DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):\nWho prefers which one, and why?\n\n" +
       "SORGULAR (zemin bunlarla acildi):\n  - astra 6 vs fable 5.1\n  - astra 6 reddit\n\n" +
       "ALT SORULAR (S-kimlik · başlık · soru):\n  - S1 · Kim neyi seçiyor · Kim hangisini seçiyor?\n");
-    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl", "subquestions.json"]) {
+    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl", "subquestions.json", "audit.jsonl",
+      "audit/batch-1.txt"]) {
       writeFileSync(join(out, f), "x\n");
     }
     const kept = join(b.root, "kept");
@@ -298,7 +309,8 @@ describe("keep.sh — the kept answer is named after its question and carries it
     const folders = readdirSync(kept);
     expect(folders).toHaveLength(1);
     expect(folders[0]).toMatch(/^\d{8}-\d{4}-astra-6-vs-fable-5-1$/);
-    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl", "subquestions.json", "question.txt"]) {
+    for (const f of ["answer.md", "answer.draft.md", "claims.jsonl", "claims.draft.jsonl", "subquestions.json", "question.txt",
+      "audit.jsonl", "audit/batch-1.txt"]) {
       expect(existsSync(join(kept, folders[0], f)), f).toBe(true);
     }
   });
@@ -385,7 +397,7 @@ describe("K3 — his question is split into sub-questions before the ground open
   }, 90_000);
 });
 
-describe("K3 — the writer's clock is --writer-timeout, and a tail that wrote no answer is no answer", () => {
+describe("K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim", () => {
   // The gate's bench (completion-gate.test.ts): its ledger answers writer-rows, its `claude` writes — slower than its
   // clock under FAKE_WRITER_SLEEP — and its coverage table carries the ledger's RECONCILED line under it, as kapsama.py's.
   const GATE = join(import.meta.dirname, "fixtures", "gate");
@@ -413,7 +425,7 @@ describe("K3 — the writer's clock is --writer-timeout, and a tail that wrote n
     const r = on({ FAKE_WRITER_SLEEP: "5" }, run, ...ARGS, "--writer-timeout", "1");
     const s = r.stdout;
     expect(r.code, s.slice(-2500)).toBe(1);
-    expect(s).toMatch(/^writer \(taslak\): \d+ satir · \d+ KB -> claude-opus-5-5 · efor high · zaman siniri 1s$/m);
+    expect(s).toMatch(/^writer \(taslak\): \d+ satir · \d+ KB -> claude-opus-5-5 · efor medium · zaman siniri 1s$/m);
     expect(s).toMatch(/^!! writer \(taslak\): zaman asimi \(1 s\) — cost \$\? · \d+ s · answer\.draft\.md yazilmadi: /m);
     expect(s).not.toMatch(/CEVAP HAZIR|ONA SOR/);
     // what the field measured stands: the coverage table and the ledger's sums print after the tail fell
@@ -430,14 +442,79 @@ describe("K3 — the writer's clock is --writer-timeout, and a tail that wrote n
     const r = on({}, run, ...ARGS);
     expect(r.code, r.stdout.slice(-2500)).toBe(0);
     for (const [tag, ans] of [["taslak", "answer\\.draft\\.md"], ["son", "answer\\.md"]]) {
-      expect(r.stdout).toMatch(new RegExp(`^writer \\(${tag}\\): \\d+ satir · \\d+ KB -> claude-opus-5-5 · efor high · zaman siniri 1500s$`, "m"));
+      expect(r.stdout).toMatch(new RegExp(`^writer \\(${tag}\\): \\d+ satir · \\d+ KB -> claude-opus-5-5 · efor medium · zaman siniri 1500s$`, "m"));
       // the stand-in's envelope says duration_ms 1234 and no usage: its second, and `?` for the tokens it does not say
       expect(r.stdout).toMatch(new RegExp(`^writer \\(${tag}\\): cost \\$0\\.42 · \\d+ s -> .*/${ans} · model 1 s · out \\? · `, "m"));
     }
     expect(r.stdout).toContain("CEVAP HAZIR");
     const w = on({}, "--write-only", run, "--writer-timeout", "42", "--no-split", "--no-claim-hunt");
     expect(w.code, w.stdout).toBe(0);
-    expect(w.stdout).toMatch(/^writer \(taslak\): .* -> claude-opus-5-5 · efor high · zaman siniri 42s$/m);
-    expect(w.stdout).toMatch(/^writer \(son\): .* -> claude-opus-5-5 · efor high · zaman siniri 42s$/m);
+    expect(w.stdout).toMatch(/^writer \(taslak\): .* -> claude-opus-5-5 · efor medium · zaman siniri 42s$/m);
+    expect(w.stdout).toMatch(/^writer \(son\): .* -> claude-opus-5-5 · efor medium · zaman siniri 42s$/m);
+  }, 60_000);
+
+  // K3 STAGE 3 — THE AUDITOR. The writer's answer here is fixtures/audit/fleet-answer.md: its verdict and two list items,
+  // citing L0008 (the x hunter's quote, the one row this bench's ledger admits) and L0002 (judged no evidence).
+  const ANSWER = join(AUDIT, "fleet-answer.md");
+  const jsonl = (p: string): Record<string, any>[] => readFileSync(p, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l));
+
+  it("rewrites answer.md with what the auditor corrected and removed, extracts the ledger again, checks it, then the page", () => {
+    const run = join(g.root, "audit-good");
+    const r = on({ FAKE_ANSWER_FILE: ANSWER, FAKE_AUDIT: join(AUDIT, "fleet-good") }, run, ...ARGS);
+    const s = r.stdout;
+    expect(r.code, s.slice(-2500)).toBe(0);
+    // the auditor's line, what apply did, the answer's ledger once more, check, the page — in that order
+    const steps = [/^denetçi: 3 iddia okundu · 1 düzeltildi · 1 çıkarıldı · 0 denetlenmedi · \$0\.00 · \d+s$/m,
+      /^ {3}apply: 1 satır düzeltildi · 1 satır silindi$/m, /^claims: 2 · .* · inadmissible-cited \d+ · carried \d+$/m, /^ {3}check: OK 3$/m, /^ {3}render: stand-in page -> /m]
+      .map((re) => s.search(re));
+    expect(steps.every((at) => at > s.indexOf("writer (son): cost")), s.slice(-2500)).toBe(true);
+    expect(steps).toEqual([...steps].sort((x, y) => x - y));
+    // the auditor's own line for C002, C003's line gone, the verdict as the writer wrote it
+    const lines = readFileSync(ANSWER, "utf8").split("\n");
+    expect(readFileSync(join(run, "answer.md"), "utf8"))
+      .toBe([...lines.slice(0, 4), "- Astra 6 on beş görevin onunu kazandı [L0008].", ...lines.slice(6)].join("\n"));
+    expect(jsonl(join(run, "audit.jsonl")).map((a) => `${a.id_before} ${a.id} ${a.verdict} ${a.line_no}`))
+      .toEqual(["C001 C001 ok 1", "C002 C002 corrected 5", "C003 null removed 6"]);
+    expect(readFileSync(join(run, "audit", "batch-1.txt"), "utf8")).toMatch(/^### C001 · hüküm\n.*\[L0008\]\.\ndayanak:\n {2}\[L0008\] x · /m);
+    expect(existsSync(join(run, "final.html"))).toBe(true);
+    expect(s).toMatch(/^ {2}keep\.sh saklar: .* · audit\.jsonl · audit\/ · /m);
+  }, 60_000);
+
+  it("asks an unreadable batch once more; still unreadable, its claims stay unaudited: the page, then !! DENETLENMEYEN İDDİA, code 1", () => {
+    const run = join(g.root, "audit-cut");
+    const cut = { FAKE_ANSWER_FILE: ANSWER, FAKE_AUDIT: join(AUDIT, "fleet-cut") };
+    const unaudited = /^!! DENETLENMEYEN İDDİA: 3 \(C001 C002 C003\) — denetçi okumadı, kapı kabul etmedi; kosu kodu 1: .*\/audit\/$/m;
+    const r = on(cut, run, ...ARGS);
+    const s = r.stdout;
+    expect(r.code, s.slice(-2500)).toBe(1);
+    expect(s).toMatch(/^denetçi: 0 iddia okundu · 0 düzeltildi · 0 çıkarıldı · 3 denetlenmedi · \$0\.00 · \d+s$/m);
+    expect(s).toMatch(/^ {3}denetçi: parti 1: 3\/3 iddia okunamadı \(cevapta okunur JSON yok\) — yeniden soruluyor \(1\/1\)$/m);
+    expect(readFileSync(join(run, "audit", "batch-1.retry.txt"), "utf8").match(/^### C\d{3}/gm)).toEqual(["### C001", "### C002", "### C003"]);
+    expect(readFileSync(join(run, "answer.md"), "utf8"), "nothing was applied").toBe(readFileSync(ANSWER, "utf8"));
+    // the page stands, and the line comes after it and after the coverage table, with the run's other `!!` lines
+    expect(existsSync(join(run, "final.html"))).toBe(true);
+    expect(s.search(unaudited)).toBeGreaterThan(s.indexOf("KAPSAMA — nereye bakildi"));
+    const w = on(cut, "--write-only", run, "--no-split", "--no-claim-hunt");
+    expect(w.code, w.stdout.slice(-2500)).toBe(1);
+    expect(w.stdout.search(unaudited)).toBeGreaterThan(w.stdout.search(/^ {3}render: stand-in page/m));
+  }, 60_000);
+
+  it("runs the auditor after --write-only — the model's stand-in, outside the repository, when no FAKE_AUDIT — and --no-audit skips it", () => {
+    const run = join(g.root, "audit-model");
+    expect(on({}, run, ...ARGS).code).toBe(0);
+    const w = on({ FAKE_AUDIT: "" }, "--write-only", run, "--no-split", "--no-claim-hunt");
+    expect(w.code, w.stdout.slice(-2500)).toBe(0);
+    expect(w.stdout).toMatch(/^denetçi: 4 iddia okundu · 0 düzeltildi · 0 çıkarıldı · 0 denetlenmedi · \$0\.00 · \d+s$/m);
+    // it changed nothing: the ledger step (5) wrote stands — no second extract, no check
+    expect(w.stdout).toMatch(/^ {3}apply: 0 satır düzeltildi · 0 satır silindi\ndenetçi: cevap değişmedi — yeniden çıkarım ve check atlandı$/m);
+    expect(readFileSync(join(run, "audit", "batch-1.left", "auditor-launch.txt"), "utf8").split("\n"))
+      .toEqual(["-p", "--model", "claude-opus-5-5", "--effort", "low", "--tools", "", "--strict-mcp-config", "--output-format", "json", ""]);
+    expect(readFileSync(join(run, "audit", "batch-1.left", "cwd.txt"), "utf8")).toMatch(/\/dxb-hunters\/audit-model\.audit\.\w+\n$/);
+    expect(jsonl(join(run, "audit.jsonl")).map((a) => a.reason)).toEqual(Array(4).fill("denetçi taklidi"));
+    // skipped: and the audit an earlier tail left goes with it — the page reads the one beside the answer
+    const n = on({}, "--write-only", run, "--no-split", "--no-claim-hunt", "--no-audit");
+    expect(n.code, n.stdout.slice(-2500)).toBe(0);
+    expect(n.stdout).toMatch(/^denetçi: atlandi \(--no-audit\)$/m);
+    expect(existsSync(join(run, "audit.jsonl")) || existsSync(join(run, "audit"))).toBe(false);
   }, 60_000);
 });

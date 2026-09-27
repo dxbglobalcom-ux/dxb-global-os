@@ -35,6 +35,9 @@
 // second table after those lines — one row per sub-question, its claims, rows, independent sources, counter rows and
 // its state, `tam` · `boş` (its section holds `Bu alt soruya satır yok.`) · `eksik` (the writer dropped it) — and its
 // `ALT SORU:` line; without subquestions.json nothing of it is printed.
+//
+// K3 stage 3 (the auditor, scripts/audit.py): with --answer and audit.jsonl beside the answer, one line after KANIT —
+// DENETÇİ: N okundu · d düzeltildi · r çıkarıldı · u denetlenmedi; without audit.jsonl nothing of it is printed.
 
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -259,6 +262,24 @@ describe("kapsama.py — prints, never blocks", () => {
     expect(tsv.out).toContain("\n\nalt_soru\tiddia\tsatir\tbagimsiz_kaynak\tkarsi\tdurum\nS1\t2\t3\t3\t1\ttam\nS2\t0\t0\t0\t0\tboş\n"
       + "S3\t0\t0\t0\t0\teksik\nALT SORU: 3 · tam 1 · boş 1 (S2) · eksik 1 (S3)\n");
     expect(bare.out, "without --answer there is no answer to count").not.toContain("ALT SORU");
+  });
+
+  it("with --answer and the auditor's audit.jsonl beside it, a DENETÇİ line right after KANIT — audit.py's tally", () => {
+    // fixtures/audit/render/audit.jsonl: run-drawer's answer as the auditor left it — 3 ok, 2 corrected, 1 removed, 1 not read
+    const dir = mkdtempSync(join(tmpdir(), "dxb-b56-kapsama-"));
+    cpSync(join(FIX, "run-drawer"), dir, { recursive: true });
+    const answer = join(dir, "answer.md");
+    const without = kapsama([dir, "--answer", answer]);
+    cpSync(join(dirname(resolve(import.meta.filename)), "fixtures", "audit", "render", "audit.jsonl"), join(dir, "audit.jsonl"));
+    const audited = kapsama([dir, "--answer", answer]);
+    const bare = kapsama([dir]);
+    rmSync(dir, { recursive: true, force: true });
+    expect(audited.code, audited.out).toBe(0);
+    // every line it printed before stands as it was; the one line more follows KANIT
+    expect(audited.out).toBe(without.out.replace(/^(KANIT: .*\n)/m, "$1DENETÇİ: 6 okundu · 2 düzeltildi · 1 çıkarıldı · 1 denetlenmedi\n"));
+    expect(without.out).toMatch(/^KANIT: /m);
+    expect(without.out).not.toContain("DENETÇİ");
+    expect(bare.out, "without --answer there is no answer the auditor read").not.toContain("DENETÇİ");
   });
 
   it("exits 1 only when the run folder does not exist", () => {

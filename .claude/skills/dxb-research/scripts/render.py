@@ -79,6 +79,14 @@ section with its count; the line of a sub-question no row speaks to, `Bu alt sor
 style: a gap made visible, never dropped. kapsama.py's second table, one row per sub-question, stands under
 "Nereye bakıldı" after the first. A page whose answer has no S-heading is built byte for byte as before.
 
+THE AUDITOR (B56 K3 stage 3): when the fleet's auditor has read the answer (scripts/audit.py), its record stands beside
+it, <run>/audit.jsonl, and the page says what it did — under the verdict box `denetçi: N iddia okundu · d düzeltildi ·
+r çıkarıldı`, ` · u denetlenmedi` when it did not read them all (audit.py's own tally, the class `count`); after the
+count of a line it corrected, the mark `düzeltildi`, its reason in the mark's title; under the "İddia defteri" table two
+lists, `Denetçinin düzelttikleri` (`C007 — <the line as the writer wrote it> → <the auditor's line> — <reason>`) and
+`Denetçinin çıkardıkları` (`C012 — <the line> — <reason>`, the id it had when it was read), each only when it has an
+entry, a line cut at 200 characters. A page with no audit.jsonl beside its answer is built byte for byte as before.
+
 REFUSED — exit 2, one line on stderr, no page written — when the answer carries an id that is not in
 evidence.jsonl; a bracket that holds an id-like token but is not a citation (`[bkz. L0002]`,
 `[L0001 ]`, `[l0003]`, `[L0001; L0002]`, `[L0001 | L0002]` — only ↔ pairs two sides, and each side is
@@ -461,6 +469,14 @@ table.cov tr.why{display:block;padding-top:0}
 """.replace("%DARK%", DARK)
 # a sub-question's counts line (B56 K3), added only to a page that has one: a page without it stays byte for byte
 SUB_CSS = ".from-n{margin:-2px 0 10px;line-height:1.5}.from-n .count{margin-left:0;white-space:normal}"
+# the auditor's line under the verdict box, its mark and its two lists (B56 K3 stage 3), added only to a page with
+# audit.jsonl beside its answer: a page without one stays byte for byte. The line sits 12 px under the box (48 − 36).
+AUDIT_CSS = (".audit-n{margin:-36px 0 48px;line-height:1.5}.audit-n .count{margin-left:0;white-space:normal}"
+             ".audit{margin-left:6px;padding:0 5px;border:1px solid var(--warm);border-radius:3px;color:var(--warm);"
+             "font:500 11px/1.5 var(--mono);white-space:nowrap;cursor:help}"
+             ".audit-t{margin:22px 0 6px}.audit-list{margin:0 0 12px;padding-left:20px;font-size:14px;line-height:1.55;"
+             "overflow-wrap:anywhere}.audit-list li{margin:0 0 8px}")
+AUDIT_CHARS = 200                  # a line in the auditor's two lists, at most
 
 
 # every U+FFFD leaves as &#xFFFD; — 2026-09-26 the claude.ai Artifact publisher refused the K1 run's page for
@@ -689,6 +705,7 @@ class Page:
         self.rows, self.shelved, self.num = rows, shelved, {}
         self.struck, self.at, self.linked = struck or {}, at or {}, {}
         self.subs: dict[str, dict] = {}       # claims.py sub_counts per S-id; html_page sets it (B56 K3)
+        self.fixed: dict[int, str] = {}       # answer line -> the auditor's reason, a claim it corrected (K3 stage 3)
         # claims.py evidence_use, by every row id at an admitted address; None without claims.py
         self.use = None if use is None else {i: u for u in use.values() for i in u["ids"]}
 
@@ -725,6 +742,15 @@ class Page:
             self.linked.setdefault(cid, ids[0])
         return f' id="{attr(ids[0])}"' if ids else ""
 
+    def audited(self, first: int | None, last: int | None = None) -> str:
+        """` <span class="audit" title="denetçi: <reason>">düzeltildi</span>` after the count of the element showing
+        answer lines first–last when the auditor corrected a claim among them (B56 K3 stage 3); '' on a page without
+        an audit."""
+        if not self.fixed or not first:
+            return ""
+        why = next((self.fixed[n] for n in range(first, (last or first) + 1) if n in self.fixed), None)
+        return "" if why is None else f' <span class="audit" title="{attr("denetçi: " + why)}">düzeltildi</span>'
+
     def inline(self, s: str) -> str:
         """Bold, italic, code and citations; every other character escaped — nothing typed becomes HTML."""
         held: list[str] = []
@@ -758,7 +784,7 @@ class Page:
         for r, row in enumerate(b["rows"]):
             row = row + [""] * (len(head) - len(row))
             last = max((j for j, c in enumerate(row) if CITE.search(c)), default=len(row) - 1 if zero else -1)
-            tail = self.count(" ".join(row), zero)
+            tail = self.count(" ".join(row), zero) + self.audited(b["at"][r])
             tds = "".join(f'<td data-label="{tags[j] if j < len(tags) else ""}"{cls[j] if j < len(cls) else ""}>'
                           f'<span class="v">{self.inline(c)}{tail if j == last else ""}</span></td>'
                           for j, c in enumerate(row))
@@ -785,14 +811,16 @@ class Page:
                     continue
                 depth = f' class="d{min(b["depth"], 3)}"' if k == "li" and b["depth"] and not claims else ""
                 out.append(f"<li{depth}{self.mark(b['line'], b['end'])}>{self.inline(b['text'])}"
-                           f"{self.count(b['text'], claims)}</li>")
+                           f"{self.count(b['text'], claims)}{self.audited(b['line'], b['end'])}</li>")
                 continue
             out += ["</ol>" if opened == "ol" else "</ul>"] if opened else []
             opened = ""
             if k == "p":
-                out.append(f"<p{self.mark(b['line'], b['end'])}>{self.inline(b['text'])}{self.count(b['text'])}</p>")
+                out.append(f"<p{self.mark(b['line'], b['end'])}>{self.inline(b['text'])}{self.count(b['text'])}"
+                           f"{self.audited(b['line'], b['end'])}</p>")
             elif k == "h":
-                out.append(f"<h3{self.mark(b['line'])}>{self.inline(b['text'])}{self.count(b['text'])}</h3>")
+                out.append(f"<h3{self.mark(b['line'])}>{self.inline(b['text'])}{self.count(b['text'])}"
+                           f"{self.audited(b['line'])}</h3>")
             elif k == "table":
                 out.append(self.table(b, claims))
             else:
@@ -881,6 +909,23 @@ class Page:
                 f"başlık ve alan adı, kaç karşı satır.</p>\n{grid}\n"
                 f'<p class="note">{len(book)} iddia · {thin} tek kaynak · {bare} karşısız · {gone} kabul edilmeyen '
                 "alıntı · kaynak = ayrı yazar, yazar yoksa ayrı adres · aynı kişinin iki hesabı iki kaynak sayılır</p>")
+
+    def audit_lists(self, audit: dict | None) -> str:
+        """Under the ledger's table (B56 K3 stage 3), from audit.jsonl: `Denetçinin düzelttikleri` — `C007 — <the line
+        as it was> → <the auditor's line> — <reason>` — and `Denetçinin çıkardıkları` — `C012 — <the line> — <reason>`,
+        the id it had when the auditor read it —, each only when it has an entry; every text escaped (audit_clip). ''
+        on a page without an audit."""
+        if audit is None:
+            return ""
+        clip = audit_clip
+        why = lambda r: f" — {esc(text(r.get('reason')))}" if text(r.get("reason")) else ""  # noqa: E731
+        fixed = [f'<li><code>{esc(text(r.get("id")))}</code> — {esc(clip(r.get("was")))} → {esc(clip(r.get("line")))}'
+                 f"{why(r)}</li>" for r in audit["records"] if r.get("verdict") == "corrected"]
+        gone = [f'<li><code>{esc(text(r.get("id_before") or r.get("id")))}</code> — {esc(clip(r.get("was")))}{why(r)}</li>'
+                for r in audit["records"] if r.get("verdict") == "removed"]
+        lists = (("Denetçinin düzelttikleri", fixed), ("Denetçinin çıkardıkları", gone))
+        return "".join(f'\n<p class="from-t audit-t">{title}</p>\n<ul class="audit-list">\n' + "\n".join(items)
+                       + "\n</ul>" for title, items in lists if items)
 
     def entry(self, a: dict, p: str) -> str:
         """One drawer row: its ids (each an anchor), author, date, passage ≤ 300 characters, address."""
@@ -1084,7 +1129,7 @@ def section(no: int, title: str, body: str, anchor: str) -> str:
 def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool] | None,
               book: list[dict] | None = None, struck: dict[str, str] | None = None,
               whence: str = "", use: dict[str, dict] | None = None,
-              full: list[dict] | None = None) -> tuple[str, dict]:
+              full: list[dict] | None = None, audit: dict | None = None) -> tuple[str, dict]:
     """final.html, in the order of the docstring. Rendered top to bottom, so the ids are numbered in the
     order he reads them. The claim ledger's table is built after every claim line, though it stands
     second, so each claim in it links to the element that shows its line."""
@@ -1094,6 +1139,12 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
         if isinstance(c.get("line"), int) and text(c.get("id")):
             at.setdefault(c["line"], text(c["id"]))
     page = Page(rows, {i for a in shelf for i in a["ids"]}, struck, at, use)
+    if audit is not None:              # the lines the auditor corrected, by the ledger's line of each (K3 stage 3)
+        where = {text(c.get("id")): c["line"] for c in book or [] if isinstance(c.get("line"), int)}
+        for r in audit["records"]:
+            n = where.get(text(r.get("id")), r.get("line_no"))
+            if r.get("verdict") == "corrected" and isinstance(n, int):
+                page.fixed.setdefault(n, text(r.get("reason")))
     h1, verdict, ours, sections = arrange(blocks(md))
     subs = CL is not None and any(CL.sub_heading(t) for t, _b in ours if t is not None)
     if subs:                           # the counts under each sub-question's heading: `full`, claims.py's extract
@@ -1105,16 +1156,19 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
     if secs:
         brow += [f"{len(secs)} avcı", f"{min(secs)}–{max(secs)} sn" if min(secs) != max(secs) else f"{secs[0]} sn"]
     head = [f'<p class="eyebrow">{esc(" · ".join(brow))}</p>', f"<h1>{page.inline(h1)}</h1>"]
-    lede = (page.inline(verdict["text"]) + page.count(verdict["text"])) if verdict \
+    lede = (page.inline(verdict["text"]) + page.count(verdict["text"])
+            + page.audited(verdict["line"], verdict["end"])) if verdict \
         else '<span class="none">Cevap metninde paragraf yok.</span>'
     mark = page.mark(verdict["line"], verdict["end"]) if verdict else ""
     head.append(f'<div class="verdict"><p class="label">Hüküm</p><p class="lede"{mark}>{lede}</p></div>')
+    if audit is not None:
+        head.append(audit_head(audit))
     parts = [section(1, esc(OWN), page.ours(ours), "sayilar")]
     rest = []
     for s in sections:
         body = page.flow(s["blocks"])
         rest.append((page.inline(s["title"]), f'<div class="caveat">\n{body}\n</div>' if CAVEAT.search(s["title"]) else body))
-    parts.append(section(2, "İddia defteri", page.ledger(book, whence), "iddialar"))
+    parts.append(section(2, "İddia defteri", page.ledger(book, whence) + page.audit_lists(audit), "iddialar"))
     for title, body in rest:
         parts.append(section(len(parts) + 1, title, body, f"s{len(parts) + 1:02d}"))
     parts.append(section(len(parts) + 1, "Alıntılar", '<p class="intro">Cevapta geçen her satır, kendi kaydından: '
@@ -1135,10 +1189,45 @@ def html_page(md: str, rows: dict[str, dict], run: Path, table: tuple[str, bool]
            '<meta name="color-scheme" content="light dark">', f"<title>{esc(title_of(queries, h1))}</title>",
            '<link rel="preconnect" href="https://fonts.googleapis.com">',
            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
-           f'<link rel="stylesheet" href="{attr(FONTS)}">', f"<style>{CSS + SUB_CSS if subs else CSS}</style>",
+           f'<link rel="stylesheet" href="{attr(FONTS)}">',
+           f"<style>{CSS + (SUB_CSS if subs else '') + (AUDIT_CSS if audit is not None else '')}</style>",
            "</head>", "<body>",
            "<main>", *head, *parts, foot, "</main>", f"<script>{OPEN_DRAWER}</script>", "</body>", "</html>"]
     return "\n".join(doc) + "\n", {"cited": len(page.num), "platforms": plats, "shelved": len(shelf)}
+
+
+def audit_of(folder: Path) -> dict | None:
+    """THE AUDITOR'S RECORD beside the answer — <run>/audit.jsonl (scripts/audit.py, B56 K3 stage 3) — read and counted
+    by audit.py's own read_jsonl and tally: {"records", "tally", "why"}. None when there is no such file: the page is
+    built as before. A record that cannot be had is said on the line under the verdict, never a reason to stop the page."""
+    path = folder / "audit.jsonl"
+    if not path.is_file():
+        return None
+    try:
+        import audit as AU         # noqa: E402 — imported here, not at the top: a page without an audit never needs it
+    except Exception as e:
+        return {"records": [], "tally": None, "why": f"audit.py yüklenemedi ({type(e).__name__}: {e})"}
+    records = AU.read_jsonl(path)
+    if records is None:
+        return {"records": [], "tally": None, "why": "audit.jsonl okunamadı"}
+    return {"records": records, "tally": AU.tally(records), "why": ""}
+
+
+def audit_clip(v) -> str:
+    """A line of the auditor's two lists: a list item's text without its mark (a table row keeps its pipes), cut at
+    AUDIT_CHARS characters with `…`."""
+    s = text(v)
+    s = m.group(3) if (m := LIST_ITEM.match(s)) else s
+    return s if len(s) <= AUDIT_CHARS else s[:AUDIT_CHARS - 1].rstrip() + "…"
+
+
+def audit_head(audit: dict) -> str:
+    """The auditor's line under the verdict box: `denetçi: N iddia okundu · d düzeltildi · r çıkarıldı`, and ` · u
+    denetlenmedi` when it did not read them all — or why its record could not be counted."""
+    t = audit["tally"]
+    said = (f"denetçi: {t['read']} iddia okundu · {t['corrected']} düzeltildi · {t['removed']} çıkarıldı"
+            + (f" · {t['unaudited']} denetlenmedi" if t["unaudited"] else "")) if t else f"denetçi: {audit['why']}"
+    return f'<p class="audit-n"><span class="count">{esc(said)}</span></p>'
 
 
 def refuse(reason: str, outs: list[Path], keep: tuple[Path, ...]) -> int:
@@ -1192,12 +1281,13 @@ def main(argv: list[str]) -> int:
     use = CL.evidence_use(md, list(rows.values())) if CL else None
     struck = refused(rows, cited_in(shown)) if CL else {}
     book, whence = ledger_of(answer.parent, full)
+    audit = audit_of(answer.parent)                         # None without audit.jsonl: the page as before (K3 stage 3)
     body, cited = number(spans_md(shown, rows) if CL else shown, set(struck))
     entries = [source_line(n, rows[i]) for n, i in enumerate(cited, 1)]
     drawer = ""
     for out in outs:
         if out.suffix.lower() in (".html", ".htm"):
-            text_out, facts = html_page(shown, rows, answer.parent, table, book, struck, whence, use, full)
+            text_out, facts = html_page(shown, rows, answer.parent, table, book, struck, whence, use, full, audit)
             drawer = f" · çekmece {facts['platforms']} platform, {facts['shelved']} adres"
         else:
             page = [body.rstrip("\n"), "", "## Kaynaklar", "",

@@ -23,10 +23,13 @@ on (K2c: the gate reads the transcript). `karsi-blind` / `bosluk-blind` link wit
 first fetch a page no claim stands on (the bench's Reddit thread) and then link without a show.
 FAKE_LATE_FETCH=<address>: a hunter, after its reading, fetches that address — a row whose body came after the
 triage, as the x hunter's L1688 and L1692 did on the K2 run.
-THE WRITER, when launched as one (`--effort high`), keeps its arguments and its stdin beside it and
+THE WRITER, when launched as one (`--effort medium`, K3), keeps its arguments and its stdin beside it and
 answers with the text of FAKE_ANSWER_FILE in the `claude -p --output-format json` envelope — on the first
 pass (its prompt says there is no claim ledger yet) with FAKE_DRAFT_FILE when that is set. FAKE_WRITER_SLEEP=<s>:
 it sleeps that long before it answers — a writer slower than its clock (fleet.sh --writer-timeout), stopped by it.
+THE AUDITOR (B56 K3 stage 3), a call with `--tools ""` whose stdin holds `### C0…` claim headings (scripts/audit.py
+without FAKE_AUDIT), agrees with every claim it was handed: `{"verdicts":[…]}`, each `ok`, reason "denetçi taklidi",
+in the `--output-format json` envelope, total_cost_usd 0 — so a tail that sets no FAKE_AUDIT still runs its auditor.
 All of them write the folder they stand in into cwd.txt there, so a case can see where a `claude` started.
 """
 import itertools
@@ -42,7 +45,7 @@ from pathlib import Path
 argv = sys.argv[1:]
 effort = argv[argv.index("--effort") + 1] if "--effort" in argv else ""
 Path("cwd.txt").write_text(os.getcwd() + "\n", encoding="utf-8")
-if effort == "high":
+if effort == "medium":
     Path("writer-launch.txt").write_text("\n".join(argv) + "\n", encoding="utf-8")
     stdin = sys.stdin.read()
     Path("writer-stdin.txt").write_text(stdin, encoding="utf-8")
@@ -52,6 +55,15 @@ if effort == "high":
     print(json.dumps({"type": "result", "subtype": "success", "is_error": False, "result": answer,
                       "total_cost_usd": 0.4213, "duration_ms": 1234}))
     sys.exit(0)
+if "--tools" in argv and argv[argv.index("--tools") + 1:][:1] == [""]:     # a tool-less call: the split's or the auditor's
+    stdin = sys.stdin.read()
+    claims = re.findall(r"^### (C\d+)", stdin, re.M)
+    if claims:
+        Path("auditor-launch.txt").write_text("\n".join(argv) + "\n", encoding="utf-8")
+        said = {"verdicts": [{"id": c, "verdict": "ok", "reason": "denetçi taklidi"} for c in claims]}
+        print(json.dumps({"type": "result", "subtype": "success", "is_error": False,
+                          "result": json.dumps(said, ensure_ascii=False), "total_cost_usd": 0}))
+        sys.exit(0)
 
 prompt = argv[argv.index("-p") + 1] if "-p" in argv else ""
 CLAIM_ROLES = ("karsi", "bosluk")

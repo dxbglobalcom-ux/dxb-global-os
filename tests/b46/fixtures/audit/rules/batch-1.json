@@ -1,0 +1,26 @@
+{
+ "verdicts": [
+  {
+   "id": "C001",
+   "verdict": "removed",
+   "reason": "Satırlar ikisinin birlikte kullanıldığını ve Opus 5.5'e geçişi taşımıyor.",
+   "line": "Eylül 2026 sonunda profesyoneller arasında tek bir kazanan yok: kod ve planlamada Fable 5.1, hız ve bilgisayar kullanımında Astra 6 öne çıkıyor. [L1669, L1700, L1631, L1583]"
+  },
+  {
+   "id": "C002",
+   "verdict": "corrected",
+   "reason": "L1700 mimariden söz etmiyor; L1701 birlikte kullanımı söylemiyor.",
+   "line": "| Facebook | 1 [L1700] | 0 | Karmaşık kod tabanlarında hata bulma [L1700] | Birlikte kullanım öneriliyor [L1697] |"
+  },
+  {
+   "id": "C003",
+   "verdict": "removed",
+   "reason": "İki satırın hiçbiri tarayıcı kullanımında Astra'yı öne koymuyor."
+  },
+  {
+   "id": "C004",
+   "verdict": "ok",
+   "reason": "İki taraf satırlarıyla duruyor."
+  }
+ ]
+}

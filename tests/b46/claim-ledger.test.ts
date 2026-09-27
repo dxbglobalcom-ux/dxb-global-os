@@ -23,6 +23,12 @@
 // menu stands under it. answer-unused.md is that answer's first 25 lines (K1's line 71 left out, so four
 // admitted addresses are cited nowhere) and a `## Alınmayan kanıt` section naming them — the writer's last
 // section (fleet/writer-prompt.md rule 10, the CEO's word of 2026-09-26 ~19:45). No network, no model.
+//
+// B56 K3 STAGE 3 — THE AUDITOR (scripts/audit.py): an Opus that never saw the writer is handed each claim of the answer
+// with only its own rows, as the writer saw them, and says ok, corrected (its own line) or removed; `apply` rewrites the
+// answer, `check` proves the ledger extracted again stands on the record. Its cases run on the same fixture run, the
+// model's answers kept in fixtures/audit/rules/ (FAKE_AUDIT): batch 1 as the model's bare text, batch 2 as claude's
+// envelope — fenced, one claim missing — and that claim's retry.
 
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -431,5 +437,72 @@ describe("the wall and the scrapling door", () => {
     expect(readFileSync(r.log, "utf8").trim().split("\n").map((l) => l.split(" ").slice(0, 3).join(" ")))
       .toEqual([`extract get ${url}`, `extract stealthy-fetch ${url}`]);
     expect(readFileSync(r.out, "utf8")).toContain("the page the stand-in scrapling read");
+  });
+});
+
+describe("audit.py — an auditor that never saw the writer reads every claim against its own rows (B56 K3 stage 3)", () => {
+  const AUDIT = join(SKILL, "scripts", "audit.py");
+  const RULES = join(dirname(resolve(import.meta.filename)), "fixtures", "audit", "rules");
+  const au = (args: string[], env: Record<string, string> = {}) => py(AUDIT, args, env);
+  /** a fresh fixture run, its ledger extracted, read by the auditor four claims to a call — the kept answers its model's */
+  function audited() {
+    const run = fresh();
+    cl(["extract", run]);
+    return { run, r: au(["run", run, "--batch", "4"], { FAKE_AUDIT: RULES }) };
+  }
+  /** the line the kept answers wrote for a claim: batch 1 bare, batch 2 in claude's envelope, fenced */
+  const said = (id: string): string => [...JSON.parse(readFileSync(join(RULES, "batch-1.json"), "utf8")).verdicts,
+    ...JSON.parse(JSON.parse(readFileSync(join(RULES, "batch-2.json"), "utf8")).result.replace(/^```json\n|\n```$/g, "")).verdicts]
+    .find((v) => v.id === id).line;
+
+  it("reads a model's answer bare, in a fence, and cut — the cut one unreadable (--selftest)", () => {
+    const r = au(["--selftest"]);
+    expect([r.code, last(r.out)]).toEqual([0, "SELFTEST OK 3/3"]);
+  });
+
+  it("hands each claim its whole line and only its own rows, as the writer saw them; a claim an answer lacks is asked once more", () => {
+    const { run, r } = audited();
+    expect(r.code, r.err).toBe(0);
+    expect(r.out).toMatch(/^denetçi: 8 iddia okundu · 4 düzeltildi · 2 çıkarıldı · 0 denetlenmedi · \$0\.02 · \d+s\n$/);
+    expect(r.err).toContain("denetçi: parti 2: 1/4 iddia okunamadı (cevapta 1 iddia yok) — yeniden soruluyor (1/1)\n");
+    const one = readFileSync(join(run, "audit", "batch-1.txt"), "utf8");
+    const two = readFileSync(join(run, "audit", "batch-2.txt"), "utf8");
+    expect([...one.matchAll(/^### (C\d{3}.*)$/gm)].map((m) => m[1])).toEqual(["C001 · hüküm", "C002", "C003", "C004"]);
+    // K1's line 66 whole, its support and its counter rows each on the line `evidence.py writer-rows` handed the writer
+    const writer = ev(["writer-rows", run]).out.split("\n");
+    const shown = (id: string) => writer.find((l) => l.startsWith(`[${id}] `));
+    expect(two).toContain(`### C006\n${readFileSync(join(run, "answer.md"), "utf8").split("\n")[23]}\ndayanak:\n  ${shown("L1720")}\n`
+      + `  ${shown("L1722")}\n  ${shown("L1755")}\nkarşı:\n  ${shown("L1721")}\n  ${shown("L1723")}\n  ${shown("L1724")}\n`);
+    expect(two).toContain("\n  [L1071] gövde yok (yazara verilmeyen satır)\n");     // judged no evidence: never the writer's
+    expect(readFileSync(join(run, "audit", "batch-2.retry.txt"), "utf8").match(/^### C\d{3}/gm)).toEqual(["### C007"]);
+    const recs = jsonl(join(run, "audit.jsonl"));
+    expect(recs.map((a) => `${a.id} ${a.verdict} ${a.batch}`)).toEqual(["C001 removed 1", "C002 corrected 1", "C003 removed 1",
+      "C004 ok 1", "C005 corrected 2", "C006 corrected 2", "C007 ok 2", "C008 corrected 2"]);
+    expect(recs[0]).toMatchObject({ section: "", line_no: 1, by: "denetci", line: said("C001"),
+      was: readFileSync(join(run, "answer.md"), "utf8").split("\n")[0] });
+  });
+
+  it("apply: the auditor's line, a table row deleted, the verdict never removed, a foreign id refused, the ids renumbered; check", () => {
+    const { run } = audited();
+    const before = readFileSync(join(run, "answer.md"), "utf8").split("\n");
+    const a = au(["apply", run]);
+    expect([a.code, a.out]).toEqual([0, "apply: C001 hüküm satırı silinmez — denetçinin satırıyla düzeltildi\n"
+      + "apply: C005 denetçi satırı reddedildi: L1720 iddianın satırlarında yok — ok\napply: 4 satır düzeltildi · 1 satır silindi\n"]);
+    // line 1, the verdict, `removed` → the auditor's line; C002's table row (7) the auditor's row of five cells; C003's
+    // (13) deleted; C005's row keeps the writer's — L1720 is another claim's row; C006 and C008 the auditor's lines
+    expect(readFileSync(join(run, "answer.md"), "utf8").split("\n")).toEqual([said("C001"), ...before.slice(1, 6), said("C002"),
+      ...before.slice(7, 12), ...before.slice(13, 23), said("C006"), before[24], said("C008"), ...before.slice(26)]);
+    const recs = jsonl(join(run, "audit.jsonl"));
+    expect(recs.map((x) => `${x.id_before} ${x.id} ${x.verdict} ${x.line_no}`)).toEqual(["C001 C001 corrected 1",
+      "C002 C002 corrected 7", "C003 null removed 13", "C004 C003 ok 13", "C005 C004 ok 19", "C006 C005 corrected 23",
+      "C007 C006 ok 24", "C008 C007 corrected 25"]);
+    expect(recs[2]).toMatchObject({ was: before[12], line: null });
+    expect(recs[4]).toMatchObject({ line: null, reason: expect.stringMatching(/^denetçi satırı reddedildi: L1720 iddianın satırlarında yok — /) });
+    // the ledger is still the old answer's, and check says so; extracted again, it stands on the record
+    const stale = au(["check", run]);
+    expect([stale.code, stale.out.split(" — ")[0]]).toEqual([1, "!! DENETİM UYUMSUZ: C001 C002 C003 C003 C004 C005 C006 C007 C008"]);
+    expect(last(cl(["extract", run]).out)).toMatch(/^CLAIMS: 7 · /);
+    expect(au(["check", run])).toMatchObject({ code: 0, out: "check: OK 8\n" });
+    expect(au(["apply", run]).code, "an audit is applied once").toBe(2);
   });
 });
