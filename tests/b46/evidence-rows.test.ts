@@ -226,3 +226,35 @@ describe("platform-of — one classifier, the contract's names", () => {
     expect(ev(["platform-of", url]).out.trim()).toBe(want);
   });
 });
+
+describe("rlib.sha256 — a passage is hashed as the ledger stores it", () => {
+  it("hashes a lone surrogate as the U+FFFD evidence.py writes, any other text as before; a written row's hash recomputes", () => {
+    // 2026-09-27: rlib.sha256 encoded with "replace" — a lone surrogate hashed as `?` — while evidence.py writes it as
+    // U+FFFD (_no_lone_surrogates), so gate H10 (`passage_sha256 != rlib.sha256(passage)`) would fail such a row
+    const dir = join(root, "run-surrogate");
+    mkdirSync(dir);
+    const texts = ["😅 tam", "Ekip için Notion'ı öne çıkaran 11 kaynak var — İ ı ş ğ", "\ufeff中文 · U+FFFD \ufffd yerinde"];
+    const py = spawnSync("python3", ["-c", [
+      "import hashlib, json, pathlib, sys",
+      "sys.path.insert(0, sys.argv[1])",
+      "import rlib, evidence as E",
+      "run, texts = pathlib.Path(sys.argv[2]), json.loads(sys.argv[3])",
+      // the real path a body takes: set_body cuts the passage and hashes it, append_rows writes the row
+      "row = E.new_row(run, 'L0001', 'https://x.com/i/status/1', 'https://x.com/i/status/1', 'twitter', None)",
+      "E.set_body(row, 'Snippet cut mid-emoji \\ud83d, a whole one \\U0001F605 stays')",
+      "E.append_rows(run, [row])",
+      "back = json.loads((run / 'evidence.jsonl').read_text(encoding='utf-8'))",
+      "print(json.dumps({'lone': rlib.sha256('a\\ud83db'), 'fffd': rlib.sha256('a\\ufffdb'), 'ours': [rlib.sha256(t) for t in texts],",
+      "  'plain': [hashlib.sha256(t.encode('utf-8')).hexdigest() for t in texts], 'passage': back['passage'],",
+      "  'stored': back['passage_sha256'], 'again': rlib.sha256(back['passage'])}))",
+    ].join("\n"), join(SKILL, "scripts"), dir, JSON.stringify(texts)],
+    { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
+    expect(py.status, py.stderr).toBe(0);
+    const got = JSON.parse(py.stdout);
+    expect(got.lone).toBe(got.fffd);
+    expect(got.ours).toEqual(got.plain);                      // every hash of a text without a lone surrogate stands
+    expect(got.passage).toBe("Snippet cut mid-emoji \ufffd, a whole one 😅 stays");
+    expect(got.again).toBe(got.stored);
+    expect(sha(got.passage)).toBe(got.stored);
+  });
+});

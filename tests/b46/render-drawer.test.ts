@@ -24,8 +24,9 @@
 // (fleet/writer-prompt.md rule 11) shows each sub-question whole under "Cevabı taşıyan sayılar", its counts line
 // under its heading, a sub-question with no row as its gap line in the thin style, and kapsama.py's second table
 // under "Nereye bakıldı". A page whose answer has no S-heading is byte for byte the page of before: fixtures/render/
-// drawer-page.html is run-drawer's page as render.py made it at af919c84, before K3 — made again once since, for the
-// overflow repair of 2026-09-27 (the `.refs` and `.tbl` rules, U+200B between two chips), nothing else in it changed.
+// drawer-page.html is run-drawer's page as render.py made it at af919c84, before K3 — made again twice since, for the
+// overflow repair of 2026-09-27 (the `.refs` and `.tbl` rules, U+200B between two chips) and for the drawer's mark and a
+// targeted table row (the `.mark` rule, `.tbl tr:target`; lane B of B56's older defects, 2026-09-27), nothing else changed.
 //
 // K3 stage 3 (the auditor, scripts/audit.py): with audit.jsonl beside the answer the page says what the auditor did — a
 // line under the verdict box, a `düzeltildi` mark after each corrected line, the two lists under the ledger — and a
@@ -35,6 +36,7 @@
 // verdict box, above the auditor's line, and the writer's `## Şekil — <name>` section stands under "Cevabı taşıyan
 // sayılar" where rule 13 puts it — after the number that carries the verdict, before S1 — with its own counts, final.md
 // alike, the ids numbered alike; its `Toplam` row and a `—` alone are no claim and carry no (0 satır); fixtures/shape/.
+// final.md says the type's line and the auditor's too, plain text, under its verdict paragraph (lane B, 2026-09-27).
 //
 // HOW IT RUNS: the REAL render.py — with the real kapsama.py, evidence.py and claims.py beside it, the
 // engine's scripts copied to a temporary folder — on a temporary copy of fixtures/evidence/run-drawer:
@@ -366,8 +368,9 @@ describe("final.html — the research type: its line under the verdict, its Şek
     spawnSync("python3", [join(root, "engine", "render.py"), join(run, "answer.md"), "--evidence", join(run, "evidence.jsonl"),
       "--out", join(run, "final.md")], { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
     const md = readFileSync(join(run, "final.md"), "utf8");
-    expect(md.startsWith("Net bir kazanan yok: iş bölümü var [1] [2]. (2 satır · 2 bağımsız kaynak)\n\nOkunan dört satırın ikisi "
-      + "Astra 6'yı, ikisi Fable 5.1'i öne koyuyor [2, 3]. (2 satır · 2 bağımsız kaynak)\n\n## Şekil — Karşılaştırma\n\n"), md).toBe(true);
+    expect(md.startsWith("Net bir kazanan yok: iş bölümü var [1] [2]. (2 satır · 2 bağımsız kaynak)\n\nrapor tipi: Karşılaştırma · "
+      + "kaynak: model\n\nOkunan dört satırın ikisi Astra 6'yı, ikisi Fable 5.1'i öne koyuyor [2, 3]. (2 satır · 2 bağımsız kaynak)"
+      + "\n\n## Şekil — Karşılaştırma\n\n"), md).toBe(true);
     expect(md).toContain("| S2 — Geçiş yapanlar | 1 [4] | 1 [3] | kota [4] (2 satır · 2 bağımsız kaynak) |\n| Diğer | — | — | satır yok |\n"
       + "| Toplam | 2 | 2 | — |\n\n## S1 — X'te iş bölümü\n");
     expect(md.match(/^## .*$/gm)).toEqual(["## Şekil — Karşılaştırma", "## S1 — X'te iş bölümü", "## S2 — Geçiş yapanlar",
@@ -407,6 +410,27 @@ describe("final.html — the research type: its line under the verdict, its Şek
     const bare = render(run).page;
     expect(bare).toContain('<p class="audit-n">');
     expect(bare).not.toContain("shape-n");
+  });
+
+  it("writes the type's line and the auditor's into final.md under the verdict paragraph, plain text; without them, as before", () => {
+    // the K3 stage-2 run of 2026-09-27 08:19: both lines stood under the verdict box on its page, neither in its final.md
+    const run = join(root, "shaped-audited-md");
+    cpSync(FIX, run, { recursive: true });
+    const md = () => {
+      spawnSync("python3", [join(root, "engine", "render.py"), join(run, "answer.md"), "--evidence", join(run, "evidence.jsonl"),
+        "--out", join(run, "final.md"), "--no-coverage"], { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
+      return readFileSync(join(run, "final.md"), "utf8");
+    };
+    const bare = md();
+    const verdict = bare.split("\n").find((l) => l.startsWith("Net bir kazanan yok")) ?? "";
+    expect(verdict.endsWith("[1] [2]. (2 satır · 2 bağımsız kaynak)"), bare).toBe(true);
+    const auditor = "denetçi: 6 iddia okundu · 2 düzeltildi · 1 çıkarıldı · 1 denetlenmedi";
+    cpSync(join(dirname(resolve(import.meta.filename)), "fixtures", "audit", "render", "audit.jsonl"), join(run, "audit.jsonl"));
+    cpSync(join(SHAPE, "subquestions.json"), join(run, "subquestions.json"));
+    // each its own paragraph right under the verdict, the type's first — and nothing else in the file moves
+    expect(md()).toBe(bare.replace(`${verdict}\n`, `${verdict}\n\nrapor tipi: Karşılaştırma · kaynak: model\n\n${auditor}\n`));
+    rmSync(join(run, "subquestions.json"));
+    expect(md()).toBe(bare.replace(`${verdict}\n`, `${verdict}\n\n${auditor}\n`));
   });
 });
 
@@ -453,6 +477,19 @@ describe("final.html — a page that stands alone", () => {
     const gaps = [...cell.matchAll(/<\/a>([^<]*)<a class="ref"/g)].map((m) => m[1]);
     expect(gaps).toHaveLength(24);
     for (const g of gaps) expect(g).toMatch(/^[\s\u200B]+$/);
+  });
+
+  it("keeps a drawer's `cevapta · …` mark inside its column and a targeted table row's outline inside its scroll box", () => {
+    // 2026-09-27, headless Chromium at 390 px, every drawer open: on the K3 page one mark, `cevapta · 15, 56, 7, …` (20
+    // numbers, `white-space:nowrap`), reached x = 650 and the page with it; and a ledger link's `tr:target` in a `.tbl`
+    // (overflow-x:auto) showed only its top and bottom lines — the outline, 2 px outside the row, was clipped at the sides
+    expect(page).toContain('<a class="mark" href="#q-');
+    const mark = page.match(/\.mark\{[^}]*\}/)?.[0] ?? "";
+    expect(mark).toContain("display:inline-block;max-width:calc(100% - 6px)");
+    expect(mark).not.toContain("nowrap");
+    expect(page).toMatch(/<tr id="C\d{3}">/);
+    expect(page).toContain("li:target,tr:target,p:target{outline:2px solid var(--accent);outline-offset:2px}");
+    expect(page).toContain(".tbl tr:target{outline-offset:-2px}");
   });
 });
 

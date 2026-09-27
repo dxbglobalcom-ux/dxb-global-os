@@ -55,6 +55,7 @@ a.ref:hover,a.ref:focus-visible{background:var(--accent);color:var(--on-accent)}
 code{padding:1px 4px;border-radius:3px;background:var(--chip);font:400 .9em var(--mono)}
 hr{margin:24px 0;border:0;border-top:1px solid var(--rule)}
 .tbl{margin:0 0 18px;overflow-x:auto;max-width:100%}
+.tbl tr:target{outline-offset:-2px}
 table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5}
 th,td{padding:8px 12px 8px 0;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
 th:last-child,td:last-child{padding-right:0}
@@ -92,7 +93,7 @@ details[open]>summary::before{content:"−"}
 .dm{font:400 12.5px/1.55 var(--mono);color:var(--muted)}
 .did{color:var(--ink-2)}
 .vd{color:var(--ink-2)}
-.mark{margin-left:6px;padding:1px 6px;border-radius:3px;background:var(--accent);color:var(--on-accent);font:600 11px/1.5 var(--mono);text-decoration:none;white-space:nowrap}
+.mark{display:inline-block;max-width:calc(100% - 6px);margin-left:6px;padding:1px 6px;border-radius:3px;background:var(--accent);color:var(--on-accent);font:600 11px/1.5 var(--mono);text-decoration:none}
 .dt{margin:4px 0;font-size:15px;line-height:1.55}
 .du,.src{font:400 12.5px/1.45 var(--mono);overflow-wrap:anywhere;word-break:break-word}
 .none,.empty{color:var(--muted);font-style:italic}

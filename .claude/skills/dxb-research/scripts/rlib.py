@@ -86,7 +86,12 @@ def new_run_id() -> str:
 
 
 def sha256(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8", "replace")).hexdigest()
+    """The text's SHA-256 as the ledger stores the text: each lone surrogate is U+FFFD first — evidence.py writes every
+    row through _no_lone_surrogates, the same round trip — then strict UTF-8. WHY (2026-09-27): "replace" hashed a lone
+    surrogate as `?` while the row kept U+FFFD, so gate H10 could not recompute such a passage's hash. A text without
+    one is its own UTF-8, hashed as before."""
+    whole = text.encode("utf-16", "surrogatepass").decode("utf-16", "replace")
+    return hashlib.sha256(whole.encode("utf-8")).hexdigest()
 
 
 # ------------------------------------------------- tamper evidence
