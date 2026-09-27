@@ -1,0 +1,1 @@
+bodies/ saklanmadi: 20.3 MB (5 MB ustu), kosu klasorunde kaldi: /home/dxb/DxB Global OS/var/research/runs/20260926-1807-k2-astra-fable/bodies

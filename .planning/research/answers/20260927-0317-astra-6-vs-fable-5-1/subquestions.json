@@ -1,0 +1,72 @@
+{
+  "source": "model",
+  "cost_usd": 0.063,
+  "items": [
+    {
+      "id": "S1",
+      "title": "Platformlara göre tercih dağılımı",
+      "question": "Her platformda (Reddit, X, Hacker News, YouTube, forumlar, Zhihu, v2ex, linux-do, Almanca/Türkçe topluluklar) gerçek kullanıcılar Astra 6'yı mı Fable 5.1'i mi tercih ediyor?",
+      "signals": [
+        "Astra 6 vs Fable 5.1",
+        "prefer Fable",
+        "更喜欢 Astra",
+        "lieber Fable"
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "Hangi iş için hangisi",
+      "question": "Kullanıcılar hangi iş türlerinde (kodlama, yazı, analiz, ajan işleri vb.) hangi modeli seçiyor?",
+      "signals": [
+        "for coding",
+        "for refactoring",
+        "写代码",
+        "agentic tasks"
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Tercihin gerekçeleri",
+      "question": "Kullanıcılar tercihlerini kalite, hız, güvenilirlik gibi hangi somut gerekçelerle açıklıyor?",
+      "signals": [
+        "hallucinates less",
+        "better at",
+        "更稳定",
+        "faster"
+      ]
+    },
+    {
+      "id": "S4",
+      "title": "Maliyet ve kota şikâyetleri",
+      "question": "Kullanıcılar iki model için hangi fiyatları, kotaları ve kullanım limitlerini aktarıyor?",
+      "signals": [
+        "rate limit",
+        "usage cap",
+        "per million tokens",
+        "额度"
+      ]
+    },
+    {
+      "id": "S5",
+      "title": "Geçiş yapanlar ve nedenleri",
+      "question": "Kimler bir modelden diğerine geçti ve bunun nedeni neydi?",
+      "signals": [
+        "switched to",
+        "cancelled my subscription",
+        "转用",
+        "gewechselt"
+      ]
+    },
+    {
+      "id": "S6",
+      "title": "Karşı kanıtlar ve itirazlar",
+      "question": "Baskın tercihi çürüten veya ona itiraz eden kullanıcı deneyimleri nelerdir?",
+      "signals": [
+        "actually worse",
+        "overrated",
+        "not true",
+        "反而更差"
+      ]
+    }
+  ]
+}

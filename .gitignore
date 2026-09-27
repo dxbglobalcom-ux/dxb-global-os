@@ -94,3 +94,8 @@ tests/e2e/evidence/
 
 # Python bytecode (scripts/model-watch and other python helpers)
 __pycache__/
+
+# Raw research runs that carry third-party tokens inside fetched URLs
+# (XiaoHongShu xsec_token, a presigned S3 link, Crossref keys gitleaks flags) — kept on disk, never in git.
+/.planning/research/answers/20260926-0234-astra-6-vs-fable-5-1-deep-run-raw/
+/.planning/research/answers/20260926-1608-astra-6-vs-fable-5-1-k1-live-run/

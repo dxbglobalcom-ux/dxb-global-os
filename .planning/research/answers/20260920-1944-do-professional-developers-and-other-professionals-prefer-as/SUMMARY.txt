@@ -1,0 +1,53 @@
+AVCI           SURE    PARA  KAYNAK   YENI  BEYAN  ACILAN KAPILAR
+code           319s    1.00     196    196    100  github hn model-arama zemin-okudu
+counter        351s    1.17     146    145     15  quora sweep youtube zemin-okudu zincir
+crowd          516s    1.65     199    175    484  browser model-arama reddit sweep zemin-okudu zincir
+foreign        748s    2.37     516    493     25  cn quora reddit sweep x zemin-okudu zincir
+measure        373s    0.93      85     48      1  akademik quora youtube zemin-okudu zincir
+rival          492s    1.30     126     77     52  model-arama quora reddit zemin-okudu zincir
+video          562s    1.07      51     31     69  browser cn youtube zemin-okudu zincir
+TOPLAM                 9.50    1165
+   (BEYAN = avcinin kendi cumlesinden okunan sayi — SAYIM DEGIL.)
+
+INSAN (sayildi): 82 ayri kisi · 166 yorum · 6 baslik — crowd.sh'in makine sayimi.
+
+GENIS ZEMIN (filo acti, avcilardan once): 1 dil/sorgu · 47 kanal dosyasi, 19 tanesi dolu · GOOGLE (2 kapi) 16848 bayt · DUCKDUCKGO 0 bayt · okunan sayfa govdesi 8
+   zemini okuyan avci: 7/7 (code, counter, crowd, foreign, measure, rival, video)
+
+DOYGUNLUK: son avci (video) getirdigi kaynaklarin %61'ini ilk kez getirdi.
+   (%5'in altina dustugunde sefer biter — yeni avci eklemek para yakmaktir.)
+
+KAPANAN KAPILAR (her avcinin D blogundan — delik sessiz kalmaz):
+   [code] KAPANAN KAPILAR
+   [code] - **StackOverflow**: "Fable 5.1" veya "Astra 6" içeren hiçbir soru bulunamadı — arama motoru sonucu boş döndü,
+   [code] - **Zemin taramasının `hackernews.raw` dosyası**: HN Algolia API'ye gönderilen sorgu tüm görev cümlesini URL-e
+   [counter] KAPANAN KAPILAR
+   [counter] - **quora** ve **quora-forums** kanalları: sorgu için "Sonuç bulunamadı" (NOT_FOUND) — hem genel zeminde hem k
+   [counter] - **google** kanalı: kod 1, "No search results found" — yedek zincir google-deep→google ile 2303 bayt kurtarıl
+   [crowd] KAPALI KAPILAR**
+   [crowd] - Fleet'in ortak `ground/` sweep'i: `reddit.raw` (0 kod, boş), `hackernews.raw` (HTTP 400), `lobsters.raw` (Du
+   [crowd] - **7 Reddit thread'i**: `opencli reddit read` art arda **HTTP 429** (rate limit) ve sonra `TypeError: Failed 
+   [foreign] KAPALI KAPILAR
+   [foreign] - **linux.do**: Oturum açma zorunlu (`AUTH_REQUIRED`, makinede giriş yok) — doğrudan fetch.py ile arama sayfas
+   [foreign] - **Almanca forumlar (golem.de forum araması, heise.de)**: Google/Bing üzerinden `site:heise.de OR site:golem.
+   [measure] CLOSED DOORS**
+   [measure] - `lmarena.ai/leaderboard` — JS ile render edilen tablo, statik fetch sadece iskelet HTML'i döndürdü (52.242 b
+   [measure] - `arxiv`, `crossref`, `europepmc`, `openalex` (ground sweep) — dördü de sadece sorgu metnini yankıladı, alaka
+   [rival] KAPALI KAPILAR
+   [rival] - **Reddit resmi API rate-limit / "TypeError: Failed to fetch"** — `opencli reddit read` üç ayrı denemede (thr
+   [rival] - **Quora** — zeminde bırakılan `02-quora.com.md` boş arama sonucu döndürmüştü ("We couldn't find any results"
+   [video] KAPANAN KAPILAR
+   [video] - **Bilibili yorum/danmaku katmanı** — `opencli bilibili comments` → "Navigation rejected" (giriş gerektiriyor
+   [video] - **Bilibili altyazı API'si** (`opencli bilibili subtitle`) — iki video için de "SyntaxError: Unexpected token
+
+SERITLERIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:
+   [code] GitHub/issue-tracker/Hacker News kanalımda gerçek geliştiricilerin sözleri net bir kazanan göstermiyor: teknik topluluk görevine göre bölünmüş — Fable 5.1 zor/uzun süren kodlama ve ajan-orkestrasyon v
+   [counter] Karşı-kanıt taraması, "Fable 5.1 kodlamada kazanıyor / Astra ajan işinde kazanıyor" genel anlatısını **doğruluyor değil, sarsıyor**: her iki modelin de gerçek kullanıcılar tarafından "kullanılamaz hal
+   [crowd] (Kalabalık/Forum Lanesi) Reddit + Hacker News + Lobsters'ta okunan **484 farklı kişinin** sözlerine göre net bir galip yok: kodlama görevlerinde Astra 6 lehine hafif sayısal ağırlık var (özellikle "ha
+   [foreign] **Kendi lanemde (Çince ve Türkçe kaynaklar) net bir kazanan yok: Çince forumlarda hafif Astra ağırlıklı bir eğilim (hız/kota dayanıklılığı + Çin'de Claude'un erişim/yasaklama sorunları yüzünden), Türk
+   [measure] ** Bağımsız toplam endekslerde (Artificial Analysis) Fable 5.1 önde, ama OpenAI'nin kendi yayınladığı 11 spesifik/dar bench'te Astra kazanıyor ve görev başına maliyeti 2-2,4x daha düşük — "kim daha iy
+   [rival] Rakibin kendi evinde (r/codex, r/OpenAI, community.openai.com) profesyonel kullanıcılar net bir kazanan belirlemiyor: kodlama kalitesinde hafif eğilim Fable 5.1'e (mimari/temiz kod), ham "one-shot çöz
+   [video] YouTube ve Bilibili'deki gerçek kullanıcı testlerinde net bir kazanan yok — iş türüne göre bölünmüş bir tercih var: ajanik/otonom görevlerde (uzun süre kesintisiz çalışma, maliyet-etkinlik, robot kolu
+   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)
+
+raporlar: /tmp/claude-1000/-home-dxb-DxB-Global-OS/7d210746-70d5-4fc6-81d3-bcbb2f1581e1/scratchpad/astra-vs-fable/run/HUNTER-*.md

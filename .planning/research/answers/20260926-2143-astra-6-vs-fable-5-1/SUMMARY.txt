@@ -1,0 +1,81 @@
+AVCI            SURE   PARA  KAYNAK  FETCH   ADD  ACILAN KAPILAR
+x           161/600s   1.44     564      1    13  cn defter x
+video       140/600s   1.19     115      0    21  defter
+forums      257/600s   1.34     165      0    24  cn defter quora reddit
+pro         153/600s   1.26     204      0     0  cn defter
+code         78/600s   0.56     147      0     0  defter
+foreign     153/600s   2.15     294      0     0  cn defter
+counter     276/600s   1.98     181      0    35  cn defter
+TOPLAM                 9.93    1648
+   (SURE = saniye / zaman asimi · KAYNAK = hatasiz arac cagrisinin actigi adres · FETCH, ADD = evidence.py komutu)
+
+DEFTER — evidence.jsonl, makine sayimi (BULUNDU = ayri adres · GOVDELI = govdesi okunmus ayri adres)
+PLATFORM         BULUNDU  GOVDELI
+x                    300      300
+threads                0        0
+bluesky                1        1
+youtube               42       42
+tiktok                37       37
+instagram              2        2
+reddit               172      170
+hackernews             9        9
+stackoverflow          0        0
+quora                 63       63
+linkedin               2        2
+facebook               7        7
+substack              34       34
+medium                18       18
+github               123      123
+chinese              138      138
+web                  477      470
+TOPLAM              1425     1416
+   satir: 1714 · satir sahibi: ground 1423 · x 59 · video 56 · forums 55 · foreign 45 · pro 38 · counter 33 · code 5
+
+AVCILARIN KENDI SATIRLARI — avcinin BEYANI, sayim degil (sayim: yukaridaki DEFTER)
+   [x] PLATFORM x: Görev bazında bölünmüş tercih var. Nate Herk'in 15 görevlik testinde Astra 10'a 5 kazandı ve daha ucuza geldi. Pawel Huryn'in 105 hatalık testinde Astra 48, Fable 43 hata çözdü. Fable'ı derin kodlama ve uzun 
+   [x] PLATFORM threads: ilgili satır yok. Zeminde bu platformdan hiç adres bulunamadı, batch boş döndü.
+   [x] PLATFORM bluesky: ilgili satır yok. Zeminin bulduğu tek satır triage aşamasında ilgisiz sayıldı.
+   [x] KULLANDIGIM SATIRLAR: 39 kimlik — defterde 39 · DEFTERDE YOK 0
+   [x] okunacak adres kalmadi (avcinin kendi satiri)
+   [video] PLATFORM youtube: Karşılaştırma yapan içerik üreticilerinin çoğu tasarım, 3D, satranç, hız ve token verimliliğinde Astra'yı kazanan buluyor. Kendi işinde kodlayanlar Fable'ı talimatı izlemesi, hata ayıklaması ve uzun kod
+   [video] PLATFORM tiktok: Yorumlar okunamadı, çünkü sayfalar "Log in" duvarının arkasında ve gövdelerde yalnız video açıklamaları var. Bu açıklamalar pazarlama ağırlıklı; Astra'yı hızlı ve görselde üstün buluyor ama token yediğin
+   [video] PLATFORM instagram: ilgili satır yok; batch bu platformda okunacak satır vermedi.
+   [video] KULLANDIGIM SATIRLAR: 56 kimlik — defterde 56 · DEFTERDE YOK 0
+   [video] okunacak adres kalmadi (avcinin kendi satiri)
+   [forums] PLATFORM reddit: Fable kod ve planlamada, Astra hız, 3D, bilgisayar kullanımı ve ML titizliğinde öne çıkıyor. Maliyet konusunda iki taraflı kanıt var: Fable'ın önbellek okuması dört kat ucuz ve uzun bağlamda daha ucuz; A
+   [forums] PLATFORM hackernews: Sayfalarda yalnızca bağlantı başlıkları var, tartışma yorumu yok. Tek içerikli başlık, Astra'nın el yazısı düzeltmeleri tanımada Fable'ı yendiğini söylüyor. — satırlar: L1552
+   [forums] PLATFORM stackoverflow: İlgili satır yok.
+   [forums] PLATFORM quora: Gövdelerin çoğu Cloudflare doğrulama duvarına ya da "Something went wrong" hata sayfasına takıldı ve içerik okunamadı. Okunabilen tek kullanıcı cevabı Blender işinde Astra'yı seçiyor; aynı kullanıcı Fable
+   [forums] KULLANDIGIM SATIRLAR: 55 kimlik — defterde 55 · DEFTERDE YOK 0
+   [forums] okunacak adres kalmadi (avcinin kendi satiri)
+   [pro] PLATFORM linkedin: Chris Donnelly adlı kurucu tıklama işlerinde Astra'yı, düşünme işlerinde Fable'ı kullandığını yazıyor; yorumcular işe göre model seçmeyi onaylıyor — satırlar: L1433, L1435
+   [pro] PLATFORM facebook: Claude Community tartışmalarında 25 yıllık bir kurumsal geliştirici mimari ve denetimde Fable'ı, uygulamada Astra'yı kullanıyor. Bir kullanıcı karmaşık kod tabanlarında hata bulmada Fable'ı daha iyi bu
+   [pro] PLATFORM substack: İnce ayrım var. Fable, Artificial Analysis dizininde, dil işlerinde ve cache fiyatında (0,25 $) önde. Astra ise bağımsız kodlama tahtasında (13-0), tasarımın ilk taslağında ve görev başına token veriml
+   [pro] PLATFORM medium: Yazıların çoğu ikinci el karşılaştırma ya da SEO rehberi. Birinci ağızdan söylenenler geniş kodlama akışı için Fable'ı öneriyor ve bazı kullanıcıların hız ile yürütme için Astra'ya geçtiğini aktarıyor — 
+   [pro] KULLANDIGIM SATIRLAR: 38 kimlik — defterde 38 · DEFTERDE YOK 0
+   [pro] okunacak adres kalmadi (avcinin kendi satiri)
+   [code] PLATFORM github: Kullanıcı tercihi ya da geçiş hikâyesi yok. Chase AI akışı Astra'yı "daha ucuz, çoğu benchmark'ta eşit veya üstün" diye anlatıyor ve modeller arasında yönlendirme öneriyor. Japonca özetlerde Fable 5.1 he
+   [code] KULLANDIGIM SATIRLAR: 10 kimlik — defterde 10 · DEFTERDE YOK 0
+   [code] okunacak adres kalmadi (avcinin kendi satiri)
+   [foreign] PLATFORM chinese: v2ex'te görüş bölünmüş. Bir kısım kullanıcı Astra'yı açıkça üstün buluyor. Diğerleri Fable'ı planlayıcı ya da "komutan" olarak kullanıp Astra ile çapraz denetim yapıyor. Birkaç kişi de iki modeli denk s
+   [foreign] KULLANDIGIM SATIRLAR: 45 kimlik — defterde 45 · DEFTERDE YOK 0
+   [foreign] okunacak adres kalmadi (avcinin kendi satiri)
+   [counter] PLATFORM web: Karşı görüşün en güçlü dayanakları şunlar: Astra'nın görev başına maliyeti daha düşük ve Terminal-Bench'te önde (L1607, L1641, L1447). Bazı elle yapılan testlerde Astra kazandı (L1440, L1704, L1569, L1549, 
+   [counter] KULLANDIGIM SATIRLAR: 34 kimlik — defterde 34 · DEFTERDE YOK 0
+   [counter] okunacak adres kalmadi (avcinin kendi satiri)
+
+AVCILARIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:
+   [x] X'te net bir kazanan yok, görev bölüşümü var: Astra 6 bilgisayar kullanımında, 3D/Blender'da, ajan işlerinde ve görev başına maliyette öne çıkıyor. Kotayı ise çok hızlı yakıyor ve yavaş olduğu söyleni
+   [video] Video kanallarında ne Astra 6 ne Fable 5.1 açık ara tercih ediliyor. Tek seferlik görsel, 3D ve oyun testlerinde, ayrıca hız, token ve maliyet tarafında Astra daha çok kazanıyor; kotadan yakınıp Astra
+   [forums] Forumlarda Eylül 2026 itibarıyla tek bir kazanan yok. Fable 5.1 kod kalitesi, talimata uyma, planlama ve orkestrasyon (işi dağıtıp yönetme) için tercih ediliyor. Astra 6 ise hız, bilgisayar kullanımı,
+   [pro] Profesyoneller tek bir kazanan seçmiyor, iki modeli birlikte kullanıyor. Fable 5.1'i düşünme, mimari, denetim, uzun bağlamlı ve dil ağırlıklı işte tercih ediyorlar. Astra'yı ise bilgisayar kullanımı, 
+   [code] GitHub'da Astra 6'yı ya da Fable 5.1'i tercih ettiğini kendi sözleriyle söyleyen gerçek bir kullanıcı yok; issue ve PR'larda yalnızca haber özetleri ve RSS aktarımları var. Bu özetlere göre Astra, ben
+   [foreign] Çinli geliştiriciler iki modeli birlikte kullanıyor, tek bir kazanan seçmiyor. Astra 3D ve ön yüz işlerinde, Computer Use'ta, uzun ve zor görevlerde öne çıkıyor; kıyas tablolarında ve harcama payında 
+   [counter] Açık web'de Fable 5.1 hâlâ öne çıkan tercih; ama karşı görüş zayıf değil. Astra görev başına daha ucuz. Terminal-Bench, ajan ve bilgisayar kullanımı işlerinde öndü, bazı elle yapılan testleri de kazan
+   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)
+
+INSAN (sayildi): 638 ayri kisi · 931 yorum · 14 baslik — crowd.sh'in makine sayimi.
+
+GENIS ZEMIN (filo acti, avcilardan once): 3 dil/sorgu · 140 kanal dosyasi, 124 tanesi dolu · GOOGLE (2 kapi) 72378 bayt · DUCKDUCKGO 33005 bayt · okunan sayfa govdesi 24
+
+raporlar: /home/dxb/DxB Global OS/var/research/runs/20260926-1807-k2-astra-fable/HUNTER-*.md
