@@ -85,6 +85,8 @@ export const C = {
     { id: "b56-older-defect-list-repair-accepted-2026-09-27", subject: /\bolder (B56 )?defect list\b/i },
     // B57 — dxb-team1, the second orchestrator door, accepted by his eye 2026-09-27 23:31 ("57 göz tmm kapat bir daha gözüme görülmesin tahtada da kapananlara at defet gitsin"); spelled "B57" in STATE and on the board.
     { id: "b57-accepted-by-his-eye-2026-09-27", subject: /\bB57\b/ },
+    // B56 — the research door, closed by his word 2026-09-27 23:44 ("evet b56 yı onayladık bitti"); spelled "B56" in STATE and on the board.
+    { id: "b56-accepted-by-his-eye-2026-09-27", subject: /\bB56\b/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from

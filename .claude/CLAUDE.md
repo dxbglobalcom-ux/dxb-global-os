@@ -132,9 +132,9 @@ the date. The battery fails on an unregistered approval claim.
   on his order, 2026-09-26.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
-- **Code: the `builder` subagent at `max`** (CEO 2026-09-24
-  <!-- CEO-OK: code-by-builder-at-max-hook-2026-09-24 -->; `builder-lean` · `medium` for simple
-  work or at weekly quota ≥ 80 %); `dxb-code-gate` refuses code at other efforts. Other subagents audit, refute
+- **Code: the session writes it; the `builder` seats write code only inside an orchestration**
+  (`dxb-team1`, `dxb-crew`); the code-gate hook was removed on his word, 2026-09-28
+  <!-- CEO-OK: code-gate-removed-2026-09-28 -->. Other subagents audit, refute
   and sweep; they never write — and a
   CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
   ruler scripts included (the audit law, CEO 2026-09-15

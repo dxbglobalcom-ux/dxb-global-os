@@ -1650,5 +1650,21 @@
     "conditions": "Closes B57 as it stands: the two owed §6 measurements of the dxb-team1 door (the xhigh twin of one verification · the same lane written by a subagent and by a separate session) were NOT run and are not carried by any row — his closing word came without them; they return only if he orders them. B58 (the code gate's cp/mv/install hole) is a separate row and stays open.",
     "session": "Fable 5.1 session 1a145178, opened Pazar 2026-09-27 ~23:20 — heard first-hand in this conversation, 2026-09-27 23:31 local, in answer to the position line 'B57 gözünüzü bekliyor'.",
     "where": "board B57 (Section 5, closed) · .planning/STATE.md 2026-09-27 and 2026-09-25 blocks (OPEN: B57 → HISTORY) · the B57 paragraph removed from 'What is open'"
+  },
+  "b56-accepted-by-his-eye-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "HE CLOSED B56 BY HIS OWN WORD — the research door at Perplexity level (K1, K2, K3 engines, each already accepted by his eye). The row goes to the board's closed section.",
+    "verbatim": "evet b56 yı onayladık bitti. en alta atılması gerekiordu normalde.",
+    "conditions": "Closes B56 whole. The two small items its waits-on cell still carried (low vs medium for the hunters; the 08:19 stage-2 test run not kept) close with it, unrun. Said while complaining that the opening still showed B56 as waiting after he had approved it.",
+    "session": "Opus 5.5 session dba211ac, opened 2026-09-27 ~23:36 — heard first-hand, 23:44 local.",
+    "where": "board B56 (Section 5, closed) · .planning/STATE.md (B56 paragraph removed from 'What is open'; OPEN: B56 → HISTORY)"
+  },
+  "code-gate-removed-2026-09-28": {
+    "date": "2026-09-28",
+    "what": "HE ORDERED THE CODE-GATE HOOK THROWN AWAY. ~/.claude/hooks/dxb-code-gate.py forced every code write in every session to a builder subagent at max; he said the builder-at-max rule was meant only for orchestration (a Fable lead, Opus 5.5 writers — dxb-team1), to make it cheaper. Outside an orchestration the session writes its own code and records.",
+    "verbatim": "ben bunu orkestrasyon yapıldığında ucuz olur diye söyledim mesela fable yönetsin opus 5.5 baş yazar olsun diye … hayır ya bu saçmalığı at çöpe gitsin zaten bizim dxb-team1 yok mu var.",
+    "conditions": "Narrows code-by-builder-at-max-hook-2026-09-24 and simple-code-at-medium-rule-2026-09-24 to orchestration doors (dxb-team1, dxb-crew); the hook itself is removed (LAW A). Not a new law.",
+    "session": "Opus 5.5 session dba211ac — heard first-hand, 2026-09-28 ~00:10 local.",
+    "where": "~/.claude/settings.json (PreToolUse entry removed) · ~/.claude/hooks/dxb-code-gate.py and tests/hooks/code-gate.test.ts moved to the trash · ~/.claude/CLAUDE.md · .claude/CLAUDE.md · dxb-crew door · builder / builder-lean agents"
   }
 }
