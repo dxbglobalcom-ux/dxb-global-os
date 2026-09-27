@@ -83,6 +83,8 @@ export const C = {
     { id: "research-k3-stage2-accepted-by-his-eye-2026-09-27", subject: /\bK3 (STAGE|stage) 2\b|\b(STAGE|stage) 2 \(rapor tipine göre şekil\)\b|\bstage 2's page\b/ },
     // B56's older defect list, repaired 2026-09-27 08:33→10:47 through dxb-team1, accepted by his eye 2026-09-27 ~13:29 (the same sentence); spelled "older defect list" / "older B56 defect list" in STATE and on board B56.
     { id: "b56-older-defect-list-repair-accepted-2026-09-27", subject: /\bolder (B56 )?defect list\b/i },
+    // B57 — dxb-team1, the second orchestrator door, accepted by his eye 2026-09-27 23:31 ("57 göz tmm kapat bir daha gözüme görülmesin tahtada da kapananlara at defet gitsin"); spelled "B57" in STATE and on the board.
+    { id: "b57-accepted-by-his-eye-2026-09-27", subject: /\bB57\b/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from

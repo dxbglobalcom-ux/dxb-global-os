@@ -1642,5 +1642,13 @@
       "conditions": "An order, not an approval of any work; nothing is accepted by it (LAW B). Not a law: he refused a hook-based remedy in the same breath ('kanca manca ile istemiorm'); the remedy he named is a working habit — a reference to past work carries the time read from its record. The dated record of the hook's building (STATE 2026-09-27 block) stays as history with the deletion appended.",
       "session": "Fable 5.1 chief-engineer session d45b26da, opened Pazar 2026-09-27 20:55 — heard first-hand in this conversation, 22:55 local; his follow-ups 22:57 ('bu dün kurulmadı arkadşaım bugün kuruldu') and ~23:00 ('anladın mı derdimi?').",
       "where": ".claude/settings.json (UserPromptSubmit entry removed) · .claude/hooks/dxb-now.sh, .codex/hooks/dxb-now.sh, tests/hooks/dxb-now.test.ts (deleted) · .planning/STATE.md 2026-09-27 block"
+  },
+  "b57-accepted-by-his-eye-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "HE ACCEPTED B57 BY HIS OWN EYE — dxb-team1, the second orchestrator door (the Fable 5.1 lead, up to three Opus 5.5 writers at medium/max by difficulty, the fresh verifier at high, refuter/arbiter on a problem), built 2026-09-25 night on his diagram, the default door since 2026-09-26 00:05, and its 2026-09-27 evening changes (the fresh-writer repair step 8718c52f, the resume lock c7f20188, the read rule 022eec2e) — all listed to him as waiting his eye. LAW B acceptance, not a law. He ordered the row moved to the closed section and never shown to him again.",
+    "verbatim": "57 göz tmm kapat bir daha gözüme görülmesin tahtada da kapananlara at defet gitsin. sonra hemen konuşmamız gereken. orkestratörlük yapısı çok önemli.",
+    "conditions": "Closes B57 as it stands: the two owed §6 measurements of the dxb-team1 door (the xhigh twin of one verification · the same lane written by a subagent and by a separate session) were NOT run and are not carried by any row — his closing word came without them; they return only if he orders them. B58 (the code gate's cp/mv/install hole) is a separate row and stays open.",
+    "session": "Fable 5.1 session 1a145178, opened Pazar 2026-09-27 ~23:20 — heard first-hand in this conversation, 2026-09-27 23:31 local, in answer to the position line 'B57 gözünüzü bekliyor'.",
+    "where": "board B57 (Section 5, closed) · .planning/STATE.md 2026-09-27 and 2026-09-25 blocks (OPEN: B57 → HISTORY) · the B57 paragraph removed from 'What is open'"
   }
 }
