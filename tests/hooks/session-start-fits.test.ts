@@ -21,12 +21,12 @@ afterAll(() => { for (const d of [quiet, loud]) rmSync(d, { recursive: true, for
 
 describe("the session-start ruler bites", () => {
   it("rings on a block the harness would refuse", () => {
-    const fat = "--- HIS LAST ORDER ---\n" + "x".repeat(C.maxBytes + 1) + "\n--- WHAT HAPPENS NEXT ---\n--- WHAT WAITS ON HIM ---\n=== END ===\n";
+    const fat = "--- WHERE WE LEFT OFF ---\n" + "x".repeat(C.maxBytes + 1) + "\n--- NEXT ---\n--- WAITING ON HIS APPROVAL ---\n=== END ===\n";
     const r = measure(fat, root);
     expect(r.verdicts[0].pass).toBe(false);
   });
   it("rings on a cut that ends mid-word", () => {
-    const out = "--- HIS LAST ORDER ---\nhe ordered a diagnos\n(+3 more lines — the rest of this section is in .planning/STATE.md)\n--- WHAT HAPPENS NEXT ---\n--- WHAT WAITS ON HIM ---\n=== END ===\n";
+    const out = "--- WHERE WE LEFT OFF ---\nhe ordered a diagnos\n(+3 more lines — the rest of this section is in .planning/STATE.md)\n--- NEXT ---\n--- WAITING ON HIS APPROVAL ---\n=== END ===\n";
     expect(measure(out, root).verdicts[2].pass).toBe(false);
   });
   it("rings when a heading is missing", () => {

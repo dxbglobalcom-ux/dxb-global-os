@@ -20,11 +20,11 @@ export const C = {
   state: ".planning/STATE.md",
   /** the whole block must be delivered by the harness as one piece: measured refused at 51,738 */
   maxBytes: 8000,
-  headings: ["--- HIS LAST ORDER ---", "--- WHAT HAPPENS NEXT ---", "--- WHAT WAITS ON HIM ---", "=== END ==="],
+  headings: ["--- WHERE WE LEFT OFF ---", "--- NEXT ---", "--- WAITING ON HIS APPROVAL ---", "=== END ==="],
   /** a cut section ends on a sentence, never mid-word: the character before a "(+N more lines" note */
   sentenceEnd: /[.·)*`"”]\s*$/,
   moreLines: /^\(\+\d+ more lines/,
-  /** how much of the newest live-order block must appear verbatim (his order, not a summary of it) */
+  /** how much of "Where we left off" must appear verbatim (the record, not a summary of it) */
   verbatimHead: 200,
 };
 
@@ -43,10 +43,10 @@ export function runHook(root: string, hookPath?: string): string {
   });
 }
 
-/** the newest dated block of "## The CEO's live order": its first non-empty line */
-export function newestOrder(root: string): string {
+/** the first non-empty line under "## Where we left off" */
+export function leftOff(root: string): string {
   const lines = readFileSync(join(root, C.state), "utf8").split("\n");
-  const start = lines.findIndex((l) => /^## The CEO.s live order/.test(l));
+  const start = lines.findIndex((l) => /^## Where we left off/.test(l));
   for (let i = start + 1; i < lines.length && !lines[i].startsWith("## "); i++) {
     if (lines[i].trim()) return lines[i];
   }
@@ -68,9 +68,9 @@ export function measure(out: string, root: string): RulerReport {
     }
   });
   v.push({ rule: "R3 every cut ends on a sentence, never mid-word", pass: midWord.length === 0, failures: midWord });
-  const head = newestOrder(root).slice(0, C.verbatimHead);
+  const head = leftOff(root).slice(0, C.verbatimHead);
   const ok = head.length > 0 && out.includes(head);
-  v.push({ rule: `R4 his newest order appears verbatim (first ${C.verbatimHead} chars)`, pass: ok, failures: ok ? [] : [`not found: "${head.slice(0, 60)}…"`] });
+  v.push({ rule: `R4 where we left off appears verbatim (first ${C.verbatimHead} chars)`, pass: ok, failures: ok ? [] : [`not found: "${head.slice(0, 60)}…"`] });
   return { verdicts: v, pass: v.every((x) => x.pass), bytes };
 }
 

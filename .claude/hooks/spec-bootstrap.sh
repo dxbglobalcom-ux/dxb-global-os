@@ -77,9 +77,9 @@ clip() {
   return 0
 }
 
-position=$(section '^## The CEO.s live order')   # his live order, newest block first — the budget below keeps the newest and counts the rest
-next=$(section '^## Next')                                    # the work in hand, with its reason
-waiting=$(section '^## What is open')                         # what cannot move without him — core §0 line 3
+left=$(section '^## Where we left off')      # the three headings every session rewrites at its end (CEO 2026-09-28)
+next=$(section '^## Next')
+waiting=$(section '^## Waiting on his approval')
 cupboard=$(cat "$CUPBOARD" 2>/dev/null || true)               # one page: what exists, where, how it opens (ruler R5 keeps it one page)
 
 # B55: the model watch's one line, and its staleness line, in plain bash (no python on this path).
@@ -106,7 +106,7 @@ if [ -r "$MODEL_WATCH/sources.tsv" ]; then
     watch+=$'\n'"--- MODEL WATCH: no good read of $stale since $since — python3 scripts/model-watch/model-watch.py --status ---"
   fi
 fi
-next_budget=2200
+next_budget=2000
 if [ -n "$watch" ]; then
   next_budget=$(( next_budget - $(printf '%s' "$watch" | wc -c) ))   # bytes, not characters: "—" is three
 fi
@@ -119,16 +119,17 @@ Starting, or picking up work? Open the door: dxb-start.
 
 YOUR FIRST REPLY TELLS HIM WHERE THE WORK STANDS, THEN ANSWERS HIM (core §0).
 Never ask him what to do. Everything below was read from .planning/STATE.md just now —
-answer him FROM IT. Re-opening a file to be told this again is the laziness he named.
+answer him FROM IT. Before this session ends, REWRITE these three headings in STATE.md —
+replace, never append. What he accepted is in scripts/governance/ceo-approvals.json.
 
---- HIS LAST ORDER ---
-$(clip "${position:-"(.planning/STATE.md could not be read — read it yourself before any work)"}" 2500)
+--- WHERE WE LEFT OFF ---
+$(clip "${left:-"(no 'Where we left off' heading in .planning/STATE.md — read it yourself before any work)"}" 2000)
 
---- WHAT HAPPENS NEXT ---
-$(clip "${next:-"(no Next block found — read .planning/STATE.md before answering him)"}" "$next_budget")
+--- NEXT ---
+$(clip "${next:-"(no 'Next' heading in .planning/STATE.md — read it before answering him)"}" "$next_budget")
 
---- WHAT WAITS ON HIM ---
-$(clip "${waiting:-"(no open-work block found — read HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md)"}" 1000)
+--- WAITING ON HIS APPROVAL ---
+$(clip "${waiting:-"(no 'Waiting on his approval' heading in .planning/STATE.md — read it before answering him)"}" 1500)
 
 --- THE CUPBOARD ---
 $(clip "${cupboard:-"(.claude/CUPBOARD.md is missing — the drawers are listed in .claude/CLAUDE.md §4)"}" 1500)

@@ -75,7 +75,8 @@ secrets or isolation move, a design pass for anything the CEO sees.
 ## Phase 5 — records, in the SAME session
 
 - the board row closes with its evidence, or its remaining leg is named
-- `.planning/STATE.md` becomes true again
+- `.planning/STATE.md`'s three headings (Where we left off · Next · Waiting on his approval) are
+  rewritten — replaced, never appended
 - the owning spec carries the registered adaptation
 - nothing is left claiming a state the system contradicts
 

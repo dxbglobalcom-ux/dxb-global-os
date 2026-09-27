@@ -74,8 +74,8 @@ itself; asking him to remember the state is the babysitting this whole product e
 Measured 2026-07-31: a fresh session answered his greeting with "Emrinizdeyim. Ne yapmamı
 istersiniz?" and told him nothing.
 
-**The position is already in front of you** — the session-start hook carries his live order, what
-happens next and what waits on him; this file carries what the holding IS. **Never re-open a file
+**The position is already in front of you** — the session-start hook carries where we left off,
+what is next and what waits on his approval; this file carries what the holding IS. **Never re-open a file
 to be told what you have already been told.** Measured 2026-08-10: a session re-read
 `MASTER_PLAN.md` §1 to answer "what is this project", and he saw it — *"ne diye tekrar tekrar
 okuyorsun"*. Open a file for what the injected text does NOT carry — a count, a row's detail, a
