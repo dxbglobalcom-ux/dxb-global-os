@@ -1603,5 +1603,12 @@
     "conditions": "See b59-accepted-by-his-eye-2026-09-27.",
     "session": "22274b4f-9b4f-434e-b9b5-eb8543434a6b (the K3 stage-1 judge session), typed 2026-09-27T01:15:13Z = 03:15 local, one sentence covering the four subjects put before him as waiting his eye; relayed to the successor session b07c3804 and verified there against the session transcript",
     "where": ".planning/STATE.md B56 · board B56"
+  },
+  "code-seat-hard-lane-max-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "THE CODE SEAT'S HARD LANE STAYS AT MAX — his word on the lead's decision, given after his own question ('maxda kalması daha ii değil mi acaba', ~03:50) was answered from the five launch charts he sent (max +0.5 to +1.5 over high on the three coding charts at 3–5× the cost per task; T8 measured max > medium on a two-file fix here; high never measured on this repository). The known-path lane stays at medium (builder-medium); the 'max → high' move is not made; it is re-examined only when a blind-judged high-vs-max lane on this repository says equal. Confirms the 2026-09-24 order (code-by-builder-at-max-hook-2026-09-24); not a new law.",
+    "verbatim": "tmmdır zor kulvar için max.",
+    "conditions": "Said at ~04:00 in the successor session (b07c3804) after the charts were read to him. 'zor kulvar' = the hard lane of dxb-team1 §3; nothing said about the verifier ladder.",
+    "where": ".planning/STATE.md live block · dxb-team1 §3 (unchanged: it already keeps the builder at max until a measured change) · EVIDENCE-B56-K3-2026-09-27.md RETURNS"
   }
 }
