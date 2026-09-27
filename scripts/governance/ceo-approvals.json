@@ -1559,9 +1559,49 @@
   },
   "effort-seats-lead-decides-2026-09-27": {
     "date": "2026-09-27",
-    "what": "The effort (thinking depth) of the seats — the research door's writer and the construction's code and verification seats — is the chief engineer's decision, measured, not his: after the lead's evaluation of Anthropic's official effort pages and the measured writer test he handed the call to the lead. Applied the same night: the research door's writer moved high → medium on the blind-judged measurement (dxb-team1 §3 carries the numbers); the code seat's move max → high for the hard lane is decided but is a separate governance lane after K3 (hooks, agent files, the code-gate tests), not done in the middle of the run.",
+    "what": "The effort (thinking depth) of the seats — the research door's writer and the construction's code and verification seats — is the chief engineer's decision, measured, not his: after the lead's evaluation of Anthropic's official effort pages and the measured writer test he handed the call to the lead. Applied the same night: the research door's writer moved high → medium on the blind-judged measurement (dxb-team1 §3 carries the numbers); the code seat STAYS at max — the lead's revision 2026-09-27 ~03:55 on his question 'maxda kalması daha ii değil mi acaba': the three coding charts of the launch page put max 0.5–1.5 points over high at 3–5× the cost, T8 measured max > medium on a two-file fix on this repository, and high has never been measured here; the seat moves only when the same lane, written at high and at max and judged blind, shows high equal.",
     "verbatim": "benim dediklerim sadece soru bilmiorm tam sadece soru. bai mühendis sensin en doğrusu neyse sen karar ver.",
     "conditions": "His preceding words were questions, not orders (his own framing): 'max seviye denetlemeler mi acaba işi ck fazşa uzatıor … medium eforuyla yapılsa daha mı hızlı olur' · 'aynen şu mediumla high arasındaki kaliteyi ölç lütfen … opus 5.5 in resmi sitesinden değerlere bak' · 'x high frontiercode da … belki xhigh ı hiç kullanmazsın. ama son karar senin'. Every seat change rests on a measurement written beside it; the 2026-09-24 order that the builder writes at max stands until the lead's measured change lands in the gate.",
     "where": ".claude/skills/dxb-team1/SKILL.md §3 (the official curve + the measured writer test) · .claude/skills/dxb-research/fleet/fleet.sh (writer effort) · EVIDENCE-B56-K3-2026-09-27.md RETURNS · .planning/STATE.md"
+  },
+  "research-k3-stage1-run-kept-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "The K3 stage-1 live run (2026-09-27 00:54 → 02:58, the page https://claude.ai/artifact/JvVCvyjPqEhvvZkSih726p) KEPT on his word: keep.sh → .planning/research/answers/20260927-0317-astra-6-vs-fable-5-1/ (4.7 MB: final.html, answer.md, claims.jsonl, claims.draft.jsonl, subquestions.json, evidence.jsonl, 7 hunter reports, SUMMARY.txt); bodies/ 23.5 MB stay under var/ by the 5 MB rule. Run at 03:17 by the successor session with HEAD's keep.sh.",
+    "verbatim": "medium kararını team1 e işleyecek misin. ayrıca sorduğun kaydet işi için tmm. göz kontrolleri de tmm şimdiye kadar. bunu yeni oturuma yapması içinde söyleyebilirsin istersen",
+    "conditions": "'sorduğun kaydet işi için tmm' answers the question the judge session had asked ('bu testi kaydedelim mi?').",
+    "session": "22274b4f-9b4f-434e-b9b5-eb8543434a6b (the K3 stage-1 judge session), typed 2026-09-27T01:15:13Z = 03:15 local, one sentence covering the four subjects put before him as waiting his eye; relayed to the successor session b07c3804 and verified there against the session transcript",
+    "where": ".planning/STATE.md live block · board B56 · EVIDENCE-B56-K3-2026-09-27.md RETURNS"
+  },
+  "research-k3-stage1-accepted-by-his-eye-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "K3 stage 1 — SORU AYRIŞTIRMA (the question split into sub-questions before the fleet runs, each with its own section and counts on the page) — ACCEPTED BY HIS EYE on the live run's page https://claude.ai/artifact/JvVCvyjPqEhvvZkSih726p, put before him at 02:58 as waiting his eye (LAW B).",
+    "verbatim": "medium kararını team1 e işleyecek misin. ayrıca sorduğun kaydet işi için tmm. göz kontrolleri de tmm şimdiye kadar. bunu yeni oturuma yapması içinde söyleyebilirsin istersen",
+    "conditions": "'göz kontrolleri de tmm şimdiye kadar' — every subject listed to him as waiting his eye up to that minute: K3 stage 1's page, B59, B60, P6-UC. Not stage 3 or stage 2 of K3, which were not built yet.",
+    "session": "22274b4f-9b4f-434e-b9b5-eb8543434a6b (the K3 stage-1 judge session), typed 2026-09-27T01:15:13Z = 03:15 local, one sentence covering the four subjects put before him as waiting his eye; relayed to the successor session b07c3804 and verified there against the session transcript",
+    "where": ".planning/STATE.md live block + B56 · board B56 · EVIDENCE-B56-K3-2026-09-27.md RETURNS"
+  },
+  "b59-accepted-by-his-eye-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "HE ACCEPTED B59 BY HIS OWN EYE — the context gate as a hook (~/.claude/hooks/dxb-context-gate.py, the red line and the Agent refusal, at 50 / 55 since B61), built 2026-09-26 00:55 and listed to him as waiting his eye. LAW B acceptance, not a law.",
+    "verbatim": "medium kararını team1 e işleyecek misin. ayrıca sorduğun kaydet işi için tmm. göz kontrolleri de tmm şimdiye kadar. bunu yeni oturuma yapması içinde söyleyebilirsin istersen",
+    "conditions": "The same sentence covers B60, P6-UC and K3 stage 1's page — the four subjects put before him. B57 and B61 were not in that list and stay as they are.",
+    "session": "22274b4f-9b4f-434e-b9b5-eb8543434a6b (the K3 stage-1 judge session), typed 2026-09-27T01:15:13Z = 03:15 local, one sentence covering the four subjects put before him as waiting his eye; relayed to the successor session b07c3804 and verified there against the session transcript",
+    "where": "board B59 (Section 5) · .planning/STATE.md"
+  },
+  "b60-accepted-by-his-eye-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "HE ACCEPTED B60 BY HIS OWN EYE — the 80 % quota rule kept with its three repairs (the time to the reset, a guarded path never at medium, the pace rule) and dxb-quota read at every lane boundary, built 2026-09-26 01:20 → ~01:45 and listed to him as waiting his eye. LAW B acceptance, not a law.",
+    "verbatim": "medium kararını team1 e işleyecek misin. ayrıca sorduğun kaydet işi için tmm. göz kontrolleri de tmm şimdiye kadar. bunu yeni oturuma yapması içinde söyleyebilirsin istersen",
+    "conditions": "See b59-accepted-by-his-eye-2026-09-27.",
+    "session": "22274b4f-9b4f-434e-b9b5-eb8543434a6b (the K3 stage-1 judge session), typed 2026-09-27T01:15:13Z = 03:15 local, one sentence covering the four subjects put before him as waiting his eye; relayed to the successor session b07c3804 and verified there against the session transcript",
+    "where": "board B60 (Section 5) · .planning/STATE.md"
+  },
+  "p6-uc-accepted-by-his-eye-2026-09-27": {
+    "date": "2026-09-27",
+    "what": "P6-UC — the three answers side by side (P6-UC-CEVAP-YAN-YANA-2026-09-26.md, a copy on his Desktop), listed to him as waiting his eye since 2026-09-26 — ACCEPTED BY HIS EYE.",
+    "verbatim": "medium kararını team1 e işleyecek misin. ayrıca sorduğun kaydet işi için tmm. göz kontrolleri de tmm şimdiye kadar. bunu yeni oturuma yapması içinde söyleyebilirsin istersen",
+    "conditions": "See b59-accepted-by-his-eye-2026-09-27.",
+    "session": "22274b4f-9b4f-434e-b9b5-eb8543434a6b (the K3 stage-1 judge session), typed 2026-09-27T01:15:13Z = 03:15 local, one sentence covering the four subjects put before him as waiting his eye; relayed to the successor session b07c3804 and verified there against the session transcript",
+    "where": ".planning/STATE.md B56 · board B56"
   }
 }

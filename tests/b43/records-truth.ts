@@ -69,6 +69,14 @@ export const C = {
     { id: "research-k1-coverage-engine-accepted-by-his-eye-2026-09-26", subject: /\bK1\b/ },
     // K2 — stage 2 of the research door (the KANIT / evidence engine), accepted by his eye 2026-09-26 ~21:10 ("tmmdır."); spelled "K2" in STATE and on board B56.
     { id: "research-k2-kanit-engine-accepted-by-his-eye-2026-09-26", subject: /\bK2\b/ },
+    // K3 stage 1 — SORU AYRIŞTIRMA (the question split before the fleet runs), accepted by his eye 2026-09-27 03:15 ("göz kontrolleri de tmm şimdiye kadar"); spelled "K3 STAGE 1" / "K3 stage 1" / "stage 1 soru ayrıştırma" in STATE and on board B56. Deliberately NOT /\bK3\b/: stages 3 and 2 of K3 are open and their records must still be able to say his eye is awaited (LAW B, the B50 lesson above).
+    { id: "research-k3-stage1-accepted-by-his-eye-2026-09-27", subject: /\bK3 (STAGE|stage) 1\b|\bstage 1 soru ayrıştırma\b/ },
+    // B59 — the context gate as a hook, accepted by his eye 2026-09-27 03:15 (the same sentence).
+    { id: "b59-accepted-by-his-eye-2026-09-27", subject: /\bB59\b/ },
+    // B60 — the 80 % quota rule with its three repairs, accepted by his eye 2026-09-27 03:15 (the same sentence).
+    { id: "b60-accepted-by-his-eye-2026-09-27", subject: /\bB60\b/ },
+    // P6-UC — the three answers side by side (P6-UC-CEVAP-YAN-YANA-2026-09-26.md), accepted by his eye 2026-09-27 03:15 (the same sentence).
+    { id: "p6-uc-accepted-by-his-eye-2026-09-27", subject: /\bP6-UC\b/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
