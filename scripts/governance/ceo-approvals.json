@@ -1698,5 +1698,13 @@
     "conditions": "He had said of his own directive: 'ceo directive tmm da ben mühendis ve bilgisayarcı değilim ki ben hatalı olabilirim'. The lead then proposed the change to §4 in the list he answered with 've başla'.",
     "session": "Opus 5.5 session b4b6d71c — heard first-hand, 2026-09-28 ~19:20 local.",
     "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md §4 · .claude/skills/dxb-verify/SKILL.md"
+  },
+  "sol-db-reach-plan-approved-2026-09-28": {
+    "date": "2026-09-28",
+    "what": "He approved the PLAN of dxb-team2's first job (critical, score 6): Sol's read-only reach into the construction engine through one MCP tool, rev 3 after Fable's challenge and a blind Sol xhigh review. A plan approval under 'no implementation before he approves the plan' — not an acceptance of finished work (LAW B).",
+    "verbatim": "Tamam onaylıyorum.",
+    "conditions": "Given after the lead put the plan to him in Turkish with its guarantees (write-refusal and company-untouched measured before and after; one from-scratch rebuild) and said the build goes to a successor session at the context gate.",
+    "session": "Opus 5.5 session b4b6d71c — heard first-hand, 2026-09-28 ~20:45 local.",
+    "where": ".planning/quick/20260928-sol-db-reach/PLAN.md · .planning/STATE.md Next"
   }
 }

@@ -39,10 +39,10 @@ routing record kept once, in `.planning/governance/`.
 
 ## Next
 
-1. **The first `dxb-team2` job, critical:** Sol's own database reach — a read-only role on the
-   construction engine (54422) served through a read-only query tool outside Codex's sandbox. The plan
-   is written, Fable challenges it, Sol reads it, then it goes to him; no code before his yes. It also
-   pays the door's owed measurements (fork cache reuse, Sol high vs xhigh, Plus share per audit).
+1. **The first `dxb-team2` job, critical — PLAN APPROVED** <!-- CEO-OK: sol-db-reach-plan-approved-2026-09-28 -->:
+   Sol's read-only reach into the construction engine, `.planning/quick/20260928-sol-db-reach/PLAN.md`
+   (rev 3, after Fable and a blind Sol xhigh review). Built by the successor session opened at the
+   context gate; then Sol audits the finished work (xhigh and high side by side), then his eye.
 2. Repository clean-up of old, unused things — he named it 2026-09-28; list and sizes go in front of
    him before anything is deleted.
 
