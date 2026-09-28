@@ -1,20 +1,25 @@
 ---
 name: model-routing-hierarchy
-description: "v15 (CEO 2026-09-25): ikinci orkestratör dxb-team1 — Fable lider, yazarlar Opus 5.5 medium/max zorluğa göre, taze verifier high, refuter xhigh, arbiter max; v14 (CEO 2026-09-24): kodu builder alt-ajanı Opus 5.5 · max yazar, kanca zorlar, kota darken medium; v13 İNŞAAT kadrosu Opus 5.5 — baş mühendis xhigh, çürütücü/teşhisçi xhigh, tasarımda ikinci göz Fable 5.1; v10 runtime kalite kademe kanunu; v9 yedek katman yok; v8-v5 tarihsel kayıt"
+description: "v17 (CEO 2026-09-28): dxb-team2 varsayılan inşaat kapısı — lider oturum kodu ve düzeltmeyi kendisi yazar, her işe kör salt-okur GPT-6 Sol denetçi (hafif medium, normal high, kritik xhigh), kritik mimari ve anlaşmazlık Fable 5.1, teknik soru CEO'ya gitmez, Opus xhigh kod yazmaz; v16 kod kapısı söküldü; v14 dxb-crew builder max; v13 İNŞAAT kadrosu Opus 5.5; v10 runtime kalite kademe kanunu; v9 yedek katman yok; v8-v5 tarihsel kayıt"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
   modified: 2026-09-24T00:06:41.286Z
 ---
 
-# v15 — İKİNCİ ORKESTRATÖR: dxb-team1 (CEO, 2026-09-25)
+# v17 — dxb-team2 VARSAYILAN İNŞAAT KAPISI (CEO, 2026-09-28 ~19:20) <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->
 
-1. **CEO emri (2026-09-25 ~22:15, kendi çizimiyle):** *"dxb-team1 şeklinde bir skill açıp dxb-crew e ikinci bir arkestratör skill kursak olur mu? dxb-crew üzerinde oynama yapma o kalsın bazen onu kullanırız."* Kayıt: `ceo-approvals.json` → `dxb-team1-ordered-2026-09-25` · `dxb-team1-effort-by-difficulty-2026-09-25` · `dxb-team1-build-order-2026-09-25` (*"tmmdır dxb-team1 yapılsın"*).
-2. **Koltuklar (kapı: `.claude/skills/dxb-team1/SKILL.md`):** lider = Fable 5.1 oturumu (işi ≤ 3 kesişmeyen kulvara böler, her kulvarın effort'unu seçer, "bitti ne demek" listesini işten önce yazar, her sayıyı kendisi yeniden ölçer, son hüküm) · yazarlar aynı anda üçe kadar: `builder-medium` (Opus 5.5 · medium, boyut zarfı YOK, korunan yol kanca ile yasak) / `builder` (max) — *"yani işin zorluk seviyesine göre ya max'li opus 5.5'e yada mediumlu opus 5.5 e ver göre"* · `verifier` (Opus 5.5 · high, taze, salt-okur: yalnız diff + liste + kulvarlar) · A bulgusunda `refuter` (xhigh, yalnız o liste) · hâlâ belirsizse `arbiter` (Opus 5.5 · max, salt-okur). Liderin altındaki hiçbir koltukta `Agent` yok; hepsi alt-ajan, ayrı oturum değil.
-3. **Doğrulama seviyeleri** Anthropic'in resmî effort sayfasından (o gece okundu, sorusu *"çürütücü neden opus 5.5 xhigh?"*): ilk bakış `high`, ikinci `xhigh`, son `max`. `dxb-crew`'in çürütücüsü xhigh'ta kalır (onun 24 Eylül cümlesi); high/xhigh farkı ölçülmedi — ilk takım işinin borcu (kapı §6).
-4. **Kanca:** `dxb-code-gate.py` NORMAL kipte `medium` + `agent_type == "builder-medium"` → zarfsız serbest, korunan yol reddedilir; `builder-lean` zarfı ve LEAN yönlendirmesi aynen (v14 bozulmadı). `dxb-crew` dosyası bayt bayt aynı.
-5. **v14 aynen geçerli** — dxb-crew için. Bu sürüm v14'ü daraltmaz, yanına ikinci kapıyı koyar.
-6. **Varsayılan kapı dxb-team1** (CEO 2026-09-26 ~00:05: *"önerini kabul ediorum varsayılan kapı dxb-team1 olsun."*, `dxb-team1-default-door-2026-09-26`): inşaat işi önce bu kapıdan yürür; `dxb-crew` tek kulvarlı iş için durur.
+*"hiç biryerde dxbteam1 kalmasın aynen … ve başla"*. v15'in üç yazarlı kapısı bir işte haftalık kotanın yarısını yaktı; yangın denetimden değil İSRAFTAN çıktı (paralel baştan okumalar, her düzeltmeye taze max yazar, 5 dakikada ölen alt-ajan önbelleği — ölçüldü 25-28 Eylül: alt-ajanlar 5 dk önbelleğe 50,6 M, ana oturumlar 1 sa önbelleğe 22,8 M token yazdı). Kapı: `.claude/skills/dxb-team2/SKILL.md`.
+
+1. **Lider = açılan oturum** (model ve effort CEO'nun seçimi; `high` ölçülen denge noktası): işi 4 eksende 0-8 puanlar (para/veritabanı/güvenlik/onay/yönetim en az normal), "bitti ne demek" listesini koddan önce yazar, kodu ve her düzeltmeyi kendisi yazar.
+2. **Denetçi = GPT-6 Sol**, yalnız `scripts/governance/refuter.sh --effort` ile, salt-okur (araçla kanıtlı), kör: CEO'nun cümlesi, plan kararları olgu olarak, liste, diff, ham test çıktısı görür; kanaat, özet, önceki hüküm görmez. Her işte bir geçiş: hafif `medium`, normal `high`, kritik `xhigh` (+ plan kod öncesi). Sol yoksa hafif/normalde taze Opus high, kayda yazılır; kritikte Sol beklenir. <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->
+3. **Fable 5.1** = kritik işin mimarisi ve testle çözülemeyen anlaşmazlığın hükmü. Son söz liderin; teknik soru CEO'ya gitmez.
+4. **Effort:** Opus `xhigh` kod yazmaz (FrontierCode %51.4, eğrinin dibi — CEO'nun sözü); `max` (`builder`) yalnız aynı parça `high`'da iki kez düşerse.
+5. **v15 kalktı** (üç yazar, verifier→refuter→arbiter zinciri, anlaşmazlığın CEO'ya gitmesi). `dxb-crew` (v14) aynen durur.
+
+# v16 — KOD KAPISI SÖKÜLDÜ (CEO, 2026-09-28 ~00:10)
+
+`dxb-code-gate.py` ve testi çöpe, ayar satırı silindi (`e18e0a33`, kayıt `code-gate-removed-2026-09-28`). **Oturum kodu ve kaydı kendisi yazar; `builder` yalnız orkestrasyonda.** v14 kanca maddeleri tarihtir.
 
 # v14 — KODU BUILDER ALT-AJANI YAZAR, KANCA ZORLAR (CEO, 2026-09-24)
 

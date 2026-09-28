@@ -82,21 +82,22 @@ violation of the same tier as an invented number.
 An independent agent is handed a **claim plus where to measure it** — never the author's
 conclusion — and told to **refute** it. It is read-only **by tool**, never by promise: a Claude
 agent limited to reading and searching, or the Codex refuter — launched **only** through
-`scripts/governance/refuter.sh` (default gpt-5.6-sol at high, `--55` for gpt-5.5 at xhigh), which
+`scripts/governance/refuter.sh` (gpt-6-sol; `--effort medium|high|xhigh` chosen per job, high by default — CEO 2026-09-28), which
 pins the read-only profile and refuses to run without it. Calling `codex` directly for an audit
 puts the promise back and takes the tool away: the base config runs unrestricted, measured
 2026-08-16. `refuter.sh --proof` re-prints the evidence that it cannot write. It may run
-measuring commands, never a writing command, and never a test suite (fixtures seed the live
-database). Record the audit-trail row counts before and after; a difference invalidates the audit.
+measuring commands, never a writing command, and never a test suite (the suites write; the
+author runs them and hands over the whole raw output). Record the audit-trail row counts before and after; a difference invalidates the audit.
 
-It fires on exactly three triggers, never per run and never per commit:
+It fires once on **every construction job**, at the depth the job's score card sets (light Sol
+`medium` · normal `high` · critical `xhigh`, the plan read first) — the author never approves his
+own work (CEO 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->; the procedure is
+`dxb-team2`). It also fires on the acceptance session, on a row whose closing evidence has a leg
+the machine cannot check, and on a defect the CEO caught — then it sweeps the **class**.
 
-1. the CEO acceptance session — cross-model, because a Claude auditing a Claude shares its blind spots
-2. a row whose closing evidence has a leg the machine cannot check
-3. a defect the CEO caught — then sweep the **class** across the repository, not the instance
-
-**A finding is evidence, never a verdict.** The session author signs every ✓. When auditor and
-author disagree and neither can prove it, the claim drops to `⚠ UNVERIFIED` rather than staying ✓.
+**A finding is evidence, never a verdict.** The session author signs every ✓. A disputed finding
+is settled inside the team (`dxb-team2` §4 DISPUTE): a test decides; where no test can, Fable rules;
+the lead has the last word. What no terminal can observe stays `⚠ UNVERIFIED`.
 Anything machine-catchable the twin finds is recorded as the author's own defect.
 
 Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.

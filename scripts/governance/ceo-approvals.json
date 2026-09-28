@@ -1636,12 +1636,12 @@
     "where": ".planning/STATE.md B56 · board B56 · EVIDENCE-B56-K3-2026-09-27.md § the older defect list"
   },
   "dxb-now-hook-deleted-2026-09-27": {
-      "date": "2026-09-27",
-      "what": "HIS ORDER TO DELETE THE dxb-now PROMPT HOOK (the clock line printed on every prompt, built the same day at 17:38, eb1f74f0), given at 22:55 after the successor session wrote 'dün kurulan dört kilit' about locks built that same day at 20:05–20:52; conditional on the chief engineer's judgment that the hook's information is available on demand — judged true (the date sits in the session's opening context, the hour is one `date` command away; the error was about a past event, which the clock could not repair).",
-      "verbatim": "ya kanca manca ile istemiorm sen biryere atıfta buluorsun bir commite onun hangi tarihte yapıldığına neden bakılmıor sorun bu geçmişte yapılan 1 saat once olsun 1 gün önce olsun neden tam zaman verilmior baktığınız yerde yazmıor mu yaa? kanca sana şuanki saati ve tarihi benim her msgımda basmasını nbir anlamı hiç yok ki şuanı biliorsun zaten o kancada yanlış o zaman gereksiz. eğer öyle dediğim gibiyse kankcayı kaldır at sil gitsin.",
-      "conditions": "An order, not an approval of any work; nothing is accepted by it (LAW B). Not a law: he refused a hook-based remedy in the same breath ('kanca manca ile istemiorm'); the remedy he named is a working habit — a reference to past work carries the time read from its record. The dated record of the hook's building (STATE 2026-09-27 block) stays as history with the deletion appended.",
-      "session": "Fable 5.1 chief-engineer session d45b26da, opened Pazar 2026-09-27 20:55 — heard first-hand in this conversation, 22:55 local; his follow-ups 22:57 ('bu dün kurulmadı arkadşaım bugün kuruldu') and ~23:00 ('anladın mı derdimi?').",
-      "where": ".claude/settings.json (UserPromptSubmit entry removed) · .claude/hooks/dxb-now.sh, .codex/hooks/dxb-now.sh, tests/hooks/dxb-now.test.ts (deleted) · .planning/STATE.md 2026-09-27 block"
+    "date": "2026-09-27",
+    "what": "HIS ORDER TO DELETE THE dxb-now PROMPT HOOK (the clock line printed on every prompt, built the same day at 17:38, eb1f74f0), given at 22:55 after the successor session wrote 'dün kurulan dört kilit' about locks built that same day at 20:05–20:52; conditional on the chief engineer's judgment that the hook's information is available on demand — judged true (the date sits in the session's opening context, the hour is one `date` command away; the error was about a past event, which the clock could not repair).",
+    "verbatim": "ya kanca manca ile istemiorm sen biryere atıfta buluorsun bir commite onun hangi tarihte yapıldığına neden bakılmıor sorun bu geçmişte yapılan 1 saat once olsun 1 gün önce olsun neden tam zaman verilmior baktığınız yerde yazmıor mu yaa? kanca sana şuanki saati ve tarihi benim her msgımda basmasını nbir anlamı hiç yok ki şuanı biliorsun zaten o kancada yanlış o zaman gereksiz. eğer öyle dediğim gibiyse kankcayı kaldır at sil gitsin.",
+    "conditions": "An order, not an approval of any work; nothing is accepted by it (LAW B). Not a law: he refused a hook-based remedy in the same breath ('kanca manca ile istemiorm'); the remedy he named is a working habit — a reference to past work carries the time read from its record. The dated record of the hook's building (STATE 2026-09-27 block) stays as history with the deletion appended.",
+    "session": "Fable 5.1 chief-engineer session d45b26da, opened Pazar 2026-09-27 20:55 — heard first-hand in this conversation, 22:55 local; his follow-ups 22:57 ('bu dün kurulmadı arkadşaım bugün kuruldu') and ~23:00 ('anladın mı derdimi?').",
+    "where": ".claude/settings.json (UserPromptSubmit entry removed) · .claude/hooks/dxb-now.sh, .codex/hooks/dxb-now.sh, tests/hooks/dxb-now.test.ts (deleted) · .planning/STATE.md 2026-09-27 block"
   },
   "b57-accepted-by-his-eye-2026-09-27": {
     "date": "2026-09-27",
@@ -1682,5 +1682,21 @@
     "conditions": "He stated the scope in the same breath: the 50 % line was meant for the Fable 5.1 lead of dxb-team1. Measured the same minute: ~/.claude/hooks/dxb-context-gate.py carries no model check and runs in every session — asked whether 50 % suits every model, he settled it minutes later: \"yok %50 sorusu çözüldü tmmdır kalabilir o\" — the hook stays as it is, for every session.",
     "session": "Opus 5.5 session dba211ac — heard first-hand, 2026-09-28 ~01:20 local.",
     "where": "board B61 (Section 5, closed) · .planning/STATE.md three headings"
+  },
+  "dxb-team2-default-door-2026-09-28": {
+    "date": "2026-09-28",
+    "what": "He ordered dxb-team2 as the construction's default door, built item by item with the lead: one lead that writes and fixes the code itself, a blind read-only GPT-6 Sol auditor on every job at a depth set by a 0-8 score card, Fable 5.1 for critical architecture and disputes, no technical question sent to him; dxb-team1 stops being the default and no record may name it as such; the duplicate model-routing record in memory becomes a pointer; the context-gate hook names the new door; Opus xhigh is never used to write code.",
+    "verbatim": "1-tmm önerilerini kabul ediorm  22kb ve bağlam kancası olayını. hiç biryerde dxbteam1 kalmasın aynen. 2-tmm o zaman ama frontiercode xhigh kullanılmasın grafiklerde dipte. 3-tmm çatal sisteminin ölçümü. eet hafıza olayı da uygun. ve başla",
+    "conditions": "Earlier the same session: 'zaten dxb-team1 default olmaktan çıkaracağız beraber yeni bir workflow … yeni dxb-team2 skill'ini oluştururken. 1'deki yararlı olan kısımları alabilirsin'; on the auditor's refuter channel: '2-önerini kabul ediorm … Plus: evet verior'; on Sol's database reach: 'önerin tmm'; on the Sol fallback and its quota: 'öneri uygun.' This is his order for the door, not an acceptance of finished work (LAW B).",
+    "session": "Opus 5.5 session b4b6d71c — heard first-hand, 2026-09-28 ~19:20 local.",
+    "where": ".claude/skills/dxb-team2/SKILL.md · .claude/CLAUDE.md §4 · ~/.claude/CLAUDE.md Kadro · .planning/governance/model-routing-hierarchy.md"
+  },
+  "audit-twin-every-job-2026-09-28": {
+    "date": "2026-09-28",
+    "what": "The audit twin's trigger rule changes: every construction job passes an independent auditor, its depth set by the job's score (light medium, normal high, critical xhigh); the author never approves his own work. Replaces 'three triggers, no others'.",
+    "verbatim": "peki senin sistemde yapılan işi kim kontrol ediyor. yani kendin pişir kendinye mantığımı var bizde? dış bağımsız reviewer sol ne diye var? bir iş yapıldığında yapan kişi kendisini mi denetliyor bu ii mi?",
+    "conditions": "He had said of his own directive: 'ceo directive tmm da ben mühendis ve bilgisayarcı değilim ki ben hatalı olabilirim'. The lead then proposed the change to §4 in the list he answered with 've başla'.",
+    "session": "Opus 5.5 session b4b6d71c — heard first-hand, 2026-09-28 ~19:20 local.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md §4 · .claude/skills/dxb-verify/SKILL.md"
   }
 }

@@ -11,12 +11,13 @@
 # to be the one way the refuter is launched. Never call `codex` directly for an
 # audit.
 #
-# The CEO named two refuter modes: gpt-5.6-sol at high, and gpt-5.5 at xhigh.
+# The auditor is gpt-6-sol (CEO 2026-09-28, replacing the gpt-5.6-sol / gpt-5.5
+# modes); the lead picks its effort per job from the job's score card.
 #
 # Usage:
-#   scripts/governance/refuter.sh "<claim + where to measure it>"      # 5.6 high
-#   scripts/governance/refuter.sh --55 "<claim + where to measure it>" # 5.5 xhigh
-#   scripts/governance/refuter.sh --proof                              # prove it cannot write
+#   scripts/governance/refuter.sh "<claim + where to measure it>"                  # high
+#   scripts/governance/refuter.sh --effort xhigh "<claim + where to measure it>"   # medium|high|xhigh
+#   scripts/governance/refuter.sh --proof                                          # prove it cannot write
 #
 # Hand it a CLAIM and WHERE TO MEASURE IT — never the author's conclusion — and
 # tell it to refute. A finding is evidence, never a verdict (dxb-verify).
@@ -26,7 +27,13 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
 PROFILE="refuter"
-if [ "${1:-}" = "--55" ]; then PROFILE="refuter55"; shift; fi
+EFFORT=""
+if [ "${1:-}" = "--effort" ]; then
+  case "${2:-}" in
+    medium|high|xhigh) EFFORT="$2"; shift 2 ;;
+    *) echo "REFUTER_FAIL: --effort takes medium, high or xhigh." >&2; exit 1 ;;
+  esac
+fi
 
 HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
 if [ ! -f "$HOME_DIR/$PROFILE.config.toml" ]; then
@@ -57,4 +64,7 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
+if [ -n "$EFFORT" ]; then
+  exec codex -p "$PROFILE" -c "model_reasoning_effort=\"$EFFORT\"" exec "$@"
+fi
 exec codex -p "$PROFILE" exec "$@"

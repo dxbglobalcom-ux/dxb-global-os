@@ -28,21 +28,21 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-09-27 23:36 → 2026-09-28 ~01:10, Opus 5.5 session dba211ac, on his complaint that the opening named
-B56 as waiting after he had approved it. Done on his words <!-- CEO-OK: code-gate-removed-2026-09-28 -->:
-B56 closed <!-- CEO-OK: b56-accepted-by-his-eye-2026-09-27 --> and the code-gate hook thrown away
-(`e18e0a33`); the ledger check that forced a board row for every open sentence removed, board law 1 now
-"a row is opened only on the CEO's word" (`b6084eae`) <!-- CEO-OK: opening-three-headings-and-board-archive-2026-09-28 -->;
-this file cut to three headings (`dec64b54`); the board's 70 open rows cut from 306,522 to ~48,300 bytes,
-each row's old text kept word for word in `.planning/board-rows/<ID>.md` and linked from the row.
+2026-09-28 17:42 → ~19:40, Opus 5.5 session b4b6d71c, on his order to replace the door that burned half a
+weekly quota. He read four outside opinions and the Opus 5.5 charts with the lead, item by item; the
+measured cause: waste, not checking (subagents wrote 50.6 M tokens to the 5-minute cache, 25–28 Sep).
+Built on his word <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->: `dxb-team2` is the default
+construction door — the lead writes and fixes the code itself, a blind read-only GPT-6 Sol audits
+every job at the depth of its 0-8 score <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->, Fable 5.1
+takes critical architecture and disputes; `refuter.sh` moved to `gpt-6-sol` with `--effort`; the
+routing record kept once, in `.planning/governance/`.
 
 ## Next
 
-1. **Review what the construction costs** — his words 2026-09-28: the dxb-team1 system cost him
-   dearly, half the weekly quota went in one day; the verifier, refuter and arbiter seats and the
-   `dxb-verify` door are reviewed with him, seat by seat. Measured this session: three writer lanes
-   ~318 k new tokens for work one session would have done for ~160 k (estimate); one verifier pass,
-   stopped half way, ~258 k. His working rule: one worker in the session, handover at the context gate.
+1. **The first `dxb-team2` job, critical:** Sol's own database reach — a read-only role on the
+   construction engine (54422) served through a read-only query tool outside Codex's sandbox. The plan
+   is written, Fable challenges it, Sol reads it, then it goes to him; no code before his yes. It also
+   pays the door's owed measurements (fork cache reuse, Sol high vs xhigh, Plus share per audit).
 2. Repository clean-up of old, unused things — he named it 2026-09-28; list and sizes go in front of
    him before anything is deleted.
 

@@ -64,9 +64,10 @@ An auditor that promises not to write is not read-only. Enforcement is by tool:
 - **When a measurement genuinely needs a command** (a `psql` count, a `git log`),
   the rule is not "no commands" — an auditor that cannot measure is theatre. The
   rule is **no writing commands**: no `INSERT/UPDATE/DELETE`, no migrations, no
-  service restarts, and **never the test suites**, because fixtures seed the live
-  database (measured precedent: test fixtures once wrote 3,087 false
-  `tool_missing` rows into the live audit table).
+  service restarts, and **never the test suites** — they write (today to the
+  construction engine, port 54422; once, before it existed, 3,087 false
+  `tool_missing` rows into the live audit table). The author runs them and hands
+  the auditor the whole raw output; the Codex sandbox has no network anyway.
 - **Proof, not trust:** the author records row counts of `audit_log`, `tasks`,
   `opportunities` and `agent_runs` **before and after** every audit. A
   difference invalidates the audit and is recorded as a defect of the audit
@@ -74,21 +75,28 @@ An auditor that promises not to write is not read-only. Enforcement is by tool:
 
 ---
 
-## 4. When the twin fires — three triggers, no others
+## 4. When the twin fires — on every construction job, at the job's depth
 
-1. **The CEO acceptance session** (`ACCEPTANCE_CRITERIA.md`, roadmap W5.1) — the
-   most critical gate, therefore **cross-model** (Codex lane). A Claude auditing
-   a Claude shares its blind spots.
+The CEO's word, 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->:
+*"bir iş yapıldığında yapan kişi kendisini mi denetliyor bu ii mi?"* — no. The
+author also writes the tests and the done-list, so his blind spot and his tests'
+blind spot are the same one; the pilot below proved it (a fake-metric page, an
+automatic RET, passed six months of machine gates and fell to the twin's first
+run). **The author never approves his own work.** Every construction job
+(`.claude/skills/dxb-team2`) passes one independent auditor, its depth set by the
+job's score card: light → Sol `medium`, normal → Sol `high`, critical → Sol
+`xhigh` and the plan read before the code. It still fires, as before, on:
+
+1. **The CEO acceptance session** (`ACCEPTANCE_CRITERIA.md`, roadmap W5.1) —
+   cross-model, because a Claude auditing a Claude shares its blind spots.
 2. **A row closing whose evidence has a leg the machine cannot check** — a claim
    about completeness, about a record matching reality, about "nobody has to do
-   this by hand any more". Rows that close on tests + `tsc` + E2E + RULE #0 alone
-   do NOT need an auditor; there, the machine already refutes.
+   this by hand any more".
 3. **A defect the CEO caught** — the auditor sweeps that defect's **class**
-   across the whole repo, not the one instance. One bad label means "find every
-   surface that can produce a bad label".
+   across the whole repo, not the one instance.
 
-**Not every run. Not every commit.** An audit on work the batteries already
-prove is ritual, and ritual costs without buying anything.
+**One audit per job, not per commit, not per run.** What keeps it from being
+ritual is its depth, not its absence.
 
 ---
 
