@@ -367,12 +367,31 @@ const quoteLiteral = (s) => `'${s.replaceAll("'", "''")}'`;
   line(`  privilege matrix photographed AFTER  : ${after.size} (role x object) answers`);
 
   const changed = diff(before, after);
-  const foreign = changed.filter((c) => c.role !== "dxb_reader" && c.role !== "<default privileges>");
+  // `sol_reader` (the construction auditor's read-only hand, dxb-team2 job 1) is
+  // left out of every re-grant by the SQL's c_windows, exactly like dxb_reader,
+  // so a change to it is the window working, not a regression. It may only LOSE.
+  const WINDOWS = new Set(["dxb_reader", "sol_reader"]);
+  const foreign = changed.filter((c) => !WINDOWS.has(c.role) && c.role !== "<default privileges>");
   const defaults = changed.filter((c) => c.role === "<default privileges>");
   const mine = changed.filter((c) => c.role === "dxb_reader");
+  const auditor = changed.filter((c) => c.role === "sol_reader");
+  // Answers are "true"/"false" (functions) or one flag per privilege, "-" when
+  // absent ("r-------"); a gain is a flag that was "-" before and is not now.
+  const gained = (b, a) =>
+    a === "true" ? b !== "true"
+    : a.length === b.length ? [...a].some((ch, i) => b[i] === "-" && ch !== "-")
+    : b === "<did not exist>" && /[^-]/.test(a) && a !== "false" && a !== "<gone>";
+  const auditorGained = auditor.filter((c) => gained(c.before, c.after));
+  if (auditorGained.length) {
+    line("  REGRESSION — the auditor's read-only role GAINED a privilege:");
+    for (const c of auditorGained.slice(0, 40)) line(`    sol_reader  ${c.obj}  ${c.before} -> ${c.after}`);
+    line("BLAST_RADIUS_FAIL");
+    process.exit(1);
+  }
 
   line("");
   line(`  privileges changed for dxb_reader    : ${mine.length}`);
+  if (auditor.length) line(`  privileges taken from sol_reader     : ${auditor.length}`);
   line(`  default-privilege sets rewritten     : ${defaults.length}   <-- future functions, PUBLIC replaced by every current role`);
   line(`  privileges changed for ANY OTHER ROLE: ${foreign.length}   <-- must be 0`);
   if (foreign.length) {

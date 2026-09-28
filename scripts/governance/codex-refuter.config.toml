@@ -1,0 +1,76 @@
+# DXB refuter profile — layered over ~/.codex/config.toml with `codex -p refuter`.
+#
+# THE SOURCE. This file is the one tracked copy; ~/.codex/refuter.config.toml must
+# be byte-identical to it, and scripts/governance/refuter.sh refuses to launch an
+# audit when it is not (`refuter.sh --install-profile` copies it into place).
+#
+# CEO order 2026-08-16. The audit twin is "read-only BY TOOL, never by promise"
+# (.claude/skills/dxb-verify). Measured that night, the promise was all there
+# was: the base config ran every Codex session at sandbox_mode = "danger-full-
+# access" with approval_policy = "never", so the refuter could write to the
+# repository it was auditing. This profile is the tool half of that sentence.
+#
+# The base config is left alone on purpose — it serves the CEO's other projects,
+# and disarming those was not what he approved.
+
+# CEO 2026-09-28: the auditor moves to gpt-6-sol; the effort is chosen per job
+# (refuter.sh --effort medium|high|xhigh), high when none is given.
+model = "gpt-6-sol"
+model_reasoning_effort = "high"
+
+# The two lines that matter.
+sandbox_mode = "read-only"
+approval_policy = "never"
+
+# No web: an outbound request is a channel out of the audit (measured 2026-09-28:
+# `web__run` was in the live tool list until this line).
+web_search = "disabled"
+
+# dxb-team2 job 1 (2026-09-28, plan .planning/quick/20260928-sol-db-reach/PLAN.md
+# R6). Everything below runs OUTSIDE the command sandbox, so everything the base
+# config switches on is switched off here — a browser, a computer, a Node REPL, a
+# plugin marketplace or a memory server is a hand that can write. `refuter.sh
+# --proof` measures the real inventory of a `codex -p refuter` session and fails
+# when anything but `dxbdb` is enabled.
+#
+# `code_mode_host` stays ON: it is the router every tool call passes through,
+# the shell included. Measured 2026-09-28 with it off: "code-mode host is
+# disabled", and the session had neither sql_read nor a working shell.
+[features]
+apps = false
+browser_use = false
+browser_use_external = false
+browser_use_full_cdp_access = false
+computer_use = false
+goals = false
+image_generation = false
+in_app_browser = false
+in_app_local_automation = false
+multi_agent = false
+plugins = false
+remote_plugin = false
+skill_mcp_dependency_install = false
+workspace_dependencies = false
+tool_suggest = false
+
+[mcp_servers.memory]
+enabled = false
+
+[mcp_servers.openaiDeveloperDocs]
+enabled = false
+
+[mcp_servers.node_repl]
+enabled = false
+
+# THE ONE TOOL: a read-only query into the construction engine as `sol_reader`.
+# Approved because it is the only MCP tool this profile leaves on; without the
+# approval Codex refuses the call ("approval policy is never"). refuter.sh turns
+# the server off (-c mcp_servers.dxbdb.enabled=false) when the engine is down.
+[mcp_servers.dxbdb]
+command = "node"
+args = ["/home/dxb/DxB Global OS/scripts/governance/sol-db-mcp.mjs"]
+enabled_tools = ["sql_read"]
+startup_timeout_sec = 20
+
+[mcp_servers.dxbdb.tools.sql_read]
+approval_mode = "approve"

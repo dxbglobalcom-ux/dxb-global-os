@@ -75,6 +75,9 @@ HOST_FILES=(
   tests/b46/render-drawer.test.ts
   # B56 K2
   tests/b46/claim-ledger.test.ts
+  # dxb-team2 job 1 (2026-09-28): the auditor's read-only hand. Its credential is
+  # ~/.config/dxb/sol-reader.env, outside the repository and outside the wall.
+  tests/governance/sol-db-reach.test.ts
 )
 
 # ── THE BENCH'S OWN RULER (CEO 2026-09-21: "tezgah kendini temizlesin her zaman

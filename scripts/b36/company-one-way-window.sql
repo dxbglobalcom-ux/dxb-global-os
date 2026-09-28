@@ -129,6 +129,16 @@ DECLARE
   c_verbs CONSTANT text[] := ARRAY['INSERT','UPDATE','DELETE','TRUNCATE',
                                    'REFERENCES','TRIGGER','MAINTAIN'];
 
+  -- The read-only logins that are LEFT OUT whenever this file hands a privilege
+  -- taken from PUBLIC back to "every role that held it". `dxb_reader` is this
+  -- file's own window. `sol_reader` is the construction auditor's hand (dxb-team2
+  -- job 1, 2026-09-28, scripts/governance/sol-reader-role.sh): it exists only on
+  -- the construction engine, and a re-run of this file there must not return to
+  -- it what PUBLIC lost. On an engine where it does not exist, naming it changes
+  -- nothing. This file still builds and asserts `dxb_reader` alone; the auditor's
+  -- role is asserted by its own script, with the same c_effectful sentence.
+  c_windows CONSTANT text[] := ARRAY['dxb_reader', 'sol_reader'];
+
   v_schema   text;
   v_role     text;
   v_creator  text;
@@ -230,7 +240,7 @@ BEGIN
     SELECT array_agg(r.rolname ORDER BY r.rolname) INTO v_holders
       FROM pg_roles r
      WHERE r.rolname NOT LIKE 'pg\_%'
-       AND r.rolname <> 'dxb_reader'
+       AND r.rolname <> ALL (c_windows)
        AND has_schema_privilege(r.rolname, v_obj.oid, 'USAGE');
 
     EXECUTE format('REVOKE USAGE ON SCHEMA %I FROM PUBLIC', v_obj.nspname);
@@ -270,7 +280,7 @@ BEGIN
       SELECT array_agg(r.rolname ORDER BY r.rolname) INTO v_holders
         FROM pg_roles r
        WHERE r.rolname NOT LIKE 'pg\_%'
-         AND r.rolname <> 'dxb_reader'
+         AND r.rolname <> ALL (c_windows)
          AND (has_sequence_privilege(r.rolname, v_obj.oid, 'USAGE')
            OR has_sequence_privilege(r.rolname, v_obj.oid, 'UPDATE')
            OR has_sequence_privilege(r.rolname, v_obj.oid, 'SELECT'));
@@ -320,7 +330,7 @@ BEGIN
     SELECT array_agg(r.rolname ORDER BY r.rolname) INTO v_holders
       FROM pg_roles r
      WHERE r.rolname NOT LIKE 'pg\_%'
-       AND r.rolname <> 'dxb_reader'
+       AND r.rolname <> ALL (c_windows)
        AND has_function_privilege(r.rolname, v_obj.oid, 'EXECUTE');
 
     EXECUTE format('REVOKE EXECUTE ON FUNCTION %s FROM PUBLIC', v_obj.sig);
@@ -367,7 +377,7 @@ BEGIN
     SELECT array_agg(r.rolname ORDER BY r.rolname) INTO v_holders
       FROM pg_roles r
      WHERE r.rolname NOT LIKE 'pg\_%'
-       AND r.rolname <> 'dxb_reader'
+       AND r.rolname <> ALL (c_windows)
        AND (has_table_privilege(r.rolname, v_obj.oid, 'INSERT')
          OR has_table_privilege(r.rolname, v_obj.oid, 'UPDATE')
          OR has_table_privilege(r.rolname, v_obj.oid, 'DELETE')
@@ -424,7 +434,7 @@ BEGIN
   SELECT array_agg(r.rolname ORDER BY r.rolname) INTO v_holders
     FROM pg_roles r
    WHERE r.rolname NOT LIKE 'pg\_%'
-     AND r.rolname <> 'dxb_reader'
+     AND r.rolname <> ALL (c_windows)
      AND has_database_privilege(r.rolname, current_database(), 'TEMPORARY');
   EXECUTE 'REVOKE TEMPORARY ON DATABASE ' || quote_ident(current_database()) || ' FROM PUBLIC';
   EXECUTE 'REVOKE TEMPORARY ON DATABASE ' || quote_ident(current_database()) || ' FROM dxb_reader';
@@ -452,7 +462,7 @@ BEGIN
                            'REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC', v_creator, v_schema);
             FOR v_role IN
               SELECT rolname FROM pg_roles
-               WHERE rolname NOT LIKE 'pg\_%' AND rolname <> 'dxb_reader' ORDER BY 1
+               WHERE rolname NOT LIKE 'pg\_%' AND rolname <> ALL (c_windows) ORDER BY 1
             LOOP
               EXECUTE format('ALTER DEFAULT PRIVILEGES FOR ROLE %I IN SCHEMA %I '
                              'GRANT EXECUTE ON FUNCTIONS TO %I', v_creator, v_schema, v_role);
