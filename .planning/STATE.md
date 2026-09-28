@@ -28,26 +28,30 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-09-28 17:42 → ~19:40, Opus 5.5 session b4b6d71c, on his order to replace the door that burned half a
-weekly quota. He read four outside opinions and the Opus 5.5 charts with the lead, item by item; the
-measured cause: waste, not checking (subagents wrote 50.6 M tokens to the 5-minute cache, 25–28 Sep).
-Built on his word <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->: `dxb-team2` is the default
-construction door — the lead writes and fixes the code itself, a blind read-only GPT-6 Sol audits
-every job at the depth of its 0-8 score <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->, Fable 5.1
-takes critical architecture and disputes; `refuter.sh` moved to `gpt-6-sol` with `--effort`; the
-routing record kept once, in `.planning/governance/`.
+2026-09-28 20:52 → 22:10, Opus 5.5 session 58e4dd12 (successor of b4b6d71c), the first `dxb-team2` job:
+**Sol's own read-only hand into the construction engine — built, audited, and waiting for his eye.**
+Sol (GPT-6 Sol via `refuter.sh`) now has one MCP tool, `sql_read` (`scripts/governance/sol-db-mcp.mjs`),
+that reads the construction engine as `sol_reader` (`scripts/governance/sol-reader-role.sh`) and never
+the company's (refused by identity); the tracked profile `scripts/governance/codex-refuter.config.toml`
+turns every other out-of-sandbox hand off. The construction engine was rebuilt from scratch once to
+prove the role comes back (new cluster 7690665340837392423). Battery once: 1 red, the pre-existing
+`tests/r43/arsenal.test.ts` (4); everything else green. Sol audited the diff blind at `high` and `xhigh`
+side by side, then re-checked five times; the last verdict is **PASSES**. The owed measurement: `xhigh`
+found a blocking finding `high` missed, so critical jobs stay at `xhigh`
+(`.planning/quick/20260928-sol-db-reach/AUDIT.md`). Commits 51f1308c … 79b2b40b.
 
 ## Next
 
-1. **The first `dxb-team2` job, critical — PLAN APPROVED** <!-- CEO-OK: sol-db-reach-plan-approved-2026-09-28 -->:
-   Sol's read-only reach into the construction engine, `.planning/quick/20260928-sol-db-reach/PLAN.md`
-   (rev 3, after Fable and a blind Sol xhigh review). Built by the successor session opened at the
-   context gate; then Sol audits the finished work (xhigh and high side by side), then his eye.
+1. **Job 1 waits for his eye** (LAW B) — Sol's read-only reach, `.planning/quick/20260928-sol-db-reach/`
+   (PLAN, DONE-LIST, AUDIT). Nothing in it is accepted until he looks.
 2. Repository clean-up of old, unused things — he named it 2026-09-28; list and sizes go in front of
    him before anything is deleted.
+3. B43's new leg (written into the board row 2026-09-28, commit 99bed571): the studio's 16 desktop tools and
+   the Media office's own invisible screen — plan first, no code before his yes.
 
 ## Waiting on his approval
 
+- Job 1 (above) — his eye on the finished work.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 
