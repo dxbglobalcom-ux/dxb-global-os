@@ -23,8 +23,20 @@
 //      PostgreSQL itself refuses a second command; the text must start with
 //      SELECT / WITH / TABLE / VALUES (run through a NO SCROLL cursor) or SHOW /
 //      EXPLAIN (never ANALYZE / ANALYSE, in any spelling). COPY is refused.
-//   4. CAPS: inside BEGIN READ ONLY with a 10 s statement timeout; 200 rows, 4 KB
-//      per cell, 64 KB per answer; ROLLBACK always, then the connection closes.
+//   4. CAPS: inside BEGIN READ ONLY with a 10 s statement timeout; 200 rows, 4096
+//      UTF-8 bytes per cell (plus the cut marker), 64 KiB per answer; ROLLBACK always, then the
+//      connection closes. The cell and answer caps bound what SOL RECEIVES; they
+//      are applied in this process, after PostgreSQL has sent the rows, so what
+//      bounds the transfer itself is the 10 s timeout and the 201-row fetch.
+//   4b. NO DRIFT: before every query, on the same connection, the role is asked
+//      whether it can execute any SECURITY DEFINER function, any function of the
+//      one-way window's c_effectful sentence (read out of
+//      scripts/b36/company-one-way-window.sql, never copied), or anything of an
+//      outbound-connection extension (dblink, postgres_fdw, http). A function a
+//      later migration or extension adds — in any schema, `extensions` and
+//      `supabase_migrations` included, where no default privilege guards it —
+//      makes the tool refuse until sol-reader-role.sh is run again (Sol's xhigh
+//      audit of 2026-09-28, finding A).
 //   5. THE BENCH IS NOT SHARED WITH THE BATTERY: while the construction
 //      battery's lock is held, the tool answers "engine busy" and runs nothing.
 //      The lock is read from /proc/locks, never taken, so the tool cannot make
@@ -56,8 +68,17 @@ const LOCK_FILE = join(process.env.TMPDIR || "/tmp", "dxb-construction-battery.l
 const ENGINE = { host: "127.0.0.1", port: "54422" };
 
 const MAX_ROWS = 200;
-const MAX_CELL = 4096;
-const MAX_ANSWER = 64 * 1024;
+const MAX_CELL = 4096; // bytes
+const MAX_ANSWER = 64 * 1024; // bytes
+const WINDOW_SQL = join(REPO, "scripts/b36/company-one-way-window.sql");
+const OUTBOUND_EXTENSIONS = ["dblink", "postgres_fdw", "http", "pgsql-http"];
+
+/** The window's one sentence for "a function whose call leaves something behind". */
+function effectfulPredicate() {
+  const m = readFileSync(WINDOW_SQL, "utf8").match(/c_effectful CONSTANT text := \$flt\$([\s\S]*?)\$flt\$;/);
+  if (!m) throw new Error("cannot read c_effectful out of company-one-way-window.sql");
+  return m[1];
+}
 const TIMEOUT = "10s";
 
 // ---------------------------------------------------------------- the text
@@ -137,10 +158,16 @@ function connectionString() {
   return m[1];
 }
 
-const cut = (v) => {
+const bytes = (s) => Buffer.byteLength(s, "utf8");
+
+/** Cut a cell at MAX_CELL UTF-8 bytes, never inside a character. */
+export const cut = (v) => {
   if (v === null) return null;
   const s = String(v);
-  return s.length > MAX_CELL ? `${s.slice(0, MAX_CELL)}…[cut at ${MAX_CELL} of ${s.length} chars]` : s;
+  const n = bytes(s);
+  if (n <= MAX_CELL) return s;
+  const head = Buffer.from(s, "utf8").subarray(0, MAX_CELL).toString("utf8").replace(/\uFFFD+$/, "");
+  return `${head}…[cut at ${MAX_CELL} of ${n} bytes]`;
 };
 
 export async function sqlRead(query) {
@@ -179,6 +206,25 @@ export async function sqlRead(query) {
     const ro = (await ext("SELECT current_setting('transaction_read_only')")).rows[0][0];
     if (ro !== "on") return { ok: false, error: "REFUSED: the transaction is not read-only" };
 
+    const drift = (await ext(
+      `SELECT string_agg(DISTINCT p.oid::regprocedure::text, ', ')
+         FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace
+        WHERE ((${effectfulPredicate()}) OR p.prosecdef
+               OR EXISTS (SELECT 1 FROM pg_depend d JOIN pg_extension e ON e.oid = d.refobjid
+                           WHERE d.classid = 'pg_proc'::regclass AND d.objid = p.oid
+                             AND d.deptype = 'e'
+                             AND e.extname = ANY ('{${OUTBOUND_EXTENSIONS.join(",")}}'::text[])))
+          AND has_function_privilege(p.oid, 'EXECUTE')`,
+    )).rows[0][0];
+    if (drift) {
+      return {
+        ok: false,
+        engine: triple(here),
+        error: `REFUSED: role drift — sol_reader can execute ${drift.slice(0, 500)}; ` +
+          "run scripts/governance/sol-reader-role.sh before this tool answers again",
+      };
+    }
+
     let res;
     let more = false;
     if (plan.mode === "cursor") {
@@ -197,8 +243,8 @@ export async function sqlRead(query) {
     };
     const answer = { identity, columns: res.fields.map((f) => f.name), rows, row_cap_hit: more };
     let text = JSON.stringify(answer);
-    if (text.length > MAX_ANSWER) {
-      while (answer.rows.length && JSON.stringify(answer).length > MAX_ANSWER) answer.rows.pop();
+    if (bytes(text) > MAX_ANSWER) {
+      while (answer.rows.length && bytes(JSON.stringify(answer)) > MAX_ANSWER) answer.rows.pop();
       answer.answer_cap_hit = `cut to ${answer.rows.length} rows at ${MAX_ANSWER} bytes`;
       text = JSON.stringify(answer);
     }

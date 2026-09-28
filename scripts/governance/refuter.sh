@@ -129,20 +129,35 @@ if [ "${1:-}" = "--proof" ]; then
 
   # 3. three writes through the very tool Codex starts, over its own stdio
   if [ ${#REACH[@]} -eq 0 ]; then
+    # Each attempt must be refused for ITS OWN reason, and a read on the same
+    # server must first reach an allowed construction identity — so a login
+    # failure, a wrong engine or a busy bench can never pass as three refusals
+    # (Sol's xhigh audit, 2026-09-28).
     verdicts="$(printf '%s\n' \
       '{"jsonrpc":"2.0","id":0,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"proof","version":"0"}}}' \
-      '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"sql_read","arguments":{"query":"insert into public.agents default values"}}}' \
-      '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"sql_read","arguments":{"query":"with x as (delete from public.agents returning 1) select count(*) from x"}}}' \
-      '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"sql_read","arguments":{"query":"select lo_create(0)"}}}' \
+      '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"sql_read","arguments":{"query":"select 1 as reached"}}}' \
+      '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"sql_read","arguments":{"query":"insert into public.agents default values"}}}' \
+      '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"sql_read","arguments":{"query":"with x as (delete from public.agents returning 1) select count(*) from x"}}}' \
+      '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"sql_read","arguments":{"query":"select lo_create(0)"}}}' \
       | timeout 60 node "$TOOL" | node -e '
+        const allowed = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")).allowed
+          .map((i) => `${i.sysid}/${i.dboid}/${i.dbname}`);
+        const want = { 2: /^REFUSED: only SELECT/, 3: /data-modifying statements in WITH/, 4: /permission denied for function lo_create/ };
         let s = ""; process.stdin.on("data", (d) => (s += d)).on("end", () => {
           for (const o of s.trim().split("\n").map((l) => JSON.parse(l)).filter((o) => o.id > 0).sort((a, b) => a.id - b.id)) {
-            const r = o.result;
-            console.log(r && r.isError && !/engine busy/.test(r.content[0].text) ? `DB_WRITE_REFUSED #${o.id}: ${r.content[0].text}` : `DB_WRITE_NOT_REFUSED #${o.id}: ${JSON.stringify(o)}`);
+            const r = o.result, text = r ? r.content[0].text : JSON.stringify(o);
+            if (o.id === 1) {
+              let eng = "";
+              try { eng = JSON.parse(text).identity.engine; } catch {}
+              console.log(r && !r.isError && allowed.includes(eng) ? `DB_REACHED ${eng}` : `DB_NOT_REACHED: ${text}`);
+            } else {
+              console.log(r && r.isError && want[o.id].test(text) ? `DB_WRITE_REFUSED #${o.id - 1}: ${text}` : `DB_WRITE_NOT_REFUSED #${o.id - 1}: ${text}`);
+            }
           }
-        });')"
+        });' "$ROOT/tools/hooks/ledger-identity.json")"
     printf '%s\n' "$verdicts" | sed 's/^/  /'
-    [ "$(printf '%s\n' "$verdicts" | grep -c '^DB_WRITE_REFUSED')" -eq 3 ] || fail "a write through sql_read was not refused"
+    printf '%s\n' "$verdicts" | grep -q '^DB_REACHED ' || fail "sql_read did not reach an allowed construction engine"
+    [ "$(printf '%s\n' "$verdicts" | grep -c '^DB_WRITE_REFUSED')" -eq 3 ] || fail "a write through sql_read was not refused for its own reason"
   else
     echo "  DB writes: not tried — the engine is absent"
   fi
