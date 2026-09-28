@@ -72,6 +72,13 @@ const MAX_CELL = 4096; // bytes
 const MAX_ANSWER = 64 * 1024; // bytes
 const WINDOW_SQL = join(REPO, "scripts/b36/company-one-way-window.sql");
 const OUTBOUND_EXTENSIONS = ["dblink", "postgres_fdw", "http", "pgsql-http"];
+// `extensions` and `supabase_migrations` are the two readable schemas no default
+// privilege guards: a function born there is PUBLIC's. There, a callable function
+// must belong to one of these vetted extensions or be a trigger function (which
+// cannot be called); anything else — SECURITY INVOKER included — is drift
+// (Sol's xhigh re-check, 2026-09-28). `public` and `pgboss` are guarded by the
+// one-way window's default privileges, which hand new functions to no reader.
+const VETTED_EXTENSIONS = ["pgcrypto", "uuid-ossp", "pg_stat_statements"];
 
 /** The window's one sentence for "a function whose call leaves something behind". */
 function effectfulPredicate() {
@@ -166,8 +173,10 @@ export const cut = (v) => {
   const s = String(v);
   const n = bytes(s);
   if (n <= MAX_CELL) return s;
-  const head = Buffer.from(s, "utf8").subarray(0, MAX_CELL).toString("utf8").replace(/\uFFFD+$/, "");
-  return `${head}…[cut at ${MAX_CELL} of ${n} bytes]`;
+  // The marker is inside the budget: head + marker ≤ MAX_CELL bytes.
+  const marker = `…[cut at ${MAX_CELL} of ${n} bytes]`;
+  const head = Buffer.from(s, "utf8").subarray(0, MAX_CELL - bytes(marker)).toString("utf8").replace(/\uFFFD+$/, "");
+  return head + marker;
 };
 
 export async function sqlRead(query) {
@@ -213,7 +222,13 @@ export async function sqlRead(query) {
                OR EXISTS (SELECT 1 FROM pg_depend d JOIN pg_extension e ON e.oid = d.refobjid
                            WHERE d.classid = 'pg_proc'::regclass AND d.objid = p.oid
                              AND d.deptype = 'e'
-                             AND e.extname = ANY ('{${OUTBOUND_EXTENSIONS.join(",")}}'::text[])))
+                             AND e.extname = ANY ('{${OUTBOUND_EXTENSIONS.join(",")}}'::text[]))
+               OR (n.nspname IN ('extensions', 'supabase_migrations')
+                   AND p.prorettype NOT IN ('trigger'::regtype, 'event_trigger'::regtype)
+                   AND NOT EXISTS (SELECT 1 FROM pg_depend d JOIN pg_extension e ON e.oid = d.refobjid
+                                    WHERE d.classid = 'pg_proc'::regclass AND d.objid = p.oid
+                                      AND d.deptype = 'e'
+                                      AND e.extname = ANY ('{${VETTED_EXTENSIONS.join(",")}}'::text[]))))
           AND has_function_privilege(p.oid, 'EXECUTE')`,
     )).rows[0][0];
     if (drift) {
@@ -225,27 +240,51 @@ export async function sqlRead(query) {
       };
     }
 
-    let res;
+    // Rows come in batches of 25 and stop once the answer budget is spent, so
+    // no more rows are pulled from the engine than can be shown. A single cell
+    // still crosses whole before it is cut — its transfer is bounded by the 10 s
+    // statement timeout. Rewriting Sol's query to cut cells server-side was
+    // weighed and refused: wrapping it in a subquery can change its row order and
+    // column shape, and false evidence is the worse failure (lead's decision on
+    // Sol's re-check, 2026-09-28).
+    let fields;
+    let rows = [];
     let more = false;
+    let spent = 0;
     if (plan.mode === "cursor") {
       await ext(`DECLARE sol_read NO SCROLL CURSOR FOR ${plan.body}`);
-      res = await ext(`FETCH ${MAX_ROWS + 1} FROM sol_read`);
+      for (;;) {
+        const batch = await ext("FETCH 25 FROM sol_read");
+        fields ??= batch.fields;
+        for (const r of batch.rows) {
+          const row = r.map(cut);
+          if (rows.length === MAX_ROWS) { more = true; break; }
+          rows.push(row);
+          spent += bytes(JSON.stringify(row));
+        }
+        if (more || batch.rows.length < 25 || spent > MAX_ANSWER) {
+          if (!more && batch.rows.length === 25) more = true; // stopped by the budget, not the end
+          break;
+        }
+      }
     } else {
-      res = await ext(plan.body);
+      const res = await ext(plan.body);
+      fields = res.fields;
+      rows = res.rows.map((r) => r.map(cut));
+      if (rows.length > MAX_ROWS) { rows = rows.slice(0, MAX_ROWS); more = true; }
     }
-    let rows = res.rows;
-    if (rows.length > MAX_ROWS) { rows = rows.slice(0, MAX_ROWS); more = true; }
-    rows = rows.map((r) => r.map(cut));
 
     const identity = {
       engine: triple(here), address: `${client.host}:${client.port}`, server_port: who[3],
       user: who[4], transaction_read_only: ro,
     };
-    const answer = { identity, columns: res.fields.map((f) => f.name), rows, row_cap_hit: more };
+    const answer = { identity, columns: (fields ?? []).map((f) => f.name), rows, row_cap_hit: more };
     let text = JSON.stringify(answer);
     if (bytes(text) > MAX_ANSWER) {
+      // The note is inside the budget: rows go until answer + note ≤ MAX_ANSWER bytes.
+      answer.answer_cap_hit = `cut at ${MAX_ANSWER} bytes to 000 rows`;
       while (answer.rows.length && bytes(JSON.stringify(answer)) > MAX_ANSWER) answer.rows.pop();
-      answer.answer_cap_hit = `cut to ${answer.rows.length} rows at ${MAX_ANSWER} bytes`;
+      answer.answer_cap_hit = `cut at ${MAX_ANSWER} bytes to ${String(answer.rows.length).padStart(3, "0")} rows`;
       text = JSON.stringify(answer);
     }
     return { ok: true, text, rows: answer.rows.length, engine: identity.engine };

@@ -102,4 +102,21 @@ out="$({
   exit 1
 }
 visible="$(printf '%s\n' "$out" | sed -n 's/.*SOL_READER readable public tables \([0-9]*\).*/\1/p')"
+# The tool's own drift guard is the one definition of "a function the auditor
+# must not be able to call" beyond this file's assertion (future functions in
+# `extensions` / `supabase_migrations`); the role is only OK when the tool,
+# asked as sol_reader, answers. The installer is not Sol: it holds no bench lock
+# question, so it says the engine is held on its behalf.
+if [ "$CONTAINER" = "$BUILD_CONTAINER" ]; then
+  # The path goes by environment, not argv: with argv[1] set to the tool's own
+  # path the tool believes it was launched as the MCP server and waits on stdin.
+  guard="$(DXB_ENGINE_LOCK_HELD=1 SOL_TOOL="$ROOT/scripts/governance/sol-db-mcp.mjs" timeout 30 node --input-type=module -e '
+    const { sqlRead } = await import(process.env.SOL_TOOL);
+    const r = await sqlRead("select 1");
+    console.log(r.ok ? "TOOL_GUARD_OK" : r.error);' < /dev/null 2>&1)"
+  if [ "$guard" != "TOOL_GUARD_OK" ]; then
+    echo "SOL_READER_FAIL — the role is committed but the tool refuses it: $guard" >&2
+    exit 1
+  fi
+fi
 echo "SOL_READER_OK sysid=$HERE readable_public_tables=${visible:-?} credential=$ENV_FILE"

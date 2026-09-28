@@ -119,38 +119,52 @@ describe("sql_read — what it refuses", () => {
     expect(many.row_cap_hit).toBe(true);
 
     const big = body(await tool.sqlRead("select repeat('x', 1000000) as cell"));
-    expect(big.rows[0][0]!.length).toBeLessThan(4200);
+    expect(Buffer.byteLength(big.rows[0][0]!, "utf8")).toBeLessThanOrEqual(4096);
     expect(big.rows[0][0]).toMatch(/cut at 4096 of 1000000 bytes/);
 
     // Bytes, not characters (Sol's high and xhigh audits, 2026-09-28): a
     // three-byte character used to pass 4096 of them — 12 KB a cell, 184 KB an answer.
     const wide = await tool.sqlRead("select repeat(chr(8364), 4096) as cell from generate_series(1, 30)");
     const w = body(wide);
-    const head = w.rows[0][0]!.split("…[cut at")[0];
-    expect(Buffer.byteLength(head, "utf8")).toBeLessThanOrEqual(4096);
-    expect(head).not.toMatch(/\uFFFD/);
+    // The WHOLE cell, marker included, and the WHOLE answer, note included
+    // (Sol's re-check: both markers used to sit outside their budgets).
+    expect(Buffer.byteLength(w.rows[0][0]!, "utf8")).toBeLessThanOrEqual(4096);
+    expect(w.rows[0][0]).not.toMatch(/\uFFFD/);
     expect(w.rows[0][0]).toMatch(/cut at 4096 of 12288 bytes/);
     expect(Buffer.byteLength(wide.text!, "utf8")).toBeLessThanOrEqual(64 * 1024);
+    const edge = await tool.sqlRead("select repeat('x', 4097) as cell");
+    expect(Buffer.byteLength(body(edge).rows[0][0]!, "utf8")).toBeLessThanOrEqual(4096);
+    const full = await tool.sqlRead("select repeat('x', 1514) as cell from generate_series(1, 200)");
+    expect(Buffer.byteLength(full.text!, "utf8")).toBeLessThanOrEqual(64 * 1024);
+    expect(body(full).row_cap_hit).toBe(true);
   }, 30_000);
 
-  it("(6b) role drift: a SECURITY DEFINER function born later in `extensions` stops the tool", async () => {
+  it("(6b) role drift: a function born later in `extensions` or `supabase_migrations` stops the tool", async () => {
     // Sol's xhigh finding A: no default privilege guards `extensions` or
     // `supabase_migrations`, so a function created there tomorrow is PUBLIC's.
     // The tool must see it on its own connection and refuse, in any schema.
     const admin = (sql: string) => spawnSync("docker",
       ["exec", "-i", "supabase_db_DxB_Build", "psql", "-U", "supabase_admin", "-d", "postgres",
        "-v", "ON_ERROR_STOP=1", "-qtA"], { input: sql, encoding: "utf8" });
-    const born = admin("CREATE FUNCTION extensions.sol_drift_probe() RETURNS int " +
-      "LANGUAGE sql SECURITY DEFINER AS 'select 1';");
-    expect(born.status, born.stderr).toBe(0);
-    try {
-      const a = await tool.sqlRead("select 1");
-      expect(a.ok).toBe(false);
-      expect(a.error).toMatch(/role drift.*sol_drift_probe/);
-    } finally {
-      expect(admin("DROP FUNCTION extensions.sol_drift_probe();").status).toBe(0);
+    // Three shapes: SECURITY DEFINER; a plain SECURITY INVOKER function (Sol's
+    // re-check — it could reach an outside effect the guard did not name); and
+    // the same in the other unguarded schema.
+    for (const [fn, how] of [
+      ["extensions.sol_drift_probe()", "SECURITY DEFINER"],
+      ["extensions.sol_drift_probe()", "SECURITY INVOKER"],
+      ["supabase_migrations.sol_drift_probe()", "SECURITY INVOKER"],
+    ]) {
+      const born = admin(`CREATE FUNCTION ${fn} RETURNS int LANGUAGE sql ${how} AS 'select 1';`);
+      expect(born.status, born.stderr).toBe(0);
+      try {
+        const a = await tool.sqlRead("select 1");
+        expect(a.ok, `${fn} ${how} did not stop the tool`).toBe(false);
+        expect(a.error).toMatch(/role drift.*sol_drift_probe/);
+      } finally {
+        expect(admin(`DROP FUNCTION ${fn};`).status).toBe(0);
+      }
+      expect((await tool.sqlRead("select 1")).ok).toBe(true);
     }
-    expect((await tool.sqlRead("select 1")).ok).toBe(true);
   });
 });
 
