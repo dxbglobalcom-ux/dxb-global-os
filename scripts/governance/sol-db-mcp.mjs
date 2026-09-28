@@ -206,8 +206,13 @@ export async function sqlRead(query) {
     // refused while it is still arriving — before a cell is assembled in this
     // process — and the query is not rewritten (Sol's second re-check,
     // 2026-09-28). Armed only for Sol's own statement.
+    // prependListener: this counter runs BEFORE pg's own parser on every chunk,
+    // so the socket is destroyed before the crossing chunk is decoded; what this
+    // process ever holds of one answer is at most MAX_WIRE plus that one chunk.
+    // The success path checks overWire again (Sol's third re-check: a cell of
+    // MAX_WIRE + 1 bytes used to be decoded, cut and returned as a success).
     const sock = client.connection.stream;
-    sock.on("data", (d) => {
+    sock.prependListener("data", (d) => {
       if (!armed) return;
       wire += d.length;
       if (wire > MAX_WIRE && !overWire) { overWire = true; sock.destroy(); }
@@ -309,6 +314,7 @@ export async function sqlRead(query) {
         };
       }
     }
+    if (overWire) throw new Error("wire budget passed");
     return { ok: true, text, rows: answer.rows.length, engine: identity.engine };
   } catch (e) {
     if (overWire) {

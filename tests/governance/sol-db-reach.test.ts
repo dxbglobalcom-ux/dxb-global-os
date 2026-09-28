@@ -145,6 +145,14 @@ describe("sql_read — what it refuses", () => {
     const huge = await tool.sqlRead("select repeat('x', 40000000) as cell");
     expect(huge.ok).toBe(false);
     expect(huge.error).toMatch(/passed 16777216 bytes on the wire/);
+    // The boundary itself (Sol's third re-check): one byte over is refused, and
+    // a cell that fits with its row's framing still answers.
+    for (const n of [16777217, 16777300]) {
+      const edge = await tool.sqlRead(`select repeat('x', ${n}) as cell`);
+      expect(edge.ok, `a ${n}-byte cell was returned as a success`).toBe(false);
+      expect(edge.error).toMatch(/on the wire/);
+    }
+    expect((await tool.sqlRead("select repeat('x', 16000000) as cell")).ok).toBe(true);
 
     const wide = "select " + Array.from({ length: 1200 }, (_, i) => `1 as ${"c".repeat(50)}_${i}`).join(", ");
     const w = await tool.sqlRead(wide);
