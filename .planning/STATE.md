@@ -29,7 +29,7 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 ## Where we left off
 
 2026-09-28 20:52 → 22:10, Opus 5.5 session 58e4dd12 (successor of b4b6d71c), the first `dxb-team2` job:
-**Sol's own read-only hand into the construction engine — built, audited, and waiting for his eye.**
+**Sol's own read-only hand into the construction engine — built, audited, and ACCEPTED BY HIS OWN EYE** <!-- CEO-OK: sol-db-reach-accepted-by-his-eye-2026-09-28 --> (*"Onaylıyorum. Göz geçimi tamam."*).
 Sol (GPT-6 Sol via `refuter.sh`) now has one MCP tool, `sql_read` (`scripts/governance/sol-db-mcp.mjs`),
 that reads the construction engine as `sol_reader` (`scripts/governance/sol-reader-role.sh`) and never
 the company's (refused by identity); the tracked profile `scripts/governance/codex-refuter.config.toml`
@@ -42,16 +42,13 @@ found a blocking finding `high` missed, so critical jobs stay at `xhigh`
 
 ## Next
 
-1. **Job 1 waits for his eye** (LAW B) — Sol's read-only reach, `.planning/quick/20260928-sol-db-reach/`
-   (PLAN, DONE-LIST, AUDIT). Nothing in it is accepted until he looks.
-2. Repository clean-up of old, unused things — he named it 2026-09-28; list and sizes go in front of
+1. Repository clean-up of old, unused things — he named it 2026-09-28; list and sizes go in front of
    him before anything is deleted.
-3. B43's new leg (written into the board row 2026-09-28, commit 99bed571): the studio's 16 desktop tools and
+2. B43's new leg (written into the board row 2026-09-28, commit 99bed571): the studio's 16 desktop tools and
    the Media office's own invisible screen — plan first, no code before his yes.
 
 ## Waiting on his approval
 
-- Job 1 (above) — his eye on the finished work.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 

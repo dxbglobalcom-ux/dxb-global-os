@@ -1706,5 +1706,13 @@
     "conditions": "Given after the lead put the plan to him in Turkish with its guarantees (write-refusal and company-untouched measured before and after; one from-scratch rebuild) and said the build goes to a successor session at the context gate.",
     "session": "Opus 5.5 session b4b6d71c — heard first-hand, 2026-09-28 ~20:45 local.",
     "where": ".planning/quick/20260928-sol-db-reach/PLAN.md · .planning/STATE.md Next"
+  },
+  "sol-db-reach-accepted-by-his-eye-2026-09-28": {
+    "date": "2026-09-28",
+    "what": "He accepted dxb-team2 job 1 by his own eye: Sol's read-only reach into the construction engine (sql_read as sol_reader, the tracked refuter profile, the role script and the window's c_windows), after Sol's fifth xhigh re-check PASSED (79b2b40b) and after he asked why the auditor was restricted and was shown that only the refuter profile is narrowed — the base Codex config (his other Sol uses) is untouched.",
+    "verbatim": "Tamam güzel o zaman. Ee, komutlayabilirsin. Onaylıyorum. Göz geçimi tamam.",
+    "conditions": "None stated. His earlier remark in the same exchange — that Sol may take other roles in the holding later — was answered as: each future role gets its own profile; not written as a rule.",
+    "session": "Opus 5.5 session 58e4dd12 — heard first-hand, 2026-09-28 ~22:20 local.",
+    "where": ".planning/quick/20260928-sol-db-reach/ (PLAN, DONE-LIST, AUDIT) · .planning/STATE.md"
   }
 }

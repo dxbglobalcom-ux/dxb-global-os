@@ -89,6 +89,9 @@ export const C = {
     { id: "b56-accepted-by-his-eye-2026-09-27", subject: /\bB56\b/ },
     // B61 — the context line 50 / 55, closed by his eye 2026-09-28 ("ben de gördüm %50 de devrediordu"); spelled "B61".
     { id: "b61-accepted-by-his-eye-2026-09-28", subject: /\bB61\b/ },
+    // dxb-team2 job 1 — Sol's read-only reach, accepted by his eye 2026-09-28 ("Onaylıyorum. Göz geçimi
+    // tamam."); the records spell it "job 1" / "Job 1" and its folder "sol-db-reach".
+    { id: "sol-db-reach-accepted-by-his-eye-2026-09-28", subject: /\b[Jj]ob 1\b|sol-db-reach/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
