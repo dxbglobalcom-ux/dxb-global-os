@@ -24,7 +24,8 @@ const TOOL = join(REPO, "scripts", "governance", "sol-db-mcp.mjs");
 const LEDGER = join(REPO, "tools", "hooks", "ledger-identity.json");
 const ENV_FILE = join(homedir(), ".config", "dxb", "sol-reader.env");
 
-type Answer = { ok: boolean; text?: string; error?: string; rows?: number };
+type Answer = { ok: boolean; text?: string; error?: string; rows?: number;
+                wire?: { received: number; delivered: number } };
 type Tool = {
   sqlRead: (q: string) => Promise<Answer>;
   classify: (q: string) => { mode?: string; refused?: string };
@@ -151,6 +152,10 @@ describe("sql_read — what it refuses", () => {
       const edge = await tool.sqlRead(`select repeat('x', ${n}) as cell`);
       expect(edge.ok, `a ${n}-byte cell was returned as a success`).toBe(false);
       expect(edge.error).toMatch(/on the wire/);
+      // Sol's fourth re-check: refused is not enough — the crossing chunk must
+      // never reach pg's parser, so what the parser was given stays in budget.
+      expect(edge.wire!.received).toBeGreaterThan(16777216);
+      expect(edge.wire!.delivered).toBeLessThanOrEqual(16777216);
     }
     expect((await tool.sqlRead("select repeat('x', 16000000) as cell")).ok).toBe(true);
 

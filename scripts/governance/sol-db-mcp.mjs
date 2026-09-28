@@ -50,6 +50,7 @@
 // this is a single pg.Client per call, outside the application, under its own
 // login — the same shape the test suites use.
 import { createInterface } from "node:readline";
+import { Socket } from "node:net";
 import { createRequire } from "node:module";
 import { readFileSync, appendFileSync, mkdirSync, statSync } from "node:fs";
 import { homedir } from "node:os";
@@ -187,7 +188,29 @@ export async function sqlRead(query) {
     return { ok: false, error: "REFUSED: engine busy — the construction battery holds the bench; ask again when it ends" };
   }
 
+  // THE WIRE BUDGET. The socket pg reads from is this one: it counts every
+  // chunk as it arrives and, once Sol's own statement has received more than
+  // MAX_WIRE bytes, destroys itself and DROPS the crossing chunk before any
+  // listener — pg's parser included — is told of it. So no oversized row is
+  // ever assembled or decoded here: pg holds at most MAX_WIRE bytes of one
+  // answer. Sol's query is never rewritten (Sol's second, third and fourth
+  // re-checks, 2026-09-28: a listener beside the parser was not enough).
+  const wireGuard = { armed: false, received: 0, delivered: 0, over: false };
+  class GuardedSocket extends Socket {
+    emit(event, ...args) {
+      if (event === "data" && wireGuard.armed) {
+        wireGuard.received += args[0].length;
+        if (wireGuard.received > MAX_WIRE) {
+          if (!wireGuard.over) { wireGuard.over = true; this.destroy(); }
+          return false;
+        }
+        wireGuard.delivered += args[0].length;
+      }
+      return super.emit(event, ...args);
+    }
+  }
   const client = new pg.Client({
+    stream: () => new GuardedSocket(),
     connectionString: connectionString(),
     connectionTimeoutMillis: 5000,
     query_timeout: 15000,
@@ -198,25 +221,9 @@ export async function sqlRead(query) {
   // pending query as a rejection, never as an unhandled 'error' that kills the
   // server Codex is talking to.
   client.on("error", () => {});
-  let wire = 0, armed = false, overWire = false;
   const ext = (text) => client.query({ text, queryMode: "extended", rowMode: "array" });
   try {
     await client.connect();
-    // THE WIRE BUDGET. Bytes are counted on the socket itself, so a result is
-    // refused while it is still arriving — before a cell is assembled in this
-    // process — and the query is not rewritten (Sol's second re-check,
-    // 2026-09-28). Armed only for Sol's own statement.
-    // prependListener: this counter runs BEFORE pg's own parser on every chunk,
-    // so the socket is destroyed before the crossing chunk is decoded; what this
-    // process ever holds of one answer is at most MAX_WIRE plus that one chunk.
-    // The success path checks overWire again (Sol's third re-check: a cell of
-    // MAX_WIRE + 1 bytes used to be decoded, cut and returned as a success).
-    const sock = client.connection.stream;
-    sock.prependListener("data", (d) => {
-      if (!armed) return;
-      wire += d.length;
-      if (wire > MAX_WIRE && !overWire) { overWire = true; sock.destroy(); }
-    });
     const ledger = readJson(identityFile());
     const who = (await ext(
       `SELECT (SELECT system_identifier::text FROM pg_control_system()),
@@ -266,7 +273,7 @@ export async function sqlRead(query) {
     // budget above stops any single answer — one huge cell included — at 16 MB
     // received. Sol's query is never wrapped: a subquery can change its row
     // order and column shape, and false evidence is the worse failure.
-    armed = true;
+    wireGuard.armed = true; // Sol's own statement starts here
     let fields;
     let rows = [];
     let more = false;
@@ -314,12 +321,13 @@ export async function sqlRead(query) {
         };
       }
     }
-    if (overWire) throw new Error("wire budget passed");
+    if (wireGuard.over) throw new Error("wire budget passed");
     return { ok: true, text, rows: answer.rows.length, engine: identity.engine };
   } catch (e) {
-    if (overWire) {
+    if (wireGuard.over) {
       return {
         ok: false,
+        wire: { received: wireGuard.received, delivered: wireGuard.delivered }, // for the tests; not sent to Sol
         error: `REFUSED: the result passed ${MAX_WIRE} bytes on the wire before it could be cut; ` +
           "select fewer rows or cut wide columns in the query (for example left(col, 4000))",
       };
