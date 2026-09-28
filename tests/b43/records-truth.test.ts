@@ -5,7 +5,9 @@
 // red; then the records as they actually stand must pass every rule. Dictated by the checker
 // session on 2026-09-19, committed by the builder (audit law, 2026-09-15).
 import { describe, expect, it } from "vitest";
-import { C, r2NoAwaitingOnAccepted, r4NoAcceptanceWithoutARow, runRuler } from "./records-truth.js";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { C, r2NoAwaitingOnAccepted, r4NoAcceptanceWithoutARow, r5OpenRowsStayThin, runRuler } from "./records-truth.js";
 
 const root = process.cwd();
 const STATE = ".planning/STATE.md";
@@ -80,5 +82,16 @@ describe("the records as they stand", () => {
     const text = report.verdicts.flatMap((v) => v.failures).join("\n");
     expect(text).toBe("");
     expect(report.pass).toBe(true);
+  });
+  it("R5 rings when an open row grows past the ceiling, and not on a closed row", () => {
+    const board = readFileSync(join(root, C.board), "utf8");
+    expect(r5OpenRowsStayThin(root, board).pass, "the tree itself must pass").toBe(true);
+    const fat = `| B97 | 2026-09-28 | ${"x".repeat(C.rowCeiling)} | - | - | AUTHOR | - |`;
+    const open = board.replace("<!-- BOARD-SECTION: open -->", `<!-- BOARD-SECTION: open -->\n${fat}`);
+    const v = r5OpenRowsStayThin(root, open);
+    expect(v.pass).toBe(false);
+    expect(v.failures[0]).toMatch(/B97 is \d+ bytes/);
+    const closed = board.replace("<!-- BOARD-SECTION: closed -->", `<!-- BOARD-SECTION: closed -->\n${fat}`);
+    expect(r5OpenRowsStayThin(root, closed).pass).toBe(true);
   });
 });

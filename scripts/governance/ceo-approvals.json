@@ -1714,5 +1714,13 @@
     "conditions": "None stated. His earlier remark in the same exchange — that Sol may take other roles in the holding later — was answered as: each future role gets its own profile; not written as a rule.",
     "session": "Opus 5.5 session 58e4dd12 — heard first-hand, 2026-09-28 ~22:20 local.",
     "where": ".planning/quick/20260928-sol-db-reach/ (PLAN, DONE-LIST, AUDIT) · .planning/STATE.md"
+  },
+  "board-thin-row-ceiling-2026-09-28": {
+    "date": "2026-09-28",
+    "what": "He ordered two small things so the board's thin rows stay thin: (1) one law at the top of the board — an open row keeps its six parts, detail goes word for word to .planning/board-rows/<ID>.md; (2) a check in the records ruler (R5) that stops a commit when an open row passes 1,600 bytes. Asked after a session had written a new B43 leg with its measurements straight into the thin row and no gate rang.",
+    "verbatim": "Tamam bu iki küçük şeyi yaz bakalım.",
+    "conditions": "Given in answer to the lead's one-line question whether to make it a standing rule; the ceiling of 1,600 bytes was the lead's proposed number (the longest thin row measured 1,566).",
+    "session": "Opus 5.5 session 58e4dd12 — heard first-hand, 2026-09-28 ~22:45 local.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md law 8 · tests/b43/records-truth.ts R5"
   }
 }

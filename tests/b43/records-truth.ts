@@ -20,6 +20,13 @@
 // here by hand; the ruler cannot guess subjects, and does not try. It touches ledger-truth.mjs
 // in no way; rule R1 merely runs it.
 //
+// R5 (CEO 2026-09-28, "Tamam bu iki küçük şeyi yaz bakalım." — board-thin-row-ceiling-2026-09-28):
+// an open row on the board stays thin. The thinning of 2026-09-28 left each row its six parts and
+// moved the rest to .planning/board-rows/<ID>.md; the same evening a session wrote a new leg with
+// its measurements straight into B43 (2,415 → 3,534 bytes) and nothing rang, because the rule lived
+// only in the approvals ledger. A row over the ceiling now turns the ruler red until its detail
+// moves to its own file.
+//
 // Usage:
 //   node --no-warnings tests/b43/records-truth.ts              — the table, exit 1 on any failure
 //   node --no-warnings tests/b43/records-truth.ts --verdicts   — plus one RULER-VERDICT line per rule
@@ -35,6 +42,9 @@ export const C = {
   records: [".planning/STATE.md", "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md"],
   ledger: "scripts/governance/ceo-approvals.json",
   ledgerGate: "scripts/governance/ledger-truth.mjs",
+  board: "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md",
+  /** R5 — the most UTF-8 bytes one open row may carry (the longest thin row measured 1,566 that day) */
+  rowCeiling: 1600,
   /**
    * WHAT HIS EYE HAS COVERED — one row per ledger entry, the subject spelled as the records spell
    * it. A sentence naming one of these subjects may no longer say his eye or his word is awaited.
@@ -172,9 +182,27 @@ export function r4NoAcceptanceWithoutARow(root: string, ledgerOverride?: Record<
   return { rule: "R4 every acceptance since the ruler law has its row", pass: failures.length === 0, failures };
 }
 
+/** R5 — every open row on the board stays under the ceiling; its detail lives in its own file. */
+export function r5OpenRowsStayThin(root: string, boardOverride?: string): Verdict {
+  const text = boardOverride ?? readFileSync(join(root, C.board), "utf8");
+  const failures: string[] = [];
+  let section = "";
+  for (const line of text.split("\n")) {
+    const mark = /<!-- BOARD-SECTION: (\w+) -->/.exec(line);
+    if (mark) { section = mark[1]; continue; }
+    if (section !== "open" || !/^\| [A-Z]+[0-9]/.test(line)) continue;
+    const size = Buffer.byteLength(line, "utf8");
+    if (size > C.rowCeiling) {
+      const id = line.split("|")[1].trim();
+      failures.push(`${id} is ${size} bytes, over ${C.rowCeiling} — move its detail word for word to .planning/board-rows/${id}.md and keep the six parts on the row`);
+    }
+  }
+  return { rule: `R5 every open board row stays under ${C.rowCeiling} bytes`, pass: failures.length === 0, failures };
+}
+
 export function runRuler(opts: { root?: string; texts?: Record<string, string> } = {}): RulerReport {
   const root = repoRoot(opts.root);
-  const verdicts = [r1LedgerGate(root), r2NoAwaitingOnAccepted(root, opts.texts), r3TableIsRegistered(root), r4NoAcceptanceWithoutARow(root)];
+  const verdicts = [r1LedgerGate(root), r2NoAwaitingOnAccepted(root, opts.texts), r3TableIsRegistered(root), r4NoAcceptanceWithoutARow(root), r5OpenRowsStayThin(root)];
   return { verdicts, pass: verdicts.every((v) => v.pass) };
 }
 
