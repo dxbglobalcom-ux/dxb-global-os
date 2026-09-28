@@ -139,6 +139,21 @@ describe("sql_read — what it refuses", () => {
     expect(body(full).row_cap_hit).toBe(true);
   }, 30_000);
 
+  it("(6c) the wire budget and the column list: bounded before they are held, and the tool lives on", async () => {
+    // Sol's second re-check: a cell crossed whole before the cut, and column
+    // names were outside the answer budget.
+    const huge = await tool.sqlRead("select repeat('x', 40000000) as cell");
+    expect(huge.ok).toBe(false);
+    expect(huge.error).toMatch(/passed 16777216 bytes on the wire/);
+
+    const wide = "select " + Array.from({ length: 1200 }, (_, i) => `1 as ${"c".repeat(50)}_${i}`).join(", ");
+    const w = await tool.sqlRead(wide);
+    expect(w.ok).toBe(false);
+    expect(w.error).toMatch(/column list alone is over 65536 bytes/);
+
+    expect((await tool.sqlRead("select 2")).ok).toBe(true); // a dropped socket did not kill the tool
+  });
+
   it("(6b) role drift: a function born later in `extensions` or `supabase_migrations` stops the tool", async () => {
     // Sol's xhigh finding A: no default privilege guards `extensions` or
     // `supabase_migrations`, so a function created there tomorrow is PUBLIC's.

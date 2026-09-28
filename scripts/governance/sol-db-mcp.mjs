@@ -70,6 +70,7 @@ const ENGINE = { host: "127.0.0.1", port: "54422" };
 const MAX_ROWS = 200;
 const MAX_CELL = 4096; // bytes
 const MAX_ANSWER = 64 * 1024; // bytes
+const MAX_WIRE = 16 * 1024 * 1024; // bytes received for one query, before any cut
 const WINDOW_SQL = join(REPO, "scripts/b36/company-one-way-window.sql");
 const OUTBOUND_EXTENSIONS = ["dblink", "postgres_fdw", "http", "pgsql-http"];
 // `extensions` and `supabase_migrations` are the two readable schemas no default
@@ -193,9 +194,24 @@ export async function sqlRead(query) {
     application_name: "sol-db-mcp",
     types: { getTypeParser: () => (v) => v }, // every value stays text
   });
+  // A dropped connection (the wire budget, a restarted engine) must reach the
+  // pending query as a rejection, never as an unhandled 'error' that kills the
+  // server Codex is talking to.
+  client.on("error", () => {});
+  let wire = 0, armed = false, overWire = false;
   const ext = (text) => client.query({ text, queryMode: "extended", rowMode: "array" });
   try {
     await client.connect();
+    // THE WIRE BUDGET. Bytes are counted on the socket itself, so a result is
+    // refused while it is still arriving — before a cell is assembled in this
+    // process — and the query is not rewritten (Sol's second re-check,
+    // 2026-09-28). Armed only for Sol's own statement.
+    const sock = client.connection.stream;
+    sock.on("data", (d) => {
+      if (!armed) return;
+      wire += d.length;
+      if (wire > MAX_WIRE && !overWire) { overWire = true; sock.destroy(); }
+    });
     const ledger = readJson(identityFile());
     const who = (await ext(
       `SELECT (SELECT system_identifier::text FROM pg_control_system()),
@@ -241,12 +257,11 @@ export async function sqlRead(query) {
     }
 
     // Rows come in batches of 25 and stop once the answer budget is spent, so
-    // no more rows are pulled from the engine than can be shown. A single cell
-    // still crosses whole before it is cut — its transfer is bounded by the 10 s
-    // statement timeout. Rewriting Sol's query to cut cells server-side was
-    // weighed and refused: wrapping it in a subquery can change its row order and
-    // column shape, and false evidence is the worse failure (lead's decision on
-    // Sol's re-check, 2026-09-28).
+    // no more rows are pulled from the engine than can be shown; and the wire
+    // budget above stops any single answer — one huge cell included — at 16 MB
+    // received. Sol's query is never wrapped: a subquery can change its row
+    // order and column shape, and false evidence is the worse failure.
+    armed = true;
     let fields;
     let rows = [];
     let more = false;
@@ -286,9 +301,23 @@ export async function sqlRead(query) {
       while (answer.rows.length && bytes(JSON.stringify(answer)) > MAX_ANSWER) answer.rows.pop();
       answer.answer_cap_hit = `cut at ${MAX_ANSWER} bytes to ${String(answer.rows.length).padStart(3, "0")} rows`;
       text = JSON.stringify(answer);
+      if (bytes(text) > MAX_ANSWER) {
+        // No row left and still over: the column list itself is the excess.
+        return {
+          ok: false, engine: triple(here),
+          error: `REFUSED: the column list alone is over ${MAX_ANSWER} bytes (${answer.columns.length} columns); select fewer or shorter-named columns`,
+        };
+      }
     }
     return { ok: true, text, rows: answer.rows.length, engine: identity.engine };
   } catch (e) {
+    if (overWire) {
+      return {
+        ok: false,
+        error: `REFUSED: the result passed ${MAX_WIRE} bytes on the wire before it could be cut; ` +
+          "select fewer rows or cut wide columns in the query (for example left(col, 4000))",
+      };
+    }
     return { ok: false, error: `ERROR: ${e.message}` };
   } finally {
     await client.query("ROLLBACK").catch(() => {});
