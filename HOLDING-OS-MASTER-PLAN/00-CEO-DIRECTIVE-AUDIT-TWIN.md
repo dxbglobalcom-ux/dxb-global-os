@@ -68,6 +68,20 @@ An auditor that promises not to write is not read-only. Enforcement is by tool:
   construction engine, port 54422; once, before it existed, 3,087 false
   `tool_missing` rows into the live audit table). The author runs them and hands
   the auditor the whole raw output; the Codex sandbox has no network anyway.
+- **The auditor's own hand into the construction engine** (dxb-team2 job 1,
+  CEO 2026-09-28 *"önerin tmm"*, plan approved *"Tamam onaylıyorum."*): the
+  Codex lane reaches the database through ONE MCP tool, `sql_read`
+  (`scripts/governance/sol-db-mcp.mjs`), as the role `sol_reader`
+  (`scripts/governance/sol-reader-role.sh`) — SELECT in four schemas, no write
+  verb, sequence, TEMP, CREATE or effectful function anywhere, every statement
+  one read inside `BEGIN READ ONLY`, the engine's identity triple checked on the
+  connection that runs it. It exists on the construction engine only; the
+  company's is refused by identity. So the auditor counts and reads rows itself
+  instead of receiving them from the author; the test suites are still the
+  author's to run. The profile it runs under is tracked
+  (`scripts/governance/codex-refuter.config.toml`) and every other hand that
+  runs outside the sandbox — plugins, browser, computer, web, memory, a Node
+  REPL — is off, measured by `refuter.sh` on every launch.
 - **Proof, not trust:** the author records row counts of `audit_log`, `tasks`,
   `opportunities` and `agent_runs` **before and after** every audit. A
   difference invalidates the audit and is recorded as a defect of the audit

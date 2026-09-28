@@ -87,7 +87,9 @@ pins the read-only profile and refuses to run without it. Calling `codex` direct
 puts the promise back and takes the tool away: the base config runs unrestricted, measured
 2026-08-16. `refuter.sh --proof` re-prints the evidence that it cannot write. It may run
 measuring commands, never a writing command, and never a test suite (the suites write; the
-author runs them and hands over the whole raw output). Record the audit-trail row counts before and after; a difference invalidates the audit.
+author runs them and hands over the whole raw output). It queries the construction engine
+itself through its one tool `sql_read` as the read-only role `sol_reader` (never the company's —
+refused by identity), so database evidence is gathered by the auditor's hand, not handed over. Record the audit-trail row counts before and after; a difference invalidates the audit.
 
 It fires once on **every construction job**, at the depth the job's score card sets (light Sol
 `medium` · normal `high` · critical `xhigh`, the plan read first) — the author never approves his

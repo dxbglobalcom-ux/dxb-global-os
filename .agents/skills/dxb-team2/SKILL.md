@@ -112,9 +112,12 @@ recommendation, answerable in one word. Nothing else.
 | test output, **raw and whole** | |
 
 Its first question on every job: *does this done-list prove what the CEO's sentence asked for?* — the
-lead wrote the exam; the auditor checks the exam too. Sol may ask for any read-only command; the lead
-runs it and returns the raw output. Sol's sandbox has no network, so the database-writing test suites
-are run by the lead and handed over whole. After the first verdict, the lead's reply may be shown and
+lead wrote the exam; the auditor checks the exam too. **Sol queries the construction engine itself**
+through its one tool `sql_read` (`scripts/governance/sol-db-mcp.mjs`, role `sol_reader`, job 1
+2026-09-28) — the brief tells it so, and tells it to read that file before trusting it; the lead never
+hands over a count the auditor can take. Sol may ask for any other read-only command; the lead runs it
+and returns the raw output. Sol's sandbox has no network, so the database-writing test suites are run
+by the lead and handed over whole. After the first verdict, the lead's reply may be shown and
 Sol weighs it. Output per claim:
 
 ```text
@@ -168,6 +171,5 @@ Correction required:
   the speed of three workers without three re-reads.
 - **Sol `high` vs `xhigh`** on the same critical diff: findings, false alarms, time, Plus usage.
 - **Plus share per audit:** `rate_limits` before and after each audit in the Codex rollout.
-- **The first critical job** is Sol's own database reach: a read-only role on the construction engine
-  (port 54422) served to Sol through a read-only query tool outside its sandbox — never the company's
-  database.
+- **The first critical job** was Sol's own database reach (built 2026-09-28, §5); its audit pays the
+  `high` vs `xhigh` measurement above.
