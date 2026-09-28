@@ -28,27 +28,31 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-09-28 20:52 → 22:10, Opus 5.5 session 58e4dd12 (successor of b4b6d71c), the first `dxb-team2` job:
-**Sol's own read-only hand into the construction engine — built, audited, and ACCEPTED BY HIS OWN EYE** <!-- CEO-OK: sol-db-reach-accepted-by-his-eye-2026-09-28 --> (*"Onaylıyorum. Göz geçimi tamam."*).
-Sol (GPT-6 Sol via `refuter.sh`) now has one MCP tool, `sql_read` (`scripts/governance/sol-db-mcp.mjs`),
-that reads the construction engine as `sol_reader` (`scripts/governance/sol-reader-role.sh`) and never
-the company's (refused by identity); the tracked profile `scripts/governance/codex-refuter.config.toml`
-turns every other out-of-sandbox hand off. The construction engine was rebuilt from scratch once to
-prove the role comes back (new cluster 7690665340837392423). Battery once: 1 red, the pre-existing
-`tests/r43/arsenal.test.ts` (4); everything else green. Sol audited the diff blind at `high` and `xhigh`
-side by side, then re-checked five times; the last verdict is **PASSES**. The owed measurement: `xhigh`
-found a blocking finding `high` missed, so critical jobs stay at `xhigh`
-(`.planning/quick/20260928-sol-db-reach/AUDIT.md`). Commits 51f1308c … 79b2b40b.
+2026-09-28 20:52 → ~23:00, Opus 5.5 session 58e4dd12. **Job 1 of `dxb-team2` — Sol's own read-only
+hand into the construction engine — ACCEPTED BY HIS OWN EYE** <!-- CEO-OK: sol-db-reach-accepted-by-his-eye-2026-09-28 -->
+(*"Onaylıyorum. Göz geçimi tamam."*), after five Sol `xhigh` re-checks ended in PASSES; the owed
+measurement kept critical audits at `xhigh` (`.planning/quick/20260928-sol-db-reach/AUDIT.md`). He asked
+why Sol was restricted and was shown that only the auditor's profile is narrowed. Then the board: a new
+B43 leg had been written straight into its thin row with no gate ringing, so the board gained,
+on his word <!-- CEO-OK: board-thin-row-ceiling-2026-09-28 -->, law 8 (an open row stays thin) and
+the records ruler R5 (an open row over 1,600 bytes stops the commit); B43's detail moved word for word
+to `.planning/board-rows/B43.md`.
 
 ## Next
 
-1. Repository clean-up of old, unused things — he named it 2026-09-28; list and sizes go in front of
-   him before anything is deleted.
-2. B43's new leg (written into the board row 2026-09-28, commit 99bed571): the studio's 16 desktop tools and
-   the Media office's own invisible screen — plan first, no code before his yes.
+1. **Tomorrow, with him: does the construction system really work?** He wants to keep talking about
+   `dxb-team2` — built on Anthropic's Opus 5.5 material and Sol's own — and whether it is good enough to
+   build a Ferrari-standard holding. Bring the measured facts of job 1 (AUDIT.md) and the two
+   measurements the door still owes (the fork's cache; class budgets after three jobs).
+2. His question of 2026-09-28: should the architecture built by older models (database, runtime,
+   agents) be reviewed and upgraded by the new ones? The lead proposed a read-only, measured review
+   (Fable 5.1 architecture + Sol `xhigh`), part by part — keep / strengthen / rebuild with cost — never a
+   rebuild from zero; a short plan of scope, order and cost goes to him first.
+3. Repository clean-up of old, unused things — list and sizes in front of him before anything is deleted.
 
 ## Waiting on his approval
 
+- The architecture-review plan (Next 2), when it is put to him.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 
