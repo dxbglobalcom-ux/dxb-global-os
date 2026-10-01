@@ -1,9 +1,9 @@
 {
   "_department": "paid-media",
-  "_generated_at": "2026-09-27T04:20:29.510Z",
+  "_generated_at": "2026-10-01T18:44:56.460Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
   "_skills": [],
-  "_source_hash": "f9abf5e892d7dcda5f3e2aa03a10a71f639f5609d42b6b95a33ba0c22660f30a",
+  "_source_hash": "6c348f4cb28b4a72025ba94cdfbef1d9af5127e0a229fd3717d29a26006eee84",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",
@@ -18,6 +18,8 @@
       "memory_commit",
       "memory_recall",
       "queue_claim",
+      "queue_create_task",
+      "queue_dispatch",
       "queue_get",
       "queue_list",
       "queue_return",

@@ -1810,5 +1810,13 @@
     "conditions": "Item 1 (prose-only work skipping Sol) and dxb-team2 are to be talked over later.",
     "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
     "where": ".planning/governance/ · README.md · MASTER_PLAN.md"
+  },
+  "tool-repin-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "The 12 tools the pin check quarantined on 2026-09-27 (scrapling 9: the 0.4.10 install of 2026-08-17; dxb-mcp 3: queue_create_task, queue_dispatch, media_submit, our own edits) re-pinned in the company's tool_pins after the session read every new description and input schema in full (no instruction, secret or exfiltration text; 'password' only in proxy-format docs) and confirmed each live hash equals the one seen at lock time. One transaction: 12 updates + 12 audit_log rows 'tool_repinned'. The library job recompiled the 25 profiles within 30 s; they match the pre-lock tool sets.",
+    "verbatim": "Çözebiliyorsan şimdi çöz.",
+    "conditions": "His further words 'Yani kitlenmesin bir daha böyle şeyler ya.' are a change to the pin law itself and were put to him with a recommendation, not built.",
+    "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
+    "where": "company tool_pins + audit_log · packages/gateway/profiles/*"
   }
 }

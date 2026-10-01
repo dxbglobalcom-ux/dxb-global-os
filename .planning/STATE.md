@@ -51,8 +51,10 @@ batches on his numbers <!-- CEO-OK: rules-prune-batch-1-2026-10-01 --> <!-- CEO-
 3. The full battery of 2026-10-01 20:19 was red on two things older than the day's changes. The chat
    session left in the construction engine is fixed (the voice test's sweep missed a probe whisper
    heard as "çirketin"; the pattern now drops the first letter, the row is gone, the file alone
-   leaves 0/0). Still red and not started: `tests/r43/arsenal.test.ts` (4) — the strategy profile's
-   scrapling tools.
+   leaves 0/0). The arsenal red is fixed too: 12 tools the pin check locked on 2026-09-27 were
+   read in full and re-pinned on his word <!-- CEO-OK: tool-repin-2026-10-01 -->; the profiles recompiled, arsenal 5/5.
+   Open with him: "kitlenmesin bir daha" — whether a changed tool is re-approved automatically when
+   its new text reads clean, locked only when it does not.
 4. The next real job is a holding part from the board, chosen with him.
 
 ## Waiting on his approval
