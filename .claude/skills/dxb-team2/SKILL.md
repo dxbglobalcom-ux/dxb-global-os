@@ -18,7 +18,7 @@ it opens `dxb-verify` and `dxb-close-row`.
      ┌──────────────┼──────────────────────────┐
   LIGHT (0-2)   NORMAL (3-5)             CRITICAL (6-8)
      │              │              the lead plans, Fable advises
-     │              │              → Sol reads the plan → the CEO approves the plan
+     │              │              → Sol reads the plan → the lead closes its gaps
      └──────────────┼──────────────────────────┘
                     ▼
      THE LEAD (this session) writes the code and runs its tests
