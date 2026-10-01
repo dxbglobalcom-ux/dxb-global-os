@@ -45,21 +45,20 @@ batches on his numbers <!-- CEO-OK: rules-prune-batch-1-2026-10-01 --> <!-- CEO-
 
 ## Next
 
-1. **Ask him** before any project work. Nothing is started without his word.
-2. To talk over with him later, on his word: dxb-team2 itself, and whether prose-only work (no code)
-   skips Sol.
-3. The full battery of 2026-10-01 20:19 was red on two things older than the day's changes. The chat
-   session left in the construction engine is fixed (the voice test's sweep missed a probe whisper
-   heard as "çirketin"; the pattern now drops the first letter, the row is gone, the file alone
-   leaves 0/0). The arsenal red is fixed too: 12 tools the pin check locked on 2026-09-27 were
-   read in full and re-pinned on his word <!-- CEO-OK: tool-repin-2026-10-01 -->; the profiles recompiled, arsenal 5/5.
-   Open with him: "kitlenmesin bir daha" — whether a changed tool is re-approved automatically when
-   its new text reads clean, locked only when it does not.
+1. **The pin auto-review job is in progress** (his "Tamam yapabilirsin", 2026-10-01 ~20:50): code at
+   b0af5fa7, tests 30/30, NOT deployed to the company. Sol's plan read BLOCKS:
+   `.planning/quick/20261001-pin-auto-review/SOL-PLAN.txt`. Next: fix its A/B findings, Sol diff audit
+   at xhigh (card `CARD.md`), then deploy (company migration via `bash scripts/bootstrap-db.sh`, the
+   gateway dist is already rebuilt at 21:00 — restart `dxb-scheduler.service` only AFTER the migration),
+   one forced pin check, profiles unchanged. Tell him the one known limit (a keyword rule can be phrased
+   around; every doubt locks and alerts).
+2. **Ask him** before any other project work.
+3. To talk over with him later, on his word: dxb-team2 itself, and whether prose-only work skips Sol.
 4. The next real job is a holding part from the board, chosen with him.
 
 ## Waiting on his approval
 
-- Next 2 and Next 3.
+- Next 3.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 
