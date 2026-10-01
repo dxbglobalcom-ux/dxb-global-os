@@ -1770,5 +1770,13 @@
     "conditions": "Items 7 and 11 wait on his answer; item 13 (memory index law copies) moves to batch 2. Backup of the global files: ~/.claude/backups/rules-prune-20261001.tgz.",
     "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
     "where": ".claude/CLAUDE.md §2-§3 · .claude/settings.json · .codex/hooks.json · scripts/governance/rules.json · ~/.claude/CLAUDE.md · ~/.claude/settings.json · ~/.claude/hooks/dxb-cost-gate.py · tests/hooks/cost-gate.test.ts"
+  },
+  "model-watch-removed-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "The model watch (row B55) is removed entirely: the twice-weekly timer and its units, scripts/model-watch, tests/model-watch, its state directory and the line it put at the top of every opening. Also item 7 of the rule prune: the threat wording leaves core §1-§2 ('gravest violation', 'forbidden', the capitals of the law-making rule); the authority order itself stays.",
+    "verbatim": "11- tamamen kaldır.diğerlerini de yap.",
+    "conditions": "Board B55 closed on his word, not on his eye: nothing was built further.",
+    "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
+    "where": "board B55 (Section 5) · .claude/hooks/spec-bootstrap.sh · scripts/systemd/install.sh · tests/hooks · .claude/CLAUDE.md §1-§2"
   }
 }

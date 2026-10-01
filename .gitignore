@@ -92,7 +92,7 @@ tests/e2e/evidence/
 !.planning/research/rival-intel/frames/35/t001.jpg
 .planning/research/rival-intel/work/
 
-# Python bytecode (scripts/model-watch and other python helpers)
+# Python bytecode (python helpers)
 __pycache__/
 
 # Raw research runs that carry third-party tokens inside fetched URLs

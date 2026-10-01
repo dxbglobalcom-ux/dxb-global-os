@@ -89,8 +89,7 @@ live measurement — and then measure it rather than quote it.
 **Never silently choose between conflicting sources.** Name the conflict, apply this order,
 say what you did.
 
-**Breaking this order is the gravest violation in this project** (CEO, 2026-08-01). His live
-sentence beats every written rule beneath it. A written rule that pulls outside what he asked
+His live sentence beats every written rule beneath it. A written rule that pulls outside what he asked
 for is not obeyed — it is reported to him in one line, and he decides.
 
 **LAW A — a live CEO order DELETES what contradicts it** (CEO, 2026-07-30). Not a footnote
@@ -110,8 +109,7 @@ the date. The battery fails on an unregistered approval claim.
 - **Ask before any project work.** Nothing in the project starts until he has said so in this
   conversation (CEO 2026-10-01).
 - **Do not state as fact what you did not check.** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
-- **Evidence before done.** A completion claim cites the command and its decisive output, or
-  it is forbidden. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
+- **Evidence before done.** A completion claim cites the command and its decisive output. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
   human-eye confirmation` and listed apart. Door: `dxb-verify`.
 - **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
@@ -127,11 +125,10 @@ the date. The battery fails on an unregistered approval claim.
   file, no row, no note — **silence is the record.** Only real, ordered, unfinished work is written
   anywhere. The reflex to keep a dropped idea "just in case" is what grew the always-on layer to 27
   pages, and he should never have to be the one who catches it.
-- **NOTHING BECOMES A LAW UNLESS HE SAYS "MAKE IT A LAW".** His order, 2026-08-13, and it is a
-  prohibition: *"ben bir şey kanun olsun demeden onu asla kanun yapma bunu yasaklıyorum… ben bir
+- **Nothing becomes a law unless he says "make it a law".** His order, 2026-08-13: *"ben bir şey kanun olsun demeden onu asla kanun yapma bunu yasaklıyorum… ben bir
   kuralı sadece belirli bir session için söylüorm."* **A rule he states is for THAT session only**
   — obey it fully while it runs, and let it die with the session. Writing it into a law file, a
-  banner, a skill or a standing order **without his explicit word to do so is forbidden.** He
+  banner, a skill or a standing order needs his explicit word. He
   authorised this one sentence, and only this one, to be written as a rule. When a session thinks a
   remark deserves to be permanent, it **asks him** in one line; his answer decides. Measured the day
   he gave it: his passing *"write it short"* had been promoted into the rival ledger's permanent

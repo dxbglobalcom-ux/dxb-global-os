@@ -60,13 +60,6 @@ cp "${SRC_DIR}/dxb-board.service" "${UNIT_DIR}/"
 cp "${SRC_DIR}/dxb-backup.service" "${UNIT_DIR}/"
 cp "${SRC_DIR}/dxb-backup.timer" "${UNIT_DIR}/"
 
-# 2026-09-24, row B55 — the watch behind the pinned model. Once a day it reads
-# Anthropic's public models page and guidance sources and leaves a notice for the
-# next session's opening; it never changes a setting (his order: he is told, he
-# and the chief engineer review together, the setting moves only on his "geç").
-cp "${SRC_DIR}/dxb-model-watch.service" "${UNIT_DIR}/"
-cp "${SRC_DIR}/dxb-model-watch.timer" "${UNIT_DIR}/"
-
 systemctl --user daemon-reload
 systemctl --user enable dxb-scheduler.service dxb-jarvis.service dxb-company-read.service dxb-board.service
 # A oneshot unit is enabled by its TIMER, never by itself.
@@ -75,9 +68,6 @@ systemctl --user enable --now dxb-screenshot-cleanup.timer
 # A oneshot unit is enabled by its TIMER, never by itself (same rule as above).
 systemctl --user reset-failed dxb-backup.service 2>/dev/null || true
 systemctl --user enable --now dxb-backup.timer
-# A oneshot unit is enabled by its TIMER, never by itself (same rule as above).
-systemctl --user reset-failed dxb-model-watch.service 2>/dev/null || true
-systemctl --user enable --now dxb-model-watch.timer
 systemctl --user restart dxb-scheduler.service
 systemctl --user restart dxb-jarvis.service
 systemctl --user restart dxb-company-read.service
@@ -92,4 +82,4 @@ systemctl --user --no-pager --lines 3 status dxb-scheduler.service || true
 systemctl --user --no-pager --lines 3 status dxb-jarvis.service || true
 systemctl --user --no-pager --lines 3 status dxb-company-read.service || true
 systemctl --user --no-pager --lines 3 status dxb-board.service || true
-systemctl --user --no-pager list-timers dxb-screenshot-cleanup.timer dxb-backup.timer dxb-model-watch.timer || true
+systemctl --user --no-pager list-timers dxb-screenshot-cleanup.timer dxb-backup.timer || true
