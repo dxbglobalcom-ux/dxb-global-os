@@ -2217,3 +2217,23 @@ archive and owned by board row **B20**. A number nobody can reproduce is worse t
 **3. Machine facts a session needs:** company database `127.0.0.1:54322` (SELECT only; every write through the `fn_`/`control_` doors), construction engine `54422` (the tests' own stack, `tests/construction-engine.ts`); resident services `systemctl --user list-units 'dxb-*'` (10 loaded services, 2 timers — `dxb-jarvis.service` DISABLED on his order 2026-09-14 <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->: its microphone call named no device and dragged the Bluetooth headset into phone-quality mode; not restarted without a dedicated external microphone; VOICE-04 is the requirement it left behind; at each boot `dxb-scheduler` fails twice before the database answers and comes up by itself on the third start); vitrin `http://127.0.0.1:8899/` (`~/tools/h3/studio/`, temporary, not the studio's screen); ComfyUI production 8188, the upscale bench 8189; the card RTX 5060 Ti 16 GB; engine standard 640×1152 · 4 steps (a 15 s take ≈ 10.5 min); a GPU job runs in a transient systemd scope and is refused while the card, RAM or swap is busy. **Reaching the other two minds:** Astra/Codex is written with `codex queue --thread <uuid> --message "…"`, the thread id being the last line of `~/.codex/session_index.jsonl`, and its reply is read from `~/.codex/sessions/YYYY/MM/DD/rollout-*-<thread>.jsonl` at the `agent_message` entries (proven twice: a token echoed back 2026-09-16 15:45, and the gate verdict 15:38 the same day); `codex agents` is a TUI and dies with "stdin is not a terminal". The checker is reached with SendMessage, and a message to a session that is not in bypass mode waits for its own user's approval in that window — say so instead of waiting in silence.
 
 **4. When he closes a session (dxb-start Phase 5 — records, in the SAME session):** this file's live-order block is rewritten as the new current position and the block it replaces moves to the archive; the board row's "WHERE THIS ROW STANDS" section is brought to the same hour; `pnpm verify:ledger` runs; commit. The next session's first reply opens with the position (core §0 — a line with nothing in it is dropped, not announced). A handover prompt (NEXT-SESSION-PROMPT) is written ONLY when he asks for one in that session — never automatically, and it is not a rule in either direction: his ruling 2026-09-15 <!-- CEO-OK: handover-prompt-only-on-his-session-request-2026-09-15 --> (the 2026-09-14 17:1x "none" was that session's order; the earlier text ordering one per session and the W2 text forbidding one are both superseded by his word — audit F017).
+
+
+<!-- archived 2026-10-01 ~21:50 from STATE "Where we left off" -->
+### Where we left off (2026-10-01 ~20:25, session a214423a)
+
+2026-10-01 ~19:05 → 20:25, Opus 5.5 session a214423a. Asked why the work goes badly, he ordered every
+rule that harms the work found and deleted, item by item, from the global layer to this repository
+(*"SORUNLU SENİ MAHVEDECEK KURALLARI HEPSİNİ BUL VE TEK TEK ÜZERİNDEN GEÇİP SİLELİM"*). Done in two
+batches on his numbers <!-- CEO-OK: rules-prune-batch-1-2026-10-01 --> <!-- CEO-OK: rules-prune-batch-2-2026-10-01 -->:
+- "never ask him what to do" is gone; core §2 now says **ask before any project work**
+  <!-- CEO-OK: never-ask-rule-deleted-2026-10-01 -->. A session started C60 and B53 without his word today; that is what he ruled out.
+- The two per-prompt hooks, the global Tooling Mandate / graph-first / Kadro blocks, the whole-file-read
+  gate, the model watch (B55 closed) <!-- CEO-OK: model-watch-removed-2026-10-01 -->, dxb-crew and dxb-team1 with their agents, and
+  20 memory files are deleted; the doors lost their act-without-asking and threat lines. dxb-team2 is
+  the one construction door. The approval register stays, on his word.
+- Sol's final re-check of the score card gate blocked on two B findings, no A; both fixed with a third
+  defect found in the capture (afe5505f).
+- Then, on his word: the 50 % handover stays without asking him <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->, B53 closed <!-- CEO-OK: b53-closed-by-the-rule-prune-2026-10-01 -->, the 25 stale memory copies in `.planning/governance/` deleted and the model routing file rewritten to v18 <!-- CEO-OK: governance-mirror-deleted-2026-10-01 -->.
+- Backup of the global files before the prune: `~/.claude/backups/rules-prune-20261001.tgz`.
+

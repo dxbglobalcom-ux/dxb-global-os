@@ -28,37 +28,37 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-01 ~19:05 → 20:25, Opus 5.5 session a214423a. Asked why the work goes badly, he ordered every
-rule that harms the work found and deleted, item by item, from the global layer to this repository
-(*"SORUNLU SENİ MAHVEDECEK KURALLARI HEPSİNİ BUL VE TEK TEK ÜZERİNDEN GEÇİP SİLELİM"*). Done in two
-batches on his numbers <!-- CEO-OK: rules-prune-batch-1-2026-10-01 --> <!-- CEO-OK: rules-prune-batch-2-2026-10-01 -->:
-- "never ask him what to do" is gone; core §2 now says **ask before any project work**
-  <!-- CEO-OK: never-ask-rule-deleted-2026-10-01 -->. A session started C60 and B53 without his word today; that is what he ruled out.
-- The two per-prompt hooks, the global Tooling Mandate / graph-first / Kadro blocks, the whole-file-read
-  gate, the model watch (B55 closed) <!-- CEO-OK: model-watch-removed-2026-10-01 -->, dxb-crew and dxb-team1 with their agents, and
-  20 memory files are deleted; the doors lost their act-without-asking and threat lines. dxb-team2 is
-  the one construction door. The approval register stays, on his word.
-- Sol's final re-check of the score card gate blocked on two B findings, no A; both fixed with a third
-  defect found in the capture (afe5505f).
-- Then, on his word: the 50 % handover stays without asking him <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->, B53 closed <!-- CEO-OK: b53-closed-by-the-rule-prune-2026-10-01 -->, the 25 stale memory copies in `.planning/governance/` deleted and the model routing file rewritten to v18 <!-- CEO-OK: governance-mirror-deleted-2026-10-01 -->.
-- Backup of the global files before the prune: `~/.claude/backups/rules-prune-20261001.tgz`.
+2026-10-01 ~21:15 → 21:50, Opus 5.5 session (handover from a214423a). **The pin auto-review is built,
+audited and deployed to the company** (his "Tamam yapabilirsin", 2026-10-01 ~20:50):
+- Sol's plan read proved a keyword gate cannot define "clean" (two bypass sentences, a schema default
+  flip). The verdict became an allowlist: a drifted tool is re-approved only when the repository vouches
+  for the exact new text (dxb-mcp is our own source; external tools: the reviewed
+  `db/seed/tool-pins.manifest.json`); everything else locks with a high alert in Turkish, linked to an
+  audit row holding both texts (8bfeaf3f). Sol's diff audit: no A, three B, repaired (d57cda74).
+  Under this rule the 2026-09-27 scrapling locks would not have happened (the manifest carried those texts).
+- Company: migration 20261001010000 applied alone (applied 1, skipped 170), fingerprint
+  `ae3e8133c23d23fc` unchanged; scheduler restarted 21:39:46; one forced pin check logged
+  `checked 76, matched 76, re-approved 0, locked 0, texts kept 76`; no audit row, no alert, profiles
+  unchanged. Battery: BATTERY_GREEN (1031 + 266 passed).
+- The known limit, for him: an honest tool upgrade the manifest does not carry yet locks (with a high
+  alert) until the manifest is refreshed and committed.
+- He caught B64 written to the board without his word; deleted (2efd8969). The cause was dxb-team2's
+  AUDIT line "C → a board row", deleted (0dd5af05).
+- ⚠ UNVERIFIED — requires human-eye confirmation: the two pin alerts on his alerts page (TR) and the
+  drill to `/gov/audit/<id>` (no browser session, B03-bis).
 
 ## Next
 
-1. **The pin auto-review job is in progress** (his "Tamam yapabilirsin", 2026-10-01 ~20:50): code at
-   b0af5fa7, tests 30/30, NOT deployed to the company. Sol's plan read BLOCKS:
-   `.planning/quick/20261001-pin-auto-review/SOL-PLAN.txt`. Next: fix its A/B findings, Sol diff audit
-   at xhigh (card `CARD.md`), then deploy (company migration via `bash scripts/bootstrap-db.sh`, the
-   gateway dist is already rebuilt at 21:00 — restart `dxb-scheduler.service` only AFTER the migration),
-   one forced pin check, profiles unchanged. Tell him the one known limit (a keyword rule can be phrased
-   around; every doubt locks and alerts).
-2. **Ask him** before any other project work.
+1. **Ask him** before any project work.
+2. His decision, raised tonight: Sol at most two rounds per job, the second blocks only on A (B fixed
+   the same day by the lead, C kept in the job's folder only). Not a rule until he says so.
 3. To talk over with him later, on his word: dxb-team2 itself, and whether prose-only work skips Sol.
 4. The next real job is a holding part from the board, chosen with him.
 
 ## Waiting on his approval
 
-- Next 3.
+- The pin auto-review: finished on the author's side, waiting for his eye.
+- Next 2 and 3.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 
