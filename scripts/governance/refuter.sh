@@ -22,7 +22,7 @@
 #
 # THE SCORE CARD GATE (CEO 2026-10-01, "tmm makineyi de kur"). No audit starts
 # without the job's score card: scripts/governance/audit-card.mjs reads it,
-# measures the floor from the files the card's range touches, sets the effort
+# checks the card's range is real and non-empty, sets the effort
 # (light medium · normal high · critical xhigh), refuses an --effort beneath it,
 # and puts the card in front of Sol so it can challenge the grading. There is no
 # silent `high` default any more. Each launch is logged to
@@ -246,7 +246,7 @@ PROMPT="$BLOCK$BRIEF"
 LOG_DIR="$HOME/.local/state/dxb"; mkdir -p "$LOG_DIR"
 ROUTE_LOG="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);delete r.brief;console.log(JSON.stringify(r))})')"
 CARD_SHA="$(sha256sum "$CARD" | cut -c1-16)"
-echo "AUDIT_CARD class=$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log(`${r.class} total=${r.total}${r.floorRaised?" (raised by the floor)":""} effort=${r.effort}`)})')" >&2
+echo "AUDIT_CARD class=$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log(`${r.class} total=${r.total} effort=${r.effort}`)})')" >&2
 
 # OpenAI can answer "Selected model is at capacity" in the middle of an audit (measured 2026-10-01
 # 17:44, one of eight Sol 6.1 runs that day; Codex does not retry it). The CEO: "sol 6.1 normal şekilde

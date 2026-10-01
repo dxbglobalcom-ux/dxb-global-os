@@ -74,10 +74,8 @@ lead did not grade itself down.
 
 **A machine holds the card** (*"tmm makineyi de kur"* <!-- CEO-OK: score-card-gate-2026-10-01 -->).
 The card is a file (`job:` · `range:` · `blast:` · `risk:` · `reasoning:` · `ambiguity:`) handed to
-`refuter.sh --card <file>`; `scripts/governance/audit-card.mjs` refuses an audit without one, measures
-the floor from the paths the range touches — failing closed: work stays light only when every path,
-both sides of a rename, is on its `LIGHT` list (prose, screen layout, assets) and no changed screen line
-reaches the database or a credential (`FLOOR`, `LIGHT`, `CONTENT` are the one copy), refuses any forwarded option that could
+`refuter.sh --card <file>`; `scripts/governance/audit-card.mjs` refuses an audit without one, checks
+that the card's range is real and changes something, refuses any forwarded option that could
 override the effort, model, sandbox or servers,
 sets the auditor's effort, refuses an `--effort` beneath it, puts the card in front of Sol, and logs
 every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §7 are summed from it.
@@ -153,7 +151,8 @@ Correction required:
 - **Auditor (Sol):** light `medium` · normal `high` · critical `xhigh`. The first critical job runs
   `high` and `xhigh` on the same diff side by side; that number keeps or moves the critical level.
 - `audit-card.mjs` sets the auditor's level from the card; the lead may raise it (a fix that spread),
-  never lower it, and the floor in §3 is measured from the files, not declared.
+  never lower it. The floor in §3 is the lead's judgment on the card, and Sol challenges it — no machine
+  can tell a dangerous file (the CEO, 2026-10-01: *"sistem tahmin edemez onu sadece sen bilirsin"*).
 
 ## 7. The brake and the bill
 
