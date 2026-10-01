@@ -103,21 +103,12 @@ describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a
     expect(r.stderr).toContain("wide repetition");
   });
 
-  it("T3 a whole file over 400 lines is refused through Bash and Read; a slice, a bound or a missing file passes", () => {
-    for (const cmd of [`cat ${F401}`, `sed -n '1,500p' ${F401}`]) {
-      const r = bash(cmd);
-      expect(denied(r), cmd).toBe(true);
-      expect(r.stderr).toContain("MEASURE FIRST");
-    }
-    for (const cmd of [`cat ${F401} | head -20`, `sed -n '1,80p' ${F401}`, `cat ${F400}`, `cat ${MISSING}`]) {
-      expect(ran(bash(cmd), cmd), cmd).toBe(REBIND + cmd);
-    }
-    expect(denied(gate("Read", { file_path: F401 }))).toBe(true);
-    for (const input of [{ file_path: F401, limit: 120 }, { file_path: F400 }, { file_path: MISSING }]) {
-      const r = gate("Read", input);
-      expect(r.status, JSON.stringify(input)).toBe(0);
-      expect(r.stdout).toBe("");
-    }
+  it("T3 rule 5 is off (CEO 2026-10-01): a whole file over 400 lines passes through Bash and Read", () => {
+    const cmd = `cat ${F401}`;
+    expect(ran(bash(cmd), cmd)).toBe(REBIND + cmd);
+    const r = gate("Read", { file_path: F401 });
+    expect(r.status).toBe(0);
+    expect(r.stdout).toBe("");
   });
 
   it("T4 a subagent's long wait belongs to the lead; the lead itself is never held", () => {
@@ -151,72 +142,6 @@ describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a
       return performance.now() - t;
     });
     expect(Math.min(...ms)).toBeLessThan(100);
-  });
-
-  // cd is banned here, so nearly every command spells its paths through a variable — R="…"; cat "$R/…".
-  // A path is resolved from the command line itself before it is measured (the lead's probe, 2026-09-27).
-  it("T7a the lead's probe — D=<dir>; cat \"$D/<401-line file>\" — is refused", () => {
-    const r = bash(`D=${tmp}; cat "$D/f401.txt"`);
-    expect(denied(r)).toBe(true);
-    expect(r.stderr).toContain("MEASURE FIRST");
-  });
-
-  it("T7b the same probe over a 400-line file passes", () => {
-    const cmd = `D=${tmp}; cat "$D/f400.txt"`;
-    expect(ran(bash(cmd), cmd)).toBe(REBIND + cmd);
-  });
-
-  it("T7c R=\"$HOME/x\"; cat \"$R/f\" resolves through $HOME and is refused", () => {
-    mkdirSync(join(tmp, "home", "x"), { recursive: true });
-    file(join("home", "x", "f"), 401);
-    expect(denied(bash(`R="$HOME/x"; cat "$R/f"`, {}, undefined, { HOME: join(tmp, "home") }))).toBe(true);
-  });
-
-  it("T7d a path the gate cannot resolve passes, logged as unmeasured-path", () => {
-    const cmd = `cat "$UNKNOWN/f"`;
-    expect(ran(bash(cmd), cmd)).toBe(REBIND + cmd);
-    const last = readFileSync(join(LOGS, "dxb-cost-gate.jsonl"), "utf8").trim().split("\n").at(-1) ?? "";
-    expect(JSON.parse(last)).toMatchObject({ decision: "unmeasured-path", paths: ["$UNKNOWN/f"] });
-  });
-
-  // The whole-file rule's escape routes (CEO order 2026-09-27 ~20:22): tail -n +N and head -n -N pour what is left
-  // of a file, a sed with neither -n nor q and an awk program that prints every line pour all of it, nl / tac / pr
-  // pour as cat does, and several files count together. The same 400-line line; a downstream bound still frees it.
-  // head -n -1 prints 400 of F401's lines — exactly the line, as cat F400 — so its refusal is shown on F402.
-  const escapes: [string, string, string | null][] = [
-    ["T9a", `tail -n +1 ${F401}`, "`tail -n +1"],
-    ["T9b", `tail -n +300 ${F401}`, null],
-    ["T9c", `head -n -1 ${F402}`, "`head -n -1"],
-    ["T9d", `head -n -1 ${F401}`, null],
-    ["T9e", `sed 's/a/b/' ${F401}`, "`sed"],
-    ["T9f", `sed '400q' ${F401}`, null],
-    ["T9g", `sed -i 's/a/b/' ${F401}`, null],
-    ["T9h", `awk '{print}' ${F401}`, "`awk"],
-    ["T9i", `awk 'END{print NR}' ${F401}`, null],
-    ["T9j", `awk '/x/{print}' ${F401}`, null],
-    ["T9k", `awk 'NR<=400' ${F401}`, null],
-    ["T9l", `nl ${F401}`, "`nl"],
-    ["T9m", `cat ${F250} ${F200}`, "2 files"],
-    ["T9n", `cat ${F200} ${F200} | head`, null],
-  ];
-  for (const [id, cmd, names] of escapes) {
-    it(`${id} ${cmd.replaceAll(`${tmp}/`, "")} ${names ? "is refused" : "passes"}`, () => {
-      const r = bash(cmd);
-      if (names) {
-        expect(denied(r), cmd).toBe(true);
-        expect(r.stderr).toContain("pours");
-        expect(r.stderr).toContain(names);
-      } else {
-        expect(ran(r, cmd), cmd).toBe(REBIND + cmd);
-      }
-    });
-  }
-
-  it("T9o an awk program the gate cannot judge — a -v bound around its print — passes, logged as unmeasured-program", () => {
-    const cmd = `awk -v n=3 '{for (i = 1; i <= n; i++) print}' ${F401}`;
-    expect(ran(bash(cmd), cmd)).toBe(REBIND + cmd);
-    const last = readFileSync(join(LOGS, "dxb-cost-gate.jsonl"), "utf8").trim().split("\n").at(-1) ?? "";
-    expect(JSON.parse(last)).toMatchObject({ decision: "unmeasured-program", paths: [F401] });
   });
 
   // A SendMessage to a finished subagent resumes it; past 4 minutes its cache is dead and the resume writes

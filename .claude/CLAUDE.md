@@ -107,25 +107,13 @@ the date. The battery fails on an unregistered approval claim.
 
 - **The approval gate.** Money OUT, contracts, ad spend, identity steps and the subjects he
   marks stop at the CEO. Money IN and routine outward communication do not.
-- **No implementation before he approves the plan.** A critical job's plan goes to him; for light
-  and normal work the board row he ordered is the approval (CEO 2026-10-01
-  <!-- CEO-OK: board-row-is-the-approval-2026-10-01 -->).
-- **Measure, never guess.** Every fact, number and status rests on a measurement taken this
-  session, cited. Memory, a grep hit, a summary or a subagent's report is a lead — never an
-  answer. Cannot measure → write `UNVERIFIED — could not measure because …`. A prediction is
-  never written in the past tense. Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md` (RULE #0-A).
+- **Ask before any project work.** Nothing in the project starts until he has said so in this
+  conversation (CEO 2026-10-01).
+- **Do not state as fact what you did not check.** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
 - **Evidence before done.** A completion claim cites the command and its decisive output, or
   it is forbidden. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
   human-eye confirmation` and listed apart. Door: `dxb-verify`.
-- **A fix repairs its target and breaks nothing around it.** His order, 2026-08-17, written on
-  his word: *"birşeyi yaparken veya düzeltirken onu etkileyecek başka şeyleri bozmasın."*
-  Before the change, name what stands on the thing being changed; after it, **measure those
-  dependants and print what the check printed** — the intention to be careful is not the check.
-  Replacing a file, deleting a duplicate, installing a package, enabling a service, repointing a
-  link: each names its blast radius in the same turn, and the report says what was re-measured
-  and found intact. A change delivered without that sweep is unfinished, whatever it fixed.
-  Door: `dxb-verify`.
-- **Speak to the CEO in his language.** The hook fires it on every prompt.
+- **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
 - **Code: the session writes it; the `builder` seats write code only inside an orchestration**
@@ -149,13 +137,11 @@ the date. The battery fails on an unregistered approval claim.
   he gave it: his passing *"write it short"* had been promoted into the rival ledger's permanent
   banner beside his registered orders, and he caught it.
 - **Secrets** never enter the repo, a prompt, or any printed output.
-- **No laziness.** The standard he set is re-injected on every prompt, in one line, by
-  `.claude/hooks/no-laziness.sh`, which owns the full text and the forms of laziness that break it.
 
 ## 3. Language
 
 Artifacts in English — specs, code, comments, migrations, commit messages, evidence.
-Conversation with the CEO in Turkish. Every CEO-visible surface is 100 % one locale, both
+Conversation with the CEO in Turkish: the answer first, plain, short. Every CEO-visible surface is 100 % one locale, both
 locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 
 ## 4. THE DOORS — open one when the job matches

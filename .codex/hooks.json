@@ -9,20 +9,6 @@
           }
         ]
       }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash '/home/dxb/DxB Global OS/.codex/hooks/no-laziness.sh'"
-          },
-          {
-            "type": "command",
-            "command": "bash '/home/dxb/DxB Global OS/.codex/hooks/ceo-language.sh'"
-          }
-        ]
-      }
     ]
   }
 }

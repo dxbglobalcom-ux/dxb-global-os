@@ -1754,5 +1754,21 @@
     "conditions": "Critical work stays at xhigh; the floor stays normal.",
     "session": "Opus 5.5 session cd2a0e9d — heard first-hand, 2026-10-01.",
     "where": "scripts/governance/codex-refuter.config.toml · refuter.sh · dxb-team2 §2 · dxb-verify · model-routing-hierarchy.md · MODEL_ROUTING_SPEC.md · ~/.claude/CLAUDE.md"
+  },
+  "never-ask-rule-deleted-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "The rule 'never ask him what to do' (\"Ne yapmamı istersiniz?\" is a failure) is deleted from core §0, the session-start hook and dxb-crew §5. It had just pushed a session to start C60 and B53 work without his word.",
+    "verbatim": "ayrıca tabiki projeyle iligli bişey yapacağın zaman soracaksın. mesela b53 başlıorsun benim haberim olmadan. bunun şeyler asla kabul edilemez ya. kaldıracaksan ona asla ne yapayım diye sorma yı kaldır.",
+    "conditions": "Core §0's position reply stays.",
+    "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
+    "where": ".claude/CLAUDE.md §0 · .claude/hooks/spec-bootstrap.sh · .claude/skills/dxb-crew/SKILL.md §5"
+  },
+  "rules-prune-batch-1-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "First batch of the rule prune he ordered ('SORUNLU SENİ MAHVEDECEK KURALLARI HEPSİNİ BUL VE TEK TEK ÜZERİNDEN GEÇİP SİLELİM'). Applied: (1) 'the board row he ordered is the approval' replaced by 'ask before any project work' in core §2, superseding board-row-is-the-approval-2026-10-01; (2) the per-prompt standing order 13 hook deleted; (3) the per-prompt standing order 14 hook deleted, core §3 keeps 'the answer first, plain, short'; (4) global Tooling Mandate deleted, nothing in its place; (5) global graph-first-reads rule deleted (the graph itself stays); (6) global Kadro block deleted, his advisor line kept; (9) 'measure, never guess' shortened; (10) the blast-radius bullet shortened; (12) the cost gate's whole-file-read rule switched off; (14) impeccable and claude-md-management plugins disabled; (15) the stale .caveman-active flag removed. Kept on his word: the approval register (8).",
+    "verbatim": "4- burayı sil ama bişey yapma. 5-sil. … 8- anlamadım bu seni nasıl kötü etkiliyor. onay listesine kayıt kötü mü iş bitince? … gerisi hem fikiriz",
+    "conditions": "Items 7 and 11 wait on his answer; item 13 (memory index law copies) moves to batch 2. Backup of the global files: ~/.claude/backups/rules-prune-20261001.tgz.",
+    "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
+    "where": ".claude/CLAUDE.md §2-§3 · .claude/settings.json · .codex/hooks.json · scripts/governance/rules.json · ~/.claude/CLAUDE.md · ~/.claude/settings.json · ~/.claude/hooks/dxb-cost-gate.py · tests/hooks/cost-gate.test.ts"
   }
 }

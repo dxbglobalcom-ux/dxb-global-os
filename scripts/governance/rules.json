@@ -1,27 +1,8 @@
 {
   "_doc": "One rule, one owner. Registered by the CEO's context-architecture order of 2026-07-30, after the measured finding that the same rule lived in dozens of files and the copies had drifted — which is how a rule he had given ('speak to me in my language') sat in a complaint ledger for nine days while binding nobody. Each entry names a sentence that belongs to exactly ONE file. ledger-truth.mjs fails the battery when a registered fingerprint appears anywhere else in the ACTIVE instruction surfaces.",
-
   "_scope": "Active instruction only: .claude/CLAUDE.md, .claude/skills/**/SKILL.md, .claude/hooks/*.sh, and the corpus's law and spec files. Deliberately EXCLUDED, each for a stated reason: 00-INDEX.md (the registered-adaptation table is a DATED RECORD of what was decided on a day, not active instruction — rewriting it would be rewriting history), 00-NOTE-* (dated session notes, same reason), .planning/STATE-ARCHIVE.md (frozen), docs/ceo-directives/** (the CEO's own documents — we never annotate or edit what he wrote), references/** (his evidence).",
-
   "_how_to_use": "Naming a rule is always allowed — 'see RULE #0-A' is a pointer. What is forbidden is restating its TEXT in a second file. A fingerprint must therefore be a phrase from the rule's body, and it must fit on ONE line: these files are hard-wrapped, so a phrase that spans a line break silently matches nothing (measured while building this, 2026-07-30).",
-
   "_growing": "This registry does not claim to cover every rule in the corpus. It covers the rules that were relocated on 2026-07-30 plus the laws most likely to be re-copied. Entries are added as rules are consolidated; an unregistered rule is simply unguarded, never blessed.",
-
-  "so13_full_capacity": {
-    "owner": ".claude/hooks/no-laziness.sh",
-    "fingerprint": "Full capacity, every turn.",
-    "what": "Standing order 13 — work worthy of an award, and the forms of laziness. Re-injected on every prompt, which is why the hook owns it: a second copy in the always-on file paid for the same text twice."
-  },
-  "so14_boundary": {
-    "owner": ".claude/hooks/ceo-language.sh",
-    "fingerprint": "THE CEO IS THE OWNER, NOT A DEVELOPER",
-    "what": "Standing order 14, the BOUNDARY — the WORD rule (use the real word, then one short bracketed explanation) and the self-test. It said 'the banned vocabulary' until 2026-08-25; that was stale, because the CEO struck the ban list out himself on 2026-08-01: 'kelimeler kullanılsın ama parantez içinde açıklansın basitçe o kadar.' A hook and not a skill because it governs every sentence he reads, not a particular job: on 2026-07-30 it was placed in a skill and was violated within the hour, because a rule that binds only when the author opens a door does not bind."
-  },
-  "so14_explain_shape": {
-    "owner": ".claude/hooks/ceo-language.sh",
-    "fingerprint": "A PICTURE FROM HIS WORLD before any mechanism",
-    "what": "Standing order 14, the SHAPE — how a technical THING is explained to him: the answer first, a picture from his world before any mechanism, the measured numbers beside it, and what it means for him. A hook and not a skill for the same reason the boundary is a hook: it governs every explanation he reads, and mid-session drift is exactly where it fails. Written on his own order of 2026-08-25, after a bare four-item list of the author's mistakes drew 'hiçbir halt ANLAMADIMMMMMMM'."
-  },
   "evidence_unverified_label": {
     "owner": ".claude/skills/dxb-verify/SKILL.md",
     "fingerprint": "requires human-eye confirmation",
