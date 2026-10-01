@@ -35,7 +35,6 @@ measured outcomes take the past tense.
 | `bash scripts/b43/vitrin-register-gate.sh` | the product register the CEO opens — his vitrin and its catalogue (`~/tools/h3/studio`, outside git) — still tells the truth: every cast face names how it was born, no cancelled hand is advertised, no pointer into a folder he deleted, no acceptance claim without a registered ledger id, no media the page shows and the disk lacks, no hand-typed counter, and the page is served to him alone (loopback). Self-skips where there is no vitrin; run by the shared studio battery since W11 |
 | the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
 | resident restart | only when runtime code changed — see below |
-| **the ruler rule** (CEO, 2026-09-15: *"kural olsun"* <!-- CEO-OK: audit-ruler-is-a-runnable-script-2026-09-15 -->) | Every audit's ruler is a runnable script, handed to the builder before the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. |
 | **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job is built by one hand and checked by another — in `dxb-team2` the blind Sol auditor (§5) — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; the checker re-measures whether it was done and done right. The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
 
 | Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
@@ -45,7 +44,6 @@ measured outcomes take the past tense.
 | Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + `tests/b43/records-truth.ts` (a record may not say his eye is awaited on what the ledger holds accepted; a new acceptance adds its row there or R4 is red) + records parity (`dxb-close-row`) | exists |
 | CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |
 | Research engine (`.claude/skills/dxb-research`) | `bash scripts/research-ruler.sh` (11 rules) + `tests/b46/` (47 cases on the real scripts) + `bash .claude/skills/dxb-research/scripts/accept.sh` (a live run, judged from the files) | built 2026-09-17; the ruler runs on every commit that touches the engine |
-| Specs / plan text | none yet — the ruler is written before the work, or the work is reported ⚠ UNVERIFIED | gap, named |
 
 The table is his, holding-wide, on his word *"yaz"* of 2026-09-15 <!-- CEO-OK: ruler-table-holding-wide-2026-09-15 -->.
 
@@ -53,7 +51,7 @@ Every commit runs its class's ruler automatically — no ruler green, no commit.
 
 A second session audits the CEO-visible and the risky work (personas, specs, money and identity
 paths, surfaces) on three things: the order against the diff (what was left out), the ruler output
-pasted into the evidence, and the blast radius measured; a class with no ruler gets its ruler first.
+pasted into the evidence, and the blast radius measured.
 
 **Green on the parts you like is not green.**
 
@@ -99,7 +97,6 @@ the machine cannot check, and on a defect the CEO caught — then it sweeps the 
 **A finding is evidence, never a verdict.** The session author signs every ✓. A disputed finding
 is settled inside the team (`dxb-team2` §4 DISPUTE): a test decides; where no test can, Fable rules;
 the lead has the last word. What no terminal can observe stays `⚠ UNVERIFIED`.
-Anything machine-catchable the twin finds is recorded as the author's own defect.
 
 Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.
 

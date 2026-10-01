@@ -58,10 +58,8 @@ Four axes, 0-2 each (the depth rule from the outside review of 2026-09-28, weigh
 | Reasoning | deterministic | a few edge cases | stateful, concurrent, agentic, emergent |
 | Ambiguity | exact | some reading | unclear or conflicting |
 
-**0-2 light · 3-5 normal · 6-8 critical.** Floor: a job touching money, the database, security,
-approval or governance files is **at least normal**; the lead cannot score it lower. The card (axes,
-total, class, auditor effort and why) goes into the commit body, so any later reader can check the
-lead did not grade itself down.
+**0-2 light · 3-5 normal · 6-8 critical.** The card (axes, total, class, auditor effort and why) goes
+into the commit body.
 
 **A machine holds the card** (*"tmm makineyi de kur"* <!-- CEO-OK: score-card-gate-2026-10-01 -->).
 The card is a file (`job:` · `range:` · `blast:` · `risk:` · `reasoning:` · `ambiguity:`) handed to
@@ -81,7 +79,8 @@ CRITICAL  → Fable drafts or challenges the architecture → Sol reads the PLAN
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → the lead writes and runs the job's own tests. Parallel work only as a measured fork (§8).
 AUDIT     → Sol, blind (§5), one pass at the class's effort (§6).
-            A — blocks · B — repaired in this same pass · C — older than this work → a board row.
+            A — blocks · B — repaired in this same pass · C — older than this work → stays in the
+            job's own folder (the audit report); never the board — a row opens only on his word.
 FIX       → the lead fixes. Sol re-checks that finding AND what the fix touched, at the same
             effort; one level up if the fix spread to other files or a guarded path.
 DISPUTE   → the lead says a finding is wrong: the auditor proves it with a test or a command —
@@ -143,7 +142,7 @@ Correction required:
 - **Auditor (Sol):** light `medium` · normal `high` · critical `xhigh`. The first critical job runs
   `high` and `xhigh` on the same diff side by side; that number keeps or moves the critical level.
 - `audit-card.mjs` sets the auditor's level from the card; the lead may raise it (a fix that spread),
-  never lower it. The floor in §3 is the lead's judgment on the card, and Sol challenges it — no machine
+  never lower it. The card is the lead's judgment, and Sol challenges it — no machine
   can tell a dangerous file (the CEO, 2026-10-01: *"sistem tahmin edemez onu sadece sen bilirsin"*).
 
 ## 7. The brake and the bill

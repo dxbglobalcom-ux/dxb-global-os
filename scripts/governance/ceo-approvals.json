@@ -1818,5 +1818,13 @@
     "conditions": "His further words 'Yani kitlenmesin bir daha böyle şeyler ya.' are a change to the pin law itself and were put to him with a recommendation, not built.",
     "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
     "where": "company tool_pins + audit_log · packages/gateway/profiles/*"
+  },
+  "distrust-rules-deleted-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "Two rules he never gave, both distrusting the lead, are deleted with nothing written in their place: dxb-team2 §3's floor ('a job touching money, the database, security, approval or governance files is at least normal; the lead cannot score it lower' — written by a session on 2026-09-28, e8e05666) and dxb-verify's ruler rule ('every audit's ruler is a runnable script' — grown from the persona ruler of 2026-09-15 into every audit), with the lines that hung on them (the spec/plan-text ruler gap row, 'a class with no ruler gets its ruler first', 'anything machine-catchable the twin finds is recorded as the author's own defect', 'so any later reader can check the lead did not grade itself down'). The card is the lead's judgment; Sol challenges it.",
+    "verbatim": "sil ikisini de. hatta bu şekilde saçma sapan seni engelleyen sana güveni mi sarsan şeyleri de sil. ben sadece bir işe başlamadan önce bana sormanı istiyorum bu. paldır küldür değil beraber plan yaparız anlaşırız işe başlarız veya tahtadan bir işe başlanacak sormadan başlama olay bu.",
+    "conditions": "Replacement is deletion, never a new rule in the old one's place (his words in the same exchange: 'kuralı değiştirerek kural yazıorsun'). Lines carrying his own word stay. The entry audit-ruler-is-a-runnable-script-2026-09-15 is history; this order supersedes it.",
+    "session": "Opus 5.5 session dbebfe82 — heard first-hand, 2026-10-01.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §3 §6 · .claude/skills/dxb-verify/SKILL.md (battery table, ruler table, audit twin) · Codex mirror"
   }
 }

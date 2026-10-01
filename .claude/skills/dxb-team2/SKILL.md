@@ -58,10 +58,8 @@ Four axes, 0-2 each (the depth rule from the outside review of 2026-09-28, weigh
 | Reasoning | deterministic | a few edge cases | stateful, concurrent, agentic, emergent |
 | Ambiguity | exact | some reading | unclear or conflicting |
 
-**0-2 light · 3-5 normal · 6-8 critical.** Floor: a job touching money, the database, security,
-approval or governance files is **at least normal**; the lead cannot score it lower. The card (axes,
-total, class, auditor effort and why) goes into the commit body, so any later reader can check the
-lead did not grade itself down.
+**0-2 light · 3-5 normal · 6-8 critical.** The card (axes, total, class, auditor effort and why) goes
+into the commit body.
 
 **A machine holds the card** (*"tmm makineyi de kur"* <!-- CEO-OK: score-card-gate-2026-10-01 -->).
 The card is a file (`job:` · `range:` · `blast:` · `risk:` · `reasoning:` · `ambiguity:`) handed to
@@ -144,7 +142,7 @@ Correction required:
 - **Auditor (Sol):** light `medium` · normal `high` · critical `xhigh`. The first critical job runs
   `high` and `xhigh` on the same diff side by side; that number keeps or moves the critical level.
 - `audit-card.mjs` sets the auditor's level from the card; the lead may raise it (a fix that spread),
-  never lower it. The floor in §3 is the lead's judgment on the card, and Sol challenges it — no machine
+  never lower it. The card is the lead's judgment, and Sol challenges it — no machine
   can tell a dangerous file (the CEO, 2026-10-01: *"sistem tahmin edemez onu sadece sen bilirsin"*).
 
 ## 7. The brake and the bill
