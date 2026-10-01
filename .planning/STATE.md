@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-09-28"
+last_updated: "2026-10-01"
 session_author: opus-5
 ---
 
@@ -28,31 +28,40 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-09-28 20:52 → ~23:00, Opus 5.5 session 58e4dd12. **Job 1 of `dxb-team2` — Sol's own read-only
-hand into the construction engine — ACCEPTED BY HIS OWN EYE** <!-- CEO-OK: sol-db-reach-accepted-by-his-eye-2026-09-28 -->
-(*"Onaylıyorum. Göz geçimi tamam."*), after five Sol `xhigh` re-checks ended in PASSES; the owed
-measurement kept critical audits at `xhigh` (`.planning/quick/20260928-sol-db-reach/AUDIT.md`). He asked
-why Sol was restricted and was shown that only the auditor's profile is narrowed. Then the board: a new
-B43 leg had been written straight into its thin row with no gate ringing, so the board gained,
-on his word <!-- CEO-OK: board-thin-row-ceiling-2026-09-28 -->, law 8 (an open row stays thin) and
-the records ruler R5 (an open row over 1,600 bytes stops the commit); B43's detail moved word for word
-to `.planning/board-rows/B43.md`.
+2026-10-01 ~16:00 → 19:15, Opus 5.5 session cd2a0e9d. Construction tooling only — no holding part was
+built today, and he named that as the problem (*"bende niye herşzaman bok gibi çalışıorsun … bu reponun
+içinde birşeyler mi seni bok gibi çalışmanı yönlendirior"*).
+- **The auditor seat is GPT-6.1 Sol** <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> after the exam on
+  job 1's first diff (`.planning/quick/20261001-auditor-exam/RESULT.md`): Sol 6.1 found the blocking
+  defect and two more; Sonnet 5.5 at max let the job pass, so Sonnet has no audit seat. Codex CLI 0.159.3.
+- **The score card gate** (`scripts/governance/audit-card.mjs` + `refuter.sh`, 759cf3b9): no audit without
+  a card, never beneath it, no forwarded override, "model at capacity" retried three times. It judges no
+  file — his ruling, after four Sol rounds broke every file-detection attempt. Sol's FINAL re-check was
+  running at the handover: `/tmp/claude-1000/-home-dxb-DxB-Global-OS/cd2a0e9d-19d4-4a28-859b-dbef1960ff3d/scratchpad/ev/sol-final.out`.
+- Core §2: for light and normal work the board row he ordered is the approval; a critical plan still goes
+  to him <!-- CEO-OK: board-row-is-the-approval-2026-10-01 -->. Advisor = Fable 5.1 (`advisorModel` in
+  ~/.claude/settings.json, tested live); the default model is back on `claude-opus-5-5[1m]` (it had been
+  switched to `sonnet` at 16:23 by a VS Code session).
 
 ## Next
 
-1. **Tomorrow, with him: does the construction system really work?** He wants to keep talking about
-   `dxb-team2` — built on Anthropic's Opus 5.5 material and Sol's own — and whether it is good enough to
-   build a Ferrari-standard holding. Bring the measured facts of job 1 (AUDIT.md) and the two
-   measurements the door still owes (the fork's cache; class budgets after three jobs).
-2. His question of 2026-09-28: should the architecture built by older models (database, runtime,
-   agents) be reviewed and upgraded by the new ones? The lead proposed a read-only, measured review
-   (Fable 5.1 architecture + Sol `xhigh`), part by part — keep / strengthen / rebuild with cost — never a
-   rebuild from zero; a short plan of scope, order and cost goes to him first.
-3. Repository clean-up of old, unused things — list and sizes in front of him before anything is deleted.
+1. **Read Sol's final verdict** (path above). PASSES → the gate is done, tell him in one line. BLOCKS → fix
+   only an A inside what the gate now is (card + effort); nothing that guesses files comes back.
+2. **His open question, unanswered:** should prose-only work (no code at all) skip Sol, and every job with
+   code run at `high` or above (the light class gone)? It changes his 2026-09-28 "every job is audited".
+3. **Stop building construction tooling. The next job is a holding part from the board** he can watch.
+   He confirmed most of the board is rework of built things he disliked (measured on titles: 40 of 69 open
+   rows; 11 new parts; 18 are construction tooling or machine chores, four of them finished — B44, B45,
+   B63, B58 — to close on his word).
+4. **The measured answer to "is it the repo?"** — the same small holding job once in this repo as it is,
+   once in a session with the always-on layer cut to a minimum; quality and time side by side; then prune
+   the rules with him, list first.
+5. A weak spec section under a board row is rewritten by the lead inside its own spec (with Fable as
+   advisor) before the row is built — his word this session, not a law.
 
 ## Waiting on his approval
 
-- The architecture-review plan (Next 2), when it is put to him.
+- Next 2 (prose-only work skips Sol).
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 
