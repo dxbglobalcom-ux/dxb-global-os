@@ -174,7 +174,10 @@ describe("refuter.sh holds the gate", () => {
   writeFileSync(join(bin, "codex"), `#!/usr/bin/env bash
 case " $* " in
   *" mcp list "*) echo '[{"name":"dxbdb","enabled":true}]' ;;
-  *" exec "*) if [ -n "\${CAPACITY_FAILS:-}" ]; then
+  *" exec "*) if [ -n "\${QUOTE_THEN_FAIL:-}" ]; then
+                echo "ERROR: Selected model is at capacity — quoted in the answer"; echo "ERROR: connection lost" >&2; exit 42
+              fi
+              if [ -n "\${CAPACITY_FAILS:-}" ]; then
                 n=$(cat "$CAPACITY_FAILS" 2>/dev/null || echo 0)
                 if [ "$n" -gt 0 ]; then echo $((n - 1)) > "$CAPACITY_FAILS"; echo "ERROR: Selected model is at capacity. Please try a different model." >&2; exit 1; fi
               fi
@@ -277,6 +280,22 @@ esac
     const gone = runWith({ CAPACITY_FAILS: counter }, "--card", card(axes(2, 2, 2, 1)), "audit this");
     expect(gone.status).toBe(75);
     expect(gone.stderr).toMatch(/stayed at capacity after 4 tries/);
+  });
+
+  it("never retries on a capacity sentence quoted in the answer; caps the retries at three; logs every try", () => {
+    const q = runWith({ QUOTE_THEN_FAIL: "1" }, "--card", card(axes(2, 2, 2, 1)), "audit this");
+    expect(q.status).toBe(42);
+    expect(q.stderr).not.toMatch(/AUDIT_RETRY/);
+    const counter = join(box, "capacity-cap");
+    writeFileSync(counter, "9");
+    const logFile = join(home, ".local", "state", "dxb", "audit-cards.log");
+    const before = readFileSync(logFile, "utf8").split("\n").filter(Boolean).length;
+    const r = runWith({ CAPACITY_FAILS: counter, DXB_REFUTER_RETRY_WAITS: "0 0 0 0 0 0" }, "--card", card(axes(2, 2, 2, 1)), "audit this");
+    expect(r.status).toBe(75);
+    expect(r.stderr.match(/AUDIT_RETRY/g)?.length).toBe(3);
+    const after = readFileSync(logFile, "utf8").split("\n").filter(Boolean);
+    expect(after.length - before).toBe(4);
+    expect(after.at(-1)).toMatch(/try=4$/);
   });
 
   it("reads the brief from stdin when the prompt is '-'", () => {

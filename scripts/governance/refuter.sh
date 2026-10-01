@@ -244,26 +244,39 @@ fi
 PROMPT="$BLOCK$BRIEF"
 
 LOG_DIR="$HOME/.local/state/dxb"; mkdir -p "$LOG_DIR"
-printf '%s\t%s\t%s\t%s\n' "$(date -Iseconds)" "$(sha256sum "$CARD" | cut -c1-16)" "$CARD" \
-  "$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);delete r.brief;console.log(JSON.stringify(r))})')" \
-  >> "$LOG_DIR/audit-cards.log"
+ROUTE_LOG="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);delete r.brief;console.log(JSON.stringify(r))})')"
+CARD_SHA="$(sha256sum "$CARD" | cut -c1-16)"
 echo "AUDIT_CARD class=$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log(`${r.class} total=${r.total}${r.floorRaised?" (raised by the floor)":""} effort=${r.effort}`)})')" >&2
 
 # OpenAI can answer "Selected model is at capacity" in the middle of an audit (measured 2026-10-01
 # 17:44, one of eight Sol 6.1 runs that day; Codex does not retry it). The CEO: "sol 6.1 normal şekilde
 # kullanılması lazım bir hata vermemesi lazım". So the audit is run again, whole and blind, after a
-# wait — three times at most — before the door's fallback applies (dxb-team2 §2).
-WAITS=(${DXB_REFUTER_RETRY_WAITS:-60 180 300})
+# wait — three times at most — before the door's fallback applies (dxb-team2 §2). Every launch,
+# retries included, is one log row (§7's budgets are summed from it).
+read -r -a WAITS <<< "${DXB_REFUTER_RETRY_WAITS:-60 180 300}"
+WAITS=("${WAITS[@]:0:3}")
+ERRF=""; OUTF=""
+trap 'rm -f ${ERRF:+"$ERRF"} ${OUTF:+"$OUTF"}' EXIT
 ERRF="$(mktemp)"; OUTF="$(mktemp)"
-trap 'rm -f "$ERRF" "$OUTF"' EXIT
 attempt=0
 while :; do
+  printf '%s\t%s\t%s\t%s\ttry=%s\n' "$(date -Iseconds)" "$CARD_SHA" "$CARD" "$ROUTE_LOG" "$((attempt + 1))" >> "$LOG_DIR/audit-cards.log"
   set +e
   codex -p "$PROFILE" "${REACH[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "${OPTS[@]}" -- "$PROMPT" < /dev/null 2> "$ERRF" | tee "$OUTF"
-  rc=${PIPESTATUS[0]}
+  st=("${PIPESTATUS[@]}")
   set -e
+  rc=${st[0]}
   cat "$ERRF" >&2
-  CAPACITY=0; [ "$rc" -ne 0 ] && grep -q "^ERROR: Selected model is at capacity" "$ERRF" "$OUTF" && CAPACITY=1
+  if [ "${st[1]}" -ne 0 ]; then
+    echo "REFUTER_FAIL: the audit's output could not be captured (tee exit ${st[1]}) — the verdict was not delivered." >&2
+    exit 74
+  fi
+  # Capacity only when Codex failed AND its LAST diagnostic line is the capacity error — a capacity
+  # sentence quoted earlier in the auditor's answer never decides it.
+  last="$( (grep -v '^[[:space:]]*$' "$ERRF" || true) | tail -n 1)"
+  [ -n "$last" ] || last="$( (grep -v '^[[:space:]]*$' "$OUTF" || true) | tail -n 1)"
+  CAPACITY=0
+  if [ "$rc" -ne 0 ] && [[ "$last" == "ERROR: Selected model is at capacity"* ]]; then CAPACITY=1; fi
   if [ "$CAPACITY" -eq 1 ] && [ "$attempt" -lt "${#WAITS[@]}" ]; then
     echo "AUDIT_RETRY: the model was at capacity — the whole audit runs again in ${WAITS[$attempt]} s (try $((attempt + 2)) of $(( ${#WAITS[@]} + 1 )))" >&2
     sleep "${WAITS[$attempt]}"

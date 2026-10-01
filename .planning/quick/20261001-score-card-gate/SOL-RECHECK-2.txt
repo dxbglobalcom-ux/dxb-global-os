@@ -1,0 +1,186 @@
+codex
+Claim / done-list item: Audit scope and isolation.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: Both commit messages and `66f22aa3..8929c28a` were examined. The five audited files still match `8929c28a`. No files were written and no test suite was run. Parser fixtures were controlled inputs; wrapper probes used anonymous memory and mock Codex.
+Evidence: `git diff --exit-code 8929c28a -- <five audited files>` → exit 0. Independent `sql_read` queries against construction engine `7690665340837392423/5/postgres` measured `audit_log`: **1795 → 1795**.
+Correction required: None.
+
+---
+
+Claim / done-list item: The lead’s score card accurately grades this re-check.
+Verdict: REFUTED
+Finding: **B.** `.agents/skills/dxb-team2/SKILL.md:65` assigns reasoning **2** to stateful work. The added retry loop maintains attempt state, changes behavior across executions, and manages captured output. The card’s reasoning **1** under-grades that axis. **1 + 2 + 2 + 0 = 5 remains normal/high**; this does not justify critical classification.
+Evidence: `node scripts/governance/audit-card.mjs check .planning/quick/20261001-score-card-gate/CARD-recheck2.md` → `"total":4,"class":"normal","effort":"high"`. `refuter.sh:259–275` contains the attempt-dependent transitions.
+Correction required: Set reasoning to 2 and update the explanation; retain normal/high.
+
+---
+
+Claim / done-list item: 1–3 / original A1 and original C — no card, insufficient effort, and forwarded overrides are refused.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:68`, `:72`, `:87`. The previously repaired controls remain intact. Attached short options also bind their values rather than exposing them as configuration overrides.
+Evidence: `bash scripts/governance/refuter.sh x` → exit 1, `REFUTER_FAIL: no score card`. Direct routing probes returned critical/xhigh, normal/high and light/medium; critical with high threw `beneath the card`. Exact parser probes converted both `-o --config=…` and `-o--config=…` into one `--output-last-message=--config=…` argument. `--sandbox=workspace-write` was refused.
+Correction required: None for A1 or original C.
+
+---
+
+Claim / done-list item: 5 / original B1 — argument and stdin briefs remain whole.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:84`, `:238`. The card precedes either brief. Trailing allowed options do not become prompt text.
+Evidence: Exact parser/prompt-construction probes preserved `brief --json -C "/tmp/path with spaces"`, a dash-prefixed brief after `--`, and stdin ending in two newlines. Whitespace-only briefs were refused.
+Correction required: None for original B1.
+
+---
+
+Claim / done-list item: The previous attached-short-option finding is repaired.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:94`. Attached forms now pass through as bound long options.
+Evidence: Exact parser probe: `-C/tmp -o=out.txt -ix.png brief` → exit 0, with `--cd=/tmp`, `--output-last-message=out.txt`, and `--image=x.png`.
+Correction required: None for the attached forms.
+
+---
+
+Claim / done-list item: The previous multi-image compatibility finding is repaired.
+Verdict: REFUTED
+Finding: **B — still reproducible.** `scripts/governance/refuter.sh:104` still interprets the second filename in `-i one.png two.png brief` as a prompt. The new diagnostic documents the restriction; it does not restore the accepted native invocation.
+Evidence: Native `codex exec -i one.png two.png --help` → exit 0; its help specifies `--image <FILE>...`. The wrapper’s exact parser → exit 1, `more than one prompt given`.
+Correction required: Support native multi-image parsing while retaining bound forwarding, or explicitly reconcile the remaining compatibility restriction with the acceptance contract.
+
+---
+
+Claim / done-list item: 4 — the previously missed database consumers and governance controls are guarded.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/audit-card.mjs:90`. The inverted allow-list repairs the named package-path counterexamples.
+Evidence: Current-module probes for `packages/orchestrator/src/dispatch.ts` and `packages/hook/src/runtime.ts` → normal/high, guard `unlisted`. Real historical ranges `512be457^..512be457` and `022eec2e^..022eec2e` also route to normal/high.
+Correction required: None for those paths. The broader floor remains defective below.
+
+---
+
+Claim / done-list item: 4 — LIGHT screen files cannot conceal guarded logic changes.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/audit-card.mjs:51`, `:57–58`, `:94`. Arbitrary executable TSX/JSX qualifies as screen layout, while only changed lines receive keyword checks. A security or database operation whose imports and calls remain unchanged can lose its safeguards without matching CONTENT.
+
+A concrete repository example is `apps/dashboard/src/components/crm/entity-view.tsx:106`: replace the company-scoping `.eq(...)` branches with `query`. The machine still classifies this database-isolation change as light.
+Evidence: Current `route()` probes using that exact path and removed/added statements → `"class":"light","effort":"medium","floor":null`. Removing `entity-form.tsx:51`’s editable-field restriction gave the same result. `fetch ("…")`, a multiline `.from(tableName)` call, and `axios.post(...)` also escaped CONTENT.
+Correction required: Restrict LIGHT to changes demonstrably confined to presentation. Guard database consumers and enforcement code independently of changed-line keywords; inspect semantic changes or fail closed when their safety cannot be established.
+
+---
+
+Claim / done-list item: 4 — planning prose is harmless enough to qualify automatically as LIGHT.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/audit-card.mjs:49` allows active instructions in `.planning/STATE.md` and board-row records. STATE is directly injected into subsequent sessions by `.claude/hooks/spec-bootstrap.sh:125–132`; changing its next action changes governance context.
+Evidence: Current-module probes for `.planning/STATE.md` and `.planning/board-rows/B43.md`, including instructions to bypass approval or execute spending, → light/medium, no floor.
+Correction required: Exclude active governance, approval and execution instructions from the prose allow-list. Classify by the document’s role rather than its `.md` extension.
+
+---
+
+Claim / done-list item: NUL-delimited parsing repairs ordinary renames, Unicode names, tabs and deletions.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/audit-card.mjs:107–115`, `:127`, `:144`. The previous ordinary rename, Git-quoted Unicode and deletion defects are repaired.
+Evidence: Controlled inputs through the exact current functions produced normal/high for a guarded-source `R100` rename, a `C100` record, a Unicode screen file importing `pg`, a tab-containing binary filename, deletion of a database import, and a binary rename. Both names in rename/copy records were consumed.
+Correction required: None for these reproduced cases. The copy probe establishes parsing of a copy record, not that `git diff -M` detects every copy.
+
+---
+
+Claim / done-list item: Binary screen files always receive the unreadable floor.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/audit-card.mjs:142` uses `.*` without newline matching. A legal Git pathname such as `apps/x\n/src/view.tsx` matches LIGHT’s application-directory segment, but its binary numstat record fails this regex. Binary status disappears.
+Evidence: Controlled NUL-delimited name/status and numstat records passed through `filesIn()`, `binaryIn()`, `changedLines()` and `route()` → `binary=[]`, light/medium, `floor:null`, despite numstat being `-\t-\t<pathname>`.
+Correction required: Parse numstat fields using their tab/NUL delimiters without a newline-sensitive whole-record regex. Add newline-containing binary-path cases.
+
+---
+
+Claim / done-list item: File-type changes cannot introduce guarded code through a LIGHT pathname.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/audit-card.mjs:112–114` discards the status after determining the number of names. A `T` change replacing `apps/x/src/view.tsx` with a symlink to `../../../packages/shared/src/db.ts` passes as light: the symlink target string matches no CONTENT pattern.
+Evidence: Controlled type-change record and corresponding patch, passed through the exact functions → light/medium, no floor. A mode-only executable-bit change also remained light with no changed lines.
+Correction required: Inspect file modes/types before granting LIGHT. Reject or raise symlinks and executable/type transitions unless their target and effect are explicitly assessed.
+
+---
+
+Claim / done-list item: The previous overbroad money-word finding is repaired.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/audit-card.mjs:56–59`. Incidental money words no longer raise plain screen copy.
+Evidence: Current-module probe with `<span>Payments</span> // Spend a moment` → light/medium, no floor.
+Correction required: None for that false positive. Operational money calls still need the stronger protection described above.
+
+---
+
+Claim / done-list item: The documented capacity error retries; ordinary errors preserve their exit code.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:266–277`. The documented plain error works on either captured stream. Successful answers containing a capacity quotation do not retry.
+Evidence: Exact retry-loop probes with anonymous-memory storage: two capacity errors followed by success → **3 calls, exit 0**; repeated capacity errors → **4 calls, exit 75**; unrelated failure → **1 call, exit 42**; capacity quotation with exit 0 → **1 call, exit 0**. Cleanup ran on these exits.
+Correction required: None for these cases.
+
+---
+
+Claim / done-list item: A capacity line inside the auditor’s answer cannot misclassify an unrelated failure.
+Verdict: REFUTED
+Finding: **B.** `scripts/governance/refuter.sh:266` searches auditor stdout as if it were a transport diagnostic. If an answer quotes `ERROR: Selected model is at capacity` and Codex subsequently exits 42 for a connection failure, the wrapper reports capacity exhaustion instead.
+Evidence: Exact-loop probe with that stdout quotation and stderr `ERROR: connection lost` → **4 calls, exit 75**, replacing the original exit 42.
+Correction required: Classify transport errors separately from assistant answer text, preferably using structured event types. Preserve unrelated failures.
+
+---
+
+Claim / done-list item: 6 — every launch appends a score-card log row.
+Verdict: REFUTED
+Finding: **B.** `scripts/governance/refuter.sh:247` logs outside the new retry loop. Retries launch additional audits without additional rows, undercounting launches used for class-budget measurements.
+Evidence: Full-wrapper probe with logging and temporary storage redirected to anonymous memory: two capacity failures then success → **3 Codex launches, 1 log row, exit 0**.
+Correction required: Log each attempt, linking retries to the same audit and recording attempt number and outcome.
+
+---
+
+Claim / done-list item: Output-capture failures cannot become a successful wrapper exit.
+Verdict: REFUTED
+Finding: **B.** `scripts/governance/refuter.sh:263` keeps only `PIPESTATUS[0]`. A failed `tee` is ignored even under `pipefail`; the wrapper can exit 0 with no delivered audit output.
+Evidence: Exact-loop probe with Codex returning 0 and a controlled capture failure returning 23 → **exit 0, empty stdout**.
+Correction required: Capture both pipeline statuses immediately. Treat capture/output failure as failure and retain the Codex status separately.
+
+---
+
+Claim / done-list item: Capacity retries are capped at three.
+Verdict: REFUTED
+Finding: **B.** `scripts/governance/refuter.sh:256–267` derives the retry limit from the unrestricted length of `DXB_REFUTER_RETRY_WAITS`.
+Evidence: Exact-loop probe with `DXB_REFUTER_RETRY_WAITS="0 0 0 0"` and persistent capacity failure → **5 calls**, exceeding the documented four-attempt maximum.
+Correction required: Enforce the maximum independently of the wait override; validate wait values.
+
+---
+
+Claim / done-list item: Temporary files are cleaned up when allocation fails.
+Verdict: REFUTED
+Finding: **B.** `scripts/governance/refuter.sh:257–258` installs cleanup only after both allocations. If the second `mktemp` fails, `set -e` exits while the first file remains.
+Evidence: Exact allocation-section probe with first allocation succeeding and second returning 3 → **exit 3; cleanup not called**.
+Correction required: Initialize temporary-path variables and install guarded cleanup before the first allocation.
+
+---
+
+Claim / done-list item: Capacity recovery works with `--json`.
+Verdict: UNVERIFIED
+Finding: `scripts/governance/refuter.sh:266` recognizes only the plain `ERROR:` prefix. A JSON-only capacity event does not match; whether the installed Codex also emits the required plain diagnostic on this real failure was not established.
+Evidence: Native help confirms `--json` emits JSONL. A controlled JSON-only capacity event → **1 call, exit 1**, without retry.
+Correction required: Verify the real JSON-mode failure stream and cover it with a regression case; classify structured errors if needed.
+
+---
+
+Claim / done-list item: 7–8 — proof remains intact and the author’s targeted tests passed.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: Proof/install bodies are unchanged from `66f22aa3`, and the installed profile matches its tracked source. The supplied artifacts support the author’s runs, but do not cover the remaining counterexamples.
+Evidence: Body comparison → `PROOF_BODY_UNCHANGED True`; profile comparison → `INSTALLED_PROFILE_MATCH True`. Supplied `vitest-host.log` and `vitest-sandbox.log` each report **24 passed**. Supplied `proof.log` contains `REFUTER_READONLY_OK`, `DB_REACHED`, and three `DB_WRITE_REFUSED`.
+Correction required: Add the reproduced counterexamples and rerun applicable checks. Refresh the done-list’s stale “13 passed” text. No writing proof or installation was replayed by this auditor.
+
+---
+
+Claim / done-list item: 9 — door mirrors agree.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: The relevant mirrored door texts agree, but their fail-closed promise is refuted by the floor findings above.
+Evidence: In-memory application of the generator’s exact path substitutions → `dxb-team2 MIRROR_MATCH` and `dxb-verify MIRROR_MATCH`.
+Correction required: Preserve mirror parity while repairing enforcement.
+
+---
+
+Claim / done-list item: 9 — ledger truth is currently green.
+Verdict: UNVERIFIED
+Finding: The permitted read gateway could not be reached from this sandbox.
+Evidence: `node scripts/governance/ledger-truth.mjs` → exit 1, `company read gateway unreachable … EPERM`. This establishes a sandbox access failure, not ledger drift.
+Correction required: Run the ledger check in the builder’s permitted environment and supply its complete output.
+
+OVERALL: BLOCKS
