@@ -1,0 +1,178 @@
+codex
+Measurement scope: `8c633882..7bb7c4db`; both fix commit messages read. I wrote no repository files and ran no test suite. Wrapper probes used in-memory copies with telemetry suppressed and Codex replaced by an argument recorder; native `--help` probes checked CLI parsing. Diff-parser fixtures below are controlled fixtures, explicitly identified. Concurrent capacity-retry edits are outside this verdict. Construction-engine `audit_log` remained **1,795 → 1,795**.
+
+---
+
+Claim / done-list item: The done-list proves the CEO’s requested machine.
+Verdict: REFUTED
+Finding: **A — blocks.** `DONE-LIST.md:14` requires the guarded floor, but the corrected implementation still permits guarded work at light/medium. The unchanged list also omits rename, quoted-path and binary-content cases.
+Evidence: The counterexamples below return `"class":"light","floor":null,"effort":"medium"`.
+Correction required: Repair the floor and diff handling; extend the acceptance cases. The acknowledged after-build timing remains a procedural deviation.
+
+---
+
+Claim / done-list item: The lead’s normal/high score is appropriate.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `CARD-recheck1.md:5`. One audit subsystem, governance risk, deterministic routing with edge cases, and an exact order support **1 + 2 + 1 + 0 = 4**. I found no basis under §3 for critical classification.
+Evidence: `node scripts/governance/audit-card.mjs check .planning/quick/20261001-score-card-gate/CARD-recheck1.md` → `"total":4,"class":"normal","files":8,"required":"high"`.
+Correction required: None to the score. Implementation defects do not themselves alter the scoring axes.
+
+---
+
+Claim / done-list item: 1 — No card means refusal before Codex.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:68`. Refusal remains before inventory and launch.
+Evidence: `bash scripts/governance/refuter.sh x` → `REFUTER_FAIL: no score card`; exit 1.
+Correction required: None.
+
+---
+
+Claim / done-list item: 2 — A critical card cannot request high.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/audit-card.mjs:123`. Both leading option orders enforce the minimum.
+Evidence: Pinned wrapper probes with a seven-point card, using `--card CARD --effort high brief` and `--effort high --card CARD brief`, each returned exit 1: `critical work is audited at xhigh or higher`.
+Correction required: None.
+
+---
+
+Claim / done-list item: 3 / original A1 — Forwarded configuration cannot lower the routed effort.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:87`. **A1 is repaired**, including the interrupted re-check’s `-o --config=…` scenario. Value-taking options become single bound arguments; direct configuration overrides are rejected.
+Evidence: A critical-card recorder probe captured:
+
+```text
+-c
+model_reasoning_effort="xhigh"
+exec
+--output-last-message=--config=model_reasoning_effort="medium"
+--
+```
+
+There was no separate forwarded `--config`. Native `codex exec '--output-last-message=--config=model_reasoning_effort="medium"' --help` returned exit 0. Direct `--config=…` returned wrapper exit 1. Module routing produced light/medium, normal/high and critical/xhigh.
+Correction required: None for A1.
+
+---
+
+Claim / done-list item: 4 / original A2 — The guarded floor covers the real repository.
+Verdict: REFUTED
+Finding: **A2 — blocks; partially repaired.** `scripts/governance/audit-card.mjs:39` and `:47` still miss database consumers and governance controls when their imports remain unchanged. For example, `packages/hook/src/runtime.ts:53` enforces a rejection; `packages/orchestrator/src/dispatch.ts:81` updates database rows. Neither path is guarded, and their changed statements need not match CONTENT.
+Evidence: In-memory, one-line edit scenarios verified against existing source returned light/medium:
+
+```text
+runtime.ts:
+  return { ok: false, reason: detail } → return { ok: true }
+  class=light floor=null effort=medium
+
+dispatch.ts:
+  .updateTable("tasks") → .updateTable("agents")
+  class=light floor=null effort=medium
+```
+
+The two original historical counterexamples **are repaired**: `512be457^..512be457` and `022eec2e^..022eec2e` now route to normal/high.
+Correction required: Classify the actual database consumers and policy-enforcement modules, including changes that leave imports untouched. Add regression cases for these real paths.
+
+---
+
+Claim / done-list item: The floor preserves guarded ownership across renames.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/audit-card.mjs:92` collects only destination names. A pure rename from guarded `packages/shared/src/db.ts` to unguarded `apps/x/service.ts` loses the source guard; `changedLines()` has no hunks to inspect.
+Evidence: A controlled 100% rename fixture, passed through the exact functions, produced `lines={}` and `"class":"light","floor":null,"effort":"medium"`.
+Correction required: Read NUL-delimited name/status records and guard both source and destination paths for renames and copies.
+
+---
+
+Claim / done-list item: CONTENT inspects code files whose names Git quotes.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/audit-card.mjs:94` retains Git’s C-quoted names. At `:101`, CODE rejects the trailing quote, so content is never inspected. A database or credential change in an otherwise unguarded Unicode filename can therefore run at medium.
+Evidence: Controlled name-only output `"apps/x/\303\247lient.ts"` produced:
+
+```text
+files=["\"apps/x/\\303\\247lient.ts\""]
+lines={}
+class=light floor=null effort=medium
+```
+
+No current tracked code filename contains non-ASCII characters; this is a reproduced parser boundary defect.
+Correction required: Use `git diff … -z` and preserve filenames without display quoting.
+
+---
+
+Claim / done-list item: Binary code changes cannot silently evade CONTENT.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/audit-card.mjs:107` ignores `Binary files … differ`. For an unguarded path, it treats unavailable content as no guarded content. Git can classify shell source containing a NUL in a comment as binary.
+Evidence: A controlled binary patch for `apps/x/client.ts` produced `lines={}`, light/medium. Separately, `bash -n` accepted a shell-source fixture containing a NUL comment and `sudo true`; this fixture was syntax-checked only.
+Correction required: Inspect binary-marked code through an appropriate representation or refuse routing when its content cannot be assessed. Add a valid shell-source regression.
+
+---
+
+Claim / done-list item: changedLines() handles ordinary spaces and deletions.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/audit-card.mjs:108`. Ordinary space-containing filenames still allow content detection, although header separator tabs remain in the reported key. Deletions retain the old path when `+++ /dev/null` appears.
+Evidence: Controlled fixtures produced normal/high for both a credential change in `apps/x/my file.ts` and deletion of `import { Pool } from "pg";`.
+Correction required: Normalize header separator tabs when repairing path parsing; neither fixture bypassed the floor.
+
+---
+
+Claim / done-list item: CONTENT preserves ordinary light work.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** `scripts/governance/audit-card.mjs:49` treats incidental words as money operations. A layout label `<span>Payments</span>` or comment `// Spend a moment on the transition.` raises an otherwise light job to normal/high.
+Evidence: Direct `floorOf()` probes returned `"normal"` for both examples and `null` for `<span>Welcome</span>`. A measured scan retained **110 light ranges among 500**, so the stronger claim that light becomes entirely meaningless is unsupported.
+Correction required: Distinguish operational money changes from labels and comments. Add positive and negative cases.
+
+---
+
+Claim / done-list item: 5 / original B1 — Argument and stdin briefs are preserved independently of option order.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:84` and `:235`. **Original B1 is repaired.** Trailing allowed options no longer become the brief. The card precedes both argument and stdin prompts.
+Evidence: Recorder probes preserved `brief --json -C "/tmp/path with spaces"` and `- --json`; stdin retained trailing newlines. `-- "-starts here"` worked. Empty, whitespace-only and empty-stdin briefs were refused; two prompts were refused. Extra stdin was excluded from an argument brief.
+Correction required: None for original B1.
+
+---
+
+Claim / done-list item: 6 — Every launch appends its routed card.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:242`. Logging remains before launch.
+Evidence: Reading `~/.local/state/dxb/audit-cards.log` found three rows. The latest records `8c633882..7bb7c4db`, normal/high, and hash `7e1840e3e15ad5e9`, matching the current card.
+Correction required: None for logging. Repair the floor so the recorded class meets the contract.
+
+---
+
+Claim / done-list item: 7 — Proof and profile-install modes remain functional.
+Verdict: UNVERIFIED
+Finding: `scripts/governance/refuter.sh:116` and `:167`. Both mode bodies are unchanged, and the installed profile matches its tracked source. Current end-to-end replay was not established here; installation writes and was not executed.
+Evidence: Exact body comparisons against `8c633882` returned true. Supplied `proof.log` contains `REFUTER_READONLY_OK`, `DB_REACHED`, and three `DB_WRITE_REFUSED`. My harmless nested sandbox probe failed with `app-server socket directory must be a user-owned directory with mode 0700`.
+Correction required: Preserve the builder’s proof evidence. Any required current replay must occur in its permitted environment; no score-card regression in these modes was demonstrated.
+
+---
+
+Claim / done-list item: 8 — The author’s targeted suite passed on host and sandbox.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `tests/governance/audit-card.test.ts:112`. Both supplied artifacts support **20 passing tests**. They do not cover the remaining floor and diff-parser defects.
+Evidence: `vitest-host.log` and `vitest-sandbox.log` each report `Test Files 1 passed (1)` and `Tests 20 passed (20)`.
+Correction required: Add the counterexamples above and rerun. Update the done-list’s stale “13 passed” criterion.
+
+---
+
+Claim / done-list item: 9 — The doors, implementation, mirror and ledger agree.
+Verdict: REFUTED
+Finding: **A — consequence of the remaining floor defects.** `dxb-team2/SKILL.md:72` promises at least normal for guarded work; the implementation still permits the reproduced medium routes.
+Evidence: In-memory application of the mirror generator’s substitutions returned equality for both dxb-team2 and dxb-verify. Supplied artifacts report `SYNC_OK` and `ledger truth OK`; those results do not establish floor completeness.
+Correction required: Repair enforcement, preserve mirror equality, and rerun the applicable checks.
+
+---
+
+Claim / done-list item: 10 — Supported wrapper invocations remain compatible.
+Verdict: REFUTED
+Finding: **B — new parser regression.** `scripts/governance/refuter.sh:99` rejects attached-value spellings of allowed native options, including `-C/tmp`, `-ox`, `-ix`, `-o=x` and `-C=/tmp`. A multi-file `-i one.png two.png brief` also becomes “more than one prompt.”
+Evidence: Native `codex exec … --help` accepted these forms with exit 0; the pinned wrapper rejected them with exit 1. Repository search found no executable production caller requiring migration; `scripts/rival-intel/motion.py:11` is a docstring. The original trailing-`--json` regression is repaired.
+Correction required: Normalize native spellings of allowed options while retaining bound forwarding and the override restrictions.
+
+---
+
+Claim / done-list item: Original C — Forwarded options can alter sandbox or MCP inventory.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:99`. **The older C finding is repaired for the forwarded-option channel.** Configuration, sandbox, model, profile, feature and other unlisted options are refused; dash-prefixed briefs remain behind `--`.
+Evidence: Probes covering installed `codex exec --help` option names and their long `--opt=value` forms rejected the unlisted controls. Pinned critical-card `--sandbox=workspace-write` returned exit 1. All permitted value-looking overrides remained bound to their allowed option.
+Correction required: None for this channel.
+
+OVERALL: BLOCKS
