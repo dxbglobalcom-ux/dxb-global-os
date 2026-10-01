@@ -28,39 +28,40 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-01 ~21:15 → 21:50, Opus 5.5 session (handover from a214423a). **The pin auto-review is built,
-audited and deployed to the company** (his "Tamam yapabilirsin", 2026-10-01 ~20:50):
-- Sol's plan read proved a keyword gate cannot define "clean" (two bypass sentences, a schema default
-  flip). The verdict became an allowlist: a drifted tool is re-approved only when the repository vouches
-  for the exact new text (dxb-mcp is our own source; external tools: the reviewed
-  `db/seed/tool-pins.manifest.json`); everything else locks with a high alert in Turkish, linked to an
-  audit row holding both texts (8bfeaf3f). Sol's diff audit: no A, three B, repaired (d57cda74).
-  Under this rule the 2026-09-27 scrapling locks would not have happened (the manifest carried those texts).
-- Company: migration 20261001010000 applied alone (applied 1, skipped 170), fingerprint
-  `ae3e8133c23d23fc` unchanged; scheduler restarted 21:39:46; one forced pin check logged
-  `checked 76, matched 76, re-approved 0, locked 0, texts kept 76`; no audit row, no alert, profiles
-  unchanged. Battery: BATTERY_GREEN (1031 + 266 passed).
-- The known limit, for him: an honest tool upgrade the manifest does not carry yet locks (with a high
-  alert) until the manifest is refreshed and committed.
-- He caught B64 written to the board without his word; deleted (2efd8969). The cause was dxb-team2's
-  AUDIT line "C → a board row", deleted (0dd5af05).
-- ⚠ UNVERIFIED — requires human-eye confirmation: the two pin alerts on his alerts page (TR) and the
-  drill to `/gov/audit/<id>` (no browser session, B03-bis).
+2026-10-01 ~21:55 → 23:25, Opus 5.5 session dbebfe82. He asked how dxb-team2 really works; walked
+through it with him, measured on the day's two jobs. What changed, on his words:
+- Deleted, nothing written in their place (*"sil ikisini de… güveni sarsan şeyleri de sil"*,
+  a11c4736, 2a5b70ae): dxb-team2's floor ("…files is at least normal; the lead cannot score it lower",
+  written by a session 2026-09-28, not by him) and dxb-verify's ruler rule ("every audit's ruler is a
+  runnable script") with the lines that hung on them. He made Opus the lead because he trusts it.
+- Fable is the advisor and arbiter on every job, critical included; it draws no architecture (d54de91f).
+- The plan is talked through with him BEFORE he gives the job; a critical plan is read by Sol and its
+  gaps closed by the lead, never sent back to him (3fe36467, 97983a29).
+- Sol stays the second eye on every job; `/code-review` is not used (his word, no text changed).
+- Measured for him: a Sol round takes 10-15 min; the pin battery 5.5 min (102 s + 235 s); the pin job
+  ~45 min end to end. Both of the day's jobs started from a word list (score-card floor, pin keyword
+  gate) and Sol refuted each; the lead did not question a list that kept growing. 282 commits since
+  2026-09-17: ~half records/board/audit, 10 feat. His aim: *"benim istediğim holdingi yapacak ekibin
+  süper olması"* — not more gates.
+- The earlier pin session's result stands (accf7dbf): built, audited, deployed; the known limit — an
+  honest upgrade the manifest does not carry yet locks with a high alert until the manifest is refreshed.
 
 ## Next
 
 1. **Ask him** before any project work.
-2. His decision, raised tonight: Sol at most two rounds per job, the second blocks only on A (B fixed
-   the same day by the lead, C kept in the job's folder only). Not a rule until he says so.
-3. To talk over with him later, on his word: dxb-team2 itself, and whether prose-only work skips Sol.
-4. The next real job is a holding part from the board, chosen with him.
-5. His question at session end (2026-10-01 ~21:55), to answer first in the next session: why a locked
-   tool is not resolved by the system itself, and why the alert comes to him instead of to the one
-   who should fix it. Answer and propose; build nothing before his word.
+2. His question from 2026-10-01 ~21:55, answer first: why a locked tool is not resolved by the system
+   itself, and why the alert comes to him instead of to the one who should fix it. Answer and
+   propose; build nothing before his word.
+3. The next real job is a holding part from the board, talked through and chosen with him — offered:
+   three candidates. In it, report to him plainly how the team worked (did the lead question its own
+   design, consult Fable in time, hand Sol solid work). No new gate or rule for it.
+4. Sol rounds: no change. Measured: a B re-check caught a B that was not fixed (score-card RECHECK-2,
+   multi-image), so "B needs no re-check" was withdrawn; "medium re-check" is unmeasured.
 
 ## Waiting on his approval
 
-- The pin auto-review: finished on the author's side, waiting for his eye.
+- The pin auto-review: finished on the author's side, waiting for his eye (⚠ UNVERIFIED: the two pin
+  alerts on his alerts page in TR and the drill to `/gov/audit/<id>`).
 - Next 2 and 3.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
