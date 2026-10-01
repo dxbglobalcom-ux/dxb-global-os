@@ -75,7 +75,7 @@ every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §
 INTAKE    → the job in ONE sentence, provable by measurement; the CEO's words verbatim; what is his.
 SCORE     → the card (§3); `dxb-quota` read once — the week's headroom and pace.
 CRITICAL  → the lead writes the plan, Fable advises → Sol reads the PLAN (marked draft) →
-            the plan goes to the CEO in his language; no code before his yes.
+            the lead closes its gaps, Fable advises; then the code.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → the lead writes and runs the job's own tests. Parallel work only as a measured fork (§8).
 AUDIT     → Sol, blind (§5), one pass at the class's effort (§6).
@@ -96,7 +96,7 @@ RECORD    → STATE (the contradicted sentence goes, LAW A), the board row, rule
 ```
 
 **What reaches the CEO as a question:** starting any job, money out, a contract, an identity step,
-the Islamic boundaries, the plan of a critical job, a job outgrowing its budget, and an order of his
+the Islamic boundaries, a job outgrowing its budget, and an order of his
 that truly reads two ways — each with a recommendation, answerable in one word. Technical choices
 inside a job he already said yes to are the lead's.
 
