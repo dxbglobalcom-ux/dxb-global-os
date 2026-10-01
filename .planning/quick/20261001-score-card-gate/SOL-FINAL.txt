@@ -1,0 +1,87 @@
+Claim: Audit scope and isolation.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: The five implementation, test and door files match `759cf3b9`. No files were written and no test suite was run. Controlled wrapper probes used anonymous memory and substituted Codex.
+Evidence: `git diff --exit-code 759cf3b9 -- <five audited files>` → exit 0; `git status --porcelain` → empty. Independent `sql_read` measurements: construction engine `7690665340837392423/5/postgres`, `audit_log` **1795 → 1795**.
+Correction required: None.
+
+---
+
+Claim: The final score card does not under-grade this job.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `.agents/skills/dxb-team2/SKILL.md:63–66`. One audit subsystem supports blast 1; governance supports risk 2; the stateful retry loop supports reasoning 2; the exact revised order supports ambiguity 0. **Total 5 remains normal/high.**
+Evidence: `node scripts/governance/audit-card.mjs check …/CARD-final.md` → `"total":5,"class":"normal","files":8,"required":"high","effort":"high"`.
+Correction required: None. The earlier reasoning-axis finding is repaired.
+
+---
+
+Claim: No card, invalid cards and an effort beneath the card are refused before Codex.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:68–73`; `scripts/governance/audit-card.mjs:44–78`. Refusal precedes inventory and model launch.
+Evidence: Unmodified wrapper without a card → exit 1, `REFUTER_FAIL: no score card`. Critical-card probes with `--effort high`, in both leading option orders → exit 1, `beneath the card`. Missing fields, invalid axes, nonexistent commits and `HEAD..HEAD` were refused.
+Correction required: None.
+
+---
+
+Claim: Forwarded options cannot override the routed effort or profile.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:84–106`. The allow-list rejects configuration, model, sandbox, profile and feature controls. Allowed values remain bound to their options.
+Evidence: **120 spelling/position probes refused; zero unexpected results.** Recorder probes for `-o --config=…` and `-o--config=…` produced one bound `--output-last-message=…` argument, retained `model_reasoning_effort="xhigh"`, and exposed no separate configuration option.
+Correction required: None.
+
+---
+
+Claim: The card and brief reach Sol whole.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:236–244`. The card precedes the argument or stdin brief; trailing allowed options do not become prompt text.
+Evidence: Controlled wrapper probes preserved `brief --json -C "/tmp/path with spaces"`, `- --json`, a dash-prefixed brief after `--`, and stdin ending in two newlines. Attached short options and repeated `-i` options remained bound.
+Correction required: None. The documented one-file-per-`-i` restriction is explicit and fails closed.
+
+---
+
+Claim: Only a real capacity failure triggers retry.
+Verdict: REFUTED
+Finding: **B — remaining retry-classification defect.** `scripts/governance/refuter.sh:277–279` falls back to assistant stdout when stderr is empty. An answer ending with `ERROR: Selected model is at capacity — quoted`, followed by an unrelated nonzero process exit, is classified as capacity. This repeats the audit and replaces the original failure status.
+Evidence: Read-only `python3 -` controlled wrapper probe, with the retry logic unchanged: stdout quotation + empty stderr + exit 42 → **4 launches, exit 75**. The same quotation with stderr `ERROR: connection lost` correctly produced **1 launch, exit 42**.
+Correction required: Exclude assistant answer text from capacity classification. Add the empty-stderr counterexample and preserve unrelated exit codes.
+
+---
+
+Claim: Retries are capped, every attempt is logged, and failed capture cannot pass.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:257–272`. The previous count, logging, capture and allocation-cleanup findings are repaired.
+Evidence: Controlled wrapper probes: two capacity failures then success → **3 launches / 3 rows / exit 0**; persistent capacity with six configured waits → **4 launches / 4 rows / exit 75**. Capture failure 23 → **exit 74**. Second allocation failure → **exit 3, zero launches, cleanup called**. The current real launch row matches the final card’s hash and normal/high route.
+Correction required: None for these repairs.
+
+---
+
+Claim: Capacity recovery works with `--json`.
+Verdict: UNVERIFIED
+Finding: `scripts/governance/refuter.sh:279` recognizes a plain diagnostic prefix. A structured capacity event alone does not trigger retry; the installed Codex’s actual capacity-failure streams were not established.
+Evidence: Controlled JSON-only capacity event → **1 launch, exit 1**. `codex exec --help` confirms JSONL output.
+Correction required: Supply a real JSON-mode capacity-failure capture and cover its diagnostic format.
+
+---
+
+Claim: `--proof` and `--install-profile` remain intact.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/refuter.sh:66`, `:120`, `:171`. Both modes remain exempt from the card gate, and their bodies are unchanged from `66f22aa3`.
+Evidence: Body comparisons → `PROOF_BODY_UNCHANGED True`, `INSTALL_BODY_UNCHANGED True`; installed profile → byte-identical; live MCP inventory → only `dxbdb`.
+Correction required: None demonstrated. End-to-end replay remains unverified: installation writes; the harmless nested sandbox probe failed with `app-server socket directory must be a user-owned directory with mode 0700`.
+
+---
+
+Claim: The final 19 tests passed on host and construction sandbox.
+Verdict: UNVERIFIED
+Finding: `tests/governance/audit-card.test.ts` contains 19 cases, but complete raw outputs for the final runs were not available in the inspected evidence locations.
+Evidence: Case count → **19**. Searches of the job directory and relevant temporary/state locations found no final `vitest-host.log` or `vitest-sandbox.log`. The auditor did not run the writing suite.
+Correction required: Supply both complete final outputs and add the remaining retry counterexample.
+
+---
+
+Claim: The doors and final acceptance record describe the simplified machine consistently.
+Verdict: REFUTED
+Finding: **B — acceptance-record drift.** The doors agree with the simplified implementation and their mirrors match. However, `.planning/quick/20261001-score-card-gate/DONE-LIST.md:14` still requires machine file-floor detection, contradicting the CEO’s revised decision; line 18 still names 13 tests.
+Evidence: Exact mirror substitutions → `dxb-team2 MIRROR_MATCH True`, `dxb-verify MIRROR_MATCH True`. The active done-list retains the superseded floor criterion and old count; the current suite contains 19 cases.
+Correction required: Rewrite the done-list around the final authorized behavior and evidence. **Do not restore file-floor detection.**
+
+OVERALL: BLOCKS

@@ -271,12 +271,13 @@ while :; do
     echo "REFUTER_FAIL: the audit's output could not be captured (tee exit ${st[1]}) — the verdict was not delivered." >&2
     exit 74
   fi
-  # Capacity only when Codex failed AND its LAST diagnostic line is the capacity error — a capacity
-  # sentence quoted earlier in the auditor's answer never decides it.
-  last="$( (grep -v '^[[:space:]]*$' "$ERRF" || true) | tail -n 1)"
-  [ -n "$last" ] || last="$( (grep -v '^[[:space:]]*$' "$OUTF" || true) | tail -n 1)"
+  # Capacity only when Codex failed, delivered no answer on stdout, AND its last diagnostic line on
+  # stderr — read past the "tokens used" footer Codex always ends stderr with — is the capacity error.
+  # The auditor's answer (stdout) is never read for it: a capacity sentence quoted there decides
+  # nothing (Sol, final re-check). --json streams events on stdout, so a --json audit is never retried.
+  last="$( (grep -v '^[[:space:]]*$' "$ERRF" || true) | sed -e '$!b' -e '/^[0-9][0-9,]*$/d' | sed -e '$!b' -e '/^tokens used$/d' | tail -n 1)"
   CAPACITY=0
-  if [ "$rc" -ne 0 ] && [[ "$last" == "ERROR: Selected model is at capacity"* ]]; then CAPACITY=1; fi
+  if [ "$rc" -ne 0 ] && ! grep -q '[^[:space:]]' "$OUTF" && [[ "$last" == "ERROR: Selected model is at capacity"* ]]; then CAPACITY=1; fi
   if [ "$CAPACITY" -eq 1 ] && [ "$attempt" -lt "${#WAITS[@]}" ]; then
     echo "AUDIT_RETRY: the model was at capacity — the whole audit runs again in ${WAITS[$attempt]} s (try $((attempt + 2)) of $(( ${#WAITS[@]} + 1 )))" >&2
     sleep "${WAITS[$attempt]}"

@@ -1,0 +1,16 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/governance/audit-card.test.ts (19 tests) 3851ms
+   ✓ refuter.sh holds the gate > refuses every forwarded option that could override the card or the profile  379ms
+   ✓ refuter.sh holds the gate > keeps the prompt whole when allowed options come after it, and refuses two prompts  313ms
+   ✓ refuter.sh holds the gate > takes the prompt after '--', and refuses an empty brief  638ms
+   ✓ refuter.sh holds the gate > runs the whole audit again when the model is at capacity, and gives up after four tries  579ms
+   ✓ refuter.sh holds the gate > never retries on a capacity sentence quoted in the answer; caps the retries at three; logs every try  767ms
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  19:09:51
+   Duration  4.12s (transform 51ms, setup 0ms, collect 21ms, tests 3.85s, environment 0ms, prepare 32ms)
+
