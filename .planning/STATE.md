@@ -28,40 +28,33 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-01 ~16:00 → 19:15, Opus 5.5 session cd2a0e9d. Construction tooling only — no holding part was
-built today, and he named that as the problem (*"bende niye herşzaman bok gibi çalışıorsun … bu reponun
-içinde birşeyler mi seni bok gibi çalışmanı yönlendirior"*).
-- **The auditor seat is GPT-6.1 Sol** <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> after the exam on
-  job 1's first diff (`.planning/quick/20261001-auditor-exam/RESULT.md`): Sol 6.1 found the blocking
-  defect and two more; Sonnet 5.5 at max let the job pass, so Sonnet has no audit seat. Codex CLI 0.159.3.
-- **The score card gate** (`scripts/governance/audit-card.mjs` + `refuter.sh`, 759cf3b9): no audit without
-  a card, never beneath it, no forwarded override, "model at capacity" retried three times. It judges no
-  file — his ruling, after four Sol rounds broke every file-detection attempt. Sol's FINAL re-check was
-  running at the handover: `/tmp/claude-1000/-home-dxb-DxB-Global-OS/cd2a0e9d-19d4-4a28-859b-dbef1960ff3d/scratchpad/ev/sol-final.out`.
-- Core §2: for light and normal work the board row he ordered is the approval; a critical plan still goes
-  to him <!-- CEO-OK: board-row-is-the-approval-2026-10-01 -->. Advisor = Fable 5.1 (`advisorModel` in
-  ~/.claude/settings.json, tested live); the default model is back on `claude-opus-5-5[1m]` (it had been
-  switched to `sonnet` at 16:23 by a VS Code session).
+2026-10-01 ~19:05 → 20:25, Opus 5.5 session a214423a. Asked why the work goes badly, he ordered every
+rule that harms the work found and deleted, item by item, from the global layer to this repository
+(*"SORUNLU SENİ MAHVEDECEK KURALLARI HEPSİNİ BUL VE TEK TEK ÜZERİNDEN GEÇİP SİLELİM"*). Done in two
+batches on his numbers <!-- CEO-OK: rules-prune-batch-1-2026-10-01 --> <!-- CEO-OK: rules-prune-batch-2-2026-10-01 -->:
+- "never ask him what to do" is gone; core §2 now says **ask before any project work**
+  <!-- CEO-OK: never-ask-rule-deleted-2026-10-01 -->. A session started C60 and B53 without his word today; that is what he ruled out.
+- The two per-prompt hooks, the global Tooling Mandate / graph-first / Kadro blocks, the whole-file-read
+  gate, the model watch (B55 closed) <!-- CEO-OK: model-watch-removed-2026-10-01 -->, dxb-crew and dxb-team1 with their agents, and
+  20 memory files are deleted; the doors lost their act-without-asking and threat lines. dxb-team2 is
+  the one construction door. The approval register stays, on his word.
+- Sol's final re-check of the score card gate blocked on two B findings, no A; both fixed with a third
+  defect found in the capture (afe5505f).
+- Backup of the global files before the prune: `~/.claude/backups/rules-prune-20261001.tgz`.
 
 ## Next
 
-1. **Read Sol's final verdict** (path above). PASSES → the gate is done, tell him in one line. BLOCKS → fix
-   only an A inside what the gate now is (card + effort); nothing that guesses files comes back.
-2. **His open question, unanswered:** should prose-only work (no code at all) skip Sol, and every job with
-   code run at `high` or above (the light class gone)? It changes his 2026-09-28 "every job is audited".
-3. **Stop building construction tooling. The next job is a holding part from the board** he can watch.
-   He confirmed most of the board is rework of built things he disliked (measured on titles: 40 of 69 open
-   rows; 11 new parts; 18 are construction tooling or machine chores, four of them finished — B44, B45,
-   B63, B58 — to close on his word).
-4. **The measured answer to "is it the repo?"** — the same small holding job once in this repo as it is,
-   once in a session with the always-on layer cut to a minimum; quality and time side by side; then prune
-   the rules with him, list first.
-5. A weak spec section under a board row is rewritten by the lead inside its own spec (with Fable as
-   advisor) before the row is built — his word this session, not a law.
+1. **Ask him** before any project work. Nothing is started without his word.
+2. His open question, unanswered: should prose-only work (no code) skip Sol, and every job with code
+   run at `high` or above?
+3. One conflict found and not settled: dxb-start says no handover prompt is written unless he asks in
+   that session; dxb-team2 §8 has the engineer write one at 50 % context. Put it to him.
+4. B53 (the prompt audit of 2026-09-24) is largely overtaken by this prune; ask whether it closes.
+5. The next real job is a holding part from the board, chosen with him.
 
 ## Waiting on his approval
 
-- Next 2 (prose-only work skips Sol).
+- Next 2, Next 3, Next 4.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 
