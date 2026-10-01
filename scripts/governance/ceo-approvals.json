@@ -1738,5 +1738,13 @@
     "conditions": "Asked after he was told it adds well under a second to an audit and stops only an audit with no card or an effort beneath the card. The floor's level (normal) is the door's existing rule; his question whether it is enough was open when this was built.",
     "session": "Opus 5.5 session cd2a0e9d — heard first-hand, 2026-10-01.",
     "where": "scripts/governance/audit-card.mjs · scripts/governance/refuter.sh · .claude/skills/dxb-team2/SKILL.md §3 §6 · .claude/skills/dxb-verify/SKILL.md"
+  },
+  "board-row-is-the-approval-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "The plan-approval boundary in .claude/CLAUDE.md §2 is narrowed: a critical job's plan goes to him before any code; for light and normal work the board row he ordered is the approval. Resolves the conflict the lead named between core §2 ('no implementation before he approves the plan', no exception) and dxb-team2 §4 (only a critical plan reaches him).",
+    "verbatim": "tmm önerini kabul ediyorum, kural dosyasına yaz.",
+    "conditions": "He asked for it to be written into the rule file. The two history clauses beside it in §2 (the report door's deletion, the code-gate's removal) were cut to keep the core under its 13,000-byte ruler; both stay registered here (ceo-report-door-deleted-2026-09-26, code-gate-removed-2026-09-28).",
+    "session": "Opus 5.5 session cd2a0e9d — heard first-hand, 2026-10-01.",
+    "where": ".claude/CLAUDE.md §2"
   }
 }

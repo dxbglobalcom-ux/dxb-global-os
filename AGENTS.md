@@ -116,7 +116,9 @@ the date. The battery fails on an unregistered approval claim.
 
 - **The approval gate.** Money OUT, contracts, ad spend, identity steps and the subjects he
   marks stop at the CEO. Money IN and routine outward communication do not.
-- **No implementation before he approves the plan.** Not inferable away, not optional.
+- **No implementation before he approves the plan.** A critical job's plan goes to him; for light
+  and normal work the board row he ordered is the approval (CEO 2026-10-01
+  <!-- CEO-OK: board-row-is-the-approval-2026-10-01 -->).
 - **Measure, never guess.** Every fact, number and status rests on a measurement taken this
   session, cited. Memory, a grep hit, a summary or a subagent's report is a lead — never an
   answer. Cannot measure → write `UNVERIFIED — could not measure because …`. A prediction is
@@ -132,14 +134,11 @@ the date. The battery fails on an unregistered approval claim.
   link: each names its blast radius in the same turn, and the report says what was re-measured
   and found intact. A change delivered without that sweep is unfinished, whatever it fixed.
   Door: `dxb-verify`.
-- **Speak to the CEO in his language.** The hook fires it on every prompt; the report door was deleted
-  on his order, 2026-09-26.
+- **Speak to the CEO in his language.** The hook fires it on every prompt.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
 - **Code: the session writes it; the `builder` seats write code only inside an orchestration**
-  (`dxb-team2`, `dxb-crew`); the code-gate hook was removed on his word, 2026-09-28
-  <!-- CEO-OK: code-gate-removed-2026-09-28 -->. Other subagents audit, refute
-  and sweep; they never write — and a
+  (`dxb-team2`, `dxb-crew`). Other subagents audit, refute and sweep; they never write — and a
   CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
   ruler scripts included (the audit law, CEO 2026-09-15
   <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).
