@@ -91,14 +91,18 @@ case "${1:-}" in
           case "$1" in -C) long=--cd ;; -o) long=--output-last-message ;; -i) long=--image ;; *) long="$1" ;; esac
           OPTS+=("$long=$2"); shift 2 ;;
         --cd=*|--color=*|--output-last-message=*|--output-schema=*|--image=*) OPTS+=("$1"); shift ;;
+        -C?*|-o?*|-i?*)   # attached short forms: -C/tmp, -C=/tmp, -ofile, -o=file, -ix.png
+          case "$1" in -C*) long=--cd ;; -o*) long=--output-last-message ;; -i*) long=--image ;; esac
+          v="${1:2}"; v="${v#=}"
+          OPTS+=("$long=$v"); shift ;;
         --) [ $# -ge 2 ] && [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: '--' must be followed by the one prompt." >&2; exit 1; }
             PROMPT_ARG="$2"; HAVE_PROMPT=1; shift 2
             [ $# -eq 0 ] || { echo "REFUTER_FAIL: nothing may follow the prompt after '--'." >&2; exit 1; } ;;
-        -) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given." >&2; exit 1; }
+        -) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given (an -i takes one file; repeat -i for more)." >&2; exit 1; }
            PROMPT_ARG="-"; HAVE_PROMPT=1; shift ;;
-        -*) echo "REFUTER_FAIL: '$1' is not passed to the auditor — only -C/--cd, --skip-git-repo-check, --ephemeral, --json, --color, -o/--output-last-message, --output-schema and -i/--image are; the effort, model, sandbox and servers are fixed by the card and the profile." >&2
+        -*) echo "REFUTER_FAIL: '$1' is not passed to the auditor — only -C/--cd, --skip-git-repo-check, --ephemeral, --json, --color, -o/--output-last-message, --output-schema and -i/--image (one file per -i; repeat it for more) are; the effort, model, sandbox and servers are fixed by the card and the profile." >&2
             exit 1 ;;
-        *) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given." >&2; exit 1; }
+        *) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given (an -i takes one file; repeat -i for more)." >&2; exit 1; }
            PROMPT_ARG="$1"; HAVE_PROMPT=1; shift ;;
       esac
     done

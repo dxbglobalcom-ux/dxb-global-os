@@ -11,7 +11,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 // @ts-expect-error — a plain .mjs module without types
-import { classOf, floorOf, parseCard, route } from "../../scripts/governance/audit-card.mjs";
+import { binaryIn, changedLines, classOf, filesIn, floorOf, parseCard, route } from "../../scripts/governance/audit-card.mjs";
 
 const REPO = join(import.meta.dirname, "..", "..");
 const GATE = join(REPO, "scripts", "governance", "audit-card.mjs");
@@ -47,31 +47,38 @@ describe("the card", () => {
   });
 });
 
-describe("the floor is measured from the files", () => {
+describe("the floor is measured from the files, and fails closed", () => {
+  type Hit = { file: string; guard: string };
   it("names the guard for database, money, security, approval and governance files", () => {
     const f = floorOf([
       "db/migrations/0001_x.sql", "packages/revenue/src/a.ts", "packages/gateway/policy/p.yaml",
-      "apps/dashboard/src/components/approvals/Card.tsx", "scripts/governance/refuter.sh", "README.md",
+      "apps/dashboard/src/components/approvals/Card.tsx", "scripts/governance/refuter.sh",
     ]);
     expect(f.min).toBe("normal");
-    expect(new Set(f.hits.map((h: { guard: string }) => h.guard))).toEqual(
+    expect(new Set(f.hits.map((h: Hit) => h.guard))).toEqual(
       new Set(["database", "money", "security", "approval", "governance"]));
-    expect(f.hits.some((h: { file: string }) => h.file === "README.md")).toBe(false);
   });
 
-  it("covers the paths Sol's audit found missing: .codex/, scripts/hooks/, the specs, the cost gate", () => {
-    const f = floorOf([".codex/hooks.json", "scripts/hooks/pre-commit", "HOLDING-OS-MASTER-PLAN/PERMISSION_MODEL.md",
-                       "scripts/ops/dxb-cost-gate.py", "packages/shared/src/db.ts"]);
-    for (const file of [".codex/hooks.json", "scripts/hooks/pre-commit", "HOLDING-OS-MASTER-PLAN/PERMISSION_MODEL.md",
-                        "scripts/ops/dxb-cost-gate.py", "packages/shared/src/db.ts"])
-      expect(f.hits.some((h: { file: string }) => h.file === file), file).toBe(true);
+  it("covers the paths Sol's audits found missing — any path not on the LIGHT list is 'unlisted'", () => {
+    const missed = [".codex/hooks.json", "scripts/hooks/pre-commit", "HOLDING-OS-MASTER-PLAN/PERMISSION_MODEL.md",
+                    "scripts/ops/dxb-cost-gate.py", "packages/shared/src/db.ts",
+                    "packages/orchestrator/src/dispatch.ts", "packages/hook/src/runtime.ts", "README.md"];
+    const f = floorOf(missed);
+    for (const file of missed) expect(f.hits.some((h: Hit) => h.file === file), file).toBe(true);
+    expect(floorOf(["packages/orchestrator/src/dispatch.ts"]).hits[0].guard).toBe("unlisted");
   });
 
-  it("reads the changed lines of code files: a database client or a credential is caught wherever it lives", () => {
-    const f = floorOf(["apps/x/src/a.ts"], { "apps/x/src/a.ts": 'import { Pool } from "pg";\n' });
-    expect(f.hits.map((h: { guard: string }) => h.guard)).toEqual(["database"]);
-    expect(floorOf(["apps/x/src/b.ts"], { "apps/x/src/b.ts": "const apiKey = env.X;\n" }).min).toBe("normal");
-    expect(floorOf(["apps/x/src/c.tsx"], { "apps/x/src/c.tsx": "<h1>Merhaba</h1>\n" }).min).toBe(null);
+  it("stays light only for prose, screen layout and assets", () => {
+    expect(floorOf([".planning/quick/x/EVIDENCE.md", "apps/dashboard/src/app/page.tsx",
+                    "apps/dashboard/src/app/x.css", "apps/dashboard/public/logo.png"]).min).toBe(null);
+    expect(floorOf([".planning/governance/model-routing-hierarchy.md"]).min).toBe("normal");
+  });
+
+  it("reads the changed lines of screen files: a database client or a credential is caught; a word is not", () => {
+    const f = floorOf(["apps/x/src/a.tsx"], { "apps/x/src/a.tsx": 'import { Pool } from "pg";' });
+    expect(f.hits.map((h: Hit) => h.guard)).toEqual(["database"]);
+    expect(floorOf(["apps/x/src/b.tsx"], { "apps/x/src/b.tsx": "const apiKey = process.env.X;" }).min).toBe("normal");
+    expect(floorOf(["apps/x/src/c.tsx"], { "apps/x/src/c.tsx": "<span>Payments</span> // Spend a moment" }).min).toBe(null);
   });
 
   it("raises a light card that touches a guarded file to normal, and leaves a plain one light", () => {
@@ -80,6 +87,36 @@ describe("the floor is measured from the files", () => {
     expect(route(c, ["db/migrations/0001_x.sql"]).floorRaised).toBe(true);
     expect(route(c, ["apps/dashboard/src/app/page.tsx"]).class).toBe("light");
     expect(route(c, ["apps/dashboard/src/app/page.tsx"]).effort).toBe("medium");
+  });
+
+  it("keeps both sides of a rename, reads unicode names unquoted, and treats a binary screen file as unreadable", () => {
+    const repo = mkdtempSync(join(tmpdir(), "audit-card-git-"));
+    const git = (...a: string[]) => {
+      const r = spawnSync("git", ["-C", repo, "-c", "user.name=t", "-c", "user.email=t@t", ...a], { encoding: "utf8" });
+      if (r.status !== 0) throw new Error(r.stderr);
+      return r.stdout.trim();
+    };
+    git("init", "-q");
+    mkdirSync(join(repo, "packages/shared/src"), { recursive: true });
+    mkdirSync(join(repo, "apps/x/src"), { recursive: true });
+    writeFileSync(join(repo, "packages/shared/src/db.ts"), "export const x = 1;\n".repeat(20));
+    git("add", "-A"); git("commit", "-qm", "base");
+    const base = git("rev-parse", "HEAD");
+    git("mv", "packages/shared/src/db.ts", "apps/x/src/service.tsx");
+    writeFileSync(join(repo, "apps/x/src/ğüş.tsx"), 'import { Pool } from "pg";\n');
+    writeFileSync(join(repo, "apps/x/src/nul.tsx"), Buffer.from("export const a = 1;\0\n"));
+    git("add", "-A"); git("commit", "-qm", "move");
+    const range = `${base}..HEAD`;
+    const files = filesIn(range, repo);
+    expect(files).toContain("packages/shared/src/db.ts");
+    expect(files).toContain("apps/x/src/service.tsx");
+    expect(files).toContain("apps/x/src/ğüş.tsx");
+    const f = floorOf(files, changedLines(range, files, repo), binaryIn(range, repo));
+    const by = (file: string) => f.hits.filter((h: Hit) => h.file.startsWith(file)).map((h: Hit) => h.guard);
+    expect(by("packages/shared/src/db.ts")).toContain("database");
+    expect(by("apps/x/src/ğüş.tsx")).toContain("database");
+    expect(by("apps/x/src/nul.tsx")).toContain("unreadable");
+    rmSync(repo, { recursive: true, force: true });
   });
 });
 
@@ -209,6 +246,13 @@ esac
     expect(r.stdout).toContain('ARG --output-last-message=--config=model_reasoning_effort="medium"');
     expect(r.stdout).not.toMatch(/^ARG --config/m);
     expect(r.stdout).toContain('EFFORT_ARG model_reasoning_effort="xhigh"');
+  });
+
+  it("accepts the attached short forms of the allowed options, bound", () => {
+    const r = run("--card", card(axes(2, 2, 2, 1)), "-C/tmp", "-o=out.txt", "audit this");
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stdout).toContain("ARG --cd=/tmp");
+    expect(r.stdout).toContain("ARG --output-last-message=out.txt");
   });
 
   it("takes the prompt after '--', and refuses an empty brief", () => {

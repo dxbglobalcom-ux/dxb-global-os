@@ -75,8 +75,9 @@ lead did not grade itself down.
 **A machine holds the card** (*"tmm makineyi de kur"* <!-- CEO-OK: score-card-gate-2026-10-01 -->).
 The card is a file (`job:` · `range:` · `blast:` · `risk:` · `reasoning:` · `ambiguity:`) handed to
 `refuter.sh --card <file>`; `scripts/governance/audit-card.mjs` refuses an audit without one, measures
-the floor from the paths the range touches and the changed lines of its code files (its `FLOOR` and
-`CONTENT` tables are the one copy of the guarded classes), refuses any forwarded option that could
+the floor from the paths the range touches — failing closed: work stays light only when every path,
+both sides of a rename, is on its `LIGHT` list (prose, screen layout, assets) and no changed screen line
+reaches the database or a credential (`FLOOR`, `LIGHT`, `CONTENT` are the one copy), refuses any forwarded option that could
 override the effort, model, sandbox or servers,
 sets the auditor's effort, refuses an `--effort` beneath it, puts the card in front of Sol, and logs
 every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §7 are summed from it.

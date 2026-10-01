@@ -15,9 +15,13 @@
 //   risk: 0|1|2       ambiguity: 0|1|2
 // Total 0-2 light → medium · 3-5 normal → high · 6-8 critical → xhigh.
 //
-// THE FLOOR is measured, not declared: the files the range touches are matched against the
-// guarded classes below, and a hit raises the class to that floor whatever the axes say. The effort
-// may be raised above the card's (a fix that spread, §4 FIX) but never lowered beneath it.
+// THE FLOOR is measured, not declared, and it FAILS CLOSED (Sol's re-check, 2026-10-01: a list of
+// guarded paths is never complete — a database consumer, a renamed file, a quoted or binary name slips
+// past it). A range may stay light ONLY when every path it touches — both sides of a rename — is on
+// the LIGHT allow-list (prose, screen layout, images) and no changed line of a screen file reaches the
+// database or a credential. Any path on FLOOR names its guard; any other path names "unlisted". Either
+// raises the class to at least normal. The effort may be raised above the card's (a fix that spread,
+// §4 FIX) but never lowered beneath it.
 // Prints one JSON object on success (exit 0); one REFUTER_FAIL line on refusal (exit 2).
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -31,22 +35,27 @@ export const LEVELS = ["medium", "high", "xhigh"];
 export const CLASSES = ["light", "normal", "critical"];
 
 // dxb-team2 §3: "a job touching money, the database, security, approval or governance files is at
-// least normal". Two tables, one copy each: FLOOR matches the PATHS a range touches (mapped against
-// this repository's layout — Sol's audit of 2026-10-01 named the shared db client, the cost gate,
-// .codex/, scripts/hooks/ and the specs as missed), and CONTENT matches the CHANGED LINES of code files,
-// so a database client or a credential change is caught wherever it lives.
+// least normal". FLOOR names WHY a path is guarded (it is reported to Sol); LIGHT is the only way to
+// stay beneath normal; CONTENT reads the changed lines of the LIGHT screen files, the one kind of light
+// file that can still hold code.
 export const FLOOR = [
-  { name: "database", min: "normal", re: /^(db|supabase)\/|\.sql$|^scripts\/(bootstrap-db|restore-db)\.sh$|^scripts\/(migration|b36)\/|^packages\/shared\/src\/db/ },
-  { name: "money", min: "normal", re: /^packages\/revenue\/|(^|\/)(payments?|billing|invoices?|wallet|money)(\/|\.|-|_)|(^|\/)[^/]*(cost|budget|spend|quota)[^/]*\.(ts|tsx|mjs|cjs|js|py|sh)$/i },
-  { name: "security", min: "normal", re: /^packages\/gateway\/|^vps\/|^scripts\/(ops|systemd|hooks)\/|^\.codex\/|^\.githooks?\/|(^|\/)[^/]*(auth|vault|secret|security|credential|sandbox|bwrap|permission|polic(y|ies)|rls|sudoers)[^/]*$/i },
-  { name: "approval", min: "normal", re: /approv/i },
-  { name: "governance", min: "normal", re: /^scripts\/(governance|hooks)\/|^\.planning\/governance\/|^HOLDING-OS-MASTER-PLAN\/|^docs\/ceo-directives\/|^\.claude\/|^\.agents\/|^\.codex\/|^tools\/hooks\/|(^|\/)(CLAUDE|AGENTS)\.md$/ },
+  { name: "database", re: /^(db|supabase)\/|\.sql$|^scripts\/(bootstrap-db|restore-db)\.sh$|^scripts\/(migration|b36)\/|^packages\/shared\/src\/db/ },
+  { name: "money", re: /^packages\/revenue\/|(^|\/)(payments?|billing|invoices?|wallet|money)(\/|\.|-|_)|(^|\/)[^/]*(cost|budget|spend|quota)[^/]*\.(ts|tsx|mjs|cjs|js|py|sh)$/i },
+  { name: "security", re: /^packages\/gateway\/|^vps\/|^scripts\/(ops|systemd|hooks)\/|^\.codex\/|^\.githooks?\/|(^|\/)[^/]*(auth|vault|secret|security|credential|sandbox|bwrap|permission|polic(y|ies)|rls|sudoers)[^/]*$/i },
+  { name: "approval", re: /approv/i },
+  { name: "governance", re: /^scripts\/(governance|hooks)\/|^\.planning\/governance\/|^HOLDING-OS-MASTER-PLAN\/|^docs\/ceo-directives\/|^\.claude\/|^\.agents\/|^\.codex\/|^tools\/hooks\/|(^|\/)(CLAUDE|AGENTS)\.md$/ },
 ];
-export const CODE = /\.(ts|tsx|mjs|cjs|js|py|sh|bash|sql|toml|ya?ml|json)$/;
+export const LIGHT = [
+  /^\.planning\/(?!governance\/).*\.(md|txt)$/,                 // records and evidence prose
+  /^(docs|references)\/.*\.(md|txt|png|jpe?g|webp|svg|gif)$/,   // reading material
+  /^apps\/[^/]+\/src\/.*\.(tsx|jsx|css|scss)$/,                 // screen layout (CONTENT-checked)
+  /^apps\/[^/]+\/public\/.*\.(png|jpe?g|webp|svg|gif|ico|woff2?)$/, // screen assets
+  /^apps\/[^/]+\/(messages|locales|i18n)\/[^/]+\.json$/,       // screen copy
+];
+const SCREEN = /\.(tsx|jsx)$/;
 export const CONTENT = [
-  { name: "database", min: "normal", re: /\bfrom\s+["'](pg|kysely|postgres|@supabase\/supabase-js)["']|require\(\s*["']pg["']\s*\)|\bpsql\b|DATABASE_URL|postgres(ql)?:\/\/|\b(INSERT\s+INTO|DELETE\s+FROM|UPDATE\s+[\w."]+\s+SET|CREATE\s+(OR\s+REPLACE\s+)?(TABLE|FUNCTION|ROLE|POLICY|TRIGGER|VIEW)|ALTER\s+(TABLE|ROLE|DEFAULT|FUNCTION)|DROP\s+(TABLE|ROLE|FUNCTION)|GRANT\s+\w|REVOKE\s+\w)\b/i },
-  { name: "security", min: "normal", re: /bypassPermissions|dangerously|sandbox_mode|\bsudo\b|\bchmod\b|credential|password|api[_-]?key|\bsecret\b/i },
-  { name: "money", min: "normal", re: /\b(stripe|invoices?|payments?|payouts?|refunds?|budget|spend(ing)?)\b/i },
+  { name: "database", re: /\bfrom\s+["'](pg|kysely|postgres|@supabase\/supabase-js)["']|require\(\s*["']pg["']\s*\)|\bpsql\b|DATABASE_URL|postgres(ql)?:\/\/|\.(from|rpc)\(\s*["']|\b(INSERT\s+INTO|DELETE\s+FROM|UPDATE\s+[\w."]+\s+SET|CREATE\s+(OR\s+REPLACE\s+)?(TABLE|FUNCTION|ROLE|POLICY|TRIGGER|VIEW)|ALTER\s+(TABLE|ROLE|DEFAULT|FUNCTION)|DROP\s+(TABLE|ROLE|FUNCTION)|GRANT\s+\w|REVOKE\s+\w)\b|["']use server["']/i },
+  { name: "security", re: /bypassPermissions|dangerously|sandbox_mode|\bsudo\b|\bchmod\b|credential|password|api[_-]?key|\bsecret\b|process\.env|fetch\(/i },
 ];
 
 const fail = (msg) => {
@@ -73,13 +82,17 @@ export function parseCard(text) {
 
 export const classOf = (total) => (total <= 2 ? "light" : total <= 5 ? "normal" : "critical");
 
-export function floorOf(files, lines = {}) {
+export function floorOf(files, lines = {}, binary = []) {
   const hits = [];
-  for (const f of files) for (const g of FLOOR) if (g.re.test(f)) hits.push({ file: f, guard: g.name, min: g.min });
+  for (const f of files) {
+    const guards = FLOOR.filter((g) => g.re.test(f));
+    for (const g of guards) hits.push({ file: f, guard: g.name });
+    if (!guards.length && !LIGHT.some((re) => re.test(f))) hits.push({ file: f, guard: "unlisted" });
+    else if (!guards.length && SCREEN.test(f) && binary.includes(f)) hits.push({ file: f, guard: "unreadable" });
+  }
   for (const [f, text] of Object.entries(lines))
-    for (const g of CONTENT) if (g.re.test(text)) hits.push({ file: `${f} (changed lines)`, guard: g.name, min: g.min });
-  const min = hits.reduce((m, h) => Math.max(m, CLASSES.indexOf(h.min)), 0);
-  return { hits, min: hits.length ? CLASSES[min] : null };
+    for (const g of CONTENT) if (SCREEN.test(f) && g.re.test(text)) hits.push({ file: `${f} (changed lines)`, guard: g.name });
+  return { hits, min: hits.length ? "normal" : null };
 }
 
 export function filesIn(range, repo = REPO) {
@@ -89,33 +102,55 @@ export function filesIn(range, repo = REPO) {
     const r = spawnSync("git", ["-C", repo, "rev-parse", "--verify", "--quiet", `${end}^{commit}`], { encoding: "utf8" });
     if (r.status !== 0) fail(`\`${end}\` in the card's range is not a commit in this repository.`);
   }
-  const d = spawnSync("git", ["-C", repo, "diff", "--name-only", range], { encoding: "utf8" });
+  // -z: names unquoted, whatever they hold · -M with --name-status: BOTH sides of a rename are kept,
+  // so a guarded file cannot leave its guard behind by moving.
+  const d = spawnSync("git", ["-C", repo, "diff", "--name-status", "-z", "-M", range], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   if (d.status !== 0) fail(`git diff ${range} failed: ${d.stderr.trim()}`);
-  const files = d.stdout.split("\n").filter(Boolean);
+  const parts = d.stdout.split("\0").filter((x) => x !== "");
+  const files = [];
+  for (let i = 0; i < parts.length; ) {
+    const st = parts[i++];
+    const n = /^[RC]/.test(st) ? 2 : 1;
+    for (let k = 0; k < n; k++) files.push(parts[i++]);
+  }
   if (!files.length) fail(`the range ${range} changes no file — there is nothing to audit.`);
-  return files;
+  return [...new Set(files)];
 }
 
-// The changed lines (added and removed) of each code file in the range, for CONTENT.
+// The changed lines of the LIGHT screen files (the only light files that can hold code), and which
+// files git treats as binary — an unreadable screen file cannot prove itself harmless.
 export function changedLines(range, files, repo = REPO) {
-  const code = files.filter((f) => CODE.test(f));
-  if (!code.length) return {};
-  const d = spawnSync("git", ["-C", repo, "diff", "-U0", "--no-color", range, "--", ...code], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
-  if (d.status !== 0) fail(`git diff -U0 ${range} failed: ${d.stderr.trim()}`);
+  const screens = files.filter((f) => SCREEN.test(f) && LIGHT.some((re) => re.test(f)));
+  if (!screens.length) return {};
   const out = {};
-  let cur = null;
-  for (const l of d.stdout.split("\n")) {
-    if (l.startsWith("--- ")) { cur = l === "--- /dev/null" ? null : l.slice(4).replace(/^a\//, ""); continue; }
-    if (l.startsWith("+++ ")) { if (l !== "+++ /dev/null") cur = l.slice(4).replace(/^b\//, ""); continue; }
-    if (cur && /^[+-]/.test(l)) out[cur] = (out[cur] ?? "") + l.slice(1) + "\n";
+  for (const f of screens) {
+    const d = spawnSync("git", ["--literal-pathspecs", "-C", repo, "-c", "core.quotePath=false", "diff", "-U0", "--no-color", "--text", "-M", range, "--", f],
+      { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+    if (d.status !== 0) fail(`git diff -U0 ${range} -- ${f} failed: ${d.stderr.trim()}`);
+    const body = d.stdout.split("\n").filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---) /.test(l)).map((l) => l.slice(1)).join("\n");
+    if (body) out[f] = body;
   }
   return out;
 }
 
-export function route(card, files, effort, lines = {}) {
+export function binaryIn(range, repo = REPO) {
+  const d = spawnSync("git", ["-C", repo, "diff", "--numstat", "-z", "-M", range], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  if (d.status !== 0) fail(`git diff --numstat ${range} failed: ${d.stderr.trim()}`);
+  const out = [];
+  const parts = d.stdout.split("\0");
+  for (let i = 0; i < parts.length; i++) {
+    const m = /^(-|\d+)\t(-|\d+)\t(.*)$/.exec(parts[i]);
+    if (!m) continue;
+    const names = m[3] === "" ? [parts[++i], parts[++i]] : [m[3]];
+    if (m[1] === "-" && m[2] === "-") out.push(...names);
+  }
+  return out;
+}
+
+export function route(card, files, effort, lines = {}, binary = []) {
   const total = AXES.reduce((s, a) => s + card[a], 0);
   const scored = classOf(total);
-  const floor = floorOf(files, lines);
+  const floor = floorOf(files, lines, binary);
   const cls = floor.min && CLASSES.indexOf(floor.min) > CLASSES.indexOf(scored) ? floor.min : scored;
   const required = LEVELS[CLASSES.indexOf(cls)];
   if (effort !== undefined && effort !== "") {
@@ -152,7 +187,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     try { text = readFileSync(file, "utf8"); } catch { fail(`no card at ${file} — an audit does not start without the job's score card (dxb-team2 §3).`); }
     const card = parseCard(text);
     const files = filesIn(card.range);
-    const r = route(card, files, effort, changedLines(card.range, files));
+    const r = route(card, files, effort, changedLines(card.range, files), binaryIn(card.range));
     console.log(JSON.stringify({ ...r, range: card.range, brief: briefBlock(text, r) }));
   } catch (e) {
     if (!e.refusal) throw e;
