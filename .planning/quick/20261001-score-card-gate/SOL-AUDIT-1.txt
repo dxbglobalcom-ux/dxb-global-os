@@ -1,0 +1,128 @@
+codex
+Claim / done-list item: Does the done-list prove the CEO’s sentence?
+Verdict: REFUTED
+Finding: **A — blocks.** The list covers the intended behavior, but misses equivalent effort overrides, guarded paths in the real repository, and valid prompt/option orders. Its admission that it was written after the build is accurate.
+Evidence: The counterexamples below pass the gate or break supported invocation forms.
+Correction required: Expand the acceptance criteria and repair A1, A2 and B1 before re-audit.
+
+Measurement note: No repository files were written. Wrapper probes used an in-memory copy with telemetry writes suppressed, the repository root pinned, and Codex substituted by an argument recorder. Native CLI checks used inventory or help commands; no model audit was launched.
+
+---
+
+Claim / done-list item: The lead’s score card under-grades this job.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: [CARD.md:5](/home/dxb/DxB%20Global%20OS/.planning/quick/20261001-score-card-gate/CARD.md:5). **The normal classification stands; I found no basis for raising it to critical.** One audit subsystem, governance risk, deterministic routing with several edge cases, and an exact order fit 1 + 2 + 1 + 0 = 4.
+Evidence: `git diff --stat d9f80d19..a2356c71` → 10 files. `node scripts/governance/audit-card.mjs check …/CARD.md` → `"total":4,"class":"normal","required":"high"`.
+Correction required: None to the score. Implementation defects do not themselves change the published scoring axes.
+
+---
+
+Claim / done-list item: 1 — No card means refusal before Codex is called.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: [refuter.sh:67](/home/dxb/DxB%20Global%20OS/scripts/governance/refuter.sh:67). The refusal precedes profile checks and inventory.
+Evidence: The unmodified `bash scripts/governance/refuter.sh x` returned exit 1, empty stdout, and `REFUTER_FAIL: no score card`.
+Correction required: None.
+
+---
+
+Claim / done-list item: 2 — A critical card with `--effort high` is refused.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: [audit-card.mjs:94](/home/dxb/DxB%20Global%20OS/scripts/governance/audit-card.mjs:94). Explicit `--effort` enforcement works, including both leading option orders.
+Evidence: The unmodified wrapper, given an in-memory critical card, returned exit 1 for both `--card CARD --effort high x` and `--effort high --card CARD x`: `beneath the card: critical work is audited at xhigh or higher`.
+Correction required: None for this specific option; A1 below concerns another route.
+
+---
+
+Claim / done-list item: 3 — The card controls the launched auditor’s effort.
+Verdict: REFUTED
+Finding: **A1 — blocks.** [refuter.sh:218](/home/dxb/DxB%20Global%20OS/scripts/governance/refuter.sh:218) forwards unchecked Codex configuration after its own effort setting. `--card CRITICAL -c 'model_reasoning_effort="medium"' brief` passes the gate and forwards the lower setting while reporting `effort=xhigh`. The equivalent `--config=model_reasoning_effort="medium"` also passes.
+Evidence: The wrapper recorder returned exit 0 and captured:
+```text
+-c model_reasoning_effort="xhigh"
+exec
+-c model_reasoning_effort="medium"
+```
+Native CLI precedence probes confirmed that a subcommand `-c` overrides the same parent configuration key: parent `memory.enabled=false`, subcommand `true` → `memory_enabled:true`; reversed → `false`. No lower-effort model request was executed.
+Correction required: Reject conflicting forwarded configuration, including both option spellings, or enforce the validated configuration after parsing all allowed arguments. Verify the effective launch configuration.
+
+---
+
+Claim / done-list item: 4 — Every guarded file raises a light card to at least normal.
+Verdict: REFUTED
+Finding: **A2 — blocks.** [audit-card.mjs:35](/home/dxb/DxB%20Global%20OS/scripts/governance/audit-card.mjs:35). `FLOOR` misses the canonical database client and existing governance/security controls. Their earlier creation does not make this finding category C: the defective floor is introduced by this job.
+Evidence: Real CLI checks with all-zero axes returned exit 0:
+```text
+range: 512be457^..512be457
+files: 7
+class: light
+floor: null
+effort: medium
+```
+That range includes `packages/shared/src/db.ts` and `db-types.ts`.
+```text
+range: 022eec2e^..022eec2e
+files: 3
+class: light
+floor: null
+effort: medium
+```
+That range changes `scripts/ops/dxb-cost-gate.py` and its installer. Direct `floorOf` checks also missed tracked `.codex/hooks.json`, `scripts/hooks/pre-commit`, and `HOLDING-OS-MASTER-PLAN/PERMISSION_MODEL.md`.
+Correction required: Map the guarded classes against the actual repository layout and add regression cases using real historical ranges.
+
+---
+
+Claim / done-list item: 5 — Argument and stdin prompts receive the card first.
+Verdict: REFUTED
+Finding: **B1 — small, repair in this pass.** [refuter.sh:205](/home/dxb/DxB%20Global%20OS/scripts/governance/refuter.sh:205) assumes the last argument is the prompt. `--card CARD AUDIT_BRIEF --json` prefixes the card to `--json`, leaving two positional arguments. `--card CARD - --json` fails similarly.
+Evidence: Native Codex parsing through the telemetry-suppressed wrapper returned exit 2: `error: unexpected argument 'THE LEAD'S SCORE CARD…'`. Baseline `codex exec AUDIT_BRIEF --json --help` and `codex exec - --json --help` both returned exit 0. Options before the final prompt worked.
+Correction required: Parse the prompt independently of option position; test argument and stdin prompts with trailing options.
+
+---
+
+Claim / done-list item: 6 — Every launch appends a log line.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: [refuter.sh:212](/home/dxb/DxB%20Global%20OS/scripts/governance/refuter.sh:212). The append precedes the launch. One real recorded invocation exists; its card hash matches the current card. The recorded effort remains vulnerable to A1.
+Evidence: `~/.local/state/dxb/audit-cards.log` contains one row with `"class":"normal","effort":"high","range":"d9f80d19..a2356c71"`. Its hash, `465f9bc93265f367`, equals the current card’s SHA-256 prefix.
+Correction required: Fix A1 so the logged effort describes the effective launch configuration.
+
+---
+
+Claim / done-list item: 7 — `--proof` and `--install-profile` still work without a card.
+Verdict: UNVERIFIED
+Finding: Their bodies are unchanged and the new gate exempts both modes. Current end-to-end execution was not established in this read-only audit environment.
+Evidence: Comparison against `d9f80d19` → `proof_body_unchanged True`, `install_body_unchanged True`. Installed/source profile comparison → exit 0. The supplied `proof.log` contains `REFUTER_READONLY_OK`, `DB_REACHED`, and three `DB_WRITE_REFUSED`. A current harmless nested sandbox probe failed with `app-server socket directory must be a user-owned directory with mode 0700`. Profile installation writes and was not executed.
+Correction required: The builder must rerun both modes in its permitted environment and provide whole output. No score-card regression was demonstrated.
+
+---
+
+Claim / done-list item: 8 — The author’s 13 tests passed on host and construction sandbox.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: The supplied artifacts support that historical test result. They do not cover the counterexamples above.
+Evidence: Both `vitest-host.log` and `vitest-sandbox.log` report `Test Files 1 passed (1)` and `Tests 13 passed (13)`. Inspection of [audit-card.test.ts:104](/home/dxb/DxB%20Global%20OS/tests/governance/audit-card.test.ts:104) confirms the wrapper cases use an argument-echoing Codex substitute.
+Correction required: Add A1, A2 and B1 cases and rerun the expanded suite.
+
+---
+
+Claim / done-list item: 9 — The doors, code, mirror and ledger agree.
+Verdict: REFUTED
+Finding: **A — consequence of A1/A2.** The doors promise machine-controlled effort and the guarded floor; enforcement has holes. Mirror equality itself holds.
+Evidence: In-memory application of the mirror generator’s substitutions → `dxb-team2 mirror_equal True`, `dxb-verify mirror_equal True`. Supplied artifacts report `SYNC_OK` and `ledger truth OK`; neither detects A1/A2.
+Correction required: Repair enforcement, regenerate the mirror if necessary, and rerun the checks. Preserve the requested contract.
+
+---
+
+Claim / done-list item: 10 — Nothing else using the wrapper breaks.
+Verdict: REFUTED
+Finding: **B — same regression as B1.** Supported trailing-option invocations now fail. Repository search found no additional production caller requiring migration; `scripts/rival-intel/motion.py:11` is a docstring.
+Evidence: Native CLI baseline accepts prompt-before-`--json`; the new wrapper transformation produces exit 2. The later commits leave `audit-card.mjs` and its tests unchanged; their wrapper change is a header comment.
+Correction required: Repair B1 and verify supported option orders using native CLI parsing.
+
+---
+
+Claim / done-list item: The wrapper preserves its read-only runtime boundary.
+Verdict: REFUTED
+Finding: **C — older than this work; belongs on the board.** [refuter.sh:117](/home/dxb/DxB%20Global%20OS/scripts/governance/refuter.sh:117) checks inventory without forwarded options, while line 218 forwards them to the audit. Options can request another sandbox or enable an MCP server absent from the checked inventory.
+Evidence: Native `codex -p refuter mcp list --json -c mcp_servers.memory.enabled=true` returned enabled servers `["dxbdb","memory"]`. The wrapper recorder forwarded `--sandbox workspace-write`. `git show d9f80d19:scripts/governance/refuter.sh` confirms the older unrestricted `exec "$@"` forwarding.
+Correction required: Register the older boundary defect on the board; enforce allowed runtime options and check the final effective inventory. No repository write was attempted.
+
+OVERALL: BLOCKS.
