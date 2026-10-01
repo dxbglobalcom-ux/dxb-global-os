@@ -38,5 +38,5 @@ Lead's decision, advisor (Fable 5.1) consulted.
 7. Rebuilt dist, migration on the company, `dxb-scheduler.service` restarted, the new code proven
    running (its log line), one forced pin check: 0 quarantined, no spurious audit or alert, the library
    profiles unchanged (git diff empty).
-8. The profile publication race Sol found (existing, C) is registered as board row B64, not fixed here.
+8. The profile publication race Sol found (existing, C) stays in SOL-PLAN.txt only; it is not fixed here and not written to the board (board law 1: a row opens only on his word).
 9. ledger-truth OK; the full battery run once.
