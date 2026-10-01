@@ -1,9 +1,9 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, writes and fixes the code itself; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job at a depth set by its score; Fable 5.1 drafts the architecture of a critical job and settles a disagreement. Trigger `/dxb-team2 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, writes and fixes the code itself; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job at a depth set by its score; Fable 5.1 advises the lead on any job and settles a disagreement. Trigger `/dxb-team2 <the job in one sentence>`.
 ---
 
-# The team — one lead who builds, one blind auditor, Fable for architecture
+# The team — one lead who builds, one blind auditor, Fable as advisor
 
 The construction's default door since 2026-09-28 <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->, built against waste, not against checking. The laws it obeys are in `AGENTS.md`;
 it opens `dxb-verify` and `dxb-close-row`.
@@ -17,7 +17,7 @@ it opens `dxb-verify` and `dxb-close-row`.
                     │
      ┌──────────────┼──────────────────────────┐
   LIGHT (0-2)   NORMAL (3-5)             CRITICAL (6-8)
-     │              │              Fable drafts / challenges the architecture
+     │              │              the lead plans, Fable advises
      │              │              → Sol reads the plan → the CEO approves the plan
      └──────────────┼──────────────────────────┘
                     ▼
@@ -37,7 +37,7 @@ it opens `dxb-verify` and `dxb-close-row`.
 |---|---|---|---|
 | **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot) | scores the job, writes the done-list, writes the code, fixes every finding, runs the tests, the battery, commits, reports | approves its own work; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> through `scripts/governance/refuter.sh --card <file>` — read-only by tool | one blind pass per job (§5); re-checks a fixed finding and what the fix touched | writes; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
-| **Architect / advisor** | Fable 5.1, one call | drafts or challenges the architecture of a critical job; rules on a disagreement no test can settle | writes code; is asked routine steps |
+| **Advisor** | Fable 5.1 | advises the lead on any job, critical ones included, whenever the lead needs it; rules on a disagreement no test can settle | writes code |
 | **Reader** | a one-shot subagent (`scout`, or `Explore`) | a wide search or read whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot, description `guarded:` when the path is guarded | only after the same piece failed twice at the lead's level | is opened for a routine fix |
 | **Design eye** | `design-eye` (Fable 5.1) | reads a surface the CEO will see | writes |
@@ -74,7 +74,7 @@ every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §
 ```
 INTAKE    → the job in ONE sentence, provable by measurement; the CEO's words verbatim; what is his.
 SCORE     → the card (§3); `dxb-quota` read once — the week's headroom and pace.
-CRITICAL  → Fable drafts or challenges the architecture → Sol reads the PLAN (marked draft) →
+CRITICAL  → the lead writes the plan, Fable advises → Sol reads the PLAN (marked draft) →
             the plan goes to the CEO in his language; no code before his yes.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → the lead writes and runs the job's own tests. Parallel work only as a measured fork (§8).
