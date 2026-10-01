@@ -48,10 +48,11 @@ batches on his numbers <!-- CEO-OK: rules-prune-batch-1-2026-10-01 --> <!-- CEO-
 1. **Ask him** before any project work. Nothing is started without his word.
 2. To talk over with him later, on his word: dxb-team2 itself, and whether prose-only work (no code)
    skips Sol.
-3. The full battery of 2026-10-01 20:19 was red on two things older than the day's changes (nothing
-   under packages/, apps/ or that test changed): `tests/r43/arsenal.test.ts` (4) — the strategy
-   profile's scrapling tools — and one chat session left in the construction engine. Put to him;
-   not started.
+3. The full battery of 2026-10-01 20:19 was red on two things older than the day's changes. The chat
+   session left in the construction engine is fixed (the voice test's sweep missed a probe whisper
+   heard as "çirketin"; the pattern now drops the first letter, the row is gone, the file alone
+   leaves 0/0). Still red and not started: `tests/r43/arsenal.test.ts` (4) — the strategy profile's
+   scrapling tools.
 4. The next real job is a holding part from the board, chosen with him.
 
 ## Waiting on his approval

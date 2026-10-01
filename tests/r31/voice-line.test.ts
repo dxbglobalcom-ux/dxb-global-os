@@ -54,8 +54,10 @@ afterAll(async () => {
      WHERE source = 'voice'
        -- ILIKE and the STEM: the intake normalises the probe text before the
        -- mirror sees it ("F31 Probe", "Pre-31 Probe", "ve otuz bir probe …
-       -- görevin nedir" all came from this one question).
-       AND (content ILIKE '%probe%şirketin görev%' OR content LIKE 'R31 %')
+       -- görevin nedir" all came from this one question). The first letter of
+       -- "şirketin" is left out on purpose: whisper heard it as "çirketin" on
+       -- 2026-10-01 and the probe turn stayed behind on the bench.
+       AND (content ILIKE '%probe%irketin görev%' OR content LIKE 'R31 %')
   `.execute(db());
   await db()
     .deleteFrom("voice_identities")
@@ -77,7 +79,7 @@ afterAll(async () => {
       { actor: "system", action: "voice.identity.retired" },
       { actor: "system", action: "voice.identity.upserted" },
     ],
-    chatSessionTitleILike: ["%probe%şirketin görev%", "R31 %"],
+    chatSessionTitleILike: ["%probe%irketin görev%", "R31 %"],
   });
   await closeDb();
 });
