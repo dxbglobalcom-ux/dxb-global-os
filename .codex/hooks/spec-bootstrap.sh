@@ -118,7 +118,7 @@ Open work: HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md — the single register.
 Starting, or picking up work? Open the door: dxb-start.
 
 YOUR FIRST REPLY TELLS HIM WHERE THE WORK STANDS, THEN ANSWERS HIM (core §0).
-Never ask him what to do. Everything below was read from .planning/STATE.md just now —
+Everything below was read from .planning/STATE.md just now —
 answer him FROM IT. Before this session ends, REWRITE these three headings in STATE.md —
 replace, never append. What he accepted is in scripts/governance/ceo-approvals.json.
 

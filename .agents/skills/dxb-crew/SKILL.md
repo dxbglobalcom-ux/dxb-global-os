@@ -166,7 +166,7 @@ described to him.
   marks stop.
   Deleting anything in the company engine stops too — first a list with sizes, then his click.
 - Every report he will read on return opens with the position (`CLAUDE.md` §0 — a line with
-  nothing in it is dropped, not announced) and then the phase result. *"Ne yapmamı istersiniz?"* is a failure.
+  nothing in it is dropped, not announced) and then the phase result.
 
 ## 6. Traps already paid for
 

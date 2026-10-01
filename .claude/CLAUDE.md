@@ -69,11 +69,6 @@ four lines to find out what needs him; a line that exists only to say "nothing" 
 for zero content. This is scoped to this reply protocol only — it does not touch "zero is a real
 answer" above, which governs system state surfaces, not this greeting line.
 
-**"Ne yapmamı istersiniz?" is a failure.** He is the owner of a company that is supposed to run
-itself; asking him to remember the state is the babysitting this whole product exists to end.
-Measured 2026-07-31: a fresh session answered his greeting with "Emrinizdeyim. Ne yapmamı
-istersiniz?" and told him nothing.
-
 **The position is already in front of you** — the session-start hook carries where we left off,
 what is next and what waits on his approval; this file carries what the holding IS. **Never re-open a file
 to be told what you have already been told.** Measured 2026-08-10: a session re-read
