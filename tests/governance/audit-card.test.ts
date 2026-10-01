@@ -137,17 +137,22 @@ describe("refuter.sh holds the gate", () => {
   writeFileSync(join(bin, "codex"), `#!/usr/bin/env bash
 case " $* " in
   *" mcp list "*) echo '[{"name":"dxbdb","enabled":true}]' ;;
-  *" exec "*) for a in "$@"; do case "$a" in model_reasoning_effort=*) echo "EFFORT_ARG $a";; --json) echo "--json";; esac; echo "ARG $a" | head -1; done
+  *" exec "*) if [ -n "\${CAPACITY_FAILS:-}" ]; then
+                n=$(cat "$CAPACITY_FAILS" 2>/dev/null || echo 0)
+                if [ "$n" -gt 0 ]; then echo $((n - 1)) > "$CAPACITY_FAILS"; echo "ERROR: Selected model is at capacity. Please try a different model." >&2; exit 1; fi
+              fi
+              for a in "$@"; do case "$a" in model_reasoning_effort=*) echo "EFFORT_ARG $a";; --json) echo "--json";; esac; echo "ARG $a" | head -1; done
               echo "PROMPT_BEGIN"; printf '%s\\n' "\${@: -1}"; echo "PROMPT_END" ;;
 esac
 `);
   chmodSync(join(bin, "codex"), 0o755);
-  const run = (...args: string[]) =>
+  const run = (...args: string[]) => runWith({}, ...args);
+  const runWith = (extra: Record<string, string>, ...args: string[]) =>
     spawnSync("bash", [REFUTER, ...args], {
       encoding: "utf8",
       input: "the brief read from stdin",
       env: { ...process.env, PATH: `${bin}:${process.env.PATH}`, CODEX_HOME: codexHome, HOME: home,
-             DXB_SOL_PROBE_PORT: "1" },
+             DXB_SOL_PROBE_PORT: "1", DXB_REFUTER_RETRY_WAITS: "0 0 0", ...extra },
     });
 
   it("refuses an audit without a card, before Codex is asked anything", () => {
@@ -215,6 +220,19 @@ esac
       expect(e.status).toBe(1);
       expect(e.stderr).toMatch(/the brief is empty/);
     }
+  });
+
+  it("runs the whole audit again when the model is at capacity, and gives up after four tries", () => {
+    const counter = join(box, "capacity");
+    writeFileSync(counter, "2");
+    const r = runWith({ CAPACITY_FAILS: counter }, "--card", card(axes(2, 2, 2, 1)), "audit this");
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stderr.match(/AUDIT_RETRY/g)?.length).toBe(2);
+    expect(r.stdout).toContain("PROMPT_BEGIN");
+    writeFileSync(counter, "9");
+    const gone = runWith({ CAPACITY_FAILS: counter }, "--card", card(axes(2, 2, 2, 1)), "audit this");
+    expect(gone.status).toBe(75);
+    expect(gone.stderr).toMatch(/stayed at capacity after 4 tries/);
   });
 
   it("reads the brief from stdin when the prompt is '-'", () => {
