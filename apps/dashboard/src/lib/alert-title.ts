@@ -138,6 +138,10 @@ const DETAIL_RULES: Rule[] = [
     re: /^Nothing to do; the old and the new text are kept in audit record (\d+)$/,
     tr: (m) => `Yapılacak bir şey yok; eski ve yeni metin ${m[1]} numaralı denetim kaydında duruyor`,
   },
+  {
+    re: /^Nothing to do; the new text is kept in audit record (\d+) \(no earlier text was kept\)$/,
+    tr: (m) => `Yapılacak bir şey yok; yeni metin ${m[1]} numaralı denetim kaydında duruyor (eski metin saklanmamıştı)`,
+  },
   { re: /^tool pins$/, tr: () => "araç onayları" },
 ];
 

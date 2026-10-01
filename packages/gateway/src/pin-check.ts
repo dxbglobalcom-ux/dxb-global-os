@@ -108,6 +108,7 @@ async function raisePinAlert(
   auditId: number,
   verdict: DriftVerdict,
   description: DriftDescription,
+  oldTextKept: boolean,
 ): Promise<void> {
   const name = `${entry.server}/${entry.tool}`;
   const sourceRef = JSON.stringify({ table: "audit_log", audit_id: auditId, server: entry.server, tool: entry.tool });
@@ -120,7 +121,10 @@ async function raisePinAlert(
         title: `Tool updated without a lock: ${name} changed to the text the repository vouches for`,
         affected_area: "tool pins",
         probable_cause: `The new text equals ${AUTHORITY_TEXT[verdict.authority ?? ""] ?? "an approved text"}`,
-        suggested_action: `Nothing to do; the old and the new text are kept in audit record ${auditId}`,
+        // Truthful about what the record holds: a pin from before 2026-10-01 may have kept no text.
+        suggested_action: oldTextKept
+          ? `Nothing to do; the old and the new text are kept in audit record ${auditId}`
+          : `Nothing to do; the new text is kept in audit record ${auditId} (no earlier text was kept)`,
         dedup_key: `pin:repinned:${entry.server}:${entry.tool}:${liveHash.slice(0, 12)}`,
         source_ref: sourceRef,
       })
@@ -151,6 +155,9 @@ async function raisePinAlert(
           acknowledged_at: null,
           muted_until: null,
           escalated_at: sql<Date>`now()`,
+          // The re-raised alert names the NEW audit record in every line, not only in its link.
+          probable_cause: (eb) => eb.ref("excluded.probable_cause"),
+          suggested_action: (eb) => eb.ref("excluded.suggested_action"),
           source_ref: sourceRef,
         }),
     )
@@ -279,7 +286,12 @@ export async function checkPins(
     // Fresh drift. The verdict rests on the repository's word alone; the description is for the
     // person who reads the audit row.
     const verdict = judgeDrift(entry.server, entry.tool, liveHash, approved);
-    const oldText = storedText(pin.pinned_text, pin.schema_hash);
+    // The earlier text, for the record only: the kept one when it hashes to the pin, else the
+    // manifest's own text when THAT hashes to the pin (a pin from before 2026-10-01 kept none).
+    const key = `${entry.server} ${entry.tool}`;
+    const oldText =
+      storedText(pin.pinned_text, pin.schema_hash) ??
+      (approved.hashes.get(key) === pin.schema_hash ? (approved.texts?.get(key) ?? null) : null);
     const description = describeDrift(oldText, entry);
     const applied = await db.transaction().execute(async (trx) => {
       // Lock the row and act only if it is still the pin that was judged: same approved hash, not
@@ -329,7 +341,16 @@ export async function checkPins(
         })
         .returning("id")
         .executeTakeFirstOrThrow();
-      await raisePinAlert(trx, clean ? "repinned" : "quarantined", entry, liveHash, Number(audit.id), verdict, description);
+      await raisePinAlert(
+        trx,
+        clean ? "repinned" : "quarantined",
+        entry,
+        liveHash,
+        Number(audit.id),
+        verdict,
+        description,
+        oldText !== null,
+      );
       return true;
     });
     if (!applied) continue;

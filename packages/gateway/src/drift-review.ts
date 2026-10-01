@@ -32,6 +32,9 @@ export interface ApprovedCorpus {
   ownServers: ReadonlySet<string>;
   /** key `${server} ${tool}` → hash of the manifest's {description, inputSchema}. */
   hashes: ReadonlyMap<string, string>;
+  /** key `${server} ${tool}` → the manifest's text itself (it hashes to `hashes` under the same key).
+   *  Used only to SHOW an earlier text a pin no longer keeps; it never decides. */
+  texts?: ReadonlyMap<string, ToolText>;
 }
 
 export type DriftAuthority = "repository-source" | "tool-manifest";
@@ -82,13 +85,16 @@ export function approvedCorpus(
   hash: (t: ToolText) => string,
 ): ApprovedCorpus {
   const hashes = new Map<string, string>();
+  const texts = new Map<string, ToolText>();
   for (const e of entries) {
     if (ownServers.has(e.server)) continue;
-    const h = hash({ description: e.description, inputSchema: e.inputSchema });
+    const text = { description: e.description, inputSchema: e.inputSchema };
+    const h = hash(text);
     if (h !== e.schema_hash) continue;
     hashes.set(`${e.server} ${e.tool}`, h);
+    texts.set(`${e.server} ${e.tool}`, text);
   }
-  return { ownServers, hashes };
+  return { ownServers, hashes, texts };
 }
 
 /** Read the manifest file into entries. Missing or malformed → no entries (every external drift is

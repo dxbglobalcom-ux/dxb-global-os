@@ -106,6 +106,7 @@ describe("the pin check's alerts, on the CEO's own screen", () => {
       localizeAlertDetail(UPDATED_CAUSE, "tr")!,
       localizeAlertDetail(UPDATED_ACTION, "tr")!,
       localizeAlertDetail("tool pins", "tr")!,
+      localizeAlertDetail("Nothing to do; the new text is kept in audit record 4213 (no earlier text was kept)", "tr")!,
       localizeAlertDetail(
         "The new text is neither the approved one nor the one the repository's tool manifest carries. Signals: none",
         "tr",
@@ -117,7 +118,8 @@ describe("the pin check's alerts, on the CEO's own screen", () => {
     expect(lines[2]).toContain("4211 numaralı denetim kaydında");
     expect(lines[3]).toContain("kilit gerekmedi: scrapling/get");
     expect(lines[5]).toContain("4212 numaralı denetim kaydında");
-    expect(lines[7]).toContain("Önce bakılacaklar: yok");
+    expect(lines[7]).toContain("4213 numaralı denetim kaydında");
+    expect(lines[8]).toContain("Önce bakılacaklar: yok");
   });
 
   it("leaves the English record untouched on the English screen", () => {
