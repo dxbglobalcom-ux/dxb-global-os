@@ -86,8 +86,14 @@ case "${1:-}" in
         --skip-git-repo-check|--ephemeral|--json) OPTS+=("$1"); shift ;;
         -C|--cd|--color|-o|--output-last-message|--output-schema|-i|--image)
           [ $# -ge 2 ] || { echo "REFUTER_FAIL: $1 takes a value." >&2; exit 1; }
-          OPTS+=("$1" "$2"); shift 2 ;;
+          # Forwarded bound as --long=value, so Codex can never read the value as an option of
+          # its own (Sol's re-check: `-o --config=…` reached Codex as a --config).
+          case "$1" in -C) long=--cd ;; -o) long=--output-last-message ;; -i) long=--image ;; *) long="$1" ;; esac
+          OPTS+=("$long=$2"); shift 2 ;;
         --cd=*|--color=*|--output-last-message=*|--output-schema=*|--image=*) OPTS+=("$1"); shift ;;
+        --) [ $# -ge 2 ] && [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: '--' must be followed by the one prompt." >&2; exit 1; }
+            PROMPT_ARG="$2"; HAVE_PROMPT=1; shift 2
+            [ $# -eq 0 ] || { echo "REFUTER_FAIL: nothing may follow the prompt after '--'." >&2; exit 1; } ;;
         -) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given." >&2; exit 1; }
            PROMPT_ARG="-"; HAVE_PROMPT=1; shift ;;
         -*) echo "REFUTER_FAIL: '$1' is not passed to the auditor — only -C/--cd, --skip-git-repo-check, --ephemeral, --json, --color, -o/--output-last-message, --output-schema and -i/--image are; the effort, model, sandbox and servers are fixed by the card and the profile." >&2
@@ -226,7 +232,12 @@ fi
 # The card goes in front of the brief (the prompt argument, or stdin for "-").
 BLOCK="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).brief))'; printf x)"
 BLOCK="${BLOCK%x}"
-if [ "$PROMPT_ARG" = "-" ]; then PROMPT="$BLOCK$(cat; printf x)"; PROMPT="${PROMPT%x}"; else PROMPT="$BLOCK$PROMPT_ARG"; fi
+if [ "$PROMPT_ARG" = "-" ]; then BRIEF="$(cat; printf x)"; BRIEF="${BRIEF%x}"; else BRIEF="$PROMPT_ARG"; fi
+if [ -z "${BRIEF//[[:space:]]/}" ]; then
+  echo "REFUTER_FAIL: the brief is empty — give the auditor a claim and where to measure it." >&2
+  exit 1
+fi
+PROMPT="$BLOCK$BRIEF"
 
 LOG_DIR="$HOME/.local/state/dxb"; mkdir -p "$LOG_DIR"
 printf '%s\t%s\t%s\t%s\n' "$(date -Iseconds)" "$(sha256sum "$CARD" | cut -c1-16)" "$CARD" \

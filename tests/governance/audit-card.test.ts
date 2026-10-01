@@ -137,7 +137,7 @@ describe("refuter.sh holds the gate", () => {
   writeFileSync(join(bin, "codex"), `#!/usr/bin/env bash
 case " $* " in
   *" mcp list "*) echo '[{"name":"dxbdb","enabled":true}]' ;;
-  *" exec "*) for a in "$@"; do case "$a" in model_reasoning_effort=*) echo "EFFORT_ARG $a";; --json) echo "--json";; esac; done
+  *" exec "*) for a in "$@"; do case "$a" in model_reasoning_effort=*) echo "EFFORT_ARG $a";; --json) echo "--json";; esac; echo "ARG $a" | head -1; done
               echo "PROMPT_BEGIN"; printf '%s\\n' "\${@: -1}"; echo "PROMPT_END" ;;
 esac
 `);
@@ -196,6 +196,25 @@ esac
     const two = run("--card", card(axes(2, 2, 2, 1)), "one", "two");
     expect(two.status).toBe(1);
     expect(two.stderr).toMatch(/more than one prompt/);
+  });
+
+  it("binds an option's value to it, so a value that looks like an option never reaches Codex as one", () => {
+    const r = run("--card", card(axes(2, 2, 2, 1)), "-o", '--config=model_reasoning_effort="medium"', "audit this");
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stdout).toContain('ARG --output-last-message=--config=model_reasoning_effort="medium"');
+    expect(r.stdout).not.toMatch(/^ARG --config/m);
+    expect(r.stdout).toContain('EFFORT_ARG model_reasoning_effort="xhigh"');
+  });
+
+  it("takes the prompt after '--', and refuses an empty brief", () => {
+    const r = run("--card", card(axes(2, 2, 2, 1)), "--json", "--", "-a brief that starts with a dash");
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stdout).toContain("-a brief that starts with a dash");
+    for (const empty of [[""], ["   "]]) {
+      const e = run("--card", card(axes(2, 2, 2, 1)), ...empty);
+      expect(e.status).toBe(1);
+      expect(e.stderr).toMatch(/the brief is empty/);
+    }
   });
 
   it("reads the brief from stdin when the prompt is '-'", () => {
