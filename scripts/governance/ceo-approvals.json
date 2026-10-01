@@ -1746,5 +1746,13 @@
     "conditions": "He asked for it to be written into the rule file. The two history clauses beside it in §2 (the report door's deletion, the code-gate's removal) were cut to keep the core under its 13,000-byte ruler; both stay registered here (ceo-report-door-deleted-2026-09-26, code-gate-removed-2026-09-28).",
     "session": "Opus 5.5 session cd2a0e9d — heard first-hand, 2026-10-01.",
     "where": ".claude/CLAUDE.md §2"
+  },
+  "auditor-sol-6-1-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "The auditor seat moves from gpt-6-sol to gpt-6.1-sol, after the auditor exam on job 1's first diff (.planning/quick/20261001-auditor-exam/RESULT.md): Sol 6.1 at high and xhigh found the blocking defect and two more real ones; Sonnet 5.5 is not seated (at max it let the job pass). Codex CLI upgraded 0.155.1 → 0.159.3 for the model. He also left the EXPLAIN escape found in the exam as it is, and left the board-row approval rule unchanged.",
+    "verbatim": "bence onay işi kalsın olduğu gibi boşver. 3. şıkla iligli. denetçi 6.1 olsun tmm 2.kusur kalsın no prblem.çok ciddi bişey değil.",
+    "conditions": "Critical work stays at xhigh; the floor stays normal.",
+    "session": "Opus 5.5 session cd2a0e9d — heard first-hand, 2026-10-01.",
+    "where": "scripts/governance/codex-refuter.config.toml · refuter.sh · dxb-team2 §2 · dxb-verify · model-routing-hierarchy.md · MODEL_ROUTING_SPEC.md · ~/.claude/CLAUDE.md"
   }
 }

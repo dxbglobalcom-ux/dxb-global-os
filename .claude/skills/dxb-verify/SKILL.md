@@ -82,7 +82,7 @@ violation of the same tier as an invented number.
 An independent agent is handed a **claim plus where to measure it** — never the author's
 conclusion — and told to **refute** it. It is read-only **by tool**, never by promise: a Claude
 agent limited to reading and searching, or the Codex refuter — launched **only** through
-`scripts/governance/refuter.sh` (gpt-6-sol; the effort is routed from the job's score card — no audit starts without `--card`, an `--effort` may raise it, never lower it — `audit-card.mjs`, 2026-10-01), which
+`scripts/governance/refuter.sh` (gpt-6.1-sol; the effort is routed from the job's score card — no audit starts without `--card`, an `--effort` may raise it, never lower it — `audit-card.mjs`, 2026-10-01), which
 pins the read-only profile and refuses to run without it. Calling `codex` directly for an audit
 puts the promise back and takes the tool away: the base config runs unrestricted, measured
 2026-08-16. `refuter.sh --proof` re-prints the evidence that it cannot write. It may run

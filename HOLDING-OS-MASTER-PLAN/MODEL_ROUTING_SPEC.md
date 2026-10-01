@@ -364,8 +364,8 @@ came from waste: parallel re-reads, a fresh `max` writer per fix, subagent cache
 minutes). The canonical table is `.claude/skills/dxb-team2/SKILL.md` §2.
 
 1. **Seats.** Lead = the session (model and effort the CEO's choice; `high` measured best) — scores
-   the job 0-8, writes the done-list, writes and fixes the code itself · auditor = GPT-6 Sol through
-   `scripts/governance/refuter.sh --effort`, blind and read-only by tool, one pass on every job ·
+   the job 0-8, writes the done-list, writes and fixes the code itself · auditor = GPT-6.1 Sol (2026-10-01) through
+   `scripts/governance/refuter.sh --card`, blind and read-only by tool, one pass on every job ·
    Fable 5.1 = the architecture of a critical job and the ruling on a dispute no test can settle ·
    `builder` (`claude-opus-5-5` · `max`) only after a piece failed twice at `high`.
 2. **Effort.** Code at the lead's level; Opus `xhigh` never writes code (FrontierCode 51.4 %, the

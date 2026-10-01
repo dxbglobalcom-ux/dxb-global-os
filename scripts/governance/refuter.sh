@@ -11,8 +11,8 @@
 # to be the one way the refuter is launched. Never call `codex` directly for an
 # audit.
 #
-# The auditor is gpt-6-sol (CEO 2026-09-28, replacing the gpt-5.6-sol / gpt-5.5
-# modes); the lead picks its effort per job from the job's score card.
+# The auditor is gpt-6.1-sol (CEO 2026-10-01, after the auditor exam; gpt-6-sol
+# before it); its effort is routed from the job's score card.
 #
 # Usage:
 #   scripts/governance/refuter.sh --card CARD.md "<claim + where to measure it>"          # effort from the card

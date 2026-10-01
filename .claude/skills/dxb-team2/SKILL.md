@@ -1,6 +1,6 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, writes and fixes the code itself; a fresh, blind, read-only GPT-6 Sol auditor checks every job at a depth set by its score; Fable 5.1 drafts the architecture of a critical job and settles a disagreement; nothing technical is ever sent to the CEO as a question. Trigger `/dxb-team2 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, writes and fixes the code itself; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job at a depth set by its score; Fable 5.1 drafts the architecture of a critical job and settles a disagreement; nothing technical is ever sent to the CEO as a question. Trigger `/dxb-team2 <the job in one sentence>`.
 ---
 
 # The team — one lead who builds, one blind auditor, Fable for architecture
@@ -45,7 +45,7 @@ it opens `dxb-verify` and `dxb-close-row`.
 | Seat | Who | Does | Never |
 |---|---|---|---|
 | **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot) | scores the job, writes the done-list, writes the code, fixes every finding, runs the tests, the battery, commits, reports | approves its own work; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
-| **Auditor** | GPT-6 Sol through `scripts/governance/refuter.sh --effort <level>` — read-only by tool | one blind pass per job (§5); re-checks a fixed finding and what the fix touched | writes; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
+| **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> through `scripts/governance/refuter.sh --card <file>` — read-only by tool | one blind pass per job (§5); re-checks a fixed finding and what the fix touched | writes; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
 | **Architect / advisor** | Fable 5.1, one call | drafts or challenges the architecture of a critical job; rules on a disagreement no test can settle | writes code; is asked routine steps |
 | **Reader** | a one-shot subagent (`scout`, or `Explore`) | a wide search or read whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot, description `guarded:` when the path is guarded | only after the same piece failed twice at the lead's level | is opened for a routine fix |

@@ -13,9 +13,10 @@
 # The base config is left alone on purpose — it serves the CEO's other projects,
 # and disarming those was not what he approved.
 
-# CEO 2026-09-28: the auditor moves to gpt-6-sol; the effort is chosen per job
-# (refuter.sh --effort medium|high|xhigh), high when none is given.
-model = "gpt-6-sol"
+# CEO 2026-10-01: the auditor moves to gpt-6.1-sol ("denetçi 6.1 olsun tmm"), after the exam in
+# .planning/quick/20261001-auditor-exam/RESULT.md; the effort is routed from the job's score card
+# (scripts/governance/audit-card.mjs).
+model = "gpt-6.1-sol"
 model_reasoning_effort = "high"
 
 # The two lines that matter.
