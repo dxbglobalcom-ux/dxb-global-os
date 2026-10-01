@@ -1,0 +1,122 @@
+Every finding below is measured against cf95 (`635e32bc..cf95b743`). The `sql_read` tool that answered me showed cf95 behaviour: the cut marker says "chars", and a 20 MB cell was not stopped before the cut. I ran no test suites and saw no raw logs.
+
+Raw logs were not available to me, so every item that only a log can prove is marked UNVERIFIED with the log that would prove it.
+
+**Claim / done-list item: The CEO's sentence ("the auditor queries the construction engine itself, never the company's database") — does the done-list prove it?**
+Verdict: STANDS AFTER ATTEMPTED REFUTATION, with three holes in the exam, each reported below as its own finding.
+Finding: The exam proves the intent in structure: the identity triple is checked on the connection that runs the query (`sol-db-mcp.mjs:163-175`, `sol-reader-role.sql:38-56`), and test 7 poisons the ledger file instead of relying on the port. The holes are:
+- Item 8 can pass with a broken login.
+- No item tries the standing guarantee "no effectful function anywhere" after a later migration.
+- Resource exhaustion has no item at all; the only large-cell test is 1 MB (test 6), well under the amounts that matter.
+Evidence: done-list rows 1–15 against `tests/governance/sol-db-reach.test.ts`, which has no EXPLAIN-option, wire-size or drift case.
+Correction required: Add those three exam items.
+
+**Claim / done-list items 2 and 4: the role wall (no write verb, sequence, TEMP, CREATE, or effectful or SECURITY DEFINER function)**
+Verdict: STANDS AFTER ATTEMPTED REFUTATION, as a point-in-time measurement.
+Finding: I could not make the role write. Item 2's psql write attempts are UNVERIFIED because they need the item-2 psql log. The privilege measurements agree with them:
+- Role `sol_reader`: super, createrole, createdb and inherit all false, bypassrls true, connection limit 3. It belongs to no other role, has no TEMPORARY or CREATE on the database, and has no CREATE on any schema.
+- Write verbs: zero on any non-catalog table, view or foreign table, and no INSERT, UPDATE or REFERENCES at column level. The one exception is `pg_catalog.pg_settings` UPDATE, which is PostgreSQL's stock grant and equivalent to `set_config`.
+- Sequences: zero. The only schemas with USAGE are `public`, `pgboss`, `extensions`, `supabase_migrations`, `pg_catalog` and `information_schema`.
+- `net`, `auth`, `vault`, `storage`, `dxb_internal` and `graphql*` all return USAGE false.
+- Functions it can execute: zero that are SECURITY DEFINER; zero matching the window's own `c_effectful` predicate (lo_*, pg_advisory*, pg_notify, pg_logical_emit_message, pg_read_file, pg_ls_dir, pg_terminate_backend, pg_stat_reset and the rest).
+- I ran `TABLE pg_authid` and got "permission denied". `set_config('transaction_read_only','off',true)` returned "must be set before any query".
+- `pgboss.create_queue`, `delete_queue` and `job_table_run` (arbitrary `EXECUTE`) are executable but not on the window's list. They are bounded only by the missing CREATE and ownership, so they do not break the claim today.
+Evidence: sql_read calls 4, 5, 7, 8, 21, 22, 24 and 25. Call 25 returned `secdef_exec=0, effectful_exec=0`. Call 24 returned `tmp=f, cr=f, memberof=null`.
+Correction required: None. Item 2's psql output (the psql log) is still owed.
+
+**Claim / done-list item 5 (R2): BYPASSRLS so RLS tables do not read as empty**
+Verdict: UNVERIFIED for the equality half; STANDS for the bypass.
+Finding: `public.control_idempotency` has RLS on and zero policies, so a non-bypass role would see 0 rows. `sol_reader` sees 1342. `audit_log` returns 1795, matching its planner estimate. I cannot read the `supabase_admin` side, so "equal to supabase_admin" is unmeasured by me.
+Evidence: sql_read calls 28 and 29. The proof would be the author's side-by-side count log (item 5).
+Correction required: None, unless the equality log is missing.
+
+**Claim: "SELECT / WITH / TABLE / VALUES run through a cursor; EXPLAIN never ANALYZE, in any spelling; one read"** (`sol-db-mcp.mjs:97-103`, `DONE-LIST.md` item 3, `00-CEO-DIRECTIVE-AUDIT-TWIN.md` §3)
+Verdict: REFUTED
+Finding: `classify` refuses EXPLAIN only when the literal text `analy[sz]e` appears (`sol-db-mcp.mjs:101`). PostgreSQL decodes Unicode-escaped identifiers before it reads option names, so `EXPLAIN (U&"analy\007Ae") SELECT …` has no match in the regex and executes the statement. That breaks the done-list's own "any spelling" claim. Impact is bounded: only the role's privileges and the READ ONLY transaction limit what runs. It is still a statement executed outside the cursor path, with no 200-row fetch, on a tool whose documented rule says it never executes.
+Evidence:
+- sql_read `EXPLAIN (U&"analy\007Ae") SELECT pg_sleep(0.01)` returned `(actual time=10.054..10.055 …)` and `Execution Time: 10.060 ms`.
+- The plain `EXPLAIN (ANALYZE) SELECT 1` was refused, so only the escape slips through.
+- Offline, `m.classify('EXPLAIN (U&"analy\007Ae") SELECT 1')` returns `{mode:"plain"}` with no refusal.
+- The tool log shows `EXPLAIN (U&"\0061nalyze" true) SELECT 1` was accepted earlier on 2026-10-01.
+Correction required: B. Allow-list the EXPLAIN options instead (accept only `COSTS`, `VERBOSE`, `FORMAT` and similar, and refuse the rest), or refuse any `U&`, quoted or non-ASCII byte inside an EXPLAIN option list. Add test 4 cases for the escape.
+
+**Claim / done-list item 3: caps of "4 KB per cell, 64 KB per answer, 200 rows"** (`sol-db-mcp.mjs:140-144, 199-204, 186`)
+Verdict: REFUTED
+Finding: The caps are applied in the tool's own process after PostgreSQL has already sent everything, and they count characters, not bytes. `FETCH 201` pulls up to 201 full rows into a Node string before any cut, so one query such as `SELECT repeat('x',1e8) FROM generate_series(1,201)` means about 20 GB arriving in Sol's tool process. That can kill the MCP server or the host, which `x230-freeze-swap-orphans` says already has memory limits. The only bound is the 10 s timeout. Separately, `s.length` and `text.length` count UTF-16 units, so a 4096-character cell of 4-byte characters is about 16 KB. The "64 KB" answer can reach about 256 KB.
+Evidence:
+- sql_read `SELECT repeat('x', 20000000)` returned the full-width cut marker `[cut at 4096 of 20000000 chars]`, so all 20 MB crossed the wire and was decoded first.
+- Test 6 only uses a 1 MB cell and `generate_series(1,10000)`, so no exhaustion item exists.
+- The main checkout's later commits (`3c8517d7`, `f73c5d4a`, `f193f852`, `79b2b40b`) add byte caps and a 16 MB wire guard. They are not in this diff and I did not audit them.
+Correction required: B, and it is already repaired in later commits. Bound the transfer itself (wire guard) and count bytes. Add an exhaustion test, for example 201 rows of a 5 MB cell.
+
+**Claim: statement timeout of 10 s is a hard cap**
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: I tried to switch the timeout off from inside the query with `set_config('statement_timeout','0',true)` followed by a 12 s sleep in a later batch. In cf95's single `FETCH 201` this fails. Memory and `work_mem` are not bounded, only time. A query can `set_config('work_mem','2GB',true)` and spend 10 s on a big hash or sort. That is a design gap, not a regression.
+Evidence: sql_read call 15 returned `canceling statement due to statement timeout`.
+Correction required: C, board. No `work_mem` or `max_parallel_workers` ceiling on the role. If the later batched `FETCH 25` form is kept, repeat this probe against it.
+
+**Claim: the identity triple guards the company, in the role script and the tool (items 1, 1b, 7, 11)**
+Verdict: STANDS AFTER ATTEMPTED REFUTATION for the code; items 1b and 11 UNVERIFIED.
+Finding:
+- The triple is read on the same connection as the work (`sol-reader-role.sql:38-56`, `sol-db-mcp.mjs:163-175`).
+- It is checked against both the company entry and the allow-list, so a company rebuild with a stale ledger is still refused by the allow-list.
+- The credential is pinned to 127.0.0.1:54422 (`:134`).
+- The live answers echo `7690665340837392423/5/postgres`, which matches `ledger-identity.json` `allowed[0]` and is not company `7674907968528752679`.
+- I cannot reach the company engine. Whether `sol_reader` is absent there and the row counts are unchanged (items 1b and 11) is therefore unmeasured.
+Evidence: any sql_read call identity line; `tools/hooks/ledger-identity.json`.
+Correction required: None. The logs that would prove 1b and 11 are the `DXB_SOL_CONTAINER=supabase_db_DxB_Global_OS bash sol-reader-role.sh` output and the `company-untouched.mjs` before and after output.
+
+**Claim / done-list item 8 (R7): `refuter.sh --proof` prints `DB_WRITE_REFUSED` ×3, so the role refuses writes**
+Verdict: REFUTED
+Finding: `refuter.sh:141` counts any `isError` result that is not "engine busy" as `DB_WRITE_REFUSED`. Write attempt #1 is refused by the classifier before any connection. Attempts #2 and #3 count as refused when the tool fails to log in (wrong credential, wrong user), because the error is `isError` text. So a broken login would also print three REFUSED lines and pass `:145`. The proof does not prove the role is the wall.
+Evidence: `refuter.sh:141,145`. Commit `3c8517d7` is titled "a proof that cannot pass on a failed login", which confirms the author found the same hole later.
+Correction required: B, repaired later. Require the refusal text to match PostgreSQL's own (`permission denied` or `read-only transaction`) and require a success probe (`select 1` returns `sol_reader`) in the same run.
+
+**Claim: "the standing property": the role holds no effectful or SECURITY DEFINER function "anywhere"** (`DONE-LIST.md` item 4; `00-CEO-DIRECTIVE-AUDIT-TWIN.md` §3)
+Verdict: REFUTED
+Finding: The guarantee holds only at the moment `sol-reader-role.sh` last ran. After that, nothing at call time re-checks it, and there is a gap in the default privileges for new functions.
+- `pg_default_acl` has function rows only for `supabase_admin` in `extensions`, and none for `postgres` in `extensions`.
+- There is no function row at all for `supabase_migrations`, for either creator.
+- A migration run as `postgres` that creates a SECURITY DEFINER or effectful function in `extensions` or `supabase_migrations` is born PUBLIC-executable. `sol_reader` can then call it as that function's owner.
+- `public` and `pgboss` are guarded by the window's default ACLs.
+Evidence: sql_read call 5 (default ACLs). Offline, `sol-db-mcp.mjs:146-212` runs no per-call function check.
+Correction required: B, repaired in the main checkout by `3c8517d7` and `10e579a1`. That is the later drift guard, which I did not audit.
+
+**Claim: R5 and test 9: "the tool refuses while the battery holds the bench"** (`sol-db-mcp.mjs:55, 110-123`)
+Verdict: UNVERIFIED
+Finding: The tool looks for the battery lock at `${TMPDIR:-/tmp}/dxb-construction-battery.lock`. The battery (`battery.sh:30`, `run.sh:37`) and `tests/global-teardown.ts:71` use the same expression, but each process uses its own `TMPDIR`. Test 9 uses a private temporary path, so it never checks that a real battery run and Codex's tool agree on the path. If the author's session has `TMPDIR` set (Claude Code sessions often do) and Codex does not, the lock is invisible and Sol reads a bench the battery is rewriting. The lock file is not present now, so I cannot measure it. `run.sh:37`'s own comment says `/tmp` is a fresh tmpfs inside the sandbox wall.
+Evidence: `grep -rn "dxb-construction-battery.lock"` over the repository.
+Correction required: B if the path differs. The log that would prove it is `battery.log` plus a `sql_read` call made during that run showing "engine busy".
+
+**Claim: R9 / item 12, the from-scratch rebuild leaves the role with its grants and the window**
+Verdict: STANDS AFTER ATTEMPTED REFUTATION on the resulting state; the rebuild sequence itself is UNVERIFIED.
+Finding: The engine's current state matches the commit's numbers: `supabase_migrations` has 170 rows, `agents` 219, `tool_pins` 76, and 62 of 62 public tables are readable. The cluster id is `…2423`, matching the ledger. Item 6 (the window re-applied inside BEGIN/ROLLBACK keeps `sol_reader` at zero) is UNVERIFIED; the code reading is sound (`company-one-way-window.sql` `c_windows` is applied at every re-grant, and the installer fails if `sol_reader` gains).
+Evidence: sql_read call 27. The proof would be the rebuild transcript and the item 6 `ROLLBACK` output.
+Correction required: None.
+
+**Claim: items 7, 9, 10, 14 (live Sol, absent path, inventory, battery)**
+Verdict: UNVERIFIED
+Finding: These can only be proven by logs I was not given:
+- Item 7 needs the `codex -p refuter mcp list --json` output.
+- Item 9 needs the Sol rollout showing a completed `sql_read` and a count equal to the lead's psql count.
+- Item 10 needs the `refuter.sh` output with the probe aimed at a dead port.
+- Item 14 needs `battery.log`; the claim is "1 failed | 997 passed", with the one red pre-existing in `tests/r43/arsenal.test.ts`.
+- Item 13 is partly measured: `sync-codex-mirror.sh --check` printed `SYNC_OK`.
+Evidence: `bash scripts/governance/sync-codex-mirror.sh --check` → `SYNC_OK mirror matches source`.
+Correction required: None. Hand over those four logs.
+
+**Claim (R6): "the tool's own log is the only write"** (`sol-db-mcp.mjs:214-219`)
+Verdict: REFUTED
+Finding: Sol controls the content, and the size is unbounded, because the full query text is appended to the log. The log was already 350 KB with entries up to 80 KB. It is mode 600 and rotation does not exist, so a looping model can fill the disk.
+Evidence: `~/.local/state/dxb/sol-db-mcp.log` has 233 entries; the longest query is 80,405 characters.
+Correction required: B. Truncate the logged `query` to about 4 KB and cap the file size.
+
+**Claim: "credential readable by the sandbox, harmless without sockets" (`PLAN.md` Design 3)**
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: A password for a role that cannot reach any socket from the sandbox is harmless, and the role is read-only anyway. The same directory also holds `.env`, `.env.daemon`, `company-gateway.env` and `apps_dashboard_.env.local`. I did not read them, only listed them. That is not part of this job. Whether Codex's sandbox exposes `~/.config/dxb` I cannot measure from my view.
+Evidence: `ls -la ~/.config/dxb` (names and modes only).
+Correction required: C, board. Check whether the refuter sandbox can read `company-gateway.env` and the other company credentials.
+
+**Note, not a finding:** `codex-refuter.config.toml:60` points the tool at the main checkout path, so what Sol runs is whatever is on main, not the audited worktree (main's file already differs from cf95: sha 06fc… against 3b08…). That is how it is wired, and it lets the exam read the tool from the commit under audit while a different file serves Sol. Class C. The profile is byte-identical to the tracked source (`cmp` returned IDENTICAL).
+
+**OVERALL: BLOCKS** — no Class A finding. Five Class B findings must be repaired in this pass: the EXPLAIN escape, the caps and wire budget, the `--proof` login hole, the standing-guarantee drift, and the unbounded log. The lock-path check (TMPDIR) stays a B-if-it-fails until a battery run shows "engine busy". The author's later commits `3c8517d7` through `79b2b40b` appear to address most of these, but they are outside this diff and I did not audit them. Class C items for the board: no memory or `work_mem` ceiling on the role, and the sandbox's view of the other credentials in `~/.config/dxb`. sql_read calls: 29.

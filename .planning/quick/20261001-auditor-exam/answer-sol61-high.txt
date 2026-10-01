@@ -1,0 +1,157 @@
+codex
+Claim / done-list item: The done-list proves the CEO’s requested independent, read-only construction-database access.
+Verdict: REFUTED
+Finding: **A — blocks.** `tests/governance/sol-db-reach.test.ts:89` tests literal ANALYZE spellings; `:112` tests an ASCII cell. These checks miss an execution-filter escape, broken byte limits, and changes to function privileges after installation.
+Evidence: Independent calls returned an executed plan for Unicode-escaped ANALYZE, a 12,321-byte cell, and a 184,646-byte answer. Details follow.
+Correction required: Expand the exam to cover escaped option names, UTF-8 byte limits, oversized column metadata, transport limits, and privilege drift.
+
+Claim / done-list item: 1 — Installer succeeds twice and is idempotent.
+Verdict: UNVERIFIED
+Finding: `scripts/governance/sol-reader-role.sh:99` changes the database. Running it is prohibited in this audit. Reading its normalization logic does not prove two successful installations.
+Evidence: The live role exists with the expected attributes; no raw installer output was supplied.
+Correction required: Supply complete output and exit statuses from both installation runs.
+
+Claim / done-list item: 1b — Installer refuses the company engine; the company has no `sol_reader`.
+Verdict: UNVERIFIED
+Finding: `scripts/governance/sol-reader-role.sh:45` contains a refusal guard, but company role absence and the historical refusal were not independently observable through the permitted construction-only tool.
+Evidence: The installer and company role-absence logs are unavailable. No company connection was attempted.
+Correction required: Supply the original refusal output and company role-absence query result.
+
+Claim / done-list item: R1 — The company’s cluster identity is always refused.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/sol-db-mcp.mjs:170`, `sol-reader-role.sql:46`, and `sol-reader-role.sh:45` compare the complete company triple. They do not categorically refuse its `sysid`, as Rev 3 requires. An allowed entry naming another database on that cluster passes.
+Evidence: An in-memory fake PostgreSQL transport, running the submitted tool without contacting any database, returned `ok:true` for `7674907968528752679/999/otherdb` when that triple appeared in `allowed[]`. The exact company triple and an unlisted construction database were refused.
+Correction required: Reject the company `sysid` independently of database OID/name, before consulting the allow-list. Apply this to both installer guards and the tool.
+
+Claim / done-list item: 2 — Every listed direct-psql write attempt fails, including after disabling default read-only mode.
+Verdict: UNVERIFIED
+Finding: `DONE-LIST.md:10` requires direct-psql trials. Tool-level refusals cannot prove that those historical trials occurred or that they reached the role’s privilege checks.
+Evidence: Independent tool calls refused INSERT, UPDATE, DELETE, CREATE, SELECT INTO, modifying WITH, large-object creation, advisory locking, sequence advancement, and `net.http_get`. The direct-psql trial log was not supplied.
+Correction required: Supply the complete direct-psql refusal log, including the read-only-disabled trial.
+
+Claim / done-list item: 2b — Direct psql permits COPY TO STDOUT; the tool refuses COPY.
+Verdict: UNVERIFIED
+Finding: `DONE-LIST.md:11` combines two execution paths. Only the tool path was independently exercised.
+Evidence: `sql_read("COPY (SELECT 1) TO STDOUT")` → `REFUSED: COPY is refused (use SELECT)`. No raw direct-psql COPY output was supplied.
+Correction required: Supply the direct-psql COPY result.
+
+Claim / done-list item: 3 — EXPLAIN ANALYZE is refused in every spelling.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/sol-db-mcp.mjs:101` searches the raw text with a regex. PostgreSQL decodes Unicode-escaped option identifiers after this check, allowing ANALYZE to execute.
+Evidence: `sql_read('EXPLAIN (U&"\0061nalyze" true) SELECT pg_sleep(1)')` succeeded and returned `actual time=1001.190..1001.191` and `Execution Time: 1001.198 ms`.
+Correction required: Validate decoded EXPLAIN options with a sound parser or reject option syntax that cannot be safely validated. Add this exact regression case.
+
+Claim / done-list item: R5 / item 3 — Cells and complete answers obey 4 KB and 64 KB limits.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** `scripts/governance/sol-db-mcp.mjs:143` and `:200` count JavaScript characters instead of UTF-8 bytes. The cut marker exceeds the cell budget, and oversized column metadata remains after all rows are removed.
+Evidence: `SELECT repeat('界',1000000) AS cell` returned a 12,321-byte cell. `SELECT repeat('界',4096) AS cell FROM generate_series(1,20)` returned a 184,646-byte answer claiming a 65,536-byte cap. A generated SELECT with 1,200 columns and 63-character aliases returned 79,444 bytes after removing every row.
+Correction required: Measure serialized UTF-8 bytes, include markers in the budgets, and refuse metadata that cannot fit.
+
+Claim / done-list item: The query limits protect the tool from oversized database results.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/sol-db-mcp.mjs:186` fetches 201 complete rows before applying cell or answer truncation. No received-byte limit exists. Large cells can exhaust the MCP process before truncation.
+Evidence: A read-only, in-memory transport probe of the submitted code handed it 201,000,000 bytes of cell content before truncation; the code subsequently returned a 62,260-byte answer. This demonstrates processing order, not a live out-of-memory event.
+Correction required: Bound received data before PostgreSQL’s parser assembles oversized results, and verify refusal plus server recovery.
+
+Claim / done-list item: 3 — The specified vitest file passed, including wrong identity and battery-busy trials.
+Verdict: UNVERIFIED
+Finding: `tests/governance/sol-db-reach.test.ts:127` and `:176` create fixtures and acquire locks. The suite cannot be run in this read-only audit.
+Evidence: Independent trials rejected four multi-statement smuggling variants; nested leading comments worked; 10,000 generated rows were capped at 200; `SELECT pg_sleep(20)` timed out after approximately 10,010 ms. The complete vitest output is unavailable.
+Correction required: Supply the raw test log. Passing it would not resolve the separately reproduced defects.
+
+Claim / done-list item: 4 — The current role has zero measured prohibited privileges.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: `scripts/governance/sol-reader-role.sql:115` matches the independently observed current privilege restrictions.
+Evidence: Catalog queries returned 175 effectful functions with zero executable; 93 SECURITY DEFINER functions with zero executable; 164 non-system relations with zero table write privileges; and 18 sequences with zero reachable sequence privileges. `SELECT datname, has_database_privilege('sol_reader',oid,'CONNECT'), has_database_privilege('sol_reader',oid,'CREATE'), has_database_privilege('sol_reader',oid,'TEMP') FROM pg_database` returned CREATE=false and TEMP=false for `postgres`. The schema query showed only the four permitted application schemas plus system catalogs usable, with no schema CREATE privilege.
+Correction required: None for these current measurements. They do not prove future privilege safety.
+
+Claim / done-list item: R3 — The submitted channel remains safe after functions are added.
+Verdict: REFUTED
+Finding: **A — blocks.** `scripts/governance/sol-db-mcp.mjs:177` proceeds from identity/read-only checks to the user statement without checking function privileges. The installer’s closing assertion runs only during installation. A subsequently callable privileged or outbound function can invalidate the role boundary without stopping the tool.
+Evidence: `SELECT r.rolname, acldefault('f',r.oid)::text AS built_in_function_default, (SELECT defaclacl::text FROM pg_default_acl d WHERE d.defaclrole=r.oid AND d.defaclnamespace=0 AND d.defaclobjtype='f') AS global_function_override FROM pg_roles r WHERE rolname IN ('postgres','supabase_admin')` returned PUBLIC EXECUTE defaults and null global overrides for both owners. The submitted-tool transport probe issued zero privilege-check queries.
+Correction required: Make the channel refuse unsafe privilege drift before accepting user statements. Cover both function owners and all readable schemas.
+
+Claim / done-list item: The existing window prevents PUBLIC execution of future functions.
+Verdict: REFUTED
+Finding: **C — older than this work; belongs on the board.** `scripts/b36/company-one-way-window.sql:461` uses schema-specific default revocation. Such defaults cannot subtract PostgreSQL’s global PUBLIC EXECUTE default. This mechanism predates the audited diff.
+Evidence: The preceding catalog query returned `{=X/postgres,postgres=X/postgres}` and `{=X/supabase_admin,supabase_admin=X/supabase_admin}`, with no global function override. `git diff 635e32bc..HEAD` shows the schema-specific revocation syntax was retained.
+Correction required: Register and repair the older default-privilege defect. This job must also close its new channel’s exposure to that defect.
+
+Claim / done-list item: 5 — Three RLS table counts equal the administrator’s counts and are nonzero.
+Verdict: UNVERIFIED
+Finding: `DONE-LIST.md:14` requires an administrator comparison. This tool cannot impersonate that administrator, and the comparison log is unavailable.
+Evidence: The combined count/RLS query returned agents=219, companies=1, departments=22, with RLS=true for all three. The role query returned BYPASSRLS=true and zero memberships.
+Correction required: Supply the administrator’s corresponding query results.
+
+Claim / done-list item: 6 — Reapplying the window never returns effectful privileges to `sol_reader`.
+Verdict: UNVERIFIED
+Finding: `company-one-way-window.sql:139` introduces `c_windows`, and the changed regrant loops exclude `sol_reader`. Executing the specified transactional reapplication still requires prohibited database writes.
+Evidence: Diff inspection confirms the exclusions. No raw reapplication output or privilege comparison was supplied.
+Correction required: Supply the rolled-back reapplication log and before/after privilege measurements.
+
+Claim / done-list item: 7 — Exactly one MCP server is enabled; the specified feature command proves other capabilities disabled.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** `DONE-LIST.md:16` names an unsupported command: the installed Codex rejects `-p refuter` for `features list`.
+Evidence: `codex -p refuter mcp list --json` reported only `dxbdb` enabled. `codex -p refuter features list` failed with `--profile only applies to runtime commands and codex mcp…`. Installed and tracked profiles had identical SHA-256: `718bb575a6156724900406efbc4d4c4c7d9e9acc1e363d62e142ced62c4de5f6`.
+Correction required: Replace the feature check with a supported measurement of the effective runtime configuration and tool inventory.
+
+Claim / done-list item: 8 — `--proof` establishes three genuine database write refusals.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** `scripts/governance/refuter.sh:141` treats every tool error except “engine busy” as a successful write refusal. Authentication failures can therefore produce green proof without reaching a write-permission check.
+Evidence: Running the exact verdict-parser logic against three synthetic authentication-error responses printed `DB_WRITE_REFUSED #1`, `#2`, and `#3`. The historical complete `--proof` output was not supplied.
+Correction required: Require a successful identity-checked control read and validate each expected refusal reason. Supply the full end-to-end proof log.
+
+Claim / done-list item: The running tool is demonstrably the submitted tool revision.
+Verdict: UNVERIFIED
+Finding: `scripts/governance/codex-refuter.config.toml:71` names the canonical repository path, while this audit targets a separate checkout. The files currently differ; this does not establish what the already-running process loaded.
+Evidence: Submitted tool SHA-256: `3b08482006ba9f65afb1d3c7986a2029aa22a0dd49d79af46bdb21a74da75af5`; canonical-path tool: `06fc5e586b5101913efadc45b26a0bba4b2f481437ebf99c3fca7c10390ec1cf`. Live truncation matches the submitted behavior.
+Correction required: Provide launch-time provenance tying the running MCP process to the audited artifact.
+
+Claim / done-list item: 9 — A medium-effort Sol rollout completed a count matching the author’s psql count.
+Verdict: UNVERIFIED
+Finding: `DONE-LIST.md:18` specifies a historical rollout and independent comparison. Neither artifact was supplied.
+Evidence: This audit successfully queried the allowed construction identity `7690665340837392423/5/postgres` as `sol_reader`, with transaction read-only=`on`, and independently observed agents=219. That proves current access, not the specified historical medium-effort run.
+Correction required: Supply that rollout and its corresponding raw psql count.
+
+Claim / done-list item: 10 — An audit still starts when the engine is absent.
+Verdict: UNVERIFIED
+Finding: `scripts/governance/refuter.sh:94` contains the disable-and-continue branch. Launching a separate audit or stopping the engine was not performed.
+Evidence: No absent-engine launch log or completed rollout was supplied.
+Correction required: Supply the dead-port trial’s complete launch output and rollout.
+
+Claim / done-list item: 11 — The company had no reader role and remained unchanged during trials.
+Verdict: UNVERIFIED
+Finding: `DONE-LIST.md:20` requires company observations surrounding items 8–10. The permitted tool cannot take those observations.
+Evidence: Company role-absence output and before/after snapshots are unavailable; construction counts cannot substitute for them.
+Correction required: Supply the original company query and timestamped snapshots surrounding those trials.
+
+Claim / done-list item: 12 — A from-scratch rebuild restored the role and grants.
+Verdict: UNVERIFIED
+Finding: `package.json:19` wires the installer into `construction:schema`, but wiring and current role existence do not prove a completed reset-and-rebuild.
+Evidence: `git log 635e32bc..HEAD` contains a rebuild claim in `cf95b743`; no raw reset, allow, schema, window, seed, or post-rebuild privilege log was supplied.
+Correction required: Supply the complete rebuild transcript and closing measurements.
+
+Claim / done-list item: 13 — Mirror, ledger, and hooks/governance tests passed.
+Verdict: UNVERIFIED
+Finding: The prescribed mirror script creates temporary files; ledger verification reaches the company; tests write. Those commands were not run.
+Evidence: An independent in-memory mirror comparison passed for 94 files and the root carrier. `git diff --check`, JavaScript syntax checks, and shell syntax checks passed. Ledger and test raw outputs are unavailable.
+Correction required: Supply their complete logs; retain the independently confirmed mirror parity.
+
+Claim / done-list item: 14 — The battery ran once with only the identified older failure.
+Verdict: UNVERIFIED
+Finding: `DONE-LIST.md:23` requires battery execution evidence. Commit prose does not prove the failure set or number of runs.
+Evidence: `battery.log` is unavailable, and the write-capable battery was not run.
+Correction required: Supply complete battery output and run-boundary evidence.
+
+Claim / done-list item: 15 — Blind high and xhigh audits were compared on the finished diff.
+Verdict: UNVERIFIED
+Finding: `DONE-LIST.md:24` requires both audit artifacts, timing, false-alarm accounting, and Plus usage measurements.
+Evidence: Those raw artifacts were not supplied. Commit statements and the session handoff cannot replace them.
+Correction required: Supply both exact-diff audit records and the associated timing/usage evidence.
+
+Claim / done-list item: This audit left the monitored construction records unchanged.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: The audit exercised read and refusal paths without observed changes to the mandated counters.
+Evidence: Before and after, `SELECT (SELECT count(*) FROM public.audit_log) AS audit_log, (SELECT count(*) FROM public.tasks) AS tasks, (SELECT count(*) FROM public.opportunities) AS opportunities, (SELECT count(*) FROM public.agent_runs) AS agent_runs` yielded `1795, 14, 0, 1`. The closing connection check returned zero other `sol_reader` connections. Git status remained the existing untracked `packages/shared/node_modules`.
+Correction required: None for this audit’s measured noninterference.
+

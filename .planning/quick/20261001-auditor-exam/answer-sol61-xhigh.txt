@@ -1,0 +1,152 @@
+codex
+Claim / done-list item: Does the done-list prove the CEO’s requested read-only access?
+Verdict: REFUTED
+Finding: **A — blocks.** scripts/governance/sol-db-mcp.mjs:177 checks transaction mode but never rechecks dangerous function privileges. A later migration can expose a SECURITY DEFINER or outbound function through PUBLIC; the tool continues accepting queries. The done-list proves installation-time privileges, not this subsequent state.
+Evidence: sql_read #50 queried global function defaults using `aclexplode(COALESCE(pg_default_acl.defaclacl, acldefault('f', owner_oid)))`. Both owners retain PUBLIC EXECUTE, and sol_reader has schema USAGE, in all eight owner/schema combinations. scripts/governance/sol-reader-role.sql:126 checks privileges only during installation.
+Correction required: Refuse queries when dangerous function privileges drift. Add adversarial coverage for newly introduced functions in all four readable schemas.
+
+Claim / done-list item: 1 — successful, idempotent role installation.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:8 requires two installer runs. Running that installer would write; its historical raw output is unavailable.
+Evidence: sql_read #2 measured `sol_reader`, no superuser/createdb/createrole/replication/inheritance, BYPASSRLS enabled, zero memberships, connection limit 3, and the specified timeout settings.
+Correction required: Supply the complete raw log of both installer runs, including exit statuses and closing assertions.
+
+Claim / done-list item: 1b — company-container refusal and company role absence.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:9 requires company-engine measurements. This audit is forbidden from contacting that engine.
+Evidence: scripts/governance/sol-reader-role.sh:44–52 contains the identity refusal before installation; no company trial was attempted.
+Correction required: Supply the raw company-container refusal and company `pg_roles` absence outputs.
+
+Claim / done-list item: R1 — refuse the company’s sysid.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** scripts/governance/sol-db-mcp.mjs:170 and sol-reader-role.sql:46 compare the entire company triple. Another database on the company cluster passes that denial if its distinct triple enters allowed[].
+Evidence: The read-only identity calculation returned `same_company_sysid=True`, `company_refusal=False`, `allowed_acceptance=True` for company-cluster/77/otherdb versus company-cluster/5/postgres. PLAN.md:67 explicitly requires refusal of the company sysid.
+Correction required: Deny the company sysid independently of database OID/name in both guards; retain full-triple construction allowlisting.
+
+Claim / done-list item: 2 — direct psql write-route refusals.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:10 specifies direct role sessions, including switching default read-only off. MCP refusals cannot substitute for those sessions.
+Evidence: My tool calls refused INSERT, UPDATE, DELETE, CREATE, COPY, SET, SELECT INTO and modifying WITH. `SELECT lo_create(0)` returned permission denied; `SELECT pg_advisory_lock(912337)` returned permission denied; `SELECT nextval(...)` returned sequence permission denied; `SELECT net.http_get('http://127.0.0.1:9')` returned schema permission denied.
+Correction required: Supply the complete direct-psql refusal log, including the read-only-off attempt.
+
+Claim / done-list item: 2b — COPY TO succeeds directly but is refused by the tool.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:11 requires both execution paths. Only the tool path was measurable here.
+Evidence: sql_read #20, `COPY (SELECT 1) TO STDOUT` → `REFUSED: COPY is refused (use SELECT)`.
+Correction required: Supply the successful direct-psql COPY TO output.
+
+Claim / done-list item: 3 — EXPLAIN ANALYZE is always refused.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** scripts/governance/sol-db-mcp.mjs:101 searches the undecoded query text. PostgreSQL decodes Unicode identifiers afterward, bypassing the check.
+Evidence: sql_read #13, `EXPLAIN (U&"an\0061lyze" true) SELECT 42` → a plan containing `actual time`, `Planning Time`, and `Execution Time`. Importing the audited classifier classified that exact query as `mode: "plain"`.
+Correction required: Validate decoded EXPLAIN options, or restrict EXPLAIN to a safely parsed form. Add this regression case.
+
+Claim / done-list item: 3 / R5 — 4 KiB cells and 64 KiB answers.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** scripts/governance/sol-db-mcp.mjs:143 and :200 count JavaScript characters instead of UTF-8 bytes. Line 201 removes rows but cannot cap oversized column metadata.
+Evidence: sql_read #38, twelve columns each containing `repeat(chr(128512),1500)` → 6,000 bytes per cell and a 72,295-byte answer. sql_read #47, 1,100 NULL columns with 63-character aliases → 72,844 bytes despite dropping every row. sql_read #55, `SELECT repeat('x',20000000) AS cell` → a 4,128-character cell, including its truncation marker.
+Correction required: Enforce byte limits including markers and metadata; refuse responses whose metadata alone exceeds the budget.
+
+Claim / done-list item: 3 — remaining test-suite result and engine-busy refusal.
+Verdict: UNVERIFIED
+Finding: tests/governance/sol-db-reach.test.ts:176 creates a lock fixture; this writing test cannot run in the audit sandbox. The complete suite output is unavailable.
+Evidence: Independently measured: statement smuggling returned `cannot insert multiple commands into a prepared statement`; modifying WITH was refused; `SELECT pg_sleep(20)` timed out after 10,027 ms; `SELECT g FROM generate_series(1,10000) g` returned 200 rows with `row_cap_hit=true`. No running battery-lock trial was available.
+Correction required: Supply the complete sol-db-reach test output from battery.log, including the lock case.
+
+Claim / done-list item: 4 — current role privilege assertions.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: scripts/governance/sol-reader-role.sql:115 assertions match the current construction role. This verdict concerns current privileges.
+Evidence: sql_read #5 evaluated the window’s exact `c_effectful` predicate → 0 executable out of 175 functions; SECURITY DEFINER → 0 executable out of 93. sql_read #61 evaluated `has_table_privilege(...,'INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER,MAINTAIN')`, sequence privileges, schema CREATE and database CREATE/TEMPORARY → `0,0,0,false`. sql_read #6 measured outside-schema USAGE → 0. sql_read #7 found the eight expected default SELECT grants.
+Correction required: None for the measured current state; repair the drift finding above.
+
+Claim / done-list item: 5 — three RLS counts equal administrator counts.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:14 requires comparison with supabase_admin. This tool supplies only sol_reader measurements.
+Evidence: sql_read #53 counted RLS-enabled tables: agents=219, tool_pins=76, companies=1. All three had `relrowsecurity=true`; sql_read #2 confirmed BYPASSRLS.
+Correction required: Supply the corresponding raw administrator counts from the same measurement interval.
+
+Claim / done-list item: 6 — window reapplication preserves zero effectful privileges.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:15 requires executing the installer within a rolled-back transaction. That remains a writing operation and was not run here.
+Evidence: The diff replaces all six regrant exclusions with `rolname <> ALL(c_windows)`, including sol_reader. Current dangerous-function reachability is zero, but that does not prove the reapplication trial.
+Correction required: Supply the complete raw rollback trial and post-trial privilege measurement.
+
+Claim / done-list item: Existing window protects future functions.
+Verdict: REFUTED
+Finding: **C — predates this work.** scripts/b36/company-one-way-window.sql:461 uses schema-level REVOKE to remove PostgreSQL’s global default PUBLIC EXECUTE. That does not remove the global default.
+Evidence: sql_read #50 found global PUBLIC function EXECUTE enabled for both owners. `git show 635e32bc:scripts/b36/company-one-way-window.sql` contains the same schema-level REVOKE.
+Correction required: Register the inherited default-ACL defect on the board. The new auditor tool must nevertheless fail closed against it in this job.
+
+Claim / done-list item: 7 — installed profile and enabled MCP inventory.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: scripts/governance/codex-refuter.config.toml matches the installed profile, and the measured MCP inventory contains only dxbdb enabled.
+Evidence: Byte comparison → `True`; both SHA-256 values were `718bb575a6156724900406efbc4d4c4c7d9e9acc1e363d62e142ced62c4de5f6`. `codex -p refuter mcp list --json` → dxbdb enabled; memory, node_repl and openaiDeveloperDocs disabled. This session exposes one MCP tool: sql_read.
+Correction required: None for these measurements.
+
+Claim / done-list item: 7 — the specified feature-state command.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** DONE-LIST.md:16 specifies a command rejected by the installed Codex CLI, so the promised feature-state evidence cannot be obtained with it.
+Evidence: `codex -p refuter features list` → exit 1, `--profile only applies to runtime commands and codex mcp`. The tracked TOML contains the disabling flags, but this command does not measure their effective runtime state.
+Correction required: Replace the verification command with a supported measurement of the refuter’s effective feature state.
+
+Claim / done-list item: 8 — --proof proves database-write refusal.
+Verdict: REFUTED
+Finding: **B — repair in this pass.** scripts/governance/refuter.sh:141 counts every tool error except “engine busy” as a successful write refusal. Authentication, connection and identity failures therefore produce false-positive proof.
+Evidence: Executing the exact extracted proof parser with three `ERROR: connect ECONNREFUSED 127.0.0.1:54422` responses printed `DB_WRITE_REFUSED #1`, `#2`, `#3`; its acceptance count was 3. The complete historical --proof log is unavailable.
+Correction required: Require a successful construction read first, then validate each expected refusal reason. Supply the complete real --proof output.
+
+Claim / done-list item: Proof identifies the program selected by the installed profile.
+Verdict: UNVERIFIED
+Finding: scripts/governance/codex-refuter.config.toml:71 selects `/home/dxb/DxB Global OS/scripts/governance/sol-db-mcp.mjs`, while refuter.sh:48 hashes the current checkout’s file. Those files differ in this audit.
+Evidence: Configured-path SHA-256=`06fc5e586b5101913efadc45b26a0bba4b2f481437ebf99c3fca7c10390ec1cf`; audited-file SHA-256=`3b08482006ba9f65afb1d3c7986a2029aa22a0dd49d79af46bdb21a74da75af5`.
+Correction required: Bind the launched MCP program and reported digest to the exact audited artifact.
+
+Claim / done-list item: 9 — historical medium-effort Sol count matches the author’s count.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:18 requires the medium-effort rollout and matching author measurement, neither supplied.
+Evidence: My sql_read #11, `SELECT 'agents' AS t,count(*) FROM public.agents ...` → agents=219. This proves present access, not the historical comparison.
+Correction required: Supply the complete medium-effort rollout and corresponding raw psql count.
+
+Claim / done-list item: 10 — absent engine still permits an audit to start.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:19 requires an actual absent-engine launch. Its raw output is unavailable.
+Evidence: refuter.sh:94–100 selects the disabled-server override when the probe fails; :158–161 passes that override to Codex. The database answered throughout this audit.
+Correction required: Supply the complete dead-port launch output demonstrating both `SOL_DB_REACH=absent` and audit startup.
+
+Claim / done-list item: 11 — company role absence and unchanged company snapshots.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:20 requires company measurements surrounding the historical trials. Construction counts cannot prove this claim.
+Evidence: No company-engine connection was attempted; the required before/after snapshots were not supplied.
+Correction required: Supply both raw company snapshots and the company role-absence query output.
+
+Claim / done-list item: 12 — from-scratch rebuild restores the role and grants.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:21 requires a destructive rebuild sequence, which this auditor cannot execute.
+Evidence: Current identity is `7690665340837392423/5/postgres`, matching allowed[]. package.json:19 appends the role installer to construction:schema. These facts do not prove the rebuild’s execution or ordering.
+Correction required: Supply the complete reset, allowlisting, schema/window, seed and post-rebuild privilege logs.
+
+Claim / done-list item: 13 — mirror, ledger and hooks/governance checks.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:22 combines independently measurable mirror parity with unavailable writing-suite and company-ledger results.
+Evidence: An in-memory reproduction of the mirror transformations returned `PASS checked_files 95 differences 0`. Shell syntax, Node syntax and `git diff --check 635e32bc..HEAD` passed. Ledger and hooks/governance raw outputs were unavailable.
+Correction required: Supply complete verify:ledger and hooks/governance logs.
+
+Claim / done-list item: 14 — battery passes with only the stated pre-existing exception.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:23 requires the complete battery result and attribution of its failures. Commit prose is insufficient evidence.
+Evidence: `git log 635e32bc..HEAD` contains the battery claim; battery.log was not supplied, and no test suite was run here.
+Correction required: Supply whole battery.log, plus baseline evidence establishing that the allowed failures predate this work.
+
+Claim / done-list item: 15 — blind high/xhigh comparison and usage measurements.
+Verdict: UNVERIFIED
+Finding: DONE-LIST.md:24 requires both raw audits, findings, false alarms, durations and Plus usage. This session cannot establish that historical comparison.
+Evidence: Both implementation commits name the comparison, but the underlying rollouts and measurements were unavailable.
+Correction required: Supply both complete audit rollouts and their before/after usage measurements.
+
+Claim / done-list item: Audit immutability and secret handling.
+Verdict: STANDS AFTER ATTEMPTED REFUTATION
+Finding: HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md:85 requires unchanged audit counts. The measured construction counts remained unchanged.
+Evidence: sql_read #4 and #61 → audit_log=1795, tasks=14, opportunities=0, agent_runs=1. HEAD remained cf95b743; git status retained only the pre-existing untracked packages/shared/node_modules. The credential file is mode 0600; its value was not printed. `gitleaks detect --no-banner --redact --log-opts=635e32bc..HEAD` → two commits scanned, no leaks found.
+Correction required: None for these measurements.
+
+OVERALL: BLOCKS — sql_read calls: 61.

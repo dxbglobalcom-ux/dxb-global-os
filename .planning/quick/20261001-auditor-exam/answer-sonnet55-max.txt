@@ -1,0 +1,318 @@
+## Audit of job 1 (Sol's read-only reach), commit cf95b743
+
+**Method and disclosures.**
+- Engine measured: `7690665340837392423/5/postgres` at 127.0.0.1:54422. This is the `allowed[]` entry in `tools/hooks/ledger-identity.json`, not the company's `7674907968528752679/5/postgres`.
+- The `sql_read` instance serving me behaves like cf95's code. The refusal strings match, and a 20 MB cell passed, which the later on-disk build refuses.
+- I read the tool log, including other sessions' queries. I did not open the large audit rollouts.
+- I read the author's four small trial rollouts of 2026-09-28 21:05–21:07.
+- My three write attempts were all refused. A final residue query found no probe table, 0 large objects and 0 `zz_` relations.
+- I never contacted the company engine.
+
+---
+
+**Claim / done-list item:** [1] Does this done-list prove what "önerin tmm" asked for? (the auditor's own read-only reach, never the company)
+**Verdict:** REFUTED (B). The deliverable is real; the exam has gaps.
+**Finding:**
+- `DONE-LIST.md:12-23` drops `PLAN.md:95` ("`pg_extension` holds none of dblink / postgres_fdw / http"). That is the one route by which a SELECT-only role could write into another database. No reason is stated beside it, though line 3 promises one. Only the `dxb_internal` narrowing is stated (`:26`).
+- Item 7's second command cannot run: `codex -p refuter features list` → "Error: --profile only applies to runtime commands and `codex mcp`…".
+- Rev-2 asked to "measure engine load for big cell, slow query and three parallel calls" (`SOL-REVIEW-PLAN-REV2.md`, §3 row). The done-list has the first two and not the third.
+- `DONE-LIST.md` first enters git in the code commit `51f1308c` (21:08:49). Only `PLAN.md`'s list (`fddfcd2f`, 20:41) provably preceded the code.
+- Item 4's privilege matrix is asserted only inside the role script at install time. The vitest file samples five functions.
+
+**Evidence:**
+- `git log -- DONE-LIST.md` → `51f1308c` only.
+- `grep -n "pg_extension\|dblink" PLAN.md DONE-LIST.md` → `PLAN.md:95` only.
+- Today's `pg_extension` holds pg_net, pg_stat_statements, pgcrypto, plpgsql, supabase_vault, uuid-ossp and vector. Foreign servers, FDWs, user mappings and subscriptions are all 0 (call 5).
+
+**Correction required:**
+- Restore the extension check, or state why it was dropped.
+- Replace item 7's command.
+- Add the three-parallel-call measurement.
+- Add a vitest case that runs the closing assertion's predicates as `sol_reader`.
+
+---
+
+**Claim / done-list item:** [2] Items 4 and 5, R2: `sol_reader` has no write verb, sequence, TEMP, CREATE, effectful or SECURITY DEFINER function; it sees what the auditor needs; `dxb_internal` stays closed.
+**Verdict:** STANDS AFTER ATTEMPTED REFUTATION (for database `postgres`)
+**Finding:** The role wall holds as measured today. The literal psql transcripts and the `supabase_admin` side of the R2 equality are UNVERIFIED (see [14]).
+**Evidence (sql_read):**
+- Role attributes: `rolsuper f`, `rolcreaterole f`, `rolcreatedb f`, `rolreplication f`, `rolinherit f`, `rolbypassrls t`, connlimit 3. No memberships. Role settings: `default_transaction_read_only=on`, `statement_timeout=10s`, `idle_in_transaction_session_timeout=15s`, `temp_file_limit=64MB`.
+- Table verbs: the only hit is `pg_catalog.pg_settings UPDATE` (the PUBLIC default). Zero sequence privileges, zero owned objects. Database privilege: CONNECT only.
+- `secdef_exec_ok = 0` in all 12 schemas that have functions.
+- Of 78 named effectful functions, all `lo_*`, `pg_advisory*`, `pg_notify`, `pg_logical_emit_message`, slot-creation, `pg_terminate_backend`, `pg_read_file`, `pg_ls_*` and stat-reset functions have 0 executable overloads.
+- The following are executable and rest on other walls:
+  - `nextval`/`setval`/`currval`/`lastval` rest on the sequence ACLs, which are empty.
+  - The replication-slot functions rest on the REPLICATION attribute, which is off.
+  - The remaining executable ones are benign (`pg_sleep`, `set_config`, `pg_export_snapshot` and similar).
+- Schema USAGE exists only on `public`, `pgboss`, `supabase_migrations`, `extensions` plus the system catalogues. `dxb_internal`, `auth`, `net`, `vault` and `realtime` are all `f`. CREATE is `f` everywhere.
+- RLS: 62 public tables have RLS. Counts as `sol_reader` are non-zero: audit_log 1795, control_idempotency 1342, agents 219, tasks 14.
+- `pg_default_acl` has all 8 rows (postgres and supabase_admin × four schemas) granting `sol_reader=r`.
+- Credential patterns (JWT, `sk-`, AKIA, PEM, DSN with password, JSON password keys): 75 tables and 6,251 rows scanned, 0 hits; positive control 4,299.
+- Other roles' statement text in `pg_stat_statements` and `pg_stat_activity` is hidden.
+- Attacks, all refused:
+  - `select set_config('transaction_read_only','off',true)` → `ERROR: transaction read-write mode must be set before any query`.
+  - `select pgboss.job_table_run('create table public.zz_audit_probe_sol_reader(i int)',null,null)` → `ERROR: cannot execute CREATE TABLE in a read-only transaction`.
+  - `select set_config('statement_timeout','0',true), pg_sleep(11)` → `ERROR: canceling statement due to statement timeout`.
+- The credential file is mode 600, host `127.0.0.1:54422`. Its 48-character value appears in no repo file, no commit of `635e32bc..HEAD`, no profile and not in the log.
+
+**Correction required:** none.
+
+---
+
+**Claim / done-list item:** [3] Never the company's database (items 1b, 11; R1; test 7)
+**Verdict:** STANDS AFTER ATTEMPTED REFUTATION (tool and role path); the company-side proofs are UNVERIFIED
+**Finding:**
+- `sol-reader-role.sh:44-53` compares the company triple first and `allowed[]` second. The tool does the same at `sol-db-mcp.mjs:170-176`, on the connection that runs the query.
+- The URL host and port are pinned (`:134`).
+- There is no FDW, dblink, subscription or user mapping, so no SQL route from the construction engine to the company.
+- `net` USAGE is `f`, and no SECURITY DEFINER function is executable.
+- The role is absent from the company, and the company counts are unchanged. I cannot measure this, and no live negative on the real company engine exists by design.
+
+**Evidence:**
+- Every one of my 28 answers echoed `engine 7690665340837392423/5/postgres`.
+- Ledger `company` = `7674907968528752679/5/postgres`.
+- The logged errors (`permission denied for schema net`, 3×) show the schema wall working.
+
+**Correction required:** none. Logs that would prove the rest: the `DXB_SOL_CONTAINER=supabase_db_DxB_Global_OS bash sol-reader-role.sh` output, the company role-absence query, and the company row-count snapshots before and after.
+
+---
+
+**Claim / done-list item:** [4] "No write verb, sequence, TEMP, CREATE or effectful function anywhere" (`00-CEO-DIRECTIVE-AUDIT-TWIN.md:76`; role-SQL header "the role is the wall")
+**Verdict:** REFUTED (B)
+**Finding:**
+- The window and the closing assertion are database-local (`sol-reader-role.sql:87,172-177` use `current_database()`; window `:199,:456` cover only `public` and `pgboss`).
+- `sol_reader` keeps PUBLIC's CONNECT and TEMP on `_supabase`, and CONNECT on `template1`.
+- There the wall (lo_*, advisory locks, sequences, TEMP revoked) was never applied.
+- `default_transaction_read_only` is only a role default that the session can reset.
+- The tool cannot reach those databases (the identity guard refuses). The credential is readable by the sandbox, as the plan states.
+- A write path therefore stays latent if the sandbox network denial ever lifts.
+- Whether `lo_create` works in `template1` as `sol_reader` is UNVERIFIED, because I can only connect through the guarded tool.
+
+**Evidence (sql_read, call 26):**
+- `_supabase`: `datacl NULL, can_connect t, can_temp t`.
+- `template1`: `can_connect t`.
+- `postgres`: `sol_reader=c/postgres`.
+
+**Correction required:**
+- Narrow the sentence to "in the postgres database", or enforce the wall: a pg_hba reject for `sol_reader` outside `postgres`, or a window-style by-name REVOKE on `_supabase` and `template1`.
+- Make the closing assertion loop over `pg_database`.
+- Author-side probe: `psql -U sol_reader -d template1 -c "set default_transaction_read_only=off; select lo_create(0)"`, then clean up.
+
+---
+
+**Claim / done-list item:** [5] Tool layer 3, "EXPLAIN never ANALYZE / ANALYSE, in any spelling" and "ONE STATEMENT" (`sol-db-mcp.mjs:25`, `:101`; test 4, `sol-db-reach.test.ts:89-93`)
+**Verdict:** REFUTED (B). The data walls still hold.
+**Finding:**
+- `:101` tests only the literal substring `/analy[sz]e/i`.
+- PostgreSQL accepts Unicode-escaped identifiers, so `ANALYZE` executes. The keyword gate is not a layer.
+- Separately, `pgboss.job_table_run(command,…)` is a PUBLIC-executable INVOKER function that EXECUTEs arbitrary multi-statement text inside the transaction.
+- Impact on data is none today: READ ONLY and privileges refuse writes (see [2]). The header and test claims are false, and the exam cannot catch this.
+
+**Evidence:**
+- Live: `explain (u&"\0061nalyze", costs off) select 1` → `Result (actual time=0.000..0.000 rows=1 loops=1)`, `Execution Time: 0.003 ms`. Control `explain (analyze, costs off) select 1` → `REFUSED: EXPLAIN ANALYZE executes the statement`.
+- Offline `classify()`:
+  - `explain (u&"\0061nalyze") delete from public.agents` → ALLOWED mode=plain.
+  - `u&"\+000061nalyze"`, `u&"anal\0079ze"` and the `/*x*/` variant → ALLOWED mode=plain.
+  - `(u&"\0061nalyze")` is the only spelling I ran live.
+- `select pgboss.job_table_run('select 1; select 2',null,null)` → OK, empty cell.
+
+**Correction required:**
+- Replace the regex with a strict option grammar: whitelist bare ASCII options and refuse any `U&` or `"` in the option list.
+- State in the header and records that the keyword gate is a convenience and the walls are READ ONLY plus privileges.
+- Add the escaped spellings and the `job_table_run` case to test 4.
+- Consider a window-style wall on `pgboss.job_table_run*`, `create_queue`, `delete_queue` for `sol_reader`.
+
+---
+
+**Claim / done-list item:** [6] R5: "every cell cut at 4 KB … the engine is protected" (test 6); Sol's rev-2 finding on the 201-row / 64 KB / 10 s caps
+**Verdict:** REFUTED (B)
+**Finding:**
+- `cut()` (`:140-144`) runs after the whole value has been materialised in the tool. The type parser returns raw text (`:158`), and no byte limit exists on the wire.
+- Measured: a 20,000,000-character cell was moved in full and then cut.
+- The wide-column case is also uncapped: `:200-204` only pops rows, so a huge column list still exceeds 64 KB.
+- A 1 GB cell would exceed V8's string limit (~512 MB) and may kill the MCP process. I did not run it, because it risks the shared engine; this part is UNVERIFIED.
+- The tool log shows a later on-disk build (2026-09-28 20:02–20:07Z) already refusing "the result passed 16777216 bytes on the wire" and "the column list alone is over 65536 bytes". That is not in cf95 and not in the audited range.
+- `connectionString()` is evaluated outside the `try` (`:154`). A missing or changed credential surfaces as a JSON-RPC error and leaves no log line.
+
+**Evidence:**
+- `select repeat('x', 20000000) as c` → cell ends `…[cut at 4096 of 20000000 chars]`, log `ms=130`.
+- Log: `REFUSED: the result passed 16777216 bytes on the wire…` (9×), `REFUSED: the column list alone is over 65536 bytes (1200 columns)…` (3×).
+
+**Correction required:**
+- Commit the wire and column caps with boundary tests, and the three-parallel-call measurement.
+- Move `connectionString()` inside the `try` and log that failure.
+- Audit the on-disk tool.
+
+---
+
+**Claim / done-list item:** [7] `tool_sha256` printed by `refuter.sh`, and "Sol reads the tool before trusting it" (§5)
+**Verdict:** REFUTED (B)
+**Finding:**
+- `refuter.sh:48,97` hash `$ROOT/scripts/governance/sol-db-mcp.mjs`.
+- The profile launches the absolute path `/home/dxb/DxB Global OS/scripts/governance/sol-db-mcp.mjs` (`codex-refuter.config.toml:71`).
+- The two are the same file only when `ROOT` is that checkout. In any worktree, such as this exam, the banner (stderr only) describes a different file than the one that runs.
+- Today they differ: the audited cf95 tool is 12,743 bytes and the file at the profile path is 19,875 bytes. The code the installed profile launches is therefore not the audited commit's.
+- The exam harness works around this with per-exam profiles (`~/.codex/exam-6-sol.config.toml:71` points at the exam copy).
+
+**Evidence:**
+- `sha256sum`: audited tool `3b08482006ba9f65…`; file at the profile path `06fc5e586b510191…`. The installed profile is byte-identical to the tracked one (`cmp`).
+- `codex -p refuter mcp list --json` → args `["/home/dxb/DxB Global OS/scripts/governance/sol-db-mcp.mjs"]`.
+
+**Correction required:**
+- Have `refuter.sh` take `args[0]` from the `mcp list --json` it already parses, then hash it and refuse if it differs from `$TOOL`.
+- Commit or discard the later on-disk edits to the tool, `refuter.sh` and `sol-reader-role.sh`, and audit them.
+
+---
+
+**Claim / done-list item:** [8] Item 8, R7: `refuter.sh --proof` proves writes are refused, with the refusal text checked
+**Verdict:** REFUTED (B) for the DB half; the sandbox legs are UNVERIFIED
+**Finding:**
+- `refuter.sh:141,145` count any `isError` except "engine busy" as `DB_WRITE_REFUSED`.
+- Attempt #1 is refused by the classifier before it reaches the database.
+- There is no positive control.
+- A dead credential, a refused connection or a wrong engine all print green.
+- This happened: the tool log shows 3× `password authentication failed for user "sol_reader"` at 2026-09-28T19:31:55Z, during a credential rotation.
+- The nested sandbox cannot run in my environment (`bwrap: No permissions to create a new namespace`), so `SANDBOX_ALIVE` and the file-write refusal are UNVERIFIED.
+
+**Evidence:** I fed the shipped verdict snippet three non-write errors (`password authentication failed`, `connect ECONNREFUSED 127.0.0.1:54422`, `…is not a permitted construction engine`). It printed `DB_WRITE_REFUSED #1/#2/#3`, grep count 3, and the `-eq 3` gate at `:145` passes.
+
+**Correction required:**
+- Assert each refusal text against its cause: `/only SELECT/`, `/data-modifying/`, `/permission denied for function lo_create/`.
+- Add a must-succeed `select 1` with an identity echo.
+- Fail on any other text.
+- Proof to attach: the real `--proof` output.
+
+---
+
+**Claim / done-list item:** [9] Item 7 and R6: the profile switches off every hand that runs outside the sandbox; the inventory is measured on every launch
+**Verdict:** REFUTED (B)
+**Finding:**
+- `codex -p refuter features list` is unsupported, so the done-list command cannot prove the flags.
+- `multi_agent = false` (`codex-refuter.config.toml:49`) has no effect. The author's own trial of the final profile lists `collaboration.spawn_agent`, `send_message`, `followup_task`, `wait_agent`, `list_agents` and `interrupt_agent`.
+- The prompts of the base and refuter profiles are identical on this point: both carry `<multi_agent_role>`.
+- `refuter.sh` and `--proof` measure only `mcp list`, which covers four servers.
+- `00-CEO-DIRECTIVE-AUDIT-TWIN.md:83-84` says plugins, browser, computer and web are "measured by `refuter.sh` on every launch". They are not.
+- What stands:
+  - The MCP list shows only `dxbdb` enabled.
+  - `-c mcp_servers.dxbdb.enabled=false` disables it.
+  - Plugin skills are absent from the refuter prompt: 26 plugin skills in the base prompt, 0 in the refuter's.
+  - `apply_patch` is refused with "writing is blocked by read-only sandbox".
+- Whether a spawned sub-agent inherits the read-only sandbox is UNVERIFIED.
+
+**Evidence:**
+- Rollout `rollout-2026-09-28T21-07-09-…jsonl`, message #43, 21:07:09 (immediately after the profile install at 21:07:08.999): `TOOLS=functions.exec,functions.wait,functions.request_user_input,…,collaboration.followup_task,…,collaboration.spawn_agent,…,apply_patch,clock__curr_time,exec_command,list_mcp_resource_templates,list_mcp_resources,mcp__dxbdb__sql_read,read_mcp_resource,view_image,write_stdin`.
+- `codex -p refuter mcp list --json` → `dxbdb:ENABLED memory:disabled node_repl:disabled openaiDeveloperDocs:disabled`.
+- `codex -p refuter features list` → "Error: --profile only applies to runtime commands and `codex mcp`…".
+
+**Correction required:**
+- Print the real session inventory in `--proof` and fail on any name outside an allow-list.
+- Delete the `multi_agent` line or prove its effect, and measure sub-agent sandbox inheritance.
+- Fix the doc sentence.
+- Replace item 7's command with a form that runs (e.g. the `debug prompt-input` skills check).
+
+---
+
+**Claim / done-list item:** [10] Item 9: a live Sol call counts rows through `sql_read`
+**Verdict:** STANDS AFTER ATTEMPTED REFUTATION
+**Finding:**
+- Rollout `rollout-2026-09-28T21-06-10-…jsonl` (gpt-6-sol, effort medium, sandbox read-only, approval never) called `tools.mcp__dxbdb__sql_read({query:"select count(*) from public.agents"})` and got `219`.
+- The same session got the insert refused and a file write refused.
+- That call ran on the pre-rebuild engine.
+- 219 equals my catalog count on the rebuilt engine.
+- That the lead compared it with his own psql count is not visible, and I treat it as UNVERIFIED.
+
+**Evidence:** `rows [["219"]]`, `engine 7688048281604841511/5/postgres`; the insert → `REFUSED: only SELECT, WITH, TABLE, VALUES, SHOW or EXPLAIN may run (got INSERT)`; the file write → `Read-only file system`.
+
+**Correction required:** none.
+
+---
+
+**Claim / done-list item:** [11] Item 10: engine absent → `SOL_DB_REACH=absent`, audit still runs
+**Verdict:** STANDS AFTER ATTEMPTED REFUTATION in effect; the banner text is UNVERIFIED
+**Finding:**
+- Rollout `…T21-07-47…` answered `ALIVE / MCP=none`.
+- I measured `codex -p refuter -c mcp_servers.dxbdb.enabled=false mcp list --json` → `dxbdb:disabled`.
+- The banner goes to the launcher's stderr, which is not in any log I can read.
+
+**Evidence:** as above.
+
+**Correction required:** none. Proof to attach: the `refuter.sh` stderr line.
+
+---
+
+**Claim / done-list item:** [12] R3 and item 6: the window is extended so `sol_reader` is never handed anything back (`company-one-way-window.sql:140` and six `<> ALL (c_windows)` sites; installer `WINDOWS`)
+**Verdict:** REFUTED (B) (a regression in a standing proof)
+**Finding:**
+- `scripts/b36/prove-window-preserves.mjs:78`, `matrix()`, excludes only `dxb_reader`.
+- With `sol_reader` present, the shipped window removes its PUBLIC-derived EXECUTE on the PUBLIC-open SECURITY DEFINER functions. That is the intent of R3.
+- The proof then counts those changes as "privileges belonging to other roles". `shippedChanges` (`:223`) is greater than 0 and `verdict` (`:234`) is false, which prints `WINDOW_DOES_NOT_PRESERVE`.
+- This is a derivation from code and measured premises. It was not executed, because the proof writes the engine.
+- The done-list never re-runs this proof or `prove-window-escapes` after editing the window. The proof's own header quotes the law "a fix breaks nothing around it".
+
+**Evidence:**
+- `prove-window-preserves.mjs:77-79`: `r.rolname NOT LIKE 'pg\_%' AND r.rolname <> 'dxb_reader'`.
+- `sol_reader` exists with 0 secdef EXECUTE, and 87 SECURITY DEFINER functions exist in `public` (call 8).
+
+**Correction required:**
+- Exclude `sol_reader` in `matrix()`, using the same set as the installer's `WINDOWS`.
+- Run `pnpm b36:prove-window-preserves` and `b36:prove-window-escapes`, and add them to the done-list.
+
+---
+
+**Claim / done-list item:** [13] The window's "a function created tomorrow is not handed to PUBLIC" (`company-one-way-window.sql:445-477`), which R3 leans on
+**Verdict:** UNVERIFIED (C, older than this work)
+**Finding:**
+- The window issues `ALTER DEFAULT PRIVILEGES … IN SCHEMA … REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC` for `public` and `pgboss` only.
+- PostgreSQL's documentation says per-schema default privileges are added to the global defaults and cannot revoke them.
+- The built-in default includes PUBLIC execute, and there are no database-wide rows.
+- Expectation: new functions in `public`, `pgboss` or `extensions` carry PUBLIC execute, which `sol_reader` would inherit. `extensions` and `supabase_migrations` were never in the window's schema list.
+- Today's state is clean. The role script's closing assertion fails loudly at the next `construction:schema` (`sol-reader-role.sql:122-132`), but it blames "window not on this engine".
+
+**Evidence (sql_read, call 27):**
+- `acldefault('f','postgres'::regrole)` = `{=X/postgres,postgres=X/postgres}`.
+- Database-wide `pg_default_acl` rows = 0. Per-schema function rows = 11, in auth, extensions, graphql, graphql_public, pgboss, public, realtime, storage and supabase_functions.
+
+**Correction required:**
+- Board the older defect.
+- For this job, add a call-time check in the tool (refuse when `sol_reader` can execute any SECURITY DEFINER or effectful function).
+- Settling probe for the author, in BEGIN…ROLLBACK as postgres: create a SECURITY DEFINER `public.zz()`, then `has_function_privilege('sol_reader','public.zz()','EXECUTE')`.
+
+---
+
+**Claim / done-list item:** [14] The audit stays blind and independent; the tool's log is a harmless write (R6 sentence; item 15, the owed high-vs-xhigh measurement)
+**Verdict:** REFUTED (B)
+**Finding:**
+- `~/.local/state/dxb/sol-db-mcp.log` (mode 600, owner `dxb`) is readable inside a read-only sandbox view.
+- It holds every session's full query text: 353 lines at last count, 582 KB, with no rotation and no per-session split.
+- I could read other sessions' queries, including earlier sessions' queries on this same diff.
+- Concurrent or later auditors can therefore see each other's investigation paths, which breaks the independence the side-by-side measurement needs.
+
+**Evidence:** `stat` → mode 600, owner dxb. The log held 77 entries from other sessions dated 2026-10-01T14Z when I first read it, and every one of my 28 calls appears in it.
+
+**Correction required:** record the limitation, or write per-session logs outside the sandbox's readable roots.
+
+---
+
+**Claim / done-list item:** [15] Items 1, 1b, 2, 2b, 3, 5 (equality), 6, 11, 12 (process), 13 (vitest), 14: runs I cannot perform or see
+**Verdict:** UNVERIFIED
+**Finding:** I measured the end states: the role, its grants, the default ACLs and the new cluster identity in `ledger-identity.json` are all consistent with the R9 rebuild. I could not see the runs themselves. I did measure three of the item-13 checks:
+- `scripts/governance/sync-codex-mirror.sh --check` → `SYNC_OK mirror matches source`.
+- `node scripts/governance/ledger-truth.mjs` → `ledger truth OK` (`pnpm verify:ledger` cannot run in the worktree, which has no `node_modules`).
+- `bash -n` and `node --check` pass on all touched scripts.
+
+**Evidence:** none for the runs themselves.
+
+**Correction required:** hand over the raw outputs below.
+- Item 1: two consecutive `sol-reader-role.sh` runs.
+- Item 1b / item 11: the company-container refusal, and the company role-absence query with before/after counts.
+- Item 2 / 2b: the psql transcript as `sol_reader`.
+- Item 5: the `supabase_admin` counts on the three RLS tables.
+- Item 6: the window re-applied in BEGIN…ROLLBACK.
+- Item 3: `pnpm vitest run tests/governance/sol-db-reach.test.ts`, whole output.
+- Item 13: `pnpm vitest run tests/hooks tests/governance`, whole output.
+- Item 12: the rebuild transcript, `supabase db reset … construction:schema … SOL_READER_OK`.
+- Item 14: `battery.log`, whole.
+
+---
+
+OVERALL: PASSES — no A finding; the CEO's ask holds on every wall I could measure. Nine B repairs are owed in this same pass (blocks [1], [4]–[9], [12], [14]) and one C goes to the board ([13]). sql_read calls: 28.
