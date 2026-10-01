@@ -59,6 +59,21 @@ describe("the floor is measured from the files", () => {
     expect(f.hits.some((h: { file: string }) => h.file === "README.md")).toBe(false);
   });
 
+  it("covers the paths Sol's audit found missing: .codex/, scripts/hooks/, the specs, the cost gate", () => {
+    const f = floorOf([".codex/hooks.json", "scripts/hooks/pre-commit", "HOLDING-OS-MASTER-PLAN/PERMISSION_MODEL.md",
+                       "scripts/ops/dxb-cost-gate.py", "packages/shared/src/db.ts"]);
+    for (const file of [".codex/hooks.json", "scripts/hooks/pre-commit", "HOLDING-OS-MASTER-PLAN/PERMISSION_MODEL.md",
+                        "scripts/ops/dxb-cost-gate.py", "packages/shared/src/db.ts"])
+      expect(f.hits.some((h: { file: string }) => h.file === file), file).toBe(true);
+  });
+
+  it("reads the changed lines of code files: a database client or a credential is caught wherever it lives", () => {
+    const f = floorOf(["apps/x/src/a.ts"], { "apps/x/src/a.ts": 'import { Pool } from "pg";\n' });
+    expect(f.hits.map((h: { guard: string }) => h.guard)).toEqual(["database"]);
+    expect(floorOf(["apps/x/src/b.ts"], { "apps/x/src/b.ts": "const apiKey = env.X;\n" }).min).toBe("normal");
+    expect(floorOf(["apps/x/src/c.tsx"], { "apps/x/src/c.tsx": "<h1>Merhaba</h1>\n" }).min).toBe(null);
+  });
+
   it("raises a light card that touches a guarded file to normal, and leaves a plain one light", () => {
     const c = parseCard(`job: x\n${axes(0, 0, 1, 0)}`);
     expect(route(c, ["db/migrations/0001_x.sql"]).class).toBe("normal");
@@ -94,6 +109,15 @@ describe("the CLI on this repository's own history", () => {
     expect(out.brief).toContain("job: Sol's read-only hand");
   });
 
+  it("raises the two real historical ranges Sol's audit named from light to normal", () => {
+    // 512be457: the shared Kysely/pg client (packages/shared/src/db.ts) · 022eec2e: the cost gate
+    for (const range of ["512be457^..512be457", "022eec2e^..022eec2e"]) {
+      const r = check(card(axes(0, 0, 0, 0, range)));
+      expect(r.status, r.stderr).toBe(0);
+      expect(JSON.parse(r.stdout), range).toMatchObject({ class: "normal", effort: "high", floorRaised: true });
+    }
+  });
+
   it("refuses a missing card file, a range that is not a commit, and an empty range", () => {
     expect(check(join(box, "nope.md")).stderr).toMatch(/REFUTER_FAIL: no card at/);
     expect(check(card(axes(0, 0, 0, 0, "deadbeef1..HEAD"))).stderr).toMatch(/not a commit/);
@@ -113,7 +137,7 @@ describe("refuter.sh holds the gate", () => {
   writeFileSync(join(bin, "codex"), `#!/usr/bin/env bash
 case " $* " in
   *" mcp list "*) echo '[{"name":"dxbdb","enabled":true}]' ;;
-  *" exec "*) for a in "$@"; do case "$a" in model_reasoning_effort=*) echo "EFFORT_ARG $a";; esac; done
+  *" exec "*) for a in "$@"; do case "$a" in model_reasoning_effort=*) echo "EFFORT_ARG $a";; --json) echo "--json";; esac; done
               echo "PROMPT_BEGIN"; printf '%s\\n' "\${@: -1}"; echo "PROMPT_END" ;;
 esac
 `);
@@ -150,6 +174,28 @@ esac
     expect(r.stderr).toMatch(/AUDIT_CARD class=critical total=7 effort=xhigh/);
     const log = readFileSync(join(home, ".local", "state", "dxb", "audit-cards.log"), "utf8");
     expect(log).toMatch(/"class":"critical"/);
+  });
+
+  it("refuses every forwarded option that could override the card or the profile", () => {
+    for (const bad of [["-c", 'model_reasoning_effort="medium"'], ['--config=model_reasoning_effort="medium"'],
+                       ["-s", "workspace-write"], ["--sandbox", "danger-full-access"], ["-m", "gpt-5.5"],
+                       ["-p", "default"], ["--enable", "x"], ["--dangerously-bypass-approvals-and-sandbox"]]) {
+      const r = run("--card", card(axes(2, 2, 2, 1)), ...bad, "audit this");
+      expect(r.status, bad.join(" ")).toBe(1);
+      expect(r.stderr).toMatch(/is not passed to the auditor/);
+      expect(r.stdout).not.toMatch(/PROMPT_BEGIN/);
+    }
+  });
+
+  it("keeps the prompt whole when allowed options come after it, and refuses two prompts", () => {
+    const r = run("--card", card(axes(2, 2, 2, 1)), "audit this claim", "--json", "-C", box);
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stdout).toContain("--json");
+    const prompt = r.stdout.split("PROMPT_BEGIN\n")[1].split("PROMPT_END")[0];
+    expect(prompt.trimEnd().endsWith("audit this claim")).toBe(true);
+    const two = run("--card", card(axes(2, 2, 2, 1)), "one", "two");
+    expect(two.status).toBe(1);
+    expect(two.stderr).toMatch(/more than one prompt/);
   });
 
   it("reads the brief from stdin when the prompt is '-'", () => {

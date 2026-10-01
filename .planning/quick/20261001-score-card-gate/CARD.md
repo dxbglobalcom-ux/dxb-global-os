@@ -1,7 +1,7 @@
 # Score card — the score card gate (dxb-team2 §3)
 
 job: A machine holds dxb-team2's score card — refuter.sh refuses an audit without the job's card or beneath it, and routes Sol's effort from it
-range: d9f80d19..HEAD
+range: d9f80d19..a2356c71
 blast: 1
 risk: 2
 reasoning: 1

@@ -71,6 +71,32 @@ case "${1:-}" in
     fi
     ROUTE="$(node "$ROOT/scripts/governance/audit-card.mjs" check "$CARD" ${EFFORT:+--effort "$EFFORT"})" || exit 1
     EFFORT="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).effort))')"
+
+    # What may follow the card: an ALLOW-LIST of `codex exec` options and exactly one prompt (or
+    # "-" for stdin). Anything else is refused, because a forwarded -c/--config, -s/--sandbox,
+    # -m/--model, -p/--profile, --enable or --dangerously-* would override what the gate and the
+    # profile just fixed — the effort, the sandbox, the model, the MCP inventory (Sol's audit of
+    # this gate, 2026-10-01: A1 and its C).
+    OPTS=()
+    PROMPT_ARG=""
+    HAVE_PROMPT=0
+    set -- "$@"
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        --skip-git-repo-check|--ephemeral|--json) OPTS+=("$1"); shift ;;
+        -C|--cd|--color|-o|--output-last-message|--output-schema|-i|--image)
+          [ $# -ge 2 ] || { echo "REFUTER_FAIL: $1 takes a value." >&2; exit 1; }
+          OPTS+=("$1" "$2"); shift 2 ;;
+        --cd=*|--color=*|--output-last-message=*|--output-schema=*|--image=*) OPTS+=("$1"); shift ;;
+        -) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given." >&2; exit 1; }
+           PROMPT_ARG="-"; HAVE_PROMPT=1; shift ;;
+        -*) echo "REFUTER_FAIL: '$1' is not passed to the auditor — only -C/--cd, --skip-git-repo-check, --ephemeral, --json, --color, -o/--output-last-message, --output-schema and -i/--image are; the effort, model, sandbox and servers are fixed by the card and the profile." >&2
+            exit 1 ;;
+        *) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given." >&2; exit 1; }
+           PROMPT_ARG="$1"; HAVE_PROMPT=1; shift ;;
+      esac
+    done
+    [ "$HAVE_PROMPT" -eq 1 ] || { echo "REFUTER_FAIL: give the auditor a claim and where to measure it." >&2; exit 1; }
     ;;
 esac
 
@@ -197,17 +223,10 @@ if [ "${1:-}" = "--proof" ]; then
   exit 0
 fi
 
-if [ $# -eq 0 ]; then
-  echo "REFUTER_FAIL: give the auditor a claim and where to measure it." >&2
-  exit 1
-fi
-
-# The card goes in front of the brief: the last argument is the prompt, or "-" for stdin.
+# The card goes in front of the brief (the prompt argument, or stdin for "-").
 BLOCK="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).brief))'; printf x)"
 BLOCK="${BLOCK%x}"
-LAST="${!#}"
-set -- "${@:1:$#-1}"
-if [ "$LAST" = "-" ]; then PROMPT="$BLOCK$(cat; printf x)"; PROMPT="${PROMPT%x}"; else PROMPT="$BLOCK$LAST"; fi
+if [ "$PROMPT_ARG" = "-" ]; then PROMPT="$BLOCK$(cat; printf x)"; PROMPT="${PROMPT%x}"; else PROMPT="$BLOCK$PROMPT_ARG"; fi
 
 LOG_DIR="$HOME/.local/state/dxb"; mkdir -p "$LOG_DIR"
 printf '%s\t%s\t%s\t%s\n' "$(date -Iseconds)" "$(sha256sum "$CARD" | cut -c1-16)" "$CARD" \
@@ -215,4 +234,4 @@ printf '%s\t%s\t%s\t%s\n' "$(date -Iseconds)" "$(sha256sum "$CARD" | cut -c1-16)
   >> "$LOG_DIR/audit-cards.log"
 echo "AUDIT_CARD class=$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log(`${r.class} total=${r.total}${r.floorRaised?" (raised by the floor)":""} effort=${r.effort}`)})')" >&2
 
-exec codex -p "$PROFILE" "${REACH[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "$@" "$PROMPT"
+exec codex -p "$PROFILE" "${REACH[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "${OPTS[@]}" -- "$PROMPT" < /dev/null

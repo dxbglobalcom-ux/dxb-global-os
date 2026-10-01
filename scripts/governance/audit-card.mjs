@@ -31,13 +31,22 @@ export const LEVELS = ["medium", "high", "xhigh"];
 export const CLASSES = ["light", "normal", "critical"];
 
 // dxb-team2 §3: "a job touching money, the database, security, approval or governance files is at
-// least normal". One table, so a change of the floor is one edit here and the door's sentence.
+// least normal". Two tables, one copy each: FLOOR matches the PATHS a range touches (mapped against
+// this repository's layout — Sol's audit of 2026-10-01 named the shared db client, the cost gate,
+// .codex/, scripts/hooks/ and the specs as missed), and CONTENT matches the CHANGED LINES of code files,
+// so a database client or a credential change is caught wherever it lives.
 export const FLOOR = [
-  { name: "database", min: "normal", re: /^(db|supabase)\/|\.sql$|^scripts\/(bootstrap-db|restore-db)\.sh$|^scripts\/migration\// },
-  { name: "money", min: "normal", re: /^packages\/revenue\/|(^|\/)(payments?|billing|invoices?|wallet|money)(\/|\.|-|_)/i },
-  { name: "security", min: "normal", re: /^packages\/gateway\/|^vps\/|(^|\/)[^/]*(auth|vault|secret|security|credential|sandbox|bwrap)[^/]*$/i },
+  { name: "database", min: "normal", re: /^(db|supabase)\/|\.sql$|^scripts\/(bootstrap-db|restore-db)\.sh$|^scripts\/(migration|b36)\/|^packages\/shared\/src\/db/ },
+  { name: "money", min: "normal", re: /^packages\/revenue\/|(^|\/)(payments?|billing|invoices?|wallet|money)(\/|\.|-|_)|(^|\/)[^/]*(cost|budget|spend|quota)[^/]*\.(ts|tsx|mjs|cjs|js|py|sh)$/i },
+  { name: "security", min: "normal", re: /^packages\/gateway\/|^vps\/|^scripts\/(ops|systemd|hooks)\/|^\.codex\/|^\.githooks?\/|(^|\/)[^/]*(auth|vault|secret|security|credential|sandbox|bwrap|permission|polic(y|ies)|rls|sudoers)[^/]*$/i },
   { name: "approval", min: "normal", re: /approv/i },
-  { name: "governance", min: "normal", re: /^scripts\/governance\/|^\.planning\/governance\/|^HOLDING-OS-MASTER-PLAN\/00-CEO-DIRECTIVE|^docs\/ceo-directives\/|^\.claude\/|^\.agents\/|^tools\/hooks\/|(^|\/)(CLAUDE|AGENTS)\.md$/ },
+  { name: "governance", min: "normal", re: /^scripts\/(governance|hooks)\/|^\.planning\/governance\/|^HOLDING-OS-MASTER-PLAN\/|^docs\/ceo-directives\/|^\.claude\/|^\.agents\/|^\.codex\/|^tools\/hooks\/|(^|\/)(CLAUDE|AGENTS)\.md$/ },
+];
+export const CODE = /\.(ts|tsx|mjs|cjs|js|py|sh|bash|sql|toml|ya?ml|json)$/;
+export const CONTENT = [
+  { name: "database", min: "normal", re: /\bfrom\s+["'](pg|kysely|postgres|@supabase\/supabase-js)["']|require\(\s*["']pg["']\s*\)|\bpsql\b|DATABASE_URL|postgres(ql)?:\/\/|\b(INSERT\s+INTO|DELETE\s+FROM|UPDATE\s+[\w."]+\s+SET|CREATE\s+(OR\s+REPLACE\s+)?(TABLE|FUNCTION|ROLE|POLICY|TRIGGER|VIEW)|ALTER\s+(TABLE|ROLE|DEFAULT|FUNCTION)|DROP\s+(TABLE|ROLE|FUNCTION)|GRANT\s+\w|REVOKE\s+\w)\b/i },
+  { name: "security", min: "normal", re: /bypassPermissions|dangerously|sandbox_mode|\bsudo\b|\bchmod\b|credential|password|api[_-]?key|\bsecret\b/i },
+  { name: "money", min: "normal", re: /\b(stripe|invoices?|payments?|payouts?|refunds?|budget|spend(ing)?)\b/i },
 ];
 
 const fail = (msg) => {
@@ -64,9 +73,11 @@ export function parseCard(text) {
 
 export const classOf = (total) => (total <= 2 ? "light" : total <= 5 ? "normal" : "critical");
 
-export function floorOf(files) {
+export function floorOf(files, lines = {}) {
   const hits = [];
   for (const f of files) for (const g of FLOOR) if (g.re.test(f)) hits.push({ file: f, guard: g.name, min: g.min });
+  for (const [f, text] of Object.entries(lines))
+    for (const g of CONTENT) if (g.re.test(text)) hits.push({ file: `${f} (changed lines)`, guard: g.name, min: g.min });
   const min = hits.reduce((m, h) => Math.max(m, CLASSES.indexOf(h.min)), 0);
   return { hits, min: hits.length ? CLASSES[min] : null };
 }
@@ -85,10 +96,26 @@ export function filesIn(range, repo = REPO) {
   return files;
 }
 
-export function route(card, files, effort) {
+// The changed lines (added and removed) of each code file in the range, for CONTENT.
+export function changedLines(range, files, repo = REPO) {
+  const code = files.filter((f) => CODE.test(f));
+  if (!code.length) return {};
+  const d = spawnSync("git", ["-C", repo, "diff", "-U0", "--no-color", range, "--", ...code], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+  if (d.status !== 0) fail(`git diff -U0 ${range} failed: ${d.stderr.trim()}`);
+  const out = {};
+  let cur = null;
+  for (const l of d.stdout.split("\n")) {
+    if (l.startsWith("--- ")) { cur = l === "--- /dev/null" ? null : l.slice(4).replace(/^a\//, ""); continue; }
+    if (l.startsWith("+++ ")) { if (l !== "+++ /dev/null") cur = l.slice(4).replace(/^b\//, ""); continue; }
+    if (cur && /^[+-]/.test(l)) out[cur] = (out[cur] ?? "") + l.slice(1) + "\n";
+  }
+  return out;
+}
+
+export function route(card, files, effort, lines = {}) {
   const total = AXES.reduce((s, a) => s + card[a], 0);
   const scored = classOf(total);
-  const floor = floorOf(files);
+  const floor = floorOf(files, lines);
   const cls = floor.min && CLASSES.indexOf(floor.min) > CLASSES.indexOf(scored) ? floor.min : scored;
   const required = LEVELS[CLASSES.indexOf(cls)];
   if (effort !== undefined && effort !== "") {
@@ -124,7 +151,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     let text;
     try { text = readFileSync(file, "utf8"); } catch { fail(`no card at ${file} — an audit does not start without the job's score card (dxb-team2 §3).`); }
     const card = parseCard(text);
-    const r = route(card, filesIn(card.range), effort);
+    const files = filesIn(card.range);
+    const r = route(card, files, effort, changedLines(card.range, files));
     console.log(JSON.stringify({ ...r, range: card.range, brief: briefBlock(text, r) }));
   } catch (e) {
     if (!e.refusal) throw e;
