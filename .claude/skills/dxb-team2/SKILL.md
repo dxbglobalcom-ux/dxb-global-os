@@ -81,7 +81,8 @@ CRITICAL  → Fable drafts or challenges the architecture → Sol reads the PLAN
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → the lead writes and runs the job's own tests. Parallel work only as a measured fork (§8).
 AUDIT     → Sol, blind (§5), one pass at the class's effort (§6).
-            A — blocks · B — repaired in this same pass · C — older than this work → a board row.
+            A — blocks · B — repaired in this same pass · C — older than this work → stays in the
+            job's own folder (the audit report); never the board — a row opens only on his word.
 FIX       → the lead fixes. Sol re-checks that finding AND what the fix touched, at the same
             effort; one level up if the fix spread to other files or a guarded path.
 DISPUTE   → the lead says a finding is wrong: the auditor proves it with a test or a command —
