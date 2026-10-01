@@ -72,6 +72,13 @@ approval or governance files is **at least normal**; the lead cannot score it lo
 total, class, auditor effort and why) goes into the commit body, so any later reader can check the
 lead did not grade itself down.
 
+**A machine holds the card** (*"tmm makineyi de kur"* <!-- CEO-OK: score-card-gate-2026-10-01 -->).
+The card is a file (`job:` · `range:` · `blast:` · `risk:` · `reasoning:` · `ambiguity:`) handed to
+`refuter.sh --card <file>`; `scripts/governance/audit-card.mjs` refuses an audit without one, measures
+the floor from the files the range touches (its `FLOOR` table is the one copy of the guarded classes),
+sets the auditor's effort, refuses an `--effort` beneath it, puts the card in front of Sol, and logs
+every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §7 are summed from it.
+
 ## 4. The loop
 
 ```
@@ -142,8 +149,8 @@ Correction required:
   the same auditor.
 - **Auditor (Sol):** light `medium` · normal `high` · critical `xhigh`. The first critical job runs
   `high` and `xhigh` on the same diff side by side; that number keeps or moves the critical level.
-- The lead picks each level from the card and writes the reason on it; the floor in §3 cannot be
-  lowered by anyone in the loop.
+- `audit-card.mjs` sets the auditor's level from the card; the lead may raise it (a fix that spread),
+  never lower it, and the floor in §3 is measured from the files, not declared.
 
 ## 7. The brake and the bill
 

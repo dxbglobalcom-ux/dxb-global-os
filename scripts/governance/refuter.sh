@@ -15,10 +15,18 @@
 # modes); the lead picks its effort per job from the job's score card.
 #
 # Usage:
-#   scripts/governance/refuter.sh "<claim + where to measure it>"                  # high
-#   scripts/governance/refuter.sh --effort xhigh "<claim + where to measure it>"   # medium|high|xhigh
-#   scripts/governance/refuter.sh --proof                                          # prove it cannot write
-#   scripts/governance/refuter.sh --install-profile                                # copy the tracked profile into ~/.codex
+#   scripts/governance/refuter.sh --card CARD.md "<claim + where to measure it>"          # effort from the card
+#   scripts/governance/refuter.sh --card CARD.md --effort xhigh "<claim + where …>"       # raise it, never lower
+#   scripts/governance/refuter.sh --proof                                                 # prove it cannot write
+#   scripts/governance/refuter.sh --install-profile                                       # copy the tracked profile into ~/.codex
+#
+# THE SCORE CARD GATE (CEO 2026-10-01, "tmm makineyi de kur"). No audit starts
+# without the job's score card: scripts/governance/audit-card.mjs reads it,
+# measures the floor from the files the card's range touches, sets the effort
+# (light medium · normal high · critical xhigh), refuses an --effort beneath it,
+# and puts the card in front of Sol so it can challenge the grading. There is no
+# silent `high` default any more. Each launch is logged to
+# ~/.local/state/dxb/audit-cards.log (the class budgets are measured from it).
 #
 # THE AUDITOR'S OWN HAND (dxb-team2 job 1, CEO 2026-09-28 "önerin tmm"). The
 # profile starts one MCP server, `dxbdb`, whose one tool `sql_read` runs a
@@ -31,16 +39,40 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+CALLER_PWD="$PWD"
 cd "$ROOT"
 
 PROFILE="refuter"
 EFFORT=""
-if [ "${1:-}" = "--effort" ]; then
-  case "${2:-}" in
-    medium|high|xhigh) EFFORT="$2"; shift 2 ;;
-    *) echo "REFUTER_FAIL: --effort takes medium, high or xhigh." >&2; exit 1 ;;
+CARD=""
+while :; do
+  case "${1:-}" in
+    --effort)
+      case "${2:-}" in
+        medium|high|xhigh) EFFORT="$2"; shift 2 ;;
+        *) echo "REFUTER_FAIL: --effort takes medium, high or xhigh." >&2; exit 1 ;;
+      esac ;;
+    --card)
+      [ -n "${2:-}" ] || { echo "REFUTER_FAIL: --card takes the path of the job's score card." >&2; exit 1; }
+      case "$2" in /*) CARD="$2" ;; *) CARD="$CALLER_PWD/$2" ;; esac
+      shift 2 ;;
+    *) break ;;
   esac
-fi
+done
+
+# The gate runs before anything else for an audit, so a refused audit costs nothing.
+ROUTE=""
+case "${1:-}" in
+  --proof|--install-profile) ;;
+  *)
+    if [ -z "$CARD" ]; then
+      echo "REFUTER_FAIL: no score card — an audit starts only with --card <file> (dxb-team2 §3; CEO 2026-10-01)." >&2
+      exit 1
+    fi
+    ROUTE="$(node "$ROOT/scripts/governance/audit-card.mjs" check "$CARD" ${EFFORT:+--effort "$EFFORT"})" || exit 1
+    EFFORT="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).effort))')"
+    ;;
+esac
 
 HOME_DIR="${CODEX_HOME:-$HOME/.codex}"
 INSTALLED="$HOME_DIR/$PROFILE.config.toml"
@@ -170,7 +202,17 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-if [ -n "$EFFORT" ]; then
-  exec codex -p "$PROFILE" "${REACH[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "$@"
-fi
-exec codex -p "$PROFILE" "${REACH[@]}" exec "$@"
+# The card goes in front of the brief: the last argument is the prompt, or "-" for stdin.
+BLOCK="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).brief))'; printf x)"
+BLOCK="${BLOCK%x}"
+LAST="${!#}"
+set -- "${@:1:$#-1}"
+if [ "$LAST" = "-" ]; then PROMPT="$BLOCK$(cat; printf x)"; PROMPT="${PROMPT%x}"; else PROMPT="$BLOCK$LAST"; fi
+
+LOG_DIR="$HOME/.local/state/dxb"; mkdir -p "$LOG_DIR"
+printf '%s\t%s\t%s\t%s\n' "$(date -Iseconds)" "$(sha256sum "$CARD" | cut -c1-16)" "$CARD" \
+  "$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);delete r.brief;console.log(JSON.stringify(r))})')" \
+  >> "$LOG_DIR/audit-cards.log"
+echo "AUDIT_CARD class=$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log(`${r.class} total=${r.total}${r.floorRaised?" (raised by the floor)":""} effort=${r.effort}`)})')" >&2
+
+exec codex -p "$PROFILE" "${REACH[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "$@" "$PROMPT"

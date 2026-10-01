@@ -1722,5 +1722,21 @@
     "conditions": "Given in answer to the lead's one-line question whether to make it a standing rule; the ceiling of 1,600 bytes was the lead's proposed number (the longest thin row measured 1,566).",
     "session": "Opus 5.5 session 58e4dd12 — heard first-hand, 2026-09-28 ~22:45 local.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md law 8 · tests/b43/records-truth.ts R5"
+  },
+  "advisor-consult-when-needed-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "The advisor line in ~/.claude/CLAUDE.md (Kadro): the Fable 5.1 advisor may be consulted at any time when it is judged necessary. Replaces the 2026-09-24 wording ('only when stuck … kalıcı'), whose 'kalıcı' stamp had no entry in this register.",
+    "verbatim": "1-yalnız takılınca değil \"gerekli görüldüğü takdirde her zaman danışılabilir\" şeklinde olsun ve önerini de kabul ediyorum.",
+    "conditions": "His wording, applied as written. Not a law: no 'kalıcı' stamp.",
+    "session": "Opus 5.5 session cd2a0e9d — heard first-hand, 2026-10-01.",
+    "where": "~/.claude/CLAUDE.md, Kadro section, the Danışman bullet."
+  },
+  "score-card-gate-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "A machine holds dxb-team2's score card: refuter.sh refuses an audit without the job's card, scripts/governance/audit-card.mjs measures the floor from the files the card's range touches, sets Sol's effort from the class, refuses an effort beneath it and puts the card in front of Sol; the silent `high` default is gone.",
+    "verbatim": "tmm makineyi de kur",
+    "conditions": "Asked after he was told it adds well under a second to an audit and stops only an audit with no card or an effort beneath the card. The floor's level (normal) is the door's existing rule; his question whether it is enough was open when this was built.",
+    "session": "Opus 5.5 session cd2a0e9d — heard first-hand, 2026-10-01.",
+    "where": "scripts/governance/audit-card.mjs · scripts/governance/refuter.sh · .claude/skills/dxb-team2/SKILL.md §3 §6 · .claude/skills/dxb-verify/SKILL.md"
   }
 }
