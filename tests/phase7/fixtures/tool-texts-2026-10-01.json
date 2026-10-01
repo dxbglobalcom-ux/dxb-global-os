@@ -1,0 +1,2914 @@
+[
+ {
+  "server": "dxb-mcp",
+  "tool": "queue_create_task",
+  "description": "Validate a TaskEnvelope and enqueue it (inbox→queued birth, evented). Optional: agent_slug (an active employee of the envelope's department — the task is born staffed), project_id (an open project), label / label_tr (one line for the CEO's feed).",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "department": {
+     "type": "string",
+     "minLength": 1
+    },
+    "objective": {
+     "type": "string",
+     "minLength": 20
+    },
+    "output_contract": {
+     "type": "string",
+     "minLength": 10
+    },
+    "model_tier": {
+     "type": "string",
+     "enum": [
+      "L1",
+      "L2",
+      "L3",
+      "L4"
+     ]
+    },
+    "approval_class": {
+     "default": "none",
+     "type": "string",
+     "enum": [
+      "none",
+      "internal",
+      "outward"
+     ]
+    },
+    "budget": {
+     "default": {},
+     "type": "object",
+     "properties": {
+      "max_tokens": {
+       "default": 200000,
+       "type": "integer",
+       "exclusiveMinimum": 0,
+       "maximum": 9007199254740991
+      },
+      "max_cost_eur": {
+       "default": 1,
+       "type": "number",
+       "exclusiveMinimum": 0
+      }
+     }
+    },
+    "priority": {
+     "default": 0,
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 9
+    },
+    "parent_task_id": {
+     "default": null,
+     "anyOf": [
+      {
+       "type": "string",
+       "format": "uuid",
+       "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      {
+       "type": "null"
+      }
+     ]
+    },
+    "project_id": {
+     "type": "string",
+     "format": "uuid",
+     "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+    },
+    "agent_slug": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 80,
+     "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "label": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 120
+    },
+    "label_tr": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 120
+    }
+   },
+   "required": [
+    "department",
+    "objective",
+    "output_contract",
+    "model_tier"
+   ],
+   "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+ },
+ {
+  "server": "dxb-mcp",
+  "tool": "queue_dispatch",
+  "description": "Turn a plan into one task per named seat of YOUR department, born under your task's project with dependencies (deps = indices of earlier seats on the sheet). Seats with the same dependencies run at the same time in separate lanes; name only the seats the job needs. Each seat gets objective, output_contract, label (EN) and label_tr (TR), and a budget_minutes (claim → done; the engineer's includes the engine's own time) — written into the task's due_at along the chain and measured by queue_sheet_times; a seat over budget is asked why, a film is never failed by the clock. Dependants are told which tasks to read (queue_get) before they start. Idempotent per (your task, code).",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "task_id": {
+     "type": "string",
+     "format": "uuid",
+     "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+    },
+    "code": {
+     "type": "string",
+     "minLength": 3,
+     "maxLength": 60,
+     "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "seats": {
+     "minItems": 1,
+     "maxItems": 12,
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "seat": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80,
+        "pattern": "^[a-z0-9][a-z0-9-]*$"
+       },
+       "objective": {
+        "type": "string",
+        "minLength": 20
+       },
+       "output_contract": {
+        "type": "string",
+        "minLength": 10
+       },
+       "label": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120
+       },
+       "label_tr": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120
+       },
+       "deps": {
+        "default": [],
+        "type": "array",
+        "items": {
+         "type": "integer",
+         "minimum": 0,
+         "maximum": 9007199254740991
+        }
+       },
+       "priority": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9
+       },
+       "approval_class": {
+        "default": "none",
+        "type": "string",
+        "enum": [
+         "none",
+         "internal",
+         "outward"
+        ]
+       },
+       "budget_max_tokens": {
+        "type": "integer",
+        "exclusiveMinimum": 0,
+        "maximum": 9007199254740991
+       },
+       "budget_minutes": {
+        "type": "number",
+        "exclusiveMinimum": 0,
+        "maximum": 1440
+       }
+      },
+      "required": [
+       "seat",
+       "objective",
+       "output_contract",
+       "label",
+       "label_tr"
+      ]
+     }
+    }
+   },
+   "required": [
+    "task_id",
+    "code",
+    "seats"
+   ],
+   "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+ },
+ {
+  "server": "dxb-mcp",
+  "tool": "media_submit",
+  "description": "Put one engine job into the studio's job book. The tool returns in milliseconds with the job row; the minutes happen in the resident media lane — wait for it with media_wait, then read output_path. Kinds and their params (anything else is refused at submit): still {prompt, out: '<name>.png', w?, h?, steps? (28), guidance?, seed?} — a FLUX frame; shoot {prompt, seconds ≤ 15.1, width, height (multiples of 32 — the station's proven vertical draft is 640×1152, LAW D: draft first), steps? (4 = the studio standard, ≈ 14 min per 15 s), seed?, prefix (letters/digits/_/-), first_frame?, last_frame?, refs? (≤ 9 absolute paths), ref_audio? (≤ 3), ref_size? 'match'|'max', lora?, no_lora?, negative?, cfg?} — a MiniMax H3 take with the engine's own voice when the prompt carries spoken lines; upscale {file, model '3b'|'7b', target 720–2160, color? 'lab'|'wavelet'|'adain'|'none', seed?, overlap?} — SeedVR2, only on the CEO's word (LAW D); assemble {clips: [{file, trim_start?, trim_end?}] (≤ 40), width, height, fps? (24), grade? 'none'|'ugc'|'luxury', captions? [{text, from, to}], logo? {file, width_frac?, x_frac?, y_frac?, from?}, audio? [{file, at}], room_tone_db?, out: '<name>.mp4'} — ffmpeg cut/grade/captions/logo/mix; probe {file, at_seconds? (≤ 6)} — ffprobe plus frames (media_probe does the same into your own eye).",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "task_id": {
+     "type": "string",
+     "format": "uuid",
+     "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+    },
+    "kind": {
+     "type": "string",
+     "enum": [
+      "still",
+      "shoot",
+      "upscale",
+      "assemble",
+      "probe"
+     ]
+    },
+    "params": {
+     "type": "object",
+     "propertyNames": {
+      "type": "string"
+     },
+     "additionalProperties": {}
+    },
+    "note": {
+     "type": "string",
+     "maxLength": 300
+    }
+   },
+   "required": [
+    "task_id",
+    "kind",
+    "params"
+   ],
+   "$schema": "http://json-schema.org/draft-07/schema#"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "open_session",
+  "description": "Open a persistent browser session that can be reused across multiple fetch calls.\nThis avoids the overhead of launching a new browser for each request.\nUse close_session to close the session when done, and list_sessions to see all active sessions.\n\n:param session_type: The type of session to open. Use \"dynamic\" for standard Playwright browser, or \"stealthy\" for anti-bot bypass with fingerprint spoofing.\n:param session_id: Optional custom session ID. If not provided, a random 12-character hex ID will be generated. Useful for naming sessions for easier management.\n:param headless: Run the browser in headless/hidden (default), or headful/visible mode.\n:param google_search: Enabled by default, Scrapling will set a Google referer header.\n:param real_chrome: If you have a Chrome browser installed on your device, enable this, and the Fetcher will launch an instance of your browser and use it.\n:param wait: The time (milliseconds) the fetcher will wait after everything finishes before closing the page and returning the Response object.\n:param proxy: The proxy to be used with requests, it can be a string or a dictionary with the keys 'server', 'username', and 'password' only.\n:param timezone_id: Changes the timezone of the browser. Defaults to the system timezone.\n:param locale: Specify user locale, for example, `en-GB`, `de-DE`, etc.\n:param extra_headers: A dictionary of extra headers to add to the request.\n:param useragent: Pass a useragent string to be used. Otherwise the fetcher will generate a real Useragent of the same browser and use it.\n:param cdp_url: Instead of launching a new browser instance, connect to this CDP URL to control real browsers through CDP.\n:param executable_path: Absolute path to a custom Chromium-compatible browser executable. Overrides the server-wide default for this session.\n:param timeout: The timeout in milliseconds that is used in all operations and waits through the page. The default is 30,000.\n:param disable_resources: Drop requests for unnecessary resources for a speed boost.\n:param wait_selector: Wait for a specific CSS selector to be in a specific state.\n:param cookies: Set cookies for the session. It should be in a dictionary format that Playwright accepts.\n:param network_idle: Wait for the page until there are no network connections for at least 500 ms.\n:param wait_selector_state: The state to wait for the selector given with `wait_selector`. The default state is `attached`.\n:param max_pages: Maximum number of concurrent pages/tabs in the browser. Defaults to 5. Higher values allow more parallel fetches.\n:param hide_canvas: (Stealthy only) Add random noise to canvas operations to prevent fingerprinting.\n:param block_webrtc: (Stealthy only) Forces WebRTC to respect proxy settings to prevent local IP address leak.\n:param allow_webgl: (Stealthy only) Enabled by default. Disabling WebGL is not recommended as many WAFs now check if WebGL is enabled.\n:param solve_cloudflare: (Stealthy only) Solves all types of the Cloudflare's Turnstile/Interstitial challenges.\n:param additional_args: (Stealthy only) Additional arguments to be passed to Playwright's context as additional settings.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "session_type": {
+     "enum": [
+      "dynamic",
+      "stealthy"
+     ],
+     "title": "Session Type",
+     "type": "string"
+    },
+    "session_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Session Id"
+    },
+    "headless": {
+     "default": true,
+     "title": "Headless",
+     "type": "boolean"
+    },
+    "google_search": {
+     "default": true,
+     "title": "Google Search",
+     "type": "boolean"
+    },
+    "real_chrome": {
+     "default": false,
+     "title": "Real Chrome",
+     "type": "boolean"
+    },
+    "wait": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 0,
+     "title": "Wait"
+    },
+    "proxy": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy"
+    },
+    "timezone_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Timezone Id"
+    },
+    "locale": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Locale"
+    },
+    "extra_headers": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Extra Headers"
+    },
+    "useragent": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Useragent"
+    },
+    "cdp_url": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cdp Url"
+    },
+    "executable_path": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Executable Path"
+    },
+    "timeout": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 30000,
+     "title": "Timeout"
+    },
+    "disable_resources": {
+     "default": false,
+     "title": "Disable Resources",
+     "type": "boolean"
+    },
+    "wait_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Wait Selector"
+    },
+    "cookies": {
+     "anyOf": [
+      {
+       "items": {
+        "$ref": "#/$defs/SetCookieParam"
+       },
+       "type": "array"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cookies"
+    },
+    "network_idle": {
+     "default": false,
+     "title": "Network Idle",
+     "type": "boolean"
+    },
+    "wait_selector_state": {
+     "default": "attached",
+     "enum": [
+      "attached",
+      "detached",
+      "hidden",
+      "visible"
+     ],
+     "title": "Wait Selector State",
+     "type": "string"
+    },
+    "max_pages": {
+     "default": 5,
+     "title": "Max Pages",
+     "type": "integer"
+    },
+    "hide_canvas": {
+     "default": false,
+     "title": "Hide Canvas",
+     "type": "boolean"
+    },
+    "block_webrtc": {
+     "default": false,
+     "title": "Block Webrtc",
+     "type": "boolean"
+    },
+    "allow_webgl": {
+     "default": true,
+     "title": "Allow Webgl",
+     "type": "boolean"
+    },
+    "solve_cloudflare": {
+     "default": false,
+     "title": "Solve Cloudflare",
+     "type": "boolean"
+    },
+    "additional_args": {
+     "anyOf": [
+      {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Additional Args"
+    }
+   },
+   "required": [
+    "session_type"
+   ],
+   "$defs": {
+    "SetCookieParam": {
+     "properties": {
+      "name": {
+       "title": "Name",
+       "type": "string"
+      },
+      "value": {
+       "title": "Value",
+       "type": "string"
+      },
+      "url": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Url"
+      },
+      "domain": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Domain"
+      },
+      "path": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Path"
+      },
+      "expires": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Expires"
+      },
+      "httpOnly": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Httponly"
+      },
+      "secure": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Secure"
+      },
+      "sameSite": {
+       "anyOf": [
+        {
+         "enum": [
+          "Lax",
+          "None",
+          "Strict"
+         ],
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Samesite"
+      },
+      "partitionKey": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Partitionkey"
+      }
+     },
+     "title": "SetCookieParam",
+     "type": "object"
+    }
+   },
+   "title": "open_sessionArguments"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "close_session",
+  "description": "Close a persistent browser session and free its resources.\n\n:param session_id: The unique identifier of the session to close. Use list_sessions to see active sessions.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "session_id": {
+     "title": "Session Id",
+     "type": "string"
+    }
+   },
+   "required": [
+    "session_id"
+   ],
+   "title": "close_sessionArguments"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "get",
+  "description": "Make GET HTTP request to a URL and return a structured output of the result.\nNote: This is only suitable for low-mid protection levels. For high-protection levels or websites that require JS loading, use the other tools directly.\nNote: If the `css_selector` resolves to more than one element, all the elements will be returned.\n\n:param url: The URL to request.\n:param impersonate: Browser version to impersonate its fingerprint. It's using the latest chrome version by default.\n:param extraction_type: The type of content to extract from the page. Defaults to \"markdown\". Options are:\n    - Markdown will convert the page content to Markdown format.\n    - HTML will return the raw HTML content of the page.\n    - Text will return the text content of the page.\n:param css_selector: CSS selector to extract the content from the page. If main_content_only is True, then it will be executed on the main content of the page. Defaults to None.\n:param main_content_only: Whether to extract only the main content of the page. Defaults to True. The main content here is the data inside the `<body>` tag.\n:param params: Query string parameters for the request.\n:param headers: Headers to include in the request.\n:param cookies: Cookies to use in the request.\n:param timeout: Number of seconds to wait before timing out.\n:param follow_redirects: Whether to follow redirects. Defaults to \"safe\", which follows redirects but rejects those targeting internal/private IPs (SSRF protection).\n    Pass True to follow all redirects without restriction.\n:param max_redirects: Maximum number of redirects. Default 30, use -1 for unlimited.\n:param retries: Number of retry attempts. Defaults to 3.\n:param retry_delay: Number of seconds to wait between retry attempts. Defaults to 1 second.\n:param proxy: Proxy URL to use. Format: \"http://username:password@localhost:8030\".\n             Cannot be used together with the `proxies` parameter.\n:param proxy_auth: HTTP basic auth for proxy in dictionary format with `username` and `password` keys.\n:param auth: HTTP basic auth in dictionary format with `username` and `password` keys.\n:param verify: Whether to verify HTTPS certificates.\n:param http3: Whether to use HTTP3. Defaults to False. It might be problematic if used it with `impersonate`.\n:param stealthy_headers: If enabled (default), it creates and adds real browser headers. It also sets a Google referer header.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "url": {
+     "title": "Url",
+     "type": "string"
+    },
+    "impersonate": {
+     "anyOf": [
+      {
+       "enum": [
+        "edge99",
+        "edge101",
+        "chrome99",
+        "chrome100",
+        "chrome101",
+        "chrome104",
+        "chrome107",
+        "chrome110",
+        "chrome116",
+        "chrome119",
+        "chrome120",
+        "chrome123",
+        "chrome124",
+        "chrome131",
+        "chrome133a",
+        "chrome136",
+        "chrome142",
+        "chrome145",
+        "chrome146",
+        "chrome99_android",
+        "chrome131_android",
+        "safari153",
+        "safari155",
+        "safari170",
+        "safari172_ios",
+        "safari180",
+        "safari180_ios",
+        "safari184",
+        "safari184_ios",
+        "safari260",
+        "safari2601",
+        "safari260_ios",
+        "firefox133",
+        "firefox135",
+        "firefox144",
+        "firefox147",
+        "tor145",
+        "chrome",
+        "edge",
+        "safari",
+        "safari_ios",
+        "safari_beta",
+        "safari_ios_beta",
+        "chrome_android",
+        "firefox",
+        "safari15_3",
+        "safari15_5",
+        "safari17_0",
+        "safari17_2_ios",
+        "safari18_0",
+        "safari18_0_ios",
+        "safari18_4",
+        "safari18_4_ios"
+       ],
+       "type": "string"
+      },
+      {
+       "items": {
+        "enum": [
+         "edge99",
+         "edge101",
+         "chrome99",
+         "chrome100",
+         "chrome101",
+         "chrome104",
+         "chrome107",
+         "chrome110",
+         "chrome116",
+         "chrome119",
+         "chrome120",
+         "chrome123",
+         "chrome124",
+         "chrome131",
+         "chrome133a",
+         "chrome136",
+         "chrome142",
+         "chrome145",
+         "chrome146",
+         "chrome99_android",
+         "chrome131_android",
+         "safari153",
+         "safari155",
+         "safari170",
+         "safari172_ios",
+         "safari180",
+         "safari180_ios",
+         "safari184",
+         "safari184_ios",
+         "safari260",
+         "safari2601",
+         "safari260_ios",
+         "firefox133",
+         "firefox135",
+         "firefox144",
+         "firefox147",
+         "tor145",
+         "chrome",
+         "edge",
+         "safari",
+         "safari_ios",
+         "safari_beta",
+         "safari_ios_beta",
+         "chrome_android",
+         "firefox",
+         "safari15_3",
+         "safari15_5",
+         "safari17_0",
+         "safari17_2_ios",
+         "safari18_0",
+         "safari18_0_ios",
+         "safari18_4",
+         "safari18_4_ios"
+        ],
+        "type": "string"
+       },
+       "type": "array"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": "chrome",
+     "title": "Impersonate"
+    },
+    "extraction_type": {
+     "default": "markdown",
+     "enum": [
+      "text",
+      "html",
+      "markdown"
+     ],
+     "title": "Extraction Type",
+     "type": "string"
+    },
+    "css_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Css Selector"
+    },
+    "main_content_only": {
+     "default": true,
+     "title": "Main Content Only",
+     "type": "boolean"
+    },
+    "params": {
+     "anyOf": [
+      {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Params"
+    },
+    "headers": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "anyOf": [
+         {
+          "type": "string"
+         },
+         {
+          "type": "null"
+         }
+        ]
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Headers"
+    },
+    "cookies": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cookies"
+    },
+    "timeout": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": 30,
+     "title": "Timeout"
+    },
+    "follow_redirects": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "enum": [
+        "safe",
+        "all",
+        "obeycode",
+        "firstonly"
+       ],
+       "type": "string"
+      }
+     ],
+     "default": "safe",
+     "title": "Follow Redirects"
+    },
+    "max_redirects": {
+     "default": 30,
+     "title": "Max Redirects",
+     "type": "integer"
+    },
+    "retries": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": 3,
+     "title": "Retries"
+    },
+    "retry_delay": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": 1,
+     "title": "Retry Delay"
+    },
+    "proxy": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy"
+    },
+    "proxy_auth": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy Auth"
+    },
+    "auth": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Auth"
+    },
+    "verify": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": true,
+     "title": "Verify"
+    },
+    "http3": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": false,
+     "title": "Http3"
+    },
+    "stealthy_headers": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": true,
+     "title": "Stealthy Headers"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "title": "getArguments"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "bulk_get",
+  "description": "Make GET HTTP request to a group of URLs and for each URL, return a structured output of the result.\nNote: This is only suitable for low-mid protection levels. For high-protection levels or websites that require JS loading, use the other tools directly.\nNote: If the `css_selector` resolves to more than one element, all the elements will be returned.\n\n:param urls: A list of the URLs to request.\n:param impersonate: Browser version to impersonate its fingerprint. It's using the latest chrome version by default.\n:param extraction_type: The type of content to extract from the page. Defaults to \"markdown\". Options are:\n    - Markdown will convert the page content to Markdown format.\n    - HTML will return the raw HTML content of the page.\n    - Text will return the text content of the page.\n:param css_selector: CSS selector to extract the content from the page. If main_content_only is True, then it will be executed on the main content of the page. Defaults to None.\n:param main_content_only: Whether to extract only the main content of the page. Defaults to True. The main content here is the data inside the `<body>` tag.\n:param params: Query string parameters for the request.\n:param headers: Headers to include in the request.\n:param cookies: Cookies to use in the request.\n:param timeout: Number of seconds to wait before timing out.\n:param follow_redirects: Whether to follow redirects. Defaults to \"safe\", which follows redirects but rejects those targeting internal/private IPs (SSRF protection).\n    Pass True to follow all redirects without restriction.\n:param max_redirects: Maximum number of redirects. Default 30, use -1 for unlimited.\n:param retries: Number of retry attempts. Defaults to 3.\n:param retry_delay: Number of seconds to wait between retry attempts. Defaults to 1 second.\n:param proxy: Proxy URL to use. Format: \"http://username:password@localhost:8030\".\n             Cannot be used together with the `proxies` parameter.\n:param proxy_auth: HTTP basic auth for proxy in dictionary format with `username` and `password` keys.\n:param auth: HTTP basic auth in dictionary format with `username` and `password` keys.\n:param verify: Whether to verify HTTPS certificates.\n:param http3: Whether to use HTTP3. Defaults to False. It might be problematic if used it with `impersonate`.\n:param stealthy_headers: If enabled (default), it creates and adds real browser headers. It also sets a Google referer header.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "urls": {
+     "items": {
+      "type": "string"
+     },
+     "title": "Urls",
+     "type": "array"
+    },
+    "impersonate": {
+     "anyOf": [
+      {
+       "enum": [
+        "edge99",
+        "edge101",
+        "chrome99",
+        "chrome100",
+        "chrome101",
+        "chrome104",
+        "chrome107",
+        "chrome110",
+        "chrome116",
+        "chrome119",
+        "chrome120",
+        "chrome123",
+        "chrome124",
+        "chrome131",
+        "chrome133a",
+        "chrome136",
+        "chrome142",
+        "chrome145",
+        "chrome146",
+        "chrome99_android",
+        "chrome131_android",
+        "safari153",
+        "safari155",
+        "safari170",
+        "safari172_ios",
+        "safari180",
+        "safari180_ios",
+        "safari184",
+        "safari184_ios",
+        "safari260",
+        "safari2601",
+        "safari260_ios",
+        "firefox133",
+        "firefox135",
+        "firefox144",
+        "firefox147",
+        "tor145",
+        "chrome",
+        "edge",
+        "safari",
+        "safari_ios",
+        "safari_beta",
+        "safari_ios_beta",
+        "chrome_android",
+        "firefox",
+        "safari15_3",
+        "safari15_5",
+        "safari17_0",
+        "safari17_2_ios",
+        "safari18_0",
+        "safari18_0_ios",
+        "safari18_4",
+        "safari18_4_ios"
+       ],
+       "type": "string"
+      },
+      {
+       "items": {
+        "enum": [
+         "edge99",
+         "edge101",
+         "chrome99",
+         "chrome100",
+         "chrome101",
+         "chrome104",
+         "chrome107",
+         "chrome110",
+         "chrome116",
+         "chrome119",
+         "chrome120",
+         "chrome123",
+         "chrome124",
+         "chrome131",
+         "chrome133a",
+         "chrome136",
+         "chrome142",
+         "chrome145",
+         "chrome146",
+         "chrome99_android",
+         "chrome131_android",
+         "safari153",
+         "safari155",
+         "safari170",
+         "safari172_ios",
+         "safari180",
+         "safari180_ios",
+         "safari184",
+         "safari184_ios",
+         "safari260",
+         "safari2601",
+         "safari260_ios",
+         "firefox133",
+         "firefox135",
+         "firefox144",
+         "firefox147",
+         "tor145",
+         "chrome",
+         "edge",
+         "safari",
+         "safari_ios",
+         "safari_beta",
+         "safari_ios_beta",
+         "chrome_android",
+         "firefox",
+         "safari15_3",
+         "safari15_5",
+         "safari17_0",
+         "safari17_2_ios",
+         "safari18_0",
+         "safari18_0_ios",
+         "safari18_4",
+         "safari18_4_ios"
+        ],
+        "type": "string"
+       },
+       "type": "array"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": "chrome",
+     "title": "Impersonate"
+    },
+    "extraction_type": {
+     "default": "markdown",
+     "enum": [
+      "text",
+      "html",
+      "markdown"
+     ],
+     "title": "Extraction Type",
+     "type": "string"
+    },
+    "css_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Css Selector"
+    },
+    "main_content_only": {
+     "default": true,
+     "title": "Main Content Only",
+     "type": "boolean"
+    },
+    "params": {
+     "anyOf": [
+      {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Params"
+    },
+    "headers": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "anyOf": [
+         {
+          "type": "string"
+         },
+         {
+          "type": "null"
+         }
+        ]
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Headers"
+    },
+    "cookies": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cookies"
+    },
+    "timeout": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": 30,
+     "title": "Timeout"
+    },
+    "follow_redirects": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "enum": [
+        "safe",
+        "all",
+        "obeycode",
+        "firstonly"
+       ],
+       "type": "string"
+      }
+     ],
+     "default": "safe",
+     "title": "Follow Redirects"
+    },
+    "max_redirects": {
+     "default": 30,
+     "title": "Max Redirects",
+     "type": "integer"
+    },
+    "retries": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": 3,
+     "title": "Retries"
+    },
+    "retry_delay": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": 1,
+     "title": "Retry Delay"
+    },
+    "proxy": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy"
+    },
+    "proxy_auth": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy Auth"
+    },
+    "auth": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Auth"
+    },
+    "verify": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": true,
+     "title": "Verify"
+    },
+    "http3": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": false,
+     "title": "Http3"
+    },
+    "stealthy_headers": {
+     "anyOf": [
+      {
+       "type": "boolean"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": true,
+     "title": "Stealthy Headers"
+    }
+   },
+   "required": [
+    "urls"
+   ],
+   "title": "bulk_getArguments"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "fetch",
+  "description": "Use playwright to open a browser to fetch a URL and return a structured output of the result.\nNote: This is only suitable for low-mid protection levels.\nNote: If the `css_selector` resolves to more than one element, all the elements will be returned.\nNote: If a `session_id` is provided (from open_session), the browser session will be reused instead of creating a new one.\n    When using a session, browser-level params (headless, proxy, locale, etc.) are ignored since they were set at session creation time.\n\n:param url: The URL to request.\n:param extraction_type: The type of content to extract from the page. Defaults to \"markdown\". Options are:\n    - Markdown will convert the page content to Markdown format.\n    - HTML will return the raw HTML content of the page.\n    - Text will return the text content of the page.\n:param css_selector: CSS selector to extract the content from the page. If main_content_only is True, then it will be executed on the main content of the page. Defaults to None.\n:param main_content_only: Whether to extract only the main content of the page. Defaults to True. The main content here is the data inside the `<body>` tag.\n:param headless: Run the browser in headless/hidden (default), or headful/visible mode.\n:param disable_resources: Drop requests for unnecessary resources for a speed boost.\n    Requests dropped are of type `font`, `image`, `media`, `beacon`, `object`, `imageset`, `texttrack`, `websocket`, `csp_report`, and `stylesheet`.\n:param useragent: Pass a useragent string to be used. Otherwise the fetcher will generate a real Useragent of the same browser and use it.\n:param cookies: Set cookies for the next request. It should be in a dictionary format that Playwright accepts.\n:param network_idle: Wait for the page until there are no network connections for at least 500 ms.\n:param timeout: The timeout in milliseconds that is used in all operations and waits through the page. The default is 30,000\n:param wait: The time (milliseconds) the fetcher will wait after everything finishes before closing the page and returning the ` Response ` object.\n:param wait_selector: Wait for a specific CSS selector to be in a specific state.\n:param timezone_id: Changes the timezone of the browser. Defaults to the system timezone.\n:param locale: Specify user locale, for example, `en-GB`, `de-DE`, etc. Locale will affect navigator.language value, Accept-Language request header value as well as number and date formatting\n    rules. Defaults to the system default locale.\n:param wait_selector_state: The state to wait for the selector given with `wait_selector`. The default state is `attached`.\n:param real_chrome: If you have a Chrome browser installed on your device, enable this, and the Fetcher will launch an instance of your browser and use it.\n:param cdp_url: Instead of launching a new browser instance, connect to this CDP URL to control real browsers through CDP.\n:param executable_path: Absolute path to a custom Chromium-compatible browser executable. Overrides the server-wide default for this request.\n:param google_search: Enabled by default, Scrapling will set a Google referer header.\n:param extra_headers: A dictionary of extra headers to add to the request. _The referer set by `google_search` takes priority over the referer set here if used together._\n:param proxy: The proxy to be used with requests, it can be a string or a dictionary with the keys 'server', 'username', and 'password' only.\n:param session_id: Optional session ID from open_session. If provided, reuses the existing browser session instead of creating a new one.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "url": {
+     "title": "Url",
+     "type": "string"
+    },
+    "extraction_type": {
+     "default": "markdown",
+     "enum": [
+      "text",
+      "html",
+      "markdown"
+     ],
+     "title": "Extraction Type",
+     "type": "string"
+    },
+    "css_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Css Selector"
+    },
+    "main_content_only": {
+     "default": true,
+     "title": "Main Content Only",
+     "type": "boolean"
+    },
+    "headless": {
+     "default": true,
+     "title": "Headless",
+     "type": "boolean"
+    },
+    "google_search": {
+     "default": true,
+     "title": "Google Search",
+     "type": "boolean"
+    },
+    "real_chrome": {
+     "default": false,
+     "title": "Real Chrome",
+     "type": "boolean"
+    },
+    "wait": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 0,
+     "title": "Wait"
+    },
+    "proxy": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy"
+    },
+    "timezone_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Timezone Id"
+    },
+    "locale": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Locale"
+    },
+    "extra_headers": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Extra Headers"
+    },
+    "useragent": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Useragent"
+    },
+    "cdp_url": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cdp Url"
+    },
+    "executable_path": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Executable Path"
+    },
+    "timeout": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 30000,
+     "title": "Timeout"
+    },
+    "disable_resources": {
+     "default": false,
+     "title": "Disable Resources",
+     "type": "boolean"
+    },
+    "wait_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Wait Selector"
+    },
+    "cookies": {
+     "anyOf": [
+      {
+       "items": {
+        "$ref": "#/$defs/SetCookieParam"
+       },
+       "type": "array"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cookies"
+    },
+    "network_idle": {
+     "default": false,
+     "title": "Network Idle",
+     "type": "boolean"
+    },
+    "wait_selector_state": {
+     "default": "attached",
+     "enum": [
+      "attached",
+      "detached",
+      "hidden",
+      "visible"
+     ],
+     "title": "Wait Selector State",
+     "type": "string"
+    },
+    "session_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Session Id"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "$defs": {
+    "SetCookieParam": {
+     "properties": {
+      "name": {
+       "title": "Name",
+       "type": "string"
+      },
+      "value": {
+       "title": "Value",
+       "type": "string"
+      },
+      "url": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Url"
+      },
+      "domain": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Domain"
+      },
+      "path": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Path"
+      },
+      "expires": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Expires"
+      },
+      "httpOnly": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Httponly"
+      },
+      "secure": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Secure"
+      },
+      "sameSite": {
+       "anyOf": [
+        {
+         "enum": [
+          "Lax",
+          "None",
+          "Strict"
+         ],
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Samesite"
+      },
+      "partitionKey": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Partitionkey"
+      }
+     },
+     "title": "SetCookieParam",
+     "type": "object"
+    }
+   },
+   "title": "fetchArguments"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "bulk_fetch",
+  "description": "Use playwright to open a browser, then fetch a group of URLs at the same time, and for each page return a structured output of the result.\nNote: This is only suitable for low-mid protection levels.\nNote: If the `css_selector` resolves to more than one element, all the elements will be returned.\nNote: If a `session_id` is provided (from open_session), the browser session will be reused instead of creating a new one.\n    When using a session, browser-level params (headless, proxy, locale, etc.) are ignored since they were set at session creation time.\n\n:param urls: A list of the URLs to request.\n:param extraction_type: The type of content to extract from the page. Defaults to \"markdown\". Options are:\n    - Markdown will convert the page content to Markdown format.\n    - HTML will return the raw HTML content of the page.\n    - Text will return the text content of the page.\n:param css_selector: CSS selector to extract the content from the page. If main_content_only is True, then it will be executed on the main content of the page. Defaults to None.\n:param main_content_only: Whether to extract only the main content of the page. Defaults to True. The main content here is the data inside the `<body>` tag.\n:param headless: Run the browser in headless/hidden (default), or headful/visible mode.\n:param disable_resources: Drop requests for unnecessary resources for a speed boost.\n    Requests dropped are of type `font`, `image`, `media`, `beacon`, `object`, `imageset`, `texttrack`, `websocket`, `csp_report`, and `stylesheet`.\n:param useragent: Pass a useragent string to be used. Otherwise the fetcher will generate a real Useragent of the same browser and use it.\n:param cookies: Set cookies for the next request. It should be in a dictionary format that Playwright accepts.\n:param network_idle: Wait for the page until there are no network connections for at least 500 ms.\n:param timeout: The timeout in milliseconds that is used in all operations and waits through the page. The default is 30,000\n:param wait: The time (milliseconds) the fetcher will wait after everything finishes before closing the page and returning the ` Response ` object.\n:param wait_selector: Wait for a specific CSS selector to be in a specific state.\n:param timezone_id: Changes the timezone of the browser. Defaults to the system timezone.\n:param locale: Specify user locale, for example, `en-GB`, `de-DE`, etc. Locale will affect navigator.language value, Accept-Language request header value as well as number and date formatting\n    rules. Defaults to the system default locale.\n:param wait_selector_state: The state to wait for the selector given with `wait_selector`. The default state is `attached`.\n:param real_chrome: If you have a Chrome browser installed on your device, enable this, and the Fetcher will launch an instance of your browser and use it.\n:param cdp_url: Instead of launching a new browser instance, connect to this CDP URL to control real browsers through CDP.\n:param executable_path: Absolute path to a custom Chromium-compatible browser executable. Overrides the server-wide default for this request.\n:param google_search: Enabled by default, Scrapling will set a Google referer header.\n:param extra_headers: A dictionary of extra headers to add to the request. _The referer set by `google_search` takes priority over the referer set here if used together._\n:param proxy: The proxy to be used with requests, it can be a string or a dictionary with the keys 'server', 'username', and 'password' only.\n:param session_id: Optional session ID from open_session. If provided, reuses the existing browser session instead of creating a new one.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "urls": {
+     "items": {
+      "type": "string"
+     },
+     "title": "Urls",
+     "type": "array"
+    },
+    "extraction_type": {
+     "default": "markdown",
+     "enum": [
+      "text",
+      "html",
+      "markdown"
+     ],
+     "title": "Extraction Type",
+     "type": "string"
+    },
+    "css_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Css Selector"
+    },
+    "main_content_only": {
+     "default": true,
+     "title": "Main Content Only",
+     "type": "boolean"
+    },
+    "headless": {
+     "default": true,
+     "title": "Headless",
+     "type": "boolean"
+    },
+    "google_search": {
+     "default": true,
+     "title": "Google Search",
+     "type": "boolean"
+    },
+    "real_chrome": {
+     "default": false,
+     "title": "Real Chrome",
+     "type": "boolean"
+    },
+    "wait": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 0,
+     "title": "Wait"
+    },
+    "proxy": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy"
+    },
+    "timezone_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Timezone Id"
+    },
+    "locale": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Locale"
+    },
+    "extra_headers": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Extra Headers"
+    },
+    "useragent": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Useragent"
+    },
+    "cdp_url": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cdp Url"
+    },
+    "executable_path": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Executable Path"
+    },
+    "timeout": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 30000,
+     "title": "Timeout"
+    },
+    "disable_resources": {
+     "default": false,
+     "title": "Disable Resources",
+     "type": "boolean"
+    },
+    "wait_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Wait Selector"
+    },
+    "cookies": {
+     "anyOf": [
+      {
+       "items": {
+        "$ref": "#/$defs/SetCookieParam"
+       },
+       "type": "array"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cookies"
+    },
+    "network_idle": {
+     "default": false,
+     "title": "Network Idle",
+     "type": "boolean"
+    },
+    "wait_selector_state": {
+     "default": "attached",
+     "enum": [
+      "attached",
+      "detached",
+      "hidden",
+      "visible"
+     ],
+     "title": "Wait Selector State",
+     "type": "string"
+    },
+    "session_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Session Id"
+    }
+   },
+   "required": [
+    "urls"
+   ],
+   "$defs": {
+    "SetCookieParam": {
+     "properties": {
+      "name": {
+       "title": "Name",
+       "type": "string"
+      },
+      "value": {
+       "title": "Value",
+       "type": "string"
+      },
+      "url": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Url"
+      },
+      "domain": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Domain"
+      },
+      "path": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Path"
+      },
+      "expires": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Expires"
+      },
+      "httpOnly": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Httponly"
+      },
+      "secure": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Secure"
+      },
+      "sameSite": {
+       "anyOf": [
+        {
+         "enum": [
+          "Lax",
+          "None",
+          "Strict"
+         ],
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Samesite"
+      },
+      "partitionKey": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Partitionkey"
+      }
+     },
+     "title": "SetCookieParam",
+     "type": "object"
+    }
+   },
+   "title": "bulk_fetchArguments"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "stealthy_fetch",
+  "description": "Use the stealthy fetcher to fetch a URL and return a structured output of the result.\nNote: This is the only suitable fetcher for high protection levels.\nNote: If the `css_selector` resolves to more than one element, all the elements will be returned.\nNote: If a `session_id` is provided (from open_session), the browser session will be reused instead of creating a new one.\n    When using a session, browser-level params (headless, proxy, locale, etc.) are ignored since they were set at session creation time.\n\n:param url: The URL to request.\n:param extraction_type: The type of content to extract from the page. Defaults to \"markdown\". Options are:\n    - Markdown will convert the page content to Markdown format.\n    - HTML will return the raw HTML content of the page.\n    - Text will return the text content of the page.\n:param css_selector: CSS selector to extract the content from the page. If main_content_only is True, then it will be executed on the main content of the page. Defaults to None.\n:param main_content_only: Whether to extract only the main content of the page. Defaults to True. The main content here is the data inside the `<body>` tag.\n:param headless: Run the browser in headless/hidden (default), or headful/visible mode.\n:param disable_resources: Drop requests for unnecessary resources for a speed boost.\n    Requests dropped are of type `font`, `image`, `media`, `beacon`, `object`, `imageset`, `texttrack`, `websocket`, `csp_report`, and `stylesheet`.\n:param useragent: Pass a useragent string to be used. Otherwise the fetcher will generate a real Useragent of the same browser and use it.\n:param cookies: Set cookies for the next request.\n:param solve_cloudflare: Solves all types of the Cloudflare's Turnstile/Interstitial challenges before returning the response to you.\n:param allow_webgl: Enabled by default. Disabling WebGL is not recommended as many WAFs now check if WebGL is enabled.\n:param network_idle: Wait for the page until there are no network connections for at least 500 ms.\n:param wait: The time (milliseconds) the fetcher will wait after everything finishes before closing the page and returning the ` Response ` object.\n:param timeout: The timeout in milliseconds that is used in all operations and waits through the page. The default is 30,000\n:param wait_selector: Wait for a specific CSS selector to be in a specific state.\n:param timezone_id: Changes the timezone of the browser. Defaults to the system timezone.\n:param locale: Specify user locale, for example, `en-GB`, `de-DE`, etc. Locale will affect navigator.language value, Accept-Language request header value as well as number and date formatting\n    rules. Defaults to the system default locale.\n:param wait_selector_state: The state to wait for the selector given with `wait_selector`. The default state is `attached`.\n:param real_chrome: If you have a Chrome browser installed on your device, enable this, and the Fetcher will launch an instance of your browser and use it.\n:param hide_canvas: Add random noise to canvas operations to prevent fingerprinting.\n:param block_webrtc: Forces WebRTC to respect proxy settings to prevent local IP address leak.\n:param cdp_url: Instead of launching a new browser instance, connect to this CDP URL to control real browsers through CDP.\n:param executable_path: Absolute path to a custom Chromium-compatible browser executable. Overrides the server-wide default for this request.\n:param google_search: Enabled by default, Scrapling will set a Google referer header.\n:param extra_headers: A dictionary of extra headers to add to the request. _The referer set by `google_search` takes priority over the referer set here if used together._\n:param proxy: The proxy to be used with requests, it can be a string or a dictionary with the keys 'server', 'username', and 'password' only.\n:param additional_args: Additional arguments to be passed to Playwright's context as additional settings, and it takes higher priority than Scrapling's settings.\n:param session_id: Optional session ID from open_session. If provided, reuses the existing browser session instead of creating a new one.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "url": {
+     "title": "Url",
+     "type": "string"
+    },
+    "extraction_type": {
+     "default": "markdown",
+     "enum": [
+      "text",
+      "html",
+      "markdown"
+     ],
+     "title": "Extraction Type",
+     "type": "string"
+    },
+    "css_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Css Selector"
+    },
+    "main_content_only": {
+     "default": true,
+     "title": "Main Content Only",
+     "type": "boolean"
+    },
+    "headless": {
+     "default": true,
+     "title": "Headless",
+     "type": "boolean"
+    },
+    "google_search": {
+     "default": true,
+     "title": "Google Search",
+     "type": "boolean"
+    },
+    "real_chrome": {
+     "default": false,
+     "title": "Real Chrome",
+     "type": "boolean"
+    },
+    "wait": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 0,
+     "title": "Wait"
+    },
+    "proxy": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy"
+    },
+    "timezone_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Timezone Id"
+    },
+    "locale": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Locale"
+    },
+    "extra_headers": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Extra Headers"
+    },
+    "useragent": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Useragent"
+    },
+    "hide_canvas": {
+     "default": false,
+     "title": "Hide Canvas",
+     "type": "boolean"
+    },
+    "cdp_url": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cdp Url"
+    },
+    "executable_path": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Executable Path"
+    },
+    "timeout": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 30000,
+     "title": "Timeout"
+    },
+    "disable_resources": {
+     "default": false,
+     "title": "Disable Resources",
+     "type": "boolean"
+    },
+    "wait_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Wait Selector"
+    },
+    "cookies": {
+     "anyOf": [
+      {
+       "items": {
+        "$ref": "#/$defs/SetCookieParam"
+       },
+       "type": "array"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cookies"
+    },
+    "network_idle": {
+     "default": false,
+     "title": "Network Idle",
+     "type": "boolean"
+    },
+    "wait_selector_state": {
+     "default": "attached",
+     "enum": [
+      "attached",
+      "detached",
+      "hidden",
+      "visible"
+     ],
+     "title": "Wait Selector State",
+     "type": "string"
+    },
+    "block_webrtc": {
+     "default": false,
+     "title": "Block Webrtc",
+     "type": "boolean"
+    },
+    "allow_webgl": {
+     "default": true,
+     "title": "Allow Webgl",
+     "type": "boolean"
+    },
+    "solve_cloudflare": {
+     "default": false,
+     "title": "Solve Cloudflare",
+     "type": "boolean"
+    },
+    "additional_args": {
+     "anyOf": [
+      {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Additional Args"
+    },
+    "session_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Session Id"
+    }
+   },
+   "required": [
+    "url"
+   ],
+   "$defs": {
+    "SetCookieParam": {
+     "properties": {
+      "name": {
+       "title": "Name",
+       "type": "string"
+      },
+      "value": {
+       "title": "Value",
+       "type": "string"
+      },
+      "url": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Url"
+      },
+      "domain": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Domain"
+      },
+      "path": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Path"
+      },
+      "expires": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Expires"
+      },
+      "httpOnly": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Httponly"
+      },
+      "secure": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Secure"
+      },
+      "sameSite": {
+       "anyOf": [
+        {
+         "enum": [
+          "Lax",
+          "None",
+          "Strict"
+         ],
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Samesite"
+      },
+      "partitionKey": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Partitionkey"
+      }
+     },
+     "title": "SetCookieParam",
+     "type": "object"
+    }
+   },
+   "title": "stealthy_fetchArguments"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "bulk_stealthy_fetch",
+  "description": "Use the stealthy fetcher to fetch a group of URLs at the same time, and for each page return a structured output of the result.\nNote: This is the only suitable fetcher for high protection levels.\nNote: If the `css_selector` resolves to more than one element, all the elements will be returned.\nNote: If a `session_id` is provided (from open_session), the browser session will be reused instead of creating a new one.\n    When using a session, browser-level params (headless, proxy, locale, etc.) are ignored since they were set at session creation time.\n\n:param urls: A list of the URLs to request.\n:param extraction_type: The type of content to extract from the page. Defaults to \"markdown\". Options are:\n    - Markdown will convert the page content to Markdown format.\n    - HTML will return the raw HTML content of the page.\n    - Text will return the text content of the page.\n:param css_selector: CSS selector to extract the content from the page. If main_content_only is True, then it will be executed on the main content of the page. Defaults to None.\n:param main_content_only: Whether to extract only the main content of the page. Defaults to True. The main content here is the data inside the `<body>` tag.\n:param headless: Run the browser in headless/hidden (default), or headful/visible mode.\n:param disable_resources: Drop requests for unnecessary resources for a speed boost.\n    Requests dropped are of type `font`, `image`, `media`, `beacon`, `object`, `imageset`, `texttrack`, `websocket`, `csp_report`, and `stylesheet`.\n:param useragent: Pass a useragent string to be used. Otherwise the fetcher will generate a real Useragent of the same browser and use it.\n:param cookies: Set cookies for the next request.\n:param solve_cloudflare: Solves all types of the Cloudflare's Turnstile/Interstitial challenges before returning the response to you.\n:param allow_webgl: Enabled by default. Disabling WebGL is not recommended as many WAFs now check if WebGL is enabled.\n:param network_idle: Wait for the page until there are no network connections for at least 500 ms.\n:param wait: The time (milliseconds) the fetcher will wait after everything finishes before closing the page and returning the ` Response ` object.\n:param timeout: The timeout in milliseconds that is used in all operations and waits through the page. The default is 30,000\n:param wait_selector: Wait for a specific CSS selector to be in a specific state.\n:param timezone_id: Changes the timezone of the browser. Defaults to the system timezone.\n:param locale: Specify user locale, for example, `en-GB`, `de-DE`, etc. Locale will affect navigator.language value, Accept-Language request header value as well as number and date formatting\n    rules. Defaults to the system default locale.\n:param wait_selector_state: The state to wait for the selector given with `wait_selector`. The default state is `attached`.\n:param real_chrome: If you have a Chrome browser installed on your device, enable this, and the Fetcher will launch an instance of your browser and use it.\n:param hide_canvas: Add random noise to canvas operations to prevent fingerprinting.\n:param block_webrtc: Forces WebRTC to respect proxy settings to prevent local IP address leak.\n:param cdp_url: Instead of launching a new browser instance, connect to this CDP URL to control real browsers through CDP.\n:param executable_path: Absolute path to a custom Chromium-compatible browser executable. Overrides the server-wide default for this request.\n:param google_search: Enabled by default, Scrapling will set a Google referer header.\n:param extra_headers: A dictionary of extra headers to add to the request. _The referer set by `google_search` takes priority over the referer set here if used together._\n:param proxy: The proxy to be used with requests, it can be a string or a dictionary with the keys 'server', 'username', and 'password' only.\n:param additional_args: Additional arguments to be passed to Playwright's context as additional settings, and it takes higher priority than Scrapling's settings.\n:param session_id: Optional session ID from open_session. If provided, reuses the existing browser session instead of creating a new one.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "urls": {
+     "items": {
+      "type": "string"
+     },
+     "title": "Urls",
+     "type": "array"
+    },
+    "extraction_type": {
+     "default": "markdown",
+     "enum": [
+      "text",
+      "html",
+      "markdown"
+     ],
+     "title": "Extraction Type",
+     "type": "string"
+    },
+    "css_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Css Selector"
+    },
+    "main_content_only": {
+     "default": true,
+     "title": "Main Content Only",
+     "type": "boolean"
+    },
+    "headless": {
+     "default": true,
+     "title": "Headless",
+     "type": "boolean"
+    },
+    "google_search": {
+     "default": true,
+     "title": "Google Search",
+     "type": "boolean"
+    },
+    "real_chrome": {
+     "default": false,
+     "title": "Real Chrome",
+     "type": "boolean"
+    },
+    "wait": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 0,
+     "title": "Wait"
+    },
+    "proxy": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Proxy"
+    },
+    "timezone_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Timezone Id"
+    },
+    "locale": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Locale"
+    },
+    "extra_headers": {
+     "anyOf": [
+      {
+       "additionalProperties": {
+        "type": "string"
+       },
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Extra Headers"
+    },
+    "useragent": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Useragent"
+    },
+    "hide_canvas": {
+     "default": false,
+     "title": "Hide Canvas",
+     "type": "boolean"
+    },
+    "cdp_url": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cdp Url"
+    },
+    "executable_path": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Executable Path"
+    },
+    "timeout": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 30000,
+     "title": "Timeout"
+    },
+    "disable_resources": {
+     "default": false,
+     "title": "Disable Resources",
+     "type": "boolean"
+    },
+    "wait_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Wait Selector"
+    },
+    "cookies": {
+     "anyOf": [
+      {
+       "items": {
+        "$ref": "#/$defs/SetCookieParam"
+       },
+       "type": "array"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Cookies"
+    },
+    "network_idle": {
+     "default": false,
+     "title": "Network Idle",
+     "type": "boolean"
+    },
+    "wait_selector_state": {
+     "default": "attached",
+     "enum": [
+      "attached",
+      "detached",
+      "hidden",
+      "visible"
+     ],
+     "title": "Wait Selector State",
+     "type": "string"
+    },
+    "block_webrtc": {
+     "default": false,
+     "title": "Block Webrtc",
+     "type": "boolean"
+    },
+    "allow_webgl": {
+     "default": true,
+     "title": "Allow Webgl",
+     "type": "boolean"
+    },
+    "solve_cloudflare": {
+     "default": false,
+     "title": "Solve Cloudflare",
+     "type": "boolean"
+    },
+    "additional_args": {
+     "anyOf": [
+      {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Additional Args"
+    },
+    "session_id": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Session Id"
+    }
+   },
+   "required": [
+    "urls"
+   ],
+   "$defs": {
+    "SetCookieParam": {
+     "properties": {
+      "name": {
+       "title": "Name",
+       "type": "string"
+      },
+      "value": {
+       "title": "Value",
+       "type": "string"
+      },
+      "url": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Url"
+      },
+      "domain": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Domain"
+      },
+      "path": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Path"
+      },
+      "expires": {
+       "anyOf": [
+        {
+         "type": "number"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Expires"
+      },
+      "httpOnly": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Httponly"
+      },
+      "secure": {
+       "anyOf": [
+        {
+         "type": "boolean"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Secure"
+      },
+      "sameSite": {
+       "anyOf": [
+        {
+         "enum": [
+          "Lax",
+          "None",
+          "Strict"
+         ],
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Samesite"
+      },
+      "partitionKey": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Partitionkey"
+      }
+     },
+     "title": "SetCookieParam",
+     "type": "object"
+    }
+   },
+   "title": "bulk_stealthy_fetchArguments"
+  }
+ },
+ {
+  "server": "scrapling",
+  "tool": "screenshot",
+  "description": "Capture a screenshot of a web page using an existing browser session and return it as an image.\nA browser session must be opened first with `open_session` (either `dynamic` or `stealthy`); the session ID is then passed here.\n\n:param url: The URL to navigate to and capture.\n:param session_id: ID of an open browser session created with `open_session`.\n:param image_type: Image format. Defaults to \"png\". Use \"jpeg\" for smaller file sizes.\n:param full_page: When True, captures the full scrollable page instead of just the viewport. Defaults to False.\n:param quality: Image quality (0-100) for JPEG only. Raises if passed with `image_type=\"png\"`.\n:param wait: Time in milliseconds to wait after page load before capturing. Defaults to 0.\n:param wait_selector: Optional CSS selector to wait for before capturing.\n:param wait_selector_state: State to wait for the selector. Defaults to \"attached\".\n:param network_idle: Wait for the page until there are no network connections for at least 500 ms.\n:param timeout: Timeout in milliseconds for page operations. Defaults to 30,000.\n",
+  "inputSchema": {
+   "type": "object",
+   "properties": {
+    "url": {
+     "title": "Url",
+     "type": "string"
+    },
+    "session_id": {
+     "title": "Session Id",
+     "type": "string"
+    },
+    "image_type": {
+     "default": "png",
+     "enum": [
+      "png",
+      "jpeg"
+     ],
+     "title": "Image Type",
+     "type": "string"
+    },
+    "full_page": {
+     "default": false,
+     "title": "Full Page",
+     "type": "boolean"
+    },
+    "quality": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Quality"
+    },
+    "wait": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 0,
+     "title": "Wait"
+    },
+    "wait_selector": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Wait Selector"
+    },
+    "wait_selector_state": {
+     "default": "attached",
+     "enum": [
+      "attached",
+      "detached",
+      "hidden",
+      "visible"
+     ],
+     "title": "Wait Selector State",
+     "type": "string"
+    },
+    "network_idle": {
+     "default": false,
+     "title": "Network Idle",
+     "type": "boolean"
+    },
+    "timeout": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "number"
+      }
+     ],
+     "default": 30000,
+     "title": "Timeout"
+    }
+   },
+   "required": [
+    "url",
+    "session_id"
+   ],
+   "title": "screenshotArguments"
+  }
+ }
+]

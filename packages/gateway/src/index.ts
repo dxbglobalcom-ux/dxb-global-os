@@ -11,6 +11,7 @@ export {
   type PinAllResult,
   type CheckPinsResult,
 } from "./pin-check.js";
+export { classifyDrift, type DriftVerdict, type ToolText } from "./drift-review.js";
 export {
   readDxbMcpInventory,
   readExternalServerInventory,

@@ -298,6 +298,7 @@ export interface ToolPinsTable {
   quarantined: Generated<boolean>;
   pinned_at: Timestamptz;
   last_checked: Date | null;
+  pinned_text: Jsonb | null;
 }
 
 export interface IntentsTable {
