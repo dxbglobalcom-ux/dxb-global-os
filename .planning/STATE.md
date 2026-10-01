@@ -54,6 +54,9 @@ audited and deployed to the company** (his "Tamam yapabilirsin", 2026-10-01 ~20:
    the same day by the lead, C kept in the job's folder only). Not a rule until he says so.
 3. To talk over with him later, on his word: dxb-team2 itself, and whether prose-only work skips Sol.
 4. The next real job is a holding part from the board, chosen with him.
+5. His question at session end (2026-10-01 ~21:55), to answer first in the next session: why a locked
+   tool is not resolved by the system itself, and why the alert comes to him instead of to the one
+   who should fix it. Answer and propose; build nothing before his word.
 
 ## Waiting on his approval
 
