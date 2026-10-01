@@ -59,7 +59,7 @@ Kanıt tabanı: repo durumu 2026-07-10, commit `3744db8` sonrası. Doğrulama ko
 | 153 legacy persona (11 dizin) | read-only hammadde | v2 Fable yazımı zorunlu (EMPLOYEE_PERSONA_STANDARD); v2'siz departman aktive edilemez |
 | `.planning/MASTER-PLAN.md` + master-plan/PHASE-01..11 | CEO: yüzeysel, RET (1299 satır/11 faz) | Bu korpus onun yerine geçer; eski dosya tarihsel referans |
 | Study cards (design-bundle, mcp-gateway, payments) | ⛔ Fable PASS'li | Dalga 2+ spec'lerinde kaynak |
-| Governance mirror `.planning/governance/` | Canlı | Korpus kurallarıyla senkron tutulur |
+| Model düzeni `.planning/governance/model-routing-hierarchy.md` | Canlı | Tek kopya; hafıza aynası 2026-10-01'de silindi |
 
 ## 4. GAP ANALİZİ (direktif istekleri ↔ mevcut gerçek)
 

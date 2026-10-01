@@ -40,21 +40,23 @@ batches on his numbers <!-- CEO-OK: rules-prune-batch-1-2026-10-01 --> <!-- CEO-
   the one construction door. The approval register stays, on his word.
 - Sol's final re-check of the score card gate blocked on two B findings, no A; both fixed with a third
   defect found in the capture (afe5505f).
+- Then, on his word: the 50 % handover stays without asking him <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->, B53 closed <!-- CEO-OK: b53-closed-by-the-rule-prune-2026-10-01 -->, the 25 stale memory copies in `.planning/governance/` deleted and the model routing file rewritten to v18 <!-- CEO-OK: governance-mirror-deleted-2026-10-01 -->.
 - Backup of the global files before the prune: `~/.claude/backups/rules-prune-20261001.tgz`.
 
 ## Next
 
 1. **Ask him** before any project work. Nothing is started without his word.
-2. His open question, unanswered: should prose-only work (no code) skip Sol, and every job with code
-   run at `high` or above?
-3. One conflict found and not settled: dxb-start says no handover prompt is written unless he asks in
-   that session; dxb-team2 §8 has the engineer write one at 50 % context. Put it to him.
-4. B53 (the prompt audit of 2026-09-24) is largely overtaken by this prune; ask whether it closes.
-5. The next real job is a holding part from the board, chosen with him.
+2. To talk over with him later, on his word: dxb-team2 itself, and whether prose-only work (no code)
+   skips Sol.
+3. The full battery of 2026-10-01 20:19 was red on two things older than the day's changes (nothing
+   under packages/, apps/ or that test changed): `tests/r43/arsenal.test.ts` (4) — the strategy
+   profile's scrapling tools — and one chat session left in the construction engine. Put to him;
+   not started.
+4. The next real job is a holding part from the board, chosen with him.
 
 ## Waiting on his approval
 
-- Next 2, Next 3, Next 4.
+- Next 2 and Next 3.
 - 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
   "Sizi bekleyenler" lists them.
 

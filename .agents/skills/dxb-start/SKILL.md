@@ -77,14 +77,10 @@ secrets or isolation move, a design pass for anything the CEO sees.
 - the owning spec carries the registered adaptation
 - nothing is left claiming a state the system contradicts
 
-**No handover prompt is written here, or anywhere, unless he asks for one in that session.**
-<!-- CEO-OK: handover-prompt-only-on-his-session-request-2026-09-15 --> His ruling of
-2026-09-15: a handover prompt is not a global or standing rule — he asks for one in the session
-that needs it, and otherwise there is none. The next session starts from `.planning/STATE.md`,
-which this phase has just made true; that is the handover. When he does ask, it is written in
-English in the author's own voice, and he is quoted only from `scripts/governance/ceo-approvals.json`
-— never composed in his first person. Measured 2026-09-15 (audit F016, F017, F054): three such
-files existed, all speaking as him, and STATE ordered the next session to write another.
+**The handover at 50 % context is the engineer's, without asking him** (dxb-team2 §8; CEO 2026-10-01
+<!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->). The note is written in English in the
+author's own voice; he is quoted only from `scripts/governance/ceo-approvals.json`, never composed in
+his first person.
 
 ## Choosing the row
 

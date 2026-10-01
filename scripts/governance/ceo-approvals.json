@@ -1786,5 +1786,29 @@
     "conditions": "Backup of the global files before batch 1: ~/.claude/backups/rules-prune-20261001.tgz (agents and memory included).",
     "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
     "where": ".claude/skills/* · ~/.claude/agents · ~/.claude/skills/{operator,graphify,agent-reach} · ~/.claude/hooks/dxb-context-gate.py · MODEL_ROUTING_SPEC A-2026-09-23/28 · memory/"
+  },
+  "handover-at-50-without-asking-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "The handover at 50 % context stays and is the engineer's, without asking him. It replaces handover-prompt-only-on-his-session-request-2026-09-15 in dxb-start Phase 5; the note still quotes him only from this register.",
+    "verbatim": "yüzde 50 devir notu kalsın bana sorulmasına gerek yk. b53 kapat 4ü yap. 1 ise sonra konuşruz. dxb team2 konuşcaz snra",
+    "conditions": "",
+    "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
+    "where": ".claude/skills/dxb-start/SKILL.md Phase 5 · dxb-team2 §8"
+  },
+  "b53-closed-by-the-rule-prune-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "Board B53 (the prompt audit of 2026-09-24) closed on his word, overtaken by the rule prune of the same day.",
+    "verbatim": "yüzde 50 devir notu kalsın bana sorulmasına gerek yk. b53 kapat 4ü yap. 1 ise sonra konuşruz. dxb team2 konuşcaz snra",
+    "conditions": "Closed on his word, not on his eye.",
+    "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
+    "where": "board B53 (Section 5) · .planning/board-rows/B53.md"
+  },
+  "governance-mirror-deleted-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "The 25 stale memory copies in .planning/governance/ deleted; model-routing-hierarchy.md, the one live file there, rewritten to v18 (dxb-team2 the one door; dxb-crew, dxb-team1 and their agents gone); README and MASTER_PLAN point at it.",
+    "verbatim": "yüzde 50 devir notu kalsın bana sorulmasına gerek yk. b53 kapat 4ü yap. 1 ise sonra konuşruz. dxb team2 konuşcaz snra",
+    "conditions": "Item 1 (prose-only work skipping Sol) and dxb-team2 are to be talked over later.",
+    "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
+    "where": ".planning/governance/ · README.md · MASTER_PLAN.md"
   }
 }

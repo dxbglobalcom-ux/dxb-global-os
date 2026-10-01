@@ -28,8 +28,7 @@ onlar da silinmedi, `DXB.code-workspace` içindeki listeden çıkarılarak anın
 
 Her yeni session, herhangi bir işten ÖNCE şunları okur (BOOTSTRAP READ onayı vermeden proje işi yapamaz):
 
-1. **Kalıcı hafıza:** `opus-5-construction-governance.md` + `model-routing-hierarchy.md` + `MEMORY.md`
-   endeksi (kim ne yazabilir, kalite kuralları, CEO hükümleri) — repo aynası: `.planning/governance/`
+1. **Model düzeni:** `.planning/governance/model-routing-hierarchy.md` (kim ne yazar, kim denetler)
 2. **`.planning/STATE.md`** — neredeyiz, son durum, kayıtlı uyarlamalar (İLK bakılan dosya)
 3. **`HOLDING-OS-MASTER-PLAN/IMPLEMENTATION_ROADMAP.md`** — sıradaki adım + kabul kanıtları
 4. **İlgili CEO direktifleri** — `00-INDEX.md` üzerinden; aktif emirler her işin üstündedir
