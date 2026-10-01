@@ -1,17 +1,28 @@
 // Anti rug-pull hash pinning (MCP-03, master PHASE-07 step 2). A tool's
 // description+inputSchema is hashed — and since 2026-10-01 kept as text — at
 // approval time; the daily cron re-hashes the live inventory. A drifted tool is
-// REVIEWED (drift-review.ts, the CEO's order of 2026-10-01): a change that reads
-// clean is re-approved, a suspect one is QUARANTINED — audit row and alert in the
-// SAME transaction either way (T-07-03/05), so he hears of both. Quarantine is
-// STICKY: nothing in this module sets quarantined back to false on a quarantined
-// pin — that is an explicit human-path update (SQL by CEO decision) by design
-// (T-07-06). Deterministic only: no model calls, no network — the inventory is
-// injected by the caller.
+// REVIEWED (drift-review.ts, the CEO's order of 2026-10-01): re-approved only when
+// the repository vouches for the exact new text (our own dxb-mcp source, or the
+// reviewed tool manifest), otherwise QUARANTINED — audit row (old and new text)
+// and alert in the SAME transaction either way (T-07-03/05), so he hears of both.
+// Quarantine is STICKY: nothing in this module sets quarantined back to false on a
+// quarantined pin — that is an explicit human-path update (SQL by CEO decision) by
+// design (T-07-06). Deterministic only: no model calls, no network — the inventory
+// is injected by the caller.
 import { createHash } from "node:crypto";
 import { sql, type Kysely, type Transaction } from "kysely";
 import { type DB } from "@dxb/shared";
-import { classifyDrift, type DriftVerdict, type ToolText } from "./drift-review.js";
+import {
+  approvedCorpus,
+  describeDrift,
+  judgeDrift,
+  readManifestEntries,
+  type ApprovedCorpus,
+  type DriftDescription,
+  type DriftVerdict,
+  type ToolText,
+} from "./drift-review.js";
+import { DXB_MCP_SERVER_NAME } from "./inventory.js";
 
 const ACTOR = "gateway:pin-check";
 
@@ -52,52 +63,97 @@ function toolText(entry: Pick<ToolInventoryEntry, "description" | "inputSchema">
   return { description: entry.description, inputSchema: entry.inputSchema };
 }
 
-/** A stored pinned_text read back, or null when absent or not the expected shape. */
-function storedText(value: unknown): ToolText | null {
-  const v = typeof value === "string" ? (JSON.parse(value) as unknown) : value;
+/** A stored pinned_text read back — only when it IS the approved text: the right shape AND hashing to
+ *  the pin's approved hash. A text left behind by a hand re-pin that changed only the hash is stale
+ *  and is not used as the baseline. */
+function storedText(value: unknown, approvedHash: string): ToolText | null {
+  let v: unknown = value;
+  if (typeof v === "string") {
+    try {
+      v = JSON.parse(v) as unknown;
+    } catch {
+      return null;
+    }
+  }
   if (v === null || typeof v !== "object") return null;
   const o = v as Record<string, unknown>;
   if (typeof o.description !== "string" || !("inputSchema" in o)) return null;
-  return { description: o.description, inputSchema: o.inputSchema };
+  const text = { description: o.description, inputSchema: o.inputSchema };
+  return computeToolHash(text) === approvedHash ? text : null;
 }
 
-/** One alert per distinct change of one tool (the dedup key carries the new hash); a duplicate is
- *  skipped inside the transaction instead of aborting it. */
+/** What the repository vouches for, read from the reviewed tool manifest (drift-review.ts). The
+ *  scheduler's daily job passes this to checkPins. */
+export function loadApprovedCorpus(manifestPath?: string): ApprovedCorpus {
+  return approvedCorpus(readManifestEntries(manifestPath), new Set([DXB_MCP_SERVER_NAME]), computeToolHash);
+}
+
+/** The alert texts are a finite vocabulary on purpose: the dashboard localizes each pattern
+ *  (apps/dashboard/src/lib/alert-title.ts), and the change itself — old and new text, what was added
+ *  — lives in the audit row the alert links to, not in free text on his screen. */
+const AUTHORITY_TEXT: Record<string, string> = {
+  "repository-source": "the repository's own source",
+  "tool-manifest": "the repository's reviewed tool manifest",
+};
+
+/** One alert per distinct change of one tool (the dedup key carries the kind and the new hash).
+ *  Informational: a duplicate is skipped. High: a duplicate (the same change of the same tool still
+ *  unresolved from an earlier lock) is raised again — unacknowledged, unmuted, escalated — so the
+ *  lock is never silent. */
 async function raisePinAlert(
   trx: Transaction<DB>,
   kind: "repinned" | "quarantined",
   entry: ToolInventoryEntry,
   liveHash: string,
-  review: DriftVerdict,
+  auditId: number,
+  verdict: DriftVerdict,
+  description: DriftDescription,
 ): Promise<void> {
-  const what = review.summary.length ? review.summary.join("; ") : "the text changed";
+  const name = `${entry.server}/${entry.tool}`;
+  const sourceRef = JSON.stringify({ table: "audit_log", audit_id: auditId, server: entry.server, tool: entry.tool });
+  if (kind === "repinned") {
+    await trx
+      .insertInto("alerts")
+      .values({
+        level: "informational",
+        source: "gateway",
+        title: `Tool updated without a lock: ${name} changed to the text the repository vouches for`,
+        affected_area: "tool pins",
+        probable_cause: `The new text equals ${AUTHORITY_TEXT[verdict.authority ?? ""] ?? "an approved text"}`,
+        suggested_action: `Nothing to do; the old and the new text are kept in audit record ${auditId}`,
+        dedup_key: `pin:repinned:${entry.server}:${entry.tool}:${liveHash.slice(0, 12)}`,
+        source_ref: sourceRef,
+      })
+      .onConflict((oc) => oc.doNothing())
+      .execute();
+    return;
+  }
+  const signals = description.signals.length ? description.signals.join(", ") : "none";
   await trx
     .insertInto("alerts")
-    .values(
-      kind === "quarantined"
-        ? {
-            level: "high",
-            source: "gateway",
-            title: `Tool locked: ${entry.server}/${entry.tool} changed in a way that needs a human look`,
-            affected_area: "tool pins",
-            probable_cause: `rules: ${review.rules.join(", ")} — ${what}`.slice(0, 1000),
-            suggested_action:
-              "Read the change; if it is harmless, re-pin the tool (tool_pins: new hash and text, quarantined=false) on the CEO's word",
-            dedup_key: `pin:quarantined:${entry.server}:${entry.tool}:${liveHash.slice(0, 12)}`,
-            source_ref: JSON.stringify({ table: "tool_pins", server: entry.server, tool: entry.tool }),
-          }
-        : {
-            level: "informational",
-            source: "gateway",
-            title: `Tool update approved: ${entry.server}/${entry.tool} changed and the change read clean`,
-            affected_area: "tool pins",
-            probable_cause: what.slice(0, 1000),
-            suggested_action: "Nothing to do; the change is recorded in the audit log",
-            dedup_key: `pin:repinned:${entry.server}:${entry.tool}:${liveHash.slice(0, 12)}`,
-            source_ref: JSON.stringify({ table: "tool_pins", server: entry.server, tool: entry.tool }),
-          },
+    .values({
+      level: "high",
+      source: "gateway",
+      title: `Tool locked: ${name} changed to a text the repository does not vouch for`,
+      affected_area: "tool pins",
+      probable_cause: `The new text is neither the approved one nor the one the repository's tool manifest carries. Signals: ${signals}`,
+      suggested_action: `The tool is out of every profile until a person reads the change in audit record ${auditId} and re-pins it`,
+      dedup_key: `pin:quarantined:${entry.server}:${entry.tool}:${liveHash.slice(0, 12)}`,
+      source_ref: sourceRef,
+    })
+    .onConflict((oc) =>
+      oc
+        .column("dedup_key")
+        .where("resolved_at", "is", null)
+        .where("dedup_key", "is not", null)
+        .doUpdateSet({
+          level: "high",
+          acknowledged_at: null,
+          muted_until: null,
+          escalated_at: sql<Date>`now()`,
+          source_ref: sourceRef,
+        }),
     )
-    .onConflict((oc) => oc.doNothing())
     .execute();
 }
 
@@ -134,8 +190,9 @@ export interface CheckPinsResult {
   checked: number;
   matched: number;
   /** Freshly quarantined this run (audit row and high alert written per tool). */
-  quarantined: Array<{ server: string; tool: string; rules: string[] }>;
-  /** Drifted, reviewed clean and re-approved this run (audit row and informational alert per tool). */
+  quarantined: Array<{ server: string; tool: string; signals: string[] }>;
+  /** Drifted to a text the repository vouches for and re-approved this run (audit row and
+   *  informational alert per tool). */
   repinned: Array<{ server: string; tool: string }>;
   /** Pins whose approved text was stored this run (the live hash still equalled the approved hash). */
   textStored: number;
@@ -150,10 +207,12 @@ export interface CheckPinsResult {
 }
 
 /** Daily drift check: recompute every live tool's hash against its pin.
- *  Mismatch on a non-quarantined tool → drift review: clean → new hash + text,
- *  audit `tool_repinned_auto` and an informational alert; suspect →
- *  quarantined=true, audit `tool_quarantined` and a high alert — each in ONE
- *  transaction. A quarantined pin is never re-approved here.
+ *  Mismatch on a non-quarantined tool → drift review (judgeDrift): the repository vouches for the
+ *  new text → new hash + text, audit `tool_repinned_auto` and an informational alert; it does not →
+ *  quarantined=true, audit `tool_quarantined` and a high alert — each in ONE transaction that first
+ *  locks the pin row and acts only if it is still the pin that was judged (two concurrent runs make
+ *  one transition, never undo a lock). A quarantined pin is never re-approved here.
+ *  `approved` defaults to the repository's manifest (loadApprovedCorpus).
  *  R4.3 `serversInScope`: with external servers in the corpus, a server that
  *  failed to SPAWN this run is unreachable, not tool-less — its pins are
  *  excluded from the missing-sweep so an npx/uvx hiccup cannot spam
@@ -162,6 +221,7 @@ export async function checkPins(
   db: Kysely<DB>,
   inventory: ToolInventoryEntry[],
   serversInScope?: Set<string>,
+  approved: ApprovedCorpus = loadApprovedCorpus(),
 ): Promise<CheckPinsResult> {
   const pins = await db.selectFrom("tool_pins").selectAll().execute();
   const byKey = new Map(pins.map((p) => [`${p.server} ${p.tool}`, p]));
@@ -188,20 +248,22 @@ export async function checkPins(
     const liveHash = computeToolHash(entry);
     if (liveHash === pin.schema_hash) {
       result.matched += 1;
-      // The live text hashes to the approved hash, so it IS the approved text: store it once, so a
-      // later drift is judged on the change itself (the self-backfill of 2026-10-01).
-      const storeText = pin.pinned_text === null || pin.pinned_text === undefined;
-      await db
+      // The live text hashes to the approved hash, so it IS the approved text: keep it, so a later
+      // drift can be shown as a change (the self-backfill of 2026-10-01). Written when no verified
+      // text is kept yet (none, or a stale one left by a hand re-pin), and only while the row's hash
+      // still equals the live hash at write time.
+      const needsText = storedText(pin.pinned_text, pin.schema_hash) === null;
+      const updated = await db
         .updateTable("tool_pins")
         .set(
-          storeText
+          needsText
             ? { last_checked: sql<Date>`now()`, pinned_text: JSON.stringify(toolText(entry)) }
             : { last_checked: sql<Date>`now()` },
         )
         .where("id", "=", pin.id)
         .where("schema_hash", "=", liveHash)
-        .execute();
-      if (storeText) result.textStored += 1;
+        .executeTakeFirst();
+      if (needsText && Number(updated.numUpdatedRows) === 1) result.textStored += 1;
       continue;
     }
     if (pin.quarantined) {
@@ -214,76 +276,65 @@ export async function checkPins(
         .execute();
       continue;
     }
-    // Fresh drift: review the change. Either way one transaction carries the pin, its audit row and
-    // the alert, and the update only applies while the pin is still the one that was read.
-    const review = classifyDrift(storedText(pin.pinned_text), entry);
-    let applied = false;
-    if (review.verdict === "clean") {
-      await db.transaction().execute(async (trx) => {
-        const updated = await trx
-          .updateTable("tool_pins")
-          .set({
-            schema_hash: liveHash,
-            pinned_text: JSON.stringify(toolText(entry)),
-            pinned_at: sql<Date>`now()`,
-            last_checked: sql<Date>`now()`,
-          })
-          .where("id", "=", pin.id)
-          .where("schema_hash", "=", pin.schema_hash)
-          .where("quarantined", "=", false)
-          .executeTakeFirst();
-        if (Number(updated.numUpdatedRows) !== 1) return;
-        await trx
-          .insertInto("audit_log")
-          .values({
-            actor: ACTOR,
-            actor_type: "system",
-            action: "tool_repinned_auto",
-            task_id: null,
-            payload: JSON.stringify({
-              server: entry.server,
-              tool: entry.tool,
-              old_hash: pin.schema_hash,
-              new_hash: liveHash,
-              summary: review.summary,
-            }),
-          })
-          .execute();
-        await raisePinAlert(trx, "repinned", entry, liveHash, review);
-        applied = true;
-      });
-      if (applied) result.repinned.push({ server: entry.server, tool: entry.tool });
-      continue;
-    }
-    await db.transaction().execute(async (trx) => {
-      const updated = await trx
-        .updateTable("tool_pins")
-        .set({ quarantined: true, last_checked: sql<Date>`now()` })
+    // Fresh drift. The verdict rests on the repository's word alone; the description is for the
+    // person who reads the audit row.
+    const verdict = judgeDrift(entry.server, entry.tool, liveHash, approved);
+    const oldText = storedText(pin.pinned_text, pin.schema_hash);
+    const description = describeDrift(oldText, entry);
+    const applied = await db.transaction().execute(async (trx) => {
+      // Lock the row and act only if it is still the pin that was judged: same approved hash, not
+      // quarantined. A concurrent run that got here first has already made the transition.
+      const current = await trx
+        .selectFrom("tool_pins")
+        .select(["schema_hash", "quarantined"])
         .where("id", "=", pin.id)
-        .where("quarantined", "=", false)
+        .forUpdate()
         .executeTakeFirst();
-      if (Number(updated.numUpdatedRows) !== 1) return;
+      if (!current || current.quarantined || current.schema_hash !== pin.schema_hash) return false;
+      const clean = verdict.verdict === "clean";
       await trx
+        .updateTable("tool_pins")
+        .set(
+          clean
+            ? {
+                schema_hash: liveHash,
+                pinned_text: JSON.stringify(toolText(entry)),
+                pinned_at: sql<Date>`now()`,
+                last_checked: sql<Date>`now()`,
+              }
+            : { quarantined: true, last_checked: sql<Date>`now()` },
+        )
+        .where("id", "=", pin.id)
+        .execute();
+      // The audit row keeps both texts, whole: after a re-approval the old one is gone from the pin,
+      // and after a lock the server may quietly restore its text — the record must still show it.
+      const audit = await trx
         .insertInto("audit_log")
         .values({
           actor: ACTOR,
           actor_type: "system",
-          action: "tool_quarantined",
+          action: clean ? "tool_repinned_auto" : "tool_quarantined",
           task_id: null,
           payload: JSON.stringify({
             server: entry.server,
             tool: entry.tool,
             old_hash: pin.schema_hash,
             new_hash: liveHash,
-            rules: review.rules,
-            summary: review.summary,
+            authority: verdict.authority,
+            signals: description.signals,
+            summary: description.summary,
+            old_text: oldText,
+            new_text: toolText(entry),
           }),
         })
-        .execute();
-      await raisePinAlert(trx, "quarantined", entry, liveHash, review);
-      applied = true;
+        .returning("id")
+        .executeTakeFirstOrThrow();
+      await raisePinAlert(trx, clean ? "repinned" : "quarantined", entry, liveHash, Number(audit.id), verdict, description);
+      return true;
     });
-    if (applied) result.quarantined.push({ server: entry.server, tool: entry.tool, rules: review.rules });
+    if (!applied) continue;
+    if (verdict.verdict === "clean") result.repinned.push({ server: entry.server, tool: entry.tool });
+    else result.quarantined.push({ server: entry.server, tool: entry.tool, signals: description.signals });
   }
 
   for (const pin of pins) {

@@ -1710,7 +1710,8 @@
           "heartbeat": "Sistem canlılığı",
           "observability": "Gözlemlenebilirlik",
           "file_review": "Dosya incelemesi",
-          "approval": "Onay"
+          "approval": "Onay",
+          "gateway": "Araç geçidi"
         },
         "affectedArea": "Etkilenen alan",
         "purgeSelected": "Seçilenleri kaldır",

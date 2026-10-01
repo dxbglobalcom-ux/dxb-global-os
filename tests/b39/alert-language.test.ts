@@ -82,3 +82,46 @@ describe("B39 · the dispatch-brake alert, on the CEO's own screen", () => {
     );
   });
 });
+
+// 2026-10-01 — the pin check's two alerts (packages/gateway/src/pin-check.ts raisePinAlert). His
+// question that day: "Holding'deki o kişi bunu kitleyince bizim nasıl haberimiz olacak?" — the answer is
+// these lines, and on his Turkish screen they must be Turkish, every one.
+describe("the pin check's alerts, on the CEO's own screen", () => {
+  const LOCKED = "Tool locked: scrapling/get changed to a text the repository does not vouch for";
+  const LOCKED_CAUSE =
+    "The new text is neither the approved one nor the one the repository's tool manifest carries. Signals: new-address, schema-changed";
+  const LOCKED_ACTION =
+    "The tool is out of every profile until a person reads the change in audit record 4211 and re-pins it";
+  const UPDATED = "Tool updated without a lock: scrapling/get changed to the text the repository vouches for";
+  const UPDATED_CAUSE = "The new text equals the repository's reviewed tool manifest";
+  const UPDATED_ACTION = "Nothing to do; the old and the new text are kept in audit record 4212";
+  const ENGLISH = /\b(tool|text|repository|changed|signals|audit|record|profile|nothing|new)\b/i;
+
+  it("every line of both alerts is Turkish, and keeps the tool's name and the record number", () => {
+    const lines = [
+      localizeAlertTitle(LOCKED, "tr"),
+      localizeAlertDetail(LOCKED_CAUSE, "tr")!,
+      localizeAlertDetail(LOCKED_ACTION, "tr")!,
+      localizeAlertTitle(UPDATED, "tr"),
+      localizeAlertDetail(UPDATED_CAUSE, "tr")!,
+      localizeAlertDetail(UPDATED_ACTION, "tr")!,
+      localizeAlertDetail("tool pins", "tr")!,
+      localizeAlertDetail(
+        "The new text is neither the approved one nor the one the repository's tool manifest carries. Signals: none",
+        "tr",
+      )!,
+    ];
+    for (const l of lines) expect(l.replace(/scrapling\/get/g, ""), l).not.toMatch(ENGLISH);
+    expect(lines[0]).toBe("Araç kilitlendi: scrapling/get değişti ve yeni metni kayıtlı onaylı metin değil");
+    expect(lines[1]).toContain("yeni bir adres, alanların yapısı değişti");
+    expect(lines[2]).toContain("4211 numaralı denetim kaydında");
+    expect(lines[3]).toContain("kilit gerekmedi: scrapling/get");
+    expect(lines[5]).toContain("4212 numaralı denetim kaydında");
+    expect(lines[7]).toContain("Önce bakılacaklar: yok");
+  });
+
+  it("leaves the English record untouched on the English screen", () => {
+    for (const l of [LOCKED, UPDATED]) expect(localizeAlertTitle(l, "en")).toBe(l);
+    for (const l of [LOCKED_CAUSE, LOCKED_ACTION, UPDATED_CAUSE, UPDATED_ACTION]) expect(localizeAlertDetail(l, "en")).toBe(l);
+  });
+});

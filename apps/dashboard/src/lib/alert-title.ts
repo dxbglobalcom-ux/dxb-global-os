@@ -77,7 +77,28 @@ const RULES: Rule[] = [
     re: /^The company paused its own work — this hour's working allowance is used up$/,
     tr: () => "Şirket kendi işini duraklattı — bu saat için ayırdığı çalışma payı doldu",
   },
+  {
+    // 2026-10-01 — the pin check (packages/gateway/src/pin-check.ts raisePinAlert).
+    re: /^Tool locked: (.+) changed to a text the repository does not vouch for$/,
+    tr: (m) => `Araç kilitlendi: ${m[1]} değişti ve yeni metni kayıtlı onaylı metin değil`,
+  },
+  {
+    re: /^Tool updated without a lock: (.+) changed to the text the repository vouches for$/,
+    tr: (m) => `Araç güncellendi, kilit gerekmedi: ${m[1]} kayıtlı onaylı metne geçti`,
+  },
 ];
+
+// The pin check's signal names (packages/gateway/src/drift-review.ts describeDrift) — what to read
+// first in a locked tool's change. An unknown name passes through as it is.
+const PIN_SIGNAL_TR: Record<string, string> = {
+  none: "yok",
+  "hidden-characters": "gizli karakter",
+  "reader-instruction": "okuyana talimat gibi yazılmış metin",
+  "new-address": "yeni bir adres",
+  "new-sensitive-word": "yeni bir hassas kelime",
+  "new-outbound-parameter": "dışarıya veri taşıyabilecek yeni bir alan",
+  "schema-changed": "alanların yapısı değişti",
+};
 
 // The other two lines of an alert: what probably caused it, and what to do.
 const DETAIL_RULES: Rule[] = [
@@ -92,6 +113,32 @@ const DETAIL_RULES: Rule[] = [
       "içinde kendi kendine yeniden başlar — sizin bir şey yapmanız gerekmiyor. Bu pay şirketin " +
       `temposuna göre yanlış ölçüldüyse, Ayarlar'da tek bir sayıdır (${m[1]}).`,
   },
+  // 2026-10-01 — the pin check's cause, action and area lines.
+  {
+    re: /^The new text is neither the approved one nor the one the repository's tool manifest carries\. Signals: (.+)$/,
+    tr: (m) =>
+      "Yeni metin ne eski onaylı metin ne de depodaki incelenmiş araç listesinde kayıtlı olan. " +
+      `Önce bakılacaklar: ${m[1]!.split(", ").map((x) => PIN_SIGNAL_TR[x] ?? x).join(", ")}`,
+  },
+  {
+    re: /^The tool is out of every profile until a person reads the change in audit record (\d+) and re-pins it$/,
+    tr: (m) =>
+      `Araç hiçbir çalışana verilmiyor; biri değişikliği ${m[1]} numaralı denetim kaydında okuyup ` +
+      "aracı yeniden onaylayana kadar böyle kalır",
+  },
+  {
+    re: /^The new text equals the repository's reviewed tool manifest$/,
+    tr: () => "Yeni metin, depodaki incelenmiş araç listesindekiyle birebir aynı",
+  },
+  {
+    re: /^The new text equals the repository's own source$/,
+    tr: () => "Yeni metin, depodaki kendi kaynak kodumuzla birebir aynı",
+  },
+  {
+    re: /^Nothing to do; the old and the new text are kept in audit record (\d+)$/,
+    tr: (m) => `Yapılacak bir şey yok; eski ve yeni metin ${m[1]} numaralı denetim kaydında duruyor`,
+  },
+  { re: /^tool pins$/, tr: () => "araç onayları" },
 ];
 
 function localize(rules: Rule[], text: string, locale: string): string {

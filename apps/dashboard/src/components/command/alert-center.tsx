@@ -31,6 +31,8 @@ export type AlertRow = {
   ceoAction: string | null;
   escalatedFrom: string | null;
   taskId: string | null;
+  /** A drill target more exact than the source's page (e.g. the audit record a pin alert names). */
+  sourceHref?: string | null;
 };
 
 export type AgentOption = { id: string; slug: string };
@@ -89,6 +91,7 @@ const SOURCE_HREF: Record<string, string> = {
   observability: "/live",
   file_review: "/gov/audit",
   approval: "/approvals",
+  gateway: "/gov/audit",
 };
 
 function fmtTime(iso: string, locale: string): string {
@@ -330,7 +333,7 @@ function AlertCard({
   const isApproval = row.kind === "approval";
   const isResolved = row.resolvedAt !== null;
   const badge = LEVEL_BADGE[row.level] ?? "info";
-  const href = SOURCE_HREF[row.source] ?? "/live";
+  const href = row.sourceHref ?? SOURCE_HREF[row.source] ?? "/live";
 
   const act = async (op: "ack" | "resolve" | "mute" | "assign", extra?: Record<string, unknown>) => {
     setBusy(true);

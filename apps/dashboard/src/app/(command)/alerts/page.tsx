@@ -45,7 +45,14 @@ type ResolvedRow = {
   ceo_action: string | null;
   escalated_from: string | null;
   task_id: string | null;
+  source_ref: Record<string, unknown> | null;
 };
+
+/** An alert that names its audit record drills to that record, not only to its source's page. */
+function auditHref(ref: Record<string, unknown> | null | undefined): string | null {
+  const id = ref?.audit_id;
+  return typeof id === "number" && Number.isInteger(id) ? `/gov/audit/${id}` : null;
+}
 
 type DetailRow = ResolvedRow & { responsible_employee: string | null };
 
@@ -60,13 +67,13 @@ export default async function Page() {
     supabase
       .from("alerts")
       .select(
-        "id,level,title,source,at,acknowledged_at,resolved_at,affected_area,probable_cause,suggested_action,mitigation,ceo_action,escalated_from,task_id,responsible_employee",
+        "id,level,title,source,at,acknowledged_at,resolved_at,affected_area,probable_cause,suggested_action,mitigation,ceo_action,escalated_from,task_id,responsible_employee,source_ref",
       )
       .is("resolved_at", null),
     supabase
       .from("alerts")
       .select(
-        "id,level,title,source,at,acknowledged_at,resolved_at,affected_area,probable_cause,suggested_action,mitigation,ceo_action,escalated_from,task_id,responsible_employee",
+        "id,level,title,source,at,acknowledged_at,resolved_at,affected_area,probable_cause,suggested_action,mitigation,ceo_action,escalated_from,task_id,responsible_employee,source_ref",
       )
       .not("resolved_at", "is", null)
       .order("resolved_at", { ascending: false })
@@ -93,13 +100,14 @@ export default async function Page() {
       acknowledgedAt: r.acknowledged_at,
       resolvedAt: null,
       responsibleSlug: r.responsible_slug,
-      affectedArea: r.affected_area,
+      affectedArea: localizeAlertDetail(r.affected_area, locale),
       probableCause: localizeAlertDetail(d?.probable_cause ?? null, locale),
       suggestedAction: localizeAlertDetail(d?.suggested_action ?? null, locale),
       mitigation: d?.mitigation ?? null,
       ceoAction: d?.ceo_action ?? null,
       escalatedFrom: d?.escalated_from ?? null,
       taskId: r.task_id,
+      sourceHref: auditHref(d?.source_ref),
     };
   });
 
@@ -114,13 +122,14 @@ export default async function Page() {
       acknowledgedAt: r.acknowledged_at,
       resolvedAt: r.resolved_at,
       responsibleSlug: null,
-      affectedArea: r.affected_area,
+      affectedArea: localizeAlertDetail(r.affected_area, locale),
       probableCause: localizeAlertDetail(r.probable_cause, locale),
       suggestedAction: localizeAlertDetail(r.suggested_action, locale),
       mitigation: r.mitigation,
       ceoAction: r.ceo_action,
       escalatedFrom: r.escalated_from,
       taskId: r.task_id,
+      sourceHref: auditHref(r.source_ref),
     }),
   );
 

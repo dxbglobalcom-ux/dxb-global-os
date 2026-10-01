@@ -9,7 +9,7 @@ import { cpus } from "node:os";
 import { PgBoss } from "pg-boss";
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
-import { checkPins, compileLibraryProfiles, readFullInventory } from "@dxb/gateway";
+import { checkPins, compileLibraryProfiles, loadApprovedCorpus, readFullInventory } from "@dxb/gateway";
 import {
   hrPerformanceDaily,
   hrProbationCheck,
@@ -474,7 +474,14 @@ export async function startWorkers(boss: PgBoss): Promise<void> {
     for (const [server, err] of Object.entries(inv.failures)) {
       console.warn(`[pin-check] external server '${server}' unreachable: ${err}`);
     }
-    await checkPins(getDb(), inv.entries, inv.reachable);
+    // 2026-10-01: a drifted tool is re-approved only when the repository vouches for its new text
+    // (the reviewed tool manifest, read fresh each run; dxb-mcp is our own source) — otherwise it is
+    // locked with a high alert.
+    const res = await checkPins(getDb(), inv.entries, inv.reachable, loadApprovedCorpus());
+    console.log(
+      `[pin-check] checked ${res.checked}, matched ${res.matched}, re-approved ${res.repinned.length}, ` +
+        `locked ${res.quarantined.length}, texts kept ${res.textStored}, already locked ${res.alreadyQuarantined}`,
+    );
   });
 
   // Command-bar intent intake (08-05): same re-arm-even-on-throw discipline

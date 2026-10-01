@@ -7,11 +7,21 @@ export {
   computeToolHash,
   pinAll,
   checkPins,
+  loadApprovedCorpus,
   type ToolInventoryEntry,
   type PinAllResult,
   type CheckPinsResult,
 } from "./pin-check.js";
-export { classifyDrift, type DriftVerdict, type ToolText } from "./drift-review.js";
+export {
+  judgeDrift,
+  describeDrift,
+  approvedCorpus,
+  readManifestEntries,
+  type ApprovedCorpus,
+  type DriftVerdict,
+  type DriftDescription,
+  type ToolText,
+} from "./drift-review.js";
 export {
   readDxbMcpInventory,
   readExternalServerInventory,

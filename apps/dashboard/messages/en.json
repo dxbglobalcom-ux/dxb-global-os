@@ -1710,7 +1710,8 @@
           "heartbeat": "System liveness",
           "observability": "Observability",
           "file_review": "File review",
-          "approval": "Approval"
+          "approval": "Approval",
+          "gateway": "Tool gateway"
         },
         "affectedArea": "Affected area",
         "purgeSelected": "Remove selected",
