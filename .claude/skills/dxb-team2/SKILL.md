@@ -1,20 +1,11 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, writes and fixes the code itself; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job at a depth set by its score; Fable 5.1 drafts the architecture of a critical job and settles a disagreement; nothing technical is ever sent to the CEO as a question. Trigger `/dxb-team2 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, writes and fixes the code itself; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job at a depth set by its score; Fable 5.1 drafts the architecture of a critical job and settles a disagreement. Trigger `/dxb-team2 <the job in one sentence>`.
 ---
 
 # The team — one lead who builds, one blind auditor, Fable for architecture
 
-**Where it came from.** 2026-09-28, after `dxb-team1` burned half the weekly quota on one job in two
-days. The CEO read four outside opinions and the Opus 5.5 launch charts with the lead, item by item,
-and ordered this door as the construction's default: *"hiç biryerde dxbteam1 kalmasın aynen … ve
-başla"* <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->. The measured cause of the burn, which
-this door is built against: **the fire came from waste, not from checking** — three writers each
-re-reading the repository, a fresh `max` writer for every fix, subagents whose prompt cache dies at
-5 minutes (measured 2026-09-28 over 25–28 Sep: subagents wrote 50.6 M tokens to the 5-minute cache,
-main sessions 22.8 M to the 1-hour cache). Waste is cut; checks are not. Every seat below was weighed
-in two columns — what quality it buys, what it costs — and a check leaves only when a measured check
-replaces it. `dxb-crew` stays for its own use. The laws this door obeys are in `.claude/CLAUDE.md`;
+The construction's default door since 2026-09-28 <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->, built against waste, not against checking. The laws it obeys are in `.claude/CLAUDE.md`;
 it opens `dxb-verify` and `dxb-close-row`.
 
 ## 1. The shape
@@ -98,16 +89,17 @@ DISPUTE   → the lead says a finding is wrong: the auditor proves it with a tes
             No test can decide it (a design question) → Fable rules on that one finding.
             The lead has the last word. The CEO reads the line in the report; he is not asked.
 BRAKE     → the job passes its class budget (§7): stop at a clean break, find why it grew,
-            re-plan, continue. The CEO hears of it only if the week's quota cannot carry the job.
+            and ask the CEO before going on.
 JUDGE     → battery ONCE, the dependants of every changed thing re-measured and printed;
             one commit per phase.
 TELL      → the CEO, in his language: the position, then the result. Never a technical question.
 RECORD    → STATE (the contradicted sentence goes, LAW A), the board row, rulers green.
 ```
 
-**What reaches the CEO as a question:** money out, a contract, an identity step, the Islamic
-boundaries, the plan of a critical job, and an order of his that truly reads two ways — then with a
-recommendation, answerable in one word. Nothing else.
+**What reaches the CEO as a question:** starting any job, money out, a contract, an identity step,
+the Islamic boundaries, the plan of a critical job, a job outgrowing its budget, and an order of his
+that truly reads two ways — each with a recommendation, answerable in one word. Technical choices
+inside a job he already said yes to are the lead's.
 
 ## 5. The auditor's brief — blind, not in the dark
 
@@ -162,16 +154,25 @@ Correction required:
   (`~/.claude/projects/-home-dxb-DxB-Global-OS/**/*.jsonl`, `message.usage`) and the Codex rollouts
   (`~/.codex/sessions/**`, `rate_limits`); when the CEO asks, one command sums them.
 
-## 8. Carried over — from `dxb-crew`, unchanged
+## 8. Findings, long commands, context and handover
 
 - **A / B / C** and his law of 2026-09-22: a minor finding is repaired in the same pass.
 - **The 4-minute rules** (held by `~/.claude/hooks/dxb-cost-gate.py`): a command over 4 minutes is the
-  lead's; a subagent idle over 4 minutes is never resumed — measured: its cache is the 5-minute one.
-- **The context gate** — `dxb-crew` §3: hand over at ≥ 50 % used, or when used + the next phase's
-  honest estimate > 55 % (held by `dxb-context-gate.py`); only at a clean break.
-- **The handover** — `dxb-crew` §4, done by the engineer through `operator`; the successor opens with
-  the same model and effort as this session. The note's first line is the job's place in the whole:
-  which leg of the Ferrari, where this job sits, what changes when it is done.
+  lead's; a subagent idle over 4 minutes is never resumed — its cache is the 5-minute one.
+- **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`, the CEO's numbers of
+  2026-09-26): hand over at ≥ 50 % used, or when used + the next phase's honest estimate > 55 %;
+  only at a clean break — no battery running, tree committed, report sent.
+- **The handover** is done by the engineer, never the CEO. A note in the scratchpad (the job's place
+  in the whole first, then his words of this job verbatim, every phase with status and commit, the
+  traps met, the first message the successor sends; session-only orders marked as such), `wl-copy`'d.
+  The successor opens with the same model and effort as this session, in a VS Code editor-area
+  terminal, through `operator` (look first; if the CEO is typing, wait): `operator key ctrl+shift+p`
+  → `operator type "Terminal: Create New Terminal in Editor Area"` → `operator key Return` →
+  `operator shot` → paste with `operator key ctrl+shift+v` (`ctrl+v` does not reach the terminal;
+  `operator type` inverts case here, so a command line is pasted, never typed) the line
+  `systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model <same> --effort <same> "$(cat <note>)"`
+  (`claude` is not on that terminal's PATH) → `operator shot`, read it → `operator key Return`.
+  Proof it is alive: `ListAgents` shows it and it answers.
 
 ## 9. Owed measurements — the first jobs pay them
 

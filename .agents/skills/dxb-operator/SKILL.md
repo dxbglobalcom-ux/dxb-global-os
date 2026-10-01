@@ -6,8 +6,7 @@ description: Points to the global `operator` skill. Any job that needs the scree
 # The screen, the mouse and the keyboard → `operator`
 
 The procedure lives once, in the global skill: `~/.agents/skills/operator/SKILL.md`. Read that
-first — it carries the command surface, the two rules that were learned the hard way, and the
-CEO's standing order that a refusal is not an acceptable answer.
+first — it carries the command surface and the two rules that were learned the hard way.
 
 ```bash
 operator shot /tmp/s.png    # one frame of the whole screen — then LOOK at it with Read
@@ -28,7 +27,7 @@ operator key alt+Tab        # bring a window to the front
 - **Claude Code's own commands are keys on this screen too.** `/goal` and the other slash commands
   go into the session's prompt box by paste: `wl-copy` the line, `operator click` the box, `operator
   shot` to see it focused, `operator key ctrl+shift+v`, read it, `operator key Return` (`operator
-  type` inverts case here). Why the engineer does it at all: `dxb-crew` §0.
+  type` inverts case here).
 
 ## The second hand — a terminal program, driven WITHOUT the screen: `dxb-tui`
 

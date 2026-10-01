@@ -20,8 +20,7 @@ Read in this order and stop when you can state the work:
    (`MASTER_PLAN.md` §1 · `HOLDING_OS_PRODUCT_SPEC.md` §§2-4 · `00-CEO-DIRECTIVE-BEKLENTILER.md`)
    when the work touches what the product is, what it must never resemble, or the CEO's 19 control
    areas — those three are exempt from the "do not read other specs" rule below.
-3. `.planning/STATE.md` — the current photo. **One page. If it has grown into a history again,
-   that is a defect: move the history to `.planning/STATE-ARCHIVE.md` in the same turn.**
+3. `.planning/STATE.md` — the current photo.
 4. `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md` — what is open, and only that
 5. The spec that owns the row you are taking — reached from the row itself, not by browsing
 6. `HOLDING-OS-MASTER-PLAN/00-INDEX.md` — **only** when you need the registered-adaptation table
@@ -52,11 +51,9 @@ it will be verified, and the risks. **This gate cannot be inferred away.**
 
 ## The working discipline
 
-- Root cause before fix; an obstacle is the start of the work (standing order 12).
+- Root cause before fix.
 - New code is proven by a test that failed before it existed.
 - Nothing is called done before `dxb-verify` maps every criterion to a command and its output.
-- Every repo line is the session author's, inline (`AGENTS.md` §2). Subagents audit and
-  sweep; they never write. When a second pair of eyes is required: `dxb-verify` § The audit twin.
 
 ## Phase 3 — implementation
 
@@ -79,8 +76,6 @@ secrets or isolation move, a design pass for anything the CEO sees.
   rewritten — replaced, never appended
 - the owning spec carries the registered adaptation
 - nothing is left claiming a state the system contradicts
-
-A turn that changed the system and left its record stale is not finished.
 
 **No handover prompt is written here, or anywhere, unless he asks for one in that session.**
 <!-- CEO-OK: handover-prompt-only-on-his-session-request-2026-09-15 --> His ruling of

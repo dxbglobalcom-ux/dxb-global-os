@@ -19,7 +19,7 @@ bakıyorsun ona. İzlemek farklı."*
 *"Projeyi tam anlamıyla anlamaları lazım … ne yapıyoruz amacımız ne bu Holding nedir öğrendikten
 sonra videoyu o gözle işlemeli."*
 
-1. Read `.claude/CLAUDE.md`, `.planning/STATE.md` and board row **B22** first. You are reading the
+1. Read board row **B22** first. You are reading the
    source **for a holding that is meant to run itself with one human in it**, and for the gaps that
    holding has today — measure them before you watch, not after.
 2. The report opens with **`WHY IT MATTERS TO THIS HOLDING`**: the measured DXB gaps this source is

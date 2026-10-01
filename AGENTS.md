@@ -119,7 +119,7 @@ the date. The battery fails on an unregistered approval claim.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
 - **Code: the session writes it; the `builder` seats write code only inside an orchestration**
-  (`dxb-team2`, `dxb-crew`). Other subagents audit, refute and sweep; they never write — and a
+  (`dxb-team2`). Other subagents audit, refute and sweep; they never write — and a
   CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
   ruler scripts included (the audit law, CEO 2026-09-15
   <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).
@@ -150,7 +150,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | When you are… | Open |
 |---|---|
 | starting a session, or picking up work | `dxb-start` |
-| running a job on its own — `dxb-team2` (the default); `dxb-crew` when the job is one lane | `dxb-team2` · `dxb-crew` |
+| running a job | `dxb-team2` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |

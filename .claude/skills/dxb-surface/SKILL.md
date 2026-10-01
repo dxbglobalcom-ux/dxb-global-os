@@ -5,11 +5,10 @@ description: Use whenever a surface the CEO can see changes — pages, panels, c
 
 # RULE #0 — mandatory design verification
 
-**CEO directive 2026-07-13, severest tier. No visual work is done until the pass has run and is
-evidenced. The CEO is not the QA layer — a catchable visual defect that reaches his eye is a
-governance violation.**
+CEO directive 2026-07-13: visual work is done when this pass has run on it. The CEO is not the
+QA layer.
 
-## The pass, per surface, in the same turn that surface changes — never batched
+## The pass, once per changed surface, before the work is called done
 
 1. Render the touched route in a real browser
 2. **Both locales**, EN and TR

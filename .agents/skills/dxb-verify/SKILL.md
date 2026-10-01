@@ -36,7 +36,7 @@ measured outcomes take the past tense.
 | the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
 | resident restart | only when runtime code changed — see below |
 | **the ruler rule** (CEO, 2026-09-15: *"kural olsun"* <!-- CEO-OK: audit-ruler-is-a-runnable-script-2026-09-15 -->) | Every audit's ruler is a runnable script, handed to the builder before the work; the order is that script's PASS; builder and checker run the same script and paste its output into the evidence. |
-| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job on the open board is built by one session and checked by a second — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; the checker re-measures whether it was done and done right. The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
+| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job is built by one hand and checked by another — in `dxb-team2` the blind Sol auditor (§5) — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; the checker re-measures whether it was done and done right. The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
 
 | Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
 |---|---|---|
@@ -55,8 +55,7 @@ A second session audits the CEO-visible and the risky work (personas, specs, mon
 paths, surfaces) on three things: the order against the diff (what was left out), the ruler output
 pasted into the evidence, and the blast radius measured; a class with no ruler gets its ruler first.
 
-**Green on the parts you like is not green.** Skipping any applicable check is a governance
-violation of the same tier as an invented number.
+**Green on the parts you like is not green.**
 
 ## Traps this project has already paid for
 
@@ -109,9 +108,7 @@ Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.
 A deliverable of the holding — a piece he will use, such as the dashboard's CRM section — is held
 to the standard of `AGENTS.md`: the Ferrari, a first-place candidate in a world
 competition. It ships when a world-class specialist would sign it, its structure matches the
-CEO's mental model rather than the implementer's convenience, and a better version inside the
-approved scope has been built instead of the lesser one (one outside it is recorded as a
-boundary). Small work — a fix, a record, a one-line change — does not go through this gate
+CEO's mental model rather than the implementer's convenience. Small work — a fix, a record, a one-line change — does not go through this gate
 (his word, 2026-09-24). <!-- CEO-OK: h6-perfection-gate-for-deliverables-2026-09-24 -->
 
 "It satisfies the spec row" is not a defence. The spec is the floor; this gate is the ceiling

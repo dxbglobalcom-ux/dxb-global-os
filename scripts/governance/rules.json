@@ -43,11 +43,6 @@
     "fingerprint": "A row is opened only on the CEO's word",
     "what": "The board's first law since 2026-09-28: the board holds the holding's special parts, and a row is opened only when the CEO says so. Replaced 'One row per open thing' on his word."
   },
-  "inline_authorship_k1": {
-    "owner": ".claude/skills/dxb-start/SKILL.md",
-    "fingerprint": "Every repo line is the session author's, inline",
-    "what": "K1 — the session author writes every repo line inline; subagents audit and sweep, never write. Replaced the so11 entry on 2026-08-10 when the CEO deleted standing order 11 (\"sil\") because the superpowers plugin it invoked is switched off; K1 was the part of that rule that never depended on the plugin."
-  },
   "onboarding_read_order": {
     "owner": ".claude/skills/dxb-start/SKILL.md",
     "fingerprint": "the smallest set",

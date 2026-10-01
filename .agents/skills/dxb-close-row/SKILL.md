@@ -57,14 +57,11 @@ An unregistered approval claim fails the battery.
 - the registered adaptation written into the owning spec
 - the boundary: what this row deliberately did **not** do
 
-## A skipped contract is YOUR defect, not a discovery
+## A skipped contract
 
-**CEO ruling 2026-07-13.** If you find a spec contract that a ✓-closed row skipped, fix it
-**immediately, in that same session**. *"Buldum — yapayım mı?"* is forbidden; the only acceptable
-sentence is *"buldum, ve düzelttim"*. The CEO is never the one who has to order the fix.
-
-The single exception: if the item belongs to a row that has not been reached yet, record it as a
-boundary instead of jumping ahead — and say so out loud.
+A defect found inside the job at hand is fixed in that job. A spec contract that a ✓-closed row
+skipped, outside the job at hand, is told to the CEO with a recommendation, and he decides
+(CEO, 2026-10-01).
 
 ## When a CEO order contradicts a record
 

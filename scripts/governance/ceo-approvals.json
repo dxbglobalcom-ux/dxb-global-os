@@ -1778,5 +1778,13 @@
     "conditions": "Board B55 closed on his word, not on his eye: nothing was built further.",
     "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
     "where": "board B55 (Section 5) · .claude/hooks/spec-bootstrap.sh · scripts/systemd/install.sh · tests/hooks · .claude/CLAUDE.md §1-§2"
+  },
+  "rules-prune-batch-2-2026-10-01": {
+    "date": "2026-10-01",
+    "what": "Second batch of the rule prune. Doors dxb-crew and dxb-team1 deleted whole, with the agents only they used (arbiter, verifier, builder-medium, builder-lean); dxb-team2 §8 now holds the context gate and the handover steps itself. Passages that made a session act without asking or over-apply a rule removed from dxb-close-row, dxb-team2, dxb-start, dxb-verify, dxb-surface, dxb-rival-intel, dxb-operator and the global operator / graphify / agent-reach skills; a defect inside the job at hand is fixed, one outside it is told to him and he decides. Memory: the act-without-asking notes, the standing Hetzner purchase grant, the copies of core rules, the stale notes (deleted, not renamed) and the 'Kanun C' law label removed; the address protocol kept.",
+    "verbatim": "dxb crew ve dxb team1 tamamen sil gitsin. 26- amaç aslında şu hata görürsen/ bulursan düzelt.ama gereksiz ise söyle.eğer kendiliğinden zaten hata gördüğünde düzeltiorsan gerek yok kalmasına  30da sil. diğerlerinin hepsini yapabilirsin.",
+    "conditions": "Backup of the global files before batch 1: ~/.claude/backups/rules-prune-20261001.tgz (agents and memory included).",
+    "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
+    "where": ".claude/skills/* · ~/.claude/agents · ~/.claude/skills/{operator,graphify,agent-reach} · ~/.claude/hooks/dxb-context-gate.py · MODEL_ROUTING_SPEC A-2026-09-23/28 · memory/"
   }
 }
