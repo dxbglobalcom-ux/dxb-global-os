@@ -1,0 +1,36 @@
+shape: cwd=residents' WorkingDirectory db=construction:54422 claude/anthropic env names=[]
+construction: skills=17 agents=5 plugins=15
+(node:1626873) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+seat finance-financial-analyst: profile servers=[dxb-mcp] allowed tools=23
+[isolation] lane=names-chat-shape session=24c9c10a-63fe-4d05-8fa6-4948f4c5e030 tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=474 home=/home/dxb/.local/share/dxb/company-claude
+chat-shape live at the first answer: []
+chat-shape init: tools=0 mcp=[] plugins=[] skills=[deep-research,design-sync,dataviz,update-config,verify,debug,code-review,simplify,batch,fewer-permission-prompts,doctor,loop,schedule,claude-api,workflow-authoring,run,run-skill-generator] agents=[claude,Explore,general-purpose,Plan,statusline-setup] slash=50
+chat-shape against the construction: skills=[] agents=[] slash=[] plugins=[] servers beyond the lane's own (init or live)=[] tools beyond the lane's grant=[] (0)
+[isolation] lane=names-task-shape session=93549202-feda-4700-a2cd-e0608bea399c tools=23 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=9146 home=/home/dxb/.local/share/dxb/company-claude
+task-shape live at the first answer: [dxb-mcp:connected(28 tools)]
+task-shape init: tools=23 mcp=[dxb-mcp:connected] plugins=[] skills=[deep-research,design-sync,dataviz,update-config,verify,debug,code-review,simplify,batch,fewer-permission-prompts,doctor,loop,schedule,claude-api,workflow-authoring,run,run-skill-generator] agents=[claude,Explore,general-purpose,Plan,statusline-setup] slash=50
+task-shape against the construction: skills=[] agents=[] slash=[] plugins=[] servers beyond the lane's own (init or live)=[] tools beyond the lane's grant=[] (0)
+[isolation] lane=chat session=8458a44c-9946-4ff7-bc33-bf3f2e5889eb tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=2161 home=/home/dxb/.local/share/dxb/company-claude
+chat lane: drain={"answered":1,"failed":0}
+  ceo/answered: "(the canary question)"
+  hamza/answered: "(1) \"anti-baby-sitting\" — ABSENT\n(2) \"Hitap protokol\" — ABSENT\n(3) \"graphify\" — ABSENT\n(4) \"THE CUPBOARD\" — ABSENT"
+[isolation] lane=task session=b61ee865-532d-4458-ae2d-45ee3dea4db3 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=11582 home=/home/dxb/.local/share/dxb/company-claude
+task lane: toolSurfaceMounted=true result="{\"result\": \"anti-baby-sitting: ABSENT\\nHitap protokol: ABSENT\\ngraphify: ABSENT\\nTHE CUPBOARD: ABSENT\", \"confidence\": 0.95, \"evidence\": [], \"acceptance_map\": {}}"
+rows before={"chat_sessions":0,"chat_messages":0,"cost_ledger":0,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+rows after ={"chat_sessions":1,"chat_messages":2,"cost_ledger":1,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+rows clean ={"chat_sessions":0,"chat_messages":0,"cost_ledger":0,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+SESSIONS 24c9c10a-63fe-4d05-8fa6-4948f4c5e030 93549202-feda-4700-a2cd-e0608bea399c 8458a44c-9946-4ff7-bc33-bf3f2e5889eb b61ee865-532d-4458-ae2d-45ee3dea4db3
+PROBE_DONE
+PROBE_EXIT=0
+── transcript check, by session id ──
+session 24c9c10a-63fe-4d05-8fa6-4948f4c5e030: files named 0 · transcripts holding it 0 · in ~/.claude.json 0
+session 93549202-feda-4700-a2cd-e0608bea399c: files named 0 · transcripts holding it 0 · in ~/.claude.json 0
+session 8458a44c-9946-4ff7-bc33-bf3f2e5889eb: files named 0 · transcripts holding it 0 · in ~/.claude.json 0
+session b61ee865-532d-4458-ae2d-45ee3dea4db3: files named 0 · transcripts holding it 0 · in ~/.claude.json 0
+── Claude files written during the probe (newer than its start) ──
+~/.claude.json
+~/.claude/projects/-home-dxb-DxB-Global-OS/79e77b01-f5d1-4a63-9a63-69e03a5fe0cf.jsonl
+── managed-policy tier (machine-specific) ──
+ls: cannot access '/etc/claude-code': No such file or directory
+RUN_LANES_PROBE_STATUS=0

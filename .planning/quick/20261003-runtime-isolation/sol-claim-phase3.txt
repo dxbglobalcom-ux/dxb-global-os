@@ -1,0 +1,29 @@
+THE CEO'S WORDS (verbatim, 2026-10-03; ledger scripts/governance/ceo-approvals.json):
+- company-claude-home-2026-10-03: "2.ye evet, 1.ye de evet" — '1.ye' answering: "Şirketin Claude'u için ayrı çalışma klasörü ve ayrı Claude klasörü kurulsun mu? Üyelik aynı kalır; yalnız bir kez sizin giriş yapmanız gerekir. Önerim: evet." Earlier the same day: "şirkette inşaatta aynı claude code üyeliğini kullanacak tabiki".
+- isolation-phase3-plan-and-memory-path-2026-10-03: "ikisine de evet" — answering "Planı onaylıyor musunuz?" and "Hafıza yolu da 3. faza eklensin mi?"
+- handover-quotes-conversation-verbatim-2026-10-03: "2.ye evet, 1.ye de evet" — '2.ye' answering: "Devir notu sizi bu konuşmadan da kelimesi kelimesine alıntılayabilsin mi? Alıntılar \"konuşmadan\" diye işaretlenir."
+
+THIS AUDIT — one pass; its findings are fixed; there is no second round (the CEO's order for this job).
+  The card (.planning/quick/20261003-runtime-isolation/CARD-PHASE3.md) is shown for information; audit at the level it gives, do not re-grade it.
+  Range 551b8af5^..b146822b: 551b8af5 (dxb-team2 §8's quoting sentence + its ledger entry), 21de4906 (ledger + STATE records), eb5eb770 (phase-3 ledger entry + card), b146822b (the phase-3 code).
+  The done-list: .planning/quick/20261003-runtime-isolation/DONE-LIST.md, items 25-33 (written before the code).
+  Raw output, in .planning/quick/20261003-runtime-isolation/evidence/: phase3-before-red.txt, phase3-after-green.txt, phase3-b43.txt, phase3-lead-build.txt, phase3-lead-typecheck.txt, phase3-auth-status.txt, battery-phase3.txt, phase3-strace.txt (items 32), phase3-lanes-probe.txt (resident shape).
+  phase3-lanes-probe.txt lists ~/.claude.json and ~/.claude/projects/-home-dxb-DxB-Global-OS/79e77b01-….jsonl as written during the probe: 79e77b01 is the lead's own Claude Code session, running beside the probe; phase3-strace.txt is the per-process record of what the company's side opened.
+  Live: dxb-scheduler restarted ~17:07 on b146822b; its start-up line is in var/scheduler.log (`[isolation] company-claude home=… credentials=…`).
+  Not measured: the company database's claude-mem pointer rows — the construction reads the company only through named questions (scripts/b36).
+
+THE DECISIONS — facts, not claims to re-litigate:
+- Every company Claude call goes through companyIsolation() (packages/kernel/src/sdk-isolation.ts): its own Claude home (CLAUDE_CONFIG_DIR, default ~/.local/share/dxb/company-claude), its own working folder <home>/work, its own cache <home>/cache, the parent's CLAUDE* variables dropped, PWD equal to cwd.
+- Same membership as the construction; his one login in the company home, done 16:59.
+- The runtime may not launch `claude` itself (the ruler); the scheduler's start-up line reads whether the login file is present.
+- The memory router never reads the construction's claude-mem database (~/.claude-mem); a feed of construction work to Hamza, if ever wanted, is built separately and named.
+- The CLI's built-in residue (done-list 32) is named, not hidden; it is not a defect of this phase.
+
+WHAT TO REFUTE:
+1. Does the done-list (25-33) prove what his words asked for — a company call opens nothing of the construction? What does it leave out?
+2. companyIsolation() and companyClaudeHome(): can a company call still reach ~/.claude, ~/.claude.json, ~/.cache/claude-cli-nodejs, the repository's .claude/, or a construction CLAUDE* variable — by a link, a relative path, an env the helper does not cover (HOME? XDG_CONFIG_HOME? a variable not spelled CLAUDE*), a lane that bypasses the helper?
+3. The ruler (tests/governance/company-isolation.test.ts): can a lane hand cwd, env or a home outside the helper and still pass?
+4. The memory-router cut (claude-mem.ts, classify-read.ts): is every path into ~/.claude-mem refused before any open, links included? Does any runtime caller still reach claude-mem?
+5. The live evidence (phase3-strace.txt, phase3-lanes-probe.txt, var/scheduler.log): does it show what items 30 and 32 claim? Name every file of the construction the company side opened beyond the named residue, and every write.
+6. 551b8af5: does dxb-team2 §8's quoting sentence say what his "2.ye evet" allowed — nothing widened, nothing narrowed — and does the ledger entry's LAW A deletion match the door?
+7. The rulers and the battery (evidence/): name every failure.
