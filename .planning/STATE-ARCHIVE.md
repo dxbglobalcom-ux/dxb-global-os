@@ -2237,3 +2237,49 @@ batches on his numbers <!-- CEO-OK: rules-prune-batch-1-2026-10-01 --> <!-- CEO-
 - Then, on his word: the 50 % handover stays without asking him <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->, B53 closed <!-- CEO-OK: b53-closed-by-the-rule-prune-2026-10-01 -->, the 25 stale memory copies in `.planning/governance/` deleted and the model routing file rewritten to v18 <!-- CEO-OK: governance-mirror-deleted-2026-10-01 -->.
 - Backup of the global files before the prune: `~/.claude/backups/rules-prune-20261001.tgz`.
 
+
+## Moved out of STATE.md on 2026-10-03, when the prompt-audit review replaced the three headings
+
+<!-- HISTORY -->
+
+### Where we left off
+
+2026-10-01 ~21:55 → 23:25, Opus 5.5 session dbebfe82. He asked how dxb-team2 really works; walked
+through it with him, measured on the day's two jobs. What changed, on his words:
+- Deleted, nothing written in their place (*"sil ikisini de… güveni sarsan şeyleri de sil"*,
+  a11c4736, 2a5b70ae): dxb-team2's floor ("…files is at least normal; the lead cannot score it lower",
+  written by a session 2026-09-28, not by him) and dxb-verify's ruler rule ("every audit's ruler is a
+  runnable script") with the lines that hung on them. He made Opus the lead because he trusts it.
+- Fable is the advisor and arbiter on every job, critical included; it draws no architecture (d54de91f).
+- The plan is talked through with him BEFORE he gives the job; a critical plan is read by Sol and its
+  gaps closed by the lead, never sent back to him (3fe36467, 97983a29).
+- Sol stays the second eye on every job; `/code-review` is not used (his word, no text changed).
+- Measured for him: a Sol round takes 10-15 min; the pin battery 5.5 min (102 s + 235 s); the pin job
+  ~45 min end to end. Both of the day's jobs started from a word list (score-card floor, pin keyword
+  gate) and Sol refuted each; the lead did not question a list that kept growing. 282 commits since
+  2026-09-17: ~half records/board/audit, 10 feat. His aim: *"benim istediğim holdingi yapacak ekibin
+  süper olması"* — not more gates.
+- The earlier pin session's result stands (accf7dbf): built, audited, deployed; the known limit — an
+  honest upgrade the manifest does not carry yet locks with a high alert until the manifest is refreshed.
+
+### Next
+
+1. **Ask him** before any project work.
+2. His question from 2026-10-01 ~21:55, answer first: why a locked tool is not resolved by the system
+   itself, and why the alert comes to him instead of to the one who should fix it. Answer and
+   propose; build nothing before his word.
+3. The next real job is a holding part from the board, talked through and chosen with him — offered:
+   three candidates. In it, report to him plainly how the team worked (did the lead question its own
+   design, consult Fable in time, hand Sol solid work). No new gate or rule for it.
+4. Sol rounds: no change. Measured: a B re-check caught a B that was not fixed (score-card RECHECK-2,
+   multi-image), so "B needs no re-check" was withdrawn; "medium re-check" is unmeasured.
+
+### Waiting on his approval
+
+- The pin auto-review: nothing waits for his eye. Measured 2026-10-02 on the company engine: 76 pins,
+  76 with approved text, 0 locked, last check 2026-10-01 19:39 UTC, and NO pin alert exists — no tool
+  has changed since. The alert's look (TR, drill to `/gov/audit/<id>`) is seen the first time one fires.
+- Next 2 and 3.
+- 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
+  "Sizi bekleyenler" lists them.
+

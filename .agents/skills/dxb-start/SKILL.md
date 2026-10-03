@@ -84,5 +84,5 @@ his first person.
 
 ## Choosing the row
 
-Order of work is the CEO's: **this board, oldest first — half-finished older work outranks new
-work.** If he has named a focus for the session, that focus outranks the board order.
+Which row is next is the CEO's: it is chosen with him after talking it through — the most
+necessary first, not the oldest (board law 4).

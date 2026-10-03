@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-01"
+last_updated: "2026-10-03"
 session_author: opus-5
 ---
 
@@ -28,43 +28,47 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-01 ~21:55 → 23:25, Opus 5.5 session dbebfe82. He asked how dxb-team2 really works; walked
-through it with him, measured on the day's two jobs. What changed, on his words:
-- Deleted, nothing written in their place (*"sil ikisini de… güveni sarsan şeyleri de sil"*,
-  a11c4736, 2a5b70ae): dxb-team2's floor ("…files is at least normal; the lead cannot score it lower",
-  written by a session 2026-09-28, not by him) and dxb-verify's ruler rule ("every audit's ruler is a
-  runnable script") with the lines that hung on them. He made Opus the lead because he trusts it.
-- Fable is the advisor and arbiter on every job, critical included; it draws no architecture (d54de91f).
-- The plan is talked through with him BEFORE he gives the job; a critical plan is read by Sol and its
-  gaps closed by the lead, never sent back to him (3fe36467, 97983a29).
-- Sol stays the second eye on every job; `/code-review` is not used (his word, no text changed).
-- Measured for him: a Sol round takes 10-15 min; the pin battery 5.5 min (102 s + 235 s); the pin job
-  ~45 min end to end. Both of the day's jobs started from a word list (score-card floor, pin keyword
-  gate) and Sol refuted each; the lead did not question a list that kept growing. 282 commits since
-  2026-09-17: ~half records/board/audit, 10 feat. His aim: *"benim istediğim holdingi yapacak ekibin
-  süper olması"* — not more gates.
-- The earlier pin session's result stands (accf7dbf): built, audited, deployed; the known limit — an
-  honest upgrade the manifest does not carry yet locks with a high alert until the manifest is refreshed.
+2026-10-03 ~10:15 → 12:00, Opus 5.5 session fe74b93a. He asked whether the prompt audit of 2026-09-24
+met his goal — the Opus 5.5 guide's three questions (think-more lines · work handed out step by step
+or with no finish line · stops for confirmation). Answer, measured: done carefully, but to Anthropic's
+generic `prompt-audit`, not the guide (never read); stops not covered; the three-heading report never
+proposed; its #1 finding still open — Hamza's voice and chat answers (`answer.ts:108`,
+`chat-drain.ts:112`) and four more `query()` calls run without `settingSources`, so the construction
+CLAUDE.md and hooks load into them (SDK 0.3.259 doc; the services run from the repo root). Think-more
+lines today: 0. Stops 2026-09-13 → 10-03: 85 — 7 bare yes, 55 steered, 13 not understood, 10 angry;
+he ruled the questions are fine. Changed today, each in the ledger under 2026-10-03:
+- a job's plan goes to him once before the work continues — dxb-team2 §1 §4 restore what
+  3fe36467/97983a29 over-deleted; no second trip after Sol;
+- the next row is the most necessary one, chosen after talking it through, not the oldest (board
+  law 4, dxb-start);
+- a job's report ends under Sizi bekleyen · Değişen · Bulunan (dxb-team2 TELL); a fix inside the job
+  is not listed;
+- memory: the dxb-crew pointers and the "chief engineer xhigh" line are gone.
+He wants dxb-team2 simpler — fewer machines, hooks and ceremony, the lead trusted to think.
 
 ## Next
 
-1. **Ask him** before any project work.
-2. His question from 2026-10-01 ~21:55, answer first: why a locked tool is not resolved by the system
-   itself, and why the alert comes to him instead of to the one who should fix it. Answer and
-   propose; build nothing before his word.
-3. The next real job is a holding part from the board, talked through and chosen with him — offered:
-   three candidates. In it, report to him plainly how the team worked (did the lead question its own
-   design, consult Fable in time, hand Sol solid work). No new gate or rule for it.
-4. Sol rounds: no change. Measured: a B re-check caught a B that was not fixed (score-card RECHECK-2,
-   multi-image), so "B needs no re-check" was withdrawn; "medium re-check" is unmeasured.
+1. **Ask him** before any project work; a job's plan goes to him once (dxb-team2 §4).
+2. Two decisions, explained to him in plain words, each waiting for one word: (1) isolate Hamza's two
+   answer lanes and the four other runtime `query()` calls from the construction files
+   (`settingSources: []`, as the task lane already is); (2) delete dxb-start — its plan rule lives in
+   dxb-team2, its row rule in board law 4, its handover in dxb-team2 §8; it re-reads what the opening
+   already printed; 2 of 134 sessions since 2026-09-13 opened it (with it go the hook line, core §4's
+   row, rules.json `onboarding_read_order`, the mirror).
+3. dxb-team2 simpler — talk it through with him first. Measured: the score-card machine ran on 2 jobs
+   (7 audits); the class budgets were never set, so BRAKE has no number; §9's measurements are unpaid.
+4. Still unanswered, his question of 2026-10-01 ~21:55: why a locked tool is not resolved by the
+   system itself, and why the alert comes to him instead of to the one who should fix it.
+5. The next real job: the most necessary holding part, chosen with him.
 
 ## Waiting on his approval
 
-- The pin auto-review: finished on the author's side, waiting for his eye (⚠ UNVERIFIED: the two pin
-  alerts on his alerts page in TR and the drill to `/gov/audit/<id>`).
-- Next 2 and 3.
-- 14 board rows wait on him for a decision, money, an eye or an identity step — the board page's
-  "Sizi bekleyenler" lists them.
+- Next 2 (two one-word decisions) and Next 3 (the dxb-team2 talk).
+- The pin auto-review: nothing waits for his eye. Measured 2026-10-02 on the company engine: 76 pins,
+  76 with approved text, 0 locked, last check 2026-10-01 19:39 UTC, and NO pin alert exists. The
+  alert's look (TR, drill to `/gov/audit/<id>`) is seen the first time one fires.
+- The board rows that wait on him for a decision, money, an eye or an identity step — the board
+  page's "Sizi bekleyenler" lists them.
 
 ## Where things live
 
@@ -74,7 +78,7 @@ through it with him, measured on the day's two jobs. What changed, on his words:
 | What work remains? | `00-BOARD-OPEN-WORK.md` |
 | What was deferred or adapted, and why? | `00-INDEX.md` — the registered-adaptation table |
 | What did the CEO order in writing? | `docs/ceo-directives/` |
-| What did he rule, and when? | `scripts/governance/ceo-approvals.json` — 104 entries; the later word governs |
+| What did he rule, and when? | `scripts/governance/ceo-approvals.json` — his words, dated; the later word governs |
 | His complaints | `HOLDING-OS-MASTER-PLAN/00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md` (C66–C68 are the studio's) |
 | How do I do X? | `.claude/skills/dxb-*` — the doors |
 | The studio's evidence, film by film | `.planning/quick/20260903-media-studio-founding/` |

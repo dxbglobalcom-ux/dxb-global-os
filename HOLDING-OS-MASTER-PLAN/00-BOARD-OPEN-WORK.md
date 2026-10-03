@@ -23,8 +23,10 @@ that the project "advances in a mess and specs stay half-finished".
    with the CEO's own eye/ear where the machine cannot check it. A closed row keeps its evidence.
 3. **New design goes into the spec that already owns the contract** as a registered adaptation —
    never into a new spec.
-4. **Historical order.** Rows are ordered by the date the item was opened, oldest first, because
-   the CEO's ruling of 2026-07-27 is that half-finished older work outranks new work.
+4. **Historical order is a listing, not a priority.** Rows are listed by the date the item was
+   opened, oldest first. Which row is taken next is decided after talking it through with him — the
+   most necessary first, not the oldest (CEO, 2026-10-03: *"en eski değil en gerekli önce yapılması
+   gereken"* <!-- CEO-OK: next-row-most-necessary-2026-10-03 -->).
 5. **Ledger parity.** When a row closes here, the ledger that owns it is corrected in the SAME
    session. A stale ✓ or a stale ◐ is a governance violation of the same tier as an invented number.
 6. **ONLY REAL WORK ENTERS. A DROPPED IDEA LEAVES NO TRACE — HERE OR ANYWHERE.**

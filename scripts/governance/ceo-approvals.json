@@ -1826,5 +1826,37 @@
     "conditions": "Lines carrying his own word stay. The entry audit-ruler-is-a-runnable-script-2026-09-15 is history; this order supersedes it.",
     "session": "Opus 5.5 session dbebfe82 — heard first-hand, 2026-10-01.",
     "where": ".claude/skills/dxb-team2/SKILL.md §3 §6 · .claude/skills/dxb-verify/SKILL.md (battery table, ruler table, audit twin) · Codex mirror"
+  },
+  "plan-comes-to-him-once-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "The plan of a job comes to him once, before the work continues. His words of 2026-10-01 ('Sol tekrar okur → size gelir bu kısma gerek yok') refused only a second trip to him after Sol's re-read; commits 3fe36467 and 97983a29 also deleted the general line 'the plan goes to the CEO in his language; no code before his yes' and 'the plan of a critical job' from what reaches him. Restored in dxb-team2: the approach is talked through with him first; the lead writes the plan (a critical one is advised by Fable and read by Sol, and the lead closes its gaps); the plan goes to him once, in his language; no code before his yes; no second trip after Sol.",
+    "verbatim": "planı en başta konuşma en başta başla planlama ve benim onayımla hayata geçirilmesi var ama sanırım dxb team2 deki kritik plan bana gelmez konusu yani benim demek istediğim plan en başta konuşulur nasıl yapılacağı sonra plan sizin tarafınızadan hazırlanır ben bakarım ve iş devam eder şeklindeydi.",
+    "conditions": "His sentence of 2026-10-01 stands inside it: the plan does not come back to him a second time after Sol's re-read. LAW A over the over-deletion of 3fe36467 and 97983a29.",
+    "session": "Opus 5.5 session fe74b93a — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §1 §4 · Codex mirror"
+  },
+  "next-row-most-necessary-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "Which board row is taken next is not decided by its age: it is decided after talking it through with Opus — the most necessary first, not the oldest. Board law 4 keeps the listing order (by the date a row was opened) and loses its priority clause (half-finished older work outranks new work, the ruling of 2026-07-27); dxb-start's 'Choosing the row' points to the board's law instead of restating the old order.",
+    "verbatim": "tahta meselesi de, yine opusla konuştuktan sonra karar verilir onunla iligli yani en eski değil en gerekli önce yapılması gereken anlamında",
+    "conditions": "LAW A over the priority clause of 2026-07-27. The board's own header line of 2026-08-20 (THE FIRST ROW MUST BE THE ONE THAT MAKES THE COMPANY BREATHE) already says the same and stays.",
+    "session": "Opus 5.5 session fe74b93a — heard first-hand, 2026-10-03.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md law 4 · .claude/skills/dxb-start/SKILL.md 'Choosing the row' · Codex mirror"
+  },
+  "job-report-three-headings-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "A job's report to him ends under three headings — Sizi bekleyen · Değişen · Bulunan (the Opus 5.5 guide's 'Blocked on me, Changed, Found'); an empty heading is not written; the evidence stays in the work until he asks; never a technical question. A defect fixed on the way inside the job is fixed without asking and not listed for him — the commit carries it; what is found outside the job goes under Bulunan with a recommendation, and he decides (dxb-close-row, 2026-10-01).",
+    "verbatim": "5-bitsin ama eskiden birşeyler düzelttiğinde de yazıordu yolda şuanları düzelttim falan onu sen kendin yapıyorsun değil mi bana söylemene gerek yok????",
+    "conditions": "His answer to decision 5 of the prompt-audit review of 2026-10-03, which read: 'Uzun bir iş şu üç başlıkla bitsin mi: Sizi bekleyen · Değişen · Bulunan? Boş başlık yazılmaz; kanıt siz isteyene kadar işin içinde kalır.'",
+    "session": "Opus 5.5 session fe74b93a — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §4 TELL · Codex mirror"
+  },
+  "memory-dxb-crew-pointers-deleted-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "The memory notes that still sent a session to the deleted door dxb-crew (four files) now point to dxb-team2 §8 or name no door; the note that put the chief engineer's seat at Opus xhigh loses that line — code is never written at Opus xhigh (dxb-team2 §6), which he confirmed with its reason.",
+    "verbatim": "3-dxb crew zaten silindi hafızadan sil. … Ayrıca şu kısım doğru:\"dxb-team2 ise \"kod xhigh'ta asla yazılmaz\" (zira frontier benci diğerlerine göre çok düşük)",
+    "conditions": "",
+    "session": "Opus 5.5 session fe74b93a — heard first-hand, 2026-10-03.",
+    "where": "~/.claude/projects/-home-dxb-DxB-Global-OS/memory — four notes and the index line of the context-meter note"
   }
 }

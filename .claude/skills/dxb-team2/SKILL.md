@@ -11,7 +11,7 @@ it opens `dxb-verify` and `dxb-close-row`.
 ## 1. The shape
 
 ```
-            THE CEO'S SENTENCE
+            THE CEO'S SENTENCE — the approach talked through with him
                     │
             SCORE CARD (4 axes, 0-8) + DONE-LIST + budget
                     │
@@ -21,6 +21,8 @@ it opens `dxb-verify` and `dxb-close-row`.
      │              │              → Sol reads the plan → the lead closes its gaps
      └──────────────┼──────────────────────────┘
                     ▼
+     THE PLAN, in his language → the CEO looks at it once → his yes
+                    │
      THE LEAD (this session) writes the code and runs its tests
                     │
      SOL AUDITOR — blind, read-only, one pass:  medium │ high │ xhigh
@@ -74,8 +76,10 @@ every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §
 ```
 INTAKE    → the job in ONE sentence, provable by measurement; the CEO's words verbatim; what is his.
 SCORE     → the card (§3); `dxb-quota` read once — the week's headroom and pace.
-CRITICAL  → the lead writes the plan, Fable advises → Sol reads the PLAN (marked draft) →
-            the lead closes its gaps, Fable advises; then the code.
+PLAN      → the approach is talked through with the CEO first; the lead then writes the plan.
+            A critical one: Fable advises → Sol reads the PLAN (marked draft) → the lead closes
+            its gaps, Fable advises. The plan goes to the CEO once, in his language; no code
+            before his yes. It does not come back to him after Sol's read.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → the lead writes and runs the job's own tests. Parallel work only as a measured fork (§8).
 AUDIT     → Sol, blind (§5), one pass at the class's effort (§6).
@@ -91,14 +95,18 @@ BRAKE     → the job passes its class budget (§7): stop at a clean break, find
             and ask the CEO before going on.
 JUDGE     → battery ONCE, the dependants of every changed thing re-measured and printed;
             one commit per phase.
-TELL      → the CEO, in his language: the position, then the result. Never a technical question.
+TELL      → the CEO, in his language, under three headings: Sizi bekleyen · Değişen · Bulunan.
+            An empty heading is not written; the evidence stays in the work until he asks; never
+            a technical question. A defect fixed inside the job is not listed (the commit carries
+            it); what is found outside it goes under Bulunan with a recommendation, he decides.
 RECORD    → STATE (the contradicted sentence goes, LAW A), the board row, rulers green.
 ```
 
-**What reaches the CEO as a question:** starting any job, money out, a contract, an identity step,
-the Islamic boundaries, a job outgrowing its budget, and an order of his
+**What reaches the CEO as a question:** starting any job, its plan (once), money out, a contract, an
+identity step, the Islamic boundaries, a job outgrowing its budget, and an order of his
 that truly reads two ways — each with a recommendation, answerable in one word. Technical choices
-inside a job he already said yes to are the lead's.
+inside a job he already said yes to are the lead's. The plan's single trip and the three-heading
+report are his words of 2026-10-03 <!-- CEO-OK: plan-comes-to-him-once-2026-10-03 --> <!-- CEO-OK: job-report-three-headings-2026-10-03 -->.
 
 ## 5. The auditor's brief — blind, not in the dark
 
