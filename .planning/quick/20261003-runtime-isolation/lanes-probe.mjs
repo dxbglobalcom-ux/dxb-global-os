@@ -14,6 +14,8 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 
 const ROOT = join(import.meta.dirname, "..", "..", "..");
+// PROBE_LANES=chat runs Hamza's chat lane alone — the shape the strace probe (strace-probe.sh) reads.
+const ALL = (process.env.PROBE_LANES ?? "all") === "all";
 const fail = (why) => {
   console.log(`PROBE_ABORT ${why}`);
   process.exit(2);
@@ -111,8 +113,8 @@ async function initNames(label, extra, expected) {
       `tools beyond the lane's grant=[${foreignTools.slice(0, 5)}${foreignTools.length > 5 ? ",…" : ""}] (${foreignTools.length})`,
   );
 }
-await initNames("chat-shape", {}, { servers: [], tools: [] });
-await initNames("task-shape", {
+if (ALL) await initNames("chat-shape", {}, { servers: [], tools: [] });
+if (ALL) await initNames("task-shape", {
   mcpServers: toolOpts.mcpServers,
   allowedTools: toolOpts.allowedTools,
   disallowedTools: toolOpts.disallowedTools,
@@ -152,7 +154,7 @@ for (const r of thread) console.log(`  ${r.role}/${r.status}: ${JSON.stringify(r
 
 const anyTask = await db.selectFrom("tasks").select(["id"]).orderBy("created_at").limit(1).executeTakeFirstOrThrow();
 const t0 = (await db.selectNoFrom((eb) => eb.fn("now", []).as("t")).executeTakeFirst()).t;
-const out = await defaultExecutor({
+const out = !ALL ? null : await defaultExecutor({
   id: anyTask.id,
   department: seat.department,
   objective: `${CANARY} Do not call any tool.`,
@@ -164,7 +166,7 @@ const out = await defaultExecutor({
   status: "running",
   agent_id: seat.id,
 });
-console.log(`task lane: toolSurfaceMounted=${out.toolSurfaceMounted} result=${JSON.stringify(out.result?.text ?? out.result)}`);
+if (out) console.log(`task lane: toolSurfaceMounted=${out.toolSurfaceMounted} result=${JSON.stringify(out.result?.text ?? out.result)}`);
 
 // ── 4. what the lanes wrote, and its removal ────────────────────────────────────────────────────
 const after = await counts();

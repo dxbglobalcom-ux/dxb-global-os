@@ -1,0 +1,28 @@
+── LANES_PROBE=exits.mjs → run-lanes-probe.sh exit 1
+PROBE_EXIT=3
+PROBE_FAIL: the probe exited 3
+PROBE_FAIL: no PROBE_DONE — the probe did not finish
+PROBE_FAIL: no session ids — nothing to check the transcripts by
+PROBE_FAIL: 0 session ids for 1 receipts
+RUN_LANES_PROBE_STATUS=1
+── LANES_PROBE=fewer.mjs → run-lanes-probe.sh exit 1
+PROBE_EXIT=0
+PROBE_FAIL: 1 session ids for 2 receipts
+RUN_LANES_PROBE_STATUS=1
+── LANES_PROBE=noid.mjs → run-lanes-probe.sh exit 1
+PROBE_EXIT=0
+PROBE_FAIL: a receipt without a session id
+RUN_LANES_PROBE_STATUS=1
+── LANES_PROBE=nodone.mjs → run-lanes-probe.sh exit 1
+PROBE_EXIT=0
+PROBE_FAIL: no PROBE_DONE — the probe did not finish
+RUN_LANES_PROBE_STATUS=1
+── LANES_PROBE=clean.mjs → run-lanes-probe.sh exit 0
+PROBE_EXIT=0
+RUN_LANES_PROBE_STATUS=0
+── a read error (an unreadable folder under ~/.claude/projects, HOME=<temp>) → run-lanes-probe.sh exit 1
+PROBE_FAIL: find under ~/.claude failed: find: ‘<temp home>/.claude/projects/locked’: Permission denied
+PROBE_FAIL: find under ~/.claude reported: find: ‘<temp home>/.claude/projects/locked’: Permission denied
+PROBE_FAIL: grep of the transcripts failed: grep: <temp home>/.claude/projects/locked: Permission denied
+PROBE_FAIL: find of the written files failed: find: ‘<temp home>/.claude/projects/locked’: Permission denied
+RUN_LANES_PROBE_STATUS=1

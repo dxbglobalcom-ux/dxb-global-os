@@ -1,0 +1,14 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home
+[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-sQH9Gt/company-codex notes=0 mcp=0 ok=true tokens=12345
+
+ ✓ tests/governance/company-isolation.test.ts (82 tests | 80 skipped) 104ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed | 80 skipped (82)
+   Start at  14:55:33
+   Duration  2.53s (transform 83ms, setup 0ms, collect 2.17s, tests 104ms, environment 0ms, prepare 31ms)
+

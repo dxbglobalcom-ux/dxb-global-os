@@ -22,9 +22,10 @@
 // construction's ~/.codex.
 
 import { execFile } from "node:child_process";
+import { existsSync, readFileSync, readlinkSync, realpathSync } from "node:fs";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, dirname, join, resolve, sep } from "node:path";
 import { z } from "zod";
 import { getDb } from "@dxb/shared";
 import { sql } from "kysely";
@@ -154,10 +155,79 @@ function buildPrompt(input: CriticalGateInput): string {
  * day: from `~/.codex` the gate's challengers loaded the construction's global Codex notes
  * (`AGENTS.md`) and started its MCP servers; `--ignore-user-config`, `--ignore-rules` and
  * `-c project_doc_max_bytes=0` left the notes in; a clean `CODEX_HOME` holding only a login dropped
- * both. `DXB_COMPANY_CODEX_HOME` moves it.
+ * both. `DXB_COMPANY_CODEX_HOME` moves it — never onto the construction's home: a path that is
+ * `~/.codex`, lies inside it, or reaches it through a link is refused (Sol, 2026-10-03: the override
+ * was taken unchecked), and the runner then records the challenger unavailable instead of launching.
  */
 export function companyCodexHome(env: NodeJS.ProcessEnv = process.env): string {
-  return env.DXB_COMPANY_CODEX_HOME ?? join(homedir(), ".local", "share", "dxb", "company-codex");
+  const home = env.DXB_COMPANY_CODEX_HOME ?? join(homedir(), ".local", "share", "dxb", "company-codex");
+  const theirs = realPath(join(homedir(), ".codex"));
+  const ours = realPath(resolve(home));
+  if (ours === theirs || ours.startsWith(`${theirs}${sep}`)) {
+    throw new Error(`the company Codex home ${home} is the construction's Codex home (${theirs}) or lies inside it — no challenger runs from there`);
+  }
+  return home;
+}
+
+/** The path with every link resolved — through parts that do not exist yet and through a dangling link. */
+function realPath(p: string, depth = 0): string {
+  try {
+    return realpathSync(p);
+  } catch {
+    // not there (yet), or a link whose target is not there
+  }
+  if (depth > 40) return p;
+  try {
+    return realPath(resolve(dirname(p), readlinkSync(p)), depth + 1);
+  } catch {
+    // not a link
+  }
+  const parent = dirname(p);
+  return parent === p ? p : join(realPath(parent, depth + 1), basename(p));
+}
+
+/** The MCP servers a Codex home's config.toml declares: the distinct `[mcp_servers.<name>]` tables,
+ *  or `?` when the file holds them in a form this count does not read. */
+function mcpServersDeclared(configToml: string): string {
+  let text: string;
+  try {
+    text = readFileSync(configToml, "utf8");
+  } catch {
+    return "0"; // no config, no server
+  }
+  const names = new Set<string>();
+  for (const m of text.matchAll(/^\s*\[\s*mcp_servers\s*\.\s*(?:"([^"]+)"|([A-Za-z0-9_-]+))/gm)) names.add(m[1] ?? m[2]);
+  const otherForm = /^\s*\[\s*mcp_servers\s*\]|^\s*mcp_servers\s*=/m.test(text);
+  return otherForm ? "?" : String(names.size);
+}
+
+/**
+ * One line per Codex call — what the challenger loaded and what it read — so the resident itself
+ * proves the separation, as the SDK lanes' `isolationReceipt` does (Sol, 2026-10-03: the gate wrote
+ * none). `home` is the Codex home handed to the call (`refused` when companyCodexHome() refused it),
+ * `notes` the global notes in it (`AGENTS.md`, `AGENTS.override.md`), `mcp` the servers its
+ * config.toml declares, `session` and `tokens` read from the CLI's own stderr header and footer.
+ * A witness, never a participant: whatever it meets, the call's answer is untouched.
+ */
+function gateReceipt(log: (line: string) => void, model: string, stderr: string, ok: boolean): void {
+  try {
+    let home = "refused";
+    let notes = "?";
+    let mcp = "?";
+    try {
+      home = companyCodexHome();
+      notes = String(["AGENTS.md", "AGENTS.override.md"].filter((n) => existsSync(join(home, n))).length);
+      mcp = mcpServersDeclared(join(home, "config.toml"));
+    } catch {
+      // the refusal itself is the call's error
+    }
+    const session = /^session id:\s*(\S+)/m.exec(stderr)?.[1] ?? "?";
+    const used = /^tokens used\s*\r?\n\s*([\d,]+)/m.exec(stderr)?.[1];
+    const tokens = used ? String(Number(used.replace(/,/g, ""))) : "?"; // an unknown is never 0
+    log(`[isolation] lane=gate model=${model} session=${session} home=${home} notes=${notes} mcp=${mcp} ok=${ok} tokens=${tokens}`);
+  } catch {
+    // the line is lost; the gate's answer is not
+  }
 }
 
 /**
@@ -167,15 +237,37 @@ export function companyCodexHome(env: NodeJS.ProcessEnv = process.env): string {
  *   --skip-git-repo-check  the sandbox cwd is not a repo
  *   --ephemeral            no session file is left behind per challenge
  *   -s read-only           a reviewer reasons about text, it never writes
+ *   -c model_reasoning_effort="high"
+ *                          the level the challengers ran at from ~/.codex's config.toml; the
+ *                          company home has none (they fell to `none`), and the isolation must
+ *                          not change how hard they think (measured 2026-10-03)
  *   --output-schema        strict JSON instead of prose parsing
  *   -o                     final message to a file; stdout carries CLI chatter
  *   stdin closed           without it the CLI blocks on "Reading additional
  *                          input from stdin..." forever (measured 2026-07-26)
+ *
+ * Every call, answered or not, writes its isolation line through `log` (gateReceipt above).
  */
-export const codexRunner: ChallengerRunner = async ({ model, prompt, timeoutMs }) => {
+export function codexRunnerWith(log: (line: string) => void): ChallengerRunner {
+  return async ({ model, prompt, timeoutMs }) => {
+    const result = await runCodex(model, prompt, timeoutMs);
+    gateReceipt(log, model, result.stderr, result.ok);
+    return result.ok ? { ok: true, raw: result.raw } : { ok: false, error: result.error };
+  };
+}
+
+/** Default transport: the scheduler's stdout carries the isolation lines (`var/scheduler.log`). */
+export const codexRunner: ChallengerRunner = codexRunnerWith((line) => console.log(line));
+
+async function runCodex(
+  model: string,
+  prompt: string,
+  timeoutMs: number,
+): Promise<{ ok: boolean; raw?: string; error?: string; stderr: string }> {
   const dir = await mkdtemp(join(tmpdir(), "dxb-gate-"));
   const schemaPath = join(dir, "schema.json");
   const outPath = join(dir, "out.json");
+  let stderr = "";
   try {
     await writeFile(schemaPath, JSON.stringify(OUTPUT_SCHEMA), "utf8");
     await new Promise<void>((resolve, reject) => {
@@ -189,6 +281,8 @@ export const codexRunner: ChallengerRunner = async ({ model, prompt, timeoutMs }
           "read-only",
           "-m",
           model,
+          "-c",
+          'model_reasoning_effort="high"',
           "--output-schema",
           schemaPath,
           "-o",
@@ -198,17 +292,21 @@ export const codexRunner: ChallengerRunner = async ({ model, prompt, timeoutMs }
           prompt,
         ],
         { timeout: timeoutMs, maxBuffer: 8 * 1024 * 1024, env: { ...process.env, CODEX_HOME: companyCodexHome() } },
-        (err) => (err ? reject(err) : resolve()),
+        (err, _stdout, errText) => {
+          stderr = String(errText ?? "");
+          if (err) reject(err);
+          else resolve();
+        },
       );
       child.stdin?.end();
     });
-    return { ok: true, raw: await readFile(outPath, "utf8") };
+    return { ok: true, raw: await readFile(outPath, "utf8"), stderr };
   } catch (e) {
-    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+    return { ok: false, error: e instanceof Error ? e.message : String(e), stderr };
   } finally {
     await rm(dir, { recursive: true, force: true }).catch(() => {});
   }
-};
+}
 
 /**
  * Runs the panel. Challengers go in parallel and NEVER throw: a dead lane is

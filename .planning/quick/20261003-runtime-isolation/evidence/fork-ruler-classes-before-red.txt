@@ -1,0 +1,243 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts (65 tests | 10 failed | 55 skipped) 10ms
+   ↓ company isolation — the ruler over every company model call (CEO 2026-10-03) > reads every SDK import and every use of query() it finds — nothing it cannot follow
+   ↓ company isolation — the ruler over every company model call (CEO 2026-10-03) > finds exactly the eight company lanes, each once
+   ↓ company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() once, sets nothing off the list, and feeds its receipt first
+   ↓ company isolation — the ruler over every company model call (CEO 2026-10-03) > no runtime code launches `claude`, and every launch in a file that names claude or codex is readable
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > passes the honest shape — an aliased named import, the helper spread, the receipt first
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a namespace import
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses require()
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a dynamic import()
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a re-export
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses an alias of query
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses query handed on as a value
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settingSources after the helper
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settings after the helper
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses persistSession through a conditional spread
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a spread the ruler cannot see into
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses env
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses plugins
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses resume
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses mcpServers not from the compiled profile
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a computed option name
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses the helper switched off by its argument
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses no helper at all
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses options that are not a literal
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt named only in a comment
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt fed after the result can leave
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt with its own sink
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a stream not held in a const
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a helper that is not the kernel's
+   ↓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > reads the profile keys only from buildSdkToolOptions()
+   ↓ the launch ruler refuses a runtime `claude` > lets an honest launch through
+   ↓ the launch ruler refuses a runtime `claude` > refuses a named launch
+   ↓ the launch ruler refuses a runtime `claude` > refuses a namespace launch
+   ↓ the launch ruler refuses a runtime `claude` > refuses a default-import launch
+   ↓ the launch ruler refuses a runtime `claude` > refuses a promisified launch
+   ↓ the launch ruler refuses a runtime `claude` > refuses a program held in a const
+   ↓ the launch ruler refuses a runtime `claude` > refuses a shell line
+   ↓ the launch ruler refuses a runtime `claude` > refuses a program the ruler cannot name, beside a claude string
+   ↓ the launch ruler refuses a runtime `claude` > refuses child_process by require()
+   ↓ the launch ruler refuses a runtime `claude` > refuses a launcher handed on, beside a codex string
+   ↓ companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors
+   ↓ companyIsolation() and its receipt > the compiled profile keeps strictMcpConfig true — the lanes that pass it after the helper cannot loosen it
+   ↓ companyIsolation() and its receipt > DXB_WORKER_ISOLATION=0 is the rollback shape
+   ↓ companyIsolation() and its receipt > prints one line per result — the lane, the run's own session, what it loaded, what it read
+   ↓ companyIsolation() and its receipt > names what a leaking run loaded, the hooks it fired included, so the line shows it
+   ↓ companyIsolation() and its receipt > never touches the call: a sink that throws and messages of any shape pass through quietly
+   ↓ companyIsolation() and its receipt > an odd token count reads as zero, never as a broken line
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > finds the gate's codex launch, and no other
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > the gate's launch ends its env with CODEX_HOME: companyCodexHome()
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > reads the honest env
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > refuses the environment spread after the home
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > refuses no env at all
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env it cannot read
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > refuses the construction's home
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > refuses the helper given an argument
+   ↓ company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+   × the class cases on the ruler of HEAD > closes the class — a computed key that folds to a launcher 5ms
+     → expected '' to match /a launch of `codex` outside the criti…/
+   × the class cases on the ruler of HEAD > closes the class — a key the ruler cannot fold 1ms
+     → expected '' to match /a child_process member the ruler cann…/
+   × the class cases on the ruler of HEAD > closes the class — a launcher held in a const 0ms
+     → expected '' to match /a launch of `codex` outside the criti…/
+   × the class cases on the ruler of HEAD > closes the class — a program folded from pieces 1ms
+     → expected '' to match /a launch of `codex` outside the criti…/
+   × the class cases on the ruler of HEAD > closes the class — codex named in a wrapper's arguments 0ms
+     → expected '' to match /a launch through `env` that names cla…/
+   × the class cases on the ruler of HEAD > closes the class — a shell line through sh -c 0ms
+     → expected '' to match /a launch through `sh` that names clau…/
+   × the class cases on the ruler of HEAD > closes the class — spawn with shell: true 0ms
+     → expected '' to match /a shell line that names claude or cod…/
+   × the class cases on the ruler of HEAD > closes the class — the namespace exported under another name 0ms
+     → expected '' to match /namespace `cp` handed on/
+   × the class cases on the ruler of HEAD > closes the class — a launcher exported through a const 0ms
+     → expected '' to match /`execFile` handed on/
+   × the class cases on the ruler of HEAD > a companyCodexHome that shadows the gate's own — not the function the file declares 1ms
+     → expected '' to match /not the function this file declares a…/
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — a computed key that folds to a launcher
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — a launcher held in a const
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — a program folded from pieces
+AssertionError: expected '' to match /a launch of `codex` outside the criti…/
+
+[32m- Expected:[39m 
+/a launch of `codex` outside the critical gate/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts:868:74
+    866|     ["a launcher exported through a const", `import { execFile } from …
+    867|   ])("closes the class — %s", (_name, text, why) => {
+    868|     expect(analyzeLaunches("x/src/launch.ts", text).problems.join("\n"…
+       |                                                                          ^
+    869|   });
+    870| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — a key the ruler cannot fold
+AssertionError: expected '' to match /a child_process member the ruler cann…/
+
+[32m- Expected:[39m 
+/a child_process member the ruler cannot name/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts:868:74
+    866|     ["a launcher exported through a const", `import { execFile } from …
+    867|   ])("closes the class — %s", (_name, text, why) => {
+    868|     expect(analyzeLaunches("x/src/launch.ts", text).problems.join("\n"…
+       |                                                                          ^
+    869|   });
+    870| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — codex named in a wrapper's arguments
+AssertionError: expected '' to match /a launch through `env` that names cla…/
+
+[32m- Expected:[39m 
+/a launch through `env` that names claude or codex/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts:868:74
+    866|     ["a launcher exported through a const", `import { execFile } from …
+    867|   ])("closes the class — %s", (_name, text, why) => {
+    868|     expect(analyzeLaunches("x/src/launch.ts", text).problems.join("\n"…
+       |                                                                          ^
+    869|   });
+    870| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — a shell line through sh -c
+AssertionError: expected '' to match /a launch through `sh` that names clau…/
+
+[32m- Expected:[39m 
+/a launch through `sh` that names claude or codex/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts:868:74
+    866|     ["a launcher exported through a const", `import { execFile } from …
+    867|   ])("closes the class — %s", (_name, text, why) => {
+    868|     expect(analyzeLaunches("x/src/launch.ts", text).problems.join("\n"…
+       |                                                                          ^
+    869|   });
+    870| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — spawn with shell: true
+AssertionError: expected '' to match /a shell line that names claude or cod…/
+
+[32m- Expected:[39m 
+/a shell line that names claude or codex/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts:868:74
+    866|     ["a launcher exported through a const", `import { execFile } from …
+    867|   ])("closes the class — %s", (_name, text, why) => {
+    868|     expect(analyzeLaunches("x/src/launch.ts", text).problems.join("\n"…
+       |                                                                          ^
+    869|   });
+    870| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — the namespace exported under another name
+AssertionError: expected '' to match /namespace `cp` handed on/
+
+[32m- Expected:[39m 
+/namespace `cp` handed on/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts:868:74
+    866|     ["a launcher exported through a const", `import { execFile } from …
+    867|   ])("closes the class — %s", (_name, text, why) => {
+    868|     expect(analyzeLaunches("x/src/launch.ts", text).problems.join("\n"…
+       |                                                                          ^
+    869|   });
+    870| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > closes the class — a launcher exported through a const
+AssertionError: expected '' to match /`execFile` handed on/
+
+[32m- Expected:[39m 
+/`execFile` handed on/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts:868:74
+    866|     ["a launcher exported through a const", `import { execFile } from …
+    867|   ])("closes the class — %s", (_name, text, why) => {
+    868|     expect(analyzeLaunches("x/src/launch.ts", text).problems.join("\n"…
+       |                                                                          ^
+    869|   });
+    870| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  tests/governance/zz-fork-old-ruler-classes.test.ts > the class cases on the ruler of HEAD > a companyCodexHome that shadows the gate's own — not the function the file declares
+AssertionError: expected '' to match /not the function this file declares a…/
+
+[32m- Expected:[39m 
+/not the function this file declares at its top level/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/zz-fork-old-ruler-classes.test.ts:876:65
+    874|     expect(analyzeLaunches(GATE, `${head}${launchLine}\n`).problems).t…
+    875|     const shadowed = `${head}export function run() {\n  const companyC…
+    876|     expect(analyzeLaunches(GATE, shadowed).problems.join("\n")).toMatc…
+       |                                                                 ^
+    877|   });
+    878| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  10 failed | 55 skipped (65)
+   Start at  14:41:07
+   Duration  637ms (transform 66ms, setup 0ms, collect 375ms, tests 10ms, environment 0ms, prepare 30ms)
+

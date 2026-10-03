@@ -1,0 +1,22 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+[isolation] lane=gate model=stand-in session=? home=/tmp/company-codex-jHKr1C/company-codex notes=0 mcp=0 ok=true tokens=0
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named
+[isolation] lane=gate model=stand-in session=? home=refused notes=? mcp=? ok=false tokens=0
+
+ ✓ tests/governance/company-isolation.test.ts (80 tests) 166ms
+(node:1224487) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/critical-gate.test.ts (8 tests) 27ms
+
+ Test Files  2 passed (2)
+      Tests  88 passed (88)
+   Start at  14:51:13
+   Duration  3.16s (transform 226ms, setup 0ms, collect 2.60s, tests 193ms, environment 0ms, prepare 65ms)
+
+[global-teardown] handed back 1 ops:live receipt(s) this run issued
+exit=0

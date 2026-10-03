@@ -1,0 +1,328 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/governance/company-isolation.test.ts (68 tests | 13 failed) 173ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > reads every SDK import and every use of query() it finds — nothing it cannot follow 1ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > finds exactly the eight company lanes, each once 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() once, sets nothing off the list, and feeds its receipt first 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > no runtime code launches `claude`, and every launch in a file that names claude or codex is readable 29ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > passes the honest shape — an aliased named import, the helper spread, the receipt first 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a namespace import 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses require() 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a dynamic import() 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a re-export 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses an alias of query 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses query handed on as a value 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settingSources after the helper 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settings after the helper 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses persistSession through a conditional spread 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a spread the ruler cannot see into 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses env 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses plugins 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses resume 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses mcpServers not from the compiled profile 2ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a computed option name 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses the helper switched off by its argument 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses no helper at all 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses options that are not a literal 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt named only in a comment 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt fed after the result can leave 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt with its own sink 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a stream not held in a const 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a helper that is not the kernel's 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > reads the profile keys only from buildSdkToolOptions() 1ms
+   ✓ the launch ruler refuses a runtime `claude` > lets an honest launch through 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a named launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a namespace launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a default-import launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a promisified launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program held in a const 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a shell line 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program the ruler cannot name, beside a claude string 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses child_process by require() 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a launcher handed on, beside a codex string 0ms
+   × the ruler refuses each of Sol's single-pass counter-examples for its own reason > a require() specifier assembled at run time, in a file that names no SDK — a module it cannot name 4ms
+     → expected '' to match /a module the ruler cannot name/
+   × the ruler refuses each of Sol's single-pass counter-examples for its own reason > an escaped SDK specifier — the site is found and held to the helper 1ms
+     → expected [] to have a length of 1 but got +0
+   × the ruler refuses each of Sol's single-pass counter-examples for its own reason > the helper taken from another file named sdk-isolation — not the kernel's helper 1ms
+     → expected '' to match /not the kernel's helper/
+   × the ruler refuses each of Sol's single-pass counter-examples for its own reason > Object.assign on the compiled profile — the profile handed on or changed 1ms
+     → expected '' to match /the profile `toolOpts` is handed on o…/
+   × the ruler refuses each of Sol's single-pass counter-examples for its own reason > a receipt shadowed by a function hoisted inside the loop — not the receipt this function declares 1ms
+     → expected '' to match /not the receipt this function declares/
+   × the ruler refuses each of Sol's single-pass counter-examples for its own reason > element access on a child_process namespace — the launch of codex is seen, and refused outside the gate 1ms
+     → expected [] to deeply equal [ 'codex' ]
+   × the ruler refuses each of Sol's single-pass counter-examples for its own reason > a shell line that reaches codex through env — refused for naming it 0ms
+     → expected '' to match /a shell line that names claude or cod…/
+   ✓ companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors 4ms
+   ✓ companyIsolation() and its receipt > the compiled profile keeps strictMcpConfig true — the lanes that pass it after the helper cannot loosen it 4ms
+   ✓ companyIsolation() and its receipt > DXB_WORKER_ISOLATION=0 is the rollback shape 0ms
+   ✓ companyIsolation() and its receipt > prints one line per result — the lane, the run's own session, what it loaded, what it read 0ms
+   ✓ companyIsolation() and its receipt > names what a leaking run loaded, the hooks it fired included, so the line shows it 0ms
+   ✓ companyIsolation() and its receipt > never touches the call: a sink that throws and messages of any shape pass through quietly 1ms
+   ✓ companyIsolation() and its receipt > an odd token count reads as zero, never as a broken line 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > finds the gate's codex launch, and no other 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the gate's launch ends its env with CODEX_HOME: companyCodexHome() 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > reads the honest env 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the environment spread after the home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses no env at all 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env it cannot read 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the construction's home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the helper given an argument 0ms
+   × company isolation — the critical gate's Codex runs from the company's own home > refuses an env spread in after a valid env (Sol, single pass) 0ms
+     → expected true to be false // Object.is equality
+   × company isolation — the critical gate's Codex runs from the company's own home > refuses a spread after env the ruler cannot see into 1ms
+     → expected true to be false // Object.is equality
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex 90ms
+   × company isolation — the critical gate's Codex runs from the company's own home > refuses a company home that is the construction's ~/.codex, a path inside it, or a link to it 0ms
+     → /home/dxb/.codex: expected [Function] to throw an error
+   × company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named 7ms
+     → expected true to be false // Object.is equality
+   × company isolation — the critical gate's Codex runs from the company's own home > writes one isolation line per Codex call — what it loaded and what it read — on success and on failure 11ms
+     → expected [] to deeply equal [ …(2) ]
+   × company isolation — the critical gate's Codex runs from the company's own home > the isolation line never touches the call: a sink that throws leaves the answer as it was 0ms
+     → codexRunnerWith is not a function
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > the ruler refuses each of Sol's single-pass counter-examples for its own reason > a require() specifier assembled at run time, in a file that names no SDK — a module it cannot name
+AssertionError: expected '' to match /a module the ruler cannot name/
+
+[32m- Expected:[39m 
+/a module the ruler cannot name/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/company-isolation.test.ts:695:54
+    693|   it("a require() specifier assembled at run time, in a file that name…
+    694|     const text = `const sdk = require("@anthropic-ai/" + "claude-agent…
+    695|     expect(said(analyzeSdk("x/src/fresh.ts", text))).toMatch(/a module…
+       |                                                      ^
+    696|   });
+    697| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > the ruler refuses each of Sol's single-pass counter-examples for its own reason > an escaped SDK specifier — the site is found and held to the helper
+AssertionError: expected [] to have a length of 1 but got +0
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 0[39m
+
+ ❯ tests/governance/company-isolation.test.ts:701:21
+    699|     const text = GOOD.replace('"@anthropic-ai/claude-agent-sdk"', '"@a…
+    700|     const r = analyzeSdk("x/src/probe.ts", text);
+    701|     expect(r.sites).toHaveLength(1);
+       |                     ^
+    702|     expect(said(r)).toMatch(/spread companyIsolation\(\) 0 times/);
+    703|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > the ruler refuses each of Sol's single-pass counter-examples for its own reason > the helper taken from another file named sdk-isolation — not the kernel's helper
+AssertionError: expected '' to match /not the kernel's helper/
+
+[32m- Expected:[39m 
+/not the kernel's helper/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/company-isolation.test.ts:707:54
+    705|   it("the helper taken from another file named sdk-isolation — not the…
+    706|     const text = GOOD.replace(HEAD, `import { companyIsolation, isolat…
+    707|     expect(said(analyzeSdk("x/src/probe.ts", text))).toMatch(/not the …
+       |                                                      ^
+    708|   });
+    709| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > the ruler refuses each of Sol's single-pass counter-examples for its own reason > Object.assign on the compiled profile — the profile handed on or changed
+AssertionError: expected '' to match /the profile `toolOpts` is handed on o…/
+
+[32m- Expected:[39m 
+/the profile `toolOpts` is handed on or changed/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/company-isolation.test.ts:714:54
+    712|       "toolOpts = buildSdkToolOptions(s, i);\nObject.assign(toolOpts, …
+    713|     );
+    714|     expect(said(analyzeSdk("x/src/probe.ts", text))).toMatch(/the prof…
+       |                                                      ^
+    715|   });
+    716| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > the ruler refuses each of Sol's single-pass counter-examples for its own reason > a receipt shadowed by a function hoisted inside the loop — not the receipt this function declares
+AssertionError: expected '' to match /not the receipt this function declares/
+
+[32m- Expected:[39m 
+/not the receipt this function declares/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/company-isolation.test.ts:719:54
+    717|   it("a receipt shadowed by a function hoisted inside the loop — not t…
+    718|     const text = GOOD.replace(`if (msg.type === "result") return msg;`…
+    719|     expect(said(analyzeSdk("x/src/probe.ts", text))).toMatch(/not the …
+       |                                                      ^
+    720|   });
+    721| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > the ruler refuses each of Sol's single-pass counter-examples for its own reason > element access on a child_process namespace — the launch of codex is seen, and refused outside the gate
+AssertionError: expected [] to deeply equal [ 'codex' ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   "codex",[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ tests/governance/company-isolation.test.ts:724:46
+    722|   it("element access on a child_process namespace — the launch of code…
+    723|     const r = analyzeLaunches("x/src/launch.ts", `import * as cp from …
+    724|     expect(r.launches.map((l) => l.program)).toEqual(["codex"]);
+       |                                              ^
+    725|     expect(r.problems.join("\n")).toMatch(/a launch of `codex` outside…
+    726|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > the ruler refuses each of Sol's single-pass counter-examples for its own reason > a shell line that reaches codex through env — refused for naming it
+AssertionError: expected '' to match /a shell line that names claude or cod…/
+
+[32m- Expected:[39m 
+/a shell line that names claude or codex/
+
+[31m+ Received:[39m 
+""
+
+ ❯ tests/governance/company-isolation.test.ts:730:35
+    728|   it("a shell line that reaches codex through env — refused for naming…
+    729|     const r = analyzeLaunches("x/src/launch.ts", `import { exec } from…
+    730|     expect(r.problems.join("\n")).toMatch(/a shell line that names cla…
+       |                                   ^
+    731|   });
+    732| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > refuses an env spread in after a valid env (Sol, single pass)
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > refuses a spread after env the ruler cannot see into
+AssertionError: expected true to be false // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+ ❯ tests/governance/company-isolation.test.ts:870:48
+    868|     ["a spread after env the ruler cannot see into", ", env: { ...proc…
+    869|   ])("refuses %s", (_name, opts) => {
+    870|     expect(namesCompanyHome(launch(opts).env)).toBe(false);
+       |                                                ^
+    871|   });
+    872| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > refuses a company home that is the construction's ~/.codex, a path inside it, or a link to it
+AssertionError: /home/dxb/.codex: expected [Function] to throw an error
+
+[32m- Expected:[39m 
+null
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/governance/company-isolation.test.ts:949:101
+    947|       symlinkSync(construction, join(box, "link"));
+    948|       for (const home of [construction, join(construction, "nested"), …
+    949|         expect(() => companyCodexHome({ DXB_COMPANY_CODEX_HOME: home }…
+       |                                                                                                     ^
+    950|       }
+    951|       expect(companyCodexHome({ DXB_COMPANY_CODEX_HOME: join(box, "own…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named
+AssertionError: expected true to be false // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- false[39m
+[31m+ true[39m
+
+ ❯ tests/governance/company-isolation.test.ts:961:22
+    959|       const { codexRunner } = await import("../../packages/orchestrato…
+    960|       const res = await codexRunner({ model: "stand-in", prompt: "p", …
+    961|       expect(res.ok).toBe(false);
+       |                      ^
+    962|       expect(res.error).toMatch(/the construction's Codex home/);
+    963|       expect(existsSync(join(box, "launched"))).toBe(false);
+ ❯ withStandIn tests/governance/company-isolation.test.ts:932:7
+ ❯ tests/governance/company-isolation.test.ts:958:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > writes one isolation line per Codex call — what it loaded and what it read — on success and on failure
+AssertionError: expected [] to deeply equal [ …(2) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   "[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-fdvQRG/company-codex notes=1 mcp=2 ok=true tokens=12345",[39m
+[32m-   "[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-fdvQRG/company-codex notes=1 mcp=2 ok=false tokens=7",[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ tests/governance/company-isolation.test.ts:987:64
+    985|         spy.mockRestore();
+    986|       }
+    987|       expect(lines.filter((l) => l.startsWith("[isolation]"))).toEqual…
+       |                                                                ^
+    988|         `[isolation] lane=gate model=stand-in session=0199a2b3-stand-i…
+    989|         `[isolation] lane=gate model=stand-in session=0199a2b3-stand-i…
+ ❯ withStandIn tests/governance/company-isolation.test.ts:932:7
+ ❯ tests/governance/company-isolation.test.ts:968:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/13]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the isolation line never touches the call: a sink that throws leaves the answer as it was
+TypeError: codexRunnerWith is not a function
+ ❯ tests/governance/company-isolation.test.ts:997:19
+    995|     await withStandIn({ DXB_COMPANY_CODEX_HOME: "<box>/company-codex" …
+    996|       const { codexRunnerWith } = await import("../../packages/orchest…
+    997|       const run = codexRunnerWith(() => {
+       |                   ^
+    998|         throw new Error("journal sink failed");
+    999|       });
+ ❯ withStandIn tests/governance/company-isolation.test.ts:932:7
+ ❯ tests/governance/company-isolation.test.ts:995:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/13]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  13 failed | 55 passed (68)
+   Start at  14:32:42
+   Duration  821ms (transform 78ms, setup 0ms, collect 392ms, tests 173ms, environment 0ms, prepare 35ms)
+

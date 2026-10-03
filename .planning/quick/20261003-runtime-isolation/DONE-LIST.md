@@ -106,3 +106,77 @@ only the login drops the notes and starts no MCP server.
     (evidence: gate-probe.txt — from `~/.codex` both canaries PRESENT and an `rmcp` start-up error on
     stderr; from the company home both ABSENT, no such line; the gate's second model `gpt-5.5` answers
     there too; company-codex-login.txt — its own `auth.json`, its own inode, one link).
+
+### After Sol's single pass (2026-10-03 14:16) — the fork's fixes
+
+The rows are SOL-PASS2.md's "The lead's sorting". Each new counter-example is asserted by the reason the
+ruler gives, not by a non-empty list — Sol ran the analysis functions directly and saw `sites=[]`,
+`problems=[]`, which the old harness's "no site found" would have hidden.
+
+15. A1 — `pnpm vitest run tests/governance/company-isolation.test.ts` → Sol's eight counter-examples
+    each refused for its own reason: a computed `require` specifier → "a module the ruler cannot name";
+    a `sdk` escape → the SDK site found and refused for its missing helper; the helper from
+    `./fake/sdk-isolation.js` → "not the kernel's helper"; `Object.assign` on the profile → "the
+    profile … handed on or changed"; a receipt shadowed by a hoisted function → "not the receipt this
+    function declares"; `cp["execFile"]("codex", …)` → a launch of `codex`, refused outside the gate;
+    `exec("env CODEX_HOME=… codex exec …")` → "a shell line that names claude or codex"; `...{env:
+    process.env}` after a valid `env` → the last effective `env` is not the company home. Red on the
+    ruler of `5de3595e`, green after. Every earlier counter-example still refused; the eight lanes found
+    by name, each once; the gate's launch the only `codex` launch. Bindings are resolved by the
+    TypeScript binder (`ts.createProgram` + `getTypeChecker`), module specifiers by their parsed value
+    and by module resolution; `grep -cE 'text\.includes\(' tests/governance/company-isolation.test.ts`
+    → 0 (no prefilter on a file's text left; the one `spec.includes(SDK)` reads a specifier's parsed
+    value — corrected from the first wording, whose pattern also matched that line).
+16. A2 — `companyCodexHome()` with `DXB_COMPANY_CODEX_HOME` set to `~/.codex`, to a path inside it,
+    or to a link to it → throws, naming the construction's home; the real `codexRunner` under such an
+    override → `ok:false` with that reason and the stand-in `codex` on PATH never runs (its marker file
+    absent). Red before (the override passed through), green after.
+17. A3 — the real `codexRunner` with a stand-in `codex` on PATH (it prints a `session id:` header and a
+    `tokens used` footer on stderr) → exactly one line `[isolation] lane=gate model=<m> session=<id>
+    home=<path> notes=<n> mcp=<n> ok=<true|false> tokens=<n>` per call, on success and on failure; a
+    sink that throws leaves the result unchanged. Red before (no line), green after.
+18. B1 — `connectors-probe.mjs` (resident shape): the negative variant passes `strictMcpConfig: false`
+    explicitly → the account's connectors mount (init or live) and the call reads more; the helper's
+    own runs mount none; `evidence/connectors-probe.txt` re-made raw.
+19. B2 — `run-lanes-probe.sh`: the probe's non-zero exit, no `PROBE_DONE`, fewer session ids than its
+    four receipts, or a read error in the transcript check → the script exits non-zero naming the
+    reason; a clean run → exit 0; `evidence/lanes-probe.txt` re-made raw.
+20. B3 — `gate-probe.sh`: the runner's own flags (`exec --skip-git-repo-check --ephemeral -s read-only
+    -m <model> --output-schema <schema> -o <out> -C <dir>`); both streams kept whole in the evidence;
+    both challengers from the company home, the construction's home as the control;
+    `evidence/gate-probe.txt` re-made.
+21. B4 — `strace -f -e trace=openat,execve` over one chat-lane run and one gate run from the company
+    home, in the resident's shape → `evidence/opened-files.txt`: every file opened under `~/.claude`,
+    the repo's `.claude/` and `~/.codex`, and every program executed. Expected: no CLAUDE.md,
+    settings*.json, skills/, plugins/, agents/, hooks/, memory/ or projects/ transcript opened; nothing
+    under `~/.codex`; no MCP server started (chat: none; gate: none). What IS opened under `~/.claude`
+    (the login, `~/.claude.json`) is the shared-home finding for the CEO's report.
+22. `pnpm typecheck` → exit 0; `pnpm vitest run tests/governance/company-isolation.test.ts
+    tests/c9/critical-gate.test.ts` → green; `pnpm vitest run tests/b43/dispatch-book.test.ts -t
+    isolation` → green.
+23. The gate pins the challengers' reasoning effort: the runner's args carry
+    `-c model_reasoning_effort="high"` — the level both challengers ran at from `~/.codex` before
+    phase 2 (its config.toml: `model_reasoning_effort = "high"`); from the company home, which has no
+    config.toml, they ran at `none` (first fork, B3). Red before, green after; `gate-probe.sh` re-run →
+    both models' stderr headers read `reasoning effort: high`.
+24. The gate's isolation line says `tokens=?` when the CLI's stderr has no `tokens used` footer — an
+    unknown is never written as 0. Red before, green after.
+
+### Measured where an item did not hold as written (the lead, 2026-10-03 ~15:00)
+
+- **18 — not reproduced as written.** With `strictMcpConfig: false` the account's connectors mount
+  (Claude Docs 8 tools, Kiwi.com 2 tools); with the helper's own options none mount. But all four runs
+  read 466 tokens: the connectors attach after the init message, and this shape-only call ends before
+  it would read them. The read difference stands on Hamza's real chat lane: 11,289 tokens with
+  `tools=10 mcp=2` before `strictMcpConfig`, 2,153 with `tools=0 mcp=0` after (evidence/lanes-probe at
+  83a54e7e).
+- **21 — NOT MET for the chat lane; met for the gate.** Under strace the chat lane's claude CLI opened
+  `<repo>/.claude/settings.json`, `<repo>/.claude/settings.local.json`, `~/.claude/settings.json`,
+  `installed_plugins.json` and ten plugin-marketplace manifests. It listed the repository with `rg`
+  (`.claude/` included) and wrote `~/.claude.json` and `~/.claude/sessions/<pid>.json`. None of it was
+  applied: the receipt reads `tools=0 mcp=0 plugins=0 hooks=0`, the four canaries are ABSENT, and the
+  init names hold no construction skill or agent. No CLAUDE.md, memory file, transcript or SKILL.md was
+  opened. The gate opened nothing under `~/.claude` or the repo's `.claude/`; under `~/.codex` it opened
+  only the binary's own package file. No MCP server was started in either run. Closing 21 for the chat
+  lane takes a company working folder and a company Claude home — the same membership, his one login.
+  That is put to the CEO under Bulunan, and it is his decision.

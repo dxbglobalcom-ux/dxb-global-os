@@ -1,12 +1,84 @@
-── CODEX_HOME=/home/dxb/.codex · exit 0
-answer: (1) PRESENT (2) PRESENT
-stderr lines naming rmcp: 1
-stderr lines naming mcp: 1
-  2026-10-03T11:44:58.465364Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when AuthRequired(AuthRequiredError { www_authenticate_header: "Bearer resource_metadata=\"
-── CODEX_HOME=/home/dxb/.local/share/dxb/company-codex · exit 0
-answer: (1) ABSENT (2) ABSENT
-stderr lines naming rmcp: 0
-stderr lines naming mcp: 0
-── CODEX_HOME=company home · model gpt-5.5 (the gate's second challenger) · exit 0
-answer: ok
-stderr lines naming rmcp: 0
+══ control · CODEX_HOME=/home/dxb/.codex · model gpt-5.6-sol · exit 0
+── answer (-o):
+{"verdict":"flawed","objections":[{"severity":"low","claim":"Graph-first reads","why":"Seen in the AGENTS.md heading “Graph-first reads — token efficiency.”"},{"severity":"low","claim":"graphify","why":"Seen in the AGENTS.md notes in the path `~/.Codex/skills/graphify/SKILL.md`."},{"severity":"low","claim":"graphify","why":"Seen in the AGENTS.md notes in the directory name `graphify-out/`."}]}
+── stdout, whole:
+{"verdict":"flawed","objections":[{"severity":"low","claim":"Graph-first reads","why":"Seen in the AGENTS.md heading “Graph-first reads — token efficiency.”"},{"severity":"low","claim":"graphify","why":"Seen in the AGENTS.md notes in the path `~/.Codex/skills/graphify/SKILL.md`."},{"severity":"low","claim":"graphify","why":"Seen in the AGENTS.md notes in the directory name `graphify-out/`."}]}
+── stderr, whole:
+Reading additional input from stdin...
+OpenAI Codex v0.159.3
+--------
+workdir: /tmp/tmp.s4WjC8SE1u/1/cwd
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a101d5-efa9-7e61-985d-418bc4650715
+--------
+user
+This is a probe of what you were given, not a review. Look ONLY at text you received before this message (system or developer instructions, AGENTS.md notes), not general knowledge. If the phrase "Graph-first reads" or the word "graphify" appears in that text, return verdict "flawed" with one objection per phrase found (severity low, claim = the phrase, why = where you saw it). If neither appears, return verdict "sound" with no objections.
+2026-10-03T12:56:01.223398Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when AuthRequired(AuthRequiredError { www_authenticate_header: "Bearer resource_metadata=\"https://mcp.context7.com/.well-known/oauth-protected-resource\"" })
+2026-10-03T12:56:02.163495Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when AuthRequired(AuthRequiredError { www_authenticate_header: "Bearer resource_metadata=\"https://mcp.context7.com/.well-known/oauth-protected-resource\"" })
+hook: SessionStart
+hook: SessionStart Completed
+hook: UserPromptSubmit
+hook: UserPromptSubmit Completed
+codex
+{"verdict":"flawed","objections":[{"severity":"low","claim":"Graph-first reads","why":"Seen in the AGENTS.md heading “Graph-first reads — token efficiency.”"},{"severity":"low","claim":"graphify","why":"Seen in the AGENTS.md notes in the path `~/.Codex/skills/graphify/SKILL.md`."},{"severity":"low","claim":"graphify","why":"Seen in the AGENTS.md notes in the directory name `graphify-out/`."}]}
+hook: Stop
+hook: Stop Completed
+tokens used
+17,791
+
+══ company · CODEX_HOME=/home/dxb/.local/share/dxb/company-codex · model gpt-5.6-sol · exit 0
+── answer (-o):
+{"verdict":"sound","objections":[]}
+── stdout, whole:
+{"verdict":"sound","objections":[]}
+── stderr, whole:
+Reading additional input from stdin...
+OpenAI Codex v0.159.3
+--------
+workdir: /tmp/tmp.s4WjC8SE1u/2/cwd
+model: gpt-5.6-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a101d5-efba-79a2-baeb-e7008624235a
+--------
+user
+This is a probe of what you were given, not a review. Look ONLY at text you received before this message (system or developer instructions, AGENTS.md notes), not general knowledge. If the phrase "Graph-first reads" or the word "graphify" appears in that text, return verdict "flawed" with one objection per phrase found (severity low, claim = the phrase, why = where you saw it). If neither appears, return verdict "sound" with no objections.
+codex
+{"verdict":"sound","objections":[]}
+tokens used
+14,725
+
+══ company · CODEX_HOME=/home/dxb/.local/share/dxb/company-codex · model gpt-5.5 · exit 0
+── answer (-o):
+{"verdict":"sound","objections":[]}
+── stdout, whole:
+{"verdict":"sound","objections":[]}
+── stderr, whole:
+Reading additional input from stdin...
+OpenAI Codex v0.159.3
+--------
+workdir: /tmp/tmp.s4WjC8SE1u/3/cwd
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: high
+reasoning summaries: none
+session id: 01a101d5-efaf-7ba1-9b4c-4f059ee26081
+--------
+user
+This is a probe of what you were given, not a review. Look ONLY at text you received before this message (system or developer instructions, AGENTS.md notes), not general knowledge. If the phrase "Graph-first reads" or the word "graphify" appears in that text, return verdict "flawed" with one objection per phrase found (severity low, claim = the phrase, why = where you saw it). If neither appears, return verdict "sound" with no objections.
+codex
+{"verdict":"sound","objections":[]}
+tokens used
+11,291
+
+GATE_PROBE_DONE
