@@ -2,7 +2,7 @@
 //
 // scripts/governance/audit-card.mjs reads the lead's card and routes the auditor's effort from it —
 // it judges no file (the CEO: "sistem tahmin edemez onu sadece sen bilirsin"); scripts/governance/refuter.sh refuses an
-// audit without a card or beneath it, and puts the card in front of Sol. The refuter cases run the
+// audit without a card or beneath it, and shows Sol the card for information. The refuter cases run the
 // REAL script with a stand-in `codex` on PATH (it answers the inventory and echoes the prompt), so
 // no model is called and no quota is spent.
 import { spawnSync } from "node:child_process";
@@ -77,6 +77,9 @@ describe("the CLI on this repository's own history", () => {
     const out = JSON.parse(r.stdout);
     expect(out).toMatchObject({ class: "critical", effort: "xhigh", total: 7 });
     expect(out.brief).toMatch(/^THE LEAD'S SCORE CARD/);
+    // The CEO, 2026-10-03: the auditor audits at the card's level and never re-grades the card.
+    expect(out.brief).toMatch(/for information.*do not re-grade/);
+    expect(out.brief).not.toMatch(/under-grade|challenge/i);
     expect(out.brief).toContain("job: Sol's read-only hand");
   });
 
@@ -143,6 +146,8 @@ esac
     expect(r.stdout).toContain('EFFORT_ARG model_reasoning_effort="xhigh"');
     const prompt = r.stdout.split("PROMPT_BEGIN\n")[1].split("PROMPT_END")[0];
     expect(prompt).toMatch(/^THE LEAD'S SCORE CARD/);
+    expect(prompt).toMatch(/for information.*do not re-grade/);
+    expect(prompt).not.toMatch(/under-grade|challenge/i);
     expect(prompt.trimEnd().endsWith("audit this claim")).toBe(true);
     expect(r.stderr).toMatch(/AUDIT_CARD class=critical total=7 effort=xhigh/);
     const log = readFileSync(join(home, ".local", "state", "dxb", "audit-cards.log"), "utf8");

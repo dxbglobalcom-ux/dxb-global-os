@@ -68,7 +68,7 @@ The card is a file (`job:` · `range:` · `blast:` · `risk:` · `reasoning:` ·
 `refuter.sh --card <file>`; `scripts/governance/audit-card.mjs` refuses an audit without one, checks
 that the card's range is real and changes something, refuses any forwarded option that could
 override the effort, model, sandbox or servers,
-sets the auditor's effort, refuses an `--effort` beneath it, puts the card in front of Sol, and logs
+sets the auditor's effort, refuses an `--effort` beneath it, shows Sol the card for information (§6), and logs
 every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §7 are summed from it.
 
 ## 4. The loop
@@ -158,8 +158,10 @@ Correction required:
 - **Auditor (Sol):** light `medium` · normal `high` · critical `xhigh`. The first critical job runs
   `high` and `xhigh` on the same diff side by side; that number keeps or moves the critical level.
 - `audit-card.mjs` sets the auditor's level from the card; the lead may raise it (a fix that spread),
-  never lower it. The card is the lead's judgment, and Sol challenges it — no machine
-  can tell a dangerous file (the CEO, 2026-10-01: *"sistem tahmin edemez onu sadece sen bilirsin"*).
+  never lower it. The card is the lead's judgment — no machine can tell a dangerous file (the CEO,
+  2026-10-01: *"sistem tahmin edemez onu sadece sen bilirsin"*). **Sol audits at the level the card
+  gives and never re-grades it** <!-- CEO-OK: auditor-never-regrades-2026-10-03 --> — checking the
+  done-list (§5) is auditing the work; grading the job is the lead's.
 
 ## 7. The brake and the bill
 

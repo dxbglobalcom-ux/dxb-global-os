@@ -24,7 +24,8 @@
 # without the job's score card: scripts/governance/audit-card.mjs reads it,
 # checks the card's range is real and non-empty, sets the effort
 # (light medium · normal high · critical xhigh), refuses an --effort beneath it,
-# and puts the card in front of Sol so it can challenge the grading. There is no
+# and shows Sol the card for information: Sol audits at the level the card
+# gives and never re-grades it (CEO 2026-10-03, "kalıcı olsun"). There is no
 # silent `high` default any more. Each launch is logged to
 # ~/.local/state/dxb/audit-cards.log (the class budgets are measured from it).
 #

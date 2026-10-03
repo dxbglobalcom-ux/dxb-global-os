@@ -10,7 +10,8 @@
 // It does NOT judge which files are dangerous. A first version tried (path lists, then content
 // patterns); Sol's audits found a new gap every round, and the CEO named why: "sistem tahmin edemez
 // onu sadece sen bilirsin … milyar tane tehlikeli olabilecek şey olabilir". The grading is the lead's
-// judgment, written on the card; Sol reads the card first and challenges it (dxb-team2 §5).
+// judgment, written on the card. Sol is shown it for information, audits at the level it gives and
+// never re-grades it (the CEO, 2026-10-03: "kalıcı olsun senin puanladığını o puanlamasın"; dxb-team2 §6).
 //
 //   node scripts/governance/audit-card.mjs check <card-file> [--effort medium|high|xhigh]
 //
@@ -84,10 +85,10 @@ export function route(card, files, effort) {
   return { total, class: cls, files, required, effort: effort || required };
 }
 
-// The block Sol reads first: the card as the lead wrote it, and what the machine made of it.
+// The block Sol reads first: the card as the lead wrote it, for information, and what the machine made of it.
 export function briefBlock(text, r) {
   return [
-    "THE LEAD'S SCORE CARD (dxb-team2 §3), as written — check it too: does it under-grade this job?",
+    "THE LEAD'S SCORE CARD (dxb-team2 §3), shown for information — it is the lead's grading. Audit the work at the level it gives; do not re-grade the card.",
     text.trim(),
     `MACHINE: axes total ${r.total} → class ${r.class}; ${r.files} files in the range; you run at ${r.effort}.`,
     "",
