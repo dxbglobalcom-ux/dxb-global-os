@@ -1882,5 +1882,13 @@
     "conditions": "His message before it: 'kart sistemi güzel sen ölçümlüormuşsun ona göre makina effor seçiyormuş tamamda buna neden sol 6.1 karışıor ki, bu iş riskli xhigh açmalıydın şimdi herşeyi baştan yap. bu saçmalık kabul edilebilir mi sence? onun görevi verilen emri yerine getirmek sadece verilen işi verilen seviyede denetle okadar değil mi?sence'. 'kalıcı olsun' is his word to make it a standing rule. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session 32178f5b — heard first-hand, 2026-10-03.",
     "where": "scripts/governance/audit-card.mjs (briefBlock, header) · scripts/governance/refuter.sh (header) · .claude/skills/dxb-team2/SKILL.md §3, §6 · Codex mirror — changed by the next session, inside the doors audit's range"
+  },
+  "handover-carries-transcript-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "Every handover note ends with the path of the handing-over session's own conversation (~/.claude/projects/-home-dxb-DxB-Global-OS/<session id>.jsonl) and the line: if anything here is unclear, read the part you need there. Written where the handover lives, dxb-team2 §8.",
+    "verbatim": "bunu kural yaparmısın güzel yöntem her devirde yapılsın önceki oturumun konuşmasının nota eklenmesi belirtiz kalırsa orada oku uyarısı. tabi kuralı devirle iligli yere sanırım yazacaksın değil mi?",
+    "conditions": "First done in session 32178f5b's handover note, after his question 'devredilen session herşeyi bilecek mi konuştuklarımızı talepleri mi vs.'. 'kural yapar mısın' is his word to make it a standing rule. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 32178f5b — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §8 · Codex mirror"
   }
 }

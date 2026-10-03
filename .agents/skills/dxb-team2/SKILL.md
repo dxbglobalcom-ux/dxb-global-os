@@ -179,7 +179,10 @@ Correction required:
   only at a clean break — no battery running, tree committed, report sent.
 - **The handover** is done by the engineer, never the CEO. A note in the scratchpad (the job's place
   in the whole first, then his words of this job verbatim, every phase with status and commit, the
-  traps met, the first message the successor sends; session-only orders marked as such), `wl-copy`'d.
+  traps met, the first message the successor sends; session-only orders marked as such; last, the
+  path of this session's own conversation — `~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl`
+  — with the line *if anything here is unclear, read the part you need there*), `wl-copy`'d
+  <!-- CEO-OK: handover-carries-transcript-2026-10-03 -->.
   The successor opens with the same model and effort as this session, in a VS Code editor-area
   terminal, through `operator` (look first; if the CEO is typing, wait): `operator key ctrl+shift+p`
   → `operator type "Terminal: Create New Terminal in Editor Area"` → `operator key Return` →
