@@ -1,0 +1,61 @@
+# The doors audit's B1-B5 and C1, fixed by the third fork — 2026-10-03 15:18:00, HEAD c4aafb6c
+
+## BEFORE the move — each grep must find nothing
+$ grep -n "never composed in his first person" .claude/skills/dxb-team2/SKILL.md   # 2a
+(nothing)
+$ grep -n "targeted test for a local change" .claude/skills/dxb-verify/SKILL.md   # 2b
+(nothing)
+$ grep -n "no file changes before his yes" .claude/skills/dxb-team2/SKILL.md   # 2c
+(nothing)
+$ grep -n "matches the surrounding code" .claude/skills/dxb-team2/SKILL.md   # 2d
+(nothing)
+$ grep -n "before any proposal" .claude/skills/dxb-team2/SKILL.md   # 2e
+(nothing)
+$ grep -n "restart trap" .claude/skills/dxb-hamza-context/SKILL.md   # C1
+(nothing)
+
+## AFTER the move — each grep finds the rule (15:18:54)
+$ grep -n "never composed in his first person" .claude/skills/dxb-team2/SKILL.md   # 2a
+193:  from this conversation, marked so — never composed in his first person.
+$ grep -n "targeted test for a local change" .claude/skills/dxb-verify/SKILL.md   # 2b
+40:The tests a change needs follow its risk: a targeted test for a local change, an integration test at
+$ grep -n "no file changes before his yes" .claude/skills/dxb-team2/SKILL.md   # 2c
+85:            no file changes before his yes. It does not come back to him after Sol's read. The
+$ grep -n "matches the surrounding code" .claude/skills/dxb-team2/SKILL.md   # 2d
+94:            The change matches the surrounding code — naming, structure, comment density, error
+$ grep -n "before any proposal" .claude/skills/dxb-team2/SKILL.md   # 2e
+80:            before any proposal; no generic software advice, no documents restated.
+$ grep -n "restart trap" .claude/skills/dxb-hamza-context/SKILL.md   # C1
+60:5. **Restart the residents** as `dxb-verify`'s restart trap says — its one owner. The chat and voice
+$ grep -n "handover-at-50-without-asking" .claude/skills/dxb-team2/SKILL.md   # the old B1 paragraph's marker, carried
+186:  <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
+
+$ bash scripts/governance/sync-codex-mirror.sh
+SYNC_OK AGENTS.md + 11 doors + 1 hooks regenerated from .claude/
+exit=0
+$ bash scripts/governance/sync-codex-mirror.sh --check
+SYNC_OK mirror matches source
+exit=0
+
+$ pnpm vitest run tests/hooks/opening-budget.test.ts tests/governance/ledger-truth.test.ts tests/governance/no-closure-without-his-word.test.ts tests/governance/codex-mirror-check.test.ts tests/governance/audit-card.test.ts
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/governance/audit-card.test.ts (19 tests) 3827ms
+   ✓ refuter.sh holds the gate > refuses every forwarded option that could override the card or the profile  373ms
+   ✓ refuter.sh holds the gate > keeps the prompt whole when allowed options come after it, and refuses two prompts  311ms
+   ✓ refuter.sh holds the gate > takes the prompt after '--', and refuses an empty brief  632ms
+   ✓ refuter.sh holds the gate > runs the whole audit again when the model is at capacity, and gives up after four tries  578ms
+   ✓ refuter.sh holds the gate > never retries on a capacity sentence quoted in the answer; caps the retries at three; logs every try  768ms
+ ✓ tests/governance/codex-mirror-check.test.ts (3 tests) 501ms
+ ✓ tests/hooks/opening-budget.test.ts (8 tests) 278ms
+ ✓ tests/governance/ledger-truth.test.ts (7 tests) 43ms
+ ✓ tests/governance/no-closure-without-his-word.test.ts (7 tests) 15ms
+
+ Test Files  5 passed (5)
+      Tests  44 passed (44)
+   Start at  15:19:05
+   Duration  5.37s (transform 70ms, setup 0ms, collect 61ms, tests 4.67s, environment 0ms, prepare 150ms)
+
+exit=0

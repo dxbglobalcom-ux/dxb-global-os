@@ -18,6 +18,24 @@ aynı hata ikinci kez olunca ve 'bitti' demeden önce." (ledger fable-three-chec
    first, no stub and no silent narrowing or widening (§4 BUILD); approval, verification, records and
    the handover in dxb-team2, dxb-verify, dxb-close-row and the board.
    `git show bec00f77^:.claude/skills/dxb-start/SKILL.md` against the doors at bec00f77.
+   Sol's doors audit (SOL-DOORS.md, B1-B5) found five rules with no owner left. Each moves to its owner,
+   and each command below finds nothing before the move and finds the rule after it:
+   2a. B1, old lines 80-83 → dxb-team2 §8: the handover note is written in the author's own voice; he
+       is quoted only from the ledger, never composed in his first person (as the ledger entry
+       handover-at-50-without-asking-2026-10-01 holds it: "the note still quotes him only from this
+       register"; the fork's first wording widened it to the conversation — the lead's brief had, and
+       it went back). `grep -n "never composed in his first person" .claude/skills/dxb-team2/SKILL.md`
+   2b. B2, old lines 68-70 → dxb-verify: the tests a change needs follow its risk — a targeted test for
+       a local change, an integration test at a boundary, a security check wherever authorisation,
+       secrets or isolation move. `grep -n "targeted test for a local change" .claude/skills/dxb-verify/SKILL.md`
+   2c. B3, old line 48 → dxb-team2 §4 PLAN: no file changes before his yes (the old scope; it read "no
+       code"). `grep -n "no file changes before his yes" .claude/skills/dxb-team2/SKILL.md`
+   2d. B4, old line 64 → dxb-team2 §4 BUILD: the change matches the surrounding code — naming,
+       structure, comment density, error handling, idiom.
+       `grep -n "matches the surrounding code" .claude/skills/dxb-team2/SKILL.md`
+   2e. B5, old lines 36 and 44 → dxb-team2 §4 INTAKE: the understanding is reported to him in his
+       language before any proposal; no generic software advice, no documents restated.
+       `grep -n "before any proposal" .claude/skills/dxb-team2/SKILL.md`
 3. dxb-team2 §2 names Fable at the three fixed points, with his ledger id beside it.
 4. Core §4's row and the opening hook line (`.claude/hooks/spec-bootstrap.sh`, its `.codex` twin) name
    dxb-start's new role; STATE no longer points at the deleted "Phase 0 §3".

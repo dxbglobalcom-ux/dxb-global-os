@@ -76,20 +76,23 @@ every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §
 ```
 INTAKE    → the job in ONE sentence, provable by measurement; the CEO's words verbatim; what is his;
             what it excludes, what it touches, what contradicts what across documents and code,
-            the real unknowns that could change the plan.
+            the real unknowns that could change the plan — reported to him in his language
+            before any proposal; no generic software advice, no documents restated.
 SCORE     → the card (§3); `dxb-quota` read once — the week's headroom and pace.
 PLAN      → the approach is talked through with the CEO first; the lead then writes the plan.
             A critical one: Fable advises → Sol reads the PLAN (marked draft) → the lead closes
-            its gaps, Fable advises. The plan goes to the CEO once, in his language; no code
-            before his yes. It does not come back to him after Sol's read. The plan names the
-            scope, the surfaces and files it touches, the ordered steps, the data and interface
-            effects, migration and rollback where relevant, how it is verified, and the risks.
+            its gaps, Fable advises. The plan goes to the CEO once, in his language, and
+            no file changes before his yes. It does not come back to him after Sol's read. The
+            plan names the scope, the surfaces and files it touches, the ordered steps, the data
+            and interface effects, migration and rollback where relevant, how it is verified, and
+            the risks.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → root cause before fix; new code is proven by a test that failed before it existed. The
             lead writes and runs the job's own tests — the approved scope, completely: no stub, no
             placeholder, no silent narrowing or widening; a discovery that would change the scope,
             architecture, security, data integrity or the outcome stops the work and is reported.
-            Parallel work only as a measured fork (§9).
+            The change matches the surrounding code — naming, structure, comment density, error
+            handling, idiom. Parallel work only as a measured fork (§9).
 AUDIT     → Sol, blind (§5), one pass at the class's effort (§6).
             A — blocks · B — repaired in this same pass · C — older than this work → stays in the
             job's own folder (the audit report); never the board — a row opens only on his word.
@@ -179,12 +182,15 @@ Correction required:
 - **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`, the CEO's numbers of
   2026-09-26): hand over at ≥ 50 % used, or when used + the next phase's honest estimate > 55 %;
   only at a clean break — no battery running, tree committed, report sent.
-- **The handover** is done by the engineer, never the CEO. A note in the scratchpad (the job's place
+- **The handover** is done by the engineer, never the CEO
+  <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
+  own voice (the job's place
   in the whole first, then his words of this job verbatim, every phase with status and commit, the
   traps met, the first message the successor sends; session-only orders marked as such; last, the
   path of this session's own conversation — `~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl`
   — with the line *if anything here is unclear, read the part you need there*), `wl-copy`'d
-  <!-- CEO-OK: handover-carries-transcript-2026-10-03 -->.
+  <!-- CEO-OK: handover-carries-transcript-2026-10-03 -->. He is quoted only from the ledger
+  (`scripts/governance/ceo-approvals.json`), never composed in his first person.
   The successor opens with the same model and effort as this session, in a VS Code editor-area
   terminal, through `operator` (look first; if the CEO is typing, wait): `operator key ctrl+shift+p`
   → `operator type "Terminal: Create New Terminal in Editor Area"` → `operator key Return` →

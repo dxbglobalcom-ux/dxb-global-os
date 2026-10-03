@@ -1901,7 +1901,7 @@
   },
   "dxb-hamza-context-restart-line-2026-10-03": {
     "date": "2026-10-03",
-    "what": "The dxb-hamza-context door's restart rule corrected the same way as dxb-verify's: it said the chat and voice lanes load new code when `dxb-scheduler` and `dxb-jarvis` are restarted; the scheduler drains both lanes (packages/outbox-executor/src/scheduler.ts — drainVoiceCalls, drainChatMessages) and dxb-jarvis is stopped and disabled. The rule now restarts dxb-scheduler and says dxb-jarvis is not started.",
+    "what": "The dxb-hamza-context door's restart rule corrected the same way as dxb-verify's: it said the chat and voice lanes load new code when `dxb-scheduler` and `dxb-jarvis` are restarted; the scheduler drains both lanes (packages/outbox-executor/src/scheduler.ts — drainVoiceCalls, drainChatMessages) and dxb-jarvis is stopped and disabled. The rule now restarts dxb-scheduler and says dxb-jarvis is not started. After the doors audit (Sol, C1: the restart had two owners), rule 5 points to dxb-verify's restart trap as its one owner and keeps why the lanes need it (the scheduler drains both).",
     "verbatim": "evet hamza-context'i de düzelt",
     "conditions": "Answering the lead's one-line question after the dxb-verify fix (ledger dxb-verify-battery-and-restart-lines-2026-10-03): the same wrong line stood in dxb-hamza-context, and his earlier yes named dxb-verify alone. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",

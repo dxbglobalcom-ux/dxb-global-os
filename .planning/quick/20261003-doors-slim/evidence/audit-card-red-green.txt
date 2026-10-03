@@ -1,0 +1,115 @@
+# The never-re-grade assertions (tests/governance/audit-card.test.ts at c4aafb6c) — run 2026-10-03 15:15
+# RED: scripts/governance/audit-card.mjs as it stood before 8202740c (git show 8202740c^:…), the tests as committed
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/governance/audit-card.test.ts (19 tests | 2 failed) 3864ms
+   ✓ the card > refuses a card without job, range or any axis, and an axis outside 0-2 1ms
+   ✓ the card > reads markdown bullets and bold keys 0ms
+   ✓ the card > classes at the door's boundaries: 0-2 light, 3-5 normal, 6-8 critical 0ms
+   ✓ the machine does not judge files — the card is the lead's judgment > routes by the card alone, whatever the files 1ms
+   ✓ the effort follows the card > sets the effort from the class when none is given — no silent high 0ms
+   ✓ the effort follows the card > refuses an effort beneath the card and allows one above it 0ms
+   × the CLI on this repository's own history > routes job 1's range: governance files, critical axes → xhigh, card in the brief 33ms
+     → expected 'THE LEAD\'S SCORE CARD (dxb-team2 §3)…' to match /for information.*do not re-grade/
+   ✓ the CLI on this repository's own history > refuses a missing card file, a range that is not a commit, and an empty range 64ms
+   ✓ refuter.sh holds the gate > refuses an audit without a card, before Codex is asked anything 5ms
+   ✓ refuter.sh holds the gate > refuses an effort beneath the card 28ms
+   × refuter.sh holds the gate > launches at the card's effort with the card in front of the brief, and logs the launch 263ms
+     → expected 'THE LEAD\'S SCORE CARD (dxb-team2 §3)…' to match /for information.*do not re-grade/
+   ✓ refuter.sh holds the gate > refuses every forwarded option that could override the card or the profile  376ms
+   ✓ refuter.sh holds the gate > keeps the prompt whole when allowed options come after it, and refuses two prompts  314ms
+   ✓ refuter.sh holds the gate > binds an option's value to it, so a value that looks like an option never reaches Codex as one 259ms
+   ✓ refuter.sh holds the gate > accepts the attached short forms of the allowed options, bound 265ms
+   ✓ refuter.sh holds the gate > takes the prompt after '--', and refuses an empty brief  629ms
+   ✓ refuter.sh holds the gate > runs the whole audit again when the model is at capacity, and gives up after four tries  576ms
+   ✓ refuter.sh holds the gate > never retries on a capacity sentence quoted in the answer; caps the retries at three; logs every try  780ms
+   ✓ refuter.sh holds the gate > reads the brief from stdin when the prompt is '-' 266ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/audit-card.test.ts > the CLI on this repository's own history > routes job 1's range: governance files, critical axes → xhigh, card in the brief
+AssertionError: expected 'THE LEAD\'S SCORE CARD (dxb-team2 §3)…' to match /for information.*do not re-grade/
+
+[32m- Expected:[39m 
+/for information.*do not re-grade/
+
+[31m+ Received:[39m 
+"THE LEAD'S SCORE CARD (dxb-team2 §3), as written — check it too: does it under-grade this job?
+# Score card
+job: Sol's read-only hand into the construction engine
+range: 635e32bc..cf95b743
+blast: 2
+risk: 2
+reasoning: 2
+ambiguity: 1
+MACHINE: axes total 7 → class critical; 17 files in the range; you run at xhigh.
+
+"
+
+ ❯ tests/governance/audit-card.test.ts:81:23
+     79|     expect(out.brief).toMatch(/^THE LEAD'S SCORE CARD/);
+     80|     // The CEO, 2026-10-03: the auditor audits at the card's level and…
+     81|     expect(out.brief).toMatch(/for information.*do not re-grade/);
+       |                       ^
+     82|     expect(out.brief).not.toMatch(/under-grade|challenge/i);
+     83|     expect(out.brief).toContain("job: Sol's read-only hand");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/governance/audit-card.test.ts > refuter.sh holds the gate > launches at the card's effort with the card in front of the brief, and logs the launch
+AssertionError: expected 'THE LEAD\'S SCORE CARD (dxb-team2 §3)…' to match /for information.*do not re-grade/
+
+[32m- Expected:[39m 
+/for information.*do not re-grade/
+
+[31m+ Received:[39m 
+"THE LEAD'S SCORE CARD (dxb-team2 §3), as written — check it too: does it under-grade this job?
+# Score card
+job: Sol's read-only hand into the construction engine
+range: 635e32bc..cf95b743
+blast: 2
+risk: 2
+reasoning: 2
+ambiguity: 1
+MACHINE: axes total 7 → class critical; 17 files in the range; you run at xhigh.
+
+audit this claim
+"
+
+ ❯ tests/governance/audit-card.test.ts:149:20
+    147|     const prompt = r.stdout.split("PROMPT_BEGIN\n")[1].split("PROMPT_E…
+    148|     expect(prompt).toMatch(/^THE LEAD'S SCORE CARD/);
+    149|     expect(prompt).toMatch(/for information.*do not re-grade/);
+       |                    ^
+    150|     expect(prompt).not.toMatch(/under-grade|challenge/i);
+    151|     expect(prompt.trimEnd().endsWith("audit this claim")).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 17 passed (19)
+   Start at  15:15:58
+   Duration  4.14s (transform 53ms, setup 0ms, collect 20ms, tests 3.86s, environment 0ms, prepare 30ms)
+
+exit=1
+# GREEN: the file restored to HEAD
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/governance/audit-card.test.ts (19 tests) 3856ms
+   ✓ refuter.sh holds the gate > refuses every forwarded option that could override the card or the profile  382ms
+   ✓ refuter.sh holds the gate > keeps the prompt whole when allowed options come after it, and refuses two prompts  307ms
+   ✓ refuter.sh holds the gate > takes the prompt after '--', and refuses an empty brief  637ms
+   ✓ refuter.sh holds the gate > runs the whole audit again when the model is at capacity, and gives up after four tries  586ms
+   ✓ refuter.sh holds the gate > never retries on a capacity sentence quoted in the answer; caps the retries at three; logs every try  774ms
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  15:16:02
+   Duration  4.13s (transform 52ms, setup 0ms, collect 23ms, tests 3.86s, environment 0ms, prepare 32ms)
+
+exit=0

@@ -1,0 +1,13 @@
+SYNC_OK AGENTS.md + 11 doors + 1 hooks regenerated from .claude/
+$ grep -n 'never composed in his first person' .claude/skills/dxb-team2/SKILL.md
+193:  (`scripts/governance/ceo-approvals.json`), never composed in his first person.
+$ sync-codex-mirror.sh --check
+SYNC_OK mirror matches source
+exit=0
+$ node scripts/governance/ledger-truth.mjs
+ledger truth OK: 11 state claims re-measured, 111 open markers resolved against 93 board rows, 13 rules each in exactly one owner, 388 CEO approval claims each backed by a registered approval, 26 closed board rows each carrying his own acceptance
+exit=0
+$ pnpm vitest run (the five rulers)
+ Test Files  5 passed (5)
+      Tests  44 passed (44)
+exit=0
