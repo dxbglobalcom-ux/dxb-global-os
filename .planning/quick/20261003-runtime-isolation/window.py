@@ -4,7 +4,7 @@ OPUS = dict(inp=4.0, w=8.0, r=0.20, out=20.0)          # $/MTok list (claude-api
 HAIKU = dict(inp=1.0, w=2.0, r=0.10, out=5.0)          # assumption: haiku 1h write 2x, read 0.1x
 FABLE = dict(inp=10.0, out=50.0)
 LO = "2026-10-03T13:00:00Z"
-probes = ["2026-10-03T17:38:20Z", "2026-10-03T17:39:42Z", "2026-10-03T17:41:06Z", "2026-10-03T17:41:27Z", "2026-10-03T17:43:33Z"]
+probes = ["2026-10-03T17:38:20Z", "2026-10-03T17:41:06Z", "2026-10-03T17:41:27Z", "2026-10-03T17:43:33Z", "2026-10-03T17:44:36Z", "2026-10-03T17:46:42Z"]
 ex = {}      # message id -> (ts, model, usage executor parts)
 adv = {}     # server_tool_use id -> (ts, in, out)
 for f in glob.glob(P + "**/*.jsonl", recursive=True):

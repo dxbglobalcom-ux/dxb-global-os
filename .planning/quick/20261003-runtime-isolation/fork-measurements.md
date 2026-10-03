@@ -50,7 +50,10 @@ usage-probe.mjs reads the /usage windows through the SDK (`usage_EXPERIMENTAL_�
 5-hour meter from every local transcript since the window opened (13:00Z), calibrated on 27 % at 17:38:20Z.
 - Fable weekly meter 0 % all day after 8 consults (~$21 at list); usage credits $0 (extra usage off).
 - 5-hour meter: 27 → 28 at 19:41:27 and stayed 28 to 19:43:33. Predicted at 17:43:33Z: Fable not counted 28.2 · counted at
-  Fable list 29.8 · counted at Opus input rates ~29.0. Observed 28 — not counted fits; Fable-list excluded; Opus-rate weak.
+  Fable list 29.8 · counted at Opus input rates ~29.0. Then 29 from 19:44:36 to the end (19:46:42), where not counted
+  predicts 28.4-28.7 and Fable list 30.0-30.2. Fable at its own list price is excluded; not counted vs counted at a much
+  lower weight (Opus-like) is unresolved at a 1-point meter (the lead's research calls ran in the same minutes).
+  He closed it ("onlar bakar düzeltir"); no test followed.
 - Weekly all-models 10 → 11 at 19:42:51: unresolvable (one point ≈ $10 of list-price usage).
 - Docs (code.claude.com/docs/en/advisor, Cost): on subscription plans advisor usage "counts toward your plan's usage limits";
   the advisor's read "is not cached". Same observation open since 2026-09-06 in anthropics/claude-code#92437 (Max 5x, two
