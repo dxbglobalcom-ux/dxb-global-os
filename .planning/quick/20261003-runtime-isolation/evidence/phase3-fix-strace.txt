@@ -1,0 +1,853 @@
+== auth status (no secret in it)
+{
+  "loggedIn": true,
+  "authMethod": "claude.ai",
+  "apiProvider": "firstParty",
+  "analyticsDisabled": false,
+  "projectsDirectory": "/home/dxb/.local/share/dxb/company-claude/projects",
+  "email": "dxbglobalcom@gmail.com",
+  "orgId": "22dbc686-6bb9-4398-8d9d-551ef2105a6e",
+  "orgName": "dxbglobalcom@gmail.com's Organization",
+  "subscriptionType": "max"
+}
+== the lanes' own output
+shape: cwd=residents' WorkingDirectory db=construction:54422 claude/anthropic env names=[]
+construction: skills=17 agents=5 plugins=15
+(node:1803699) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+seat finance-financial-analyst: profile servers=[dxb-mcp] allowed tools=23
+[isolation] lane=names-chat-shape session=da5e7a7e-4b8e-4df5-98ad-db933fe76b25 tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=474 home=/home/dxb/.local/share/dxb/company-claude
+chat-shape live at the first answer: []
+chat-shape init: tools=0 mcp=[] plugins=[] skills=[deep-research,design-sync,dataviz,update-config,verify,debug,code-review,simplify,batch,fewer-permission-prompts,doctor,loop,schedule,claude-api,workflow-authoring,run,run-skill-generator] agents=[claude,Explore,general-purpose,Plan,statusline-setup] slash=50
+chat-shape against the construction: skills=[] agents=[] slash=[] plugins=[] servers beyond the lane's own (init or live)=[] tools beyond the lane's grant=[] (0)
+[isolation] lane=names-task-shape session=4aaf84d8-515b-4202-a2e6-646974f8d84a tools=23 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=9146 home=/home/dxb/.local/share/dxb/company-claude
+task-shape live at the first answer: [dxb-mcp:connected(28 tools)]
+task-shape init: tools=23 mcp=[dxb-mcp:connected] plugins=[] skills=[deep-research,design-sync,dataviz,update-config,verify,debug,code-review,simplify,batch,fewer-permission-prompts,doctor,loop,schedule,claude-api,workflow-authoring,run,run-skill-generator] agents=[claude,Explore,general-purpose,Plan,statusline-setup] slash=50
+task-shape against the construction: skills=[] agents=[] slash=[] plugins=[] servers beyond the lane's own (init or live)=[] tools beyond the lane's grant=[] (0)
+[isolation] lane=chat session=d8b813e5-240b-415d-bdcb-ead9deb7f266 tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=2161 home=/home/dxb/.local/share/dxb/company-claude
+chat lane: drain={"answered":1,"failed":0}
+  ceo/answered: "(the canary question)"
+  hamza/answered: "(1) \"anti-baby-sitting\" — ABSENT\n(2) \"Hitap protokol\" — ABSENT\n(3) \"graphify\" — ABSENT\n(4) \"THE CUPBOARD\" — ABSENT"
+[isolation] lane=task session=2aa768bb-1a2b-4dd0-9c00-0f1e7fdec0e8 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=11582 home=/home/dxb/.local/share/dxb/company-claude
+task lane: toolSurfaceMounted=true result="anti-baby-sitting: ABSENT\nHitap protokol: ABSENT\ngraphify: ABSENT\nTHE CUPBOARD: ABSENT"
+rows before={"chat_sessions":0,"chat_messages":0,"cost_ledger":0,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+rows after ={"chat_sessions":1,"chat_messages":2,"cost_ledger":1,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+rows clean ={"chat_sessions":0,"chat_messages":0,"cost_ledger":0,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+SESSIONS da5e7a7e-4b8e-4df5-98ad-db933fe76b25 4aaf84d8-515b-4202-a2e6-646974f8d84a d8b813e5-240b-415d-bdcb-ead9deb7f266 2aa768bb-1a2b-4dd0-9c00-0f1e7fdec0e8
+PROBE_DONE
+LANES_EXIT=0
+== every path the company's side touched (raw traces: /home/dxb/DxB Global OS/.planning/quick/20261003-runtime-isolation/evidence/phase3-fix-strace-raw.tgz)
+programs executed by the company's side (47):
+  grep  [grep -v grep]
+  grep  [grep -E code|cursor|windsurf|devin-desktop|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|datagrip|dataspell|aqua|gateway|fleet|android-studio]
+  ps  [ps aux]
+  sh  [/bin/sh -c ps aux | grep -E \"code|cursor|windsurf|devin-desktop|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|datagrip|dataspell|aqua|gateway|flee]
+  claude (as rg)  [rg --no-config --files --hidden /home/dxb/.local/share/dxb/company-claude/work]
+  claude (as rg)  [rg --no-config --files --hidden --no-ignore --max-depth]
+  claude (as rg)  [rg --version]
+  node  [node /home/dxb/DxB Global OS/packages/dxb-mcp/dist/index.js]
+  git  [/usr/bin/git -c core.askPass= -c protocol.ext.allow=never -c]
+  git  [/usr/bin/git -c core.askPass= -c protocol.ext.allow=never -c]
+  git  [git -c core.hooksPath=/dev/null -c core.fsmonitor= -C]
+  claude  [/home/dxb/DxB Global OS/node_modules/.pnpm/@anthropic-ai+claude-agent-sdk-linux-x64@0.3.259/node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude --outpu]
+  grep  [grep -v grep]
+  grep  [grep -E code|cursor|windsurf|devin-desktop|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|datagrip|dataspell|aqua|gateway|fleet|android-studio]
+  ps  [ps aux]
+  sh  [/bin/sh -c ps aux | grep -E \"code|cursor|windsurf|devin-desktop|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|datagrip|dataspell|aqua|gateway|flee]
+  claude (as rg)  [rg --no-config --files --hidden /home/dxb/.local/share/dxb/company-claude/work]
+  claude (as rg)  [rg --no-config --files --hidden --no-ignore --max-depth]
+  claude (as rg)  [rg --version]
+  git  [/usr/bin/git -c core.askPass= -c protocol.ext.allow=never -c]
+  git  [/usr/bin/git -c core.askPass= -c protocol.ext.allow=never -c]
+  git  [git -c core.hooksPath=/dev/null -c core.fsmonitor= -C]
+  claude  [/home/dxb/DxB Global OS/node_modules/.pnpm/@anthropic-ai+claude-agent-sdk-linux-x64@0.3.259/node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude --outpu]
+  grep  [grep -v grep]
+  grep  [grep -E code|cursor|windsurf|devin-desktop|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|datagrip|dataspell|aqua|gateway|fleet|android-studio]
+  ps  [ps aux]
+  sh  [/bin/sh -c ps aux | grep -E \"code|cursor|windsurf|devin-desktop|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|datagrip|dataspell|aqua|gateway|flee]
+  claude (as rg)  [rg --no-config --files --hidden /home/dxb/.local/share/dxb/company-claude/work]
+  claude (as rg)  [rg --no-config --files --hidden --no-ignore --max-depth]
+  claude (as rg)  [rg --version]
+  node  [node /home/dxb/DxB Global OS/packages/dxb-mcp/dist/index.js]
+  git  [/usr/bin/git -c core.askPass= -c protocol.ext.allow=never -c]
+  git  [/usr/bin/git -c core.askPass= -c protocol.ext.allow=never -c]
+  git  [git -c core.hooksPath=/dev/null -c core.fsmonitor= -C]
+  claude  [/home/dxb/DxB Global OS/node_modules/.pnpm/@anthropic-ai+claude-agent-sdk-linux-x64@0.3.259/node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude --outpu]
+  grep  [grep -v grep]
+  grep  [grep -E code|cursor|windsurf|devin-desktop|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|datagrip|dataspell|aqua|gateway|fleet|android-studio]
+  ps  [ps aux]
+  sh  [/bin/sh -c ps aux | grep -E \"code|cursor|windsurf|devin-desktop|idea|pycharm|webstorm|phpstorm|rubymine|clion|goland|rider|datagrip|dataspell|aqua|gateway|flee]
+  claude (as rg)  [rg --no-config --files --hidden /home/dxb/.local/share/dxb/company-claude/work]
+  claude (as rg)  [rg --no-config --files --hidden --no-ignore --max-depth]
+  claude (as rg)  [rg --version]
+  git  [/usr/bin/git -c core.askPass= -c protocol.ext.allow=never -c]
+  git  [/usr/bin/git -c core.askPass= -c protocol.ext.allow=never -c]
+  git  [git -c core.hooksPath=/dev/null -c core.fsmonitor= -C]
+  claude  [/home/dxb/DxB Global OS/node_modules/.pnpm/@anthropic-ai+claude-agent-sdk-linux-x64@0.3.259/node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude --outpu]
+  node  [node .planning/quick/20261003-runtime-isolation/lanes-probe.mjs]
+every path the company's side touched, by class (distinct paths: opened · listed · written · looked for, absent):
+  company home                               8 ·    4 ·   21 ·   33
+  repository node_modules                  570 ·    0 ·    0 ·   52
+  repository packages                       34 ·    0 ·    0 ·    6
+  repository, other                          0 ·    0 ·    0 ·    0
+  repository agent config                    0 ·    0 ·    0 ·    0
+  named residue under the real ~             0 ·    0 ·    0 ·    0
+  construction state under the real ~        0 ·    0 ·    0 ·    0
+  real ~, other                              0 ·    0 ·    0 ·    0
+  temp                                       1 ·    2 ·    5 ·    5
+  system                                  2881 ·  773 ·    1 · 1395
+  other                                      0 ·    0 ·    0 ·    3
+── company home
+  write   <company home>/.claude.json
+  write   <company home>/.claude.json.lock
+  write   <company home>/.claude.json.tmp.1803720.b6f607a7e85a
+  write   <company home>/.claude.json.tmp.1803976.2d8015ca04d2
+  write   <company home>/.claude.json.tmp.1804198.69a706c3767f
+  write   <company home>/.claude.json.tmp.1804331.318c38cbd979
+  write   <company home>/backups/.claude.json.backup.1791042599787
+  write   <company home>/cache/claude-cli-nodejs/-home-dxb--local-share-dxb-company-claude-work/mcp-logs-dxb-mcp/2026-10-03T15-50-02-225Z.jsonl
+  write   <company home>/cache/claude-cli-nodejs/-home-dxb--local-share-dxb-company-claude-work/mcp-logs-dxb-mcp/2026-10-03T15-50-10-071Z.jsonl
+  write   <company home>/sessions/1803720.eebdd902fbcba54a6f454f34048f8329272fd6877d685c7307830a0550121ad7.key
+  write   <company home>/sessions/1803720.eebdd902fbcba54a6f454f34048f8329272fd6877d685c7307830a0550121ad7.key.tmp.7cd330c6
+  write   <company home>/sessions/1803720.json
+  write   <company home>/sessions/1803976.b4b6bf5e2b12c7694bab796a47509585768826588b9647a88f5dd552882f59ba.key
+  write   <company home>/sessions/1803976.b4b6bf5e2b12c7694bab796a47509585768826588b9647a88f5dd552882f59ba.key.tmp.e82545a6
+  write   <company home>/sessions/1803976.json
+  write   <company home>/sessions/1804198.e5db804981b37c263b3f76fbc708b3e0443656f73cb8d2db7da4ab80e260db3b.key
+  write   <company home>/sessions/1804198.e5db804981b37c263b3f76fbc708b3e0443656f73cb8d2db7da4ab80e260db3b.key.tmp.a8783e7e
+  write   <company home>/sessions/1804198.json
+  write   <company home>/sessions/1804331.17b69aa69498027cb182589263f6cd1e7e9f07930e391f498bf088f6ebcbe64d.key
+  write   <company home>/sessions/1804331.17b69aa69498027cb182589263f6cd1e7e9f07930e391f498bf088f6ebcbe64d.key.tmp.f8bcdac7
+  write   <company home>/sessions/1804331.json
+  read    <company home>
+  read    <company home>/.claude.json
+  read    <company home>/.claude.json.lock
+  read    <company home>/.credentials.json
+  read    <company home>/backups
+  read    <company home>/cache
+  read    <company home>/sessions
+  read    <company home>/work
+  dir     <company home>
+  dir     <company home>/backups
+  dir     <company home>/sessions
+  dir     <company home>/work
+  missing <company home>
+  missing <company home>/.claude/ide
+  missing <company home>/.claude/state/unattended-serving-consent.json
+  missing <company home>/.config/anthropic/active_config
+  missing <company home>/.config/anthropic/configs/default.json
+  missing <company home>/.config/git/config
+  missing <company home>/.gitconfig
+  missing <company home>/backups
+  missing <company home>/cache/changelog.md
+  missing <company home>/cache/model-catalog/masked-ids.json
+  missing <company home>/ide
+  missing <company home>/mcp-needs-auth-cache.json
+  missing <company home>/plans
+  missing <company home>/plugins
+  missing <company home>/plugins/flagged-plugins.json
+  missing <company home>/plugins/installed_plugins.json
+  missing <company home>/plugins/installed_plugins_v2.json
+  missing <company home>/plugins/known_marketplaces.json
+  missing <company home>/sessions
+  missing <company home>/sessions/1803720.eebdd902fbcba54a6f454f34048f8329272fd6877d685c7307830a0550121ad7.key
+  missing <company home>/sessions/1803720.json
+  missing <company home>/sessions/1803976.b4b6bf5e2b12c7694bab796a47509585768826588b9647a88f5dd552882f59ba.key
+  missing <company home>/sessions/1803976.json
+  missing <company home>/sessions/1804198.e5db804981b37c263b3f76fbc708b3e0443656f73cb8d2db7da4ab80e260db3b.key
+  missing <company home>/sessions/1804198.json
+  missing <company home>/sessions/1804331.17b69aa69498027cb182589263f6cd1e7e9f07930e391f498bf088f6ebcbe64d.key
+  missing <company home>/sessions/1804331.json
+  missing <company home>/settings.json
+  missing <company home>/telemetry
+  missing <company home>/themes
+  missing <company home>/work/.claude/scheduled_tasks.json
+  missing <company home>/work/.claude/settings.json
+  missing <company home>/work/.claude/settings.local.json
+── repository node_modules
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/helpers.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/interfaces.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/mcp-server.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/server.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/package.json
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/server/completable.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/server/index.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/server/mcp.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-compat.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-json-schema-compat.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/protocol.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/stdio.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/toolNameValidation.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/uriTemplate.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/types.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/validation/ajv-provider.js
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/package.json
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/ajv-formats/package.json
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/ajv/package.json
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/zod-to-json-schema/package.json
+  read    <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/zod/package.json
+  read    <repo>/node_modules/.pnpm/ajv-formats@3.0.1_ajv@8.20.0/node_modules/ajv-formats/dist/formats.js
+  read    <repo>/node_modules/.pnpm/ajv-formats@3.0.1_ajv@8.20.0/node_modules/ajv-formats/dist/index.js
+  read    <repo>/node_modules/.pnpm/ajv-formats@3.0.1_ajv@8.20.0/node_modules/ajv-formats/dist/limit.js
+  read    <repo>/node_modules/.pnpm/ajv-formats@3.0.1_ajv@8.20.0/node_modules/ajv-formats/package.json
+  read    <repo>/node_modules/.pnpm/ajv-formats@3.0.1_ajv@8.20.0/node_modules/ajv/package.json
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/ajv.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/codegen/code.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/codegen/index.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/codegen/scope.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/errors.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/index.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/names.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/ref_error.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/resolve.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/rules.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/util.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/validate/applicability.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/validate/boolSchema.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/validate/dataType.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/validate/defaults.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/validate/index.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/validate/keyword.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/validate/subschema.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/core.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/refs/data.json
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/refs/json-schema-draft-07.json
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/runtime/equal.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/runtime/ucs2length.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/runtime/uri.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/runtime/validation_error.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/additionalItems.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/additionalProperties.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/allOf.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/anyOf.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/contains.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/dependencies.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/if.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/index.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/items.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/items2020.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/not.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/oneOf.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/patternProperties.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/prefixItems.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/properties.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/propertyNames.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/thenElse.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/code.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/core/id.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/core/index.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/core/ref.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/discriminator/index.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/discriminator/types.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/draft7.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/format/format.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/format/index.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/metadata.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/const.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/enum.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/index.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/limitItems.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/limitLength.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/limitNumber.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/limitProperties.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/multipleOf.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/pattern.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/required.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/uniqueItems.js
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/package.json
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/fast-deep-equal/package.json
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/fast-uri/package.json
+  read    <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/json-schema-traverse/package.json
+  read    <repo>/node_modules/.pnpm/fast-deep-equal@3.1.3/node_modules/fast-deep-equal/index.js
+  read    <repo>/node_modules/.pnpm/fast-deep-equal@3.1.3/node_modules/fast-deep-equal/package.json
+  read    <repo>/node_modules/.pnpm/fast-uri@3.1.3/node_modules/fast-uri/index.js
+  read    <repo>/node_modules/.pnpm/fast-uri@3.1.3/node_modules/fast-uri/lib/schemes.js
+  read    <repo>/node_modules/.pnpm/fast-uri@3.1.3/node_modules/fast-uri/lib/utils.js
+  read    <repo>/node_modules/.pnpm/fast-uri@3.1.3/node_modules/fast-uri/package.json
+  read    <repo>/node_modules/.pnpm/json-schema-traverse@1.0.0/node_modules/json-schema-traverse/index.js
+  read    <repo>/node_modules/.pnpm/json-schema-traverse@1.0.0/node_modules/json-schema-traverse/package.json
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/dialect-adapter-base.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mssql/mssql-adapter.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mssql/mssql-dialect.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mssql/mssql-driver.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mssql/mssql-introspector.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mssql/mssql-query-compiler.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mysql/mysql-adapter.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mysql/mysql-dialect.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mysql/mysql-driver.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mysql/mysql-introspector.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mysql/mysql-query-compiler.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/pglite/pglite-adapter.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/pglite/pglite-dialect.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/pglite/pglite-driver.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/postgres/postgres-adapter.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/postgres/postgres-dialect.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/postgres/postgres-driver.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/postgres/postgres-introspector.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/postgres/postgres-query-compiler.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/sqlite/sqlite-adapter.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/sqlite/sqlite-dialect.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/sqlite/sqlite-driver.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/sqlite/sqlite-introspector.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/sqlite/sqlite-query-compiler.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/driver/connection-mutex.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/driver/default-connection-provider.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/driver/driver.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/driver/dummy-driver.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/driver/runtime-driver.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/driver/single-connection-provider.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dynamic/dynamic-reference-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dynamic/dynamic-table-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dynamic/dynamic.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/expression/expression-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/expression/expression-wrapper.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/expression/expression.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/index.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/kysely.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/migration/migrator.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/add-column-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/add-constraint-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/add-index-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/add-value-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/aggregate-function-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/alias-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/alter-column-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/alter-table-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/alter-type-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/and-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/binary-operation-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/case-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/cast-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/check-constraint-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/collate-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/column-definition-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/column-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/column-update-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/common-table-expression-name-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/common-table-expression-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/constraint-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/create-index-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/create-schema-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/create-table-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/create-type-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/create-view-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/data-type-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/default-insert-value-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/default-value-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/delete-query-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/drop-column-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/drop-constraint-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/drop-index-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/drop-schema-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/drop-table-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/drop-type-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/drop-view-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/explain-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/fetch-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/foreign-key-constraint-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/from-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/function-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/generated-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/group-by-item-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/group-by-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/having-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/identifier-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/insert-query-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/join-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/json-operator-chain-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/json-path-leg-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/json-path-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/json-reference-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/limit-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/list-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/matched-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/merge-query-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/modify-column-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/offset-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/on-conflict-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/on-duplicate-key-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/on-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/operation-node-source.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/operation-node-transformer.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/operation-node-visitor.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/operation-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/operator-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/or-action-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/or-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/order-by-item-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/order-by-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/output-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/over-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/parens-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/partition-by-item-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/partition-by-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/primary-key-constraint-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/primitive-value-list-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/query-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/raw-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/reference-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/references-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/refresh-materialized-view-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/rename-column-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/rename-constraint-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/rename-value-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/returning-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/root-operation-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/schemable-identifier-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/select-all-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/select-modifier-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/select-query-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/selection-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/set-operation-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/simple-reference-expression-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/table-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/top-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/tuple-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/unary-operation-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/unique-constraint-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/update-query-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/using-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/value-list-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/value-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/values-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/when-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/where-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/with-node.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/binary-operation-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/data-type-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/default-value-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/expression-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/fetch-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/group-by-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/identifier-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/insert-values-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/join-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/merge-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/on-commit-action-parse.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/on-modify-action-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/order-by-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/parse-utils.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/partition-by-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/reference-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/savepoint-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/select-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/set-operation-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/table-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/top-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/unary-operation-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/update-set-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/value-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/with-parser.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/camel-case/camel-case-plugin.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/camel-case/camel-case-transformer.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/camel-case/camel-case.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/deduplicate-joins/deduplicate-joins-plugin.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/deduplicate-joins/deduplicate-joins-transformer.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/handle-empty-in-lists/handle-empty-in-lists-plugin.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/handle-empty-in-lists/handle-empty-in-lists-transformer.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/handle-empty-in-lists/handle-empty-in-lists.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/immediate-value/immediate-value-plugin.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/immediate-value/immediate-value-transformer.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/noop-plugin.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/parse-json-results/parse-json-results-plugin.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/safe-null-comparison/safe-null-comparison-plugin.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/safe-null-comparison/safe-null-comparison-transformer.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/with-schema/with-schema-plugin.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/with-schema/with-schema-transformer.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/aggregate-function-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/case-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/cte-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/delete-query-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/delete-result.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/function-module.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/insert-query-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/insert-result.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/join-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/json-path-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/merge-query-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/merge-result.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/no-result-error.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/on-conflict-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/order-by-item-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/over-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/select-query-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/update-query-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/update-result.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-compiler/compiled-query.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-compiler/default-query-compiler.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-creator.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-executor/default-query-executor.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-executor/noop-query-executor.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-executor/query-executor-base.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-finalizer.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/raw-builder/raw-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/raw-builder/sql.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/alter-column-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/alter-table-add-foreign-key-constraint-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/alter-table-add-index-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/alter-table-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/alter-table-drop-constraint-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/alter-table-executor.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/alter-type-add-value-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/alter-type-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/check-constraint-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/column-definition-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/create-index-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/create-schema-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/create-table-add-index-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/create-table-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/create-type-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/create-view-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/drop-column-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/drop-index-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/drop-schema-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/drop-table-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/drop-type-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/drop-view-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/foreign-key-constraint-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/primary-key-constraint-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/refresh-materialized-view-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/schema-module.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/unique-constraint-builder.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/abort.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/compilable.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/deferred.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/log-once.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/log.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/object-utils.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/performance-now.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/provide-controlled-connection.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/query-id.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/random-string.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/stack-trace-utils.js
+  read    <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/package.json
+  read    <repo>/node_modules/.pnpm/pg-connection-string@2.14.0/node_modules/pg-connection-string/index.js
+  read    <repo>/node_modules/.pnpm/pg-connection-string@2.14.0/node_modules/pg-connection-string/package.json
+  read    <repo>/node_modules/.pnpm/pg-int8@1.0.1/node_modules/pg-int8/index.js
+  read    <repo>/node_modules/.pnpm/pg-int8@1.0.1/node_modules/pg-int8/package.json
+  read    <repo>/node_modules/.pnpm/pg-pool@3.14.0_pg@8.22.0/node_modules/pg-pool/index.js
+  read    <repo>/node_modules/.pnpm/pg-pool@3.14.0_pg@8.22.0/node_modules/pg-pool/package.json
+  read    <repo>/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/buffer-reader.js
+  read    <repo>/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/buffer-writer.js
+  read    <repo>/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/index.js
+  read    <repo>/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/messages.js
+  read    <repo>/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/parser.js
+  read    <repo>/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/dist/serializer.js
+  read    <repo>/node_modules/.pnpm/pg-protocol@1.15.0/node_modules/pg-protocol/package.json
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-int8/package.json
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/index.js
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/pg-types/package.json
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/postgres-array/package.json
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/postgres-bytea/package.json
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/postgres-date/package.json
+  read    <repo>/node_modules/.pnpm/pg-types@2.2.0/node_modules/postgres-interval/package.json
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg-connection-string/package.json
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg-pool/package.json
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg-protocol/package.json
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg-types/package.json
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/esm/index.mjs
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection-parameters.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/crypto/cert-signatures.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/crypto/sasl.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/crypto/utils.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/defaults.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/index.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/query.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/result.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/stream.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/type-overrides.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/utils.js
+  read    <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/package.json
+  read    <repo>/node_modules/.pnpm/postgres-array@2.0.0/node_modules/postgres-array/index.js
+  read    <repo>/node_modules/.pnpm/postgres-array@2.0.0/node_modules/postgres-array/package.json
+  read    <repo>/node_modules/.pnpm/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js
+  read    <repo>/node_modules/.pnpm/postgres-bytea@1.0.1/node_modules/postgres-bytea/package.json
+  read    <repo>/node_modules/.pnpm/postgres-date@1.0.7/node_modules/postgres-date/index.js
+  read    <repo>/node_modules/.pnpm/postgres-date@1.0.7/node_modules/postgres-date/package.json
+  read    <repo>/node_modules/.pnpm/postgres-interval@1.2.0/node_modules/postgres-interval/index.js
+  read    <repo>/node_modules/.pnpm/postgres-interval@1.2.0/node_modules/postgres-interval/package.json
+  read    <repo>/node_modules/.pnpm/postgres-interval@1.2.0/node_modules/xtend/package.json
+  read    <repo>/node_modules/.pnpm/xtend@4.0.2/node_modules/xtend/mutable.js
+  read    <repo>/node_modules/.pnpm/xtend@4.0.2/node_modules/xtend/package.json
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/Options.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/Refs.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/errorMessages.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/getRelativePath.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/index.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/package.json
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parseDef.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parseTypes.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/any.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/array.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/bigint.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/boolean.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/branded.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/catch.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/date.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/default.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/effects.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/enum.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/intersection.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/literal.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/map.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/nativeEnum.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/never.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/null.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/nullable.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/number.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/object.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/optional.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/pipeline.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/promise.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/readonly.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/record.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/set.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/string.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/tuple.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/undefined.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/union.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/unknown.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/selectParser.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/zodToJsonSchema.js
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/package.json
+  read    <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod/package.json
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/index.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/package.json
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/ZodError.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/errors.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/external.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/helpers/errorUtil.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/helpers/parseUtil.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/helpers/typeAliases.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/helpers/util.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/index.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/locales/en.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/package.json
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/types.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4-mini/index.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4-mini/package.json
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/checks.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/coerce.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/compat.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/errors.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/external.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/from-json-schema.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/index.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/iso.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/package.json
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/parse.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/api.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/doc.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/errors.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/index.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/json-schema-generator.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/json-schema-processors.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/json-schema.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/package.json
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/parse.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/regexes.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/registries.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/to-json-schema.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/versions.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/index.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ar.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/az.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/be.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/bg.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ca.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/cs.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/da.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/de.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/el.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/en.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/eo.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/es.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/fa.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/fi.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/fr-CA.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/fr.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/he.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/hr.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/hu.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/hy.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/id.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/index.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/is.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/it.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ja.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ka.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/kh.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/km.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ko.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/lt.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/mk.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ms.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/nl.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/no.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ota.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/package.json
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/pl.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ps.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/pt.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ro.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ru.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/sl.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/sv.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ta.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/th.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/tr.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ua.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/uk.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/ur.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/uz.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/vi.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/yo.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/zh-CN.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/locales/zh-TW.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/mini/checks.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/mini/coerce.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/mini/external.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/mini/iso.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/mini/package.json
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/mini/parse.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/mini/schemas.js
+  read    <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/package.json
+  read    <repo>/packages/dxb-mcp/node_modules/@dxb/memory-router/package.json
+  read    <repo>/packages/dxb-mcp/node_modules/@dxb/shared/package.json
+  read    <repo>/packages/dxb-mcp/node_modules/@modelcontextprotocol/sdk/package.json
+  read    <repo>/packages/dxb-mcp/node_modules/kysely/package.json
+  read    <repo>/packages/dxb-mcp/node_modules/zod/package.json
+  read    <repo>/packages/memory-router/node_modules/@dxb/shared/package.json
+  read    <repo>/packages/memory-router/node_modules/kysely/package.json
+  read    <repo>/packages/memory-router/node_modules/zod/package.json
+  read    <repo>/packages/shared/node_modules/kysely/package.json
+  read    <repo>/packages/shared/node_modules/pg/package.json
+  read    <repo>/packages/shared/node_modules/zod/package.json
+  missing <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/package.json
+  missing <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/experimental/tasks/package.json
+  missing <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/server/package.json
+  missing <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/shared/package.json
+  missing <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/@modelcontextprotocol/sdk/dist/esm/validation/package.json
+  missing <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/ajv-formats/dist/package.json
+  missing <repo>/node_modules/.pnpm/@modelcontextprotocol+sdk@1.29.0_zod@4.4.3/node_modules/ajv/dist/package.json
+  missing <repo>/node_modules/.pnpm/ajv-formats@3.0.1_ajv@8.20.0/node_modules/ajv-formats/dist/package.json
+  missing <repo>/node_modules/.pnpm/ajv-formats@3.0.1_ajv@8.20.0/node_modules/ajv/dist/compile/codegen/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/codegen/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/compile/validate/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/applicator/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/core/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/discriminator/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/format/package.json
+  missing <repo>/node_modules/.pnpm/ajv@8.20.0/node_modules/ajv/dist/vocabularies/validation/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mssql/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/mysql/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/pglite/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/postgres/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dialect/sqlite/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/driver/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/dynamic/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/expression/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/migration/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/operation-node/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/parser/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/camel-case/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/deduplicate-joins/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/handle-empty-in-lists/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/immediate-value/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/parse-json-results/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/safe-null-comparison/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/plugin/with-schema/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-compiler/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-executor/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/raw-builder/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/schema/package.json
+  missing <repo>/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/util/package.json
+  missing <repo>/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/package.json
+  missing <repo>/node_modules/.pnpm/zod-to-json-schema@3.25.2_zod@4.4.3/node_modules/zod-to-json-schema/dist/esm/parsers/package.json
+  missing <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/helpers/package.json
+  missing <repo>/node_modules/.pnpm/zod@4.4.3/node_modules/zod/v3/locales/package.json
+  missing <repo>/packages/dxb-mcp/node_modules/@dxb/memory-router/dist/package.json
+  missing <repo>/packages/dxb-mcp/node_modules/@dxb/shared/dist/package.json
+  missing <repo>/packages/memory-router/node_modules/@dxb/shared/dist/package.json
+── repository packages
+  read    <repo>/packages/dxb-mcp/dist/dispatch-book.js
+  read    <repo>/packages/dxb-mcp/dist/groups/approval.js
+  read    <repo>/packages/dxb-mcp/dist/groups/audit.js
+  read    <repo>/packages/dxb-mcp/dist/groups/cost.js
+  read    <repo>/packages/dxb-mcp/dist/groups/crm.js
+  read    <repo>/packages/dxb-mcp/dist/groups/dashboard.js
+  read    <repo>/packages/dxb-mcp/dist/groups/media.js
+  read    <repo>/packages/dxb-mcp/dist/groups/memory.js
+  read    <repo>/packages/dxb-mcp/dist/groups/queue.js
+  read    <repo>/packages/dxb-mcp/dist/groups/registry.js
+  read    <repo>/packages/dxb-mcp/dist/groups/stub-error.js
+  read    <repo>/packages/dxb-mcp/dist/index.js
+  read    <repo>/packages/dxb-mcp/dist/redact.js
+  read    <repo>/packages/dxb-mcp/dist/transitions.js
+  read    <repo>/packages/dxb-mcp/package.json
+  read    <repo>/packages/memory-router/dist/adapters/claude-mem.js
+  read    <repo>/packages/memory-router/dist/adapters/graphify.js
+  read    <repo>/packages/memory-router/dist/adapters/notebook.js
+  read    <repo>/packages/memory-router/dist/adapters/obsidian.js
+  read    <repo>/packages/memory-router/dist/adapters/pgvector.js
+  read    <repo>/packages/memory-router/dist/classify-read.js
+  read    <repo>/packages/memory-router/dist/compaction.js
+  read    <repo>/packages/memory-router/dist/index.js
+  read    <repo>/packages/memory-router/dist/write-policy.js
+  read    <repo>/packages/memory-router/package.json
+  read    <repo>/packages/shared/dist/contracts/events.js
+  read    <repo>/packages/shared/dist/contracts/workflow-steps.js
+  read    <repo>/packages/shared/dist/db.js
+  read    <repo>/packages/shared/dist/envelope.js
+  read    <repo>/packages/shared/dist/index.js
+  read    <repo>/packages/shared/dist/litellm.js
+  read    <repo>/packages/shared/dist/media-probe.js
+  read    <repo>/packages/shared/dist/sdk-schema.js
+  read    <repo>/packages/shared/package.json
+  missing <repo>/packages/dxb-mcp/dist/groups/package.json
+  missing <repo>/packages/dxb-mcp/dist/package.json
+  missing <repo>/packages/memory-router/dist/adapters/package.json
+  missing <repo>/packages/memory-router/dist/package.json
+  missing <repo>/packages/shared/dist/contracts/package.json
+  missing <repo>/packages/shared/dist/package.json
+── temp
+  write   /tmp/cc-socks
+  write   /tmp/cc-socks/1803720.sock
+  write   /tmp/cc-socks/1803976.sock
+  write   /tmp/cc-socks/1804198.sock
+  write   /tmp/cc-socks/1804331.sock
+  read    /tmp/claude-1000
+  dir     /tmp/cc-socks
+  dir     /tmp/claude-1000
+  missing /tmp/cc-socks/1803720.sock
+  missing /tmp/cc-socks/1803976.sock
+  missing /tmp/cc-socks/1804198.sock
+  missing /tmp/cc-socks/1804331.sock
+  missing /tmp/claude-1000
+── other
+  missing /System/Library/OpenSSL/certs
+  missing /home/claude/.claude/remote/.api_key
+  missing /home/claude/.claude/remote/.oauth_token
+named residue under the real ~ (expected 0 with HOME=<company home>): 0
+unresolved paths (0):
+leaks (0):
+PHASE3_VERDICT=CLEAN
+REPORT_EXIT=0
