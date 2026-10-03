@@ -23,3 +23,23 @@ Not in this file before it moved here from the scratchpads (session cbedb76a's h
 build) 5.6 min 100,489 · the lead (cbedb76a) 169.6 min 591,266 new by 17:05. Fable's notes: forks serialize on
 the one construction engine (vitest globalSetup); a fork inherits the lead's errors (fork 3's widening came
 from the lead's brief); harness `subagent_tokens` ≈ final context, not cost. usage.mjs beside this file.
+
+## The four lead sessions of 2026-10-03, measured (session 79e77b01, 19:30; sessions.py · advisor_forks.py · cost.py beside this file)
+$ = API list price equivalent (claude-api skill, cached 2026-09-25: Opus 5.5 in $4 · 1h cache write $8 · cache read $0.20 · out $20;
+Fable 5.1 in $10 · out $50) — a common scale for token kinds, not his Max plan's bill (its weighting is not published).
+
+| session | minutes | forks | lead context at the end | kept out by forks | lead $ (reads share) | forks $ | Fable $ |
+|---|---|---|---|---|---|---|---|
+| 5ed74ad7 | 80 | 0 (1 probe) | 463k | — | 20.88 (59 %) | 0.10 | 2.38 |
+| 32178f5b | 52 | 0 | 454k | — | 16.82 (49 %) | 0 | 1.86 |
+| cbedb76a | 177 | 5 | 451k | 456k | 18.02 (57 %) | 23.26 | 5.60 |
+| 79e77b01 | 144 (~60 idle) | 1 | 205k | 94k | 6.17 (47 %) | 3.53 | 4.08 |
+
+- Fork start-up 403-2,860 new tokens. A fork re-reads the lead's context on every call: fork 5 (from a 409k lead) $0.088
+  reads per call, fork 6 (from 131k) $0.037 — 2.4x. Fork from a light lead.
+- Fable reads the whole lead transcript UNCACHED each consult: input $0.96 at 96k … $3.69 at 369k; today $13.92 = 13.6 % of
+  $102.69. Top-level message usage EXCLUDES the advisor iteration (usage.iterations[type=advisor_message]); the "max context"
+  spikes (734k, 384k) were two executor iterations summed, not one context.
+- A handover: the new session's first call writes 27-32k ($0.22-0.26) on a 56-61k context, plus orientation reads and the
+  note — about $0.5. One lead call reads $0.09 at 450k, $0.012 at 60k: a handover pays back in ~6-7 calls.
+- Not comparable per hour: effort differed (max · max · max→high at 16:45 · high) and idle stretches differ.
