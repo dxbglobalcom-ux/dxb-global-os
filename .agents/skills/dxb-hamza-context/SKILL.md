@@ -57,8 +57,10 @@ what makes an agent slow, expensive and vague.
    nothing — shipping a dossier table as an identity is the exact defect this replaced.
 4. **A number an agent remembers is a number he can invent.** Hand it to him measured, or let him
    say he cannot measure it.
-5. **Restart the residents.** The chat and voice lanes only load new code when
-   `dxb-scheduler` and `dxb-jarvis` are restarted. The restart is part of the evidence.
+5. **Restart the residents.** The chat and voice lanes only load new code when `dxb-scheduler` is
+   restarted — it drains both (`packages/outbox-executor/src/scheduler.ts`); `dxb-jarvis` is stopped
+   and disabled and is not started <!-- CEO-OK: dxb-hamza-context-restart-line-2026-10-03 -->. The
+   restart is part of the evidence.
 6. **Pin it.** `tests/b21/agent-context.test.ts` and `tests/r31/persona-delivery.test.ts` fail if
    the slug is declared twice, if the lanes drift apart, if the language law stops reaching him,
    or if the persona is truncated on the way in.
