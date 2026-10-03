@@ -53,7 +53,6 @@ usage-probe.mjs reads the /usage windows through the SDK (`usage_EXPERIMENTAL_�
   Fable list 29.8 · counted at Opus input rates ~29.0. Then 29 from 19:44:36 to the end (19:46:42), where not counted
   predicts 28.4-28.7 and Fable list 30.0-30.2. Fable at its own list price is excluded; not counted vs counted at a much
   lower weight (Opus-like) is unresolved at a 1-point meter (the lead's research calls ran in the same minutes).
-  He closed it ("onlar bakar düzeltir"); no test followed.
 - Weekly all-models 10 → 11 at 19:42:51: unresolvable (one point ≈ $10 of list-price usage).
 - Docs (code.claude.com/docs/en/advisor, Cost): on subscription plans advisor usage "counts toward your plan's usage limits";
   the advisor's read "is not cached". Same observation open since 2026-09-06 in anthropics/claude-code#92437 (Max 5x, two

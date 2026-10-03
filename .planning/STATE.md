@@ -27,34 +27,35 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-03 ~17:10 → 17:55, Opus 5.5 session 79e77b01 (after cbedb76a). His orders of the day, each in the ledger:
+2026-10-03 ~17:10 → 20:05, Opus 5.5 session 79e77b01 (after cbedb76a). His orders of the day, each in the ledger:
 - **Runtime isolation — all three phases done and live** (`runtime-isolation-2026-10-03`,
   `company-claude-home-2026-10-03`, `isolation-phase3-plan-and-memory-path-2026-10-03`). Every company
-  Claude call runs in its own Claude home `~/.local/share/dxb/company-claude` (his login, claude.ai max)
-  with its own working folder and cache, an ALLOWLIST env and HOME = that home; the memory router never
-  reads the construction's claude-mem. Phase 3 `b146822b` → Sol's single pass (`SOL-PHASE3.md`, A1-A4)
-  → fork 6 + two lead follow-ups `90341b85` (media-probe's ffmpeg from the passwd home; the tests and
-  claude-mem's default path name the passwd home — the sandbox's HOME is /tmp/home). Battery GREEN
-  (sandboxed 1,136 · host 266); `dxb-scheduler` restarted 17:49:48, `credentials=present`. Live strace
-  (`e63afbb3`): CLEAN by class — 0 in every class under the real `~`, the CLI's built-in look-ups now
-  inside the company home; resident-shape lanes clean. No second round.
-  - Left in the folder (Sol's C1, older than this job): the obsidian/graphify readers hand `ref` to
-    `readFile` unchecked — a `ref` naming `~/.claude-mem/claude-mem.db` reaches the file reader.
-  - Not measured: the company DB's claude-mem pointer rows (the construction reads the company only
-    through named questions); live strace covers chat and task, not all eight lanes.
-- **Doors** (Sol, one pass, `bec00f77^..e04e12be`; five lost rules back `49d61b5f`) and **handover quotes**
-  (dxb-team2 §8, `551b8af5`, audited with phase 3 — Sol found nothing widened).
-- **Forks measured on real jobs** — `.planning/quick/20261003-runtime-isolation/fork-measurements.md`:
-  fork 1 29.1 min 444,212 new · fork 6 8.5 min 146,201 new (Fable's brief; it found the ffmpeg side
-  effect itself) · forks 2-5 2.4-6.8 min, 40-122k.
+  Claude call runs in its own Claude home `~/.local/share/dxb/company-claude` (his login) with its own
+  working folder and cache, an ALLOWLIST env and HOME = that home; the memory router never reads the
+  construction's claude-mem. Sol's single pass (`SOL-PHASE3.md`) fixed by fork 6 + the lead (`90341b85`);
+  battery GREEN (sandboxed 1,136 · host 266); `dxb-scheduler` restarted 17:49:48; live strace CLEAN by class.
+  - Not measured: the company DB's claude-mem pointer rows; live strace covers chat and task of eight lanes.
+- **The orchestration design — measured and APPROVED, not yet written into the door.** Today's four lead
+  sessions and six forks, by quality · cost · speed: `.planning/quick/20261003-runtime-isolation/fork-measurements.md`
+  (forks keep the lead light — cbedb76a's five kept 456k out; a fork from a heavy lead costs 2.4x per
+  call; cache reads are 47-59 % of a lead's cost; a handover costs ~$0.5; call latency does not grow
+  with context; a Fable consult blocks the lead 42-290 s). His three words, registered:
+  `orchestration-three-arrangements-lead-chooses-2026-10-03` (fork · high lead + three medium helpers ·
+  hybrid; the lead chooses per job and writes why, minutes, tokens, cost, Sol's findings on the card;
+  measured after 1-2 real jobs), `helpers-write-code-under-lead-verification-2026-10-03` (PERMANENT),
+  `sol-single-pass-fixes-by-helper-2026-10-03` (PERMANENT).
 
 ## Next
 
-1. The orchestration design for dxb-team2 — on his word ("dxbteam2 için sistemini bu işten snra
-   yapıcaz"): from the fork measurements, Fable consulted, no A/B experiment for its own sake; the lead
-   picks the arrangement per job and writes it, with why, on the card. With it his note
-   (`plan-max-orchestration-high-2026-10-03`): very important plans and architecture at Opus 5.5 `max`,
-   everything after them as orchestration at `high`. A plan moment — tell him first, for `/effort max`.
+1. Write the approved orchestration design into dxb-team2 (high effort; the plan moment is past):
+   the three arrangements with no "when to choose" line; the card's new fields (arrangement + why ·
+   minutes · new tokens · cost · Sol's findings); the fork's two seen weaknesses as procedure — the
+   lead's brief cites registered sources only (fork 3 inherited a widening from the brief), and the
+   fork runs its targeted tests through the battery's own sandboxed runner `scripts/construction/run.sh`
+   (fork 6's nine sandbox-only failures reached only the lead's battery); the lead still runs the
+   battery. CLAUDE.md §2 "Code" and dxb-team2 §3/§6 change on his two PERMANENT words (LAW A). Mirror,
+   ledger-truth, opening budget; one Sol pass, its fixes by a fork. Today's conversation, if a
+   point is unclear: ~/.claude/projects/-home-dxb-DxB-Global-OS/79e77b01-f5d1-4a63-9a63-69e03a5fe0cf.jsonl
 2. His question of 2026-10-01 ~21:55: why a locked tool is not resolved by the system itself, and why
    the alert comes to him instead of to the one who should fix it.
 
@@ -62,8 +63,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- C1 of Sol's phase-3 pass (above): close the obsidian/graphify readers to paths outside their own
-  stores — recommended evet; his word decides.
+- C1 of Sol's phase-3 pass: the obsidian/graphify readers hand `ref` to `readFile` unchecked (a `ref`
+  naming `~/.claude-mem/claude-mem.db` reaches it) — close them to their own stores; recommended evet.
 
 ## Where things live
 

@@ -1938,5 +1938,29 @@
     "conditions": "Answering the lead's two questions: 'Planı onaylıyor musunuz?' and 'Hafıza yolu da 3. faza eklensin mi?' (recommended: evet to both). The plan's one trip to him (dxb-team2 §4). Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",
     "where": "packages/kernel/src/sdk-isolation.ts · packages/memory-router (claude-mem reader) · .planning/quick/20261003-runtime-isolation/ (phase 3)"
+  },
+  "orchestration-three-arrangements-lead-chooses-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "dxb-team2 holds three arrangements and no line telling when to choose each: (1) the fork — the lead's own copy writes the job; (2) the team — Opus 5.5 high lead with three Opus medium helpers (code reader · edit+test · docs/research), Fable 5.1 at the three points, the lead gathering their results and deciding; (3) the hybrid — the fork writes, medium helpers read and research beside it. The lead chooses per job and writes on the card the arrangement and why, minutes, new tokens, cost and Sol's findings; after one or two real jobs the records show which suits which job — no separate A/B experiment. The 50 % handover gate stays. Measured input: .planning/quick/20261003-runtime-isolation/fork-measurements.md.",
+    "verbatim": "bu yazdığın plan oklenebilir. ve 1-2 işten sonra ölçümde yapılabilir.",
+    "conditions": "Answering the lead's summary of his own earlier design (the high main + three medium helpers diagram he pasted again, the fork, and the hybrid of the two) with the recommendation that the lead chooses per job and writes why on the card. Said with \"önerim evet ikisi de eet\" (the two entries below). Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 79e77b01 — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-team2/SKILL.md (to be written by the successor session) · the job's card"
+  },
+  "helpers-write-code-under-lead-verification-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "PERMANENT, inside dxb-team2: the fork and a medium helper may write code; every piece they write is verified by the lead (the battery, the review against registered sources, the live probe) before it is committed. LAW A: the core's sentence that subagents other than the builder seats never write, and the session-only scope of this permission (from session 32178f5b), give way to it.",
+    "verbatim": "önerim evet ikisi de eet",
+    "conditions": "Answering question 1: 'Bugün kodu yalnız oturum ve dxb-team2'deki max builder yazabiliyor. Fork'un ve medium yardımcının kod yazması kalıcı izin olsun mu? Önerim: evet, her işi liderin doğrulaması şartıyla.' Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 79e77b01 — heard first-hand, 2026-10-03.",
+    "where": ".claude/CLAUDE.md §2 (Code) · .claude/skills/dxb-team2/SKILL.md — both to be changed by the successor session"
+  },
+  "sol-single-pass-fixes-by-helper-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "PERMANENT, inside dxb-team2: Sol audits a job once, at the level the card gives; its findings are fixed by the fork or a helper and verified by the lead; there is no second Sol round. Until now this held for the runtime-isolation job only (session 32178f5b).",
+    "verbatim": "önerim evet ikisi de eet",
+    "conditions": "Answering question 2: '\"Sol tek tur denetler, düzeltmeyi fork ya da yardımcı yapar, ikinci tur yok\" kuralı da bu işe özeldi. Kalıcı olsun mu? Önerim: evet.' Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 79e77b01 — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §3/§6 — to be changed by the successor session"
   }
 }
