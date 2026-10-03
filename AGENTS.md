@@ -149,7 +149,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 
 | When you are… | Open |
 |---|---|
-| starting a session, or picking up work | `dxb-start` |
+| asked to learn the holding — what is where | `dxb-start` |
 | running a job | `dxb-team2` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |

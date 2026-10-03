@@ -39,7 +39,7 @@ it opens `dxb-verify` and `dxb-close-row`.
 |---|---|---|---|
 | **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot) | scores the job, writes the done-list, writes the code, fixes every finding, runs the tests, the battery, commits, reports | approves its own work; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> through `scripts/governance/refuter.sh --card <file>` — read-only by tool | one blind pass per job (§5); re-checks a fixed finding and what the fix touched | writes; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
-| **Advisor** | Fable 5.1 | advises the lead on any job, critical ones included, whenever the lead needs it; rules on a disagreement no test can settle | writes code |
+| **Advisor** | Fable 5.1 | advises the lead at three fixed points on every job — before a big plan, when the same error comes a second time, before "done" <!-- CEO-OK: fable-three-checkpoints-2026-10-03 --> — and whenever else the lead needs it; rules on a disagreement no test can settle | writes code |
 | **Reader** | a one-shot subagent (`scout`, or `Explore`) | a wide search or read whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot, description `guarded:` when the path is guarded | only after the same piece failed twice at the lead's level | is opened for a routine fix |
 | **Design eye** | `design-eye` (Fable 5.1) | reads a surface the CEO will see | writes |
@@ -74,14 +74,22 @@ every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §
 ## 4. The loop
 
 ```
-INTAKE    → the job in ONE sentence, provable by measurement; the CEO's words verbatim; what is his.
+INTAKE    → the job in ONE sentence, provable by measurement; the CEO's words verbatim; what is his;
+            what it excludes, what it touches, what contradicts what across documents and code,
+            the real unknowns that could change the plan.
 SCORE     → the card (§3); `dxb-quota` read once — the week's headroom and pace.
 PLAN      → the approach is talked through with the CEO first; the lead then writes the plan.
             A critical one: Fable advises → Sol reads the PLAN (marked draft) → the lead closes
             its gaps, Fable advises. The plan goes to the CEO once, in his language; no code
-            before his yes. It does not come back to him after Sol's read.
+            before his yes. It does not come back to him after Sol's read. The plan names the
+            scope, the surfaces and files it touches, the ordered steps, the data and interface
+            effects, migration and rollback where relevant, how it is verified, and the risks.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
-BUILD     → the lead writes and runs the job's own tests. Parallel work only as a measured fork (§8).
+BUILD     → root cause before fix; new code is proven by a test that failed before it existed. The
+            lead writes and runs the job's own tests — the approved scope, completely: no stub, no
+            placeholder, no silent narrowing or widening; a discovery that would change the scope,
+            architecture, security, data integrity or the outcome stops the work and is reported.
+            Parallel work only as a measured fork (§9).
 AUDIT     → Sol, blind (§5), one pass at the class's effort (§6).
             A — blocks · B — repaired in this same pass · C — older than this work → stays in the
             job's own folder (the audit report); never the board — a row opens only on his word.
@@ -183,9 +191,10 @@ Correction required:
 
 ## 9. Owed measurements — the first jobs pay them
 
-- **The fork.** A forked subagent starts with the lead's whole context. Measure whether it reuses the
-  lead's cache (cache read, not write) on a real job; if it does, forks become the parallel lane —
-  the speed of three workers without three re-reads.
+- **The fork — its start measured 2026-10-03.** A forked subagent's first call read 203,676 tokens from
+  the lead's cache and wrote 1,200 (session 5ed74ad7): a fork does not re-read the lead's context. What
+  it reads after that is new, and it runs on the lead's model. Whether forks pay as the parallel lane
+  on a real job — the speed of three workers without three re-reads — is still owed.
 - **Sol `high` vs `xhigh`** on the same critical diff: findings, false alarms, time, Plus usage.
 - **Plus share per audit:** `rate_limits` before and after each audit in the Codex rollout.
 - **The first critical job** was Sol's own database reach (built 2026-09-28, §5); its audit pays the

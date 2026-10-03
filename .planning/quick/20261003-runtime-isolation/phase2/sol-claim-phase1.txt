@@ -1,0 +1,15 @@
+THE CEO'S SENTENCE (verbatim, 2026-10-03): "evet tabi hamza ve herşey herkes inşaattan ayrı olmalı ya!" — Hamza and everything, everyone must be separate from the construction. On the Codex gate he chose "(b)": the company's own Codex login (that is phase 2 of this job and is NOT in this diff).
+
+THE PLAN'S DECISIONS — facts, not claims to re-litigate:
+- One helper in @dxb/kernel, companyIsolation(): { settingSources: [], settings: { autoMemoryEnabled: false }, persistSession: false, cwd }. DXB_WORKER_ISOLATION=0 is the kept rollback shape. The old orchestrator helper (workerIsolation, settingSources only) is deleted.
+- Every Agent-SDK query() in the company's runtime (packages/*/src, apps/*/src) spreads it, and its stream loop feeds isolationReceipt(<lane>), which prints one journal line per result: lanes chat, voice, task, qa, decompose, council, classify, workflow.
+- The working directory stays the repository root: moving it was measured (3,865 tokens — the auto-memory's own instructions still load) and not chosen; settings.autoMemoryEnabled=false reaches 476 without moving it (evidence/probes-before.md).
+- dxb-jarvis (the always-on wake daemon) is stopped and disabled since 2026-09-14 and is NOT started by this job; only dxb-scheduler is restarted — it drains Hamza's voice calls and chat messages itself (packages/outbox-executor/src/scheduler.ts:679, :690). Done-list item 8 was corrected after the restart to say so.
+
+WHAT TO REFUTE — the diff 1d492949..2edec1e1 (phase 1 commit), the done-list .planning/quick/20261003-runtime-isolation/DONE-LIST.md, and the raw outputs in .planning/quick/20261003-runtime-isolation/evidence/:
+1. Does this done-list prove what the CEO's sentence asked for, for the SDK lanes? What does it leave out?
+2. Is there any company-side model call (Agent SDK query(), a spawned `claude`, or anything else that loads Claude Code settings) in packages/*/src or apps/*/src that still runs without companyIsolation()? Is the ruler tests/governance/company-isolation.test.ts able to miss one (aliasing, a wrapper, a second import style)?
+3. Does companyIsolation() actually keep out: project/user/local settings (hooks, plugins, MCP servers, CLAUDE.md), the auto-memory, and the transcript? Read node_modules/.pnpm/@anthropic-ai+claude-agent-sdk@0.3.259*/node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts (settingSources, settings, persistSession, autoMemoryEnabled) and compare with evidence/probe-after.txt.
+4. Did any call site change behaviour beyond the isolation (the order of option spreads overriding model/effort/tools/systemPrompt/cwd, a receipt that throws, a loop that now consumes a message it used to return on)?
+5. Is the B43 test change (tests/b43/dispatch-book.test.ts) a faithful move of the old case, or did it weaken it?
+6. The battery: evidence/battery.txt is the whole raw output. Name every failure and whether this diff can have caused it.

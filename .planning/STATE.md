@@ -16,8 +16,7 @@ that contradicted itself in three places until 2026-07-30; that narrative is fro
 lines / 206 KB by 2026-09-13 — a session read 50 KB of it before its first word and the CEO caught
 it (*"yahu neden 165k oldu hemen ya daha bişey yapmadan"*) — and on 2026-09-14, on his word, every
 block before the current one was moved whole to the same archive (§ "STATE.md as it stood on
-2026-09-14"). The one-page law is `dxb-start` Phase 0 §3; a history growing back here is the defect
-it names.
+2026-09-14"). A history growing back here is the defect this paragraph names.
 
 **Three headings, nothing else above "Where things live"** — his approval of 2026-09-28
 <!-- CEO-OK: opening-three-headings-and-board-archive-2026-09-28 -->: *Where we left off · Next ·

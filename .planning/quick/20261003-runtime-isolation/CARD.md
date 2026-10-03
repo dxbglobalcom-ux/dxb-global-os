@@ -1,7 +1,7 @@
 # Score card — every company model call runs with nothing of the construction loaded
 
 job: Every company-side model call — Hamza's chat and voice lanes, the task and QA lanes, decompose, the council judge, classify and the workflow executor (phase 1), and the critical gate's Codex challengers (phase 2) — runs with nothing of the construction loaded (no CLAUDE.md, settings, hooks, plugins, MCP servers, skills, auto-memory or Codex notes) and leaves no transcript in the construction's folders; each call writes one journal line saying what it loaded and what it read
-range: 1d492949..HEAD
+range: 1d492949..2edec1e1
 blast: 2
 risk: 2
 reasoning: 1

@@ -37,9 +37,12 @@ only the login drops the notes and starts no MCP server.
 6. `pnpm test` → green, or exactly the failures that are red on 1d492949 too (named, unchanged).
 7. `pnpm build` → exit 0; the built `chat-drain.js`, `answer.js`, `decompose.js`, `council.js`,
    `classify.js`, `executor.js`, `worker-shim.js`, `qa.js` each contain `companyIsolation`.
-8. `systemctl --user restart dxb-scheduler` → `active`; its journal shows a clean start.
-   `dxb-jarvis` is NOT started: it has been stopped and disabled since 2026-09-14 10:15 — the voice
-   lane's fix takes effect on the day it is switched on.
+8. `systemctl --user restart dxb-scheduler` → `active`; its journal shows a clean start. The
+   scheduler itself drains Hamza's voice calls and chat messages (`packages/outbox-executor/src/
+   scheduler.ts:679`, `:690`), so both of his lanes run the isolated code from this restart.
+   `dxb-jarvis` — the always-on wake daemon — is NOT started: it has been stopped and disabled since
+   2026-09-14 10:15. (Corrected after the restart: the first wording said the voice lane waited for
+   dxb-jarvis; the scheduler's own drain was measured.)
 9. Resident proof: the next company model call writes
    `[isolation] lane=<lane> tools=0 mcp=0 plugins=0 input=<n>` (tool-less lanes) into
    `journalctl --user -u dxb-scheduler`, and no new `sdk-*` transcript appears under

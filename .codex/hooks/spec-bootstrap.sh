@@ -78,7 +78,7 @@ cat <<EOF
 === DXB — WHERE THE WORK STANDS ===
 Always-on core: AGENTS.md (authority order, the boundaries, the doors).
 Open work: HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md — the single register.
-Starting, or picking up work? Open the door: dxb-start.
+Asked to learn the holding? dxb-start. A job: dxb-team2.
 
 YOUR FIRST REPLY TELLS HIM WHERE THE WORK STANDS, THEN ANSWERS HIM (core §0).
 Everything below was read from .planning/STATE.md just now —
