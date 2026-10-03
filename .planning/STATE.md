@@ -27,56 +27,42 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-03 ~13:15 → 14:05, Opus 5.5 session 32178f5b (after 5ed74ad7). His orders of the day, each in the ledger:
-- **Runtime isolation** (`runtime-isolation-2026-10-03`) — both phases LIVE: `dxb-scheduler` restarted
-  14:01:30 on the build of `5de3595e`; `dxb-jarvis` left stopped (disabled since 2026-09-14).
-  - Phase 1, after Sol's first pass (`6e3f693b`): fixed in `83a54e7e` — a fail-closed ruler (the eight
-    lanes pinned by name, Sol's counter-examples refused, runtime `claude` launches refused), a receipt
-    that never touches the call (`[isolation] … session= … hooks=`, written to `var/scheduler.log` —
-    the unit's stdout, not the journal), and `strictMcpConfig: true`: without it the claude.ai
-    account's connectors (Claude Docs, Kiwi.com) mounted into Hamza's chat lane — 11,289 tokens,
-    tools=10 mcp=2; with it 2,153, tools=0 mcp=0. Live proof on the lanes' own code, in the resident's
-    shape, against the construction engine (`run-lanes-probe.sh`): no construction note, skill, agent
-    or plugin, no transcript by session id.
-  - Phase 2 (`5de3595e`): the critical gate's Codex runs from `companyCodexHome()`, his own login —
-    from `~/.codex` the construction's notes and an MCP error reached it, from the company home neither.
-  - Battery on `5de3595e`: BATTERY_GREEN (sandboxed 1,086 passed · host 266).
-  - Sol's single pass (high) on `6e3f693b..5de3595e` was running at the handover:
-    `.planning/quick/20261003-runtime-isolation/sol-claim-pass2.txt` is its brief.
-- **Audits, his words of this session** (for this job): one pass, the findings fixed by a fork, no
-  second round; Sol `high`, not xhigh (researched: DeepSWE v1.1 high 75.2 % · xhigh 71.9 %); the auditor
-  audits at the level the card gives and does not re-grade it — the card went back to the lead's 5.
-- **dxb-start slimmed** and **Fable at three fixed points**, committed `bec00f77`: its audit card and
-  done-list are in `.planning/quick/20261003-doors-slim/`; not yet audited.
-- **His word ~14:05** (`auditor-never-regrades-2026-10-03`): "kalıcı olsun senin puanladığını o
-  puanlamasın işi sadece verilen seviyede denetimini yapmak okadar." And: the orchestration — the fork
-  and a hybrid of fork and helpers — is designed AFTER this job, by measurement and the lead's
-  judgment, Fable consulted; no A/B experiment for its own sake.
+2026-10-03 ~14:11 → 15:25, Opus 5.5 session cbedb76a (after 32178f5b). His orders of the day, each in the ledger:
+- **Runtime isolation** (`runtime-isolation-2026-10-03`) — done and live. Sol's single pass (`b3bc05d4`:
+  the ruler, the Codex home override, no line per Codex call) fixed by a fork in `9685ecc8`: the ruler
+  binds every runtime file through the TypeScript compiler (Sol's 8 counter-examples and 10 class cases
+  red before, green after); `companyCodexHome()` refuses the construction's home; one `[isolation]
+  lane=gate …` line per Codex call. Found while fixing: since phase 2 the gate's challengers ran at
+  `reasoning effort: none` (the company home has no config.toml) — pinned `high` again. Battery GREEN
+  (sandboxed 1,113 · host 266); `dxb-scheduler` restarted 15:03:48 on this build. No second round.
+  - Measured, not met (done-list 21): the chat lane's claude CLI still opens the construction's settings
+    files and plugin manifests (none applied), lists the repository and writes into `~/.claude` —
+    closed only by a company working folder and Claude home (waits on him, below).
+- **Doors** (all audited by Sol, one pass, `bec00f77^..e04e12be`): dxb-start slimmed, Fable at three
+  points, the handover carries the transcript, the auditor never re-grades (`8202740c`, permanent),
+  dxb-verify's battery and restart lines (`e7117fce`) and dxb-hamza-context's restart (`e04e12be`) on
+  his words. Sol refuted "nothing is lost": five rules the slimming dropped are back with their owners
+  (`49d61b5f`, a fork; `SOL-DOORS.md`).
+- **The fork, measured on a real job** — fork 1 (the isolation fixes): 29.1 min, 444,212 new tokens,
+  start-up 2,860 new over 158,146 read from the lead's cache, ~268k tokens of work kept out of the lead's
+  context, battery green. Forks 2 and 3 (small fixes): 2.4 and 2.8 min, 40,644 and 48,908 new.
 
 ## Next
 
-1. Sol's single-pass verdict → `SOL-PASS2.md`; its A/B findings fixed by ONE fork, each proven by a
-   test that failed first; typecheck, the ruler, B43, the battery if code changed; commit; build;
-   restart `dxb-scheduler`. No second Sol round.
-2. The auditor never re-grades (his word, `auditor-never-regrades-2026-10-03`): `audit-card.mjs`
-   briefBlock line and header, `refuter.sh` header, dxb-team2 §3/§6, the Codex mirror. Then the doors
-   audit (`bec00f77` + this change; card 4, high): the brief, the rulers' raw output, one pass, a fork
-   for its findings.
-3. His report under Sizi bekleyen · Değişen · Bulunan. Bulunan, measured: the company's Claude runs
-   share the user's Claude home with the construction — a running company call sits in the peer
-   registry (`~/.claude/sessions/`), its MCP debug log lands under
-   `~/.cache/claude-cli-nodejs/-home-dxb-DxB-Global-OS/`; recommendation: a company-owned Claude home
-   like the Codex one — his one login (identity step).
-4. After the job: the orchestration design (his message of ~14:05) — measured on this job's fork
-   fixes first (tokens, minutes, tests), Fable consulted; then the doors written from it.
-5. Still unanswered, his question of 2026-10-01 ~21:55: why a locked tool is not resolved by the
-   system itself, and why the alert comes to him instead of to the one who should fix it.
+1. The orchestration design for dxb-team2 — after this job, on his word ("dxbteam2 için sistemini bu
+   işten sonra yapıcaz"): from the fork measurements above, Fable consulted, no A/B experiment for its
+   own sake; the lead picks the arrangement per job and writes it, with why, on the card.
+2. His question of 2026-10-01 ~21:55: why a locked tool is not resolved by the system itself, and why
+   the alert comes to him instead of to the one who should fix it.
 
 ## Waiting on his approval
 
-- dxb-verify's two-line fix: it names `pnpm test` as the battery (the battery is
-  `pnpm construction:battery`) and says to restart `dxb-jarvis`, a stopped service. Recommended: evet.
-  Not answered.
+- The company's own Claude working folder and Claude home — the same membership, his one login —
+  closes done-list 21. Recommended: evet. Not answered.
+- dxb-team2 §8 says a handover note carries "his words of this job verbatim", and the same paragraph
+  (his ledger entry handover-at-50-without-asking-2026-10-01) says he is quoted only from the ledger —
+  older than today. Recommended: verbatim from the conversation too, marked so (the transcript path
+  in every note makes it checkable). Not answered.
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 
