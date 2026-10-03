@@ -1,0 +1,31 @@
+# The rulers that read the doors — run 2026-10-03 15:04 at HEAD 9685ecc8
+# The doors, the ledger, the mirror and the governance scripts are as at e04e12be (the range's end):
+$ git diff --stat e04e12be HEAD -- .claude .agents AGENTS.md .codex scripts/governance
+(empty above = unchanged)
+
+$ pnpm vitest run tests/hooks/opening-budget.test.ts tests/governance/ledger-truth.test.ts tests/governance/no-closure-without-his-word.test.ts tests/governance/codex-mirror-check.test.ts tests/governance/audit-card.test.ts
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/governance/audit-card.test.ts (19 tests) 3869ms
+   ✓ refuter.sh holds the gate > refuses every forwarded option that could override the card or the profile  384ms
+   ✓ refuter.sh holds the gate > keeps the prompt whole when allowed options come after it, and refuses two prompts  313ms
+   ✓ refuter.sh holds the gate > takes the prompt after '--', and refuses an empty brief  636ms
+   ✓ refuter.sh holds the gate > runs the whole audit again when the model is at capacity, and gives up after four tries  578ms
+   ✓ refuter.sh holds the gate > never retries on a capacity sentence quoted in the answer; caps the retries at three; logs every try  778ms
+ ✓ tests/governance/codex-mirror-check.test.ts (3 tests) 587ms
+ ✓ tests/hooks/opening-budget.test.ts (8 tests) 280ms
+ ✓ tests/governance/ledger-truth.test.ts (7 tests) 44ms
+ ✓ tests/governance/no-closure-without-his-word.test.ts (7 tests) 15ms
+
+ Test Files  5 passed (5)
+      Tests  44 passed (44)
+   Start at  15:04:16
+   Duration  5.54s (transform 73ms, setup 0ms, collect 80ms, tests 4.79s, environment 1ms, prepare 158ms)
+
+exit=0
+
+$ bash scripts/governance/sync-codex-mirror.sh --check
+SYNC_OK mirror matches source
+exit=0

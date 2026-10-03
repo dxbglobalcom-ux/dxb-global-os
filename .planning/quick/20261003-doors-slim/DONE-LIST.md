@@ -1,7 +1,8 @@
 # Done-list — the doors after his word of 2026-10-03
 
 Written at audit time, AFTER the change (commit bec00f77, session 5ed74ad7): the job ran before its
-done-list was put on paper. Each item names what has to hold and the command that shows it.
+done-list was put on paper. Items 7-10 were added by session cbedb76a for the door changes that followed
+bec00f77 (5b5dd2a6, 8202740c, e7117fce, e04e12be); item 8's test was written and run red before its change. Each item names what has to hold and the command that shows it.
 
 His question: "dxb-start kapısında faydalı olup diğerlerinde olmayan ne var? biz bu start kapısını
 boşuna mı yapmışız?" His word: "Diğer beni bekleyen konularda da ikinci DXP start sadeleşsin. Aynen."
@@ -24,4 +25,24 @@ aynı hata ikinci kez olunca ve 'bitti' demeden önce." (ledger fable-three-chec
    `SYNC_OK`; `.agents/skills/` and `AGENTS.md` differ from `.claude/` only by the generator's rules.
 6. The rulers that read these files stay green: `pnpm vitest run tests/hooks/opening-budget.test.ts
    tests/governance/ledger-truth.test.ts tests/governance/no-closure-without-his-word.test.ts
-   tests/governance/codex-mirror-check.test.ts` (raw output in evidence/).
+   tests/governance/codex-mirror-check.test.ts tests/governance/audit-card.test.ts` (raw output in
+   evidence/rulers.txt).
+7. dxb-team2 §8 (5b5dd2a6; ledger handover-carries-transcript-2026-10-03): a handover note ends with
+   the path of the handing-over session's own conversation
+   (`~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl`) and the line *if
+   anything here is unclear, read the part you need there*, his ledger id beside it.
+   `git show 5b5dd2a6`.
+8. The auditor never re-grades (8202740c; ledger auditor-never-regrades-2026-10-03): the line Sol
+   receives first shows the card for information and tells it to audit at the level the card gives
+   and not to re-grade it — no "under-grade", no "challenge"; the headers of audit-card.mjs and
+   refuter.sh and dxb-team2 §3 and §6 say the same, the ledger id beside §6's sentence; nothing else
+   invites a re-grade: `grep -rniE "challeng|re-?grade|under-?grade" .claude .agents AGENTS.md
+   scripts/governance`. `pnpm vitest run tests/governance/audit-card.test.ts` → the two new
+   assertions red on the old text (2 failed, 17 passed — run before the change), green after.
+9. dxb-verify (e7117fce; ledger dxb-verify-battery-and-restart-lines-2026-10-03): the check table's
+   first row names `pnpm construction:battery`; the restart trap restarts `dxb-scheduler` and says
+   `dxb-jarvis` is not started. `git show e7117fce`.
+10. dxb-hamza-context (e04e12be; ledger dxb-hamza-context-restart-line-2026-10-03): rule 5 restarts
+   `dxb-scheduler` — it drains both lanes (`packages/outbox-executor/src/scheduler.ts`) — and says
+   `dxb-jarvis` is not started; no door names a dxb-jarvis restart:
+   `grep -rn "dxb-jarvis" .claude/skills .claude/CLAUDE.md` → only the two "not started" lines.

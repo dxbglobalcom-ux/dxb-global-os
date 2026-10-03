@@ -1,0 +1,30 @@
+THE CEO'S QUESTION AND WORDS (verbatim, 2026-10-03):
+- dxb-start (ledger dxb-start-slimmed-2026-10-03). His question: "dxb-start kapısında faydalı olup diğerlerinde olmayan ne var? biz bu start kapısını boşuna mı yapmışız?" His word: "Diğer beni bekleyen konularda da ikinci DXP start sadeleşsin. Aynen."
+- Fable (ledger fable-three-checkpoints-2026-10-03): "Bir de Fable'la ilgili şöyle bir şey yani tamam dediğiniz gibi." — answering "Fable'ı sizin belirlediğiniz üç noktaya bağlayalım: büyük plandan önce, aynı hata ikinci kez olunca ve 'bitti' demeden önce."
+- The handover (ledger handover-carries-transcript-2026-10-03): "bunu kural yaparmısın güzel yöntem her devirde yapılsın önceki oturumun konuşmasının nota eklenmesi belirtiz kalırsa orada oku uyarısı. tabi kuralı devirle iligli yere sanırım yazacaksın değil mi?"
+- The auditor (ledger auditor-never-regrades-2026-10-03): "kalıcı olsun senin puanladığını o puanlamasın işi sadece verilen seviyede denetimini yapmak okadar."
+- dxb-verify (ledger dxb-verify-battery-and-restart-lines-2026-10-03): "dxb-verify düzeltmesine evet" — answering: "dxb-verify's two-line fix: it names `pnpm test` as the battery (the battery is `pnpm construction:battery`) and says to restart `dxb-jarvis`, a stopped service. Recommended: evet."
+- dxb-hamza-context (ledger dxb-hamza-context-restart-line-2026-10-03): "evet hamza-context'i de düzelt" — answering: "the same wrong line (restart dxb-jarvis) stands in dxb-hamza-context; shall I fix it the same way? Recommended: evet."
+
+THIS AUDIT — one pass; its findings are fixed; there is no second round (the CEO's order for this job).
+  In scope: bec00f77, 5b5dd2a6, 8202740c, e7117fce, e04e12be, and the ledger entries they name in scripts/governance/ceo-approvals.json.
+  Out of scope: the other commits in the range (2351d9b5, 6e3f693b, 83a54e7e, 5de3595e, c97bcc73, fd367851, b3bc05d4) belong to the runtime-isolation job, audited on its own card — except where one touches a door, which is then in scope.
+  Range bec00f77^..e04e12be. The done-list: .planning/quick/20261003-doors-slim/DONE-LIST.md. Raw output: .planning/quick/20261003-doors-slim/evidence/rulers.txt.
+
+THE DECISIONS — facts, not claims to re-litigate:
+- dxb-start holds only "learn the holding — what is where": the read order, what not to read, where things are. A job runs through dxb-team2.
+- The job rules that lived only in dxb-start moved into dxb-team2 §4; its copies of what dxb-team2, dxb-verify, dxb-close-row and the board own were deleted, not moved.
+- Fable 5.1 advises the lead at three fixed points on every job — before a big plan, when the same error comes a second time, before "done" — and whenever else the lead needs it.
+- Every handover note ends with the path of the handing-over session's own conversation and the line "if anything here is unclear, read the part you need there".
+- The auditor audits at the level the card gives and never re-grades it. Checking the done-list (dxb-team2 §5) is auditing the work.
+- The battery is `pnpm construction:battery`; dxb-jarvis is stopped and disabled and is not started; dxb-scheduler drains both of Hamza's lanes.
+- The Codex mirror (AGENTS.md, .agents/skills/, .codex/hooks/) is written only by scripts/governance/sync-codex-mirror.sh.
+- A rule lives in one place: the core (.claude/CLAUDE.md) holds the boundary, a door the procedure; a rule in both means the door is wrong.
+
+WHAT TO REFUTE:
+1. Does the done-list prove what his words asked for? What does it leave out?
+2. Was a rule lost? Read dxb-start as it stood at bec00f77^ and name any rule that now lives in no door, the board or the core — with its old line.
+3. Do the doors now contradict each other or the core — one rule in two places, two wordings of one rule, a step one door orders and another forbids?
+4. The never-re-grade change: does every place that invited a re-grade now say otherwise — the line Sol receives first (audit-card.mjs briefBlock), the two headers, dxb-team2 §3 and §6, the mirror? Does anything else in the repository still invite it?
+5. Every CEO-OK marker the range adds to a door: does its ledger entry exist, and do his verbatim words support what the door says — nothing widened, nothing narrowed?
+6. The rulers (evidence/rulers.txt): name every failure.
