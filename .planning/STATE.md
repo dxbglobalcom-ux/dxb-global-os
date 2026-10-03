@@ -27,43 +27,43 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-03 ~10:15 → 12:00, Opus 5.5 session fe74b93a. He asked whether the prompt audit of 2026-09-24
-met his goal — the Opus 5.5 guide's three questions (think-more lines · work handed out step by step
-or with no finish line · stops for confirmation). Answer, measured: done carefully, but to Anthropic's
-generic `prompt-audit`, not the guide (never read); stops not covered; the three-heading report never
-proposed; its #1 finding still open — Hamza's voice and chat answers (`answer.ts:108`,
-`chat-drain.ts:112`) and four more `query()` calls run without `settingSources`, so the construction
-CLAUDE.md and hooks load into them (SDK 0.3.259 doc; the services run from the repo root). Think-more
-lines today: 0. Stops 2026-09-13 → 10-03: 85 — 7 bare yes, 55 steered, 13 not understood, 10 angry;
-he ruled the questions are fine. Changed today, each in the ledger under 2026-10-03:
-- a job's plan goes to him once before the work continues — dxb-team2 §1 §4 restore what
-  3fe36467/97983a29 over-deleted; no second trip after Sol;
-- a job's report ends under Sizi bekleyen · Değişen · Bulunan (dxb-team2 TELL); a fix inside the job
-  is not listed;
-- memory: the dxb-crew pointers and the "chief engineer xhigh" line are gone.
-He wants dxb-team2 simpler — fewer machines, hooks and ceremony, the lead trusted to think.
+2026-10-03 ~12:05 → 13:15, Opus 5.5 session 5ed74ad7. His three orders of the day, each in the ledger:
+- **Runtime isolation** (`runtime-isolation-2026-10-03`), phase 1 committed `2edec1e1`: the eight
+  company `query()` calls (chat, voice, task, qa, decompose, council, classify, workflow) run through
+  `@dxb/kernel` `companyIsolation()` and write one `[isolation]` journal line each. Measured on the
+  built helper: before 58 tools · 5 MCP · 1 plugin · 44,158 tokens; after 0 · 0 · 0 · 480. The task
+  lane's isolation of 2026-09-05 had leaked the construction's auto-memory. Battery
+  (`pnpm construction:battery`) EXIT 0; `dxb-scheduler` restarted 13:03:39 — it drains Hamza's voice
+  and chat itself; `dxb-jarvis` left stopped (disabled since 2026-09-14). Sol's audit (high) was
+  still running at the handover: `.planning/quick/20261003-runtime-isolation/` holds the card and the
+  brief. His company Codex login is done (`~/.local/share/dxb/company-codex`, its own `auth.json`).
+- **dxb-start slimmed** (`dxb-start-slimmed-2026-10-03`) and **Fable at three fixed points**
+  (`fable-three-checkpoints-2026-10-03`), committed `bec00f77`; the fork's start measured (203,676
+  cache read · 1,200 written). Not yet audited by Sol.
+- His correction, measured: dxb-team1's writers were mostly max (46 of 59 writer launches 25–28 Sep);
+  "high orchestrator + medium writers" has never been measured here.
 
 ## Next
 
-1. **Ask him** before any project work; a job's plan goes to him once (dxb-team2 §4).
-2. Two decisions, explained to him in plain words, each waiting for one word: (1) isolate Hamza's two
-   answer lanes and the four other runtime `query()` calls from the construction files
-   (`settingSources: []`, as the task lane already is); (2) delete dxb-start — its plan rule lives in
-   dxb-team2, its handover in dxb-team2 §8; it re-reads what the opening
-   already printed; 2 of 134 sessions since 2026-09-13 opened it (with it go the hook line, core §4's
-   row, rules.json `onboarding_read_order`, the mirror).
-3. dxb-team2 simpler — talk it through with him first. Measured: the score-card machine ran on 2 jobs
-   (7 audits); the class budgets were never set, so BRAKE has no number; §9's measurements are unpaid.
-4. Still unanswered, his question of 2026-10-01 ~21:55: why a locked tool is not resolved by the
+1. Sol's phase-1 verdict: read it (the auditor's Codex rollout of 13:04 under `~/.codex/sessions/`),
+   fix any finding, re-check.
+2. Phase 2, his login done: `python3 .planning/quick/20261003-runtime-isolation/phase2/apply-phase2.py`
+   (the gate's `codexRunner` runs with `CODEX_HOME` = `companyCodexHome()`, plus the ruler's phase-2
+   block), then the ruler, typecheck, the gate probe in the company home (the notes ABSENT), commit,
+   restart `dxb-scheduler`, Sol re-check. Done-list items 11–14.
+3. Sol audit of `bec00f77` (doors; governance, normal).
+4. Waiting for his one word: the orchestration measurement — two past fixes replayed in two shapes
+   (A: high lead alone · B: high orchestrator + three medium agents: reader, editor+tester,
+   researcher), Fable at three points and Sol blind in both; new tokens, minutes, Sol findings.
+5. Waiting for his word: dxb-verify names `pnpm test` as the battery (it reddens 6 B36 wall tests;
+   the battery is `pnpm construction:battery`) and says to restart `dxb-jarvis`, which would switch on
+   a stopped service.
+6. Still unanswered, his question of 2026-10-01 ~21:55: why a locked tool is not resolved by the
    system itself, and why the alert comes to him instead of to the one who should fix it.
-5. The next real job: a holding part from the board, chosen with him.
 
 ## Waiting on his approval
 
-- Next 2 (two one-word decisions) and Next 3 (the dxb-team2 talk).
-- The pin auto-review: nothing waits for his eye. Measured 2026-10-02 on the company engine: 76 pins,
-  76 with approved text, 0 locked, last check 2026-10-01 19:39 UTC, and NO pin alert exists. The
-  alert's look (TR, drill to `/gov/audit/<id>`) is seen the first time one fires.
+- Next 4 and Next 5 (one word each).
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 
