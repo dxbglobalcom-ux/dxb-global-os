@@ -14,7 +14,7 @@ import { join } from "node:path";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
-import { loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
+import { companyIsolation, isolationReceipt, loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
 import { recallMemory } from "@dxb/memory-router";
 import { matchMute, matchUnmute, loadPersonaBody, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
 import {
@@ -112,6 +112,8 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
   const stream = query({
     prompt: `${sys}\n\nConversation so far:\n${historyText}\n\nCEO says: ${q.message}\n\nHamza replies:`,
     options: {
+      // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
+      ...(companyIsolation() ?? {}),
       model: SDK_MODEL_IDS[r.model] ?? r.model,
       effort: (["low", "medium", "high", "max"].includes(r.effort ?? "") ? r.effort : "low") as
         | "low"
@@ -124,7 +126,9 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
       maxTurns: 4,
     },
   });
+  const seen = isolationReceipt("chat");
   for await (const msg of stream) {
+    seen(msg);
     if (msg.type === "result") {
       if (msg.subtype !== "success") throw new Error(`chat answer failed (${msg.subtype})`);
       return String(msg.result ?? "").trim();

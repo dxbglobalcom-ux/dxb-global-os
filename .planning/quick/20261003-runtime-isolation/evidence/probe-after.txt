@@ -1,0 +1,5 @@
+companyIsolation() = {"settingSources":[],"settings":{"autoMemoryEnabled":false},"persistSession":false,"cwd":"/home/dxb/DxB Global OS"}
+[isolation] lane=before tools=58 mcp=5 plugins=1 input=44158
+before canaries: "1. \"anti-baby-sitting\": PRESENT\n2. \"Hitap protokol\": PRESENT\n3. \"graphify\": PRESENT\n4. \"THE CUPBOARD\": PRESENT"
+[isolation] lane=after tools=0 mcp=0 plugins=0 input=480
+after canaries: "1. \"anti-baby-sitting\": ABSENT\n2. \"Hitap protokol\": ABSENT\n3. \"graphify\": ABSENT\n4. \"THE CUPBOARD\": ABSENT"

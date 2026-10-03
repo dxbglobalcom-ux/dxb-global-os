@@ -1850,5 +1850,29 @@
     "conditions": "",
     "session": "Opus 5.5 session fe74b93a — heard first-hand, 2026-10-03.",
     "where": "~/.claude/projects/-home-dxb-DxB-Global-OS/memory — four notes and the index line of the context-meter note"
+  },
+  "runtime-isolation-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "Every company-side model call is separated from the construction. Hamza's chat and voice lanes, the task and QA lanes, decompose, the council judge, classify and the workflow executor run through one kernel helper — companyIsolation(): no filesystem settings (CLAUDE.md, hooks, plugins, MCP servers), no auto-memory, no transcript in the construction's folder — and each call writes one journal line saying what it loaded and what it read. The critical gate's Codex challengers are to run from the company's own Codex home under the company's own login (option b — the job's phase 2, after his login). The plan went to him once, in Turkish, with the measurements: Hamza's lane options read 44,306 tokens and mounted 58 construction tools; the task lane's settingSources: [] still loaded the construction's auto-memory (4,237); with the helper a call reads 476-480 and nothing of the construction.",
+    "verbatim": "evet tabi hamza ve herşey herkes inşaattan ayrı olmalı ya! … B önerisini de yapalım. Şeyle ilgili, kodeksle ilgili.",
+    "conditions": "Option (b) as it was put to him: '(b) Şirketin kendi girişi olur. Giriş sayfasını bir kez ben açarım, siz izin verirsiniz. Ayrılık tam olur.' The Codex login is an identity step and stays his. dxb-jarvis, stopped and disabled since 2026-09-14, is not started by this job. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 5ed74ad7 — heard first-hand, 2026-10-03.",
+    "where": "packages/kernel/src/sdk-isolation.ts · the eight query() call sites · packages/orchestrator/src/critical-gate.ts · tests/governance/company-isolation.test.ts · .planning/quick/20261003-runtime-isolation/"
+  },
+  "dxb-start-slimmed-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "dxb-start stays and holds only 'learn the holding — what is where': the read order, what not to read, where things are. The job rules that lived only there (the understanding report, the plan's contents, root cause before fix, the test that failed first, no silent narrowing or widening) move into dxb-team2 §4, which every job opens; its copies of what dxb-team2 and the board already owned (approval, implementation, verification, records, the handover, choosing the row) are deleted. Core §4's row and the opening hook line name the door's new role. The earlier recommendation to delete the door was withdrawn on his question: two of the three openings found were his own 'learn the cupboards' request (2026-09-04, 2026-10-03), and 2 of ~280 interactive sessions since 2026-09-13 had opened it, so its four unique rules reached almost no job.",
+    "verbatim": "Diğer beni bekleyen konularda da ikinci DXP start sadeleşsin. Aynen.",
+    "conditions": "His question before it: 'dxb-start kapısında faydalı olup diğerlerinde olmayan ne var? biz bu start kapısını boşuna mı yapmışız?' Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 5ed74ad7 — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-start/SKILL.md · .claude/skills/dxb-team2/SKILL.md §4 · .claude/CLAUDE.md §4 · .claude/hooks/spec-bootstrap.sh · Codex mirror"
+  },
+  "fable-three-checkpoints-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "Fable 5.1 advises the lead at three fixed points on every job — before a big plan, when the same error comes a second time, before 'done' — and whenever else the lead needs it (dxb-team2 §2). The three points come from the orchestration table he brought on 2026-10-03.",
+    "verbatim": "Bir de Fable'la ilgili şöyle bir şey yani tamam dediğiniz gibi.",
+    "conditions": "The proposal he answered: 'Fable'ı sizin belirlediğiniz üç noktaya bağlayalım: büyük plandan önce, aynı hata ikinci kez olunca ve \"bitti\" demeden önce.' Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 5ed74ad7 — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §2 · Codex mirror"
   }
 }

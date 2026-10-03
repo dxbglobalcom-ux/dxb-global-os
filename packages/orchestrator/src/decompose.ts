@@ -18,6 +18,8 @@ import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, TaskEnvelope, sdkJsonSchema } from "@dxb/shared";
 import {
+  companyIsolation,
+  isolationReceipt,
   loadPolicy,
   route,
   SDK_MODEL_IDS,
@@ -115,6 +117,8 @@ async function runDraftQuery(prompt: string, own: ResolvedRoute): Promise<unknow
   const q = query({
     prompt,
     options: {
+      // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
+      ...(companyIsolation() ?? {}),
       model: SDK_MODEL_IDS[own.model] ?? own.model,
       effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
@@ -122,7 +126,9 @@ async function runDraftQuery(prompt: string, own: ResolvedRoute): Promise<unknow
       outputFormat: { type: "json_schema", schema: sdkJsonSchema(DraftBatch) },
     },
   });
+  const seen = isolationReceipt("decompose");
   for await (const msg of q) {
+    seen(msg);
     if (msg.type === "result") {
       if (msg.subtype === "success") {
         if (msg.structured_output !== undefined) return msg.structured_output;

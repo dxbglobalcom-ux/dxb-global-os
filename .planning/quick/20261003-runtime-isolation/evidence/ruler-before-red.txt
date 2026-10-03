@@ -1,0 +1,101 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/governance/company-isolation.test.ts (7 tests | 6 failed) 9ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > finds the company's query() call sites (eight on 2026-10-03) 1ms
+   × company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() into its options 4ms
+     → expected [ …(8) ] to deeply equal []
+   × company isolation — the ruler over every company model call (CEO 2026-10-03) > every file that calls query() writes the one-line receipt 1ms
+     → expected [ …(8) ] to deeply equal []
+   × companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory and the transcript 2ms
+     → Cannot find module '../../packages/kernel/src/sdk-isolation.js' imported from '/home/dxb/DxB Global OS/tests/governance/company-isolation.test.ts'
+   × companyIsolation() and its receipt > DXB_WORKER_ISOLATION=0 is the rollback shape 0ms
+     → Cannot find module '../../packages/kernel/src/sdk-isolation.js' imported from '/home/dxb/DxB Global OS/tests/governance/company-isolation.test.ts'
+   × companyIsolation() and its receipt > prints one line per result — the lane, what the run loaded, what it read 0ms
+     → Cannot find module '../../packages/kernel/src/sdk-isolation.js' imported from '/home/dxb/DxB Global OS/tests/governance/company-isolation.test.ts'
+   × companyIsolation() and its receipt > names what a leaking run loaded, so the journal shows it 0ms
+     → Cannot find module '../../packages/kernel/src/sdk-isolation.js' imported from '/home/dxb/DxB Global OS/tests/governance/company-isolation.test.ts'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() into its options
+AssertionError: expected [ …(8) ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "packages/kernel/src/classify.ts:56",[39m
+[31m+   "packages/kernel/src/workflow/executor.ts:103",[39m
+[31m+   "packages/orchestrator/src/chat-drain.ts:112",[39m
+[31m+   "packages/orchestrator/src/council.ts:90",[39m
+[31m+   "packages/orchestrator/src/decompose.ts:115",[39m
+[31m+   "packages/orchestrator/src/qa.ts:81",[39m
+[31m+   "packages/orchestrator/src/worker-shim.ts:365",[39m
+[31m+   "packages/voice/src/answer.ts:108",[39m
+[31m+ ][39m
+
+ ❯ tests/governance/company-isolation.test.ts:94:92
+     92| 
+     93|   it("every query() spreads companyIsolation() into its options", () =…
+     94|     expect(callers.flatMap((r) => r.sites).filter((s) => !s.isolated).…
+       |                                                                                            ^
+     95|   });
+     96| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the ruler over every company model call (CEO 2026-10-03) > every file that calls query() writes the one-line receipt
+AssertionError: expected [ …(8) ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "packages/kernel/src/classify.ts",[39m
+[31m+   "packages/kernel/src/workflow/executor.ts",[39m
+[31m+   "packages/orchestrator/src/chat-drain.ts",[39m
+[31m+   "packages/orchestrator/src/council.ts",[39m
+[31m+   "packages/orchestrator/src/decompose.ts",[39m
+[31m+   "packages/orchestrator/src/qa.ts",[39m
+[31m+   "packages/orchestrator/src/worker-shim.ts",[39m
+[31m+   "packages/voice/src/answer.ts",[39m
+[31m+ ][39m
+
+ ❯ tests/governance/company-isolation.test.ts:98:66
+     96| 
+     97|   it("every file that calls query() writes the one-line receipt", () =…
+     98|     expect(callers.filter((r) => !r.receipt).map((r) => r.file)).toEqu…
+       |                                                                  ^
+     99|   });
+    100| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory and the transcript
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > DXB_WORKER_ISOLATION=0 is the rollback shape
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > prints one line per result — the lane, what the run loaded, what it read
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > names what a leaking run loaded, so the journal shows it
+Error: Cannot find module '../../packages/kernel/src/sdk-isolation.js' imported from '/home/dxb/DxB Global OS/tests/governance/company-isolation.test.ts'
+ ❯ tests/governance/company-isolation.test.ts:106:34
+    104| 
+    105|   it("shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), …
+    106|     const { companyIsolation } = await helper();
+       |                                  ^
+    107|     expect(companyIsolation({ DXB_REPO_ROOT: "/r" } as NodeJS.ProcessE…
+    108|       settingSources: [],
+
+Caused by: Error: Failed to load url ../../packages/kernel/src/sdk-isolation.js (resolved id: ../../packages/kernel/src/sdk-isolation.js) in /home/dxb/DxB Global OS/tests/governance/company-isolation.test.ts. Does the file exist?
+ ❯ loadAndTransform ../DxB%20Global%20OS/node_modules/.pnpm/vite@7.3.6_@types+node@22.20.0_jiti@2.7.0_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:22739:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 1 passed (7)
+   Start at  12:48:38
+   Duration  591ms (transform 48ms, setup 0ms, collect 315ms, tests 9ms, environment 0ms, prepare 35ms)
+

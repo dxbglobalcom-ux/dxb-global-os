@@ -13,8 +13,14 @@ import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall, sdkJsonSchema } from "@dxb/shared";
 import { logDecision } from "@dxb/observability";
-import { loadPolicy, route, SDK_MODEL_IDS, type ClassifiedIntent } from "@dxb/kernel";
-import { workerIsolation } from "./sdk-isolation.js";
+import {
+  companyIsolation,
+  isolationReceipt,
+  loadPolicy,
+  route,
+  SDK_MODEL_IDS,
+  type ClassifiedIntent,
+} from "@dxb/kernel";
 import { QA_SPEND_SOURCE, recordSubscriptionSpend } from "./subscription-cap.js";
 
 const ACTOR = "orchestrator:qa";
@@ -81,8 +87,8 @@ async function defaultEvaluator(task: QaTask): Promise<unknown> {
     const q = query({
       prompt,
       options: {
-        // B43 plan ② (2026-09-05): the gate judges in SDK isolation too — no construction settings
-        ...(workerIsolation() ?? {}),
+        // B43 plan ② (2026-09-05), CEO 2026-10-03: the gate judges with nothing of the construction loaded
+        ...(companyIsolation() ?? {}),
         model: SDK_MODEL_IDS[routed.model] ?? routed.model,
         effort: routed.effort as "low" | "medium" | "high" | "xhigh" | "max",
         tools: [],
@@ -91,7 +97,9 @@ async function defaultEvaluator(task: QaTask): Promise<unknown> {
       },
     });
     const t0 = Date.now();
+    const seen = isolationReceipt("qa");
     for await (const msg of q) {
+      seen(msg);
       if (msg.type === "result") {
         if (msg.subtype !== "success") throw new Error(`qa: agent-sdk result error (${msg.subtype})`);
         // B39 (CEO 2026-09-13, "düzelt"): the judge's receipt — the same book the

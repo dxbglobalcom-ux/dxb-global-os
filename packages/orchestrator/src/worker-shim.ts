@@ -30,10 +30,9 @@ import {
   resolveRuntimeProfile,
   type SdkToolOptions,
 } from "@dxb/gateway";
-import { loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
+import { companyIsolation, isolationReceipt, loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
 import { loadPersonaBody, standingPrompt } from "@dxb/voice";
 import { recordSubscriptionSpend } from "./subscription-cap.js";
-import { workerIsolation } from "./sdk-isolation.js";
 
 // R2.3: the R2.2 pieces moved to their dependency-clean homes so the workflow
 // agent step (kernel) shares ONE implementation — re-exported here verbatim
@@ -359,16 +358,16 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
   let raw: unknown;
   if (rule.mode === "subscription") {
     // B43 plan ②: the seat's identity is the system prompt; the run is the seat's, not the
-    // session's (sdk-isolation.ts). An unstaffed task keeps the CLI's default prompt.
+    // session's (kernel sdk-isolation.ts). An unstaffed task keeps the CLI's default prompt.
     const seatPrompt = employee ? await seatStandingPrompt(employee) : null;
-    const isolation = workerIsolation();
+    const seen = isolationReceipt("task");
     const q = query({
       prompt,
       options: {
         model: SDK_MODEL_IDS[rule.model] ?? rule.model,
         effort: rule.effort as "low" | "medium" | "high" | "xhigh" | "max",
         ...(seatPrompt ? { systemPrompt: seatPrompt } : {}),
-        ...(isolation ?? {}),
+        ...(companyIsolation() ?? {}),
         // R2.2: built-ins stay OFF (least privilege); the MCP surface is the
         // compiled gateway profile — allowed set mounted, everything else in
         // the inventory stripped from context, session pinned to these
@@ -387,6 +386,7 @@ async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
       },
     });
     for await (const msg of q) {
+      seen(msg);
       // SDK tool traffic → tool_calls (params digest only, §16: no raw content).
       if (msg.type === "assistant") {
         const blocks = (msg as { message?: { content?: unknown } }).message?.content;

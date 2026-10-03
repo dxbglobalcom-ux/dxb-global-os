@@ -20,6 +20,7 @@ import {
   type SdkToolOptions,
 } from "@dxb/gateway";
 import { SDK_MODEL_IDS } from "../classify.js";
+import { companyIsolation, isolationReceipt } from "../sdk-isolation.js";
 import type { AgentWork, AgentWorkResult } from "./types.js";
 
 // Same envelope as the worker-shim (A10 executor-declared evidence).
@@ -103,6 +104,8 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
     const q = query({
       prompt,
       options: {
+        // CEO 2026-10-03: nothing of the construction is loaded into a company call (sdk-isolation.ts)
+        ...(companyIsolation() ?? {}),
         model: SDK_MODEL_IDS[work.model] ?? work.model,
         tools: [],
         ...(toolOpts
@@ -117,7 +120,9 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
         outputFormat: { type: "json_schema", schema: sdkJsonSchema(WorkerJson) },
       },
     });
+    const seen = isolationReceipt("workflow");
     for await (const msg of q) {
+      seen(msg);
       // SDK tool traffic → tool_calls (params key-digest only, §16) — the
       // same tap as the worker-shim so the drill chain (§11) stays whole.
       if (msg.type === "assistant") {

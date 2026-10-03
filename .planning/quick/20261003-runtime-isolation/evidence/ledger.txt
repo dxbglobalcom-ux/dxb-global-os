@@ -1,0 +1,2 @@
+$ node scripts/governance/ledger-truth.mjs
+ledger truth OK: 11 state claims re-measured, 111 open markers resolved against 93 board rows, 13 rules each in exactly one owner, 388 CEO approval claims each backed by a registered approval, 26 closed board rows each carrying his own acceptance

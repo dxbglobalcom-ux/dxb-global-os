@@ -19,7 +19,7 @@
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, llmCall, sdkJsonSchema } from "@dxb/shared";
-import { SDK_MODEL_IDS } from "@dxb/kernel";
+import { SDK_MODEL_IDS, companyIsolation, isolationReceipt } from "@dxb/kernel";
 
 const ACTOR_META = { council: true } as const;
 
@@ -90,6 +90,8 @@ export async function judgeCandidates(
   const q = query({
     prompt: judgePrompt(objective, outputContract, candidates),
     options: {
+      // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
+      ...(companyIsolation() ?? {}),
       model: SDK_MODEL_IDS[judgeModel] ?? judgeModel,
       effort: COUNCIL_CONFIG.judge.effort,
       tools: [],
@@ -97,7 +99,9 @@ export async function judgeCandidates(
       outputFormat: { type: "json_schema", schema: sdkJsonSchema(JudgeVerdict) },
     },
   });
+  const seen = isolationReceipt("council");
   for await (const msg of q) {
+    seen(msg);
     if (msg.type === "result") {
       if (msg.subtype !== "success") throw new Error(`council: judge result error (${msg.subtype})`);
       let raw = msg.structured_output ?? msg.result;

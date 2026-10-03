@@ -46,7 +46,7 @@ import {
   type SheetRecord,
 } from "../../packages/dxb-mcp/src/dispatch-book.js";
 import { composeSeatPrompt } from "../../packages/orchestrator/src/worker-shim.js";
-import { workerIsolation } from "../../packages/orchestrator/src/sdk-isolation.js";
+import { companyIsolation } from "../../packages/kernel/src/sdk-isolation.js";
 import { pinHookOff, sweepByDepartment } from "../helpers/suite-scope.js";
 import { dispatchLanes } from "../../packages/outbox-executor/src/scheduler.js";
 
@@ -212,8 +212,14 @@ describe("B43 plan ② · the dispatch book — pure", () => {
   });
 
   it("runs seats in SDK isolation unless DXB_WORKER_ISOLATION=0", () => {
-    expect(workerIsolation({ DXB_REPO_ROOT: "/r" } as NodeJS.ProcessEnv)).toEqual({ settingSources: [], cwd: "/r" });
-    expect(workerIsolation({ DXB_WORKER_ISOLATION: "0" } as NodeJS.ProcessEnv)).toBeNull();
+    // CEO 2026-10-03: `settingSources: []` alone still loaded the construction's auto-memory
+    expect(companyIsolation({ DXB_REPO_ROOT: "/r" } as NodeJS.ProcessEnv)).toEqual({
+      settingSources: [],
+      settings: { autoMemoryEnabled: false },
+      persistSession: false,
+      cwd: "/r",
+    });
+    expect(companyIsolation({ DXB_WORKER_ISOLATION: "0" } as NodeJS.ProcessEnv)).toBeNull();
   });
 });
 
