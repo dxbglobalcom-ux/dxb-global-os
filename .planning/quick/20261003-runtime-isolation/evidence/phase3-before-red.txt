@@ -1,0 +1,603 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+[isolation] lane=gate model=stand-in session=? home=/tmp/company-codex-EbrX39/company-codex notes=0 mcp=0 ok=true tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named
+[isolation] lane=gate model=stand-in session=? home=refused notes=? mcp=? ok=false tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home
+[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-n2QoG1/company-codex notes=0 mcp=0 ok=true tokens=12345
+
+(node:1547060) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/governance/company-isolation.test.ts (88 tests | 9 failed) 195ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > reads every SDK import and every use of query() it finds — nothing it cannot follow 1ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > finds exactly the eight company lanes, each once 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() once, sets nothing off the list, and feeds its receipt first 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > no runtime code launches `claude`, and every launch in a file that names claude or codex is readable 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > @dxb/kernel hands out the helper of sdk-isolation.ts and nothing else under its names 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > passes the honest shape — an aliased named import, the helper spread, the receipt first 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a namespace import 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses require() 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a dynamic import() 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a re-export 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses an alias of query 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses query handed on as a value 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settingSources after the helper 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settings after the helper 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses persistSession through a conditional spread 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a spread the ruler cannot see into 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses env 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses cwd (phase 3: the working folder is the helper's) 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses plugins 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses resume 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses mcpServers not from the compiled profile 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a computed option name 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses the helper switched off by its argument 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses no helper at all 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses options that are not a literal 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt named only in a comment 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt fed after the result can leave 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt with its own sink 3ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a stream not held in a const 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a helper that is not the kernel's 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > reads the profile keys only from buildSdkToolOptions() 4ms
+   ✓ the launch ruler refuses a runtime `claude` > lets an honest launch through 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a named launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a namespace launch 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a default-import launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a promisified launch 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program held in a const 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a shell line 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program the ruler cannot name, beside a claude string 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses child_process by require() 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a launcher handed on, beside a codex string 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a require() specifier assembled at run time, in a file that names no SDK — a module it cannot name 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > an escaped SDK specifier — the site is found and held to the helper 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > the helper taken from another file named sdk-isolation — not the kernel's helper 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > Object.assign on the compiled profile — the profile handed on or changed 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a receipt shadowed by a function hoisted inside the loop — not the receipt this function declares 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > element access on a child_process namespace — the launch of codex is seen, and refused outside the gate 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a shell line that reaches codex through env — refused for naming it 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a computed key that folds to a launcher 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a key the ruler cannot fold 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a launcher held in a const 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a program folded from pieces 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — codex named in a wrapper's arguments 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a shell line through sh -c 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — spawn with shell: true 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — the namespace exported under another name 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a launcher exported through a const 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a companyCodexHome that shadows the gate's own — not the function the file declares 4ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > an SDK import the ruler resolves, not spells — a package that resolves into the SDK's folder is the SDK 1ms
+   × companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors — and runs in the company's own Claude home and working folder (phase 3) 10ms
+     → expected { settingSources: [], …(4) } to deeply equal { settingSources: [], …(5) }
+   × companyIsolation() and its receipt > phase 3: the company Claude home defaults to ~/.local/share/dxb/company-claude 0ms
+     → companyClaudeHome is not a function
+   × companyIsolation() and its receipt > phase 3: never the construction's ~/.claude — not it, not inside it, not a link to it 1ms
+     → /home/dxb/.claude: expected [Function] to throw error matching /construction's Claude home/ but got 'companyClaudeHome is not a function'
+   × companyIsolation() and its receipt > phase 3: the scheduler's start-up line says whether the company home holds a login — never a secret, never a throw 0ms
+     → companyClaudeLoginLine is not a function
+   ✓ companyIsolation() and its receipt > the compiled profile keeps strictMcpConfig true — the lanes that pass it after the helper cannot loosen it 4ms
+   ✓ companyIsolation() and its receipt > DXB_WORKER_ISOLATION=0 is the rollback shape 0ms
+   × companyIsolation() and its receipt > prints one line per result — the lane, the run's own session, what it loaded, what it read 1ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   × companyIsolation() and its receipt > names what a leaking run loaded, the hooks it fired included, so the line shows it 0ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ companyIsolation() and its receipt > never touches the call: a sink that throws and messages of any shape pass through quietly 0ms
+   × companyIsolation() and its receipt > an odd token count reads as zero, never as a broken line 0ms
+     → expected [ Array(1) ] to deeply equal [ Array(1) ]
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > finds the gate's codex launch, and no other 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the gate's launch ends its env with CODEX_HOME: companyCodexHome() 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > reads the honest env 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the environment spread after the home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses no env at all 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env it cannot read 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the construction's home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the helper given an argument 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env spread in after a valid env (Sol, single pass) 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses a spread after env the ruler cannot see into 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex 89ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses a company home that is the construction's ~/.codex, a path inside it, or a link to it 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > writes one isolation line per Codex call — what it loaded and what it read — on success and on failure 12ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > writes tokens=? when the CLI left no tokens-used footer — an unknown is never written as 0 5ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home 5ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the isolation line never touches the call: a sink that throws leaves the answer as it was 6ms
+   × phase 3 — the company's memory never reads the construction's claude-mem > refuses the construction's claude-mem — by default, by DXB_CLAUDE_MEM_DB and through a link — before opening it 5ms
+     → expected [Function] to throw an error
+   × phase 3 — the company's memory never reads the construction's claude-mem > recall holds no claude-mem reader 0ms
+     → expected '// The read path (master PHASE-06 ste…' not to match /readObservationByRef/
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors — and runs in the company's own Claude home and working folder (phase 3)
+AssertionError: expected { settingSources: [], …(4) } to deeply equal { settingSources: [], …(5) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[33m@@ -1,16 +1,7 @@[39m
+[2m  {[22m
+[32m-   "cwd": "/co/work",[39m
+[32m-   "env": {[39m
+[32m-     "CLAUDE_CONFIG_DIR": "/co",[39m
+[32m-     "DXB_COMPANY_CLAUDE_HOME": "/co",[39m
+[32m-     "DXB_DATABASE_URL": "postgres://company",[39m
+[32m-     "DXB_REPO_ROOT": "/r",[39m
+[32m-     "PATH": "/usr/bin",[39m
+[32m-     "PWD": "/co/work",[39m
+[32m-     "XDG_CACHE_HOME": "/co/cache",[39m
+[32m-   },[39m
+[31m+   "cwd": "/r",[39m
+[2m    "persistSession": false,[22m
+[2m    "settingSources": [],[22m
+[2m    "settings": {[22m
+[2m      "autoMemoryEnabled": false,[22m
+[2m    },[22m
+
+ ❯ tests/governance/company-isolation.test.ts:1114:38
+    1112|       PWD: "/r",
+    1113|     } as NodeJS.ProcessEnv;
+    1114|     expect(companyIsolation(parent)).toEqual({
+       |                                      ^
+    1115|       settingSources: [],
+    1116|       settings: { autoMemoryEnabled: false },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > phase 3: the company Claude home defaults to ~/.local/share/dxb/company-claude
+TypeError: companyClaudeHome is not a function
+ ❯ tests/governance/company-isolation.test.ts:1134:12
+    1132|   it("phase 3: the company Claude home defaults to ~/.local/share/dxb/…
+    1133|     const { companyClaudeHome } = await helper();
+    1134|     expect(companyClaudeHome({} as NodeJS.ProcessEnv)).toBe(join(homed…
+       |            ^
+    1135|   });
+    1136| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > phase 3: never the construction's ~/.claude — not it, not inside it, not a link to it
+AssertionError: /home/dxb/.claude: expected [Function] to throw error matching /construction's Claude home/ but got 'companyClaudeHome is not a function'
+
+[32m- Expected:[39m 
+/construction's Claude home/
+
+[31m+ Received:[39m 
+"companyClaudeHome is not a function"
+
+ ❯ tests/governance/company-isolation.test.ts:1144:101
+    1142|     symlinkSync(theirs, link);
+    1143|     for (const home of [theirs, join(theirs, "company"), link, join(li…
+    1144|       expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: home }…
+       |                                                                                                     ^
+    1145|       expect(() => companyIsolation({ DXB_COMPANY_CLAUDE_HOME: home } …
+    1146|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > phase 3: the scheduler's start-up line says whether the company home holds a login — never a secret, never a throw
+TypeError: companyClaudeLoginLine is not a function
+ ❯ tests/governance/company-isolation.test.ts:1154:12
+    1152|     const { companyClaudeLoginLine } = await helper();
+    1153|     const box = mkdtempSync(join(tmpdir(), "company-claude-login-"));
+    1154|     expect(companyClaudeLoginLine({ DXB_COMPANY_CLAUDE_HOME: box } as …
+       |            ^
+    1155|     writeFileSync(join(box, ".credentials.json"), '{"claudeAiOauth":{"…
+    1156|     const line = companyClaudeLoginLine({ DXB_COMPANY_CLAUDE_HOME: box…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > prints one line per result — the lane, the run's own session, what it loaded, what it read
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "[isolation] lane=chat session=5f0c tools=0 mcp=0 plugins=0 skills=2 agents=1 hooks=0 input=476 home=/home/dxb/.local/share/dxb/company-claude",[39m
+[31m+   "[isolation] lane=chat session=5f0c tools=0 mcp=0 plugins=0 skills=2 agents=1 hooks=0 input=476",[39m
+[2m  ][22m
+
+ ❯ tests/governance/company-isolation.test.ts:1196:19
+    1194|       usage: { input_tokens: 4, cache_creation_input_tokens: 400, cach…
+    1195|     });
+    1196|     expect(lines).toEqual([`[isolation] lane=chat session=5f0c tools=0…
+       |                   ^
+    1197|   });
+    1198| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > names what a leaking run loaded, the hooks it fired included, so the line shows it
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "[isolation] lane=voice session=9a1e tools=2 mcp=2 plugins=1 skills=1 agents=2 hooks=1 input=44306 home=/home/dxb/.local/share/dxb/company-claude",[39m
+[31m+   "[isolation] lane=voice session=9a1e tools=2 mcp=2 plugins=1 skills=1 agents=2 hooks=1 input=44306",[39m
+[2m  ][22m
+
+ ❯ tests/governance/company-isolation.test.ts:1215:19
+    1213|     });
+    1214|     see({ type: "result", subtype: "success", usage: { input_tokens: 4…
+    1215|     expect(lines).toEqual([`[isolation] lane=voice session=9a1e tools=…
+       |                   ^
+    1216|   });
+    1217| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > an odd token count reads as zero, never as a broken line
+AssertionError: expected [ Array(1) ] to deeply equal [ Array(1) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "[isolation] lane=qa session=? tools=? mcp=? plugins=? skills=? agents=? hooks=0 input=9 home=/home/dxb/.local/share/dxb/company-claude",[39m
+[31m+   "[isolation] lane=qa session=? tools=? mcp=? plugins=? skills=? agents=? hooks=0 input=9",[39m
+[2m  ][22m
+
+ ❯ tests/governance/company-isolation.test.ts:1234:19
+    1232|     const see = isolationReceipt("qa", (line) => lines.push(line));
+    1233|     see({ type: "result", usage: { input_tokens: "lots", cache_read_in…
+    1234|     expect(lines).toEqual([`[isolation] lane=qa session=? tools=? mcp=…
+       |                   ^
+    1235|   });
+    1236| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > phase 3 — the company's memory never reads the construction's claude-mem > refuses the construction's claude-mem — by default, by DXB_CLAUDE_MEM_DB and through a link — before opening it
+AssertionError: expected [Function] to throw an error
+
+[32m- Expected:[39m 
+null
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/governance/company-isolation.test.ts:1483:48
+    1481|       symlinkSync(join(box, ".claude-mem"), join(box, "a-link"));
+    1482|       delete process.env.DXB_CLAUDE_MEM_DB;
+    1483|       expect(() => readObservationByRef("77")).toThrow(/construction's…
+       |                                                ^
+    1484|       expect(() => readObservationByRef("77", join(box, "a-link", "cla…
+    1485|       process.env.DXB_CLAUDE_MEM_DB = theirs;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > phase 3 — the company's memory never reads the construction's claude-mem > recall holds no claude-mem reader
+AssertionError: expected '// The read path (master PHASE-06 ste…' not to match /readObservationByRef/
+
+[32m- Expected:[39m 
+/readObservationByRef/
+
+[31m+ Received:[39m 
+"// The read path (master PHASE-06 steps 5+7): classifyQuery picks the store with
+// the 06-02 spike-validated cheap classifier, recallMemory applies the LOCKED
+// trust semantics. Rules (⛔ FABLE-ONLY to relax):
+//   - the router NEVER queries stores by guess: kind given → KIND_STORE lookup,
+//     classifier skipped entirely; kind absent → classifyQuery, and a parse
+//     failure THROWS — no silent fallback store (misrouting is silent quality loss)
+//   - trust='trusted' is the default and quarantined rows never appear in it;
+//     the exclusion happens at the SQL layer (liveMemoryFilter), never by
+//     post-filtering (T-06-14)
+//   - trust='include-quarantined' widens to both tiers and appends an audit_log
+//     'quarantined_recall' row in the same call — a gate, not a black hole
+// PROMPT CONTRACT: CLASSIFY_SYSTEM_PROMPT below is lifted VERBATIM from
+// tests/phase6/routing-spike.mjs (06-02 gate PASS 20/20, content hash
+// sha256:2eeccfde17360711e46a0c6c96ba181b1c6bc852fb69e9500159eb5a8cda7290).
+// Model/mode come from routing_rules task_class='memory.classify' at call time —
+// no model literal in this file; a missing row fails CLOSED (kernel policy
+// discipline, T-06-16: callers can retry with an explicit kind).
+import { readFile } from \"node:fs/promises\";
+import { z } from \"zod\";
+import type { Kysely, Selectable } from \"kysely\";
+import { llmCall, llmEmbed, type DB, type MemoryIndexTable } from \"@dxb/shared\";
+import { cosineSearch, liveMemoryFilter } from \"./adapters/pgvector.js\";
+import { readDoc } from \"./adapters/notebook.js\";
+import { readObservationByRef } from \"./adapters/claude-mem.js\";
+import {
+  KIND_STORE,
+  RecallInput,
+  type MemoryKind,
+  type MemoryStore,
+} from \"./write-policy.js\";
+
+const CLASSIFY_SYSTEM_PROMPT = `You route a memory query to exactly one store. Stores and their contracts:
+- pgvector: atomic facts — short factual statements looked up semantically (numbers, ports, settings, single-line truths)
+- graphify: entity relations — which component connects to / depends on / gates which; pipelines; links between things
+- obsidian: authored artifacts — documents, notes, reports, templates that were written and are retrieved whole
+- notebook: research corpus and procedures — how-to steps, research conclusions, long-form investigation material
+Kind hints: fact->pgvector, relation->graphify, artifact->obsidian, procedure->notebook.
+Reply with STRICT JSON only, no prose, no code fences: {\"store\":\"pgvector\"|\"graphify\"|\"obsidian\"|\"notebook\",\"kind\":\"fact\"|\"relation\"|\"artifact\"|\"procedure\"}`;
+
+/** All router LLM spend is attributed to the OS department key (06-01). */
+const ROUTER_DEPARTMENT = \"os\";
+/** LiteLLM alias from study-cards/litellm.md Embeddings section (06-01 pin). */
+const EMBED_MODEL_ALIAS = \"embed-small\";
+
+const STORES: ReadonlySet<string> = new Set(Object.values(KIND_STORE));
+const KINDS: ReadonlySet<string> = new Set(Object.keys(KIND_STORE));
+
+/** Strict-parse failure on the classifier output. Thrown, never swallowed:
+ *  a guessed store is a silent quality loss (LOCKED rationale). */
+export class ClassifyParseError extends Error {
+  constructor(raw: string) {
+    super(
+      \"memory.classify returned non-strict JSON — refusing to guess a store: \" +
+        JSON.stringify(raw.slice(0, 200)),
+    );
+    this.name = \"ClassifyParseError\";
+  }
+}
+
+export interface ClassifiedQuery {
+  store: MemoryStore;
+  kind: MemoryKind;
+}
+
+/** Route a free-text memory query to exactly one store with the cheap
+ *  classifier. Fail-closed on a missing routing row; throws on any
+ *  non-strict-JSON or inconsistent output. */
+export async function classifyQuery(db: Kysely<DB>, query: string): Promise<ClassifiedQuery> {
+  const rule = await db
+    .selectFrom(\"routing_rules\")
+    .select([\"model\"])
+    .where(\"task_class\", \"=\", \"memory.classify\")
+    .where(\"enabled\", \"=\", true)
+    .orderBy(\"priority\", \"desc\")
+    .limit(1)
+    .executeTakeFirst();
+  if (!rule) {
+    throw new Error(
+      \"routing_rules has no enabled memory.classify row — read path is fail-closed, seed it first\",
+    );
+  }
+  const res = await llmCall({
+    department: ROUTER_DEPARTMENT,
+    model: rule.model,
+    // max_tokens >= 200: the classifier model spends reasoning tokens before content
+    // (06-01 pitfall, litellm.md card)
+    maxTokens: 400,
+    messages: [
+      { role: \"system\", content: CLASSIFY_SYSTEM_PROMPT },
+      { role: \"user\", content: query },
+    ],
+  });
+  const t = res.content.trim();
+  if (!t.startsWith(\"{\") || !t.endsWith(\"}\")) throw new ClassifyParseError(res.content);
+  let parsed: { store?: unknown; kind?: unknown };
+  try {
+    parsed = JSON.parse(t) as { store?: unknown; kind?: unknown };
+  } catch {
+    throw new ClassifyParseError(res.content);
+  }
+  if (
+    typeof parsed.store !== \"string\" ||
+    !STORES.has(parsed.store) ||
+    typeof parsed.kind !== \"string\" ||
+    !KINDS.has(parsed.kind) ||
+    KIND_STORE[parsed.kind as MemoryKind] !== parsed.store // pair must match the LOCKED composition
+  ) {
+    throw new ClassifyParseError(res.content);
+  }
+  return { store: parsed.store as MemoryStore, kind: parsed.kind as MemoryKind };
+}
+
+// -- recall -----------------------------------------------------------------
+
+type IndexMeta = Selectable<MemoryIndexTable>;
+
+export interface RecalledMemory {
+  id: string;
+  kind: MemoryKind;
+  store: MemoryStore;
+  body: string;
+  trust_tier: IndexMeta[\"trust_tier\"];
+  confidence: IndexMeta[\"confidence\"];
+  created_at: IndexMeta[\"created_at\"];
+}
+
+export interface RecallResult {
+  rows: RecalledMemory[];
+  /** Observability: did the cheap classifier fire (false when kind was given). */
+  classifier_used: boolean;
+}
+
+export interface RecallDeps {
+  /** Test seam; production default = classifyQuery via routing_rules. */
+  classify?: (query: string) => Promise<ClassifiedQuery>;
+  /** Test seam; production default = llmEmbed via the dxb-os key. */
+  embed?: (query: string) => Promise<number[]>;
+  /** Audit actor for 'quarantined_recall' / 'memory_ref_broken' rows. */
+  caller?: string;
+}
+
+async function defaultQueryEmbed(query: string): Promise<number[]> {
+  const { vectors } = await llmEmbed({
+    department: ROUTER_DEPARTMENT,
+    model: EMBED_MODEL_ALIAS,
+    input: query,
+  });
+  return vectors[0];
+}
+
+async function appendAudit(
+  db: Kysely<DB>,
+  actor: string,
+  action: string,
+  payload: unknown,
+): Promise<void> {
+  await db
+    .insertInto(\"audit_log\")
+    .values({ actor, actor_type: \"agent\", action, task_id: null, payload: JSON.stringify(payload) })
+    .execute();
+}
+
+interface StoreReadArgs {
+  db: Kysely<DB>;
+  /** liveMemoryFilter tier opt: 'trusted' (default) or null (both tiers). */
+  tierOpt: string | null;
+  kind: MemoryKind;
+  limit: number;
+  query: string;
+  embed: (query: string) => Promise<number[]>;
+  caller: string;
+}
+
+type StoreReader = (args: StoreReadArgs) => Promise<RecalledMemory[]>;
+
+async function readPgvector(a: StoreReadArgs): Promise<RecalledMemory[]> {
+  const vector = await a.embed(a.query);
+  // trust + superseded/expiry exclusion live INSIDE cosineSearch's shared
+  // filter builder — SQL layer, not post-filtering (T-06-14).
+  const hits = await cosineSearch(a.db, {
+    vector,
+    limit: a.limit,
+    trustTier: a.tierOpt,
+    kind: a.kind,
+  });
+  if (hits.length === 0) return [];
+  const metas = await a.db
+    .selectFrom(\"memory_index\")
+    .select([\"id\", \"kind\", \"trust_tier\", \"confidence\", \"created_at\"])
+    .where(\"id\", \"in\", hits.map((h) => h.index_id))
+    .execute();
+  const byId = new Map(metas.map((m) => [m.id, m]));
+  return hits.map((h) => {
+    const m = byId.get(h.index_id);
+    if (!m) throw new Error(`recall: memory_index row vanished for ${h.index_id}`);
+    return {
+      id: m.id,
+      kind: m.kind as MemoryKind,
+      store: \"pgvector\" as const,
+      body: h.body,
+      trust_tier: m.trust_tier,
+      confidence: m.confidence,
+      created_at: m.created_at,
+    };
+  });
+}
+
+/** Metadata-ordered reader over a ref-resolving store: memory_index rows
+ *  (created_at desc) → resolve each body by ref. A broken ref is LOUD +
+ *  audited — recall must never read as silently empty. */
+function makeRefReader(
+  store: MemoryStore | \"claude-mem\",
+  resolve: (ref: string) => Promise<string> | string,
+): StoreReader {
+  return async (a) => {
+    const rows = await a.db
+      .selectFrom(\"memory_index\")
+      .select([\"id\", \"kind\", \"ref\", \"trust_tier\", \"confidence\", \"created_at\"])
+      .where(\"store\", \"=\", store)
+      .where((eb) => liveMemoryFilter(eb, { trustTier: a.tierOpt, kind: a.kind }))
+      .orderBy(\"created_at\", \"desc\")
+      .limit(a.limit)
+      .execute();
+    const out: RecalledMemory[] = [];
+    for (const row of rows) {
+      let body: string;
+      try {
+        body = await resolve(row.ref);
+      } catch (e) {
+        await appendAudit(a.db, a.caller, \"memory_ref_broken\", { index_id: row.id, ref: row.ref });
+        throw new Error(
+          `recall: memory ref broken for index ${row.id} at '${row.ref}' — ${(e as Error).message}`,
+        );
+      }
+      out.push({
+        id: row.id,
+        kind: row.kind as MemoryKind,
+        store: store as MemoryStore,
+        body,
+        trust_tier: row.trust_tier,
+        confidence: row.confidence,
+        created_at: row.created_at,
+      });
+    }
+    return out;
+  };
+}
+
+// All four spike-confirmed stores are wired (06-06) — plus the claude-mem
+// pointer store (read-only; pointers land via syncClaudeMem, never the door).
+const STORE_READERS: Record<MemoryStore | \"claude-mem\", StoreReader> = {
+  pgvector: readPgvector,
+  obsidian: makeRefReader(\"obsidian\", (ref) => readFile(ref, \"utf8\")),
+  graphify: makeRefReader(\"graphify\", (ref) => readFile(ref, \"utf8\")),
+  notebook: makeRefReader(\"notebook\", (ref) => readDoc(ref)),
+  \"claude-mem\": makeRefReader(\"claude-mem\", (ref) => readObservationByRef(ref)),
+};
+
+/** The ONE read door: metadata-routed, trust-filtered recall over the memory
+ *  stores. RecallInput.parse enforces the 1..20 limit clamp and the 'trusted'
+ *  default before anything touches the database. */
+export async function recallMemory(
+  db: Kysely<DB>,
+  input: z.input<typeof RecallInput>,
+  deps: RecallDeps = {},
+): Promise<RecallResult> {
+  const parsed = RecallInput.parse(input);
+  const classify = deps.classify ?? ((q: string) => classifyQuery(db, q));
+  const embed = deps.embed ?? defaultQueryEmbed;
+  const caller = deps.caller ?? \"memory-router\";
+
+  let kind: MemoryKind;
+  let classifierUsed = false;
+  if (parsed.kind !== undefined) {
+    kind = parsed.kind; // kind given → classifier skipped entirely (LOCKED)
+  } else {
+    kind = (await classify(parsed.query)).kind;
+    classifierUsed = true;
+  }
+  const store: MemoryStore = KIND_STORE[kind];
+  const tierOpt = parsed.trust === \"trusted\" ? \"trusted\" : null;
+
+  const rows = await STORE_READERS[store]({
+    db,
+    tierOpt,
+    kind,
+    limit: parsed.limit,
+    query: parsed.query,
+    embed,
+    caller,
+  });
+
+  if (parsed.trust === \"include-quarantined\") {
+    await appendAudit(db, caller, \"quarantined_recall\", {
+      query: parsed.query,
+      returned_ids: rows.map((r) => r.id),
+      caller,
+    });
+  }
+
+  return { rows, classifier_used: classifierUsed };
+}
+"
+
+ ❯ tests/governance/company-isolation.test.ts:1502:21
+    1500|   it("recall holds no claude-mem reader", () => {
+    1501|     const src = readFileSync(join(REPO, "packages", "memory-router", "…
+    1502|     expect(src).not.toMatch(/readObservationByRef/);
+       |                     ^
+    1503|     expect(src).not.toMatch(/"claude-mem":\s*makeRefReader/);
+    1504|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed | 79 passed (88)
+   Start at  16:55:45
+   Duration  2.58s (transform 97ms, setup 0ms, collect 2.13s, tests 195ms, environment 0ms, prepare 31ms)
+

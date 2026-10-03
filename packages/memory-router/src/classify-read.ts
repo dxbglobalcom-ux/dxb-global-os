@@ -21,7 +21,6 @@ import type { Kysely, Selectable } from "kysely";
 import { llmCall, llmEmbed, type DB, type MemoryIndexTable } from "@dxb/shared";
 import { cosineSearch, liveMemoryFilter } from "./adapters/pgvector.js";
 import { readDoc } from "./adapters/notebook.js";
-import { readObservationByRef } from "./adapters/claude-mem.js";
 import {
   KIND_STORE,
   RecallInput,
@@ -209,7 +208,7 @@ async function readPgvector(a: StoreReadArgs): Promise<RecalledMemory[]> {
  *  (created_at desc) → resolve each body by ref. A broken ref is LOUD +
  *  audited — recall must never read as silently empty. */
 function makeRefReader(
-  store: MemoryStore | "claude-mem",
+  store: MemoryStore,
   resolve: (ref: string) => Promise<string> | string,
 ): StoreReader {
   return async (a) => {
@@ -246,14 +245,14 @@ function makeRefReader(
   };
 }
 
-// All four spike-confirmed stores are wired (06-06) — plus the claude-mem
-// pointer store (read-only; pointers land via syncClaudeMem, never the door).
-const STORE_READERS: Record<MemoryStore | "claude-mem", StoreReader> = {
+// All four spike-confirmed stores are wired (06-06). The claude-mem pointer reader is gone (CEO
+// 2026-10-03, isolation-phase3-plan-and-memory-path-2026-10-03): claude-mem holds the construction's
+// session observations, not the company's memory — recall never routed to it, and now cannot.
+const STORE_READERS: Record<MemoryStore, StoreReader> = {
   pgvector: readPgvector,
   obsidian: makeRefReader("obsidian", (ref) => readFile(ref, "utf8")),
   graphify: makeRefReader("graphify", (ref) => readFile(ref, "utf8")),
   notebook: makeRefReader("notebook", (ref) => readDoc(ref)),
-  "claude-mem": makeRefReader("claude-mem", (ref) => readObservationByRef(ref)),
 };
 
 /** The ONE read door: metadata-routed, trust-filtered recall over the memory

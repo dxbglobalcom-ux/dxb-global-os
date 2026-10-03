@@ -5,7 +5,7 @@ export { PACKAGE };
 
 export { ClassifiedIntent, classify, SDK_MODEL_IDS } from "./classify.js";
 // CEO 2026-10-03: every company model call runs with nothing of the construction loaded.
-export { companyIsolation, isolationReceipt } from "./sdk-isolation.js";
+export { companyClaudeHome, companyClaudeLoginLine, companyIsolation, isolationReceipt } from "./sdk-isolation.js";
 export type { SdkIsolation } from "./sdk-isolation.js";
 export { loadPolicy, route, NoRouteError } from "./policy.js";
 export type { ResolvedRoute, RoutingRule } from "./policy.js";

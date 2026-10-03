@@ -13,6 +13,7 @@
 // directly — pointer rows are session-observation provenance, and the synced
 // facts' contradiction sweep is deferred to the 06-08 compaction cron.
 import { DatabaseSync } from "node:sqlite";
+import { readlinkSync, realpathSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Kysely } from "kysely";
@@ -26,8 +27,40 @@ function defaultProject(): string {
   return process.env.DXB_CLAUDE_MEM_PROJECT ?? "DxB Global OS";
 }
 
+/** The path with every link resolved — through parts that do not exist yet and through a dangling link. */
+function realPath(p: string, depth = 0): string {
+  try {
+    return realpathSync(p);
+  } catch {
+    // not there (yet), or a link whose target is not there
+  }
+  if (depth > 40) return p;
+  try {
+    return realPath(path.resolve(path.dirname(p), readlinkSync(p)), depth + 1);
+  } catch {
+    // not a link
+  }
+  const parent = path.dirname(p);
+  return parent === p ? p : path.join(realPath(parent, depth + 1), path.basename(p));
+}
+
+/** The construction's claude-mem (its sessions' observations) is not the company's memory (CEO
+ *  2026-10-03, "ikisine de evet" — isolation-phase3-plan-and-memory-path-2026-10-03). A database that
+ *  is ~/.claude-mem/…, lies inside it or reaches it through a link is refused before it is opened —
+ *  by default, by DXB_CLAUDE_MEM_DB and by an explicit path alike. A database of the company's own
+ *  (the suites' fixtures) still reads. Measured before the cut: no runtime caller reached it. */
+function companyOwned(dbPath: string): string {
+  const theirs = realPath(path.join(os.homedir(), ".claude-mem"));
+  const p = realPath(path.resolve(dbPath));
+  if (p === theirs || p.startsWith(`${theirs}${path.sep}`)) {
+    throw new Error(`claude-mem adapter: ${dbPath} is the construction's claude-mem (${theirs}) — the company does not read it`);
+  }
+  return dbPath;
+}
+
 /** Read-only open with a small busy/locked retry (WAL is hook-live). */
 function openReadOnly(dbPath: string): DatabaseSync {
+  companyOwned(dbPath);
   let lastErr: unknown;
   for (let attempt = 0; attempt < 3; attempt += 1) {
     try {

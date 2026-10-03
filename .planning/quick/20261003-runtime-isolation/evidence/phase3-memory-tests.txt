@@ -1,0 +1,17 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:1551505) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/adapters-roundtrip.test.ts (7 tests) 207ms
+(node:1551555) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/recall.test.ts (7 tests | 1 skipped) 78ms
+ ✓ tests/b36/company-memory-is-not-a-diary.test.ts (3 tests) 2ms
+
+ Test Files  3 passed (3)
+      Tests  16 passed | 1 skipped (17)
+   Start at  16:57:04
+   Duration  1.20s (transform 143ms, setup 0ms, collect 463ms, tests 287ms, environment 0ms, prepare 92ms)
+

@@ -956,6 +956,7 @@ describe("the ruler refuses what it cannot follow (Sol's counter-examples, 2026-
     ["persistSession through a conditional spread", GOOD.replace(ISO, `${ISO}, ...(prompt ? { persistSession: true } : {})`)],
     ["a spread the ruler cannot see into", GOOD.replace(ISO, `${ISO}, ...extra`)],
     ["env", GOOD.replace(ISO, `${ISO}, env: { ...process.env }`)],
+    ["cwd (phase 3: the working folder is the helper's)", GOOD.replace(ISO, `${ISO}, cwd: "/home/dxb/DxB Global OS"`)],
     ["plugins", GOOD.replace(ISO, `${ISO}, plugins: [{ type: "local", path: "/x" }]`)],
     ["resume", GOOD.replace(ISO, `${ISO}, resume: "abc"`)],
     ["mcpServers not from the compiled profile", GOOD.replace(ISO, `${ISO}, mcpServers: { playwright: { command: "npx" } }`)],
@@ -1098,15 +1099,67 @@ describe("the ruler refuses each of Sol's single-pass counter-examples for its o
 describe("companyIsolation() and its receipt", () => {
   const helper = () => import("../../packages/kernel/src/sdk-isolation.js");
 
-  it("shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors", async () => {
+  it("shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors — and runs in the company's own Claude home and working folder (phase 3)", async () => {
     const { companyIsolation } = await helper();
-    expect(companyIsolation({ DXB_REPO_ROOT: "/r" } as NodeJS.ProcessEnv)).toEqual({
+    const parent = {
+      DXB_REPO_ROOT: "/r",
+      DXB_DATABASE_URL: "postgres://company",
+      PATH: "/usr/bin",
+      DXB_COMPANY_CLAUDE_HOME: "/co",
+      CLAUDECODE: "1",
+      CLAUDE_CODE_ENTRYPOINT: "cli",
+      CLAUDE_CONFIG_DIR: "/home/x/.claude",
+      PWD: "/r",
+    } as NodeJS.ProcessEnv;
+    expect(companyIsolation(parent)).toEqual({
       settingSources: [],
       settings: { autoMemoryEnabled: false },
       persistSession: false,
       strictMcpConfig: true,
-      cwd: "/r",
+      cwd: "/co/work",
+      env: {
+        DXB_REPO_ROOT: "/r",
+        DXB_DATABASE_URL: "postgres://company",
+        PATH: "/usr/bin",
+        DXB_COMPANY_CLAUDE_HOME: "/co",
+        CLAUDE_CONFIG_DIR: "/co",
+        XDG_CACHE_HOME: "/co/cache",
+        PWD: "/co/work",
+      },
     });
+  });
+
+  it("phase 3: the company Claude home defaults to ~/.local/share/dxb/company-claude", async () => {
+    const { companyClaudeHome } = await helper();
+    expect(companyClaudeHome({} as NodeJS.ProcessEnv)).toBe(join(homedir(), ".local", "share", "dxb", "company-claude"));
+  });
+
+  it("phase 3: never the construction's ~/.claude — not it, not inside it, not a link to it", async () => {
+    const { companyClaudeHome, companyIsolation } = await helper();
+    const theirs = join(homedir(), ".claude");
+    const box = mkdtempSync(join(tmpdir(), "company-claude-home-"));
+    const link = join(box, "looks-like-ours");
+    symlinkSync(theirs, link);
+    for (const home of [theirs, join(theirs, "company"), link, join(link, "deeper")]) {
+      expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: home } as NodeJS.ProcessEnv), home).toThrow(/construction's Claude home/);
+      expect(() => companyIsolation({ DXB_COMPANY_CLAUDE_HOME: home } as NodeJS.ProcessEnv), home).toThrow(/construction's Claude home/);
+    }
+    expect(companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: join(box, "ours") } as NodeJS.ProcessEnv)).toBe(join(box, "ours"));
+    rmSync(box, { recursive: true, force: true });
+  });
+
+  it("phase 3: the scheduler's start-up line says whether the company home holds a login — never a secret, never a throw", async () => {
+    const { companyClaudeLoginLine } = await helper();
+    const box = mkdtempSync(join(tmpdir(), "company-claude-login-"));
+    expect(companyClaudeLoginLine({ DXB_COMPANY_CLAUDE_HOME: box } as NodeJS.ProcessEnv)).toBe(`[isolation] company-claude home=${box} credentials=absent`);
+    writeFileSync(join(box, ".credentials.json"), '{"claudeAiOauth":{"accessToken":"SECRET-NEVER-PRINTED"}}');
+    const line = companyClaudeLoginLine({ DXB_COMPANY_CLAUDE_HOME: box } as NodeJS.ProcessEnv);
+    expect(line).toBe(`[isolation] company-claude home=${box} credentials=present`);
+    expect(line).not.toMatch(/SECRET/);
+    expect(companyClaudeLoginLine({ DXB_COMPANY_CLAUDE_HOME: join(homedir(), ".claude") } as NodeJS.ProcessEnv)).toBe("[isolation] company-claude home=refused credentials=absent");
+    rmSync(box, { recursive: true, force: true });
+    const main = readFileSync(join(REPO, "packages", "outbox-executor", "src", "main.ts"), "utf8");
+    expect(main).toMatch(/console\.log\(companyClaudeLoginLine\(\)\)/);
   });
 
   it("the compiled profile keeps strictMcpConfig true — the lanes that pass it after the helper cannot loosen it", async () => {
@@ -1140,7 +1193,7 @@ describe("companyIsolation() and its receipt", () => {
       session_id: "5f0c",
       usage: { input_tokens: 4, cache_creation_input_tokens: 400, cache_read_input_tokens: 72 },
     });
-    expect(lines).toEqual(["[isolation] lane=chat session=5f0c tools=0 mcp=0 plugins=0 skills=2 agents=1 hooks=0 input=476"]);
+    expect(lines).toEqual([`[isolation] lane=chat session=5f0c tools=0 mcp=0 plugins=0 skills=2 agents=1 hooks=0 input=476 home=${join(homedir(), ".local", "share", "dxb", "company-claude")}`]);
   });
 
   it("names what a leaking run loaded, the hooks it fired included, so the line shows it", async () => {
@@ -1159,7 +1212,7 @@ describe("companyIsolation() and its receipt", () => {
       agents: ["builder", "refuter"],
     });
     see({ type: "result", subtype: "success", usage: { input_tokens: 44_306 } });
-    expect(lines).toEqual(["[isolation] lane=voice session=9a1e tools=2 mcp=2 plugins=1 skills=1 agents=2 hooks=1 input=44306"]);
+    expect(lines).toEqual([`[isolation] lane=voice session=9a1e tools=2 mcp=2 plugins=1 skills=1 agents=2 hooks=1 input=44306 home=${join(homedir(), ".local", "share", "dxb", "company-claude")}`]);
   });
 
   it("never touches the call: a sink that throws and messages of any shape pass through quietly", async () => {
@@ -1178,7 +1231,7 @@ describe("companyIsolation() and its receipt", () => {
     const lines: string[] = [];
     const see = isolationReceipt("qa", (line) => lines.push(line));
     see({ type: "result", usage: { input_tokens: "lots", cache_read_input_tokens: 9 } });
-    expect(lines).toEqual(["[isolation] lane=qa session=? tools=? mcp=? plugins=? skills=? agents=? hooks=0 input=9"]);
+    expect(lines).toEqual([`[isolation] lane=qa session=? tools=? mcp=? plugins=? skills=? agents=? hooks=0 input=9 home=${join(homedir(), ".local", "share", "dxb", "company-claude")}`]);
   });
 });
 
@@ -1397,5 +1450,56 @@ describe("company isolation — the critical gate's Codex runs from the company'
       const res = await run({ model: "stand-in", prompt: "p", timeoutMs: 10_000 });
       expect(res).toEqual({ ok: true, raw: JSON.stringify({ codex_home: join(box, "company-codex") }) });
     });
+  });
+});
+
+// ── phase 3: the company's memory never reads the construction's claude-mem ─────────────────────
+// The CEO, 2026-10-03 ("ikisine de evet", ledger isolation-phase3-plan-and-memory-path-2026-10-03).
+// Measured before: recallMemory routes only KIND_STORE's four stores, and readObservationByRef /
+// syncClaudeMem had no runtime caller — the path was unused. The cut makes it impossible: the adapter
+// refuses the construction's ~/.claude-mem before opening anything, and recall holds no reader for it.
+describe("phase 3 — the company's memory never reads the construction's claude-mem", () => {
+  const adapter = () => import("../../packages/memory-router/src/adapters/claude-mem.js");
+  const fixture = async (dbPath: string) => {
+    mkdirSync(dirname(dbPath), { recursive: true });
+    const { DatabaseSync } = await import("node:sqlite");
+    const db = new DatabaseSync(dbPath);
+    db.exec("CREATE TABLE observations (id INTEGER PRIMARY KEY, project TEXT, title TEXT, subtitle TEXT, narrative TEXT, facts TEXT, text TEXT, type TEXT, created_at_epoch INTEGER)");
+    db.prepare("INSERT INTO observations VALUES (?,?,?,?,?,?,?,?,?)").run(77, "DxB Global OS", "a construction session", null, "what an engineer did", null, null, "change", 1);
+    db.close();
+  };
+
+  it("refuses the construction's claude-mem — by default, by DXB_CLAUDE_MEM_DB and through a link — before opening it", async () => {
+    const { readObservationByRef, syncClaudeMem } = await adapter();
+    const box = mkdtempSync(join(tmpdir(), "company-claude-mem-"));
+    const realHome = process.env.HOME;
+    const realDb = process.env.DXB_CLAUDE_MEM_DB;
+    process.env.HOME = box; // the construction's ~/.claude-mem, in a home of its own
+    try {
+      const theirs = join(box, ".claude-mem", "claude-mem.db");
+      await fixture(theirs);
+      symlinkSync(join(box, ".claude-mem"), join(box, "a-link"));
+      delete process.env.DXB_CLAUDE_MEM_DB;
+      expect(() => readObservationByRef("77")).toThrow(/construction's claude-mem/);
+      expect(() => readObservationByRef("77", join(box, "a-link", "claude-mem.db"))).toThrow(/construction's claude-mem/);
+      process.env.DXB_CLAUDE_MEM_DB = theirs;
+      expect(() => readObservationByRef("77")).toThrow(/construction's claude-mem/);
+      await expect(syncClaudeMem({} as never)).rejects.toThrow(/construction's claude-mem/);
+      // a database of the company's own (the suites' fixtures) still reads
+      const ours = join(box, "company", "claude-mem.db");
+      await fixture(ours);
+      expect(readObservationByRef("77", ours)).toMatch(/what an engineer did/);
+    } finally {
+      process.env.HOME = realHome;
+      if (realDb === undefined) delete process.env.DXB_CLAUDE_MEM_DB;
+      else process.env.DXB_CLAUDE_MEM_DB = realDb;
+      rmSync(box, { recursive: true, force: true });
+    }
+  });
+
+  it("recall holds no claude-mem reader", () => {
+    const src = readFileSync(join(REPO, "packages", "memory-router", "src", "classify-read.ts"), "utf8");
+    expect(src).not.toMatch(/readObservationByRef/);
+    expect(src).not.toMatch(/"claude-mem":\s*makeRefReader/);
   });
 });

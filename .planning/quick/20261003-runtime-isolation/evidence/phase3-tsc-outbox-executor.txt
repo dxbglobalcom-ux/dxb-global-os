@@ -1,0 +1,2 @@
+packages/outbox-executor/src/main.ts(14,10): error TS2305: Module '"@dxb/kernel"' has no exported member 'companyClaudeLoginLine'.
+exit=2

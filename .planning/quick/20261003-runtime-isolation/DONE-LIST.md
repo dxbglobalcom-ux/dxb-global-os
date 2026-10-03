@@ -180,3 +180,42 @@ ruler gives, not by a non-empty list — Sol ran the analysis functions directly
   only the binary's own package file. No MCP server was started in either run. Closing 21 for the chat
   lane takes a company working folder and a company Claude home — the same membership, his one login.
   That is put to the CEO under Bulunan, and it is his decision.
+
+## Phase 3 — the company's own Claude home and working folder
+
+His word: "ikisine de evet" (ledger isolation-phase3-plan-and-memory-path-2026-10-03; card CARD-PHASE3.md).
+Written before the code (fork 5, 2026-10-03 16:53). Tests: `tests/governance/company-isolation.test.ts`.
+
+25. The helper's shape — `companyIsolation({ DXB_COMPANY_CLAUDE_HOME: "/co", … })` equals
+    `{ settingSources: [], settings: { autoMemoryEnabled: false }, persistSession: false,
+    strictMcpConfig: true, cwd: "/co/work", env: { …the parent's variables without any CLAUDE*,
+    CLAUDE_CONFIG_DIR: "/co", XDG_CACHE_HOME: "/co/cache", PWD: "/co/work" } }`; default home
+    `~/.local/share/dxb/company-claude`. Red before (no `env`, cwd the repository), green after.
+26. `companyClaudeHome()` refuses a home that is `~/.claude`, lies inside it, or reaches it through a
+    link — it throws, naming the construction's home; a lane under such a setting fails closed. Red
+    before (no such function), green after.
+27. The parent's `CLAUDE*` variables (a construction shell's `CLAUDECODE`, `CLAUDE_CODE_*`, its own
+    `CLAUDE_CONFIG_DIR`) never reach a company call; `PWD` equals `cwd`. Red before, green after.
+28. A `cwd` beside the helper is refused by the ruler, as `env` already is (pinned; the ruler refused it
+    before this phase — this case is green on HEAD, recorded so).
+29. The receipt ends with `home=<the company Claude home>` (`refused` when refused). Red before, green after.
+30. The scheduler logs one line at start — `[isolation] company-claude home=<path> credentials=present|absent`
+    (`home=refused` when refused) — never a secret, never blocking or failing the start
+    (`companyClaudeLoginLine()`, called from `packages/outbox-executor/src/main.ts`). The runtime may
+    not launch `claude` (the ruler), so the line reads whether the login file is there; `auth status`
+    is the lead's check before the restart. Red before, green after.
+31. The memory router never reads the construction's claude-mem: `readObservationByRef` and
+    `syncClaudeMem` refuse a database that is `~/.claude-mem/…` or reaches it through a link (named
+    error, before any open); `recallMemory` holds no `claude-mem` reader. Measured before: no runtime
+    caller reached the reader (`recallMemory` routes only `KIND_STORE`'s four stores; the two
+    functions had no caller outside tests) — the cut makes it impossible, not merely unused. Red
+    before, green after; `tests/phase6/adapters-roundtrip.test.ts` (fixture databases) unchanged.
+32. After his login, the phase-3 strace probe (`phase3-strace-probe.sh`, refusing to run while
+    `auth status` says `loggedIn: false`) over Hamza's chat lane and the task lane → nothing under
+    `<repo>/.claude/`; nothing of `~/.claude` settings*, `plugins/`, `sessions/` or `projects/`; no
+    write to `~/.claude.json` or under `~/.cache/claude-cli-nodejs/`; the residue named, not hidden:
+    the `~/.claude/ide` listing, the consent-file and `~/.config/anthropic` lookups, `rg` reading
+    `~/.config/git/ignore`. Receipts unchanged (chat `tools=0 mcp=0`, task `tools=24 mcp=1`), now with
+    `home=`; canaries ABSENT.
+33. `CLAUDE_CONFIG_DIR=<home> <bundled claude> auth status` → `"loggedIn": true` before
+    `dxb-scheduler` is restarted; its JSON (no secret in it) in evidence/.

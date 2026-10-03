@@ -11,6 +11,7 @@
 // self-chain jobs stay persisted in pgboss.job). On the next boot every
 // chain re-arms via singletonKey bootstrap sends — restart continuity is
 // startScheduler's construction, not this file's job.
+import { companyClaudeLoginLine } from "@dxb/kernel";
 import { closeDb } from "@dxb/shared";
 import { hostOpsLiveCollector } from "./ops-live-host.js";
 import { startScheduler, stopScheduler } from "./scheduler.js";
@@ -23,6 +24,9 @@ async function main(): Promise<void> {
   // listened to a channel with no producer.
   const opsLive = await hostOpsLiveCollector({ log: (line) => console.error(line) });
   console.log("[scheduler] resident scheduler up — queues live, chains armed, ops:live hosted");
+  // Isolation phase 3 (CEO 2026-10-03): whether the company's own Claude home holds a login — a home
+  // without one answers "Not logged in" and Hamza goes silent. One line, never a secret, never blocking.
+  console.log(companyClaudeLoginLine());
 
   let stopping = false;
   const shutdown = (signal: string) => {

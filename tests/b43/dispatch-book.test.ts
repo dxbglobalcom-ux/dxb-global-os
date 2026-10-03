@@ -213,13 +213,15 @@ describe("B43 plan ② · the dispatch book — pure", () => {
 
   it("runs seats in SDK isolation unless DXB_WORKER_ISOLATION=0", () => {
     // CEO 2026-10-03: `settingSources: []` alone still loaded the construction's auto-memory, and
-    // without `strictMcpConfig` the claude.ai account's connectors still mounted
-    expect(companyIsolation({ DXB_REPO_ROOT: "/r" } as NodeJS.ProcessEnv)).toEqual({
+    // without `strictMcpConfig` the claude.ai account's connectors still mounted; phase 3 (same day,
+    // "ikisine de evet"): its own Claude home, working folder and cache, no CLAUDE* from the parent
+    expect(companyIsolation({ DXB_REPO_ROOT: "/r", DXB_COMPANY_CLAUDE_HOME: "/co", CLAUDECODE: "1" } as NodeJS.ProcessEnv)).toEqual({
       settingSources: [],
       settings: { autoMemoryEnabled: false },
       persistSession: false,
       strictMcpConfig: true,
-      cwd: "/r",
+      cwd: "/co/work",
+      env: { DXB_REPO_ROOT: "/r", DXB_COMPANY_CLAUDE_HOME: "/co", CLAUDE_CONFIG_DIR: "/co", XDG_CACHE_HOME: "/co/cache", PWD: "/co/work" },
     });
     expect(companyIsolation({ DXB_WORKER_ISOLATION: "0" } as NodeJS.ProcessEnv)).toBeNull();
   });
