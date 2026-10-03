@@ -57,6 +57,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 2. The orchestration design for dxb-team2 — after this job, on his word ("dxbteam2 için sistemini bu
    işten sonra yapıcaz"): from the fork measurements above, Fable consulted, no A/B experiment for its
    own sake; the lead picks the arrangement per job and writes it, with why, on the card.
+   With it his note (`plan-max-orchestration-high-2026-10-03`): very important plans and
+   architecture at Opus 5.5 `max`, everything after them as orchestration at `high`.
 3. His question of 2026-10-01 ~21:55: why a locked tool is not resolved by the system itself, and why
    the alert comes to him instead of to the one who should fix it.
 
