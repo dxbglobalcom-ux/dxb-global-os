@@ -1,0 +1,16 @@
+19:39:42 5h=27 7d=10 fable=0 credit_used=0 spend=0
+19:40:03 5h=27 7d=10 fable=0 credit_used=0 spend=0
+19:40:24 5h=27 7d=10 fable=0 credit_used=0 spend=0
+19:40:45 5h=27 7d=10 fable=0 credit_used=0 spend=0
+19:41:06 5h=27 7d=10 fable=0 credit_used=0 spend=0
+19:41:27 5h=28 7d=10 fable=0 credit_used=0 spend=0
+19:41:48 5h=28 7d=10 fable=0 credit_used=0 spend=0
+19:42:09 5h=28 7d=10 fable=0 credit_used=0 spend=0
+19:42:30 5h=28 7d=10 fable=0 credit_used=0 spend=0
+19:42:51 5h=28 7d=11 fable=0 credit_used=0 spend=0
+19:43:12 5h=28 7d=11 fable=0 credit_used=0 spend=0
+19:43:33 5h=28 7d=11 fable=0 credit_used=0 spend=0
+19:43:54 5h=28 7d=11 fable=0 credit_used=0 spend=0
+19:44:15 5h=29 7d=11 fable=0 credit_used=0 spend=0
+19:44:36 5h=29 7d=11 fable=0 credit_used=0 spend=0
+19:44:57 5h=29 7d=11 fable=0 credit_used=0 spend=0

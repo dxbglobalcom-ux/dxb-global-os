@@ -43,3 +43,17 @@ Fable 5.1 in $10 · out $50) — a common scale for token kinds, not his Max pla
 - A handover: the new session's first call writes 27-32k ($0.22-0.26) on a 56-61k context, plus orientation reads and the
   note — about $0.5. One lead call reads $0.09 at 450k, $0.012 at 60k: a handover pays back in ~6-7 calls.
 - Not comparable per hour: effort differed (max · max · max→high at 16:45 · high) and idle stretches differ.
+
+## Does a Fable advisor consult reach his plan's meters? (2026-10-03 19:38-19:47, session 79e77b01)
+usage-probe.mjs reads the /usage windows through the SDK (`usage_EXPERIMENTAL_…`, no model call); usage-series.txt is the
+20-second series around one consult (17:39:50Z, Fable read 316,163 · wrote 1,352 — $3.23 at list); window.py predicts the
+5-hour meter from every local transcript since the window opened (13:00Z), calibrated on 27 % at 17:38:20Z.
+- Fable weekly meter 0 % all day after 8 consults (~$21 at list); usage credits $0 (extra usage off).
+- 5-hour meter: 27 → 28 at 19:41:27 and stayed 28 to 19:43:33. Predicted at 17:43:33Z: Fable not counted 28.2 · counted at
+  Fable list 29.8 · counted at Opus input rates ~29.0. Observed 28 — not counted fits; Fable-list excluded; Opus-rate weak.
+- Weekly all-models 10 → 11 at 19:42:51: unresolvable (one point ≈ $10 of list-price usage).
+- Docs (code.claude.com/docs/en/advisor, Cost): on subscription plans advisor usage "counts toward your plan's usage limits";
+  the advisor's read "is not cached". Same observation open since 2026-09-06 in anthropics/claude-code#92437 (Max 5x, two
+  users, no Anthropic answer); API docs: advisor tokens are not rolled into top-level usage totals.
+- Speed (speed.py): call latency does not grow with context (medians 4-10 s at 60k and at 450k); a consult blocks the lead
+  42-290 s (8 consults today).
