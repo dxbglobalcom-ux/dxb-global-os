@@ -48,29 +48,32 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
   audits at the level the card gives and does not re-grade it — the card went back to the lead's 5.
 - **dxb-start slimmed** and **Fable at three fixed points**, committed `bec00f77`: its audit card and
   done-list are in `.planning/quick/20261003-doors-slim/`; not yet audited.
+- **His word ~14:05** (`auditor-never-regrades-2026-10-03`): "kalıcı olsun senin puanladığını o
+  puanlamasın işi sadece verilen seviyede denetimini yapmak okadar." And: the orchestration — the fork
+  and a hybrid of fork and helpers — is designed AFTER this job, by measurement and the lead's
+  judgment, Fable consulted; no A/B experiment for its own sake.
 
 ## Next
 
 1. Sol's single-pass verdict → `SOL-PASS2.md`; its A/B findings fixed by ONE fork, each proven by a
    test that failed first; typecheck, the ruler, B43, the battery if code changed; commit; build;
    restart `dxb-scheduler`. No second Sol round.
-2. The doors audit (`bec00f77`, card 4, high): the brief, the rulers' raw output, one pass, a fork
+2. The auditor never re-grades (his word, `auditor-never-regrades-2026-10-03`): `audit-card.mjs`
+   briefBlock line and header, `refuter.sh` header, dxb-team2 §3/§6, the Codex mirror. Then the doors
+   audit (`bec00f77` + this change; card 4, high): the brief, the rulers' raw output, one pass, a fork
    for its findings.
 3. His report under Sizi bekleyen · Değişen · Bulunan. Bulunan, measured: the company's Claude runs
    share the user's Claude home with the construction — a running company call sits in the peer
    registry (`~/.claude/sessions/`), its MCP debug log lands under
    `~/.cache/claude-cli-nodejs/-home-dxb-DxB-Global-OS/`; recommendation: a company-owned Claude home
    like the Codex one — his one login (identity step).
-4. Still unanswered, his question of 2026-10-01 ~21:55: why a locked tool is not resolved by the
+4. After the job: the orchestration design (his message of ~14:05) — measured on this job's fork
+   fixes first (tokens, minutes, tests), Fable consulted; then the doors written from it.
+5. Still unanswered, his question of 2026-10-01 ~21:55: why a locked tool is not resolved by the
    system itself, and why the alert comes to him instead of to the one who should fix it.
 
 ## Waiting on his approval
 
-- "Kanun olsun?" — the auditor never re-grades the card (`audit-card.mjs` tells Sol "check it too:
-  does it under-grade this job?"; dxb-team2 §3/§6 say Sol challenges the card). Recommended: evet.
-- The orchestration measurement — two past fixes replayed in two shapes (A: high lead alone · B: high
-  orchestrator + three medium agents), Fable at three points, Sol blind; new tokens, minutes, Sol
-  findings. Recommended: evet. Not answered.
 - dxb-verify's two-line fix: it names `pnpm test` as the battery (the battery is
   `pnpm construction:battery`) and says to restart `dxb-jarvis`, a stopped service. Recommended: evet.
   Not answered.

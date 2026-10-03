@@ -1874,5 +1874,13 @@
     "conditions": "The proposal he answered: 'Fable'ı sizin belirlediğiniz üç noktaya bağlayalım: büyük plandan önce, aynı hata ikinci kez olunca ve \"bitti\" demeden önce.' Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session 5ed74ad7 — heard first-hand, 2026-10-03.",
     "where": ".claude/skills/dxb-team2/SKILL.md §2 · Codex mirror"
+  },
+  "auditor-never-regrades-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "The auditor (Sol) audits the given work at the level the lead's score card gives and never re-grades the card: the card is the lead's grading and the machine routes the effort from it. Sol's first pass on the runtime-isolation job had re-graded that card (5 to 6, high to xhigh), invited by audit-card.mjs's brief line 'check it too: does it under-grade this job?' and by dxb-team2 §3/§6, and the lead had accepted it; the card went back to the lead's 5. Made a standing rule on his word: the brief line, the machine's and refuter.sh's headers and dxb-team2 §3/§6 change so the auditor never re-grades.",
+    "verbatim": "kalıcı olsun senin puanladığını o puanlamasın işi sadece verilen seviyede denetimini yapmak okadar.",
+    "conditions": "His message before it: 'kart sistemi güzel sen ölçümlüormuşsun ona göre makina effor seçiyormuş tamamda buna neden sol 6.1 karışıor ki, bu iş riskli xhigh açmalıydın şimdi herşeyi baştan yap. bu saçmalık kabul edilebilir mi sence? onun görevi verilen emri yerine getirmek sadece verilen işi verilen seviyede denetle okadar değil mi?sence'. 'kalıcı olsun' is his word to make it a standing rule. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 32178f5b — heard first-hand, 2026-10-03.",
+    "where": "scripts/governance/audit-card.mjs (briefBlock, header) · scripts/governance/refuter.sh (header) · .claude/skills/dxb-team2/SKILL.md §3, §6 · Codex mirror — changed by the next session, inside the doors audit's range"
   }
 }
