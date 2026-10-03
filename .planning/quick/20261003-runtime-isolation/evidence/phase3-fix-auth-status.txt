@@ -1,0 +1,11 @@
+{
+  "loggedIn": true,
+  "authMethod": "claude.ai",
+  "apiProvider": "firstParty",
+  "analyticsDisabled": false,
+  "projectsDirectory": "/home/dxb/.local/share/dxb/company-claude/projects",
+  "email": "dxbglobalcom@gmail.com",
+  "orgId": "22dbc686-6bb9-4398-8d9d-551ef2105a6e",
+  "orgName": "dxbglobalcom@gmail.com's Organization",
+  "subscriptionType": "max"
+}

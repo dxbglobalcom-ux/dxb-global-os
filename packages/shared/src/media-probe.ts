@@ -3,10 +3,12 @@
 // media lane (every finished job records what it produced). ffprobe/ffmpeg
 // are the holding's own binaries on this station (~/.local/bin); a service
 // unit's PATH may not carry that directory, so the binary is resolved here
-// once, explicitly, instead of trusting the environment.
+// once, explicitly, instead of trusting the environment. The station user's own home comes from
+// passwd (userInfo), not $HOME: a company Claude call runs with HOME set to the company Claude home
+// (sdk-isolation.ts, phase 3), and its dxb-mcp child must still find the holding's binaries.
 import { accessSync, constants, mkdirSync } from "node:fs";
 import { execFile } from "node:child_process";
-import { homedir } from "node:os";
+import { userInfo } from "node:os";
 import { join } from "node:path";
 import { promisify } from "node:util";
 
@@ -16,7 +18,7 @@ export function resolveMediaBinary(name: "ffmpeg" | "ffprobe"): string {
   const override = process.env[`DXB_${name.toUpperCase()}`];
   const candidates = [
     ...(override ? [override] : []),
-    join(homedir(), ".local", "bin", name),
+    join(userInfo().homedir, ".local", "bin", name),
     `/usr/local/bin/${name}`,
     `/usr/bin/${name}`,
   ];

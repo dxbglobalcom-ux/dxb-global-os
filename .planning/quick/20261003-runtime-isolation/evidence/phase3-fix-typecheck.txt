@@ -1,0 +1,2 @@
+$ tsc --build
+TYPECHECK_EXIT=0

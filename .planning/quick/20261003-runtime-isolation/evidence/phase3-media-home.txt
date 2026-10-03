@@ -1,0 +1,9 @@
+== before (media-probe.ts at HEAD)
+   × the holding's media binaries under a company HOME > resolveMediaBinary finds ~/.local/bin/ffmpeg of the station user, not of $HOME 11ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+Expected: "/home/dxb/.local/bin/ffmpeg"
+Received: "/usr/bin/ffmpeg"
+      Tests  1 failed | 105 skipped (106)
+== after
+ Test Files  3 passed (3)
+      Tests  133 passed (133)

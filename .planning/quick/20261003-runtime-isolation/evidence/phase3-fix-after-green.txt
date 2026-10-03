@@ -1,0 +1,21 @@
+== pnpm exec vitest run tests/governance/company-isolation.test.ts tests/phase6/adapters-roundtrip.test.ts tests/b43/dispatch-book.test.ts tests/b36/company-memory-is-not-a-diary.test.ts
+ Test Files  4 passed (4)
+      Tests  135 passed (135)
+VITEST_EXIT=0
+
+== the strace gate on fabricated traces — the new report
+ok   an empty trace dir: verdict=NO_MEASUREMENT (no trace files; 0 root processes in the trace, not one; no process beyond the probe's own node; no claude run in the trace) exit=1 (want NO_MEASUREMENT)
+ok   only the probe's own node: verdict=NO_MEASUREMENT (no process beyond the probe's own node; no claude run in the trace) exit=1 (want NO_MEASUREMENT)
+ok   a clean run: verdict=CLEAN exit=0 (want CLEAN)
+ok   a clean run whose lanes never finished: verdict=NO_MEASUREMENT (the lanes output holds no PROBE_DONE) exit=1 (want NO_MEASUREMENT)
+ok   a relative .claude/settings.json from cwd=<repo>: verdict=LEAK (1) exit=1 (want LEAK)
+ok   a write into the repository: verdict=LEAK (1) exit=1 (want LEAK)
+ok   a rename into ~/.claude: verdict=LEAK (1) exit=1 (want LEAK)
+ok   a relative mkdir after chdir into the repository: verdict=LEAK (1) exit=1 (want LEAK)
+ok   a company path that is a link into the repository's .claude: verdict=LEAK (1) exit=1 (want LEAK)
+ok   a relative open whose base is unknown: verdict=UNRESOLVED (1) exit=1 (want UNRESOLVED)
+ok   the construction's ~/.claude.json read: verdict=LEAK (1) exit=1 (want LEAK)
+ok   a named residue read stays CLEAN and is counted: verdict=CLEAN exit=0 (want CLEAN)
+SELFTEST GREEN: 12/12
+SELFTEST_EXIT=0
+tsc --noEmit (kernel, orchestrator, memory-router, outbox-executor, root): exit 0 each — not tsc --build, so dist/ under the live scheduler is untouched; the lead's pnpm build/typecheck follows

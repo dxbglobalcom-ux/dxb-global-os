@@ -20,7 +20,7 @@
 // program name assembled at run time outside the file is beyond any static reading; the receipts and
 // the live probe are the run-time witnesses.
 import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs";
-import { homedir, tmpdir } from "node:os";
+import { tmpdir, userInfo } from "node:os";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
@@ -873,6 +873,53 @@ function analyzeLaunches(rel: string, text: string): LaunchReport {
   return report;
 }
 
+// ── no runtime code writes process.env (Sol's single pass on phase 3, A2) ──────────────────────
+// The helper hands a company call an allowlisted copy of the parent's env, so a variable off the list
+// never reaches the call whatever the parent holds. What the list does carry — DXB_*, PATH — and the
+// home's own knob DXB_COMPANY_CLAUDE_HOME would still move with a write to process.env before the
+// call; Sol's counter-example set one and the ruler said problems=[]. The runtime writes none today,
+// so the ruler refuses every write it can see: an assignment (=, ??=, ||=, &&=) to a member of
+// process.env, a delete of one, process.env replaced, and Object.assign / Object.defineProperty /
+// Reflect.set / Reflect.deleteProperty / Object.defineProperties on it. Its limit, named: a write
+// through an alias of process.env held elsewhere — the allowlist and the home's own refusals are the
+// run-time guard there.
+const ASSIGN = new Set([
+  ts.SyntaxKind.EqualsToken,
+  ts.SyntaxKind.QuestionQuestionEqualsToken,
+  ts.SyntaxKind.BarBarEqualsToken,
+  ts.SyntaxKind.AmpersandAmpersandEqualsToken,
+]);
+const ENV_WRITERS = /^(?:Object\.(?:assign|defineProperty|defineProperties)|Reflect\.(?:set|deleteProperty|defineProperty))$/;
+
+function isProcessEnv(e: ts.Expression, sf: ts.SourceFile): boolean {
+  const x = unwrap(e);
+  return (
+    (ts.isPropertyAccessExpression(x) && x.name.text === "env" && unwrap(x.expression).getText(sf) === "process") ||
+    (ts.isElementAccessExpression(x) && ts.isStringLiteralLike(x.argumentExpression) && x.argumentExpression.text === "env" && unwrap(x.expression).getText(sf) === "process")
+  );
+}
+
+function analyzeEnvWrites(rel: string, text: string): string[] {
+  const sf = ts.createSourceFile(rel, text, ts.ScriptTarget.Latest, true, rel.endsWith("x") ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+  const problems: string[] = [];
+  const at = (n: ts.Node): string => `${rel}:${lineOf(sf, n)}`;
+  const member = (e: ts.Expression): boolean => {
+    const x = unwrap(e);
+    return (ts.isPropertyAccessExpression(x) || ts.isElementAccessExpression(x)) && isProcessEnv(x.expression, sf);
+  };
+  everyNode(sf, (n) => {
+    if (ts.isBinaryExpression(n) && ASSIGN.has(n.operatorToken.kind)) {
+      if (member(n.left)) problems.push(`${at(n)} a write to process.env (\`${n.getText(sf).slice(0, 60)}\`)`);
+      else if (isProcessEnv(n.left, sf)) problems.push(`${at(n)} process.env replaced`);
+    } else if (ts.isDeleteExpression(n) && member(n.expression)) {
+      problems.push(`${at(n)} a delete from process.env (\`${n.getText(sf).slice(0, 60)}\`)`);
+    } else if (ts.isCallExpression(n) && ENV_WRITERS.test(unwrap(n.expression).getText(sf)) && n.arguments[0] && isProcessEnv(n.arguments[0], sf)) {
+      problems.push(`${at(n)} \`${unwrap(n.expression).getText(sf)}\` on process.env`);
+    }
+  });
+  return problems;
+}
+
 // ── the company's runtime, read ──────────────────────────────────────────────────────────────────
 
 const SOURCES = runtimeSources().map((file) => ({ rel: relative(REPO, file), text: readFileSync(file, "utf8") }));
@@ -881,6 +928,7 @@ const LANES = ["chat", "classify", "council", "decompose", "qa", "task", "voice"
 /** Every runtime file bound and read once — every file, not the ones whose text names the SDK. */
 const SDK_REPORTS = SOURCES.map((s) => analyzeSdk(s.rel, s.text));
 const LAUNCH_REPORTS = SOURCES.map((s) => analyzeLaunches(s.rel, s.text));
+const ENV_WRITE_PROBLEMS = SOURCES.flatMap((s) => analyzeEnvWrites(s.rel, s.text));
 
 describe("company isolation — the ruler over every company model call (CEO 2026-10-03)", () => {
   const sites = SDK_REPORTS.flatMap((r) => r.sites);
@@ -895,6 +943,10 @@ describe("company isolation — the ruler over every company model call (CEO 202
 
   it("every query() spreads companyIsolation() once, sets nothing off the list, and feeds its receipt first", () => {
     expect(sites.filter((s) => s.problems.length > 0).map((s) => `${s.where}: ${s.problems.join("; ")}`)).toEqual([]);
+  });
+
+  it("no runtime code writes process.env — what the allowlist carries cannot be moved before a call (phase 3, A2)", () => {
+    expect(ENV_WRITE_PROBLEMS).toEqual([]);
   });
 
   it("no runtime code launches `claude`, and every launch in a file that names claude or codex is readable", () => {
@@ -973,6 +1025,26 @@ describe("the ruler refuses what it cannot follow (Sol's counter-examples, 2026-
 
   it.each(refused)("refuses %s", (_name, text) => {
     expect(verdict(text).length).toBeGreaterThan(0);
+  });
+
+  // Sol's single pass on phase 3 (A2): a write to process.env before the call passed with problems=[].
+  const envWrites: Array<[string, string]> = [
+    ["the home's own knob set before the call", `process.env.DXB_COMPANY_CLAUDE_HOME = "/home/dxb/.claude";\n${GOOD}`],
+    ["XDG_CONFIG_HOME set before the call", `${GOOD}process.env.XDG_CONFIG_HOME = "/home/dxb/DxB Global OS/.claude";\n`],
+    ["an element write", `process.env["GIT_CONFIG_GLOBAL"] ??= "/r/.claude/skills/x/SKILL.md";\n${GOOD}`],
+    ["a delete", `delete process.env.HOME;\n${GOOD}`],
+    ["Object.assign", `Object.assign(process.env, { GIT_CONFIG_GLOBAL: "/x" });\n${GOOD}`],
+    ["Reflect.set", `Reflect.set(process.env, "XDG_CONFIG_HOME", "/x");\n${GOOD}`],
+    ["process.env replaced", `process.env = { ...process.env, HOME: "/x" };\n${GOOD}`],
+    ["a parenthesised write", `(process.env).DXB_DATABASE_URL = "postgres://construction";\n${GOOD}`],
+  ];
+
+  it.each(envWrites)("refuses a write to process.env: %s", (_name, text) => {
+    expect(analyzeEnvWrites("x/src/probe.ts", text).length).toBeGreaterThan(0);
+  });
+
+  it("reads of process.env are not writes", () => {
+    expect(analyzeEnvWrites("x/src/probe.ts", `const a = process.env.X ?? "d";\nconst b = { ...process.env };\nf(process.env);\n${GOOD}`)).toEqual([]);
   });
 
   it("reads the profile keys only from buildSdkToolOptions()", () => {
@@ -1101,14 +1173,32 @@ describe("companyIsolation() and its receipt", () => {
 
   it("shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors — and runs in the company's own Claude home and working folder (phase 3)", async () => {
     const { companyIsolation } = await helper();
+    // Sol's single pass on phase 3 (A2): a denylist of CLAUDE* let every other path-moving variable
+    // through — GIT_CONFIG_GLOBAL=<repo>/.claude/skills/…/SKILL.md reached the file. The env is an
+    // allowlist now; everything not on it — HOME, XDG_CONFIG_HOME, GIT_*, NODE_OPTIONS, ANTHROPIC_* —
+    // stays behind.
     const parent = {
       DXB_REPO_ROOT: "/r",
       DXB_DATABASE_URL: "postgres://company",
+      DXB_LITELLM_KEY_FINANCE: "sk-dept",
       PATH: "/usr/bin",
+      LANG: "C.UTF-8",
+      LC_ALL: "C.UTF-8",
+      HTTPS_PROXY: "http://proxy:3128",
+      SSL_CERT_FILE: "/etc/ssl/cert.pem",
+      LITELLM_BASE_URL: "http://127.0.0.1:4000",
+      LITELLM_MASTER_KEY: "sk-admin",
       DXB_COMPANY_CLAUDE_HOME: "/co",
       CLAUDECODE: "1",
       CLAUDE_CODE_ENTRYPOINT: "cli",
       CLAUDE_CONFIG_DIR: "/home/x/.claude",
+      HOME: "/home/x",
+      XDG_CONFIG_HOME: "/home/x/.config",
+      GIT_CONFIG_GLOBAL: "/r/.claude/skills/dxb-team2/SKILL.md",
+      GIT_DIR: "/r/.git",
+      ANTHROPIC_CONFIG_DIR: "/home/x/.config/anthropic",
+      ANTHROPIC_API_KEY: "sk-ant-raw",
+      NODE_OPTIONS: "--require /r/x.js",
       PWD: "/r",
     } as NodeJS.ProcessEnv;
     expect(companyIsolation(parent)).toEqual({
@@ -1120,9 +1210,15 @@ describe("companyIsolation() and its receipt", () => {
       env: {
         DXB_REPO_ROOT: "/r",
         DXB_DATABASE_URL: "postgres://company",
+        DXB_LITELLM_KEY_FINANCE: "sk-dept",
         PATH: "/usr/bin",
-        DXB_COMPANY_CLAUDE_HOME: "/co",
+        LANG: "C.UTF-8",
+        LC_ALL: "C.UTF-8",
+        HTTPS_PROXY: "http://proxy:3128",
+        SSL_CERT_FILE: "/etc/ssl/cert.pem",
+        LITELLM_BASE_URL: "http://127.0.0.1:4000",
         CLAUDE_CONFIG_DIR: "/co",
+        HOME: "/co",
         XDG_CACHE_HOME: "/co/cache",
         PWD: "/co/work",
       },
@@ -1131,12 +1227,12 @@ describe("companyIsolation() and its receipt", () => {
 
   it("phase 3: the company Claude home defaults to ~/.local/share/dxb/company-claude", async () => {
     const { companyClaudeHome } = await helper();
-    expect(companyClaudeHome({} as NodeJS.ProcessEnv)).toBe(join(homedir(), ".local", "share", "dxb", "company-claude"));
+    expect(companyClaudeHome({} as NodeJS.ProcessEnv)).toBe(join(userInfo().homedir, ".local", "share", "dxb", "company-claude"));
   });
 
   it("phase 3: never the construction's ~/.claude — not it, not inside it, not a link to it", async () => {
     const { companyClaudeHome, companyIsolation } = await helper();
-    const theirs = join(homedir(), ".claude");
+    const theirs = join(userInfo().homedir, ".claude");
     const box = mkdtempSync(join(tmpdir(), "company-claude-home-"));
     const link = join(box, "looks-like-ours");
     symlinkSync(theirs, link);
@@ -1148,6 +1244,113 @@ describe("companyIsolation() and its receipt", () => {
     rmSync(box, { recursive: true, force: true });
   });
 
+  // Sol's single pass on phase 3, A4: the construction's identity followed $HOME — with HOME moved, the
+  // real ~/.claude passed. It comes from the passwd entry (os.userInfo()) now.
+  it("A4: the construction's ~/.claude is the passwd home's, whatever $HOME says", async () => {
+    const { companyClaudeHome } = await helper();
+    const box = mkdtempSync(join(tmpdir(), "company-claude-a4-"));
+    const realHome = process.env.HOME;
+    process.env.HOME = box;
+    try {
+      const theirs = join(userInfo().homedir, ".claude");
+      expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: theirs } as NodeJS.ProcessEnv)).toThrow(/construction's Claude home/);
+      expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: join(theirs, "company") } as NodeJS.ProcessEnv)).toThrow(/construction's Claude home/);
+      // a box that merely holds a .claude is not the construction
+      mkdirSync(join(box, ".claude"));
+      expect(companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: join(box, ".claude") } as NodeJS.ProcessEnv)).toBe(realpathSync(join(box, ".claude")));
+    } finally {
+      process.env.HOME = realHome;
+      rmSync(box, { recursive: true, force: true });
+    }
+  });
+
+  // Sol's single pass on phase 3, A1: the check took the repository, its .claude/, a relative value and
+  // an empty one; it returned the raw value (a relative one resolves elsewhere in the child); and it
+  // never looked at the parts the CLI uses — work/, cache/, .claude.json, .credentials.json.
+  it("A1: an empty or relative home, the repository, its .claude/, ~ itself and / are refused", async () => {
+    const { companyClaudeHome, companyIsolation } = await helper();
+    const refused: Array<[string, RegExp]> = [
+      ["", /absolute path/],
+      ["company-claude", /absolute path/],
+      ["./company-claude", /absolute path/],
+      [REPO, /the repository/],
+      [join(REPO, ".claude"), /the repository/],
+      [join(REPO, "var", "company-claude"), /the repository/],
+      [userInfo().homedir, /construction's Claude home/],
+      ["/", /construction's Claude home|the repository/],
+    ];
+    for (const [home, why] of refused) {
+      expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: home } as NodeJS.ProcessEnv), home).toThrow(why);
+      expect(() => companyIsolation({ DXB_COMPANY_CLAUDE_HOME: home } as NodeJS.ProcessEnv), home).toThrow(why);
+    }
+  });
+
+  it("A1: the home is returned canonical — a link to a folder of the company's own answers with the folder", async () => {
+    const { companyClaudeHome, companyIsolation } = await helper();
+    const box = realpathSync(mkdtempSync(join(tmpdir(), "company-claude-canon-")));
+    mkdirSync(join(box, "real"));
+    symlinkSync(join(box, "real"), join(box, "link"));
+    expect(companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: join(box, "link") } as NodeJS.ProcessEnv)).toBe(join(box, "real"));
+    const iso = companyIsolation({ DXB_COMPANY_CLAUDE_HOME: join(box, "link") } as NodeJS.ProcessEnv)!;
+    expect([iso.cwd, iso.env.CLAUDE_CONFIG_DIR, iso.env.HOME, iso.env.PWD]).toEqual([join(box, "real", "work"), join(box, "real"), join(box, "real"), join(box, "real", "work")]);
+    rmSync(box, { recursive: true, force: true });
+  });
+
+  it("A1: a home whose work/, cache/, .claude.json or .credentials.json leads out through a link is refused", async () => {
+    const { companyClaudeHome } = await helper();
+    const box = realpathSync(mkdtempSync(join(tmpdir(), "company-claude-parts-")));
+    const out = join(box, "elsewhere");
+    mkdirSync(out);
+    const cases: Array<[string, string]> = [
+      ["work", REPO],
+      ["cache", join(userInfo().homedir, ".cache")],
+      [".claude.json", join(userInfo().homedir, ".claude.json")],
+      [".credentials.json", join(userInfo().homedir, ".claude", ".credentials.json")],
+      ["work", out],
+    ];
+    try {
+      for (const [part, target] of cases) {
+        const home = mkdtempSync(join(box, "home-"));
+        symlinkSync(target, join(home, part));
+        expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: home } as NodeJS.ProcessEnv), `${part} -> ${target}`).toThrow(new RegExp(`${part.replace(".", "\\.")} leads outside`));
+      }
+      // a part that is a link inside the home is the home's own
+      const home = mkdtempSync(join(box, "home-"));
+      mkdirSync(join(home, "work-real"));
+      symlinkSync(join(home, "work-real"), join(home, "work"));
+      expect(companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: home } as NodeJS.ProcessEnv)).toBe(home);
+    } finally {
+      rmSync(box, { recursive: true, force: true });
+    }
+  });
+
+  it("A2: what the parent's process.env holds before a call never moves the call — off-list variables stay behind, a construction home fails closed", async () => {
+    const { companyIsolation } = await helper();
+    const keys = ["XDG_CONFIG_HOME", "GIT_CONFIG_GLOBAL", "ANTHROPIC_CONFIG_DIR", "GIT_DIR", "NODE_OPTIONS", "ANTHROPIC_API_KEY", "DXB_COMPANY_CLAUDE_HOME"] as const;
+    const saved = Object.fromEntries(keys.map((k) => [k, process.env[k]]));
+    try {
+      process.env.XDG_CONFIG_HOME = join(REPO, ".claude");
+      process.env.GIT_CONFIG_GLOBAL = join(REPO, ".claude", "skills", "dxb-team2", "SKILL.md");
+      process.env.ANTHROPIC_CONFIG_DIR = join(userInfo().homedir, ".config", "anthropic");
+      process.env.GIT_DIR = join(REPO, ".git");
+      process.env.NODE_OPTIONS = `--require ${join(REPO, "x.js")}`;
+      process.env.ANTHROPIC_API_KEY = "sk-ant-raw";
+      delete process.env.DXB_COMPANY_CLAUDE_HOME;
+      const env = companyIsolation()!.env;
+      for (const k of keys) expect(env[k], k).toBeUndefined();
+      expect(env.HOME).toBe(env.CLAUDE_CONFIG_DIR);
+      for (const home of [join(userInfo().homedir, ".claude"), REPO, join(REPO, ".claude")]) {
+        process.env.DXB_COMPANY_CLAUDE_HOME = home;
+        expect(() => companyIsolation(), home).toThrow(/construction's Claude home|the repository/);
+      }
+    } finally {
+      for (const k of keys) {
+        if (saved[k] === undefined) delete process.env[k];
+        else process.env[k] = saved[k];
+      }
+    }
+  });
+
   it("phase 3: the scheduler's start-up line says whether the company home holds a login — never a secret, never a throw", async () => {
     const { companyClaudeLoginLine } = await helper();
     const box = mkdtempSync(join(tmpdir(), "company-claude-login-"));
@@ -1156,7 +1359,7 @@ describe("companyIsolation() and its receipt", () => {
     const line = companyClaudeLoginLine({ DXB_COMPANY_CLAUDE_HOME: box } as NodeJS.ProcessEnv);
     expect(line).toBe(`[isolation] company-claude home=${box} credentials=present`);
     expect(line).not.toMatch(/SECRET/);
-    expect(companyClaudeLoginLine({ DXB_COMPANY_CLAUDE_HOME: join(homedir(), ".claude") } as NodeJS.ProcessEnv)).toBe("[isolation] company-claude home=refused credentials=absent");
+    expect(companyClaudeLoginLine({ DXB_COMPANY_CLAUDE_HOME: join(userInfo().homedir, ".claude") } as NodeJS.ProcessEnv)).toBe("[isolation] company-claude home=refused credentials=absent");
     rmSync(box, { recursive: true, force: true });
     const main = readFileSync(join(REPO, "packages", "outbox-executor", "src", "main.ts"), "utf8");
     expect(main).toMatch(/console\.log\(companyClaudeLoginLine\(\)\)/);
@@ -1193,7 +1396,7 @@ describe("companyIsolation() and its receipt", () => {
       session_id: "5f0c",
       usage: { input_tokens: 4, cache_creation_input_tokens: 400, cache_read_input_tokens: 72 },
     });
-    expect(lines).toEqual([`[isolation] lane=chat session=5f0c tools=0 mcp=0 plugins=0 skills=2 agents=1 hooks=0 input=476 home=${join(homedir(), ".local", "share", "dxb", "company-claude")}`]);
+    expect(lines).toEqual([`[isolation] lane=chat session=5f0c tools=0 mcp=0 plugins=0 skills=2 agents=1 hooks=0 input=476 home=${join(userInfo().homedir, ".local", "share", "dxb", "company-claude")}`]);
   });
 
   it("names what a leaking run loaded, the hooks it fired included, so the line shows it", async () => {
@@ -1212,7 +1415,7 @@ describe("companyIsolation() and its receipt", () => {
       agents: ["builder", "refuter"],
     });
     see({ type: "result", subtype: "success", usage: { input_tokens: 44_306 } });
-    expect(lines).toEqual([`[isolation] lane=voice session=9a1e tools=2 mcp=2 plugins=1 skills=1 agents=2 hooks=1 input=44306 home=${join(homedir(), ".local", "share", "dxb", "company-claude")}`]);
+    expect(lines).toEqual([`[isolation] lane=voice session=9a1e tools=2 mcp=2 plugins=1 skills=1 agents=2 hooks=1 input=44306 home=${join(userInfo().homedir, ".local", "share", "dxb", "company-claude")}`]);
   });
 
   it("never touches the call: a sink that throws and messages of any shape pass through quietly", async () => {
@@ -1231,7 +1434,7 @@ describe("companyIsolation() and its receipt", () => {
     const lines: string[] = [];
     const see = isolationReceipt("qa", (line) => lines.push(line));
     see({ type: "result", usage: { input_tokens: "lots", cache_read_input_tokens: 9 } });
-    expect(lines).toEqual([`[isolation] lane=qa session=? tools=? mcp=? plugins=? skills=? agents=? hooks=0 input=9 home=${join(homedir(), ".local", "share", "dxb", "company-claude")}`]);
+    expect(lines).toEqual([`[isolation] lane=qa session=? tools=? mcp=? plugins=? skills=? agents=? hooks=0 input=9 home=${join(userInfo().homedir, ".local", "share", "dxb", "company-claude")}`]);
   });
 });
 
@@ -1310,7 +1513,7 @@ describe("company isolation — the critical gate's Codex runs from the company'
         else process.env.DXB_COMPANY_CODEX_HOME = saved.HOME_;
       }
       // with no override, the company home is its own place — not the construction's ~/.codex
-      expect(companyCodexHome({} as NodeJS.ProcessEnv)).toBe(join(homedir(), ".local", "share", "dxb", "company-codex"));
+      expect(companyCodexHome({} as NodeJS.ProcessEnv)).toBe(join(userInfo().homedir, ".local", "share", "dxb", "company-codex"));
     } finally {
       rmSync(box, { recursive: true, force: true });
     }
@@ -1357,7 +1560,7 @@ describe("company isolation — the critical gate's Codex runs from the company'
 
   it("refuses a company home that is the construction's ~/.codex, a path inside it, or a link to it", async () => {
     const { companyCodexHome } = await import("../../packages/orchestrator/src/critical-gate.js");
-    const construction = join(homedir(), ".codex");
+    const construction = join(userInfo().homedir, ".codex");
     const box = mkdtempSync(join(tmpdir(), "company-codex-home-"));
     try {
       symlinkSync(construction, join(box, "link"));
@@ -1370,8 +1573,23 @@ describe("company isolation — the critical gate's Codex runs from the company'
     }
   });
 
+  it("A4: the construction's ~/.codex is the passwd home's, whatever $HOME says", async () => {
+    const { companyCodexHome } = await import("../../packages/orchestrator/src/critical-gate.js");
+    const box = mkdtempSync(join(tmpdir(), "company-codex-a4-"));
+    const realHome = process.env.HOME;
+    process.env.HOME = box;
+    try {
+      const construction = join(userInfo().homedir, ".codex");
+      expect(() => companyCodexHome({ DXB_COMPANY_CODEX_HOME: construction } as NodeJS.ProcessEnv)).toThrow(/the construction's Codex home/);
+      expect(() => companyCodexHome({ DXB_COMPANY_CODEX_HOME: join(construction, "nested") } as NodeJS.ProcessEnv)).toThrow(/the construction's Codex home/);
+    } finally {
+      process.env.HOME = realHome;
+      rmSync(box, { recursive: true, force: true });
+    }
+  });
+
   it("the real runner under a refused home never launches codex — ok:false, the reason named", async () => {
-    await withStandIn({ DXB_COMPANY_CODEX_HOME: join(homedir(), ".codex"), STANDIN_MARK: "<box>/launched" }, async (box) => {
+    await withStandIn({ DXB_COMPANY_CODEX_HOME: join(userInfo().homedir, ".codex"), STANDIN_MARK: "<box>/launched" }, async (box) => {
       const { codexRunner } = await import("../../packages/orchestrator/src/critical-gate.js");
       const res = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000 });
       expect(res.ok).toBe(false);
@@ -1469,20 +1687,22 @@ describe("phase 3 — the company's memory never reads the construction's claude
     db.close();
   };
 
+  // The construction's ~/.claude-mem is the passwd home's (Sol's single pass on phase 3, A4: it followed
+  // $HOME, so a moved HOME let the real database through). The refusal comes before any open, so these
+  // name the real place without touching it: the file names below do not exist, and a refused path is
+  // never opened — an unrefused one would fail with sqlite's own "unable to open", not this error.
   it("refuses the construction's claude-mem — by default, by DXB_CLAUDE_MEM_DB and through a link — before opening it", async () => {
     const { readObservationByRef, syncClaudeMem } = await adapter();
     const box = mkdtempSync(join(tmpdir(), "company-claude-mem-"));
-    const realHome = process.env.HOME;
     const realDb = process.env.DXB_CLAUDE_MEM_DB;
-    process.env.HOME = box; // the construction's ~/.claude-mem, in a home of its own
+    const theirs = join(userInfo().homedir, ".claude-mem");
     try {
-      const theirs = join(box, ".claude-mem", "claude-mem.db");
-      await fixture(theirs);
-      symlinkSync(join(box, ".claude-mem"), join(box, "a-link"));
+      symlinkSync(theirs, join(box, "a-link"));
       delete process.env.DXB_CLAUDE_MEM_DB;
       expect(() => readObservationByRef("77")).toThrow(/construction's claude-mem/);
-      expect(() => readObservationByRef("77", join(box, "a-link", "claude-mem.db"))).toThrow(/construction's claude-mem/);
-      process.env.DXB_CLAUDE_MEM_DB = theirs;
+      expect(() => readObservationByRef("77", join(theirs, "no-such-probe.db"))).toThrow(/construction's claude-mem/);
+      expect(() => readObservationByRef("77", join(box, "a-link", "no-such-probe.db"))).toThrow(/construction's claude-mem/);
+      process.env.DXB_CLAUDE_MEM_DB = join(theirs, "no-such-probe.db");
       expect(() => readObservationByRef("77")).toThrow(/construction's claude-mem/);
       await expect(syncClaudeMem({} as never)).rejects.toThrow(/construction's claude-mem/);
       // a database of the company's own (the suites' fixtures) still reads
@@ -1490,9 +1710,24 @@ describe("phase 3 — the company's memory never reads the construction's claude
       await fixture(ours);
       expect(readObservationByRef("77", ours)).toMatch(/what an engineer did/);
     } finally {
-      process.env.HOME = realHome;
       if (realDb === undefined) delete process.env.DXB_CLAUDE_MEM_DB;
       else process.env.DXB_CLAUDE_MEM_DB = realDb;
+      rmSync(box, { recursive: true, force: true });
+    }
+  });
+
+  it("A4: a moved $HOME does not move the bar — the real ~/.claude-mem is still refused, a box's own .claude-mem reads", async () => {
+    const { readObservationByRef } = await adapter();
+    const box = mkdtempSync(join(tmpdir(), "company-claude-mem-a4-"));
+    const realHome = process.env.HOME;
+    process.env.HOME = box;
+    try {
+      expect(() => readObservationByRef("77", join(userInfo().homedir, ".claude-mem", "no-such-probe.db"))).toThrow(/construction's claude-mem/);
+      const boxes = join(box, ".claude-mem", "claude-mem.db");
+      await fixture(boxes);
+      expect(readObservationByRef("77", boxes)).toMatch(/what an engineer did/);
+    } finally {
+      process.env.HOME = realHome;
       rmSync(box, { recursive: true, force: true });
     }
   });
@@ -1501,5 +1736,27 @@ describe("phase 3 — the company's memory never reads the construction's claude
     const src = readFileSync(join(REPO, "packages", "memory-router", "src", "classify-read.ts"), "utf8");
     expect(src).not.toMatch(/readObservationByRef/);
     expect(src).not.toMatch(/"claude-mem":\s*makeRefReader/);
+  });
+});
+
+// Fork 6 found it: with HOME set to the company Claude home (A2), the dxb-mcp child of a company call
+// resolved the holding's own ffmpeg (~/.local/bin, the station user's) through $HOME and fell back to
+// the system's. The station user's home comes from passwd.
+describe("the holding's media binaries under a company HOME", () => {
+  const own = join(userInfo().homedir, ".local", "bin", "ffmpeg");
+  it.skipIf(!existsSync(own))("resolveMediaBinary finds ~/.local/bin/ffmpeg of the station user, not of $HOME", async () => {
+    const { resolveMediaBinary } = await import("../../packages/shared/src/media-probe.js");
+    const realHome = process.env.HOME;
+    const override = process.env.DXB_FFMPEG;
+    const box = mkdtempSync(join(tmpdir(), "company-home-"));
+    try {
+      process.env.HOME = box;
+      delete process.env.DXB_FFMPEG;
+      expect(resolveMediaBinary("ffmpeg")).toBe(own);
+    } finally {
+      process.env.HOME = realHome;
+      if (override !== undefined) process.env.DXB_FFMPEG = override;
+      rmSync(box, { recursive: true, force: true });
+    }
   });
 });

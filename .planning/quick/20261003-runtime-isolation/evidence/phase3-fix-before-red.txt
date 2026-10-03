@@ -1,0 +1,333 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+[isolation] lane=gate model=stand-in session=? home=/tmp/company-codex-epf3dC/company-codex notes=0 mcp=0 ok=true tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named
+[isolation] lane=gate model=stand-in session=? home=refused notes=? mcp=? ok=false tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home
+[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-6A1gPt/company-codex notes=0 mcp=0 ok=true tokens=12345
+
+(node:1674959) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/governance/company-isolation.test.ts (105 tests | 8 failed) 217ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > reads every SDK import and every use of query() it finds — nothing it cannot follow 1ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > finds exactly the eight company lanes, each once 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() once, sets nothing off the list, and feeds its receipt first 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > no runtime code writes process.env — what the allowlist carries cannot be moved before a call (phase 3, A2) 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > no runtime code launches `claude`, and every launch in a file that names claude or codex is readable 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > @dxb/kernel hands out the helper of sdk-isolation.ts and nothing else under its names 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > passes the honest shape — an aliased named import, the helper spread, the receipt first 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a namespace import 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses require() 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a dynamic import() 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a re-export 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses an alias of query 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses query handed on as a value 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settingSources after the helper 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settings after the helper 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses persistSession through a conditional spread 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a spread the ruler cannot see into 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses env 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses cwd (phase 3: the working folder is the helper's) 2ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses plugins 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses resume 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses mcpServers not from the compiled profile 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a computed option name 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses the helper switched off by its argument 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses no helper at all 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses options that are not a literal 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt named only in a comment 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt fed after the result can leave 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt with its own sink 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a stream not held in a const 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a helper that is not the kernel's 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: the home's own knob set before the call 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: XDG_CONFIG_HOME set before the call 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: an element write 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: a delete 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: Object.assign 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: Reflect.set 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: process.env replaced 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: a parenthesised write 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > reads of process.env are not writes 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > reads the profile keys only from buildSdkToolOptions() 3ms
+   ✓ the launch ruler refuses a runtime `claude` > lets an honest launch through 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a named launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a namespace launch 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a default-import launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a promisified launch 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program held in a const 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a shell line 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program the ruler cannot name, beside a claude string 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses child_process by require() 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a launcher handed on, beside a codex string 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a require() specifier assembled at run time, in a file that names no SDK — a module it cannot name 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > an escaped SDK specifier — the site is found and held to the helper 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > the helper taken from another file named sdk-isolation — not the kernel's helper 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > Object.assign on the compiled profile — the profile handed on or changed 3ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a receipt shadowed by a function hoisted inside the loop — not the receipt this function declares 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > element access on a child_process namespace — the launch of codex is seen, and refused outside the gate 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a shell line that reaches codex through env — refused for naming it 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a computed key that folds to a launcher 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a key the ruler cannot fold 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a launcher held in a const 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a program folded from pieces 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — codex named in a wrapper's arguments 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a shell line through sh -c 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — spawn with shell: true 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — the namespace exported under another name 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a launcher exported through a const 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a companyCodexHome that shadows the gate's own — not the function the file declares 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > an SDK import the ruler resolves, not spells — a package that resolves into the SDK's folder is the SDK 1ms
+   × companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors — and runs in the company's own Claude home and working folder (phase 3) 11ms
+     → expected { settingSources: [], …(5) } to deeply equal { settingSources: [], …(5) }
+   ✓ companyIsolation() and its receipt > phase 3: the company Claude home defaults to ~/.local/share/dxb/company-claude 0ms
+   ✓ companyIsolation() and its receipt > phase 3: never the construction's ~/.claude — not it, not inside it, not a link to it 2ms
+   × companyIsolation() and its receipt > A4: the construction's ~/.claude is the passwd home's, whatever $HOME says 1ms
+     → expected [Function] to throw an error
+   × companyIsolation() and its receipt > A1: an empty or relative home, the repository, its .claude/, ~ itself and / are refused 1ms
+     → expected [Function] to throw an error
+   × companyIsolation() and its receipt > A1: the home is returned canonical — a link to a folder of the company's own answers with the folder 1ms
+     → expected '/tmp/company-claude-canon-yD9aFC/link' to be '/tmp/company-claude-canon-yD9aFC/real' // Object.is equality
+   × companyIsolation() and its receipt > A1: a home whose work/, cache/, .claude.json or .credentials.json leads out through a link is refused 1ms
+     → work -> /home/dxb/DxB Global OS: expected [Function] to throw an error
+   × companyIsolation() and its receipt > A2: what the parent's process.env holds before a call never moves the call — off-list variables stay behind, a construction home fails closed 1ms
+     → XDG_CONFIG_HOME: expected '/home/dxb/DxB Global OS/.claude' to be undefined
+   ✓ companyIsolation() and its receipt > phase 3: the scheduler's start-up line says whether the company home holds a login — never a secret, never a throw 1ms
+   ✓ companyIsolation() and its receipt > the compiled profile keeps strictMcpConfig true — the lanes that pass it after the helper cannot loosen it 5ms
+   ✓ companyIsolation() and its receipt > DXB_WORKER_ISOLATION=0 is the rollback shape 0ms
+   ✓ companyIsolation() and its receipt > prints one line per result — the lane, the run's own session, what it loaded, what it read 0ms
+   ✓ companyIsolation() and its receipt > names what a leaking run loaded, the hooks it fired included, so the line shows it 0ms
+   ✓ companyIsolation() and its receipt > never touches the call: a sink that throws and messages of any shape pass through quietly 1ms
+   ✓ companyIsolation() and its receipt > an odd token count reads as zero, never as a broken line 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > finds the gate's codex launch, and no other 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the gate's launch ends its env with CODEX_HOME: companyCodexHome() 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > reads the honest env 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the environment spread after the home 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses no env at all 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env it cannot read 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the construction's home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the helper given an argument 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env spread in after a valid env (Sol, single pass) 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses a spread after env the ruler cannot see into 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex 99ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses a company home that is the construction's ~/.codex, a path inside it, or a link to it 1ms
+   × company isolation — the critical gate's Codex runs from the company's own home > A4: the construction's ~/.codex is the passwd home's, whatever $HOME says 0ms
+     → expected [Function] to throw an error
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > writes one isolation line per Codex call — what it loaded and what it read — on success and on failure 13ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > writes tokens=? when the CLI left no tokens-used footer — an unknown is never written as 0 6ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home 6ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the isolation line never touches the call: a sink that throws leaves the answer as it was 7ms
+   ✓ phase 3 — the company's memory never reads the construction's claude-mem > refuses the construction's claude-mem — by default, by DXB_CLAUDE_MEM_DB and through a link — before opening it 7ms
+   × phase 3 — the company's memory never reads the construction's claude-mem > A4: a moved $HOME does not move the bar — the real ~/.claude-mem is still refused, a box's own .claude-mem reads 1ms
+     → expected [Function] to throw error matching /construction's claude-mem/ but got 'unable to open database file'
+   ✓ phase 3 — the company's memory never reads the construction's claude-mem > recall holds no claude-mem reader 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors — and runs in the company's own Claude home and working folder (phase 3)
+AssertionError: expected { settingSources: [], …(5) } to deeply equal { settingSources: [], …(5) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[33m@@ -1,21 +1,29 @@[39m
+[2m  {[22m
+[2m    "cwd": "/co/work",[22m
+[2m    "env": {[22m
+[31m+     "ANTHROPIC_API_KEY": "sk-ant-raw",[39m
+[31m+     "ANTHROPIC_CONFIG_DIR": "/home/x/.config/anthropic",[39m
+[2m      "CLAUDE_CONFIG_DIR": "/co",[22m
+[31m+     "DXB_COMPANY_CLAUDE_HOME": "/co",[39m
+[2m      "DXB_DATABASE_URL": "postgres://company",[22m
+[2m      "DXB_LITELLM_KEY_FINANCE": "sk-dept",[22m
+[2m      "DXB_REPO_ROOT": "/r",[22m
+[32m-     "HOME": "/co",[39m
+[31m+     "GIT_CONFIG_GLOBAL": "/r/.claude/skills/dxb-team2/SKILL.md",[39m
+[31m+     "GIT_DIR": "/r/.git",[39m
+[31m+     "HOME": "/home/x",[39m
+[2m      "HTTPS_PROXY": "http://proxy:3128",[22m
+[2m      "LANG": "C.UTF-8",[22m
+[2m      "LC_ALL": "C.UTF-8",[22m
+[2m      "LITELLM_BASE_URL": "http://127.0.0.1:4000",[22m
+[31m+     "LITELLM_MASTER_KEY": "sk-admin",[39m
+[31m+     "NODE_OPTIONS": "--require /r/x.js",[39m
+[2m      "PATH": "/usr/bin",[22m
+[2m      "PWD": "/co/work",[22m
+[2m      "SSL_CERT_FILE": "/etc/ssl/cert.pem",[22m
+[2m      "XDG_CACHE_HOME": "/co/cache",[22m
+[31m+     "XDG_CONFIG_HOME": "/home/x/.config",[39m
+[2m    },[22m
+[2m    "persistSession": false,[22m
+[2m    "settingSources": [],[22m
+[2m    "settings": {[22m
+[2m      "autoMemoryEnabled": false,[22m
+
+ ❯ tests/governance/company-isolation.test.ts:1204:38
+    1202|       PWD: "/r",
+    1203|     } as NodeJS.ProcessEnv;
+    1204|     expect(companyIsolation(parent)).toEqual({
+       |                                      ^
+    1205|       settingSources: [],
+    1206|       settings: { autoMemoryEnabled: false },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > A4: the construction's ~/.claude is the passwd home's, whatever $HOME says
+AssertionError: expected [Function] to throw an error
+
+[32m- Expected:[39m 
+null
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/governance/company-isolation.test.ts:1256:97
+    1254|     try {
+    1255|       const theirs = join(userInfo().homedir, ".claude");
+    1256|       expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: theirs…
+       |                                                                                                 ^
+    1257|       expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: join(t…
+    1258|       // a box that merely holds a .claude is not the construction
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > A1: an empty or relative home, the repository, its .claude/, ~ itself and / are refused
+AssertionError: expected [Function] to throw an error
+
+[32m- Expected:[39m 
+null
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/governance/company-isolation.test.ts:1283:101
+    1281|     ];
+    1282|     for (const [home, why] of refused) {
+    1283|       expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: home }…
+       |                                                                                                     ^
+    1284|       expect(() => companyIsolation({ DXB_COMPANY_CLAUDE_HOME: home } …
+    1285|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > A1: the home is returned canonical — a link to a folder of the company's own answers with the folder
+AssertionError: expected '/tmp/company-claude-canon-yD9aFC/link' to be '/tmp/company-claude-canon-yD9aFC/real' // Object.is equality
+
+Expected: [32m"/tmp/company-claude-canon-yD9aFC/[7mreal[27m"[39m
+Received: [31m"/tmp/company-claude-canon-yD9aFC/[7mlink[27m"[39m
+
+ ❯ tests/governance/company-isolation.test.ts:1293:100
+    1291|     mkdirSync(join(box, "real"));
+    1292|     symlinkSync(join(box, "real"), join(box, "link"));
+    1293|     expect(companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: join(box, "lin…
+       |                                                                                                    ^
+    1294|     const iso = companyIsolation({ DXB_COMPANY_CLAUDE_HOME: join(box, …
+    1295|     expect([iso.cwd, iso.env.CLAUDE_CONFIG_DIR, iso.env.HOME, iso.env.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > A1: a home whose work/, cache/, .claude.json or .credentials.json leads out through a link is refused
+AssertionError: work -> /home/dxb/DxB Global OS: expected [Function] to throw an error
+
+[32m- Expected:[39m 
+null
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/governance/company-isolation.test.ts:1315:121
+    1313|         const home = mkdtempSync(join(box, "home-"));
+    1314|         symlinkSync(target, join(home, part));
+    1315|         expect(() => companyClaudeHome({ DXB_COMPANY_CLAUDE_HOME: home…
+       |                                                                                                                         ^
+    1316|       }
+    1317|       // a part that is a link inside the home is the home's own
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > companyIsolation() and its receipt > A2: what the parent's process.env holds before a call never moves the call — off-list variables stay behind, a construction home fails closed
+AssertionError: XDG_CONFIG_HOME: expected '/home/dxb/DxB Global OS/.claude' to be undefined
+
+[32m- Expected:[39m 
+undefined
+
+[31m+ Received:[39m 
+"/home/dxb/DxB Global OS/.claude"
+
+ ❯ tests/governance/company-isolation.test.ts:1340:47
+    1338|       delete process.env.DXB_COMPANY_CLAUDE_HOME;
+    1339|       const env = companyIsolation()!.env;
+    1340|       for (const k of keys) expect(env[k], k).toBeUndefined();
+       |                                               ^
+    1341|       expect(env.HOME).toBe(env.CLAUDE_CONFIG_DIR);
+    1342|       for (const home of [join(userInfo().homedir, ".claude"), REPO, j…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > A4: the construction's ~/.codex is the passwd home's, whatever $HOME says
+AssertionError: expected [Function] to throw an error
+
+[32m- Expected:[39m 
+null
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/governance/company-isolation.test.ts:1583:101
+    1581|     try {
+    1582|       const construction = join(userInfo().homedir, ".codex");
+    1583|       expect(() => companyCodexHome({ DXB_COMPANY_CODEX_HOME: construc…
+       |                                                                                                     ^
+    1584|       expect(() => companyCodexHome({ DXB_COMPANY_CODEX_HOME: join(con…
+    1585|     } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > phase 3 — the company's memory never reads the construction's claude-mem > A4: a moved $HOME does not move the bar — the real ~/.claude-mem is still refused, a box's own .claude-mem reads
+AssertionError: expected [Function] to throw error matching /construction's claude-mem/ but got 'unable to open database file'
+
+[32m- Expected:[39m 
+/construction's claude-mem/
+
+[31m+ Received:[39m 
+"unable to open database file"
+
+ ❯ tests/governance/company-isolation.test.ts:1725:109
+    1723|     process.env.HOME = box;
+    1724|     try {
+    1725|       expect(() => readObservationByRef("77", join(userInfo().homedir,…
+       |                                                                                                             ^
+    1726|       const boxes = join(box, ".claude-mem", "claude-mem.db");
+    1727|       await fixture(boxes);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 97 passed (105)
+   Start at  17:30:29
+   Duration  2.99s (transform 109ms, setup 0ms, collect 2.50s, tests 217ms, environment 0ms, prepare 32ms)
+
+EXIT=1
+
+== the strace gate on fabricated traces — the report at HEAD (b146822b's), red (note: it also cannot parse strace -y lines)
+FAIL an empty trace dir: verdict=CLEAN exit=0 (want NO_MEASUREMENT)
+FAIL only the probe's own node: verdict=CLEAN exit=0 (want NO_MEASUREMENT)
+ok   a clean run: verdict=CLEAN exit=0 (want CLEAN)
+FAIL a clean run whose lanes never finished: verdict=CLEAN exit=0 (want NO_MEASUREMENT)
+FAIL a relative .claude/settings.json from cwd=<repo>: verdict=CLEAN exit=0 (want LEAK)
+FAIL a write into the repository: verdict=CLEAN exit=0 (want LEAK)
+FAIL a rename into ~/.claude: verdict=CLEAN exit=0 (want LEAK)
+FAIL a relative mkdir after chdir into the repository: verdict=CLEAN exit=0 (want LEAK)
+FAIL a company path that is a link into the repository's .claude: verdict=CLEAN exit=0 (want LEAK)
+FAIL a relative open whose base is unknown: verdict=CLEAN exit=0 (want UNRESOLVED)
+FAIL the construction's ~/.claude.json read: verdict=CLEAN exit=0 (want LEAK)
+ok   a named residue read stays CLEAN and is counted: verdict=CLEAN exit=0 (want CLEAN)
+SELFTEST RED: 2/12
+SELFTEST_EXIT=1

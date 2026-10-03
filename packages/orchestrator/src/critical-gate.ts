@@ -24,7 +24,7 @@
 import { execFile } from "node:child_process";
 import { existsSync, readFileSync, readlinkSync, realpathSync } from "node:fs";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { homedir, tmpdir } from "node:os";
+import { tmpdir, userInfo } from "node:os";
 import { basename, dirname, join, resolve, sep } from "node:path";
 import { z } from "zod";
 import { getDb } from "@dxb/shared";
@@ -160,8 +160,10 @@ function buildPrompt(input: CriticalGateInput): string {
  * was taken unchecked), and the runner then records the challenger unavailable instead of launching.
  */
 export function companyCodexHome(env: NodeJS.ProcessEnv = process.env): string {
-  const home = env.DXB_COMPANY_CODEX_HOME ?? join(homedir(), ".local", "share", "dxb", "company-codex");
-  const theirs = realPath(join(homedir(), ".codex"));
+  // The construction is the passwd entry's home, never $HOME (Sol's single pass on phase 3, A4).
+  const user = userInfo().homedir;
+  const home = env.DXB_COMPANY_CODEX_HOME ?? join(user, ".local", "share", "dxb", "company-codex");
+  const theirs = realPath(join(user, ".codex"));
   const ours = realPath(resolve(home));
   if (ours === theirs || ours.startsWith(`${theirs}${sep}`)) {
     throw new Error(`the company Codex home ${home} is the construction's Codex home (${theirs}) or lies inside it — no challenger runs from there`);

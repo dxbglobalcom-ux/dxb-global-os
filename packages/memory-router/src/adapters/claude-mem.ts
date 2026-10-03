@@ -20,7 +20,8 @@ import type { Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 
 function defaultDbPath(): string {
-  return process.env.DXB_CLAUDE_MEM_DB ?? path.join(os.homedir(), ".claude-mem", "claude-mem.db");
+  // The passwd home, not $HOME (A4): a company call runs with HOME set to the company Claude home.
+  return process.env.DXB_CLAUDE_MEM_DB ?? path.join(os.userInfo().homedir, ".claude-mem", "claude-mem.db");
 }
 
 function defaultProject(): string {
@@ -46,11 +47,15 @@ function realPath(p: string, depth = 0): string {
 
 /** The construction's claude-mem (its sessions' observations) is not the company's memory (CEO
  *  2026-10-03, "ikisine de evet" — isolation-phase3-plan-and-memory-path-2026-10-03). A database that
- *  is ~/.claude-mem/…, lies inside it or reaches it through a link is refused before it is opened —
+ *  is ~/.claude-mem/… (the passwd home's, whatever $HOME says), lies inside it or reaches it through
+ *  a link is refused before it is opened —
  *  by default, by DXB_CLAUDE_MEM_DB and by an explicit path alike. A database of the company's own
  *  (the suites' fixtures) still reads. Measured before the cut: no runtime caller reached it. */
 function companyOwned(dbPath: string): string {
-  const theirs = realPath(path.join(os.homedir(), ".claude-mem"));
+  // The construction is the passwd entry's home, never $HOME (Sol's single pass on phase 3, A4: a
+  // company call runs with HOME set to the company's Claude home, and a bar derived from os.homedir()
+  // moved with it and let the real database through).
+  const theirs = realPath(path.join(os.userInfo().homedir, ".claude-mem"));
   const p = realPath(path.resolve(dbPath));
   if (p === theirs || p.startsWith(`${theirs}${path.sep}`)) {
     throw new Error(`claude-mem adapter: ${dbPath} is the construction's claude-mem (${theirs}) — the company does not read it`);

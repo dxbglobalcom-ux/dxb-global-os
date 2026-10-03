@@ -1,6 +1,7 @@
 import { existsSync, readlinkSync, realpathSync } from "node:fs";
-import { homedir } from "node:os";
-import { basename, dirname, join, resolve, sep } from "node:path";
+import { userInfo } from "node:os";
+import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 
 // THE COMPANY'S MODEL CALLS ARE THE COMPANY'S, NOT THE CONSTRUCTION'S (CEO 2026-10-03: "evet tabi
 // hamza ve herşey herkes inşaattan ayrı olmalı ya!"; B43 plan ② before it, 2026-09-05).
@@ -30,9 +31,14 @@ import { basename, dirname, join, resolve, sep } from "node:path";
 // XDG_CACHE_HOME of its own, the login, the global config, the peer registry and the MCP debug log
 // all live in the company home, and nothing of the repository is listed. The same membership — his
 // one login in that home; a home without it answers "Not logged in" and never falls back to ~/.claude.
-// The parent's CLAUDE* variables never reach a company call: a construction shell's CLAUDECODE /
-// CLAUDE_CODE_* would otherwise follow it in. The CLI's own built-in residue stays, named in the job's
-// done-list: a listing of ~/.claude/ide, lookups of two absent files, rg reading ~/.config/git/ignore.
+// Sol's single pass on phase 3 refuted the first shape: the env was the parent's minus CLAUDE*, so every
+// other path-moving variable followed the call in (GIT_CONFIG_GLOBAL=<repo>/.claude/…/SKILL.md reached
+// the file); the home check took the repository, a relative value and links out of work/ or cache/;
+// and the construction's own folders were derived from $HOME. Now the env is an ALLOWLIST (COMPANY_ENV
+// below) and HOME is the company home too — so the CLI's built-in look-ups (~/.claude/ide,
+// ~/.config/anthropic, rg's ~/.config/git/ignore), the residue phase 3 first had to name, fall inside
+// it; the home is absolute, canonical, outside both the construction's ~/.claude and the repository,
+// and its parts stay inside it; the construction's folders come from the passwd entry (os.userInfo()).
 //
 // The tools a seat holds are still the compiled gateway profile (R2.2), passed explicitly.
 // `DXB_WORKER_ISOLATION=0` is the rollback shape (the pre-2026-09-05 behaviour).
@@ -62,30 +68,71 @@ function realPath(p: string, depth = 0): string {
   return parent === p ? p : join(realPath(parent, depth + 1), basename(p));
 }
 
+/** The repository, from this module's own place (packages/kernel/{src,dist}/) — never from the cwd. */
+const REPOSITORY = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+
+/** `p` is `root`, lies inside it, or holds it — both already canonical. */
+const overlaps = (p: string, root: string): boolean =>
+  p === root || p.startsWith(`${root}${sep}`) || root.startsWith(p === sep ? sep : `${p}${sep}`);
+
+/** The parts of a Claude home the CLI uses; each must resolve inside the home. */
+const HOME_PARTS = ["work", "cache", ".claude.json", ".credentials.json"] as const;
+
 /**
- * The company's own Claude home (CLAUDE_CONFIG_DIR) — `~/.local/share/dxb/company-claude`;
- * `DXB_COMPANY_CLAUDE_HOME` moves it, never onto the construction's: a home that is `~/.claude`,
- * lies inside it, or reaches it through a link is refused, so the lane fails closed instead of
- * running from the construction's login, settings and peer registry (as companyCodexHome() does
- * for the gate's Codex).
+ * The company's own Claude home (CLAUDE_CONFIG_DIR, and HOME for the call) — by default
+ * `~/.local/share/dxb/company-claude`; `DXB_COMPANY_CLAUDE_HOME` moves it. Returned canonical (every
+ * link resolved). Refused, so the lane fails closed instead of running from the construction's login,
+ * settings and peer registry (as companyCodexHome() does for the gate's Codex): an empty or relative
+ * value; a home that is, lies inside or holds the construction's `~/.claude` (the passwd home's, never
+ * $HOME) or the repository; a home whose work/, cache/, .claude.json or .credentials.json leads
+ * outside it through a link.
  */
 export function companyClaudeHome(env: NodeJS.ProcessEnv = process.env): string {
-  const home = env.DXB_COMPANY_CLAUDE_HOME ?? join(homedir(), ".local", "share", "dxb", "company-claude");
-  const theirs = realPath(join(homedir(), ".claude"));
-  const ours = realPath(resolve(home));
-  if (ours === theirs || ours.startsWith(`${theirs}${sep}`)) {
-    throw new Error(`the company Claude home ${home} is the construction's Claude home (${theirs}) or lies inside it — no company call runs from there`);
+  const user = userInfo().homedir;
+  const home = env.DXB_COMPANY_CLAUDE_HOME ?? join(user, ".local", "share", "dxb", "company-claude");
+  if (!home || !isAbsolute(home)) {
+    throw new Error(`the company Claude home "${home}" is not an absolute path — a relative one resolves elsewhere in the child`);
   }
-  return home;
+  const ours = realPath(home);
+  const theirs = realPath(join(user, ".claude"));
+  if (overlaps(ours, theirs)) {
+    throw new Error(`the company Claude home ${home} is the construction's Claude home (${theirs}), lies inside it or holds it — no company call runs from there`);
+  }
+  const repository = realPath(REPOSITORY);
+  if (overlaps(ours, repository)) {
+    throw new Error(`the company Claude home ${home} is the repository (${repository}), lies inside it or holds it — no company call runs from there`);
+  }
+  for (const part of HOME_PARTS) {
+    const at = realPath(join(ours, part));
+    if (!at.startsWith(`${ours}${sep}`)) {
+      throw new Error(`the company Claude home ${home}: its ${part} leads outside it (${at}) — no company call runs from there`);
+    }
+  }
+  return ours;
 }
+
+/**
+ * What a company call may take from the parent's environment — an allowlist (Sol's single pass on
+ * phase 3, A2). The locale, PATH and temp, the terminal and the user's name; the proxy and the CA
+ * certificates; LITELLM_BASE_URL (read by @dxb/shared's llmCall/llmEmbed inside the dxb-mcp child);
+ * DXB_* — the database URLs and the departments' LiteLLM keys the dxb-mcp child needs — except the
+ * home's own knob. Nothing else: no HOME, XDG_*, GIT_*, NODE_OPTIONS, ANTHROPIC_*, CLAUDE*.
+ */
+const COMPANY_ENV = new Set([
+  "PATH", "TMPDIR", "LANG", "TERM", "TZ", "USER", "LOGNAME", "SHELL",
+  "HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "no_proxy", "all_proxy",
+  "NODE_EXTRA_CA_CERTS", "LITELLM_BASE_URL",
+]);
+const companyEnvName = (k: string): boolean =>
+  COMPANY_ENV.has(k) || k.startsWith("LC_") || k.startsWith("SSL_CERT_") || (k.startsWith("DXB_") && k !== "DXB_COMPANY_CLAUDE_HOME");
 
 export function companyIsolation(env: NodeJS.ProcessEnv = process.env): SdkIsolation | null {
   if (env.DXB_WORKER_ISOLATION === "0") return null;
   const home = companyClaudeHome(env);
   const work = join(home, "work");
-  const inherited: Record<string, string> = {};
+  const carried: Record<string, string> = {};
   for (const [k, v] of Object.entries(env)) {
-    if (v !== undefined && !k.startsWith("CLAUDE")) inherited[k] = v;
+    if (v !== undefined && companyEnvName(k)) carried[k] = v;
   }
   return {
     settingSources: [],
@@ -93,7 +140,7 @@ export function companyIsolation(env: NodeJS.ProcessEnv = process.env): SdkIsola
     persistSession: false,
     strictMcpConfig: true,
     cwd: work,
-    env: { ...inherited, CLAUDE_CONFIG_DIR: home, XDG_CACHE_HOME: join(home, "cache"), PWD: work },
+    env: { ...carried, CLAUDE_CONFIG_DIR: home, HOME: home, XDG_CACHE_HOME: join(home, "cache"), PWD: work },
   };
 }
 

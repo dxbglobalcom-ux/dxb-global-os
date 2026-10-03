@@ -1,0 +1,6 @@
+== sandboxed (dxbbuild, HOME=/tmp/home) via scripts/construction/run.sh
+ Test Files  3 passed (3)
+      Tests  132 passed | 1 skipped (133)
+== host
+ Test Files  3 passed (3)
+      Tests  133 passed (133)

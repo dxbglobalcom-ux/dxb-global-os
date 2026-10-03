@@ -219,3 +219,52 @@ Written before the code (fork 5, 2026-10-03 16:53). Tests: `tests/governance/com
     `home=`; canaries ABSENT.
 33. `CLAUDE_CONFIG_DIR=<home> <bundled claude> auth status` → `"loggedIn": true` before
     `dxb-scheduler` is restarted; its JSON (no secret in it) in evidence/.
+
+### After Sol's single pass on phase 3 (2026-10-03 ~17:25, SOL-PHASE3.md) — fork 6's fixes
+One pass, its A findings fixed by a fork, no second round (his order for this job). C1 (the obsidian
+and graphify readers hand `ref` straight to `readFile`) is older than this phase and stays in the
+folder. Written before the code; each code item red before, green after
+(`evidence/phase3-fix-before-red.txt`, `evidence/phase3-fix-after-green.txt`).
+
+34. A4 — the construction's identity never follows `$HOME`. `companyOwned()` (claude-mem.ts),
+    `companyClaudeHome()` and `companyCodexHome()` take the construction's `~/.claude-mem`, `~/.claude`
+    and `~/.codex` from `os.userInfo().homedir` (the passwd entry), not `os.homedir()`: with
+    `HOME=<a company folder>` the real `~/.claude-mem/claude-mem.db` is still refused before any open,
+    and `HOME=<a box holding .claude>` no longer makes the box's `.claude` "the construction's".
+35. A1 — `companyClaudeHome()` refuses an empty or non-absolute value; returns the canonical path (every
+    link resolved); refuses a home that is, lies inside or contains the construction's `~/.claude` or
+    the repository (pinned from the module's own location — so `~` itself, `/`, the repository and its
+    `.claude/` are refused); refuses a home whose `work`, `cache`, `.claude.json` or `.credentials.json`
+    resolves outside it through a link. Tests with tmp links for each.
+36. A2 — the company call's `env` is an ALLOWLIST: `PATH TMPDIR LANG LC_* TERM TZ USER LOGNAME SHELL`,
+    the proxy variables, `SSL_CERT_*`, `NODE_EXTRA_CA_CERTS`, `LITELLM_BASE_URL` (read by `@dxb/shared`
+    llmEmbed/llmCall inside the dxb-mcp child), `DXB_*` except `DXB_COMPANY_CLAUDE_HOME`; then
+    `CLAUDE_CONFIG_DIR=<home>`, `HOME=<home>`, `XDG_CACHE_HOME=<home>/cache`, `PWD=<home>/work`. Sol's
+    counter-examples — `XDG_CONFIG_HOME`, `GIT_CONFIG_GLOBAL`, `ANTHROPIC_CONFIG_DIR`, `GIT_DIR`,
+    `NODE_OPTIONS`, `ANTHROPIC_API_KEY` in the parent — never reach the call; a `process.env` assignment
+    of any of them (or of `DXB_COMPANY_CLAUDE_HOME` to the construction's home or the repository) before
+    the call either does not change what the call gets or makes it fail closed.
+37. A3 — the strace gate fails closed: `phase3-strace-probe.sh` exits 1 on `LANES_EXIT≠0` and on any
+    verdict but CLEAN; `phase3-strace-report.py` answers NOT CLEAN on a trace with 0 processes, on
+    lanes output without `PROBE_DONE`, and on a relative path it cannot resolve (UNRESOLVED). The trace
+    adds `chdir, fchdir, rename*, unlink*, symlink*, link*, mkdir*` and `-y`; relative paths resolve
+    against their dirfd or the process's cwd. The raw traces are kept (`evidence/phase3-strace-raw.tgz`).
+    The summary counts every path by class — company home · repository node_modules · repository
+    packages · named residue under the real `~` · other — instead of "construction files reached (0)".
+    Proven on fabricated trace dirs: empty → not CLEAN; a relative `.claude/settings.json` open from
+    cwd=<repo> → LEAK; a write into <repo> → LEAK; a rename into `~/.claude` → LEAK.
+38. Live, after the lead's build and restart: the strace probe over chat and task with `HOME=<home>` →
+    CLEAN, the named-residue class under the real `~` expected 0 (it moves into the company home);
+    receipts unchanged (chat `tools=0 mcp=0`, task `tools=24 mcp=1`, dxb-mcp connected); canaries
+    ABSENT; `env -i … CLAUDE_CONFIG_DIR=<home> HOME=<home> <bundled claude> auth status` →
+    `loggedIn: true` before the restart. (The lead's item; the fork does not run it.)
+39. The lead, after fork 6 (found by it, fixed by the lead): a company call's dxb-mcp child still finds
+    the holding's own ffmpeg/ffprobe — `resolveMediaBinary()` (packages/shared/src/media-probe.ts) looks
+    in the passwd home's `~/.local/bin`, not `$HOME`'s (HOME is the company home now). Red before
+    (`/usr/bin/ffmpeg`), green after — evidence/phase3-media-home.txt.
+40. The lead, after the first battery on fork 6's tree went red (9, all in company-isolation.test.ts):
+    inside the construction sandbox HOME is `/tmp/home` while the passwd home of `dxbbuild` is
+    `/home/dxbbuild`, so the tests' expectations built from `homedir()` parted from the code's
+    `userInfo().homedir`. The tests now name the passwd home; claude-mem's default database path is the
+    passwd home's too (refused by default everywhere). Sandboxed 132 passed / 1 skipped (the ffmpeg case,
+    no binary for dxbbuild), host 133 — evidence/phase3-sandbox-home.txt, battery-phase3-fix-red.txt.
