@@ -1,0 +1,12 @@
+── CODEX_HOME=/home/dxb/.codex · exit 0
+answer: (1) PRESENT (2) PRESENT
+stderr lines naming rmcp: 1
+stderr lines naming mcp: 1
+  2026-10-03T11:44:58.465364Z ERROR rmcp::transport::worker: worker quit with fatal: Transport channel closed, when AuthRequired(AuthRequiredError { www_authenticate_header: "Bearer resource_metadata=\"
+── CODEX_HOME=/home/dxb/.local/share/dxb/company-codex · exit 0
+answer: (1) ABSENT (2) ABSENT
+stderr lines naming rmcp: 0
+stderr lines naming mcp: 0
+── CODEX_HOME=company home · model gpt-5.5 (the gate's second challenger) · exit 0
+answer: ok
+stderr lines naming rmcp: 0

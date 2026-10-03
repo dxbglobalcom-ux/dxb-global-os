@@ -17,7 +17,8 @@
 // loop does not feed the receipt first. A runtime launch of `claude` is refused outright — a company
 // model call goes through `query()`. Its limit: a program name assembled at run time outside the
 // file is beyond any static reading; the receipts and the live probe are the run-time witnesses.
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { chmodSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { homedir, tmpdir } from "node:os";
 import { basename, join, relative } from "node:path";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
@@ -766,5 +767,86 @@ describe("companyIsolation() and its receipt", () => {
     const see = isolationReceipt("qa", (line) => lines.push(line));
     see({ type: "result", usage: { input_tokens: "lots", cache_read_input_tokens: 9 } });
     expect(lines).toEqual(["[isolation] lane=qa session=? tools=? mcp=? plugins=? skills=? agents=? hooks=0 input=9"]);
+  });
+});
+
+// ── Phase 2 — the critical gate's Codex (CEO 2026-10-03, option (b): the company's own login) ────
+// Measured that day: run from ~/.codex, the gate's challengers loaded the construction's global Codex
+// notes (AGENTS.md) and started its MCP servers; `--ignore-user-config`, `--ignore-rules` and
+// `-c project_doc_max_bytes=0` left the notes in; a clean CODEX_HOME holding only a login dropped
+// both. Only the gate launches codex, and the last word of its env is the company's own home.
+
+const GATE = "packages/orchestrator/src/critical-gate.ts";
+
+/** `env: { …, CODEX_HOME: companyCodexHome() }` — the company home is the LAST word, so nothing after it overrides it. */
+function namesCompanyHome(env: ts.Expression | null): boolean {
+  if (!env || !ts.isObjectLiteralExpression(env)) return false;
+  const last = env.properties[env.properties.length - 1];
+  if (!last || !ts.isPropertyAssignment(last) || nameText(last.name) !== "CODEX_HOME") return false;
+  const v = unwrap(last.initializer);
+  return ts.isCallExpression(v) && ts.isIdentifier(v.expression) && v.expression.text === "companyCodexHome" && v.arguments.length === 0;
+}
+
+describe("company isolation — the critical gate's Codex runs from the company's own home", () => {
+  const codex = SOURCES.flatMap((s) => analyzeLaunches(s.rel, s.text).launches).filter((l) => l.program === "codex");
+
+  it("finds the gate's codex launch, and no other", () => {
+    expect(codex.map((l) => l.file)).toEqual([GATE]);
+  });
+
+  it("the gate's launch ends its env with CODEX_HOME: companyCodexHome()", () => {
+    expect(codex.filter((l) => !namesCompanyHome(l.env)).map((l) => l.where)).toEqual([]);
+  });
+
+  const launch = (opts: string): Launch => {
+    const text = `import { execFile } from "node:child_process";\nexecFile("codex", ["exec"], { timeout: 1${opts} }, () => {});\n`;
+    return analyzeLaunches("x/src/gate.ts", text).launches[0];
+  };
+
+  it("reads the honest env", () => {
+    expect(namesCompanyHome(launch(", env: { ...process.env, CODEX_HOME: companyCodexHome() }").env)).toBe(true);
+  });
+
+  it.each([
+    ["the environment spread after the home", ", env: { CODEX_HOME: companyCodexHome(), ...process.env }"],
+    ["no env at all", ""],
+    ["an env it cannot read", ", env: e"],
+    ["the construction's home", ', env: { ...process.env, CODEX_HOME: "/home/dxb/.codex" }'],
+    ["the helper given an argument", ", env: { ...process.env, CODEX_HOME: companyCodexHome({}) }"],
+  ])("refuses %s", (_name, opts) => {
+    expect(namesCompanyHome(launch(opts).env)).toBe(false);
+  });
+
+  it("the real runner hands a stand-in codex the company home, never the construction's ~/.codex", async () => {
+    const box = mkdtempSync(join(tmpdir(), "company-codex-"));
+    try {
+      const bin = join(box, "bin");
+      mkdirSync(bin);
+      // The stand-in answers like `codex exec -o <file>`: it writes what it was handed, so no model is called.
+      writeFileSync(
+        join(bin, "codex"),
+        '#!/usr/bin/env bash\nwhile [ $# -gt 0 ]; do [ "$1" = "-o" ] && out="$2"; shift; done\nprintf \'{"codex_home":"%s"}\' "$CODEX_HOME" > "$out"\n',
+      );
+      chmodSync(join(bin, "codex"), 0o755);
+      const home = join(box, "company-codex");
+      const { codexRunner, companyCodexHome } = await import("../../packages/orchestrator/src/critical-gate.js");
+      const saved = { PATH: process.env.PATH, HOME_: process.env.DXB_COMPANY_CODEX_HOME };
+      process.env.PATH = `${bin}:${process.env.PATH}`;
+      process.env.DXB_COMPANY_CODEX_HOME = home;
+      try {
+        expect(companyCodexHome()).toBe(home);
+        const res = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000 });
+        expect(res.ok).toBe(true);
+        expect(JSON.parse((res as { raw: string }).raw)).toEqual({ codex_home: home });
+      } finally {
+        process.env.PATH = saved.PATH;
+        if (saved.HOME_ === undefined) delete process.env.DXB_COMPANY_CODEX_HOME;
+        else process.env.DXB_COMPANY_CODEX_HOME = saved.HOME_;
+      }
+      // with no override, the company home is its own place — not the construction's ~/.codex
+      expect(companyCodexHome({} as NodeJS.ProcessEnv)).toBe(join(homedir(), ".local", "share", "dxb", "company-codex"));
+    } finally {
+      rmSync(box, { recursive: true, force: true });
+    }
   });
 });

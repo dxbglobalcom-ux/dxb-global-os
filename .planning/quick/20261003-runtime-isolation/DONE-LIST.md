@@ -95,7 +95,14 @@ only the login drops the notes and starts no MCP server.
     the construction's `~/.codex/auth.json`).
 12. The gate probe in the company home (gate flags, temp cwd) → the global notes ABSENT, no MCP
     server started (stderr has no `rmcp`/`mcp` line).
-13. `tests/governance/company-isolation.test.ts` → every runtime `execFile("codex", …)` passes an
-    `env` whose `CODEX_HOME` is the company home; the construction's `~/.codex` is never used.
-14. `pnpm typecheck`, the gate's own tests, `pnpm build`, `systemctl --user restart dxb-scheduler`;
-    Sol re-checks the phase-2 diff.
+13. `tests/governance/company-isolation.test.ts` → red on the gate without the change (2 failed: the
+    env test and the stand-in runner), green with it: the only runtime launch of `codex` — in any form
+    the launch ruler reads (named, namespace, promisified, a const program) — is the gate's, and the
+    LAST word of its literal `env` is `CODEX_HOME: companyCodexHome()` (an environment spread after it,
+    no env, an unreadable env, the construction's home, the helper given an argument: each refused);
+    the real `codexRunner` hands a stand-in `codex` on PATH the company home (no model called).
+14. `pnpm typecheck`, the gate's own tests (`tests/c9/critical-gate.test.ts`), `pnpm build`,
+    `pnpm construction:battery`, `systemctl --user restart dxb-scheduler`; Sol audits the phase-2 diff
+    (evidence: gate-probe.txt — from `~/.codex` both canaries PRESENT and an `rmcp` start-up error on
+    stderr; from the company home both ABSENT, no such line; the gate's second model `gpt-5.5` answers
+    there too; company-codex-login.txt — its own `auth.json`, its own inode, one link).

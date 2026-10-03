@@ -1,0 +1,5 @@
+── item 11, 2026-10-03T13:45:37+02:00
+company home login: Logged in using ChatGPT
+~/.codex/auth.json: inode 4096246 · hard links 1 · symlink no
+~/.local/share/dxb/company-codex/auth.json: inode 9181585 · hard links 1 · symlink no
+company home holds: .sandbox_migration auth.json cache goals_1.sqlite goals_1.sqlite-shm goals_1.sqlite-wal installation_id log logs_2.sqlite memories_1.sqlite memories_1.sqlite-shm memories_1.sqlite-wal models_cache.json plugins queue_1.sqlite queue_1.sqlite-shm queue_1.sqlite-wal shell_snapshots skills state_5.sqlite state_5.sqlite-shm state_5.sqlite-wal tmp 

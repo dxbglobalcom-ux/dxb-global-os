@@ -17,11 +17,13 @@
 // separate from the subscription. `~/.codex/auth.json` carries subscription
 // tokens and no OPENAI_API_KEY, and `codex exec` answers on that lane. The CLI
 // runs read-only, ephemeral and outside any git repo: a challenger reasons
-// about text and must never touch this repository.
+// about text and must never touch this repository. Since 2026-10-03 it runs from
+// the company's own Codex home (companyCodexHome() below), never the
+// construction's ~/.codex.
 
 import { execFile } from "node:child_process";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
 import { z } from "zod";
 import { getDb } from "@dxb/shared";
@@ -147,7 +149,19 @@ function buildPrompt(input: CriticalGateInput): string {
 }
 
 /**
- * Default transport: `codex exec` in subscription mode.
+ * The company's own Codex home (CEO 2026-10-03, option (b): "B önerisini de yapalım … kodeksle
+ * ilgili") — the company's own login and nothing of the construction's `~/.codex`. Measured that
+ * day: from `~/.codex` the gate's challengers loaded the construction's global Codex notes
+ * (`AGENTS.md`) and started its MCP servers; `--ignore-user-config`, `--ignore-rules` and
+ * `-c project_doc_max_bytes=0` left the notes in; a clean `CODEX_HOME` holding only a login dropped
+ * both. `DXB_COMPANY_CODEX_HOME` moves it.
+ */
+export function companyCodexHome(env: NodeJS.ProcessEnv = process.env): string {
+  return env.DXB_COMPANY_CODEX_HOME ?? join(homedir(), ".local", "share", "dxb", "company-codex");
+}
+
+/**
+ * Default transport: `codex exec` in subscription mode, from the company's own Codex home.
  *
  * Flags chosen deliberately:
  *   --skip-git-repo-check  the sandbox cwd is not a repo
@@ -183,7 +197,7 @@ export const codexRunner: ChallengerRunner = async ({ model, prompt, timeoutMs }
           dir,
           prompt,
         ],
-        { timeout: timeoutMs, maxBuffer: 8 * 1024 * 1024 },
+        { timeout: timeoutMs, maxBuffer: 8 * 1024 * 1024, env: { ...process.env, CODEX_HOME: companyCodexHome() } },
         (err) => (err ? reject(err) : resolve()),
       );
       child.stdin?.end();

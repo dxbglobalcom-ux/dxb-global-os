@@ -1,0 +1,104 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/governance/company-isolation.test.ts (55 tests | 2 failed) 155ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > reads every SDK import and every use of query() it finds — nothing it cannot follow 1ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > finds exactly the eight company lanes, each once 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() once, sets nothing off the list, and feeds its receipt first 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > no runtime code launches `claude`, and every launch in a file that names claude or codex is readable 28ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > passes the honest shape — an aliased named import, the helper spread, the receipt first 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a namespace import 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses require() 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a dynamic import() 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a re-export 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses an alias of query 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses query handed on as a value 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settingSources after the helper 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settings after the helper 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses persistSession through a conditional spread 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a spread the ruler cannot see into 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses env 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses plugins 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses resume 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses mcpServers not from the compiled profile 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a computed option name 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses the helper switched off by its argument 2ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses no helper at all 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses options that are not a literal 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt named only in a comment 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt fed after the result can leave 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt with its own sink 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a stream not held in a const 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a helper that is not the kernel's 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > reads the profile keys only from buildSdkToolOptions() 2ms
+   ✓ the launch ruler refuses a runtime `claude` > lets an honest launch through 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a named launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a namespace launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a default-import launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a promisified launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program held in a const 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a shell line 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program the ruler cannot name, beside a claude string 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses child_process by require() 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a launcher handed on, beside a codex string 0ms
+   ✓ companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors 4ms
+   ✓ companyIsolation() and its receipt > the compiled profile keeps strictMcpConfig true — the lanes that pass it after the helper cannot loosen it 4ms
+   ✓ companyIsolation() and its receipt > DXB_WORKER_ISOLATION=0 is the rollback shape 0ms
+   ✓ companyIsolation() and its receipt > prints one line per result — the lane, the run's own session, what it loaded, what it read 0ms
+   ✓ companyIsolation() and its receipt > names what a leaking run loaded, the hooks it fired included, so the line shows it 0ms
+   ✓ companyIsolation() and its receipt > never touches the call: a sink that throws and messages of any shape pass through quietly 1ms
+   ✓ companyIsolation() and its receipt > an odd token count reads as zero, never as a broken line 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > finds the gate's codex launch, and no other 0ms
+   × company isolation — the critical gate's Codex runs from the company's own home > the gate's launch ends its env with CODEX_HOME: companyCodexHome() 5ms
+     → expected [ Array(1) ] to deeply equal []
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > reads the honest env 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the environment spread after the home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses no env at all 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env it cannot read 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the construction's home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the helper given an argument 0ms
+   × company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex 94ms
+     → companyCodexHome is not a function
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the gate's launch ends its env with CODEX_HOME: companyCodexHome()
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "packages/orchestrator/src/critical-gate.ts:168",[39m
+[31m+ ][39m
+
+ ❯ tests/governance/company-isolation.test.ts:798:79
+    796| 
+    797|   it("the gate's launch ends its env with CODEX_HOME: companyCodexHome…
+    798|     expect(codex.filter((l) => !namesCompanyHome(l.env)).map((l) => l.…
+       |                                                                               ^
+    799|   });
+    800| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+TypeError: companyCodexHome is not a function
+ ❯ tests/governance/company-isolation.test.ts:837:16
+    835|       process.env.DXB_COMPANY_CODEX_HOME = home;
+    836|       try {
+    837|         expect(companyCodexHome()).toBe(home);
+       |                ^
+    838|         const res = await codexRunner({ model: "stand-in", prompt: "p"…
+    839|         expect(res.ok).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 53 passed (55)
+   Start at  13:44:06
+   Duration  778ms (transform 76ms, setup 0ms, collect 369ms, tests 155ms, environment 0ms, prepare 30ms)
+
