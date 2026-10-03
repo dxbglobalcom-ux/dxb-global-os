@@ -25,7 +25,7 @@ measured outcomes take the past tense.
 
 | Check | What it proves |
 |---|---|
-| `pnpm test` (vitest) | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
+| `pnpm construction:battery` (vitest, both halves — the sandboxed and the host one; `BATTERY_GREEN`) | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
 | `bash scripts/research-ruler.sh` | only when the research engine changed — the commit hook runs it by itself; `accept.sh` is the live half and is run before a claim that the engine works |
 | `bash scripts/persona-ruler.sh` | only when a persona under the ruler's contract changed — the writing and the doctrine of those seats, by the one metre the battery case (`tests/personas/persona-ruler.test.ts`) and the DB gate (`scripts/sync-personas-to-db.sh`) both run |
 | `pnpm typecheck` (`tsc --build`) | the interfaces still hold |
@@ -58,8 +58,9 @@ pasted into the evidence, and the blast radius measured.
 ## Traps this project has already paid for
 
 - **Shipping runtime code is not shipping until the resident services are restarted** in the same
-  turn (`systemctl --user restart dxb-scheduler dxb-jarvis`), and that restart is part of the
-  evidence. A stale resident silently answered the CEO with pre-session code once.
+  turn (`systemctl --user restart dxb-scheduler`; `dxb-jarvis` is stopped and disabled and is not
+  started <!-- CEO-OK: dxb-verify-battery-and-restart-lines-2026-10-03 -->), and that restart is part
+  of the evidence. A stale resident silently answered the CEO with pre-session code once.
 - **Live-database tests must be state-independent.** A case that books "today" passes until the
   feature actually runs in production, then fails forever. Book a day the company will never live
   through, or fixture your own row.

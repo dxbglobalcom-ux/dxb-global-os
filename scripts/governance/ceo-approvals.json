@@ -1890,5 +1890,13 @@
     "conditions": "First done in session 32178f5b's handover note, after his question 'devredilen session herşeyi bilecek mi konuştuklarımızı talepleri mi vs.'. 'kural yapar mısın' is his word to make it a standing rule. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session 32178f5b — heard first-hand, 2026-10-03.",
     "where": ".claude/skills/dxb-team2/SKILL.md §8 · Codex mirror"
+  },
+  "dxb-verify-battery-and-restart-lines-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "The dxb-verify door's two wrong lines corrected: its check table named `pnpm test` (vitest alone) where the battery is `pnpm construction:battery` (both halves, the sandboxed and the host one); its restart trap said `systemctl --user restart dxb-scheduler dxb-jarvis`, and dxb-jarvis is stopped and disabled — a restart would start it. The trap now restarts dxb-scheduler and says dxb-jarvis is not started.",
+    "verbatim": "dxb-verify düzeltmesine evet",
+    "conditions": "Answering the one-word question carried since session 5ed74ad7 (STATE, 'Waiting on his approval': 'dxb-verify's two-line fix … Recommended: evet'). Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-verify/SKILL.md (the check table's first row, the restart trap) · Codex mirror"
   }
 }
