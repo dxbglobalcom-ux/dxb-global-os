@@ -37,32 +37,31 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
   (sandboxed 1,113 · host 266); `dxb-scheduler` restarted 15:03:48 on this build. No second round.
   - Measured, not met (done-list 21): the chat lane's claude CLI still opens the construction's settings
     files and plugin manifests (none applied), lists the repository and writes into `~/.claude` —
-    closed only by a company working folder and Claude home (waits on him, below).
+    closed by phase 3 (Next 1, his evet).
 - **Doors** (all audited by Sol, one pass, `bec00f77^..e04e12be`): dxb-start slimmed, Fable at three
   points, the handover carries the transcript, the auditor never re-grades (`8202740c`, permanent),
   dxb-verify's battery and restart lines (`e7117fce`) and dxb-hamza-context's restart (`e04e12be`) on
   his words. Sol refuted "nothing is lost": five rules the slimming dropped are back with their owners
   (`49d61b5f`, a fork; `SOL-DOORS.md`).
+- **Handover quotes** (`handover-quotes-conversation-verbatim-2026-10-03`): a note may quote him
+  verbatim from the conversation, marked so — dxb-team2 §8.
 - **The fork, measured on a real job** — fork 1 (the isolation fixes): 29.1 min, 444,212 new tokens,
   start-up 2,860 new over 158,146 read from the lead's cache, ~268k tokens of work kept out of the lead's
   context, battery green. Forks 2 and 3 (small fixes): 2.4 and 2.8 min, 40,644 and 48,908 new.
 
 ## Next
 
-1. The orchestration design for dxb-team2 — after this job, on his word ("dxbteam2 için sistemini bu
+1. Isolation phase 3 on his "evet" (`company-claude-home-2026-10-03`): the company's Claude runs get
+   their own working folder and Claude home — the same membership, his one login (an identity step;
+   he is told the moment). Closes done-list 21. A short plan to him once, then build, one Sol pass.
+2. The orchestration design for dxb-team2 — after this job, on his word ("dxbteam2 için sistemini bu
    işten sonra yapıcaz"): from the fork measurements above, Fable consulted, no A/B experiment for its
    own sake; the lead picks the arrangement per job and writes it, with why, on the card.
-2. His question of 2026-10-01 ~21:55: why a locked tool is not resolved by the system itself, and why
+3. His question of 2026-10-01 ~21:55: why a locked tool is not resolved by the system itself, and why
    the alert comes to him instead of to the one who should fix it.
 
 ## Waiting on his approval
 
-- The company's own Claude working folder and Claude home — the same membership, his one login —
-  closes done-list 21. Recommended: evet. Not answered.
-- dxb-team2 §8 says a handover note carries "his words of this job verbatim", and the same paragraph
-  (his ledger entry handover-at-50-without-asking-2026-10-01) says he is quoted only from the ledger —
-  older than today. Recommended: verbatim from the conversation too, marked so (the transcript path
-  in every note makes it checkable). Not answered.
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 

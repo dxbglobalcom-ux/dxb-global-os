@@ -189,8 +189,9 @@ Correction required:
   traps met, the first message the successor sends; session-only orders marked as such; last, the
   path of this session's own conversation — `~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl`
   — with the line *if anything here is unclear, read the part you need there*), `wl-copy`'d
-  <!-- CEO-OK: handover-carries-transcript-2026-10-03 -->. He is quoted only from the ledger
-  (`scripts/governance/ceo-approvals.json`), never composed in his first person.
+  <!-- CEO-OK: handover-carries-transcript-2026-10-03 -->. He is quoted verbatim — from the ledger, or
+  from this conversation marked so <!-- CEO-OK: handover-quotes-conversation-verbatim-2026-10-03 --> —
+  never composed in his first person.
   The successor opens with the same model and effort as this session, in a VS Code editor-area
   terminal, through `operator` (look first; if the CEO is typing, wait): `operator key ctrl+shift+p`
   → `operator type "Terminal: Create New Terminal in Editor Area"` → `operator key Return` →

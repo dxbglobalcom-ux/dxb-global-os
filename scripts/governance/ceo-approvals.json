@@ -1789,7 +1789,7 @@
   },
   "handover-at-50-without-asking-2026-10-01": {
     "date": "2026-10-01",
-    "what": "The handover at 50 % context stays and is the engineer's, without asking him. It replaces handover-prompt-only-on-his-session-request-2026-09-15 in dxb-start Phase 5; the note still quotes him only from this register.",
+    "what": "The handover at 50 % context stays and is the engineer's, without asking him. It replaces handover-prompt-only-on-his-session-request-2026-09-15 in dxb-start Phase 5. (Its clause on quoting him only from this register was deleted on his word of 2026-10-03, handover-quotes-conversation-verbatim-2026-10-03.)",
     "verbatim": "yüzde 50 devir notu kalsın bana sorulmasına gerek yk. b53 kapat 4ü yap. 1 ise sonra konuşruz. dxb team2 konuşcaz snra",
     "conditions": "",
     "session": "Opus 5.5 session a214423a — heard first-hand, 2026-10-01.",
@@ -1906,5 +1906,21 @@
     "conditions": "Answering the lead's one-line question after the dxb-verify fix (ledger dxb-verify-battery-and-restart-lines-2026-10-03): the same wrong line stood in dxb-hamza-context, and his earlier yes named dxb-verify alone. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",
     "where": ".claude/skills/dxb-hamza-context/SKILL.md (rule 5, Restart the residents) · Codex mirror"
+  },
+  "handover-quotes-conversation-verbatim-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "A handover note may quote him verbatim from the handing-over session's own conversation, marked so, as well as from this register — never composed in his first person. The conversation's path, which every note now ends with (handover-carries-transcript-2026-10-03), makes each such quote checkable. LAW A: the clause 'the note still quotes him only from this register' is deleted from handover-at-50-without-asking-2026-10-01.",
+    "verbatim": "2.ye evet, 1.ye de evet",
+    "conditions": "'2.ye' answers question 2 under 'Sizi bekleyen' in session cbedb76a's report: 'Devir notu sizi bu konuşmadan da kelimesi kelimesine alıntılayabilsin mi? Alıntılar \"konuşmadan\" diye işaretlenir. Konuşma dosyası artık her notta olduğu için alıntı kontrol edilebilir. Önerim: evet.' He first asked for an example ('2.yi tam anlamadım örnek verir misin') and was given today's: his session-only order 'denetim tek seferde olsun…' reached the successor only as a verbatim quote from the conversation. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §8 · Codex mirror"
+  },
+  "company-claude-home-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "The company's Claude runs get their own working folder and their own Claude home — the same membership, his one login — so a company call opens nothing of the construction. Measured before it (runtime-isolation done-list 21): under strace the chat lane's claude CLI opened the construction's settings files and plugin manifests (none applied), listed the repository and wrote ~/.claude.json and ~/.claude/sessions/<pid>.json. Phase 3 of runtime-isolation-2026-10-03.",
+    "verbatim": "2.ye evet, 1.ye de evet",
+    "conditions": "'1.ye de evet' answers question 1 under 'Sizi bekleyen' in session cbedb76a's report: 'Şirketin Claude'u için ayrı çalışma klasörü ve ayrı Claude klasörü kurulsun mu? Üyelik aynı kalır; yalnız bir kez sizin giriş yapmanız gerekir. Önerim: evet.' Earlier the same day: 'şirkette inşaatta aynı claude code üyeliğini kullanacak tabiki'. The login is his identity step. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",
+    "where": "packages/kernel/src/sdk-isolation.ts (companyIsolation) · the company Claude home · .planning/quick/20261003-runtime-isolation/ (phase 3)"
   }
 }

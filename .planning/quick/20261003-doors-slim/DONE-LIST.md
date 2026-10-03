@@ -21,10 +21,9 @@ aynı hata ikinci kez olunca ve 'bitti' demeden önce." (ledger fable-three-chec
    Sol's doors audit (SOL-DOORS.md, B1-B5) found five rules with no owner left. Each moves to its owner,
    and each command below finds nothing before the move and finds the rule after it:
    2a. B1, old lines 80-83 → dxb-team2 §8: the handover note is written in the author's own voice; he
-       is quoted only from the ledger, never composed in his first person (as the ledger entry
-       handover-at-50-without-asking-2026-10-01 holds it: "the note still quotes him only from this
-       register"; the fork's first wording widened it to the conversation — the lead's brief had, and
-       it went back). `grep -n "never composed in his first person" .claude/skills/dxb-team2/SKILL.md`
+       is quoted verbatim — from the ledger, or from this conversation marked so — never composed in
+       his first person. (At the audit the ledger allowed the ledger only, and the fork's widening went
+       back; after the audit his word widened it — handover-quotes-conversation-verbatim-2026-10-03.) `grep -n "never composed in his first person" .claude/skills/dxb-team2/SKILL.md`
    2b. B2, old lines 68-70 → dxb-verify: the tests a change needs follow its risk — a targeted test for
        a local change, an integration test at a boundary, a security check wherever authorisation,
        secrets or isolation move. `grep -n "targeted test for a local change" .claude/skills/dxb-verify/SKILL.md`
