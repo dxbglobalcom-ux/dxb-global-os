@@ -1925,7 +1925,7 @@
   },
   "plan-max-orchestration-high-2026-10-03": {
     "date": "2026-10-03",
-    "what": "Very important plans and architecture are made by Opus 5.5 at max; everything after them runs as orchestration at high. To be written into dxb-team2 with the orchestration design (STATE Next), as a note on that subject.",
+    "what": "Very important plans and architecture are made by Opus 5.5 at max; everything after them runs as orchestration at high. To be written into dxb-team2 with the orchestration design (STATE Next), as a note on that subject. Sharpened the same day by design-plan-architecture-at-max-2026-10-03: every design, plan and architecture task runs at max.",
     "verbatim": "şimdi normalde ben çok önemli plan ve mimari de bu arada opus 5.5'un max ile plan yapmasını lakin bunun dışında her zaman orkestrasyonu high ile yapmasını istiyorum. bunu da dxb-team2 planına eklersen sevinirim. yani plan ve mimari maxla yapıldıktan sonra bunun dışındaki süreç high orkestrasyonunda ilerlesin.not olarak eklensin bu da bu konuyla iligli.",
     "conditions": "Said in session cbedb76a right after he set this session's effort to high (/effort). A session cannot change its own effort mid-run; how a max plan is made inside a high-led job is the design's to measure. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",
@@ -1962,5 +1962,13 @@
     "conditions": "Answering question 2: '\"Sol tek tur denetler, düzeltmeyi fork ya da yardımcı yapar, ikinci tur yok\" kuralı da bu işe özeldi. Kalıcı olsun mu? Önerim: evet.' Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session 79e77b01 — heard first-hand, 2026-10-03.",
     "where": ".claude/skills/dxb-team2/SKILL.md §3/§6 — to be changed by the successor session"
+  },
+  "design-plan-architecture-at-max-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "Design, plan and architecture are carried out by Opus 5.5 at max — writing the approved orchestration design into dxb-team2 is such work; the orchestration after it runs at high. Sharpens plan-max-orchestration-high-2026-10-03 (no 'very important' filter; design named). To be written into dxb-team2 with the orchestration design.",
+    "verbatim": "effor neden high olsun ki plan ve mimari yapmayacak mı? ben ce max olmalı zaten aslında dxbteam2 de de ben bunu istiordum tasarım plan mimari kesinlikle opus max olarak gerçekleştirmeli bu görevi",
+    "conditions": "Correcting the lead's handover advice (effort high for writing the door, 'the plan moment is past'). Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 79e77b01 — heard first-hand, 2026-10-03.",
+    "where": ".claude/skills/dxb-team2/SKILL.md (with the orchestration design) · the handover note"
   }
 }

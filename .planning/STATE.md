@@ -47,7 +47,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Next
 
-1. Write the approved orchestration design into dxb-team2 (high effort; the plan moment is past):
+1. Write the approved orchestration design into dxb-team2 at Opus 5.5 `max` — design, plan and
+   architecture (his word, `design-plan-architecture-at-max-2026-10-03`); the orchestration after it at `high`:
    the three arrangements with no "when to choose" line; the card's new fields (arrangement + why ·
    minutes · new tokens · cost · Sol's findings); the fork's two seen weaknesses as procedure — the
    lead's brief cites registered sources only (fork 3 inherited a widening from the brief), and the
