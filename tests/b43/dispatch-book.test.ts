@@ -212,11 +212,13 @@ describe("B43 plan ② · the dispatch book — pure", () => {
   });
 
   it("runs seats in SDK isolation unless DXB_WORKER_ISOLATION=0", () => {
-    // CEO 2026-10-03: `settingSources: []` alone still loaded the construction's auto-memory
+    // CEO 2026-10-03: `settingSources: []` alone still loaded the construction's auto-memory, and
+    // without `strictMcpConfig` the claude.ai account's connectors still mounted
     expect(companyIsolation({ DXB_REPO_ROOT: "/r" } as NodeJS.ProcessEnv)).toEqual({
       settingSources: [],
       settings: { autoMemoryEnabled: false },
       persistSession: false,
+      strictMcpConfig: true,
       cwd: "/r",
     });
     expect(companyIsolation({ DXB_WORKER_ISOLATION: "0" } as NodeJS.ProcessEnv)).toBeNull();

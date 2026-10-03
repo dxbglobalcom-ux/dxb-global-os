@@ -1,0 +1,26 @@
+# run-lanes-probe.sh, FIRST run 2026-10-03 ~13:35 — before `strictMcpConfig: true` entered the helper.
+# Copied verbatim from the session's tool output (lines cut at 700 characters by the display); the
+# scratch file was overwritten by the second run (lanes-probe.txt). Its transcript check did not run:
+# the checker died on a no-match under `set -o pipefail` (fixed in run-lanes-probe.sh before run 2).
+shape: cwd=residents' WorkingDirectory db=construction:54422 claude/anthropic env names=[]
+construction: skills=17 agents=5 plugins=15
+seat finance-financial-analyst: profile servers=[dxb-mcp] allowed tools=23
+[isolation] lane=names-chat-shape session=fecce355-c9a4-4e24-a5e0-9546f4144182 tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=466
+chat-shape init: tools=0 mcp=[] plugins=[] skills=[deep-research,design-sync,dataviz,update-config,verify,debug,code-review,simplify,batch,fewer-permission-prompts,doctor,loop,schedule,claude-api,workflow-authoring,run,run-skill-generator] agents=[claude,Explore,general-purpose,Plan,statusline-setup] slash=51
+chat-shape against the construction: skills=[] agents=[] slash=[] plugins=[] servers outside the seat's profile=[] tools outside the seat's grant=[] (0)
+[isolation] lane=names-task-shape session=2ab4b94b-2f20-428d-9f6b-53d2d1a33783 tools=23 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=9138
+task-shape init: tools=23 mcp=[dxb-mcp:connected] plugins=[] skills=[deep-research,design-sync,dataviz,update-config,verify,debug,code-review,simplify,batch,fewer-permission-prompts,doctor,loop,schedule,claude-api,workflow-authoring,run,run-skill-generator] agents=[claude,Explore,general-purpose,Plan,statusline-setup] slash=50
+task-shape against the construction: skills=[] agents=[] slash=[] plugins=[] servers outside the seat's profile=[] tools outside the seat's grant=[] (0)
+[isolation] lane=chat session=3d1b9a32-0ac4-4fe6-a0d3-2909465180e6 tools=10 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=11289
+chat lane: drain={"answered":1,"failed":0}
+  ceo/answered: "(the canary question)"
+  hamza/answered: "(1) \"anti-baby-sitting\" — ABSENT\n(2) \"Hitap protokol\" — ABSENT\n(3) \"graphify\" — ABSENT\n(4) \"THE CUPBOARD\" — ABSENT"
+[isolation] lane=task session=2e618e38-6128-44e7-8da7-c717ccce7a59 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=11574
+task lane: toolSurfaceMounted=true result="{\"result\": \"anti-baby-sitting: ABSENT\\nHitap protokol: ABSENT\\ngraphify: ABSENT\\nTHE CUPBOARD: ABSENT\", \"confidence\": 0.95, \"evidence\": [], \"acceptance_map\": {}}"
+rows before={"chat_sessions":0,"chat_messages":0,"cost_ledger":0,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+rows after ={"chat_sessions":1,"chat_messages":2,"cost_ledger":1,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+rows clean ={"chat_sessions":0,"chat_messages":0,"cost_ledger":0,"audit_log":1795,"alerts":0,"memory_index":0,"agent_runs":1,"tool_calls":0}
+SESSIONS fecce355-c9a4-4e24-a5e0-9546f4144182 2ab4b94b-2f20-428d-9f6b-53d2d1a33783 3d1b9a32-0ac4-4fe6-a0d3-2909465180e6 2e618e38-6128-44e7-8da7-c717ccce7a59
+PROBE_DONE
+PROBE_EXIT=0
+── transcript check, by session id ──

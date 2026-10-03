@@ -294,8 +294,10 @@ export async function seatStandingPrompt(
   return composeSeatPrompt(employee, personaBody);
 }
 
-// Default executor: routing decided above; this function owns the SDK call.
-async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
+// Default executor: routing decided above; this function owns the SDK call. Exported (not from the
+// package index) so the task lane's isolation is proven live on its own code, without claiming a
+// task (runtime isolation, Sol's re-check 2026-10-03).
+export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
   const { rule, employee } = await resolveExecutionRoute(task);
 
   // tools:[] is DEAD on the staffed path; an unstaffed task (no agent) or an

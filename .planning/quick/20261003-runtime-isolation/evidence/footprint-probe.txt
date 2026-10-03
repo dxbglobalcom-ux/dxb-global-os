@@ -1,0 +1,6 @@
+while running: peer-registry files holding this run's session id = 1 (976488.json)
+[isolation] lane=footprint session=a1a48052-a5df-493a-b887-d056238b5f94 tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=466
+~/.claude.json paths changed around the run: 1
+  cachedGrowthBookFeaturesAt: changed
+after exit: peer-registry files holding it = 0
+PROBE_DONE

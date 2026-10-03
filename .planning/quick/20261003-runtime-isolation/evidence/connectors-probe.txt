@@ -1,0 +1,13 @@
+isolation-as-is#1 init: tools=0 mcp=[]
+isolation-as-is#1 live at the first answer: [claude.ai Claude Docs:connected(8 tools), claude.ai Kiwi.com:connected(2 tools)]
+[isolation] lane=isolation-as-is#1 session=ef71fe6b-a3d9-46c5-b421-0a483f0dea60 tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=466
+isolation-as-is#2 init: tools=10 mcp=[claude.ai Claude Docs:connected, claude.ai Kiwi.com:connected]
+isolation-as-is#2 live at the first answer: [claude.ai Claude Docs:connected(8 tools), claude.ai Kiwi.com:connected(2 tools)]
+[isolation] lane=isolation-as-is#2 session=8bcdd164-2640-4a2f-8b5f-8ea45a2b651e tools=10 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=9686
+isolation+strictMcpConfig#1 init: tools=0 mcp=[]
+isolation+strictMcpConfig#1 live at the first answer: []
+[isolation] lane=isolation+strictMcpConfig#1 session=b52bbf92-c70b-4b2a-a43f-0178e5a23af2 tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=466
+isolation+strictMcpConfig#2 init: tools=0 mcp=[]
+isolation+strictMcpConfig#2 live at the first answer: []
+[isolation] lane=isolation+strictMcpConfig#2 session=1712c248-bf0d-4e7f-824e-81bfa6b7b370 tools=0 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=466
+PROBE_DONE
