@@ -1,0 +1,25 @@
+ABOUT THE CARD ABOVE: it is shown to you for information. The CEO ruled today (2026-10-03): the auditor audits the given work at the level the card gives and does not re-grade the card — "onun görevi … sadece verilen işi verilen seviyede denetle o kadar". The line above that invites a re-grade does not apply to this audit.
+
+THE CEO'S SENTENCE (verbatim, 2026-10-03, ledger runtime-isolation-2026-10-03): "evet tabi hamza ve herşey herkes inşaattan ayrı olmalı ya! … B önerisini de yapalım. Şeyle ilgili, kodeksle ilgili." — Hamza and everything, everyone must be separate from the construction; on the Codex gate he chose (b): "Şirketin kendi girişi olur. Giriş sayfasını bir kez ben açarım, siz izin verirsiniz. Ayrılık tam olur."
+
+THIS PASS (the job's one audit of what you have not seen; your first verdict is .planning/quick/20261003-runtime-isolation/SOL-PHASE1.md):
+  Part A — 83a54e7e answers your first verdict. For each "Correction required" there, say whether the commit meets it, and refute what the fix touched.
+  Part B — 5de3595e is phase 2, the critical gate's Codex, never audited: refute it from the start.
+  Range 6e3f693b..5de3595e. The done-list: .planning/quick/20261003-runtime-isolation/DONE-LIST.md (items 10a-10d and 11-14 are new). Raw outputs: .planning/quick/20261003-runtime-isolation/evidence/ (battery.txt is this pass's battery, whole).
+
+THE PLAN'S DECISIONS — facts, not claims to re-litigate:
+- companyIsolation() in @dxb/kernel is { settingSources: [], settings: { autoMemoryEnabled: false }, persistSession: false, strictMcpConfig: true, cwd }. DXB_WORKER_ISOLATION=0 is the kept rollback shape. The working directory stays the repository root.
+- isolationReceipt(<lane>) prints one line per result to the process's stdout; for the resident that is var/scheduler.log (the unit's StandardOutput=append:).
+- The ruler tests/governance/company-isolation.test.ts is fail-closed by design: what it cannot read, it refuses. Options beside the helper are held to a list; the compiled gateway profile's keys come only from buildSdkToolOptions(). A program name assembled at run time outside the file is beyond static reading — named as its limit in its header.
+- worker-shim exports defaultExecutor (not from the package index) so the task lane is proven live on its own code.
+- The gate runs codex with env { ...process.env, CODEX_HOME: companyCodexHome() } — ~/.local/share/dxb/company-codex, his own login (done 2026-10-03 13:10), DXB_COMPANY_CODEX_HOME moves it.
+- dxb-jarvis (stopped and disabled since 2026-09-14) is not started; dxb-scheduler is restarted after this pass's battery.
+- Known, measured (evidence/footprint-probe.txt, evidence/lanes-probe.txt) and put to the CEO separately, NOT in this diff: the company's Claude runs share the user's Claude home with the construction — while a run is alive it sits in the peer registry (~/.claude/sessions/), the CLI writes its MCP debug log under ~/.cache/claude-cli-nodejs/<repo>/, and it touches ~/.claude.json. A separate Claude home needs his own login (an identity step).
+
+WHAT TO REFUTE:
+1. Does the done-list now prove what his sentence asked for, for the SDK lanes and for the gate? What does it still leave out?
+2. Can the rewritten ruler still miss a company model call or a reopened option — a form you can write that it lets through? Try it in memory, as you did on the first ruler.
+3. Does strictMcpConfig: true keep the claude.ai account's connectors out of every lane, and does any lane that passes its own strictMcpConfig (the profile) loosen it? Does the live proof (run-lanes-probe.sh, connectors-probe.mjs and their evidence) show what it claims — the lanes' own built code, the resident's shape, no transcript by session id?
+4. Phase 2: can a company Codex launch still reach ~/.codex (its env, a second launch, a path the ruler misses)? Do gate-probe.sh and company-codex-login.txt show what items 11-12 claim?
+5. Did any call site or the gate change behaviour beyond the isolation (a receipt that can throw, an option order that overrides model/effort/tools/systemPrompt, the runner's error path)?
+6. The battery (evidence/battery.txt): name every failure and whether this diff can have caused it.

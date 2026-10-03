@@ -1,0 +1,27 @@
+# Done-list — the doors after his word of 2026-10-03
+
+Written at audit time, AFTER the change (commit bec00f77, session 5ed74ad7): the job ran before its
+done-list was put on paper. Each item names what has to hold and the command that shows it.
+
+His question: "dxb-start kapısında faydalı olup diğerlerinde olmayan ne var? biz bu start kapısını
+boşuna mı yapmışız?" His word: "Diğer beni bekleyen konularda da ikinci DXP start sadeleşsin. Aynen."
+(ledger dxb-start-slimmed-2026-10-03). On Fable: "Bir de Fable'la ilgili şöyle bir şey yani tamam
+dediğiniz gibi." — answering "Fable'ı sizin belirlediğiniz üç noktaya bağlayalım: büyük plandan önce,
+aynı hata ikinci kez olunca ve 'bitti' demeden önce." (ledger fable-three-checkpoints-2026-10-03).
+
+1. `.claude/skills/dxb-start/SKILL.md` holds the read order, what not to read and a map of where things
+   are — and no copy of what dxb-team2 or the board own (approval, implementation, verification,
+   records, the handover, choosing the row). `git show bec00f77 -- .claude/skills/dxb-start/SKILL.md`.
+2. Nothing is lost: every rule deleted from dxb-start lives on in its owner — the understanding report
+   (dxb-team2 §4 INTAKE), the plan's contents (§4 PLAN), root cause before fix, the test that failed
+   first, no stub and no silent narrowing or widening (§4 BUILD); approval, verification, records and
+   the handover in dxb-team2, dxb-verify, dxb-close-row and the board.
+   `git show bec00f77^:.claude/skills/dxb-start/SKILL.md` against the doors at bec00f77.
+3. dxb-team2 §2 names Fable at the three fixed points, with his ledger id beside it.
+4. Core §4's row and the opening hook line (`.claude/hooks/spec-bootstrap.sh`, its `.codex` twin) name
+   dxb-start's new role; STATE no longer points at the deleted "Phase 0 §3".
+5. The Codex mirror equals its source: `bash scripts/governance/sync-codex-mirror.sh --check` →
+   `SYNC_OK`; `.agents/skills/` and `AGENTS.md` differ from `.claude/` only by the generator's rules.
+6. The rulers that read these files stay green: `pnpm vitest run tests/hooks/opening-budget.test.ts
+   tests/governance/ledger-truth.test.ts tests/governance/no-closure-without-his-word.test.ts
+   tests/governance/codex-mirror-check.test.ts` (raw output in evidence/).
