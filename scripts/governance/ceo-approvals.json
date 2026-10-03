@@ -1930,5 +1930,13 @@
     "conditions": "Said in session cbedb76a right after he set this session's effort to high (/effort). A session cannot change its own effort mid-run; how a max plan is made inside a high-led job is the design's to measure. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",
     "where": ".claude/skills/dxb-team2/SKILL.md (with the orchestration design) · STATE Next"
+  },
+  "isolation-phase3-plan-and-memory-path-2026-10-03": {
+    "date": "2026-10-03",
+    "what": "Phase 3 of the runtime isolation, its plan as put to him: companyIsolation() gives every company Claude call its own Claude home (CLAUDE_CONFIG_DIR, refused when it is ~/.claude or reaches it), its own empty working folder, its own cache, and drops the parent's CLAUDE* variables; his one login in that home before the restart, which waits for loggedIn true; one Sol pass, a fork for its findings. Added on his second yes: the memory router's path into the construction's claude-mem database (~/.claude-mem/claude-mem.db, readObservationByRef) is cut from company reads; a feed of construction work to Hamza, if ever wanted, is built separately and named.",
+    "verbatim": "ikisine de evet",
+    "conditions": "Answering the lead's two questions: 'Planı onaylıyor musunuz?' and 'Hafıza yolu da 3. faza eklensin mi?' (recommended: evet to both). The plan's one trip to him (dxb-team2 §4). Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session cbedb76a — heard first-hand, 2026-10-03.",
+    "where": "packages/kernel/src/sdk-isolation.ts · packages/memory-router (claude-mem reader) · .planning/quick/20261003-runtime-isolation/ (phase 3)"
   }
 }
