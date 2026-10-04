@@ -12,7 +12,7 @@
 // `head -10` back into scripts/governance/sync-codex-mirror.sh and the eleven-file case turns red.
 // TMPDIR points inside the same scratch tree, so the script's own mktemp stage lands there too.
 import { spawnSync } from "node:child_process";
-import { appendFileSync, copyFileSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
@@ -103,5 +103,61 @@ describe("sync-codex-mirror.sh rewrites only the hook paths it mirrors", () => {
     expect(door).toContain("The gate `.claude/hooks/gate.py` and its home twin `~/.claude/hooks/home-gate.py`.");
     expect(door).not.toMatch(/\.codex\/hooks\/(gate|home-gate)\.py/);
     expect(run(root, "--check").code).toBe(0);
+  });
+});
+
+// Sol's single pass on 193eea17, 2026-10-04 (B3): the substitutions did not tell a home path from a
+// repo path — `~/.claude/hooks/order.sh` became `~/.codex/hooks/order.sh` and the mirror of
+// dxb-operator named `~/.agents/skills/operator/SKILL.md`; neither folder exists on this machine. And
+// the hook-name class [A-Za-z0-9._-] missed names step 3 really copies, such as `name+extra.sh`.
+// A home path is never rewritten; a hook file path moves exactly for the names step 3 copies.
+describe("sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3)", () => {
+  const HOME_LINES = [
+    "`~/.claude/hooks/order.sh`",
+    "`~/.claude/hooks/`",
+    "`~/.claude/skills/operator/SKILL.md`",
+    "`~/.claude/CLAUDE.md`",
+    "`$HOME/.claude/hooks/order.sh`",
+    "`/home/someone/.claude/hooks/order.sh`",
+  ];
+
+  it("a home path stays exactly as written under every substitution", () => {
+    const root = scratch();
+    put(root, ".claude/skills/door-c/SKILL.md", [...HOME_LINES, ""].join("\n"));
+    const made = run(root);
+    expect(made.code, made.err).toBe(0);
+    const door = spawnSync("cat", [join(root, ".agents/skills/door-c/SKILL.md")], { encoding: "utf8" }).stdout;
+    expect(door).toBe([...HOME_LINES, ""].join("\n"));
+    expect(run(root, "--check").code).toBe(0);
+  });
+
+  it("a hook named with '+' or a space moves and is mirrored; a ghost hook and a .bak stay", () => {
+    const root = scratch();
+    put(root, ".claude/hooks/name+extra.sh", "#!/usr/bin/env bash\necho plus\n");
+    put(root, ".claude/hooks/name space.sh", "#!/usr/bin/env bash\necho space\n");
+    put(root, ".claude/skills/door-d/SKILL.md", [
+      "Plus `.claude/hooks/name+extra.sh`",
+      "Space `.claude/hooks/name space.sh`",
+      "Ghost `.claude/hooks/ghost.sh`",
+      "Backup `.claude/hooks/order.sh.bak`",
+      "Absolute /home/dxb/DxB Global OS/.claude/hooks/order.sh",
+      "",
+    ].join("\n"));
+    const made = run(root);
+    expect(made.code, made.err).toBe(0);
+    const door = spawnSync("cat", [join(root, ".agents/skills/door-d/SKILL.md")], { encoding: "utf8" }).stdout;
+    expect(door).toBe([
+      "Plus `.codex/hooks/name+extra.sh`",
+      "Space `.codex/hooks/name space.sh`",
+      "Ghost `.claude/hooks/ghost.sh`",
+      "Backup `.claude/hooks/order.sh.bak`",
+      "Absolute /home/dxb/DxB Global OS/.codex/hooks/order.sh",
+      "",
+    ].join("\n"));
+    expect(existsSync(join(root, ".codex/hooks/name+extra.sh"))).toBe(true);
+    expect(existsSync(join(root, ".codex/hooks/name space.sh"))).toBe(true);
+    const r = run(root, "--check");
+    expect(r.code, r.err).toBe(0);
+    expect(r.out).toContain("SYNC_OK mirror matches source");
   });
 });

@@ -99,7 +99,7 @@ automatic RET, passed six months of machine gates and fell to the twin's first
 run). **The author never approves his own work.** Every construction job
 (`.claude/skills/dxb-team2`) passes one independent auditor, its depth set by the
 job's score card: light → Sol `medium`, normal → Sol `high`, critical → Sol
-`xhigh` and the plan read before the code. It still fires, as before, on:
+`xhigh`. It still fires, as before, on:
 
 1. **The CEO acceptance session** (`ACCEPTANCE_CRITERIA.md`, roadmap W5.1) —
    cross-model, because a Claude auditing a Claude shares its blind spots.

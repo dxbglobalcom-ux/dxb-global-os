@@ -1,0 +1,65 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/governance/usage-cost.test.ts (2 tests | 2 failed) 47ms
+   × usage.mjs — tokens and their list-price cost > --from: executor sums unchanged in meaning, advisor block, usd, unpriced 24ms
+     → expected undefined to deeply equal { calls: 1, input: 100000, …(4) }
+   × usage.mjs — tokens and their list-price cost > without --from the early row counts 21ms
+     → expected undefined to be 10.76 // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/usage-cost.test.ts > usage.mjs — tokens and their list-price cost > --from: executor sums unchanged in meaning, advisor block, usd, unpriced
+AssertionError: expected undefined to deeply equal { calls: 1, input: 100000, …(4) }
+
+[32m- Expected:[39m 
+{
+  "cacheRead": 0,
+  "cacheWrite": 0,
+  "calls": 1,
+  "input": 100000,
+  "models": [
+    "claude-fable-5-1",
+  ],
+  "output": 10000,
+}
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/governance/usage-cost.test.ts:89:23
+     87|     expect(j.output).toBe(50_700);
+     88|     expect(j.new).toBe(11_004 + 601_000 + 50_700);
+     89|     expect(j.advisor).toEqual({
+       |                       ^
+     90|       calls: 1, input: 100_000, cacheWrite: 0, cacheRead: 0, output: 1…
+     91|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/governance/usage-cost.test.ts > usage.mjs — tokens and their list-price cost > without --from the early row counts
+AssertionError: expected undefined to be 10.76 // Object.is equality
+
+[32m- Expected:[39m 
+10.76
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/governance/usage-cost.test.ts:102:19
+    100|     expect(j.input).toBe(1_011_004);
+    101|     // 6.758016 + 4.00
+    102|     expect(j.usd).toBe(10.76);
+       |                   ^
+    103|   });
+    104| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  18:17:00
+   Duration  312ms (transform 46ms, setup 0ms, collect 12ms, tests 47ms, environment 0ms, prepare 31ms)
+

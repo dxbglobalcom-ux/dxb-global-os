@@ -93,15 +93,15 @@ itself through its one tool `sql_read` as the read-only role `sol_reader` (never
 refused by identity), so database evidence is gathered by the auditor's hand, not handed over. Record the audit-trail row counts before and after; a difference invalidates the audit.
 
 It fires once on **every construction job**, at the depth the job's score card sets (light Sol
-`medium` · normal `high` · critical `xhigh`, the plan read first) — the author never approves his
+`medium` · normal `high` · critical `xhigh`) — the author never approves his
 own work (CEO 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->; the procedure is
 `dxb-team2`). It also fires on the acceptance session, on a row whose closing evidence has a leg
 the machine cannot check, and on a defect the CEO caught — then it sweeps the **class**.
 
 **A finding is evidence, never a verdict.** The session author signs every ✓. A disputed finding
 is settled inside the team (`dxb-team2` §4 DISPUTE): a test decides; where no test can, the lead
-decides and records why — on a critical job Fable rules in its one call at the end; the lead has the
-last word. What no terminal can observe stays `⚠ UNVERIFIED`.
+decides and records why — on an important job Fable rules in its end call; the lead has the last
+word. What no terminal can observe stays `⚠ UNVERIFIED`.
 
 Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.
 

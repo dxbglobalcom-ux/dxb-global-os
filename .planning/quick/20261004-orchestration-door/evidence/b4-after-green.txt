@@ -1,0 +1,11 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/governance/usage-cost.test.ts (2 tests) 44ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  18:17:17
+   Duration  310ms (transform 44ms, setup 0ms, collect 10ms, tests 44ms, environment 0ms, prepare 32ms)
+

@@ -1,0 +1,78 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/governance/codex-mirror-check.test.ts (6 tests | 2 failed) 1235ms
+   ✓ sync-codex-mirror.sh --check (B63) > passes a mirror its own write mode has just made 174ms
+   ✓ sync-codex-mirror.sh --check (B63) > names every one of eleven stale mirror files — none is cut off 174ms
+   ✓ sync-codex-mirror.sh --check (B63) > ignores a __pycache__/*.pyc that only the source side has 173ms
+   ✓ sync-codex-mirror.sh rewrites only the hook paths it mirrors > a .sh hook and the bare hooks folder move to .codex/hooks/; a .py hook and a home path stay 295ms
+   × sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a home path stays exactly as written under every substitution 205ms
+     → expected '`~/.codex/hooks/order.sh`\n`~/.codex/…' to be '`~/.claude/hooks/order.sh`\n`~/.claud…' // Object.is equality
+   × sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a hook named with '+' or a space moves and is mirrored; a ghost hook and a .bak stay 209ms
+     → expected 'Plus `.claude/hooks/name+extra.sh`\nS…' to be 'Plus `.codex/hooks/name+extra.sh`\nSp…' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/codex-mirror-check.test.ts > sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a home path stays exactly as written under every substitution
+AssertionError: expected '`~/.codex/hooks/order.sh`\n`~/.codex/…' to be '`~/.claude/hooks/order.sh`\n`~/.claud…' // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- `~/.c[7mlau[27mde/hooks/order.sh`[39m
+[31m+ `~/.c[7mo[27mde[7mx[27m/hooks/order.sh`[39m
+[32m- `~/.c[7mlau[27mde/hooks/`[39m
+[31m+ `~/.c[7mo[27mde[7mx[27m/hooks/`[39m
+[32m- `~/.[7mclaude[27m/skills/operator/SKILL.md`[39m
+[31m+ `~/.[7magents[27m/skills/operator/SKILL.md`[39m
+[32m- `~/[7m.claude/CLAUDE[27m.md`[39m
+[31m+ `~/[7mAGENTS[27m.md`[39m
+[32m- `$HOME/.c[7mlau[27mde/hooks/order.sh`[39m
+[31m+ `$HOME/.c[7mo[27mde[7mx[27m/hooks/order.sh`[39m
+[32m- `/home/someone/.c[7mlau[27mde/hooks/order.sh`[39m
+[31m+ `/home/someone/.c[7mo[27mde[7mx[27m/hooks/order.sh`[39m
+
+
+ ❯ tests/governance/codex-mirror-check.test.ts:130:18
+    128|     expect(made.code, made.err).toBe(0);
+    129|     const door = spawnSync("cat", [join(root, ".agents/skills/door-c/S…
+    130|     expect(door).toBe([...HOME_LINES, ""].join("\n"));
+       |                  ^
+    131|     expect(run(root, "--check").code).toBe(0);
+    132|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/governance/codex-mirror-check.test.ts > sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a hook named with '+' or a space moves and is mirrored; a ghost hook and a .bak stay
+AssertionError: expected 'Plus `.claude/hooks/name+extra.sh`\nS…' to be 'Plus `.codex/hooks/name+extra.sh`\nSp…' // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- Plus `.c[7mo[27mde[7mx[27m/hooks/name+extra.sh`[39m
+[31m+ Plus `.c[7mlau[27mde/hooks/name+extra.sh`[39m
+[32m- Space `.c[7mo[27mde[7mx[27m/hooks/name space.sh`[39m
+[31m+ Space `.c[7mlau[27mde/hooks/name space.sh`[39m
+[32m- Ghost `.c[7mlau[27mde/hooks/ghost.sh`[39m
+[31m+ Ghost `.c[7mo[27mde[7mx[27m/hooks/ghost.sh`[39m
+[2m  Backup `.claude/hooks/order.sh.bak`[22m
+[2m  Absolute /home/dxb/DxB Global OS/.codex/hooks/order.sh[22m
+
+
+ ❯ tests/governance/codex-mirror-check.test.ts:149:18
+    147|     expect(made.code, made.err).toBe(0);
+    148|     const door = spawnSync("cat", [join(root, ".agents/skills/door-d/S…
+    149|     expect(door).toBe([
+       |                  ^
+    150|       "Plus `.codex/hooks/name+extra.sh`",
+    151|       "Space `.codex/hooks/name space.sh`",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 passed (6)
+   Start at  18:15:35
+   Duration  1.52s (transform 49ms, setup 0ms, collect 14ms, tests 1.23s, environment 0ms, prepare 36ms)
+

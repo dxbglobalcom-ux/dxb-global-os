@@ -31,18 +31,29 @@ STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 
 # The ONLY substitutions. Repo paths, nothing else, longest first.
-# A hook path moves only where the mirror really holds the file: the hooks folder itself and its
-# *.sh (step 3 copies nothing else). Any other hook path -- a .py hook in the repo, a home path
-# such as ~/.claude/hooks/dxb-cost-gate.py -- stays as written, because the mirror has no copy of
-# it (Sol's single pass, 2026-10-04: the mirror named .codex/hooks/dxb-design-max.py, which does not
-# exist).
+# A home path (`.claude/` right after ~/, $HOME/, ${HOME}/, /root/ or /home/<user>/) is never
+# rewritten: it is masked with a sentinel first and unmasked last, because ~/.codex/hooks/ and
+# ~/.agents/ do not exist (Sol's single pass on 193eea17, 2026-10-04: ~/.claude/hooks/order.sh became
+# ~/.codex/hooks/order.sh). A hook path moves only where the mirror really holds the file: the hooks
+# folder itself and each *.sh step 3 copies, its name matched literally, so `name+extra.sh` and
+# `name space.sh` move too. Any other hook path -- a .py hook, a .sh with no such file -- stays
+# (Sol, 2026-10-04: the mirror named .codex/hooks/dxb-design-max.py, which does not exist).
+HOME_MASK=$'\001'
+HOOK_RULES=()
+for f in .claude/hooks/*.sh; do
+  [ -e "$f" ] || continue
+  n="$(basename "$f" | sed 's/[\.*^$[|]/\\&/g')"
+  HOOK_RULES+=(-e "s|\\.claude/hooks/\\($n\\)\\([^A-Za-z0-9._-]\\)|.codex/hooks/\\1\\2|g"
+               -e "s|\\.claude/hooks/\\($n\\)\$|.codex/hooks/\\1|")
+done
 rewrite() {
+  sed -E "s#(~/|\\\$HOME/|\\\$\\{HOME\\}/|/root/|/home/[^/]+/)\\.claude/#\\1$HOME_MASK/#g" |
   sed -e 's|\.claude/CLAUDE\.md|AGENTS.md|g' \
       -e 's|\.claude/skills/|.agents/skills/|g' \
-      -e 's|\.claude/hooks/\([A-Za-z0-9._-]*\.sh\)\([^A-Za-z0-9._-]\)|.codex/hooks/\1\2|g' \
-      -e 's|\.claude/hooks/\([A-Za-z0-9._-]*\.sh\)$|.codex/hooks/\1|' \
+      "${HOOK_RULES[@]}" \
       -e 's|\.claude/hooks/\([^A-Za-z0-9._-]\)|.codex/hooks/\1|g' \
-      -e 's|\.claude/hooks/$|.codex/hooks/|'
+      -e 's|\.claude/hooks/$|.codex/hooks/|' |
+  sed -e "s|$HOME_MASK|.claude|g"
 }
 
 BANNER='<!-- GENERATED FILE — DO NOT EDIT BY HAND.

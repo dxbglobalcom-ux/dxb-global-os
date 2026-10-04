@@ -5,7 +5,7 @@ description: Points to the global `operator` skill. Any job that needs the scree
 
 # The screen, the mouse and the keyboard → `operator`
 
-The procedure lives once, in the global skill: `~/.agents/skills/operator/SKILL.md`. Read that
+The procedure lives once, in the global skill: `~/.claude/skills/operator/SKILL.md`. Read that
 first — it carries the command surface and the two rules that were learned the hard way.
 
 ```bash
