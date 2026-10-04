@@ -212,11 +212,8 @@ the tweet's link is still to come from him.
   `fable:` line) and item 1's (the card's measured fields checked at close, cheap in the same job) — not ordered.
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- Found in the locked-tool job, each with a recommendation; nothing is changed before his word:
-  (1) the tool manifest's serializer (`db/seed/tool-pins-manifest.ts`) drops a schema property named
-  `__proto__` (Sol's C, older than this work; manifest-add now refuses to write such a file) — recommended: fix it;
-  (2) 84 dossiers still say `Durum: dormant`/`draft` while every seat's `employment_status` is active, and 112
-  spell the line `Status:` (counts measured, not matched seat by seat) — recommended: one regeneration pass.
+- Found in the locked-tool job (his word decides): (1) the manifest serializer drops a `__proto__` schema
+  key (Sol's C, older) — fix it; (2) 84 dossiers say dormant/draft against an all-active DB — regenerate them.
 - The two found items of the orchestration job — both written on his yes <!-- CEO-OK: helpers-never-call-fable-and-global-advisor-line-scoped-2026-10-04 -->: the helper seats never call Fable; `~/.claude/CLAUDE.md`'s advisor line limited to work outside dxb-team2 (all outside the repo).
 
 ## Where things live
