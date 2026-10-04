@@ -47,25 +47,44 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Next
 
-1. Write the approved orchestration design into dxb-team2 at Opus 5.5 `max` — design, plan and
-   architecture (his word, `design-plan-architecture-at-max-2026-10-03`); the orchestration after it at `high`:
-   the three arrangements with no "when to choose" line; the card's new fields (arrangement + why ·
-   minutes · new tokens · cost · Sol's findings); the fork's two seen weaknesses as procedure — the
-   lead's brief cites registered sources only (fork 3 inherited a widening from the brief), and the
-   fork runs its targeted tests through the battery's own sandboxed runner `scripts/construction/run.sh`
-   (fork 6's nine sandbox-only failures reached only the lead's battery); the lead still runs the
-   battery. CLAUDE.md §2 "Code" and dxb-team2 §3/§6 change on his two PERMANENT words (LAW A). Mirror,
-   ledger-truth, opening budget; one Sol pass, its fixes by a fork. Today's conversation, if a
-   point is unclear: ~/.claude/projects/-home-dxb-DxB-Global-OS/79e77b01-f5d1-4a63-9a63-69e03a5fe0cf.jsonl
-2. His question of 2026-10-01 ~21:55: why a locked tool is not resolved by the system itself, and why
-   the alert comes to him instead of to the one who should fix it.
+His list of 2026-10-04 (session 9bc3fc3e), in his order — *"bunları sırayla yapalım işte ama unutulmasın
+heee arada kaynamasın"* (conversation, verbatim). One at a time; each talked through with him first.
+
+1. **C1 — the company's memory drawer on the company's desk — IN PROGRESS.**
+   <!-- CEO-OK: company-memory-drawer-2026-10-04 --> Plan, card (4, normal, Sol `high`) and done-list:
+   `.planning/quick/20261004-company-memory-drawer/PLAN.md`; code at `high`.
+2. **Tool loading — his question 9, a board row to propose.** Measured 2026-10-04: an employee gets its
+   department's whole list (finance: 24 tools, ~9.4k tokens of schemas in every task call); Claude's own
+   tools are off for employees and Hamza (`tools: []`, the July 17/19 design: Hamza talks, work goes to an
+   employee); SDK 0.3.259 can defer schemas behind tool search; Claude's 17 bundled skills and 5 agents
+   still reach every company call (whether they can be removed is unmeasured). Same subject, his words in
+   the conversation (verbatim): *"hamza zaten sınırlarını biliyor onay gerektiren şeylerin ne olduğunu
+   biliyor oyüzden claude'ın tüm becerilerini kullanabilmeli istediği zaman.bir sorun çıkarsa kapatırız.
+   yani benim holdingim benim iş istasyonu olan pc yi tam teşekküllü tüm aletlerle kullanmalı. hem
+   dışardan yüklediğimiz aletler pluginler beceriler modlar ve claude'un kendi beceri ve aletleriyle
+   birlikte."* Then he asked whether Hamza needs to know his PC at all; the lead separated doing from
+   remembering (personal tasks are done, only company work reaches the company's memory). Unanswered,
+   recommended yes: secret files (passwords, API keys, login files) and writing into the construction's
+   folder stay closed.
+3. **The prompt audit's runtime bucket (B51 move 5)** — 141 persona files still carry "Muhakeme sırası
+   sabittir / Fixed reasoning order" (counted 2026-10-04); R1-R17 in
+   `.planning/quick/20260923-prompt-audit/REPORT.md`. Waits on his B51 verdict.
+4. **A locked tool resolved by the system itself** — his question of 2026-10-01 ~21:55: why the alert
+   comes to him and not to the one who should fix it. The proposal goes with item 2.
+5. **The construction's auto-memory** — stale and contradicting entries (Burj Al Arab in 2 files; 8
+   entries naming paths not found in the repository, unchecked one by one). Waits on his word.
+
+After his list: write the approved orchestration design into dxb-team2 at Opus 5.5 `max`
+(`design-plan-architecture-at-max-2026-10-03`; the three arrangements, the card's new fields, the fork's two
+seen weaknesses as procedure, CLAUDE.md §2 "Code" and dxb-team2 §3/§6 on his two PERMANENT words — the full
+brief: ~/.claude/projects/-home-dxb-DxB-Global-OS/79e77b01-f5d1-4a63-9a63-69e03a5fe0cf.jsonl). Then the
+research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes, what they have that this
+repository lacks; the tweet's link is still to come from him.
 
 ## Waiting on his approval
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- C1 of Sol's phase-3 pass: the obsidian/graphify readers hand `ref` to `readFile` unchecked (a `ref`
-  naming `~/.claude-mem/claude-mem.db` reaches it) — close them to their own stores; recommended evet.
 
 ## Where things live
 

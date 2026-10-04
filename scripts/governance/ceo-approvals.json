@@ -1970,5 +1970,13 @@
     "conditions": "Correcting the lead's handover advice (effort high for writing the door, 'the plan moment is past'). Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session 79e77b01 — heard first-hand, 2026-10-03.",
     "where": ".claude/skills/dxb-team2/SKILL.md (with the orchestration design) · the handover note"
+  },
+  "company-memory-drawer-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "The company's memory notes (obsidian = artifact, graphify = relation) move from the repository's memory-store/ to the company's own desk, the company Claude home; the reader opens only a note of the writer's exact shape inside that folder (Sol's phase-3 C1, and the working-folder split found 2026-10-04: since phase 3 the dxb-mcp child of a company call runs in the company work folder while the scheduler's recall runs in the repository). The one live company note moves; the 32 orphaned July notes his 2026-08-23 wipe left on disk (27 company work notes and 5 test notes, 128,151 bytes, referenced by no row in either engine) are deleted. Nothing is written to the company database. Plan: .planning/quick/20261004-company-memory-drawer/PLAN.md.",
+    "verbatim": "Tamam önerini kabul ediyorum.",
+    "conditions": "Answering the lead's proposal: 'Şirketin not çekmecesi inşaatın odasından şirketin kendi masasına taşınsın mı? Not okuyucu da yalnız o çekmeceyi açar; böylece çalışanlarla Hamza notları yine aynı yerde bulur. Önerim evet.' The plan then went to him once, ending 'Evet mi? Önerim, 7. madde dahil evet.' (item 7: the 32 orphans deleted, their summary in the plan). His answer: 'tamam lakin bundan önce konuştuğumuz diğer işler 6 madde. bu sadece c1'di sanırım onlar ne olacak?' The lead said it took that 'tamam' as yes to the plan; he went on to the list without objecting. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 9bc3fc3e — heard first-hand, 2026-10-04.",
+    "where": ".planning/quick/20261004-company-memory-drawer/ · packages/memory-router · packages/outbox-executor · vitest.config.ts · .planning/STATE.md"
   }
 }
