@@ -60,11 +60,14 @@ durumdan diğer oturumları da haberdar et bilsinler kim nerede çalışıor com
   prices the tokens and counts Fable's calls. Commits `193eea17` · `79f57aef`; battery GREEN (1,179 · 266);
   Fable's end call 18:35, no objection. Job folder `.planning/quick/20261004-orchestration-door/`.
 - **The live bar** (his *"çubuk her turu canlı interaktif göstermeli mutlaka"*, conversation, verbatim) —
-  his yes 19:22 (*"çubuk için tamam evet"*), being built: in a fresh session the bar draws no `tur:` at all (no readable
+  his yes 19:22 (*"çubuk için tamam evet"*) — **finished** (not accepted — LAW B), commits `bf345ba3` · `ebb0556c`,
+  Sol `high` 2 B fixed, battery GREEN, Fable start and end. Before it: in a fresh session the bar draws no `tur:` at all (no readable
   transcript line at any render of three turns); the render's own `prompt_id` equals the hooks' and a message
   sent mid-turn keeps it; the payload's `effort.level` follows `/effort` at once. The plan: the hook writes the
   turn's id when `dxb-design-max` is called, and the bar shows `tur: max` when it equals its own id, else the
-  session's level. Card and evidence: `.planning/quick/20261004-live-turn-bar/`.
+  session's level; the bar redraws every second (`refreshInterval: 1`). Live: first turn `tur: high` → `tur: max`
+  ~3 s after the skill's call, `max` through a mid-turn message, the next prompt `tur: high` within ~1 s.
+  Card and evidence: `.planning/quick/20261004-live-turn-bar/`.
 
 2026-10-04 ~17:00 → 17:55, Opus 5.5 session e7aa0d14 (high), on his /goal *"iş devam edin sonunda fable a
 danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar içinde geçerli"* (conversation, verbatim).
@@ -165,7 +168,6 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 
-Beside his list: the live bar (session e3574313) — his yes 19:22, being built.
 
 After his list: the research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes;
 the tweet's link is still to come from him.
@@ -178,7 +180,8 @@ the tweet's link is still to come from him.
   (1) the helper seats call Fable on their own — each of this job's two helper-writers once, unasked, about half
   its cost (usage.mjs: 0.53 of 1.03 and 0.44 of 0.95 USD); `advisorModel: fable` in `~/.claude/settings.json`
   gives it to every session and subagent, and `--disallowedTools advisor` does not take it away (measured
-  18:45) — the remedy is measured on the live bar's helper before it is proposed; (2) `~/.claude/CLAUDE.md`'s line *"advisor (Fable 5.1): gerekli görüldüğü takdirde
+  18:45); one line in the brief ("do not call the advisor tool") gave 0 calls in both of the live bar's helpers —
+  recommended: that sentence in `~/.claude/agents/helper.md` and `helper-writer.md`; (2) `~/.claude/CLAUDE.md`'s line *"advisor (Fable 5.1): gerekli görüldüğü takdirde
   her zaman danışılabilir (CEO 2026-10-01)"* contradicts the card's `fable:` rule — recommended: limit it to work
   outside dxb-team2.
 

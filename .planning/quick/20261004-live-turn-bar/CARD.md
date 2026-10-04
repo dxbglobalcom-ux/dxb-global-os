@@ -35,3 +35,30 @@ his words (verbatim, session fd7d67f2, 2026-10-04): "Unutmadan: alttaki tur yaz�
 2. `pnpm --dir "/home/dxb/DxB Global OS" exec vitest run tests/hooks/statusline-effort.test.ts` — the new payload/marker cases RED before the bar changes, GREEN after; the 13 old cases stay GREEN.
 3. The pty probe's bar log: first turn `tur: high` → `tur: max` after the skill's PostToolUse; next prompt `tur: high`; raw log saved.
 4. Battery once, `BATTERY_GREEN`.
+
+## Measured
+
+Audited range `0c00005f..bf345ba3` (build); Sol's fixes `ebb0556c`. Two files outside git, their diffs in
+evidence: `~/.claude/hooks/dxb-statusline.js` (`dxb-statusline.diff`) and `~/.claude/settings.json`
+(`settings-refresh.diff`, `"refreshInterval": 1`).
+
+| Phase | When (local) | Who | USD |
+|---|---|---|---|
+| Measure + plan | 18:22 → 18:40 | lead; Fable's start call 18:23 (203,584 in · 14,661 out) | 2.77 (Fable) |
+| Build | 19:22 → 19:31 | helper-writer, 0 Fable calls (65,211 new) | 0.57 |
+| Sol's single pass | 19:31 → 19:33 | Sol `high` (Plus) | — |
+| Fixes | 19:33 → 19:40 | helper-writer for B2 (37,225 new, 0 Fable calls); the lead for B1 | 0.29 |
+| Battery | 19:40 → GREEN | 1,202 passed · 69 skipped; 266 passed | — |
+| Fable's end call | 19:44 | 412,180 in · 3,811 out — no defect, no dispute | (in the lead's) |
+| Lead, from his yes | 19:20 → 19:44 | 67,741 new, Fable's end call included | 7.69 |
+
+Sol's findings, each CLOSED, no dispute:
+- B1 — a short new turn kept the old level until it ended (the bar redraws on events): `refreshInterval: 1`;
+  `pty-bar6.log`: the next prompt's `tur: high` 0.64 s after it was sent, before the answer. A running
+  session reloaded it: this session's meter file `ts` moved every render (17:45:11 → 17:45:14 UTC).
+- B2 — the reader trusted the folder: `trustedFlagDir()` and an fstat of the marker; `fix-before-red.txt`
+  4 failed of 47 → `fix-after-green.txt` 47 of 47. A folder or marker owned by another user: not testable
+  without root (UNVERIFIED branch).
+
+Live (fresh session, a real claude in a pty): first turn `tur: high` → `tur: max` 2.8 s after the prompt (the
+skill's call); `max` through a message typed mid-turn; next prompt `tur: high`; `/effort max` shown at once.
