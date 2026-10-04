@@ -1,5 +1,5 @@
 job: Two of his orders of 2026-10-04 written where the construction reads them — the review's item 4 (the old second-round paragraph leaves ~/.claude/agents/refuter.md; dxb-team2's fallback auditor named read-only by word, not by tool) and his Fable rule of 20:58 (light job none, normal job at the start, critical job at the start and the end).
-range: 97b7181b..HEAD
+range: 41d71772..f03dfe16
 blast: 1
 risk: 2
 reasoning: 0
@@ -46,8 +46,20 @@ ambiguity: 1
 3. `grep -n -E 'normal · critical: Fable|FABLE at the end, normal|normal or critical job Fable|a normal \(3-5\) or critical' .claude/skills/dxb-team2/SKILL.md .claude/skills/dxb-verify/SKILL.md`
    → no line; `grep -n 'a normal job (3-5) `start`' .claude/skills/dxb-team2/SKILL.md` → one line (§3).
 4. `grep -c 'normal işte yalnız başta, önemli (kritik) işte başta ve sonda' ~/.claude/CLAUDE.md` → `1`.
-5. `git diff 97b7181b..<build> --stat` → the two doors, their mirrors, `.codex/hooks/spec-bootstrap.sh`, the
+5. `git diff 41d71772..f03dfe16 --stat` → the two doors, their mirrors, `.codex/hooks/spec-bootstrap.sh`, the
    ledger, this folder — nothing else (STATE.md comes in the records commit).
 6. `bash scripts/governance/sync-codex-mirror.sh --check` → exit 0.
 7. `node scripts/governance/ledger-truth.mjs` → OK, exit 0.
 8. `pnpm construction:battery` → BATTERY_GREEN.
+
+## Measured
+- **Lead** (Opus 5.5, session 89e39ac4, at `max` on his /effort): 22.5 min from his "4. maddeyi önce bitir"
+  (20:49) to the fix, 29 calls, new tokens 245,786, output 98,134, Fable advisor 1 call (125,805 in,
+  12,476 out), list price **USD 6.29** (`usage.mjs --from 2026-10-04T18:49:10Z`).
+- **Sol** (GPT-6.1 `high`, one pass, 21:04 → 21:09): 95,884 tokens (Plus; not priced) — **0 A · 1 B · 2 C**
+  (SOL.md). B1, the design eye on Fable left outside his rule (§2 row), fixed by the lead: one table row
+  and one agent description — a fork or a helper would have cost more than the two lines; verified by
+  grep, the mirror check and the ledger ruler. C1, C2 (refuter.md sends a C to the board; runs acceptance
+  commands without telling write from read) are older than this job: they stay here, for his word.
+- **Battery** on f03dfe16: BATTERY_GREEN, EXIT=0 (evidence/battery.log). After B1 (text only): the mirror
+  check SYNC_OK and the ledger ruler OK were re-run; the full battery was not re-run.

@@ -45,7 +45,7 @@ it opens `dxb-verify` and `dxb-close-row`.
 | **Writing helper** | `helper-writer` (Opus 5.5 · `medium`) | edits and tests a piece the lead specified; fixes Sol's findings | commits; widens the piece — the lead commits only what it verified <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Reader** | a one-shot subagent (`scout`, or `Explore`) | a wide search or read whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot, description `guarded:` when the path is guarded | only after the same piece failed twice at the lead's level | is opened for a routine fix |
-| **Design eye** | `design-eye` (Fable 5.1) | reads a finished surface the CEO will see, after it changed, against the design system and his design rulings | writes; advises the lead on the work, reads a plan, or rules on a dispute — it is a reader of a finished surface, not an advisor: Fable as an advisor is the Advisor row's alone, where the card's `fable:` line says (§3) |
+| **Design eye** | `design-eye` (Fable 5.1) | on a critical job only, beside Fable's end call: reads a finished surface the CEO will see, after it changed, against the design system and his design rulings | writes; advises the lead on the work, reads a plan, or rules on a dispute; is called on a light or normal job — it runs on Fable, so his Fable rule binds it (§3) <!-- CEO-OK: fable-normal-start-only-critical-start-end-2026-10-04 --> |
 
 **Fallback auditor.** Sol unavailable (quota, error, timeout): on a light or normal job a fresh
 one-shot Opus 5.5 `high` subagent audits and the record says *"audited by Opus instead of Sol —

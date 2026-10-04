@@ -1,0 +1,32 @@
+$ grep -c "İkinci tur" ~/.claude/agents/refuter.md
+0
+$ sed -n "/^\*\*Fallback auditor/,/2026-10-04 -->\./p" .claude/skills/dxb-team2/SKILL.md
+**Fallback auditor.** Sol unavailable (quota, error, timeout): on a light or normal job a fresh
+one-shot Opus 5.5 `high` subagent audits and the record says *"audited by Opus instead of Sol —
+read-only by word, not by tool — because …"*; on a critical job the lead waits for Sol's 5-hour window
+and works on something else. No job closes unaudited; the auditor is never swapped silently. The
+stand-in is a known weakness, not a licence: it has no Write or Edit, but its Bash can still write, so
+it falls short of `dxb-verify`'s audit twin, which is read-only by tool; the record names it so
+<!-- CEO-OK: fallback-auditor-named-and-refuter-second-round-gone-2026-10-04 -->.
+$ grep -n -E "normal · critical: Fable|FABLE at the end, normal|normal or critical job Fable|a normal \(3-5\) or critical" (both doors)
+exit=1
+$ grep -n "a normal job (3-5) \`start\`" .claude/skills/dxb-team2/SKILL.md
+83:line says (§2): a light job (0-2) `none`; a normal job (3-5) `start` — once, before the plan goes to the
+$ grep -c "normal işte yalnız başta, önemli (kritik) işte başta ve sonda" ~/.claude/CLAUDE.md
+1
+$ git diff 41d71772..f03dfe16 --stat
+ .agents/skills/dxb-team2/SKILL.md                  | 32 +++++++------
+ .agents/skills/dxb-verify/SKILL.md                 |  2 +-
+ .claude/skills/dxb-team2/SKILL.md                  | 32 +++++++------
+ .claude/skills/dxb-verify/SKILL.md                 |  2 +-
+ .codex/hooks/spec-bootstrap.sh                     | 20 +++++++-
+ .planning/quick/20261004-auditor-text/CARD.md      | 53 ++++++++++++++++++++++
+ .../evidence/ledger-truth.txt                      |  1 +
+ .../evidence/refuter.md.after                      | 28 ++++++++++++
+ .../evidence/refuter.md.before                     | 32 +++++++++++++
+ .../20261004-auditor-text/evidence/refuter.md.diff |  5 ++
+ scripts/governance/ceo-approvals.json              | 18 +++++++-
+ 11 files changed, 193 insertions(+), 32 deletions(-)
+$ bash scripts/governance/sync-codex-mirror.sh --check
+SYNC_OK mirror matches source
+exit=0
