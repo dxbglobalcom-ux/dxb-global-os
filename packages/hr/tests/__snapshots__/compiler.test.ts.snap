@@ -43,7 +43,7 @@ notify_broadcast: durum yayını — durum değişiminde.
 Kaydeder: karar gerekçeleri, öğrenilen dağıtım desenleri.
 Okur: STATE, geçmiş koşu sonuçları, maliyet trendi.
 ASLA kaydetmez: secret, kimlik bilgisi, müşteri kişisel verisi.
-## 11. Fable 5 hook bağlantısı
+## 11. Hook bağlantısı
 hook_version: v1 bağlı.
 Rol sıkılaştırması: dispatch öncesi bütçe kontrolü zorunlu.
 İhlalde koşu fail-closed durur, hook_violations'a yazılır.

@@ -30,7 +30,7 @@ export const PERSONA_SECTIONS: readonly SectionSpec[] = [
   { no: 8, key: "ceo'ya raporlama", title: "CEO'ya raporlama", compactable: true },
   { no: 9, key: "tool kullanımı", title: "Tool kullanımı", compactable: true },
   { no: 10, key: "memory kullanımı", title: "Memory kullanımı", compactable: true },
-  { no: 11, key: "hook bağlantısı", title: "Fable 5 hook bağlantısı", compactable: false },
+  { no: 11, key: "hook bağlantısı", title: "Hook bağlantısı", compactable: false },
   // §12 anayasal bölüm (CEO D5+D6 2026-07-17, Talep §5.12; spec §4.1 kanonik metin, G8):
   // tek tip metin tasarım gereği — jenerik-metin reddi §12'ye uygulanmaz.
   { no: 12, key: "discipline dna", title: "Discipline DNA & Islamic conduct", compactable: false },
@@ -38,6 +38,8 @@ export const PERSONA_SECTIONS: readonly SectionSpec[] = [
   // (`agents-orchestrator` = Hamza): CEO şirketini emanet edeceği orkestratörün, adını taşıdığı
   // Hamza ibn Abdülmuttalib (r.a.) karakterinde olmasını emretti. §12'nin aksine bu bölüm
   // MİRAS ALINMAZ — ada ve arkasındaki emanete özgüdür. optional: yoksa kapı reddetmez.
+  // Yazar kuralı (eskiden Hamza'nın metnindeydi, prompt denetimi H15 2026-09-24): orkestratörün §13'ü
+  // atlayan ya da sulandıran bir sürümü persona kalite incelemesinden geçmez.
   {
     no: 13,
     key: "name and the character",
