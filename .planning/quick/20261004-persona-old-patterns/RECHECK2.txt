@@ -1,0 +1,4 @@
+SECOND RE-CHECK, findings 3 and 4 only (your first re-check: SOL-recheck.md in this folder). Fix commit: 675767d6 (git show 675767d6).
+3. One-line alert limits: head-of-commerce.md:106 and engineering-wechat-mini-program-developer.md:105 ("single-line alert"), chief-of-staff.md:70, market-intelligence-lead.md:69 now say short alert / kısa uyarı. chief-of-staff.md:58 — read it: is there still a notification limit there?
+4. R20: the short emphatic words you named are lowered in the seven files; "(EN varsayılan)" in compliance-auditor.md is the English locale and stays upper-case on purpose.
+Answer per finding: CLOSED | NOT CLOSED with file:line; then any new defect.
