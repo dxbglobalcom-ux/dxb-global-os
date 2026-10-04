@@ -1,0 +1,274 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:265928) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:266195) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:266295) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/phase7/locked-tool-review.test.ts (10 tests | 10 failed) 1127ms
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (a) a lock goes to the security engineer: an informational alert, a tool-less review task and its link, in one transaction 35ms
+     → expected 'high' to be 'informational' // Object.is equality
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (b) a poisoned description cannot close its frame, and the review runs with no MCP server and no tool 11ms
+     → no result
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (c) the repository's word unlocks: lifted, recorded, the lock alert resolved through the alert door, the waiting review returned 25ms
+     → expected undefined to deeply equal [ { …(2) } ]
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (d) a lock older than 72 hours reaches him once 17ms
+     → (0 , watchToolLocks) is not a function
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (e) a malicious verdict is recorded whole in the audit row and raises the lock — no alert line carries the seat's words 16ms
+     → no result
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (f) a failed review reaches him; a benign one does not 20ms
+     → no result
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (f2) he resolved the alert while the tool stayed locked: the next reason opens it again 31ms
+     → (0 , watchToolLocks) is not a function
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (g) the tool check is due after 24 hours without one 0ms
+     → (0 , pinCheckDue) is not a function
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (g2) the verdict reader takes only the contract's shape 0ms
+     → (0 , parseLockVerdict) is not a function
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock 961ms
+     → expected undefined to deeply equal [ { …(2) } ]
+(node:266348) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/phase7/pin-quarantine.test.ts (18 tests | 3 failed) 359ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (5) computeToolHash is key-order canonical: shuffled keys → same hash, changed value → new hash 1ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (1) pinAll pins the two-tool fixture once and never overwrites on re-run 20ms
+   × pin-quarantine (MCP-03 anti rug-pull) > (2) a live description change quarantines WITH audit; the other tool is untouched 25ms
+     → expected 'high' to be 'informational' // Object.is equality
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (3) re-running against the same mutated inventory adds NO duplicate audit row 8ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (4) restoring the original description does NOT un-quarantine (sticky quarantine) 5ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (6) a server that was NOT reached is unreachable, not tool-less — no tool_missing 4ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (7) a server that WAS reached and dropped a tool still says so 12ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (8) pinAll keeps the approved text beside the hash 0ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (9) a change the manifest vouches for is re-approved in one step: new hash and text, an audit row, an informational alert 16ms
+   × pin-quarantine (MCP-03 anti rug-pull) > (10) a quarantined tool whose live text the manifest now vouches for is unlocked — by the repository's word alone 7ms
+     → expected undefined to deeply equal [ { …(2) } ]
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (11) a pin with no stored text gets it only while its live hash still equals the approved hash 26ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (12) a pin with no kept text whose live text the manifest vouches for is re-approved; a stale kept text is replaced 27ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (13) a lock made between a run's read and its write stops that run's re-approval — no audit, no alert 55ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (13b) two concurrent runs — one vouched, one not — never undo a lock, and every audit row is a transition 30ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (12b) a legacy pin with no kept text: the earlier text is recovered from the manifest when it hashes to the pin 25ms
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (14) a re-approval notice and a later lock of the same tool are two alerts 39ms
+   × pin-quarantine (MCP-03 anti rug-pull) > (15) the same lock again while its alert is still open: one alert naming the newest record, not re-raised, a review per lock 33ms
+     → expected 'high' to be 'informational' // Object.is equality
+   ✓ pin-quarantine (MCP-03 anti rug-pull) > (16) our own server's drift is re-approved by its source, with no manifest entry 18ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (a) a lock goes to the security engineer: an informational alert, a tool-less review task and its link, in one transaction
+AssertionError: expected 'high' to be 'informational' // Object.is equality
+
+Expected: [32m"informational"[39m
+Received: [31m"high"[39m
+
+ ❯ tests/phase7/locked-tool-review.test.ts:109:25
+    107|     const engineer = await db.selectFrom("agents").select("id").where(…
+    108|     const alert = await lockAlert("a_lookup");
+    109|     expect(alert.level).toBe("informational");
+       |                         ^
+    110|     expect(alert.responsible_employee).toBe(engineer.id);
+    111|     expect(alert.task_id).toBeNull(); // a finished review must not au…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (b) a poisoned description cannot close its frame, and the review runs with no MCP server and no tool
+Error: no result
+ ❯ SelectQueryBuilderImpl.executeTakeFirstOrThrow ../DxB%20Global%20OS/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/select-query-builder.js:335:19
+ ❯ reviewOf tests/phase7/locked-tool-review.test.ts:61:16
+     59| 
+     60| const reviewOf = async (lockId: number) => {
+     61|   const link = await db
+       |                ^
+     62|     .selectFrom("audit_log")
+     63|     .select(sql<string>`payload->>'task_id'`.as("task_id"))
+ ❯ tests/phase7/locked-tool-review.test.ts:128:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (c) the repository's word unlocks: lifted, recorded, the lock alert resolved through the alert door, the waiting review returned
+AssertionError: expected undefined to deeply equal [ { …(2) } ]
+
+[32m- Expected:[39m 
+[
+  {
+    "server": "test-lock-e739f737",
+    "tool": "c_upgrade",
+  },
+]
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/phase7/locked-tool-review.test.ts:148:24
+    146|     const { entry, lockId } = await lockedTool("c_upgrade", { descript…
+    147|     const r = await checkPins(db, [entry], new Set([SERVER]), vouching…
+    148|     expect(r.unlocked).toEqual([{ server: SERVER, tool: "c_upgrade" }]…
+       |                        ^
+    149|     const pin = await db.selectFrom("tool_pins").selectAll().where("se…
+    150|     expect(pin.quarantined).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (d) a lock older than 72 hours reaches him once
+TypeError: (0 , watchToolLocks) is not a function
+ ❯ tests/phase7/locked-tool-review.test.ts:175:19
+    173|   it("(d) a lock older than 72 hours reaches him once", async () => {
+    174|     const { lockId } = await lockedTool("d_slow", { description: "The …
+    175|     expect((await watchToolLocks(db, { servers: [SERVER] })).escalated…
+       |                   ^
+    176|     await db.updateTable("audit_log").set({ created_at: sql<Date>`now(…
+    177|     const first = await watchToolLocks(db, { servers: [SERVER] });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (e) a malicious verdict is recorded whole in the audit row and raises the lock — no alert line carries the seat's words
+Error: no result
+ ❯ SelectQueryBuilderImpl.executeTakeFirstOrThrow ../DxB%20Global%20OS/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/select-query-builder.js:335:19
+ ❯ reviewOf tests/phase7/locked-tool-review.test.ts:61:16
+     59| 
+     60| const reviewOf = async (lockId: number) => {
+     61|   const link = await db
+       |                ^
+     62|     .selectFrom("audit_log")
+     63|     .select(sql<string>`payload->>'task_id'`.as("task_id"))
+ ❯ tests/phase7/locked-tool-review.test.ts:191:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (f) a failed review reaches him; a benign one does not
+Error: no result
+ ❯ SelectQueryBuilderImpl.executeTakeFirstOrThrow ../DxB%20Global%20OS/node_modules/.pnpm/kysely@0.29.3/node_modules/kysely/dist/query-builder/select-query-builder.js:335:19
+ ❯ reviewOf tests/phase7/locked-tool-review.test.ts:61:16
+     59| 
+     60| const reviewOf = async (lockId: number) => {
+     61|   const link = await db
+       |                ^
+     62|     .selectFrom("audit_log")
+     63|     .select(sql<string>`payload->>'task_id'`.as("task_id"))
+ ❯ tests/phase7/locked-tool-review.test.ts:215:79
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (f2) he resolved the alert while the tool stayed locked: the next reason opens it again
+TypeError: (0 , watchToolLocks) is not a function
+ ❯ tests/phase7/locked-tool-review.test.ts:234:11
+    232|     await db.updateTable("alerts").set({ resolved_at: sql<Date>`now()`…
+    233|     await db.updateTable("audit_log").set({ created_at: sql<Date>`now(…
+    234|     await watchToolLocks(db, { servers: [SERVER] });
+       |           ^
+    235|     const open = await db.selectFrom("alerts").selectAll().where("dedu…
+    236|     expect(open).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (g) the tool check is due after 24 hours without one
+TypeError: (0 , pinCheckDue) is not a function
+ ❯ tests/phase7/locked-tool-review.test.ts:242:12
+    240|   it("(g) the tool check is due after 24 hours without one", () => {
+    241|     const now = new Date("2026-10-04T12:00:00Z");
+    242|     expect(pinCheckDue(new Date("2026-10-03T11:00:00Z"), now)).toBe(tr…
+       |            ^
+    243|     expect(pinCheckDue(new Date("2026-10-03T13:00:00Z"), now)).toBe(fa…
+    244|     expect(pinCheckDue(null, now)).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (g2) the verdict reader takes only the contract's shape
+TypeError: (0 , parseLockVerdict) is not a function
+ ❯ tests/phase7/locked-tool-review.test.ts:248:12
+    246| 
+    247|   it("(g2) the verdict reader takes only the contract's shape", () => {
+    248|     expect(parseLockVerdict('{"verdict":"suspect","reasons":["x"]}')).…
+       |            ^
+    249|     expect(parseLockVerdict('```json\n{"verdict":"benign","reasons":[]…
+    250|     expect(parseLockVerdict("benign").verdict).toBe("unreadable");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/13]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock
+AssertionError: expected undefined to deeply equal [ { …(2) } ]
+
+[32m- Expected:[39m 
+[
+  {
+    "server": "test-lock-e739f737",
+    "tool": "h_added",
+  },
+]
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/phase7/locked-tool-review.test.ts:280:24
+    278|     expect(corpus.hashes.get(`${SERVER} h_added`)).toBe(computeToolHas…
+    279|     const r = await checkPins(db, [entry], new Set([SERVER]), corpus);
+    280|     expect(r.unlocked).toEqual([{ server: SERVER, tool: "h_added" }]);
+       |                        ^
+    281|   });
+    282| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/13]⎯
+
+ FAIL  tests/phase7/pin-quarantine.test.ts > pin-quarantine (MCP-03 anti rug-pull) > (2) a live description change quarantines WITH audit; the other tool is untouched
+AssertionError: expected 'high' to be 'informational' // Object.is equality
+
+Expected: [32m"informational"[39m
+Received: [31m"high"[39m
+
+ ❯ tests/phase7/pin-quarantine.test.ts:193:30
+    191|     const alerts = await pinAlerts();
+    192|     expect(alerts).toHaveLength(1);
+    193|     expect(alerts[0]!.level).toBe("informational");
+       |                              ^
+    194|     expect(alerts[0]!.title).toBe(`Tool locked: ${SERVER}/alpha_lookup…
+    195|     expect(alerts[0]!.probable_cause).toContain("Signals: new-address"…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/13]⎯
+
+ FAIL  tests/phase7/pin-quarantine.test.ts > pin-quarantine (MCP-03 anti rug-pull) > (10) a quarantined tool whose live text the manifest now vouches for is unlocked — by the repository's word alone
+AssertionError: expected undefined to deeply equal [ { …(2) } ]
+
+[32m- Expected:[39m 
+[
+  {
+    "server": "test-pin-9f70c026",
+    "tool": "alpha_lookup",
+  },
+]
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ tests/phase7/pin-quarantine.test.ts:284:29
+    282|     const result = await checkPins(db, [harmless], new Set([SERVER]), …
+    283|     expect(result.repinned).toHaveLength(0);
+    284|     expect(result.unlocked).toEqual([{ server: SERVER, tool: "alpha_lo…
+       |                             ^
+    285|     const a = (await pinRows()).find((r) => r.tool === "alpha_lookup")…
+    286|     expect(a.quarantined).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/13]⎯
+
+ FAIL  tests/phase7/pin-quarantine.test.ts > pin-quarantine (MCP-03 anti rug-pull) > (15) the same lock again while its alert is still open: one alert naming the newest record, not re-raised, a review per lock
+AssertionError: expected 'high' to be 'informational' // Object.is equality
+
+Expected: [32m"informational"[39m
+Received: [31m"high"[39m
+
+ ❯ tests/phase7/pin-quarantine.test.ts:438:26
+    436|     await checkPins(db, [bad], new Set([SERVER]));
+    437|     let [alert] = await alertsOf("iota_again");
+    438|     expect(alert!.level).toBe("informational");
+       |                          ^
+    439|     // He acknowledged and muted it; a person re-opened the pin withou…
+    440|     await db.updateTable("alerts").set({ acknowledged_at: sql<Date>`no…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/13]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  13 failed | 15 passed (28)
+   Start at  20:02:10
+   Duration  2.45s (transform 184ms, setup 0ms, collect 598ms, tests 1.49s, environment 0ms, prepare 65ms)
+

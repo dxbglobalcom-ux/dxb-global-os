@@ -39,6 +39,9 @@ export interface TasksTable {
   // the clock (B43, CEO 2026-09-13): NOT NULL DEFAULT now() + 7 days in the schema, CHECK due_at >
   // created_at; the dispatch book writes it from a seat's minutes budget along the chain.
   due_at: Generated<Date>;
+  // the locked-tool review (CEO 2026-10-04): false = the seat runs with no MCP server mounted
+  // (worker-shim). NOT NULL DEFAULT true, so no existing insert names it.
+  tools_allowed: Generated<boolean>;
   created_at: Timestamptz;
   updated_at: Timestamptz;
 }

@@ -4,11 +4,15 @@
 // REVIEWED (drift-review.ts, the CEO's order of 2026-10-01): re-approved only when
 // the repository vouches for the exact new text (our own dxb-mcp source, or the
 // reviewed tool manifest), otherwise QUARANTINED — audit row (old and new text)
-// and alert in the SAME transaction either way (T-07-03/05), so he hears of both.
-// Quarantine is STICKY: nothing in this module sets quarantined back to false on a
-// quarantined pin — that is an explicit human-path update (SQL by CEO decision) by
-// design (T-07-06). Deterministic only: no model calls, no network — the inventory
-// is injected by the caller.
+// and alert in the SAME transaction either way (T-07-03/05).
+// A lock goes to the one who fixes it (his list item 2, his yes of 2026-10-04): the
+// same transaction opens a tool-less review task for the security engineer
+// (lock-review.ts) and the alert is informational, his; what must reach the CEO is
+// raised by tool-lock-watch.ts. The lock is lifted only by the repository's word: a
+// quarantined pin whose live text the manifest (or our own source) now vouches for
+// is unlocked here — never by a seat's verdict, never by the server restoring its
+// old text. Deterministic only: no model calls, no network — the inventory is
+// injected by the caller.
 import { createHash } from "node:crypto";
 import { sql, type Kysely, type Transaction } from "kysely";
 import { type DB } from "@dxb/shared";
@@ -23,6 +27,16 @@ import {
   type ToolText,
 } from "./drift-review.js";
 import { DXB_MCP_SERVER_NAME } from "./inventory.js";
+import {
+  LOCK_REVIEW_DEPARTMENT,
+  LOCK_REVIEW_PROJECT_SLUG,
+  LOCK_REVIEWER_SLUG,
+  buildLockReviewTask,
+  lockAlertAction,
+  lockAlertCause,
+  lockAlertTitle,
+  unlockAlertTitle,
+} from "./lock-review.js";
 
 const ACTOR = "gateway:pin-check";
 
@@ -96,36 +110,39 @@ const AUTHORITY_TEXT: Record<string, string> = {
   "tool-manifest": "the repository's reviewed tool manifest",
 };
 
-/** One alert per distinct change of one tool (the dedup key carries the kind and the new hash).
- *  Informational: a duplicate is skipped. High: a duplicate (the same change of the same tool still
- *  unresolved from an earlier lock) is raised again — unacknowledged, unmuted, escalated — so the
- *  lock is never silent. */
+/** One alert per distinct change of one tool (the dedup key carries the kind and the new hash; a
+ *  duplicate is skipped). A lock's alert is informational and names the security engineer: the review
+ *  task is the work, tool-lock-watch.ts raises what must reach the CEO. */
 async function raisePinAlert(
   trx: Transaction<DB>,
-  kind: "repinned" | "quarantined",
+  kind: "repinned" | "quarantined" | "unlocked",
   entry: ToolInventoryEntry,
   liveHash: string,
   auditId: number,
   verdict: DriftVerdict,
   description: DriftDescription,
   oldTextKept: boolean,
+  review?: { reviewerId: string | null; taskId: string },
 ): Promise<void> {
   const name = `${entry.server}/${entry.tool}`;
   const sourceRef = JSON.stringify({ table: "audit_log", audit_id: auditId, server: entry.server, tool: entry.tool });
-  if (kind === "repinned") {
+  if (kind === "repinned" || kind === "unlocked") {
     await trx
       .insertInto("alerts")
       .values({
         level: "informational",
         source: "gateway",
-        title: `Tool updated without a lock: ${name} changed to the text the repository vouches for`,
+        title:
+          kind === "repinned"
+            ? `Tool updated without a lock: ${name} changed to the text the repository vouches for`
+            : unlockAlertTitle(name),
         affected_area: "tool pins",
         probable_cause: `The new text equals ${AUTHORITY_TEXT[verdict.authority ?? ""] ?? "an approved text"}`,
         // Truthful about what the record holds: a pin from before 2026-10-01 may have kept no text.
         suggested_action: oldTextKept
           ? `Nothing to do; the old and the new text are kept in audit record ${auditId}`
           : `Nothing to do; the new text is kept in audit record ${auditId} (no earlier text was kept)`,
-        dedup_key: `pin:repinned:${entry.server}:${entry.tool}:${liveHash.slice(0, 12)}`,
+        dedup_key: `pin:${kind}:${entry.server}:${entry.tool}:${liveHash.slice(0, 12)}`,
         source_ref: sourceRef,
       })
       .onConflict((oc) => oc.doNothing())
@@ -133,35 +150,159 @@ async function raisePinAlert(
     return;
   }
   const signals = description.signals.length ? description.signals.join(", ") : "none";
+  // The review task rides in source_ref, NOT in alerts.task_id: trg_alert_supersede_on_task_done resolves
+  // every open alert whose task_id finishes, and a finished review does not unlock the tool.
+  const lockRef = JSON.stringify({ ...JSON.parse(sourceRef), review_task_id: review?.taskId ?? null });
   await trx
     .insertInto("alerts")
     .values({
-      level: "high",
+      level: "informational",
       source: "gateway",
-      title: `Tool locked: ${name} changed to a text the repository does not vouch for`,
+      title: lockAlertTitle(name),
       affected_area: "tool pins",
-      probable_cause: `The new text is neither the approved one nor the one the repository's tool manifest carries. Signals: ${signals}`,
-      suggested_action: `The tool is out of every profile until a person reads the change in audit record ${auditId} and re-pins it`,
+      probable_cause: lockAlertCause(signals),
+      suggested_action: lockAlertAction(auditId),
+      responsible_employee: review?.reviewerId ?? null,
       dedup_key: `pin:quarantined:${entry.server}:${entry.tool}:${liveHash.slice(0, 12)}`,
-      source_ref: sourceRef,
+      source_ref: lockRef,
     })
+    // The same change locked again while its alert is open (only after a hand unlock): the alert names
+    // the newest record and review; it is not re-raised — the watch decides what reaches the CEO.
     .onConflict((oc) =>
       oc
         .column("dedup_key")
         .where("resolved_at", "is", null)
         .where("dedup_key", "is not", null)
         .doUpdateSet({
-          level: "high",
-          acknowledged_at: null,
-          muted_until: null,
-          escalated_at: sql<Date>`now()`,
-          // The re-raised alert names the NEW audit record in every line, not only in its link.
           probable_cause: (eb) => eb.ref("excluded.probable_cause"),
           suggested_action: (eb) => eb.ref("excluded.suggested_action"),
-          source_ref: sourceRef,
+          responsible_employee: (eb) => eb.ref("excluded.responsible_employee"),
+          source_ref: lockRef,
         }),
     )
     .execute();
+}
+
+/** The review task for one lock, in the lock's own transaction (lock-review.ts): the security engineer's,
+ *  tool-less, queued, hanging off the holding's own project; then the `tool_review_opened` row that links
+ *  the lock to it (append-only — no audit row is ever updated). The seat or the project missing does not
+ *  stop the lock: the task is still opened (the gate decides), and the 72-hour rule covers a review that
+ *  never comes. */
+async function openLockReview(
+  trx: Transaction<DB>,
+  entry: ToolInventoryEntry,
+  oldText: ToolText | null,
+  description: DriftDescription,
+  lockAuditId: number,
+): Promise<{ reviewerId: string | null; taskId: string }> {
+  const reviewer = await trx
+    .selectFrom("agents")
+    .select("id")
+    .where("slug", "=", LOCK_REVIEWER_SLUG)
+    .where("employment_status", "=", "active")
+    .executeTakeFirst();
+  const project = (
+    await sql<{ id: string }>`SELECT id FROM projects WHERE slug = ${LOCK_REVIEW_PROJECT_SLUG}`.execute(trx)
+  ).rows[0];
+  const words = buildLockReviewTask(entry.server, entry.tool, oldText, toolText(entry), description, lockAuditId);
+  const task = await trx
+    .insertInto("tasks")
+    .values({
+      department: LOCK_REVIEW_DEPARTMENT,
+      agent_id: reviewer?.id ?? null,
+      project_id: project?.id ?? null,
+      objective: words.objective,
+      output_contract: words.output_contract,
+      label: words.label,
+      label_tr: words.label_tr,
+      model_tier: "L2",
+      approval_class: "none",
+      budget_max_tokens: 60000,
+      budget_max_cost_eur: 1,
+      priority: 8,
+      status: "queued",
+      tools_allowed: false,
+    })
+    .returning("id")
+    .executeTakeFirstOrThrow();
+  await trx
+    .insertInto("task_events")
+    .values({
+      task_id: task.id,
+      event: "created",
+      from_status: "inbox",
+      to_status: "queued",
+      actor: ACTOR,
+      payload: JSON.stringify({ lock_audit_id: lockAuditId, server: entry.server, tool: entry.tool }),
+    })
+    .execute();
+  await trx
+    .insertInto("audit_log")
+    .values({
+      actor: ACTOR,
+      actor_type: "system",
+      action: "tool_review_opened",
+      task_id: task.id,
+      payload: JSON.stringify({ lock_audit_id: lockAuditId, task_id: task.id, server: entry.server, tool: entry.tool }),
+    })
+    .execute();
+  return { reviewerId: reviewer?.id ?? null, taskId: task.id };
+}
+
+/** An unlock's housekeeping, in the unlock's own transaction: every open lock alert of this tool resolved
+ *  through the alert door (control_alerts_action — its audit row says who and why), and every review task
+ *  of this tool that has not started yet returned. A review already running finishes; its verdict is
+ *  recorded and raises nothing, because the watch acts only on locked pins. */
+async function closeLock(trx: Transaction<DB>, entry: ToolInventoryEntry, unlockAuditId: number): Promise<void> {
+  const open = await trx
+    .selectFrom("alerts")
+    .select("id")
+    .where("source", "=", "gateway")
+    .where("dedup_key", "like", `pin:quarantined:${entry.server}:${entry.tool}:%`)
+    .where("resolved_at", "is", null)
+    .execute();
+  for (const a of open) {
+    const payload = JSON.stringify({
+      op: "resolve",
+      alert_id: a.id,
+      note: `Unlocked by the repository's word (audit record ${unlockAuditId})`,
+      mitigation: `The repository's tool manifest carries the new text (audit record ${unlockAuditId})`,
+    });
+    await sql`SELECT control_alerts_action(${payload}::jsonb, ${`pin-unlock:${unlockAuditId}:${a.id}`})`.execute(trx);
+  }
+  const reviews = await trx
+    .selectFrom("audit_log as r")
+    .innerJoin("tasks as t", (j) => j.on(sql`t.id`, "=", sql`(r.payload->>'task_id')::uuid`))
+    .select(["t.id", "t.status"])
+    .where("r.action", "=", "tool_review_opened")
+    .where(sql<string>`r.payload->>'server'`, "=", entry.server)
+    .where(sql<string>`r.payload->>'tool'`, "=", entry.tool)
+    .where("t.status", "in", ["inbox", "queued"])
+    .execute();
+  for (const t of reviews) {
+    const moved = await trx
+      .updateTable("tasks")
+      .set({
+        status: "returned",
+        feedback: `No longer needed: the tool was unlocked by the repository's word (audit record ${unlockAuditId})`,
+        updated_at: sql<Date>`now()`,
+      })
+      .where("id", "=", t.id)
+      .where("status", "in", ["inbox", "queued"])
+      .executeTakeFirst();
+    if (Number(moved.numUpdatedRows) !== 1) continue;
+    await trx
+      .insertInto("task_events")
+      .values({
+        task_id: t.id,
+        event: "returned",
+        from_status: t.status,
+        to_status: "returned",
+        actor: ACTOR,
+        payload: JSON.stringify({ unlock_audit_id: unlockAuditId }),
+      })
+      .execute();
+  }
 }
 
 export interface PinAllResult {
@@ -203,8 +344,11 @@ export interface CheckPinsResult {
   repinned: Array<{ server: string; tool: string }>;
   /** Pins whose approved text was stored this run (the live hash still equalled the approved hash). */
   textStored: number;
-  /** Drifted but already quarantined — short-circuited, no duplicate audit. */
+  /** Drifted but already quarantined and nobody vouches — short-circuited, no duplicate audit. */
   alreadyQuarantined: number;
+  /** Locked pins whose live text the repository now vouches for, unlocked this run (audit row, the lock
+   *  alert resolved, the waiting review returned, an informational alert). */
+  unlocked: Array<{ server: string; tool: string }>;
   /** Pinned in the table but absent from the live inventory (audited as
    *  tool_missing — disappearance ≠ mutation, no quarantine flip). */
   missing: Array<{ server: string; tool: string }>;
@@ -216,9 +360,12 @@ export interface CheckPinsResult {
 /** Daily drift check: recompute every live tool's hash against its pin.
  *  Mismatch on a non-quarantined tool → drift review (judgeDrift): the repository vouches for the
  *  new text → new hash + text, audit `tool_repinned_auto` and an informational alert; it does not →
- *  quarantined=true, audit `tool_quarantined` and a high alert — each in ONE transaction that first
- *  locks the pin row and acts only if it is still the pin that was judged (two concurrent runs make
- *  one transition, never undo a lock). A quarantined pin is never re-approved here.
+ *  quarantined=true, audit `tool_quarantined`, the security engineer's tool-less review task and an
+ *  informational alert — each in ONE transaction that first locks the pin row and acts only if it is
+ *  still the pin that was judged (two concurrent runs make one transition, never undo a lock).
+ *  A quarantined pin whose live text differs from its approved one AND the repository now vouches for
+ *  is unlocked (`tool_unquarantined_auto`, same transaction discipline); one that serves its old text
+ *  again, or a text nobody vouches for, stays locked.
  *  `approved` defaults to the repository's manifest (loadApprovedCorpus).
  *  R4.3 `serversInScope`: with external servers in the corpus, a server that
  *  failed to SPAWN this run is unreachable, not tool-less — its pins are
@@ -241,6 +388,7 @@ export async function checkPins(
     repinned: [],
     textStored: 0,
     alreadyQuarantined: 0,
+    unlocked: [],
     missing: [],
     unpinned: [],
   };
@@ -273,19 +421,70 @@ export async function checkPins(
       if (needsText && Number(updated.numUpdatedRows) === 1) result.textStored += 1;
       continue;
     }
+    // The verdict rests on the repository's word alone; the description is for the person who reads
+    // the audit row.
+    const verdict = judgeDrift(entry.server, entry.tool, liveHash, approved);
     if (pin.quarantined) {
-      // Already quarantined: touch last_checked only — no duplicate audit.
-      result.alreadyQuarantined += 1;
-      await db
-        .updateTable("tool_pins")
-        .set({ last_checked: sql<Date>`now()` })
-        .where("id", "=", pin.id)
-        .execute();
+      if (verdict.verdict !== "clean") {
+        // Locked, and nobody vouches for what it serves: touch last_checked only — no duplicate audit.
+        result.alreadyQuarantined += 1;
+        await db
+          .updateTable("tool_pins")
+          .set({ last_checked: sql<Date>`now()` })
+          .where("id", "=", pin.id)
+          .execute();
+        continue;
+      }
+      // Locked, and the repository now vouches for exactly the text it serves (the construction added it
+      // to the manifest after a person read it, or it is our own source): the unlock, in ONE transaction
+      // that acts only if the pin is still the locked pin that was judged.
+      const unlocked = await db.transaction().execute(async (trx) => {
+        const current = await trx
+          .selectFrom("tool_pins")
+          .select(["schema_hash", "quarantined", "pinned_text"])
+          .where("id", "=", pin.id)
+          .forUpdate()
+          .executeTakeFirst();
+        if (!current || !current.quarantined || current.schema_hash !== pin.schema_hash) return false;
+        const oldText = storedText(current.pinned_text, current.schema_hash);
+        await trx
+          .updateTable("tool_pins")
+          .set({
+            quarantined: false,
+            schema_hash: liveHash,
+            pinned_text: JSON.stringify(toolText(entry)),
+            pinned_at: sql<Date>`now()`,
+            last_checked: sql<Date>`now()`,
+          })
+          .where("id", "=", pin.id)
+          .execute();
+        const audit = await trx
+          .insertInto("audit_log")
+          .values({
+            actor: ACTOR,
+            actor_type: "system",
+            action: "tool_unquarantined_auto",
+            task_id: null,
+            payload: JSON.stringify({
+              server: entry.server,
+              tool: entry.tool,
+              old_hash: pin.schema_hash,
+              new_hash: liveHash,
+              authority: verdict.authority,
+              old_text: oldText,
+              new_text: toolText(entry),
+            }),
+          })
+          .returning("id")
+          .executeTakeFirstOrThrow();
+        await closeLock(trx, entry, Number(audit.id));
+        await raisePinAlert(trx, "unlocked", entry, liveHash, Number(audit.id), verdict, { signals: [], summary: [] }, oldText !== null);
+        return true;
+      });
+      if (unlocked) result.unlocked.push({ server: entry.server, tool: entry.tool });
       continue;
     }
-    // Fresh drift. The verdict rests on the repository's word alone; the description is for the
-    // person who reads the audit row.
-    const verdict = judgeDrift(entry.server, entry.tool, liveHash, approved);
+    // Fresh drift.
     // The earlier text, for the record only: the kept one when it hashes to the pin, else the
     // manifest's own text when THAT hashes to the pin (a pin from before 2026-10-01 kept none).
     const key = `${entry.server} ${entry.tool}`;
@@ -341,6 +540,9 @@ export async function checkPins(
         })
         .returning("id")
         .executeTakeFirstOrThrow();
+      // A lock opens its review in the same transaction: the lock, its record, the seat's task and the
+      // alert exist together or not at all.
+      const review = clean ? undefined : await openLockReview(trx, entry, oldText, description, Number(audit.id));
       await raisePinAlert(
         trx,
         clean ? "repinned" : "quarantined",
@@ -350,6 +552,7 @@ export async function checkPins(
         verdict,
         description,
         oldText !== null,
+        review,
       );
       return true;
     });

@@ -86,6 +86,11 @@ const RULES: Rule[] = [
     re: /^Tool updated without a lock: (.+) changed to the text the repository vouches for$/,
     tr: (m) => `Araç güncellendi, kilit gerekmedi: ${m[1]} kayıtlı onaylı metne geçti`,
   },
+  {
+    // 2026-10-04 — his list item 2: the lock lifted by the repository's word (pin-check.ts).
+    re: /^Tool unlocked: (.+) now carries the text the repository vouches for$/,
+    tr: (m) => `Araç kilidi açıldı: ${m[1]} artık depodaki onaylı metni taşıyor`,
+  },
 ];
 
 // The pin check's signal names (packages/gateway/src/drift-review.ts describeDrift) — what to read
@@ -141,6 +146,40 @@ const DETAIL_RULES: Rule[] = [
   {
     re: /^Nothing to do; the new text is kept in audit record (\d+) \(no earlier text was kept\)$/,
     tr: (m) => `Yapılacak bir şey yok; yeni metin ${m[1]} numaralı denetim kaydında duruyor (eski metin saklanmamıştı)`,
+  },
+  // 2026-10-04 — his list item 2: the lock goes to the security engineer; the watch's escalation lines
+  // (packages/gateway/src/lock-review.ts); the unlock's resolve note and mitigation (pin-check.ts closeLock).
+  {
+    re: /^The security engineer reviews the change; the tool stays out of every profile until the repository's tool manifest carries the new text of audit record (\d+)$/,
+    tr: (m) =>
+      "Güvenlik mühendisi değişikliği inceliyor; araç, " +
+      `${m[1]} numaralı denetim kaydındaki yeni metin depodaki incelenmiş araç listesine girene kadar hiçbir çalışana verilmiyor`,
+  },
+  {
+    re: /^The security engineer judged the change in audit record (\d+) malicious; the tool stays out of every profile and a person decides$/,
+    tr: (m) =>
+      `Güvenlik mühendisi ${m[1]} numaralı denetim kaydındaki değişikliği kötü niyetli buldu; ` +
+      "araç hiçbir çalışana verilmiyor ve kararı bir insan verecek",
+  },
+  {
+    re: /^The security engineer's review of the change in audit record (\d+) gave no usable verdict; the tool stays out of every profile and a person decides$/,
+    tr: (m) =>
+      `Güvenlik mühendisinin ${m[1]} numaralı denetim kaydındaki değişiklik için yaptığı inceleme kullanılabilir bir karar vermedi; ` +
+      "araç hiçbir çalışana verilmiyor ve kararı bir insan verecek",
+  },
+  {
+    re: /^The tool has been locked for more than 72 hours \(audit record (\d+)\); it stays out of every profile until the repository's tool manifest carries the new text$/,
+    tr: (m) =>
+      `Araç 72 saatten uzun süredir kilitli (${m[1]} numaralı denetim kaydı); ` +
+      "yeni metin depodaki incelenmiş araç listesine girene kadar hiçbir çalışana verilmiyor",
+  },
+  {
+    re: /^Unlocked by the repository's word \(audit record (\d+)\)$/,
+    tr: (m) => `Depodaki onaylı metin kilidi açtı (${m[1]} numaralı denetim kaydı)`,
+  },
+  {
+    re: /^The repository's tool manifest carries the new text \(audit record (\d+)\)$/,
+    tr: (m) => `Depodaki incelenmiş araç listesi artık yeni metni taşıyor (${m[1]} numaralı denetim kaydı)`,
   },
   { re: /^tool pins$/, tr: () => "araç onayları" },
 ];

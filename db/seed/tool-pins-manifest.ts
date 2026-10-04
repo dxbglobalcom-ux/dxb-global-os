@@ -197,6 +197,32 @@ export function serializeManifest(manifest: ToolPinsManifest): string {
   return `${JSON.stringify(ordered, null, 2)}\n`;
 }
 
+/** The manifest with one tool's text put in — the locked-tool review's last step (his yes of 2026-10-04,
+ *  scripts/gateway/manifest-add.ts): a person read the locked text and the repository now vouches for it.
+ *  An entry for the same (server, tool) is REPLACED (the tool changed), else the tool is added and its
+ *  server counted. Refuses dxb-mcp (its authority is the source) and a text without an inputSchema. Pure:
+ *  the caller verifies and writes. */
+export function withTool(
+  manifest: ToolPinsManifest,
+  entry: Pick<ToolInventoryEntry, "server" | "tool" | "description" | "inputSchema">,
+): ToolPinsManifest {
+  if (entry.server === DXB_MCP_SERVER_NAME) {
+    throw new Error(`manifest must not carry ${DXB_MCP_SERVER_NAME} (${keyOf(entry)}) — its authority is the source`);
+  }
+  if (entry.inputSchema === undefined) throw new Error(`${keyOf(entry)} has no inputSchema, cannot be stored`);
+  const tool: ManifestTool = {
+    server: entry.server,
+    tool: entry.tool,
+    description: entry.description,
+    inputSchema: entry.inputSchema,
+    schema_hash: computeToolHash(entry),
+  };
+  const others = manifest.tools.filter((t) => keyOf(t) !== keyOf(entry));
+  const servers: Record<string, number> = emptyCounts();
+  for (const t of [...others, tool]) servers[t.server] = (servers[t.server] ?? 0) + 1;
+  return { about: manifest.about, servers, tools: [...others, tool] };
+}
+
 /** Read and shape-check a manifest file. A file that is not a manifest fails
  *  here, by name, rather than three steps later as a confusing hash mismatch. */
 export function readManifest(path: string = DEFAULT_MANIFEST_PATH): ToolPinsManifest {

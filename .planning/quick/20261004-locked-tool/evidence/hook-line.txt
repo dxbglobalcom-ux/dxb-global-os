@@ -1,0 +1,9 @@
+== fake engine answers 2 locks
+Asked to learn the holding? dxb-start. A job: dxb-team2.
+LOCKED TOOLS WAITING FOR THE MANIFEST: 2 (audit 4211, 4212) — read each: pnpm construction:pins:add <audit_id>; vouch with --yes; commit.
+== fake engine answers 0
+Asked to learn the holding? dxb-start. A job: dxb-team2.
+
+== real company engine
+Asked to learn the holding? dxb-start. A job: dxb-team2.
+

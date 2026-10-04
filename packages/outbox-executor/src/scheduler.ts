@@ -9,7 +9,15 @@ import { cpus } from "node:os";
 import { PgBoss } from "pg-boss";
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
-import { checkPins, compileLibraryProfiles, loadApprovedCorpus, readFullInventory } from "@dxb/gateway";
+import {
+  checkPins,
+  compileLibraryProfiles,
+  loadApprovedCorpus,
+  newestPinCheck,
+  pinCheckDue,
+  readFullInventory,
+  watchToolLocks,
+} from "@dxb/gateway";
 import {
   hrPerformanceDaily,
   hrProbationCheck,
@@ -53,6 +61,11 @@ export const QUEUES = {
   // tests/b36/company-memory-is-not-a-diary.test.ts fails the battery if any of
   // them comes back.
   pinCheck: "tool-pin-check",
+  // His list item 2 (his yes of 2026-10-04): the locked-tool watch — deterministic, no model. It raises
+  // to the CEO what must reach him (a malicious verdict, a failed review, a lock older than 72 h) and
+  // sends the tool check when the last one is older than 24 h: the machine sleeps at night, which he
+  // ruled normal until the cloud move, and pg-boss does not replay a missed 04:00.
+  toolLockWatch: "tool-lock-watch",
   intentIntake: "intent-intake",
   // HR lifecycle jobs (E5.4b, HR spec §3): run inside this scheduler worker — R5,
   // no new resident service. Queue/schedule rows also seeded by migration
@@ -139,6 +152,7 @@ export const CADENCES = {
   // Anti rug-pull drift check (07-02, MCP-03): daily 04:00 — after the 03:00
   // compaction so the two daily jobs never contend for the session-mode pool.
   pinCheckCron: "0 4 * * *", // daily 04:00
+  toolLockWatchCron: "*/15 * * * *", // the locked-tool watch, and the tool check's catch-up after a wake
   // HR crons spread across the quiet window, after compaction, one per hour slot
   // (same session-mode pool contention rule as pinCheck).
   hrPerformanceCron: "30 2 * * *", // daily 02:30
@@ -480,8 +494,26 @@ export async function startWorkers(boss: PgBoss): Promise<void> {
     const res = await checkPins(getDb(), inv.entries, inv.reachable, loadApprovedCorpus());
     console.log(
       `[pin-check] checked ${res.checked}, matched ${res.matched}, re-approved ${res.repinned.length}, ` +
-        `locked ${res.quarantined.length}, texts kept ${res.textStored}, already locked ${res.alreadyQuarantined}`,
+        `locked ${res.quarantined.length}, unlocked ${res.unlocked.length}, texts kept ${res.textStored}, ` +
+        `already locked ${res.alreadyQuarantined}`,
     );
+  });
+
+  await boss.work(QUEUES.toolLockWatch, async () => {
+    const db = getDb();
+    // The tool check after a sleep: one send, deduplicated for an hour, so a check that keeps failing is
+    // retried hourly rather than every tick.
+    if (pinCheckDue(await newestPinCheck(db))) {
+      await boss.send(QUEUES.pinCheck, {}, { singletonKey: "tool-pin-check-catchup", singletonSeconds: 3600 });
+      console.log("[tool-lock-watch] the last tool check is older than 24 h — one sent");
+    }
+    const res = await watchToolLocks(db);
+    if (res.verdicts.length || res.escalated.length) {
+      console.log(
+        `[tool-lock-watch] locked ${res.locked}, verdicts ${res.verdicts.map((v) => `${v.server}/${v.tool}=${v.verdict}`).join(" ") || "none"}, ` +
+          `raised ${res.escalated.map((e) => `${e.server}/${e.tool}:${e.reason}`).join(" ") || "none"}`,
+      );
+    }
   });
 
   // Command-bar intent intake (08-05): same re-arm-even-on-throw discipline
@@ -716,6 +748,7 @@ export async function registerSchedules(boss: PgBoss): Promise<void> {
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
   await boss.schedule(QUEUES.pinCheck, CADENCES.pinCheckCron);
+  await boss.schedule(QUEUES.toolLockWatch, CADENCES.toolLockWatchCron);
   await boss.schedule(QUEUES.hrPerformance, CADENCES.hrPerformanceCron);
   await boss.schedule(QUEUES.hrStalePersona, CADENCES.hrStalePersonaCron);
   await boss.schedule(QUEUES.hrProbation, CADENCES.hrProbationCron);

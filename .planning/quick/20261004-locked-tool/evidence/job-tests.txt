@@ -1,0 +1,43 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:269471) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:269727) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:269761) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/locked-tool-review.test.ts (10 tests) 1293ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock  1004ms
+(node:269813) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/pin-quarantine.test.ts (18 tests) 417ms
+ ✓ tests/hooks/context-gate.test.ts (14 tests) 1087ms
+   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 56 into a closed pipe  309ms
+ ✓ tests/hooks/opening-budget.test.ts (8 tests) 1012ms
+ ✓ tests/hooks/design-max.test.ts (24 tests) 884ms
+ ✓ tests/hooks/statusline-effort.test.ts (23 tests) 676ms
+ ✓ tests/hooks/cost-gate.test.ts (16 tests) 658ms
+ ✓ tests/hooks/session-start-fits.test.ts (4 tests) 147ms
+(node:271675) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b49/pin-manifest.test.ts (13 tests) 54ms
+(node:271822) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase7/drift-review.test.ts > drift review — what the manifest may vouch for > a missing or malformed manifest gives no entries — every external drift then locks
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-cz4Y40/absent.json): Error: ENOENT: no such file or directory, open '/tmp/pin-manifest-cz4Y40/absent.json' — no external drift can be re-approved
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-cz4Y40/bad.json): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2) — no external drift can be re-approved
+
+ ✓ tests/phase7/drift-review.test.ts (23 tests) 41ms
+(node:271936) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/bundle2-prompts.test.ts (17 tests) 10ms
+ ✓ tests/b39/alert-language.test.ts (9 tests) 6ms
+
+ Test Files  12 passed (12)
+      Tests  179 passed (179)
+   Start at  20:02:34
+   Duration  9.10s (transform 290ms, setup 0ms, collect 1.38s, tests 6.29s, environment 1ms, prepare 385ms)
+
+[global-teardown] handed back 18 ops:live receipt(s) this run issued

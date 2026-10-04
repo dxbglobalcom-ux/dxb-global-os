@@ -83,6 +83,8 @@ export interface ClaimedTask {
   milestone_id?: string | null;
   budget_max_cost_eur?: number | string | null;
   feedback?: string | null;
+  /** false = no MCP server is mounted for this task (the locked-tool review, CEO 2026-10-04). */
+  tools_allowed?: boolean;
 }
 
 /** E10.2: what the binding hands the executor — the claimed row plus the
@@ -296,21 +298,27 @@ export async function seatStandingPrompt(
   return composeSeatPrompt(employee, personaBody);
 }
 
+/** The MCP surface one task runs with; null = none is mounted. Exported so a test proves the tool-less
+ *  review without a live model call. tools:[] is DEAD on the staffed path; an unstaffed task (no agent)
+ *  or an empty profile runs tool-less by default-deny, never by silent design — and a task flagged
+ *  `tools_allowed = false` runs tool-less by design: the locked-tool review reads text an outside server
+ *  wrote, so the seat holds no hand a poisoned description could try to use (CEO 2026-10-04). */
+export async function taskToolOptions(
+  task: Pick<ClaimedTask, "tools_allowed">,
+  employee: SeatIdentity | null,
+): Promise<SdkToolOptions | null> {
+  if (task.tools_allowed === false || !employee) return null;
+  const surface = resolveRuntimeProfile(employee);
+  return surface.allowedTools.length > 0 ? buildSdkToolOptions(surface, await dxbInventoryNames()) : null;
+}
+
 // Default executor: routing decided above; this function owns the SDK call. Exported (not from the
 // package index) so the task lane's isolation is proven live on its own code, without claiming a
 // task (runtime isolation, Sol's re-check 2026-10-03).
 export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
   const { rule, employee } = await resolveExecutionRoute(task);
 
-  // tools:[] is DEAD on the staffed path; an unstaffed task (no agent) or an
-  // empty profile runs tool-less by default-deny, never by silent design.
-  let toolOpts: SdkToolOptions | null = null;
-  if (employee) {
-    const surface = resolveRuntimeProfile(employee);
-    if (surface.allowedTools.length > 0) {
-      toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
-    }
-  }
+  const toolOpts = await taskToolOptions(task, employee);
 
   const hooked = task as HookedClaimedTask;
   const prompt = [

@@ -127,3 +127,38 @@ describe("the pin check's alerts, on the CEO's own screen", () => {
     for (const l of [LOCKED_CAUSE, LOCKED_ACTION, UPDATED_CAUSE, UPDATED_ACTION]) expect(localizeAlertDetail(l, "en")).toBe(l);
   });
 });
+
+// 2026-10-04 — his list item 2 (a locked tool resolved by the system itself). Every sentence the lock, the
+// unlock and the watch write is produced by the gateway's own functions, so this test reads them from
+// there: a sentence changed in one place and not the other fails here.
+describe("the locked-tool review's alerts, on the CEO's own screen", () => {
+  const ENGLISH = /\b(tool|text|repository|changed|audit|record|profile|nothing|new|security|engineer|review|verdict|locked|hours|manifest|person)\b/i;
+
+  it("every line the lock, the unlock and the watch write is Turkish, and keeps the record number", async () => {
+    const g = await import("../../packages/gateway/src/lock-review.js");
+    const lines = [
+      localizeAlertTitle(g.unlockAlertTitle("scrapling/get"), "tr"),
+      localizeAlertDetail(g.lockAlertAction(5101), "tr")!,
+      localizeAlertDetail(g.escalationAction("malicious", 5102), "tr")!,
+      localizeAlertDetail(g.escalationAction("review-failed", 5103), "tr")!,
+      localizeAlertDetail(g.escalationAction("lock-72h", 5104), "tr")!,
+      localizeAlertDetail("Unlocked by the repository's word (audit record 5105)", "tr")!,
+      localizeAlertDetail("The repository's tool manifest carries the new text (audit record 5106)", "tr")!,
+      localizeAlertTitle(g.lockAlertTitle("scrapling/get"), "tr"),
+      localizeAlertDetail(g.lockAlertCause("none"), "tr")!,
+    ];
+    for (const l of lines) expect(l.replace(/scrapling\/get/g, ""), l).not.toMatch(ENGLISH);
+    expect(lines[0]).toBe("Araç kilidi açıldı: scrapling/get artık depodaki onaylı metni taşıyor");
+    for (const [i, n] of [[1, 5101], [2, 5102], [3, 5103], [4, 5104], [5, 5105], [6, 5106]] as const) {
+      expect(lines[i]).toContain(`${n} numaralı denetim kaydı`);
+    }
+    expect(lines[2]).toContain("kötü niyetli");
+    expect(lines[4]).toContain("72 saatten uzun");
+  });
+
+  it("leaves the English record untouched on the English screen", async () => {
+    const g = await import("../../packages/gateway/src/lock-review.js");
+    expect(localizeAlertTitle(g.unlockAlertTitle("x/y"), "en")).toBe(g.unlockAlertTitle("x/y"));
+    expect(localizeAlertDetail(g.escalationAction("lock-72h", 1), "en")).toBe(g.escalationAction("lock-72h", 1));
+  });
+});

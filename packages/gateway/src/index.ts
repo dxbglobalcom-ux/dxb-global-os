@@ -23,6 +23,21 @@ export {
   type ToolText,
 } from "./drift-review.js";
 export {
+  buildLockReviewTask,
+  parseLockVerdict,
+  escalationAction,
+  LOCK_REVIEWER_SLUG,
+  type LockReviewTask,
+  type ParsedVerdict,
+  type EscalationReason,
+} from "./lock-review.js";
+export {
+  watchToolLocks,
+  pinCheckDue,
+  newestPinCheck,
+  type ToolLockWatchResult,
+} from "./tool-lock-watch.js";
+export {
   readDxbMcpInventory,
   readExternalServerInventory,
   readFullInventory,
