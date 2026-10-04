@@ -12,6 +12,10 @@ answered *"gerekeni yap"* — not registered as his yes to the three; this plan 
   (journal: suspend 2026-10-03 20:26 → resume 2026-10-04 10:36); `lease-reaper` (`* * * * *`) has 0 rows in
   UTC hours 01-06 across 8 days; no `memory-compaction`, `hr.*`, `revenue.*`, `ceo.briefing.morning` row in
   the 7-day window. pg-boss cron does not replay a missed slot.
+- What he sees of it: `ceo_briefings` — the newest morning briefing is 2026-09-27 (8 rows ever); none since.
+- Why the machine sleeps, measured: GNOME idle sleep is off (`sleep-inactive-ac-type 'nothing'`); each night
+  logind received an explicit suspend request — 2026-10-02 23:19 → 10-03 09:44, 2026-10-03 20:26 → 10-04 10:36
+  (`systemd-logind: The system will suspend now!`). Who or what sent it is not measured.
 - `fn_alerts_evaluate()` (the escalation sweep) is defined and invoked by nothing: 13 alerts, 0 ever escalated.
 - A lock today: `pin-check.ts` raises a `high` alert (re-raised while unresolved), `responsible_employee` null,
   quarantine sticky — lifted only by hand.
@@ -64,3 +68,10 @@ agents · governance) · reasoning 2 (agentic reading of untrusted text) · ambi
 Sol `xhigh`, `fable: start+end`. Done-list includes a poisoned-description fixture proving the tool-less
 review cannot act, a lift fixture, the 72 h fixture, the malicious fixture, and the manifest-add round trip.
 Size: about a day; this session is at 35 % — the build goes to a successor at the handover gate.
+
+## Fable
+- **Start call** (Fable 5.1, 2026-10-04 ~19:10, the advisor call after this plan was written; the earlier call
+  at ~18:58 read the approach): its gaps closed above — the tool-less review and why, the verdict kept out of
+  alert texts, the work visible as the seat's task, his two sentences of 2026-10-01 named, the third escalation
+  condition dropped and said so, unlock latency stated, the night-jobs dependency, the dormant dossier.
+- **End call:** owed at the end of the build (critical job, `start+end`).
