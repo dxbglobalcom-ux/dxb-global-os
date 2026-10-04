@@ -38,8 +38,8 @@ an outside review of dxb-team2 he pasted, explained to him item by item.
   yeter buadar bugün"*.
 
 2026-10-04 19:47 → ~21:00, Opus 5.5 session c04c8a07 (high), the successor of 5ab4ff38 on his list item 2.
-- **A locked tool resolved by the system itself — built and live on the holding's own engine** (finished, not
-  accepted — LAW B) <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->. A lock is informational and goes to the
+- **A locked tool resolved by the system itself — built and live on the holding's own engine; accepted by his eye**
+  (*"bkatım tmmdır."*) <!-- CEO-OK: locked-tool-accepted-by-his-eye-2026-10-04 -->. A lock is informational and goes to the
   security engineer as a tool-less review task (`tasks.tools_allowed`, migration 20261004010000); the tool returns
   only when the repository's manifest carries its new text (`pnpm construction:pins:add <audit_id> [--yes]`,
   the construction engineer's step; the session-start hook names locks that wait for it); the 15-minute
@@ -185,7 +185,7 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
    e7aa0d14, finished, not accepted); code bundle 2 done and live (session 5ab4ff38, finished, not accepted).
    Bundle 3 waits on his word, together with B51 moves 3 and 6.
 2. ~~A locked tool resolved by the system itself~~ — built and live on the holding's own engine 2026-10-04
-   (session c04c8a07, finished, not accepted) <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->.
+   (session c04c8a07); accepted by his eye <!-- CEO-OK: locked-tool-accepted-by-his-eye-2026-10-04 -->.
 3. ~~The construction's auto-memory~~ — finished 2026-10-04 (session e7aa0d14): 25 fixes, 4 files deleted
    <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->, the July diaries kept
    <!-- CEO-OK: auto-memory-july-diaries-stay-2026-10-04 -->. Finished, not accepted.

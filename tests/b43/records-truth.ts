@@ -108,6 +108,9 @@ export const C = {
     // His list item 1 — the old patterns removed from the 213 employee personas (B51 move 5 persona text + cards
     // H13-H17, H21), accepted by his eye 2026-10-04 ("göz tmm"); the records spell it "old patterns in the employee personas".
     { id: "persona-old-patterns-accepted-by-his-eye-2026-10-04", subject: /old patterns in the employee personas/ },
+    // His list item 2 — the locked tool resolved by the system itself, accepted by his eye 2026-10-04
+    // ("bkatım tmmdır."); the records spell it "A locked tool resolved by the system itself".
+    { id: "locked-tool-accepted-by-his-eye-2026-10-04", subject: /locked tool resolved by the system itself/i },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
