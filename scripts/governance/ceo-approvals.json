@@ -2058,5 +2058,13 @@
     "conditions": "His correction of the /goal of ~17:19, said in session fd7d67f2 at 18:12 local; he left the design to the lead ('Nasıl ekleneceği … sana kalmış. Bunu tasarlayan sensin planlayan.'). The five points were told to him in that session and he pasted that reply into session e3574313 with 'şunu unuttum'. One question stays open with him: whether a normal job should have no Fable at the start either (point 3 is read from 'başta danışılır sonda danışılmaz'). Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session fd7d67f2 — heard first-hand, 2026-10-04 18:12 local; registered by session e3574313, the job's lead after the handover, from fd7d67f2's transcript (promptId 0b087333).",
     "where": ".claude/skills/dxb-team2/SKILL.md (description, §1-§4) · .claude/skills/dxb-verify/SKILL.md · Codex mirror"
+  },
+  "b51-bundle2-code-gerekeni-yap-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "B51 move 5 code bundle 2 (the prompt audit's runtime code rows C2-2, C2-5, C2-6/7/8, C2-10, C2-11, R14) built and made live, the four stale 'ADD gelene kadar' persona lines corrected, and the other sessions told who works where for their commits.",
+    "verbatim": "gerekeni yap ve bu durumdan diğer oturumları da haberdar et bilsinler kim nerede çalışıor commitlerle ilgili",
+    "conditions": "His answer to the lead's 'Kod tarafına yap ya da bekle' (recommendation: yap, bundle 2) and the locked-tool table (recommendations 1 yes · 2 yes · 3 no), 2026-10-04 18:40. Registered as his order to do bundle 2 and the notice, not a LAW B acceptance; NOT read as his yes to the locked-tool plan's decisions — that plan goes to him once for one word. Bundle 3 stays on his word.",
+    "session": "Opus 5.5 session 5ab4ff38 — heard first-hand, 2026-10-04.",
+    "where": ".planning/STATE.md · .planning/quick/20261004-b51-code-and-lock/CARD.md"
   }
 }

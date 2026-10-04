@@ -1,0 +1,66 @@
+# His list item 2 — a locked tool resolved by the system itself: the plan (waits on his yes)
+
+His question of 2026-10-01: *a locked tool should be resolved by the system itself; the alert should go to
+whoever fixes it, not to the CEO* (`.planning/quick/20261004-his-list/item2-brief.txt:7`). Asked on 2026-10-04
+with the three decisions of `item2-report.md` § ITEM 4 and their recommendations (1 yes · 2 yes · 3 no), he
+answered *"gerekeni yap"* — not registered as his yes to the three; this plan restates them for one word.
+
+## Measured before the plan (company engine, SELECT only, 2026-10-04 ~18:55)
+- 76 pins on 5 servers, 0 quarantined; `tool_pins.last_checked` = 2026-10-01 19:39 for all 76.
+- `pgboss.schedule` has `tool-pin-check 0 4 * * *` (UTC); `pgboss.job` holds ONE `tool-pin-check` row
+  (2026-10-01 19:39, a manual send) — the 04:00 run has not fired since. Cause: the machine suspends at night
+  (journal: suspend 2026-10-03 20:26 → resume 2026-10-04 10:36); `lease-reaper` (`* * * * *`) has 0 rows in
+  UTC hours 01-06 across 8 days; no `memory-compaction`, `hr.*`, `revenue.*`, `ceo.briefing.morning` row in
+  the 7-day window. pg-boss cron does not replay a missed slot.
+- `fn_alerts_evaluate()` (the escalation sweep) is defined and invoked by nothing: 13 alerts, 0 ever escalated.
+- A lock today: `pin-check.ts` raises a `high` alert (re-raised while unresolved), `responsible_employee` null,
+  quarantine sticky — lifted only by hand.
+- `security-engineer`: active in the company, profile `security.mcp.json` = 23 dxb-mcp tools, among them
+  `registry_activate`, `queue_dispatch`, `queue_create_task`, `approval_submit_draft`, `memory_commit` —
+  none writes `tool_pins`, but each is a hand a poisoned description could try to use. Its dossier still says
+  `Durum: dormant`.
+- Profiles subtract quarantined pins at compile; `library.profile_recompile` recompiles on its cadence, so a
+  lift reaches the seats at the next recompile.
+
+## The design
+1. **The lock goes to the fixer.** `raisePinAlert` (quarantined): level `informational`, `responsible_employee`
+   = security-engineer, `suggested_action` names the review task. The re-raise-on-duplicate semantics go;
+   what replaces them is the open review task and the 72 h rule (5).
+2. **A review task, tool-less.** In the same transaction a `tasks` row: department `security`, `agent_id` =
+   security-engineer, label EN/TR, the audit id, old and new text inside the objective framed as untrusted
+   data, output contract = a JSON verdict `benign | suspect | malicious` + reasons. It runs on the normal road
+   (live feed, gate, QA) but WITHOUT tools: a new `tasks.tools_allowed boolean NOT NULL DEFAULT true`
+   (migration, company ledger), and `worker-shim` mounts no MCP server when it is false. The verdict text
+   goes to an audit row (`tool_drift_verdict`), never into an alert title or body.
+3. **Unlock = the repository's word.** `checkPins`: a quarantined pin whose live hash the manifest (or the
+   own-source rule) now vouches for → one transaction: lift, new hash + text, audit `tool_unquarantined_auto`,
+   the lock alert resolved through `control_alerts_action`, the review task closed if still open, an
+   informational "unlocked" alert. The seat's verdict never unlocks (decision 3 = No).
+4. **The manifest step is the construction's.** `scripts/gateway/manifest-add.mjs <audit_id>` appends the
+   audit row's new text with its hash to `db/seed/tool-pins.manifest.json` after a person read it; the
+   session-start hook (`.claude/hooks/spec-bootstrap.sh`) prints "locked tools waiting for the manifest: N
+   (audit …)" from a SELECT on the company engine, so the next construction session sees it without him.
+5. **What reaches him as `high`.** A `tool-lock-watch` job every 15 min (deterministic, no model): a done
+   review task → its verdict audit row; verdict `malicious` → the lock alert to `high`, escalated; a lock
+   older than 72 h (from the `tool_quarantined` audit row) → `high`, once; a review task failed or returned →
+   `high`. The third condition he was shown ("a lock that blocks your approved work") is DROPPED: nothing
+   measures it deterministically, and the 72 h rule covers it — he is told so.
+6. **The check must run.** Depends on the night-jobs decision (Bulunan): a daily job whose last run is older
+   than 24 h runs on wake. Without it this plan locks and unlocks nothing.
+7. **Words.** New alert texts get their TR patterns in `apps/dashboard/src/lib/alert-title.ts` (door
+   `dxb-surface`); `drift-review.ts:1-3` ("he must hear when one is") is replaced under LAW A by his yes;
+   `security-engineer.md` dossier `Durum: dormant` → `active` and refiled.
+
+## Decisions for him (one word each)
+- The plan: yes / no.
+- The last step: the construction engineer adds the text to the approved list (recommended — safe; the lock
+  waits for the next construction session) / the security engineer's "benign" unlocks by itself (fast; the
+  very thing a poisoned text would aim for).
+- (Bulunan) The night jobs catch up on wake: yes (recommended).
+
+## Card (to be filed at SCORE)
+blast 2 (gateway, scheduler, worker-shim, migration, dashboard words, hook) · risk 2 (security · database ·
+agents · governance) · reasoning 2 (agentic reading of untrusted text) · ambiguity 1 → 7/8 critical:
+Sol `xhigh`, `fable: start+end`. Done-list includes a poisoned-description fixture proving the tool-less
+review cannot act, a lift fixture, the 72 h fixture, the malicious fixture, and the manifest-add round trip.
+Size: about a day; this session is at 35 % — the build goes to a successor at the handover gate.
