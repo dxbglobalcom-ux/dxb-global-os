@@ -1,0 +1,37 @@
+{
+ "hooks": {
+  "PostToolUse": [
+   {
+    "matcher": "Skill",
+    "hooks": [
+     {
+      "type": "command",
+      "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/dxb-design-max.py\""
+     },
+     {
+      "type": "command",
+      "command": "HOOK_LOG=/tmp/claude-1000/-home-dxb-DxB-Global-OS/e3574313-0b06-484a-a0e3-b78b478cd65d/scratchpad/hook-keys.log python3 /tmp/claude-1000/-home-dxb-DxB-Global-OS/e3574313-0b06-484a-a0e3-b78b478cd65d/scratchpad/hook-keys.py"
+     }
+    ]
+   }
+  ],
+  "UserPromptSubmit": [
+   {
+    "hooks": [
+     {
+      "type": "command",
+      "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/dxb-design-max.py\""
+     },
+     {
+      "type": "command",
+      "command": "HOOK_LOG=/tmp/claude-1000/-home-dxb-DxB-Global-OS/e3574313-0b06-484a-a0e3-b78b478cd65d/scratchpad/hook-keys.log python3 /tmp/claude-1000/-home-dxb-DxB-Global-OS/e3574313-0b06-484a-a0e3-b78b478cd65d/scratchpad/hook-keys.py"
+     }
+    ]
+   }
+  ]
+ },
+ "statusLine": {
+  "type": "command",
+  "command": "DUMP_LOG=/tmp/claude-1000/-home-dxb-DxB-Global-OS/e3574313-0b06-484a-a0e3-b78b478cd65d/scratchpad/statusline-dump.log /usr/bin/node /tmp/claude-1000/-home-dxb-DxB-Global-OS/e3574313-0b06-484a-a0e3-b78b478cd65d/scratchpad/dump-statusline.js"
+ }
+}

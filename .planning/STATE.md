@@ -27,6 +27,25 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-04 18:05 → now, Opus 5.5 session e3574313 (max), the lead after fd7d67f2's handover.
+- **The approved orchestration design is in the door — finished** (not accepted — LAW B)
+  <!-- CEO-OK: fable-at-the-end-on-important-jobs-2026-10-04 --> <!-- CEO-OK: fable-start-and-important-end-2026-10-04 -->:
+  three arrangements and the card's measured fields; `helper-writer` (Opus 5.5 · medium) and the core's "Code"
+  sentence; Sol once per job, on the finished work (the critical plan's Sol read and the high/xhigh twin audit
+  deleted, LAW A); Fable as he corrected it at 18:12 (*"Pardon ya o fable'a sonda değil yani başta danışılır
+  sonda danışılmaz diyecektim…"*, fd7d67f2's transcript, verbatim) — the card's `fable:` line: none on a light
+  job, the start of a normal one (before the plan goes to him), the start and the end of an important one
+  (critical, or a design, plan or architecture job with risk 2), nowhere else. Sol's 1 A + 4 B fixed by a fork
+  and two helper-writers, each verified: the mirror keeps home paths and moves every hook it copies; usage.mjs
+  prices the tokens and counts Fable's calls. Commits `193eea17` · `79f57aef`; battery GREEN (1,179 · 266);
+  Fable's end call 18:35, no objection. Job folder `.planning/quick/20261004-orchestration-door/`.
+- **The live bar** (his *"çubuk her turu canlı interaktif göstermeli mutlaka"*, conversation, verbatim) —
+  measured, plan sent to him, waits on his yes: in a fresh session the bar draws no `tur:` at all (no readable
+  transcript line at any render of three turns); the render's own `prompt_id` equals the hooks' and a message
+  sent mid-turn keeps it; the payload's `effort.level` follows `/effort` at once. The plan: the hook writes the
+  turn's id when `dxb-design-max` is called, and the bar shows `tur: max` when it equals its own id, else the
+  session's level. Card and evidence: `.planning/quick/20261004-live-turn-bar/`.
+
 2026-10-04 ~17:00 → 17:55, Opus 5.5 session e7aa0d14 (high), on his /goal *"iş devam edin sonunda fable a
 danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar içinde geçerli"* (conversation, verbatim).
 - **His list item 3 — the construction's auto-memory: the fixes are done** (finished, not accepted — LAW B).
@@ -56,17 +75,14 @@ danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar
 2026-10-04 14:53 → ~18:15, Opus 5.5 session fd7d67f2 (high; `max` from ~17:37 on his `/effort max`).
 - **Design at max** <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 --> <!-- CEO-OK: design-max-only-his-yes-closes-2026-10-04 -->:
   the `dxb-design-max` skill (`effort: max`) first in every design turn; its hook reminds the lead on each
-  of his messages; only his yes closes it. The bar shows the turn's real level, `tur: max`, and
-  `🟣 tasarım açık` <!-- CEO-OK: statusline-turn-effort-2026-10-04 -->. Proven at the API through a local
+  of his messages; only his yes closes it. The bar shows `🟣 tasarım açık` and the turn's level read from the
+  transcript, `tur: max` <!-- CEO-OK: statusline-turn-effort-2026-10-04 --> — not live in a fresh session (session
+  e3574313's block). Proven at the API through a local
   proxy: after the skill's call the request carries `output_config.effort` `max`, the `builder` subagent's
   too; the spinner shows only the session's level (`evidence/api-effort-proxy.txt`). Removed by session
   b762d77d (8639c403) and restored on his *"geri al skill kalsın"* (6861a0c3). Weak point measured: the lead
   must obey the reminder — at 17:30-17:33 it did not, and those turns ran at high.
-- **The approved orchestration design is in the door — NOT finished** <!-- CEO-OK: fable-at-the-end-on-important-jobs-2026-10-04 -->
-  (commit `193eea17`; Sol `high` found 1 A + 4 B, open, in the job's SOL.md; battery not yet run): three arrangements and the card's measured fields, `helper-writer`
-  (Opus 5.5 · medium) and the core's "Code" sentence, Sol's single pass, Fable once at the end on a
-  critical job only, USD prices in §6, the mirror rewriting only hook paths it holds. Job folder
-  `.planning/quick/20261004-orchestration-door/`.
+- The orchestration design written into the door (`193eea17`) — finished by session e3574313 (its block).
 
 2026-10-04 15:10 → 17:00, Opus 5.5 session 07841b79 (max ~15:40 → ~16:20, then high).
 - C1 accepted on his waiver of the eye (commit `3b0825d9`).
@@ -127,6 +143,8 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 
+Beside his list: the live bar (session e3574313) — built on his yes to the plan (Waiting on his approval).
+
 After his list: the research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes;
 the tweet's link is still to come from him.
 
@@ -134,6 +152,14 @@ the tweet's link is still to come from him.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
+- The live bar's plan (session e3574313, sent 18:40) — one word.
+- Found in the orchestration job, each with a recommendation; his word decides, nothing is changed before it:
+  (1) the helper seats call Fable on their own — each of this job's two helper-writers once, unasked, about half
+  its cost (usage.mjs: 0.53 of 1.03 and 0.44 of 0.95 USD); `advisorModel: fable` in `~/.claude/settings.json`
+  gives it to every session and subagent, and `--disallowedTools advisor` does not take it away (measured
+  18:45) — the remedy is measured on the live bar's helper before it is proposed; (2) `~/.claude/CLAUDE.md`'s line *"advisor (Fable 5.1): gerekli görüldüğü takdirde
+  her zaman danışılabilir (CEO 2026-10-01)"* contradicts the card's `fable:` rule — recommended: limit it to work
+  outside dxb-team2; (3) fd7d67f2's open question: no Fable at the start of a normal job either?
 
 ## Where things live
 

@@ -1,0 +1,35 @@
+# The prompt-id probes, 2026-10-04 18:28-18:39 local — a real interactive claude 2.1.289 in a pty, a scratch project
+# with copies of the dxb-design-max skill and hook, a status-line wrapper logging every render (dump-statusline.js) and a
+# hook logger (hook-keys.py); settings in probe-settings.json; drivers pty-bar2.py, pty-bar3.py, pty-effort.py.
+# Run 2 (pty-bar3): turn 1 calls the skill four times; a second message is sent at +5 s while turn 1 runs; turn 2 is a
+# new prompt with no skill. Run 3 (pty-effort): launched at high, `/effort max` typed, then one prompt.
+# The hook log of run 2 and the render logs of runs 2 and 3 were kept below as they were read at the time.
+## Run 2 — hooks
+18:34:29 UserPromptSubmit prompt_id 964970d0 'Invoke the dxb-design-max skill first. T'
+18:34:31 PostToolUse      prompt_id 964970d0 Skill dxb-design-max
+18:34:33 PostToolUse      prompt_id 964970d0 Skill dxb-design-max
+18:34:34 UserPromptSubmit prompt_id 964970d0 'Also say the name of the largest ocean.'   <- sent while turn 1 ran: same id
+18:34:34 PostToolUse      prompt_id 964970d0 Skill dxb-design-max
+18:34:38 PostToolUse      prompt_id 964970d0 Skill dxb-design-max
+18:34:49 UserPromptSubmit prompt_id db2c821e 'What is the capital of France? One word.'
+## Run 2 — renders (payload prompt_id, payload effort, readable transcript lines, bar)
+18:34:09.205 -        high 0 | Opus 5.5 bar-probe
+18:34:31.334 964970d0 high 0 | Opus 5.5 6% (47k) bar-probe                      <- during the PostToolUse hooks
+18:34:31.764 964970d0 high 0 | Opus 5.5 6% (47k) 🟣 tasarım açık bar-probe
+18:34:33.667 964970d0 high 0 | … 🟣 tasarım açık
+18:34:35.269 964970d0 high 0 | … 🟣 tasarım açık
+18:34:39.073 964970d0 high 0 | … 🟣 tasarım açık
+18:34:40.943 964970d0 high 0 | … 🟣 tasarım açık
+18:34:52.188 db2c821e high 0 | … 🟣 tasarım açık
+## Run 3 — renders
+18:38:26.941 -        high 0 | Opus 5.5 bar-probe
+18:38:41.931 94790095 max  0 | Opus 5.5 bar-probe                                <- the render after `/effort max`
+18:38:49.245 042d92e9 max  0 | Opus 5.5 6% (47k) bar-probe
+## Findings
+- The render payload's prompt_id equals the UserPromptSubmit and PostToolUse hooks' prompt_id (runs 1 and 2).
+- A message sent while a turn runs keeps that turn's prompt_id in the hook and in the render (run 2, 18:34:34).
+- A new prompt gets a new prompt_id (run 2, 18:34:49; run 1, 18:29:23).
+- The payload's effort.level is the session's own level (high while the skill lifted the turn) and follows /effort at once (run 3).
+- The reader found no readable transcript line at any render of any run (it cannot tell an empty file from one not yet
+  created; the probe project's transcript folder held no .jsonl afterwards) — the transcript-read bar drew no `tur:` at all.
+- Run 1 (pty-bar2.log): the same equality over two turns (5ec70c6f, e85a0aba); its second message landed after turn 1 ended.
