@@ -57,10 +57,13 @@ const commandName = { type: "user", message: { content: "<command-name>/effort</
 const queued = { type: "attachment", attachment: { type: "queued_command", prompt: "bak" } };
 
 /** the bar as he reads it: ANSI colours stripped */
-function bar(dir: string, transcript_path?: string, sid = SID): string {
+function bar(dir: string, transcript_path?: string, sid = SID,
+  live: { prompt_id?: string; effort?: string } = {}): string {
   const r = spawnSync("node", [STATUS_LINE], {
     input: JSON.stringify({
       session_id: sid, transcript_path, model: { display_name: "Opus 5.5" }, workspace: { current_dir: "/x" },
+      ...(live.prompt_id !== undefined ? { prompt_id: live.prompt_id } : {}),
+      ...(live.effort !== undefined ? { effort: { level: live.effort } } : {}),
     }),
     encoding: "utf8", env: { ...process.env, XDG_RUNTIME_DIR: dir }, timeout: 10_000,
   });
@@ -130,6 +133,52 @@ describe("the bar shows the request in flight now, not the last step that finish
     expect(bar(dir, transcript(dir, [said, step("high"), commandName, effortCommand("max")]))).toContain("tur: max");
     expect(bar(dir, transcript(dir, [said, step("high"), commandName, effortCommand("max"), said]))).toContain("tur: max");
     expect(bar(dir, transcript(dir, [said, step("max"), effortCommand("high"), said]))).toContain("tur: high");
+  });
+});
+
+// Measured 2026-10-04 18:28-18:39 (.planning/quick/20261004-live-turn-bar/evidence/prompt-id-probe.txt): during a
+// fresh session's turns the transcript gives the bar nothing, while every render's payload carries `effort.level`
+// (the session's own level) and the turn's `prompt_id` — the same id the design-max hook writes into
+// <session_id>.turn when the lifting skill is called in that turn.
+describe("the bar reads the turn in flight from its own payload and the skill's turn marker", () => {
+  const PROMPT = "964970d0-1a2b-4c3d-8e4f-000000000000";
+  const EARLIER = "5ec70c6f-1a2b-4c3d-8e4f-000000000000";
+  const marker = (dir: string, id: string) => {
+    mkdirSync(join(dir, "dxb-design-max"), { recursive: true, mode: 0o700 });
+    writeFileSync(join(dir, "dxb-design-max", `${SID}.turn`), id);
+  };
+  it("the marker holds this render's prompt_id: 'tur: max' with no transcript at all", () => {
+    const dir = box();
+    marker(dir, PROMPT);
+    expect(bar(dir, undefined, SID, { prompt_id: PROMPT, effort: "high" })).toContain("tur: max");
+  });
+  it("a marker of an earlier prompt: the payload's level, even when the transcript's last turn lifted", () => {
+    const dir = box();
+    marker(dir, EARLIER);
+    const t = transcript(dir, [said, skillCall("dxb-design-max"), toolResult, step("max")]);
+    const out = bar(dir, t, SID, { prompt_id: PROMPT, effort: "high" });
+    expect(out).toContain("tur: high");
+    expect(out).not.toContain("tur: max");
+  });
+  it("no marker, payload effort medium: 'tur: medium'", () => {
+    expect(bar(box(), undefined, SID, { prompt_id: PROMPT, effort: "medium" })).toContain("tur: medium");
+  });
+  it("payload effort max (his /effort), no marker: 'tur: max'", () => {
+    expect(bar(box(), undefined, SID, { prompt_id: PROMPT, effort: "max" })).toContain("tur: max");
+  });
+  it("a link at the marker pointing to a file holding the right id is not trusted: the payload's level", () => {
+    const dir = box();
+    mkdirSync(join(dir, "dxb-design-max"), { mode: 0o700 });
+    writeFileSync(join(dir, "elsewhere"), PROMPT);
+    symlinkSync(join(dir, "elsewhere"), join(dir, "dxb-design-max", `${SID}.turn`));
+    const out = bar(dir, undefined, SID, { prompt_id: PROMPT, effort: "high" });
+    expect(out).toContain("tur: high");
+    expect(out).not.toContain("tur: max");
+  });
+  it("a payload without effort and no marker: the transcript rules as before", () => {
+    const dir = box();
+    expect(bar(dir, transcript(dir, [said, skillCall("dxb-design-max")]), SID, { prompt_id: PROMPT })).toContain("tur: max");
+    expect(bar(dir, transcript(dir, [said, step("high")]), SID, { prompt_id: PROMPT })).toContain("tur: high");
   });
 });
 

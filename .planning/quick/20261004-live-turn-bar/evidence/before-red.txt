@@ -1,0 +1,222 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/hooks/design-max.test.ts (24 tests | 5 failed) 860ms
+   ✓ the skill's call opens the mode for its own session > invoking dxb-design-max writes this session's flag and says nothing 14ms
+   ✓ the skill's call opens the mode for its own session > any other skill opens nothing 13ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > no flag: a prompt gets nothing 13ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > open: the prompt carries the reminder, naming the skill and the close command 26ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > another session's open mode does not reach this session 26ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > close removes this session's flag only, and the next prompt is silent 54ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > close on a mode that is not open says so and still exits 0 15ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > close without a session id in its env refuses with exit 2 and touches nothing 29ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > a session id shaped like a path writes nothing, reads nothing, closes nothing 239ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > a link planted at the flag is neither written through nor read as a flag nor closed 40ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > a link to another session's flag does not carry that session's reminder 25ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > a flag folder that is a link is not trusted: nothing written, read or removed through it 39ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > a flag folder writable by others is not trusted 13ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > a FIFO at the flag neither blocks the hook nor counts as a flag 41ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > close that cannot remove the flag says why on stderr, exits 1, and the mode stays open 40ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > garbage, empty and non-object stdin: exit 0, nothing on stdout or stderr 62ms
+   × the skill's call marks its turn for the status bar > the opening call writes <sid>.turn holding the payload's prompt_id 15ms
+     → ENOENT: no such file or directory, open '/tmp/designmax9nqDur/dxb-design-max/5e1f0a2b-d351-4000-8000-000000000000.turn'
+   × the skill's call marks its turn for the status bar > a later call with another prompt_id replaces it, leaving no temporary file behind 26ms
+     → ENOENT: no such file or directory, open '/tmp/designmaxErn3qc/dxb-design-max/5e1f0a2b-d351-4000-8000-000000000000.turn'
+   × the skill's call marks its turn for the status bar > a link planted at the marker is not followed: its target untouched, the marker a regular file 16ms
+     → expected false to be true // Object.is equality
+   × the skill's call marks its turn for the status bar > a FIFO at the marker does not block the hook, and is replaced by the marker 17ms
+     → expected false to be true // Object.is equality
+   ✓ the skill's call marks its turn for the status bar > a malformed or missing prompt_id writes no marker, and the flag still opens 64ms
+   × the skill's call marks its turn for the status bar > close removes the flag and leaves the marker 27ms
+     → ENOENT: no such file or directory, open '/tmp/designmaxtI9Taq/dxb-design-max/5e1f0a2b-d351-4000-8000-000000000000.turn'
+   ✓ the registration and the skill as they stand > settings.json runs exactly this hook, as a command, on PostToolUse Skill and on UserPromptSubmit 0ms
+   ✓ the registration and the skill as they stand > the skill is named dxb-design-max, runs at effort max, and closes with the reminder's command 0ms
+ ❯ tests/hooks/statusline-effort.test.ts (19 tests | 5 failed) 577ms
+   ✓ the bar shows the level the turn really runs at > the last step ran at max: 'tur: max' 20ms
+   ✓ the bar shows the level the turn really runs at > the last step ran at high: 'tur: high' 19ms
+   ✓ the bar shows the level the turn really runs at > a new prompt with no step yet shows the session's own level — the first step of the turn before 22ms
+   ✓ the bar shows the level the turn really runs at > no transcript, an unreadable one, or no step with an effort: no turn mark, the bar still stands 62ms
+   ✓ the bar shows the level the turn really runs at > a long transcript is read from its end only and still gives the last step 32ms
+   ✓ the bar shows the level the turn really runs at > an effort that is not one of the five levels is not shown 20ms
+   ✓ the bar shows the request in flight now, not the last step that finished > the moment the lifting skill is called, before any max step is written: 'tur: max' 42ms
+   ✓ the bar shows the request in flight now, not the last step that finished > his next message after a lifted turn: back to the session's level until the skill is called again 42ms
+   ✓ the bar shows the request in flight now, not the last step that finished > a message he sends while the turn runs does not end the lift 21ms
+   ✓ the bar shows the request in flight now, not the last step that finished > another skill lifts nothing 22ms
+   ✓ the bar shows the request in flight now, not the last step that finished > an /effort set since the last step is the level of the next request 61ms
+   × the bar reads the turn in flight from its own payload and the skill's turn marker > the marker holds this render's prompt_id: 'tur: max' with no transcript at all 22ms
+     → expected 'Opus 5.5 x' to contain 'tur: max'
+   × the bar reads the turn in flight from its own payload and the skill's turn marker > a marker of an earlier prompt: the payload's level, even when the transcript's last turn lifted 25ms
+     → expected 'Opus 5.5 tur: max x' to contain 'tur: high'
+   × the bar reads the turn in flight from its own payload and the skill's turn marker > no marker, payload effort medium: 'tur: medium' 22ms
+     → expected 'Opus 5.5 x' to contain 'tur: medium'
+   × the bar reads the turn in flight from its own payload and the skill's turn marker > payload effort max (his /effort), no marker: 'tur: max' 21ms
+     → expected 'Opus 5.5 x' to contain 'tur: max'
+   × the bar reads the turn in flight from its own payload and the skill's turn marker > a link at the marker pointing to a file holding the right id is not trusted: the payload's level 20ms
+     → expected 'Opus 5.5 x' to contain 'tur: high'
+   ✓ the bar reads the turn in flight from its own payload and the skill's turn marker > a payload without effort and no marker: the transcript rules as before 41ms
+   ✓ the bar shows when design at max is open for this session > its flag stands: 'tasarım açık'; another session's flag: nothing 41ms
+   ✓ the bar shows when design at max is open for this session > a link at the flag is no flag 20ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hooks/design-max.test.ts > the skill's call marks its turn for the status bar > the opening call writes <sid>.turn holding the payload's prompt_id
+Error: ENOENT: no such file or directory, open '/tmp/designmax9nqDur/dxb-design-max/5e1f0a2b-d351-4000-8000-000000000000.turn'
+ ❯ tests/hooks/design-max.test.ts:229:12
+    227|     expect(hook(dir, skillCallIn(SID, PROMPT))).toBe("");
+    228|     expect(existsSync(flag(dir, SID))).toBe(true);
+    229|     expect(readFileSync(marker(dir, SID), "utf8")).toBe(PROMPT);
+       |            ^
+    230|     expect(lstatSync(marker(dir, SID)).mode & 0o777).toBe(0o600);
+    231|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > the skill's call marks its turn for the status bar > a later call with another prompt_id replaces it, leaving no temporary file behind
+Error: ENOENT: no such file or directory, open '/tmp/designmaxErn3qc/dxb-design-max/5e1f0a2b-d351-4000-8000-000000000000.turn'
+ ❯ tests/hooks/design-max.test.ts:236:12
+    234|     hook(dir, skillCallIn(SID, PROMPT));
+    235|     hook(dir, skillCallIn(SID, NEXT_PROMPT));
+    236|     expect(readFileSync(marker(dir, SID), "utf8")).toBe(NEXT_PROMPT);
+       |            ^
+    237|     expect(readdirSync(FLAGS(dir)).sort()).toEqual([SID, `${SID}.turn`…
+    238|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > the skill's call marks its turn for the status bar > a link planted at the marker is not followed: its target untouched, the marker a regular file
+AssertionError: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ tests/hooks/design-max.test.ts:247:50
+    245|     hook(dir, skillCallIn(SID, PROMPT));
+    246|     expect(readFileSync(outside, "utf8")).toBe("keep");
+    247|     expect(lstatSync(marker(dir, SID)).isFile()).toBe(true);
+       |                                                  ^
+    248|     expect(readFileSync(marker(dir, SID), "utf8")).toBe(PROMPT);
+    249|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > the skill's call marks its turn for the status bar > a FIFO at the marker does not block the hook, and is replaced by the marker
+AssertionError: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ tests/hooks/design-max.test.ts:255:50
+    253|     expect(spawnSync("mkfifo", [marker(dir, SID)]).status).toBe(0);
+    254|     hook(dir, skillCallIn(SID, PROMPT));
+    255|     expect(lstatSync(marker(dir, SID)).isFile()).toBe(true);
+       |                                                  ^
+    256|     expect(readFileSync(marker(dir, SID), "utf8")).toBe(PROMPT);
+    257|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > the skill's call marks its turn for the status bar > close removes the flag and leaves the marker
+Error: ENOENT: no such file or directory, open '/tmp/designmaxtI9Taq/dxb-design-max/5e1f0a2b-d351-4000-8000-000000000000.turn'
+ ❯ tests/hooks/design-max.test.ts:271:12
+    269|     expect(close(dir, SID).stdout).toContain("closed");
+    270|     expect(existsSync(flag(dir, SID))).toBe(false);
+    271|     expect(readFileSync(marker(dir, SID), "utf8")).toBe(PROMPT);
+       |            ^
+    272|   });
+    273| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar reads the turn in flight from its own payload and the skill's turn marker > the marker holds this render's prompt_id: 'tur: max' with no transcript at all
+AssertionError: expected 'Opus 5.5 x' to contain 'tur: max'
+
+Expected: [32m"[7mtur: ma[27mx"[39m
+Received: [31m"[7mOpus 5.5 [27mx"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:153:77
+    151|     const dir = box();
+    152|     marker(dir, PROMPT);
+    153|     expect(bar(dir, undefined, SID, { prompt_id: PROMPT, effort: "high…
+       |                                                                             ^
+    154|   });
+    155|   it("a marker of an earlier prompt: the payload's level, even when th…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar reads the turn in flight from its own payload and the skill's turn marker > a marker of an earlier prompt: the payload's level, even when the transcript's last turn lifted
+AssertionError: expected 'Opus 5.5 tur: max x' to contain 'tur: high'
+
+Expected: [32m"tur: high"[39m
+Received: [31m"Opus 5.5 tur: max x"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:160:17
+    158|     const t = transcript(dir, [said, skillCall("dxb-design-max"), tool…
+    159|     const out = bar(dir, t, SID, { prompt_id: PROMPT, effort: "high" }…
+    160|     expect(out).toContain("tur: high");
+       |                 ^
+    161|     expect(out).not.toContain("tur: max");
+    162|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar reads the turn in flight from its own payload and the skill's turn marker > no marker, payload effort medium: 'tur: medium'
+AssertionError: expected 'Opus 5.5 x' to contain 'tur: medium'
+
+Expected: [32m"tur: medium"[39m
+Received: [31m"Opus 5.5 x"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:164:81
+    162|   });
+    163|   it("no marker, payload effort medium: 'tur: medium'", () => {
+    164|     expect(bar(box(), undefined, SID, { prompt_id: PROMPT, effort: "me…
+       |                                                                                 ^
+    165|   });
+    166|   it("payload effort max (his /effort), no marker: 'tur: max'", () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar reads the turn in flight from its own payload and the skill's turn marker > payload effort max (his /effort), no marker: 'tur: max'
+AssertionError: expected 'Opus 5.5 x' to contain 'tur: max'
+
+Expected: [32m"[7mtur: ma[27mx"[39m
+Received: [31m"[7mOpus 5.5 [27mx"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:167:78
+    165|   });
+    166|   it("payload effort max (his /effort), no marker: 'tur: max'", () => {
+    167|     expect(bar(box(), undefined, SID, { prompt_id: PROMPT, effort: "ma…
+       |                                                                              ^
+    168|   });
+    169|   it("a link at the marker pointing to a file holding the right id is …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar reads the turn in flight from its own payload and the skill's turn marker > a link at the marker pointing to a file holding the right id is not trusted: the payload's level
+AssertionError: expected 'Opus 5.5 x' to contain 'tur: high'
+
+Expected: [32m"tur: high"[39m
+Received: [31m"Opus 5.5 x"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:175:17
+    173|     symlinkSync(join(dir, "elsewhere"), join(dir, "dxb-design-max", `$…
+    174|     const out = bar(dir, undefined, SID, { prompt_id: PROMPT, effort: …
+    175|     expect(out).toContain("tur: high");
+       |                 ^
+    176|     expect(out).not.toContain("tur: max");
+    177|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/10]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  10 failed | 33 passed (43)
+   Start at  19:24:07
+   Duration  1.84s (transform 56ms, setup 0ms, collect 25ms, tests 1.44s, environment 0ms, prepare 70ms)
+

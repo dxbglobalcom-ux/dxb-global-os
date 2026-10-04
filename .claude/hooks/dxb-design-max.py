@@ -11,7 +11,11 @@ to that answer, "bunu yapalım tmm." (design-max-skill-every-turn-2026-10-04): t
 `dxb-design-max` skill first in every design turn, and this hook keeps the mode alive across turns:
 
   * PostToolUse on Skill: the call of `dxb-design-max` opens the mode for that session -- a flag file
-    $XDG_RUNTIME_DIR/dxb-design-max/<session_id> (/tmp/dxb-design-max/ without XDG_RUNTIME_DIR).
+    $XDG_RUNTIME_DIR/dxb-design-max/<session_id> (/tmp/dxb-design-max/ without XDG_RUNTIME_DIR) --
+    and marks its turn for the status bar: <session_id>.turn holds the call's `prompt_id`, the same id
+    every render of that turn carries (measured 2026-10-04, .planning/quick/20261004-live-turn-bar/),
+    so the bar shows `tur: max` from the call until his next prompt. `close` leaves the marker; a new
+    prompt_id retires it.
   * UserPromptSubmit: while the session's flag stands, each of his messages carries a reminder into
     the session's context -- invoke the skill first, whatever the message asks; only his yes to the
     plan closes the mode (his words of 2026-10-04: "benim bir sonraki mesajım planı onaylıorm şeklinde
@@ -92,6 +96,26 @@ def open_mode(dir_fd, name):
     os.close(fd)
 
 
+def mark_turn(dir_fd, name, prompt_id):
+    """Writes the turn's prompt_id to <name>.turn by rename -- a link or FIFO standing there is replaced, never opened."""
+    if not isinstance(prompt_id, str) or not SESSION_ID.fullmatch(prompt_id):
+        return
+    tmp = f"{name}.turn.{os.urandom(8).hex()}.tmp"
+    fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=dir_fd)
+    try:
+        try:
+            os.write(fd, prompt_id.encode())
+        finally:
+            os.close(fd)
+        os.replace(tmp, f"{name}.turn", src_dir_fd=dir_fd, dst_dir_fd=dir_fd)
+    except BaseException:
+        try:
+            os.unlink(tmp, dir_fd=dir_fd)
+        except OSError:
+            pass
+        raise
+
+
 def on_hook(data):
     name = flag_name(data.get("session_id"))
     if name is None:
@@ -108,6 +132,7 @@ def on_hook(data):
     try:
         if opening:
             open_mode(dir_fd, name)
+            mark_turn(dir_fd, name, data.get("prompt_id"))
         elif is_flag(dir_fd, name):
             output = {"hookSpecificOutput": {"hookEventName": event, "additionalContext": reminder()}}
             sys.stdout.write(json.dumps(output) + "\n")

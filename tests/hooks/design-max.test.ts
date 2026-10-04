@@ -46,6 +46,10 @@ const skillCall = (sid: string, skill: string) => ({
   session_id: sid, hook_event_name: "PostToolUse", tool_name: "Skill",
   tool_input: { skill }, tool_response: { success: true, commandName: skill },
 });
+/** the same call carrying the turn's prompt_id, as Claude Code sends it (measured 2026-10-04 18:28-18:39) */
+const skillCallIn = (sid: string, promptId: unknown) => ({ ...skillCall(sid, "dxb-design-max"), prompt_id: promptId });
+const PROMPT = "964970d0-1a2b-4c3d-8e4f-000000000000";
+const NEXT_PROMPT = "db2c821e-1a2b-4c3d-8e4f-000000000000";
 /** a UserPromptSubmit input */
 const prompt = (sid: string) => ({ session_id: sid, hook_event_name: "UserPromptSubmit", prompt: "devam", cwd: ROOT });
 
@@ -210,6 +214,61 @@ describe("no session id names a path outside the flag folder; no input makes the
     for (const input of ["", "not json", "[1,2]", "null", JSON.stringify({ hook_event_name: "UserPromptSubmit" })]) {
       expect(hook(dir, input)).toBe("");
     }
+  });
+});
+
+// His words of 2026-10-04: "alttaki tur yazısı tamamiyle aynı etkileşimde olmalı skill aktifse o turda max
+// yazmalı çubukta". The skill's lift lasts the rest of its turn; the status bar learns which turn from a
+// marker <session_id>.turn holding the prompt_id of the turn that called the skill.
+describe("the skill's call marks its turn for the status bar", () => {
+  const marker = (dir: string, sid: string) => join(FLAGS(dir), `${sid}.turn`);
+  it("the opening call writes <sid>.turn holding the payload's prompt_id", () => {
+    const dir = box();
+    expect(hook(dir, skillCallIn(SID, PROMPT))).toBe("");
+    expect(existsSync(flag(dir, SID))).toBe(true);
+    expect(readFileSync(marker(dir, SID), "utf8")).toBe(PROMPT);
+    expect(lstatSync(marker(dir, SID)).mode & 0o777).toBe(0o600);
+  });
+  it("a later call with another prompt_id replaces it, leaving no temporary file behind", () => {
+    const dir = box();
+    hook(dir, skillCallIn(SID, PROMPT));
+    hook(dir, skillCallIn(SID, NEXT_PROMPT));
+    expect(readFileSync(marker(dir, SID), "utf8")).toBe(NEXT_PROMPT);
+    expect(readdirSync(FLAGS(dir)).sort()).toEqual([SID, `${SID}.turn`]);
+  });
+  it("a link planted at the marker is not followed: its target untouched, the marker a regular file", () => {
+    const dir = box();
+    const outside = join(dir, "outside");
+    writeFileSync(outside, "keep");
+    mkdirSync(FLAGS(dir), { mode: 0o700 });
+    symlinkSync(outside, marker(dir, SID));
+    hook(dir, skillCallIn(SID, PROMPT));
+    expect(readFileSync(outside, "utf8")).toBe("keep");
+    expect(lstatSync(marker(dir, SID)).isFile()).toBe(true);
+    expect(readFileSync(marker(dir, SID), "utf8")).toBe(PROMPT);
+  });
+  it("a FIFO at the marker does not block the hook, and is replaced by the marker", () => {
+    const dir = box();
+    mkdirSync(FLAGS(dir), { mode: 0o700 });
+    expect(spawnSync("mkfifo", [marker(dir, SID)]).status).toBe(0);
+    hook(dir, skillCallIn(SID, PROMPT));
+    expect(lstatSync(marker(dir, SID)).isFile()).toBe(true);
+    expect(readFileSync(marker(dir, SID), "utf8")).toBe(PROMPT);
+  });
+  it("a malformed or missing prompt_id writes no marker, and the flag still opens", () => {
+    for (const bad of ["../x", "", 42, null, undefined]) {
+      const dir = box();
+      expect(hook(dir, bad === undefined ? skillCall(SID, "dxb-design-max") : skillCallIn(SID, bad))).toBe("");
+      expect(existsSync(flag(dir, SID))).toBe(true);
+      expect(readdirSync(FLAGS(dir))).toEqual([SID]);
+    }
+  });
+  it("close removes the flag and leaves the marker", () => {
+    const dir = box();
+    hook(dir, skillCallIn(SID, PROMPT));
+    expect(close(dir, SID).stdout).toContain("closed");
+    expect(existsSync(flag(dir, SID))).toBe(false);
+    expect(readFileSync(marker(dir, SID), "utf8")).toBe(PROMPT);
   });
 });
 

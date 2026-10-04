@@ -1,0 +1,54 @@
+--- "/home/dxb/DxB Global OS/.planning/quick/20261004-live-turn-bar/evidence/dxb-statusline.before.js"	2026-10-04 19:23:00.005475731 +0200
++++ /home/dxb/.claude/hooks/dxb-statusline.js	2026-10-04 19:25:20.224363693 +0200
+@@ -166,8 +166,15 @@
+ //   * else the newest step of this turn                 -> its level;
+ //   * else (the turn has no step yet) the session's own level -- an /effort set since the last step,
+ //     or the first step of the latest earlier turn (taken before any skill could lift it).
++// That reading still drew nothing during a fresh session's turns: the transcript holds no readable line
++// there at any render (measured 2026-10-04 18:28-18:39, .planning/quick/20261004-live-turn-bar/). So the
++// render's own payload rules first, newest rule first:
++//   * this session's turn marker (dxb-design-max/<session_id>.turn, written by the design-max hook when
++//     the lifting skill is called) is a regular file holding the payload's `prompt_id` -> max;
++//   * else the payload's `effort.level` (the session's own level, it follows /effort at once);
++//   * else the transcript reading above, for a payload without `effort`.
+ // "tasarım açık" stands while this session's design-at-max flag stands. Best effort: the bar must never
+-// fail because of either.
++// fail because of any of them -- an error falls to the next rule.
+ const EFFORT_LEVELS = new Set(['low', 'medium', 'high', 'xhigh', 'max']);
+ const LIFTING_SKILLS = new Set(['dxb-design-max']);
+ const EFFORT_SET = /<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b/;
+@@ -243,8 +250,33 @@
+   } catch { return false; }
+ }
+ 
++const TURN_MARKER_MAX_BYTES = 128;
++
++function turnMarked(sid, promptId) {
++  let fd;
++  try {
++    if (!sid || !/^[0-9a-f-]{8,}$/i.test(sid)) return false;
++    if (typeof promptId !== 'string' || !/^[0-9a-f-]{8,}$/i.test(promptId)) return false;
++    const file = path.join(process.env.XDG_RUNTIME_DIR || '/tmp', 'dxb-design-max', `${sid}.turn`);
++    if (!fs.lstatSync(file).isFile()) return false;
++    fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
++    const buf = Buffer.alloc(TURN_MARKER_MAX_BYTES);
++    const n = fs.readSync(fd, buf, 0, TURN_MARKER_MAX_BYTES, 0);
++    return buf.toString('utf8', 0, n).trim() === promptId;
++  } catch { return false; }
++  finally { if (fd !== undefined) try { fs.closeSync(fd); } catch { /* closed */ } }
++}
++
++function payloadEffort(data) {
++  const level = data.effort?.level;
++  return EFFORT_LEVELS.has(level) ? level : null;
++}
++
+ function turnMark(data) {
+-  const effort = turnEffort(data.transcript_path);
++  let effort = null;
++  try { effort = turnMarked(data.session_id, data.prompt_id) ? 'max' : payloadEffort(data); }
++  catch { /* the next rule */ }
++  if (!effort) effort = turnEffort(data.transcript_path);
+   const design = designOpen(data.session_id) ? ' \x1b[35m🟣 tasarım açık\x1b[0m' : '';
+   if (!effort) return design;
+   return `${design} ${effort === 'max' ? '\x1b[35;1m' : '\x1b[2m'}tur: ${effort}\x1b[0m`;
