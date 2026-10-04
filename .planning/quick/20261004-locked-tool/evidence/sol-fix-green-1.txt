@@ -1,0 +1,48 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:475449) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:475592) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:475616) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/locked-tool-review.test.ts (15 tests) 1190ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock  473ms
+(node:475637) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/pin-quarantine.test.ts (18 tests) 296ms
+(node:475714) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/video-ingest.test.ts (7 tests | 1 skipped) 98ms
+REJECT bad-job.md — missing: artifact:
+load-jobs: audit write failed (db down?) — rejection still enforced
+ ✓ tests/phase7/watchdog.test.ts (13 tests) 65ms
+(node:475798) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b49/pin-manifest.test.ts (14 tests) 44ms
+(node:475904) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase7/drift-review.test.ts > drift review — what the manifest may vouch for > a missing or malformed manifest gives no entries — every external drift then locks
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-s1Wtn7/absent.json): Error: ENOENT: no such file or directory, open '/tmp/pin-manifest-s1Wtn7/absent.json' — no external drift can be re-approved
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-s1Wtn7/bad.json): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2) — no external drift can be re-approved
+
+ ✓ tests/phase7/drift-review.test.ts (23 tests) 39ms
+(node:475936) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/profile-denial.test.ts (4 tests) 33ms
+(node:475971) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/profile-denial-runtime.test.ts (2 tests) 29ms
+(node:476065) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/bundle2-prompts.test.ts (17 tests) 10ms
+ ✓ tests/b39/alert-language.test.ts (9 tests) 6ms
+
+ Test Files  10 passed (10)
+      Tests  121 passed | 1 skipped (122)
+   Start at  20:23:21
+   Duration  4.97s (transform 350ms, setup 0ms, collect 1.96s, tests 1.81s, environment 1ms, prepare 312ms)
+
+[global-teardown] handed back 26 ops:live receipt(s) this run issued

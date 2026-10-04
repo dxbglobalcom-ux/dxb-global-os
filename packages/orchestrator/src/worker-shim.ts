@@ -298,27 +298,24 @@ export async function seatStandingPrompt(
   return composeSeatPrompt(employee, personaBody);
 }
 
-/** The MCP surface one task runs with; null = none is mounted. Exported so a test proves the tool-less
- *  review without a live model call. tools:[] is DEAD on the staffed path; an unstaffed task (no agent)
- *  or an empty profile runs tool-less by default-deny, never by silent design — and a task flagged
- *  `tools_allowed = false` runs tool-less by design: the locked-tool review reads text an outside server
- *  wrote, so the seat holds no hand a poisoned description could try to use (CEO 2026-10-04). */
-export async function taskToolOptions(
-  task: Pick<ClaimedTask, "tools_allowed">,
-  employee: SeatIdentity | null,
-): Promise<SdkToolOptions | null> {
-  if (task.tools_allowed === false || !employee) return null;
-  const surface = resolveRuntimeProfile(employee);
-  return surface.allowedTools.length > 0 ? buildSdkToolOptions(surface, await dxbInventoryNames()) : null;
-}
-
 // Default executor: routing decided above; this function owns the SDK call. Exported (not from the
 // package index) so the task lane's isolation is proven live on its own code, without claiming a
 // task (runtime isolation, Sol's re-check 2026-10-03).
 export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> {
   const { rule, employee } = await resolveExecutionRoute(task);
 
-  const toolOpts = await taskToolOptions(task, employee);
+  // tools:[] is DEAD on the staffed path; an unstaffed task (no agent) or an
+  // empty profile runs tool-less by default-deny, never by silent design — and a
+  // task flagged tools_allowed=false runs tool-less by design: the locked-tool
+  // review reads text an outside server wrote, so the seat holds no hand a
+  // poisoned description could try to use (CEO 2026-10-04).
+  let toolOpts: SdkToolOptions | null = null;
+  if (employee && task.tools_allowed !== false) {
+    const surface = resolveRuntimeProfile(employee);
+    if (surface.allowedTools.length > 0) {
+      toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
+    }
+  }
 
   const hooked = task as HookedClaimedTask;
   const prompt = [
@@ -369,6 +366,12 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
 
   let raw: unknown;
   if (rule.mode === "subscription") {
+    // A tool-less review leans on the company isolation for what `tools: []` alone does not stop: without
+    // strictMcpConfig and empty settingSources the CLI would load the machine's own MCP servers. With the
+    // isolation switched off (the DXB_WORKER_ISOLATION=0 rollback) such a task is refused, never run.
+    if (task.tools_allowed === false && companyIsolation() === null) {
+      throw new Error("worker-shim: a tool-less review task is refused while the company isolation is off (DXB_WORKER_ISOLATION=0)");
+    }
     // B43 plan ②: the seat's identity is the system prompt; the run is the seat's, not the
     // session's (kernel sdk-isolation.ts). An unstaffed task keeps the CLI's default prompt.
     const seatPrompt = employee ? await seatStandingPrompt(employee) : null;

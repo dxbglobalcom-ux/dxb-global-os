@@ -217,7 +217,8 @@ export function withTool(
     inputSchema: entry.inputSchema,
     schema_hash: computeToolHash(entry),
   };
-  const others = manifest.tools.filter((t) => keyOf(t) !== keyOf(entry));
+  // Identity is the pair itself, never the dotted display name (Sol F10: `a.b`+`c` and `a`+`b.c` are two tools).
+  const others = manifest.tools.filter((t) => !(t.server === entry.server && t.tool === entry.tool));
   const servers: Record<string, number> = emptyCounts();
   for (const t of [...others, tool]) servers[t.server] = (servers[t.server] ?? 0) + 1;
   return { about: manifest.about, servers, tools: [...others, tool] };

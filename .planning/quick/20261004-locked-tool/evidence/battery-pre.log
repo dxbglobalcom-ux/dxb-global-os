@@ -1,0 +1,1148 @@
+$ bash scripts/construction/battery.sh
+=== 1/2 · THE CONSTRUCTION RUNTIME — the sandboxed suite ===
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:69) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b43/media-hands.test.ts > 2. the media lane > a failing engine lands in failed with its error; a busy machine leaves the job queued
+[media-lane] b43t-cbc977-lane: job 9a8ec92f (still) waits: card busy: test
+
+ ✓ tests/b43/media-hands.test.ts (12 tests) 10704ms
+   ✓ 1. the media tool group > cancel flips a queued job; wait times out honestly and renews the task lease  5113ms
+   ✓ 2. the media lane > cancel_requested reaches a running engine  420ms
+   ✓ 4. the lease heartbeat > a run longer than its lease is not reaped while the worker is alive  4528ms
+(node:389) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > worker path: intake parks 'routing', drainVoiceCalls answers + writes the handoff WAV
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/r31/voice-line.test.ts (11 tests) 9571ms
+   ✓ R3.1 — real Speaches roundtrip > Piper TR synth → whisper transcript preserves the question intent  3109ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0  3130ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true  3241ms
+ ✓ tests/b46/drawer-repairs.test.ts (9 tests) 7618ms
+   ✓ profile-sync.sh — a scratch root never touches the real unit, a stop never leaves his settings > a copy stopped by SIGTERM in the middle leaves no half copy and none of his settings in Default  3011ms
+   ✓ fetch.py — a door that is stopped takes its whole tree with it > a door that outlives its timeout is ended with every process under it  1105ms
+   ✓ fetch.py — a door that is stopped takes its whole tree with it > `timeout N fetch.py` — the callers' stop — still ends the door that is running  3113ms
+(node:497) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b43/media-lanes.test.ts > W8 · the media lane's seams > a child killed with SIGKILL — the hardest death — still gives its job back
+[media-lane] recovered orphan a4968003 (probe, held by lane-pid-585) → queued
+
+stdout | tests/b43/media-lanes.test.ts > W8 · the media lane's seams > start-up recovery gives back a job a dead process was holding
+[media-lane] recovered orphan 830afefe (probe, held by a-lane-that-died) → queued
+[media-lane] recovered orphan bc696e05 (probe, held by a-lane-that-died) → cancelled
+
+ ✓ tests/b43/media-lanes.test.ts (10 tests) 7534ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > a processor job is claimed while the card lane is inside a long shoot  601ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > two card jobs never overlap — the card is one  450ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > a lane that just finished looks again at once; an idle lane rests one tick  370ms
+   ✓ B43 · media lanes on the engine — kinds are claimed by the right lane, at the same time > a GPU-kinds lane and a CPU-kinds lane run their jobs at once; the book shows the overlap  929ms
+   ✓ W8 · the media lane's seams > a REAL child process killed mid-run ends 'cancelled', never 'failed'  5024ms
+(node:587) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e8/ops-live.test.ts (6 tests) 3974ms
+   ✓ E8.3 collector — 1 s debounce onto dxb:ops:live (§18/§21/§24) > 10 rapid INSERTs → ≤2 publishes, one envelope carrying payload.batch  1831ms
+   ✓ E8.3 collector — 1 s debounce onto dxb:ops:live (§18/§21/§24) > a single event publishes verbatim — the §24 probe contract  915ms
+   ✓ E8.3 collector — 1 s debounce onto dxb:ops:live (§18/§21/§24) > real claim path: dispatch → runWorkerOnce → run.started/run.succeeded reach the channel  946ms
+ ✓ tests/governance/audit-card.test.ts (19 tests) 3992ms
+   ✓ refuter.sh holds the gate > refuses every forwarded option that could override the card or the profile  395ms
+   ✓ refuter.sh holds the gate > keeps the prompt whole when allowed options come after it, and refuses two prompts  327ms
+   ✓ refuter.sh holds the gate > takes the prompt after '--', and refuses an empty brief  648ms
+   ✓ refuter.sh holds the gate > runs the whole audit again when the model is at capacity, and gives up after four tries  607ms
+   ✓ refuter.sh holds the gate > never retries on a capacity sentence quoted in the answer; caps the retries at three; logs every try  791ms
+ ✓ tests/phase3/crash.test.ts (1 test) 3082ms
+   ✓ crash durability (QUEUE-02, kill -9) > reaps the dead owner's lease and hands the SAME task to a new worker  3064ms
+ ❯ tests/b36/no-company-fallbacks.test.ts (4 tests | 1 failed) 3110ms
+   ✓ B36 Block 4 — nothing falls back to the company's database > (0) the counter finds a fallback in each shape it claims to read 6ms
+   ✓ B36 Block 4 — nothing falls back to the company's database > (0b) and it does not cry over a record of the address 1ms
+   ✓ B36 Block 4 — nothing falls back to the company's database > (1) the sweep really walked this repository  1566ms
+   × B36 Block 4 — nothing falls back to the company's database > (2) no tracked file binds the company's address to DXB_DATABASE_URL 1537ms
+     → these files fall through to the CEO's own database when nothing sets the address:
+package.json:23  line rule  (1): expected [ 'package.json:23  line rule  (1)' ] to deeply equal []
+(node:2174) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase6/known-facts.test.ts > known-fact battery — 20 facts end-to-end across the composition > BATTERY >= 18/20: commit through the door, recall through the full pipeline, verify bodies
+Q01 fact      -> pgvector HIT
+Q02 fact      -> pgvector HIT
+Q03 fact      -> pgvector HIT
+Q04 fact      -> pgvector HIT
+Q05 fact      -> pgvector HIT
+Q06 relation  -> graphify HIT
+Q07 relation  -> graphify HIT
+Q08 relation  -> graphify HIT
+Q09 relation  -> graphify HIT
+Q10 relation  -> graphify HIT
+Q11 artifact  -> obsidian HIT
+Q12 artifact  -> obsidian HIT
+Q13 artifact  -> obsidian HIT
+Q14 artifact  -> obsidian HIT
+Q15 artifact  -> obsidian HIT
+Q16 procedure -> notebook HIT
+Q17 procedure -> notebook HIT
+Q18 procedure -> notebook HIT
+Q19 procedure -> notebook HIT
+Q20 procedure -> notebook HIT
+BATTERY=20/20
+
+ ✓ tests/phase6/known-facts.test.ts (4 tests) 1958ms
+   ✓ known-fact battery — 20 facts end-to-end across the composition > BATTERY >= 18/20: commit through the door, recall through the full pipeline, verify bodies  1662ms
+ ❯ tests/b36/fallback-count.test.ts (1 test | 1 failed) 1778ms
+   × B36 — the board's fallback figure is the counter's figure > matches, file for file and bucket for bucket 1777ms
+     → expected { total: +0, tests: +0, …(3) } to deeply equal { total: 1, tests: +0, …(3) }
+ ✓ tests/b43/task-lanes.test.ts (7 tests) 1577ms
+   ✓ B43 · task lanes — one long job never holds the other hands > lane 2 takes the next task while lane 1 is inside a long run  602ms
+   ✓ B43 · task lanes — one long job never holds the other hands > an idle lane rests one tick; a working lane looks again at once  321ms
+ ✓ tests/governance/codex-mirror-check.test.ts (6 tests) 1527ms
+   ✓ sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a home path stays exactly as written under every substitution  304ms
+   ✓ sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a hook named with '+' or a space moves and is mirrored; a ghost hook and a .bak stay  350ms
+(node:3762) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3802) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3827) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/locked-tool-review.test.ts (10 tests) 1724ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock  1068ms
+stderr | tests/hooks/context-gate.test.ts
+SKIPPED — hooks unreadable as dxbbuild — tried /home/dxbbuild, /home/dxb; the sandboxed battery cannot read the CEO's home; run "pnpm vitest run tests/hooks" as the host user
+
+ ↓ tests/hooks/context-gate.test.ts (14 tests | 14 skipped)
+ ✓ tests/hooks/opening-budget.test.ts (8 tests) 1021ms
+(node:4321) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e9/library.test.ts (13 tests) 979ms
+   ✓ grant→profile chain (G3, §21 E2E) > full record→profile→resolution chain incl. revoke refusal  385ms
+   ✓ grant→profile chain (G3, §21 E2E) > compileLibraryProfiles: staging swap, hash-skip, stale overlay cleanup, system event  365ms
+ ✓ tests/hooks/design-max.test.ts (24 tests) 919ms
+ ↓ tests/hooks/statusline-effort.test.ts (23 tests | 23 skipped)
+stderr | tests/hooks/cost-gate.test.ts
+SKIPPED — cost gate unreadable as dxbbuild — tried /home/dxbbuild, /home/dxb; the sandboxed battery cannot read the CEO's home; run "pnpm vitest run tests/hooks" as the host user
+
+ ↓ tests/hooks/cost-gate.test.ts (16 tests | 16 skipped)
+(node:4480) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b38/ops-live-is-hosted.test.ts (4 tests) 589ms
+   ✓ B38 — the ops:live collector has a host > stops cleanly, and stays stopped  407ms
+(node:4511) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/e8/obs-wrapper.test.ts > E8.1 spill — flush failure never blocks, evidence survives > 3 failed attempts spill to disk; restoreSpill replays them
+[obs] flush failed 3x for run 600a432d-b40c-410b-b02b-52e1df2f1aa9 — spilling 1 rows: Error: sink down
+    at RunScope.failingInsert [as insert] [90m(/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:156:13[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:166:22
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at RunScope.drain [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:215:5[90m)[39m
+    at close [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:292:5[90m)[39m
+    at runScope [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:322:5[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:159:23
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:20
+
+stderr | tests/e8/obs-wrapper.test.ts > E8.1 spill — flush failure never blocks, evidence survives > a corrupt spill file is kept, not deleted (no evidence loss)
+[obs] spill restore failed for obs-spill-corrupt.jsonl (kept for retry): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at [90m/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:29
+    at Array.map (<anonymous>)
+    at restoreSpill [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:10[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:194:28
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:155:11
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:26
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1897:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1863:10[90m)[39m
+
+stderr | tests/e8/obs-wrapper.test.ts > E8.1 worker-shim integration — real claim path > runWorkerOnce wraps the executor: agent_runs + tool_calls land, task reaches review
+[obs] spill restore failed for obs-spill-corrupt.jsonl (kept for retry): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at [90m/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:29
+    at Array.map (<anonymous>)
+    at restoreSpill [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:10[90m)[39m
+    at runScope [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:263:11[90m)[39m
+    at runWorkerOnce [90m(/home/dxb/DxB Global OS/[39mpackages/orchestrator/src/worker-shim.ts:844:34[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:217:20
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:20
+
+stderr | tests/e8/obs-wrapper.test.ts > E8.1 worker-shim integration — real claim path > a throwing executor fails BOTH the task and the run record
+[obs] spill restore failed for obs-spill-corrupt.jsonl (kept for retry): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at [90m/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:29
+    at Array.map (<anonymous>)
+    at restoreSpill [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:10[90m)[39m
+    at runScope [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:263:11[90m)[39m
+    at runWorkerOnce [90m(/home/dxb/DxB Global OS/[39mpackages/orchestrator/src/worker-shim.ts:844:34[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:275:20
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:20
+
+ ✓ tests/e8/obs-wrapper.test.ts (9 tests) 479ms
+   ✓ E8.1 tool_calls buffer — N calls → N rows > size-flushes at 20 before the run closes  309ms
+(node:4539) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e10/spawn-binding.test.ts (6 tests) 466ms
+(node:4567) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/pin-quarantine.test.ts (18 tests) 1174ms
+(node:4596) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e9/workflow-runner.test.ts (24 tests) 485ms
+(node:4625) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/b39/dispatch-brakes.test.ts > B39 · H1 — the subscription path spends where a brake can see it > crossing the hourly ceiling HOLDS the execution leg — and only that leg
+[worker-loop] execution leg held: 4800 tokens in the last hour, ceiling 1000
+
+stdout | tests/b39/dispatch-brakes.test.ts > B39 · H1 — the subscription path spends where a brake can see it > crossing the hourly ceiling HOLDS the execution leg — and only that leg
+[qa] task 7d6074b2-d420-43fe-8c8e-6aec2c839beb PASS (confidence 0.95) — the judge took 1 ms in 1 call
+
+ ✓ tests/b39/dispatch-brakes.test.ts (15 tests) 427ms
+(node:4654) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/assigned-seats.test.ts (6 tests) 354ms
+(node:4682) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/ladder.test.ts > master-plan step 6 — 2× fail → third claim at higher tier (events as evidence) > worker fails twice; the THIRD claim serves the task with the bumped model_tier
+ladder event chain: [
+ {
+  "event": "created",
+  "from_status": "inbox",
+  "to_status": "queued",
+  "actor": "orchestrator:dispatch",
+  "payload": {
+   "deps": [],
+   "envelope_index": 0
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-1",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "failed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "error": "synthetic ladder failure: first attempt"
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "failed",
+  "to_status": "queued",
+  "actor": "orchestrator:escalate",
+  "payload": {
+   "ladder": "retry-same-tier",
+   "fail_count": 1,
+   "model_tier": "L4"
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-1",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "failed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "error": "synthetic ladder failure: second attempt"
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "failed",
+  "to_status": "queued",
+  "actor": "orchestrator:escalate",
+  "payload": {
+   "ladder": "specialist",
+   "fail_count": 2,
+   "model_tier": "L3"
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-2",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-2",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "review",
+  "actor": "worker-lad-2",
+  "payload": {
+   "confidence": 0.9
+  }
+ }
+]
+
+ ✓ tests/phase5/ladder.test.ts (6 tests) 327ms
+stderr | tests/e10/hook.test.ts > pre-gate — 17-standard mechanisms (§2/§6) > §17 FAIL-CLOSED: DB unreachable → REJECT hook_unavailable (spawn held, no throw)
+[hook] FAIL-CLOSED — policies unreachable: Error: connect ECONNREFUSED 127.0.0.1:1
+    at [90m/home/dxb/DxB Global OS/[39mnode_modules/[4m.pnpm[24m/pg-pool@3.14.0_pg@8.22.0/node_modules/[4mpg-pool[24m/index.js:45:11
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at PostgresDriver.acquireConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/dialect/postgres/postgres-driver.js:21:24[90m)[39m
+    at RuntimeDriver.acquireConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/driver/runtime-driver.js:54:28[90m)[39m
+    at DefaultConnectionProvider.provideConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/driver/default-connection-provider.js:8:28[90m)[39m
+    at DefaultQueryExecutor.executeQuery [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/query-executor/query-executor-base.js:38:28[90m)[39m
+    at SelectQueryBuilderImpl.execute [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/query-builder/select-query-builder.js:318:24[90m)[39m
+    at loadPolicies [90m(/home/dxb/DxB Global OS/[39mpackages/hook/src/policies.ts:80:15[90m)[39m
+    at preTask [90m(/home/dxb/DxB Global OS/[39mpackages/hook/src/pre-task.ts:183:12[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e10/hook.test.ts:419:23 {
+  errno: [33m-111[39m,
+  code: [32m'ECONNREFUSED'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'127.0.0.1'[39m,
+  port: [33m1[39m
+}
+
+stderr | tests/e10/hook.test.ts > pre-gate — 17-standard mechanisms (§2/§6) > §17 FAIL-CLOSED: DB unreachable → REJECT hook_unavailable (spawn held, no throw)
+[hook] fail-closed alert also failed: Error: connect ECONNREFUSED 127.0.0.1:1
+    at [90m/home/dxb/DxB Global OS/[39mnode_modules/[4m.pnpm[24m/pg-pool@3.14.0_pg@8.22.0/node_modules/[4mpg-pool[24m/index.js:45:11
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at PostgresDriver.acquireConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/dialect/postgres/postgres-driver.js:21:24[90m)[39m
+    at RuntimeDriver.acquireConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/driver/runtime-driver.js:54:28[90m)[39m
+    at DefaultConnectionProvider.provideConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/driver/default-connection-provider.js:8:28[90m)[39m
+    at DefaultQueryExecutor.executeQuery [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/query-executor/query-executor-base.js:38:28[90m)[39m
+    at criticalAlert [90m(/home/dxb/DxB Global OS/[39mpackages/hook/src/pre-task.ts:20:5[90m)[39m
+    at preTask [90m(/home/dxb/DxB Global OS/[39mpackages/hook/src/pre-task.ts:186:5[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e10/hook.test.ts:419:23
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:20 {
+  errno: [33m-111[39m,
+  code: [32m'ECONNREFUSED'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'127.0.0.1'[39m,
+  port: [33m1[39m
+}
+
+ ✓ tests/e10/hook.test.ts (35 tests) 333ms
+ ✓ tests/b36/gateway-door-is-not-stolen.test.ts (6 tests) 352ms
+(node:4797) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/adapters-roundtrip.test.ts (7 tests) 345ms
+(node:4825) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/dispatch-book.test.ts (20 tests) 306ms
+(node:4853) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/velocity.test.ts (6 tests) 251ms
+(node:4886) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > CONTROL: budget disabled → the same 50 steps provably exceed the hard band
+control final context estimate: 37018 tokens (hard 16000)
+
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > MANAGED: band held per step, compressions evented, evicted facts recall back, log written
+managed: 4 compressions at steps [17, 28, 38, 48]
+
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > MANAGED: band held per step, compressions evented, evicted facts recall back, log written
+evicted planted facts: 10, 25, 40 — offload rows: 3
+
+ ✓ tests/phase6/context-rot.test.ts (4 tests | 1 skipped) 257ms
+ ✓ tests/b36/seed-is-fiction.test.ts (11 tests) 262ms
+(node:4941) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/approval-flow.test.ts (8 tests) 212ms
+(node:4969) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e9/approval-center.test.ts (22 tests) 249ms
+ ✓ tests/e9/project-command.test.ts (17 tests) 209ms
+(node:5024) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa fail → review→failed with reason 'qa-fail', and the 05-06 ladder engages
+[qa] task 23e3e65f-aa5e-437c-8082-30cfee196a11 FAIL (confidence 0.3) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa pass + approval_class 'none' → done
+[qa] task 4df0cfb5-33a6-4472-bd31-17b1b321db15 PASS (confidence 0.95) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa pass + approval_class 'internal' → awaiting_approval (Phase-4 flow takes over)
+[qa] task c810336b-20ce-45db-a114-d759157ef1a8 PASS (confidence 0.9) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > council NEGATIVE proof — normal task, zero council calls (master-plan step 7) > internal/L3 task runs worker→qa→done with shouldCouncil=false and no meta.council rows
+[qa] task e1997610-b8cd-415d-8f75-c8547877ae29 PASS (confidence 0.9) — the judge took 0 ms in 1 call
+
+ ✓ tests/phase5/council-judge.test.ts (8 tests | 2 skipped) 206ms
+(node:5052) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/e8/log-decision.test.ts > E8.2 logDecision — the 8-field row > never throws on a failed write; marks the task degraded_logging
+[obs] logDecision FAILED (workflow_branch by orchestrator:test): insert or update on table "decision_log" violates foreign key constraint "decision_log_approval_id_fkey"
+
+stdout | tests/e8/log-decision.test.ts > E8.2 §10 call sites — decisions land where the code decides > qa pass on an approval-class task writes approval_conversion
+[qa] task 3d702292-899d-4411-ae6a-5756a03ba4fc PASS (confidence 0.9) — the judge took 1 ms in 1 call
+
+stdout | tests/e8/log-decision.test.ts > E8.2 §10 call sites — decisions land where the code decides > qa fail writes a workflow_branch decision with the verdict confidence
+[qa] task 912f5538-82e2-4651-a706-4e6b2914ac24 FAIL (confidence 0.3) — the judge took 0 ms in 1 call
+
+ ✓ tests/e8/log-decision.test.ts (6 tests) 212ms
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+[isolation] lane=gate model=stand-in session=? home=/tmp/company-codex-da6ehE/company-codex notes=0 mcp=0 ok=true tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named
+[isolation] lane=gate model=stand-in session=? home=refused notes=? mcp=? ok=false tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home
+[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-clcUAC/company-codex notes=0 mcp=0 ok=true tokens=12345
+
+(node:5080) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/governance/company-isolation.test.ts (106 tests | 2 failed | 1 skipped) 216ms
+   × company isolation — the ruler over every company model call (CEO 2026-10-03) > reads every SDK import and every use of query() it finds — nothing it cannot follow 7ms
+     → expected [ Array(1) ] to deeply equal []
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > finds exactly the eight company lanes, each once 0ms
+   × company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() once, sets nothing off the list, and feeds its receipt first 1ms
+     → expected [ Array(1) ] to deeply equal []
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > no runtime code writes process.env — what the allowlist carries cannot be moved before a call (phase 3, A2) 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > no runtime code launches `claude`, and every launch in a file that names claude or codex is readable 0ms
+   ✓ company isolation — the ruler over every company model call (CEO 2026-10-03) > @dxb/kernel hands out the helper of sdk-isolation.ts and nothing else under its names 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > passes the honest shape — an aliased named import, the helper spread, the receipt first 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a namespace import 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses require() 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a dynamic import() 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a re-export 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses an alias of query 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses query handed on as a value 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settingSources after the helper 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses settings after the helper 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses persistSession through a conditional spread 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a spread the ruler cannot see into 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses env 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses cwd (phase 3: the working folder is the helper's) 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses plugins 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses resume 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses mcpServers not from the compiled profile 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a computed option name 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses the helper switched off by its argument 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses no helper at all 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses options that are not a literal 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt named only in a comment 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt fed after the result can leave 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a receipt with its own sink 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a stream not held in a const 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a helper that is not the kernel's 1ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: the home's own knob set before the call 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: XDG_CONFIG_HOME set before the call 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: an element write 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: a delete 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: Object.assign 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: Reflect.set 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: process.env replaced 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > refuses a write to process.env: a parenthesised write 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > reads of process.env are not writes 0ms
+   ✓ the ruler refuses what it cannot follow (Sol's counter-examples, 2026-10-03) > reads the profile keys only from buildSdkToolOptions() 4ms
+   ✓ the launch ruler refuses a runtime `claude` > lets an honest launch through 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a named launch 0ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a namespace launch 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a default-import launch 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a promisified launch 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program held in a const 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a shell line 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a program the ruler cannot name, beside a claude string 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses child_process by require() 1ms
+   ✓ the launch ruler refuses a runtime `claude` > refuses a launcher handed on, beside a codex string 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a require() specifier assembled at run time, in a file that names no SDK — a module it cannot name 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > an escaped SDK specifier — the site is found and held to the helper 4ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > the helper taken from another file named sdk-isolation — not the kernel's helper 3ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > Object.assign on the compiled profile — the profile handed on or changed 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a receipt shadowed by a function hoisted inside the loop — not the receipt this function declares 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > element access on a child_process namespace — the launch of codex is seen, and refused outside the gate 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a shell line that reaches codex through env — refused for naming it 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a computed key that folds to a launcher 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a key the ruler cannot fold 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a launcher held in a const 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a program folded from pieces 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — codex named in a wrapper's arguments 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a shell line through sh -c 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — spawn with shell: true 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — the namespace exported under another name 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > closes the class — a launcher exported through a const 0ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > a companyCodexHome that shadows the gate's own — not the function the file declares 1ms
+   ✓ the ruler refuses each of Sol's single-pass counter-examples for its own reason > an SDK import the ruler resolves, not spells — a package that resolves into the SDK's folder is the SDK 1ms
+   ✓ companyIsolation() and its receipt > shuts out filesystem settings (hooks, plugins, MCP, CLAUDE.md), the auto-memory, the transcript and the account's connectors — and runs in the company's own Claude home and working folder (phase 3) 2ms
+   ✓ companyIsolation() and its receipt > phase 3: the company Claude home defaults to ~/.local/share/dxb/company-claude 1ms
+   ✓ companyIsolation() and its receipt > phase 3: never the construction's ~/.claude — not it, not inside it, not a link to it 2ms
+   ✓ companyIsolation() and its receipt > A4: the construction's ~/.claude is the passwd home's, whatever $HOME says 1ms
+   ✓ companyIsolation() and its receipt > A1: an empty or relative home, the repository, its .claude/, ~ itself and / are refused 2ms
+   ✓ companyIsolation() and its receipt > A1: the home is returned canonical — a link to a folder of the company's own answers with the folder 1ms
+   ✓ companyIsolation() and its receipt > A1: a home whose work/, cache/, .claude.json or .credentials.json leads out through a link is refused 2ms
+   ✓ companyIsolation() and its receipt > A2: what the parent's process.env holds before a call never moves the call — off-list variables stay behind, a construction home fails closed 1ms
+   ✓ companyIsolation() and its receipt > phase 3: the scheduler's start-up line says whether the company home holds a login — never a secret, never a throw 1ms
+   ✓ companyIsolation() and its receipt > the compiled profile keeps strictMcpConfig true — the lanes that pass it after the helper cannot loosen it 1ms
+   ✓ companyIsolation() and its receipt > DXB_WORKER_ISOLATION=0 is the rollback shape 0ms
+   ✓ companyIsolation() and its receipt > prints one line per result — the lane, the run's own session, what it loaded, what it read 1ms
+   ✓ companyIsolation() and its receipt > names what a leaking run loaded, the hooks it fired included, so the line shows it 1ms
+   ✓ companyIsolation() and its receipt > never touches the call: a sink that throws and messages of any shape pass through quietly 1ms
+   ✓ companyIsolation() and its receipt > an odd token count reads as zero, never as a broken line 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > finds the gate's codex launch, and no other 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the gate's launch ends its env with CODEX_HOME: companyCodexHome() 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > reads the honest env 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the environment spread after the home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses no env at all 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env it cannot read 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the construction's home 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses the helper given an argument 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses an env spread in after a valid env (Sol, single pass) 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses a spread after env the ruler cannot see into 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex 95ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > refuses a company home that is the construction's ~/.codex, a path inside it, or a link to it 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > A4: the construction's ~/.codex is the passwd home's, whatever $HOME says 0ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named 1ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > writes one isolation line per Codex call — what it loaded and what it read — on success and on failure 13ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > writes tokens=? when the CLI left no tokens-used footer — an unknown is never written as 0 6ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home 7ms
+   ✓ company isolation — the critical gate's Codex runs from the company's own home > the isolation line never touches the call: a sink that throws leaves the answer as it was 5ms
+   ✓ phase 3 — the company's memory never reads the construction's claude-mem > refuses the construction's claude-mem — by default, by DXB_CLAUDE_MEM_DB and through a link — before opening it 3ms
+   ✓ phase 3 — the company's memory never reads the construction's claude-mem > A4: a moved $HOME does not move the bar — the real ~/.claude-mem is still refused, a box's own .claude-mem reads 1ms
+   ✓ phase 3 — the company's memory never reads the construction's claude-mem > recall holds no claude-mem reader 0ms
+   ↓ the holding's media binaries under a company HOME > resolveMediaBinary finds ~/.local/bin/ffmpeg of the station user, not of $HOME
+ ✓ tests/e125/activation-contract.test.ts (8 tests) 87ms
+ ✓ tests/b36/wall-question.test.ts (3 tests) 202ms
+(node:5201) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r23/unified-constitution.test.ts (4 tests) 208ms
+(node:5228) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/r21/worker-loop.test.ts > R2.1 resident worker loop (audit F-01 drain semantics) > leg 2: confident review → QA pass → done (terminal, approval_class none)
+[qa] task 49aa0559-0e81-4e38-a6df-647a57d21519 PASS (confidence 0.95) — the judge took 1 ms in 1 call
+
+stdout | tests/r21/worker-loop.test.ts > R2.1 resident worker loop (audit F-01 drain semantics) > leg 2→3: QA fail → failed → ladder requeues in the same drain
+[qa] task 9f2336d6-fab6-4c2c-9f29-1247d3201e36 FAIL (confidence 0.9) — the judge took 0 ms in 1 call
+
+ ✓ tests/r21/worker-loop.test.ts (6 tests) 170ms
+(node:5258) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/decompose-dispatch.test.ts > worker shim — e2e claim→work→done with full event chain (master-plan step 5) > one envelope runs end-to-end; task_events chain complete and ordered
+e2e event chain: [
+ {
+  "event": "created",
+  "from_status": "inbox",
+  "to_status": "queued",
+  "actor": "orchestrator:dispatch"
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "review",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "review",
+  "to_status": "done",
+  "actor": "test:head-review"
+ }
+]
+
+ ✓ tests/phase5/decompose-dispatch.test.ts (10 tests | 1 skipped) 169ms
+ ✓ tests/e8/audit-surface.test.ts (8 tests) 164ms
+ ✓ tests/b43/records-truth.test.ts (8 tests) 166ms
+ ✓ tests/hooks/session-start-fits.test.ts (4 tests) 149ms
+ ✓ tests/phase8/approval-inbox.test.ts (10 tests) 146ms
+ ✓ tests/e8/alerts.test.ts (12 tests) 178ms
+(node:5481) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/toctou.test.ts (5 tests) 135ms
+(node:5509) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase3/registry.test.ts (5 tests) 131ms
+(node:5538) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/gate-canary.test.ts (5 tests) 130ms
+ ✓ tests/b36/global-setup-identity.test.ts (3 tests) 126ms
+(node:5594) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase3/lifecycle.test.ts (5 tests) 123ms
+ ✓ tests/phase8/crm-views.test.ts (8 tests) 114ms
+(node:5649) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r24/staging-outbox.test.ts (1 test) 113ms
+(node:5678) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/proactive-briefing.test.ts (17 tests) 102ms
+(node:5705) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/video-ingest.test.ts (7 tests | 1 skipped) 106ms
+(node:5733) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/recall.test.ts (7 tests | 1 skipped) 89ms
+ ✓ tests/r12/revenue-core.test.ts (8 tests) 98ms
+(node:5788) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/double-fire.test.ts (2 tests) 93ms
+(node:5817) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/memory-drawer.test.ts (14 tests) 92ms
+ ✓ tests/b23/graph-is-not-stale.test.ts (5 tests) 88ms
+ ✓ tests/e7/routing-slots.test.ts (8 tests) 85ms
+ ✓ tests/phase6/pgvector.test.ts (5 tests) 81ms
+ ✓ tests/c9/monthly-cap.test.ts (6 tests) 119ms
+ ✓ tests/c42/rival-intel-ledger.test.ts (15 tests) 79ms
+(node:5972) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/c9/chat-sessions.test.ts > sessions — the answer half only sees its own conversation > Hamza's context window is scoped to the thread, and his reply joins it
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/c9/chat-sessions.test.ts (10 tests) 40ms
+(node:5999) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b39/qa-gate-receipt.test.ts (2 tests) 76ms
+ ✓ tests/e124/crm-isolation.test.ts (5 tests) 69ms
+ ✓ tests/c9/data-controls.test.ts (9 tests) 71ms
+(node:6081) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/w9-road-proof.test.ts (3 tests) 70ms
+ ✓ tests/b43/brain-truth.test.ts (6 tests) 65ms
+(node:6137) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/contradiction.test.ts (4 tests | 1 skipped) 69ms
+REJECT bad-job.md — missing: artifact:
+load-jobs: audit write failed (db down?) — rejection still enforced
+ ✓ tests/phase7/watchdog.test.ts (13 tests) 64ms
+(node:6204) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase8/command-bar-intent.test.ts (4 tests) 67ms
+ ✓ tests/e125/workforce-gate.test.ts (7 tests) 60ms
+(node:6259) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r43/arsenal.test.ts (5 tests) 61ms
+ ✓ tests/phase9/briefing-view.test.ts (5 tests) 54ms
+(node:6313) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b49/pin-manifest.test.ts (13 tests) 45ms
+ ✓ tests/phase8/cost-view.test.ts (5 tests) 52ms
+ ✓ tests/r42/knowledge-shelf.test.ts (6 tests) 55ms
+(node:6395) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/poisoning.test.ts (7 tests) 52ms
+ ✓ tests/c9/work-generation.test.ts (14 tests) 57ms
+ ✓ tests/c9/discovery.test.ts (12 tests) 55ms
+ ✓ tests/phase8/broadcast-triggers.test.ts (4 tests) 44ms
+ ✓ tests/governance/ledger-truth.test.ts (7 tests) 49ms
+ ✓ tests/r13/cycle-jobs.test.ts (5 tests) 51ms
+ ✓ tests/c9/dashboard-doors.test.ts (4 tests) 44ms
+(node:6579) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/c9/chat-legs.test.ts > the drain routes a real message to the right leg > a status question arrives on the brief leg WITH a snapshot
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > the drain routes a real message to the right leg > a money question arrives on the strategy leg WITHOUT a snapshot
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/c9/chat-legs.test.ts (13 tests) 44ms
+ ✓ tests/e11/cost-view-daily.test.ts (7 tests) 43ms
+ ✓ tests/c9/allocation-seam.test.ts (6 tests) 40ms
+(node:6660) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase7/drift-review.test.ts > drift review — what the manifest may vouch for > a missing or malformed manifest gives no entries — every external drift then locks
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-EKStue/absent.json): Error: ENOENT: no such file or directory, open '/tmp/pin-manifest-EKStue/absent.json' — no external drift can be re-approved
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-EKStue/bad.json): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2) — no external drift can be re-approved
+
+ ✓ tests/phase7/drift-review.test.ts (23 tests) 39ms
+ ✓ tests/e122/widget-layout.test.ts (6 tests) 43ms
+(node:6709) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/brain-floor.test.ts (14 tests) 42ms
+ ✓ tests/governance/usage-cost.test.ts (2 tests) 41ms
+(node:6773) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/profile-denial-runtime.test.ts (2 tests) 72ms
+(node:6800) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/u15r2/voice-round2.test.ts > U15 D12/D13 — one conversation + session threads > a Hamza-answered call mirrors onto the board and carries session_id
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/u15r2/voice-round2.test.ts (5 tests) 37ms
+ ✓ tests/phase8/live-projection.test.ts (2 tests) 38ms
+(node:6854) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/greeting-script-rescue.test.ts (2 tests) 37ms
+(node:6881) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/profile-denial.test.ts (4 tests) 201ms
+(node:6908) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/road-consistency.test.ts (16 tests) 38ms
+(node:6934) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r22/tool-surface.test.ts (3 tests) 31ms
+(node:6961) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/routing-data.test.ts > KERN-02 — routing is data (routing_rules), never code > KERN-02 proof: UPDATE one row → same intent resolves a different model, zero code changes
+KERN-02 UPDATE proof: before=probe-high after=probe-rerouted (row 899b9a38-c207-4eac-9c08-46dceeb2e355)
+
+ ✓ tests/phase5/routing-data.test.ts (10 tests | 5 skipped) 32ms
+ ✓ tests/c9/revenue-gates.test.ts (9 tests) 46ms
+(node:7015) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase6/memory-unreachable.test.ts > both answer lanes hand the flag to the producer > chat: a failed recall reaches Hamza as memoryUnreachable
+[memory] recall failed on the chat lane — recall: memory ref broken for index x at 'artifact/x.md' — ENOENT
+
+stderr | tests/phase6/memory-unreachable.test.ts > both answer lanes hand the flag to the producer > voice: a failed recall reaches Hamza as memoryUnreachable
+[memory] recall failed on the voice lane — recall: memory ref broken for index x at 'artifact/x.md' — ENOENT
+
+ ✓ tests/phase6/memory-unreachable.test.ts (6 tests) 33ms
+(node:7042) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/critical-gate.test.ts (8 tests) 26ms
+ ✓ tests/e10/alert-projection-purity.test.ts (7 tests) 26ms
+ ✓ tests/c5/decide-approvals-task-sync.test.ts (3 tests) 25ms
+ ✓ tests/b36/construction-config.test.ts (4 tests) 23ms
+ ✓ tests/c9/objective-door.test.ts (4 tests) 24ms
+ ✓ tests/c9/brain-source.test.ts (3 tests) 20ms
+ ✓ tests/c9/outbox-enqueue-allowlist.test.ts (3 tests) 19ms
+ ✓ tests/c9/engine-owner.test.ts (3 tests) 19ms
+ ✓ tests/b36/battery-carries-no-company-key.test.ts (3 tests) 17ms
+ ✓ tests/c9/outbox-internal-signal.test.ts (2 tests) 17ms
+(node:7310) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/feed-headlines.test.ts (8 tests) 18ms
+ ✓ tests/governance/no-closure-without-his-word.test.ts (7 tests) 14ms
+ ✓ tests/c9/org-tree-truth.test.ts (3 tests) 17ms
+ ✓ tests/c9/hr-equipment-dept.test.ts (1 test) 14ms
+ ✓ tests/personas/activation-gate-author-list.test.ts (3 tests) 13ms
+(node:7440) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/bundle2-prompts.test.ts (17 tests) 10ms
+ ✓ tests/b20/roadmap-tally-is-stable.test.ts (7 tests) 9ms
+ ✓ tests/r32/jarvis-wake.test.ts (58 tests) 10ms
+stdout | tests/personas/persona-ruler.test.ts > the persona ruler — the studio's sixteen seats > prints its table, passing or failing (the evidence both sides paste)
+
+PERSONA RULER — one metre for the builder and the checker
+
+  R 1 sentence-length
+  R 2 line-terminator
+  R 3 paren-depth
+  R 4 paren-balance
+  R 5 no-duplicate-clause
+  R 6 voice-residue
+  R 7 three-roads
+  R 8 no-model-name
+  R 9 section-12-identity
+  R10 delivery-header
+  R11 canonical-law-paragraph
+  R12 concept-contract
+  R13 dossier-date
+
+seat                                    R1  R2  R3  R4  R5  R6  R7  R8  R9 R10 R11 R12 R13   verdict
+-----------------------------------------------------------------------------------------------------
+media-creative-director                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-film-director                      ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-storyboard-previz                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+design-image-prompt-engineer             ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+marketing-short-video-editing-coach      ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-ai-video-engineer                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-product-brand-consistency          ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-character-identity                 ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-continuity                         ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-screenwriter                       ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-failure-analysis                   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-cinematographer                    ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-advertising-director               ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-delivery-qc                        ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-vfx-post                           ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-sound-music                        ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+
+rule                       seats failing  failures
+--------------------------------------------------
+sentence-length                        0         0
+line-terminator                        0         0
+paren-depth                            0         0
+paren-balance                          0         0
+no-duplicate-clause                    0         0
+voice-residue                          0         0
+three-roads                            0         0
+no-model-name                          0         0
+section-12-identity                    0         0
+delivery-header                        0         0
+canonical-law-paragraph                0         0
+concept-contract                       0         0
+dossier-date                           0         0
+
+
+RULER: 16/16 PASS · §12 canon 16e9ced6 · law canon 578bf86a
+
+
+ ✓ tests/personas/persona-ruler.test.ts (26 tests) 8ms
+ ✓ tests/b39/alert-language.test.ts (9 tests) 6ms
+ ✓ tests/phase8/memory-store-labels.test.ts (5 tests) 6ms
+ ✓ tests/b36/separation-gate.test.ts (14 tests) 5ms
+ ✓ tests/phase3/envelope.test.ts (5 tests) 4ms
+ ✓ tests/phase8/realtime-channel-sharing.test.ts (7 tests) 5ms
+ ✓ tests/b36/company-is-read-only.test.ts (7 tests) 5ms
+(node:7664) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b21/agent-context.test.ts (11 tests) 4ms
+(node:7690) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/persona-delivery.test.ts (4 tests) 3ms
+(node:7716) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b36/battery-writes-no-company-artefact.test.ts (3 tests) 2ms
+ ✓ tests/b43/sdk-schema.test.ts (1 test) 2ms
+ ✓ tests/b36/company-memory-is-not-a-diary.test.ts (3 tests) 2ms
+ ✓ tests/b19/actions-are-sha-pinned.test.ts (3 tests) 3ms
+ ✓ tests/c9/revenue-capital-surface.test.ts (6 tests) 2ms
+ ✓ tests/ops/search-blindness.test.ts (2 tests) 2ms
+ ✓ tests/phase3/db-guard.test.ts (1 test) 1ms
+ ✓ tests/smoke.test.ts (1 test) 1ms
+ ✓ tests/phase4/budget-stop.test.ts (4 tests | 3 skipped) 1ms
+ ✓ tests/phase8/panel-stamp.test.tsx (6 tests) 102ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/b36/fallback-count.test.ts > B36 — the board's fallback figure is the counter's figure > matches, file for file and bucket for bucket
+AssertionError: expected { total: +0, tests: +0, …(3) } to deeply equal { total: 1, tests: +0, …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "apps": 0,[22m
+[2m    "scripts": 0,[22m
+[2m    "seeds": 0,[22m
+[2m    "tests": 0,[22m
+[32m-   "total": 1,[39m
+[31m+   "total": 0,[39m
+[2m  }[22m
+
+ ❯ tests/b36/fallback-count.test.ts:38:52
+     36| 
+     37|     const [, total, tests, scripts, seeds, apps] = published!.map(Numb…
+     38|     expect({ total, tests, scripts, seeds, apps }).toEqual({
+       |                                                    ^
+     39|       total: measured.executable.length,
+     40|       tests: measured.tally.tests ?? 0,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/b36/no-company-fallbacks.test.ts > B36 Block 4 — nothing falls back to the company's database > (2) no tracked file binds the company's address to DXB_DATABASE_URL
+AssertionError: these files fall through to the CEO's own database when nothing sets the address:
+package.json:23  line rule  (1): expected [ 'package.json:23  line rule  (1)' ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "package.json:23  line rule  (1)",[39m
+[31m+ ][39m
+
+ ❯ tests/b36/no-company-fallbacks.test.ts:125:7
+    123|       "these files fall through to the CEO's own database when nothing…
+    124|         offenders.join("\n"),
+    125|     ).toEqual([]);
+       |       ^
+    126|   });
+    127| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the ruler over every company model call (CEO 2026-10-03) > reads every SDK import and every use of query() it finds — nothing it cannot follow
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "packages/orchestrator/src/worker-shim.ts the profile `toolOpts` is handed on or changed — it starts as `await taskToolOptions(task, employee)`",[39m
+[31m+ ][39m
+
+ ❯ tests/governance/company-isolation.test.ts:937:52
+    935| 
+    936|   it("reads every SDK import and every use of query() it finds — nothi…
+    937|     expect(SDK_REPORTS.flatMap((r) => r.problems)).toEqual([]);
+       |                                                    ^
+    938|   });
+    939| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/governance/company-isolation.test.ts > company isolation — the ruler over every company model call (CEO 2026-10-03) > every query() spreads companyIsolation() once, sets nothing off the list, and feeds its receipt first
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "packages/orchestrator/src/worker-shim.ts:376: option `mcpServers` does not come straight from the compiled profile (`<buildSdkToolOptions(…)>.mcpServers`); option `allowedTools` does not come straight from the compiled profile (`<buildSdkToolOptions(…)>.allowedTools`); option `disallowedTools` does not come straight from the compiled profile (`<buildSdkToolOptions(…)>.disallowedTools`); option `strictMcpConfig` does not come straight from the compiled profile (`<buildSdkToolOptions(…)>.strictMcpConfig`)",[39m
+[31m+ ][39m
+
+ ❯ tests/governance/company-isolation.test.ts:945:107
+    943| 
+    944|   it("every query() spreads companyIsolation() once, sets nothing off …
+    945|     expect(sites.filter((s) => s.problems.length > 0).map((s) => `${s.…
+       |                                                                                                           ^
+    946|   });
+    947| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  3 failed | 138 passed | 3 skipped (144)
+      Tests  4 failed | 1210 passed | 69 skipped (1283)
+   Start at  20:05:23
+   Duration  113.25s (transform 1.22s, setup 0ms, collect 22.20s, tests 74.93s, environment 385ms, prepare 4.79s)
+
+[global-teardown] swept 1 stale hook-conflict alert(s) (no live policy disagreement)
+[global-teardown] handed back 669 ops:live receipt(s) this run issued
+
+=== 2/2 · THE AUTHOR'S HAND — on the company's side, outside the sandbox ===
+    tests/b36/live-drills.host.test.ts
+    tests/ops/freeze-guard.test.ts
+    tests/ops/dashboard-launcher.host.test.ts
+    tests/b46/research-ruler.test.ts
+    tests/b46/judge-is-one-metre.test.ts
+    tests/b46/the-number-he-sees.test.ts
+    tests/b46/the-crowd-is-read.test.ts
+    tests/b46/no-green-on-a-failure.test.ts
+    tests/b46/one-run-one-owner.test.ts
+    tests/b46/a-hunter-cannot-write.test.ts
+    tests/b46/evidence-rows.test.ts
+    tests/b46/kapsama.test.ts
+    tests/b46/fleet-by-platform.test.ts
+    tests/b46/render-from-rows.test.ts
+    tests/b46/ledger-states.test.ts
+    tests/b46/completion-gate.test.ts
+    tests/b46/render-drawer.test.ts
+    tests/b46/claim-ledger.test.ts
+    tests/governance/sol-db-reach.test.ts
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/b46/completion-gate.test.ts (23 tests) 59877ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > sends a hunter that leaves at once back to its unread rows, and keeps the last round's HÜKÜM  1694ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > accepts at the first round a hunter that read everything through batch and judged it  2920ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > sends back a hunter that read but judged nothing, and the resume line names both numbers  1570ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > relaunches a hunter that exits non-zero the same way, each exit a round  2082ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > counts a body printed only in part as owed: the hunter is sent back to it, the resume line names all three  1765ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > never accepts a round whose ledger status cannot be read: unmeasured, then time-up (unmeasured), exit 1  1761ms
+   ✓ the run lives on disk, under the repository > puts a bare name, or no name, under <repo>/var/research/runs  2963ms
+   ✓ the run lives on disk, under the repository > refuses a run folder under /tmp, with the reason, unless --allow-tmp  1507ms
+   ✓ what a hunter declares changes no count > prints 'okundu 130' as the hunter's claim, while the gate and the coverage table count the ledger  1696ms
+   ✓ the writer step — an Opus turns the rows into answer.md > --write-only hands a tool-less Opus at medium effort the question, the verdicts, the status and the rows  3042ms
+   ✓ every claude stands outside the repository — the run stays under var/ > starts the split, the hunter, both writer passes and the claim hunters outside the repository and brings their files back  3048ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > drafts, extracts the claims, sends karsi then bosluk, writes the answer, carries the links and renders  2911ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > sends back a claim hunter that linked nothing, and stops a gap round that found no new source (saturated)  3044ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > never accepts a claim round whose ledger status cannot be read  3297ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > writes the page, then names a claim role its gate could not measure on the run's last line and leaves with code 1  3382ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > --no-claim-hunt writes both passes, both ledgers and the page with no claim round  2245ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > a draft whose claim ledger was never written still ends in the answer's ledger and the page, with no links to carry  2236ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > --write-only runs the same tail on a run that has its rows  3057ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > sends back a claim hunter that linked without reading, the claim kept on its list and named; a round that reads is accepted  3146ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > reads no claim with a fetch of a page none of its rows stands at: the links after it are sent back  3157ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > rounds out with links made without a read: the page is written, then !! OKUMADAN HÜKÜM and code 1  3179ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > sorts once more only a platform its triage left pending; still pending: !! ELEME EKSIK, the hunters run, code 1  3111ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > sorts a body a hunter fetched after the triage, which the triage left none of, before the tail: no !! ELEME EKSIK, code 0  3033ms
+Traceback (most recent call last):
+  File "<string>", line 6, in <module>
+    print(json.dumps({k: (v or {}).get('fallback') or [] for k, v in ch.items()}))
+                                                                     ^^^^^^^^
+AttributeError: 'str' object has no attribute 'items'
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    import rlib
+  File "/tmp/dxb-ruler-Eyy7rN/compile/scripts/rlib.py", line 14
+    import json (((
+                ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys; sys.path.insert(0, sys.argv[1]); import rlib; print(rlib.SITE_ERROR + '|' + rlib._WALL.pattern + '|' + getattr(rlib, 'QUOTA_ERROR', ''))
+                                                 ^^^^^^^^^^^
+  File "/tmp/dxb-ruler-Eyy7rN/compile/scripts/rlib.py", line 14
+    import json (((
+                ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys; sys.path.insert(0, sys.argv[1]); import fetch; print(len(fetch.CHAIN))
+                                                 ^^^^^^^^^^^^
+  File "/tmp/dxb-ruler-Eyy7rN/compile/scripts/fetch.py", line 67, in <module>
+    import rlib  # noqa: E402
+    ^^^^^^^^^^^
+  File "/tmp/dxb-ruler-Eyy7rN/compile/scripts/rlib.py", line 14
+    import json (((
+                ^
+SyntaxError: invalid syntax
+ ✓ tests/b46/research-ruler.test.ts (28 tests) 42984ms
+   ✓ the ruler bites > catches a prose number that no longer matches the map  1167ms
+   ✓ the ruler bites > catches a channel whose stand-in was taken away  1138ms
+   ✓ the ruler bites > catches a stand-in that names a channel the map does not have  1144ms
+   ✓ the ruler bites > catches a config file that a standard parser cannot read  1205ms
+   ✓ the ruler bites > catches a second copy of the judge's word list appearing in the sweep  954ms
+   ✓ the ruler bites > catches a marker being dropped from the judge's vocabulary  1130ms
+   ✓ the ruler bites > catches the sign-in guard drifting below the line that fires the channels  1157ms
+   ✓ the ruler bites > catches a script that no longer compiles  1287ms
+   ✓ the ruler bites > catches the same definition written twice  1129ms
+   ✓ the ruler bites > catches the contract naming a file that is not there  1138ms
+   ✓ the ruler bites > catches the reading chain gaining a door while the prose still says eleven  1116ms
+   ✓ the ruler bites > catches the fleet firing before its queries are judged  1104ms
+   ✓ the ruler bites > catches the sweep taking a paragraph again  5237ms
+   ✓ the ruler bites > catches a box query with no word in it — "200 %50 5.1" is not a search  1115ms
+   ✓ the ruler bites > catches the first word of a question being dropped — the name it is about  1106ms
+   ✓ the ruler bites > catches a run that no longer writes down what it sent  1125ms
+   ✓ the ruler bites > catches the sweep's gate being switched off while its text stays  5309ms
+   ✓ the ruler bites > catches the ledger line being deleted and left behind in a comment  1136ms
+   ✓ the ruler bites > catches a gate that cannot run being treated as a gate that said yes  5248ms
+   ✓ the ruler bites > catches the stand-in chain and the last resort sending text with no ledger row  1125ms
+   ✓ the ruler bites > catches the ledger keeping yesterday's rows  1133ms
+   ✓ the ruler bites > catches the last resort typing the whole question into a site's search box  1118ms
+   ✓ the ruler bites > catches the write guard being parked on a dead branch while its text stays  1132ms
+   ✓ the ruler bites > catches an executable `opencli browser` line — the Bridge that opened windows on his screen  1158ms
+   ✓ the ruler bites > catches the citation ruler's own probes failing — the round-2 hole put back  1190ms
+   ✓ the engine as it stands > passes every rule of its own ruler  1088ms
+   ✓ the engine as it stands > counts the channels from the map rather than from any sentence about it  1070ms
+ ✓ tests/b46/fleet-by-platform.test.ts (30 tests) 36268ms
+   ✓ the fleet, run — what each hunter is handed and how it is launched > names a platform no hunter of the run owns, instead of dropping it  1145ms
+   ✓ the fleet, run — what each hunter is handed and how it is launched > never launches a claim role as a hunter, even when --roles names it  1003ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > takes --shape as one of the four words or does not start; with --no-split his word is named unused  862ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > names the sub-questions before the ground, hands them to the hunter through question.txt; --write-only reuses them  1126ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > falls back to one sub-question, the DERT itself, when the answer cannot be read — and the run goes on  974ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > --no-split leaves question.txt as the fleet wrote it  852ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > keeps no earlier split's subquestions.json in a full run that does not split: --no-split, or a split.py that fails — and names his --shape unused  4751ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > names a writer its clock stopped `zaman asimi`, prints the coverage table, then !! CEVAP YOK — no CEVAP HAZIR, code 1  2486ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > says its clock on the launch line — 1500 s by default, the flag's after --write-only — and the model's time and tokens  2875ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > hands the writer the skeleton of the run's research type — the model's, then his --shape on --write-only  3977ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > rewrites answer.md with what the auditor corrected and removed, extracts the ledger again, checks it, then the page  2265ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > asks an unreadable batch once more; still unreadable, its claims stay unaudited: the page, then !! DENETLENMEYEN İDDİA, code 1  2896ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > runs the auditor after --write-only — the model's stand-in, outside the repository, when no FAKE_AUDIT — and --no-audit skips it  3516ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > sorts a body a hunter fetched after the triage before the writer: its line, no !! ELEME EKSIK, code 0 — a row the triage cannot sort is still named  4387ms
+   ✓ the machine's memory is read before anything starts > says what it measured on a healthy machine, first, and starts  945ms
+ ✓ tests/b36/live-drills.host.test.ts (4 tests) 28889ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (4) LIVE — the two audited escapes reproduce with the real role, then the server refuses them  501ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (4-bis) LIVE — the proof still sees the counter's FIRST turn, on a sequence in its born state  574ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (5) LIVE — a forged live event reached the screen, and now it is refused  8720ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (6) LIVE — from the construction runtime there is no route to the holding, and the probe proves it can succeed  19092ms
+ ✓ tests/b46/the-crowd-is-read.test.ts (5 tests) 16515ms
+   ✓ the page selector gives the crowd its turn > opens Reddit when Reddit brought addresses, even on a small budget  689ms
+   ✓ the page selector gives the crowd its turn > gives the crowd channels the larger share of a small budget  677ms
+   ✓ a cover is a cover only when new bytes came back > walks to the site itself when every stand-in failed  9174ms
+   ✓ a cover is a cover only when new bytes came back > never announces a stand-in that returned an error as the cover  4189ms
+   ✓ what the sweep prints about its own reading is measured from disk > separates pages that carry real content from pages that merely answered  1771ms
+ ✓ tests/governance/sol-db-reach.test.ts (12 tests) 11542ms
+   ✓ sql_read — what it refuses > (6) caps: 10 s per statement, 200 rows, 4 KB per cell  10131ms
+   ✓ sql_read — what it refuses > (6c) the wire budget and the column list: bounded before they are held, and the tool lives on  652ms
+   ✓ sql_read — what it refuses > (6b) role drift: a function born later in `extensions` or `supabase_migrations` stops the tool  340ms
+ ✓ tests/b46/claim-ledger.test.ts (22 tests) 8834ms
+   ✓ `## Alınmayan kanıt` — the writer names every admitted address it did not cite > is no claim and no citation; unexplained-evidence counts the admitted addresses neither cited nor named there  603ms
+   ✓ `## Alınmayan kanıt` — the writer names every admitted address it did not cite > status --format json counts it for any ledger: --answer, else the ledger's own answer, else <run>/answer.md  586ms
+   ✓ the answer's sub-questions — every claim knows the `## S<n> — ` section it stands in (B56 K3) > sets `section`, counts the sub-questions in extract's last line and per sub-question in status  396ms
+   ✓ list and link — the claim rounds' two doors > link refuses a 'kanıt değil' row and an id already in support, links against, records none; owed 0 after five  1192ms
+   ✓ list and link — the claim rounds' two doors > extract --keep-links carries the five checked claims onto the same answer; the capped one keeps its status uncounted  783ms
+   ✓ list and link — the claim rounds' two doors > a claim the cap held back is sent by the next list, for both kinds; a claim already sent is never sent again  682ms
+   ✓ reads — a link counts only after a read of the claim (K2c) > counts the rows shown and the addresses fetched before each link, per claim; unread_links names the rest  1071ms
+   ✓ repassage — a passage starts at the first line that is not chrome > L1480's passage starts past the page's title, menu and heading; the quote row on its address keeps its quote  320ms
+   ✓ audit.py — an auditor that never saw the writer reads every claim against its own rows (B56 K3 stage 3) > hands each claim its whole line and only its own rows, as the writer saw them; a claim an answer lacks is asked once more  465ms
+   ✓ audit.py — an auditor that never saw the writer reads every claim against its own rows (B56 K3 stage 3) > apply: the auditor's line, a table row deleted, the verdict never removed, a foreign id refused, the ids renumbered; check  829ms
+ ✓ tests/b46/no-green-on-a-failure.test.ts (6 tests) 8763ms
+   ✓ N09 — a run where nothing was read does not end with 'the answer is ready' > leaves with a non-zero code and names the hunters that failed  8455ms
+ ✓ tests/b46/ledger-states.test.ts (15 tests) 6467ms
+   ✓ triage — a verdict that removes an address needs its reason > irrelevant without a reason is refused and nothing is written; with one only that row's line changes  303ms
+   ✓ triage — a verdict that removes an address needs its reason > a hunter may only eliminate what batch printed it: unread refused, read passes, a model is no hunter  668ms
+   ✓ triage.py — the measured Haiku triage, applied through triage-bulk > parses a ```json{…}``` answer; one with no JSON — the K2 run's X batch 2/5, cut — is asked once more: retry 1/1  306ms
+   ✓ batch and page — READ is what the machine printed > batch prints whole bodies shortest first, never a row twice, and stops before 20,000 characters  886ms
+   ✓ batch and page — READ is what the machine printed > a body longer than --max-chars is partial with its completeness; page prints the rest and completes it  397ms
+   ✓ batch and page — READ is what the machine printed > a partial row is offered again first, from where its print stopped, and is owed until its end is printed  695ms
+   ✓ fetch — a closed door is a terminal state > an address with no body whose door stays shut is inaccessible, with the fetcher's words  445ms
+   ✓ add — a hunter's own quote is evidence by definition > the quote row is relevant, a pending address turns relevant, a removed one stays removed, reading untouched  633ms
+   ✓ verdict — a hunter owes every row it read a verdict > none needs a reason; add is evidence; verdict-bulk counts; status and batch show what is owed  894ms
+ ✓ tests/ops/freeze-guard.test.ts (9 tests) 3277ms
+   ✓ freeze-guard — the editor is never the designated victim > never closes a suspended session, however long it has stood still  316ms
+   ✓ freeze-guard — the editor is never the designated victim > closes a helper whose session is gone, and leaves a live one alone  1401ms
+   ✓ freeze-guard — the editor is never the designated victim > sweeps a widow whose session leader is gone, even when a live subreaper adopted it  1398ms
+ ✓ tests/b46/render-drawer.test.ts (24 tests) 3555ms
+   ✓ final.html — what the auditor corrected and removed (B56 K3 stage 3) > says under the verdict what it read, marks each line it corrected, lists both under the ledger; without it, byte for byte  355ms
+   ✓ final.html — the research type: its line under the verdict, its Şekil section before S1 (B56 K3 stage 2) > says the type under the verdict box and stands the Şekil section after the number line, before S1; final.md alike  324ms
+   ✓ final.html — the research type: its line under the verdict, its Şekil section before S1 (B56 K3 stage 2) > puts the type's line above the auditor's; a subquestions.json without a shape gives neither the line nor its rule  345ms
+   ✓ final.html — the research type: its line under the verdict, its Şekil section before S1 (B56 K3 stage 2) > writes the type's line and the auditor's into final.md under the verdict paragraph, plain text; without them, as before  314ms
+ ✓ tests/b46/evidence-rows.test.ts (22 tests) 2659ms
+   ✓ add — a quote becomes a row only when it is in the body > a body that evidence.py did not cache is REFUSED — planted, or swapped under a fetched row  322ms
+ ✓ tests/b46/judge-is-one-metre.test.ts (10 tests) 2527ms
+   ✓ the sweep's judge, on the pages this engine actually met > refuses a door's own quota notice instead of stamping it ok  989ms
+   ✓ the sweep's judge, on the pages this engine actually met > refuses a page that says access is denied  494ms
+   ✓ the sweep's judge, on the pages this engine actually met > KEEPS a real page that carries the site's error sentence on top of its content  343ms
+   ✓ the sweep's judge, on the pages this engine actually met > still refuses the same site's login shell, which carries the banner and nothing else  499ms
+ ✓ tests/b46/kapsama.test.ts (15 tests) 2270ms
+   ✓ kapsama.py — prints, never blocks > with subquestions.json, a second table: one row per sub-question, `tam` · `boş` · `eksik`, and its ALT SORU line  306ms
+   ✓ kapsama.py — prints, never blocks > with a shape in subquestions.json, a last ŞEKİL line: the Şekil section's claims and rule 12's geçiş table  321ms
+pin this run to THIS session:  export DXB_RESEARCH_RUN=20260917-235959
+pin this run to THIS session:  export DXB_RESEARCH_RUN=20260917-235959-2
+ ✓ tests/b46/one-run-one-owner.test.ts (3 tests) 1349ms
+   ✓ N02 — a sweep writes to the run its own session owns, or to none > does not write into another session's ledger because a shared marker points there  879ms
+   ✓ N02 — a sweep writes to the run its own session owns, or to none > the capture hook writes to the run named by the session in its own payload  304ms
+ ✓ tests/b46/render-from-rows.test.ts (18 tests) 1063ms
+ ✓ tests/b46/the-number-he-sees.test.ts (8 tests) 467ms
+ ✓ tests/ops/dashboard-launcher.host.test.ts (5 tests) 43ms
+ ✓ tests/b46/a-hunter-cannot-write.test.ts (7 tests) 3ms
+
+ Test Files  19 passed (19)
+      Tests  266 passed (266)
+   Start at  20:07:17
+   Duration  239.83s (transform 239ms, setup 0ms, collect 328ms, tests 237.35s, environment 2ms, prepare 623ms)
+
+
+=== THE BENCH'S OWN RULER — what this run left behind ===
+    a suite changed the construction engine — it must leave what it found:
+    public.control_idempotency         1351 -> 1354  (+3)
+
+sandboxed suite : exit 1
+host suite      : exit 0
+bench residue   : LEFT_BEHIND
+BATTERY_RED
+[ELIFECYCLE] Command failed with exit code 1.
+EXIT=1

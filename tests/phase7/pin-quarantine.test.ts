@@ -102,6 +102,9 @@ afterAll(async () => {
     await db.deleteFrom("task_events").where("task_id", "in", taskIds).execute();
     await db.deleteFrom("tasks").where("id", "in", taskIds).execute();
   }
+  // An unlock resolves its lock alerts through control_alerts_action, which keeps an idempotency row.
+  await sql`DELETE FROM control_idempotency WHERE key LIKE 'pin-unlock:%' AND (response->>'alert_id')::uuid IN
+              (SELECT id FROM alerts WHERE dedup_key LIKE ${`pin:%:${SERVER}:%`})`.execute(db);
   await db.deleteFrom("audit_log").where("action", "=", "alert.resolve").where(sql<string>`payload->>'title'`, "like", `%${SERVER}/%`).execute();
   await db.deleteFrom("alerts").where("source", "=", "gateway").where("dedup_key", "like", `pin:%:${SERVER}:%`).execute();
   await db.deleteFrom("tool_pins").where("server", "=", SERVER).execute();

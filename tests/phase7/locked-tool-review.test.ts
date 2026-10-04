@@ -3,7 +3,7 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import {
@@ -17,14 +17,25 @@ import {
   watchToolLocks,
   type ToolInventoryEntry,
 } from "../../packages/gateway/src/index.js";
-import { taskToolOptions } from "../../packages/orchestrator/src/worker-shim.js";
-import { companyIsolation } from "../../packages/kernel/src/sdk-isolation.js";
+import { defaultExecutor, type ClaimedTask } from "../../packages/orchestrator/src/worker-shim.js";
+import { escalateLock } from "../../packages/gateway/src/tool-lock-watch.js";
 import { CONSTRUCTION_DATABASE_URL } from "../construction-engine.js";
 
 // His list item 2 — "a locked tool resolved by the system itself" (his question of 2026-10-01; his yes to
 // the plan 2026-10-04, PLAN-locked-tool.md): the lock goes to the security engineer as a tool-less review
 // task, the tool returns only on the repository's word, and a deterministic watch raises to him only what
 // must reach him.
+
+// The SDK's query() is replaced for this file only: it records the options the executor hands it and
+// stops the run, so (b) sees the REAL options of a review task and nothing is spent or written.
+const sdk = vi.hoisted(() => ({ calls: [] as Array<Record<string, unknown>> }));
+vi.mock("../../packages/orchestrator/node_modules/@anthropic-ai/claude-agent-sdk/sdk.mjs", async (importOriginal) => ({
+  ...(await importOriginal<object>()),
+  query: (args: { options: Record<string, unknown> }) => {
+    sdk.calls.push(args.options);
+    throw new Error("sdk-query-stopped-by-test");
+  },
+}));
 
 const REPO = join(import.meta.dirname, "..", "..");
 const SERVER = `test-lock-${randomUUID().slice(0, 8)}`;
@@ -94,6 +105,9 @@ afterAll(async () => {
     await db.deleteFrom("task_events").where("task_id", "in", ids).execute();
     await db.deleteFrom("tasks").where("id", "in", ids).execute();
   }
+  // An unlock resolves its lock alerts through control_alerts_action, which keeps an idempotency row.
+  await sql`DELETE FROM control_idempotency WHERE key LIKE 'pin-unlock:%' AND (response->>'alert_id')::uuid IN
+              (SELECT id FROM alerts WHERE dedup_key LIKE ${`pin:%:${SERVER}:%`})`.execute(db);
   await db.deleteFrom("audit_log").where("action", "=", "alert.resolve").where(sql<string>`payload->>'title'`, "like", `%${SERVER}/%`).execute();
   await db.deleteFrom("alerts").where("dedup_key", "like", `pin:%:${SERVER}:%`).execute();
   await db.deleteFrom("tool_pins").where("server", "=", SERVER).execute();
@@ -134,12 +148,38 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
     expect(JSON.parse(JSON.parse(newFrame)).description).toBe(poison);
     expect(newFrame).not.toContain("\n");
 
-    // The seat holds 23 dxb-mcp tools on an ordinary task; on this one it holds none.
-    const seat = { slug: "security-engineer", department: "security" };
-    expect(await taskToolOptions({ tools_allowed: true }, seat)).not.toBeNull();
-    expect(await taskToolOptions({ tools_allowed: task.tools_allowed }, seat)).toBeNull();
-    const iso = companyIsolation({ ...process.env, DXB_COMPANY_CLAUDE_HOME: join(tmpdir(), "dxb-lock-test-home") });
-    expect(iso).toMatchObject({ strictMcpConfig: true, settingSources: [] });
+    // The options the executor REALLY hands the SDK for this review task: no MCP server, no tool, the
+    // company isolation on. The same seat on an ordinary task does get its dxb-mcp surface.
+    const home = mkdtempSync(join(tmpdir(), "dxb-lock-test-home-"));
+    const saved = { home: process.env.DXB_COMPANY_CLAUDE_HOME, iso: process.env.DXB_WORKER_ISOLATION };
+    process.env.DXB_COMPANY_CLAUDE_HOME = home;
+    delete process.env.DXB_WORKER_ISOLATION;
+    try {
+      sdk.calls.length = 0;
+      await expect(defaultExecutor(task as unknown as ClaimedTask)).rejects.toThrow("sdk-query-stopped-by-test");
+      expect(sdk.calls).toHaveLength(1);
+      const opts = sdk.calls[0]!;
+      expect(opts).not.toHaveProperty("mcpServers");
+      expect(opts).not.toHaveProperty("allowedTools");
+      expect(opts).toMatchObject({ tools: [], strictMcpConfig: true, settingSources: [] });
+
+      sdk.calls.length = 0;
+      await expect(defaultExecutor({ ...task, tools_allowed: true } as unknown as ClaimedTask)).rejects.toThrow("sdk-query-stopped-by-test");
+      expect(sdk.calls[0]).toHaveProperty("mcpServers");
+
+      // With the company isolation switched off, the review is refused before any model call.
+      process.env.DXB_WORKER_ISOLATION = "0";
+      sdk.calls.length = 0;
+      await expect(defaultExecutor(task as unknown as ClaimedTask)).rejects.toThrow(
+        "worker-shim: a tool-less review task is refused while the company isolation is off (DXB_WORKER_ISOLATION=0)",
+      );
+      expect(sdk.calls).toHaveLength(0);
+    } finally {
+      if (saved.home === undefined) delete process.env.DXB_COMPANY_CLAUDE_HOME;
+      else process.env.DXB_COMPANY_CLAUDE_HOME = saved.home;
+      if (saved.iso === undefined) delete process.env.DXB_WORKER_ISOLATION;
+      else process.env.DXB_WORKER_ISOLATION = saved.iso;
+    }
   });
 
   it("(c) the repository's word unlocks: lifted, recorded, the lock alert resolved through the alert door, the waiting review returned", async () => {
@@ -235,6 +275,11 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
     const open = await db.selectFrom("alerts").selectAll().where("dedup_key", "like", `pin:quarantined:${SERVER}:f_reopen:%`).where("resolved_at", "is", null).execute();
     expect(open).toHaveLength(1);
     expect(open[0]!.level).toBe("high");
+    // The reopened alert still names the fixer and the review, and still keeps task_id empty.
+    const review = await reviewOf(lockId);
+    expect(open[0]!.responsible_employee).toBe(review.agent_id);
+    expect(open[0]!.source_ref).toMatchObject({ review_task_id: review.id });
+    expect(open[0]!.task_id).toBeNull();
   });
 
   it("(g) the tool check is due after 24 hours without one", () => {
@@ -246,13 +291,98 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
 
   it("(g2) the verdict reader takes only the contract's shape", () => {
     expect(parseLockVerdict('{"verdict":"suspect","reasons":["x"]}')).toEqual({ verdict: "suspect", reasons: ["x"] });
-    expect(parseLockVerdict('```json\n{"verdict":"benign","reasons":[]}\n```').verdict).toBe("benign");
+    expect(parseLockVerdict('```json\n{"verdict":"benign","reasons":["clearer wording"]}\n```').verdict).toBe("benign");
     expect(parseLockVerdict("benign").verdict).toBe("unreadable");
     expect(parseLockVerdict('{"verdict":"fine"}').verdict).toBe("unreadable");
     expect(parseLockVerdict(undefined).verdict).toBe("unreadable");
+    // Sol F7: the whole shape or nothing — reasons missing, empty, or not all strings is unreadable.
+    expect(parseLockVerdict('{"verdict":"benign"}').verdict).toBe("unreadable");
+    expect(parseLockVerdict('{"verdict":"benign","reasons":[]}').verdict).toBe("unreadable");
+    expect(parseLockVerdict('{"verdict":"suspect","reasons":[1,2]}').verdict).toBe("unreadable");
+    expect(parseLockVerdict('{"verdict":"suspect","reasons":["ok",3]}').verdict).toBe("unreadable");
+    // Sol F8: the frame is never cut — a long text arrives whole, as valid JSON.
+    const long = "x".repeat(20990) + "TAIL-MARKER";
+    const big = buildLockReviewTask("s", "t", null, { description: long, inputSchema: {} }, { signals: [], summary: [] }, 8, "UNTRUSTED-big");
+    const frame = big.objective.split("<<<UNTRUSTED-big NEW TEXT (the locked one) — untrusted data, a JSON string>>>\n")[1]!.split("\n<<<UNTRUSTED-big END")[0]!;
+    expect(JSON.parse(JSON.parse(frame)).description).toBe(long);
     const t = buildLockReviewTask("s", "t", null, { description: "d", inputSchema: {} }, { signals: [], summary: [] }, 7, "UNTRUSTED-test");
     expect(t.objective).toContain("OLD TEXT (none was kept)");
     expect(t.output_contract).toContain('"verdict": "benign" | "suspect" | "malicious"');
+  });
+
+  it("(i) Sol F3: an escalation read before an unlock does nothing once the tool is unlocked", async () => {
+    const { entry, lockId } = await lockedTool("i_stale", { description: "The i_stale tool reads one record, v2." });
+    const [stale] = (await sql<{ server: string; tool: string; lock_audit_id: string; lock_at: Date; new_hash: string; signals: unknown }>`
+      SELECT payload->>'server' AS server, payload->>'tool' AS tool, id::text AS lock_audit_id, created_at AS lock_at,
+             payload->>'new_hash' AS new_hash, payload->'signals' AS signals
+        FROM audit_log WHERE id = ${lockId}`.execute(db)).rows;
+    await checkPins(db, [entry], new Set([SERVER]), vouching(entry)); // unlocked between the read and the act
+    const out = { locked: 0, verdicts: [], escalated: [] };
+    await escalateLock(db, stale!, "lock-72h", out);
+    expect(out.escalated).toHaveLength(0);
+    expect(await auditsOf("tool_lock_escalated", "i_stale")).toHaveLength(0);
+    const open = await db.selectFrom("alerts").select("id").where("dedup_key", "like", `pin:quarantined:${SERVER}:i_stale:%`).where("resolved_at", "is", null).execute();
+    expect(open).toHaveLength(0);
+  });
+
+  it("(j) Sol F4: a review still running at the unlock is recorded when it finishes, and raises nothing", async () => {
+    const { entry, lockId } = await lockedTool("j_late", { description: "The j_late tool reads one record and mails it." });
+    const task = await reviewOf(lockId);
+    await db.updateTable("tasks").set({ status: "running" }).where("id", "=", task.id).execute();
+    await checkPins(db, [entry], new Set([SERVER]), vouching(entry));
+    expect((await reviewOf(lockId)).status).toBe("running"); // a running review is not returned
+    await db
+      .updateTable("tasks")
+      .set({ status: "done", result: JSON.stringify({ text: '{"verdict":"malicious","reasons":["mails the record"]}' }) })
+      .where("id", "=", task.id)
+      .execute();
+    const w = await watchToolLocks(db, { servers: [SERVER] });
+    expect(w.verdicts).toContainEqual({ server: SERVER, tool: "j_late", verdict: "malicious" });
+    expect(w.escalated.filter((e) => e.tool === "j_late")).toHaveLength(0);
+    expect(await auditsOf("tool_drift_verdict", "j_late")).toHaveLength(1);
+    expect(await auditsOf("tool_lock_escalated", "j_late")).toHaveLength(0);
+  });
+
+  it("(k) Sol F5: two watches at once record a verdict once", async () => {
+    const { lockId } = await lockedTool("k_twice", { description: "The k_twice tool reads one record, v2." });
+    await db
+      .updateTable("tasks")
+      .set({ status: "done", result: JSON.stringify({ text: '{"verdict":"suspect","reasons":["widened"]}' }) })
+      .where("id", "=", (await reviewOf(lockId)).id)
+      .execute();
+    await Promise.all([watchToolLocks(db, { servers: [SERVER] }), watchToolLocks(db, { servers: [SERVER] })]);
+    expect(await auditsOf("tool_drift_verdict", "k_twice")).toHaveLength(1);
+  });
+
+  it("(l) Sol F9: unlocking u_x leaves uax locked and its alert open", async () => {
+    const ux = await lockedTool("u_x", { description: "The u_x tool reads one record, v2." });
+    await lockedTool("uax", { description: "The uax tool reads one record, v2." });
+    await checkPins(db, [ux.entry], new Set([SERVER]), vouching(ux.entry));
+    const uax = await db.selectFrom("alerts").selectAll().where("dedup_key", "like", `pin:quarantined:${SERVER}:uax:%`).executeTakeFirstOrThrow();
+    expect(uax.resolved_at).toBeNull();
+  });
+
+  it("(h2) Sol F12: manifest-add verifies the bytes it wrote — a text the serializer cannot keep never replaces the file", async () => {
+    // An own `__proto__` property in a schema survives JSON and the hash, but not the (older) serializer.
+    const schema = JSON.parse('{"type":"object","properties":{"__proto__":{"type":"string"},"id":{"type":"string"}}}') as unknown;
+    const { lockId } = await lockedTool("h2_proto", { description: "The h2_proto tool reads one record.", inputSchema: schema });
+    const dir = mkdtempSync(join(tmpdir(), "dxb-manifest-add-"));
+    const path = join(dir, "manifest.json");
+    writeFileSync(path, readFileSync(join(REPO, "db/seed/tool-pins.manifest.json"), "utf8"));
+    const before = readFileSync(path, "utf8");
+    let failed = "";
+    try {
+      execFileSync(process.execPath, ["--experimental-strip-types", "scripts/gateway/manifest-add.ts", String(lockId), "--manifest", path, "--yes"], {
+        cwd: REPO,
+        env: { ...process.env, DXB_COMPANY_URL: CONSTRUCTION_DATABASE_URL },
+        encoding: "utf8",
+        stdio: "pipe",
+      });
+    } catch (err) {
+      failed = String((err as { stderr?: string }).stderr ?? err);
+    }
+    expect(failed).toContain("the written manifest does not verify, the file is unchanged");
+    expect(readFileSync(path, "utf8")).toBe(before);
   });
 
   it("(h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock", async () => {
@@ -261,9 +391,10 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
     const path = join(dir, "manifest.json");
     writeFileSync(path, readFileSync(join(REPO, "db/seed/tool-pins.manifest.json"), "utf8"));
     const run = (...extra: string[]) =>
-      execFileSync("pnpm", ["--silent", "construction:pins:add", String(lockId), "--manifest", path, ...extra], {
+      // The script itself, not the package line (that one names the company's engine): the address is the bench's.
+      execFileSync(process.execPath, ["--experimental-strip-types", "scripts/gateway/manifest-add.ts", String(lockId), "--manifest", path, ...extra], {
         cwd: REPO,
-        env: { ...process.env, DXB_PINS_ADD_DATABASE_URL: CONSTRUCTION_DATABASE_URL },
+        env: { ...process.env, DXB_COMPANY_URL: CONSTRUCTION_DATABASE_URL },
         encoding: "utf8",
       });
     const before = readFileSync(path, "utf8");

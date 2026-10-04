@@ -20,7 +20,7 @@
     "construction:seed": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node --experimental-strip-types db/seed/build-seed.ts",
     "construction:pins:refresh": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts",
     "construction:pins:check": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts --check",
-    "construction:pins:add": "DXB_DATABASE_URL=${DXB_PINS_ADD_DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres} node --experimental-strip-types scripts/gateway/manifest-add.ts",
+    "construction:pins:add": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres node --experimental-strip-types scripts/gateway/manifest-add.ts",
     "verify:schema-parity": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
     "b36:window": "node scripts/b36/install-company-window.mjs company",
     "b36:prove-window-preserves": "node scripts/b36/prove-window-preserves.mjs",

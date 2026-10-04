@@ -19,9 +19,6 @@ export const LOCK_REVIEWER_SLUG = "security-engineer";
 export const LOCK_REVIEW_DEPARTMENT = "security";
 export const LOCK_REVIEW_PROJECT_SLUG = "dxb-global-os";
 
-/** Whole text kept in the frame up to this many characters; a longer one is cut and says so. */
-const FRAME_LIMIT = 20_000;
-
 export type LockVerdict = "benign" | "suspect" | "malicious";
 
 export interface LockReviewTask {
@@ -31,10 +28,12 @@ export interface LockReviewTask {
   label_tr: string;
 }
 
+/** One text as ONE valid JSON string, whole. It is never cut (Sol F8): a cut string is invalid JSON, and
+ *  whatever stood past the cut would escape the review. A text too long for the seat's budget makes the run
+ *  fail, and a failed review is raised to the CEO — the intended direction. */
 function framed(name: string, text: ToolText | null, nonce: string): string {
   const body = text === null ? "null" : JSON.stringify(JSON.stringify(text));
-  const cut = body.length > FRAME_LIMIT ? `${body.slice(0, FRAME_LIMIT)}… [cut at ${FRAME_LIMIT} of ${body.length} characters]` : body;
-  return [`<<<${nonce} ${name} — untrusted data, a JSON string>>>`, cut, `<<<${nonce} END ${name}>>>`].join("\n");
+  return [`<<<${nonce} ${name} — untrusted data, a JSON string>>>`, body, `<<<${nonce} END ${name}>>>`].join("\n");
 }
 
 /** The review task's words for one lock. `nonce` is drawn at random unless a test hands one in. */
@@ -95,8 +94,13 @@ export function parseLockVerdict(text: unknown): ParsedVerdict {
   }
   if (v === null || typeof v !== "object" || Array.isArray(v)) return { verdict: "unreadable", reasons: [] };
   const o = v as Record<string, unknown>;
-  const reasons = Array.isArray(o.reasons) ? o.reasons.filter((r): r is string => typeof r === "string").map((r) => r.slice(0, 500)).slice(0, 10) : [];
-  if (o.verdict === "benign" || o.verdict === "suspect" || o.verdict === "malicious") return { verdict: o.verdict, reasons };
+  // The whole shape or nothing (Sol F7): reasons must be a non-empty list of strings; only then are they
+  // clipped for the record.
+  const shaped = Array.isArray(o.reasons) && o.reasons.length > 0 && o.reasons.every((r) => typeof r === "string");
+  const reasons = shaped ? (o.reasons as string[]).map((r) => r.slice(0, 500)).slice(0, 10) : [];
+  if (shaped && (o.verdict === "benign" || o.verdict === "suspect" || o.verdict === "malicious")) {
+    return { verdict: o.verdict, reasons };
+  }
   return { verdict: "unreadable", reasons };
 }
 

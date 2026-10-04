@@ -258,7 +258,11 @@ async function closeLock(trx: Transaction<DB>, entry: ToolInventoryEntry, unlock
     .selectFrom("alerts")
     .select("id")
     .where("source", "=", "gateway")
-    .where("dedup_key", "like", `pin:quarantined:${entry.server}:${entry.tool}:%`)
+    // The prefix names the kind; the tool is matched by its exact fields (Sol F9: an underscore in a tool
+    // name is a LIKE wildcard, so `a_b` would match `acb`'s alert too).
+    .where("dedup_key", "like", "pin:quarantined:%")
+    .where(sql<string>`source_ref->>'server'`, "=", entry.server)
+    .where(sql<string>`source_ref->>'tool'`, "=", entry.tool)
     .where("resolved_at", "is", null)
     .execute();
   for (const a of open) {

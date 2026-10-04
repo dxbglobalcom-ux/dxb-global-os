@@ -14,16 +14,14 @@
  * Then commit the manifest. The lock lifts at the next tool check — the daily run, or the
  * tool-lock-watch catch-up when the last check is older than 24 h; the check reads the file fresh.
  *
- * It reads the company engine with SELECT only (the package script points DXB_DATABASE_URL at the
- * company; DXB_PINS_ADD_DATABASE_URL overrides it) — the audit row `tool_quarantined` carries the locked
- * text whole. `--manifest <path>` writes
- * another file (the tests).
+ * It reads the company engine with SELECT only, at the address DXB_COMPANY_URL names (the package script
+ * spells the company's; there is no fallback — an unset address stops the script). The audit row
+ * `tool_quarantined` carries the locked text whole. `--manifest <path>` writes another file (the tests).
  */
-import { writeFileSync } from "node:fs";
+import { renameSync, rmSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { sql } from "kysely";
-import { closeDb, getDb } from "../../packages/shared/dist/index.js";
 import { computeToolHash } from "../../packages/gateway/dist/index.js";
 import {
   readManifest,
@@ -34,6 +32,14 @@ import {
 } from "../../db/seed/tool-pins-manifest.ts";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+// pg resolves from the shared package, as scripts/b36/schema-parity.mjs does.
+const { Client } = createRequire(join(REPO, "packages", "shared", "package.json"))("pg") as {
+  Client: new (o: { connectionString: string }) => {
+    connect(): Promise<void>;
+    query<T>(text: string, values?: unknown[]): Promise<{ rows: T[] }>;
+    end(): Promise<void>;
+  };
+};
 const args = process.argv.slice(2);
 const yes = args.includes("--yes");
 const mIdx = args.indexOf("--manifest");
@@ -47,12 +53,16 @@ function fail(msg: string): never {
 
 if (!auditId) fail("usage: manifest-add <audit_id> [--yes] [--manifest <path>]");
 
-const db = getDb();
+const url = process.env.DXB_COMPANY_URL;
+if (!url) fail("DXB_COMPANY_URL is not set — run it through `pnpm construction:pins:add`, which names the company's engine");
+const db = new Client({ connectionString: url });
+await db.connect();
 try {
   const row = (
-    await sql<{ action: string; payload: Record<string, unknown> }>`
-      SELECT action, payload FROM audit_log WHERE id = ${Number(auditId)}
-    `.execute(db)
+    await db.query<{ action: string; payload: Record<string, unknown> }>(
+      "SELECT action, payload FROM audit_log WHERE id = $1",
+      [Number(auditId)],
+    )
   ).rows[0];
   if (!row) fail(`audit record ${auditId} does not exist`);
   if (row.action !== "tool_quarantined") fail(`audit record ${auditId} is '${row.action}', not a lock (tool_quarantined)`);
@@ -66,11 +76,12 @@ try {
   if (computeToolHash(entry) !== p.new_hash) fail(`audit record ${auditId}: the kept text does not hash to the locked hash`);
 
   const verdict = (
-    await sql<{ payload: Record<string, unknown> }>`
-      SELECT payload FROM audit_log
-       WHERE action = 'tool_drift_verdict' AND (payload->>'lock_audit_id')::bigint = ${Number(auditId)}
-       ORDER BY id DESC LIMIT 1
-    `.execute(db)
+    await db.query<{ payload: Record<string, unknown> }>(
+      `SELECT payload FROM audit_log
+        WHERE action = 'tool_drift_verdict' AND (payload->>'lock_audit_id')::bigint = $1
+        ORDER BY id DESC LIMIT 1`,
+      [Number(auditId)],
+    )
   ).rows[0]?.payload;
 
   console.log(`Locked tool: ${entry.server}/${entry.tool} (audit record ${auditId})`);
@@ -93,11 +104,21 @@ try {
   verifyManifest(before); // a file that disagrees with itself is never extended
   const after = withTool(before, entry);
   verifyManifest(after);
-  writeFileSync(manifestPath, serializeManifest(after));
+  // The BYTES are verified, not only the object (Sol F12): written beside the target, read back and
+  // re-hashed, and only then moved over it. A serialization that loses anything never replaces the file.
+  const temp = `${manifestPath}.manifest-add-${process.pid}.tmp`;
+  writeFileSync(temp, serializeManifest(after));
+  try {
+    verifyManifest(readManifest(temp));
+  } catch (err) {
+    rmSync(temp, { force: true });
+    fail(`the written manifest does not verify, the file is unchanged: ${err instanceof Error ? err.message : String(err)}`);
+  }
+  renameSync(temp, manifestPath);
   const replaced = before.tools.some((t) => t.server === entry.server && t.tool === entry.tool);
   console.log(
     `${replaced ? "Replaced" : "Added"} ${entry.server}/${entry.tool} in ${manifestPath}. Commit it; the lock lifts at the next tool check.`,
   );
 } finally {
-  await closeDb();
+  await db.end();
 }

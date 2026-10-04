@@ -1,0 +1,34 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+[isolation] lane=gate model=stand-in session=? home=/tmp/company-codex-LfNrT2/company-codex notes=0 mcp=0 ok=true tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named
+[isolation] lane=gate model=stand-in session=? home=refused notes=? mcp=? ok=false tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home
+[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-U6VH2Z/company-codex notes=0 mcp=0 ok=true tokens=12345
+
+(node:476359) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/governance/company-isolation.test.ts (106 tests) 213ms
+ ✓ tests/b36/no-company-fallbacks.test.ts (4 tests) 3065ms
+   ✓ B36 Block 4 — nothing falls back to the company's database > (1) the sweep really walked this repository  1532ms
+   ✓ B36 Block 4 — nothing falls back to the company's database > (2) no tracked file binds the company's address to DXB_DATABASE_URL  1526ms
+ ✓ tests/b36/fallback-count.test.ts (1 test) 1773ms
+   ✓ B36 — the board's fallback figure is the counter's figure > matches, file for file and bucket for bucket  1773ms
+ ✓ tests/hooks/opening-budget.test.ts (8 tests) 1025ms
+ ✓ tests/hooks/design-max.test.ts (24 tests) 887ms
+ ✓ tests/hooks/session-start-fits.test.ts (4 tests) 149ms
+ ✓ tests/hooks/context-gate.test.ts (14 tests) 1085ms
+   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 56 into a closed pipe  309ms
+ ✓ tests/hooks/cost-gate.test.ts (16 tests) 580ms
+ ✓ tests/hooks/statusline-effort.test.ts (23 tests) 700ms
+
+ Test Files  9 passed (9)
+      Tests  200 passed (200)
+   Start at  20:23:27
+   Duration  13.36s (transform 142ms, setup 0ms, collect 2.76s, tests 9.48s, environment 1ms, prepare 285ms)
+

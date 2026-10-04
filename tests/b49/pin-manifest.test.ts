@@ -26,6 +26,7 @@ import {
   readManifest,
   serializeManifest,
   verifyManifest,
+  withTool,
   diffAgainstBench,
   pinTheCorpus,
   DEFAULT_MANIFEST_PATH,
@@ -428,5 +429,25 @@ describe("B49 the pin manifest", () => {
     );
     expect(await pinCount(HOUSE2)).toBe(0);
     expect(await pinCount("b49-fixture-bad2")).toBe(0);
+  });
+
+  it("(14) withTool (the locked-tool review's manifest-add) replaces only the same (server, tool) pair — Sol F10", () => {
+    const t = (server: string, tool: string): ToolInventoryEntry => ({
+      server,
+      tool,
+      description: `${server} ${tool}`,
+      inputSchema: { type: "object" },
+    });
+    const base: ToolPinsManifest = {
+      about: "fixture",
+      servers: { "a.b": 1 },
+      tools: [{ ...t("a.b", "c"), schema_hash: computeToolHash(t("a.b", "c")) }],
+    };
+    const after = withTool(base, t("a", "b.c"));
+    expect(after.tools.map((x) => [x.server, x.tool]).sort()).toEqual([["a", "b.c"], ["a.b", "c"]]);
+    expect(verifyManifest(after)).toHaveLength(2);
+    const replaced = withTool(after, { ...t("a.b", "c"), description: "changed" });
+    expect(replaced.tools).toHaveLength(2);
+    expect(replaced.tools.find((x) => x.server === "a.b")!.description).toBe("changed");
   });
 });

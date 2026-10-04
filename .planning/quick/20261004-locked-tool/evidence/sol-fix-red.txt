@@ -1,0 +1,191 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:463782) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:463910) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:463971) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/phase7/locked-tool-review.test.ts (14 tests | 6 failed) 948ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (a) a lock goes to the security engineer: an informational alert, a tool-less review task and its link, in one transaction 32ms
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (b) a poisoned description cannot close its frame, and the review runs with no MCP server and no tool 45ms
+     → expected [Function] to throw error including 'worker-shim: a tool-less review task …' but got 'sdk-query-stopped-by-test'
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (c) the repository's word unlocks: lifted, recorded, the lock alert resolved through the alert door, the waiting review returned 34ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (d) a lock older than 72 hours reaches him once 25ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (e) a malicious verdict is recorded whole in the audit row and raises the lock — no alert line carries the seat's words 30ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (f) a failed review reaches him; a benign one does not 49ms
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (f2) he resolved the alert while the tool stayed locked: the next reason opens it again 34ms
+     → expected null to be 'b4d461d1-b991-4533-a9e3-dd7fdde60e1b' // Object.is equality
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (g) the tool check is due after 24 hours without one 0ms
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (g2) the verdict reader takes only the contract's shape 1ms
+     → expected 'benign' to be 'unreadable' // Object.is equality
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (i) Sol F3: an escalation read before an unlock does nothing once the tool is unlocked 43ms
+     → escalateLock is not a function
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (j) Sol F4: a review still running at the unlock is recorded when it finishes, and raises nothing 57ms
+     → expected [] to deep equally contain { server: 'test-lock-86578083', …(2) }
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (k) Sol F5: two watches at once record a verdict once 40ms
+   × a locked tool resolved by the system itself (his yes of 2026-10-04) > (l) Sol F9: unlocking u_x leaves uax locked and its alert open 73ms
+     → expected 2026-10-04T18:21:25.727Z to be null
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock  467ms
+(node:464059) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/b49/pin-manifest.test.ts (14 tests | 1 failed) 49ms
+   ✓ B49 the pin manifest > (1) the repository's manifest re-hashes to itself and holds the catalogued external corpus 4ms
+   ✓ B49 the pin manifest > (2) serialization is deterministic — the file is what the serializer produces 4ms
+   ✓ B49 the pin manifest > (3) pinning from a manifest is first-sight and idempotent, and sweeps after itself 9ms
+   ✓ B49 the pin manifest > (4) a manifest that disagrees with itself pins NOTHING and names the tool 2ms
+   ✓ B49 the pin manifest > (6) a body edited by hand is invisible to the diff — which is why the check verifies first 0ms
+   ✓ B49 the pin manifest > (7) verify refuses what a manifest may never carry — the rules, not just the hashes 0ms
+   ✓ B49 the pin manifest > (8) the serializer sorts — object keys and the tool list, whatever order it is handed 0ms
+   ✓ B49 the pin manifest > (9) reading refuses a file that is not a manifest, by name 1ms
+   ✓ B49 the pin manifest > (10) the three holes the SECOND adversarial round found in the first round's fixes 0ms
+   ✓ B49 the pin manifest > (5) the diff names every difference, and says nothing when there is none 0ms
+   ✓ B49 the pin manifest > (11) the seed pins from THIS REPOSITORY — the wiring is pinned, not merely described 0ms
+   ✓ B49 the pin manifest > (12) a bench that holds what this repository does not declare is NAMED, in all three directions 0ms
+   ✓ B49 the pin manifest > (13) the seed's whole pin step refuses a manifest that disagrees with itself — and pins nothing at all 10ms
+   × B49 the pin manifest > (14) withTool (the locked-tool review's manifest-add) replaces only the same (server, tool) pair — Sol F10 4ms
+     → expected [ [ 'a', 'b.c' ] ] to deeply equal [ [ 'a', 'b.c' ], [ 'a.b', 'c' ] ]
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/b49/pin-manifest.test.ts > B49 the pin manifest > (14) withTool (the locked-tool review's manifest-add) replaces only the same (server, tool) pair — Sol F10
+AssertionError: expected [ [ 'a', 'b.c' ] ] to deeply equal [ [ 'a', 'b.c' ], [ 'a.b', 'c' ] ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[2m    [[22m
+[2m      "a",[22m
+[2m      "b.c",[22m
+[2m    ],[22m
+[32m-   [[39m
+[32m-     "a.b",[39m
+[32m-     "c",[39m
+[32m-   ],[39m
+[2m  ][22m
+
+ ❯ tests/b49/pin-manifest.test.ts:447:63
+    445|     };
+    446|     const after = withTool(base, t("a", "b.c"));
+    447|     expect(after.tools.map((x) => [x.server, x.tool]).sort()).toEqual(…
+       |                                                               ^
+    448|     expect(verifyManifest(after)).toHaveLength(2);
+    449|     const replaced = withTool(after, { ...t("a.b", "c"), description: …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (b) a poisoned description cannot close its frame, and the review runs with no MCP server and no tool
+AssertionError: expected [Function] to throw error including 'worker-shim: a tool-less review task …' but got 'sdk-query-stopped-by-test'
+
+Expected: [32m"[7mwork[27mer-s[7mhim: a tool-less review task is refused while the company isolation is off (DXB_WORKER_ISOLATION=0)[27m"[39m
+Received: [31m"[7msdk-qu[27mer[7my[27m-s[7mtopped-by-test[27m"[39m
+
+ ❯ tests/phase7/locked-tool-review.test.ts:173:7
+    171|       process.env.DXB_WORKER_ISOLATION = "0";
+    172|       sdk.calls.length = 0;
+    173|       await expect(defaultExecutor(task as unknown as ClaimedTask)).re…
+       |       ^
+    174|         "worker-shim: a tool-less review task is refused while the com…
+    175|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (f2) he resolved the alert while the tool stayed locked: the next reason opens it again
+AssertionError: expected null to be 'b4d461d1-b991-4533-a9e3-dd7fdde60e1b' // Object.is equality
+
+[32m- Expected:[39m 
+"b4d461d1-b991-4533-a9e3-dd7fdde60e1b"
+
+[31m+ Received:[39m 
+null
+
+ ❯ tests/phase7/locked-tool-review.test.ts:280:43
+    278|     // The reopened alert still names the fixer and the review, and st…
+    279|     const review = await reviewOf(lockId);
+    280|     expect(open[0]!.responsible_employee).toBe(review.agent_id);
+       |                                           ^
+    281|     expect(open[0]!.source_ref).toMatchObject({ review_task_id: review…
+    282|     expect(open[0]!.task_id).toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (g2) the verdict reader takes only the contract's shape
+AssertionError: expected 'benign' to be 'unreadable' // Object.is equality
+
+Expected: [32m"unreadable"[39m
+Received: [31m"benign"[39m
+
+ ❯ tests/phase7/locked-tool-review.test.ts:299:62
+    297|     expect(parseLockVerdict(undefined).verdict).toBe("unreadable");
+    298|     // Sol F7: the whole shape or nothing — reasons missing, empty, or…
+    299|     expect(parseLockVerdict('{"verdict":"benign"}').verdict).toBe("unr…
+       |                                                              ^
+    300|     expect(parseLockVerdict('{"verdict":"benign","reasons":[]}').verdi…
+    301|     expect(parseLockVerdict('{"verdict":"suspect","reasons":[1,2]}').v…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (i) Sol F3: an escalation read before an unlock does nothing once the tool is unlocked
+TypeError: escalateLock is not a function
+ ❯ tests/phase7/locked-tool-review.test.ts:321:11
+    319|     await checkPins(db, [entry], new Set([SERVER]), vouching(entry)); …
+    320|     const out = { locked: 0, verdicts: [], escalated: [] };
+    321|     await escalateLock(db, stale!, "lock-72h", out);
+       |           ^
+    322|     expect(out.escalated).toHaveLength(0);
+    323|     expect(await auditsOf("tool_lock_escalated", "i_stale")).toHaveLen…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (j) Sol F4: a review still running at the unlock is recorded when it finishes, and raises nothing
+AssertionError: expected [] to deep equally contain { server: 'test-lock-86578083', …(2) }
+
+[32m- Expected:[39m 
+{
+  "server": "test-lock-86578083",
+  "tool": "j_late",
+  "verdict": "malicious",
+}
+
+[31m+ Received:[39m 
+[]
+
+ ❯ tests/phase7/locked-tool-review.test.ts:340:24
+    338|       .execute();
+    339|     const w = await watchToolLocks(db, { servers: [SERVER] });
+    340|     expect(w.verdicts).toContainEqual({ server: SERVER, tool: "j_late"…
+       |                        ^
+    341|     expect(w.escalated.filter((e) => e.tool === "j_late")).toHaveLengt…
+    342|     expect(await auditsOf("tool_drift_verdict", "j_late")).toHaveLengt…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  tests/phase7/locked-tool-review.test.ts > a locked tool resolved by the system itself (his yes of 2026-10-04) > (l) Sol F9: unlocking u_x leaves uax locked and its alert open
+AssertionError: expected 2026-10-04T18:21:25.727Z to be null
+
+[32m- Expected:[39m 
+null
+
+[31m+ Received:[39m 
+2026-10-04T18:21:25.727Z
+
+ ❯ tests/phase7/locked-tool-review.test.ts:362:29
+    360|     await checkPins(db, [ux.entry], new Set([SERVER]), vouching(ux.ent…
+    361|     const uax = await db.selectFrom("alerts").selectAll().where("dedup…
+    362|     expect(uax.resolved_at).toBeNull();
+       |                             ^
+    363|   });
+    364| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  7 failed | 21 passed (28)
+   Start at  20:21:24
+   Duration  1.99s (transform 209ms, setup 0ms, collect 626ms, tests 997ms, environment 0ms, prepare 64ms)
+
+[global-teardown] handed back 18 ops:live receipt(s) this run issued
