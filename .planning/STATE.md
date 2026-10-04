@@ -27,6 +27,17 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-04 ~17:05 → ~17:45, Opus 5.5 session e7aa0d14 (high), on his /goal *"iş devam edin sonunda fable a
+danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar içinde geçerli"* (conversation, verbatim).
+- **His list item 3 — the construction's auto-memory: the fixes are done** (finished, not accepted — LAW B).
+  Each of the 25 fix rows of `item5-report.md` re-measured in place first, then corrected in
+  `~/.claude/projects/-home-dxb-DxB-Global-OS/memory/` (outside the repo): 42 files touched, nothing deleted,
+  index still 67 ↔ 67. Backup before the first edit: the session scratchpad's `memory-backup-2026-10-04.tgz`.
+  Two report rows were narrowed on measurement: the minimalism note keeps what `dxb-surface` lacks (HelpTip
+  on click, badge symmetry, `min-w-0`) and points the rest at the door; of 18 dangling-link targets only the
+  4 with a clear owner today were repointed (39 uses), the rest left as they are.
+  Waiting on his one word: the 4 delete rows and the 8 July diaries (list and sizes put in front of him).
+
 2026-10-04 14:53 → 16:25, Opus 5.5 session fd7d67f2 (beside 07841b79). He went through the approved
 orchestration design again, then ordered how its max part runs without his hand on /effort.
 - **Design at max — built** <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 -->: the lead invokes
@@ -92,7 +103,8 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 2. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
    proposal in `item2-report.md` § ITEM 4. Waits on his word.
 3. **The construction's auto-memory** — stale and contradicting entries (his list item 6), measured:
-   `item5-report.md`. Waits on his word.
+   `item5-report.md`. Fixes done 2026-10-04 (session e7aa0d14); the 4 deletions and the 8 July diaries
+   wait on his one word — nothing is deleted without it.
 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 
