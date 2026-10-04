@@ -2082,5 +2082,13 @@
     "conditions": "Answering the plain-language restatement of 2026-10-04 ~19:20 (decision 1: the lock to the security engineer, the construction side lifts it, he hears only of real danger or a 3-day lock; decision 2: night jobs catch up on wake). Decision 1 = yes, with the last step at the construction engineer (the option stated in that message). Decision 2 declined by his reason: the sleep is normal before the cloud move. The tool check itself still has to run for the plan to work; running that one check when the machine wakes is the lead's technical choice inside this yes. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session 5ab4ff38 — heard first-hand, 2026-10-04.",
     "where": ".planning/STATE.md · .planning/quick/20261004-b51-code-and-lock/PLAN-locked-tool.md"
+  },
+  "helpers-never-call-fable-and-global-advisor-line-scoped-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "Two found items of the orchestration job, both yes: (1) the `helper` and `helper-writer` seat definitions (~/.claude/agents/) carry the sentence that they never call the advisor tool (Fable) — Fable is consulted only by the lead, where the job's card allows; measured before: without the sentence both helper-writers of the orchestration job called Fable once each, unasked; with it in the brief, both helpers of the live bar called it zero times. (2) ~/.claude/CLAUDE.md's advisor line ('gerekli görüldüğü takdirde her zaman danışılabilir', CEO 2026-10-01) is limited to work outside dxb-team2; inside it, only where the card's `fable:` line allows.",
+    "verbatim": "evet yaz ikisini de",
+    "conditions": "Answering the lead's two questions of 2026-10-04 ~19:50 (the global line limited to work outside dxb-team2; the 'do not call Fable' sentence written into the two helper seats). Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session e3574313 — heard first-hand, 2026-10-04.",
+    "where": "~/.claude/agents/helper.md · ~/.claude/agents/helper-writer.md · ~/.claude/CLAUDE.md (# Danışman) — all outside the repo"
   }
 }

@@ -176,14 +176,7 @@ the tweet's link is still to come from him.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- Found in the orchestration job, each with a recommendation; his word decides, nothing is changed before it:
-  (1) the helper seats call Fable on their own — each of this job's two helper-writers once, unasked, about half
-  its cost (usage.mjs: 0.53 of 1.03 and 0.44 of 0.95 USD); `advisorModel: fable` in `~/.claude/settings.json`
-  gives it to every session and subagent, and `--disallowedTools advisor` does not take it away (measured
-  18:45); one line in the brief ("do not call the advisor tool") gave 0 calls in both of the live bar's helpers —
-  recommended: that sentence in `~/.claude/agents/helper.md` and `helper-writer.md`; (2) `~/.claude/CLAUDE.md`'s line *"advisor (Fable 5.1): gerekli görüldüğü takdirde
-  her zaman danışılabilir (CEO 2026-10-01)"* contradicts the card's `fable:` rule — recommended: limit it to work
-  outside dxb-team2.
+- The two found items of the orchestration job — both written on his yes <!-- CEO-OK: helpers-never-call-fable-and-global-advisor-line-scoped-2026-10-04 -->: the helper seats never call Fable; `~/.claude/CLAUDE.md`'s advisor line limited to work outside dxb-team2 (all outside the repo).
 
 ## Where things live
 
