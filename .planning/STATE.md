@@ -39,8 +39,20 @@ orchestration design again, then ordered how its max part runs without his hand 
   Waiting on his word, proposed in the same talk and not answered: one line for that design — a fork is
   opened only while the lead is light; a heavy lead hands over first (fork-measurements.md, 2.4x).
 
-2026-10-04 15:10 → 16:20, Opus 5.5 session 07841b79 (max from ~15:40, his `/effort max`).
+2026-10-04 15:10 → 17:00, Opus 5.5 session 07841b79 (max ~15:40 → ~16:20, then high).
 - C1 accepted on his waiver of the eye (commit `3b0825d9`).
+- **The two memory items left by C1 — done and live** (finished, not accepted — LAW B), on his
+  *"kısaysa yap değilse boşver"*: (a) chat and voice no longer turn a failed recall into an empty memory —
+  Hamza is told, unconditionally, and says so (`@dxb/voice` recallForAnswer + prompt-core memoryBlock; a
+  real chat-lane answer: "bu seferlik şirket hafızama … ulaşamadım"); (b) a real task-lane call of a
+  staffed seat committed a note through its own dxb-mcp child into the handed root and the scheduler-side
+  recall read the same id and text back (NOTE_PROBE_OK, construction engine). Commits `83bc9342` ·
+  `bd536d25` · `91f93b23` · `ca7d337c`; Sol `high`: 1 A + 3 B fixed, the whole RED run left as a named
+  limit (`.planning/quick/20261004-memory-followups/evidence/red-note.txt`); battery GREEN (1,174 · 266);
+  `dxb-scheduler` restarted 16:54:58, `[memory] root=…/company-claude notes=1`; company counts unchanged
+  (memory_index 5 · audit_log 10312 · chat_messages 106).
+- Standing order 13's one-line reminder fires on every prompt again <!-- CEO-OK: so13-reminder-restored-2026-10-04 -->
+  (`.claude/hooks/no-laziness.sh`); its language twin stays off.
 - **Tool loading went to the board as a leg of B41** <!-- CEO-OK: open-tools-two-walls-ordered-2026-10-04 -->
   — Hamza and every employee get Claude's own tools, skills and the holding's plugins, loaded when needed,
   behind two walls (the two databases apart; everyone at its own desk); claude-mem stays out of the
@@ -76,15 +88,10 @@ work to be re-verified (nine questions, answered from the records), then set his
 His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama unutulmasın heee arada kaynamasın"*
 (conversation, verbatim). One at a time; each talked through with him first.
 
-1. **The two memory items — in progress, promised without asking him again** (session 9bc3fc3e, 15:08):
-   (a) Hamza's chat and voice lanes swallow a memory-read failure and answer as if he had no notes — the
-   failure must be said (Sol's C, `.planning/quick/20261004-company-memory-drawer/SOL.md`); (b) one real
-   task-lane company call's dxb-mcp child commits and recalls a note (a `run-lanes-probe.sh`-shaped call on
-   the construction engine). Told to him in plain words when done.
-2. **The prompt audit's runtime bucket (B51 move 5)** — measured: `item3-report.md`. Waits on his B51 verdict.
-3. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
+1. **The prompt audit's runtime bucket (B51 move 5)** — measured: `item3-report.md`. Waits on his B51 verdict.
+2. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
    proposal in `item2-report.md` § ITEM 4. Waits on his word.
-4. **The construction's auto-memory** — stale and contradicting entries (his list item 6), measured:
+3. **The construction's auto-memory** — stale and contradicting entries (his list item 6), measured:
    `item5-report.md`. Waits on his word.
 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
