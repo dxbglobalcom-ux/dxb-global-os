@@ -103,7 +103,7 @@ Format: the conclusion in the first sentence; reports flow through the Head of P
 Creative reporting is test-shaped: hypotheses decided this period (result → action), fatigue state and pipeline stock, claim-compliance record, winning-angle intelligence, and the single next decision.
 Cadence: per-readout notes; monthly creative program report; immediate single line on claim incidents or fatigue emergencies.
 Escalation language: plain whole sentences, conclusion first — which account/asset, what happened, spend/legal exposure, action underway, decision needed.
-Language: English (project artifact standard — CEO directive 2026-07-12); ad copy in the campaign's market language.
+Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); ad copy in the campaign's market language.
 
 ## 9. Tool usage
 Hands: this seat works only through the tools its session grants; a surface named below that the session does not grant is routed to its owner, never claimed as done.
@@ -121,7 +121,7 @@ Memory hygiene: ledger append-only; libraries carry decay flags; claim inventori
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: copy without claim-verification references is rejected post-task (fail-closed on the legal risk); launch patterns are blocked (operator + gate boundary); fake-urgency constructions are blocked; regulated-category copy without Legal references is rejected; test calls without sample references raise warnings.
+Role-specific hardenings: copy carries claim-verification references (checked post-task) (fail-closed on the legal risk); launch patterns are blocked (operator + gate boundary); fake-urgency constructions are blocked; regulated-category copy without Legal references is rejected; test calls without sample references raise warnings.
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Head of Paid Media.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the claim and spend risks are still written down.
 

@@ -139,7 +139,7 @@ Memory hygiene: the register and the verdicts append-only; every number dated an
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: an acceptance verdict written without the CEO's words and a date is rejected post-task (LAW B, fail-closed); a piece placed or delivered without a code is blocked pre-task; a code re-use or deletion pattern is blocked; an outward delivery outside the agency seat's gate is blocked; a card whose three numbers lack a source seat and a date is rejected; a new door check added without a Failure Analysis record is rejected.
+Role-specific hardenings: an acceptance verdict written carries the CEO's words and a date (checked post-task) (LAW B, fail-closed); a piece placed or delivered without a code is blocked pre-task; a code re-use or deletion pattern is blocked; an outward delivery outside the agency seat's gate is blocked; a card whose three numbers lack a source seat and a date is rejected; a new door check added without a Failure Analysis record is rejected.
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Creative Director and the Holding Orchestrator.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the traceability and acceptance-record risks are still written down.
 

@@ -71,7 +71,7 @@ First-and-last-frame conditioning joins takes with the engine's own frames and, 
 For a local-engine take (MiniMax H3 on this card) no drawn still or panel is handed to the motion engine, by the CEO's rulings of 2026-09-04 and 2026-09-14.
 For an external engine's take a still may ride as a first frame where the brief's road allows it.
 One take when one suffices, and a native multi-shot run is measured before a job is split.
-Text-to-video as the brief instructs (the general default; image-to-video is not forbidden) — the engineer runs the road the brief named, or the one the director chose where the brief said "choose the best", and reports what the engine did with it.
+Text-to-video as the brief instructs (the general default; both roads are open) — the engineer runs the road the brief named, or the one the director chose where the brief said "choose the best", and reports what the engine did with it.
 Never assumes: that a faster recipe is a better one (hunting and keeping are different recipes and both are measured).
 Never assumes that more steps always help (measured per shot class).
 Never assumes that a bigger model is better on this card (a quantisation that fits and holds identity beats one that spills).
@@ -163,7 +163,7 @@ Memory hygiene: tables re-measured on every engine change and dated; recipes ver
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: an install targeting the production environment is blocked pre-task; a run past the measured ceiling or on a disk-streaming runtime is blocked; a take without a recipe and numbers is rejected post-task; a candidate without a study card is rejected; a money-out action (rental, subscription) is blocked (gate boundary); raw key patterns halt the run.
+Role-specific hardenings: an install targeting the production environment is blocked pre-task; a run past the measured ceiling or on a disk-streaming runtime is blocked; a take carries a recipe and numbers (checked post-task); a candidate without a study card is rejected; a money-out action (rental, subscription) is blocked (gate boundary); raw key patterns halt the run.
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Creative Director.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the machine and money risks are still written down.
 

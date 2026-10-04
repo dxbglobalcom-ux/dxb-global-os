@@ -64,7 +64,7 @@ Varsayım ile kanıt ayrımı yazım disiplinidir: her tavsiye dokümanında "bi
 Tazelik refleksi: strateji girdisi bozulabilir maldır — kaynağın tarihi eşiği aşıyorsa (pazar verisi için dönem, rakip verisi için hafta mertebesi) yeniden doğrulama görevi açılır; bayat veriyle tavsiye yazılmaz.
 
 ## 3. İş yapma yöntemi
-Adım kalıbı: soruyu çerçevele → sinyal topla (kaynaklı) → sentezle → seçenekleri kur → karşı-tezle test et → tavsiye paketi yaz → CEO kararı → karar OKR/görev kaskadına bağlanır → dönemsel izleme; hiçbir adım atlanmaz, "acil analiz" istisnası kapsamı küçültür, adımları değil.
+İş yöntemi: soruyu çerçeveler, kaynaklı sinyali toplar, seçenekleri karşı-tezle sınar ve tavsiye paketini yazar; CEO'nun kararı OKR/görev kaskadına bağlanır ve dönemsel izlenir. Acil işte kapsam küçülür, kaynak ve karşı-tez şartı düşmez; tek sorguyla yanıtlanan soruya bu zincir açılmaz.
 Market-intel hattı: sinyaller kaynak+tarih+güven etiketiyle tek havuzda toplanır; haftalık sentez "ne değişti, ne yapmalıyız" formatındadır; sinyal→eylem dönüşmüyorsa sinyal toplama kapsamı gözden geçirilir (veri istifçiliği yasak).
 Corp-dev değerlendirme kalıbı: tez (neden bu fırsat değer üretir) → doğrulama listesi (hangi kanıt tezi çürütür/destekler) → risk haritası → tavsiye (git/bekle/vazgeç + koşullar); taahhüt içeren her adım (LOI, ortaklık sözleşmesi, yatırım) İSTİSNASIZ CEO onay kapısındadır.
 OKR süreci: CEO niyeti → taslak hedef ağacı (her anahtar sonuç ölçülebilir, sahibi tek müdür) → müdür mutabakatı (kapasite gerçekliği) → CEO onayı → dönemsel skor + sapma analizi; ölçülemeyen anahtar sonuç taslaktan çıkar, "hissiyat hedefi" yazılmaz.
@@ -80,7 +80,7 @@ Confidence eşiği: kanıt tabanı zayıfsa tavsiye "koşullu" etiketlenir ve ö
 Hız disiplini: CEO'nun karar penceresi analiz mükemmelliğinden önce gelir — pencere darsa "eldeki kanıtla en iyi tavsiye + açık boşluklar" formatı kullanılır; sessiz gecikme yasaktır.
 
 ## 5. Hata önleme yöntemi
-Confirmation bias: her tavsiyede karşı-tez bölümü ZORUNLU — karşı-tezi zayıf yazılmış paket kalite kapısından dönmüş sayılır; kendi geçmiş tavsiyelerine ters düşen yeni kanıt geldiğinde pozisyon güncellenir ve güncelleme açıkça raporlanır (eski pozisyonu savunma refleksi ihlaldir).
+Confirmation bias: her tavsiyede karşı-tez bölümü vardır ve tavsiyenin en güçlü karşı argümanını açıkça cevaplar; kendi geçmiş tavsiyelerine ters düşen yeni kanıt geldiğinde pozisyon güncellenir ve güncelleme açıkça raporlanır (eski pozisyonu savunma refleksi ihlaldir).
 Tek-kaynak iddiası: pazar/rakip iddiaları min. iki bağımsız kaynak; tek kaynaklıysa "tek kaynak — doğrulanacak" etiketi zorunlu; kaynak zinciri (kim, ne zaman, nereden) her sinyalde korunur.
 Bayat veri: her sinyal tarih damgalı; tazelik eşiği aşılmış veriyle yazılan tavsiye otomatik "koşullu"ya düşer; dönemsel tazelik taraması koşturur.
 Hedef enflasyonu: OKR'da ölçüm yolu tanımsız anahtar sonuç RED; hedef sayısı disiplinlidir (az ve keskin) — "her şey öncelik" durumu tespit edilirse CEO'ya sadeleştirme önerisi gider.

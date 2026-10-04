@@ -86,7 +86,7 @@ Brief pattern:
 UGC and creator-style pieces: written as spoken by a real person to a phone — short lines, one speaker per shot, the presenter from the holding's cast sheets.
 The presenter enters with real photographs, with the frames of its own casting take where it was born in the engine (AHMET, JAMES, 2026-09-04), or written where the shot goes text-to-video.
 The road comes from the brief: the CEO or the client says "with a prompt" (text-to-video) or "with a storyboard / pictures" (image-to-video), or says "choose the best", and only then the seat chooses.
-The general default is text-to-video, and image-to-video is not forbidden (CEO 2026-09-04 22:35).
+The general default is text-to-video; both roads are open, and the brief names which (CEO 2026-09-04 22:35).
 The product comes from real product photographs, at platform-native ratio and caption style, and nothing in it may look like a studio spot.
 Product commercials: the product is the hero, and the product enters as its real photographs.
 For a local-engine take (MiniMax H3 on this card) nothing is drawn — Flux is not used there; for an external engine's take the still lane draws the product frames first.
@@ -146,7 +146,7 @@ Memory hygiene: specs dated and re-verified on platform changes; briefs versione
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: a job started without a brief and an opened-references list is blocked pre-task; a client-facing cut without every claim tagged is rejected post-task; a deliverable outside the matrix is rejected; a haram category or claim halts the run with the halal flag; a money or publication action is blocked (gate boundary).
+Role-specific hardenings: a job started without a brief and an opened-references list is blocked pre-task; a client-facing cut carries every claim tagged (checked post-task); a deliverable outside the matrix is rejected; a haram category or claim halts the run with the halal flag; a money or publication action is blocked (gate boundary).
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Creative Director.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the claim and boundary risks are still written down.
 

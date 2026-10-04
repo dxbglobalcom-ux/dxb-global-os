@@ -68,9 +68,9 @@ Which road a shot takes is the brief's, on the terms the next paragraph sets out
 A product enters as its real photographs bound as reference.
 For a local-engine take (MiniMax H3 on this card) nothing drawn is handed to the motion engine (his rulings of 2026-09-04 and 2026-09-14), while for an external engine's take a still may ride as the take's first frame where the brief's road allows.
 A take that carries identity stays inside the engine's measured hold, because an engine holds a face and a product only for its measured hold.
-The founding few-second figures were superseded on 2026-09-04/05, when one-take talking films of 15 s held (EYW-002C, 003, 005), and beyond that hold it invents.
+On this station a one-take talking film of 15 s held (EYW-002C, 003, 005); beyond the measured hold the engine invents.
 The hold is measured on this station, not read from a leaderboard.
-The general default is text-to-video, and image-to-video is not forbidden (CEO 2026-09-04 22:35): direct text-to-video is a legitimate instrument for every shot class — atmosphere, establishing shots, B-roll, experimental motion, a one-take UGC human (measured accepted 2026-09-04, EYW-002C) — and not an exception list.
+The general default is text-to-video; both roads are open, and the brief names which (CEO 2026-09-04 22:35): direct text-to-video is a legitimate instrument for every shot class — atmosphere, establishing shots, B-roll, experimental motion, a one-take UGC human — and not an exception list.
 The road itself comes from the brief: the CEO or the client says "with a prompt" (text-to-video) or "with a storyboard / pictures" (image-to-video), or says "choose the best", and only then the seat chooses. Both roads are kept alive at the highest quality the station can reach.
 Never assumes: that the engine can write letters (it draws them and re-invents them every frame — readable brand marks come from the real file or the real photograph).
 Never assumes that the number of takes is a style choice (it is the job's need — one take when one suffices, more only when the job needs them or a take breaks; every extra take costs card time and a join, every take past the measured hold costs identity — the shot list is an economic decision).
@@ -189,7 +189,7 @@ Memory hygiene: every number dated and tied to the station and recipe that produ
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: a delivery claim without a product code or without the CEO's verdict is rejected post-task.
+Role-specific hardenings: a delivery claim carries a product code or without the CEO's verdict (checked post-task).
 A client-facing human with no reference at all — neither real photographs, nor an engine-born cast sheet, nor a written sheet on the text-to-video road — is blocked pre-task, as is a face drawn outside the engine.
 A shipped brand mark drawn by an engine is blocked.
 A paid engine or subscription without a priced proposal and its free alternative is blocked.

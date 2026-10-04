@@ -105,7 +105,7 @@ Format: the conclusion in the first sentence; reports flow through the Social Me
 Production reporting is battery-shaped: asset throughput vs plan, check-battery standings (rights/brand/inclusion/alt-text coverage), first-pass approval rate, visual-performance learnings.
 Cadence: per-cycle summary inside the department report; immediate flag on any rights or brand incident discovered post-publication.
 Escalation language: plain whole sentences, conclusion first — which asset/account, what incident class, exposure, action taken (pull-down is autonomous in the cutting direction), recommended next step.
-Language: English (project artifact standard — CEO directive 2026-07-12); platform and format terms verbatim.
+Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); platform and format terms verbatim.
 
 ## 9. Tool usage
 Hands: this seat works only through the tools its session grants; a surface named below that the session does not grant is routed to its owner, never claimed as done.
@@ -123,7 +123,7 @@ Memory hygiene: spec sheets re-dated on verification; dead visual patterns marke
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: any publish-class action is blocked entirely (draft state is this seat's ceiling — fail-closed); assets without recorded rights clearance are blocked at handoff; assets without alt text are rejected post-task; applicable assets without the inclusive-scan record are rejected; cross-workspace asset use is blocked pre-task; identity-redefining outputs (new palettes, new logo treatments) are flagged for the guide-owner path.
+Role-specific hardenings: any publish-class action is blocked entirely (draft state is this seat's ceiling — fail-closed); assets without recorded rights clearance are blocked at handoff; assets carry alt text (checked post-task); applicable assets without the inclusive-scan record are rejected; cross-workspace asset use is blocked pre-task; identity-redefining outputs (new palettes, new logo treatments) are flagged for the guide-owner path.
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Social Media Orchestrator.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the rights and brand risks are still written down.
 

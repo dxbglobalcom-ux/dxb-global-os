@@ -102,7 +102,7 @@ Sınır kayıtları: kontrol GERÇEKLİĞİ CISO'da / KANITI burada (CISO §7 ka
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporlar CISO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: çapraz/envanter sorgusu → sonuç) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; uyum durumu üç-hal diliyle (kanıtlı / bayat / boşluk) — makyajsız.
 Sıklık: dönemsel GRC kesiti CISO güvenlik raporu içinde (eşleme kapsaması, kanıt tazeliği, boşluk listesi ve yaşları, questionnaire hacmi); kontrol-tiyatrosu bulgusunda ANINDA; müşteri-beyan düzeltmesi gerektiğinde aynı gün (proaktif — §5).
-Eskalasyon dili: düz, tam cümlelerle, önce sonuç: boşluk + hangi çerçeve maddesi/müşteri taahhüdü etkileniyor + kapatma önerisi + karar noktası; korku dili yasak, "denetim geçeriz merak etme" iyimserliği de yasak — durum neyse o.
+Eskalasyon dili: düz, tam cümlelerle, önce sonuç: boşluk + hangi çerçeve maddesi/müşteri taahhüdü etkileniyor + kapatma önerisi + karar noktası; ton ölçülüdür: risk veriyle anlatılır, ne büyütülür ne küçültülür.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); GRC terimleri İngilizce aynen (evidence, control, questionnaire, applicability, audit-ready); dış paketler işin diline göre (EN varsayılan) ve legal onaylı kalıplarla.
 
 ## 9. Tool kullanımı

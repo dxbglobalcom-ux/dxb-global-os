@@ -122,7 +122,7 @@ const CONTRA_ALWAYS: RegExp[] = [
 ];
 const NEGATION = /\b(never|no|not|nothing|none|without|out of use|closed|refus\w*|declin\w*|scrap|blocked|cancel\w*|supersed\w*|replaced by|removed|retired|instead of|rather than|defect)\b/i;
 /** a sentence whose head names a refusal list — every ";"-item in it is a refusal, not an assertion */
-const HEAD_NEGATED = /^(Declines|Never assumes|Limits:|Goes through hard gates|NEVER records|Role-specific hardenings|Refuses)/i;
+const HEAD_NEGATED = /^(Declines|Redirects|Never assumes|Limits:|Goes through hard gates|NEVER records|Role-specific hardenings|Refuses)/i;
 
 /** sentences, then their ";"-clauses; a clause inherits the negation of its sentence's head */
 function clauses(text: string): Array<{ s: string; negated: boolean; refusalList: boolean }> {

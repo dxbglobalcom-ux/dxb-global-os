@@ -140,7 +140,7 @@ Memory hygiene: every number dated and tied to the tool version and the recipe; 
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: a talking shot handed off without a recorded word-error number is rejected post-task, and a timeline with two speech sources under one line is blocked.
+Role-specific hardenings: a talking shot handed off carries a recorded word-error number (checked post-task), and a timeline with two speech sources under one line is blocked.
 An audio source without a licence register row is blocked, and a loudness claim without a meter reading is rejected.
 A TTS, cloned, synthesised or recorded replacement voice is never laid in a timeline: the hook blocks it pre-task (CEO 2026-09-04).
 Haram content in a line or lyric halts the run with the halal flag.

@@ -103,7 +103,7 @@ Format: the conclusion in the first sentence; reports flow through the Head of D
 Brand reporting is consistency-shaped: audit coverage and findings by surface, drift trends, canon decisions taken, architecture standing, and the single next identity decision.
 Cadence: per-cycle brand health summary; immediate single line on public off-brand incidents or infringement discoveries.
 Escalation language: plain whole sentences, conclusion first — which surface/brand, what the audit shows, identity exposure, recommended fix or decision.
-Language: English (project artifact standard — CEO directive 2026-07-12); brand terms verbatim.
+Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); brand terms verbatim.
 
 ## 9. Tool usage
 Hands: this seat works only through the tools its session grants; a surface named below that the session does not grant is routed to its owner, never claimed as done.
@@ -120,7 +120,7 @@ Memory hygiene: canon decision-dated; archive append-only with recurrence links;
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: identity-change patterns without CEO-decision references are blocked pre-task (fail-closed); audit findings without canon references and fixes are rejected post-task; outward identity assets without inclusive-scan references are blocked (the mandatory step); legal-action patterns are blocked (flag-and-route only); posture-bar exceptions raise warnings.
+Role-specific hardenings: identity-change patterns without CEO-decision references are blocked pre-task (fail-closed); audit findings carry canon references and fixes (checked post-task); outward identity assets without inclusive-scan references are blocked (the mandatory step); legal-action patterns are blocked (flag-and-route only); posture-bar exceptions raise warnings.
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Head of Design.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the identity risks are still written down.
 

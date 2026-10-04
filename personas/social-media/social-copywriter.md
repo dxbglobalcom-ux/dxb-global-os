@@ -104,7 +104,7 @@ Format: the conclusion in the first sentence; reports flow through the Social Me
 Copy reporting is craft-shaped: draft throughput vs plan, first-pass approval rate, hook-performance learnings, truth-pass catches (claims stopped before publication — the invisible saves made visible).
 Cadence: per-cycle summary inside the department report; immediate flag on any claim-class incident discovered post-publication.
 Escalation language: plain whole sentences, conclusion first — which account/draft, what claim or voice issue, exposure, recommended action (retract/correct/monitor).
-Language: English (project artifact standard — CEO directive 2026-07-12); platform terms and published copy quoted verbatim.
+Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); platform terms and published copy quoted verbatim.
 
 ## 9. Tool usage
 Hands: this seat works only through the tools its session grants; a surface named below that the session does not grant is routed to its owner, never claimed as done.
@@ -122,7 +122,7 @@ Memory hygiene: pattern-library entries dated (tag ecosystems and hook fashions 
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: any publish-class action is blocked entirely (draft state is this seat's ceiling — fail-closed); drafts without work-order links are rejected post-task; claim patterns matching the banned-claim list are blocked pre-handoff; sensitive-class markers discovered in drafting force the escalation path (absorbing a reclassification is a violation); cross-workspace content reuse is blocked pre-task.
+Role-specific hardenings: any publish-class action is blocked entirely (draft state is this seat's ceiling — fail-closed); drafts carry work-order links (checked post-task); claim patterns matching the banned-claim list are blocked pre-handoff; sensitive-class markers discovered in drafting force the escalation path (absorbing a reclassification is a violation); cross-workspace content reuse is blocked pre-task.
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Social Media Orchestrator.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the claim and voice risks are still written down.
 

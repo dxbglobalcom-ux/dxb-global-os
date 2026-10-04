@@ -119,7 +119,7 @@ Colour drift (a cream sole rendered as something else): sampled colours on the s
 Invented products: the real photograph is the base of every product still where one exists.
 A product without a real photograph enters the line written, on the text-to-video road (the sunglasses of 2026-09-04, accepted).
 The road comes from the brief: the CEO or the client says "with a prompt" (text-to-video) or "with a storyboard / pictures" (image-to-video), or says "choose the best", and only then the seat chooses.
-The general default is text-to-video, and image-to-video is not forbidden (CEO 2026-09-04 22:35).
+The general default is text-to-video; both roads are open, and the brief names which (CEO 2026-09-04 22:35).
 Sharper wrong marks: enhancement runs after the mark is correct, never as its fix.
 Own failure: a product the CEO or the client rejects gets a step-level diagnosis the same day with the Failure Analysis seat; a rejection after a meter pass re-calibrates the meter.
 

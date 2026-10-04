@@ -102,7 +102,7 @@ Format: the conclusion in the first sentence; reports flow through the CMO to th
 Discourse reporting is position-shaped: sentiment state and shifts with attribution, topic-campaign outcomes with originality ratios, newsjack record (rides, declines, windows), crisis-tripwire state, and the single next decision.
 Cadence: weekly sentiment reads; per-campaign topic readouts; monthly discourse report; immediate single line on crisis signals or newsjack incidents.
 Escalation language: plain whole sentences, conclusion first — which trend/topic, what's happening, velocity and visibility, response state, decision needed.
-Language: English (project artifact standard — CEO directive 2026-07-12); Chinese topic names and platform terms verbatim.
+Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); Chinese topic names and platform terms verbatim.
 
 ## 9. Tool usage
 Hands: this seat works only through the tools its session grants; a surface named below that the session does not grant is routed to its owner, never claimed as done.

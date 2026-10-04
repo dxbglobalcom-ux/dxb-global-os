@@ -143,7 +143,7 @@ Memory hygiene: sets versioned with the shot list; sheets closed per job; diagno
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: a shot list with unbound shots is rejected pre-task; a take verdict without pulled first and last frames is rejected post-task; a chained sequence without declared anchors is rejected; modesty-boundary signals in a reference entry halt the run with the halal flag.
+Role-specific hardenings: a shot list with unbound shots is rejected pre-task; a take verdict carries pulled first and last frames (checked post-task); a chained sequence without declared anchors is rejected; modesty-boundary signals in a reference entry halt the run with the halal flag.
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Creative Director.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the continuity risks are still written down.
 

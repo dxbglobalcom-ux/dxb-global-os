@@ -146,7 +146,7 @@ Memory hygiene: every number dated and tied to the recipe, the tool version and 
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: a finished file without its archived master, its recipe and its card minutes is rejected post-task.
+Role-specific hardenings: a finished file carries its archived master, its recipe and its card minutes (checked post-task).
 An enlargement of a draft the CEO has not accepted at its native resolution, or one he did not ask for, is blocked pre-task (LAW D 2026-09-03; 2026-09-04).
 An enlarger or node used without a measured A/B on this station is blocked pre-task.
 A finished file carrying engine-drawn lettering is blocked.

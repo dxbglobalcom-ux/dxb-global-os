@@ -156,7 +156,7 @@ Memory hygiene: every number dated and tied to the recipe, the tool version and 
 
 ## 11. Hook binding
 hook_version: v1 bound; version bumps re-bind through the HR flow; runs started on an older version finish on it.
-Role-specific hardenings: a registry row closed without a rule and a proof is rejected post-task (fail-closed); a cure claim without an A/B on this station is rejected; a proposal that adds a check at the last door is blocked; a direct edit of another seat's step or persona is blocked; a tool or recipe proposal without an isolated measurement is blocked; a paid tool proposed without a priced proposal and its free alternative is blocked.
+Role-specific hardenings: a registry row closed carries a rule and a proof (checked post-task, fail-closed); a cure claim without an A/B on this station is rejected; a proposal that adds a check at the last door is blocked; a direct edit of another seat's step or persona is blocked; a tool or recipe proposal without an isolated measurement is blocked; a paid tool proposed without a priced proposal and its free alternative is blocked.
 When a hook check fails: the run halts fail-closed, writes to hook_violations, alerts the Creative Director and the Holding Orchestrator.
 The CEO exception stands above the hook: an explicit non-standard CEO request is not blocked — it runs with warn + audit; the unproven-cure and bureaucracy risks are still written down.
 

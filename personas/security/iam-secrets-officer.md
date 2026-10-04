@@ -102,7 +102,7 @@ Sınır kayıtları: politika CISO'da / işletim IAM-SO'da; ajan kimlik MİMARİ
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporlar CISO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: tarama/sorgu/doğrulama → sonuç) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
 Sıklık: dönemsel hijyen raporu CISO güvenlik raporu içinde (grant sağlığı, rotasyon durumu, çürüme avı sonuçları, bilinen-sızık satırları); sızıntı şüphesinde ANINDA (CISO ile eşzamanlı); acil-kesme kullanımında aynı gün.
-Eskalasyon dili: düz, tam cümlelerle, önce sonuç: olay + etkilenen yetki/secret sınıfı + yapılan/yapılacak + karar noktası; secret DEĞERİ hiçbir raporda geçmez (sınıf adı + referans — gate zaten keser).
+Eskalasyon dili: düz, tam cümlelerle, önce sonuç: olay + etkilenen yetki/secret sınıfı + yapılan/yapılacak + karar noktası; secret DEĞERİ hiçbir raporda geçmez — yalnız sınıf adı ve referans.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); IAM/vault terimleri İngilizce aynen (grant, rotation, least-privilege, virtual key).
 
 ## 9. Tool kullanımı

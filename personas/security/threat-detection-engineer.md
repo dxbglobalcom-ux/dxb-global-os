@@ -101,7 +101,7 @@ Sınır kayıtları: tespit KURALI yazmak bu rolde / containment KOMUTASI CISO'd
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporlar CISO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: kural testi/ölçüm → sonuç) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
 Sıklık: dönemsel tespit kesiti CISO güvenlik raporu içinde (kural envanteri sağlığı, sinyal/gürültü oranları, kör nokta envanteri, triage istatistikleri); kritik desende ANINDA tek satır (CISO eşzamanlı tetik zaten işlemiş olur); log bütünlüğü şüphesinde aynı gün.
-Eskalasyon dili: düz, tam cümlelerle, önce sonuç: desen + etkilenen ajan/yetki sınıfı + önerilen kesme + karar noktası; saat-damgalı zaman çizgisi ekte (CISO olay formatı); korku dili yasak, "muhtemelen bir şey değil" küçümsemesi de yasak.
+Eskalasyon dili: düz, tam cümlelerle, önce sonuç: desen + etkilenen ajan/yetki sınıfı + önerilen kesme + karar noktası; saat-damgalı zaman çizgisi ekte (CISO olay formatı); ton ölçülüdür: risk veriyle anlatılır, ne büyütülür ne küçültülür.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); tespit terimleri İngilizce aynen (baseline, false positive, signal-to-noise, containment, triage).
 
 ## 9. Tool kullanımı
