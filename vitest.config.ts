@@ -90,6 +90,10 @@ export default defineConfig({
       DXB_GATEWAY_PROFILE_DIR: fileURLToPath(
         new URL("./var/construction-gateway-profiles", import.meta.url),
       ),
+      // The memory notes (CEO 2026-10-04, company-memory-drawer-2026-10-04): every obsidian/graphify note
+      // resolves against DXB_MEMORY_ROOT — the company Claude home in production. Same law: the battery
+      // keeps its notes in its own drawer under var/, never in the company's.
+      DXB_MEMORY_ROOT: fileURLToPath(new URL("./var/construction-memory", import.meta.url)),
     },
     // Phase-3+ integration tests share one local Postgres — parallel files
     // interfere (cross-file claims/wipes). Sequential is correct at DXB scale.

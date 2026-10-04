@@ -1,0 +1,158 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:2627925) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/phase6/memory-drawer.test.ts (10 tests | 7 failed) 66ms
+   × the memory root — one folder, never the working folder > refuses an unset or relative DXB_MEMORY_ROOT, naming the variable 4ms
+     → expected [Function] to throw error matching /DXB_MEMORY_ROOT/ but got '(0 , memoryRoot…'
+   × the memory root — one folder, never the working folder > an unset root refuses the write and leaves no index row 19ms
+     → promise resolved "{ created: [ { …(6) } ] }" instead of rejecting
+   × the memory root — one folder, never the working folder > an artifact lands under the root — not under the working folder — and reads back 3ms
+     → expected false to be true // Object.is equality
+   × the memory root — one folder, never the working folder > a relation lands under the root and reads back 3ms
+     → expected false to be true // Object.is equality
+   × the reader opens nothing but a note of the writer's shape inside the root > an absolute ref naming a file elsewhere on the machine 7ms
+     → ref /tmp/dxb-memory-canary-Zuvj14/canary.md was read: expected '{"rows":[{"id":"f727716d-92c9-43b2-ae…' to be an instance of Error
+   ✓ the reader opens nothing but a note of the writer's shape inside the root > a ref climbing out of the root 7ms
+   ✓ the reader opens nothing but a note of the writer's shape inside the root > a ref of the other store's kind, and a ref that is not a uuid note 11ms
+   ✓ the reader opens nothing but a note of the writer's shape inside the root > a note of the right shape that is a link to a file outside the root 6ms
+   × the scheduler gives the company its own drawer > sets the root to the company Claude home only when none is given 0ms
+     → (0 , ensureCompanyMemoryRoot) is not a function
+   × the scheduler gives the company its own drawer > says where the drawer is and how many notes it holds 1ms
+     → (0 , memoryRootLine) is not a function
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the memory root — one folder, never the working folder > refuses an unset or relative DXB_MEMORY_ROOT, naming the variable
+AssertionError: expected [Function] to throw error matching /DXB_MEMORY_ROOT/ but got '(0 , memoryRoot…'
+
+[32m- Expected:[39m 
+/DXB_MEMORY_ROOT/
+
+[31m+ Received:[39m 
+"(0 , __vite_ssr_import_8__.memoryRoot) is not a function"
+
+ ❯ tests/phase6/memory-drawer.test.ts:64:34
+     62| describe("the memory root — one folder, never the working folder", () …
+     63|   it("refuses an unset or relative DXB_MEMORY_ROOT, naming the variabl…
+     64|     expect(() => memoryRoot({})).toThrow(/DXB_MEMORY_ROOT/);
+       |                                  ^
+     65|     expect(() => memoryRoot({ DXB_MEMORY_ROOT: "var/construction-memor…
+     66|     expect(memoryRoot({ DXB_MEMORY_ROOT: root })).toBe(root);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the memory root — one folder, never the working folder > an unset root refuses the write and leaves no index row
+AssertionError: promise resolved "{ created: [ { …(6) } ] }" instead of rejecting
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- Error {[39m
+[32m-   "message": "rejected promise",[39m
+[31m+ {[39m
+[31m+   "created": [[39m
+[31m+     {[39m
+[31m+       "contradicts": null,[39m
+[31m+       "index_id": "1aa2dbfc-4bb4-4eb9-b746-6956a50fa756",[39m
+[31m+       "kind": "artifact",[39m
+[31m+       "ref": "memory-store/artifact/1aa2dbfc-4bb4-4eb9-b746-6956a50fa756.md",[39m
+[31m+       "store": "obsidian",[39m
+[31m+       "trust_tier": "trusted",[39m
+[31m+     },[39m
+[31m+   ],[39m
+[2m  }[22m
+
+ ❯ tests/phase6/memory-drawer.test.ts:74:5
+     72|     await expect(
+     73|       commitMemory(db, { artifact: { path: "reports/unset.md", body: "…
+     74|     ).rejects.toThrow(/DXB_MEMORY_ROOT/);
+       |     ^
+     75|     const rows = await db
+     76|       .selectFrom("memory_index")
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the memory root — one folder, never the working folder > an artifact lands under the root — not under the working folder — and reads back
+AssertionError: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ tests/phase6/memory-drawer.test.ts:93:46
+     91|     const ref = created[0].ref;
+     92|     expect(ref).toMatch(/^memory-store\/artifact\/[0-9a-f-]{36}\.md$/);
+     93|     expect(existsSync(path.join(root, ref))).toBe(true);
+       |                                              ^
+     94|     expect(existsSync(path.join(process.cwd(), ref))).toBe(false);
+     95|     const res = await recallMemory(db, { query: "drawer artifact", kin…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the memory root — one folder, never the working folder > a relation lands under the root and reads back
+AssertionError: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ tests/phase6/memory-drawer.test.ts:110:46
+    108|     const ref = created[0].ref;
+    109|     expect(ref).toMatch(/^memory-store\/relation\/[0-9a-f-]{36}\.md$/);
+    110|     expect(existsSync(path.join(root, ref))).toBe(true);
+       |                                              ^
+    111|     const res = await recallMemory(db, { query: "drawer relation", kin…
+    112|     expect(res.rows[0]?.body).toContain(marker);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the reader opens nothing but a note of the writer's shape inside the root > an absolute ref naming a file elsewhere on the machine
+AssertionError: ref /tmp/dxb-memory-canary-Zuvj14/canary.md was read: expected '{"rows":[{"id":"f727716d-92c9-43b2-ae…' to be an instance of Error
+ ❯ expectRefused tests/phase6/memory-drawer.test.ts:145:44
+    143|     );
+    144|     await db.deleteFrom("memory_index").where("id", "=", id).execute();
+    145|     expect(outcome, `ref ${ref} was read`).toBeInstanceOf(Error);
+       |                                            ^
+    146|     expect((outcome as Error).message).toMatch(/memory ref broken/);
+    147|     expect((outcome as Error).message).not.toContain(CANARY);
+ ❯ tests/phase6/memory-drawer.test.ts:159:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the scheduler gives the company its own drawer > sets the root to the company Claude home only when none is given
+TypeError: (0 , ensureCompanyMemoryRoot) is not a function
+ ❯ tests/phase6/memory-drawer.test.ts:189:12
+    187|   it("sets the root to the company Claude home only when none is given…
+    188|     const unset: NodeJS.ProcessEnv = {};
+    189|     expect(ensureCompanyMemoryRoot(unset)).toBe(companyClaudeHome({}));
+       |            ^
+    190|     expect(unset.DXB_MEMORY_ROOT).toBe(companyClaudeHome({}));
+    191|     const given: NodeJS.ProcessEnv = { DXB_MEMORY_ROOT: root };
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the scheduler gives the company its own drawer > says where the drawer is and how many notes it holds
+TypeError: (0 , memoryRootLine) is not a function
+ ❯ tests/phase6/memory-drawer.test.ts:200:12
+    198|     await mkdir(path.join(lineRoot, "memory-store", "artifact"), { rec…
+    199|     await writeFile(path.join(lineRoot, "memory-store", "artifact", `$…
+    200|     expect(memoryRootLine({ DXB_MEMORY_ROOT: lineRoot })).toBe(`[memor…
+       |            ^
+    201|     expect(memoryRootLine({})).toMatch(/^\[memory\] root=unset/);
+    202|     await rm(lineRoot, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed | 3 passed (10)
+   Start at  14:18:10
+   Duration  473ms (transform 78ms, setup 0ms, collect 149ms, tests 66ms, environment 0ms, prepare 32ms)
+

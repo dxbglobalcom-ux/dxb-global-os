@@ -1,0 +1,25 @@
+THE CEO'S WORDS (verbatim, 2026-10-04; ledger scripts/governance/ceo-approvals.json, entry company-memory-drawer-2026-10-04):
+- To the proposal "Şirketin not çekmecesi inşaatın odasından şirketin kendi masasına taşınsın mı? Not okuyucu da yalnız o çekmeceyi açar; böylece çalışanlarla Hamza notları yine aynı yerde bulur. Önerim evet." he said: "Tamam önerini kabul ediyorum."
+- The plan then went to him once (.planning/quick/20261004-company-memory-drawer/PLAN.md, his Turkish version in the conversation, item 7 the 32 orphaned notes included); his answer "tamam".
+- Earlier the same day, his goal in his own words: "İnşaatla bu holding database'leri ayrı kalsın o kadar. Birbirlerinin database'ine bir şey yazmasınlar o kadar. Bunu istemiştim ben. Bir de her şey herkes kendi masasında çalışsın."
+
+THIS AUDIT — one pass at the level the card gives (.planning/quick/20261004-company-memory-drawer/CARD.md — for information; do not re-grade it); its findings are fixed by a helper and verified by the lead; there is no second round.
+  Range: the card's range. The plan, the design decisions and the done-list (written before the code): PLAN.md in the same folder.
+  Raw output in .planning/quick/20261004-company-memory-drawer/evidence/: before-red.txt (the new test before the code), after-green.txt, targeted.txt (adapters-roundtrip, video-ingest, company-isolation), battery.txt, mcp-child-probe.txt (done-list 6).
+  Not yet done when this audit starts (deployment, after your findings are fixed): the one company note's move, the 32 orphans' deletion, the scheduler restart and the live read (done-list 7-10).
+
+THE DECISIONS — facts, not claims to re-litigate:
+- Refs stay as stored in memory_index (memory-store/<kind>/<uuid>.md); the construction writes nothing to the company database.
+- DXB_MEMORY_ROOT is the one root; memory-router has no default and refuses unset or relative.
+- Production: the scheduler (packages/outbox-executor/src/main.ts) sets it with kernel ensureCompanyMemoryRoot() — the company Claude home — before startScheduler; company Claude children inherit it through the DXB_* allowlist of companyIsolation().
+- The battery: vitest.config.ts env sets it to var/construction-memory (the construction's own drawer).
+- notebook's readDoc (an HTTP read on the notebook server) is outside this job.
+
+WHAT TO REFUTE:
+1. Does the done-list prove what his words asked for — one drawer on the company's desk, the reader opening nothing else, workers and Hamza finding the same notes? What does it leave out?
+2. readNote / writeNote / notePath / insideRoot (packages/memory-router/src/adapters/obsidian.ts): can any ref reach a file outside the root, or a file of the other store's kind — absolute, `..`, encoded, unicode, trailing characters, a link in any path component, a root that is itself a link, a race between the check and the read? Can the writer be made to write outside the root?
+3. Is every reader of a note ref now behind the one guard? Search the repository for any other place a memory_index ref is opened as a path (packages, tools, apps, scripts, tests).
+4. Can any process that commits or recalls company memory run WITHOUT DXB_MEMORY_ROOT set (a lane started outside main.ts, a CLI, the dashboard, a dxb-mcp spawned by anything else) — and what happens then: a loud refusal, or a silent loss (chat-drain and voice swallow recall errors)?
+5. Can the battery or any construction script still write a note into the company's drawer or the repository's memory-store/?
+6. ensureCompanyMemoryRoot: does `env.DXB_MEMORY_ROOT` given by the scheduler's own environment (.env files it sources) override the company home in a way that matters? Is a refused home handled?
+Query the construction engine yourself with sql_read where a count decides; ask the lead for any other read-only command.

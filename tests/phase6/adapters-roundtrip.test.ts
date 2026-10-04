@@ -11,6 +11,7 @@ import {
   recallMemory,
   syncClaudeMem,
   readObservationByRef,
+  memoryRoot,
   notebookBaseUrl,
   NotebookDownError,
 } from "../../packages/memory-router/src/index.js";
@@ -140,9 +141,9 @@ describe("per-store round-trips (write → memory_index → recall)", () => {
       provenance,
     });
     track(created);
-    createdFiles.push(created[0].ref);
+    createdFiles.push(path.join(memoryRoot(), created[0].ref));
     expect(created[0].store).toBe("obsidian");
-    const onDisk = await readFile(created[0].ref, "utf8");
+    const onDisk = await readFile(path.join(memoryRoot(), created[0].ref), "utf8");
     expect(onDisk).toContain(`OBS-${AGENT}`);
 
     const res = await recallMemory(db, { query: "roundtrip artifact", kind: "artifact" }, { caller: AGENT });
@@ -159,7 +160,7 @@ describe("per-store round-trips (write → memory_index → recall)", () => {
       provenance,
     });
     track(created);
-    createdFiles.push(created[0].ref);
+    createdFiles.push(path.join(memoryRoot(), created[0].ref));
     expect(created[0].store).toBe("graphify");
     expect(created[0].ref).toMatch(/^memory-store\/relation\/.+\.md$/);
     const row = await db
@@ -169,7 +170,7 @@ describe("per-store round-trips (write → memory_index → recall)", () => {
       .executeTakeFirstOrThrow();
     expect(row.ref).toBe(created[0].ref);
     expect(row.expires_at).toBeNull(); // rule 5: relation has no TTL
-    const onDisk = await readFile(created[0].ref, "utf8");
+    const onDisk = await readFile(path.join(memoryRoot(), created[0].ref), "utf8");
     expect(onDisk).toContain('kind: "relation"');
     expect(onDisk).toContain(`GRA-${AGENT}`);
 

@@ -31,4 +31,7 @@ export type { CompactExpiredResult } from "./compaction.js";
 export { syncClaudeMem, readObservationByRef } from "./adapters/claude-mem.js";
 export type { SyncClaudeMemOpts, SyncClaudeMemResult } from "./adapters/claude-mem.js";
 export { updateGraphIncremental, readRelationByRef } from "./adapters/graphify.js";
+// The memory root (CEO 2026-10-04): the one folder every note ref resolves against, and the scheduler's
+// start-up line saying where it is.
+export { memoryRoot, memoryRootLine, readNote } from "./adapters/obsidian.js";
 export { NotebookDownError, readDoc, notebookBaseUrl } from "./adapters/notebook.js";

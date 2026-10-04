@@ -1,0 +1,12 @@
+(node:2780933) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+root=/tmp/dxb-probe-root-Nksje6
+cwd=/tmp/dxb-probe-cwd-gVnzUg
+child env carries DXB_MEMORY_ROOT=true
+[child] (node:2780958) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+commit: index_id=09542033-683b-4286-a476-2260f6b0f49c store=obsidian
+recall: first row 09542033-683b-4286-a476-2260f6b0f49c body has marker=true
+note under root: true · note under cwd: false · under repo: false
+construction rows of the probe removed
+PROBE_OK

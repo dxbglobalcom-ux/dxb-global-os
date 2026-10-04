@@ -112,6 +112,25 @@ export function companyClaudeHome(env: NodeJS.ProcessEnv = process.env): string 
 }
 
 /**
+ * The company's memory drawer (CEO 2026-10-04, company-memory-drawer-2026-10-04): the scheduler gives
+ * DXB_MEMORY_ROOT the company Claude home when none is set, before any lane runs. Every company Claude
+ * child inherits it through the DXB_* allowlist below, so the dxb-mcp child — working in the home's
+ * `work` folder — reads and writes the same notes as the scheduler's own recall. `??=`: the battery
+ * starts the real scheduler under vitest's env and keeps the construction's own root. Never throws;
+ * a refused home leaves the root unset, and memory-router then refuses every note.
+ */
+export function ensureCompanyMemoryRoot(env: NodeJS.ProcessEnv = process.env): string | undefined {
+  if (!env.DXB_MEMORY_ROOT) {
+    try {
+      env.DXB_MEMORY_ROOT = companyClaudeHome(env);
+    } catch {
+      // the home was refused — companyClaudeLoginLine says so; memory stays refused
+    }
+  }
+  return env.DXB_MEMORY_ROOT;
+}
+
+/**
  * What a company call may take from the parent's environment — an allowlist (Sol's single pass on
  * phase 3, A2). The locale, PATH and temp, the terminal and the user's name; the proxy and the CA
  * certificates; LITELLM_BASE_URL (read by @dxb/shared's llmCall/llmEmbed inside the dxb-mcp child);

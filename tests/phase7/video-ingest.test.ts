@@ -1,9 +1,10 @@
 import { randomUUID } from "node:crypto";
 import { readFile, rm } from "node:fs/promises";
+import path from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
-import { commitMemory, recallMemory } from "../../packages/memory-router/src/index.js";
+import { commitMemory, memoryRoot, recallMemory } from "../../packages/memory-router/src/index.js";
 import {
   ingestVideo,
   ytDlpArgs,
@@ -92,7 +93,7 @@ afterAll(async () => {
   for (const src of cleanupSources) {
     const rows = await rowsForSource(src);
     for (const r of rows) {
-      if (r.ref.startsWith("memory-store/")) await rm(r.ref, { force: true });
+      if (r.ref.startsWith("memory-store/")) await rm(path.join(memoryRoot(), r.ref), { force: true });
       await db.deleteFrom("memory_embeddings").where("index_id", "=", r.id).execute().catch(() => {});
       await db.deleteFrom("memory_index").where("id", "=", r.id).execute();
     }
@@ -124,7 +125,7 @@ describe("video-ingest deterministic battery", () => {
     expect(transcriptRow!.id).not.toBe(explanationRow!.id);
 
     // raw transcript stored verbatim; department metadata in front-matter
-    const body = await readFile(transcriptRow!.ref, "utf8");
+    const body = await readFile(path.join(memoryRoot(), transcriptRow!.ref), "utf8");
     expect(body).toContain(TRANSCRIPT);
     expect(body).toContain('department: "marketing"');
 

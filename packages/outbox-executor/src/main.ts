@@ -11,12 +11,16 @@
 // self-chain jobs stay persisted in pgboss.job). On the next boot every
 // chain re-arms via singletonKey bootstrap sends — restart continuity is
 // startScheduler's construction, not this file's job.
-import { companyClaudeLoginLine } from "@dxb/kernel";
+import { companyClaudeLoginLine, ensureCompanyMemoryRoot } from "@dxb/kernel";
+import { memoryRootLine } from "@dxb/memory-router";
 import { closeDb } from "@dxb/shared";
 import { hostOpsLiveCollector } from "./ops-live-host.js";
 import { startScheduler, stopScheduler } from "./scheduler.js";
 
 async function main(): Promise<void> {
+  // The company's memory drawer (CEO 2026-10-04): set before any lane runs, so the scheduler's recall and
+  // every company call's dxb-mcp child read and write the same notes.
+  ensureCompanyMemoryRoot();
   const boss = await startScheduler();
   // B38: the ops:live debounce collector has no service of its own — EVENT_MODEL
   // §26 (R5) put it inside this loop deliberately ("yeni servis AÇILMAZ"), and
@@ -27,6 +31,7 @@ async function main(): Promise<void> {
   // Isolation phase 3 (CEO 2026-10-03): whether the company's own Claude home holds a login — a home
   // without one answers "Not logged in" and Hamza goes silent. One line, never a secret, never blocking.
   console.log(companyClaudeLoginLine());
+  console.log(memoryRootLine());
 
   let stopping = false;
   const shutdown = (signal: string) => {

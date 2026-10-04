@@ -20,24 +20,21 @@
 // Reachable ONLY through write-policy's registry (T-06-12) on the write side.
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { readFile } from "node:fs/promises";
-import { writeNote, type ObsidianNoteArgs } from "./obsidian.js";
+import path from "node:path";
+import { memoryRoot, readNote, writeNote, type ObsidianNoteArgs } from "./obsidian.js";
 
 const execFileAsync = promisify(execFile);
 
-const RELATION_REF_RE = /^memory-store\/relation\/[0-9a-f-]{36}\.md$/;
 
 /** Write one relation node as a corpus note; returns the note-path ref. */
 export async function writeRelationNote(args: Omit<ObsidianNoteArgs, "kind">): Promise<string> {
   return writeNote({ ...args, kind: "relation" });
 }
 
-/** Read a relation node body by its note-path ref. Loud on a broken ref. */
+/** Read a relation node body by its note-path ref — only a relation note inside
+ *  the memory root (obsidian.ts readNote, the one guard). Loud on a broken ref. */
 export async function readRelationByRef(ref: string): Promise<string> {
-  if (!RELATION_REF_RE.test(ref)) {
-    throw new Error(`graphify adapter: ref is not a relation note path: ${ref}`);
-  }
-  return readFile(ref, "utf8");
+  return readNote(ref, "relation");
 }
 
 /** Incremental re-extract via the live CLI surface (`graphify update <path>`,
@@ -50,7 +47,7 @@ export async function readRelationByRef(ref: string): Promise<string> {
  *  against memory-store/relation would fail on every tick. Kept exported for
  *  code-corpus refresh use; never called on the write path. */
 export async function updateGraphIncremental(
-  corpusPath = "memory-store/relation",
+  corpusPath = path.join(memoryRoot(), "memory-store", "relation"),
 ): Promise<{ stdout: string; stderr: string }> {
   return execFileAsync("graphify", ["update", corpusPath]);
 }

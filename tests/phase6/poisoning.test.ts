@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { readFile, rm } from "node:fs/promises";
+import path from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
@@ -7,6 +8,7 @@ import { pinHookOff } from "../helpers/suite-scope.js";
 import {
   commitMemory,
   cosineSearch,
+  memoryRoot,
   recallMemory,
 } from "../../packages/memory-router/src/index.js";
 
@@ -111,11 +113,11 @@ describe("rule 1 — deliberate poisoning lands quarantined (gate criterion 1, w
       provenance: provenance("web"),
     });
     createdIndexIds.push(...created.map((c) => c.index_id));
-    createdFiles.push(created[0].ref);
+    createdFiles.push(path.join(memoryRoot(), created[0].ref));
 
     expect(created[0].store).toBe("obsidian");
     expect(created[0].trust_tier).toBe("quarantined");
-    const note = await readFile(created[0].ref, "utf8");
+    const note = await readFile(path.join(memoryRoot(), created[0].ref), "utf8");
     expect(note).toContain('trust_tier: "quarantined"');
     expect(note).toContain(`id: "${created[0].index_id}"`);
   });

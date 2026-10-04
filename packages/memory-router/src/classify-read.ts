@@ -15,12 +15,13 @@
 // Model/mode come from routing_rules task_class='memory.classify' at call time —
 // no model literal in this file; a missing row fails CLOSED (kernel policy
 // discipline, T-06-16: callers can retry with an explicit kind).
-import { readFile } from "node:fs/promises";
 import { z } from "zod";
 import type { Kysely, Selectable } from "kysely";
 import { llmCall, llmEmbed, type DB, type MemoryIndexTable } from "@dxb/shared";
 import { cosineSearch, liveMemoryFilter } from "./adapters/pgvector.js";
 import { readDoc } from "./adapters/notebook.js";
+import { readNote } from "./adapters/obsidian.js";
+import { readRelationByRef } from "./adapters/graphify.js";
 import {
   KIND_STORE,
   RecallInput,
@@ -250,8 +251,10 @@ function makeRefReader(
 // session observations, not the company's memory — recall never routed to it, and now cannot.
 const STORE_READERS: Record<MemoryStore, StoreReader> = {
   pgvector: readPgvector,
-  obsidian: makeRefReader("obsidian", (ref) => readFile(ref, "utf8")),
-  graphify: makeRefReader("graphify", (ref) => readFile(ref, "utf8")),
+  // Only a note of the writer's shape inside the memory root (CEO 2026-10-04,
+  // company-memory-drawer-2026-10-04; Sol's phase-3 C1) — a ref naming any other file is refused.
+  obsidian: makeRefReader("obsidian", (ref) => readNote(ref, "artifact")),
+  graphify: makeRefReader("graphify", (ref) => readRelationByRef(ref)),
   notebook: makeRefReader("notebook", (ref) => readDoc(ref)),
 };
 

@@ -6,9 +6,9 @@
 // ask answers a CEO question grounded ONLY in the stored raw transcript —
 // quarantine binds gated agent decisions (06-05), not an explicit CEO read,
 // so the answer is printed WITH a visible quarantine caveat, never silently.
-import { readFile } from "node:fs/promises";
 import { sql, type Kysely } from "kysely";
 import { getDb, closeDb, llmCall, type DB } from "@dxb/shared";
+import { readNote } from "@dxb/memory-router";
 import { ingestVideo } from "./ingest.js";
 import {
   routedModel,
@@ -73,7 +73,8 @@ async function cmdAsk(argv: string[]): Promise<void> {
     .limit(1)
     .executeTakeFirst();
   if (!row) fail(`no stored transcript for video_id '${videoId}' — ingest it first`);
-  const transcript = await readFile(row.ref, "utf8");
+  // The note lives in the memory root (DXB_MEMORY_ROOT, CEO 2026-10-04), never relative to the cwd.
+  const transcript = await readNote(row.ref, "artifact");
   const model = await routedModel(db, "video.explain");
   const res = await llmCall({
     department: resolveAttribution(FALLBACK_DEPARTMENT).department,
