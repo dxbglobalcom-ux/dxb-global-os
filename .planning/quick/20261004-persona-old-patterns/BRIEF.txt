@@ -1,0 +1,27 @@
+THE CEO'S SENTENCE (verbatim, 2026-10-04): "personadaki eski kalıpları bitir"
+
+WHAT IT REFERS TO (facts, read them yourself):
+- .planning/quick/20261004-his-list/item3-report.md — the measured Bucket-3 runtime rows of the prompt audit; bundle 1 = persona text.
+- .planning/quick/20260923-prompt-audit/REPORT.md (Bucket 3) and PROPOSED.diff (H13 H14 H16 hunks, R1-R7 hunks) and slices/*.md (rows with proposals).
+- scripts/governance/ceo-approvals.json: h13-persona-discipline-section-trimmed-2026-09-24, h14-h15-h17-h21-yes-2026-09-24, h16-persona-author-is-the-chief-engineer-2026-09-24.
+
+DESIGN DECISIONS (facts, on purpose):
+- Persona text only. Code rows (R14 HTML-comment strip in packages/voice/src/persona.ts, C2-x, packages/voice/src/prompt-core.ts rows) are NOT in this job.
+- §12 is constitutional and identical in every persona: H13 changes only the Discipline DNA lines; the Islamic conduct lines are untouched. The standard's canonical block (HOLDING-OS-MASTER-PLAN/EMPLOYEE_PERSONA_STANDARD.md §4.1) follows; the Inheritance rule moved out of the seat text into the standard as an author rule.
+- R12/R15/R5: instead of rewriting ~50 files' §9 prose one by one, one "Hands" line is placed at the head of every §9 (EN/TR), and every web-tool line names what the seat really holds (strategy profile: scrapling; engineering + context7 in the line: context7; others: none) — packages/gateway/profiles/*.mcp.json is the source.
+- R13: the "On violation / İhlalde davranış" lead-in becomes "When a hook check fails / Hook kontrolü düşerse"; the line's role-specific content stays.
+- C6: "<X> without <Y> are rejected post-task" -> "<X> carry <Y> (checked post-task)"; 12 differently shaped sentences and the Turkish forms stay as they are.
+- R1 keep-list: the three real sequences (social-scheduler-publisher "Pre-publish battery, fixed order", blockchain "Denetim süreci sabittir", IAM "Grant yaşam döngüsü") are untouched; the R1 lead-ins in those two security files were converted.
+- "Flag" rows of the slices (no proposal) are not applied.
+- The authorship law: every new sentence is the session's own; a script only placed the session's exact text (the script: the session scratchpad apply.py; its rules are in commit 3ebbce2b's body).
+
+DONE-LIST (command -> expected):
+1. python3 .planning/quick/20260923-prompt-audit/verify-runtime.py -> every template count 0/214 except "B5 version comment" (R14, code, out of scope).
+2. grep -rn "Muhakeme sırası sabittir\|Fixed reasoning order\|Fixed pipeline order" personas -> no line.
+3. grep -rc "MUST-B amendment\|Fable in person\|Fable 5 hook\|Fable bizzat\|Fable 5'tedir" personas, counting only lines after each file's "# PERSONA — " header -> 0.
+4. grep -rn "notify_broadcast\|WebSearch/WebFetch" personas -> no line.
+5. pnpm exec vitest run tests/personas tests/r31 tests/b43 -> all pass; persona ruler 16/16 PASS (raw output: evidence/tests-personas-r31-b43.txt).
+6. Every persona keeps sections ## 1. … ## 12. (gate parses by number: packages/hr/src/gate.ts).
+7. No persona's role-specific content was lost: the diff 0467dbb6..HEAD touches only the rows named above.
+
+YOUR FIRST QUESTION: does this done-list prove what the CEO's sentence asked for? Then try to refute each item on the diff (git diff 0467dbb6..HEAD) — wrong meaning introduced, broken grammar that changes an instruction, a seat told it holds a tool it does not (or the reverse), a CEO ruling misstated, Islamic conduct touched, anything the sentence asked that is still in the files.
