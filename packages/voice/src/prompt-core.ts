@@ -54,7 +54,12 @@ export function personaBlock(personaBody: string): string {
 }
 
 /** Company memory that matched this turn. Empty = no block. */
-export function memoryBlock(lines: readonly string[]): string {
+export function memoryBlock(lines: readonly string[], unreachable = false): string {
+  // Sol's C on the memory-drawer job (2026-10-04): a failed recall used to arrive here as an empty
+  // list, so Hamza answered as if he had no notes and a broken drawer looked like an empty one.
+  if (unreachable) {
+    return "Your company memory could not be read for this answer. If what you are asked depends on what you remember, say plainly that you could not reach your notes this time — never answer as if you had none.";
+  }
   return lines.length ? `Relevant company memory:\n- ${lines.join("\n- ")}` : "";
 }
 
@@ -188,13 +193,15 @@ export function standingPrompt(input: {
   agent: { slug: string; department?: string | null; role_level?: string | null };
   personaBody: string;
   memoryLines: readonly string[];
+  /** The recall failed (recallForAnswer) — said to the agent, never passed as an empty memory. */
+  memoryUnreachable?: boolean;
   lang: "tr" | "en";
   lane: AnswerLane;
 }): string[] {
   return [
     identityLine(input.agent),
     personaBlock(input.personaBody),
-    memoryBlock(input.memoryLines),
+    memoryBlock(input.memoryLines, input.memoryUnreachable),
     languageLine(input.lang, input.lane),
     ceoLanguageLaw(input.lang),
     honestyLine(),

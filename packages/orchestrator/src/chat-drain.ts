@@ -15,8 +15,8 @@ import { query } from "@anthropic-ai/claude-agent-sdk";
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 import { companyIsolation, isolationReceipt, loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
-import { recallMemory } from "@dxb/memory-router";
-import { matchMute, matchUnmute, loadPersonaBody, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
+import type { recallMemory } from "@dxb/memory-router";
+import { matchMute, matchUnmute, loadPersonaBody, recallForAnswer, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
 import {
   buildBriefSnapshot,
   classifyLeg,
@@ -39,6 +39,8 @@ export interface ChatAnswerInput {
   history: Array<{ role: "ceo" | "hamza"; content: string }>;
   personaBody: string;
   memoryLines: string[];
+  /** The recall failed — Hamza is told so (prompt-core memoryBlock), never handed an empty memory. */
+  memoryUnreachable?: boolean;
   /** Which of Hamza's two legs answers this (CEO directive 2026-07-25). */
   leg: ChatLeg;
   /** Live company figures — present on the brief leg, null on strategy. */
@@ -51,6 +53,8 @@ export interface DrainChatDeps {
   /** answer producer — overridable in tests; default = SDK on this message's
    *  leg row (same one-brain law as the voice line, V2). */
   answer?: (q: ChatAnswerInput) => Promise<string>;
+  /** Test seam for the memory recall; production default = recallMemory. */
+  recall?: typeof recallMemory;
 }
 
 export interface DrainChatResult {
@@ -94,6 +98,7 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
       agent: { slug: CHAT_HAMZA_SLUG },
       personaBody: q.personaBody,
       memoryLines: q.memoryLines,
+      memoryUnreachable: q.memoryUnreachable,
       lang: q.lang,
       lane: "chat",
     }),
@@ -209,10 +214,7 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
     const historyRows = await historyQuery.execute();
     const [head, recall] = await Promise.all([
       loadPersonaBody(repoRoot, hamza?.persona_path ?? null),
-      recallMemory(db, { query: row.content, limit: 5 }).catch(() => ({
-        rows: [] as Array<{ body: string }>,
-        classifier_used: false,
-      })),
+      recallForAnswer(db, row.content, "chat", { recall: deps.recall }),
     ]);
     // Which leg — and, on the report leg, the live figures it is allowed to
     // quote. The snapshot is read AFTER the persona/memory fetch so it is as
@@ -225,7 +227,8 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       lang,
       history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content })),
       personaBody: head,
-      memoryLines: recall.rows.map((r) => r.body.slice(0, 200)).filter(Boolean),
+      memoryLines: recall.lines,
+      memoryUnreachable: recall.unreachable,
       leg,
       snapshot,
     });

@@ -27,6 +27,8 @@ export {
   noRefusalLaw,
 } from "./prompt-core.js";
 export type { AnswerLane } from "./prompt-core.js";
+export { recallForAnswer } from "./answer-memory.js";
+export type { AnswerMemory, AnswerMemoryDeps } from "./answer-memory.js";
 export type { AnswerQuestion, VoiceAnswerDeps, VoiceAnswerResult } from "./answer.js";
 export { drainVoiceCalls, STALE_CALL_MINUTES, AUDIO_RETENTION_HOURS } from "./drain.js";
 export type { DrainVoiceDeps, DrainVoiceResult } from "./drain.js";

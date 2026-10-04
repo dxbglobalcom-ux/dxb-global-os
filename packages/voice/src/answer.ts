@@ -10,7 +10,8 @@ import { sql, type Kysely } from "kysely";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import type { DB } from "@dxb/shared";
 import { SDK_MODEL_IDS, companyIsolation, isolationReceipt, loadPolicy, route } from "@dxb/kernel";
-import { recallMemory } from "@dxb/memory-router";
+import type { recallMemory } from "@dxb/memory-router";
+import { recallForAnswer } from "./answer-memory.js";
 import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./speaches.js";
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
 import { logCall } from "./log.js";
@@ -29,6 +30,8 @@ export interface AnswerQuestion {
   agent: { slug: string; department: string; role_level: string | null; persona_path: string | null };
   personaBody: string;
   memoryLines: string[];
+  /** The recall failed — Hamza is told so (prompt-core memoryBlock), never handed an empty memory. */
+  memoryUnreachable?: boolean;
   /** U15 D12 (one-conversation law): recent board turns (chat + mirrored
    *  voice), oldest first — the CEO must be able to continue in voice what
    *  he started in chat and vice versa. */
@@ -41,6 +44,8 @@ export interface VoiceAnswerDeps {
   /** answer producer — overridable in tests; default = SDK on the
    *  orchestration route (one brain, V2; persona rides the system prompt, V7) */
   answer?: (q: AnswerQuestion) => Promise<string>;
+  /** Test seam for the memory recall; production default = recallMemory. */
+  recall?: typeof recallMemory;
   speaches?: SpeachesConfig;
   repoRoot?: string;
   /** where the answer WAV lands for the dashboard playback route;
@@ -93,6 +98,7 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
       agent: q.agent,
       personaBody: q.personaBody,
       memoryLines: q.memoryLines,
+      memoryUnreachable: q.memoryUnreachable,
       lang: q.lang,
       lane: "voice",
     }),
@@ -243,7 +249,7 @@ export async function answerVoiceCall(
   try {
     const [head, recall, historyRows] = await Promise.all([
       loadPersonaBody(repoRoot, agent.persona_path),
-      recallMemory(db, { query: question, limit: 5 }).catch(() => ({ rows: [], classifier_used: false })),
+      recallForAnswer(db, question, "voice", { recall: deps.recall }),
       // U15 D12 (one-conversation law): the voice answer sees the same board
       // history chat sees — a voice question continues the chat thread. W1.5
       // scopes that to the CURRENT thread, so a spoken question no longer
@@ -260,11 +266,10 @@ export async function answerVoiceCall(
         .execute()
         .catch(() => []),
     ]);
-    const memoryLines = recall.rows.map((r) => r.body.slice(0, 200)).filter(Boolean);
     answerText = await produceAnswer({
       question, lang,
       agent: { slug: agent.slug, department: agent.department, role_level: agent.role_level, persona_path: agent.persona_path },
-      personaBody: head, memoryLines,
+      personaBody: head, memoryLines: recall.lines, memoryUnreachable: recall.unreachable,
       history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content.slice(0, 500) })),
     });
   } catch (e) {
