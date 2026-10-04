@@ -79,3 +79,14 @@ ambiguity: 1
    → SCHEMA_PARITY, build, nothing in flight, `dxb-scheduler` restarted, `pgboss.schedule` carries
    `tool-lock-watch */15 * * * *`, its first job completes; the catch-up sends one `tool-pin-check`
    (last 2026-10-01) and it completes; `tool_pins.last_checked` moves to today.
+
+## Measured
+- Lead (Opus 5.5 high, session c04c8a07): 44.4 min to the deploy, 122 calls, new tokens 380,595, USD 9.20
+  (usage.mjs, list price); advisor calls 0.
+- Persona refile (helper-writer, medium): 3.0 min, new 59,376, USD 0.67, advisor 0.
+- Sol fixes (fork, the lead's model): 4.7 min, new 63,893, USD 2.16, advisor 0.
+- Sol (GPT-6.1 xhigh, one pass): 182,083 tokens (Plus subscription; not priced here); 1 A, 10 B, 1 C — all A/B
+  fixed with failing-first tests (6096ae57); C (the manifest serializer's own __proto__ loss) stays in SOL.md.
+- Card cost (Claude side): USD 12.03. Battery once after the fixes: BATTERY_GREEN (1220 + 266), residue none.
+- Arrangement note: lead + a fork for the fixes — the fork read the lead's cache and fixed 11 findings in
+  4.7 min for USD 2.16.

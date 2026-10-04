@@ -1,0 +1,11 @@
+[bootstrap] preamble (bare-PG compat surface; admin plane)
+NOTICE:  extension "vector" already exists, skipping
+NOTICE:  schema "auth" already exists, skipping
+NOTICE:  schema "realtime" already exists, skipping
+NOTICE:  schema "supabase_migrations" already exists, skipping
+NOTICE:  relation "schema_migrations" already exists, skipping
+[bootstrap] pg-boss schema (library initializer)
+[bootstrap] pgboss schema ready
+[bootstrap] applying 20261004010000_tasks_tools_allowed.sql
+[bootstrap] done — applied 1, skipped 171, ledger total 172
+exit=0

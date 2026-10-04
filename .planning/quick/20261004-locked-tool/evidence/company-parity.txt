@@ -1,0 +1,17 @@
+$ DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs
+company      : 7674907968528752679 / postgres
+construction : 7690665340837392423 / postgres
+
+columns      company   631 ecefdb3a9031cc6b  construction   631 ecefdb3a9031cc6b  same
+constraints  company   251 9f5e1c642965470b  construction   251 9f5e1c642965470b  same
+indexes      company   124 c2f41611e7a22873  construction   124 c2f41611e7a22873  same
+functions    company   228 af22f8377fc939a3  construction   228 af22f8377fc939a3  same
+views        company    34 d03007d3df38bbc5  construction    34 8bdef3b0d98839bf  same after removing PostgreSQL's own default type labels
+    normalised : v_alerts_active ::  SELECT kind, …
+    1 view definition(s) matched only after that removal. Their OUTPUT columns are compared strictly under `view_columns` and are identical.
+view_columns company   461 72649692695f1e0b  construction   461 72649692695f1e0b  same
+policies     company    57 50677097944b0bcc  construction    57 50677097944b0bcc  same
+triggers     company    31 bf0559916710180f  construction    31 bf0559916710180f  same
+sequences    company    14 13b638eb4eab9ade  construction    14 13b638eb4eab9ade  same
+
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
