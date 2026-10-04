@@ -1,0 +1,10 @@
+   × the bar shows the level the turn really runs at > the last step ran at max: 'tur: max' 26ms
+   × the bar shows the level the turn really runs at > the last step ran at high: 'tur: high' 21ms
+   × the bar shows the level the turn really runs at > the step read is the LAST assistant step, after any later user or tool lines 21ms
+   ✓ the bar shows the level the turn really runs at > no transcript, an unreadable one, or no step with an effort: no turn mark, the bar still stands 57ms
+   × the bar shows the level the turn really runs at > a long transcript is read from its end only and still gives the last step 33ms
+   ✓ the bar shows the level the turn really runs at > an effort that is not one of the five levels is not shown 21ms
+   × the bar shows when design at max is open for this session > its flag stands: 'tasarım açık'; another session's flag: nothing 19ms
+   ✓ the bar shows when design at max is open for this session > a link at the flag is no flag 21ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  5 failed | 3 passed (8)

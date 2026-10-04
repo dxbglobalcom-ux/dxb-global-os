@@ -2018,5 +2018,13 @@
     "conditions": "Said in session 086b5928 at 14:50 after its lead answered his side question 'şuan max efforunda mısın?' at high, having judged the question not plan work and skipped the skill (transcript: 14:47:18 effort high); relayed to session fd7d67f2 with the screenshot and fixed there. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session fd7d67f2 — his words read from session 086b5928's transcript and his screenshot, 2026-10-04.",
     "where": ".claude/hooks/dxb-design-max.py · .claude/skills/dxb-design-max/SKILL.md · .claude/skills/dxb-team2/SKILL.md §4 PLAN · tests/hooks/design-max.test.ts"
+  },
+  "statusline-turn-effort-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "The status line shows the level the turn really runs at — 'tur: <level>' from the last assistant step's effort in the session's transcript — and '🟣 tasarım açık' while the session's design-at-max flag stands; the /effort menu shows only the session's own level.",
+    "verbatim": "evet ekle",
+    "conditions": "Answering the lead's offer after his question with a screenshot of the /effort menu during a design turn: 'tmm ama neden hala /effor seçtiğimde altta high görüorm kendisi şuan maxte değil mi arkadşaım'. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session fd7d67f2 — heard first-hand, 2026-10-04.",
+    "where": "~/.claude/hooks/dxb-statusline.js (outside git) · tests/hooks/statusline-effort.test.ts"
   }
 }
