@@ -1,0 +1,22 @@
+# 2026-10-04 17:33-17:34 local: what the API received. A local proxy (scratchpad effort-proxy.js) between headless claude -p 2.1.289 and api.anthropic.com logged output_config.effort of every /v1/messages request (no headers logged). A/B validate the detector; C/E the skill; D the builder subagent.
+== A: --effort high, no skill
+{"t":"2026-10-04T15:33:42.974Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":2,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"high"}}}
+== B: --effort max, no skill
+{"t":"2026-10-04T15:33:47.085Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":2,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"max"}}}
+== C: --effort high, skill dxb-design-max then answer
+{"t":"2026-10-04T15:33:51.123Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":2,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"high"}}}
+{"t":"2026-10-04T15:33:53.405Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":5,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"max"}}}
+== D: --effort high, the builder agent spawned
+{"t":"2026-10-04T15:34:10.450Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":2,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"high"}}}
+{"t":"2026-10-04T15:34:13.086Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":2,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"max"}}}
+{"t":"2026-10-04T15:34:14.545Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":4,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"high"}}}
+== E: resume, turn 2, skill again (second call in the same session)
+{"t":"2026-10-04T15:34:17.228Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":2,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"high"}}}
+{"t":"2026-10-04T15:34:19.668Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":5,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"max"}}}
+== E2: same session, next prompt, skill called again
+{"t":"2026-10-04T15:34:23.454Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":8,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"high"}}}
+{"t":"2026-10-04T15:34:25.551Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":11,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"max"}}}
+== E3: same session, next prompt, no skill
+{"t":"2026-10-04T15:34:29.302Z","url":"/v1/messages?beta=true","model":"claude-opus-5-5","n_messages":14,"fields":{"thinking":{"type":"adaptive","display":"omitted"},"output_config":{"effort":"high"}}}
+
+# The transcript of session 4a7dfc5c (E) beside it: high, Skill, max, max | high, Skill, max, max | high, high — the same sequence as the API log.
