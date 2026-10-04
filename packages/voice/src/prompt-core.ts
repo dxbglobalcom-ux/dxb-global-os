@@ -58,7 +58,7 @@ export function memoryBlock(lines: readonly string[], unreachable = false): stri
   // Sol's C on the memory-drawer job (2026-10-04): a failed recall used to arrive here as an empty
   // list, so Hamza answered as if he had no notes and a broken drawer looked like an empty one.
   if (unreachable) {
-    return "Your company memory could not be read for this answer. If what you are asked depends on what you remember, say plainly that you could not reach your notes this time — never answer as if you had none.";
+    return "Your company memory could not be read for this answer. Say so plainly in your answer — tell the CEO you could not reach your notes this time — and never answer as if you had none.";
   }
   return lines.length ? `Relevant company memory:\n- ${lines.join("\n- ")}` : "";
 }

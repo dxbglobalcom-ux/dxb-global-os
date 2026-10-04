@@ -54,7 +54,6 @@ const companyBefore = drawerCount();
 const db = getDb();
 const seat = await db.selectFrom("agents").select(["id", "slug", "department"]).where("slug", "=", "finance-financial-analyst").executeTakeFirstOrThrow();
 const anyTask = await db.selectFrom("tasks").select(["id"]).orderBy("created_at").limit(1).executeTakeFirstOrThrow();
-const t0 = (await db.selectNoFrom((eb) => eb.fn("now", []).as("t")).executeTakeFirst()).t;
 const canary = `NOTE_PROBE_${stamp}`;
 
 const out = await defaultExecutor({
@@ -78,36 +77,50 @@ const out = await defaultExecutor({
 });
 console.log(`task lane: toolSurfaceMounted=${out.toolSurfaceMounted} result=${JSON.stringify(out.result?.text ?? out.result).slice(0, 300)}`);
 
-// what the employee's child wrote, read from the engine and the drawer
-const rows = await db
-  .selectFrom("memory_index")
-  .select(["id", "store", "ref", "trust_tier"])
-  .where("store", "=", "obsidian")
-  .where("created_at", ">=", t0)
-  .execute();
-console.log(`memory_index rows since the call: ${JSON.stringify(rows)}`);
-const onDisk = rows.map((r) => {
-  const file = join(memRoot, r.ref);
-  return { ref: r.ref, exists: existsSync(file), holdsCanary: existsSync(file) && readFileSync(file, "utf8").includes(canary) };
-});
-console.log(`in the handed root: ${JSON.stringify(onDisk)}`);
+// what the employee's child wrote: the index id its tool returned, read back three ways and compared
+// exactly (Sol's single pass, 2026-10-04: a canary substring proved too little)
+const body = `${canary} — the employee's note from a real task.`;
+const returned = (() => {
+  try {
+    const text = String(out.result?.text ?? out.result);
+    return JSON.parse(text.slice(text.indexOf("["), text.lastIndexOf("]") + 1))[0]?.index_id ?? null;
+  } catch {
+    return null;
+  }
+})();
+console.log(`the tool returned index_id=${returned}`);
+const row = returned
+  ? await db.selectFrom("memory_index").select(["id", "store", "ref", "trust_tier"]).where("id", "=", returned).executeTakeFirst()
+  : undefined;
+console.log(`memory_index row: ${JSON.stringify(row ?? null)}`);
+const file = row ? join(memRoot, row.ref) : null;
+const fileBody = file && existsSync(file) ? readFileSync(file, "utf8") : null;
+// the writer stores frontmatter (its own id among it) + the body + "\n" (memory-router obsidian.ts)
+const parts = fileBody?.split("\n---\n") ?? [];
+const noteText = parts.length === 2 ? parts[1] : null;
+const idInNote = fileBody?.includes(`\nid: ${JSON.stringify(returned)}\n`) ?? false;
+console.log(`in the handed root: exists=${fileBody !== null} body_equal=${noteText === `${body}\n`} id_in_note=${idInNote}`);
 
 // the scheduler side — the same recall Hamza's lanes call
 const recall = await recallMemory(db, { query: canary, kind: "artifact", limit: 5 }, { caller: "note-probe" });
-const found = recall.rows.filter((r) => r.body.includes(canary));
-console.log(`scheduler-side recall: rows=${recall.rows.length} holding the canary=${found.length}`);
+const back = recall.rows.find((r) => r.id === returned);
+console.log(`scheduler-side recall: rows=${recall.rows.length} same_id=${Boolean(back)} same_note=${back?.body === fileBody}`);
 
 const companyAfter = drawerCount();
 console.log(`company drawer files: before=${companyBefore} after=${companyAfter}`);
 
-const ok = rows.length === 1 && onDisk[0]?.holdsCanary === true && found.length === 1 && companyBefore === companyAfter;
+const ok =
+  row?.store === "obsidian" &&
+  noteText === `${body}\n` &&
+  idInNote &&
+  back?.body === fileBody &&
+  companyBefore === companyAfter;
 console.log(ok ? "NOTE_PROBE_OK" : "NOTE_PROBE_FAIL");
 
-// removal: the probe's index row, its cost row, its root
-if (rows.length) await db.deleteFrom("memory_index").where("id", "in", rows.map((r) => r.id)).execute();
-await db.deleteFrom("cost_ledger").where("task_id", "=", anyTask.id).where("created_at", ">=", t0).execute();
+// removal: only this probe's own index row and its root (the cost row stays — it is the call's record)
+if (row) await db.deleteFrom("memory_index").where("id", "=", row.id).execute();
 rmSync(memRoot, { recursive: true, force: true });
-console.log(`removed: memory_index ${rows.length} · root ${existsSync(memRoot) ? "STILL THERE" : "gone"}`);
+console.log(`removed: memory_index ${row ? 1 : 0} · root ${existsSync(memRoot) ? "STILL THERE" : "gone"}`);
 
 console.log(`SESSIONS ${receipts.map((r) => r.match(/session=(\S+)/)?.[1]).join(" ")}`);
 await db.destroy();

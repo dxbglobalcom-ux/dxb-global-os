@@ -1,0 +1,19 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:3232400) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase6/memory-unreachable.test.ts > both answer lanes hand the flag to the producer > chat: a failed recall reaches Hamza as memoryUnreachable
+[memory] recall failed on the chat lane — recall: memory ref broken for index x at 'artifact/x.md' — ENOENT
+
+stderr | tests/phase6/memory-unreachable.test.ts > both answer lanes hand the flag to the producer > voice: a failed recall reaches Hamza as memoryUnreachable
+[memory] recall failed on the voice lane — recall: memory ref broken for index x at 'artifact/x.md' — ENOENT
+
+ ✓ tests/phase6/memory-unreachable.test.ts (6 tests) 29ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  16:36:05
+   Duration  725ms (transform 179ms, setup 0ms, collect 438ms, tests 29ms, environment 0ms, prepare 33ms)
+

@@ -50,6 +50,9 @@ describe("the standing layer — the unreachable sentence only when flagged", ()
     const block = memoryBlock([], true);
     expect(block).toMatch(/could not be read/);
     expect(block).toMatch(/never answer as if you had none/);
+    // Unconditional (Sol, 2026-10-04): no "if it depends on memory" escape — he is told every time.
+    expect(block).toMatch(/Say so plainly in your answer/);
+    expect(block).not.toMatch(/depends on/);
     expect(standingPrompt({ ...base, memoryLines: [], memoryUnreachable: true }).join("\n")).toContain(block);
   });
 

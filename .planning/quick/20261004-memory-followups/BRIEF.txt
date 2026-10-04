@@ -1,0 +1,26 @@
+You are auditing one construction job of the DXB Global OS repository, blind and read-only. Refute it.
+
+THE CEO'S SENTENCE (Turkish, verbatim, 2026-10-04). The lead put two items to him:
+"1. Hamza notlarını okuyamadığında bunu cevabında açıkça söyleyecek, örneğin "notlarıma şu an ulaşamadım" diyecek. Notlar okunabildiğinde hiçbir şey değişmeyecek. 2. Bir çalışanın gerçek bir işte not yazdığı, Hamza tarafının da aynı notu geri okuduğu tek bir deneme yapılacak. Deneme inşaatın kendi veritabanında yapılır, şirketinkine dokunmaz."
+His answer: "kısaysa yap değilse boşver".
+
+DESIGN DECISIONS (facts, on purpose):
+- Origin: finding C of the previous audit (.planning/quick/20261004-company-memory-drawer/SOL.md) — chat and voice used `recallMemory(...).catch(() => ({ rows: [] }))`.
+- One definition for both answer lanes: @dxb/voice `recallForAnswer` (packages/voice/src/answer-memory.ts). A failed recall returns { lines: [], unreachable: true } and logs one `[memory] recall failed on the <lane> lane — <message>` line; the answer still goes out.
+- The sentence Hamza receives lives once, in prompt-core `memoryBlock(lines, unreachable)`, carried by `standingPrompt` through `memoryUnreachable`.
+- `recall` is a test seam on DrainChatDeps and VoiceAnswerDeps (production default recallMemory).
+- Item 2 is a probe, not product code: .planning/quick/20261004-memory-followups/note-probe.mjs, run through .planning/quick/20261003-runtime-isolation/run-lanes-probe.sh (the resident's shape, the CONSTRUCTION engine on port 54422). The drawer root is a fresh construction folder handed down as the scheduler hands the company's (DXB_MEMORY_ROOT in the parent's env, carried to the child by companyIsolation in packages/kernel/src/sdk-isolation.ts).
+
+THE DONE-LIST and the score card: .planning/quick/20261004-memory-followups/CARD.md
+THE DIFF: git diff b8bb4222..83bc9342 (only this job; earlier commits on master belong to another session).
+RAW OUTPUT, whole: .planning/quick/20261004-memory-followups/evidence/ (red.txt = the new test before the code; green.txt after; targeted.txt = tests/b21 tests/c9 tests/u15r2 tests/phase6; build.txt; note-probe.txt = the probe run).
+
+You may query the construction engine yourself through your one tool `sql_read` (read scripts/governance/sol-db-mcp.mjs before trusting it). Never the company engine. Ask for any other read-only command and the lead runs it.
+
+First question: does this done-list prove what the CEO's sentence asked for? Then each claim:
+Claim / done-list item:
+Verdict: REFUTED | STANDS AFTER ATTEMPTED REFUTATION | UNVERIFIED
+Finding: file:line, concrete scenario, impact
+Evidence: the command or artifact and its decisive result
+Correction required:
+Grade each finding A (blocks) / B (repair in this pass) / C (older than this work). Answer in Turkish.

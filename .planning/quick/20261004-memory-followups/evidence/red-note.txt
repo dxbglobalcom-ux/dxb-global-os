@@ -1,0 +1,5 @@
+red.txt is the tail (25 lines) of the run made before the code, 2026-10-04 16:26:45: "Tests 5 failed | 1 passed (6)".
+Sol asked for the whole output. A re-run on the old sources (b8bb4222 restored, answer-memory.ts moved out,
+2026-10-04 ~16:50) gave "1 failed | 5 passed" — not the before-state: vitest.config.ts resolves workspace
+packages (@dxb/voice) to their BUILT dist, and dist already held the new code. A faithful whole RED needs the
+old dist rebuilt; that was not done. The tail stands as the only before-evidence, with this limit named.
