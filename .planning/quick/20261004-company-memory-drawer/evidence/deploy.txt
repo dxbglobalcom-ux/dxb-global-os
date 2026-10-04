@@ -1,0 +1,29 @@
+== before 2026-10-04 15:01:09
+mi | al | al_last
+5 | 10312 | 2026-10-01 18:44:52.745525+00
+(1 row)
+repo memory-store files: 33 bytes: 130217
+== move the live note
+drwxrwxr-x 3 dxb dxb 4096 Oct  4 15:01 /home/dxb/.local/share/dxb/company-claude/memory-store
+drwxrwxr-x 2 dxb dxb 4096 Oct  4 15:01 /home/dxb/.local/share/dxb/company-claude/memory-store/artifact
+sha256 repo=b60552fdf7c503be23496c8a3fd379cbb112824033b6dc717d4aa56753214552
+sha256 home=b60552fdf7c503be23496c8a3fd379cbb112824033b6dc717d4aa56753214552
+identical — repository copy removed
+== the orphans
+files: 32 bytes: 128151
+company rows naming them: 0
+construction rows naming them: 0
+after delete: repository memory-store/ gone; company drawer holds e6ce767b-c427-4049-9341-d30f17ad571e.md only
+[scheduler] resident scheduler up — queues live, chains armed, ops:live hosted
+[isolation] company-claude home=/home/dxb/.local/share/dxb/company-claude credentials=present
+[memory] root=/home/dxb/.local/share/dxb/company-claude notes=1
+[scheduler] the company is working with 1 hand (first tick) — loops running 1, started 1
+[scheduler] the studio's hands: 4 lanes running — 1 for the card, 3 for the processor (first tick)
+== live read, no writes · ref from the company DB: memory-store/artifact/e6ce767b-c427-4049-9341-d30f17ad571e.md
+(Use `node --trace-warnings ...` to show where the warning was created)
+read 2032 chars · first lines: id: "e6ce767b-c427-4049-9341-d30f17ad571e" | kind: "artifact"
+a ref naming .env: refused — memory note: ref is not a memory-store/<kind>/<uuid>.md note: /home/dxb/DxB Global OS/.env
+== after 2026-10-04 15:02:06
+mi | al | al_last
+5 | 10312 | 2026-10-01 18:44:52.745525+00
+(1 row)
