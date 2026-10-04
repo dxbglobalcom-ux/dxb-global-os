@@ -8,7 +8,9 @@
 // messages until his yes to the plan closes the mode. Every case gets its own temporary directory as
 // XDG_RUNTIME_DIR, so nothing lands in the machine's own flag folder.
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+  chmodSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
@@ -47,11 +49,16 @@ const skillCall = (sid: string, skill: string) => ({
 /** a UserPromptSubmit input */
 const prompt = (sid: string) => ({ session_id: sid, hook_event_name: "UserPromptSubmit", prompt: "devam", cwd: ROOT });
 
+/** a hook that blocks (a FIFO opened for writing) fails the case instead of hanging the suite */
+const LIMIT_MS = 10_000;
+
 /** runs the real hook on stdin; exit 0 and a clean stderr are part of every answer */
 function hook(dir: string, input: unknown): string {
   const r = spawnSync("python3", [HOOK], {
     input: typeof input === "string" ? input : JSON.stringify(input), encoding: "utf8", env: env(dir),
+    timeout: LIMIT_MS,
   });
+  expect(r.error, "the hook did not finish in time").toBeUndefined();
   expect(r.status, r.stderr).toBe(0);
   expect(r.stderr).toBe("");
   return r.stdout;
@@ -59,7 +66,9 @@ function hook(dir: string, input: unknown): string {
 
 /** runs the real hook's close command as the lead runs it from Bash, with the session id in its env */
 function close(dir: string, sid?: string) {
-  return spawnSync("python3", [HOOK, "close"], { encoding: "utf8", env: env(dir, sid) });
+  const r = spawnSync("python3", [HOOK, "close"], { encoding: "utf8", env: env(dir, sid), timeout: LIMIT_MS });
+  expect(r.error, "close did not finish in time").toBeUndefined();
+  return r;
 }
 
 describe("the skill's call opens the mode for its own session", () => {
@@ -132,6 +141,67 @@ describe("no session id names a path outside the flag folder; no input makes the
     expect(existsSync(FLAGS(dir))).toBe(false);
     expect(readFileSync(join(dir, "victim", "keep"), "utf8")).toBe("x");
   });
+  it("a link planted at the flag is neither written through nor read as a flag nor closed", () => {
+    const dir = box();
+    const outside = join(dir, "outside");
+    writeFileSync(outside, "keep");
+    mkdirSync(FLAGS(dir), { mode: 0o700 });
+    symlinkSync(outside, flag(dir, SID));
+    hook(dir, skillCall(SID, "dxb-design-max"));
+    expect(readFileSync(outside, "utf8")).toBe("keep");
+    expect(hook(dir, prompt(SID))).toBe("");
+    expect(close(dir, SID).stdout).toContain("not open");
+    expect(lstatSync(flag(dir, SID)).isSymbolicLink()).toBe(true);
+    expect(readFileSync(outside, "utf8")).toBe("keep");
+  });
+  it("a link to another session's flag does not carry that session's reminder", () => {
+    const dir = box();
+    hook(dir, skillCall(OTHER, "dxb-design-max"));
+    symlinkSync(flag(dir, OTHER), flag(dir, SID));
+    expect(hook(dir, prompt(SID))).toBe("");
+  });
+  it("a flag folder that is a link is not trusted: nothing written, read or removed through it", () => {
+    const dir = box();
+    const elsewhere = join(dir, "elsewhere");
+    mkdirSync(elsewhere, { mode: 0o700 });
+    writeFileSync(join(elsewhere, SID), "");
+    symlinkSync(elsewhere, FLAGS(dir));
+    expect(hook(dir, prompt(SID))).toBe("");
+    hook(dir, skillCall(OTHER, "dxb-design-max"));
+    expect(existsSync(join(elsewhere, OTHER))).toBe(false);
+    expect(close(dir, SID).stdout).toContain("not open");
+    expect(existsSync(join(elsewhere, SID))).toBe(true);
+  });
+  it("a flag folder writable by others is not trusted", () => {
+    const dir = box();
+    mkdirSync(FLAGS(dir));
+    chmodSync(FLAGS(dir), 0o777);
+    writeFileSync(flag(dir, SID), "");
+    expect(hook(dir, prompt(SID))).toBe("");
+  });
+  it("a FIFO at the flag neither blocks the hook nor counts as a flag", () => {
+    const dir = box();
+    mkdirSync(FLAGS(dir), { mode: 0o700 });
+    expect(spawnSync("mkfifo", [flag(dir, SID)]).status).toBe(0);
+    hook(dir, skillCall(SID, "dxb-design-max"));
+    expect(hook(dir, prompt(SID))).toBe("");
+    expect(close(dir, SID).stdout).toContain("not open");
+  });
+  it("close that cannot remove the flag says why on stderr, exits 1, and the mode stays open", () => {
+    if (process.getuid?.() === 0) return; // root ignores the folder's mode
+    const dir = box();
+    hook(dir, skillCall(SID, "dxb-design-max"));
+    chmodSync(FLAGS(dir), 0o500);
+    try {
+      const r = close(dir, SID);
+      expect(r.status).toBe(1);
+      expect(r.stderr).toContain("could not be removed");
+      expect(existsSync(flag(dir, SID))).toBe(true);
+    } finally {
+      chmodSync(FLAGS(dir), 0o700);
+    }
+    expect(JSON.parse(hook(dir, prompt(SID))).hookSpecificOutput.additionalContext).toContain("dxb-design-max");
+  });
   it("garbage, empty and non-object stdin: exit 0, nothing on stdout or stderr", () => {
     const dir = box();
     for (const input of ["", "not json", "[1,2]", "null", JSON.stringify({ hook_event_name: "UserPromptSubmit" })]) {
@@ -141,19 +211,23 @@ describe("no session id names a path outside the flag folder; no input makes the
 });
 
 describe("the registration and the skill as they stand", () => {
-  it("settings.json runs the hook on PostToolUse Skill and on UserPromptSubmit", () => {
+  it("settings.json runs exactly this hook, as a command, on PostToolUse Skill and on UserPromptSubmit", () => {
     const hooks = JSON.parse(readFileSync(SETTINGS, "utf8")).hooks;
-    const runs = (blocks: { matcher?: string; hooks: { command: string }[] }[] | undefined, matcher?: string) =>
-      (blocks ?? []).some((b) => (matcher === undefined || b.matcher === matcher) &&
-        b.hooks.some((h) => h.command.includes(".claude/hooks/dxb-design-max.py")));
+    const COMMAND = 'python3 "$CLAUDE_PROJECT_DIR/.claude/hooks/dxb-design-max.py"';
+    type Block = { matcher?: string; hooks: { type: string; command: string }[] };
+    const runs = (blocks: Block[] | undefined, matcher?: string) =>
+      (blocks ?? []).filter((b) => b.matcher === matcher)
+        .some((b) => b.hooks.some((h) => h.type === "command" && h.command === COMMAND));
     expect(runs(hooks.PostToolUse, "Skill")).toBe(true);
     expect(runs(hooks.UserPromptSubmit)).toBe(true);
+    // the command the registration names resolves to the file under test
+    expect(COMMAND.replace("$CLAUDE_PROJECT_DIR", ROOT)).toBe(`python3 "${HOOK}"`);
   });
-  it("the skill is named dxb-design-max and runs at effort max", () => {
+  it("the skill is named dxb-design-max, runs at effort max, and closes with the reminder's command", () => {
     const text = readFileSync(SKILL, "utf8");
     const front = /^---\n([\s\S]*?)\n---\n/.exec(text)?.[1] ?? "";
     expect(front).toMatch(/^name: dxb-design-max$/m);
     expect(front).toMatch(/^effort: max$/m);
-    expect(text).toContain("dxb-design-max.py\" close");
+    expect(text).toContain("close command the reminder names");
   });
 });

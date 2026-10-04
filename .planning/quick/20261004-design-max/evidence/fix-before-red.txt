@@ -1,0 +1,169 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/hooks/design-max.test.ts (18 tests | 6 failed) 10737ms
+   ✓ the skill's call opens the mode for its own session > invoking dxb-design-max writes this session's flag and says nothing 14ms
+   ✓ the skill's call opens the mode for its own session > any other skill opens nothing 13ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > no flag: a prompt gets nothing 12ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > open: the prompt carries the reminder, naming the skill and the close command 27ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > another session's open mode does not reach this session 24ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > close removes this session's flag only, and the next prompt is silent 54ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > close on a mode that is not open says so and still exits 0 16ms
+   ✓ while open, each of his messages carries the reminder; closed or never opened, the hook is silent > close without a session id in its env refuses with exit 2 and touches nothing 29ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > a session id shaped like a path writes nothing, reads nothing, closes nothing 297ms
+   × no session id names a path outside the flag folder; no input makes the hook fail > a link planted at the flag is neither written through nor read as a flag nor closed 16ms
+     → expected '' to be 'keep' // Object.is equality
+   × no session id names a path outside the flag folder; no input makes the hook fail > a link to another session's flag does not carry that session's reminder 27ms
+     → expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+   × no session id names a path outside the flag folder; no input makes the hook fail > a flag folder that is a link is not trusted: nothing written, read or removed through it 13ms
+     → expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+   × no session id names a path outside the flag folder; no input makes the hook fail > a flag folder writable by others is not trusted 13ms
+     → expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+   × no session id names a path outside the flag folder; no input makes the hook fail > a FIFO at the flag neither blocks the hook nor counts as a flag 10022ms
+     → the hook did not finish in time: expected Error: spawnSync python3 ETIMEDOUT { …(5) } to be undefined
+   × no session id names a path outside the flag folder; no input makes the hook fail > close that cannot remove the flag says why on stderr, exits 1, and the mode stays open 90ms
+     → expected 'Traceback (most recent call last):\n …' to contain 'could not be removed'
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > garbage, empty and non-object stdin: exit 0, nothing on stdout or stderr 64ms
+   ✓ the registration and the skill as they stand > settings.json runs exactly this hook, as a command, on PostToolUse Skill and on UserPromptSubmit 0ms
+   ✓ the registration and the skill as they stand > the skill is named dxb-design-max, runs at effort max, and closes with the reminder's command 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hooks/design-max.test.ts > no session id names a path outside the flag folder; no input makes the hook fail > a link planted at the flag is neither written through nor read as a flag nor closed
+AssertionError: expected '' to be 'keep' // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- keep[39m
+
+ ❯ tests/hooks/design-max.test.ts:151:43
+    149|     symlinkSync(outside, flag(dir, SID));
+    150|     hook(dir, skillCall(SID, "dxb-design-max"));
+    151|     expect(readFileSync(outside, "utf8")).toBe("keep");
+       |                                           ^
+    152|     expect(hook(dir, prompt(SID))).toBe("");
+    153|     expect(close(dir, SID).stdout).toContain("not open");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > no session id names a path outside the flag folder; no input makes the hook fail > a link to another session's flag does not carry that session's reminder
+AssertionError: expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[31m+ {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "\ud83d\udfe3 DESIGN AT MAX is open for this session (dxb-team2 \u00a74 PLAN). If this message continues design, plan or architecture work, invoke Skill dxb-design-max as your FIRST step, so the rest of the turn runs at max. If this message is the CEO's yes to the plan, close the mode instead, as your first step -- `python3 \"/home/dxb/DxB Global OS/.claude/hooks/dxb-design-max.py\" close` -- and go on at the session's own level."}}[39m
+[31m+[39m
+
+ ❯ tests/hooks/design-max.test.ts:161:36
+    159|     hook(dir, skillCall(OTHER, "dxb-design-max"));
+    160|     symlinkSync(flag(dir, OTHER), flag(dir, SID));
+    161|     expect(hook(dir, prompt(SID))).toBe("");
+       |                                    ^
+    162|   });
+    163|   it("a flag folder that is a link is not trusted: nothing written, re…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > no session id names a path outside the flag folder; no input makes the hook fail > a flag folder that is a link is not trusted: nothing written, read or removed through it
+AssertionError: expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[31m+ {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "\ud83d\udfe3 DESIGN AT MAX is open for this session (dxb-team2 \u00a74 PLAN). If this message continues design, plan or architecture work, invoke Skill dxb-design-max as your FIRST step, so the rest of the turn runs at max. If this message is the CEO's yes to the plan, close the mode instead, as your first step -- `python3 \"/home/dxb/DxB Global OS/.claude/hooks/dxb-design-max.py\" close` -- and go on at the session's own level."}}[39m
+[31m+[39m
+
+ ❯ tests/hooks/design-max.test.ts:169:36
+    167|     writeFileSync(join(elsewhere, SID), "");
+    168|     symlinkSync(elsewhere, FLAGS(dir));
+    169|     expect(hook(dir, prompt(SID))).toBe("");
+       |                                    ^
+    170|     hook(dir, skillCall(OTHER, "dxb-design-max"));
+    171|     expect(existsSync(join(elsewhere, OTHER))).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > no session id names a path outside the flag folder; no input makes the hook fail > a flag folder writable by others is not trusted
+AssertionError: expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[31m+ {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "\ud83d\udfe3 DESIGN AT MAX is open for this session (dxb-team2 \u00a74 PLAN). If this message continues design, plan or architecture work, invoke Skill dxb-design-max as your FIRST step, so the rest of the turn runs at max. If this message is the CEO's yes to the plan, close the mode instead, as your first step -- `python3 \"/home/dxb/DxB Global OS/.claude/hooks/dxb-design-max.py\" close` -- and go on at the session's own level."}}[39m
+[31m+[39m
+
+ ❯ tests/hooks/design-max.test.ts:180:36
+    178|     chmodSync(FLAGS(dir), 0o777);
+    179|     writeFileSync(flag(dir, SID), "");
+    180|     expect(hook(dir, prompt(SID))).toBe("");
+       |                                    ^
+    181|   });
+    182|   it("a FIFO at the flag neither blocks the hook nor counts as a flag"…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > no session id names a path outside the flag folder; no input makes the hook fail > a FIFO at the flag neither blocks the hook nor counts as a flag
+AssertionError: the hook did not finish in time: expected Error: spawnSync python3 ETIMEDOUT { …(5) } to be undefined
+
+[32m- Expected:[39m 
+undefined
+
+[31m+ Received:[39m 
+Error {
+  "message": "spawnSync python3 ETIMEDOUT",
+  "errno": -110,
+  "code": "ETIMEDOUT",
+  "syscall": "spawnSync python3",
+  "path": "python3",
+  "spawnargs": [
+    "/home/dxb/DxB Global OS/.claude/hooks/dxb-design-max.py",
+  ],
+}
+
+ ❯ hook tests/hooks/design-max.test.ts:61:54
+     59|     timeout: LIMIT_MS,
+     60|   });
+     61|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+       |                                                      ^
+     62|   expect(r.status, r.stderr).toBe(0);
+     63|   expect(r.stderr).toBe("");
+ ❯ tests/hooks/design-max.test.ts:186:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > no session id names a path outside the flag folder; no input makes the hook fail > close that cannot remove the flag says why on stderr, exits 1, and the mode stays open
+AssertionError: expected 'Traceback (most recent call last):\n …' to contain 'could not be removed'
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- could not be removed[39m
+[31m+ Traceback (most recent call last):[39m
+[31m+   File "/home/dxb/DxB Global OS/.claude/hooks/dxb-design-max.py", line 94, in <module>[39m
+[31m+     sys.exit(close())[39m
+[31m+              ~~~~~^^[39m
+[31m+   File "/home/dxb/DxB Global OS/.claude/hooks/dxb-design-max.py", line 75, in close[39m
+[31m+     os.remove(flag)[39m
+[31m+     ~~~~~~~~~^^^^^^[39m
+[31m+ PermissionError: [Errno 13] Permission denied: '/tmp/designmaxGVkSmG/dxb-design-max/5e1f0a2b-d351-4000-8000-000000000000'[39m
+[31m+[39m
+
+ ❯ tests/hooks/design-max.test.ts:198:24
+    196|       const r = close(dir, SID);
+    197|       expect(r.status).toBe(1);
+    198|       expect(r.stderr).toContain("could not be removed");
+       |                        ^
+    199|       expect(existsSync(flag(dir, SID))).toBe(true);
+    200|     } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 12 passed (18)
+   Start at  16:17:42
+   Duration  11.08s (transform 76ms, setup 0ms, collect 13ms, tests 10.74s, environment 0ms, prepare 35ms)
+

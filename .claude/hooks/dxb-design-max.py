@@ -19,20 +19,26 @@ to that answer, "bunu yapalım tmm." (design-max-skill-every-turn-2026-10-04): t
     CLAUDE_CODE_SESSION_ID (the same id the hook receives on stdin, measured 2026-10-04).
 
 Only a session id shaped like Claude Code's (SESSION_ID) ever names a flag, so no path leaves the
-flag folder. The flags live in the runtime directory: a reboot clears them, a resumed session keeps
-its own. Stdlib only. As a hook it never fails a session: on any failure it exits 0 with nothing on
-stdout or stderr. `close` answers on stdout, and refuses with exit 2 when it has no valid session id.
+flag folder; and the folder is trusted only as a real directory (not a link) owned by this user and
+writable by no one else, every flag is reached through that folder's descriptor without following a
+link, and only a regular file counts as a flag (Sol's single pass, 2026-10-04: a planted link or FIFO
+must neither redirect a write nor block the hook). The flags live in the runtime directory: a reboot
+clears them, a resumed session keeps its own. Stdlib only. As a hook it never fails a session: on any
+failure it exits 0 with nothing on stdout or stderr. `close` answers on stdout; it refuses with exit 2
+when it has no valid session id, and exits 1 with the reason on stderr when the flag cannot be removed.
 """
 
 import json
 import os
 import re
+import stat
 import sys
 
 SKILL = "dxb-design-max"
 SESSION_ID = re.compile(r"[0-9a-f-]{8,}", re.IGNORECASE)
 FLAG_DIR = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "dxb-design-max")
 CLOSE_COMMAND = f'python3 "{os.path.abspath(__file__)}" close'
+DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
 
 
 def reminder():
@@ -40,42 +46,91 @@ def reminder():
         f"🟣 DESIGN AT MAX is open for this session (dxb-team2 §4 PLAN). If this message continues "
         f"design, plan or architecture work, invoke Skill {SKILL} as your FIRST step, so the rest of the "
         f"turn runs at max. If this message is the CEO's yes to the plan, close the mode instead, as your "
-        f"first step -- `{CLOSE_COMMAND}` -- and go on at the session's own level.")
+        f"first step, exactly as written -- `{CLOSE_COMMAND}` -- and go on at the session's own level.")
 
 
-def flag_path(session_id):
-    """The session's flag, or None when the id could name anything but a file in the flag folder."""
+def flag_name(session_id):
+    """The session's flag name, or None when the id could name anything but a file in the flag folder."""
     if not isinstance(session_id, str) or not SESSION_ID.fullmatch(session_id):
         return None
-    return os.path.join(FLAG_DIR, session_id)
+    return session_id
+
+
+def open_flag_dir(create):
+    """A descriptor on the flag folder, or None when it is missing or not to be trusted."""
+    if create:
+        try:
+            os.mkdir(FLAG_DIR, 0o700)
+        except FileExistsError:
+            pass
+    try:
+        fd = os.open(FLAG_DIR, DIR_FLAGS)
+    except OSError:  # missing, or a link (O_NOFOLLOW), or not a directory
+        return None
+    info = os.fstat(fd)
+    if info.st_uid != os.getuid() or info.st_mode & (stat.S_IWGRP | stat.S_IWOTH):
+        os.close(fd)
+        return None
+    return fd
+
+
+def is_flag(dir_fd, name):
+    """True when the name is a regular file in the folder -- a link, a FIFO or nothing is no flag."""
+    try:
+        return stat.S_ISREG(os.stat(name, dir_fd=dir_fd, follow_symlinks=False).st_mode)
+    except FileNotFoundError:
+        return False
+
+
+def open_mode(dir_fd, name):
+    if is_flag(dir_fd, name):
+        return
+    # O_EXCL: never opens what stands there already -- a link, a FIFO, another file
+    fd = os.open(name, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600, dir_fd=dir_fd)
+    os.close(fd)
 
 
 def on_hook(data):
-    flag = flag_path(data.get("session_id"))
-    if flag is None:
+    name = flag_name(data.get("session_id"))
+    if name is None:
         return
     event = data.get("hook_event_name")
     tool_input = data.get("tool_input")
-    if (event == "PostToolUse" and data.get("tool_name") == "Skill"
-            and isinstance(tool_input, dict) and tool_input.get("skill") == SKILL):
-        os.makedirs(FLAG_DIR, mode=0o700, exist_ok=True)
-        with open(flag, "w", encoding="utf-8"):
-            pass
-    elif event == "UserPromptSubmit" and os.path.isfile(flag):
-        output = {"hookSpecificOutput": {"hookEventName": event, "additionalContext": reminder()}}
-        sys.stdout.write(json.dumps(output) + "\n")
+    opening = (event == "PostToolUse" and data.get("tool_name") == "Skill"
+               and isinstance(tool_input, dict) and tool_input.get("skill") == SKILL)
+    if not opening and event != "UserPromptSubmit":
+        return
+    dir_fd = open_flag_dir(create=opening)
+    if dir_fd is None:
+        return
+    try:
+        if opening:
+            open_mode(dir_fd, name)
+        elif is_flag(dir_fd, name):
+            output = {"hookSpecificOutput": {"hookEventName": event, "additionalContext": reminder()}}
+            sys.stdout.write(json.dumps(output) + "\n")
+    finally:
+        os.close(dir_fd)
 
 
 def close():
-    flag = flag_path(os.environ.get("CLAUDE_CODE_SESSION_ID"))
-    if flag is None:
+    name = flag_name(os.environ.get("CLAUDE_CODE_SESSION_ID"))
+    if name is None:
         sys.stderr.write("dxb-design-max close: no valid CLAUDE_CODE_SESSION_ID in the environment\n")
         return 2
-    try:
-        os.remove(flag)
-    except FileNotFoundError:
+    dir_fd = open_flag_dir(create=False)
+    if dir_fd is None or not is_flag(dir_fd, name):
+        if dir_fd is not None:
+            os.close(dir_fd)
         print("design at max: not open for this session")
         return 0
+    try:
+        os.unlink(name, dir_fd=dir_fd)
+    except OSError as error:
+        sys.stderr.write(f"dxb-design-max close: the flag could not be removed -- {error}\n")
+        return 1
+    finally:
+        os.close(dir_fd)
     print("design at max: closed -- the session goes on at its own level")
     return 0
 

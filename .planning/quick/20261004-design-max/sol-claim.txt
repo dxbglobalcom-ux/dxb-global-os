@@ -1,0 +1,23 @@
+THE CEO'S WORDS (verbatim; ledger scripts/governance/ceo-approvals.json):
+- design-plan-architecture-at-max-2026-10-03: "effor neden high olsun ki plan ve mimari yapmayacak mı? ben ce max olmalı zaten aslında dxbteam2 de de ben bunu istiordum tasarım plan mimari kesinlikle opus max olarak gerçekleştirmeli bu görevi"
+- 2026-10-04, in this conversation: "bunun sürekli ben değiştiremem elle." — then, asking whether max could hold until his approval: "plan mimari bitip tamm onaylıyorum veya önerini kabul ediyorum.veya plan yapılsın gibi buna benzer birşey dediğimde başka bir tur olmuyor mu?" — then, to the answer that a skill holds max for one turn only so it is called again each turn: "bunu yapalım tmm." (design-max-skill-every-turn-2026-10-04)
+
+THIS AUDIT — one pass at the level the card gives (.planning/quick/20261004-design-max/CARD.md — for information; do not re-grade it); findings are fixed and verified by the lead; there is no second round.
+  Range: the card's range. Done-list: CARD.md, written before the code.
+  Raw output in .planning/quick/20261004-design-max/evidence/: before-red.txt, after-green.txt, live-probe.txt (two probes in scratch projects with headless `claude -p --effort high`; transcript `effort` per step).
+
+THE DECISIONS — facts, not claims to re-litigate:
+- A session cannot change its own effort for good; a skill's frontmatter `effort` applies to the rest of the turn it is invoked in and is cleared at the next user prompt (documented in Claude Code's skills page; measured in live-probe.txt).
+- One session (the lead keeps the conversation), not a handover at his yes.
+- The flag is per session id in $XDG_RUNTIME_DIR/dxb-design-max/; the close command takes the id from CLAUDE_CODE_SESSION_ID, which equals the hook's stdin session_id (measured).
+- Opening the mode is the lead's judgment on the first design turn (the door and the skill's description tell it); the hook only holds it open across turns.
+- The project hook runs in every session opened in this repository; the company's own Claude calls run with their own Claude home and settingSources [] (runtime isolation, 2026-10-03) and do not load it.
+
+WHAT TO REFUTE:
+1. Does the done-list prove what his words asked for — design/plan/architecture turns at max, back to the session's level after his yes, without his hand on /effort?
+2. The hook (.claude/hooks/dxb-design-max.py): can any input make it fail a session (non-zero exit, stderr, a hang), write or delete outside its flag folder, or remind a session whose mode another session opened? Can `close` remove anything but the caller's own flag?
+3. The registration (.claude/settings.json): does it run where the door says, and could it disturb the other hooks or the SessionStart position?
+4. The door text (.claude/skills/dxb-team2/SKILL.md §2, §4 PLAN) and the skill text: do they say what the code does — no claim the code does not keep?
+5. The test (tests/hooks/design-max.test.ts): does each case test what its title says, against the real files?
+
+Output per claim: Claim / Verdict (REFUTED | STANDS AFTER ATTEMPTED REFUTATION | UNVERIFIED) / Finding (file:line, scenario, impact) / Evidence / Correction required. Grade A (blocks) · B (repair in this pass) · C (older than this work).

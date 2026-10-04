@@ -1,7 +1,7 @@
 # Score card — design, plan and architecture at max without his hand on /effort
 
 job: Every turn of design, plan or architecture work runs at Opus 5.5 max while the session itself stays at its own level (high), without the CEO touching /effort: the lead invokes the `dxb-design-max` skill (frontmatter `effort: max`) as the first step of such a turn; a project hook marks the mode open for that session on the skill's call and, on each of his messages while it is open, reminds the lead to invoke it again; his yes to the plan closes it (`dxb-design-max.py close`) and the work goes on at the session's level
-range: (filled at commit)
+range: 5fbd909f..bdbb997c
 blast: 1
 risk: 2
 reasoning: 1
