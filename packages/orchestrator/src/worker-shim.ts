@@ -262,13 +262,15 @@ export function turnBudgetFor(allowedTools: readonly string[]): number {
 // the ONE definition the answer lanes already share (prompt-core.ts, the door
 // dxb-hamza-context: identity line, the persona WHOLE, the CEO language law, honesty, the
 // approval gate, the no-refusal law); the task lane is a parameter of it, never a copy.
+// B51 move 5 (C2-11, 2026-10-04): this line goes to every seat, tool-less ones too, so it no longer
+// asks for "a real tool call" — that request lives once, in the block sent only when the seat holds
+// tools — and it states the requirement instead of the grader's verdict ("judged empty").
 const TASK_LANE_LINE =
   "You are working ONE task from the company's queue, as this seat and nobody else. The task's " +
   "objective and output contract are the whole job: deliver exactly that with the tools you were " +
-  "given, verify with a real tool call before you answer, and never claim a check you did not run. " +
-  "Your final answer IS the delivery: never move your own task's status (no queue_transition, no " +
-  "queue_return on it) and never claim tasks (no queue_claim) — the road moves your task the moment " +
-  "you answer, and a task you moved yourself is judged empty.";
+  "given, and never claim a check you did not run. Your final answer IS the delivery — the road " +
+  "moves your task the moment you answer — so never move your own task's status (no " +
+  "queue_transition, no queue_return on it) and never claim tasks (no queue_claim).";
 
 /** Pure: the standing layer for a seat at work. Exported so the delivery can be pinned. */
 export function composeSeatPrompt(employee: SeatIdentity, personaBody: string): string {
@@ -326,8 +328,8 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
     // 2026-07-24. An evidence entry may carry `ref`, and when the contract asks
     // for a file entry it MUST.
     'An evidence entry may also be {"kind": "file", "ref": "<the exact ref your output',
-    'contract names>", "note": "<what this artifact is>"} — when the contract asks for a',
-    "file entry, copy its ref EXACTLY. A file entry without ref is rejected by the gate.",
+    'contract names>", "note": "<what this artifact is>"}. When the contract names a file',
+    "ref, the file entry carries that ref exactly.",
     ...(toolOpts
       ? [
           "",

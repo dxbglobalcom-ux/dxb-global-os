@@ -37,7 +37,7 @@ export type DecomposedEnvelope = TaskEnvelope & { deps: number[] };
 // çoğu görevde (head→specialist→worker); 5 katman yalnız gerçekten karmaşık işte"*. The same
 // row carries the reason not to go higher, and it is arithmetic rather than taste: at 95% per
 // hop, 5 hops finish 77% of the time and 6 hops 74%. Raising it further is the CEO's call.
-const MAX_HOP_DEPTH = 5; // PHASE-05 §2 row 7, complex-work clause exercised 2026-08-27
+export const MAX_HOP_DEPTH = 5; // PHASE-05 §2 row 7, complex-work clause exercised 2026-08-27
 const MAX_ENVELOPES = 10; // T-05-12 runaway-batch cap
 
 // What the model is allowed to draft. Deliberately NO model_tier (route() owns
@@ -146,11 +146,11 @@ async function runDraftQuery(prompt: string, own: ResolvedRoute): Promise<unknow
   throw new Error("decompose: agent-sdk stream ended without a result message");
 }
 
-function draftPrompt(ci: ClassifiedIntent, taskClasses: string[], departments: string[]): string {
+/** Exported so the prompt text is pinned (tests/b51/bundle2-prompts.test.ts). */
+export function draftPrompt(ci: ClassifiedIntent, taskClasses: string[], departments: string[]): string {
   return [
     "You are the task decomposer of DXB Global OS. Split the classified CEO intent",
     "into 2-10 SELF-CONTAINED work envelopes as strict JSON matching the schema.",
-    "Output JSON ONLY — no prose.",
     "",
     `Legal task_class values (choose one per envelope): ${taskClasses.join(", ")}`,
     `Live departments (choose one per envelope): ${departments.join(", ")}`,
@@ -161,7 +161,10 @@ function draftPrompt(ci: ClassifiedIntent, taskClasses: string[], departments: s
     "  'yukarıda' or 'önceki' — each envelope is the only text its worker sees.",
     "- output_contract: concrete deliverable format + done-criteria.",
     "- deps: array of indices of EARLIER envelopes this one needs finished first",
-    "  (0-based, forward references forbidden). Keep the longest chain <= 3 envelopes.",
+    // The cap the code enforces, not an older number (B51 move 5, C2-5): his order of 2026-08-27
+    // raised it to MAX_HOP_DEPTH; PHASE-05 §2 row 7 keeps ≤3 as the usual shape.
+    "  (0-based, forward references forbidden). Keep the longest chain as short as the work",
+    `  allows — usually 3 or fewer; up to ${MAX_HOP_DEPTH} only when the work truly needs it.`,
     "- approval_class: 'outward' when that envelope's work leaves the company,",
     "  'internal' when it needs internal review, else 'none'.",
     "",

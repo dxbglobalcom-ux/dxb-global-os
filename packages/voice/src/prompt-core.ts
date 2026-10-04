@@ -26,6 +26,20 @@ export type AnswerLane = "voice" | "chat" | "task";
 /** Slug of the orchestrator identity the CEO speaks to. */
 export const HAMZA_SLUG = "agents-orchestrator";
 
+/** The effort levels the SDK accepts and a routing row may carry (xhigh: 20260903190000_b43_media_hands.sql). */
+const EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const;
+export type Effort = (typeof EFFORTS)[number];
+
+/**
+ * The routing row's effort for the chat and voice lanes — ONE guard for both (B51 move 5, C2-2,
+ * 2026-10-04). The two hand-written copies listed four levels, so a row set to `xhigh` silently
+ * ran Hamza at `low`. An unknown value still falls back to `low` rather than handing the SDK a
+ * value it cannot parse.
+ */
+export function routeEffort(effort: string | null | undefined): Effort {
+  return (EFFORTS as readonly string[]).includes(effort ?? "") ? (effort as Effort) : "low";
+}
+
 /**
  * Who the agent is, in one line.
  *

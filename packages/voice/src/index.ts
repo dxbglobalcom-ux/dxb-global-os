@@ -16,6 +16,7 @@ export { loadPersonaBody } from "./persona.js";
 // definition of the orchestrator's slug (context architecture, 2026-07-30).
 export {
   HAMZA_SLUG,
+  routeEffort,
   standingPrompt,
   identityLine,
   personaBlock,
@@ -26,7 +27,7 @@ export {
   languageLine,
   noRefusalLaw,
 } from "./prompt-core.js";
-export type { AnswerLane } from "./prompt-core.js";
+export type { AnswerLane, Effort } from "./prompt-core.js";
 export { recallForAnswer } from "./answer-memory.js";
 export type { AnswerMemory, AnswerMemoryDeps } from "./answer-memory.js";
 export type { AnswerQuestion, VoiceAnswerDeps, VoiceAnswerResult } from "./answer.js";

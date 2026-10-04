@@ -53,6 +53,31 @@ function clampOutward(text: string, ci: ClassifiedIntent): ClassifiedIntent {
   return ci;
 }
 
+/**
+ * The classifier's prompt. B51 move 5 (C2-10, 2026-10-04): the "Output JSON ONLY — no prose."
+ * line went — this path is subscription-only and sends `outputFormat: json_schema`, so the
+ * schema already carries the shape. Exported so the text is pinned (tests/b51).
+ */
+export function classifyPrompt(text: string, taskClasses: readonly string[], deptSlugs: readonly string[]): string {
+  return [
+    "You are the intent classifier of DXB Global OS. Classify the CEO's intent",
+    "into strict JSON matching the given schema.",
+    "",
+    `Legal task_class values (choose exactly one): ${taskClasses.join(", ")}`,
+    `Live departments (choose one or more): ${deptSlugs.join(", ")}`,
+    "",
+    "Rules:",
+    "- intent_summary: one plain sentence restating the intent.",
+    "- departments: only slugs from the live list.",
+    "- approval_class: 'outward' when the work sends/publishes/pays outside the company,",
+    "  'internal' when it needs internal review, else 'none'.",
+    "- complexity: 'multi' when fulfilling the intent needs multiple distinct work items",
+    "  or departments, else 'single'.",
+    "",
+    `CEO intent: """${text}"""`,
+  ].join("\n");
+}
+
 async function runQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
   const q = query({
     prompt,
@@ -127,23 +152,7 @@ export async function classify(
     );
   }
 
-  const basePrompt = [
-    "You are the intent classifier of DXB Global OS. Classify the CEO's intent",
-    "into strict JSON matching the given schema. Output JSON ONLY — no prose.",
-    "",
-    `Legal task_class values (choose exactly one): ${taskClasses.join(", ")}`,
-    `Live departments (choose one or more): ${deptSlugs.join(", ")}`,
-    "",
-    "Rules:",
-    "- intent_summary: one plain sentence restating the intent.",
-    "- departments: only slugs from the live list.",
-    "- approval_class: 'outward' when the work sends/publishes/pays outside the company,",
-    "  'internal' when it needs internal review, else 'none'.",
-    "- complexity: 'multi' when fulfilling the intent needs multiple distinct work items",
-    "  or departments, else 'single'.",
-    "",
-    `CEO intent: """${text}"""`,
-  ].join("\n");
+  const basePrompt = classifyPrompt(text, taskClasses, deptSlugs);
 
   let lastError = "";
   for (let attempt = 0; attempt < 2; attempt++) {

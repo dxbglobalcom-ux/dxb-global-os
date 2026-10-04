@@ -82,7 +82,7 @@ Hız disiplini: sağlayıcı kesintisinde fallback zinciri otomatik işler (tasa
 
 ## 5. Hata önleme yöntemi
 Sessiz kalite regresyonu: eval skorları trend izlenir; düşüş eşiğinde otomatik alarm + kök neden (model mi, prompt mu, veri mi); "kimse fark etmedi" kabul edilmez — fark etmeyen ölçüm düzeni de arızalıdır.
-Maliyet sürprizi: model-başı/departman-başı token kırılımı günlük izlenir (AI Observability hattı — ADD gelene kadar kendi üzerinde); anomali aynı gün açıklanır; fiyat değişikliği sinyalleri katalogda işlenir.
+Maliyet sürprizi: model-başı/departman-başı token kırılımı günlük izlenir (AI Observability hattı — AI Observability & FinOps Analyst'te, bu role bağlı); anomali aynı gün açıklanır; fiyat değişikliği sinyalleri katalogda işlenir.
 Fallback döngüsü/zincir kırığı: fallback zincirleri döngü-korumalı (DB trigger E4 kanıtlı) ve dönemsel tatbikatlı — hiç kullanılmamış fallback, çalışmayan fallback'tir.
 Tek-tanım ihlali (BI): metrik sözlüğü dışı tanımla rapor üretimi RED; yeni metrik önce sözlüğe, sonra rapora.
 Prompt/persona sürüklenmesi: derleyici determinizmi (aynı girdi → aynı prompt) snapshot testli; hook/persona sürüm değişimlerinin prompt etkisi görünür kılınır.

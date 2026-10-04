@@ -16,7 +16,7 @@ import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 import { companyIsolation, isolationReceipt, loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
 import type { recallMemory } from "@dxb/memory-router";
-import { matchMute, matchUnmute, loadPersonaBody, recallForAnswer, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
+import { matchMute, matchUnmute, loadPersonaBody, recallForAnswer, routeEffort, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
 import {
   buildBriefSnapshot,
   classifyLeg,
@@ -62,6 +62,24 @@ export interface DrainChatResult {
   failed: number;
 }
 
+/**
+ * What is genuinely chat-lane specific, in order: the conversation register, the plan-mode or
+ * dispatch line, the leg's own instruction, and the format the board can show. B51 move 5
+ * (C2-6/7, 2026-10-04): the board renders plain text (chat-board.tsx, whitespace-pre-wrap, no
+ * markdown renderer), so the format rule carries that reason; the 8-sentence quota and the
+ * plan-mode capitals went — this call has tools: [] and cannot dispatch anything anyway.
+ */
+export function chatLaneLines(planMode: boolean, legLine = ""): string[] {
+  return [
+    "This is a CONVERSATION, not a task intake. A greeting gets a warm greeting back. A question gets a direct answer. An idea gets genuine engagement — agree, push back, refine.",
+    planMode
+      ? "Plan mode is on: think the CEO's topic through with him — propose a concrete plan (goal, steps, who does what, rough cost) and ask what to adjust. Work starts only when he dispatches it himself."
+      : "If the CEO clearly wants work executed, summarize what you would dispatch in one sentence and remind him of the 'Görev olarak gönder' button — never dispatch from chat yourself.",
+    legLine,
+    "His chat board shows plain text and does not render markdown: write plain prose, and when you list steps or options use plain numbered lines without #, ** or other markdown symbols. Answer at the length the question needs.",
+  ];
+}
+
 async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string> {
   // One brain (V2): the same subscription routing rows the kernel uses.
   const rules = await loadPolicy(db);
@@ -102,12 +120,7 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
       lang: q.lang,
       lane: "chat",
     }),
-    "This is a CONVERSATION, not a task intake. A greeting gets a warm greeting back. A question gets a direct answer. An idea gets genuine engagement — agree, push back, refine.",
-    planMode
-      ? "PLAN MODE is ON: think through the CEO's topic WITH him — propose a concrete plan (goal, steps, who does what, rough cost), ask what to adjust. DO NOT start any work; the CEO dispatches explicitly when he is satisfied."
-      : "If the CEO clearly wants work executed, summarize what you would dispatch in one sentence and remind him of the 'Görev olarak gönder' button — never dispatch from chat yourself.",
-    legInstruction(q.leg, q.snapshot, q.lang),
-    "No markdown headers. Keep it under 8 sentences unless the CEO asked for depth.",
+    ...chatLaneLines(planMode, legInstruction(q.leg, q.snapshot, q.lang)),
   ].filter(Boolean).join("\n\n");
 
   const historyText = q.history
@@ -120,11 +133,8 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
       model: SDK_MODEL_IDS[r.model] ?? r.model,
-      effort: (["low", "medium", "high", "max"].includes(r.effort ?? "") ? r.effort : "low") as
-        | "low"
-        | "medium"
-        | "high"
-        | "max",
+      // the routing row's effort through the one guard both answer lanes share (prompt-core, C2-2)
+      effort: routeEffort(r.effort),
       tools: [],
       // maxTurns 1 starves the SDK of its final text turn (measured
       // error_max_turns on the voice fast lane, probe 30ddba44) — keep 4.

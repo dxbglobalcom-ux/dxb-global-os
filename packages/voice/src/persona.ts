@@ -47,7 +47,10 @@ export async function loadPersonaBody(
     // Sending the dossier table as if it were an identity is what this fix exists to stop, so
     // an unwritten persona yields nothing rather than a table.
     if (start < 0) return "";
-    return text.slice(start).trim();
+    // HTML comments are the file's own bookkeeping — version lines (`<!-- v1 · fable-5 · … -->`),
+    // the §12 note, approval markers — never the employee's mind; none reaches a model (B51 move 5,
+    // R14, 2026-10-04). The DB copy and its gate keep the whole file (sync-personas-to-db.sh).
+    return text.slice(start).replace(/<!--[\s\S]*?-->/g, "").replace(/\n{3,}/g, "\n\n").trim();
   } catch {
     return "";
   }

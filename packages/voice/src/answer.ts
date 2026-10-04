@@ -16,7 +16,7 @@ import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./spe
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
 import { logCall } from "./log.js";
 import { loadPersonaBody } from "./persona.js";
-import { HAMZA_SLUG, standingPrompt } from "./prompt-core.js";
+import { HAMZA_SLUG, routeEffort, standingPrompt } from "./prompt-core.js";
 
 // Re-exported, not re-declared: `prompt-core` owns the one definition of who the CEO is talking
 // to, and the standing instructions both answer lanes carry. Before 2026-07-30 this slug was
@@ -69,6 +69,22 @@ export interface VoiceAnswerResult {
 
 type TranscriptLine = { role: string; text: string; at: string; intent_id?: string | null; lang?: string };
 
+/**
+ * What is genuinely spoken-lane specific: the format a voice needs, with its reason, and the
+ * TOPIC contract the transcript header parses. B51 move 5 (C2-8, 2026-10-04): the fixed
+ * "2-4 sentences" quota went — the length is what the question needs; the no-markdown need stays
+ * because text-to-speech would read the symbols out.
+ */
+export function voiceLaneLines(lang: "tr" | "en"): string[] {
+  return [
+    "This is a VOICE call and the answer is read aloud by text-to-speech: answer in a few short spoken sentences — only what the question needs — with no markdown or list symbols, which the voice would read out.",
+    lang === "tr"
+      ? "Bir insana sesli söylendiğinde kulağa doğal gelmeli: tam cümleler kur, devrik ya da telgraf üslubu kullanma."
+      : "It must sound natural when read aloud to a person: complete sentences, no telegraphic compression.",
+    `First line of your output MUST be exactly "TOPIC: <2-4 word topic of the question in ${lang === "tr" ? "Turkish" : "English"}>", then an empty line, then the spoken answer. The TOPIC line is never spoken.`,
+  ];
+}
+
 async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string> {
   // One brain (V2): same subscription path and routing rows the kernel uses.
   // Voice is a LATENCY-CRITICAL lane (registered adaptation 2026-07-17): a
@@ -102,11 +118,7 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
       lang: q.lang,
       lane: "voice",
     }),
-    "This is a VOICE call: answer in 2-4 short spoken sentences, no markdown, no lists.",
-    q.lang === "tr"
-      ? "Bir insana sesli söylendiğinde kulağa doğal gelmeli: tam cümleler kur, devrik ya da telgraf üslubu kullanma."
-      : "It must sound natural when read aloud to a person: complete sentences, no telegraphic compression.",
-    `First line of your output MUST be exactly "TOPIC: <2-4 word topic of the question in ${q.lang === "tr" ? "Turkish" : "English"}>", then an empty line, then the spoken answer. The TOPIC line is never spoken.`,
+    ...voiceLaneLines(q.lang),
   ].filter(Boolean).join("\n\n");
   const historyText = (q.history ?? [])
     .map((m) => `${m.role === "ceo" ? "CEO" : "Hamza"}: ${m.content}`)
@@ -121,12 +133,8 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
       // The hardcoded "low" silently overrode the row and made the voice lane
       // the one place a CEO dashboard change could not reach. Same guard idiom
       // as chat-drain: an unknown row value falls back to "low" rather than
-      // handing the SDK a value it cannot parse.
-      effort: (["low", "medium", "high", "max"].includes(r.effort ?? "") ? r.effort : "low") as
-        | "low"
-        | "medium"
-        | "high"
-        | "max",
+      // handing the SDK a value it cannot parse. One guard for both lanes (prompt-core).
+      effort: routeEffort(r.effort),
       tools: [],
       // Same lesson as classify NOT 1: with maxTurns 1 the SDK cannot recover
       // when the model spends its only turn before the final text — measured

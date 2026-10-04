@@ -1,0 +1,45 @@
+PERSONA RULER — one metre for the builder and the checker
+
+  R 1 sentence-length
+  R 2 line-terminator
+  R 3 paren-depth
+  R 4 paren-balance
+  R 5 no-duplicate-clause
+  R 6 voice-residue
+  R 7 three-roads
+  R 8 no-model-name
+  R 9 section-12-identity
+  R10 delivery-header
+  R11 canonical-law-paragraph
+  R12 concept-contract
+  R13 dossier-date
+
+seat                                    R1  R2  R3  R4  R5  R6  R7  R8  R9 R10 R11 R12 R13   verdict
+-----------------------------------------------------------------------------------------------------
+ciso                                                                                         NOT-MEASURED (outside the ruler's contract)
+platform-head                                                                                NOT-MEASURED (outside the ruler's contract)
+chief-ai-officer                                                                             NOT-MEASURED (outside the ruler's contract)
+
+rule                       seats failing  failures
+--------------------------------------------------
+sentence-length                        0         0
+line-terminator                        0         0
+paren-depth                            0         0
+paren-balance                          0         0
+no-duplicate-clause                    0         0
+voice-residue                          0         0
+three-roads                            0         0
+no-model-name                          0         0
+section-12-identity                    0         0
+delivery-header                        0         0
+canonical-law-paragraph                0         0
+concept-contract                       0         0
+dossier-date                           0         0
+
+
+RULER: 0/0 PASS · §12 canon 16e9ced6 · law canon 578bf86a
+SUBMIT ciso — persona id: aaaecad1-9214-4895-823d-2c2324287886 · author: opus-5 (pending; gate verdikti ayrı adım)
+SUBMIT platform-head — persona id: 19a32620-bd0e-4014-92f8-99f78dc50d01 · author: opus-5 (pending; gate verdikti ayrı adım)
+SUBMIT chief-ai-officer — persona id: fb554cf5-1048-4a8f-a904-0ec4d5b9c966 · author: opus-5 (pending; gate verdikti ayrı adım)
+---
+submit: 3 · skip(⏳): 0 · fail: 0
