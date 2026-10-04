@@ -112,6 +112,7 @@ WeChat DevTools chain: primary build/debug environment — with the standing cav
 Real-device matrix (iOS + Android WeChat, incl. low-end): the verification floor — matrix composition is recorded and maintained.
 Platform console (submission, gray release, quotas): read freely; every WRITE action is approval-referenced (outward surface).
 Policy/doc sources (official, current): the pre-scan's ground truth — cached copies are never trusted over the live text at submission time.
+Announcements (the system broadcasts these from this seat's task states): delivery/submission/release states visible in the task stream.
 Limits: no unapproved platform writes (fail-closed); no custody of merchant credentials (vault/IAM-SO); no direct client commitments (contract gate); no outbound money actions; model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

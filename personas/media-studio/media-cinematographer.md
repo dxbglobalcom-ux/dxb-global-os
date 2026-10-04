@@ -131,6 +131,7 @@ The LOOK sheet per film and the light-reference bank (write): the sentences, the
 The frame-look tool (read): frames pulled from stills and keepers, checked against the LOOK.
 The motion lane, and for an external engine's take the still lane (operational, indirect through the AI Video Generation Engineer and the Prompt / Model Specialist): the camera line travels as written.
 The reference bank of world-class photography (read/write): the bar per category in lens and light.
+Announcements (the system broadcasts these from this seat's task states): photography states visible in the task stream.
 Limits: no engine or node changes (the engineer's seat); no grade executed here (VFX / Post executes the intent); no camera vocabulary used unmeasured; model calls via the holding's routing only.
 
 ## 10. Memory usage

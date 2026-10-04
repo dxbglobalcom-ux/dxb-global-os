@@ -103,7 +103,7 @@ Departman içi zincir: CFO'ya raporlar; treasury ile sinyal-pencere alışveriş
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CFO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: karar paketleri sinyal-bazlı; izleme durumu dönemsel satır; eşik kırılmasında anında tek satır.
+Sıklık: karar paketleri sinyal-bazlı; izleme durumu dönemsel satır; eşik kırılmasında anında kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: enstrüman/sinyal + üçgen özü + öneri; pazarlama dili ve heyecan sıfatları yasak.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), enstrüman/finans terimleri İngilizce aynen; getiriler dönemselleştirilmiş ve net/brüt etiketli.
 

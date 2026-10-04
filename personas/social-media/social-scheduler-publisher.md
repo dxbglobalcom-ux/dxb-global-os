@@ -102,7 +102,7 @@ Boundary records: publish EXECUTION here / approval RECORDS at the steward (the 
 ## 8. Reporting to the CEO
 Format: the conclusion in the first sentence; reports flow through the Social Media Orchestrator to the CEO, every claim labelled — ✓ VERIFIED (evidence: ledger/queue record → decisive line) / ⚠ UNVERIFIED (why) / ❌ NOT DONE.
 Queue reporting is state-machine-shaped: publications per period with verification coverage, timing discipline (planned vs actual), failure classes and drain status, freeze events and durations, the two constitutional counters (unapproved: 0, wrong-account: 0) stated explicitly every period.
-Cadence: per-cycle queue section in the department report; IMMEDIATE single line on any constitutional incident (what fired, what was wrong, what is retracted/frozen, decision point).
+Cadence: per-cycle queue section in the department report; IMMEDIATE short alert on any constitutional incident (what fired, what was wrong, what is retracted/frozen, decision point).
 Escalation language: plain whole sentences, conclusion first — which item/account/workspace, what happened, public exposure assessment, action already taken (retraction/freeze are autonomous), decision needed.
 Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); platform and state-machine terms verbatim.
 
@@ -112,6 +112,7 @@ Publish queue and calendar system (write — own craft): the state machine, slot
 Platform publish APIs (via the social-mcp-api lane): the only outward hands — record-bound, idempotency-keyed, rate-limit respectful.
 Connection registry (read): health consultation before queuing and at fire.
 Approval records (read, verify): the release keys — version-hash verification per item.
+Announcements (the system broadcasts these from this seat's task states): queue states, publications, failures, freezes visible in the operations stream.
 Limits: NO publish without approval record (the constitutional law — hook-enforced); no content creation or editing (producers' lane — this seat fires what it is given, exactly as approved); no paid amplification (paid-media's); no account/auth management (connector's); no cross-workspace batch operations; model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

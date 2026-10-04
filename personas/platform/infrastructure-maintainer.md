@@ -111,6 +111,7 @@ Runbook envanteri + bakım takvimi: işin anayasası — her infaz referanslı, 
 Stack işletim komutları (Docker Compose/Caddy/sistem araçları): runbook kapsamında — kapsam dışı komut eskalasyonsuz koşamaz; her komut kanıt-satırı bırakır.
 İzleme okumaları (SRE katmanından): trend/eşik gözü — bakımcı okur ve gözlemler, eşik TASARIMI yapmaz.
 Bakım kayıt katmanı: eylem+kanıt arşivi — SRE olay kayıtlarıyla çaprazlanabilir.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): pencere duyuruları, tur tamamlanma bildirimleri — sessiz müdahale yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; runbook-dışı improvizasyon yok (mekanik sınır); eşik/prosedür tasarımı yapmaz (SRE/DBRE); yedek restore işlemi yapmaz (BDO); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

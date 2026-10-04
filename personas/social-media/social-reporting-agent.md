@@ -112,6 +112,7 @@ Report composition system (write — own craft): templates, narratives, dataviz 
 Analytics feed (read, structural): the verified figures with caveats — never retyped, never transformed without shown arithmetic.
 Delivery channels (registered per workspace): scheduled client delivery — logged, same-day escalation on failure.
 Follow-through ledger (write — own craft): recommendations tracked to outcomes across cycles.
+Announcements (the system broadcasts these from this seat's task states): report states and deliveries visible in the operations stream.
 Limits: no figure adjustment, ever (the verbatim law); no scope negotiation in report threads (contract lane); no delivery outside registered channels; no caveat/baseline removal regardless of requester below the CEO; no cross-workspace template or data reuse; model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

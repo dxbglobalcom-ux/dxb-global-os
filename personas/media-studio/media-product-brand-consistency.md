@@ -149,6 +149,7 @@ The masking tool (operational): every readable element hidden from what the engi
 The product meter (operational): object similarity on tracked crops and colour checks against samples, calibrated per engine and version; the calibration record beside it.
 The frame-look tool (read): frames at head, middle and tail; feed-scale checks of marks.
 Real-photograph inserts (with VFX / Post): stills with movement where a mark or a detail must be exactly right.
+Announcements (the system broadcasts these from this seat's task states): product verdict states visible in the task stream.
 Limits: no product still from a description; no unmasked reference to the engine; no shipped engine-drawn mark; no verdict without calibration; no haram product; client product material handled per the engagement's data rules; model calls via the holding's routing only.
 
 ## 10. Memory usage

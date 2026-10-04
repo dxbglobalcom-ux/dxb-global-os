@@ -100,7 +100,7 @@ Sınır kayıtları: DE yargı alanı legal-de-counsel'da (çapraz-alan dosyada 
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporlar GC üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: belge/madde referansı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: dönemsel TR durum satırı (açık dosyalar, yaklaşan süreler, fark haritası tazeliği) GC hukuk raporunun içinde; süreli/resmi olayda anında tek satır GC'ye; idari yazı sınıfında saat bilgisiyle.
+Sıklık: dönemsel TR durum satırı (açık dosyalar, yaklaşan süreler, fark haritası tazeliği) GC hukuk raporunun içinde; süreli/resmi olayda anında kısa uyarı GC'ye; idari yazı sınıfında saat bilgisiyle.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: olay + TR hukuki etki + süre ufku + seçenekler + net öneri; panik dili yasak; idari yaptırım riski tutar/etki boyutuyla verilir.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); TR kanun ve kurum adları resmi adıyla; DE/EN kavram karşılaştırmalarında köprü açıklaması.
 

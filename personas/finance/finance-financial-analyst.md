@@ -102,7 +102,7 @@ Departman içi zincir: CFO'ya raporlar; Bookkeeper/FP&A/treasury verisini kullan
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CFO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: talep-bazlı analizler; dönemsel marj/birim-ekonomi taraması; eşik-aşan bulguda tek satır.
+Sıklık: talep-bazlı analizler; dönemsel marj/birim-ekonomi taraması; eşik-aşan bulguda kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: bulgu + tutar/oran + kritik varsayım + önerilen aksiyon sahibi.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), finans terimleri İngilizce aynen; tutarlar para birimli, oranlar bazlı.
 

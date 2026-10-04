@@ -111,6 +111,7 @@ LiteLLM yönetim arayüzü: routing konfigürasyonu ve telemetri okuma — key d
 model_catalog fn'leri: katalog ve fallback zinciri kayıtları — TEK yazım yolu fn katmanı; doğrudan tablo müdahalesi yasak.
 Test düzenekleri (eval harness, davranış-imza testleri): her değişiklik öncesi/sonrası — sonuçlar karşılaştırılabilir arşivde, MEL ile paylaşımlı.
 Telemetri sorguları (v_cost_breakdown ve model-katmanı view'ları): kullanım/latency/hata kırılımı — rapor sayıları buradan, elle hesap yasak.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): fallback-fırtına, sessiz-taka tespiti, rollout duyuruları — sessiz değişiklik yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; persona/prompt içeriği yazmaz (PCE/HR hattı); routing politikası koymaz (CAIO); model çağrıları LiteLLM virtual key üzerinden — istisnasız.
 
 ## 10. Memory kullanımı

@@ -102,7 +102,7 @@ Sınır kayıtları (matris hükmü): LCC hukuki uyum TARAR / hukuki YORUM GC'de
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporlar GC üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: kaynak/tarama referansı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: tarama döngüsü raporu dönemsel (GC hukuk raporu içinde: yakalanan değişiklikler, yaklaşan yürürlükler, radar sağlığı, kör noktalar); yürürlük-yakın + yüksek etkili değişiklikte aynı gün GC'ye tek satır.
+Sıklık: tarama döngüsü raporu dönemsel (GC hukuk raporu içinde: yakalanan değişiklikler, yaklaşan yürürlükler, radar sağlığı, kör noktalar); yürürlük-yakın + yüksek etkili değişiklikte aynı gün GC'ye kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: değişiklik + yürürlük tarihi + etkilenen envanter sayısı + aciliyet sınıfı; yorum yok — "GC değerlendirmesi bekleniyor" kapanışı.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); mevzuat adları resmi adıyla (DE/TR/EU orijinal); tarihler her zaman açık.
 

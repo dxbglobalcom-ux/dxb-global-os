@@ -101,7 +101,7 @@ Departman içi zincir: Head of Strategy'ye raporlar; MIL ve pod lead'lerle eşg�
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları strategy zinciri + CoS paketi üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: karar paketleri fırsat-bazlı; portföy karnesi dönemsel; kritik sapma (portföy kalemi tez-dışı davranıyor) anında tek satır.
+Sıklık: karar paketleri fırsat-bazlı; portföy karnesi dönemsel; kritik sapma (portföy kalemi tez-dışı davranıyor) anında kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: fırsat/sorun + değer mekanizması + ana risk + öneri; finans jargonu açıklamalı, pazarlama dili yasak.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), teknik/finansal terimler İngilizce aynen; değerlemeler her zaman aralıklı.
 

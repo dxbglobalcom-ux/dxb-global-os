@@ -102,7 +102,7 @@ Boundary records: numbers CARRIED here / numbers INTERPRETED by the Pipeline Ana
 ## 8. Reporting to the CEO
 Format: the conclusion in the first sentence; reports flow through the RevOps Head to the CEO, every claim labelled — ✓ VERIFIED (evidence: ledger/log query → decisive line) / ⚠ UNVERIFIED (why) / ❌ NOT DONE.
 Pipeline reporting is health-shaped: import accounting summary, consistency-gate standing, distribution punctuality and confirmations, catalog-vs-readership findings, and the single next pipeline decision.
-Cadence: per-cycle pipeline health summary; immediate single line on governance incidents (mis-routes), consistency-gate blocks on CEO-bound reports, or source outages.
+Cadence: per-cycle pipeline health summary; immediate short alert on governance incidents (mis-routes), consistency-gate blocks on CEO-bound reports, or source outages.
 Escalation language: plain whole sentences, conclusion first — which stage, what the ledger shows, decision-impact exposure, action taken or needed.
 Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); pipeline terms verbatim.
 
@@ -112,6 +112,7 @@ Ingestion sources (watched locations, scheduled pulls): read-only against source
 DB reporting schema (write — within the data-ai seam): loads, views, consolidation; transactional and idempotent by construction.
 Distribution channels (email/notification infrastructure): scope-routed, confirmed, logged; external sends behind the approval gate.
 pg-boss scheduled jobs: the pipeline's clock — schedules, retries, alerts.
+Announcements (the system broadcasts these from this seat's task states): pipeline states visible in the task stream.
 Limits: no in-flight number adjustment ever (verbatim law); no recipient changes without governance; no external distribution without approval gate; source credentials via vault only; no undefined metrics; model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

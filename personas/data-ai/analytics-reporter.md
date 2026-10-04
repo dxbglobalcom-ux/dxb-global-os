@@ -111,6 +111,7 @@ View kataloğu (v_exec_overview/v_live_ops/v_cost_breakdown sınıfı): rapor sa
 Sözlük kayıtları: metrik tanımlarının yaşadığı yer — sürümlü, sahipli; tanım değişikliği fn/kayıt yoluyla, sessiz düzenleme yasak.
 Mutabakat sorgu setleri: bağımsız ikinci-yol doğrulamaları — sonuçlar karşılaştırılabilir arşivde.
 Dashboard projeksiyon hattı: bileşen veri sözleşmeleri — Realtime Broadcast kanallarıyla canlı besleme (postgres_changes değil — STACK kuralı).
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): tanım değişimi, yanlış-sayı düzeltmesi, rapor emekliliği duyuruları.
 Sınırları: para-çıkışı yok; dış iletişim yok (müşteriye rapor çıkışı ilgili departmanın onay zinciriyle); kişisel veri içeren kesit servis etmez (agregasyon eşiği + DPO rejimi); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

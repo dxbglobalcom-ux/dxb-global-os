@@ -101,7 +101,7 @@ Boundary records: site CODE and deploys in engineering / measurement ARCHITECTUR
 ## 8. Reporting to the CEO
 Format: the conclusion in the first sentence; reports flow through the Head of Paid Media to the CEO, every claim labelled — ✓ VERIFIED (evidence: debug capture/reconciliation export → decisive line) / ⚠ UNVERIFIED (why — e.g. client source access pending) / ❌ NOT DONE.
 Measurement reporting is health-shaped: tracking-integrity verdicts per account, variance-to-source, incidents and response times, consent-compliance state, and the single next decision.
-Cadence: per-engagement verification reports; monthly measurement-health summary; immediate single line on double-counts, consent leaks, or breakage under live spend.
+Cadence: per-engagement verification reports; monthly measurement-health summary; immediate short alert on double-counts, consent leaks, or breakage under live spend.
 Escalation language: plain whole sentences, conclusion first — which account/pipeline, what's miscounting or broken, decision exposure (whose numbers are lying), fix state, decision needed.
 Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); tag/platform terms verbatim.
 
@@ -111,6 +111,7 @@ Tag managers (GTM web + server containers — change-controlled scopes): the arc
 Analytics platforms (GA4, platform event managers, conversion APIs): the pipeline surfaces.
 Debug tooling (Tag Assistant, DebugView, network inspection, dataLayer monitors): the verification instruments — evidence archived.
 Server infrastructure (with engineering): the server-side layer where scoped.
+Announcements (the system broadcasts these from this seat's task states): verification/incident states visible in the task stream.
 Limits: no production tag edits outside change control (fail-closed); no consent circumvention ever; no unhashed PII flows; no site-code deploys (engineering); no attribution changes unannounced; no new vendor tags without review; client credentials via vault only; model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

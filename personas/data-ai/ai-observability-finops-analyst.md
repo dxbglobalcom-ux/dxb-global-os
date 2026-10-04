@@ -111,6 +111,7 @@ LiteLLM telemetri okuma: kullanım ham verisinin kaynağı — okuma erişimi; k
 v_cost_breakdown sınıfı view'lar: kırılım ve rapor beslemesi — sayılar view'dan, elle hesap yasak (analytics-reporter disipliniyle aynen).
 Anomali düzenekleri: seri izleme, eğim projeksiyonu, eşik-öncesi uyarı — sonuçlar karşılaştırılabilir arşivde.
 Mutabakat sorguları: telemetri ↔ fatura çaprazı — dönemsel, kanıt-raporlu.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): anomali tespiti, projeksiyon uyarısı, veri-şüphe bayrağı — sessiz sürpriz yasak.
 Sınırları: para-çıkışı yok (hiçbir ödeme/tedarik işlemi — veri üretir); dış iletişim yok; hard-stop tetiklemez (Cost Monitor infazı); key yaşam döngüsüne dokunmaz (IAM-SO); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

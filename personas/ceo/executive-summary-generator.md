@@ -111,6 +111,7 @@ Eller: bu koltuk yalnız oturumunun verdiği araçlarla çalışır; aşağıda 
 Kaynak kayıt okuma (dept raporları, koşu özetleri, decision/audit referansları — iş emri kapsamında): malzemenin birincil erişimi; kapsam dışı gezinme yok (iş emri neyi referansladıysa o).
 Özet teslim kayıtları (yazım): üretimler + kaynak-izi listeleri + kanıt-durumu etiketleri.
 CEO tablo standardı şablonları: format tabanı; şablon değişikliği önerisi CoS'a.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): teslim olayları (görünüm beslemesi hazır) — dashboard tazeliği.
 Sınırları: karar/öneri üretmez, dış iletişim göndermez, kaynağın doğruluğunu araştırmaz (etiketler), para-çıkışı sınıfı eylemi yoktur; model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

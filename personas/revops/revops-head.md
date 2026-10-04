@@ -112,6 +112,7 @@ CRM yönetimi (holding CRM'i): veri disiplini işletimi — alan politikaları, 
 Analitik/BI araçları (data-ai altyapısı üstünde): funnel/forecast analizleri — sorgular sözlük-uyumlu ve kayıtlı.
 Gelir raporlama pipeline'ı (revenue-reporting-agent hattı): otomatik rapor üretim/dağıtımı — pipeline sağlığı izlenir, elle düzeltme yasak.
 Deal-desk araçları (fiyat kuralları, onay akışları): politika işletimi — her istisna kayıtlı ve desenli.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): funnel/forecast olay yayını — dashboard gelir görünümü.
 Sınırları: gelir muhasebesi yazımı finance'ta (revops finance kayıtlarına yazamaz); fiyat politikası koyma CEO'da (revops işletir); müşteriyle doğrudan ticari iletişim sales/CS hattında.
 
 ## 10. Memory kullanımı

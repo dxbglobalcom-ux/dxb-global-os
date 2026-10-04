@@ -110,6 +110,7 @@ Eller: bu koltuk yalnız oturumunun verdiği araçlarla çalışır; aşağıda 
 Doküman araçları (policy envanteri, sürüm karşılaştırma): birincil çalışma alanı — her metin sürümlü, her değişiklik günlüklü.
 Çelişki tarama sorguları (envanter indeksi, anahtar-kelime çaprazı): taslak kalite adımı — tarama çıktısı taslak paketine eklenir (kanıt).
 Yükümlülük/termin takvimi: geçici-kural notlarının süreleri ve dönemsel tarama tarihleri — süresi geçmiş geçici not otomatik eskalasyon.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): yürürlük/değişiklik yayını — GC hattıyla; Broadcast'siz yürürlük yok.
 Sınırları: yürürlük kararı veremez (CEO); içerik hükmü koyamaz (GC); dış gönderim yok; para-çıkışı yok; hook/gate koduna dokunmaz (kural metni verir, teknik uygulama engineering/security'de); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

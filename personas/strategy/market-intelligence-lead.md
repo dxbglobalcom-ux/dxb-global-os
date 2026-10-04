@@ -101,7 +101,7 @@ Departman içi zincir: Head of Strategy'ye raporlar; CorpDev ve pod lead'lerle k
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları strategy zinciri üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; pazar iddiaları kaynak-tarihli.
-Sıklık: dönemsel istihbarat özeti (Head of Strategy paketinde); kritik sinyalde anında tek satır (zincir üzerinden); talep-bazlı servisler talep sahibine.
+Sıklık: dönemsel istihbarat özeti (Head of Strategy paketinde); kritik sinyalde anında kısa uyarı (zincir üzerinden); talep-bazlı servisler talep sahibine.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: sinyal + kaynak + karara olası etki; sansasyon dili yasak — "kritik" etiketi tanımlı eşikten.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), pazar/teknik terimler İngilizce aynen; kaynak adları orijinal.
 

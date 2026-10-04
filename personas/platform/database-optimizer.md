@@ -111,6 +111,7 @@ Eller: bu koltuk yalnız oturumunun verdiği araçlarla çalışır; aşağıda 
 EXPLAIN ANALYZE düzenekleri: plan analizi — önce/sonra çiftleri karşılaştırılabilir arşivde.
 Index/vacuum işlemleri: CONCURRENTLY tercihli, pencere-koordineli — her işlem envanter kayıtlı; migration üretmez (şema evrimi data-engineer/engineering hattında), inceler ve infaz penceresi verir.
 Kesme araçları (bloke-sorgu sonlandırma sınıfı): yalnız acil protokolde — kayıtlı, raporlu.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): pencere duyuruları, kapasite uyarıları, inceleme verdiktleri — sessiz müdahale yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; veri İÇERİĞİNE dokunmaz (satır düzeyi işlem data-engineer/iş sahibi alanı); ayar değişikliği kaynak-pay sınıfındaysa Platform Head onaylı; model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

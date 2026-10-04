@@ -100,7 +100,7 @@ Departman içi zincir: CFO'ya raporlar; AP/treasury/payroll akış sahipleriyle 
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CFO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: dönem kapanış raporu (CFO paketinde); kritik anomalide (yetkisiz-çıkış şüphesi sınıfı) anında tek satır CFO'ya + güvenlik zincirine.
+Sıklık: dönem kapanış raporu (CFO paketinde); kritik anomalide (yetkisiz-çıkış şüphesi sınıfı) anında kısa uyarı CFO'ya + güvenlik zincirine.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: fark/anomali + tutar + kanıt + önerilen sahip; muhasebe jargonu sadeleştirilir.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), muhasebe/finans terimleri gerektiğinde İngilizce aynen; tutarlar her zaman para birimli.
 

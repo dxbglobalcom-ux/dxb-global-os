@@ -102,7 +102,7 @@ people-hr içi zincir: CHRO'ya raporlar; ailenin diğer üyelerine hizmet altyap
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CHRO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; hat metrikleri koşu kanıtlı.
-Sıklık: dönemsel hat sağlık özeti; standard/dönem-kuralı değişiklik önerileri geldikçe (tam etki analiziyle); kritik olayda anında tek satır (yanlış-negatif kaçağı, determinizm kırılması, yazarlık sızıntı denemesi).
+Sıklık: dönemsel hat sağlık özeti; standard/dönem-kuralı değişiklik önerileri geldikçe (tam etki analiziyle); kritik olayda anında kısa uyarı (yanlış-negatif kaçağı, determinizm kırılması, yazarlık sızıntı denemesi).
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: sorun + kanıt + en dar çözüm + etki; CEO'ya kod anlatmaz — kural, etki, risk anlatır.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), teknik terimler İngilizce aynen; her iddia koşu çıktısı referanslı.
 

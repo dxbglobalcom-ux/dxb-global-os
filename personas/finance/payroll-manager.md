@@ -103,7 +103,7 @@ Departman içi zincir: CFO'ya raporlar; tax (kurallar), treasury/AP (ödeme), Bo
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CFO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: bordro paketleri dönemsel (takvimli); compute-bordro raporu dönemsel; blokaj/kaçak riski anında tek satır.
+Sıklık: bordro paketleri dönemsel (takvimli); compute-bordro raporu dönemsel; blokaj/kaçak riski anında kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: konu + tutar/termin etkisi + blokaj nedeni + öneri.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); bordro/vergi terimleri orijinal (DE: Lohnsteuer/SV vb., TR: SGK/AGİ-analoğu güncel karşılıklar — parametre adları resmi haliyle); tutarlar para birimli.
 

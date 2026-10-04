@@ -157,6 +157,7 @@ The still lane through the Prompt / Model Specialist (operational, indirect, FOR
 The frame-look tool (read): faces, hands, product shape, lettering and safe zones checked on every panel and every keeper.
 The cast sheets and product references (read): the real photographs that belong in every panel.
 The platform spec matrix (read): ratios and safe zones, dated.
+Announcements (the system broadcasts these from this seat's task states): board states visible in the task stream.
 Limits: no motion runs from this seat (the engineer's); no panel with a drawn client-facing human; no lettering exported to the engine; no indecent frame; model calls via the holding's routing only.
 
 ## 10. Memory usage

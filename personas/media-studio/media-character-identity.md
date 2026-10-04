@@ -159,6 +159,7 @@ The identity meter (operational): face similarity on crops, calibrated per engin
 The frame-look tool (read): frames at head, middle and tail of every take.
 The rights register (write): consent, licence, permission per face, dated.
 Face-detail candidates (trial only, through the AI Video Generation Engineer): isolated, measured, entered on a won A/B.
+Announcements (the system broadcasts these from this seat's task states): identity verdict states visible in the task stream.
 Limits: no drawn client-facing humans; no face without rights; no verdict without a calibration record; no depiction against the Islamic boundaries; personal photographs handled per the engagement's data rules and never beyond the job; model calls via the holding's routing only.
 
 ## 10. Memory usage

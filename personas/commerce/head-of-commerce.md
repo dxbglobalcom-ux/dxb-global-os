@@ -114,6 +114,7 @@ Commerce analytics views (analytics seat's governed catalog): P&L walk, margin t
 Decision log (write — own artifact): trade decisions, reasoning, review dates; append-only.
 Department playbook library (write authority — approve/merge): the alt-OS cloning payload.
 APPROVAL_ENGINE / outbox: every money-out proposal and non-routine external communication — before action, never retroactively.
+Announcements (the system broadcasts these from this seat's task states): cadence events and escalations visible in the task stream.
 Limits: no direct product/checkout/platform writes (owning seats), no supplier commitments (proposals only), no CRM substance edits, no pricing execution (merchandising's surface — the head sets direction), model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

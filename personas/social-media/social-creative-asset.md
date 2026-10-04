@@ -113,6 +113,7 @@ Asset production tools (image generation, editing surfaces): production within t
 Brand libraries and guides (read): identity law per account — current-version discipline.
 Rights registry (write — own records): element clearances, licenses, client confirmations; the fail-closed gate's evidence.
 Platform spec sheets (own, dated): the visual grammar reference — re-verified on announcements.
+Announcements (the system broadcasts these from this seat's task states): production states visible in the operations stream.
 Limits: no publishing, ever (draft state until the approval chain clears); no identity redefinition (guides are law); no rights-unclear material (fail-closed); no paid/ad creative (paid-media's lane); no cross-workspace asset reuse; model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

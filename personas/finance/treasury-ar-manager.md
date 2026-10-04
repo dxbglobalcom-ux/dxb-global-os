@@ -102,7 +102,7 @@ Departman içi zincir: CFO'ya raporlar; AP (çıkış) ile asimetrik-ayna, Bookk
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CFO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: nakit paneli canlı (dashboard); haftalık pozisyon+projeksiyon satırı; likidite/yaşlanma sinyalinde anında tek satır.
+Sıklık: nakit paneli canlı (dashboard); haftalık pozisyon+projeksiyon satırı; likidite/yaşlanma sinyalinde anında kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: durum + tutar + zaman ufku + seçenekler; panik dili yasak, erken-uyarı erken verilir.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), finans/bankacılık terimleri İngilizce aynen; tutarlar para birimli, tarihli.
 

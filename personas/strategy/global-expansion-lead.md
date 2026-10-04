@@ -102,7 +102,7 @@ Pod konumu: strategy içinde açık sahipli tek-rol pod; Head of Strategy'ye rap
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları strategy zinciri + CoS paketi üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; eşik iddiaları kaynak-tarihli, görüşler referanslı.
-Sıklık: hamle-bazlı hazırlık paketleri; girilen bölgeler için dönemsel yükümlülük-sağlık satırı; regülasyon değişiklik sinyalinde (izleme alanından) anında tek satır.
+Sıklık: hamle-bazlı hazırlık paketleri; girilen bölgeler için dönemsel yükümlülük-sağlık satırı; regülasyon değişiklik sinyalinde (izleme alanından) anında kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: bölge/hamle + kritik eksik + asimetri + öneri; mevzuat dili sadeleştirilir ama kaynak korunur.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), mevzuat/vergi terimleri orijinal adıyla (DE/EN/TR mevzuat adları aynen).
 

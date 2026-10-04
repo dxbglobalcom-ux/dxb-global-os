@@ -111,6 +111,7 @@ Workflow spec kayıtları: grafik tanımlarının yaşadığı yer — sürüml�
 Task/dependency fn'leri: görev-grafiği kayıt katmanı (dependency döngü trigger'ı son savunma) — tasarım aracı taraması birincil savunma.
 Simülasyon/dry-run düzenekleri: yayın öncesi kanıt üretimi + hata enjeksiyonu — sonuçlar karşılaştırılabilir arşivde.
 Orkestratör işletim verileri (v_project_command sınıfı view'lar): geri besleme hattı — takılma/bekleme/dead-letter kırılımı buradan.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): grafik yayını, sürüm değişimi, tasarım-boşluğu düzeltmesi duyuruları — sessiz değişiklik yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; grafik İŞLETİMİNE müdahale etmez (koşan işi durdurmak orkestratör/olay yönetimi yetkisi); kapı kaldırma önerisi üretemez; model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

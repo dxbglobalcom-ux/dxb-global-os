@@ -111,6 +111,7 @@ Yedek zinciri araçları (Postgres dump/WAL hattı, dosya yedek araçları, Stor
 İzole restore ortamı: drill'lerin sahnesi — canlıdan yalıtık; her drill koşusu süre+doğrulama çıktılı.
 Bütünlük-kontrol düzenekleri: yedek doğrulama katmanı — otomatik, dönemsel, alarm-bağlı.
 Drill arşivi + envanter kayıtları: kanıtların yaşadığı yer — E13.0 kapısının ve risk-audit denetiminin veri kaynağı.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): drill sonuçları, bayrak değişimleri, restore olayları — sessiz kırmızı yasak.
 Sınırları: para-çıkışı yok (Storage Box sınıfı tedarik kararları finance/Platform Head hattında); dış iletişim yok; CANLIYA restore onaysız yapamaz (Platform Head/IRC zinciri — fail-closed); anahtar değerlerine erişmez (IAM-SO rejimi); yedek içeriğini restore-doğrulama dışında açmaz (veri minimizasyonu); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

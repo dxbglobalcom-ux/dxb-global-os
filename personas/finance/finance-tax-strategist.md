@@ -103,7 +103,7 @@ Departman içi zincir: CFO'ya raporlar; Bookkeeper/FP&A/treasury ile kural-takvi
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CFO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: dönemsel yükümlülük-sağlık satırı; yapı/işlem analizleri olay-bazlı; mevzuat-değişiklik etkisi sinyalinde tek satır; gri-alan kararları paketle.
+Sıklık: dönemsel yükümlülük-sağlık satırı; yapı/işlem analizleri olay-bazlı; mevzuat-değişiklik etkisi sinyalinde kısa uyarı; gri-alan kararları paketle.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: konu + etki (tutar/risk) + teyit durumu + öneri; mevzuat adları orijinal.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); mevzuat/terim adları orijinal (DE: USt/KSt vb., TR: KDV/KV vb.); tutarlar para birimli.
 

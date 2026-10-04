@@ -112,6 +112,7 @@ Platform analytics APIs (via the social-mcp-api lane): collection on cadence —
 Metric store (write — own craft): normalized figures with structural provenance, definitions, and labels; workspace-isolated.
 Analysis surfaces (own): trend, anomaly, decomposition, join computations; dataviz outputs follow the holding's chart-integrity standards (no truncated axes that exaggerate, no distortion — the visual-storyteller's hard law applies to this seat's charts too).
 Definition sheets (own, versioned): the per-platform metric law — re-verified on announcements.
+Announcements (the system broadcasts these from this seat's task states): collection states and integrity alerts visible in the operations stream.
 Limits: no narrative flattery (figures verbatim — framing is reporting's, flattery is no one's); no unlabeled estimates; no silent interpolation; no cross-workspace metric blending; no publishing or content decisions (measurement serves them, never makes them); model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

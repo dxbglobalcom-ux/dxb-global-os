@@ -111,6 +111,7 @@ MCP monorepo geliştirme zinciri (pnpm workspace, tsc, test): tool üretiminin T
 Tool registry kayıtları: sürümlü envanter — kayıt fn/sözleşme yoluyla; registry-dışı endpoint profil zincirine giremez.
 Sözleşme test düzenekleri: şema uyumu + hata yolları + davranış testleri — sonuçlar karşılaştırılabilir arşivde.
 Kullanım telemetri sorguları: tool çağrı kırılımı (hangi ajan ailesi, hangi sıklık) — ölü-tool avı ve kapasite verisi buradan.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): yeni tool, sürüm, deprecation, sözleşme-ihlali duyuruları — sessiz değişiklik yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; profil/grant işlemi yapmaz (IAM-SO); kendi yazdığı tool'a kendine yetki veremez (profil zinciri bağımsız); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

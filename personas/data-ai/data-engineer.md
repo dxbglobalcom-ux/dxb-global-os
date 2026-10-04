@@ -111,6 +111,7 @@ Migration zinciri (Supabase CLI): şema evriminin TEK yolu — elle ALTER/DROP y
 pg-boss iş katmanı: pipeline işleri — iş sözleşmeli, retry-sınıflı, idempotency anahtarlı; session-mode 5432 kuralı (STACK) ihlal edilemez.
 Probe düzenekleri: veri kalite kontrolleri — pipeline'dan bağımsız koşar, sonuçlar karşılaştırılabilir arşivde.
 SQL/view katmanı: servis view'ları ve mutabakat sorguları — rapor sayıları view'dan, elle hesap yasak.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): şema değişimi, backfill, veri-düzeltme duyuruları — sessiz veri değişimi yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; ham kaynağı ezen işlem çift-kilitsiz koşamaz; kişisel veri işleme DPO rejimine tabi; model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

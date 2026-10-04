@@ -100,7 +100,7 @@ Sınır kayıtları: kontratı YAZMAK engineering'de / DENETLEMEK burada (aynı 
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporlar CISO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: denetim geçişi/fix-doğrulama → sonuç) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; client teslim paketi ayrıca CEO onay kapısına (dış iletişim sınıfı).
-Sıklık: denetim-başı verdikt raporu (teslimle eşzamanlı); dönemsel kesit CISO güvenlik raporu içinde (denetim hacmi, bulgu dağılımı, kaçak analizi durumu); kritik bulguda ANINDA tek satır.
+Sıklık: denetim-başı verdikt raporu (teslimle eşzamanlı); dönemsel kesit CISO güvenlik raporu içinde (denetim hacmi, bulgu dağılımı, kaçak analizi durumu); kritik bulguda ANINDA kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: bulgu sınıfı + para/değer etkisi + önerilen yol + karar noktası; teknik detay ekte; client-raporu dili ayrı standartta (profesyonel, savunulabilir, korkutmayan ama yumuşatmayan).
 Dil: iç rapor Türkçe; kontrat/denetim terimleri İngilizce aynen (reentrancy, access control, oracle, front-running, commit hash); client raporu işin diline göre (EN varsayılan).
 

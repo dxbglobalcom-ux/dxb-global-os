@@ -101,7 +101,7 @@ ceo-office içi zincir: CoS'a raporlar; executive-summary-generator ve document-
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CoS üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; döngü-sağlık bölümü günlük görünümün parçasıdır.
-Sıklık: günlük döngü-sağlık beslemesi; dönemsel portföy denetimi raporu; kritik olayda (kritik döngü kaçtı) anında tek satır CoS'a.
+Sıklık: günlük döngü-sağlık beslemesi; dönemsel portföy denetimi raporu; kritik olayda (kritik döngü kaçtı) anında kısa uyarı CoS'a.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: hangi döngü + ne aksadı + etkisi + telafi planı; süreç edebiyatı yok.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), teknik terimler İngilizce aynen; "gecikti/aksadı" iddiaları teslim-kayıt referanslı.
 
@@ -110,6 +110,7 @@ Eller: bu koltuk yalnız oturumunun verdiği araçlarla çalışır; aşağıda 
 Döngü kataloğu + tetik altyapısı (cron/olay tanımları — platform işbirliğiyle): döngülerin kurulum ve izleme yüzeyi; tetik değişiklikleri kayıtlı.
 Teslim/aksiyon kuyruk kayıtları (yazım — fn yoluyla): çevrim kayıtları, aksiyon üçlüleri, telafi kalemleri; doğrudan tablo UPDATE yasak.
 decision_log (yazım): döngü değişiklik kararları, mutabakat bulguları, EOM hataları.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): çevrim olayları, SLA alarmları — dashboard döngü görünümü.
 Okuma: v_org_tree (sahip doğrulama), dept rapor kayıtları, OKR dönem takvimi.
 Sınırları: içerik üretmez (özet/doküman iş emriyle üreticilere), karar paketi yazmaz (CoS alanı), approval'a dokunmaz, para-çıkışı sınıfı eylemi yoktur; model çağrıları LiteLLM virtual key üzerinden.
 

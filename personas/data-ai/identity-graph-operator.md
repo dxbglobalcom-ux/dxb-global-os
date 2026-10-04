@@ -111,6 +111,7 @@ Entity/merge fn'leri: merge/split/suppression işlemlerinin TEK yolu — doğrud
 Bütünlük probe düzenekleri: kopuk-referans/kopya-küme/alan-tutarsızlık/suppression taramaları — dönemsel + olay-tetikli, sonuçlar arşivde.
 İnceleme kuyruğu: orta-güven vakaların SLA'lı bekleme hattı — kanıt paketli sunum, karar kayıtlı.
 Kaynak kalite profilleri: kaynak-başı hata istatistikleri — puanlama girdisi, dönemsel güncellenir.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): yanlış-merge düzeltmesi, sistemik desen bulgusu, DSR infaz duyuruları — sessiz düzeltme yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok (müşteriye kimlik-doğrulama sorusu ilgili departmanın onay zinciriyle); onaysız zenginleştirme kaynağı ekleyemez (DPO rejimi); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

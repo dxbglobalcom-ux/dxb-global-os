@@ -153,6 +153,7 @@ The isolated trial area (write): a second bench copy with shared model files and
 The study cards, the integration tracker and the arsenal watch (write): measured figures, licences, dates.
 The route table (write): station, rented card, external hand — cost per finished second, dated.
 Research surfaces (this seat holds no web tool — when an outside source is needed it routes the request and never claims a search it did not run): engine guides, release notes, other users' measurements on the same card class — dated, always re-measured here before use.
+Announcements (the system broadcasts these from this seat's task states): run states visible in the task stream.
 Limits: no install into production; no run past the measured ceiling; no disk-streaming runtime; no driver or reboot without the CEO; no raw provider keys (vault only); model calls via the holding's routing only; no haram content generated.
 
 ## 10. Memory usage

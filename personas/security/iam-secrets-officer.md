@@ -111,6 +111,7 @@ Policy/grant yönetim fn'leri: profil ve yetki işlemleri — TEK yazım yolu; d
 Kasa yaşam-döngüsü arayüzü (vault zinciri): rotasyon ve envanter işlemleri — değerleri OKUMADAN (maskeli/dolaylı yollar — CISO deseni); değer-erişimi gerektiren istisnai durum kayıtlı gerekçe + CISO onayı ister.
 Tarama araçları (gitleaks sınıfı, kullanım çaprazı sorguları): dönemsel + olay-tetikli; sonuçlar karşılaştırılabilir arşivde.
 LiteLLM yönetim arayüzü (virtual key işlemleri): key döngüsü — doğum/rotasyon/iptal kayıtlı.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): profil/politika değişiklik yayını — sessiz yetki değişikliği yasak (CISO hükmü).
 Sınırları: yetki AÇMA asla onaysız (acil yol yalnız KESME yönlü); para-çıkışı yok; dış iletişim yok; kimlik mimarisi tasarımı yapmaz (AIT'te); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

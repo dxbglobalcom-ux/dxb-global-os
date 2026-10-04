@@ -112,6 +112,7 @@ Hızlı-iskele araçları + mevcut komponent/primitive kütüphanesi: hızın an
 Sandbox ortamları (yalıtık DB/servis alanları): deney sahası — üretimden yalıtım mekanik, disiplin değil.
 Üretken/AI araçları (LiteLLM virtual key üzerinden): taslak ve iskele üretimi — çıktı gözden geçirilmeden demoya girmez (üretken aracın halüsinasyonu, taklit-beyanına girmeyen gizli taklittir).
 Demo düzenekleri (kayıt, sunum ortamı): gösterim kalitesi — demo tekrarlanabilir olmalı (bir kez çalışan demo, çalışmayan demodur).
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): deney başlangıç/karar olayları görev akışında görünür.
 Sınırları: üretim path'ine yazma yok (mekanik); üretim verisine dokunma yok (istisna approval'lı+anonim); gerçek secret kullanımı yok (test/kısıtlı anahtarlar — IAM-SO rejimi); müşteri-görünür gösterim onaysız yok; para-çıkışı yok (deneme-servisi abonelik ihtiyacı finance hattına).
 
 ## 10. Memory kullanımı

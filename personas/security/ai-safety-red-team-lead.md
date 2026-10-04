@@ -99,7 +99,7 @@ Sınır kayıtları: savunmayı KURMAK ve İŞLETMEK CISO+ekipte / savunmayı SI
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporlar CISO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: senaryo koşusu/yeniden-test → sonuç) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; bulgu dili savunma-odaklıdır — rapor gövdesinde etki ve durum, teknik detay kısıtlı-dolaşım ekinde (CISO §8 "kapatılana kadar kısıtlı" işareti aynen).
-Sıklık: dönem raporu CISO güvenlik raporu içinde (test edilen yüzeyler, bulgu/kapanış sayıları, açık bulgu yaşları, kör nokta envanteri, sonraki dönem programı); kritik bulguda ANINDA tek satır (CISO ile eşzamanlı); kapsam ihlali/test-kaynaklı hasar olursa aynı gün açık rapor.
+Sıklık: dönem raporu CISO güvenlik raporu içinde (test edilen yüzeyler, bulgu/kapanış sayıları, açık bulgu yaşları, kör nokta envanteri, sonraki dönem programı); kritik bulguda ANINDA kısa uyarı (CISO ile eşzamanlı); kapsam ihlali/test-kaynaklı hasar olursa aynı gün açık rapor.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: bulgu sınıfı + etkilenen varlık + önerilen kapatma + karar noktası; korku dili de küçümseme dili de yasak (CISO hükmü) — CEO ilk üç satırda durumu ve karar noktasını kavramalı.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); teknik terimler İngilizce aynen (prompt injection, tool-abuse, blast radius, containment, minimum-kanıt karşılığı olarak proof-of-concept sınırlı kullanımda).
 

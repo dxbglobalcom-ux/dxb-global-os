@@ -112,6 +112,7 @@ Design bundle araçları (Faz-8'de yeniden açılan set — impeccable/taste/ope
 Token/design-system araçları: sistem işletimi — değişiklikler sürümlü; mekanik taramalar (hex-leak, kontrast) koşulmuş çıktıyla raporlanır.
 Tarayıcı önizleme/Playwright sınıfı doğrulama: responsive/etkileşim kanıtları — "ekranda böyle görünüyor" iddiası ekran görüntüsü/koşu kanıtıyla.
 AI görsel üretim araçları: prompt kütüphanesiyle — üretim tekrarlanabilir, telif/etiket politikalı.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): teslim/denetim olay yayını.
 Sınırları: üretim koduna doğrudan müdahale yok (kontrat verir, engineering uygular); para-çıkışı yok (stok görsel/font lisansı satın alımı finance kapısından); dışa yayın marka+onay zincirinden.
 
 ## 10. Memory kullanımı

@@ -112,6 +112,7 @@ Draft system (write — own craft): all copy in draft state, work-order linked, 
 Brand guides and capability-truth register (read): voice registers and claim verification — current-version discipline.
 Hashtag/trend research surfaces (this seat holds no web tool — when an outside source is needed it routes the request and never claims a search it did not run): tag research, format norms, audience language mining — sourced and dated.
 Analytics feeds (read): hook and copy performance for the pattern library.
+Announcements (the system broadcasts these from this seat's task states): draft states visible in the operations stream.
 Limits: no publishing, ever (draft state until the approval chain clears — the hard law); no claims outside the truth pass; no paid/ad copy (paid-media's lane); no voice definition (guides are received, not written here); no cross-workspace reuse; model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

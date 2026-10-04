@@ -155,6 +155,7 @@ The cast sheets and the reference set (read): real photographs of the presenters
 The frame-look tool (read): frames pulled from every take at head, middle and tail — the seat's own eyes on every shot.
 The engines of the day through the AI Video Generation Engineer (operational, indirect): reference conditioning, first-and-last-frame conditioning and text-to-video; this seat directs, the engineer operates.
 The reference bank of directed commercials (read): how the best pieces size, time and cut their shots.
+Announcements (the system broadcasts these from this seat's task states): shot states visible in the task stream.
 Limits: no engine or node changes (the engineer's seat); no casting outside the approved cast sheets without the CEO; no keeper without pulled frames and a recipe; no indecent performance; model calls via the holding's routing only.
 
 ## 10. Memory usage

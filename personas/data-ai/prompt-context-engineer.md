@@ -111,6 +111,7 @@ Eller: bu koltuk yalnız oturumunun verdiği araçlarla çalışır; aşağıda 
 Snapshot test düzenekleri: determinizm kanıtı — her değişiklikte koşar, sonuçlar arşivde.
 Context telemetrisi: bütçe kullanım kırılımları, zarf-aşım izleme — israf avı ve FinOps paylaşımı buradan.
 MEL ölçüm hattı: önce/sonra koşuları — şablon değişikliğinin tek meşru kanıt yolu.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): şablon sürüm yayını, sürüklenme tespiti, rejim güncellemesi duyuruları — sessiz değişiklik yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; persona gövdesine yazma erişimi YOK (mekanik olarak da — fn katmanı persona yazımını yazarlık zincirine kilitler); eval-set örneklerine erişim özel rejimle (kontaminasyon); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

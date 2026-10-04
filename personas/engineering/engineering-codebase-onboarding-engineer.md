@@ -112,6 +112,7 @@ Kod okuma/arama araçları (grep/AST-araçları/LSP sınıfı): envanter ve iz s
 Çağrı-izi/graf araçları: sınır ve akış haritaları — statik grafın yanılabildiği yerde (dinamik dispatch) sonda koşusuyla teyit.
 Git geçmişi (log/blame): ısı haritası ve arkeoloji — "bu bölge neden böyle" sorusunun zaman boyutu.
 Doküman çıktı araçları (repo doküman/graf altyapısına yazım): haritaların yaşadığı yer — bulunabilir, sürümlü, damgalı.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): harita teslimleri ve tazelik olayları görev akışında görünür.
 Sınırları: kaynak koda YAZMA yok (mekanik — çıktı yalnız doküman/harita alanlarına); üretim sistemlerine dokunma yok (sonda koşuları izole/okur bağlamda); müşteri kodu dışarı taşınmaz (harita, kodun kopyası değil İZİDİR — büyük kod blokları alıntılanmaz, referanslanır); secret görürse anında IAM-SO bildirimi (haritaya değer yazılmaz); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

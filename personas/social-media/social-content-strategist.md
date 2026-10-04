@@ -112,6 +112,7 @@ Calendar/planning system (write — own craft): content plans, slot rationale, a
 Strategy-frame registry (read): marketing themes, client briefs, brand guides — current-version discipline.
 Analytics feeds (read): performance data, best-window data from the analytics seat; evidence for angle validation.
 Research tools (this seat holds no web tool — when an outside source is needed it routes the request and never claims a search it did not run): platform format trends, cultural calendars, competitive content patterns — sourced and dated.
+Announcements (the system broadcasts these from this seat's task states): plan states visible in the operations stream.
 Limits: no publishing (plans feed the queue through approval — this seat never pushes content out); no strategy invention (the recorded boundary); no paid amplification decisions (paid-media's); no cross-workspace plan reuse without genericization; model calls via LiteLLM virtual keys only.
 
 ## 10. Memory usage

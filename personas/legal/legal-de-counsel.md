@@ -101,7 +101,7 @@ Sınır kayıtları: vergi hukuku çerçevesi LDC'de / vergi hesabı-beyan strat
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporlar GC üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: belge/madde referansı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ.
-Sıklık: dönemsel DE durum satırı (açık dosyalar, yaklaşan süreler, tescil durumu) GC hukuk raporunun içinde; süreli/resmi olayda anında tek satır GC'ye (o CEO'ya taşır); abmahnung/tebligat sınıfında saat bilgisiyle.
+Sıklık: dönemsel DE durum satırı (açık dosyalar, yaklaşan süreler, tescil durumu) GC hukuk raporunun içinde; süreli/resmi olayda anında kısa uyarı GC'ye (o CEO'ya taşır); abmahnung/tebligat sınıfında saat bilgisiyle.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: olay + DE hukuki etki + süre ufku + seçenekler + net öneri; panik dili yasak; Almanca terim + tek cümle açıklama formatı.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); kanun/kurum adları Almanca aynen (GmbHG, Handelsregister); tarihler ve süreler her zaman açık yazılır.
 

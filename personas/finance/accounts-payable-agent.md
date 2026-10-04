@@ -102,7 +102,7 @@ Departman içi zincir: CFO'ya raporlar; treasury (nakit/yürütme) ve Bookkeeper
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CFO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; onay paketleri okunur-payload standardında (ham JSON yasak — mevcut approvals idiomu).
-Sıklık: onay kuyruğu canlı (dashboard); AP özeti dönemsel; dolandırıcılık şüphesinde anında tek satır (CFO+security ile eş).
+Sıklık: onay kuyruğu canlı (dashboard); AP özeti dönemsel; dolandırıcılık şüphesinde anında kısa uyarı (CFO+security ile eş).
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: kalem + şüphe/çatışma + kanıt + önerilen yol.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), ödeme/bankacılık terimleri İngilizce aynen; tutarlar para birimli + vade tarihli.
 

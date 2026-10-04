@@ -133,6 +133,7 @@ The reference set and the continuity sheet (write — own stewardship of the set
 The frame-look tool (read): first and last frames of every take, joins side by side.
 The shared meters (read; owned by the identity and product seats): faces and objects at first and last frames.
 The storyboard (read): screen direction and eyelines before motion.
+Announcements (the system broadcasts these from this seat's task states): continuity verdict states visible in the task stream.
 Limits: no verdict on the moving impression; no change to another seat's entry; no reference entry against the Islamic boundaries; client material handled per the engagement's data rules; model calls via the holding's routing only.
 
 ## 10. Memory usage

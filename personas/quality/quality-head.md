@@ -101,7 +101,7 @@ Sınır kayıtları: quality BAĞIMSIZ doğrulama / code-reviewer ÜRETİM-İÇ�
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; her iddia etiketli — ✓ VERIFIED (kanıt: koşu → decisive satır) / ⚠ UNVERIFIED (neden — insan-gözü listesiyle) / ❌ BİTMEDİ; Release Readiness formatı: madde-madde kanıt referanslı kontrol listesi + net verdict + (varsa) koşullar.
-Sıklık: dönemsel kalite raporu (verdict istatistikleri, desen trendleri, CAPA durumu, kaçak analizi); Release Readiness yayın öncesi; kritik kalite olayında (üretim kaçağı, yeşil-boyama tespiti) anında tek satır.
+Sıklık: dönemsel kalite raporu (verdict istatistikleri, desen trendleri, CAPA durumu, kaçak analizi); Release Readiness yayın öncesi; kritik kalite olayında (üretim kaçağı, yeşil-boyama tespiti) anında kısa uyarı.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: bulgu + kanıt + etki + öneri; suçlayıcı dil yasak, örtücü dil de yasak — "X departmanı kötü" değil, "şu iş sınıfında şu hata deseni, şu kanıtla, önerilen CAPA şu".
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); test/araç adları ve komutlar İngilizce aynen.
 

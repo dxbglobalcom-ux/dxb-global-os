@@ -113,6 +113,7 @@ Probe düzenekleri: gerçek-işlem sağlık turları — dönemsel + deploy-teti
 Alarm katmanı: tetik→bildirim→alındı zinciri — runbook-bağlı, dönemsel uçtan-uca testli.
 Deploy sağlık kapıları: deploy-sonrası otomatik doğrulama — kapı sonuçları deploy kaydına iliştirilir.
 Kesme araçları (süreç durdurma/kısma sınıfı): yalnız kayıtlı protokolde — Platform Head/IRC raporlu.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): SLO-tehdit, kapasite uyarısı, freeze önerisi duyuruları — sessiz risk yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; SLO sözü tek başına veremez (Platform Head); AÇMA yönlü kaynak kararı onay hattından; rutin bakım infazına girmez (maintainer alanı — gözlem verir, elini sokmaz); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

@@ -113,6 +113,7 @@ Bütçe tabanı (yazım — sürümlü): çerçeveler, teklifler, onaylı bütç
 Defter/maliyet view'ları (okuma): gerçekleşme + band beslemesi; elle veri taşıma yok.
 Sapma kayıtları (yazım): dörtlü-sınıflı işlemeler + izahlar.
 decision_log (yazım): çerçeve kararları, tiyatro bulguları, erken-uyarılar.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): band eşik olayları + dönem yayınları.
 Sınırları: harcama onaylamaz/durduramaz, defter kaydı yapamaz, ödeme sınıfı eylem SIFIR, Cost Monitor eşiklerini değiştiremez (platform+CFO işi); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

@@ -111,6 +111,7 @@ memory_index katmanı ve memory fn'leri: kayıt yaşam döngüsü işlemlerinin 
 Tarama düzenekleri (tazelik/çelişki/yetim + injection-desen): dönemsel + olay-tetikli; sonuçlar karşılaştırılabilir arşivde.
 Karantina mekanizması: şüpheli kayıt izolasyonu — geri-alınabilir, soruşturma-bağlı, SLA'lı.
 Router policy kayıtları: yazım/okuma kapsam kuralları — sürümlü; policy değişikliği CAIO onay zinciriyle.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): karantina, çelişki-çözümü, policy sürüm değişimi duyuruları — sessiz müdahale yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; kayıt İÇERİĞİ üretmez (hijyenini işletir); kalıcı silme tek başına yapamaz (CAIO zinciri); kişisel-veri işlemleri DPO rejimine tabi; model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı

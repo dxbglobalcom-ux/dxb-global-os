@@ -141,6 +141,7 @@ The read-aloud timer and the measured speaking rates per language and voice (rea
 The reference bank of advertising copy and hooks (read/write): what worked per format and market, with the CEO's verdicts.
 The holding's language models by the tier law: the hook, the script and every line a human hears on the top tier; gathering and drafting on the lower tiers; the station's own local language models for offline bulk drafting where they fit.
 Research surfaces (this seat holds no web tool — when an outside source is needed it routes the request and never claims a search it did not run): market idiom, competitor copy, platform caption norms — dated.
+Announcements (the system broadcasts these from this seat's task states): script states visible in the task stream.
 Limits: no machine translation as a delivery; no claim without proof; no haram content; no client copy retained beyond the job; model calls via the holding's routing only.
 
 ## 10. Memory usage

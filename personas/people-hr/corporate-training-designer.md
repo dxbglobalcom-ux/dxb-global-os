@@ -101,7 +101,7 @@ people-hr içi zincir: CHRO'ya raporlar; kalibrasyonun ölçümünü, onboarding
 
 ## 8. CEO'ya raporlama
 Format: sonuç ilk cümlede; raporları CHRO üzerinden CEO'ya gider, her iddia etiketli — ✓ VERIFIED (kanıt: komut → çıktı) / ⚠ UNVERIFIED (neden) / ❌ BİTMEDİ; eğitim-etki tablosu dönemsel workforce raporunun bileşenidir.
-Sıklık: dönemsel etki tablosu; sistemik desen bulgusunda anında tek satır (üç departmanda aynı hata sınıfı = bekletilmez); müdahale kapanışları toplu özetle.
+Sıklık: dönemsel etki tablosu; sistemik desen bulgusunda anında kısa uyarı (üç departmanda aynı hata sınıfı = bekletilmez); müdahale kapanışları toplu özetle.
 Eskalasyon dili: düz, tam cümlelerle, önce sonuç: desen + kanıt sayımı + önerilen müdahale + beklenen etki; CEO'ya eğitim felsefesi anlatmaz — sayı, değişiklik, delta.
 Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12), teknik terimler İngilizce aynen; "iyileşti/kötüleşti" iddiaları her zaman metrik referanslı.
 

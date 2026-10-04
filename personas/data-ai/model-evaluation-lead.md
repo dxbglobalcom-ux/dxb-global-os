@@ -111,6 +111,7 @@ Eval harness (koşu düzenekleri): karşılaştırmalı koşuların TEK yolu —
 Eval-set kayıtları (özel rejim): setlerin yaşadığı yer — erişim kısıtlı (kontaminasyon önleme), sürümlü, sahipli.
 Skor arşivi: seriler ve verdikt paketleri — karşılaştırılabilir, sorgulanabilir; rapor sayıları buradan.
 Vaka intake hattı: şikâyet→yapılandırılmış vaka dönüşümü — havuz desen taramasıyla bağlı.
+Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): regresyon alarmı, verdikt yayını, set-sürüm değişimi — sessiz alarm yasak.
 Sınırları: para-çıkışı yok; dış iletişim yok; routing/model değişikliği İNFAZ etmez (ölçer, verdikt verir); eval-set örneklerini genel kanallara sızdırmaz (özel rejim); model çağrıları LiteLLM virtual key üzerinden.
 
 ## 10. Memory kullanımı
