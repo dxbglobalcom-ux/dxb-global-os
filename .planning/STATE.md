@@ -50,18 +50,17 @@ durumdan diğer oturumları da haberdar et bilsinler kim nerede çalışıor com
 
 2026-10-04 18:05 → now, Opus 5.5 session e3574313 (max), the lead after fd7d67f2's handover.
 - **The approved orchestration design is in the door — finished** (not accepted — LAW B)
-  <!-- CEO-OK: fable-at-the-end-on-important-jobs-2026-10-04 --> <!-- CEO-OK: fable-start-and-important-end-2026-10-04 -->:
+  <!-- CEO-OK: fable-at-the-end-on-important-jobs-2026-10-04 --> <!-- CEO-OK: fable-start-and-end-normal-and-important-2026-10-04 -->:
   three arrangements and the card's measured fields; `helper-writer` (Opus 5.5 · medium) and the core's "Code"
   sentence; Sol once per job, on the finished work (the critical plan's Sol read and the high/xhigh twin audit
-  deleted, LAW A); Fable as he corrected it at 18:12 (*"Pardon ya o fable'a sonda değil yani başta danışılır
-  sonda danışılmaz diyecektim…"*, fd7d67f2's transcript, verbatim) — the card's `fable:` line: none on a light
-  job, the start of a normal one (before the plan goes to him), the start and the end of an important one
-  (critical, or a design, plan or architecture job with risk 2), nowhere else. Sol's 1 A + 4 B fixed by a fork
+  deleted, LAW A); Fable as he settled it at 19:22 (*"Fable için de başta ve sonda sorulsun. Advice yapılsın o
+  kadar. Normal işlerde olabilir bir de önemli işlerde. Basit işlerde gerek yok."*, conversation, verbatim) — the
+  card's `fable:` line: none on a light job, the start and the end of a normal or critical one, nowhere else. Sol's 1 A + 4 B fixed by a fork
   and two helper-writers, each verified: the mirror keeps home paths and moves every hook it copies; usage.mjs
   prices the tokens and counts Fable's calls. Commits `193eea17` · `79f57aef`; battery GREEN (1,179 · 266);
   Fable's end call 18:35, no objection. Job folder `.planning/quick/20261004-orchestration-door/`.
 - **The live bar** (his *"çubuk her turu canlı interaktif göstermeli mutlaka"*, conversation, verbatim) —
-  measured, plan sent to him, waits on his yes: in a fresh session the bar draws no `tur:` at all (no readable
+  his yes 19:22 (*"çubuk için tamam evet"*), being built: in a fresh session the bar draws no `tur:` at all (no readable
   transcript line at any render of three turns); the render's own `prompt_id` equals the hooks' and a message
   sent mid-turn keeps it; the payload's `effort.level` follows `/effort` at once. The plan: the hook writes the
   turn's id when `dxb-design-max` is called, and the bar shows `tur: max` when it equals its own id, else the
@@ -166,7 +165,7 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 
-Beside his list: the live bar (session e3574313) — built on his yes to the plan (Waiting on his approval).
+Beside his list: the live bar (session e3574313) — his yes 19:22, being built.
 
 After his list: the research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes;
 the tweet's link is still to come from him.
@@ -175,7 +174,6 @@ the tweet's link is still to come from him.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- The live bar's plan (session e3574313, sent 18:40) — one word.
 - The locked-tool plan (session 5ab4ff38) — one word, and the last step: the construction engineer adds the new
   text to the approved list (recommended) or the security engineer's "benign" unlocks by itself.
 - The night jobs (session 5ab4ff38): a daily job whose time passed while the machine slept runs on wake —
@@ -186,7 +184,7 @@ the tweet's link is still to come from him.
   gives it to every session and subagent, and `--disallowedTools advisor` does not take it away (measured
   18:45) — the remedy is measured on the live bar's helper before it is proposed; (2) `~/.claude/CLAUDE.md`'s line *"advisor (Fable 5.1): gerekli görüldüğü takdirde
   her zaman danışılabilir (CEO 2026-10-01)"* contradicts the card's `fable:` rule — recommended: limit it to work
-  outside dxb-team2; (3) fd7d67f2's open question: no Fable at the start of a normal job either?
+  outside dxb-team2.
 
 ## Where things live
 

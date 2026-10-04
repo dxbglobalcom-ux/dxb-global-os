@@ -11,7 +11,7 @@ why: one subsystem — the session's status line (`~/.claude/hooks/dxb-statuslin
 
 arrangement: team — one `helper-writer` writes the hook, the bar and both tests from this card's plan; the lead verifies each piece and runs the live pty probe itself. Why: the pieces are small and exactly specified; medium writes such code as well as high (§6) at a fraction of the price.
 
-fable: start — normal class (fable-start-and-important-end-2026-10-04): once, now, on this approach and plan, before any file changes; not at the end.
+fable: start+end — normal class (fable-start-and-end-normal-and-important-2026-10-04): the start call made 18:23 on this approach and plan, before any file changes; the end call before "done".
 
 his words (verbatim, session fd7d67f2, 2026-10-04): "Unutmadan: alttaki tur yazısı tamamiyle aynı etkileşimde olmalı skill aktifse o turda max yazmalı çubukta. çubuk her turu canlı interaktif göstermeli mutlaka. şuan öyle mi çalışması? işin bitince bak."
 

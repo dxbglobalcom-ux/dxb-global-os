@@ -100,7 +100,7 @@ the machine cannot check, and on a defect the CEO caught — then it sweeps the 
 
 **A finding is evidence, never a verdict.** The session author signs every ✓. A disputed finding
 is settled inside the team (`dxb-team2` §4 DISPUTE): a test decides; where no test can, the lead
-decides and records why — on an important job Fable rules in its end call; the lead has the last
+decides and records why — on a normal or critical job Fable rules in its end call; the lead has the last
 word. What no terminal can observe stays `⚠ UNVERIFIED`.
 
 Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.
