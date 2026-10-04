@@ -29,9 +29,9 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 2026-10-04 ~12:30 → 15:10, Opus 5.5 session 9bc3fc3e (plan at `max`, build at `high`). He asked for yesterday's
 work to be re-verified (nine questions, answered from the records), then set his list (Next).
-- **C1 — the company's memory drawer on the company's desk — done and live**
-  <!-- CEO-OK: company-memory-drawer-2026-10-04 --> (finished, not accepted — LAW B; nothing on his screen
-  changes). Every obsidian/graphify note is read and written under DXB_MEMORY_ROOT = the company Claude home
+- **C1 — the company's memory drawer on the company's desk — done, live, accepted**
+  <!-- CEO-OK: company-memory-drawer-2026-10-04 --> <!-- CEO-OK: company-memory-drawer-accepted-2026-10-04 -->
+  (he waived the eye and accepted it, 2026-10-04: *"gözüm tmm boşver onayla bunu. sen gerekeni yap."*). Every obsidian/graphify note is read and written under DXB_MEMORY_ROOT = the company Claude home
   (the scheduler binds it; the battery uses var/construction-memory); the reader opens only a note of the
   writer's shape through one descriptor whose real path is checked. Commits `628863e1` (code) · `9757d9f0`
   (Sol's 2 A + 2 B fixed by a fork) · `3df4a74d` (deploy: the live note moved, sha256 equal; the 32 July

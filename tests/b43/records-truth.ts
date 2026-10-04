@@ -102,6 +102,9 @@ export const C = {
     // dxb-team2 job 1 — Sol's read-only reach, accepted by his eye 2026-09-28 ("Onaylıyorum. Göz geçimi
     // tamam."); the records spell it "job 1" / "Job 1" and its folder "sol-db-reach".
     { id: "sol-db-reach-accepted-by-his-eye-2026-09-28", subject: /\b[Jj]ob 1\b|sol-db-reach/ },
+    // C1 — the company's memory drawer on the company's desk, accepted 2026-10-04 on his waiver of the eye
+    // ("gözüm tmm boşver onayla bunu."); the records spell it "C1" / "memory drawer".
+    { id: "company-memory-drawer-accepted-2026-10-04", subject: /\bC1\b|memory drawer/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from

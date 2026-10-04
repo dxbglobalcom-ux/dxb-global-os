@@ -1978,5 +1978,13 @@
     "conditions": "Answering the lead's proposal: 'Şirketin not çekmecesi inşaatın odasından şirketin kendi masasına taşınsın mı? Not okuyucu da yalnız o çekmeceyi açar; böylece çalışanlarla Hamza notları yine aynı yerde bulur. Önerim evet.' The plan then went to him once, ending 'Evet mi? Önerim, 7. madde dahil evet.' (item 7: the 32 orphans deleted, their summary in the plan). His answer: 'tamam lakin bundan önce konuştuğumuz diğer işler 6 madde. bu sadece c1'di sanırım onlar ne olacak?' The lead said it took that 'tamam' as yes to the plan; he went on to the list without objecting. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session 9bc3fc3e — heard first-hand, 2026-10-04.",
     "where": ".planning/quick/20261004-company-memory-drawer/ · packages/memory-router · packages/outbox-executor · vitest.config.ts · .planning/STATE.md"
+  },
+  "company-memory-drawer-accepted-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "ACCEPTANCE of C1 as delivered — the company's memory drawer on the company's desk (commits 628863e1 · 9757d9f0 · 3df4a74d · 5b2f3de9; job folder .planning/quick/20261004-company-memory-drawer/). Distinct from his order to build it (company-memory-drawer-2026-10-04). It accepts nothing else: the one open check (a real task-lane company call's dxb-mcp child committing and recalling a note) and Sol's C (chat and voice swallow a recall error) remain the lead's work.",
+    "verbatim": "gözüm tmm boşver onayla bunu. sen gerekeni yap.",
+    "conditions": "Given WITHOUT his own inspection: the lead's opening said C1 was finished and waited for his eye, nothing on his screen changes; he waived the look and told the lead to accept it. Recorded as his waiver of the eye, not as an eye test passed.",
+    "session": "Opus 5.5 session 07841b79 — heard first-hand, 2026-10-04.",
+    "where": ".planning/quick/20261004-company-memory-drawer/ · .planning/STATE.md"
   }
 }
