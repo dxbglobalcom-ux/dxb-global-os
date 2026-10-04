@@ -20,6 +20,18 @@ export const ClassifiedIntent = z.object({
 });
 export type ClassifiedIntent = z.infer<typeof ClassifiedIntent>;
 
+/**
+ * The per-call schema: ClassifiedIntent with task_class narrowed to the live routing classes, so
+ * the SDK's json_schema and the parse gate both refuse a class no routing row can serve (B51 move 5,
+ * C2-10, Sol's single pass 2026-10-04: the open string let "bogus" through to a NoRouteError).
+ * The exported ClassifiedIntent contract stays as it is; an empty list keeps it unnarrowed.
+ */
+export function classifiedIntentFor(taskClasses: readonly string[]) {
+  return taskClasses.length > 0
+    ? ClassifiedIntent.extend({ task_class: z.enum(taskClasses as [string, ...string[]]) })
+    : ClassifiedIntent;
+}
+
 // Brain-map row values → CLI model ids. Mechanical translation ONLY — the
 // choice lives in routing_rules; unknown values pass through unchanged so a
 // full CLI id can ship as pure data with zero code change.
@@ -78,7 +90,7 @@ export function classifyPrompt(text: string, taskClasses: readonly string[], dep
   ].join("\n");
 }
 
-async function runQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
+async function runQuery(prompt: string, own: ResolvedRoute, schema: z.ZodType): Promise<unknown> {
   const q = query({
     prompt,
     options: {
@@ -91,7 +103,7 @@ async function runQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
       // tool call — with a single turn the SDK cannot retry when the model
       // answers inline first (observed live on opus-4.8 effort=high).
       maxTurns: 4,
-      outputFormat: { type: "json_schema", schema: sdkJsonSchema(ClassifiedIntent) },
+      outputFormat: { type: "json_schema", schema: sdkJsonSchema(schema) },
     },
   });
   const seen = isolationReceipt("classify");
@@ -153,6 +165,7 @@ export async function classify(
   }
 
   const basePrompt = classifyPrompt(text, taskClasses, deptSlugs);
+  const schema = classifiedIntentFor(taskClasses);
 
   let lastError = "";
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -160,8 +173,8 @@ export async function classify(
       attempt === 0
         ? basePrompt
         : `${basePrompt}\n\nYour previous JSON failed schema validation:\n${lastError}\nReturn corrected JSON only.`;
-    const raw = await runQuery(prompt, own);
-    const parsed = ClassifiedIntent.safeParse(raw);
+    const raw = await runQuery(prompt, own, schema);
+    const parsed = schema.safeParse(raw);
     if (parsed.success) return clampOutward(text, parsed.data);
     lastError = JSON.stringify(parsed.error.issues);
   }

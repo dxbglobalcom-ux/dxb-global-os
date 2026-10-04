@@ -1,0 +1,10 @@
+import { sql } from "kysely";
+import { getDb } from "/home/dxb/DxB Global OS/packages/shared/dist/index.js";
+import { classify } from "/home/dxb/DxB Global OS/packages/kernel/dist/index.js";
+const db = getDb();
+const id = await sql`SELECT (SELECT system_identifier FROM pg_control_system())::text AS sysid, current_setting('port') AS port, current_database() AS db, (SELECT count(*) FROM agents)::int AS agents`.execute(db);
+console.log("engine on the classify pool:", JSON.stringify(id.rows[0]));
+const t0 = Date.now();
+const ci = await classify("Kahve markamız için bir pazar araştırması ve rakip fiyat tablosu hazırlayın.");
+console.log(JSON.stringify(ci), `${Date.now() - t0}ms`);
+process.exit(0);

@@ -1,0 +1,3 @@
+# Sol B1 baseline — the built classify (dist of 18:49, before the fix) accepts a class no routing row serves
+$ node -e (ClassifiedIntent.safeParse with task_class 'bogus')
+bogus accepted by the schema sent to the SDK: true

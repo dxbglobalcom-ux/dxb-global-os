@@ -1,0 +1,234 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:4064063) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > worker path: intake parks 'routing', drainVoiceCalls answers + writes the handoff WAV
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/r31/voice-line.test.ts (11 tests) 8015ms
+   ✓ R3.1 — real Speaches roundtrip > Piper TR synth → whisper transcript preserves the question intent  1830ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0  3096ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true  2999ms
+(node:4064525) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/ladder.test.ts > master-plan step 6 — 2× fail → third claim at higher tier (events as evidence) > worker fails twice; the THIRD claim serves the task with the bumped model_tier
+ladder event chain: [
+ {
+  "event": "created",
+  "from_status": "inbox",
+  "to_status": "queued",
+  "actor": "orchestrator:dispatch",
+  "payload": {
+   "deps": [],
+   "envelope_index": 0
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-1",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "failed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "error": "synthetic ladder failure: first attempt"
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "failed",
+  "to_status": "queued",
+  "actor": "orchestrator:escalate",
+  "payload": {
+   "ladder": "retry-same-tier",
+   "fail_count": 1,
+   "model_tier": "L4"
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-1",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "failed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "error": "synthetic ladder failure: second attempt"
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "failed",
+  "to_status": "queued",
+  "actor": "orchestrator:escalate",
+  "payload": {
+   "ladder": "specialist",
+   "fail_count": 2,
+   "model_tier": "L3"
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-2",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-2",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "review",
+  "actor": "worker-lad-2",
+  "payload": {
+   "confidence": 0.9
+  }
+ }
+]
+
+ ✓ tests/phase5/ladder.test.ts (6 tests) 314ms
+(node:4064643) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/dispatch-book.test.ts (20 tests) 272ms
+(node:4064699) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa fail → review→failed with reason 'qa-fail', and the 05-06 ladder engages
+[qa] task a9de17d6-7c51-486a-8956-d68afff121ef FAIL (confidence 0.3) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa pass + approval_class 'none' → done
+[qa] task cafd5008-7b59-4523-b84c-3c86c487107a PASS (confidence 0.95) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa pass + approval_class 'internal' → awaiting_approval (Phase-4 flow takes over)
+[qa] task 5764a2ed-2251-444f-86db-e80587add41a PASS (confidence 0.9) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > council NEGATIVE proof — normal task, zero council calls (master-plan step 7) > internal/L3 task runs worker→qa→done with shouldCouncil=false and no meta.council rows
+[qa] task 63d89d5c-5b07-44be-bbcf-234964cf21ae PASS (confidence 0.9) — the judge took 0 ms in 1 call
+
+ ✓ tests/phase5/council-judge.test.ts (8 tests | 2 skipped) 200ms
+(node:4064727) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/decompose-dispatch.test.ts > worker shim — e2e claim→work→done with full event chain (master-plan step 5) > one envelope runs end-to-end; task_events chain complete and ordered
+e2e event chain: [
+ {
+  "event": "created",
+  "from_status": "inbox",
+  "to_status": "queued",
+  "actor": "orchestrator:dispatch"
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "review",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "review",
+  "to_status": "done",
+  "actor": "test:head-review"
+ }
+]
+
+ ✓ tests/phase5/decompose-dispatch.test.ts (10 tests | 1 skipped) 164ms
+(node:4064783) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/poisoning.test.ts (7 tests) 48ms
+(node:4064860) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/greeting-script-rescue.test.ts (2 tests) 36ms
+(node:4064887) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/c9/chat-legs.test.ts > the drain routes a real message to the right leg > a status question arrives on the brief leg WITH a snapshot
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > the drain routes a real message to the right leg > a money question arrives on the strategy leg WITHOUT a snapshot
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/c9/chat-legs.test.ts (13 tests) 43ms
+(node:4064915) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/routing-data.test.ts > KERN-02 — routing is data (routing_rules), never code > KERN-02 proof: UPDATE one row → same intent resolves a different model, zero code changes
+KERN-02 UPDATE proof: before=probe-high after=probe-rerouted (row d5375605-f94d-4853-9257-10bab1101173)
+
+ ✓ tests/phase5/routing-data.test.ts (10 tests | 5 skipped) 32ms
+(node:4064942) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/u15r2/voice-round2.test.ts > U15 D12/D13 — one conversation + session threads > a Hamza-answered call mirrors onto the board and carries session_id
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/u15r2/voice-round2.test.ts (5 tests) 39ms
+(node:4064992) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/road-consistency.test.ts (16 tests) 34ms
+(node:4065039) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/bundle2-prompts.test.ts (14 tests) 8ms
+(node:4065065) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b21/agent-context.test.ts (11 tests) 5ms
+(node:4065091) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/persona-delivery.test.ts (4 tests) 3ms
+
+ Test Files  14 passed (14)
+      Tests  129 passed | 8 skipped (137)
+   Start at  18:52:25
+   Duration  14.89s (transform 449ms, setup 0ms, collect 4.00s, tests 9.21s, environment 1ms, prepare 450ms)
+
+[global-teardown] handed back 223 ops:live receipt(s) this run issued

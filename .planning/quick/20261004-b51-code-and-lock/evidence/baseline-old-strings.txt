@@ -1,0 +1,16 @@
+# Sol B3 — what the RED run proves, narrowed: 9 of the 14 first cases failed because the new helpers did not exist yet.
+# The old behaviour itself, read from the tree before this job (519e803b), one grep per row:
+$ git show 519e803b:packages/orchestrator/src/chat-drain.ts | grep -cF '"low", "medium", "high", "max"'  →  1
+$ git show 519e803b:packages/voice/src/answer.ts | grep -cF '"low", "medium", "high", "max"'  →  1
+$ git show 519e803b:packages/orchestrator/src/decompose.ts | grep -cF '<= 3 envelopes'  →  1
+$ git show 519e803b:packages/orchestrator/src/chat-drain.ts | grep -cF 'No markdown headers. Keep it under 8 sentences'  →  1
+$ git show 519e803b:packages/orchestrator/src/chat-drain.ts | grep -cF 'PLAN MODE is ON'  →  1
+$ git show 519e803b:packages/voice/src/answer.ts | grep -cF '2-4 short spoken sentences'  →  1
+$ git show 519e803b:packages/kernel/src/classify.ts | grep -cF 'Output JSON ONLY'  →  1
+$ git show 519e803b:packages/orchestrator/src/decompose.ts | grep -cF 'Output JSON ONLY'  →  1
+$ git show 519e803b:packages/orchestrator/src/worker-shim.ts | grep -cF 'verify with a real tool call'  →  1
+$ git show 519e803b:packages/orchestrator/src/worker-shim.ts | grep -cF 'judged empty'  →  1
+$ git show 519e803b:packages/orchestrator/src/worker-shim.ts | grep -cF 'rejected by the gate'  →  1
+$ git show 519e803b:packages/voice/src/persona.ts | grep -cF 'return text.slice(start).trim();'  →  1
+# R14 at 519e803b: Hamza's delivered body (the old loader returned text.slice(start).trim()) carried comments:
+$ awk from '# PERSONA — ' personas/ceo/agents-orchestrator.md@519e803b | grep -c '<!--'  →  3

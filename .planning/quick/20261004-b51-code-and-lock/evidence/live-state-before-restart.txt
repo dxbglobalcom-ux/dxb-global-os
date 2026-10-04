@@ -1,0 +1,23 @@
+# Live state before each dxb-scheduler restart (company engine, SELECT only)
+## 2026-10-04T19:00:42+02:00 — before the second restart (the per-call schema)
+$ SELECT status, count(*) FROM voice_calls GROUP BY 1
+ended|58
+failed|44
+$ SELECT status, count(*) FROM tasks GROUP BY 1
+done|247
+inbox|14
+returned|3
+failed|2
+## 18:50 — before the first restart (measured in the session, same queries): voice_calls ended 58 · failed 44; tasks done 247 · inbox 14 · returned 3 · failed 2 — no call open, no task claimed or running
+$ systemctl --user restart dxb-scheduler   (2026-10-04T19:00:52+02:00)
+     Active: active (running) since Sun 2026-10-04 19:00:46 CEST; 6s ago
+             ├─4095252 sh -c "node packages/outbox-executor/dist/main.js"
+             └─4095253 node packages/outbox-executor/dist/main.js
+$ stat dist (built before this start):
+2026-10-04 19:00:05.598578255 +0200 packages/kernel/dist/classify.js
+2026-10-04 18:49:42.382038610 +0200 packages/orchestrator/dist/chat-drain.js
+2026-10-04 18:49:41.926135370 +0200 packages/voice/dist/answer.js
+2026-10-04 18:49:41.927087816 +0200 packages/voice/dist/persona.js
+$ journalctl (restart lines)
+Oct 04 19:00:46 DXB-Center systemd[2408]: Stopped dxb-scheduler.service - DXB Global OS resident scheduler (pg-boss queues + voice drain).
+Oct 04 19:00:46 DXB-Center systemd[2408]: Started dxb-scheduler.service - DXB Global OS resident scheduler (pg-boss queues + voice drain).

@@ -1,4 +1,5 @@
-(node:4056600) ExperimentalWarning: SQLite is an experimental feature and might change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
-[isolation] lane=classify session=65b7f02c-39e3-4e5a-9222-6cab4c8352de tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=1479 home=/home/dxb/.local/share/dxb/company-claude
-{"intent_summary":"The CEO wants a market research report plus a competitor pricing comparison table prepared for the company's coffee brand.","task_class":"research.synthesis","departments":["strategy","marketing","commerce","data-ai"],"approval_class":"internal","complexity":"multi"} 35155ms
+$ DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node .planning/quick/20261004-b51-code-and-lock/evidence/probe-classify.mjs   (2026-10-04T19:00:29+02:00, dist of 19:00 with the per-call schema)
+engine on the classify pool: {"sysid":"7690665340837392423","port":"5432","db":"postgres","agents":219}
+[isolation] lane=classify session=1710c417-e06e-4db4-afd4-8c0b9b7ccd8a tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=1741 home=/home/dxb/.local/share/dxb/company-claude
+{"intent_summary":"The CEO wants a market research report and a competitor price comparison table prepared for the company's coffee brand.","task_class":"research.fanout","departments":["strategy","marketing","commerce"],"approval_class":"internal","complexity":"multi"} 5728ms
+EXIT=0

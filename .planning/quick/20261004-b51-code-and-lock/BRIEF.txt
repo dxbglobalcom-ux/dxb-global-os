@@ -1,0 +1,262 @@
+THE CEO'S SENTENCE (verbatim, 2026-10-04): "gerekeni yap ve bu durumdan diğer oturumları da haberdar et bilsinler kim nerede çalışıor commitlerle ilgili" — his answer to the question "Kod tarafına 'yap' ya da 'bekle'", asked with the recommendation "yap" for bundle 2 of .planning/quick/20261004-his-list/item3-report.md.
+
+WHAT IT REFERS TO (facts, read them yourself):
+- .planning/quick/20261004-his-list/item3-report.md § Bundles — bundle 2 = C2-2, C2-5, C2-6/7/8, C2-10, C2-11, R14 strip, R2 in template.ts.
+- .planning/quick/20260923-prompt-audit/slices/c-personas-108-213-code.md PART 2 (rows 2, 5, 6, 7, 8, 10, 11) and its "Coverage and tests" list; REPORT.md Bucket 3 row R14.
+
+DESIGN DECISIONS (facts, on purpose):
+- Bundle 3 (C2-3, C2-4, C2-9, C2-12, C2-13) is NOT in this job.
+- R2 is dropped: template.ts §11 already reads "Hook bağlantısı" (commit 3ebbce2b).
+- C2-2: the unknown-value fallback stays "low" (only xhigh is admitted); the audit's "medium" fallback was a separate decision nobody took. One helper (routeEffort in packages/voice/src/prompt-core.ts) serves chat and voice.
+- C2-5: the prompt says "usually 3 or fewer; up to ${MAX_HOP_DEPTH} only when the work truly needs it" — the CEO's order of 2026-08-27 raised the cap to 5 and PHASE-05 §2 row 7 keeps <=3 as the usual shape (both quoted in decompose.ts's comment above MAX_HOP_DEPTH).
+- C2-10: the JSON-only prose is removed only from classify and decompose, which run subscription-only with outputFormat json_schema; qa.ts, executor.ts, worker-shim.ts keep theirs (LiteLLM paths / bundle 3).
+- R14: comments are stripped only in the prompt loader; the DB copy and the gate keep the whole file.
+- Persona lines: the four "ADD gelene kadar" conditions in ciso.md (2), platform-head.md, chief-ai-officer.md are replaced because the successor seats (iam-secrets-officer, ai-safety-red-team-lead, backup-dr-officer, ai-observability-finops-analyst) exist, are active in the company DB and name these heads as their manager (dossier row 6). iam-secrets-officer.md:23 and backup-dr-officer.md:23 are history and stay. No fraud seat exists, so fraud stays on the CISO. The files were refiled to the COMPANY database (author opus-5, gate passed, bound); you cannot read that database — evidence/submit.log, gate.log, bind.log, verify.log are its raw output.
+- Deployment: tsc --build, then dxb-scheduler restarted (evidence in the commit body).
+
+DONE-LIST (command -> expected):
+1. pnpm exec vitest run tests/b51/bundle2-prompts.test.ts -> before the fix RED (evidence/before-red.txt), after GREEN 14/14 (evidence/after-green.txt).
+2. The test pins: routeEffort("xhigh")==="xhigh", unknown -> "low"; chat lines without "No markdown headers"/"under 8 sentences"/"PLAN MODE is ON"; voice line without "2-4 short spoken sentences", TOPIC contract kept; decompose says "up to 5"; classify/decompose prompts without "Output JSON ONLY"; seat prompt without "verify with a real tool call"/"judged empty"; worker-shim without "rejected by the gate"; persona comments (single- and multi-line) never in loadPersonaBody output.
+3. grep -c "ADD gelene" personas/security/ciso.md personas/platform/platform-head.md personas/data-ai/chief-ai-officer.md -> 0 0 0.
+4. scripts/sync-personas-to-db.sh --verify -> match: 213 · diff: 0 (evidence/verify.log).
+5. Pinning suites green: tests/r31, tests/b43/dispatch-book, tests/b43/road-consistency, tests/b21/agent-context, tests/c9/chat-legs, tests/u15r2, tests/phase6/poisoning, tests/phase5 (raw output below).
+6. tsc --build exit 0; built dist carries the new strings and none of the old.
+7. One live classify call on the construction engine parses against the schema without the prose line (evidence/live-classify.txt).
+
+YOUR FIRST QUESTION: does this done-list prove what the CEO's sentence and bundle 2 asked for? Then audit the diff (git diff 519e803b..HEAD), the replacement texts against the audit's rows, behavioural regressions (anything else reading these prompts, the persona loader's other callers, the chat/voice output parsers), and whether anything in bundle 2 was silently narrowed or widened. You may query the construction engine with sql_read. Output per claim: Claim / Verdict (REFUTED | STANDS AFTER ATTEMPTED REFUTATION | UNVERIFIED) / Finding file:line / Evidence / Correction required. Grade each finding A (blocks) / B (repair in this pass) / C (older than this work).
+
+RAW TEST OUTPUT (pinning suites, whole):
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:4064063) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > worker path: intake parks 'routing', drainVoiceCalls answers + writes the handoff WAV
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/r31/voice-line.test.ts (11 tests) 8015ms
+   ✓ R3.1 — real Speaches roundtrip > Piper TR synth → whisper transcript preserves the question intent  1830ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0  3096ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true  2999ms
+(node:4064525) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/ladder.test.ts > master-plan step 6 — 2× fail → third claim at higher tier (events as evidence) > worker fails twice; the THIRD claim serves the task with the bumped model_tier
+ladder event chain: [
+ {
+  "event": "created",
+  "from_status": "inbox",
+  "to_status": "queued",
+  "actor": "orchestrator:dispatch",
+  "payload": {
+   "deps": [],
+   "envelope_index": 0
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-1",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "failed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "error": "synthetic ladder failure: first attempt"
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "failed",
+  "to_status": "queued",
+  "actor": "orchestrator:escalate",
+  "payload": {
+   "ladder": "retry-same-tier",
+   "fail_count": 1,
+   "model_tier": "L4"
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-1",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "failed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "error": "synthetic ladder failure: second attempt"
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "failed",
+  "to_status": "queued",
+  "actor": "orchestrator:escalate",
+  "payload": {
+   "ladder": "specialist",
+   "fail_count": 2,
+   "model_tier": "L3"
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-2",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-2",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "review",
+  "actor": "worker-lad-2",
+  "payload": {
+   "confidence": 0.9
+  }
+ }
+]
+
+ ✓ tests/phase5/ladder.test.ts (6 tests) 314ms
+(node:4064643) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/dispatch-book.test.ts (20 tests) 272ms
+(node:4064699) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa fail → review→failed with reason 'qa-fail', and the 05-06 ladder engages
+[qa] task a9de17d6-7c51-486a-8956-d68afff121ef FAIL (confidence 0.3) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa pass + approval_class 'none' → done
+[qa] task cafd5008-7b59-4523-b84c-3c86c487107a PASS (confidence 0.95) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > qa wiring — injectable evaluator (deterministic) > qa pass + approval_class 'internal' → awaiting_approval (Phase-4 flow takes over)
+[qa] task 5764a2ed-2251-444f-86db-e80587add41a PASS (confidence 0.9) — the judge took 0 ms in 1 call
+
+stdout | tests/phase5/council-judge.test.ts > council NEGATIVE proof — normal task, zero council calls (master-plan step 7) > internal/L3 task runs worker→qa→done with shouldCouncil=false and no meta.council rows
+[qa] task 63d89d5c-5b07-44be-bbcf-234964cf21ae PASS (confidence 0.9) — the judge took 0 ms in 1 call
+
+ ✓ tests/phase5/council-judge.test.ts (8 tests | 2 skipped) 200ms
+(node:4064727) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/decompose-dispatch.test.ts > worker shim — e2e claim→work→done with full event chain (master-plan step 5) > one envelope runs end-to-end; task_events chain complete and ordered
+e2e event chain: [
+ {
+  "event": "created",
+  "from_status": "inbox",
+  "to_status": "queued",
+  "actor": "orchestrator:dispatch"
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "review",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "review",
+  "to_status": "done",
+  "actor": "test:head-review"
+ }
+]
+
+ ✓ tests/phase5/decompose-dispatch.test.ts (10 tests | 1 skipped) 164ms
+(node:4064783) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/poisoning.test.ts (7 tests) 48ms
+(node:4064860) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/greeting-script-rescue.test.ts (2 tests) 36ms
+(node:4064887) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/c9/chat-legs.test.ts > the drain routes a real message to the right leg > a status question arrives on the brief leg WITH a snapshot
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > the drain routes a real message to the right leg > a money question arrives on the strategy leg WITHOUT a snapshot
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/c9/chat-legs.test.ts (13 tests) 43ms
+(node:4064915) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/routing-data.test.ts > KERN-02 — routing is data (routing_rules), never code > KERN-02 proof: UPDATE one row → same intent resolves a different model, zero code changes
+KERN-02 UPDATE proof: before=probe-high after=probe-rerouted (row d5375605-f94d-4853-9257-10bab1101173)
+
+ ✓ tests/phase5/routing-data.test.ts (10 tests | 5 skipped) 32ms
+(node:4064942) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/u15r2/voice-round2.test.ts > U15 D12/D13 — one conversation + session threads > a Hamza-answered call mirrors onto the board and carries session_id
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/u15r2/voice-round2.test.ts (5 tests) 39ms
+(node:4064992) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/road-consistency.test.ts (16 tests) 34ms
+(node:4065039) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/bundle2-prompts.test.ts (14 tests) 8ms
+(node:4065065) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b21/agent-context.test.ts (11 tests) 5ms
+(node:4065091) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/persona-delivery.test.ts (4 tests) 3ms
+
+ Test Files  14 passed (14)
+      Tests  129 passed | 8 skipped (137)
+   Start at  18:52:25
+   Duration  14.89s (transform 449ms, setup 0ms, collect 4.00s, tests 9.21s, environment 1ms, prepare 450ms)
+
+[global-teardown] handed back 223 ops:live receipt(s) this run issued

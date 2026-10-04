@@ -11,7 +11,7 @@ import { chatLaneLines } from "../../packages/orchestrator/src/chat-drain.js";
 import { draftPrompt } from "../../packages/orchestrator/src/decompose.js";
 import { MAX_HOP_DEPTH } from "../../packages/orchestrator/src/decompose.js";
 import { composeSeatPrompt } from "../../packages/orchestrator/src/worker-shim.js";
-import { classifyPrompt } from "../../packages/kernel/src/classify.js";
+import { classifyPrompt, classifiedIntentFor } from "../../packages/kernel/src/classify.js";
 
 const REPO_ROOT = join(import.meta.dirname, "..", "..");
 const CI = {
@@ -126,5 +126,28 @@ describe("R14 — a persona file's HTML comments never reach the model", () => {
   it("the live Hamza persona carries no comment", async () => {
     const body = await loadPersonaBody(REPO_ROOT, "personas/ceo/agents-orchestrator.md");
     expect(body).not.toContain("<!--");
+  });
+});
+
+describe("C2-10 (Sol's single pass) — task_class is narrowed to the live routing classes per call", () => {
+  const base = {
+    intent_summary: "x",
+    departments: ["strategy"],
+    approval_class: "none",
+    complexity: "single",
+  };
+  it("the per-call schema refuses a class no routing row serves, accepts a live one", () => {
+    const s = classifiedIntentFor(["research", "research.synthesis"]);
+    expect(s.safeParse({ ...base, task_class: "bogus" }).success).toBe(false);
+    expect(s.safeParse({ ...base, task_class: "research.synthesis" }).success).toBe(true);
+  });
+  it("an empty class list leaves the contract unnarrowed (no z.enum of nothing)", () => {
+    expect(classifiedIntentFor([]).safeParse({ ...base, task_class: "anything" }).success).toBe(true);
+  });
+  it("classify sends AND validates with that per-call schema", async () => {
+    const src = await readFile(join(REPO_ROOT, "packages/kernel/src/classify.ts"), "utf8");
+    expect(src).toContain("const schema = classifiedIntentFor(taskClasses);");
+    expect(src).toContain('outputFormat: { type: "json_schema", schema: sdkJsonSchema(schema) }');
+    expect(src).toContain("const parsed = schema.safeParse(raw);");
   });
 });
