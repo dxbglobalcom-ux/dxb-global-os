@@ -13,7 +13,7 @@ DESIGN DECISIONS (facts, on purpose):
 - C6: "<X> without <Y> are rejected post-task" -> "<X> carry <Y> (checked post-task)"; 12 differently shaped sentences and the Turkish forms stay as they are.
 - R1 keep-list: the three real sequences (social-scheduler-publisher "Pre-publish battery, fixed order", blockchain "Denetim süreci sabittir", IAM "Grant yaşam döngüsü") are untouched; the R1 lead-ins in those two security files were converted.
 - "Flag" rows of the slices (no proposal) are not applied.
-- The authorship law: every new sentence is the session's own; a script only placed the session's exact text (the script: the session scratchpad apply.py; its rules are in commit 3ebbce2b's body).
+- The authorship law: every new sentence is the session's own; a script only placed the session's exact text (the script: evidence/apply.py in this folder; the two security lead-ins and every file-specific row were edited by hand afterwards).
 
 DONE-LIST (command -> expected):
 1. python3 .planning/quick/20260923-prompt-audit/verify-runtime.py -> every template count 0/214 except "B5 version comment" (R14, code, out of scope).
