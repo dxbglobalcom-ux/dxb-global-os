@@ -27,7 +27,7 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-04 ~17:00 → 17:05, Opus 5.5 session e7aa0d14 (high), on his /goal *"iş devam edin sonunda fable a
+2026-10-04 ~17:00 → 17:55, Opus 5.5 session e7aa0d14 (high), on his /goal *"iş devam edin sonunda fable a
 danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar içinde geçerli"* (conversation, verbatim).
 - **His list item 3 — the construction's auto-memory: the fixes are done** (finished, not accepted — LAW B).
   Each of the 25 fix rows of `item5-report.md` re-measured in place first, then corrected in
@@ -39,6 +39,19 @@ danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar
   The 4 delete rows deleted on his word *"A sil"* <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->: 4 files, 5.3 KB, their index lines
   and the 2 links to them repointed at `dxb-persona`; index 63 ↔ 63. The 8 July diaries stay, unshortened, on his word *"kalsın"* <!-- CEO-OK: auto-memory-july-diaries-stay-2026-10-04 -->.
   **His list item 3 is finished** (not accepted — LAW B).
+- **His list item 1 — the old patterns in the employee personas — done and live** (finished, not accepted —
+  LAW B), on his /goal *"personadaki eski kalıpları bitir"* (conversation, verbatim). B51 move 5's persona-text
+  rows and his cards H13 H14 H15 H16 H17 H21 of 2026-09-24 <!-- CEO-OK: h13-persona-discipline-section-trimmed-2026-09-24 --> <!-- CEO-OK: h14-h15-h17-h21-yes-2026-09-24 --> <!-- CEO-OK: h16-persona-author-is-the-chief-engineer-2026-09-24 -->
+  applied to the 213 seats in the session's own words: retired model names and the Fable-as-author lines out,
+  no fixed step script or reasoning order, escalation and reports in whole sentences with the conclusion
+  first, Turkish to the CEO and English artefacts, each seat told only the tools it really holds, no issue
+  quotas, no dated archaeology; §12's Islamic conduct untouched. Commits `3ebbce2b` · `c61a84d3` ·
+  `3d5bb2ed` · `675767d6` · `4fa96287` · `fb4bf1ff`; Sol `high`: 5 findings + 2 residues fixed, all CLOSED;
+  battery GREEN (266), persona ruler 16/16, tests personas/r31/b43 135/135. Filed in the company: 213
+  versions submitted as opus-5, gate passed, bound, `--verify` 213 MATCH (the bind loop's stdin defect fixed
+  on the way); titles 0 of 213 changed. Job folder `.planning/quick/20261004-persona-old-patterns/`.
+  Left on purpose (code, B51 bundles 2-3): the version-comment strip, chat/voice/decompose prompt strings,
+  the standing layer's approval, language and honesty lines.
 
 2026-10-04 14:53 → 16:25, Opus 5.5 session fd7d67f2 (beside 07841b79). He went through the approved
 orchestration design again, then ordered how its max part runs without his hand on /effort.
@@ -99,7 +112,8 @@ work to be re-verified (nine questions, answered from the records), then set his
 His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama unutulmasın heee arada kaynamasın"*
 (conversation, verbatim). One at a time; each talked through with him first.
 
-1. **The prompt audit's runtime bucket (B51 move 5)** — measured: `item3-report.md`. Waits on his B51 verdict.
+1. ~~The prompt audit's runtime bucket (B51 move 5)~~ — the persona text finished 2026-10-04 (session
+   e7aa0d14, finished, not accepted). Its code rows (bundles 2-3 of `item3-report.md`) wait on his word.
 2. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
    proposal in `item2-report.md` § ITEM 4. Waits on his word.
 3. ~~The construction's auto-memory~~ — finished 2026-10-04 (session e7aa0d14): 25 fixes, 4 files deleted
