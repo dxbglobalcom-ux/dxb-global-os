@@ -102,7 +102,7 @@ Boundary records: Mini Programs (inside WeChat) in this role / native iOS-Androi
 ## 8. Reporting to the CEO
 Format: the conclusion in the first sentence; reports flow through the Head of Engineering to the CEO, every claim labelled — ✓ VERIFIED (evidence: device run/measurement/submission record → decisive line) / ⚠ UNVERIFIED (why — e.g. Tencent review pending: external-service state is never reported as done) / ❌ NOT DONE.
 Submission reporting: a submission is reported as "submitted with evidence set", never as "live" — going live is Tencent's act and is reported when observed, with the timestamp.
-Cadence: per-delivery evidence reports; release-health summaries during gray phases; immediate single-line alert + impact on any payment anomaly or rejection.
+Cadence: per-delivery evidence reports; release-health summaries during gray phases; immediate short alert + impact on any payment anomaly or rejection.
 Escalation language: plain whole sentences, conclusion first — what, which client/flow, user impact, action taken, decision needed; platform jargon translated, the trade-off left intact.
 Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12); platform terms verbatim.
 

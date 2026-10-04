@@ -1,0 +1,133 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:3642017) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b43/media-hands.test.ts > 2. the media lane > a failing engine lands in failed with its error; a busy machine leaves the job queued
+[media-lane] b43t-6d886a-lane: job 408fd848 (still) waits: card busy: test
+
+ ✓ tests/b43/media-hands.test.ts (12 tests) 10340ms
+   ✓ 1. the media tool group > cancel flips a queued job; wait times out honestly and renews the task lease  5105ms
+   ✓ 2. the media lane > cancel_requested reaches a running engine  418ms
+   ✓ 4. the lease heartbeat > a run longer than its lease is not reaped while the worker is alive  4525ms
+(node:3643322) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > worker path: intake parks 'routing', drainVoiceCalls answers + writes the handoff WAV
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/r31/voice-line.test.ts (11 tests) 9681ms
+   ✓ R3.1 — real Speaches roundtrip > Piper TR synth → whisper transcript preserves the question intent  3288ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0  3255ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true  3050ms
+(node:3644079) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b43/media-lanes.test.ts > W8 · the media lane's seams > a child killed with SIGKILL — the hardest death — still gives its job back
+[media-lane] recovered orphan a469710e (probe, held by lane-pid-3644645) → queued
+
+stdout | tests/b43/media-lanes.test.ts > W8 · the media lane's seams > start-up recovery gives back a job a dead process was holding
+[media-lane] recovered orphan 42bce419 (probe, held by a-lane-that-died) → queued
+[media-lane] recovered orphan 1543f700 (probe, held by a-lane-that-died) → cancelled
+
+ ✓ tests/b43/media-lanes.test.ts (10 tests) 7540ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > a processor job is claimed while the card lane is inside a long shoot  602ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > two card jobs never overlap — the card is one  451ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > a lane that just finished looks again at once; an idle lane rests one tick  372ms
+   ✓ B43 · media lanes on the engine — kinds are claimed by the right lane, at the same time > a GPU-kinds lane and a CPU-kinds lane run their jobs at once; the book shows the overlap  928ms
+   ✓ W8 · the media lane's seams > a REAL child process killed mid-run ends 'cancelled', never 'failed'  5049ms
+ ✓ tests/b43/task-lanes.test.ts (7 tests) 1579ms
+   ✓ B43 · task lanes — one long job never holds the other hands > lane 2 takes the next task while lane 1 is inside a long run  601ms
+   ✓ B43 · task lanes — one long job never holds the other hands > an idle lane rests one tick; a working lane looks again at once  321ms
+(node:3644928) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/assigned-seats.test.ts (6 tests) 148ms
+(node:3644975) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/dispatch-book.test.ts (20 tests) 268ms
+ ✓ tests/b43/records-truth.test.ts (8 tests) 168ms
+(node:3645048) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/w9-road-proof.test.ts (3 tests) 66ms
+ ✓ tests/b43/brain-truth.test.ts (6 tests) 64ms
+(node:3645175) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/greeting-script-rescue.test.ts (2 tests) 36ms
+(node:3645210) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/road-consistency.test.ts (16 tests) 35ms
+ ✓ tests/personas/activation-gate-author-list.test.ts (3 tests) 14ms
+stdout | tests/personas/persona-ruler.test.ts > the persona ruler — the studio's sixteen seats > prints its table, passing or failing (the evidence both sides paste)
+
+PERSONA RULER — one metre for the builder and the checker
+
+  R 1 sentence-length
+  R 2 line-terminator
+  R 3 paren-depth
+  R 4 paren-balance
+  R 5 no-duplicate-clause
+  R 6 voice-residue
+  R 7 three-roads
+  R 8 no-model-name
+  R 9 section-12-identity
+  R10 delivery-header
+  R11 canonical-law-paragraph
+  R12 concept-contract
+  R13 dossier-date
+
+seat                                    R1  R2  R3  R4  R5  R6  R7  R8  R9 R10 R11 R12 R13   verdict
+-----------------------------------------------------------------------------------------------------
+media-creative-director                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-film-director                      ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-storyboard-previz                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+design-image-prompt-engineer             ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+marketing-short-video-editing-coach      ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-ai-video-engineer                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-product-brand-consistency          ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-character-identity                 ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-continuity                         ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-screenwriter                       ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-failure-analysis                   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-cinematographer                    ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-advertising-director               ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-delivery-qc                        ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-vfx-post                           ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-sound-music                        ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+
+rule                       seats failing  failures
+--------------------------------------------------
+sentence-length                        0         0
+line-terminator                        0         0
+paren-depth                            0         0
+paren-balance                          0         0
+no-duplicate-clause                    0         0
+voice-residue                          0         0
+three-roads                            0         0
+no-model-name                          0         0
+section-12-identity                    0         0
+delivery-header                        0         0
+canonical-law-paragraph                0         0
+concept-contract                       0         0
+dossier-date                           0         0
+
+
+RULER: 16/16 PASS · §12 canon 16e9ced6 · law canon 578bf86a
+
+
+ ✓ tests/personas/persona-ruler.test.ts (26 tests) 7ms
+(node:3645325) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/persona-delivery.test.ts (4 tests) 3ms
+ ✓ tests/b43/sdk-schema.test.ts (1 test) 3ms
+
+ Test Files  15 passed (15)
+      Tests  135 passed (135)
+   Start at  17:43:02
+   Duration  34.61s (transform 423ms, setup 0ms, collect 2.87s, tests 29.95s, environment 1ms, prepare 481ms)
+
+[global-teardown] handed back 67 ops:live receipt(s) this run issued

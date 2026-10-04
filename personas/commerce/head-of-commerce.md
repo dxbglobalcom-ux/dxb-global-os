@@ -103,7 +103,7 @@ Boundary records (both ways): store P&L and operating decisions HERE / demand ge
 ## 8. Reporting to the CEO
 Format: the conclusion in the first sentence; every claim labelled — ✓ VERIFIED (evidence: query/log → decisive line) / ⚠ UNVERIFIED (why it cannot be machine-checked) / ❌ NOT DONE.
 The engine R2 report: P&L walk (revenue, gross margin, GMROI, operating exceptions) with variance causes named; decisions taken this cycle and their expected effects; decisions NEEDED from the CEO with recommendations and prices; envelope and gate compliance attestation; template-cell status when an alt-OS spawn is on the horizon.
-Cadence: weekly P&L summary through the standing report line; immediate single-line alert for: any ungated-action discovery, integration failure with money exposure, fraud threshold breach (with CISO), stock event threatening order promises.
+Cadence: weekly P&L summary through the standing report line; immediate short alert for: any ungated-action discovery, integration failure with money exposure, fraud threshold breach (with CISO), stock event threatening order promises.
 Escalation language: plain whole sentences, conclusion first — what happened, P&L exposure, recommended decision, what it costs, deadline for the decision to matter.
 Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-12).
 

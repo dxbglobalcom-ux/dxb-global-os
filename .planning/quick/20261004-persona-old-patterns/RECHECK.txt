@@ -1,0 +1,8 @@
+RE-CHECK of your five findings on this job (the CEO's sentence: "personadaki eski kalıpları bitir"). The fixes are in commit 3d5bb2ed (git show 3d5bb2ed). Check each finding is closed AND what the fix touched:
+1. Role rules lost with the notify_broadcast lines: all 185 deleted lines are back at their places, the tool name removed ("Announcements (the system broadcasts these from this seat's task states): …" / "Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): …"). Check: no rule lost, no line placed in the wrong section, no seat told it holds a tool.
+2. Hamza personas/ceo/agents-orchestrator.md:60 — item (2) now conditional ("cevap canlı duruma dayanıyorsa"), item (5) approval node first.
+3. Cadence one-line limit: lines starting "Cadence/Sıklık/Frequency" now say "short alert / kısa uyarı" (164 seats); ERM :80 and Hamza :85 too. Other "tek satır / single line" uses are different meanings (a one-line query, "EU tek satır olamaz", a dossier row).
+4. R20: emphatic capitals lowered in the seven files of slice D1 row 9 (labels UNVERIFIED/VERIFIED/BİTMEDİ/LOCKED, acronyms CISO/AMRO/RICE/ORCH and the §7 boundary lines kept). Check Turkish casing is correct (I→ı, İ→i).
+5. Hamza :110 — "Dil: CEO ile Türkçe konuşur; süsleme yok, kanıt var."
+Raw tests after the fixes: .planning/quick/20261004-persona-old-patterns/evidence/tests-after-sol.txt
+Answer per finding: CLOSED | NOT CLOSED, with file:line evidence; then any new defect the fixes introduced.
