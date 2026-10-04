@@ -99,8 +99,9 @@ own work (CEO 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->; the p
 the machine cannot check, and on a defect the CEO caught — then it sweeps the **class**.
 
 **A finding is evidence, never a verdict.** The session author signs every ✓. A disputed finding
-is settled inside the team (`dxb-team2` §4 DISPUTE): a test decides; where no test can, Fable rules;
-the lead has the last word. What no terminal can observe stays `⚠ UNVERIFIED`.
+is settled inside the team (`dxb-team2` §4 DISPUTE): a test decides; where no test can, the lead
+decides and records why — on a critical job Fable rules in its one call at the end; the lead has the
+last word. What no terminal can observe stays `⚠ UNVERIFIED`.
 
 Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.
 

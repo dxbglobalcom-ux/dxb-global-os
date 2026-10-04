@@ -1,0 +1,12 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/governance/codex-mirror-check.test.ts (4 tests) 819ms
+   ✓ sync-codex-mirror.sh rewrites only the hook paths it mirrors > a .sh hook and the bare hooks folder move to .codex/hooks/; a .py hook and a home path stay  301ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  17:52:02
+   Duration  1.10s (transform 46ms, setup 0ms, collect 11ms, tests 819ms, environment 0ms, prepare 35ms)
+

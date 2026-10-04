@@ -82,3 +82,26 @@ describe("sync-codex-mirror.sh --check (B63)", () => {
     expect(r.out + r.err).not.toMatch(/__pycache__|\.pyc/);
   });
 });
+
+// Sol's single pass on the design-max job, 2026-10-04: the mirror of dxb-team2 named
+// `.codex/hooks/dxb-design-max.py`, a file that does not exist — the script copies only the
+// `*.sh` hooks, yet rewrote every `.claude/hooks/` path, and the home path
+// `~/.claude/hooks/dxb-cost-gate.py` became `~/.codex/hooks/…` the same way. A hook path is
+// rewritten only where the mirror really holds the file: the hooks folder itself and its `*.sh`.
+describe("sync-codex-mirror.sh rewrites only the hook paths it mirrors", () => {
+  it("a .sh hook and the bare hooks folder move to .codex/hooks/; a .py hook and a home path stay", () => {
+    const root = scratch();
+    put(root, ".claude/skills/door-b/SKILL.md", [
+      "Orders: `.claude/hooks/` · the order `.claude/hooks/order.sh`",
+      "The gate `.claude/hooks/gate.py` and its home twin `~/.claude/hooks/home-gate.py`.",
+      "",
+    ].join("\n"));
+    const made = run(root);
+    expect(made.code, made.err).toBe(0);
+    const door = spawnSync("cat", [join(root, ".agents/skills/door-b/SKILL.md")], { encoding: "utf8" }).stdout;
+    expect(door).toContain("Orders: `.codex/hooks/` · the order `.codex/hooks/order.sh`");
+    expect(door).toContain("The gate `.claude/hooks/gate.py` and its home twin `~/.claude/hooks/home-gate.py`.");
+    expect(door).not.toMatch(/\.codex\/hooks\/(gate|home-gate)\.py/);
+    expect(run(root, "--check").code).toBe(0);
+  });
+});

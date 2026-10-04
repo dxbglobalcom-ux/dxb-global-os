@@ -2042,5 +2042,13 @@
     "conditions": "Answering the lead's table of the eight diaries and its recommendation to keep them, 2026-10-04 ~17:15. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session e7aa0d14 — heard first-hand, 2026-10-04.",
     "where": ".planning/STATE.md"
+  },
+  "fable-at-the-end-on-important-jobs-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "Two orders in one sentence. (1) The approved orchestration design is written into dxb-team2 now — the three arrangements and the card's fields (orchestration-three-arrangements-lead-chooses-2026-10-03), a fork or a medium helper writing code under the lead's verification (helpers-write-code-under-lead-verification-2026-10-03; the core's 'Code' sentence and a writing helper seat, helper-writer), Sol's single pass with its findings fixed by a fork or a helper (sol-single-pass-fixes-by-helper-2026-10-03), and the two defects found on the way (the door's dollar figures overwritten when it is opened with a job sentence; the Codex mirror naming hook paths it does not hold). (2) Fable is consulted once per job, at the end — before 'done' — and only on an important job, read as the card's critical class (6-8); in that one call it also rules on a disagreement no test settled. This DELETES (LAW A) the three fixed points of fable-three-checkpoints-2026-10-03 (before a big plan, on a repeated error, before 'done', and 'whenever else the lead needs it') and Fable's ruling on any dispute of a light or normal job — there the lead decides and records why.",
+    "verbatim": "4- kalsın gerek yok. diğerlerini tamamla ve bu sistemde fable en sonda sadece önemli konularda danışılsın sanırım şuan hem başta hem de sonda danışılıor galiba ve herşeyde... evet başla!",
+    "conditions": "Set as a /goal in session fd7d67f2, answering the lead's list of 2026-10-04 ~17:13 (items 1, 2, 3, 5; item 4 dropped and written nowhere). 'Önemli konularda' is read by the lead as the critical class; the reading is named to him in the job's report. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session fd7d67f2 — heard first-hand, 2026-10-04.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §1-§6, §9 · .claude/CLAUDE.md §2 (Code) · ~/.claude/agents/helper-writer.md · .claude/skills/dxb-verify/SKILL.md · scripts/governance/sync-codex-mirror.sh · .planning/quick/20261004-orchestration-door/"
   }
 }

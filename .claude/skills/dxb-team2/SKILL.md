@@ -1,9 +1,9 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, writes and fixes the code itself; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job at a depth set by its score; Fable 5.1 advises the lead on any job and settles a disagreement. Trigger `/dxb-team2 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, chooses who writes (itself, a fork or medium helpers) and verifies every piece; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job once, at a depth set by its score; Fable 5.1 is consulted once, at the end, on a critical job only. Trigger `/dxb-team2 <the job in one sentence>`.
 ---
 
-# The team — one lead who builds, one blind auditor, Fable as advisor
+# The team — one lead, the hands it chooses, one blind auditor, Fable at the end
 
 The construction's default door since 2026-09-28 <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->, built against waste, not against checking. The laws it obeys are in `.claude/CLAUDE.md`;
 it opens `dxb-verify` and `dxb-close-row`.
@@ -17,29 +17,32 @@ it opens `dxb-verify` and `dxb-close-row`.
                     │
      ┌──────────────┼──────────────────────────┐
   LIGHT (0-2)   NORMAL (3-5)             CRITICAL (6-8)
-     │              │              the lead plans, Fable advises
-     │              │              → Sol reads the plan → the lead closes its gaps
+     │              │              the lead plans → Sol reads the plan
+     │              │              → the lead closes its gaps
      └──────────────┼──────────────────────────┘
                     ▼
      THE PLAN, in his language → the CEO looks at it once → his yes
                     │
-     THE LEAD (this session) writes the code and runs its tests
+     ARRANGEMENT (§3) — the lead, a fork, or medium helpers write; the lead verifies
                     │
-     SOL AUDITOR — blind, read-only, one pass:  medium │ high │ xhigh
+     SOL AUDITOR — blind, read-only, ONE pass:  medium │ high │ xhigh
                     │
-     finding → the lead fixes → Sol re-checks the finding and its surroundings
-     disagreement → a test decides → else Fable rules → the lead has the last word
+     finding → a fork or a helper fixes → the lead verifies; no second Sol round
+     disagreement → a test decides → else the lead (critical: Fable, in its one call)
                     │
-     BATTERY once · dependants re-measured · commit · report
+     BATTERY once · dependants re-measured · FABLE once, critical only · commit · report
 ```
 
 ## 2. Seats
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot); design, plan and architecture turns at `max` through `dxb-design-max` (§4 PLAN) | scores the job, writes the done-list, writes the code, fixes every finding, runs the tests, the battery, commits, reports | approves its own work; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
-| **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> through `scripts/governance/refuter.sh --card <file>` — read-only by tool | one blind pass per job (§5); re-checks a fixed finding and what the fix touched | writes; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
-| **Advisor** | Fable 5.1 | advises the lead at three fixed points on every job — before a big plan, when the same error comes a second time, before "done" <!-- CEO-OK: fable-three-checkpoints-2026-10-03 --> — and whenever else the lead needs it; rules on a disagreement no test can settle | writes code |
+| **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot); design, plan and architecture turns at `max` through `dxb-design-max` (§4 PLAN) | scores the job, writes the done-list, chooses the arrangement (§3), writes code itself or through the hands it chose, verifies every piece and every fix, runs the battery, commits, reports | approves its own work; commits a piece it has not verified; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
+| **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> through `scripts/governance/refuter.sh --card <file>` — read-only by tool | one blind pass per job (§5) — there is no second round <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 --> | writes; audits the same job twice; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
+| **Advisor** | Fable 5.1 | once per job, at the end — before "done" — and only on a critical job (card 6-8): reads the finished work with Sol's findings and, in the same call, rules on a disagreement no test settled <!-- CEO-OK: fable-at-the-end-on-important-jobs-2026-10-04 --> | writes code; is consulted before or during the work, on a repeated error, or on a light or normal job — the advisor tool's own advice to call it before substantive work does not apply here |
+| **Fork** | the lead's own copy (`subagent_type: "fork"`), on the lead's model | writes the job, or a part of it, with the lead's whole context (§3) | commits |
+| **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code, documents or the outside world for the lead, beside the others | writes |
+| **Writing helper** | `helper-writer` (Opus 5.5 · `medium`) | edits and tests a piece the lead specified; fixes Sol's findings | commits; widens the piece — the lead commits only what it verified <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Reader** | a one-shot subagent (`scout`, or `Explore`) | a wide search or read whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot, description `guarded:` when the path is guarded | only after the same piece failed twice at the lead's level | is opened for a routine fix |
 | **Design eye** | `design-eye` (Fable 5.1) | reads a surface the CEO will see | writes |
@@ -71,6 +74,24 @@ override the effort, model, sandbox or servers,
 sets the auditor's effort, refuses an `--effort` beneath it, shows Sol the card for information (§6), and logs
 every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §7 are summed from it.
 
+**The arrangement — who writes** (*"bu yazdığın plan oklenebilir. ve 1-2 işten sonra ölçümde
+yapılabilir."* <!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 -->). Before BUILD
+the lead chooses one per job and writes it on the card as `arrangement:`, with its why:
+
+| Arrangement | Who writes | Beside it |
+|---|---|---|
+| **Fork** | the fork — the lead's own copy, with its whole context | — |
+| **Team** | `helper-writer` edits and runs the tests | a `helper` reads the code, a `helper` reads documents or researches; the lead gathers their results and decides |
+| **Hybrid** | the fork | `helper`s read and research |
+
+The core's *"the session writes it"* stands beside them: a piece the lead writes itself is written
+`arrangement: lead`, with its why. At the job's end the card carries, under `## Measured`, the minutes of
+each phase, the new tokens and their list-price cost — `node .planning/quick/20261003-runtime-isolation/usage.mjs <transcript> --from <ISO>`
+sums them for the lead's transcript and for each subagent's (`<session>/subagents/`), priced at the rates
+`cost.py` beside it uses — and Sol's findings. After one or two real jobs these records show which
+arrangement suits which job; there is no separate A/B test. The 50 % handover gate (§8) holds in every
+arrangement.
+
 ## 4. The loop
 
 ```
@@ -80,8 +101,8 @@ INTAKE    → the job in ONE sentence, provable by measurement; the CEO's words 
             before any proposal; no generic software advice, no documents restated.
 SCORE     → the card (§3); `dxb-quota` read once — the week's headroom and pace.
 PLAN      → the approach is talked through with the CEO first; the lead then writes the plan.
-            A critical one: Fable advises → Sol reads the PLAN (marked draft) → the lead closes
-            its gaps, Fable advises. The plan goes to the CEO once, in his language, and
+            A critical one: Sol reads the PLAN (marked draft) → the lead closes its gaps. The
+            plan goes to the CEO once, in his language, and
             no file changes before his yes. It does not come back to him after Sol's read. The
             plan names the scope, the surfaces and files it touches, the ordered steps, the data
             and interface effects, migration and rollback where relevant, how it is verified, and
@@ -94,24 +115,28 @@ PLAN      → the approach is talked through with the CEO first; the lead then w
             <!-- CEO-OK: design-plan-architecture-at-max-2026-10-03 --> <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 -->.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → root cause before fix; new code is proven by a test that failed before it existed. The
-            lead writes and runs the job's own tests — the approved scope, completely: no stub, no
+            writers write and run the job's own tests — the approved scope, completely: no stub, no
             placeholder, no silent narrowing or widening; a discovery that would change the scope,
             architecture, security, data integrity or the outcome stops the work and is reported.
             The change matches the surrounding code — naming, structure, comment density, error
-            handling, idiom. Parallel work only as a measured fork (§9).
+            handling, idiom. The hands are the arrangement's (§3); whoever writes, the lead verifies
+            each piece — its failing-first test, a reading against the registered sources — before
+            it is committed.
 AUDIT     → Sol, blind (§5), one pass at the class's effort (§6).
             A — blocks · B — repaired in this same pass · C — older than this work → stays in the
             job's own folder (the audit report); never the board — a row opens only on his word.
-FIX       → the lead fixes. Sol re-checks that finding AND what the fix touched, at the same
-            effort; one level up if the fix spread to other files or a guarded path.
-DISPUTE   → the lead says a finding is wrong: the auditor proves it with a test or a command —
+FIX       → a fork or a `helper-writer` fixes each finding; the lead verifies it — the finding's own
+            failing case now green, what the fix touched re-measured. There is no second Sol round
+            <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 -->.
+DISPUTE   → the lead says a finding is wrong: the lead runs the evidence Sol gave with it —
             it fails → real, fixed; it holds → the finding drops, the reason is recorded.
-            No test can decide it (a design question) → Fable rules on that one finding.
+            No test can decide it (a design question): the lead decides and records why; on a
+            critical job Fable rules on it in its one call at the end (§2).
             The lead has the last word. The CEO reads the line in the report; he is not asked.
 BRAKE     → the job passes its class budget (§7): stop at a clean break, find why it grew,
             and ask the CEO before going on.
-JUDGE     → battery ONCE, the dependants of every changed thing re-measured and printed;
-            one commit per phase.
+JUDGE     → battery ONCE, the dependants of every changed thing re-measured and printed; on a
+            critical job Fable's one call, before "done" (§2); one commit per phase.
 TELL      → the CEO, in his language, under three headings: Sizi bekleyen · Değişen · Bulunan.
             An empty heading is not written; the evidence stays in the work until he asks; never
             a technical question. A defect fixed inside the job is not listed (the commit carries
@@ -127,7 +152,7 @@ report are his words of 2026-10-03 <!-- CEO-OK: plan-comes-to-him-once-2026-10-0
 
 ## 5. The auditor's brief — blind, not in the dark
 
-| Sol sees | Sol does not see (first pass) |
+| Sol sees | Sol does not see |
 |---|---|
 | the CEO's sentence, verbatim | "Opus / Fable found it correct" |
 | the plan and its design decisions **as facts** ("this door is closed on purpose") | the lead's reasoning or summary |
@@ -141,8 +166,7 @@ through its one tool `sql_read` (`scripts/governance/sol-db-mcp.mjs`, role `sol_
 2026-09-28) — the brief tells it so, and tells it to read that file before trusting it; the lead never
 hands over a count the auditor can take. Sol may ask for any other read-only command; the lead runs it
 and returns the raw output. Sol's sandbox has no network, so the database-writing test suites are run
-by the lead and handed over whole. After the first verdict, the lead's reply may be shown and
-Sol weighs it. Output per claim:
+by the lead and handed over whole. Sol audits once; there is no reply round. Output per claim:
 
 ```text
 Claim / done-list item:
@@ -156,18 +180,19 @@ Correction required:
 
 | Opus 5.5 | medium | high | xhigh | max |
 |---|---|---|---|---|
-| FrontierCode (mergeable code) | **54.6 % · $0.80** | 54.0 % · $1.09 | 51.4 % · $2.25 | 54.4 % · $6.19 |
-| Terminal-Bench 4.0 | ≈ 58 % | **64.2 % · $3.88** | 66.4 % · $7.35 | 64.8 % · $11.24 |
+| FrontierCode (mergeable code) | **54.6 % · USD 0.80** | 54.0 % · USD 1.09 | 51.4 % · USD 2.25 | 54.4 % · USD 6.19 |
+| Terminal-Bench 4.0 | ≈ 58 % | **64.2 % · USD 3.88** | 66.4 % · USD 7.35 | 64.8 % · USD 11.24 |
 | CursorBench 4.0 | 52.5 % | ≈ 56 % | ≈ 56 % | 57.8 % |
 
 - **Writing code:** the lead's level (`high`). Opus `xhigh` is never used for code — the bottom of the
   FrontierCode curve (the CEO's word, 2026-09-28). `max` only after the same piece failed twice at
-  `high`: a medium try plus a high retry ($1.89) is under a third of one `max` run ($6.19) and passes
-  the same auditor.
+  `high`: a medium try plus a high retry (USD 1.89) is under a third of one `max` run (USD 6.19) and
+  passes the same auditor. Prices here are written USD, never with a dollar sign: opened with a job
+  sentence, this door has a dollar sign and a digit replaced by the sentence's words (measured
+  2026-10-04).
 - **Auditor (Sol):** light `medium` · normal `high` · critical `xhigh`. The first critical job runs
   `high` and `xhigh` on the same diff side by side; that number keeps or moves the critical level.
-- `audit-card.mjs` sets the auditor's level from the card; the lead may raise it (a fix that spread),
-  never lower it. The card is the lead's judgment — no machine can tell a dangerous file (the CEO,
+- `audit-card.mjs` sets the auditor's level from the card; the lead may raise it, never lower it. The card is the lead's judgment — no machine can tell a dangerous file (the CEO,
   2026-10-01: *"sistem tahmin edemez onu sadece sen bilirsin"*). **Sol audits at the level the card
   gives and never re-grades it** <!-- CEO-OK: auditor-never-regrades-2026-10-03 --> — checking the
   done-list (§5) is auditing the work; grading the job is the lead's.
@@ -211,8 +236,8 @@ Correction required:
 
 - **The fork — its start measured 2026-10-03.** A forked subagent's first call read 203,676 tokens from
   the lead's cache and wrote 1,200 (session 5ed74ad7): a fork does not re-read the lead's context. What
-  it reads after that is new, and it runs on the lead's model. Whether forks pay as the parallel lane
-  on a real job — the speed of three workers without three re-reads — is still owed.
+  it reads after that is new, and it runs on the lead's model. Whether a fork, a team or a hybrid
+  pays on a real job is paid by the cards' measured fields (§3).
 - **Sol `high` vs `xhigh`** on the same critical diff: findings, false alarms, time, Plus usage.
 - **Plus share per audit:** `rate_limits` before and after each audit in the Codex rollout.
 - **The first critical job** was Sol's own database reach (built 2026-09-28, §5); its audit pays the

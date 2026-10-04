@@ -1,0 +1,40 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/governance/codex-mirror-check.test.ts (4 tests | 1 failed) 706ms
+   ✓ sync-codex-mirror.sh --check (B63) > passes a mirror its own write mode has just made 173ms
+   ✓ sync-codex-mirror.sh --check (B63) > names every one of eleven stale mirror files — none is cut off 162ms
+   ✓ sync-codex-mirror.sh --check (B63) > ignores a __pycache__/*.pyc that only the source side has 173ms
+   × sync-codex-mirror.sh rewrites only the hook paths it mirrors > a .sh hook and the bare hooks folder move to .codex/hooks/; a .py hook and a home path stay 194ms
+     → expected 'Orders: `.codex/hooks/` · the order `…' to contain 'The gate `.claude/hooks/gate.py` and …'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/governance/codex-mirror-check.test.ts > sync-codex-mirror.sh rewrites only the hook paths it mirrors > a .sh hook and the bare hooks folder move to .codex/hooks/; a .py hook and a home path stay
+AssertionError: expected 'Orders: `.codex/hooks/` · the order `…' to contain 'The gate `.claude/hooks/gate.py` and …'
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- The gate `.c[7mlau[27mde/hooks/gate.py` and its home twin `~/.c[7mlau[27mde/hooks/home-gate.py`.[39m
+[31m+ Orders: `.codex/hooks/` · the order `.codex/hooks/order.sh`[39m
+[31m+ The gate `.c[7mo[27mde[7mx[27m/hooks/gate.py` and its home twin `~/.c[7mo[27mde[7mx[27m/hooks/home-gate.py`.[39m
+[31m+[39m
+
+ ❯ tests/governance/codex-mirror-check.test.ts:103:18
+    101|     const door = spawnSync("cat", [join(root, ".agents/skills/door-b/S…
+    102|     expect(door).toContain("Orders: `.codex/hooks/` · the order `.code…
+    103|     expect(door).toContain("The gate `.claude/hooks/gate.py` and its h…
+       |                  ^
+    104|     expect(door).not.toMatch(/\.codex\/hooks\/(gate|home-gate)\.py/);
+    105|     expect(run(root, "--check").code).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  17:51:50
+   Duration  969ms (transform 45ms, setup 0ms, collect 10ms, tests 706ms, environment 0ms, prepare 31ms)
+

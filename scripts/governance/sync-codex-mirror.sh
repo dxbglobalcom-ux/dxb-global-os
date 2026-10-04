@@ -31,10 +31,18 @@ STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 
 # The ONLY substitutions. Repo paths, nothing else, longest first.
+# A hook path moves only where the mirror really holds the file: the hooks folder itself and its
+# *.sh (step 3 copies nothing else). Any other hook path -- a .py hook in the repo, a home path
+# such as ~/.claude/hooks/dxb-cost-gate.py -- stays as written, because the mirror has no copy of
+# it (Sol's single pass, 2026-10-04: the mirror named .codex/hooks/dxb-design-max.py, which does not
+# exist).
 rewrite() {
   sed -e 's|\.claude/CLAUDE\.md|AGENTS.md|g' \
       -e 's|\.claude/skills/|.agents/skills/|g' \
-      -e 's|\.claude/hooks/|.codex/hooks/|g'
+      -e 's|\.claude/hooks/\([A-Za-z0-9._-]*\.sh\)\([^A-Za-z0-9._-]\)|.codex/hooks/\1\2|g' \
+      -e 's|\.claude/hooks/\([A-Za-z0-9._-]*\.sh\)$|.codex/hooks/\1|' \
+      -e 's|\.claude/hooks/\([^A-Za-z0-9._-]\)|.codex/hooks/\1|g' \
+      -e 's|\.claude/hooks/$|.codex/hooks/|'
 }
 
 BANNER='<!-- GENERATED FILE — DO NOT EDIT BY HAND.

@@ -53,15 +53,20 @@ danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar
   Left on purpose (code, B51 bundles 2-3): the version-comment strip, chat/voice/decompose prompt strings,
   the standing layer's approval, language and honesty lines.
 
-2026-10-04 14:53 → 16:25, Opus 5.5 session fd7d67f2 (beside 07841b79). He went through the approved
-orchestration design again, then ordered how its max part runs without his hand on /effort.
-- **Design at max — built** <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 -->: the lead invokes
-  the `dxb-design-max` skill (`effort: max`) first in every design, plan or architecture turn; the project
-  hook `.claude/hooks/dxb-design-max.py` reminds it on each of his messages; his yes closes it and the job
-  goes on at the session's level (dxb-team2 §2, §4 PLAN). Measured first: a skill holds max for its own
-  turn only. Commits `bdbb997c` · `7e48374a` (Sol `high`, 1 A + 4 B fixed); battery GREEN (1,168 · 266);
-  live four-turn probe in `.planning/quick/20261004-design-max/evidence/`. The rest of the orchestration
-  design (the arrangements, the card's fields, helpers' code, Sol's single pass) is still to be written.
+2026-10-04 14:53 → ~18:15, Opus 5.5 session fd7d67f2 (high; `max` from ~17:37 on his `/effort max`).
+- **Design at max** <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 --> <!-- CEO-OK: design-max-only-his-yes-closes-2026-10-04 -->:
+  the `dxb-design-max` skill (`effort: max`) first in every design turn; its hook reminds the lead on each
+  of his messages; only his yes closes it. The bar shows the turn's real level, `tur: max`, and
+  `🟣 tasarım açık` <!-- CEO-OK: statusline-turn-effort-2026-10-04 -->. Proven at the API through a local
+  proxy: after the skill's call the request carries `output_config.effort` `max`, the `builder` subagent's
+  too; the spinner shows only the session's level (`evidence/api-effort-proxy.txt`). Removed by session
+  b762d77d (8639c403) and restored on his *"geri al skill kalsın"* (6861a0c3). Weak point measured: the lead
+  must obey the reminder — at 17:30-17:33 it did not, and those turns ran at high.
+- **The approved orchestration design is in the door** <!-- CEO-OK: fable-at-the-end-on-important-jobs-2026-10-04 -->
+  (finished, not accepted — LAW B): three arrangements and the card's measured fields, `helper-writer`
+  (Opus 5.5 · medium) and the core's "Code" sentence, Sol's single pass, Fable once at the end on a
+  critical job only, USD prices in §6, the mirror rewriting only hook paths it holds. Job folder
+  `.planning/quick/20261004-orchestration-door/`.
 
 2026-10-04 15:10 → 17:00, Opus 5.5 session 07841b79 (max ~15:40 → ~16:20, then high).
 - C1 accepted on his waiver of the eye (commit `3b0825d9`).
@@ -122,11 +127,8 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 
-After his list: write the approved orchestration design into dxb-team2 at Opus 5.5 `max`
-(`design-plan-architecture-at-max-2026-10-03`; the full brief:
-~/.claude/projects/-home-dxb-DxB-Global-OS/79e77b01-f5d1-4a63-9a63-69e03a5fe0cf.jsonl) — the session
-al-ma1-a7 may already be on it with him; ask it first. Then the research he asked for: the tweet's top-tier
-agent systems (SS and S) and Hermes; the tweet's link is still to come from him.
+After his list: the research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes;
+the tweet's link is still to come from him.
 
 ## Waiting on his approval
 

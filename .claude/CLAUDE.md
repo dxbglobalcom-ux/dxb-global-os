@@ -114,8 +114,10 @@ the date. The battery fails on an unregistered approval claim.
 - **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them; code may never widen or narrow them.
-- **Code: the session writes it; the `builder` seats write code only inside an orchestration**
-  (`dxb-team2`). Other subagents audit, refute and sweep; they never write — and a
+- **Code: the session writes it; inside `dxb-team2` a fork, a `helper-writer` and the `builder`
+  seat write too, every piece verified by the lead before it is committed**
+  <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->. Other subagents audit,
+  refute and sweep; they never write — and a
   CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
   ruler scripts included (the audit law, CEO 2026-09-15
   <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).
