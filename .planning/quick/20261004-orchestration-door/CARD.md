@@ -1,7 +1,7 @@
 # Score card — the approved orchestration design written into the door; Fable at the end, on important jobs only
 
 job: dxb-team2 and the core say what the CEO approved on 2026-10-03 and ordered finished on 2026-10-04 — the lead chooses one of three arrangements per job (fork · team · hybrid) and writes it, its why and its measured fields on the card; a fork or a medium helper may write code, every piece verified by the lead before commit (core §2, a writing helper seat); Sol audits a job once, its findings fixed by a fork or a helper and verified by the lead, no second round; Fable is consulted once, at the end, on a critical job only — no fixed points before the work; the door's dollar figures survive the door being opened with a job sentence; the Codex mirror stops turning hook paths it does not copy into paths that do not exist
-range: (filled at commit)
+range: a9d53d08..193eea17
 blast: 1
 risk: 2
 reasoning: 1

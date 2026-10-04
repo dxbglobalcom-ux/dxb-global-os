@@ -1,0 +1,25 @@
+THE CEO'S WORDS (verbatim; ledger scripts/governance/ceo-approvals.json):
+- fable-at-the-end-on-important-jobs-2026-10-04 (his /goal, 2026-10-04): "4- kalsın gerek yok. diğerlerini tamamla ve bu sistemde fable en sonda sadece önemli konularda danışılsın sanırım şuan hem başta hem de sonda danışılıor galiba ve herşeyde... evet başla!"
+  "diğerleri" = the lead's list items 1, 2, 3, 5: (1) the three arrangements and the card's fields — orchestration-three-arrangements-lead-chooses-2026-10-03; (2) a fork or a medium helper may write code under the lead's verification — helpers-write-code-under-lead-verification-2026-10-03 (PERMANENT); (3) Sol audits once, findings fixed by a fork or a helper, no second round — sol-single-pass-fixes-by-helper-2026-10-03 (PERMANENT); (5) two defects: the door's "$0.80"-style figures overwritten when the door is opened with a job sentence (skill argument substitution of $0..$9), and the Codex mirror naming hook paths it does not hold. Item 4 was dropped by him and must appear nowhere.
+  Read the three 2026-10-03 entries in the ledger in full — they are the contract.
+
+THIS AUDIT — one pass at the level the card gives (.planning/quick/20261004-orchestration-door/CARD.md — for information; do not re-grade it). Your findings are fixed by a helper and verified by the lead; there is no second round.
+  Range: the card's range (one commit). Done-list: CARD.md, written before the change.
+  Raw output in .planning/quick/20261004-orchestration-door/evidence/: before-red.txt, after-green.txt (the mirror test), helper-writer-proxy.txt (a local proxy logging output_config.effort of each API request while a lead at high spawned helper-writer).
+  Outside the repository, read it: ~/.claude/agents/helper-writer.md (and ~/.claude/agents/helper.md, builder.md beside it).
+  Not yet run when this audit starts: the battery (after your findings are fixed).
+
+THE DECISIONS — facts, not claims to re-litigate:
+- "Önemli konularda" is read as the card's critical class (6-8).
+- The lead writing a piece itself stays beside the three arrangements, because the core says "Code: the session writes it" and his 2026-10-03 words add writers without removing the session.
+- The team arrangement's three helpers are two read-only `helper`s and one `helper-writer`.
+- The dxb-design-max skill and hook (§4 PLAN) are not part of this job; they stand on his word "geri al skill kalsın".
+
+WHAT TO REFUTE:
+1. Does the done-list prove what his words and the three 2026-10-03 ledger entries asked for — nothing missing, nothing added beyond them, item 4 nowhere?
+2. The door (.claude/skills/dxb-team2/SKILL.md): does any sentence still give Fable a call before or during the work, a call on a light or normal job, or Sol a second pass, a re-check or a reply round? Does any sentence contradict another (shape vs seats vs loop vs §5/§6/§9)? Are the CEO-OK ids the ones registered?
+3. The core (.claude/CLAUDE.md §2 Code) and dxb-verify's dispute line: do they say what the door says?
+4. helper-writer: does its definition give it what the team arrangement needs and withhold what the door forbids (committing, widening)? Does the proxy evidence show what the card claims?
+5. sync-codex-mirror.sh: can its new sed turn any path the mirror does hold into one it does not, or leave a mirrored *.sh path or the bare hooks folder unconverted? Does the new test case test what its title says, against the real script?
+
+Output per claim: Claim / Verdict (REFUTED | STANDS AFTER ATTEMPTED REFUTATION | UNVERIFIED) / Finding (file:line, scenario, impact) / Evidence / Correction required. Grade A (blocks) · B (repair in this pass) · C (older than this work).

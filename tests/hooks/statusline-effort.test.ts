@@ -43,6 +43,18 @@ function transcript(dir: string, rows: object[]): string {
 }
 const step = (effort: string) => ({ type: "assistant", effort, perTurnEffort: effort, message: { content: [] } });
 const said = { type: "user", message: { content: "devam" } };
+/** the shapes of a skill's call as Claude Code writes them (measured in session fd7d67f2, 2026-10-04) */
+const skillCall = (skill: string, effort = "high") => ({
+  type: "assistant", effort, perTurnEffort: effort,
+  message: { content: [{ type: "tool_use", name: "Skill", input: { skill } }] },
+});
+const toolResult = { type: "user", message: { content: [{ type: "tool_result", tool_use_id: "t", content: "Launching skill" }] } };
+const skillText = { type: "user", isMeta: true, message: { content: "Skill /dxb-design-max is already loaded above; instructions unchanged." } };
+const effortCommand = (level: string) => ({
+  type: "user", message: { content: `<local-command-stdout>Set effort level to ${level} (this session only): …</local-command-stdout>` },
+});
+const commandName = { type: "user", message: { content: "<command-name>/effort</command-name>" } };
+const queued = { type: "attachment", attachment: { type: "queued_command", prompt: "bak" } };
 
 /** the bar as he reads it: ANSI colours stripped */
 function bar(dir: string, transcript_path?: string, sid = SID): string {
@@ -67,9 +79,9 @@ describe("the bar shows the level the turn really runs at", () => {
     const dir = box();
     expect(bar(dir, transcript(dir, [step("max"), said, step("high")]))).toContain("tur: high");
   });
-  it("the step read is the LAST assistant step, after any later user or tool lines", () => {
+  it("a new prompt with no step yet shows the session's own level — the first step of the turn before", () => {
     const dir = box();
-    expect(bar(dir, transcript(dir, [step("high"), step("max"), said, { type: "attachment" }]))).toContain("tur: max");
+    expect(bar(dir, transcript(dir, [said, step("high"), step("max"), said, { type: "attachment" }]))).toContain("tur: high");
   });
   it("no transcript, an unreadable one, or no step with an effort: no turn mark, the bar still stands", () => {
     const dir = box();
@@ -87,6 +99,37 @@ describe("the bar shows the level the turn really runs at", () => {
   it("an effort that is not one of the five levels is not shown", () => {
     const dir = box();
     expect(bar(dir, transcript(dir, [step("max\u001b[31mevil")]))).not.toContain("tur:");
+  });
+});
+
+// His words of 2026-10-04: "alttaki tur yazısı tamamiyle aynı etkileşimde olmalı skill aktifse o turda max
+// yazmalı çubukta. çubuk her turu canlı interaktif göstermeli". A step that thinks for minutes is written
+// only when it ends; the bar must not wait for it.
+describe("the bar shows the request in flight now, not the last step that finished", () => {
+  it("the moment the lifting skill is called, before any max step is written: 'tur: max'", () => {
+    const dir = box();
+    expect(bar(dir, transcript(dir, [said, skillCall("dxb-design-max")]))).toContain("tur: max");
+    expect(bar(dir, transcript(dir, [said, skillCall("dxb-design-max"), toolResult, skillText]))).toContain("tur: max");
+  });
+  it("his next message after a lifted turn: back to the session's level until the skill is called again", () => {
+    const dir = box();
+    const lifted = [said, skillCall("dxb-design-max"), toolResult, skillText, step("max"), step("max")];
+    expect(bar(dir, transcript(dir, [...lifted, said]))).toContain("tur: high");
+    expect(bar(dir, transcript(dir, [...lifted, said, skillCall("dxb-design-max")]))).toContain("tur: max");
+  });
+  it("a message he sends while the turn runs does not end the lift", () => {
+    const dir = box();
+    expect(bar(dir, transcript(dir, [said, skillCall("dxb-design-max"), toolResult, step("max"), queued]))).toContain("tur: max");
+  });
+  it("another skill lifts nothing", () => {
+    const dir = box();
+    expect(bar(dir, transcript(dir, [said, skillCall("dxb-verify"), toolResult]))).toContain("tur: high");
+  });
+  it("an /effort set since the last step is the level of the next request", () => {
+    const dir = box();
+    expect(bar(dir, transcript(dir, [said, step("high"), commandName, effortCommand("max")]))).toContain("tur: max");
+    expect(bar(dir, transcript(dir, [said, step("high"), commandName, effortCommand("max"), said]))).toContain("tur: max");
+    expect(bar(dir, transcript(dir, [said, step("max"), effortCommand("high"), said]))).toContain("tur: high");
   });
 });
 

@@ -62,8 +62,8 @@ danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar
   too; the spinner shows only the session's level (`evidence/api-effort-proxy.txt`). Removed by session
   b762d77d (8639c403) and restored on his *"geri al skill kalsın"* (6861a0c3). Weak point measured: the lead
   must obey the reminder — at 17:30-17:33 it did not, and those turns ran at high.
-- **The approved orchestration design is in the door** <!-- CEO-OK: fable-at-the-end-on-important-jobs-2026-10-04 -->
-  (finished, not accepted — LAW B): three arrangements and the card's measured fields, `helper-writer`
+- **The approved orchestration design is in the door — NOT finished** <!-- CEO-OK: fable-at-the-end-on-important-jobs-2026-10-04 -->
+  (commit `193eea17`; Sol `high` found 1 A + 4 B, open, in the job's SOL.md; battery not yet run): three arrangements and the card's measured fields, `helper-writer`
   (Opus 5.5 · medium) and the core's "Code" sentence, Sol's single pass, Fable once at the end on a
   critical job only, USD prices in §6, the mirror rewriting only hook paths it holds. Job folder
   `.planning/quick/20261004-orchestration-door/`.
