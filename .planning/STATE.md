@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-03"
+last_updated: "2026-10-04"
 session_author: opus-5
 ---
 
@@ -27,59 +27,49 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-03 ~17:10 → 20:05, Opus 5.5 session 79e77b01 (after cbedb76a). His orders of the day, each in the ledger:
-- **Runtime isolation — all three phases done and live** (`runtime-isolation-2026-10-03`,
-  `company-claude-home-2026-10-03`, `isolation-phase3-plan-and-memory-path-2026-10-03`). Every company
-  Claude call runs in its own Claude home `~/.local/share/dxb/company-claude` (his login) with its own
-  working folder and cache, an ALLOWLIST env and HOME = that home; the memory router never reads the
-  construction's claude-mem. Sol's single pass (`SOL-PHASE3.md`) fixed by fork 6 + the lead (`90341b85`);
-  battery GREEN (sandboxed 1,136 · host 266); `dxb-scheduler` restarted 17:49:48; live strace CLEAN by class.
-  - Not measured: the company DB's claude-mem pointer rows; live strace covers chat and task of eight lanes.
-- **The orchestration design — measured and APPROVED, not yet written into the door.** Today's four lead
-  sessions and six forks, by quality · cost · speed: `.planning/quick/20261003-runtime-isolation/fork-measurements.md`
-  (forks keep the lead light — cbedb76a's five kept 456k out; a fork from a heavy lead costs 2.4x per
-  call; cache reads are 47-59 % of a lead's cost; a handover costs ~$0.5; call latency does not grow
-  with context; a Fable consult blocks the lead 42-290 s). His three words, registered:
-  `orchestration-three-arrangements-lead-chooses-2026-10-03` (fork · high lead + three medium helpers ·
-  hybrid; the lead chooses per job and writes why, minutes, tokens, cost, Sol's findings on the card;
-  measured after 1-2 real jobs), `helpers-write-code-under-lead-verification-2026-10-03` (PERMANENT),
-  `sol-single-pass-fixes-by-helper-2026-10-03` (PERMANENT).
+2026-10-04 ~12:30 → 15:10, Opus 5.5 session 9bc3fc3e (plan at `max`, build at `high`). He asked for yesterday's
+work to be re-verified (nine questions, answered from the records), then set his list (Next).
+- **C1 — the company's memory drawer on the company's desk — done and live**
+  <!-- CEO-OK: company-memory-drawer-2026-10-04 --> (finished, not accepted — LAW B; nothing on his screen
+  changes). Every obsidian/graphify note is read and written under DXB_MEMORY_ROOT = the company Claude home
+  (the scheduler binds it; the battery uses var/construction-memory); the reader opens only a note of the
+  writer's shape through one descriptor whose real path is checked. Commits `628863e1` (code) · `9757d9f0`
+  (Sol's 2 A + 2 B fixed by a fork) · `3df4a74d` (deploy: the live note moved, sha256 equal; the 32 July
+  orphans deleted, 128,151 bytes; `dxb-scheduler` restarted 15:01:32, `[memory] root=…/company-claude
+  notes=1`; a `.env` ref refused live; company counts unchanged). Job folder
+  `.planning/quick/20261004-company-memory-drawer/` (PLAN, CARD with the measured fields, SOL.md).
+  - ⚠ UNVERIFIED: a real task-lane company call's dxb-mcp child committing and recalling a note (one
+    `run-lanes-probe.sh`-shaped call closes it). Sol's C (chat and voice swallow a recall error) in SOL.md.
+- A medium helper seat now exists, on his words *"durdur ve mediumda aç"*: `~/.claude/agents/helper.md`
+  (Opus 5.5 · medium, read-only) — loaded only by sessions opened after 15:00; this session ran its three
+  helpers as headless `claude -p --effort medium`. Their measurements for items 2-5:
+  `.planning/quick/20261004-his-list/`.
+- Another session (al-ma1-a7, "Çalışma1") was talking the dxb-team2 plan through with him in parallel.
 
 ## Next
 
-His list of 2026-10-04 (session 9bc3fc3e), in his order — *"bunları sırayla yapalım işte ama unutulmasın
-heee arada kaynamasın"* (conversation, verbatim). One at a time; each talked through with him first.
+His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama unutulmasın heee arada kaynamasın"*
+(conversation, verbatim). One at a time; each talked through with him first.
 
-1. **C1 — the company's memory drawer on the company's desk — IN PROGRESS.**
-   <!-- CEO-OK: company-memory-drawer-2026-10-04 --> Plan, card (4, normal, Sol `high`) and done-list:
-   `.planning/quick/20261004-company-memory-drawer/PLAN.md`; code at `high`.
-2. **Tool loading — his question 9, a board row to propose.** Measured 2026-10-04: an employee gets its
-   department's whole list (finance: 24 tools, ~9.4k tokens of schemas in every task call); Claude's own
-   tools are off for employees and Hamza (`tools: []`, the July 17/19 design: Hamza talks, work goes to an
-   employee); SDK 0.3.259 can defer schemas behind tool search; Claude's 17 bundled skills and 5 agents
-   still reach every company call (whether they can be removed is unmeasured). Same subject, his words in
-   the conversation (verbatim): *"hamza zaten sınırlarını biliyor onay gerektiren şeylerin ne olduğunu
-   biliyor oyüzden claude'ın tüm becerilerini kullanabilmeli istediği zaman.bir sorun çıkarsa kapatırız.
-   yani benim holdingim benim iş istasyonu olan pc yi tam teşekküllü tüm aletlerle kullanmalı. hem
-   dışardan yüklediğimiz aletler pluginler beceriler modlar ve claude'un kendi beceri ve aletleriyle
-   birlikte."* Then he asked whether Hamza needs to know his PC at all; the lead separated doing from
-   remembering (personal tasks are done, only company work reaches the company's memory). Unanswered,
-   recommended yes: secret files (passwords, API keys, login files) and writing into the construction's
-   folder stay closed.
-3. **The prompt audit's runtime bucket (B51 move 5)** — 141 persona files still carry "Muhakeme sırası
-   sabittir / Fixed reasoning order" (counted 2026-10-04); R1-R17 in
-   `.planning/quick/20260923-prompt-audit/REPORT.md`. Waits on his B51 verdict.
-4. **A locked tool resolved by the system itself** — his question of 2026-10-01 ~21:55: why the alert
-   comes to him and not to the one who should fix it. The proposal goes with item 2.
-5. **The construction's auto-memory** — stale and contradicting entries (Burj Al Arab in 2 files; 8
-   entries naming paths not found in the repository, unchecked one by one). Waits on his word.
+1. **Tool loading (his question 9) — waits on his answer.** The plan presented from
+   `.planning/quick/20261004-his-list/item2-report.md` he did not like: *"planı beğenmedim. 2. maddeyle
+   iligli."* He was asked what he wants different; do not re-plan before his answer. Same subject, his words
+   (conversation, verbatim): *"hamza zaten sınırlarını biliyor onay gerektiren şeylerin ne olduğunu biliyor
+   oyüzden claude'ın tüm becerilerini kullanabilmeli istediği zaman.bir sorun çıkarsa kapatırız. yani benim
+   holdingim benim iş istasyonu olan pc yi tam teşekküllü tüm aletlerle kullanmalı. hem dışardan
+   yüklediğimiz aletler pluginler beceriler modlar ve claude'un kendi beceri ve aletleriyle birlikte."*
+   The report's key claim (`tools: []` also removes ToolSearch, so deferral never fires) is UNVERIFIED.
+2. **The prompt audit's runtime bucket (B51 move 5)** — measured: `item3-report.md`. Waits on his B51 verdict.
+3. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
+   proposal in `item2-report.md` § ITEM 4; goes with item 1.
+4. **The construction's auto-memory** — stale and contradicting entries, measured: `item5-report.md`.
+   Waits on his word.
 
 After his list: write the approved orchestration design into dxb-team2 at Opus 5.5 `max`
-(`design-plan-architecture-at-max-2026-10-03`; the three arrangements, the card's new fields, the fork's two
-seen weaknesses as procedure, CLAUDE.md §2 "Code" and dxb-team2 §3/§6 on his two PERMANENT words — the full
-brief: ~/.claude/projects/-home-dxb-DxB-Global-OS/79e77b01-f5d1-4a63-9a63-69e03a5fe0cf.jsonl). Then the
-research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes, what they have that this
-repository lacks; the tweet's link is still to come from him.
+(`design-plan-architecture-at-max-2026-10-03`; the full brief:
+~/.claude/projects/-home-dxb-DxB-Global-OS/79e77b01-f5d1-4a63-9a63-69e03a5fe0cf.jsonl) — the session
+al-ma1-a7 may already be on it with him; ask it first. Then the research he asked for: the tweet's top-tier
+agent systems (SS and S) and Hermes; the tweet's link is still to come from him.
 
 ## Waiting on his approval
 
