@@ -55,6 +55,9 @@ const db = getDb();
 const seat = await db.selectFrom("agents").select(["id", "slug", "department"]).where("slug", "=", "finance-financial-analyst").executeTakeFirstOrThrow();
 const anyTask = await db.selectFrom("tasks").select(["id"]).orderBy("created_at").limit(1).executeTakeFirstOrThrow();
 const canary = `NOTE_PROBE_${stamp}`;
+// the call's own cost row is removed after it, by id: a row it leaves makes the battery's B39 "clean book"
+// case red (measured 2026-10-04 — two probe rows left the book at 1 lane instead of 2)
+const costBefore = Number((await db.selectFrom("cost_ledger").select(db.fn.max("id").as("m")).executeTakeFirst()).m ?? 0);
 
 const out = await defaultExecutor({
   id: anyTask.id,
@@ -117,8 +120,16 @@ const ok =
   companyBefore === companyAfter;
 console.log(ok ? "NOTE_PROBE_OK" : "NOTE_PROBE_FAIL");
 
-// removal: only this probe's own index row and its root (the cost row stays — it is the call's record)
+// removal: only this probe's own index row, the call's own cost rows and its root
 if (row) await db.deleteFrom("memory_index").where("id", "=", row.id).execute();
+const costGone = await db
+  .deleteFrom("cost_ledger")
+  .where("id", ">", costBefore)
+  .where("task_id", "=", anyTask.id)
+  .where("source", "=", "worker")
+  .returning("id")
+  .execute();
+console.log(`removed: cost_ledger ${costGone.length}`);
 rmSync(memRoot, { recursive: true, force: true });
 console.log(`removed: memory_index ${row ? 1 : 0} · root ${existsSync(memRoot) ? "STILL THERE" : "gone"}`);
 

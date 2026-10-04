@@ -2002,5 +2002,13 @@
     "conditions": "Four sentences of 2026-10-04. The first three (13:36, 13:45 and 13:50 GMT+2) were heard by session 9bc3fc3e and are read from its transcript; the third answered that session's question whether his personal requests should stay out of the company's memory. The fourth (16:08) was heard first-hand, answering the plan the lead laid over the table of today's design (Hamza only talks; employees hold their department's company tools; outside tools in 3 of 22 departments; Claude's own tools nowhere). 'vakti gelince yapılsın': it waits its turn, and the session that builds it asks him before it starts (core §2). The lead's earlier line 'the send-as-a-task button stays with you' contradicted his V2 ruling of 2026-08-01 (board §2d, 'talking to him IS ordering') and is not part of this order. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session 07841b79 — the fourth sentence heard first-hand, 2026-10-04.",
     "where": ".planning/board-rows/B41.md · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B41 · HOLDING-OS-MASTER-PLAN/CAPABILITY_ARSENAL_DOCTRINE.md §1 item 5 · .planning/STATE.md"
+  },
+  "so13-reminder-restored-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "Standing order 13's one-line reminder (.claude/hooks/no-laziness.sh — measure before you state; finish all of it or name the blocked part; back every claim with its command and output; what a terminal cannot observe is UNVERIFIED) fires again on every prompt. The rules prune of 2026-10-01 (rules-prune-batch-1-2026-10-01) had deleted the hook; the rule itself had stayed in core §2. Its twin, ceo-language.sh, stays off.",
+    "verbatim": "hatırlatma geri gelsin faydalı sanırım",
+    "conditions": "Answering the lead, 2026-10-04 ~16:45: he asked whether rules like 'ölçmeden konuşma' had been deleted; the lead measured and told him the rule stands in the core and its owner file, and that only the two per-prompt reminders went on 2026-10-01, and offered to put the reminder back as one line. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 07841b79 — heard first-hand, 2026-10-04.",
+    "where": ".claude/hooks/no-laziness.sh · .claude/settings.json UserPromptSubmit"
   }
 }
