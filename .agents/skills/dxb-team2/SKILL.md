@@ -37,7 +37,7 @@ it opens `dxb-verify` and `dxb-close-row`.
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot); design, plan and architecture talk in a session opened at `max`, the build in a session at `high` (§4 PLAN) | scores the job, writes the done-list, writes the code, fixes every finding, runs the tests, the battery, commits, reports | approves its own work; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
+| **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot); design, plan and architecture turns at `max` through `dxb-design-max` (§4 PLAN) | scores the job, writes the done-list, writes the code, fixes every finding, runs the tests, the battery, commits, reports | approves its own work; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> through `scripts/governance/refuter.sh --card <file>` — read-only by tool | one blind pass per job (§5); re-checks a fixed finding and what the fix touched | writes; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
 | **Advisor** | Fable 5.1 | advises the lead at three fixed points on every job — before a big plan, when the same error comes a second time, before "done" <!-- CEO-OK: fable-three-checkpoints-2026-10-03 --> — and whenever else the lead needs it; rules on a disagreement no test can settle | writes code |
 | **Reader** | a one-shot subagent (`scout`, or `Explore`) | a wide search or read whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
@@ -86,14 +86,12 @@ PLAN      → the approach is talked through with the CEO first; the lead then w
             plan names the scope, the surfaces and files it touches, the ordered steps, the data
             and interface effects, migration and rollback where relevant, how it is verified, and
             the risks.
-            This talk and the plan — design, plan, architecture — run in a session opened at
-            Opus 5.5 `max` from its start, so every turn is max and the spinner and the bar say so;
-            nothing depends on the lead remembering a switch. Before the talk begins the lead reads
-            its own level — `tail -c 262144 ~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl | grep -o '"effort":"[a-z]*"' | tail -1`
-            — and, when it is not `max`, hands the job over (§8) to a session at `max` before a
-            word of design. At his yes to the plan the lead hands the build over (§8) to a new
-            session at `high`; the max session does not build
-            <!-- CEO-OK: design-plan-architecture-at-max-2026-10-03 --> <!-- CEO-OK: design-in-a-max-session-2026-10-04 -->.
+            Every turn of this talk and of the plan — design, plan, architecture — runs at `max`:
+            the lead invokes `dxb-design-max` as its first step; a skill holds max for one turn,
+            so its project hook `dxb-design-max.py` reminds it on each of his messages and the
+            lead calls it on every one, whatever it asks; only his yes closes the mode
+            <!-- CEO-OK: design-max-only-his-yes-closes-2026-10-04 --> and the job goes on at the session's level
+            <!-- CEO-OK: design-plan-architecture-at-max-2026-10-03 --> <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 -->.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → root cause before fix; new code is proven by a test that failed before it existed. The
             lead writes and runs the job's own tests — the approved scope, completely: no stub, no
@@ -200,8 +198,7 @@ Correction required:
   <!-- CEO-OK: handover-carries-transcript-2026-10-03 -->. He is quoted verbatim — from the ledger, or
   from this conversation marked so <!-- CEO-OK: handover-quotes-conversation-verbatim-2026-10-03 --> —
   never composed in his first person.
-  The successor opens with the same model and effort as this session — except at the two switches of
-  §4 PLAN: into `max` before design talk, into `high` at his yes to the plan — in a VS Code editor-area
+  The successor opens with the same model and effort as this session, in a VS Code editor-area
   terminal, through `operator` (look first; if the CEO is typing, wait): `operator key ctrl+shift+p`
   → `operator type "Terminal: Create New Terminal in Editor Area"` → `operator key Return` →
   `operator shot` → paste with `operator key ctrl+shift+v` (`ctrl+v` does not reach the terminal;
