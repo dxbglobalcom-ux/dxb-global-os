@@ -1,0 +1,19 @@
+[isolation] lane=probe-A-tools-empty session=67c5b8fe-c5e2-44c3-a50f-6828f900714c tools=23 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=18465 home=/home/dxb/.local/share/dxb/company-claude
+A-tools-empty: init.tools=23 first=[mcp__dxb-mcp__approval_finalize_draft,mcp__dxb-mcp__approval_list_pending,mcp__dxb-mcp__approval_submit_draft,mcp__dxb-mcp__audit_append] hasToolSearch=false used=[mcp__dxb-mcp__approval_list_pending] answer="mcp__dxb-mcp__approval_list_pending returned 0 items."
+[isolation] lane=probe-B-toolsearch session=e0a50fde-da91-4936-b34c-d0bcb774a7ee tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=11621 home=/home/dxb/.local/share/dxb/company-claude
+B-toolsearch: init.tools=24 first=[ToolSearch,mcp__dxb-mcp__approval_finalize_draft,mcp__dxb-mcp__approval_list_pending,mcp__dxb-mcp__approval_submit_draft] hasToolSearch=true used=[ToolSearch,mcp__dxb-mcp__queue_list] answer="mcp__dxb-mcp__queue_list returned 15 items."
+[isolation] lane=probe-C-toolsearch-env session=8ed2be53-3a22-47f1-a45a-98ec68908513 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=11621 home=/home/dxb/.local/share/dxb/company-claude
+C-toolsearch-env: init.tools=24 first=[ToolSearch,mcp__dxb-mcp__approval_finalize_draft,mcp__dxb-mcp__approval_list_pending,mcp__dxb-mcp__approval_submit_draft] hasToolSearch=true used=[ToolSearch,mcp__dxb-mcp__queue_list] answer="mcp__dxb-mcp__queue_list returned 14 items."
+SESSIONS 67c5b8fe-c5e2-44c3-a50f-6828f900714c e0a50fde-da91-4936-b34c-d0bcb774a7ee 8ed2be53-3a22-47f1-a45a-98ec68908513
+PROBE_DONE
+PROBE_EXIT=0
+── transcript check, by session id ──
+session 67c5b8fe-c5e2-44c3-a50f-6828f900714c: files named 0 · transcripts holding it 0 · in ~/.claude.json 0
+session e0a50fde-da91-4936-b34c-d0bcb774a7ee: files named 0 · transcripts holding it 0 · in ~/.claude.json 0
+session 8ed2be53-3a22-47f1-a45a-98ec68908513: files named 0 · transcripts holding it 0 · in ~/.claude.json 0
+── Claude files written during the probe (newer than its start) ──
+~/.claude.json
+~/.claude/projects/-home-dxb-DxB-Global-OS/07841b79-5171-4ea7-a2e2-b3ee204f0160.jsonl
+── managed-policy tier (machine-specific) ──
+ls: cannot access '/etc/claude-code': No such file or directory
+RUN_LANES_PROBE_STATUS=0

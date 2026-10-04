@@ -58,7 +58,12 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
    oyüzden claude'ın tüm becerilerini kullanabilmeli istediği zaman.bir sorun çıkarsa kapatırız. yani benim
    holdingim benim iş istasyonu olan pc yi tam teşekküllü tüm aletlerle kullanmalı. hem dışardan
    yüklediğimiz aletler pluginler beceriler modlar ve claude'un kendi beceri ve aletleriyle birlikte."*
-   The report's key claim (`tools: []` also removes ToolSearch, so deferral never fires) is UNVERIFIED.
+   2026-10-04 he waived his answer (*"boşver … sen gerekeni yap"*). The report's key claim is now MEASURED
+   (`.planning/quick/20261004-his-list/evidence/tools-probe.txt`, construction engine): `tools: []` loads
+   all 23 dxb-mcp schemas up front with no ToolSearch; `tools: ['ToolSearch']` defers them and the model
+   found and used `queue_list` through it, ~37 % less input; `ENABLE_TOOL_SEARCH` is not needed. A new plan
+   built from his three sentences (default open in every lane; wall 1 the two databases; wall 2 each on
+   its own desk) goes to him for one yes.
 2. **The prompt audit's runtime bucket (B51 move 5)** — measured: `item3-report.md`. Waits on his B51 verdict.
 3. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
    proposal in `item2-report.md` § ITEM 4; goes with item 1.
