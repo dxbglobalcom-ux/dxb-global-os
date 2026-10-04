@@ -37,7 +37,8 @@ danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar
   on click, badge symmetry, `min-w-0`) and points the rest at the door; of 18 dangling-link targets only the
   4 with a clear owner today were repointed (39 uses), the rest left as they are.
   The 4 delete rows deleted on his word *"A sil"* <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->: 4 files, 5.3 KB, their index lines
-  and the 2 links to them repointed at `dxb-persona`; index 63 ↔ 63. The 8 July diaries wait on his word.
+  and the 2 links to them repointed at `dxb-persona`; index 63 ↔ 63. The 8 July diaries stay, unshortened, on his word *"kalsın"* <!-- CEO-OK: auto-memory-july-diaries-stay-2026-10-04 -->.
+  **His list item 3 is finished** (not accepted — LAW B).
 
 2026-10-04 14:53 → 16:25, Opus 5.5 session fd7d67f2 (beside 07841b79). He went through the approved
 orchestration design again, then ordered how its max part runs without his hand on /effort.
@@ -103,9 +104,9 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 1. **The prompt audit's runtime bucket (B51 move 5)** — measured: `item3-report.md`. Waits on his B51 verdict.
 2. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
    proposal in `item2-report.md` § ITEM 4. Waits on his word.
-3. **The construction's auto-memory** — stale and contradicting entries (his list item 6), measured:
-   `item5-report.md`. Fixes done and the 4 stale files deleted on his word <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->, 2026-10-04 (session e7aa0d14);
-   the 8 July diaries (compress or keep) wait on his one word.
+3. ~~The construction's auto-memory~~ — finished 2026-10-04 (session e7aa0d14): 25 fixes, 4 files deleted
+   <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->, the July diaries kept
+   <!-- CEO-OK: auto-memory-july-diaries-stay-2026-10-04 -->. Finished, not accepted.
 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 
