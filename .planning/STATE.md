@@ -42,11 +42,11 @@ durumdan diğer oturumları da haberdar et bilsinler kim nerede çalışıor com
   flight. Job folder `.planning/quick/20261004-b51-code-and-lock/`.
 - **The other sessions were told who works where** — scope, the shared records, explicit-path commits only;
   delivery measured in each receiver's transcript (`evidence/peer-notice.txt`).
-- **His list item 2 (the locked tool) — the plan is written** (`PLAN-locked-tool.md`), not built: it goes to him
-  once for one word, with the last-step choice. Measured on the way, for him under Bulunan: the machine
-  suspends at night (2026-10-03 20:26 → 10-04 10:36), so no night-time daily job ran in 8 days — the 04:00
-  tool check (last run 2026-10-01 19:39, by hand), the 07:00 briefing, memory compaction, HR and revenue
-  scans; and `fn_alerts_evaluate`, the alert escalation sweep, is called by nothing (13 alerts, 0 escalated).
+- **His list item 2 (the locked tool) — his yes to the plan** <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->
+  (`PLAN-locked-tool.md`), last step at the construction engineer; not built — handed to a successor session at
+  the context gate. The 04:00 tool check has not run since 2026-10-01 19:39 because the machine sleeps at night,
+  which he ruled normal until the cloud move; the plan runs that one check on wake. Found and reported, not
+  decided: `fn_alerts_evaluate`, the alert escalation sweep, is called by nothing (13 alerts, 0 escalated).
 
 2026-10-04 18:05 → now, Opus 5.5 session e3574313 (max), the lead after fd7d67f2's handover.
 - **The approved orchestration design is in the door — finished** (not accepted — LAW B)
@@ -156,9 +156,9 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 1. ~~The prompt audit's runtime bucket (B51 move 5)~~ — the persona text finished 2026-10-04 (session
    e7aa0d14, finished, not accepted); code bundle 2 done and live (session 5ab4ff38, finished, not accepted).
    Bundle 3 waits on his word, together with B51 moves 3 and 6.
-2. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — the plan is
-   `.planning/quick/20261004-b51-code-and-lock/PLAN-locked-tool.md`; it waits on his yes and on the night-jobs
-   decision (without a check that runs, nothing locks or unlocks). Built by a successor session at the handover gate.
+2. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — his yes to the plan
+   `.planning/quick/20261004-b51-code-and-lock/PLAN-locked-tool.md` <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->;
+   being built by the successor of session 5ab4ff38 (critical card, Sol `xhigh`, Fable start+end).
 3. ~~The construction's auto-memory~~ — finished 2026-10-04 (session e7aa0d14): 25 fixes, 4 files deleted
    <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->, the July diaries kept
    <!-- CEO-OK: auto-memory-july-diaries-stay-2026-10-04 -->. Finished, not accepted.
@@ -174,10 +174,6 @@ the tweet's link is still to come from him.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- The locked-tool plan (session 5ab4ff38) — one word, and the last step: the construction engineer adds the new
-  text to the approved list (recommended) or the security engineer's "benign" unlocks by itself.
-- The night jobs (session 5ab4ff38): a daily job whose time passed while the machine slept runs on wake —
-  recommended yes; keeping the machine awake at night is a separate choice of his.
 - Found in the orchestration job, each with a recommendation; his word decides, nothing is changed before it:
   (1) the helper seats call Fable on their own — each of this job's two helper-writers once, unasked, about half
   its cost (usage.mjs: 0.53 of 1.03 and 0.44 of 0.95 USD); `advisorModel: fable` in `~/.claude/settings.json`

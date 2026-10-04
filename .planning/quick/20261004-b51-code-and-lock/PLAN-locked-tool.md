@@ -1,4 +1,4 @@
-# His list item 2 — a locked tool resolved by the system itself: the plan (waits on his yes)
+# His list item 2 — a locked tool resolved by the system itself: the plan (his yes 2026-10-04 <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->)
 
 His question of 2026-10-01: *a locked tool should be resolved by the system itself; the alert should go to
 whoever fixes it, not to the CEO* (`.planning/quick/20261004-his-list/item2-brief.txt:7`). Asked on 2026-10-04
@@ -49,18 +49,18 @@ answered *"gerekeni yap"* — not registered as his yes to the three; this plan 
    older than 72 h (from the `tool_quarantined` audit row) → `high`, once; a review task failed or returned →
    `high`. The third condition he was shown ("a lock that blocks your approved work") is DROPPED: nothing
    measures it deterministically, and the 72 h rule covers it — he is told so.
-6. **The check must run.** Depends on the night-jobs decision (Bulunan): a daily job whose last run is older
-   than 24 h runs on wake. Without it this plan locks and unlocks nothing.
+6. **The check must run.** His word: the machine sleeping at night is normal until the holding moves to the
+   cloud — the other night jobs stay as they are. The tool check alone runs when the scheduler starts or wakes
+   and its last run is older than 24 h (the lead's choice inside his yes); without it this plan locks and
+   unlocks nothing.
 7. **Words.** New alert texts get their TR patterns in `apps/dashboard/src/lib/alert-title.ts` (door
    `dxb-surface`); `drift-review.ts:1-3` ("he must hear when one is") is replaced under LAW A by his yes;
    `security-engineer.md` dossier `Durum: dormant` → `active` and refiled.
 
-## Decisions for him (one word each)
-- The plan: yes / no.
-- The last step: the construction engineer adds the text to the approved list (recommended — safe; the lock
-  waits for the next construction session) / the security engineer's "benign" unlocks by itself (fast; the
-  very thing a poisoned text would aim for).
-- (Bulunan) The night jobs catch up on wake: yes (recommended).
+## His decisions (2026-10-04, verbatim: *"bu holding henüz tam kurulmadı buluta vpn e alınmadı oyüzden uyuması
+normalde. ilk şıkla ilgili eet"*)
+- The plan: yes, with the last step at the construction engineer (decision 3 = No stands).
+- The night jobs: no general catch-up — the sleep is normal before the cloud move.
 
 ## Card (to be filed at SCORE)
 blast 2 (gateway, scheduler, worker-shim, migration, dashboard words, hook) · risk 2 (security · database ·
