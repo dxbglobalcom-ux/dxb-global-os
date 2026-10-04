@@ -37,9 +37,12 @@ ambiguity: 1
 - **Escalation once.** Each reason (`malicious`, `review-failed`, `lock-72h`) writes one `tool_lock_escalated`
   audit row per lock; its presence is the "once". The lock alert is raised to `high` (re-opened under the same
   dedup key if he resolved it).
-- **A review that is no longer needed** (the tool was unlocked) is closed only while `inbox`/`queued`
-  (→ `returned`, with a task event); a running one finishes and its verdict is recorded but raises nothing,
-  because the watch acts only on still-quarantined pins.
+- **A review that is no longer needed** (the tool was unlocked) is left to finish: the LOCKED lifecycle
+  (`packages/dxb-mcp/src/transitions.ts`) has no queued → returned edge — the first build had one, found at
+  the end call and removed. Its verdict is recorded and raises nothing (the watch raises only for locked pins).
+- **A failed review** reaches him only when the worker's ladder stopped it for good (`task.blocked`): a first
+  failure is retried by the ladder, and `returned` is the gate's revision round — both on the way, not the end
+  (also found at the end call).
 - **The wake check.** The 15-minute watch also sends one `tool-pin-check` (singleton, one per hour) when the
   newest `tool_pins.last_checked` is older than 24 h — the start and the wake in one rule.
 - **manifest-add.** `scripts/gateway/manifest-add.ts` (TypeScript like its sibling `refresh-pin-manifest.ts`,
@@ -90,3 +93,16 @@ ambiguity: 1
 - Card cost (Claude side): USD 12.03. Battery once after the fixes: BATTERY_GREEN (1220 + 266), residue none.
 - Arrangement note: lead + a fork for the fixes — the fork read the lead's cache and fixed 11 findings in
   4.7 min for USD 2.16.
+
+## Fable's end call (2026-10-04 ~20:48) and what it changed
+- Sol F1's end-to-end leg was open (the record said "10 B fixed"; nothing had carried a review through the
+  real road). Closed by `probe-road.mjs` on the construction engine (evidence/probe-road*.txt): run 1 —
+  the tool-less seat hit `error_max_turns` (budget 4) and the watch raised `review-failed` at once, which
+  exposed that a first failure was treated as final; run 3 — lock → real worker (isolation receipt
+  `mcp=0`, the only tool call `StructuredOutput`) → real QA PASS 0.93 → done → the watch recorded `benign`,
+  raised nothing. Residue after the probes: 0.
+- Fixed by the lead (end-call findings, not Sol's): closeLock no longer moves a queued review to `returned`
+  (an illegal edge in the LOCKED lifecycle); review-failed = failed + `task.blocked` only. Tests (c), (f).
+- dxb-surface: `scripts/i18n-purity-check.sh` → I18N PURITY: PASS. The browser eye leg of the alerts page is
+  ⚠ UNVERIFIED (B03-bis — no session file; automated login forbidden).
+- Fable ruled on no dispute (none was raised).

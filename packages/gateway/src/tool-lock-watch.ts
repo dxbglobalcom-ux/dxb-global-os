@@ -5,7 +5,9 @@
 //   - the review is done → its verdict is written to a `tool_drift_verdict` audit row (the seat's words go
 //     there and nowhere else); a malicious verdict, or an answer that is not the contract's shape, raises
 //     the lock alert to high;
-//   - the review failed or was returned → high;
+//   - the review was stopped for good (failed, and the ladder wrote `task.blocked`) → high — a first
+//     failure is retried by the worker's ladder and a `returned` task is the gate's revision round, both
+//     on the way, not the end;
 //   - the lock is older than 72 hours → high.
 // Each reason acts ONCE per lock: a `tool_lock_escalated` audit row is the mark. The lock alert keeps its
 // title; its level goes to high and its action line becomes the reason's fixed sentence (lock-review.ts) —
@@ -111,8 +113,9 @@ export async function watchToolLocks(
 
   for (const lock of locks.rows) {
     const lockId = Number(lock.lock_audit_id);
-    const review = await sql<{ status: string; verdict: string | null }>`
+    const review = await sql<{ status: string; verdict: string | null; blocked: boolean }>`
       SELECT t.status,
+             EXISTS (SELECT 1 FROM audit_log b WHERE b.task_id = t.id AND b.action = 'task.blocked') AS blocked,
              (SELECT v.payload->>'verdict' FROM audit_log v
                WHERE v.action = 'tool_drift_verdict' AND (v.payload->>'lock_audit_id')::bigint = ${lockId}
                ORDER BY v.id LIMIT 1) AS verdict
@@ -123,7 +126,7 @@ export async function watchToolLocks(
     const task = review.rows[0];
     if (task?.verdict === "malicious") await escalateLock(db, lock, "malicious", out);
     else if (task?.verdict === "unreadable") await escalateLock(db, lock, "review-failed", out);
-    else if (task?.status === "failed" || task?.status === "returned") await escalateLock(db, lock, "review-failed", out);
+    else if (task?.status === "failed" && task.blocked) await escalateLock(db, lock, "review-failed", out);
 
     if (now.getTime() - new Date(lock.lock_at).getTime() > LOCK_ESCALATION_HOURS * 3600_000) {
       await escalateLock(db, lock, "lock-72h", out);

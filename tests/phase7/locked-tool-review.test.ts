@@ -182,7 +182,7 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
     }
   });
 
-  it("(c) the repository's word unlocks: lifted, recorded, the lock alert resolved through the alert door, the waiting review returned", async () => {
+  it("(c) the repository's word unlocks: lifted, recorded, the lock alert resolved through the alert door, the waiting review left to finish", async () => {
     const { entry, lockId } = await lockedTool("c_upgrade", { description: "The c_upgrade tool reads one record, now with paging." });
     const r = await checkPins(db, [entry], new Set([SERVER]), vouching(entry));
     expect(r.unlocked).toEqual([{ server: SERVER, tool: "c_upgrade" }]);
@@ -200,7 +200,8 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
       .where(sql<string>`payload->>'alert_id'`, "=", alert.id)
       .execute();
     expect(door).toHaveLength(1);
-    expect((await reviewOf(lockId)).status).toBe("returned");
+    // The LOCKED lifecycle cannot close a queued task (transitions.ts): the review runs, its verdict is recorded, nothing is raised.
+    expect((await reviewOf(lockId)).status).toBe("queued");
     const unlocked = await db.selectFrom("alerts").selectAll().where("dedup_key", "like", `pin:unlocked:${SERVER}:c_upgrade:%`).executeTakeFirstOrThrow();
     expect(unlocked.level).toBe("informational");
     expect(unlocked.title).toBe(`Tool unlocked: ${SERVER}/c_upgrade now carries the text the repository vouches for`);
@@ -250,9 +251,19 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
     expect(await auditsOf("tool_lock_escalated", "e_bad")).toHaveLength(1);
   });
 
-  it("(f) a failed review reaches him; a benign one does not", async () => {
+  it("(f) a review stopped for good reaches him; a first failure, a revision round and a benign verdict do not", async () => {
     const failed = await lockedTool("f_failed", { description: "The f_failed tool reads one record, v2." });
-    await db.updateTable("tasks").set({ status: "failed" }).where("id", "=", (await reviewOf(failed.lockId)).id).execute();
+    const failedTask = (await reviewOf(failed.lockId)).id;
+    await db.updateTable("tasks").set({ status: "failed" }).where("id", "=", failedTask).execute();
+    // A first failure is the ladder's to retry (worker-loop leg 3): nothing reaches him yet.
+    expect((await watchToolLocks(db, { servers: [SERVER] })).escalated.filter((e) => e.tool === "f_failed")).toHaveLength(0);
+    const revised = await lockedTool("f_revised", { description: "The f_revised tool reads one record, v2." });
+    await db.updateTable("tasks").set({ status: "returned", feedback: "revise" }).where("id", "=", (await reviewOf(revised.lockId)).id).execute();
+    // The ladder gave up: task.blocked.
+    await db
+      .insertInto("audit_log")
+      .values({ actor: "orchestrator:ladder", actor_type: "system", action: "task.blocked", task_id: failedTask, payload: JSON.stringify({ server: SERVER }) })
+      .execute();
     const benign = await lockedTool("f_benign", { description: "The f_benign tool reads one record, v2." });
     await db
       .updateTable("tasks")
@@ -262,6 +273,7 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
     const w = await watchToolLocks(db, { servers: [SERVER] });
     expect(w.escalated).toContainEqual({ server: SERVER, tool: "f_failed", reason: "review-failed" });
     expect(w.escalated.filter((e) => e.tool === "f_benign")).toHaveLength(0);
+    expect(w.escalated.filter((e) => e.tool === "f_revised")).toHaveLength(0);
     expect((await lockAlert("f_failed")).level).toBe("high");
     expect((await lockAlert("f_benign")).level).toBe("informational");
   });

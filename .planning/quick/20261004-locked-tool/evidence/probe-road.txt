@@ -1,0 +1,11 @@
+(node:648933) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+locked: [{"server":"probe-road-9c45b3c3","tool":"record_read","signals":[]}]
+[isolation] lane=task session=dc7b2483-1fd0-4cbd-bd0d-09d722b189e7 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=19810 home=/home/dxb/.local/share/dxb/company-claude
+worker: {"claimed":true,"taskId":"1bc617fd-566c-43b6-bbfd-2110ba71bb98","status":"failed","error":"worker-shim: agent-sdk result error (error_max_turns)"} 28s
+task: failed tools_allowed: false text: null
+tool calls in the run: 4
+watch: {"locked":1,"verdicts":[],"escalated":[{"server":"probe-road-9c45b3c3","tool":"record_read","reason":"review-failed"}]}
+verdict rows: []
+alerts: [{"level":"high","title":"Tool locked: probe-road-9c45b3c3/record_read changed to a text the repository does not vouch for"}]
+cleaned probe-road-9c45b3c3 1bc617fd-566c-43b6-bbfd-2110ba71bb98

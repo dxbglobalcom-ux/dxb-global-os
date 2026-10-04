@@ -1,0 +1,7 @@
+PASS agents: every live agent titled EN+TR
+PASS departments: every department named EN+TR
+PASS projects: every live project named + explained EN+TR
+PASS risks: every risk titled + noted EN+TR
+PASS briefings: every system-authored chat row carries EN+TR
+PASS dictionary parity: en 2399 = tr 2399
+I18N PURITY: PASS

@@ -91,3 +91,7 @@ Depoya yazmadım. Construction engine üzerindeki bağımsız ölçüm: `audit_l
 tokens used
 182,083
 EXIT=0
+
+
+## Lead note (2026-10-04 ~20:55)
+F1 end-to-end leg closed after the fix commit: probe-road.mjs carried a real review through worker → QA → watch (evidence/probe-road-3.txt). Two further defects found there and at the end call, fixed by the lead: a queued → returned edge the LOCKED lifecycle does not have, and a first failure treated as final.

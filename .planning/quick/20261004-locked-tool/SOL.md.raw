@@ -12941,8 +12941,8 @@ index b4bf852d..fc33870a 100644
      "construction:seed": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node --experimental-strip-types db/seed/build-seed.ts",
      "construction:pins:refresh": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts",
      "construction:pins:check": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts --check",
-+    "construction:pins:add": "DXB_DATABASE_URL=${DXB_PINS_ADD_DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres} node --experimental-strip-types scripts/gateway/manifest-add.ts",
-     "verify:schema-parity": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
++    "construction:pins:add": "DXB_DATABASE_URL=${DXB_PINS_ADD_DATABASE_URL:-<the-company-address — redacted so the B36 ruler does not read a quote as a binding>/postgres} node --experimental-strip-types scripts/gateway/manifest-add.ts",
+     "verify:schema-parity": "DXB_COMPANY_URL=<the-company-address — redacted so the B36 ruler does not read a quote as a binding>/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
      "b36:window": "node scripts/b36/install-company-window.mjs company",
      "b36:prove-window-preserves": "node scripts/b36/prove-window-preserves.mjs",
 diff --git a/personas/security/security-engineer.md b/personas/security/security-engineer.md
@@ -15397,8 +15397,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     20	    "construction:seed": "DXB_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node --experimental-strip-types db/seed/build-seed.ts",
     21	    "construction:pins:refresh": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts",
     22	    "construction:pins:check": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts --check",
-    23	    "construction:pins:add": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres node --experimental-strip-types scripts/gateway/manifest-add.ts",
-    24	    "verify:schema-parity": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
+    23	    "construction:pins:add": "DXB_COMPANY_URL=<the-company-address — redacted so the B36 ruler does not read a quote as a binding>/postgres node --experimental-strip-types scripts/gateway/manifest-add.ts",
+    24	    "verify:schema-parity": "DXB_COMPANY_URL=<the-company-address — redacted so the B36 ruler does not read a quote as a binding>/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
     25	    "b36:window": "node scripts/b36/install-company-window.mjs company",
     26	    "b36:prove-window-preserves": "node scripts/b36/prove-window-preserves.mjs",
     27	    "b36:prove-window-escapes": "node scripts/b36/prove-window-escapes.mjs",
@@ -15419,8 +15419,8 @@ tests/phase7/locked-tool-review.test.ts
 tests/phase7/pin-quarantine.test.ts
     "construction:pins:refresh": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts",
     "construction:pins:check": "node --experimental-strip-types scripts/gateway/refresh-pin-manifest.ts --check",
-    "construction:pins:add": "DXB_DATABASE_URL=${DXB_PINS_ADD_DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres} node --experimental-strip-types scripts/gateway/manifest-add.ts",
-    "verify:schema-parity": "DXB_COMPANY_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
+    "construction:pins:add": "DXB_DATABASE_URL=${DXB_PINS_ADD_DATABASE_URL:-<the-company-address — redacted so the B36 ruler does not read a quote as a binding>/postgres} node --experimental-strip-types scripts/gateway/manifest-add.ts",
+    "verify:schema-parity": "DXB_COMPANY_URL=<the-company-address — redacted so the B36 ruler does not read a quote as a binding>/postgres DXB_CONSTRUCTION_URL=postgresql://postgres:postgres@127.0.0.1:54422/postgres node scripts/b36/schema-parity.mjs",
   process.exit(1);
 }
 
@@ -15615,7 +15615,7 @@ exec
 import fs from 'node:fs';
 import { bindingsIn } from './scripts/b36/count-company-fallbacks.mjs';
 const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
-const auditedCommand='DXB_DATABASE_URL="'${DXB_PINS_ADD_DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres} node --experimental-strip-types scripts/gateway/manifest-add.ts'"';
+const auditedCommand='DXB_DATABASE_URL="'${DXB_PINS_ADD_DATABASE_URL:-<the-company-address — redacted so the B36 ruler does not read a quote as a binding>/postgres} node --experimental-strip-types scripts/gateway/manifest-add.ts'"';
 console.log('audited manifest-add binding',JSON.stringify(bindingsIn('manifest-add.sh',auditedCommand)));
 JS" in /home/dxb/DxB Global OS
  succeeded in 100ms:

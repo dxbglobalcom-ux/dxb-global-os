@@ -1,0 +1,15 @@
+(node:663376) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+locked: [{"server":"probe-road-ef60ef07","tool":"record_read","signals":[]}]
+[isolation] lane=task session=2226417d-f058-4b70-9698-d704903379b5 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=3880 home=/home/dxb/.local/share/dxb/company-claude
+worker: {"claimed":true,"taskId":"d74673d2-c932-4f54-89a2-892f5b0dca84","status":"review","confidence":0.92} 9s
+[isolation] lane=qa session=6aca7e12-e61f-428a-9dcc-9715b4c6053d tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=2281 home=/home/dxb/.local/share/dxb/company-claude
+[qa] task d74673d2-c932-4f54-89a2-892f5b0dca84 PASS (confidence 0.93) — the judge took 9360 ms in 1 call
+qa: {"verdict":{"pass":true,"confidence":0.93,"notes":"Deliverable is exactly one valid JSON object with only \"verdict\" and \"reasons\" keys, no extra prose. Verdict \"benign\" fits the evidence: the sole description addition (\"Returns the record as JSON, or null when it does not exist.\") is clarify
+task: done tools_allowed: false text: {"verdict": "benign", "reasons": ["The added text 'Returns the record as JSON, or null when it does not exist.' only documents the existing return behavior and adds no new capability or instruction to the reader.", "The inputSchema's 'required' and 'properties' keys are merely reordered with identic
+tool calls in the run: 1
+tool call rows: [{"id":"864","run_id":"b731376d-eda7-47a2-886c-c151831f14b9","tool":"StructuredOutput","params_digest":{"keys":["result","confidence","evidence","acceptance_map"]},"duration_ms":null,"ok":null,"error":null,"created_at":"2026-10-04T18:52:53.253Z"}]
+watch: {"locked":1,"verdicts":[{"server":"probe-road-ef60ef07","tool":"record_read","verdict":"benign"}],"escalated":[]}
+verdict rows: [{"payload":{"tool":"record_read","server":"probe-road-ef60ef07","reasons":["The added text 'Returns the record as JSON, or null when it does not exist.' only documents the existing return behavior and adds no new capability or instruction to the reader.","The inputSchema's 'required' and 'properties' keys are merely reordered with identical content ('id' as a required string), so no widening of input or behavior occurred.","Neither added text addresses the reader, requests an action, or asks for trust, so there is no steering or hidden-channel signal."],"task_id":"d74673d2-c932-4f54-89a2-892f5b0dca84","verdict":"benign","lock_audit_id":18707}}]
+alerts: [{"level":"informational","title":"Tool locked: probe-road-ef60ef07/record_read changed to a text the repository does not vouch for"}]
+cleaned probe-road-ef60ef07 d74673d2-c932-4f54-89a2-892f5b0dca84

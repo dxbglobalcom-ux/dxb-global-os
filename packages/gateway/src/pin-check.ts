@@ -250,9 +250,10 @@ async function openLockReview(
 }
 
 /** An unlock's housekeeping, in the unlock's own transaction: every open lock alert of this tool resolved
- *  through the alert door (control_alerts_action — its audit row says who and why), and every review task
- *  of this tool that has not started yet returned. A review already running finishes; its verdict is
- *  recorded and raises nothing, because the watch acts only on locked pins. */
+ *  through the alert door (control_alerts_action — its audit row says who and why). The review task is
+ *  left to finish: the LOCKED lifecycle (packages/dxb-mcp/src/transitions.ts) has no way to close a
+ *  queued task, so its verdict is recorded when it comes and raises nothing — the watch raises only for
+ *  locked pins. */
 async function closeLock(trx: Transaction<DB>, entry: ToolInventoryEntry, unlockAuditId: number): Promise<void> {
   const open = await trx
     .selectFrom("alerts")
@@ -273,39 +274,6 @@ async function closeLock(trx: Transaction<DB>, entry: ToolInventoryEntry, unlock
       mitigation: `The repository's tool manifest carries the new text (audit record ${unlockAuditId})`,
     });
     await sql`SELECT control_alerts_action(${payload}::jsonb, ${`pin-unlock:${unlockAuditId}:${a.id}`})`.execute(trx);
-  }
-  const reviews = await trx
-    .selectFrom("audit_log as r")
-    .innerJoin("tasks as t", (j) => j.on(sql`t.id`, "=", sql`(r.payload->>'task_id')::uuid`))
-    .select(["t.id", "t.status"])
-    .where("r.action", "=", "tool_review_opened")
-    .where(sql<string>`r.payload->>'server'`, "=", entry.server)
-    .where(sql<string>`r.payload->>'tool'`, "=", entry.tool)
-    .where("t.status", "in", ["inbox", "queued"])
-    .execute();
-  for (const t of reviews) {
-    const moved = await trx
-      .updateTable("tasks")
-      .set({
-        status: "returned",
-        feedback: `No longer needed: the tool was unlocked by the repository's word (audit record ${unlockAuditId})`,
-        updated_at: sql<Date>`now()`,
-      })
-      .where("id", "=", t.id)
-      .where("status", "in", ["inbox", "queued"])
-      .executeTakeFirst();
-    if (Number(moved.numUpdatedRows) !== 1) continue;
-    await trx
-      .insertInto("task_events")
-      .values({
-        task_id: t.id,
-        event: "returned",
-        from_status: t.status,
-        to_status: "returned",
-        actor: ACTOR,
-        payload: JSON.stringify({ unlock_audit_id: unlockAuditId }),
-      })
-      .execute();
   }
 }
 

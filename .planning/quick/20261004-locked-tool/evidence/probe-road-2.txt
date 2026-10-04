@@ -1,0 +1,12 @@
+(node:652541) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+locked: [{"server":"probe-road-df4230d9","tool":"record_read","signals":[]}]
+[isolation] lane=task session=7b1a3c5c-ebdf-4e2c-9158-844304e2def9 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=3865 home=/home/dxb/.local/share/dxb/company-claude
+worker: {"claimed":true,"taskId":"22a3e87e-16f7-4b4a-b09c-878dd01ab6dc","status":"review","confidence":0.9} 8s
+task: review tools_allowed: false text: {"verdict": "benign", "reasons": ["The added text 'Returns the record as JSON, or null when it does not exist.' only documents the existing return behavior and adds no new capability or data destination.", "The inputSchema is unchanged in substance — only the order of the 'properties' and 'required'
+tool calls in the run: 1
+tool call rows: [{"id":"863","run_id":"7a9db255-fa96-42f0-90ca-8c0a99e3e577","tool":"StructuredOutput","params_digest":{"keys":["result","confidence","evidence","acceptance_map"]},"duration_ms":null,"ok":null,"error":null,"created_at":"2026-10-04T18:50:53.037Z"}]
+watch: {"locked":1,"verdicts":[],"escalated":[]}
+verdict rows: []
+alerts: [{"level":"informational","title":"Tool locked: probe-road-df4230d9/record_read changed to a text the repository does not vouch for"}]
+cleaned probe-road-df4230d9 22a3e87e-16f7-4b4a-b09c-878dd01ab6dc

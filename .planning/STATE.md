@@ -27,6 +27,23 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-04 19:47 → ~21:00, Opus 5.5 session c04c8a07 (high), the successor of 5ab4ff38 on his list item 2.
+- **A locked tool resolved by the system itself — built and live on the holding's own engine** (finished, not
+  accepted — LAW B) <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->. A lock is informational and goes to the
+  security engineer as a tool-less review task (`tasks.tools_allowed`, migration 20261004010000); the tool returns
+  only when the repository's manifest carries its new text (`pnpm construction:pins:add <audit_id> [--yes]`,
+  the construction engineer's step; the session-start hook names locks that wait for it); the 15-minute
+  `tool-lock-watch` raises to him only a malicious verdict, a review stopped for good, or a lock older than 72 h,
+  once each; it also sends the tool check when the last one is older than 24 h. The security engineer's dossier
+  says active (refiled v4). Commits `acee5559` · `d529186e` · `6096ae57` · `97b7181b` and the end-call commit;
+  Sol `xhigh` one pass: 1 A + 10 B fixed (a fork), 1 C left in the job folder; Fable's end call found the
+  end-to-end leg open and two lifecycle defects — closed by a real review on the construction engine
+  (lock → tool-less seat → QA PASS → verdict `benign`, nothing raised) and fixed. Deployed: migration (ledger 172),
+  SCHEMA_PARITY, `dxb-scheduler` restarted with nothing in flight; the first watch (20:45) sent the tool check —
+  76/76 pins checked, 0 drift. He asked whether it should stay on the holding's engine while it is still under
+  construction: *"kalsın"* (conversation, verbatim). Job folder `.planning/quick/20261004-locked-tool/`.
+  The alerts page's eye leg is ⚠ UNVERIFIED (B03-bis).
+
 2026-10-04 18:40 → ~19:15, Opus 5.5 session 5ab4ff38 (high; plan turns at max), on his *"gerekeni yap ve bu
 durumdan diğer oturumları da haberdar et bilsinler kim nerede çalışıor commitlerle ilgili"*
 <!-- CEO-OK: b51-bundle2-code-gerekeni-yap-2026-10-04 --> (conversation, verbatim).
@@ -43,9 +60,7 @@ durumdan diğer oturumları da haberdar et bilsinler kim nerede çalışıor com
 - **The other sessions were told who works where** — scope, the shared records, explicit-path commits only;
   delivery measured in each receiver's transcript (`evidence/peer-notice.txt`).
 - **His list item 2 (the locked tool) — his yes to the plan** <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->
-  (`PLAN-locked-tool.md`), last step at the construction engineer; not built — handed to a successor session at
-  the context gate. The 04:00 tool check has not run since 2026-10-01 19:39 because the machine sleeps at night,
-  which he ruled normal until the cloud move; the plan runs that one check on wake. Found and reported, not
+  (`PLAN-locked-tool.md`), last step at the construction engineer; built by the successor (above). Found and reported, not
   decided: `fn_alerts_evaluate`, the alert escalation sweep, is called by nothing (13 alerts, 0 escalated).
 
 2026-10-04 18:05 → now, Opus 5.5 session e3574313 (max), the lead after fd7d67f2's handover.
@@ -159,9 +174,8 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 1. ~~The prompt audit's runtime bucket (B51 move 5)~~ — the persona text finished 2026-10-04 (session
    e7aa0d14, finished, not accepted); code bundle 2 done and live (session 5ab4ff38, finished, not accepted).
    Bundle 3 waits on his word, together with B51 moves 3 and 6.
-2. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — his yes to the plan
-   `.planning/quick/20261004-b51-code-and-lock/PLAN-locked-tool.md` <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->;
-   being built by the successor of session 5ab4ff38 (critical card, Sol `xhigh`, Fable start+end).
+2. ~~A locked tool resolved by the system itself~~ — built and live on the holding's own engine 2026-10-04
+   (session c04c8a07, finished, not accepted) <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->.
 3. ~~The construction's auto-memory~~ — finished 2026-10-04 (session e7aa0d14): 25 fixes, 4 files deleted
    <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->, the July diaries kept
    <!-- CEO-OK: auto-memory-july-diaries-stay-2026-10-04 -->. Finished, not accepted.
@@ -176,6 +190,11 @@ the tweet's link is still to come from him.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
+- Found in the locked-tool job, each with a recommendation; nothing is changed before his word:
+  (1) the tool manifest's serializer (`db/seed/tool-pins-manifest.ts`) drops a schema property named
+  `__proto__` (Sol's C, older than this work; manifest-add now refuses to write such a file) — recommended: fix it;
+  (2) 84 dossiers still say `Durum: dormant`/`draft` while every seat's `employment_status` is active, and 112
+  spell the line `Status:` (counts measured, not matched seat by seat) — recommended: one regeneration pass.
 - The two found items of the orchestration job — both written on his yes <!-- CEO-OK: helpers-never-call-fable-and-global-advisor-line-scoped-2026-10-04 -->: the helper seats never call Fable; `~/.claude/CLAUDE.md`'s advisor line limited to work outside dxb-team2 (all outside the repo).
 
 ## Where things live
