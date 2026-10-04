@@ -1,7 +1,7 @@
 # Score card — the status bar's turn mark live in every turn, the first one too
 
 job: the status bar's turn mark shows the level of the turn in flight in every turn, a session's first turn included — `tur: max` from the moment `dxb-design-max` is called in a turn until his next message, the session's own level otherwise — read from the render's own payload (its `prompt_id` and `effort.level`) and a per-prompt marker the design-max hook writes, so it no longer waits on the transcript, which holds no line during a session's first turn
-range: (filled after the build commit)
+range: 0c00005f..bf345ba3
 blast: 1
 risk: 2
 reasoning: 1

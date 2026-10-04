@@ -1,0 +1,12 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/hooks/statusline-effort.test.ts (23 tests) 689ms
+ ✓ tests/hooks/design-max.test.ts (24 tests) 865ms
+
+ Test Files  2 passed (2)
+      Tests  47 passed (47)
+   Start at  19:36:11
+   Duration  1.94s (transform 54ms, setup 0ms, collect 26ms, tests 1.55s, environment 0ms, prepare 63ms)
+

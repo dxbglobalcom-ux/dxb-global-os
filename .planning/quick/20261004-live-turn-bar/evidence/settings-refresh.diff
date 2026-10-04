@@ -1,0 +1,5 @@
+119c119,120
+<     "command": "\"/usr/bin/node\" \"/home/dxb/.claude/hooks/dxb-statusline.js\""
+---
+>     "command": "\"/usr/bin/node\" \"/home/dxb/.claude/hooks/dxb-statusline.js\"",
+>     "refreshInterval": 1

@@ -1,0 +1,106 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/hooks/design-max.test.ts (24 tests) 876ms
+ ❯ tests/hooks/statusline-effort.test.ts (23 tests | 4 failed) 665ms
+   ✓ the bar shows the level the turn really runs at > the last step ran at max: 'tur: max' 21ms
+   ✓ the bar shows the level the turn really runs at > the last step ran at high: 'tur: high' 21ms
+   ✓ the bar shows the level the turn really runs at > a new prompt with no step yet shows the session's own level — the first step of the turn before 22ms
+   ✓ the bar shows the level the turn really runs at > no transcript, an unreadable one, or no step with an effort: no turn mark, the bar still stands 64ms
+   ✓ the bar shows the level the turn really runs at > a long transcript is read from its end only and still gives the last step 33ms
+   ✓ the bar shows the level the turn really runs at > an effort that is not one of the five levels is not shown 20ms
+   ✓ the bar shows the request in flight now, not the last step that finished > the moment the lifting skill is called, before any max step is written: 'tur: max' 43ms
+   ✓ the bar shows the request in flight now, not the last step that finished > his next message after a lifted turn: back to the session's level until the skill is called again 39ms
+   ✓ the bar shows the request in flight now, not the last step that finished > a message he sends while the turn runs does not end the lift 20ms
+   ✓ the bar shows the request in flight now, not the last step that finished > another skill lifts nothing 25ms
+   ✓ the bar shows the request in flight now, not the last step that finished > an /effort set since the last step is the level of the next request 63ms
+   ✓ the bar reads the turn in flight from its own payload and the skill's turn marker > the marker holds this render's prompt_id: 'tur: max' with no transcript at all 21ms
+   ✓ the bar reads the turn in flight from its own payload and the skill's turn marker > a marker of an earlier prompt: the payload's level, even when the transcript's last turn lifted 19ms
+   ✓ the bar reads the turn in flight from its own payload and the skill's turn marker > no marker, payload effort medium: 'tur: medium' 19ms
+   ✓ the bar reads the turn in flight from its own payload and the skill's turn marker > payload effort max (his /effort), no marker: 'tur: max' 21ms
+   ✓ the bar reads the turn in flight from its own payload and the skill's turn marker > a link at the marker pointing to a file holding the right id is not trusted: the payload's level 21ms
+   × the bar reads the turn in flight from its own payload and the skill's turn marker > the right marker inside a flag folder that is a link to a real directory: the payload's level 25ms
+     → expected 'Opus 5.5 tur: max x' to contain 'tur: high'
+   × the bar reads the turn in flight from its own payload and the skill's turn marker > the right marker inside a flag folder writable by group or others (0o777, 0o770): the payload's level 21ms
+     → expected 'Opus 5.5 tur: max x' to contain 'tur: high'
+   ✓ the bar reads the turn in flight from its own payload and the skill's turn marker > a payload without effort and no marker: the transcript rules as before 41ms
+   ✓ the bar shows when design at max is open for this session > its flag stands: 'tasarım açık'; another session's flag: nothing 43ms
+   ✓ the bar shows when design at max is open for this session > a link at the flag is no flag 19ms
+   × the bar shows when design at max is open for this session > the flag inside a flag folder that is a link to a real directory is no flag 21ms
+     → expected 'Opus 5.5 🟣 tasarım açık x' not to contain 'tasarım'
+   × the bar shows when design at max is open for this session > the flag inside a flag folder writable by group or others (0o777, 0o770) is no flag 22ms
+     → expected 'Opus 5.5 🟣 tasarım açık x' not to contain 'tasarım'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar reads the turn in flight from its own payload and the skill's turn marker > the right marker inside a flag folder that is a link to a real directory: the payload's level
+AssertionError: expected 'Opus 5.5 tur: max x' to contain 'tur: high'
+
+Expected: [32m"tur: high"[39m
+Received: [31m"Opus 5.5 tur: max x"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:186:17
+    184|     symlinkSync(join(dir, "real"), join(dir, "dxb-design-max"));
+    185|     const out = bar(dir, undefined, SID, { prompt_id: PROMPT, effort: …
+    186|     expect(out).toContain("tur: high");
+       |                 ^
+    187|     expect(out).not.toContain("tur: max");
+    188|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar reads the turn in flight from its own payload and the skill's turn marker > the right marker inside a flag folder writable by group or others (0o777, 0o770): the payload's level
+AssertionError: expected 'Opus 5.5 tur: max x' to contain 'tur: high'
+
+Expected: [32m"tur: high"[39m
+Received: [31m"Opus 5.5 tur: max x"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:195:19
+    193|       chmodSync(join(dir, "dxb-design-max"), mode);
+    194|       const out = bar(dir, undefined, SID, { prompt_id: PROMPT, effort…
+    195|       expect(out).toContain("tur: high");
+       |                   ^
+    196|       expect(out).not.toContain("tur: max");
+    197|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar shows when design at max is open for this session > the flag inside a flag folder that is a link to a real directory is no flag
+AssertionError: expected 'Opus 5.5 🟣 tasarım açık x' not to contain 'tasarım'
+
+Expected: [32m"tasarım"[39m
+Received: [31m"Opus 5.5 🟣 tasarım açık x"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:227:26
+    225|     writeFileSync(join(dir, "real", SID), "");
+    226|     symlinkSync(join(dir, "real"), flags(dir));
+    227|     expect(bar(dir)).not.toContain("tasarım");
+       |                          ^
+    228|   });
+    229|   it("the flag inside a flag folder writable by group or others (0o777…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/hooks/statusline-effort.test.ts > the bar shows when design at max is open for this session > the flag inside a flag folder writable by group or others (0o777, 0o770) is no flag
+AssertionError: expected 'Opus 5.5 🟣 tasarım açık x' not to contain 'tasarım'
+
+Expected: [32m"tasarım"[39m
+Received: [31m"Opus 5.5 🟣 tasarım açık x"[39m
+
+ ❯ tests/hooks/statusline-effort.test.ts:235:28
+    233|       writeFileSync(join(flags(dir), SID), "");
+    234|       chmodSync(flags(dir), mode);
+    235|       expect(bar(dir)).not.toContain("tasarım");
+       |                            ^
+    236|     }
+    237|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  4 failed | 43 passed (47)
+   Start at  19:35:55
+   Duration  1.93s (transform 56ms, setup 0ms, collect 26ms, tests 1.54s, environment 0ms, prepare 63ms)
+

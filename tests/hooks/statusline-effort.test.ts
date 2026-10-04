@@ -8,7 +8,7 @@
 // from its flag ($XDG_RUNTIME_DIR/dxb-design-max/<session_id>). Every case gets its own temporary
 // directory as XDG_RUNTIME_DIR and for its transcript.
 import { spawnSync } from "node:child_process";
-import { accessSync, constants, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { accessSync, chmodSync, constants, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir, userInfo } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe as vdescribe, expect, it } from "vitest";
@@ -175,6 +175,27 @@ describe("the bar reads the turn in flight from its own payload and the skill's 
     expect(out).toContain("tur: high");
     expect(out).not.toContain("tur: max");
   });
+  // Sol's audit, 2026-10-04: the folder is trusted only as the design-max hook trusts it (open_flag_dir) — a real
+  // directory, not a link, owned by this user, writable by neither group nor others.
+  it("the right marker inside a flag folder that is a link to a real directory: the payload's level", () => {
+    const dir = box();
+    mkdirSync(join(dir, "real"), { mode: 0o700 });
+    writeFileSync(join(dir, "real", `${SID}.turn`), PROMPT);
+    symlinkSync(join(dir, "real"), join(dir, "dxb-design-max"));
+    const out = bar(dir, undefined, SID, { prompt_id: PROMPT, effort: "high" });
+    expect(out).toContain("tur: high");
+    expect(out).not.toContain("tur: max");
+  });
+  it("the right marker inside a flag folder writable by group or others (0o777, 0o770): the payload's level", () => {
+    for (const mode of [0o777, 0o770]) {
+      const dir = box();
+      marker(dir, PROMPT);
+      chmodSync(join(dir, "dxb-design-max"), mode);
+      const out = bar(dir, undefined, SID, { prompt_id: PROMPT, effort: "high" });
+      expect(out).toContain("tur: high");
+      expect(out).not.toContain("tur: max");
+    }
+  });
   it("a payload without effort and no marker: the transcript rules as before", () => {
     const dir = box();
     expect(bar(dir, transcript(dir, [said, skillCall("dxb-design-max")]), SID, { prompt_id: PROMPT })).toContain("tur: max");
@@ -197,5 +218,21 @@ describe("the bar shows when design at max is open for this session", () => {
     writeFileSync(join(dir, "elsewhere"), "");
     symlinkSync(join(dir, "elsewhere"), join(flags(dir), SID));
     expect(bar(dir)).not.toContain("tasarım");
+  });
+  it("the flag inside a flag folder that is a link to a real directory is no flag", () => {
+    const dir = box();
+    mkdirSync(join(dir, "real"), { mode: 0o700 });
+    writeFileSync(join(dir, "real", SID), "");
+    symlinkSync(join(dir, "real"), flags(dir));
+    expect(bar(dir)).not.toContain("tasarım");
+  });
+  it("the flag inside a flag folder writable by group or others (0o777, 0o770) is no flag", () => {
+    for (const mode of [0o777, 0o770]) {
+      const dir = box();
+      mkdirSync(flags(dir), { mode: 0o700 });
+      writeFileSync(join(flags(dir), SID), "");
+      chmodSync(flags(dir), mode);
+      expect(bar(dir)).not.toContain("tasarım");
+    }
   });
 });

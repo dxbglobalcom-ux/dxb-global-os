@@ -1,0 +1,18 @@
+THE CEO'S WORDS (verbatim):
+- 2026-10-04 (session fd7d67f2): "Unutmadan: alttaki tur yazısı tamamiyle aynı etkileşimde olmalı skill aktifse o turda max yazmalı çubukta. çubuk her turu canlı interaktif göstermeli mutlaka. şuan öyle mi çalışması? işin bitince bak."
+- 2026-10-04 19:22 (session e3574313), his yes to the plan: "çubuk için tamam evet"
+
+DESIGN DECISIONS (facts, not open questions):
+- The bar is ~/.claude/hooks/dxb-statusline.js, OUTSIDE git: read it in place; its before-copy and diff are in .planning/quick/20261004-live-turn-bar/evidence/ (dxb-statusline.before.js, dxb-statusline.diff).
+- Rule order in the bar: this session's marker <XDG_RUNTIME_DIR>/dxb-design-max/<sid>.turn equal to the render's prompt_id → max; else the payload's effort.level; else the old transcript reading (kept on purpose as the fallback).
+- `close` leaves the marker on purpose: the skill's lift lasts the rest of its turn; a new prompt_id retires the marker.
+- A skill call from a subagent is not told apart (parity with the flag, which has the same property today; no discriminator was measured).
+- Markers are not cleaned up; they live in the runtime directory, cleared at reboot, like the flags.
+- What was measured before the plan: evidence/prompt-id-probe.txt.
+
+DONE-LIST: in CARD.md (items 1-4). Item 4, the battery, runs after this audit.
+
+RAW TEST OUTPUT: evidence/before-red.txt (RED) and evidence/after-green.txt (GREEN), whole. After the lead added O_NONBLOCK to the bar's marker open, the same command printed "Test Files 2 passed (2) / Tests 43 passed (43)".
+LIVE OUTPUT: evidence/pty-bar4.log, pty-bar5.log, live-after-dump.log (a real interactive claude 2.1.289 in a pty, fresh session).
+
+The hook tests run the real hook and the real home bar; you may read both files. Ask for any read-only command you need.
