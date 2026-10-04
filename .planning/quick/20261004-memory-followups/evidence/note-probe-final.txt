@@ -1,0 +1,24 @@
+(node:3379836) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[isolation] lane=task session=754dcac7-089e-4864-b8bc-739593e4938b tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=23582 home=/home/dxb/.local/share/dxb/company-claude
+task lane: toolSurfaceMounted=true result="[{\"index_id\":\"5d95632e-15b7-4d18-87fb-e3bf71f375a2\",\"kind\":\"artifact\",\"store\":\"obsidian\",\"trust_tier\":\"trusted\",\"contradicts\":null}]"
+the tool returned index_id=5d95632e-15b7-4d18-87fb-e3bf71f375a2
+memory_index row: {"id":"5d95632e-15b7-4d18-87fb-e3bf71f375a2","store":"obsidian","ref":"memory-store/artifact/5d95632e-15b7-4d18-87fb-e3bf71f375a2.md","trust_tier":"trusted"}
+in the handed root: exists=true body_equal=true id_in_note=true
+scheduler-side recall: rows=1 same_id=true same_note=true
+company drawer files: before=1 after=1
+NOTE_PROBE_OK
+removed: cost_ledger 1 · its own task 1
+removed: memory_index 1 · root gone
+SESSIONS 754dcac7-089e-4864-b8bc-739593e4938b
+PROBE_DONE
+PROBE_EXIT=0
+── transcript check, by session id ──
+session 754dcac7-089e-4864-b8bc-739593e4938b: files named 0 · transcripts holding it 0 · in ~/.claude.json 0
+── Claude files written during the probe (newer than its start) ──
+~/.claude/backups/.claude.json.backup.1791125683956
+~/.claude.json
+~/.claude/projects/-home-dxb-DxB-Global-OS/07841b79-5171-4ea7-a2e2-b3ee204f0160.jsonl
+── managed-policy tier (machine-specific) ──
+ls: cannot access '/etc/claude-code': No such file or directory
+RUN_LANES_PROBE_STATUS=0

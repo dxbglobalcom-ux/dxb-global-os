@@ -3,3 +3,8 @@ Sol asked for the whole output. A re-run on the old sources (b8bb4222 restored, 
 2026-10-04 ~16:50) gave "1 failed | 5 passed" — not the before-state: vitest.config.ts resolves workspace
 packages (@dxb/voice) to their BUILT dist, and dist already held the new code. A faithful whole RED needs the
 old dist rebuilt; that was not done. The tail stands as the only before-evidence, with this limit named.
+
+Sol's re-check (SOL-recheck.raw) keeps this UNVERIFIED and asks for an isolated rebuild of the old dist.
+The lead's decision (dxb-team2 §4, the lead has the last word): not done. The tail shows the decisive line
+"5 failed | 1 passed (6)" of the before-run; a rebuild of the old dist into the shared tree would put the
+old code in front of the live packages for the length of the run. The limit stays named here.

@@ -53,11 +53,25 @@ const companyBefore = drawerCount();
 
 const db = getDb();
 const seat = await db.selectFrom("agents").select(["id", "slug", "department"]).where("slug", "=", "finance-financial-analyst").executeTakeFirstOrThrow();
-const anyTask = await db.selectFrom("tasks").select(["id"]).orderBy("created_at").limit(1).executeTakeFirstOrThrow();
+// the probe's OWN task row (Sol's re-check, 2026-10-04): its cost rows and nothing else's are removed
+// by that id. Department "note-probe" has no seat and no lane, so no drain ever claims it.
+const anyTask = await db
+  .insertInto("tasks")
+  .values({
+    department: "note-probe",
+    objective: "note-probe 2026-10-04 — the call's own record",
+    output_contract: "none",
+    model_tier: "L4",
+    approval_class: "none",
+    budget_max_tokens: 4000,
+    priority: 5,
+    status: "queued",
+  })
+  .returning("id")
+  .executeTakeFirstOrThrow();
 const canary = `NOTE_PROBE_${stamp}`;
-// the call's own cost row is removed after it, by id: a row it leaves makes the battery's B39 "clean book"
-// case red (measured 2026-10-04 — two probe rows left the book at 1 lane instead of 2)
-const costBefore = Number((await db.selectFrom("cost_ledger").select(db.fn.max("id").as("m")).executeTakeFirst()).m ?? 0);
+// a cost row the call leaves makes the battery's B39 "clean book" case red (measured 2026-10-04 — two
+// probe rows left the book at 1 lane instead of 2); they are removed by the probe's own task id below
 
 const out = await defaultExecutor({
   id: anyTask.id,
@@ -83,14 +97,8 @@ console.log(`task lane: toolSurfaceMounted=${out.toolSurfaceMounted} result=${JS
 // what the employee's child wrote: the index id its tool returned, read back three ways and compared
 // exactly (Sol's single pass, 2026-10-04: a canary substring proved too little)
 const body = `${canary} — the employee's note from a real task.`;
-const returned = (() => {
-  try {
-    const text = String(out.result?.text ?? out.result);
-    return JSON.parse(text.slice(text.indexOf("["), text.lastIndexOf("]") + 1))[0]?.index_id ?? null;
-  } catch {
-    return null;
-  }
-})();
+// the model echoes the tool's JSON as an array or as its one object — the id is read from either
+const returned = String(out.result?.text ?? out.result).match(/"index_id"\s*:\s*"([0-9a-f-]{36})"/)?.[1] ?? null;
 console.log(`the tool returned index_id=${returned}`);
 const row = returned
   ? await db.selectFrom("memory_index").select(["id", "store", "ref", "trust_tier"]).where("id", "=", returned).executeTakeFirst()
@@ -122,14 +130,10 @@ console.log(ok ? "NOTE_PROBE_OK" : "NOTE_PROBE_FAIL");
 
 // removal: only this probe's own index row, the call's own cost rows and its root
 if (row) await db.deleteFrom("memory_index").where("id", "=", row.id).execute();
-const costGone = await db
-  .deleteFrom("cost_ledger")
-  .where("id", ">", costBefore)
-  .where("task_id", "=", anyTask.id)
-  .where("source", "=", "worker")
-  .returning("id")
-  .execute();
-console.log(`removed: cost_ledger ${costGone.length}`);
+else if (recall.rows.length) console.log(`LEFTOVER memory_index rows the reply did not name: ${recall.rows.map((r) => r.id)}`);
+const costGone = await db.deleteFrom("cost_ledger").where("task_id", "=", anyTask.id).returning("id").execute();
+const taskGone = await db.deleteFrom("tasks").where("id", "=", anyTask.id).returning("id").execute();
+console.log(`removed: cost_ledger ${costGone.length} · its own task ${taskGone.length}`);
 rmSync(memRoot, { recursive: true, force: true });
 console.log(`removed: memory_index ${row ? 1 : 0} · root ${existsSync(memRoot) ? "STILL THERE" : "gone"}`);
 

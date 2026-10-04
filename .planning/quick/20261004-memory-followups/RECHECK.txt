@@ -1,0 +1,11 @@
+RE-CHECK of your own single pass on this job (your verdict is in .planning/quick/20261004-memory-followups/SOL.md.raw, the end of the file). Read-only, same effort. Re-check each finding AND what its fix touched; nothing else.
+
+The lead's reply, finding by finding:
+- A (prompt-core.ts:61, the disclosure was conditional): fixed in bd536d25 — memoryBlock now reads "Say so plainly in your answer — tell the CEO you could not reach your notes this time — and never answer as if you had none."; the test pins it. A real chat-lane answer was produced: .planning/quick/20261004-memory-followups/answer-probe.mjs, raw output evidence/answer-probe-fix.txt (a question that does not depend on memory, a failed recall).
+- B (red.txt is a tail): not reproducible as the whole before-state — see evidence/red-note.txt (vitest resolves @dxb/voice to the built dist). Weigh it.
+- B (note-probe compared a substring; deleted every obsidian row in the window; deleted cost rows broadly): fixed in bd536d25 and 91f93b23 — compares the tool's returned index_id, the note text after the frontmatter, the id line and the recall's body; deletes only its own index row and the call's own cost rows (id above the max taken before the call, the borrowed task, source worker). Raw: evidence/note-probe-fix.txt (that run predates the cost-row cleanup; the two rows it left were removed by id — see the commit body of 91f93b23).
+- Battery: evidence/battery-red-probe-rows.txt (RED, B39 'clean book', caused by those two rows) and evidence/battery.txt (GREEN after their removal).
+- Deploy (dxb-scheduler restart) has not happened yet; it follows your re-check.
+
+Diff: git diff 83bc9342..91f93b23 (91f93b23 also restores .claude/hooks/no-laziness.sh on the CEO's word — outside this job; do not audit it).
+Same output format per finding, in Turkish.
