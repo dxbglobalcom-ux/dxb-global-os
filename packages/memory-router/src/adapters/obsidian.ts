@@ -11,11 +11,17 @@
 // phase 3 the dxb-mcp child of a company call works in the company's `work`
 // folder while the scheduler's own recall works in the repository — the two
 // looked in different places. Now every note lives under ONE absolute folder:
-// the company Claude home in production (the scheduler sets it,
+// the company Claude home in production (the scheduler binds it to that home,
 // kernel ensureCompanyMemoryRoot), the construction's own folder under var/ in
 // the battery (vitest.config.ts). Unset or relative refuses — no guess.
-import { readdirSync } from "node:fs";
-import { mkdir, readFile, realpath, stat, writeFile } from "node:fs/promises";
+//
+// Sol's single pass (2026-10-04): a note is opened ONCE, through one file
+// descriptor, and that descriptor's own path (/proc/self/fd) must be exactly
+// <real root>/<ref> — no link in any component below the root, and no window
+// between the check and the read or write. Folders below the root are made one
+// level at a time and each must be a real folder before anything is written.
+import { constants, readdirSync } from "node:fs";
+import { lstat, mkdir, open, readlink, realpath, unlink } from "node:fs/promises";
 import path from "node:path";
 
 const MEMORY_STORE_ROOT = "memory-store";
@@ -80,22 +86,29 @@ function notePath(ref: string, kind: string, root: string): string {
   return path.join(root, ref);
 }
 
-/** `file` resolves — links followed — to a place inside `root`. */
-async function insideRoot(file: string, root: string): Promise<string> {
-  const [real, realRoot] = await Promise.all([realpath(file), realpath(root)]);
-  if (!real.startsWith(`${realRoot}${path.sep}`)) {
-    throw new Error(`memory note: ${file} resolves outside the memory root (${real})`);
-  }
-  return real;
+/** The path the descriptor really opened — whatever the name pointed at meanwhile. */
+function openedPath(fd: number): Promise<string> {
+  return readlink(`/proc/self/fd/${fd}`);
 }
 
 /** Read one note by its ref: only a note of the writer's shape and of this
- *  store's kind, inside the memory root, a regular file. Loud otherwise. */
+ *  store's kind, opened once without following a link, whose descriptor sits
+ *  exactly at <real root>/<ref> and is a regular file. Loud otherwise. */
 export async function readNote(ref: string, kind: string): Promise<string> {
   const root = memoryRoot();
-  const real = await insideRoot(notePath(ref, kind, root), root);
-  if (!(await stat(real)).isFile()) throw new Error(`memory note: ${ref} is not a regular file`);
-  return readFile(real, "utf8");
+  notePath(ref, kind, root);
+  const expected = path.join(await realpath(root), ref);
+  const handle = await open(expected, constants.O_RDONLY | constants.O_NOFOLLOW).catch((e: NodeJS.ErrnoException) => {
+    throw new Error(`memory note: ${ref} cannot be opened as a note in the memory root (${e.code ?? e.message})`);
+  });
+  try {
+    const opened = await openedPath(handle.fd);
+    if (opened !== expected) throw new Error(`memory note: ${ref} opened ${opened}, not ${expected}`);
+    if (!(await handle.stat()).isFile()) throw new Error(`memory note: ${ref} is not a regular file`);
+    return await handle.readFile("utf8");
+  } finally {
+    await handle.close();
+  }
 }
 
 /** Frontmatter values are serialized with JSON.stringify — JSON scalars/objects
@@ -115,15 +128,42 @@ function frontmatter(args: ObsidianNoteArgs): string {
 }
 
 /** Write one memory note under the memory root; returns the root-relative ref.
- *  Never overwrites: an indexId collision is a hard error (flag 'wx'). */
+ *  Never overwrites: an indexId collision is a hard error (O_EXCL). */
 export async function writeNote(args: ObsidianNoteArgs): Promise<string> {
   if (!UUID_RE.test(args.indexId)) throw new Error(`obsidian adapter: indexId is not a uuid: ${args.indexId}`);
   if (!KIND_RE.test(args.kind)) throw new Error(`obsidian adapter: invalid kind: ${args.kind}`);
   const root = memoryRoot();
   const rel = path.posix.join(MEMORY_STORE_ROOT, args.kind, `${args.indexId}.md`);
-  const file = notePath(rel, args.kind, root);
-  await mkdir(path.dirname(file), { recursive: true });
-  await insideRoot(path.dirname(file), root);
-  await writeFile(file, frontmatter(args) + args.body + "\n", { flag: "wx" });
+  notePath(rel, args.kind, root);
+  // The root is the configured folder itself; below it, one level at a time, each a real folder.
+  await mkdir(root, { recursive: true });
+  const base = await realpath(root);
+  let dir = base;
+  for (const part of [MEMORY_STORE_ROOT, args.kind]) {
+    dir = path.join(dir, part);
+    await mkdir(dir).catch((e: NodeJS.ErrnoException) => {
+      if (e.code !== "EEXIST") throw e;
+    });
+    const st = await lstat(dir);
+    if (st.isSymbolicLink() || !st.isDirectory()) {
+      throw new Error(`memory note: ${dir} is not a real folder inside the memory root`);
+    }
+  }
+  const expected = path.join(base, rel);
+  const handle = await open(
+    expected,
+    constants.O_WRONLY | constants.O_CREAT | constants.O_EXCL | constants.O_NOFOLLOW,
+    0o644,
+  );
+  try {
+    const opened = await openedPath(handle.fd);
+    if (opened !== expected) {
+      await unlink(opened).catch(() => undefined);
+      throw new Error(`memory note: the write for ${rel} opened ${opened}, not ${expected}`);
+    }
+    await handle.writeFile(frontmatter(args) + args.body + "\n");
+  } finally {
+    await handle.close();
+  }
   return rel;
 }

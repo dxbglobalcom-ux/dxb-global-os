@@ -112,20 +112,20 @@ export function companyClaudeHome(env: NodeJS.ProcessEnv = process.env): string 
 }
 
 /**
- * The company's memory drawer (CEO 2026-10-04, company-memory-drawer-2026-10-04): the scheduler gives
- * DXB_MEMORY_ROOT the company Claude home when none is set, before any lane runs. Every company Claude
+ * The company's memory drawer (CEO 2026-10-04, company-memory-drawer-2026-10-04): the scheduler binds
+ * DXB_MEMORY_ROOT to the company Claude home before any lane runs — always, overwriting whatever the
+ * process inherited (Sol's single pass, B2: an inherited value is not validated). Every company Claude
  * child inherits it through the DXB_* allowlist below, so the dxb-mcp child — working in the home's
- * `work` folder — reads and writes the same notes as the scheduler's own recall. `??=`: the battery
- * starts the real scheduler under vitest's env and keeps the construction's own root. Never throws;
- * a refused home leaves the root unset, and memory-router then refuses every note.
+ * `work` folder — reads and writes the same notes as the scheduler's own recall. Only main.ts calls
+ * this; the battery never runs main.ts and keeps its own root through vitest's env. Never throws: a
+ * refused home DELETES the root, and memory-router then refuses every note.
  */
 export function ensureCompanyMemoryRoot(env: NodeJS.ProcessEnv = process.env): string | undefined {
-  if (!env.DXB_MEMORY_ROOT) {
-    try {
-      env.DXB_MEMORY_ROOT = companyClaudeHome(env);
-    } catch {
-      // the home was refused — companyClaudeLoginLine says so; memory stays refused
-    }
+  try {
+    env.DXB_MEMORY_ROOT = companyClaudeHome(env);
+  } catch {
+    // the home was refused — companyClaudeLoginLine says so; memory stays refused
+    delete env.DXB_MEMORY_ROOT;
   }
   return env.DXB_MEMORY_ROOT;
 }

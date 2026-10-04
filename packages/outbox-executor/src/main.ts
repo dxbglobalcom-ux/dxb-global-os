@@ -18,8 +18,8 @@ import { hostOpsLiveCollector } from "./ops-live-host.js";
 import { startScheduler, stopScheduler } from "./scheduler.js";
 
 async function main(): Promise<void> {
-  // The company's memory drawer (CEO 2026-10-04): set before any lane runs, so the scheduler's recall and
-  // every company call's dxb-mcp child read and write the same notes.
+  // The company's memory drawer (CEO 2026-10-04): bound to the company Claude home before any lane runs,
+  // so the scheduler's recall and every company call's dxb-mcp child read and write the same notes.
   ensureCompanyMemoryRoot();
   const boss = await startScheduler();
   // B38: the ops:live debounce collector has no service of its own — EVENT_MODEL

@@ -1,0 +1,34 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:2821710) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/adapters-roundtrip.test.ts (7 tests) 215ms
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+[isolation] lane=gate model=stand-in session=? home=/tmp/company-codex-EWFxXR/company-codex notes=0 mcp=0 ok=true tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named
+[isolation] lane=gate model=stand-in session=? home=refused notes=? mcp=? ok=false tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > pins the challengers' reasoning effort to high — the level they ran at before the company home
+[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-aREXwr/company-codex notes=0 mcp=0 ok=true tokens=12345
+
+(node:2821750) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/governance/company-isolation.test.ts (106 tests) 282ms
+(node:2821925) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/video-ingest.test.ts (7 tests | 1 skipped) 98ms
+(node:2821956) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/memory-drawer.test.ts (14 tests) 84ms
+(node:2821983) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/poisoning.test.ts (7 tests) 47ms
+
+ Test Files  5 passed (5)
+      Tests  140 passed | 1 skipped (141)
+   Start at  14:51:46
+   Duration  4.30s (transform 175ms, setup 0ms, collect 2.89s, tests 727ms, environment 0ms, prepare 161ms)
+

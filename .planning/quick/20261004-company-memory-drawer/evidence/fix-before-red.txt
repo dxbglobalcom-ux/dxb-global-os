@@ -1,0 +1,117 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:2819030) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/phase6/memory-drawer.test.ts (14 tests | 5 failed) 86ms
+   ✓ the memory root — one folder, never the working folder > refuses an unset or relative DXB_MEMORY_ROOT, naming the variable 1ms
+   ✓ the memory root — one folder, never the working folder > an unset root refuses the write and leaves no index row 15ms
+   ✓ the memory root — one folder, never the working folder > an artifact lands under the root — not under the working folder — and reads back 9ms
+   ✓ the memory root — one folder, never the working folder > a relation lands under the root and reads back 3ms
+   ✓ the reader opens nothing but a note of the writer's shape inside the root > an absolute ref naming a file elsewhere on the machine 13ms
+   ✓ the reader opens nothing but a note of the writer's shape inside the root > a ref climbing out of the root 5ms
+   ✓ the reader opens nothing but a note of the writer's shape inside the root > a ref of the other store's kind, and a ref that is not a uuid note 12ms
+   ✓ the reader opens nothing but a note of the writer's shape inside the root > a note of the right shape that is a link to a file outside the root 6ms
+   × the reader opens nothing but a note of the writer's shape inside the root > a note of the right shape that is a link to another store's note inside the root 6ms
+     → ref memory-store/artifact/8348a4a9-c883-4d03-9368-6552c6fce0fa.md was read: expected '{"rows":[{"id":"ea1c5236-0378-4b8e-a1…' to be an instance of Error
+   × the reader opens nothing but a note of the writer's shape inside the root > a note of the right shape that is a link to a plain file in the root 4ms
+     → ref memory-store/artifact/f4174ced-6674-4884-856f-05d9a878be5d.md was read: expected '{"rows":[{"id":"0bb25d75-e67e-408b-9d…' to be an instance of Error
+   × the reader opens nothing but a note of the writer's shape inside the root > a memory-store that is a link out of the root: the write refuses and creates nothing outside 2ms
+     → expected [ 'artifact' ] to deeply equal []
+   × the scheduler gives the company its own drawer > sets the root to the company Claude home, overwriting any inherited value 2ms
+     → expected '/somewhere' to be '/home/dxb/.local/share/dxb/company-cl…' // Object.is equality
+   × the scheduler gives the company its own drawer > a refused company home leaves no root at all 0ms
+     → expected '/somewhere' to be undefined
+   ✓ the scheduler gives the company its own drawer > says where the drawer is and how many notes it holds 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the reader opens nothing but a note of the writer's shape inside the root > a note of the right shape that is a link to another store's note inside the root
+AssertionError: ref memory-store/artifact/8348a4a9-c883-4d03-9368-6552c6fce0fa.md was read: expected '{"rows":[{"id":"ea1c5236-0378-4b8e-a1…' to be an instance of Error
+ ❯ expectRefused tests/phase6/memory-drawer.test.ts:145:44
+    143|     );
+    144|     await db.deleteFrom("memory_index").where("id", "=", id).execute();
+    145|     expect(outcome, `ref ${ref} was read`).toBeInstanceOf(Error);
+       |                                            ^
+    146|     expect((outcome as Error).message).toMatch(/memory ref broken/);
+    147|     expect((outcome as Error).message).not.toContain(CANARY);
+ ❯ tests/phase6/memory-drawer.test.ts:196:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the reader opens nothing but a note of the writer's shape inside the root > a note of the right shape that is a link to a plain file in the root
+AssertionError: ref memory-store/artifact/f4174ced-6674-4884-856f-05d9a878be5d.md was read: expected '{"rows":[{"id":"0bb25d75-e67e-408b-9d…' to be an instance of Error
+ ❯ expectRefused tests/phase6/memory-drawer.test.ts:145:44
+    143|     );
+    144|     await db.deleteFrom("memory_index").where("id", "=", id).execute();
+    145|     expect(outcome, `ref ${ref} was read`).toBeInstanceOf(Error);
+       |                                            ^
+    146|     expect((outcome as Error).message).toMatch(/memory ref broken/);
+    147|     expect((outcome as Error).message).not.toContain(CANARY);
+ ❯ tests/phase6/memory-drawer.test.ts:204:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the reader opens nothing but a note of the writer's shape inside the root > a memory-store that is a link out of the root: the write refuses and creates nothing outside
+AssertionError: expected [ 'artifact' ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "artifact",[39m
+[31m+ ][39m
+
+ ❯ tests/phase6/memory-drawer.test.ts:216:36
+    214|       commitMemory(getDb(), { artifact: { path: "reports/linked.md", b…
+    215|     ).rejects.toThrow(/memory/);
+    216|     expect(await readdir(outside)).toEqual([]);
+       |                                    ^
+    217|     await rm(linkedRoot, { recursive: true, force: true });
+    218|     await rm(outside, { recursive: true, force: true });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the scheduler gives the company its own drawer > sets the root to the company Claude home, overwriting any inherited value
+AssertionError: expected '/somewhere' to be '/home/dxb/.local/share/dxb/company-cl…' // Object.is equality
+
+Expected: [32m"/[7mh[27mome[7m/dxb/.local/share/dxb/company-claud[27me"[39m
+Received: [31m"/[7ms[27mome[7mwher[27me"[39m
+
+ ❯ tests/phase6/memory-drawer.test.ts:229:44
+    227|     expect(unset.DXB_MEMORY_ROOT).toBe(companyClaudeHome({}));
+    228|     const given: NodeJS.ProcessEnv = { DXB_MEMORY_ROOT: "/somewhere" };
+    229|     expect(ensureCompanyMemoryRoot(given)).toBe(companyClaudeHome({}));
+       |                                            ^
+    230|     expect(given.DXB_MEMORY_ROOT).toBe(companyClaudeHome({}));
+    231|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/phase6/memory-drawer.test.ts > the scheduler gives the company its own drawer > a refused company home leaves no root at all
+AssertionError: expected '/somewhere' to be undefined
+
+[32m- Expected:[39m 
+undefined
+
+[31m+ Received:[39m 
+"/somewhere"
+
+ ❯ tests/phase6/memory-drawer.test.ts:235:46
+    233|   it("a refused company home leaves no root at all", () => {
+    234|     const refused: NodeJS.ProcessEnv = { DXB_MEMORY_ROOT: "/somewhere"…
+    235|     expect(ensureCompanyMemoryRoot(refused)).toBeUndefined();
+       |                                              ^
+    236|     expect(refused.DXB_MEMORY_ROOT).toBeUndefined();
+    237|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 9 passed (14)
+   Start at  14:50:58
+   Duration  480ms (transform 81ms, setup 0ms, collect 143ms, tests 86ms, environment 0ms, prepare 31ms)
+

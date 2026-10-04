@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { existsSync } from "node:fs";
-import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
@@ -181,16 +181,59 @@ describe("the reader opens nothing but a note of the writer's shape inside the r
     await symlink(canaryFile, path.join(root, "memory-store", "artifact", `${id}.md`));
     await expectRefused("obsidian", `memory-store/artifact/${id}.md`);
   });
+
+  // Sol's single pass, A1: a link INSIDE the root must not redirect a ref to another note or file.
+  it("a note of the right shape that is a link to another store's note inside the root", async () => {
+    const id = randomUUID();
+    const other = randomUUID();
+    await mkdir(path.join(root, "memory-store", "artifact"), { recursive: true });
+    await mkdir(path.join(root, "memory-store", "relation"), { recursive: true });
+    await writeFile(path.join(root, "memory-store", "relation", `${other}.md`), `${CANARY} relation\n`);
+    await symlink(
+      path.join(root, "memory-store", "relation", `${other}.md`),
+      path.join(root, "memory-store", "artifact", `${id}.md`),
+    );
+    await expectRefused("obsidian", `memory-store/artifact/${id}.md`);
+  });
+
+  it("a note of the right shape that is a link to a plain file in the root", async () => {
+    const id = randomUUID();
+    await mkdir(path.join(root, "memory-store", "artifact"), { recursive: true });
+    await writeFile(path.join(root, "plain.txt"), `${CANARY} plain\n`);
+    await symlink(path.join(root, "plain.txt"), path.join(root, "memory-store", "artifact", `${id}.md`));
+    await expectRefused("obsidian", `memory-store/artifact/${id}.md`);
+  });
+
+  // Sol's single pass, B1: no filesystem effect before the boundary holds.
+  it("a memory-store that is a link out of the root: the write refuses and creates nothing outside", async () => {
+    const linkedRoot = await mkdtemp(path.join(os.tmpdir(), "dxb-memory-linked-"));
+    const outside = await mkdtemp(path.join(os.tmpdir(), "dxb-memory-outside-"));
+    await symlink(outside, path.join(linkedRoot, "memory-store"));
+    process.env.DXB_MEMORY_ROOT = linkedRoot;
+    await expect(
+      commitMemory(getDb(), { artifact: { path: "reports/linked.md", body: "must not land" }, provenance }),
+    ).rejects.toThrow(/memory/);
+    expect(await readdir(outside)).toEqual([]);
+    await rm(linkedRoot, { recursive: true, force: true });
+    await rm(outside, { recursive: true, force: true });
+  });
 });
 
 describe("the scheduler gives the company its own drawer", () => {
-  it("sets the root to the company Claude home only when none is given", () => {
+  // Sol's single pass, B2: the production root is bound to the company home — an inherited value is not kept.
+  it("sets the root to the company Claude home, overwriting any inherited value", () => {
     const unset: NodeJS.ProcessEnv = {};
     expect(ensureCompanyMemoryRoot(unset)).toBe(companyClaudeHome({}));
     expect(unset.DXB_MEMORY_ROOT).toBe(companyClaudeHome({}));
-    const given: NodeJS.ProcessEnv = { DXB_MEMORY_ROOT: root };
-    expect(ensureCompanyMemoryRoot(given)).toBe(root);
-    expect(given.DXB_MEMORY_ROOT).toBe(root);
+    const given: NodeJS.ProcessEnv = { DXB_MEMORY_ROOT: "/somewhere" };
+    expect(ensureCompanyMemoryRoot(given)).toBe(companyClaudeHome({}));
+    expect(given.DXB_MEMORY_ROOT).toBe(companyClaudeHome({}));
+  });
+
+  it("a refused company home leaves no root at all", () => {
+    const refused: NodeJS.ProcessEnv = { DXB_MEMORY_ROOT: "/somewhere", DXB_COMPANY_CLAUDE_HOME: "relative/home" };
+    expect(ensureCompanyMemoryRoot(refused)).toBeUndefined();
+    expect(refused.DXB_MEMORY_ROOT).toBeUndefined();
   });
 
   it("says where the drawer is and how many notes it holds", async () => {

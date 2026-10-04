@@ -1,7 +1,7 @@
 # Score card — the company's memory drawer on the company's desk
 
 job: Every company memory note (obsidian = artifact, graphify = relation) is written to and read from one absolute folder, DXB_MEMORY_ROOT — the company Claude home in production, set by the scheduler before any lane runs and inherited by every company call's dxb-mcp child; the construction's own var/construction-memory in the battery — and the reader opens nothing but a note of the writer's exact shape, of its store's kind, inside that folder
-range: 7c6a0dc6..HEAD
+range: 7c6a0dc6..628863e1
 blast: 1
 risk: 2
 reasoning: 1
