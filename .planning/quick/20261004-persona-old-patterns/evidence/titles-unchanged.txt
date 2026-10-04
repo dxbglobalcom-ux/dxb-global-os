@@ -1,0 +1,7 @@
+Sol's third re-check (SOL-recheck3.md): the submit path also runs `UPDATE agents SET title=<dossier field 3>` (scripts/sync-personas-to-db.sh:173) for the 127 files that carry a Title row.
+Measured 2026-10-04 ~17:55:
+- git diff 0467dbb6..HEAD -- personas: 0 changed "| 3 | Title |" lines (no title was edited by this job).
+- Company agents.title before = today's backup /home/dxb/backups/dxb/dxb-laptop-2026-10-04.dump (10:36:23), restored read-only with pg_restore -a -t agents -f - ; after = live SELECT.
+  agents before 213 · now 213 · title changed 0.
+- agents.updated_at: 213 rows bumped 15:46:45-15:47:05 UTC (the same-value UPDATE and the bind).
+So the filing wrote, besides persona versions / gate verdicts / bindings, only same-value titles and updated_at.
