@@ -27,6 +27,16 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-04 14:53 → 16:25, Opus 5.5 session fd7d67f2 (beside 07841b79). He went through the approved
+orchestration design again, then ordered how its max part runs without his hand on /effort.
+- **Design at max — built** <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 -->: the lead invokes
+  the `dxb-design-max` skill (`effort: max`) first in every design, plan or architecture turn; the project
+  hook `.claude/hooks/dxb-design-max.py` reminds it on each of his messages; his yes closes it and the job
+  goes on at the session's level (dxb-team2 §2, §4 PLAN). Measured first: a skill holds max for its own
+  turn only. Commits `bdbb997c` · `7e48374a` (Sol `high`, 1 A + 4 B fixed); battery GREEN (1,168 · 266);
+  live four-turn probe in `.planning/quick/20261004-design-max/evidence/`. The rest of the orchestration
+  design (the arrangements, the card's fields, helpers' code, Sol's single pass) is still to be written.
+
 2026-10-04 15:10 → 16:20, Opus 5.5 session 07841b79 (max from ~15:40, his `/effort max`).
 - C1 accepted on his waiver of the eye (commit `3b0825d9`).
 - **Tool loading went to the board as a leg of B41** <!-- CEO-OK: open-tools-two-walls-ordered-2026-10-04 -->
