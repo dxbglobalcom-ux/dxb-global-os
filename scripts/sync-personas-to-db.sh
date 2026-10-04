@@ -79,7 +79,9 @@ if [ "$MODE" = "bind" ]; then
       if [ "$DRY" = 1 ]; then
         echo "WOULD BIND $slug -> $pid ($pver)"; continue
       fi
-      if "${PSQL[@]}" -c "SELECT public.fn_persona_bind('$aid'::uuid, '$pid'::uuid, 'persona-sync');" >/dev/null 2>&1; then
+      # </dev/null: PSQL is `docker exec -i`, which would otherwise swallow the rest of this loop's
+      # here-string — measured 2026-10-04: 213 candidates, one bound, the loop then saw no input.
+      if "${PSQL[@]}" -c "SELECT public.fn_persona_bind('$aid'::uuid, '$pid'::uuid, 'persona-sync');" >/dev/null 2>&1 </dev/null; then
         echo "BOUND $slug -> $pid ($pver)"; bound=$((bound+1))
       else
         echo "REFUSED $slug -> $pid — the door said no (gate, author or ownership); run the statement by hand to see its message"; refused=$((refused+1))
