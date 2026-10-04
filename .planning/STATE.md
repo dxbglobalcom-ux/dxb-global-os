@@ -27,6 +27,16 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-04 20:06 → 21:20, session 89e39ac4 (Fable 5.1, then Opus 5.5 at max on his /effort, high from ~21:15) —
+an outside review of dxb-team2 he pasted, explained to him item by item.
+- **Item 4 done** (finished, not accepted — LAW B) <!-- CEO-OK: fallback-auditor-named-and-refuter-second-round-gone-2026-10-04 -->:
+  refuter.md's round-2 paragraph deleted; the fallback auditor named read-only by word, not by tool.
+- **His Fable rule written** <!-- CEO-OK: fable-normal-start-only-critical-start-end-2026-10-04 -->: light none,
+  normal at the start, critical at the start and the end; the design eye bound by it. Commits `f03dfe16` · `103ad1ef`;
+  Sol `high` 0 A · 1 B (fixed) · 2 C; battery GREEN. Job folder `.planning/quick/20261004-auditor-text/`.
+- He closed the design-at-max mode by his own word (~21:18) and ended the day: *"sana verdiğim işi bitir okadar
+  yeter buadar bugün"*.
+
 2026-10-04 19:47 → ~21:00, Opus 5.5 session c04c8a07 (high), the successor of 5ab4ff38 on his list item 2.
 - **A locked tool resolved by the system itself — built and live on the holding's own engine** (finished, not
   accepted — LAW B) <!-- CEO-OK: locked-tool-plan-yes-2026-10-04 -->. A lock is informational and goes to the
@@ -188,6 +198,12 @@ the tweet's link is still to come from him.
 
 ## Waiting on his approval
 
+- The outside review of dxb-team2 (session 89e39ac4), each with a recommendation: item 3 — the drop to high after
+  his "plan tamam" (the skill lifts a turn to max, nothing lowers a session opened at max; handovers copy the level):
+  a 10-minute measurement whether a skill with `effort: high` lowers a turn, else hand the build to a fresh high
+  session; handovers always open at high — asked, no answer yet; item 2's machine part (audit-card.mjs derives the
+  `fable:` line) and item 1's (the card's measured fields checked at close, cheap in the same job) — not ordered;
+  refuter.md's two older defects (C1 sends a C to the board, C2 lets the auditor run writing commands) — recommended: fix.
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 - Found in the locked-tool job, each with a recommendation; nothing is changed before his word:
