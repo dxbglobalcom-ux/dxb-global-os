@@ -27,6 +27,19 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-04 15:10 → 16:20, Opus 5.5 session 07841b79 (max from ~15:40, his `/effort max`).
+- C1 accepted on his waiver of the eye (commit `3b0825d9`).
+- **Tool loading went to the board as a leg of B41** <!-- CEO-OK: open-tools-two-walls-ordered-2026-10-04 -->
+  — Hamza and every employee get Claude's own tools, skills and the holding's plugins, loaded when needed,
+  behind two walls (the two databases apart; everyone at its own desk); claude-mem stays out of the
+  company; his personal requests stay out of the company's memory. Built when its turn comes, his words:
+  *"bu iş vakti gelince yapılsın."* The plan with the two law-7 sentences: `.planning/board-rows/B41.md`;
+  the owning spec's least-privilege principle replaced (doctrine §1 item 5, LAW A). Shown to him first as
+  a table of today's design: Hamza only talks; employees hold 23 company tools; outside hands in 3 of 22
+  departments; Claude's own tools nowhere; the orchestrator is code plus two nameless Opus 5 calls.
+- The lead's line "the send-as-a-task button stays with you" contradicted his V2 ruling of 2026-08-01
+  (board §2d) and was not written anywhere.
+
 2026-10-04 ~12:30 → 15:10, Opus 5.5 session 9bc3fc3e (plan at `max`, build at `high`). He asked for yesterday's
 work to be re-verified (nine questions, answered from the records), then set his list (Next).
 - **C1 — the company's memory drawer on the company's desk — done, live, accepted**
@@ -51,24 +64,18 @@ work to be re-verified (nine questions, answered from the records), then set his
 His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama unutulmasın heee arada kaynamasın"*
 (conversation, verbatim). One at a time; each talked through with him first.
 
-1. **Tool loading (his question 9) — waits on his answer.** The plan presented from
-   `.planning/quick/20261004-his-list/item2-report.md` he did not like: *"planı beğenmedim. 2. maddeyle
-   iligli."* He was asked what he wants different; do not re-plan before his answer. Same subject, his words
-   (conversation, verbatim): *"hamza zaten sınırlarını biliyor onay gerektiren şeylerin ne olduğunu biliyor
-   oyüzden claude'ın tüm becerilerini kullanabilmeli istediği zaman.bir sorun çıkarsa kapatırız. yani benim
-   holdingim benim iş istasyonu olan pc yi tam teşekküllü tüm aletlerle kullanmalı. hem dışardan
-   yüklediğimiz aletler pluginler beceriler modlar ve claude'un kendi beceri ve aletleriyle birlikte."*
-   2026-10-04 he waived his answer (*"boşver … sen gerekeni yap"*). The report's key claim is now MEASURED
-   (`.planning/quick/20261004-his-list/evidence/tools-probe.txt`, construction engine): `tools: []` loads
-   all 23 dxb-mcp schemas up front with no ToolSearch; `tools: ['ToolSearch']` defers them and the model
-   found and used `queue_list` through it, ~37 % less input; `ENABLE_TOOL_SEARCH` is not needed. A new plan
-   built from his three sentences (default open in every lane; wall 1 the two databases; wall 2 each on
-   its own desk) goes to him for one yes.
+1. **The two memory items — in progress, promised without asking him again** (session 9bc3fc3e, 15:08):
+   (a) Hamza's chat and voice lanes swallow a memory-read failure and answer as if he had no notes — the
+   failure must be said (Sol's C, `.planning/quick/20261004-company-memory-drawer/SOL.md`); (b) one real
+   task-lane company call's dxb-mcp child commits and recalls a note (a `run-lanes-probe.sh`-shaped call on
+   the construction engine). Told to him in plain words when done.
 2. **The prompt audit's runtime bucket (B51 move 5)** — measured: `item3-report.md`. Waits on his B51 verdict.
 3. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
-   proposal in `item2-report.md` § ITEM 4; goes with item 1.
-4. **The construction's auto-memory** — stale and contradicting entries, measured: `item5-report.md`.
-   Waits on his word.
+   proposal in `item2-report.md` § ITEM 4. Waits on his word.
+4. **The construction's auto-memory** — stale and contradicting entries (his list item 6), measured:
+   `item5-report.md`. Waits on his word.
+
+Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 
 After his list: write the approved orchestration design into dxb-team2 at Opus 5.5 `max`
 (`design-plan-architecture-at-max-2026-10-03`; the full brief:
