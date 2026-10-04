@@ -1,0 +1,25 @@
+    149|     expect(runs(hooks.PostToolUse, "Skill")).toBe(true);
+       |                                              ^
+    150|     expect(runs(hooks.UserPromptSubmit)).toBe(true);
+    151|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL  tests/hooks/design-max.test.ts > the registration and the skill as they stand > the skill is named dxb-design-max and runs at effort max
+Error: ENOENT: no such file or directory, open '/home/dxb/DxB Global OS/.claude/skills/dxb-design-max/SKILL.md'
+ ❯ tests/hooks/design-max.test.ts:153:18
+    151|   });
+    152|   it("the skill is named dxb-design-max and runs at effort max", () =>…
+    153|     const text = readFileSync(SKILL, "utf8");
+       |                  ^
+    154|     const front = /^---\n([\s\S]*?)\n---\n/.exec(text)?.[1] ?? "";
+    155|     expect(front).toMatch(/^name: dxb-design-max$/m);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  12 failed (12)
+   Start at  16:08:01
+   Duration  370ms (transform 46ms, setup 0ms, collect 12ms, tests 107ms, environment 0ms, prepare 31ms)
+

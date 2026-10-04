@@ -1,0 +1,12 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/hooks/design-max.test.ts (12 tests) 599ms
+   ✓ no session id names a path outside the flag folder; no input makes the hook fail > a session id shaped like a path writes nothing, reads nothing, closes nothing  352ms
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  16:08:33
+   Duration  872ms (transform 46ms, setup 0ms, collect 12ms, tests 599ms, environment 0ms, prepare 32ms)
+

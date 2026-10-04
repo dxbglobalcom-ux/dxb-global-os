@@ -1986,5 +1986,13 @@
     "conditions": "Given WITHOUT his own inspection: the lead's opening said C1 was finished and waited for his eye, nothing on his screen changes; he waived the look and told the lead to accept it. Recorded as his waiver of the eye, not as an eye test passed.",
     "session": "Opus 5.5 session 07841b79 — heard first-hand, 2026-10-04.",
     "where": ".planning/quick/20261004-company-memory-drawer/ · .planning/STATE.md"
+  },
+  "design-max-skill-every-turn-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "How design-plan-architecture-at-max-2026-10-03 runs without his hand on /effort: the lead invokes the dxb-design-max skill (frontmatter effort: max) as the first step of every design, plan or architecture turn; .claude/hooks/dxb-design-max.py opens the mode for that session on the skill's call and reminds the lead on each of his messages while it is open; his yes to the plan closes it (dxb-design-max.py close) and the work goes on at the session's own level. Measured before he chose: a skill with effort: max invoked by the model itself runs the rest of that turn at max, and Claude Code clears it at the next prompt — a session cannot hold max on its own.",
+    "verbatim": "bunu yapalım tmm.",
+    "conditions": "Said after the lead's answer to his question why the skill is called every turn rather than once until the plan's approval: the skill holds max for one turn only, a session cannot change its own effort for good, so the call each turn is the remedy — invisible to him, no slowdown, a few lines of text. He chose this (A, one session) over B (open at max, hand over at his yes to a session at high). Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session fd7d67f2 — heard first-hand, 2026-10-04.",
+    "where": ".claude/skills/dxb-design-max/SKILL.md · .claude/hooks/dxb-design-max.py · .claude/settings.json · .claude/skills/dxb-team2/SKILL.md §2 §4 · tests/hooks/design-max.test.ts · .planning/quick/20261004-design-max/"
   }
 }
