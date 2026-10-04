@@ -1,0 +1,40 @@
+THE CEO'S SENTENCE (verbatim, conversation of 2026-10-04): "bu holding henüz tam kurulmadı buluta vpn e alınmadı oyüzden uyuması normalde. ilk şıkla ilgili eet" — his answer to two decisions: (1) the plan .planning/quick/20261004-b51-code-and-lock/PLAN-locked-tool.md, with its last step (putting a reviewed text into the manifest) at the construction engineer → YES; (2) a general catch-up of all night jobs after the machine wakes → NO (the machine's night sleep is normal until the holding moves to the cloud).
+His original question (2026-10-01), quoted in .planning/quick/20261004-his-list/item2-brief.txt:7: a locked tool should be resolved by the system itself; the alert should go to whoever fixes it, not to him.
+
+READ THE PLAN WHOLE: .planning/quick/20261004-b51-code-and-lock/PLAN-locked-tool.md — its "Measured before the plan" and "The design" (7 steps) are the contract.
+
+DESIGN DECISIONS (facts, on purpose — see .planning/quick/20261004-locked-tool/CARD.md "Decisions inside his yes"):
+- Unlock rule: a quarantined pin is lifted only when its live hash differs from the pin's approved hash AND the repository vouches for the live hash (a manifest entry, or the own dxb-mcp source). A server that serves its OLD approved text again stays locked. A seat's verdict never unlocks.
+- The third escalation condition he was shown ("a lock that blocks your approved work") is DROPPED on purpose; he was told. The 72 h rule covers it.
+- Escalation = the lock alert raised to high, once per (lock, reason); reasons: malicious, review-failed (failed/returned task, or a done task whose answer is not the contract's JSON shape), lock-72h. The mark is a tool_lock_escalated audit row. If he resolved the alert while the tool stayed locked, a new reason opens a fresh alert under the same dedup key.
+- The review task's id rides in alerts.source_ref, NOT alerts.task_id, because trigger trg_alert_supersede_on_task_done resolves every open alert whose task_id finishes (read its function on the construction engine).
+- The wake check: the 15-min watch sends one tool-pin-check (singletonKey, singletonSeconds 3600) when max(tool_pins.last_checked) is older than 24 h. No other night job catches up (his decision 2).
+- manifest-add is scripts/gateway/manifest-add.ts (TypeScript like its sibling refresh-pin-manifest.ts), not .mjs as the plan named it. Without --yes it writes nothing. Unlock latency: the next tool check after the manifest is committed.
+- Known gap, accepted: a tool that changes AGAIN while locked is not re-audited (the existing short-circuit); the 72 h rule raises it.
+- A review that is no longer needed (tool unlocked) is returned only while inbox/queued; a running one finishes, its verdict is recorded, nothing is raised (the watch acts only on locked pins).
+- Review tasks: department security, agent security-engineer (if active), project dxb-global-os (the pre-task gate rejects a project-less task), model_tier L2, priority 8, tools_allowed false.
+- The persona file personas/security/security-engineer.md: dormant → active, refiled to the COMPANY database by the door's sync path (you cannot read that database; the refile's raw output is in evidence/persona-*.txt when present).
+- Not yet deployed to the company: the migration, build and scheduler restart come after this audit.
+- The session-start hook reads the COMPANY engine with SELECT only, through docker exec with a 3 s timeout; empty and unreachable are both silent.
+
+DONE-LIST (command -> expected) — the card's list, verbatim in CARD.md "Done-list". Your first question: does this done-list prove what his sentence and the plan asked for?
+
+THE DIFF: git range 1965e1fa..HEAD (git -C "/home/dxb/DxB Global OS" diff 1965e1fa..HEAD).
+
+RAW TEST OUTPUT (whole files; the database-writing suites run against the construction engine, which your sandbox cannot reach over the network, so the lead ran them):
+- .planning/quick/20261004-locked-tool/evidence/job-tests.txt — the job's tests after the change.
+- .planning/quick/20261004-locked-tool/evidence/red-before.txt — the same tests with the five changed source files reverted to 1965e1fa (the new modules lock-review.ts/tool-lock-watch.ts stayed on disk, unexported).
+- .planning/quick/20261004-locked-tool/evidence/hook-line.txt — the hook with a fake engine answering 2 locks, 0 locks, and the real company engine.
+- .planning/quick/20261004-locked-tool/evidence/construction-schema.txt — \d tasks on the construction engine.
+
+YOUR DATABASE TOOL: sql_read (scripts/governance/sol-db-mcp.mjs, role sol_reader) on the CONSTRUCTION engine — read that file before trusting it. Take any count or definition yourself (control_alerts_action, claim_next_task, the alerts unique index, the supersede trigger). For any other read-only command, name it and the lead runs it.
+
+LOOK HARD AT: the untrusted-text frame (can the old/new text escape it or steer the seat; can it reach an alert line?); whether a tools_allowed=false task can still get any MCP server or tool on every executor path (subscription and api); transaction boundaries and concurrency of lock/unlock/escalate; the "once" guarantees; what reaches his Turkish screen in English; the watch on a lock with no review row (legacy locks); the manifest-add script refusing what the manifest must never carry; whether existing tests were weakened rather than rewritten to his new rule.
+
+Output per claim:
+Claim / done-list item:
+Verdict: REFUTED | STANDS AFTER ATTEMPTED REFUTATION | UNVERIFIED
+Finding: file:line, concrete scenario, impact
+Evidence: the command or artifact and its decisive result
+Correction required:
+Grade each finding A (blocks) / B (repair in this pass) / C (older than this work).
