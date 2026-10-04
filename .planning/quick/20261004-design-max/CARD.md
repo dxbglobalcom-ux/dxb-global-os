@@ -17,3 +17,21 @@ arrangement: the lead writes (four small files and one test; a fork would only r
 2. Live probe in a scratch project holding copies of the skill, the hook and the registration, a headless session at `--effort high`, two turns: turn 1 invokes the skill → transcript `effort` max after the call; turn 2 (his "next message") → the reminder reaches the model (it invokes the skill again, max again); turn 3 closes → flag gone; turn 4 → high, no reminder.
 3. The door: `.claude/skills/dxb-team2/SKILL.md` §2 Lead row and §4 PLAN name the skill; the ledger carries his order with its CEO-OK id; `pnpm -s tsx scripts/governance/*` rulers that read the ledger stay green (the battery).
 4. Battery once, GREEN.
+
+## Measured (2026-10-04, the approved card fields)
+
+- minutes: the talk at the session's level (his /effort max for one turn ~15:06) 15:02→15:50, with two
+  probes (16:00 effort, 16:03 hook payloads); build at `high` 16:05→16:10 (RED test, hook, skill,
+  registration, live four-turn probe, door, ledger); Sol 16:12→16:16 (high, one pass, 72,726 tokens);
+  the lead's fixes 16:16→16:19 (6 new cases red on the old hook → green, probe again); battery
+  16:19→16:25. About 25 min from his yes to green.
+- batteries: one, GREEN (sandboxed 1,168 passed · host 266 passed).
+- Sol's findings: 1 A (a planted link or FIFO at the flag redirects a write, aliases another session,
+  redirects close, or blocks the hook) + 4 B (close let a permission error escape; the Codex mirror named
+  a hook it lacks; the registration test accepted any command; the probe evidence truncated, close after
+  a cd) — all fixed by the lead (no helper: four small files). No C.
+- cost: not summed here (subscription; the transcripts hold message.usage — dxb-team2 §7).
+- ⚠ UNVERIFIED: both probes ran headless (`claude -p`, 2.1.289); his interactive session, same version,
+  was not measured — the first real design conversation is the check. That the company's own Claude
+  calls do not load this project hook is read from the isolation design (own home, own working folder,
+  settingSources []), not measured.

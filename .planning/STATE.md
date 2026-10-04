@@ -36,6 +36,8 @@ orchestration design again, then ordered how its max part runs without his hand 
   turn only. Commits `bdbb997c` · `7e48374a` (Sol `high`, 1 A + 4 B fixed); battery GREEN (1,168 · 266);
   live four-turn probe in `.planning/quick/20261004-design-max/evidence/`. The rest of the orchestration
   design (the arrangements, the card's fields, helpers' code, Sol's single pass) is still to be written.
+  Waiting on his word, proposed in the same talk and not answered: one line for that design — a fork is
+  opened only while the lead is light; a heavy lead hands over first (fork-measurements.md, 2.4x).
 
 2026-10-04 15:10 → 16:20, Opus 5.5 session 07841b79 (max from ~15:40, his `/effort max`).
 - C1 accepted on his waiver of the eye (commit `3b0825d9`).
