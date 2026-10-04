@@ -1,0 +1,5 @@
+29,32d28
+< 
+< İkinci tur yeni bir av değildir. Yalnız birinci turun A listesine bakarsın: her madde için "düzeldi"
+< (onarımın `dosya:satır`'ı ile) ya da "düzelmedi" (nedeniyle). Yeni bulgu açmazsın; gözüne çarpan yeni
+< bir şey olursa C'ye yazarsın.

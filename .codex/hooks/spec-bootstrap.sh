@@ -74,12 +74,30 @@ cupboard=$(cat "$CUPBOARD" 2>/dev/null || true)               # one page: what e
 
 next_budget=2000
 
+# His list item 2 (his yes of 2026-10-04): a locked tool returns only when the repository's manifest
+# carries its new text, and putting it there is the construction's step — a person reads the locked text
+# first (pnpm construction:pins:add). So the opening names the locks that wait for it, read from the
+# company engine with SELECT only. Empty is silent; an engine that does not answer within 3 s is silent
+# too — the opening must never hang on it.
+locks=$(timeout 3 docker exec -i supabase_db_DxB_Global_OS psql -U postgres -d postgres -At -c \
+  "SELECT count(*) || '|' || coalesce(string_agg(coalesce(a.id::text, p.server || '/' || p.tool), ', ' ORDER BY a.id), '')
+     FROM tool_pins p
+     LEFT JOIN LATERAL (SELECT id FROM audit_log WHERE action = 'tool_quarantined'
+                          AND payload->>'server' = p.server AND payload->>'tool' = p.tool
+                        ORDER BY id DESC LIMIT 1) a ON true
+    WHERE p.quarantined" </dev/null 2>/dev/null || true)
+locks_line=""
+if [[ "$locks" =~ ^([1-9][0-9]*)\|(.*)$ ]]; then
+  locks_line="LOCKED TOOLS WAITING FOR THE MANIFEST: ${BASH_REMATCH[1]} (audit ${BASH_REMATCH[2]}) — read each: pnpm construction:pins:add <audit_id>; vouch with --yes; commit."
+fi
+
 cat <<EOF
 === DXB — WHERE THE WORK STANDS ===
 Always-on core: AGENTS.md (authority order, the boundaries, the doors).
 Open work: HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md — the single register.
 Asked to learn the holding? dxb-start. A job: dxb-team2.
-
+${locks_line:+$locks_line
+}
 YOUR FIRST REPLY TELLS HIM WHERE THE WORK STANDS, THEN ANSWERS HIM (core §0).
 Everything below was read from .planning/STATE.md just now —
 answer him FROM IT. Before this session ends, REWRITE these three headings in STATE.md —

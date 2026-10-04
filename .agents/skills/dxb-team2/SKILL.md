@@ -1,6 +1,6 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, chooses who writes (itself, a fork or medium helpers) and verifies every piece; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job once, at a depth set by its score; Fable 5.1 is consulted only where the score card's `fable:` line says — at the start and the end of a normal or critical job, never on a light one. Trigger `/dxb-team2 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job — the default construction door. One lead (the session) scores the job, writes the done-list, chooses who writes (itself, a fork or medium helpers) and verifies every piece; a fresh, blind, read-only GPT-6.1 Sol auditor checks every job once, at a depth set by its score; Fable 5.1 is consulted only where the score card's `fable:` line says — at the start of a normal job, at the start and the end of a critical one, never on a light one. Trigger `/dxb-team2 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, one blind auditor, Fable where the card says
@@ -28,9 +28,9 @@ it opens `dxb-verify` and `dxb-close-row`.
      SOL AUDITOR — blind, read-only, ONE pass:  medium │ high │ xhigh
                     │
      finding → a fork or a helper fixes → the lead verifies; no second Sol round
-     disagreement → a test decides → else the lead (normal · critical: Fable, in its end call)
+     disagreement → a test decides → else the lead (critical: Fable, in its end call)
                     │
-     BATTERY once · dependants re-measured · FABLE at the end, normal · critical · commit · report
+     BATTERY once · dependants re-measured · FABLE at the end, critical only · commit · report
 ```
 
 ## 2. Seats
@@ -39,7 +39,7 @@ it opens `dxb-verify` and `dxb-close-row`.
 |---|---|---|---|
 | **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot); design, plan and architecture turns at `max` through `dxb-design-max` (§4 PLAN) | scores the job, writes the done-list, chooses the arrangement (§3), writes code itself or through the hands it chose, verifies every piece and every fix, runs the battery, commits, reports | approves its own work; commits a piece it has not verified; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> through `scripts/governance/refuter.sh --card <file>` — read-only by tool | one blind pass per job (§5) — there is no second round <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 --> | writes; audits the same job twice; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
-| **Advisor** | Fable 5.1 | only where the card's `fable:` line says (§3), measured before it is consulted: on a normal or critical job, twice: the **start** call, before the plan goes to the CEO, reads the approach, the plan and the design, and the lead closes its gaps; the **end** call, before "done", reads the finished work with Sol's findings and in the same call rules on a disagreement no test settled <!-- CEO-OK: fable-start-and-end-normal-and-important-2026-10-04 --> | writes code; is consulted anywhere else — on a repeated error, "whenever the lead needs it", on a light job; the advisor tool's own advice to call it before substantive work or when done applies only where the card's `fable:` line allows it |
+| **Advisor** | Fable 5.1 | only where the card's `fable:` line says (§3), measured before it is consulted: the **start** call, on a normal or critical job, before the plan goes to the CEO, reads the approach, the plan and the design, and the lead closes its gaps; the **end** call, on a critical job only, before "done", reads the finished work with Sol's findings and in the same call rules on a disagreement no test settled <!-- CEO-OK: fable-normal-start-only-critical-start-end-2026-10-04 --> | writes code; is consulted anywhere else — on a repeated error, "whenever the lead needs it", on a light job, at the end of a normal job; the advisor tool's own advice to call it before substantive work or when done applies only where the card's `fable:` line allows it |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), on the lead's model | writes the job, or a part of it, with the lead's whole context (§3) | commits |
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code, documents or the outside world for the lead, beside the others | writes |
 | **Writing helper** | `helper-writer` (Opus 5.5 · `medium`) | edits and tests a piece the lead specified; fixes Sol's findings | commits; widens the piece — the lead commits only what it verified <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
@@ -48,9 +48,12 @@ it opens `dxb-verify` and `dxb-close-row`.
 | **Design eye** | `design-eye` (Fable 5.1) | reads a finished surface the CEO will see, after it changed, against the design system and his design rulings | writes; advises the lead on the work, reads a plan, or rules on a dispute — it is a reader of a finished surface, not an advisor: Fable as an advisor is the Advisor row's alone, where the card's `fable:` line says (§3) |
 
 **Fallback auditor.** Sol unavailable (quota, error, timeout): on a light or normal job a fresh
-one-shot Opus 5.5 `high` subagent audits and the record says *"audited by Opus instead of Sol, because
-…"*; on a critical job the lead waits for Sol's 5-hour window and works on something else. No job
-closes unaudited; the auditor is never swapped silently.
+one-shot Opus 5.5 `high` subagent audits and the record says *"audited by Opus instead of Sol —
+read-only by word, not by tool — because …"*; on a critical job the lead waits for Sol's 5-hour window
+and works on something else. No job closes unaudited; the auditor is never swapped silently. The
+stand-in is a known weakness, not a licence: it has no Write or Edit, but its Bash can still write, so
+it falls short of `dxb-verify`'s audit twin, which is read-only by tool; the record names it so
+<!-- CEO-OK: fallback-auditor-named-and-refuter-second-round-gone-2026-10-04 -->.
 
 ## 3. The score card — written before a line of code
 
@@ -74,11 +77,12 @@ override the effort, model, sandbox or servers,
 sets the auditor's effort, refuses an `--effort` beneath it, shows Sol the card for information (§6), and logs
 every launch to `~/.local/state/dxb/audit-cards.log` — the class budgets of §7 are summed from it.
 
-**Fable — measured before it is consulted** (*"Fable için de başta ve sonda sorulsun. Advice yapılsın o
-kadar. Normal işlerde olabilir bir de önemli işlerde. Basit işlerde gerek yok."* <!-- CEO-OK: fable-start-and-end-normal-and-important-2026-10-04 -->).
+**Fable — measured before it is consulted** (*"abi küçük işte no fable orta işte başta fable önemli
+işlerde de başta ve sonra fable olay bu. ben bunu istiyorum."* <!-- CEO-OK: fable-normal-start-only-critical-start-end-2026-10-04 -->).
 At SCORE the lead writes on the card a `fable:` line with its why, and Fable is consulted only where that
-line says (§2): a light job (0-2) `none`; a normal (3-5) or critical (6-8) job `start+end` — once before
-the plan goes to the CEO, once before "done". Fable advises; it never writes. The machine reads only `job:` · `range:` · `blast:` · `risk:` · `reasoning:` ·
+line says (§2): a light job (0-2) `none`; a normal job (3-5) `start` — once, before the plan goes to the
+CEO; a critical job (6-8), his "important", `start+end` — once before the plan goes to the CEO, once
+before "done". Fable advises; it never writes. The machine reads only `job:` · `range:` · `blast:` · `risk:` · `reasoning:` ·
 `ambiguity:`; `fable:` and `arrangement:` are the lead's lines beside them.
 
 **The arrangement — who writes** (*"bu yazdığın plan oklenebilir. ve 1-2 işten sonra ölçümde
@@ -112,7 +116,7 @@ INTAKE    → the job in ONE sentence, provable by measurement; the CEO's words 
 SCORE     → the card (§3) with its `fable:` line — measured before Fable is consulted;
             `dxb-quota` read once — the week's headroom and pace.
 PLAN      → the approach is talked through with the CEO first; the lead then writes the plan.
-            Where the card's `fable:` line says `start+end`, Fable's start call reads
+            Where the card's `fable:` line says `start` or `start+end`, Fable's start call reads
             the approach, the plan and the design, and the lead closes its gaps — before the plan
             goes to him. The plan goes to the CEO once, in his language, and no file changes before
             his yes.
@@ -143,12 +147,12 @@ FIX       → a fork or a `helper-writer` fixes each finding; the lead verifies 
 DISPUTE   → the lead says a finding is wrong: the lead runs the evidence Sol gave with it —
             it fails → real, fixed; it holds → the finding drops, the reason is recorded.
             No test can decide it (a design question): the lead decides and records why; on a
-            normal or critical job Fable rules on it in its end call (§2).
+            critical job Fable rules on it in its end call (§2).
             The lead has the last word. The CEO reads the line in the report; he is not asked.
 BRAKE     → the job passes its class budget (§7): stop at a clean break, find why it grew,
             and ask the CEO before going on.
 JUDGE     → battery ONCE, the dependants of every changed thing re-measured and printed; on a
-            normal or critical job Fable's end call, before "done" (§2); one commit per phase.
+            critical job Fable's end call, before "done" (§2); one commit per phase.
 TELL      → the CEO, in his language, under three headings: Sizi bekleyen · Değişen · Bulunan.
             An empty heading is not written; the evidence stays in the work until he asks; never
             a technical question. A defect fixed inside the job is not listed (the commit carries

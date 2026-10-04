@@ -2061,7 +2061,7 @@
   },
   "fable-start-and-end-normal-and-important-2026-10-04": {
     "date": "2026-10-04",
-    "what": "Fable 5.1 advises at the start and at the end of a normal (3-5) or critical (6-8) job — the start call before the plan goes to him, the end call before 'done' (the finished work with Sol's findings, ruling there on a disagreement no test settled) — and never on a light (0-2) job; the card's `fable:` line is `none` or `start+end`, measured before Fable is consulted; nowhere else. Fable advises, it never writes. This replaces point 3 of fable-start-and-important-end-2026-10-04 (a normal job: the start only) — LAW A.",
+    "what": "Fable 5.1 advises at the start and at the end of a normal (3-5) or critical (6-8) job — the start call before the plan goes to him, the end call before 'done' (the finished work with Sol's findings, ruling there on a disagreement no test settled) — and never on a light (0-2) job; the card's `fable:` line is `none` or `start+end`, measured before Fable is consulted; nowhere else. Fable advises, it never writes. This replaces point 3 of fable-start-and-important-end-2026-10-04 (a normal job: the start only) — LAW A. Its normal job's end call is replaced by his words of 20:58 the same day, fable-normal-start-only-critical-start-end-2026-10-04 (LAW A).",
     "verbatim": "Fable için de başta ve sonda sorulsun. Advice yapılsın o kadar. Normal işlerde olabilir bir de önemli işlerde. Basit işlerde gerek yok.",
     "conditions": "His answer to the open question of fd7d67f2 (whether a normal job should have no Fable at the start either), in the same message as his yes to the live bar ('çubuk için tamam evet'). Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session e3574313 — heard first-hand, 2026-10-04 19:22 local.",
@@ -2098,5 +2098,21 @@
     "conditions": "Answering the lead's table 'ne yapıldı personada', 2026-10-04 evening. Commits 3ebbce2b · c61a84d3 · 3d5bb2ed · 675767d6 · 4fa96287 · fb4bf1ff; Sol high, every finding CLOSED.",
     "session": "Opus 5.5 session e7aa0d14 — heard first-hand, 2026-10-04.",
     "where": ".planning/STATE.md · .planning/quick/20261004-persona-old-patterns/"
+  },
+  "fallback-auditor-named-and-refuter-second-round-gone-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "Item 4 of the outside review of dxb-team2 that a Fable session wrote and he pasted into session 89e39ac4: (1) the door's fallback auditor — the one-shot Opus 5.5 subagent that audits a light or normal job when Sol is unavailable — is named for what it is: read-only by word, not by tool (no Write or Edit, but its Bash can write), a known weakness against dxb-verify's audit twin, never a licence; the record of such an audit says so. (2) The round-2 paragraph of refuter-redesign-2026-09-24 leaves ~/.claude/agents/refuter.md (LAW A): there is no second round since sol-single-pass-fixes-by-helper-2026-10-03. The rest of that redesign — acceptance items written before the work, the A/B/C boxes — stays.",
+    "verbatim": "4- tmm silinsin. ama 3 önemli — then, in the same conversation: 4. maddeyi önce bitir.",
+    "conditions": "His answer to the session's plain retelling of the review's item 4 ('Kayıt bu yedeğe dürüstçe \"sözle salt-okur\" desin. Denetçi tanımındaki eski \"ikinci tur\" paragrafı da silinsin, çünkü artık Sol tek geçiş yapıyor.'). Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 89e39ac4 — heard first-hand, 2026-10-04.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §2 (Fallback auditor) and its Codex mirror · ~/.claude/agents/refuter.md — outside the repo"
+  },
+  "fable-normal-start-only-critical-start-end-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "Fable 5.1 advises by the job's size, read from the card's class: a light job (0-2) never; a normal job (3-5) once, at the start, before the plan goes to him; an important job — the card's critical class (6-8) — at the start and at the end (before 'done', reading the finished work with Sol's findings and ruling there on a disagreement no test settled). The card's `fable:` line is `none` · `start` · `start+end`. This replaces the normal job's end call of fable-start-and-end-normal-and-important-2026-10-04 (LAW A). The audit he describes in the same message is the one already written: one Sol pass, its findings fixed, then the tests (sol-single-pass-fixes-by-helper-2026-10-03).",
+    "verbatim": "abi küçük işte no fable orta işte başta fable önemli işlerde de başta ve sonra fable olay bu. ben bunu istiyorum. denetimde tek turdu bulunan hatalar tamir edilecekti. ve kontrol. çalışıor mu herşey çalışmıor mu düzgün yapılmış mı diye test sanırım.",
+    "conditions": "Said at 20:58 local in session 89e39ac4, while the lead ran item 4 of the outside review and had named a Fable end call for that normal job under the 19:22 rule. His 'küçük · orta · önemli' are read as the card's light · normal · critical. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session 89e39ac4 — heard first-hand, 2026-10-04.",
+    "where": ".claude/skills/dxb-team2/SKILL.md (description, §1, §2 Advisor, §3, §4 PLAN · DISPUTE · JUDGE) · .claude/skills/dxb-verify/SKILL.md (a finding is evidence) · their Codex mirrors · ~/.claude/CLAUDE.md (# Danışman) — outside the repo"
   }
 }
