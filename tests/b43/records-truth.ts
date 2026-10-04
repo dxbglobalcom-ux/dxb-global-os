@@ -105,6 +105,9 @@ export const C = {
     // C1 — the company's memory drawer on the company's desk, accepted 2026-10-04 on his waiver of the eye
     // ("gözüm tmm boşver onayla bunu."); the records spell it "C1" / "memory drawer".
     { id: "company-memory-drawer-accepted-2026-10-04", subject: /\bC1\b|memory drawer/ },
+    // His list item 1 — the old patterns removed from the 213 employee personas (B51 move 5 persona text + cards
+    // H13-H17, H21), accepted by his eye 2026-10-04 ("göz tmm"); the records spell it "old patterns in the employee personas".
+    { id: "persona-old-patterns-accepted-by-his-eye-2026-10-04", subject: /old patterns in the employee personas/ },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from

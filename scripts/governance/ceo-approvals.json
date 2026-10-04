@@ -2090,5 +2090,13 @@
     "conditions": "Answering the lead's two questions of 2026-10-04 ~19:50 (the global line limited to work outside dxb-team2; the 'do not call Fable' sentence written into the two helper seats). Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session e3574313 — heard first-hand, 2026-10-04.",
     "where": "~/.claude/agents/helper.md · ~/.claude/agents/helper-writer.md · ~/.claude/CLAUDE.md (# Danışman) — all outside the repo"
+  },
+  "persona-old-patterns-accepted-by-his-eye-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "ACCEPTED BY HIS EYE: the old patterns removed from the 213 employee personas — B51 move 5's persona-text rows and his cards H13 H14 H15 H16 H17 H21 (retired model names and Fable-as-author lines, fixed step scripts and reasoning orders, one-sentence/one-line limits, the report-language conflict, tools the seats do not hold, issue quotas, the refusal lead-in, dated archaeology, emphatic capitals); §12 Islamic conduct untouched; filed in the company (213 versions gate passed, bound, --verify 213 MATCH). Shown to him as a before/after table in plain words. Not part of it: B51's code rows (another session's job).",
+    "verbatim": "göz tmm",
+    "conditions": "Answering the lead's table 'ne yapıldı personada', 2026-10-04 evening. Commits 3ebbce2b · c61a84d3 · 3d5bb2ed · 675767d6 · 4fa96287 · fb4bf1ff; Sol high, every finding CLOSED.",
+    "session": "Opus 5.5 session e7aa0d14 — heard first-hand, 2026-10-04.",
+    "where": ".planning/STATE.md · .planning/quick/20261004-persona-old-patterns/"
   }
 }

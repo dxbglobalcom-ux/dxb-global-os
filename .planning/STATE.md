@@ -81,8 +81,8 @@ danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar
   The 4 delete rows deleted on his word *"A sil"* <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->: 4 files, 5.3 KB, their index lines
   and the 2 links to them repointed at `dxb-persona`; index 63 ↔ 63. The 8 July diaries stay, unshortened, on his word *"kalsın"* <!-- CEO-OK: auto-memory-july-diaries-stay-2026-10-04 -->.
   **His list item 3 is finished** (not accepted — LAW B).
-- **His list item 1 — the old patterns in the employee personas — done and live** (finished, not accepted —
-  LAW B), on his /goal *"personadaki eski kalıpları bitir"* (conversation, verbatim). B51 move 5's persona-text
+- **His list item 1 — the old patterns in the employee personas — done, live and ACCEPTED by his eye**
+  (*"göz tmm"* <!-- CEO-OK: persona-old-patterns-accepted-by-his-eye-2026-10-04 -->), on his /goal *"personadaki eski kalıpları bitir"* (conversation, verbatim). B51 move 5's persona-text
   rows and his cards H13 H14 H15 H16 H17 H21 of 2026-09-24 <!-- CEO-OK: h13-persona-discipline-section-trimmed-2026-09-24 --> <!-- CEO-OK: h14-h15-h17-h21-yes-2026-09-24 --> <!-- CEO-OK: h16-persona-author-is-the-chief-engineer-2026-09-24 -->
   applied to the 213 seats in the session's own words: retired model names and the Fable-as-author lines out,
   no fixed step script or reasoning order, escalation and reports in whole sentences with the conclusion
