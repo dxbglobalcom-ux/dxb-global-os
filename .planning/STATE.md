@@ -36,7 +36,8 @@ danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar
   Two report rows were narrowed on measurement: the minimalism note keeps what `dxb-surface` lacks (HelpTip
   on click, badge symmetry, `min-w-0`) and points the rest at the door; of 18 dangling-link targets only the
   4 with a clear owner today were repointed (39 uses), the rest left as they are.
-  Waiting on his one word: the 4 delete rows and the 8 July diaries (list and sizes put in front of him).
+  The 4 delete rows deleted on his word *"A sil"* <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->: 4 files, 5.3 KB, their index lines
+  and the 2 links to them repointed at `dxb-persona`; index 63 ↔ 63. The 8 July diaries wait on his word.
 
 2026-10-04 14:53 → 16:25, Opus 5.5 session fd7d67f2 (beside 07841b79). He went through the approved
 orchestration design again, then ordered how its max part runs without his hand on /effort.
@@ -103,8 +104,8 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 2. **A locked tool resolved by the system itself** (his question of 2026-10-01 ~21:55) — measured with a
    proposal in `item2-report.md` § ITEM 4. Waits on his word.
 3. **The construction's auto-memory** — stale and contradicting entries (his list item 6), measured:
-   `item5-report.md`. Fixes done 2026-10-04 (session e7aa0d14); the 4 deletions and the 8 July diaries
-   wait on his one word — nothing is deleted without it.
+   `item5-report.md`. Fixes done and the 4 stale files deleted on his word <!-- CEO-OK: auto-memory-four-stale-files-deleted-2026-10-04 -->, 2026-10-04 (session e7aa0d14);
+   the 8 July diaries (compress or keep) wait on his one word.
 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 

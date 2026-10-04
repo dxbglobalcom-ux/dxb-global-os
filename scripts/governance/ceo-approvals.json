@@ -2026,5 +2026,13 @@
     "conditions": "Answering the lead's offer after his question with a screenshot of the /effort menu during a design turn: 'tmm ama neden hala /effor seçtiğimde altta high görüorm kendisi şuan maxte değil mi arkadşaım'. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session fd7d67f2 — heard first-hand, 2026-10-04.",
     "where": "~/.claude/hooks/dxb-statusline.js (outside git) · tests/hooks/statusline-effort.test.ts"
+  },
+  "auto-memory-four-stale-files-deleted-2026-10-04": {
+    "date": "2026-10-04",
+    "what": "Four stale files of the construction's auto-memory (~/.claude/projects/-home-dxb-DxB-Global-OS/memory/) deleted with their index lines: position-block-must-sit-under-its-heading-2026-09-16 (the STATE heading it names no longer exists), persona-roster-scope (153 legacy and a missing folder; headcount is 205), persona-quality-dna and ceo-ui-progressive-disclosure (restated dxb-persona and dxb-surface). The two links to them repointed at dxb-persona. The 25 fixes of item5-report.md were done before it on his /goal 'iş devam edin'; the eight July diaries are not part of this and wait on his word.",
+    "verbatim": "A sil",
+    "conditions": "Answering the lead's list with sizes (4 files, 5.3 KB) under 'Sizi bekleyen', item A, 2026-10-04 ~17:10; the folder's backup was taken before the first edit. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session e7aa0d14 — heard first-hand, 2026-10-04.",
+    "where": ".planning/STATE.md · .planning/quick/20261004-his-list/item5-report.md"
   }
 }
