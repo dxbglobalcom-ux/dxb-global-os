@@ -193,6 +193,13 @@ His list of 2026-10-04, in his order — *"bunları sırayla yapalım işte ama 
 Tool loading left this list for the board — B41's leg of 2026-10-04, built when its turn comes.
 
 
+Ordered 2026-10-04 ~21:20 for the next day, in this order — *"o bulduğun iki kusuruda da kayda geç yarın yapılsın.
+ama önce şu salak dxbteam2 yi üzerinden geçmemiz lazım hala adam gibi yapmamışlar"* (conversation, verbatim):
+1. Go over dxb-team2 with him first — he says it is still not done properly; talk it through before any change.
+2. Then fix ~/.claude/agents/refuter.md's two older defects (Sol's C1, C2 in `.planning/quick/20261004-auditor-text/SOL.md`):
+   C1 — a C finding goes to the board, while the door keeps it in the job folder (a row opens only on his word);
+   C2 — it tells the auditor to run the acceptance commands without separating writing commands from reading ones.
+
 After his list: the research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes;
 the tweet's link is still to come from him.
 
@@ -202,8 +209,7 @@ the tweet's link is still to come from him.
   his "plan tamam" (the skill lifts a turn to max, nothing lowers a session opened at max; handovers copy the level):
   a 10-minute measurement whether a skill with `effort: high` lowers a turn, else hand the build to a fresh high
   session; handovers always open at high — asked, no answer yet; item 2's machine part (audit-card.mjs derives the
-  `fable:` line) and item 1's (the card's measured fields checked at close, cheap in the same job) — not ordered;
-  refuter.md's two older defects (C1 sends a C to the board, C2 lets the auditor run writing commands) — recommended: fix.
+  `fable:` line) and item 1's (the card's measured fields checked at close, cheap in the same job) — not ordered.
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 - Found in the locked-tool job, each with a recommendation; nothing is changed before his word:
