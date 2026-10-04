@@ -40,16 +40,16 @@ danışmayın onun yerine goal aktif"* and *"bu aynı şekilde diğer sessionlar
   and the 2 links to them repointed at `dxb-persona`; index 63 ↔ 63. The 8 July diaries stay, unshortened, on his word *"kalsın"* <!-- CEO-OK: auto-memory-july-diaries-stay-2026-10-04 -->.
   **His list item 3 is finished** (not accepted — LAW B).
 
-2026-10-04 14:53 → 16:25, Opus 5.5 session fd7d67f2 (beside 07841b79). He went through the approved
-orchestration design again, then ordered how its max part runs without his hand on /effort.
-- **Design at max — built** <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 -->: the lead invokes
-  the `dxb-design-max` skill (`effort: max`) first in every design, plan or architecture turn; the project
-  hook `.claude/hooks/dxb-design-max.py` reminds it on each of his messages; his yes closes it and the job
-  goes on at the session's level (dxb-team2 §2, §4 PLAN). Measured first: a skill holds max for its own
-  turn only. Commits `bdbb997c` · `7e48374a` (Sol `high`, 1 A + 4 B fixed); battery GREEN (1,168 · 266);
-  live four-turn probe in `.planning/quick/20261004-design-max/evidence/`. The rest of the orchestration
+2026-10-04 ~17:30 → 17:55, Opus 5.5 session b762d77d (high). He reported that the design-at-max skill
+was said to work while the spinner said "thinking with high effort" during planning.
+- **Design now runs in a max session** <!-- CEO-OK: design-in-a-max-session-2026-10-04 -->: design, plan
+  and architecture talk runs in a session opened at Opus 5.5 `max`; at his yes the build is handed over to
+  a session at `high` (dxb-team2 §2, §4 PLAN, §8). The `dxb-design-max` skill, its hook, its test and the
+  bar's "tasarım açık" mark are removed (LAW A). Measured first: the skill lifted the API to max, but the
+  spinner showed high through it, and in session fd7d67f2 the model ignored the hook's reminder three times
+  (all steps high). Record: `.planning/quick/20261004-design-in-max-session/`. The rest of the orchestration
   design (the arrangements, the card's fields, helpers' code, Sol's single pass) is still to be written.
-  Waiting on his word, proposed in the same talk and not answered: one line for that design — a fork is
+  Waiting on his word, proposed in session fd7d67f2's talk and not answered: one line for that design — a fork is
   opened only while the lead is light; a heavy lead hands over first (fork-measurements.md, 2.4x).
 
 2026-10-04 15:10 → 17:00, Opus 5.5 session 07841b79 (max ~15:40 → ~16:20, then high).

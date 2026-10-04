@@ -1,0 +1,14 @@
+# 2026-10-04, session b762d77d — the measurements that preceded his order (scratchpad probes, claude 2.1.289).
+# A local proxy (scratchpad proxy.py) between claude and api.anthropic.com logged output_config of each /v1/messages request (no headers).
+== headless, --effort high, "invoke dxb-design-max first, then answer"
+17:30:43 output_config {'effort': 'high'}
+17:30:45 output_config {'effort': 'max'}
+== interactive (pty, the TUI as he sees it), --effort high, two messages, the skill invoked on each
+API 17:32:16 {'effort': 'high'}   API 17:32:20 {'effort': 'max'}   API 17:32:25 {'effort': 'max'}
+API 17:33:47 {'effort': 'high'}   API 17:33:50 {'effort': 'max'}   API 17:33:51 {'effort': 'max'}
+SCREEN through all of them: "thinking with high effort" (e.g. 17:32:21 "Unraveling… thinking with high effort", 17:33:50 "● Skill (dxb-design-max) … thinking with high effort")
+== session fd7d67f2 transcript, per CEO message (UTC): skill invoked? effort of each assistant step
+15:21:57 skill=True {'max': 6} | 15:24:30 {'max': 8}
+15:30:58 skill=False {'high': 2}  — hook reminder attachment present (line 1254)
+15:32:17 skill=False {'high': 2}  — reminder present (line 1263)
+15:33:15 skill=False {'high': 11} — reminder present (line 1278)

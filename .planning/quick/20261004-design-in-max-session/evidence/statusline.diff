@@ -1,0 +1,40 @@
+--- /tmp/claude-1000/-home-dxb-DxB-Global-OS/b762d77d-6857-41d6-9d27-613cfc772984/scratchpad/dxb-statusline.js.bak	2026-10-04 17:44:14.714367717 +0200
++++ /home/dxb/.claude/hooks/dxb-statusline.js	2026-10-04 17:44:14.721625998 +0200
+@@ -153,11 +153,11 @@
+ 
+ // 2026-10-04 (CEO, during a design turn: "neden hala /effor seçtiğimde altta high görüorm kendisi
+ // şuan maxte değil mi"; to showing it here: "evet ekle"): the /effort menu shows the session's own
+-// level, while a skill's `effort: max` (dxb-design-max) lifts only its own turn, and that is written
+-// nowhere but the transcript -- field `effort` on each assistant step (measured 2026-10-04). The bar
+-// shows the last step's level, "tur: max", read from the end of the transcript Claude Code names on
+-// stdin, and "tasarım açık" while this session's design-at-max flag stands. Best effort: the bar must
+-// never fail because of either.
++// level, and the level each step really ran at is written nowhere but the transcript -- field `effort`
++// on each assistant step (measured 2026-10-04). The bar shows the last step's level, "tur: max", read
++// from the end of the transcript Claude Code names on stdin. Design talk now runs in a session opened at
++// max (design-in-a-max-session-2026-10-04), so the bar has no design mode. Best effort: the bar must
++// never fail because of it.
+ const EFFORT_LEVELS = new Set(['low', 'medium', 'high', 'xhigh', 'max']);
+ const TRANSCRIPT_TAIL_BYTES = 256 * 1024;
+ 
+@@ -184,18 +184,10 @@
+   return null;
+ }
+ 
+-function designOpen(sid) {
+-  try {
+-    if (!sid || !/^[0-9a-f-]{8,}$/i.test(sid)) return false;
+-    return fs.lstatSync(path.join(process.env.XDG_RUNTIME_DIR || '/tmp', 'dxb-design-max', sid)).isFile();
+-  } catch { return false; }
+-}
+-
+ function turnMark(data) {
+   const effort = turnEffort(data.transcript_path);
+-  const design = designOpen(data.session_id) ? ' \x1b[35m🟣 tasarım açık\x1b[0m' : '';
+-  if (!effort) return design;
+-  return `${design} ${effort === 'max' ? '\x1b[35;1m' : '\x1b[2m'}tur: ${effort}\x1b[0m`;
++  if (!effort) return '';
++  return ` ${effort === 'max' ? '\x1b[35;1m' : '\x1b[2m'}tur: ${effort}\x1b[0m`;
+ }
+ 
+ function branch(dir) {

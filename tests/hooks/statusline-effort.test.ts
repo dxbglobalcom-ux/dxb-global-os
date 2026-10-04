@@ -1,14 +1,14 @@
 // THE TURN'S EFFORT ON THE STATUS LINE — the real status line, run where it stands (~/.claude/hooks).
 // His question of 2026-10-04, looking at the /effort menu during a design turn: "neden hala /effor
-// seçtiğimde altta high görüorm kendisi şuan maxte değil mi" — the menu shows the session's own
-// level; the turn's level (a skill's `effort: max`, design-max-skill-every-turn-2026-10-04) is written
-// only in the transcript, field `effort` on each assistant step (measured 2026-10-04). His word to
-// showing it on the bar: "evet ekle" (statusline-turn-effort-2026-10-04). The bar reads the last
-// assistant step's effort from the transcript Claude Code names on its stdin, and the design mode
-// from its flag ($XDG_RUNTIME_DIR/dxb-design-max/<session_id>). Every case gets its own temporary
+// seçtiğimde altta high görüorm kendisi şuan maxte değil mi" — the level each step really ran at is
+// written only in the transcript, field `effort` on each assistant step (measured 2026-10-04). His word
+// to showing it on the bar: "evet ekle" (statusline-turn-effort-2026-10-04). The bar reads the last
+// assistant step's effort from the transcript Claude Code names on its stdin. Design at max no longer
+// has a per-session mode (design-in-a-max-session-2026-10-04: the talk runs in a session opened at max),
+// so a leftover design flag in the runtime folder shows nothing. Every case gets its own temporary
 // directory as XDG_RUNTIME_DIR and for its transcript.
 import { spawnSync } from "node:child_process";
-import { accessSync, constants, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { accessSync, constants, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir, userInfo } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe as vdescribe, expect, it } from "vitest";
@@ -90,20 +90,11 @@ describe("the bar shows the level the turn really runs at", () => {
   });
 });
 
-describe("the bar shows when design at max is open for this session", () => {
-  const flags = (dir: string) => join(dir, "dxb-design-max");
-  it("its flag stands: 'tasarım açık'; another session's flag: nothing", () => {
+describe("design at max has no mode on the bar any more", () => {
+  it("a design flag left in the runtime folder adds nothing", () => {
     const dir = box();
-    mkdirSync(flags(dir), { mode: 0o700 });
-    writeFileSync(join(flags(dir), SID), "");
-    expect(bar(dir)).toContain("tasarım açık");
-    expect(bar(dir, undefined, "e4f0c1a2-77aa-4000-8000-000000000001")).not.toContain("tasarım");
-  });
-  it("a link at the flag is no flag", () => {
-    const dir = box();
-    mkdirSync(flags(dir), { mode: 0o700 });
-    writeFileSync(join(dir, "elsewhere"), "");
-    symlinkSync(join(dir, "elsewhere"), join(flags(dir), SID));
+    mkdirSync(join(dir, "dxb-design-max"), { mode: 0o700 });
+    writeFileSync(join(dir, "dxb-design-max", SID), "");
     expect(bar(dir)).not.toContain("tasarım");
   });
 });
