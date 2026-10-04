@@ -96,6 +96,9 @@ describe("while open, each of his messages carries the reminder; closed or never
     expect(out.hookEventName).toBe("UserPromptSubmit");
     expect(out.additionalContext).toContain("dxb-design-max");
     expect(out.additionalContext).toContain(`python3 "${HOOK}" close`);
+    // his words of 2026-10-04: nothing but his yes closes it -- the skill on every message, whatever it asks
+    expect(out.additionalContext).toContain("whatever it asks");
+    expect(out.additionalContext).toContain("Nothing closes the mode but the CEO's yes");
   });
   it("another session's open mode does not reach this session", () => {
     const dir = box();

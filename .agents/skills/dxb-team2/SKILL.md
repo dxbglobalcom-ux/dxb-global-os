@@ -88,8 +88,9 @@ PLAN      → the approach is talked through with the CEO first; the lead then w
             the risks.
             Every turn of this talk and of the plan — design, plan, architecture — runs at `max`:
             the lead invokes `dxb-design-max` as its first step; a skill holds max for one turn,
-            so its project hook `dxb-design-max.py` reminds it on each of his messages; his yes
-            closes the mode and the job goes on at the session's level
+            so its project hook `dxb-design-max.py` reminds it on each of his messages and the
+            lead calls it on every one, whatever it asks; only his yes closes the mode
+            <!-- CEO-OK: design-max-only-his-yes-closes-2026-10-04 --> and the job goes on at the session's level
             <!-- CEO-OK: design-plan-architecture-at-max-2026-10-03 --> <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 -->.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → root cause before fix; new code is proven by a test that failed before it existed. The

@@ -13,8 +13,9 @@ to that answer, "bunu yapalım tmm." (design-max-skill-every-turn-2026-10-04): t
   * PostToolUse on Skill: the call of `dxb-design-max` opens the mode for that session -- a flag file
     $XDG_RUNTIME_DIR/dxb-design-max/<session_id> (/tmp/dxb-design-max/ without XDG_RUNTIME_DIR).
   * UserPromptSubmit: while the session's flag stands, each of his messages carries a reminder into
-    the session's context -- invoke the skill first, or, when this message is his yes to the plan,
-    close the mode and go on at the session's own level.
+    the session's context -- invoke the skill first, whatever the message asks; only his yes to the
+    plan closes the mode (his words of 2026-10-04: "benim bir sonraki mesajım planı onaylıorm şeklinde
+    olmalı ki kapansın bunun dışında onu kapatacak hiç birşey olmamalı").
   * `dxb-design-max.py close`, run by the lead from Bash: removes the flag of the session named by
     CLAUDE_CODE_SESSION_ID (the same id the hook receives on stdin, measured 2026-10-04).
 
@@ -43,10 +44,11 @@ DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
 
 def reminder():
     return (
-        f"🟣 DESIGN AT MAX is open for this session (dxb-team2 §4 PLAN). If this message continues "
-        f"design, plan or architecture work, invoke Skill {SKILL} as your FIRST step, so the rest of the "
-        f"turn runs at max. If this message is the CEO's yes to the plan, close the mode instead, as your "
-        f"first step, exactly as written -- `{CLOSE_COMMAND}` -- and go on at the session's own level.")
+        f"🟣 DESIGN AT MAX is open for this session (dxb-team2 §4 PLAN). Invoke Skill {SKILL} as your "
+        f"FIRST step on this message, whatever it asks -- a side question too, so the whole turn runs at "
+        f"max. Nothing closes the mode but the CEO's yes to the plan: only when this message is that yes, "
+        f"close it instead, as your first step, exactly as written -- `{CLOSE_COMMAND}` -- and go on at "
+        f"the session's own level.")
 
 
 def flag_name(session_id):
