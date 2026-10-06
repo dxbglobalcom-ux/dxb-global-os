@@ -1,0 +1,14 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/governance/codex-mirror-check.test.ts (6 tests) 1417ms
+   ✓ sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a hook named with '+' or a space moves and is mirrored; a ghost hook and a .bak stay  325ms
+ ✓ tests/hooks/context-gate.test.ts (14 tests) 1035ms
+   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 56 into a closed pipe  308ms
+
+ Test Files  2 passed (2)
+      Tests  20 passed (20)
+   Start at  15:01:34
+   Duration  2.84s (transform 52ms, setup 0ms, collect 23ms, tests 2.45s, environment 0ms, prepare 66ms)
+

@@ -37,7 +37,7 @@ it opens `dxb-verify` and `dxb-close-row`.
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot); design, plan and architecture turns at `max` through `dxb-design-max` (§4 PLAN) | scores the job, writes the done-list, chooses the arrangement (§3), writes code itself or through the hands it chose, verifies every piece and every fix, runs the battery, commits, reports | approves its own work; commits a piece it has not verified; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
+| **Lead** | the session — model and effort are the CEO's choice (`high` is the measured sweet spot) | scores the job, writes the done-list, chooses the arrangement (§3), writes code itself or through the hands it chose, verifies every piece and every fix, runs the battery, commits, reports | approves its own work; commits a piece it has not verified; writes code at Opus `xhigh` (FrontierCode: 51.4 %, the bottom of the curve); asks the CEO a technical question |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 --> through `scripts/governance/refuter.sh --card <file>` — read-only by tool | one blind pass per job (§5) — there is no second round <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 --> | writes; audits the same job twice; sees a verdict or the lead's reasoning; is called as bare `codex` (the base config writes everywhere) |
 | **Advisor** | Fable 5.1 | only where the card's `fable:` line says (§3), measured before it is consulted: the **start** call, on a normal or critical job, before the plan goes to the CEO, reads the approach, the plan and the design, and the lead closes its gaps; the **end** call, on a critical job only, before "done", reads the finished work with Sol's findings and in the same call rules on a disagreement no test settled <!-- CEO-OK: fable-normal-start-only-critical-start-end-2026-10-04 --> | writes code; is consulted anywhere else — on a repeated error, "whenever the lead needs it", on a light job, at the end of a normal job; the advisor tool's own advice to call it before substantive work or when done applies only where the card's `fable:` line allows it |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), on the lead's model | writes the job, or a part of it, with the lead's whole context (§3) | commits |
@@ -123,12 +123,6 @@ PLAN      → the approach is talked through with the CEO first; the lead then w
             The plan names the scope, the surfaces and files it touches, the ordered steps, the
             data and interface effects, migration and rollback where relevant, how it is verified,
             and the risks.
-            Every turn of this talk and of the plan — design, plan, architecture — runs at `max`:
-            the lead invokes `dxb-design-max` as its first step; a skill holds max for one turn,
-            so its project hook `dxb-design-max.py` reminds it on each of his messages and the
-            lead calls it on every one, whatever it asks; only his yes closes the mode
-            <!-- CEO-OK: design-max-only-his-yes-closes-2026-10-04 --> and the job goes on at the session's level
-            <!-- CEO-OK: design-plan-architecture-at-max-2026-10-03 --> <!-- CEO-OK: design-max-skill-every-turn-2026-10-04 -->.
 DONE-LIST → numbered, each item a command and its expected output, written BEFORE the code.
 BUILD     → root cause before fix; new code is proven by a test that failed before it existed. The
             writers write and run the job's own tests — the approved scope, completely: no stub, no
@@ -241,12 +235,12 @@ Correction required:
   <!-- CEO-OK: handover-carries-transcript-2026-10-03 -->. He is quoted verbatim — from the ledger, or
   from this conversation marked so <!-- CEO-OK: handover-quotes-conversation-verbatim-2026-10-03 --> —
   never composed in his first person.
-  The successor opens with the same model and effort as this session, in a VS Code editor-area
+  The successor opens with the same model as this session, in a VS Code editor-area
   terminal, through `operator` (look first; if the CEO is typing, wait): `operator key ctrl+shift+p`
   → `operator type "Terminal: Create New Terminal in Editor Area"` → `operator key Return` →
   `operator shot` → paste with `operator key ctrl+shift+v` (`ctrl+v` does not reach the terminal;
   `operator type` inverts case here, so a command line is pasted, never typed) the line
-  `systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model <same> --effort <same> "$(cat <note>)"`
+  `systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model <same> "$(cat <note>)"`
   (`claude` is not on that terminal's PATH) → `operator shot`, read it → `operator key Return`.
   Proof it is alive: `ListAgents` shows it and it answers.
 

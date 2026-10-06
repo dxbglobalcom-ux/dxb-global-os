@@ -1,0 +1,160 @@
+--- "/home/dxb/DxB Global OS/.planning/quick/20261006-effort-machinery-removal/evidence/dxb-statusline.before.js"	2026-10-06 14:59:42.566536289 +0200
++++ /home/dxb/.claude/hooks/dxb-statusline.js	2026-10-06 15:00:12.127775361 +0200
+@@ -151,150 +151,6 @@
+   } catch { /* the bar is the product; the history is a convenience */ }
+ }
+ 
+-// 2026-10-04 (CEO, during a design turn: "neden hala /effor seçtiğimde altta high görüorm kendisi
+-// şuan maxte değil mi"; to showing it here: "evet ekle"): the /effort menu and the spinner show the
+-// session's own level, while a skill's `effort: max` (dxb-design-max) lifts the rest of its own turn,
+-// and that is written nowhere but the transcript -- field `effort` on each assistant step, the same
+-// value the API request carries (measured through a local proxy, 2026-10-04). Then (CEO, the same
+-// evening: "alttaki tur yazısı tamamiyle aynı etkileşimde olmalı skill aktifse o turda max yazmalı
+-// çubukta. çubuk her turu canlı interaktif göstermeli"): the bar shows the level of the request in
+-// flight NOW, not the level of the last step that finished -- a step that thinks for two minutes is
+-// written to the transcript only when it ends, so the last finished step ran one level behind. Read
+-// from the end of the transcript, newest first, within the current turn (it begins at the newest
+-// prompt that is not a tool result, not a skill's injected text and not a local command):
+-//   * a call of a lifting skill in this turn            -> max, from the call on;
+-//   * else the newest step of this turn                 -> its level;
+-//   * else (the turn has no step yet) the session's own level -- an /effort set since the last step,
+-//     or the first step of the latest earlier turn (taken before any skill could lift it).
+-// That reading still drew nothing during a fresh session's turns: the transcript holds no readable line
+-// there at any render (measured 2026-10-04 18:28-18:39, .planning/quick/20261004-live-turn-bar/). So the
+-// render's own payload rules first, newest rule first:
+-//   * this session's turn marker (dxb-design-max/<session_id>.turn, written by the design-max hook when
+-//     the lifting skill is called) is a regular file holding the payload's `prompt_id` -> max;
+-//   * else the payload's `effort.level` (the session's own level, it follows /effort at once);
+-//   * else the transcript reading above, for a payload without `effort`.
+-// "tasarım açık" stands while this session's design-at-max flag stands. Best effort: the bar must never
+-// fail because of any of them -- an error falls to the next rule. The flag folder is trusted only as the
+-// design-max hook trusts it (open_flag_dir): a real directory, not a link, ours, writable by no one else.
+-const EFFORT_LEVELS = new Set(['low', 'medium', 'high', 'xhigh', 'max']);
+-const LIFTING_SKILLS = new Set(['dxb-design-max']);
+-const EFFORT_SET = /<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b/;
+-const TRANSCRIPT_TAIL_BYTES = 256 * 1024;
+-
+-function transcriptTail(transcriptPath) {
+-  if (typeof transcriptPath !== 'string' || !transcriptPath) return [];
+-  const fd = fs.openSync(transcriptPath, 'r');
+-  let text;
+-  try {
+-    const size = fs.fstatSync(fd).size;
+-    const length = Math.min(size, TRANSCRIPT_TAIL_BYTES);
+-    const buf = Buffer.alloc(length);
+-    fs.readSync(fd, buf, 0, length, size - length);
+-    text = buf.toString('utf8');
+-  } finally { fs.closeSync(fd); }
+-  const rows = [];
+-  for (const line of text.split('\n')) {
+-    if (!line) continue;
+-    try { const row = JSON.parse(line); if (row && typeof row === 'object') rows.push(row); }
+-    catch { /* the cut first line, or a line being written */ }
+-  }
+-  return rows;
+-}
+-
+-function contentText(row) {
+-  const c = row.message?.content;
+-  if (typeof c === 'string') return c;
+-  if (Array.isArray(c)) return c.filter(x => x?.type === 'text' && typeof x.text === 'string').map(x => x.text).join(' ');
+-  return '';
+-}
+-const isToolResult = row => Array.isArray(row.message?.content) && row.message.content.some(x => x?.type === 'tool_result');
+-const isLocalCommand = row => /^\s*<(local-command|command-name|command-message)/.test(contentText(row));
+-const startsTurn = row => row.type === 'user' && !row.isMeta && !isToolResult(row) && !isLocalCommand(row);
+-const stepLevel = row => (row.type === 'assistant' && EFFORT_LEVELS.has(row.effort) ? row.effort : null);
+-const effortSet = row => (row.type === 'user' ? (EFFORT_SET.exec(contentText(row)) || [])[1] || null : null);
+-const liftsToMax = row => row.type === 'assistant' && Array.isArray(row.message?.content)
+-  && row.message.content.some(x => x?.type === 'tool_use' && x.name === 'Skill' && LIFTING_SKILLS.has(x.input?.skill));
+-
+-function inFlightEffort(rows) {
+-  let i = rows.length - 1;
+-  let newestStep = null;
+-  for (; i >= 0; i--) {                       // the current turn
+-    const row = rows[i];
+-    if (liftsToMax(row)) return 'max';
+-    const level = stepLevel(row);
+-    if (level) { if (!newestStep) newestStep = level; }
+-    else if (!newestStep && effortSet(row)) return effortSet(row);
+-    if (startsTurn(row)) break;
+-  }
+-  if (newestStep) return newestStep;
+-  let firstStep = null;                        // no step yet: the session's own level
+-  for (i -= 1; i >= 0; i--) {
+-    const row = rows[i];
+-    const set = effortSet(row);
+-    if (set) return firstStep || set;
+-    const level = stepLevel(row);
+-    if (level) firstStep = level;              // keeps the oldest step of that turn
+-    if (startsTurn(row) && firstStep) return firstStep;
+-  }
+-  return firstStep;
+-}
+-
+-function turnEffort(transcriptPath) {
+-  try { return inFlightEffort(transcriptTail(transcriptPath)); }
+-  catch { return null; }                       // no transcript yet, or unreadable
+-}
+-
+-function trustedFlagDir() {
+-  const dir = path.join(process.env.XDG_RUNTIME_DIR || '/tmp', 'dxb-design-max');
+-  const st = fs.lstatSync(dir);
+-  if (!st.isDirectory() || st.uid !== process.getuid() || (st.mode & 0o022) !== 0) return null;
+-  return dir;
+-}
+-
+-function designOpen(sid) {
+-  try {
+-    if (!sid || !/^[0-9a-f-]{8,}$/i.test(sid)) return false;
+-    const dir = trustedFlagDir();
+-    return !!dir && fs.lstatSync(path.join(dir, sid)).isFile();
+-  } catch { return false; }
+-}
+-
+-const TURN_MARKER_MAX_BYTES = 128;
+-
+-function turnMarked(sid, promptId) {
+-  let fd;
+-  try {
+-    if (!sid || !/^[0-9a-f-]{8,}$/i.test(sid)) return false;
+-    if (typeof promptId !== 'string' || !/^[0-9a-f-]{8,}$/i.test(promptId)) return false;
+-    const dir = trustedFlagDir();
+-    if (!dir) return false;
+-    const file = path.join(dir, `${sid}.turn`);
+-    if (!fs.lstatSync(file).isFile()) return false;
+-    fd = fs.openSync(file, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
+-    const st = fs.fstatSync(fd);
+-    if (!st.isFile() || st.uid !== process.getuid()) return false;
+-    const buf = Buffer.alloc(TURN_MARKER_MAX_BYTES);
+-    const n = fs.readSync(fd, buf, 0, TURN_MARKER_MAX_BYTES, 0);
+-    return buf.toString('utf8', 0, n).trim() === promptId;
+-  } catch { return false; }
+-  finally { if (fd !== undefined) try { fs.closeSync(fd); } catch { /* closed */ } }
+-}
+-
+-function payloadEffort(data) {
+-  const level = data.effort?.level;
+-  return EFFORT_LEVELS.has(level) ? level : null;
+-}
+-
+-function turnMark(data) {
+-  let effort = null;
+-  try { effort = turnMarked(data.session_id, data.prompt_id) ? 'max' : payloadEffort(data); }
+-  catch { /* the next rule */ }
+-  if (!effort) effort = turnEffort(data.transcript_path);
+-  const design = designOpen(data.session_id) ? ' \x1b[35m🟣 tasarım açık\x1b[0m' : '';
+-  if (!effort) return design;
+-  return `${design} ${effort === 'max' ? '\x1b[35;1m' : '\x1b[2m'}tur: ${effort}\x1b[0m`;
+-}
+-
+ function branch(dir) {
+   try {
+     const b = execSync('git rev-parse --abbrev-ref HEAD', {
+@@ -318,5 +174,5 @@
+   const dir = data.workspace?.current_dir || process.cwd();
+   const name = dir.split('/').filter(Boolean).pop() || dir;
+ 
+-  process.stdout.write(`\x1b[2m${model}\x1b[0m${contextMeter(data.context_window)}${turnMark(data)} \x1b[2m${name}\x1b[0m${branch(dir)}`);
++  process.stdout.write(`\x1b[2m${model}\x1b[0m${contextMeter(data.context_window)} \x1b[2m${name}\x1b[0m${branch(dir)}`);
+ });

@@ -1,0 +1,3 @@
+# 2026-10-06: the same payload (effort.level max) through the bar before and after the cut; XDG_RUNTIME_DIR a scratch folder
+before: Opus 5.5 ██░░░░░░░░ 24% (120k) tur: max DxB Global OS master
+after:  Opus 5.5 ██░░░░░░░░ 24% (120k) DxB Global OS master

@@ -1,0 +1,5 @@
+{
+  "type": "command",
+  "command": "\"/usr/bin/node\" \"/home/dxb/.claude/hooks/dxb-statusline.js\"",
+  "refreshInterval": 1
+}
