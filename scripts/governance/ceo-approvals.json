@@ -2170,5 +2170,13 @@
     "conditions": "Said at the day's close, after the day's work had been accepted. The lead had recommended keeping the dumps; he chose deletion after three months. Before any code the lead warned him to switch to high (the door's rule) and he did ('F'u haya geçirdim' = /effort high). Acceptance given in advance, before he saw the work.",
     "session": "Opus 5.5 session f0af511e — heard first-hand, 2026-10-06.",
     "where": "scripts/governance/sol-dump-sweep.sh · scripts/hooks/post-commit · tests/governance/sol-dump-sweep.test.ts · .claude/skills/dxb-team2/SKILL.md §6 · .planning/STATE.md"
+  },
+  "simple-work-goes-to-a-medium-writer-2026-10-06": {
+    "date": "2026-10-06",
+    "what": "ORDER, permanent in dxb-team2 §3 (accepting the lead's recommendation, 'genel anlamda sessionlarda'): a job or piece that can be specified in a paragraph goes to a medium helper-writer, however small; the lead writes code itself, at high, only when the pieces are too coupled to split or the work needs the conversation; the lead still specifies, verifies, tests, runs the battery and commits. The high warning is for code the lead or a fork writes itself; a helper-writer's code needs no switch.",
+    "verbatim": "Yani evet önerini kabul ediyorum çünkü e, yani sonuçta lider sensin … senin için demiyorum genel anlamda sessionlarda bu olmalı yani orkestratör bakacak işe basitse hani medium'da yapılsın niye high'da yapılsın ki hemen kendisi lider olarak bir tane Ajana şunu şunu şunu yaptır. O da alır onu tak yerine koyar. Testini yapar geçer falan. hani Bataryasını koşar. Her şey tamamsa tamam. … Yani kısacası önerim bunu anlatıyorsa evet.",
+    "conditions": "Said after he asked why the 90-day sweep (a twenty-line script) was written by the lead at high instead of a medium helper, and the lead agreed and proposed the rule, asking in one line whether it is permanent. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session f0af511e — heard first-hand, 2026-10-06.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §2 §3"
   }
 }

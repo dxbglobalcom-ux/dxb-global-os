@@ -64,8 +64,8 @@ at `max`. **He switches with /effort; the lead warns him — on every reply, unt
 - Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
   session's live level matches. With no mode set, a message of his naming a plan, a design or an
   architecture reminds the lead to run `plan`, and a session whose level is not high reminds the lead to
-  open any reply that writes code with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.` — a small
-  job is not written at max either.
+  open any reply in which it writes code itself with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.`
+  — a small job is not written at max either. Code a medium `helper-writer` writes needs no switch.
 - Measured 2026-10-06: neither a hook's input nor its environment carries the effort (`CLAUDE_EFFORT`
   reaches the Bash tool, not a UserPromptSubmit hook). The live level is the newest, by timestamp, of the
   status line's record (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`), this session's last
@@ -93,11 +93,16 @@ and before done" advice does not apply here) nor the Fable-based `design-eye`.
 
 | Arrangement | Who writes | When |
 |---|---|---|
-| **Lead** | the lead itself | a small job, or pieces so coupled that splitting them costs more than it saves |
+| **Lead** | the lead itself | pieces so coupled that splitting them costs more than it saves, or work that needs this conversation and is too small for a fork |
 | **Fork** | the fork | one large piece that needs the whole conversation, while the lead stays free to verify |
-| **Team** | `helper-writer`s, in parallel; `helper`s read and research beside them | independent pieces, each specifiable in a paragraph |
+| **Team** | one `helper-writer`, or several in parallel; `helper`s read and research beside them | any job or piece specifiable in a paragraph — a small one included |
 | **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read | a large core with independent pieces around it |
 
+- **Medium first** <!-- CEO-OK: simple-work-goes-to-a-medium-writer-2026-10-06 -->: a job or a piece
+  that can be specified in a paragraph goes to a medium `helper-writer`, however small — it starts at
+  about 20 k tokens, where every turn of the lead re-reads its whole context. The lead writes, at `high`,
+  only what the Lead or Fork rows above name; it still specifies, verifies, tests, runs the battery and
+  commits.
 - Parallel writers never touch the same file, and run their tests with `DXB_ENGINE_LOCK_WAIT=200`: one
   run at a time holds the construction engine, and with it a second one queues instead of being refused
   — inside the 4-minute rule (§7), so the lead starts no battery while writers are testing.
